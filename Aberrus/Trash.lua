@@ -167,7 +167,7 @@ function mod:HealingBloom(args)
 end
 
 do
-	local bannerCollector, icon, prev = {}, 8, 0
+	local bannerCollector, icon, prevWarn, prevMarkClear = {}, 8, 0, 0
 	function mod:BannerMarking(_, unit, guid)
 		if bannerCollector[guid] then
 			self:CustomIcon(bannerMarker, unit, bannerCollector[guid]) -- icon order from SPELL_SUMMON
@@ -179,15 +179,18 @@ do
 	end
 
 	function mod:FormRanks(args)
-		self:Message(args.spellId, "orange", CL.spawned:format(L.banner))
-		self:PlaySound(args.spellId, "warning")
+		if args.time-prevWarn > 1 then -- Don't spam warn for multiple casts
+			prevWarn = args.time
+			self:Message(args.spellId, "orange", CL.spawned:format(L.banner))
+			self:PlaySound(args.spellId, "warning")
+		end
 		if self:GetOption(bannerMarker) then
-			if args.time-prev > 5 then
-				prev = args.time
+			if args.time-prevMarkClear > 5 then
+				prevMarkClear = args.time
 				icon = 8
 				bannerCollector = {}
 			end
-			if not bannerCollector[args.destGUID] then
+			if not bannerCollector[args.destGUID] and icon > 6 then -- Limit to skull & cross
 				bannerCollector[args.destGUID] = icon
 				icon = icon - 1
 				self:RegisterTargetEvents("BannerMarking")
