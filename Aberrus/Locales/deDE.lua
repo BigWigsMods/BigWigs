@@ -48,7 +48,7 @@ if L then
 	L.energy_gained = "Energie erreicht: %d"
 
 	-- Mythic
-	--L.shadowflame_energy = "Heal Absorb"
+	L.shadowflame_energy = "Heilung Absorption"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "deDE")
