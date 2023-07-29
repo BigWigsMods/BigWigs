@@ -13,6 +13,7 @@ mod:RegisterEnableMob(
 	205656, -- Sundered Chemist
 	203939, -- Animation Fluid
 	205651, -- Bubbling Slime
+	203809, -- Entropic Hatred
 	203806 -- Whisper in the Dark
 )
 
@@ -119,8 +120,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StagnatingPoolDamage", 412498)
 
 	--[[ Echo of Neltharion -> Sarkareth ]]--
-	self:Log("SPELL_AURA_APPLIED", "DarkBindingsApplied", 409576)
-	self:Log("SPELL_AURA_REMOVED", "DarkBindingsRemoved", 409576)
+	self:Log("SPELL_AURA_APPLIED", "DarkBindingsApplied", 413785, 409576) -- Source: Entropic Hatred (203809), Whisper in the Dark (203806)
+	self:Log("SPELL_AURA_REMOVED", "DarkBindingsRemoved", 413785, 409576)
 	self:Log("SPELL_CAST_START", "UmbralTorrent", 409612)
 end
 
@@ -276,16 +277,16 @@ end
 --[[ Echo of Neltharion -> Sarkareth ]]--
 function mod:DarkBindingsApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
+		self:PersonalMessage(409576)
+		self:PlaySound(409576, "warning")
+		self:Say(409576)
+		self:SayCountdown(409576, 5)
 	end
 end
 
 function mod:DarkBindingsRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelSayCountdown(409576)
 	end
 end
 
