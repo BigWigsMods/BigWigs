@@ -104,5 +104,5 @@ if L then
 	L.fluid = "活化液体" -- NPC 203939
 	L.slime = "冒泡的软泥" -- NPC 205651
 	L.goo = "匍匐粘液" -- NPC 205820
-	--L.whisper = "Whisper in the Dark" -- NPC 203806
+	L.whisper = "黑暗低语" -- NPC 203806
 end
