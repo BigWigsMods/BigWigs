@@ -19,6 +19,7 @@ local phoenixRushCount = 1
 local vigorousGaleCount = 1
 local zaqaliAideCount = 1
 local magmaMysticCount = 1
+local blazingFocusCount = 0
 local tempBlockBigAddMsg = false
 
 --------------------------------------------------------------------------------
@@ -64,7 +65,7 @@ function mod:GetOptions()
 		408620, -- Scorching Roar
 		{401867, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Volcanic Shield
 		-- Ignara (Mythic)
-		401108, -- Phoenix Rush
+		{401108, "ME_ONLY_EMPHASIZE"}, -- Phoenix Rush
 		401381, -- Blazing Focus
 		407009, -- Vigorous Gale
 		-- Stage 2
@@ -83,6 +84,7 @@ function mod:GetOptions()
 		[404382] = CL.big_adds, -- Zaqali Aide (Big Adds)
 		[397383] = L.molten_barrier, -- Molten Barrier (Barrier)
 		[408959] = CL.leap, -- Devastating Leap (Leap)
+		[401867] = CL.beam, -- Volcanic Shield (Beam)
 		[401381] = CL.fixate, -- Blazing Focus (Fixate)
 		[407009] = CL.pushback, -- Vigorous Gale (Pushback)
 		[410516] = L.catastrophic_slam, -- Catastrophic Slam (Door Slam)
@@ -99,6 +101,7 @@ function mod:OnBossEnable()
 	-- Ignara
 	self:Log("SPELL_CAST_SUCCESS", "PhoenixRush", 401108)
 	self:Log("SPELL_AURA_APPLIED", "BlazingFocusApplied", 401381)
+	self:Log("SPELL_AURA_REMOVED", "BlazingFocusRemoved", 401381)
 	self:Log("SPELL_CAST_START", "VigorousGale", 407009)
 	-- Warlord Kagni
 	self:Log("SPELL_AURA_APPLIED", "IgnaraFlameApplied", 411230)
@@ -116,8 +119,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlazingSpearApplied", 401452)
 	-- Obsidian Guard
 	self:Log("SPELL_CAST_START", "ScorchingRoar", 408620)
-	self:Log("SPELL_AURA_APPLIED", "VolcanicShieldApplied", 402066)
-	self:Log("SPELL_AURA_REMOVED", "VolcanicShieldRemoved", 402066)
+	self:Log("SPELL_AURA_APPLIED", "VolcanicShieldApplied", 401867)
+	self:Log("SPELL_AURA_REMOVED", "VolcanicShieldRemoved", 401867)
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "DesperateImmolation", 397514)
 	self:Log("SPELL_CAST_SUCCESS", "DesperateImmolationSuccess", 397514)
@@ -136,6 +139,7 @@ function mod:OnEngage()
 	zaqaliAideCount = 1
 	vigorousGaleCount = 1
 	phoenixRushCount = 1
+	blazingFocusCount = 0
 	tempBlockBigAddMsg = false
 
 	self:Bar(401258, 12) -- Heavy Cudgel
@@ -253,8 +257,17 @@ end
 
 function mod:BlazingFocusApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, CL.fixate)
-		self:PlaySound(args.spellId, "alarm")
+		blazingFocusCount = blazingFocusCount + 1
+		if blazingFocusCount == 1 then -- Don't spam warn when multiple are hunting you
+			self:PersonalMessage(args.spellId, nil, CL.fixate)
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
+
+function mod:BlazingFocusRemoved(args)
+	if self:Me(args.destGUID) then
+		blazingFocusCount = blazingFocusCount - 1
 	end
 end
 
@@ -414,20 +427,17 @@ do
 end
 
 function mod:VolcanicShieldApplied(args)
-	self:TargetMessage(401867, "orange", args.destName)
-	self:PlaySound(401867, "alert") -- stack?
-	-- self:Bar(401867, 30)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(401867)
-		self:PlaySound(401867, "warning")
-		self:Yell(401867)
-		self:YellCountdown(401867, 5)
+		self:PersonalMessage(args.spellId, nil, CL.beam)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId, CL.beam)
+		self:SayCountdown(args.spellId, 5)
 	end
 end
 
 function mod:VolcanicShieldRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelYellCountdown(401867)
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
