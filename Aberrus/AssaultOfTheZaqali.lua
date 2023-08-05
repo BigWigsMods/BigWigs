@@ -184,6 +184,7 @@ function mod:UNIT_AURA(_, unit)
 		self:SayCountdown(401867, 5)
 	elseif not beamName and hasBeam then
 		hasBeam = false
+		self:CancelSayCountdown(401867)
 	end
 end
 
