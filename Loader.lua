@@ -30,11 +30,16 @@ local BIGWIGS_GUILD_VERSION = 0
 local guildWarnMessage = ""
 
 do
-	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local _, tbl = ...
 	tbl.loaderPublic = public
 	tbl.loaderPrivate = mod
+	public.IsRetail = tbl.IsRetail
+	public.IsClassic = tbl.IsClassic
+	public.IsVanilla = tbl.IsVanilla
+	public.IsTBC = tbl.IsTBC
+	public.IsWrath = tbl.IsWrath
 
+	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local REPO = "REPO"
 	local ALPHA = "ALPHA"
 
@@ -162,7 +167,29 @@ do
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
 
-	public.currentExpansion = { -- Change on new expansion releases
+	if public.IsVanilla then
+		public.currentExpansion = {
+		name = c,
+		littlewigsName = lw_c,
+		zones = {
+		}
+	}
+	elseif public.IsTBC then
+		public.currentExpansion = {
+		name = bc,
+		littlewigsName = lw_bc,
+		zones = {
+		}
+	}
+	elseif public.IsWrath then
+		public.currentExpansion = {
+		name = wotlk,
+		littlewigsName = lw_wotlk,
+		zones = {
+		}
+	}
+	else
+		public.currentExpansion = { -- Change on new expansion releases
 		name = df,
 		littlewigsName = lw_df,
 		zones = {
@@ -170,15 +197,23 @@ do
 			[2569] = "BigWigs_Aberrus",
 		}
 	}
+	end
 
 	public.zoneTbl = {
+		[533] = public.IsVanilla and c or wotlk, -- Naxxramas
+		[249] = public.IsVanilla and c or wotlk, -- Onyxia's Lair
+		[568] = public.IsClassic and bc or lw_cata, -- Zul'Aman
+		[-947] = public.IsClassic and c or bfa, -- Azeroth (Fake Menu)
+
 		--[[ BigWigs: Classic ]]--
+		[309] = c, -- Zul'Gurub [Classic Only]
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		--[[ BigWigs: The Burning Crusade ]]--
 		[-101] = bc, -- Outland (Fake Menu)
+		[-1945] = bc, -- Outland (Fake Menu) [Classic Only]
 		[565] = bc, -- Gruul's Lair
 		[532] = bc, -- Karazhan
 		[548] = bc, -- Coilfang: Serpentshrine Cavern
@@ -188,7 +223,6 @@ do
 		[564] = bc, -- Black Temple
 		[580] = bc, -- The Sunwell
 		--[[ BigWigs: Wrath of the Lich King ]]--
-		[533] = wotlk, -- Naxxramas
 		[616] = wotlk, -- The Eye of Eternity
 		[603] = wotlk, -- Ulduar
 		[624] = wotlk, -- Vault of Archavon
@@ -196,7 +230,6 @@ do
 		[724] = wotlk, -- The Ruby Sanctum
 		[631] = wotlk, -- Icecrown Citadel
 		[615] = wotlk, -- The Obsidian Sanctum
-		[249] = wotlk, -- Onyxia's Lair
 		--[[ BigWigs: Cataclysm ]]--
 		[671] = cata, -- The Bastion of Twilight
 		[669] = cata, -- Blackwing Descent
@@ -225,7 +258,6 @@ do
 		[1712] = l, -- Antorus, the Burning Throne
 		[1779] = l, -- Invasion Points
 		--[[ BigWigs: Battle for Azeroth ]]--
-		[-947] = bfa, -- Azeroth (Fake Menu)
 		[1861] = bfa, -- Uldir
 		[2070] = bfa, -- Battle Of Dazar'alor
 		[2096] = bfa, -- Crucible of Storms
@@ -243,7 +275,24 @@ do
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
+		--[34] = lw_c, -- The Stockade
 		[36] = lw_c, -- Deadmines
+		--[43] = lw_c, -- Wailing Caverns
+		--[47] = lw_c, -- Razorfen Kraul
+		--[48] = lw_c, -- Blackfathom Deeps
+		--[70] = lw_c, -- Uldaman
+		--[90] = lw_c, -- Gnomeregan
+		--[109] = lw_c, -- Sunken Temple
+		--[129] = lw_c, -- Razorfen Downs
+		--[189] = lw_c, -- Scarlet Monastery
+		--[209] = lw_c, -- Zul'Farrak
+		--[229] = lw_c, -- Blackrock Spire
+		--[230] = lw_c, -- Blackrock Depths
+		--[289] = lw_c, -- Scholomance
+		--[329] = lw_c, -- Stratholme
+		--[349] = lw_c, -- Maraudon
+		--[389] = lw_c, -- Ragefire Chasm
+		--[429] = lw_c, -- Dire Maul
 		--[[ LittleWigs: The Burning Crusade ]]--
 		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
 		[542] = lw_bc, -- Hellfire Citadel: The Blood Furnace
@@ -279,7 +328,6 @@ do
 		[668] = lw_wotlk, -- Halls of Reflection
 		[632] = lw_wotlk, -- The Forge of Souls
 		--[[ LittleWigs: Cataclysm ]]--
-		[568] = lw_cata, -- Zul'Aman
 		[859] = lw_cata, -- Zul'Gurub
 		[643] = lw_cata, -- Throne of the Tides
 		[644] = lw_cata, -- Halls of Origination
@@ -361,6 +409,11 @@ do
 	}
 
 	public.zoneTblWorld = {
+		-- Classic
+		[-1447] = -947, [-1419] = -947, [-1425] = -947, [-1431] = -947, [-1440] = -947, [-1444] = -947, -- Azeroth
+		[-1948] = -1945, [-1944] = -1945, -- Outland
+
+		-- Retail
 		[-104] = -101, [-100] = -101, -- Outland
 		[-376] = -424, [-379] = -424, [-504] = -424, [-507] = -424, [-554] = -424, -- Pandaria
 		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
@@ -943,6 +996,7 @@ do
 	}
 	local delayedMessages = {}
 	local foundReqAddons = {} -- Deciding whether or not we show a warning for core/options/plugins addons not existing
+	local printMissingExpansionAddon = true
 
 	local warning = "The addon '|cffffff00%s|r' is forcing %s to load prematurely, notify the BigWigs authors!"
 	local dontForceLoadList = {
@@ -1014,6 +1068,10 @@ do
 		if reqFuncAddons[name] then
 			foundReqAddons[name] = true -- A required functional addon is found
 		end
+
+		if name == public.currentExpansion.name then
+			printMissingExpansionAddon = false
+		end
 	end
 
 	if not public.usingBigWigsRepo then -- We're not using BigWigs Git, but required functional addons are missing? Show a warning
@@ -1024,6 +1082,14 @@ do
 				Popup(msg)
 			end
 		end
+	end
+
+	if printMissingExpansionAddon and public.IsClassic then
+		local msg = L.missingAddOn:format(public.currentExpansion.name)
+		delayedMessages[#delayedMessages+1] = msg
+		Popup(msg)
+	else
+		printMissingExpansionAddon = false
 	end
 
 	local locales = {
@@ -1050,6 +1116,9 @@ do
 				CTimerAfter(15, function()
 					for i = 1, #delayedMessages do
 						sysprint(delayedMessages[i])
+					end
+					if printMissingExpansionAddon then
+						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format(public.currentExpansion.name), {r=1,g=1,b=1}, 120)
 					end
 					delayedMessages = nil
 				end)
@@ -1388,11 +1457,11 @@ do
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
-			if zoneAddon == public.currentExpansion.name and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
+			if zoneAddon == public.currentExpansion.name and public.IsRetail and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
 			if public.currentExpansion.zones[id] then
 				zoneAddon = public.currentExpansion.zones[id] -- Current BigWigs content has individual zone specific addons
-			elseif zoneAddon == public.currentExpansion.littlewigsName then
+			elseif zoneAddon == public.currentExpansion.littlewigsName and public.IsRetail then
 				zoneAddon = "LittleWigs" -- Current LittleWigs content is stored in the main addon
 			end
 			if public:GetAddOnState(zoneAddon) == "MISSING" then

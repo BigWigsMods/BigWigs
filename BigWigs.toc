@@ -27,6 +27,7 @@
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 embeds.xml
+Init.lua
 API.lua
 locales.xml
 
