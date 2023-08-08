@@ -27,11 +27,18 @@ files["**/Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 	"11[23]/hash_SlashCmdList",
 }
+files["**/AutoRole.lua"].ignore = {
+	"113/GetSpecialization",
+	"113/GetSpecializationRole",
+	"113/UnitGroupRolesAssigned",
+	"113/UnitSetRole",
+}
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitTokenFromGUID",
 	"113/C_UnitAuras",
+	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
@@ -182,9 +189,7 @@ globals = {
 	"GetRaidTargetIndex",
 	"GetRealmName",
 	"GetRealZoneText",
-	"GetSpecialization",
 	"GetSpecializationInfoByID",
-	"GetSpecializationRole",
 	"GetSpellCooldown",
 	"GetSpellDescription",
 	"GetSpellInfo",
@@ -235,7 +240,6 @@ globals = {
 	"UnitExists",
 	"UnitFactionGroup",
 	"UnitGetTotalAbsorbs",
-	"UnitGroupRolesAssigned",
 	"UnitHealth",
 	"UnitHealthMax",
 	"UnitInParty",
@@ -259,7 +263,6 @@ globals = {
 	"UnitPowerMax",
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
-	"UnitSetRole",
 	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua

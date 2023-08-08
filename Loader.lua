@@ -32,6 +32,9 @@ local guildWarnMessage = ""
 do
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local _, tbl = ...
+	tbl.loaderPublic = public
+	tbl.loaderPrivate = mod
+
 	local REPO = "REPO"
 	local ALPHA = "ALPHA"
 
@@ -372,9 +375,9 @@ end
 -- Utility
 --
 
+local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 local EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
-local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned = C_AddOns.GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned
-local GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitSetRole = GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitSetRole
+local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 public.EnableAddOn = EnableAddOn
 
 local reqFuncAddons = {
@@ -770,11 +773,6 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
-
-	-- Role Updating
-	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
@@ -1179,105 +1177,6 @@ end)
 bwFrame:RegisterEvent("ADDON_LOADED")
 bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 
-do
-	-- Role Updating
-	local prev = 0
-	function mod:PLAYER_REGEN_ENABLED()
-		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
-	end
-	function mod:ACTIVE_TALENT_GROUP_CHANGED()
-		if IsInGroup() then
-			if IsPartyLFG() then return end
-
-			local tree = GetSpecialization()
-			if not tree then return end -- No spec selected
-
-			local role = GetSpecializationRole(tree)
-			if role and UnitGroupRolesAssigned("player") ~= role then
-				if InCombatLockdown() or UnitAffectingCombat("player") then
-					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					return
-				end
-				-- ACTIVE_TALENT_GROUP_CHANGED fires twice when changing spec, leaving the talent tree, and entering the new tree. We throttle this to prevent a double role chat message.
-				-- It should only fire once when joining a group (triggered from GROUP_ROSTER_UPDATE)
-				-- This will fail when logging in/reloading in a group because GetSpecializationRole is nil since WoW v7 when GROUP_ROSTER_UPDATE fires
-				-- However, your role seems to be saved internally and preserved, so is this really an issue?
-				local t = GetTime()
-				if (t-prev) > 2 then
-					prev = t
-					UnitSetRole("player", role)
-				end
-			end
-		end
-	end
-end
-
--- Merged LFG_ProposalTime addon by Freebaser
-do
-	local prev
-	function mod:LFG_PROPOSAL_SHOW()
-		if not prev then
-			local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
-			timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
-			local tex = timerBar:CreateTexture()
-			tex:SetTexture(137012) -- Interface\\TargetingFrame\\UI-StatusBar
-			timerBar:SetStatusBarTexture(tex)
-			timerBar:SetSize(190, 9)
-			timerBar:SetStatusBarColor(1, 0.1, 0)
-			timerBar:SetMinMaxValues(0, 40)
-			timerBar:Show()
-
-			local bg = timerBar:CreateTexture(nil, "BACKGROUND")
-			bg:SetAllPoints(timerBar)
-			bg:SetColorTexture(0, 0, 0, 0.7)
-
-			local spark = timerBar:CreateTexture(nil, "OVERLAY")
-			spark:SetTexture(130877) -- Interface\\CastingBar\\UI-CastingBar-Spark
-			spark:SetSize(32, 32)
-			spark:SetBlendMode("ADD")
-			spark:SetPoint("LEFT", tex, "RIGHT", -15, 0)
-
-			local border = timerBar:CreateTexture(nil, "OVERLAY")
-			border:SetTexture(130874) -- Interface\\CastingBar\\UI-CastingBar-Border
-			border:SetSize(256, 64)
-			border:SetPoint("TOP", timerBar, 0, 28)
-
-			timerBar.text = timerBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-			timerBar.text:SetPoint("CENTER", timerBar, "CENTER")
-
-			self.LFG_PROPOSAL_SHOW = function()
-				prev = GetTime() + 40
-				-- Play in Master for those that have SFX off or very low.
-				-- Using false as third arg to avoid the "only one of each sound at a time" throttle.
-				-- Only play via the "Master" channel if we have sounds turned on
-				if (BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound) or self.isSoundOn ~= false then
-					local _, id = PlaySound(8960, "Master", false) -- SOUNDKIT.READY_CHECK
-					if id then
-						StopSound(id-1) -- Should work most of the time to stop the blizz sound
-					end
-				end
-			end
-			self:LFG_PROPOSAL_SHOW()
-
-			timerBar:SetScript("OnUpdate", function(f)
-				local timeLeft = prev - GetTime()
-				if timeLeft > 0 then
-					f:SetValue(timeLeft)
-					f.text:SetFormattedText("BigWigs: %.1f", timeLeft)
-				end
-			end)
-
-			-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-			-- local name, addon = ...
-			-- if BigWigsLoader then
-			-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-			-- end
-			public:SendMessage("BigWigs_FrameCreated", timerBar, "QueueTimer")
-		end
-	end
-end
-
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
 		return
@@ -1549,7 +1448,6 @@ do
 			--local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			--SendAddonMessage("D5", name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			SendAddonMessage("D4", "H", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
-			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			ResetVersionWarning()
