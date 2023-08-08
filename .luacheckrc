@@ -30,6 +30,7 @@ files["**/Loader.lua"].ignore = {
 files["**/AutoRole.lua"].ignore = {
 	"113/GetSpecialization",
 	"113/GetSpecializationRole",
+	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitSetRole",
 }
@@ -43,6 +44,9 @@ files["**/Core/BossPrototype.lua"].ignore = {
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/geterrorhandler",
+}
+files["**/Plugins/AltPower.lua"].ignore = {
+	"113/UnitGroupRolesAssigned",
 }
 files["**/Plugins/AutoReply.lua"].ignore = {
 	"113/BNGetFriendIndex",
@@ -61,6 +65,9 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/C_CVar",
 	"113/C_TalkingHead",
 	"113/TooltipDataProcessor",
+}
+files["**/Plugins/Pull.lua"].ignore = {
+	"113/UnitGroupRolesAssigned",
 }
 files["**/Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
@@ -224,7 +231,6 @@ globals = {
 	"RaidBossEmoteFrame",
 	"RaidNotice_AddMessage",
 	"RaidWarningFrame",
-	"RolePollPopup",
 	"SecondsToTime",
 	"StopSound",
 	"TalkingHeadFrame",
