@@ -66,7 +66,7 @@ function mod:GetOptions()
 		408620, -- Scorching Roar
 		{401867, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Volcanic Shield
 		-- Ignara (Mythic)
-		{401108, "ME_ONLY_EMPHASIZE"}, -- Phoenix Rush
+		401108, -- Phoenix Rush
 		401381, -- Blazing Focus
 		407009, -- Vigorous Gale
 		-- Stage 2
