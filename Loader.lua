@@ -115,6 +115,7 @@ public.SetRaidTarget = SetRaidTarget
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
+public.onTestBuild = IsTestBuild()
 
 -- Version
 local usersHash = {}

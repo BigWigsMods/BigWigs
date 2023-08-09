@@ -38,6 +38,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
+local onTestBuild = BigWigsLoader.onTestBuild
 local GetSubZoneText = GetSubZoneText
 local TalkingHeadLineInfo = C_TalkingHead.GetCurrentLineInfo
 local IsEncounterInProgress = IsEncounterInProgress
@@ -356,7 +357,7 @@ do
 	function plugin:OnEngage(_, module)
 		if not module or not module:GetJournalID() or module.worldBoss then return end
 
-		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
+		if self.db.profile.blockEmotes and not onTestBuild then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 		end
