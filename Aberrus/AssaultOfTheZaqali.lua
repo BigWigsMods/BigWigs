@@ -20,6 +20,7 @@ local vigorousGaleCount = 1
 local zaqaliAideCount = 1
 local magmaMysticCount = 1
 local blazingFocusCount = 0
+local myFlamingCudgelStacks = 0
 local tempBlockBigAddMsg = false
 local hasFixate, hasBeam = false, false
 
@@ -130,6 +131,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FlamingCudgel", 410351)
 	self:Log("SPELL_AURA_APPLIED", "FlamingCudgelApplied", 410353)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FlamingCudgelApplied", 410353)
+	self:Log("SPELL_AURA_REMOVED", "FlamingCudgelRemoved", 410353)
 end
 
 function mod:OnEngage()
@@ -141,6 +143,7 @@ function mod:OnEngage()
 	vigorousGaleCount = 1
 	phoenixRushCount = 1
 	blazingFocusCount = 0
+	myFlamingCudgelStacks = 0
 	tempBlockBigAddMsg = false
 	hasFixate, hasBeam = false, false
 
@@ -345,7 +348,7 @@ end
 do
 	local timer = { 26.0, 22.0, 31.0, 21.0 } -- 22.0, 31.0, 21.0, 26.0 repeating
 	function mod:HeavyCudgel(args)
-		local unit = self:GetUnitIdByGUID(args.sourceGUID)
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
 		if not unit or IsItemInRange(116139, unit) then -- 50yd
 			self:Message(args.spellId, "purple")
 			self:PlaySound(args.spellId, "alert") -- frontal
@@ -358,15 +361,14 @@ do
 end
 
 function mod:HeavyCudgelApplied(args)
-	local amount = args.amount or 1
-	if self:Tank() or self:Healer() or self:Me(args.destGUID) then
-		self:StackMessage(401258, "purple", args.destName, amount, 2)
-	end
-	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
-	if amount > 2 and self:Tank() and not self:Tanking(bossUnit) then
-		self:PlaySound(401258, "warning") -- Maybe swap?
-	elseif self:Me(args.destGUID) then
-		self:PlaySound(401258, "alarm") -- On you
+	if self:Me(args.destGUID) then
+		self:StackMessage(401258, "purple", args.destName, arg.amount, 2)
+		self:PlaySound(401258, "alarm")
+	else
+		local playerUnit = self:UnitTokenFromGUID(args.destGUID)
+		if playerUnit and self:Tank(playerUnit) and (self:Tank() or self:Healer()) then
+			self:StackMessage(401258, "purple", args.destName, arg.amount, 2)
+		end
 	end
 end
 
@@ -402,7 +404,7 @@ do
 	local prev = 0
 	function mod:MagmaFlow(args)
 		if args.time - prev > 2 then
-			local unit = self:GetUnitIdByGUID(args.sourceGUID)
+			local unit = self:UnitTokenFromGUID(args.sourceGUID)
 			if not unit or IsItemInRange(116139, unit) then -- 50yd
 				prev = args.time
 				self:Message(409275, "orange")
@@ -443,7 +445,7 @@ do
 	local prev = 0
 	function mod:ScorchingRoar(args)
 		if args.time - prev > 2 then
-			local unit = self:GetUnitIdByGUID(args.sourceGUID)
+			local unit = self:UnitTokenFromGUID(args.sourceGUID)
 			if not unit or IsItemInRange(116139, unit) then -- 50yd
 				prev = args.time
 				self:Message(args.spellId, "yellow")
@@ -528,13 +530,24 @@ end
 
 function mod:FlamingCudgelApplied(args)
 	local amount = args.amount or 1
-	if self:Tank() or self:Healer() or self:Me(args.destGUID) then
+	if self:Me(args.destGUID) then
+		myFlamingCudgelStacks = amount
 		self:StackMessage(410351, "purple", args.destName, amount, 2)
+		self:PlaySound(410351, "alarm")
+	else
+		local playerUnit = self:UnitTokenFromGUID(args.destGUID)
+		if playerUnit and self:Tank(playerUnit) and (self:Tank() or self:Healer()) then
+			self:StackMessage(410351, "purple", args.destName, arg.amount, 2)
+			local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+			if self:Tank() and bossUnit and not self:Tanking(bossUnit) and myFlamingCudgelStacks == 0 and amount > 1 then -- Not tanking, no stacks, 2+ stacks on other tank
+				self:PlaySound(410351, "warning") -- Maybe swap?
+			end
+		end
 	end
-	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
-	if amount > 2 and self:Tank() and not self:Tanking(bossUnit) then
-		self:PlaySound(410351, "warning") -- Maybe swap?
-	elseif self:Me(args.destGUID) then
-		self:PlaySound(410351, "alarm") -- On you
+end
+
+function mod:FlamingCudgelRemoved(args)
+	if self:Me(args.destGUID) then
+		myFlamingCudgelStacks = 0
 	end
 end
