@@ -21,6 +21,7 @@ local tacticalDestructionCount = 1
 local shrapnelBombCount = 1
 local unstableEmbersCount = 1
 local blastWaveCount = 1
+local mySearingClawsStacks = 0
 local totalBombs = mod:Easy() and 2 or 3
 
 --------------------------------------------------------------------------------
@@ -84,6 +85,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BlastWave", 403978)
 	self:Log("SPELL_AURA_APPLIED", "SearingClawsApplied", 404942)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingClawsApplied", 404942)
+	self:Log("SPELL_AURA_REMOVED", "SearingClawsRemoved", 404942)
 end
 
 function mod:OnEngage()
@@ -94,6 +96,7 @@ function mod:OnEngage()
 	shrapnelBombCount = 1
 	unstableEmbersCount = 1
 	blastWaveCount = 1
+	mySearingClawsStacks = 0
 	totalBombs = self:Easy() and 2 or 3
 
 	if not self:Easy() then
@@ -249,10 +252,19 @@ end
 
 function mod:SearingClawsApplied(args)
 	local amount = args.amount or 1
-	if amount % 2 == 0 or amount > 10 then
-		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 10)
+	if self:Me(args.destGUID) then
+		mySearingClawsStacks = amount
 	end
-	if amount > 10 and self:Tank() and not self:Tanking("boss1") then
-		self:PlaySound(args.spellId, "warning")
+	if amount % 2 == 0 or amount > 8 then -- 2,4,6 then 8+
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 8)
+		if mySearingClawsStacks == 0 and amount >= 8 and self:Tank() then -- No stacks on me, 8+ stacks on other tank
+			self:PlaySound(args.spellId, "warning") -- Maybe swap?
+		end
+	end
+end
+
+function mod:SearingClawsRemoved(args)
+	if self:Me(args.destGUID) then
+		mySearingClawsStacks = 0
 	end
 end
