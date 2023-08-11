@@ -362,12 +362,12 @@ end
 
 function mod:HeavyCudgelApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(401258, "purple", args.destName, arg.amount, 2)
+		self:StackMessage(401258, "purple", args.destName, args.amount, 2)
 		self:PlaySound(401258, "alarm")
 	elseif self:Tank() or self:Healer() then
 		local playerUnit = self:UnitTokenFromGUID(args.destGUID)
 		if playerUnit and self:Tank(playerUnit) and IsItemInRange(116139, playerUnit) then -- Applied to a tank, tank is within 50yd
-			self:StackMessage(401258, "purple", args.destName, arg.amount, 2)
+			self:StackMessage(401258, "purple", args.destName, args.amount, 2)
 		end
 	end
 end
@@ -537,7 +537,7 @@ function mod:FlamingCudgelApplied(args)
 	elseif self:Tank() or self:Healer() then
 		local playerUnit = self:UnitTokenFromGUID(args.destGUID)
 		if playerUnit and self:Tank(playerUnit) then -- Applied to a tank
-			self:StackMessage(410351, "purple", args.destName, arg.amount, 2)
+			self:StackMessage(410351, "purple", args.destName, args.amount, 2)
 			if myFlamingCudgelStacks == 0 and amount >= 2 and self:Tank() then -- No stacks on me, 2+ stacks on other tank
 				self:PlaySound(410351, "warning") -- Maybe swap?
 			end
