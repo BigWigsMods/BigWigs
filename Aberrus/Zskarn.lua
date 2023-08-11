@@ -255,7 +255,7 @@ function mod:SearingClawsApplied(args)
 	if self:Me(args.destGUID) then
 		mySearingClawsStacks = amount
 	end
-	if amount % 2 == 0 or amount > 8 then -- 2,4,6 then 8+
+	if amount % 2 == 0 or (amount > 8 and mySearingClawsStacks == 0) then -- 2,4,6 then 8+ (only warn for every application if you have no stacks)
 		self:StackMessage(args.spellId, "purple", args.destName, amount, 8)
 		if mySearingClawsStacks == 0 and amount >= 8 and self:Tank() then -- No stacks on me, 8+ stacks on other tank
 			self:PlaySound(args.spellId, "warning") -- Maybe swap?
