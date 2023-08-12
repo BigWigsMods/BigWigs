@@ -84,12 +84,18 @@ files["**/Options/Options.lua"].ignore = {
 files["**/Locales/*.lua"].ignore = {
 	"542", -- Empty if branch
 }
+files["gen_option_values.lua"].ignore = {
+	"113/arg", -- We use global arg in the parser
+}
 ignore = {
 	"113/BigWigs",
 	"212/self",
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
 	"2",
 	"4",
+}
+not_globals = {
+	"arg", -- arg is a standard global, so without this it won't error when we typo "args" in a module
 }
 globals = {
 	-- wow std api
