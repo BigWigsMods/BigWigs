@@ -19,8 +19,6 @@ L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) y
 L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nombre sobre la placa de nombre del objetivo. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r: Estás usando la versión incorrecta de BigWigs en un servidor classic"
-L.classicWarning2 = "|cFF33FF99BigWigs|r: Por favor instala la versión para classic de BigWigs."
 L.officialRelease = "Estás usando la versión oficial de BigWigs %s (%s)"
 L.alphaRelease = "Estás usando la VERSION ALPHA de BigWigs %s (%s)"
 L.sourceCheckout = "Estás usando la versión de BigWigs %s directamente del repositorio."

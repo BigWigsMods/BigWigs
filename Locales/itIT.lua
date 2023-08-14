@@ -19,8 +19,6 @@ L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) 
 L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo una barra, e serve per tracciare i tempi di recupero mentre si combattono più boss/add che lanciano la stessa magia.|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r: Stai usando la versione sbagliata di BigWigs su un server classic."
-L.classicWarning2 = "|cFF33FF99BigWigs|r: Ti preghiamo di installare la versione classic di BigWigs."
 L.officialRelease = "Stai usando una versione ufficiale di BigWigs %s (%s)"
 L.alphaRelease = "Stai usando una VERSIONE ALPHA di BigWigs %s (%s)"
 L.sourceCheckout = "Stai usando una versione di BigWigs %s presa direttamente dal repository."

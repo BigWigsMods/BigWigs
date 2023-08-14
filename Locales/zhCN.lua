@@ -19,8 +19,6 @@ L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）
 L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99此功能很少用到，当与多个首领/增援战斗时通常一个计时条并且需要保持追踪冷却施放相同的法术。|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r：你在经典怀旧服务器上正在使用错误版本的 BigWigs。"
-L.classicWarning2 = "|cFF33FF99BigWigs|r：请安装经典怀旧版本 BigWigs。"
 L.officialRelease = "你所使用的 BigWigs %s 为官方正式版（%s）"
 L.alphaRelease = "你所使用的 BigWigs %s 为“α测试版”（%s）"
 L.sourceCheckout = "你所使用的 BigWigs %s 为从源直接检出的。"

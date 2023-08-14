@@ -1,14 +1,4 @@
 
-if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then
-	local L = BigWigsAPI:GetLocale("BigWigs")
-	RaidNotice_AddMessage(RaidWarningFrame, L.classicWarning1, {r=1,g=1,b=1}, 999999)
-	print(L.classicWarning1)
-	print(L.classicWarning2)
-	BasicMessageDialog.Text:SetText(L.classicWarning1)
-	BasicMessageDialog:Show()
-	return
-end
-
 local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
@@ -33,11 +23,11 @@ do
 	local _, tbl = ...
 	tbl.loaderPublic = public
 	tbl.loaderPrivate = mod
-	public.IsRetail = tbl.IsRetail
-	public.IsClassic = tbl.IsClassic
-	public.IsVanilla = tbl.IsVanilla
-	public.IsTBC = tbl.IsTBC
-	public.IsWrath = tbl.IsWrath
+	public.isRetail = tbl.isRetail
+	public.isClassic = tbl.isClassic
+	public.isVanilla = tbl.isVanilla
+	public.isTBC = tbl.isTBC
+	public.isWrath = tbl.isWrath
 	public.dbmPrefix = tbl.dbmPrefix
 
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
@@ -170,21 +160,21 @@ do
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
 
-	if public.IsVanilla then
+	if public.isVanilla then
 		public.currentExpansion = {
 		name = c,
 		littlewigsName = lw_c,
 		zones = {
 		}
 	}
-	elseif public.IsTBC then
+	elseif public.isTBC then
 		public.currentExpansion = {
 		name = bc,
 		littlewigsName = lw_bc,
 		zones = {
 		}
 	}
-	elseif public.IsWrath then
+	elseif public.isWrath then
 		public.currentExpansion = {
 		name = wotlk,
 		littlewigsName = lw_wotlk,
@@ -203,10 +193,10 @@ do
 	end
 
 	public.zoneTbl = {
-		[533] = public.IsVanilla and c or wotlk, -- Naxxramas
-		[249] = public.IsVanilla and c or wotlk, -- Onyxia's Lair
-		[568] = public.IsClassic and bc or lw_cata, -- Zul'Aman
-		[-947] = public.IsClassic and c or bfa, -- Azeroth (Fake Menu)
+		[533] = public.isVanilla and c or wotlk, -- Naxxramas
+		[249] = public.isVanilla and c or wotlk, -- Onyxia's Lair
+		[568] = public.isClassic and bc or lw_cata, -- Zul'Aman
+		[-947] = public.isClassic and c or bfa, -- Azeroth (Fake Menu)
 
 		--[[ BigWigs: Classic ]]--
 		[309] = c, -- Zul'Gurub [Classic Only]
@@ -1086,7 +1076,7 @@ do
 		end
 	end
 
-	if printMissingExpansionAddon and public.IsClassic then
+	if printMissingExpansionAddon and public.isClassic then
 		local msg = L.missingAddOn:format(public.currentExpansion.name)
 		delayedMessages[#delayedMessages+1] = msg
 		Popup(msg)
@@ -1443,11 +1433,11 @@ do
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
-			if zoneAddon == public.currentExpansion.name and public.IsRetail and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
+			if zoneAddon == public.currentExpansion.name and public.isRetail and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
 			if public.currentExpansion.zones[id] then
 				zoneAddon = public.currentExpansion.zones[id] -- Current BigWigs content has individual zone specific addons
-			elseif zoneAddon == public.currentExpansion.littlewigsName and public.IsRetail then
+			elseif zoneAddon == public.currentExpansion.littlewigsName and public.isRetail then
 				zoneAddon = "LittleWigs" -- Current LittleWigs content is stored in the main addon
 			end
 			if public:GetAddOnState(zoneAddon) == "MISSING" then

@@ -1,6 +1,6 @@
 
 local _, tbl = ...
-tbl.IsRetail = true
+tbl.isRetail = true
 tbl.dbmPrefix = "D5"
 tbl.dbmRevision = "20230814090538"
 tbl.dbmDisplayVersion = "10.1.23"

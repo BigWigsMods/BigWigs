@@ -19,8 +19,6 @@ L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은
 L.testNameplate = "대상이 감지되면, 대상의 이름표 위에 임의로 이름표를 하나 만듭니다. |cFF33FF99이 기능은 거의 쓰이지 않고, 바 하나일 때가 많고, 주로 같은 스킬을 시전하는 여러마리의 넴드나 쫄들과 상대할때 그 쿨다운을 체크하기 위해 씁니다.|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r: 클래식 서버에서 잘못된 버젼의 BigWigs를 쓰고 있습니다."
-L.classicWarning2 = "|cFF33FF99BigWigs|r: BigWigs 클래식 버젼을 설치하십시오."
 L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
 L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 버전을 실행 중입니다"
 L.sourceCheckout = "당신은 저장소로부터 직접 가져온 BigWigs %s의 소스를 실행 중입니다."

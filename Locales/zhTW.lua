@@ -19,8 +19,6 @@ L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）
 L.testNameplate = "檢測到目標，在目標名條上創建一個測試計時條。 |cFF33FF99這個功能相當少用，並且通常一次只會有一條；通常用於分別監視多個目標的同個技能冷卻。|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r：你在經典版魔獸世界使用了正式版的 BigWigs，這是錯誤的版本。"
-L.classicWarning2 = "|cFF33FF99BigWigs|r：請安裝經典版的 BigWigs。"
 L.officialRelease = "你所使用的 BigWigs %s 為官方正式版（%s）"
 L.alphaRelease = "你所使用的 BigWigs %s 為「α測試版（%s）」"
 L.sourceCheckout = "你所使用的 BigWigs（%s）是直接從原始碼倉庫下載的版本。"

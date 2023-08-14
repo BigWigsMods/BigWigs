@@ -1,7 +1,7 @@
 
 local _, tbl = ...
-tbl.IsClassic = true
-tbl.IsVanilla = true
+tbl.isClassic = true
+tbl.isVanilla = true
 tbl.dbmPrefix = "D5C"
 tbl.dbmRevision = "20230814090538"
 tbl.dbmDisplayVersion = "1.14.44"
