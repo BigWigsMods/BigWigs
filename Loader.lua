@@ -69,7 +69,7 @@ do
 		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 		BIGWIGS_VERSION_STRING = ("%d/%d-%s"):format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION, myGitHash)
-		if tbl.guildReleaseType == "REPO" then
+		if tbl.guildReleaseType and tbl.guildReleaseType == "REPO" then
 			public.usingBigWigsRepo = true
 		end
 	else
