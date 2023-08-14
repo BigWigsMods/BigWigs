@@ -11,8 +11,11 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local names = {}
 local descriptions = {}
 
-local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal.GetSectionInfo
+local GetSpellInfo, GetSpellTexture, GetSpellDescription = GetSpellInfo, GetSpellTexture, GetSpellDescription
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
+local C_EncounterJournal_GetSectionInfo = C_EncounterJournal and C_EncounterJournal.GetSectionInfo or function(key)
+	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
+end
 
 -- Option bitflags
 local coreToggles = {
@@ -119,6 +122,7 @@ local function replaceIdWithName(msg)
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
 			BigWigs:Print(("No journal name found for boss option using id %d."):format(id))
+			return msg
 		else
 			return tbl.title
 		end
@@ -132,11 +136,13 @@ local function replaceIdWithDescription(msg)
 			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 		else
 			BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+			return msg
 		end
 	else
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
 			BigWigs:Print(("No journal description found for boss option using id %d."):format(id))
+			return msg
 		else
 			return tbl.description
 		end
