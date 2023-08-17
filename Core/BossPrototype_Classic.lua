@@ -17,7 +17,7 @@
 -- @alias boss
 -- @usage local mod, CL = BigWigs:NewBoss("Argus the Unmaker", 1712, 2031)
 
-if BigWigsLoader.isClassic then return end
+if BigWigsLoader.isRetail then return end
 
 local boss = {}
 local core
@@ -27,11 +27,14 @@ do
 	tbl.bossPrototype = boss
 end
 
+local isClassicEra = BigWigsLoader.isVanilla
+local isClassic = BigWigsLoader.isWrath
+
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
-local LibSpec = LibStub("LibSpecialization")
-local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
-local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
-local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
+local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
+local C_EncounterJournal_GetSectionInfo = function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
+local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned or function(_) end
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
 local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
@@ -45,19 +48,27 @@ local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local enabledModules, bossTargetScans, unitTargetScans = {}, {}, {}
 local allowedEvents = {}
-local difficulty
+local difficulty = 0
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
-local myGUID, myRole, myRolePosition
-local myGroupGUIDs, myGroupRolePositions = {}, {}
+local myGUID, myRole, myDamagerRole = nil, nil, nil
+local myGroupGUIDs = {}
 local solo = false
 local classColorMessages = true
-do -- Update some data that may be called at the top of modules (prior to initialization)
-	local _, _, diff = GetInstanceInfo()
-	difficulty = diff
-	myGUID = UnitGUID("player")
-	local _, role, position = LibSpec:MySpecialization()
-	myRole, myRolePosition = role, position
-end
+local debugFunc = nil
+
+local talentRoles = {
+	DEATHKNIGHT = { "TANK", "DAMAGER", "DAMAGER" },
+	DRUID = { "DAMAGER","DAMAGER", "HEALER" },
+	HUNTER = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	MAGE = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	PALADIN = { "HEALER", "TANK", "DAMAGER" },
+	PRIEST = { "HEALER", "HEALER", "DAMAGER" },
+	ROGUE = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	SHAMAN = { "DAMAGER", "DAMAGER", "HEALER" },
+	WARLOCK = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	WARRIOR = { "DAMAGER", "DAMAGER", "TANK" },
+}
+
 local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
@@ -69,11 +80,77 @@ local updateData = function(module)
 		classColorMessages = true
 	end
 
-	local _, role, position = LibSpec:MySpecialization()
-	myRole, myRolePosition = role, position
+	myRole = nil
+	myDamagerRole = nil
 
+	local _, class = UnitClass("player")
+	local spent = 0
+	local talentTree = 0
+	for tree = 1, 3 do
+		local _, _, pointsSpent = GetTalentTabInfo(tree)
+		if pointsSpent > spent then
+			spent = pointsSpent
+			talentTree = tree
+			myRole = talentRoles[class][tree]
+		end
+	end
+
+	if class == "DEATHKNIGHT" and talentTree == 1 then -- defaults to TANK
+		-- Using the LFG tool?
+		local role = UnitGroupRolesAssigned("player")
+		if role == "TANK" or role == "DAMAGER" then
+			myRole = role
+		elseif spent == 51 then
+			-- Meta tank spec was 43/27/1 with Blood DPS pretty much dead at this point in Wrath
+			myRole = "DAMAGER"
+		end
+	elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
+		if isClassicEra then
+			-- Check for bear talents
+			local feralInstinct = select(5, GetTalentInfo(2, 3))
+			local thickHide = select(5, GetTalentInfo(2, 5))
+			local primalFury = select(5, GetTalentInfo(2, 12))
+			if feralInstinct == 5 and thickHide >= 2 and primalFury == 2 then
+				myRole = "TANK"
+			end
+		else
+			-- Using the LFG tool?
+			local role = UnitGroupRolesAssigned("player")
+			if role == "TANK" or role == "DAMAGER" then
+				myRole = role
+			else
+				-- Check for bear talents
+				local thickHide = select(5, GetTalentInfo(2, 1))
+				local survivalInstincts = select(5, GetTalentInfo(2, 15))
+				local naturalReaction = select(5, GetTalentInfo(2, 29))
+				if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
+					myRole = "TANK"
+				end
+			end
+		end
+	end
+
+	if myRole == "DAMAGER" then
+		myDamagerRole = "MELEE"
+		if
+			class == "MAGE" or class == "HUNTER" or class == "PRIEST" or class == "WARLOCK" or
+			(class == "DRUID" and talentTree == 1) or (class == "SHAMAN" and talentTree == 1)
+		then
+			myDamagerRole = "RANGED"
+		end
+	end
+
+	local diffTable = {
+		-- [148] = 0, -- 20
+		[173] = 1, -- 5n
+		[174] = 2, -- 5h
+		[175] = 3, -- 10n
+		[176] = 4, -- 25n
+		[193] = 5, -- 10h
+		[194] = 6, -- 25h
+	}
 	local _, _, diff = GetInstanceInfo()
-	difficulty = diff
+	difficulty = diffTable[diff] or diff
 
 	UpdateDispelStatus()
 	UpdateInterruptStatus()
@@ -90,14 +167,33 @@ local updateData = function(module)
 end
 
 -------------------------------------------------------------------------------
+-- Debug
+--
+
+local dbg = function(...)
+	if debugFunc then
+		debugFunc:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Metatables
 --
 
 local metaMap = {__index = function(self, key) self[key] = {} return self[key] end}
 local eventMap = setmetatable({}, metaMap)
+local unfilteredEventSpells = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
-local icons = setmetatable({}, {__index =
+local icons = setmetatable({
+	-- include some retail icons used for generic events
+	["achievement_bg_returnxflags_def_wsg"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\achievement_bg_returnxflags_def_wsg",
+	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown",
+	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft",
+	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup",
+	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright",
+	["spell_holy_borrowedtime"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\spell_holy_borrowedtime",
+}, {__index =
 	function(self, key)
 		local value
 		if type(key) == "number" then
@@ -118,7 +214,11 @@ local icons = setmetatable({}, {__index =
 				end
 			end
 		else
-			value = "Interface\\Icons\\" .. key
+			if key:sub(1, 10) == "Interface\\" then
+				value = key
+			else
+				value = "Interface\\Icons\\" .. key
+			end
 		end
 		self[key] = value
 		return value
@@ -148,7 +248,7 @@ local spells = setmetatable({}, {__index =
 })
 local bossNames = setmetatable({}, {__index =
 	function(self, key)
-		local name = EJ_GetEncounterInfo(key)
+		local name = BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
 		if name then
 			self[key] = name
 			return name
@@ -310,7 +410,7 @@ function boss:Enable(isWipe)
 		self.enabled = true
 
 		local isWiping = isWipe == true
-		self:Debug("Enabling module", self:GetEncounterID(), self.moduleName)
+		dbg("Enabling module", self.engageId, self.moduleName)
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -322,8 +422,10 @@ function boss:Enable(isWipe)
 		end
 		enabledModules[#enabledModules+1] = self
 
-		if self:GetEncounterID() then
-			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+		if self.engageId then
+			if not isClassicEra then
+				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+			end
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		end
 		local _, class = UnitClass("player")
@@ -348,7 +450,7 @@ function boss:Disable(isWipe)
 		self.enabled = nil
 
 		local isWiping = isWipe == true
-		self:Debug("Disabling module", "isWipe:", isWiping, self:GetEncounterID(), self.moduleName)
+		dbg("Disabling module", "isWipe:", isWiping, self.engageId, self.moduleName)
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -385,6 +487,7 @@ function boss:Disable(isWipe)
 
 		-- Empty the event maps for this module
 		eventMap[self] = nil
+		unfilteredEventSpells[self] = nil
 		unitEventMap[self] = nil
 		widgetEventMap[self] = nil
 		allowedEvents = {}
@@ -396,14 +499,6 @@ function boss:Disable(isWipe)
 			end
 		end
 
-		-- Remove all private aura sounds
-		if self.privateAuraSounds then
-			for _, id in next, self.privateAuraSounds do
-				C_UnitAuras.RemovePrivateAuraAppliedSound(id)
-			end
-			self.privateAuraSounds = nil
-		end
-
 		-- Cancel all say countdowns
 		for _, tbl in next, self.sayCountdowns do
 			tbl[1] = true
@@ -412,9 +507,11 @@ function boss:Disable(isWipe)
 		self.sayCountdowns = nil
 		self.scheduledMessages = nil
 		self.targetEventFunc = nil
+		self.missing = nil
 		self.isWiping = nil
 		self.isEngaged = nil
 		self.bossTargetChecks = nil
+		self.blockWinFunction = nil
 
 		self:CancelAllTimers()
 
@@ -457,7 +554,7 @@ function boss:Disable(isWipe)
 end
 function boss:Reboot(isWipe)
 	if self.enabled then
-		self:Debug("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
+		dbg("Rebooting module", "isWipe:", isWipe, self.engageId, self.moduleName)
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
 			self:SendMessage("BigWigs_OnBossWipe", self)
@@ -486,30 +583,23 @@ boss.NewLocale = boss.GetLocale
 -- @bool state Boolean value to represent default state
 -- @string markType The type of string to return (player, npc)
 -- @number icon An icon id to be used for the option texture
--- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up L.test
+-- @number id The spell id or journal id to be translated into a name for the returned string
 -- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
 -- @return an option string to be used in conjuction with :GetOption
 function boss:AddMarkerOption(state, markType, icon, id, ...)
-	local moduleLocale = self:GetLocale()
+	local l = self:GetLocale()
 	local str = ""
 	for i = 1, select("#", ...) do
-		local raidMarkerIconNumber = select(i, ...)
-		local markerTexture = format("|T13700%d:15|t", raidMarkerIconNumber)
-		str = str .. markerTexture
+		local num = select(i, ...)
+		local icon = format("|T13700%d:15|t", num)
+		str = str .. icon
 	end
 
-	local option = format(state and "custom_on_%s" or "custom_off_%s", id)
-	if type(id) == "number" then
-		moduleLocale[option] = format(L.marker, spells[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, spells[id], str)
-	elseif type(id) == "string" then
-		moduleLocale[option] = format(L.marker, moduleLocale[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, moduleLocale[id], str)
-	else
-		core:Error("Wrong id type for AddMarkerOption. Expected number or string, got: ".. tostring(id))
-	end
+	local option = format(state and "custom_on_%d" or "custom_off_%d", id)
+	l[option] = format(L.marker, spells[id])
+	l[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, spells[id], str)
 	if icon then
-		moduleLocale[option.."_icon"] = icon
+		l[option.."_icon"] = icon
 	end
 	return option
 end
@@ -523,7 +613,7 @@ do
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local invalidId = "Module %q tried to register an invalid spell id (%s) to event %q."
-	local multipleRegistration = "Module %q registered the event %q with spell id %q multiple times."
+	local multipleRegistration = "Module %q registered the event %q with spell %q multiple times."
 
 	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
 		if eventMap[self][event][msg] then
@@ -574,6 +664,7 @@ do
 	end
 
 	local args = {}
+	local COMBATLOG_OBJECT_TYPE_PLAYER = COMBATLOG_OBJECT_TYPE_PLAYER
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	bossUtilityFrame:SetScript("OnEvent", function()
 		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
@@ -587,7 +678,7 @@ do
 						local m = eventMap[self][event]
 						if m and m[mobId] then
 							local func = m[mobId]
-							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName, destFlags, destRaidFlags, time
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
 							if type(func) == "function" then
 								func(args)
 							else
@@ -600,8 +691,12 @@ do
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
-					if m and (m[spellId] or m["*"]) then
-						local func = m[spellId] or m["*"]
+					local func = m and (m[spellId] or m[spellName] or m["*"])
+					if func then
+						-- Classic Era: By default we only care about non-player spells (exempting "*")
+						if m[spellName] and band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
+							return
+						end
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
@@ -624,15 +719,30 @@ do
 		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
-		for i = 1, select("#", ...) do
-			local id = select(i, ...)
-			if (type(id) == "number" and GetSpellInfo(id)) or id == "*" then
-				if eventMap[self][event][id] then
-					core:Print(format(multipleRegistration, self.moduleName, event, id))
+		local numSpells = select("#", ...)
+		local nofilter = select(numSpells, ...) == true
+		if nofilter then numSpells = numSpells - 1 end
+		for i = 1, numSpells do
+			local spell = select(i, ...)
+			if type(spell) == "number" then
+				local id = spell
+				if isClassicEra then
+					spell = GetSpellInfo(spell)
+				elseif not GetSpellInfo(spell) then
+					spell = nil
 				end
-				eventMap[self][event][id] = func
-			else
-				core:Print(format(invalidId, self.moduleName, tostring(id), event))
+				if not spell then
+					core:Print(format(invalidId, self.moduleName, tostring(id), event))
+					return
+				end
+			end
+			if eventMap[self][event][spell] then
+				core:Print(format(multipleRegistration, self.moduleName, event, spell))
+			end
+			eventMap[self][event][spell] = func
+			if nofilter then
+				if not unfilteredEventSpells[self][event] then unfilteredEventSpells[self][event] = {} end
+				unfilteredEventSpells[self][event][spell] = true
 			end
 		end
 		allowedEvents[event] = true
@@ -692,16 +802,25 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if event == "UNIT_HEALTH" then
+			-- Retail module compat
+			if not func then func = event end
+			event = "UNIT_HEALTH_FREQUENT"
+		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
-		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
-			if not frameTbl[unit] then
-				frameTbl[unit] = CreateFrame("Frame")
-				frameTbl[unit]:SetScript("OnEvent", eventFunc)
+			if unit:sub(1, 4) == "boss" then -- XXX compat
+				self:RegisterEvent(event, func)
+			else
+				if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
+				if not frameTbl[unit] then
+					frameTbl[unit] = CreateFrame("Frame")
+					frameTbl[unit]:SetScript("OnEvent", eventFunc)
+				end
+				unitEventMap[self][event][unit] = func or event
+				frameTbl[unit]:RegisterUnitEvent(event, unit)
 			end
-			unitEventMap[self][event][unit] = func or event
-			frameTbl[unit]:RegisterUnitEvent(event, unit)
 		end
 	end
 	--- Unregister a callback for unit bound events.
@@ -710,6 +829,11 @@ do
 	function boss:UnregisterUnitEvent(event, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if event == "UNIT_HEALTH" then event = "UNIT_HEALTH_FREQUENT" end -- Retail module compat
+		if not frameTbl[(...)] then -- XXX compat
+			self:UnregisterEvent(event)
+			return
+		end
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
@@ -741,7 +865,7 @@ do
 		local id = tbl.widgetID
 		local func = widgetEventMap[self][id]
 		if func then
-			local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
+			local typeInfo = UIWidgetManager.widgetVisTypeInfo[tbl.widgetType]
 			local info = typeInfo and typeInfo.visInfoDataFunction(id)
 			if info then
 				local value = info.text -- Remain compatible with older modules
@@ -785,7 +909,7 @@ end
 do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
-			module:Debug(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module:GetEncounterID(), module.moduleName)
+			dbg(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module.engageId, module.moduleName)
 			module:Wipe()
 		end
 	end
@@ -813,9 +937,9 @@ do
 	function boss:CheckForEncounterEngage(noEngage)
 		if not self:IsEngaged() then
 			for i = 1, 5 do
-				local bossUnit = bosses[i]
-				local guid = UnitGUID(bossUnit)
-				if guid and UnitHealth(bossUnit) > 0 then
+				local boss = bosses[i]
+				local guid = UnitGUID(boss)
+				if guid and UnitHealth(boss) > 0 then
 					local mobId = self:MobId(guid)
 					if self:IsEnableMob(mobId) then
 						self:Engage(noEngage == "NoEngage" and noEngage)
@@ -838,54 +962,13 @@ do
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
-			self:Debug(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
+			dbg(":CheckBossStatus wipeCheck scheduled", self.engageId, self.moduleName)
 			self:ScheduleTimer(wipeCheck, 6, self)
 		elseif not self:IsEngaged() and hasBoss then
-			self:Debug(":CheckBossStatus called :CheckForEncounterEngage", self:GetEncounterID(), self.moduleName)
+			dbg(":CheckBossStatus called :CheckForEncounterEngage", self.engageId, self.moduleName)
 			self:CheckForEncounterEngage()
 		else
-			self:Debug(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID(), self.moduleName)
-		end
-	end
-end
-
-do
-	local targetOnlyUnitTable = { -- Attempt to prioritize by likelihood of success
-		"party1target", "party2target", "party3target", "party4target",
-		"targettarget", "mouseovertarget", "focustarget",
-		"raid1target", "raid2target", "raid3target", "raid4target", "raid5target",
-		"raid6target", "raid7target", "raid8target", "raid9target", "raid10target",
-		"raid11target", "raid12target", "raid13target", "raid14target", "raid15target",
-		"raid16target", "raid17target", "raid18target", "raid19target", "raid20target",
-		"raid21target", "raid22target", "raid23target", "raid24target", "raid25target",
-		"raid26target", "raid27target", "raid28target", "raid29target", "raid30target",
-		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
-		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target",
-		"nameplate1target", "nameplate2target", "nameplate3target", "nameplate4target", "nameplate5target",
-		"nameplate6target", "nameplate7target", "nameplate8target", "nameplate9target", "nameplate10target",
-		"nameplate11target", "nameplate12target", "nameplate13target", "nameplate14target", "nameplate15target",
-		"nameplate16target", "nameplate17target", "nameplate18target", "nameplate19target", "nameplate20target",
-		"nameplate21target", "nameplate22target", "nameplate23target", "nameplate24target", "nameplate25target",
-		"nameplate26target", "nameplate27target", "nameplate28target", "nameplate29target", "nameplate30target",
-		"nameplate31target", "nameplate32target", "nameplate33target", "nameplate34target", "nameplate35target",
-		"nameplate36target", "nameplate37target", "nameplate38target", "nameplate39target", "nameplate40target",
-	}
-	local unitTableCount = #targetOnlyUnitTable
-	--- Fetches a unit id by scanning available targets.
-	-- @string guid The GUID of the unit to find
-	-- @return unit id if found, nil otherwise
-	function boss:UnitTokenFromGUID(guid)
-		local unit = UnitTokenFromGUID(guid) -- Check Blizz API first
-		if unit then
-			return unit
-		else -- Fall back to scanning unit targets
-			for i = 1, unitTableCount do
-				local targetUnit = targetOnlyUnitTable[i]
-				local targetGUID = UnitGUID(targetUnit)
-				if targetGUID == guid then
-					return targetUnit
-				end
-			end
+			dbg(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self.engageId, self.moduleName)
 		end
 	end
 end
@@ -913,10 +996,6 @@ do
 	local unitTableCount = #unitTable
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
-		if not isNumber and UnitTokenFromGUID then
-			local unit = UnitTokenFromGUID(id)
-			if unit then return unit end
-		end
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
@@ -1020,11 +1099,11 @@ do
 	function boss:CheckForEngage()
 		local go = scan(self)
 		if go then
-			self:Debug(":CheckForEngage() scan found active boss entities, calling :Engage", self:GetEncounterID(), self.moduleName)
+			dbg(":CheckForEngage() scan found active boss entities, calling :Engage", self.engageId, self.moduleName)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			self:Engage()
 		else
-			self:Debug(":CheckForEngage() scan found nothing, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
+			dbg(":CheckForEngage() scan found nothing, next scan in 0.5s", self.engageId, self.moduleName)
 			self:ScheduleTimer("CheckForEngage", .5)
 		end
 	end
@@ -1041,28 +1120,28 @@ do
 	function boss:CheckForWipe(first)
 		local go = scan(self)
 		if not first and not go then
-			self:Debug(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID(), self.moduleName)
+			dbg(":CheckForWipe() found nothing active, rebooting module", self.engageId, self.moduleName)
 			self:Wipe()
 		else
-			self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self:GetEncounterID(), self.moduleName)
+			dbg(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self.engageId, self.moduleName)
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
 
 	function boss:Engage(noEngage)
-		if not self:IsEngaged() then
+		if not self.isEngaged then
 			self.isEngaged = true
 
-			self:Debug(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
+			dbg(":Engage", "noEngage:", noEngage, self.engageId, self.moduleName)
 
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
 
-				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
-
 				if self.OnEngage then
 					self:OnEngage(difficulty)
 				end
+
+				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
 			elseif noEngage == "NoEngage" then
 				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
 			end
@@ -1070,7 +1149,10 @@ do
 	end
 
 	function boss:Win()
-		self:Debug(":Win", self:GetEncounterID(), self.moduleName)
+		 -- Classic modules use both encounter event and death events which can cause double wins. Do this rather than changing and testing every module.
+		if self.blockWinFunction then return end
+		self.blockWinFunction = true
+		dbg(":Win", self.engageId, self.moduleName)
 		twipe(icons) -- Wipe icon cache
 		twipe(spells)
 		if self.OnWin then self:OnWin() end
@@ -1172,27 +1254,27 @@ end
 do
 	function boss:UPDATE_MOUSEOVER_UNIT(event)
 		local guid = UnitGUID("mouseover")
-		if guid and not myGroupGUIDs[guid] then
+		if not myGroupGUIDs[guid] then
 			self[self.targetEventFunc](self, event, "mouseover", guid)
 		end
 	end
 	function boss:UNIT_TARGET(event, unit)
 		local unitTarget = unit.."target"
 		local guid = UnitGUID(unitTarget)
-		if guid and not myGroupGUIDs[guid] then
+		if not myGroupGUIDs[guid] then
 			self[self.targetEventFunc](self, event, unitTarget, guid)
 		end
 
 		if self.targetEventFunc then -- Event is still registered, continue
-			guid = UnitGUID(unit)
-			if guid and not myGroupGUIDs[guid] then
+			local guid = UnitGUID(unit)
+			if not myGroupGUIDs[guid] then
 				self[self.targetEventFunc](self, event, unit, guid)
 			end
 		end
 	end
 	function boss:NAME_PLATE_UNIT_ADDED(event, unit)
 		local guid = UnitGUID(unit)
-		if guid and not myGroupGUIDs[guid] then
+		if not myGroupGUIDs[guid] then
 			self[self.targetEventFunc](self, event, unit, guid)
 		end
 	end
@@ -1218,10 +1300,10 @@ do
 	end
 end
 
-function boss:EncounterEnd(_, id, name, diff, size, status)
-	if self:GetEncounterID() == id and self:IsEnabled() then
+function boss:EncounterEnd(event, id, name, diff, size, status)
+	if self.engageId == id and self.enabled then
 		if status == 1 then
-			if self:GetJournalID() or self.allowWin then
+			if self.journalId or self.allowWin then
 				self:Win() -- Official boss module
 			else
 				self:Disable() -- Custom external boss module
@@ -1254,7 +1336,7 @@ end
 --- Check if in a Normal difficulty instance.
 -- @return boolean
 function boss:Normal()
-	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14
+	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14 or difficulty == 173
 end
 
 --- Check if in a Looking for Raid or Normal difficulty instance.
@@ -1266,7 +1348,7 @@ end
 --- Check if in a Heroic difficulty instance.
 -- @return boolean
 function boss:Heroic()
-	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
+	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15 or difficulty == 174
 end
 
 --- Check if in a Mythic or Mythic+ difficulty instance.
@@ -1381,7 +1463,7 @@ do
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
@@ -1427,7 +1509,7 @@ do
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
@@ -1462,8 +1544,8 @@ function boss:Solo()
 end
 
 do
-	local GetOptions = C_GossipInfo.GetOptions
-	local SelectOption = C_GossipInfo.SelectOption
+	local GetOptions = C_GossipInfo.GetOptions or _G.GetGossipOptions
+	local SelectOption = C_GossipInfo.SelectOption or _G.SelectGossipOption
 	--- Request the gossip options of the selected NPC
 	-- @return table A table result of all text strings in the form of { result1, result2, result3 }
 	function boss:GetGossipOptions()
@@ -1559,39 +1641,16 @@ end
 -- Role checking
 -- @section role
 
-do
-	local function update(_, _, position, player)
-		myGroupRolePositions[player] = position
-	end
-	LibSpec:Register(BigWigsLoader, update)
-end
-
---- Ask LibSpecialization to update the role positions of everyone in your group.
--- @string[opt="channel"] channel the specific addon comm channel to use, empty for automatic (recommended).
-function boss:UpdateRolePositions(channel)
-	LibSpec:RequestSpecialization(channel)
-end
-
---- Check if your talent tree role is MELEE.
--- @string[opt="playerName"] playerName check if another player is MELEE.
+--- Check if your talent tree role is TANK or MELEE.
 -- @return boolean
-function boss:Melee(playerName)
-	if playerName then
-		return myGroupRolePositions[playerName] == "MELEE"
-	else
-		return myRolePosition == "MELEE"
-	end
+function boss:Melee()
+	return myRole == "TANK" or myDamagerRole == "MELEE"
 end
 
---- Check if your talent tree role is RANGED.
--- @string[opt="playerName"] playerName check if another player is RANGED.
+--- Check if your talent tree role is HEALER or RANGED.
 -- @return boolean
-function boss:Ranged(playerName)
-	if playerName then
-		return myGroupRolePositions[playerName] == "RANGED"
-	else
-		return myRolePosition == "RANGED"
-	end
+function boss:Ranged()
+	return myRole == "HEALER" or myDamagerRole == "RANGED"
 end
 
 --- Check if your talent tree role is TANK.
@@ -1600,9 +1659,8 @@ end
 function boss:Tank(unit)
 	if unit then
 		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
-	else
-		return myRole == "TANK"
 	end
+	return myRole == "TANK"
 end
 
 --- Check if you are tanking a specific NPC unit.
@@ -1630,9 +1688,8 @@ end
 function boss:Healer(unit)
 	if unit then
 		return UnitGroupRolesAssigned(unit) == "HEALER"
-	else
-		return myRole == "HEALER"
 	end
+	return myRole == "HEALER"
 end
 
 --- Check if your talent tree role is DAMAGER.
@@ -1641,11 +1698,8 @@ end
 function boss:Damager(unit)
 	if unit then
 		return UnitGroupRolesAssigned(unit) == "DAMAGER"
-	else
-		if myRole == "DAMAGER" then
-			return myRolePosition
-		end
 	end
+	return myDamagerRole
 end
 
 petUtilityFrame:SetScript("OnEvent", function()
@@ -1657,32 +1711,34 @@ do
 	local offDispel, defDispel = {}, {}
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or IsSpellKnown(19801) then
-			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Tranquilizing Shot (Hunter)
+		-- local shieldslam = isClassic and (IsSpellKnown(47488) or IsSpellKnown(47487) or IsSpellKnown(30356) or IsSpellKnown(25258) or IsSpellKnown(23925) or IsSpellKnown(23924) or IsSpellKnown(23923) or IsSpellKnown(23922))
+		local devourMagic = IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) or IsSpellKnown(27276, true) or IsSpellKnown(27277, true) or IsSpellKnown(48011, true)
+		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) or IsSpellKnown(370) or IsSpellKnown(8012) or devourMagic then
+			-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W], Purge r1/r2 (Shaman), Devour Magic (Warlock Felhunter)
 			offDispel.magic = true
 		end
-		if IsSpellKnown(2908) or IsSpellKnown(19801) or IsSpellKnown(5938) then
-			-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue)
+		if IsSpellKnown(19801) then
+			-- Tranquilizing Shot (Hunter)
 			offDispel.enrage = true
 		end
-		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) or IsPlayerSpell(360823) or IsSpellKnown(89808, true) then -- XXX Add DPS priest mass dispel?
-			-- Purify (Heal Priest), Purify Spirit (Heal Shaman), Detox (Heal Monk), Cleanse (Heal Paladin), Nature's Cure (Heal Druid), Naturalize (Heal Evoker), Singe Magic (Warlock Imp)
+		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) then
+			-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W]
 			defDispel.magic = true
 		end
-		if IsPlayerSpell(390632) or IsSpellKnown(213634) or IsPlayerSpell(388874) or IsSpellKnown(218164) or IsPlayerSpell(393024) or IsSpellKnown(213644) then
-			-- Improved Purify (Heal Priest), Purify Disease (DPS Priest), Improved Detox (Heal Monk), Detox (Tank/DPS Monk), Improved Cleanse (Heal Paladin), Cleanse Toxins (Tank/DPS Paladin)
+		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (isClassicEra and IsSpellKnown(2870)) or (isClassic and IsSpellKnown(526)) or IsSpellKnown(8170) then
+			-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman)[C,BC], Cure Toxins (Shaman)[W], Disease Cleansing Totem (Shaman)
 			defDispel.disease = true
 		end
-		if IsPlayerSpell(392378) or IsSpellKnown(2782) or IsPlayerSpell(388874) or IsSpellKnown(218164) or IsPlayerSpell(393024) or IsSpellKnown(213644) or IsPlayerSpell(360823) or IsSpellKnown(365585) then
-			-- Improved Nature's Cure (Heal Druid), Remove Corruption (Tank/DPS Druid), Improved Detox (Heal Monk), Detox (Tank/DPS Monk), Improved Cleanse (Heal Paladin), Cleanse Toxins (DPS Paladin), Naturalize (Heal Evoker), Expunge (DPS Evoker)
+		if IsSpellKnown(2893) or IsSpellKnown(8946) or IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(526) or IsSpellKnown(8166) then
+			-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison/Toxins (Shaman), Poison Cleansing Totem (Shaman)
 			defDispel.poison = true
 		end
-		if IsPlayerSpell(392378) or IsSpellKnown(2782) or IsPlayerSpell(383016) or IsSpellKnown(51886) or IsSpellKnown(475) then
-			-- Improved Nature's Cure (Heal Druid), Remove Corruption (Tank/DPS Druid), Improved Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman), Remove Curse (Mage)
+		if IsSpellKnown(2782) or IsSpellKnown(475) or IsSpellKnown(51886) then
+			-- Remove Curse (Druid), Remove Lesser Curse (Mage), Cleanse Spirit (Shaman)[W]
 			defDispel.curse = true
 		end
-		if IsSpellKnown(1044) or IsSpellKnown(116841) then
-			-- Blessing of Freedom (Paladin), Tiger's Lust (Monk)
+		if IsSpellKnown(1044) then
+			-- Blessing of Freedom (Paladin)
 			defDispel.movement = true
 		end
 	end
@@ -1705,25 +1761,29 @@ end
 do
 	local GetSpellCooldown = GetSpellCooldown
 	local canInterrupt = false
-	local spellList = {
-		106839, -- Skull Bash (Druid)
-		78675, -- Solar Beam (Druid-Balance)
-		116705, -- Spear Hand Strike (Monk)
-		147362, -- Counter Shot (Hunter)
-		187707, -- Muzzle (Hunter-Survival)
-		57994, -- Wind Shear (Shaman)
-		47528, -- Mind Freeze (Death Knight)
-		96231, -- Rebuke (Paladin)
-		15487, -- Silence (Priest)
+	local spellListClassic = {
+		-- 16979, -- Feral Charge (Druid)
 		2139, -- Counterspell (Mage)
-		1766, -- Kick (Rogue)
-		6552, -- Pummel (Warrior)
-		183752, -- Disrupt (Demon Hunter)
-		351338, -- Quell (Evoker)
+		15487, -- Silence (Priest)
+		38768, 1769, 1768, 1767, 1766, -- Kick (Rogue)
+		25454, 10414, 10413, 10412, 8046, 8045, 8044, 8042, -- Earth Shock (Shaman)
+		6554, 6552, -- Pummel (Warrior)
+		-- 29704, 1672, 1671, 72, -- Shield Bash (Warrior)
 	}
+	local spellListWrath = {
+		-- 16979, -- Feral Charge (Druid)
+		2139, -- Counterspell (Mage)
+		15487, -- Silence (Priest)
+		1766, -- Kick (Rogue)
+		6555, -- Pummel (Warrior)
+		-- 72, -- Shield Bash (Warrior)
+		47528, -- Mind Freeze (Death Knight)
+		57994, -- Wind Shear (Shaman)
+	}
+	local spellList = isClassicEra and spellListClassic or spellListWrath
 	function UpdateInterruptStatus()
-		if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-			canInterrupt = 19647
+		if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+			canInterrupt = GetSpellInfo(19647)
 			return
 		end
 		canInterrupt = false
@@ -1795,7 +1855,7 @@ end
 -- @section toggles
 --
 
-local checkFlag
+local checkFlag = nil
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
@@ -1831,33 +1891,6 @@ do
 	-- @return boolean
 	function boss:CheckOption(key, flag)
 		return checkFlag(self, key, C[flag])
-	end
-end
-
--------------------------------------------------------------------------------
--- AltPower.
--- @section AltPower
---
-
---- Open the "Alternate Power" display.
--- @param key the option key to check
--- @param title the title of the window, either a spell id or string
--- @string[opt] sorting "ZA" for descending sort, "AZ" or nil for ascending sort
--- @bool[opt] sync if true, queries values from other players (for use if phasing prevents reliable updates)
-function boss:OpenAltPower(key, title, sorting, sync)
-	if checkFlag(self, key, C.ALTPOWER) then
-		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ", sync)
-	end
-	if sync then
-		self:SendMessage("BigWigs_StartSyncingPower", self)
-	end
-end
-
---- Close the "Alternate Power" display.
--- @param[opt] key the option key to check ("altpower" if nil)
-function boss:CloseAltPower(key)
-	if checkFlag(self, key or "altpower", C.ALTPOWER) then
-		self:SendMessage("BigWigs_HideAltPower", self)
 	end
 end
 
@@ -1922,10 +1955,10 @@ end
 --- Open the "Info Box" display.
 -- @param key the option key to check
 -- @string title the title of the window
--- @bool[opt] TEMP
-function boss:OpenInfo(key, title, TEMP)
+-- @number[opt] blocks number of 5 line blocks to show
+function boss:OpenInfo(key, title, blocks)
 	if checkFlag(self, key, C.INFOBOX) then
-		self:SendMessage("BigWigs_ShowInfoBox", self, title, TEMP)
+		self:SendMessage("BigWigs_ShowInfoBox", self, title, blocks)
 	end
 end
 
@@ -2943,25 +2976,6 @@ end
 --- Request to play the victory sound.
 function boss:PlayVictorySound()
 	self:SendMessage("BigWigs_VictorySound", self)
-end
-
---- Register a sound to be played when a Private Aura is applied to you.
--- @param key the option key
--- @number[opt] spellId the spell id of the Private Aura if different from the key
--- @string[opt] soundCategory the sound to play, defaults to "warning"
-function boss:SetPrivateAuraSound(key, spellId, soundCategory)
-	if checkFlag(self, key, C.SOUND) then
-		local soundsModule = core:GetPlugin("Sounds", true)
-		if soundsModule then
-			if not self.privateAuraSounds then self.privateAuraSounds = {} end
-			self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
-				spellID = spellId or key,
-				unitToken = "player",
-				soundFileName = soundsModule:GetSoundFile(self, key, soundCategory or "warning"),
-				outputChannel = "master",
-			})
-		end
-	end
 end
 
 do

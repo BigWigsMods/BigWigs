@@ -43,6 +43,9 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_UnitAuras",
 	"113/UnitGroupRolesAssigned",
 }
+files["**/Core/BossPrototype_Classic.lua"].ignore = {
+	".+", -- Temp file for classic
+}
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/geterrorhandler",
