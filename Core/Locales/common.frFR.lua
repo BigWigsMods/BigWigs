@@ -23,6 +23,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s près de VOUS"
 L.on_group = "%s sur le GROUPE" -- spell on group
+--L.boss = "BOSS"
 
 L.phase = "Phase %d"
 L.stage = "Phase %d"

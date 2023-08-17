@@ -22,6 +22,7 @@ L.count_rticon = "%s（%d{rt%d}）"
 L.rticon = "%s（{rt%d}）"
 L.near = "%s在你附近"
 L.on_group = "队伍 %s" -- spell on group
+--L.boss = "BOSS"
 
 L.phase = "阶段%d"
 L.stage = "阶段%d"

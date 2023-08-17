@@ -21,6 +21,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s near YOU"
 L.on_group = "%s on GROUP"
+L.boss = "BOSS"
 
 L.phase = "Phase %d"
 L.stage = "Stage %d"
