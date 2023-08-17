@@ -1,0 +1,36 @@
+## Interface: 20504
+
+## Title: BigWigs [|cffeda55fPlugins|r]
+## Title-zhCN: BigWigs [|cffeda55f插件|r]
+## Title-zhTW: BigWigs [|cffeda55f附加元件|r]
+## Title-deDE: BigWigs [|cffeda55fPlugins|r]
+## Title-frFR: BigWigs [|cffeda55fPlugins|r]
+## Title-itIT: BigWigs [|cffeda55fPlugins|r]
+## Title-koKR: BigWigs [|cffeda55f플러그인|r]
+## Title-ruRU: BigWigs [|cffeda55fПлагины|r]
+## Title-ptBR: BigWigs [|cffeda55fPlugins|r]
+## Title-esES: BigWigs [|cffeda55fPlugins|r]
+## Title-esMX: BigWigs [|cffeda55fPlugins|r]
+## Notes: BigWigs Core Plugins
+## Notes-zhCN: BigWigs 插件模块。
+## Notes-zhTW: BigWigs 附加元件模組。
+## Notes-deDE: Plugins für die Grundfunktionen von BigWigs.
+## Notes-frFR: Plugins du noyau de BigWigs.
+## Notes-itIT: Plugins di base per BigWigs
+## Notes-koKR: BigWigs 플러그인
+## Notes-ruRU: Модуль BigWigs Плагины
+## Notes-ptBR: Plugins principais do BigWigs
+## Notes-esES: Plugins del núcleo de BigWigs.
+## Notes-esMX: Plugins del núcleo de BigWigs.
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs, BigWigs_Core
+## X-BigWigs-LoadOn-CoreEnabled: 1
+## X-BigWigs-LoadOn-Slash: /proximity, /range, /localbar, /raidbar, /pull, /break
+
+## X-Category: Raid
+
+libs.xml
+modules.xml
