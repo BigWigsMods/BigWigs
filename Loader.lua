@@ -892,6 +892,15 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	self:GROUP_ROSTER_UPDATE()
 	self:PLAYER_ENTERING_WORLD()
 	self:ZONE_CHANGED()
+
+	if C_PartyInfo then
+		C_PartyInfo.DoCountdown = function(num)
+			loadAndEnableCore()
+			if SlashCmdList.BIGWIGSPULL then
+				SlashCmdList.BIGWIGSPULL(num)
+			end
+		end
+	end
 end
 
 -- Various temporary printing stuff
