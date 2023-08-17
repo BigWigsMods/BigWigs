@@ -18,11 +18,19 @@ local PlaySoundFile = PlaySoundFile
 -- Options
 --
 
-plugin.defaultDB = {
-	soundName = "BigWigs: Victory",
-	blizzMsg = true,
-	bigwigsMsg = false,
-}
+if BigWigsLoader.isRetail then
+	plugin.defaultDB = {
+		soundName = "BigWigs: Victory",
+		blizzMsg = true,
+		bigwigsMsg = false,
+	}
+else -- Blizz message doesn't exist on classic so we reverse the default
+	plugin.defaultDB = {
+		soundName = "BigWigs: Victory",
+		blizzMsg = false,
+		bigwigsMsg = true,
+	}
+end
 
 plugin.pluginOptions = {
 	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Victory:20|t ".. L.Victory,
@@ -86,6 +94,7 @@ plugin.pluginOptions = {
 					desc = L.victoryMessageBlizzardDesc,
 					order = 2,
 					width = "full",
+					hidden = BigWigsLoader.isClassic,
 				},
 			},
 		},
@@ -111,7 +120,7 @@ do
 	end
 
 	function plugin:OnPluginEnable()
-		if not self.db.profile.blizzMsg then
+		if not self.db.profile.blizzMsg and BossBanner then
 			BossBanner:UnregisterEvent("BOSS_KILL")
 		end
 		self:RegisterMessage("BigWigs_OnBossWin")

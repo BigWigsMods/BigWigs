@@ -39,8 +39,9 @@ plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local onTestBuild = BigWigsLoader.onTestBuild
+local isClassic = BigWigsLoader.isClassic
 local GetSubZoneText = GetSubZoneText
-local TalkingHeadLineInfo = C_TalkingHead.GetCurrentLineInfo
+local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
 local IsEncounterInProgress = IsEncounterInProgress
 local SetCVar = C_CVar.SetCVar
 local GetCVar = C_CVar.GetCVar
@@ -92,6 +93,7 @@ plugin.pluginOptions = {
 					desc = L.blockMoviesDesc,
 					width = "full",
 					order = 2,
+					hidden = isClassic,
 				},
 				blockGarrison = {
 					type = "toggle",
@@ -99,6 +101,7 @@ plugin.pluginOptions = {
 					desc = L.blockFollowerMissionDesc,
 					width = "full",
 					order = 3,
+					hidden = isClassic,
 				},
 				blockGuildChallenge = {
 					type = "toggle",
@@ -106,6 +109,7 @@ plugin.pluginOptions = {
 					desc = L.blockGuildChallengeDesc,
 					width = "full",
 					order = 4,
+					hidden = isClassic,
 				},
 				blockSpellErrors = {
 					type = "toggle",
@@ -120,6 +124,7 @@ plugin.pluginOptions = {
 					desc = L.blockTooltipQuestsDesc,
 					width = "full",
 					order = 6,
+					hidden = isClassic, -- TooltipDataProcessor doesn't exist on classic
 				},
 				blockObjectiveTracker = {
 					type = "toggle",
@@ -127,6 +132,7 @@ plugin.pluginOptions = {
 					desc = L.blockObjectiveTrackerDesc,
 					width = "full",
 					order = 7,
+					hidden = isClassic, -- XXX make compatible with classic
 				},
 				blockTalkingHeads = {
 					type = "multiselect",
@@ -148,6 +154,7 @@ plugin.pluginOptions = {
 					end,
 					width = 2,
 					order = 8,
+					hidden = isClassic,
 				},
 			},
 		},
@@ -235,9 +242,11 @@ do
 		end
 	end
 	function plugin:OnRegister()
-		TooltipDataProcessor.AddLinePreCall(8, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestObjective
-		TooltipDataProcessor.AddLinePreCall(17, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestTitle
-		TooltipDataProcessor.AddLinePreCall(18, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestPlayer
+		if TooltipDataProcessor then
+			TooltipDataProcessor.AddLinePreCall(8, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestObjective
+			TooltipDataProcessor.AddLinePreCall(17, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestTitle
+			TooltipDataProcessor.AddLinePreCall(18, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestPlayer
+		end
 	end
 end
 
@@ -302,13 +311,15 @@ do
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 
-		self:RegisterEvent("TALKINGHEAD_REQUESTED")
-		self:RegisterEvent("CINEMATIC_START")
-		self:RegisterEvent("PLAY_MOVIE")
-		self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
-		self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+		if not isClassic then
+			self:RegisterEvent("TALKINGHEAD_REQUESTED")
+			self:RegisterEvent("CINEMATIC_START")
+			self:RegisterEvent("PLAY_MOVIE")
+			self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+			self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
 
-		CheckElv(self)
+			CheckElv(self)
+		end
 	end
 end
 
@@ -389,16 +400,18 @@ do
 			SetCVar("Sound_EnableErrorSpeech", "0")
 		end
 
-		CheckElv(self)
-		-- Never hide when tracking achievements or in Mythic+
-		local _, _, diff = GetInstanceInfo()
-		local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
-		if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
-			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
-			if restoreObjectiveTracker then
-				trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
-				trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
-				trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
+		if not isClassic then
+			CheckElv(self)
+			-- Never hide when tracking achievements or in Mythic+
+			local _, _, diff = GetInstanceInfo()
+			local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
+			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
+				restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
+				if restoreObjectiveTracker then
+					trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
+					trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
+					trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
+				end
 			end
 		end
 	end

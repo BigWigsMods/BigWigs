@@ -13,11 +13,23 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-local difficultyTable = {[14] = "normal", [15] = "heroic", [16] = "mythic", [17] = "LFR"}
+local difficultyTable = BigWigsLoader.isRetail and {
+	[14] = "normal",
+	[15] = "heroic",
+	[16] = "mythic",
+	[17] = "LFR",
+} or {
+	[3] = "normal", -- raid10 (karazhan)
+	[9] = "normal", -- raid40
+	[148] = "normal", -- raid20
+	[4] = "normal", -- raid25 (black temple)
+	[176] = "normal", -- raid 25 (sunwell)
+}
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
 
 --[[
+10.1.5
 1. Normal
 2. Heroic
 3. 10 Player
@@ -60,6 +72,26 @@ local GetTime = GetTime
 170. Path of Ascension: Wisdom
 171. Path of Ascension: Humility
 172. World Boss
+192. Challenge Level 1
+
+3.4.2
+1. Normal
+2. Heroic
+3. 10 Player
+4. 25 Player
+5. 10 Player (Heroic)
+6. 25 Player (Heroic)
+9. 40 Player
+148. 20 Player
+173. Normal
+174. Heroic
+175. 10 Player
+176. 25 Player
+193. 10 Player (Heroic)
+194. 25 Player (Heroic)
+
+1.14.4
+Doesn't return results
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
 
@@ -250,7 +282,7 @@ do
 
 				local best = sDB[difficultyTable[diff]].best
 				if self.db.profile.showBar and best then
-					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 237538) -- 237538 = "Interface\\Icons\\spell_holy_borrowedtime"
+					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, "Interface\\AddOns\\BigWigs\\Media\\Icons\\spell_holy_borrowedtime") -- 237538 = "Interface\\Icons\\spell_holy_borrowedtime"
 				end
 			end
 
@@ -300,6 +332,8 @@ function plugin:BigWigs_OnBossWin(event, module)
 				end
 				sDB.best = elapsed
 			end
+		elseif IsInRaid() then
+			BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 		end
 	end
 

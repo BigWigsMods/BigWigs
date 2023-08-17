@@ -74,6 +74,8 @@ local next, type, tonumber = next, type, tonumber
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
+local UnitInPhase = UnitInPhase or function(unit) return not UnitPhaseReason(unit) end -- UnitPhaseReason doesn't exist on classic
+
 --------------------------------------------------------------------------------
 -- Range Checking
 --
@@ -85,14 +87,33 @@ do
 	local function initRanges()
 		ranges = {}
 
-		local interactDistances = { [2] = 10, [4] = 30 }
+		local interactDistances = BigWigsLoader.isClassic and { [2] = 10, [3] = 9, [4] = 30 } or { [2] = 10, [4] = 30 }
 		for index, range in next, interactDistances do
 			ranges[range] = function(unit)
 				return CheckInteractDistance(unit, index)
 			end
 		end
 
-		local items = {
+		local expansion = GetServerExpansionLevel()
+		local items = BigWigsLoader.isClassic and {
+			[1] = expansion > 3 and 90175, -- Gin-Ji Knife Set (5.0)
+			[3] = expansion > 1 and 42732, -- Everfrost Razor (3.0)
+			[5] = expansion > 1 and 37727, -- Ruby Acorn (3.0)
+			[8] = 8149, -- Voodoo Charm
+			-- [9]  = CheckInteractDistance 3
+			-- [10] = CheckInteractDistance 2
+			[13] = expansion > 0 and 32321, -- Sparrowhawk Net (2.1)
+			[18] = 14530, -- Heavy Runecloth Bandage
+			[23] = 21519, -- Mistletoe
+			[28] = 13289, -- Egan's Blaster
+			-- [30] = CheckInteractDistance 4
+			[33] = 955, -- Scroll of Intellect
+			[38] = 18904, -- Zorbin's Ultra-Shrinker
+			[43] = expansion > 0 and 34471, -- Vial of the Sunwell (2.4)
+			[48] = expansion > 0 and 32698, -- Wrangling Rope (2.1)
+			[53] = expansion > 4 and 116139, -- Haunting Memento (6.0)
+			[63] = expansion > 0 and 32825, -- Soul Cannon (2.1)
+		} or {
 			[1] = 90175, -- Gin-Ji Knife Set
 			[3] = 42732, -- Everfrost Razor
 			[5] = 37727, -- Ruby Acorn
@@ -289,7 +310,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
 				anyoneClose = anyoneClose + 1
 				if anyoneClose < 6 then
 					local player = plugin:UnitName(n)
@@ -382,7 +403,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
 				anyoneClose = anyoneClose + 1
 			end
 		end

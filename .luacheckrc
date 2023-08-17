@@ -68,6 +68,10 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/C_TalkingHead",
 	"113/TooltipDataProcessor",
 }
+files["**/Plugins/Proximity.lua"].ignore = {
+	"113/GetServerExpansionLevel", -- Classic support
+	"113/UnitInPhase", -- Classic support
+}
 files["**/Plugins/Pull.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
