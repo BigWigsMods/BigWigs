@@ -372,13 +372,13 @@ do
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 		end
-		if self.db.profile.blockGarrison then
+		if self.db.profile.blockGarrison and not isClassic then
 			KillEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
 			KillEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
 			KillEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
 			KillEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
 		end
-		if self.db.profile.blockGuildChallenge then
+		if self.db.profile.blockGuildChallenge and not isClassic then
 			KillEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
 		end
 		if self.db.profile.blockSpellErrors then
