@@ -245,7 +245,7 @@ do
 
 		local msg = CL.count:format(L.test, lastTest)
 		local icon = GetSpellTexture(lastSpell)
-		while not icon or icon == (loader.isRetail and 136243 or 136235) do -- 136243 = cogwheel, 136235 = samwise (classic)
+		while not icon or icon == ((loader.isVanilla or loader.isTBC) and 136235 or 136243) do -- 136243 = cogwheel, 136235 = samwise (classic)
 			lastSpell = lastSpell + 1
 			icon = GetSpellTexture(lastSpell)
 		end
