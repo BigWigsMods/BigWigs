@@ -1381,7 +1381,7 @@ do
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
-						text = EJ_GetTierInfo(i),
+						text = L.expansionNames(i),
 						value = value,
 						enabled = true,
 					}
@@ -1392,7 +1392,7 @@ do
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
-						text = EJ_GetTierInfo(i),
+						text = L.expansionNames(i),
 						value = value,
 						enabled = true,
 					}

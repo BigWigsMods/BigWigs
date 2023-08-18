@@ -185,7 +185,6 @@ globals = {
 	"CreateFrame",
 	"EJ_GetCreatureInfo",
 	"EJ_GetEncounterInfo",
-	"EJ_GetTierInfo",
 	"ElvUI",
 	"FlashClientIcon",
 	"GameFontHighlight",

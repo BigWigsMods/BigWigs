@@ -43,6 +43,19 @@ L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이�
 L.removeAddOn = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
+L.expansionNames = {
+	"오리지널", -- Classic
+	"불타는 성전", -- The Burning Crusade
+	"리치 왕의 분노", -- Wrath of the Lich King
+	"대격변", -- Cataclysm
+	"판다리아의 안개", -- Mists of Pandaria
+	"드레노어의 전쟁군주", -- Warlords of Draenor
+	"군단", -- Legion
+	"격전의 아제로스", -- Battle for Azeroth
+	"어둠땅", -- Shadowlands
+	"용군단", -- Dragonflight
+}
+
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"
 L.FlagTaken = "깃발 뺏김 (PvP)"

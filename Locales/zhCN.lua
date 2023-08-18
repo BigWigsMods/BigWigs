@@ -43,6 +43,19 @@ L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显
 L.removeAddOn = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"
 
+L.expansionNames = {
+	"经典旧世", -- Classic
+	"燃烧的远征", -- The Burning Crusade
+	"巫妖王之怒", -- Wrath of the Lich King
+	"大地的裂变", -- Cataclysm
+	"熊猫人之谜", -- Mists of Pandaria
+	"德拉诺之王", -- Warlords of Draenor
+	"军团再临", -- Legion
+	"争霸艾泽拉斯", -- Battle for Azeroth
+	"暗影国度", -- Shadowlands
+	"巨龙时代", -- Dragonflight
+}
+
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "当心（奥尔加隆）"
 L.FlagTaken = "夺旗（PvP）"

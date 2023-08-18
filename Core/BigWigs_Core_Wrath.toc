@@ -29,4 +29,4 @@
 ## Dependencies: BigWigs
 
 libs.xml
-modules.xml
+modules_Classic.xml
