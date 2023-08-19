@@ -19,10 +19,13 @@ local difficultyTable = BigWigsLoader.isRetail and {
 	[16] = "mythic",
 	[17] = "LFR",
 } or {
-	[3] = "normal", -- raid10 (karazhan)
+	[3] = "10N", -- 10N
+	[4] = "25N", -- 25N
+	[5] = "10H", -- 10H
+	[6] = "25H", -- 25H
+	[175] = "normal", -- raid10 (karazhan) -- move from 3 (fake) to 175 (guessed)
 	[9] = "normal", -- raid40
 	[148] = "normal", -- raid20
-	[4] = "normal", -- raid25 (black temple)
 	[176] = "normal", -- raid 25 (sunwell)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
@@ -351,7 +354,9 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 
 			local diff = module:Difficulty()
-			if difficultyTable[diff] and self.db.profile.saveWipes then
+			if not difficultyTable[diff] and IsInRaid() then
+				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
+			elseif difficultyTable[diff] and self.db.profile.saveWipes then
 				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
