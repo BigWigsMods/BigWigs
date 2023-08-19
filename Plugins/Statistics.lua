@@ -335,7 +335,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 				end
 				sDB.best = elapsed
 			end
-		elseif IsInRaid() then
+		elseif IsInRaid() and diff ~= 24 then -- Not printing for Timewalking (24)
 			BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 		end
 	end
@@ -354,7 +354,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 
 			local diff = module:Difficulty()
-			if not difficultyTable[diff] and IsInRaid() then
+			if not difficultyTable[diff] and IsInRaid() and diff ~= 24 then -- Not printing for Timewalking (24)
 				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 			elseif difficultyTable[diff] and self.db.profile.saveWipes then
 				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
