@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000只警報驅散和打斷。|r"
 
 -- Statistics
 L.statistics = "統計"
-L.lfr = "隨機團隊"
+L.LFR = "隨機團隊"
 L.normal = "普通模式"
 L.heroic = "英雄模式"
 L.mythic = "傳奇"

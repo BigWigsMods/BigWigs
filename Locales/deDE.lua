@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000Warnungen nur für Banner.|r "
 
 -- Statistics
 L.statistics = "Statistiken"
-L.lfr = "LFR"
+L.LFR = "LFR"
 L.normal = "Normal"
 L.heroic = "Heroisch"
 L.mythic = "Mythisch"

@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000Alertes pour dispeller uniquement.|r "
 
 -- Statistics
 L.statistics = "Statistiques"
-L.lfr = "RdR"
+L.LFR = "RdR"
 L.normal = "Normal"
 L.heroic = "Héroïque"
 L.mythic = "Mythique"

@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000只警报驱散和打断。|r"
 
 -- Statistics
 L.statistics = "统计"
-L.lfr = "随机团队"
+L.LFR = "随机团队"
 L.normal = "普通"
 L.heroic = "英雄"
 L.mythic = "史诗"

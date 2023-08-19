@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000Messaggio solo per Dissolutori Magici.|r "
 
 -- Statistics
 L.statistics = "Statistiche"
-L.lfr = "RDI"
+L.LFR = "RDI"
 L.normal = "Normale"
 L.heroic = "Eroica"
 L.mythic = "Mitica"

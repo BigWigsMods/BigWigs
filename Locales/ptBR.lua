@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000Alerta para Dissipadores apenas.|r "
 
 -- Statistics
 L.statistics = "Estatísticas"
-L.lfr = "LDR"
+L.LFR = "LDR"
 L.normal = "Normal"
 L.heroic = "Heroico"
 L.mythic = "Mítico"

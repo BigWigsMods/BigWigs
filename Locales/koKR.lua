@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000무효화 시전자만 경보합니다.|r "
 
 -- Statistics
 L.statistics = "통계"
-L.lfr = "공찾"
+L.LFR = "공찾"
 L.normal = "일반"
 L.heroic = "영웅"
 L.mythic = "신화"

@@ -165,7 +165,7 @@ L.dispeller = "|cFFFF0000Только для рассеивателей.|r "
 
 -- Statistics
 L.statistics = "Статистика"
-L.lfr = "LFR"
+L.LFR = "LFR"
 L.normal = "Обычный"
 L.heroic = "Героический"
 L.mythic = "Эпохальный"

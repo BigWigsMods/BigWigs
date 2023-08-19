@@ -1040,115 +1040,77 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText("")
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.lfr)
-			statGroup:AddChild(statistics)
+			local difficulties = BigWigsLoader.isRetail and {
+				"LFR", "normal", "heroic", "mythic",
+			} or BigWigsLoader.isWrath and {
+				-- maybe do this per instanceId?
+				"normal", "10N", "25N", "10H", "25H",
+			} or {
+				"normal",
+			}
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.normal)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.heroic)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.mythic)
-			statGroup:AddChild(statistics)
+			-- Headers
+			for _, diff in ipairs(difficulties) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(L[diff])
+				statGroup:AddChild(statistics)
+			end
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
 			statistics:SetText("")
 			statGroup:AddChild(statistics)
 
+			-- Wipes
 			statistics = AceGUI:Create("Label")
 			statistics:SetWidth(100)
 			statistics:SetText(L.wipes)
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.LFR and sDB.LFR.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.normal and sDB.normal.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.heroic and sDB.heroic.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.mythic and sDB.mythic.wipes or "-")
-			statGroup:AddChild(statistics)
+			for _, diff in ipairs(difficulties) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(sDB[diff] and sDB[diff].wipes or "-")
+				statGroup:AddChild(statistics)
+			end
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
 			statistics:SetText("")
 			statGroup:AddChild(statistics)
 
+			-- Kills
 			statistics = AceGUI:Create("Label")
 			statistics:SetWidth(100)
 			statistics:SetText(L.kills)
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.LFR and sDB.LFR.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.normal and sDB.normal.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.heroic and sDB.heroic.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.mythic and sDB.mythic.kills or "-")
-			statGroup:AddChild(statistics)
+			for _, diff in ipairs(difficulties) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(sDB[diff] and sDB[diff].kills or "-")
+				statGroup:AddChild(statistics)
+			end
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
 			statistics:SetText("")
 			statGroup:AddChild(statistics)
 
+			-- Best Time
 			statistics = AceGUI:Create("Label")
 			statistics:SetWidth(100)
 			statistics:SetText(L.best)
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.LFR and sDB.LFR.best and SecondsToTime(sDB.LFR.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.normal and sDB.normal.best and SecondsToTime(sDB.normal.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.heroic and sDB.heroic.best and SecondsToTime(sDB.heroic.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.mythic and sDB.mythic.best and SecondsToTime(sDB.mythic.best) or "-")
-			statGroup:AddChild(statistics)
+			for _, diff in ipairs(difficulties) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				local value = sDB[diff] and sDB[diff].best and SecondsToTime(sDB[diff].best)
+				statistics:SetText(value or "-")
+				statGroup:AddChild(statistics)
+			end
 		end -- End statistics table
 	end
 
