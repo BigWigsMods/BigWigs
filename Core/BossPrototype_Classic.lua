@@ -143,10 +143,10 @@ local updateData = function(module)
 		-- [148] = 0, -- 20
 		[173] = 1, -- 5n
 		[174] = 2, -- 5h
-		[175] = 3, -- 10n
-		[176] = 4, -- 25n
-		[193] = 5, -- 10h
-		[194] = 6, -- 25h
+		--[175] = 3, -- 10n
+		--[176] = 4, -- 25n
+		--[193] = 5, -- 10h
+		--[194] = 6, -- 25h
 	}
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diffTable[diff] or diff
