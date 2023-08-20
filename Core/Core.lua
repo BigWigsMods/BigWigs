@@ -486,9 +486,9 @@ do
 
 			if journalId then
 				local name = EJ_GetEncounterInfo(journalId)
-				if name then
+				if name or journalId < 0 then
 					m.journalId = journalId
-					m.displayName = name
+					m.displayName = name or moduleName
 				else
 					m.displayName = moduleName
 					core:Print(errorJournalIdInvalid:format(moduleName, journalId))
