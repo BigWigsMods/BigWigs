@@ -1040,21 +1040,18 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText("")
 			statGroup:AddChild(statistics)
 
-			local difficulties = BigWigsLoader.isRetail and {
-				"LFR", "normal", "heroic", "mythic",
-			} or BigWigsLoader.isWrath and {
-				-- maybe do this per instanceId?
-				"normal", "10N", "25N", "10H", "25H",
-			} or {
-				"normal",
-			}
+			local difficulties = {}
 
 			-- Headers
-			for _, diff in ipairs(difficulties) do
-				statistics = AceGUI:Create("Label")
-				statistics:SetWidth(100)
-				statistics:SetText(L[diff])
-				statGroup:AddChild(statistics)
+			local displayOrder = { "LFR", "normal", "heroic", "mythic", "10N", "25N", "10H", "25H" }
+			for _, diff in ipairs(displayOrder) do
+				if sDB[diff] then
+					difficulties[#difficulties+1] = diff
+					statistics = AceGUI:Create("Label")
+					statistics:SetWidth(100)
+					statistics:SetText(L[diff])
+					statGroup:AddChild(statistics)
+				end
 			end
 
 			statistics = AceGUI:Create("Label")
