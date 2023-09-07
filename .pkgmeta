@@ -24,6 +24,7 @@ move-folders:
     BigWigs/VaultOfTheIncarnates: BigWigs_VaultOfTheIncarnates
     BigWigs/DragonIsles: BigWigs_DragonIsles
     BigWigs/Aberrus: BigWigs_Aberrus
+    BigWigs/Amirdrassil: BigWigs_Amirdrassil
 
 ignore:
   - .luacheckrc

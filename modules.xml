@@ -8,5 +8,6 @@
 <Include file="DragonIsles\modules.xml"/>
 <Include file="VaultOfTheIncarnates\modules.xml"/>
 <Include file="Aberrus\modules.xml"/>
+<Include file="Amirdrassil\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
