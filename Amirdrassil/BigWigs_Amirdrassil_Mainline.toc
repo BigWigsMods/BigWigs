@@ -11,17 +11,17 @@
 ## Title-ruRU: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-zhCN: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-zhTW: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-deDE: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-esES: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-esMX: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-frFR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-itIT: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-koKR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-ptBR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-ruRU: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-zhCN: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-zhTW: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
+## Notes: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-deDE: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-esES: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-esMX: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-frFR: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-itIT: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-koKR: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-ptBR: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-ruRU: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-zhCN: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-zhTW: BigWigs Amirdrassil, the Dream's Hope Modules
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
