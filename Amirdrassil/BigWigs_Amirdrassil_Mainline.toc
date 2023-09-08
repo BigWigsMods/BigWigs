@@ -9,7 +9,7 @@
 ## Title-koKR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-ptBR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-ruRU: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Title-zhCN: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
+## Title-zhCN: BigWigs [|cffeda55f阿梅达希尔，梦境之愿|r]
 ## Title-zhTW: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Notes: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Notes-deDE: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
@@ -20,7 +20,7 @@
 ## Notes-koKR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Notes-ptBR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Notes-ruRU: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Notes-zhCN: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
+## Notes-zhCN: BigWigs [|cffeda55f阿梅达希尔，梦境之愿模块|r]
 ## Notes-zhTW: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
