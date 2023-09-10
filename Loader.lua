@@ -188,6 +188,7 @@ do
 		zones = {
 			[2522] = "BigWigs_VaultOfTheIncarnates",
 			[2569] = "BigWigs_Aberrus",
+			[2549] = "BigWigs_Amirdrassil",
 		}
 	}
 	end
@@ -264,8 +265,8 @@ do
 		--[[ BigWigs: Dragonflight ]]--
 		[-1978] = df, -- Dragon Isles (Fake Menu)
 		[2522] = df, -- Vault of the Incarnate
-		[2549] = df, -- Amirdrassil, the Dream's Hope
 		[2569] = df, -- Aberrus, the Shadowed Crucible
+		[2549] = df, -- Amirdrassil, the Dream's Hope
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
