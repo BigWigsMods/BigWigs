@@ -123,11 +123,11 @@ function mod:TwistingBlade(args)
 end
 
 function mod:MarkedforTorment(args)
-	self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
 	self:StopBar(CL.count:format(args.spellName, markedForTormentCount))
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, markedForTormentCount))
 	self:PlaySound(args.spellId, "long")
 	markedForTormentCount = markedForTormentCount + 1
+	self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
 	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, markedForTormentCount))
 
 	blisteringSpearCount = 1
