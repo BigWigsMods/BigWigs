@@ -5,7 +5,7 @@ if not BigWigsLoader.onTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Igira the Cruel", 2549, 2554)
 if not mod then return end
---mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(206689) -- Igira the Cruel <Zaqali Elder>
 mod:SetEncounterID(2709)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -72,6 +72,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	blisteringSpearCount = 1
 	twistingBladeCount = 1
 	markedForTormentCount = 1
@@ -122,6 +123,7 @@ function mod:TwistingBlade(args)
 end
 
 function mod:MarkedforTorment(args)
+	self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
 	self:StopBar(CL.count:format(args.spellName, markedForTormentCount))
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, markedForTormentCount))
 	self:PlaySound(args.spellId, "long")
