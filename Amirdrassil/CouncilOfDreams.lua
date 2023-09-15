@@ -5,7 +5,7 @@ if not BigWigsLoader.onTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Council of Dreams", 2549, 2555)
 if not mod then return end
---mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(208363, 208365, 208367)
 mod:SetEncounterID(2728)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
