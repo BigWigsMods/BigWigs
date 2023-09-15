@@ -5,7 +5,7 @@ if not BigWigsLoader.onTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Igira the Cruel", 2549, 2554)
 if not mod then return end
-mod:RegisterEnableMob(206689) -- Igira the Cruel <Zaqali Elder>
+mod:RegisterEnableMob(200926) -- Igira the Cruel <Zaqali Elder>
 mod:SetEncounterID(2709)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -34,11 +34,13 @@ end
 -- Initialization
 --
 
-local heartStopperMarker = mod:AddMarkerOption(true, "player", 1, 415624, 1, 2, 3, 4, 5) -- Controlled Burn
+local blisteringSpearMarker = mod:AddMarkerOption(false, "player", 1, 414888, 1, 2, 3, 4, 5, 6) -- Blistering Spear
 function mod:GetOptions()
 	return {
+		"stages",
 		{414340, "TANK"}, -- Drenched Blades
-		414425, -- Blistering Spear
+		{414888, "SAY", "SAY_COUNTDOWN"}, -- Blistering Spear
+		blisteringSpearMarker,
 		{414770, "SAY"}, -- Piercing Torment
 		416996, -- Twisting Blade
 		422776, -- Marked for Torment
@@ -46,17 +48,20 @@ function mod:GetOptions()
 		419462, -- Flesh Mortification
 		419048, -- Ruinous End
 		416048, -- Wracking Skewer
-		418531, -- Smashing Viscera
-		{415624, "SAY_COUNTDOWN"}, -- Heart Stopper
-		heartStopperMarker,
+		{424456, "SAY", "SAY_COUNTDOWN"}, -- Smashing Viscera
+		{415623, "SAY_COUNTDOWN"}, -- Heart Stopper
 		426056, -- Vital Rupture
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	self:Log("SPELL_AURA_APPLIED", "DrenchedBlades", 414340)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DrenchedBlades", 414340)
 	self:Log("SPELL_CAST_START", "BlisteringSpear", 414425)
+	self:Log("SPELL_AURA_APPLIED", "BlisteringSpearApplied", 414888)
+	self:Log("SPELL_AURA_REMOVED", "BlisteringSpearRemoved", 414888)
 	self:Log("SPELL_AURA_APPLIED", "PiercingTorment", 414770)
 	self:Log("SPELL_CAST_START", "TwistingBlade", 416996)
 	self:Log("SPELL_CAST_START", "MarkedforTorment", 422776)
@@ -65,7 +70,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RuinousEnd", 419048)
 	self:Log("SPELL_CAST_START", "WrackingSkewer", 416048)
 	self:Log("SPELL_CAST_START", "SmashingViscera", 418531)
-	self:Log("SPELL_CAST_SUCCESS", "HeartStopper", 415624)
+	self:Log("SPELL_AURA_APPLIED", "SmashingVisceraApplied", 424456)
+	self:Log("SPELL_AURA_REMOVED", "SmashingVisceraRemoved", 424456)
 	self:Log("SPELL_AURA_APPLIED", "HeartStopperApplied", 415623)
 	self:Log("SPELL_AURA_REMOVED", "HeartStopperRemoved", 415623)
 	self:Log("SPELL_AURA_APPLIED", "VitalRuptureApplied", 426056)
@@ -77,14 +83,33 @@ function mod:OnEngage()
 	twistingBladeCount = 1
 	markedForTormentCount = 1
 
-	--self:Bar(414425, 30, CL.count:format(self:SpellName(414425), blisteringSpearCount)) -- Blistering Spear
-	--self:Bar(416996, 30, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
-	--self:Bar(422776, 100, CL.count:format(self:SpellName(422776), markedForTormentCount)) -- Marked for Torment
+	self:Bar(414888, 15.5, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
+	self:Bar(416996, 7.5, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
+	self:Bar(422776, 40, CL.count:format(self:SpellName(422776), markedForTormentCount)) -- Marked for Torment
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 415020 then -- Sword Stance
+		self:Message("stages", "cyan", self:SpellName(spellId), spellId)
+		self:PlaySound("stages", "info")
+		smashingVisceraCount = 1
+		self:Bar(424456, 19, CL.count:format(self:SpellName(424456), smashingVisceraCount)) -- Smashing Viscera
+	elseif spellId == 415094 then -- Knife Stance
+		self:Message("stages", "cyan", self:SpellName(spellId), spellId)
+		self:PlaySound("stages", "info")
+		heartStopperCount = 1
+		self:Bar(415623, 19, CL.count:format(self:SpellName(415623), smashingVisceraCount)) -- Heart Stopper
+	elseif spellId == 415090 then -- Axe Stance
+		self:Message("stages", "cyan", self:SpellName(spellId), spellId)
+		self:PlaySound("stages", "info")
+		wrackingSkewerCount = 1
+		self:Bar(416048, 19, CL.count:format(self:SpellName(416048), wrackingSkewerCount)) -- Wracking Skewer
+	end
+end
 
 function mod:DrenchedBlades(args)
 	local amount = args.amount or 1
@@ -98,12 +123,36 @@ function mod:DrenchedBlades(args)
 	end
 end
 
-function mod:BlisteringSpear(args)
-	self:StopBar(CL.count:format(args.spellName, blisteringSpearCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, blisteringSpearCount))
-	self:PlaySound(args.spellId, "alert")
-	blisteringSpearCount = blisteringSpearCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, blisteringSpearCount))
+do
+	local playerList = {}
+	function mod:BlisteringSpear(args)
+		playerList = {}
+		self:StopBar(CL.count:format(args.spellName, blisteringSpearCount))
+		-- self:Message(args.spellId, "yellow", CL.count:format(args.spellName, blisteringSpearCount))
+		-- self:PlaySound(args.spellId, "alert")
+		blisteringSpearCount = blisteringSpearCount + 1
+		self:Bar(414888, 140, CL.count:format(args.spellName, blisteringSpearCount))
+	end
+
+	function mod:BlisteringSpearApplied(args)
+		local count = #playerList+1
+		playerList[count] = args.destName
+		playerList[args.destName] = count -- Set raid marker
+		if self:Me(args.destGUID) then
+			self:PlaySound(args.spellId, "warning")
+			self:Say(args.spellId)
+			--self:SayCountdown(args.spellId, 15, count)
+		end
+		self:CustomIcon(blisteringSpearMarker, args.destName, count)
+		self:TargetsMessage(args.spellId, "cyan", playerList, self:Mythic() and 6 or 4, CL.count:format(args.spellName, blisteringSpearCount-1))
+	end
+
+	function mod:BlisteringSpearRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+		self:CustomIcon(blisteringSpearMarker, args.destName)
+	end
 end
 
 function mod:PiercingTorment(args)
@@ -114,12 +163,14 @@ function mod:PiercingTorment(args)
 	end
 end
 
+local bladeTimers = {25.8, 13.6, 25.6, 48.7, 25.6}
 function mod:TwistingBlade(args)
 	self:StopBar(CL.count:format(args.spellName, twistingBladeCount))
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, twistingBladeCount))
 	self:PlaySound(args.spellId, "alarm")
 	twistingBladeCount = twistingBladeCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, twistingBladeCount))
+	local cdCount = twistingBladeCount % 5 + 1
+	self:Bar(args.spellId, bladeTimers[cdCount], CL.count:format(args.spellName, twistingBladeCount))
 end
 
 function mod:MarkedforTorment(args)
@@ -128,7 +179,7 @@ function mod:MarkedforTorment(args)
 	self:PlaySound(args.spellId, "long")
 	markedForTormentCount = markedForTormentCount + 1
 	self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, markedForTormentCount))
+	self:Bar(args.spellId, markedForTormentCount > 4 and 70 or 140, CL.count:format(args.spellName, markedForTormentCount))
 
 	blisteringSpearCount = 1
 	twistingBladeCount = 1
@@ -174,43 +225,60 @@ function mod:WrackingSkewer(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, wrackingSkewerCount))
 	self:PlaySound(args.spellId, "warning")
 	wrackingSkewerCount = wrackingSkewerCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, wrackingSkewerCount))
+	if wrackingSkewerCount < 3 then -- 2 only
+		self:Bar(args.spellId, 30, CL.count:format(args.spellName, wrackingSkewerCount))
+	end
 end
 
 function mod:SmashingViscera(args)
 	self:StopBar(CL.count:format(args.spellName, smashingVisceraCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, smashingVisceraCount))
-	self:PlaySound(args.spellId, "alarm")
+	self:Message(424456, "orange", CL.count:format(args.spellName, smashingVisceraCount))
+	-- self:PlaySound(424456, "alarm")
 	smashingVisceraCount = smashingVisceraCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, smashingVisceraCount))
+	if smashingVisceraCount < 3 then -- 2 only
+		self:Bar(424456, 30, CL.count:format(args.spellName, smashingVisceraCount))
+	end
+end
+
+function mod:SmashingVisceraApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 4)
+	end
+end
+
+function mod:SmashingVisceraRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 do
-	local playerList = {}
-	function mod:HeartStopper(args)
-		playerList = {}
-		self:StopBar(CL.count:format(args.spellName, heartStopperCount))
-		heartStopperCount = heartStopperCount + 1
-		--self:Bar(args.spellId, 30, CL.count:format(args.spellName, heartStopperCount))
-	end
-
+	local prev = 0
 	function mod:HeartStopperApplied(args)
-		local count = #playerList+1
-		playerList[count] = args.destName
-		playerList[args.destName] = count -- Set raid marker
-		if self:Me(args.destGUID) then
-			self:PlaySound(415624, "warning")
-			self:SayCountdown(415624, 15, count)
+		local msg = CL.count:format(args.spellName, heartStopperCount)
+		if args.time - prev > 2 then -- reset
+			prev = args.time
+			self:StopBar(msg)
+			self:Message(args.spellId, "orange", msg)
+			heartStopperCount = heartStopperCount + 1
+			if heartStopperCount < 3 then -- 2 only
+				self:Bar(args.spellId, 30, CL.count:format(args.spellName, heartStopperCount))
+			end
 		end
-		self:CustomIcon(heartStopperMarker, args.destName, count)
-		self:TargetsMessage(415624, "cyan", playerList, 5, CL.count:format(args.spellName, heartStopperCount-1))
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "warning")
+			self:SayCountdown(args.spellId, 15)
+		end
 	end
 
 	function mod:HeartStopperRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(415624)
+			self:CancelSayCountdown(args.spellId)
 		end
-		self:CustomIcon(heartStopperMarker, args.destName)
 	end
 end
 
