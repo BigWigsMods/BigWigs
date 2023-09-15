@@ -5,7 +5,7 @@ if not BigWigsLoader.onTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Smolderon", 2549, 2563)
 if not mod then return end
---mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(200927)
 mod:SetEncounterID(2824)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
