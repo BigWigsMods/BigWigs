@@ -5,7 +5,7 @@ if not BigWigsLoader.onTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Gnarlroot", 2549, 2564)
 if not mod then return end
-mod:RegisterEnableMob(209333) -- Gnarlroot XXX Confirm
+mod:RegisterEnableMob(209333) -- Gnarlroot
 mod:SetEncounterID(2820)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -14,10 +14,12 @@ mod:SetStage(1)
 -- Locals
 --
 
+local emberCharredOnMe = nil
 local flamingPestilenceCount = 1
 local controlledBurnCount = 1
 local torturedScreamCount = 1
 local shadowflameCleaveCount = 1
+local dreadfireBarrageCount = 1
 local intermissionCount = 0
 
 --------------------------------------------------------------------------------
@@ -42,6 +44,7 @@ function mod:GetOptions()
 		422053, -- Shadow Spines
 		{421972, "SAY", "SAY_COUNTDOWN"}, -- Controlled Burn
 		controlledBurnMarker,
+		422023, -- Shadow-Scorched Earth
 		{424352, "TANK"}, -- Dreadfire Barrage
 		422026, -- Tortured Scream
 		422039, -- Shadowflame Cleave
@@ -67,31 +70,34 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadowflameCleave", 422039)
 
 	-- Intermission: Frenzied Growth
-	self:Log("SPELL_CAST_START", "PotentFertilization", 421013)
+	self:Log("SPELL_CAST_SUCCESS", "PotentFertilization", 421090)
 	self:Log("SPELL_AURA_APPLIED", "EmberCharredApplied", 421038)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EmberCharredApplied", 421038)
+	self:Log("SPELL_AURA_REMOVED", "EmberCharredRemoved", 421038)
 	self:Log("SPELL_AURA_APPLIED", "UprootedAgonyApplied", 421840)
 	self:Log("SPELL_AURA_REMOVED", "UprootedAgonyRemoved", 421840)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 424970) -- Corrupted Soil
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 424970)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 424970)
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 424970, 422023) -- Corrupted Soil, Shadow-Scorched Earth
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 424970, 422023)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 424970, 422023)
 end
 
 function mod:OnEngage()
 	self:SetStage(1)
+	emberCharredOnMe = nil
 	flamingPestilenceCount = 1
 	controlledBurnCount = 1
 	torturedScreamCount = 1
 	shadowflameCleaveCount = 1
+	dreadfireBarrageCount = 1
 	intermissionCount = 1
 
-	--self:Bar(424352, 30) -- Dreadfire Barrage
-	--self:Bar(421898, 30, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
-	--self:Bar(421972, 30, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
-	--self:Bar(422026, 30, CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
-	--self:Bar(422039, 30, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
-	--self:Bar("stages", 30, CL.count:format(CL.intermission, intermissionCount)) -- Intermission / Potent Fertilization
+	self:Bar(422026, 3.5, CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, 9.5) -- Dreadfire Barrage
+	self:Bar(421898, 20.4, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, 33.5, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, 22, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar("stages", 90, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
 end
 
 --------------------------------------------------------------------------------
@@ -104,7 +110,9 @@ function mod:FlamingPestilence(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, flamingPestilenceCount))
 	self:PlaySound(args.spellId, "alert")
 	flamingPestilenceCount = flamingPestilenceCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, flamingPestilenceCount))
+	if flamingPestilenceCount < 3 then -- 2 per rotation
+		self:CDBar(args.spellId, 35, CL.count:format(args.spellName, flamingPestilenceCount))
+	end
 end
 
 function mod:ShadowSpinesApplied(args)
@@ -121,7 +129,9 @@ do
 		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, controlledBurnCount))
 		controlledBurnCount = controlledBurnCount + 1
-		--self:Bar(421972, 35, CL.count:format(args.spellName, controlledBurnCount))
+		if controlledBurnCount < 3 then -- 2 per rotation
+			self:CDBar(421972, 32, CL.count:format(args.spellName, controlledBurnCount))
+		end
 	end
 
 	function mod:ControlledBurnApplied(args)
@@ -153,7 +163,10 @@ function mod:DreadfireBarrage(args)
 	else -- TargetMessage?
 		self:Message(args.spellId, "purple")
 	end
-	--self:Bar(args.spellId, 30)
+	dreadfireBarrageCount = dreadfireBarrageCount + 1
+	if dreadfireBarrageCount < 5 then -- 4 per rotation
+		self:Bar(args.spellId, 21.5)
+	end
 end
 
 function mod:DreadfireBarrageApplied(args)
@@ -174,7 +187,9 @@ function mod:TorturedScream(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, torturedScreamCount))
 	self:PlaySound(args.spellId, "alert")
 	torturedScreamCount = torturedScreamCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, torturedScreamCount))
+	if torturedScreamCount < 6 then -- 5 per rotation
+		self:CDBar(args.spellId, 18, CL.count:format(args.spellName, torturedScreamCount))
+	end
 end
 
 function mod:ShadowflameCleave(args)
@@ -182,7 +197,7 @@ function mod:ShadowflameCleave(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shadowflameCleaveCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameCleaveCount = shadowflameCleaveCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, shadowflameCleaveCount))
+	self:CDBar(args.spellId, 20, CL.count:format(args.spellName, shadowflameCleaveCount))
 end
 
 -- Intermission: Frenzied Growth
@@ -208,6 +223,13 @@ function mod:EmberCharredApplied(args)
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
 		self:PlaySound(args.spellId, "alarm")
+		emberCharredOnMe = true
+	end
+end
+
+function mod:EmberCharredRemoved(args)
+	if self:Me(args.destGUID) then
+		emberCharredOnMe = false
 	end
 end
 
@@ -215,6 +237,7 @@ do
 	local prev = 0
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
+			if args.spellId == 424970 and not emberCharredOnMe then return end -- Don't warn in soil if you are Charred
 			prev = args.time
 			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
@@ -232,16 +255,18 @@ function mod:UprootedAgonyRemoved(args)
 	self:Message("stages", "yellow", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
 	self:SetStage(1)
+
 	flamingPestilenceCount = 1
 	controlledBurnCount = 1
 	torturedScreamCount = 1
 	shadowflameCleaveCount = 1
+	dreadfireBarrageCount = 1
 	intermissionCount = intermissionCount + 1
 
-	--self:Bar(424352, 30) -- Dreadfire Barrage
-	--self:Bar(421898, 30, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
-	--self:Bar(421972, 30, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
-	--self:Bar(422026, 30, CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
-	--self:Bar(422039, 30, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
-	--self:Bar("stages", 30, CL.count:format(CL.intermission, intermissionCount)) -- Intermission / Potent Fertilization
+	self:Bar(422026, 5, CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, 11) -- Dreadfire Barrage
+	self:Bar(421898, 21, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, 35, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, 44, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar("stages", 95.5, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
 end
