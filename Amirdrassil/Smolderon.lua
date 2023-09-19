@@ -39,7 +39,7 @@ function mod:GetOptions()
 		421343, -- Brand of Damnation
 		421656, -- Cauterizing Wound
 		{422577, "SAY", "SAY_COUNTDOWN"}, -- Searing Aftermath
-		{421455, "SAY", "SAY_COUNTDOWN"}, -- Overheated
+		{421455, "SAY_COUNTDOWN"}, -- Overheated
 		421969, -- Flame Waves
 		422691, -- Lava Geysers
 		421532, -- Smoldering Ground
@@ -83,10 +83,11 @@ function mod:OnEngage()
 	lavaGeysersCount = 1
 	rotationCount = 1
 
-	--self:Bar(421343, 30, CL.count:format(self:SpellName(421343), brandofDamnationCount)) -- Brand of Damnation
-	--self:Bar(421455, 30, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
-	--self:Bar(422691, 30, CL.count:format(self:SpellName(422691), lavaGeysersCount)) -- Lava Geysers
-	--self:Bar("stages", 100, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
+	self:Bar(421343, 13, CL.count:format(self:SpellName(421343), brandofDamnationCount)) -- Brand of Damnation
+	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
+	self:Bar(422691, 27, CL.count:format(self:SpellName(422691), lavaGeysersCount)) -- Lava Geysers
+	self:Bar("stages", 67.2, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
+	self:Bar(426725, 395) -- Encroaching Destruction -- XXX Only after last world
 end
 
 --------------------------------------------------------------------------------
@@ -95,10 +96,13 @@ end
 
 -- Stage One: The Firelord's Fury
 function mod:BrandofDamnation(args)
+	self:StopBar(CL.count:format(args.spellName, brandofDamnationCount))
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, brandofDamnationCount))
 	self:PlaySound(args.spellId, "alert")
 	brandofDamnationCount = brandofDamnationCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, brandofDamnationCount))
+	if brandofDamnationCount < 9 then -- 8 total
+		self:Bar(args.spellId, brandofDamnationCount % 2 == 1 and 69 or 30, CL.count:format(args.spellName, brandofDamnationCount))
+	end
 end
 
 function mod:CauterizingWoundApplied(args)
@@ -139,16 +143,18 @@ do
 			playerList = {}
 			prev = args.time
 			self:StopBar(msg)
+			self:Message(args.spellId, "yellow", msg)
 			overheatedCount = overheatedCount + 1
-			--self:Bar(args.spellId, 30, CL.count:format(args.spellName, overheatedCount))
+			if overheatedCount < 9 then -- 8 total
+				self:Bar(args.spellId, overheatedCount % 2 == 1 and 69 or 30, CL.count:format(args.spellName, overheatedCount))
+			end
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 10)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 5, msg)
 	end
 
 	function mod:OverheatedRemoved(args)
@@ -162,28 +168,20 @@ function mod:LavaGeysers(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, lavaGeysersCount))
 	self:PlaySound(args.spellId, "alarm") -- watch feet
 	lavaGeysersCount = lavaGeysersCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, lavaGeysersCount))
+	if lavaGeysersCount < 9 then -- 8 total
+		self:Bar(args.spellId, lavaGeysersCount % 2 == 1 and 77 or 22, CL.count:format(args.spellName, lavaGeysersCount))
+	end
 end
 
 function mod:BlazingSoulApplied(args)
 	self:SetStage(2)
-	self:StopBar(CL.count:format(self:SpellName(421343), brandofDamnationCount)) -- Brand of Damnation
-	self:StopBar(CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
-	self:StopBar(CL.count:format(self:SpellName(422691), lavaGeysersCount)) -- Lava Geysers
 	self:StopBar(CL.count:format(CL.stage:format(2), rotationCount))
 end
 
 function mod:BlazingSoulRemoved(args)
 	self:SetStage(1)
-	brandofDamnationCount = 1
-	overheatedCount = 1
-	lavaGeysersCount = 1
 	rotationCount = rotationCount + 1
-
-	--self:Bar(421343, 30, CL.count:format(self:SpellName(421343), brandofDamnationCount)) -- Brand of Damnation
-	--self:Bar(421455, 30, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
-	--self:Bar(422691, 30, CL.count:format(self:SpellName(422691), lavaGeysersCount)) -- Lava Geysers
-	--self:Bar("stages", 100, CL.count:format(CL.stage:format(2), rotationCount), 422172)
+	self:Bar("stages", 65, CL.count:format(CL.stage:format(2), rotationCount), 422172)
 end
 
 function mod:EncroachingDestruction(args)
