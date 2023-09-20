@@ -153,7 +153,6 @@ function mod:OnEngage()
 	self:Bar(404382, 41, L.add_bartext:format(CL.big_adds, CL.south, zaqaliAideCount)) -- Zaqali Aide
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
-	self:RegisterUnitEvent("UNIT_AURA", nil, "player") -- XXX temp for 401867 & 401381, should be fixed in 10.1.7
 end
 
 --------------------------------------------------------------------------------
@@ -165,29 +164,6 @@ function mod:UNIT_HEALTH(event, unit)
 		self:UnregisterUnitEvent(event, unit)
 		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(2)), false)
 		self:PlaySound("stages", "info")
-	end
-end
-
-function mod:UNIT_AURA(_, unit)
-	local fixateName = self:UnitDebuff(unit, 401381)
-	if fixateName and not hasFixate then
-		hasFixate = true
-		self:PersonalMessage(401381, nil, CL.fixate)
-		self:PlaySound(401381, "alarm")
-	elseif not fixateName and hasFixate then
-		hasFixate = false
-	end
-
-	local beamName = self:UnitDebuff(unit, 401867)
-	if beamName and not hasBeam then
-		hasBeam = true
-		self:PersonalMessage(401867, nil, CL.beam)
-		self:PlaySound(401867, "warning")
-		self:Say(401867, CL.beam)
-		self:SayCountdown(401867, 5)
-	elseif not beamName and hasBeam then
-		hasBeam = false
-		self:CancelSayCountdown(401867)
 	end
 end
 
@@ -285,7 +261,6 @@ function mod:PhoenixRush(args)
 end
 
 function mod:BlazingFocusApplied(args)
-	self:UnregisterUnitEvent("UNIT_AURA", "player")
 	if self:Me(args.destGUID) then
 		blazingFocusCount = blazingFocusCount + 1
 		if blazingFocusCount == 1 then -- Don't spam warn when multiple are hunting you
@@ -456,7 +431,6 @@ do
 end
 
 function mod:VolcanicShieldApplied(args)
-	self:UnregisterUnitEvent("UNIT_AURA", "player")
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.beam)
 		self:PlaySound(args.spellId, "warning")
