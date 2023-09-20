@@ -48,10 +48,14 @@ function mod:GetOptions()
 		{424352, "TANK"}, -- Dreadfire Barrage
 		422026, -- Tortured Scream
 		422039, -- Shadowflame Cleave
-		-- Intermission: Frenzied Growth
+		-- Stage Two: Agonizing Growth
 		421038, -- Ember-Charred
 		424970, -- Corrupted Soil
 		421840, -- Uprooted Agony
+	},{
+		["stages"] = "general",
+		[421898] = -27467, -- Stage One: Garden of Despair
+		[421038] = -27475, -- Stage Two: Agonizing Growth
 	}
 end
 
@@ -69,7 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TorturedScream", 422026)
 	self:Log("SPELL_CAST_START", "ShadowflameCleave", 422039)
 
-	-- Intermission: Frenzied Growth
+	-- Stage Two: Agonizing Growth
 	self:Log("SPELL_CAST_SUCCESS", "PotentFertilization", 421090)
 	self:Log("SPELL_AURA_APPLIED", "EmberCharredApplied", 421038)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EmberCharredApplied", 421038)
@@ -97,7 +101,7 @@ function mod:OnEngage()
 	self:Bar(421898, 20.4, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
 	self:Bar(421972, 33.5, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
 	self:Bar(422039, 22, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:Bar("stages", 90, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
+	self:Bar("stages", 90, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Stage Two: Agonizing Growth / Potent Fertilization
 end
 
 --------------------------------------------------------------------------------
@@ -200,16 +204,16 @@ function mod:ShadowflameCleave(args)
 	self:CDBar(args.spellId, 20, CL.count:format(args.spellName, shadowflameCleaveCount))
 end
 
--- Intermission: Frenzied Growth
+-- Stage Two: Agonizing Growth
 function mod:PotentFertilization(args)
 	self:StopBar(424352) -- Dreadfire Barrage
 	self:StopBar(CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
 	self:StopBar(CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
 	self:StopBar(CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
 	self:StopBar(CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:StopBar(CL.count:format(CL.intermission, intermissionCount)) -- Intermission / Potent Fertilization
+	self:StopBar(CL.count:format(CL.stage:format(2), intermissionCount)) -- Stage Two: Agonizing Growth / Potent Fertilization
 
-	self:Message("stages", "yellow", CL.intermission, false)
+	self:Message("stages", "yellow", CL.stage:format(2), false)
 	self:PlaySound("stages", "info")
 	self:SetStage(2)
 
