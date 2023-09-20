@@ -68,6 +68,11 @@ function mod:GetOptions()
 		"custom_on_repeating_yell_smoldering_suffocation",
 		422461, -- Ashen Call
 		421323, -- Searing Ash
+	},{
+		["stages"] = "general",
+		[417653] = -27241, -- Stage One: The Cycle of Flame
+		[421316] = -27242, -- Intermission: Unreborn Again
+		[421333] = -27243, -- Stage Two: Avatar of Ash
 	}
 end
 
