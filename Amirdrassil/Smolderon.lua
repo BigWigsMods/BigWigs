@@ -48,6 +48,10 @@ function mod:GetOptions()
 		422277, -- Devour Essence
 		421858, -- Ignited Essence
 		422172, -- World In Flames
+	},{
+		["stages"] = "general",
+		[421343] = -27637, -- Stage One: The Firelord's Fury
+		[426725] = -27649, -- Stage Two: World In Flames
 	}
 end
 
