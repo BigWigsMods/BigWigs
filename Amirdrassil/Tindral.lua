@@ -46,7 +46,7 @@ function mod:GetOptions()
 		fieryGrowthMarker,
 		424499, -- Scorching Ground
 		420236, -- Falling Stars
-		422503, -- Star Fragments
+		{422503, "SAY", "SAY_COUNTDOWN"}, -- Star Fragments
 		{424495, "SAY", "SAY_COUNTDOWN"}, -- Mass Entanglement
 		massEntanglementMarker,
 		420540, -- Incarnation: Moonkin
@@ -65,6 +65,12 @@ function mod:GetOptions()
 		422325, -- Flaming Tree
 		-- Mythic
 		424582, -- Lingering Cinder
+	},{
+		["stages"] = "general",
+		[422000] = -27488, -- Stage One: Moonkin of the Flame
+		[424258] = -27500, -- Intermission: Burning Pursuit
+		[422115] = -27506, -- Stage Two: Tree of the Flame
+		[424582] = "mythic",
 	}
 end
 
@@ -76,6 +82,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FieryGrowthApplied", 424581)
 	self:Log("SPELL_AURA_REMOVED", "FieryGrowthRemoved", 424581)
 	self:Log("SPELL_CAST_START", "FallingStars", 420236)
+	self:Log("SPELL_AURA_APPLIED", "FallingStarsApplied", 424580)
+	self:Log("SPELL_AURA_REMOVED", "FallingStarsRemoved", 424580)
 	self:Log("SPELL_CAST_SUCCESS", "MassEntanglement", 424495)
 	self:Log("SPELL_AURA_APPLIED", "MassEntanglementApplied", 424495)
 	self:Log("SPELL_AURA_REMOVED", "MassEntanglementRemoved", 424495)
@@ -167,7 +175,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.rticon:format(args.spellName_single, count))
+			self:Say(args.spellId, CL.rticon:format(args.spellName, count))
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, fieryGrowthCount - 1))
 		self:CustomIcon(fieryGrowthMarker, args.destName, count)
@@ -184,6 +192,20 @@ function mod:FallingStars(args)
 	self:PlaySound(args.spellId, "alert")
 	fallingStarsCount = fallingStarsCount + 1
 	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, fallingStarsCount))
+end
+
+function mod:FallingStarsApplied(args)
+	if self:Me(args.destGUID) then
+		self:PlaySound(422503, "warning")
+		self:Say(422503)
+		self:SayCountdown(422503, 5)
+	end
+end
+
+function mod:FallingStarsRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(422503)
+	end
 end
 
 do
