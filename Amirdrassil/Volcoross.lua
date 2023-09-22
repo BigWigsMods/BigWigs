@@ -50,12 +50,14 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Scorchtail Crash
+
 	self:Log("SPELL_CAST_START", "SerpentsFury", 421672)
 	self:Log("SPELL_AURA_APPLIED", "CoilingFlamesApplied", 421207)
 	self:Log("SPELL_AURA_REMOVED", "CoilingFlamesRemoved", 421207)
 	self:Log("SPELL_CAST_START", "FloodOfTheFirelands", 420933)
 	self:Log("SPELL_CAST_START", "VolcanicDisgorge", 421616)
-	self:Log("SPELL_CAST_START", "ScorchtailCrash", 420415)
+	-- self:Log("SPELL_CAST_START", "ScorchtailCrash", 420415)
 	self:Log("SPELL_AURA_APPLIED", "MoltenVenomApplied", 419054)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MoltenVenomApplied", 419054)
 	self:Log("SPELL_CAST_START", "CataclysmJaws", 423117)
@@ -74,23 +76,34 @@ function mod:OnEngage()
 	scorchtailCrashCount = 1
 	cataclysmJawsCount = 1
 
-	--self:Bar(421672, 30, CL.count:format(self:SpellName(421672), serpentsFuryCount)) -- Serpent's Fury
-	--self:Bar(420933, 30, CL.count:format(self:SpellName(420933), floodOfTheFirelandsCount)) -- Flood of the Firelands
-	--self:Bar(421616, 30, CL.count:format(self:SpellName(421616), volcanicDisgorgeCount)) -- Volcanic Disgorge
-	--self:Bar(420415, 30, CL.count:format(self:SpellName(420415), scorchtailCrashCount)) -- Scorchtail Crash
-	--self:Bar(423117, 30, CL.count:format(self:SpellName(423117), cataclysmJawsCount)) -- Cataclysm Jaws
+	self:Bar(423117, 5, CL.count:format(self:SpellName(423117), cataclysmJawsCount)) -- Cataclysm Jaws
+	self:Bar(421672, 10, CL.count:format(self:SpellName(421672), serpentsFuryCount)) -- Serpent's Fury
+	self:Bar(420415, 20, CL.count:format(self:SpellName(420415), scorchtailCrashCount)) -- Scorchtail Crash
+	self:Bar(421616, 30, CL.count:format(self:SpellName(421616), volcanicDisgorgeCount)) -- Volcanic Disgorge
+	self:Bar(420933, 70, CL.count:format(self:SpellName(420933), floodOfTheFirelandsCount)) -- Flood of the Firelands
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 421356 or spellId == 421359 or spellId == 421684 then -- Scorchtail Crash
+		self:StopBar(CL.count:format(self:SpellName(420415), scorchtailCrashCount))
+		self:Message(420415, "red", CL.count:format(self:SpellName(420415), scorchtailCrashCount))
+		self:PlaySound(420415, "alarm")
+		scorchtailCrashCount = scorchtailCrashCount + 1
+		-- This need some more fixing
+		self:Bar(420415, 20, CL.count:format(self:SpellName(420415), scorchtailCrashCount)) -- Scorchtail Crash
+	end
+end
+
 function mod:SerpentsFury(args)
 	self:StopBar(CL.count:format(args.spellName, serpentsFuryCount))
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, serpentsFuryCount))
 	self:PlaySound(args.spellId, "alert")
 	serpentsFuryCount = serpentsFuryCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, serpentsFuryCount))
+	self:Bar(args.spellId, 70, CL.count:format(args.spellName, serpentsFuryCount))
 end
 
 do
@@ -115,7 +128,7 @@ function mod:FloodOfTheFirelands(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, floodOfTheFirelandsCount))
 	self:PlaySound(args.spellId, "long")
 	floodOfTheFirelandsCount = floodOfTheFirelandsCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, floodOfTheFirelandsCount))
+	self:Bar(args.spellId, 70, CL.count:format(args.spellName, floodOfTheFirelandsCount))
 end
 
 function mod:VolcanicDisgorge(args)
@@ -123,16 +136,21 @@ function mod:VolcanicDisgorge(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, volcanicDisgorgeCount))
 	self:PlaySound(args.spellId, "alert")
 	volcanicDisgorgeCount = volcanicDisgorgeCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, volcanicDisgorgeCount))
+	local cdTable = {
+		[2] = 20,
+		[3] = 40,
+		[8] = 30,
+	}
+	self:Bar(args.spellId, cdTable[volcanicDisgorgeCount] or 10, CL.count:format(args.spellName, volcanicDisgorgeCount))
 end
 
-function mod:ScorchtailCrash(args)
-	self:StopBar(CL.count:format(args.spellName, scorchtailCrashCount))
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, scorchtailCrashCount))
-	self:PlaySound(args.spellId, "alarm")
-	scorchtailCrashCount = scorchtailCrashCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, scorchtailCrashCount))
-end
+-- function mod:ScorchtailCrash(args)
+-- 	self:StopBar(CL.count:format(args.spellName, scorchtailCrashCount))
+-- 	self:Message(args.spellId, "red", CL.count:format(args.spellName, scorchtailCrashCount))
+-- 	self:PlaySound(args.spellId, "alarm")
+-- 	scorchtailCrashCount = scorchtailCrashCount + 1
+-- 	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, scorchtailCrashCount))
+-- end
 
 function mod:MoltenVenomApplied(args)
 	local amount = args.amount or 1
@@ -149,7 +167,12 @@ function mod:CataclysmJaws(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, cataclysmJawsCount))
 	self:PlaySound(args.spellId, "alarm")
 	cataclysmJawsCount = cataclysmJawsCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, cataclysmJawsCount))
+	local cdTable = {
+		[4] = 40,
+		[6] = 40,
+		[8] = 25,
+	}
+	self:Bar(args.spellId, cdTable[cataclysmJawsCount] or 30, CL.count:format(args.spellName, cataclysmJawsCount))
 end
 
 function mod:SerpentsWrath(args)
