@@ -14,15 +14,25 @@ mod:SetStage(1)
 -- Locals
 --
 
+local songOnMe = false
 local castingRebirth = false
+local activeUltimates = 0
 
 local blindingRageCount = 1
 local barrelingChargeCount = 1
 local constrictingThicketCount = 1
+local poisonousJavelinCount = 1
 local noxiousBlossomCount = 1
 local songoftheDragonCount = 1
 local polymorphBombCount = 1
 local emeraldWindsCount = 1
+local agonizingClawsCount = 1
+
+local specialCD = 56
+local nextSpecial = 0
+local nextBlindingRage = 0
+local nextConstrictingThicket = 0
+--local nextSongoftheDragon = 0 -- Unused atm
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,7 +40,11 @@ local emeraldWindsCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.placeholder = "placeholder"
+	L.ultimate_boss = "Ultimate (%s)"
+	L.charge = "Charge"
+	L.poisonous_javelin = "Javelin"
+	L.polymorph_bomb = "Ducks"
+	L.polymorph_bomb_single = "Duck"
 end
 
 --------------------------------------------------------------------------------
@@ -48,17 +62,31 @@ function mod:GetOptions()
 		423420, -- Trampled
 		{421022, "TANK"}, -- Agonizing Claws
 		-- Aerwynn
+		421570, -- Leap
 		421292, -- Constricting Thicket
 		420937, -- Relentless Barrage
 		420671, -- Noxious Blossom
 		426390, -- Corrosive Pollen
-		{420858, "SAY"}, -- Poisonous Javelin
+		{420858, "SAY", "SAY_COUNTDOWN"}, -- Poisonous Javelin
 		-- Pip
-		421029, -- Song of the Dragon
+		{421029, "CASTBAR"}, -- Song of the Dragon
 		{421032, "SAY"}, -- Captivating Finale
-		{418720, "SAY", "SAY_COUNTDOWN"}, -- Polymorph Bomb
+		{418720, "SAY_COUNTDOWN"}, -- Polymorph Bomb
 		421024, -- Emerald Winds
 		423551, -- Whimsical Gust
+	},{
+		[418187] = "general",
+		[420525] = -27300, -- Urctos
+		[421292] = -27301, -- Aerwynn
+		[421029] = -27302, -- Pip
+	},{
+		[420525] = L.ultimate_boss:format(self:SpellName(-27300)), -- Blinding Rage (Ultimate (Urctos))
+		[420948] = L.charge, -- Barreling Charge (Charge)
+		[421292] = L.ultimate_boss:format(self:SpellName(-27301)), -- Constricting Thicket (Ultimate (Aerwynn))
+		[420671] = CL.pools, -- Noxious Blossom (Pools)
+		[421029] = L.ultimate_boss:format(self:SpellName(-27302)), -- Song of the Dragon (Ultimate (Pip))
+		[418720] = L.polymorph_bomb, -- Polymorph Bomb (Ducks)
+		[421024] = CL.pushback, -- Emerald Winds (Pushback)
 	}
 end
 
@@ -72,7 +100,7 @@ function mod:OnBossEnable()
 
 	-- Urctos
 	self:Log("SPELL_CAST_START", "BlindingRage", 420525)
-	self:Log("SPELL_AURA_REMOVED", "WeakenedDefensesRemoved", 418755) -- Might not be the correct event to use, what if you fail within 20s?
+	self:Log("SPELL_AURA_REMOVED", "BlindingRageOver", 420525)
 	self:Log("SPELL_AURA_APPLIED", "UrsineRageApplied", 425114)
 	self:Log("SPELL_CAST_START", "BarrelingCharge", 420947)
 	self:Log("SPELL_AURA_APPLIED", "BarrelingChargeApplied", 420948)
@@ -84,17 +112,21 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AgonizingClawsApplied", 421022)
 
 	-- Aerwynn
+	self:Log("SPELL_CAST_START", "Leap", 421570)
 	self:Log("SPELL_CAST_START", "ConstrictingThicket", 421292)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", "ConstrictingThicketInterrupted", "boss1", "boss2", "boss3")
+	self:Log("SPELL_AURA_REMOVED", "ConstrictingThicketOver", 421292)
 	self:Log("SPELL_AURA_APPLIED", "ConstrictingThicketApplied", 421298)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ConstrictingThicketApplied", 421298)
 	self:Log("SPELL_CAST_START", "RelentlessBarrage", 420937)
 	self:Log("SPELL_CAST_START", "NoxiousBlossom", 420671)
+	self:Log("SPELL_CAST_START", "PoisonousJavelin", 420856)
 	self:Log("SPELL_AURA_APPLIED", "PoisonousJavelinApplied", 420858)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "PoisonousJavelinApplied", 420858)
+	self:Log("SPELL_AURA_REMOVED", "PoisonousJavelinRemoved", 420858)
 
 	-- Pip
 	self:Log("SPELL_CAST_START", "SongoftheDragon", 421029)
+	self:Log("SPELL_AURA_REMOVED", "SongoftheDragonOver", 421029)
+	self:Log("SPELL_AURA_APPLIED", "SongoftheDragonApplied", 421031)
 	self:Log("SPELL_AURA_REMOVED", "SongoftheDragonRemoved", 421031)
 	self:Log("SPELL_AURA_APPLIED", "CaptivatingFinaleApplied", 421032)
 	self:Log("SPELL_CAST_START", "PolymorphBomb", 418591)
@@ -104,32 +136,63 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	songOnMe = false
 	castingRebirth = false
+	activeUltimates = 0
 
 	blindingRageCount = 1
 	barrelingChargeCount = 1
 	constrictingThicketCount = 1
+	poisonousJavelinCount = 1
 	noxiousBlossomCount = 1
 	songoftheDragonCount = 1
 	polymorphBombCount = 1
 	emeraldWindsCount = 1
+	agonizingClawsCount = 1
 
 	-- Urctos
-	-- self:Bar(420525, 30, CL.count:format(self:SpellName(420525), blindingRageCount)) -- Blinding Rage
-	-- self:Bar(420948, 30, CL.count:format(self:SpellName(420948), barrelingChargeCount)) -- Barreling Charge
-	-- self:Bar(421022, 15) -- Agonizing Claws
+	self:Bar(421022, 8) -- Agonizing Claws
+	self:Bar(420948, 28.5, CL.count:format(L.charge, barrelingChargeCount)) -- Barreling Charge
+	self:Bar(420525, specialCD, CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount)) -- Blinding Rage
+	nextBlindingRage = GetTime() + specialCD
+	nextSpecial = GetTime() + specialCD
 
-	-- self:Bar(421292, 30, CL.count:format(self:SpellName(421292), constrictingThicketCount)) --Constricting Thicket
-	-- self:Bar(420671, 30, CL.count:format(self:SpellName(420671), noxiousBlossomCount)) -- Noxious Blossom
+	-- Aerwynn
+	self:Bar(420671, 10.9, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+	self:Bar(420858, 20.5, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+	nextConstrictingThicket = 0
 
-	-- self:Bar(421029, 30, CL.count:format(self:SpellName(421029), songoftheDragonCount)) -- Song of the Dragon
-	-- self:Bar(418720, 30, CL.count:format(self:SpellName(418720), polymorphBombCount)) -- Polymorph Bomb
-	-- self:Bar(421024, 30, CL.count:format(self:SpellName(421024), emeraldWindsCount)) -- Emerald Winds
+	-- Pip
+	self:Bar(418720, 35, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+	self:Bar(421024, 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
+	--nextSongoftheDragon = 0
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function activeUltimate()
+	if activeUltimates > 0 then
+		return true
+	end
+	return false
+end
+
+local function specialInterrupted()
+	if not activeUltimate() then
+		agonizingClawsCount = 1 -- Reset for CD rotation
+		mod:Bar(421022, 8) -- Agonizing Claws
+		mod:Bar(420948, 28.5, CL.count:format(L.charge, barrelingChargeCount)) -- Barreling Charge
+
+		mod:Bar(420671, 10.9, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+		mod:Bar(420858, 20.5, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+
+		mod:Bar(418720, 16, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+		mod:Bar(421024, 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
+		nextSpecial = GetTime() + specialCD
+	end
+end
 
 -- General
 function mod:Rebirth(args)
@@ -151,6 +214,7 @@ do
 	local prev = 0
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
+			if args.spellId == 426390 and songOnMe then return end -- Don't warn for pools when you need to clear
 			prev = args.time
 			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
@@ -160,15 +224,23 @@ end
 
 -- Urctos
 function mod:BlindingRage(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, blindingRageCount))
+	self:StopBar(CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount))
 	self:PlaySound(args.spellId, "alert") -- Poly Boss
 	blindingRageCount = blindingRageCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, blindingRageCount))
+	activeUltimates = activeUltimates + 1
+	-- Starting timers for breaks / pools
+	self:Bar(418720, 9, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+	self:Bar(420671, 7, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
 end
 
-function mod:WeakenedDefensesRemoved(args)
-	self:Message(420525, "green", CL.interrupted:format(self:SpellName(420525))) -- Blinding Rage
+function mod:BlindingRageOver(args)
+	self:Message(420525, "green", CL.interrupted:format(L.ultimate_boss:format(self:SpellName(-27300)))) -- Blinding Rage
 	self:PlaySound(420525, "info")
+	activeUltimates = activeUltimates - 1
+	specialInterrupted()
+	nextConstrictingThicket = GetTime() + specialCD
+	self:Bar(421292, specialCD, CL.count:format(L.ultimate_boss:format(self:SpellName(-27301)), constrictingThicketCount)) -- Constricting Thicket
 end
 
 function mod:UrsineRageApplied(args)
@@ -179,14 +251,19 @@ end
 do
 	local trampledOnYou = false
 	function mod:BarrelingCharge(args)
-		barrelingChargeCount = barrelingChargeCount + 1
-		--self:Bar(420948, 30, CL.count:format(args.spellName, barrelingChargeCount))
+		self:StopBar(CL.count:format(L.charge, barrelingChargeCount))
+		if not activeUltimate() then -- Only increment outside of ultimates
+			barrelingChargeCount = barrelingChargeCount + 1
+		end
+		if activeUltimate() or (nextConstrictingThicket - GetTime() > 0) then -- Repeat during ultimate, second cast if Constricting Thicket is next
+			self:CDBar(420948, activeUltimate() and 8 or 30, CL.count:format(L.charge, barrelingChargeCount))
+		end
 	end
 
 	function mod:BarrelingChargeApplied(args)
-		self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, barrelingChargeCount-1))
+		self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.charge, barrelingChargeCount-1))
 		if self:Me(args.destGUID) then
-			self:Yell(args.spellId)
+			self:Yell(args.spellId, L.charge)
 			self:YellCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning") -- Move
 		elseif trampledOnYou then -- Avoid
@@ -219,7 +296,11 @@ end
 
 function mod:AgonizingClaws(args)
 	self:Message(421022, "purple", CL.casting:format(args.spellName))
-	--self:Bar(421022, 10)
+	agonizingClawsCount = agonizingClawsCount + 1
+	if agonizingClawsCount < 5 then -- 4 between each ultimate
+		local cd = {8, 6, 25, 6}
+		self:Bar(421022, cd[agonizingClawsCount])
+	end
 end
 
 function mod:AgonizingClawsApplied(args)
@@ -235,18 +316,31 @@ function mod:AgonizingClawsApplied(args)
 end
 
 -- Aerwynn
-function mod:ConstrictingThicket(args)
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, constrictingThicketCount)))
-	self:PlaySound(args.spellId, "alert") -- Interrupt
-	constrictingThicketCount = constrictingThicketCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, constrictingThicketCount))
+function mod:Leap(args)
+	self:StopBar(args.spellId)
+	self:Message(args.spellId, "cyan")
+	self:PlaySound(args.spellId, "info")
+	local cd = 48.5
+	if nextSpecial - GetTime() > cd then
+		self:Bar(args.spellId, cd)
+	end
 end
 
-function mod:ConstrictingThicketInterrupted(_, _, _, spellId)
-	if spellId == 421292 then -- Constricting Thicket
-		self:Message(spellId, "green", CL.interrupted:formaT(self:SpellName(spellId)))
-		self:PlaySound(spellId, "info") -- well done
-	end
+function mod:ConstrictingThicket(args)
+	self:StopBar(CL.count:format(L.ultimate_boss:format(self:SpellName(-27301)), constrictingThicketCount))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.ultimate_boss:format(self:SpellName(-27301)), constrictingThicketCount)))
+	self:PlaySound(args.spellId, "alert") -- Interrupt
+	constrictingThicketCount = constrictingThicketCount + 1
+	activeUltimates = activeUltimates + 1
+end
+
+function mod:ConstrictingThicketOver(args)
+	self:Message(421292, "green", CL.interrupted:format(L.ultimate_boss:format(self:SpellName(-27301))))
+	self:PlaySound(421292, "info") -- well done
+	activeUltimates = activeUltimates - 1
+	specialInterrupted()
+	--nextSongoftheDragon = GetTime() + specialCD
+	self:Bar(421029, specialCD, CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount)) -- Song of the Dragon
 end
 
 function mod:ConstrictingThicketApplied(args)
@@ -265,33 +359,74 @@ function mod:RelentlessBarrage(args)
 end
 
 function mod:NoxiousBlossom(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, noxiousBlossomCount))
+	self:StopBar(CL.count:format(CL.pools, noxiousBlossomCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.pools, noxiousBlossomCount))
 	self:PlaySound(args.spellId, "alert")
-	noxiousBlossomCount = noxiousBlossomCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, noxiousBlossomCount))
+	if not activeUltimate() then -- Only increment outside of ultimates
+		noxiousBlossomCount = noxiousBlossomCount + 1
+	end
+	if nextSpecial - GetTime() > 24 then -- Is this enough?
+		self:CDBar(args.spellId, 21, CL.count:format(CL.pools, noxiousBlossomCount))
+	end
+end
+
+function mod:PoisonousJavelin(args)
+	self:StopBar(CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
+	self:Message(420858, "yellow", CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
+	poisonousJavelinCount = poisonousJavelinCount + 1
+	if nextSpecial - GetTime() > 24.5 then
+		self:CDBar(420858, 24.5, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
+	end
 end
 
 function mod:PoisonousJavelinApplied(args)
 	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
-		self:PlaySound(args.spellId, "warning") -- move away
-		self:Say(args.spellId)
+		self:PersonalMessage(args.spellId, nil, L.poisonous_javelin)
+		self:PlaySound(args.spellId, self:Mythic() and "warning" or "alarm") -- move away in mythic
+		if self:Mythic() then
+			self:Say(args.spellId, L.poisonous_javelin)
+			self:SayCountdown(args.spellId, 10)
+		end
+	end
+end
+
+function mod:PoisonousJavelinRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
 -- Pip
 function mod:SongoftheDragon(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, songoftheDragonCount))
+	self:StopBar(CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
 	self:PlaySound(args.spellId, "alert")
+	self:CastBar(args.spellId, 24, CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
 	songoftheDragonCount = songoftheDragonCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, songoftheDragonCount))
+	activeUltimates = activeUltimates + 1
+	self:Bar(420671, 3, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+end
+
+function mod:SongoftheDragonOver(args)
+	self:Message(args.spellId, "green", CL.interrupted:format(L.ultimate_boss:format(self:SpellName(-27302))))
+	self:PlaySound(args.spellId, "info") -- well done
+	activeUltimates = activeUltimates - 1
+	specialInterrupted()
+	nextBlindingRage = GetTime() + specialCD
+	self:Bar(420525, specialCD, CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount)) -- Blinding Rage
+end
+
+function mod:SongoftheDragonApplied(args)
+	if self:Me(args.destGUID) then
+		songOnMe = true
+	end
 end
 
 function mod:SongoftheDragonRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(421029, "green", CL.removed:format(args.spellName))
 		self:PlaySound(421029, "info")
+		songOnMe = false
 	end
 end
 
@@ -304,16 +439,33 @@ function mod:CaptivatingFinaleApplied(args)
 end
 
 function mod:PolymorphBomb(args)
-	self:Message(418720, "yellow", CL.count:format(args.spellName, polymorphBombCount))
+	self:StopBar(CL.count:format(L.polymorph_bomb, polymorphBombCount))
+	self:Message(418720, "yellow", CL.count:format(L.polymorph_bomb, polymorphBombCount))
 	self:PlaySound(418720, "alert")
-	polymorphBombCount = polymorphBombCount + 1
-	--self:Bar(418720, 30, CL.count:format(args.spellName, polymorphBombCount))
+	if not activeUltimate() then -- Only increment outside of ultimates
+		polymorphBombCount = polymorphBombCount + 1
+	end
+	local cd = nil
+	if nextSpecial - GetTime() > 25 then -- Normal cooldown
+		cd = 18.9
+	elseif activeUltimate() then -- Repeat Cooldown
+		cd = 9
+	else
+		local remainingRageTime = nextBlindingRage - GetTime()
+		if remainingRageTime < 25 then -- Synced Cooldown
+			cd = remainingRageTime
+		end
+	end
+	if cd then
+		self:CDBar(418720, cd, CL.count:format(L.polymorph_bomb, polymorphBombCount))
+	end
 end
 
 function mod:PolymorphBombApplied(args)
 	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.polymorph_bomb_single)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		--self:Say(args.spellId) -- Don't need initial say, only dangerous at the end
 		self:SayCountdown(args.spellId, 12)
 	end
 end
@@ -325,8 +477,10 @@ function mod:PolymorphBombRemoved(args)
 end
 
 function mod:EmeraldWinds(args)
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, emeraldWindsCount))
+	self:StopBar(CL.count:format(CL.pushback, emeraldWindsCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.pushback, emeraldWindsCount))
 	self:PlaySound(args.spellId, "alarm") -- move for pushback
 	emeraldWindsCount = emeraldWindsCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, emeraldWindsCount))
+	-- Timer started after specials end
+	--self:CDBar(args.spellId, 30, CL.count:format(CL.pushback, emeraldWindsCount))
 end
