@@ -20,6 +20,73 @@ local fallingStarsCount = 1
 local massEntanglementCount = 1
 local incarnationMoonkinCount = 1
 local incarnationTreeOfFlameCount = 1
+local tranquilityOfFlameCount = 1
+local fireBeamCount = 1
+local dreamEssenceOnYou = 0
+
+------------------------------------------------------------------2--------------
+-- Timers
+--
+
+local timersNormal = {
+	[1] = {
+		[423260] = {12.0, 35.0}, -- Blazing Mushroom
+		[420236] = {15.3, 34.7}, -- Falling Stars
+		[424581] = {35.0, 35.0}, -- Fiery Growth
+		[424495] = {6.0, 35.0}, -- Mass Entanglement
+		[420540] = {20.0, 35.0}, -- Incarnation: Moonkin
+		[421398] = {25.0, 35.0}, -- Fire Beam
+	},
+	[2] = {
+		[423260] = {18.0, 48.0}, -- Blazing Mushroom
+		[420236] = {10.0, 48.0}, -- Falling Stars
+		[424581] = {22.0, 48.0}, -- Fiery Growth
+		[424495] = {5.0, 48.0}, -- Mass Entanglement
+		[422115] = {26.0, 48.0}, -- Incarnation: Tree of Flame
+		[423265] = {35.0, 48.0}, -- Tranquility of Flame
+	},
+	[3] = {
+		[423260] = {7.0, 30.0, 36.5, 40.5}, -- Blazing Mushroom
+		[420236] = {20.0, 48.5, 65.5, 46.0}, -- Falling Stars
+		[424581] = {5.0, 87.0, 49.0, 55.0}, -- Fiery Growth
+		[424495] = {14.0, 50.0, 64.0, 62.5}, -- Mass Entanglement
+		[420540] = {26.0, 49.5, 43.5, 50.0}, -- Incarnation: Moonkin
+		[421398] = {34.0, 46.5, 43.5, 50.0}, -- Fire Beam
+		[422115] = {42.0, 52.0, 56.0, 48.0}, -- Incarnation: Tree of Flame
+		[423265] = {48.0, 47.0, 59.0, 47.0}, -- Tranquility of Flame
+	},
+}
+
+local timersHeroic = {
+	[1] = {
+		[423260] = {22, 40}, -- Blazing Mushroom
+		[420236] = {6, 42}, -- Falling Stars
+		[424581] = {25, 40}, -- Fiery Growth
+		[424495] = {14, 40}, -- Mass Entanglement
+		[420540] = {28, 40}, -- Incarnation: Moonkin
+		[421398] = {40, 40}, -- Fire Beam
+	},
+	[2] = {
+		[423260] = {18, 48}, -- Blazing Mushroom
+		[420236] = {10, 48}, -- Falling Stars
+		[424581] = {22, 48}, -- Fiery Growth
+		[424495] = {5, 48}, -- Mass Entanglement
+		[422115] = {26, 48}, -- Incarnation: Tree of Flame
+		[423265] = {35, 48}, -- Tranquility of Flame
+	},
+	[3] = {
+		[423260] = {8, 30, 36.5, 40.5}, -- Blazing Mushroom
+		[420236] = {22, 48.5, 65.5, 46}, -- Falling Stars
+		[424581] = {6, 87, 49, 55}, -- Fiery Growth
+		[424495] = {15.5, 50, 64, 62.5}, -- Mass Entanglement
+		[420540] = {26, 49.7, 43.2, 50}, -- Incarnation: Moonkin
+		[421398] = {34, 46.5, 43.5, 50}, -- Fire Beam
+		[422115] = {42.0, 52.0, 56.0, 48.0}, -- Incarnation: Tree of Flame
+		[423265] = {50, 47, 59, 47}, -- Tranquility of Flame
+	},
+}
+
+local timers = mod:Easy() and timersNormal or timersHeroic
 
 ------------------------------------------------------------------2--------------
 -- Localization
@@ -27,14 +94,22 @@ local incarnationTreeOfFlameCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.placeholder = "placeholder"
+	L.blazing_mushroom = "Mushrooms"
+	L.fiery_growth = "Pool Dispels"
+	L.falling_stars = "Stars"
+	L.falling_stars_single = "Star"
+	L.mass_entanglement = "Roots"
+	L.mass_entanglement_single = "Root"
+	L.incarnation_moonkin = "Moonkin Form"
+	L.incarnation_tree_of_flame = "Tree Form"
+	L.tranquility_of_flame = "Seeds"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local fieryGrowthMarker = mod:AddMarkerOption(true, "player", 1, 424581, 1, 2, 3) -- Fiery Growth
+local fieryGrowthMarker = mod:AddMarkerOption(false, "player", 1, 424581, 1, 2, 3) -- Fiery Growth
 function mod:GetOptions()
 	return {
 		"stages",
@@ -44,11 +119,11 @@ function mod:GetOptions()
 		{424581, "SAY"}, -- Fiery Growth
 		fieryGrowthMarker,
 		424499, -- Scorching Ground
-		420236, -- Falling Stars
-		{422503, "SAY", "SAY_COUNTDOWN"}, -- Star Fragments
-		{424495, "SAY", "SAY_COUNTDOWN"}, -- Mass Entanglement
+		{420236, "SAY", "SAY_COUNTDOWN"}, -- Falling Stars
+		422503, -- Star Fragments
+		{424495, "SAY_COUNTDOWN"}, -- Mass Entanglement
 		420540, -- Incarnation: Moonkin
-		420239, -- Sunfire
+		--420239, -- Sunfire
 		421398, -- Fire Beam
 		-- Intermission: Burning Pursuit
 		424258, -- Dream Essence
@@ -69,6 +144,14 @@ function mod:GetOptions()
 		[424258] = -27500, -- Intermission: Burning Pursuit
 		[422115] = -27506, -- Stage Two: Tree of the Flame
 		[424582] = "mythic",
+	},{
+		[423260] = L.blazing_mushroom, -- Blazing Mushroom (Mushrooms)
+		[424581] = L.fiery_growth, -- Fiery Growth (Pool Dispels)
+		[420236] = L.falling_stars, -- Falling Stars (Stars)
+		[424495] = L.mass_entanglement, -- Mass Entanglement (Roots)
+		[420540] = L.incarnation_moonkin, -- Incarnation: Moonkin (Moonkin Form)
+		[422115] = L.incarnation_tree_of_flame, -- Incarnation: Tree of Flame (Tree Form)
+		[423265] = L.tranquility_of_flame, -- Tranquility of Flame (Seeds)
 	}
 end
 
@@ -86,7 +169,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MassEntanglementApplied", 424495)
 	self:Log("SPELL_AURA_REMOVED", "MassEntanglementRemoved", 424495)
 	self:Log("SPELL_AURA_APPLIED", "IncarnationMoonkin", 420540)
-	self:Log("SPELL_AURA_APPLIED", "SunfireApplied", 420239)
+	--self:Log("SPELL_AURA_APPLIED", "SunfireApplied", 420239)
 	self:Log("SPELL_CAST_START", "FireBeam", 421398)
 
 	-- Intermission: Burning Pursuit
@@ -117,20 +200,24 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:GetStage(1)
+	timers = self:Easy() and timersNormal or timersHeroic
+	self:SetStage(1)
 	blazingMushroomCount = 1
 	fieryGrowthCount = 1
 	fallingStarsCount = 1
 	massEntanglementCount = 1
 	incarnationMoonkinCount = 1
 	incarnationTreeOfFlameCount = 1
+	fireBeamCount = 1
+	tranquilityOfFlameCount = 1
+	dreamEssenceOnYou = 0
 
-	self:Bar(420236, 6, CL.count:format(self:SpellName(420236), fallingStarsCount)) -- Falling Stars
-	self:Bar(424495, 14, CL.count:format(self:SpellName(424495), massEntanglementCount)) -- Mass Entanglement
-	self:Bar(423260, 22, CL.count:format(self:SpellName(423260), blazingMushroomCount)) -- Blazing Mushroom
-	self:Bar(424581, 25, CL.count:format(self:SpellName(424581), fieryGrowthCount)) -- Fiery Growth
-	self:Bar(420540, 28, CL.count:format(self:SpellName(420540), incarnationMoonkinCount)) -- Incarnation: Moonkin
-	self:Bar(421398, 40) -- Fire Beam
+	self:Bar(420236, timers[1][420236][fallingStarsCount], CL.count:format(L.falling_stars, fallingStarsCount)) -- Falling Stars
+	self:Bar(424495, timers[1][424495][massEntanglementCount], CL.count:format(L.mass_entanglement, massEntanglementCount)) -- Mass Entanglement
+	self:Bar(423260, timers[1][423260][blazingMushroomCount], CL.count:format(L.blazing_mushroom, blazingMushroomCount)) -- Blazing Mushroom
+	self:Bar(424581, timers[1][424581][fieryGrowthCount], CL.count:format(L.fiery_growth, fieryGrowthCount)) -- Fiery Growth
+	self:Bar(420540, timers[1][420540][incarnationMoonkinCount], CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
+	self:Bar(421398, timers[1][421398][fireBeamCount], CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
 	self:Bar("stages", 82, CL.intermission, 421603)
 end
 
@@ -151,43 +238,32 @@ function mod:SearingWrathApplied(args)
 end
 
 function mod:BlazingMushroom(args)
-	self:StopBar(CL.count:format(args.spellName, blazingMushroomCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, blazingMushroomCount))
+	self:StopBar(CL.count:format(L.blazing_mushroom, blazingMushroomCount))
+	self:Message(args.spellId, "purple", CL.count:format(L.blazing_mushroom, blazingMushroomCount))
 	if self:Tank() then
 		self:PlaySound(args.spellId, "alert")
 	end
 	blazingMushroomCount = blazingMushroomCount + 1
-	if self:GetStage() == 3 then
-		local cd = {8, 30, 36.5, 40.5}
-		self:Bar(args.spellId, cd[blazingMushroomCount], CL.count:format(args.spellName, blazingMushroomCount))
-	elseif blazingMushroomCount < 3 then -- 2 per rotation?
-		self:Bar(args.spellId, self:GetStage() == 2 and 48 or 40, CL.count:format(args.spellName, blazingMushroomCount))
-	end
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][blazingMushroomCount], CL.count:format(L.blazing_mushroom, blazingMushroomCount))
 end
 
 do
 	local playerList = {}
 	function mod:FieryGrowth(args)
 		playerList = {}
-		self:StopBar(CL.count:format(args.spellName, fieryGrowthCount))
+		self:StopBar(CL.count:format(L.fiery_growth, fieryGrowthCount))
 		fieryGrowthCount = fieryGrowthCount + 1
-		if self:GetStage() == 3 then
-			local cd = {5, 87, 49, 55}
-			self:Bar(args.spellId, cd[fieryGrowthCount], CL.count:format(args.spellName, fieryGrowthCount))
-		elseif fieryGrowthCount < 3 then -- 2 per rotation?
-			self:Bar(args.spellId, self:GetStage() == 2 and 48 or 40, CL.count:format(args.spellName, fieryGrowthCount))
-		end
+		self:Bar(args.spellId, timers[self:GetStage()][args.spellId][fieryGrowthCount], CL.count:format(L.fiery_growth, fieryGrowthCount))
 	end
 
 	function mod:FieryGrowthApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.rticon:format(args.spellName, count))
+			self:Say(args.spellId, L.fiery_growth)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, fieryGrowthCount - 1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.fiery_growth, fieryGrowthCount - 1))
 		self:CustomIcon(fieryGrowthMarker, args.destName, count)
 	end
 
@@ -197,47 +273,38 @@ do
 end
 
 function mod:FallingStars(args)
-	self:StopBar(CL.count:format(args.spellName, fallingStarsCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, fallingStarsCount))
+	self:StopBar(CL.count:format(L.falling_stars, fallingStarsCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.falling_stars, fallingStarsCount))
 	self:PlaySound(args.spellId, "alert")
 	fallingStarsCount = fallingStarsCount + 1
-	if self:GetStage() == 3 then
-		local cd = {22, 48.5, 65.5, 46}
-		self:Bar(args.spellId, cd[fallingStarsCount], CL.count:format(args.spellName, fallingStarsCount))
-	elseif fallingStarsCount < 3 then -- 2 per rotation?
-		self:Bar(args.spellId, self:GetStage() == 2 and 48 or 42, CL.count:format(args.spellName, fallingStarsCount))
-	end
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][fallingStarsCount], CL.count:format(L.falling_stars, fallingStarsCount))
 end
 
 function mod:FallingStarsApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(422503)
-		self:PlaySound(422503, "warning")
-		self:Say(422503)
-		self:SayCountdown(422503, 5)
+		self:PersonalMessage(420236, nil, L.falling_stars_single)
+		self:PlaySound(420236, "warning")
+		self:Say(420236, L.falling_stars_single)
+		self:SayCountdown(420236, 5)
 	end
 end
 
 function mod:FallingStarsRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(422503)
+		self:CancelSayCountdown(420236)
 	end
 end
 
 function mod:MassEntanglement(args)
-	self:StopBar(CL.count:format(args.spellName, massEntanglementCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, massEntanglementCount))
+	self:StopBar(CL.count:format(L.mass_entanglement, massEntanglementCount))
+	--self:Message(args.spellId, "yellow", CL.count:format(L.mass_entanglement, massEntanglementCount))
 	massEntanglementCount = massEntanglementCount + 1
-	if self:GetStage() == 3 then
-		local cd = {15.5, 50, 64, 62.5}
-		self:Bar(args.spellId, cd[massEntanglementCount], CL.count:format(args.spellName, massEntanglementCount))
-	elseif massEntanglementCount < 3 then -- 2 per rotation?
-		self:Bar(args.spellId, self:GetStage() == 2 and 48 or 40, CL.count:format(args.spellName, massEntanglementCount))
-	end
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][massEntanglementCount], CL.count:format(L.mass_entanglement, massEntanglementCount))
 end
 
 function mod:MassEntanglementApplied(args)
 	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.mass_entanglement_single)
 		self:PlaySound(args.spellId, "warning")
 		self:SayCountdown(args.spellId, 6)
 	end
@@ -250,45 +317,38 @@ function mod:MassEntanglementRemoved(args)
 end
 
 function mod:IncarnationMoonkin(args)
-	self:StopBar(CL.count:format(args.spellName, incarnationMoonkinCount))
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, incarnationMoonkinCount))
+	self:StopBar(CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount))
+	self:Message(args.spellId, "cyan", CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount))
 	self:PlaySound(args.spellId, "info")
 	incarnationMoonkinCount = incarnationMoonkinCount + 1
-	if self:GetStage() == 3 then
-		local cd = {26, 49.7, 43.2, 50}
-		self:Bar(args.spellId, cd[incarnationMoonkinCount], CL.count:format(args.spellName, incarnationMoonkinCount))
-	elseif incarnationMoonkinCount < 3 then -- 2 per rotation?
-		self:Bar(args.spellId, 40, CL.count:format(args.spellName, incarnationMoonkinCount))
-	end
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][incarnationMoonkinCount], CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount))
 end
 
-function mod:SunfireApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
-	end
-end
+-- function mod:SunfireApplied(args)
+-- 	if self:Me(args.destGUID) then
+-- 		self:PersonalMessage(args.spellId)
+-- 		self:PlaySound(args.spellId, "alarm")
+-- 	end
+-- end
 
 function mod:FireBeam(args)
-	self:StopBar(args.spellName)
-	self:Message(args.spellId, "orange")
+	self:StopBar(CL.count:format(args.spellName, fireBeamCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, fireBeamCount))
 	self:PlaySound(args.spellId, "alert")
-	if self:GetStage() == 3 then
-		local cd = {34, 46.5, 43.5, 50}
-		self:Bar(args.spellId, cd[incarnationMoonkinCount])
-	elseif incarnationMoonkinCount == 2 then -- 2 per rotation?
-		self:Bar(args.spellId, 40)
-	end
+	fireBeamCount = fireBeamCount + 1
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][fireBeamCount], CL.count:format(args.spellName, fireBeamCount))
 end
 
 -- Intermission: Burning Pursuit
 function mod:IncarnationOwlOfTheFlame(args) -- XXX Also used outside intermission in Mythic
-	self:StopBar(CL.count:format(self:SpellName(423260), blazingMushroomCount)) -- Blazing Mushroom
-	self:StopBar(CL.count:format(self:SpellName(424581), fieryGrowthCount)) -- Fiery Growth
-	self:StopBar(CL.count:format(self:SpellName(420236), fallingStarsCount)) -- Falling Stars
-	self:StopBar(CL.count:format(self:SpellName(424495), massEntanglementCount)) -- Mass Entanglement
-	self:StopBar(CL.count:format(self:SpellName(420540), incarnationMoonkinCount)) -- Incarnation: Moonkin
-	self:StopBar(CL.count:format(self:SpellName(422115), incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
+	self:StopBar(CL.count:format(L.blazing_mushroom, blazingMushroomCount)) -- Blazing Mushroom
+	self:StopBar(CL.count:format(L.fiery_growth, fieryGrowthCount)) -- Fiery Growth
+	self:StopBar(CL.count:format(L.falling_stars, fallingStarsCount)) -- Falling Stars
+	self:StopBar(CL.count:format(L.mass_entanglement, massEntanglementCount)) -- Mass Entanglement
+	self:StopBar(CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
+	self:StopBar(CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
+	self:StopBar(CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
+	self:StopBar(CL.count:format(L.tranquility_of_flame, tranquilityOfFlameCount)) -- Tranquility of Flame
 	self:StopBar(CL.intermission)
 
 	local stage = self:GetStage()
@@ -296,13 +356,15 @@ function mod:IncarnationOwlOfTheFlame(args) -- XXX Also used outside intermissio
 	self:SetStage(stage)
 	self:Message("stages", "cyan", CL.intermission, false)
 	self:PlaySound("stages", "long")
+
+	self:Bar(424140, stage == 1.5 and 44 or 34.0) -- Supernova
+	dreamEssenceOnYou = 0
 end
 
 function mod:DreamEssenceApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:Message(args.spellId, "green", CL.you:format(CL.count:format(args.spellName, amount)))
-		self:PlaySound(args.spellId, "info")
+		dreamEssenceOnYou = amount
 	end
 end
 
@@ -317,6 +379,9 @@ function mod:Supernova(args)
 	self:Message(424140, "red")
 	self:PlaySound(424140, "long")
 	self:CastBar(424140, 20)
+	if self:GetStage() < 3 then
+		self:Message(424258, "green", CL.you:format(CL.count:format(self:SpellName(424258), dreamEssenceOnYou)))
+	end
 end
 
 function mod:SupernovaRemoved(args)
@@ -334,36 +399,33 @@ function mod:SupernovaRemoved(args)
 	massEntanglementCount = 1
 	incarnationMoonkinCount = 1
 	incarnationTreeOfFlameCount = 1
+	tranquilityOfFlameCount = 1
+	fireBeamCount = 1
 
-	self:Bar(423260, self:GetStage() == 3 and 8.5 or 18, CL.count:format(self:SpellName(423260), blazingMushroomCount)) -- Blazing Mushroom
-	self:Bar(424581, self:GetStage() == 3 and 5 or 22, CL.count:format(self:SpellName(424581), fieryGrowthCount)) -- Fiery Growth
-	self:Bar(420236, self:GetStage() == 3 and 22 or 10, CL.count:format(self:SpellName(420236), fallingStarsCount)) -- Falling Stars
-	self:Bar(424495, self:GetStage() == 3 and 15.5 or 5, CL.count:format(self:SpellName(424495), massEntanglementCount)) -- Mass Entanglement
+	self:Bar(423260, timers[stage][423260][blazingMushroomCount], CL.count:format(L.blazing_mushroom, blazingMushroomCount)) -- Blazing Mushroom
+	self:Bar(424581, timers[stage][424581][fieryGrowthCount], CL.count:format(L.fiery_growth, fieryGrowthCount)) -- Fiery Growth
+	self:Bar(420236, timers[stage][420236][fallingStarsCount], CL.count:format(L.falling_stars, fallingStarsCount)) -- Falling Stars
+	self:Bar(424495, timers[stage][424495][massEntanglementCount], CL.count:format(L.mass_entanglement, massEntanglementCount)) -- Mass Entanglement
 	if stage == 2 then
-		self:Bar(422115, 26, CL.count:format(self:SpellName(422115), incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
-		self:Bar(423265, 35) -- Tranquility of Flame
-		self:Bar("stages", 102, CL.intermission, 421603)
+		self:Bar(422115, timers[stage][422115][incarnationTreeOfFlameCount], CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
+		self:Bar(423265, timers[stage][423265][tranquilityOfFlameCount], CL.count:format(L.tranquility_of_flame, tranquilityOfFlameCount)) -- Tranquility of Flame
+		self:Bar("stages", 100, CL.intermission, 421603)
 	elseif stage == 3 then
-		self:Bar(420540, 26, CL.count:format(self:SpellName(420540), incarnationMoonkinCount)) -- Incarnation: Moonkin
-		self:Bar(422115, 41, CL.count:format(self:SpellName(422115), incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
-		self:Bar(423265, 50) -- Tranquility of Flame
-		self:Bar(421398, 34) -- Fire Beam
+		self:Bar(420540, timers[stage][420540][incarnationMoonkinCount], CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
+		self:Bar(421398, timers[stage][421398][fireBeamCount], CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
+		self:Bar(422115, timers[stage][422115][incarnationTreeOfFlameCount], CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
+		self:Bar(423265, timers[stage][423265][tranquilityOfFlameCount], CL.count:format(L.tranquility_of_flame, tranquilityOfFlameCount)) -- Tranquility of Flame
 		self:Bar(424140, 220) -- Supernova
 	end
 end
 
 -- Stage Two: Tree of the Flame
 function mod:IncarnationTreeOfFlame(args)
-	self:StopBar(CL.count:format(args.spellName, incarnationTreeOfFlameCount))
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, incarnationTreeOfFlameCount))
+	self:StopBar(CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount))
+	self:Message(args.spellId, "cyan", CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount))
 	self:PlaySound(args.spellId, "info")
 	incarnationTreeOfFlameCount = incarnationTreeOfFlameCount + 1
-	if self:GetStage() == 3 then
-		local cd = {42.0, 52.0, 56.0, 48.0}
-		self:Bar(args.spellId, cd[incarnationTreeOfFlameCount], CL.count:format(args.spellName, incarnationTreeOfFlameCount))
-	elseif incarnationTreeOfFlameCount < 3 then -- 2 in stage 1 + 2
-		self:Bar(args.spellId, 48, CL.count:format(args.spellName, incarnationTreeOfFlameCount))
-	end
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][incarnationTreeOfFlameCount], CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount))
 end
 
 function mod:SuppressiveEmberApplied(args)
@@ -374,16 +436,11 @@ function mod:SuppressiveEmberApplied(args)
 end
 
 function mod:TranquilityOfFlame(args)
-	self:StopBar(args.spellName)
-	self:Message(args.spellId, "cyan")
+	self:StopBar(args.spellName, CL.count:format(L.tranquility_of_flame, tranquilityOfFlameCount))
+	self:Message(args.spellId, "cyan", CL.count:format(L.tranquility_of_flame, tranquilityOfFlameCount))
 	self:PlaySound(args.spellId, "info")
-
-	if self:GetStage() == 3 then
-		local cd = {50, 47, 59, 47}
-		self:Bar(args.spellId, cd[incarnationTreeOfFlameCount])
-	elseif incarnationTreeOfFlameCount == 2 then -- 2 per rotation?
-		self:Bar(args.spellId, 48)
-	end
+	tranquilityOfFlameCount = tranquilityOfFlameCount + 1
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][tranquilityOfFlameCount], CL.count:format(L.tranquility_of_flame, tranquilityOfFlameCount))
 end
 
 function mod:SeedOfFlameApplied(args)
