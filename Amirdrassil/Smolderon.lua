@@ -25,7 +25,8 @@ local rotationCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.placeholder = "placeholder"
+	L.brand_of_damnation = "Tank Soak"
+	L.lava_geysers = "Geysers"
 end
 
 --------------------------------------------------------------------------------
@@ -52,6 +53,9 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[421343] = -27637, -- Stage One: The Firelord's Fury
 		[426725] = -27649, -- Stage Two: World In Flames
+	},{
+		[421343] = L.brand_of_damnation, -- Brand of Damnation (Tank Soak)
+		[422691] = L.lava_geysers, -- Lava Geysers (Geysers)
 	}
 end
 
@@ -87,11 +91,10 @@ function mod:OnEngage()
 	lavaGeysersCount = 1
 	rotationCount = 1
 
-	self:Bar(421343, 13, CL.count:format(self:SpellName(421343), brandofDamnationCount)) -- Brand of Damnation
+	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
-	self:Bar(422691, 27, CL.count:format(self:SpellName(422691), lavaGeysersCount)) -- Lava Geysers
+	self:Bar(422691, 27, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 67.2, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
-	self:Bar(426725, 395) -- Encroaching Destruction -- XXX Only after last world
 end
 
 --------------------------------------------------------------------------------
@@ -100,12 +103,12 @@ end
 
 -- Stage One: The Firelord's Fury
 function mod:BrandofDamnation(args)
-	self:StopBar(CL.count:format(args.spellName, brandofDamnationCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, brandofDamnationCount))
+	self:StopBar(CL.count:format(L.brand_of_damnation, brandofDamnationCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount))
 	self:PlaySound(args.spellId, "alert")
 	brandofDamnationCount = brandofDamnationCount + 1
-	if brandofDamnationCount < 9 then -- 8 total
-		self:Bar(args.spellId, brandofDamnationCount % 2 == 1 and 69 or 30, CL.count:format(args.spellName, brandofDamnationCount))
+	if brandofDamnationCount < 9 and brandofDamnationCount % 2 == 0 then -- 8 total, starting odds after a stage 2
+		self:Bar(args.spellId, 30, CL.count:format(L.brand_of_damnation, brandofDamnationCount))
 	end
 end
 
@@ -149,8 +152,8 @@ do
 			self:StopBar(msg)
 			self:Message(args.spellId, "yellow", msg)
 			overheatedCount = overheatedCount + 1
-			if overheatedCount < 9 then -- 8 total
-				self:Bar(args.spellId, overheatedCount % 2 == 1 and 69 or 30, CL.count:format(args.spellName, overheatedCount))
+			if overheatedCount < 9 and  overheatedCount % 2 == 0 then -- 8 total, starting odds after a stage 2
+				self:Bar(args.spellId, 30, CL.count:format(args.spellName, overheatedCount))
 			end
 		end
 		playerList[#playerList+1] = args.destName
@@ -169,11 +172,11 @@ do
 end
 
 function mod:LavaGeysers(args)
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, lavaGeysersCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.lava_geysers, lavaGeysersCount))
 	self:PlaySound(args.spellId, "alarm") -- watch feet
 	lavaGeysersCount = lavaGeysersCount + 1
-	if lavaGeysersCount < 9 then -- 8 total
-		self:Bar(args.spellId, lavaGeysersCount % 2 == 1 and 77 or 22, CL.count:format(args.spellName, lavaGeysersCount))
+	if lavaGeysersCount < 9 and lavaGeysersCount % 2 == 0 then -- 8 total, starting odds after a stage 2
+		self:Bar(args.spellId, 22, CL.count:format(L.lava_geysers, lavaGeysersCount))
 	end
 end
 
@@ -185,7 +188,14 @@ end
 function mod:BlazingSoulRemoved(args)
 	self:SetStage(1)
 	rotationCount = rotationCount + 1
-	self:Bar("stages", 65, CL.count:format(CL.stage:format(2), rotationCount), 422172)
+
+	self:Bar(421343, 13.0, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
+	self:Bar(421455, 10.4, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
+	self:Bar(422691, 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
+	self:Bar("stages", 60, CL.count:format(CL.stage:format(2), rotationCount), 422172)
+	if rotationCount == 4 then -- "Enrage" after 4th
+		self:Bar(426725, 100) -- Encroaching Destruction
+	end
 end
 
 function mod:EncroachingDestruction(args)
