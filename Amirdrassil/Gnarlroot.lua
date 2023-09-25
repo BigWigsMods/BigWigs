@@ -28,7 +28,8 @@ local intermissionCount = 0
 
 local L = mod:GetLocale()
 if L then
-	L.placeholder = "placeholder"
+	L.shadowflame_cleave = "Cleave"
+	L.tortured_scream = "Scream"
 end
 
 --------------------------------------------------------------------------------
@@ -56,6 +57,11 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[421898] = -27467, -- Stage One: Garden of Despair
 		[421038] = -27475, -- Stage Two: Agonizing Growth
+	},{
+		[421898] = CL.adds, -- Flaming Pestilence (Adds)
+		[421972] = CL.bombs, -- Controlled Burn (Bombs)
+		[422026] = L.tortured_scream, -- Tortured Scream (Scream)
+		[422039] = L.shadowflame_cleave, -- Shadowflame Cleave (Cleave)
 	}
 end
 
@@ -96,11 +102,11 @@ function mod:OnEngage()
 	dreadfireBarrageCount = 1
 	intermissionCount = 1
 
-	self:Bar(422026, 3.5, CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
-	self:Bar(424352, 9.5) -- Dreadfire Barrage
-	self:Bar(421898, 20.4, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
-	self:Bar(421972, 33.5, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, 22, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar(422026, 4.5, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, 12.2) -- Dreadfire Barrage
+	self:Bar(421898, 21.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, 39.9, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, 27.6, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:Bar("stages", 90, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Stage Two: Agonizing Growth / Potent Fertilization
 end
 
@@ -110,12 +116,12 @@ end
 
 -- Stage One: Garden of Despair
 function mod:FlamingPestilence(args)
-	self:StopBar(CL.count:format(args.spellName, flamingPestilenceCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, flamingPestilenceCount))
+	self:StopBar(CL.count:format(CL.adds, flamingPestilenceCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.adds, flamingPestilenceCount))
 	self:PlaySound(args.spellId, "alert")
 	flamingPestilenceCount = flamingPestilenceCount + 1
 	if flamingPestilenceCount < 3 then -- 2 per rotation
-		self:CDBar(args.spellId, 35, CL.count:format(args.spellName, flamingPestilenceCount))
+		self:CDBar(args.spellId, 49.2, CL.count:format(CL.adds, flamingPestilenceCount))
 	end
 end
 
@@ -131,10 +137,10 @@ do
 	local playerList = {}
 	function mod:ControlledBurn(args)
 		playerList = {}
-		self:StopBar(CL.count:format(args.spellName, controlledBurnCount))
+		self:StopBar(CL.count:format(CL.bombs, controlledBurnCount))
 		controlledBurnCount = controlledBurnCount + 1
 		if controlledBurnCount < 3 then -- 2 per rotation
-			self:CDBar(421972, 32, CL.count:format(args.spellName, controlledBurnCount))
+			self:CDBar(421972, 43, CL.count:format(CL.bombs, controlledBurnCount))
 		end
 	end
 
@@ -144,11 +150,11 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, count, count))
 			self:SayCountdown(args.spellId, 6, count)
 		end
 		self:CustomIcon(controlledBurnMarker, args.destName, count)
-		self:TargetsMessage(args.spellId, "yellow", playerList, 4, CL.count:format(args.spellName, controlledBurnCount))
+		self:TargetsMessage(args.spellId, "yellow", playerList, 4, CL.count:format(CL.bombs, controlledBurnCount))
 	end
 
 	function mod:ControlledBurnRemoved(args)
@@ -168,8 +174,8 @@ function mod:DreadfireBarrage(args)
 		self:Message(args.spellId, "purple")
 	end
 	dreadfireBarrageCount = dreadfireBarrageCount + 1
-	if dreadfireBarrageCount < 5 then -- 4 per rotation
-		self:Bar(args.spellId, 21.5)
+	if dreadfireBarrageCount < 4 then -- 3 per rotation
+		self:Bar(args.spellId, dreadfireBarrageCount == 2 and 32.4 or 29.4)
 	end
 end
 
@@ -187,30 +193,33 @@ function mod:DreadfireBarrageApplied(args)
 end
 
 function mod:TorturedScream(args)
-	self:StopBar(CL.count:format(args.spellName, torturedScreamCount))
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, torturedScreamCount))
+	self:StopBar(CL.count:format(L.tortured_scream, torturedScreamCount))
+	self:Message(args.spellId, "red", CL.count:format(L.tortured_scream, torturedScreamCount))
 	self:PlaySound(args.spellId, "alert")
 	torturedScreamCount = torturedScreamCount + 1
-	if torturedScreamCount < 6 then -- 5 per rotation
-		self:CDBar(args.spellId, 18, CL.count:format(args.spellName, torturedScreamCount))
+	if torturedScreamCount < 5 then -- 4 per rotation
+		local cd = {4.5, 29.2, 23.1, 30.8}
+		self:CDBar(args.spellId, cd[torturedScreamCount], CL.count:format(L.tortured_scream, torturedScreamCount))
 	end
 end
 
 function mod:ShadowflameCleave(args)
-	self:StopBar(CL.count:format(args.spellName, shadowflameCleaveCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shadowflameCleaveCount))
+	self:StopBar(CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameCleaveCount = shadowflameCleaveCount + 1
-	self:CDBar(args.spellId, 20, CL.count:format(args.spellName, shadowflameCleaveCount))
+	if shadowflameCleaveCount < 3 then -- 2 per rotation
+		self:CDBar(args.spellId, 36.9, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
+	end
 end
 
 -- Stage Two: Agonizing Growth
 function mod:PotentFertilization(args)
 	self:StopBar(424352) -- Dreadfire Barrage
-	self:StopBar(CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
-	self:StopBar(CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
-	self:StopBar(CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
-	self:StopBar(CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:StopBar(CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:StopBar(CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:StopBar(CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:StopBar(CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:StopBar(CL.count:format(CL.stage:format(2), intermissionCount)) -- Stage Two: Agonizing Growth / Potent Fertilization
 
 	self:Message("stages", "yellow", CL.stage:format(2), false)
@@ -267,10 +276,10 @@ function mod:UprootedAgonyRemoved(args)
 	dreadfireBarrageCount = 1
 	intermissionCount = intermissionCount + 1
 
-	self:Bar(422026, 5, CL.count:format(self:SpellName(422026), torturedScreamCount)) -- Tortured Scream
-	self:Bar(424352, 11) -- Dreadfire Barrage
-	self:Bar(421898, 21, CL.count:format(self:SpellName(421898), flamingPestilenceCount)) -- Flaming Pestilence
-	self:Bar(421972, 35, CL.count:format(self:SpellName(421972), controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, 44, CL.count:format(self:SpellName(422039), shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:Bar("stages", 95.5, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
+	self:Bar(422026, 6.6, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, 14.3) -- Dreadfire Barrage
+	self:Bar(421898, 23.5, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, 42.4, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, 29.7, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar("stages", 93.5, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
 end
