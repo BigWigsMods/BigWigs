@@ -35,7 +35,8 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
-	L.placeholder = "placeholder"
+	L.threads_of_life = "Daggers"
+	L.viridian_rain = "Raid Damage"
 end
 
 --------------------------------------------------------------------------------
@@ -52,6 +53,12 @@ function mod:GetOptions()
 		{426147, "TANK"}, -- Threaded Blast
 		{426520, "SAY", "SAY_COUNTDOWN"}, -- Weaver's Burden
 		420907, -- Viridian Rain
+	},nil,{
+		[420846] = CL.adds, -- Continuum (Adds)
+		[424477] = CL.pools, -- Violent Flora (Pools)
+		[425745] = L.threads_of_life, -- Threads of Life (Daggers)
+		[426520] = CL.bomb, -- Weaver's Burden (Bomb)
+		[420907] = L.viridian_rain, -- Viridian Rain (Raid Damage)
 	}
 end
 
@@ -82,11 +89,11 @@ function mod:OnEngage()
 
 	inflorescenceOnMe = false
 
-	self:Bar(420907, 7, CL.count:format(self:SpellName(420907), viridianRainCount)) -- Viridian Rain
-	self:Bar(424477, 15, CL.count:format(self:SpellName(424477), violentFloraCount)) -- Violent Flora
-	self:Bar(426520, 27, CL.count:format(self:SpellName(426520), weaversBurdenCount)) -- Weaver's Burden
-	self:Bar(425745, 35, CL.count:format(self:SpellName(425745), threadsOfLifeCount)) -- Threads of Life
-	self:Bar(420846, 90, CL.count:format(self:SpellName(420846), continuumCount)) -- Continuum
+	self:Bar(420907, 7, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
+	self:Bar(424477, 15, CL.count:format(CL.pools, violentFloraCount)) -- Violent Flora
+	self:Bar(426520, 27, CL.count:format(CL.bomb, weaversBurdenCount)) -- Weaver's Burden
+	self:Bar(425745, 35, CL.count:format(L.threads_of_life, threadsOfLifeCount)) -- Threads of Life
+	self:Bar(420846, 90, CL.count:format(CL.adds, continuumCount)) -- Continuum
 end
 
 --------------------------------------------------------------------------------
@@ -96,24 +103,24 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 423858 then -- Violent Flora
-		self:StopBar(CL.count:format(self:SpellName(423858), violentFloraCount))
-		self:Message(424477, "yellow", CL.count:format(self:SpellName(423858), violentFloraCount))
+		self:StopBar(CL.count:format(CL.pools, violentFloraCount))
+		self:Message(424477, "yellow", CL.count:format(CL.pools, violentFloraCount))
 		self:PlaySound(424477, "long")
 		violentFloraCount = violentFloraCount + 1
-		self:Bar(424477, timers[424477][violentFloraCount], CL.count:format(self:SpellName(423858), violentFloraCount))
+		self:Bar(424477, timers[424477][violentFloraCount], CL.count:format(CL.pools, violentFloraCount))
 	elseif spellId == 426519 then -- Weaver's Burden
-		self:StopBar(CL.count:format(self:SpellName(426519), weaversBurdenCount))
+		self:StopBar(CL.count:format(CL.bomb, weaversBurdenCount))
 		weaversBurdenCount = weaversBurdenCount + 1
-		self:Bar(426520, timers[424477][weaversBurdenCount], CL.count:format(self:SpellName(426519), weaversBurdenCount))
+		self:Bar(426520, timers[424477][weaversBurdenCount], CL.count:format(CL.bomb, weaversBurdenCount))
 	end
 end
 
 function mod:Continuum(args)
-	self:StopBar(CL.count:format(args.spellName, continuumCount))
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, continuumCount))
+	self:StopBar(CL.count:format(CL.adds, continuumCount))
+	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, continuumCount))
 	self:PlaySound(args.spellId, "info")
 	continuumCount = continuumCount + 1
-	self:Bar(args.spellId, 90, CL.count:format(args.spellName, continuumCount))
+	self:Bar(args.spellId, 90, CL.count:format(CL.adds, continuumCount))
 end
 
 function mod:VerdantMatrixApplied(args)
@@ -125,11 +132,11 @@ function mod:VerdantMatrixApplied(args)
 end
 
 -- function mod:ViolentFlora(args)
--- 	self:StopBar(CL.count:format(args.spellName, violentFloraCount))
--- 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, violentFloraCount))
+-- 	self:StopBar(CL.count:format(CL.pools, violentFloraCount))
+-- 	self:Message(args.spellId, "yellow", CL.count:format(CL.pools, violentFloraCount))
 -- 	self:PlaySound(args.spellId, "long")
 -- 	violentFloraCount = violentFloraCount + 1
--- 	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, violentFloraCount))
+-- 	--self:Bar(args.spellId, 20, CL.count:format(CL.pools, violentFloraCount))
 -- end
 
 function mod:InflorescenceApplied(args)
@@ -147,11 +154,11 @@ function mod:InflorescenceRemoved(args)
 end
 
 function mod:ThreadsOfLife(args)
-	self:StopBar(CL.count:format(args.spellName, threadsOfLifeCount))
-	self:Message(425745, "yellow", CL.count:format(args.spellName, threadsOfLifeCount))
+	self:StopBar(CL.count:format(L.threads_of_life, threadsOfLifeCount))
+	self:Message(425745, "yellow", CL.count:format(L.threads_of_life, threadsOfLifeCount))
 	self:PlaySound(425745, "alert")
 	threadsOfLifeCount = threadsOfLifeCount + 1
-	self:Bar(425745, timers[425745][threadsOfLifeCount], CL.count:format(args.spellName, threadsOfLifeCount))
+	self:Bar(425745, timers[425745][threadsOfLifeCount], CL.count:format(L.threads_of_life, threadsOfLifeCount))
 end
 
 function mod:ThreadsOfLifeApplied(args)
@@ -168,25 +175,25 @@ function mod:ThreadedBlast(args)
 end
 
 function mod:WeaversBurdenApplied(args)
-	self:TargetMessage(args.spellId, "purple", args.destName)
-	self:TargetBar(args.spellId, 12, args.destName)
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.bomb)
+	self:TargetBar(args.spellId, 12, args.destName, CL.bomb)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+		self:Say(args.spellId, CL.bomb)
 		self:SayCountdown(args.spellId, 12)
 	end
 end
 
 function mod:WeaversBurdenRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(CL.bomb, args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
 end
 
 function mod:ViridianRain(args)
-	self:StopBar(CL.count:format(args.spellName, viridianRainCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, viridianRainCount))
+	self:StopBar(CL.count:format(L.viridian_rain, viridianRainCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.viridian_rain, viridianRainCount))
 	self:PlaySound(args.spellId, "alarm")
 	viridianRainCount = viridianRainCount + 1
-	self:Bar(args.spellId, timers[args.spellId][viridianRainCount], CL.count:format(args.spellName, viridianRainCount))
+	self:Bar(args.spellId, timers[args.spellId][viridianRainCount], CL.count:format(L.viridian_rain, viridianRainCount))
 end
