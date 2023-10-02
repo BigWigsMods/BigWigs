@@ -23,6 +23,12 @@ local heartStopperCount = 1
 local hasLeap = false
 
 --------------------------------------------------------------------------------
+-- Timers
+--
+
+local bladeTimers = {25.8, 13.6, 25.6, 48.7, 25.6}
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -30,7 +36,7 @@ local L = mod:GetLocale()
 if L then
 	L.blistering_spear = "Spears"
 	L.blistering_spear_single = "Spear"
-	L.piercing_torment = "Chain"
+	L.blistering_torment = "Chain"
 	L.twisting_blade = "Blades"
 	L.marked_for_torment = "Torment"
 	L.wracking_skewer = "Soak"
@@ -47,9 +53,9 @@ function mod:GetOptions()
 	return {
 		"stages",
 		{414340, "TANK"}, -- Drenched Blades
-		{414888, "SAY", "SAY_COUNTDOWN"}, -- Blistering Spear
+		{414888, "SAY"}, -- Blistering Spear
 		blisteringSpearMarker,
-		{414770, "SAY"}, -- Piercing Torment
+		{414770, "SAY"}, -- Blistering Torment
 		416996, -- Twisting Blade
 		422776, -- Marked for Torment
 		414367, -- Gathering Torment
@@ -61,7 +67,7 @@ function mod:GetOptions()
 		426056, -- Vital Rupture
 	},nil,{
 		[414888] = L.blistering_spear, -- Blistering Spear (Spears)
-		[414770] = L.piercing_torment, -- Piercing Torment (Chain)
+		[414770] = L.blistering_torment, -- Blistering Torment (Chain)
 		[416996] = L.twisting_blade, -- Twisting Blade (Blades)
 		[422776] = L.marked_for_torment, -- Marked for Torment (Torment)
 		[416048] = L.wracking_skewer, -- Wracking Skewer (Soak)
@@ -78,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BlisteringSpear", 414425)
 	self:Log("SPELL_AURA_APPLIED", "BlisteringSpearApplied", 414888)
 	self:Log("SPELL_AURA_REMOVED", "BlisteringSpearRemoved", 414888)
-	self:Log("SPELL_AURA_APPLIED", "PiercingTorment", 414770)
+	self:Log("SPELL_AURA_APPLIED", "BlisteringTorment", 414770)
 	self:Log("SPELL_CAST_START", "TwistingBlade", 416996)
 	self:Log("SPELL_CAST_START", "MarkedforTorment", 422776)
 	self:Log("SPELL_AURA_APPLIED", "GatheringTorment", 414367)
@@ -100,8 +106,8 @@ function mod:OnEngage()
 	markedForTormentCount = 1
 	hasLeap = false
 
-	self:Bar(414888, 15.5, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
-	self:Bar(416996, 7.5, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
+	self:Bar(414888, self:Mythic() and 4.5 or 15.5, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
+	self:Bar(416996, self:Mythic() and 15.5 or 7.5, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
 	self:Bar(422776, 40, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
 
 	self:RegisterUnitEvent("UNIT_AURA", nil, "player") -- XXX temp Smashing Viscera / 424456, reported and hopefully they add log event
@@ -142,6 +148,33 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		wrackingSkewerCount = 1
 		self:Bar(416048, 19, CL.count:format(L.wracking_skewer, wrackingSkewerCount)) -- Wracking Skewer
 	end
+
+	-- Mythic
+	if spellId == 425282 then -- Axe Knife Stance
+		self:Message("stages", "cyan", CL.soon:format(L.wracking_skewer), 416048) -- Wracking Skewer
+		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
+		self:PlaySound("stages", "info")
+		wrackingSkewerCount = 1
+		heartStopperCount = 1
+		self:Bar(416048, 13.5, CL.count:format(L.wracking_skewer, wrackingSkewerCount)) -- Wracking Skewer
+		self:Bar(415623, 17.5, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
+	elseif spellId == 425283 then -- Axe Sword Stance
+		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
+		self:Message("stages", "cyan", CL.soon:format(L.wracking_skewer), 416048) -- Wracking Skewer
+		self:PlaySound("stages", "info")
+		smashingVisceraCount = 1
+		wrackingSkewerCount = 1
+		self:Bar(424456, 14, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
+		self:Bar(416048, 8.5, CL.count:format(L.wracking_skewer, wrackingSkewerCount)) -- Wracking Skewer
+	elseif spellId == 414357 then -- Sword Knife Stance
+		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
+		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
+		self:PlaySound("stages", "info")
+		smashingVisceraCount = 1
+		heartStopperCount = 1
+		self:Bar(415623, 8.5, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
+		self:Bar(424456, 12.5, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
+	end
 end
 
 function mod:DrenchedBlades(args)
@@ -168,6 +201,12 @@ do
 		if not self:Easy() and blisteringSpearCount > 4 then -- Weapons don't respawn on Heroic+
 			cd = 70
 		end
+		if self:Mythic() then
+			cd = blisteringSpearCount % 2 == 0 and 20.5 or 110.5
+			if blisteringSpearCount > 8 and blisteringSpearCount % 2 == 1 then
+				cd = 47.4
+			end
+		end
 		self:Bar(414888, cd, CL.count:format(L.blistering_spear, blisteringSpearCount))
 	end
 
@@ -178,36 +217,37 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.blistering_spear_single)
-			--self:SayCountdown(args.spellId, 15, count)
 		end
 		self:CustomIcon(blisteringSpearMarker, args.destName, count)
 		self:TargetsMessage(args.spellId, "cyan", playerList, self:Mythic() and 6 or 4, CL.count:format(L.blistering_spear, blisteringSpearCount-1))
 	end
 
 	function mod:BlisteringSpearRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
 		self:CustomIcon(blisteringSpearMarker, args.destName)
 	end
 end
 
-function mod:PiercingTorment(args)
+function mod:BlisteringTorment(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.piercing_torment)
+		self:PersonalMessage(args.spellId, nil, L.blistering_torment)
 		self:PlaySound(args.spellId, "warning")
-		self:Yell(args.spellId, L.piercing_torment) -- Save me
+		self:Yell(args.spellId, L.blistering_torment) -- Save me
 	end
 end
 
-local bladeTimers = {25.8, 13.6, 25.6, 48.7, 25.6}
 function mod:TwistingBlade(args)
 	self:StopBar(CL.count:format(L.twisting_blade, twistingBladeCount))
 	self:Message(args.spellId, "orange", CL.count:format(L.twisting_blade, twistingBladeCount))
 	self:PlaySound(args.spellId, "alarm")
 	twistingBladeCount = twistingBladeCount + 1
 	local cdCount = twistingBladeCount % 5 + 1
-	self:Bar(args.spellId, bladeTimers[cdCount], CL.count:format(L.twisting_blade, twistingBladeCount))
+	local cd = bladeTimers[cdCount]
+	if self:Mythic() then
+		local table = {30.5, 17.1, 20.7, 63.5}
+		local mythicCount = twistingBladeCount % 4 + 1
+		cd = table[mythicCount]
+	end
+	self:Bar(args.spellId, cd, CL.count:format(L.twisting_blade, twistingBladeCount))
 end
 
 function mod:MarkedforTorment(args)
@@ -216,7 +256,7 @@ function mod:MarkedforTorment(args)
 	self:PlaySound(args.spellId, "long")
 	markedForTormentCount = markedForTormentCount + 1
 	self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
-	local cd = 140
+	local cd = self:Mythic() and 131.5 or 140
 	if not self:Easy() and markedForTormentCount > 4 then -- Weapons don't respawn on Heroic+
 		cd = 70
 	end
