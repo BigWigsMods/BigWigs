@@ -14,6 +14,8 @@ mod:SetStage(1)
 -- Locals
 --
 
+local mobCollector = {}
+local taintedTreantMarks = {}
 local emberCharredOnMe = nil
 local flamingPestilenceCount = 1
 local controlledBurnCount = 1
@@ -28,7 +30,7 @@ local intermissionCount = 0
 
 local L = mod:GetLocale()
 if L then
-	L.shadowflame_cleave = "Cleave"
+	L.shadowflame_cleave = "Frontal Cone"
 	L.tortured_scream = "Scream"
 end
 
@@ -37,6 +39,7 @@ end
 --
 
 local controlledBurnMarker = mod:AddMarkerOption(true, "player", 1, 421972, 1, 2, 3, 4) -- Controlled Burn
+local taintedTreantMarker = mod:AddMarkerOption(true, "npc", 8, -27902, 8, 7, 6, 5) -- Tainted Treant
 function mod:GetOptions()
 	return {
 		"stages",
@@ -51,12 +54,16 @@ function mod:GetOptions()
 		422039, -- Shadowflame Cleave
 		-- Stage Two: Agonizing Growth
 		421038, -- Ember-Charred
-		424970, -- Corrupted Soil
+		424970, -- Toxic Loam
 		421840, -- Uprooted Agony
+		taintedTreantMarker,
+		425816, -- Blazing Pollen
+		{425820, "SAY"}, -- Flaming Sap
 	},{
 		["stages"] = "general",
 		[421898] = -27467, -- Stage One: Garden of Despair
 		[421038] = -27475, -- Stage Two: Agonizing Growth
+		[taintedTreantMarker] = "mythic",
 	},{
 		[421898] = CL.adds, -- Flaming Pestilence (Adds)
 		[421972] = CL.bombs, -- Controlled Burn (Bombs)
@@ -66,6 +73,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+
 	-- Stage One: Garden of Despair
 	self:Log("SPELL_CAST_SUCCESS", "FlamingPestilence", 421898)
 	self:Log("SPELL_AURA_APPLIED", "ShadowSpinesApplied", 422053)
@@ -87,9 +95,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "UprootedAgonyApplied", 421840)
 	self:Log("SPELL_AURA_REMOVED", "UprootedAgonyRemoved", 421840)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 424970, 422023) -- Corrupted Soil, Shadow-Scorched Earth
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 424970, 422023) -- Toxic Loam, Shadow-Scorched Earth
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 424970, 422023)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 424970, 422023)
+
+	-- Mythic
+	self:Log("SPELL_SUMMON", "FlamingPestilenceSummon", 425366) -- Flaming Pestilence
+	self:Death("TaintedTreantDeath", 211904) -- Tainted Treant
+	self:Log("SPELL_CAST_START", "BlazingPollen", 425816)
+	self:Log("SPELL_AURA_APPLIED", "FlamingSapApplied", 425820)
 end
 
 function mod:OnEngage()
@@ -101,13 +115,19 @@ function mod:OnEngage()
 	shadowflameCleaveCount = 1
 	dreadfireBarrageCount = 1
 	intermissionCount = 1
+	mobCollector = {}
+	taintedTreantMarks = {}
 
-	self:Bar(422026, 4.5, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
-	self:Bar(424352, 12.2) -- Dreadfire Barrage
-	self:Bar(421898, 21.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
-	self:Bar(421972, 39.9, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, 27.6, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar(422026, self:Mythic() and 3.5 or 4.5, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, self:Mythic() and 9.4 or 12.2) -- Dreadfire Barrage
+	self:Bar(421898, self:Mythic() and 19.5 or 21.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, self:Mythic() and 31.5 or 39.9, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, self:Mythic() and 21.2 or 27.6, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:Bar("stages", 90, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Stage Two: Agonizing Growth / Potent Fertilization
+
+	if self:GetOption(taintedTreantMarker) then
+		self:RegisterTargetEvents("AddMarking")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -121,7 +141,7 @@ function mod:FlamingPestilence(args)
 	self:PlaySound(args.spellId, "alert")
 	flamingPestilenceCount = flamingPestilenceCount + 1
 	if flamingPestilenceCount < 3 then -- 2 per rotation
-		self:CDBar(args.spellId, 49.2, CL.count:format(CL.adds, flamingPestilenceCount))
+		self:CDBar(args.spellId, self:Mythic() and 44.8 or 49.2, CL.count:format(CL.adds, flamingPestilenceCount))
 	end
 end
 
@@ -140,7 +160,7 @@ do
 		self:StopBar(CL.count:format(CL.bombs, controlledBurnCount))
 		controlledBurnCount = controlledBurnCount + 1
 		if controlledBurnCount < 3 then -- 2 per rotation
-			self:CDBar(421972, 43, CL.count:format(CL.bombs, controlledBurnCount))
+			self:CDBar(421972, self:Mythic() and 38.9 or 43, CL.count:format(CL.bombs, controlledBurnCount))
 		end
 	end
 
@@ -174,9 +194,8 @@ function mod:DreadfireBarrage(args)
 		self:Message(args.spellId, "purple")
 	end
 	dreadfireBarrageCount = dreadfireBarrageCount + 1
-	if dreadfireBarrageCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, dreadfireBarrageCount == 2 and 32.4 or 29.4)
-	end
+	local cd = self:Mythic() and {9.4, 25.9, 20.0, 18.9, 0} or {12.2, 32.4, 29.4, 0}
+	self:Bar(args.spellId, cd[dreadfireBarrageCount])
 end
 
 function mod:DreadfireBarrageApplied(args)
@@ -197,10 +216,8 @@ function mod:TorturedScream(args)
 	self:Message(args.spellId, "red", CL.count:format(L.tortured_scream, torturedScreamCount))
 	self:PlaySound(args.spellId, "alert")
 	torturedScreamCount = torturedScreamCount + 1
-	if torturedScreamCount < 5 then -- 4 per rotation
-		local cd = {4.5, 29.2, 23.1, 30.8}
-		self:CDBar(args.spellId, cd[torturedScreamCount], CL.count:format(L.tortured_scream, torturedScreamCount))
-	end
+	local cd = self:Mythic() and {3.5, 23.5, 16.4, 22.5, 20.1, 0} or {4.5, 29.2, 23.1, 30.8, 0}
+	self:CDBar(args.spellId, cd[torturedScreamCount], CL.count:format(L.tortured_scream, torturedScreamCount))
 end
 
 function mod:ShadowflameCleave(args)
@@ -208,9 +225,8 @@ function mod:ShadowflameCleave(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameCleaveCount = shadowflameCleaveCount + 1
-	if shadowflameCleaveCount < 3 then -- 2 per rotation
-		self:CDBar(args.spellId, 36.9, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
-	end
+	local cd = self:Mythic() and {23.4, 28.2, 30.7} or {29.7, 36.9}
+	self:CDBar(args.spellId, cd[shadowflameCleaveCount], CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 end
 
 -- Stage Two: Agonizing Growth
@@ -275,11 +291,60 @@ function mod:UprootedAgonyRemoved(args)
 	shadowflameCleaveCount = 1
 	dreadfireBarrageCount = 1
 	intermissionCount = intermissionCount + 1
+	mobCollector = {}
+	taintedTreantMarks = {}
 
-	self:Bar(422026, 6.6, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
-	self:Bar(424352, 14.3) -- Dreadfire Barrage
-	self:Bar(421898, 23.5, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
-	self:Bar(421972, 42.4, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, 29.7, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:Bar("stages", 93.5, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
+	self:Bar(422026, self:Mythic() and 5.5 or 6.6, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, self:Mythic() and 11.5 or 14.3) -- Dreadfire Barrage
+	self:Bar(421898, self:Mythic() and 21.5 or 23.5, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, self:Mythic() and 35.5 or 42.4, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, self:Mythic() and 23 or 29.7, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar("stages", 92, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Potent Fertilization
+end
+
+-- Mythic
+function mod:FlamingPestilenceSummon(args)
+	if self:GetOption(taintedTreantMarker) then
+		for i = 8, 5, -1 do -- 8, 7, 6, 5
+			if not mobCollector[args.destGUID] and not taintedTreantMarks[i] then
+				taintedTreantMarks[i] = args.destGUID
+				mobCollector[args.destGUID] = i
+				return
+			end
+		end
+	end
+end
+
+function mod:AddMarking(_, unit, guid)
+	if mobCollector[guid] then
+		self:CustomIcon(taintedTreantMarker, unit, mobCollector[guid]) -- icon order from SPELL_SUMMON
+		mobCollector[guid] = nil
+	end
+end
+
+function mod:TaintedTreantDeath(args)
+	for i = 8, 5, -1 do -- 8, 7, 6, 5
+		if taintedTreantMarks[i] == args.destGUID then
+			taintedTreantMarks[i] = nil
+			return
+		end
+	end
+end
+
+function mod:BlazingPollen(args)
+	local canDo, ready = self:Interrupter(args.sourceGUID)
+	if canDo then
+		self:Message(args.spellId, "orange")
+		if ready then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
+
+function mod:FlamingSapApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "alarm")
+		self:Say(args.spellId)
+	end
 end
