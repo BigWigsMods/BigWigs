@@ -100,7 +100,7 @@ function mod:OnBossEnable()
 
 	-- Urctos
 	self:Log("SPELL_CAST_START", "BlindingRage", 420525)
-	self:Log("SPELL_AURA_REMOVED", "BlindingRageOver", 420525)
+	self:Log("SPELL_CAST_SUCCESS", "BlindingRageOver", 418757) -- Polymorph Bomb on Ursoc
 	self:Log("SPELL_AURA_APPLIED", "UrsineRageApplied", 425114)
 	self:Log("SPELL_CAST_START", "BarrelingCharge", 420947)
 	self:Log("SPELL_AURA_APPLIED", "BarrelingChargeApplied", 420948)
@@ -252,9 +252,7 @@ do
 	local trampledOnYou = false
 	function mod:BarrelingCharge(args)
 		self:StopBar(CL.count:format(L.charge, barrelingChargeCount))
-		if not activeUltimate() then -- Only increment outside of ultimates
-			barrelingChargeCount = barrelingChargeCount + 1
-		end
+		barrelingChargeCount = barrelingChargeCount + 1
 		if activeUltimate() or (nextConstrictingThicket - GetTime() > 0) then -- Repeat during ultimate, second cast if Constricting Thicket is next
 			self:CDBar(420948, activeUltimate() and 8 or 30, CL.count:format(L.charge, barrelingChargeCount))
 		end
@@ -362,9 +360,7 @@ function mod:NoxiousBlossom(args)
 	self:StopBar(CL.count:format(CL.pools, noxiousBlossomCount))
 	self:Message(args.spellId, "yellow", CL.count:format(CL.pools, noxiousBlossomCount))
 	self:PlaySound(args.spellId, "alert")
-	if not activeUltimate() then -- Only increment outside of ultimates
-		noxiousBlossomCount = noxiousBlossomCount + 1
-	end
+	noxiousBlossomCount = noxiousBlossomCount + 1
 	if nextSpecial - GetTime() > 24 then -- Is this enough?
 		self:CDBar(args.spellId, 21, CL.count:format(CL.pools, noxiousBlossomCount))
 	end
@@ -401,7 +397,7 @@ function mod:SongoftheDragon(args)
 	self:StopBar(CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 24, CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
+	self:CastBar(args.spellId, self:Mythic() and 12 or 24, CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songoftheDragonCount))
 	songoftheDragonCount = songoftheDragonCount + 1
 	activeUltimates = activeUltimates + 1
 	self:Bar(420671, 3, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
@@ -442,9 +438,7 @@ function mod:PolymorphBomb(args)
 	self:StopBar(CL.count:format(L.polymorph_bomb, polymorphBombCount))
 	self:Message(418720, "yellow", CL.count:format(L.polymorph_bomb, polymorphBombCount))
 	self:PlaySound(418720, "alert")
-	if not activeUltimate() then -- Only increment outside of ultimates
-		polymorphBombCount = polymorphBombCount + 1
-	end
+	polymorphBombCount = polymorphBombCount + 1
 	local cd = nil
 	if nextSpecial - GetTime() > 25 then -- Normal cooldown
 		cd = 18.9
