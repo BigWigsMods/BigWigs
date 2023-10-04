@@ -572,16 +572,32 @@ local function parseLua(file)
 		lines[#lines+1] = line
 	end
 
+	local module_encounter_id, module_set_stage = nil, nil
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
 	local options, option_keys, option_key_used = {}, {}, {}
 	local options_block_start = 0
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
 	local current_func = nil
-	local rep = {}
+	local rep = {} -- key replacements
+
 	for n, line in ipairs(lines) do
 		local comment = line:match("%-%-%s*(.*)") or ""
 		line = line:gsub("%-%-.*$", "") -- strip comments
+
+		-- set some module flags
+		if line:match("^mod:SetEncounterID") then
+			module_encounter_id = true
+		end
+		if line:match("^mod:SetStage") then
+			module_set_stage = true
+		else
+			local method = line:match(":([GS]etStage)%(")
+			if method and not module_set_stage then
+				error(string.format("    %s:%d: %s: Missing initial mod:SetStage!", file_name, n, method))
+				module_set_stage = true
+			end
+		end
 
 		-- locale checking
 		do
