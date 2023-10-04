@@ -421,14 +421,18 @@ local function parseGetOptions(file_name, lines, start)
 			chunk = lines[i]
 			break
 		end
-		if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
-			-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
-			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
-			-- TODO string parse the other tables for duplicates
-			break
-		end
-		if lines[i]:match("^%s*end") then
-			chunk = table.concat(lines, "\n", start, i-1) -- no headers, so we need to back up to the }
+		-- if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
+		-- 	-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
+		-- 	chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
+		-- 	-- TODO string parse the other tables for duplicates
+		-- 	break
+		-- -- end
+		-- if lines[i]:match("^%s*end") then
+		-- 	chunk = table.concat(lines, "\n", start, i-1) -- no headers, so we need to back up to the }
+		-- 	break
+		-- end
+		if lines[i]:match("^%s*}%s*$") then
+			chunk = table.concat(lines, "\n", start, i)
 			break
 		end
 	end
@@ -436,36 +440,82 @@ local function parseGetOptions(file_name, lines, start)
 		return false, "Something is wrong."
 	end
 
-	local f, err = loadstring(chunk)
-	if err then
-		return false, err
-	end
-	local success, result = pcall(f)
-	if success then
-		local options, option_flags = {}, {}
-		for _, opt in next, result do
-			local flags = true
-			if type(opt) == "table" then
-				flags = {}
-				for i=2, #opt do
-					flags[opt[i]] = true
-				end
-				opt = opt[1]
+	local chunk_func
+	do
+		-- sigh.
+		local mt = { __index = function(t, k)
+			if string.match(k, "%w+Marker$") then
+				return "custom_off_" .. k
 			end
-			if opt then -- marker option vars will be nil
-				if default_options[opt] then
-					flags = default_options[opt]
-				end
-				if options[opt] then
-					error(string.format("    %s:%d: Duplicate option key \"%s\"", file_name, start, tostring(opt)))
-				else
-					options[opt] = flags
-				end
+			return k
+		end }
+		local t = setmetatable({}, mt)
+		local mod = {
+			SpellName = function(k) return tostring(k) end
+		}
+		local options_env = setmetatable({
+			CL = t,
+			L = t,
+			self = mod,
+			mod = mod,
+		}, mt)
+
+		if setfenv then
+			local f, err = loadstring(chunk, "optionstable")
+			if err then
+				return false, err
+			end
+			setfenv(f, options_env)
+			chunk_func = f
+		else
+			local f, err = load(chunk, "optionstable", "t", options_env)
+			if err then
+				return false, err
+			end
+			chunk_func = f
+		end
+	end
+	local success, toggles, headers, altNames = pcall(chunk_func)
+	if not success then
+		return success, toggles
+	end
+
+	local options, option_flags = {}, {}
+	for _, opt in next, toggles do
+		local flags = true
+		if type(opt) == "table" then
+			flags = {}
+			for i=2, #opt do
+				flags[opt[i]] = true
+			end
+			opt = opt[1]
+		end
+		if opt then -- marker option vars will be nil
+			if default_options[opt] then
+				flags = default_options[opt]
+			end
+			if options[opt] then
+				error(string.format("    %s:%d: Duplicate option key %q", file_name, start, tostring(opt)))
+			else
+				options[opt] = flags
 			end
 		end
-		return options
 	end
-	return success, result
+	if headers then
+		for key in next, headers do
+			if not options[key] then
+				error(string.format("    %s:%d: Invalid option header key %q", file_name, start, tostring(key)))
+			end
+		end
+	end
+	if altNames then
+		for key, name in next, altNames do
+			if not options[key] then
+				error(string.format("    %s:%d: Invalid option alt name key %q", file_name, start, tostring(key)))
+			end
+		end
+	end
+	return options
 end
 
 local function checkForAPI(line)
@@ -570,7 +620,7 @@ local function parseLua(file)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
-				-- return
+				return
 			else
 				option_keys = opts
 				options_block_start = n + 1
