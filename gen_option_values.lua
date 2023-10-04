@@ -101,6 +101,7 @@ local valid_methods = {
 	SetPrivateAuraSound = "PRIVATE",
 	PauseBar = true,
 	ResumeBar = true,
+	CheckOption = true,
 }
 local function add_valid_methods(t)
 	for k in next, t do
@@ -522,7 +523,8 @@ local function parseLua(file)
 	end
 
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
-	local options, option_keys = {}, {}
+	local options, option_keys, option_key_used = {}, {}, {}
+	local options_block_start = 0
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
 	local current_func = nil
@@ -571,6 +573,7 @@ local function parseLua(file)
 				-- return
 			else
 				option_keys = opts
+				options_block_start = n + 1
 			end
 		end
 		local toggle_options = line:match("^mod%.toggleOptions = ({.+})")
@@ -669,10 +672,12 @@ local function parseLua(file)
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
-		if res and line:match("spellId == %d+") then
-			rep.if_key = {}
-			for m in res:gmatch("spellId == (%d+)") do
-				rep.if_key[#rep.if_key+1] = m
+		if res then
+			if line:match("spellId == %d+") then
+				rep.if_key = {}
+				for m in res:gmatch("spellId == (%d+)") do
+					rep.if_key[#rep.if_key+1] = m
+				end
 			end
 		end
 		-- For expression keys used multiple times
@@ -686,7 +691,11 @@ local function parseLua(file)
 					rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 				end
 			else
-				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+				if res == "args.spellId" then
+					rep.if_key = rep.func_key
+				else
+					rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+				end
 			end
 		else
 			res = line:match("%s*local spellId,.+=%s*(.+),")
@@ -719,12 +728,16 @@ local function parseLua(file)
 			end
 		end
 
-		--- Parse message calls.
-		-- Check for function calls that will trigger a sound, including calls
-		-- delayed with ScheduleTimer.
+		local method, args = line:match(":(Berserk)(%b())")
+		if method then
+			option_key_used["berserk"] = true
+		end
+
+		--- Parse toggle option API calls.
 		if checkForAPI(line) then
 			local key, sound, color, bitflag = nil, nil, nil, nil
-			local obj, sugar, method, args = line:match("(%w+)([.:])(.-)%(%s*(.+)%s*%)")
+			local obj, sugar, method, args = line:gsub("^.* = ", ""):match("(%w+)([.:])(.-)(%b())")
+			if args then args = args:sub(2, -2) end
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
 				method = args:match("^\"(.-)\"")
@@ -793,6 +806,13 @@ local function parseLua(file)
 				if method == "PlaySound" and args[3+offset] and args[3+offset] ~= "nil" and not args[3+offset]:match("^\"(.-)\"$") and not args[3+offset]:match(" and \"(.-)\"$") then
 					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3+offset])))
 				end
+				-- Set default keys
+				if method == "CloseAltPower" and not key then
+					key = "\"altpower\""
+				end
+				if method == "CloseProximity" and not key then
+					key = "\"proximity\""
+				end
 			end
 
 			-- -- SetOption:key:color:sound:
@@ -829,11 +849,13 @@ local function parseLua(file)
 				if k == "args.spellId" and rep.func_key then
 					k = rep.func_key
 				end
-				if k == "spellId" and rep.if_key then
-					k = rep.if_key
-				end
-				if k == "spellId" and rep.local_func_key then
-					k = rep.local_func_key
+				if k == "spellId" then
+					if rep.if_key then
+						k = rep.if_key
+					end
+					if rep.local_func_key then
+						k = rep.local_func_key
+					end
 				end
 				for _, nk in next, tablize(k) do
 					keys[#keys+1] = nk
@@ -843,13 +865,16 @@ local function parseLua(file)
 			for i, k in next, keys do
 				local key = tonumber(k) or unquote(k)
 				if key ~= "false" then
-					if not option_keys[key] then
-						error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
-						errors = true
-					elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
-						error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
-						errors = true
+					if not default_options[key] then
+						if not option_keys[key] then
+							error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
+							errors = true
+						elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
+							error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
+							errors = true
+						end
 					end
+					option_key_used[key] = true
 				end
 				keys[i] = key
 			end
@@ -887,6 +912,13 @@ local function parseLua(file)
 	for f, n in next, registered_methods do
 		if not methods[f] then
 			error(string.format("    %s:%d: %q was registered as a callback, but it does not exist.", file_name, n, f))
+		end
+	end
+
+	-- Check for options that were set but never used.
+	for key in next, option_keys do
+		if not option_key_used[key] and not tostring(key):match("^custom_") then
+			error(string.format("    %s:%d: %q was registered as an option key, but was not used.", file_name, options_block_start, key))
 		end
 	end
 end
