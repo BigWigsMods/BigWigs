@@ -99,6 +99,8 @@ local valid_methods = {
 	NameplateCDBar = "NAMEPLATEBAR",
 	StopNameplateBar = "NAMEPLATEBAR",
 	SetPrivateAuraSound = "PRIVATE",
+	PauseBar = true,
+	ResumeBar = true,
 }
 local function add_valid_methods(t)
 	for k in next, t do
