@@ -728,8 +728,16 @@ local function parseLua(file)
 			end
 		end
 
-		local method, args = line:match(":(Berserk)(%b())")
-		if method then
+		--- Check :Me args
+		local args = line:match(":Me(%b())")
+		if args then
+			args = args:sub(2, -2)
+			if not string.find(string.lower(args), "guid", nil, true) then
+				error(string.format("    %s:%d: Me: Invalid guid(1)! guid=%s", file_name, n, args))
+			end
+		end
+
+		if line:match(":(Berserk%b())") then
 			option_key_used["berserk"] = true
 		end
 
