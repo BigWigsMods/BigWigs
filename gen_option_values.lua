@@ -927,23 +927,33 @@ local function parseLua(file)
 			-- Handle manually setting the key, color, and sound with a comment. Has to be on the
 			-- same line as the function call. All three values can also be a comma seperated list
 			-- or left empty.
-			-- e.g.: -- SetOption:1234,1235:Urgent:Info,Alert:  or  -- SetOption:1234:::
-			local set_key, set_color, set_sound = comment:match("SetOption:(.*):(.*):(.*):")
-			if set_key then
-				if set_key ~= "" then
-					key = strsplit(set_key)
-					for k, v in next, key do
-						if not tonumber(v) then
-							-- string keys are expected to be quoted
-							key[k] = string.format("%q", unquote(v))
+			-- e.g.: -- SetOption:1234,1235:yellow:info,alert:  or  -- SetOption::1234,1235::info:  or  -- SetOption:1234:
+			do
+				local set_key, set_color, set_sound = comment:match("SetOption:(.*):(.*):(.*):")
+				if not set_key then
+					set_key, set_color = comment:match("SetOption:(.*):(.*):")
+					set_sound = ""
+				end
+				if not set_key then
+					set_key = comment:match("SetOption:(.*):")
+					set_color, set_sound = "", ""
+				end
+				if set_key then
+					if set_key ~= "" then
+						key = strsplit(set_key)
+						for k, v in next, key do
+							if not tonumber(v) then
+								-- string keys are expected to be quoted
+								key[k] = string.format("%q", unquote(v))
+							end
 						end
 					end
-				end
-				if set_color ~= "" then
-					color = strsplit(set_color)
-				end
-				if set_sound ~= "" then
-					sound = strsplit(set_sound)
+					if set_color ~= "" then
+						color = strsplit(set_color)
+					end
+					if set_sound ~= "" then
+						sound = strsplit(set_sound)
+					end
 				end
 			end
 
@@ -970,21 +980,21 @@ local function parseLua(file)
 				end
 			end
 			--- Validate keys.
-			for i, k in next, keys do
-				local key = tonumber(k) or unquote(k)
+			for i, nk in next, keys do
+				local k = tonumber(nk) or unquote(nk)
 				if key ~= "false" then
-					if not default_options[key] then
-						if not option_keys[key] then
-							error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
+					if not default_options[k] then
+						if not option_keys[k] then
+							error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, k))
 							errors = true
-						elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
-							error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
+						elseif bitflag and (type(option_keys[k]) ~= "table" or not option_keys[k][bitflag]) then
+							error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, k))
 							errors = true
 						end
 					end
-					option_key_used[key] = true
+					option_key_used[k] = true
 				end
-				keys[i] = key
+				keys[i] = k
 			end
 
 			-- Add the color entries.
