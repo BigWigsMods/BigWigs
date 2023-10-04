@@ -102,7 +102,7 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[417653] = -27241, -- Stage One: The Cycle of Flame
 		[421316] = -27242, -- Intermission: Unreborn Again
-		[421333] = -27243, -- Stage Two: Avatar of Ash
+		[427252] = -27243, -- Stage Two: Avatar of Ash
 	},{
 		[417653] = CL.adds, -- Fiery Force of Nature (Adds)
 		[422614] = L.scorching_roots, -- Scorching Roots (Roots)

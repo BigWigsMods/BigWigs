@@ -433,9 +433,9 @@ do
 				text = CL.bomb
 			end
 			if args.spellId ~= 406428 then -- Dont show message for motes, already have Oblivion messages
-				self:PersonalMessage(spellId, "underyou", text) -- SetOption:404027,401500,406989,406428:::
+				self:PersonalMessage(spellId, "underyou", text) -- SetOption:404027,401500,406989,402746:::
 			end
-			self:PlaySound(spellId, "underyou") -- SetOption:404027,401500,406989,406428:::
+			self:PlaySound(spellId, "underyou") -- SetOption:404027,401500,406989,406428,402746:::
 		end
 	end
 end

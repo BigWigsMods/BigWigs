@@ -46,7 +46,7 @@ end
 -- Initialization
 --
 
-local bannerMarker
+local bannerMarker = mod:AddMarkerOption(true, "npc", 8, "banner", 8, 7)
 function mod:GetOptions()
 	return {
 		--[[ Pre-Kazzara ]]--

@@ -63,7 +63,6 @@ function mod:GetOptions()
 		402902, -- Twisted Earth
 		402115, -- Echoing Fissure
 		-- Stage 2
-		403057, -- Surrender to Corruption
 		{401010, "SAY", "ME_ONLY_EMPHASIZE"}, -- Corruption
 		407036, -- Hidden in Void
 		405433, -- Umbral Annihilation
@@ -75,7 +74,7 @@ function mod:GetOptions()
 		{407917, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Ebon Destruction
 	},{
 		[402902] = -26192, -- Stage 1
-		[403057] = -26421, -- Stage 2
+		[401010] = -26421, -- Stage 2
 		[407936] = -26422, -- Stage 3
 	},{
 		[407221] = L.rushing_darkness, -- Rushing Darkness (Knock Lines)

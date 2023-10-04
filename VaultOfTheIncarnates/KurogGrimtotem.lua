@@ -181,7 +181,6 @@ function mod:GetOptions()
 	return {
 		"stages",
 		371981, -- Elemental Surge
-		374861, -- Elemental Shift
 		{372158, "TANK"}, -- Sundering Strike
 		"avoid",
 		"damage",
@@ -232,7 +231,6 @@ function mod:GetOptions()
 		393459, -- Stormwrought Despoiler
 		394719, -- Orb Lightning
 		{393429, "TANK", "SAY"}, -- Storm Smite
-		"berserk",
 	}, {
 		["stages"] = "general",
 		[382563] = -25040, -- Fire Altar

@@ -76,7 +76,7 @@ function mod:GetOptions()
 		[419506] = -26666, -- Stage One: The Dream Render
 		[419144] = -26667, -- Intermission: Amirdrassil in Peril
 		[422518] = -26668, -- Stage Two: Children of the Stars
-		[422935] = -26670, -- Stage Three: Shadowflame Incarnate
+		[423717] = -26670, -- Stage Three: Shadowflame Incarnate
 	},{
 		[419506] = L.firestorm, -- Firestorm (Meteors)
 		[417455] = L.dream_rend, -- Dream Rend (Pull In)

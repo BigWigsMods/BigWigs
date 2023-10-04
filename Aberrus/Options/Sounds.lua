@@ -130,6 +130,7 @@ BigWigs:AddSounds("Scalecommander Sarkareth", {
 	[401810] = "long",
 	[401951] = {"info","warning"},
 	[402050] = "alert",
+	[402746] = "underyou",
 	[403520] = "warning",
 	[403625] = "warning",
 	[403741] = "alarm",

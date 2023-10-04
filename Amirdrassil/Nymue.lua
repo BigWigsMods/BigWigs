@@ -39,7 +39,6 @@ end
 
 function mod:GetOptions()
 	return {
-		"stages",
 		420554, -- Verdant Matrix
 		423195, -- Inflorescence
 		-- Stage One: Rapid Iteration
@@ -53,7 +52,7 @@ function mod:GetOptions()
 		429108, -- Lumbering Slam
 		425370, -- Radial Flourish
 	},{
-		["stages"] = "general",
+		[420554] = "general",
 		[420846] = -28355, -- Stage One: Rapid Iteration
 		[426855] = -28356, -- Stage Two: Creation Complete
 	},{

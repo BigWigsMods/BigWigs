@@ -58,7 +58,7 @@ function mod:GetOptions()
 		391592, -- Infused Fallout
 		"custom_on_repeating_fallout",
 	},{
-		[391306] = CL.mythic,
+		[391592] = CL.mythic,
 	},{
 		[380487] = L.rock_blast, -- Rock Blast (Soak)
 		[377166] = L.resonating_annihilation, -- Resonating Annihilation (Annihilation)
