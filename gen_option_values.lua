@@ -816,6 +816,12 @@ local function parseLua(file)
 			end
 		end
 
+		if line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\"") and current_func == "mod:OnBossEnable" then
+			if module_encounter_id and not line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\", \"CheckBossStatus\"%)") then
+				error(string.format("    %s:%d: Overwriting IEEU handler! Register in OnEngage instead. func=%s", file_name, n, tostring(current_func)))
+			end
+		end
+
 		--- Parse toggle option API calls.
 		if checkForAPI(line) then
 			local key, sound, color, bitflag = nil, nil, nil, nil
