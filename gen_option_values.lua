@@ -101,7 +101,6 @@ local valid_methods = {
 	SetPrivateAuraSound = "PRIVATE",
 	PauseBar = true,
 	ResumeBar = true,
-	CheckOption = true,
 }
 local function add_valid_methods(t)
 	for k in next, t do
@@ -794,7 +793,7 @@ local function parseLua(file)
 			end
 		end
 
-		--- Check :Me args
+		-- Check :Me args
 		local args = line:match(":Me(%b())")
 		if args then
 			args = args:sub(2, -2)
@@ -803,7 +802,31 @@ local function parseLua(file)
 			end
 		end
 
-		--- Set Berserk default key as used
+		-- Check :CheckOption
+		local args = line:match(":CheckOption(%b())")
+		if args then
+			args = strsplit(clean(args:sub(2, -2)))
+			local f = tostring(current_func)
+			if rep.func_key then f = string.format("%s(%s)", f, table.concat(rep.func_key, ",")) end
+
+			local key = tonumber(args[1]) or unquote(args[1])
+			if key == "args.spellId" then
+				if rep.func_key and #rep.func_key == 1 then
+					key = rep.func_key[1]
+				else
+					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
+					key = nil
+				end
+			end
+			if key then
+				if not option_keys[key] then
+					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
+				end
+				option_key_used[key] = true
+			end
+		end
+
+		-- Check :Berserk
 		local args = line:match(":Berserk(%b())")
 		if args then
 			args = strsplit(clean(args:sub(2, -2)))
@@ -832,6 +855,7 @@ local function parseLua(file)
 			end
 		end
 
+		-- Check registering IEEU when it could overwrite the encounter start handler
 		if line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\"") and current_func == "mod:OnBossEnable" then
 			if module_encounter_id and not line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\", \"CheckBossStatus\"%)") then
 				error(string.format("    %s:%d: Overwriting IEEU handler! Register in OnEngage instead. func=%s", file_name, n, tostring(current_func)))
