@@ -39,7 +39,7 @@ end
 --
 
 local controlledBurnMarker = mod:AddMarkerOption(true, "player", 1, 421972, 1, 2, 3, 4) -- Controlled Burn
-local taintedTreantMarker = mod:AddMarkerOption(true, "npc", 8, -27902, 8, 7, 6, 5) -- Tainted Treant
+local taintedTreantMarker = mod:AddMarkerOption(true, "npc", 8, -28350, 8, 7, 6, 5) -- Tainted Treant
 function mod:GetOptions()
 	return {
 		"stages",
