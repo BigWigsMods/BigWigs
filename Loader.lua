@@ -106,7 +106,7 @@ public.SetRaidTarget = SetRaidTarget
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
-public.onTestBuild = IsTestBuild()
+public.onTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 
 -- Version
 local usersHash = {}

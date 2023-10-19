@@ -14,7 +14,7 @@ files["**/Loader.lua"].ignore = {
 	"11[23]/C_PartyInfo",
 	"113/EnableAddOn",
 	"113/GetAddOnInfo",
-	"113/IsTestBuild",
+	"113/GetCurrentRegion",
 	"113/securecallfunction",
 	"113/SendChatMessage",
 	"113/SetRaidTarget",
@@ -72,6 +72,9 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/C_CVar",
 	"113/C_TalkingHead",
 	"113/TooltipDataProcessor",
+}
+files["**/Plugins/Countdown.lua"].ignore = {
+	"113/GetCurrentRegion",
 }
 files["**/Plugins/Proximity.lua"].ignore = {
 	"113/GetServerExpansionLevel", -- Classic support
@@ -196,7 +199,6 @@ globals = {
 	"GetAddOnDependencies",
 	"GetAddOnOptionalDependencies",
 	"GetBuildInfo",
-	"GetCurrentRegion", -- XXX temp 9.0.5
 	"GetDifficultyInfo",
 	"GetFramesRegisteredForEvent",
 	"GetInstanceInfo",
