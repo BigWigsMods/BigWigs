@@ -1,4 +1,3 @@
-if not BigWigsLoader.onTestBuild then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -8,7 +7,6 @@ if not mod then return end
 mod:RegisterEnableMob(208478) -- Volcoross
 mod:SetEncounterID(2737)
 mod:SetRespawnTime(30)
-mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

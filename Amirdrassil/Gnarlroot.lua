@@ -1,4 +1,3 @@
-if not BigWigsLoader.onTestBuild then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
