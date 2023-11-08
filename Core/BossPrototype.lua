@@ -586,7 +586,7 @@ do
 						local m = eventMap[self][event]
 						if m and m[mobId] then
 							local func = m[mobId]
-							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, Ambiguate(destName, "none"), destFlags, destRaidFlags, time
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName and Ambiguate(destName, "none"), destFlags, destRaidFlags, time
 							if type(func) == "function" then
 								func(args)
 							else
@@ -602,8 +602,8 @@ do
 					if m and (m[spellId] or m["*"]) then
 						local func = m[spellId] or m["*"]
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
-						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, Ambiguate(sourceName, "none"), sourceFlags, sourceRaidFlags
-						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, Ambiguate(destName, "none"), destFlags, destRaidFlags
+						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName and Ambiguate(sourceName, "none"), sourceFlags, sourceRaidFlags
+						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName and Ambiguate(destName, "none"), destFlags, destRaidFlags
 						args.time, args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = time, spellId, spellName, extraSpellId, amount, amount
 						if type(func) == "function" then
 							func(args)
