@@ -1,4 +1,4 @@
-## Interface: 100107
+## Interface: 100200
 
 ## Title: BigWigs [|cffeda55fDragon Isles|r]
 ## Title-deDE: BigWigs [|cffeda55fDracheninseln|r]

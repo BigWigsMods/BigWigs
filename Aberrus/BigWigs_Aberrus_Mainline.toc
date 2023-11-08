@@ -1,4 +1,4 @@
-## Interface: 100107
+## Interface: 100200
 
 ## Title: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
 ## Title-deDE: BigWigs [|cffeda55fAberrus, Schmelztiegel der Schatten|r]
