@@ -55,7 +55,7 @@ BigWigs:AddColors("Assault of the Zaqali", {
 	[401258] = {"blue","purple"},
 	[401381] = "blue",
 	[401401] = "blue",
-	[401867] = {"blue","orange"},
+	[401867] = "blue",
 	[404382] = "cyan",
 	[404687] = "red",
 	[406585] = "red",
@@ -77,8 +77,9 @@ BigWigs:AddColors("Rashok, the Elder", {
 	[405821] = {"blue","yellow"},
 	[406333] = "yellow",
 	[406851] = "orange",
-	[407547] = {"blue","purple"},
-	[407597] = {"blue","purple"},
+	[407547] = "purple",
+	[407597] = "purple",
+	[407641] = {"blue","purple"},
 	[410070] = "orange",
 })
 
