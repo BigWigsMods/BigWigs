@@ -625,7 +625,7 @@ local function parseLua(file)
 			end
 			-- trying to invoke the string (missing :format)
 			if extra == "(" then
-				error(string.format("    %s:%d: Invalid locale string format \"%s.%s%s\"", file_name, n, locale_type, locale_key, format))
+				error(string.format("    %s:%d: Missing locale string format \"%s.%s(\"", file_name, n, locale_type, locale_key))
 			end
 		end
 
