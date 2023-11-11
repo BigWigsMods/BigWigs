@@ -1246,7 +1246,7 @@ local function parse(file)
 		if string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
 			parseLua(file)
-		elseif string.match(file, "modules%.xml$") then
+		elseif string.match(file, "modules.*%.xml$") then
 			-- Scan module includes for lua files.
 			print(string.format("Checking %s", file))
 			parse(parseXML(file))
