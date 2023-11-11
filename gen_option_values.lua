@@ -630,15 +630,27 @@ local function parseLua(file)
 		end
 
 		--- loadstring the options table
-		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
+		if line:find("function mod:GetOptions(", nil, true) then
 			local opts, err = parseGetOptions(file_name, lines, n+1)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
 				return
 			else
-				option_keys = opts
-				options_block_start = n + 1
+				if not next(option_keys) then
+					option_keys = opts
+					options_block_start = n + 1
+				else -- merge multiple :GetOptions
+					for key, flags in next, opts do
+						if type(option_keys[key]) == "table" and type(flags) == "table" then
+							for flag, v in next, flags do
+								option_keys[key][flag] = v
+							end
+						elseif not option_keys[key] or type(flags) == "table" then
+							option_keys[key] = flags
+						end
+					end
+				end
 			end
 		end
 		local toggle_options = line:match("^mod%.toggleOptions = ({.+})")
