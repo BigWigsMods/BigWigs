@@ -1178,7 +1178,11 @@ end
 local function parseXML(file)
 	local f = io.open(file, "r")
 	if not f then
-		error("    File not found!")
+		if opt.quiet then
+			error(string.format("    %s: File not found!", file))
+		else
+			error("    File not found!")
+		end
 		return
 	end
 
@@ -1202,7 +1206,11 @@ end
 local function parseTOC(file)
 	local f = io.open(file, "r")
 	if not f then
-		error("    File not found!")
+		if opt.quiet then
+			error(string.format("    %s: File not found!", file))
+		else
+			error("    File not found!")
+		end
 		return
 	end
 
