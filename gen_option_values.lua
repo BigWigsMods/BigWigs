@@ -412,7 +412,7 @@ local function findCalls(lines, start, local_func, options)
 	return #keys > 0 and keys or nil
 end
 
-local function parseGetOptions(file_name, lines, start)
+local function parseGetOptions(file_name, lines, start, marker_options)
 	local chunk = nil
 	for i = start, #lines do
 		if i == start and lines[i]:match("^%s*return {.+}%s*$") then
@@ -442,22 +442,21 @@ local function parseGetOptions(file_name, lines, start)
 	local chunk_func
 	do
 		-- sigh.
-		local mt = { __index = function(t, k)
-			if string.match(k, "%w+Marker$") then
-				return "custom_off_" .. k
-			end
-			return k
-		end }
-		local t = setmetatable({}, mt)
+		local s = setmetatable({}, { __index = function(t, k) return tostring(k) end })
 		local mod = {
 			SpellName = function(k) return tostring(k) end
 		}
 		local options_env = setmetatable({
-			CL = t,
-			L = t,
+			CL = s,
+			L = s,
 			self = mod,
 			mod = mod,
-		}, mt)
+		}, {
+			__index = function(t, k)
+				if marker_options[k] then return "custom_off_" .. k end
+				return k
+			end
+		})
 
 		if setfenv then
 			local f, err = loadstring(chunk, "optionstable")
@@ -575,6 +574,7 @@ local function parseLua(file)
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
 	local options, option_keys, option_key_used = {}, {}, {}
 	local options_block_start = 0
+	local marker_options = {}
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
 	local current_func = nil
@@ -595,6 +595,14 @@ local function parseLua(file)
 			if method and not module_set_stage then
 				error(string.format("    %s:%d: %s: Missing initial mod:SetStage!", file_name, n, method))
 				module_set_stage = true
+			end
+		end
+
+		-- save marker options
+		do
+			local var = line:match("(%w+) = .*:AddMarkerOption%(")
+			if var then
+				marker_options[var] = true
 			end
 		end
 
@@ -631,7 +639,7 @@ local function parseLua(file)
 
 		--- loadstring the options table
 		if line:find("function mod:GetOptions(", nil, true) then
-			local opts, err = parseGetOptions(file_name, lines, n+1)
+			local opts, err = parseGetOptions(file_name, lines, n+1, marker_options)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
