@@ -64,7 +64,7 @@ end
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhCN")
 if L then
 	L.blazing_mushroom = "蘑菇"
-        L.fiery_growth = "水池驱散"
+	L.fiery_growth = "水池驱散"
 	L.falling_stars = "流星"
 	L.falling_stars_single = "流星"
 	L.mass_entanglement = "藤蔓"
