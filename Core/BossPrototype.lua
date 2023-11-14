@@ -32,7 +32,7 @@ local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime,
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
-local UnitDetailedThreatSituation, Ambiguate = BigWigsLoader.UnitDetailedThreatSituation, BigWigsLoader.Ambiguate
+local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
 local isClassic, isRetail = BigWigsLoader.isClassic, BigWigsLoader.isRetail
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -586,7 +586,7 @@ do
 						local m = eventMap[self][event]
 						if m and m[mobId] then
 							local func = m[mobId]
-							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName and Ambiguate(destName, "none"), destFlags, destRaidFlags, time
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName, destFlags, destRaidFlags, time
 							if type(func) == "function" then
 								func(args)
 							else
@@ -602,8 +602,8 @@ do
 					if m and (m[spellId] or m["*"]) then
 						local func = m[spellId] or m["*"]
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
-						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName and Ambiguate(sourceName, "none"), sourceFlags, sourceRaidFlags
-						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName and Ambiguate(destName, "none"), destFlags, destRaidFlags
+						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
+						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
 						args.time, args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = time, spellId, spellName, extraSpellId, amount, amount
 						if type(func) == "function" then
 							func(args)
