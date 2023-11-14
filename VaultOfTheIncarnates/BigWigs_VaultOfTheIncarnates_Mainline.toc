@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f化身巨龙牢窟|r]
 ## Title-zhTW: BigWigs [|cffeda55f洪荒化身牢獄|r]
 ## Notes: BigWigs Vault of the Incarnates Modules
-## Notes-deDE: BigWigs Vault of the Incarnates Modules
+## Notes-deDE: BigWigs Gewölbe der Inkarnationen Module
 ## Notes-esES: BigWigs Vault of the Incarnates Modules
 ## Notes-esMX: BigWigs Vault of the Incarnates Modules
 ## Notes-frFR: Modules BigWigs du Caveau des Incarnations

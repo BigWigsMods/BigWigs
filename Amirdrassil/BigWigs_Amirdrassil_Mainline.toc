@@ -1,7 +1,7 @@
 ## Interface: 100200
 
 ## Title: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
-## Title-deDE: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
+## Title-deDE: BigWigs [|cffeda55fAmirdrassil, Hoffnung des Traums|r]
 ## Title-esES: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-esMX: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-frFR: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f阿梅达希尔，梦境之愿 |r]
 ## Title-zhTW: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Notes: BigWigs Amirdrassil, the Dream's Hope Modules
-## Notes-deDE: BigWigs Amirdrassil, the Dream's Hope Modules
+## Notes-deDE: BigWigs Amirdrassil, Hoffnung des Traums Module
 ## Notes-esES: BigWigs Amirdrassil, the Dream's Hope Modules
 ## Notes-esMX: BigWigs Amirdrassil, the Dream's Hope Modules
 ## Notes-frFR: BigWigs Amirdrassil, the Dream's Hope Modules

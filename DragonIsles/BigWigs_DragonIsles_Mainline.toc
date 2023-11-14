@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f巨龙群岛|r]
 ## Title-zhTW: BigWigs [|cffeda55f巨龍群島|r]
 ## Notes: BigWigs Dragon Isles Modules
-## Notes-deDE: BigWigs Dragon Isles Modules
+## Notes-deDE: BigWigs Dracheninseln Module
 ## Notes-esES: BigWigs Dragon Isles Modules
 ## Notes-esMX: BigWigs Dragon Isles Modules
 ## Notes-frFR: Modules BigWigs des Îles aux Dragons
