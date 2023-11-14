@@ -1,37 +1,37 @@
 local L = BigWigs:NewBossLocale("Gnarlroot", "zhTW")
 if not L then return end
 if L then
-	--L.shadowflame_cleave = "Frontal Cone"
-	--L.tortured_scream = "Scream"
+	L.shadowflame_cleave = "衝擊波"
+	L.tortured_scream = "尖嘯"
 end
 
 L = BigWigs:NewBossLocale("Igira the Cruel", "zhTW")
 if L then
-	--L.blistering_spear = "Spears"
-	--L.blistering_spear_single = "Spear"
+	L.blistering_spear = "長矛"
+	L.blistering_spear_single = "長矛"
 	--L.blistering_torment = "Chain"
 	--L.twisting_blade = "Blades"
-	--L.marked_for_torment = "Torment"
-	--L.wracking_skewer = "Soak"
-	--L.heart_stopper = "Heal Absorbs"
-	--L.heart_stopper_single = "Heal Absorb"
+	L.marked_for_torment = "折磨"
+	L.wracking_skewer = "分攤"
+	L.heart_stopper = "治療吸收盾"
+	L.heart_stopper_single = "治療吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhTW")
 if L then
-	--L.flood_of_the_firelands = "Soaks"
-	--L.scorchtail_crash = "Tail Slam"
-	--L.serpents_fury = "Flames"
-	--L.coiling_flames_single = "Flames"
+	L.flood_of_the_firelands = "分攤"
+	L.scorchtail_crash = "甩尾"
+	L.serpents_fury = "噴火"
+	L.coiling_flames_single = "烈焰纏繞" -- 烈焰纏繞，噴完火纏身上的，要不叫烤焦吧......
 end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "zhTW")
 if L then
-	--L.ultimate_boss = "Ultimate (%s)"
-	--L.charge = "Charge"
-	--L.poisonous_javelin = "Javelin"
-	--L.polymorph_bomb = "Ducks"
-	--L.polymorph_bomb_single = "Duck"
+	L.ultimate_boss = "滿能量 (%s)"
+	L.charge = "衝鋒"
+	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
+	L.polymorph_bomb = "鴨子"
+	L.polymorph_bomb_single = "鴨子"
 end
 
 L = BigWigs:NewBossLocale("Larodar, Keeper of the Flame", "zhTW")
@@ -39,39 +39,39 @@ if L then
 	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
 	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
 
-	--L.scorching_roots = "Roots"
-	--L.furious_charge = "Charge"
+	L.scorching_roots = "樹根"
+	L.furious_charge = "衝鋒"
 	--L.blazing_thorns = "Dodges"
-	--L.falling_embers = "Soaks"
-	--L.smoldering_backdraft = "Frontal"
-	--L.fire_whirl = "Tornadoes"
+	L.falling_embers = "接圈"
+	L.smoldering_backdraft = "衝擊波"
+	L.fire_whirl = "火旋風"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
 if L then
-	--L.continuum = "New Lines"
-	--L.impending_loom = "Dodges"
-	--L.viridian_rain = "Raid Damage"
-	--L.lumbering_slam = "Frontal Cone"
+	L.continuum = "新的矩陣"
+	L.impending_loom = "躲避織物"
+	L.viridian_rain = "翠綠之雨"
+	L.lumbering_slam = "衝擊波"
 end
 
 L = BigWigs:NewBossLocale("Smolderon", "zhTW")
 if L then
-	--L.brand_of_damnation = "Tank Soak"
+	L.brand_of_damnation = "坦克分攤"
 	--L.lava_geysers = "Geysers"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhTW")
 if L then
-	--L.blazing_mushroom = "Mushrooms"
+	L.blazing_mushroom = "蘑菇"
 	--L.fiery_growth = "Pool Dispels"
-	--L.falling_stars = "Stars"
-	--L.falling_stars_single = "Star"
-	--L.mass_entanglement = "Roots"
-	--L.mass_entanglement_single = "Root"
-	--L.incarnation_moonkin = "Moonkin Form"
-	--L.incarnation_tree_of_flame = "Tree Form"
-	--L.tranquility_of_flame = "Seeds"
+	L.falling_stars = "殞星"
+	L.falling_stars_single = "殞星"
+	L.mass_entanglement = "藤蔓"
+	L.mass_entanglement_single = "藤蔓"
+	L.incarnation_moonkin = "梟獸型態"
+	L.incarnation_tree_of_flame = "樹人型態"
+	L.tranquility_of_flame = "種子" -- 手冊寫焰種
 end
 
 --L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
