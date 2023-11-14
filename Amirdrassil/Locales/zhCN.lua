@@ -22,12 +22,12 @@ if L then
 	L.flood_of_the_firelands = "分摊"
 	L.scorchtail_crash = "尾击"
 	L.serpents_fury = "怒焰"
-	L.coiling_flames_single = "怒焰"
+	L.coiling_flames_single = "烈焰"
 end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
-	L.ultimate_boss = "终极 (%s)"
+	L.ultimate_boss = "满能量 (%s)"
 	L.charge = "冲锋"
 	L.poisonous_javelin = "标枪"
 	L.polymorph_bomb = "鸭子"
@@ -42,16 +42,16 @@ if L then
 	L.scorching_roots = "树根"
 	L.furious_charge = "冲锋"
 	L.blazing_thorns = "躲避"
-	L.falling_embers = "分摊"
+	L.falling_embers = "接圈"
 	L.smoldering_backdraft = "震慑波"
-	L.fire_whirl = "龙卷风"
+	L.fire_whirl = "火旋风"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
 if L then
 	L.continuum = "新矩阵"
-	L.impending_loom = "躲避"
-	L.viridian_rain = "团队伤害"
+	L.impending_loom = "躲避丝线"
+	L.viridian_rain = "翠绿之雨"
 	L.lumbering_slam = "震慑波"
 end
 
@@ -64,13 +64,13 @@ end
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhCN")
 if L then
 	L.blazing_mushroom = "蘑菇"
-	L.fiery_growth = "水池驱散"
+	L.fiery_growth = "炽热驱散" --炽热增生驱散后脚下大圈
 	L.falling_stars = "流星"
 	L.falling_stars_single = "流星"
 	L.mass_entanglement = "藤蔓"
 	L.mass_entanglement_single = "藤蔓"
 	L.incarnation_moonkin = "枭兽形态"
-	L.incarnation_tree_of_flame = "烈焰之树"
+	L.incarnation_tree_of_flame = "树人形态"
 	L.tranquility_of_flame = "种子"
 end
 
