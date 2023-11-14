@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Amirdrassil, the Dream's Hop Trash", 2549)
+local mod, CL = BigWigs:NewBoss("Amirdrassil, the Dream's Hope Trash", 2549)
 if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob()
