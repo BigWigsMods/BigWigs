@@ -60,15 +60,16 @@ function mod:GetOptions()
 		423420, -- Trampled
 		{421022, "TANK"}, -- Agonizing Claws
 		-- Aerwynn
-		421570, -- Leap
 		421292, -- Constricting Thicket
 		420937, -- Relentless Barrage
+		{421570, "OFF"}, -- Leap
 		420671, -- Noxious Blossom
 		426390, -- Corrosive Pollen
 		{420858, "SAY", "SAY_COUNTDOWN"}, -- Poisonous Javelin
 		-- Pip
 		{421029, "CASTBAR"}, -- Song of the Dragon
 		{421032, "SAY"}, -- Captivating Finale
+		{421501, "OFF"}, -- Blink
 		{418720, "SAY_COUNTDOWN"}, -- Polymorph Bomb
 		421024, -- Emerald Winds
 		423551, -- Whimsical Gust
@@ -110,7 +111,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AgonizingClawsApplied", 421022)
 
 	-- Aerwynn
-	self:Log("SPELL_CAST_START", "Leap", 421570)
 	self:Log("SPELL_CAST_START", "ConstrictingThicket", 421292)
 	self:Log("SPELL_AURA_REMOVED", "ConstrictingThicketOver", 421292)
 	self:Log("SPELL_AURA_APPLIED", "ConstrictingThicketApplied", 421298)
@@ -120,6 +120,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "PoisonousJavelin", 420856)
 	self:Log("SPELL_AURA_APPLIED", "PoisonousJavelinApplied", 420858)
 	self:Log("SPELL_AURA_REMOVED", "PoisonousJavelinRemoved", 420858)
+	self:Log("SPELL_CAST_START", "Leap", 421570)
 
 	-- Pip
 	self:Log("SPELL_CAST_START", "SongoftheDragon", 421029)
@@ -130,7 +131,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "PolymorphBomb", 418591)
 	self:Log("SPELL_AURA_APPLIED", "PolymorphBombApplied", 418720) -- Not pre-debuff, that's private
 	self:Log("SPELL_AURA_REMOVED", "PolymorphBombRemoved", 418720)
-	self:Log("SPELL_CAST_START", "EmeraldWinds", 421024) -- Emerald Winds
+	self:Log("SPELL_CAST_START", "EmeraldWinds", 421024)
+	self:Log("SPELL_CAST_START", "Blink", 421501)
 end
 
 function mod:OnEngage()
@@ -149,19 +151,21 @@ function mod:OnEngage()
 	agonizingClawsCount = 1
 
 	-- Urctos
-	self:Bar(421022, 8) -- Agonizing Claws
-	self:Bar(420948, 28.5, CL.count:format(L.charge, barrelingChargeCount)) -- Barreling Charge
+	self:Bar(421022, self:Easy() and 8.0 or 5.0) -- Agonizing Claws
+	self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(L.charge, barrelingChargeCount)) -- Barreling Charge
 	self:Bar(420525, specialCD, CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount)) -- Blinding Rage
 	nextBlindingRage = GetTime() + specialCD
 	nextSpecial = GetTime() + specialCD
 
 	-- Aerwynn
-	self:Bar(420671, 10.9, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
-	self:Bar(420858, 20.5, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+	-- self:Bar(421570, 0.5) -- Leap
+	self:Bar(420671, self:Easy() and 11.0 or 5.0, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+	self:Bar(420858, self:Easy() and 20.0 or 21.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
 	nextConstrictingThicket = 0
 
 	-- Pip
-	self:Bar(418720, 35, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+	self:Bar(421501, 23.0) -- Blink
+	self:Bar(418720, self:Easy() and 35.0 or 36.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 	self:Bar(421024, 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 	--nextSongoftheDragon = 0
 end
@@ -180,13 +184,15 @@ end
 local function specialInterrupted()
 	if not activeUltimate() then
 		agonizingClawsCount = 1 -- Reset for CD rotation
-		mod:Bar(421022, 8) -- Agonizing Claws
-		mod:Bar(420948, 28.5, CL.count:format(L.charge, barrelingChargeCount)) -- Barreling Charge
+		mod:Bar(421022, mod:Easy() and 8.0 or 5.0) -- Agonizing Claws
+		mod:Bar(420948, mod:Easy() and 29.0 or 13.0, CL.count:format(L.charge, barrelingChargeCount)) -- Barreling Charge
 
-		mod:Bar(420671, 10.9, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
-		mod:Bar(420858, 20.5, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+		mod:Bar(420671, mod:Easy() and 11.0 or 5.0, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+		mod:Bar(420858, mod:Easy() and 20.0 or 21.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+		mod:Bar(421570, 49.0) -- Leap (0.5, then 48.5, sometimes skipping the 0.5)
 
-		mod:Bar(418720, 16, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+		mod:Bar(418720, 16.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+		mod:Bar(421501, 23.0) -- Blink
 		mod:Bar(421024, 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 		nextSpecial = GetTime() + specialCD
 	end
@@ -228,7 +234,7 @@ function mod:BlindingRage(args)
 	blindingRageCount = blindingRageCount + 1
 	activeUltimates = activeUltimates + 1
 	-- Starting timers for breaks / pools
-	self:Bar(418720, 9, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+	self:Bar(418720, self:Easy() and 3.0 or 5.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 	self:Bar(420671, 7, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
 end
 
@@ -251,9 +257,15 @@ do
 	function mod:BarrelingCharge(args)
 		self:StopBar(CL.count:format(L.charge, barrelingChargeCount))
 		barrelingChargeCount = barrelingChargeCount + 1
-		if activeUltimate() or (nextConstrictingThicket - GetTime() > 0) then -- Repeat during ultimate, second cast if Constricting Thicket is next
-			self:CDBar(420948, activeUltimate() and 8 or 30, CL.count:format(L.charge, barrelingChargeCount))
+		local cd = 0
+		if activeUltimate() then -- Repeat during ultimate
+			cd = 8.0
+		elseif not self:Easy() and nextSpecial - GetTime() > 25 then -- 43s
+			cd = 20
+		elseif nextConstrictingThicket - GetTime() > 0 then -- second cast if Constricting Thicket is next
+			cd = self:Easy() and 30.0 or 26.0
 		end
+		self:CDBar(420948, cd, CL.count:format(L.charge, barrelingChargeCount))
 	end
 
 	function mod:BarrelingChargeApplied(args)
@@ -294,7 +306,7 @@ function mod:AgonizingClaws(args)
 	self:Message(421022, "purple", CL.casting:format(args.spellName))
 	agonizingClawsCount = agonizingClawsCount + 1
 	if agonizingClawsCount < 5 then -- 4 between each ultimate
-		local cd = {8, 6, 25, 6}
+		local cd = self:Easy() and { 8.0, 6.0, 25.0, 6.0 } or { 5.0, 4.0, 16.0, 4.0 }
 		self:Bar(421022, cd[agonizingClawsCount])
 	end
 end
@@ -318,7 +330,7 @@ function mod:Leap(args)
 	self:PlaySound(args.spellId, "info")
 	local cd = 48.5
 	if nextSpecial - GetTime() > cd then
-		self:Bar(args.spellId, cd)
+		self:Bar(args.spellId, {cd, 49})
 	end
 end
 
@@ -362,14 +374,26 @@ function mod:NoxiousBlossom(args)
 	if nextSpecial - GetTime() > 24 then -- Is this enough?
 		self:CDBar(args.spellId, 21, CL.count:format(CL.pools, noxiousBlossomCount))
 	end
+
+	if not activeUltimate() then -- only initial cast during specials?
+		local cd = 0
+		-- normal 11.0, 22.0, 21.0 / heroic 5.0, 20.0, 29.0
+		local remainingSpecialCD = nextSpecial - GetTime()
+		if remainingSpecialCD > 40 then -- 45 / 51s (non easy)
+			cd = self:Easy() and 22.0 or 20.0 -- normal cast 2
+		elseif remainingSpecialCD > 20 and nextSpecial == nextBlindingRage then -- 23s / 31s (non easy)
+			cd = self:Easy() and 21.0 or 29.0 -- normal cast 3
+		end
+		self:CDBar(args.spellId, 21, CL.count:format(CL.pools, noxiousBlossomCount))
+	end
 end
 
 function mod:PoisonousJavelin(args)
 	self:StopBar(CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 	self:Message(420858, "yellow", CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 	poisonousJavelinCount = poisonousJavelinCount + 1
-	if nextSpecial - GetTime() > 24.5 then
-		self:CDBar(420858, 24.5, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
+	if nextSpecial - GetTime() > 25 then
+		self:CDBar(420858, 25.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 	end
 end
 
@@ -437,27 +461,25 @@ function mod:PolymorphBomb(args)
 	self:Message(418720, "yellow", CL.count:format(L.polymorph_bomb, polymorphBombCount))
 	self:PlaySound(418720, "alert")
 	polymorphBombCount = polymorphBombCount + 1
-	local cd = nil
+
+	local cd = 0
 	if nextSpecial - GetTime() > 25 then -- Normal cooldown
-		cd = 18.9
+		cd = 19
 	elseif activeUltimate() then -- Repeat Cooldown
-		cd = 9
+		cd = self:Easy() and 9 or 11
 	else
 		local remainingRageTime = nextBlindingRage - GetTime()
 		if remainingRageTime < 25 then -- Synced Cooldown
-			cd = remainingRageTime
+			cd = remainingRageTime - 0.01
 		end
 	end
-	if cd then
-		self:CDBar(418720, cd, CL.count:format(L.polymorph_bomb, polymorphBombCount))
-	end
+	self:CDBar(418720, cd, CL.count:format(L.polymorph_bomb, polymorphBombCount))
 end
 
 function mod:PolymorphBombApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, L.polymorph_bomb_single)
 		self:PlaySound(args.spellId, "warning")
-		--self:Say(args.spellId) -- Don't need initial say, only dangerous at the end
 		self:SayCountdown(args.spellId, 12)
 	end
 end
@@ -475,4 +497,14 @@ function mod:EmeraldWinds(args)
 	emeraldWindsCount = emeraldWindsCount + 1
 	-- Timer started after specials end
 	--self:CDBar(args.spellId, 30, CL.count:format(CL.pushback, emeraldWindsCount))
+end
+
+function mod:Blink(args)
+	self:StopBar(args.spellId)
+	self:Message(args.spellId, "cyan")
+	-- self:PlaySound(args.spellId, "info")
+	local cd = 30 -- nextSpecialAbility == "urctos" and 27.5 or 29.8
+	if nextSpecial - GetTime() > cd then
+		self:Bar(args.spellId, cd)
+	end
 end

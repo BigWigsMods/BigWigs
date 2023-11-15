@@ -26,7 +26,7 @@ BigWigs:AddSounds("Igira the Cruel", {
 	[419048] = "warning",
 	[419462] = "warning",
 	[422776] = "long",
-	[424456] = "warning",
+	[424456] = {"alarm","warning"},
 	[426056] = "alarm",
 	["stages"] = "info",
 })
@@ -154,7 +154,6 @@ BigWigs:AddSounds("Fyrakk the Blazing", {
 	[422518] = "alert",
 	[422524] = "long",
 	[422837] = "long",
-	[422935] = "alert",
 	[423717] = "info",
 	[425483] = "underyou",
 	[425492] = {"alarm","alert","warning"},
