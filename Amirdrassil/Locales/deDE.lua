@@ -71,7 +71,7 @@ if L then
 	L.mass_entanglement_single = "Wurzel"
 	L.incarnation_moonkin = "Mondkingestalt"
 	L.incarnation_tree_of_flame = "Treantgestalt"
-	L.tranquility_of_flame = "Samen"
+	L.flaming_germination = "Samen"
 end
 
 --L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")
