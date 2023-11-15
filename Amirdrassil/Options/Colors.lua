@@ -115,6 +115,7 @@ BigWigs:AddColors("Smolderon", {
 	[422172] = "yellow",
 	[422277] = "orange",
 	[422691] = {"blue","orange"},
+	[423896] = {"cyan","red"},
 	[425885] = "red",
 	[426725] = "red",
 })

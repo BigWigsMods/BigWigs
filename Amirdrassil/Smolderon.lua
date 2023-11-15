@@ -1,4 +1,7 @@
 --------------------------------------------------------------------------------
+-- TODO:
+-- Fix count limits for normal
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -17,7 +20,9 @@ local brandofDamnationCount = 1
 local overheatedCount = 1
 local lavaGeysersCount = 1
 local rotationCount = 1
+local heatingUpCount = 0
 local seekingInfernoCount = 1
+local castingWorldInFlames = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -49,6 +54,7 @@ function mod:GetOptions()
 		422277, -- Devour Essence
 		421858, -- Ignited Essence
 		422172, -- World In Flames
+		423896, -- Heating Up
 		425885, -- Seeking Inferno
 	},{
 		["stages"] = "general",
@@ -81,6 +87,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IgnitedEssenceApplied", 421858)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "IgnitedEssenceApplied", 421858)
 	self:Log("SPELL_CAST_START", "WorldInFlames", 422172)
+	self:Log("SPELL_AURA_APPLIED", "HeatingUpApplied", 423896)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "HeatingUpApplied", 423896)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 421969, 422823, 421532) -- Flame Waves, Lava Geysers, Smoldering Ground
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 421969, 422823, 421532)
@@ -96,10 +104,12 @@ function mod:OnEngage()
 	overheatedCount = 1
 	lavaGeysersCount = 1
 	rotationCount = 1
+	heatingUpCount = 0
 	seekingInfernoCount = 1
+	castingWorldInFlames = false
 
-	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
+	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
 	self:Bar(422691, self:Mythic() and 24 or 27, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 67.2, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
 
@@ -187,28 +197,27 @@ function mod:LavaGeysers(args)
 	self:PlaySound(args.spellId, "alarm") -- watch feet
 	lavaGeysersCount = lavaGeysersCount + 1
 	if lavaGeysersCount < 9 and lavaGeysersCount % 2 == 0 then -- 8 total, starting odds after a stage 2
-		self:Bar(args.spellId, 22, CL.count:format(L.lava_geysers, lavaGeysersCount))
+		self:Bar(args.spellId, self:Mythic() and 25.0 or 26.0, CL.count:format(L.lava_geysers, lavaGeysersCount))
 	end
 end
 
 function mod:BlazingSoulApplied(args)
 	self:SetStage(2)
+	castingWorldInFlames = true
 	self:StopBar(CL.count:format(CL.stage:format(2), rotationCount))
 end
 
 function mod:BlazingSoulRemoved(args)
 	self:SetStage(1)
+	castingWorldInFlames = false
 	rotationCount = rotationCount + 1
 
-	self:Bar(421343, 13.0, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
 	self:Bar(421455, 10.4, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
+	self:Bar(421343, 13.0, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
 	self:Bar(422691, self:Mythic() and 24 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 60, CL.count:format(CL.stage:format(2), rotationCount), 422172)
 	if self:Mythic() then
 		self:Bar(425885, 26, CL.count:format(CL.orbs, seekingInfernoCount))
-	end
-	if rotationCount == 4 then -- "Enrage" after 4th
-		self:Bar(426725, 100) -- Encroaching Destruction
 	end
 end
 
@@ -220,6 +229,21 @@ end
 function mod:DevourEssence(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
+end
+
+function mod:HeatingUpApplied(args)
+	heatingUpCount = args.amount or 1
+	if heatingUpCount < (self:Easy() and 6 or 4) then
+		self:Message(args.spellId, "cyan", CL.stack:format(heatingUpCount, args.spellName, args.destName))
+		if castingWorldInFlames then
+			self:Bar("stages", 33.7, CL.stage:format(1), 422172)
+		end
+	else
+		self:Message(args.spellId, "red", CL.stack:format(heatingUpCount, args.spellName, args.destName))
+		if castingWorldInFlames then
+			self:Bar(426725, 36) -- Encroaching Destruction
+		end
+	end
 end
 
 function mod:IgnitedEssenceApplied(args)
