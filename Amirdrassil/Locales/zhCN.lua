@@ -43,7 +43,7 @@ if L then
 	L.furious_charge = "冲锋"
 	L.blazing_thorns = "躲避"
 	L.falling_embers = "接圈"
-	L.smoldering_backdraft = "震慑波"
+	L.smoldering_backdraft = "冲击波"
 	L.fire_whirl = "火旋风"
 end
 
