@@ -12,7 +12,7 @@ if L then
 	L.blistering_torment = "Kette"
 	L.twisting_blade = "Klingen"
 	L.marked_for_torment = "Qualen"
-	L.wracking_skewer = "Soak"
+	L.umbral_destruction = "Soak"
 	L.heart_stopper = "Heilungen absorbiert"
 	L.heart_stopper_single = "Heilung absorbiert"
 end

@@ -12,7 +12,7 @@ if L then
 	--L.blistering_torment = "Chain"
 	--L.twisting_blade = "Blades"
 	L.marked_for_torment = "折磨"
-	L.wracking_skewer = "分攤"
+	L.umbral_destruction = "分攤"
 	L.heart_stopper = "治療吸收盾"
 	L.heart_stopper_single = "治療吸收盾"
 end

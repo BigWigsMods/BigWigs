@@ -12,7 +12,7 @@ if L then
 	L.blistering_torment = "Cadena"
 	L.twisting_blade = "Espadas"
 	L.marked_for_torment = "Tormento"
-	L.wracking_skewer = "Soak"
+	L.umbral_destruction = "Soak"
 	L.heart_stopper = "Absorber curación"
 	L.heart_stopper_single = "Absorber curación"
 end

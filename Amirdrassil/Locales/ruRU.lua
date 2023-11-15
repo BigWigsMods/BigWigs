@@ -12,7 +12,7 @@ if L then
 	L.blistering_torment = "Цепь"
 	L.twisting_blade = "Фронтал"
 	L.marked_for_torment = "Переходка"
-	L.wracking_skewer = "Соак"
+	L.umbral_destruction = "Соак"
 	L.heart_stopper = "Абсорб"
 	L.heart_stopper_single = "Абсорб"
 end

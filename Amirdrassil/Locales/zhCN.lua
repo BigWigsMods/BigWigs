@@ -12,7 +12,7 @@ if L then
 	L.blistering_torment = "链条"
 	L.twisting_blade = "飞刀"
 	L.marked_for_torment = "折磨"
-	L.wracking_skewer = "分摊"
+	L.umbral_destruction = "分摊"
 	L.heart_stopper = "吸收治疗"
 	L.heart_stopper_single = "吸收治疗"
 end
