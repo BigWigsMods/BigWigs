@@ -316,12 +316,11 @@ function mod:UprootedAgonyRemoved(args)
 	mobCollector = {}
 	taintedTreantMarks = {}
 
-	-- XXX still need mythic times
-	self:Bar(422026, self:Mythic() and 5.5 or 4.7, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
-	self:Bar(424352, self:Mythic() and 11.5 or self:Easy() and 14.3 or 10.4, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
-	self:Bar(421898, self:Mythic() and 21.5 or self:Easy() and 23.5 or 16.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
-	self:Bar(421972, self:Mythic() and 35.5 or 42.4, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, self:Mythic() and 23 or self:Easy() and 44 or 21.4, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar(422026, 4.5, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:Bar(424352, self:Easy() and 14.3 or 10.4, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
+	self:Bar(421898, self:Easy() and 23.5 or 16.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:Bar(421972, self:Mythic() and 37.4 or self:Easy() and 44.5 or 33, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:Bar(422039, self:Easy() and 44 or 21.4, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:Bar("stages", 94.4, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Doom Cultivation
 end
 
