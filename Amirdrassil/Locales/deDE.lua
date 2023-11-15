@@ -74,14 +74,7 @@ if L then
 	L.tranquility_of_flame = "Samen"
 end
 
-L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")
-if L then
-	L.firestorm = "Meteore"
-	L.dream_rend = "Heranziehen"
-	L.fyralaths_bite = "Tankbiss"
-	L.fyralaths_mark = "Mal"
-	L.incarnate = "Zurückstoßen"
-	L.greater_firestorm = "Meteore [G]" -- G for Greater
-	L.shadowflame_devastation = "Tiefer Atem"
-	L.eternal_firestorm = "Meteore [E]" -- E for Eternal
-end
+--L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")
+--if L then
+	--soon
+--end
