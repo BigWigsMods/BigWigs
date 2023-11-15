@@ -17,8 +17,8 @@ local timers = { -- Normal only
 	[1] = {
 		[420422] = {4.0, 24.0, 53.5}, -- Wildfire
 		[419506] = {13.0, 53.5}, -- Firestorm
-		[417455] = {41.9}, -- Dream Rend
-		[417431] = {9.0, 15.0, 15.0, 23.5, 15.0}, -- Fyr'alath's Bite
+		[417455] = {41.9, 53.5}, -- Dream Rend
+		[417431] = {9.0, 15.0, 15.0, 23.5, 15.0, 15.0}, -- Fyr'alath's Bite
 	},
 	[2] = {
 		[419123] = {6.0, 75.0, 80.0}, -- Flamefall
@@ -28,8 +28,8 @@ local timers = { -- Normal only
 	},
 	[3] = {
 		[425492] = {8, 3.0, 10.0, 3.0, 25.0, 3.0, 10.0}, -- Infernal Maw
-		[410223] = {10, 41.0}, -- Shadowflame Breath
-		[422837] = {34}, -- Apocalypse Roar
+		[410223] = {10, 41.0, 41.0, 41.0, 41.0}, -- Shadowflame Breath
+		[422837] = {34, 41.0, 41.0, 41.0}, -- Apocalypse Roar
 	}
 }
 
@@ -83,7 +83,6 @@ function mod:GetOptions()
 		417443, -- Fyr'alath's Mark
 		-- Intermission: Amirdrassil in Peril
 		419144, -- Corrupt
-		410223, -- Shadowflame Breath
 		412761, -- Incarnate
 		421937, -- Shadowflame Orbs
 		429866, -- Shadowflame Eruption
@@ -95,6 +94,7 @@ function mod:GetOptions()
 		423717, -- Bloom
 		--422935, -- Eternal Firestorm
 		422837, -- Apocalypse Roar
+		410223, -- Shadowflame Breath
 		{425492, "TANK"}, -- Infernal Maw
 	},{
 		["stages"] = "general",
@@ -264,7 +264,7 @@ end
 
 function mod:FyralathsMarkApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.fyralaths_mark)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 1, L.fyralaths_mark)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
 	elseif amount > 1 then -- Tank Swap?
@@ -375,8 +375,6 @@ function mod:EternalFirestorm(args)
 	self:Bar(425492, timers[3][425492][infernalMawCount], CL.count:format(self:SpellName(425492), infernalMawCount)) -- Infernal Maw
 	self:Bar(410223, timers[3][410223][shadowflameBreathCount], CL.count:format(CL.breath, shadowflameBreathCount)) -- Shadowflame Breath
 	self:Bar(422837, timers[3][422837][apocalypseRoarCount], CL.count:format(CL.pushback, apocalypseRoarCount)) -- Apocalypse Roar
-
-
 end
 
 function mod:ApocalypseRoar(args)
@@ -384,7 +382,7 @@ function mod:ApocalypseRoar(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.pushback, apocalypseRoarCount))
 	self:PlaySound(args.spellId, "long")
 	apocalypseRoarCount = apocalypseRoarCount + 1
-	--self:Bar(args.spellId, 50, CL.count:format(CL.pushback, apocalypseRoarCount))
+	self:Bar(args.spellId, timers[3][args.spellId][apocalypseRoarCount], CL.count:format(CL.pushback, apocalypseRoarCount))
 end
 
 function mod:ShadowflameBreath(args)
@@ -392,7 +390,7 @@ function mod:ShadowflameBreath(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.breath, shadowflameBreathCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameBreathCount = shadowflameBreathCount + 1
-	--self:Bar(args.spellId, 50, CL.count:format(CL.breath, shadowflameBreathCount))
+	self:Bar(args.spellId, timers[3][args.spellId][shadowflameBreathCount], CL.count:format(CL.breath, shadowflameBreathCount))
 end
 
 function mod:InfernalMaw(args)

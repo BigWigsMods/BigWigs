@@ -159,5 +159,5 @@ BigWigs:AddSounds("Fyrakk the Blazing", {
 	[425483] = "underyou",
 	[425492] = {"alarm","alert","warning"},
 	[429866] = "warning",
-	["stages"] = "info",
+	["stages"] = {"info","long"},
 })
