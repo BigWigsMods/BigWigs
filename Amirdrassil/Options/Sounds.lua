@@ -140,7 +140,7 @@ BigWigs:AddSounds("Tindral Sageswift, Seer of the Flame", {
 
 BigWigs:AddSounds("Fyrakk the Blazing", {
 	[410223] = {"alert","underyou"},
-	[412761] = "warning",
+	[412761] = "info",
 	[417443] = {"alarm","info","warning"},
 	[417455] = "warning",
 	[417807] = {"alarm","info"},
@@ -149,7 +149,6 @@ BigWigs:AddSounds("Fyrakk the Blazing", {
 	[419504] = "underyou",
 	[419506] = "alert",
 	[420422] = "alert",
-	[421937] = "info",
 	[422518] = "alert",
 	[422524] = "long",
 	[422837] = "long",

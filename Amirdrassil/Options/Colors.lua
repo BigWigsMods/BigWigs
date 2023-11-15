@@ -145,7 +145,7 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 
 BigWigs:AddColors("Fyrakk the Blazing", {
 	[410223] = {"blue","orange"},
-	[412761] = "red",
+	[412761] = "yellow",
 	[414186] = "yellow",
 	[417431] = "purple",
 	[417443] = {"blue","purple"},
@@ -156,7 +156,6 @@ BigWigs:AddColors("Fyrakk the Blazing", {
 	[419504] = "blue",
 	[419506] = "orange",
 	[420422] = "yellow",
-	[421937] = "cyan",
 	[422518] = "orange",
 	[422524] = "yellow",
 	[422837] = "yellow",
