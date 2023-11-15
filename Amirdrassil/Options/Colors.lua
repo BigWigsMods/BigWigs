@@ -93,15 +93,16 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 })
 
 BigWigs:AddColors("Nymue, Weaver of the Cycle", {
+	[413443] = {"green","yellow"},
 	[420554] = "blue",
 	[420846] = "cyan",
 	[420907] = "yellow",
-	[423195] = "green",
-	[425370] = "cyan",
-	[426519] = "yellow",
+	[425370] = "yellow",
 	[426855] = "green",
+	[427722] = "blue",
 	[429108] = "orange",
 	[429615] = "cyan",
+	[429798] = "red",
 })
 
 BigWigs:AddColors("Smolderon", {

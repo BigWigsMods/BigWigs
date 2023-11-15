@@ -91,15 +91,16 @@ BigWigs:AddSounds("Larodar, Keeper of the Flame", {
 })
 
 BigWigs:AddSounds("Nymue, Weaver of the Cycle", {
+	[413443] = "info",
 	[420554] = "underyou",
 	[420846] = "info",
 	[420907] = "alarm",
-	[423195] = "info",
-	[425370] = "alert",
-	[426519] = "alert",
+	[425370] = "alarm",
 	[426855] = "long",
-	[429108] = "alarm",
+	[427722] = "warning",
+	[429108] = "alert",
 	[429615] = "info",
+	[429798] = "alarm",
 })
 
 BigWigs:AddSounds("Smolderon", {
