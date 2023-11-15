@@ -663,7 +663,6 @@ do
 	end
 
 	local args = {}
-	local COMBATLOG_OBJECT_TYPE_PLAYER = COMBATLOG_OBJECT_TYPE_PLAYER
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	bossUtilityFrame:SetScript("OnEvent", function()
 		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
@@ -677,7 +676,7 @@ do
 						local m = eventMap[self][event]
 						if m and m[mobId] then
 							local func = m[mobId]
-							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName, destFlags, destRaidFlags, time
 							if type(func) == "function" then
 								func(args)
 							else
@@ -690,12 +689,8 @@ do
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
-					local func = m and (m[spellId] or m[spellName] or m["*"])
-					if func then
-						-- Classic Era: By default we only care about non-player spells (exempting "*")
-						if m[spellName] and band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
-							return
-						end
+					if m and (m[spellId] or m["*"]) then
+						local func = m[spellId] or m["*"]
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
@@ -718,30 +713,15 @@ do
 		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
-		local numSpells = select("#", ...)
-		local nofilter = select(numSpells, ...) == true
-		if nofilter then numSpells = numSpells - 1 end
-		for i = 1, numSpells do
-			local spell = select(i, ...)
-			if type(spell) == "number" then
-				local id = spell
-				if isClassicEra then
-					spell = GetSpellInfo(spell)
-				elseif not GetSpellInfo(spell) then
-					spell = nil
+		for i = 1, select("#", ...) do
+			local id = select(i, ...)
+			if (type(id) == "number" and GetSpellInfo(id)) or id == "*" then
+				if eventMap[self][event][id] then
+					core:Print(format(multipleRegistration, self.moduleName, event, id))
 				end
-				if not spell then
-					core:Print(format(invalidId, self.moduleName, tostring(id), event))
-					return
-				end
-			end
-			if eventMap[self][event][spell] then
-				core:Print(format(multipleRegistration, self.moduleName, event, spell))
-			end
-			eventMap[self][event][spell] = func
-			if nofilter then
-				if not unfilteredEventSpells[self][event] then unfilteredEventSpells[self][event] = {} end
-				unfilteredEventSpells[self][event][spell] = true
+				eventMap[self][event][id] = func
+			else
+				core:Print(format(invalidId, self.moduleName, tostring(id), event))
 			end
 		end
 		allowedEvents[event] = true
