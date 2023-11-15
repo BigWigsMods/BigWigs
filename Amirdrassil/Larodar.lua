@@ -29,21 +29,33 @@ local fireWhirlCount = 1
 -- Timers
 --
 
-local timers = {
-	[1] = {
-		[417653] = {6.0, 113.4, 44.0, 64.7, 114.5}, -- Fiery Force of Nature
-		[422614] = {30.1, 113.3, 108.7}, -- Scorching Roots
-		[418637] = {20.0, 20.0, 20.1, 52.5, 19.9, 20.0, 20.0, 69.6, 20.0, 20.0, 53.5}, -- Furious Charge
-		[426206] = {14.0, 36.0, 74.5, 111.6, 36.0, 75.6}, -- Blazing Thorns
-	},
-	[2] = {
-		[427252] = {7.4, 35.1, 20.0, 33.4, 16.7, 33.4, 25.0, 33.4, 16.7, 33.4, 16.7, 41.7, 16.7, 33.4, 16.7, 33.4}, -- Falling Embers
-		[427299] = {34.1, 45.0, 41.7, 41.8, 50.1, 50.1, 41.7, 41.7, 41.8}, -- Flash Fire
-		[427343] = {54.1, 50.1, 50.1, 41.7, 41.8, 41.8, 41.7, 50.1}, -- Fire Whirl
-		[421318] = {17.4, 53.4, 58.4, 50.1, 50.1, 58.5, 50.0, 58.5}, -- Smoldering Backdraft
-		[421325] = {25.8, 61.7, 50.1, 50.1, 58.5, 50.1, 58.4, 50.1}, -- Ashen Call
-	},
+local timersNormal = { -- 5:06 p1, 2:55 p2
+	-- p1
+	[417653] = { 6.6, 104.8, 98.6 }, -- Fiery Force of Nature
+	[422614] = { 37.3, 110.3, 93.1 }, -- Scorching Roots
+	[418637] = { 22.1, 21.8, 24.2, 35.6, 24.2, 28.6, 25.3, 43.6, 22.0, 24.3 }, -- Furious Charge
+	[426206] = { 30.7, 24.2, 24.2, 37.8, 52.7, 64.5, 24.2, 24.2 }, -- Blazing Thorns
+	-- p2
+	[427252] = { 7.3, 26.7, 25.0, 23.3, 30.0, 20.0, 25.0 }, -- Falling Embers
+	[427299] = { 29.1, 45.1, 41.8, 41.8, 50.1, 50.1 }, -- Flash Fire 1
+	[427343] = { 54.0, 40.8, 32.5, 42.5 }, -- Fire Whirl
+	[421318] = { 14.0, 25.9, 30.0, 19.1, 29.2, 25.8, 20.0 }, -- Smoldering Backdraft
+	[421325] = { 20.7, 44.2, 42.5, 42.5 }, -- Ashen Call
 }
+local timersHeroic = { -- 3:37 p1, 3:45 p2
+	-- p1
+	[417653] = { 6.6, 104.6, 98.6 }, -- Fiery Force of Nature
+	[422614] = { 37.4, 110.1 }, -- Scorching Roots
+	[418637] = { 22.0, 22.0, 24.1, 35.5, 24.1, 28.5, 25.4 }, -- Furious Charge
+	[426206] = { 30.8, 24.2, 24.1, 37.6, 52.8 }, -- Blazing Thorns
+	-- p2
+	[427252] = { 7.4, 26.7, 25.0, 23.3, 30.0, 20.0, 25.0, 25.0, 25.0 }, -- Falling Embers
+	[427299] = { 29.1, 56.8, 43.5 }, -- Flash Fire
+	[427343] = { 54.2, 40.9, 32.5, 36.7, 36.6, }, -- Fire Whirl
+	[421318] = { 14.2, 25.9, 30.0, 19.1, 29.2, 20.8, 30.0, 24.1 }, -- Smoldering Backdraft
+	[421325] = { 20.9, 44.2, 42.5, 42.5, 38.3 }, -- Ashen Call
+}
+local timers = mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -152,6 +164,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	timers = self:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 	fieryForceOfNatureCount = 1
 	scorchingRootsCount = 1
@@ -165,11 +178,11 @@ function mod:OnEngage()
 	searingAshCount = 1
 	fireWhirlCount = 1
 
-	self:Bar(417653, timers[1][417653][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount)) -- Fiery Force of Nature
-	self:Bar(426206, timers[1][426206][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
-	self:Bar(418637, timers[1][418637][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
-	self:Bar(422614, timers[1][422614][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
-	self:Bar(417634, 100, CL.count:format(self:SpellName(417634), ragingInfernoCount)) -- Raging Inferno
+	self:Bar(417653, timers[417653][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount)) -- Fiery Force of Nature
+	self:Bar(426206, timers[426206][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
+	self:Bar(418637, timers[418637][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
+	self:Bar(422614, timers[422614][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
+	self:Bar(417634, 90, CL.count:format(self:SpellName(417634), ragingInfernoCount)) -- Raging Inferno
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -191,7 +204,7 @@ function mod:FieryForceOfNature(args)
 	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, fieryForceOfNatureCount))
 	self:PlaySound(args.spellId, "info")
 	fieryForceOfNatureCount = fieryForceOfNatureCount + 1
-	self:Bar(args.spellId, timers[1][args.spellId][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount))
+	self:Bar(args.spellId, timers[args.spellId][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount))
 end
 
 function mod:BlisteringSplintersApplied(args)
@@ -219,7 +232,7 @@ function mod:ScorchingRoots(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.scorching_roots, scorchingRootsCount))
 	self:PlaySound(args.spellId, "alert")
 	scorchingRootsCount = scorchingRootsCount + 1
-	self:Bar(args.spellId, timers[1][args.spellId][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount))
+	self:Bar(args.spellId, timers[args.spellId][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount))
 end
 
 function mod:ScorchingPursuit(args)
@@ -242,7 +255,7 @@ function mod:FuriousCharge(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.furious_charge, furiousChargeCount))
 	self:PlaySound(args.spellId, "alert")
 	furiousChargeCount = furiousChargeCount + 1
-	self:Bar(args.spellId, timers[1][args.spellId][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount))
+	self:Bar(args.spellId, timers[args.spellId][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount))
 end
 
 function mod:NaturesFuryApplied(args)
@@ -257,7 +270,7 @@ function mod:BlazingThorns(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.blazing_thorns, blazingThornsCount))
 	self:PlaySound(args.spellId, "alert")
 	blazingThornsCount = blazingThornsCount + 1
-	self:Bar(args.spellId, timers[1][args.spellId][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount))
+	self:Bar(args.spellId, timers[args.spellId][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount))
 end
 
 function mod:BlazingCoalescenceApplied(args)
@@ -277,7 +290,7 @@ function mod:RagingInferno(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, ragingInfernoCount))
 	self:PlaySound(args.spellId, "long")
 	ragingInfernoCount = ragingInfernoCount + 1
-	self:Bar(args.spellId, 111, CL.count:format(args.spellName, ragingInfernoCount))
+	self:Bar(args.spellId, 102, CL.count:format(args.spellName, ragingInfernoCount))
 end
 
 -- Intermission: Unreborn Again
@@ -311,11 +324,11 @@ function mod:ConsumingFlameRemoved(args)
 	fireWhirlCount = 1
 
 	self:Bar(421407, 2.5, CL.count:format(self:SpellName(421407), searingAshCount)) -- Searing Ash
-	self:Bar(427252, timers[2][427252][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount)) -- Falling Embers
-	self:Bar(421318, timers[2][421318][smolderingBackdraftCount], CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount)) -- Smoldering Backdraft
-	self:Bar(421325, timers[2][421325][ashenCallCount], CL.count:format(CL.adds, ashenCallCount)) -- Ashen Call
-	self:Bar(427299, timers[2][427299][flashFireCount], CL.count:format(CL.bombs, flashFireCount)) -- Flash Fire
-	self:Bar(427343, timers[2][427343][fireWhirlCount], CL.count:format(L.fire_whirl, fireWhirlCount)) -- Fire Whirl
+	self:Bar(427252, timers[427252][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount)) -- Falling Embers
+	self:Bar(421318, timers[421318][smolderingBackdraftCount], CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount)) -- Smoldering Backdraft
+	self:Bar(421325, timers[421325][ashenCallCount], CL.count:format(CL.adds, ashenCallCount)) -- Ashen Call
+	self:Bar(427299, timers[427299][flashFireCount], CL.count:format(CL.bombs, flashFireCount)) -- Flash Fire
+	self:Bar(427343, timers[427343][fireWhirlCount], CL.count:format(L.fire_whirl, fireWhirlCount)) -- Fire Whirl
 end
 
 function mod:FallingEmbers(args)
@@ -323,7 +336,7 @@ function mod:FallingEmbers(args)
 	self:Message(args.spellId, "red", CL.count:format(L.falling_embers, fallingEmbersCount))
 	self:PlaySound(args.spellId, "long")
 	fallingEmbersCount = fallingEmbersCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount))
+	self:Bar(args.spellId, timers[args.spellId][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount))
 end
 
 do
@@ -340,7 +353,7 @@ do
 			-- self:Message(args.spellId, "yellow", CL.count:format(CL.bombs, flashFireCount))
 			-- self:PlaySound(args.spellId, "alert")
 			flashFireCount = flashFireCount + 1
-			self:Bar(args.spellId, timers[2][args.spellId][flashFireCount], CL.count:format(CL.bombs, flashFireCount))
+			self:Bar(args.spellId, timers[args.spellId][flashFireCount], CL.count:format(CL.bombs, flashFireCount))
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
@@ -371,7 +384,7 @@ function mod:FireWhirl(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.fire_whirl, fireWhirlCount))
 	self:PlaySound(args.spellId, "alert")
 	fireWhirlCount = fireWhirlCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][fireWhirlCount], CL.count:format(L.fire_whirl, fireWhirlCount))
+	self:Bar(args.spellId, timers[args.spellId][fireWhirlCount], CL.count:format(L.fire_whirl, fireWhirlCount))
 end
 
 do
@@ -398,7 +411,7 @@ do
 		self:Message(args.spellId, "purple", CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount))
 		self:PlaySound(args.spellId, "alarm")
 		smolderingBackdraftCount = smolderingBackdraftCount + 1
-		self:Bar(args.spellId, timers[2][args.spellId][smolderingBackdraftCount], CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount))
+		self:Bar(args.spellId, timers[args.spellId][smolderingBackdraftCount], CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount))
 	end
 
 	function mod:SmolderingSuffocationApplied(args)
@@ -425,7 +438,7 @@ function mod:AshenCall(args)
 	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, ashenCallCount))
 	self:PlaySound(args.spellId, "info")
 	ashenCallCount = ashenCallCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][ashenCallCount], CL.count:format(CL.adds, ashenCallCount))
+	self:Bar(args.spellId, timers[args.spellId][ashenCallCount], CL.count:format(CL.adds, ashenCallCount))
 end
 
 do
