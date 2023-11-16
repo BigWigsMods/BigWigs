@@ -71,13 +71,13 @@ local timersHeroic = { -- 9:25
 		[423265] = { 60.0, 48.0, 0 }, -- Flaming Germination
 	},
 	[3] = {
-		[423260] = { 31.9, 31.0, 43.5, 49.5, 76.0 }, -- Blazing Mushroom
-		[424581] = { 29.9, 100.0, 60.0, 58.0 }, -- Fiery Growth
-		[420236] = { 44.9, 58.5, 68.4, 57.0 }, -- Falling Stars
-		[424495] = { 33.9, 57.0, 86.0, 61.5 }, -- Mass Entanglement
-		[421398] = { 56.9, 59.5, 49.5, 55.0 }, -- Fire Beam
-		[424579] = { 66.9, 48.0, 42.0, 32.0 }, -- Suppressive Ember
-		[423265] = { 73.0, 64.0, 62.0, 47.0 }, -- Flaming Germination
+		[423260] = { 30.9, 31.0, 43.5, 49.5, 76.0, 0 }, -- Blazing Mushroom
+		[424581] = { 28.9, 100.0, 60.0, 58.0, 0 }, -- Fiery Growth
+		[420236] = { 43.9, 58.5, 68.5, 57.0, 0 }, -- Falling Stars
+		[424495] = { 32.9, 57.0, 86.0, 61.5, 0 }, -- Mass Entanglement
+		[421398] = { 55.9, 59.5, 49.5, 55.0, 0 }, -- Fire Beam
+		[424579] = { 65.9, 48.0, 42.0, 32.0, 0 }, -- Suppressive Ember
+		[423265] = { 71.9, 64.0, 62.0, 54.0, 0 }, -- Flaming Germination
 	}
 }
 local timers = mod:Easy() and timersNormal or timersHeroic
@@ -175,7 +175,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DreamEssenceApplied", 424258)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreamEssenceApplied", 424258)
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredFeatherApplied", 422509)
-	self:Log("SPELL_CAST_START", "Supernova", 424140, 426016)
+	self:Log("SPELL_CAST_START", "Supernova", 424140, 429169) -- intermission, enrage
 	self:Log("SPELL_AURA_REMOVED", "SupernovaRemoved", 424140)
 
 	-- Stage Two: Tree of the Flame
@@ -423,9 +423,9 @@ function mod:SupernovaRemoved(args)
 	elseif stage == 3 then
 		-- self:Bar(420540, timers[stage][420540][incarnationMoonkinCount] - offset, CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
 		self:Bar(421398, timers[stage][421398][fireBeamCount] - offset, CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
-		-- if not self:Easy() then
-		-- 	self:Bar(424140, 220 - offset) -- Supernova
-		-- end
+		if not self:Easy() then
+			self:Bar(424140, 271 - offset) -- Supernova
+		end
 	end
 end
 
