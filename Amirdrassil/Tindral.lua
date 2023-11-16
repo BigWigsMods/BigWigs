@@ -176,7 +176,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreamEssenceApplied", 424258)
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredFeatherApplied", 422509)
 	self:Log("SPELL_CAST_START", "Supernova", 424140, 426016)
-	self:Log("SPELL_AURA_REMOVED", "SupernovaRemoved", 424180)
+	self:Log("SPELL_AURA_REMOVED", "SupernovaRemoved", 424140)
 
 	-- Stage Two: Tree of the Flame
 	self:Log("SPELL_AURA_APPLIED", "IncarnationTreeOfFlameApplied", 422115)
