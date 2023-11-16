@@ -13,8 +13,8 @@ if L then
 	L.twisting_blade = "飞刀"
 	L.marked_for_torment = "折磨"
 	L.umbral_destruction = "分摊"
-	L.heart_stopper = "吸收治疗"
-	L.heart_stopper_single = "吸收治疗"
+	L.heart_stopper = "治疗吸收盾"
+	L.heart_stopper_single = "治疗吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhCN")
@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
 if L then
 	L.continuum = "新矩阵"
 	L.impending_loom = "躲避丝线"
-	L.viridian_rain = "翠绿之雨"
+	L.viridian_rain = "伤害+炸弹"
 	L.lumbering_slam = "震慑波"
 end
 
@@ -72,6 +72,8 @@ if L then
 	L.incarnation_moonkin = "枭兽形态"
 	L.incarnation_tree_of_flame = "树人形态"
 	L.flaming_germination = "种子"
+	L.suppressive_ember = "治疗吸收盾"
+	L.suppressive_ember_single = "治疗吸收盾"
 end
 
 --L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
