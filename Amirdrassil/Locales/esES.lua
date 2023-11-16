@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "esES")
 if L then
 	L.continuum = "Nuevas Lineas"
 	L.impending_loom = "Esquivar"
-	L.viridian_rain = "Daño de Banda"
+	--L.viridian_rain = "Damage + Bombs"
 	L.lumbering_slam = "Cono frontal"
 end
 
@@ -72,6 +72,8 @@ if L then
 	L.incarnation_moonkin = "Forma de Pollo"
 	L.incarnation_tree_of_flame = "Forma de Arbol"
 	L.flaming_germination = "Semillas"
+	--L.suppressive_ember = "Heal Absorbs"
+	--L.suppressive_ember_single = "Heal Absorb"
 end
 
 --L = BigWigs:NewBossLocale("Fyrakk the Blazing", "esES")

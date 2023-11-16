@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
 if L then
 	L.continuum = "新的矩陣"
 	L.impending_loom = "躲避織物"
-	L.viridian_rain = "翠綠之雨"
+	--L.viridian_rain = "Damage + Bombs"
 	L.lumbering_slam = "衝擊波"
 end
 
@@ -72,6 +72,8 @@ if L then
 	L.incarnation_moonkin = "梟獸型態"
 	L.incarnation_tree_of_flame = "樹人型態"
 	L.flaming_germination = "種子" -- 手冊寫焰種
+	--L.suppressive_ember = "Heal Absorbs"
+	--L.suppressive_ember_single = "Heal Absorb"
 end
 
 --L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
