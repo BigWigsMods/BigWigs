@@ -220,7 +220,7 @@ do
 	function mod:LumberingSlam(args)
 		if args.time - prev > 3 then
 			prev = args.time
-			self:Message(args.spellId, "purple")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alert")
 			self:Bar(args.spellId, 19.5) -- 19~20
 		end
