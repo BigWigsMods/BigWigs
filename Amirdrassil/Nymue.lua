@@ -18,6 +18,7 @@ local continuumCount = 1
 local impendingLoomCount = 1
 local surgingGrowthCount = 1
 local fullBloomCount = 1
+local radialFlourishCount = 1
 local inflorescenceOnMe = false
 
 --------------------------------------------------------------------------------
@@ -49,7 +50,7 @@ function mod:GetOptions()
 		426855, -- Full Bloom (Stage 2)
 		413443, -- Life Ward
 		429108, -- Lumbering Slam
-		425370, -- Radial Flourish
+		422721, -- Radial Flourish
 		429798, -- Verdent Rend
 	},{
 		[420554] = "general",
@@ -83,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LifeWardApplied", 413443)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "LifeWardRemoved", 413443)
 	self:Log("SPELL_CAST_START", "LumberingSlam", 429108)
-	self:Log("SPELL_CAST_SUCCESS", "RadialFlourish", 425370)
+	self:Log("SPELL_CAST_SUCCESS", "RadialFlourish", 422721)
 	self:Log("SPELL_AURA_APPLIED", "VerdantRendApplied", 429798)
 end
 
@@ -92,6 +93,7 @@ function mod:OnEngage()
 	continuumCount = 1
 	impendingLoomCount = 1
 	fullBloomCount = 1
+	radialFlourishCount = 1
 	inflorescenceOnMe = false
 
 	self:Bar(420907, 20, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
@@ -189,6 +191,12 @@ function mod:FullBloom(args)
 	self:StopBar(CL.count:format(L.impending_loom, impendingLoomCount)) -- Impending Loom
 	self:StopBar(CL.stage:format(2)) -- Full Bloom
 
+	radialFlourishCount = 1
+
+	self:Bar(413443, 6.9) -- Life Ward
+	self:Bar(422721, 12.6) -- Radial Flourish
+	self:Bar(429108, 19) -- Lumbering Slam
+
 	self:StopBar(CL.stage:format(2))
 	self:Message(args.spellId, "green", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
@@ -207,19 +215,28 @@ function mod:LifeWardRemoved(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:LumberingSlam(args)
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if not unit or IsItemInRange(18904, unit) then -- Zorbin's Ultra-Shrinker, 38y
-		self:Message(args.spellId, "orange", L.lumbering_slam)
-		self:PlaySound(args.spellId, "alert")
+do
+	local prev = 0
+	function mod:LumberingSlam(args)
+		if args.time - prev > 3 then
+			prev = args.time
+			self:Message(args.spellId, "purple")
+			self:PlaySound(args.spellId, "alert")
+			self:Bar(args.spellId, 19.5) -- 19~20
+		end
 	end
 end
 
-function mod:RadialFlourish(args)
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if not unit or IsItemInRange(18904, unit) then -- Zorbin's Ultra-Shrinker, 38y
-		self:Message(args.spellId, "yellow")
-		self:PlaySound(args.spellId, "alarm")
+do
+	local prev = 0
+	function mod:RadialFlourish(args)
+		if args.time - prev > 3 then
+			prev = args.time
+			self:Message(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alarm")
+			radialFlourishCount = radialFlourishCount + 1
+			self:Bar(args.spellId, radialFlourishCount == 2 and 11.5 or radialFlourishCount == 5 and 8.6 or 5.8) -- 10.2~12.7 / 5.6~6.1
+		end
 	end
 end
 

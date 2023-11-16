@@ -95,7 +95,7 @@ BigWigs:AddSounds("Nymue, Weaver of the Cycle", {
 	[420554] = "underyou",
 	[420846] = "info",
 	[420907] = "alarm",
-	[425370] = "alarm",
+	[422721] = "alarm",
 	[426855] = "long",
 	[427722] = "warning",
 	[429108] = "alert",

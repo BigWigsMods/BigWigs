@@ -97,10 +97,10 @@ BigWigs:AddColors("Nymue, Weaver of the Cycle", {
 	[420554] = "blue",
 	[420846] = "cyan",
 	[420907] = "yellow",
-	[425370] = "yellow",
+	[422721] = "yellow",
 	[426855] = "green",
 	[427722] = "blue",
-	[429108] = "orange",
+	[429108] = "purple",
 	[429615] = "cyan",
 	[429798] = "red",
 })
