@@ -419,7 +419,7 @@ function mod:SupernovaRemoved(args)
 	self:Bar(424579, timers[stage][424579][incarnationTreeOfFlameCount] - offset, L.suppressive_ember) -- Suppressive Ember
 	self:Bar(423265, timers[stage][423265][flamingGerminationCount] - offset, CL.count:format(L.flaming_germination, flamingGerminationCount)) -- Tranquility of Flame
 	if stage == 2 then
-		self:Bar("stages", 115 - offset, CL.intermission, 421603)
+		self:Bar("stages", (self:Easy() and 115 or 125) - offset, CL.intermission, 421603)
 	elseif stage == 3 then
 		-- self:Bar(420540, timers[stage][420540][incarnationMoonkinCount] - offset, CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
 		self:Bar(421398, timers[stage][421398][fireBeamCount] - offset, CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
