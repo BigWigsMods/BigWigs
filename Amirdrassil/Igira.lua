@@ -206,7 +206,7 @@ do
 			local timer = { 14.2, 30.5, 30.3, 14.6, 20.7 }
 			cd = timer[blisteringSpearCount]
 		else
-			local timer = { 14.4, 23.1, 23.2, 28.4, 20.3 }
+			local timer = { 14.2, 23.2, 23.2, 24.4, 20.7 }
 			cd = timer[blisteringSpearCount]
 		end
 		self:Bar(414888, cd, CL.count:format(L.blistering_spear, blisteringSpearCount))
@@ -271,7 +271,7 @@ function mod:MarkedForTormentRemoved(args)
 
 	if markedForTormentCount < 5 then
 		if not self:Mythic() then
-			self:Bar(416996, 83.5, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
+			self:Bar(416996, self:Easy() and 83.5 or 79, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
 		end
 		self:Bar(414888, self:Mythic() and 79 or 14.4, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 		self:Bar(422776, self:Easy() and 120 or 115.5, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
