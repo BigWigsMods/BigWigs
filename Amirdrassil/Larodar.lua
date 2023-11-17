@@ -359,7 +359,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, CL.bomb)
-			self:SayCountdown(args.spellId, 6)
+			self:SayCountdown(args.spellId, 8)
 		end
 		self:TargetsMessage(args.spellId, "red", playerList, nil, msg)
 	end
