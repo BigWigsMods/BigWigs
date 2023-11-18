@@ -1,7 +1,4 @@
 --------------------------------------------------------------------------------
--- TODO:
--- Fix count limits for normal
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -134,7 +131,7 @@ function mod:BrandofDamnation(args)
 		self:PlaySound(args.spellId, "alert") -- stack
 	end
 	brandofDamnationCount = brandofDamnationCount + 1
-	if brandofDamnationCount < 9 and brandofDamnationCount % 2 == 0 then -- 8 total, starting odds after a stage 2
+	if brandofDamnationCount < (self:Easy() and 13 or 9) and brandofDamnationCount % 2 == 0 then -- 8 total, starting odds after a stage 2
 		self:Bar(args.spellId, 30, CL.count:format(L.brand_of_damnation, brandofDamnationCount))
 	end
 end
@@ -172,7 +169,7 @@ function mod:Overheated(args)
 	self:StopBar(CL.count:format(args.spellName, overheatedCount))
 	self:Message(421455, "yellow", CL.count:format(args.spellName, overheatedCount))
 	overheatedCount = overheatedCount + 1
-	if overheatedCount < 9 and overheatedCount % 2 == 0 then   -- 8 total, starting odds after a stage 2
+	if overheatedCount < (self:Easy() and 13 or 9) and overheatedCount % 2 == 0 then -- 8 total, starting odds after a stage 2
 		self:Bar(421455, 30, CL.count:format(args.spellName, overheatedCount))
 	end
 	if not self:Easy() then
@@ -200,7 +197,7 @@ function mod:LavaGeysers(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.lava_geysers, lavaGeysersCount))
 	self:PlaySound(args.spellId, "alarm") -- watch feet
 	lavaGeysersCount = lavaGeysersCount + 1
-	if lavaGeysersCount < 9 and lavaGeysersCount % 2 == 0 then -- 8 total, starting odds after a stage 2
+	if lavaGeysersCount < (self:Easy() and 13 or 9) and lavaGeysersCount % 2 == 0 then -- 8 total, starting odds after a stage 2
 		self:Bar(args.spellId, self:Mythic() and 25.0 or 26.0, CL.count:format(L.lava_geysers, lavaGeysersCount))
 	end
 end
