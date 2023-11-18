@@ -19,9 +19,10 @@ mod:SetStage(1)
 local brandofDamnationCount = 1
 local overheatedCount = 1
 local lavaGeysersCount = 1
+local seekingInfernoCount = 1
 local rotationCount = 1
 local heatingUpCount = 0
-local seekingInfernoCount = 1
+local overheatedOnMe = false
 local castingWorldInFlames = false
 
 --------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ local L = mod:GetLocale()
 if L then
 	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysers"
+	L.flame_waves = "Tornados"
 end
 
 --------------------------------------------------------------------------------
@@ -45,7 +47,7 @@ function mod:GetOptions()
 		421343, -- Brand of Damnation
 		421656, -- Cauterizing Wound
 		{422577, "SAY", "SAY_COUNTDOWN"}, -- Searing Aftermath
-		{421455, "SAY_COUNTDOWN"}, -- Overheated
+		421455, -- Overheated
 		421969, -- Flame Waves
 		422691, -- Lava Geysers
 		421532, -- Smoldering Ground
@@ -75,6 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CauterizingWoundRemoved", 421656)
 	self:Log("SPELL_AURA_APPLIED", "SearingAftermathApplied", 422577)
 	self:Log("SPELL_AURA_REMOVED", "SearingAftermathRemoved", 422577)
+	self:Log("SPELL_CAST_SUCCESS", "Overheated", 430677)
 	self:Log("SPELL_AURA_APPLIED", "OverheatedApplied", 421455)
 	self:Log("SPELL_AURA_REMOVED", "OverheatedRemoved", 421455)
 	self:Log("SPELL_CAST_START", "LavaGeysers", 422691)
@@ -103,14 +106,15 @@ function mod:OnEngage()
 	brandofDamnationCount = 1
 	overheatedCount = 1
 	lavaGeysersCount = 1
+	seekingInfernoCount = 1
 	rotationCount = 1
 	heatingUpCount = 0
-	seekingInfernoCount = 1
+	overheatedOnMe = false
 	castingWorldInFlames = false
 
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
-	self:Bar(422691, self:Mythic() and 24 or 27, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
+	self:Bar(422691, self:Mythic() and 26.0 or 29.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 67.2, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
 
 	if self:Mythic() then
@@ -126,7 +130,9 @@ end
 function mod:BrandofDamnation(args)
 	self:StopBar(CL.count:format(L.brand_of_damnation, brandofDamnationCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount))
-	self:PlaySound(args.spellId, "alert")
+	if not overheatedOnMe then -- no circle
+		self:PlaySound(args.spellId, "alert") -- stack
+	end
 	brandofDamnationCount = brandofDamnationCount + 1
 	if brandofDamnationCount < 9 and brandofDamnationCount % 2 == 0 then -- 8 total, starting odds after a stage 2
 		self:Bar(args.spellId, 30, CL.count:format(L.brand_of_damnation, brandofDamnationCount))
@@ -162,33 +168,31 @@ function mod:SearingAftermathRemoved(args)
 	end
 end
 
-do
-	local playerList = {}
-	local prev = 0
-	function mod:OverheatedApplied(args)
-		local msg = CL.count:format(args.spellName, overheatedCount)
-		if args.time - prev > 2 then -- reset
-			playerList = {}
-			prev = args.time
-			self:StopBar(msg)
-			self:Message(args.spellId, "yellow", msg)
-			overheatedCount = overheatedCount + 1
-			if overheatedCount < 9 and  overheatedCount % 2 == 0 then -- 8 total, starting odds after a stage 2
-				self:Bar(args.spellId, 30, CL.count:format(args.spellName, overheatedCount))
-			end
-		end
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "warning")
-			self:SayCountdown(args.spellId, 10)
-		end
+function mod:Overheated(args)
+	self:StopBar(CL.count:format(args.spellName, overheatedCount))
+	self:Message(421455, "yellow", CL.count:format(args.spellName, overheatedCount))
+	overheatedCount = overheatedCount + 1
+	if overheatedCount < 9 and overheatedCount % 2 == 0 then   -- 8 total, starting odds after a stage 2
+		self:Bar(421455, 30, CL.count:format(args.spellName, overheatedCount))
 	end
+	if not self:Easy() then
+		self:Bar(421969, 10, L.flame_waves)
+	else
+		self:Bar(421455, 10, CL.over:format(args.spellName))
+	end
+end
 
-	function mod:OverheatedRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
+function mod:OverheatedApplied(args)
+	if self:Me(args.destGUID) then
+		overheatedOnMe = true
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+	end
+end
+
+function mod:OverheatedRemoved(args)
+	if self:Me(args.destGUID) then
+		overheatedOnMe = false
 	end
 end
 
@@ -214,10 +218,10 @@ function mod:BlazingSoulRemoved(args)
 
 	self:Bar(421455, 10.4, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13.0, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
-	self:Bar(422691, self:Mythic() and 24 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
+	self:Bar(422691, self:Mythic() and 26.0 or 29.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 60, CL.count:format(CL.stage:format(2), rotationCount), 422172)
 	if self:Mythic() then
-		self:Bar(425885, 26, CL.count:format(CL.orbs, seekingInfernoCount))
+		self:Bar(425885, 28.0, CL.count:format(CL.orbs, seekingInfernoCount))
 	end
 end
 
