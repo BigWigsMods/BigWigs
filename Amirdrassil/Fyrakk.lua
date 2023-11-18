@@ -61,7 +61,7 @@ function mod:GetOptions()
 		420422, -- Wildfire
 		417455, -- Dream Rend
 		425483, -- Incinerated
-		{414186,"PRIVATE"}, -- Blaze
+		{414186, "PRIVATE"}, -- Blaze
 		417807, -- Aflame
 		417431, -- Fyr'alath's Bite
 		{417443, "TANK"}, -- Fyr'alath's Mark
@@ -92,12 +92,13 @@ function mod:GetOptions()
 		[414186] = L.blaze, -- Blaze (Lines)
 		[417431] = L.fyralaths_bite, -- Fyr'alath's Bite (Tank Bite)
 		[417443] = L.fyralaths_mark, -- Fyr'alath's Mark (Mark)
-		[410223] = CL.breath, -- Shadowflame Breath (Breath)
-		[412761] = L.incarnate, -- Incarnate (Knockup)
+		[422032] = L.spirits_of_kaldorei, -- Spirits of the Kaldorei (Spirits)
 		[422518] = L.greater_firestorm, -- Greater Firestorm (Meteors [G])
+		[412761] = L.incarnate, -- Incarnate (Knockup)
 		[422524] = L.shadowflame_devastation, -- Shadowflame Devastation (Deep Breath)
 		[423717] = CL.absorb, -- Bloom (Absorb)
 		[422935] = L.eternal_firestorm, -- Eternal Firestorm (Meteors [E])
+		[410223] = CL.breath, -- Shadowflame Breath (Breath)
 		[422837] = CL.pushback, -- Apocalypse Roar (Pushback)
 	}
 end
@@ -115,7 +116,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DreamRend", 417455)
 	self:Log("SPELL_CAST_SUCCESS", "Blaze", 414186)
 	self:Log("SPELL_AURA_APPLIED", "AflameApplied", 417807)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "AflameApplied", 417807)
 	self:Log("SPELL_AURA_REMOVED", "AflameRemoved", 417807)
 	self:Log("SPELL_CAST_START", "FyralathsBite", 417431)
 	self:Log("SPELL_AURA_APPLIED", "FyralathsMarkApplied", 417443)
@@ -250,10 +250,8 @@ end
 function mod:AflameApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
-		if amount == 1 then -- Only for initial, maybe more when high stacks?
-			self:PlaySound(args.spellId, "alarm")
-		end
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
@@ -266,20 +264,18 @@ end
 
 function mod:FyralathsBite(args)
 	self:Message(args.spellId, "purple", CL.casting:format(L.fyralaths_bite))
+	self:PlaySound(args.spellId, "alert") -- frontal
 	fyralathsBiteCount = fyralathsBiteCount + 1
-	-- Sound on _APPLIED
 	self:Bar(args.spellId, fyralathsBiteCount % 3 == 1 and 23.6 or 15.0, L.fyralaths_bite)
 end
 
 function mod:FyralathsMarkApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, amount, 1, L.fyralaths_mark)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2, L.fyralaths_mark)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
 	elseif amount > 1 then -- Tank Swap?
 		self:PlaySound(args.spellId, "warning")
-	else
-		self:PlaySound(args.spellId, "info")
 	end
 end
 
@@ -491,7 +487,9 @@ end
 
 function mod:InfernalMaw(args)
 	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "alert")
+	if self:Tank() then
+		self:PlaySound(args.spellId, "alert")
+	end
 	infernalMawCount = infernalMawCount + 1
 	local cd = infernalMawCount % 2 == 0 and 3.0 or infernalMawCount % 4 == 1 and 25.0 or 10.0
 	self:CDBar(args.spellId, cd)
