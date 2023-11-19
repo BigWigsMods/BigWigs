@@ -423,7 +423,7 @@ end
 
 function mod:AgonizingClaws(args)
 	self:Message(421022, "purple", CL.count:format(args.spellName, agonizingClawsCount))
-	if not self:Easy() or self:Tank() then
+	if self:Tank() or (not self:Easy() and not self:Melee()) then
 		self:PlaySound(421022, "alert") -- frontal (in heroic and mythic)
 	end
 	agonizingClawsCount = agonizingClawsCount + 1
