@@ -31,7 +31,6 @@ if L then
 	L.special_bar = "[%s] 能量 (%d)"
 	L.special_mythic_bar = "[%s/%s] 能量 (%d)"
 	L.special_mechanic_bar = "%s [能量] (%d)"
-	
 	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
