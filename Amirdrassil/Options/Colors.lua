@@ -24,10 +24,10 @@ BigWigs:AddColors("Igira the Cruel", {
 	[416048] = "red",
 	[416996] = "orange",
 	[419048] = "red",
-	[419462] = "blue",
 	[422776] = "cyan",
-	[424456] = {"blue","orange"},
+	[424456] = "orange",
 	[426056] = "blue",
+	["berserk"] = "red",
 	["stages"] = "cyan",
 })
 

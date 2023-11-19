@@ -18,16 +18,16 @@ BigWigs:AddSounds("Gnarlroot", {
 BigWigs:AddSounds("Igira the Cruel", {
 	[414340] = {"alarm","warning"},
 	[414367] = "info",
-	[414770] = "warning",
+	[414770] = "alarm",
 	[414888] = "warning",
 	[415623] = "warning",
 	[416048] = "warning",
 	[416996] = "alarm",
 	[419048] = "warning",
-	[419462] = "warning",
 	[422776] = "long",
-	[424456] = {"alarm","warning"},
+	[424456] = "alarm",
 	[426056] = "alarm",
+	["berserk"] = "alarm",
 	["stages"] = "info",
 })
 
