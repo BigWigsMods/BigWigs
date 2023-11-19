@@ -36,12 +36,14 @@ local blazeTimer
 
 local L = mod:GetLocale()
 if L then
+	L.spirit_trigger = "Spirit of the Kaldorei" -- [CHAT_MSG_MONSTER_YELL] Amirdrassil must not fall.#Spirit of the Kaldorei
+
 	L.firestorm = "Meteors"
 	L.dream_rend = "Pull In"
 	L.fyralaths_bite = "Tank Frontal"
 	L.fyralaths_mark = "Mark"
 	L.blaze = "Lines"
-	L.spirits_of_kaldorei = "Spirits"
+	L.spirits_of_the_kaldorei = "Spirits"
 	L.greater_firestorm = "Meteors [G]" -- G for Greater
 	L.incarnate = "Knockup"
 	L.shadowflame_devastation = "Deep Breath"
@@ -69,7 +71,7 @@ function mod:GetOptions()
 		419144, -- Corrupt
 		429866, -- Shadowflame Eruption
 		-- Stage Two: Children of the Stars
-		422032, -- Spirits of Kaldorei
+		422032, -- Spirits of the Kaldorei
 		{422518, "PRIVATE"}, -- Greater Firestorm
 		412761, -- Incarnate
 		422524, -- Shadowflame Devastation
@@ -92,7 +94,7 @@ function mod:GetOptions()
 		[414186] = L.blaze, -- Blaze (Lines)
 		[417431] = L.fyralaths_bite, -- Fyr'alath's Bite (Tank Bite)
 		[417443] = L.fyralaths_mark, -- Fyr'alath's Mark (Mark)
-		[422032] = L.spirits_of_kaldorei, -- Spirits of the Kaldorei (Spirits)
+		[422032] = L.spirits_of_the_kaldorei, -- Spirits of the Kaldorei (Spirits)
 		[422518] = L.greater_firestorm, -- Greater Firestorm (Meteors [G])
 		[412761] = L.incarnate, -- Incarnate (Knockup)
 		[422524] = L.shadowflame_devastation, -- Shadowflame Devastation (Deep Breath)
@@ -105,6 +107,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Incarnate
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL") -- P2 Spirit of the Kaldorei
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 419504, 425483) -- Raging Flames, Incinerated
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 419504, 425483, 410223) -- Shadowflame Breath (not in _APPLIED)
@@ -380,16 +383,16 @@ function mod:Incarnate(args)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg, sender)
-	-- [CHAT_MSG_MONSTER_YELL] Amirdrassil must not fall.#Spirit of the Kaldorei
-	if msg == "Amirdrassil must not fall." or msg == "Our lives are sworn to Amirdrassil!" or msg == "This tree will not fall!" then
-		self:StopBar(CL.count:format(L.spirits_of_kaldorei, spiritCount))
-		self:Message(422032, "green", CL.count:format(L.spirits_of_kaldorei, spiritCount))
+	-- if msg == "Amirdrassil must not fall." or msg == "Our lives are sworn to Amirdrassil!" or msg == "This tree will not fall!" then
+	if sender == L.spirit_trigger and self:GetStage() == 2 then
+		self:StopBar(CL.count:format(L.spirits_of_the_kaldorei, spiritCount))
+		self:Message(422032, "green", CL.count:format(L.spirits_of_the_kaldorei, spiritCount))
 		if self:Healer() then
 			self:PlaySound(422032, "alert")
 		end
 		spiritCount = spiritCount + 1
-		local timer = { 15.5, 19.8, 25.0, 29.1, 26.0, 24.8, 25.0 }
-		self:Bar(422032, timer[spiritCount], CL.count:format(L.spirits_of_kaldorei, spiritCount))
+		local timer = { 15.5, 20.0, 25.0, 32.0, 26.0, 25.0, 25.0 }
+		self:Bar(422032, timer[spiritCount], CL.count:format(L.spirits_of_the_kaldorei, spiritCount))
 	end
 end
 
@@ -424,7 +427,7 @@ end
 function mod:EternalFirestormP3()
 	self:CancelTimer(blazeTimer)
 	self:StopBar(CL.stage:format(3))
-	self:StopBar(CL.count:format(L.spirits_of_kaldorei, spiritCount)) -- Spirits of the Kaldorei
+	self:StopBar(CL.count:format(L.spirits_of_the_kaldorei, spiritCount)) -- Spirits of the Kaldorei
 	self:StopBar(CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 	self:StopBar(CL.count:format(L.greater_firestorm, firestormCount)) -- Greater Firestorm
 	self:StopBar(CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall

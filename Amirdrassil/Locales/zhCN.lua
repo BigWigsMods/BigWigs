@@ -76,7 +76,7 @@ if L then
 	L.suppressive_ember_single = "治疗吸收盾"
 end
 
---L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
---if L then
-	--soon
---end
+L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
+if L then
+	L.spirit_trigger = "卡多雷精魂"
+end

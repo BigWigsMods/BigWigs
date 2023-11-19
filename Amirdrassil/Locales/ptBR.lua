@@ -76,7 +76,7 @@ if L then
 	--L.suppressive_ember_single = "Heal Absorb"
 end
 
---L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ptBR")
---if L then
-	--soon
---end
+L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ptBR")
+if L then
+	L.spirit_trigger = "Espírito dos Kaldorei"
+end
