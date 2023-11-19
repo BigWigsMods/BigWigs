@@ -42,7 +42,6 @@ if L then
 	L.dream_rend = "Pull In"
 	L.fyralaths_bite = "Tank Frontal"
 	L.fyralaths_mark = "Mark"
-	L.blaze = "Lines"
 	L.spirits_of_the_kaldorei = "Spirits"
 	L.greater_firestorm = "Meteors [G]" -- G for Greater
 	L.incarnate = "Knockup"
@@ -91,7 +90,6 @@ function mod:GetOptions()
 	},{
 		[419506] = L.firestorm, -- Firestorm (Meteors)
 		[417455] = L.dream_rend, -- Dream Rend (Pull In)
-		[414186] = L.blaze, -- Blaze (Lines)
 		[417431] = L.fyralaths_bite, -- Fyr'alath's Bite (Tank Bite)
 		[417443] = L.fyralaths_mark, -- Fyr'alath's Mark (Mark)
 		[422032] = L.spirits_of_the_kaldorei, -- Spirits of the Kaldorei (Spirits)
@@ -357,7 +355,7 @@ function mod:Incarnate(args)
 		self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
 		self:StopBar(CL.count:format(L.firestorm, firestormCount)) -- Firestorm
 		self:StopBar(CL.count:format(L.dream_rend, dreamRendCount)) -- Dream Rend
-		self:StopBar(CL.count:format(L.blaze, blazeCount)) -- Blaze
+		self:StopBar(CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 		self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 
 		self:Message("stages", "cyan", CL.intermission, false)
