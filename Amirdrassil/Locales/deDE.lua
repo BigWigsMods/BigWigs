@@ -30,6 +30,7 @@ if L then
 	L.ultimate_boss = "Ultimate (%s)"
 	L.barreling_charge = "Ansturm"
 	L.poisonous_javelin = "Wurfspeer"
+	L.song_of_the_dragon = "Lied"
 	L.polymorph_bomb = "Enten"
 	L.polymorph_bomb_single = "Ente"
 end
@@ -59,6 +60,7 @@ L = BigWigs:NewBossLocale("Smolderon", "deDE")
 if L then
 	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysire"
+	L.flame_waves = "Wirbel"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "deDE")
@@ -80,13 +82,13 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")
 if L then
 	L.spirit_trigger = "Geist der Kaldorei"
 
-	--L.firestorm = "Meteors"
-	--L.dream_rend = "Pull In"
-	--L.fyralaths_bite = "Tank Frontal"
-	--L.fyralaths_mark = "Mark"
-	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.greater_firestorm = "Meteors [G]" -- G for Greater
-	--L.incarnate = "Fly Away"
-	--L.shadowflame_devastation = "Deep Breath"
-	--L.eternal_firestorm = "Meteors [E]" -- E for Eternal
+	L.firestorm = "Meteore"
+	L.dream_rend = "Heranziehen"
+	L.fyralaths_bite = "Tank Frontal"
+	L.fyralaths_mark = "Mal"
+	L.spirits_of_the_kaldorei = "Geister"
+	L.greater_firestorm = "Meteore [G]" -- G for Greater
+	L.incarnate = "Abheben"
+	L.shadowflame_devastation = "Tiefer Atem"
+	L.eternal_firestorm = "Meteors [E]" -- E for Eternal
 end
