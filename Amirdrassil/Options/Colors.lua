@@ -47,23 +47,23 @@ BigWigs:AddColors("Volcoross", {
 
 BigWigs:AddColors("Council of Dreams", {
 	[418187] = {"orange","red"},
-	[418720] = {"blue","yellow"},
-	[420525] = {"green","yellow"},
+	[418720] = {"blue","cyan"},
+	[420525] = {"green","orange"},
 	[420671] = "yellow",
 	[420858] = {"blue","yellow"},
 	[420937] = "red",
-	[420948] = {"blue","yellow"},
-	[421022] = {"blue","purple"},
+	[420948] = {"blue","purple"},
+	[421022] = "purple",
 	[421024] = "orange",
-	[421029] = {"green","yellow"},
-	[421032] = "blue",
-	[421292] = {"blue","green","yellow"},
+	[421029] = {"green","orange"},
+	[421032] = {"blue","green"},
+	[421292] = {"blue","green","orange"},
 	[421501] = "cyan",
 	[421570] = "cyan",
-	[423420] = "blue",
 	[423551] = "blue",
 	[425114] = "red",
 	[426390] = "blue",
+	["agonizing_claws_debuff"] = {"blue","purple"},
 })
 
 BigWigs:AddColors("Larodar, Keeper of the Flame", {

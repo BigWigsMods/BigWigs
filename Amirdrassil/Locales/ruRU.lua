@@ -28,7 +28,7 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "ruRU")
 if L then
 	L.ultimate_boss = "Ульта (%s)"
-	L.charge = "Чардж"
+	L.barreling_charge = "Чардж"
 	L.poisonous_javelin = "Отравленное копьё"
 	L.polymorph_bomb = "Утки"
 	L.polymorph_bomb_single = "Утка"
