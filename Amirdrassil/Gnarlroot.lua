@@ -227,8 +227,19 @@ function mod:TorturedScream(args)
 	self:Message(args.spellId, "red", CL.count:format(L.tortured_scream, torturedScreamCount))
 	self:PlaySound(args.spellId, "alert")
 	torturedScreamCount = torturedScreamCount + 1
-	local cd = self:Mythic() and {3.5, 23.5, 16.4, 22.5, 20.1, 0} or {4.5, 29.2, 23.1, 30.8, 0}
-	self:CDBar(args.spellId, cd[torturedScreamCount], CL.count:format(L.tortured_scream, torturedScreamCount))
+
+	local cd
+	if self:Mythic() then
+		local timer = { 3.0, 23.0, 28.0, 22.1, 0 }
+		cd = timer[torturedScreamCount]
+	elseif self:Easy() then
+		local timer = { 3.3, 25.5, 25.6, 26.7, 0 }
+		cd = timer[torturedScreamCount]
+	else
+		local timer = { 3.0, 23.0, 23.0, 24.0, 0 }
+		cd = timer[torturedScreamCount]
+	end
+	self:CDBar(args.spellId, cd, CL.count:format(L.tortured_scream, torturedScreamCount))
 end
 
 function mod:ShadowflameCleave(args)
@@ -236,19 +247,12 @@ function mod:ShadowflameCleave(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameCleaveCount = shadowflameCleaveCount + 1
-
-	local cd
 	if self:Mythic() then
-		local timer = { 3.0, 23.0, 28.0, 22.1, 0 }
-		cd = timer[shadowflameCleaveCount]
-	elseif self:Easy() then
-		local timer = { 3.3, 25.5, 25.6, 26.7, 0 }
-		cd = timer[shadowflameCleaveCount]
-	else
-		local timer = { 3.0, 23.0, 23.0, 24.0, 0 }
-		cd = timer[shadowflameCleaveCount]
+		local timer = { 21.4, 24.0, 27.0, 0 }
+		self:CDBar(args.spellId, timer[shadowflameCleaveCount], CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
+	elseif shadowflameCleaveCount < 4 then -- 3 per
+		self:CDBar(args.spellId, self:Easy() and 26.7 or 24.0, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 	end
-	self:CDBar(args.spellId, cd, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 end
 
 -- Stage Two: Agonizing Growth
