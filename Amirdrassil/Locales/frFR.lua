@@ -79,4 +79,14 @@ end
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "frFR")
 if L then
 	L.spirit_trigger = "Esprit des Kaldorei"
+
+	--L.firestorm = "Meteors"
+	--L.dream_rend = "Pull In"
+	--L.fyralaths_bite = "Tank Frontal"
+	--L.fyralaths_mark = "Mark"
+	--L.spirits_of_the_kaldorei = "Spirits"
+	--L.greater_firestorm = "Meteors [G]" -- G for Greater
+	--L.incarnate = "Fly Away"
+	--L.shadowflame_devastation = "Deep Breath"
+	--L.eternal_firestorm = "Meteors [E]" -- E for Eternal
 end

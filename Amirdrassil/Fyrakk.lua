@@ -44,7 +44,7 @@ if L then
 	L.fyralaths_mark = "Mark"
 	L.spirits_of_the_kaldorei = "Spirits"
 	L.greater_firestorm = "Meteors [G]" -- G for Greater
-	L.incarnate = "Knockup"
+	L.incarnate = "Fly Away"
 	L.shadowflame_devastation = "Deep Breath"
 	L.eternal_firestorm = "Meteors [E]" -- E for Eternal
 end
@@ -365,7 +365,7 @@ function mod:Incarnate(args)
 
 	elseif self:GetStage() == 2 then
 		self:StopBar(CL.count:format(L.incarnate, incarnateCount))
-		self:Message(args.spellId, "yellow", CL.count:format(L.incarnate, incarnateCount))
+		self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.incarnate, incarnateCount)))
 		self:PlaySound(args.spellId, "info")
 		incarnateCount = incarnateCount + 1
 
