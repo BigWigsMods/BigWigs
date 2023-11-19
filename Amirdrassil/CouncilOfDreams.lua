@@ -345,7 +345,7 @@ function mod:BlindingRage(args)
 	-- self:Bar(418720, 9.0, L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 end
 
-function mod:BlindingRageOver(args)
+function mod:BlindingRageOver()
 	self:StopBar(L.special_mechanic_bar:format(L.noxious_blossom, noxiousBlossomCount)) -- Noxious Blossom
 	self:StopBar(L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 	self:SpecialOver()
@@ -356,7 +356,7 @@ function mod:BlindingRageOver(args)
 	end
 end
 
-function mod:UrctosPolyBomb(args)
+function mod:UrctosPolyBomb()
 	self:BlindingRageOver() -- you can interrupt the cast with duck, never getting the auras
 	self:Message(420525, "green", CL.interrupted:format(self:SpellName(420525))) -- Blinding Rage
 	self:PlaySound(420525, "info")
@@ -459,7 +459,7 @@ function mod:ConstrictingThicket(args)
 	-- self:Bar(420948, self:Mythic() and 4.0 or 3.0, L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
 end
 
-function mod:ConstrictingThicketOver(args)
+function mod:ConstrictingThicketOver()
 	self:StopBar(L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
 	self:SpecialOver()
 
@@ -469,7 +469,7 @@ function mod:ConstrictingThicketOver(args)
 	end
 end
 
-function mod:AerwynnBarrelingCharge(args)
+function mod:AerwynnBarrelingCharge()
 	self:Message(421292, "green", CL.interrupted:format(L.ultimate_boss:format(L.aerwynn))) -- Constricting Thicket
 	self:PlaySound(421292, "info")
 end
@@ -563,7 +563,7 @@ function mod:SongOfTheDragon(args)
 	-- self:Bar(420671, self:Mythic() and 1.0 or 3.0, L.special_mechanic_bar:format(args.spellName, noxiousBlossomCount)) -- Noxious Blossom
 end
 
-function mod:SongOfTheDragonOver(args)
+function mod:SongOfTheDragonOver()
 	self:StopBar(CL.cast:format(L.song_of_the_dragon))
 
 	self:Message(421292, "green", CL.over:format(L.ultimate_boss:format(L.pip)))
