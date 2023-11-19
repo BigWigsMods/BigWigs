@@ -72,7 +72,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
 	-- Stage One: Garden of Despair
 	self:Log("SPELL_CAST_SUCCESS", "FlamingPestilence", 421898)
 	self:Log("SPELL_AURA_APPLIED", "ShadowSpinesApplied", 422053)
@@ -123,7 +122,7 @@ function mod:OnEngage()
 	self:CDBar(421898, self:Easy() and 16.5 or 15.0, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
 	self:CDBar(421972, self:Heroic() and 32 or 36, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
 	self:CDBar(422039, self:Easy() and 22.4 or 20.0, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:CDBar("stages", self:Heroic() and 92.8 or 94.5, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Doom Cultivation
+	self:CDBar("stages", 90, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Doom Cultivation
 
 	if self:GetOption(taintedTreantMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -325,7 +324,7 @@ function mod:UprootedAgonyRemoved(args)
 	self:Bar(421898, self:Easy() and 23.5 or 16.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
 	self:Bar(421972, self:Mythic() and 37.4 or self:Easy() and 44.5 or 33, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
 	self:Bar(422039, self:Easy() and 44 or 21.4, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:Bar("stages", 94.4, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Doom Cultivation
+	self:Bar("stages", 92.2, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Doom Cultivation
 end
 
 -- Mythic
