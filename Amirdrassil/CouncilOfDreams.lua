@@ -87,7 +87,7 @@ function mod:GetOptions()
 		{421029, "CASTBAR"}, -- Song of the Dragon
 		{421032, "SAY"}, -- Captivating Finale
 		421501, -- Blink
-		{418720, "SAY_COUNTDOWN"}, -- Polymorph Bomb
+		{418720, "PRIVATE", "SAY_COUNTDOWN"}, -- Polymorph Bomb
 		421024, -- Emerald Winds
 		423551, -- Whimsical Gust (Damage)
 	},{
@@ -202,6 +202,8 @@ function mod:OnEngage()
 	self:Bar(421501, 23.0) -- Blink
 	self:Bar(418720, self:Easy() and 35.0 or 36.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 	self:Bar(421024, self:Mythic() and 43 or 45.5, CL.count:format(L.emerald_winds, emeraldWindsCount)) -- Emerald Winds
+
+	self:SetPrivateAuraSound(418720, 429123) -- Polymorph Bomb
 end
 
 --------------------------------------------------------------------------------
@@ -210,7 +212,6 @@ end
 
 function mod:SpecialOver()
 	activeSpecials = math.max(activeSpecials - 1, 0)
-	specialBreakCount = 0
 	if activeSpecials == 0 then
 		self:StopBar(L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
 		self:StopBar(L.special_mechanic_bar:format(L.noxious_blossom, noxiousBlossomCount)) -- Noxious Blossom
