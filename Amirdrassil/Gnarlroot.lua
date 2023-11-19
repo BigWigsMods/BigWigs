@@ -240,15 +240,15 @@ function mod:ShadowflameCleave(args)
 	local cd
 	if self:Mythic() then
 		local timer = { 3.0, 23.0, 28.0, 22.1, 0 }
-		cd = timer[torturedScreamCount]
+		cd = timer[shadowflameCleaveCount]
 	elseif self:Easy() then
 		local timer = { 3.3, 25.5, 25.6, 26.7, 0 }
-		cd = timer[torturedScreamCount]
+		cd = timer[shadowflameCleaveCount]
 	else
 		local timer = { 3.0, 23.0, 23.0, 24.0, 0 }
-		cd = timer[torturedScreamCount]
+		cd = timer[shadowflameCleaveCount]
 	end
-	self:CDBar(args.spellId, cd, CL.count:format(args.spellName, torturedScreamCount))
+	self:CDBar(args.spellId, cd, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
 end
 
 -- Stage Two: Agonizing Growth
