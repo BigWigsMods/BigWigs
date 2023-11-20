@@ -58,7 +58,7 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "ruRU")
 if L then
 	L.continuum = "Новые Узоры"
 	L.impending_loom = "Доджи"
-	--L.viridian_rain = "Damage + Bombs"
+	L.viridian_rain = "Урон + Бомбы"
 	L.lumbering_slam = "Фронтал"
 end
 
@@ -78,26 +78,27 @@ if L then
 	L.incarnation_moonkin = "Совиная форма "
 	L.incarnation_tree_of_flame = "Древоформа"
 	L.flaming_germination = "Семена"
-	--L.suppressive_ember = "Heal Absorbs"
-	--L.suppressive_ember_single = "Heal Absorb"
-	--L.flare_bomb = "Feathers"
+	L.suppressive_ember = "Абсорб"
+	L.suppressive_ember_single = "Абсорб"
+	L.flare_bomb = "Перья"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ruRU")
 if L then
 	L.spirit_trigger = "Дух калдорай"
 
-	--L.fyralaths_bite = "Frontal"
-	--L.fyralaths_bite_mythic = "Frontals"
-	--L.fyralaths_mark = "Mark"
-	--L.darkflame_shades = "Shades"
-	--L.darkflame_cleave = "Mythic Soaks"
-	--L.incarnate_intermission = "Knock Up"
-	--L.incarnate = "Fly Away"
-	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.molten_gauntlet = "Gauntlet"
-	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
-	--L.greater_firestorm_message_full = "Firestorm [Greater]"
-	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
-	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
+	L.fyralaths_bite = "Фронтал"
+	L.fyralaths_bite_mythic = "Фронталы"
+	L.fyralaths_mark = "Метка"
+	L.darkflame_shades = "Тени"
+	L.darkflame_cleave = "Соаки"
+	L.incarnate_intermission = "Подкидывание"
+	L.incarnate = "Улетает"
+	L.spirits_of_the_kaldorei = "Духи"
+	L.molten_gauntlet = "Танкбастер"
+
+	L.greater_firestorm_shortened_bar = "Метеоры" -- G for Greater
+	L.greater_firestorm_message_full = "Метеоры [Великая]"
+	L.eternal_firestorm_shortened_bar = "Метеоры" -- E for Eternal
+	L.eternal_firestorm_message_full = "Метеоры [Вечная]"
 end
