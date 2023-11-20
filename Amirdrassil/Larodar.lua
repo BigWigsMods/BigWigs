@@ -218,6 +218,9 @@ function mod:OnEngage()
 	ashenCallCount = 1
 	ashenDevastationCount = 1
 
+	if self:Mythic() then
+		self:Berserk(401, 0) -- ~6:41
+	end
 	self:Bar(417653, timers[417653][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount)) -- Fiery Force of Nature
 	self:Bar(426206, timers[426206][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
 	self:Bar(418637, timers[418637][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
@@ -384,9 +387,6 @@ function mod:ConsumingFlameRemoved(args)
 	searingAshCount = 1
 	fireWhirlCount = 1
 
-	if self:Mythic() then
-		self:Berserk(100, 0)
-	end
 	self:Bar(421407, 2.5, CL.count:format(self:SpellName(421407), searingAshCount)) -- Searing Ash
 	self:Bar(427252, timers[427252][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount)) -- Falling Embers
 	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount)) -- Smoldering Backdraft
@@ -525,6 +525,7 @@ do
 end
 
 function mod:BerserkCast(args)
+	self:StopBar(args.spellName)
 	self:Message("berserk", "red", CL.custom_end:format(args.sourceName, args.spellName), args.spellId)
 	self:PlaySound("berserk", "alarm")
 end
