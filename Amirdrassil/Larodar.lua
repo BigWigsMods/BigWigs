@@ -61,7 +61,7 @@ local timersHeroic = { -- 4:51 p1, 3:45 p2
 	[429973] = { 14.2, 25.9, 30.0, 19.1, 29.2, 20.8, 30.0, 24.1 }, -- Smoldering Backdraft
 	[421325] = { 20.9, 44.2, 42.5, 42.5, 38.3 }, -- Ashen Call
 }
-local timersMythic = { -- 4:21 p1, 2:43 p2 XXX hot mess of testing + live timers
+local timersMythic = {
 	-- p1
 	[417653] = { 6.6, 104.9, 98.7 }, -- Fiery Force of Nature
 	[422614] = { 37.3, 110.5, 93.2 }, -- Scorching Roots
@@ -70,12 +70,12 @@ local timersMythic = { -- 4:21 p1, 2:43 p2 XXX hot mess of testing + live timers
 	[417634] = { 90.6, 101.0 }, -- Raging Inferno
 	[425889] = { 14.2, 123.7, 80.0 }, -- Igniting Growth
 	-- p2
-	[428896] = { 45.5, 68.5 }, -- Ashen Devastation 68.5/73.5?
-	[427252] = { 7.4, 26.7, 35.9, 21.7, 30.0, 20.0, 25.0, 25.0, 25.0 }, -- Falling Embers 4
-	[427299] = { 29.1, 51.8, 30.0 }, -- Flash Fire 2
-	[427343] = { 65.0, 32.6, 32.5, 36.7, 36.6 }, -- Fire Whirl 2
-	[429973] = { 14.0, 25.9, 19.2, 26.8, 16.7, 20.8, 30.0, 24.1 }, -- Smoldering Backdraft 5
-	[421325] = { 20.7, 55.1, 42.5, 42.5, 38.3 }, -- Ashen Call 2
+	[428896] = { 45.5, 0 }, -- Ashen Devastation
+	[427252] = { 7.4, 26.7, 35.9, 21.7, 0 }, -- Falling Embers
+	[427299] = { 29.0, 51.8, 0 }, -- Flash Fire
+	[427343] = { 64.9, 32.6, 0 }, -- Fire Whirl
+	[429973] = { 14.0, 25.9, 19.2, 26.7, 16.7, 0 }, -- Smoldering Backdraft
+	[421325] = { 20.7, 55.1, 0 }, -- Ashen Call
 }
 local timers = mod:Easy() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
 
@@ -103,6 +103,7 @@ end
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		-- Stage One: The Cycle of Flame
 		417653, -- Fiery Force of Nature
 		418520, -- Blistering Splinters
@@ -383,6 +384,9 @@ function mod:ConsumingFlameRemoved(args)
 	searingAshCount = 1
 	fireWhirlCount = 1
 
+	if self:Mythic() then
+		self:Berserk(100, 0)
+	end
 	self:Bar(421407, 2.5, CL.count:format(self:SpellName(421407), searingAshCount)) -- Searing Ash
 	self:Bar(427252, timers[427252][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount)) -- Falling Embers
 	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(L.smoldering_backdraft, smolderingBackdraftCount)) -- Smoldering Backdraft
@@ -518,6 +522,11 @@ do
 			self:Bar(args.spellId, 12, CL.count:format(args.spellName, searingAshCount))
 		end
 	end
+end
+
+function mod:BerserkCast(args)
+	self:Message("berserk", "red", CL.custom_end:format(args.sourceName, args.spellName), args.spellId)
+	self:PlaySound("berserk", "alarm")
 end
 
 do
