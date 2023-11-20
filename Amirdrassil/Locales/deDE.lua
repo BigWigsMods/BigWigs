@@ -50,8 +50,12 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "deDE")
 if L then
+	L.mythic_add_death = "%s getötet"
+
 	L.continuum = "Neue Fäden"
 	L.impending_loom = "Ausweichen"
+	L.surging_growth = "Neue Soaks"
+	L.ephemeral_flora = "Roter Soak"
 	L.viridian_rain = "Schaden + Bomben"
 	L.lumbering_slam = "Frontaler Kegel"
 end
@@ -90,5 +94,5 @@ if L then
 	L.greater_firestorm = "Meteore [G]" -- G for Greater
 	L.incarnate = "Abheben"
 	L.shadowflame_devastation = "Tiefer Atem"
-	L.eternal_firestorm = "Meteors [E]" -- E for Eternal
+	L.eternal_firestorm = "Meteore [E]" -- E for Eternal
 end
