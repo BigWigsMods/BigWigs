@@ -30,6 +30,6 @@
 
 ## X-Category: Raid
 ## X-BigWigs-ExtraMenu: -1978
-## X-BigWigs-LoadOn-WorldBoss: -2023, 193534, -2022, 193535, -2024, 193532, -2085, 193533
+## X-BigWigs-LoadOn-WorldBoss: -2023, 193534, -2022, 193535, -2024, 193532, -2085, 193533, -2200, 209574
 
 modules.xml
