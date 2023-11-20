@@ -108,14 +108,14 @@ function mod:GetOptions()
 		418520, -- Blistering Splinters
 		426524, -- Fiery Flourish
 		422614, -- Scorching Roots
-		{420544, "PRIVATE", "SAY"}, -- Scorching Pursuit
+		{420544, "PRIVATE"}, -- Scorching Pursuit
 		426387, -- Scorching Bramblethorn
 		418637, -- Furious Charge
 		{423719, "TANK"}, -- Nature's Fury
 		426206, -- Blazing Thorns
 		426249, -- Blazing Coalescence (Player)
 		"blazing_coalescence_boss", -- Blazing Coalescence (Boss) 426256
-		417634, -- Raging Inferno
+		{417634, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Raging Inferno
 		417632, -- Burning Ground
 		-- Mythic
 		425889, -- Igniting Growth
@@ -126,7 +126,7 @@ function mod:GetOptions()
 
 		-- Stage Two: Avatar of Ash
 		427252, -- Falling Embers
-		{427299, "SAY", "SAY_COUNTDOWN"}, -- Flash Fire
+		{427299, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Flash Fire
 		{427306, "SAY"}, -- Encased in Ash
 		427343, -- Fire Whirl
 		429973, -- Smoldering Backdraft
@@ -161,7 +161,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlisteringSplintersApplied", 418520)
 	self:Log("SPELL_CAST_START", "FieryFlourish", 426524)
 	self:Log("SPELL_CAST_START", "ScorchingRoots", 422614)
-	self:Log("SPELL_AURA_APPLIED", "ScorchingPursuit", 420544)
 	self:Log("SPELL_AURA_APPLIED", "ScorchingBramblethorn", 426387)
 	self:Log("SPELL_CAST_START", "FuriousCharge", 418637)
 	self:Log("SPELL_AURA_APPLIED", "NaturesFuryApplied", 423719)
@@ -284,14 +283,6 @@ function mod:ScorchingRoots(args)
 	self:Bar(args.spellId, timers[args.spellId][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount))
 end
 
-function mod:ScorchingPursuit(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
-	end
-end
-
 function mod:ScorchingBramblethorn(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
@@ -340,6 +331,7 @@ function mod:RagingInferno(args)
 	self:PlaySound(args.spellId, "long")
 	ragingInfernoCount = ragingInfernoCount + 1
 	self:Bar(args.spellId, 102, CL.count:format(args.spellName, ragingInfernoCount))
+	self:CastBar(args.spellId, 4, args.spellName)
 end
 
 function mod:IgnitingGrowth(args)
@@ -359,7 +351,7 @@ end
 
 -- Intermission: Unreborn Again
 function mod:ConsumingFlame(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, ragingInfernoCount))
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 
 	self:SetStage(1.5)
