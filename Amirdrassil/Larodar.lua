@@ -67,15 +67,14 @@ local timersMythic = {
 	[422614] = { 37.3, 110.5, 93.2 }, -- Scorching Roots
 	[418637] = { 22.0, 21.9, 24.2, 35.7, 24.2, 28.6, 25.3, 43.8, 22.0, 24.1 }, -- Furious Charge
 	[426206] = { 30.8, 24.1, 24.2, 37.9, 52.7, 64.6, 24.2, 24.2  }, -- Blazing Thorns
-	[417634] = { 90.6, 101.0 }, -- Raging Inferno
 	[425889] = { 14.2, 123.7, 80.0 }, -- Igniting Growth
 	-- p2
-	[428896] = { 45.5, 0 }, -- Ashen Devastation
-	[427252] = { 7.4, 26.7, 35.9, 21.7, 0 }, -- Falling Embers
-	[427299] = { 29.0, 51.8, 0 }, -- Flash Fire
-	[427343] = { 64.9, 32.6, 0 }, -- Fire Whirl
-	[429973] = { 14.0, 25.9, 19.2, 26.7, 16.7, 0 }, -- Smoldering Backdraft
-	[421325] = { 20.7, 55.1, 0 }, -- Ashen Call
+	[428896] = { 45.5 }, -- Ashen Devastation
+	[427252] = { 7.4, 26.7, 35.9, 21.7 }, -- Falling Embers
+	[427299] = { 29.0, 51.8 }, -- Flash Fire
+	[427343] = { 64.9, 32.6 }, -- Fire Whirl
+	[429973] = { 14.0, 25.9, 19.2, 26.7, 16.7 }, -- Smoldering Backdraft
+	[421325] = { 20.7, 55.1 }, -- Ashen Call
 }
 local timers = mod:Easy() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
 
@@ -194,6 +193,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SmolderingSuffocationRemoved", 421594)
 	self:Log("SPELL_CAST_START", "AshenCall", 421325)
 	self:Log("SPELL_CAST_SUCCESS", "SearingAsh", 421407)
+	self:Log("SPELL_CAST_SUCCESS", "BerserkCast", 26662)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 417632) -- Burning Ground
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 417632)
