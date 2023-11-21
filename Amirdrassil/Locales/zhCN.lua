@@ -28,6 +28,9 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
 	L.ultimate_boss = "满能量 (%s)"
+	L.special_bar = "满能量 [%s] (%d)"
+	L.special_mythic_bar = "满能量 [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [满能量] (%d)"
 	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
@@ -50,8 +53,11 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
 if L then
+	L.mythic_add_death = "%s 被击杀"
 	L.continuum = "新矩阵"
 	L.impending_loom = "躲避丝线"
+	L.surging_growth = "新踩圈"
+	L.ephemeral_flora = "踩红圈"
 	L.viridian_rain = "伤害+炸弹"
 	L.lumbering_slam = "震慑波"
 end
