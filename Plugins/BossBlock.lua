@@ -581,6 +581,7 @@ do
 		[964] = true, -- Raszageth defeat
 		[991] = true, -- Iridikron (DotI) defeat
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
+		[1003] = true, -- Fyrakk defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
