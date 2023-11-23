@@ -341,11 +341,6 @@ function mod:ShadowflameEruptionApplied(args)
 	end
 end
 
-function mod:CorruptRemoved() -- Stage 2
-	self:Message("stages", "green", CL.stage:format(2), false)
-	self:PlaySound("stages", "info")
-end
-
 -- Stage Two: Children of the Stars
 
 function mod:Incarnate(args)
