@@ -45,7 +45,7 @@ function mod:GetOptions()
 		-- Stage One: Garden of Despair
 		421898, -- Flaming Pestilence
 		422053, -- Shadow Spines
-		{421972, "SAY", "SAY_COUNTDOWN"}, -- Controlled Burn
+		{421972, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Controlled Burn
 		controlledBurnMarker,
 		422023, -- Shadow-Scorched Earth
 		{424352, "TANK"}, -- Dreadfire Barrage
