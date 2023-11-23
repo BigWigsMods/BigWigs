@@ -72,7 +72,6 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 	[417653] = "cyan",
 	[418520] = "blue",
 	[418637] = "yellow",
-	[420544] = "blue",
 	[421316] = "yellow",
 	[421325] = "cyan",
 	[421407] = "yellow",
@@ -172,5 +171,6 @@ BigWigs:AddColors("Fyrakk the Blazing", {
 	[425483] = "blue",
 	[425492] = {"blue","purple"},
 	[429866] = "blue",
-	["stages"] = {"cyan","green"},
+	[429872] = "red",
+	["stages"] = "cyan",
 })

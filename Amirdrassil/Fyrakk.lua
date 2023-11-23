@@ -56,6 +56,7 @@ end
 function mod:GetOptions()
 	return {
 		"stages",
+		429872, -- Amirdrassil Burns
 		-- Stage One: The Dream Render
 		{419506, "PRIVATE"}, -- Firestorm
 		419504, -- Raging Flames
@@ -107,6 +108,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Incarnate
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL") -- P2 Spirit of the Kaldorei
 
+	self:Log("SPELL_AURA_APPLIED", "AmirdrassilBurns", 429872)
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 419504, 425483) -- Raging Flames, Incinerated
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 419504, 425483, 410223) -- Shadowflame Breath (not in _APPLIED)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 419504, 425483, 410223)
@@ -188,6 +190,11 @@ function mod:UNIT_HEALTH(event, unit)
 		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false) -- Intermission soon
 		self:PlaySound("stages", "info")
 	end
+end
+
+function mod:AmirdrassilBurns(args)
+	self:Message(args.spellId, "red")
+	self:PlaySound(args.spellId, "alarm")
 end
 
 do
@@ -282,6 +289,21 @@ end
 
 -- Intermission: Amirdrassil in Peril
 
+function mod:IncarnateIntermission()
+	self:CancelTimer(blazeTimer)
+	self:StopBar(CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
+	self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
+	self:StopBar(CL.count:format(L.firestorm, firestormCount)) -- Firestorm
+	self:StopBar(CL.count:format(L.dream_rend, dreamRendCount)) -- Dream Rend
+	self:StopBar(CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
+	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
+
+	self:Message("stages", "cyan", CL.intermission, false)
+	self:PlaySound("stages", "long")
+
+	self:Bar(419144, 13) -- Corrupt
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 421830 then -- Incarnate
 		local stage = self:GetStage()
@@ -344,20 +366,8 @@ end
 -- Stage Two: Children of the Stars
 
 function mod:Incarnate(args)
-	if self:GetStage() == 1 then -- Intermission start
-		self:CancelTimer(blazeTimer)
-		self:StopBar(CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
-		self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-		self:StopBar(CL.count:format(L.firestorm, firestormCount)) -- Firestorm
-		self:StopBar(CL.count:format(L.dream_rend, dreamRendCount)) -- Dream Rend
-		self:StopBar(CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
-		self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
-
-		self:Message("stages", "cyan", CL.intermission, false)
-		self:PlaySound("stages", "long")
-
-		self:Bar(419144, 13) -- Corrupt
-
+	if self:GetStage() == 1 then
+		self:IncarnateIntermission()
 	elseif self:GetStage() == 2 then
 		self:StopBar(CL.count:format(L.incarnate, incarnateCount))
 		self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.incarnate, incarnateCount)))
