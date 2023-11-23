@@ -127,11 +127,12 @@ BigWigs:AddColors("Smolderon", {
 })
 
 BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
-	[420236] = {"blue","yellow"},
+	[420236] = "yellow",
 	[420540] = "cyan",
 	[421398] = {"blue","orange"},
+	[421636] = "yellow",
 	[421939] = "blue",
-	[422000] = "blue",
+	[422000] = {"blue","purple"},
 	[422115] = "cyan",
 	[422325] = "blue",
 	[422503] = "blue",
@@ -140,12 +141,14 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 	[423265] = "cyan",
 	[424140] = "red",
 	[424258] = "green",
-	[424495] = {"blue","green"},
+	[424495] = "green",
 	[424499] = "blue",
 	[424579] = "blue",
 	[424581] = {"blue","yellow"},
-	[424582] = {"blue","cyan"},
 	[424665] = "blue",
+	[425576] = "red",
+	[425606] = "green",
+	[430583] = {"blue","green"},
 	["stages"] = "cyan",
 })
 

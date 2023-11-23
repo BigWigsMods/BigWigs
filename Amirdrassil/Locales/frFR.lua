@@ -63,17 +63,17 @@ end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "frFR")
 if L then
+	--L.seed_soaked = "Seed soaked"
+	--L.all_seeds_soaked = "Seeds done!"
 	--L.blazing_mushroom = "Mushrooms"
-	--L.fiery_growth = "Pool Dispels"
-	--L.falling_stars = "Stars"
-	--L.falling_stars_single = "Star"
+	--L.fiery_growth = "Dispels"
 	--L.mass_entanglement = "Roots"
-	--L.mass_entanglement_single = "Root"
 	--L.incarnation_moonkin = "Moonkin Form"
 	--L.incarnation_tree_of_flame = "Tree Form"
 	--L.flaming_germination = "Seeds"
 	--L.suppressive_ember = "Heal Absorbs"
 	--L.suppressive_ember_single = "Heal Absorb"
+	--L.flare_bomb = "Feathers"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "frFR")
