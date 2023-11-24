@@ -30,7 +30,7 @@ if L then
 	L.ultimate_boss = "满能量 (%s)"
 	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
-	L.song_of_the_dragon = "Song"
+	L.song_of_the_dragon = "歌谣"
 	L.polymorph_bomb = "鸭子"
 	L.polymorph_bomb_single = "鸭子"
 end
