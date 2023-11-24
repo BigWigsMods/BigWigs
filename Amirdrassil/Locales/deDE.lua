@@ -72,7 +72,7 @@ if L then
 
 	L.seed_soaked = "Samen gesoaked"
 	L.all_seeds_soaked = "Samen fertig!"
-	
+
 	L.blazing_mushroom = "Pilze"
 	L.fiery_growth = "Dispels"
 	L.mass_entanglement = "Wurzeln"
