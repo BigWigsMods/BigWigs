@@ -52,7 +52,7 @@ function mod:GetOptions()
 		"stages",
 		"berserk",
 		{414340, "TANK"}, -- Drenched Blades
-		{414888, "SAY"}, -- Blistering Spear
+		{414888, "SAY", "ME_ONLY_EMPHASIZE"}, -- Blistering Spear
 		blisteringSpearMarker,
 		414770, -- Blistering Torment
 		416996, -- Twisting Blade

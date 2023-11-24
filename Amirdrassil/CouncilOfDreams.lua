@@ -333,7 +333,7 @@ end
 
 -- Urctos
 function mod:BlindingRage(args)
-	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(self:SpellName(L.urctos)), blindingRageCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(L.urctos), blindingRageCount))
 	self:PlaySound(args.spellId, "alert") -- duck boss
 	blindingRageCount = blindingRageCount + 1
 
@@ -450,7 +450,7 @@ end
 
 -- Aerwynn
 function mod:ConstrictingThicket(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_boss:format(L.aerwynn)), constrictingThicketCount))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_boss:format(L.aerwynn), constrictingThicketCount)))
 	self:PlaySound(args.spellId, "alert") -- Interrupt
 	constrictingThicketCount = constrictingThicketCount + 1
 
@@ -553,7 +553,7 @@ end
 
 -- Pip
 function mod:SongOfTheDragon(args)
-	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(self:SpellName(L.pip)), songCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(L.pip), songCount))
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, self:Mythic() and 14 or 24, L.song_of_the_dragon)
 	songCount = songCount + 1

@@ -17,6 +17,7 @@ local viridianRainCount = 1
 local continuumCount = 1
 local impendingLoomCount = 1
 local surgingGrowthCount = 1
+local ephemeralFloraCount = 1
 local fullBloomCount = 1
 local radialFlourishCount = 1
 local inflorescenceOnMe = false
@@ -27,8 +28,12 @@ local inflorescenceOnMe = false
 
 local L = mod:GetLocale()
 if L then
+	L.mythic_add_death = "%s Killed"
+
 	L.continuum = "New Lines"
 	L.impending_loom = "Dodges"
+	L.surging_growth = "New Soaks"
+	L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "Damage + Bombs"
 	L.lumbering_slam = "Frontal Cone"
 end
@@ -43,24 +48,32 @@ function mod:GetOptions()
 		-- Stage One: Rapid Iteration
 		420846, -- Continuum
 		429615, -- Impending Loom
-		--420971, -- Surging Growth
+		429983, -- Surging Growth
+		-- Mythic
+		430563, -- Ephemeral Flora
 		420907, -- Viridian Rain
-		{427722, "PRIVATE", "SAY"}, -- Weaver's Burden
+		{427722, "SAY"}, -- Weaver's Burden
 		-- Stage Two: Creation Complete
 		426855, -- Full Bloom (Stage 2)
 		413443, -- Life Ward
 		429108, -- Lumbering Slam
 		422721, -- Radial Flourish
 		429798, -- Verdent Rend
+		-- Mythic
+		-28482, -- Manifested Dream
+		428471, -- Waking Decimation
 	},{
 		[420554] = "general",
 		[420846] = -28355, -- Stage One: Rapid Iteration
+		[430563] = "mythic",
 		[426855] = -28356, -- Stage Two: Creation Complete
 		[413443] = -27432, -- Cycle Warden
+		[-28482] = "mythic", -- Manifested Dream (Mythic)
 	},{
 		[420846] = L.continuum, -- Continuum (New Lines)
 		[429615] = L.impending_loom, -- Impending Loom (Dodges)
 		[420907] = L.viridian_rain, -- Viridian Rain (Raid Damage)
+		[430563] = L.ephemeral_flora, -- Ephmeral Flora (Red Soak)
 		[427722] = CL.bombs, -- Weaver's Burden (Bombs)
 		[426855] = CL.stage:format(2), -- Full Bloom (Stage 2)
 		[429108] = L.lumbering_slam, -- Lumbering Slam (Frontal Cone)
@@ -86,19 +99,26 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "LumberingSlam", 429108)
 	self:Log("SPELL_CAST_SUCCESS", "RadialFlourish", 422721)
 	self:Log("SPELL_AURA_APPLIED", "VerdantRendApplied", 429798)
+	self:Log("SPELL_CAST_START", "WakingDecimation", 428471)
 end
 
 function mod:OnEngage()
 	viridianRainCount = 1
 	continuumCount = 1
 	impendingLoomCount = 1
+	ephemeralFloraCount = 1
 	fullBloomCount = 1
 	radialFlourishCount = 1
 	inflorescenceOnMe = false
 
+	self:Bar(429983, 11.2, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 20, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
 	self:Bar(429615, 24.0, CL.count:format(L.impending_loom, impendingLoomCount)) -- Impending Loom
-	self:Bar(426855, 76.1, CL.stage:format(2)) -- Full Bloom
+	self:Bar(426855, 76.1, CL.stage:format(2))  -- Full Bloom
+	if self:Mythic() then
+		self:Bar(430563, 29, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
+		self:ScheduleTimer("EphemeralFlora", 29)
+	end
 
 	-- self:SetPrivateAuraSound(427722) -- Weaver's Burden
 end
@@ -130,10 +150,16 @@ function mod:Continuum(args)
 	self:SetStage(1)
 	impendingLoomCount = 1
 	viridianRainCount = 1
+	ephemeralFloraCount = 1
 
+	self:Bar(429983, 28.4, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 36.6, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
 	self:Bar(429615, 41.5, CL.count:format(L.impending_loom, impendingLoomCount)) -- Impending Loom
 	self:Bar(426855, 87.5, CL.stage:format(2)) -- Full Bloom
+	if self:Mythic() then
+		self:Bar(430563, 46, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
+		self:ScheduleTimer("EphemeralFlora", 46)
+	end
 end
 
 function mod:ImpendingLoom(args)
@@ -146,13 +172,16 @@ function mod:ImpendingLoom(args)
 	end
 end
 
--- function mod:SurgingGrowth(args)
--- 	self:StopBar(CL.count:format(L.surging_growth, surgingGrowthCount))
--- 	self:Message(args.spellId, "cyan", CL.count:format(L.surging_growth, surgingGrowthCount))
--- 	self:PlaySound(args.spellId, "info")
--- 	surgingGrowthCount = surgingGrowthCount + 1
--- 	--self:Bar(args.spellId, 90, CL.count:format(L.surging_growth, surgingGrowthCount))
--- end
+function mod:EphemeralFlora()
+	self:StopBar(CL.count:format(L.ephemeral_flora, ephemeralFloraCount))
+	self:Message(430563, "red", CL.count:format(L.ephemeral_flora, ephemeralFloraCount))
+	self:PlaySound(430563, "alert")
+	ephemeralFloraCount = ephemeralFloraCount + 1
+	if ephemeralFloraCount < 3 then -- 2 per
+		self:Bar(430563, 26.5, CL.count:format(L.ephemeral_flora, ephemeralFloraCount))
+		self:ScheduleTimer("EphemeralFlora", 26.5)
+	end
+end
 
 function mod:ViridianRain(args)
 	self:StopBar(CL.count:format(L.viridian_rain, viridianRainCount))
@@ -191,17 +220,20 @@ function mod:FullBloom(args)
 	self:StopBar(CL.count:format(L.impending_loom, impendingLoomCount)) -- Impending Loom
 	self:StopBar(CL.stage:format(2)) -- Full Bloom
 
+	self:Message(args.spellId, "green", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "long")
+	fullBloomCount = fullBloomCount + 1
+	self:SetStage(2)
+
 	radialFlourishCount = 1
 
 	self:Bar(413443, 6.9) -- Life Ward
 	self:Bar(422721, 12.6) -- Radial Flourish
 	self:Bar(429108, 19) -- Lumbering Slam
-
-	self:StopBar(CL.stage:format(2))
-	self:Message(args.spellId, "green", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "long")
-	fullBloomCount = fullBloomCount + 1
-	self:SetStage(2)
+	if self:Mythic() then
+		-- self:Bar(-28482, 4.0, nil, "ability_xavius_dreamsimulacrum") -- Manifested Dream
+		self:Bar(428471, 35.2) -- Waking Decimation
+	end
 end
 
 function mod:LifeWardApplied(args)
@@ -213,6 +245,12 @@ function mod:LifeWardRemoved(args)
 	local total = 2
 	self:Message(args.spellId, "green", ("%s (%d/%d)"):format(CL.removed:format(args.spellName), total - args.amount, total))
 	self:PlaySound(args.spellId, "info")
+end
+
+function mod:MythicAddDeath(args)
+	self:Message(-28482, "green", L.mythic_add_death:format(args.destName), "ability_xavius_dreamsimulacrum")
+	self:PlaySound(-28482, "info")
+	self:StopBar(428471) -- Waking Decimation
 end
 
 do
@@ -245,4 +283,10 @@ function mod:VerdantRendApplied(args)
 		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "alarm")
 	end
+end
+
+function mod:WakingDecimation(args)
+	self:StopBar(args.spellName)
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "alarm") -- death
 end

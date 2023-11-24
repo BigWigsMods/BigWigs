@@ -41,10 +41,10 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: The Firelord's Fury
-		421343, -- Brand of Damnation
+		{421343, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Brand of Damnation
 		421656, -- Cauterizing Wound
-		{422577, "SAY", "SAY_COUNTDOWN"}, -- Searing Aftermath
-		421455, -- Overheated
+		{422577, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Searing Aftermath
+		{421455, "ME_ONLY_EMPHASIZE"}, -- Overheated
 		421969, -- Flame Waves
 		422691, -- Lava Geysers
 		421532, -- Smoldering Ground
@@ -129,6 +129,9 @@ function mod:BrandofDamnation(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount))
 	if not overheatedOnMe then -- no circle
 		self:PlaySound(args.spellId, "alert") -- stack
+		if self:Damager() then
+			self:CastBar(args.spellId, 4, L.brand_of_damnation)
+		end
 	end
 	brandofDamnationCount = brandofDamnationCount + 1
 	if brandofDamnationCount < (self:Easy() and 13 or 9) and brandofDamnationCount % 2 == 0 then -- 8 total, starting odds after a stage 2

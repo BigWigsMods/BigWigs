@@ -45,7 +45,7 @@ function mod:GetOptions()
 		-- Stage One: Garden of Despair
 		421898, -- Flaming Pestilence
 		422053, -- Shadow Spines
-		{421972, "SAY", "SAY_COUNTDOWN"}, -- Controlled Burn
+		{421972, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Controlled Burn
 		controlledBurnMarker,
 		422023, -- Shadow-Scorched Earth
 		{424352, "TANK"}, -- Dreadfire Barrage
@@ -185,6 +185,7 @@ do
 end
 
 function mod:DreadfireBarrage(args)
+	self:StopBar(CL.count:format(args.spellName, dreadfireBarrageCount))
 	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	if self:Tanking(bossUnit) then
 		self:PersonalMessage(args.spellId)
@@ -256,7 +257,7 @@ end
 
 -- Stage Two: Agonizing Growth
 function mod:DoomCultivation(args)
-	self:StopBar(424352) -- Dreadfire Barrage
+	self:StopBar(CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
 	self:StopBar(CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
 	self:StopBar(CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
 	self:StopBar(CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream

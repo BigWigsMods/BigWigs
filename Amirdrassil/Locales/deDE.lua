@@ -69,6 +69,7 @@ end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "deDE")
 if L then
+
 	L.seed_soaked = "Samen gesoaked"
 	L.all_seeds_soaked = "Samen fertig!"
 	

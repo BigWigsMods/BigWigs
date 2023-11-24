@@ -72,7 +72,6 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 	[417653] = "cyan",
 	[418520] = "blue",
 	[418637] = "yellow",
-	[420544] = "blue",
 	[421316] = "yellow",
 	[421325] = "cyan",
 	[421407] = "yellow",
@@ -85,17 +84,19 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 	[426387] = "blue",
 	[426524] = "yellow",
 	[427252] = "red",
-	[427299] = {"blue","red","yellow"},
+	[427299] = {"blue","red"},
 	[427306] = "blue",
 	[427343] = "yellow",
 	[428896] = "orange",
 	[429032] = "blue",
 	[429973] = "purple",
+	["berserk"] = "red",
 	["blazing_coalescence_boss"] = {"blue","red"},
 	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Nymue, Weaver of the Cycle", {
+	[-28482] = "green",
 	[413443] = {"green","yellow"},
 	[420554] = "blue",
 	[420846] = "cyan",
@@ -103,9 +104,11 @@ BigWigs:AddColors("Nymue, Weaver of the Cycle", {
 	[422721] = "yellow",
 	[426855] = "green",
 	[427722] = "blue",
+	[428471] = "red",
 	[429108] = "orange",
 	[429615] = "cyan",
 	[429798] = "red",
+	[430563] = "red",
 })
 
 BigWigs:AddColors("Smolderon", {
@@ -124,11 +127,12 @@ BigWigs:AddColors("Smolderon", {
 })
 
 BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
-	[420236] = {"blue","yellow"},
+	[420236] = "yellow",
 	[420540] = "cyan",
 	[421398] = {"blue","orange"},
+	[421636] = "yellow",
 	[421939] = "blue",
-	[422000] = "blue",
+	[422000] = {"blue","purple"},
 	[422115] = "cyan",
 	[422325] = "blue",
 	[422503] = "blue",
@@ -137,12 +141,14 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 	[423265] = "cyan",
 	[424140] = "red",
 	[424258] = "green",
-	[424495] = {"blue","green"},
+	[424495] = "green",
 	[424499] = "blue",
 	[424579] = "blue",
 	[424581] = {"blue","yellow"},
-	[424582] = {"blue","cyan"},
 	[424665] = "blue",
+	[425576] = "red",
+	[425606] = "green",
+	[430583] = {"blue","green"},
 	["stages"] = "cyan",
 })
 
@@ -168,5 +174,6 @@ BigWigs:AddColors("Fyrakk the Blazing", {
 	[425483] = "blue",
 	[425492] = {"blue","purple"},
 	[429866] = "blue",
-	["stages"] = {"cyan","green"},
+	[429872] = "red",
+	["stages"] = "cyan",
 })
