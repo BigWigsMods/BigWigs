@@ -38,15 +38,15 @@ local L = mod:GetLocale()
 if L then
 	L.spirit_trigger = "Spirit of the Kaldorei" -- [CHAT_MSG_MONSTER_YELL] Amirdrassil must not fall.#Spirit of the Kaldorei
 
-	L.firestorm = "Meteors"
-	L.dream_rend = "Pull In"
-	L.fyralaths_bite = "Tank Frontal"
+	L.fyralaths_bite = "Frontal"
 	L.fyralaths_mark = "Mark"
 	L.spirits_of_the_kaldorei = "Spirits"
-	L.greater_firestorm = "Meteors [G]" -- G for Greater
+	L.greater_firestorm = "Firestorm [G]" -- G for Greater
+	L.incarnate_intermission = "Knock Up"
 	L.incarnate = "Fly Away"
 	L.shadowflame_devastation = "Deep Breath"
-	L.eternal_firestorm = "Meteors [E]" -- E for Eternal
+	L.eternal_firestorm = "Firestorm [E]" -- E for Eternal
+	L.apocalypse_roar = "Roar"
 end
 
 --------------------------------------------------------------------------------
@@ -89,18 +89,16 @@ function mod:GetOptions()
 		[422032] = -26668, -- Stage Two: Children of the Stars
 		[423717] = -26670, -- Stage Three: Shadowflame Incarnate
 	},{
-		[419506] = L.firestorm, -- Firestorm (Meteors)
-		[417455] = L.dream_rend, -- Dream Rend (Pull In)
-		[417431] = L.fyralaths_bite, -- Fyr'alath's Bite (Tank Bite)
+		[417431] = L.fyralaths_bite, -- Fyr'alath's Bite (Frontal)
 		[417443] = L.fyralaths_mark, -- Fyr'alath's Mark (Mark)
 		[422032] = L.spirits_of_the_kaldorei, -- Spirits of the Kaldorei (Spirits)
-		[422518] = L.greater_firestorm, -- Greater Firestorm (Meteors [G])
-		[412761] = L.incarnate, -- Incarnate (Knockup)
+		[422518] = L.greater_firestorm, -- Greater Firestorm (Firestorm [G])
+		[412761] = L.incarnate, -- Incarnate (Fly Away)
 		[422524] = L.shadowflame_devastation, -- Shadowflame Devastation (Deep Breath)
 		[423717] = CL.absorb, -- Bloom (Absorb)
-		[422935] = L.eternal_firestorm, -- Eternal Firestorm (Meteors [E])
+		[422935] = L.eternal_firestorm, -- Eternal Firestorm (Firestorm [E])
 		[410223] = CL.breath, -- Shadowflame Breath (Breath)
-		[422837] = CL.pushback, -- Apocalypse Roar (Pushback)
+		[422837] = L.apocalypse_roar, -- Apocalypse Roar (Roar)
 	}
 end
 
@@ -165,8 +163,8 @@ function mod:OnEngage()
 
 	self:Bar(420422, 4, CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
 	self:Bar(417431, 9, CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:Bar(419506, 13, CL.count:format(L.firestorm, firestormCount)) -- Firestorm
-	self:Bar(417455, 42, CL.count:format(L.dream_rend, dreamRendCount)) -- Dream Rend
+	self:Bar(419506, 13, CL.count:format(self:SpellName(419506), firestormCount)) -- Firestorm
+	self:Bar(417455, 42, CL.count:format(self:SpellName(417455), dreamRendCount)) -- Dream Rend
 	if not self:Easy() then
 		self:Bar(414186, 32.0, CL.count:format(self:SpellName(414187), blazeCount)) -- Blaze
 		blazeTimer = self:ScheduleTimer("Blaze", 32.0)
@@ -210,26 +208,26 @@ end
 
 -- Stage One: The Dream Render
 function mod:Firestorm(args)
-	self:StopBar(CL.count:format(L.firestorm, firestormCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.firestorm, firestormCount))
+	self:StopBar(CL.count:format(args.spellName, firestormCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, firestormCount))
 	self:PlaySound(args.spellId, "alert")
 	firestormCount = firestormCount + 1
-	self:Bar(args.spellId, 53.5, CL.count:format(L.firestorm, firestormCount))
+	self:Bar(args.spellId, 53.5, CL.count:format(args.spellName, firestormCount))
 end
 
 function mod:Wildfire(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, wildfireCount))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "alarm")
 	wildfireCount = wildfireCount + 1
 	self:Bar(args.spellId, wildfireCount == 2 and 24.0 or 53.5, CL.count:format(args.spellName, wildfireCount)) -- Wildfire
 end
 
 function mod:DreamRend(args)
-	self:StopBar(CL.count:format(L.dream_rend, dreamRendCount))
-	self:Message(args.spellId, "red", CL.count:format(L.dream_rend, dreamRendCount))
+	self:StopBar(CL.count:format(args.spellName, dreamRendCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, dreamRendCount))
 	self:PlaySound(args.spellId, "warning")
 	dreamRendCount = dreamRendCount + 1
-	self:Bar(args.spellId, 53.6, CL.count:format(L.dream_rend, dreamRendCount))
+	self:Bar(args.spellId, 53.6, CL.count:format(args.spellName, dreamRendCount))
 end
 
 function mod:Blaze()
@@ -293,8 +291,8 @@ function mod:IncarnateIntermission()
 	self:CancelTimer(blazeTimer)
 	self:StopBar(CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
 	self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:StopBar(CL.count:format(L.firestorm, firestormCount)) -- Firestorm
-	self:StopBar(CL.count:format(L.dream_rend, dreamRendCount)) -- Dream Rend
+	self:StopBar(CL.count:format(self:SpellName(419506), firestormCount)) -- Firestorm
+	self:StopBar(CL.count:format(self:SpellName(417455), dreamRendCount)) -- Dream Rend
 	self:StopBar(CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 
@@ -339,8 +337,8 @@ end
 
 function mod:Corrupt(args)
 	self:StopBar(args.spellName)
-	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "info")
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "warning")
 end
 
 do
@@ -352,14 +350,27 @@ do
 		if args.amount == 0 then
 			self:Message(419144, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(419144, "info")
+
+			self:Bar(419123, 5.7, CL.count:format(self:SpellName(419123), 1)) -- Flamefall
 		end
 	end
 end
 
-function mod:ShadowflameEruptionApplied(args)
-	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
-		self:PlaySound(args.spellId, "warning")
+do
+	local stacks = 0
+	local scheduled = nil
+	function mod:ShadowflameEruptionMessage()
+		self:Message(429866, "red", CL.stackyou:format(stacks, self:SpellName(429866)))
+		self:PlaySound(429866, "alarm")
+		scheduled = nil
+	end
+	function mod:ShadowflameEruptionApplied(args)
+		if self:Me(args.destGUID) then
+			stacks = args.amount or 1
+			if not scheduled then
+				scheduled = self:ScheduleTimer("ShadowflameEruptionMessage", 1)
+			end
+		end
 	end
 end
 
@@ -376,7 +387,9 @@ function mod:Incarnate(args)
 
 		local timer = { 45.0, 80.0, 79.5 }
 		local cd = timer[incarnateCount]
-		if cd then -- last cast is p3 transition, what to do if you push before the second cast?
+		if not cd then -- last cast is p3 transition, what to do if you push before the second cast?
+			self:Bar(args.spellId, 8.2, L.incarnate_intermission) -- Incarnate
+		else
 			self:Bar(args.spellId, cd, CL.count:format(L.incarnate, incarnateCount))
 			self:Bar(422524, 14.5, CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount)) -- Shadowflame Devastation
 			self:Bar(419123, 36.5, CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
@@ -402,7 +415,9 @@ end
 function mod:GreaterFirestorm(args)
 	self:StopBar(CL.count:format(L.greater_firestorm, firestormCount))
 	self:Message(args.spellId, "orange", CL.count:format(L.greater_firestorm, firestormCount))
-	self:PlaySound(args.spellId, "alert")
+	if self:Tank() then
+		self:PlaySound(args.spellId, "alert")
+	end
 	firestormCount = firestormCount + 1
 	if firestormCount < 3 then
 		self:Bar(args.spellId, 80, CL.count:format(args.spellName, firestormCount))
@@ -412,14 +427,14 @@ end
 function mod:Flamefall(args)
 	self:StopBar(CL.count:format(args.spellName, flamefallCount))
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, flamefallCount))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "alarm")
 	flamefallCount = flamefallCount + 1
 	-- self:Bar(args.spellId, timers[2][args.spellId][flamefallCount], CL.count:format(args.spellName, flamefallCount))
 end
 
 function mod:ShadowflameDevastation(args)
 	self:StopBar(CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
+	self:Message(args.spellId, "red", CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
 	self:PlaySound(args.spellId, "long")
 	shadowflameDevastationCount = shadowflameDevastationCount + 1
 	-- self:Bar(args.spellId, timers[2][args.spellId][shadowflameDevastationCount], CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
@@ -451,7 +466,7 @@ function mod:EternalFirestormP3()
 	self:Bar(410223, 10, CL.count:format(CL.breath, shadowflameBreathCount)) -- Shadowflame Breath
 	self:Bar(422935, 18.1, CL.count:format(L.eternal_firestorm, firestormCount)) -- Eternal Firestorm
 	self:ScheduleTimer("EternalFirestorm", 18.1)
-	self:Bar(422837, 34.1, CL.count:format(CL.pushback, apocalypseRoarCount)) -- Apocalypse Roar
+	self:Bar(422837, 34.1, CL.count:format(L.apocalypse_roar, apocalypseRoarCount)) -- Apocalypse Roar
 	if not self:Easy() then
 		self:Bar(414186, 12.1, CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 		blazeTimer = self:ScheduleTimer("Blaze", 12.1)
@@ -476,16 +491,16 @@ function mod:BloomApplied(args)
 end
 
 function mod:ApocalypseRoar(args)
-	self:StopBar(CL.count:format(CL.pushback, apocalypseRoarCount))
-	self:Message(args.spellId, "yellow", CL.count:format(CL.pushback, apocalypseRoarCount))
+	self:StopBar(CL.count:format(L.apocalypse_roar, apocalypseRoarCount))
+	self:Message(args.spellId, "red", CL.count:format(L.apocalypse_roar, apocalypseRoarCount))
 	self:PlaySound(args.spellId, "long")
 	apocalypseRoarCount = apocalypseRoarCount + 1
-	self:Bar(args.spellId, 41, CL.count:format(CL.pushback, apocalypseRoarCount))
+	self:Bar(args.spellId, 41, CL.count:format(L.apocalypse_roar, apocalypseRoarCount))
 end
 
 function mod:ShadowflameBreath(args)
 	self:StopBar(CL.count:format(CL.breath, shadowflameBreathCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.breath, shadowflameBreathCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.breath, shadowflameBreathCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameBreathCount = shadowflameBreathCount + 1
 	self:Bar(args.spellId, 41, CL.count:format(CL.breath, shadowflameBreathCount))
@@ -502,13 +517,14 @@ function mod:InfernalMaw(args)
 end
 
 function mod:InfernalMawApplied(args)
+	-- XXX not sure what to do with this, 4 is the amount of applications between mechanics
 	local amount = args.amount or 1
-	local warnFrom = 2
-	self:StackMessage(425492, "purple", args.destName, args.amount, warnFrom)
-	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
-	if amount >= warnFrom and bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
-		self:PlaySound(425492, "warning") -- tauntswap
-	elseif self:Me(args.destGUID) then
-		self:PlaySound(425492, "alarm") -- On you
+	if amount % 4 == 0 then
+		self:StackMessage(425492, "purple", args.destName, amount, 4)
+		if self:Me(args.destGUID) then
+			self:PlaySound(425492, "alarm") -- On you
+		elseif self:Tank() then
+			self:PlaySound(425492, "warning") -- tauntswap
+		end
 	end
 end

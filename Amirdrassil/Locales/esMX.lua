@@ -82,13 +82,13 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "esMX")
 if L then
 	L.spirit_trigger = "Espíritu de los kaldorei"
 
-	--L.firestorm = "Meteors"
-	--L.dream_rend = "Pull In"
-	--L.fyralaths_bite = "Tank Frontal"
+	--L.fyralaths_bite = "Frontal"
 	--L.fyralaths_mark = "Mark"
 	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.greater_firestorm = "Meteors [G]" -- G for Greater
+	L.greater_firestorm = "Tormenta de Fuego [S]" -- G for Greater
+	--L.incarnate_intermission = "Knock Up"
 	--L.incarnate = "Fly Away"
 	--L.shadowflame_devastation = "Deep Breath"
-	--L.eternal_firestorm = "Meteors [E]" -- E for Eternal
+	L.eternal_firestorm = "Tormenta de Fuego [E]" -- E for Eternal
+	--L.apocalypse_roar = "Roar"
 end
