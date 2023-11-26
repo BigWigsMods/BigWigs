@@ -41,12 +41,12 @@ if L then
 	L.fyralaths_bite = "Frontal"
 	L.fyralaths_mark = "Mark"
 	L.spirits_of_the_kaldorei = "Spirits"
-	L.greater_firestorm = "Firestorm [G]" -- G for Greater
+	L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
+	L.greater_firestorm_message_full = "Firestorm [Greater]"
 	L.incarnate_intermission = "Knock Up"
 	L.incarnate = "Fly Away"
-	L.shadowflame_devastation = "Deep Breath"
-	L.eternal_firestorm = "Firestorm [E]" -- E for Eternal
-	L.apocalypse_roar = "Roar"
+	L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
+	L.eternal_firestorm_message_full = "Firestorm [Eternal]"
 end
 
 --------------------------------------------------------------------------------
@@ -92,13 +92,13 @@ function mod:GetOptions()
 		[417431] = L.fyralaths_bite, -- Fyr'alath's Bite (Frontal)
 		[417443] = L.fyralaths_mark, -- Fyr'alath's Mark (Mark)
 		[422032] = L.spirits_of_the_kaldorei, -- Spirits of the Kaldorei (Spirits)
-		[422518] = L.greater_firestorm, -- Greater Firestorm (Firestorm [G])
+		[422518] = L.greater_firestorm_shortened_bar, -- Greater Firestorm (Firestorm [G])
 		[412761] = L.incarnate, -- Incarnate (Fly Away)
-		[422524] = L.shadowflame_devastation, -- Shadowflame Devastation (Deep Breath)
+		[422524] = CL.breath, -- Shadowflame Devastation (Deep Breath)
 		[423717] = CL.absorb, -- Bloom (Absorb)
-		[422935] = L.eternal_firestorm, -- Eternal Firestorm (Firestorm [E])
+		[422935] = L.eternal_firestorm_shortened_bar, -- Eternal Firestorm (Firestorm [E])
 		[410223] = CL.breath, -- Shadowflame Breath (Breath)
-		[422837] = L.apocalypse_roar, -- Apocalypse Roar (Roar)
+		[422837] = CL.roar, -- Apocalypse Roar (Roar)
 	}
 end
 
@@ -328,7 +328,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			-- corrupt removed - 4.7~5
 			-- self:Bar(419123, 1.7, CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
 			self:Bar(417431, 14.2, CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-			self:Bar(422518, 31.2, CL.count:format(L.greater_firestorm, firestormCount)) -- Greater Firestorm
+			self:Bar(422518, 31.2, CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm
 			self:Bar(412761, 39.8, CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 			if not self:Easy() then
 				self:Bar(414186, 15.9, CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
@@ -395,7 +395,7 @@ function mod:Incarnate(args)
 			self:Bar(args.spellId, 8.2, L.incarnate_intermission) -- Incarnate
 		else
 			self:Bar(args.spellId, cd, CL.count:format(L.incarnate, incarnateCount))
-			self:Bar(422524, 14.5, CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount)) -- Shadowflame Devastation
+			self:Bar(422524, 14.5, CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
 			self:Bar(419123, 36.5, CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
 			self:Bar(417431, 45.5, CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
 		end
@@ -417,14 +417,14 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg, sender)
 end
 
 function mod:GreaterFirestorm(args)
-	self:StopBar(CL.count:format(L.greater_firestorm, firestormCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, firestormCount))
+	self:StopBar(CL.count:format(L.greater_firestorm_shortened_bar, firestormCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.greater_firestorm_message_full, firestormCount))
 	if self:Tank() then
 		self:PlaySound(args.spellId, "alert")
 	end
 	firestormCount = firestormCount + 1
 	if firestormCount < 3 then
-		self:Bar(args.spellId, 80, CL.count:format(L.greater_firestorm, firestormCount))
+		self:Bar(args.spellId, 80, CL.count:format(L.greater_firestorm_shortened_bar, firestormCount))
 	end
 end
 
@@ -437,11 +437,11 @@ function mod:Flamefall(args)
 end
 
 function mod:ShadowflameDevastation(args)
-	self:StopBar(CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
-	self:Message(args.spellId, "red", CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
+	self:StopBar(CL.count:format(CL.breath, shadowflameDevastationCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.breath, shadowflameDevastationCount))
 	self:PlaySound(args.spellId, "long")
 	shadowflameDevastationCount = shadowflameDevastationCount + 1
-	-- self:Bar(args.spellId, timers[2][args.spellId][shadowflameDevastationCount], CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount))
+	-- self:Bar(args.spellId, timers[2][args.spellId][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount))
 end
 
 -- Stage 3
@@ -451,9 +451,9 @@ function mod:EternalFirestormP3()
 	self:StopBar(CL.stage:format(3))
 	self:StopBar(CL.count:format(L.spirits_of_the_kaldorei, spiritCount)) -- Spirits of the Kaldorei
 	self:StopBar(CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
-	self:StopBar(CL.count:format(L.greater_firestorm, firestormCount)) -- Greater Firestorm
+	self:StopBar(CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm
 	self:StopBar(CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
-	self:StopBar(CL.count:format(L.shadowflame_devastation, shadowflameDevastationCount)) -- Shadowflame Devastation
+	self:StopBar(CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
 	self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
 
 	self:Message("stages", "cyan", CL.stage:format(3), false)
@@ -468,9 +468,9 @@ function mod:EternalFirestormP3()
 	-- Seeds spawn 2s after this event
 	self:Bar(425492, 5, CL.count:format(self:SpellName(425492), infernalMawCount)) -- Infernal Maw
 	self:Bar(410223, 10, CL.count:format(CL.breath, shadowflameBreathCount)) -- Shadowflame Breath
-	self:Bar(422935, 18.1, CL.count:format(L.eternal_firestorm, firestormCount)) -- Eternal Firestorm
+	self:Bar(422935, 18.1, CL.count:format(L.eternal_firestorm_shortened_bar, firestormCount)) -- Eternal Firestorm
 	self:ScheduleTimer("EternalFirestorm", 18.1)
-	self:Bar(422837, 34.1, CL.count:format(L.apocalypse_roar, apocalypseRoarCount)) -- Apocalypse Roar
+	self:Bar(422837, 34.1, CL.count:format(CL.roar, apocalypseRoarCount)) -- Apocalypse Roar
 	if not self:Easy() then
 		self:Bar(414186, 12.1, CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 		blazeTimer = self:ScheduleTimer("Blaze", 12.1)
@@ -478,12 +478,12 @@ function mod:EternalFirestormP3()
 end
 
 function mod:EternalFirestorm()
-	self:StopBar(CL.count:format(L.eternal_firestorm, firestormCount))
-	self:Message(422935, "orange", CL.count:format(self:SpellName(422935), firestormCount))
+	self:StopBar(CL.count:format(L.eternal_firestorm_shortened_bar, firestormCount))
+	self:Message(422935, "orange", CL.count:format(L.eternal_firestorm_message_full, firestormCount))
 	-- sound warning from private aura
 	firestormCount = firestormCount + 1
 
-	self:Bar(422935, 41, CL.count:format(L.eternal_firestorm, firestormCount))
+	self:Bar(422935, 41, CL.count:format(L.eternal_firestorm_shortened_bar, firestormCount))
 	self:ScheduleTimer("EternalFirestorm", 41)
 end
 
@@ -495,11 +495,11 @@ function mod:BloomApplied(args)
 end
 
 function mod:ApocalypseRoar(args)
-	self:StopBar(CL.count:format(L.apocalypse_roar, apocalypseRoarCount))
-	self:Message(args.spellId, "red", CL.count:format(L.apocalypse_roar, apocalypseRoarCount))
+	self:StopBar(CL.count:format(CL.roar, apocalypseRoarCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.roar, apocalypseRoarCount))
 	self:PlaySound(args.spellId, "long")
 	apocalypseRoarCount = apocalypseRoarCount + 1
-	self:Bar(args.spellId, 41, CL.count:format(L.apocalypse_roar, apocalypseRoarCount))
+	self:Bar(args.spellId, 41, CL.count:format(CL.roar, apocalypseRoarCount))
 end
 
 function mod:ShadowflameBreath(args)

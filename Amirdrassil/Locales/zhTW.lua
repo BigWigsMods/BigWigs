@@ -85,11 +85,10 @@ if L then
 	--L.fyralaths_bite = "Frontal"
 	--L.fyralaths_mark = "Mark"
 	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.greater_firestorm = "%s [G]" -- G for Greater
-	L.greater_firestorm = "宏火風暴" -- "Firestorm [G]" -- G for Greater
+	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
+	--L.greater_firestorm_message_full = "Firestorm [Greater]"
 	--L.incarnate_intermission = "Knock Up"
 	--L.incarnate = "Fly Away"
-	--L.shadowflame_devastation = "Deep Breath"
-	L.eternal_firestorm = "永火風暴" -- "Firestorm [E]" -- E for Eternal
-	--L.apocalypse_roar = "Roar"
+	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
+	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
 end
