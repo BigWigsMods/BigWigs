@@ -89,13 +89,13 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
 if L then
 	L.spirit_trigger = "卡多雷精魂"
 
-	L.fyralaths_bite = "流星"
+	L.fyralaths_bite = "正面"
 	L.fyralaths_mark = "印记"
 	L.spirits_of_the_kaldorei = "精魂"
-	L.greater_firestorm = "宏火风暴" -- "Firestorm [G]" -- G for Greater
-	L.incarnate_intermission = "击飞"
+	L.greater_firestorm_shortened_bar = "宏火风暴" -- G for Greater
+	L.greater_firestorm_message_full = "宏火风暴"
+	L.incarnate_intermission = "击退"
 	L.incarnate = "飞天"
-	L.shadowflame_devastation = "深呼吸"
-	L.eternal_firestorm = "永火风暴" -- "Firestorm [E]" -- E for Eternal
-	L.apocalypse_roar = "咆哮"
+	L.eternal_firestorm_shortened_bar = "永火风暴" -- E for Eternal
+	L.eternal_firestorm_message_full = "永火风暴"
 end
