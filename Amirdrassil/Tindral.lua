@@ -431,7 +431,7 @@ function mod:EmpoweredFeatherApplied(args)
 end
 
 function mod:Supernova(args)
-	local stage = self:GetStage()
+	local stage = math.floor(self:GetStage())
 	self:StopBar(424140, CL.count:format(args.spellName, stage))
 	self:Message(424140, "red", CL.count:format(args.spellName, stage))
 	self:PlaySound(424140, "long")

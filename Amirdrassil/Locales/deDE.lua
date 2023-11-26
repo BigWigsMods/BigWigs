@@ -40,6 +40,8 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Ersticken Gesundheit wiederholen"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Gibt wiederholt Chatnachrichten für Qualmendes Ersticken aus um mitzuteilen, dass unter 75% Gesundheit erreicht sind."
 
+	L.blazing_coalescence_boss = "{426256} (Boss)"
+
 	L.scorching_roots = "Wurzeln"
 	L.furious_charge = "Ansturm"
 	L.blazing_thorns = "Ausweichen"
@@ -88,13 +90,13 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")
 if L then
 	L.spirit_trigger = "Geist der Kaldorei"
 
-	L.firestorm = "Meteore"
-	L.dream_rend = "Heranziehen"
-	L.fyralaths_bite = "Tank Frontal"
+	L.fyralaths_bite = "Frontal"
 	L.fyralaths_mark = "Mal"
-	L.spirits_of_the_kaldorei = "Geister"
-	L.greater_firestorm = "Meteore [G]" -- G for Greater
+  L.spirits_of_the_kaldorei = "Geister"
+	L.greater_firestorm_shortened_bar = "Feuersturm [G]" -- G for Greater
+	L.greater_firestorm_message_full = "Feuersturm [Groß]"
+	L.incarnate_intermission = "Zurückstoßen"
 	L.incarnate = "Abheben"
-	L.shadowflame_devastation = "Tiefer Atem"
-	L.eternal_firestorm = "Meteore [E]" -- E for Eternal
+	L.eternal_firestorm_shortened_bar = "Feuersturm [E]" -- E for Eternal
+	L.eternal_firestorm_message_full = "Feuersturm [Ewig]"
 end

@@ -39,6 +39,8 @@ if L then
 	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
 	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
 
+	L.blazing_coalescence_boss = "{426256} (Jefe)"
+
 	L.scorching_roots = "Raíces"
 	L.furious_charge = "Carga"
 	L.blazing_thorns = "Esquivar"
@@ -80,13 +82,13 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "esES")
 if L then
 	L.spirit_trigger = "Espíritu de los kaldorei"
 
-	--L.firestorm = "Meteors"
-	--L.dream_rend = "Pull In"
-	--L.fyralaths_bite = "Tank Frontal"
+	--L.fyralaths_bite = "Frontal"
 	--L.fyralaths_mark = "Mark"
 	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.greater_firestorm = "Meteors [G]" -- G for Greater
+	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
+	--L.greater_firestorm_message_full = "Firestorm [Greater]"
+	--L.incarnate_intermission = "Knock Up"
 	--L.incarnate = "Fly Away"
-	--L.shadowflame_devastation = "Deep Breath"
-	--L.eternal_firestorm = "Meteors [E]" -- E for Eternal
+	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
+	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
 end

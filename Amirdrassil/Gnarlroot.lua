@@ -22,6 +22,8 @@ local torturedScreamCount = 1
 local shadowflameCleaveCount = 1
 local dreadfireBarrageCount = 1
 local intermissionCount = 0
+local myDreadfireBarrageStacks = 0
+local allowTankWarnings = true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -80,8 +82,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ControlledBurnApplied", 421972)
 	self:Log("SPELL_AURA_REMOVED", "ControlledBurnRemoved", 421972)
 	self:Log("SPELL_CAST_START", "DreadfireBarrage", 424352)
+	self:Log("SPELL_AURA_REMOVED", "DreadfireBarrageStop", 424352)
 	self:Log("SPELL_AURA_APPLIED", "DreadfireBarrageApplied", 426106)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreadfireBarrageApplied", 426106)
+	self:Log("SPELL_AURA_REMOVED", "DreadfireBarrageRemoved", 426106)
 	self:Log("SPELL_CAST_START", "TorturedScream", 422026)
 	self:Log("SPELL_CAST_START", "ShadowflameCleave", 422039)
 
@@ -113,6 +117,8 @@ function mod:OnEngage()
 	shadowflameCleaveCount = 1
 	dreadfireBarrageCount = 1
 	intermissionCount = 1
+	myDreadfireBarrageStacks = 0
+	allowTankWarnings = true
 	mobCollector = {}
 	taintedTreantMarks = {}
 
@@ -185,14 +191,9 @@ do
 end
 
 function mod:DreadfireBarrage(args)
+	allowTankWarnings = false
 	self:StopBar(CL.count:format(args.spellName, dreadfireBarrageCount))
-	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
-	if self:Tanking(bossUnit) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning")
-	else -- TargetMessage?
-		self:Message(args.spellId, "purple")
-	end
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, dreadfireBarrageCount))
 	dreadfireBarrageCount = dreadfireBarrageCount + 1
 
 	local cd
@@ -209,16 +210,26 @@ function mod:DreadfireBarrage(args)
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, dreadfireBarrageCount))
 end
 
+function mod:DreadfireBarrageStop()
+	allowTankWarnings = true -- Using this as our throttle as I'm not convinced there will always be 5 stacks exactly, the final stack should always apply to the tank after this ends
+end
+
 function mod:DreadfireBarrageApplied(args)
-	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	local amount = args.amount or 1
-	if amount % 2 == 0 or amount > 4 then
+	if self:Me(args.destGUID) then
+		myDreadfireBarrageStacks = amount
+	end
+	if allowTankWarnings or amount % 5 == 0 then -- Only warn for the final stack, or every 5/10/15..
 		self:StackMessage(424352, "purple", args.destName, amount, 5)
-		if not self:Tanking(bossUnit) and amount > 4 then -- Taunt?
-			self:PlaySound(424352, "warning")
-		elseif self:Me(args.destGUID) then
-			self:PlaySound(424352, "alarm")
+		if myDreadfireBarrageStacks == 0 and self:Tank() then -- No stacks on me
+			self:PlaySound(424352, "warning") -- Taunt
 		end
+	end
+end
+
+function mod:DreadfireBarrageRemoved(args)
+	if self:Me(args.destGUID) then
+		myDreadfireBarrageStacks = 0
 	end
 end
 

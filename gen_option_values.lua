@@ -659,6 +659,20 @@ local function parseLua(file)
 						end
 					end
 				end
+				-- check string keys
+				local custom_options = {
+					berserk = true,
+					altpower = true,
+					infobox = true,
+					proximity = true,
+					stages = true,
+					warmup = true,
+				}
+				for key in next, option_keys do
+					if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and not locale[key] then
+						error(string.format("    %s:%d: Missing option key locale for \"%s\"", file_name, options_block_start, key))
+					end
+				end
 			end
 		end
 		local toggle_options = line:match("^mod%.toggleOptions = ({.+})")
@@ -1161,7 +1175,7 @@ local function parseLocale(file)
 			if key then
 				keys[current_module][key] = comment == ""
 				if not modules_locale[current_module][key] then
-					error(string.format("    %s:%d: %s: Invalid locale key %q", file_name, n, current_module, key))
+					warn(string.format("    %s:%d: %s: Invalid locale key %q", file_name, n, current_module, key))
 				end
 			end
 		end
