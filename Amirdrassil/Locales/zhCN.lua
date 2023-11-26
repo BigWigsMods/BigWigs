@@ -28,9 +28,9 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
 	L.ultimate_boss = "满能量 (%s)"
-	L.special_bar = "满能量 [%s] (%d)"
-	L.special_mythic_bar = "满能量 [%s/%s] (%d)"
-	L.special_mechanic_bar = "%s [满能量] (%d)"
+	L.special_bar = "满能 [%s] (%d)"
+	L.special_mythic_bar = "满能 [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [满能] (%d)"
 	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
@@ -93,7 +93,7 @@ if L then
 	L.fyralaths_mark = "印记"
 	L.spirits_of_the_kaldorei = "精魂"
 	L.greater_firestorm = "流星 [怪]" -- G for Greater
-	L.incarnate = "飞起"
+	L.incarnate = "飞天"
 	L.shadowflame_devastation = "深呼吸"
 	L.eternal_firestorm = "流星 [风]" -- E for Eternal
 end
