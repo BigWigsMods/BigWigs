@@ -220,9 +220,9 @@ function mod:DreadfireBarrageApplied(args)
 		myDreadfireBarrageStacks = amount
 	end
 	if allowTankWarnings or amount % 5 == 0 then -- Only warn for the final stack, or every 5/10/15..
-		self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
+		self:StackMessage(424352, "purple", args.destName, amount, 5)
 		if myDreadfireBarrageStacks == 0 and self:Tank() then -- No stacks on me
-			self:PlaySound(args.spellId, "warning") -- Taunt
+			self:PlaySound(424352, "warning") -- Taunt
 		end
 	end
 end
