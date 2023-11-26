@@ -28,6 +28,9 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
 	L.ultimate_boss = "满能量 (%s)"
+	L.special_bar = "满能量 [%s] (%d)"
+	L.special_mythic_bar = "满能量 [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [满能量] (%d)"
 	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
