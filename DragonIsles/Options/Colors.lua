@@ -27,3 +27,10 @@ BigWigs:AddColors("Liskanoth, The Futurebane", {
 	[389960] = "blue",
 	[391026] = {"red","yellow"},
 })
+
+BigWigs:AddColors("Aurostor", {
+	[420895] = {"blue","purple"},
+	[420925] = "red",
+	[421059] = "yellow",
+	[421260] = {"blue","green"},
+})

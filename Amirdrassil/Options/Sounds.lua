@@ -8,7 +8,7 @@ BigWigs:AddSounds("Gnarlroot", {
 	[422026] = "alert",
 	[422039] = "alert",
 	[422053] = "alarm",
-	[424352] = {"alarm","warning"},
+	[424352] = "warning",
 	[424970] = "underyou",
 	[425816] = "alarm",
 	[425820] = "alarm",
@@ -141,7 +141,7 @@ BigWigs:AddSounds("Tindral Sageswift, Seer of the Flame", {
 	[424665] = "alarm",
 	[425576] = "alarm",
 	[425606] = "info",
-	[430583] = "info",
+	[430583] = {"info","warning"},
 	["stages"] = "long",
 })
 

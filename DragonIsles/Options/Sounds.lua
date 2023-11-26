@@ -26,3 +26,10 @@ BigWigs:AddSounds("Liskanoth, The Futurebane", {
 	[389960] = "alert",
 	[391026] = {"long","warning"},
 })
+
+BigWigs:AddSounds("Aurostor", {
+	[420895] = "warning",
+	[420925] = "long",
+	[421059] = "info",
+	[421260] = "warning",
+})

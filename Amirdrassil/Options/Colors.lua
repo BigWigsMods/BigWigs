@@ -141,7 +141,7 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 	[423265] = "cyan",
 	[424140] = "red",
 	[424258] = "green",
-	[424495] = "green",
+	[424495] = {"green","yellow"},
 	[424499] = "blue",
 	[424579] = "blue",
 	[424581] = {"blue","yellow"},
