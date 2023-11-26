@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Council of Dreams", 2549, 2555)
 if not mod then return end
-mod:RegisterEnableMob(208363, 208365, 208956) -- Urctos, Aerwynn, Pip
+mod:RegisterEnableMob(208363, 208365, 208367) -- Urctos, Aerwynn, Pip
 mod:SetEncounterID(2728)
 mod:SetRespawnTime(30)
 
