@@ -414,13 +414,13 @@ end
 
 function mod:GreaterFirestorm(args)
 	self:StopBar(CL.count:format(L.greater_firestorm, firestormCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.greater_firestorm, firestormCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, firestormCount))
 	if self:Tank() then
 		self:PlaySound(args.spellId, "alert")
 	end
 	firestormCount = firestormCount + 1
 	if firestormCount < 3 then
-		self:Bar(args.spellId, 80, CL.count:format(args.spellName, firestormCount))
+		self:Bar(args.spellId, 80, CL.count:format(L.greater_firestorm, firestormCount))
 	end
 end
 
@@ -475,7 +475,7 @@ end
 
 function mod:EternalFirestorm()
 	self:StopBar(CL.count:format(L.eternal_firestorm, firestormCount))
-	self:Message(422935, "orange", CL.count:format(L.eternal_firestorm, firestormCount))
+	self:Message(422935, "orange", CL.count:format(self:SpellName(422935), firestormCount))
 	-- sound warning from private aura
 	firestormCount = firestormCount + 1
 
