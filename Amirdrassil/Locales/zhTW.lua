@@ -39,6 +39,8 @@ if L then
 	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
 	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
 
+	L.blazing_coalescence_boss = "{426256} (首領增益)"
+
 	L.scorching_roots = "樹根"
 	L.furious_charge = "衝鋒"
 	--L.blazing_thorns = "Dodges"

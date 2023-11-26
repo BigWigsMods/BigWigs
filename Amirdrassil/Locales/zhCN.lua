@@ -39,6 +39,8 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "焖燃窒息血量重复喊话"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "当你的血量低于75%时，持续喊话通报你的血量。"
 
+	L.blazing_coalescence_boss = "{426256} (首领增益)"
+
 	L.scorching_roots = "树根"
 	L.furious_charge = "冲锋"
 	L.blazing_thorns = "躲避"
