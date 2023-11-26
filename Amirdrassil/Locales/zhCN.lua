@@ -28,8 +28,12 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
 	L.ultimate_boss = "满能量 (%s)"
+	L.special_bar = "满能 [%s] (%d)"
+	L.special_mythic_bar = "满能 [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [满能] (%d)"
 	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
+	L.song_of_the_dragon = "歌谣"
 	L.polymorph_bomb = "鸭子"
 	L.polymorph_bomb_single = "鸭子"
 end
@@ -53,6 +57,8 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
 if L then
 	L.continuum = "新矩阵"
 	L.impending_loom = "躲避丝线"
+	L.surging_growth = "新踩圈"
+	L.ephemeral_flora = "踩红圈"
 	L.viridian_rain = "伤害+炸弹"
 	L.lumbering_slam = "震慑波"
 end
@@ -61,12 +67,13 @@ L = BigWigs:NewBossLocale("Smolderon", "zhCN")
 if L then
 	L.brand_of_damnation = "坦克分摊"
 	L.lava_geysers = "喷泉"
+	L.flame_waves = "旋风"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhCN")
 if L then
-	--L.seed_soaked = "Seed soaked"
-	--L.all_seeds_soaked = "Seeds done!"
+	L.seed_soaked = "踩种子"
+	L.all_seeds_soaked = "踩种子完毕!"
 	L.blazing_mushroom = "蘑菇"
 	L.fiery_growth = "炽热驱散" --炽热增生驱散后脚下大圈
 	L.mass_entanglement = "藤蔓"
@@ -75,20 +82,20 @@ if L then
 	L.flaming_germination = "种子"
 	L.suppressive_ember = "治疗吸收盾"
 	L.suppressive_ember_single = "治疗吸收盾"
-	--L.flare_bomb = "Feathers"
+	L.flare_bomb = "羽毛"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
 if L then
 	L.spirit_trigger = "卡多雷精魂"
 
-	--L.fyralaths_bite = "Frontal"
-	--L.fyralaths_mark = "Mark"
-	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
-	--L.greater_firestorm_message_full = "Firestorm [Greater]"
-	--L.incarnate_intermission = "Knock Up"
-	--L.incarnate = "Fly Away"
-	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
-	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
+	L.fyralaths_bite = "正面"
+	L.fyralaths_mark = "印记"
+	L.spirits_of_the_kaldorei = "精魂"
+	L.greater_firestorm_shortened_bar = "宏火风暴" -- G for Greater
+	L.greater_firestorm_message_full = "宏火风暴"
+	L.incarnate_intermission = "击退"
+	L.incarnate = "飞天"
+	L.eternal_firestorm_shortened_bar = "永火风暴" -- E for Eternal
+	L.eternal_firestorm_message_full = "永火风暴"
 end
