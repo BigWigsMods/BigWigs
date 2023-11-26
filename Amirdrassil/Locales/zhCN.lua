@@ -89,6 +89,7 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
 if L then
 	L.spirit_trigger = "卡多雷精魂"
 
+<<<<<<< patch-42
 	L.fyralaths_bite = "正面"
 	L.fyralaths_mark = "印记"
 	L.spirits_of_the_kaldorei = "精魂"
