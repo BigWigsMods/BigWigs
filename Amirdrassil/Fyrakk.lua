@@ -58,7 +58,6 @@ if L then
 	L.greater_firestorm_message_full = "Firestorm [Greater]"
 	L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Firestorm [Eternal]"
-
 end
 
 --------------------------------------------------------------------------------
@@ -204,11 +203,12 @@ function mod:OnEngage()
 	dreamRendCount = 1
 	darkflameShadesCount = 1
 	darkflameCleaveCount = 1
+	timerHandles = {}
 
 	self:Bar(420422, 4, CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
 	self:Bar(417431, 9, CL.count:format(self:Mythic() and L.fyralaths_bite_mythic or L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:Bar(419506, self:Mythic() and 12 or 13, CL.count:format(self:SpellName(419506), firestormCount))                -- Firestorm
-	self:Bar(417455, self:Mythic() and 48 or 42, CL.count:format(self:SpellName(417455), dreamRendCount))                -- Dream Rend
+	self:Bar(419506, self:Mythic() and 12 or 13, CL.count:format(self:SpellName(419506), firestormCount)) -- Firestorm
+	self:Bar(417455, self:Mythic() and 48 or 42, CL.count:format(self:SpellName(417455), dreamRendCount)) -- Dream Rend
 	if not self:Easy() then
 		self:Bar(414186, self:Mythic() and 36 or 32, CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 		timerHandles[414186] = self:ScheduleTimer("Blaze", self:Mythic() and 36 or 32)

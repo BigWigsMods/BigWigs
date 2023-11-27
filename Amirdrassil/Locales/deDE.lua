@@ -95,12 +95,16 @@ if L then
 	L.spirit_trigger = "Geist der Kaldorei"
 
 	L.fyralaths_bite = "Frontal"
+	--L.fyralaths_bite_mythic = "Frontals"
 	L.fyralaths_mark = "Mal"
-	L.spirits_of_the_kaldorei = "Geister"
-	L.greater_firestorm_shortened_bar = "Feuersturm [G]" -- G for Greater
-	L.greater_firestorm_message_full = "Feuersturm [Groß]"
+	--L.darkflame_shades = "Shades"
+	--L.darkflame_cleave = "Mythic Soaks"
 	L.incarnate_intermission = "Zurückstoßen"
 	L.incarnate = "Abheben"
+	L.spirits_of_the_kaldorei = "Geister"
+	--L.molten_gauntlet = "Gauntlet"
+	L.greater_firestorm_shortened_bar = "Feuersturm [G]" -- G for Greater
+	L.greater_firestorm_message_full = "Feuersturm [Groß]"
 	L.eternal_firestorm_shortened_bar = "Feuersturm [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Feuersturm [Ewig]"
 end
