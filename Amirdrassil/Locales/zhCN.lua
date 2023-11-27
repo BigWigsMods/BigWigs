@@ -91,14 +91,14 @@ if L then
 	L.spirit_trigger = "卡多雷精魂"
 
 	L.fyralaths_bite = "正面"
-	--L.fyralaths_bite_mythic = "Frontals"
+	L.fyralaths_bite_mythic = "正面"
 	L.fyralaths_mark = "印记"
-	--L.darkflame_shades = "Shades"
-	--L.darkflame_cleave = "Mythic Soaks"
-	L.incarnate_intermission = "击退"
-	L.incarnate = "飞天"
+	L.darkflame_shades = "影子"
+	L.darkflame_cleave = "分摊[史诗]"
+	L.incarnate_intermission = "击飞"
+	L.incarnate = "升空"
 	L.spirits_of_the_kaldorei = "精魂"
-	--L.molten_gauntlet = "Gauntlet"
+	L.molten_gauntlet = "重拳"
 	L.greater_firestorm_shortened_bar = "宏火风暴" -- G for Greater
 	L.greater_firestorm_message_full = "宏火风暴"
 	L.eternal_firestorm_shortened_bar = "永火风暴" -- E for Eternal
