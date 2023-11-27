@@ -1073,7 +1073,7 @@ do
 		twipe(icons) -- Wipe icon cache
 		twipe(spells)
 		if self.OnWin then self:OnWin() end
-		self:ScheduleTimer("Disable", 1) -- Delay a little to prevent re-enabling
+		Timer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
 		self:SendMessage("BigWigs_OnBossWin", self)
 		self:SendMessage("BigWigs_VictorySound", self)
 	end
