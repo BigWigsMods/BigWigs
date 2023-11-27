@@ -43,7 +43,8 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Крик при низком здоровье на Тлеющем Удульше"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Повторяющиеся крики при здоровье < 75% для игроков с Тлеющем Удушье для координации с другими игроками."
 
-	L.blazing_coalescence_boss = "{426256} (Боссе)"
+	--L.blazing_coalescence_on_player_note = "When it's on you"
+	--L.blazing_coalescence_on_boss_note = "When it's on the boss"
 
 	L.scorching_roots = "Корень"
 	L.furious_charge = "Чардж"

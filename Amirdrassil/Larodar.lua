@@ -87,9 +87,8 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
 
-	L.blazing_coalescence_boss = "{426256} (Boss Buff)"
-	L.blazing_coalescence_boss_desc = 426256
-	L.blazing_coalescence_boss_icon = 426256
+	L.blazing_coalescence_on_player_note = "When it's on you"
+	L.blazing_coalescence_on_boss_note = "When it's on the boss"
 
 	L.scorching_roots = "Roots"
 	L.furious_charge = "Charge"
@@ -118,7 +117,7 @@ function mod:GetOptions()
 		{423719, "TANK"}, -- Nature's Fury
 		426206, -- Blazing Thorns
 		426249, -- Blazing Coalescence (Player)
-		"blazing_coalescence_boss", -- Blazing Coalescence (Boss) 426256
+		426256, -- Blazing Coalescence (Boss)
 		{417634, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Raging Inferno
 		417632, -- Burning Ground
 		-- Mythic
@@ -149,6 +148,8 @@ function mod:GetOptions()
 		[422614] = L.scorching_roots, -- Scorching Roots (Roots)
 		[418637] = L.furious_charge, -- Furious Charge (Charge)
 		[426206] = L.blazing_thorns, -- Blazing Thorns (Dodges)
+		[426249] = L.blazing_coalescence_on_player_note, -- Blazing Coalescence (When it's on you)
+		[426256] = L.blazing_coalescence_on_boss_note, -- Blazing Coalescence (When it's on the boss)
 		[427252] = L.falling_embers, -- Falling Embers (Soaks)
 		[427299] = CL.bombs, -- Flash Fire (Bombs)
 		[427343] = L.fire_whirl, -- Fire Whirl (Tornadoes)
@@ -204,7 +205,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Easy() and timersNormal or timersHeroic
+	timers = self:Easy() and timersNormal or self:Mythic() and timersMythic or timersHeroic
 	self:SetStage(1)
 	fieryForceOfNatureCount = 1
 	scorchingRootsCount = 1
@@ -325,8 +326,8 @@ function mod:BlazingCoalescenceApplied(args)
 end
 
 function mod:BlazingCoalescenceAppliedOnBoss(args)
-	self:StackMessage("blazing_coalescence_boss", "red", args.destName, args.amount, 1, args.spellId)
-	self:PlaySound("blazing_coalescence_boss", "alarm")
+	self:Message(args.spellId, "red", CL.buff_boss:format(args.spellName))
+	self:PlaySound(args.spellId, "info")
 end
 
 function mod:RagingInferno(args)

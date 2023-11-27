@@ -43,7 +43,8 @@ if L then
 	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
 	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
 
-	L.blazing_coalescence_boss = "{426256} (Boss)"
+	--L.blazing_coalescence_on_player_note = "When it's on you"
+	--L.blazing_coalescence_on_boss_note = "When it's on the boss"
 
 	--L.scorching_roots = "Roots"
 	--L.furious_charge = "Charge"
