@@ -27,10 +27,12 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "deDE")
 if L then
+	L.agonizing_claws_debuff = "{421022} (Debuff)"
+
 	L.ultimate_boss = "Ultimate (%s)"
-	--L.special_bar = "Ult [%s] (%d)"
-	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
-	--L.special_mechanic_bar = "%s [Ult] (%d)"
+	L.special_bar = "Ult [%s] (%d)"
+	L.special_mythic_bar = "Ult [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [Ult] (%d)"
 
 	L.barreling_charge = "Ansturm"
 	L.poisonous_javelin = "Wurfspeer"
@@ -95,14 +97,14 @@ if L then
 	L.spirit_trigger = "Geist der Kaldorei"
 
 	L.fyralaths_bite = "Frontal"
-	--L.fyralaths_bite_mythic = "Frontals"
+	L.fyralaths_bite_mythic = "Frontals"
 	L.fyralaths_mark = "Mal"
-	--L.darkflame_shades = "Shades"
-	--L.darkflame_cleave = "Mythic Soaks"
+	L.darkflame_shades = "Schemen"
+	L.darkflame_cleave = "Mythische Soaks"
 	L.incarnate_intermission = "Zurückstoßen"
 	L.incarnate = "Abheben"
 	L.spirits_of_the_kaldorei = "Geister"
-	--L.molten_gauntlet = "Gauntlet"
+	L.molten_gauntlet = "Fäuste"
 	L.greater_firestorm_shortened_bar = "Feuersturm [G]" -- G for Greater
 	L.greater_firestorm_message_full = "Feuersturm [Groß]"
 	L.eternal_firestorm_shortened_bar = "Feuersturm [E]" -- E for Eternal
