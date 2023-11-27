@@ -40,13 +40,13 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Ersticken Gesundheit wiederholen"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Gibt wiederholt Chatnachrichten für Qualmendes Ersticken aus um mitzuteilen, dass unter 75% Gesundheit erreicht sind."
 
-	L.blazing_coalescence_boss = "{426256} (Boss)"
+	L.blazing_coalescence_boss = "{426256} (Boss Buff)"
 
 	L.scorching_roots = "Wurzeln"
 	L.furious_charge = "Ansturm"
 	L.blazing_thorns = "Ausweichen"
 	L.falling_embers = "Soaks"
-	L.smoldering_backdraft = "Frontaler Kegel"
+	L.smoldering_backdraft = "Frontal"
 	L.fire_whirl = "Wirbel"
 end
 
@@ -92,7 +92,7 @@ if L then
 
 	L.fyralaths_bite = "Frontal"
 	L.fyralaths_mark = "Mal"
-  L.spirits_of_the_kaldorei = "Geister"
+	L.spirits_of_the_kaldorei = "Geister"
 	L.greater_firestorm_shortened_bar = "Feuersturm [G]" -- G for Greater
 	L.greater_firestorm_message_full = "Feuersturm [Groß]"
 	L.incarnate_intermission = "Zurückstoßen"
