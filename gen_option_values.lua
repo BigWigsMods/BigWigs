@@ -1175,7 +1175,7 @@ local function parseLocale(file)
 			if key then
 				keys[current_module][key] = comment == ""
 				if not modules_locale[current_module][key] then
-					warn(string.format("    %s:%d: %s: Invalid locale key %q", file_name, n, current_module, key))
+					error(string.format("    %s:%d: %s: Invalid locale key %q", file_name, n, current_module, key))
 				end
 			end
 		end
