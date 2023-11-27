@@ -106,8 +106,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterMessage("BigWigs_EncounterEnd", "CancelAllTimers") -- stop skipped cast bars
-
 	-- General
 	self:Log("SPELL_CAST_START", "Rebirth", 418187)
 	self:Log("SPELL_CAST_SUCCESS", "RebirthSuccess", 418187)
