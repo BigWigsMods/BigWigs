@@ -12,14 +12,14 @@ if L then
 	L.blistering_torment = "Kette"
 	L.twisting_blade = "Klingen"
 	L.marked_for_torment = "Qualen"
-	--L.umbral_destruction = "Soak"
+	L.umbral_destruction = "Soak"
 	L.heart_stopper = "Heilungen absorbiert"
 	L.heart_stopper_single = "Heilung absorbiert"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "deDE")
 if L then
-	--L.flood_of_the_firelands = "Soaks"
+	L.flood_of_the_firelands = "Soaks"
 	L.scorchtail_crash = "Schweifschlag"
 	L.serpents_fury = "Flammen"
 	L.coiling_flames_single = "Flamme"
@@ -27,12 +27,12 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "deDE")
 if L then
-	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+	L.agonizing_claws_debuff = "{421022} (Debuff)"
 
-	--L.ultimate_boss = "Ultimate (%s)"
-	--L.special_bar = "Ult [%s] (%d)"
-	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
-	--L.special_mechanic_bar = "%s [Ult] (%d)"
+	L.ultimate_boss = "Ultimate (%s)"
+	L.special_bar = "Ult [%s] (%d)"
+	L.special_mythic_bar = "Ult [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [Ult] (%d)"
 
 	L.barreling_charge = "Ansturm"
 	L.poisonous_javelin = "Wurfspeer"
@@ -46,13 +46,13 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Ersticken Gesundheit wiederholen"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Gibt wiederholt Chatnachrichten für Qualmendes Ersticken aus um mitzuteilen, dass unter 75% Gesundheit erreicht sind."
 
-	--L.blazing_coalescence_boss = "{426256} (Boss Buff)"
+	L.blazing_coalescence_boss = "{426256} (Boss Buff)"
 
 	L.scorching_roots = "Wurzeln"
 	L.furious_charge = "Ansturm"
 	L.blazing_thorns = "Ausweichen"
-	--L.falling_embers = "Soaks"
-	--L.smoldering_backdraft = "Frontal"
+	L.falling_embers = "Soaks"
+	L.smoldering_backdraft = "Frontal"
 	L.fire_whirl = "Wirbel"
 end
 
@@ -70,7 +70,7 @@ end
 
 L = BigWigs:NewBossLocale("Smolderon", "deDE")
 if L then
-	--L.brand_of_damnation = "Tank Soak"
+	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysire"
 	L.flame_waves = "Wirbel"
 end
@@ -82,7 +82,7 @@ if L then
 	L.all_seeds_soaked = "Samen fertig!"
 
 	L.blazing_mushroom = "Pilze"
-	--L.fiery_growth = "Dispels"
+	L.fiery_growth = "Dispels"
 	L.mass_entanglement = "Wurzeln"
 	L.incarnation_moonkin = "Mondkingestalt"
 	L.incarnation_tree_of_flame = "Treantgestalt"
@@ -96,8 +96,8 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")
 if L then
 	L.spirit_trigger = "Geist der Kaldorei"
 
-	--L.fyralaths_bite = "Frontal"
-	--L.fyralaths_bite_mythic = "Frontals"
+	L.fyralaths_bite = "Frontal"
+	L.fyralaths_bite_mythic = "Frontals"
 	L.fyralaths_mark = "Mal"
 	L.darkflame_shades = "Schemen"
 	L.darkflame_cleave = "Mythische Soaks"
