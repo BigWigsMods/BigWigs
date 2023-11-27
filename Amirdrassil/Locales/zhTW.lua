@@ -28,6 +28,10 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "zhTW")
 if L then
 	L.ultimate_boss = "滿能量 (%s)"
+	--L.special_bar = "Ult [%s] (%d)"
+	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
+	--L.special_mechanic_bar = "%s [Ult] (%d)"
+
 	L.barreling_charge = "衝鋒"
 	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
 	L.polymorph_bomb = "鴨子"

@@ -28,6 +28,10 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "deDE")
 if L then
 	L.ultimate_boss = "Ultimate (%s)"
+	--L.special_bar = "Ult [%s] (%d)"
+	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
+	--L.special_mechanic_bar = "%s [Ult] (%d)"
+
 	L.barreling_charge = "Ansturm"
 	L.poisonous_javelin = "Wurfspeer"
 	L.song_of_the_dragon = "Lied"
