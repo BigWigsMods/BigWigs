@@ -178,8 +178,10 @@ function mod:OnEngage()
 	self:Bar(421022, self:Easy() and 8.0 or 5.0, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
 	self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
 	if self:Mythic() then
+		-- Ult [Urctos/Aerwynn] (%d)
 		self:Bar(420525, specialCD, L.special_mythic_bar:format(self:SpellName(-27300), self:SpellName(-27301), specialCount)) -- Blinding Rage/Constricting Thicket
 	else
+		-- Ult [Urctos] (%d)
 		self:Bar(420525, specialCD, L.special_bar:format(self:SpellName(-27300), blindingRageCount)) -- Blinding Rage
 	end
 	nextSpecial = GetTime() + specialCD
@@ -227,22 +229,28 @@ function mod:SpecialOver()
 		if nextSpecialAbility == "urctos" then
 			nextSpecialAbility = "aerwynn"
 			if self:Mythic() then
+				-- Ult [Aerwynn/Pip] (%d)
 				self:Bar(421292, specialCD, L.special_mythic_bar:format(self:SpellName(-27301), self:SpellName(-27302), specialCount)) -- Constricting Thicket/Song of the Dragon
 			else
+				-- Ult [Aerwynn] (%d)
 				self:Bar(421292, specialCD, L.special_bar:format(self:SpellName(-27301), constrictingThicketCount)) -- Constricting Thicket
 			end
 		elseif nextSpecialAbility == "aerwynn" then
 			nextSpecialAbility = "pip"
 			if self:Mythic() then
+				-- Ult [Pip/Urctos] (%d)
 				self:Bar(421029, specialCD, L.special_mythic_bar:format(self:SpellName(-27302), self:SpellName(-27300), specialCount)) -- Song of the Dragon/Blinding Rage
 			else
+				-- Ult [Pip] (%d)
 				self:Bar(421029, specialCD, L.special_bar:format(self:SpellName(-27302), constrictingThicketCount))  -- Song of the Dragon
 			end
 		elseif nextSpecialAbility == "pip" then
 			nextSpecialAbility = "urctos"
 			if self:Mythic() then
+				-- Ult [Urctos/Aerwynn] (%d)
 				self:Bar(420525, specialCD, L.special_mythic_bar:format(self:SpellName(-27300), self:SpellName(-27301), specialCount)) -- Blinding Rage/Constricting Thicket
 			else
+				-- Ult [Urctos] (%d)
 				self:Bar(420525, specialCD, L.special_bar:format(self:SpellName(-27300), constrictingThicketCount))   -- Blinding Rage
 			end
 		end
@@ -325,7 +333,7 @@ end
 
 -- Urctos
 function mod:BlindingRage(args)
-	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(self:SpellName(-27300)), blindingRageCount)) -- Urctos ult
 	self:PlaySound(args.spellId, "alert") -- duck boss
 	blindingRageCount = blindingRageCount + 1
 
@@ -442,7 +450,7 @@ end
 
 -- Aerwynn
 function mod:ConstrictingThicket(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_boss:format(self:SpellName(-27301)), constrictingThicketCount)))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_boss:format(self:SpellName(-27301)), constrictingThicketCount))) -- Aerwynn ult
 	self:PlaySound(args.spellId, "alert") -- Interrupt
 	constrictingThicketCount = constrictingThicketCount + 1
 
@@ -462,7 +470,7 @@ function mod:ConstrictingThicketOver()
 end
 
 function mod:AerwynnBarrelingCharge()
-	self:Message(421292, "green", CL.interrupted:format(L.ultimate_boss:format(self:SpellName(-27301)))) -- Constricting Thicket
+	self:Message(421292, "green", CL.interrupted:format(L.ultimate_boss:format(self:SpellName(-27301)))) -- Aerwynn interrupted
 	self:PlaySound(421292, "info")
 end
 
@@ -545,7 +553,7 @@ end
 
 -- Pip
 function mod:SongOfTheDragon(args)
-	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(self:SpellName(-27302)), songCount)) -- Pip ult
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, self:Mythic() and 14 or 24, L.song_of_the_dragon)
 	songCount = songCount + 1
@@ -558,7 +566,7 @@ end
 function mod:SongOfTheDragonOver()
 	self:StopBar(CL.cast:format(L.song_of_the_dragon))
 
-	self:Message(421292, "green", CL.over:format(L.ultimate_boss:format(self:SpellName(-27302))))
+	self:Message(421292, "green", CL.over:format(L.ultimate_boss:format(self:SpellName(-27302)))) -- Pip ult over
 	self:PlaySound(421292, "info")
 
 	self:SpecialOver()
