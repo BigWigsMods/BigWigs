@@ -81,6 +81,7 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 	[425889] = "orange",
 	[426206] = "yellow",
 	[426249] = "blue",
+	[426256] = "red",
 	[426387] = "blue",
 	[426524] = "yellow",
 	[427252] = "red",
@@ -91,7 +92,6 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 	[429032] = "blue",
 	[429973] = "purple",
 	["berserk"] = "red",
-	["blazing_coalescence_boss"] = {"blue","red"},
 	["stages"] = "cyan",
 })
 

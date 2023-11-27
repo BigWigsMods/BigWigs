@@ -77,6 +77,7 @@ BigWigs:AddSounds("Larodar, Keeper of the Flame", {
 	[423719] = "alarm",
 	[426206] = "alert",
 	[426249] = "info",
+	[426256] = "info",
 	[426387] = "alarm",
 	[426524] = "alert",
 	[427252] = "long",
@@ -87,7 +88,6 @@ BigWigs:AddSounds("Larodar, Keeper of the Flame", {
 	[429032] = "alarm",
 	[429973] = "alarm",
 	["berserk"] = "alarm",
-	["blazing_coalescence_boss"] = "alarm",
 	["stages"] = {"info","long"},
 })
 
