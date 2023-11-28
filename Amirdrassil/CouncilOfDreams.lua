@@ -332,9 +332,8 @@ function mod:Rebirth(args)
 			local remaining = self:BarTimeLeft(CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 			if remaining > 0 and remaining < rebirthTime then
 				rebirthTimers[418720] = self:ScheduleTimer(function()
-					local cd = self:Easy() and 19.0 or 20.0
-					if nextSpecial - GetTime() > cd then
-						self:Bar(418720, cd, CL.count:format(L.polymorph_bomb, polymorphBombCount))
+					if nextSpecial - GetTime() > 25 then
+						self:Bar(418720, self:Easy() and 19.0 or 20.0, CL.count:format(L.polymorph_bomb, polymorphBombCount))
 					end
 				end, remaining)
 			end
