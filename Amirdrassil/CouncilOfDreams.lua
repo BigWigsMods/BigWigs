@@ -13,6 +13,7 @@ mod:SetRespawnTime(30)
 --
 
 local castingRebirth = false
+local rebirthCount = 1
 
 local specialCD = 56
 local specialChain = { ["urctos"] = "aerwynn", ["aerwynn"] = "pip", ["pip"] = "urctos" }
@@ -62,7 +63,7 @@ end
 
 function mod:GetOptions()
 	return {
-		418187, -- Rebirth
+		{418187, "CASTBAR"}, -- Rebirth
 		-- "berserk",
 		-- Urctos
 		420525, -- Blinding Rage
@@ -150,6 +151,7 @@ end
 
 function mod:OnEngage()
 	castingRebirth = false
+	rebirthCount = 1
 	activeSpecials = 0
 	specialCount = 1
 
@@ -259,16 +261,17 @@ end
 
 -- General
 function mod:Rebirth(args)
+	local rebirthTime = self:Mythic() and 15 or self:Heroic() and 20 or self:Easy() and 30
+	self:CastBar(args.spellId, rebirthTime, CL.count:format(args.spellName, rebirthCount))
+	rebirthCount = rebirthCount + 1
 	if not castingRebirth then
 		self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 		self:PlaySound(args.spellId, "long")
-		self:Bar(args.spellId, 15)
 		castingRebirth = true
 	end
 
 	-- handle skipping a cast due to rebirth
 	local boss = self:MobId(args.sourceGUID)
-	local rebirthTime = 15
 	local remainingSpecialCD = nextSpecial - GetTime()
 	if remainingSpecialCD > rebirthTime then
 		if boss == 208363 then -- Urctos
