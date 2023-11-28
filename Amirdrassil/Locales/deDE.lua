@@ -46,8 +46,8 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Ersticken Gesundheit wiederholen"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Gibt wiederholt Chatnachrichten für Qualmendes Ersticken aus um mitzuteilen, dass unter 75% Gesundheit erreicht sind."
 
-	--L.blazing_coalescence_on_player_note = "When it's on you"
-	--L.blazing_coalescence_on_boss_note = "When it's on the boss"
+	L.blazing_coalescence_on_player_note = "Wenn es auf Dir ist"
+	L.blazing_coalescence_on_boss_note = "Wenn es auf dem Boss ist"
 
 	L.scorching_roots = "Wurzeln"
 	L.furious_charge = "Ansturm"
