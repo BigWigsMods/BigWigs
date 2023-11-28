@@ -34,6 +34,7 @@ if L then
 
 	L.barreling_charge = "衝鋒"
 	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
+	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"
 	L.polymorph_bomb_single = "鴨子"
 end
@@ -87,15 +88,15 @@ L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
 if L then
 	L.spirit_trigger = "卡多雷之魂"
 
-	--L.fyralaths_bite = "Frontal"
-	--L.fyralaths_bite_mythic = "Frontals"
+	L.fyralaths_bite = "正面衝擊波"
+	L.fyralaths_bite_mythic = "正面衝擊波"
 	L.fyralaths_mark = "印記"
 	L.darkflame_shades = "影子"
 	L.darkflame_cleave = "分攤"
 	L.incarnate_intermission = "擊飛"
 	L.incarnate = "升空"
 	L.spirits_of_the_kaldorei = "靈魂"
-	--L.molten_gauntlet = "Gauntlet"
+	L.molten_gauntlet = "重拳" -- 熔火護手是什麼鬼翻譯......
 	L.greater_firestorm_shortened_bar = "強效火颶" -- 中文技能名短，先按原文來
 	L.greater_firestorm_message_full = "強效火颶"
 	L.eternal_firestorm_shortened_bar = "永恆火颶"
