@@ -10,7 +10,7 @@ if L then
 	L.blistering_spear = "長矛"
 	L.blistering_spear_single = "長矛"
 	--L.blistering_torment = "Chain"
-	--L.twisting_blade = "Blades"
+	L.twisting_blade = "旋刃"
 	L.marked_for_torment = "折磨"
 	L.umbral_destruction = "分攤"
 	L.heart_stopper = "治療吸收盾"
@@ -34,17 +34,18 @@ if L then
 
 	L.barreling_charge = "衝鋒"
 	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
+	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"
 	L.polymorph_bomb_single = "鴨子"
 end
 
 L = BigWigs:NewBossLocale("Larodar, Keeper of the Flame", "zhTW")
 if L then
-	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
-	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_smoldering_suffocation = "重覆悶燃窒息喊話"
+	L.custom_on_repeating_yell_smoldering_suffocation_desc = "當你中了悶燃窒息並且生命值低於 75%，持續喊話以引起隊友注意。"
 
-	--L.blazing_coalescence_on_player_note = "When it's on you"
-	--L.blazing_coalescence_on_boss_note = "When it's on the boss"
+	L.blazing_coalescence_on_player_note = "在你身上"
+	L.blazing_coalescence_on_boss_note = "在王身上"
 
 	L.scorching_roots = "樹根"
 	L.furious_charge = "衝鋒"
@@ -58,46 +59,46 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
 if L then
 	L.continuum = "新的矩陣"
 	L.impending_loom = "躲避織物"
-	--L.viridian_rain = "Damage + Bombs"
+	L.viridian_rain = "翠綠之雨" -- 原名比較短
 	L.lumbering_slam = "衝擊波"
 end
 
 L = BigWigs:NewBossLocale("Smolderon", "zhTW")
 if L then
 	L.brand_of_damnation = "坦克分攤"
-	--L.lava_geysers = "Geysers"
+	L.lava_geysers = "岩漿"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhTW")
 if L then
-	--L.seed_soaked = "Seed soaked"
-	--L.all_seeds_soaked = "Seeds done!"
+	L.seed_soaked = "踩種子" -- 之後看一下語序
+	L.all_seeds_soaked = "種子踩完了！"
 	L.blazing_mushroom = "蘑菇"
-	--L.fiery_growth = "Dispels"
+	L.fiery_growth = "驅散"
 	L.mass_entanglement = "藤蔓"
 	L.incarnation_moonkin = "梟獸型態"
 	L.incarnation_tree_of_flame = "樹人型態"
 	L.flaming_germination = "種子" -- 手冊寫焰種
-	--L.suppressive_ember = "Heal Absorbs"
-	--L.suppressive_ember_single = "Heal Absorb"
-	--L.flare_bomb = "Feathers"
+	L.suppressive_ember = "治療吸收盾"
+	L.suppressive_ember_single = "治療吸收盾"
+	L.flare_bomb = "羽毛"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
 if L then
-	L.spirit_trigger = "卡多雷精魂"
+	L.spirit_trigger = "卡多雷之魂"
 
-	--L.fyralaths_bite = "Frontal"
-	--L.fyralaths_bite_mythic = "Frontals"
-	--L.fyralaths_mark = "Mark"
-	--L.darkflame_shades = "Shades"
-	--L.darkflame_cleave = "Mythic Soaks"
-	--L.incarnate_intermission = "Knock Up"
-	--L.incarnate = "Fly Away"
-	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.molten_gauntlet = "Gauntlet"
-	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
-	--L.greater_firestorm_message_full = "Firestorm [Greater]"
-	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
-	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
+	L.fyralaths_bite = "正面衝擊波"
+	L.fyralaths_bite_mythic = "正面衝擊波"
+	L.fyralaths_mark = "印記"
+	L.darkflame_shades = "影子"
+	L.darkflame_cleave = "分攤"
+	L.incarnate_intermission = "擊飛"
+	L.incarnate = "升空"
+	L.spirits_of_the_kaldorei = "靈魂"
+	L.molten_gauntlet = "重拳" -- 熔火護手是什麼鬼翻譯......
+	L.greater_firestorm_shortened_bar = "強效火颶" -- 中文技能名短，先按原文來
+	L.greater_firestorm_message_full = "強效火颶"
+	L.eternal_firestorm_shortened_bar = "永恆火颶"
+	L.eternal_firestorm_message_full = "永恆火颶"
 end
