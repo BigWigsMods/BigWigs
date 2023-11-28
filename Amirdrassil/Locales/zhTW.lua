@@ -41,11 +41,11 @@ end
 
 L = BigWigs:NewBossLocale("Larodar, Keeper of the Flame", "zhTW")
 if L then
-	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
-	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_smoldering_suffocation = "重覆悶燃窒息喊話"
+	L.custom_on_repeating_yell_smoldering_suffocation_desc = "當你中了悶燃窒息並且生命值低於 75%，持續喊話以引起隊友注意。"
 
-	--L.blazing_coalescence_on_player_note = "When it's on you"
-	--L.blazing_coalescence_on_boss_note = "When it's on the boss"
+	L.blazing_coalescence_on_player_note = "在你身上"
+	L.blazing_coalescence_on_boss_note = "在王身上"
 
 	L.scorching_roots = "樹根"
 	L.furious_charge = "衝鋒"
