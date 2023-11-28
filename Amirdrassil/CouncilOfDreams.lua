@@ -214,7 +214,6 @@ function mod:SpecialOver()
 		self:StopBar(L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 
 		specialCount = specialCount + 1
-		agonizingClawsCount = 1
 
 		self:Bar(421022, self:Easy() and 8.0 or 5.0, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
 		self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
@@ -341,6 +340,7 @@ function mod:BlindingRage(args)
 	blindingRageCount = blindingRageCount + 1
 
 	activeSpecials = activeSpecials + 1
+	agonizingClawsCount = 1 -- reset on all specials start because Urctos gets weird if interrupted during the Blinding Rage cast
 
 	-- if not self:Mythic() or nextSpecialAbility == "pip" then
 	-- 	self:Bar(420671, self:Mythic() and 1.0 or self:Easy() and 3.0 or 5.0, L.special_mechanic_bar:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
@@ -458,6 +458,7 @@ function mod:ConstrictingThicket(args)
 	constrictingThicketCount = constrictingThicketCount + 1
 
 	activeSpecials = activeSpecials + 1
+	agonizingClawsCount = 1
 
 	-- self:Bar(420948, self:Mythic() and 4.0 or 3.0, L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
 end
@@ -562,6 +563,7 @@ function mod:SongOfTheDragon(args)
 	songCount = songCount + 1
 
 	activeSpecials = activeSpecials + 1
+	agonizingClawsCount = 1
 
 	-- self:Bar(420671, self:Mythic() and 1.0 or 3.0, L.special_mechanic_bar:format(args.spellName, noxiousBlossomCount)) -- Noxious Blossom
 end
