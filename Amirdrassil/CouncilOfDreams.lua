@@ -14,6 +14,7 @@ mod:SetRespawnTime(30)
 
 local castingRebirth = false
 local rebirthCount = 1
+local rebirthTimers = {}
 
 local specialCD = 56
 local specialChain = { ["urctos"] = "aerwynn", ["aerwynn"] = "pip", ["pip"] = "urctos" }
@@ -105,6 +106,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterMessage("BigWigs_EncounterEnd") -- stop skipped cast bars immediately on wipe
+
 	-- General
 	self:Log("SPELL_CAST_START", "Rebirth", 418187)
 	self:Log("SPELL_CAST_SUCCESS", "RebirthSuccess", 418187)
@@ -156,6 +159,8 @@ end
 function mod:OnEngage()
 	castingRebirth = false
 	rebirthCount = 1
+	rebirthTimers = {}
+
 	activeSpecials = 0
 	specialCount = 1
 
@@ -204,6 +209,13 @@ function mod:OnEngage()
 	self:Bar(421024, self:Mythic() and 43 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 
 	self:SetPrivateAuraSound(418720, 429123) -- Polymorph Bomb
+end
+
+function mod:BigWigs_EncounterEnd()
+	for id, timer in next, rebirthTimers do
+		self:CancelTimer(timer)
+		rebirthTimers[id] = nil
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -280,23 +292,37 @@ function mod:Rebirth(args)
 		if boss == 208363 then -- Urctos
 			local remaining = self:BarTimeLeft(CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
 			if remaining > 0 and remaining < rebirthTime then
-				self:ScheduleTimer(function()
-					agonizingClawsCount = agonizingClawsCount + 1
-					local cd
-					if self:Easy() then
-						local timer = { 8.0, 6.0, 25.0, 6.0, 0 }
-						cd = timer[agonizingClawsCount]
-					else
-						local timer = { 5.0, 4.0, 16.0, 4.0, 0 }
-						cd = timer[agonizingClawsCount]
-					end
-					self:Bar(421022, cd, CL.count:format(self:SpellName(421022), agonizingClawsCount))
-				end, remaining)
+				-- find the next cast time and set the correct count for it
+				local timer = self:Easy() and { 8.0, 6.0, 25.0, 6.0 } or { 5.0, 4.0, 16.0, 4.0 }
+				local count = 1
+				local totalCD = remaining
+				while timer[agonizingClawsCount + count] and (totalCD + timer[agonizingClawsCount + count] < rebirthTime) do
+					totalCD = remaining + timer[agonizingClawsCount + count]
+					count = count + 1
+				end
+				if timer[agonizingClawsCount + count] then
+					rebirthTimers[421022] = self:ScheduleTimer(function()
+						agonizingClawsCount = agonizingClawsCount + count
+						self:Bar(421022, totalCD, CL.count:format(self:SpellName(421022), agonizingClawsCount))
+					end, remaining)
+				end
+			end
+
+			if not self:Easy() then
+				remaining = self:BarTimeLeft(CL.count:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+				if remaining > 0 and remaining < rebirthTime then
+					rebirthTimers[420948] = self:ScheduleTimer(function()
+						-- barrelingChargeCount = barrelingChargeCount + 1 -- does count matter? debuff should be off
+						if nextSpecial - GetTime() > 25 then
+							self:Bar(420948, 20, CL.count:format(L.barreling_charge, barrelingChargeCount))
+						end
+					end, remaining)
+				end
 			end
 		elseif boss == 208365 then -- Aerwynn
 			local remaining = self:BarTimeLeft(CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
 			if remaining > 0 and remaining < rebirthTime then
-				self:ScheduleTimer(function()
+				rebirthTimers[420858] = self:ScheduleTimer(function()
 					if nextSpecial - GetTime() > 25 then
 						self:Bar(420858, 25.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 					end
@@ -305,17 +331,19 @@ function mod:Rebirth(args)
 		elseif boss == 208956 then -- Pip
 			local remaining = self:BarTimeLeft(CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 			if remaining > 0 and remaining < rebirthTime then
-				self:ScheduleTimer(function()
-					if nextSpecial - GetTime() > 25 then
-						self:Bar(418720, self:Easy() and 19.0 or 20.0, CL.count:format(L.polymorph_bomb, polymorphBombCount))
+				rebirthTimers[418720] = self:ScheduleTimer(function()
+					local cd = self:Easy() and 19.0 or 20.0
+					if nextSpecial - GetTime() > cd then
+						self:Bar(418720, cd, CL.count:format(L.polymorph_bomb, polymorphBombCount))
 					end
 				end, remaining)
 			end
+			-- Noxious Blossom logic is annoying, so just let the next cast figure things out
 		end
 	elseif not self:Mythic() then
 		if (boss == 208363 and nextSpecialAbility == "urctos") or (boss == 208365 and nextSpecialAbility == "aerwynn") or (boss == 208956 and nextSpecialAbility == "pip") then
 			-- is this how this works?
-			self:ScheduleTimer("SpecialOver", remainingSpecialCD)
+			rebirthTimers[boss] = self:ScheduleTimer("SpecialOver", remainingSpecialCD)
 		end
 	end
 end
