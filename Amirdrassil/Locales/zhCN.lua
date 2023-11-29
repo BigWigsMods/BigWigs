@@ -61,7 +61,7 @@ if L then
 	L.impending_loom = "躲避丝线"
 	L.surging_growth = "新踩圈"
 	L.ephemeral_flora = "踩红圈"
-	L.viridian_rain = "伤害+炸弹"
+	L.viridian_rain = "翠绿之雨"
 	L.lumbering_slam = "震慑波"
 end
 
@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhCN")
 if L then
-	L.seed_soaked = "踩种子"
+	L.seed_soaked = "烈焰之种"
 	L.all_seeds_soaked = "踩种子完毕!"
 	L.blazing_mushroom = "蘑菇"
 	L.fiery_growth = "炽热驱散" --炽热增生驱散后脚下大圈
