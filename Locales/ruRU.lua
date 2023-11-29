@@ -43,18 +43,18 @@ L.disabledAddOn = "У вас выключена модификация |cFF436EE
 L.removeAddOn = "Пожалуйста, удалите '|cFF436EEE%s|r', ему на смену пришло '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
---L.expansionNames = {
---	"Classic", -- Classic
---	"The Burning Crusade", -- The Burning Crusade
---	"Wrath of the Lich King", -- Wrath of the Lich King
---	"Cataclysm", -- Cataclysm
---	"Mists of Pandaria", -- Mists of Pandaria
---	"Warlords of Draenor", -- Warlords of Draenor
---	"Legion", -- Legion
---	"Battle for Azeroth", -- Battle for Azeroth
---	"Темные Земли", -- Shadowlands
---	"Dragonflight", -- Dragonflight
---}
+L.expansionNames = {
+	"Классика", -- Classic
+	-- "The Burning Crusade", -- The Burning Crusade -- would rather leave untranslated
+	"Гнев Короля Лича", -- Wrath of the Lich King
+	"Катаклизм", -- Cataclysm
+	"Туманы Пандарии", -- Mists of Pandaria
+	"Воеводы Дренора", -- Warlords of Draenor
+	"Легион", -- Legion
+	"Битва за Азерот", -- Battle for Azeroth
+	"Темные Земли", -- Shadowlands
+	-- "Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
+}
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Берегитесь (Алгалон)"
