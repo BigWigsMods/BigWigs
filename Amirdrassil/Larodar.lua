@@ -150,6 +150,7 @@ function mod:GetOptions()
 		[426206] = L.blazing_thorns, -- Blazing Thorns (Dodges)
 		[426249] = L.blazing_coalescence_on_player_note, -- Blazing Coalescence (When it's on you)
 		[426256] = L.blazing_coalescence_on_boss_note, -- Blazing Coalescence (When it's on the boss)
+		[417634] = CL.full_energy, -- Raging Inferno (Full Energy)
 		[427252] = L.falling_embers, -- Falling Embers (Soaks)
 		[427299] = CL.bombs, -- Flash Fire (Bombs)
 		[427343] = L.fire_whirl, -- Fire Whirl (Tornadoes)
@@ -229,7 +230,7 @@ function mod:OnEngage()
 	self:Bar(426206, timers[426206][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
 	self:Bar(418637, timers[418637][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
 	self:Bar(422614, timers[422614][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
-	self:Bar(417634, 90, CL.count:format(self:SpellName(417634), ragingInfernoCount)) -- Raging Inferno
+	self:Bar(417634, 90, CL.count:format(CL.full_energy, ragingInfernoCount)) -- Raging Inferno
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 
@@ -331,12 +332,12 @@ function mod:BlazingCoalescenceAppliedOnBoss(args)
 end
 
 function mod:RagingInferno(args)
-	self:StopBar(CL.count:format(args.spellName, ragingInfernoCount))
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, ragingInfernoCount))
+	self:StopBar(CL.count:format(CL.full_energy, ragingInfernoCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.full_energy, ragingInfernoCount))
 	self:PlaySound(args.spellId, "long")
 	ragingInfernoCount = ragingInfernoCount + 1
-	self:Bar(args.spellId, 102, CL.count:format(args.spellName, ragingInfernoCount))
-	self:CastBar(args.spellId, 4, args.spellName)
+	self:Bar(args.spellId, 102, CL.count:format(CL.full_energy, ragingInfernoCount))
+	self:CastBar(args.spellId, 4, CL.full_energy)
 end
 
 function mod:IgnitingGrowth(args)
@@ -364,7 +365,7 @@ function mod:ConsumingFlame(args)
 	self:StopBar(CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
 	self:StopBar(CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
 	self:StopBar(CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
-	self:StopBar(CL.count:format(self:SpellName(417634), ragingInfernoCount)) -- Raging Inferno
+	self:StopBar(CL.count:format(CL.full_energy, ragingInfernoCount)) -- Raging Inferno
 
 	self:CastBar(args.spellId, 16)
 end
