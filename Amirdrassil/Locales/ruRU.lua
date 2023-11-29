@@ -28,9 +28,9 @@ end
 L = BigWigs:NewBossLocale("Council of Dreams", "ruRU")
 if L then
 	L.ultimate_boss = "Ульта (%s)"
-	--L.special_bar = "Ult [%s] (%d)"
-	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
-	--L.special_mechanic_bar = "%s [Ult] (%d)"
+	L.special_bar = "Ульта [%s] (%d)"
+	L.special_mythic_bar = "Ульта [%s/%s] (%d)"
+	L.special_mechanic_bar = "%s [Ульта] (%d)"
 
 	L.barreling_charge = "Чардж"
 	L.poisonous_javelin = "Отравленное копьё"
@@ -43,8 +43,8 @@ if L then
 	L.custom_on_repeating_yell_smoldering_suffocation = "Крик при низком здоровье на Тлеющем Удульше"
 	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Повторяющиеся крики при здоровье < 75% для игроков с Тлеющем Удушье для координации с другими игроками."
 
-	--L.blazing_coalescence_on_player_note = "When it's on you"
-	--L.blazing_coalescence_on_boss_note = "When it's on the boss"
+	L.blazing_coalescence_on_player_note = "Когда на тебе"
+	L.blazing_coalescence_on_boss_note = "Когда на боссе"
 
 	L.scorching_roots = "Корень"
 	L.furious_charge = "Чардж"
@@ -58,7 +58,7 @@ L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "ruRU")
 if L then
 	L.continuum = "Новые Узоры"
 	L.impending_loom = "Доджи"
-	--L.viridian_rain = "Damage + Bombs"
+	L.viridian_rain = "Урон + Бомбы"
 	L.lumbering_slam = "Фронтал"
 end
 
@@ -70,34 +70,35 @@ end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "ruRU")
 if L then
-	--L.seed_soaked = "Seed soaked"
-	--L.all_seeds_soaked = "Seeds done!"
+	L.seed_soaked = "Семечко засокано"
+	L.all_seeds_soaked = "Семечки кончились!"
 	L.blazing_mushroom = "Грибы"
 	L.fiery_growth = "Диспеллы"
 	L.mass_entanglement = "Корни"
 	L.incarnation_moonkin = "Совиная форма "
 	L.incarnation_tree_of_flame = "Древоформа"
 	L.flaming_germination = "Семена"
-	--L.suppressive_ember = "Heal Absorbs"
-	--L.suppressive_ember_single = "Heal Absorb"
-	--L.flare_bomb = "Feathers"
+	L.suppressive_ember = "Абсорб"
+	L.suppressive_ember_single = "Абсорб"
+	L.flare_bomb = "Перья"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ruRU")
 if L then
 	L.spirit_trigger = "Дух калдорай"
 
-	--L.fyralaths_bite = "Frontal"
-	--L.fyralaths_bite_mythic = "Frontals"
-	--L.fyralaths_mark = "Mark"
-	--L.darkflame_shades = "Shades"
-	--L.darkflame_cleave = "Mythic Soaks"
-	--L.incarnate_intermission = "Knock Up"
-	--L.incarnate = "Fly Away"
-	--L.spirits_of_the_kaldorei = "Spirits"
-	--L.molten_gauntlet = "Gauntlet"
-	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
-	--L.greater_firestorm_message_full = "Firestorm [Greater]"
-	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
-	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
+	L.fyralaths_bite = "Фронтал"
+	L.fyralaths_bite_mythic = "Фронталы"
+	L.fyralaths_mark = "Метка"
+	L.darkflame_shades = "Тени"
+	L.darkflame_cleave = "Соаки"
+	L.incarnate_intermission = "Подкидывание"
+	L.incarnate = "Улетает"
+	L.spirits_of_the_kaldorei = "Духи"
+	L.molten_gauntlet = "Танкбастер"
+
+	L.greater_firestorm_shortened_bar = "Метеоры" -- Same letter in ru
+	L.greater_firestorm_message_full = "Метеоры [Великая]"
+	L.eternal_firestorm_shortened_bar = "Метеоры" --  Same letter in ru
+	L.eternal_firestorm_message_full = "Метеоры [Вечная]"
 end
