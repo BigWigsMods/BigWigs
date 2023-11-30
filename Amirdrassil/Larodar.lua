@@ -71,8 +71,8 @@ local timersMythic = {
 	-- p2
 	[428896] = { 45.5 }, -- Ashen Devastation
 	[427252] = { 7.4, 26.7, 35.9, 21.7 }, -- Falling Embers
-	[427299] = { 29.0, 51.8 }, -- Flash Fire
-	[427343] = { 64.9, 32.6 }, -- Fire Whirl
+	[427299] = { 29.0, 51.8, 27.6 }, -- Flash Fire
+	[427343] = { 58.4, 32.6 }, -- Fire Whirl
 	[429973] = { 14.0, 25.9, 19.2, 26.7, 16.7 }, -- Smoldering Backdraft
 	[421325] = { 20.7, 55.1 }, -- Ashen Call
 }
