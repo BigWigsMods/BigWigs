@@ -296,7 +296,7 @@ local function sortKeys(keys)
 end
 
 -- Write out a module option values to [module dir]/Options/[value].lua
-local function dumpValues(path, name, options_table)
+local function dumpValues(path, name, modules_table, options_table)
 	local file = path .. name .. ".lua"
 	local old_data = ""
 	local f = io.open(file, "r")
@@ -306,7 +306,7 @@ local function dumpValues(path, name, options_table)
 	end
 
 	local data = ""
-	for _, mod in ipairs(modules) do
+	for _, mod in ipairs(modules_table) do
 		local options = options_table[mod] or {}
 		data = data .. string.format("\r\nBigWigs:Add%s(%q, {\r\n", name, mod)
 		for _, key in ipairs(sortKeys(options)) do
@@ -585,8 +585,20 @@ local function parseLua(file)
 	local rep = {} -- key replacements
 
 	for n, line in ipairs(lines) do
-		local comment = line:match("%-%-%s*(.*)") or ""
-		line = line:gsub("%-%-.*$", "") -- strip comments
+		-- save and strip comment
+		local comment = ""
+		if line:match("^%s*%-%-") then -- shortcut for full line comments
+			comment = line:gsub("^%s*%-%-%s*", "")
+			line = ""
+		else
+			-- pop off comments from the end (trying to protect strings)
+			while line:gsub('%b""', ''):match("%-%-") do
+				local new_line = line:reverse()
+				local start, stop = new_line:find("--", nil, true)
+				comment = comment .. new_line:sub(1, stop):reverse()
+				line = new_line:sub(stop + 1):reverse()
+			end
+		end
 
 		-- set some module flags
 		if line:match("^mod:SetEncounterID") then
@@ -619,9 +631,17 @@ local function parseLua(file)
 					locale[locale_key] = true
 				end
 			end
-			local locale_key = line:match("L%.([%w_]+)%s*=") or line:match("L%[\"(.+)\"%]%s*=")
+			local locale_key, locale_value = line:match("L%.([%w_]+)%s*=%s*(.*)")
+			if not locale_key then
+				locale_key, locale_value = line:match("L%[\"(.+)\"%]%s*=%s*(.*)")
+			end
 			if locale_key then
-				locale[locale_key] = true
+				locale_value = strtrim(locale_value)
+				-- check if we're all replacement tokens
+				local v = locale_value:gsub("%b{}", ""):gsub("\\n", "")
+				if v == '""' then locale_value = "" end
+
+				locale[locale_key] = locale_value:sub(1,1) == "{" or locale_value ~= unquote(locale_value)
 			end
 		end
 
@@ -632,7 +652,7 @@ local function parseLua(file)
 				if common_locale and not common_locale[locale_key] then
 					error(string.format("    %s:%d: Invalid locale string \"CL.%s\"", file_name, n, locale_key))
 				end
-			elseif locale_type == "L" and not locale[locale_key] then
+			elseif locale_type == "L" and locale[locale_key] == nil then
 				error(string.format("    %s:%d: Invalid locale string \"L.%s\"", file_name, n, locale_key))
 			end
 			-- trying to invoke the string (missing :format)
@@ -673,7 +693,7 @@ local function parseLua(file)
 					warmup = true,
 				}
 				for key in next, option_keys do
-					if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and not locale[key] then
+					if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and locale[key] == nil then
 						error(string.format("    %s:%d: Missing option key locale for \"%s\"", file_name, options_block_start, key))
 					end
 				end
@@ -1122,6 +1142,7 @@ local function parseLocale(file)
 
 	local keys = {}
 	local current_module
+	local current_module_line
 	local n = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		n = n + 1
@@ -1148,7 +1169,16 @@ local function parseLocale(file)
 			end
 		end
 		if module_name then
+			if current_module then
+				-- reverse check
+				for key, value in next, modules_locale[current_module] do
+					if value and not key:match("_icon$") and keys[current_module][key] == nil then
+						warn(string.format("    %s:%d: %s: Missing locale key %q", file_name, current_module_line, current_module, key))
+					end
+				end
+			end
 			current_module = module_name
+			current_module_line = n
 			if not keys[module_name] then
 				keys[module_name] = {}
 			else
@@ -1175,6 +1205,9 @@ local function parseLocale(file)
 			local comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%s*=")
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=")
+			end
+			if not key then
+				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=")
 			end
 			if key then
 				keys[current_module][key] = comment == ""
@@ -1260,8 +1293,8 @@ local function parse(file)
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
 			local path = (file[1]:match(".*/") or "") .. "Options/"
-			dumpValues(path, "Colors", module_colors)
-			dumpValues(path, "Sounds", module_sounds)
+			dumpValues(path, "Colors", modules, module_colors)
+			dumpValues(path, "Sounds", modules, module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
 		end
 		-- Reset!
