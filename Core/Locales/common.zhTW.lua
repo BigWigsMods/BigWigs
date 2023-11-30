@@ -135,6 +135,7 @@ L.breath = "吐息" -- When a boss breathes fire/frost/etc on to a player or the
 L.roar = "咆哮" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
 L.leap = "跳躍" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.full_energy = "滿能量" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
+--L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "水池" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "水池" -- Plural of L.pool
 L.totem = "圖騰" -- A totem, usually summoned by a boss, the same thing that shamans summon

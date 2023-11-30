@@ -70,6 +70,7 @@ function mod:GetOptions()
 		[421972] = CL.bombs, -- Controlled Burn (Bombs)
 		[422026] = L.tortured_scream, -- Tortured Scream (Scream)
 		[422039] = L.shadowflame_cleave, -- Shadowflame Cleave (Cleave)
+		[421840] = CL.weakened, -- Uprooted Agony (Weakened)
 	}
 end
 
@@ -312,9 +313,9 @@ do
 end
 
 function mod:UprootedAgonyApplied(args)
-	self:Message(args.spellId, "green", CL.count:format(args.spellName, intermissionCount))
+	self:Message(args.spellId, "green", CL.count:format(CL.weakened, intermissionCount))
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 20, CL.count:format(args.spellName, intermissionCount))
+	self:Bar(args.spellId, 20, CL.count:format(CL.weakened, intermissionCount))
 end
 
 function mod:UprootedAgonyRemoved(args)
