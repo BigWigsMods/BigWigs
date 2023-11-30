@@ -135,7 +135,7 @@ do
 					end
 					scorchtailCrashCount = scorchtailCrashCount + 1
 					self:CDBar(420415, timer["all"][scorchtailCrashCount], CL.count:format(CL.count:format(L.scorchtail_crash, scorchtailCrashCount), scorchtailCrashCount))
-				elseif spellId == 421684 or spellId == playerSide then
+				elseif floodOfTheFirelandsCount == 1 or spellId == 421684 or spellId == playerSide then
 					last = GetTime()
 					self:StopBar(CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
 					self:Message(420415, "red", CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
