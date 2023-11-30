@@ -20,6 +20,8 @@ end
 L = BigWigs:NewBossLocale("Volcoross", "zhTW")
 if L then
 	L.flood_of_the_firelands = "分攤"
+	--L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
+	--L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "甩尾"
 	L.serpents_fury = "噴火"
 	L.coiling_flames_single = "烈焰纏繞" -- 烈焰纏繞，噴完火纏身上的，要不叫烤焦吧......

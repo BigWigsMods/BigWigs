@@ -20,6 +20,8 @@ end
 L = BigWigs:NewBossLocale("Volcoross", "koKR")
 if L then
 	--L.flood_of_the_firelands = "Soaks"
+	--L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
+	--L.flood_of_the_firelands_single = "Soak"
 	--L.scorchtail_crash = "Tail Slam"
 	--L.serpents_fury = "Flames"
 	--L.coiling_flames_single = "Flames"

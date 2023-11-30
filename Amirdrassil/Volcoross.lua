@@ -25,9 +25,11 @@ local cataclysmJawsCount = 1
 local L = mod:GetLocale()
 if L then
 	L.flood_of_the_firelands = "Soaks"
+	L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
+	L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "Tail Slam"
 	L.serpents_fury = "Flames"
-	L.coiling_flames_single = "Flames" -- Do we need a single locale for this?
+	L.coiling_flames_single = "Flames"
 end
 
 --------------------------------------------------------------------------------
@@ -47,11 +49,15 @@ function mod:GetOptions()
 		{423117, "TANK"}, -- Cataclysm Jaws
 		421703, -- Serpent's Wrath
 		424218, -- Combusting Rage
-	}, nil, {
+		{427201, "SAY", "SAY_COUNTDOWN"}, -- Coiling Eruption
+	},{
+		[427201] = "mythic",
+	},{
 		[421672] = L.serpents_fury, -- Serpent's Fury (Flames)
 		[420933] = L.flood_of_the_firelands, -- Flood of the Firelands (Soaks)
 		[421616] = CL.pools, -- Volcanic Disgorge (Pools)
 		[420415] = L.scorchtail_crash, -- Scorchtail Crash (Tail Slam)
+		[427201] = L.flood_of_the_firelands_single, -- Coiling Eruption (Soak)
 	}
 end
 
@@ -73,6 +79,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 421082, 423494) -- Hellboil, Tidal Blaze
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 421082, 423494)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 421082, 423494)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "CoilingEruptionApplied", 427201)
+	self:Log("SPELL_AURA_REMOVED", "CoilingEruptionRemoved", 427201)
 end
 
 function mod:OnEngage()
@@ -81,6 +91,7 @@ function mod:OnEngage()
 	volcanicDisgorgeCount = 1
 	scorchtailCrashCount = 1
 	cataclysmJawsCount = 1
+	explosionCount = 1
 
 	self:Bar(423117, 5, CL.count:format(self:SpellName(423117), cataclysmJawsCount)) -- Cataclysm Jaws
 	self:Bar(421672, 10, CL.count:format(L.serpents_fury, serpentsFuryCount)) -- Serpent's Fury
@@ -118,12 +129,18 @@ function mod:SerpentsFury(args)
 end
 
 do
+	local prev = 0
 	function mod:CoilingFlamesApplied(args)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId)
+			self:PersonalMessage(args.spellId, nil, L.coiling_flames_single)
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.coiling_flames_single)
-			self:SayCountdown(args.spellId, 10)
+			self:SayCountdown(args.spellId, 12, self:Mythic() and L.flood_of_the_firelands_single_wait) -- Wait countdown for Mythic, soak after
+		end
+		if self:Mythic() and args.time - prev > 2 then
+			prev = args.time
+			self:Bar(427201, 16, CL.count:format(CL.explosion, explosionCount))
+			explosionCount = explosionCount + 1
 		end
 	end
 
@@ -221,6 +238,23 @@ do
 			prev = args.time
 			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
+		end
+	end
+end
+
+do
+	function mod:CoilingEruptionApplied(args)
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, nil, L.flood_of_the_firelands_single)
+			self:PlaySound(args.spellId, "warning")
+			self:Yell(args.spellId, L.flood_of_the_firelands_single)
+			self:YellCountdown(args.spellId, 4, L.flood_of_the_firelands_single) -- Soak in 4
+		end
+	end
+
+	function mod:CoilingEruptionRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelYellCountdown(args.spellId)
 		end
 	end
 end
