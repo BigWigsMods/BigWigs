@@ -357,9 +357,9 @@ function mod:FyralathsBite(args)
 	self:PlaySound(args.spellId, "alert") -- frontal
 	fyralathsBiteCount = fyralathsBiteCount + 1
 	if self:GetStage() == 1 then
-		self:Bar(args.spellId, fyralathsBiteCount % 3 == 1 and (self:Mythic() and 31.5 or 23.6) or 15)
+		self:Bar(args.spellId, fyralathsBiteCount % 3 == 1 and (self:Mythic() and 31.5 or 23.6) or 15, spellName)
 	elseif fyralathsBiteCount % 3 ~= 0 then
-		self:Bar(args.spellId, 11)
+		self:Bar(args.spellId, 11, spellName)
 	end
 end
 
