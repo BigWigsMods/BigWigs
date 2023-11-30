@@ -57,7 +57,7 @@ function mod:GetOptions()
 		[420933] = L.flood_of_the_firelands, -- Flood of the Firelands (Soaks)
 		[421616] = CL.pools, -- Volcanic Disgorge (Pools)
 		[420415] = L.scorchtail_crash, -- Scorchtail Crash (Tail Slam)
-		[427201] = L.flood_of_the_firelands_single, -- Coiling Eruption (Soak)
+		[427201] = CL.explosion, -- Coiling Eruption (Soak)
 	}
 end
 
