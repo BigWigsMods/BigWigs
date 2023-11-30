@@ -71,6 +71,7 @@ if L then
 	L.ephemeral_flora = "踩红圈"
 	L.viridian_rain = "翠绿之雨"
 	L.lumbering_slam = "震慑波"
+	--L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 
 L = BigWigs:NewBossLocale("Smolderon", "zhCN")

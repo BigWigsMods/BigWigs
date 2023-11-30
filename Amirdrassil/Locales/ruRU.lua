@@ -71,6 +71,7 @@ if L then
 	--L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "Урон + Бомбы"
 	L.lumbering_slam = "Фронтал"
+	--L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 
 L = BigWigs:NewBossLocale("Smolderon", "ruRU")

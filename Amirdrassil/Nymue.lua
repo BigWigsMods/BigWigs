@@ -35,6 +35,7 @@ if L then
 	L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "Damage + Bombs"
 	L.lumbering_slam = "Frontal Cone"
+	L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 
 --------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ function mod:GetOptions()
 		[-28482] = "mythic", -- Manifested Dream (Mythic)
 	},{
 		[420846] = L.continuum, -- Continuum (New Lines)
-		[429615] = CL.beams, -- Impending Loom (Beams)
+		[429615] = L.threads, -- Impending Loom (Threads)
 		[420907] = L.viridian_rain, -- Viridian Rain (Raid Damage)
 		[430563] = L.ephemeral_flora, -- Ephmeral Flora (Red Soak)
 		[427722] = CL.bombs, -- Weaver's Burden (Bombs)
@@ -112,7 +113,7 @@ function mod:OnEngage()
 
 	self:Bar(429983, 11.2, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 20, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
-	self:Bar(429615, 24.0, CL.count:format(CL.beams, impendingLoomCount)) -- Impending Loom
+	self:Bar(429615, 24.0, CL.count:format(L.threads, impendingLoomCount)) -- Impending Loom
 	self:Bar(426855, 76.1, CL.stage:format(2))  -- Full Bloom
 	if self:Mythic() then
 		self:Bar(430563, 29, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
@@ -153,7 +154,7 @@ function mod:Continuum(args)
 
 	self:Bar(429983, 28.4, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 36.6, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
-	self:Bar(429615, 41.5, CL.count:format(CL.beams, impendingLoomCount)) -- Impending Loom
+	self:Bar(429615, 41.5, CL.count:format(L.threads, impendingLoomCount)) -- Impending Loom
 	self:Bar(426855, 87.5, CL.stage:format(2)) -- Full Bloom
 	if self:Mythic() then
 		self:Bar(430563, 46, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
@@ -162,12 +163,12 @@ function mod:Continuum(args)
 end
 
 function mod:ImpendingLoom(args)
-	self:StopBar(CL.count:format(CL.beams, impendingLoomCount))
-	self:Message(args.spellId, "cyan", CL.soon:format(CL.count:format(CL.beams, impendingLoomCount)))
+	self:StopBar(CL.count:format(L.threads, impendingLoomCount))
+	self:Message(args.spellId, "cyan", CL.soon:format(CL.count:format(L.threads, impendingLoomCount)))
 	self:PlaySound(args.spellId, "info")
 	impendingLoomCount = impendingLoomCount + 1
 	if impendingLoomCount < 3 then
-		self:Bar(args.spellId, 24, CL.count:format(CL.beams, impendingLoomCount))
+		self:Bar(args.spellId, 24, CL.count:format(L.threads, impendingLoomCount))
 	end
 end
 
@@ -216,7 +217,7 @@ end
 -- Stage Two: Creation Complete
 function mod:FullBloom(args)
 	self:StopBar(CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
-	self:StopBar(CL.count:format(CL.beams, impendingLoomCount)) -- Impending Loom
+	self:StopBar(CL.count:format(L.threads, impendingLoomCount)) -- Impending Loom
 	self:StopBar(CL.stage:format(2)) -- Full Bloom
 
 	self:Message(args.spellId, "green", CL.casting:format(args.spellName))
