@@ -99,7 +99,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "UmbralDestruction", 416048)
 	self:Log("SPELL_CAST_START", "SmashingViscera", 418531)
-	self:Log("SPELL_CAST_SUCCESS", "HeartStopper", 415624)
+	-- self:Log("SPELL_CAST_SUCCESS", "HeartStopper", 415624) -- XXX Only in Mythic atm
 	self:Log("SPELL_AURA_APPLIED", "HeartStopperApplied", 415623)
 	self:Log("SPELL_AURA_APPLIED", "VitalRuptureApplied", 426056)
 end
@@ -360,19 +360,31 @@ function mod:SmashingViscera(args)
 	end
 end
 
-function mod:HeartStopper(args)
-	self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount))
-	self:Message(415623, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
-	heartStopperCount = heartStopperCount + 1
-	if heartStopperCount < 3 then -- 2 only
-		self:Bar(415623, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
-	end
-end
+-- function mod:HeartStopper(args)
+-- 	self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount))
+-- 	self:Message(415623, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
+-- 	heartStopperCount = heartStopperCount + 1
+-- 	if heartStopperCount < 3 then -- 2 only
+-- 		self:Bar(415623, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
+-- 	end
+-- end
 
-function mod:HeartStopperApplied(args)
+do
+	local prev = 0
+	function mod:HeartStopperApplied(args)
+		if args.time - prev > 10 then -- reset
+			prev = args.time
+			self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount))
+			self:Message(args.spellId, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
+			heartStopperCount = heartStopperCount + 1
+			if heartStopperCount < 3 then -- 2 only
+				self:Bar(args.spellId, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
+			end
+		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.heart_stopper_single)
 			self:PlaySound(args.spellId, "warning")
+		end
 	end
 end
 
