@@ -21,7 +21,6 @@ local tantrumCount = 1
 local L = mod:GetLocale()
 if L then
 	L.slumberous_roar = "3x %s - Jump to remove it"
-	L.boss_yell_on_win = "Thank you...exhausted...can finally...sleep."
 end
 
 --------------------------------------------------------------------------------
@@ -44,7 +43,7 @@ end
 function mod:OnBossEnable()
 	self:ScheduleTimer("CheckForEngage", 1)
 	--self:RegisterEvent("BOSS_KILL") - no event
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Log("SPELL_CAST_SUCCESS", "EncounterEvent", 181089) -- Added for win detection
 
 	self:Log("SPELL_CAST_SUCCESS", "GroggyBash", 420895)
 	self:Log("SPELL_CAST_START", "PulverizingOutburst", 420925)
@@ -69,8 +68,8 @@ end
 --	end
 --end
 
-function mod:CHAT_MSG_MONSTER_YELL(_, msg)
-	if msg == L.boss_yell_on_win then
+function mod:EncounterEvent(args) -- Added for win detection
+	if self:MobId(args.sourceGUID) == 209574 then
 		self:Win()
 	end
 end
