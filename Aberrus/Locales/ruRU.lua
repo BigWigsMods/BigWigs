@@ -8,6 +8,7 @@ if L then
 	L.molten_eruption = "Соки"
 	L.swirling_flame = "Ветерки"
 	L.shadowflame_burst = "Фронтал"
+	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Мифик дебафф"
 end

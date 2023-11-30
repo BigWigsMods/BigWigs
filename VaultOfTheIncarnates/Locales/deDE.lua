@@ -122,6 +122,8 @@ if L then
 	L.broodkeepers_fury = "Wut (Bruthüterin)"
 	L.frozen_shroud = "Bewegungsunfähig / Absorbtion"
 	-- L.detonating_stoneslam = "Tank Soak"
+
+	-- L.add_count = "%s (%d-%d)"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "deDE")
@@ -140,6 +142,7 @@ if L then
 	L.lightning_devastation = "Atem"
 	L.shattering_shroud = "Heilung absorbiert"
 	-- Stage Two: Surging Power
+	-- L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "Absorbtionsschild"
 	L.stormcharged = "Positiv oder Negativ"
 	L.positive = "Positiv"

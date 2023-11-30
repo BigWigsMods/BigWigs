@@ -122,6 +122,8 @@ if L then
 	L.broodkeepers_fury = "愤怒"
 	L.frozen_shroud = "定身吸收盾"
 	L.detonating_stoneslam = "坦克分摊"
+
+	-- L.add_count = "%s (%d-%d)"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhCN")
@@ -140,6 +142,7 @@ if L then
 	L.lightning_devastation = "吐息"
 	L.shattering_shroud = "治疗吸收盾"
 	-- Stage Two: Surging Power
+	-- L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "吸收护盾"
 	L.stormcharged = "正或负电荷"
 	L.positive = "正"

@@ -8,6 +8,7 @@ if L then
 	L.molten_eruption = "바닥 밟기"
 	L.swirling_flame = "회오리"
 	L.shadowflame_burst = "탱 머리 조심"
+	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "신화 디버프"
 end
@@ -20,6 +21,7 @@ if L then
 	L.custom_on_unstable_essence_high = "불안정한 정수 고중첩 알리기"
 	L.custom_on_unstable_essence_high_desc = "불안정한 정수 고중첩일때 일반창으로 중첩 알림."
 	L.volatile_spew = "바닥 피하기"
+	--L.volatile_eruption = "Eruption"
 	L.temporal_anomaly_knocked = "구슬 쳐냄"
 end
 

@@ -8,6 +8,7 @@ if L then
 	L.molten_eruption = "Soaks"
 	L.swirling_flame = "Tornados"
 	L.shadowflame_burst = "Frontaler Kegel"
+	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Mythische Debuffs"
 end

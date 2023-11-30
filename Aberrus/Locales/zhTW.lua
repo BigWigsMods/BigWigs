@@ -8,6 +8,7 @@ if L then
 	L.molten_eruption = "接圈"
 	L.swirling_flame = "旋風"
 	L.shadowflame_burst = "衝擊波"
+	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "暗焰易傷"
 end
@@ -87,7 +88,6 @@ if L then
 	L.claws_debuff = "坦克爆炸"
 	L.emptiness_between_stars = "空無"
 	L.void_slash = "正面斬擊"
-	L.scouring_eternity = "躲藏"
 
 	L.boss_immune = "首領免疫"
 	L.ebon_might = "小怪免疫"

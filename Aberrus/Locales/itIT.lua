@@ -8,6 +8,7 @@ if L then
 	L.molten_eruption = "Assorbi"
 	L.swirling_flame = "Tornado"
 	L.shadowflame_burst = "Cono Frontale"
+	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Penalità Mitico"
 end

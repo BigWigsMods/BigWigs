@@ -112,16 +112,18 @@ end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "koKR")
 if L then
-	 L.eggs_remaining = "알 %d 개 남음!"
-	 L.broodkeepers_bond = "알 남아있음"
-	 L.greatstaff_of_the_broodkeeper = "대지팡이"
-	 L.greatstaffs_wrath = "레이저"
-	 L.clutchwatchers_rage = "분노"
-	 L.rapid_incubation = "급속 배양"
-	 L.icy_shroud = "치유량 흡수 껍질"
-	 L.broodkeepers_fury = "분노"
-	 L.frozen_shroud = "속박"
-	  L.detonating_stoneslam = "탱커 나눠맞기"
+	L.eggs_remaining = "알 %d 개 남음!"
+	L.broodkeepers_bond = "알 남아있음"
+	L.greatstaff_of_the_broodkeeper = "대지팡이"
+	L.greatstaffs_wrath = "레이저"
+	L.clutchwatchers_rage = "분노"
+	L.rapid_incubation = "급속 배양"
+	L.icy_shroud = "치유량 흡수 껍질"
+	L.broodkeepers_fury = "분노"
+	L.frozen_shroud = "속박"
+	L.detonating_stoneslam = "탱커 나눠맞기"
+
+	-- L.add_count = "%s (%d-%d)"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "koKR")
