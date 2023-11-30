@@ -188,14 +188,17 @@ local args_keys = {
 
 -- Set an exit code if we show an error.
 local exit_code = 0
-local error, warn
-if package.config:sub(1,1) == "/" then -- linux path seperator
+local error, warn, info
+if os.execute("tput colors 2>/dev/null") then
 	function error(msg)
 		print("\27[31m" .. msg .. "\27[0m") -- red
 		exit_code = 1
 	end
 	function warn(msg)
-		print("\27[33m" .. msg .. "\27[0m") -- yellow
+		print("\27[33m" .. msg .. "\27[0m") -- orange
+	end
+	function info(msg)
+		print("\27[36m" .. msg .. "\27[0m") -- cyan
 	end
 else
 	function error(msg)
@@ -203,6 +206,7 @@ else
 		exit_code = 1
 	end
 	warn = print
+	info = print
 end
 local function print(...)
 	if opt.quiet then return end
@@ -332,10 +336,10 @@ local function dumpValues(path, name, options_table)
 			else
 				f:write(data)
 				f:close()
-				warn("    Updated " .. file)
+				info("    Updated " .. file)
 			end
 		else
-			warn("    Updated " .. file .. " (skipped)")
+			info("    Updated " .. file .. " (skipped)")
 		end
 	end
 end
