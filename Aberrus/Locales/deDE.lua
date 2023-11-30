@@ -8,7 +8,7 @@ if L then
 	L.molten_eruption = "Soaks"
 	L.swirling_flame = "Tornados"
 	L.shadowflame_burst = "Frontaler Kegel"
-	--L.plus = "%s + %s"
+	L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Mythische Debuffs"
 end
@@ -84,10 +84,10 @@ end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "deDE")
 if L then
-	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
+	L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 	L.claws_debuff = "Tank Explosionen"
 	L.emptiness_between_stars = "Leere"
-	--L.void_slash = "Tank Frontal"
+	L.void_slash = "Tank Frontal"
 
 	L.boss_immune = "Boss immun"
 	L.ebon_might = "Adds immun"
