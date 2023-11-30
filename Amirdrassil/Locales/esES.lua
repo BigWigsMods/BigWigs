@@ -32,6 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "esES")
 if L then
+	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+
 	L.ultimate_boss = "Definitiva (%s)"
 	--L.special_bar = "Ult [%s] (%d)"
 	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
@@ -39,6 +41,7 @@ if L then
 
 	L.barreling_charge = "Carga"
 	L.poisonous_javelin = "Javalina"
+	--L.song_of_the_dragon = "Song"
 	L.polymorph_bomb = "Patos"
 	L.polymorph_bomb_single = "Pato"
 end
@@ -61,8 +64,12 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "esES")
 if L then
+	--L.mythic_add_death = "%s Killed"
+
 	L.continuum = "Nuevas Lineas"
 	L.impending_loom = "Esquivar"
+	--L.surging_growth = "New Soaks"
+	--L.ephemeral_flora = "Red Soak"
 	--L.viridian_rain = "Damage + Bombs"
 	L.lumbering_slam = "Cono frontal"
 end
@@ -71,6 +78,7 @@ L = BigWigs:NewBossLocale("Smolderon", "esES")
 if L then
 	L.brand_of_damnation = "Sokeo de Tanque"
 	L.lava_geysers = "Géiseres"
+	L.flame_waves = "Tornados"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "esES")

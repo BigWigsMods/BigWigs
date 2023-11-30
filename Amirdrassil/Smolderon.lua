@@ -30,7 +30,7 @@ local L = mod:GetLocale()
 if L then
 	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysers"
-	L.flame_waves = "Tornados"
+	L.flame_waves = "Tornadoes"
 end
 
 --------------------------------------------------------------------------------

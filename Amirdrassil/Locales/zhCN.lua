@@ -32,6 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
+	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+
 	L.ultimate_boss = "满能量 (%s)"
 	L.special_bar = "满能 [%s] (%d)"
 	L.special_mythic_bar = "满能 [%s/%s] (%d)"
@@ -62,6 +64,8 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
 if L then
+	--L.mythic_add_death = "%s Killed"
+
 	L.continuum = "新矩阵"
 	L.impending_loom = "躲避丝线"
 	L.surging_growth = "新踩圈"

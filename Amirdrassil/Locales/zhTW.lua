@@ -32,6 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "zhTW")
 if L then
+	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+
 	L.ultimate_boss = "滿能量 (%s)"
 	--L.special_bar = "Ult [%s] (%d)"
 	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
@@ -62,8 +64,12 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
 if L then
+	--L.mythic_add_death = "%s Killed"
+
 	L.continuum = "新的矩陣"
 	L.impending_loom = "躲避織物"
+	--L.surging_growth = "New Soaks"
+	--L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "翠綠之雨" -- 原名比較短
 	L.lumbering_slam = "衝擊波"
 end
@@ -72,6 +78,7 @@ L = BigWigs:NewBossLocale("Smolderon", "zhTW")
 if L then
 	L.brand_of_damnation = "坦克分攤"
 	L.lava_geysers = "岩漿"
+	L.flame_waves = "旋風"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhTW")

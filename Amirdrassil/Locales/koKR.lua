@@ -32,6 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "koKR")
 if L then
+	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+
 	--L.ultimate_boss = "Ultimate (%s)"
 	--L.special_bar = "Ult [%s] (%d)"
 	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
@@ -39,6 +41,7 @@ if L then
 
 	--L.barreling_charge = "Charge"
 	--L.poisonous_javelin = "Javelin"
+	--L.song_of_the_dragon = "Song"
 	--L.polymorph_bomb = "Ducks"
 	--L.polymorph_bomb_single = "Duck"
 end
@@ -61,8 +64,12 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "koKR")
 if L then
+	--L.mythic_add_death = "%s Killed"
+
 	--L.continuum = "New Lines"
 	--L.impending_loom = "Dodges"
+	--L.surging_growth = "New Soaks"
+	--L.ephemeral_flora = "Red Soak"
 	--L.viridian_rain = "Damage + Bombs"
 	--L.lumbering_slam = "Frontal Cone"
 end
@@ -71,6 +78,7 @@ L = BigWigs:NewBossLocale("Smolderon", "koKR")
 if L then
 	--L.brand_of_damnation = "Tank Soak"
 	--L.lava_geysers = "Geysers"
+	--L.flame_waves = "Tornadoes"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "koKR")

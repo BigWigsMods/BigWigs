@@ -32,6 +32,8 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "ruRU")
 if L then
+	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+
 	L.ultimate_boss = "Ульта (%s)"
 	L.special_bar = "Ульта [%s] (%d)"
 	L.special_mythic_bar = "Ульта [%s/%s] (%d)"
@@ -39,6 +41,7 @@ if L then
 
 	L.barreling_charge = "Чардж"
 	L.poisonous_javelin = "Отравленное копьё"
+	--L.song_of_the_dragon = "Song"
 	L.polymorph_bomb = "Утки"
 	L.polymorph_bomb_single = "Утка"
 end
@@ -61,8 +64,12 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "ruRU")
 if L then
+	--L.mythic_add_death = "%s Killed"
+
 	L.continuum = "Новые Узоры"
 	L.impending_loom = "Доджи"
+	--L.surging_growth = "New Soaks"
+	--L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "Урон + Бомбы"
 	L.lumbering_slam = "Фронтал"
 end
@@ -71,6 +78,7 @@ L = BigWigs:NewBossLocale("Smolderon", "ruRU")
 if L then
 	L.brand_of_damnation = "Танк Соак"
 	L.lava_geysers = "Гейзеры"
+	L.flame_waves = "Торнадо"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "ruRU")
