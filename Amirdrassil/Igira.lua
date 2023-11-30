@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Igira the Cruel", 2549, 2554)
 if not mod then return end
-mod:RegisterEnableMob(200926)
+mod:RegisterEnableMob(200926) -- Igira the Cruel
 mod:SetEncounterID(2709)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -16,7 +16,6 @@ mod:SetStage(1)
 local blisteringSpearCount = 1
 local twistingBladeCount = 1
 local markedForTormentCount = 1
-
 local stance = nil
 local umbralDestructionCount = 1
 local smashingVisceraCount = 1
@@ -59,6 +58,7 @@ function mod:GetOptions()
 
 		{422776, "CASTBAR"}, -- Marked for Torment
 		414367, -- Gathering Torment
+		419462, -- Flesh Mortification
 		419048, -- Ruinous End
 
 		416048, -- Umbral Destruction
@@ -93,11 +93,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MarkedForTormentApplied", 422961)
 	self:Log("SPELL_AURA_REMOVED", "MarkedForTormentRemoved", 422961)
 	self:Log("SPELL_AURA_APPLIED", "GatheringTormentApplied", 414367)
+	self:Log("SPELL_AURA_APPLIED", "FleshMortification", 419462)
 	self:Log("SPELL_CAST_START", "RuinousEnd", 419048)
 	self:Log("SPELL_CAST_SUCCESS", "BerserkCast", 301495)
 
 	self:Log("SPELL_CAST_START", "UmbralDestruction", 416048)
 	self:Log("SPELL_CAST_START", "SmashingViscera", 418531)
+	self:Log("SPELL_CAST_SUCCESS", "HeartStopper", 415624)
 	self:Log("SPELL_AURA_APPLIED", "HeartStopperApplied", 415623)
 	self:Log("SPELL_AURA_APPLIED", "VitalRuptureApplied", 426056)
 end
@@ -140,13 +142,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
 		self:PlaySound("stages", "info")
 		self:Bar(424456, self:Easy() and 24 or 19, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
-
 	elseif spellId == 415090 then -- Axe Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(L.umbral_destruction), 416048) -- Umbral Destruction
 		self:PlaySound("stages", "info")
 		self:Bar(416048, self:Easy() and 24 or 19, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
-
 	elseif spellId == 415094 then -- Knife Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
@@ -161,7 +161,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound("stages", "info")
 		self:Bar(415623, 21.5, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
 		self:Bar(424456, 23.9, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
-
 	elseif spellId == 425282 then -- Axe Knife Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(L.umbral_destruction), 416048) -- Umbral Destruction
@@ -169,7 +168,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound("stages", "info")
 		self:Bar(415623, 24.3, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
 		self:Bar(416048, 26.7, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
-
 	elseif spellId == 425283 then -- Axe Sword Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
@@ -230,7 +228,7 @@ do
 			self:Say(args.spellId, L.blistering_spear_single)
 		end
 		self:CustomIcon(blisteringSpearMarker, args.destName, count)
-		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.blistering_spear, blisteringSpearCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, self:Mythic() and 6 or 4, CL.count:format(L.blistering_spear, blisteringSpearCount-1))
 	end
 
 	function mod:BlisteringSpearRemoved(args)
@@ -326,6 +324,13 @@ function mod:GatheringTormentApplied(args)
 	end
 end
 
+function mod:FleshMortification(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
 function mod:RuinousEnd(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
@@ -355,23 +360,19 @@ function mod:SmashingViscera(args)
 	end
 end
 
-do
-	local prev = 0
-	function mod:HeartStopperApplied(args)
-		local msg = CL.count:format(L.heart_stopper, heartStopperCount)
-		if args.time - prev > 10 then -- reset
-			prev = args.time
-			self:StopBar(msg)
-			self:Message(args.spellId, "orange", msg)
-			heartStopperCount = heartStopperCount + 1
-			if heartStopperCount < 3 then -- 2 only
-				self:Bar(args.spellId, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
-			end
-		end
+function mod:HeartStopper(args)
+	self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount))
+	self:Message(415623, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
+	heartStopperCount = heartStopperCount + 1
+	if heartStopperCount < 3 then -- 2 only
+		self:Bar(415623, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
+	end
+end
+
+function mod:HeartStopperApplied(args)
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.heart_stopper_single)
 			self:PlaySound(args.spellId, "warning")
-		end
 	end
 end
 
