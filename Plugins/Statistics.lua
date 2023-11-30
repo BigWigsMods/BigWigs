@@ -32,7 +32,7 @@ local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
 
 --[[
-10.1.5
+10.2.0
 1. Normal
 2. Heroic
 3. 10 Player
@@ -76,8 +76,9 @@ local GetTime = GetTime
 171. Path of Ascension: Humility
 172. World Boss
 192. Challenge Level 1
+205. Dungeon Follower
 
-3.4.2
+3.4.3
 1. Normal
 2. Heroic
 3. 10 Player
@@ -93,7 +94,7 @@ local GetTime = GetTime
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
 
-1.14.4
+1.15.0
 Doesn't return results
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
