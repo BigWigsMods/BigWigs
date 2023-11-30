@@ -19,6 +19,9 @@ end
 
 L = BigWigs:NewBossLocale("Volcoross", "deDE")
 if L then
+	--L.custom_off_all_scorchtail_crash = "Show All Casts"
+	--L.custom_off_all_scorchtail_crash_desc = "Show timers and messages for all Scorchtail Crash casts instead of just for your side."
+
 	L.flood_of_the_firelands = "Soaks"
 	--L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
 	--L.flood_of_the_firelands_single = "Soak"
