@@ -17,6 +17,7 @@ local floodOfTheFirelandsCount = 1
 local volcanicDisgorgeCount = 1
 local scorchtailCrashCount = 1
 local cataclysmJawsCount = 1
+local explosionCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
