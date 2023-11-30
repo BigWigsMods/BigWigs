@@ -185,7 +185,11 @@ do
 			self:PersonalMessage(args.spellId, nil, L.coiling_flames_single)
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.coiling_flames_single)
-			self:SayCountdown(args.spellId, 12, self:Mythic() and L.flood_of_the_firelands_single_wait) -- Wait countdown for Mythic, soak after
+			if self:Mythic() then
+				self:SayCountdown(args.spellId, 12, L.flood_of_the_firelands_single_wait) -- Wait countdown for Mythic, soak after
+			elseif not self:LFR() then
+				self:SayCountdown(args.spellId, 10)
+			end
 		end
 		if self:Mythic() and args.time - prev > 2 then
 			prev = args.time
