@@ -67,7 +67,6 @@ if L then
 	--L.mythic_add_death = "%s Killed"
 
 	L.continuum = "新的矩陣"
-	L.impending_loom = "躲避織物"
 	--L.surging_growth = "New Soaks"
 	--L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "翠綠之雨" -- 原名比較短

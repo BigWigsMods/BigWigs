@@ -67,7 +67,6 @@ if L then
 	--L.mythic_add_death = "%s Killed"
 
 	L.continuum = "Новые Узоры"
-	L.impending_loom = "Доджи"
 	--L.surging_growth = "New Soaks"
 	--L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "Урон + Бомбы"

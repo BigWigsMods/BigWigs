@@ -67,7 +67,6 @@ if L then
 	--L.mythic_add_death = "%s Killed"
 
 	L.continuum = "新矩阵"
-	L.impending_loom = "躲避丝线"
 	L.surging_growth = "新踩圈"
 	L.ephemeral_flora = "踩红圈"
 	L.viridian_rain = "翠绿之雨"

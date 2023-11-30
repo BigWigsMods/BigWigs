@@ -67,7 +67,6 @@ if L then
 	L.mythic_add_death = "%s getötet"
 
 	L.continuum = "Neue Fäden"
-	L.impending_loom = "Ausweichen"
 	L.surging_growth = "Neue Soaks"
 	L.ephemeral_flora = "Roter Soak"
 	L.viridian_rain = "Schaden + Bomben"
