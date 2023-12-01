@@ -19,12 +19,12 @@ end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhCN")
 if L then
-	--L.custom_off_all_scorchtail_crash = "Show All Casts"
-	--L.custom_off_all_scorchtail_crash_desc = "Show timers and messages for all Scorchtail Crash casts instead of just for your side."
+	L.custom_off_all_scorchtail_crash = "显示全部施法"
+	L.custom_off_all_scorchtail_crash_desc = "显示全部焦尾碾压的施法计时和信息，而不是仅显示你的一面。"
 
 	L.flood_of_the_firelands = "分摊"
-	--L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	--L.flood_of_the_firelands_single = "Soak"
+	L.flood_of_the_firelands_single_wait = "等待" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
+	L.flood_of_the_firelands_single = "分摊"
 	L.scorchtail_crash = "尾击"
 	L.serpents_fury = "怒焰"
 	L.coiling_flames_single = "烈焰"
@@ -32,7 +32,7 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
-	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+	L.agonizing_claws_debuff = "{421022} (减益)"
 
 	L.ultimate_boss = "满能量 (%s)"
 	L.special_bar = "满能 [%s] (%d)"
@@ -71,7 +71,7 @@ if L then
 	L.ephemeral_flora = "踩红圈"
 	L.viridian_rain = "翠绿之雨"
 	L.lumbering_slam = "震慑波"
-	--L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
+	L.threads = "丝线" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 
 L = BigWigs:NewBossLocale("Smolderon", "zhCN")
