@@ -332,7 +332,7 @@ end
 
 function mod:MassEntanglementTargetApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetBar(args.spellId, 4, args.destName, L.mass_entanglement)
+		self:TargetBar(args.spellId, self:Mythic() and 4 or 6, args.destName, L.mass_entanglement)
 	end
 end
 
@@ -341,14 +341,6 @@ function mod:MassEntanglementTargetRemoved(args)
 		self:StopBar(L.mass_entanglement, args.destName)
 	end
 end
-
--- function mod:MassEntanglementApplied(args)
--- 	if self:Me(args.destGUID) then
--- 		self:PersonalMessage(args.spellId, nil, L.mass_entanglement)
--- 		self:PlaySound(args.spellId, "warning")
--- 		self:TargetBar(args.spellId, 6, args.destName)
--- 	end
--- end
 
 function mod:MassEntanglementRemoved(args)
 	if self:Me(args.destGUID) then
