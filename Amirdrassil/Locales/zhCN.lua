@@ -64,7 +64,7 @@ end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
 if L then
-	--L.mythic_add_death = "%s Killed"
+	--L.mythic_add_death = "%s已击杀"
 
 	L.continuum = "新矩阵"
 	L.surging_growth = "新踩圈"
