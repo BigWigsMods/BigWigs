@@ -22,7 +22,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s in DEINER Nähe"
 L.on_group = "%s auf GRUPPE"
---L.boss = "BOSS"
+L.boss = "BOSS"
 
 L.phase = "Phase %d"
 L.stage = "Phase %d"
@@ -135,7 +135,7 @@ L.breath = "Atem" -- When a boss breathes fire/frost/etc on to a player or the r
 L.roar = "Brüllen" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
 L.leap = "Sprung" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.full_energy = "Volle Energie" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.weakened = "Geschwächt" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "Pfütze" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Pfützen" -- Plural of L.pool
 L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
