@@ -19,8 +19,8 @@ end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhCN")
 if L then
-	L.custom_off_all_scorchtail_crash = "显示全部施法"
-	L.custom_off_all_scorchtail_crash_desc = "显示全部焦尾碾压的施法计时和信息，而不是仅显示你的一面。"
+	L.custom_off_all_scorchtail_crash = "团长模式"
+	L.custom_off_all_scorchtail_crash_desc = "显示全部焦尾碾压的计时器和信息，而不是仅显示你的一面。"
 
 	L.flood_of_the_firelands = "分摊"
 	L.flood_of_the_firelands_single_wait = "等待" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
