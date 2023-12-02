@@ -941,12 +941,10 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	self:PLAYER_ENTERING_WORLD()
 	self:ZONE_CHANGED()
 
-	if C_PartyInfo then
-		C_PartyInfo.DoCountdown = function(num)
-			loadAndEnableCore()
-			if SlashCmdList.BIGWIGSPULL then
-				SlashCmdList.BIGWIGSPULL(num)
-			end
+	C_PartyInfo.DoCountdown = function(num)
+		loadAndEnableCore()
+		if SlashCmdList.BIGWIGSPULL then
+			SlashCmdList.BIGWIGSPULL(num)
 		end
 	end
 end
