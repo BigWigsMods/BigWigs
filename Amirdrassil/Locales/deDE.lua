@@ -109,19 +109,19 @@ if L then
 	L.darkflame_cleave = "Mythische Soaks"
 
 	L.incarnate_intermission = "Zurückstoßen"
-	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
+	L.corrupt_removed = "Verderben vorbei (%.1fs verbleiben)" -- eg: Corrupt Over (5.0s remaining)
 
 	L.incarnate = "Abheben"
 	L.spirits_of_the_kaldorei = "Geister"
 	L.molten_gauntlet = "Fäuste"
-	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
+	L.mythic_debuffs = "Käfige" -- Shadow Cage & Molten Eruption
 
 	L.greater_firestorm_shortened_bar = "Feuersturm [G]" -- G for Greater
 	L.greater_firestorm_message_full = "Feuersturm [Groß]"
 	L.eternal_firestorm_shortened_bar = "Feuersturm [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Feuersturm [Ewig]"
 
-	-- L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
-	-- L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
-	-- L.eternal_firestorm_swirl_bartext = "Swirls"
+	L.eternal_firestorm_swirl = "Ewiger Feuersturm Wirbel"
+	L.eternal_firestorm_swirl_desc = "Timer für Ewiger Feuersturm Wirbel."
+	L.eternal_firestorm_swirl_bartext = "Wirbel"
 end
