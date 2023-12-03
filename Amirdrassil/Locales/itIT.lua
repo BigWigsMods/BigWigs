@@ -98,7 +98,7 @@ end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "itIT")
 if L then
-	L.spirit_trigger = "Spirito dei Kaldorei"
+	L.spirits_trigger = "Spirito dei Kaldorei"
 
 	--L.fyralaths_bite = "Frontal"
 	--L.fyralaths_bite_mythic = "Frontals"
