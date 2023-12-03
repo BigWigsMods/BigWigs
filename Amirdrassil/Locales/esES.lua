@@ -105,12 +105,21 @@ if L then
 	--L.fyralaths_mark = "Mark"
 	--L.darkflame_shades = "Shades"
 	--L.darkflame_cleave = "Mythic Soaks"
+
 	--L.incarnate_intermission = "Knock Up"
+	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
+
 	--L.incarnate = "Fly Away"
 	--L.spirits_of_the_kaldorei = "Spirits"
 	--L.molten_gauntlet = "Gauntlet"
+	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
+
 	--L.greater_firestorm_shortened_bar = "Firestorm [G]" -- G for Greater
 	--L.greater_firestorm_message_full = "Firestorm [Greater]"
 	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
 	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
+
+	-- L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
+	-- L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
+	-- L.eternal_firestorm_swirl_bartext = "Swirls"
 end

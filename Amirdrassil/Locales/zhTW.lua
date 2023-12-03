@@ -105,12 +105,21 @@ if L then
 	L.fyralaths_mark = "印記"
 	L.darkflame_shades = "影子"
 	L.darkflame_cleave = "分攤"
+
 	L.incarnate_intermission = "擊飛"
+	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
+
 	L.incarnate = "升空"
 	L.spirits_of_the_kaldorei = "靈魂"
 	L.molten_gauntlet = "重拳" -- 熔火護手是什麼鬼翻譯......
+	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
+
 	L.greater_firestorm_shortened_bar = "強效火颶" -- 中文技能名短，先按原文來
 	L.greater_firestorm_message_full = "強效火颶"
 	L.eternal_firestorm_shortened_bar = "永恆火颶"
 	L.eternal_firestorm_message_full = "永恆火颶"
+
+	-- L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
+	-- L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
+	-- L.eternal_firestorm_swirl_bartext = "Swirls"
 end

@@ -105,13 +105,21 @@ if L then
 	L.fyralaths_mark = "Метка"
 	L.darkflame_shades = "Тени"
 	L.darkflame_cleave = "Соаки"
+
 	L.incarnate_intermission = "Подкидывание"
+	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
+
 	L.incarnate = "Улетает"
 	L.spirits_of_the_kaldorei = "Духи"
 	L.molten_gauntlet = "Танкбастер"
+	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 
 	L.greater_firestorm_shortened_bar = "Метеоры" -- Same letter in ru
 	L.greater_firestorm_message_full = "Метеоры [Великая]"
 	L.eternal_firestorm_shortened_bar = "Метеоры" --  Same letter in ru
 	L.eternal_firestorm_message_full = "Метеоры [Вечная]"
+
+	-- L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
+	-- L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
+	-- L.eternal_firestorm_swirl_bartext = "Swirls"
 end
