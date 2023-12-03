@@ -202,6 +202,7 @@ do
 		[-947] = public.isClassic and c or bfa, -- Azeroth (Fake Menu)
 
 		--[[ BigWigs: Classic ]]--
+		[48] = c, -- Blackfathom Deeps [Classic Season of Discovery Only]
 		[309] = c, -- Zul'Gurub [Classic Only]
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
