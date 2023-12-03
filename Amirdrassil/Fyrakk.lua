@@ -374,7 +374,7 @@ function mod:Blaze()
 		if self:Mythic() then
 			cd = blazeCount % 2 == 0 and 13.0 or 33.0
 		else
-			cd = 41
+			cd = blazeCount % 2 == 0 and 13.0 or 28.0
 		end
 	end
 	self:Bar(414186, cd, CL.count:format(spellName, blazeCount))
