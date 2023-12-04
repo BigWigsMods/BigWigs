@@ -5,6 +5,7 @@ if not L then return end
 L.you = "%s на ТЕБЕ"
 L.you_icon = "%s на |T13700%d:0|tТЕБЕ"
 L.underyou = "%s под ТОБОЙ"
+--L.aboveyou = "%s above YOU"
 L.other = "%s: %s"
 L.onboss = "%s на БОССЕ"
 L.buff_boss = "Бафф на БОССЕ: %s"

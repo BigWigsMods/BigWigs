@@ -5,6 +5,7 @@ if not L then return end
 L.you = "%s auf DIR"
 L.you_icon = "%s auf |T13700%d:0|tDIR"
 L.underyou = "%s unter DIR"
+--L.aboveyou = "%s above YOU"
 L.other = "%s: %s"
 L.onboss = "%s auf dem BOSS"
 L.buff_boss = "Buff auf BOSS: %s"

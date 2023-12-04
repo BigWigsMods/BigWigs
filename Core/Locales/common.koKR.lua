@@ -5,6 +5,7 @@ if not L then return end
 L.you = "당신에게 %s"
 L.you_icon = "%s on |T13700%d:0|tYOU"
 L.underyou = "당신 밑에 %s"
+--L.aboveyou = "%s above YOU"
 L.other = "%s: %s"
 L.onboss = "우두머리에게 %s"
 L.buff_boss = "넴드에게 버프: %s"
