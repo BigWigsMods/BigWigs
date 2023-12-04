@@ -31,8 +31,8 @@ local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClas
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
-local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
-local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
+local UnitName, UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax, BigWigsLoader.Ambiguate
+local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = BigWigsLoader.RegisterAddonMessagePrefix, BigWigsLoader.UnitDetailedThreatSituation
 local isClassic, isRetail = BigWigsLoader.isClassic, BigWigsLoader.isRetail
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -1462,6 +1462,24 @@ end
 function boss:Solo()
 	return solo
 end
+
+--- Register a wrapper around the CHAT_MSG_ADDON event that listens to Transcriptor comms sent by the core on every RAID_BOSS_WHISPER.
+-- @param func callback function, passed (msg, player)
+function boss:RegisterWhisperEmoteComms(func)
+	RegisterAddonMessagePrefix("Transcriptor")
+	self:RegisterEvent("CHAT_MSG_ADDON", function(_, prefix, msg, channel, sender)
+		if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
+			return
+		elseif prefix == "Transcriptor" then
+			self[func](self, msg, Ambiguate(sender, "none"))
+		end
+	end)
+end
+
+-------------------------------------------------------------------------------
+-- Gossip API
+-- @section gossip
+--
 
 do
 	local GetOptions = C_GossipInfo.GetOptions
