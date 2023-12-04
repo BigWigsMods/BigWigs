@@ -148,4 +148,4 @@ L.orb = "宝珠" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "宝珠" -- Plural for L.orb
 L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "诅咒" -- Plural of L.curse
---L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.frontal_cone = "正面技能" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
