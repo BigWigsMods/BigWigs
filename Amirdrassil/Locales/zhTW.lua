@@ -1,7 +1,6 @@
 local L = BigWigs:NewBossLocale("Gnarlroot", "zhTW")
 if not L then return end
 if L then
-	L.shadowflame_cleave = "衝擊波"
 	L.tortured_scream = "尖嘯"
 end
 
@@ -58,7 +57,6 @@ if L then
 	L.furious_charge = "衝鋒"
 	--L.blazing_thorns = "Dodges"
 	L.falling_embers = "接圈"
-	L.smoldering_backdraft = "衝擊波"
 	L.fire_whirl = "火旋風"
 end
 
@@ -70,7 +68,6 @@ if L then
 	--L.surging_growth = "New Soaks"
 	--L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "翠綠之雨" -- 原名比較短
-	L.lumbering_slam = "衝擊波"
 	--L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 

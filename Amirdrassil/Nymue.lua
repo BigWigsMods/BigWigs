@@ -34,7 +34,6 @@ if L then
 	L.surging_growth = "New Soaks"
 	L.ephemeral_flora = "Red Soak"
 	L.viridian_rain = "Damage + Bombs"
-	L.lumbering_slam = "Frontal Cone"
 	L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 
@@ -76,7 +75,7 @@ function mod:GetOptions()
 		[430563] = L.ephemeral_flora, -- Ephmeral Flora (Red Soak)
 		[427722] = CL.bombs, -- Weaver's Burden (Bombs)
 		[426855] = CL.stage:format(2), -- Full Bloom (Stage 2)
-		[429108] = L.lumbering_slam, -- Lumbering Slam (Frontal Cone)
+		[429108] = CL.frontal_cone, -- Lumbering Slam (Frontal Cone)
 	}
 end
 
@@ -171,7 +170,7 @@ function mod:Continuum(args)
 	self:PlaySound(args.spellId, "info")
 	continuumCount = continuumCount + 1
 
-	self:StopBar(429108) -- Lumbering Slam
+	self:StopBar(CL.frontal_cone) -- Lumbering Slam
 	self:StopBar(422721) -- Radial Flourish
 
 	self:SetStage(1)
@@ -247,7 +246,7 @@ function mod:FullBloom(args)
 
 	self:Bar(413443, 6.9) -- Life Ward
 	self:Bar(422721, 12.6) -- Radial Flourish
-	self:Bar(429108, 19) -- Lumbering Slam
+	self:Bar(429108, 19, CL.frontal_cone) -- Lumbering Slam
 	if self:Mythic() then
 		-- self:Bar(-28482, 4.0, nil, "ability_xavius_dreamsimulacrum") -- Manifested Dream
 		self:Bar(428471, 35.2) -- Waking Decimation
@@ -276,9 +275,9 @@ do
 	function mod:LumberingSlam(args)
 		if args.time - prev > 3 then
 			prev = args.time
-			self:Message(args.spellId, "orange")
+			self:Message(args.spellId, "orange", CL.frontal_cone)
 			self:PlaySound(args.spellId, "alert")
-			self:Bar(args.spellId, 19.5) -- 19~20
+			self:Bar(args.spellId, 19.5, CL.frontal_cone) -- 19~20
 		end
 	end
 end

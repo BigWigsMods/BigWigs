@@ -31,7 +31,6 @@ local allowTankWarnings = true
 
 local L = mod:GetLocale()
 if L then
-	L.shadowflame_cleave = "Frontal Cone"
 	L.tortured_scream = "Scream"
 end
 
@@ -69,7 +68,7 @@ function mod:GetOptions()
 		[421898] = CL.adds, -- Flaming Pestilence (Adds)
 		[421972] = CL.bombs, -- Controlled Burn (Bombs)
 		[422026] = L.tortured_scream, -- Tortured Scream (Scream)
-		[422039] = L.shadowflame_cleave, -- Shadowflame Cleave (Cleave)
+		[422039] = CL.frontal_cone, -- Shadowflame Cleave (Frontal Cone)
 		[421840] = CL.weakened, -- Uprooted Agony (Weakened)
 	}
 end
@@ -128,7 +127,7 @@ function mod:OnEngage()
 	self:CDBar(424352, self:Easy() and 9.6 or 9.0, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
 	self:CDBar(421898, self:Easy() and 16.5 or 15.0, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
 	self:CDBar(421972, self:Heroic() and 32 or 36, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:CDBar(422039, self:Easy() and 22.4 or 20.0, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:CDBar(422039, self:Easy() and 22.4 or 20.0, CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:CDBar("stages", 90, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Doom Cultivation
 
 	if self:GetOption(taintedTreantMarker) then
@@ -255,15 +254,15 @@ function mod:TorturedScream(args)
 end
 
 function mod:ShadowflameCleave(args)
-	self:StopBar(CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
+	self:StopBar(CL.count:format(CL.frontal_cone, shadowflameCleaveCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.frontal_cone, shadowflameCleaveCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameCleaveCount = shadowflameCleaveCount + 1
 	if self:Mythic() then
 		local timer = { 21.4, 24.0, 27.0, 0 }
-		self:CDBar(args.spellId, timer[shadowflameCleaveCount], CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
+		self:CDBar(args.spellId, timer[shadowflameCleaveCount], CL.count:format(CL.frontal_cone, shadowflameCleaveCount))
 	elseif shadowflameCleaveCount < 4 then -- 3 per
-		self:CDBar(args.spellId, self:Easy() and 26.7 or 24.0, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount))
+		self:CDBar(args.spellId, self:Easy() and 26.7 or 24.0, CL.count:format(CL.frontal_cone, shadowflameCleaveCount))
 	end
 end
 
@@ -273,7 +272,7 @@ function mod:DoomCultivation(args)
 	self:StopBar(CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
 	self:StopBar(CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
 	self:StopBar(CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
-	self:StopBar(CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:StopBar(CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:StopBar(CL.count:format(CL.stage:format(2), intermissionCount)) -- Stage Two: Agonizing Growth / Doom Cultivation
 
 	self:Message("stages", "yellow", CL.stage:format(2), false)
@@ -336,7 +335,7 @@ function mod:UprootedAgonyRemoved(args)
 	self:Bar(424352, self:Easy() and 14.3 or 10.4, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
 	self:Bar(421898, self:Easy() and 23.5 or 16.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
 	self:Bar(421972, self:Mythic() and 37.4 or self:Easy() and 44.5 or 33, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, self:Easy() and 44 or 21.4, CL.count:format(L.shadowflame_cleave, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:Bar(422039, self:Easy() and 44 or 21.4, CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
 	self:Bar("stages", 92.2, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Doom Cultivation
 end
 

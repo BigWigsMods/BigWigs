@@ -1,7 +1,6 @@
 local L = BigWigs:NewBossLocale("Gnarlroot", "frFR")
 if not L then return end
 if L then
-	--L.shadowflame_cleave = "Frontal Cone"
 	--L.tortured_scream = "Scream"
 end
 
@@ -58,7 +57,6 @@ if L then
 	--L.furious_charge = "Charge"
 	--L.blazing_thorns = "Dodges"
 	--L.falling_embers = "Soaks"
-	--L.smoldering_backdraft = "Frontal"
 	--L.fire_whirl = "Tornadoes"
 end
 
@@ -70,7 +68,6 @@ if L then
 	--L.surging_growth = "New Soaks"
 	--L.ephemeral_flora = "Red Soak"
 	--L.viridian_rain = "Damage + Bombs"
-	--L.lumbering_slam = "Frontal Cone"
 	--L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
 
