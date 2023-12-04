@@ -12,7 +12,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 304
+local BIGWIGS_VERSION = 305
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -87,9 +87,9 @@ end
 
 local tooltipFunctions = {}
 local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
-local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
+local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
-local UnitName, UnitGUID = UnitName, UnitGUID
+local Ambiguate, UnitName, UnitGUID = Ambiguate, UnitName, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 
@@ -99,6 +99,7 @@ public.GetBestMapForUnit = GetBestMapForUnit
 public.GetMapInfo = GetMapInfo
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
+public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 public.SendChatMessage = SendChatMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
@@ -202,6 +203,7 @@ do
 		[-947] = public.isClassic and c or bfa, -- Azeroth (Fake Menu)
 
 		--[[ BigWigs: Classic ]]--
+		[48] = c, -- Blackfathom Deeps [Classic Season of Discovery Only]
 		[309] = c, -- Zul'Gurub [Classic Only]
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
@@ -507,6 +509,13 @@ end
 local function Popup(msg)
 	BasicMessageDialog.Text:SetText(msg)
 	BasicMessageDialog:Show()
+end
+
+C_PartyInfo.DoCountdown = function(num) -- Overwrite Blizz countdown
+	loadAndEnableCore()
+	if SlashCmdList.BIGWIGSPULL then
+		SlashCmdList.BIGWIGSPULL(num)
+	end
 end
 
 -----------------------------------------------------------------------
@@ -825,8 +834,8 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
-	C_ChatInfo.RegisterAddonMessagePrefix(dbmPrefix) -- DBM
+	RegisterAddonMessagePrefix("BigWigs")
+	RegisterAddonMessagePrefix(dbmPrefix) -- DBM
 
 	-- LibDBIcon setup
 	if type(BigWigsIconDB) ~= "table" then
@@ -940,13 +949,6 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	self:GROUP_ROSTER_UPDATE()
 	self:PLAYER_ENTERING_WORLD()
 	self:ZONE_CHANGED()
-
-	C_PartyInfo.DoCountdown = function(num)
-		loadAndEnableCore()
-		if SlashCmdList.BIGWIGSPULL then
-			SlashCmdList.BIGWIGSPULL(num)
-		end
-	end
 end
 
 -- Various temporary printing stuff

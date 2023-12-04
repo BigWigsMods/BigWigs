@@ -117,7 +117,7 @@ function mod:GetOptions()
 		{426368, "CASTBAR", "PRIVATE"}, -- Darkflame Cleave
 
 		-- Intermission: Amirdrassil in Peril
-		419144, -- Corrupt
+		{419144, "CASTBAR"}, -- Corrupt
 		421937, -- Shadowflame Orbs
 		429866, -- Shadowflame Eruption
 
@@ -579,13 +579,13 @@ function mod:CorruptRemoved(args)
 	self:Bar(419123, timers[2][419123][flamefallCount], CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
 	self:Bar(422524, timers[2][422524][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
 	self:Bar(417431, timers[2][417431][fyralathsBiteCount], CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:Bar(422029, timers[2][422029][spiritsCount], CL.count:format(L.spirits_of_the_kaldorei, spiritsCount)) -- Spirits of Kaldorei
+	self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(L.spirits_of_the_kaldorei, spiritsCount)) -- Spirits of Kaldorei
 	self:Bar(412761, timers[2][412761][incarnateCount], CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 	self:Bar(417807, timers[2][417807][aflameCount], CL.count:format(self:SpellName(417807), aflameCount))
 	if not self:Easy() then
-		local cd = timers[2][414187][blazeCount]
-		self:Bar(414187, cd, CL.count:format(self:SpellName(414187), blazeCount))
-		timerHandles[414187] = self:ScheduleTimer("Blaze", cd) -- Trigger Next
+		local cd = timers[2][414186][blazeCount]
+		self:Bar(414186, cd, CL.count:format(self:SpellName(414186), blazeCount))
+		timerHandles[414186] = self:ScheduleTimer("Blaze", cd) -- Trigger Next
 	end
 	self:Bar("stages", 216, CL.stage:format(3), 408330) -- Axel icon
 end

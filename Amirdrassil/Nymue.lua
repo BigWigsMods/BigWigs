@@ -49,10 +49,10 @@ function mod:GetOptions()
 		420846, -- Continuum
 		429615, -- Impending Loom
 		429983, -- Surging Growth
+		{427722, "SAY", "ME_ONLY_EMPHASIZE"}, -- Weaver's Burden
 		-- Mythic
 		430563, -- Ephemeral Flora
 		420907, -- Viridian Rain
-		{427722, "SAY"}, -- Weaver's Burden
 		-- Stage Two: Creation Complete
 		426855, -- Full Bloom (Stage 2)
 		413443, -- Life Ward
@@ -81,9 +81,11 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Weaver's Burden (existed all of testing, sooooo)
-
 	-- Stage One: Rapid Iteration
+	self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
+	self:Log("SPELL_CAST_SUCCESS", "WeaversBurden", 426519)
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Weaver's Burden
+
 	self:Log("SPELL_AURA_APPLIED", "VerdantMatrixApplied", 420554)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VerdantMatrixApplied", 420554)
 	self:Log("SPELL_CAST_START", "Continuum", 420846)
@@ -128,6 +130,31 @@ end
 --
 
 -- Stage One: Rapid Iteration
+do
+	local playerList = {}
+	function mod:RaidBossWhisperSync(msg, player)
+		if msg:find("spell:427722", nil, true) then
+			playerList[#playerList+1] = player
+			self:TargetsMessage(427722, "yellow", playerList, 3, CL.bombs)
+		end
+	end
+
+	function mod:WeaversBurden()
+		playerList = {}
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+	-- "|TInterface\\ICONS\\INV_10_Enchanting2_MagicSwirl_Green.BLP:20|t You are marked with |cFFFF0000|Hspell:427722|h[Weaver's Burden]|h|r!"
+	if msg:find("spell:427722", nil, true) then
+		if self:Solo() then -- You won't transmit addon comms when solo, so warn here instead
+			self:PersonalMessage(427722, nil, CL.bomb)
+		end
+		self:PlaySound(427722, "warning")
+		self:Say(427722, CL.bomb)
+	end
+end
+
 function mod:VerdantMatrixApplied(args)
 	if self:Me(args.destGUID) and not inflorescenceOnMe then -- Don't warn when you should be crossing
 		local amount = args.amount or 1
@@ -190,15 +217,6 @@ function mod:ViridianRain(args)
 	viridianRainCount = viridianRainCount + 1
 	if viridianRainCount < 4 then
 		self:Bar(args.spellId, 20, CL.count:format(L.viridian_rain, viridianRainCount))
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	-- "|TInterface\\ICONS\\INV_10_Enchanting2_MagicSwirl_Green.BLP:20|t You are marked with |cFFFF0000|Hspell:427722|h[Weaver's Burden]|h|r!"
-	if msg:find("spell:427722", nil, true) then
-		self:PersonalMessage(427722, nil, CL.bomb)
-		self:PlaySound(427722, "warning")
-		self:Say(427722, CL.bomb)
 	end
 end
 
