@@ -146,3 +146,6 @@ L.rift = "裂隙" -- Can be used in a similar way as a portal e.g. "Time Rift" b
 L.rifts = "裂隙" -- Plural of L.rift
 L.orb = "寶珠" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "寶珠" -- Plural for L.orb
+--L.curse = "Curse" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
+--L.curses = "Curses" -- Plural of L.curse
+--L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
