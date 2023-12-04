@@ -107,7 +107,7 @@ if L then
 	L.darkflame_cleave = "分摊[史诗]"
 
 	L.incarnate_intermission = "击飞"
-	--L.corrupt_removed = "腐蚀结束（剩余%.1f秒）" -- eg: Corrupt Over (5.0s remaining)
+	--L.corrupt_removed = "腐蚀结束（剩余：%.1f秒）" -- eg: Corrupt Over (5.0s remaining)
 
 	L.incarnate = "升空"
 	L.spirits_of_the_kaldorei = "精魂"
