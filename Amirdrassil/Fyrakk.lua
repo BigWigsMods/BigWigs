@@ -22,7 +22,7 @@ local timers = {
 		[417431] = {18.5, 11, 60, 11, 11, 58, 11, 11}, -- Fyr'alath's Bite
 		[422518] = {35.5, 80.0, 0}, -- Greater Firestorm
 		[422524] = {58.5, 80.0, 0}, -- Shadowflame Devastation
-		[422032] = {17.5, 20.0, 25.0, 29, 26, 24}, -- Spirits of the Kaldorei
+		[422032] = {17.5, 20.0, 25.0, 29.0, 26.0, 24.0, 25.0}, -- Spirits of the Kaldorei
 		[414186] = {20.5, 15, 25, 30, 26.9, 23, 30, 25}, -- Blaze
 		[412761] = {44.0, 80, 79.5, 0}, -- Incarnate
 		[417807] = {27.5, 16, 58.5, 16, 64.5, 16, 13.5}, -- Aflame
@@ -505,7 +505,7 @@ function mod:Corrupt(args)
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 33)
 	shadowflameOrbsCount = 1
-	local cd = timers[1.5][421937][shadowflameOrbsCount]
+	local cd = 3.5 -- First Shadowflame Orbs
 	self:Bar(421937, cd, CL.count:format(CL.orbs, shadowflameOrbsCount)) -- Shadowflame Orbs
 	self:ScheduleTimer("ShadowflameOrbs", cd)
 end
@@ -598,6 +598,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 			self:PlaySound(422032, "alert")
 		end
 		spiritsCount = spiritsCount + 1
+		if self:Mythic() and spiritsCount >= 6 then return end -- Max 6 waves in mythic
 		self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(L.spirits_of_the_kaldorei, spiritsCount))
 	end
 end
