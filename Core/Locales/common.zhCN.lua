@@ -5,7 +5,7 @@ if not L then return end
 L.you = "你 %s"
 L.you_icon = "|T13700%2$d:0|t你 %1$s"
 L.underyou = "你脚下：%s"
-L.aboveyou = "%s 在你面前"
+L.aboveyou = "%s在你面前"
 L.other = "%s：%s"
 L.onboss = "首领%s"
 L.buff_boss = "首领增益：%s"
