@@ -5,7 +5,7 @@ if not L then return end
 L.you = "你 %s"
 L.you_icon = "|T13700%2$d:0|t你 %1$s"
 L.underyou = "你脚下：%s"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s在你面前"
 L.other = "%s：%s"
 L.onboss = "首领%s"
 L.buff_boss = "首领增益：%s"
@@ -149,4 +149,4 @@ L.orb = "宝珠" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "宝珠" -- Plural for L.orb
 L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "诅咒" -- Plural of L.curse
---L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.frontal_cone = "正面技能" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
