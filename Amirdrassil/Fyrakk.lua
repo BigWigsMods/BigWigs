@@ -598,7 +598,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 			self:PlaySound(422032, "alert")
 		end
 		spiritsCount = spiritsCount + 1
-		if self:Mythic() and spiritsCount >= 6 then return end -- Max 6 waves in mythic
+		if self:Mythic() and spiritsCount > 6 then return end -- Max 6 waves in mythic
 		self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(L.spirits_of_the_kaldorei, spiritsCount))
 	end
 end
