@@ -6,6 +6,7 @@ local female = UnitSex("player") == 3
 L.you = "%s sur VOUS"
 L.you_icon = "%s sur |T13700%d:0|tVOUS"
 L.underyou = "%s en dessous de VOUS"
+--L.aboveyou = "%s above YOU"
 L.other = "%s : %s"
 L.onboss = "%s sur le BOSS"
 L.buff_boss = "Buff sur le BOSS : %s"
