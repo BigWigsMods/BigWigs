@@ -36,7 +36,7 @@ if L then
 	L.ultimate_boss = "%s大招" -- 滿能量大招 提示，例 正在施放：艾爾玟大招 (1)
 	L.special_bar = "%s滿能 (%d)" -- 滿能量大招 計時條
 	L.special_mythic_bar = "%s+%s滿能 (%d)" -- 傳奇難度 滿能量大招 計時條
-	L.special_mechanic_bar = "%s [斷大招] (%d)"　-- 其他boss用來處理大招的常規技能，只在大招期間如此提示 衝鋒 [斷大招] (1) 水池 [斷大招] (2)
+	L.special_mechanic_bar = "%s [斷大招] (%d)" -- 其他boss用來處理大招的常規技能，只在大招期間如此提示 衝鋒 [斷大招] (1) 水池 [斷大招] (2)
 
 	L.barreling_charge = "衝鋒"
 	L.poisonous_javelin = "標槍" -- 中毒/緩速
