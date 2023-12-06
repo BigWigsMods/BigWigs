@@ -397,13 +397,13 @@ function mod:IncarnationOwlOfTheFlame(args)
 end
 
 function mod:Typhoon(args)
-	self:StopBar(args.spellName)
+	self:StopBar(CL.pushback)
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.pushback))
 	self:PlaySound(args.spellId, "alarm")
 
 	-- maybe a bit more reliable than owl?
 	local stage = self:GetStage()
-	self:Bar(424140, stage == 1 and 39 or self:Mythic() and 25.5 or 26, CL.count:format(self:SpellName(424140), stage)) -- Supernova
+	self:Bar(424140, stage == 1 and 39.4 or 25.6, CL.count:format(self:SpellName(424140), stage)) -- Supernova
 end
 
 function mod:DreamEssenceApplied(args)
@@ -428,7 +428,7 @@ function mod:Supernova(args)
 	self:Message(424140, "red", CL.count:format(args.spellName, stage))
 	self:PlaySound(424140, "long")
 
-	if self:GetStage() < 3 then
+	if stage < 3 then
 		self:Message(424258, "green", CL.count:format(self:SpellName(424258), dreamEssenceOnYou)) -- Dream Essence
 
 		supernovaCasting = true
