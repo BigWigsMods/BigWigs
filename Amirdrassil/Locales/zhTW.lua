@@ -8,7 +8,7 @@ L = BigWigs:NewBossLocale("Igira the Cruel", "zhTW")
 if L then
 	L.blistering_spear = "長矛"
 	L.blistering_spear_single = "長矛"
-	--L.blistering_torment = "Chain"
+	L.blistering_torment = "鎖鏈" -- 你：%s/player gets chained
 	L.twisting_blade = "旋刃"
 	L.marked_for_torment = "折磨"
 	L.umbral_destruction = "分攤"
@@ -18,28 +18,28 @@ end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhTW")
 if L then
-	--L.custom_off_all_scorchtail_crash = "Show All Casts"
-	--L.custom_off_all_scorchtail_crash_desc = "Show timers and messages for all Scorchtail Crash casts instead of just for your side."
+	L.custom_off_all_scorchtail_crash = "顯示所有施法"
+	L.custom_off_all_scorchtail_crash_desc = "顯示所有的焦尾撞擊計時器和提示，而不是只顯示你那一側的。"
 
 	L.flood_of_the_firelands = "分攤"
-	--L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	--L.flood_of_the_firelands_single = "Soak"
+	L.flood_of_the_firelands_single_wait = "等待" -- 等待/預備/準備 Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
+	L.flood_of_the_firelands_single = "分攤"
 	L.scorchtail_crash = "甩尾"
 	L.serpents_fury = "噴火"
-	L.coiling_flames_single = "烈焰纏繞" -- 烈焰纏繞，噴完火纏身上的，要不叫烤焦吧......
+	L.coiling_flames_single = "烈焰纏繞" -- 烈焰纏繞
 end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "zhTW")
 if L then
-	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+	L.agonizing_claws_debuff = "{421022}（減益）"
 
-	L.ultimate_boss = "滿能量 (%s)"
-	--L.special_bar = "Ult [%s] (%d)"
-	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
-	--L.special_mechanic_bar = "%s [Ult] (%d)"
+	L.ultimate_boss = "%s大招" -- 滿能量大招 提示，例 正在施放：艾爾玟大招 (1)
+	L.special_bar = "%s滿能 (%d)" -- 滿能量大招 計時條
+	L.special_mythic_bar = "%s+%s滿能 (%d)" -- 傳奇難度 滿能量大招 計時條
+	L.special_mechanic_bar = "%s [斷大招] (%d)"　-- 其他boss用來處理大招的常規技能，只在大招期間如此提示 衝鋒 [斷大招] (1) 水池 [斷大招] (2)
 
 	L.barreling_charge = "衝鋒"
-	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
+	L.poisonous_javelin = "標槍" -- 中毒/緩速
 	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"
 	L.polymorph_bomb_single = "鴨子"
@@ -55,20 +55,20 @@ if L then
 
 	L.scorching_roots = "樹根"
 	L.furious_charge = "衝鋒"
-	--L.blazing_thorns = "Dodges"
+	L.blazing_thorns = "躲圈" -- 躲圈/接圈，統一一點好了
 	L.falling_embers = "接圈"
 	L.fire_whirl = "火旋風"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
 if L then
-	--L.mythic_add_death = "%s Killed"
+	L.mythic_add_death = "%s已擊殺"
 
 	L.continuum = "新的矩陣"
-	--L.surging_growth = "New Soaks"
-	--L.ephemeral_flora = "Red Soak"
+	L.surging_growth = "綠圈"
+	L.ephemeral_flora = "紅圈"
 	L.viridian_rain = "翠綠之雨" -- 原名比較短
-	--L.threads = "Threads" -- From the spell description of Impending Loom (429615) "threads of energy"
+	L.threads = "織物" -- ZHTW是織物 From the spell description of Impending Loom (429615) "threads of energy"
 end
 
 L = BigWigs:NewBossLocale("Smolderon", "zhTW")
@@ -104,12 +104,12 @@ if L then
 	L.darkflame_cleave = "分攤"
 
 	L.incarnate_intermission = "擊飛"
-	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
+	L.corrupt_removed = "腐化結束（剩餘 %.1f 秒）" -- eg: Corrupt Over (5.0s remaining)
 
 	L.incarnate = "升空"
 	L.spirits_of_the_kaldorei = "靈魂"
 	L.molten_gauntlet = "重拳" -- 熔火護手是什麼鬼翻譯......
-	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
+	L.mythic_debuffs = "牢籠" -- 影縛焰縛 Shadow Cage & Molten Eruption
 
 	L.greater_firestorm_shortened_bar = "強效火颶" -- 中文技能名短，先按原文來
 	L.greater_firestorm_message_full = "強效火颶"
