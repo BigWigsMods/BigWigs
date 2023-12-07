@@ -38,7 +38,6 @@ if L then
 	L.special_mythic_bar = "Ульта [%s/%s] (%d)"
 	L.special_mechanic_bar = "%s [Ульта] (%d)"
 
-	L.barreling_charge = "Чардж"
 	L.poisonous_javelin = "Отравленное копьё"
 	--L.song_of_the_dragon = "Song"
 	L.polymorph_bomb = "Утки"
@@ -54,7 +53,6 @@ if L then
 	L.blazing_coalescence_on_boss_note = "Когда на боссе"
 
 	L.scorching_roots = "Корень"
-	L.furious_charge = "Чардж"
 	L.blazing_thorns = "Спирали"
 	L.falling_embers = "Соки"
 	L.fire_whirl = "Торнадо"

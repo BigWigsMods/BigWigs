@@ -55,7 +55,6 @@ if L then
 	L.aerwynn = mod:SpellName(-27301)
 	L.pip = mod:SpellName(-27302)
 
-	L.barreling_charge = "Charge"
 	L.poisonous_javelin = "Javelin"
 	L.song_of_the_dragon = "Song"
 	L.polymorph_bomb = "Ducks"
@@ -96,12 +95,12 @@ function mod:GetOptions()
 		[421029] = -27302, -- Pip
 	},{
 		[420525] = L.ultimate_boss:format(L.urctos), -- Blinding Rage (Ultimate (Urctos))
-		[420948] = L.barreling_charge,
+		[420948] = CL.charge, -- Barreling Charge (Charge)
 		[421292] = L.ultimate_boss:format(L.aerwynn), -- Constricting Thicket (Ultimate (Aerwynn))
-		[420671] = CL.pools,
+		[420671] = CL.pools, -- Noxious Blossom (Pools)
 		[421029] = L.ultimate_boss:format(L.pip), -- Song of the Dragon (Ultimate (Pip))
-		[418720] = L.polymorph_bomb,
-		[421024] = CL.pushback,
+		[418720] = L.polymorph_bomb, -- Polymorph Bomb (Ducks)
+		[421024] = CL.pushback, -- Emerald Winds (Pushback)
 	}
 end
 
@@ -187,7 +186,7 @@ function mod:OnEngage()
 
 	-- Urctos
 	self:Bar(421022, self:Easy() and 8.0 or 5.0, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
-	self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+	self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 	if self:Mythic() then
 		-- Ult [Urctos/Aerwynn] (%d)
 		self:Bar(420525, specialCD, L.special_mythic_bar:format(L.urctos, L.aerwynn, specialCount)) -- Blinding Rage/Constricting Thicket
@@ -225,7 +224,7 @@ end
 function mod:SpecialOver()
 	activeSpecials = math.max(activeSpecials - 1, 0)
 	if activeSpecials == 0 then
-		self:StopBar(L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+		self:StopBar(L.special_mechanic_bar:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 		self:StopBar(L.special_mechanic_bar:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
 		self:StopBar(L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 
@@ -233,7 +232,7 @@ function mod:SpecialOver()
 
 		if agonizingClawsCount == 1 then -- don't start if Urctos is confused about the phase
 			self:Bar(421022, self:Easy() and 8.0 or 5.0, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
-			self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+			self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 		end
 
 		self:Bar(420671, self:Easy() and 11.0 or 5.0, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
@@ -311,12 +310,12 @@ function mod:Rebirth(args)
 			end
 
 			if not self:Easy() then
-				remaining = self:BarTimeLeft(CL.count:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+				remaining = self:BarTimeLeft(CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 				if remaining > 0 and remaining < rebirthTime then
 					rebirthTimers[420948] = self:ScheduleTimer(function()
 						-- barrelingChargeCount = barrelingChargeCount + 1 -- does count matter? debuff should be off
 						if nextSpecial - GetTime() > 25 then
-							self:Bar(420948, 20, CL.count:format(L.barreling_charge, barrelingChargeCount))
+							self:Bar(420948, 20, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 						end
 					end, remaining)
 				end
@@ -387,8 +386,8 @@ function mod:BlindingRageOver()
 	self:SpecialOver()
 
 	if activeSpecials > 0 and specialChain[nextSpecialAbility] == "aerwynn" then -- Urctos + Aerwynn
-		self:StopBar(CL.count:format(L.barreling_charge, barrelingChargeCount)) -- make sure we're not duplicating
-		self:Bar(420948, 2.5, L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount))
+		self:StopBar(CL.count:format(CL.charge, barrelingChargeCount)) -- make sure we're not duplicating
+		self:Bar(420948, 2.5, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 	end
 end
 
@@ -407,26 +406,25 @@ end
 do
 	local trampledOnYou = false
 	function mod:BarrelingCharge(args)
-		local spellName = L.barreling_charge
-		self:StopBar(L.special_mechanic_bar:format(spellName, barrelingChargeCount))
-		self:StopBar(CL.count:format(spellName, barrelingChargeCount))
+		self:StopBar(L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
+		self:StopBar(CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 
 		barrelingChargeCount = barrelingChargeCount + 1
 
 		-- 1 per special
 		if activeSpecials > 0 then -- short recast during specials
-			self:Bar(420948, 8.0, L.special_mechanic_bar:format(spellName, barrelingChargeCount))
+			self:Bar(420948, 8.0, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 		elseif not self:Easy() and nextSpecial - GetTime() > 25 then -- 43s
-			self:Bar(420948, 20, CL.count:format(spellName, barrelingChargeCount)) -- Barreling Charge
+			self:Bar(420948, 20, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 		elseif nextSpecialAbility == "aerwynn" then -- cast 3/4s after Constricting Thicket
 			-- replaces bar in :ConstrictingThicket
 			local cd = self:Mythic() and 27.0 or self:Easy() and 30.0 or 26.0
-			self:Bar(420948, cd, L.special_mechanic_bar:format(spellName, barrelingChargeCount))
+			self:Bar(420948, cd, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 		end
 	end
 
 	function mod:BarrelingChargeApplied(args)
-		self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(L.barreling_charge, barrelingChargeCount - 1))
+		self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.charge, barrelingChargeCount - 1))
 		if self:Me(args.destGUID) then
 			self:Yell(args.spellId)
 			self:YellCountdown(args.spellId, 5)
@@ -493,11 +491,11 @@ function mod:ConstrictingThicket(args)
 	activeSpecials = activeSpecials + 1
 	agonizingClawsCount = 1
 
-	-- self:Bar(420948, self:Mythic() and 4.0 or 3.0, L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+	-- self:Bar(420948, self:Mythic() and 4.0 or 3.0, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 end
 
 function mod:ConstrictingThicketOver()
-	self:StopBar(L.special_mechanic_bar:format(L.barreling_charge, barrelingChargeCount)) -- Barreling Charge
+	self:StopBar(L.special_mechanic_bar:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 	self:SpecialOver()
 
 	if activeSpecials > 0 and specialChain[nextSpecialAbility] == "pip" then -- Aerwynn + Pip

@@ -91,7 +91,6 @@ if L then
 	L.blazing_coalescence_on_boss_note = "When it's on the boss"
 
 	L.scorching_roots = "Roots"
-	L.furious_charge = "Charge"
 	L.blazing_thorns = "Dodges"
 	L.falling_embers = "Soaks"
 	L.fire_whirl = "Tornadoes"
@@ -145,7 +144,7 @@ function mod:GetOptions()
 	},{
 		[417653] = CL.adds, -- Fiery Force of Nature (Adds)
 		[422614] = L.scorching_roots, -- Scorching Roots (Roots)
-		[418637] = L.furious_charge, -- Furious Charge (Charge)
+		[418637] = CL.charge, -- Furious Charge (Charge)
 		[426206] = L.blazing_thorns, -- Blazing Thorns (Dodges)
 		[426249] = L.blazing_coalescence_on_player_note, -- Blazing Coalescence (When it's on you)
 		[426256] = L.blazing_coalescence_on_boss_note, -- Blazing Coalescence (When it's on the boss)
@@ -228,7 +227,7 @@ function mod:OnEngage()
 	end
 	self:Bar(417653, timers[417653][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount)) -- Fiery Force of Nature
 	self:Bar(426206, timers[426206][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
-	self:Bar(418637, timers[418637][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
+	self:Bar(418637, timers[418637][furiousChargeCount], CL.count:format(CL.charge, furiousChargeCount)) -- Furious Charge
 	self:Bar(422614, timers[422614][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
 	self:Bar(417634, 90, CL.count:format(CL.full_energy, ragingInfernoCount)) -- Raging Inferno
 
@@ -297,11 +296,11 @@ function mod:ScorchingBramblethorn(args)
 end
 
 function mod:FuriousCharge(args)
-	self:StopBar(CL.count:format(L.furious_charge, furiousChargeCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.furious_charge, furiousChargeCount))
+	self:StopBar(CL.count:format(CL.charge, furiousChargeCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.charge, furiousChargeCount))
 	self:PlaySound(args.spellId, "alert")
 	furiousChargeCount = furiousChargeCount + 1
-	self:Bar(args.spellId, timers[args.spellId][furiousChargeCount], CL.count:format(L.furious_charge, furiousChargeCount))
+	self:Bar(args.spellId, timers[args.spellId][furiousChargeCount], CL.count:format(CL.charge, furiousChargeCount))
 end
 
 function mod:NaturesFuryApplied(args)
@@ -363,7 +362,7 @@ function mod:ConsumingFlame(args)
 	self:SetStage(1.5)
 	self:StopBar(CL.count:format(CL.adds, fieryForceOfNatureCount)) -- Fiery Force of Nature
 	self:StopBar(CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
-	self:StopBar(CL.count:format(L.furious_charge, furiousChargeCount)) -- Furious Charge
+	self:StopBar(CL.count:format(CL.charge, furiousChargeCount)) -- Furious Charge
 	self:StopBar(CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
 	self:StopBar(CL.count:format(CL.full_energy, ragingInfernoCount)) -- Raging Inferno
 

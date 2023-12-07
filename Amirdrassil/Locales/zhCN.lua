@@ -38,7 +38,6 @@ if L then
 	L.special_mythic_bar = "满能 [%s/%s] (%d)"
 	L.special_mechanic_bar = "%s [满能] (%d)"
 
-	L.barreling_charge = "冲锋"
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
 	L.polymorph_bomb = "鸭子"
@@ -54,7 +53,6 @@ if L then
 	L.blazing_coalescence_on_boss_note = "首领获得时"
 
 	L.scorching_roots = "树根"
-	L.furious_charge = "冲锋"
 	L.blazing_thorns = "躲避"
 	L.falling_embers = "接圈"
 	L.fire_whirl = "火旋风"

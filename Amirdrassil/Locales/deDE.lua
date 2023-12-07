@@ -38,7 +38,6 @@ if L then
 	L.special_mythic_bar = "Ult [%s/%s] (%d)"
 	L.special_mechanic_bar = "%s [Ult] (%d)"
 
-	L.barreling_charge = "Ansturm"
 	L.poisonous_javelin = "Wurfspeer"
 	L.song_of_the_dragon = "Lied"
 	L.polymorph_bomb = "Enten"
@@ -54,7 +53,6 @@ if L then
 	L.blazing_coalescence_on_boss_note = "Wenn es auf dem Boss ist"
 
 	L.scorching_roots = "Wurzeln"
-	L.furious_charge = "Ansturm"
 	L.blazing_thorns = "Ausweichen"
 	L.falling_embers = "Soaks"
 	L.fire_whirl = "Wirbel"

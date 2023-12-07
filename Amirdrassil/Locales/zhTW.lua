@@ -38,7 +38,6 @@ if L then
 	--L.special_mythic_bar = "Ult [%s/%s] (%d)"
 	--L.special_mechanic_bar = "%s [Ult] (%d)"
 
-	L.barreling_charge = "衝鋒"
 	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
 	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"
@@ -54,7 +53,6 @@ if L then
 	L.blazing_coalescence_on_boss_note = "在王身上"
 
 	L.scorching_roots = "樹根"
-	L.furious_charge = "衝鋒"
 	--L.blazing_thorns = "Dodges"
 	L.falling_embers = "接圈"
 	L.fire_whirl = "火旋風"
