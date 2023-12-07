@@ -426,7 +426,7 @@ do
 	function mod:BarrelingChargeApplied(args)
 		self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.charge, barrelingChargeCount - 1))
 		if self:Me(args.destGUID) then
-			self:Yell(args.spellId)
+			self:Yell(args.spellId, CL.charge)
 			self:YellCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning") -- Move
 		elseif trampledOnYou then -- Avoid
