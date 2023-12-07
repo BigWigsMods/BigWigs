@@ -24,6 +24,7 @@ BigWigs:AddColors("Igira the Cruel", {
 	[416048] = "red",
 	[416996] = "orange",
 	[419048] = "red",
+	[419462] = "blue",
 	[422776] = "cyan",
 	[424456] = "orange",
 	[426056] = "blue",
@@ -43,6 +44,7 @@ BigWigs:AddColors("Volcoross", {
 	[423117] = "purple",
 	[423494] = "blue",
 	[424218] = "red",
+	[427201] = "blue",
 })
 
 BigWigs:AddColors("Council of Dreams", {
@@ -103,7 +105,7 @@ BigWigs:AddColors("Nymue, Weaver of the Cycle", {
 	[420907] = "yellow",
 	[422721] = "yellow",
 	[426855] = "green",
-	[427722] = "blue",
+	[427722] = {"blue","yellow"},
 	[428471] = "red",
 	[429108] = "orange",
 	[429615] = "cyan",
@@ -153,15 +155,15 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 })
 
 BigWigs:AddColors("Fyrakk the Blazing", {
-	[410223] = {"blue","red"},
-	[412761] = "yellow",
+	[410223] = {"blue","yellow"},
+	[412761] = "red",
 	[414186] = "yellow",
 	[417431] = "purple",
 	[417443] = {"blue","purple"},
 	[417455] = "red",
 	[417807] = {"blue","green"},
 	[419123] = "red",
-	[419144] = {"green","red"},
+	[419144] = {"cyan","yellow"},
 	[419504] = "blue",
 	[419506] = "orange",
 	[420422] = "yellow",
@@ -178,9 +180,9 @@ BigWigs:AddColors("Fyrakk the Blazing", {
 	[426368] = "orange",
 	[428400] = "red",
 	[428963] = "purple",
-	[428968] = "cyan",
+	[428970] = "yellow",
 	[429866] = "red",
 	[429872] = "red",
 	[430441] = "cyan",
-	["stages"] = "cyan",
+	["stages"] = {"cyan","green"},
 })
