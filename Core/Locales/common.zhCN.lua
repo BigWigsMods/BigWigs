@@ -48,6 +48,7 @@ L.no = "缺少%s" -- No Spell
 L.intermission = "阶段转换"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
+L.you_die = "你将死亡"
 
 -- Add related
 L.add_spawned = "小怪刷新"

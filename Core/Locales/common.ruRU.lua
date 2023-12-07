@@ -48,6 +48,7 @@ L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s отменено" -- Spell Cancelled
+--L.you_die = "You die"
 
 -- Add related
 L.add_spawned = "Помощник появился"

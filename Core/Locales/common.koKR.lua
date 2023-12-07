@@ -48,6 +48,7 @@ L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
+--L.you_die = "You die"
 
 -- Add related
 L.add_spawned = "추가 몹 생성"

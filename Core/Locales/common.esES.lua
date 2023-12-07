@@ -48,6 +48,7 @@ L.no = "No %s" -- No Spell
 L.intermission = "Intermedio"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
+--L.you_die = "You die"
 
 -- Add related
 L.add_spawned = "Aparece Esbirro"

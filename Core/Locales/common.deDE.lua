@@ -48,6 +48,7 @@ L.no = "Kein %s" -- No Spell
 L.intermission = "Zwischenphase"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s abgebrochen" -- Spell Cancelled
+L.you_die = "Du stirbst"
 
 -- Add related
 L.add_spawned = "Add erschienen"
