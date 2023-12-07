@@ -49,6 +49,7 @@ L.intermission = "Zwischenphase"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s abgebrochen" -- Spell Cancelled
 L.you_die = "Du stirbst"
+L.you_die_sec = "Du stirbst in %d Sek" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Add erschienen"

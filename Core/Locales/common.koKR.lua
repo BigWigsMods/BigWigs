@@ -49,6 +49,7 @@ L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
 --L.you_die = "You die"
+--L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
