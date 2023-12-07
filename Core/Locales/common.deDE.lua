@@ -137,6 +137,7 @@ L.fear = "Furcht" -- For abilities that cause you to flee in fear
 L.breath = "Atem" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
 L.roar = "Brüllen" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
 L.leap = "Sprung" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
+L.charge = "Ansturm" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "Volle Energie" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "Geschwächt" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "Pfütze" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
