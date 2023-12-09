@@ -1145,16 +1145,16 @@ do
 		--ruRU = "Russian (ruRU)",
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
-		---itIT = "Italian (itIT)",
-		--koKR = "Korean (koKR)",
-		--esES = "Spanish (esES)",
-		---esMX = "Spanish (esMX)",
+		itIT = "Italian (itIT)",
+		koKR = "Korean (koKR)",
+		esES = "Spanish (esES)",
+		esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
-		--ptBR = "Portuguese (ptBR)",
-		--frFR = "French (frFR)",
+		ptBR = "Portuguese (ptBR)",
+		frFR = "French (frFR)",
 	}
 	local language = locales[myLocale]
-	if language then
+	if language and public.isRetail then
 		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Ask us on Discord for more info."):format(language)
 	end
 
