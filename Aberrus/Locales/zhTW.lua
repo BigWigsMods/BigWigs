@@ -6,7 +6,6 @@ if L then
 
 	L.coalescing_void = "跑遠"
 	L.molten_eruption = "接圈"
-	L.swirling_flame = "旋風"
 	L.shadowflame_burst = "衝擊波"
 	--L.plus = "%s + %s"
 

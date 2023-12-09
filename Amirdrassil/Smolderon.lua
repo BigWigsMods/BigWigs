@@ -30,7 +30,6 @@ local L = mod:GetLocale()
 if L then
 	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysers"
-	L.flame_waves = "Tornadoes"
 end
 
 --------------------------------------------------------------------------------
@@ -62,6 +61,7 @@ function mod:GetOptions()
 		[425885] = "mythic",
 	},{
 		[421343] = L.brand_of_damnation, -- Brand of Damnation (Tank Soak)
+		[421969] = CL.tornadoes, -- Flame Waves (Tornadoes)
 		[422691] = L.lava_geysers, -- Lava Geysers (Geysers)
 		[425885] = CL.orbs, -- Seeking Inferno (Orbs)
 	}
@@ -176,7 +176,7 @@ function mod:Overheated(args)
 		self:Bar(421455, 30, CL.count:format(args.spellName, overheatedCount))
 	end
 	if not self:Easy() then
-		self:Bar(421969, 10, L.flame_waves)
+		self:Bar(421969, 10, CL.tornadoes)
 	else
 		self:Bar(421455, 10, CL.over:format(args.spellName))
 	end

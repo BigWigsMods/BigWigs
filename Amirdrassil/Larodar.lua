@@ -93,7 +93,6 @@ if L then
 	L.scorching_roots = "Roots"
 	L.blazing_thorns = "Dodges"
 	L.falling_embers = "Soaks"
-	L.fire_whirl = "Tornadoes"
 end
 
 --------------------------------------------------------------------------------
@@ -151,7 +150,7 @@ function mod:GetOptions()
 		[417634] = CL.full_energy, -- Raging Inferno (Full Energy)
 		[427252] = L.falling_embers, -- Falling Embers (Soaks)
 		[427299] = CL.bombs, -- Flash Fire (Bombs)
-		[427343] = L.fire_whirl, -- Fire Whirl (Tornadoes)
+		[427343] = CL.tornadoes, -- Fire Whirl (Tornadoes)
 		[429973] = CL.frontal_cone, -- Smoldering Backdraft (Frontal Cone)
 		[421325] = CL.adds, -- Ashen Call (Adds)
 	}
@@ -389,7 +388,7 @@ function mod:ConsumingFlameRemoved(args)
 	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount)) -- Smoldering Backdraft
 	self:Bar(421325, timers[421325][ashenCallCount], CL.count:format(CL.adds, ashenCallCount)) -- Ashen Call
 	self:Bar(427299, timers[427299][flashFireCount], CL.count:format(CL.bombs, flashFireCount)) -- Flash Fire
-	self:Bar(427343, timers[427343][fireWhirlCount], CL.count:format(L.fire_whirl, fireWhirlCount)) -- Fire Whirl
+	self:Bar(427343, timers[427343][fireWhirlCount], CL.count:format(CL.tornadoes, fireWhirlCount)) -- Fire Whirl
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
@@ -448,11 +447,11 @@ function mod:EncasedInAshApplied(args)
 end
 
 function mod:FireWhirl(args)
-	self:StopBar(CL.count:format(L.fire_whirl, fireWhirlCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.fire_whirl, fireWhirlCount))
+	self:StopBar(CL.count:format(CL.tornadoes, fireWhirlCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.tornadoes, fireWhirlCount))
 	self:PlaySound(args.spellId, "alert")
 	fireWhirlCount = fireWhirlCount + 1
-	self:Bar(args.spellId, timers[args.spellId][fireWhirlCount], CL.count:format(L.fire_whirl, fireWhirlCount))
+	self:Bar(args.spellId, timers[args.spellId][fireWhirlCount], CL.count:format(CL.tornadoes, fireWhirlCount))
 end
 
 do

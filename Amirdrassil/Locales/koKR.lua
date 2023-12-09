@@ -55,7 +55,6 @@ if L then
 	--L.scorching_roots = "Roots"
 	--L.blazing_thorns = "Dodges"
 	--L.falling_embers = "Soaks"
-	--L.fire_whirl = "Tornadoes"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "koKR")
@@ -73,7 +72,6 @@ L = BigWigs:NewBossLocale("Smolderon", "koKR")
 if L then
 	--L.brand_of_damnation = "Tank Soak"
 	--L.lava_geysers = "Geysers"
-	--L.flame_waves = "Tornadoes"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "koKR")

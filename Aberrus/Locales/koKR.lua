@@ -6,7 +6,6 @@ if L then
 
 	L.coalescing_void = "보스에서 이격"
 	L.molten_eruption = "바닥 밟기"
-	L.swirling_flame = "회오리"
 	L.shadowflame_burst = "탱 머리 조심"
 	--L.plus = "%s + %s"
 

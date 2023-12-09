@@ -6,7 +6,6 @@ if L then
 
 	L.coalescing_void = "Fuyez"
 	L.molten_eruption = "Soaks"
-	L.swirling_flame = "Tornades"
 	L.shadowflame_burst = "Cône Frontal"
 	--L.plus = "%s + %s"
 

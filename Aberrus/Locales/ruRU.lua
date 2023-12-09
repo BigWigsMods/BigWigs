@@ -6,7 +6,6 @@ if L then
 
 	L.coalescing_void = "Отбежка"
 	L.molten_eruption = "Соки"
-	L.swirling_flame = "Ветерки"
 	L.shadowflame_burst = "Фронтал"
 	--L.plus = "%s + %s"
 
