@@ -154,4 +154,6 @@ L.orbs = "寶珠" -- Plural for L.orb
 --L.curses = "Curses" -- Plural of L.curse
 L.spirit = "靈魂" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "靈魂" -- Plural of L.spirit
+L.tornado = "旋風" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
+L.tornadoes = "旋風" -- Plural of L.tornado
 --L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!

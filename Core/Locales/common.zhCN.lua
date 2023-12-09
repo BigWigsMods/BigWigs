@@ -154,4 +154,6 @@ L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curs
 L.curses = "诅咒" -- Plural of L.curse
 L.spirit = "精魂" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "精魂" -- Plural of L.spirit
+L.tornado = "旋风" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
+L.tornadoes = "旋风" -- Plural of L.tornado
 L.frontal_cone = "正面技能" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
