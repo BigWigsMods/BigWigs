@@ -134,7 +134,7 @@ do
 					self:PlaySound(420415, "alarm")
 				end
 				scorchtailCrashCount = scorchtailCrashCount + 1
-				self:CDBar(420415, timer["all"][scorchtailCrashCount], CL.count:format(CL.count:format(L.scorchtail_crash, scorchtailCrashCount), scorchtailCrashCount))
+				self:CDBar(420415, timer["all"][scorchtailCrashCount], CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
 			elseif floodOfTheFirelandsCount == 1 or spellId == 421684 or spellId == playerSide then
 				last = GetTime()
 				self:StopBar(CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
@@ -143,13 +143,11 @@ do
 				scorchtailCrashCount = scorchtailCrashCount + 1
 				self:CDBar(420415, timer[playerSide][scorchtailCrashCount], CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
 			end
-			-- local cd = timer[scorchtailCrashCount]
 			-- if cd then
 			-- 	local t = GetTime()
 			-- 	local offset = nextScorchtailCrash - t -- +/-2s auto correcting
 			-- 	cd = cd + offset
-			-- 	msg = CL.count:format(L[side[scorchtailCrashCount]]:format(L.scorchtail_crash), scorchtailCrashCount)
-			-- 	self:CDBar(420415, cd, msg)
+			-- 	self:CDBar(420415, cd, CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
 			-- 	nextScorchtailCrash = t + cd
 			-- end
 		end
@@ -163,7 +161,9 @@ do
 			elseif spellId == 421331 then -- Right Side
 				playerSide = 421359
 			end
-			-- first soak is between the 3rd and 4th cast, which forces the split
+			-- XXX this could use some work, first side after soaking (every soak?) is apparently random
+			-- first soak is between the 3rd and 4th cast, which forces the split (second: 8/9, third: 13/14)
+			-- so should leave cast 4/9/14 as 30s for both sides and then correct the next cast for your side (like raszageth deep breaths)
 			if scorchtailCrashCount == 4 and oldSide ~= playerSide and not showAllCasts then
 				local cd = timer[playerSide][scorchtailCrashCount]
 				local remaining = cd - (GetTime() - last)
