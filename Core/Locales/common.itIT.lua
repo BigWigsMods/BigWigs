@@ -152,4 +152,6 @@ L.orb = "Globo" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "Globi" -- Plural for L.orb
 L.curse = "Maledizione" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Maledizioni" -- Plural of L.curse
+L.spirit = "Spirito" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
+L.spirits = "Spiriti" -- Plural of L.spirit
 L.frontal_cone = "Cono Frontale" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!

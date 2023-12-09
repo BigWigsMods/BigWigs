@@ -152,4 +152,6 @@ L.orb = "보주" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "보주" -- Plural for L.orb
 L.curse = "저주" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "저주" -- Plural of L.curse
+L.spirit = "영혼" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
+L.spirits = "영혼" -- Plural of L.spirit
 --L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!

@@ -152,4 +152,6 @@ L.orb = "Kugel" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "Kugeln" -- Plural for L.orb
 L.curse = "Fluch" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Flüche" -- Plural of L.curse
+L.spirit = "Geist" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
+L.spirits = "Geister" -- Plural of L.spirit
 L.frontal_cone = "Frontaler Kegel" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!

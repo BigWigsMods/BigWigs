@@ -151,4 +151,6 @@ L.orb = "Orb" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "Orbs" -- Plural for L.orb
 L.curse = "Curse" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Curses" -- Plural of L.curse
+L.spirit = "Spirit" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
+L.spirits = "Spirits" -- Plural of L.spirit
 L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
