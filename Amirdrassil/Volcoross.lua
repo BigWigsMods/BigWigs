@@ -18,7 +18,7 @@ local volcanicDisgorgeCount = 1
 local scorchtailCrashCount = 1
 local cataclysmJawsCount = 1
 local explosionCount = 1
-local playerSide = 421330
+local playerSide = "all"
 local showAllCasts = false
 
 --------------------------------------------------------------------------------
@@ -69,7 +69,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Scorchtail Crash
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Scorchtail Crash
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "PlayerCasts", "player")
 
 	self:Log("SPELL_CAST_START", "SerpentsFury", 421672)
 	self:Log("SPELL_AURA_APPLIED", "CoilingFlamesApplied", 421207)
@@ -99,7 +100,7 @@ function mod:OnEngage()
 	scorchtailCrashCount = 1
 	cataclysmJawsCount = 1
 	explosionCount = 1
-	playerSide = 421330
+	playerSide = "all"
 	showAllCasts = self:GetOption("custom_off_all_scorchtail_crash")
 
 	self:Bar(423117, 5, CL.count:format(self:SpellName(423117), cataclysmJawsCount)) -- Cataclysm Jaws
@@ -123,37 +124,39 @@ do
 	}
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
-		if unit == "boss1" then
-			if spellId == 421356 or spellId == 421359 or spellId == 421684 then -- Scorchtail Crash (left, right, either)
-				if showAllCasts then
-					-- raid leader mode
-					local msg = CL.count:format(L.scorchtail_crash, scorchtailCrashCount)
-					self:StopBar(msg)
-					self:Message(420415, "red", msg)
-					if spellId == 421684 or spellId == playerSide then
-						self:PlaySound(420415, "alarm")
-					end
-					scorchtailCrashCount = scorchtailCrashCount + 1
-					self:CDBar(420415, timer["all"][scorchtailCrashCount], CL.count:format(CL.count:format(L.scorchtail_crash, scorchtailCrashCount), scorchtailCrashCount))
-				elseif floodOfTheFirelandsCount == 1 or spellId == 421684 or spellId == playerSide then
-					last = GetTime()
-					self:StopBar(CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
-					self:Message(420415, "red", CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
+		if spellId == 421356 or spellId == 421359 or spellId == 421684 then -- Scorchtail Crash (left, right, either)
+			if showAllCasts or playerSide == "all" then
+				-- raid leader mode
+				local msg = CL.count:format(L.scorchtail_crash, scorchtailCrashCount)
+				self:StopBar(msg)
+				self:Message(420415, "red", msg)
+				if spellId == 421684 or spellId == playerSide then
 					self:PlaySound(420415, "alarm")
-					scorchtailCrashCount = scorchtailCrashCount + 1
-					self:CDBar(420415, timer[playerSide][scorchtailCrashCount], CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
 				end
-				-- local cd = timer[scorchtailCrashCount]
-				-- if cd then
-				-- 	local t = GetTime()
-				-- 	local offset = nextScorchtailCrash - t -- +/-2s auto correcting
-				-- 	cd = cd + offset
-				-- 	msg = CL.count:format(L[side[scorchtailCrashCount]]:format(L.scorchtail_crash), scorchtailCrashCount)
-				-- 	self:CDBar(420415, cd, msg)
-				-- 	nextScorchtailCrash = t + cd
-				-- end
+				scorchtailCrashCount = scorchtailCrashCount + 1
+				self:CDBar(420415, timer["all"][scorchtailCrashCount], CL.count:format(CL.count:format(L.scorchtail_crash, scorchtailCrashCount), scorchtailCrashCount))
+			elseif floodOfTheFirelandsCount == 1 or spellId == 421684 or spellId == playerSide then
+				last = GetTime()
+				self:StopBar(CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
+				self:Message(420415, "red", CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
+				self:PlaySound(420415, "alarm")
+				scorchtailCrashCount = scorchtailCrashCount + 1
+				self:CDBar(420415, timer[playerSide][scorchtailCrashCount], CL.count:format(L.scorchtail_crash, scorchtailCrashCount))
 			end
-		elseif (spellId == 421330 or spellId == 421331) and scorchtailCrashCount < 5 and UnitIsUnit("player", unit) then -- Left Side / Right Side
+			-- local cd = timer[scorchtailCrashCount]
+			-- if cd then
+			-- 	local t = GetTime()
+			-- 	local offset = nextScorchtailCrash - t -- +/-2s auto correcting
+			-- 	cd = cd + offset
+			-- 	msg = CL.count:format(L[side[scorchtailCrashCount]]:format(L.scorchtail_crash), scorchtailCrashCount)
+			-- 	self:CDBar(420415, cd, msg)
+			-- 	nextScorchtailCrash = t + cd
+			-- end
+		end
+	end
+
+	function mod:PlayerCasts(_, unit, _, spellId)
+		if scorchtailCrashCount < 5 and (spellId == 421330 or spellId == 421331) then -- Left Side / Right Side
 			local oldSide = playerSide
 			if spellId == 421330 then -- Left Side
 				playerSide = 421356
