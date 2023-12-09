@@ -105,7 +105,7 @@ if L then
 	--L.molten_gauntlet = "Gauntlet"
 	L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 
-	L.greater_firestorm_shortened_bar = "Tempête de feu [G]" -- G for Greater
+	L.greater_firestorm_shortened_bar = "Tempête de feu [S]" -- G for Greater
 	L.greater_firestorm_message_full = "Tempête de feu [Supérieure]"
 	L.eternal_firestorm_shortened_bar = "Tempête de feu [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Tempête de feu [Éternelle]"
