@@ -635,7 +635,7 @@ local function parseLua(file)
 			if not locale_key then
 				locale_key, locale_value = line:match("L%[\"(.+)\"%]%s*=%s*(.*)")
 			end
-			if locale_key then
+			if locale_key and locale[locale_key] == nil then
 				locale_value = strtrim(locale_value)
 				-- check if we're all replacement tokens
 				local v = locale_value:gsub("%b{}", ""):gsub("\\n", "")
