@@ -50,7 +50,7 @@ L.intermission = "Intervalle"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s annulé" -- Spell Cancelled
 L.you_die = "Vous êtes mort"
-L.you_die_sec = "Vous mourrez dans %d secondes" -- "You die in 15 sec" (sec = seconds)
+L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Add apparu"
