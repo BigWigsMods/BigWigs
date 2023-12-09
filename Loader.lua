@@ -1151,7 +1151,7 @@ do
 		esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
 		ptBR = "Portuguese (ptBR)",
-		frFR = "French (frFR)",
+		--frFR = "French (frFR)",
 	}
 	local language = locales[myLocale]
 	if language and public.isRetail then
