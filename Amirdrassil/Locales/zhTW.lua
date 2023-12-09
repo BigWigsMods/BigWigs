@@ -102,10 +102,8 @@ if L then
 	L.darkflame_cleave = "分攤"
 
 	L.incarnate_intermission = "擊飛"
-	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
 
 	L.incarnate = "升空"
-	L.spirits_of_the_kaldorei = "靈魂"
 	L.molten_gauntlet = "重拳" -- 熔火護手是什麼鬼翻譯......
 	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 

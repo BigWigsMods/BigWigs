@@ -75,10 +75,8 @@ if L then
 	L.darkflame_cleave = "Mythic Soaks"
 
 	L.incarnate_intermission = "Knock Up"
-	L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
 
 	L.incarnate = "Fly Away"
-	L.spirits_of_the_kaldorei = "Spirits"
 	L.molten_gauntlet = "Gauntlet"
 	L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 
@@ -161,7 +159,7 @@ function mod:GetOptions()
 		[430441] = L.darkflame_shades, -- Darkflame Shades (Shades)
 		[426368] = L.darkflame_cleave, -- Darkflame Cleave (Mythic Soaks)
 		[421937] = CL.orbs, -- Shadowflame Orbs (Orbs)
-		[422032] = L.spirits_of_the_kaldorei, -- Spirits of the Kaldorei (Spirits)
+		[422032] = CL.spirits, -- Spirits of the Kaldorei (Spirits)
 		[422518] = L.greater_firestorm_shortened_bar, -- Greater Firestorm (Firestorm [G])
 		[428970] = L.mythic_debuffs, -- Shadow Cage (Debuffs)
 		[412761] = L.incarnate, -- Incarnate (Fly Away)
@@ -546,7 +544,6 @@ end
 
 -- Stage Two: Children of the Stars
 function mod:CorruptRemoved(args)
-	local shieldTime = 30 - (args.time - corruptApplied)
 	self:StopBar(CL.cast:format(args.spellName)) -- Corrupt Castbar
 	self:StopBar(CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 	if timerHandles[414186] then -- Blaze
@@ -559,7 +556,7 @@ function mod:CorruptRemoved(args)
 		timerHandles[421937] = nil
 	end
 
-	self:Message(419144, "cyan", L.corrupt_removed:format(shieldTime))
+	self:Message(419144, "cyan", CL.removed_after:format(args.spellName, args.time - corruptApplied))
 	self:Message("stages", "green", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
 
@@ -579,7 +576,7 @@ function mod:CorruptRemoved(args)
 	self:Bar(419123, timers[2][419123][flamefallCount], CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
 	self:Bar(422524, timers[2][422524][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
 	self:Bar(417431, timers[2][417431][fyralathsBiteCount], CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(L.spirits_of_the_kaldorei, spiritsCount)) -- Spirits of Kaldorei
+	self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount)) -- Spirits of Kaldorei
 	self:Bar(412761, timers[2][412761][incarnateCount], CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 	self:Bar(417807, timers[2][417807][aflameCount], CL.count:format(self:SpellName(417807), aflameCount))
 	if not self:Easy() then
@@ -592,14 +589,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 	if sender == L.spirits_trigger then
-		self:StopBar(CL.count:format(L.spirits_of_the_kaldorei, spiritsCount))
-		self:Message(422032, "green", CL.count:format(L.spirits_of_the_kaldorei, spiritsCount))
+		self:StopBar(CL.count:format(CL.spirits, spiritsCount))
+		self:Message(422032, "green", CL.count:format(CL.spirits, spiritsCount))
 		if self:Healer() then
 			self:PlaySound(422032, "alert")
 		end
 		spiritsCount = spiritsCount + 1
 		if self:Mythic() and spiritsCount > 6 then return end -- Max 6 waves in mythic
-		self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(L.spirits_of_the_kaldorei, spiritsCount))
+		self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount))
 	end
 end
 
@@ -703,7 +700,7 @@ function mod:EternalFirestormP3()
 	self:StopBar(CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
 	self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
 	self:StopBar(CL.count:format(L.fyralaths_bite_mythic, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:StopBar(CL.count:format(L.spirits_of_the_kaldorei, spiritsCount)) -- Spirits of the Kaldorei
+	self:StopBar(CL.count:format(CL.spirits, spiritsCount)) -- Spirits of the Kaldorei
 	self:StopBar(CL.count:format(self:SpellName(417807), aflameCount)) -- Aflame
 	self:StopBar(CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 	self:StopBar(CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm

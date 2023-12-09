@@ -102,10 +102,8 @@ if L then
 	L.darkflame_cleave = "Соаки"
 
 	L.incarnate_intermission = "Подкидывание"
-	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
 
 	L.incarnate = "Улетает"
-	L.spirits_of_the_kaldorei = "Духи"
 	L.molten_gauntlet = "Танкбастер"
 	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 

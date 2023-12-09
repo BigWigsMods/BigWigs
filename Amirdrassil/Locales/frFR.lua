@@ -102,10 +102,8 @@ if L then
 	--L.darkflame_cleave = "Mythic Soaks"
 
 	--L.incarnate_intermission = "Knock Up"
-	--L.corrupt_removed = "Corrupt Over (%.1fs remaining)" -- eg: Corrupt Over (5.0s remaining)
 
 	--L.incarnate = "Fly Away"
-	--L.spirits_of_the_kaldorei = "Spirits"
 	--L.molten_gauntlet = "Gauntlet"
 	--L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 
