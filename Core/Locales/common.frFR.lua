@@ -6,7 +6,7 @@ local female = UnitSex("player") == 3
 L.you = "%s sur VOUS"
 L.you_icon = "%s sur |T13700%d:0|tVOUS"
 L.underyou = "%s en dessous de VOUS"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s au dessus de VOUS"
 L.other = "%s : %s"
 L.onboss = "%s sur le BOSS"
 L.buff_boss = "Buff sur le BOSS : %s"
@@ -24,7 +24,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s près de VOUS"
 L.on_group = "%s sur le GROUPE" -- spell on group
---L.boss = "BOSS"
+L.boss = "BOSS"
 
 L.phase = "Phase %d"
 L.stage = "Phase %d"
@@ -49,8 +49,8 @@ L.no = "Sans %s" -- No Spell
 L.intermission = "Intervalle"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s annulé" -- Spell Cancelled
---L.you_die = "You die"
---L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "Vous êtes mort"
+L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Add apparu"
@@ -102,21 +102,21 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
---L.top = "Top"
---L.up = "Up"
---L.middle = "Middle"
---L.down = "Down"
---L.bottom = "Bottom"
---L.left = "Left"
---L.right = "Right"
+L.top = "En haut"
+L.up = "En haut"
+L.middle = "Au milieu"
+L.down = "En bas"
+L.bottom = "En bas"
+L.left = "À gauche"
+L.right = "À droite"
 L.north = "Nord"
---L.north_east = "North-East"
---L.east = "East"
---L.south_east = "South-East"
+L.north_east = "Nord-est"
+L.east = "Est"
+L.south_east = "Sud-est"
 L.south = "Sud"
---L.south_west = "South-West"
---L.west = "West"
---L.north_west = "North-West"
+L.south_west = "Sud-ouest"
+L.west = "Ouest"
+L.north_west = "Nord-ouest"
 
 -- Common ability name replacements
 L.tank_combo = "Combo Tank" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
@@ -140,11 +140,11 @@ L.roar = "Cri" -- When a boss opens their mouth to let out a loud roar, sometime
 L.leap = "Bond" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Charge" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "Energie pleine" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.weakened = "Affaibli" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "Flaque" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Flaques" -- Plural of L.pool
---L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
---L.totems = "Totems" -- Plural of L.totem
+L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
+L.totems = "Totems" -- Plural of L.totem
 L.portal = "Portail" -- A portal somewhere, usually leading to a different location
 L.portals = "Portails" -- Plural of L.portal
 L.rift = "Faille" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
