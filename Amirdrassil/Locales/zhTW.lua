@@ -38,7 +38,6 @@ if L then
 	L.special_mythic_bar = "%s+%s滿能 (%d)" -- 傳奇難度 滿能量大招 計時條
 	L.special_mechanic_bar = "%s [斷大招] (%d)" -- 其他boss用來處理大招的常規技能，只在大招期間如此提示 衝鋒 [斷大招] (1) 水池 [斷大招] (2)
 
-	L.barreling_charge = "衝鋒"
 	L.poisonous_javelin = "標槍" -- 中毒/緩速
 	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"
@@ -54,10 +53,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "在王身上"
 
 	L.scorching_roots = "樹根"
-	L.furious_charge = "衝鋒"
 	L.blazing_thorns = "躲圈" -- 躲圈/接圈，統一一點好了
 	L.falling_embers = "接圈"
-	L.fire_whirl = "火旋風"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
@@ -75,7 +72,6 @@ L = BigWigs:NewBossLocale("Smolderon", "zhTW")
 if L then
 	L.brand_of_damnation = "坦克分攤"
 	L.lava_geysers = "岩漿"
-	L.flame_waves = "旋風"
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhTW")
@@ -104,10 +100,8 @@ if L then
 	L.darkflame_cleave = "分攤"
 
 	L.incarnate_intermission = "擊飛"
-	L.corrupt_removed = "腐化結束（剩餘 %.1f 秒）" -- eg: Corrupt Over (5.0s remaining)
-
+	
 	L.incarnate = "升空"
-	L.spirits_of_the_kaldorei = "靈魂"
 	L.molten_gauntlet = "重拳" -- 熔火護手是什麼鬼翻譯......
 	L.mythic_debuffs = "牢籠" -- 影縛焰縛 Shadow Cage & Molten Eruption
 
