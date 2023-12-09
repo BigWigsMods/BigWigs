@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s на ТЕБЕ"
 L.you_icon = "%s на |T13700%d:0|tТЕБЕ"
 L.underyou = "%s под ТОБОЙ"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s над ТОБОЙ"
 L.other = "%s: %s"
 L.onboss = "%s на БОССЕ"
 L.buff_boss = "Бафф на БОССЕ: %s"
@@ -48,8 +48,8 @@ L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s отменено" -- Spell Cancelled
---L.you_die = "You die"
---L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "Умираешь"
+L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Помощник появился"
@@ -139,7 +139,7 @@ L.roar = "Рык" -- When a boss opens their mouth to let out a loud roar, somet
 L.leap = "Прыжок" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Рывок" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "Макс. энергя" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.weakened = "Ослабленный" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "Лужа" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Лужи" -- Plural of L.pool
 L.totem = "Тотем" -- A totem, usually summoned by a boss, the same thing that shamans summon
@@ -156,4 +156,4 @@ L.spirit = "Дух" -- Sometimes a boss will summon spirits, similar to ghosts, 
 L.spirits = "Духи" -- Plural of L.spirit
 L.tornado = "Торнадо" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Торнадо" -- Plural of L.tornado
---L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.frontal_cone = "Фронтал клив" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
