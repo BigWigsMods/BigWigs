@@ -187,10 +187,10 @@ L.blockTalkingHeadRaids = "Raids"
 L.blockTalkingHeadTimewalking = "Marcheurs du temps (donjons & raids)"
 L.blockTalkingHeadScenarios = "Scénarios"
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.userNotifySfx = "Les effets sonores étaient désactivés par BossBlock, la réactivation a été forcée."
+L.userNotifyMusic = "La musique était désactivée par BossBlock, la réactivation a été forcée."
+L.userNotifyAmbience = "Les sons d'ambiance étaient désactivés par BossBlock, la réactivation a été forcée."
+L.userNotifyErrorSpeech = "Les messsages d'erreur vocaux étaient désactivés par BossBlock, la réactivation a été forcée."
 
 L.subzone_grand_bazaar = "Le Grand bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Port de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
