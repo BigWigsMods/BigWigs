@@ -94,6 +94,8 @@ L.dbmFaker = "Fingir que estoy usando DBM"
 L.dbmFakerDesc = "Si un usuario de DBM hace un chequeo de versión para ver quien está usando DBM, ellos te verán a ti en la lista. Muy útil para gremios que obligan a usar DBM."
 L.zoneMessages = "Mostrar mensajes de la zona"
 L.zoneMessagesDesc = "Desactivando esto dejará de mostrar mensajes cuando entres en una zona donde BigWigs tenga un módulo, pero no lo tengas instalado. Recomendamos que dejes esto activo, pues será la única notificación que recibirás si creamos módulos nuevos para una zona que encuentres útil"
+--L.englishSayMessages = "English-only say messages"
+--L.englishSayMessagesDesc = "All the 'say' and 'yell' messages that you send in chat during a boss encounter will always be in English. Can be useful if you are with a mixed language group of players."
 
 L.slashDescTitle = "|cFFFED000Atajo de comandos:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Envia una cuenta regresiva de llamado al jefe a tu banda."

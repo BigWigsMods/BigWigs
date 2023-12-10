@@ -39,6 +39,7 @@ local select, type, next, tonumber = select, type, next, tonumber
 local C = core.C
 local pName = UnitName("player")
 local cpName
+local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
@@ -50,6 +51,7 @@ local myGUID, myRole, myRolePosition
 local myGroupGUIDs, myGroupRolePositions = {}, {}
 local solo = false
 local classColorMessages = true
+local englishSayMessages = false
 do -- Update some data that may be called at the top of modules (prior to initialization)
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
@@ -66,6 +68,12 @@ local updateData = function(module)
 		classColorMessages = false
 	else
 		classColorMessages = true
+	end
+
+	if core.db.profile.englishSayMessages then
+		englishSayMessages = true
+	else
+		englishSayMessages = false
 	end
 
 	local _, role, position = LibSpec:MySpecialization()
@@ -2206,7 +2214,7 @@ do
 		"|T137007:0|t",
 		"|T137008:0|t",
 	}
-	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
+	local comma = (myLocale == "zhTW" or myLocale == "zhCN") and "，" or ", "
 	local tconcat = table.concat
 	do
 		local function printTargets(self, key, playerTable, color, text, icon, markers)
@@ -2445,8 +2453,7 @@ do
 	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar %q without a valid unitGUID."
 
 	local countString = "%((%d%d?)%)"
-	local l = GetLocale()
-	if l == "zhCN" or l == "zhTW" then
+	if myLocale == "zhCN" or myLocale == "zhTW" then
 		countString = "（(%d%d?)）"
 	end
 
@@ -2793,32 +2800,45 @@ end
 -- @section chat
 --
 
---- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
--- @param key the option key
--- @param msg the message to say (if nil, key is used)
--- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Say(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "SAY")
-	else
-		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+do
+	local on = "%s on %s"
+	--- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
+	-- @param key the option key
+	-- @param msg the message to say (if nil, key is used)
+	-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:Say(key, msg, directPrint, englishText)
+		if not checkFlag(self, key, C.SAY) then return end
+		if directPrint then
+			SendChatMessage(englishSayMessages and englishText or msg, "SAY")
+		else
+			if englishSayMessages and englishText then
+				SendChatMessage(format(on, englishText, pName), "SAY")
+			else
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+			end
+		end
+		self:Debug(":Say", key, msg, directPrint, englishText)
 	end
-	self:Debug(":Say", key, msg, directPrint)
-end
 
---- Send a message in YELL. Generally used for abilities where you need to group up.
--- @param key the option key
--- @param msg the message to yell (if nil, key is used)
--- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Yell(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "YELL")
-	else
-		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+	--- Send a message in YELL. Generally used for abilities where you need to group up.
+	-- @param key the option key
+	-- @param msg the message to yell (if nil, key is used)
+	-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:Yell(key, msg, directPrint, englishText)
+		if not checkFlag(self, key, C.SAY) then return end
+		if directPrint then
+			SendChatMessage(englishSayMessages and englishText or msg, "YELL")
+		else
+			if englishSayMessages and englishText then
+				SendChatMessage(format(on, englishText, pName), "YELL")
+			else
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+			end
+		end
+		self:Debug(":Yell", key, msg, directPrint, englishText)
 	end
-	self:Debug(":Yell", key, msg, directPrint)
 end
 
 --- Cancel a countdown using say messages.
@@ -2850,11 +2870,12 @@ do
 	-- @number seconds the amount of time in seconds until the countdown expires
 	-- @param[opt] textOrIcon Attach additional text to the countdown if passed a text string, attach a raid icon if passed a number [1-8]
 	-- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
-	function boss:SayCountdown(key, seconds, textOrIcon, startAt)
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:SayCountdown(key, seconds, textOrIcon, startAt, englishText)
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
 		local tbl = {false}
-		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
+		local text = (type(textOrIcon) == "number" and iconList[textOrIcon]) or (englishSayMessages and englishText) or textOrIcon
 		local function printTime()
 			if not tbl[1] then
 				SendChatMessage(text and format("%s %d", text, start) or start, "SAY")
@@ -2873,11 +2894,12 @@ do
 	-- @number seconds the amount of time in seconds until the countdown expires
 	-- @param[opt] textOrIcon Attach additional text to the countdown if passed a text string, attach a raid icon if passed a number [1-8]
 	-- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
-	function boss:YellCountdown(key, seconds, textOrIcon, startAt)
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:YellCountdown(key, seconds, textOrIcon, startAt, englishText)
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
 		local tbl = {false}
-		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
+		local text = (type(textOrIcon) == "number" and iconList[textOrIcon]) or (englishSayMessages and englishText) or textOrIcon
 		local function printTime()
 			if not tbl[1] then
 				SendChatMessage(text and format("%s %d", text, start) or start, "YELL")
@@ -3007,8 +3029,7 @@ do
 end
 
 do
-	local l = GetLocale()
-	if l == "zhCN" or l == "zhTW" or l == "koKR" then
+	if myLocale == "zhCN" or myLocale == "zhTW" or myLocale == "koKR" then
 		function boss:AbbreviateNumber(amount)
 			if amount >= 100000000 then -- 100,000,000
 				return format(L.amount_one, amount/100000000)

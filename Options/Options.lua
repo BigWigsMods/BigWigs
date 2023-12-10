@@ -160,18 +160,29 @@ local acOptions = {
 					order = 32,
 					width = "full",
 				},
+				fakeDBMVersion = {
+					type = "toggle",
+					name = L.dbmFaker,
+					desc = L.dbmFakerDesc,
+					order = 33,
+					width = "full",
+				},
 				separator4 = {
 					type = "description",
 					name = " ",
 					order = 40,
 					width = "full",
 				},
-				fakeDBMVersion = {
+				englishSayMessages = {
 					type = "toggle",
-					name = L.dbmFaker,
-					desc = L.dbmFakerDesc,
+					name = L.englishSayMessages,
+					desc = L.englishSayMessagesDesc,
 					order = 41,
 					width = "full",
+					disabled = function()
+						local myLocale = GetLocale()
+						return myLocale == "enUS" or myLocale == "enGB"
+					end,
 				},
 				slashDescTitle = {
 					type = "description",

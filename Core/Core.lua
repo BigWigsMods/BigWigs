@@ -325,6 +325,7 @@ do
 				flash = true,
 				showZoneMessages = true,
 				fakeDBMVersion = false,
+				englishSayMessages = false,
 			},
 			global = {
 				optionShiftIndexes = {},

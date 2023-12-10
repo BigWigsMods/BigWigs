@@ -94,6 +94,8 @@ L.dbmFaker = "Маскировка под DBM"
 L.dbmFakerDesc = "Если пользователь DBM делает проверку версий, чтобы увидеть у кого стоит аддон, он обнаружит вас в этом списке. Полезно для гильдий, которые заставляют использовать DBM."
 L.zoneMessages = "Показывать сообщения для игровой зоны"
 L.zoneMessagesDesc = "Отключив, вы перестанете получать сообщения при входе в зону, для которой нет таймеров BigWigs. Мы рекомендуем оставить включенной, чтобы в случае создания таймеров для новой зоны, вы могли сразу узнать об этом."
+--L.englishSayMessages = "English-only say messages"
+--L.englishSayMessagesDesc = "All the 'say' and 'yell' messages that you send in chat during a boss encounter will always be in English. Can be useful if you are with a mixed language group of players."
 
 L.slashDescTitle = "|cFFFED000Быстрые команды:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Отправляет отсчет атаки в рейд."
