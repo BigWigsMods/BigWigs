@@ -71,6 +71,7 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/C_ContentTracking",
 	"113/C_CVar",
 	"113/C_TalkingHead",
+	"113/RaidBossEmoteFrame_OnEvent",
 	"113/TooltipDataProcessor",
 }
 files["**/Plugins/Countdown.lua"].ignore = {
