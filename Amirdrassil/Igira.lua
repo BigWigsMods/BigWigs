@@ -225,7 +225,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, L.blistering_spear_single)
+			self:Say(args.spellId, L.blistering_spear_single, nil, "Spear")
 		end
 		self:CustomIcon(blisteringSpearMarker, args.destName, count)
 		self:TargetsMessage(args.spellId, "cyan", playerList, self:Mythic() and 6 or 4, CL.count:format(L.blistering_spear, blisteringSpearCount-1))

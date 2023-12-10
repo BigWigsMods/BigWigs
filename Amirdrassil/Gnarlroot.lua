@@ -175,7 +175,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, count, count))
+			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, count, count), nil, ("Bomb (%d{rt%d})"):format(count, count))
 			self:SayCountdown(args.spellId, 6, count)
 		end
 		self:CustomIcon(controlledBurnMarker, args.destName, count)
@@ -382,6 +382,6 @@ function mod:FlamingSapApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Flaming Sap")
 	end
 end

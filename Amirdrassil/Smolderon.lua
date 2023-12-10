@@ -155,7 +155,7 @@ end
 
 function mod:SearingAftermathApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Searing Aftermath")
 		self:SayCountdown(args.spellId, 6)
 		self:PlaySound(args.spellId, "warning")
 	end

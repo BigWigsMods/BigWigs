@@ -426,7 +426,7 @@ do
 	function mod:BarrelingChargeApplied(args)
 		self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.charge, barrelingChargeCount - 1))
 		if self:Me(args.destGUID) then
-			self:Yell(args.spellId, CL.charge)
+			self:Yell(args.spellId, CL.charge, nil, "Charge")
 			self:YellCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning") -- Move
 		elseif trampledOnYou then -- Avoid
@@ -564,7 +564,7 @@ function mod:PoisonousJavelinApplied(args)
 		self:PersonalMessage(args.spellId, nil, L.poisonous_javelin)
 		self:PlaySound(args.spellId, self:Mythic() and "warning" or "alarm") -- move away in mythic
 		if self:Mythic() then
-			self:Say(args.spellId, L.poisonous_javelin)
+			self:Say(args.spellId, L.poisonous_javelin, nil, "Javelin")
 			self:SayCountdown(args.spellId, 10)
 		end
 	end
@@ -638,7 +638,7 @@ do
 			captivatingFinaleOnMe = true
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
-			self:Yell(args.spellId) -- Maybe get saved
+			self:Yell(args.spellId, nil, nil, "Captivating Finale") -- Maybe get saved
 		end
 	end
 

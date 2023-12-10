@@ -425,7 +425,7 @@ do
 		if self:Me(args.destGUID) then
 			-- self:PersonalMessage(args.spellId, nil, CL.bomb)
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.bomb)
+			self:Say(args.spellId, CL.bomb, nil, "Bomb")
 			self:SayCountdown(args.spellId, 8)
 		end
 		self:TargetsMessage(args.spellId, "red", playerList, nil, msg)
@@ -442,7 +442,7 @@ function mod:EncasedInAshApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Encased in Ash")
 	end
 end
 
@@ -485,7 +485,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
-			self:Yell(args.spellId)
+			self:Yell(args.spellId, nil, nil, "Smoldering Suffocation")
 			smolderingSuffocationOnMe = true
 			if self:GetOption("custom_on_repeating_yell_smoldering_suffocation") then
 				self:SimpleTimer(RepeatingChatMessages, 2)

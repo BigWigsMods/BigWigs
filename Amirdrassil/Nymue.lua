@@ -150,7 +150,7 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 			self:PersonalMessage(427722, nil, CL.bomb)
 		end
 		self:PlaySound(427722, "warning")
-		self:Say(427722, CL.bomb)
+		self:Say(427722, CL.bomb, nil, "Bomb")
 	end
 end
 

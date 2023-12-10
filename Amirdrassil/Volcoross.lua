@@ -187,9 +187,9 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.coiling_flames_single)
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, L.coiling_flames_single)
+			self:Say(args.spellId, L.coiling_flames_single, nil, "Flames")
 			if self:Mythic() then
-				self:SayCountdown(args.spellId, 12, L.flood_of_the_firelands_single_wait) -- Wait countdown for Mythic, soak after
+				self:SayCountdown(args.spellId, 12, L.flood_of_the_firelands_single_wait, nil, "Wait") -- Wait countdown for Mythic, soak after
 			elseif not self:LFR() then
 				self:SayCountdown(args.spellId, 10)
 			end
@@ -221,7 +221,7 @@ do
 		self:TargetMessage(421616, "yellow", name, CL.count:format(CL.pools, volcanicDisgorgeCount-1))
 		if self:Me(guid) then
 			self:PlaySound(421616, "warning") -- move
-			self:Say(421616, CL.pools)
+			self:Say(421616, CL.pools, nil, "Pools")
 		else
 			self:PlaySound(421616, "alert")
 		end
@@ -304,8 +304,8 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.flood_of_the_firelands_single)
 			self:PlaySound(args.spellId, "warning")
-			self:Yell(args.spellId, L.flood_of_the_firelands_single)
-			self:YellCountdown(args.spellId, 4, L.flood_of_the_firelands_single) -- Soak in 4
+			self:Yell(args.spellId, L.flood_of_the_firelands_single, nil, "Soak")
+			self:YellCountdown(args.spellId, 4, L.flood_of_the_firelands_single, nil, "Soak") -- Soak in 4
 		end
 	end
 

@@ -304,7 +304,7 @@ do
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, L.fiery_growth)
+			self:Say(args.spellId, L.fiery_growth, nil, "Dispels")
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.fiery_growth, fieryGrowthCount - 1))
 		self:CustomIcon(fieryGrowthMarker, args.destName, count)
