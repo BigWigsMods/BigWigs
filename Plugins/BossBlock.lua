@@ -366,6 +366,11 @@ do
 		end
 	end
 
+	local function EditEmotesOnPTR(event, msg, ...)
+		msg = "BigWigs |cFF3366ffNP|r: ".. msg
+		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
+	end
+
 	local restoreObjectiveTracker = nil
 	function plugin:OnEngage(_, module)
 		if not module or not module:GetJournalID() or module.worldBoss then return end
@@ -376,7 +381,12 @@ do
 			activatedModules[module:GetJournalID()] = true
 		end
 
-		if self.db.profile.blockEmotes and not onTestBuild then -- Don't block emotes on WoW beta.
+		if onTestBuild then -- Don't block emotes on WoW PTR
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+			self:RegisterEvent("RAID_BOSS_EMOTE", EditEmotesOnPTR)
+			self:RegisterEvent("RAID_BOSS_WHISPER", EditEmotesOnPTR)
+		elseif self.db.profile.blockEmotes then
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 		end
@@ -425,22 +435,23 @@ do
 	end
 
 	function RestoreAll(self)
-		if self.db.profile.blockEmotes then
-			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
-			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		-- blockEmotes
+		RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+		RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		if onTestBuild then
+			self:UnregisterEvent("RAID_BOSS_EMOTE")
+			self:UnregisterEvent("RAID_BOSS_WHISPER")
 		end
-		if self.db.profile.blockGarrison then
-			RestoreEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
-			RestoreEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
-			RestoreEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
-			RestoreEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
-		end
-		if self.db.profile.blockGuildChallenge then
-			RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
-		end
-		if self.db.profile.blockSpellErrors then
-			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
-		end
+		-- blockGarrison
+		RestoreEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
+		RestoreEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
+		RestoreEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
+		RestoreEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
+		-- blockGuildChallenge
+		RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
+		-- blockSpellErrors
+		RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+
 		if self.db.profile.blockTooltipQuestText then
 			hideQuestTrackingTooltips = false
 		end
@@ -456,6 +467,7 @@ do
 		if self.db.profile.disableErrorSpeech then
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
+
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
 			trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
