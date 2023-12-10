@@ -131,7 +131,7 @@ function mod:BrandofDamnation(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount))
 	if not overheatedOnMe then -- no circle
 		self:PlaySound(args.spellId, "alert") -- stack
-		if self:Damager() then
+		if not self:Tank() then
 			self:CastBar(args.spellId, self:Easy() and 4 or 3, L.brand_of_damnation)
 		end
 	end
