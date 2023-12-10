@@ -90,9 +90,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "HeatingUpApplied", 423896)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "HeatingUpApplied", 423896)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 421969, 422823, 421532) -- Flame Waves, Lava Geysers, Smoldering Ground
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 421969, 422823, 421532)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 421969, 422823, 421532)
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 422823, 421532) -- Lava Geysers, Smoldering Ground
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 422823, 421532)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 422823, 421532)
+	self:Log("SPELL_DAMAGE", "FlameWavesDamage", 421969)
+	self:Log("SPELL_MISSED", "FlameWavesDamage", 421969)
 
 	-- Mythic
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
@@ -271,9 +273,16 @@ do
 				key = 422691
 			end
 			prev = args.time
-			self:PlaySound(key, "underyou") -- SetOption:421969,422691,421532:::
-			self:PersonalMessage(key, "underyou") -- SetOption:421969,422691,421532:::
+			self:PlaySound(key, "underyou") -- SetOption:422691,421532:::
+			self:PersonalMessage(key, "underyou") -- SetOption:422691,421532:::
 		end
+	end
+end
+
+function mod:FlameWavesDamage(args)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "underyou")
+		self:PersonalMessage(args.spellId, nil, CL.tornado)
 	end
 end
 
