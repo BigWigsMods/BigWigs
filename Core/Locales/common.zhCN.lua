@@ -4,7 +4,7 @@ if not L then return end
 -- Prototype.lua common words
 L.you = "你 %s"
 L.you_icon = "|T13700%2$d:0|t你 %1$s"
-L.underyou = "你脚下：%s"
+L.underyou = "%s在你脚下"
 L.aboveyou = "%s在你面前"
 L.other = "%s：%s"
 L.onboss = "首领%s"
@@ -40,9 +40,9 @@ L.over = "%s结束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
 L.removed_from = "%2$s已移除%1$s" -- Spell removed from Player
 L.removed_by = "%s被%s移除" -- Spell removed by Player
-L.removed_after = "%s在%.1f秒后移除" -- "Spell removed after 1.1s" (s = seconds)
+L.removed_after = "%s移除，用时 %.1f 秒" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "即将%s" -- Spell Incoming
-L.interrupted = "%s已打断" -- Spell Interrupted
+L.interrupted = "已打断%s" -- Spell Interrupted
 L.interrupted_by = "%2$s已打断%1$s" -- Spell interrupted by Player
 L.no = "缺少%s" -- No Spell
 L.intermission = "阶段转换"
