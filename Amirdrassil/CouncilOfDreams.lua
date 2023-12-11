@@ -15,6 +15,7 @@ mod:SetRespawnTime(30)
 local castingRebirth = false
 local rebirthCount = 1
 local rebirthTimers = {}
+local duckList = {}
 
 local specialCD = 56
 local specialChain = { ["urctos"] = "aerwynn", ["aerwynn"] = "pip", ["pip"] = "urctos" }
@@ -72,7 +73,7 @@ function mod:GetOptions()
 		-- Urctos
 		420525, -- Blinding Rage
 		425114, -- Ursine Rage
-		{420948, "SAY", "SAY_COUNTDOWN"}, -- Barreling Charge
+		{420948, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Barreling Charge
 		421022, -- Agonizing Claws
 		{"agonizing_claws_debuff", "TANK"},
 		-- Aerwynn
@@ -86,7 +87,7 @@ function mod:GetOptions()
 		{421029, "CASTBAR"}, -- Song of the Dragon
 		{421032, "SAY"}, -- Captivating Finale
 		421501, -- Blink
-		{418720, "PRIVATE", "SAY_COUNTDOWN"}, -- Polymorph Bomb
+		{418720, "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Polymorph Bomb
 		421024, -- Emerald Winds
 		423551, -- Whimsical Gust (Damage)
 	},{
@@ -106,6 +107,10 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_EncounterEnd") -- stop skipped cast bars immediately on wipe
+	if not self:LFR() then
+		self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
+	end
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Pre Polymorph Bomb
 
 	-- General
 	self:Log("SPELL_CAST_START", "Rebirth", 418187)
@@ -159,6 +164,7 @@ function mod:OnEngage()
 	castingRebirth = false
 	rebirthCount = 1
 	rebirthTimers = {}
+	duckList = {}
 
 	activeSpecials = 0
 	specialCount = 1
@@ -207,7 +213,7 @@ function mod:OnEngage()
 	self:Bar(418720, self:Easy() and 35.0 or 36.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 	self:Bar(421024, self:Mythic() and 43 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 
-	self:SetPrivateAuraSound(418720, 429123) -- Polymorph Bomb
+	--self:SetPrivateAuraSound(418720, 418589) -- Polymorph Bomb
 end
 
 function mod:BigWigs_EncounterEnd()
@@ -220,6 +226,23 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:RaidBossWhisperSync(msg, player)
+	if msg:find("spell:418720", nil, true) then
+		duckList[#duckList+1] = player
+		self:TargetsMessage(418720, "yellow", duckList, self:Mythic() and 3 or 4, CL.count:format(L.polymorph_bomb_single, polymorphBombCount))
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+	--|TInterface\\ICONS\\INV_DuckBaby_Mallard.blp:20|t You are targeted for |cFFFF0000|Hspell:418720|h[Polymorph Bomb]|h|r!
+	if msg:find("spell:418720", nil, true) then
+		if self:Solo() or self:LFR() then -- You won't transmit addon comms when solo, and we don't listen to comms on LFR as the debuff can affect 12+ players, so warn here instead
+			self:PersonalMessage(418720, nil, L.polymorph_bomb_single)
+		end
+		self:PlaySound(418720, "warning")
+	end
+end
 
 function mod:SpecialOver()
 	activeSpecials = math.max(activeSpecials - 1, 0)
@@ -652,11 +675,15 @@ do
 end
 
 function mod:PolymorphBomb()
+	duckList = {}
+
 	local spellName = L.polymorph_bomb
 	self:StopBar(L.special_mechanic_bar:format(spellName, polymorphBombCount))
 	self:StopBar(CL.count:format(spellName, polymorphBombCount))
 
-	self:Message(418720, "cyan", CL.count:format(spellName, polymorphBombCount))
+	if self:LFR() then
+		self:Message(418720, "yellow", CL.count:format(spellName, polymorphBombCount)) -- On non-LFR we use a player message sent from whisper comms
+	end
 	polymorphBombCount = polymorphBombCount + 1
 	self:PlaySound(418720, "alert")
 
