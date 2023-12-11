@@ -53,7 +53,7 @@ if L then
 	L.blazing_coalescence_on_boss_note = "首领获得时"
 
 	L.scorching_roots = "树根"
-	L.blazing_thorns = "躲避"
+	L.blazing_thorns = "躲圈"
 	L.falling_embers = "接圈"
 end
 
@@ -62,8 +62,8 @@ if L then
 	L.mythic_add_death = "%s已击杀"
 
 	L.continuum = "新矩阵"
-	L.surging_growth = "新踩圈"
-	L.ephemeral_flora = "踩红圈"
+	L.surging_growth = "新圈"
+	L.ephemeral_flora = "红圈"
 	L.viridian_rain = "翠绿之雨"
 	L.threads = "丝线" -- From the spell description of Impending Loom (429615) "threads of energy"
 end
