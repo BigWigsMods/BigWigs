@@ -40,7 +40,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: The Firelord's Fury
-		{421343, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Brand of Damnation
+		{421343, "SAY", "SAY_COUNTDOWN", "CASTBAR", "CASTBAR_COUNTDOWN", "EMPHASIZE"}, -- Brand of Damnation
 		421656, -- Cauterizing Wound
 		{422577, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Searing Aftermath
 		{421455, "ME_ONLY_EMPHASIZE"}, -- Overheated
@@ -128,13 +128,23 @@ end
 -- Stage One: The Firelord's Fury
 function mod:BrandofDamnation(args)
 	self:StopBar(CL.count:format(L.brand_of_damnation, brandofDamnationCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount))
-	if not overheatedOnMe then -- no circle
+
+	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+	if bossUnit and self:Tanking(bossUnit) then
+		self:PersonalMessage(args.spellId, nil, L.brand_of_damnation)
+		local castTime = self:Easy() and 4 or 3
+		self:Yell(args.spellId, L.brand_of_damnation, nil, "Tank Soak")
+		self:YellCountdown(args.spellId, castTime, nil, castTime-1)
+		self:CastBar(args.spellId, castTime, L.brand_of_damnation)
 		self:PlaySound(args.spellId, "alert") -- stack
-		if not self:Tank() then
-			self:CastBar(args.spellId, self:Easy() and 4 or 3, L.brand_of_damnation)
-		end
+	elseif self:Tank() or overheatedOnMe then
+		self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount), nil, true) -- Disable emphasize
+	else
+		self:Message(args.spellId, "yellow", CL.count:format(L.brand_of_damnation, brandofDamnationCount))
+		self:CastBar(args.spellId, self:Easy() and 4 or 3, L.brand_of_damnation)
+		self:PlaySound(args.spellId, "alert") -- stack
 	end
+
 	brandofDamnationCount = brandofDamnationCount + 1
 	if brandofDamnationCount < (self:Easy() and 13 or 9) and brandofDamnationCount % 2 == 0 then -- 8 total, starting odds after a stage 2
 		self:Bar(args.spellId, 30, CL.count:format(L.brand_of_damnation, brandofDamnationCount))
