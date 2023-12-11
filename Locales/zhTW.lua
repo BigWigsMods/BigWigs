@@ -95,7 +95,7 @@ L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用
 L.zoneMessages = "顯示區域訊息"
 L.zoneMessagesDesc = "此選項於進入區域時提示可安裝的 BigWigs 模組。建議啟用此選項，因為當我們為一個新區域建立 BigWigs 模組，這將會是唯一的提示安裝訊息。"
 L.englishSayMessages = "英文喊話"
-L.englishSayMessagesDesc = "戰鬥中所有的「說」與「大喊」提示都會以英文發送。這對多語言團隊非常有用。"
+L.englishSayMessagesDesc = "首領戰中所有以「說」與「大喊」發送的提示訊息都會以英文發送。這對多語言團隊非常有用。"
 
 L.slashDescTitle = "|cFFFED000指令：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 發送拉怪倒數提示到團隊。"
