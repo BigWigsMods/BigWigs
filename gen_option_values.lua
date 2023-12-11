@@ -993,8 +993,9 @@ local function parseLua(file)
 				if method == "PlaySound" and args[3+offset] and args[3+offset] ~= "nil" and not args[3+offset]:match("^\"(.-)\"$") and not args[3+offset]:match(" and \"(.-)\"$") then
 					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3+offset])))
 				end
-				if method == "Say" and (args[2+offset] == "nil" and args[3+offset] == "true") then
-					error(string.format("    %s:%d: Say: Missing msg(2) with directPrint(3)! func=%s, key=%s", file_name, n, tostring(current_func), key))
+				-- Check chat directPrint
+				if (method == "Say" or method == "Yell") and (args[2+offset] == "nil" and args[3+offset] == "true") then
+					error(string.format("    %s:%d: %s: Missing msg(2) with directPrint(3)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
 				end
 				-- Set default keys
 				if method == "CloseAltPower" and not key then
