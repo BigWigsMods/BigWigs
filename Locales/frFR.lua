@@ -94,7 +94,7 @@ L.dbmFaker = "Prétendre d'utiliser DBM"
 L.dbmFakerDesc = "Si un utilisateur de DBM effectue une vérification des versions pour voir qui utilise DBM, il vous verra sur la liste. Utile pour les guildes qui forcent l'utilisation de DBM."
 L.zoneMessages = "Afficher les messages de zone"
 L.zoneMessagesDesc = "La désactivation de ceci enlevera les messages qui s'affichent quand vous entrez dans une zone pour laquelle BigWigs a un module de délais que vous n'avez pas installé. Nous vous recommendons de laisser ceci activé, étant donné qu'il s'agit de la seule notification que vous recevrez si nous ajoutons un module que vous n'avez pas pour une nouvelle zone qui vous intéresse."
-L.englishSayMessages = "Changer en anglais tous les messages"
+L.englishSayMessages = "Messages dans le chat en anglais"
 L.englishSayMessagesDesc = "Tous les messages envoyés durant les combats de boss dans les discussions 'dire' et 'crier' seront toujours en anglais. Cette option peut être utile lorsque votre groupe est multilingue."
 
 L.slashDescTitle = "|cFFFED000Commandes :|r"
