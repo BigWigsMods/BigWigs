@@ -482,7 +482,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, count, count))
+			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, count, count), nil, ("Bomb (%d{rt%d})"):format(count, count))
 			self:SayCountdown(args.spellId, 8, count)
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -674,7 +674,7 @@ end
 function mod:SurgingBlastApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.bomb)
-		self:Say(args.spellId, CL.bomb)
+		self:Say(args.spellId, CL.bomb, nil, "Bomb")
 		self:SayCountdown(args.spellId, 6)
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -958,7 +958,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.fulminating_charge_debuff)
+			self:Say(args.spellId, L.fulminating_charge_debuff, nil, "Charge")
 			if self:Mythic() then
 				self:SayCountdown(args.spellId, 3, nil, 2)
 			else
@@ -1082,7 +1082,7 @@ end
 
 function mod:MagneticChargeApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId, L.magnetic_charge)
+		self:Say(args.spellId, L.magnetic_charge, nil, "Pull Charge")
 		self:SayCountdown(args.spellId, 8)
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -1104,7 +1104,7 @@ function mod:ThunderousBlast(args)
 	self:PlaySound(args.spellId, "alarm")
 	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	if bossUnit and self:Tanking(bossUnit) then
-		self:Say(args.spellId, L.thunderous_blast)
+		self:Say(args.spellId, L.thunderous_blast, nil, "Blast")
 	end
 	thunderousBlastCount = thunderousBlastCount + 1
 	self:Bar(args.spellId, timers[3][args.spellId][thunderousBlastCount], CL.count:format(L.thunderous_blast, thunderousBlastCount))

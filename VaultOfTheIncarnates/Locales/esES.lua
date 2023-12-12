@@ -115,7 +115,6 @@ if L then
 	-- L.eggs_remaining = "%d Eggs Remaining!"
 	-- L.broodkeepers_bond = "Eggs Remaining"
 	-- L.greatstaff_of_the_broodkeeper = "Greatstaff"
-	-- L.greatstaffs_wrath = "Laser"
 	-- L.clutchwatchers_rage = "Rage"
 	-- L.rapid_incubation = "Infuse Eggs"
 	-- L.icy_shroud = "Heal Absorb"

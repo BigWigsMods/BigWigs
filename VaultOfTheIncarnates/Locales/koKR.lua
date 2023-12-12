@@ -115,7 +115,6 @@ if L then
 	L.eggs_remaining = "알 %d 개 남음!"
 	L.broodkeepers_bond = "알 남아있음"
 	L.greatstaff_of_the_broodkeeper = "대지팡이"
-	L.greatstaffs_wrath = "레이저"
 	L.clutchwatchers_rage = "분노"
 	L.rapid_incubation = "급속 배양"
 	L.icy_shroud = "치유량 흡수 껍질"

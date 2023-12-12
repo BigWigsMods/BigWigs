@@ -115,7 +115,6 @@ if L then
 	L.eggs_remaining = "%d Uova Rimanenti!"
 	L.broodkeepers_bond = "Uova Rimanenti"
 	L.greatstaff_of_the_broodkeeper = "Granbastone"
-	L.greatstaffs_wrath = "Laser"
 	L.clutchwatchers_rage = "Rabbia"
 	L.rapid_incubation = "Infusione Uova"
 	L.icy_shroud = "Assorbimento Cure"

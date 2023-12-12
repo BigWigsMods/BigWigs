@@ -115,7 +115,6 @@ if L then
 	L.eggs_remaining = "%d Eier verbleiben!"
 	L.broodkeepers_bond = "Eier verbleiben"
 	L.greatstaff_of_the_broodkeeper = "Großstab"
-	L.greatstaffs_wrath = "Strahl"
 	L.clutchwatchers_rage = "Wut (Gelegehüterin)"
 	L.rapid_incubation = "Eier erfüllen"
 	L.icy_shroud = "Heilung absorbiert"

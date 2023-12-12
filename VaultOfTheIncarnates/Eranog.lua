@@ -134,7 +134,7 @@ function mod:FlameriftApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.add)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, CL.add)
+		self:Say(args.spellId, CL.add, nil, "Add")
 		self:SayCountdown(args.spellId, 6)
 	end
 end
@@ -246,7 +246,7 @@ function mod:GreaterFlameriftApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, L.greater_flamerift)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, L.greater_flamerift)
+		self:Say(args.spellId, L.greater_flamerift, nil, "Mythic Add")
 		self:SayCountdown(args.spellId, 6)
 	end
 end

@@ -269,7 +269,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.rticon:format(L.web, count))
+			self:Say(args.spellId, CL.rticon:format(L.web, count), nil, ("Web ({rt%d})"):format(count))
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -352,7 +352,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.rticon:format(L.web, count))
+			self:Say(args.spellId, CL.rticon:format(L.web, count), nil, ("Web ({rt%d})"):format(count))
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end

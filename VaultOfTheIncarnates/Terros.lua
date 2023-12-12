@@ -140,7 +140,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(380487, nil, L.rock_blast)
 			self:PlaySound(380487, "warning")
-			self:Yell(380487, L.rock_blast)
+			self:Yell(380487, L.rock_blast, nil, "Soak")
 			self:YellCountdown(380487, 5.5)
 		else
 			self:PlaySound(380487, "alert")
@@ -151,7 +151,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(381315, nil , L.awakened_earth)
 			self:PlaySound(381315, "warning")
-			self:Say(381315, CL.count_rticon:format(L.awakened_earth, count, count))
+			self:Say(381315, CL.count_rticon:format(L.awakened_earth, count, count), nil, ("Pillar (%d{rt%d})"):format(count, count))
 			self:SayCountdown(381315, 6)
 		end
 		self:CustomIcon(awakenedEarthMarker, args.destName, count)

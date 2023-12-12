@@ -115,7 +115,6 @@ if L then
 	L.eggs_remaining = "%d Ovos Restantes!"
 	L.broodkeepers_bond = "Ovos Restantes"
 	L.greatstaff_of_the_broodkeeper = "Grande Cajado"
-	L.greatstaffs_wrath = "Laser"
 	L.clutchwatchers_rage = "Raiva"
 	L.rapid_incubation = "Ovos Imbuídos"
 	L.icy_shroud = "Cura Absorvida"

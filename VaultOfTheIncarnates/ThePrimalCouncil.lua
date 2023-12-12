@@ -297,9 +297,13 @@ do
 		table.sort(iconList, sortPriority) -- Priority for tanks > melee > ranged
 		for i = 1, #iconList do
 			if iconList[i].player == self:UnitName("player") then
-				local text = i == 1 and L.meteor_axes_melee or L.meteor_axes_ranged -- Melee or Ranged Axe
-				self:Say(374038, CL.rticon:format(text, i))
-				self:PersonalMessage(374038, nil, text)
+				if i == 1 then -- Melee Axe
+					self:Say(374038, CL.rticon:format(L.meteor_axes_melee, i), nil, ("Melee Axe ({rt%d})"):format(i))
+					self:PersonalMessage(374038, nil, L.meteor_axes_melee)
+				else -- Ranged Axe
+					self:Say(374038, CL.rticon:format(L.meteor_axes_ranged, i), nil, ("Ranged Axe ({rt%d})"):format(i))
+					self:PersonalMessage(374038, nil, L.meteor_axes_ranged)
+				end
 				self:SayCountdown(374038, 6, i)
 				self:PlaySound(374038, "warning") -- debuffmove
 				playedSound = true

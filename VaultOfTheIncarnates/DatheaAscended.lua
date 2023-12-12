@@ -230,7 +230,7 @@ function mod:ConductiveMarkApplied(args)
 		local amount = args.amount or 1
 		self:PlaySound(args.spellId, "warning")
 		if amount == 1 then -- Initial Say
-			self:Say(args.spellId, L.conductive_mark)
+			self:Say(args.spellId, L.conductive_mark, nil, "Mark")
 			self:PersonalMessage(args.spellId, nil, L.conductive_mark)
 		else
 			self:StackMessage(args.spellId, "blue", args.destName, amount, amount, L.conductive_mark)

@@ -71,7 +71,6 @@ if L then
 	L.eggs_remaining = "%d Eggs Remaining!"
 	L.broodkeepers_bond = "Eggs Remaining"
 	L.greatstaff_of_the_broodkeeper = "Greatstaff"
-	L.greatstaffs_wrath = "Laser"
 	L.clutchwatchers_rage = "Rage"
 	L.rapid_incubation = "Infuse Eggs"
 	L.icy_shroud = "Heal Absorb"
@@ -143,14 +142,14 @@ function mod:GetOptions()
 	}, {
 		[375809] = L.broodkeepers_bond, -- Broodkeeper's Bond (Eggs Remaining)
 		[380175] = L.greatstaff_of_the_broodkeeper, -- Greatstaff of the Broodkeeper (Greatstaff)
-		[375889] = L.greatstaffs_wrath, -- Greatstaff's Wrath (Laser)
+		[375889] = CL.laser, -- Greatstaff's Wrath (Laser)
 		[375829] = L.clutchwatchers_rage, -- Clutchwatcher's Rage (Rage)
 		[376073] = L.rapid_incubation, -- Rapid Incubation (Infuse Eggs)
 		[388716] = L.icy_shroud, -- Icy Shroud (Heal Absorb)
 		[-25129] = CL.adds, -- Primalist Reinforcements (Adds)
 		[375879] = L.broodkeepers_fury, --  Broodkeeper's Fury (Fury)
 		[392194] = L.greatstaff_of_the_broodkeeper, -- Empowered Greatstaff of the Broodkeeper (Greatstaff)
-		[380483] = L.greatstaffs_wrath, -- Empowered Greatstaff's Wrath (Laser)
+		[380483] = CL.laser, -- Empowered Greatstaff's Wrath (Laser)
 		[388918] = L.frozen_shroud, -- Frozen Shroud (Root Absorb)
 		[396264] = L.detonating_stoneslam, -- Detonating Stoneslam (Tank Soak)
 	}
@@ -343,9 +342,9 @@ end
 
 function mod:GreatstaffsWrathApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.greatstaffs_wrath)
+		self:PersonalMessage(args.spellId, nil, CL.laser)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, L.greatstaffs_wrath)
+		self:Say(args.spellId, CL.laser, nil, "Laser")
 	end
 end
 
@@ -562,7 +561,7 @@ do
 	function mod:IonizingChargeApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, nil, nil, "Ionizing Charge")
 			self:PlaySound(args.spellId, "warning")
 			onMe = true
 		end
@@ -668,7 +667,7 @@ function mod:DetonatingStoneslamApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount-1))
 	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount-1))
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId, L.detonating_stoneslam)
+		self:Say(args.spellId, L.detonating_stoneslam, nil, "Tank Soak")
 		self:SayCountdown(args.spellId, 6)
 	else
 		self:PlaySound(args.spellId, "warning") -- danger

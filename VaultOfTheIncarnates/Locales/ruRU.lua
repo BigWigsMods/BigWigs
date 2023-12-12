@@ -115,7 +115,6 @@ if L then
 	L.eggs_remaining = "Яиц осталось: %d!"
 	L.broodkeepers_bond = "Яиц осталось"
 	L.greatstaff_of_the_broodkeeper = "Великий Посох"
-	L.greatstaffs_wrath = "Лазер"
 	L.clutchwatchers_rage = "Ярость"
 	L.rapid_incubation = "Инкубация"
 	L.icy_shroud = "Абсорб"

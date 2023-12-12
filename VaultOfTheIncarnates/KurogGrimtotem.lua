@@ -683,9 +683,13 @@ do
 		table.sort(iconList, sortPriority) -- Priority for tanks > melee > ranged
 		for i = 1, #iconList do
 			if iconList[i].player == self:UnitName("player") then
-				local text = i == 1 and L.absolute_zero_melee or L.absolute_zero_ranged -- Melee or Ranged Soak
-				self:Say(372458, CL.rticon:format(text, i))
-				self:PersonalMessage(372458, nil, text)
+				if i == 1 then -- Melee Soak
+					self:Say(372458, CL.rticon:format(L.absolute_zero_melee, i), nil, ("Melee Soak ({rt%d})"):format(i))
+					self:PersonalMessage(372458, nil, L.absolute_zero_melee)
+				else -- Ranged Soak
+					self:Say(372458, CL.rticon:format(L.absolute_zero_ranged, i), nil, ("Ranged Soak ({rt%d})"):format(i))
+					self:PersonalMessage(372458, nil, L.absolute_zero_ranged)
+				end
 				self:SayCountdown(372458, 5, i)
 				self:PlaySound(372458, "warning") -- debuffmove
 				playedSound = true
@@ -797,7 +801,7 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(373487, L.lightning_crash)
+			self:Say(373487, L.lightning_crash, nil, "Zaps")
 			self:SayCountdown(373487, 4)
 			self:PersonalMessage(373487)
 			self:PlaySound(373487, "warning") -- debuffmove
@@ -828,7 +832,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count + 3 -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.bomb)
+			self:Say(args.spellId, CL.bomb, nil, "Bomb")
 			self:SayCountdown(args.spellId, 5, count)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
@@ -878,7 +882,7 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.bomb)
+			self:Say(args.spellId, CL.bomb, nil, "Bomb")
 			self:SayCountdown(args.spellId, 5)
 			self:PersonalMessage(args.spellId, nil, CL.bomb)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
@@ -928,7 +932,7 @@ do
 		self:TargetMessage(374622, "yellow", name) -- Storm Break
 		if self:Me(guid) then
 			self:PlaySound(374622, "warning") -- debuffmove
-			self:Say(374622)
+			self:Say(374622, nil, nil, "Storm Break")
 		end
 	end
 
@@ -942,7 +946,7 @@ function mod:LethalCurrentApplied(args)
 	self:TargetMessage(args.spellId, "orange", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning") -- debuffmove
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Lethal Current")
 		self:SayCountdown(args.spellId, 6)
 	end
 end
@@ -1082,7 +1086,7 @@ end
 function mod:StormSmiteApplied(args)
 	self:TargetMessage(393429, "purple", args.destName)
 	if self:Me(args.destGUID) then
-		self:Say(393429, CL.bomb)
+		self:Say(393429, CL.bomb, nil, "Bomb")
 	end
 end
 

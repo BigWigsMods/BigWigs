@@ -115,7 +115,6 @@ if L then
 	L.eggs_remaining = "還剩 %d 個蛋！"
 	L.broodkeepers_bond = "剩餘龍蛋"
 	L.greatstaff_of_the_broodkeeper = "巨杖"
-	L.greatstaffs_wrath = "射線"
 	L.clutchwatchers_rage = "狂怒"
 	L.rapid_incubation = "注入龍蛋"
 	L.icy_shroud = "減速吸收盾"
