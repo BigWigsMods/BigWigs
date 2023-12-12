@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "杀戮指令标记你时在姓名板显示一个图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
 	L.molten_cleave = "正面顺劈"
-	L.incinerating_roar = "咆哮"
 	L.molten_spikes = "尖刺"
 	L.collapsing_army = "烈焰军团"
 	L.greater_flamerift = "大型增援"
@@ -48,7 +47,6 @@ if L then
 	L.webs = "蛛网"
 	L.web = "蛛网"
 	L.gossamer_burst = "拉人"
-	L.repelling_burst = "击退"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhCN")
@@ -83,14 +81,12 @@ if L then
 	L.Storm = "风暴"
 
 	-- Fire
-	L.magma_burst = "岩浆池"
 	L.molten_rupture = "熔岩"
 	L.searing_carnage = "火焰跳舞"
 	L.raging_inferno = "吸收岩浆池"
 
 	-- Frost
 	L.biting_chill = "刺骨寒意"
-	L.frigid_torrent = "冰球跳舞"
 	L.absolute_zero = "团队分摊"
 	L.absolute_zero_melee = "近战分摊"
 	L.absolute_zero_ranged = "远程分摊"
@@ -130,15 +126,12 @@ if L then
 	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	L.hurricane_wing = "推开"
 	L.volatile_current = "火花"
 	L.thunderous_blast = "冲击"
-	L.lightning_breath = "吐息"
 	L.lightning_strikes = "打击"
 	L.electric_scales = "团队伤害"
 	L.electric_lash = "鞭笞"
 	-- Intermission: The Primalist Strike
-	L.lightning_devastation = "吐息"
 	L.shattering_shroud = "治疗吸收盾"
 	-- Stage Two: Surging Power
 	-- L.absorb_text = "%s (%.0f%%)"
@@ -151,7 +144,6 @@ if L then
 	L.fulminating_charge = "积雷"
 	L.fulminating_charge_debuff = "积雷"
 	-- Intermission: The Vault Falters
-	L.storm_break = "传送"
 	L.ball_lightning = "闪电球"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "积雷倒数"

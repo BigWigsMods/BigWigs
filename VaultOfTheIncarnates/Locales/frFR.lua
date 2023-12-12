@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Affiche un icône sur le nameplate du Tarasèke frénétique qui vous fixe.\n\nNécessite l'utilisation des namemplates ennemi et un addon qui supporte les nameplates (KuiNameplates, Plater)."
 
 	L.molten_cleave = "Frontal"
-	L.incinerating_roar = "Hurlement"
 	L.molten_spikes = "Pointes"
 	L.collapsing_army = "Armée"
 	L.greater_flamerift = "Add Mythique"
@@ -48,7 +47,6 @@ if L then
 	L.webs = "Toiles"
 	L.web = "Toile"
 	L.gossamer_burst = "Attirer"
-	L.repelling_burst = "Repousser"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "frFR")
@@ -83,14 +81,12 @@ if L then
 	L.Storm = "Tempête"
 
 	-- Fire
-	L.magma_burst = "Flaques"
 	L.molten_rupture = "Vagues"
 	L.searing_carnage = "Danse"
 	L.raging_inferno = "Soak Flaques"
 
 	-- Frost
 	L.biting_chill = "DoT Frisson"
-	L.frigid_torrent = "Orbes"
 	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Soak Mêlée"
 	L.absolute_zero_ranged = "Soak Distance"
@@ -130,15 +126,12 @@ if L then
 	L.lighting_devastation_trigger = "profonde inspiration" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	L.hurricane_wing = "Projection"
 	L.volatile_current = "Etincelles"
 	L.thunderous_blast = "Explosion"
-	L.lightning_breath = "Souffle"
 	L.lightning_strikes = "Frappes"
 	L.electric_scales = "Dégats Raid"
 	L.electric_lash = "Fouet"
 	-- Intermission: The Primalist Strike
-	L.lightning_devastation = "Souffle"
 	L.shattering_shroud = "Absorption Soins"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
@@ -151,7 +144,6 @@ if L then
 	L.fulminating_charge = "Charges"
 	L.fulminating_charge_debuff = "Charge"
 	-- Intermission: The Vault Falters
-	L.storm_break = "Téléportation"
 	L.ball_lightning = "Boules"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Charge attirante"

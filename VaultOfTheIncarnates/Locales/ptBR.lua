@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação do Tarasek Flamescama que está fixado em você.\n\nRequer o uso de placas de identificação inimigas e um addon de placas de identificação suportado (KuiNameplates, Plater)."
 
 	L.molten_cleave = "Frontal"
-	L.incinerating_roar = "Rugido"
 	L.molten_spikes = "Espetos"
 	L.collapsing_army = "Exército"
 	L.greater_flamerift = "Add Mítico"
@@ -48,7 +47,6 @@ if L then
 	L.webs = "Teias"
 	L.web = "Teia"
 	L.gossamer_burst = "Puxão"
-	L.repelling_burst = "Repulsão"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "ptBR")
@@ -83,14 +81,12 @@ if L then
 	L.Storm = "Tempestade"
 
 	-- Fire
-	L.magma_burst = "Poças"
 	L.molten_rupture = "Ondas"
 	L.searing_carnage = "Dança"
 	L.raging_inferno = "Poças de Soak"
 
 	-- Frost
 	L.biting_chill = "DoT Congelante"
-	L.frigid_torrent = "Orbes"
 	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Soak Melee"
 	L.absolute_zero_ranged = "Soak Ranged"
@@ -130,15 +126,12 @@ if L then
 	L.lighting_devastation_trigger = "Respiração Profunda" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	L.hurricane_wing = "Empurrão"
 	L.volatile_current = "Centelhas"
 	L.thunderous_blast = "Impacto"
-	L.lightning_breath = "Sopro"
 	L.lightning_strikes = "Raios"
 	L.electric_scales = "Dano na Raid"
 	L.electric_lash = "Açoite"
 	-- Intermission: The Primalist Strike
-	L.lightning_devastation = "Sopro"
 	L.shattering_shroud = "Absorb de Cura"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
@@ -151,7 +144,6 @@ if L then
 	L.fulminating_charge = "Cargas"
 	L.fulminating_charge_debuff = "Carga"
 	-- Intermission: The Vault Falters
-	L.storm_break = "Teleporte"
 	L.ball_lightning = "Bolas"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Carga Puxante"

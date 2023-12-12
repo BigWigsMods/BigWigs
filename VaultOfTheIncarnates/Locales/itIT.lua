@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Mostra un'icona sulla barra del Tarasek Scagliafiamma che ti insegue.\n\nRichiede l'uso delle Barre del Bersaglio Nemichee un'addon delle Barre del bersaglio supportato (KuiNameplates, Plater)."
 
 	L.molten_cleave = "Frontale"
-	L.incinerating_roar = "Ruggito"
 	L.molten_spikes = "Spuntoni"
 	L.collapsing_army = "Armata"
 	L.greater_flamerift = "Add Mitico"
@@ -48,7 +47,6 @@ if L then
 	L.webs = "Ragnatele"
 	L.web = "Ragnatela"
 	L.gossamer_burst = "Presa"
-	L.repelling_burst = "Respingimento"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "itIT")
@@ -83,14 +81,12 @@ if L then
 	L.Storm = "Tempesta"
 
 	-- Fire
-	L.magma_burst = "Pozze"
 	L.molten_rupture = "Ondate"
 	L.searing_carnage = "Danza"
 	L.raging_inferno = "Assorbi Pozze"
 
 	-- Frost
 	L.biting_chill = "DoT Morsa Gelida"
-	L.frigid_torrent = "Globi"
 	L.absolute_zero = "Assorbimenti"
 	L.absolute_zero_melee = "Assorbimento Corpo a Corpo"
 	L.absolute_zero_ranged = "Assorbimento a Distanza"
@@ -130,15 +126,12 @@ if L then
 	L.lighting_devastation_trigger = "respiro profondo" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	L.hurricane_wing = "Respingimento"
 	L.volatile_current = "Scintilla"
 	L.thunderous_blast = "Detonazione"
-	L.lightning_breath = "Soffio"
 	L.lightning_strikes = "Assalti"
 	L.electric_scales = "Danno Incursione"
 	L.electric_lash = "Sferzata"
 	-- Intermission: The Primalist Strike
-	L.lightning_devastation = "Soffio"
 	L.shattering_shroud = "Assorbimento Cure"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
@@ -151,7 +144,6 @@ if L then
 	L.fulminating_charge = "Cariche"
 	L.fulminating_charge_debuff = "Carica"
 	-- Intermission: The Vault Falters
-	L.storm_break = "Teletrasporto"
 	L.ball_lightning = "Sfere"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Carica Attirante"

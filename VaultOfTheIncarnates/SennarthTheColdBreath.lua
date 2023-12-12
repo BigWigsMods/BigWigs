@@ -64,7 +64,6 @@ if L then
 	L.webs = "Webs"
 	L.web = "Web"
 	L.gossamer_burst = "Grip"
-	L.repelling_burst = "Pushback"
 end
 
 --------------------------------------------------------------------------------
@@ -109,7 +108,7 @@ function mod:GetOptions()
 		[373048] = L.webs, -- Suffocating Webs (Webs)
 		[-24899] = CL.big_add, -- Frostbreath Arachnid (Big Add)
 		[374112] = L.freezing_breath, -- Freezing Breath (Add Breath)
-		[371983] = L.repelling_burst, -- Repelling Burst (Knockback)
+		[371983] = CL.pushback, -- Repelling Burst (Pushback)
 	}
 end
 
@@ -203,7 +202,7 @@ function mod:EncounterEvent(args)
 			self:CDBar(372238, 13.3, CL.small_adds) -- Call Spiderlings
 			self:Bar(371976, 15.7, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 			self:Bar(373048, 26.2, CL.count:format(L.webs, webCount)) -- Suffocating Webs
-			self:Bar(371983, 32.8, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
+			self:Bar(371983, 32.8, CL.count:format(CL.pushback, burstCount)) -- Repelling Burst
 		end
 	end
 end
@@ -335,7 +334,7 @@ function mod:ApexOfIceRemoved(args)
 	self:CDBar(372238, self:Easy() and 13 or 9, CL.small_adds) -- Call Spiderlings 8.5~10.5
 	self:Bar(371976, self:Easy() and 15 or 11, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 	self:Bar(373048, self:Easy() and 25 or 21, CL.count:format(L.webs, webCount)) -- Suffocating Webs
-	self:Bar(371983, self:Easy() and 34 or 28, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
+	self:Bar(371983, self:Easy() and 34 or 28, CL.count:format(CL.pushback, burstCount)) -- Repelling Burst
 end
 
 do
@@ -369,10 +368,10 @@ do
 end
 
 function mod:RepellingBurst(args)
-	self:StopBar(CL.count:format(L.repelling_burst, burstCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.repelling_burst, burstCount)))
+	self:StopBar(CL.count:format(CL.pushback, burstCount))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(CL.pushback, burstCount)))
 	self:PlaySound(args.spellId, "warning") -- castmove
-	self:CastBar(args.spellId, 4, L.repelling_burst)
+	self:CastBar(args.spellId, 4, CL.pushback)
 	burstCount = burstCount + 1
-	self:Bar(args.spellId, 34.2, CL.count:format(L.repelling_burst, burstCount))
+	self:Bar(args.spellId, 34.2, CL.count:format(CL.pushback, burstCount))
 end

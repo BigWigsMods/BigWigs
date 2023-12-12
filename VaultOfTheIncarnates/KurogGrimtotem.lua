@@ -64,14 +64,12 @@ if L then
 
 	-- Fire
 	L.magma_burst_icon = "spell_fire_ragnaros_lavabolt"
-	L.magma_burst = "Pools"
 	L.molten_rupture = "Waves"
 	L.searing_carnage = "Dance"
 	L.raging_inferno = "Soak Pools"
 
 	-- Frost
 	L.biting_chill = "Chill DoT"
-	L.frigid_torrent = "Orbs"
 	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Melee Soak"
 	L.absolute_zero_ranged = "Ranged Soak"
@@ -105,7 +103,7 @@ local alterSpellNameMap = {
 	},
 	["Fire"] = {
 		["stage"] = -25040, -- Fire Altar
-		["damage"] = L.magma_burst,
+		["damage"] = CL.pools,
 		["avoid"] = L.molten_rupture,
 		["ultimate"] = L.searing_carnage,
 		["add"] = L.raging_inferno,
@@ -113,9 +111,9 @@ local alterSpellNameMap = {
 	["Frost"] = {
 		["stage"] = -25061, -- Frost Altar
 		["damage"] = L.biting_chill,
-		["avoid"] = L.frigid_torrent,
+		["avoid"] = CL.orbs,
 		["ultimate"] = L.absolute_zero,
-		["add"] = L.frigid_torrent,
+		["add"] = CL.orbs,
 	},
 	["Earth"] = {
 		["stage"] = -25064, -- Earthen Altar
@@ -242,12 +240,12 @@ function mod:GetOptions()
 		[400473] = "mythic", -- Mythic
 	},{
 		-- Fire
-		[382563] = L.magma_burst, -- Magma Burst (Pools)
+		[382563] = CL.pools, -- Magma Burst (Pools)
 		[373329] = L.molten_rupture, -- Magma Rupture (Waves)
 		[374023] = L.searing_carnage, -- Searing Carnage (Dance)
 		-- Frost
 		[373678] = L.biting_chill, -- Biting Chill (Chill DoT)
-		[391019] = L.frigid_torrent, -- Frigid Torrent (Orbs)
+		[391019] = CL.orbs, -- Frigid Torrent (Orbs)
 		[372458] = L.absolute_zero, -- Absolute Zero (Soaks)
 		-- Earth
 		[391056] = L.enveloping_earth, -- Enveloping Earth (Healing Absorb)
@@ -572,7 +570,7 @@ end
 
 -- Fire
 function mod:MagmaBurst(args)
-	self:Message(args.spellId, "yellow", CL.count:format(L.damage_bartext:format(L.magma_burst), damageCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.damage_bartext:format(CL.pools), damageCount))
 	self:PlaySound(args.spellId, "info")
 	if self:Easy() then
 		self:EasySpellSelection()
@@ -634,13 +632,13 @@ end
 
 function mod:FrigidTorrent(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
-		self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(L.frigid_torrent), avoidCount))
+		self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(CL.orbs), avoidCount))
 	else --if self:MobId(args.sourceGUID) == 198308 then -- Frostwrought Dominator (Mythic altar add)
 		local count = addCount[args.spellId] or 1
-		self:StopBar(CL.count:format(L.add_bartext:format(L.frigid_torrent), count))
-		self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(L.frigid_torrent), count))
+		self:StopBar(CL.count:format(L.add_bartext:format(CL.orbs), count))
+		self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(CL.orbs), count))
 		count = count + 1
-		self:CDBar(args.spellId, 33, CL.count:format(L.add_bartext:format(L.frigid_torrent), count))
+		self:CDBar(args.spellId, 33, CL.count:format(L.add_bartext:format(CL.orbs), count))
 		addCount[args.spellId] = count
 	end
 	self:PlaySound(args.spellId, "alert")
@@ -1056,7 +1054,7 @@ function mod:MythicAddDeaths(args)
 		self:StopBar(L.enrage_other:format(L["Fire"]))
 	elseif args.mobId == 198308 then -- Icewrought Dominator
 		self:StopBar(393296) -- Frost Smite
-		self:StopBar(CL.count:format(L.add_bartext:format(L.frigid_torrent), addCount[391019] or 1)) -- Frigid Torrent
+		self:StopBar(CL.count:format(L.add_bartext:format(CL.orbs), addCount[391019] or 1)) -- Frigid Torrent
 		self:StopBar(L.enrage_other:format(L["Frost"]))
 	elseif args.mobId == 197595 then -- Ironwrought Smasher
 		self:StopBar(391268) -- Earth Smite

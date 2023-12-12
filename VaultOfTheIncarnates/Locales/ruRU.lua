@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Показывать метку на Бешеном Тарасекке, который зафиксировал вас.\n\nТребует включённых индикаторов здоровья врагов и соответствующего аддона (KuiNameplates, Plater)."
 
 	L.molten_cleave = "Фронтал"
-	L.incinerating_roar = "Рык"
 	L.molten_spikes = "Шипы"
 	L.collapsing_army = "Армия"
 	L.greater_flamerift = "Мифик адд"
@@ -48,7 +47,6 @@ if L then
 	L.webs = "Сети"
 	L.web = "Паутина"
 	L.gossamer_burst = "Притягивание"
-	L.repelling_burst = "Отталкивание"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "ruRU")
@@ -83,14 +81,12 @@ if L then
 	L.Storm = "буря"
 
 	-- Fire
-	L.magma_burst = "Лужи"
 	L.molten_rupture = "Волны"
 	L.searing_carnage = "Танец"
 	L.raging_inferno = "Соак лужи"
 
 	-- Frost
 	L.biting_chill = "Фрост ДоТ"
-	L.frigid_torrent = "Шары"
 	L.absolute_zero = "Делёжка"
 	L.absolute_zero_melee = "Мили делёжка"
 	L.absolute_zero_ranged = "Рендж делёжка"
@@ -130,15 +126,12 @@ if L then
 	L.lighting_devastation_trigger = "глубокий вдох" -- Рашагет делает глубокий вдох...
 
 	-- Stage One: The Winds of Change
-	L.hurricane_wing = "Отталкивание"
 	L.volatile_current = "Искры"
 	L.thunderous_blast = "Танкбастер"
-	L.lightning_breath = "Дыхание"
 	L.lightning_strikes = "Войд зоны"
 	L.electric_scales = "Рейд урон"
 	L.electric_lash = "Хлыст"
 	-- Intermission: The Primalist Strike
-	L.lightning_devastation = "Дыхание"
 	L.shattering_shroud = "Хил Абсорб"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
@@ -151,7 +144,6 @@ if L then
 	L.fulminating_charge = "Вынос"
 	L.fulminating_charge_debuff = "Вынос"
 	-- Intermission: The Vault Falters
-	L.storm_break = "Телепорт"
 	L.ball_lightning = "Шарики"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Притягивание"
