@@ -411,7 +411,7 @@ function mod:BlazingSpearApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(401401)
 		self:PlaySound(401401, "alarm") -- spread
-		self:Say(401401)
+		self:Say(401401, nil, nil, "Blazing Spear")
 	end
 end
 
@@ -434,7 +434,7 @@ function mod:VolcanicShieldApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.beam)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, CL.beam)
+		self:Say(args.spellId, CL.beam, nil, "Beam")
 		self:SayCountdown(args.spellId, 5)
 	end
 end

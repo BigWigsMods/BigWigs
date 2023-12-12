@@ -513,7 +513,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.rticon:format(L.mass_disintergrate_single, count))
+			self:Say(args.spellId, CL.rticon:format(L.mass_disintergrate_single, count), nil, ("Disintegrate ({rt%d})"):format(count))
 			self:SayCountdown(args.spellId, 6, count)
 		end
 		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.mass_disintergrate, massDisintergrateCount - 1))
@@ -644,7 +644,7 @@ function mod:VoidFractureApplied(args)
 		self:PersonalMessage(404218, nil, CL.bomb)
 		self:PlaySound(404218, "warning")
 		if args.spellId == 404218 then -- Initial say only for the Stage 2 debuffs
-			self:Say(404218, CL.bomb)
+			self:Say(404218, CL.bomb, nil, "Bomb")
 		end
 		local _, _, duration = self:UnitDebuff(args.destName, args.spellId) -- Duration depends on when bomb is picked up, so always different
 		if duration < 2 then -- dont countdown below 2, just run
@@ -747,7 +747,7 @@ do
 		if self:Me(args.destGUID) then
 			onMe = true
 			self:TargetBar(404288, 16, args.destName, L.infinite_duress)
-			self:Say(404288, L.infinite_duress)
+			self:Say(404288, L.infinite_duress, nil, "Infinite Duress")
 			self:SayCountdown(404288, 16)
 			self:PlaySound(404288, "warning")
 		end
@@ -869,7 +869,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.rticon:format(args.spellName, icon))
+			self:Say(args.spellId, CL.rticon:format(args.spellName, icon), nil, ("Hurtling Barrage ({rt%d})"):format(icon))
 			self:SayCountdown(args.spellId, 7, icon)
 		end
 		self:CustomIcon(hurlingBarrageMarker, args.destName, icon)
@@ -903,7 +903,7 @@ function mod:EmbraceOfNothingnessApplied(args)
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount-1))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
-		self:Yell(args.spellId, L.embrace_of_nothingness)
+		self:Yell(args.spellId, L.embrace_of_nothingness, nil, "Black Hole")
 		self:YellCountdown(args.spellId, 8)
 	end
 end

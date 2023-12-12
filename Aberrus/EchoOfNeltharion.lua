@@ -225,7 +225,7 @@ do
 		markedPlayer = player
 		self:TargetMessage("wall_breaker", "yellow", player, L.wall_breaker_message, 407221)
 		if self:Me(guid) then
-			self:Say("wall_breaker", CL.rticon:format(L.wall_breaker_message, 6))
+			self:Say("wall_breaker", CL.rticon:format(L.wall_breaker_message, 6), nil, "Wall Breaker ({rt%6})")
 			self:SayCountdown("wall_breaker", 5)
 		end
 		if self:CheckOption("wall_breaker", "ICON") then
@@ -333,7 +333,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(401010, "warning")
-			self:Say(401010)
+			self:Say(401010, nil, nil, "Corruption")
 		end
 		self:TargetsMessage(401010, "yellow", playerList, nil, msg)
 	end

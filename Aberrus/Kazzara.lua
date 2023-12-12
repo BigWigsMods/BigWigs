@@ -126,7 +126,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(407196, nil, CL.rift)
 			self:PlaySound(407196, "warning")
-			self:Say(407196, CL.count_rticon:format(CL.rift, count, count))
+			self:Say(407196, CL.count_rticon:format(CL.rift, count, count), nil, ("Rift (%d{rt%d})"):format(count, count))
 			self:SayCountdown(407196, 5, count)
 		end
 		self:CustomIcon(dreadRiftMarker, args.destName, count)
@@ -154,7 +154,7 @@ function mod:RaysOfAnguishApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(407069, nil, CL.laser)
 		self:PlaySound(407069, "warning")
-		self:Say(407069, CL.laser)
+		self:Say(407069, CL.laser, nil, "Laser")
 	end
 end
 

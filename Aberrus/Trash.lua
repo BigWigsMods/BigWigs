@@ -146,7 +146,7 @@ function mod:DreamBurstApplied(args)
 	self:TargetMessage(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Dream Burst")
 		self:SayCountdown(args.spellId, 3.5)
 	end
 end
@@ -247,7 +247,7 @@ function mod:SlimeEjectionApplied(args)
 		self:PersonalMessage(args.spellId)
 		self:TargetBar(args.spellId, 5, args.destName)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Slime Ejection")
 		self:SayCountdown(args.spellId, 5)
 	end
 end
@@ -279,7 +279,7 @@ function mod:DarkBindingsApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(409576)
 		self:PlaySound(409576, "warning")
-		self:Say(409576)
+		self:Say(409576, nil, nil, "Dark Bindings")
 		self:SayCountdown(409576, 5)
 	end
 end

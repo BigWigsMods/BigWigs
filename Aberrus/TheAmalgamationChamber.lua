@@ -356,7 +356,7 @@ function mod:UmbralDetonationApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.bomb)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, CL.bomb)
+		self:Say(args.spellId, CL.bomb, nil, "Bomb")
 		self:SayCountdown(args.spellId, 6)
 	end
 end
@@ -535,7 +535,7 @@ function mod:BlisteringTwilightApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.bomb)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, CL.bomb)
+		self:Say(args.spellId, CL.bomb, nil, "Bomb")
 		self:SayCountdown(args.spellId, 6)
 	end
 end

@@ -228,7 +228,7 @@ function mod:UnstableEmbersApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, L.unstable_ember)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, L.unstable_ember)
+		self:Say(args.spellId, L.unstable_ember, nil, "Ember")
 		if self:Mythic() then
 			self:SayCountdown(args.spellId, 10, nil, 5)
 		end

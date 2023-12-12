@@ -152,7 +152,7 @@ function mod:SearingSlamApplied(args)
 	self:TargetMessage(405821, "yellow", args.destName, msg)
 	if self:Me(args.destGUID) then
 		self:PlaySound(405821, "warning")
-		self:Say(405821, CL.leap)
+		self:Say(405821, CL.leap, nil, "Leap")
 		self:SayCountdown(405821, 4.9)
 	end
 	searingSlamCount = searingSlamCount + 1

@@ -170,7 +170,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(402994, "warning")
-			self:Say(402994, CL.rticon:format(CL.pool, count))
+			self:Say(402994, CL.rticon:format(CL.pool, count), nil, ("Pool ({rt%d})"):format(count))
 			self:SayCountdown(402994, 6, count)
 		end
 		self:CustomIcon(moltenSpittleMarker, args.destName, count)
@@ -287,7 +287,7 @@ function mod:ExplosiveMagmaApplied(args)
 	self:TargetMessage(411182, "red", args.destName, CL.count:format(L.explosive_magma, moltenSpittleCount-1))
 	if self:Me(args.destGUID) then
 		self:PlaySound(411182, "warning")
-		self:Yell(411182, CL.rticon:format(L.explosive_magma, 8))
+		self:Yell(411182, CL.rticon:format(L.explosive_magma, 8), nil, "Explosive Magma ({rt8})")
 		self:YellCountdown(411182, 6, 8)
 	end
 	self:CustomIcon(moltenSpittleMarker, args.destName, 8)

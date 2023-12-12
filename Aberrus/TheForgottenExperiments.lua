@@ -267,7 +267,7 @@ do
 		if self:Me(guid) then
 			self:PersonalMessage(406358, nil, L.rending_charge_single)
 			--self:PlaySound(406358, "warning") -- The private aura sound should play
-			self:Say(406358, L.rending_charge_single)
+			self:Say(406358, L.rending_charge_single, nil, "First Charge")
 			self:SayCountdown(406358, 5)
 		end
 		self:PrimaryIcon(406358, player)
@@ -436,6 +436,6 @@ function mod:DisintegrateApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		self:Say(args.spellId, nil, nil, "Disintegrate")
 	end
 end
