@@ -17,7 +17,7 @@ local rebirthCount = 1
 local rebirthTimers = {}
 local duckList = {}
 
-local specialCD = 56
+local specialCD = mod:LFR() and 74.7 or 56
 local specialChain = { ["urctos"] = "aerwynn", ["aerwynn"] = "pip", ["pip"] = "urctos" }
 local activeSpecials = 0
 local specialCount = 1
@@ -166,6 +166,7 @@ function mod:OnEngage()
 	rebirthTimers = {}
 	duckList = {}
 
+	specialCD = self:LFR() and 74.7 or 56
 	activeSpecials = 0
 	specialCount = 1
 
@@ -191,8 +192,8 @@ function mod:OnEngage()
 	-- end
 
 	-- Urctos
-	self:Bar(421022, self:Easy() and 8.0 or 5.0, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
-	self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
+	self:Bar(421022, self:LFR() and 10.7 or self:Normal() and 8 or 5, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
+	self:Bar(420948, self:LFR() and 38.7 or self:Normal() and 29 or 13, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 	if self:Mythic() then
 		-- Ult [Urctos/Aerwynn] (%d)
 		self:Bar(420525, specialCD, L.special_mythic_bar:format(L.urctos, L.aerwynn, specialCount)) -- Blinding Rage/Constricting Thicket
@@ -205,13 +206,13 @@ function mod:OnEngage()
 
 	-- Aerwynn
 	-- self:Bar(421570, 0.5) -- Leap
-	self:Bar(420671, self:Easy() and 11.0 or 5.0, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
-	self:Bar(420858, self:Easy() and 20.0 or 21.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+	self:Bar(420671, self:LFR() and 14.7 or self:Normal() and 11 or 5, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+	self:Bar(420858, self:LFR() and 26.7 or self:Normal() and 20 or 21, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
 
 	-- Pip
-	self:Bar(421501, 23.0) -- Blink
-	self:Bar(418720, self:Easy() and 35.0 or 36.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
-	self:Bar(421024, self:Mythic() and 43 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
+	self:Bar(421501, self:LFR() and 30.7 or 23) -- Blink
+	self:Bar(418720, self:LFR() and 46.6 or self:Normal() and 35 or 36, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+	self:Bar(421024, self:Mythic() and 43 or self:LFR() and 60.2 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 
 	--self:SetPrivateAuraSound(418720, 418589) -- Polymorph Bomb
 end
@@ -254,17 +255,17 @@ function mod:SpecialOver()
 		specialCount = specialCount + 1
 
 		if agonizingClawsCount == 1 then -- don't start if Urctos is confused about the phase
-			self:Bar(421022, self:Easy() and 8.0 or 5.0, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
-			self:Bar(420948, self:Easy() and 29.0 or 13.0, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
+			self:Bar(421022, self:LFR() and 10.7 or self:Normal() and 8 or 5, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
+			self:Bar(420948, self:LFR() and 38.7 or self:Normal() and 29 or 13, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 		end
 
-		self:Bar(420671, self:Easy() and 11.0 or 5.0, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
-		self:Bar(420858, self:Easy() and 20.0 or 21.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
-		self:Bar(421570, 49.0) -- Leap (0.5, then 48.5, sometimes skipping the 0.5)
+		self:Bar(420671, self:LFR() and 14.7 or self:Normal() and 11 or 5, CL.count:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+		self:Bar(420858, self:LFR() and 26.7 or self:Normal() and 20 or 21, CL.count:format(L.poisonous_javelin, poisonousJavelinCount)) -- Poisonous Javelin
+		self:Bar(421570, self:LFR() and 65.4 or 49) -- Leap (0.5, then 48.5, sometimes skipping the 0.5)
 
-		self:Bar(418720, 16.0, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
-		self:Bar(421501, 23.0) -- Blink
-		self:Bar(421024, self:Mythic() and 43 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
+		self:Bar(418720, self:LFR() and 21.4 or 16, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+		self:Bar(421501, self:LFR() and 30.7 or 23) -- Blink
+		self:Bar(421024, self:Mythic() and 43 or self:LFR() and 60.2 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 
 		nextSpecial = GetTime() + specialCD
 		if nextSpecialAbility == "urctos" then
@@ -348,7 +349,7 @@ function mod:Rebirth(args)
 			if remaining > 0 and remaining < rebirthTime then
 				rebirthTimers[420858] = self:ScheduleTimer(function()
 					if nextSpecial - GetTime() > 25 then
-						self:Bar(420858, 25.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
+						self:Bar(420858, 25, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 					end
 				end, remaining)
 			end
@@ -357,7 +358,7 @@ function mod:Rebirth(args)
 			if remaining > 0 and remaining < rebirthTime then
 				rebirthTimers[418720] = self:ScheduleTimer(function()
 					if nextSpecial - GetTime() > 25 then
-						self:Bar(418720, self:Easy() and 19.0 or 20.0, CL.count:format(L.polymorph_bomb, polymorphBombCount))
+						self:Bar(418720, self:Easy() and 19 or 20, CL.count:format(L.polymorph_bomb, polymorphBombCount))
 					end
 				end, remaining)
 			end
@@ -398,9 +399,9 @@ function mod:BlindingRage(args)
 	agonizingClawsCount = 1 -- reset on all specials start because Urctos gets weird if interrupted during the Blinding Rage cast
 
 	-- if not self:Mythic() or nextSpecialAbility == "pip" then
-	-- 	self:Bar(420671, self:Mythic() and 1.0 or self:Easy() and 3.0 or 5.0, L.special_mechanic_bar:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
+	-- 	self:Bar(420671, self:Mythic() and 1 or self:LFR() and 4 or self:Normal() and 3 or 5, L.special_mechanic_bar:format(CL.pools, noxiousBlossomCount)) -- Noxious Blossom
 	-- end
-	-- self:Bar(418720, 9.0, L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
+	-- self:Bar(418720, self:LFR() and 12 or 9, L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 end
 
 function mod:BlindingRageOver()
@@ -430,18 +431,18 @@ do
 	local trampledOnYou = false
 	function mod:BarrelingCharge(args)
 		self:StopBar(L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
-		self:StopBar(CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
+		self:StopBar(CL.count:format(CL.charge, barrelingChargeCount))
 
 		barrelingChargeCount = barrelingChargeCount + 1
 
 		-- 1 per special
 		if activeSpecials > 0 then -- short recast during specials
-			self:Bar(420948, 8.0, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
+			self:Bar(420948, self:LFR() and 10 or 8, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 		elseif not self:Easy() and nextSpecial - GetTime() > 25 then -- 43s
-			self:Bar(420948, 20, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
+			self:Bar(420948, 20, CL.count:format(CL.charge, barrelingChargeCount)) -- second cast on heroic/mythic
 		elseif nextSpecialAbility == "aerwynn" then -- cast 3/4s after Constricting Thicket
 			-- replaces bar in :ConstrictingThicket
-			local cd = self:Mythic() and 27.0 or self:Easy() and 30.0 or 26.0
+			local cd = self:Mythic() and 27 or self:LFR() and 40 or self:Normal() and 30 or 26
 			self:Bar(420948, cd, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 		end
 	end
@@ -486,7 +487,10 @@ function mod:AgonizingClaws(args)
 	agonizingClawsCount = agonizingClawsCount + 1
 
 	local cd
-	if self:Easy() then
+	if self:LFR() then
+		local timer = { 10.6, 8.0, 33.3, 8.0, 0 }
+		cd = timer[agonizingClawsCount]
+	elseif self:Normal() then
 		local timer = { 8.0, 6.0, 25.0, 6.0, 0 }
 		cd = timer[agonizingClawsCount]
 	else
@@ -514,7 +518,7 @@ function mod:ConstrictingThicket(args)
 	activeSpecials = activeSpecials + 1
 	agonizingClawsCount = 1
 
-	-- self:Bar(420948, self:Mythic() and 4.0 or 3.0, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
+	-- self:Bar(420948, (self:Mythic() or self:LFR()) and 4 or 3, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 end
 
 function mod:ConstrictingThicketOver()
@@ -523,7 +527,7 @@ function mod:ConstrictingThicketOver()
 
 	if activeSpecials > 0 and specialChain[nextSpecialAbility] == "pip" then -- Aerwynn + Pip
 		self:StopBar(CL.count:format(CL.pools, noxiousBlossomCount)) -- make sure we're not duplicating
-		self:Bar(420671, 5.0, L.special_mechanic_bar:format(CL.pools, noxiousBlossomCount))
+		self:Bar(420671, 5, L.special_mechanic_bar:format(CL.pools, noxiousBlossomCount))
 	end
 end
 
@@ -556,19 +560,21 @@ function mod:NoxiousBlossom(args)
 	self:Message(args.spellId, "yellow", CL.count:format(spellName, noxiousBlossomCount))
 	noxiousBlossomCount = noxiousBlossomCount + 1
 
-	if activeSpecials == 0 then -- only initial cast during specials?
-		-- normal 11.0, 22.0, 21.0 / heroic 5.0, 20.0, 29.0
+	if self:LFR() and activeSpecials > 0 and nextSpecialAbility == "pip" then -- short recast during specials XXX need to recheck other difficulties
+		self:Bar(args.spellId, 10, L.special_mechanic_bar:format(spellName, noxiousBlossomCount)) -- 9.3/10.6 but another var for knowning which modulus to use z.z
+	elseif activeSpecials == 0 then -- only initial cast during specials?
+		-- normal 11.0, 22.0, 21.0 / heroic 5.0, 20.0, 29.0 / lfr 14.7, 29.3, [34.7]
 		local remainingSpecialCD = nextSpecial - GetTime()
-		if remainingSpecialCD > 40 then -- 45 / 51s (non easy)
-			self:Bar(args.spellId, self:Easy() and 22.0 or 20.0, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 2
-		elseif remainingSpecialCD > 20 and nextSpecialAbility == "urctos" then -- 23s / 31s (non easy)
-			self:Bar(args.spellId, self:Mythic() and 27 or self:Easy() and 21.0 or 29.0, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 3
-		elseif nextSpecialAbility == "urctos" and not self:Mythic() then -- 2s
+		if remainingSpecialCD > 40 then -- 45 / 51s (non easy) / 60s lfr
+			self:Bar(args.spellId, self:LFR() and 29.3 or self:Normal() and 22 or 20, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 2
+		elseif remainingSpecialCD > 20 and nextSpecialAbility == "urctos" then -- 23s / 31s (non easy) / no lfr
+			self:Bar(args.spellId, self:Mythic() and 27 or self:Normal() and 21 or 29, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 3
+		elseif nextSpecialAbility == "urctos" and not self:Mythic() and not self:LFR() then -- 2s
 			-- replaces bar in :BlindingRage
-			self:Bar(args.spellId, 7.0, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
+			self:Bar(args.spellId, 7, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
 		elseif nextSpecialAbility == "pip" and not self:Mythic() then
 			-- replaces bar in :SongOfTheDragon
-			self:Bar(args.spellId, self:Easy() and 26.0 or 29.1, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
+			self:Bar(args.spellId, self:LFR() and 34.7 or self:Normal() and 26 or 29, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
 		end
 	end
 end
@@ -578,7 +584,7 @@ function mod:PoisonousJavelin(args)
 	self:Message(420858, "yellow", CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 	poisonousJavelinCount = poisonousJavelinCount + 1
 	if nextSpecial - GetTime() > 25 then
-		self:Bar(420858, 25.0, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
+		self:Bar(420858, self:LFR() and 33.3 or 25, CL.count:format(L.poisonous_javelin, poisonousJavelinCount))
 	end
 end
 
@@ -603,9 +609,9 @@ function mod:Leap(args)
 	self:StopBar(args.spellId)
 	self:Message(args.spellId, "cyan")
 	-- self:PlaySound(args.spellId, "info")
-	local cd = 48.5
+	local cd = self:LFR() and 64.7 or 48.5
 	if nextSpecial - GetTime() > cd then
-		self:Bar(args.spellId, { cd, 49.0 })
+		self:Bar(args.spellId, { cd, self:LFR() and 65.4 or 49 })
 	end
 end
 
@@ -619,7 +625,7 @@ function mod:SongOfTheDragon(args)
 	activeSpecials = activeSpecials + 1
 	agonizingClawsCount = 1
 
-	-- self:Bar(420671, self:Mythic() and 1.0 or 3.0, L.special_mechanic_bar:format(args.spellName, noxiousBlossomCount)) -- Noxious Blossom
+	-- self:Bar(420671, self:Mythic() and 1 or self:LFR() and 4 or 3, L.special_mechanic_bar:format(args.spellName, noxiousBlossomCount)) -- Noxious Blossom
 end
 
 function mod:SongOfTheDragonOver()
@@ -688,12 +694,12 @@ function mod:PolymorphBomb()
 	self:PlaySound(418720, "alert")
 
 	if activeSpecials > 0 then -- short recast during specials (you only get one extra cast?)
-		self:Bar(418720, self:Easy() and 9.0 or 11, L.special_mechanic_bar:format(spellName, polymorphBombCount))
-	elseif nextSpecial - GetTime() > 25 then -- 40s
-		self:Bar(418720, self:Easy() and 19.0 or 20.0, CL.count:format(spellName, polymorphBombCount)) -- normal cast 2
+		self:Bar(418720, self:LFR() and 12 or self:Normal() and 9 or 11, L.special_mechanic_bar:format(spellName, polymorphBombCount))
+	elseif nextSpecial - GetTime() > 30 then -- 40s / 53s lfr
+		self:Bar(418720, self:LFR() and 25.3 or self:Normal() and 19 or 20, CL.count:format(spellName, polymorphBombCount)) -- normal cast 2
 	elseif nextSpecialAbility == "urctos" then
 		local remainingBlindingRageCD = nextSpecial - GetTime()
-		if remainingBlindingRageCD < 25 and remainingBlindingRageCD > 3 then -- 20s
+		if remainingBlindingRageCD < 30 and remainingBlindingRageCD > 3 then -- 20s / 28s lfr
 			if self:Mythic() then
 				-- cast 0.5s before Blinding Rage
 				self:Bar(418720, 18.5, CL.count:format(spellName, polymorphBombCount))
@@ -725,16 +731,18 @@ function mod:EmeraldWinds(args)
 	self:PlaySound(args.spellId, "alarm") -- move for pushback
 	emeraldWindsCount = emeraldWindsCount + 1
 	-- 1 per special
-	-- self:Bar(args.spellId, 45.5, CL.count:format(CL.pushback, emeraldWindsCount))
 end
 
 function mod:Blink(args)
 	self:StopBar(args.spellId)
 	self:Message(args.spellId, "cyan")
 	-- self:PlaySound(args.spellId, "info")
-	local cd = 30
+
+	local cd
 	if self:Mythic() then
 		cd = nextSpecialAbility == "pip" and 28 or 27
+	else
+		cd = self:LFR() and 37.2 or 30
 	end
 	if nextSpecial - GetTime() > cd then
 		self:Bar(args.spellId, cd)
