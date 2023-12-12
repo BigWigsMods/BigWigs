@@ -270,28 +270,22 @@ function mod:MythicAddDeath(args)
 	self:StopBar(428471) -- Waking Decimation
 end
 
-do
-	local prev = 0
-	function mod:LumberingSlam(args)
-		if args.time - prev > 3 then
-			prev = args.time
-			self:Message(args.spellId, "orange", CL.frontal_cone)
-			self:PlaySound(args.spellId, "alert")
-			self:Bar(args.spellId, 19.5, CL.frontal_cone) -- 19~20
-		end
+function mod:LumberingSlam(args)
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or IsItemInRange(18904, unit) then -- Zorbin's Ultra-Shrinker, 38y
+		self:Message(args.spellId, "orange", CL.frontal_cone)
+		self:PlaySound(args.spellId, "alert")
+		self:Bar(args.spellId, 19.5, CL.frontal_cone) -- 19~20
 	end
 end
 
-do
-	local prev = 0
-	function mod:RadialFlourish(args)
-		if args.time - prev > 3 then
-			prev = args.time
-			self:Message(args.spellId, "yellow")
-			self:PlaySound(args.spellId, "alarm")
-			radialFlourishCount = radialFlourishCount + 1
-			self:Bar(args.spellId, radialFlourishCount == 2 and 11.5 or radialFlourishCount == 5 and 8.6 or 5.8) -- 10.2~12.7 / 5.6~6.1
-		end
+function mod:RadialFlourish(args)
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or IsItemInRange(18904, unit) then -- Zorbin's Ultra-Shrinker, 38y
+		self:Message(args.spellId, "yellow")
+		self:PlaySound(args.spellId, "alarm")
+		radialFlourishCount = radialFlourishCount + 1
+		self:Bar(args.spellId, radialFlourishCount == 2 and 11.5 or radialFlourishCount == 5 and 8.6 or 5.8) -- 10.2~12.7 / 5.6~6.1
 	end
 end
 
