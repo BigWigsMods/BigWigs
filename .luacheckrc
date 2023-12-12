@@ -30,6 +30,9 @@ files["**/Loader.lua"].ignore = {
 	"111/SLASH_BigWigsVersion1",
 	"11[23]/SlashCmdList",
 	"11[23]/hash_SlashCmdList",
+
+	-- Temp
+	"11[13]/BigWigsLangFeat",
 }
 files["**/AutoRole.lua"].ignore = {
 	"113/GetSpecialization",
