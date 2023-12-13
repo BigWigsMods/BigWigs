@@ -114,11 +114,12 @@ BigWigs:AddColors("Nymue, Weaver of the Cycle", {
 })
 
 BigWigs:AddColors("Smolderon", {
-	[421343] = "yellow",
+	[421343] = {"blue","yellow"},
 	[421455] = {"blue","yellow"},
 	[421532] = "blue",
 	[421656] = {"blue","green"},
 	[421858] = "blue",
+	[421859] = "red",
 	[421969] = "blue",
 	[422172] = "yellow",
 	[422277] = "orange",
@@ -126,6 +127,7 @@ BigWigs:AddColors("Smolderon", {
 	[423896] = {"cyan","red"},
 	[425885] = "red",
 	[426725] = "red",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {

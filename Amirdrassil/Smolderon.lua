@@ -30,6 +30,7 @@ local L = mod:GetLocale()
 if L then
 	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysers"
+	L.essence_stacks = "%s (%d/5)" -- Ignited Essence (1/5)
 end
 
 --------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ function mod:GetOptions()
 		426725, -- Encroaching Destruction
 		422277, -- Devour Essence
 		421858, -- Ignited Essence
+		421859, -- Ignited Essence (Boss)
 		422172, -- World In Flames
 		423896, -- Heating Up
 		425885, -- Seeking Inferno
@@ -68,6 +70,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	-- Stage One: The Firelord's Fury
 	self:Log("SPELL_CAST_START", "BrandOfDamnation", 421343)
 	self:Log("SPELL_AURA_APPLIED", "CauterizingWoundApplied", 421656)
@@ -80,12 +84,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "LavaGeysers", 422691)
 
 	-- Stage Two: World In Flames
-	self:Log("SPELL_AURA_APPLIED", "BlazingSoulApplied", 422067)
 	self:Log("SPELL_AURA_REMOVED", "BlazingSoulRemoved", 422067)
 	self:Log("SPELL_CAST_START", "EncroachingDestruction", 426725)
 	self:Log("SPELL_CAST_SUCCESS", "DevourEssence", 422277)
 	self:Log("SPELL_AURA_APPLIED", "IgnitedEssenceApplied", 421858)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "IgnitedEssenceApplied", 421858)
+	self:Log("SPELL_AURA_APPLIED", "IgnitedEssenceBossApplied", 421859)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "IgnitedEssenceBossApplied", 421859)
 	self:Log("SPELL_CAST_START", "WorldInFlames", 422172)
 	self:Log("SPELL_AURA_APPLIED", "HeatingUpApplied", 423896)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "HeatingUpApplied", 423896)
@@ -95,9 +100,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 422823, 421532)
 	self:Log("SPELL_DAMAGE", "FlameWavesDamage", 421969)
 	self:Log("SPELL_MISSED", "FlameWavesDamage", 421969)
-
-	-- Mythic
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
@@ -114,7 +116,7 @@ function mod:OnEngage()
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandOfDamnationCount)) -- Brand of Damnation
 	self:Bar(422691, self:Mythic() and 24.0 or self:LFR() and 29.0 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
-	self:Bar("stages", 67.2, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
+	self:Bar("stages", 60, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
 
 	if self:Mythic() then
 		self:Bar(425885, 26, CL.count:format(CL.orbs, seekingInfernoCount))
@@ -124,6 +126,24 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 422061 then -- World In Flames
+		castingWorldInFlames = true
+		self:StopBar(CL.count:format(CL.stage:format(2), rotationCount))
+		self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), rotationCount), false)
+		self:PlaySound("stages", "long")
+		self:SetStage(2)
+		self:Bar(422277, 8.5) -- Devour Essence
+	elseif spellId == 426144 then -- Seeking Inferno
+		self:Message(425885, "red", CL.count:format(CL.orbs, seekingInfernoCount))
+		self:PlaySound(425885, "warning") -- watch feet
+		seekingInfernoCount = seekingInfernoCount + 1
+		if seekingInfernoCount < 9 and seekingInfernoCount % 2 == 0 then -- 8 total, starting odds after a stage 2
+			self:Bar(425885, 25, CL.count:format(CL.orbs, seekingInfernoCount))
+		end
+	end
+end
 
 -- Stage One: The Firelord's Fury
 function mod:BrandOfDamnation(args)
@@ -217,13 +237,11 @@ function mod:LavaGeysers(args)
 	end
 end
 
-function mod:BlazingSoulApplied(args)
-	self:SetStage(2)
-	castingWorldInFlames = true
-	self:StopBar(CL.count:format(CL.stage:format(2), rotationCount))
-end
-
 function mod:BlazingSoulRemoved(args)
+	self:StopBar(CL.stage:format(1))
+	self:Message("stages", "cyan", CL.stage:format(1), false)
+	self:PlaySound("stages", "long")
+
 	self:SetStage(1)
 	castingWorldInFlames = false
 	rotationCount = rotationCount + 1
@@ -264,8 +282,24 @@ end
 
 function mod:IgnitedEssenceApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
+		self:Message(args.spellId, "blue", L.essence_stacks:format(args.spellName, args.amount or 1))
 		self:PlaySound(args.spellId, "info")
+	end
+end
+
+do
+	local stacks = 0
+	local scheduled = nil
+	function mod:SmolderonIgnitedEssenceMessage()
+		self:Message(421859, "red", CL.onboss:format(CL.count:format(self:SpellName(421859), stacks)))
+		self:PlaySound(421859, "alarm")
+		scheduled = nil
+	end
+	function mod:IgnitedEssenceBossApplied(args)
+		stacks = args.amount or 1
+		if not scheduled then
+			scheduled = self:ScheduleTimer("SmolderonIgnitedEssenceMessage", 2)
+		end
 	end
 end
 
@@ -293,17 +327,5 @@ function mod:FlameWavesDamage(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "underyou")
 		self:PersonalMessage(args.spellId, nil, CL.tornado)
-	end
-end
-
--- Mythic
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 426144 then -- Seeking Inferno
-		self:Message(425885, "red", CL.count:format(CL.orbs, seekingInfernoCount))
-		self:PlaySound(425885, "warning") -- watch feet
-		seekingInfernoCount = seekingInfernoCount + 1
-		if seekingInfernoCount < 9 and seekingInfernoCount % 2 == 0 then -- 8 total, starting odds after a stage 2
-			self:Bar(425885, 25, CL.count:format(CL.orbs, seekingInfernoCount))
-		end
 	end
 end

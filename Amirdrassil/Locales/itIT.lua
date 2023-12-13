@@ -72,6 +72,7 @@ L = BigWigs:NewBossLocale("Smolderon", "itIT")
 if L then
 	--L.brand_of_damnation = "Tank Soak"
 	--L.lava_geysers = "Geysers"
+	--L.essence_stacks = "%s (%d/5)" -- Ignited Essence (1/5)
 end
 
 L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "itIT")

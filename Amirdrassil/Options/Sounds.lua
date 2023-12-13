@@ -115,6 +115,7 @@ BigWigs:AddSounds("Smolderon", {
 	[421532] = "underyou",
 	[421656] = "info",
 	[421858] = "info",
+	[421859] = "alarm",
 	[421969] = "underyou",
 	[422172] = "alarm",
 	[422277] = "long",
@@ -122,6 +123,7 @@ BigWigs:AddSounds("Smolderon", {
 	[422691] = {"alarm","underyou"},
 	[425885] = "warning",
 	[426725] = "warning",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Tindral Sageswift, Seer of the Flame", {
