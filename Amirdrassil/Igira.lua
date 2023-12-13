@@ -122,9 +122,9 @@ function mod:OnEngage()
 	-- 	self:Berserk(600, 0)
 	-- end
 
-	self:Bar(414888, self:Mythic() and 4.5 or 11, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
-	self:Bar(416996, self:Mythic() and 15.5 or 4.9, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
-	self:Bar(422776, 46, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
+	self:CDBar(414888, self:Mythic() and 4.5 or 11, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
+	self:CDBar(416996, self:Mythic() and 15.5 or 4.9, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
+	self:CDBar(422776, self:LFR() and 41 or 46, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
 end
 
 --------------------------------------------------------------------------------
@@ -207,8 +207,11 @@ do
 			if markedForTormentCount < 5 or blisteringSpearCount < 3 then -- only 2 before berserk at the end
 				cd = timer[blisteringSpearCount]
 			end
-		elseif self:Easy() then
+		elseif self:Normal() then
 			local timer = { 14.2, 30.5, 30.3, 14.6, 20.7, 0 }
+			cd = timer[blisteringSpearCount]
+		elseif self:LFR() then
+			local timer = { 14.2, 30.4, 40.2, 20.6, 0 }
 			cd = timer[blisteringSpearCount]
 		else
 			local timer = { 14.2, 23.2, 23.2, 24.4, 20.7, 0 }
@@ -307,14 +310,14 @@ function mod:MarkedForTormentRemoved(args)
 	-- mythic: 3 torments, normal phase berserk
 	local berserkPhase = self:Mythic() and 4 or self:Easy() and 5 or 6
 	if markedForTormentCount < berserkPhase then
-		self:Bar(416996, self:Mythic() and 94 or self:Easy() and 83.5 or 79, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
+		self:Bar(416996, self:Mythic() and 94 or self:Normal() and 83.5 or 79, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
 		self:Bar(414888, 14.4, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
 	elseif markedForTormentCount == berserkPhase then -- berserk next
 		self:Bar(416996, self:Mythic() and 14.1 or 11.6, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
 		self:Bar(414888, 18.8, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
 		self:Berserk(self:Mythic() and 71.2 and self:Easy() and 111.3 or 31.0, 0)
 	end
-	self:Bar(422776, self:Mythic() and 120.5 or 115.5, CL.count:format(args.spellName, markedForTormentCount)) -- Marked for Torment
+	self:CDBar(422776, self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5, CL.count:format(args.spellName, markedForTormentCount)) -- Marked for Torment
 end
 
 function mod:GatheringTormentApplied(args)
@@ -346,7 +349,7 @@ function mod:UmbralDestruction(args)
 	self:PlaySound(args.spellId, "warning")
 	umbralDestructionCount = umbralDestructionCount + 1
 	if umbralDestructionCount < 3 then -- 2 only
-		self:Bar(args.spellId, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.umbral_destruction, umbralDestructionCount))
+		self:Bar(args.spellId, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(L.umbral_destruction, umbralDestructionCount))
 	end
 end
 
@@ -356,7 +359,7 @@ function mod:SmashingViscera(args)
 	self:PlaySound(424456, "alarm")
 	smashingVisceraCount = smashingVisceraCount + 1
 	if smashingVisceraCount < 3 then -- 2 only
-		self:Bar(424456, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(CL.leap, smashingVisceraCount))
+		self:Bar(424456, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(CL.leap, smashingVisceraCount))
 	end
 end
 
@@ -365,7 +368,7 @@ end
 -- 	self:Message(415623, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
 -- 	heartStopperCount = heartStopperCount + 1
 -- 	if heartStopperCount < 3 then -- 2 only
--- 		self:Bar(415623, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
+-- 		self:Bar(415623, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(L.heart_stopper, heartStopperCount))
 -- 	end
 -- end
 
@@ -378,7 +381,7 @@ do
 			self:Message(args.spellId, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
 			heartStopperCount = heartStopperCount + 1
 			if heartStopperCount < 3 then -- 2 only
-				self:Bar(args.spellId, self:Mythic() and 32.8 or self:Heroic() and 25.5 or 30.5, CL.count:format(L.heart_stopper, heartStopperCount))
+				self:Bar(args.spellId, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(L.heart_stopper, heartStopperCount))
 			end
 		end
 		if self:Me(args.destGUID) then
