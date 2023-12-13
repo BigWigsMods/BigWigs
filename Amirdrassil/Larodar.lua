@@ -34,6 +34,19 @@ local ashenDevastationCount = 1
 -- Timers
 --
 
+local timersLFR = { -- 5:06 p1, 5:32 p2 (p1 the same as normal, some differences in p2, maybe just due to spell queueing?)
+	-- p1
+	[417653] = { 6.6, 104.8, 98.6 }, -- Fiery Force of Nature
+	[422614] = { 37.3, 110.3, 93.1 }, -- Scorching Roots
+	[418637] = { 22.1, 21.8, 24.2, 35.6, 24.2, 28.6, 25.3, 43.6, 22.0, 24.3 }, -- Furious Charge
+	[426206] = { 30.7, 24.2, 24.2, 37.8, 52.7, 64.5, 24.2, 24.2 }, -- Blazing Thorns
+	-- p2
+	[427252] = { 7.4, 26.7, 25.0, 23.3, 30.0, 20.0, 25.0, 25.0, 25.0, 26.7, 23.3, 25.0, 25.0 }, -- Falling Embers
+	[427299] = { 29.0, 46.8, 26.5, 42.5, 30.8, 37.5, 37.6, 37.4 }, -- Flash Fire
+	[427343] = { 54.0, 40.9, 32.5, 36.7, 36.6, 39.2, 35.8, 37.5 }, -- Fire Whirl
+	[429973] = { 14.0, 25.9, 30.0, 19.1, 29.2, 20.8, 30.0, 24.2, 25.0, 26.7, 19.1, 29.2 }, -- Smoldering Backdraft
+	[421325] = { 20.7, 44.3, 42.4, 42.5, 38.3, 40.8, 41.7 }, -- Ashen Call
+}
 local timersNormal = { -- 5:06 p1, 2:55 p2
 	-- p1
 	[417653] = { 6.6, 104.8, 98.6 }, -- Fiery Force of Nature
@@ -42,7 +55,7 @@ local timersNormal = { -- 5:06 p1, 2:55 p2
 	[426206] = { 30.7, 24.2, 24.2, 37.8, 52.7, 64.5, 24.2, 24.2 }, -- Blazing Thorns
 	-- p2
 	[427252] = { 7.3, 26.7, 25.0, 23.3, 30.0, 20.0, 25.0 }, -- Falling Embers
-	[427299] = { 29.1, 45.1, 41.8, 41.8, 50.1, 50.1 }, -- Flash Fire 1
+	[427299] = { 29.1, 45.1, 41.8, 41.8, 50.1, 50.1 }, -- Flash Fire
 	[427343] = { 54.0, 40.8, 32.5, 42.5 }, -- Fire Whirl
 	[429973] = { 14.0, 25.9, 30.0, 19.1, 29.2, 25.8, 20.0 }, -- Smoldering Backdraft
 	[421325] = { 20.7, 44.2, 42.5, 42.5 }, -- Ashen Call
@@ -76,7 +89,7 @@ local timersMythic = {
 	[429973] = { 14.0, 25.9, 19.2, 26.7, 16.7 }, -- Smoldering Backdraft
 	[421325] = { 20.7, 55.1 }, -- Ashen Call
 }
-local timers = mod:Easy() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
+local timers = mod:LFR() and timersLFR or mod:Normal() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -204,7 +217,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Easy() and timersNormal or self:Mythic() and timersMythic or timersHeroic
+	timers = self:LFR() and timersLFR or self:Normal() and timersNormal or self:Mythic() and timersMythic or timersHeroic
 	self:SetStage(1)
 	fieryForceOfNatureCount = 1
 	scorchingRootsCount = 1
