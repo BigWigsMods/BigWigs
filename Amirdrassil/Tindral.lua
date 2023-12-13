@@ -26,6 +26,7 @@ local dreamEssenceOnYou = 0
 local supernovaCasting = false
 local seedsSoaked = 0
 local dispelCount = 1
+local searingWrathOnMe = false
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -191,6 +192,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SearingWrathApplied", 422000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingWrathApplied", 422000)
+	self:Log("SPELL_AURA_REMOVED", "SearingWrathRemoved", 422000)
 	self:Log("SPELL_CAST_START", "BlazingMushroom", 423260, 426669) -- Blazing Mushroom, Wild Mushrooms
 	self:Log("SPELL_CAST_SUCCESS", "FieryGrowth", 424581)
 	self:Log("SPELL_AURA_APPLIED", "FieryGrowthApplied", 424581)
@@ -252,6 +254,7 @@ function mod:OnEngage()
 	flareBombCount = 1
 	dreamEssenceOnYou = 0
 	supernovaCasting = false
+	searingWrathOnMe = false
 
 	self:Bar(420236, timers[1][420236][fallingStarCount], CL.count:format(self:SpellName(420236), fallingStarCount)) -- Falling Star
 	self:Bar(424495, timers[1][424495][massEntanglementCount], CL.count:format(L.mass_entanglement, massEntanglementCount)) -- Mass Entanglement
@@ -271,11 +274,27 @@ end
 
 function mod:SearingWrathApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
+	if amount % 2 == 0 then
+		if self:Me(args.destGUID) then
+			searingWrathOnMe = true
+			self:StackMessage(args.spellId, "purple", args.destName, amount, 6)
+			if amount >= 6 then
+				self:PlaySound(args.spellId, "alarm")
+			end
+		else
+			self:StackMessage(args.spellId, "purple", args.destName, amount, searingWrathOnMe and 100 or 6)
+			if not searingWrathOnMe and amount >= 6 then
+				self:PlaySound(args.spellId, "warning") -- taunt
+			end
+		end
+	end
+end
+
+function mod:SearingWrathRemoved(args)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm")
-	elseif amount > 2 then
-		self:PlaySound(args.spellId, "warning")
+		searingWrathOnMe = false
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "warning") -- taunt
 	end
 end
 
