@@ -115,7 +115,7 @@ function mod:OnEngage()
 	self:Bar(429983, 11.2, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 20, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
 	self:Bar(429615, 24.0, CL.count:format(L.threads, impendingLoomCount)) -- Impending Loom
-	self:Bar(426855, 76.1, CL.stage:format(2))  -- Full Bloom
+	self:CDBar(426855, 70.4, CL.stage:format(2)) -- Full Bloom
 	if self:Mythic() then
 		self:Bar(430563, 29, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
 		self:ScheduleTimer("EphemeralFlora", 29)
@@ -181,7 +181,7 @@ function mod:Continuum(args)
 	self:Bar(429983, 28.4, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 36.6, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
 	self:Bar(429615, 41.5, CL.count:format(L.threads, impendingLoomCount)) -- Impending Loom
-	self:Bar(426855, 87.5, CL.stage:format(2)) -- Full Bloom
+	self:CDBar(426855, 87.5, CL.stage:format(2)) -- Full Bloom
 	if self:Mythic() then
 		self:Bar(430563, 46, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
 		self:ScheduleTimer("EphemeralFlora", 46)
@@ -233,9 +233,9 @@ end
 
 -- Stage Two: Creation Complete
 function mod:FullBloom(args)
+	self:StopBar(CL.stage:format(2)) -- Full Bloom
 	self:StopBar(CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
 	self:StopBar(CL.count:format(L.threads, impendingLoomCount)) -- Impending Loom
-	self:StopBar(CL.stage:format(2)) -- Full Bloom
 
 	self:Message(args.spellId, "green", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
@@ -285,7 +285,7 @@ function mod:RadialFlourish(args)
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alarm")
 		radialFlourishCount = radialFlourishCount + 1
-		self:Bar(args.spellId, radialFlourishCount == 2 and 11.5 or radialFlourishCount == 5 and 8.6 or 5.8) -- 10.2~12.7 / 5.6~6.1
+		self:Bar(args.spellId, 6) -- 2 casts in ~12.8, can skip one, annoying queueing with slam
 	end
 end
 
