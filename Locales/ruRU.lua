@@ -45,7 +45,7 @@ L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.expansionNames = {
 	"Классика", -- Classic
-	-- "The Burning Crusade", -- The Burning Crusade -- would rather leave untranslated
+	"The Burning Crusade", -- The Burning Crusade -- would rather leave untranslated
 	"Гнев Короля Лича", -- Wrath of the Lich King
 	"Катаклизм", -- Cataclysm
 	"Туманы Пандарии", -- Mists of Pandaria
@@ -53,7 +53,7 @@ L.expansionNames = {
 	"Легион", -- Legion
 	"Битва за Азерот", -- Battle for Azeroth
 	"Темные Земли", -- Shadowlands
-	-- "Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
+	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
 }
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
