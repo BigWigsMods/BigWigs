@@ -113,7 +113,7 @@ function mod:OnEngage()
 
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
-	self:Bar(422691, self:Mythic() and 24.0 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
+	self:Bar(422691, self:Mythic() and 24.0 or self:LFR() and 29.0 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 67.2, CL.count:format(CL.stage:format(2), rotationCount), 422172) -- Stage 2
 
 	if self:Mythic() then
@@ -230,7 +230,7 @@ function mod:BlazingSoulRemoved(args)
 
 	self:Bar(421455, 10.4, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13.0, CL.count:format(L.brand_of_damnation, brandofDamnationCount)) -- Brand of Damnation
-	self:Bar(422691, self:Mythic() and 24.0 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
+	self:Bar(422691, self:Mythic() and 24.0 or self:LFR() and 29.0 or 27.0, CL.count:format(L.lava_geysers, lavaGeysersCount)) -- Lava Geysers
 	self:Bar("stages", 60, CL.count:format(CL.stage:format(2), rotationCount), 422172)
 	if self:Mythic() then
 		self:Bar(425885, 28.0, CL.count:format(CL.orbs, seekingInfernoCount))
