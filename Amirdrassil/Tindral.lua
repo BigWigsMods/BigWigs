@@ -207,7 +207,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FireBeam", 421398)
 
 	-- Intermission: Burning Pursuit
-	self:Log("SPELL_CAST_START", "IncarnationOwlOfTheFlame", 421603)
+	-- self:Log("SPELL_CAST_START", "IncarnationOwlOfTheFlame", 421603) -- XXX only cast the first time in LFR?
+	self:Log("SPELL_AURA_APPLIED", "IncarnationOwlOfTheFlame", 421603)
 	self:Log("SPELL_CAST_START", "Typhoon", 421636)
 	self:Log("SPELL_AURA_APPLIED", "DreamEssenceApplied", 424258)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreamEssenceApplied", 424258)
@@ -265,7 +266,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(425576, timers[1][425576][1], CL.count:format(L.flare_bomb, flareBombCount)) -- Flare Bomb
 	end
-	self:Bar("stages", 80, CL.count:format(CL.intermission, 1), 421603)
+	self:Bar("stages", 82, CL.count:format(CL.intermission, 1), 421603)
 end
 
 --------------------------------------------------------------------------------
@@ -410,7 +411,7 @@ function mod:IncarnationOwlOfTheFlame(args)
 	dreamEssenceOnYou = 0
 	supernovaCasting = false
 
-	self:CDBar(421636, 5.5, CL.pushback) -- Typhoon
+	self:CDBar(421636, 3.5, CL.pushback) -- Typhoon
 end
 
 function mod:Typhoon(args)
@@ -473,7 +474,7 @@ function mod:Supernova(args)
 		self:Bar(424579, timers[stage][424579][incarnationTreeOfFlameCount], CL.count:format(L.suppressive_ember, incarnationTreeOfFlameCount)) -- Suppressive Ember
 		self:Bar(423265, timers[stage][423265][flamingGerminationCount], CL.count:format(L.flaming_germination, flamingGerminationCount)) -- Tranquility of Flame
 		if stage == 2 then
-			self:Bar("stages", (self:Easy() and 115 or self:Mythic() and 102 or 125), CL.count:format(CL.intermission, 2), 421603)
+			self:Bar("stages", (self:Easy() and 117 or self:Mythic() and 104 or 127), CL.count:format(CL.intermission, 2), 421603)
 		elseif stage == 3 then
 			-- self:Bar(420540, timers[stage][420540][incarnationMoonkinCount], CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
 			self:Bar(421398, timers[stage][421398][fireBeamCount], CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
