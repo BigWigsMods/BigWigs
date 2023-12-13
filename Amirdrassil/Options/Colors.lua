@@ -49,7 +49,7 @@ BigWigs:AddColors("Volcoross", {
 
 BigWigs:AddColors("Council of Dreams", {
 	[418187] = {"orange","red"},
-	[418720] = {"blue","cyan"},
+	[418720] = {"blue","yellow"},
 	[420525] = {"green","orange"},
 	[420671] = "yellow",
 	[420858] = {"blue","yellow"},
@@ -136,7 +136,7 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 	[421398] = {"blue","orange"},
 	[421636] = "yellow",
 	[421939] = "blue",
-	[422000] = {"blue","purple"},
+	[422000] = {"blue","green","purple"},
 	[422115] = "cyan",
 	[422325] = "blue",
 	[422503] = "blue",
