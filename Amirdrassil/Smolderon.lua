@@ -30,7 +30,6 @@ local L = mod:GetLocale()
 if L then
 	L.brand_of_damnation = "Tank Soak"
 	L.lava_geysers = "Geysers"
-	L.essence_stacks = "%s (%d/5)" -- Ignited Essence (1/5)
 end
 
 --------------------------------------------------------------------------------
@@ -280,10 +279,22 @@ function mod:HeatingUpApplied(args)
 	end
 end
 
-function mod:IgnitedEssenceApplied(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "blue", L.essence_stacks:format(args.spellName, args.amount or 1))
-		self:PlaySound(args.spellId, "info")
+do
+	local stacks = 0
+	local scheduled = nil
+	local function IgnitedEssenceOnMe()
+		scheduled = nil
+		mod:PersonalMessage(421858, false, CL.count_amount:format(mod:SpellName(421858), stacks, 5))
+		mod:PlaySound(421858, "info")
+	end
+	function mod:IgnitedEssenceApplied(args)
+		if self:Me(args.destGUID) then
+			stacks = args.amount or 1
+			if not scheduled then
+				scheduled = true
+				self:SimpleTimer(IgnitedEssenceOnMe, 0.5)
+			end
+		end
 	end
 end
 
@@ -291,9 +302,9 @@ do
 	local stacks = 0
 	local scheduled = nil
 	function mod:SmolderonIgnitedEssenceMessage()
+		scheduled = nil
 		self:Message(421859, "red", CL.onboss:format(CL.count:format(self:SpellName(421859), stacks)))
 		self:PlaySound(421859, "alarm")
-		scheduled = nil
 	end
 	function mod:IgnitedEssenceBossApplied(args)
 		stacks = args.amount or 1
