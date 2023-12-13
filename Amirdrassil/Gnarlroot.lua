@@ -122,13 +122,12 @@ function mod:OnEngage()
 	mobCollector = {}
 	taintedTreantMarks = {}
 
-	-- XXX these times are probably just within variance of each other
-	self:CDBar(422026, self:Easy() and 3.6 or 3.0, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
-	self:CDBar(424352, self:Easy() and 9.6 or 9.0, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
-	self:CDBar(421898, self:Easy() and 16.5 or 15.0, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
-	self:CDBar(421972, self:Heroic() and 32 or 36, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:CDBar(422039, self:Easy() and 22.4 or 20.0, CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:CDBar("stages", 90, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Doom Cultivation
+	self:CDBar(422026, 3.3, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:CDBar(424352, self:Easy() and 10 or 9, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
+	self:CDBar(421898, self:Easy() and 16.5 or 15, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:CDBar(422039, self:Easy() and 22.4 or 20, CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:CDBar(421972, self:Mythic() and 36 or self:Heroic() and 32 or 35.3, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:CDBar("stages", 91, CL.count:format(CL.stage:format(2), intermissionCount), 421013) -- Doom Cultivation
 
 	if self:GetOption(taintedTreantMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -241,7 +240,7 @@ function mod:TorturedScream(args)
 
 	local cd
 	if self:Mythic() then
-		local timer = { 3.0, 23.0, 28.0, 22.1, 0 }
+		local timer = { 3.0, 23.0, 28.0, 22.0, 0 }
 		cd = timer[torturedScreamCount]
 	elseif self:Easy() then
 		local timer = { 3.3, 25.5, 25.6, 26.7, 0 }
@@ -331,12 +330,12 @@ function mod:UprootedAgonyRemoved(args)
 	mobCollector = {}
 	taintedTreantMarks = {}
 
-	self:Bar(422026, 4.5, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
-	self:Bar(424352, self:Easy() and 14.3 or 10.4, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
-	self:Bar(421898, self:Easy() and 23.5 or 16.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
-	self:Bar(421972, self:Mythic() and 37.4 or self:Easy() and 44.5 or 33, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
-	self:Bar(422039, self:Easy() and 44 or 21.4, CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
-	self:Bar("stages", 92.2, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Doom Cultivation
+	self:CDBar(422026, self:LFR() and 4.4 or 5, CL.count:format(L.tortured_scream, torturedScreamCount)) -- Tortured Scream
+	self:CDBar(424352, self:Easy() and 11.4 or 10.4, CL.count:format(self:SpellName(424352), dreadfireBarrageCount)) -- Dreadfire Barrage
+	self:CDBar(421898, self:Easy() and 18 or 16.4, CL.count:format(CL.adds, flamingPestilenceCount)) -- Flaming Pestilence
+	self:CDBar(422039, self:Easy() and 24 or 21.4, CL.count:format(CL.frontal_cone, shadowflameCleaveCount)) -- Shadowflame Cleave
+	self:CDBar(421972, self:Heroic() and 33 or 37.4, CL.count:format(CL.bombs, controlledBurnCount)) -- Controlled Burn
+	self:CDBar("stages", 92.2, CL.count:format(CL.intermission, intermissionCount), 421013) -- Intermission / Doom Cultivation
 end
 
 -- Mythic
