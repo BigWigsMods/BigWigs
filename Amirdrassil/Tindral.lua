@@ -406,8 +406,6 @@ function mod:IncarnationOwlOfTheFlame(args)
 	self:StopBar(CL.count:format(CL.intermission, stage))
 	self:Message("stages", "cyan", CL.count:format(CL.intermission, stage), false)
 	self:PlaySound("stages", "long")
-	stage = stage + 0.5
-	self:SetStage(stage)
 
 	dreamEssenceOnYou = 0
 	supernovaCasting = false
@@ -442,13 +440,16 @@ function mod:EmpoweredFeatherApplied(args)
 end
 
 function mod:Supernova(args)
-	local stage = math.floor(self:GetStage())
+	local stage = self:GetStage()
 	self:StopBar(424140, CL.count:format(args.spellName, stage))
 	self:Message(424140, "red", CL.count:format(args.spellName, stage))
 	self:PlaySound(424140, "long")
 
 	if stage < 3 then
 		self:Message(424258, "green", CL.count:format(self:SpellName(424258), dreamEssenceOnYou)) -- Dream Essence
+
+		stage = stage + 1
+		self:SetStage(stage)
 
 		supernovaCasting = true
 		blazingMushroomCount = 1
@@ -461,7 +462,6 @@ function mod:Supernova(args)
 		fireBeamCount = 1
 		flareBombCount = 1
 
-		stage = stage + 1
 		if self:Mythic() then
 			self:Bar(425576, timers[stage][425576][flareBombCount], CL.count:format(L.flare_bomb, flareBombCount)) -- Flare Bomb
 		end
@@ -486,12 +486,9 @@ end
 
 function mod:SupernovaRemoved(args)
 	supernovaCasting = false
-	local stage = math.floor(self:GetStage())
-	stage = stage + 1
-	self:SetStage(stage)
+	local stage = self:GetStage()
 	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
-
 end
 
 -- Stage Two: Tree of the Flame
