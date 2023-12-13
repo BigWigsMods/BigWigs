@@ -563,7 +563,7 @@ function mod:LingeringCinderApplied(args)
 		-- self:PersonalMessage(args.spellId)
 		-- self:PlaySound(args.spellId, "info")
 		self:StopBar(CL.count:format(args.spellName, dispelCount-1))
-		self:TargetBar(args.spellId, 3, args.destName, CL.count:format(args.spellName, dispelCount))
+		self:TargetBar(args.spellId, 2, args.destName, CL.count:format(args.spellName, dispelCount))
 		dispelCount = dispelCount + 1
 	end
 end
