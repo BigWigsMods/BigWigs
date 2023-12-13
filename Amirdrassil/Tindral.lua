@@ -278,14 +278,18 @@ function mod:SearingWrathApplied(args)
 	if amount % 2 == 0 then
 		if self:Me(args.destGUID) then
 			searingWrathOnMe = true
-			self:StackMessage(args.spellId, "purple", args.destName, amount, 6)
-			if amount >= 6 then
+			self:StackMessage(args.spellId, "purple", args.destName, amount, amount <= 16 and 6 or 100)
+			if amount >= 6 and amount <= 16 then
 				self:PlaySound(args.spellId, "alarm")
 			end
 		else
-			self:StackMessage(args.spellId, "purple", args.destName, amount, searingWrathOnMe and 100 or 6)
-			if not searingWrathOnMe and amount >= 6 then
-				self:PlaySound(args.spellId, "warning") -- taunt
+			if searingWrathOnMe then
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 100)
+			else
+				self:StackMessage(args.spellId, "purple", args.destName, amount, amount <= 16 and 6 or 100)
+				if amount >= 6 and amount <= 16 then
+					self:PlaySound(args.spellId, "warning") -- taunt
+				end
 			end
 		end
 	end
