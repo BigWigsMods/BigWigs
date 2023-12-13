@@ -747,7 +747,7 @@ function mod:EternalFirestorm()
 	self:PlaySound(422935, "alert")
 	-- personal sound warning from private aura
 	firestormCount = firestormCount + 1
-	local cd = self:Mythic() and 46 or 41
+	local cd = self:Mythic() and 46 or self:LFR() and 41.2 or 41 -- LFR is a bit longer and there's no enrage.. don't drift pls
 	self:Bar(422935, cd, CL.count:format(L.eternal_firestorm_shortened_bar, firestormCount))
 	self:ScheduleTimer("EternalFirestorm", cd)
 end
