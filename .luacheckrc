@@ -15,6 +15,7 @@ files["**/Loader.lua"].ignore = {
 	"113/EnableAddOn",
 	"113/GetAddOnInfo",
 	"113/GetCurrentRegion",
+	"113/GetRealmID",
 	"113/securecallfunction",
 	"113/SendChatMessage",
 	"113/SetRaidTarget",
