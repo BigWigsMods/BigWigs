@@ -178,7 +178,12 @@ function mod:SerpentsFury(args)
 	self:Message(args.spellId, "cyan", CL.count:format(L.serpents_fury, serpentsFuryCount))
 	self:PlaySound(args.spellId, "alert")
 	serpentsFuryCount = serpentsFuryCount + 1
-	self:Bar(args.spellId, 70, CL.count:format(L.serpents_fury, serpentsFuryCount))
+	if serpentsFuryCount < 5 then
+		self:Bar(args.spellId, 70, CL.count:format(L.serpents_fury, serpentsFuryCount))
+	elseif serpentsFuryCount == 5 then
+		self:Bar(421703, 78) -- Serpent's Wrath
+	end
+	-- self:Bar(421207, 7.5) -- Coiling Flames
 end
 
 do
@@ -299,19 +304,19 @@ do
 	end
 end
 
-do
-	function mod:CoilingEruptionApplied(args)
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, L.flood_of_the_firelands_single)
-			self:PlaySound(args.spellId, "warning")
-			self:Yell(args.spellId, L.flood_of_the_firelands_single, nil, "Soak")
-			self:YellCountdown(args.spellId, 4, L.flood_of_the_firelands_single, nil, "Soak") -- Soak in 4
-		end
-	end
+-- Mythic
 
-	function mod:CoilingEruptionRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelYellCountdown(args.spellId)
-		end
+function mod:CoilingEruptionApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.flood_of_the_firelands_single)
+		self:PlaySound(args.spellId, "warning")
+		self:Yell(args.spellId, L.flood_of_the_firelands_single, nil, "Soak")
+		self:YellCountdown(args.spellId, 4, L.flood_of_the_firelands_single, nil, "Soak") -- Soak in 4
+	end
+end
+
+function mod:CoilingEruptionRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelYellCountdown(args.spellId)
 	end
 end
