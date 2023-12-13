@@ -133,8 +133,13 @@ do
 	local playerList = {}
 	function mod:RaidBossWhisperSync(msg, player)
 		if msg:find("spell:427722", nil, true) then
-			playerList[#playerList+1] = player
-			self:TargetsMessage(427722, "yellow", playerList, 3, CL.bombs)
+			if self:Easy() then
+				-- only applied to tank in LFR / Normal
+				self:TargetMessage(427722, "yellow", player, CL.bomb)
+			else
+				playerList[#playerList+1] = player
+				self:TargetsMessage(427722, "yellow", playerList, 3, CL.bombs)
+			end
 		end
 	end
 
