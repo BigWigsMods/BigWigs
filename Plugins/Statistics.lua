@@ -27,6 +27,7 @@ local difficultyTable = BigWigsLoader.isRetail and {
 	[9] = "normal", -- raid40
 	[148] = "normal", -- raid20
 	[176] = "normal", -- raid 25 (sunwell)
+	[198] = "normal", -- raid10 (Blackfathom Deeps - Classic Season of Discovery)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
