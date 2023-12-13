@@ -567,11 +567,13 @@ function mod:NoxiousBlossom(args)
 		local remainingSpecialCD = nextSpecial - GetTime()
 		if remainingSpecialCD > 40 then -- 45 / 51s (non easy) / 60s lfr
 			self:Bar(args.spellId, self:LFR() and 29.3 or self:Normal() and 22 or 20, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 2
-		elseif remainingSpecialCD > 20 and nextSpecialAbility == "urctos" then -- 23s / 31s (non easy) / no lfr
-			self:Bar(args.spellId, self:Mythic() and 27 or self:Normal() and 21 or 29, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 3
-		elseif nextSpecialAbility == "urctos" and not self:Mythic() and not self:LFR() then -- 2s
-			-- replaces bar in :BlindingRage
-			self:Bar(args.spellId, 7, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
+		elseif nextSpecialAbility == "urctos" and not self:LFR() then
+			if remainingSpecialCD > 20 then -- 23s / 31s (non easy) / no lfr
+				self:Bar(args.spellId, self:Mythic() and 27 or self:Normal() and 21 or 29, CL.count:format(spellName, noxiousBlossomCount)) -- normal cast 3
+			elseif not self:Mythic() then -- 2s
+				-- replaces bar in :BlindingRage
+				self:Bar(args.spellId, 7, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
+			end
 		elseif nextSpecialAbility == "pip" and not self:Mythic() then
 			-- replaces bar in :SongOfTheDragon
 			self:Bar(args.spellId, self:LFR() and 34.7 or self:Normal() and 26 or 29, L.special_mechanic_bar:format(spellName, noxiousBlossomCount))
