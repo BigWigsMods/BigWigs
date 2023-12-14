@@ -62,6 +62,7 @@ function mod:GetOptions()
 		[425885] = "mythic",
 	},{
 		[421343] = L.brand_of_damnation, -- Brand of Damnation (Tank Soak)
+		[422577] = CL.bomb, -- Searing Aftermath (Bomb)
 		[421969] = CL.tornadoes, -- Flame Waves (Tornadoes)
 		[422691] = L.lava_geysers, -- Lava Geysers (Geysers)
 		[425885] = CL.orbs, -- Seeking Inferno (Orbs)
@@ -186,11 +187,11 @@ end
 
 function mod:SearingAftermathApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId, nil, nil, "Searing Aftermath")
+		self:Say(args.spellId, CL.bomb, nil, "Bomb")
 		self:SayCountdown(args.spellId, 6)
 		self:PlaySound(args.spellId, "warning")
 	end
-	self:TargetBar(args.spellId, 6, args.destName)
+	self:TargetBar(args.spellId, 6, args.destName, CL.bomb)
 end
 
 function mod:SearingAftermathRemoved(args)
