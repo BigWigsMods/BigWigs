@@ -317,11 +317,11 @@ do
 		-- mythic: 3 torments, normal phase berserk
 		local berserkPhase = self:Mythic() and 4 or self:Normal() and 5 or 6
 		if self:LFR() or markedForTormentCount < berserkPhase then
-			self:Bar(416996, (self:Mythic() and 94 or self:Normal() and 83.5 or 79) - tormentOffset, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
-			self:Bar(414888, 14.4 - tormentOffset, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
+			self:Bar(416996, (self:Mythic() and 94 or self:Normal() and 83.5 or 79) - tormentOffset, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
+			self:Bar(414888, 14.4 - tormentOffset, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 		elseif markedForTormentCount == berserkPhase then -- berserk next
-			self:Bar(416996, self:Mythic() and 14.1 or 11.6, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
-			self:Bar(414888, 18.8, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
+			self:Bar(416996, self:Mythic() and 14.1 or 11.6, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
+			self:Bar(414888, 18.8, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 			self:Berserk(self:Mythic() and 71.2 and self:Easy() and 111.3 or 31.0, 0)
 		end
 		self:CDBar(422776, (self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5) - tormentOffset, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
