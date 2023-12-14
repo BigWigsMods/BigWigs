@@ -348,7 +348,7 @@ function mod:RuinousEnd(args)
 
 	self:Bar(414888, self:Mythic() and 8.3 or 19.2, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 	self:Bar(416996, self:Mythic() and 19.2 or 11.2, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
-	self:Bar(422776, self:Mythic() and 40.0 or 54.3, CL.count:format((L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
+	self:Bar(422776, self:Mythic() and 40.0 or 54.3, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
 end
 
 function mod:UmbralDestruction(args)
