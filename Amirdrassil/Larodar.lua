@@ -29,6 +29,7 @@ local smolderingBackdraftCount = 1
 local ashenCallCount = 1
 local ashenDevastationCount = 1
 local ashenDevastationCount = 1
+local smolderingSuffocationOnMe = false
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -217,8 +218,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:LFR() and timersLFR or self:Normal() and timersNormal or self:Mythic() and timersMythic or timersHeroic
-	self:SetStage(1)
 	fieryForceOfNatureCount = 1
 	scorchingRootsCount = 1
 	furiousChargeCount = 1
@@ -233,6 +232,10 @@ function mod:OnEngage()
 	smolderingBackdraftCount = 1
 	ashenCallCount = 1
 	ashenDevastationCount = 1
+	smolderingSuffocationOnMe = false
+
+	timers = self:LFR() and timersLFR or self:Normal() and timersNormal or self:Mythic() and timersMythic or timersHeroic
+	self:SetStage(1)
 
 	if self:Mythic() then
 		self:Berserk(401, 0) -- ~6:41
@@ -467,10 +470,18 @@ function mod:FireWhirl(args)
 	self:Bar(args.spellId, timers[args.spellId][fireWhirlCount], CL.count:format(CL.tornadoes, fireWhirlCount))
 end
 
+function mod:SmolderingBackdraft(args)
+	self:StopBar(CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
+	self:Message(429973, "purple", CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
+	self:PlaySound(429973, "alarm")
+	smolderingBackdraftCount = smolderingBackdraftCount + 1
+	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
+end
+
 do
-	local smolderingSuffocationOnMe = false
 	local function RepeatingChatMessages()
 		if smolderingSuffocationOnMe then
+			mod:SimpleTimer(RepeatingChatMessages, 2)
 			local currentHealthPercent = math.floor(mod:GetHealth("player"))
 			if currentHealthPercent < 75 then -- Only let players know when you are below 75%
 				local myIcon = GetRaidTargetIndex("player")
@@ -480,36 +491,25 @@ do
 					mod:Yell(false, ("%d%%"):format(currentHealthPercent), true)
 				end
 			end
-		else
-			return -- Nothing had to be repeated, stop repeating
 		end
-		mod:SimpleTimer(RepeatingChatMessages, 2)
-	end
-
-	function mod:SmolderingBackdraft(args)
-		self:StopBar(CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
-		self:Message(429973, "purple", CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
-		self:PlaySound(429973, "alarm")
-		smolderingBackdraftCount = smolderingBackdraftCount + 1
-		self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
 	end
 
 	function mod:SmolderingSuffocationApplied(args)
 		if self:Me(args.destGUID) then
+			smolderingSuffocationOnMe = true
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
 			self:Yell(args.spellId, nil, nil, "Smoldering Suffocation")
-			smolderingSuffocationOnMe = true
 			if self:GetOption("custom_on_repeating_yell_smoldering_suffocation") then
 				self:SimpleTimer(RepeatingChatMessages, 2)
 			end
 		end
 	end
+end
 
-	function mod:SmolderingSuffocationRemoved(args)
-		if self:Me(args.destGUID) then
-			smolderingSuffocationOnMe = false
-		end
+function mod:SmolderingSuffocationRemoved(args)
+	if self:Me(args.destGUID) then
+		smolderingSuffocationOnMe = false
 	end
 end
 

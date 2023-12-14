@@ -22,7 +22,7 @@ local torturedScreamCount = 1
 local shadowflameCleaveCount = 1
 local dreadfireBarrageCount = 1
 local intermissionCount = 0
-local myDreadfireBarrageStacks = 0
+local dreadfireBarrageOnMe = false
 local allowTankWarnings = true
 
 --------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ function mod:OnEngage()
 	shadowflameCleaveCount = 1
 	dreadfireBarrageCount = 1
 	intermissionCount = 1
-	myDreadfireBarrageStacks = 0
+	dreadfireBarrageOnMe = false
 	allowTankWarnings = true
 	mobCollector = {}
 	taintedTreantMarks = {}
@@ -216,11 +216,11 @@ end
 function mod:DreadfireBarrageApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
-		myDreadfireBarrageStacks = amount
+		dreadfireBarrageOnMe = true
 	end
 	if allowTankWarnings or amount % 5 == 0 then -- Only warn for the final stack, or every 5/10/15..
 		self:StackMessage(424352, "purple", args.destName, amount, 5)
-		if myDreadfireBarrageStacks == 0 and self:Tank() then -- No stacks on me
+		if not dreadfireBarrageOnMe and self:Tank() then -- No stacks on me
 			self:PlaySound(424352, "warning") -- Taunt
 		end
 	end
@@ -228,7 +228,7 @@ end
 
 function mod:DreadfireBarrageRemoved(args)
 	if self:Me(args.destGUID) then
-		myDreadfireBarrageStacks = 0
+		dreadfireBarrageOnMe = false
 	end
 end
 

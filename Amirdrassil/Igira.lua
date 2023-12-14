@@ -83,7 +83,6 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
-	self:Log("SPELL_AURA_APPLIED", "DrenchedBladesApplied", 414340)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DrenchedBladesApplied", 414340)
 	self:Log("SPELL_AURA_REMOVED", "DrenchedBladesRemoved", 414340)
 	self:Log("SPELL_CAST_START", "BlisteringSpear", 414425)
@@ -183,7 +182,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 end
 
 function mod:DrenchedBladesApplied(args)
-	local amount = args.amount or 1
+	local amount = args.amount
 	if amount == 3 or (amount >= 6 and amount % 2 == 0) then
 		if self:Me(args.destGUID) then
 			drenchedBladesOnMe = true

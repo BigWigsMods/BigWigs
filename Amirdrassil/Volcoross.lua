@@ -53,7 +53,7 @@ function mod:GetOptions()
 		420415, -- Scorchtail Crash
 		423494, -- Tidal Blaze
 		{419054, "TANK"}, -- Molten Venom
-		{423117, "TANK"}, -- Cataclysm Jaws
+		{423117, "TANK", "EMPHASIZE"}, -- Cataclysm Jaws
 		421703, -- Serpent's Wrath
 		424218, -- Combusting Rage
 		{427201, "SAY", "SAY_COUNTDOWN"}, -- Coiling Eruption
@@ -78,7 +78,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FloodOfTheFirelands", 420933)
 	self:Log("SPELL_CAST_START", "VolcanicDisgorge", 421616)
 	-- self:Log("SPELL_CAST_START", "ScorchtailCrash", 420415)
-	self:Log("SPELL_AURA_APPLIED", "MoltenVenomApplied", 419054)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MoltenVenomApplied", 419054)
 	self:Log("SPELL_CAST_START", "CataclysmJaws", 423117)
 	self:Log("SPELL_CAST_START", "SerpentsWrath", 421703)
@@ -259,12 +258,8 @@ end
 -- end
 
 function mod:MoltenVenomApplied(args)
-	local amount = args.amount or 1
-	if amount % 3 == 0 then
+	if args.amount % 3 == 0 then
 		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 6)
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "alarm") -- On you
-		end
 	end
 end
 

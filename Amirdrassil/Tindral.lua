@@ -190,7 +190,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "SearingWrathApplied", 422000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingWrathApplied", 422000)
 	self:Log("SPELL_AURA_REMOVED", "SearingWrathRemoved", 422000)
 	self:Log("SPELL_CAST_START", "BlazingMushroom", 423260, 426669) -- Blazing Mushroom, Wild Mushrooms
@@ -274,7 +273,7 @@ end
 --
 
 function mod:SearingWrathApplied(args)
-	local amount = args.amount or 1
+	local amount = args.amount
 	if amount % 2 == 0 then
 		if self:Me(args.destGUID) then
 			searingWrathOnMe = true
