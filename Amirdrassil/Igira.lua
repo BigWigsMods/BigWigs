@@ -324,7 +324,7 @@ do
 			self:Bar(414888, 18.8, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
 			self:Berserk(self:Mythic() and 71.2 and self:Easy() and 111.3 or 31.0, 0)
 		end
-		self:CDBar(422776, (self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5) - tormentOffset, CL.count:format(args.spellName, markedForTormentCount)) -- Marked for Torment
+		self:CDBar(422776, (self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5) - tormentOffset, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
 	end
 end
 
@@ -348,7 +348,7 @@ function mod:RuinousEnd(args)
 
 	self:Bar(414888, self:Mythic() and 8.3 or 19.2, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 	self:Bar(416996, self:Mythic() and 19.2 or 11.2, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
-	self:Bar(422776, self:Mythic() and 40.0 or 54.3, CL.count:format(self:SpellName(422776), markedForTormentCount)) -- Marked for Torment
+	self:Bar(422776, self:Mythic() and 40.0 or 54.3, CL.count:format((L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
 end
 
 function mod:UmbralDestruction(args)
