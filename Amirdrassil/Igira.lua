@@ -21,6 +21,7 @@ local umbralDestructionCount = 1
 local smashingVisceraCount = 1
 local heartStopperCount = 1
 local tormentOffset = 0
+local drenchedBladesOnMe = false
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -82,8 +83,9 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
-	self:Log("SPELL_AURA_APPLIED", "DrenchedBlades", 414340)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "DrenchedBlades", 414340)
+	self:Log("SPELL_AURA_APPLIED", "DrenchedBladesApplied", 414340)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DrenchedBladesApplied", 414340)
+	self:Log("SPELL_AURA_REMOVED", "DrenchedBladesRemoved", 414340)
 	self:Log("SPELL_CAST_START", "BlisteringSpear", 414425)
 	self:Log("SPELL_AURA_APPLIED", "BlisteringSpearApplied", 414888)
 	self:Log("SPELL_AURA_REMOVED", "BlisteringSpearRemoved", 414888)
@@ -115,6 +117,7 @@ function mod:OnEngage()
 	umbralDestructionCount = 1
 	smashingVisceraCount = 1
 	heartStopperCount = 1
+	drenchedBladesOnMe = false
 
 	-- Started later after Marked For Torment
 	-- if self:Mythic() then
@@ -179,15 +182,33 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	end
 end
 
-function mod:DrenchedBlades(args)
+function mod:DrenchedBladesApplied(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 or amount > 9 then
-		self:StackMessage(args.spellId, "purple", args.destName, amount, 9)
-		if amount > 9 then -- Taunt?
-			self:PlaySound(args.spellId, "warning")
-		elseif self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "alarm")
+	if amount == 3 or (amount >= 6 and amount % 2 == 0) then
+		if self:Me(args.destGUID) then
+			drenchedBladesOnMe = true
+			self:StackMessage(args.spellId, "purple", args.destName, amount, amount >= 6 and 6 or 100)
+			if amount >= 6 then
+				self:PlaySound(args.spellId, "alarm")
+			end
+		else
+			if drenchedBladesOnMe then
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 100)
+			else
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 6)
+				if amount >= 6 and self:Tank() then -- Strictly tank only for taunt sound
+					self:PlaySound(args.spellId, "warning") -- taunt
+				end
+			end
 		end
+	end
+end
+
+function mod:DrenchedBladesRemoved(args)
+	if self:Me(args.destGUID) then
+		drenchedBladesOnMe = false
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "warning") -- taunt
 	end
 end
 
