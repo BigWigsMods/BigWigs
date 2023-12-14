@@ -278,16 +278,16 @@ function mod:SearingWrathApplied(args)
 	if amount % 2 == 0 then
 		if self:Me(args.destGUID) then
 			searingWrathOnMe = true
-			self:StackMessage(args.spellId, "purple", args.destName, amount, amount <= 16 and 6 or 100)
-			if amount >= 6 and amount <= 16 then
+			self:StackMessage(args.spellId, "purple", args.destName, amount, amount <= 10 and 6 or 100)
+			if amount >= 6 then -- Always play a sound for the person tanking
 				self:PlaySound(args.spellId, "alarm")
 			end
 		else
 			if searingWrathOnMe then
 				self:StackMessage(args.spellId, "purple", args.destName, amount, 100)
 			else
-				self:StackMessage(args.spellId, "purple", args.destName, amount, amount <= 16 and 6 or 100)
-				if amount >= 6 and amount <= 16 then
+				self:StackMessage(args.spellId, "purple", args.destName, amount, amount <= 10 and 6 or 100)
+				if amount >= 6 and amount <= 10 and self:Tank() then -- Strictly tank only for taunt sound
 					self:PlaySound(args.spellId, "warning") -- taunt
 				end
 			end
