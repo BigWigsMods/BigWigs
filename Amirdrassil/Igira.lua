@@ -20,6 +20,7 @@ local stance = nil
 local umbralDestructionCount = 1
 local smashingVisceraCount = 1
 local heartStopperCount = 1
+local tormentOffset = 0
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -141,17 +142,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
 		self:PlaySound("stages", "info")
-		self:Bar(424456, self:Easy() and 24 or 19, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
+		self:Bar(424456, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
 	elseif spellId == 415090 then -- Axe Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(L.umbral_destruction), 416048) -- Umbral Destruction
 		self:PlaySound("stages", "info")
-		self:Bar(416048, self:Easy() and 24 or 19, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
+		self:Bar(416048, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
 	elseif spellId == 415094 then -- Knife Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
 		self:PlaySound("stages", "info")
-		self:Bar(415623, self:Easy() and 24 or 19, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
+		self:Bar(415623, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
 
 	-- Mythic
 	elseif spellId == 414357 then -- Sword Knife Stance
@@ -283,41 +284,48 @@ function mod:MarkedForTorment(args)
 	markedForTormentCount = markedForTormentCount + 1
 end
 
-function mod:MarkedForTormentApplied(args)
-	-- applied/removed on channel start and end? o.O
-	self:StopBar(CL.count:format(L.marked_for_torment, markedForTormentCount))
-	self:StopBar(CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
-	self:StopBar(CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
+do
+	local tormentCastTime = 0
+	function mod:MarkedForTormentApplied(args)
+		tormentCastTime = args.time
+		-- applied/removed on channel start and end? o.O
+		self:StopBar(CL.count:format(L.marked_for_torment, markedForTormentCount))
+		self:StopBar(CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
+		self:StopBar(CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
 
-	self:CastBar(422776, 20, L.marked_for_torment)
-end
-
-function mod:MarkedForTormentRemoved(args)
-	self:StopBar(CL.cast:format(L.marked_for_torment))
-	self:Message(422776, "cyan", CL.over:format(L.marked_for_torment))
-	self:PlaySound(422776, "long")
-
-	self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
-	blisteringSpearCount = 1
-	twistingBladeCount = 1
-
-	umbralDestructionCount = 1
-	smashingVisceraCount = 1
-	heartStopperCount = 1
-
-	-- normal: 4 torments, normal phase berserk
-	-- heroic: 5 torments, no stance berserk
-	-- mythic: 3 torments, normal phase berserk
-	local berserkPhase = self:Mythic() and 4 or self:Easy() and 5 or 6
-	if markedForTormentCount < berserkPhase then
-		self:Bar(416996, self:Mythic() and 94 or self:Normal() and 83.5 or 79, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
-		self:Bar(414888, 14.4, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
-	elseif markedForTormentCount == berserkPhase then -- berserk next
-		self:Bar(416996, self:Mythic() and 14.1 or 11.6, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
-		self:Bar(414888, 18.8, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
-		self:Berserk(self:Mythic() and 71.2 and self:Easy() and 111.3 or 31.0, 0)
+		self:CastBar(422776, 20, L.marked_for_torment)
 	end
-	self:CDBar(422776, self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5, CL.count:format(args.spellName, markedForTormentCount)) -- Marked for Torment
+
+	function mod:MarkedForTormentRemoved(args)
+		-- LFR torment can go until something is soaked? reduce initial cast times by the extra channel time
+		tormentOffset = self:LFR() and math.max(args.time - tormentCastTime - 20, 0) or 0
+
+		self:StopBar(CL.cast:format(L.marked_for_torment))
+		self:Message(422776, "cyan", CL.over:format(L.marked_for_torment))
+		self:PlaySound(422776, "long")
+
+		self:SetStage(markedForTormentCount) -- SetStage to use for external addons/tools
+		blisteringSpearCount = 1
+		twistingBladeCount = 1
+
+		umbralDestructionCount = 1
+		smashingVisceraCount = 1
+		heartStopperCount = 1
+
+		-- normal: 4 torments, normal phase berserk
+		-- heroic: 5 torments, no stance berserk
+		-- mythic: 3 torments, normal phase berserk
+		local berserkPhase = self:Mythic() and 4 or self:Normal() and 5 or 6
+		if self:LFR() or markedForTormentCount < berserkPhase then
+			self:Bar(416996, (self:Mythic() and 94 or self:Normal() and 83.5 or 79) - tormentOffset, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
+			self:Bar(414888, 14.4 - tormentOffset, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
+		elseif markedForTormentCount == berserkPhase then -- berserk next
+			self:Bar(416996, self:Mythic() and 14.1 or 11.6, CL.count:format(self:SpellName(416996), twistingBladeCount)) -- Twisting Blade
+			self:Bar(414888, 18.8, CL.count:format(self:SpellName(414888), blisteringSpearCount)) -- Blistering Spear
+			self:Berserk(self:Mythic() and 71.2 and self:Easy() and 111.3 or 31.0, 0)
+		end
+		self:CDBar(422776, (self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5) - tormentOffset, CL.count:format(args.spellName, markedForTormentCount)) -- Marked for Torment
+	end
 end
 
 function mod:GatheringTormentApplied(args)
