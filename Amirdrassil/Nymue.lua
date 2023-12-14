@@ -132,7 +132,7 @@ end
 do
 	local playerList = {}
 	function mod:RaidBossWhisperSync(msg, player)
-		if msg:find("spell:427722", nil, true) then
+		if msg:find("spell:427722", nil, true) and not self:Tank() then
 			if self:Easy() then
 				-- only applied to tank in LFR / Normal
 				self:TargetMessage(427722, "yellow", player, CL.bomb)
@@ -143,14 +143,23 @@ do
 		end
 	end
 
-	function mod:WeaversBurden()
+	function mod:WeaversBurden(args)
 		playerList = {}
+		if self:Tank() then
+			if self:Me(args.destGUID) then
+				self:PersonalMessage(427722, nil, CL.bomb)
+				self:Say(427722, CL.bomb, nil, "Bomb")
+			else
+				self:TargetMessage(427722, "purple", args.destName, CL.bomb)
+			end
+			self:PlaySound(427722, "warning")
+		end
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	-- "|TInterface\\ICONS\\INV_10_Enchanting2_MagicSwirl_Green.BLP:20|t You are marked with |cFFFF0000|Hspell:427722|h[Weaver's Burden]|h|r!"
-	if msg:find("spell:427722", nil, true) then
+	if msg:find("spell:427722", nil, true) and not self:Tank() then
 		if self:Solo() then -- You won't transmit addon comms when solo, so warn here instead
 			self:PersonalMessage(427722, nil, CL.bomb)
 		end
