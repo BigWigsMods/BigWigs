@@ -124,7 +124,7 @@ function mod:GetOptions()
 		422614, -- Scorching Roots
 		{420544, "PRIVATE"}, -- Scorching Pursuit
 		426387, -- Scorching Bramblethorn
-		418637, -- Furious Charge
+		{418637, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "CASTBAR"}, -- Furious Charge
 		{423719, "TANK"}, -- Nature's Fury
 		426206, -- Blazing Thorns
 		426249, -- Blazing Coalescence (Player)
@@ -144,7 +144,7 @@ function mod:GetOptions()
 		{427306, "SAY"}, -- Encased in Ash
 		427343, -- Fire Whirl
 		429973, -- Smoldering Backdraft
-		{421594, "SAY"}, -- Smoldering Suffocation
+		{421594, "SAY", "ME_ONLY_EMPHASIZE"}, -- Smoldering Suffocation
 		"custom_on_repeating_yell_smoldering_suffocation",
 		421325, -- Ashen Call
 		{421407, "HEALER"}, -- Searing Ash
@@ -312,10 +312,37 @@ end
 
 function mod:FuriousCharge(args)
 	self:StopBar(CL.count:format(CL.charge, furiousChargeCount))
-	self:Message(args.spellId, "yellow", CL.count:format(CL.charge, furiousChargeCount))
-	self:PlaySound(args.spellId, "alert")
+
+	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+	if bossUnit then
+		if self:Tanking(bossUnit) then
+			self:PersonalMessage(args.spellId, nil, CL.count:format(CL.charge, furiousChargeCount))
+			self:Say(args.spellId, CL.charge, nil, "Charge")
+			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "warning")
+		else
+			local target = self:UnitName(bossUnit.."target")
+			if target then
+				if self:Tank() then
+					self:TargetMessage(args.spellId, "purple", target, CL.count:format(CL.charge, furiousChargeCount))
+					self:PlaySound(args.spellId, "warning")
+				else
+					self:TargetMessage(args.spellId, "purple", target, CL.count:format(CL.charge, furiousChargeCount))
+					self:PlaySound(args.spellId, "alert")
+				end
+			else -- Fallback for no boss target
+				self:Message(args.spellId, "purple", CL.count:format(CL.charge, furiousChargeCount))
+				self:PlaySound(args.spellId, "alert")
+			end
+		end
+	else -- Fallback for no boss unit
+		self:Message(args.spellId, "purple", CL.count:format(CL.charge, furiousChargeCount))
+		self:PlaySound(args.spellId, "alert")
+	end
+
 	furiousChargeCount = furiousChargeCount + 1
 	self:Bar(args.spellId, timers[args.spellId][furiousChargeCount], CL.count:format(CL.charge, furiousChargeCount))
+	self:CastBar(args.spellId, 4, CL.charge)
 end
 
 function mod:NaturesFuryApplied(args)
@@ -503,6 +530,9 @@ do
 			if self:GetOption("custom_on_repeating_yell_smoldering_suffocation") then
 				self:SimpleTimer(RepeatingChatMessages, 2)
 			end
+		elseif self:Tank() and self:Tank(args.destName) then
+			self:TargetMessage(args.spellId, "purple", args.destName)
+			self:PlaySound(args.spellId, "warning")
 		end
 	end
 end
