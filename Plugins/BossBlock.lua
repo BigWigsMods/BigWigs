@@ -491,13 +491,14 @@ do
 	local known = {
 		-- Black Rook Hold
 		[54567]=true,[54552]=true,[54566]=true,[54511]=true,[57890]=true,
-		[54540]=true,[54527]=true,[70621]=true,
+		[54540]=true,[54527]=true,[70619]=true,[70621]=true,[70623]=true,
 		-- Court of Stars
 		[70615]=true,[70199]=true,[70198]=true,[70197]=true,[70193]=true,
 		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
 		-- Darkheart Thicket
 		[54459]=true,[54460]=true,[54461]=true,[54462]=true,[54463]=true,
-		[54464]=true,[70601]=true,
+		[54464]=true,[54465]=true,[54466]=true,[54467]=true,[70601]=true,
+		[70603]=true,[70607]=true,
 		-- Halls of Valor
 		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
 		-- Neltharion's Lair
@@ -506,14 +507,16 @@ do
 
 		-- Atal'Dazar
 		[97376]=true,[97377]=true,[97373]=true,[97374]=true,[97375]=true,[97372]=true,
+		[106402]=true,[106404]=true,[106406]=true,[106411]=true,[106412]=true,[106413]=true,
 		-- Freehold
-		[104684]=true,[104682]=true,[104685]=true,
+		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
 		-- The Underrot
-		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,[110728]=true,
+		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,[110728]=true,[112208]=true,
 		[106877]=true,[106853]=true,[106855]=true,[106856]=true,[106434]=true,[110781]=true,
 		-- Waycrest Manor
 		[105953]=true,[105954]=true,[105955]=true,[105956]=true,[105962]=true,[105963]=true,[105964]=true,
-		[106722]=true,
+		[106722]=true,[104219]=true,[104220]=true,[104228]=true,[104229]=true,[103811]=true,[104628]=true,
+		[103812]=true,[104208]=true,[104209]=true,[106720]=true,
 
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
