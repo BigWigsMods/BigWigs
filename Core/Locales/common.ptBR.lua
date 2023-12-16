@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s em VOCÊ"
 L.you_icon = "%s em |T13700%d:0|tVOCÊ"
 L.underyou = "%s debaixo de VOCÊ"
-L.aboveyou = "%s acima VOCÊ"
+L.aboveyou = "%s acima de VOCÊ"
 L.other = "%s: %s"
 L.onboss = "%s no CHEFE"
 L.buff_boss = "Buff no CHEFE: %s"
