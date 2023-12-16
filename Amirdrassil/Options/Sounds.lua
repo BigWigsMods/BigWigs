@@ -33,7 +33,6 @@ BigWigs:AddSounds("Igira the Cruel", {
 })
 
 BigWigs:AddSounds("Volcoross", {
-	[419054] = "alarm",
 	[420415] = "alarm",
 	[420933] = "long",
 	[421082] = "underyou",
@@ -70,7 +69,7 @@ BigWigs:AddSounds("Larodar, Keeper of the Flame", {
 	[417634] = "long",
 	[417653] = "info",
 	[418520] = "alarm",
-	[418637] = "alert",
+	[418637] = {"alert","warning"},
 	[420544] = "warning",
 	[421316] = "long",
 	[421325] = "info",

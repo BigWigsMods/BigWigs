@@ -16,7 +16,7 @@ BigWigs:AddColors("Gnarlroot", {
 })
 
 BigWigs:AddColors("Igira the Cruel", {
-	[414340] = {"blue","purple"},
+	[414340] = {"blue","green","purple"},
 	[414367] = "blue",
 	[414770] = "blue",
 	[414888] = {"blue","cyan"},
@@ -73,11 +73,11 @@ BigWigs:AddColors("Larodar, Keeper of the Flame", {
 	[417634] = "red",
 	[417653] = "cyan",
 	[418520] = "blue",
-	[418637] = "yellow",
+	[418637] = {"blue","purple"},
 	[421316] = "yellow",
 	[421325] = "cyan",
 	[421407] = "yellow",
-	[421594] = "blue",
+	[421594] = {"blue","purple"},
 	[422614] = "yellow",
 	[423719] = "blue",
 	[425889] = "orange",
@@ -105,7 +105,7 @@ BigWigs:AddColors("Nymue, Weaver of the Cycle", {
 	[420907] = "yellow",
 	[422721] = "yellow",
 	[426855] = "green",
-	[427722] = {"blue","yellow"},
+	[427722] = {"blue","purple","yellow"},
 	[428471] = "red",
 	[429108] = "orange",
 	[429615] = "cyan",
