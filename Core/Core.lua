@@ -223,9 +223,6 @@ do
 			local color = colors[count]
 			local sound = sounds[count]
 			local emphasized = count == 2
-			if count == 6 then
-				core:SendMessage("BigWigs_Flash", core, key)
-			end
 			core:Print(L.test .." - ".. color ..": ".. key)
 			core:SendMessage("BigWigs_Message", core, key, color..": "..key, color, messages[key], emphasized)
 			core:SendMessage("BigWigs_Sound", core, key, sound)
