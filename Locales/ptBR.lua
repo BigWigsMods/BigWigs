@@ -39,7 +39,7 @@ L.noBossMod = "Sem mod de chefes:"
 L.offline = "Desconectado"
 
 L.missingAddOn = "O addon |cFF436EEE%s|r está faltando!"
-L.disabledAddOn = "Você desabilitou o addOn |cFF436EEE%s|r, contadores não serão exibidos."
+L.disabledAddOn = "Você desabilitou o addon |cFF436EEE%s|r, contadores não serão exibidos."
 L.removeAddOn = "Por favor remova '|cFF436EEE%s|r' porque este foi substituído por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
@@ -53,7 +53,7 @@ L.alternativeName = "%s (|cFF436EEE%s|r)"
 --	"Legion", -- Legion
 --	"Battle for Azeroth", -- Battle for Azeroth
 --	"Shadowlands", -- Shadowlands
---	"Revoada Dragônica", -- Dragonflight
+--	"Dragonflight", -- Dragonflight
 --}
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
@@ -66,7 +66,7 @@ L.spell_under_you = "BigWigs: Feitiço debaixo de você"
 
 -- Options.lua
 L.options = "Opções"
---L.optionsKey = "Key: %s" -- The key that messages/bars/options use
+L.optionsKey = "Tecla: %s" -- The key that messages/bars/options use
 L.raidBosses = "Chefes de Raid"
 L.dungeonBosses = "Chefes de Masmorras"
 L.introduction = "Bem-vindo ao BigWigs, onde os encontros com chefes vagam. Por favor, aperte seu cinto, prepare um lanchinho e desfrute do passeio. Não iremos acabar com todos os problemas, mas vamos ajudar a se preparar para todos esses novos encontros de chefe como um jantar chique para todo o seu grupo de raide."
@@ -94,8 +94,8 @@ L.dbmFaker = "Faz de conta que eu estou usando DBM"
 L.dbmFakerDesc = "Se um usuário do DBM tem uma versão que verifica quem está usando DBM, ele irá vê-lo na lista. Útil para guildas que forçam usar o DBM."
 L.zoneMessages = "Mostrar mensagens da zona atual"
 L.zoneMessagesDesc = "Desativar isso irá parar de mostrar mensagens quando você entra em uma zona que BigWigs possui contadores, mas você não o instalou. Nós recomendamos que você deixe ligado, pois é a única notificação que você vai receber se nós criarmos contadores para uma nova zona que você ache útil."
---L.englishSayMessages = "English-only say messages"
---L.englishSayMessagesDesc = "All the 'say' and 'yell' messages that you send in chat during a boss encounter will always be in English. Can be useful if you are with a mixed language group of players."
+L.englishSayMessages = "Mensagens de 'say' apenas em inglês"
+L.englishSayMessagesDesc = "Todas as mensagens 'say' e 'yell' que você enviar no chat durante um encontro com o chefe serão sempre em inglês. Pode ser útil se você estiver com um grupo de jogadores de idiomas mistos."
 
 L.slashDescTitle = "|cFFFED000Comandos com barra:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Envia uma contagem regressiva do pull para a raide."
