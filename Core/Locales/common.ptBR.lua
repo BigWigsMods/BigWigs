@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s em VOCÊ"
 L.you_icon = "%s em |T13700%d:0|tVOCÊ"
 L.underyou = "%s debaixo de VOCÊ"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s acima de VOCÊ"
 L.other = "%s: %s"
 L.onboss = "%s no CHEFE"
 L.buff_boss = "Buff no CHEFE: %s"
@@ -23,7 +23,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s perto de VOCÊ"
 L.on_group = "%s no GRUPO" -- spell on group
---L.boss = "BOSS"
+L.boss = "CHEFE"
 
 L.phase = "Fase %d"
 L.stage = "Estágio %d"
@@ -41,15 +41,15 @@ L.removed = "%s Removido" -- Spell Removed
 L.removed_from = "%s Removido %s" -- Spell removed from Player
 L.removed_by = "%s Removido por %s" -- Spell removed by Player
 L.removed_after = "%s removido depois de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
-L.incoming = "%s Chegando" -- Spell Incoming
+L.incoming = "%s a Caminho" -- Spell Incoming
 L.interrupted = "%s Interrompido" -- Spell Interrupted
 L.interrupted_by = "%s interrompido por %s" -- Spell interrupted by Player
 L.no = "Sem %s" -- No Spell
 L.intermission = "Intervalo"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
---L.you_die = "You die"
---L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "Você morrerá"
+L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Add surgiu"
@@ -101,21 +101,21 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
---L.top = "Top"
---L.up = "Up"
---L.middle = "Middle"
---L.down = "Down"
---L.bottom = "Bottom"
---L.left = "Left"
---L.right = "Right"
+L.top = "Topo"
+L.up = "Cima"
+L.middle = "Meio"
+L.down = "Baixo"
+L.bottom = "Fundo"
+L.left = "Esquerda"
+L.right = "Direita"
 L.north = "Norte"
---L.north_east = "North-East"
---L.east = "East"
---L.south_east = "South-East"
+L.north_east = "Nordeste"
+L.east = "Leste"
+L.south_east = "Sudeste"
 L.south = "Sul"
---L.south_west = "South-West"
---L.west = "West"
---L.north_west = "North-West"
+L.south_west = "Sudoeste"
+L.west = "Oeste"
+L.north_west = "Noroeste"
 
 -- Common ability name replacements
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
@@ -139,12 +139,12 @@ L.roar = "Rugido" -- When a boss opens their mouth to let out a loud roar, somet
 L.leap = "Salto" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Investida" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "Energia Cheia" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.weakened = "Enfraquecido" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "Poça" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Poças" -- Plural of L.pool
---L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
---L.totems = "Totems" -- Plural of L.totem
---L.portal = "Portal" -- A portal somewhere, usually leading to a different location
+L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
+L.totems = "Totems" -- Plural of L.totem
+L.portal = "Portal" -- A portal somewhere, usually leading to a different location
 L.portals = "Portais" -- Plural of L.portal
 L.rift = "Fenda" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
 L.rifts = "Fendas" -- Plural of L.rift
