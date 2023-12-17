@@ -33,10 +33,10 @@ L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
 	L.agonizing_claws_debuff = "{421022} (减益)"
 
-	L.ultimate_boss = "满能量 (%s)"
-	L.special_bar = "满能 [%s] (%d)"
-	L.special_mythic_bar = "满能 [%s/%s] (%d)"
-	L.special_mechanic_bar = "%s [满能] (%d)"
+	L.ultimate_boss = "%s 绝招"
+	L.special_bar = "%s 满能 (%d)"
+	L.special_mythic_bar = "[%s+%s] 满能 (%d)"
+	L.special_mechanic_bar = "%s [断绝招] (%d)"
 
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
