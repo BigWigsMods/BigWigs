@@ -231,6 +231,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamageFireBeam", 423649)
 
 	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "FallenFeatherApplied", 425657)
 	self:Log("SPELL_CAST_START", "FlareBomb", 425576)
 	self:Log("SPELL_DAMAGE", "FlareBombDamage", 425602)
 	self:Log("SPELL_MISSED", "FlareBombDamage", 425602)
@@ -563,6 +564,12 @@ do
 end
 
 -- Mythic
+function mod:FallenFeatherApplied(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(L.mass_entanglement, args.destName)
+	end
+end
+
 function mod:FlareBomb(args)
 	self:StopBar(CL.count:format(L.flare_bomb, flareBombCount))
 	self:Message(args.spellId, "red", CL.incoming:format(CL.count:format(L.flare_bomb, flareBombCount)))
