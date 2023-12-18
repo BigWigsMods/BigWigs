@@ -38,7 +38,7 @@ L.dbmUsers = "Jugadores con DBM:"
 L.noBossMod = "Sin boss mod:"
 L.offline = "Desconectado"
 
---L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
+L.missingAddOn = "Falta el addon |cFF436EEE%s|r!"
 L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostrarán."
 L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
