@@ -263,11 +263,7 @@ function mod:MoltenVenomApplied(args)
 	end
 end
 
-function mod:CataclysmJaws(args)
-	self:StopBar(CL.count:format(args.spellName, cataclysmJawsCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, cataclysmJawsCount))
-	self:PlaySound(args.spellId, "alarm")
-	cataclysmJawsCount = cataclysmJawsCount + 1
+do
 	local cdTable = {
 		[4] = 40,
 		[6] = 40,
@@ -275,7 +271,13 @@ function mod:CataclysmJaws(args)
 		[9] = 25,
 		[10] = 20,
 	}
-	self:Bar(args.spellId, cdTable[cataclysmJawsCount] or 30, CL.count:format(args.spellName, cataclysmJawsCount))
+	function mod:CataclysmJaws(args)
+		self:StopBar(CL.count:format(args.spellName, cataclysmJawsCount))
+		self:Message(args.spellId, "purple", CL.count:format(args.spellName, cataclysmJawsCount))
+		self:PlaySound(args.spellId, "alarm")
+		cataclysmJawsCount = cataclysmJawsCount + 1
+		self:Bar(args.spellId, cdTable[cataclysmJawsCount] or 30, CL.count:format(args.spellName, cataclysmJawsCount))
+	end
 end
 
 function mod:SerpentsWrath(args)
