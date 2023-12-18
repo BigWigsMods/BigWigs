@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s en TI"
 L.you_icon = "%s en |T13700%d:0|tTI"
 L.underyou = "%s debajo de TI"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s encima DE TI"
 L.other = "%s: %s"
 L.onboss = "%s en JEFE"
 L.buff_boss = "Efecto en JEFE: %s"
@@ -23,7 +23,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s cerca de TI"
 L.on_group = "%s en GRUPO" -- spell on group
---L.boss = "BOSS"
+L.boss = "JEFE"
 
 L.phase = "Fase %d"
 L.stage = "Etapa %d"
@@ -48,8 +48,8 @@ L.no = "No %s" -- No Spell
 L.intermission = "Interrupción"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
---L.you_die = "You die"
---L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "Te mueres"
+L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (seg = seconds (segundos))
 
 -- Add related
 L.add_spawned = "Apareció Esbirro"
@@ -79,7 +79,7 @@ L.custom_sec = "%s en %d seg"
 
 L.focus_only = "|cffff0000Alertas solo para objetivo en foco.|r "
 L.trash = "Basura"
---L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
+L.affixes = "Aflijos" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s Marcador"
@@ -101,26 +101,26 @@ L.amount_three = "%dK" -- Miles 1,000
 L.seconds = "%.1fs" -- 1.1 segundos
 
 -- Directions
---L.top = "Top"
---L.up = "Up"
---L.middle = "Middle"
---L.down = "Down"
---L.bottom = "Bottom"
---L.left = "Left"
---L.right = "Right"
---L.north = "North"
---L.north_east = "North-East"
---L.east = "East"
---L.south_east = "South-East"
---L.south = "South"
---L.south_west = "South-West"
---L.west = "West"
---L.north_west = "North-West"
+L.top = "Superior"
+L.up = "Arriba"
+L.middle = "Medio"
+L.down = "Abajo"
+L.bottom = "Fondo"
+L.left = "Izquierda"
+L.right = "Derecha"
+L.north = "Norte"
+L.north_east = "Noreste"
+L.east = "Este"
+L.south_east = "Sureste"
+L.south = "Sur"
+L.south_west = "Suroeste"
+L.west = "Oeste"
+L.north_west = "Noroeste"
 
 -- Common ability name replacements
---L.tank_combo = "Tank Combo" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_combo = "Combo de tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
---L.lasers = "Lasers" -- Plural of L.lasers
+L.lasers = "Láseres" -- Plural of L.lasers
 L.beam = "Rayo" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Rayos" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
@@ -128,23 +128,23 @@ L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Deflagración" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Retroceso" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
---L.pushback = "Pushback" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
+L.pushback = "Retroceso" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Trampas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors
 L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Teletransporte" -- A boss/add/etc teleported somewhere
 L.fear = "Miedo" -- For abilities that cause you to flee in fear
---L.breath = "Breath" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
---L.roar = "Roar" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
---L.leap = "Leap" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
+L.breath = "Aliento" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
+L.roar = "Rugido" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
+L.leap = "Salto" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Cargar" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
---L.full_energy = "Full Energy" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
---L.pool = "Pool" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
---L.pools = "Pools" -- Plural of L.pool
+L.full_energy = "Energía al máximo" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
+L.weakened = "Debilitado" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.pool = "Charco" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
+L.pools = "Charcos" -- Plural of L.pool
 L.totem = "Tótem" -- A totem, usually summoned by a boss, the same thing that shamans summon
---L.totems = "Totems" -- Plural of L.totem
---L.portal = "Portal" -- A portal somewhere, usually leading to a different location
+L.totems = "Tótems" -- Plural of L.totem
+L.portal = "Portal" -- A portal somewhere, usually leading to a different location
 L.portals = "Portales" -- Plural of L.portal
 L.rift = "Falla" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
 L.rifts = "Fallas" -- Plural of L.rift
