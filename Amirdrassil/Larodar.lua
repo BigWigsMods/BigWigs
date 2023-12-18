@@ -181,7 +181,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Ashen Devastation, Healing Roots activating
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Ashen Devastation
 
 	-- Stage One: The Cycle of Flame
 	self:Log("SPELL_CAST_SUCCESS", "FieryForceOfNature", 417653)
@@ -189,6 +189,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlisteringSplintersApplied", 418520)
 	self:Log("SPELL_CAST_START", "FieryFlourish", 426524)
 	self:Log("SPELL_CAST_START", "ScorchingRoots", 422614)
+	self:Log("SPELL_CAST_SUCCESS", "CharredBrambles", 418655)
 	self:Log("SPELL_AURA_APPLIED", "ScorchingBramblethorn", 426387)
 	self:Log("SPELL_CAST_START", "FuriousCharge", 418637)
 	self:Log("SPELL_AURA_APPLIED", "NaturesFuryApplied", 423719)
@@ -277,27 +278,14 @@ end
 -- Event Handlers
 --
 
-do
-	local prevRoots, prevAshen = 0, 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-		if spellId == 428896 then -- Ashen Devastation
-			local time = GetTime()
-			if time - prevAshen > 2 then -- Throttled due to multiple units (boss1, nameplate, target, etc)
-				prevAshen = time
-				local spellName = self:SpellName(spellId)
-				self:Message(428896, "orange", CL.count:format(spellName, ashenDevastationCount))
-				-- self:PlaySound(428896, "alert")
-				ashenDevastationCount = ashenDevastationCount + 1
-				self:CDBar(428896, timers[428896][ashenDevastationCount] or (self:Easy() and 50), CL.count:format(spellName, ashenDevastationCount))
-			end
-		elseif spellId == 418655 then -- Charred Brambles
-			local time = GetTime()
-			if time - prevRoots > 2 then -- Throttled due to multiple units (nameplate, target etc)
-				prevRoots = time
-				self:Message(418655, "green", L.charred_brambles)
-				self:PlaySound(418655, "info")
-			end
-		end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 428896 then -- Ashen Devastation
+		local spellName = self:SpellName(spellId)
+		self:Message(428896, "orange", CL.count:format(spellName, ashenDevastationCount))
+		-- self:PlaySound(428896, "alert")
+		ashenDevastationCount = ashenDevastationCount + 1
+		self:CDBar(428896, timers[428896][ashenDevastationCount], CL.count:format(spellName, ashenDevastationCount))
 	end
 end
 
@@ -343,6 +331,11 @@ function mod:ScorchingRoots(args)
 	self:PlaySound(args.spellId, "alert")
 	scorchingRootsCount = scorchingRootsCount + 1
 	self:Bar(args.spellId, timers[args.spellId][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount))
+end
+
+function mod:CharredBrambles(args)
+	self:Message(args.spellId, "green", L.charred_brambles)
+	self:PlaySound(args.spellId, "info")
 end
 
 function mod:ScorchingBramblethorn(args)
