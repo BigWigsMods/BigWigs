@@ -45,15 +45,15 @@ L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.expansionNames = {
 	"Clásico", -- Classic
-  "The Burning Crusade", -- The Burning Crusade
-  "Wrath of the Lich King", -- Wrath of the Lich King
-  "Cataclysm", -- Cataclysm
-  "Mists of Pandaria", -- Mists of Pandaria
-  "Warlords of Draenor", -- Warlords of Draenor
-  "Legion", -- Legion
-  "Battle for Azeroth", -- Battle for Azeroth
-  "Shadowlands", -- Shadowlands
-  "Dragonflight", -- Dragonflight
+  	"The Burning Crusade", -- The Burning Crusade
+  	"Wrath of the Lich King", -- Wrath of the Lich King
+  	"Cataclysm", -- Cataclysm
+  	"Mists of Pandaria", -- Mists of Pandaria
+  	"Warlords of Draenor", -- Warlords of Draenor
+  	"Legion", -- Legion
+  	"Battle for Azeroth", -- Battle for Azeroth
+  	"Shadowlands", -- Shadowlands
+  	"Dragonflight", -- Dragonflight
 }
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
@@ -82,7 +82,7 @@ L.flashScreenDesc = "Ciertas habilidades son suficientemente importantes para ne
 L.minimapIcon = "Ícono del minimapa"
 L.minimapToggle = "Cambia entre mostrar/ocultar el ícono en el minimapa."
 L.compartmentMenu = "Sin ícono de compartimento"
-L.compartmentMenu_desc = "Al desactivar esta opción, BigWigs aparecerá en el menú del addon adicional. Recomendamos dejar esta opción activada."
+L.compartmentMenu_desc = "Al desactivar esta opción, BigWigs aparecerá en el menú de compartimiento de addon. Recomendamos dejar esta opción activada."
 L.configure = "Configurar"
 L.test = "Probar"
 L.resetPositions = "Restablecer posiciones"
