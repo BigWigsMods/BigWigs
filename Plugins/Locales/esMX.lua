@@ -36,7 +36,7 @@ L.additionalSizeDesc = "Aumente el tamaño de la pantalla estándar ajustando es
 L.yourPowerTest = "Tu poder: %d" -- Your Power: 42
 L.yourAltPower = "Tu %s: %d" -- e.g. Your Corruption: 42
 L.player = "Jugador %d" -- Player 7
-L.disableAltPowerDesc = "Deshabilita la pantalla de Poder Alternativo, nunca se mostrará para ningún encuentro con el jefe."
+L.disableAltPowerDesc = "Desactiva la pantalla de Poder Alternativo, nunca se mostrará para ningún encuentro con el jefe."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -100,9 +100,9 @@ L.emphasize = "Enfatizar"
 L.emphasizeMultiplier = "Multiplicador de tamaño"
 L.emphasizeMultiplierDesc = "Si desactiva las barras moviéndose el anclaje enfatizado, esta opción decidirá el tamaño de las barras enfatizadas multiplicando el tamaño de las barras normales."
 
-L.enable = "Habilitar"
+L.enable = "Activar"
 L.move = "Mover"
-L.moveDesc = "Mueve las barras enfatizadas al anclaje de Enfatizar. Si esta opción está deshabilitada, las barras enfatizadas simplemente cambiarán de tamaño y color."
+L.moveDesc = "Mueve las barras enfatizadas al anclaje de Enfatizar. Si esta opción está desactivada, las barras enfatizadas simplemente cambiarán de tamaño y color."
 L.emphasizedBars = "Barras enfatizadas"
 L.align = "Alinear"
 L.alignText = "Alinear el texto"
@@ -173,7 +173,7 @@ L.disableMusic = "Silenciar la música (recomendado)"
 L.disableAmbience = "Silenciar sonidos ambientales (recomendado)"
 L.disableSfx = "Silenciar efectos de sonido (no recomendado)"
 L.disableErrorSpeech = "Silenciar sonidos de error (recomendado)"
-L.disableAudioDesc = "La opción '%s' en las opciones de sonido de WoW será deshabilitada, luego se volverá a habilidad cuando el encuentro con el jefe termina. Esto puede ayudarte a enfocarte en los sonidos de alerta de BigWigs."
+L.disableAudioDesc = "La opción '%s' en las opciones de sonido de WoW será desactivada, luego se volverá a habilidad cuando el encuentro con el jefe termina. Esto puede ayudarte a enfocarte en los sonidos de alerta de BigWigs."
 L.blockTooltipQuests = "Bloquea la ventana de información de los objetivos de misiones"
 L.blockTooltipQuestsDesc = "Cuando necesitas matar a un jefe para una misión, normalmente se mostrará como '0/1 completado' en la ventana de información cuando pasas tu mouse sobre el jefe. Esto se esconderá durante el combate con ese jefe para evitar que la ventana de información crezca mucho."
 L.blockObjectiveTracker = "Ocultar el seguimiento de misión"
@@ -299,7 +299,7 @@ L.soundDelayDesc = "Especifica el tiempo que BigWigs debería esperar entre cada
 L.resetProximityDesc = "Restablece todas las opciones relacionadas con las proximidad, incluyendo la posición de anclas de este."
 
 L.close = "Cerrar"
-L.closeProximityDesc = "Cierra la ventana de proximidad.\n\nPara deshabilitarla completamente para un encuentro, debes ir a las opciones para ese encuentro module y deshabilitar la opción de 'Proximidad'."
+L.closeProximityDesc = "Cierra la ventana de proximidad.\n\nPara desactivarla completamente para un encuentro, debes ir a las opciones para ese encuentro module y desactivar la opción de 'Proximidad'."
 L.lock = "Bloquear"
 L.lockDesc = "Bloquea la ventana en el lugar en el que está, previniendo que esta sea movida o redimensionada."
 L.title = "Título"
@@ -376,18 +376,18 @@ L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuent
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "Derrotado '%s' después de %s."
-L.bossWipeDurationPrint = "Wipe en '%s' después de %s."
+L.bossDefeatDurationPrint = "Victorioso en '%s' después de %s."
+L.bossWipeDurationPrint = "Derrotado en '%s' después de %s."
 L.newBestTime = "¡Nuevo mejor tiempo!"
 L.bossStatistics = "Estadísticas del jefe"
 L.bossStatsDescription = "Registro de varias estadísticas relacionadas con los jefes, como la cantidad de veces que un jefe ha sido asesinado, la cantidad de wipes, el tiempo total que duró el combate o la muerte más rápida del jefe. Estas estadísticas pueden verse en la pantalla de configuración de cada jefe, pero se ocultarán para los jefes que no tengan estadísticas registradas."
-L.enableStats = "Habilitar las estadísticas"
+L.enableStats = "Activar las estadísticas"
 L.chatMessages = "Mensajes de chat"
 L.printBestTimeOption = "Notificación de mejor tiempo"
-L.printDefeatOption = "Tiempo de derrota"
-L.printWipeOption = "Tiempo de wipe"
-L.countDefeats = "Recuento de derrotas"
-L.countWipes = "Recuento de wipes"
+L.printDefeatOption = "Tiempo de victoria"
+L.printWipeOption = "Tiempo de derrota"
+L.countDefeats = "Recuento de victorias"
+L.countWipes = "Recuento de derrotas"
 L.recordBestTime = "Recordar mejor tiempo"
 L.createTimeBar = "Mostrar la barra 'Mejor tiempo'"
 L.bestTimeBar = "Mejor tiempo"
@@ -413,8 +413,8 @@ L.defeated = "%s ha sido derrotado"
 -- Wipe.lua
 --
 
-L.wipe = "Wipe"
-L.wipeSoundTitle = "Reproduce un sonido cuando tu wipeas"
+L.wipe = "Derrota"
+L.wipeSoundTitle = "Reproduce un sonido cuando tu mueras de un jefe"
 L.respawn = "Reaparición"
 L.showRespawnBar = "Muestra la barra de reaparición"
-L.showRespawnBarDesc = "Muestra una barra después de que wipeas en un jefe mostrando el tiempo hasta que el jefe reaparezca."
+L.showRespawnBarDesc = "Muestra una barra después de que mueres en un jefe mostrando el tiempo hasta que el jefe reaparezca."
