@@ -627,3 +627,14 @@ do
 		end
 	end
 end
+
+-- Mythic
+function mod:AshenAsphyxiationApplied(args)
+	local amount = args.amount or 1
+	if self:Me(args.destGUID) and amount % 4 == 1 then -- 1, 5, 9, 10+
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 10)
+		if amount > 9 then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
