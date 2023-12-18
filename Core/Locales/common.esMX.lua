@@ -52,10 +52,10 @@ L.you_die = "Te mueres"
 L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (seg = seconds (segundos))
 
 -- Add related
-L.add_spawned = "Apareció Esbirro"
+L.add_spawned = "Apareció esbirro"
 L.spawned = "%s Apareció"
 L.spawning = "%s Aparece"
-L.next_add = "Siguiente Esbirro"
+L.next_add = "Siguiente esbirro"
 L.add_killed = "Esbirro muerto (%d/%d)"
 L.add_remaining = "Esbirro muerto, %d restantes"
 L.add = "Esbirro"
