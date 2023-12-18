@@ -158,3 +158,4 @@ L.spirits = "Esprits" -- Plural of L.spirit
 L.tornado = "Tornade" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Tornades" -- Plural of L.tornado
 L.frontal_cone = "Cône Devant" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.fear = "Peur" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
