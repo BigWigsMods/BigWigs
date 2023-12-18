@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s en TI"
 L.you_icon = "%s en |T13700%d:0|tTI"
 L.underyou = "%s debajo de TI"
-L.aboveyou = "%s encima DE TI"
+L.aboveyou = "%s encima de TI"
 L.other = "%s: %s"
 L.onboss = "%s en JEFE"
 L.buff_boss = "Efecto en JEFE: %s"
@@ -78,7 +78,7 @@ L.custom_min = "%s en %d min"
 L.custom_sec = "%s en %d seg"
 
 L.focus_only = "|cffff0000Alertas solo para objetivo en foco.|r "
-L.trash = "Basura"
+L.trash = "Bichos"
 L.affixes = "Aflijos" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
@@ -128,7 +128,7 @@ L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Deflagración" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Retroceso" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
-L.pushback = "Retroceso" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
+L.pushback = "Empujón" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Trampas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors
 L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
