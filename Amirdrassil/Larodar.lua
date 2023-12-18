@@ -13,13 +13,13 @@ mod:SetStage(1)
 -- Locals
 --
 
-
 local fieryForceOfNatureCount = 1
 local scorchingRootsCount = 1
 local furiousChargeCount = 1
 local blazingThornsCount = 1
 local ragingInfernoCount = 1
 local ignitingGrowthCount = 1
+local nextRagingInferno = 0
 
 local searingAshCount = 1
 local fallingEmbersCount = 1
@@ -27,7 +27,6 @@ local flashFireCount = 1
 local fireWhirlCount = 1
 local smolderingBackdraftCount = 1
 local ashenCallCount = 1
-local ashenDevastationCount = 1
 local ashenDevastationCount = 1
 local smolderingSuffocationOnMe = false
 
@@ -39,7 +38,7 @@ local timersLFR = { -- 5:06 p1, 5:32 p2 (p1 the same as normal, some differences
 	-- p1
 	[417653] = { 6.6, 104.8, 98.6 }, -- Fiery Force of Nature
 	[422614] = { 37.3, 110.3, 93.1 }, -- Scorching Roots
-	[418637] = { 22.1, 21.8, 24.2, 35.6, 24.2, 28.6, 25.3, 43.6, 22.0, 24.3 }, -- Furious Charge
+	-- [418637] = { 22.1, 21.8, 24.2, 35.6, 24.2, 28.6, 25.3, 43.6, 22.0, 24.3 }, -- Furious Charge
 	[426206] = { 30.7, 24.2, 24.2, 37.8, 52.7, 64.5, 24.2, 24.2 }, -- Blazing Thorns
 	-- p2
 	[427252] = { 7.4, 26.7, 25.0, 23.3, 30.0, 20.0, 25.0, 25.0, 25.0, 26.7, 23.3, 25.0, 25.0 }, -- Falling Embers
@@ -52,7 +51,7 @@ local timersNormal = { -- 5:06 p1, 2:55 p2
 	-- p1
 	[417653] = { 6.6, 104.8, 98.6 }, -- Fiery Force of Nature
 	[422614] = { 37.3, 110.3, 93.1 }, -- Scorching Roots
-	[418637] = { 22.1, 21.8, 24.2, 35.6, 24.2, 28.6, 25.3, 43.6, 22.0, 24.3 }, -- Furious Charge
+	-- [418637] = { 22.1, 21.8, 24.2, 35.6, 24.2, 28.6, 25.3, 43.6, 22.0, 24.3 }, -- Furious Charge
 	[426206] = { 30.7, 24.2, 24.2, 37.8, 52.7, 64.5, 24.2, 24.2 }, -- Blazing Thorns
 	-- p2
 	[427252] = { 7.3, 26.7, 25.0, 23.3, 30.0, 20.0, 25.0 }, -- Falling Embers
@@ -65,7 +64,7 @@ local timersHeroic = { -- 4:51 p1, 3:45 p2
 	-- p1
 	[417653] = { 6.6, 105.5, 98.0 }, -- Fiery Force of Nature
 	[422614] = { 37.4, 111.0, 92.5 }, -- Scorching Roots
-	[418637] = { 22.0, 22.0, 24.2, 36.3, 24.2, 28.6, 25.2, 43.1, 22.1, 24.1 }, -- Furious Charge
+	-- [418637] = { 22.0, 22.0, 24.2, 36.3, 24.2, 28.6, 25.2, 43.1, 22.1, 24.1 }, -- Furious Charge
 	[426206] = { 30.8, 24.2, 24.2, 38.5, 52.7, 64.0, 24.2, 24.2 }, -- Blazing Thorns
 	[417634] = { 91.1, 101.4 }, -- Raging Inferno
 	-- p2
@@ -78,16 +77,16 @@ local timersHeroic = { -- 4:51 p1, 3:45 p2
 local timersMythic = {
 	-- p1
 	[417653] = { 6.6, 104.9, 98.7 }, -- Fiery Force of Nature
-	[422614] = { 37.3, 110.5, 93.2 }, -- Scorching Roots
-	[418637] = { 22.0, 21.9, 24.2, 35.7, 24.2, 28.6, 25.3, 43.8, 22.0, 24.1 }, -- Furious Charge
+	[422614] = { 37.3, 110.5, 93.2, 120.2 }, -- Scorching Roots
+	-- [418637] = { 22.0, 21.9, 24.2, 35.7, 24.2, 28.6, 25.3, 43.8, 22.0, 24.1 }, -- Furious Charge
 	[426206] = { 30.8, 24.1, 24.2, 37.9, 52.7, 64.6, 24.2, 24.2  }, -- Blazing Thorns
-	[425889] = { 14.2, 123.7, 80.0 }, -- Igniting Growth
+	[425889] = { 14.2, 123.7, 80.0, 133.9 }, -- Igniting Growth
 	-- p2
 	[428896] = { 45.5 }, -- Ashen Devastation
 	[427252] = { 7.4, 26.7, 35.9, 21.7 }, -- Falling Embers
 	[427299] = { 29.0, 51.8, 27.6 }, -- Flash Fire
 	[427343] = { 58.4, 32.6 }, -- Fire Whirl
-	[429973] = { 14.0, 25.9, 19.2, 26.7, 16.7 }, -- Smoldering Backdraft
+	[429973] = { 14.0, 25.9, 19.2, 21.7, 16.7 }, -- Smoldering Backdraft
 	[421325] = { 20.7, 55.1 }, -- Ashen Call
 }
 local timers = mod:LFR() and timersLFR or mod:Normal() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
@@ -105,8 +104,11 @@ if L then
 	L.blazing_coalescence_on_boss_note = "When it's on the boss"
 
 	L.scorching_roots = "Roots"
-	L.blazing_thorns = "Dodges"
+	L.charred_brambles = "Roots Healable"
+	L.blazing_thorns = "Spiral of Eruptions"
 	L.falling_embers = "Soaks"
+	L.flash_fire = "Heal Absorbs"
+	L.flash_fire_single = "Heal Absorb"
 end
 
 --------------------------------------------------------------------------------
@@ -123,6 +125,7 @@ function mod:GetOptions()
 		426524, -- Fiery Flourish
 		422614, -- Scorching Roots
 		{420544, "PRIVATE"}, -- Scorching Pursuit
+		{418655, "HEALER"}, -- Charred Brambles
 		426387, -- Scorching Bramblethorn
 		{418637, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "CASTBAR"}, -- Furious Charge
 		{423719, "TANK"}, -- Nature's Fury
@@ -148,34 +151,41 @@ function mod:GetOptions()
 		"custom_on_repeating_yell_smoldering_suffocation",
 		421325, -- Ashen Call
 		{421407, "HEALER"}, -- Searing Ash
+		-- Mythic
 		{428896, "PRIVATE"}, -- Ashen Devastation
+		428946, -- Ashen Asphyxiation
 	},{
 		["stages"] = "general",
 		[417653] = -27241, -- Stage One: The Cycle of Flame
+		[425889] = "mythic", -- Stage One Mythic
 		[421316] = -27242, -- Intermission: Unreborn Again
 		[427252] = -27243, -- Stage Two: Avatar of Ash
+		[428896] = "mythic", -- Stage Two Mythic
 	},{
 		[417653] = CL.adds, -- Fiery Force of Nature (Adds)
 		[422614] = L.scorching_roots, -- Scorching Roots (Roots)
+		[418655] = L.charred_brambles, -- Charred Brambles (Roots Healable)
 		[418637] = CL.charge, -- Furious Charge (Charge)
-		[426206] = L.blazing_thorns, -- Blazing Thorns (Dodges)
-		[426249] = L.blazing_coalescence_on_player_note, -- Blazing Coalescence (When it's on you)
+		[426206] = L.blazing_thorns, -- Blazing Thorns (Spiral of Eruptions)
+		[426249] = ("%s [%s]"):format(CL.orbs, L.blazing_coalescence_on_player_note), -- Blazing Coalescence (Orbs [When it's on you])
 		[426256] = L.blazing_coalescence_on_boss_note, -- Blazing Coalescence (When it's on the boss)
 		[417634] = CL.full_energy, -- Raging Inferno (Full Energy)
+		[425889] = CL.pools, -- Igniting Growth (Pools)
 		[427252] = L.falling_embers, -- Falling Embers (Soaks)
-		[427299] = CL.bombs, -- Flash Fire (Bombs)
+		[427299] = L.flash_fire, -- Flash Fire (Heal Absorbs)
 		[427343] = CL.tornadoes, -- Fire Whirl (Tornadoes)
 		[429973] = CL.frontal_cone, -- Smoldering Backdraft (Frontal Cone)
 		[421325] = CL.adds, -- Ashen Call (Adds)
+		[428896] = CL.bombs, -- Ashen Devastation (Bombs)
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Ashen Devastation
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Ashen Devastation, Healing Roots activating
 
 	-- Stage One: The Cycle of Flame
 	self:Log("SPELL_CAST_SUCCESS", "FieryForceOfNature", 417653)
-	self:Log("SPELL_AURA_APPLIED", "BlisteringSplintersApplied", 418520)
+	-- self:Log("SPELL_AURA_APPLIED", "BlisteringSplintersApplied", 418520)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlisteringSplintersApplied", 418520)
 	self:Log("SPELL_CAST_START", "FieryFlourish", 426524)
 	self:Log("SPELL_CAST_START", "ScorchingRoots", 422614)
@@ -194,18 +204,16 @@ function mod:OnBossEnable()
 
 	-- Intermission: Unreborn Again
 	self:Log("SPELL_AURA_APPLIED", "ConsumingFlame", 421316)
-	-- self:Log("SPELL_AURA_APPLIED", "ConsumingFlame", 421316)
 	self:Log("SPELL_AURA_REMOVED", "ConsumingFlameRemoved", 421316)
 
 	-- Stage Two: Avatar of Ash
-	-- self:Log("SPELL_CAST_SUCCESS", "AshenDevastation", 428896)
 	self:Log("SPELL_CAST_START", "FallingEmbers", 427252)
 	-- self:Log("SPELL_CAST_SUCCESS", "FlashFire", 421326)
 	self:Log("SPELL_CAST_SUCCESS", "FlashFireApplied", 427299)
 	self:Log("SPELL_AURA_REMOVED", "FlashFireRemoved", 427299)
 	self:Log("SPELL_AURA_APPLIED", "EncasedInAshApplied", 427306)
 	self:Log("SPELL_CAST_START", "FireWhirl", 427343)
-	self:Log("SPELL_CAST_START", "SmolderingBackdraft", 429973, 421318) -- heroic, mythic?
+	self:Log("SPELL_CAST_START", "SmolderingBackdraft", 429973)
 	self:Log("SPELL_AURA_APPLIED", "SmolderingSuffocationApplied", 421594)
 	self:Log("SPELL_AURA_REMOVED", "SmolderingSuffocationRemoved", 421594)
 	self:Log("SPELL_CAST_START", "AshenCall", 421325)
@@ -215,6 +223,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 417632) -- Burning Ground
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 417632)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 417632)
+
+	-- Mythic
+	-- self:Log("SPELL_CAST_SUCCESS", "AshenDevastation", 428896) -- USCS
+	-- self:Log("SPELL_AURA_APPLIED", "AshenDevastationApplied", 428901)
+	-- self:Log("SPELL_AURA_REMOVED", "AshenDevastationRemoved", 428901)
+	self:Log("SPELL_AURA_APPLIED", "AshenAsphyxiationApplied", 428946)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "AshenAsphyxiationApplied", 428946)
 end
 
 function mod:OnEngage()
@@ -237,19 +252,22 @@ function mod:OnEngage()
 	timers = self:LFR() and timersLFR or self:Normal() and timersNormal or self:Mythic() and timersMythic or timersHeroic
 	self:SetStage(1)
 
-	if self:Mythic() then
-		self:Berserk(401, 0) -- ~6:41
-	end
 	self:Bar(417653, timers[417653][fieryForceOfNatureCount], CL.count:format(CL.adds, fieryForceOfNatureCount)) -- Fiery Force of Nature
 	self:Bar(426206, timers[426206][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
-	self:Bar(418637, timers[418637][furiousChargeCount], CL.count:format(CL.charge, furiousChargeCount)) -- Furious Charge
+	self:CDBar(418637, 22, CL.count:format(CL.charge, furiousChargeCount)) -- Furious Charge
 	self:Bar(422614, timers[422614][scorchingRootsCount], CL.count:format(L.scorching_roots, scorchingRootsCount)) -- Scorching Roots
+
+	nextRagingInferno = GetTime() + 90
 	self:Bar(417634, 90, CL.count:format(CL.full_energy, ragingInfernoCount)) -- Raging Inferno
+
+	if self:Mythic() then
+		self:Bar(425889, timers[425889][ignitingGrowthCount], CL.count:format(CL.pools, ignitingGrowthCount)) -- Igniting Growth
+		self:Berserk(400, 0) -- ~6:40
+	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 
 	self:SetPrivateAuraSound(420544) -- Scorching Pursuit
-	-- self:SetPrivateAuraSound(427299, 421461, "alarm") -- Flash Fire
 	if self:Mythic() then
 		self:SetPrivateAuraSound(428896, 428901) -- Ashen Devastation
 	end
@@ -258,6 +276,30 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prevRoots, prevAshen = 0, 0
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+		if spellId == 428896 then -- Ashen Devastation
+			local time = GetTime()
+			if time - prevAshen > 2 then -- Throttled due to multiple units (boss1, nameplate, target, etc)
+				prevAshen = time
+				local spellName = self:SpellName(spellId)
+				self:Message(428896, "orange", CL.count:format(spellName, ashenDevastationCount))
+				-- self:PlaySound(428896, "alert")
+				ashenDevastationCount = ashenDevastationCount + 1
+				self:CDBar(428896, timers[428896][ashenDevastationCount] or (self:Easy() and 50), CL.count:format(spellName, ashenDevastationCount))
+			end
+		elseif spellId == 418655 then -- Charred Brambles
+			local time = GetTime()
+			if time - prevRoots > 2 then -- Throttled due to multiple units (nameplate, target etc)
+				prevRoots = time
+				self:Message(418655, "green", L.charred_brambles)
+				self:PlaySound(418655, "info")
+			end
+		end
+	end
+end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 43 then -- Intermission at 40%
@@ -280,7 +322,7 @@ function mod:BlisteringSplintersApplied(args)
 		local amount = args.amount or 1
 		if amount % 2 == 1 then -- 1, 3, 5...
 			self:StackMessage(args.spellId, "blue", args.destName, amount, 3)
-			self:PlaySound(args.spellId, "alarm")
+			-- self:PlaySound(args.spellId, "alarm")
 		end
 	end
 end
@@ -341,7 +383,13 @@ function mod:FuriousCharge(args)
 	end
 
 	furiousChargeCount = furiousChargeCount + 1
-	self:Bar(args.spellId, timers[args.spellId][furiousChargeCount], CL.count:format(CL.charge, furiousChargeCount))
+	-- This ability looks to be lowest prio, and can get pushed back a lot.
+	-- We can adjust easily for the Raging Inferno cast, but perhaps we can also improve it around other abilities
+	local cd = 22.5
+	if nextRagingInferno - GetTime() < cd then
+		cd = 35 -- Estimate
+	end
+	self:CDBar(args.spellId, cd, CL.count:format(CL.charge, furiousChargeCount))
 	self:CastBar(args.spellId, 4, CL.charge)
 end
 
@@ -358,18 +406,19 @@ function mod:BlazingThorns(args)
 	self:PlaySound(args.spellId, "alert")
 	blazingThornsCount = blazingThornsCount + 1
 	self:Bar(args.spellId, timers[args.spellId][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount))
+	self:Bar(426249, 5, CL.spawning:format(CL.orbs)) -- Blazing Coalescence
 end
 
 function mod:BlazingCoalescenceApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, CL.orb)
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:BlazingCoalescenceAppliedOnBoss(args)
-	self:Message(args.spellId, "red", CL.buff_boss:format(args.spellName))
-	self:PlaySound(args.spellId, "info")
+	self:StackMessage(args.spellId, "red", CL.boss, args.amount, 1, CL.orb)
+	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:RagingInferno(args)
@@ -377,16 +426,10 @@ function mod:RagingInferno(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.full_energy, ragingInfernoCount))
 	self:PlaySound(args.spellId, "long")
 	ragingInfernoCount = ragingInfernoCount + 1
-	self:Bar(args.spellId, 102, CL.count:format(CL.full_energy, ragingInfernoCount))
+	local cd = 102
+	nextRagingInferno = GetTime() + cd
+	self:Bar(args.spellId, cd, CL.count:format(CL.full_energy, ragingInfernoCount))
 	self:CastBar(args.spellId, 4, CL.full_energy)
-end
-
-function mod:IgnitingGrowth(args)
-	self:StopBar(CL.count:format(args.spellName, ignitingGrowthCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, ignitingGrowthCount))
-	-- self:PlaySound(args.spellId, "alert")
-	ignitingGrowthCount = ignitingGrowthCount + 1
-	self:Bar(args.spellId, timers[args.spellId][ignitingGrowthCount], CL.count:format(args.spellName, ignitingGrowthCount))
 end
 
 function mod:EverlastingBlazeApplied(args)
@@ -394,6 +437,15 @@ function mod:EverlastingBlazeApplied(args)
 		self:StackMessage(args.spellId, "blue", args.destName, args.amount or 1, 1)
 		self:PlaySound(args.spellId, "alarm")
 	end
+end
+
+-- Mythic
+function mod:IgnitingGrowth(args)
+	self:StopBar(CL.count:format(CL.pools, ignitingGrowthCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.pools, ignitingGrowthCount))
+	-- self:PlaySound(args.spellId, "alert")
+	ignitingGrowthCount = ignitingGrowthCount + 1
+	self:Bar(args.spellId, timers[args.spellId][ignitingGrowthCount], CL.count:format(CL.pools, ignitingGrowthCount))
 end
 
 -- Intermission: Unreborn Again
@@ -407,13 +459,14 @@ function mod:ConsumingFlame(args)
 	self:StopBar(CL.count:format(CL.charge, furiousChargeCount)) -- Furious Charge
 	self:StopBar(CL.count:format(L.blazing_thorns, blazingThornsCount)) -- Blazing Thorns
 	self:StopBar(CL.count:format(CL.full_energy, ragingInfernoCount)) -- Raging Inferno
+	self:StopBar(CL.count:format(CL.pools, ignitingGrowthCount)) -- Igniting Growth
 
 	self:CastBar(args.spellId, 16)
 end
 
 -- Stage Two: Avatar of Ash
 function mod:ConsumingFlameRemoved(args)
-	self:StopBar(args.spellId)
+	self:StopBar(CL.cast:format(args.spellId))
 
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
@@ -425,22 +478,17 @@ function mod:ConsumingFlameRemoved(args)
 	fallingEmbersCount = 1
 	searingAshCount = 1
 	fireWhirlCount = 1
+	ashenDevastationCount = 1
 
 	self:Bar(421407, 2.5, CL.count:format(self:SpellName(421407), searingAshCount)) -- Searing Ash
 	self:Bar(427252, timers[427252][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount)) -- Falling Embers
 	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount)) -- Smoldering Backdraft
 	self:Bar(421325, timers[421325][ashenCallCount], CL.count:format(CL.adds, ashenCallCount)) -- Ashen Call
-	self:Bar(427299, timers[427299][flashFireCount], CL.count:format(CL.bombs, flashFireCount)) -- Flash Fire
+	self:Bar(427299, timers[427299][flashFireCount], CL.count:format(L.flash_fire, flashFireCount)) -- Flash Fire
 	self:Bar(427343, timers[427343][fireWhirlCount], CL.count:format(CL.tornadoes, fireWhirlCount)) -- Fire Whirl
-end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 428896 then -- Ashen Devastation
-		local spellName = self:SpellName(spellId)
-		self:Message(428896, "orange", CL.count:format(spellName, ashenDevastationCount))
-		-- self:PlaySound(428896, "alert")
-		ashenDevastationCount = ashenDevastationCount + 1
-		self:CDBar(428896, timers[428896][ashenDevastationCount] or (self:Easy() and 50), CL.count:format(spellName, ashenDevastationCount))
+	if self:Mythic() then
+		self:Bar(428896, timers[428896][ashenDevastationCount], CL.count:format(CL.bombs, ashenDevastationCount)) -- Ashen Devastation
 	end
 end
 
@@ -456,19 +504,18 @@ do
 	local playerList = {}
 	local prev = 0
 	function mod:FlashFireApplied(args)
-		local msg = CL.count:format(CL.bombs, flashFireCount)
+		local msg = CL.count:format(L.flash_fire, flashFireCount)
 		if args.time - prev > 2 then -- reset
 			prev = args.time
 			playerList = {}
 			self:StopBar(msg)
 			flashFireCount = flashFireCount + 1
-			self:Bar(args.spellId, timers[args.spellId][flashFireCount] or (self:Easy() and 50), CL.count:format(CL.bombs, flashFireCount))
+			self:Bar(args.spellId, timers[args.spellId][flashFireCount], CL.count:format(L.flash_fire, flashFireCount))
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
-			-- self:PersonalMessage(args.spellId, nil, CL.bomb)
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.bomb, nil, "Bomb")
+			self:Say(args.spellId, L.flash_fire_single, nil, "Heal Absorb")
 			self:SayCountdown(args.spellId, 8)
 		end
 		self:TargetsMessage(args.spellId, "red", playerList, nil, msg)
@@ -499,10 +546,10 @@ end
 
 function mod:SmolderingBackdraft(args)
 	self:StopBar(CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
-	self:Message(429973, "purple", CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
-	self:PlaySound(429973, "alarm")
+	self:Message(args.spellId, "purple", CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
+	self:PlaySound(args.spellId, "alarm")
 	smolderingBackdraftCount = smolderingBackdraftCount + 1
-	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
+	self:Bar(args.spellId, timers[args.spellId][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount))
 end
 
 do
@@ -556,6 +603,7 @@ do
 	function mod:SearingAsh(args)
 		if args.time - prev > 2 then
 			prev = args.time
+			self:StopBar(CL.count:format(args.spellName, searingAshCount))
 			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, searingAshCount))
 			searingAshCount = searingAshCount + 1
 			self:Bar(args.spellId, 12, CL.count:format(args.spellName, searingAshCount))

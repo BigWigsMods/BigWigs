@@ -53,8 +53,11 @@ if L then
 	L.blazing_coalescence_on_boss_note = "Wenn es auf dem Boss ist"
 
 	L.scorching_roots = "Wurzeln"
-	L.blazing_thorns = "Ausweichen"
+	--L.charred_brambles = "Roots Healable"
+	--L.blazing_thorns = "Spiral of Eruptions"
 	L.falling_embers = "Soaks"
+	L.flash_fire = "Heilungen absorbiert"
+	L.flash_fire_single = "Heilung absorbiert"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "deDE")
