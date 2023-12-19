@@ -53,8 +53,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "首领获得时"
 
 	L.scorching_roots = "树根"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "治疗树根"
+	L.blazing_thorns = "耀焰荆棘" --还是预警技能名称吧螺旋喷发或者螺旋荆棘害怕误导。
 	L.falling_embers = "接圈"
 	L.flash_fire = "治疗吸收盾"
 	L.flash_fire_single = "治疗吸收盾"
