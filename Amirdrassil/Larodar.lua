@@ -135,7 +135,7 @@ function mod:GetOptions()
 		{417634, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Raging Inferno
 		417632, -- Burning Ground
 		-- Mythic
-		425889, -- Igniting Growth
+		{425889, "PRIVATE"}, -- Igniting Growth
 		429032, -- Everlasting Blaze
 
 		-- Intermission: Unreborn Again
@@ -269,6 +269,7 @@ function mod:OnEngage()
 
 	self:SetPrivateAuraSound(420544) -- Scorching Pursuit
 	if self:Mythic() then
+		self:SetPrivateAuraSound(425889, 425888) -- Igniting Growth
 		self:SetPrivateAuraSound(428896, 428901) -- Ashen Devastation
 	end
 end
