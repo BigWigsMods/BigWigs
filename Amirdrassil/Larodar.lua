@@ -454,7 +454,7 @@ end
 
 -- Stage Two: Avatar of Ash
 function mod:ConsumingFlameRemoved(args)
-	self:StopBar(CL.cast:format(args.spellId))
+	self:StopBar(CL.cast:format(args.spellName))
 
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
