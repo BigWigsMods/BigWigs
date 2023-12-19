@@ -1245,6 +1245,7 @@ do
 			"BattleForAzeroth",
 			"Shadowlands",
 			"Dragonflight",
+			"CurrentSeason",
 		}
 	end
 
@@ -1436,14 +1437,20 @@ do
 						id = entry
 					end
 
-					local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]] -- Get expansion number for this zone
-					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
-					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
-						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
-						tinsert(treeParent.children, { -- Add new instance/zone sub menu
-							value = name or id,
-							text = zoneName,
-						})
+					local parentExpansion = loader.zoneTbl[id]
+					if type(parentExpansion) ~= "table" then
+						parentExpansion = {parentExpansion}
+					end
+					for j = 1, #parentExpansion do
+						local parent = parentExpansion[j] and addonNameToHeader[parentExpansion[j]] -- Get expansion number for this zone
+						local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+						if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
+							if not treeParent.children then treeParent.children = {} end -- Create sub menu table
+							tinsert(treeParent.children, { -- Add new instance/zone sub menu
+								value = name or id,
+								text = zoneName,
+							})
+						end
 					end
 				end
 			end
@@ -1458,12 +1465,16 @@ do
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
 			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
-			local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
+			local expansionName = loader.zoneTbl[id]
+			if type(expansionName) == "table" then
+				expansionName = loader.isRetail and expansionName[1] or expansionName[2]
+			end
+			local parent = expansionName and addonNameToHeader[expansionName]
 			if instanceType == "none" then
 				local mapId = GetBestMapForUnit("player")
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
-					parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
+					parent = expansionName and addonNameToHeader[expansionName]
 				end
 			end
 

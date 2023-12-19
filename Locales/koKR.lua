@@ -54,6 +54,7 @@ L.expansionNames = {
 	"격전의 아제로스", -- Battle for Azeroth
 	"어둠땅", -- Shadowlands
 	"용군단", -- Dragonflight
+--	"Current Season", -- Current Season
 }
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

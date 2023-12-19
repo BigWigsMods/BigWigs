@@ -54,6 +54,7 @@ L.expansionNames = {
 	"Битва за Азерот", -- Battle for Azeroth
 	"Темные Земли", -- Shadowlands
 	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
+--	"Current Season", -- Current Season
 }
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
