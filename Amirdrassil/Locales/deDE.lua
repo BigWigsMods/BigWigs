@@ -53,8 +53,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "Wenn es auf dem Boss ist"
 
 	L.scorching_roots = "Wurzeln"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "Wurzeln heilbar"
+	L.blazing_thorns = "Dornenspirale"
 	L.falling_embers = "Soaks"
 	L.flash_fire = "Heilungen absorbiert"
 	L.flash_fire_single = "Heilung absorbiert"
