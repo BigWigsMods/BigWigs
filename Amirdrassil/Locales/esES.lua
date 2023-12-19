@@ -54,7 +54,7 @@ if L then
 
 	L.scorching_roots = "Raíces"
 	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Eruptions"
+	--L.blazing_thorns = "Spiral of Thorns"
 	L.falling_embers = "Soaks individuales"
 	L.flash_fire = "Absorber curación"
 	L.flash_fire_single = "Absorber curación"

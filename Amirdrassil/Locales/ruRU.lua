@@ -54,7 +54,7 @@ if L then
 
 	L.scorching_roots = "Корень"
 	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Eruptions"
+	--L.blazing_thorns = "Spiral of Thorns"
 	L.falling_embers = "Соки"
 	L.flash_fire = "Абсорб"
 	L.flash_fire_single = "Абсорб"

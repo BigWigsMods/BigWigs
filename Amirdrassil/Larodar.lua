@@ -105,7 +105,7 @@ if L then
 
 	L.scorching_roots = "Roots"
 	L.charred_brambles = "Roots Healable"
-	L.blazing_thorns = "Spiral of Eruptions"
+	L.blazing_thorns = "Spiral of Thorns"
 	L.falling_embers = "Soaks"
 	L.flash_fire = "Heal Absorbs"
 	L.flash_fire_single = "Heal Absorb"
@@ -166,9 +166,9 @@ function mod:GetOptions()
 		[422614] = L.scorching_roots, -- Scorching Roots (Roots)
 		[418655] = L.charred_brambles, -- Charred Brambles (Roots Healable)
 		[418637] = CL.charge, -- Furious Charge (Charge)
-		[426206] = L.blazing_thorns, -- Blazing Thorns (Spiral of Eruptions)
+		[426206] = L.blazing_thorns, -- Blazing Thorns (Spiral of Thorns)
 		[426249] = ("%s [%s]"):format(CL.orbs, L.blazing_coalescence_on_player_note), -- Blazing Coalescence (Orbs [When it's on you])
-		[426256] = L.blazing_coalescence_on_boss_note, -- Blazing Coalescence (When it's on the boss)
+		[426256] =  ("%s [%s]"):format(CL.orbs, L.blazing_coalescence_on_boss_note), -- Blazing Coalescence (Orbs [When it's on the boss])
 		[417634] = CL.full_energy, -- Raging Inferno (Full Energy)
 		[425889] = CL.pools, -- Igniting Growth (Pools)
 		[427252] = L.falling_embers, -- Falling Embers (Soaks)
@@ -185,7 +185,6 @@ function mod:OnBossEnable()
 
 	-- Stage One: The Cycle of Flame
 	self:Log("SPELL_CAST_SUCCESS", "FieryForceOfNature", 417653)
-	-- self:Log("SPELL_AURA_APPLIED", "BlisteringSplintersApplied", 418520)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlisteringSplintersApplied", 418520)
 	self:Log("SPELL_CAST_START", "FieryFlourish", 426524)
 	self:Log("SPELL_CAST_START", "ScorchingRoots", 422614)
@@ -283,7 +282,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 428896 then -- Ashen Devastation
 		local spellName = self:SpellName(spellId)
 		self:Message(428896, "orange", CL.count:format(spellName, ashenDevastationCount))
-		-- self:PlaySound(428896, "alert")
 		ashenDevastationCount = ashenDevastationCount + 1
 		self:CDBar(428896, timers[428896][ashenDevastationCount], CL.count:format(spellName, ashenDevastationCount))
 	end
@@ -306,12 +304,8 @@ function mod:FieryForceOfNature(args)
 end
 
 function mod:BlisteringSplintersApplied(args)
-	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		if amount % 2 == 1 then -- 1, 3, 5...
-			self:StackMessage(args.spellId, "blue", args.destName, amount, 3)
-			-- self:PlaySound(args.spellId, "alarm")
-		end
+	if self:Me(args.destGUID) and args.amount % 2 == 1 then -- 3, 5...
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 5)
 	end
 end
 
@@ -399,7 +393,9 @@ function mod:BlazingThorns(args)
 	self:PlaySound(args.spellId, "alert")
 	blazingThornsCount = blazingThornsCount + 1
 	self:Bar(args.spellId, timers[args.spellId][blazingThornsCount], CL.count:format(L.blazing_thorns, blazingThornsCount))
-	self:Bar(426249, 5, CL.spawning:format(CL.orbs)) -- Blazing Coalescence
+	if not self:Easy() then
+		self:Bar(426249, 5, CL.orbs) -- Blazing Coalescence
+	end
 end
 
 function mod:BlazingCoalescenceApplied(args)
@@ -436,7 +432,6 @@ end
 function mod:IgnitingGrowth(args)
 	self:StopBar(CL.count:format(CL.pools, ignitingGrowthCount))
 	self:Message(args.spellId, "orange", CL.count:format(CL.pools, ignitingGrowthCount))
-	-- self:PlaySound(args.spellId, "alert")
 	ignitingGrowthCount = ignitingGrowthCount + 1
 	self:Bar(args.spellId, timers[args.spellId][ignitingGrowthCount], CL.count:format(CL.pools, ignitingGrowthCount))
 end

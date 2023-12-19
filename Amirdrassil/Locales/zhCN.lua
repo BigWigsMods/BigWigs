@@ -54,7 +54,7 @@ if L then
 
 	L.scorching_roots = "树根"
 	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Eruptions"
+	--L.blazing_thorns = "Spiral of Thorns"
 	L.falling_embers = "接圈"
 	L.flash_fire = "治疗吸收盾"
 	L.flash_fire_single = "治疗吸收盾"
