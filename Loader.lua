@@ -1504,6 +1504,7 @@ do
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if type(zoneAddon) == "table" then
+			-- default to the expansion addon for current season modules
 			zoneAddon = zoneAddon[2]
 		end
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
@@ -1595,6 +1596,7 @@ function mod:BigWigs_CoreEnabled()
 	local _, _, _, _, _, _, _, id = GetInstanceInfo()
 	local zoneAddon = public.zoneTbl[id]
 	if type(zoneAddon) == "table" then
+		-- default to the expansion addon for current season modules
 		zoneAddon = zoneAddon[2]
 	end
 	if zoneAddon and zoneAddon:find("LittleWigs", nil, true) then

@@ -1467,6 +1467,7 @@ do
 			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
 			local expansionName = loader.zoneTbl[id]
 			if type(expansionName) == "table" then
+				-- on Retail default to Current Season, on Classic default to the expansion addon
 				expansionName = loader.isRetail and expansionName[1] or expansionName[2]
 			end
 			local parent = expansionName and addonNameToHeader[expansionName]
