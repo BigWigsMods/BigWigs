@@ -1465,17 +1465,17 @@ do
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
 			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
-			local expansionName = loader.zoneTbl[id]
-			if type(expansionName) == "table" then
+			local zoneAddon = loader.zoneTbl[id]
+			if type(zoneAddon) == "table" then
 				-- on Retail default to Current Season, on Classic default to the expansion addon
-				expansionName = loader.isRetail and expansionName[1] or expansionName[2]
+				zoneAddon = loader.isRetail and zoneAddon[1] or zoneAddon[2]
 			end
-			local parent = expansionName and addonNameToHeader[expansionName]
+			local parent = zoneAddon and addonNameToHeader[zoneAddon]
 			if instanceType == "none" then
 				local mapId = GetBestMapForUnit("player")
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
-					parent = expansionName and addonNameToHeader[expansionName]
+					parent = zoneAddon and addonNameToHeader[zoneAddon]
 				end
 			end
 
