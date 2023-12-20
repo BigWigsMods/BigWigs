@@ -14,19 +14,14 @@ mod:SetStage(1)
 --
 
 local timers = {
-	[1.5] = {
-		[414186] = {28, 8, 0}, -- Blaze (Mythic Only)
-	},
-	[2] = {
-		[419123] = {5.5, 75, 80, 0}, -- Flamefall
-		[417431] = {18.5, 11, 60, 11, 11, 58, 11, 11}, -- Fyr'alath's Bite
-		[422518] = {35.5, 80.0, 0}, -- Greater Firestorm
-		[422524] = {58.5, 80.0, 0}, -- Shadowflame Devastation
-		[422032] = {19.9, 20.0, 25.0, 29.0, 26.0, 24.0, 25.0}, -- Spirits of the Kaldorei
-		[414186] = {20.5, 15, 25, 30, 26.9, 23, 30, 25}, -- Blaze
-		[412761] = {44.0, 80, 79.5, 0}, -- Incarnate
-		[417807] = {27.5, 16, 58.5, 16, 64.5, 16, 13.5}, -- Aflame
-	},
+	[419123] = {5.5, 75, 80, 0}, -- Flamefall
+	[417431] = {18.5, 11, 60, 11, 11, 58, 11, 11}, -- Fyr'alath's Bite
+	[422518] = {35.5, 80.0, 0}, -- Greater Firestorm
+	[422524] = {58.5, 80.0, 0}, -- Shadowflame Devastation
+	[422032] = {19.9, 20.0, 25.0, 29.0, 26.0, 24.0, 25.0}, -- Spirits of the Kaldorei
+	[414186] = {20.5, 15, 25, 30, 26.9, 23, 30, 25}, -- Blaze
+	[412761] = {44.0, 80, 79.5, 0}, -- Incarnate
+	[417807] = {27.5, 16, 58.5, 16, 64.5, 16, 13.5}, -- Aflame
 }
 
 --------------------------------------------------------------------------------
@@ -366,8 +361,12 @@ function mod:Blaze()
 		else
 			cd = blazeCount % 2 == 0 and 24 or 29.5
 		end
-	elseif stage == 1.5 or stage == 2 then
-		cd = timers[stage][414186][blazeCount]
+	elseif stage == 1.5 then
+		if blazeCount == 2 then
+			cd = 8
+		end
+	elseif stage == 2 then
+		cd = timers[414186][blazeCount]
 	else -- Stage 3
 		if self:Mythic() then
 			cd = blazeCount % 2 == 0 and 13.0 or 33.0
@@ -389,7 +388,7 @@ do
 			prev = args.time
 			self:StopBar(CL.count:format(args.spellName, aflameCount))
 			aflameCount = aflameCount + 1
-			self:Bar(args.spellId, self:GetStage() < 2 and (self:Easy() and 12.0 or 8.0) or timers[2][args.spellId][aflameCount], CL.count:format(args.spellName, aflameCount))
+			self:Bar(args.spellId, self:GetStage() < 2 and (self:Easy() and 12.0 or 8.0) or timers[args.spellId][aflameCount], CL.count:format(args.spellName, aflameCount))
 		end
 		if self:Me(args.destGUID) and amount % 5 == 1 then
 			self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
@@ -418,7 +417,7 @@ function mod:FyralathsBite(args)
 	if self:GetStage() == 1 then
 		cd = fyralathsBiteCount % 3 == 1 and (self:Mythic() and 31.5 or 23.6) or 15
 	else
-		cd = timers[2][args.spellId][fyralathsBiteCount]
+		cd = timers[args.spellId][fyralathsBiteCount]
 	end
 	self:Bar(args.spellId, cd, CL.count:format(spellName, fyralathsBiteCount))
 end
@@ -486,14 +485,14 @@ function mod:Incarnate(args)
 		self:Bar(419144, 13) -- Corrupt
 		if self:Mythic() then
 			blazeCount = 1
-			local cd = timers[1.5][414186][blazeCount]
+			local cd = 28
 			self:Bar(414186, cd, CL.count:format(self:SpellName(414186), blazeCount)) -- Blaze
 			timerHandles[414186] = self:ScheduleTimer("Blaze", cd)
 		end
 
 	else -- Stage 2 Incarnates
 		incarnateCount = incarnateCount + 1
-		self:Bar(args.spellId, timers[2][args.spellId][incarnateCount], CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
+		self:Bar(args.spellId, timers[args.spellId][incarnateCount], CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 	end
 end
 
@@ -572,15 +571,15 @@ function mod:CorruptRemoved(args)
 	addCount = 0
 	scheduledCages = {}
 
-	self:Bar(422518, timers[2][422518][firestormCount], CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm
-	self:Bar(419123, timers[2][419123][flamefallCount], CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
-	self:Bar(422524, timers[2][422524][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
-	self:Bar(417431, timers[2][417431][fyralathsBiteCount], CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
-	self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount)) -- Spirits of Kaldorei
-	self:Bar(412761, timers[2][412761][incarnateCount], CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
-	self:Bar(417807, timers[2][417807][aflameCount], CL.count:format(self:SpellName(417807), aflameCount))
+	self:Bar(422518, timers[422518][firestormCount], CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm
+	self:Bar(419123, timers[419123][flamefallCount], CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
+	self:Bar(422524, timers[422524][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount)) -- Shadowflame Devastation
+	self:Bar(417431, timers[417431][fyralathsBiteCount], CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
+	self:Bar(422032, timers[422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount)) -- Spirits of Kaldorei
+	self:Bar(412761, timers[412761][incarnateCount], CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
+	self:Bar(417807, timers[417807][aflameCount], CL.count:format(self:SpellName(417807), aflameCount))
 	if not self:Easy() then
-		local cd = timers[2][414186][blazeCount]
+		local cd = timers[414186][blazeCount]
 		self:Bar(414186, cd, CL.count:format(self:SpellName(414186), blazeCount))
 		timerHandles[414186] = self:ScheduleTimer("Blaze", cd) -- Trigger Next
 	end
@@ -596,7 +595,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 		end
 		spiritsCount = spiritsCount + 1
 		if self:Mythic() and spiritsCount > 6 then return end -- Max 6 waves in mythic
-		self:Bar(422032, timers[2][422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount))
+		self:Bar(422032, timers[422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount))
 	end
 end
 
@@ -606,7 +605,7 @@ function mod:GreaterFirestorm(args)
 	self:PlaySound(args.spellId, "alert")
 	-- tanks get a private aura
 	firestormCount = firestormCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][firestormCount], CL.count:format(L.greater_firestorm_shortened_bar, firestormCount))
+	self:Bar(args.spellId, timers[args.spellId][firestormCount], CL.count:format(L.greater_firestorm_shortened_bar, firestormCount))
 
 	addCount = 0
 	self:Bar(428963, 15, L.molten_gauntlet) -- Molten Gauntlet
@@ -681,7 +680,7 @@ function mod:Flamefall(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, flamefallCount))
 	self:PlaySound(args.spellId, "alarm")
 	flamefallCount = flamefallCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][flamefallCount], CL.count:format(args.spellName, flamefallCount))
+	self:Bar(args.spellId, timers[args.spellId][flamefallCount], CL.count:format(args.spellName, flamefallCount))
 end
 
 function mod:ShadowflameDevastation(args)
@@ -689,7 +688,7 @@ function mod:ShadowflameDevastation(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, shadowflameDevastationCount))
 	self:PlaySound(args.spellId, "long")
 	shadowflameDevastationCount = shadowflameDevastationCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount))
+	self:Bar(args.spellId, timers[args.spellId][shadowflameDevastationCount], CL.count:format(CL.breath, shadowflameDevastationCount))
 end
 
 -- Stage Three: Shadowflame Incarnate
