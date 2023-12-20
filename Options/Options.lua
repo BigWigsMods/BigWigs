@@ -1245,7 +1245,6 @@ do
 			"BattleForAzeroth",
 			"Shadowlands",
 			"Dragonflight",
-			"CurrentSeason",
 		}
 	end
 
@@ -1377,7 +1376,7 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = loader.currentExpansion.littlewigsName
+				defaultHeader = loader.currentExpansion.littlewigsDefault
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
@@ -1386,6 +1385,15 @@ do
 						enabled = true,
 					}
 					addonNameToHeader[value] = i
+				end
+				-- add default LittleWigs to options if it doesn't match the current expansion's LittleWigs
+				if loader.currentExpansion.littlewigsName ~= loader.currentExpansion.littlewigsDefault then
+					treeTbl[#treeTbl + 1] = {
+						text = L.currentSeason,
+						value = defaultHeader,
+						enabled = true,
+					}
+					addonNameToHeader[defaultHeader] = #treeTbl
 				end
 			end
 

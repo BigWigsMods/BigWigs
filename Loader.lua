@@ -168,6 +168,7 @@ do
 		public.currentExpansion = {
 		name = c,
 		littlewigsName = lw_c,
+		littlewigsDefault = lw_c,
 		zones = {
 		}
 	}
@@ -175,6 +176,7 @@ do
 		public.currentExpansion = {
 		name = bc,
 		littlewigsName = lw_bc,
+		littlewigsDefault = lw_bc,
 		zones = {
 		}
 	}
@@ -182,13 +184,15 @@ do
 		public.currentExpansion = {
 		name = wotlk,
 		littlewigsName = lw_wotlk,
+		littlewigsDefault = lw_wotlk,
 		zones = {
 		}
 	}
 	else
 		public.currentExpansion = { -- Change on new expansion releases
 		name = df,
-		littlewigsName = lw_cs,
+		littlewigsName = lw_df,
+		littlewigsDefault = lw_cs,
 		zones = {
 			[2522] = "BigWigs_VaultOfTheIncarnates",
 			[2569] = "BigWigs_Aberrus",

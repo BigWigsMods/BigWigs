@@ -54,8 +54,8 @@ L.alternativeName = "%s (|cFF436EEE%s|r)"
 --	"Battle for Azeroth", -- Battle for Azeroth
 --	"Schattenlande", -- Shadowlands
 --	"Dragonflight", -- Dragonflight
---	"Current Season", -- Current Season
 --}
+--L.currentSeason = "Current Season"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Hütet Euch (Algalon)"
