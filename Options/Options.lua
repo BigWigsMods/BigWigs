@@ -1346,6 +1346,18 @@ do
 		end
 	end
 
+	local function addModuleToOptions(zoneAddon, treeTbl, addonNameToHeader, value, zoneName)
+		local parent = zoneAddon and addonNameToHeader[zoneAddon] -- Get expansion number for this zone
+		local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+		if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
+			if not treeParent.children then treeParent.children = {} end -- Create sub menu table
+			tinsert(treeParent.children, { -- Add new instance/zone sub menu
+				value = value,
+				text = zoneName,
+			})
+		end
+	end
+
 	local function onTabGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 
@@ -1447,20 +1459,14 @@ do
 						id = entry
 					end
 
-					local parentExpansion = loader.zoneTbl[id]
-					if type(parentExpansion) ~= "table" then
-						parentExpansion = {parentExpansion}
-					end
-					for j = 1, #parentExpansion do
-						local parent = parentExpansion[j] and addonNameToHeader[parentExpansion[j]] -- Get expansion number for this zone
-						local treeParent = treeTbl[parent] -- Grab appropriate expansion name
-						if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
-							if not treeParent.children then treeParent.children = {} end -- Create sub menu table
-							tinsert(treeParent.children, { -- Add new instance/zone sub menu
-								value = name or id,
-								text = zoneName,
-							})
+					-- add zones to options
+					local zoneAddon = loader.zoneTbl[id]
+					if type(zoneAddon) == "table" then
+						for j = 1, #zoneAddon do
+							addModuleToOptions(zoneAddon[j], treeTbl, addonNameToHeader, name or id, zoneName)
 						end
+					else
+						addModuleToOptions(zoneAddon, treeTbl, addonNameToHeader, name or id, zoneName)
 					end
 				end
 			end
