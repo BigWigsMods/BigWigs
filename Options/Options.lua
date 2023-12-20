@@ -1312,7 +1312,9 @@ do
 				end
 			end
 		elseif value:match("^LittleWigs_") then -- All LittleWigs content addons, all come from 1 zip
-			if value == loader.currentExpansion.littlewigsName and loader.isRetail then value = "LittleWigs" end
+			if loader.isRetail and (value == loader.currentExpansion.littlewigsName or value == loader.currentExpansion.littlewigsDefault) then
+				value = "LittleWigs"
+			end
 			local addonState = loader:GetAddOnState(value)
 			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
 			if not loader.usingLittleWigsRepo and string then
