@@ -153,7 +153,7 @@ L.SAY_COUNTDOWN_desc = "Las burbujas de chat son fáciles de detectar. BigWigs u
 L.ME_ONLY_EMPHASIZE = "Enfatizar (sólo en mi)"
 L.ME_ONLY_EMPHASIZE_desc = "Al activar esto enfatizará cualquier mensaje asociado con esta habilidad SÓLO si se lanza sobre ti, mostrándolo más grande y visible."
 L.NAMEPLATEBAR = "Barras en placas de nombre"
-L.NAMEPLATEBAR_desc = "Las barras algunas veces están pegadas a las placas de nombre cuando más de un objetivo lanzando el mismo hechizo. Si esta habilidad está acompañada por una barra de placa de nombre que quieres ocultar, desactiva esta opción."
+L.NAMEPLATEBAR_desc = "Las barras algunas veces están pegadas a las placas de nombre cuando más de un objetivo lanza el mismo hechizo. Si esta habilidad está acompañada por una barra de placa de nombre que quieres ocultar, desactiva esta opción."
 L.PRIVATE = "Aura privada"
 L.PRIVATE_desc = "Las auras privadas no se pueden rastrear normalmente, pero el sonido \"sobre ti\" (aviso) se puede configurar en la pestaña Sonido."
 
