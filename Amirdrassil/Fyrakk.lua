@@ -15,7 +15,7 @@ mod:SetStage(1)
 
 local timers = {
 	[1.5] = {
-		[414186] = {17, 12, 8, 0}, -- Blaze (Mythic Only)
+		[414186] = {28, 8, 0}, -- Blaze (Mythic Only)
 	},
 	[2] = {
 		[419123] = {5.5, 75, 80, 0}, -- Flamefall
