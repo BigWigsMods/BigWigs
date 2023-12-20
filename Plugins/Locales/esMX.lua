@@ -8,8 +8,8 @@ L.positionX = "Posición X"
 L.positionY = "Posición Y"
 L.positionExact = "Posicionamiento exacto"
 L.positionDesc = "Escriba en el recuadro o mueva el deslizador si necesita un posicionamiento exacto desde el ancla."
-L.width = "Ancho"
-L.height = "Alto"
+L.width = "Anchura"
+L.height = "Altura"
 L.sizeDesc = "Normalmente se ajusta el tamaño arrastrando el ancla. Si necesitas un tamaño exacto puedes usar este deslizador o escribir el valor en el recuadro, que no tiene un máximo."
 L.fontSizeDesc = "Ajuste el tamaño de la fuente utilizando el control deslizante o escriba el valor en la casilla que tiene un máximo de 200."
 L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacer esto?"
@@ -30,7 +30,7 @@ L.altPowerTestDesc = "Muestra la pantalla de Poder Alternativo, permitiéndote m
 L.yourPowerBar = "Tu barra de poder"
 L.barColor = "Color de la barra"
 L.barTextColor = "Color del texto de la barra"
-L.additionalWidth = "Ancho adicional"
+L.additionalWidth = "Anchura adicional"
 L.additionalHeight = "Altura adicional"
 L.additionalSizeDesc = "Aumente el tamaño de la pantalla estándar ajustando este deslizador, o escriba el valor en la casilla que tiene un máximo de 100."
 L.yourPowerTest = "Tu poder: %d" -- Your Power: 42
@@ -71,7 +71,7 @@ L.resetBarsDesc = "Restablece todas las opciones relacionadas con las barras, in
 
 L.nameplateBars = "Barras de nombres"
 L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
-L.nameplateAutoWidthDesc = "Establece el ancho de las barras de nombres con la anchura de la barra de nombre padre."
+L.nameplateAutoWidthDesc = "Establece la anchura de las barras de nombres con la anchura de la barra de nombre padre."
 L.nameplateOffsetY = "Desplazamiento en Y"
 L.nameplateOffsetYDesc = "Desplazamiento de la parte superior de la placa de nombre para las barras hacia arriba y la parte inferior de la placa de nombre para las barras hacia abajo."
 L.nameplateAlphaDesc = "Controla qué tan transparentes las barras de nombres deben ser."
@@ -81,16 +81,16 @@ L.clickableBarsDesc = "Las barras de BigWigs se les puede hacer clic por defecto
 L.interceptMouseDesc = "Permite que las barras reciban clics del ratón."
 L.modifier = "Modificador"
 L.modifierDesc = "Presiona la tecla modificadora seleccionada para activar acciones de clic en barras de tiempo."
-L.modifierKey = "Solo con una tecla modificadora"
+L.modifierKey = "Sólo con una tecla modificadora"
 L.modifierKeyDesc = "Permite hacer clic en las barras a menos que se mantenga pulsada la tecla modificadora especificada, en cuyo caso las acciones del ratón que se describen a continuación estarán disponibles."
 
 L.temporaryCountdownDesc = "Habilita temporalmente un contador de la habilidad asociada con esta barra"
 L.report = "Reportar"
 L.reportDesc = "Informa del estado actual de las barras al grupo de chat activo; ya sea en el chat de la estancia, en la banda, en el grupo o decir, según corresponda."
 L.remove = "Quitar"
-L.removeBarDesc = "Remueve temporalmente esta barra."
+L.removeBarDesc = "Quita temporalmente esta barra."
 L.removeOther = "Quitar otros"
-L.removeOtherBarDesc = "Remueve temporalmente todas las demás barras (excepto ésta)."
+L.removeOtherBarDesc = "Quita temporalmente todas las demás barras (excepto ésta)."
 
 L.emphasizeAt = "Enfatiza en... (segundos)"
 L.growingUpwards = "Crecer hacia arriba"
@@ -117,7 +117,7 @@ L.icon = "Ícono"
 L.iconDesc = "Muestra u oculta los íconos de la barra."
 L.iconPosition = "Posición del ícono"
 L.iconPositionDesc = "Elige en qué lugar de la barra debe posicionarse el ícono."
-L.font = "Fuenta"
+L.font = "Fuente"
 L.restart = "Restablecer"
 L.restartDesc = "Restablece las barras enfatizadas para que empiecen desde el principio y cuenten desde 10."
 L.fill = "Llenar"
@@ -142,9 +142,9 @@ L.sendBreak = "Enviando un temporizador de descanso a los usuarios de BigWigs y 
 L.breakStarted = "Temporizador de descanso iniciado por %s el usuario %s."
 L.breakStopped = "Temporizador de descanso cancelado por %s."
 L.breakBar = "Tiempo de descanso"
-L.breakMinutes = "El descanso termina en %d |4minuto:minutos;!"
-L.breakSeconds = "El descanso termina en %d |4segundo:segundos;!"
-L.breakFinished = "El descanso ha terminado!"
+L.breakMinutes = "¡El descanso termina en %d |4minuto:minutos;!"
+L.breakSeconds = "¡El descanso termina en %d |4segundo:segundos;!"
+L.breakFinished = "¡El descanso ha terminado!"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -154,7 +154,7 @@ L.bossBlock = "Bloque de Jefe"
 L.bossBlockDesc = "Configura las diferentes cosas que puedes bloquear durante un encuentro con el jefe.\n\n"
 L.bossBlockAudioDesc = "Configura qué sonido silenciar durante un encuentro con un jefe.\n\nCualquier opción aquí que está |cff808080grisada|r ha sido desactivada en las opciones de sonido de WoW.\n\n"
 L.movieBlocked = "Ya has visto esta cinemática antes, saltándola."
-L.blockEmotes = "Bloquear los emotes de la pantalla central"
+L.blockEmotes = "Bloquear emotes de la pantalla central"
 L.blockEmotesDesc = "Algunos jefes muestran emotes para ciertas habilidades, estos mensajes son demasiado largos y descriptivos. Intentamos acortarlos, y ajustarlos para que no interfieran con el juego, y que no te digan específicamente qué tienes que hacer.\n\nTen en cuenta: Los emotes de Jefe seguirán siendo visibles en el chat si deseas leerlos."
 L.blockMovies = "Bloquear las cinemáticas repetidas"
 L.blockMoviesDesc = "Las cinemáticas de encuentros con el jefe sólo se podrán ver una vez (para que puedas ver cada una) y luego serán bloqueadas."
@@ -179,18 +179,18 @@ L.blockTooltipQuestsDesc = "Cuando necesitas matar a un jefe para una misión, n
 L.blockObjectiveTracker = "Ocultar el seguimiento de misión"
 L.blockObjectiveTrackerDesc = "El seguimiento de misión se ocultará durante encuentros de jefes para limpiar el espacio en pantalla.\n\nEsto no sucederá si estás en una mítica + o estás haciendo seguimiento de un logro."
 
-L.blockTalkingHead = "Ocultar la ventana emergente de diálogo 'Cabeza Parlante' del NPC"
-L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de NPC y un texto de chat de NPC en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un NPC está hablando.\n\nPuedes elegir los diferentes tipos de instancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del NPC se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
+L.blockTalkingHead = "Ocultar la ventana emergente de diálogo 'Cabeza Parlante' del PNJ"
+L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de PNJ y un texto de chat de PNJ en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un PNJ está hablando.\n\nPuedes elegir los diferentes tipos de instancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del PNJ se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
 L.blockTalkingHeadDungeons = "Calabozos Normales & Heroicos"
-L.blockTalkingHeadMythics = "Cabozos Míticos y Míticos+"
+L.blockTalkingHeadMythics = "Calabozos Míticos y Míticos+"
 L.blockTalkingHeadRaids = "Bandas"
 L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos & Bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.userNotifySfx = "BossBlock desactivó los efectos de sonido, lo que obligó a volver a activarlos."
+L.userNotifyMusic = "BossBlock desactivó la música, lo que obligó a volver a activarla."
+L.userNotifyAmbience = "BossBlock desactivó el ambiente, lo que obligó a volver a activarlo."
+L.userNotifyErrorSpeech = "BossBlock desactivó el aviso de error, lo que obligó a volver a activarlo."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -220,11 +220,11 @@ L.blueDesc = "Alertas por cosas que te afectan directamente, como un efecto mal�
 L.orange = "Naranja"
 L.yellow = "Amarillo"
 L.green = "Verde"
-L.greenDesc = "Advertencias para las cosas buenas que pasan, como que te quiten un efecto maléfico."
+L.greenDesc = "Avisos para las cosas buenas que pasan, como que te quiten un efecto maléfico."
 L.cyan = "Cian"
-L.cyanDesc = "Advertencias para cambios de estado del encuentro, como el avance a la siguiente fase."
+L.cyanDesc = "Avisos para cambios de estado del encuentro, como el avance a la siguiente fase."
 L.purple = "Morado"
-L.purpleDesc = "Advertencias sobre las habilidades específicas de los tanques, como las acumulaciones de efectos negativos en un tanque."
+L.purpleDesc = "Avisos sobre las habilidades específicas de los tanques, como las acumulaciones de efectos negativos en un tanque."
 
 -----------------------------------------------------------------------
 -- Countdown.lua
@@ -248,7 +248,7 @@ L.resetAllCountdownDesc = "Si has seleccionado voces de cuenta regresiva persona
 -- InfoBox.lua
 --
 
-L.infoBox = "InfoBox"
+L.infoBox = "Caja de información"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -324,20 +324,20 @@ L.tooltipDesc = "Muestra u oculta la descripción del hechizo si la ventana de p
 
 L.countdownType = "Tipo de cuenta regresiva"
 L.combatLog = "Registro automático de combate"
-L.combatLogDesc = "Automáticamente comienza a registrar el combate cuando se inicia el temporizador de llamado de jefe y lo termina cuando acaba el encuentro."
+L.combatLogDesc = "Automáticamente comienza a registrar el combate cuando se inicia el temporizador de llamada de jefe y lo termina cuando acaba el encuentro."
 
-L.pull = "Llamado de jefe"
+L.pull = "Llamada de jefe"
 L.engageSoundTitle = "Toca un sonido cuando un encuentro con el jefe haya comenzado"
-L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamado de jefe es comenzado"
-L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamado de jefe termina"
-L.pullStarted = "Temporizador de llamado de jefe empezado por %s el jugador %s."
-L.pullStopped = "Temporizador de llamado de jefe cancelado por %s."
-L.pullStoppedCombat = "Temporizador de llamado de jefe cancelado porque tu entraste en combate"
-L.pullIn = "Llamado de jefe en %d seg"
-L.sendPull = "Enviando un temporizador de llamado de jefe para los usuarios de BigWigs y DBM."
+L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe es comenzado"
+L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe termina"
+L.pullStarted = "Temporizador de llamada de jefe empezado por %s el jugador %s."
+L.pullStopped = "Temporizador de llamada de jefe cancelado por %s."
+L.pullStoppedCombat = "Temporizador de llamada de jefe cancelado porque tu entraste en combate"
+L.pullIn = "Llamada de jefe en %d seg"
+L.sendPull = "Enviando un temporizador de llamada de jefe para los usuarios de BigWigs y DBM."
 L.wrongPullFormat = "Debe estar entre 1 y 60 segundos. Un ejemplo correcto es: /pull 5"
 L.countdownBegins = "Comenzar cuenta regresiva"
-L.countdownBegins_desc = "Elige cuánto tiempo restante debe de quedar en el llamado de jefe (en segundos) cuando la cuenta regresiva comience."
+L.countdownBegins_desc = "Elige cuánto tiempo restante debe de quedar en la llamada de jefe (en segundos) cuando la cuenta regresiva comience."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -362,8 +362,8 @@ L.Alarm = "Alarma"
 L.Info = "Información"
 L.Alert = "Alerta"
 L.Long = "Largo"
-L.Warning = "Alerta"
-L.onyou = "Una hechizo, efecto o debuff está en ti"
+L.Warning = "Aviso"
+L.onyou = "Una hechizo, efecto o perjuicio está en ti"
 L.underyou = "Debes moverte fuera del hechizo que está debajo de ti"
 
 L.sound = "Sonido"
@@ -414,7 +414,7 @@ L.defeated = "%s ha sido derrotado"
 --
 
 L.wipe = "Derrota"
-L.wipeSoundTitle = "Reproduce un sonido cuando tu mueras de un jefe"
+L.wipeSoundTitle = "Reproduce un sonido cuando tú mueres de un jefe"
 L.respawn = "Reaparición"
 L.showRespawnBar = "Muestra la barra de reaparición"
 L.showRespawnBarDesc = "Muestra una barra después de que mueres en un jefe mostrando el tiempo hasta que el jefe reaparezca."
