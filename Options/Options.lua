@@ -1484,7 +1484,7 @@ do
 			local zoneAddon = loader.zoneTbl[id]
 			if type(zoneAddon) == "table" then
 				-- on Retail default to Current Season, on Classic default to the expansion addon
-				zoneAddon = loader.isRetail and zoneAddon[1] or zoneAddon[2]
+				zoneAddon = loader.isRetail and zoneAddon[#zoneAddon] or zoneAddon[1]
 			end
 			local parent = zoneAddon and addonNameToHeader[zoneAddon]
 			if instanceType == "none" then

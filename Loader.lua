@@ -333,7 +333,7 @@ do
 		[632] = lw_wotlk, -- The Forge of Souls
 		--[[ LittleWigs: Cataclysm ]]--
 		[859] = lw_cata, -- Zul'Gurub
-		[643] = {lw_cs, lw_cata}, -- Throne of the Tides
+		[643] = {lw_cata, lw_cs}, -- Throne of the Tides
 		[644] = lw_cata, -- Halls of Origination
 		[645] = lw_cata, -- Blackrock Caverns
 		[755] = lw_cata, -- Lost City of the Tol'vir
@@ -356,7 +356,7 @@ do
 		[1209] = lw_wod, -- Skyreach
 		[1176] = lw_wod, -- Shadowmoon Burial Grounds
 		[1208] = lw_wod, -- Grimrail Depot
-		[1279] = {lw_cs, lw_wod}, -- The Everbloom
+		[1279] = {lw_wod, lw_cs}, -- The Everbloom
 		[1195] = lw_wod, -- Iron Docks
 		[1182] = lw_wod, -- Auchindoun
 		[1175] = lw_wod, -- Bloodmaul Slag Mines
@@ -367,9 +367,9 @@ do
 		[1677] = lw_l, -- Cathedral of Eternal Night
 		[1571] = lw_l, -- Court of Stars
 		[1651] = lw_l, -- Return to Karazhan
-		[1501] = {lw_cs, lw_l}, -- Black Rook Hold
+		[1501] = {lw_l, lw_cs}, -- Black Rook Hold
 		[1516] = lw_l, -- The Arcway
-		[1466] = {lw_cs, lw_l}, -- Darkheart Thicket
+		[1466] = {lw_l, lw_cs}, -- Darkheart Thicket
 		[1458] = lw_l, -- Neltharion's Lair
 		[1456] = lw_l, -- Eye of Azshara
 		[1492] = lw_l, -- Maw of Souls
@@ -377,7 +377,7 @@ do
 		[1493] = lw_l, -- Vault of the Wardens
 		[1753] = lw_l, -- Seat of the Triumvirate
 		--[[ LittleWigs: Battle for Azeroth ]]--
-		[1763] = {lw_cs, lw_bfa}, -- Atal'Dazar
+		[1763] = {lw_bfa, lw_cs}, -- Atal'Dazar
 		[1754] = lw_bfa, -- Freehold
 		[1762] = lw_bfa, -- King's Rest
 		[1864] = lw_bfa, -- Shrine of the Storm
@@ -386,7 +386,7 @@ do
 		[1594] = lw_bfa, -- The Undermine
 		[1771] = lw_bfa, -- Tol Dagor
 		[1841] = lw_bfa, -- Underrot
-		[1862] = {lw_cs, lw_bfa}, -- Waycrest Manor
+		[1862] = {lw_bfa, lw_cs}, -- Waycrest Manor
 		[2097] = lw_bfa, -- Operation: Mechagon
 		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
 		[2213] = lw_bfa, -- Horrific Vision of Stormwind
@@ -409,7 +409,7 @@ do
 		[2521] = lw_df, -- Ruby Life Pools
 		[2526] = lw_df, -- Algeth'ar Academy
 		[2527] = lw_df, -- Halls of Infusion
-		[2579] = {lw_cs, lw_df}, -- Dawn of the Infinite
+		[2579] = {lw_df, lw_cs}, -- Dawn of the Infinite
 	}
 
 	public.zoneTblWorld = {
@@ -1509,7 +1509,7 @@ do
 		local zoneAddon = public.zoneTbl[id]
 		if type(zoneAddon) == "table" then
 			-- default to the expansion addon for current season modules
-			zoneAddon = zoneAddon[2]
+			zoneAddon = zoneAddon[1]
 		end
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
 			if zoneAddon == public.currentExpansion.name and public.isRetail and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
@@ -1601,7 +1601,7 @@ function mod:BigWigs_CoreEnabled()
 	local zoneAddon = public.zoneTbl[id]
 	if type(zoneAddon) == "table" then
 		-- default to the expansion addon for current season modules
-		zoneAddon = zoneAddon[2]
+		zoneAddon = zoneAddon[1]
 	end
 	if zoneAddon and zoneAddon:find("LittleWigs", nil, true) then
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga"
