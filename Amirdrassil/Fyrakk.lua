@@ -594,8 +594,17 @@ function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 			self:PlaySound(422032, "alert")
 		end
 		spiritsCount = spiritsCount + 1
-		if self:Mythic() and spiritsCount > 6 then return end -- Max 6 waves in mythic
-		self:Bar(422032, timers[422032][spiritsCount], CL.count:format(CL.spirits, spiritsCount))
+		local cd = timers[422032][spiritsCount]
+		if self:Mythic() then -- last waves are delayed a bit on mythic
+			if spiritsCount == 6 then
+				cd = 26.7
+				-- all trees (no spirit yell), need to schedule
+				timerHandles[422032] = self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", cd, nil, nil, L.spirits_trigger)
+			elseif spiritsCount == 7 then
+				cd = 27.5
+			end
+		end
+		self:Bar(422032, cd, CL.count:format(CL.spirits, spiritsCount))
 	end
 end
 
@@ -700,6 +709,10 @@ function mod:EternalFirestormP3()
 	self:StopBar(CL.count:format(L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
 	self:StopBar(CL.count:format(L.fyralaths_bite_mythic, fyralathsBiteCount)) -- Fyr'alath's Bite
 	self:StopBar(CL.count:format(CL.spirits, spiritsCount)) -- Spirits of the Kaldorei
+	if timerHandles[422032] then
+		self:CancelTimer(timerHandles[422032])
+		timerHandles[422032] = nil
+	end
 	self:StopBar(CL.count:format(self:SpellName(417807), aflameCount)) -- Aflame
 	self:StopBar(CL.count:format(L.incarnate, incarnateCount)) -- Incarnate
 	self:StopBar(CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm
