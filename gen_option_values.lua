@@ -646,7 +646,7 @@ local function parseLua(file)
 		end
 
 		-- check usage
-		for locale_type, locale_key, extra in line:gmatch("(C?L)%.([%w_]+)(%(?)") do
+		for locale_type, locale_key, extra in line:gsub("L%[\"([%w_]+)\"%]", "L.%1"):gmatch("(C?L)%.([%w_]+)(%(?)") do
 			if locale_type == "CL" then
 				-- CL is only set in the main project
 				if common_locale and not common_locale[locale_key] then
