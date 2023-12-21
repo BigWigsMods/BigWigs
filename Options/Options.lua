@@ -1312,7 +1312,9 @@ do
 				end
 			end
 		elseif value:match("^LittleWigs_") then -- All LittleWigs content addons, all come from 1 zip
-			if value == loader.currentExpansion.littlewigsName and loader.isRetail then value = "LittleWigs" end
+			if loader.isRetail and (value == loader.currentExpansion.littlewigsName or value == loader.currentExpansion.littlewigsDefault) then
+				value = "LittleWigs"
+			end
 			local addonState = loader:GetAddOnState(value)
 			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
 			if not loader.usingLittleWigsRepo and string then
@@ -1341,6 +1343,18 @@ do
 		else
 			statusTable.groups[value] = true
 			widget:RefreshTree()
+		end
+	end
+
+	local function addModuleToOptions(zoneAddon, treeTbl, addonNameToHeader, value, zoneName)
+		local parent = zoneAddon and addonNameToHeader[zoneAddon] -- Get expansion number for this zone
+		local treeParent = treeTbl[parent] -- Grab appropriate expansion name
+		if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
+			if not treeParent.children then treeParent.children = {} end -- Create sub menu table
+			tinsert(treeParent.children, { -- Add new instance/zone sub menu
+				value = value,
+				text = zoneName,
+			})
 		end
 	end
 
@@ -1376,7 +1390,7 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = loader.currentExpansion.littlewigsName
+				defaultHeader = loader.currentExpansion.littlewigsDefault
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
@@ -1385,6 +1399,15 @@ do
 						enabled = true,
 					}
 					addonNameToHeader[value] = i
+				end
+				-- add default LittleWigs to options if it doesn't match the current expansion's LittleWigs
+				if loader.currentExpansion.littlewigsName ~= loader.currentExpansion.littlewigsDefault then
+					treeTbl[#treeTbl + 1] = {
+						text = L.currentSeason,
+						value = defaultHeader,
+						enabled = true,
+					}
+					addonNameToHeader[defaultHeader] = #treeTbl
 				end
 			end
 
@@ -1436,14 +1459,14 @@ do
 						id = entry
 					end
 
-					local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]] -- Get expansion number for this zone
-					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
-					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
-						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
-						tinsert(treeParent.children, { -- Add new instance/zone sub menu
-							value = name or id,
-							text = zoneName,
-						})
+					-- add zones to options
+					local zoneAddon = loader.zoneTbl[id]
+					if type(zoneAddon) == "table" then
+						for j = 1, #zoneAddon do
+							addModuleToOptions(zoneAddon[j], treeTbl, addonNameToHeader, name or id, zoneName)
+						end
+					else
+						addModuleToOptions(zoneAddon, treeTbl, addonNameToHeader, name or id, zoneName)
 					end
 				end
 			end
@@ -1458,12 +1481,17 @@ do
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
 			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
-			local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
+			local zoneAddon = loader.zoneTbl[id]
+			if type(zoneAddon) == "table" then
+				-- on Retail default to Current Season, on Classic default to the expansion addon
+				zoneAddon = loader.isRetail and zoneAddon[#zoneAddon] or zoneAddon[1]
+			end
+			local parent = zoneAddon and addonNameToHeader[zoneAddon]
 			if instanceType == "none" then
 				local mapId = GetBestMapForUnit("player")
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
-					parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
+					parent = zoneAddon and addonNameToHeader[zoneAddon]
 				end
 			end
 

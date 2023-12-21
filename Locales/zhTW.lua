@@ -55,6 +55,7 @@ L.expansionNames = {
 	"暗影之境", -- Shadowlands
 	"巨龍崛起", -- Dragonflight
 }
+--L.currentSeason = "Current Season"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "當心（艾爾加隆）"

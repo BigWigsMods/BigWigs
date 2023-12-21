@@ -55,6 +55,7 @@ L.expansionNames = {
 	"어둠땅", -- Shadowlands
 	"용군단", -- Dragonflight
 }
+--L.currentSeason = "Current Season"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"

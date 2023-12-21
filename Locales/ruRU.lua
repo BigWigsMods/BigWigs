@@ -55,6 +55,7 @@ L.expansionNames = {
 	"Темные Земли", -- Shadowlands
 	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
 }
+--L.currentSeason = "Current Season"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Берегитесь (Алгалон)"
