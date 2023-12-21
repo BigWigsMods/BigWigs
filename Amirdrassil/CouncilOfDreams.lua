@@ -68,6 +68,7 @@ end
 
 function mod:GetOptions()
 	return {
+		-- General
 		{418187, "CASTBAR"}, -- Rebirth
 		-- "berserk",
 		-- Urctos
@@ -79,18 +80,19 @@ function mod:GetOptions()
 		-- Aerwynn
 		421292, -- Constricting Thicket
 		420937, -- Relentless Barrage
-		421570, -- Leap
+		{421570, "OFF"}, -- Leap
 		420671, -- Noxious Blossom
 		426390, -- Corrosive Pollen (Damage)
 		{420858, "SAY", "SAY_COUNTDOWN"}, -- Poisonous Javelin
 		-- Pip
 		{421029, "CASTBAR"}, -- Song of the Dragon
 		{421032, "SAY"}, -- Captivating Finale
-		421501, -- Blink
+		{421501, "OFF"}, -- Blink
 		{418720, "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Polymorph Bomb
 		421024, -- Emerald Winds
 		423551, -- Whimsical Gust (Damage)
 	},{
+		[418187] = "general",
 		[420525] = -27300, -- Urctos
 		[421292] = -27301, -- Aerwynn
 		[421029] = -27302, -- Pip
@@ -121,7 +123,6 @@ function mod:OnBossEnable()
 
 	-- Urctos
 	self:Log("SPELL_CAST_START", "BlindingRage", 420525)
-	-- self:Log("SPELL_AURA_REMOVED", "BlindingRageOver", 420525)
 	self:Log("SPELL_CAST_SUCCESS", "UrctosPolyBomb", 418757)
 	self:Log("SPELL_AURA_APPLIED", "UrsineRageApplied", 425114)
 	self:Log("SPELL_CAST_START", "BarrelingCharge", 420947)
@@ -432,10 +433,8 @@ do
 	function mod:BarrelingCharge(args)
 		self:StopBar(L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 		self:StopBar(CL.count:format(CL.charge, barrelingChargeCount))
-
 		barrelingChargeCount = barrelingChargeCount + 1
 
-		-- 1 per special
 		if activeSpecials > 0 then -- short recast during specials
 			self:Bar(420948, self:LFR() and 10 or 8, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount))
 		elseif not self:Easy() and nextSpecial - GetTime() > 25 then -- 43s
@@ -516,9 +515,7 @@ function mod:ConstrictingThicket(args)
 	constrictingThicketCount = constrictingThicketCount + 1
 
 	activeSpecials = activeSpecials + 1
-	agonizingClawsCount = 1
-
-	-- self:Bar(420948, (self:Mythic() or self:LFR()) and 4 or 3, L.special_mechanic_bar:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
+	agonizingClawsCount = 1 -- reset on all specials start because Urctos gets weird if interrupted during the Blinding Rage cast
 end
 
 function mod:ConstrictingThicketOver()
@@ -536,20 +533,20 @@ function mod:AerwynnBarrelingCharge()
 	self:PlaySound(421292, "info")
 end
 
-function mod:RelentlessBarrage(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alarm") -- didn't interrupt
-	-- XXX does Aerwynn still cast her regular abilities?
-end
-
 function mod:ConstrictingThicketApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount % 4 == 0 then
+		if amount % 4 == 0 then -- 4, 8...
 			self:StackMessage(421292, "blue", args.destName, args.amount, 4)
 			self:PlaySound(421292, "alarm") -- watch movement
 		end
 	end
+end
+
+function mod:RelentlessBarrage(args)
+	self:Message(args.spellId, "red")
+	self:PlaySound(args.spellId, "alarm") -- didn't interrupt
+	-- XXX does Aerwynn still cast her regular abilities?
 end
 
 function mod:NoxiousBlossom(args)
@@ -613,6 +610,8 @@ function mod:Leap(args)
 	-- self:PlaySound(args.spellId, "info")
 	local cd = self:LFR() and 64.7 or 48.5
 	if nextSpecial - GetTime() > cd then
+		-- Starting bars with a max set which is the same max as the start of :SpecialOver
+		-- This is to avoid the bars from flickering if the boss casts Leap right after a special isntead
 		self:Bar(args.spellId, { cd, self:LFR() and 65.4 or 49 })
 	end
 end
@@ -621,17 +620,15 @@ end
 function mod:SongOfTheDragon(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.ultimate_boss:format(L.pip), songCount)) -- Pip ult
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, self:Mythic() and 14 or 24, L.song_of_the_dragon)
+	self:CastBar(args.spellId, self:Mythic() and 14 or 24, CL.count:format(L.song_of_the_dragon, songCount))
 	songCount = songCount + 1
 
 	activeSpecials = activeSpecials + 1
-	agonizingClawsCount = 1
-
-	-- self:Bar(420671, self:Mythic() and 1 or self:LFR() and 4 or 3, L.special_mechanic_bar:format(args.spellName, noxiousBlossomCount)) -- Noxious Blossom
+	agonizingClawsCount = 1 -- reset on all specials start because Urctos gets weird if interrupted during the Blinding Rage cast
 end
 
 function mod:SongOfTheDragonOver()
-	self:StopBar(CL.cast:format(L.song_of_the_dragon))
+	self:StopBar(CL.cast:format(CL.count:format(L.song_of_the_dragon, songCount)))
 
 	self:Message(421292, "green", CL.over:format(L.ultimate_boss:format(L.pip))) -- Pip ult over
 	self:PlaySound(421292, "info")
@@ -692,8 +689,8 @@ function mod:PolymorphBomb()
 	if self:LFR() then
 		self:Message(418720, "yellow", CL.count:format(spellName, polymorphBombCount)) -- On non-LFR we use a player message sent from whisper comms
 	end
-	polymorphBombCount = polymorphBombCount + 1
 	self:PlaySound(418720, "alert")
+	polymorphBombCount = polymorphBombCount + 1
 
 	if activeSpecials > 0 then -- short recast during specials (you only get one extra cast?)
 		self:Bar(418720, self:LFR() and 12 or self:Normal() and 9 or 11, L.special_mechanic_bar:format(spellName, polymorphBombCount))
