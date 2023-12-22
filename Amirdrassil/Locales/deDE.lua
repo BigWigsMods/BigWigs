@@ -39,7 +39,6 @@ if L then
 	L.special_mechanic_bar = "%s [Ult] (%d)"
 
 	--L.constricting_thicket = "Vines"
-	--L.song_of_the_dragon = "Song"
 	L.poisonous_javelin = "Wurfspeer"
 	L.song_of_the_dragon = "Lied"
 	L.polymorph_bomb = "Enten"

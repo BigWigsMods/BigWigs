@@ -39,7 +39,6 @@ if L then
 	L.special_mechanic_bar = "%s [斷大招] (%d)" -- 其他boss用來處理大招的常規技能，只在大招期間如此提示 衝鋒 [斷大招] (1) 水池 [斷大招] (2)
 
 	--L.constricting_thicket = "Vines"
-	--L.song_of_the_dragon = "Song"
 	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
 	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"

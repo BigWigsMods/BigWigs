@@ -54,7 +54,6 @@ if L then
 	L.special_mechanic_bar = "%s [Ult] (%d)"
 
 	L.constricting_thicket = "Vines"
-	L.song_of_the_dragon = "Song"
 	L.poisonous_javelin = "Javelin"
 	L.song_of_the_dragon = "Song"
 	L.polymorph_bomb = "Ducks"
@@ -196,7 +195,7 @@ function mod:OnEngage()
 	self:Bar(421022, self:LFR() and 10.7 or self:Normal() and 8 or 5, CL.count:format(self:SpellName(421022), agonizingClawsCount)) -- Agonizing Claws
 	self:Bar(420948, self:LFR() and 38.7 or self:Normal() and 29 or 13, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 	if self:Mythic() then -- Urctos + Aerwynn
-		if self:GetOptions("custom_off_combined_full_energy") then
+		if self:GetOption("custom_off_combined_full_energy") then
 			self:Bar(420525, specialCD, CL.count:format(L.combined_bar:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
 		else
 			self:Bar(420525, specialCD, CL.count:format(self:SpellName(420525), blindingRageCount)) -- Blinding Rage
@@ -275,7 +274,7 @@ function mod:SpecialOver()
 		if nextSpecialAbility == "urctos" then
 			nextSpecialAbility = "aerwynn"
 			if self:Mythic() then -- Aerwynn + Pip
-				if self:GetOptions("custom_off_combined_full_energy") then
+				if self:GetOption("custom_off_combined_full_energy") then
 					self:Bar(421292, specialCD, CL.count:format(L.combined_bar:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
 				else
 					self:Bar(421029, specialCD, CL.count:format(L.song_of_the_dragon, songCount))  -- Song of the Dragon
@@ -287,7 +286,7 @@ function mod:SpecialOver()
 		elseif nextSpecialAbility == "aerwynn" then
 			nextSpecialAbility = "pip"
 			if self:Mythic() then -- Pip + Urctos
-				if self:GetOptions("custom_off_combined_full_energy") then
+				if self:GetOption("custom_off_combined_full_energy") then
 					self:Bar(421029, specialCD, CL.count:format(L.combined_bar:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
 				else
 					self:Bar(421029, specialCD, CL.count:format(L.song_of_the_dragon, songCount))  -- Song of the Dragon
@@ -299,7 +298,7 @@ function mod:SpecialOver()
 		elseif nextSpecialAbility == "pip" then
 			nextSpecialAbility = "urctos"
 			if self:Mythic() then -- Urctos + Aerwynn
-				if self:GetOptions("custom_off_combined_full_energy") then
+				if self:GetOption("custom_off_combined_full_energy") then
 					self:Bar(420525, specialCD, CL.count:format(L.combined_bar:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
 				else
 					self:Bar(420525, specialCD, CL.count:format(self:SpellName(420525), blindingRageCount)) -- Blinding Rage
