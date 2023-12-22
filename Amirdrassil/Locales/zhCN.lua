@@ -33,13 +33,12 @@ L = BigWigs:NewBossLocale("Council of Dreams", "zhCN")
 if L then
 	L.agonizing_claws_debuff = "{421022} (减益)"
 
-	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
-	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+	L.custom_off_combined_full_energy = "合并满能量条（仅限史诗）"
+	L.custom_off_combined_full_energy_desc = "将首领在满能量的状态下使用的能量条合并成一个，但前提是这些能量条必须是同时施放。"
 
 	L.special_mechanic_bar = "%s [断绝招] (%d)"
 
-	--L.constricting_thicket = "Vines"
-	--L.song_of_the_dragon = "Song"
+	L.constricting_thicket = "藤蔓"
 	L.poisonous_javelin = "标枪"
 	L.song_of_the_dragon = "歌谣"
 	L.polymorph_bomb = "鸭子"
