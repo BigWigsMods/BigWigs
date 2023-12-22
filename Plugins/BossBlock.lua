@@ -29,7 +29,7 @@ plugin.defaultDB = {
 	disableAmbience = false,
 	disableErrorSpeech = false,
 	redirectToasts = true,
-	redirectToastsColor = {1, 1, 1},
+	redirectToastsColor = {0.2, 1, 1},
 }
 
 --------------------------------------------------------------------------------
@@ -333,7 +333,12 @@ do
 			local n = db.blockTalkingHeads[i]
 			if type(n) ~= "boolean" then
 				db.blockTalkingHeads = plugin.defaultDB.blockTalkingHeads
-				break
+			end
+		end
+		for i = 1, 3 do
+			local n = db.redirectToastsColor[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				db.redirectToastsColor = plugin.defaultDB.redirectToastsColor
 			end
 		end
 	end
