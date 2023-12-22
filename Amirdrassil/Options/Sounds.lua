@@ -76,6 +76,7 @@ BigWigs:AddSounds("Larodar, Keeper of the Flame", {
 	[421594] = "warning",
 	[422614] = "alert",
 	[423719] = "alarm",
+	[425889] = "warning",
 	[426206] = "alert",
 	[426249] = "info",
 	[426256] = "alert",
