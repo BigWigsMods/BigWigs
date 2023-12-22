@@ -49,7 +49,6 @@ if L then
 
 	L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
 	L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
-	L.combined_bar = "%s + %s"
 
 	L.special_mechanic_bar = "%s [Ult] (%d)"
 
@@ -96,7 +95,7 @@ function mod:GetOptions()
 		[421292] = -27301, -- Aerwynn
 		[421029] = -27302, -- Pip
 	},{
-		["custom_off_combined_full_energy"] = L.combined_bar:format(L.constricting_thicket, L.song_of_the_dragon), -- Vines + Song (Example)
+		["custom_off_combined_full_energy"] = CL.plus:format(L.constricting_thicket, L.song_of_the_dragon), -- Vines + Song (Example)
 		[420948] = CL.charge, -- Barreling Charge (Charge)
 		[421292] = L.constricting_thicket, -- Constricting Thicket (Vines)
 		[420671] = CL.pools, -- Noxious Blossom (Pools)
@@ -196,7 +195,7 @@ function mod:OnEngage()
 	self:Bar(420948, self:LFR() and 38.7 or self:Normal() and 29 or 13, CL.count:format(CL.charge, barrelingChargeCount)) -- Barreling Charge
 	if self:Mythic() then -- Urctos + Aerwynn
 		if self:GetOption("custom_off_combined_full_energy") then
-			self:Bar(420525, specialCD, CL.count:format(L.combined_bar:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
+			self:Bar(420525, specialCD, CL.count:format(CL.plus:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
 		else
 			self:Bar(420525, specialCD, CL.count:format(self:SpellName(420525), blindingRageCount)) -- Blinding Rage
 			self:Bar(421292, specialCD, CL.count:format(L.constricting_thicket, constrictingThicketCount)) -- Constricting Thicket
@@ -275,7 +274,7 @@ function mod:SpecialOver()
 			nextSpecialAbility = "aerwynn"
 			if self:Mythic() then -- Aerwynn + Pip
 				if self:GetOption("custom_off_combined_full_energy") then
-					self:Bar(421292, specialCD, CL.count:format(L.combined_bar:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
+					self:Bar(421292, specialCD, CL.count:format(CL.plus:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
 				else
 					self:Bar(421029, specialCD, CL.count:format(L.song_of_the_dragon, songCount))  -- Song of the Dragon
 					self:Bar(421292, specialCD, CL.count:format(L.constricting_thicket, constrictingThicketCount)) -- Constricting Thicket
@@ -287,7 +286,7 @@ function mod:SpecialOver()
 			nextSpecialAbility = "pip"
 			if self:Mythic() then -- Pip + Urctos
 				if self:GetOption("custom_off_combined_full_energy") then
-					self:Bar(421029, specialCD, CL.count:format(L.combined_bar:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
+					self:Bar(421029, specialCD, CL.count:format(CL.plus:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
 				else
 					self:Bar(421029, specialCD, CL.count:format(L.song_of_the_dragon, songCount))  -- Song of the Dragon
 					self:Bar(420525, specialCD, CL.count:format(self:SpellName(420525), blindingRageCount)) -- Blinding Rage
@@ -299,7 +298,7 @@ function mod:SpecialOver()
 			nextSpecialAbility = "urctos"
 			if self:Mythic() then -- Urctos + Aerwynn
 				if self:GetOption("custom_off_combined_full_energy") then
-					self:Bar(420525, specialCD, CL.count:format(L.combined_bar:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
+					self:Bar(420525, specialCD, CL.count:format(CL.plus:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
 				else
 					self:Bar(420525, specialCD, CL.count:format(self:SpellName(420525), blindingRageCount)) -- Blinding Rage
 					self:Bar(421292, specialCD, CL.count:format(L.constricting_thicket, constrictingThicketCount)) -- Constricting Thicket
@@ -403,8 +402,8 @@ end
 
 -- Urctos
 function mod:BlindingRage(args)
-	self:StopBar(CL.count:format(L.combined_bar:format(args.spellName, L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
-	self:StopBar(CL.count:format(L.combined_bar:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
+	self:StopBar(CL.count:format(CL.plus:format(args.spellName, L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
+	self:StopBar(CL.count:format(CL.plus:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
 	self:StopBar(CL.count:format(args.spellName, blindingRageCount)) -- Blinding Rage
 
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, blindingRageCount)) -- Urctos ult
@@ -525,8 +524,8 @@ end
 
 -- Aerwynn
 function mod:ConstrictingThicket(args)
-	self:StopBar(CL.count:format(L.combined_bar:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
-	self:StopBar(CL.count:format(L.combined_bar:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
+	self:StopBar(CL.count:format(CL.plus:format(self:SpellName(420525), L.constricting_thicket), specialCount)) -- Blinding Rage + Constricting Thicket
+	self:StopBar(CL.count:format(CL.plus:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
 	self:StopBar(CL.count:format(L.constricting_thicket, constrictingThicketCount)) -- Constricting Thicket
 
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.constricting_thicket, constrictingThicketCount))) -- Aerwynn ult
@@ -637,8 +636,8 @@ end
 
 -- Pip
 function mod:SongOfTheDragon(args)
-	self:StopBar(CL.count:format(L.combined_bar:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
-	self:StopBar(CL.count:format(L.combined_bar:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
+	self:StopBar(CL.count:format(CL.plus:format(L.constricting_thicket, L.song_of_the_dragon), specialCount)) -- Constricting Thicket + Song of the Dragon
+	self:StopBar(CL.count:format(CL.plus:format(L.song_of_the_dragon, self:SpellName(420525)), specialCount)) -- Song of the Dragon + Blinding Rage
 	self:StopBar(CL.count:format(L.song_of_the_dragon, songCount)) -- Song of the Dragon
 
 	self:Message(args.spellId, "orange", CL.count:format(L.song_of_the_dragon, songCount)) -- Pip ult
