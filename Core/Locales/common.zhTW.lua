@@ -24,6 +24,7 @@ L.rticon = "%s（{rt%d}）"
 L.near = "%s在你附近"
 L.on_group = "團隊：%s" -- spell on group
 L.boss = "首領"
+--L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "階段%d"
 L.stage = "階段%d"

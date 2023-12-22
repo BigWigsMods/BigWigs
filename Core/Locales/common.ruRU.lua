@@ -24,6 +24,7 @@ L.rticon = "%s ({rt%d})"
 L.near = "%s возле ТЕБЯ"
 L.on_group = "%s на ГРУППЕ" -- spell on group
 L.boss = "БОСС"
+L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "Фаза %d"
 L.stage = "Этап %d"

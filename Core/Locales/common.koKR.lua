@@ -24,6 +24,7 @@ L.rticon = "%s ({rt%d})"
 L.near = "당신 근처에 %s"
 L.on_group = "파티에 %s" -- spell on group
 --L.boss = "BOSS"
+L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "%d단계"
 L.stage = "%d단계"
