@@ -158,3 +158,5 @@ L.tornado = "旋风" -- 'A tornado is a violently rotating column of air that is
 L.tornadoes = "旋风" -- Plural of L.tornado
 L.frontal_cone = "正面技能" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "恐惧" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
+L.mark = "印记" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
+L.marks = "印记"  -- Plural of L.marks

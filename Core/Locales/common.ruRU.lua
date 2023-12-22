@@ -158,3 +158,5 @@ L.tornado = "Торнадо" -- 'A tornado is a violently rotating column of air
 L.tornadoes = "Торнадо" -- Plural of L.tornado
 L.frontal_cone = "Фронтал клив" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "Страх" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
+L.mark = "Знак" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
+--L.marks = "Marks"  -- Plural of L.marks

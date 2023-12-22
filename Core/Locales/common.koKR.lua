@@ -158,3 +158,5 @@ L.tornado = "뇌우" -- 'A tornado is a violently rotating column of air that is
 L.tornadoes = "뇌우" -- Plural of L.tornado
 --L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "공포" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
+L.mark = "징표" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
+L.marks = "징표"  -- Plural of L.marks
