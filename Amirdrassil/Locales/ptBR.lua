@@ -33,11 +33,13 @@ L = BigWigs:NewBossLocale("Council of Dreams", "ptBR")
 if L then
 	L.agonizing_claws_debuff = "{421022} (Debuff)"
 
-	L.ultimate_boss = "Supremo (%s)"
-	L.special_bar = "Supremo [%s] (%d)"
-	L.special_mythic_bar = "Supremo [%s/%s] (%d)"
+	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
+	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+
 	L.special_mechanic_bar = "%s [Supremo] (%d)"
 
+	--L.constricting_thicket = "Vines"
+	--L.song_of_the_dragon = "Song"
 	L.poisonous_javelin = "Zagaia"
 	L.song_of_the_dragon = "Canção"
 	L.polymorph_bomb = "Patos"
