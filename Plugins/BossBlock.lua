@@ -40,6 +40,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
+local zoneList = BigWigsLoader.zoneTbl
 local onTestBuild = BigWigsLoader.onTestBuild
 local isClassic = BigWigsLoader.isClassic
 local GetSubZoneText = GetSubZoneText
@@ -178,25 +179,30 @@ plugin.pluginOptions = {
 							set = function(info, entry, value)
 								plugin.db.profile[info[#info]][entry] = value
 								if value then
-									registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
-									for i = 1, #registeredToasts do
-										bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+									local _, _, _, _, _, _, _, id = GetInstanceInfo()
+									if zoneList[id] then -- Instances only
+										registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+										for i = 1, #registeredToasts do
+											bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+										end
+										plugin:RegisterEvent("DISPLAY_EVENT_TOASTS")
 									end
-									plugin:RegisterEvent("DISPLAY_EVENT_TOASTS")
 								else
 									plugin:UnregisterEvent("DISPLAY_EVENT_TOASTS")
-									-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
-									local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
-									for i = 1, #extraSafety do
-										bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
+									if next(registeredToasts) then
+										-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
+										local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
+										for i = 1, #extraSafety do
+											bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
+										end
+										for i = 1, #registeredToasts do
+											bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
+										end
+										for i = 1, #extraSafety do
+											bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
+										end
+										registeredToasts = {}
 									end
-									for i = 1, #registeredToasts do
-										bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
-									end
-									for i = 1, #extraSafety do
-										bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
-									end
-									registeredToasts = {}
 								end
 							end,
 							width = "full",
@@ -372,7 +378,8 @@ do
 		end
 
 		if not isClassic then
-			if self.db.profile.redirectToasts then
+			local _, _, _, _, _, _, _, id = GetInstanceInfo()
+			if self.db.profile.redirectToasts and zoneList[id] then -- Instances only
 				registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
 				for i = 1, #registeredToasts do
 					bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
@@ -395,18 +402,20 @@ function plugin:OnPluginDisable()
 	RestoreAll(self)
 	if not isClassic and self.db.profile.redirectToasts then
 		self:UnregisterEvent("DISPLAY_EVENT_TOASTS")
-		-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
-		local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
-		for i = 1, #extraSafety do
-			bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
+		if next(registeredToasts) then
+			-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
+			local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
+			for i = 1, #extraSafety do
+				bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
+			end
+			for i = 1, #registeredToasts do
+				bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
+			end
+			for i = 1, #extraSafety do
+				bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
+			end
+			registeredToasts = {}
 		end
-		for i = 1, #registeredToasts do
-			bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
-		end
-		for i = 1, #extraSafety do
-			bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
-		end
-		registeredToasts = {}
 	end
 end
 
