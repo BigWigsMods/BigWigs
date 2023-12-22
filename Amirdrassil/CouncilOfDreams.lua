@@ -53,10 +53,6 @@ if L then
 
 	L.special_mechanic_bar = "%s [Ult] (%d)"
 
-	L.urctos = mod:SpellName(-27300)
-	L.aerwynn = mod:SpellName(-27301)
-	L.pip = mod:SpellName(-27302)
-
 	L.constricting_thicket = "Vines"
 	L.song_of_the_dragon = "Song"
 	L.poisonous_javelin = "Javelin"
