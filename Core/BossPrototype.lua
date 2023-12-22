@@ -755,9 +755,9 @@ do
 				-- for known widget types, call the visualization info function directly. this
 				-- skips state checks that Blizzard might have defined in their widget template.
 				local widgetType = tbl.widgetType
-				if widgetType == Enum.UIWidgetVisualizationType.StatusBar then -- 2
+				if widgetType == 2 then -- Enum.UIWidgetVisualizationType.StatusBar
 					info = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo(id)
-				elseif widgetType == Enum.UIWidgetVisualizationType.TextWithState then -- 8
+				elseif widgetType == 8 then -- Enum.UIWidgetVisualizationType.TextWithState
 					info = C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo(id)
 				else -- unknown widget type
 					core:Print(format(noVisInfoDataFunction, self.moduleName))

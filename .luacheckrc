@@ -43,7 +43,6 @@ files["**/AutoRole.lua"].ignore = {
 	"113/UnitSetRole",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
-	"113/Enum",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/TranscriptIgnore",
