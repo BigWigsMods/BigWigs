@@ -623,7 +623,7 @@ do
 		-- Waycrest Manor
 		[105953]=true,[105954]=true,[105955]=true,[105956]=true,[105962]=true,[105963]=true,[105964]=true,
 		[106722]=true,[104219]=true,[104220]=true,[104228]=true,[104229]=true,[103811]=true,[104628]=true,
-		[103812]=true,[104208]=true,[104209]=true,[106720]=true,
+		[103812]=true,[104208]=true,[104209]=true,[106718]=true,[106720]=true,
 
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
