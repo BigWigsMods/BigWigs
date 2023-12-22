@@ -187,9 +187,9 @@ L.blockTalkingHeadRaids = "团队"
 L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
 L.blockTalkingHeadScenarios = "场景事件"
 
---L.redirectPopups = "Redirect popup banners to BigWigs messages"
---L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner or the banner you see when entering a Mythic+ dungeon will be blocked and instead displayed as BigWigs messages. These banners can be quite large, last a long time, and block your ability to click through them."
---L.redirectPopupsColor = "Color of the redirected message"
+L.redirectPopups = "弹出式横幅在BigWigs信息中显示"
+L.redirectPopupsDesc = "屏幕中间的弹出式横幅，如'|cFF33FF99宏伟宝库栏位已解锁|r' 横幅或进入大秘境副本时看到的横幅，将被阻止并显示为 BigWigs 消息。这些横幅可能很大，持续时间很长，而且会阻止你点击通过。"
+L.redirectPopupsColor = "横幅信息的颜色"
 
 L.userNotifySfx = "首领屏蔽禁用了声音效果，强制它重新启用。"
 L.userNotifyMusic = "首领屏蔽禁用了音乐，强制它重新启用。"
