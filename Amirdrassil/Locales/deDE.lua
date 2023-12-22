@@ -33,12 +33,12 @@ L = BigWigs:NewBossLocale("Council of Dreams", "deDE")
 if L then
 	L.agonizing_claws_debuff = "{421022} (Debuff)"
 
-	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
-	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+	L.custom_off_combined_full_energy = "Gemeinsame Leisten bei voller Energie (nur Mythisch)"
+	L.custom_off_combined_full_energy_desc = "Bündelt die Leisten der Fähigkeiten bei voller Energie in einer Leiste, wenn diese zur gleichen Zeit auftreten."
 
 	L.special_mechanic_bar = "%s [Ult] (%d)"
 
-	--L.constricting_thicket = "Vines"
+	L.constricting_thicket = "Ranken"
 	L.poisonous_javelin = "Wurfspeer"
 	L.song_of_the_dragon = "Lied"
 	L.polymorph_bomb = "Enten"
