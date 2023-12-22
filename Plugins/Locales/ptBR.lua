@@ -187,6 +187,10 @@ L.blockTalkingHeadRaids = "Raides"
 L.blockTalkingHeadTimewalking = "Caminhada Temporal (Masmorras & Raides)"
 L.blockTalkingHeadScenarios = "Cenários"
 
+--L.redirectPopups = "Redirect popup banners to BigWigs messages"
+--L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner or the banner you see when entering a Mythic+ dungeon will be blocked and instead displayed as BigWigs messages. These banners can be quite large, last a long time, and block your ability to click through them."
+--L.redirectPopupsColor = "Color of the redirected message"
+
 L.userNotifySfx = "Os Efeitos Sonoros estavam desativados pelo BossBlock e agora estão sendo reativados."
 L.userNotifyMusic = "A Música estava desativada pelo BossBlock e agora está sendo reativada."
 L.userNotifyAmbience = "A Ambiência estava desativada pelo BossBlock e agora está sendo reativada."

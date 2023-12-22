@@ -28,6 +28,8 @@ plugin.defaultDB = {
 	disableMusic = false,
 	disableAmbience = false,
 	disableErrorSpeech = false,
+	redirectToasts = true,
+	redirectToastsColor = {1, 1, 1},
 }
 
 --------------------------------------------------------------------------------
@@ -42,6 +44,8 @@ local onTestBuild = BigWigsLoader.onTestBuild
 local isClassic = BigWigsLoader.isClassic
 local GetSubZoneText = GetSubZoneText
 local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
+local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
+local RemoveCurrentToast = C_EventToastManager and C_EventToastManager.RemoveCurrentToast
 local IsEncounterInProgress = IsEncounterInProgress
 local SetCVar = C_CVar.SetCVar
 local GetCVar = C_CVar.GetCVar
@@ -49,6 +53,9 @@ local CheckElv = nil
 local RestoreAll
 local hideQuestTrackingTooltips = false
 local activatedModules = {}
+local registeredToasts = {}
+local bbFrame = CreateFrame("Frame")
+bbFrame:Hide()
 
 -------------------------------------------------------------------------------
 -- Options
@@ -156,6 +163,58 @@ plugin.pluginOptions = {
 					width = 2,
 					order = 8,
 					hidden = isClassic,
+				},
+				redirectToastsCategory = {
+					type = "group",
+					name = " ",
+					order = 9,
+					inline = true,
+					hidden = isClassic,
+					args = {
+						redirectToasts = {
+							type = "toggle",
+							name = L.redirectPopups,
+							desc = L.redirectPopupsDesc,
+							set = function(info, entry, value)
+								plugin.db.profile[info[#info]][entry] = value
+								if value then
+									registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+									for i = 1, #registeredToasts do
+										bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+									end
+									plugin:RegisterEvent("DISPLAY_EVENT_TOASTS")
+								else
+									plugin:UnregisterEvent("DISPLAY_EVENT_TOASTS")
+									-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
+									local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
+									for i = 1, #extraSafety do
+										bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
+									end
+									for i = 1, #registeredToasts do
+										bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
+									end
+									for i = 1, #extraSafety do
+										bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
+									end
+									registeredToasts = {}
+								end
+							end,
+							width = "full",
+							order = 1,
+						},
+						redirectToastsColor = {
+							type = "color",
+							name = L.redirectPopupsColor,
+							get = function()
+								return plugin.db.profile.redirectToastsColor[1], plugin.db.profile.redirectToastsColor[2], plugin.db.profile.redirectToastsColor[3]
+							end,
+							set = function(_, r, g, b)
+								plugin.db.profile.redirectToastsColor = {r, g, b}
+							end,
+							width = "full",
+							order = 2,
+						},
+					},
 				},
 			},
 		},
@@ -313,6 +372,13 @@ do
 		end
 
 		if not isClassic then
+			if self.db.profile.redirectToasts then
+				registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+				for i = 1, #registeredToasts do
+					bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+				end
+				self:RegisterEvent("DISPLAY_EVENT_TOASTS")
+			end
 			self:RegisterEvent("TALKINGHEAD_REQUESTED")
 			self:RegisterEvent("CINEMATIC_START")
 			self:RegisterEvent("PLAY_MOVIE")
@@ -327,6 +393,21 @@ end
 function plugin:OnPluginDisable()
 	activatedModules = {}
 	RestoreAll(self)
+	if not isClassic and self.db.profile.redirectToasts then
+		self:UnregisterEvent("DISPLAY_EVENT_TOASTS")
+		-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
+		local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
+		for i = 1, #extraSafety do
+			bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
+		end
+		for i = 1, #registeredToasts do
+			bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
+		end
+		for i = 1, #extraSafety do
+			bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
+		end
+		registeredToasts = {}
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -334,34 +415,60 @@ end
 --
 
 do
-	local trackerHider = CreateFrame("Frame")
-	trackerHider:Hide()
+	local function printMessage(self, tbl)
+		if type(tbl.title) == "string" and #tbl.title > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.redirectToastsColor)
+		end
+		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.redirectToastsColor)
+		end
+		if type(tbl.instructionText) == "string" and #tbl.instructionText > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.redirectToastsColor)
+		end
+		if type(tbl.showSoundKitID) == "number" then
+			PlaySound(tbl.showSoundKitID)
+		end
+	end
+	function plugin:DISPLAY_EVENT_TOASTS()
+		local tbl = GetNextToastToDisplay()
+		if tbl then
+			if tbl.eventToastID == 184 then -- Vault
+				self:SimpleTimer(function() printMessage(self, tbl) end, 5)
+			else
+				printMessage(self, tbl)
+			end
+			RemoveCurrentToast()
+		end
+	end
+end
+
+do
 	local unregisteredEvents = {}
 	local function KillEvent(frame, event)
 		-- The user might be running an addon that permanently unregisters one of these events.
 		-- Let's check that before we go re-registering that event and screwing with that addon.
-		if trackerHider.IsEventRegistered(frame, event) then
-			trackerHider.UnregisterEvent(frame, event)
+		if bbFrame.IsEventRegistered(frame, event) then
+			bbFrame.UnregisterEvent(frame, event)
 			unregisteredEvents[event] = true
 		end
 	end
 	local function RestoreEvent(frame, event)
 		if unregisteredEvents[event] then
-			trackerHider.RegisterEvent(frame, event)
+			bbFrame.RegisterEvent(frame, event)
 			unregisteredEvents[event] = nil
 		end
 	end
 
 	function CheckElv(self)
 		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
-		if type(ObjectiveTrackerFrame.AutoHider) == "table" and trackerHider.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
+		if type(ObjectiveTrackerFrame.AutoHider) == "table" and bbFrame.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
 				self:RegisterEvent("PLAYER_REGEN_ENABLED", function()
-					trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+					bbFrame.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
 					self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 				end)
 			else
-				trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+				bbFrame.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
 			end
 		end
 	end
@@ -423,12 +530,12 @@ do
 			-- Never hide when tracking achievements or in Mythic+
 			local _, _, diff = GetInstanceInfo()
 			local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
-			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
-				restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
+			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not bbFrame.IsProtected(ObjectiveTrackerFrame) then
+				restoreObjectiveTracker = bbFrame.GetParent(ObjectiveTrackerFrame)
 				if restoreObjectiveTracker then
-					trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
-					trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
-					trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
+					bbFrame.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
+					bbFrame.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
+					bbFrame.SetParent(ObjectiveTrackerFrame, bbFrame)
 				end
 			end
 		end
@@ -469,9 +576,9 @@ do
 		end
 
 		if restoreObjectiveTracker then
-			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
-			trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
-			trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
+			bbFrame.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
+			bbFrame.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
+			bbFrame.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
 			restoreObjectiveTracker = nil
 		end
 	end

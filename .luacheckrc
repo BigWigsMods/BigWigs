@@ -74,7 +74,9 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"112/BigWigs",
 	"113/C_ContentTracking",
 	"113/C_CVar",
+	"113/C_EventToastManager",
 	"113/C_TalkingHead",
+	"113/GetFramesRegisteredForEvent",
 	"113/RaidBossEmoteFrame_OnEvent",
 	"113/TooltipDataProcessor",
 }
