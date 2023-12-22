@@ -29,7 +29,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
-local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
+local EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager = EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax, BigWigsLoader.Ambiguate
 local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = BigWigsLoader.RegisterAddonMessagePrefix, BigWigsLoader.UnitDetailedThreatSituation
@@ -743,13 +743,30 @@ end
 do
 	local noID = "Module '%s' tried to register/unregister a widget event without specifying a widget id."
 	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
+	local noVisInfoDataFunction = "Module '%s' tried to register for all updates to a widget event, but the visInfoDataFunction is unknown."
 
 	function boss:UPDATE_UI_WIDGET(_, tbl)
 		local id = tbl.widgetID
-		local func = widgetEventMap[self][id]
-		if func then
-			local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
-			local info = typeInfo and typeInfo.visInfoDataFunction(id)
+		local widgetEventEntry = widgetEventMap[self][id]
+		if widgetEventEntry then
+			local func, allUpdates = widgetEventEntry[1], widgetEventEntry[2]
+			local info
+			if allUpdates then
+				-- for known widget types, call the visualization info function directly. this
+				-- skips state checks that Blizzard might have defined in their widget template.
+				local widgetType = tbl.widgetType
+				if widgetType == 2 then -- Enum.UIWidgetVisualizationType.StatusBar
+					info = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo(id)
+				elseif widgetType == 8 then -- Enum.UIWidgetVisualizationType.TextWithState
+					info = C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo(id)
+				else -- unknown widget type
+					core:Print(format(noVisInfoDataFunction, self.moduleName))
+					return
+				end
+			else
+				local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
+				info = typeInfo and typeInfo.visInfoDataFunction(id)
+			end
 			if info then
 				local value = info.text -- Remain compatible with older modules
 				if (not value or value == "") and info.barValue then
@@ -766,10 +783,11 @@ do
 	--- Register a callback for a widget event for the specified widget id.
 	-- @number id the id of the widget to listen to
 	-- @param func callback function, passed (widgetId, widgetValue, widgetInfoTable)
-	function boss:RegisterWidgetEvent(id, func)
+	-- @bool[opt] allUpdates If widget update events should always trigger the callback - even if the widget is hidden.
+	function boss:RegisterWidgetEvent(id, func, allUpdates)
 		if type(id) ~= "number" then core:Print(format(noID, self.moduleName)) return end
 		if type(func) ~= "string" or not self[func] then core:Print(format(noFunc, self.moduleName, tostring(func))) return end
-		if not widgetEventMap[self][id] then widgetEventMap[self][id] = func end
+		if not widgetEventMap[self][id] then widgetEventMap[self][id] = { func, allUpdates } end
 		self:RegisterEvent("UPDATE_UI_WIDGET")
 	end
 	--- Unregister a callback for widget events.
