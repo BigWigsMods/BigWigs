@@ -176,8 +176,8 @@ plugin.pluginOptions = {
 							type = "toggle",
 							name = L.redirectPopups,
 							desc = L.redirectPopupsDesc,
-							set = function(info, entry, value)
-								plugin.db.profile[info[#info]][entry] = value
+							set = function(_, value)
+								plugin.db.profile.redirectToasts = value
 								if value then
 									local _, _, _, _, _, _, _, id = GetInstanceInfo()
 									if zoneList[id] then -- Instances only
