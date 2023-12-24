@@ -190,6 +190,8 @@ L.blockTalkingHeadScenarios = "Escenarios"
 --L.redirectPopups = "Redirect popup banners to BigWigs messages"
 --L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner or the banner you see when entering a Mythic+ dungeon will be blocked and instead displayed as BigWigs messages. These banners can be quite large, last a long time, and block your ability to click through them."
 --L.redirectPopupsColor = "Color of the redirected message"
+--L.blockDungeonPopups = "Block dungeon popup banners"
+--L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them instead of being redirected to BigWigs messages."
 
 L.userNotifySfx = "Los efectos de sonido fueron desactivados por el Bloque de jefe, forzándolos a volver a activarse."
 L.userNotifyMusic = "La música fue desactivada por el Bloque de jefe, forzándola a volver a activarse."

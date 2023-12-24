@@ -28,8 +28,9 @@ plugin.defaultDB = {
 	disableMusic = false,
 	disableAmbience = false,
 	disableErrorSpeech = false,
-	redirectToasts = true,
-	redirectToastsColor = {0.2, 1, 1},
+	redirectToastMsgs = true,
+	toastsColor = {0.2, 1, 1},
+	blockDungeonToasts = true,
 }
 
 --------------------------------------------------------------------------------
@@ -165,19 +166,19 @@ plugin.pluginOptions = {
 					order = 8,
 					hidden = isClassic,
 				},
-				redirectToastsCategory = {
+				toastsCategory = {
 					type = "group",
 					name = " ",
 					order = 9,
 					inline = true,
 					hidden = isClassic,
 					args = {
-						redirectToasts = {
+						redirectToastMsgs = {
 							type = "toggle",
 							name = L.redirectPopups,
 							desc = L.redirectPopupsDesc,
 							set = function(_, value)
-								plugin.db.profile.redirectToasts = value
+								plugin.db.profile.redirectToastMsgs = value
 								if value then
 									local _, _, _, _, _, _, _, id = GetInstanceInfo()
 									if zoneList[id] then -- Instances only
@@ -208,17 +209,30 @@ plugin.pluginOptions = {
 							width = "full",
 							order = 1,
 						},
-						redirectToastsColor = {
+						toastsColor = {
 							type = "color",
 							name = L.redirectPopupsColor,
 							get = function()
-								return plugin.db.profile.redirectToastsColor[1], plugin.db.profile.redirectToastsColor[2], plugin.db.profile.redirectToastsColor[3]
+								return plugin.db.profile.toastsColor[1], plugin.db.profile.toastsColor[2], plugin.db.profile.toastsColor[3]
 							end,
 							set = function(_, r, g, b)
-								plugin.db.profile.redirectToastsColor = {r, g, b}
+								plugin.db.profile.toastsColor = {r, g, b}
 							end,
 							width = "full",
 							order = 2,
+							disabled = function()
+								return not plugin.db.profile.redirectToastMsgs
+							end,
+						},
+						blockDungeonToasts = {
+							type = "toggle",
+							name = L.blockDungeonPopups,
+							desc = L.blockDungeonPopupsDesc,
+							width = "full",
+							order = 3,
+							disabled = function()
+								return not plugin.db.profile.redirectToastMsgs
+							end,
 						},
 					},
 				},
@@ -337,9 +351,9 @@ do
 			end
 		end
 		for i = 1, 3 do
-			local n = db.redirectToastsColor[i]
+			local n = db.toastsColor[i]
 			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.redirectToastsColor = plugin.defaultDB.redirectToastsColor
+				db.toastsColor = plugin.defaultDB.toastsColor
 				break -- If 1 entry is bad, reset the whole table
 			end
 		end
@@ -386,7 +400,7 @@ do
 
 		if not isClassic then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
-			if self.db.profile.redirectToasts and zoneList[id] then -- Instances only
+			if self.db.profile.redirectToastMsgs and zoneList[id] then -- Instances only
 				registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
 				for i = 1, #registeredToasts do
 					bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
@@ -407,7 +421,7 @@ end
 function plugin:OnPluginDisable()
 	activatedModules = {}
 	RestoreAll(self)
-	if not isClassic and self.db.profile.redirectToasts then
+	if not isClassic and self.db.profile.redirectToastMsgs then
 		self:UnregisterEvent("DISPLAY_EVENT_TOASTS")
 		if next(registeredToasts) then
 			-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
@@ -433,13 +447,13 @@ end
 do
 	local function printMessage(self, tbl)
 		if type(tbl.title) == "string" and #tbl.title > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.redirectToastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor)
 		end
 		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.redirectToastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor)
 		end
 		if type(tbl.instructionText) == "string" and #tbl.instructionText > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.redirectToastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.toastsColor)
 		end
 		if type(tbl.showSoundKitID) == "number" then
 			PlaySound(tbl.showSoundKitID)
@@ -448,7 +462,10 @@ do
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
-			if tbl.eventToastID == 184 then -- Vault
+			if tbl.eventToastID == 5 and self.db.profile.blockDungeonToasts then -- Dungeon zone in popup
+				RemoveCurrentToast()
+				return
+			elseif tbl.eventToastID == 184 then -- Vault
 				self:SimpleTimer(function() printMessage(self, tbl) end, 5)
 			else
 				printMessage(self, tbl)

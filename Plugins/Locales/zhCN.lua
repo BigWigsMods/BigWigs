@@ -190,6 +190,8 @@ L.blockTalkingHeadScenarios = "场景事件"
 L.redirectPopups = "弹出式横幅在BigWigs信息中显示"
 L.redirectPopupsDesc = "屏幕中间的弹出式横幅，如'|cFF33FF99宏伟宝库栏位已解锁|r' 横幅或进入大秘境副本时看到的横幅，将被阻止并显示为 BigWigs 消息。这些横幅可能很大，持续时间很长，而且会阻止你点击通过。"
 L.redirectPopupsColor = "横幅信息的颜色"
+--L.blockDungeonPopups = "Block dungeon popup banners"
+--L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them instead of being redirected to BigWigs messages."
 
 L.userNotifySfx = "首领屏蔽禁用了声音效果，强制它重新启用。"
 L.userNotifyMusic = "首领屏蔽禁用了音乐，强制它重新启用。"

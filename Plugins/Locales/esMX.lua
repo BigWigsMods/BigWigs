@@ -190,6 +190,8 @@ L.blockTalkingHeadScenarios = "Escenarios"
 L.redirectPopups = "Redirigir banderas emergentes a mensajes de BigWigs"
 L.redirectPopupsDesc = "Las banderas emergentes en el medio de la pantalla, como la bandera '|cFF33FF99ranura de bóveda desbloqueada|r' o la bandera que ves al ingresar a una mazmorra Mítico+, se bloquearán y se mostrarán como mensajes de BigWigs. Estas banderas pueden ser bastante grandes, durar mucho tiempo y bloquear la posibilidad de hacer clic en ellos."
 L.redirectPopupsColor = "Color del mensaje redirigido"
+--L.blockDungeonPopups = "Block dungeon popup banners"
+--L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them instead of being redirected to BigWigs messages."
 
 L.userNotifySfx = "BossBlock desactivó los efectos de sonido, lo que obligó a volver a activarlos."
 L.userNotifyMusic = "BossBlock desactivó la música, lo que obligó a volver a activarla."
