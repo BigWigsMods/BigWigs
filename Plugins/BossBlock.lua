@@ -51,11 +51,13 @@ local RemoveCurrentToast = C_EventToastManager and C_EventToastManager.RemoveCur
 local IsEncounterInProgress = IsEncounterInProgress
 local SetCVar = C_CVar.SetCVar
 local GetCVar = C_CVar.GetCVar
+local GetTime = GetTime
 local CheckElv = nil
 local RestoreAll
 local hideQuestTrackingTooltips = false
 local activatedModules = {}
 local registeredToasts = {}
+local latestKill = {}
 local bbFrame = CreateFrame("Frame")
 bbFrame:Hide()
 
@@ -362,6 +364,7 @@ do
 	function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
 		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+		self:RegisterMessage("BigWigs_OnBossWin")
 		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -626,6 +629,13 @@ do
 	end
 end
 
+function plugin:BigWigs_OnBossWin(event, module)
+	local journalId = module:GetJournalID()
+	if journalId then
+		latestKill = {journalId, (GetTime())}
+	end
+end
+
 do
 	-- Talking Head blocking
 	local known = {
@@ -748,7 +758,7 @@ do
 		[964] = true, -- Raszageth defeat
 		[991] = true, -- Iridikron (DotI) defeat
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
-		[1003] = true, -- Fyrakk defeat
+		[1003] = true, -- Amirdrassil, Fyrakk defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
@@ -778,8 +788,8 @@ do
 		[-573] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		[-575] = true, -- Shadowmoon Burial Grounds, final boss introduction
 		[-593] = { -- Auchindoun
-			"", -- "": Before the 1st boss, the tunnel doesn't have a sub zone
-			L.subzone_eastern_transept, -- Eastern Transept: After the 3rd boss, Teren'gor porting in
+			function() return GetSubZoneText() == "" end, -- "": Before the 1st boss, the tunnel doesn't have a sub zone
+			function() return GetSubZoneText() == L.subzone_eastern_transept end, -- Eastern Transept: After the 3rd boss, Teren'gor porting in
 		},
 		[-607] = true, -- Grimrail Depot, boarding the train
 		[-609] = true, -- Grimrail Depot, destroying the train
@@ -795,8 +805,8 @@ do
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
 		[-1345] = true, -- Crucible of Storms, after killing first boss
 		[-1352] = { -- Battle of Dazar'alor
-			L.subzone_grand_bazaar, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
-			L.subzone_port_of_zandalar, -- Port of Zandalar: After killing blockade, boat arriving
+			function() return GetSubZoneText() == L.subzone_grand_bazaar end, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
+			function() return GetSubZoneText() == L.subzone_port_of_zandalar end, -- Port of Zandalar: After killing blockade, boat arriving
 		},
 		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side only)
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
@@ -804,8 +814,12 @@ do
 		[-2000] = true, -- Soulrender Dormazain defeat
 		[-2002] = true, -- Sylvanas stage 2
 		[-2004] = true, -- Sylvanas defeat
-		[-2170] = true, -- Sarkareth defeat
-		[-2233] = true, -- Smolderon defeat
+		[-2170] = true, -- Aberrus, Sarkareth defeat
+		[-2233] = true, -- Amirdrassil, Smolderon defeat
+		[-2238] = { -- Amirdrassil
+			function() return latestKill[1] == 2565 end, -- After killing Tindral, flying into the tree
+			function() return latestKill[1] == 2519 and GetTime()-latestKill[2] < 6 end, -- After killing Fyrakk, but don't trigger when talking to the NPC after killing him
+		}
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
@@ -860,8 +874,8 @@ do
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
 					if type(BigWigs.db.global.watchedMovies[id]) ~= "table" then BigWigs.db.global.watchedMovies[id] = {} end
 					for i = 1, #cinematicZones[id] do
-						local subZone = cinematicZones[id][i]
-						if subZone == GetSubZoneText() then
+						local func = cinematicZones[id][i]
+						if func() then
 							if BigWigs.db.global.watchedMovies[id][i] then
 								BigWigs:Print(L.movieBlocked)
 								CinematicFrame_CancelCinematic()
