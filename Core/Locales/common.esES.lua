@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s en TI"
 L.you_icon = "%s en |T13700%d:0|tTI"
 L.underyou = "%s debajo de TI"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s encima de TI"
 L.other = "%s: %s"
 L.onboss = "%s en el JEFE"
 L.buff_boss = "Beneficio en el JEFE: %s"
@@ -23,11 +23,11 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s cerca de TI"
 L.on_group = "%s en el GRUPO" -- spell on group
---L.boss = "BOSS"
+L.boss = "JEFE"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "Fase %d"
-L.stage = "Fase %d"
+L.stage = "Etapa %d"
 L.normal = "Modo normal"
 L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
@@ -49,8 +49,8 @@ L.no = "No %s" -- No Spell
 L.intermission = "Intermedio"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
---L.you_die = "You die"
---L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "Mueres"
+L.you_die_sec = "Mueres en %d seg" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Aparece Esbirro"
@@ -110,13 +110,13 @@ L.bottom = "Fondo"
 L.left = "Izquierda"
 L.right = "Derecha"
 L.north = "Norte"
-L.north_east = "Nor-Este"
+L.north_east = "Noreste"
 L.east = "Este"
-L.south_east = "Sur-Este"
+L.south_east = "Sureste"
 L.south = "Sur"
-L.south_west = "Sue-Oeste"
+L.south_west = "Suroeste"
 L.west = "Oeste"
-L.north_west = "Nor-Oeste"
+L.north_west = "Noroeste"
 
 -- Common ability name replacements
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
@@ -140,11 +140,11 @@ L.roar = "Rugido" -- When a boss opens their mouth to let out a loud roar, somet
 L.leap = "Salto" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Cargar" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "Energia Completa" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.weakened = "Debilitado" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "Charco" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Charcos" -- Plural of L.pool
 L.totem = "Tótem" -- A totem, usually summoned by a boss, the same thing that shamans summon
-L.totems = "Totems" -- Plural of L.totem
+L.totems = "Tótems" -- Plural of L.totem
 L.portal = "Portal" -- A portal somewhere, usually leading to a different location
 L.portals = "Portales" -- Plural of L.portal
 L.rift = "Falla" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
@@ -160,4 +160,4 @@ L.tornadoes = "Tornados" -- Plural of L.tornado
 L.frontal_cone = "Cono Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "Miedo" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
---L.marks = "Marks"  -- Plural of L.marks
+L.marks = "Marcas"  -- Plural of L.marks
