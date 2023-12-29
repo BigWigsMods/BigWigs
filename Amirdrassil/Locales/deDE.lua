@@ -93,6 +93,9 @@ if L then
 	L.suppressive_ember = "Heilungen absorbiert"
 	L.suppressive_ember_single = "Heilung absorbiert"
 	L.flare_bomb = "Federn"
+	--L.too_close_to_edge = "Too close to the edge"
+	--L.taking_damage_from_edge = "Taking damage from the edge"
+	--L.flying_available = "You can fly now"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "deDE")

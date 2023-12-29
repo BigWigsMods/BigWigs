@@ -91,6 +91,9 @@ if L then
 	L.suppressive_ember = "治療吸收盾"
 	L.suppressive_ember_single = "治療吸收盾"
 	L.flare_bomb = "羽毛"
+	--L.too_close_to_edge = "Too close to the edge"
+	--L.taking_damage_from_edge = "Taking damage from the edge"
+	--L.flying_available = "You can fly now"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
@@ -114,7 +117,7 @@ if L then
 	L.eternal_firestorm_shortened_bar = "永恆火颶"
 	L.eternal_firestorm_message_full = "永恆火颶"
 
-	-- L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
-	-- L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
-	-- L.eternal_firestorm_swirl_bartext = "Swirls"
+	--L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
+	--L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
+	--L.eternal_firestorm_swirl_bartext = "Swirls"
 end

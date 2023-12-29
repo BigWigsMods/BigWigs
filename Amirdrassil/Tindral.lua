@@ -115,7 +115,7 @@ local timersMythic = {
 }
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
-------------------------------------------------------------------2--------------
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -133,6 +133,9 @@ if L then
 	L.suppressive_ember = "Heal Absorbs"
 	L.suppressive_ember_single = "Heal Absorb"
 	L.flare_bomb = "Feathers"
+	L.too_close_to_edge = "Too close to the edge"
+	L.taking_damage_from_edge = "Taking damage from the edge"
+	L.flying_available = "You can fly now"
 end
 
 --------------------------------------------------------------------------------
@@ -143,6 +146,7 @@ local fieryGrowthMarker = mod:AddMarkerOption(false, "player", 1, 424581, 1, 2, 
 function mod:GetOptions()
 	return {
 		"stages",
+		427297, -- Flame Surge
 		-- Stage One: Moonkin of the Flame
 		{422000, "TANK"}, -- Searing Wrath
 		423260, -- Blazing Mushroom
@@ -157,7 +161,7 @@ function mod:GetOptions()
 		-- Intermission: Burning Pursuit
 		421636, -- Typhoon
 		424258, -- Dream Essence
-		{422509, "EMPHASIZE"}, -- Empowered Feather
+		422509, -- Empowered Feather
 		421939, -- Scorching Plume
 		{424140, "CASTBAR"}, -- Supernova
 		-- Stage Two: Tree of the Flame
@@ -178,18 +182,25 @@ function mod:GetOptions()
 		[422115] = -27506, -- Stage Two: Tree of the Flame
 		[425576] = "mythic",
 	},{
+		[427297] = L.too_close_to_edge, -- Flame Surge (Too close to the edge)
 		[423260] = L.blazing_mushroom, -- Blazing Mushroom (Mushrooms)
 		[424581] = L.fiery_growth, -- Fiery Growth (Pool Dispels)
 		[424495] = L.mass_entanglement, -- Mass Entanglement (Roots)
 		[420540] = L.incarnation_moonkin, -- Incarnation: Moonkin (Moonkin Form)
 		[421636] = CL.pushback, -- Typhoon (Pushback)
+		[422509] = L.flying_available, -- Empowered Feather (You can fly now)
 		[422115] = L.incarnation_tree_of_flame, -- Incarnation: Tree of Flame (Tree Form)
-		[423265] = L.flaming_germination, -- Tranquility of Flame (Seeds)
 		[424579] = L.suppressive_ember, -- Suppressive Ember (Healing Absorbs)
+		[423265] = L.flaming_germination, -- Tranquility of Flame (Seeds)
 	}
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "FlameSurgeApplied", 427297)
+	self:Log("SPELL_AURA_REMOVED", "FlameSurgeRemoved", 427297)
+	self:Log("SPELL_DAMAGE", "FlameSurgeDamage", 427311)
+	self:Log("SPELL_MISSED", "FlameSurgeDamage", 427311)
+
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingWrathApplied", 422000)
 	self:Log("SPELL_AURA_REMOVED", "SearingWrathRemoved", 422000)
 	self:Log("SPELL_CAST_START", "BlazingMushroom", 423260, 426669) -- Blazing Mushroom, Wild Mushrooms
@@ -211,7 +222,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Typhoon", 421636)
 	self:Log("SPELL_AURA_APPLIED", "DreamEssenceApplied", 424258)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreamEssenceApplied", 424258)
-	self:Log("SPELL_AURA_APPLIED", "EmpoweredFeatherApplied", 422509)
+	self:Log("SPELL_AURA_APPLIED", "EmpoweredFeatherApplied", 422509) -- XXX currently hidden
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Feather alternative
 	self:Log("SPELL_CAST_START", "Supernova", 424140, 429169) -- intermission, enrage
 	self:Log("SPELL_AURA_REMOVED", "SupernovaRemoved", 424140)
 
@@ -273,6 +285,33 @@ end
 -- Event Handlers
 --
 
+do
+	local edgeTimer = nil
+	function mod:FlameSurgeApplied(args)
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, false, L.too_close_to_edge)
+			self:PlaySound(args.spellId, "warning")
+			if edgeTimer then
+				self:CancelTimer(edgeTimer)
+			end
+			edgeTimer = self:ScheduleRepeatingTimer("PersonalMessage", 1, 427297, false, L.too_close_to_edge)
+		end
+	end
+
+	function mod:FlameSurgeRemoved(args)
+		if self:Me(args.destGUID) and edgeTimer then
+			self:CancelTimer(edgeTimer)
+			edgeTimer = nil
+		end
+	end
+end
+
+function mod:FlameSurgeDamage(args) -- Every second, purposely not throttled
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(427297, false, L.taking_damage_from_edge)
+	end
+end
+
 function mod:SearingWrathApplied(args)
 	local amount = args.amount
 	if amount % 2 == 0 then
@@ -303,7 +342,7 @@ function mod:SearingWrathRemoved(args)
 	end
 end
 
-function mod:BlazingMushroom(args)
+function mod:BlazingMushroom()
 	self:StopBar(CL.count:format(L.blazing_mushroom, blazingMushroomCount))
 	self:Message(423260, "purple", CL.count:format(L.blazing_mushroom, blazingMushroomCount))
 	if self:Tank() then
@@ -395,7 +434,7 @@ function mod:FireBeam(args)
 end
 
 -- Intermission: Burning Pursuit
-function mod:IncarnationOwlOfTheFlame(args)
+function mod:IncarnationOwlOfTheFlame()
 	self:StopBar(CL.count:format(L.blazing_mushroom, blazingMushroomCount)) -- Blazing Mushroom
 	self:StopBar(CL.count:format(L.fiery_growth, fieryGrowthCount)) -- Fiery Growth
 	self:StopBar(CL.count:format(self:SpellName(420236), fallingStarCount)) -- Falling Star
@@ -439,8 +478,17 @@ end
 
 function mod:EmpoweredFeatherApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.you:format(args.spellName))
+		self:Error("Feather ID available")
+		self:Message(args.spellId, "green", L.flying_available)
 		self:PlaySound(args.spellId, "long")
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+	--|TInterface\\ICONS\\Ability_DragonRiding_DragonRiding01.BLP:20|t Take flight!
+	if msg:find("Ability_DragonRiding_DragonRiding01", nil, true) then
+		self:Message(422509, "green", L.flying_available)
+		self:PlaySound(422509, "long")
 	end
 end
 
@@ -489,7 +537,7 @@ function mod:Supernova(args)
 	end
 end
 
-function mod:SupernovaRemoved(args)
+function mod:SupernovaRemoved()
 	supernovaCasting = false
 	local stage = self:GetStage()
 	self:Message("stages", "cyan", CL.stage:format(stage), false)

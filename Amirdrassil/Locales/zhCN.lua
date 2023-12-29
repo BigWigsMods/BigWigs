@@ -91,6 +91,9 @@ if L then
 	L.suppressive_ember = "治疗吸收盾"
 	L.suppressive_ember_single = "治疗吸收盾"
 	L.flare_bomb = "羽毛"
+	--L.too_close_to_edge = "Too close to the edge"
+	--L.taking_damage_from_edge = "Taking damage from the edge"
+	--L.flying_available = "You can fly now"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
