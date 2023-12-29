@@ -33,12 +33,12 @@ L = BigWigs:NewBossLocale("Council of Dreams", "zhTW")
 if L then
 	L.agonizing_claws_debuff = "{421022}（減益）"
 
-	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
-	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+	L.custom_off_combined_full_energy = "合併大招計時器（傳奇限定）"
+	L.custom_off_combined_full_energy_desc = "將同時施放的滿能量大招合併顯示。"
 
 	L.special_mechanic_bar = "%s [斷大招] (%d)" -- 其他boss用來處理大招的常規技能，只在大招期間如此提示 衝鋒 [斷大招] (1) 水池 [斷大招] (2)
 
-	--L.constricting_thicket = "Vines"
+	L.constricting_thicket = "藤蔓" -- 束縛、藤蔓
 	L.poisonous_javelin = "標槍" -- 或者中毒/緩速
 	L.song_of_the_dragon = "頌歌"
 	L.polymorph_bomb = "鴨子"
@@ -54,8 +54,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "在王身上"
 
 	L.scorching_roots = "樹根"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "治療樹根"
+	L.blazing_thorns = "熾炎荊棘"
 	L.falling_embers = "接圈"
 	L.flash_fire = "治療吸收盾"
 	L.flash_fire_single = "治療吸收盾"
@@ -91,9 +91,9 @@ if L then
 	L.suppressive_ember = "治療吸收盾"
 	L.suppressive_ember_single = "治療吸收盾"
 	L.flare_bomb = "羽毛"
-	--L.too_close_to_edge = "Too close to the edge"
-	--L.taking_damage_from_edge = "Taking damage from the edge"
-	--L.flying_available = "You can fly now"
+	L.too_close_to_edge = "太靠近邊緣"
+	L.taking_damage_from_edge = "受到邊緣傷害"
+	L.flying_available = "可以飛行"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
