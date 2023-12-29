@@ -24,7 +24,7 @@ L.rticon = "%s（{rt%d}）"
 L.near = "%s在你附近"
 L.on_group = "團隊：%s" -- spell on group
 L.boss = "首領"
---L.plus = "%s + %s" -- Spell 1 + Spell 2
+L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "階段%d"
 L.stage = "階段%d"
@@ -159,5 +159,5 @@ L.tornado = "旋風" -- 'A tornado is a violently rotating column of air that is
 L.tornadoes = "旋風" -- Plural of L.tornado
 L.frontal_cone = "正面技能" -- 正面衝擊 Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "恐懼術" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
---L.mark = "Mark" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
---L.marks = "Marks"  -- Plural of L.marks
+L.mark = "標記" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
+L.marks = "標記"  -- Plural of L.marks
