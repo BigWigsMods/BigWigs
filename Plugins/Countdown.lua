@@ -255,6 +255,7 @@ do
 						handler = plugin,
 						func = "TestCountdown",
 						order = 3,
+						width = 1.2,
 					},
 					audioSpacer = {
 						type = "description",
