@@ -54,8 +54,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "在王身上"
 
 	L.scorching_roots = "樹根"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "治療樹根"
+	L.blazing_thorns = "熾炎荊棘"
 	L.falling_embers = "接圈"
 	L.flash_fire = "治療吸收盾"
 	L.flash_fire_single = "治療吸收盾"
@@ -91,9 +91,9 @@ if L then
 	L.suppressive_ember = "治療吸收盾"
 	L.suppressive_ember_single = "治療吸收盾"
 	L.flare_bomb = "羽毛"
-	--L.too_close_to_edge = "Too close to the edge"
-	--L.taking_damage_from_edge = "Taking damage from the edge"
-	--L.flying_available = "You can fly now"
+	L.too_close_to_edge = "太靠近邊緣"
+	L.taking_damage_from_edge = "受到邊緣傷害"
+	L.flying_available = "可以飛行"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
