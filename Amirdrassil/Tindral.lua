@@ -161,7 +161,7 @@ function mod:GetOptions()
 		-- Intermission: Burning Pursuit
 		421636, -- Typhoon
 		424258, -- Dream Essence
-		422509, -- Empowered Feather
+		{422509, "EMPHASIZE"}, -- Empowered Feather
 		421939, -- Scorching Plume
 		{424140, "CASTBAR"}, -- Supernova
 		-- Stage Two: Tree of the Flame
