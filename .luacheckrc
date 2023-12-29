@@ -294,6 +294,7 @@ globals = {
 	"UnitPowerMax",
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
+	"UnitReaction", -- Classic/BWL/Nefarian
 	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
