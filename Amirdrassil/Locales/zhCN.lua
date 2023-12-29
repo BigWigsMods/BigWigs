@@ -19,7 +19,7 @@ end
 L = BigWigs:NewBossLocale("Volcoross", "zhCN")
 if L then
 	L.custom_off_all_scorchtail_crash = "团长模式"
-	L.custom_off_all_scorchtail_crash_desc = "显示全部焦尾碾压的计时器和信息，而不是仅显示你的一面。"
+	L.custom_off_all_scorchtail_crash_desc = "显示全部焦尾碾压的计时器和信息，而不是仅显示你所在的半场。"
 
 	L.flood_of_the_firelands = "分摊"
 	L.flood_of_the_firelands_single_wait = "等待" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
@@ -91,9 +91,9 @@ if L then
 	L.suppressive_ember = "治疗吸收盾"
 	L.suppressive_ember_single = "治疗吸收盾"
 	L.flare_bomb = "羽毛"
-	--L.too_close_to_edge = "Too close to the edge"
-	--L.taking_damage_from_edge = "Taking damage from the edge"
-	--L.flying_available = "You can fly now"
+	L.too_close_to_edge = "太靠近边缘"
+	L.taking_damage_from_edge = "在边缘受到伤害"
+	L.flying_available = "你现在可以起飞"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
