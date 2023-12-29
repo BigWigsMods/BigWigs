@@ -66,7 +66,7 @@ L.autoReplyLeftCombatAdvancedWipe = "Perdí contra '%s' en: %s"
 
 L.bars = "Barras"
 L.style = "Estilo"
-L.bigWigsBarStyleName_Default = "Por defecto"
+L.bigWigsBarStyleName_Default = "Predeterminado"
 L.resetBarsDesc = "Restablece todas las opciones relacionadas con las barras, incluyendo la posición de anclas de este."
 
 L.nameplateBars = "Barras de nombres"
@@ -84,7 +84,7 @@ L.modifierDesc = "Presiona la tecla modificadora seleccionada para activar accio
 L.modifierKey = "Sólo con una tecla modificadora"
 L.modifierKeyDesc = "Permite hacer clic en las barras a menos que se mantenga pulsada la tecla modificadora especificada, en cuyo caso las acciones del ratón que se describen a continuación estarán disponibles."
 
-L.temporaryCountdownDesc = "Habilita temporalmente un contador de la habilidad asociada con esta barra"
+L.temporaryCountdownDesc = "Activa temporalmente un contador de la habilidad asociada con esta barra"
 L.report = "Reportar"
 L.reportDesc = "Informa del estado actual de las barras al grupo de chat activo; ya sea en el chat de la estancia, en la banda, en el grupo o decir, según corresponda."
 L.remove = "Quitar"
@@ -113,10 +113,10 @@ L.right = "Derecha"
 L.time = "Tiempo"
 L.timeDesc = "Muestra u oculta el tiempo que queda en las barras."
 L.textDesc = "Muestra u oculta el texto que aparece en las barras."
-L.icon = "Ícono"
-L.iconDesc = "Muestra u oculta los íconos de la barra."
-L.iconPosition = "Posición del ícono"
-L.iconPositionDesc = "Elige en qué lugar de la barra debe posicionarse el ícono."
+L.icon = "Icono"
+L.iconDesc = "Muestra u oculta los iconos de la barra."
+L.iconPosition = "Posición del icono"
+L.iconPositionDesc = "Elige en qué lugar de la barra debe posicionarse el icono."
 L.font = "Fuente"
 L.restart = "Restablecer"
 L.restartDesc = "Restablece las barras enfatizadas para que empiecen desde el principio y cuenten desde 10."
@@ -214,10 +214,10 @@ L.flash = "Destello"
 L.normal = "Normal"
 L.emphasized = "Enfatizado"
 
-L.reset = "Reajusta"
-L.resetDesc = "Reajusta los colores anteriores a sus valores por defecto."
-L.resetAll = "Reajustar todo"
-L.resetAllDesc = "Si has personalizado los colores de cualquier encuentro con el jefe, este botón los reajustará TODOS para que se usen los colores definidos aquí."
+L.reset = "Restablecer"
+L.resetDesc = "Restablece los colores anteriores a sus valores predeterminados."
+L.resetAll = "Restablecer todo"
+L.resetAllDesc = "Si has personalizado los colores de cualquier encuentro con el jefe, este botón los restablecerá TODOS para que se usen los colores definidos aquí."
 
 L.red = "Rojo"
 L.redDesc = "Alertas generales del encuentro."
@@ -240,7 +240,7 @@ L.textCountdown = "Cuenta regresiva de texto"
 L.textCountdownDesc = "Muestra un contador visual durante una cuenta regresiva."
 L.countdownColor = "Color de la cuenta regresiva"
 L.countdownVoice = "Voz de la cuenta regresiva"
-L.countdownTest = "Probar una cuenta regresiva"
+L.countdownTest = "Probar cuenta regresiva"
 L.countdownAt = "Cuenta regresiva en... (segundos)"
 L.countdownAt_desc = "Elige cuánto tiempo le queda a la habilidad del jefe (en segundos) cuando la cuenta regresiva comience."
 L.countdown = "Cuenta regresiva"
@@ -271,8 +271,8 @@ L.emphasizedDesc = "El punto de un mensaje enfatizado es conseguir su atención 
 L.uppercase = "MAYÚSCULAS"
 L.uppercaseDesc = "Todos los mensajes enfatizados se convertirán en MAYÚSCULAS."
 
-L.useIcons = "Usar íconos"
-L.useIconsDesc = "Mostrar íconos al lado de los mensajes."
+L.useIcons = "Usar iconos"
+L.useIconsDesc = "Mostrar iconos al lado de los mensajes."
 L.classColors = "Colores de clase"
 L.classColorsDesc = "Los mensajes a veces contienen nombres de jugadores. Al activar esta opción, esos nombres serán coloreados con los colores de la clase."
 L.chatFrameMessages = "Mensajes del marco de chat"
@@ -334,8 +334,8 @@ L.combatLogDesc = "Automáticamente comienza a registrar el combate cuando se in
 
 L.pull = "Llamada de jefe"
 L.engageSoundTitle = "Toca un sonido cuando un encuentro con el jefe haya comenzado"
-L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe es comenzado"
-L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe termina"
+L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se comienza"
+L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se termina"
 L.pullStarted = "Temporizador de llamada de jefe empezado por %s el jugador %s."
 L.pullStopped = "Temporizador de llamada de jefe cancelado por %s."
 L.pullStoppedCombat = "Temporizador de llamada de jefe cancelado porque tu entraste en combate"
@@ -349,12 +349,12 @@ L.countdownBegins_desc = "Elige cuánto tiempo restante debe de quedar en la lla
 -- RaidIcon.lua
 --
 
-L.icons = "Íconos"
-L.raidIconsDescription = "Algunos encuentros pueden incluir elementos como habilidades de tipo bomba dirigidas a un jugador específico, un jugador perseguido, o un jugador específico puede ser de interés. Aquí puedes personalizar los íconos de banda que deben utilizarse para marcar a estos jugadores.\n\nSi un encuentro sólo tiene una habilidad por la que vale la pena marcar, sólo se utilizará el primer icono. Un icono nunca se usará para dos habilidades diferentes en el mismo encuentro, y cualquier habilidad dada siempre usará el mismo icono la próxima vez.\n\n|cffff4411Ten en cuenta que si un jugador ya ha sido marcado manualmente, BigWigs nunca cambiará su icono.|r"
+L.icons = "Iconos"
+L.raidIconsDescription = "Algunos encuentros pueden incluir elementos como habilidades de tipo bomba dirigidas a un jugador específico, un jugador perseguido, o un jugador específico puede ser de interés. Aquí puedes personalizar los iconos de banda que deben utilizarse para marcar a estos jugadores.\n\nSi un encuentro sólo tiene una habilidad por la que vale la pena marcar, sólo se utilizará el primer icono. Un icono nunca se usará para dos habilidades diferentes en el mismo encuentro, y cualquier habilidad dada siempre usará el mismo icono la próxima vez.\n\n|cffff4411Ten en cuenta que si un jugador ya ha sido marcado manualmente, BigWigs nunca cambiará su icono.|r"
 L.primary = "Primario"
-L.primaryDesc = "El primer ícono de banda que un encuentro debería usar. "
+L.primaryDesc = "El primer icono de banda que un encuentro debería usar. "
 L.secondary = "Secundario"
-L.secondaryDesc = "El segundo ícono de banda que un encuentro debería usar."
+L.secondaryDesc = "El segundo icono de banda que un encuentro debería usar."
 
 -----------------------------------------------------------------------
 -- Sound.lua
@@ -376,7 +376,7 @@ L.sound = "Sonido"
 
 L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del suministrado por el módulo."
 L.resetSoundDesc = "Restablece los sonidos anteriores a sus valores predeterminados."
-L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuentro con el jefe, este botón los reajustará TODOS para que se usen los sonidos definidos aquí."
+L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuentro con el jefe, este botón los restablecerá TODOS para que se usen los sonidos definidos aquí."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
