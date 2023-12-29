@@ -94,6 +94,7 @@ do
 				desc = L.countdownBegins_desc,
 				type = "range", min = 5, max = 10, step = 1,
 				order = 2,
+				width = 1.5
 			},
 			spacer1 = {
 				type = "description",
@@ -108,7 +109,7 @@ do
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
-				width = 2,
+				width = 2.5,
 				itemControl = "DDI-Sound",
 			},
 			spacer2 = {
@@ -124,7 +125,7 @@ do
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
-				width = 2,
+				width = 2.5,
 				itemControl = "DDI-Sound",
 			},
 			endPullSound = {
@@ -134,7 +135,7 @@ do
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
-				width = 2,
+				width = 2.5,
 				itemControl = "DDI-Sound",
 			},
 			voice = {
@@ -143,7 +144,7 @@ do
 				values = BigWigsAPI.GetCountdownList,
 				sorting = voiceSorting,
 				order = 8,
-				width = 2,
+				width = 2.5,
 			},
 			spacer3 = {
 				type = "description",
