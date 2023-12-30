@@ -187,11 +187,12 @@ L.blockTalkingHeadRaids = "레이드"
 L.blockTalkingHeadTimewalking = "시간여행 (던전 및 레이드)"
 L.blockTalkingHeadScenarios = "시나리오"
 
---L.redirectPopups = "Redirect popup banners to BigWigs messages"
---L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner or the banner you see when entering a Mythic+ dungeon will be blocked and instead displayed as BigWigs messages. These banners can be quite large, last a long time, and block your ability to click through them."
---L.redirectPopupsColor = "Color of the redirected message"
---L.blockDungeonPopups = "Block dungeon popup banners"
---L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them instead of being redirected to BigWigs messages."
+L.redirectPopups = "BigWigs 메시지에 표시되는 팝업 배너"
+L.redirectPopupsDesc = "'|cFF33FF99vault 슬롯 잠금 해제됨|r' 배너 또는 신화 쐐기돌 던전에 입장할 때 표시되는 배너와 같이 화면 중앙에 있는 팝업 배너는 차단되고 대신 BigWigs 메시지로 표시됩니다. 이러한 배너는 상당히 클 수 있으며 오래 지속될 수 있습니다. 시간이 오래 걸리고 클릭 연결 기능이 차단됩니다."
+L.redirectPopupsColor = "표시되는 팝업 배너의 색상"
+L.blockDungeonPopups = "던전 팝업 배너 차단"
+L.blockDungeonPopupsDesc = 
+"던전 입장 시 표시되는 팝업 배너에 텍스트가 매우 긴 경우가 있습니다. 이 기능을 활성화하면 BigWigs 메시지로 표시되는 대신 완전히 차단됩니다."
 
 -- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
 -- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
