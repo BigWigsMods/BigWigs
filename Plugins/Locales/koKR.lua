@@ -194,10 +194,10 @@ L.blockDungeonPopups = "던전 팝업 배너 차단"
 L.blockDungeonPopupsDesc = 
 "던전 입장 시 표시되는 팝업 배너에 텍스트가 매우 긴 경우가 있습니다. 이 기능을 활성화하면 BigWigs 메시지로 표시되는 대신 완전히 차단됩니다."
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.userNotifySfx = "우두머리 기능 차단으로 비활성화된 음향 효과를 강제로 다시 활성화합니다."
+L.userNotifyMusic = "우두머리 기능 차단으로 비활성화된 배경음악를 강제로 다시 활성화합니다."
+L.userNotifyAmbience = "우두머리 기능 차단으로 비활성화된 환경 소리를 강제로 다시 활성화합니다."
+L.userNotifyErrorSpeech = "우두머리 기능 차단으로 비활성화된 오류 음성을 강제로 다시 활성화합니다."
 
 L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)
