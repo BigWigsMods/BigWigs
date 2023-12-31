@@ -14,6 +14,8 @@ L.warmup = "预备"
 L.warmup_desc = "首领战斗开始前预备时间。"
 L.proximity = "近距离"
 L.proximity_desc = "显示近距离窗口，列出距离你很近的玩家。"
+--L.adds = "Adds"
+--L.adds_desc = "Enable functions related to the various adds that will spawn during the boss encounter."
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已经存在模块，但存在模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您插件的文件夹中。建议删除所有 BigWigs 文件夹并重新安装。"
 L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99此功能很少用到，当与多个首领/增援战斗时通常一个计时条并且需要保持追踪冷却施放相同的法术。|r"
