@@ -83,7 +83,7 @@ if L then
 
 	L.seed_soaked = "Samen gesoaked"
 	L.all_seeds_soaked = "Samen fertig!"
-	L.failed_seed = "%s ist auf einen zusätzlichen Samen getreten!"
+	L.failed_seed = "%s ist auf einen weiteren Samen getreten!"
 
 	L.blazing_mushroom = "Pilze"
 	L.fiery_growth = "Dispels"
