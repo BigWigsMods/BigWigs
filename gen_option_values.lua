@@ -691,6 +691,7 @@ local function parseLua(file)
 					proximity = true,
 					stages = true,
 					warmup = true,
+					adds = true,
 				}
 				for key in next, option_keys do
 					if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and locale[key] == nil then
