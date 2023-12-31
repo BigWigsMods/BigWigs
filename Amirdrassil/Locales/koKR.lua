@@ -91,6 +91,9 @@ if L then
 	L.suppressive_ember = "치유 흡수"
 	L.suppressive_ember_single = "치유 흡수"
 	L.flare_bomb = "깃털"
+	L.too_close_to_edge = "가장자리에 너무 가까움"
+	L.taking_damage_from_edge = "가장자리에서 피해를 입음"
+	L.flying_available = "비행 가능"
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "koKR")
