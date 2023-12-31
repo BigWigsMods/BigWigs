@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Tindral Sageswift, Seer of the Flame", 2549, 2565)
 if not mod then return end
-mod:RegisterEnableMob(209090) -- Tindral Sageswift <Seer of Flame>
+mod:RegisterEnableMob(209090) -- Tindral Sageswift
 mod:SetEncounterID(2786)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -24,7 +24,6 @@ local fireBeamCount = 1
 local flareBombCount = 1
 local dreamEssenceOnYou = 0
 local supernovaCasting = false
-local seedsSoaked = 0
 local dispelCount = 1
 local searingWrathOnMe = false
 
@@ -123,6 +122,7 @@ local L = mod:GetLocale()
 if L then
 	L.seed_soaked = "Seed soaked"
 	L.all_seeds_soaked = "Seeds done!"
+	L.failed_seed = "%s soaked an extra seed!"
 
 	L.blazing_mushroom = "Mushrooms"
 	L.fiery_growth = "Dispels"
@@ -251,6 +251,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LingeringCinderApplied", 424582)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringCinderApplied", 424582)
 	self:Log("SPELL_AURA_APPLIED", "GerminatingAuraApplied", 430583)
+	self:Log("SPELL_DAMAGE", "SeedDamage", 430584)
+	self:Log("SPELL_MISSED", "SeedDamage", 430584)
 end
 
 function mod:OnEngage()
@@ -567,28 +569,59 @@ function mod:SuppressiveEmberApplied(args)
 	end
 end
 
-function mod:FlamingGermination(args)
-	self:StopBar(args.spellName, CL.count:format(L.flaming_germination, flamingGerminationCount))
-	self:Message(args.spellId, "cyan", CL.count:format(L.flaming_germination, flamingGerminationCount))
-	self:PlaySound(args.spellId, "info")
-	flamingGerminationCount = flamingGerminationCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][flamingGerminationCount], CL.count:format(L.flaming_germination, flamingGerminationCount))
+do
+	local seedsLeft = 16
+	local seedSoakedList = {}
 
-	if self:Mythic() then
-		local playersAlive = 0
-		for unit in self:IterateGroup() do
-			if not UnitIsDead(unit) and UnitIsConnected(unit) then
-				playersAlive = playersAlive + 1
+	function mod:FlamingGermination(args)
+		self:StopBar(CL.count:format(L.flaming_germination, flamingGerminationCount))
+		self:Message(args.spellId, "cyan", CL.count:format(L.flaming_germination, flamingGerminationCount))
+		self:PlaySound(args.spellId, "info")
+		flamingGerminationCount = flamingGerminationCount + 1
+		self:Bar(args.spellId, timers[self:GetStage()][args.spellId][flamingGerminationCount], CL.count:format(L.flaming_germination, flamingGerminationCount))
+
+		if self:Mythic() then
+			local playersAlive = 0
+			for unit in self:IterateGroup() do
+				if not UnitIsDead(unit) and UnitIsConnected(unit) then
+					playersAlive = playersAlive + 1
+				end
+			end
+			seedsLeft = math.floor(playersAlive * 0.8) -- XXX might not be linear, but this is mostly right?
+			seedSoakedList = {}
+		end
+	end
+
+	function mod:SeedOfFlameApplied(args)
+		if self:Me(args.destGUID) then
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+
+	function mod:GerminatingAuraApplied(args)
+		seedsLeft = seedsLeft - 1
+		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "blue", L.seed_soaked)
+			if seedsLeft > 0 then
+				self:PlaySound(args.spellId, "warning")
 			end
 		end
-		seedsSoaked = math.floor(playersAlive * 0.8) -- XXX might not be linear, but this is mostly right?
+		if seedsLeft == 0 then
+			self:Message(args.spellId, "green", L.all_seeds_soaked)
+			self:PlaySound(args.spellId, "info")
+		end
 	end
-end
 
-function mod:SeedOfFlameApplied(args)
-	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
-		self:PlaySound(args.spellId, "alarm")
+	function mod:SeedDamage(args)
+		if self:Mythic() then
+			seedSoakedList[args.destName] = (seedSoakedList[args.destName] or 0) + 1
+			if seedSoakedList[args.destName] > 1 then -- Soaked more than 1, spawning a tree
+				-- Germinating Aura key, sad face icon
+				self:Message(430583, "red", L.failed_seed:format(self:ColorName(args.destName)), "spell_misc_emotionsad")
+				self:PlaySound(430583, "warning")
+			end
+		end
 	end
 end
 
@@ -640,20 +673,6 @@ function mod:LingeringCinderApplied(args)
 		self:StopBar(CL.count:format(args.spellName, dispelCount-1))
 		self:TargetBar(args.spellId, 2, args.destName, CL.count:format(args.spellName, dispelCount))
 		dispelCount = dispelCount + 1
-	end
-end
-
-function mod:GerminatingAuraApplied(args)
-	seedsSoaked = seedsSoaked - 1
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "blue", L.seed_soaked)
-		if seedsSoaked > 0 then
-			self:PlaySound(args.spellId, "warning")
-		end
-	end
-	if seedsSoaked == 0 then
-		self:Message(args.spellId, "green", L.all_seeds_soaked)
-		self:PlaySound(args.spellId, "info")
 	end
 end
 
