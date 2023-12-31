@@ -6,27 +6,27 @@ end
 
 L = BigWigs:NewBossLocale("Igira the Cruel", "koKR")
 if L then
-	--L.blistering_spear = "창"
-	--L.blistering_spear_single = "창"
-	--L.blistering_torment = "사슬"
-	--L.twisting_blade = "칼날"
-	--L.marked_for_torment = "고문"
-	--L.umbral_destruction = "같이 맞기"
-	--L.heart_stopper = "치유 흡수"
-	--L.heart_stopper_single = "치유 흡수"
+	L.blistering_spear = "창"
+	L.blistering_spear_single = "창"
+	L.blistering_torment = "사슬"
+	L.twisting_blade = "칼날"
+	L.marked_for_torment = "고문"
+	L.umbral_destruction = "같이 맞기"
+	L.heart_stopper = "치유 흡수"
+	L.heart_stopper_single = "치유 흡수"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "koKR")
 if L then
-	--L.custom_off_all_scorchtail_crash = "모든 시전 보이기"
-	--L.custom_off_all_scorchtail_crash_desc = "당신의 방향만이 아닌 모든 방향에서의 불꽃꼬리 충돌의 타이머와 메시지를 표시합니다."
+	L.custom_off_all_scorchtail_crash = "모든 시전 보이기"
+	L.custom_off_all_scorchtail_crash_desc = "당신의 방향만이 아닌 모든 방향에서의 불꽃꼬리 충돌의 타이머와 메시지를 표시합니다."
 
 	L.flood_of_the_firelands = "같이 맞기"
-	--L.flood_of_the_firelands_single_wait = "대기" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	--L.flood_of_the_firelands_single = "같이 맞기"
-	--L.scorchtail_crash = "꼬리치기"
-	--L.serpents_fury = "불꽃"
-	--L.coiling_flames_single = "불꽃"
+	L.flood_of_the_firelands_single_wait = "대기" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
+	L.flood_of_the_firelands_single = "같이 맞기"
+	L.scorchtail_crash = "꼬리치기"
+	L.serpents_fury = "불꽃"
+	L.coiling_flames_single = "불꽃"
 end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "koKR")
@@ -109,7 +109,7 @@ if L then
 	L.incarnate_intermission = "공중에 뜸" -- 현신
 
 	L.incarnate = "현신"
-	L.molten_gauntlet = "시련" -- never used?
+	L.molten_gauntlet = "시련" -- 타오르는 시련
 	L.mythic_debuffs = "우리" -- Shadow Cage & Molten Eruption
 
 	L.greater_firestorm_shortened_bar = "상급 화염폭풍" -- G for Greater
