@@ -3,9 +3,9 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "당신에게 %s"
-L.you_icon = "%s on |T13700%d:0|tYOU"
+L.you_icon = "|T13700%2$d:0|t당신에게 %1$s"
 L.underyou = "당신 밑에 %s"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "당신 위에 %s"
 L.other = "%s: %s"
 L.onboss = "우두머리에게 %s"
 L.buff_boss = "넴드에게 버프: %s"
@@ -23,7 +23,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "당신 근처에 %s"
 L.on_group = "파티에 %s" -- spell on group
---L.boss = "BOSS"
+L.boss = "우두머리"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "%d단계"
@@ -49,8 +49,8 @@ L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
---L.you_die = "You die"
---L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "당신은 죽습니다"
+L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
@@ -102,21 +102,21 @@ L.amount_three = "%d천" -- Thousands 1,000
 L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Directions
---L.top = "Top"
---L.up = "Up"
---L.middle = "Middle"
---L.down = "Down"
---L.bottom = "Bottom"
---L.left = "Left"
---L.right = "Right"
+L.top = "최상단"
+L.up = "상단"
+L.middle = "중간"
+L.down = "하단"
+L.bottom = "최하"
+L.left = "왼쪽"
+L.right = "오른쪽"
 L.north = "북쪽"
---L.north_east = "North-East"
---L.east = "East"
---L.south_east = "South-East"
+L.north_east = "북동쪽"
+L.east = "동쪽"
+L.south_east = "남동쪽"
 L.south = "남쪽"
---L.south_west = "South-West"
---L.west = "West"
---L.north_west = "North-West"
+L.south_west = "남서쪽"
+L.west = "서쪽"
+L.north_west = "북서쪽"
 
 -- Common ability name replacements
 L.tank_combo = "탱크 콤보" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
@@ -140,7 +140,7 @@ L.roar = "포효" -- When a boss opens their mouth to let out a loud roar, somet
 L.leap = "도약" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "돌진" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "기력 최대" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.weakened = "Weakened" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.weakened = "약화" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.pool = "바닥" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "바닥" -- Plural of L.pool
 L.totem = "토템" -- A totem, usually summoned by a boss, the same thing that shamans summon
@@ -157,7 +157,7 @@ L.spirit = "영혼" -- Sometimes a boss will summon spirits, similar to ghosts, 
 L.spirits = "영혼" -- Plural of L.spirit
 L.tornado = "뇌우" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "뇌우" -- Plural of L.tornado
---L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.frontal_cone = "전방기" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "공포" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.mark = "징표" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "징표"  -- Plural of L.marks
