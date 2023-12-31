@@ -102,7 +102,6 @@ if L then
 
 	L.fyralaths_bite = "正面"
 	L.fyralaths_bite_mythic = "正面"
-	L.fyralaths_mark = "印记"
 	L.darkflame_shades = "影子"
 	L.darkflame_cleave = "分摊[史诗]"
 

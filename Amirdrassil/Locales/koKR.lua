@@ -102,7 +102,6 @@ if L then
 
 	L.fyralaths_bite = "정면"
 	L.fyralaths_bite_mythic = "정면"
-	L.fyralaths_mark = "징표"
 	L.darkflame_shades = "망령"
 	L.darkflame_cleave = "같이 맞기"
 

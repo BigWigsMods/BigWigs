@@ -150,7 +150,7 @@ function mod:GetOptions()
 		[430048] = "mythic",
 	},{
 		[417431] = L.fyralaths_bite.."/"..L.fyralaths_bite_mythic, -- Fyr'alath's Bite (Frontal/Frontals)
-		[417443] = L.fyralaths_mark, -- Fyr'alath's Mark (Mark)
+		[417443] = CL.mark, -- Fyr'alath's Mark (Mark)
 		[430441] = L.darkflame_shades, -- Darkflame Shades (Shades)
 		[426368] = L.darkflame_cleave, -- Darkflame Cleave (Mythic Soaks)
 		[421937] = CL.orbs, -- Shadowflame Orbs (Orbs)
@@ -424,7 +424,7 @@ end
 
 function mod:FyralathsMarkApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, amount, 2, L.fyralaths_mark)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2, CL.mark)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
 	elseif amount > 1 then -- Tank Swap?

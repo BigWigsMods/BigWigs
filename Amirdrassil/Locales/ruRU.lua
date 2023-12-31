@@ -102,7 +102,6 @@ if L then
 
 	L.fyralaths_bite = "Фронтал"
 	L.fyralaths_bite_mythic = "Фронталы"
-	L.fyralaths_mark = "Метка"
 	L.darkflame_shades = "Тени"
 	L.darkflame_cleave = "Соаки"
 

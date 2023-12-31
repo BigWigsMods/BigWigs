@@ -102,14 +102,13 @@ if L then
 
 	L.fyralaths_bite = "Frontal"
 	L.fyralaths_bite_mythic = "Frontals"
-	L.fyralaths_mark = "Marque"
 	L.darkflame_shades = "Ombres"
 	L.darkflame_cleave = "Mythique Soaks"
 
 	L.incarnate_intermission = "Renversement"
 
 	L.incarnate = "Envole-toi ailleurs"
-	--L.molten_gauntlet = "Gauntlet"
+	L.molten_gauntlet = "Gantelet"
 	L.mythic_debuffs = "Cages" -- Shadow Cage & Molten Eruption
 
 	L.greater_firestorm_shortened_bar = "Tempête de feu [S]" -- G for Greater

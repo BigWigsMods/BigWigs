@@ -102,7 +102,6 @@ if L then
 
 	L.fyralaths_bite = "正面衝擊波"
 	L.fyralaths_bite_mythic = "正面衝擊波"
-	L.fyralaths_mark = "印記"
 	L.darkflame_shades = "影子"
 	L.darkflame_cleave = "分攤"
 
