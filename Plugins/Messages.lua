@@ -402,6 +402,7 @@ plugin.pluginOptions = {
 					max = 10,
 					step = 0.5,
 					order = 9,
+					width = 1.5,
 				},
 				fadetime = {
 					type = "range",
@@ -411,6 +412,7 @@ plugin.pluginOptions = {
 					max = 10,
 					step = 0.5,
 					order = 10,
+					width = 1.5,
 				},
 				newline1 = {
 					type = "description",
