@@ -1157,7 +1157,7 @@ do
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
 		itIT = "Italian (itIT)",
-		koKR = "Korean (koKR)",
+		--koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
 		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
