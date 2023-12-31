@@ -978,12 +978,12 @@ do
 			if type(o) == "number" then
 				if o > 0 then
 					local spellLink = GetSpellLink(o)
-					if not spellLink then
+					if type(spellLink) == "string" and spellLink:find("Hspell", nil, true) then
+						link = spellLink -- Use Blizz link if valid...
+					else -- ...or make our own
 						local spellName = GetSpellInfo(o)
 						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, spellName)
 						--BigWigs:Error(("Failed to fetch the link for spell id %d, tell the authors."):format(o))
-					else
-						link = spellLink
 					end
 				else
 					local tbl = C_EncounterJournal_GetSectionInfo(-o)
