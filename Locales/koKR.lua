@@ -9,7 +9,7 @@ L.altpower_desc = "보조 마력 창을 표시합니다, 자신의 파티/공격
 L.infobox = "정보 상자"
 L.infobox_desc = "우두머리 전투와 관련된 정보를 담은 상자를 표시합니다."
 L.stages = "단계"
---L.stages_desc = "Enable functions related to the various stages of the boss encounter such as stage change warnings, stage duration timer bars, etc."
+L.stages_desc = "단계 변경 경고, 단계 지속 시간 타이머 바 등 우두머리 전투의 다양한 단계와 관련된 기능을 활성화합니다."
 L.warmup = "준비"
 L.warmup_desc = "우두머리와의 전투가 시작되기 까지 시간입니다."
 L.proximity = "근접 디스플레이"
@@ -55,7 +55,7 @@ L.expansionNames = {
 	"어둠땅", -- Shadowlands
 	"용군단", -- Dragonflight
 }
---L.currentSeason = "Current Season"
+L.currentSeason = "현재 시즌"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"
