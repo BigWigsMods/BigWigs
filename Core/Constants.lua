@@ -174,6 +174,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 			roleDesc = getRoleStrings(module, option)
 		end
 		local moduleLocale = module:GetLocale(true)
+
 		local title, description = moduleLocale[option], moduleLocale[option .. "_desc"]
 		if title then
 			if type(title) == "number" then
@@ -183,8 +184,9 @@ function BigWigs:GetBossOptionDetails(module, option)
 				title = gsub(title, "{(%-?%d-)}", replaceIdWithName) -- Allow embedding an id in a string.
 			end
 		elseif customBossOptions[option] then
-			return option, customBossOptions[option][1], roleDesc.. customBossOptions[option][2], customBossOptions[option][3], alternativeName
+			title = customBossOptions[option][1]
 		end
+
 		if description then
 			if type(description) == "number" then
 				description = replaceIdWithDescription(description)
@@ -193,9 +195,11 @@ function BigWigs:GetBossOptionDetails(module, option)
 				description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
 			end
 			description = roleDesc.. gsub(description, "{rt(%d)}", "|T13700%1:15|t")
+		elseif customBossOptions[option] then
+			description = roleDesc.. customBossOptions[option][2]
 		end
+
 		local icon = moduleLocale[option .. "_icon"]
-		if icon == option .. "_icon" then icon = nil end
 		if type(icon) == "number" then
 			if icon > 8 then
 				icon = GetSpellTexture(icon)
@@ -210,7 +214,10 @@ function BigWigs:GetBossOptionDetails(module, option)
 			end
 		elseif type(icon) == "string" and not icon:find("\\", nil, true) then
 			icon = "Interface\\Icons\\" .. icon
+		elseif customBossOptions[option] then
+			icon = customBossOptions[option][3]
 		end
+
 		return option, title, description, icon, alternativeName
 	elseif optionType == "number" then
 		if option > 0 then
