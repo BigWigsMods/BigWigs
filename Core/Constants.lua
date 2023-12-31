@@ -169,53 +169,49 @@ function BigWigs:GetBossOptionDetails(module, option)
 	local alternativeName = module.altNames and module.altNames[option]
 
 	if optionType == "string" then
-		if customBossOptions[option] then
-			return option, customBossOptions[option][1], customBossOptions[option][2], customBossOptions[option][3]
-		else
-			local roleDesc = ""
-			if not option:find("^custom_") then
-				roleDesc = getRoleStrings(module, option)
-			end
-
-			local moduleLocale = module:GetLocale(true)
-			local title, description = moduleLocale[option], moduleLocale[option .. "_desc"]
-			if title then
-				if type(title) == "number" then
-					if not description then description = title end -- Allow a nil description to mean the same id as the title, if title is a number.
-					title = replaceIdWithName(title)
-				else
-					title = gsub(title, "{(%-?%d-)}", replaceIdWithName) -- Allow embedding an id in a string.
-				end
-				title = title
-			end
-			if description then
-				if type(description) == "number" then
-					description = replaceIdWithDescription(description)
-				else
-					description = gsub(description, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
-					description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
-				end
-				description = roleDesc.. gsub(description, "{rt(%d)}", "|T13700%1:15|t")
-			end
-			local icon = moduleLocale[option .. "_icon"]
-			if icon == option .. "_icon" then icon = nil end
-			if type(icon) == "number" then
-				if icon > 8 then
-					icon = GetSpellTexture(icon)
-				elseif icon > 0 then
-					icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
-				else
-					local tbl = C_EncounterJournal_GetSectionInfo(-icon)
-					icon = tbl.abilityIcon
-				end
-				if not icon then
-					BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
-				end
-			elseif type(icon) == "string" and not icon:find("\\", nil, true) then
-				icon = "Interface\\Icons\\" .. icon
-			end
-			return option, title, description, icon, alternativeName
+		local roleDesc = ""
+		if not option:find("custom_", nil, true) then
+			roleDesc = getRoleStrings(module, option)
 		end
+		local moduleLocale = module:GetLocale(true)
+		local title, description = moduleLocale[option], moduleLocale[option .. "_desc"]
+		if title then
+			if type(title) == "number" then
+				if not description then description = title end -- Allow a nil description to mean the same id as the title, if title is a number.
+				title = replaceIdWithName(title)
+			else
+				title = gsub(title, "{(%-?%d-)}", replaceIdWithName) -- Allow embedding an id in a string.
+			end
+		elseif customBossOptions[option] then
+			return option, customBossOptions[option][1], roleDesc.. customBossOptions[option][2], customBossOptions[option][3], alternativeName
+		end
+		if description then
+			if type(description) == "number" then
+				description = replaceIdWithDescription(description)
+			else
+				description = gsub(description, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
+				description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
+			end
+			description = roleDesc.. gsub(description, "{rt(%d)}", "|T13700%1:15|t")
+		end
+		local icon = moduleLocale[option .. "_icon"]
+		if icon == option .. "_icon" then icon = nil end
+		if type(icon) == "number" then
+			if icon > 8 then
+				icon = GetSpellTexture(icon)
+			elseif icon > 0 then
+				icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
+			else
+				local tbl = C_EncounterJournal_GetSectionInfo(-icon)
+				icon = tbl.abilityIcon
+			end
+			if not icon then
+				BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
+			end
+		elseif type(icon) == "string" and not icon:find("\\", nil, true) then
+			icon = "Interface\\Icons\\" .. icon
+		end
+		return option, title, description, icon, alternativeName
 	elseif optionType == "number" then
 		if option > 0 then
 			local spellName, _, icon = GetSpellInfo(option)
