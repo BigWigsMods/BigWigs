@@ -3,7 +3,7 @@ if not L then return end
 
 -- Core.lua
 L.berserk = "狂暴"
-L.berserk_desc = "当首领进入狂暴状态时发出警报。"
+L.berserk_desc = "为首领狂暴显示计时器和警报。"
 L.altpower = "交替能量显示"
 L.altpower_desc = "显示交替能量窗口，可以显示团队成员交替能量计数。"
 L.infobox = "信息盒"
@@ -14,8 +14,8 @@ L.warmup = "预备"
 L.warmup_desc = "首领战斗开始前预备时间。"
 L.proximity = "近距离"
 L.proximity_desc = "显示近距离窗口，列出距离你很近的玩家。"
---L.adds = "Adds"
---L.adds_desc = "Enable functions related to the various adds that will spawn during the boss encounter."
+L.adds = "增援"
+L.adds_desc = "启用与首领战斗中出现的各种增援相关的功能。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已经存在模块，但存在模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您插件的文件夹中。建议删除所有 BigWigs 文件夹并重新安装。"
 L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99此功能很少用到，当与多个首领/增援战斗时通常一个计时条并且需要保持追踪冷却施放相同的法术。|r"
@@ -23,17 +23,17 @@ L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试�
 -- Loader / Options.lua
 L.officialRelease = "你所使用的 BigWigs %s 为官方正式版（%s）"
 L.alphaRelease = "你所使用的 BigWigs %s 为“α测试版”（%s）"
-L.sourceCheckout = "你所使用的 BigWigs %s 为从源直接检出的。"
-L.guildRelease = "你正在使用 BigWigs 公会版本%d，基于官方插件版本%d。"
+L.sourceCheckout = "你所使用的 BigWigs %s 是从原始代码仓库直接下载的。"
+L.guildRelease = "你正在使用 BigWigs 公会版，版本 %d ，其基于官方版本 %d 。"
 L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 CurseForge 客户端轻松升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
 L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误，功能缺失或不正确的计时器。所以强烈建议你升级。"
-L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期%d发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
-L.warnOldBase = "你正在使用公会版本 BigWigs（%d），但是你的基础版本（%d）%d 发布已过期。这可能出现一些问题。"
+L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期 %d 个发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
+L.warnOldBase = "你正在使用公会版本 BigWigs（%d），但是它是基于官方版本（%d）已过期 %d 个版本。可能出现一些问题。"
 
 L.tooltipHint = "|cffeda55f右击|r打开选项。"
 L.activeBossModules = "激活首领模块："
 
-L.oldVersionsInGroup = "在你队伍里使用旧版本或没有使用 BigWigs。你可以用 /bwv 获得详细内容。"
+L.oldVersionsInGroup = "在你队伍里有人使用了旧版本或没有使用 BigWigs。你可以用 /bwv 获得详细信息。"
 L.upToDate = "已更新："
 L.outOfDate = "过期："
 L.dbmUsers = "DBM 用户："
@@ -41,7 +41,7 @@ L.noBossMod = "没有首领模块："
 L.offline = "离线"
 
 L.missingAddOn = "你缺少 |cFF436EEE%s|r 插件!"
-L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显示。"
+L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将无法显示。"
 L.removeAddOn = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"
 
