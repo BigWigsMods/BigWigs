@@ -109,7 +109,7 @@ if L then
 	L.incarnate_intermission = "공중에 뜸" -- 현신
 
 	L.incarnate = "현신"
-	L.molten_gauntlet = "건틀릿" -- never used?
+	L.molten_gauntlet = "시련" -- never used?
 	L.mythic_debuffs = "우리" -- Shadow Cage & Molten Eruption
 
 	L.greater_firestorm_shortened_bar = "상급 화염폭풍" -- G for Greater
