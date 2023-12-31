@@ -3,7 +3,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "당신에게 %s"
-L.you_icon = "|T13700%d:0|t당신에게 %s"
+L.you_icon = "|T13700%2$d:0|t당신에게 %1$s"
 L.underyou = "당신 밑에 %s"
 L.aboveyou = "당신 위에 %s"
 L.other = "%s: %s"
