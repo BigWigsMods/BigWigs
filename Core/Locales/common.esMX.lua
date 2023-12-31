@@ -141,6 +141,7 @@ L.leap = "Salto" -- When a boss leaps through the air from one location to anoth
 L.charge = "Cargar" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "Energía al máximo" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "Debilitado" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.immune = "Inmune" -- When a boss becomes immune to all damage and you can no longer hurt it
 L.pool = "Charco" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Charcos" -- Plural of L.pool
 L.totem = "Tótem" -- A totem, usually summoned by a boss, the same thing that shamans summon

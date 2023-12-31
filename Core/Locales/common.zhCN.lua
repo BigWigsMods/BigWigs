@@ -141,6 +141,7 @@ L.leap = "跳跃" -- When a boss leaps through the air from one location to anot
 L.charge = "冲锋" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
 L.full_energy = "满能量" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "虚弱" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
+L.immune = "免疫" -- When a boss becomes immune to all damage and you can no longer hurt it
 L.pool = "水池" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "水池" -- Plural of L.pool
 L.totem = "图腾" -- A totem, usually summoned by a boss, the same thing that shamans summon
