@@ -82,7 +82,7 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhTW")
 if L then
 	L.seed_soaked = "踩種子" -- 之後看一下語序
 	L.all_seeds_soaked = "種子踩完了！"
-	--L.failed_seed = "%s soaked an extra seed!"
+	L.failed_seed = "%s多踩了一顆種子！"
 
 	L.blazing_mushroom = "蘑菇"
 	L.fiery_growth = "驅散"
@@ -118,7 +118,7 @@ if L then
 	L.eternal_firestorm_shortened_bar = "永恆火颶"
 	L.eternal_firestorm_message_full = "永恆火颶"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
-	--L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
-	--L.eternal_firestorm_swirl_bartext = "Swirls"
+	L.eternal_firestorm_swirl = "迴旋火颶"
+	L.eternal_firestorm_swirl_desc = "為永恆火颶產生的迴旋火颶顯示計時器。"
+	L.eternal_firestorm_swirl_bartext = "迴旋火颶"
 end
