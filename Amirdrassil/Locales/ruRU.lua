@@ -90,7 +90,6 @@ if L then
 	L.incarnation_moonkin = "Совиная форма "
 	L.incarnation_tree_of_flame = "Древоформа"
 	L.flaming_germination = "Семена"
-	L.suppressive_ember = "Абсорб"
 	L.suppressive_ember_single = "Абсорб"
 	L.flare_bomb = "Перья"
 	--L.too_close_to_edge = "Too close to the edge"

@@ -91,7 +91,6 @@ if L then
 	L.incarnation_moonkin = "Mondkingestalt"
 	L.incarnation_tree_of_flame = "Treantgestalt"
 	L.flaming_germination = "Samen"
-	L.suppressive_ember = "Heilungen absorbiert"
 	L.suppressive_ember_single = "Heilung absorbiert"
 	L.flare_bomb = "Federn"
 	L.too_close_to_edge = "Zu nah am Rand"

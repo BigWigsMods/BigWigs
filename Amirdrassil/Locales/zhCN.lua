@@ -90,7 +90,6 @@ if L then
 	L.incarnation_moonkin = "枭兽形态"
 	L.incarnation_tree_of_flame = "树人形态"
 	L.flaming_germination = "种子"
-	L.suppressive_ember = "治疗吸收盾"
 	L.suppressive_ember_single = "治疗吸收盾"
 	L.flare_bomb = "羽毛"
 	L.too_close_to_edge = "太靠近边缘"

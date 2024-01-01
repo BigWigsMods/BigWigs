@@ -90,7 +90,6 @@ if L then
 	L.incarnation_moonkin = "Forme de célénien"
 	L.incarnation_tree_of_flame = "Forme d'arbre"
 	L.flaming_germination = "Graines"
-	L.suppressive_ember = "Heal Absorbs"
 	L.suppressive_ember_single = "Heal Absorb"
 	L.flare_bomb = "Plumes"
 	--L.too_close_to_edge = "Too close to the edge"

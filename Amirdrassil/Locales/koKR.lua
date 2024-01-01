@@ -90,7 +90,6 @@ if L then
 	L.incarnation_moonkin = "달빛야수 형태"
 	L.incarnation_tree_of_flame = "나무 형태"
 	L.flaming_germination = "씨앗"
-	L.suppressive_ember = "치유 흡수"
 	L.suppressive_ember_single = "치유 흡수"
 	L.flare_bomb = "깃털"
 	L.too_close_to_edge = "가장자리에 너무 가까움"
