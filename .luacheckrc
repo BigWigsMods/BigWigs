@@ -230,6 +230,7 @@ globals = {
 	"GetSpellTexture",
 	"GetSubZoneText",
 	"GetTime",
+	"GetUnitSpeed", -- Dragonflight/Amirdrassil/TindralSageswift.lua
 	"InCombatLockdown",
 	"IsAddOnLoaded",
 	"IsAddOnLoadOnDemand",
@@ -241,6 +242,7 @@ globals = {
 	"IsInRaid",
 	"IsItemInRange",
 	"IsLoggedIn",
+	"IsMounted", -- Dragonflight/Amirdrassil/TindralSageswift.lua
 	"IsPartyLFG",
 	"IsPlayerSpell",
 	"IsSpellKnown",
