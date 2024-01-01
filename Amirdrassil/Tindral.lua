@@ -144,7 +144,7 @@ if L then
 
 	L.custom_on_fly_time = "Fly Time"
 	L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
-	L.custom_on_fly_time_icon = "inv_druidflightzandalaritroll"
+	L.custom_on_fly_time_icon = "inv_checkered_flag"
 	L.custom_on_fly_time_msg = "Fly Time: %.2f"
 end
 
