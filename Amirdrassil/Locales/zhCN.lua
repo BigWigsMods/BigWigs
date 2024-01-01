@@ -95,6 +95,10 @@ if L then
 	L.too_close_to_edge = "太靠近边缘"
 	L.taking_damage_from_edge = "在边缘受到伤害"
 	L.flying_available = "你现在可以起飞"
+
+	--L.custom_on_fly_time = "Fly Time"
+	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
+	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")

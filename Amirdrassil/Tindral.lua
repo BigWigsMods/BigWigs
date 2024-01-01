@@ -439,28 +439,56 @@ function mod:FireBeam(args)
 end
 
 -- Intermission: Burning Pursuit
-function mod:IncarnationOwlOfTheFlame()
-	self:StopBar(CL.count:format(L.blazing_mushroom, blazingMushroomCount)) -- Blazing Mushroom
-	self:StopBar(CL.count:format(L.fiery_growth, fieryGrowthCount)) -- Fiery Growth
-	self:StopBar(CL.count:format(self:SpellName(420236), fallingStarCount)) -- Falling Star
-	self:StopBar(CL.count:format(L.mass_entanglement, massEntanglementCount)) -- Mass Entanglement
-	self:StopBar(CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
-	self:StopBar(CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
-	self:StopBar(CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
-	self:StopBar(CL.count:format(L.flaming_germination, flamingGerminationCount)) -- Flaming Germination
-	self:StopBar(CL.count:format(L.flare_bomb, flareBombCount)) -- Flare Bomb
+do
+	local mountUpTime = 0
+	local mounted = false
+	function mod:FlightTimeChecker()
+		local isMounted = IsMounted()
+		if mounted and not isMounted and GetUnitSpeed("player") == 0 then -- Dismounted
+			local timeSinceMountUp = GetTime() - mountUpTime
+			if timeSinceMountUp > 10 then
+				self:Message("custom_on_fly_time", "cyan", L.custom_on_fly_time_msg:format(timeSinceMountUp), L.custom_on_fly_time_icon)
+			else -- Too fast, didn't fly !
+				self:ScheduleTimer("FlightTimeChecker", 0.01)
+			end
+		elseif not mounted and isMounted then -- Mounted up
+			mounted = isMounted
+			self:ScheduleTimer("FlightTimeChecker", 0.01)
+		else -- No Change
+			if self:GetStage() == 2 or self:GetStage() == 3 then return end -- Too late, stop checking
+			self:ScheduleTimer("FlightTimeChecker", 0.01)
+		end
+	end
 
-	local stage = self:GetStage()
-	self:StopBar(CL.count:format(CL.intermission, stage))
-	self:Message("stages", "cyan", CL.count:format(CL.intermission, stage), false)
-	self:PlaySound("stages", "long")
-	stage = stage + 0.5
-	self:SetStage(stage)
+	function mod:IncarnationOwlOfTheFlame()
+		self:StopBar(CL.count:format(L.blazing_mushroom, blazingMushroomCount)) -- Blazing Mushroom
+		self:StopBar(CL.count:format(L.fiery_growth, fieryGrowthCount)) -- Fiery Growth
+		self:StopBar(CL.count:format(self:SpellName(420236), fallingStarCount)) -- Falling Star
+		self:StopBar(CL.count:format(L.mass_entanglement, massEntanglementCount)) -- Mass Entanglement
+		self:StopBar(CL.count:format(L.incarnation_moonkin, incarnationMoonkinCount)) -- Incarnation: Moonkin
+		self:StopBar(CL.count:format(self:SpellName(421398), fireBeamCount)) -- Fire Beam
+		self:StopBar(CL.count:format(L.incarnation_tree_of_flame, incarnationTreeOfFlameCount)) -- Incarnation: Tree of Flame
+		self:StopBar(CL.count:format(L.flaming_germination, flamingGerminationCount)) -- Flaming Germination
+		self:StopBar(CL.count:format(L.flare_bomb, flareBombCount)) -- Flare Bomb
 
-	dreamEssenceOnYou = 0
-	supernovaCasting = false
+		local stage = self:GetStage()
+		self:StopBar(CL.count:format(CL.intermission, stage))
+		self:Message("stages", "cyan", CL.count:format(CL.intermission, stage), false)
+		self:PlaySound("stages", "long")
+		stage = stage + 0.5
+		self:SetStage(stage)
 
-	self:CDBar(421636, 3.5, CL.pushback) -- Typhoon
+		dreamEssenceOnYou = 0
+		supernovaCasting = false
+
+		self:CDBar(421636, 3.5, CL.pushback) -- Typhoon
+
+		if self:GetOption("custom_on_fly_time") then
+			mountUpTime = 7 + GetTime() -- Estimated Feathers Spawn
+			mounted = false
+			self:ScheduleTimer("FlightTimeChecker", 0.01)
+		end
+	end
 end
 
 function mod:Typhoon(args)
