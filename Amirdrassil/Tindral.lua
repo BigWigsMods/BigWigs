@@ -141,6 +141,11 @@ if L then
 	L.too_close_to_edge = "Too close to the edge"
 	L.taking_damage_from_edge = "Taking damage from the edge"
 	L.flying_available = "You can fly now"
+
+	L.custom_on_fly_time = "Fly Time"
+	L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
+	L.custom_on_fly_time_icon = "inv_druidflightzandalaritroll"
+	L.custom_on_fly_time_msg = "Fly Time: %.2f"
 end
 
 --------------------------------------------------------------------------------
@@ -165,6 +170,7 @@ function mod:GetOptions()
 		421398, -- Fire Beam
 		-- Intermission: Burning Pursuit
 		421636, -- Typhoon
+		"custom_on_fly_time",
 		424258, -- Dream Essence
 		{422509, "EMPHASIZE"}, -- Empowered Feather
 		421939, -- Scorching Plume
