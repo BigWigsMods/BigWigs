@@ -229,7 +229,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredFeatherApplied", 422509) -- XXX currently hidden
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Feather alternative
 	self:Log("SPELL_CAST_START", "Supernova", 424140, 429169) -- intermission, enrage
-	self:Log("SPELL_AURA_REMOVED", "SupernovaApplied", 424140)
+	self:Log("SPELL_AURA_APPLIED", "SupernovaApplied", 424140)
 	self:Log("SPELL_AURA_REMOVED", "SupernovaRemoved", 424140)
 
 	-- Stage Two: Tree of the Flame
