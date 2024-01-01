@@ -229,6 +229,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredFeatherApplied", 422509) -- XXX currently hidden
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Feather alternative
 	self:Log("SPELL_CAST_START", "Supernova", 424140, 429169) -- intermission, enrage
+	self:Log("SPELL_AURA_REMOVED", "SupernovaApplied", 424140)
 	self:Log("SPELL_AURA_REMOVED", "SupernovaRemoved", 424140)
 
 	-- Stage Two: Tree of the Flame
@@ -502,7 +503,6 @@ function mod:Supernova(args)
 	self:StopBar(CL.count:format(args.spellName, stage))
 	self:Message(424140, "red", CL.count:format(args.spellName, stage))
 	self:PlaySound(424140, "long")
-	self:CastBar(424140, 20, CL.count:format(args.spellName, stage))
 
 	if stage < 3 then
 		self:Message(424258, "green", CL.count:format(self:SpellName(424258), dreamEssenceOnYou)) -- Dream Essence
@@ -540,6 +540,11 @@ function mod:Supernova(args)
 			end
 		end
 	end
+end
+
+function mod:SupernovaApplied(args)
+	local stage = self:GetStage()
+	self:CastBar(424140, 20, CL.count:format(args.spellName, stage-1))
 end
 
 function mod:SupernovaRemoved(args)
