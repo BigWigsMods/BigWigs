@@ -408,6 +408,7 @@ end
 
 function mod:MassEntanglementTargetApplied(args)
 	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning") -- Move to position and aoe
 		self:TargetBar(args.spellId, self:Mythic() and 4 or 6, args.destName, L.mass_entanglement)
 	end
 end
