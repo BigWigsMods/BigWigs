@@ -188,7 +188,7 @@ L.blockTalkingHeadTimewalking = "Paseo en el tiempo (mazmorras y bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
 L.redirectPopups = "Redirigir los carteles emergentes a mensajes de BigWigs"
-L.redirectPopupsDesc = "Los carteles emergentes que aparecen el medio de tu pantalla como '|cFF33FF99vault slot unlocked|r' o el cartel que ves al entrar en una mazmorra mítica+ serán bloqueados y en su lugar se mostrarán como mensajes de BigWigs. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear tu capacidad de hacer clic a través de ellos."
+L.redirectPopupsDesc = "Los carteles emergentes que aparecen el medio de tu pantalla como '|cFF33FF99ranura de bóveda desbloqueada|r' o el cartel que ves al entrar en una mazmorra mítica+ serán bloqueados y en su lugar se mostrarán como mensajes de BigWigs. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear tu capacidad de hacer clic a través de ellos."
 L.redirectPopupsColor = "Color del mensaje redirigido"
 L.blockDungeonPopups = "Bloquear los carteles emergentes de mazmorras"
 L.blockDungeonPopupsDesc = "Los carteles emergentes que aparecen cuando entras a una mazmorras pueden contener texto que es muy largo. Activar esta opcion los bloqueara directamente en vez de ser redigidos a un mensaje de BigWigs."
