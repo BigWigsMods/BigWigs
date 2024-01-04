@@ -90,12 +90,15 @@ if L then
 	L.incarnation_moonkin = "Forma de lechúcico lunar"
 	L.incarnation_tree_of_flame = "Forma de antárbol"
 	L.flaming_germination = "Semillas"
-	L.suppressive_ember = "Absorciones de Sanación"
 	L.suppressive_ember_single = "Absorción de Sanación"
 	L.flare_bomb = "Plumas"
 	L.too_close_to_edge = "Demasiado cerca del borde"
 	L.taking_damage_from_edge = "Recibiendo daño del borde"
 	L.flying_available = "Puedes volar ahora"
+
+	--L.custom_on_fly_time = "Fly Time"
+	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
+	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "esES")

@@ -90,12 +90,15 @@ if L then
 	L.incarnation_moonkin = "달빛야수 형태"
 	L.incarnation_tree_of_flame = "나무 형태"
 	L.flaming_germination = "씨앗"
-	L.suppressive_ember = "치유 흡수"
 	L.suppressive_ember_single = "치유 흡수"
 	L.flare_bomb = "깃털"
 	L.too_close_to_edge = "가장자리에 너무 가까움"
 	L.taking_damage_from_edge = "가장자리에서 피해를 입음"
 	L.flying_available = "비행 가능"
+
+	--L.custom_on_fly_time = "Fly Time"
+	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
+	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "koKR")
