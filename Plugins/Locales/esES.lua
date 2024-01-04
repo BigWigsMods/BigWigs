@@ -187,11 +187,11 @@ L.blockTalkingHeadRaids = "Bandas"
 L.blockTalkingHeadTimewalking = "Paseo en el tiempo (mazmorras y bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
---L.redirectPopups = "Redirect popup banners to BigWigs messages"
---L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner or the banner you see when entering a Mythic+ dungeon will be blocked and instead displayed as BigWigs messages. These banners can be quite large, last a long time, and block your ability to click through them."
---L.redirectPopupsColor = "Color of the redirected message"
---L.blockDungeonPopups = "Block dungeon popup banners"
---L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them instead of being redirected to BigWigs messages."
+L.redirectPopups = "Redirigir los carteles emergentes a mensajes de BigWigs"
+L.redirectPopupsDesc = "Los carteles emergentes que aparecen el medio de tu pantalla como '|cFF33FF99ranura de bóveda desbloqueada|r' o el cartel que ves al entrar en una mazmorra mítica+ serán bloqueados y en su lugar se mostrarán como mensajes de BigWigs. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear tu capacidad de hacer clic a través de ellos."
+L.redirectPopupsColor = "Color del mensaje redirigido"
+L.blockDungeonPopups = "Bloquear los carteles emergentes de mazmorras"
+L.blockDungeonPopupsDesc = "Los carteles emergentes que aparecen cuando entras a una mazmorras pueden contener texto que es muy largo. Activar esta opcion los bloqueara directamente en vez de ser redigidos a un mensaje de BigWigs."
 
 L.userNotifySfx = "Los efectos de sonido fueron desactivados por el Bloque de jefe, forzándolos a volver a activarse."
 L.userNotifyMusic = "La música fue desactivada por el Bloque de jefe, forzándola a volver a activarse."
@@ -200,7 +200,7 @@ L.userNotifyErrorSpeech = "La voz de error fue desactivada por el Bloque de jefe
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_eastern_transept = "Transepto oriental" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua
