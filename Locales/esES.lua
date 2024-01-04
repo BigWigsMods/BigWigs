@@ -45,19 +45,19 @@ L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores 
 L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
---L.expansionNames = {
---	"Classic", -- Classic
---	"The Burning Crusade", -- The Burning Crusade
---	"Wrath of the Lich King", -- Wrath of the Lich King
---	"Cataclysm", -- Cataclysm
---	"Mists of Pandaria", -- Mists of Pandaria
---	"Warlords of Draenor", -- Warlords of Draenor
---	"Legion", -- Legion
---	"Battle for Azeroth", -- Battle for Azeroth
---	"Shadowlands", -- Shadowlands
---	"Dragonflight", -- Dragonflight
---}
---L.currentSeason = "Temporada actual"
+L.expansionNames = {
+	"Classic", -- Classic
+	"The Burning Crusade", -- The Burning Crusade
+	"Wrath of the Lich King", -- Wrath of the Lich King
+	"Cataclysm", -- Cataclysm
+	"Mists of Pandaria", -- Mists of Pandaria
+	"Warlords of Draenor", -- Warlords of Draenor
+	"Legion", -- Legion
+	"Battle for Azeroth", -- Battle for Azeroth
+	"Shadowlands", -- Shadowlands
+	"Dragonflight", -- Dragonflight
+}
+L.currentSeason = "Temporada actual"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
@@ -84,8 +84,8 @@ L.flashScreen = "Destello de pantalla"
 L.flashScreenDesc = "Ciertas habilidades son suficientemente importantes para necesitar de tu total atención. Cuando estas habilidades te afecten BigWigs puede hacer parpadear la pantalla."
 L.minimapIcon = "Icono del minimapa"
 L.minimapToggle = "Cambia entre mostrar/ocultar el icono en el minimapa."
---L.compartmentMenu = "No compartment icon"
---L.compartmentMenu_desc = "Turning this option off will make BigWigs show up in the addon compartment menu. We recommend leaving this option enabled."
+L.compartmentMenu = "Sin icono de compartimento"
+L.compartmentMenu_desc =  "Desactivar esta opcion hará que BigWigs no se muestre en el menu de compartimiento de addons. Recomendamos dejar esta opción activada."
 L.configure = "Configurar"
 L.test = "Probar"
 L.resetPositions = "Reiniciar posiciones"
