@@ -80,6 +80,8 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/GetFramesRegisteredForEvent",
 	"113/RaidBossEmoteFrame_OnEvent",
 	"113/TooltipDataProcessor",
+	"113/UIErrorsFrame",
+	"113/ZoneTextFrame",
 }
 files["**/Plugins/Countdown.lua"].ignore = {
 	"113/GetCurrentRegion",
@@ -262,7 +264,6 @@ globals = {
 	"StopSound",
 	"TalkingHeadFrame",
 	"Tukui",
-	"UIErrorsFrame",
 	"UIParent",
 	"UIWidgetManager",
 	"UnitAffectingCombat",

@@ -449,21 +449,22 @@ end
 do
 	local mountUpTime = 0
 	local mounted = false
-	function mod:FlightTimeChecker()
+	local function FlightTimeChecker()
+		if not mod:IsEngaged() then return end
 		local isMounted = IsMounted()
 		if mounted and not isMounted and GetUnitSpeed("player") == 0 then -- Dismounted
 			local timeSinceMountUp = GetTime() - mountUpTime
 			if timeSinceMountUp > 10 then
-				self:Message("custom_on_fly_time", "cyan", L.custom_on_fly_time_msg:format(timeSinceMountUp), L.custom_on_fly_time_icon)
+				mod:Message(false, "cyan", L.custom_on_fly_time_msg:format(timeSinceMountUp), L.custom_on_fly_time_icon)
 			else -- Too fast, didn't fly !
-				self:ScheduleTimer("FlightTimeChecker", 0.01)
+				mod:SimpleTimer(FlightTimeChecker, 0.01)
 			end
 		elseif not mounted and isMounted then -- Mounted up
 			mounted = isMounted
-			self:ScheduleTimer("FlightTimeChecker", 0.01)
+			mod:SimpleTimer(FlightTimeChecker, 0.01)
 		else -- No Change
-			if self:GetStage() == 2 or self:GetStage() == 3 then return end -- Too late, stop checking
-			self:ScheduleTimer("FlightTimeChecker", 0.01)
+			if mod:GetStage() == 2 or mod:GetStage() == 3 then return end -- Too late, stop checking
+			mod:SimpleTimer(FlightTimeChecker, 0.01)
 		end
 	end
 
@@ -493,7 +494,7 @@ do
 		if self:GetOption("custom_on_fly_time") then
 			mountUpTime = 7 + GetTime() -- Estimated Feathers Spawn
 			mounted = false
-			self:ScheduleTimer("FlightTimeChecker", 0.01)
+			self:SimpleTimer(FlightTimeChecker, 0.01)
 		end
 	end
 end

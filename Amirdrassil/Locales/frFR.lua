@@ -31,14 +31,14 @@ end
 
 L = BigWigs:NewBossLocale("Council of Dreams", "frFR")
 if L then
-	--L.agonizing_claws_debuff = "{421022} (Debuff)"
+	L.agonizing_claws_debuff = "{421022} (Affaiblissement)"
 
-	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
-	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+	L.custom_off_combined_full_energy = "Toutes les barres d'énergie combinées (seulement en mythique)"
+	L.custom_off_combined_full_energy_desc = "Combine les barres d'énergie des techniques que chaque boss utilise en une seule barre, uniquement si les techniques sont lancées en même temps."
 
-	--L.special_mechanic_bar = "%s [Ult] (%d)"
+	L.special_mechanic_bar = "%s [Ult] (%d)"
 
-	--L.constricting_thicket = "Vines"
+	L.constricting_thicket = "Vignes"
 	L.poisonous_javelin = "Javelot"
 	L.song_of_the_dragon = "Chant"
 	L.polymorph_bomb = "Canards"
@@ -47,15 +47,15 @@ end
 
 L = BigWigs:NewBossLocale("Larodar, Keeper of the Flame", "frFR")
 if L then
-	--L.custom_on_repeating_yell_smoldering_suffocation = "Repeating Suffocation Health Yell"
-	--L.custom_on_repeating_yell_smoldering_suffocation_desc = "Repeating yell messages for Smoldering Suffocation to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_smoldering_suffocation = "Répéter les messages sur la suffocation ardente"
+	L.custom_on_repeating_yell_smoldering_suffocation_desc = "Répète les messages en /crier à propos des suffocations ardentes pour prévenir les autres joueurs quand vous êtes en dessous de 75% de points de vie."
 
 	L.blazing_coalescence_on_player_note = "Lorsque c'est sur vous"
 	L.blazing_coalescence_on_boss_note = "Lors que c'est sur le boss"
 
 	L.scorching_roots = "Enracinements"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "Racines soignables"
+	L.blazing_thorns = "Spirale d'épines"
 	L.falling_embers = "Soaks"
 	L.flash_fire = "Heal Absorbs"
 	L.flash_fire_single = "Heal Absorb"
@@ -82,7 +82,7 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "frFR")
 if L then
 	L.seed_soaked = "Graines soaked"
 	L.all_seeds_soaked = "Toutes les graines ont été soaked !"
-	--L.failed_seed = "%s soaked an extra seed!"
+	L.failed_seed = "%s a soak une graine de trop !"
 
 	L.blazing_mushroom = "Champignons"
 	L.fiery_growth = "Dissipations"
@@ -92,13 +92,13 @@ if L then
 	L.flaming_germination = "Graines"
 	L.suppressive_ember_single = "Heal Absorb"
 	L.flare_bomb = "Plumes"
-	--L.too_close_to_edge = "Too close to the edge"
-	--L.taking_damage_from_edge = "Taking damage from the edge"
-	--L.flying_available = "You can fly now"
+	L.too_close_to_edge = "Trop proche du bord"
+	L.taking_damage_from_edge = "Prends des dégats du bord"
+	L.flying_available = "Vous pouvez maintenant voler"
 
-	--L.custom_on_fly_time = "Fly Time"
-	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
-	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
+	L.custom_on_fly_time = "Temps en vol"
+	L.custom_on_fly_time_desc = "Affiche un message qui indique combien de temps vous avez pris pour voler d'une plateforme à une autre."
+	L.custom_on_fly_time_msg = "Temps en vol : %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "frFR")

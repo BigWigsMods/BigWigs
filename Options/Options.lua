@@ -1519,6 +1519,7 @@ do
 		bw:EnableResize(false)
 		bw:SetLayout("Flow")
 		bw:SetCallback("OnClose", function(widget)
+			widget:ReleaseChildren()
 			AceGUI:Release(widget)
 			statusTable = {}
 			isPluginOpen = nil

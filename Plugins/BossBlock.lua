@@ -22,6 +22,7 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	blockZoneChanges = true,
 	blockTooltipQuestText = true,
 	blockObjectiveTracker = true,
 	disableSfx = false,
@@ -130,12 +131,19 @@ plugin.pluginOptions = {
 					width = "full",
 					order = 5,
 				},
+				blockZoneChanges = {
+					type = "toggle",
+					name = L.blockZoneChanges,
+					desc = L.blockZoneChangesDesc,
+					width = "full",
+					order = 6,
+				},
 				blockTooltipQuestText = {
 					type = "toggle",
 					name = L.blockTooltipQuests,
 					desc = L.blockTooltipQuestsDesc,
 					width = "full",
-					order = 6,
+					order = 7,
 					hidden = isClassic, -- TooltipDataProcessor doesn't exist on classic
 				},
 				blockObjectiveTracker = {
@@ -143,7 +151,7 @@ plugin.pluginOptions = {
 					name = L.blockObjectiveTracker,
 					desc = L.blockObjectiveTrackerDesc,
 					width = "full",
-					order = 7,
+					order = 8,
 					hidden = isClassic, -- XXX make compatible with classic
 				},
 				blockTalkingHeads = {
@@ -165,13 +173,13 @@ plugin.pluginOptions = {
 						plugin.db.profile[info[#info]][entry] = value
 					end,
 					width = 2,
-					order = 8,
+					order = 9,
 					hidden = isClassic,
 				},
 				toastsCategory = {
 					type = "group",
 					name = " ",
-					order = 9,
+					order = 10,
 					inline = true,
 					hidden = isClassic,
 					args = {
@@ -545,6 +553,11 @@ do
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
+		if self.db.profile.blockZoneChanges then
+			KillEvent(ZoneTextFrame, "ZONE_CHANGED")
+			KillEvent(ZoneTextFrame, "ZONE_CHANGED_INDOORS")
+			KillEvent(ZoneTextFrame, "ZONE_CHANGED_NEW_AREA")
+		end
 		if self.db.profile.blockTooltipQuestText then
 			hideQuestTrackingTooltips = true
 		end
@@ -594,6 +607,10 @@ do
 		RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
 		-- blockSpellErrors
 		RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		-- blockZoneChanges
+		RestoreEvent(ZoneTextFrame, "ZONE_CHANGED")
+		RestoreEvent(ZoneTextFrame, "ZONE_CHANGED_INDOORS")
+		RestoreEvent(ZoneTextFrame, "ZONE_CHANGED_NEW_AREA")
 
 		if self.db.profile.blockTooltipQuestText then
 			hideQuestTrackingTooltips = false

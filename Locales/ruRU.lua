@@ -9,13 +9,13 @@ L.altpower_desc = "Показывать окно с альтернативной
 L.infobox = "Информационный блок"
 L.infobox_desc = "Показать блок с информацией, связанной с текущим боем."
 L.stages = "Фазы"
---L.stages_desc = "Enable functions related to the various stages of the boss encounter such as stage change warnings, stage duration timer bars, etc."
+L.stages_desc = "Включает функционал, связанный с различными фазами боя, такие как уведомление о смене фазы, полоска длительности фазы, и т.д."
 L.warmup = "Подготовка"
 L.warmup_desc = "Время, когда начнется схватка с боссом."
 L.proximity = "Отображение близости"
 L.proximity_desc = "Показывать окно близости при соответствующей схватке, выводя список игроков, которые стоят слишком близко к вам."
---L.adds = "Adds"
---L.adds_desc = "Enable functions related to the various adds that will spawn during the boss encounter."
+L.adds = "Адды"
+L.adds_desc = "Включает функционал связанный с различными помощниками во время боя с боссом."
 
 L.already_registered = "|cffff0000ВНИМАНИЕ:|r |cff00ff00%s|r (|cffffff00%s|r) уже загружен как модуль BigWigs, но что-то пытается зарегистрировать его ещё раз. Обычно, это означает, что у вас две копии этого модуля в папке с модификациями (возможно, из-за ошибки программы для обновления модификаций). Мы рекомендуем вам удалить все папки BigWigs и установить его с нуля."
 L.testNameplate = "Цель обнаружена, создаю тестовую полосу неймплейта на неймплейте цели. |cFF33FF99Это редко используемая вещь, всего одна полоса, необходимая для отслеживания перезарядки при сражении с несколькими боссами / аддами, использующих одно и то же заклинание.|r"
@@ -57,7 +57,7 @@ L.expansionNames = {
 	"Темные Земли", -- Shadowlands
 	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
 }
---L.currentSeason = "Current Season"
+L.currentSeason = "Текущий сезон"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Берегитесь (Алгалон)"
