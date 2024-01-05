@@ -33,12 +33,12 @@ L = BigWigs:NewBossLocale("Council of Dreams", "ruRU")
 if L then
 	L.agonizing_claws_debuff = "{421022} (Дебафф)"
 
-	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
-	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+	L.custom_off_combined_full_energy = "Объединённые полоски максимальной энергии (Мифический режим)"
+	L.custom_off_combined_full_energy_desc = "Объединяет полоски способностей боссов, что бы показывалась только одна полоска для обоих способностей."
 
 	L.special_mechanic_bar = "%s [Ульта] (%d)"
 
-	--L.constricting_thicket = "Vines"
+	L.constricting_thicket = "Лозы"
 	L.poisonous_javelin = "Отравленное копьё"
 	L.song_of_the_dragon = "Песня"
 	L.polymorph_bomb = "Утки"
@@ -54,8 +54,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "Когда на боссе"
 
 	L.scorching_roots = "Корень"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "Корень хилить"
+	L.blazing_thorns = "Спирали"
 	L.falling_embers = "Соки"
 	L.flash_fire = "Абсорб"
 	L.flash_fire_single = "Абсорб"
@@ -82,7 +82,7 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "ruRU")
 if L then
 	L.seed_soaked = "Семечко засокано"
 	L.all_seeds_soaked = "Семечки кончились!"
-	--L.failed_seed = "%s soaked an extra seed!"
+	L.failed_seed = "%s засокал лишнее семечко!"
 
 	L.blazing_mushroom = "Грибы"
 	L.fiery_growth = "Диспеллы"
@@ -92,13 +92,13 @@ if L then
 	L.flaming_germination = "Семена"
 	L.suppressive_ember_single = "Абсорб"
 	L.flare_bomb = "Перья"
-	--L.too_close_to_edge = "Too close to the edge"
-	--L.taking_damage_from_edge = "Taking damage from the edge"
-	--L.flying_available = "You can fly now"
+	L.too_close_to_edge = "Слишком близко к краю"
+	L.taking_damage_from_edge = "Получаешь урон от края платформы"
+	L.flying_available = "Можешь лететь"
 
-	--L.custom_on_fly_time = "Fly Time"
-	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
-	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
+	L.custom_on_fly_time = "Полёт"
+	L.custom_on_fly_time_desc = "Показывает сообщение с длительностью полёта между платформами на переходке."
+	L.custom_on_fly_time_msg = "Время полёта: %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ruRU")
