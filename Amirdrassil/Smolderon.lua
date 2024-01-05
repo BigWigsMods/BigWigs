@@ -282,16 +282,22 @@ end
 
 do
 	local stacks = 0
-	local scheduled = nil
+	local scheduled = false
 	local function IgnitedEssenceOnMe()
-		scheduled = nil
-		mod:PersonalMessage(421858, false, CL.count_amount:format(mod:SpellName(421858), stacks, 5))
-		mod:PlaySound(421858, "info")
+		if scheduled then
+			scheduled = false
+			mod:PersonalMessage(421858, false, CL.count_amount:format(mod:SpellName(421858), stacks, 5))
+			if stacks == 5 then
+				mod:PlaySound(421858, "info")
+			end
+		end
 	end
 	function mod:IgnitedEssenceApplied(args)
 		if self:Me(args.destGUID) then
 			stacks = args.amount or 1
-			if not scheduled then
+			if stacks == 5 then
+				IgnitedEssenceOnMe()
+			elseif not scheduled then
 				scheduled = true
 				self:SimpleTimer(IgnitedEssenceOnMe, 0.5)
 			end
