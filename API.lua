@@ -92,8 +92,6 @@ do
 	-- For more on bar styles, visit: https://github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles
 	function API:RegisterBarStyle(key, styleData)
 		if type(key) ~= "string" then error("Bar style must be a string.") end
-		if key:find("AddOnSkins") then return end -- XXX banned for causing too many support requests, needs investigated further before restoring
-		if key:find("NaowhUI") then return end -- XXX banned for causing too many support requests, needs investigated further before restoring
 		if type(styleData) ~= "table" then error("Bar style data must be a table.") end
 		if type(styleData.version) ~= "number" then error("Bar style version must be a number.") end
 		if type(styleData.apiVersion) ~= "number" then error("Bar style apiVersion must be a number.") end
