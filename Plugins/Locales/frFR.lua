@@ -190,7 +190,7 @@ L.blockTalkingHeadTimewalking = "Marcheurs du temps (donjons & raids)"
 L.blockTalkingHeadScenarios = "Scénarios"
 
 L.redirectPopups = "Redirige les popups vers les messages BigWigs"
-L.redirectPopupsDesc = "Les popups qui s'affichent au milieu de votre écran telle que la bannière de '|cFF33FF99vault slot unlocked|r' ou les popups que vous voyez en entrant dans un donjon Mythique+ seront bloqués et seront convertis en messages BigWigs. Ces popups sont parfois larges, restent affichés longtemps et vous empêchent de cliquer à travers."
+L.redirectPopupsDesc = "Les popups qui s'affichent au milieu de votre écran telle que la bannière de '|cFF33FF99emplacement de la grande chambre-forte débloqué|r' ou les popups que vous voyez en entrant dans un donjon Mythique+ seront bloqués et seront convertis en messages BigWigs. Ces popups sont parfois larges, restent affichés longtemps et vous empêchent de cliquer à travers."
 L.redirectPopupsColor = "Couleur du message redirigé"
 L.blockDungeonPopups = "Bloque les popups de donjons"
 L.blockDungeonPopupsDesc = "Les popups qui s'affichent lorsque vous entrez dans un donjon contiennent parfois beaucoup de texte. Activer cette option désactivera complètement ces messages au lieu de les convertir en message BigWigs."
