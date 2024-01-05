@@ -190,7 +190,7 @@ L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos & Bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
 L.redirectPopups = "Redirigir banderas emergentes a mensajes de BigWigs"
-L.redirectPopupsDesc = "Las banderas emergentes en el medio de la pantalla, como la bandera '|cFF33FF99ranura de bóveda desbloqueada|r' o la bandera que ves al entrar a una mazmorra Mítico+, se bloquearán y se mostrarán como mensajes de BigWigs. Estas banderas pueden ser bastante grandes, durar mucho tiempo y bloquear la posibilidad de hacer clic en ellos."
+L.redirectPopupsDesc = "Las banderas emergentes en el medio de la pantalla, como la bandera '|cFF33FF99ranura de la gran cámara desbloqueada|r' o la bandera que ves al entrar a una mazmorra Mítico+, se bloquearán y se mostrarán como mensajes de BigWigs. Estas banderas pueden ser bastante grandes, durar mucho tiempo y bloquear la posibilidad de hacer clic en ellos."
 L.redirectPopupsColor = "Color del mensaje redirigido"
 L.blockDungeonPopups = "Bloquear banderas emergentes de mazmorras"
 L.blockDungeonPopupsDesc = "Las banderas emergentes que se muestran al entrar a una mazmorra a veces pueden contener texto muy largo. Activar esta función los bloqueará completamente en lugar de ser redirigidos a los mensajes de BigWigs."
