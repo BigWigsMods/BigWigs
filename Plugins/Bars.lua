@@ -2059,9 +2059,11 @@ do
 	local function PauseAtZero(bar)
 		if bar.remaining < 0.045 then -- Pause at 0.0
 			bar:SetDuration(0.01) -- Make the bar look full
+			currentBarStyler.BarStopped(bar)
 			bar:Start()
 			bar:SetTimeVisibility(false)
 			bar:Pause()
+			currentBarStyler.ApplyStyle(bar)
 		end
 	end
 
