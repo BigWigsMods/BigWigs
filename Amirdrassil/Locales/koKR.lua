@@ -82,7 +82,7 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "koKR")
 if L then
 	L.seed_soaked = "씨앗 밟기"
 	L.all_seeds_soaked = "씨앗 완료!"
-	--L.failed_seed = "%s soaked an extra seed!"
+	L.failed_seed = "%s 님이 씨앗을 추가로 밟음!"
 
 	L.blazing_mushroom = "버섯"
 	L.fiery_growth = "해제"
