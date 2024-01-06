@@ -9,13 +9,13 @@ L.altpower_desc = "Mostra a janela alternativa de poder, que mostra o quanto de 
 L.infobox = "Caixa de informações"
 L.infobox_desc = "Exibe uma caixa com informações relacionadas ao encontro."
 L.stages = "Estágios"
---L.stages_desc = "Enable functions related to the various stages of the boss encounter such as stage change warnings, stage duration timer bars, etc."
+L.stages_desc = "Ativar funções relacionadas às várias fases do encontro com o chefe, como alertas de mudança de fase, barras de temporizador de duração da fase, etc."
 L.warmup = "Preparar"
 L.warmup_desc = "Tempo até o combate com o chefe começar."
 L.proximity = "Exibição de proximidade"
 L.proximity_desc = "Mostra a janela de proximidade quando for apropriada para este encontro, listando os jogadores que estão muito pertos de você."
---L.adds = "Adds"
---L.adds_desc = "Enable functions related to the various adds that will spawn during the boss encounter."
+L.adds = "Adds"
+L.adds_desc = "Ativar funções relacionadas aos vários adds que aparecerão durante o encontro com o chefe."
 
 L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) já existe como um módulo do BigWigs, mas as vezes ele tenta registra-lo novamente. Isso normalmente significa que você tem duas cópias deste módulo na sua pasta de addOns devido a alguma falha ao atualizar um addOn. É recomendado que você delete todas as pastas do BigWigs existentes e reinstale-o novamente."
 L.testNameplate = "Alvo detectado, criando uma barra de identificação teste sobre a barra de identificação do alvo. |cFF33FF99Essa função é raramente usada, normalmente é somente 1 barra, e é necessária para manter o rastreio de recargas quando lutando com múltiplos chefes/adds que conjuram a mesma magia.|r"
@@ -57,7 +57,7 @@ L.alternativeName = "%s (|cFF436EEE%s|r)"
 --	"Shadowlands", -- Shadowlands
 --	"Dragonflight", -- Dragonflight
 --}
---L.currentSeason = "Current Season"
+L.currentSeason = "Temporada Atual"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"

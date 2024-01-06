@@ -33,12 +33,12 @@ L = BigWigs:NewBossLocale("Council of Dreams", "ptBR")
 if L then
 	L.agonizing_claws_debuff = "{421022} (Debuff)"
 
-	--L.custom_off_combined_full_energy = "Combined Full Energy Bars (Mythic only)"
-	--L.custom_off_combined_full_energy_desc = "Combine the bars of the abilities that the bosses use at full energy into one bar, only if they will be cast at the same time."
+	L.custom_off_combined_full_energy = "Barras de Energia Combinadas (Apenas Mítico)"
+	L.custom_off_combined_full_energy_desc = "Combine as barras das habilidades que os chefes usam quando estão com energia completa em uma única barra, apenas se forem lançadas ao mesmo tempo."
 
 	L.special_mechanic_bar = "%s [Supremo] (%d)"
 
-	--L.constricting_thicket = "Vines"
+	L.constricting_thicket = "Vinhas"
 	L.poisonous_javelin = "Zagaia"
 	L.song_of_the_dragon = "Canção"
 	L.polymorph_bomb = "Patos"
@@ -54,8 +54,8 @@ if L then
 	L.blazing_coalescence_on_boss_note = "Quando estiver no chefe"
 
 	L.scorching_roots = "Raízes"
-	--L.charred_brambles = "Roots Healable"
-	--L.blazing_thorns = "Spiral of Thorns"
+	L.charred_brambles = "Raízes curáveis"
+	L.blazing_thorns = "Espiral de Espinhos"
 	L.falling_embers = "Soaks"
 	L.flash_fire = "Absorção de Cura"
 	L.flash_fire_single = "Absorção de Cura"
@@ -82,7 +82,7 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "ptBR")
 if L then
 	L.seed_soaked = "Semente feita"
 	L.all_seeds_soaked = "Sementes Concluídas!"
-	--L.failed_seed = "%s soaked an extra seed!"
+	L.failed_seed = "%s deu soak em uma semente a mais!"
 
 	L.blazing_mushroom = "Cogumelos"
 	L.fiery_growth = "Dissipar"
@@ -92,13 +92,13 @@ if L then
 	L.flaming_germination = "Sementes"
 	L.suppressive_ember_single = "Absorção de Cura"
 	L.flare_bomb = "Penas"
-	--L.too_close_to_edge = "Too close to the edge"
-	--L.taking_damage_from_edge = "Taking damage from the edge"
-	--L.flying_available = "You can fly now"
+	L.too_close_to_edge = "Muito próximo da borda"
+	L.taking_damage_from_edge = "Levando dano da borda"
+	L.flying_available = "Pode voar agora"
 
-	--L.custom_on_fly_time = "Fly Time"
-	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
-	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
+	L.custom_on_fly_time = "Tempo de voo"
+	L.custom_on_fly_time_desc = "Exiba uma mensagem mostrando quanto tempo você levou para voar até a outra plataforma durante os intervalos."
+	L.custom_on_fly_time_msg = "Tempo de Voo: %.2f" -- Tempo de voo: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ptBR")
