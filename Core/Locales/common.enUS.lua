@@ -160,4 +160,6 @@ L.tornadoes = "Tornadoes" -- Plural of L.tornado
 L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "Fear" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.mark = "Mark" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
-L.marks = "Marks"  -- Plural of L.marks
+L.marks = "Marks" -- Plural of L.marks
+L.mind_control = "Mind Control" -- Any kind of Mind Control ability, where a player loses control of their character
+L.mind_control_short = "MC" -- Short version of Mind Control, mainly for bars

@@ -161,4 +161,6 @@ L.tornadoes = "旋風" -- Plural of L.tornado
 L.frontal_cone = "正面技能" -- 正面衝擊 Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.fear = "恐懼術" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.mark = "標記" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
-L.marks = "標記"  -- Plural of L.marks
+L.marks = "標記" -- Plural of L.marks
+L.mind_control = "精神控制" -- Any kind of Mind Control ability, where a player loses control of their character
+L.mind_control_short = "精神控制" -- Short version of Mind Control, mainly for bars
