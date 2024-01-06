@@ -82,7 +82,7 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "koKR")
 if L then
 	L.seed_soaked = "씨앗 밟기"
 	L.all_seeds_soaked = "씨앗 완료!"
-	--L.failed_seed = "%s soaked an extra seed!"
+	L.failed_seed = "%s 님이 씨앗을 추가로 밟음!"
 
 	L.blazing_mushroom = "버섯"
 	L.fiery_growth = "해제"
@@ -96,9 +96,9 @@ if L then
 	L.taking_damage_from_edge = "가장자리에서 피해를 입음"
 	L.flying_available = "비행 가능"
 
-	--L.custom_on_fly_time = "Fly Time"
-	--L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
-	--L.custom_on_fly_time_msg = "Fly Time: %.2f" -- Fly Time: 32.23
+	L.custom_on_fly_time = "비행 시간"
+	L.custom_on_fly_time_desc = "사잇단계 동안 다른 단상으로 이동하는 데 걸린 시간을 보여줍니다."
+	L.custom_on_fly_time_msg = "비행 시간: %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "koKR")
