@@ -139,7 +139,7 @@ BigWigs:AddSounds("Tindral Sageswift, Seer of the Flame", {
 	[423260] = "warning",
 	[423265] = "info",
 	[424140] = "long",
-	[424495] = "info",
+	[424495] = {"info","warning"},
 	[424499] = "underyou",
 	[424579] = "alarm",
 	[424581] = "warning",
