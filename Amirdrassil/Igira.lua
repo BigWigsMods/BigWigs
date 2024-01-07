@@ -229,7 +229,7 @@ do
 				cd = timer[blisteringSpearCount]
 			end
 		elseif self:Normal() then
-			local timer = { 14.2, 30.5, 30.3, 14.6, 20.7, 0 }
+			local timer = { 14.2, 30.3, 40.0, 20.6, 0 }
 			cd = timer[blisteringSpearCount]
 		elseif self:LFR() then
 			local timer = { 14.2, 30.4, 40.2, 20.6, 0 }
@@ -341,7 +341,7 @@ do
 			self:Bar(414888, 14.4 - tormentOffset, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 		elseif markedForTormentCount == berserkPhase then -- berserk next
 			self:Bar(416996, self:Mythic() and 14.1 or 11.6, CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
-			self:Bar(414888, 18.8, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
+			self:Bar(414888, self:Normal() and 14.4 or 18.8, CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 			self:Berserk(self:Mythic() and 71.2 and self:Easy() and 111.3 or 31.0, 0)
 		end
 		self:CDBar(422776, (self:Mythic() and 120.5 or self:LFR() and 110.5 or 115.5) - tormentOffset, CL.count:format(L.marked_for_torment, markedForTormentCount)) -- Marked for Torment
