@@ -3104,7 +3104,7 @@ function boss:Berserk(seconds, noMessages, customBoss, customBerserk, customFina
 
 	if not noMessages then
 		-- Engage warning with minutes to enrage
-		self:MessageOld(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
+		self:Message(key, "yellow", format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
 	if noMessages ~= 0 then
