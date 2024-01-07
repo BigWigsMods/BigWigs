@@ -473,15 +473,13 @@ do
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
-			if tbl.eventToastID == 5 and self.db.profile.blockDungeonToasts then -- Dungeon zone in popup
-				RemoveCurrentToast()
-				return
-			elseif tbl.eventToastID == 184 then -- Vault
+			if tbl.eventToastID == 184 or tbl.eventToastID == 185 then -- Vault unlocked, vault upgraded
 				self:SimpleTimer(function() printMessage(self, tbl) end, 5)
-			else
+			elseif not self.db.profile.blockDungeonToasts or (self.db.profile.blockDungeonToasts and tbl.eventToastID ~= 5) then -- Dungeon zone in popup
 				printMessage(self, tbl)
 			end
 			RemoveCurrentToast()
+			self:DISPLAY_EVENT_TOASTS()
 		end
 	end
 end
@@ -833,6 +831,7 @@ do
 		[-2004] = true, -- Sylvanas defeat
 		[-2170] = true, -- Aberrus, Sarkareth defeat
 		[-2233] = true, -- Amirdrassil, Smolderon defeat
+		[-2234] = true, -- After killing Tindral, flying into the tree, usually 2238 but rarely can be 2234
 		[-2238] = { -- Amirdrassil
 			function() return latestKill[1] == 2565 end, -- After killing Tindral, flying into the tree
 			function() return latestKill[1] == 2519 and GetTime()-latestKill[2] < 6 end, -- After killing Fyrakk, but don't trigger when talking to the NPC after killing him
