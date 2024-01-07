@@ -228,13 +228,10 @@ do
 			if markedForTormentCount < 5 or blisteringSpearCount < 3 then -- only 2 before berserk at the end
 				cd = timer[blisteringSpearCount]
 			end
-		elseif self:Normal() then
-			local timer = { 14.2, 30.3, 40.0, 20.6, 0 }
-			cd = timer[blisteringSpearCount]
-		elseif self:LFR() then
+		elseif self:Easy() then
 			local timer = { 14.2, 30.4, 40.2, 20.6, 0 }
 			cd = timer[blisteringSpearCount]
-		else
+		else -- Heroic
 			local timer = { 14.2, 23.2, 23.2, 24.4, 20.7, 0 }
 			cd = timer[blisteringSpearCount]
 		end
