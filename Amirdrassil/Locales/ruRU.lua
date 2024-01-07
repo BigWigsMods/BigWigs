@@ -96,9 +96,9 @@ if L then
 	L.taking_damage_from_edge = "Получаешь урон от края платформы"
 	L.flying_available = "Можешь лететь"
 
-	L.custom_on_fly_time = "Полёт"
-	L.custom_on_fly_time_desc = "Показывает сообщение с длительностью полёта между платформами на переходке."
-	L.custom_on_fly_time_msg = "Время полёта: %.2f" -- Fly Time: 32.23
+	L.fly_time = "Полёт"
+	L.fly_time_desc = "Показывает сообщение с длительностью полёта между платформами на переходке."
+	L.fly_time_msg = "Время полёта: %.2f" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "ruRU")

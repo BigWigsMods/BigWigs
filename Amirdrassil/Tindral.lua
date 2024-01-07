@@ -142,10 +142,10 @@ if L then
 	L.taking_damage_from_edge = "Taking damage from the edge"
 	L.flying_available = "You can fly now"
 
-	L.custom_on_fly_time = "Fly Time"
-	L.custom_on_fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
-	L.custom_on_fly_time_icon = "inv_checkered_flag"
-	L.custom_on_fly_time_msg = "Fly Time: %.2f"
+	L.fly_time = "Fly Time"
+	L.fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
+	L.fly_time_icon = "inv_checkered_flag"
+	L.fly_time_msg = "Fly Time: %.2f"
 end
 
 --------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ function mod:GetOptions()
 		421398, -- Fire Beam
 		-- Intermission: Burning Pursuit
 		421636, -- Typhoon
-		"custom_on_fly_time",
+		"fly_time",
 		424258, -- Dream Essence
 		{422509, "EMPHASIZE"}, -- Empowered Feather
 		421939, -- Scorching Plume
@@ -455,7 +455,7 @@ do
 		if mounted and not isMounted and GetUnitSpeed("player") == 0 then -- Dismounted
 			local timeSinceMountUp = GetTime() - mountUpTime
 			if timeSinceMountUp > 10 then
-				mod:Message(false, "cyan", L.custom_on_fly_time_msg:format(timeSinceMountUp), L.custom_on_fly_time_icon)
+				mod:Message("fly_time", "cyan", L.fly_time_msg:format(timeSinceMountUp), L.fly_time_icon)
 			else -- Too fast, didn't fly !
 				mod:SimpleTimer(FlightTimeChecker, 0.01)
 			end
@@ -491,7 +491,7 @@ do
 
 		self:CDBar(421636, 3.5, CL.pushback) -- Typhoon
 
-		if self:GetOption("custom_on_fly_time") then
+		if self:CheckOption("fly_time", "MESSAGE") then
 			mountUpTime = 7 + GetTime() -- Estimated Feathers Spawn
 			mounted = false
 			self:SimpleTimer(FlightTimeChecker, 0.01)
