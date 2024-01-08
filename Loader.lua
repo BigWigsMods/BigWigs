@@ -434,7 +434,14 @@ end
 --
 
 local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
-local EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
+local EnableAddOn = C_AddOns.EnableAddOn or EnableAddOn
+local GetAddOnInfo = C_AddOns.GetAddOnInfo or GetAddOnInfo
+local LoadAddOn = C_AddOns.LoadAddOn or LoadAddOn
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded or IsAddOnLoaded
+local GetAddOnDependencies = C_AddOns.GetAddOnDependencies or GetAddOnDependencies
+local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies or GetAddOnOptionalDependencies
+local GetNumAddOns = C_AddOns.GetNumAddOns or GetNumAddOns
+local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand or IsAddOnLoadOnDemand
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 public.EnableAddOn = EnableAddOn
 
