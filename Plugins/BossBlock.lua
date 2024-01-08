@@ -461,6 +461,10 @@ do
 		if type(tbl.title) == "string" and #tbl.title > 2 then
 			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor)
 		end
+		if delayedTbl and delayedTbl.title and #delayedTbl.title > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor)
+			delayedTbl.title = nil
+		end
 		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
 			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor)
 		end
@@ -492,10 +496,9 @@ do
 					if type(itemID) == "number" then
 						self:RegisterEvent("ITEM_DATA_LOAD_RESULT")
 						if not delayedTbl then
-							delayedTbl = {}
-						else
-							tbl.title = nil
+							delayedTbl = {title = tbl.title}
 						end
+						tbl.title = nil
 						delayedTbl[#delayedTbl+1] = tbl
 						tbl.bwItemID = itemID
 						C_Item.RequestLoadItemDataByID(itemID)
