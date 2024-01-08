@@ -36,6 +36,7 @@ local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = BigWigsLoader.Re
 local isClassic, isRetail = BigWigsLoader.isClassic, BigWigsLoader.isRetail
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
+local PlaySoundFile = PlaySoundFile
 local C = core.C
 local pName = UnitName("player")
 local cpName
@@ -3003,6 +3004,13 @@ end
 --- Request to play the victory sound.
 function boss:PlayVictorySound()
 	self:SendMessage("BigWigs_VictorySound", self)
+end
+
+--- Play a sound file.
+-- @param sound Either a FileID (number), or the path to a sound file (string)
+-- @string[opt] channel the channel the sound should play on, defaults to "Master"
+function boss:PlaySoundFile(sound, channel)
+	PlaySoundFile(sound, channel or "Master")
 end
 
 --- Register a sound to be played when a Private Aura is applied to you.
