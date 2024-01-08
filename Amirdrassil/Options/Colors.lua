@@ -106,8 +106,8 @@ BigWigs:AddColors("Nymue, Weaver of the Cycle", {
 	[420846] = "cyan",
 	[420907] = "yellow",
 	[422721] = "yellow",
+	[426519] = {"blue","purple"},
 	[426855] = "green",
-	[427722] = {"blue","purple","yellow"},
 	[428471] = "red",
 	[429108] = "orange",
 	[429615] = "cyan",
@@ -156,7 +156,7 @@ BigWigs:AddColors("Tindral Sageswift, Seer of the Flame", {
 	[425606] = "green",
 	[427297] = "blue",
 	[430583] = {"blue","green","red"},
-	["false"] = "cyan",
+	["fly_time"] = "cyan",
 	["stages"] = "cyan",
 })
 
