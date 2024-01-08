@@ -48,7 +48,7 @@ function mod:GetOptions()
 		420846, -- Continuum
 		429615, -- Impending Loom
 		429983, -- Surging Growth
-		{427722, "SAY", "ME_ONLY_EMPHASIZE"}, -- Weaver's Burden
+		{426519, "TANK", "SAY", "ME_ONLY_EMPHASIZE", "PRIVATE"}, -- Weaver's Burden
 		-- Mythic
 		430563, -- Ephemeral Flora
 		420907, -- Viridian Rain
@@ -73,7 +73,7 @@ function mod:GetOptions()
 		[429615] = L.threads, -- Impending Loom (Threads)
 		[420907] = L.viridian_rain, -- Viridian Rain (Raid Damage)
 		[430563] = L.ephemeral_flora, -- Ephmeral Flora (Red Soak)
-		[427722] = CL.bombs, -- Weaver's Burden (Bombs)
+		[426519] = CL.bombs, -- Weaver's Burden (Bombs)
 		[426855] = CL.stage:format(2), -- Full Bloom (Stage 2)
 		[429108] = CL.frontal_cone, -- Lumbering Slam (Frontal Cone)
 	}
@@ -81,9 +81,7 @@ end
 
 function mod:OnBossEnable()
 	-- Stage One: Rapid Iteration
-	self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
 	self:Log("SPELL_CAST_SUCCESS", "WeaversBurden", 426519)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Weaver's Burden
 
 	self:Log("SPELL_AURA_APPLIED", "VerdantMatrixApplied", 420554)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VerdantMatrixApplied", 420554)
@@ -121,7 +119,7 @@ function mod:OnEngage()
 		self:ScheduleTimer("EphemeralFlora", 29)
 	end
 
-	-- self:SetPrivateAuraSound(427722) -- Weaver's Burden
+	self:SetPrivateAuraSound(426519, 427722) -- Weaver's Burden
 end
 
 --------------------------------------------------------------------------------
@@ -129,42 +127,14 @@ end
 --
 
 -- Stage One: Rapid Iteration
-do
-	local playerList = {}
-	function mod:RaidBossWhisperSync(msg, player)
-		if msg:find("spell:427722", nil, true) and not self:Tank() then
-			if self:Easy() then
-				-- only applied to tank in LFR / Normal
-				self:TargetMessage(427722, "yellow", player, CL.bomb)
-			else
-				playerList[#playerList+1] = player
-				self:TargetsMessage(427722, "yellow", playerList, 3, CL.bombs)
-			end
-		end
-	end
-
-	function mod:WeaversBurden(args)
-		playerList = {}
-		if self:Tank() then
-			if self:Me(args.destGUID) then
-				self:PersonalMessage(427722, nil, CL.bomb)
-				self:Say(427722, CL.bomb, nil, "Bomb")
-			else
-				self:TargetMessage(427722, "purple", args.destName, CL.bomb)
-			end
-			self:PlaySound(427722, "warning")
-		end
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	-- "|TInterface\\ICONS\\INV_10_Enchanting2_MagicSwirl_Green.BLP:20|t You are marked with |cFFFF0000|Hspell:427722|h[Weaver's Burden]|h|r!"
-	if msg:find("spell:427722", nil, true) and not self:Tank() then
-		if self:Solo() then -- You won't transmit addon comms when solo, so warn here instead
-			self:PersonalMessage(427722, nil, CL.bomb)
-		end
-		self:PlaySound(427722, "warning")
-		self:Say(427722, CL.bomb, nil, "Bomb")
+function mod:WeaversBurden(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, CL.bomb)
+		self:Say(args.spellId, CL.bomb, nil, "Bomb")
+		--self:PlaySound(args.spellId, "warning") -- Handled by the private aura sound
+	else
+		self:TargetMessage(args.spellId, "purple", args.destName, CL.bomb)
+		self:PlaySound(args.spellId, "warning")
 	end
 end
 
