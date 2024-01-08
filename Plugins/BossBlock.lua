@@ -43,7 +43,7 @@ plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local zoneList = BigWigsLoader.zoneTbl
-local onTestBuild = BigWigsLoader.onTestBuild
+local isTestBuild = BigWigsLoader.isTestBuild
 local isClassic = BigWigsLoader.isClassic
 local GetSubZoneText = GetSubZoneText
 local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
@@ -530,7 +530,7 @@ do
 			activatedModules[module:GetJournalID()] = true
 		end
 
-		if onTestBuild then -- Don't block emotes on WoW PTR
+		if isTestBuild then -- Don't block emotes on WoW PTR
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 			self:RegisterEvent("RAID_BOSS_EMOTE", EditEmotesOnPTR)
@@ -592,7 +592,7 @@ do
 		-- blockEmotes
 		RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 		RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
-		if onTestBuild then
+		if isTestBuild then
 			self:UnregisterEvent("RAID_BOSS_EMOTE")
 			self:UnregisterEvent("RAID_BOSS_WHISPER")
 		end

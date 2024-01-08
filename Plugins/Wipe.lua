@@ -12,7 +12,6 @@ if not plugin then return end
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
-local PlaySoundFile = PlaySoundFile
 
 -------------------------------------------------------------------------------
 -- Options
@@ -107,7 +106,7 @@ function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 		if soundName ~= "None" then
 			local sound = media:Fetch(SOUND, soundName, true)
 			if sound then
-				PlaySoundFile(sound, "Master")
+				self:PlaySoundFile(sound)
 			end
 		end
 	end

@@ -27,16 +27,17 @@ end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization")
+local loader = BigWigsLoader
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager = EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager
-local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
-local UnitName, UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax, BigWigsLoader.Ambiguate
-local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = BigWigsLoader.RegisterAddonMessagePrefix, BigWigsLoader.UnitDetailedThreatSituation
-local isClassic, isRetail = BigWigsLoader.isClassic, BigWigsLoader.isRetail
+local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
+local UnitName, UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitName, loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
+local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = loader.RegisterAddonMessagePrefix, loader.UnitDetailedThreatSituation
+local isClassic, isRetail = loader.isClassic, loader.isRetail
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
-local PlaySoundFile = PlaySoundFile
+local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
 local pName = UnitName("player")
 local cpName
@@ -431,10 +432,10 @@ function boss:Disable(isWipe)
 		end
 
 		if self.missing then
-			local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
+			local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. loader:GetVersionString() ..", tell the authors."
 			local newBarError = "New timer for %q at stage %d with placement %d and value %.2f."
 			local difficultyToText = {[14] = "N", [15] = "H", [16] = "M", [17] = "LFR"}
-			local errorHeader = format("BigWigs is missing timers on %q running %s, tell the devs!", difficultyToText[self:Difficulty()] or self:Difficulty(), BigWigsLoader:GetVersionString())
+			local errorHeader = format("BigWigs is missing timers on %q running %s, tell the devs!", difficultyToText[self:Difficulty()] or self:Difficulty(), loader:GetVersionString())
 			local errorStrings = {errorHeader}
 			for key, stageTbl in next, self.missing do
 				for stage = 0, 5, 0.5 do
@@ -1610,7 +1611,7 @@ do
 	local function update(_, _, position, player)
 		myGroupRolePositions[player] = position
 	end
-	LibSpec:Register(BigWigsLoader, update)
+	LibSpec:Register(loader, update)
 end
 
 --- Ask LibSpecialization to update the role positions of everyone in your group.
@@ -3033,7 +3034,7 @@ function boss:SetPrivateAuraSound(key, spellId, soundCategory)
 end
 
 do
-	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
+	local SendAddonMessage, IsInGroup = loader.SendAddonMessage, IsInGroup
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send

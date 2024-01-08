@@ -15,7 +15,7 @@ local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local dbmPrefix = BigWigsLoader.dbmPrefix
 local zoneTable = BigWigsLoader.zoneTbl
 local isLogging = false
-local IsEncounterInProgress, PlaySoundFile = IsEncounterInProgress, PlaySoundFile
+local IsEncounterInProgress = IsEncounterInProgress
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
@@ -227,7 +227,7 @@ do
 			if soundName ~= "None" then
 				local sound = media:Fetch(SOUND, soundName, true)
 				if sound then
-					PlaySoundFile(sound, "Master")
+					self:PlaySoundFile(sound)
 				end
 			end
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
@@ -286,7 +286,7 @@ do
 			if soundName ~= "None" then
 				local sound = media:Fetch(SOUND, soundName, true)
 				if sound then
-					PlaySoundFile(sound, "Master")
+					self:PlaySoundFile(sound)
 				end
 			end
 		end
@@ -318,7 +318,7 @@ function plugin:BigWigs_OnBossEngage(_, module)
 		if soundName ~= "None" then
 			local sound = media:Fetch(SOUND, soundName, true)
 			if sound then
-				PlaySoundFile(sound, "Master")
+				self:PlaySoundFile(sound)
 			end
 		end
 	end

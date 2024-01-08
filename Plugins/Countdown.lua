@@ -48,7 +48,6 @@ local FONT = media.MediaType and media.MediaType.FONT or "font"
 local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.countdown
-local PlaySoundFile = PlaySoundFile
 
 local countdownAnchor = nil
 local countdownFrame = nil
@@ -638,7 +637,7 @@ do
 					end
 					local sound = BigWigsAPI:GetCountdownSound(voice, count)
 					if sound then
-						PlaySoundFile(sound, "Master")
+						self:PlaySoundFile(sound)
 					end
 					count = count - 1
 				end

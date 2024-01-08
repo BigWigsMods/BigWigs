@@ -95,21 +95,22 @@ local myLocale = GetLocale()
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.Ambiguate = Ambiguate
-public.GetBestMapForUnit = GetBestMapForUnit
-public.GetMapInfo = GetMapInfo
-public.GetInstanceInfo = GetInstanceInfo
-public.SendAddonMessage = SendAddonMessage
-public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
-public.SendChatMessage = SendChatMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
-public.UnitName = UnitName
-public.UnitGUID = UnitGUID
+public.GetBestMapForUnit = GetBestMapForUnit
+public.GetInstanceInfo = GetInstanceInfo
+public.GetMapInfo = GetMapInfo
+public.PlaySoundFile = PlaySoundFile
+public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
+public.SendAddonMessage = SendAddonMessage
 public.SetRaidTarget = SetRaidTarget
+public.SendChatMessage = SendChatMessage
+public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
+public.UnitGUID = UnitGUID
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
-public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
-public.onTestBuild = GetCurrentRegion() == 72 -- PTR/beta
+public.UnitName = UnitName
+public.isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 
 -- Version
 local usersHash = {}

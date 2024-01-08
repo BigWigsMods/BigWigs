@@ -25,21 +25,19 @@ do
 	tbl.bossPrototype = boss
 end
 
-local isClassicEra = BigWigsLoader.isVanilla
-local isClassic = BigWigsLoader.isWrath
-
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
+local loader = BigWigsLoader
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo = function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
 local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned or function(_) end
-local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
-local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
-local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
-local isClassic, isRetail = BigWigsLoader.isClassic, BigWigsLoader.isRetail
+local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
+local UnitName, UnitGUID, UnitHealth, UnitHealthMax = loader.UnitName, loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
+local UnitDetailedThreatSituation = loader.UnitDetailedThreatSituation
+local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
-local PlaySoundFile = PlaySoundFile
+local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
 local pName = UnitName("player")
 local cpName
@@ -520,10 +518,10 @@ function boss:Disable(isWipe)
 		end
 
 		if self.missing then
-			local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
+			local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. loader:GetVersionString() ..", tell the authors."
 			local newBarError = "New timer for %q at stage %d with placement %d and value %.2f."
 			local difficultyToText = {[14] = "N", [15] = "H", [16] = "M", [17] = "LFR"}
-			local errorHeader = format("BigWigs is missing timers on %q running %s, tell the devs!", difficultyToText[self:Difficulty()] or self:Difficulty(), BigWigsLoader:GetVersionString())
+			local errorHeader = format("BigWigs is missing timers on %q running %s, tell the devs!", difficultyToText[self:Difficulty()] or self:Difficulty(), loader:GetVersionString())
 			local errorStrings = {errorHeader}
 			for key, stageTbl in next, self.missing do
 				for stage = 0, 5, 0.5 do
@@ -2967,7 +2965,7 @@ function boss:PlaySoundFile(sound, channel)
 end
 
 do
-	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
+	local SendAddonMessage, IsInGroup = loader.SendAddonMessage, IsInGroup
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send

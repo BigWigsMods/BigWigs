@@ -60,7 +60,7 @@ plugin.pluginOptions = {
 	set = function(info, value)
 		local sound = info[#info]
 		db.media[sound] = soundList[value]
-		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
+		plugin:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
 	end,
 	order = 4,
 	args = {
@@ -250,7 +250,7 @@ function plugin:OnRegister()
 				local optionName = info[#info]
 				if not db[optionName][name] then db[optionName][name] = {} end
 				db[optionName][name][key] = soundList[value]
-				PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
+				self:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
 				-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
 			end,
 			hidden = function(info)
@@ -316,12 +316,9 @@ do
 	end
 end
 
-do
-	local PlaySoundFile = PlaySoundFile
-	function plugin:BigWigs_Sound(event, module, key, soundName)
-		local soundPath = self:GetSoundFile(module, key, soundName)
-		if soundPath then
-			PlaySoundFile(soundPath, "Master")
-		end
+function plugin:BigWigs_Sound(event, module, key, soundName)
+	local soundPath = self:GetSoundFile(module, key, soundName)
+	if soundPath then
+		self:PlaySoundFile(soundPath)
 	end
 end
