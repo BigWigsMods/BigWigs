@@ -456,6 +456,7 @@ end
 --
 
 do
+	local delayedTbl = nil
 	local function printMessage(self, tbl)
 		if type(tbl.title) == "string" and #tbl.title > 2 then
 			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor)
@@ -469,17 +470,56 @@ do
 		if type(tbl.showSoundKitID) == "number" then
 			PlaySound(tbl.showSoundKitID)
 		end
+		if delayedTbl then
+			for i = 1, #delayedTbl do
+				local entryTbl = delayedTbl[i]
+				if not entryTbl.bwDone then
+					return
+				end
+			end
+			delayedTbl = nil
+			plugin:UnregisterEvent("ITEM_DATA_LOAD_RESULT")
+		end
 	end
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
-			if tbl.eventToastID == 184 or tbl.eventToastID == 185 then -- Vault unlocked, vault upgraded
+			if tbl.eventToastID == 184 then -- Vault unlocked
 				self:SimpleTimer(function() printMessage(self, tbl) end, 5)
+			elseif tbl.eventToastID == 185 then -- Vault upgraded
+				if type(tbl.subtitle) == "string" then
+					local itemID = C_Item.GetItemIDForItemInfo(tbl.subtitle)
+					if type(itemID) == "number" then
+						self:RegisterEvent("ITEM_DATA_LOAD_RESULT")
+						if not delayedTbl then
+							delayedTbl = {}
+						else
+							tbl.title = nil
+						end
+						delayedTbl[#delayedTbl+1] = tbl
+						tbl.bwItemID = itemID
+						C_Item.RequestLoadItemDataByID(itemID)
+					end
+				end
 			elseif not self.db.profile.blockDungeonToasts or (self.db.profile.blockDungeonToasts and tbl.eventToastID ~= 5) then -- Dungeon zone in popup
 				printMessage(self, tbl)
 			end
 			RemoveCurrentToast()
 			self:DISPLAY_EVENT_TOASTS()
+		end
+	end
+	function plugin:ITEM_DATA_LOAD_RESULT(_, id, success)
+		if delayedTbl then
+			for i = 1, #delayedTbl do
+				local tbl = delayedTbl[i]
+				if tbl.bwItemID == id then
+					local tbl = delayedTbl
+					tbl.bwDone = true
+					self:SimpleTimer(function() printMessage(self, tbl) end, 5)
+					local itemLevel = success and GetDetailedItemLevelInfo(tbl.subtitle) or 0
+					tbl.subtitle = L.itemLevel:format(itemLevel)
+				end
+			end
 		end
 	end
 end

@@ -194,6 +194,7 @@ L.redirectPopupsDesc = "屏幕中间的弹出式横幅，例如：“|cFF33FF99�
 L.redirectPopupsColor = "横幅信息的颜色"
 L.blockDungeonPopups = "屏蔽地下城弹出式横幅"
 L.blockDungeonPopupsDesc = "进入地下城时弹出的横幅有时会包含很长的文字。启用此功能将完全屏蔽它们，而不是显示到 BigWigs 消息内。"
+L.itemLevel = "物品等级%d"
 
 L.userNotifySfx = "首领屏蔽禁用了声音效果，强制它重新启用。"
 L.userNotifyMusic = "首领屏蔽禁用了音乐，强制它重新启用。"

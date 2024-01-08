@@ -194,6 +194,7 @@ L.blockTalkingHeadScenarios = "Scenari"
 --L.redirectPopupsColor = "Color of the redirected message"
 --L.blockDungeonPopups = "Block dungeon popup banners"
 --L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them instead of being redirected to BigWigs messages."
+L.itemLevel = "Livello oggetto: %d"
 
 L.userNotifySfx = "Gli Effetti sonori sono disabilitati dal Blocco Boss, li riattivo forzatamente."
 L.userNotifyMusic = "La Musica è stata disabilitata dal Blocco Boss, la riattivo forzatamente."

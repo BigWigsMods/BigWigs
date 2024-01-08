@@ -194,6 +194,7 @@ L.redirectPopupsDesc = "Popup Banner in der Mitte des Bildschirms wie das '|cFF3
 L.redirectPopupsColor = "Farbe der ausgegebenen Nachricht"
 L.blockDungeonPopups = "Popup Banner in Instanzen blockieren"
 L.blockDungeonPopupsDesc = "Die Popup Banner beim Betreten einer Instanz können sehr lange Texte enthalten. Die Aktivierung dieser Option blockiert diese komplett, statt diese als BigWigs Nachrichten auszugeben."
+L.itemLevel = "Gegenstandsstufe %d"
 
 L.userNotifySfx = "Soundeffekte wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
 L.userNotifyMusic = "Musik wurde von BossBlock deaktiviert, Aktivierung wird erzwungen."

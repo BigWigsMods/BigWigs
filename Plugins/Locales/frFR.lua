@@ -194,6 +194,7 @@ L.redirectPopupsDesc = "Les popups qui s'affichent au milieu de votre écran tel
 L.redirectPopupsColor = "Couleur du message redirigé"
 L.blockDungeonPopups = "Bloque les popups de donjons"
 L.blockDungeonPopupsDesc = "Les popups qui s'affichent lorsque vous entrez dans un donjon contiennent parfois beaucoup de texte. Activer cette option désactivera complètement ces messages au lieu de les convertir en message BigWigs."
+L.itemLevel = "Niveau d'objet %d"
 
 L.userNotifySfx = "Les effets sonores étaient désactivés par BossBlock, la réactivation a été forcée."
 L.userNotifyMusic = "La musique était désactivée par BossBlock, la réactivation a été forcée."
