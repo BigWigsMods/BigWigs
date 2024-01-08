@@ -513,7 +513,6 @@ do
 			for i = 1, #delayedTbl do
 				local tbl = delayedTbl[i]
 				if tbl.bwItemID == id and not tbl.bwDone then
-					local tbl = delayedTbl
 					tbl.bwDone = true
 					self:SimpleTimer(function() printMessage(self, tbl) end, 5)
 					local itemLevel = success and GetDetailedItemLevelInfo(tbl.subtitle) or 0
