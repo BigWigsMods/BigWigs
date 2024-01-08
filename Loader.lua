@@ -955,12 +955,6 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	self:GROUP_ROSTER_UPDATE()
 	self:PLAYER_ENTERING_WORLD()
 	self:ZONE_CHANGED()
-
-	-- XXX temp 10.2
-	if public.isRetail and not BigWigsLangFeat and myLocale ~= "enUS" and myLocale ~= "enGB" then
-		BigWigsLangFeat = true
-		Popup("|cFF33FF99BigWigs|r: New feature, you can now send your say messages in English!")
-	end
 end
 
 -- Various temporary printing stuff
