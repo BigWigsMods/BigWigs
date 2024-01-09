@@ -735,12 +735,15 @@ local function RefreshOnUpdate(self)
 end
 
 spellUpdater:SetScript("OnEvent", function(self, event, spellId, success)
-	if success and needsUpdate[spellId] then
-		needsLayout[needsUpdate[spellId]] = true
-		local desc = GetSpellDescription(spellId)
-		self:SetScript("OnUpdate", RefreshOnUpdate)
+	for widget, widgetSpellId in next, needsUpdate do
+		if spellId == widgetSpellId then
+			if success then
+				needsLayout[widget] = true
+				self:SetScript("OnUpdate", RefreshOnUpdate)
+			end
+			needsUpdate[widget] = nil
+		end
 	end
-	needsUpdate[spellId] = nil
 end)
 spellUpdater:RegisterEvent("SPELL_DATA_LOAD_RESULT")
 
@@ -852,9 +855,18 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			spellId = description
 		end
 	end
-	if spellId and not C_Spell.IsSpellDataCached(spellId) then
-		needsUpdate[spellId] = check
-		C_Spell.RequestLoadSpellData(spellId)
+	if spellId then
+		if not C_Spell.IsSpellDataCached(spellId) then
+			needsUpdate[check] = spellId
+			C_Spell.RequestLoadSpellData(spellId)
+		else
+			-- spell is loaded but still has no description? manually try again
+			local desc = GetSpellDescription(spellId)
+			if desc == "" then
+				needsLayout[check] = true
+				C_Timer.After(0.2, function() RefreshOnUpdate(spellUpdater) end)
+			end
+		end
 	end
 
 	if type(dbKey) == "string" and dbKey:find("^custom_") then
