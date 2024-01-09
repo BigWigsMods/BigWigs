@@ -698,8 +698,8 @@ do
 	-- Talking Head blocking
 	local known = {
 		-- Black Rook Hold
-		[54567]=true,[54552]=true,[54566]=true,[54511]=true,[57890]=true,
-		[54540]=true,[54527]=true,[70619]=true,[70621]=true,[70623]=true,
+		[54567]=true,[54552]=true,[54566]=true,[54511]=true,[57890]=true,[54540]=true,
+		[54527]=true,[70619]=true,[70621]=true,[70623]=true,[70625]=true,
 		-- Court of Stars
 		[70615]=true,[70199]=true,[70198]=true,[70197]=true,[70193]=true,
 		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
