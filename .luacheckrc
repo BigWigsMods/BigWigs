@@ -104,7 +104,6 @@ files["**/Plugins/*.lua"].ignore = {
 	"111/SLASH_.*", -- slash handlers
 }
 files["**/Options/Options.lua"].ignore = {
-	"113/C_Spell",
 	"113/C_UI",
 }
 files["**/Locales/*.lua"].ignore = {

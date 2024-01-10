@@ -320,6 +320,23 @@ do
 	f:SetScript("OnEvent", Initialize)
 end
 
+local spellDescriptionUpdater = CreateFrame("Frame")
+local visibleSpellDescriptionWidgets = {}
+spellDescriptionUpdater:SetScript("OnEvent", function(_, _, spellId)
+	local scrollFrame = nil
+	for widget, widgetSpellId in next, visibleSpellDescriptionWidgets do
+		if spellId == widgetSpellId then
+			scrollFrame = widget:GetUserData("scrollFrame")
+			local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
+			local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+			widget:SetDescription(desc)
+		end
+	end
+	if scrollFrame then
+		scrollFrame:PerformLayout()
+	end
+end)
+
 function options:Open()
 	if not configFrame then
 		options:OpenConfig()
@@ -400,6 +417,7 @@ local function masterOptionToggled(self, event, value)
 		if dropdown then
 			local scrollFrame = self:GetUserData("scrollFrame")
 			local bossOption = self:GetUserData("option")
+			visibleSpellDescriptionWidgets = {}
 			scrollFrame:ReleaseChildren()
 			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
 			scrollFrame:PerformLayout()
@@ -577,6 +595,7 @@ end
 local function advancedTabSelect(widget, callback, tab)
 	if widget:GetUserData("tab") == tab then return end
 	widget:SetUserData("tab", tab)
+	visibleSpellDescriptionWidgets = {}
 	widget:PauseLayout()
 	widget:ReleaseChildren()
 	local module = widget:GetUserData("module")
@@ -716,45 +735,8 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	return unpack(widgets)
 end
 
-local spellUpdater = CreateFrame("Frame")
-local needsUpdate, needsLayout = {}, {}
-
-local function RefreshOnUpdate(self)
-	local scrollFrame = nil
-	for widget in next, needsLayout do
-		needsLayout[widget] = nil
-		scrollFrame = widget:GetUserData("scrollFrame")
-		local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
-		local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
-		widget:SetDescription(desc)
-	end
-	if scrollFrame then
-		scrollFrame:PerformLayout()
-	end
-	self:SetScript("OnUpdate", nil)
-end
-
-spellUpdater:SetScript("OnEvent", function(self, event, spellId, success)
-	for widget, widgetSpellId in next, needsUpdate do
-		if spellId == widgetSpellId then
-			if success then
-				needsLayout[widget] = true
-				self:SetScript("OnUpdate", RefreshOnUpdate)
-			end
-			needsUpdate[widget] = nil
-		end
-	end
-end)
-spellUpdater:RegisterEvent("SPELL_DATA_LOAD_RESULT")
-
-local function clearPendingUpdates()
-	spellUpdater:SetScript("OnUpdate", nil)
-	needsUpdate = {}
-	needsLayout = {}
-end
-
 local function buttonClicked(widget)
-	clearPendingUpdates()
+	visibleSpellDescriptionWidgets = {}
 	-- save scroll bar position
 	toggleOptionsStatusTable.restore_scrollvalue = toggleOptionsStatusTable.scrollvalue
 	toggleOptionsStatusTable.restore_offset = toggleOptionsStatusTable.offset
@@ -856,17 +838,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 	if spellId then
-		if not C_Spell.IsSpellDataCached(spellId) then
-			needsUpdate[check] = spellId
-			C_Spell.RequestLoadSpellData(spellId)
-		else
-			-- spell is loaded but still has no description? manually try again
-			local desc = GetSpellDescription(spellId)
-			if desc == "" then
-				needsLayout[check] = true
-				C_Timer.After(0.2, function() RefreshOnUpdate(spellUpdater) end)
-			end
-		end
+		visibleSpellDescriptionWidgets[check] = spellId
 	end
 
 	if type(dbKey) == "string" and dbKey:find("^custom_") then
@@ -1039,7 +1011,7 @@ local function SecondsToTime(time)
 end
 
 local function populateToggleOptions(widget, module)
-	clearPendingUpdates()
+	visibleSpellDescriptionWidgets = {}
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
 	scrollFrame:PauseLayout()
@@ -1292,6 +1264,7 @@ do
 	end
 
 	local function onTreeGroupSelected(widget, event, value)
+		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
 		local bigwigsContent = value:match("(BigWigs_%a+)$")
@@ -1371,6 +1344,7 @@ do
 	end
 
 	local function onTabGroupSelected(widget, event, value)
+		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
 
 		if value == "options" then
@@ -1521,6 +1495,7 @@ do
 
 	function options:OpenConfig()
 		playerName = UnitName("player")
+		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
 
 		local bw = AceGUI:Create("Frame")
 		configFrame = bw
@@ -1531,6 +1506,8 @@ do
 		bw:EnableResize(false)
 		bw:SetLayout("Flow")
 		bw:SetCallback("OnClose", function(widget)
+			visibleSpellDescriptionWidgets = {}
+			spellDescriptionUpdater:UnregisterEvent("SPELL_TEXT_UPDATE")
 			widget:ReleaseChildren()
 			AceGUI:Release(widget)
 			statusTable = {}
