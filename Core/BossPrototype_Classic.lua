@@ -2188,16 +2188,6 @@ do
 		end
 	end
 
-	local markerIcons = {
-		"|T137001:0|t",
-		"|T137002:0|t",
-		"|T137003:0|t",
-		"|T137004:0|t",
-		"|T137005:0|t",
-		"|T137006:0|t",
-		"|T137007:0|t",
-		"|T137008:0|t",
-	}
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
 	local tconcat = table.concat
 	do
@@ -2221,7 +2211,7 @@ do
 				else
 					if markers then
 						for i = 1, playersInTable do
-							playerTable[i] = markerIcons[markers[i]] .. playerTable[i]
+							playerTable[i] = self:GetIconTexture(markers[i]) .. playerTable[i]
 						end
 					end
 					local list = tconcat(playerTable, comma, 1, playersInTable)
@@ -2327,7 +2317,7 @@ do
 						local name = playerTable[i]
 						local hasMarker = playerTable[name]
 						if hasMarker then
-							local markerFromTable = markerIcons[hasMarker]
+							local markerFromTable = self:GetIconTexture(hasMarker)
 							if markerFromTable then
 								tbl[#tbl+1] = markerFromTable .. self:ColorName(name)
 							else
@@ -2777,6 +2767,25 @@ do
 	-- @return number The number based on the icon ranging from 1-8 (nil if no icon is set)
 	function boss:GetIcon(flags)
 		return flagToIcon[flags]
+	end
+end
+
+do
+	local markerIcons = {
+		"|T137001:0|t",
+		"|T137002:0|t",
+		"|T137003:0|t",
+		"|T137004:0|t",
+		"|T137005:0|t",
+		"|T137006:0|t",
+		"|T137007:0|t",
+		"|T137008:0|t",
+	}
+	--- Get the raid target icon texture from a number ranging from 1-8
+	-- @number position The number from 1-8
+	-- @return string A texture you can embed into a string
+	function boss:GetIconTexture(position)
+		return markerIcons[position]
 	end
 end
 
