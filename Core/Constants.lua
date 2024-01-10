@@ -159,6 +159,28 @@ local customBossOptions = { -- Adding core generic toggles
 	adds = {L.adds, L.adds_desc, false},
 }
 
+local function getIcon(icon, module, option)
+	if type(icon) == "number" then
+		if icon > 8 then
+			icon = GetSpellTexture(icon)
+		elseif icon > 0 then
+			icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
+		else
+			local tbl = C_EncounterJournal_GetSectionInfo(-icon)
+			icon = tbl.abilityIcon
+		end
+		if not icon then
+			local moduleLocale = module:GetLocale(true)
+			BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
+		end
+		return icon
+	elseif type(icon) == "string" and not icon:find("\\", nil, true) then
+		return "Interface\\Icons\\" .. icon
+	elseif customBossOptions[option] then
+		return customBossOptions[option][3]
+	end
+end
+
 function BigWigs:GetBossOptionDetails(module, option)
 	local optionType = type(option)
 	if optionType == "table" then
@@ -167,13 +189,13 @@ function BigWigs:GetBossOptionDetails(module, option)
 	end
 
 	local alternativeName = module.altNames and module.altNames[option]
+	local moduleLocale = module:GetLocale(true)
 
 	if optionType == "string" then
 		local roleDesc = ""
 		if not option:find("custom_", nil, true) then
 			roleDesc = getRoleStrings(module, option)
 		end
-		local moduleLocale = module:GetLocale(true)
 
 		local title, description = moduleLocale[option], moduleLocale[option .. "_desc"]
 		if title then
@@ -199,24 +221,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 			description = roleDesc.. customBossOptions[option][2]
 		end
 
-		local icon = moduleLocale[option .. "_icon"]
-		if type(icon) == "number" then
-			if icon > 8 then
-				icon = GetSpellTexture(icon)
-			elseif icon > 0 then
-				icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
-			else
-				local tbl = C_EncounterJournal_GetSectionInfo(-icon)
-				icon = tbl.abilityIcon
-			end
-			if not icon then
-				BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
-			end
-		elseif type(icon) == "string" and not icon:find("\\", nil, true) then
-			icon = "Interface\\Icons\\" .. icon
-		elseif customBossOptions[option] then
-			icon = customBossOptions[option][3]
-		end
+		local icon = getIcon(moduleLocale[option .. "_icon"], module, option)
 
 		return option, title, description, icon, alternativeName
 	elseif optionType == "number" then
@@ -232,6 +237,21 @@ function BigWigs:GetBossOptionDetails(module, option)
 				desc = option
 			else
 				desc = desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
+			end
+			local descriptionReplacement = moduleLocale[option .. "_desc"]
+			if descriptionReplacement then
+				if type(descriptionReplacement) == "number" then
+					descriptionReplacement = replaceIdWithDescription(descriptionReplacement)
+				else
+					descriptionReplacement = gsub(descriptionReplacement, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
+					descriptionReplacement = gsub(descriptionReplacement, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
+				end
+				descriptionReplacement = gsub(descriptionReplacement, "{rt(%d)}", "|T13700%1:15|t")
+				desc = descriptionReplacement
+			end
+			local iconReplacement = moduleLocale[option .. "_icon"]
+			if iconReplacement then
+				icon = getIcon(iconReplacement, module, option)
 			end
 			local roleDesc = getRoleStrings(module, option)
 			return option, spellName, roleDesc..desc, icon, alternativeName
