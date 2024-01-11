@@ -296,6 +296,7 @@ do
 		if self:Me(args.destGUID) then
 			stacks = args.amount or 1
 			if stacks == 5 then
+				scheduled = true
 				IgnitedEssenceOnMe()
 			elseif not scheduled then
 				scheduled = true
