@@ -15,7 +15,6 @@ mod:SetRespawnTime(30)
 local castingRebirth = false
 local rebirthCount = 1
 local rebirthTimers = {}
-local duckList = {}
 
 local specialCD = mod:LFR() and 74.7 or 56
 local specialChain = { ["urctos"] = "aerwynn", ["aerwynn"] = "pip", ["pip"] = "urctos" }
@@ -83,10 +82,10 @@ function mod:GetOptions()
 		426390, -- Corrosive Pollen (Damage)
 		{420858, "SAY", "SAY_COUNTDOWN"}, -- Poisonous Javelin
 		-- Pip
-		{421029, "CASTBAR"}, -- Song of the Dragon
+		{421029, "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Song of the Dragon
 		{421032, "SAY"}, -- Captivating Finale
 		{421501, "OFF"}, -- Blink
-		{418720, "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Polymorph Bomb
+		{418720, "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "PRIVATE"}, -- Polymorph Bomb
 		421024, -- Emerald Winds
 		423551, -- Whimsical Gust (Damage)
 	},{
@@ -107,10 +106,6 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_EncounterEnd") -- stop skipped cast bars immediately on wipe
-	if not self:LFR() then
-		self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
-	end
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Pre Polymorph Bomb
 
 	-- General
 	self:Log("SPELL_CAST_START", "Rebirth", 418187)
@@ -163,7 +158,6 @@ function mod:OnEngage()
 	castingRebirth = false
 	rebirthCount = 1
 	rebirthTimers = {}
-	duckList = {}
 
 	specialCD = self:LFR() and 74.7 or 56
 	activeSpecials = 0
@@ -216,7 +210,7 @@ function mod:OnEngage()
 	self:Bar(418720, self:LFR() and 46.6 or self:Normal() and 35 or 36, CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- Polymorph Bomb
 	self:Bar(421024, self:Mythic() and 43 or self:LFR() and 60.2 or 45.5, CL.count:format(CL.pushback, emeraldWindsCount)) -- Emerald Winds
 
-	--self:SetPrivateAuraSound(418720, 418589) -- Polymorph Bomb
+	self:SetPrivateAuraSound(418720, 418589) -- Polymorph Bomb (Pre-Bomb)
 end
 
 function mod:BigWigs_EncounterEnd()
@@ -229,23 +223,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:RaidBossWhisperSync(msg, player)
-	if msg:find("spell:418720", nil, true) then
-		duckList[#duckList+1] = player
-		self:TargetsMessage(418720, "yellow", duckList, self:Mythic() and 3 or 4, CL.count:format(L.polymorph_bomb_single, polymorphBombCount))
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	--|TInterface\\ICONS\\INV_DuckBaby_Mallard.blp:20|t You are targeted for |cFFFF0000|Hspell:418720|h[Polymorph Bomb]|h|r!
-	if msg:find("spell:418720", nil, true) then
-		if self:Solo() or self:LFR() then -- You won't transmit addon comms when solo, and we don't listen to comms on LFR as the debuff can affect 12+ players, so warn here instead
-			self:PersonalMessage(418720, nil, L.polymorph_bomb_single)
-		end
-		self:PlaySound(418720, "warning")
-	end
-end
 
 function mod:SpecialOver()
 	activeSpecials = math.max(activeSpecials - 1, 0)
@@ -649,68 +626,55 @@ function mod:SongOfTheDragon(args)
 	agonizingClawsCount = 1 -- reset on all specials start because Urctos gets weird if interrupted during the Blinding Rage cast
 end
 
-function mod:SongOfTheDragonOver()
+function mod:SongOfTheDragonOver(args)
 	self:StopBar(CL.cast:format(CL.count:format(L.song_of_the_dragon, songCount)))
 
-	self:Message(421292, "green", CL.over:format(L.song_of_the_dragon)) -- Pip ult over
-	self:PlaySound(421292, "info")
+	self:Message(args.spellId, "green", CL.over:format(L.song_of_the_dragon)) -- Pip ult over
+	self:PlaySound(args.spellId, "info")
 
 	self:SpecialOver()
 
 	if activeSpecials > 0 and specialChain[nextSpecialAbility] == "urctos" then -- Pip + Urctos
 		self:StopBar(CL.count:format(L.polymorph_bomb, polymorphBombCount)) -- make sure we're not duplicating
-		self:Bar(420948, 2.5, L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount))
+		self:Bar(418720, 2.5, L.special_mechanic_bar:format(L.polymorph_bomb, polymorphBombCount))
 	end
 end
 
 function mod:SongOfTheDragonApplied(args)
 	if self:Me(args.destGUID) then
 		songOnMe = true
+		self:PersonalMessage(421029, nil, L.song_of_the_dragon)
+		self:PlaySound(421029, "warning", nil, args.destName)
 	end
 end
 
-do
-	local captivatingFinaleOnMe = false
-	function mod:SongOfTheDragonRemoved(args)
-		if self:Me(args.destGUID) then
-			songOnMe = false
-			self:SimpleTimer(function() -- don't announce if you got stunned
-				if not captivatingFinaleOnMe then
-					self:Message(421029, "green", CL.removed:format(self:SpellName(421029)))
-					self:PlaySound(421029, "info")
-				end
-			end, 0.5)
-		end
+function mod:SongOfTheDragonRemoved(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(421029, false, CL.removed:format(L.song_of_the_dragon))
+		self:PlaySound(421029, "warning", nil, args.destName)
+		self:SimpleTimer(function() songOnMe = false end, 1) -- Give some time to get out before showing a damage warning
 	end
+end
 
-	function mod:CaptivatingFinaleApplied(args)
-		if self:Me(args.destGUID) then
-			captivatingFinaleOnMe = true
-			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "warning")
-			self:Yell(args.spellId, nil, nil, "Captivating Finale") -- Maybe get saved
-		end
+function mod:CaptivatingFinaleApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:Yell(args.spellId, nil, nil, "Captivating Finale") -- Maybe get saved
 	end
+end
 
-	function mod:CaptivatingFinaleRemoved(args)
-		if self:Me(args.destGUID) then
-			captivatingFinaleOnMe = false
-			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-			self:PlaySound(args.spellId, "info")
-		end
+function mod:CaptivatingFinaleRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 	end
 end
 
 function mod:PolymorphBomb()
-	duckList = {}
-
 	local spellName = L.polymorph_bomb
 	self:StopBar(L.special_mechanic_bar:format(spellName, polymorphBombCount))
 	self:StopBar(CL.count:format(spellName, polymorphBombCount))
 
-	if self:LFR() then
-		self:Message(418720, "yellow", CL.count:format(spellName, polymorphBombCount)) -- On non-LFR we use a player message sent from whisper comms
-	end
+	self:Message(418720, "yellow", CL.count:format(spellName, polymorphBombCount))
 	self:PlaySound(418720, "alert")
 	polymorphBombCount = polymorphBombCount + 1
 
