@@ -431,6 +431,7 @@ end
 
 function plugin:OnPluginDisable()
 	activatedModules = {}
+	latestKill = {}
 	RestoreAll(self)
 	if not isClassic and self.db.profile.redirectToastMsgs then
 		self:UnregisterEvent("DISPLAY_EVENT_TOASTS")
