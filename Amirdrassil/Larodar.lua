@@ -29,6 +29,7 @@ local smolderingBackdraftCount = 1
 local ashenCallCount = 1
 local ashenDevastationCount = 1
 local smolderingSuffocationOnMe = false
+local intermissionSoon = false
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -248,6 +249,7 @@ function mod:OnEngage()
 	ashenCallCount = 1
 	ashenDevastationCount = 1
 	smolderingSuffocationOnMe = false
+	intermissionSoon = false
 
 	timers = self:LFR() and timersLFR or self:Normal() and timersNormal or self:Mythic() and timersMythic or timersHeroic
 	self:SetStage(1)
@@ -289,10 +291,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 43 then -- Intermission at 40%
+	if self:GetHealth(unit) < 39 then -- Intermission at 35%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
-		self:PlaySound("stages", "info")
+		intermissionSoon = true
+		if self:GetStage() == 1 then
+			self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
+			self:PlaySound("stages", "info")
+		end
 	end
 end
 
@@ -439,7 +444,11 @@ end
 
 -- Intermission: Unreborn Again
 function mod:ConsumingFlame(args)
-	self:Message(args.spellId, "yellow")
+	if intermissionSoon then
+		self:Message(args.spellId, "yellow", CL.percent:format(35, args.spellName))
+	else
+		self:Message(args.spellId, "yellow")
+	end
 	self:PlaySound(args.spellId, "long")
 
 	self:SetStage(1.5)
