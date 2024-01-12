@@ -541,8 +541,6 @@ function mod:Supernova(args)
 	self:PlaySound(424140, "long")
 
 	if stage < 3 then
-		self:Message(424258, "green", CL.count:format(self:SpellName(424258), dreamEssenceOnYou)) -- Dream Essence
-
 		stage = stage + 1
 		self:SetStage(stage)
 
