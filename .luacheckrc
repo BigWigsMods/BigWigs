@@ -198,7 +198,6 @@ globals = {
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
 	"CombatLogGetCurrentEventInfo",
-	"CombatLog_String_GetIcon",
 	"CreateFrame",
 	"EJ_GetCreatureInfo",
 	"EJ_GetEncounterInfo",
