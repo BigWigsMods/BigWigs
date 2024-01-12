@@ -512,8 +512,8 @@ end
 function mod:DreamEssenceApplied(args)
 	if self:Me(args.destGUID) then
 		dreamEssenceOnYou = args.amount or 1
-		if supernovaCasting or dreamEssenceOnYou % 2 == 0 or dreamEssenceOnYou >= 6 then
-			self:StackMessage(args.spellId, "green", args.destName, dreamEssenceOnYou, 10)
+		if supernovaCasting or dreamEssenceOnYou % 2 == 0 or dreamEssenceOnYou >= 8 then
+			self:StackMessage(args.spellId, "blue", args.destName, dreamEssenceOnYou, 10)
 		end
 	end
 end
