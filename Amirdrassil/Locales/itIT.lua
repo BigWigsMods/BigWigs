@@ -121,6 +121,6 @@ if L then
 	--L.eternal_firestorm_shortened_bar = "Firestorm [E]" -- E for Eternal
 	--L.eternal_firestorm_message_full = "Firestorm [Eternal]"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
-	--L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
+	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
+	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
 end

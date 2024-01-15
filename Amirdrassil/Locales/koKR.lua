@@ -121,6 +121,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "영원한 화염폭풍" -- E for Eternal
 	L.eternal_firestorm_message_full = "영원한 화염폭풍"
 
-	L.eternal_firestorm_swirl = "영원한 화염폭풍 소용돌이"
-	L.eternal_firestorm_swirl_desc = "영원한 화염폭풍 소용돌이 타이머"
+	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
+	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
 end

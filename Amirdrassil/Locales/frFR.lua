@@ -121,6 +121,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "Tempête de feu [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Tempête de feu [Éternelle]"
 
-	L.eternal_firestorm_swirl = "Tempête de feu tourbillonnante"
-	L.eternal_firestorm_swirl_desc = "Compteur pour les tempêtes de feu tourbillonnantes"
+	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
+	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
 end
