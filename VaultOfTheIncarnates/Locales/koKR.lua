@@ -32,8 +32,6 @@ if L then
 	L.meteor_axe = "도끼" -- Singular
 	L.meteor_axes_melee = "근딜 도끼"
 	L.meteor_axes_ranged = "원딜 도끼"
-	L.conductive_marks = "표식" -- Conductive Marks
-	L.conductive_mark = "표식" -- Singular
 
 	L.skipped_cast = "%s (%d) 스킵"
 end
@@ -51,8 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "koKR")
 if L then
-	L.conductive_marks = "표식"
-	L.conductive_mark = "표식"
 	L.raging_burst = "회오리 생성"
 	L.cyclone = "당기기"
 	L.crosswinds = "회오리 재배치"

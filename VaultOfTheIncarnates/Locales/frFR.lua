@@ -32,8 +32,6 @@ if L then
 	L.meteor_axe = "Hache" -- Singular
 	L.meteor_axes_melee = "Hache Mêlée"
 	L.meteor_axes_ranged = "Hache Distance"
-	L.conductive_marks = "Marques" -- Conductive Marks
-	L.conductive_mark = "Marque" -- Singular
 
 	L.skipped_cast = "%s ignoré (%d)"
 end
@@ -51,8 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "frFR")
 if L then
-	L.conductive_marks = "Marques"
-	L.conductive_mark = "Marque"
 	L.raging_burst = "Nouvelles Tornades"
 	L.cyclone = "Attraction"
 	L.crosswinds = "Tornades mobiles"

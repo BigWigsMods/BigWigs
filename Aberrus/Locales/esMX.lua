@@ -6,8 +6,6 @@ if L then
 
 	--L.coalescing_void = "Run Away"
 	--L.molten_eruption = "Soaks"
-	--L.shadowflame_burst = "Frontal Cone"
-	--L.plus = "%s + %s"
 
 	--L.shadow_and_flame = "Mythic Debuffs"
 end
@@ -15,7 +13,6 @@ end
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "esMX")
 if L then
 	--L.rending_charge_single = "First Charge"
-	--L.massive_slam = "Frontal Cone"
 	--L.unstable_essence_new = "New Bomb"
 	--L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
 	--L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
@@ -43,7 +40,6 @@ end
 L = BigWigs:NewBossLocale("Rashok, the Elder", "esMX")
 if L then
 	--L.doom_flames = "Small Soaks"
-	--L.shadowlave_blast = "Frontal Cone"
 	--L.charged_smash = "Big Soak"
 	--L.energy_gained = "Energy Gained: %d"
 

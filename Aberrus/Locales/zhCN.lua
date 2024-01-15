@@ -6,8 +6,6 @@ if L then
 
 	L.coalescing_void = "远离"
 	L.molten_eruption = "接圈"
-	L.shadowflame_burst = "冲击波"
-	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "暗焰易伤"
 end
@@ -15,7 +13,6 @@ end
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "zhCN")
 if L then
 	L.rending_charge_single = "第一个冲锋"
-	L.massive_slam = "冲击波"
 	L.unstable_essence_new = "新炸弹"
 	L.custom_on_unstable_essence_high = "不稳定的精华：高层数喊话"
 	L.custom_on_unstable_essence_high_desc = "当你身上的不稳定的精华层数过高时，持续喊话通报你的层数。"
@@ -43,7 +40,6 @@ end
 L = BigWigs:NewBossLocale("Rashok, the Elder", "zhCN")
 if L then
 	L.doom_flames = "接圈"
-	L.shadowlave_blast = "冲击波"
 	L.charged_smash = "分摊"
 	L.energy_gained = "获得能量: %d"
 

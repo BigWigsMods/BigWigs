@@ -32,8 +32,6 @@ if L then
 	L.meteor_axe = "Axt" -- Singular
 	L.meteor_axes_melee = "Nahkampf Axt"
 	L.meteor_axes_ranged = "Fernkampf Axt"
-	L.conductive_marks = "Zeichen" -- Conductive Marks
-	L.conductive_mark = "Zeichen" -- Singular
 
 	L.skipped_cast = "%s (%d) übersprungen"
 end
@@ -51,8 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "deDE")
 if L then
-	L.conductive_marks = "Zeichen"
-	L.conductive_mark = "Zeichen"
 	L.raging_burst = "Neue Tornados"
 	L.cyclone = "Heranziehen"
 	L.crosswinds = "Bewegende Tornados"

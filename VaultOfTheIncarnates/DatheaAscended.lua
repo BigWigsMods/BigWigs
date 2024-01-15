@@ -28,8 +28,6 @@ local infuserMarks = {}
 
 local L = mod:GetLocale()
 if L then
-	L.conductive_marks = "Marks"
-	L.conductive_mark = "Mark"
 	L.raging_burst = "New Tornadoes"
 	L.cyclone = "Pull In"
 	L.crosswinds = "Moving Tornadoes"
@@ -67,7 +65,7 @@ function mod:GetOptions()
 	}, {
 		[387849] = CL.adds, -- Coalescing Storm (Adds)
 		[388302] = L.raging_burst, -- Raging Burst (New Tempests)
-		[391686] = L.conductive_marks, -- Conductive Mark (Marks)
+		[391686] = CL.marks, -- Conductive Mark (Marks)
 		[376943] = L.cyclone, -- Cyclone (Pull In)
 		[388410] = L.crosswinds, -- Crosswinds (Moving Tempests)
 		[375580] = CL.knockback, -- Zephyr Slam (Knockback)
@@ -106,7 +104,7 @@ function mod:OnEngage()
 	mobCollector = {}
 	infuserMarks = {}
 
-	self:CDBar(391686, 4, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Conductive Mark
+	self:CDBar(391686, 4, CL.count:format(CL.marks, conductiveMarkCount)) -- Conductive Mark
 	self:CDBar(388302, 7, CL.count:format(L.raging_burst, ragingBurstCount)) -- Raging Burst
 	self:CDBar(375580, self:Easy() and 9.5 or 16, CL.knockback) -- Zephyr Slam
 	self:CDBar(388410, self:Easy() and 29 or 25.5, CL.count:format(L.crosswinds, crosswindsCount)) -- Crosswinds
@@ -148,7 +146,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391595 then -- Conductive Mark
-		self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
+		self:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
 		conductiveMarkCount = conductiveMarkCount + 1
 		local cd
 		if self:Mythic() then
@@ -158,7 +156,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		else
 			cd = conductiveMarkCount % 3 == 1 and 23.1 or 31.5
 		end
-		self:CDBar(391686, cd, CL.count:format(L.conductive_marks, conductiveMarkCount))
+		self:CDBar(391686, cd, CL.count:format(CL.marks, conductiveMarkCount))
 	end
 end
 
@@ -169,7 +167,7 @@ function mod:CoalescingStorm(args)
 	coalescingStormCount = coalescingStormCount + 1
 	self:CDBar(args.spellId, self:Heroic() and 75 or 87.5, CL.count:format(CL.adds, coalescingStormCount))
 
-	self:CDBar(391686, self:Mythic() and 19.4 or self:Easy() and 9.7 or 35.5, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Marks
+	self:CDBar(391686, self:Mythic() and 19.4 or self:Easy() and 9.7 or 35.5, CL.count:format(CL.marks, conductiveMarkCount)) -- Marks
 	self:CDBar(375580, self:Mythic() and 30.5 or 20.7, CL.knockback) -- Zephyr Slam
 end
 
@@ -230,10 +228,10 @@ function mod:ConductiveMarkApplied(args)
 		local amount = args.amount or 1
 		self:PlaySound(args.spellId, "warning")
 		if amount == 1 then -- Initial Say
-			self:Say(args.spellId, L.conductive_mark, nil, "Mark")
-			self:PersonalMessage(args.spellId, nil, L.conductive_mark)
+			self:Say(args.spellId, CL.mark, nil, "Mark")
+			self:PersonalMessage(args.spellId, nil, CL.mark)
 		else
-			self:StackMessage(args.spellId, "blue", args.destName, amount, amount, L.conductive_mark)
+			self:StackMessage(args.spellId, "blue", args.destName, amount, amount, CL.mark)
 		end
 	end
 end

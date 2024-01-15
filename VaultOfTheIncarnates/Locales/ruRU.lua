@@ -32,8 +32,6 @@ if L then
 	L.meteor_axe = "Топор" -- Singular
 	L.meteor_axes_melee = "Мили делёжка"
 	L.meteor_axes_ranged = "Рендж делёжка"
-	L.conductive_marks = "Знаки" -- Conductive Marks
-	L.conductive_mark = "Знак" -- Singular
 
 	L.skipped_cast = "Пропущено %s (%d)"
 end
@@ -51,8 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "ruRU")
 if L then
-	L.conductive_marks = "Знаки"
-	L.conductive_mark = "Знак"
 	L.raging_burst = "Новые торнадо"
 	L.cyclone = "Циклон"
 	L.crosswinds = "Торнадо движутся"

@@ -33,7 +33,6 @@ local timers = {
 local L = mod:GetLocale()
 if L then
 	L.doom_flames = "Small Soaks"
-	L.shadowlave_blast = "Frontal Cone"
 	L.charged_smash = "Big Soak"
 	L.energy_gained = "Energy Gained: %d"
 
@@ -73,7 +72,7 @@ function mod:GetOptions()
 		[405316] = CL.full_energy, -- Ancient Fury (Full Energy)
 		[405821] = CL.leap, -- Searing Slam (Leap)
 		[406851] = L.doom_flames, -- Doom Flames (Small Soaks)
-		[406333] = L.shadowlave_blast, -- Shadowlava Blast (Frontal Cone)
+		[406333] = CL.frontal_cone, -- Shadowlava Blast (Frontal Cone)
 		[400777] = L.charged_smash, -- Charged Smash (Big Soak)
 		[407641] = CL.tank_combo, -- Wrath of Djaruun (Tank Combo)
 	}
@@ -118,7 +117,7 @@ function mod:OnEngage()
 	self:Bar(400777, 21, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
 	self:Bar(407641, 29, CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 39, L.doom_flames) -- Doom Flames
-	self:Bar(406333, 95.6, L.shadowlave_blast) -- Shadowlava Blast
+	self:Bar(406333, 95.6, CL.frontal_cone) -- Shadowlava Blast
 	self:Bar(405316, 113, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	if self:Mythic() then
 		self:Bar(410070, 4, CL.count:format(CL.orbs, unleashShadowflameCount)) -- Unleash Shadowflame
@@ -173,8 +172,8 @@ function mod:DoomFlames(args)
 end
 
 function mod:ShadowlavaBlast(args)
-	self:StopBar(L.shadowlave_blast)
-	self:Message(args.spellId, "yellow", L.shadowlave_blast)
+	self:StopBar(CL.frontal_cone)
+	self:Message(args.spellId, "yellow", CL.frontal_cone)
 	self:PlaySound(args.spellId, "alert") -- frontal
 	-- 1 per rotation
 end
@@ -263,7 +262,7 @@ function mod:EldersConduitApplied(args)
 	self:StopBar(CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	self:StopBar(CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
 	self:StopBar(L.doom_flames) -- Doom Flames
-	self:StopBar(L.shadowlave_blast) -- Shadowlava Blast
+	self:StopBar(CL.frontal_cone) -- Shadowlava Blast
 	self:StopBar(CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
 	self:StopBar(CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:StopBar(CL.count:format(CL.orbs, unleashShadowflameCount)) -- Unleash Shadowflame
@@ -296,7 +295,7 @@ function mod:EldersConduitRemoved(args)
 	self:Bar(400777, timers[400777][chargedSmashCount], CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
 	self:Bar(407641, timers[407641][wrathOfDjaruunCount], CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 41, L.doom_flames) -- Doom Flames
-	self:Bar(406333, 97.8, L.shadowlave_blast) -- Shadowlava Blast
+	self:Bar(406333, 97.8, CL.frontal_cone) -- Shadowlava Blast
 	self:Bar(405316, 113, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	if self:Mythic() then
 		self:Bar(410070, timers[410070][unleashShadowflameCount], CL.count:format(CL.orbs, unleashShadowflameCount)) -- Unleash Shadowflame

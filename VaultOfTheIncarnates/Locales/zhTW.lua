@@ -32,8 +32,6 @@ if L then
 	L.meteor_axe = "大圈分攤" -- Singular
 	L.meteor_axes_melee = "近戰分攤"
 	L.meteor_axes_ranged = "遠程分攤"
-	L.conductive_marks = "導電印記" -- Conductive Marks
-	L.conductive_mark = "導電印記" -- Singular
 
 	-- L.skipped_cast = "Skipped %s (%d)"
 end
@@ -51,8 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhTW")
 if L then
-	L.conductive_marks = "導電印記"
-	L.conductive_mark = "導電印記"
 	L.raging_burst = "狂怒風暴"
 	L.cyclone = "拉近"
 	L.crosswinds = "移動風暴"

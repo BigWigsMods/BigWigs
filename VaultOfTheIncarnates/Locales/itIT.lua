@@ -32,8 +32,6 @@ L.primal_blizzard = "Tormenta" -- Primal Blizzard
 	L.meteor_axe = "Ascia" -- Singular
 	L.meteor_axes_melee = "Ascia Corpo a Corpo"
 	L.meteor_axes_ranged = "Ascia a Distanza"
-	L.conductive_marks = "Marchi" -- Conductive Marks
-	L.conductive_mark = "Marchio" -- Singular
 
 	L.skipped_cast = "Saltato %s (%d)"
 end
@@ -51,8 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "itIT")
 if L then
-	L.conductive_marks = "Marchi"
-	L.conductive_mark = "Marchio"
 	L.raging_burst = "Nuovi Tornado"
 	L.cyclone = "Trascinamento"
 	L.crosswinds = "Tornado in Movimento"

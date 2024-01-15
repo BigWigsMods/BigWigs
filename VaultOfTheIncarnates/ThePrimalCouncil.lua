@@ -67,8 +67,6 @@ if L then
 	L.meteor_axe = "Axe" -- Singular
 	L.meteor_axes_melee = "Melee Axe"
 	L.meteor_axes_ranged = "Ranged Axe"
-	L.conductive_marks = "Marks" -- Conductive Marks
-	L.conductive_mark = "Mark" -- Singular
 
 	L.skipped_cast = "Skipped %s (%d)"
 end
@@ -106,7 +104,7 @@ function mod:GetOptions()
 	}, {
 		[373059] = L.primal_blizzard, -- Primal Blizzard (Blizzard)
 		[374038] = L.meteor_axes, -- Meteor Axes (Axes)
-		[371624] = L.conductive_marks, -- Conductive Mark (Mark)
+		[371624] = CL.marks, -- Conductive Mark (Marks)
 	}
 end
 
@@ -149,7 +147,7 @@ function mod:OnEngage(diff)
 	self:Bar(372056, 19.5) -- Crush
 	self:Bar(397134, timers[397134][earthenPillarCount], CL.count:format(L.earthen_pillars, earthenPillarCount)) -- Earthen Pillar
 	local markCD = timers[371624][conductiveMarkCount]
-	self:Bar(371624, markCD, CL.count:format(L.conductive_marks, conductiveMarkCount))
+	self:Bar(371624, markCD, CL.count:format(CL.marks, conductiveMarkCount))
 	checkTimer = self:ScheduleTimer("ConductiveMarkCheck", markCD + SKIP_CAST_THRESHOLD, conductiveMarkCount)
 	self:Bar(374038, timers[374038][axeCount], CL.count:format(L.meteor_axes, axeCount))
 	self:Bar(373059, timers[373059][blizzardCount], CL.count:format(L.primal_blizzard, blizzardCount))
@@ -161,12 +159,12 @@ end
 
 function mod:ConductiveMarkCheck(castCount) -- Marks are rarely skipped
 	if castCount == conductiveMarkCount then -- not on the next cast?
-		mod:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
-		mod:Message(371624, "green", L.skipped_cast:format(L.conductive_marks, castCount))
+		mod:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
+		mod:Message(371624, "green", L.skipped_cast:format(CL.marks, castCount))
 		conductiveMarkCount = castCount + 1
 		local cd = timers[371624][conductiveMarkCount]
 		if cd then
-			mod:Bar(371624, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.conductive_marks, conductiveMarkCount))
+			mod:Bar(371624, cd - SKIP_CAST_THRESHOLD, CL.count:format(CL.marks, conductiveMarkCount))
 			checkTimer = mod:ScheduleTimer("ConductiveMarkCheck", cd, conductiveMarkCount)
 		end
 	end
@@ -199,11 +197,11 @@ end
 
 -- Dathea Stormlash
 function mod:ConductiveMark()
-	self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
-	self:Message(371624, "cyan", CL.casting:format(CL.count:format(L.conductive_marks, conductiveMarkCount)))
+	self:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
+	self:Message(371624, "cyan", CL.casting:format(CL.count:format(CL.marks, conductiveMarkCount)))
 	conductiveMarkCount = conductiveMarkCount + 1
 	local cd = timers[371624][conductiveMarkCount]
-	self:CDBar(371624, cd, CL.count:format(L.conductive_marks, conductiveMarkCount))
+	self:CDBar(371624, cd, CL.count:format(CL.marks, conductiveMarkCount))
 	if cd then
 		checkTimer = self:ScheduleTimer("ConductiveMarkCheck", cd + SKIP_CAST_THRESHOLD, conductiveMarkCount)
 	end
@@ -212,9 +210,9 @@ end
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
 		if args.amount then
-			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, CL.mark)
 		else
-			self:PersonalMessage(args.spellId, nil, L.conductive_mark)
+			self:PersonalMessage(args.spellId, nil, CL.mark)
 		end
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -226,7 +224,7 @@ function mod:ChainLightning(args)
 end
 
 function mod:StormingConvocation(args)
-	self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
+	self:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
 end

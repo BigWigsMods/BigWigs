@@ -55,7 +55,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
 
 	L.rending_charge_single = "First Charge"
-	L.massive_slam = "Frontal Cone"
 	L.unstable_essence_new = "New Bomb"
 	L.volatile_spew = "Dodges"
 	L.volatile_eruption = "Eruption"
@@ -92,7 +91,7 @@ function mod:GetOptions()
 		[407327] = -26322, -- Thadrion
 		[406227] = -26329, -- Rionthus
 	},{
-		[404472] = L.massive_slam, -- Massive Slam (Frontal Cone)
+		[404472] = CL.frontal_cone, -- Massive Slam (Frontal Cone)
 		[404713] = CL.roar, -- Bellowing Roar (Roar)
 		[407327] = L.unstable_essence_new, -- Unstable Essence (New Bomb)
 		[405492] = L.volatile_spew, -- Volatile Spew (Dodges)
@@ -156,7 +155,7 @@ function mod:OnEngage()
 
 	self:Bar(404713, self:Mythic() and 6 or 11, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	self:Bar(406358, self:Mythic() and 14 or 19, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
-	self:Bar(404472, self:Mythic() and 24 or 35, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
+	self:Bar(404472, self:Mythic() and 24 or 35, CL.count:format(CL.frontal_cone, massiveSlamCount)) -- Massive Slam
 
 	self:SetPrivateAuraSound(406358, 406317) -- Rending Charge
 end
@@ -221,7 +220,7 @@ function mod:Deaths(args)
 	end
 	if args.mobId == 200912 then -- Neldris
 		self:StopBar(CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
-		self:StopBar(CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
+		self:StopBar(CL.count:format(CL.frontal_cone, massiveSlamCount)) -- Massive Slam
 		self:StopBar(CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	elseif args.mobId == 200913 then -- Thadrion
 		self:StopBar(CL.count:format(L.unstable_essence_new, unstableEssenceCount)) -- Unstable Essence
@@ -293,7 +292,7 @@ function mod:RendingChargeSuccess(args)
 end
 
 function mod:MassiveSlam()
-	local msg = CL.count:format(L.massive_slam, massiveSlamCount)
+	local msg = CL.count:format(CL.frontal_cone, massiveSlamCount)
 	self:StopBar(msg)
 	self:Message(404472, "yellow", msg)
 	self:PlaySound(404472, "alert")
@@ -302,7 +301,7 @@ function mod:MassiveSlam()
 	if self:Mythic() then
 		cd = massiveSlamCount % 2 == 0 and 18.0 or 37.0
 	end
-	self:Bar(404472, cd, CL.count:format(L.massive_slam, massiveSlamCount))
+	self:Bar(404472, cd, CL.count:format(CL.frontal_cone, massiveSlamCount))
 end
 
 function mod:BellowingRoar(args)

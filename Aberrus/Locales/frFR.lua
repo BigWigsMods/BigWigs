@@ -6,8 +6,6 @@ if L then
 
 	L.coalescing_void = "Fuyez"
 	L.molten_eruption = "Soaks"
-	L.shadowflame_burst = "Cône Frontal"
-	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Affaiblissements Mythiques"
 end
@@ -15,7 +13,6 @@ end
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "frFR")
 if L then
 	L.rending_charge_single = "Première Charge"
-	L.massive_slam = "Cône Frontal"
 	L.unstable_essence_new = "Nouvelle Bombe"
 	L.custom_on_unstable_essence_high = "Message Dire quand Essence Instable est élevé"
 	L.custom_on_unstable_essence_high_desc = "Messages Dire avec le nombre de piles de votre Essence Instable quand il est suffisamment élevé."
@@ -43,7 +40,6 @@ end
 L = BigWigs:NewBossLocale("Rashok, the Elder", "frFR")
 if L then
 	L.doom_flames = "Petits Soaks"
-	L.shadowlave_blast = "Cône Frontal"
 	L.charged_smash = "Gros Soak"
 	L.energy_gained = "Energie Gagnée: %d"
 

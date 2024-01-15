@@ -6,8 +6,6 @@ if L then
 
 	L.coalescing_void = "보스에서 이격"
 	L.molten_eruption = "바닥 밟기"
-	L.shadowflame_burst = "탱 머리 조심"
-	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "신화 디버프"
 end
@@ -15,7 +13,6 @@ end
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "koKR")
 if L then
 	L.rending_charge_single = "돌진 대상"
-	L.massive_slam = "고개 주의"
 	L.unstable_essence_new = "정수 디버프"
 	L.custom_on_unstable_essence_high = "불안정한 정수 고중첩 알리기"
 	L.custom_on_unstable_essence_high_desc = "불안정한 정수 고중첩일때 일반창으로 중첩 알림."
@@ -43,7 +40,6 @@ end
 L = BigWigs:NewBossLocale("Rashok, the Elder", "koKR")
 if L then
 	L.doom_flames = "바닥 밟기"
-	L.shadowlave_blast = "전방 브레스"
 	L.charged_smash = "큰바닥 같이맞기"
 	L.energy_gained = "기력 회복: %d"
 

@@ -6,8 +6,6 @@ if L then
 
 	L.coalescing_void = "Fuja"
 	L.molten_eruption = "Soaks"
-	L.shadowflame_burst = "Cone Frontal"
-	--L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Debuffs Míticos"
 end
@@ -15,7 +13,6 @@ end
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "ptBR")
 if L then
 	L.rending_charge_single = "Primeira Investida"
-	L.massive_slam = "Cone Frontal"
 	L.unstable_essence_new = "Nova Bomba"
 	L.custom_on_unstable_essence_high = "Mensagens de Acumulos Altos de Essência Instável"
 	L.custom_on_unstable_essence_high_desc = "Diga mensagens com a quantidade de acúmulos do seu debuff de Essência Instável quando eles estiverem altos o suficiente."
@@ -43,7 +40,6 @@ end
 L = BigWigs:NewBossLocale("Rashok, the Elder", "ptBR")
 if L then
 	L.doom_flames = "Soaks Pequenos"
-	L.shadowlave_blast = "Cone Frontal"
 	L.charged_smash = "Soak Grande"
 	L.energy_gained = "Energia Obtida: %d"
 

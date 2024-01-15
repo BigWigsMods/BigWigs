@@ -48,8 +48,6 @@ if L then
 
 	L.coalescing_void = "Run Away"
 	L.molten_eruption = "Soaks"
-	L.shadowflame_burst = "Frontal Cone"
-	L.plus = "%s + %s"
 
 	L.shadow_and_flame = "Mythic Debuffs"
 end
@@ -102,10 +100,10 @@ function mod:GetOptions()
 		[404732] = CL.meteor, -- Fiery Meteor (Meteor)
 		[403101] = L.molten_eruption, -- Molten Eruption (Soaks)
 		[404896] = CL.tornadoes, -- Swirling Flame (Tornadoes)
-		[405437] = L.plus:format(CL.meteor, L.coalescing_void), -- Gloom Conflagration (Meteor + Run Away)
-		[405642] = L.plus:format(CL.bombs, CL.tornadoes), -- Blistering Twilight (Bombs + Tornadoes)
-		[408193] = L.plus:format(L.molten_eruption, CL.orbs), -- Convergent Eruption (Soaks + Orbs)
-		[406783] = L.shadowflame_burst, -- Shadowflame Burst (Frontal Cone)
+		[405437] = CL.plus:format(CL.meteor, L.coalescing_void), -- Gloom Conflagration (Meteor + Run Away)
+		[405642] = CL.plus:format(CL.bombs, CL.tornadoes), -- Blistering Twilight (Bombs + Tornadoes)
+		[408193] = CL.plus:format(L.molten_eruption, CL.orbs), -- Convergent Eruption (Soaks + Orbs)
+		[406783] = CL.frontal_cone, -- Shadowflame Burst (Frontal Cone)
 		[409385] = L.shadow_and_flame, -- Shadow and Flame (Mythic Debuffs)
 	}
 end
@@ -477,11 +475,11 @@ do
 			shadowflameBurstCount = 1
 			shadowAndFlameCount = 1
 
-			self:Bar(406783, 19.5, CL.count:format(L.shadowflame_burst, shadowflameBurstCount)) -- Shadowflame Burst
-			self:Bar(405642, 22, CL.count:format(L.plus:format(CL.bombs, CL.tornadoes), blisteringTwilightCount)) -- Blistering Twilight
-			self:Bar(405437, 50, CL.count:format(L.plus:format(CL.meteor, L.coalescing_void), gloomConflagrationCount)) -- Gloom Conflagration
+			self:Bar(406783, 19.5, CL.count:format(CL.frontal_cone, shadowflameBurstCount)) -- Shadowflame Burst
+			self:Bar(405642, 22, CL.count:format(CL.plus:format(CL.bombs, CL.tornadoes), blisteringTwilightCount)) -- Blistering Twilight
+			self:Bar(405437, 50, CL.count:format(CL.plus:format(CL.meteor, L.coalescing_void), gloomConflagrationCount)) -- Gloom Conflagration
 			if not self:Easy() then
-				self:Bar(408193, self:Mythic() and 35.6 or 33, CL.count:format(L.plus:format(L.molten_eruption, CL.orbs), convergentEruptionCount)) -- Convergent Eruption
+				self:Bar(408193, self:Mythic() and 35.6 or 33, CL.count:format(CL.plus:format(L.molten_eruption, CL.orbs), convergentEruptionCount)) -- Convergent Eruption
 			end
 			if self:Mythic() then
 				self:Bar(409385, 29.5, CL.count:format(L.shadow_and_flame, shadowAndFlameCount)) -- Shadow and Flame
@@ -508,16 +506,16 @@ function mod:ShadowflameRemoved(args)
 end
 
 function mod:GloomConflagration(args)
-	local msg = CL.count:format(L.plus:format(CL.meteor, L.coalescing_void), gloomConflagrationCount)
+	local msg = CL.count:format(CL.plus:format(CL.meteor, L.coalescing_void), gloomConflagrationCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	gloomConflagrationCount = gloomConflagrationCount + 1
-	self:Bar(args.spellId, 47.5, CL.count:format(L.plus:format(CL.meteor, L.coalescing_void), gloomConflagrationCount))
+	self:Bar(args.spellId, 47.5, CL.count:format(CL.plus:format(CL.meteor, L.coalescing_void), gloomConflagrationCount))
 end
 
 function mod:BlisteringTwilight()
-	local msg = CL.count:format(L.plus:format(CL.bombs, CL.tornadoes), blisteringTwilightCount)
+	local msg = CL.count:format(CL.plus:format(CL.bombs, CL.tornadoes), blisteringTwilightCount)
 	self:StopBar(msg)
 	self:Message(405642, "yellow", msg)
 	self:PlaySound(405642, "alert")
@@ -528,7 +526,7 @@ function mod:BlisteringTwilight()
 	else -- Heroic/Mythic
 		cd = blisteringTwilightCount == 2 and 52.3 or 47.5
 	end
-	self:Bar(405642, cd, CL.count:format(L.plus:format(CL.bombs, CL.tornadoes), blisteringTwilightCount))
+	self:Bar(405642, cd, CL.count:format(CL.plus:format(CL.bombs, CL.tornadoes), blisteringTwilightCount))
 end
 
 function mod:BlisteringTwilightApplied(args)
@@ -547,12 +545,12 @@ function mod:BlisteringTwilightRemoved(args)
 end
 
 function mod:ConvergentEruption(args)
-	local msg = CL.count:format(L.plus:format(L.molten_eruption, CL.orbs), convergentEruptionCount)
+	local msg = CL.count:format(CL.plus:format(L.molten_eruption, CL.orbs), convergentEruptionCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	convergentEruptionCount = convergentEruptionCount + 1
-	self:Bar(args.spellId, convergentEruptionCount == 2 and 52 or 47.5, CL.count:format(L.plus:format(L.molten_eruption, CL.orbs), convergentEruptionCount))
+	self:Bar(args.spellId, convergentEruptionCount == 2 and 52 or 47.5, CL.count:format(CL.plus:format(L.molten_eruption, CL.orbs), convergentEruptionCount))
 end
 
 function mod:WitheringVulnerabilityApplied(args)
@@ -565,12 +563,12 @@ function mod:WitheringVulnerabilityApplied(args)
 end
 
 function mod:ShadowflameBurst(args)
-	local msg = CL.count:format(L.shadowflame_burst, shadowflameBurstCount)
+	local msg = CL.count:format(CL.frontal_cone, shadowflameBurstCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "purple", msg)
 	self:PlaySound(args.spellId, "alert")
 	shadowflameBurstCount = shadowflameBurstCount + 1
-	self:Bar(args.spellId, shadowflameBurstCount == 3 and 27.6 or 24.3, CL.count:format(L.shadowflame_burst, shadowflameBurstCount))
+	self:Bar(args.spellId, shadowflameBurstCount == 3 and 27.6 or 24.3, CL.count:format(CL.frontal_cone, shadowflameBurstCount))
 end
 
 do
