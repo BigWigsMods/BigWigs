@@ -1421,7 +1421,7 @@ function boss:GetHealth(unit)
 end
 
 do
-	local UnitAura = UnitAura
+	local UnitAura = C_UnitAuras and C_UnitAuras.GetAuraDataByIndex or UnitAura
 	local blacklist = {}
 	--- Get the buff info of a unit.
 	-- @string unit unit token or name
@@ -1438,6 +1438,14 @@ do
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
 				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+				if type(name) == "table" then
+					stack = name.applications
+					duration = name.duration
+					expirationTime = name.expirationTime
+					spellId = name.spellId
+					value = name.points and name.points[1]
+					name = name.name
+				end
 
 				if name == spell then
 					if not blacklist[spellId] then
@@ -1454,6 +1462,14 @@ do
 		else
 			for i = 1, 100 do
 				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+				if type(name) == "table" then
+					stack = name.applications
+					duration = name.duration
+					expirationTime = name.expirationTime
+					spellId = name.spellId
+					value = name.points and name.points[1]
+					name = name.name
+				end
 
 				if not spellId then
 					return
@@ -1484,6 +1500,14 @@ do
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
 				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+				if type(name) == "table" then
+					stack = name.applications
+					duration = name.duration
+					expirationTime = name.expirationTime
+					spellId = name.spellId
+					value = name.points and name.points[1]
+					name = name.name
+				end
 
 				if name == spell then
 					if not blacklist[spellId] then
@@ -1500,6 +1524,14 @@ do
 		else
 			for i = 1, 100 do
 				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+				if type(name) == "table" then
+					stack = name.applications
+					duration = name.duration
+					expirationTime = name.expirationTime
+					spellId = name.spellId
+					value = name.points and name.points[1]
+					name = name.name
+				end
 
 				if not spellId then
 					return
