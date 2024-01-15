@@ -123,5 +123,4 @@ if L then
 
 	--L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
 	--L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
-	--L.eternal_firestorm_swirl_bartext = "Swirls"
 end

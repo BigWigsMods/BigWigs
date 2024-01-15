@@ -124,5 +124,4 @@ if L then
 
 	L.eternal_firestorm_swirl = "Ewiger Feuersturm Wirbel"
 	L.eternal_firestorm_swirl_desc = "Timer für Ewiger Feuersturm Wirbel."
-	L.eternal_firestorm_swirl_bartext = "Wirbel"
 end

@@ -123,5 +123,4 @@ if L then
 
 	L.eternal_firestorm_swirl = "Войдзоны метеоров"
 	L.eternal_firestorm_swirl_desc = "Таймеры для Войдзон метеоров."
-	L.eternal_firestorm_swirl_bartext = "Войдзоны"
 end

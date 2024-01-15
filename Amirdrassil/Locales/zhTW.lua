@@ -123,5 +123,4 @@ if L then
 
 	L.eternal_firestorm_swirl = "迴旋火颶"
 	L.eternal_firestorm_swirl_desc = "為永恆火颶產生的迴旋火颶顯示計時器。"
-	L.eternal_firestorm_swirl_bartext = "迴旋火颶"
 end

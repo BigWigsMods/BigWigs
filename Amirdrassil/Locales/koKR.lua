@@ -123,5 +123,4 @@ if L then
 
 	L.eternal_firestorm_swirl = "영원한 화염폭풍 소용돌이"
 	L.eternal_firestorm_swirl_desc = "영원한 화염폭풍 소용돌이 타이머"
-	L.eternal_firestorm_swirl_bartext = "소용돌이"
 end

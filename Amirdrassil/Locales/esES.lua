@@ -123,5 +123,4 @@ if L then
 
 	L.eternal_firestorm_swirl = "Tormenta de fuego eterna"
 	L.eternal_firestorm_swirl_desc = "Temporizador para Tormentas de fuego eterna"
-	L.eternal_firestorm_swirl_bartext = "Tormentas"
 end

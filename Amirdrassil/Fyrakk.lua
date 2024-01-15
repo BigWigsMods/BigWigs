@@ -83,7 +83,6 @@ if L then
 	L.eternal_firestorm_swirl = "Eternal Firestorm Swirls"
 	L.eternal_firestorm_swirl_desc = "Timers for Eternal Firestorm Swirls."
 	L.eternal_firestorm_swirl_icon = 402736
-	L.eternal_firestorm_swirl_bartext = "Swirls"
 end
 
 --------------------------------------------------------------------------------
@@ -748,7 +747,7 @@ function mod:EternalFirestormP3()
 		timerHandles[414186] = self:ScheduleTimer("Blaze", blazeCD)
 	end
 	if self:Mythic() then -- Unsure about other difficulty timers
-		self:Bar("eternal_firestorm_swirl", 4, CL.count:format(L.eternal_firestorm_swirl_bartext, eternalFirestormSwirlCount), 402736)
+		self:Bar("eternal_firestorm_swirl", 4, CL.count:format(CL.swirls, eternalFirestormSwirlCount), 402736)
 		self:ScheduleTimer("EternalFirestormSwirlTimer", 4) -- Trigger Next
 	end
 end
@@ -772,15 +771,15 @@ function mod:BloomApplied(args)
 end
 
 function mod:EternalFirestormSwirlTimer()
-	self:StopBar(CL.count:format(L.eternal_firestorm_swirl_bartext, eternalFirestormSwirlCount))
+	self:StopBar(CL.count:format(CL.swirls, eternalFirestormSwirlCount))
 	-- No Messages or Sounds, just bars.
-	--self:Message("eternal_firestorm_swirl", "yellow", CL.count:format(L.eternal_firestorm_swirl_bartext, eternalFirestormSwirlCount), 402736)
+	--self:Message("eternal_firestorm_swirl", "yellow", CL.count:format(CL.swirls, eternalFirestormSwirlCount), 402736)
 	--self:PlaySound("eternal_firestorm_swirl", "alert")
 	eternalFirestormSwirlCount = eternalFirestormSwirlCount + 1
 	local cdTable = {3.8, 6.2, 11.1, 11.5, 11.5, 5.1, 6.3, 12, 11.1, 11.7, 5, 6.5, 12.1, 11.0, 11.6, 5.0,  6.5, 11.8, 10.5, 11.8, 5, 6.5, 11.1, 10.5, 10.5}
 	local cd = cdTable[eternalFirestormSwirlCount]
 	if cd and cd > 0 then
-		self:Bar("eternal_firestorm_swirl", cd, CL.count:format(L.eternal_firestorm_swirl_bartext, eternalFirestormSwirlCount), 402736)
+		self:Bar("eternal_firestorm_swirl", cd, CL.count:format(CL.swirls, eternalFirestormSwirlCount), 402736)
 		self:ScheduleTimer("EternalFirestormSwirlTimer", cd)
 	end
 end

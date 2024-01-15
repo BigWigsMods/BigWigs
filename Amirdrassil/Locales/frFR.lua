@@ -123,5 +123,4 @@ if L then
 
 	L.eternal_firestorm_swirl = "Tempête de feu tourbillonnante"
 	L.eternal_firestorm_swirl_desc = "Compteur pour les tempêtes de feu tourbillonnantes"
-	L.eternal_firestorm_swirl_bartext = "Tourbillons"
 end
