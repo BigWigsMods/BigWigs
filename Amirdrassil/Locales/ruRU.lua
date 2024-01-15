@@ -121,6 +121,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "Метеоры" --  Same letter in ru
 	L.eternal_firestorm_message_full = "Метеоры [Вечные]"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "Лужи Огненной Бури"
+	L.eternal_firestorm_swirl_desc = "Показывает таймеры появления дамажущих луж после каста Огненной Бури."
 end

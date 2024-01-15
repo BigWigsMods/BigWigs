@@ -34,8 +34,8 @@ L.mythic = "Эпохальный режим"
 L.hard = "Сложный режим"
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.door_open = "Дверь открыта" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "Врата открыты" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s для %s сек" -- Spell for 10 seconds
 L.over = "%s завершается" -- Spell Over
@@ -55,7 +55,7 @@ L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec 
 
 -- Add related
 L.add_spawned = "Помощник появился"
---L.adds_spawned = "Помощники появился"
+L.adds_spawned = "Помощники появились"
 L.spawned = "Появление: %s"
 L.spawning = "%s появление"
 L.next_add = "Следующий помощник"
