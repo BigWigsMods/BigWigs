@@ -34,7 +34,6 @@ L.mythic = "신화 난이도"
 L.hard = "어려움 모드"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
 --L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 --L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
@@ -123,6 +122,7 @@ L.west = "서쪽"
 L.north_west = "북서쪽"
 
 -- Common ability name replacements
+L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
 L.tank_combo = "탱크 콤보" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "레이저" -- Plural of L.lasers

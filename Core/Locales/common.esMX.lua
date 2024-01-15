@@ -34,7 +34,6 @@ L.mythic = "Modo mítico"
 L.hard = "Modo difícil"
 L.active = "Activo" -- When a boss becomes active, after speech finishes
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
 --L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 --L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
@@ -123,6 +122,7 @@ L.west = "Oeste"
 L.north_west = "Noroeste"
 
 -- Common ability name replacements
+L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
 L.tank_combo = "Combo de tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Láseres" -- Plural of L.lasers

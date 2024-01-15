@@ -34,7 +34,6 @@ L.mythic = "史诗模式"
 L.hard = "困难模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
 --L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 --L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
@@ -123,6 +122,7 @@ L.west = "西"
 L.north_west = "西北"
 
 -- Common ability name replacements
+L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
 L.tank_combo = "坦克连击" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "激光" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "激光" -- Plural of L.lasers

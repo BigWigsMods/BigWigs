@@ -34,7 +34,6 @@ L.mythic = "Mythischer Modus"
 L.hard = "Schwerer Modus"
 L.active = "Aktiv" -- When a boss becomes active, after speech finishes
 L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
 L.door_open = "Tür offen" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Tor offen" -- When a gate is open, usually after a speech from an NPC
 
@@ -123,6 +122,7 @@ L.west = "Westen"
 L.north_west = "Nordwesten"
 
 -- Common ability name replacements
+L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
 L.tank_combo = "Tank Kombi" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Laser" -- Plural of L.lasers
@@ -168,4 +168,3 @@ L.mark = "Mal" -- Short name for abilites with "Mark" in the name, for example "
 L.marks = "Male" -- Plural of L.marks
 L.mind_control = "Gedankenkontrolle" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "GK" -- Short version of Mind Control, mainly for bars
-
