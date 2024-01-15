@@ -36,6 +36,8 @@ L.hard = "Mode difficile"
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 L.general = "Général" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
+--L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+--L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s pendant %s sec." -- Spell for 10 seconds
 L.over = "%s terminé" -- Spell Over
@@ -55,6 +57,7 @@ L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = second
 
 -- Add related
 L.add_spawned = "Add apparu"
+--L.adds_spawned = "Adds apparu"
 L.spawned = "%s apparu"
 L.spawning = "Apparition |2 %s"
 L.next_add = "Prochain Add"
@@ -68,6 +71,7 @@ L.small_add = "Petit add" -- singular
 L.small_adds = "Petits adds" -- plural
 
 -- Mob related
+L.killed = "%s tué"
 L.mob_killed = "%s tué (%d/%d)"
 L.mob_remaining = "%s tué, il en reste %d"
 
@@ -165,3 +169,5 @@ L.mark = "Marque" -- Short name for abilites with "Mark" in the name, for exampl
 L.marks = "Marques" -- Plural of L.marks
 L.mind_control = "Contrôle mental" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
+L.swirl = "Tourbillon" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+L.swirls = "Tourbillons" -- Plural of L.swirl

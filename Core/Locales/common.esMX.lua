@@ -35,6 +35,8 @@ L.hard = "Modo difícil"
 L.active = "Activo" -- When a boss becomes active, after speech finishes
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
+--L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+--L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s terminado" -- Spell Over
@@ -54,6 +56,7 @@ L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (seg = seconds (segu
 
 -- Add related
 L.add_spawned = "Apareció esbirro"
+L.adds_spawned = "Apareció esbirros"
 L.spawned = "%s Apareció"
 L.spawning = "%s Aparece"
 L.next_add = "Siguiente esbirro"
@@ -67,6 +70,7 @@ L.small_add = "Esbirro pequeños" -- singular
 L.small_adds = "Esbirros pequeños" -- plural
 
 -- Mob related
+L.killed = "%s muerto"
 L.mob_killed = "%s muerto (%d/%d)"
 L.mob_remaining = "%s muerto, %d restantes"
 
@@ -164,3 +168,5 @@ L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Control mental" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
+L.swirl = "Remolino" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+L.swirls = "Remolinos" -- Plural of L.swirl

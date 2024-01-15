@@ -35,6 +35,8 @@ L.hard = "Сложный режим"
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Поглот." -- Used for shield-like abilities that absorb damage or healing
+--L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+--L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s для %s сек" -- Spell for 10 seconds
 L.over = "%s завершается" -- Spell Over
@@ -54,6 +56,7 @@ L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec 
 
 -- Add related
 L.add_spawned = "Помощник появился"
+--L.adds_spawned = "Помощники появился"
 L.spawned = "Появление: %s"
 L.spawning = "%s появление"
 L.next_add = "Следующий помощник"
@@ -67,6 +70,7 @@ L.small_add = "Маленький помощник" -- singular
 L.small_adds = "Маленькие помощники" -- plural
 
 -- Mob related
+L.killed = "%s убит"
 L.mob_killed = "%s убит (%d/%d)"
 L.mob_remaining = "%s убит, %d осталось"
 
@@ -164,3 +168,5 @@ L.mark = "Знак" -- Short name for abilites with "Mark" in the name, for exam
 L.marks = "Знаки" -- Plural of L.marks
 L.mind_control = "Контроль над разумом" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "КР" -- Short version of Mind Control, mainly for bars
+--L.swirl = "Swirl" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+--L.swirls = "Swirls" -- Plural of L.swirl

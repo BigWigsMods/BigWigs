@@ -35,6 +35,8 @@ L.hard = "Modalità Difficile"
 L.active = "Attivo" -- When a boss becomes active, after speech finishes
 L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Assorbimento" -- Used for shield-like abilities that absorb damage or healing
+--L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+--L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s per %s sec" -- Spell for 10 seconds
 L.over = "%s Terminato" -- Spell Over
@@ -54,6 +56,7 @@ L.you_die_sec = "Morirai in %d sec" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Add Apparso"
+L.adds_spawned = "Adds Apparso"
 L.spawned = "%s Reinizializzato"
 L.spawning = "Apparizione di %s"
 L.next_add = "Prossimo Add"
@@ -67,7 +70,8 @@ L.small_add = "Add Minore" -- singular
 L.small_adds = "Adds Minori" -- plural
 
 -- Mob related
-L.mob_killed = "%s ucciso (%d/%d)"
+L.killed = "%s Ucciso"
+L.mob_killed = "%s Ucciso (%d/%d)"
 L.mob_remaining = "%s ucciso, %d rimasti"
 
 -- Localizers note:
@@ -164,3 +168,5 @@ L.mark = "Marchio" -- Short name for abilites with "Mark" in the name, for examp
 --L.marks = "Marks" -- Plural of L.marks
 L.mind_control = "Controllo Mentale" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
+L.swirl = "Vortice" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+--L.swirls = "Swirls" -- Plural of L.swirl

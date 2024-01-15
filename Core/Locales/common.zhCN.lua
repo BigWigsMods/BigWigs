@@ -35,6 +35,8 @@ L.hard = "困难模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
+--L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+--L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s持续%s秒" -- Spell for 10 seconds
 L.over = "%s结束" -- Spell Over
@@ -54,6 +56,7 @@ L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "小怪刷新"
+L.adds_spawned = "小怪刷新"
 L.spawned = "%s已刷新"
 L.spawning = "%s刷新"
 L.next_add = "下一波小怪"
@@ -67,6 +70,7 @@ L.small_add = "小型增援" -- singular
 L.small_adds = "小型增援" -- plural
 
 -- Mob related
+L.killed = "%s已击杀"
 L.mob_killed = "%s已击杀（%d/%d）"
 L.mob_remaining = "%s已击杀，%d剩余"
 
@@ -164,3 +168,5 @@ L.mark = "印记" -- Short name for abilites with "Mark" in the name, for exampl
 L.marks = "印记" -- Plural of L.marks
 L.mind_control = "精神控制" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "精神控制" -- Short version of Mind Control, mainly for bars
+L.swirl = "漩涡" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+L.swirls = "漩涡" -- Plural of L.swirl

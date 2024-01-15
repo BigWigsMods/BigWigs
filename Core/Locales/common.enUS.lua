@@ -34,6 +34,8 @@ L.hard = "Hard mode"
 L.active = "Active" -- When a boss becomes active, after speech finishes
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Absorb" -- Used for shield-like abilities that absorb damage or healing
+L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s for %s sec" -- Spell for 10 seconds
 L.over = "%s Over" -- Spell Over
@@ -53,6 +55,7 @@ L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
 
 -- Add related
 L.add_spawned = "Add Spawned"
+L.adds_spawned = "Adds Spawned"
 L.spawned = "%s Spawned"
 L.spawning = "%s Spawning"
 L.next_add = "Next Add"
@@ -66,7 +69,8 @@ L.small_add = "Small Add" -- singular
 L.small_adds = "Small Adds" -- plural
 
 -- Mob related
-L.mob_killed = "%s killed (%d/%d)"
+L.killed = "%s Killed"
+L.mob_killed = "%s Killed (%d/%d)"
 L.mob_remaining = "%s killed, %d remaining"
 
 -- Localizers note:
@@ -163,3 +167,5 @@ L.mark = "Mark" -- Short name for abilites with "Mark" in the name, for example 
 L.marks = "Marks" -- Plural of L.marks
 L.mind_control = "Mind Control" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "MC" -- Short version of Mind Control, mainly for bars
+L.swirl = "Swirl" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+L.swirls = "Swirls" -- Plural of L.swirl

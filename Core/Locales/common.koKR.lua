@@ -35,6 +35,8 @@ L.hard = "어려움 모드"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
+--L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
+--L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s %s초 남음" -- Spell for 10 seconds
 L.over = "%s 종료" -- Spell Over
@@ -54,6 +56,7 @@ L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec 
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
+L.adds_spawned = "추가 몹들 생성"
 L.spawned = "%s 생성"
 L.spawning = "%s 생성"
 L.next_add = "다음 몹 추가"
@@ -67,6 +70,7 @@ L.small_add = "작은 추가 몹" -- singular
 L.small_adds = "작은 추가 몹들" -- plural
 
 -- Mob related
+L.killed = "%s 처치"
 L.mob_killed = "%s 처치 (%d/%d)"
 L.mob_remaining = "%s 처치, %d 남음"
 
@@ -164,3 +168,5 @@ L.mark = "징표" -- Short name for abilites with "Mark" in the name, for exampl
 L.marks = "징표" -- Plural of L.marks
 L.mind_control = "정신 지배" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "정신 지배" -- Short version of Mind Control, mainly for bars
+L.swirl = "소용돌이" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
+L.swirls = "소용돌이" -- Plural of L.swirl
