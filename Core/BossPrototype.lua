@@ -3125,12 +3125,6 @@ function boss:Berserk(seconds, noMessages, customBoss, customBerserk, customFina
 	end
 
 	if noMessages ~= 0 then
-		-- Half-way to enrage warning.
-		local half = seconds / 2
-		local m = half % 60
-		local halfMin = (half - m) / 60
-		self:DelayedMessage(key, half + m, "yellow", format(L.custom_min, berserk, halfMin))
-
 		self:DelayedMessage(key, seconds - 60, "orange", format(L.custom_min, berserk, 1))
 		self:DelayedMessage(key, seconds - 30, "orange", format(L.custom_sec, berserk, 30))
 		self:DelayedMessage(key, seconds - 10, "orange", format(L.custom_sec, berserk, 10))
