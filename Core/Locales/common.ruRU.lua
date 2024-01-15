@@ -168,5 +168,3 @@ L.mark = "Знак" -- Short name for abilites with "Mark" in the name, for exam
 L.marks = "Знаки" -- Plural of L.marks
 L.mind_control = "Контроль над разумом" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "КР" -- Short version of Mind Control, mainly for bars
---L.swirl = "Swirl" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
---L.swirls = "Swirls" -- Plural of L.swirl

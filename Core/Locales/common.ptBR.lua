@@ -168,5 +168,3 @@ L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Controle Mental" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
-L.swirl = "Redemoinho" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
-L.swirls = "Redemoinhos" -- Plural of L.swirl

@@ -168,5 +168,3 @@ L.mark = "印记" -- Short name for abilites with "Mark" in the name, for exampl
 L.marks = "印记" -- Plural of L.marks
 L.mind_control = "精神控制" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "精神控制" -- Short version of Mind Control, mainly for bars
-L.swirl = "漩涡" -- Any ability that shows up as a swirl, usually a bad ability on the ground that you should avoid standing in
-L.swirls = "漩涡" -- Plural of L.swirl
