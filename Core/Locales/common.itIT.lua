@@ -5,7 +5,7 @@ if not L then return end
 L.you = "%s su di TE"
 L.you_icon = "%s su di |T13700%d:0|tTE"
 L.underyou = "%s sotto di TE"
---L.aboveyou = "%s above YOU"
+L.aboveyou = "%s sopra di TE"
 L.other = "%s: %s"
 L.onboss = "%s sul BOSS"
 L.buff_boss = "Potenziamento sul BOSS: %s"
@@ -23,7 +23,7 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "%s vicino A TE"
 L.on_group = "%s sul GRUPPO" -- spell on group
---L.boss = "BOSS"
+L.boss = "BOSS"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "Fase %d"
@@ -34,8 +34,8 @@ L.mythic = "Modalità Mitica"
 L.hard = "Modalità Difficile"
 L.active = "Attivo" -- When a boss becomes active, after speech finishes
 L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.door_open = "Porta aperta" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "Cancello aperto" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s per %s sec" -- Spell for 10 seconds
 L.over = "%s Terminato" -- Spell Over
@@ -105,21 +105,21 @@ L.amount_three = "%dk" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
---L.top = "Top"
---L.up = "Up"
---L.middle = "Middle"
---L.down = "Down"
---L.bottom = "Bottom"
---L.left = "Left"
---L.right = "Right"
+L.top = "Superiore"
+L.up = "Sopra"
+L.middle = "Centrale"
+L.down = "Sotto"
+L.bottom = "Inferiore"
+L.left = "Sinistra"
+L.right = "Destra"
 L.north = "Nord"
---L.north_east = "North-East"
---L.east = "East"
---L.south_east = "South-East"
+L.north_east = "Nord-Est"
+L.east = "Est"
+L.south_east = "Sud-Est"
 L.south = "Sud"
---L.south_west = "South-West"
---L.west = "West"
---L.north_west = "North-West"
+L.south_west = "Sud-Ovest"
+L.west = "Ovest"
+L.north_west = "Nord-Ovest"
 
 -- Common ability name replacements
 L.absorb = "Assorbimento" -- Used for shield-like abilities that absorb damage or healing
