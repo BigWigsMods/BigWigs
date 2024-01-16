@@ -17,8 +17,8 @@ L.proximity_desc = "显示近距离窗口，列出距离你很近的玩家。"
 L.adds = "增援"
 L.adds_desc = "启用与首领战斗中出现的各种增援相关的功能。"
 
-L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已经存在模块，但存在模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您插件的文件夹中。建议删除所有 BigWigs 文件夹并重新安装。"
-L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99此功能很少用到，当与多个首领/增援战斗时通常一个计时条并且需要保持追踪冷却施放相同的法术。|r"
+L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已经存在，但该模块仍试图重新注册。这可能是因为更新失败，导致您的插件文件夹中同时存在两份相同模块的拷贝。建议删除所有 BigWigs 文件夹并重新安装。"
+L.testNameplate = "检测到目标，在目标姓名板上创建一个测试计时条。 |cFF33FF99此功能很少用到，而且通常一次只存在一个计时条，用于追踪同时存在的多个目标的同个技能。|r"
 
 -- Loader / Options.lua
 L.officialRelease = "你所使用的 BigWigs %s 为官方正式版（%s）"
