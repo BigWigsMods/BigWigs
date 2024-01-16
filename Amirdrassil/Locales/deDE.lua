@@ -122,6 +122,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "Feuersturm [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Feuersturm [Ewig]"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "Ewiger Feuersturm Wirbel"
+	L.eternal_firestorm_swirl_desc = "Zeigt Timer für die Wirbel des Ewigen Feuersturms, denen ausgewichen werden muss."
 end
