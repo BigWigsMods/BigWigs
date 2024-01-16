@@ -1171,7 +1171,7 @@ local function parseLocale(file)
 			end
 		end
 		if module_name then
-			if current_module then
+			if current_module and modules_locale[current_module] then
 				-- reverse check
 				for key, value in next, modules_locale[current_module] do
 					if value and not key:match("_icon$") and keys[current_module][key] == nil then
