@@ -34,14 +34,14 @@ if L then
 	L.agonizing_claws_debuff = "{421022} (Debuff)"
 
 	L.custom_off_combined_full_energy = "Barre delle piene combinate (Solo mitico)"
-	L.custom_off_combined_full_energy_desc = "COmbina le barre delle abilità che i boss usano a piena energia in una sola barra, solo se le lanciano contemporaneamente."
+	L.custom_off_combined_full_energy_desc = "Combina le barre delle abilità che i boss usano a piena energia in una sola barra, solo se le lanciano contemporaneamente."
 
 	L.special_mechanic_bar = "%s [Ulti] (%d)"
 
 	L.constricting_thicket = "Viticci"
 	L.poisonous_javelin = "Giavellotto"
 	L.song_of_the_dragon = "Canzone"
-	L.polymorph_bomb = "papere"
+	L.polymorph_bomb = "Papere"
 	L.polymorph_bomb_single = "Papera"
 end
 
@@ -57,8 +57,8 @@ if L then
 	L.charred_brambles = "Radici curabili"
 	L.blazing_thorns = "Spine Fiammeggianti"
 	L.falling_embers = "Assorbimenti"
-	L.flash_fire = "assorbimenti di cura"
-	L.flash_fire_single = "assorbimento di cura"
+	L.flash_fire = "Assorbimenti di cura"
+	L.flash_fire_single = "Assorbimento di cura"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "itIT")
@@ -89,10 +89,10 @@ if L then
 	L.mass_entanglement = "Radici"
 	L.incarnation_moonkin = "Forma di Lunagufo"
 	L.incarnation_tree_of_flame = "Forma albero"
-	L.flaming_germination = "semi"
-	L.suppressive_ember_single = "assorbimento di cura"
+	L.flaming_germination = "Semi"
+	L.suppressive_ember_single = "Sssorbimento di cura"
 	L.flare_bomb = "Piume"
-	L.too_close_to_edge = "troppo vicino al bordo"
+	L.too_close_to_edge = "Troppo vicino al bordo"
 	L.taking_damage_from_edge = "Prendendo danno dal bordo"
 	L.flying_available = "Adesso puoi volare"
 
