@@ -9,13 +9,13 @@ L.altpower_desc = "Mostra la finestra del Potere Alternativo, che mostra l'ammon
 L.infobox = "Riquadro informazioni"
 L.infobox_desc = "Mostra un riquadro con informazioni sul combattimento."
 L.stages = "Fasi"
---L.stages_desc = "Enable functions related to the various stages of the boss encounter such as stage change warnings, stage duration timer bars, etc."
+L.stages_desc = "Abilita le funzioni relative alle varie fasi del boss come per esempio avvisi di cambio di fase, barre della durata della fase, ecc."
 L.warmup = "Pre-ingaggio"
 L.warmup_desc = "Conto alla rovescia per l'inizio del combattimento con il boss."
 L.proximity = "Monitor di Prossimità"
 L.proximity_desc = "Visualizza il monitor di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
---L.adds = "Adds"
---L.adds_desc = "Enable functions related to the various adds that will spawn during the boss encounter."
+L.adds = "Adds"
+L.adds_desc = "Abilita le varie funzioni relative agli add che usciranno durante il boss"
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo una barra, e serve per tracciare i tempi di recupero mentre si combattono più boss/add che lanciano la stessa magia.|r"
@@ -57,7 +57,7 @@ L.alternativeName = "%s (|cFF436EEE%s|r)"
 --	"Shadowlands", -- Shadowlands
 --	"Dragonflight", -- Dragonflight
 --}
---L.currentSeason = "Current Season"
+L.currentSeason = "Stagione attuale"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attenti! (Algalon)"
@@ -97,8 +97,8 @@ L.dbmFaker = "Fingi di usare DBM"
 L.dbmFakerDesc = "Se un'utente DBM effettua un controllo di versione per vedere chi usa DBM, ti vedranno nella lista. Utile per quelle gilde che obbligano ad usare DBM."
 L.zoneMessages = "Mostra messaggi di zona"
 L.zoneMessagesDesc = "Disabilitando questa opzione BigWigs non mostrerà più i messaggi per avvisare che esistono moduli con timer/barre ecc. disponibili ma che tu non hai installato. Raccomandiamo di lasciare attiva questa opzione perché è una notifica che vedrai solo quando verranno creati timer e quant'altro per una nuova zona che potresti trovare utile."
---L.englishSayMessages = "English-only say messages"
---L.englishSayMessagesDesc = "All the 'say' and 'yell' messages that you send in chat during a boss encounter will always be in English. Can be useful if you are with a mixed language group of players."
+L.englishSayMessages = "EAbilita solo messaggi in inglese in chat dici"
+L.englishSayMessagesDesc = "Tutti i messaggi in 'dici' e 'urla' che mandi durante un boss saranno sempre in inglese. Può essere utile se ti trovi in un gruppo con lingue diverse.."
 
 L.slashDescTitle = "|cFFFED000Comandi Slash:|r"
 L.slashDescPull = "|cFFFED000/pull:|r Invia un conto alla rovescia per l'ingaggio alla tua incursione."
@@ -143,8 +143,8 @@ L.VOICE = "Voce"
 L.VOICE_desc = "Se hai un plugin vocale installato, questa opzione lo indurrà a riprodurre un file sonoro per annunciarti l'avvertimento."
 L.COUNTDOWN = "Conto alla rovescia"
 L.COUNTDOWN_desc = "Se abilitato, un conto alla rovescia vocale e visuale verrà aggiunto per gli ultimi 5 secondi. Immagina qualcuno che esegue un conto alla rovescia \"5... 4... 3... 2... 1...\" con numeri grandi proprio nel centro dello schermo."
---L.CASTBAR_COUNTDOWN = "Countdown (cast bars only)"
---L.CASTBAR_COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for the last 5 seconds of the cast bars."
+L.CASTBAR_COUNTDOWN = "Conto alla rovescia (Solo barre dei lanci)"
+L.CASTBAR_COUNTDOWN_desc = "Se abilitato, un avviso verbale e visivo saranno aggiunti per negli ultimi 5 secondi delle barre dei lanci."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 L.SOUND = "Suono"
@@ -157,8 +157,8 @@ L.ME_ONLY_EMPHASIZE = "Enfatizza (solo per me)"
 L.ME_ONLY_EMPHASIZE_desc = "Se attivo enfatizzerà tutti i messaggi associati a questa abilità SOLO se lanciati su di te, rendendoli più grandi e più visibili."
 L.NAMEPLATEBAR = "Barre dei nomi"
 L.NAMEPLATEBAR_desc = "Le barre sono mostrate vicino alle barre dei nomi se più di un nemico lancia la stessa abilità. Se questa abilità è associata ad una barra dei nomi che vuoi nascondere, disattiva questa opzione."
---L.PRIVATE = "Private Aura"
---L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
+L.PRIVATE = "Auree privata"
+L.PRIVATE_desc = "Le auree private non possono essere tracciare normalmente, ma il suono ''su di te'' può essere impostato nella tabella dei suoni."
 
 L.advanced = "Opzioni Avanzate"
 L.back = "<< Indietro"
