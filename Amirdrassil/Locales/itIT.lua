@@ -113,7 +113,7 @@ if L then
 	--L.incarnate_intermission = "Sbalzo"
 
 	--L.incarnate = "Vola via"
-	--L.molten_gauntlet = "Gauntlet"
+	--L.molten_gauntlet = "Guanto lungo fuso"
 	--L.mythic_debuffs = "Gabbie" -- Shadow Cage & Molten Eruption
 
 	--L.greater_firestorm_shortened_bar = "Tempesta di fuoco [S]" -- G for Greater
