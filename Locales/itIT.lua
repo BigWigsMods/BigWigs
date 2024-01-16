@@ -61,7 +61,7 @@ L.currentSeason = "Stagione attuale"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attenti! (Algalon)"
-L.FlagTaken = "Cattura Bandiera (PvP)"
+L.FlagTaken = "Bandiera catturata (PvP)"
 L.Destruction = "Distruzione (Kil'jaeden)"
 L.RunAway = "Scappa ragazzina, scappa!!! (Lupo Cattivo)"
 L.spell_on_you = "BigWigs: Abilità su di te"
