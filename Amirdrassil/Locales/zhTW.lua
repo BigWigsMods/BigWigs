@@ -98,7 +98,7 @@ if L then
 
 	L.fly_time = "飛行用時"
 	L.fly_time_desc = "顯示你在階段轉換期間到達下個平台的飛行用時。"
-	L.fly_time_msg = "飛行用時 %.2 秒" -- Fly Time: 32.23
+	L.fly_time_msg = "飛行用時 %.2f 秒" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhTW")
