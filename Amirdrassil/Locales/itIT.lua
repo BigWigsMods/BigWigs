@@ -1,19 +1,19 @@
 local L = BigWigs:NewBossLocale("Gnarlroot", "itIT")
 if not L then return end
 if L then
-	--L.tortured_scream = "Scream"
+	--L.tortured_scream = "Urlo Torturato"
 end
 
 L = BigWigs:NewBossLocale("Igira the Cruel", "itIT")
 if L then
-	--L.blistering_spear = "Spears"
-	--L.blistering_spear_single = "Spear"
-	--L.blistering_torment = "Chain"
-	--L.twisting_blade = "Blades"
-	--L.marked_for_torment = "Torment"
-	--L.umbral_destruction = "Soak"
-	--L.heart_stopper = "Heal Absorbs"
-	--L.heart_stopper_single = "Heal Absorb"
+	--L.blistering_spear = "Lance"
+	--L.blistering_spear_single = "Lancia"
+	--L.blistering_torment = "Catena"
+	--L.twisting_blade = "Lame"
+	--L.marked_for_torment = "Tormento"
+	--L.umbral_destruction = "Assorbi"
+	--L.heart_stopper = "Assorbimenti di cura"
+	--L.heart_stopper_single = "Assorbimento di cura"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "itIT")
