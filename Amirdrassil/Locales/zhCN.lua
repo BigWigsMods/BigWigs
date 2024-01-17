@@ -98,7 +98,7 @@ if L then
 
 	L.fly_time = "飞行用时"
 	L.fly_time_desc = "显示你在阶段转换期间到达另一个平台的飞行用时。"
-	L.fly_time_msg = "飞行用时: %.2f" -- Fly Time: 32.23
+	L.fly_time_msg = "飞行用时: %.2f 秒" -- Fly Time: 32.23
 end
 
 L = BigWigs:NewBossLocale("Fyrakk the Blazing", "zhCN")
@@ -121,6 +121,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "永火风暴" -- E for Eternal
 	L.eternal_firestorm_message_full = "永火风暴"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "永火风暴旋火"
+	L.eternal_firestorm_swirl_desc = "显示永火风暴何时会生成旋火风暴的计时器，提醒您避免站在旋火风暴中。"
 end

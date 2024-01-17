@@ -98,7 +98,7 @@ L.dbmFakerDesc = "如果 DBM 用户进行版本检查，看看谁在使用 DBM�
 L.zoneMessages = "显示区域信息"
 L.zoneMessagesDesc = "禁用此项 BigWigs 在进入新区域时将停止显示已有计时器。建议不要关闭此选项，因为可能在进入新的区域时需要创建新的计时器，这是非常有帮助的。"
 L.englishSayMessages = "英文喊话"
-L.englishSayMessagesDesc = "在首领战中所有以<大喊>与<说>发送的提示信息都会以英文发送，这对多语言的团队非常有用。"
+L.englishSayMessagesDesc = "在首领战中所有以“大喊”与“说”发送的提示信息都会以英文发送，这对多语言的团队非常有用。"
 
 L.slashDescTitle = "|cFFFED000命令行：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 发送拉怪倒数提示到团队。"

@@ -24,7 +24,7 @@ L.rticon = "%s（{rt%d}）"
 L.near = "%s在你附近"
 L.on_group = "队伍 %s" -- spell on group
 L.boss = "首领"
---L.plus = "%s + %s" -- Spell 1 + Spell 2
+L.plus = "%s + %s" -- Spell 1 + Spell 2
 
 L.phase = "阶段%d"
 L.stage = "阶段%d"
@@ -34,8 +34,8 @@ L.mythic = "史诗模式"
 L.hard = "困难模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.door_open = "门开了" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "门开了" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s持续%s秒" -- Spell for 10 seconds
 L.over = "%s结束" -- Spell Over
