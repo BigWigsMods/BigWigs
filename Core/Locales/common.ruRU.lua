@@ -122,7 +122,7 @@ L.west = "Запад"
 L.north_west = "Северо-Запад"
 
 -- Common ability name replacements
-L.absorb = "Поглот." -- Used for shield-like abilities that absorb damage or healing
+L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
 L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Лазеры" -- Plural of L.lasers
