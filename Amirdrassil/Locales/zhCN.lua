@@ -121,6 +121,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "永火风暴" -- E for Eternal
 	L.eternal_firestorm_message_full = "永火风暴"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "永火风暴旋火"
+	L.eternal_firestorm_swirl_desc = "显示永火风暴何时会生成旋火风暴的计时器，提醒您避免站在旋火风暴中。"
 end
