@@ -94,7 +94,7 @@ local timersMythic = { -- Not complete until Supernova Enrage
 		[420236] = { 14.1, 40.0, 0 }, -- Falling Star
 		[424495] = { 27.1, 20.0, 20.0, 0 }, -- Mass Entanglement
 		[420540] = { 6.2, 26.0, 40.0, 0 }, -- Incarnation: Moonkin
-		[421398] = { 7.1, 26.0, 7.0, 33.0, 0 }, -- Fire Beam
+		[421398] = { 7.1, 33.0, 33.0, 0 }, -- Fire Beam
 		[425576] = { 23.1, 40.0, 0 }, -- Flare Bomb
 	},
 	[2] = {
@@ -262,8 +262,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LingeringCinderApplied", 424582)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringCinderApplied", 424582)
 	self:Log("SPELL_AURA_APPLIED", "GerminatingAuraApplied", 430583)
-	self:Log("SPELL_DAMAGE", "SeedDamage", 430584)
-	self:Log("SPELL_MISSED", "SeedDamage", 430584)
 end
 
 function mod:OnEngage()
@@ -610,8 +608,7 @@ function mod:SuppressiveEmberApplied(args)
 end
 
 do
-	local seedsLeft = 16
-	local seedSoakedList = {}
+	local seedsLeft = 12
 
 	function mod:FlamingGermination(args)
 		self:StopBar(CL.count:format(L.flaming_germination, flamingGerminationCount))
@@ -627,8 +624,8 @@ do
 					playersAlive = playersAlive + 1
 				end
 			end
-			seedsLeft = math.floor(playersAlive * 0.8) -- XXX might not be linear, but this is mostly right?
-			seedSoakedList = {}
+			-- XXX floor? ceil? math.max(1, 12 - (20 - playersAlive))?
+			seedsLeft = math.ceil(playersAlive * 0.6)
 		end
 	end
 
@@ -650,17 +647,6 @@ do
 		if seedsLeft == 0 then
 			self:Message(args.spellId, "green", L.all_seeds_soaked)
 			self:PlaySound(args.spellId, "info")
-		end
-	end
-
-	function mod:SeedDamage(args)
-		if self:Mythic() then
-			seedSoakedList[args.destName] = (seedSoakedList[args.destName] or 0) + 1
-			if seedSoakedList[args.destName] > 1 then -- Soaked more than 1, spawning a tree
-				-- Germinating Aura key, sad face icon
-				self:Message(430583, "red", L.failed_seed:format(self:ColorName(args.destName)), "spell_misc_emotionsad")
-				self:PlaySound(430583, "warning")
-			end
 		end
 	end
 end
