@@ -82,7 +82,6 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "ptBR")
 if L then
 	L.seed_soaked = "Semente feita"
 	L.all_seeds_soaked = "Sementes Concluídas!"
-	L.failed_seed = "%s deu soak em uma semente a mais!"
 
 	L.blazing_mushroom = "Cogumelos"
 	L.fiery_growth = "Dissipar"

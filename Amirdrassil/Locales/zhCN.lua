@@ -82,7 +82,6 @@ L = BigWigs:NewBossLocale("Tindral Sageswift, Seer of the Flame", "zhCN")
 if L then
 	L.seed_soaked = "烈焰之种"
 	L.all_seeds_soaked = "踩种子完毕!"
-	L.failed_seed = "%s 多踩了一粒种子!"
 
 	L.blazing_mushroom = "蘑菇"
 	L.fiery_growth = "炽热驱散" --炽热增生驱散后脚下大圈

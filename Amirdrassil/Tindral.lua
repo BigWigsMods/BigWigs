@@ -128,7 +128,6 @@ local L = mod:GetLocale()
 if L then
 	L.seed_soaked = "Seed soaked"
 	L.all_seeds_soaked = "Seeds done!"
-	L.failed_seed = "%s soaked an extra seed!"
 
 	L.blazing_mushroom = "Mushrooms"
 	L.fiery_growth = "Dispels"
