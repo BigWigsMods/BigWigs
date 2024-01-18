@@ -120,6 +120,6 @@ if L then
 	L.eternal_firestorm_shortened_bar = "永火风暴" -- E for Eternal
 	L.eternal_firestorm_message_full = "永火风暴"
 
-	L.eternal_firestorm_swirl = "永火风暴旋火"
-	L.eternal_firestorm_swirl_desc = "显示永火风暴何时会生成旋火风暴的计时器，提醒您避免站在旋火风暴中。"
+	L.eternal_firestorm_swirl = "永火风暴水池"
+	L.eternal_firestorm_swirl_desc = "显示永火风暴何时会生成水池的计时条，提醒您避免站在水池中。提醒：计时条上显示“水池”。"
 end
