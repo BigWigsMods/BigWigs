@@ -47,7 +47,7 @@ L.incoming = "%s inminente" -- Spell Incoming
 L.interrupted = "%s interrumpido" -- Spell Interrupted
 L.interrupted_by = "%s interrumpido por %s" -- Spell interrupted by Player
 L.no = "No %s" -- No Spell
-L.intermission = "Intermedio"
+L.intermission = "Interfase"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
 L.you_die = "Mueres"
@@ -83,7 +83,7 @@ L.custom_sec = "%s en %d seg"
 
 L.focus_only = "|cffff0000Alertas sólo para objetivos en Foco.|r "
 L.trash = "Bichos"
-L.affixes = "Aflijos" -- Seasonal affixes for raids and mythic+ dungeons
+L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s Marcador"
