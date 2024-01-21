@@ -191,14 +191,14 @@ end
 function mod:IsEssenceOfShadowInRange()
 	local unit = self:GetUnitIdByGUID(201774)
 	if unit then
-		return IsItemInRange(116139, unit) -- 50yd
+		return self:UnitWithinRange(unit, 45)
 	end
 end
 
 function mod:IsEternalBlazeInRange()
 	local unit = self:GetUnitIdByGUID(201773)
 	if unit then
-		return IsItemInRange(116139, unit) -- 50yd
+		return self:UnitWithinRange(unit, 45)
 	end
 end
 
@@ -331,7 +331,8 @@ end
 function mod:CoalescingVoid(args)
 	local msg = CL.count:format(L.coalescing_void, coalescingVoidCount)
 	self:StopBar(msg)
-	if self:IsEssenceOfShadowInRange() then
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -339,10 +340,11 @@ function mod:CoalescingVoid(args)
 	self:Bar(args.spellId, 35.2, CL.count:format(L.coalescing_void, coalescingVoidCount))
 end
 
-function mod:UmbralDetonation()
+function mod:UmbralDetonation(args)
 	local msg = CL.count:format(CL.bombs, umbralDetonationCount)
 	self:StopBar(msg)
-	if self:IsEssenceOfShadowInRange() then
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(405036, "yellow", msg)
 		self:PlaySound(405036, "alert")
 	end
@@ -368,7 +370,8 @@ end
 function mod:ShadowsConvergence(args)
 	local msg = CL.count:format(CL.orbs, shadowsConvergenceCount)
 	self:StopBar(msg)
-	if self:IsEssenceOfShadowInRange() then
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -409,7 +412,8 @@ end
 function mod:FieryMeteor(args)
 	local msg = CL.count:format(CL.meteor, fieryMeteorCount)
 	self:StopBar(msg)
-	if self:IsEternalBlazeInRange() then
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -420,7 +424,8 @@ end
 function mod:MoltenEruption(args)
 	local msg = CL.count:format(L.molten_eruption, moltenEruptionCount)
 	self:StopBar(msg)
-	if self:IsEternalBlazeInRange() then
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -431,7 +436,8 @@ end
 function mod:SwirlingFlame(args)
 	local msg = CL.count:format(CL.tornadoes, swirlingFlameCount)
 	self:StopBar(msg)
-	if self:IsEternalBlazeInRange() then
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 	end

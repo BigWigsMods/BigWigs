@@ -387,26 +387,23 @@ end
 --
 
 function mod:AddMarking(_, unit, guid)
-	if guid and not mobCollector[guid] and self:MobId(guid) == 194990 then -- Stormseeker Acolyte
-		local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
-		if inRange then
-			if self:GetOption(stormseekerAcolyteLeft) then
-				for i = 8, 6, -1 do -- 8, 7, 6
-					if not marksUsed[i] then
-						mobCollector[guid] = true
-						marksUsed[i] = guid
-						self:CustomIcon(stormseekerAcolyteLeft, unit, i)
-						return
-					end
+	if not mobCollector[guid] and self:MobId(guid) == 194990 and self:UnitWithinRange(unit, 100) then -- Stormseeker Acolyte
+		if self:GetOption(stormseekerAcolyteLeft) then
+			for i = 8, 6, -1 do -- 8, 7, 6
+				if not marksUsed[i] then
+					mobCollector[guid] = true
+					marksUsed[i] = guid
+					self:CustomIcon(stormseekerAcolyteLeft, unit, i)
+					return
 				end
-			elseif self:GetOption(stormseekerAcolyteRight) then
-				for i = 5, 3, -1 do -- 5, 4, 3
-					if not marksUsed[i] then
-						mobCollector[guid] = true
-						marksUsed[i] = guid
-						self:CustomIcon(stormseekerAcolyteRight, unit, i)
-						return
-					end
+			end
+		elseif self:GetOption(stormseekerAcolyteRight) then
+			for i = 5, 3, -1 do -- 5, 4, 3
+				if not marksUsed[i] then
+					mobCollector[guid] = true
+					marksUsed[i] = guid
+					self:CustomIcon(stormseekerAcolyteRight, unit, i)
+					return
 				end
 			end
 		end
@@ -695,13 +692,9 @@ function mod:ShatteringShroud(args)
 	if self:Healer() then
 		self:PlaySound(args.spellId, "alert")
 	end
-	local unit = self:GetUnitIdByGUID(args.destGUID)
-	local range = nil
-	if unit then
-		local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
-		if inRange then
-			self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, addToNumber[args.sourceGUID]))
-		end
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if unit and self:UnitWithinRange(unit, 100) then
+		self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, addToNumber[args.sourceGUID]))
 	end
 end
 
@@ -723,22 +716,16 @@ function mod:OverloadApplied(args)
 	if self:MobId(args.destGUID) == 199549 then -- Flamesworn Herald
 		flameswornFound = flameswornFound + 1
 		addToNumber[args.destGUID] = flameswornFound
-		local unit = self:GetUnitIdByGUID(args.destGUID)
-		if unit then
-			local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
-			if inRange then
-				self:Bar(397387, 7.32, CL.count:format(self:SpellName(397387), flameswornFound)) -- Flame Shield
-			end
+		local unit = self:UnitTokenFromGUID(args.destGUID)
+		if unit and self:UnitWithinRange(unit, 100) then
+			self:Bar(397387, 7.32, CL.count:format(self:SpellName(397387), flameswornFound)) -- Flame Shield
 		end
 	elseif self:MobId(args.destGUID) == 199547 then -- Frostforged Zealot
 		frostforgedZaelotFound = frostforgedZaelotFound + 1
 		addToNumber[args.destGUID] = frostforgedZaelotFound
-		local unit = self:GetUnitIdByGUID(args.destGUID)
-		if unit then
-			local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
-			if inRange then
-				self:Bar(397382, 7.32, CL.count:format(self:SpellName(397382), frostforgedZaelotFound)) -- Shattering Shroud
-			end
+		local unit = self:UnitTokenFromGUID(args.destGUID)
+		if unit and self:UnitWithinRange(unit, 100) then
+			self:Bar(397382, 7.32, CL.count:format(self:SpellName(397382), frostforgedZaelotFound)) -- Shattering Shroud
 		end
 	end
 end

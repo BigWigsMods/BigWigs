@@ -256,7 +256,7 @@ end
 
 function mod:LumberingSlam(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if not unit or IsItemInRange(18904, unit) then -- Zorbin's Ultra-Shrinker, 38y
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "orange", CL.frontal_cone)
 		self:PlaySound(args.spellId, "alert")
 		self:Bar(args.spellId, 19.5, CL.frontal_cone) -- 19~20
@@ -265,7 +265,7 @@ end
 
 function mod:RadialFlourish(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if not unit or IsItemInRange(18904, unit) then -- Zorbin's Ultra-Shrinker, 38y
+	if not unit or self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alarm")
 		radialFlourishCount = radialFlourishCount + 1
