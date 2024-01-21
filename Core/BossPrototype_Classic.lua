@@ -32,14 +32,14 @@ local C_EncounterJournal_GetSectionInfo = function(key) return BigWigsAPI:GetLoc
 local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned or function(_) end
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
-local UnitName, UnitGUID, UnitHealth, UnitHealthMax = loader.UnitName, loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
+local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
 local UnitDetailedThreatSituation = loader.UnitDetailedThreatSituation
 local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
-local pName = UnitName("player")
+local pName = loader.UnitName("player")
 local cpName
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
@@ -1385,6 +1385,7 @@ function boss:Me(guid)
 end
 
 do
+	local UnitName = loader.UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
 	-- @return name name with the server appended if appropriate
@@ -1397,13 +1398,41 @@ do
 		end
 		return name
 	end
-	--- Get the Globally Unique Identifier of a unit.
+end
+
+--- Get the Globally Unique Identifier of a unit.
+-- @string unit unit token or name
+-- @return guid guid of the unit
+function boss:UnitGUID(unit)
+	local guid = UnitGUID(unit)
+	if guid then
+		return guid
+	end
+end
+
+do
+	local IsItemInRange = loader.IsItemInRange
+	local items = {
+		[5] = 8149, -- Voodoo Charm
+		[10] = 17626, -- Frostwolf Muzzle
+		[20] = 10645, -- Gnomish Death Ray
+		[30] = 835, -- Large Rope Net
+		[35] = 18904, -- Zorbin's Ultra-Shrinker
+		[40] = 28767, -- The Decapitator (TBC+ only)
+		[45] = 23836, -- Goblin Rocket Launcher (TBC+ only)
+		[60] = 32825, -- Soul Cannon (TBC+ only)
+		[100] = 33119, -- Malister's Frost Wand (WotlK+ only)
+	}
+	--- Check whether a hostile unit is within a specific range, check is performed based on specific item ranges.
+	-- Available Ranges: 10, 20, 30, 35, (TBC+: 40, 45, 60), (WotlK+: 100)
 	-- @string unit unit token or name
-	-- @return guid guid of the unit
-	function boss:UnitGUID(unit)
-		local guid = UnitGUID(unit)
-		if guid then
-			return guid
+	-- @number range the range to check
+	-- @return boolean
+	function boss:UnitWithinRange(unit, range)
+		local item = items[range]
+		if item then
+			local inRange = IsItemInRange(item, unit)
+			return inRange
 		end
 	end
 end

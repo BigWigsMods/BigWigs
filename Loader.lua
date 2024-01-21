@@ -100,6 +100,7 @@ public.CTimerNewTicker = CTimerNewTicker
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
+public.IsItemInRange = IsItemInRange
 public.PlaySoundFile = PlaySoundFile
 public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 public.SendAddonMessage = SendAddonMessage
