@@ -34,8 +34,8 @@ L.mythic = "Modo mítico"
 L.hard = "Modo difícil"
 L.active = "Activo" -- When a boss becomes active, after speech finishes
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.door_open = "Puerta abierta" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s terminado" -- Spell Over
@@ -47,7 +47,7 @@ L.incoming = "%s Acercándose" -- Spell Incoming
 L.interrupted = "%s Interrumpido" -- Spell Interrupted
 L.interrupted_by = "%s Interrumpido por %s" -- Spell interrupted by Player
 L.no = "No %s" -- No Spell
-L.intermission = "Interrupción"
+L.intermission = "Interfase"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
 L.you_die = "Te mueres"
@@ -65,7 +65,7 @@ L.add = "Esbirro"
 L.adds = "Esbirros"
 L.big_add = "Esbirro grande" -- singular
 L.big_adds = "Esbirros grande" -- plural
-L.small_add = "Esbirro pequeños" -- singular
+L.small_add = "Esbirro pequeño" -- singular
 L.small_adds = "Esbirros pequeños" -- plural
 
 -- Mob related
