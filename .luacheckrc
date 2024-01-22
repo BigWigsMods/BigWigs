@@ -16,6 +16,7 @@ files["**/Loader.lua"].ignore = {
 	"113/GetAddOnInfo",
 	"113/GetCurrentRegion",
 	"113/GetRealmID",
+	"113/IsItemInRange",
 	"113/PlaySoundFile",
 	"113/securecallfunction",
 	"113/SendChatMessage",
@@ -243,7 +244,6 @@ globals = {
 	"IsGuildMember",
 	"IsInGroup",
 	"IsInRaid",
-	"IsItemInRange",
 	"IsLoggedIn",
 	"IsMounted", -- Dragonflight/Amirdrassil/TindralSageswift.lua
 	"IsPartyLFG",

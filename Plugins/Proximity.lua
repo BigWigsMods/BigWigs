@@ -65,6 +65,7 @@ local proxAnchor, proxTitle = nil, nil
 local CTimerAfter = BigWigsLoader.CTimerAfter
 local GameTooltip = CreateFrame("GameTooltip", "BigWigsProximityTooltip", UIParent, "GameTooltipTemplate")
 local UnitPosition = UnitPosition
+local IsItemInRange = BigWigsLoader.IsItemInRange
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
 local UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason
