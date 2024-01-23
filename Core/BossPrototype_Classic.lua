@@ -452,11 +452,7 @@ function boss:Disable(isWipe)
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
-		for i = #enabledModules, 1, -1 do
-			if self == enabledModules[i] then
-				tremove(enabledModules, i)
-			end
-		end
+		self:DeleteFromTable(enabledModules, self)
 
 		-- No enabled modules? Unregister the combat log!
 		if #enabledModules == 0 then
@@ -1298,6 +1294,17 @@ end
 -- Misc utility functions
 -- @section utility
 --
+
+--- Delete a specific item from a table.
+-- @table table The table to remove the item from
+-- @param item The item to remove from the table
+function boss:DeleteFromTable(table, item)
+	for i = #table, 1, -1 do
+		if item == table[i] then
+			tremove(table, i)
+		end
+	end
+end
 
 --- Get the current instance difficulty.
 -- @return difficulty id

@@ -175,7 +175,6 @@ globals = {
 
 	-- framexml
 	"tContains",
-	"tDeleteItem",
 
 	-- everything else
 	"BigWigs3DB",
