@@ -1296,7 +1296,7 @@ end
 --
 
 --- Delete a specific item from a table.
--- @table table The table to remove the item from
+-- @param[type=table] table The table to remove the item from
 -- @param item The item to remove from the table
 function boss:DeleteFromTable(table, item)
 	for i = #table, 1, -1 do
