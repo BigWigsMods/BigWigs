@@ -660,7 +660,7 @@ do
 	local args = {}
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	bossUtilityFrame:SetScript("OnEvent", function()
-		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
+		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool, extraSpellId, amount = CombatLogGetCurrentEventInfo()
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
 				local _, _, _, _, _, id = strsplit("-", destGUID)
@@ -689,7 +689,8 @@ do
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-						args.time, args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = time, spellId, spellName, extraSpellId, amount, amount
+						args.spellId, args.spellName, args.spellSchool = spellId, spellName, spellSchool
+						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, amount, amount
 						if type(func) == "function" then
 							func(args)
 						else
@@ -1130,7 +1131,7 @@ do
 		twipe(icons) -- Wipe icon cache
 		twipe(spells)
 		if self.OnWin then self:OnWin() end
-		self:ScheduleTimer("Disable", 1) -- Delay a little to prevent re-enabling
+		Timer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
 		self:SendMessage("BigWigs_OnBossWin", self)
 		self:SendMessage("BigWigs_VictorySound", self)
 	end
@@ -1188,15 +1189,17 @@ do
 		bossTargetScans[#bossTargetScans+1] = {self, func, solo and 0.1 or tankCheckExpiry, guid, 0} -- Tiny allowance when solo
 	end
 
-
 	function boss:NextTarget(event, unit)
-		self:UnregisterUnitEvent(event, unit)
-		local func = self.bossTargetChecks[unit]
-		self.bossTargetChecks[unit] = nil
 		local id = unit.."target"
 		local playerGUID = UnitGUID(id)
-		local name = self:UnitName(id)
-		func(self, name, playerGUID)
+		-- ignore the boss detargeting their current target before targeting the next player
+		if playerGUID then
+			self:UnregisterUnitEvent(event, unit)
+			local func = self.bossTargetChecks[unit]
+			self.bossTargetChecks[unit] = nil
+			local name = self:UnitName(id)
+			func(self, name, playerGUID)
+		end
 	end
 	--- Register a callback to get the next target a boss swaps to (boss1 - boss5).
 	-- Looks for the boss as defined by the GUID and then returns the next target selected by that boss.
@@ -1228,27 +1231,27 @@ end
 do
 	function boss:UPDATE_MOUSEOVER_UNIT(event)
 		local guid = UnitGUID("mouseover")
-		if not myGroupGUIDs[guid] then
+		if guid and not myGroupGUIDs[guid] then
 			self[self.targetEventFunc](self, event, "mouseover", guid)
 		end
 	end
 	function boss:UNIT_TARGET(event, unit)
 		local unitTarget = unit.."target"
 		local guid = UnitGUID(unitTarget)
-		if not myGroupGUIDs[guid] then
+		if guid and not myGroupGUIDs[guid] then
 			self[self.targetEventFunc](self, event, unitTarget, guid)
 		end
 
 		if self.targetEventFunc then -- Event is still registered, continue
-			local guid = UnitGUID(unit)
-			if not myGroupGUIDs[guid] then
+			guid = UnitGUID(unit)
+			if guid and not myGroupGUIDs[guid] then
 				self[self.targetEventFunc](self, event, unit, guid)
 			end
 		end
 	end
 	function boss:NAME_PLATE_UNIT_ADDED(event, unit)
 		local guid = UnitGUID(unit)
-		if not myGroupGUIDs[guid] then
+		if guid and not myGroupGUIDs[guid] then
 			self[self.targetEventFunc](self, event, unit, guid)
 		end
 	end
@@ -1274,10 +1277,10 @@ do
 	end
 end
 
-function boss:EncounterEnd(event, id, name, diff, size, status)
-	if self.engageId == id and self.enabled then
+function boss:EncounterEnd(_, id, name, diff, size, status)
+	if self:GetEncounterID() == id and self:IsEnabled() then
 		if status == 1 then
-			if self.journalId or self.allowWin then
+			if self:GetJournalID() or self.allowWin then
 				self:Win() -- Official boss module
 			else
 				self:Disable() -- Custom external boss module
@@ -1590,9 +1593,27 @@ function boss:Solo()
 	return solo
 end
 
+--- Register a wrapper around the CHAT_MSG_ADDON event that listens to Transcriptor comms sent by the core on every RAID_BOSS_WHISPER.
+-- @param func callback function, passed (msg, player)
+function boss:RegisterWhisperEmoteComms(func)
+	RegisterAddonMessagePrefix("Transcriptor")
+	self:RegisterEvent("CHAT_MSG_ADDON", function(_, prefix, msg, channel, sender)
+		if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
+			return
+		elseif prefix == "Transcriptor" then
+			self[func](self, msg, Ambiguate(sender, "none"))
+		end
+	end)
+end
+
+-------------------------------------------------------------------------------
+-- Gossip API
+-- @section gossip
+--
+
 do
-	local GetOptions = C_GossipInfo.GetOptions or _G.GetGossipOptions
-	local SelectOption = C_GossipInfo.SelectOption or _G.SelectGossipOption
+	local GetOptions = C_GossipInfo.GetOptions
+	local SelectOption = C_GossipInfo.SelectOption
 	--- Request the gossip options of the selected NPC
 	-- @return table A table result of all text strings in the form of { result1, result2, result3 }
 	function boss:GetGossipOptions()
@@ -2119,9 +2140,9 @@ function boss:MessageOld(key, color, sound, text, icon)
 	self:PlaySound(key, sound)
 end
 
-function boss:Message(key, color, text, icon)
+function boss:Message(key, color, text, icon, disableEmphasize)
 	if checkFlag(self, key, C.MESSAGE) then
-		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
+		local isEmphasized = not disableEmphasize and band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 		self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized)
 	end
 end
@@ -2829,7 +2850,6 @@ do
 		[0x00000040] = 7, -- COMBATLOG_OBJECT_RAIDTARGET7
 		[0x00000080] = 8, -- COMBATLOG_OBJECT_RAIDTARGET8
 	}
-
 	--- Get the raid target icon currently set on a unit based on its combat log flags.
 	-- @string flags unit bit flags
 	-- @return number The number based on the icon ranging from 1-8 (nil if no icon is set)
@@ -2862,32 +2882,45 @@ end
 -- @section chat
 --
 
---- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
--- @param key the option key
--- @param msg the message to say (if nil, key is used)
--- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Say(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "SAY")
-	else
-		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+do
+	local on = "%s on %s"
+	--- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
+	-- @param key the option key
+	-- @param msg the message to say (if nil, key is used)
+	-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:Say(key, msg, directPrint, englishText)
+		if not checkFlag(self, key, C.SAY) then return end
+		if directPrint then
+			SendChatMessage(englishSayMessages and englishText or msg, "SAY")
+		else
+			if englishSayMessages and englishText then
+				SendChatMessage(format(on, englishText, pName), "SAY")
+			else
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+			end
+		end
+		self:Debug(":Say", key, msg, directPrint, englishText)
 	end
-	self:Debug(":Say", key, msg, directPrint)
-end
 
---- Send a message in YELL. Generally used for abilities where you need to group up.
--- @param key the option key
--- @param msg the message to yell (if nil, key is used)
--- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Yell(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "YELL")
-	else
-		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+	--- Send a message in YELL. Generally used for abilities where you need to group up.
+	-- @param key the option key
+	-- @param msg the message to yell (if nil, key is used)
+	-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:Yell(key, msg, directPrint, englishText)
+		if not checkFlag(self, key, C.SAY) then return end
+		if directPrint then
+			SendChatMessage(englishSayMessages and englishText or msg, "YELL")
+		else
+			if englishSayMessages and englishText then
+				SendChatMessage(format(on, englishText, pName), "YELL")
+			else
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+			end
+		end
+		self:Debug(":Yell", key, msg, directPrint, englishText)
 	end
-	self:Debug(":Yell", key, msg, directPrint)
 end
 
 --- Cancel a countdown using say messages.
@@ -2919,11 +2952,12 @@ do
 	-- @number seconds the amount of time in seconds until the countdown expires
 	-- @param[opt] textOrIcon Attach additional text to the countdown if passed a text string, attach a raid icon if passed a number [1-8]
 	-- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
-	function boss:SayCountdown(key, seconds, textOrIcon, startAt)
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:SayCountdown(key, seconds, textOrIcon, startAt, englishText)
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
 		local tbl = {false}
-		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
+		local text = (type(textOrIcon) == "number" and iconList[textOrIcon]) or (englishSayMessages and englishText) or textOrIcon
 		local function printTime()
 			if not tbl[1] then
 				SendChatMessage(text and format("%s %d", text, start) or start, "SAY")
@@ -2942,11 +2976,12 @@ do
 	-- @number seconds the amount of time in seconds until the countdown expires
 	-- @param[opt] textOrIcon Attach additional text to the countdown if passed a text string, attach a raid icon if passed a number [1-8]
 	-- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
-	function boss:YellCountdown(key, seconds, textOrIcon, startAt)
+	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
+	function boss:YellCountdown(key, seconds, textOrIcon, startAt, englishText)
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
 		local tbl = {false}
-		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
+		local text = (type(textOrIcon) == "number" and iconList[textOrIcon]) or (englishSayMessages and englishText) or textOrIcon
 		local function printTime()
 			if not tbl[1] then
 				SendChatMessage(text and format("%s %d", text, start) or start, "YELL")
@@ -3122,7 +3157,7 @@ function boss:Berserk(seconds, noMessages, customBoss, customBerserk, customFina
 
 	if not noMessages then
 		-- Engage warning with minutes to enrage
-		self:MessageOld(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
+		self:Message(key, "yellow", format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
 	if noMessages ~= 0 then
