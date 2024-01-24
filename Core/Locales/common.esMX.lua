@@ -123,6 +123,8 @@ L.north_west = "Noroeste"
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
+L.heal_absorb = "Absorcion de sanación" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Absorciones de sanación" -- Plural of L.heal_absorb
 L.tank_combo = "Combo de tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Láseres" -- Plural of L.lasers
@@ -168,3 +170,5 @@ L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Control mental" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
+L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "Soaks" -- Plural of L.soak

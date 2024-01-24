@@ -123,6 +123,8 @@ L.north_west = "Северо-Запад"
 
 -- Common ability name replacements
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
+--L.heal_absorb = "Heal Absorb" -- Used for shield-like abilities that absorb healing only
+--L.heal_absorbs = "Heal Absorbs" -- Plural of L.heal_absorb
 L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Лазеры" -- Plural of L.lasers
@@ -168,3 +170,5 @@ L.mark = "Знак" -- Short name for abilites with "Mark" in the name, for exam
 L.marks = "Знаки" -- Plural of L.marks
 L.mind_control = "Контроль над разумом" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "КР" -- Short version of Mind Control, mainly for bars
+L.soak = "Сока" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "Соки" -- Plural of L.soak

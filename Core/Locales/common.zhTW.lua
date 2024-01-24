@@ -123,6 +123,8 @@ L.north_west = "西北"
 
 -- Common ability name replacements
 L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
+L.heal_absorb = "治療吸收盾" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "治療吸收盾" -- Plural of L.heal_absorb
 L.tank_combo = "坦克連擊" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "雷射" -- Plural of L.lasers
@@ -168,3 +170,5 @@ L.mark = "標記" -- Short name for abilites with "Mark" in the name, for exampl
 L.marks = "標記" -- Plural of L.marks
 L.mind_control = "精神控制" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "精神控制" -- Short version of Mind Control, mainly for bars
+L.soak = "分攤" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "分攤" -- Plural of L.soak
