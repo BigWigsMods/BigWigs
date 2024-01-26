@@ -34,6 +34,7 @@ L.mythic = "Mythischer Modus"
 L.hard = "Schwerer Modus"
 L.active = "Aktiv" -- When a boss becomes active, after speech finishes
 L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+--L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
 L.door_open = "Tür offen" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Tor offen" -- When a gate is open, usually after a speech from an NPC
 

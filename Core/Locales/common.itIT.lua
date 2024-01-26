@@ -34,6 +34,7 @@ L.mythic = "Modalità Mitica"
 L.hard = "Modalità Difficile"
 L.active = "Attivo" -- When a boss becomes active, after speech finishes
 L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+--L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
 L.door_open = "Porta aperta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Cancello aperto" -- When a gate is open, usually after a speech from an NPC
 

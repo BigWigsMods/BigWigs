@@ -34,6 +34,7 @@ L.mythic = "史诗模式"
 L.hard = "困难模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+--L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
 L.door_open = "门开了" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "门开了" -- When a gate is open, usually after a speech from an NPC
 
