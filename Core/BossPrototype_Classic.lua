@@ -777,25 +777,16 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
-		if event == "UNIT_HEALTH" then
-			-- Retail module compat
-			if not func then func = event end
-			event = "UNIT_HEALTH_FREQUENT"
-		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
+		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
-			if unit:sub(1, 4) == "boss" then -- XXX compat
-				self:RegisterEvent(event, func)
-			else
-				if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
-				if not frameTbl[unit] then
-					frameTbl[unit] = CreateFrame("Frame")
-					frameTbl[unit]:SetScript("OnEvent", eventFunc)
-				end
-				unitEventMap[self][event][unit] = func or event
-				frameTbl[unit]:RegisterUnitEvent(event, unit)
+			if not frameTbl[unit] then
+				frameTbl[unit] = CreateFrame("Frame")
+				frameTbl[unit]:SetScript("OnEvent", eventFunc)
 			end
+			unitEventMap[self][event][unit] = func or event
+			frameTbl[unit]:RegisterUnitEvent(event, unit)
 		end
 	end
 	--- Unregister a callback for unit bound events.
@@ -804,11 +795,6 @@ do
 	function boss:UnregisterUnitEvent(event, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
-		if event == "UNIT_HEALTH" then event = "UNIT_HEALTH_FREQUENT" end -- Retail module compat
-		if not frameTbl[(...)] then -- XXX compat
-			self:UnregisterEvent(event)
-			return
-		end
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
