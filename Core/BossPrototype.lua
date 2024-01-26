@@ -1285,36 +1285,42 @@ end
 --- Check if in a Looking for Raid instance.
 -- @return boolean
 function boss:LFR()
+	-- 7: Looking for Raid (Legacy), 17: Looking for Raid
 	return difficulty == 7 or difficulty == 17
 end
 
 --- Check if in a Normal difficulty instance.
 -- @return boolean
 function boss:Normal()
-	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14
+	-- 1: Normal Dungeon, 3: 10 Player Raid, 4: 25 Player Raid, 14: Normal Raid, 205: Follower Dungeon
+	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14 or difficulty == 205
 end
 
 --- Check if in a Looking for Raid or Normal difficulty instance.
 -- @return boolean
 function boss:Easy()
-	return difficulty == 14 or difficulty == 17 -- New normal mode or new LFR mode
+	-- 14: Normal Raid, 17: Looking for Raid
+	return difficulty == 14 or difficulty == 17
 end
 
 --- Check if in a Heroic difficulty instance.
 -- @return boolean
 function boss:Heroic()
-	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
+	-- 2: Heroic Dungeon, 5: 10 Player Heroic Raid, 6: 25 Player Heroic Raid, 15: Heroic Raid, 24: Timewalking Dungeon
+	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15 or difficulty == 24
 end
 
 --- Check if in a Mythic or Mythic+ difficulty instance.
 -- @return boolean
 function boss:Mythic()
-	return difficulty == 16 or difficulty == 23 or difficulty == 8
+	-- 8: Mythic Keystone Dungeon, 16: Mythic Raid, 23: Mythic Dungeon
+	return difficulty == 8 or difficulty == 16 or difficulty == 23
 end
 
 --- Check if in a Mythic+ difficulty instance.
 -- @return boolean
 function boss:MythicPlus()
+	-- 8: Mythic Keystone Dungeon
 	return difficulty == 8
 end
 
