@@ -84,7 +84,8 @@ do
 		db.posx = self:GetLeft() * s
 		db.posy = self:GetTop() * s
 	end)
-	local display2 = CreateFrame("Frame", nil, UIParent)
+	local display2 = CreateFrame("Frame", nil, display)
+	display2:Hide()
 	display2:SetSize(infoboxWidth, infoboxHeight)
 	display2:SetPoint("LEFT", display, "RIGHT")
 	display2:SetFrameStrata("MEDIUM")
@@ -103,7 +104,8 @@ do
 		db.posy = display:GetTop() * s
 	end)
 	display.display2 = display2
-	local display3 = CreateFrame("Frame", nil, UIParent)
+	local display3 = CreateFrame("Frame", nil, display)
+	display3:Hide()
 	display3:SetSize(infoboxWidth, infoboxHeight)
 	display3:SetPoint("TOP", display, "BOTTOM")
 	display3:SetFrameStrata("MEDIUM")
@@ -122,7 +124,8 @@ do
 		db.posy = display:GetTop() * s
 	end)
 	display.display3 = display3
-	local display4 = CreateFrame("Frame", nil, UIParent)
+	local display4 = CreateFrame("Frame", nil, display)
+	display4:Hide()
 	display4:SetSize(infoboxWidth, infoboxHeight)
 	display4:SetPoint("TOPLEFT", display, "BOTTOMRIGHT")
 	display4:SetFrameStrata("MEDIUM")
