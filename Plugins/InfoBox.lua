@@ -84,6 +84,63 @@ do
 		db.posx = self:GetLeft() * s
 		db.posy = self:GetTop() * s
 	end)
+	local display2 = CreateFrame("Frame", nil, UIParent)
+	display2:SetSize(infoboxWidth, infoboxHeight)
+	display2:SetPoint("LEFT", display, "RIGHT")
+	display2:SetFrameStrata("MEDIUM")
+	display2:SetFixedFrameStrata(true)
+	display2:SetFrameLevel(130)
+	display2:SetFixedFrameLevel(true)
+	display2:SetClampedToScreen(true)
+	display2:EnableMouse(true)
+	display2:SetMovable(true)
+	display2:RegisterForDrag("LeftButton")
+	display2:SetScript("OnDragStart", function() display:StartMoving() end)
+	display2:SetScript("OnDragStop", function()
+		display:StopMovingOrSizing()
+		local s = display:GetEffectiveScale()
+		db.posx = display:GetLeft() * s
+		db.posy = display:GetTop() * s
+	end)
+	display.display2 = display2
+	local display3 = CreateFrame("Frame", nil, UIParent)
+	display3:SetSize(infoboxWidth, infoboxHeight)
+	display3:SetPoint("TOP", display, "BOTTOM")
+	display3:SetFrameStrata("MEDIUM")
+	display3:SetFixedFrameStrata(true)
+	display3:SetFrameLevel(130)
+	display3:SetFixedFrameLevel(true)
+	display3:SetClampedToScreen(true)
+	display3:EnableMouse(true)
+	display3:SetMovable(true)
+	display3:RegisterForDrag("LeftButton")
+	display3:SetScript("OnDragStart", function() display:StartMoving() end)
+	display3:SetScript("OnDragStop", function()
+		display:StopMovingOrSizing()
+		local s = display:GetEffectiveScale()
+		db.posx = display:GetLeft() * s
+		db.posy = display:GetTop() * s
+	end)
+	display.display3 = display3
+	local display4 = CreateFrame("Frame", nil, UIParent)
+	display4:SetSize(infoboxWidth, infoboxHeight)
+	display4:SetPoint("TOPLEFT", display, "BOTTOMRIGHT")
+	display4:SetFrameStrata("MEDIUM")
+	display4:SetFixedFrameStrata(true)
+	display4:SetFrameLevel(130)
+	display4:SetFixedFrameLevel(true)
+	display4:SetClampedToScreen(true)
+	display4:EnableMouse(true)
+	display4:SetMovable(true)
+	display4:RegisterForDrag("LeftButton")
+	display4:SetScript("OnDragStart", function() display:StartMoving() end)
+	display4:SetScript("OnDragStop", function()
+		display:StopMovingOrSizing()
+		local s = display:GetEffectiveScale()
+		db.posx = display:GetLeft() * s
+		db.posy = display:GetTop() * s
+	end)
+	display.display4 = display4
 
 	local bg = display:CreateTexture()
 	bg:SetAllPoints(display)
@@ -120,6 +177,7 @@ do
 		BigWigs:Print(L.toggleDisplayPrint)
 		plugin:Close()
 	end)
+	display.close = close
 
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFont(plugin:GetDefaultFont(12))
@@ -250,10 +308,18 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 		display.xxx1:Show()
 		display.xxx2:Show()
 		display.xxx3:Show()
+		display.display2:Show()
+		display.display3:Show()
+		display.display4:Show()
+		display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
 	else
 		display.xxx1:Hide()
 		display.xxx2:Hide()
 		display.xxx3:Hide()
+		display.display2:Hide()
+		display.display3:Hide()
+		display.display4:Hide()
+		display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
 	end
 end
 
