@@ -2055,40 +2055,25 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	return bar
 end
 
-do
-	local function PauseAtZero(bar)
-		if bar.remaining < 0.045 then -- Pause at 0.0
-			bar:SetDuration(0.01) -- Make the bar look full
-			currentBarStyler.BarStopped(bar)
-			bar:Start()
-			bar:SetTimeVisibility(false)
-			bar:Pause()
-			currentBarStyler.ApplyStyle(bar)
-		end
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
+	if not text then text = "" end
+	self:StopSpecificBar(nil, module, text)
+	local bar = self:CreateBar(module, key, text, time, icon, isApprox)
+	if isApprox then
+		bar:SetPauseWhenDone(true)
 	end
-
-	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
-		if not text then text = "" end
-		self:StopSpecificBar(nil, module, text)
-
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox)
-		if isApprox then
-			bar:AddUpdateFunction(PauseAtZero)
-		end
-		bar:Start(maxTime)
-		if db.emphasize and time < db.emphasizeTime then
-			self:EmphasizeBar(bar, true)
-		else
-			currentBarStyler.ApplyStyle(bar)
-		end
-		rearrangeBars(bar:Get("bigwigs:anchor"))
-
-		self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
-		-- Check if :EmphasizeBar(bar) was run and trigger the callback.
-		-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
-		if bar:Get("bigwigs:emphasized") then
-			self:SendMessage("BigWigs_BarEmphasized", self, bar)
-		end
+	bar:Start(maxTime)
+	if db.emphasize and time < db.emphasizeTime then
+		self:EmphasizeBar(bar, true)
+	else
+		currentBarStyler.ApplyStyle(bar)
+	end
+	rearrangeBars(bar:Get("bigwigs:anchor"))
+	self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
+	-- Check if :EmphasizeBar(bar) was run and trigger the callback.
+	-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
+	if bar:Get("bigwigs:emphasized") then
+		self:SendMessage("BigWigs_BarEmphasized", self, bar)
 	end
 end
 
