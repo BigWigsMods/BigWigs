@@ -185,12 +185,10 @@ local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
 local icons = setmetatable({
 	-- include some retail icons used for generic events
-	["achievement_bg_returnxflags_def_wsg"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\achievement_bg_returnxflags_def_wsg",
 	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown",
 	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft",
 	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup",
 	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright",
-	["spell_holy_borrowedtime"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\spell_holy_borrowedtime",
 }, {__index =
 	function(self, key)
 		local value
