@@ -32,9 +32,16 @@ local difficultyTable = BigWigsLoader.isRetail and {
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
+local dontPrint = { -- Don't print a warning message for these difficulties
+	[1] = true, -- Normal Dungeon
+	[2] = true, -- Heroic Dungeon
+	[8] = true, -- Mythic+ Dungeon
+	[23] = true, -- Mythic Dungeon
+	[24] = true, -- Timewalking
+}
 
 --[[
-10.2.0
+10.2.5
 1. Normal
 2. Heroic
 3. 10 Player
@@ -78,7 +85,7 @@ local GetTime = GetTime
 171. Path of Ascension: Humility
 172. World Boss
 192. Challenge Level 1
-205. Dungeon Follower
+205. Follower
 
 3.4.3
 1. Normal
@@ -342,7 +349,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 				end
 				sDB.best = elapsed
 			end
-		elseif IsInRaid() and diff ~= 24 then -- Not printing for Timewalking (24)
+		elseif IsInRaid() and not dontPrint[diff] then
 			BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 		end
 	end
@@ -361,7 +368,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 
 			local diff = module:Difficulty()
-			if not difficultyTable[diff] and IsInRaid() and diff ~= 24 then -- Not printing for Timewalking (24)
+			if not difficultyTable[diff] and IsInRaid() and not dontPrint[diff] then
 				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 			elseif difficultyTable[diff] and self.db.profile.saveWipes then
 				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
