@@ -337,7 +337,6 @@ do
 				border:SetPoint("TOPLEFT", bd, "TOPLEFT", 1, -1)
 				border:SetPoint("BOTTOMRIGHT", bd, "BOTTOMRIGHT", -1, 1)
 			end
-			border:SetFrameLevel(3)
 			border:SetBackdrop(borderBackdrop)
 			border:SetBackdropBorderColor(0, 0, 0)
 			bd.tukiborder = border
@@ -353,7 +352,6 @@ do
 				border:SetPoint("TOPLEFT", bd, "TOPLEFT", -1, 1)
 				border:SetPoint("BOTTOMRIGHT", bd, "BOTTOMRIGHT", 1, -1)
 			end
-			border:SetFrameLevel(3)
 			border:SetBackdrop(borderBackdrop)
 			border:SetBackdropBorderColor(0, 0, 0)
 			bd.tukoborder = border
@@ -2163,6 +2161,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
 	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
 	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	bar:SetFrameLevel(105) -- Put emphasized bars just above normal bars (LibCandyBar 100)
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
