@@ -42,7 +42,6 @@ local tremove = tremove
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local nameplateBars = {}
-local empUpdate = nil -- emphasize updater frame
 local rearrangeBars
 local rearrangeNameplateBars
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
@@ -1361,15 +1360,7 @@ do
 		return a.remaining < b.remaining and true or false
 	end
 	rearrangeBars = function(anchor)
-		if not anchor then return end
-		if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
-			if next(anchor.bars) and db.emphasize then
-				empUpdate:Play()
-			else
-				empUpdate:Stop()
-			end
-		end
-		if not next(anchor.bars) then return end
+		if not anchor or not next(anchor.bars) then return end
 
 		local tmp = {}
 		for bar in next, anchor.bars do
@@ -2053,25 +2044,37 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	return bar
 end
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
-	if not text then text = "" end
-	self:StopSpecificBar(nil, module, text)
-	local bar = self:CreateBar(module, key, text, time, icon, isApprox)
-	if isApprox then
-		bar:SetPauseWhenDone(true)
+do
+	local function moveBar(bar)
+		plugin:EmphasizeBar(bar)
+		plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
+		rearrangeBars(normalAnchor)
+		rearrangeBars(emphasizeAnchor)
 	end
-	bar:Start(maxTime)
-	if db.emphasize and time < db.emphasizeTime then
-		self:EmphasizeBar(bar, true)
-	else
-		currentBarStyler.ApplyStyle(bar)
-	end
-	rearrangeBars(bar:Get("bigwigs:anchor"))
-	self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
-	-- Check if :EmphasizeBar(bar) was run and trigger the callback.
-	-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
-	if bar:Get("bigwigs:emphasized") then
-		self:SendMessage("BigWigs_BarEmphasized", self, bar)
+
+	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
+		if not text then text = "" end
+		self:StopSpecificBar(nil, module, text)
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox)
+		if isApprox then
+			bar:SetPauseWhenDone(true)
+		end
+		bar:Start(maxTime)
+		if db.emphasize and time < db.emphasizeTime then
+			self:EmphasizeBar(bar, true)
+		else
+			currentBarStyler.ApplyStyle(bar)
+			if db.emphasize then
+				bar:SetTimeCallback(moveBar, db.emphasizeTime)
+			end
+		end
+		rearrangeBars(bar:Get("bigwigs:anchor"))
+		self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
+		-- Check if :EmphasizeBar(bar) was run and trigger the callback.
+		-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
+		if bar:Get("bigwigs:emphasized") then
+			self:SendMessage("BigWigs_BarEmphasized", self, bar)
+		end
 	end
 end
 
@@ -2106,30 +2109,6 @@ end
 --------------------------------------------------------------------------------
 -- Emphasize
 --
-
-do
-	local dirty = nil
-	local frame = CreateFrame("Frame")
-	empUpdate = frame:CreateAnimationGroup()
-	empUpdate:SetScript("OnLoop", function()
-		for k in next, normalAnchor.bars do
-			if k.remaining < db.emphasizeTime and not k:Get("bigwigs:emphasized") then
-				dirty = true
-				plugin:EmphasizeBar(k)
-				plugin:SendMessage("BigWigs_BarEmphasized", plugin, k)
-			end
-		end
-		if dirty then
-			rearrangeBars(normalAnchor)
-			rearrangeBars(emphasizeAnchor)
-			dirty = nil
-		end
-	end)
-	empUpdate:SetLooping("REPEAT")
-
-	local anim = empUpdate:CreateAnimation()
-	anim:SetDuration(0.2)
-end
 
 function plugin:EmphasizeBar(bar, freshBar)
 	if db.emphasizeMove then
