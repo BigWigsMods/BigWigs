@@ -73,6 +73,9 @@ local format = string.format
 local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
 local next, type, tonumber = next, type, tonumber
 
+local combatText = GARRISON_LANDING_STATUS_MISSION_COMBAT or "In Combat"
+local isWrath = BigWigsLoader.isWrath
+
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 local UnitInPhase = UnitInPhase or function(unit) return not UnitPhaseReason(unit) end -- UnitPhaseReason doesn't exist on classic
@@ -167,7 +170,7 @@ do
 	end
 
 	function isInRange(unit)
-		if activeRangeChecker then
+		if activeRangeChecker and (isWrath or not InCombatLockdown()) then
 			return activeRangeChecker(unit)
 		end
 	end
@@ -322,7 +325,9 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if anyoneClose == 0 then
+		if InCombatLockdown() and not isWrath then
+			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
+		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cff777777:-)|r")
 		else
 			setText(tooClose)
@@ -343,7 +348,9 @@ do
 	function targetProximityText()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
-		if isInRange(proximityPlayer) then
+		if InCombatLockdown() and not isWrath then
+			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
+		elseif isInRange(proximityPlayer) then
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 			local player = plugin:UnitName(proximityPlayer)
 			proxAnchor.text:SetText(coloredNames[player])
@@ -378,7 +385,9 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if anyoneClose == 0 then
+		if InCombatLockdown() and not isWrath then
+			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
+		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cff777777:-)|r")
 		else
 			setText(tooClose)
@@ -411,7 +420,9 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if anyoneClose == 0 then
+		if InCombatLockdown() and not isWrath then
+			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
+		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cffff0202> STACK <|r") -- XXX localize or remove?
 			if not db.sound then return end
 			local t = GetTime()
@@ -431,7 +442,9 @@ do
 	function reverseTargetProximityText()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
-		if isInRange(proximityPlayer) then
+		if InCombatLockdown() and not isWrath then
+			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
+		elseif isInRange(proximityPlayer) then
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
 			proxAnchor.text:SetText("|cff777777:-)|r")
 		else
@@ -464,7 +477,9 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if anyoneClose == 0 then
+		if InCombatLockdown() and not isWrath then
+			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
+		elseif anyoneClose == 0 then
 			tinsert(tooClose, 1, "|cffff0202> STACK <|r") -- XXX localize or remove?
 			setText(tooClose)
 			if not db.sound then return end
