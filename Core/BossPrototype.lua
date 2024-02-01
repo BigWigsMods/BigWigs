@@ -34,7 +34,7 @@ local EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager = EJ_GetEnc
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
 local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = loader.RegisterAddonMessagePrefix, loader.UnitDetailedThreatSituation
-local isClassic, isRetail = loader.isClassic, loader.isRetail
+local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local PlaySoundFile = loader.PlaySoundFile
@@ -1331,10 +1331,15 @@ function boss:Retail()
 end
 
 --- Check if on a classic server.
--- @return number 2 = classic era, 5 = classic, nil if retail
+-- @return boolean
 function boss:Classic()
-	return WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID
-	--return isClassic
+	return isClassic
+end
+
+--- Check if on a vanilla server.
+-- @return boolean
+function boss:Vanilla()
+	return isClassicEra
 end
 
 --- Get the mob/npc id from a GUID.

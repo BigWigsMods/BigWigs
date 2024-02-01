@@ -1342,10 +1342,15 @@ function boss:Retail()
 end
 
 --- Check if on a classic server.
--- @return number 2 = classic era, 5 = classic, nil if retail
+-- @return boolean
 function boss:Classic()
-	return WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID
-	--return isClassic
+	return isClassic
+end
+
+--- Check if on a vanilla server.
+-- @return boolean
+function boss:Vanilla()
+	return isClassicEra
 end
 
 --- Get the mob/npc id from a GUID.
