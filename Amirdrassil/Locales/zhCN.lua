@@ -125,6 +125,6 @@ if L then
 
 	L.flame_orb = "烈焰宝珠"
 	L.shadow_orb = "暗影宝珠"
-	L.orb_message_flame = ">你< 烈焰宝珠"
-	L.orb_message_shadow = ">你< 暗影宝珠"
+	L.orb_message_flame = "你是烈焰"
+	L.orb_message_shadow = "你是暗影"
 end
