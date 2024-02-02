@@ -187,8 +187,10 @@ BigWigs:AddColors("Fyrakk the Blazing", {
 	[428400] = "red",
 	[428963] = "purple",
 	[428970] = "yellow",
-	[429866] = "red",
+	[429866] = "blue",
 	[429872] = "red",
+	[429903] = "blue",
+	[429906] = "blue",
 	[430441] = "cyan",
 	["stages"] = {"cyan","green"},
 })

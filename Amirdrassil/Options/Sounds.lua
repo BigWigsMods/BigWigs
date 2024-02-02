@@ -180,6 +180,8 @@ BigWigs:AddSounds("Fyrakk the Blazing", {
 	[428971] = "alarm",
 	[429866] = "warning",
 	[429872] = "alarm",
+	[429903] = "alarm",
+	[429906] = "alarm",
 	[430441] = "info",
 	["stages"] = {"info","long"},
 })
