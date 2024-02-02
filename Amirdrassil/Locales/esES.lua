@@ -122,4 +122,9 @@ if L then
 
 	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
 	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+
+	--L.flame_orb = "Flame Orb"
+	--L.shadow_orb = "Shadow Orb"
+	--L.orb_message_flame = "You are Flame"
+	--L.orb_message_shadow = "You are Shadow"
 end

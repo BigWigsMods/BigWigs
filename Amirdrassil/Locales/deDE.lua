@@ -123,4 +123,9 @@ if L then
 
 	L.eternal_firestorm_swirl = "Ewiger Feuersturm Wirbel"
 	L.eternal_firestorm_swirl_desc = "Zeigt Timer für die Wirbel des Ewigen Feuersturms, denen ausgewichen werden muss."
+
+	--L.flame_orb = "Flame Orb"
+	--L.shadow_orb = "Shadow Orb"
+	--L.orb_message_flame = "You are Flame"
+	--L.orb_message_shadow = "You are Shadow"
 end

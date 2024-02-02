@@ -122,4 +122,9 @@ if L then
 
 	L.eternal_firestorm_swirl = "Лужи Огненной Бури"
 	L.eternal_firestorm_swirl_desc = "Показывает таймеры появления дамажущих луж после каста Огненной Бури."
+
+	--L.flame_orb = "Flame Orb"
+	--L.shadow_orb = "Shadow Orb"
+	--L.orb_message_flame = "You are Flame"
+	--L.orb_message_shadow = "You are Shadow"
 end

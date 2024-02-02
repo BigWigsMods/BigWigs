@@ -122,4 +122,9 @@ if L then
 
 	L.eternal_firestorm_swirl = "Pozzo di Tempesta di fuoco eterna"
 	L.eternal_firestorm_swirl_desc = "Mostra i timer per quando le tempeste di fuoco eterne rilasceranno le pozze da evitare."
+
+	--L.flame_orb = "Flame Orb"
+	--L.shadow_orb = "Shadow Orb"
+	--L.orb_message_flame = "You are Flame"
+	--L.orb_message_shadow = "You are Shadow"
 end

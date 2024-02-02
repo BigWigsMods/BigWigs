@@ -54,6 +54,7 @@ local infernalMawCount = 1
 
 local timerHandles = {}
 local scheduledCages = {}
+local myOrb = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -83,6 +84,11 @@ if L then
 	L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
 	L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
 	L.eternal_firestorm_swirl_icon = 402736
+
+	L.flame_orb = "Flame Orb"
+	L.shadow_orb = "Shadow Orb"
+	L.orb_message_flame = "You are Flame"
+	L.orb_message_shadow = "You are Shadow"
 end
 
 --------------------------------------------------------------------------------
@@ -112,6 +118,8 @@ function mod:GetOptions()
 		{419144, "CASTBAR"}, -- Corrupt
 		421937, -- Shadowflame Orbs
 		429866, -- Shadowflame Eruption
+		{429906, "ME_ONLY_EMPHASIZE"}, -- Shadowbound
+		{429903, "ME_ONLY_EMPHASIZE"}, -- Flamebound
 
 		-- Stage Two: Children of the Stars
 		422032, -- Spirits of the Kaldorei
@@ -142,6 +150,7 @@ function mod:GetOptions()
 		[419506] = -26666, -- Stage One: The Dream Render
 		[430441] = "mythic",
 		[419144] = -26667, -- Intermission: Amirdrassil in Peril
+		[429906] = "mythic",
 		[422032] = -26668, -- Stage Two: Children of the Stars
 		[428971] = "mythic",
 		[422935] = -26670, -- Stage Three: Shadowflame Incarnate
@@ -153,6 +162,8 @@ function mod:GetOptions()
 		[430441] = L.darkflame_shades, -- Darkflame Shades (Shades)
 		[426368] = L.darkflame_cleave, -- Darkflame Cleave (Mythic Soaks)
 		[421937] = CL.orbs, -- Shadowflame Orbs (Orbs)
+		[429906] = L.shadow_orb, -- Shadowbound (Shadow Orb)
+		[429903] = L.flame_orb, -- Flamebound (Flame Orb)
 		[422032] = CL.spirits, -- Spirits of the Kaldorei (Spirits)
 		[422518] = L.greater_firestorm_shortened_bar, -- Greater Firestorm (Firestorm [G])
 		[428970] = L.mythic_debuffs, -- Shadow Cage (Debuffs)
@@ -197,6 +208,10 @@ function mod:OnBossEnable()
 	-- self:Log("SPELL_CAST_SUCCESS", "ShadowflameOrbs", 421937) -- Scheduled
 	self:Log("SPELL_AURA_APPLIED", "ShadowflameEruptionApplied", 429866)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowflameEruptionApplied", 429866)
+	self:Log("SPELL_AURA_APPLIED", "ShadowboundApplied", 429906)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowboundApplied", 429906)
+	self:Log("SPELL_AURA_APPLIED", "FlameboundApplied", 429903)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "FlameboundApplied", 429903)
 
 	-- Stage Two: Children of the Stars
 	self:Log("SPELL_CAST_START", "GreaterFirestorm", 422518)
@@ -243,6 +258,7 @@ function mod:OnEngage()
 	incarnateCount = 1
 	addCount = 0
 	scheduledCages = {}
+	myOrb = nil
 
 	self:Bar(420422, 4.0, CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
 	self:Bar(417431, 9.0, CL.count:format(self:Mythic() and L.fyralaths_bite_mythic or L.fyralaths_bite, fyralathsBiteCount)) -- Fyr'alath's Bite
@@ -512,7 +528,11 @@ end
 
 function mod:ShadowflameOrbs()
 	self:StopBar(CL.count:format(CL.orbs, shadowflameOrbsCount))
-	self:Message(421937, "cyan", CL.incoming:format(CL.count:format(CL.orbs, shadowflameOrbsCount)))
+	if self:Mythic() and myOrb then
+		self:Message(421937, "cyan", CL.other:format(CL.count:format(CL.orbs, shadowflameOrbsCount), myOrb))
+	else
+		self:Message(421937, "cyan", CL.count:format(CL.orbs, shadowflameOrbsCount))
+	end
 	self:PlaySound(421937, "info")
 	shadowflameOrbsCount = shadowflameOrbsCount + 1
 	if shadowflameOrbsCount < 4 then
@@ -524,19 +544,44 @@ end
 
 do
 	local stacks = 0
-	local scheduled = nil
-	function mod:ShadowflameEruptionMessage()
-		self:Message(429866, "red", CL.stackyou:format(stacks, self:SpellName(429866)))
-		self:PlaySound(429866, "warning") -- big dot
-		scheduled = nil
+	local pName = nil
+	local function ShadowflameEruptionMessage()
+		mod:StackMessage(429866, "blue", pName, stacks, 1)
+		mod:PlaySound(429866, "warning", nil, pName) -- big dot
+		pName = nil
 	end
 	function mod:ShadowflameEruptionApplied(args)
 		if self:Me(args.destGUID) then
 			stacks = args.amount or 1
-			if not scheduled then
-				scheduled = self:ScheduleTimer("ShadowflameEruptionMessage", 1)
+			if not pName then -- Re-use as throttle
+				pName = args.destName
+				self:SimpleTimer(ShadowflameEruptionMessage, 1)
 			end
 		end
+	end
+end
+
+function mod:ShadowboundApplied(args)
+	if self:Me(args.destGUID) then
+		if args.amount then
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 100, L.shadow_orb) -- Never emphasize stacks
+		else
+			myOrb = L.orb_message_shadow
+			self:PersonalMessage(args.spellId, "you", L.shadow_orb)
+		end
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
+	end
+end
+
+function mod:FlameboundApplied(args)
+	if self:Me(args.destGUID) then
+		if args.amount then
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 100, L.flame_orb) -- Never emphasize stacks
+		else
+			myOrb = L.orb_message_flame
+			self:PersonalMessage(args.spellId, "you", L.flame_orb)
+		end
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
