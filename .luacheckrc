@@ -50,7 +50,14 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
-	".+", -- Temp file for classic
+	"113/C_UIWidgetManager",
+	"113/C_UnitAuras",
+	"113/GetTalentInfo",
+	"113/GetTalentTabInfo",
+	"113/TranscriptIgnore",
+	"113/Transcriptor",
+	"113/UnitTokenFromGUID",
+	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",

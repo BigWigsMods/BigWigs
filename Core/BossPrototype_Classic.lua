@@ -32,8 +32,8 @@ local C_EncounterJournal_GetSectionInfo = function(key) return BigWigsAPI:GetLoc
 local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned or function(_) end
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
-local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
-local UnitDetailedThreatSituation = loader.UnitDetailedThreatSituation
+local UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
+local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = loader.RegisterAddonMessagePrefix, loader.UnitDetailedThreatSituation
 local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -41,6 +41,7 @@ local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
 local pName = loader.UnitName("player")
 local cpName
+local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
@@ -52,6 +53,7 @@ local myGUID, myRole, myDamagerRole = nil, nil, nil
 local myGroupGUIDs = {}
 local solo = false
 local classColorMessages = true
+local englishSayMessages = false
 local debugFunc = nil
 
 local talentRoles = {
@@ -76,6 +78,12 @@ local updateData = function(module)
 		classColorMessages = false
 	else
 		classColorMessages = true
+	end
+
+	if core.db.profile.englishSayMessages then
+		englishSayMessages = true
+	else
+		englishSayMessages = false
 	end
 
 	myRole = nil
@@ -1293,6 +1301,18 @@ function boss:DeleteFromTable(table, item)
 	end
 end
 
+do
+	local comma = (myLocale == "zhTW" or myLocale == "zhCN") and "，" or ", "
+	local tconcat = table.concat
+	--- Concatenate all the entries from a table into a string separated with commas.
+	-- @param[type=table] table The table to concatenate
+	-- @number entries The amount of entries in the table to concatenate
+	-- @return string
+	function boss:TableToString(table, entries)
+		return tconcat(table, comma, 1, entries)
+	end
+end
+
 --- Get the current instance difficulty.
 -- @return difficulty id
 function boss:Difficulty()
@@ -1912,7 +1932,7 @@ end
 -- @section toggles
 --
 
-local checkFlag = nil
+local checkFlag
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
@@ -2266,8 +2286,6 @@ do
 		end
 	end
 
-	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
-	local tconcat = table.concat
 	do
 		local function printTargets(self, key, playerTable, color, text, icon, markers)
 			local playersInTable = #playerTable
@@ -2292,7 +2310,7 @@ do
 							playerTable[i] = self:GetIconTexture(markers[i]) .. playerTable[i]
 						end
 					end
-					local list = tconcat(playerTable, comma, 1, playersInTable)
+					local list = self:TableToString(playerTable, playersInTable)
 					-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
@@ -2407,7 +2425,7 @@ do
 							tbl[#tbl+1] = self:ColorName(name)
 						end
 					end
-					local list = tconcat(tbl, comma, 1, #tbl)
+					local list = self:TableToString(tbl, #tbl)
 					-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
@@ -2505,8 +2523,7 @@ do
 	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar %q without a valid unitGUID."
 
 	local countString = "%((%d%d?)%)"
-	local l = GetLocale()
-	if l == "zhCN" or l == "zhTW" then
+	if myLocale == "zhCN" or myLocale == "zhTW" then
 		countString = "（(%d%d?)）"
 	end
 
@@ -3088,8 +3105,7 @@ do
 end
 
 do
-	local l = GetLocale()
-	if l == "zhCN" or l == "zhTW" or l == "koKR" then
+	if myLocale == "zhCN" or myLocale == "zhTW" or myLocale == "koKR" then
 		function boss:AbbreviateNumber(amount)
 			if amount >= 100000000 then -- 100,000,000
 				return format(L.amount_one, amount/100000000)
@@ -3119,7 +3135,7 @@ do
 	end
 end
 
---- Start a "berserk" bar and show an engage message.
+--- Start a "berserk" bar, and optionally also show an engage message, and multiple reminder messages.
 -- @number seconds the time before the boss enrages/berserks
 -- @param[opt] noMessages if any value, don't display an engage message. If set to 0, don't display any messages
 -- @string[opt] customBoss set a custom boss name
@@ -3156,4 +3172,17 @@ function boss:Berserk(seconds, noMessages, customBoss, customBerserk, customFina
 		self:DelayedMessage(key, seconds - 5, "orange", format(L.custom_sec, berserk, 5))
 		self:DelayedMessage(key, seconds, "red", customFinalMessage or format(L.custom_end, name, berserk), icon, "Alarm")
 	end
+end
+
+--- Stop a "berserk" bar, and any related messages.
+-- @string barText The text the bar is using
+-- @string[opt] customBoss the text that was set as a custom boss name
+-- @string[opt] customFinalMessage the text that was set for the final message
+function boss:StopBerserk(barText, customBoss, customFinalMessage)
+	self:StopBar(barText)
+	self:CancelDelayedMessage(format(L.custom_min, barText, 1))
+	self:CancelDelayedMessage(format(L.custom_sec, barText, 30))
+	self:CancelDelayedMessage(format(L.custom_sec, barText, 10))
+	self:CancelDelayedMessage(format(L.custom_sec, barText, 5))
+	self:CancelDelayedMessage(customFinalMessage or format(L.custom_end, customBoss or self.displayName, barText))
 end
