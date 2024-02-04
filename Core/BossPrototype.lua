@@ -2886,11 +2886,17 @@ do
 		[0x00000040] = 7, -- COMBATLOG_OBJECT_RAIDTARGET7
 		[0x00000080] = 8, -- COMBATLOG_OBJECT_RAIDTARGET8
 	}
-	--- Get the raid target icon currently set on a unit based on its combat log flags.
-	-- @string flags unit bit flags
+	local GetRaidTargetIndex = GetRaidTargetIndex
+	--- Get the raid target icon currently set on a unit based on a unit token (string) or combat log flags (number).
+	-- @param unitOrFlags unit token or combat log flags
 	-- @return number The number based on the icon ranging from 1-8 (nil if no icon is set)
-	function boss:GetIcon(flags)
-		return flagToIcon[flags]
+	function boss:GetIcon(unitOrFlags)
+		if type(unitOrFlags) == "string" then
+			local icon = GetRaidTargetIndex(unitOrFlags)
+			return icon
+		else
+			return flagToIcon[unitOrFlags]
+		end
 	end
 end
 

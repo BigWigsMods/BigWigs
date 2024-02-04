@@ -44,6 +44,7 @@ files["**/AutoRole.lua"].ignore = {
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetRaidTargetIndex",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitTokenFromGUID",
@@ -52,6 +53,7 @@ files["**/Core/BossPrototype.lua"].ignore = {
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetRaidTargetIndex",
 	"113/GetTalentInfo",
 	"113/GetTalentTabInfo",
 	"113/TranscriptIgnore",
@@ -95,11 +97,15 @@ files["**/Plugins/Countdown.lua"].ignore = {
 	"113/GetCurrentRegion",
 }
 files["**/Plugins/Proximity.lua"].ignore = {
+	"113/GetRaidTargetIndex",
 	"113/GetServerExpansionLevel", -- Classic support
 	"113/UnitInPhase", -- Classic support
 }
 files["**/Plugins/Pull.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
+}
+files["**/Plugins/RaidIcon.lua"].ignore = {
+	"113/GetRaidTargetIndex",
 }
 files["**/Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
@@ -226,7 +232,6 @@ globals = {
 	"GetProfessionInfo",
 	"GetProfessions",
 	"GetRaidRosterInfo", -- Classic/AQ40/Cthun.lua
-	"GetRaidTargetIndex",
 	"GetRealmName",
 	"GetRealZoneText",
 	"GetSpecializationInfoByID",
