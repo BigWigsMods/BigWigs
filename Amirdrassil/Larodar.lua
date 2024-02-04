@@ -28,7 +28,6 @@ local fireWhirlCount = 1
 local smolderingBackdraftCount = 1
 local ashenCallCount = 1
 local ashenDevastationCount = 1
-local smolderingSuffocationOnMe = false
 local intermissionSoon = false
 
 --------------------------------------------------------------------------------
@@ -216,6 +215,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FireWhirl", 427343)
 	self:Log("SPELL_CAST_START", "SmolderingBackdraft", 429973)
 	self:Log("SPELL_AURA_APPLIED", "SmolderingSuffocationApplied", 421594)
+	self:Log("SPELL_AURA_REFRESH", "SmolderingSuffocationApplied", 421594)
 	self:Log("SPELL_AURA_REMOVED", "SmolderingSuffocationRemoved", 421594)
 	self:Log("SPELL_CAST_START", "AshenCall", 421325)
 	self:Log("SPELL_CAST_SUCCESS", "SearingAsh", 421407)
@@ -248,7 +248,6 @@ function mod:OnEngage()
 	smolderingBackdraftCount = 1
 	ashenCallCount = 1
 	ashenDevastationCount = 1
-	smolderingSuffocationOnMe = false
 	intermissionSoon = false
 
 	timers = self:LFR() and timersLFR or self:Normal() and timersNormal or self:Mythic() and timersMythic or timersHeroic
@@ -551,16 +550,19 @@ function mod:SmolderingBackdraft(args)
 end
 
 do
-	local function RepeatingChatMessages()
-		if smolderingSuffocationOnMe then
-			mod:SimpleTimer(RepeatingChatMessages, 2)
-			local currentHealthPercent = math.floor(mod:GetHealth("player"))
-			if currentHealthPercent < 75 then -- Only let players know when you are below 75%
-				local myIcon = GetRaidTargetIndex("player")
-				if myIcon then
-					mod:Yell(false, ("{rt%d}%d%%"):format(myIcon, currentHealthPercent), true)
-				else
-					mod:Yell(false, ("%d%%"):format(currentHealthPercent), true)
+	local smolderingSuffocationTicks = 0
+	function mod:SmolderingSuffocationDamage(args)
+		if self:Me(args.destGUID) then
+			smolderingSuffocationTicks = smolderingSuffocationTicks + 1
+			if smolderingSuffocationTicks % 2 == 0 then -- Every 2 sec
+				local currentHealthPercent = math.floor(self:GetHealth("player"))
+				if currentHealthPercent < 75 then -- Only let players know when you are below 75%
+					local myIcon = self:GetIcon(args.destRaidFlags)
+					if myIcon then
+						self:Yell(false, ("{rt%d}%d%%"):format(myIcon, currentHealthPercent), true)
+					else
+						self:Yell(false, ("%d%%"):format(currentHealthPercent), true)
+					end
 				end
 			end
 		end
@@ -568,23 +570,25 @@ do
 
 	function mod:SmolderingSuffocationApplied(args)
 		if self:Me(args.destGUID) then
-			smolderingSuffocationOnMe = true
+			smolderingSuffocationTicks = 0
 			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "warning")
 			self:Yell(args.spellId, nil, nil, "Smoldering Suffocation")
 			if self:GetOption("custom_on_repeating_yell_smoldering_suffocation") then
-				self:SimpleTimer(RepeatingChatMessages, 2)
+				self:Log("SPELL_DAMAGE", "SmolderingSuffocationDamage", 423787)
+				self:Log("SPELL_MISSED", "SmolderingSuffocationDamage", 423787)
 			end
+			self:PlaySound(args.spellId, "warning", nil, args.destName)
 		elseif self:Tank() and self:Tank(args.destName) then
 			self:TargetMessage(args.spellId, "purple", args.destName)
-			self:PlaySound(args.spellId, "warning")
+			self:PlaySound(args.spellId, "warning", nil, args.destName)
 		end
 	end
 end
 
 function mod:SmolderingSuffocationRemoved(args)
 	if self:Me(args.destGUID) then
-		smolderingSuffocationOnMe = false
+		self:RemoveLog("SPELL_DAMAGE", 423787)
+		self:RemoveLog("SPELL_MISSED", 423787)
 	end
 end
 
