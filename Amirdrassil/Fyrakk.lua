@@ -57,6 +57,7 @@ local spiritsCount = 1
 local incarnateCount = 1
 local shadowflameDevastationCount = 1
 local flamefallCount = 1
+local shadowCageCount = 1
 local addCount = 0
 
 local eternalFirestormSwirlCount = 1
@@ -65,7 +66,6 @@ local apocalypseRoarCount = 1
 local infernalMawCount = 1
 
 local timerHandles = {}
-local scheduledCages = {}
 local myOrb = nil
 
 --------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ function mod:GetOptions()
 		[429903] = L.flame_orb, -- Flamebound (Flame Orb)
 		[422032] = CL.spirits, -- Spirits of the Kaldorei (Spirits)
 		[422518] = L.greater_firestorm_shortened_bar, -- Greater Firestorm (Firestorm [G])
-		[428970] = L.mythic_debuffs, -- Shadow Cage (Debuffs)
+		[428970] = L.mythic_debuffs, -- Shadow Cage (Cages)
 		[412761] = L.incarnate, -- Incarnate (Fly Away)
 		[422524] = CL.breath, -- Shadowflame Devastation (Breath)
 		[423717] = CL.absorb, -- Bloom (Absorb)
@@ -251,6 +251,7 @@ end
 function mod:OnEngage()
 	timers = self:Mythic() and timersMythic or timersHeroic
 	self:SetStage(1)
+
 	blazeCount = 1
 	fyralathsBiteCount = 1
 
@@ -270,7 +271,6 @@ function mod:OnEngage()
 	spiritsCount = 1
 	incarnateCount = 1
 	addCount = 0
-	scheduledCages = {}
 	myOrb = nil
 
 	self:Bar(420422, 4.0, CL.count:format(self:SpellName(420422), wildfireCount)) -- Wildfire
@@ -626,7 +626,6 @@ function mod:CorruptRemoved(args)
 	incarnateCount = 1
 	aflameCount = 1
 	addCount = 0
-	scheduledCages = {}
 
 	self:Bar(422518, timers[422518][firestormCount], CL.count:format(L.greater_firestorm_shortened_bar, firestormCount)) -- Greater Firestorm
 	self:Bar(419123, timers[419123][flamefallCount], CL.count:format(self:SpellName(419123), flamefallCount)) -- Flamefall
@@ -671,16 +670,11 @@ function mod:GreaterFirestorm(args)
 	self:Bar(428963, 15, L.molten_gauntlet) -- Molten Gauntlet
 	self:Bar(428400, self:Mythic() and 53.8 or 68.3) -- Exploding Core
 	if self:Mythic() then
-		local count = (firestormCount-1) * 2
-		-- This keeps a consistent count for the cage timers, always 1-2 / 3-4 / 5-6
-		-- We schedule everything here, you wont get more than 2 sets per add wave
-		self:Bar(428970, 15, CL.count:format(L.mythic_debuffs, count - 1))
-		scheduledCages = {}
-		scheduledCages[0] = self:ScheduleTimer("Message", 15, 428970, "yellow", CL.count:format(L.mythic_debuffs, count - 1))
-		scheduledCages[2] = self:ScheduleTimer("PlaySound", 15, 428970, "info")
-		scheduledCages[3] = self:ScheduleTimer("Bar", 15, 428970, 23, CL.count:format(L.mythic_debuffs, count))
-		scheduledCages[4] = self:ScheduleTimer("Message", 38, 428970, "yellow", CL.count:format(L.mythic_debuffs, count))
-		scheduledCages[5] = self:ScheduleTimer("PlaySound", 38, 428970, "info")
+		-- This keeps a consistent count for the cage timers, always 1-2 / 3-4
+		shadowCageCount = (firestormCount - 1) * 2 - 1
+		local cd = 23
+		self:Bar(428970, cd, CL.count:format(L.mythic_debuffs, shadowCageCount))
+		timerHandles[428970] = self:ScheduleTimer("ShadowCage", cd)
 	end
 end
 
@@ -698,11 +692,18 @@ do
 	end
 end
 
--- function mod:ShadowCage()
--- 	self:Message(428970, "cyan")
--- 	self:Bar(428970, 23)
--- 	timerHandles[428970] = self:ScheduleTimer("ShadowCage", 23)
--- end
+function mod:ShadowCage()
+	self:Message(428970, "yellow", CL.count:format(L.mythic_debuffs, shadowCageCount))
+	self:PlaySound(428970, "info")
+	shadowCageCount = shadowCageCount + 1
+	if shadowCageCount % 2 == 0 then -- 2 per
+		local cd = 23
+		self:Bar(428970, cd, CL.count:format(L.mythic_debuffs, shadowCageCount))
+		timerHandles[428970] = self:ScheduleTimer("ShadowCage", cd)
+	else
+		timerHandles[428970] = nil
+	end
+end
 
 do
 	local prev = 0
@@ -722,16 +723,12 @@ function mod:ColossusDeath(args)
 		self:StopBar(428400) -- Exploding Core
 	end
 
-	if self:Mythic() and args.mobId == 207796 then -- Burning Colosus - do the cages also fizzle when Dark Colossus dies?
-		for i = 0, 5 do
-			if scheduledCages[i] then
-				self:CancelTimer(scheduledCages[i])
-				scheduledCages[i] = nil
-			end
+	if self:Mythic() and args.mobId == 207796 then -- Burning Colosus
+		self:StopBar(CL.count:format(L.mythic_debuffs, shadowCageCount)) -- Shadow Cage
+		if timerHandles[428970] then
+			self:CancelTimer(timerHandles[428970])
+			timerHandles[428970] = nil
 		end
-		local count = (firestormCount-1) * 2
-		self:StopBar(CL.count:format(L.mythic_debuffs, count - 1))
-		self:StopBar(CL.count:format(L.mythic_debuffs, count))
 	end
 end
 
