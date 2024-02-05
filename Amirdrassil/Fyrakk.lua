@@ -13,16 +13,28 @@ mod:SetStage(1)
 -- Timers
 --
 
-local timers = {
+local timersHeroic = {
 	[419123] = {5.5, 75, 80, 0}, -- Flamefall
 	[417431] = {18.5, 11, 60, 11, 11, 58, 11, 11}, -- Fyr'alath's Bite
-	[422518] = {35.5, 80.0, 0}, -- Greater Firestorm
-	[422524] = {58.5, 80.0, 0}, -- Shadowflame Devastation
-	[422032] = {19.9, 20.0, 25.0, 29.0, 26.0, 24.0, 25.0}, -- Spirits of the Kaldorei
-	[414186] = {20.5, 15, 25, 30, 26.9, 23, 30, 25}, -- Blaze
+	[422518] = {35.5, 80, 0}, -- Greater Firestorm
+	[422524] = {58.5, 80, 0}, -- Shadowflame Devastation
+	[422032] = {20, 20, 25, 29, 26, 24, 25}, -- Spirits of the Kaldorei
+	[414186] = {20.2, 15, 25, 30, 26.9, 23, 30, 25}, -- Blaze
 	[412761] = {44.0, 80, 79.5, 0}, -- Incarnate
 	[417807] = {27.5, 16, 58.5, 16, 64.5, 16, 13.5}, -- Aflame
 }
+
+local timersMythic = {
+	[419123] = timersHeroic[419123], -- Flamefall
+	[417431] = timersHeroic[417431], -- Fyr'alath's Bite
+	[422518] = timersHeroic[422518], -- Greater Firestorm
+	[422524] = timersHeroic[422524], -- Shadowflame Devastation
+	[422032] = {20, 20, 25, 29, 26, 26.7, 27}, -- Spirits of the Kaldorei
+	[414186] = {20, 15, 25, 30, 27.0, 23, 30, 25}, -- Blaze
+	[412761] = timersHeroic[412761], -- Incarnate
+	[417807] = timersHeroic[417807], -- Aflame
+}
+local timers = mod:Mythic() and timersMythic or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -237,6 +249,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	timers = self:Mythic() and timersMythic or timersHeroic
 	self:SetStage(1)
 	blazeCount = 1
 	fyralathsBiteCount = 1
@@ -639,14 +652,8 @@ function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 		end
 		spiritsCount = spiritsCount + 1
 		local cd = timers[422032][spiritsCount]
-		if self:Mythic() then -- last waves are delayed a bit on mythic
-			if spiritsCount == 6 then
-				cd = 26.7
-				-- all trees (no spirit yell), need to schedule
-				timerHandles[422032] = self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", cd, nil, nil, L.spirits_trigger)
-			elseif spiritsCount == 7 then
-				cd = 27.5
-			end
+		if self:Mythic() and spiritsCount == 6 then -- all trees (no spirit yell), need to schedule
+			timerHandles[422032] = self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", cd, nil, nil, L.spirits_trigger)
 		end
 		self:Bar(422032, cd, CL.count:format(CL.spirits, spiritsCount))
 	end
