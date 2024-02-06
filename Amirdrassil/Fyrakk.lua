@@ -30,7 +30,7 @@ local timersMythic = {
 	[422518] = timersHeroic[422518], -- Greater Firestorm
 	[422524] = timersHeroic[422524], -- Shadowflame Devastation
 	[422032] = {20, 20, 25, 29, 26, 26.7, 27}, -- Spirits of the Kaldorei
-	[414186] = {20, 15, 25, 30, 27.0, 23, 30, 25}, -- Blaze
+	[414186] = {20, 15, 25, 34, 23, 23, 34, 21}, -- Blaze
 	[412761] = timersHeroic[412761], -- Incarnate
 	[417807] = timersHeroic[417807], -- Aflame
 }
