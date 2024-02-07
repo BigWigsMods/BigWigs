@@ -1437,6 +1437,17 @@ do
 	end
 end
 
+do
+	local UnitIsInteractable = UnitIsInteractable
+	--- Check if a unit is interactable
+	-- @string unit unit token or name
+	-- @return boolean
+	function boss:UnitIsInteractable(unit)
+		local canInteract = UnitIsInteractable(unit)
+		return canInteract
+	end
+end
+
 --- Get the health percentage of a unit.
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100

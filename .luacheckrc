@@ -15,6 +15,7 @@ files["**/Loader.lua"].ignore = {
 	"113/EnableAddOn",
 	"113/GetAddOnInfo",
 	"113/GetCurrentRegion",
+	"113/GetNumGroupMembers",
 	"113/GetRealmID",
 	"113/IsItemInRange",
 	"113/PlaySoundFile",
@@ -44,20 +45,24 @@ files["**/AutoRole.lua"].ignore = {
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
+	"113/UnitIsInteractable",
 	"113/UnitTokenFromGUID",
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
 	"113/GetTalentInfo",
 	"113/GetTalentTabInfo",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
+	"113/UnitIsInteractable",
 	"113/UnitTokenFromGUID",
 	"113/UnitGroupRolesAssigned",
 }
@@ -65,7 +70,11 @@ files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/geterrorhandler",
 }
+files["**/Core/PluginPrototype.lua"].ignore = {
+	"113/GetNumGroupMembers",
+}
 files["**/Plugins/AltPower.lua"].ignore = {
+	"113/GetNumGroupMembers",
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Plugins/AutoReply.lua"].ignore = {
@@ -97,6 +106,7 @@ files["**/Plugins/Countdown.lua"].ignore = {
 	"113/GetCurrentRegion",
 }
 files["**/Plugins/Proximity.lua"].ignore = {
+	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
 	"113/GetServerExpansionLevel", -- Classic support
 	"113/UnitInPhase", -- Classic support
@@ -226,7 +236,6 @@ globals = {
 	"GetItemCount",
 	"GetLocale",
 	"GetNumAddOns",
-	"GetNumGroupMembers",
 	"GetPartyAssignment",
 	"GetPlayerFacing",
 	"GetProfessionInfo",
@@ -305,7 +314,6 @@ globals = {
 	"UnitPowerMax",
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
-	"UnitReaction", -- Classic/BWL/Nefarian
 	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
