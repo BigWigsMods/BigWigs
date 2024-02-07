@@ -180,6 +180,7 @@ local args_keys = {
 	destRaidFlags = true,
 	spellId = true,
 	spellName = true,
+	spellSchool = true,
 	extraSpellId = true,
 	extraSpellName = true,
 	amount = true,
