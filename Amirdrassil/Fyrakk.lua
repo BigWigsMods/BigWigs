@@ -680,7 +680,7 @@ function mod:GreaterFirestorm(args)
 	if self:Mythic() then
 		-- This keeps a consistent count for the cage timers, always 1-2 / 3-4
 		shadowCageCount = (firestormCount - 1) * 2 - 1
-		local cd = 23
+		local cd = 15
 		self:Bar(428970, cd, CL.count:format(L.mythic_debuffs, shadowCageCount))
 		timerHandles[428970] = self:ScheduleTimer("ShadowCage", cd)
 	end
