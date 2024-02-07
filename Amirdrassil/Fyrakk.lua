@@ -226,6 +226,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FlameboundApplied", 429903)
 
 	-- Stage Two: Children of the Stars
+	self:Log("SPELL_CAST_SUCCESS", "SpiritsOfTheKaldorei", 422032)
 	self:Log("SPELL_CAST_START", "GreaterFirestorm", 422518)
 	self:Log("SPELL_CAST_START", "Gauntlet", 428963, 428965) -- Molten Gauntlet, Shadow Gauntlet
 	self:Log("SPELL_CAST_START", "ExplodingCore", 428400)
@@ -655,6 +656,13 @@ function mod:CHAT_MSG_MONSTER_YELL(_, _, sender)
 			timerHandles[422032] = self:ScheduleTimer("CHAT_MSG_MONSTER_YELL", cd, nil, nil, L.spirits_trigger)
 		end
 		self:Bar(422032, cd, CL.count:format(CL.spirits, spiritsCount))
+	end
+end
+
+function mod:SpiritsOfTheKaldorei(args)
+	if not self.seeSpirits then
+		self.seeSpirits = true
+		self:Error("ID is now enabled.")
 	end
 end
 
