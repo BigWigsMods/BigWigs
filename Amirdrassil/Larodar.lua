@@ -83,11 +83,11 @@ local timersMythic = {
 	[425889] = { 14.2, 123.7, 80.0, 133.9 }, -- Igniting Growth
 	-- p2
 	[428896] = { 45.5 }, -- Ashen Devastation
-	[427252] = { 7.4, 26.7, 35.9, 21.7 }, -- Falling Embers
+	[427252] = { 7.4, 26.7, 35.9, 21.7, 26.7}, -- Falling Embers
 	[427299] = { 29.0, 51.8, 27.6 }, -- Flash Fire
 	[427343] = { 58.4, 32.6 }, -- Fire Whirl
 	[429973] = { 14.0, 25.9, 19.2, 21.7, 16.7 }, -- Smoldering Backdraft
-	[421325] = { 20.7, 55.1 }, -- Ashen Call
+	[421325] = { 20.7, 55.1, 37.7 }, -- Ashen Call
 }
 local timers = mod:LFR() and timersLFR or mod:Normal() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
 
