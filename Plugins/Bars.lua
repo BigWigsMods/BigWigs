@@ -583,12 +583,10 @@ do
 		end
 		local f = media:Fetch(FONT, db.fontName)
 		for bar in next, normalAnchor.bars do
-			bar.candyBarLabel:SetFont(f, db.fontSize, flags)
-			bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+			bar:SetFont(f, db.fontSize, flags)
 		end
 		for bar in next, emphasizeAnchor.bars do
-			bar.candyBarLabel:SetFont(f, db.fontSizeEmph, flags)
-			bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
+			bar:SetFont(f, db.fontSizeEmph, flags)
 		end
 	end
 
@@ -2024,12 +2022,10 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	end
 	local f = media:Fetch(FONT, db.fontName)
 	if unitGUID then
-		bar.candyBarLabel:SetFont(f, db.fontSizeNameplate, flags)
-		bar.candyBarDuration:SetFont(f, db.fontSizeNameplate, flags)
+		bar:SetFont(f, db.fontSizeNameplate, flags)
 		bar:SetAlpha(db.nameplateAlpha)
 	else
-		bar.candyBarLabel:SetFont(f, db.fontSize, flags)
-		bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+		bar:SetFont(f, db.fontSize, flags)
 	end
 
 	bar:SetTimeVisibility(db.time)
@@ -2134,8 +2130,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 		flags = db.outline
 	end
 	local f = media:Fetch(FONT, db.fontName)
-	bar.candyBarLabel:SetFont(f, db.fontSizeEmph, flags)
-	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
+	bar:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
 	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
