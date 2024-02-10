@@ -848,7 +848,7 @@ do
 					return
 				end
 			else
-				local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
+				local typeInfo = UIWidgetManager.widgetVisTypeInfo[tbl.widgetType]
 				info = typeInfo and typeInfo.visInfoDataFunction(id)
 			end
 			if info then
