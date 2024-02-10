@@ -150,11 +150,11 @@ L.breakFinished = "¡El descanso ha terminado!"
 -- BossBlock.lua
 --
 
-L.bossBlock = "Bloque de Jefe"
+L.bossBlock = "Bloque de jefe"
 L.bossBlockDesc = "Configura varias cosas que puedes bloquear durante un encuentro.\n\n"
 L.bossBlockAudioDesc = "Configura qué audio silenciar durante un encuentro con un jefe.\n\nCualquier opción que esté |cff808080griseada|r ha sido desactivada en las opciones de sonido de WoW.\n\n"
 L.movieBlocked = "Ya has visto esta cinemática antes, omitiéndola."
-L.blockEmotes = "Bloquear emotes del centro de la pantalla"
+L.blockEmotes = "Bloquear emociones del centro de la pantalla"
 L.blockEmotesDesc = "Algunos jefes muestran emotes para ciertas habilidades, estos mensajes son demasiado largos y descriptivos. Intentamos acortarlos, y ajustarlos para que no interfieran con el juego, y que no te digan específicamente qué tienes que hacer.\n\nTen en cuenta: los emotes de Jefe seguirán siendo visibles en el chat si deseas leerlos."
 L.blockMovies = "Bloquear vídeos repetidos"
 L.blockMoviesDesc = "Las cinemáticas de encuentros con jefes solo se reproducirán una vez (para que puedas ver cada una de ellas) y luego se bloquearán."
@@ -422,8 +422,8 @@ L.defeated = "%s ha sido derrotado"
 -- Wipe.lua
 --
 
-L.wipe = "Wipe"
-L.wipeSoundTitle = "Reproduce un sonido cuando hay wipe"
-L.respawn = "Reaparecer"
-L.showRespawnBar = "Muestra la barra de reaparecer"
-L.showRespawnBarDesc = "Muestra una barra después de wipear en un jefe que indica el tiempo que queda hasta que el jefe reaparezca."
+L.wipe = "Derrota"
+L.wipeSoundTitle = "Reproduce un sonido cuando tú mueres por un jefe"
+L.respawn = "Reaparición"
+L.showRespawnBar = "Muestra la barra de reaparición"
+L.showRespawnBarDesc = "Muestra una barra después de que mueres por un jefe mostrando el tiempo hasta que el jefe reaparezca."
