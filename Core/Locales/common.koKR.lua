@@ -10,6 +10,8 @@ L.other = "%s: %s"
 L.onboss = "우두머리에게 %s"
 L.buff_boss = "넴드에게 버프: %s"
 L.buff_other = "%s 에게 버프: %s"
+--L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
+--L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC: SPELL_NAME
 L.on = "%2$s에게 %1$s"
 L.stack = "%3$s에게 %1$dx %2$s"
 L.stackyou = "당신에게 %dx %s"
@@ -53,6 +55,7 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
 L.you_die = "당신은 죽습니다"
 L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
+--L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
@@ -161,6 +164,7 @@ L.orb = "보주" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "보주" -- Plural for L.orb
 L.curse = "저주" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "저주" -- Plural of L.curse
+L.disease = "질병" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.spirit = "영혼" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "영혼" -- Plural of L.spirit
 L.tornado = "뇌우" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia

@@ -10,6 +10,8 @@ L.other = "%s: %s"
 L.onboss = "%s no CHEFE"
 L.buff_boss = "Buff no CHEFE: %s"
 L.buff_other = "Buff no %s: %s"
+--L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
+--L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC: SPELL_NAME
 L.on = "%s em %s"
 L.stack = "%dx %s em %s"
 L.stackyou = "%dx %s em VOCÊ"
@@ -53,6 +55,7 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
 L.you_die = "Você morrerá"
 L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds)
+--L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "Add surgiu"
@@ -161,6 +164,7 @@ L.orb = "Orbe" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "Orbes" -- Plural for L.orb
 L.curse = "Maldição" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Maldições" -- Plural of L.curse
+L.disease = "Doença" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.spirit = "Espírito" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "Espíritos" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
