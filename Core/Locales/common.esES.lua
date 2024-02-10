@@ -10,8 +10,8 @@ L.other = "%s: %s"
 L.onboss = "%s en el JEFE"
 L.buff_boss = "Beneficio en el JEFE: %s"
 L.buff_other = "Beneficio en %s: %s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC: SPELL_NAME
+L.magic_buff_boss = "Beneficio de magia en el JEFE: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "Beneficio de magia en %s: %s" -- Magic buff on NPC: SPELL_NAME
 L.on = "%s en %s"
 L.stack = "%dx %s en %s"
 L.stackyou = "%dx %s en TI"
@@ -55,7 +55,7 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
 L.you_die = "Mueres"
 L.you_die_sec = "Mueres en %d seg" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "Aparece Esbirro"
