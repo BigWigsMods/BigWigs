@@ -26,15 +26,16 @@ do
 end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
-local LibSpec = LibStub("LibSpecialization")
+local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
+local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
+local C_EncounterJournal_GetSectionInfo = isRetail and C_EncounterJournal.GetSectionInfo or function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
-local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
-local EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager = EJ_GetEncounterInfo, UnitGroupRolesAssigned, C_UIWidgetManager
+local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
+local UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo = UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
 local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = loader.RegisterAddonMessagePrefix, loader.UnitDetailedThreatSituation
-local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local PlaySoundFile = loader.PlaySoundFile
@@ -106,7 +107,13 @@ local metaMap = {__index = function(self, key) self[key] = {} return self[key] e
 local eventMap = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
-local icons = setmetatable({}, {__index =
+local icons = setmetatable({
+	-- Icons that are missing on classic
+	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown",
+	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft",
+	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup",
+	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright",
+}, {__index =
 	function(self, key)
 		local value
 		if type(key) == "number" then
@@ -155,7 +162,7 @@ local spells = setmetatable({}, {__index =
 		return value
 	end
 })
-local bossNames = setmetatable({}, {__index =
+local bossNames = isRetail and setmetatable({}, {__index =
 	function(self, key)
 		local name = EJ_GetEncounterInfo(key)
 		if name then
@@ -167,6 +174,18 @@ local bossNames = setmetatable({}, {__index =
 			return ""
 		end
 	end
+}) or setmetatable({}, {__index =
+function(self, key)
+	local name = BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
+	if name then
+		self[key] = name
+		return name
+	else
+		core:Print(format("An invalid boss name id (%d) is being used in a boss module.", key))
+		self[key] = ""
+		return ""
+	end
+end
 })
 
 -------------------------------------------------------------------------------
@@ -1082,11 +1101,11 @@ do
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
 
-				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
-
 				if self.OnEngage then
 					self:OnEngage(difficulty)
 				end
+
+				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
 			elseif noEngage == "NoEngage" then
 				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
 			end
@@ -1304,8 +1323,8 @@ end
 --- Check if in a Normal difficulty instance.
 -- @return boolean
 function boss:Normal()
-	-- 1: Normal Dungeon, 3: 10 Player Raid, 4: 25 Player Raid, 14: Normal Raid, 205: Follower Dungeon
-	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14 or difficulty == 205
+	-- 1: Normal Dungeon, 3: 10 Player Raid, 4: 25 Player Raid, 14: Normal Raid, 173: Normal Dungeon (Classic), 205: Follower Dungeon
+	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14 or difficulty == 173 or difficulty == 205
 end
 
 --- Check if in a Looking for Raid or Normal difficulty instance.
@@ -1318,8 +1337,8 @@ end
 --- Check if in a Heroic difficulty instance.
 -- @return boolean
 function boss:Heroic()
-	-- 2: Heroic Dungeon, 5: 10 Player Heroic Raid, 6: 25 Player Heroic Raid, 15: Heroic Raid, 24: Timewalking Dungeon
-	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15 or difficulty == 24
+	-- 2: Heroic Dungeon, 5: 10 Player Heroic Raid, 6: 25 Player Heroic Raid, 15: Heroic Raid, 24: Timewalking Dungeon, 174: Heroic Dungeon (Classic)
+	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15 or difficulty == 24 or difficulty == 174
 end
 
 --- Check if in a Mythic or Mythic+ difficulty instance.
