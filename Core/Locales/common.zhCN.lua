@@ -10,11 +10,11 @@ L.other = "%s：%s"
 L.onboss = "首领%s"
 L.buff_boss = "首领增益：%s"
 L.buff_other = "首领增益%s：%s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
-L.on = "%2$s %1$s"
-L.stack = "%3$s %1$d层%2$s"
-L.stackyou = "你%d层%s"
+L.magic_buff_boss = "首领魔法增益: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "魔法增益 %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.on = "%s：%s"
+L.stack = "%3$s：%1$d层%2$s"
+L.stackyou = "你：%d层%s"
 L.cast = "<施放：%s>"
 L.casting = "正在施放%s"
 L.soon = "即将%s"
@@ -36,7 +36,7 @@ L.mythic = "史诗模式"
 L.hard = "困难模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
+L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
 L.door_open = "门开了" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "门开了" -- When a gate is open, usually after a speech from an NPC
 
@@ -55,7 +55,7 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
 L.you_die = "你将死亡"
 L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.next_ability = "下一个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "小怪刷新"
