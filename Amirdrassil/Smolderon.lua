@@ -54,7 +54,7 @@ function mod:GetOptions()
 		421859, -- Ignited Essence (Boss)
 		422172, -- World In Flames
 		423896, -- Heating Up
-		425885, -- Seeking Inferno
+		{425885, "PRIVATE"}, -- Seeking Inferno
 	},{
 		["stages"] = "general",
 		[421343] = -27637, -- Stage One: The Firelord's Fury
@@ -112,6 +112,8 @@ function mod:OnEngage()
 	heatingUpCount = 0
 	overheatedOnMe = false
 	castingWorldInFlames = false
+
+	self:SetPrivateAuraSound(425885, 426010) -- Seeking Inferno
 
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandOfDamnationCount)) -- Brand of Damnation
