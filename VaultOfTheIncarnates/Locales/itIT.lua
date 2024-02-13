@@ -13,7 +13,6 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "itIT")
 if L then
-	L.rock_blast = "Assorbi"
 	L.resonating_annihilation = "Annientamento"
 	L.awakened_earth = "Pilastri"
 	L.shattering_impact = "Contusione"
@@ -83,17 +82,14 @@ if L then
 
 	-- Frost
 	L.biting_chill = "DoT Morsa Gelida"
-	L.absolute_zero = "Assorbimenti"
 	L.absolute_zero_melee = "Assorbimento Corpo a Corpo"
 	L.absolute_zero_ranged = "Assorbimento a Distanza"
 
 	-- Earth
-	L.enveloping_earth = "Assorbimento Cure"
 	L.erupting_bedrock = "Terremoti"
 
 	-- Storm
 	L.lightning_crash = "Fulmini"
-	L.thundering_strike = "Assorbimenti"
 
 	-- General
 	L.primal_attunement = "Rabbia Leggera"
@@ -109,7 +105,6 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "Granbastone"
 	L.clutchwatchers_rage = "Rabbia"
 	L.rapid_incubation = "Infusione Uova"
-	L.icy_shroud = "Assorbimento Cure"
 	L.broodkeepers_fury = "Furia"
 	L.frozen_shroud = "Assorbimento Cure e Immobilizzazione"
 	L.detonating_stoneslam = "Assorbimento Difensore"
@@ -127,8 +122,6 @@ if L then
 	L.lightning_strikes = "Assalti"
 	L.electric_scales = "Danno Incursione"
 	L.electric_lash = "Sferzata"
-	-- Intermission: The Primalist Strike
-	L.shattering_shroud = "Assorbimento Cure"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "Assorbimento Scudo"

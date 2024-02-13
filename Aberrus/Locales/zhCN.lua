@@ -5,7 +5,6 @@ if L then
 	L.custom_on_fade_out_bars_desc = "第一阶段时，淡出首领计时器。"
 
 	L.coalescing_void = "远离"
-	L.molten_eruption = "接圈"
 
 	L.shadow_and_flame = "暗焰易伤"
 end
@@ -42,9 +41,6 @@ if L then
 	L.doom_flames = "接圈"
 	L.charged_smash = "分摊"
 	L.energy_gained = "获得能量: %d"
-
-	-- Mythic
-	L.shadowflame_energy = "吸收治疗"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "zhCN")
@@ -84,7 +80,6 @@ if L then
 	L.emptiness_between_stars = "虚渺"
 	L.void_slash = "正面斩击"
 
-	L.boss_immune = "首领免疫"
 	L.ebon_might = "小怪免疫"
 end
 

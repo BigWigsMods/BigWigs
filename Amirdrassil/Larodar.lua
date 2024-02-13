@@ -106,9 +106,6 @@ if L then
 	L.scorching_roots = "Roots"
 	L.charred_brambles = "Roots Healable"
 	L.blazing_thorns = "Spiral of Thorns"
-	L.falling_embers = "Soaks"
-	L.flash_fire = "Heal Absorbs"
-	L.flash_fire_single = "Heal Absorb"
 end
 
 --------------------------------------------------------------------------------
@@ -171,8 +168,8 @@ function mod:GetOptions()
 		[426256] =  ("%s [%s]"):format(CL.orbs, L.blazing_coalescence_on_boss_note), -- Blazing Coalescence (Orbs [When it's on the boss])
 		[417634] = CL.full_energy, -- Raging Inferno (Full Energy)
 		[425889] = CL.pools, -- Igniting Growth (Pools)
-		[427252] = L.falling_embers, -- Falling Embers (Soaks)
-		[427299] = L.flash_fire, -- Flash Fire (Heal Absorbs)
+		[427252] = CL.soaks, -- Falling Embers (Soaks)
+		[427299] = CL.heal_absorbs, -- Flash Fire (Heal Absorbs)
 		[427343] = CL.tornadoes, -- Fire Whirl (Tornadoes)
 		[429973] = CL.frontal_cone, -- Smoldering Backdraft (Frontal Cone)
 		[421325] = CL.adds, -- Ashen Call (Adds)
@@ -478,10 +475,10 @@ function mod:ConsumingFlameRemoved(args)
 	ashenDevastationCount = 1
 
 	self:Bar(421407, 2.5, CL.count:format(self:SpellName(421407), searingAshCount)) -- Searing Ash
-	self:Bar(427252, timers[427252][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount)) -- Falling Embers
+	self:Bar(427252, timers[427252][fallingEmbersCount], CL.count:format(CL.soaks, fallingEmbersCount)) -- Falling Embers
 	self:Bar(429973, timers[429973][smolderingBackdraftCount], CL.count:format(CL.frontal_cone, smolderingBackdraftCount)) -- Smoldering Backdraft
 	self:Bar(421325, timers[421325][ashenCallCount], CL.count:format(CL.adds, ashenCallCount)) -- Ashen Call
-	self:Bar(427299, timers[427299][flashFireCount], CL.count:format(L.flash_fire, flashFireCount)) -- Flash Fire
+	self:Bar(427299, timers[427299][flashFireCount], CL.count:format(CL.heal_absorbs, flashFireCount)) -- Flash Fire
 	self:Bar(427343, timers[427343][fireWhirlCount], CL.count:format(CL.tornadoes, fireWhirlCount)) -- Fire Whirl
 
 	if self:Mythic() then
@@ -490,29 +487,29 @@ function mod:ConsumingFlameRemoved(args)
 end
 
 function mod:FallingEmbers(args)
-	self:StopBar(CL.count:format(L.falling_embers, fallingEmbersCount))
-	self:Message(args.spellId, "red", CL.count:format(L.falling_embers, fallingEmbersCount))
+	self:StopBar(CL.count:format(CL.soaks, fallingEmbersCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.soaks, fallingEmbersCount))
 	self:PlaySound(args.spellId, "long")
 	fallingEmbersCount = fallingEmbersCount + 1
-	self:Bar(args.spellId, timers[args.spellId][fallingEmbersCount], CL.count:format(L.falling_embers, fallingEmbersCount))
+	self:Bar(args.spellId, timers[args.spellId][fallingEmbersCount], CL.count:format(CL.soaks, fallingEmbersCount))
 end
 
 do
 	local playerList = {}
 	local prev = 0
 	function mod:FlashFireApplied(args)
-		local msg = CL.count:format(L.flash_fire, flashFireCount)
+		local msg = CL.count:format(CL.heal_absorbs, flashFireCount)
 		if args.time - prev > 2 then -- reset
 			prev = args.time
 			playerList = {}
 			self:StopBar(msg)
 			flashFireCount = flashFireCount + 1
-			self:Bar(args.spellId, timers[args.spellId][flashFireCount], CL.count:format(L.flash_fire, flashFireCount))
+			self:Bar(args.spellId, timers[args.spellId][flashFireCount], CL.count:format(CL.heal_absorbs, flashFireCount))
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, L.flash_fire_single, nil, "Heal Absorb")
+			self:Say(args.spellId, CL.heal_absorb, nil, "Heal Absorb")
 			self:SayCountdown(args.spellId, 8)
 		end
 		self:TargetsMessage(args.spellId, "red", playerList, nil, msg)

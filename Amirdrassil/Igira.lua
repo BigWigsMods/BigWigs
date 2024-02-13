@@ -38,9 +38,6 @@ if L then
 	L.blistering_torment = "Chain"
 	L.twisting_blade = "Blades"
 	L.marked_for_torment = "Torment"
-	L.umbral_destruction = "Soak"
-	L.heart_stopper = "Heal Absorbs"
-	L.heart_stopper_single = "Heal Absorb"
 end
 
 --------------------------------------------------------------------------------
@@ -74,9 +71,9 @@ function mod:GetOptions()
 		[414770] = L.blistering_torment, -- Blistering Torment (Chain)
 		[416996] = L.twisting_blade, -- Twisting Blade (Blades)
 		[422776] = L.marked_for_torment, -- Marked for Torment (Torment)
-		[416048] = L.umbral_destruction, -- Umbral Destruction (Soak)
+		[416048] = CL.soak, -- Umbral Destruction (Soak)
 		[424456] = CL.leap, -- Smashing Viscera (Leap)
-		[415623] = L.heart_stopper, -- Heart Stopper (Heal Absorbs)
+		[415623] = CL.heal_absorbs, -- Heart Stopper (Heal Absorbs)
 	}
 end
 
@@ -147,36 +144,36 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(424456, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
 	elseif spellId == 415090 then -- Axe Stance
 		stance = spellId
-		self:Message("stages", "cyan", CL.soon:format(L.umbral_destruction), 416048) -- Umbral Destruction
+		self:Message("stages", "cyan", CL.soon:format(CL.soak), 416048) -- Umbral Destruction
 		self:PlaySound("stages", "info")
-		self:Bar(416048, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
+		self:Bar(416048, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(CL.soak, umbralDestructionCount)) -- Umbral Destruction
 	elseif spellId == 415094 then -- Knife Stance
 		stance = spellId
-		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
+		self:Message("stages", "cyan", CL.soon:format(CL.heal_absorbs), 415623) -- Heart Stopper
 		self:PlaySound("stages", "info")
-		self:Bar(415623, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
+		self:Bar(415623, (self:Easy() and 24 or 19) - tormentOffset, CL.count:format(CL.heal_absorbs, heartStopperCount)) -- Heart Stopper
 
 	-- Mythic
 	elseif spellId == 414357 then -- Sword Knife Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
-		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
+		self:Message("stages", "cyan", CL.soon:format(CL.heal_absorbs), 415623) -- Heart Stopper
 		self:PlaySound("stages", "info")
-		self:Bar(415623, 21.5, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
+		self:Bar(415623, 21.5, CL.count:format(CL.heal_absorbs, heartStopperCount)) -- Heart Stopper
 		self:Bar(424456, 23.9, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
 	elseif spellId == 425282 then -- Axe Knife Stance
 		stance = spellId
-		self:Message("stages", "cyan", CL.soon:format(L.umbral_destruction), 416048) -- Umbral Destruction
-		self:Message("stages", "cyan", CL.soon:format(L.heart_stopper), 415623) -- Heart Stopper
+		self:Message("stages", "cyan", CL.soon:format(CL.soak), 416048) -- Umbral Destruction
+		self:Message("stages", "cyan", CL.soon:format(CL.heal_absorbs), 415623) -- Heart Stopper
 		self:PlaySound("stages", "info")
-		self:Bar(415623, 24.3, CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
-		self:Bar(416048, 26.7, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
+		self:Bar(415623, 24.3, CL.count:format(CL.heal_absorbs, heartStopperCount)) -- Heart Stopper
+		self:Bar(416048, 26.7, CL.count:format(CL.soak, umbralDestructionCount)) -- Umbral Destruction
 	elseif spellId == 425283 then -- Axe Sword Stance
 		stance = spellId
 		self:Message("stages", "cyan", CL.soon:format(CL.leap), 424456) -- Smashing Viscera
-		self:Message("stages", "cyan", CL.soon:format(L.umbral_destruction), 416048) -- Umbral Destruction
+		self:Message("stages", "cyan", CL.soon:format(CL.soak), 416048) -- Umbral Destruction
 		self:PlaySound("stages", "info")
-		self:Bar(416048, 19.0, CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
+		self:Bar(416048, 19.0, CL.count:format(CL.soak, umbralDestructionCount)) -- Umbral Destruction
 		self:Bar(424456, 25.5, CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
 	end
 end
@@ -293,8 +290,8 @@ function mod:MarkedForTorment(args)
 	self:StopBar(CL.count:format(L.blistering_spear, blisteringSpearCount)) -- Blistering Spear
 	self:StopBar(CL.count:format(L.twisting_blade, twistingBladeCount)) -- Twisting Blade
 	self:StopBar(CL.count:format(CL.leap, smashingVisceraCount)) -- Smashing Viscera
-	self:StopBar(CL.count:format(L.umbral_destruction, umbralDestructionCount)) -- Umbral Destruction
-	self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount)) -- Heart Stopper
+	self:StopBar(CL.count:format(CL.soak, umbralDestructionCount)) -- Umbral Destruction
+	self:StopBar(CL.count:format(CL.heal_absorbs, heartStopperCount)) -- Heart Stopper
 
 	self:Message(args.spellId, "cyan", CL.count:format(L.marked_for_torment, markedForTormentCount))
 	self:PlaySound(args.spellId, "long")
@@ -369,12 +366,12 @@ function mod:RuinousEnd(args)
 end
 
 function mod:UmbralDestruction(args)
-	self:StopBar(CL.count:format(L.umbral_destruction, umbralDestructionCount))
-	self:Message(args.spellId, "red", CL.count:format(L.umbral_destruction, umbralDestructionCount))
+	self:StopBar(CL.count:format(CL.soak, umbralDestructionCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.soak, umbralDestructionCount))
 	self:PlaySound(args.spellId, "warning")
 	umbralDestructionCount = umbralDestructionCount + 1
 	if umbralDestructionCount < 3 then -- 2 only
-		self:Bar(args.spellId, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(L.umbral_destruction, umbralDestructionCount))
+		self:Bar(args.spellId, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(CL.soak, umbralDestructionCount))
 	end
 end
 
@@ -389,11 +386,11 @@ function mod:SmashingViscera(args)
 end
 
 -- function mod:HeartStopper(args)
--- 	self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount))
--- 	self:Message(415623, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
+-- 	self:StopBar(CL.count:format(CL.heal_absorbs, heartStopperCount))
+-- 	self:Message(415623, "orange", CL.count:format(CL.heal_absorbs, heartStopperCount))
 -- 	heartStopperCount = heartStopperCount + 1
 -- 	if heartStopperCount < 3 then -- 2 only
--- 		self:Bar(415623, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(L.heart_stopper, heartStopperCount))
+-- 		self:Bar(415623, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(CL.heal_absorbs, heartStopperCount))
 -- 	end
 -- end
 
@@ -402,15 +399,15 @@ do
 	function mod:HeartStopperApplied(args)
 		if args.time - prev > 10 then -- reset
 			prev = args.time
-			self:StopBar(CL.count:format(L.heart_stopper, heartStopperCount))
-			self:Message(args.spellId, "orange", CL.count:format(L.heart_stopper, heartStopperCount))
+			self:StopBar(CL.count:format(CL.heal_absorbs, heartStopperCount))
+			self:Message(args.spellId, "orange", CL.count:format(CL.heal_absorbs, heartStopperCount))
 			heartStopperCount = heartStopperCount + 1
 			if heartStopperCount < 3 then -- 2 only
-				self:Bar(args.spellId, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(L.heart_stopper, heartStopperCount))
+				self:Bar(args.spellId, self:Mythic() and 32.8 or self:Easy() and 30.5 or 25.5, CL.count:format(CL.heal_absorbs, heartStopperCount))
 			end
 		end
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, L.heart_stopper_single)
+			self:PersonalMessage(args.spellId, nil, CL.heal_absorb)
 			self:PlaySound(args.spellId, "warning")
 		end
 	end

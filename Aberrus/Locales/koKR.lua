@@ -5,7 +5,6 @@ if L then
 	L.custom_on_fade_out_bars_desc = "1페이즈에서 거리에서 먼 보스들의 바를 임시로 비활성화."
 
 	L.coalescing_void = "보스에서 이격"
-	L.molten_eruption = "바닥 밟기"
 
 	L.shadow_and_flame = "신화 디버프"
 end
@@ -42,9 +41,6 @@ if L then
 	L.doom_flames = "바닥 밟기"
 	L.charged_smash = "큰바닥 같이맞기"
 	L.energy_gained = "기력 회복: %d"
-
-	-- Mythic
-	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "koKR")
@@ -84,7 +80,6 @@ if L then
 	L.emptiness_between_stars = "공허 위상"
 	L.void_slash = "탱커 전방기"
 
-	L.boss_immune = "넴드 면역"
 	L.ebon_might = "쫄 메즈 면역"
 end
 

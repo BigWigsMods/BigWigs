@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "Corrente"
 	L.twisting_blade = "Lâminas"
 	L.marked_for_torment = "Tormento"
-	L.umbral_destruction = "Soak"
-	L.heart_stopper = "Absorção de Cura"
-	L.heart_stopper_single = "Absorção de Cura"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "ptBR")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Mostrar Todas as Conjurações"
 	L.custom_off_all_scorchtail_crash_desc = "Mostra temporizadores e mensagens para todas as conjurações de Colisão de Escauda em vez de apenas para o seu lado."
 
-	L.flood_of_the_firelands = "Soaks"
 	L.flood_of_the_firelands_single_wait = "Aguarde" -- Aguarde 3, Aguarde 2, Aguarde 1 contagem regressiva antes que o debuff de absorção seja aplicado
-	L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "Impacto da Cauda"
 	L.serpents_fury = "Chamas"
 	L.coiling_flames_single = "Chama"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "Raízes"
 	L.charred_brambles = "Raízes curáveis"
 	L.blazing_thorns = "Espiral de Espinhos"
-	L.falling_embers = "Soaks"
-	L.flash_fire = "Absorção de Cura"
-	L.flash_fire_single = "Absorção de Cura"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "ptBR")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "Forma de Luniscante"
 	L.incarnation_tree_of_flame = "Forma de Árvore"
 	L.flaming_germination = "Sementes"
-	L.suppressive_ember_single = "Absorção de Cura"
 	L.flare_bomb = "Penas"
 	L.too_close_to_edge = "Muito próximo da borda"
 	L.taking_damage_from_edge = "Levando dano da borda"

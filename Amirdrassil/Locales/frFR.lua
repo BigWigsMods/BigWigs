@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "Chaine"
 	L.twisting_blade = "Lames"
 	L.marked_for_torment = "Tourment"
-	L.umbral_destruction = "Soak"
-	L.heart_stopper = "Heal Absorbs"
-	L.heart_stopper_single = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "frFR")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Afficher toutes les incantations"
 	L.custom_off_all_scorchtail_crash_desc = "Afficher les timers et les messages pour tous les impacts de Brûlequeue au lieu d'afficher uniquement ceux de votre côté."
 
-	L.flood_of_the_firelands = "Soaks"
 	L.flood_of_the_firelands_single_wait = "Attendez" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "Coup de queue"
 	L.serpents_fury = "Flammes"
 	L.coiling_flames_single = "Flamme"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "Enracinements"
 	L.charred_brambles = "Racines soignables"
 	L.blazing_thorns = "Spirale d'épines"
-	L.falling_embers = "Soaks"
-	L.flash_fire = "Heal Absorbs"
-	L.flash_fire_single = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "frFR")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "Forme de célénien"
 	L.incarnation_tree_of_flame = "Forme d'arbre"
 	L.flaming_germination = "Graines"
-	L.suppressive_ember_single = "Heal Absorb"
 	L.flare_bomb = "Plumes"
 	L.too_close_to_edge = "Trop proche du bord"
 	L.taking_damage_from_edge = "Prends des dégats du bord"

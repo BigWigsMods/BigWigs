@@ -78,7 +78,6 @@ if L then
 
 	L.fyralaths_bite = "Frontal"
 	L.fyralaths_bite_mythic = "Frontals"
-	L.fyralaths_mark = "Mark"
 	L.darkflame_shades = "Shades"
 	L.darkflame_cleave = "Mythic Soaks"
 

@@ -73,7 +73,6 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "Greatstaff"
 	L.clutchwatchers_rage = "Rage"
 	L.rapid_incubation = "Infuse Eggs"
-	L.icy_shroud = "Heal Absorb"
 	L.broodkeepers_fury = "Fury"
 	L.frozen_shroud = "Root Absorb"
 	L.detonating_stoneslam = "Tank Soak"
@@ -145,7 +144,7 @@ function mod:GetOptions()
 		[375889] = CL.laser, -- Greatstaff's Wrath (Laser)
 		[375829] = L.clutchwatchers_rage, -- Clutchwatcher's Rage (Rage)
 		[376073] = L.rapid_incubation, -- Rapid Incubation (Infuse Eggs)
-		[388716] = L.icy_shroud, -- Icy Shroud (Heal Absorb)
+		[388716] = CL.heal_absorb, -- Icy Shroud (Heal Absorb)
 		[-25129] = CL.adds, -- Primalist Reinforcements (Adds)
 		[375879] = L.broodkeepers_fury, --  Broodkeeper's Fury (Fury)
 		[392194] = L.greatstaff_of_the_broodkeeper, -- Empowered Greatstaff of the Broodkeeper (Greatstaff)
@@ -233,7 +232,7 @@ function mod:OnEngage()
 	self:CDBar(376073, 13, CL.count:format(L.rapid_incubation, rapidIncubationCount)) -- Rapid Incubation
 	self:CDBar(380175, 17, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount)) -- Greatstaff of the Broodkeeper
 	self:CDBar(-25129, self:Easy() and 35.7 or 33, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
-	self:CDBar(388716, 26.5, CL.count:format(L.icy_shroud, icyShroudCount)) -- Icy Shroud
+	self:CDBar(388716, 26.5, CL.count:format(CL.heal_absorb, icyShroudCount)) -- Icy Shroud
 	self:Bar(375879, self:Easy() and 317 or 300, CL.stage:format(2)) -- Broodkeeper's Fury
 
 	if self:Mythic() then
@@ -391,9 +390,9 @@ do
 end
 
 function mod:IcyShroud(args)
-	self:StopBar(CL.count:format(L.icy_shroud, icyShroudCount))
+	self:StopBar(CL.count:format(CL.heal_absorb, icyShroudCount))
 	self:StopBar(CL.count:format(L.frozen_shroud, icyShroudCount))
-	local text = self:GetStage() == 2 and L.frozen_shroud or L.icy_shroud
+	local text = self:GetStage() == 2 and L.frozen_shroud or CL.heal_absorb
 	self:Message(args.spellId, "yellow", CL.count:format(text, icyShroudCount))
 	self:PlaySound(args.spellId, "alert")
 	icyShroudCount = icyShroudCount + 1
@@ -603,7 +602,7 @@ function mod:BroodkeepersFury(args)
 		self:StopBar(CL.count:format(CL.adds, primalReinforcementsCount))
 		self:StopBar(CL.count:format(L.rapid_incubation, rapidIncubationCount))
 		self:StopBar(CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount)) -- Greatstaff of the Broodkeeper
-		self:StopBar(CL.count:format(L.icy_shroud, icyShroudCount)) -- Icy Shroud
+		self:StopBar(CL.count:format(CL.heal_absorb, icyShroudCount)) -- Icy Shroud
 
 		self:SetStage(2)
 		showFissures = true

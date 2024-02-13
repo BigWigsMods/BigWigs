@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "Цепь"
 	L.twisting_blade = "Фронтал"
 	L.marked_for_torment = "Переходка"
-	L.umbral_destruction = "Соак"
-	L.heart_stopper = "Абсорб"
-	L.heart_stopper_single = "Абсорб"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "ruRU")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Показывать все касты"
 	L.custom_off_all_scorchtail_crash_desc = "Показывать таймеры и уведомления о всех применениях Удара Жгучехвоста, а не только для своей стороны."
 
-	L.flood_of_the_firelands = "Соки"
 	L.flood_of_the_firelands_single_wait = "Жди" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "Сока"
 	L.scorchtail_crash = "Хвост"
 	L.serpents_fury = "Дебаффы"
 	L.coiling_flames_single = "Дебафф"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "Корень"
 	L.charred_brambles = "Корень хилить"
 	L.blazing_thorns = "Спирали"
-	L.falling_embers = "Соки"
-	L.flash_fire = "Абсорб"
-	L.flash_fire_single = "Абсорб"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "ruRU")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "Совиная форма "
 	L.incarnation_tree_of_flame = "Древоформа"
 	L.flaming_germination = "Семена"
-	L.suppressive_ember_single = "Абсорб"
 	L.flare_bomb = "Перья"
 	L.too_close_to_edge = "Слишком близко к краю"
 	L.taking_damage_from_edge = "Получаешь урон от края платформы"

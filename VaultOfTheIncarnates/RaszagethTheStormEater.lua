@@ -142,8 +142,6 @@ if L then
 	L.lightning_strikes = "Strikes"
 	L.electric_scales = "Raid Damage"
 	L.electric_lash = "Lash"
-	-- Intermission: The Primalist Strike
-	L.shattering_shroud = "Heal Absorb"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "Absorb Shield"
@@ -246,7 +244,7 @@ function mod:GetOptions()
 		-- Intermission: The Primalist Strike
 		[385065] = CL.breath, -- Lightning Devastation (Breath)
 		[396037] = CL.bombs, -- Surging Blast (Bombs)
-		[397382] = L.shattering_shroud, -- Shattering Shroud (Heal Absorb)
+		[397382] = CL.heal_absorb, -- Shattering Shroud (Heal Absorb)
 		-- Stage Two: Surging Power
 		[387261] = L.stormsurge, -- Stormsurge
 		[391989] = L.stormcharged, -- Stormcharged (Positive or Negative)
@@ -688,7 +686,7 @@ function mod:StormBolt(args)
 end
 
 function mod:ShatteringShroud(args)
-	self:Message(args.spellId, "yellow", CL.casting:format(L.shattering_shroud))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.heal_absorb))
 	if self:Healer() then
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -700,14 +698,14 @@ end
 
 function mod:ShatteringShroudApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.shattering_shroud)
+		self:PersonalMessage(args.spellId, nil, CL.heal_absorb)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
 function mod:ShatteringShroudRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.removed:format(L.shattering_shroud))
+		self:Message(args.spellId, "green", CL.removed:format(CL.heal_absorb))
 		self:PlaySound(args.spellId, "info")
 	end
 end

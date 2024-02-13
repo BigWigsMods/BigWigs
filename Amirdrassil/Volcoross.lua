@@ -30,9 +30,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Show All Casts"
 	L.custom_off_all_scorchtail_crash_desc = "Show timers and messages for all Scorchtail Crash casts instead of just for your side."
 
-	L.flood_of_the_firelands = "Soaks"
 	L.flood_of_the_firelands_single_wait = "Wait" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "Tail Slam"
 	L.serpents_fury = "Flames"
 	L.coiling_flames_single = "Flames"
@@ -61,7 +59,7 @@ function mod:GetOptions()
 		[427201] = "mythic",
 	},{
 		[421672] = L.serpents_fury, -- Serpent's Fury (Flames)
-		[420933] = L.flood_of_the_firelands, -- Flood of the Firelands (Soaks)
+		[420933] = CL.soaks, -- Flood of the Firelands (Soaks)
 		[421616] = CL.pools, -- Volcanic Disgorge (Pools)
 		[420415] = L.scorchtail_crash, -- Scorchtail Crash (Tail Slam)
 		[427201] = CL.explosion, -- Coiling Eruption (Explosion)
@@ -106,7 +104,7 @@ function mod:OnEngage()
 	self:Bar(421672, 10, CL.count:format(L.serpents_fury, serpentsFuryCount)) -- Serpent's Fury
 	self:Bar(420415, 20, CL.count:format(L.scorchtail_crash, scorchtailCrashCount)) -- Scorchtail Crash
 	self:Bar(421616, 30, CL.count:format(CL.pools, volcanicDisgorgeCount)) -- Volcanic Disgorge
-	self:Bar(420933, 70, CL.count:format(L.flood_of_the_firelands, floodOfTheFirelandsCount)) -- Flood of the Firelands
+	self:Bar(420933, 70, CL.count:format(CL.soaks, floodOfTheFirelandsCount)) -- Flood of the Firelands
 end
 
 --------------------------------------------------------------------------------
@@ -213,11 +211,11 @@ do
 end
 
 function mod:FloodOfTheFirelands(args)
-	self:StopBar(CL.count:format(L.flood_of_the_firelands, floodOfTheFirelandsCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.flood_of_the_firelands, floodOfTheFirelandsCount))
+	self:StopBar(CL.count:format(CL.soaks, floodOfTheFirelandsCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.soaks, floodOfTheFirelandsCount))
 	self:PlaySound(args.spellId, "long")
 	floodOfTheFirelandsCount = floodOfTheFirelandsCount + 1
-	self:Bar(args.spellId, 70, CL.count:format(L.flood_of_the_firelands, floodOfTheFirelandsCount))
+	self:Bar(args.spellId, 70, CL.count:format(CL.soaks, floodOfTheFirelandsCount))
 end
 
 do
@@ -305,10 +303,10 @@ end
 
 function mod:CoilingEruptionApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.flood_of_the_firelands_single)
+		self:PersonalMessage(args.spellId, nil, CL.soak)
 		self:PlaySound(args.spellId, "warning")
-		self:Yell(args.spellId, L.flood_of_the_firelands_single, nil, "Soak")
-		self:YellCountdown(args.spellId, 4, L.flood_of_the_firelands_single, nil, "Soak") -- Soak in 4
+		self:Yell(args.spellId, CL.soak, nil, "Soak")
+		self:YellCountdown(args.spellId, 4, CL.soak, nil, "Soak") -- Soak in 4
 	end
 end
 

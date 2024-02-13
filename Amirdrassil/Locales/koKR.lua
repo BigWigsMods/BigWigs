@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "사슬"
 	L.twisting_blade = "칼날"
 	L.marked_for_torment = "고문"
-	L.umbral_destruction = "같이 맞기"
-	L.heart_stopper = "치유 흡수"
-	L.heart_stopper_single = "치유 흡수"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "koKR")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "모든 시전 보이기"
 	L.custom_off_all_scorchtail_crash_desc = "당신의 방향만이 아닌 모든 방향에서의 불꽃꼬리 충돌의 타이머와 메시지를 표시합니다."
 
-	L.flood_of_the_firelands = "같이 맞기"
 	L.flood_of_the_firelands_single_wait = "대기" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "같이 맞기"
 	L.scorchtail_crash = "꼬리치기"
 	L.serpents_fury = "불꽃"
 	L.coiling_flames_single = "불꽃"
@@ -55,10 +50,7 @@ if L then
 
 	L.scorching_roots = "뿌리"
 	L.charred_brambles = "치유 가능한 뿌리"
-	L.blazing_thorns = "이글거리는 가시" -- Spiral of Thorn
-	L.falling_embers = "바닥 밟기"
-	L.flash_fire = "치유 흡수"
-	L.flash_fire_single = "치유 흡수"
+	L.blazing_thorns = "이글거리는 가시" -- Spiral of Thorns
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "koKR")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "달빛야수 형태"
 	L.incarnation_tree_of_flame = "나무 형태"
 	L.flaming_germination = "씨앗"
-	L.suppressive_ember_single = "치유 흡수"
 	L.flare_bomb = "깃털"
 	L.too_close_to_edge = "가장자리에 너무 가까움"
 	L.taking_damage_from_edge = "가장자리에서 피해를 입음"

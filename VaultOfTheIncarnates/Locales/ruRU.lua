@@ -13,7 +13,6 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "ruRU")
 if L then
-	L.rock_blast = "Делёжка"
 	L.resonating_annihilation = "Аннигиляция"
 	L.awakened_earth = "Столп"
 	L.shattering_impact = "Войда"
@@ -83,17 +82,14 @@ if L then
 
 	-- Frost
 	L.biting_chill = "Фрост ДоТ"
-	L.absolute_zero = "Делёжка"
 	L.absolute_zero_melee = "Мили делёжка"
 	L.absolute_zero_ranged = "Рендж делёжка"
 
 	-- Earth
-	L.enveloping_earth = "Абсорб хила"
 	L.erupting_bedrock = "Войд зоны"
 
 	-- Storm
 	L.lightning_crash = "Молния"
-	L.thundering_strike = "Соки"
 
 	-- General
 	L.primal_attunement = "Софт энрейдж"
@@ -109,7 +105,6 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "Великий Посох"
 	L.clutchwatchers_rage = "Ярость"
 	L.rapid_incubation = "Инкубация"
-	L.icy_shroud = "Абсорб"
 	L.broodkeepers_fury = "Стаки"
 	L.frozen_shroud = "Абсорб + Рут"
 	L.detonating_stoneslam = "Танк Соак"
@@ -127,8 +122,6 @@ if L then
 	L.lightning_strikes = "Войд зоны"
 	L.electric_scales = "Рейд урон"
 	L.electric_lash = "Хлыст"
-	-- Intermission: The Primalist Strike
-	L.shattering_shroud = "Хил Абсорб"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "Щит"

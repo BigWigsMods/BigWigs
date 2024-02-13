@@ -5,7 +5,6 @@ if L then
 	L.custom_on_fade_out_bars_desc = "Fondu enchainé des barres du boss qui est hors de portée durant la phase 1"
 
 	L.coalescing_void = "Fuyez"
-	L.molten_eruption = "Soaks"
 
 	L.shadow_and_flame = "Affaiblissements Mythiques"
 end
@@ -42,9 +41,6 @@ if L then
 	L.doom_flames = "Petits Soaks"
 	L.charged_smash = "Gros Soak"
 	L.energy_gained = "Energie Gagnée: %d"
-
-	-- Mythic
-	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "frFR")
@@ -84,7 +80,6 @@ if L then
 	L.emptiness_between_stars = "Vide interstellaire"
 	L.void_slash = "Frontal sur le Tank"
 
-	--L.boss_immune = "Boss Immune"
 	--L.ebon_might = "Adds Immune"
 end
 

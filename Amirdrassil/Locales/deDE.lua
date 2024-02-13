@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "Kette"
 	L.twisting_blade = "Klingen"
 	L.marked_for_torment = "Qualen"
-	L.umbral_destruction = "Soak"
-	L.heart_stopper = "Heilungen absorbiert"
-	L.heart_stopper_single = "Heilung absorbiert"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "deDE")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Alle Zauber anzeigen"
 	L.custom_off_all_scorchtail_crash_desc = "Zeigt Timer und Nachrichten für alle Zauber von Sengschweifsturz an, statt nur die Zauber auf Deiner Seite."
 
-	L.flood_of_the_firelands = "Soaks"
 	L.flood_of_the_firelands_single_wait = "Warten" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "Schweifschlag"
 	L.serpents_fury = "Flammen"
 	L.coiling_flames_single = "Flamme"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "Wurzeln"
 	L.charred_brambles = "Wurzeln heilbar"
 	L.blazing_thorns = "Dornenspirale"
-	L.falling_embers = "Soaks"
-	L.flash_fire = "Heilungen absorbiert"
-	L.flash_fire_single = "Heilung absorbiert"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "deDE")
@@ -90,7 +82,6 @@ if L then
 	L.incarnation_moonkin = "Mondkingestalt"
 	L.incarnation_tree_of_flame = "Treantgestalt"
 	L.flaming_germination = "Samen"
-	L.suppressive_ember_single = "Heilung absorbiert"
 	L.flare_bomb = "Federn"
 	L.too_close_to_edge = "Zu nah am Rand"
 	L.taking_damage_from_edge = "Du kriegst Schaden vom Rand"

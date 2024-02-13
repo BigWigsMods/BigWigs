@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "Cadena"
 	L.twisting_blade = "Espadas"
 	L.marked_for_torment = "Tormento"
-	L.umbral_destruction = "Soak"
-	L.heart_stopper = "Absorciones de sanación"
-	L.heart_stopper_single = "Absorcion de sanación"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "esMX")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Mostrar todos los lanzamientos"
 	L.custom_off_all_scorchtail_crash_desc = "Mostrar temporizadores y mensajes para todos los lanzamientos de Choque Abrasacola en lugar de solo para tu lado."
 
-	L.flood_of_the_firelands = "Soaks"
 	L.flood_of_the_firelands_single_wait = "Espera" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "Soak"
 	L.scorchtail_crash = "Golpe de Cola"
 	L.serpents_fury = "Llamas"
 	L.coiling_flames_single = "Llamas"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "Raíces"
 	--L.charred_brambles = "Roots Healable"
 	--L.blazing_thorns = "Spiral of Thorns"
-	L.falling_embers = "Soaks"
-	L.flash_fire = "Absorciones de sanación"
-	L.flash_fire_single = "Absorcion de sanación"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "esMX")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "Forma de lechúcico lunar"
 	L.incarnation_tree_of_flame = "Forma de Árbol"
 	L.flaming_germination = "Semillas"
-	L.suppressive_ember_single = "Absorcion de sanación"
 	L.flare_bomb = "Plumas"
 	--L.too_close_to_edge = "Too close to the edge"
 	--L.taking_damage_from_edge = "Taking damage from the edge"

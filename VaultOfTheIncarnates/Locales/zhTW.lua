@@ -13,7 +13,6 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "zhTW")
 if L then
-	L.rock_blast = "分攤"
 	L.resonating_annihilation = "清場"
 	L.awakened_earth = "地刺"
 	L.shattering_impact = "猛擊"
@@ -83,17 +82,14 @@ if L then
 
 	-- Frost
 	L.biting_chill = "刺骨之寒"
-	L.absolute_zero = "大圈分攤"
 	L.absolute_zero_melee = "近戰分攤"
 	L.absolute_zero_ranged = "遠程分攤"
 
 	-- Earth
-	L.enveloping_earth = "吸收盾"
 	L.erupting_bedrock = "地震跳舞"
 
 	-- Storm
 	L.lightning_crash = "閃電暴擊"
-	L.thundering_strike = "接圈"
 
 	-- General
 	L.primal_attunement = "軟狂暴"
@@ -109,7 +105,6 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "巨杖"
 	L.clutchwatchers_rage = "狂怒"
 	L.rapid_incubation = "注入龍蛋"
-	L.icy_shroud = "減速吸收盾"
 	L.broodkeepers_fury = "狂怒"
 	L.frozen_shroud = "定身吸收盾"
 	L.detonating_stoneslam = "坦克分攤"
@@ -127,8 +122,6 @@ if L then
 	L.lightning_strikes = "落雷"
 	L.electric_scales = "團隊傷害"
 	L.electric_lash = "電鞭"
-	-- Intermission: The Primalist Strike
-	L.shattering_shroud = "治療吸收盾"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "帶電吸收盾"

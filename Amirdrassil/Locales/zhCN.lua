@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "链条"
 	L.twisting_blade = "飞刀"
 	L.marked_for_torment = "折磨"
-	L.umbral_destruction = "分摊"
-	L.heart_stopper = "治疗吸收盾"
-	L.heart_stopper_single = "治疗吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhCN")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "团长模式"
 	L.custom_off_all_scorchtail_crash_desc = "显示全部焦尾碾压的计时器和信息，而不是仅显示你所在的半场。"
 
-	L.flood_of_the_firelands = "分摊"
 	L.flood_of_the_firelands_single_wait = "等待" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "分摊"
 	L.scorchtail_crash = "尾击"
 	L.serpents_fury = "怒焰"
 	L.coiling_flames_single = "烈焰"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "树根"
 	L.charred_brambles = "治疗树根"
 	L.blazing_thorns = "耀焰荆棘" --还是预警技能名称吧螺旋喷发或者螺旋荆棘害怕误导。
-	L.falling_embers = "接圈"
-	L.flash_fire = "治疗吸收盾"
-	L.flash_fire_single = "治疗吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhCN")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "枭兽形态"
 	L.incarnation_tree_of_flame = "树人形态"
 	L.flaming_germination = "种子"
-	L.suppressive_ember_single = "治疗吸收盾"
 	L.flare_bomb = "羽毛"
 	L.too_close_to_edge = "太靠近边缘"
 	L.taking_damage_from_edge = "在边缘受到伤害"

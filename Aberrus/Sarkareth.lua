@@ -159,7 +159,6 @@ if L then
 	L.infinite_duress = mod:SpellName(404288) -- Infinite Duress
 
 	-- Stage Three: The Seas of Infinity
-	L.boss_immune = "Boss Immune"
 	L.cosmic_ascension = mod:SpellName(161862) -- Cosmic Ascension (Ascension)
 	L.scouring_eternity = mod:SpellName(123244) -- Scouring Eternity (Hide)
 	L.embrace_of_nothingness = mod:SpellName(371920) -- Embrace of Nothingness (Black Hole)
@@ -467,7 +466,7 @@ function mod:StageEnd(args)
 	self:StopBar(CL.stage:format(3))
 
 	if self:GetStage() == 2 then
-		self:Bar("stages", 11, L.boss_immune, args.spellId)
+		self:Bar("stages", 11, CL.immune, args.spellId)
 	end
 end
 

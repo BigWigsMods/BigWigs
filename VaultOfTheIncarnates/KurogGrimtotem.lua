@@ -70,17 +70,14 @@ if L then
 
 	-- Frost
 	L.biting_chill = "Chill DoT"
-	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Melee Soak"
 	L.absolute_zero_ranged = "Ranged Soak"
 
 	-- Earth
-	L.enveloping_earth = "Heal Absorb"
 	L.erupting_bedrock = "Quakes"
 
 	-- Storm
 	L.lightning_crash = "Zaps"
-	L.thundering_strike = "Soaks"
 	L.orb_lightning = mod:SpellName(394719) -- Orb Lightning
 
 	-- General
@@ -112,12 +109,12 @@ local alterSpellNameMap = {
 		["stage"] = -25061, -- Frost Altar
 		["damage"] = L.biting_chill,
 		["avoid"] = CL.orbs,
-		["ultimate"] = L.absolute_zero,
+		["ultimate"] = CL.soaks,
 		["add"] = CL.orbs,
 	},
 	["Earth"] = {
 		["stage"] = -25064, -- Earthen Altar
-		["damage"] = L.enveloping_earth,
+		["damage"] = CL.heal_absorb,
 		["avoid"] = L.erupting_bedrock,
 		["ultimate"] = CL.adds,
 		["add"] = L.erupting_bedrock,
@@ -126,7 +123,7 @@ local alterSpellNameMap = {
 		["stage"] = -25068, -- Storm Altar
 		["damage"] = L.lightning_crash,
 		["avoid"] = CL.bombs,
-		["ultimate"] = L.thundering_strike,
+		["ultimate"] = CL.soaks,
 		["add"] = L.orb_lightning,
 	}
 }
@@ -246,15 +243,15 @@ function mod:GetOptions()
 		-- Frost
 		[373678] = L.biting_chill, -- Biting Chill (Chill DoT)
 		[391019] = CL.orbs, -- Frigid Torrent (Orbs)
-		[372458] = L.absolute_zero, -- Absolute Zero (Soaks)
+		[372458] = CL.soaks, -- Absolute Zero (Soaks)
 		-- Earth
-		[391056] = L.enveloping_earth, -- Enveloping Earth (Healing Absorb)
+		[391056] = CL.heal_absorb, -- Enveloping Earth (Heal Absorb)
 		[395893] = L.erupting_bedrock, -- Erupting Bedrock (Quakes)
 		[374691] = CL.adds, -- Seismic Rupture (Adds)
 		-- Storm
 		[373487] = L.lightning_crash, -- Lightning Crash (Zaps)
 		[390920] = CL.bombs, -- Shocking Burst (Bombs)
-		[374215] = L.thundering_strike, -- Thundering Strike (Soaks)
+		[374215] = CL.soaks, -- Thundering Strike (Soaks)
 		-- Stage 2
 		[374427] = CL.bombs, -- Ground Shatter (Bombs)
 		-- Stage 3
@@ -661,12 +658,12 @@ do
 
 	function mod:AbsoluteZero(args)
 		if self:MobId(args.sourceGUID) == 184986 then -- Kurog
-			self:Message(372458, "orange", CL.casting:format(CL.count:format(L.ultimate_bartext:format(L.absolute_zero), ultimateCount)))
+			self:Message(372458, "orange", CL.casting:format(CL.count:format(L.ultimate_bartext:format(CL.soaks), ultimateCount)))
 		else --if self:MobId(args.sourceGUID) == 190686 then -- Frozen Destroyer (Intermission add)
-			self:StopBar(CL.count:format(L.absolute_zero, ultimateCount))
-			self:Message(372458, "orange", CL.casting:format(CL.count:format(L.absolute_zero, ultimateCount)))
+			self:StopBar(CL.count:format(CL.soaks, ultimateCount))
+			self:Message(372458, "orange", CL.casting:format(CL.count:format(CL.soaks, ultimateCount)))
 			ultimateCount = ultimateCount + 1 -- reusing this because it's also the same _APPLIED
-			self:Bar(372458, 23, CL.count:format(L.absolute_zero, ultimateCount))
+			self:Bar(372458, 23, CL.count:format(CL.soaks, ultimateCount))
 		end
 		playerList = {}
 		iconList = {}
@@ -697,7 +694,7 @@ do
 			self:CustomIcon(aboluteZeroMarker, iconList[i].player, i)
 		end
 		if not playedSound then -- play for others
-			self:TargetsMessage(372458, "yellow", playerList, 2, CL.count:format(L.absolute_zero, ultimateCount-1))
+			self:TargetsMessage(372458, "yellow", playerList, 2, CL.count:format(CL.soaks, ultimateCount-1))
 			self:PlaySound(372458, "alert") -- stack
 		end
 	end
@@ -729,7 +726,7 @@ end
 do
 	local count = 1
 	function mod:EnvelopingEarth(args)
-		self:Message(391056, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.enveloping_earth), damageCount)))
+		self:Message(391056, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(CL.heal_absorb), damageCount)))
 		self:PlaySound(391056, "info")
 		count = 1
 	end
@@ -737,7 +734,7 @@ do
 	function mod:EnvelopingEarthApplied(args)
 		count = count + 1
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, L.enveloping_earth)
+			self:PersonalMessage(args.spellId, nil, CL.heal_absorb)
 			self:PlaySound(args.spellId, "alarm") -- debuffdamage
 		end
 		if count < 9 then -- flex scaling, yikes
@@ -848,13 +845,13 @@ end
 
 function mod:ThunderStrike(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
-		self:Message(args.spellId, "orange", CL.count:format(L.ultimate_bartext:format(L.thundering_strike), ultimateCount))
+		self:Message(args.spellId, "orange", CL.count:format(L.ultimate_bartext:format(CL.soaks), ultimateCount))
 	else --if self:MobId(args.sourceGUID) == 190690 then -- Thunder Ravager (Intermission add)
 		local count = addCount[args.spellId] or 1
-		self:StopBar(CL.count:format(L.thundering_strike, count))
-		self:Message(args.spellId, "orange", CL.count:format(L.thundering_strike, count))
+		self:StopBar(CL.count:format(CL.soaks, count))
+		self:Message(args.spellId, "orange", CL.count:format(CL.soaks, count))
 		count = count + 1
-		self:Bar(args.spellId, 41, CL.count:format(L.thundering_strike, count))
+		self:Bar(args.spellId, 41, CL.count:format(CL.soaks, count))
 		addCount[args.spellId] = count
 	end
 	self:PlaySound(args.spellId, "alert")
@@ -965,7 +962,7 @@ function mod:IntermissionAddSpawn(args)
 		self:Bar(374624, self:Mythic() and 33 or 30) -- Freezing Tempest
 		if self:Mythic() then
 			ultimateCount = 1
-			self:Bar(372458, 20, CL.count:format(L.absolute_zero, ultimateCount)) -- Absolute Zero
+			self:Bar(372458, 20, CL.count:format(CL.soaks, ultimateCount)) -- Absolute Zero
 		end
 	elseif args.spellId == 375824 then -- Tectonic Crusher
 		self:Bar(374427, 5.5, CL.bombs) -- Ground Shatter
@@ -978,7 +975,7 @@ function mod:IntermissionAddSpawn(args)
 		self:Bar(391696, 7.3) -- Lethal Current
 		if self:Mythic() then
 			addCount[374215] = 1
-			self:Bar(374215, 37.7, CL.count:format(L.thundering_strike, 1)) -- Thunder Strike
+			self:Bar(374215, 37.7, CL.count:format(CL.soaks, 1)) -- Thunder Strike
 		end
 	end
 end
@@ -986,14 +983,14 @@ end
 function mod:IntermissionAddDeath(args)
 	if args.mobId == 190690  then -- Thundering Ravager
 		self:StopBar(391696) -- Lethal Current
-		self:StopBar(CL.count:format(L.thundering_strike, addCount[374215] or 1)) -- Thunder Strike
+		self:StopBar(CL.count:format(CL.soaks, addCount[374215] or 1)) -- Thunder Strike
 	elseif args.mobId == 190588 then -- Tectonic Crusher
 		self:StopBar(CL.bombs) -- Ground Shatter
 		self:StopBar(L.violent_upheaval) -- Violent Upheaval
 		self:StopBar(CL.count:format(CL.adds, addCount[374691] or 1)) -- Seismic Rupture
 	elseif args.mobId == 190686 then -- Frozen Destroyer
 		self:StopBar(374624) -- Freezing Tempest
-		self:StopBar(CL.count:format(L.absolute_zero, ultimateCount)) -- Absolute Zero
+		self:StopBar(CL.count:format(CL.soaks, ultimateCount)) -- Absolute Zero
 	elseif args.mobId == 190688  then -- Blazing Fiend
 		self:StopBar(CL.count:format(L.searing_carnage, addCount[374023] or 1)) -- Searing Carnage
 	end

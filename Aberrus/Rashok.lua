@@ -35,9 +35,6 @@ if L then
 	L.doom_flames = "Small Soaks"
 	L.charged_smash = "Big Soak"
 	L.energy_gained = "Energy Gained: %d"
-
-	-- Mythic
-	L.shadowflame_energy = "Heal Absorb"
 end
 
 --------------------------------------------------------------------------------
@@ -68,7 +65,7 @@ function mod:GetOptions()
 		[410070] = "mythic",
 	}, {
 		[410070] = CL.orbs, -- Unleash Shadowflame (Orbs)
-		[410075] = L.shadowflame_energy, -- Shadowflame Energy (Heal Absorb)
+		[410075] = CL.heal_absorb, -- Shadowflame Energy (Heal Absorb)
 		[405316] = CL.full_energy, -- Ancient Fury (Full Energy)
 		[405821] = CL.leap, -- Searing Slam (Leap)
 		[406851] = L.doom_flames, -- Doom Flames (Small Soaks)
@@ -323,5 +320,5 @@ function mod:UnleashShadowflame(args)
 	unleashShadowflameCount = unleashShadowflameCount + 1
 	self:Bar(args.spellId, timers[args.spellId][unleashShadowflameCount], CL.count:format(CL.orbs, unleashShadowflameCount))
 
-	self:Bar(410075, 18.5, L.shadowflame_energy) -- Shadowflame Energy
+	self:Bar(410075, 18.5, CL.heal_absorb) -- Shadowflame Energy
 end

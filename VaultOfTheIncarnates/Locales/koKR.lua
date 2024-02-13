@@ -13,7 +13,6 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "koKR")
 if L then
-	L.rock_blast = "같이 맞아주기"
 	L.resonating_annihilation = "절멸 - 잔해 조심"
 	L.awakened_earth = "기둥 생성"
 	L.shattering_impact = "충격 - 잔해 조심"
@@ -83,17 +82,14 @@ if L then
 
 	-- 냉기
 	L.biting_chill = "추위 도트"
-	L.absolute_zero = "같이 맞아주기"
 	L.absolute_zero_melee = "근딜 나눠맞기"
 	L.absolute_zero_ranged = "원딜 나눠맞기"
 
 	-- 대지
-	L.enveloping_earth = "치유 흡수"
 	L.erupting_bedrock = "지진 넉백"
 
 	-- 폭풍
 	L.lightning_crash = "번개 충돌"
-	L.thundering_strike = "맞아주기"
 
 	-- 일반
 	L.primal_attunement = "미니 광폭"
@@ -109,7 +105,6 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "대지팡이"
 	L.clutchwatchers_rage = "분노"
 	L.rapid_incubation = "급속 배양"
-	L.icy_shroud = "치유량 흡수 껍질"
 	L.broodkeepers_fury = "분노"
 	L.frozen_shroud = "속박"
 	L.detonating_stoneslam = "탱커 나눠맞기"
@@ -127,8 +122,6 @@ if L then
 	L.lightning_strikes = "벼락"
 	L.electric_scales = "공대 광역뎀"
 	L.electric_lash = "채찍"
-	-- Intermission: The Primalist Strike
-	L.shattering_shroud = "치유 흡수"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "흡수 보호막"

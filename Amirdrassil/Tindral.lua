@@ -135,7 +135,6 @@ if L then
 	L.incarnation_moonkin = "Moonkin Form"
 	L.incarnation_tree_of_flame = "Tree Form"
 	L.flaming_germination = "Seeds"
-	L.suppressive_ember_single = "Heal Absorb"
 	L.flare_bomb = "Feathers"
 	L.too_close_to_edge = "Too close to the edge"
 	L.taking_damage_from_edge = "Taking damage from the edge"
@@ -200,6 +199,7 @@ function mod:GetOptions()
 		[421636] = CL.pushback, -- Typhoon (Pushback)
 		[422509] = L.flying_available, -- Empowered Feather (You can fly now)
 		[422115] = L.incarnation_tree_of_flame, -- Incarnation: Tree of Flame (Tree Form)
+		[424579] = CL.heal_absorb, -- Suppressive Ember (Heal Absorb)
 		[423265] = L.flaming_germination, -- Flaming Germination (Seeds)
 		[425576] = L.flare_bomb, -- Flare Bomb (Feathers)
 	}
@@ -601,7 +601,7 @@ end
 
 function mod:SuppressiveEmberApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.suppressive_ember_single)
+		self:PersonalMessage(args.spellId, nil, CL.heal_absorb)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

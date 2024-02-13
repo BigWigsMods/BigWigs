@@ -5,7 +5,6 @@ if L then
 	L.custom_on_fade_out_bars_desc = "Desaparece com as barras que pertencem ao boss que está fora de alcance na primeira fase."
 
 	L.coalescing_void = "Fuja"
-	L.molten_eruption = "Soaks"
 
 	L.shadow_and_flame = "Debuffs Míticos"
 end
@@ -42,9 +41,6 @@ if L then
 	L.doom_flames = "Soaks Pequenos"
 	L.charged_smash = "Soak Grande"
 	L.energy_gained = "Energia Obtida: %d"
-
-	-- Mythic
-	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "ptBR")
@@ -84,7 +80,6 @@ if L then
 	L.emptiness_between_stars = "Vazio"
 	L.void_slash = "Frontal no Tank"
 
-	L.boss_immune = "Boss Imune"
 	L.ebon_might = "Adds Imunes"
 end
 

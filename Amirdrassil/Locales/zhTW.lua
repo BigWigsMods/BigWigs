@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "鎖鏈"
 	L.twisting_blade = "旋刃"
 	L.marked_for_torment = "折磨"
-	L.umbral_destruction = "分攤"
-	L.heart_stopper = "治療吸收盾"
-	L.heart_stopper_single = "治療吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "zhTW")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "顯示所有施法"
 	L.custom_off_all_scorchtail_crash_desc = "顯示所有的焦尾撞擊計時器和提示，而不是只顯示你那一側的。"
 
-	L.flood_of_the_firelands = "分攤"
 	L.flood_of_the_firelands_single_wait = "等待" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "分攤"
 	L.scorchtail_crash = "甩尾"
 	L.serpents_fury = "噴火"
 	L.coiling_flames_single = "烈焰纏繞" -- 烈焰纏繞，噴完火纏身上的，要不叫烤焦吧......
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "樹根"
 	L.charred_brambles = "治療樹根"
 	L.blazing_thorns = "熾炎荊棘"
-	L.falling_embers = "接圈"
-	L.flash_fire = "治療吸收盾"
-	L.flash_fire_single = "治療吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "zhTW")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "梟獸型態"
 	L.incarnation_tree_of_flame = "樹人型態"
 	L.flaming_germination = "種子" -- 手冊寫焰種
-	L.suppressive_ember_single = "治療吸收盾"
 	L.flare_bomb = "羽毛"
 	L.too_close_to_edge = "太靠近邊緣"
 	L.taking_damage_from_edge = "受到邊緣傷害"

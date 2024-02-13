@@ -13,7 +13,6 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "ptBR")
 if L then
-	L.rock_blast = "Soak"
 	L.resonating_annihilation = "Aniquilação"
 	L.awakened_earth = "Pilar"
 	L.shattering_impact = "Batida"
@@ -83,17 +82,14 @@ if L then
 
 	-- Frost
 	L.biting_chill = "DoT Congelante"
-	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Soak Melee"
 	L.absolute_zero_ranged = "Soak Ranged"
 
 	-- Earth
-	L.enveloping_earth = "Cura Absorvida"
 	L.erupting_bedrock = "Terremotos"
 
 	-- Storm
 	L.lightning_crash = "Relâmpago"
-	L.thundering_strike = "Soaks"
 
 	-- General
 	L.primal_attunement = "Enfurecimento Suave"
@@ -109,7 +105,6 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "Grande Cajado"
 	L.clutchwatchers_rage = "Raiva"
 	L.rapid_incubation = "Ovos Imbuídos"
-	L.icy_shroud = "Cura Absorvida"
 	L.broodkeepers_fury = "Fúria"
 	L.frozen_shroud = "Enraizamento e Cura Absorvida" -- XXX these should be short
 	L.detonating_stoneslam = "Soak do Tank"
@@ -127,8 +122,6 @@ if L then
 	L.lightning_strikes = "Raios"
 	L.electric_scales = "Dano na Raid"
 	L.electric_lash = "Açoite"
-	-- Intermission: The Primalist Strike
-	L.shattering_shroud = "Absorb de Cura"
 	-- Stage Two: Surging Power
 	L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "Escudo"

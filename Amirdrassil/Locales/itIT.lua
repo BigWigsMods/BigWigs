@@ -11,9 +11,6 @@ if L then
 	L.blistering_torment = "Catena"
 	L.twisting_blade = "Lame"
 	L.marked_for_torment = "Tormento"
-	L.umbral_destruction = "Assorbi"
-	L.heart_stopper = "Assorbimenti di cura"
-	L.heart_stopper_single = "Assorbimento di cura"
 end
 
 L = BigWigs:NewBossLocale("Volcoross", "itIT")
@@ -21,9 +18,7 @@ if L then
 	L.custom_off_all_scorchtail_crash = "Mostra tutti i lanci"
 	L.custom_off_all_scorchtail_crash_desc = "Mostra cronometri e messaggi per tutti i lanci di Schianto di Codarsa invece che quelli solo dalla tua parte."
 
-	L.flood_of_the_firelands = "Assorbimenti"
 	L.flood_of_the_firelands_single_wait = "Aspetta" -- Wait 3, Wait 2, Wait 1 countdown before soak debuff is applied
-	L.flood_of_the_firelands_single = "Assorbi"
 	L.scorchtail_crash = "Schianto di Codarsa"
 	L.serpents_fury = "Fiamme"
 	L.coiling_flames_single = "Fiamme"
@@ -56,9 +51,6 @@ if L then
 	L.scorching_roots = "Radici"
 	L.charred_brambles = "Radici curabili"
 	L.blazing_thorns = "Spine Fiammeggianti"
-	L.falling_embers = "Assorbimenti"
-	L.flash_fire = "Assorbimenti di cura"
-	L.flash_fire_single = "Assorbimento di cura"
 end
 
 L = BigWigs:NewBossLocale("Nymue, Weaver of the Cycle", "itIT")
@@ -89,7 +81,6 @@ if L then
 	L.incarnation_moonkin = "Forma di Lunagufo"
 	L.incarnation_tree_of_flame = "Forma albero"
 	L.flaming_germination = "Semi"
-	L.suppressive_ember_single = "Assorbimento di cura"
 	L.flare_bomb = "Piume"
 	L.too_close_to_edge = "Troppo vicino al bordo"
 	L.taking_damage_from_edge = "Prendendo danno dal bordo"
