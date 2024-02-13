@@ -295,7 +295,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
+function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 	if opener then
 		self:Close()
 	end
@@ -307,14 +307,34 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 	display.title:SetText(title)
 	display:Show()
 
-	if TEMP then
-		display.xxx1:Show()
-		display.xxx2:Show()
-		display.xxx3:Show()
-		display.display2:Show()
-		display.display3:Show()
-		display.display4:Show()
-		display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+	if lines then
+		if type(lines) == "number" then
+			if lines >= 11 then
+				display.xxx1:Show()
+				display.xxx2:Show()
+				display.xxx3:Show()
+				display.display2:Show()
+				display.display3:Show()
+				display.display4:Show()
+				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+			else
+				display.xxx1:Hide()
+				display.xxx2:Show()
+				display.xxx3:Hide()
+				display.display2:Hide()
+				display.display3:Show()
+				display.display4:Hide()
+				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+			end
+		else
+			display.xxx1:Show()
+			display.xxx2:Show()
+			display.xxx3:Show()
+			display.display2:Show()
+			display.display3:Show()
+			display.display4:Show()
+			display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+		end
 	else
 		display.xxx1:Hide()
 		display.xxx2:Hide()

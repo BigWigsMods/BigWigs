@@ -2092,10 +2092,10 @@ end
 --- Open the "Info Box" display.
 -- @param key the option key to check
 -- @string title the title of the window
--- @bool[opt] TEMP
-function boss:OpenInfo(key, title, TEMP)
+-- @number[opt] lines the number of lines to show
+function boss:OpenInfo(key, title, lines)
 	if checkFlag(self, key, C.INFOBOX) then
-		self:SendMessage("BigWigs_ShowInfoBox", self, title, TEMP)
+		self:SendMessage("BigWigs_ShowInfoBox", self, title, lines)
 	end
 end
 
