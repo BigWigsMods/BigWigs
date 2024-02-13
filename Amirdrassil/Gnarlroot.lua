@@ -49,7 +49,7 @@ function mod:GetOptions()
 		{421972, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Controlled Burn
 		controlledBurnMarker,
 		422023, -- Shadow-Scorched Earth
-		{424352, "TANK"}, -- Dreadfire Barrage
+		{424352, "TANK", "EMPHASIZE"}, -- Dreadfire Barrage
 		422026, -- Tortured Scream
 		422039, -- Shadowflame Cleave
 		-- Stage Two: Agonizing Growth
@@ -219,9 +219,11 @@ function mod:DreadfireBarrageApplied(args)
 		dreadfireBarrageOnMe = true
 	end
 	if allowTankWarnings or amount % 5 == 0 then -- Only warn for the final stack, or every 5/10/15..
-		self:StackMessage(424352, "purple", args.destName, amount, 5)
 		if not dreadfireBarrageOnMe and self:Tank() then -- No stacks on me
+			self:StackMessage(424352, "purple", args.destName, amount, 5)
 			self:PlaySound(424352, "warning") -- Taunt
+		else
+			self:StackMessage(424352, "purple", args.destName, amount, 100) -- Prevent emphasize when on you
 		end
 	end
 end
