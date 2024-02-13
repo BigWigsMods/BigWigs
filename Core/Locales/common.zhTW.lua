@@ -9,9 +9,9 @@ L.aboveyou = "%s在你面前"
 L.other = "%s：%s"
 L.onboss = "首領%s"
 L.buff_boss = "首領增益：%s"
-L.buff_other = "首領增益%s：%s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.buff_other = "%s獲得增益：%s"
+L.magic_buff_boss = "首領魔法增益：%s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "%s獲得魔法增益：%s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s：%s"
 L.stack = "%3$s：%1$d層%2$s"
 L.stackyou = "你：%d層%s"
@@ -36,9 +36,9 @@ L.mythic = "傳奇難度"
 L.hard = "困難模式"
 L.active = "開戰" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
---L.health = "Health" -- The health of an NPC
---L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
+L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
+L.health = "生命值" -- The health of an NPC
+L.health_percent = "%d%% 生命值" -- "10% Health" The health percentage of an NPC
 L.door_open = "門開了" -- 小的門 When a door is open, usually after a speech from an NPC
 L.gate_open = "門開了" -- 大的門 When a gate is open, usually after a speech from an NPC
 
@@ -57,7 +57,7 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
 L.you_die = "你將死亡"
 L.you_die_sec = "你將在%d秒後死亡" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.next_ability = "下個技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "小怪出現"
@@ -166,7 +166,7 @@ L.orb = "寶珠" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "寶珠" -- Plural for L.orb
 L.curse = "詛咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "詛咒" -- Plural of L.curse
---L.disease = "Disease" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.disease = "疾病" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.spirit = "靈魂" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "靈魂" -- Plural of L.spirit
 L.tornado = "旋風" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
