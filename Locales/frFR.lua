@@ -16,6 +16,8 @@ L.proximity = "Affichage de proximité"
 L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
 L.adds = "Adds"
 L.adds_desc = "Active les fonctions relatives aux adds qui apparaissent durant le combat de boss."
+--L.health = "Health"
+--L.health_desc = "Enable functions for displaying various health information during the boss encounter."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans BigWigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de BigWigs et de le réinstaller complètement."
 L.testNameplate = "Cible détectée, création d'une barre d'info de test par dessus la barre d'info de la cible. |cFF33FF99Cette fonctionnalité est rarement utilisée : elle se présente habituellement sous la forme d'une seule barre, et est nécessaire pour le bon suivi des temps de recharge lors des combats face à plusieurs monstres qui utilisent le même sort.|r"

@@ -16,6 +16,8 @@ L.proximity = "Monitor di Prossimità"
 L.proximity_desc = "Visualizza il monitor di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 L.adds = "Adds"
 L.adds_desc = "Abilita le varie funzioni relative agli add che usciranno durante il boss."
+--L.health = "Health"
+--L.health_desc = "Enable functions for displaying various health information during the boss encounter."
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo una barra, e serve per tracciare i tempi di recupero mentre si combattono più boss/add che lanciano la stessa magia.|r"

@@ -37,6 +37,8 @@ L.hard = "어려움 모드"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 --L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
+--L.health = "Health" -- The health of an NPC
+--L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
 --L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 --L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
