@@ -192,7 +192,7 @@ end
 function mod:DreadfireBarrage(args)
 	allowTankWarnings = false
 	self:StopBar(CL.count:format(args.spellName, dreadfireBarrageCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, dreadfireBarrageCount))
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, dreadfireBarrageCount), nil, true) -- Disable emphasize
 	dreadfireBarrageCount = dreadfireBarrageCount + 1
 
 	local cd
