@@ -111,11 +111,11 @@ if L then
 	L.eternal_firestorm_shortened_bar = "永恆火颶"
 	L.eternal_firestorm_message_full = "永恆火颶"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "永恆火颶池"
+	L.eternal_firestorm_swirl_desc = "為永恆火颶產生的隕石裂片顯示計時器，使你知道何時該避開它。"
 
-	--L.flame_orb = "Flame Orb"
-	--L.shadow_orb = "Shadow Orb"
-	--L.orb_message_flame = "You are Flame"
-	--L.orb_message_shadow = "You are Shadow"
+	L.flame_orb = "烈焰之球"
+	L.shadow_orb = "暗影之球"
+	L.orb_message_flame = "你是烈焰"
+	L.orb_message_shadow = "你是暗影"
 end
