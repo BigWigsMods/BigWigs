@@ -2,29 +2,29 @@ local L = BigWigsAPI:NewLocale("BigWigs: Common", "zhCN")
 if not L then return end
 
 -- Prototype.lua common words
-L.you = "你 %s"
-L.you_icon = "|T13700%2$d:0|t你 %1$s"
+L.you = "你：%s"
+L.you_icon = "|T13700%2$d:0|t你：%1$s"
 L.underyou = "%s在你脚下"
 L.aboveyou = "%s在你面前"
 L.other = "%s：%s"
 L.onboss = "首领%s"
 L.buff_boss = "首领增益：%s"
-L.buff_other = "首领增益%s：%s"
+L.buff_other = "%s获得增益：%s"
 L.magic_buff_boss = "首领魔法增益: %s" -- Magic buff on BOSS: SPELL_NAME
-L.magic_buff_other = "魔法增益 %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.magic_buff_other = "%s获得魔法增益: %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s：%s"
 L.stack = "%3$s：%1$d层%2$s"
 L.stackyou = "你：%d层%s"
 L.cast = "<施放：%s>"
-L.casting = "正在施放%s"
-L.soon = "即将%s"
+L.casting = "正在施放：%s"
+L.soon = "即将：%s"
 L.count = "%s（%d）"
 L.count_amount = "%s（%d/%d）"
 L.count_icon = "%s（%d|T13700%d:0|t）"
 L.count_rticon = "%s（%d{rt%d}）"
 L.rticon = "%s（{rt%d}）"
 L.near = "%s在你附近"
-L.on_group = "队伍 %s" -- spell on group
+L.on_group = "队伍：%s" -- spell on group
 L.boss = "首领"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 
@@ -57,7 +57,7 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
 L.you_die = "你将死亡"
 L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
-L.next_ability = "下一个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.next_ability = "下个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "小怪刷新"
@@ -66,7 +66,7 @@ L.spawned = "%s已刷新"
 L.spawning = "%s刷新"
 L.next_add = "下一波小怪"
 L.add_killed = "小怪已击杀（%d/%d）"
-L.add_remaining = "小怪已击杀，%d剩余"
+L.add_remaining = "小怪已击杀，剩余 %d"
 L.add = "增援"
 L.adds = "增援"
 L.big_add = "大型增援" -- singular
@@ -77,7 +77,7 @@ L.small_adds = "小型增援" -- plural
 -- Mob related
 L.killed = "%s已击杀"
 L.mob_killed = "%s已击杀（%d/%d）"
-L.mob_remaining = "%s已击杀，%d剩余"
+L.mob_remaining = "%s已击杀，剩余 %d"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
