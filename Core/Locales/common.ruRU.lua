@@ -179,3 +179,4 @@ L.mind_control = "Контроль над разумом" -- Any kind of Mind Co
 L.mind_control_short = "КР" -- Short version of Mind Control, mainly for bars
 L.soak = "Сока" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Соки" -- Plural of L.soak
+L.spell_reflection = "Отражение заклинаний" -- Any ability that reflects spells

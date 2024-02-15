@@ -179,3 +179,4 @@ L.mind_control = "精神控制" -- Any kind of Mind Control ability, where a pla
 L.mind_control_short = "精神控制" -- Short version of Mind Control, mainly for bars
 L.soak = "分摊" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "分摊" -- Plural of L.soak
+L.spell_reflection = "法术反射" -- Any ability that reflects spells
