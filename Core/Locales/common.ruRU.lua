@@ -36,7 +36,6 @@ L.mythic = "Эпохальный режим"
 L.hard = "Сложный режим"
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
 --L.health = "Health" -- The health of an NPC
 --L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
 L.door_open = "Дверь открыта" -- When a door is open, usually after a speech from an NPC
