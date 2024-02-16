@@ -8,15 +8,15 @@ L.underyou = "%s debaixo de VOCÊ"
 L.aboveyou = "%s acima de VOCÊ"
 L.other = "%s: %s"
 L.onboss = "%s no CHEFE"
-L.buff_boss = "Buff no CHEFE: %s"
-L.buff_other = "Buff no %s: %s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.buff_boss = "Bônus no CHEFE: %s"
+L.buff_other = "Bônus no %s: %s"
+L.magic_buff_boss = "Bônus mágico no CHEFE: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "Bônus mágico no %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s em %s"
 L.stack = "%dx %s em %s"
 L.stackyou = "%dx %s em VOCÊ"
-L.cast = "<Conjurando %s>"
-L.casting = "Conjurando: %s"
+L.cast = "<Lançando %s>"
+L.casting = "Lançando: %s"
 L.soon = "%s em breve"
 L.count = "%s (%d)"
 L.count_amount = "%s (%d/%d)"
@@ -36,20 +36,20 @@ L.mythic = "Modo mítico"
 L.hard = "Modo difícil"
 L.active = "Ativo" -- When a boss becomes active, after speech finishes
 L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.hp = "%d%% HP" -- "30% HP" (HP = Health Points)
---L.health = "Health" -- The health of an NPC
---L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.hp = "%d%% Vida" -- "30% HP" (HP = Health Points)
+L.health = "Vida" -- The health of an NPC
+L.health_percent = "%d%% Vida" -- "10% Health" The health percentage of an NPC
+L.door_open = "Porta aberta" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "Portão aberto" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
-L.over = "%s Acabou" -- Spell Over
-L.removed = "%s Removido" -- Spell Removed
-L.removed_from = "%s Removido %s" -- Spell removed from Player
-L.removed_by = "%s Removido por %s" -- Spell removed by Player
+L.over = "%s acabou" -- Spell Over
+L.removed = "%s removido" -- Spell Removed
+L.removed_from = "%s removido %s" -- Spell removed from Player
+L.removed_by = "%s removido por %s" -- Spell removed by Player
 L.removed_after = "%s removido depois de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
-L.incoming = "%s a Caminho" -- Spell Incoming
-L.interrupted = "%s Interrompido" -- Spell Interrupted
+L.incoming = "%s a caminho" -- Spell Incoming
+L.interrupted = "%s interrompido" -- Spell Interrupted
 L.interrupted_by = "%s interrompido por %s" -- Spell interrupted by Player
 L.no = "Sem %s" -- No Spell
 L.intermission = "Intervalo"
@@ -57,22 +57,22 @@ L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancelado" -- Spell Cancelled
 L.you_die = "Você morrerá"
 L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.next_ability = "Próxima habilidade" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
-L.add_spawned = "Add surgiu"
---L.adds_spawned = "Adds surgiu"
+L.add_spawned = "Lacaio surgiu"
+L.adds_spawned = "Lacaios surgiu"
 L.spawned = "%s surgiu"
 L.spawning = "%s Chegando"
 L.next_add = "Próximo add"
-L.add_killed = "Add morto (%d/%d)"
-L.add_remaining = "Add morto, restam %d"
+L.add_killed = "Lacaio morto (%d/%d)"
+L.add_remaining = "Lacaio morto, restam %d"
 L.add = "Inimigo adicional"
 L.adds = "Inimigos adicionais"
-L.big_add = "Add Grande" -- singular
-L.big_adds = "Adds Grandes" -- plural
-L.small_add = "Add Pequeno" -- singular
-L.small_adds = "Adds Pequenos" -- plural
+L.big_add = "Lacaio grande" -- singular
+L.big_adds = "Lacaios grandes" -- plural
+L.small_add = "Lacaio pequeno" -- singular
+L.small_adds = "Lacaios pequenos" -- plural
 
 -- Mob related
 L.killed = "%s morto"
