@@ -109,10 +109,10 @@ local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
 local icons = setmetatable({
 	-- Icons that are missing on classic
-	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown",
-	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft",
-	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup",
-	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright",
+	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown.tga",
+	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft.tga",
+	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup.tga",
+	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright.tga",
 }, {__index =
 	function(self, key)
 		local value
