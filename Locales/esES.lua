@@ -24,7 +24,7 @@ L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nom
 
 -- Loader / Options.lua
 L.officialRelease = "Estás usando la versión oficial de BigWigs %s (%s)"
-L.alphaRelease = "Estás usando la VERSION ALPHA de BigWigs %s (%s)"
+L.alphaRelease = "Estás usando la VERSIÓN ALFA de BigWigs %s (%s)"
 L.sourceCheckout = "Estás usando la versión de BigWigs %s directamente del repositorio."
 L.guildRelease = "Estás usando la vestión de BigWigs %d hecha para tu hermandad, basada en la versión %d del addon oficial."
 L.getNewRelease = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de CurseForge. También puedes actualizarlo manualmente desde curseforge.com o wowinterface.com."
