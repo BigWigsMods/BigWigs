@@ -109,6 +109,7 @@ function mod:OnEngage()
 	fullBloomCount = 1
 	radialFlourishCount = 1
 	inflorescenceOnMe = false
+	self:SetStage(1)
 
 	self:Bar(429983, 11.2, L.surging_growth) -- Surging Growth
 	self:Bar(420907, 20, CL.count:format(L.viridian_rain, viridianRainCount)) -- Viridian Rain
