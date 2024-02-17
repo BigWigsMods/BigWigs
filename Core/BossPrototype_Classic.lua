@@ -171,13 +171,7 @@ local metaMap = {__index = function(self, key) self[key] = {} return self[key] e
 local eventMap = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
-local icons = setmetatable({
-	-- Icons that are missing on classic
-	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown.tga",
-	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft.tga",
-	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup.tga",
-	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright.tga",
-}, {__index =
+local icons = setmetatable({}, {__index =
 	function(self, key)
 		local value
 		if type(key) == "number" then
@@ -204,6 +198,11 @@ local icons = setmetatable({
 		return value
 	end
 })
+-- Icons that are missing on classic
+icons.misc_arrowdown = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown.tga"
+icons.misc_arrowleft = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft.tga"
+icons.misc_arrowlup = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup.tga"
+icons.misc_arrowright = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright.tga"
 local spells = setmetatable({}, {__index =
 	function(self, key)
 		local value
