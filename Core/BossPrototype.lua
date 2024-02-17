@@ -2049,10 +2049,12 @@ end
 --- Set the "Info Box" display to show a list of players and their assigned values in ascending order.
 -- @param key the option key to check
 -- @param[type=table] tbl a table in the format of {player = number}
--- @bool reverseOrder Set as true to sort in reverse (0 before 1)
-function boss:SetInfoByTable(key, tbl, reverseOrder)
+-- @number[opt] tableEntries how many table entries should be displayed
+-- @number[opt] lineStart what specific line to start displaying names at
+-- @bool[opt] reverseOrder Set as true to sort in reverse (0 before 1)
+function boss:SetInfoByTable(key, tbl, tableEntries, lineStart, reverseOrder)
 	if checkFlag(self, key, C.INFOBOX) then
-		self:SendMessage("BigWigs_SetInfoBoxTable", self, tbl, reverseOrder)
+		self:SendMessage("BigWigs_SetInfoBoxTable", self, tbl, tableEntries, lineStart, reverseOrder)
 	end
 end
 

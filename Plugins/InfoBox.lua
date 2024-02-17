@@ -411,11 +411,11 @@ do
 	end
 	local tsort = table.sort
 	local colors = plugin:GetColoredNameTable()
-	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl, reverseOrder)
+	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl, tableEntries, lineStart, reverseOrder)
 		sortingTbl = tbl
 		tsort(nameList, reverseOrder and sortFuncReverse or sortFunc)
-		local line = 1
-		for i = 1, 5 do
+		local line = lineStart or 1
+		for i = 1, tableEntries or 5 do
 			local n = nameList[i]
 			local result = tbl[n]
 			if result then
