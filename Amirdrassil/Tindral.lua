@@ -107,10 +107,10 @@ local timersMythic = { -- Not complete until Supernova Enrage
 		[425576] = { 30.0, 51.0, 0 }, -- Flare Bomb
 	},
 	[3] = {
-		[423260] = { 50.0, 60.0, 67.0 }, -- Blazing Mushroom (Wild Mushrooms in Mythic)
+		[423260] = { 50.0, 60.0, 67.0, 52.0 }, -- Blazing Mushroom (Wild Mushrooms in Mythic)
 		[424581] = { 53.0, 40.0, 35.0, 45.0, 40.0 }, -- Fiery Growth
 		[420236] = { 22.0, 38.0, 40.0, 40.0, 40.0, 40.0 }, -- Falling Star
-		[424495] = { 26.1, 41.9, 19.0, 29.0, 19.0, 24.0, 24.0, 21.0 }, -- Mass Entanglement
+		[424495] = { 26.1, 41.9, 19.0, 29.0, 19.0, 24.0, 24.0, 21.0, 20.0}, -- Mass Entanglement
 		[420540] = { 31.0, 63.0, 50.0, 46.0, 19.0 }, -- Incarnation: Moonkin
 		[421398] = { 33.0, 63.0, 49.0, 46.0, 19.0 }, -- Fire Beam
 		[422115] = { 38.0, 35.0, 47.0, 43.0, 51.0 }, -- Incarnation: Tree of Flame
