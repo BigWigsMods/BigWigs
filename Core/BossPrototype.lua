@@ -1240,16 +1240,33 @@ do
 			self[self.targetEventFunc](self, event, unit, guid)
 		end
 	end
+
+	local unitTable = {
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+	}
+	local function NameplateScan(self)
+		for i = 1, 20 do
+			if self.targetEventFunc then
+				self:NAME_PLATE_UNIT_ADDED("NAME_PLATE_UNIT_ADDED", unitTable[i])
+			else
+				return
+			end
+		end
+	end
 	--- Register a set of events commonly used for raid marking functionality and pass the unit to a designated function.
-	-- UPDATE_MOUSEOVER_UNIT, UNIT_TARGET, NAME_PLATE_UNIT_ADDED, FORBIDDEN_NAME_PLATE_UNIT_ADDED.
+	-- UPDATE_MOUSEOVER_UNIT, UNIT_TARGET, NAME_PLATE_UNIT_ADDED
 	-- @param func callback function, passed (event, unit)
-	function boss:RegisterTargetEvents(func)
+	-- @number[opt] scanDelay seconds to wait until sending all nameplate units to the function, for situations where the nameplate will show before registering your function
+	function boss:RegisterTargetEvents(func, scanDelay)
 		if self[func] then
 			self.targetEventFunc = func
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 			self:RegisterEvent("UNIT_TARGET")
 			self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-			self:RegisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED", "NAME_PLATE_UNIT_ADDED")
+			if scanDelay then
+				Timer(scanDelay, function() NameplateScan(self) end)
+			end
 		end
 	end
 	--- Unregister the events registered by `RegisterTargetEvents`.
@@ -1258,7 +1275,6 @@ do
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		self:UnregisterEvent("UNIT_TARGET")
 		self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
-		self:UnregisterEvent("FORBIDDEN_NAME_PLATE_UNIT_ADDED")
 	end
 end
 
