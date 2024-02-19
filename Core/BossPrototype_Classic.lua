@@ -35,7 +35,7 @@ local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = GetS
 local UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo = UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
-local RegisterAddonMessagePrefix, UnitDetailedThreatSituation = loader.RegisterAddonMessagePrefix, loader.UnitDetailedThreatSituation
+local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local PlaySoundFile = loader.PlaySoundFile
@@ -46,7 +46,7 @@ local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
-local enabledModules, bossTargetScans, unitTargetScans = {}, {}, {}
+local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
 local difficulty = 0
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
@@ -449,13 +449,8 @@ function boss:Disable(isWipe)
 		if #enabledModules == 0 then
 			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
-			bossTargetScans, unitTargetScans = {}, {}
+			unitTargetScans = {}
 		else
-			for i = #bossTargetScans, 1, -1 do
-				if self == bossTargetScans[i][1] then
-					tremove(bossTargetScans, i)
-				end
-			end
 			for i = #unitTargetScans, 1, -1 do
 				if self == unitTargetScans[i][1] then
 					tremove(unitTargetScans, i)
@@ -1074,15 +1069,14 @@ do
 			if unit then
 				local unitTarget = unit.."target"
 				local playerGUID = UnitGUID(unitTarget)
-				if playerGUID and ((not UnitDetailedThreatSituation(unitTarget, unit) and not self:Tank(unitTarget)) or elapsed > tankCheckExpiry) then
+				if playerGUID and (not self:Tanking(unit, unitTarget) or elapsed > tankCheckExpiry) then
 					local name = self:UnitName(unitTarget)
 					tremove(unitTargetScans, i)
-					elapsed = 0
-					func(self, name, playerGUID)
+					func(self, name, playerGUID, elapsed)
+				elseif elapsed > 0.8 then
+					tremove(unitTargetScans, i)
 				end
-			end
-
-			if elapsed > 0.8 then
+			elseif elapsed > 0.8 then
 				tremove(unitTargetScans, i)
 			end
 		end
@@ -1197,50 +1191,8 @@ do
 end
 
 do
-	local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-	local bossTargets = {"boss1target", "boss2target", "boss3target", "boss4target", "boss5target"}
-	local function bossScanner()
-		for i = #bossTargetScans, 1, -1 do
-			local self, func, tankCheckExpiry, guid = bossTargetScans[i][1], bossTargetScans[i][2], bossTargetScans[i][3], bossTargetScans[i][4]
-			local elapsed = bossTargetScans[i][5] + 0.05
-			bossTargetScans[i][5] = elapsed
-
-			for j = 1, 5 do
-				local unit = bosses[j]
-				if UnitGUID(unit) == guid then
-					local bossTarget = bossTargets[j]
-					local playerGUID = UnitGUID(bossTarget)
-					if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, unit) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
-						local name = self:UnitName(bossTarget)
-						tremove(bossTargetScans, i)
-						elapsed = 0
-						func(self, name, playerGUID)
-					end
-					break
-				end
-			end
-
-			if elapsed > 0.8 then
-				tremove(bossTargetScans, i)
-			end
-		end
-
-		if #bossTargetScans ~= 0 then
-			Timer(0.05, bossScanner)
-		end
-	end
-	--- Register a callback to get the first non-tank target of a boss (boss1 - boss5).
-	-- Looks for the boss as defined by the GUID and then returns the target of that boss.
-	-- If the target is a tank, it will keep looking until the designated time has elapsed.
-	-- @param func callback function, passed (module, playerName, playerGUID)
-	-- @number tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
-	-- @string guid GUID of the mob to get the target of
 	function boss:GetBossTarget(func, tankCheckExpiry, guid)
-		if #bossTargetScans == 0 then
-			Timer(0.05, bossScanner)
-		end
-
-		bossTargetScans[#bossTargetScans+1] = {self, func, solo and 0.1 or tankCheckExpiry, guid, 0} -- Tiny allowance when solo
+		self:GetUnitTarget(func, tankCheckExpiry, guid)
 	end
 
 	function boss:NextTarget(event, unit)
@@ -1255,6 +1207,8 @@ do
 			func(self, name, playerGUID)
 		end
 	end
+	local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5"}
+
 	--- Register a callback to get the next target a boss swaps to (boss1 - boss5).
 	-- Looks for the boss as defined by the GUID and then returns the next target selected by that boss.
 	-- Unlike the :GetBossTarget functionality, :GetNextBossTarget doesn't care what the target is, it will just fire the callback with whatever unit the boss targets next
@@ -1835,22 +1789,25 @@ function boss:Tank(unit)
 	return myRole == "TANK"
 end
 
---- Check if you are tanking a specific NPC unit.
--- @string targetUnit the unit token of the NPC you wish to check
--- @string[opt="player"] sourceUnit If a player unit is specified, this unit will be checked to see if they are tanking, otherwise use nil to check yourself
--- @return boolean
-function boss:Tanking(targetUnit, sourceUnit)
-	return UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
-end
+do
+	local UnitDetailedThreatSituation = loader.UnitDetailedThreatSituation
+	--- Check if you are tanking a specific NPC unit.
+	-- @string targetUnit the unit token of the NPC you wish to check
+	-- @string[opt="player"] sourceUnit If a player unit is specified, this unit will be checked to see if they are tanking, otherwise use nil to check yourself
+	-- @return boolean
+	function boss:Tanking(targetUnit, sourceUnit)
+		return UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
+	end
 
---- Check if you have the highest threat on a specific NPC unit.
--- @string targetUnit the unit token of the NPC you wish to check
--- @string[opt="player"] sourceUnit the specific unit you want to check the threat level of, otherwise use nil to check yourself
--- @return boolean
-function boss:TopThreat(targetUnit, sourceUnit)
-	local _, status = UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
-	if status == 1 or status == 3 then
-		return true
+	--- Check if you have the highest threat on a specific NPC unit.
+	-- @string targetUnit the unit token of the NPC you wish to check
+	-- @string[opt="player"] sourceUnit the specific unit you want to check the threat level of, otherwise use nil to check yourself
+	-- @return boolean
+	function boss:TopThreat(targetUnit, sourceUnit)
+		local _, status = UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
+		if status == 1 or status == 3 then
+			return true
+		end
 	end
 end
 
@@ -1996,9 +1953,9 @@ do
 end
 
 do
-	local COMBATLOG_OBJECT_REACTION_HOSTILE = COMBATLOG_OBJECT_REACTION_HOSTILE
-	local COMBATLOG_OBJECT_REACTION_FRIENDLY = COMBATLOG_OBJECT_REACTION_FRIENDLY
-	local COMBATLOG_OBJECT_TYPE_PLAYER = COMBATLOG_OBJECT_TYPE_PLAYER
+	local COMBATLOG_OBJECT_REACTION_HOSTILE = 0x00000040
+	local COMBATLOG_OBJECT_REACTION_FRIENDLY = 0x00000010
+	local COMBATLOG_OBJECT_TYPE_PLAYER = 0x00000400
 
 	--- Check if the unit is hostile.
 	-- @string flags unit bit flags
@@ -2644,7 +2601,6 @@ do
 	local badTargetBar = "Attempted to start target bar %q without a valid time."
 	local badNameplateBarStart = "Attempted to start nameplate bar %q without a valid unitGUID."
 	local badNameplateBarStop = "Attempted to stop nameplate bar %q without a valid unitGUID."
-	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar %q without a valid unitGUID."
 
 	local countString = "%((%d%d?)%)"
 	if myLocale == "zhCN" or myLocale == "zhTW" then
