@@ -2453,7 +2453,7 @@ do
 	do
 		local function printTargets(self, key, playerTable, color, text, icon)
 			local playersInTable = #playerTable
-			if not playerTable.prevPlayersInTable or playerTable.prevPlayersInTable ~= playersInTable then
+			if playersInTable > 0 and (not playerTable.prevPlayersInTable or playerTable.prevPlayersInTable < playersInTable) then
 				local textType = type(text)
 				local msg = textType == "string" and text or spells[text or key]
 				local texture = icon ~= false and icons[icon or key]
