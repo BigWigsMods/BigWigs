@@ -53,7 +53,7 @@ L.removed_after = "%s entfernt nach %.1fs" -- "Spell removed after 1.1s" (s = se
 L.incoming = "%s steht bevor" -- Spell Incoming
 L.interrupted = "%s unterbrochen" -- Spell Interrupted
 L.interrupted_by = "%s wurde von %s unterbrochen" -- Spell interrupted by Player
---L.interruptible = "Interruptible" -- when a spell is interruptible
+L.interruptible = "Unterbrechbar" -- when a spell is interruptible
 L.no = "Kein %s" -- No Spell
 L.intermission = "Zwischenphase"
 L.percent = "%d%% - %s" -- 20% - Spell
