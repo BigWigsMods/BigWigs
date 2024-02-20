@@ -27,6 +27,7 @@ L.near = "%s in DEINER Nähe"
 L.on_group = "%s auf GRUPPE"
 L.boss = "BOSS"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
+L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Phase %d"
 L.stage = "Phase %d"
@@ -35,6 +36,8 @@ L.heroic = "Heroischer Modus"
 L.mythic = "Mythischer Modus"
 L.hard = "Schwerer Modus"
 L.active = "Aktiv" -- When a boss becomes active, after speech finishes
+L.ready = "Bereit" -- When a player is ready to do something
+L.dead = "Tot" -- When a player is dead
 L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.health = "Gesundheit" -- The health of an NPC
 L.health_percent = "%d%% Gesundheit" -- "10% Health" The health percentage of an NPC
@@ -50,6 +53,7 @@ L.removed_after = "%s entfernt nach %.1fs" -- "Spell removed after 1.1s" (s = se
 L.incoming = "%s steht bevor" -- Spell Incoming
 L.interrupted = "%s unterbrochen" -- Spell Interrupted
 L.interrupted_by = "%s wurde von %s unterbrochen" -- Spell interrupted by Player
+--L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "Kein %s" -- No Spell
 L.intermission = "Zwischenphase"
 L.percent = "%d%% - %s" -- 20% - Spell

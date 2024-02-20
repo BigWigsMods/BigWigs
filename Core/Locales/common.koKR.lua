@@ -27,6 +27,7 @@ L.near = "당신 근처에 %s"
 L.on_group = "파티에 %s" -- spell on group
 L.boss = "우두머리"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
+L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "%d단계"
 L.stage = "%d단계"
@@ -35,6 +36,8 @@ L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
 L.hard = "어려움 모드"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
+L.ready = "준비" -- When a player is ready to do something
+L.dead = "죽음" -- When a player is dead
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 --L.health = "Health" -- The health of an NPC
 --L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
@@ -50,6 +53,7 @@ L.removed_after = "%s %.1f초 후 제거됨" -- "Spell removed after 1.1s" (s = 
 L.incoming = "곧 %s" -- Spell Incoming
 L.interrupted = "%s 시전 방해됨" -- Spell Interrupted
 L.interrupted_by = "%s 를 %s 가 차단" -- Spell interrupted by Player
+--L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
