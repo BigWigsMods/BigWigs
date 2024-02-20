@@ -2042,9 +2042,12 @@ end
 -- @param key the option key to check
 -- @number line the line to update
 -- @string text the new text to show
-function boss:SetInfo(key, line, text)
+-- @number[opt] r red part of rgb, 0-1
+-- @number[opt] g green part of rgb, 0-1
+-- @number[opt] b blue part of rgb, 0-1
+function boss:SetInfo(key, line, text, r, g, b)
 	if checkFlag(self, key, C.INFOBOX) then
-		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, text)
+		self:SendMessage("BigWigs_SetInfoBoxLine", self, line, text, r, g, b)
 	end
 end
 

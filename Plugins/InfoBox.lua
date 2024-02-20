@@ -350,8 +350,13 @@ function plugin:BigWigs_SetInfoBoxTitle(_, _, text)
 	display.title:SetText(text)
 end
 
-function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
+function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, r, g, b)
 	display.text[line]:SetText(text)
+	if r then
+		display.text[line]:SetTextColor(r, g, b, 1)
+	else
+		display.text[line]:SetTextColor(1, 0.82, 0, 1)
+	end
 	local row = line
 	if line % 2 == 0 then
 		row = line-1
@@ -529,7 +534,11 @@ end
 function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
 	local bar = display.bar[line]
 	percentage = min(1, percentage)
-	bar:SetColorTexture(r or 0.5, g or 0.5, b or 0.5, a or 0.5)
+	if r then
+		bar:SetColorTexture(r, g, b, a)
+	else
+		bar:SetColorTexture(0.5, 0.5, 0.5, 0.5)
+	end
 	if percentage > 0 then
 		bar:SetWidth(percentage * infoboxWidth)
 		bar:Show()
