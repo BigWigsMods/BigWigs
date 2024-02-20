@@ -47,18 +47,18 @@ L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden ni
 L.removeAddOn = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
---L.expansionNames = {
---	"Classic", -- Classic
---	"The Burning Crusade", -- The Burning Crusade
---	"Wrath of the Lich King", -- Wrath of the Lich King
---	"Cataclysm", -- Cataclysm
---	"Mists of Pandaria", -- Mists of Pandaria
---	"Warlords of Draenor", -- Warlords of Draenor
---	"Legion", -- Legion
---	"Battle for Azeroth", -- Battle for Azeroth
---	"Schattenlande", -- Shadowlands
---	"Dragonflight", -- Dragonflight
---}
+L.expansionNames = {
+	"Classic", -- Classic
+	"The Burning Crusade", -- The Burning Crusade
+	"Wrath of the Lich King", -- Wrath of the Lich King
+	"Cataclysm", -- Cataclysm
+	"Mists of Pandaria", -- Mists of Pandaria
+	"Warlords of Draenor", -- Warlords of Draenor
+	"Legion", -- Legion
+	"Battle for Azeroth", -- Battle for Azeroth
+	"Schattenlande", -- Shadowlands
+	"Dragonflight", -- Dragonflight
+}
 L.currentSeason = "Aktuelle Saison"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
