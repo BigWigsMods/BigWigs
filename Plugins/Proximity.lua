@@ -46,7 +46,6 @@ local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 local mute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute"
 
-local inConfigMode = nil
 local activeRange = 0
 local activeRangeChecker = nil
 local activeSpellID = nil
@@ -188,7 +187,6 @@ end
 -- Display Window
 --
 
-local testText
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
@@ -208,9 +206,7 @@ end
 local locked = nil
 local function lockDisplay()
 	if locked then return end
-	if not inConfigMode then
-		proxAnchor:EnableMouse(false) -- Keep enabled during config mode
-	end
+	proxAnchor:EnableMouse(false)
 	proxAnchor:SetMovable(false)
 	proxAnchor:SetResizable(false)
 	proxAnchor:RegisterForDrag()
@@ -294,12 +290,6 @@ do
 		else
 			proxAnchor.text:SetText(players)
 		end
-	end
-
-	function testText()
-		--proxAnchor.playerDot:Hide()
-		proxAnchor.text:SetText("|cffaad372Legolasftw|r\n|cfff48cbaTirionman|r\n|cfffff468Sneakystab|r\n|cffc69b6dIamconanok|r")
-		proxAnchor.text:Show()
 	end
 
 	--------------------------------------------------------------------------------
@@ -537,7 +527,7 @@ do
 		tooltipFrame:SetHeight(40)
 		tooltipFrame:SetPoint("BOTTOM", proxAnchor, "TOP")
 		tooltipFrame:SetScript("OnEnter", function(self)
-			if not activeSpellID and not inConfigMode then return end
+			if not activeSpellID then return end
 			GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
 			GameTooltip:SetHyperlink(format("spell:%d", activeSpellID or 44318))
 			GameTooltip:Show()
@@ -645,8 +635,6 @@ do
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossDisable")
 
-		self:RegisterMessage("BigWigs_StartConfigureMode")
-		self:RegisterMessage("BigWigs_StopConfigureMode")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
 	end
@@ -660,22 +648,6 @@ end
 -------------------------------------------------------------------------------
 -- Options
 --
-
-function plugin:BigWigs_StartConfigureMode()
-	if activeRange > 0 then
-		return -- Pointless trying to start configure mode if proximity has already been opened by a boss encounter.
-	end
-	inConfigMode = true
-	self:Test()
-end
-
-function plugin:BigWigs_StopConfigureMode()
-	inConfigMode = nil
-	if db.lock then
-		proxAnchor:EnableMouse(false) -- Mouse disabled whilst locked, but we enable it in test mode. Re-disable it.
-	end
-	self:Close(true)
-end
 
 do
 	local disabled = function() return plugin.db.profile.disabled end
@@ -997,15 +969,6 @@ do
 		self:CancelTimer(updateTimer)
 		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
 	end
-end
-
-function plugin:Test()
-	self:Close(true)
-	if db.lock then
-		proxAnchor:EnableMouse(true) -- Mouse disabled whilst locked, enable it in test mode
-	end
-	testText()
-	proxAnchor:Show()
 end
 
 -------------------------------------------------------------------------------
