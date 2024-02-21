@@ -213,7 +213,6 @@ L.colors = "颜色"
 
 L.text = "文本"
 L.textShadow = "文本阴影"
-L.flash = "闪烁"
 L.normal = "标准"
 L.emphasized = "醒目"
 

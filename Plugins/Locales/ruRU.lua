@@ -213,7 +213,6 @@ L.colors = "Цвета"
 
 L.text = "Текст"
 L.textShadow = "Тень текста"
-L.flash = "Мигание"
 L.normal = "Обычные"
 L.emphasized = "Увеличенные"
 

@@ -213,7 +213,6 @@ L.colors = "Cores"
 
 L.text = "Texto"
 L.textShadow = "Sombra do texto"
-L.flash = "Piscar"
 L.normal = "Normal"
 L.emphasized = "Enfatizado"
 

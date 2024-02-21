@@ -213,7 +213,6 @@ L.colors = "색상"
 
 L.text = "문자"
 L.textShadow = "문자 그림자"
-L.flash = "깜빡임"
 L.normal = "일반"
 L.emphasized = "강조"
 
