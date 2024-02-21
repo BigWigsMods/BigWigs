@@ -135,18 +135,6 @@ local acOptions = {
 					end,
 					hidden = loader.isClassic,
 				},
-				separator2 = {
-					type = "description",
-					name = " ",
-					order = 15,
-					width = "full",
-				},
-				flash = {
-					type = "toggle",
-					name = L.flashScreen,
-					desc = L.flashScreenDesc,
-					order = 22,
-				},
 				separator3 = {
 					type = "description",
 					name = " ",

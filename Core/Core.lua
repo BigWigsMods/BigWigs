@@ -319,7 +319,6 @@ do
 
 		local defaults = {
 			profile = {
-				flash = true,
 				showZoneMessages = true,
 				fakeDBMVersion = false,
 				englishSayMessages = false,
