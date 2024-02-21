@@ -57,6 +57,7 @@ end
 plugin.defaultDB = {
 	disabled = false,
 	lock = false,
+	position = {"CENTER", "CENTER", -450, -40},
 	--fontName = plugin:GetDefaultFont(),
 	--fontSize = 12,
 	fontOutline = "",
@@ -67,7 +68,7 @@ plugin.defaultDB = {
 --
 
 do
-	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
+	display = CreateFrame("Frame", nil, UIParent)
 	display:SetSize(infoboxWidth, infoboxHeight)
 	display:SetFrameStrata("MEDIUM")
 	display:SetFixedFrameStrata(true)
@@ -77,13 +78,29 @@ do
 	display:EnableMouse(true)
 	display:SetMovable(true)
 	display:RegisterForDrag("LeftButton")
-	display:SetScript("OnDragStart", function(self) self:StartMoving() end)
+	display:SetScript("OnDragStart", function(self)
+		if self:IsMovable() then
+			self:StartMoving()
+		end
+	end)
 	display:SetScript("OnDragStop", function(self)
 		self:StopMovingOrSizing()
-		local s = self:GetEffectiveScale()
-		db.posx = self:GetLeft() * s
-		db.posy = self:GetTop() * s
+		local point, _, relPoint, x, y = self:GetPoint()
+		db.position = {point, relPoint, x, y}
+		--plugin:UpdateGUI() -- Update X/Y if GUI is open.
 	end)
+
+	local function dragStart()
+		if display:IsMovable() then
+			display:StartMoving()
+		end
+	end
+	local function dragStop()
+		display:StopMovingOrSizing()
+		local point, _, relPoint, x, y = display:GetPoint()
+		db.position = {point, relPoint, x, y}
+		--plugin:UpdateGUI() -- Update X/Y if GUI is open.
+	end
 	local display2 = CreateFrame("Frame", nil, display)
 	display2:Hide()
 	display2:SetSize(infoboxWidth, infoboxHeight)
@@ -96,13 +113,8 @@ do
 	display2:EnableMouse(true)
 	display2:SetMovable(true)
 	display2:RegisterForDrag("LeftButton")
-	display2:SetScript("OnDragStart", function() display:StartMoving() end)
-	display2:SetScript("OnDragStop", function()
-		display:StopMovingOrSizing()
-		local s = display:GetEffectiveScale()
-		db.posx = display:GetLeft() * s
-		db.posy = display:GetTop() * s
-	end)
+	display2:SetScript("OnDragStart", dragStart)
+	display2:SetScript("OnDragStop", dragStop)
 	display.display2 = display2
 	local display3 = CreateFrame("Frame", nil, display)
 	display3:Hide()
@@ -116,13 +128,8 @@ do
 	display3:EnableMouse(true)
 	display3:SetMovable(true)
 	display3:RegisterForDrag("LeftButton")
-	display3:SetScript("OnDragStart", function() display:StartMoving() end)
-	display3:SetScript("OnDragStop", function()
-		display:StopMovingOrSizing()
-		local s = display:GetEffectiveScale()
-		db.posx = display:GetLeft() * s
-		db.posy = display:GetTop() * s
-	end)
+	display3:SetScript("OnDragStart", dragStart)
+	display3:SetScript("OnDragStop", dragStop)
 	display.display3 = display3
 	local display4 = CreateFrame("Frame", nil, display)
 	display4:Hide()
@@ -136,13 +143,8 @@ do
 	display4:EnableMouse(true)
 	display4:SetMovable(true)
 	display4:RegisterForDrag("LeftButton")
-	display4:SetScript("OnDragStart", function() display:StartMoving() end)
-	display4:SetScript("OnDragStop", function()
-		display:StopMovingOrSizing()
-		local s = display:GetEffectiveScale()
-		db.posx = display:GetLeft() * s
-		db.posy = display:GetTop() * s
-	end)
+	display4:SetScript("OnDragStart", dragStart)
+	display4:SetScript("OnDragStop", dragStop)
 	display.display4 = display4
 
 	local bg = display:CreateTexture()
@@ -253,20 +255,15 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
-	if display then
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = display:GetEffectiveScale()
-			display:ClearAllPoints()
-			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			display:ClearAllPoints()
-			display:SetPoint("CENTER", UIParent, "CENTER", -450, -40)
-		end
+	db.posx = nil
+	db.posy = nil
 
-		--plugin:RestyleWindow()
-	end
+	display:ClearAllPoints()
+	local point, relPoint = db.position[1], db.position[2]
+	local x, y = db.position[3], db.position[4]
+	display:SetPoint(point, UIParent, relPoint, x, y)
+
+	--plugin:RestyleWindow()
 end
 
 function plugin:OnPluginEnable()
@@ -534,12 +531,12 @@ end
 function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
 	local bar = display.bar[line]
 	percentage = min(1, percentage)
-	if r then
-		bar:SetColorTexture(r, g, b, a)
-	else
-		bar:SetColorTexture(0.5, 0.5, 0.5, 0.5)
-	end
 	if percentage > 0 then
+		if r then
+			bar:SetColorTexture(r, g, b, a)
+		else
+			bar:SetColorTexture(0.5, 0.5, 0.5, 0.5)
+		end
 		bar:SetWidth(percentage * infoboxWidth)
 		bar:Show()
 	else
