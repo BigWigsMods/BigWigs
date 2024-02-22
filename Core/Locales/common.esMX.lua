@@ -73,7 +73,7 @@ L.add_remaining = "Esbirro muerto, %d restantes"
 L.add = "Esbirro"
 L.adds = "Esbirros"
 L.big_add = "Esbirro grande" -- singular
-L.big_adds = "Esbirros grande" -- plural
+L.big_adds = "Esbirros grandes" -- plural
 L.small_add = "Esbirro pequeño" -- singular
 L.small_adds = "Esbirros pequeños" -- plural
 
