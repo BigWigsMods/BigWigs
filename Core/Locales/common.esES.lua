@@ -44,7 +44,7 @@ L.health_percent = "%d%% Salud" -- "10% Health" The health percentage of an NPC
 L.door_open = "Puerta abierta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech from an NPC
 
-L.duration = "%s durante %s sec" -- Spell for 10 seconds
+L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s terminado" -- Spell Over
 L.removed = "%s eliminado" -- Spell Removed
 L.removed_from = "%s eliminado de %s" -- Spell removed from Player
