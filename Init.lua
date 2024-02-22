@@ -2,7 +2,7 @@
 local _, tbl = ...
 tbl.isRetail = true
 tbl.dbmPrefix = "D5"
-tbl.dbmRevision = "20240220180302"
-tbl.dbmDisplayVersion = "10.2.24"
-tbl.dbmReleaseRevision = "20240220000000"
-tbl.dbmPForceDisable = 9
+tbl.dbmRevision = "20240222055916"
+tbl.dbmDisplayVersion = "10.2.26"
+tbl.dbmReleaseRevision = "20240222000000"
+tbl.dbmPForceDisable = 10
