@@ -50,7 +50,7 @@ L.removed = "%s eliminado" -- Spell Removed
 L.removed_from = "%s eliminado de %s" -- Spell removed from Player
 L.removed_by = "%s eliminado por %s" -- Spell removed by Player
 L.removed_after = "%s eliminado después de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
-L.incoming = "%s acercándose" -- Spell Incoming
+L.incoming = "%s inminente" -- Spell Incoming
 L.interrupted = "%s interrumpido" -- Spell Interrupted
 L.interrupted_by = "%s interrumpido por %s" -- Spell interrupted by Player
 L.interruptible = "Interrumpible" -- when a spell is interruptible
