@@ -15,8 +15,8 @@ L.magic_buff_other = "Beneficio de magia en %s: %s" -- Magic buff on NPC_NAME: S
 L.on = "%s en %s"
 L.stack = "%dx %s en %s"
 L.stackyou = "%dx %s en TI"
-L.cast = "<Canaliza: %s>"
-L.casting = "Canalizando %s"
+L.cast = "<Lanza: %s>"
+L.casting = "Lanzando %s"
 L.soon = "%s pronto"
 L.count = "%s (%d)"
 L.count_amount = "%s (%d/%d)"
@@ -46,18 +46,18 @@ L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech fr
 
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s terminado" -- Spell Over
-L.removed = "%s Removido" -- Spell Removed
-L.removed_from = "%s Removido de %s" -- Spell removed from Player
-L.removed_by = "%s Removido por %s" -- Spell removed by Player
-L.removed_after = "%s removido después de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
-L.incoming = "%s Acercándose" -- Spell Incoming
-L.interrupted = "%s Interrumpido" -- Spell Interrupted
-L.interrupted_by = "%s Interrumpido por %s" -- Spell interrupted by Player
+L.removed = "%s eliminado" -- Spell Removed
+L.removed_from = "%s eliminado de %s" -- Spell removed from Player
+L.removed_by = "%s eliminado por %s" -- Spell removed by Player
+L.removed_after = "%s eliminado después de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
+L.incoming = "%s acercándose" -- Spell Incoming
+L.interrupted = "%s interrumpido" -- Spell Interrupted
+L.interrupted_by = "%s interrumpido por %s" -- Spell interrupted by Player
 L.interruptible = "Interrumpible" -- when a spell is interruptible
 L.no = "No %s" -- No Spell
 L.intermission = "Intermedio"
 L.percent = "%d%% - %s" -- 20% - Spell
-L.cancelled = "%s Cancelado" -- Spell Cancelled
+L.cancelled = "%s cancelado" -- Spell Cancelled
 L.you_die = "Te mueres"
 L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (seg = seconds (segundos))
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
@@ -65,8 +65,8 @@ L.next_ability = "Próxima habilidad" -- We don't know what ability will be next
 -- Add related
 L.add_spawned = "Apareció esbirro"
 L.adds_spawned = "Apareció esbirros"
-L.spawned = "%s Apareció"
-L.spawning = "%s Aparece"
+L.spawned = "%s apareció"
+L.spawning = "%s aparece"
 L.next_add = "Siguiente esbirro"
 L.add_killed = "Esbirro muerto (%d/%d)"
 L.add_remaining = "Esbirro muerto, %d restantes"
@@ -95,7 +95,7 @@ L.trash = "Bichos"
 L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
-L.marker = "%s Marcador"
+L.marker = "%s marcador"
 L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudante o líder."
 L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder."
 
@@ -132,7 +132,7 @@ L.north_west = "Noroeste"
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
-L.heal_absorb = "Absorcion de sanación" -- Used for shield-like abilities that absorb healing only
+L.heal_absorb = "Absorción de sanación" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "Absorciones de sanación" -- Plural of L.heal_absorb
 L.tank_combo = "Combo de tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
@@ -180,6 +180,6 @@ L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Control mental" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
-L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
-L.soaks = "Soaks" -- Plural of L.soak
+L.soak = "Absorción" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "Absorciones" -- Plural of L.soak
 L.spell_reflection = "Reflejo de hechizos" -- Any ability that reflects spells
