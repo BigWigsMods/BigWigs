@@ -58,7 +58,7 @@ L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s отменено" -- Spell Cancelled
-L.you_die = "Умираешь"
+L.you_die = "Умираешь" -- You will die
 L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec = seconds)
 --L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 

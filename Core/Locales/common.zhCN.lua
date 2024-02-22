@@ -58,7 +58,7 @@ L.no = "缺少%s" -- No Spell
 L.intermission = "阶段转换"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
-L.you_die = "你将死亡"
+L.you_die = "你将死亡" -- You will die
 L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "下个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 

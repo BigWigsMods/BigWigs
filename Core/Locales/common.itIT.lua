@@ -58,7 +58,7 @@ L.no = "Nessun %s" -- No Spell
 L.intermission = "Intermezzo"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancellata" -- Spell Cancelled
-L.you_die = "Tu muori"
+L.you_die = "Tu muori" -- You will die
 L.you_die_sec = "Morirai in %d sec" -- "You die in 15 sec" (sec = seconds)
 --L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 

@@ -44,28 +44,28 @@ L.door_open = "Door open" -- When a door is open, usually after a speech from an
 L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s for %s sec" -- Spell for 10 seconds
-L.over = "%s Over" -- Spell Over
-L.removed = "%s Removed" -- Spell Removed
+L.over = "%s over" -- Spell over
+L.removed = "%s removed" -- Spell removed
 L.removed_from = "%s removed from %s" -- Spell removed from Player
 L.removed_by = "%s removed by %s" -- Spell removed by Player
 L.removed_after = "%s removed after %.1fs" -- "Spell removed after 1.1s" (s = seconds)
-L.incoming = "%s Incoming" -- Spell Incoming
-L.interrupted = "%s Interrupted" -- Spell Interrupted
+L.incoming = "%s incoming" -- Spell incoming
+L.interrupted = "%s interrupted" -- Spell interrupted
 L.interrupted_by = "%s interrupted by %s" -- Spell interrupted by Player
 L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "No %s" -- No Spell
 L.intermission = "Intermission"
 L.percent = "%d%% - %s" -- 20% - Spell
-L.cancelled = "%s Cancelled" -- Spell Cancelled
-L.you_die = "You die"
+L.cancelled = "%s cancelled" -- Spell cancelled
+L.you_die = "You die" -- You will die
 L.you_die_sec = "You die in %d sec" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
-L.add_spawned = "Add Spawned"
-L.adds_spawned = "Adds Spawned"
-L.spawned = "%s Spawned"
-L.spawning = "%s Spawning"
+L.add_spawned = "Add spawned"
+L.adds_spawned = "Adds spawned"
+L.spawned = "%s spawned"
+L.spawning = "%s spawning"
 L.next_add = "Next Add"
 L.add_killed = "Add killed (%d/%d)"
 L.add_remaining = "Add killed, %d remaining"
@@ -77,8 +77,8 @@ L.small_add = "Small Add" -- singular
 L.small_adds = "Small Adds" -- plural
 
 -- Mob related
-L.killed = "%s Killed"
-L.mob_killed = "%s Killed (%d/%d)"
+L.killed = "%s killed"
+L.mob_killed = "%s killed (%d/%d)"
 L.mob_remaining = "%s killed, %d remaining"
 
 -- Localizers note:
@@ -94,7 +94,7 @@ L.trash = "Trash"
 L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
-L.marker = "%s Marker"
+L.marker = "%s marker"
 L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
 L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
 
