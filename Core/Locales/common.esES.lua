@@ -64,7 +64,7 @@ L.next_ability = "Próxima habilidad" -- We don't know what ability will be next
 
 -- Add related
 L.add_spawned = "Aparece esbirro"
-L.adds_spawned = "Aparece esbirros"
+L.adds_spawned = "Aparecen esbirros"
 L.spawned = "%s apareció"
 L.spawning = "%s aparece"
 L.next_add = "Siguiente esbirro"
