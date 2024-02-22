@@ -49,7 +49,7 @@ L.over = "%s terminado" -- Spell Over
 L.removed = "%s eliminado" -- Spell Removed
 L.removed_from = "%s eliminado de %s" -- Spell removed from Player
 L.removed_by = "%s eliminado por %s" -- Spell removed by Player
-L.removed_after = "%s removido despues de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
+L.removed_after = "%s eliminado despues de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "%s inminente" -- Spell Incoming
 L.interrupted = "%s interrumpido" -- Spell Interrupted
 L.interrupted_by = "%s interrumpido por %s" -- Spell interrupted by Player
@@ -57,23 +57,23 @@ L.interruptible = "Interrumpible" -- when a spell is interruptible
 L.no = "No %s" -- No Spell
 L.intermission = "Intermedio"
 L.percent = "%d%% - %s" -- 20% - Spell
-L.cancelled = "%s Cancelado" -- Spell Cancelled
+L.cancelled = "%s cancelado" -- Spell Cancelled
 L.you_die = "Mueres"
 L.you_die_sec = "Mueres en %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
-L.add_spawned = "Aparece Esbirro"
-L.adds_spawned = "Aparece Esbirros"
-L.spawned = "%s Apareció"
+L.add_spawned = "Aparece esbirro"
+L.adds_spawned = "Aparece esbirros"
+L.spawned = "%s apareció"
 L.spawning = "%s aparece"
-L.next_add = "Siguiente Esbirro"
+L.next_add = "Siguiente esbirro"
 L.add_killed = "Esbirro muerto (%d/%d)"
 L.add_remaining = "Esbirro muerto, %d restantes"
 L.add = "Esbirro"
 L.adds = "Esbirros"
 L.big_add = "Esbirro grande" -- singular
-L.big_adds = "Esbirros grande" -- plural
+L.big_adds = "Esbirros grandes" -- plural
 L.small_add = "Esbirro pequeño" -- singular
 L.small_adds = "Esbirros pequeños" -- plural
 
@@ -95,7 +95,7 @@ L.trash = "Bichos"
 L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
-L.marker = "%s Marcador"
+L.marker = "%s marcador"
 L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudante o líder."
 L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder."
 
@@ -132,8 +132,8 @@ L.north_west = "Noroeste"
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
-L.heal_absorb = "Absorción curación" -- Used for shield-like abilities that absorb healing only
-L.heal_absorbs = "Absorciones curación" -- Plural of L.heal_absorb
+L.heal_absorb = "Absorción de curación" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Absorciones de curación" -- Plural of L.heal_absorb
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Lasers" -- Plural of L.lasers
@@ -154,7 +154,7 @@ L.breath = "Aliento" -- When a boss breathes fire/frost/etc on to a player or th
 L.roar = "Rugido" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
 L.leap = "Salto" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Cargar" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
-L.full_energy = "Energia Completa" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
+L.full_energy = "Energía Completa" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "Debilitado" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.immune = "Inmune" -- When a boss becomes immune to all damage and you can no longer hurt it
 L.pool = "Charco" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
@@ -180,6 +180,6 @@ L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Control mental" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "CM" -- Short version of Mind Control, mainly for bars
-L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
-L.soaks = "Soaks" -- Plural of L.soak
+L.soak = "Absorción" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "Absorciones" -- Plural of L.soak
 L.spell_reflection = "Reflejo de hechizos" -- Any ability that reflects spells
