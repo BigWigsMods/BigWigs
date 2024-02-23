@@ -4,6 +4,7 @@
 <Script file="Libs\LibStub\LibStub.lua"/>
 <Script file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
+<Script file="Libs\LibCombatLogging-1.0\LibCombatLogging.lua"/>
 
 <!--@non-debug@
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
