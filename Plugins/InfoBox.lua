@@ -286,11 +286,7 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowInfoBox")
 	self:RegisterMessage("BigWigs_HideInfoBox", "Close")
-	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
-	self:RegisterMessage("BigWigs_SetInfoBoxLine")
-	self:RegisterMessage("BigWigs_SetInfoBoxTable")
-	self:RegisterMessage("BigWigs_SetInfoBoxTableWithBars")
-	self:RegisterMessage("BigWigs_SetInfoBoxBar")
+
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 
@@ -314,6 +310,12 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 		self:Close()
 	end
 
+	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
+	self:RegisterMessage("BigWigs_SetInfoBoxLine")
+	self:RegisterMessage("BigWigs_SetInfoBoxTable")
+	self:RegisterMessage("BigWigs_SetInfoBoxTableWithBars")
+	self:RegisterMessage("BigWigs_SetInfoBoxBar")
+
 	opener = module or self
 	for unit in self:IterateGroup() do
 		nameList[#nameList+1] = self:UnitName(unit)
@@ -323,7 +325,16 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 
 	if lines then
 		if type(lines) == "number" then
-			if lines >= 11 then
+			if lines <= 5 then
+				display.xxx1:Hide()
+				display.xxx2:Hide()
+				display.xxx3:Hide()
+				display.display2:Hide()
+				display.display3:Hide()
+				display.display4:Hide()
+				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+				display.headerFrame:SetWidth(infoboxWidth)
+			elseif lines >= 11 then
 				display.xxx1:Show()
 				display.xxx2:Show()
 				display.xxx3:Show()
@@ -546,6 +557,11 @@ do
 			display.bar[i]:Hide()
 		end
 		display.title:SetText(L.infoBox)
+		self:UnregisterMessage("BigWigs_SetInfoBoxTitle")
+		self:UnregisterMessage("BigWigs_SetInfoBoxLine")
+		self:UnregisterMessage("BigWigs_SetInfoBoxTable")
+		self:UnregisterMessage("BigWigs_SetInfoBoxTableWithBars")
+		self:UnregisterMessage("BigWigs_SetInfoBoxBar")
 	end
 end
 
@@ -573,8 +589,15 @@ end
 
 function plugin:Test()
 	inTestMode = true
-	for i = 1, 10 do
-		display.text[i]:SetText(i)
-	end
-	display:Show()
+	self:BigWigs_ShowInfoBox(nil, self, L.infoBox, 5)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 1, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 2, 1)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 3, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 4, 2)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 5, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 6, 3)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 7, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 8, 4)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 9, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 10, 5)
 end
