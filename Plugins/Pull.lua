@@ -230,7 +230,7 @@ do
 					self:PlaySoundFile(sound)
 				end
 			end
-		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
+		elseif timeLeft > 1 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			self:CancelTimer(timer)
 			timeLeft = 0
 			BigWigs:Print(L.pullStoppedCombat)
