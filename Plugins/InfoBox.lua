@@ -192,6 +192,23 @@ do
 	header:SetText(L.infoBox)
 	display.title = header
 
+	local headerFrame = CreateFrame("Frame", nil, display)
+	headerFrame:Show()
+	headerFrame:SetWidth(infoboxWidth)
+	headerFrame:SetHeight(18)
+	headerFrame:SetPoint("BOTTOMLEFT", display, "TOPLEFT")
+	headerFrame:SetFrameStrata("MEDIUM")
+	headerFrame:SetFixedFrameStrata(true)
+	headerFrame:SetFrameLevel(130)
+	headerFrame:SetFixedFrameLevel(true)
+	headerFrame:SetClampedToScreen(true)
+	headerFrame:EnableMouse(true)
+	headerFrame:SetMovable(true)
+	headerFrame:RegisterForDrag("LeftButton")
+	headerFrame:SetScript("OnDragStart", dragStart)
+	headerFrame:SetScript("OnDragStop", dragStop)
+	display.headerFrame = headerFrame
+
 	display.text = {}
 	for i = 1, 20 do
 		local text = display:CreateFontString(nil, "OVERLAY")
@@ -314,6 +331,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 				display.display3:Show()
 				display.display4:Show()
 				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+				display.headerFrame:SetWidth(infoboxWidth*2)
 			else
 				display.xxx1:Hide()
 				display.xxx2:Show()
@@ -322,6 +340,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 				display.display3:Show()
 				display.display4:Hide()
 				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+				display.headerFrame:SetWidth(infoboxWidth)
 			end
 		else
 			display.xxx1:Show()
@@ -331,6 +350,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 			display.display3:Show()
 			display.display4:Show()
 			display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+			display.headerFrame:SetWidth(infoboxWidth*2)
 		end
 	else
 		display.xxx1:Hide()
@@ -340,6 +360,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 		display.display3:Hide()
 		display.display4:Hide()
 		display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+		display.headerFrame:SetWidth(infoboxWidth)
 	end
 end
 
