@@ -753,8 +753,8 @@ do
 	local anim = updater:CreateAnimation("Alpha")
 	anim:SetFromAlpha(1)
 	anim:SetToAlpha(0)
-	anim:SetDuration(2)
-	anim:SetStartDelay(1.1)
+	anim:SetDuration(1.2)
+	anim:SetStartDelay(1)
 
 	function plugin:EmphasizedPrint(_, text, r, g, b)
 		emphMessageAnchor.header:Hide() -- Hide the header, for config mode
