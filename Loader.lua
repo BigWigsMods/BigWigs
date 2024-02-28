@@ -165,6 +165,7 @@ do
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
 	local lw_cs = "LittleWigs_CurrentSeason"
+	local cap = "Capping"
 
 	if public.isVanilla then
 		public.currentExpansion = {
@@ -410,6 +411,24 @@ do
 		[2526] = lw_df, -- Algeth'ar Academy
 		[2527] = lw_df, -- Halls of Infusion
 		[2579] = {lw_df, lw_cs}, -- Dawn of the Infinite
+
+		--[[ Capping ]]--
+		[30] = cap, -- Alterac Valley
+		[2197] = cap, -- Alterac Valley (Korrak's Revenge)
+		[2107] = cap, -- Arathi Basin
+		[1681] = cap, -- Arathi Basin (Snowy PvP Brawl)
+		[2177] = cap, -- Arathi Basin (Players vs AI Brawl)
+		[529] = cap, -- Arathi Basin (Classic)
+		[1191] = cap, -- Ashran
+		[2245] = cap, -- Deepwind Gorge
+		[566] = cap, -- Eye of the Storm
+		[968] = cap, -- Eye of the Storm (Rated BG)
+		[761] = cap, -- Gilneas
+		[628] = cap, -- Isle of Conquest
+		[726] = cap, -- Twin Peaks
+		[2106] = cap, -- Warsong Gulch
+		[489] = cap, -- Warsong Gulch (Classic)
+		[2118] = cap, -- Wintergrasp
 	}
 
 	public.zoneTblWorld = {
@@ -846,7 +865,10 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-	RegisterAddonMessagePrefix("BigWigs")
+	local success = RegisterAddonMessagePrefix("BigWigs")
+	if not success then
+		sysprint("Failed to register the BigWigs addon message prefix.")
+	end
 	RegisterAddonMessagePrefix(dbmPrefix) -- DBM
 
 	-- LibDBIcon setup
