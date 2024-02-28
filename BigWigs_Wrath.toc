@@ -34,4 +34,5 @@ locales.xml
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
+LFGTimer.lua
 modules_Classic.xml
