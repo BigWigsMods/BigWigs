@@ -11,7 +11,6 @@ if not mod then return end
 
 local flashFrame, pulseFrame
 local flasher, pulser
-local colors = nil
 
 -------------------------------------------------------------------------------
 -- Initialization
@@ -71,7 +70,6 @@ do
 end
 
 function mod:OnPluginEnable()
-	colors = BigWigs:GetPlugin("Colors")
 	self:RegisterMessage("BigWigs_Flash")
 	self:RegisterMessage("BigWigs_Pulse")
 end
@@ -81,16 +79,10 @@ end
 --
 
 function mod:BigWigs_Flash(event, module, key)
-	if BigWigs.db.profile.flash then
-		flasher:Stop()
-		if colors then
-			local r, g, b, a = colors:GetColor("flash", module, key)
-			flashFrame:SetColorTexture(r, g, b, a)
-		end
-		flashFrame:SetAlpha(0)
-		flashFrame:Show()
-		flasher:Play()
-	end
+	flasher:Stop()
+	flashFrame:SetAlpha(0)
+	flashFrame:Show()
+	flasher:Play()
 end
 
 function mod:BigWigs_Pulse(event, _, _, icon)
