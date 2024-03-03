@@ -31,6 +31,7 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "%d단계"
 L.stage = "%d단계"
+--L.wave = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "일반 난이도"
 L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
