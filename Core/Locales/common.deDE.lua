@@ -31,7 +31,7 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Phase %d"
 L.stage = "Phase %d"
---L.wave = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "Welle %d von %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Normaler Modus"
 L.heroic = "Heroischer Modus"
 L.mythic = "Mythischer Modus"
