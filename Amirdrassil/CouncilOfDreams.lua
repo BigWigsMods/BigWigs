@@ -353,9 +353,17 @@ function mod:Rebirth(args)
 			-- Noxious Blossom logic is annoying, so just let the next cast figure things out
 		end
 	elseif not self:Mythic() then
+		-- special should happen while rebirth is casting
 		if (boss == 208363 and nextSpecialAbility == "urctos") or (boss == 208365 and nextSpecialAbility == "aerwynn") or (boss == 208956 and nextSpecialAbility == "pip") then
-			-- is this how this works?
-			rebirthTimers[boss] = self:ScheduleTimer("SpecialOver", remainingSpecialCD)
+			-- it's not 5s ticks, was the first 10s tick for two heroic logs
+			local restartCD = (nextSpecial + 10) - (GetTime() + rebirthTime)
+			while restartCD < 0 do
+				restartCD = restartCD + 10
+			end
+			rebirthTimers[boss] = self:ScheduleTimer(function()
+				agonizingClawsCount = 1
+				self:SpecialOver()
+			end, restartCD)
 		end
 	end
 end
@@ -478,16 +486,16 @@ function mod:AgonizingClaws(args)
 
 	local cd
 	if self:LFR() then
-		local timer = { 10.6, 8.0, 33.3, 8.0, 0 }
+		local timer = { 10.6, 8.0, 33.3, 8.0 }
 		cd = timer[agonizingClawsCount]
 	elseif self:Normal() then
-		local timer = { 8.0, 6.0, 25.0, 6.0, 0 }
+		local timer = { 8.0, 6.0, 25.0, 6.0 }
 		cd = timer[agonizingClawsCount]
 	else
-		local timer = { 5.0, 4.0, 16.0, 4.0, 0 }
+		local timer = { 5.0, 4.0, 16.0, 4.0 }
 		cd = timer[agonizingClawsCount]
 	end
-	self:Bar(421022, cd, CL.count:format(args.spellName, agonizingClawsCount))
+	self:Bar(421022, cd or 0, CL.count:format(args.spellName, agonizingClawsCount)) -- shhh, just be wrong until next specal without erroring
 end
 
 function mod:AgonizingClawsApplied(args)
