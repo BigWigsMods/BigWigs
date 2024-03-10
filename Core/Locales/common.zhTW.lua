@@ -98,8 +98,9 @@ L.affixes = "詞綴" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s標記"
-L.marker_player_desc = "標記受到%s影響的玩家為%s，需要權限。"
-L.marker_npc_desc = "標記%s為%s，需要權限。"
+L.marker_player_desc = "標記受到%s影響的玩家為%s，需要權限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_desc = "標記%s為%s，需要權限。" -- Mark NPC_NAME with SKULL_ICON
+--L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "連結"
