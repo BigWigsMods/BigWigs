@@ -98,8 +98,9 @@ L.affixes = "Affixe" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s markieren"
-L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s. Benötigt Leiter oder Assistent."
-L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent."
+L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s. Benötigt Leiter oder Assistent." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent." -- Mark NPC_NAME with SKULL_ICON
+--L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "Verbindung"

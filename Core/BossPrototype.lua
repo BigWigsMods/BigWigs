@@ -107,38 +107,46 @@ local metaMap = {__index = function(self, key) self[key] = {} return self[key] e
 local eventMap = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
-local icons = setmetatable({}, {__index =
-	function(self, key)
-		local value
-		if type(key) == "number" then
-			if key > 8 then
-				value = GetSpellTexture(key)
-				if not value then
-					core:Error(format("The spell id %q has no icon texture but is being used as an icon in a boss module.", key))
-				end
-			elseif key > 0 then
-				-- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
-				value = key + 137000
-			else
-				local tbl = C_EncounterJournal_GetSectionInfo(-key)
-				if not tbl or not tbl.abilityIcon then
-					core:Error(format("The journal id %q has no icon texture but is being used as an icon in a boss module.", key))
+local icons
+do
+	local inBuilt = { -- Icons that are missing on classic
+		["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown.tga",
+		["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft.tga",
+		["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup.tga",
+		["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright.tga",
+	}
+	icons = setmetatable({}, {__index =
+		function(self, key)
+			local value
+			if type(key) == "number" then
+				if key > 8 then
+					value = GetSpellTexture(key)
+					if not value then
+						core:Error(format("The spell id %q has no icon texture but is being used as an icon in a boss module.", key))
+					end
+				elseif key > 0 then
+					-- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
+					value = key + 137000
 				else
-					value = tbl.abilityIcon
+					local tbl = C_EncounterJournal_GetSectionInfo(-key)
+					if not tbl or not tbl.abilityIcon then
+						core:Error(format("The journal id %q has no icon texture but is being used as an icon in a boss module.", key))
+					else
+						value = tbl.abilityIcon
+					end
+				end
+			else
+				if inBuilt[key] then
+					value = inBuilt[key]
+				else
+					value = "Interface\\Icons\\" .. key
 				end
 			end
-		else
-			value = "Interface\\Icons\\" .. key
+			self[key] = value
+			return value
 		end
-		self[key] = value
-		return value
-	end
-})
--- Icons that are missing on classic
-icons.misc_arrowdown = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown.tga"
-icons.misc_arrowleft = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft.tga"
-icons.misc_arrowlup = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup.tga"
-icons.misc_arrowright = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright.tga"
+	})
+end
 local spells = setmetatable({}, {__index =
 	function(self, key)
 		local value
@@ -502,7 +510,7 @@ boss.NewLocale = boss.GetLocale
 
 --- Create a custom marking option
 -- @bool state Boolean value to represent default state
--- @string markType The type of string to return (player, npc)
+-- @string markType The type of string to return (player, npc, npc_aura)
 -- @number icon An icon id to be used for the option texture
 -- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up L.test
 -- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
@@ -519,7 +527,7 @@ function boss:AddMarkerOption(state, markType, icon, id, ...)
 	local option = format(state and "custom_on_%s" or "custom_off_%s", id)
 	if type(id) == "number" then
 		moduleLocale[option] = format(L.marker, spells[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, spells[id], str)
+		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or markType == "npc_aura" and L.marker_npc_aura_desc or L.marker_npc_desc, spells[id], str)
 	elseif type(id) == "string" then
 		moduleLocale[option] = format(L.marker, moduleLocale[id])
 		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, moduleLocale[id], str)
