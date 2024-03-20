@@ -12,7 +12,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 324
+local BIGWIGS_VERSION = 325
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -29,7 +29,7 @@ do
 	public.isVanilla = tbl.isVanilla
 	public.isTBC = tbl.isTBC
 	public.isWrath = tbl.isWrath
-	public.dbmPrefix = tbl.dbmPrefix
+	public.dbmPrefix = "D5"
 
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local REPO = "REPO"
@@ -1291,13 +1291,12 @@ end
 --
 
 do
-	local _, tbl = ...
-	local DBMdotRevision = tbl.dbmRevision -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = tbl.dbmDisplayVersion -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = tbl.dbmReleaseRevision -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
-	local protocol = 2
+	local DBMdotRevision = "20240319130700" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "10.2.30 alpha" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20240315000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local protocol = 3
 	local versionPrefix = "V"
-	local PForceDisable = tbl.dbmPForceDisable
+	local PForceDisable = 10
 
 	local timer = nil
 	local function sendMsg()
