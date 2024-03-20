@@ -885,6 +885,7 @@ do
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
 	function plugin:SiegeOfOrgrimmarCinematics()
 		local hasItem
+		local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount -- XXX 10.2.6
 		for i = 105930, 105935 do -- Vision of Time items
 			local count = GetItemCount(i)
 			if count > 0 then hasItem = true break end -- Item is found in our inventory
