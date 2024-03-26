@@ -28,7 +28,8 @@ local difficultyTable = BigWigsLoader.isRetail and {
 	[175] = "normal", -- raid10 (karazhan) -- move from 3 (fake) to 175 (guessed)
 	[148] = "normal", -- raid20
 	[176] = "normal", -- raid 25 (sunwell)
-	[198] = "normal", -- raid10 (Blackfathom Deeps - Classic Season of Discovery)
+	[198] = "normal", -- raid10 (Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
+	[215] = "normal", -- raid20 (Sunken Temple - Classic Season of Discovery)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
@@ -103,8 +104,23 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
 
-1.15.0
-Doesn't return results
+1.15.2
+1. Normal
+9. 40 Player
+148. 20 Player
+184. Normal
+185. 20 Player
+186. 40 Player
+197. 10 Player
+198. Normal
+201. Normal
+202. Difficulty A
+203. Difficulty B
+204. Difficulty C
+207. Normal
+213. Infinite
+214. DNT - Internal only
+215. Normal
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
 
