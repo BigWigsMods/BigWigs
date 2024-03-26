@@ -210,6 +210,7 @@ do
 		--[[ BigWigs: Classic ]]--
 		[48] = c, -- Blackfathom Deeps [Classic Season of Discovery Only]
 		[90] = c, -- Gnomeregan [Classic Season of Discovery Only]
+		[109] = c, -- Sunken Temple [Classic Season of Discovery Only]
 		[309] = c, -- Zul'Gurub [Classic Only]
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
