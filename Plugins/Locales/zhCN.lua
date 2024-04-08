@@ -4,8 +4,8 @@ if not L then return end
 L.general = "一般"
 L.comma = "，"
 
-L.positionX = "X 座标"
-L.positionY = "Y 座标"
+L.positionX = "水平位置"
+L.positionY = "垂直位置"
 L.positionExact = "精确位置"
 L.positionDesc = "在框中输入或移动滑块精准定位锚点位置。"
 L.width = "宽度"
