@@ -100,6 +100,7 @@ public.CTimerNewTicker = CTimerNewTicker
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
+public.GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 public.GetSpellLink = C_Spell and C_Spell.GetSpellLink or GetSpellLink
 public.GetSpellName = C_Spell and C_Spell.GetSpellName or GetSpellInfo
 public.GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture

@@ -1879,7 +1879,7 @@ do
 end
 
 do
-	local GetSpellCooldown = GetSpellCooldown
+	local GetSpellCooldown = loader.GetSpellCooldown
 	local canInterrupt = false
 	local spellListClassic = {
 		-- 16979, -- Feral Charge (Druid)
@@ -1923,6 +1923,9 @@ do
 		if canInterrupt then
 			local ready = true
 			local start, duration = GetSpellCooldown(canInterrupt)
+			if type(start) == "table" then
+				start, duration = start.startTime, start.duration
+			end
 			if start > 0 then -- On cooldown currently
 				local endTime = start + duration
 				local t = GetTime()
