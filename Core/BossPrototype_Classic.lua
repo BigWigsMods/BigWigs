@@ -31,7 +31,7 @@ local loader = BigWigsLoader
 local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
 local C_EncounterJournal_GetSectionInfo = isRetail and C_EncounterJournal.GetSectionInfo or function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
-local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
+local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo = UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
@@ -215,7 +215,7 @@ local spells = setmetatable({}, {__index =
 	function(self, key)
 		local value
 		if key > 0 then
-			value = GetSpellInfo(key)
+			value = GetSpellName(key)
 			if not value then
 				value = "INVALID"
 				core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
@@ -719,7 +719,7 @@ do
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local id = select(i, ...)
-			if (type(id) == "number" and GetSpellInfo(id)) or id == "*" then
+			if (type(id) == "number" and GetSpellName(id)) or id == "*" then
 				if eventMap[self][event][id] then
 					core:Print(format(multipleRegistration, self.moduleName, event, id))
 				end
@@ -1411,7 +1411,7 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
+--- Get a localized name from an id. Positive ids for spells (C_Spell.GetSpellName) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
 -- @number spellIdOrSectionId The spell id or the journal-based section id (as a negative number)
 -- @return spell name
 function boss:SpellName(spellIdOrSectionId)
@@ -1903,7 +1903,7 @@ do
 	local spellList = isClassicEra and spellListClassic or spellListWrath
 	function UpdateInterruptStatus()
 		if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-			canInterrupt = GetSpellInfo(19647)
+			canInterrupt = GetSpellName(19647)
 			return
 		end
 		canInterrupt = false

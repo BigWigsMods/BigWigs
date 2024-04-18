@@ -949,11 +949,11 @@ do
 			local link
 			if type(o) == "number" then
 				if o > 0 then
-					local spellLink = GetSpellLink(o)
+					local spellLink = loader.GetSpellLink(o)
 					if type(spellLink) == "string" and spellLink:find("Hspell", nil, true) then
 						link = spellLink -- Use Blizz link if valid...
 					else -- ...or make our own
-						local spellName = GetSpellInfo(o)
+						local spellName = loader.GetSpellName(o)
 						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, spellName)
 						--BigWigs:Error(("Failed to fetch the link for spell id %d, tell the authors."):format(o))
 					end
@@ -971,7 +971,7 @@ do
 					local name, desc, icon = L[o], L[o.."_desc"], L[o.."_icon"]
 					if name and type(desc) == "number" and desc == icon then
 						if desc > 0 then
-							local spellName = GetSpellInfo(desc)
+							local spellName = loader.GetSpellName(desc)
 							link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(desc, spellName)
 						end
 					end
