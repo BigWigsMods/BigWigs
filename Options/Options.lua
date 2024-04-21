@@ -1217,6 +1217,7 @@ do
 			"BattleForAzeroth",
 			"Shadowlands",
 			"Dragonflight",
+			C_Spell and "TheWarWithin", -- XXX Remove C_Spell check on 11.0 release
 		}
 	end
 

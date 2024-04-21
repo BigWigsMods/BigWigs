@@ -158,6 +158,7 @@ do
 	local bfa = "BigWigs_BattleForAzeroth"
 	local s = "BigWigs_Shadowlands"
 	local df = "BigWigs_Dragonflight"
+	local tww = "BigWigs_TheWarWithin"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -168,6 +169,7 @@ do
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
+	local lw_tww = "LittleWigs_TheWarWithin"
 	local lw_cs = "LittleWigs_CurrentSeason"
 	local cap = "Capping"
 
@@ -191,6 +193,15 @@ do
 			littlewigsName = lw_wotlk,
 			littlewigsDefault = lw_wotlk,
 			zones = {},
+		}
+	elseif C_Spell then -- Beta
+		public.currentExpansion = { -- Change on new expansion releases
+			name = tww,
+			littlewigsName = lw_tww,
+			littlewigsDefault = lw_tww,
+			zones = {
+				[2657] = "BigWigs_NerubarPalace",
+			}
 		}
 	else
 		public.currentExpansion = { -- Change on new expansion releases
@@ -282,6 +293,7 @@ do
 		[2522] = df, -- Vault of the Incarnate
 		[2569] = df, -- Aberrus, the Shadowed Crucible
 		[2549] = df, -- Amirdrassil, the Dream's Hope
+		[2657] = tww, -- Nerub-ar Palace
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
