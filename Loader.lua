@@ -294,6 +294,7 @@ do
 		[2522] = df, -- Vault of the Incarnate
 		[2569] = df, -- Aberrus, the Shadowed Crucible
 		[2549] = df, -- Amirdrassil, the Dream's Hope
+		--[[ BigWigs: The War Within ]]--
 		[2657] = tww, -- Nerub-ar Palace
 
 		--[[ LittleWigs: Classic ]]--
@@ -429,6 +430,15 @@ do
 		[2526] = {lw_df, lw_cs}, -- Algeth'ar Academy
 		[2527] = {lw_df, lw_cs}, -- Halls of Infusion
 		[2579] = lw_df, -- Dawn of the Infinite
+		--[[ LittleWigs: The War Within ]]--
+		[2648] = lw_tww, -- The Rookery
+		[2649] = lw_tww, -- Priory of the Sacred Flame
+		[2651] = lw_tww, -- Darkflame Cleft
+		[2652] = lw_tww, -- The Stonevault
+		[2660] = lw_tww, -- Ara-Kara, City of Echoes
+		[2661] = lw_tww, -- Cinderbrew Meadery
+		[2662] = lw_tww, -- The Dawnbreaker
+		[2669] = lw_tww, -- City of Threads
 
 		--[[ Capping ]]--
 		[30] = cap, -- Alterac Valley
