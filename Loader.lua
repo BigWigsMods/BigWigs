@@ -116,7 +116,7 @@ public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitName = UnitName
 public.isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
-public.isBeta = not not C_Spell -- TWW Alpha/Beta
+public.isBeta = select(4, GetBuildInfo()) >= 110000 -- XXX remove when TWW launches
 
 -- Version
 local usersHash = {}
