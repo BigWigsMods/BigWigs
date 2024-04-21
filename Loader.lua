@@ -195,7 +195,7 @@ do
 			littlewigsDefault = lw_wotlk,
 			zones = {},
 		}
-	elseif C_Spell then -- Beta
+	elseif public.isBeta then -- TWW Alpha/Beta
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
 			littlewigsName = lw_tww,

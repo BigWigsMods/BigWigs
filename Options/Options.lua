@@ -1205,6 +1205,20 @@ do
 			"BurningCrusade",
 			"WrathOfTheLichKing",
 		}
+	elseif loader.isBeta then
+		expansionHeader = {
+			"Classic",
+			"BurningCrusade",
+			"WrathOfTheLichKing",
+			"Cataclysm",
+			"MistsOfPandaria",
+			"WarlordsOfDraenor",
+			"Legion",
+			"BattleForAzeroth",
+			"Shadowlands",
+			"Dragonflight",
+			"TheWarWithin",
+		}
 	else
 		expansionHeader = {
 			"Classic",
@@ -1217,7 +1231,6 @@ do
 			"BattleForAzeroth",
 			"Shadowlands",
 			"Dragonflight",
-			C_Spell and "TheWarWithin", -- XXX Remove C_Spell check on 11.0 release
 		}
 	end
 
