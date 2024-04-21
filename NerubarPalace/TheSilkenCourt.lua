@@ -1,4 +1,4 @@
-if not C_Spell then return end -- Beta check
+if not BigWigsLoader.isBeta then return end -- Beta check
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -19,10 +19,10 @@ mod:SetRespawnTime(30)
 -- Localization
 --
 
-local L = mod:GetLocale()
-if L then
+-- local L = mod:GetLocale()
+-- if L then
 
-end
+-- end
 
 --------------------------------------------------------------------------------
 -- Initialization
