@@ -58,7 +58,7 @@ L.expansionNames = {
 	"争霸艾泽拉斯", -- Battle for Azeroth
 	"暗影国度", -- Shadowlands
 	"巨龙时代", -- Dragonflight
-	"The War Within", -- The War Within
+	"地心之战", -- The War Within
 }
 L.currentSeason = "当前赛季"
 
