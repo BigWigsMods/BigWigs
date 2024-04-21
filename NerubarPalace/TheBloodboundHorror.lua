@@ -30,7 +30,7 @@ end
 
 function mod:GetOptions()
 	return {
-		"berserk",
+		"stages",
 	}
 end
 
@@ -39,6 +39,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Message("stages", "cyan", CL.stage:format(1), false)
 end
 
 --------------------------------------------------------------------------------
