@@ -9,5 +9,7 @@
 <Include file="VaultOfTheIncarnates\modules.xml"/>
 <Include file="Aberrus\modules.xml"/>
 <Include file="Amirdrassil\modules.xml"/>
+
+<Include file="NerubarPalace\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

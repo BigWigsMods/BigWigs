@@ -1205,6 +1205,20 @@ do
 			"BurningCrusade",
 			"WrathOfTheLichKing",
 		}
+	elseif loader.isBeta then
+		expansionHeader = {
+			"Classic",
+			"BurningCrusade",
+			"WrathOfTheLichKing",
+			"Cataclysm",
+			"MistsOfPandaria",
+			"WarlordsOfDraenor",
+			"Legion",
+			"BattleForAzeroth",
+			"Shadowlands",
+			"Dragonflight",
+			"TheWarWithin",
+		}
 	else
 		expansionHeader = {
 			"Classic",

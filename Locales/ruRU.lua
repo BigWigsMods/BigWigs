@@ -58,6 +58,7 @@ L.expansionNames = {
 	"Битва за Азерот", -- Battle for Azeroth
 	"Темные Земли", -- Shadowlands
 	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
+	"The War Within", -- The War Within
 }
 L.currentSeason = "Текущий сезон"
 

@@ -58,6 +58,7 @@ L.expansionNames = {
 	"Battle for Azeroth", -- Battle for Azeroth
 	"Shadowlands", -- Shadowlands
 	"Dragonflight", -- Dragonflight
+	"The War Within", -- The War Within
 }
 --L.currentSeason = "Current Season"
 

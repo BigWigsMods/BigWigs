@@ -1,0 +1,17 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Ulgrax.lua"/>
+<Script file="TheBloodboundHorror.lua"/>
+<Script file="Sikran.lua"/>
+<Script file="Rashanan.lua"/>
+<Script file="Ovinax.lua"/>
+<Script file="Kyveza.lua"/>
+<Script file="TheSilkenCourt.lua"/>
+<Script file="Ansurek.lua"/>
+<!-- <Script file="Trash.lua"/> -->
+
+<!-- <Include file="Locales\locales.xml"/>
+<Include file="Options\options.xml"/> -->
+
+</Ui>
