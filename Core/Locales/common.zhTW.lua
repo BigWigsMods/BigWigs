@@ -31,8 +31,8 @@ L.extra = "%s（%s）" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "階段%d"
 L.stage = "階段%d"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "第 %d 波" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "第 %d/%d 波" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "普通模式"
 L.heroic = "英雄模式"
 L.mythic = "傳奇難度"
@@ -43,8 +43,8 @@ L.dead = "死亡" -- When a player is dead
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.health = "生命值" -- The health of an NPC
 L.health_percent = "%d%% 生命值" -- "10% Health" The health percentage of an NPC
-L.door_open = "門開了" -- 小的門 When a door is open, usually after a speech from an NPC
-L.gate_open = "門開了" -- 大的門 When a gate is open, usually after a speech from an NPC
+L.door_open = "開門" -- 小的門 When a door is open, usually after a speech from an NPC
+L.gate_open = "開門" -- 大的門 When a gate is open, usually after a speech from an NPC
 
 L.duration = "%s持續%s秒" -- Spell for 10 seconds
 L.over = "%s結束" -- Spell Over
@@ -55,7 +55,7 @@ L.removed_after = "%s移除，用時 %.1f 秒" -- "Spell removed after 1.1s" (s 
 L.incoming = "即將：%s" -- Spell Incoming
 L.interrupted = "已打斷%s" -- Spell Interrupted
 L.interrupted_by = "%2$s已打斷%1$s" -- Spell interrupted by Player
---L.interruptible = "Interruptible" -- when a spell is interruptible
+L.interruptible = "可打斷" -- when a spell is interruptible
 L.no = "缺少%s" -- No Spell
 L.intermission = "階段轉換"
 L.percent = "%d%% - %s" -- 20% - Spell
@@ -98,9 +98,9 @@ L.affixes = "詞綴" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s標記"
-L.marker_player_desc = "標記受到%s影響的玩家為%s，需要權限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_player_desc = "將受到%s影響的玩家標記為%s，需要權限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "標記%s為%s，需要權限。" -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "將受到%s影響的 NPC 標記為%s，需要權限。" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "連結"
