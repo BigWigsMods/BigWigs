@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Nerub-ar Palace Trash", 2657)
+local mod, CL = BigWigs:NewBoss("Nerub'ar Palace Trash", 2657)
 if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(

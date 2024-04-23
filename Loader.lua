@@ -295,7 +295,7 @@ do
 		[2569] = df, -- Aberrus, the Shadowed Crucible
 		[2549] = df, -- Amirdrassil, the Dream's Hope
 		--[[ BigWigs: The War Within ]]--
-		[2657] = tww, -- Nerub-ar Palace
+		[2657] = tww, -- Nerub'ar Palace
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
