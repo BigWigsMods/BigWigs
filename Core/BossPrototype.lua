@@ -1165,7 +1165,7 @@ do
 				self.bossTargetChecks[unit] = func
 				self:RegisterUnitEvent("UNIT_TARGET", "NextTarget", unit)
 				Timer(timeToWait or 0.3, function()
-					if self.bossTargetChecks[unit] then
+					if self.bossTargetChecks and self.bossTargetChecks[unit] then
 						self:UnregisterUnitEvent("UNIT_TARGET", unit)
 					end
 				end)
