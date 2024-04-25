@@ -37,7 +37,7 @@ end
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local UnitGroupRolesAssigned, C_UIWidgetManager = UnitGroupRolesAssigned, C_UIWidgetManager
-local EJ_GetEncounterInfo = loader.isCata and function(key)
+local EJ_GetEncounterInfo = isCata and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
 end or EJ_GetEncounterInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
@@ -242,7 +242,7 @@ local spells = setmetatable({}, {__index =
 		return value
 	end
 })
-local bossNames = (isRetail or isCata) and setmetatable({}, {__index =
+local bossNames = setmetatable({}, {__index =
 	function(self, key)
 		local name = EJ_GetEncounterInfo(key)
 		if name then
@@ -254,18 +254,6 @@ local bossNames = (isRetail or isCata) and setmetatable({}, {__index =
 			return ""
 		end
 	end
-}) or setmetatable({}, {__index =
-function(self, key)
-	local name = BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
-	if name then
-		self[key] = name
-		return name
-	else
-		core:Print(format("An invalid boss name id (%d) is being used in a boss module.", key))
-		self[key] = ""
-		return ""
-	end
-end
 })
 
 -------------------------------------------------------------------------------
