@@ -80,7 +80,7 @@ local meteorAxeMarker = mod:AddMarkerOption(false, "player", 1, 374043, 1, 2)
 function mod:GetOptions()
 	return {
 		-- Kadros Icewrath
-		{373059, "CASTBAR"}, -- Primal Blizzard
+		{373059, "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Primal Blizzard
 		386661, -- Glacial Convocation
 		-- Dathea Stormlash
 		{371624, "ME_ONLY_EMPHASIZE"}, -- Conductive Mark
@@ -181,7 +181,7 @@ function mod:PrimalBlizzard(args)
 end
 
 function mod:PrimalBlizzardApplied(args)
-	if self:Me(args.destGUID) and (args.amount > 5 and args.amount % 3 == 0 or args.amount == 8) then -- 6, 8, 9
+	if self:Me(args.destGUID) and args.amount > 5 then
 		self:StackMessage(373059, "blue", args.destName, args.amount, 8)
 		if args.amount > 6 then
 			self:PlaySound(373059, "warning")

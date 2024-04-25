@@ -108,8 +108,6 @@ if L then
 	L.broodkeepers_fury = "Furie"
 	L.frozen_shroud = "Root Absorbant"
 	L.detonating_stoneslam = "Soak Tank"
-
-	-- L.add_count = "%s (%d-%d)"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "frFR")

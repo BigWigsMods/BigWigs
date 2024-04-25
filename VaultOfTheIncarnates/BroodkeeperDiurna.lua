@@ -76,8 +76,6 @@ if L then
 	L.broodkeepers_fury = "Fury"
 	L.frozen_shroud = "Root Absorb"
 	L.detonating_stoneslam = "Tank Soak"
-
-	L.add_count = "%s (%d-%d)"
 end
 
 --------------------------------------------------------------------------------
@@ -114,7 +112,7 @@ function mod:GetOptions()
 		{375457}, -- Chilling Tantrum
 		-- Drakonid Stormbringer
 		375653, -- Static Jolt
-		{375620, "SAY"}, -- Ionizing Charge
+		{375620, "ME_ONLY", "SAY", "ME_ONLY_EMPHASIZE"}, -- Ionizing Charge
 		stormBringerMarker,
 
 		-- Stage Two: A Broodkeeper Scorned
@@ -231,7 +229,7 @@ function mod:OnEngage()
 	self:CDBar(375871, 8.5, CL.count:format(self:SpellName(375871), wildfireCount)) -- Wildfire
 	self:CDBar(376073, 13, CL.count:format(L.rapid_incubation, rapidIncubationCount)) -- Rapid Incubation
 	self:CDBar(380175, 17, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount)) -- Greatstaff of the Broodkeeper
-	self:CDBar(-25129, self:Easy() and 35.7 or 33, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
+	self:CDBar(-25129, self:Easy() and 35.7 or 33, CL.count:format(CL.adds, primalReinforcementsCount), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
 	self:CDBar(388716, 26.5, CL.count:format(CL.heal_absorb, icyShroudCount)) -- Icy Shroud
 	self:Bar(375879, self:Easy() and 317 or 300, CL.stage:format(2)) -- Broodkeeper's Fury
 
@@ -560,9 +558,9 @@ do
 	function mod:IonizingChargeApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
+			onMe = true
 			self:Say(args.spellId, nil, nil, "Ionizing Charge")
 			self:PlaySound(args.spellId, "warning")
-			onMe = true
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end

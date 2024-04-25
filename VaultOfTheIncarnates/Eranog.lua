@@ -43,19 +43,19 @@ end
 function mod:GetOptions()
 	return {
 		-- Stage 1
-		{390715, "SAY", "SAY_COUNTDOWN"}, -- Flamerift
+		{390715, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Flamerift
 		370649, -- Primal Flow
 		370615, -- Molten Cleave
 		396023, -- Incinerating Roar
 		396022, -- Molten Spikes
 		{394906, "TANK"}, -- Burning Wound
 		-- Frenzied Tarasek
-		370597, -- Kill Order (Fixate)
+		{370597, "ME_ONLY_EMPHASIZE"}, -- Kill Order (Fixate)
 		"custom_on_nameplate_fixate",
 		-- Stage 2
 		{370307, "CASTBAR"}, -- Collapsing Army
 		-- Mythic
-		{396094, "SAY", "SAY_COUNTDOWN"}, -- Greater Flamerift
+		{396094, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Greater Flamerift
 		394917, -- Leaping Flames
 		393780, -- Pyroblast
 	},{

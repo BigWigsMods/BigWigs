@@ -44,10 +44,10 @@ end
 local awakenedEarthMarker = mod:AddMarkerOption(false, "player", 1, 381315, 1, 2, 3, 4, 5, 6, 7, 8) -- Awakened Earth
 function mod:GetOptions()
 	return {
-		{380487, "SAY", "SAY_COUNTDOWN"}, -- Rock Blast
+		{380487, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Rock Blast
 		{381315, "SAY", "SAY_COUNTDOWN"}, -- Awakened Earth
 		awakenedEarthMarker,
-		377166, -- Resonating Annihilation
+		{377166, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Resonating Annihilation
 		382458, -- Resonant Aftermath
 		383073, -- Shattering Impact
 		376279, -- Concussive Slam
@@ -137,12 +137,11 @@ do
 		self:TargetMessage(380487, "orange", args.destName, CL.count:format(CL.soak, rockBlastCount-1))
 		self:TargetBar(380487, 5.5, args.destName, CL.count:format(CL.soak, rockBlastCount-1))
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(380487, nil, CL.soak)
-			self:PlaySound(380487, "warning")
 			self:Yell(380487, CL.soak, nil, "Soak")
 			self:YellCountdown(380487, 5.5)
+			self:PlaySound(380487, "warning", nil, args.destName)
 		else
-			self:PlaySound(380487, "alert")
+			self:PlaySound(380487, "alert", nil, args.destName)
 		end
 	end
 
@@ -168,11 +167,12 @@ end
 function mod:ResonatingAnnihilation(args)
 	self:StopBar(CL.count:format(L.resonating_annihilation, resonatingAnnihilationCount))
 	self:Message(args.spellId, "red", CL.count:format(L.resonating_annihilation, resonatingAnnihilationCount))
-	self:PlaySound(args.spellId, "long")
+	self:CastBar(args.spellId, L.resonating_annihilation)
 	resonatingAnnihilationCount = resonatingAnnihilationCount + 1
 	if resonatingAnnihilationCount < 5 then -- Only 4
 		self:Bar(args.spellId, 96.5, CL.count:format(L.resonating_annihilation, resonatingAnnihilationCount))
 	end
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:ShatteringImpact(args)

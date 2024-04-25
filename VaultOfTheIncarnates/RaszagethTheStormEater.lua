@@ -182,7 +182,7 @@ function mod:GetOptions()
 		"stages",
 		-- Stage One: The Winds of Change
 		{377612, "CASTBAR"}, -- Hurricane Wing
-		{381615, "SAY", "SAY_COUNTDOWN"}, -- Static Charge
+		{381615, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Static Charge
 		staticChargeMarker,
 		388643, -- Volatile Current
 		{395906, "TANK"}, -- Electrified Jaws
@@ -194,7 +194,7 @@ function mod:GetOptions()
 		-- Intermission: The Primalist Strike
 		385065, -- Lightning Devastation
 		"custom_off_raidleader_devastation",
-		{396037, "SAY", "SAY_COUNTDOWN"}, -- Surging Blast
+		{396037, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Surging Blast
 		385553, -- Storm Bolt
 		stormseekerAcolyteLeft,
 		stormseekerAcolyteRight,
@@ -207,7 +207,7 @@ function mod:GetOptions()
 		394582, -- Focused Charge
 		394583, -- Scattered Charge
 		385574, -- Tempest Wing
-		{377467, "SAY", "SAY_COUNTDOWN"}, -- Fulminating Charge
+		{377467, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Fulminating Charge
 		fulminatingChargeMarker,
 		-- Intermission: The Vault Falters
 		389870, -- Storm Break
@@ -216,7 +216,7 @@ function mod:GetOptions()
 		-- Stage Three: Storm Incarnate
 		385569, -- Raging Storm
 		395929, -- Storm's Spite
-		{399713, "SAY", "SAY_COUNTDOWN"}, -- Magnetic Charge
+		{399713, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Magnetic Charge
 		magneticChargeMarker,
 		{386410, "SAY"}, -- Thunderous Blast
 		{391285, "TANK"}, -- Melted Armor
