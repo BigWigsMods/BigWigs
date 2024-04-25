@@ -893,9 +893,9 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-	local success = RegisterAddonMessagePrefix("BigWigs")
-	if not success then
-		sysprint("Failed to register the BigWigs addon message prefix.")
+	local oldResult, result = RegisterAddonMessagePrefix("BigWigs")
+	if type(result) == "number" and result > 2 then
+		sysprint("Failed to register the BigWigs addon message prefix. Error code: ".. result)
 	end
 	RegisterAddonMessagePrefix(dbmPrefix) -- DBM
 
@@ -1411,7 +1411,10 @@ do
 	local timer = nil
 	local function sendMsg()
 		if IsInGroup() then
-			SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			local _, result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			if type(result) == "number" and result ~= 0 then
+				sysprint("Failed to send initial version. Error code: ".. result)
+			end
 		end
 		timer = nil
 	end
@@ -1617,7 +1620,10 @@ do
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
-			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			local _, result = SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			if type(result) == "number" and result ~= 0 then
+				sysprint("Failed to send version response. Error code: ".. result)
+			end
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
@@ -1664,7 +1670,10 @@ function mod:BigWigs_CoreEnabled()
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInGroup() then
-		SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+		local _, result = SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+		if type(result) == "number" and result ~= 0 then
+			sysprint("Failed to send initial (load) version. Error code: ".. result)
+		end
 		local name = UnitName("player")
 		local realm = GetRealmName()
 		local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
