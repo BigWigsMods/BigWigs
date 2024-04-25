@@ -28,7 +28,7 @@ end
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
-local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
+local isClassic, isRetail, isClassicEra, isCata = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata
 local C_EncounterJournal_GetSectionInfo = isRetail and C_EncounterJournal.GetSectionInfo or function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
@@ -93,7 +93,7 @@ local updateData = function(module)
 	local spent = 0
 	local talentTree = 0
 	for tree = 1, 3 do
-		local _, _, pointsSpent = GetTalentTabInfo(tree)
+		local pointsSpent = select(isCata and 5 or 3, GetTalentTabInfo(tree))
 		if pointsSpent > spent then
 			spent = pointsSpent
 			talentTree = tree

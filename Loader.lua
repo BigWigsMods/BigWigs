@@ -29,6 +29,7 @@ do
 	public.isVanilla = tbl.isVanilla
 	public.isTBC = tbl.isTBC
 	public.isWrath = tbl.isWrath
+	public.isCata = tbl.isCata
 	public.dbmPrefix = "D5"
 
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
@@ -195,6 +196,13 @@ do
 			littlewigsDefault = lw_wotlk,
 			zones = {},
 		}
+	elseif public.isCata then
+		public.currentExpansion = {
+			name = cata,
+			littlewigsName = lw_cata,
+			littlewigsDefault = lw_cata,
+			zones = {},
+		}
 	elseif public.isBeta then -- TWW Alpha/Beta
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
@@ -220,7 +228,7 @@ do
 	public.zoneTbl = {
 		[533] = public.isVanilla and c or wotlk, -- Naxxramas
 		[249] = public.isVanilla and c or wotlk, -- Onyxia's Lair
-		[568] = public.isClassic and bc or lw_cata, -- Zul'Aman
+		[568] = (public.isTBC or public.isWrath) and bc or lw_cata, -- Zul'Aman
 		[-947] = public.isClassic and c or bfa, -- Azeroth (Fake Menu)
 
 		--[[ BigWigs: Classic ]]--

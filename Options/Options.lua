@@ -1205,6 +1205,13 @@ do
 			"BurningCrusade",
 			"WrathOfTheLichKing",
 		}
+	elseif loader.isCata then
+		expansionHeader = {
+			"Classic",
+			"BurningCrusade",
+			"WrathOfTheLichKing",
+			"Cataclysm",
+		}
 	elseif loader.isBeta then
 		expansionHeader = {
 			"Classic",
