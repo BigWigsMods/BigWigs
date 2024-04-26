@@ -618,7 +618,7 @@ function mod:StormNovaSuccess(args)
 	self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), args.spellId)
 	self:PlaySound("stages", "info")
 	self:SetStage(1.5)
-	self:Bar("stages", 93.5, CL.stage:format(2), 387261)
+	self:Bar("stages", 98.5, CL.stage:format(2), 387261)
 
 	lightningDevastationCount = 1
 	flameswornFound = 0
