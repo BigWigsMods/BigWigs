@@ -10,8 +10,9 @@ files["**/Loader.lua"].ignore = {
 	"113/C_AddOns",
 	"113/C_ChatInfo",
 	"113/C_CVar",
+	"113/C_EventUtils",
 	"113/C_Map",
-	"112/C_PartyInfo",
+	"11[23]/C_PartyInfo",
 	"113/C_Spell",
 	"113/EnableAddOn",
 	"113/GetAddOnInfo",
@@ -27,6 +28,7 @@ files["**/Loader.lua"].ignore = {
 	"113/securecallfunction",
 	"113/SendChatMessage",
 	"113/SetRaidTarget",
+	"113/TimerTracker",
 	"113/UnitDetailedThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
@@ -117,6 +119,8 @@ files["**/Plugins/Proximity.lua"].ignore = {
 	"113/UnitInPhase", -- Classic support
 }
 files["**/Plugins/Pull.lua"].ignore = {
+	"113/C_EventUtils",
+	"113/GetPlayerInfoByGUID",
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Plugins/RaidIcon.lua"].ignore = {

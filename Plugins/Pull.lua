@@ -12,6 +12,7 @@ if not plugin then return end
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local SendAddonMessage = BigWigsLoader.SendAddonMessage
+local DoCountdown = BigWigsLoader.DoCountdown
 local dbmPrefix = BigWigsLoader.dbmPrefix
 local zoneTable = BigWigsLoader.zoneTbl
 local isLogging = false
@@ -199,6 +200,11 @@ do
 
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
+
+		if C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
+			self:RegisterEvent("START_PLAYER_COUNTDOWN")
+			self:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
+		end
 	end
 end
 
@@ -291,16 +297,57 @@ do
 			end
 		end
 	end
+
+	function plugin:START_PLAYER_COUNTDOWN(_, initiatedBy, timeSeconds, totalTime)
+		if IsEncounterInProgress() then return end -- Doesn't make sense to allow this in combat
+		if timeLeft == timeSeconds then return end -- Throttle
+		timeLeft = timeSeconds
+		local _, _, _, _, _, name = GetPlayerInfoByGUID(initiatedBy)
+		if timer then
+			self:CancelTimer(timer)
+		end
+		FlashClientIcon()
+		BigWigs:Print(L.pullStarted:format("BigWigs", name))
+		timer = self:ScheduleRepeatingTimer(printPull, 1, self)
+		if self.db.profile.combatLog then
+			isLogging = true
+			LoggingCombat(isLogging)
+		end
+		self:SendMessage("BigWigs_StartCountdown", self, nil, "pulling time", timeLeft, self.db.profile.voice, self.db.profile.countBegin, self.db.profile.countType ~= "emphasized")
+		self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
+		self:SendMessage("BigWigs_StartBar", self, nil, L.pull, timeSeconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
+		self:SendMessage("BigWigs_StartPull", self, timeSeconds, name)
+		local soundName = self.db.profile.startPullSound
+		if soundName ~= "None" then
+			local sound = media:Fetch(SOUND, soundName, true)
+			if sound then
+				self:PlaySoundFile(sound)
+			end
+		end
+	end
+
+	function plugin:CANCEL_PLAYER_COUNTDOWN(_, initiatedBy)
+		if timer then
+			self:CancelTimer(timer)
+			timer = nil
+			timeLeft = 0
+			local _, _, _, _, _, name = GetPlayerInfoByGUID(initiatedBy)
+			BigWigs:Print(L.pullStopped:format(name))
+			self:SendMessage("BigWigs_StopBar", self, L.pull)
+			self:SendMessage("BigWigs_StopPull", self, name)
+			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
+		end
+	end
 end
 
 function plugin:DBM_AddonMessage(_, sender, prefix, seconds)
-	if prefix == "PT" then
+	if prefix == "PT" and not C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
 		self:StartPull(seconds, sender, true)
 	end
 end
 
 function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
-	if msg == "Pull" and seconds then
+	if msg == "Pull" and seconds and not C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
 		self:StartPull(seconds, sender)
 	end
 end
@@ -330,30 +377,45 @@ end
 
 SlashCmdList.BIGWIGSPULL = function(input)
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
-	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or ((IsInGroup(2) or not IsInRaid()) and UnitGroupRolesAssigned("player") == "TANK") then -- Solo or leader/assist or tank in LFG/5m
+
+	if not C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
+		if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or ((IsInGroup(2) or not IsInRaid()) and UnitGroupRolesAssigned("player") == "TANK") then -- Solo or leader/assist or tank in LFG/5m
+			if not plugin:IsEnabled() then BigWigs:Enable() end
+			if input == "" then
+				input = "10" -- Allow typing /pull to start a 10 second pull timer
+			else
+				local seconds = tonumber(input)
+				if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
+				if seconds ~= 0 then
+					BigWigs:Print(L.sendPull)
+				end
+			end
+
+			plugin:Sync("Pull", input)
+
+			if IsInGroup() then
+				local _, _, _, _, _, _, _, id = GetInstanceInfo()
+				local instanceId = tonumber(id) or 0
+				local name = plugin:UnitName("player")
+				local realm = GetRealmName()
+				local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
+				SendAddonMessage(dbmPrefix, ("%s-%s\t1\tPT\t%s\t%d"):format(name, normalizedPlayerRealm, input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			end
+		else
+			BigWigs:Print(L.requiresLeadOrAssist)
+		end
+	else
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 		if input == "" then
-			input = "10" -- Allow typing /pull to start a 10 second pull timer
+			DoCountdown(10) -- Allow typing /pull to start a 10 second pull timer
 		else
 			local seconds = tonumber(input)
 			if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
 			if seconds ~= 0 then
 				BigWigs:Print(L.sendPull)
 			end
+			DoCountdown(seconds)
 		end
-
-		plugin:Sync("Pull", input)
-
-		if IsInGroup() then
-			local _, _, _, _, _, _, _, id = GetInstanceInfo()
-			local instanceId = tonumber(id) or 0
-			local name = plugin:UnitName("player")
-			local realm = GetRealmName()
-			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			SendAddonMessage(dbmPrefix, ("%s-%s\t1\tPT\t%s\t%d"):format(name, normalizedPlayerRealm, input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
-		end
-	else
-		BigWigs:Print(L.requiresLeadOrAssist)
 	end
 end
 SLASH_BIGWIGSPULL1 = "/pull"

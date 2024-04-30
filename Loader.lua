@@ -98,6 +98,7 @@ local myLocale = GetLocale()
 public.Ambiguate = Ambiguate
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
+public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
@@ -901,6 +902,12 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+	if C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
+		bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
+		bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
+		TimerTracker:UnregisterEvent("START_PLAYER_COUNTDOWN")
+		TimerTracker:UnregisterEvent("CANCEL_PLAYER_COUNTDOWN")
+	end
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	local oldResult, result = RegisterAddonMessagePrefix("BigWigs")
@@ -1009,6 +1016,19 @@ end
 function mod:GLOBAL_MOUSE_UP(button)
 	if button == "RightButton" then
 		isMouseDown = false
+	end
+end
+
+function mod:START_PLAYER_COUNTDOWN(initiatedBy, timeSeconds, totalTime)
+	loadAndEnableCore()
+	if BigWigs and BigWigs.GetPlugin then -- XXX Clean this up
+		BigWigs:GetPlugin("Pull"):START_PLAYER_COUNTDOWN(nil, initiatedBy, timeSeconds, totalTime)
+	end
+end
+function mod:CANCEL_PLAYER_COUNTDOWN(initiatedBy)
+	loadAndEnableCore()
+	if BigWigs and BigWigs.GetPlugin then -- XXX Clean this up
+		BigWigs:GetPlugin("Pull"):CANCEL_PLAYER_COUNTDOWN(nil, initiatedBy)
 	end
 end
 
