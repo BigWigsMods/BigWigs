@@ -449,11 +449,11 @@ do
 		self:StopBar(msg)
 		self:Message(args.spellId, "red", CL.casting:format(msg))
 		self:PlaySound(args.spellId, "warning")
-		self:CastBar(args.spellId, 6, L.ebon_destruction)
+		self:CastBar(args.spellId, 12, L.ebon_destruction)
 		ebonDestructionCount = ebonDestructionCount + 1
 		-- 8+ are spam casted (7.3 cd)
 		if ebonDestructionCount < 8 then
-			self:CDBar(args.spellId, 30, CL.count:format(L.ebon_destruction, ebonDestructionCount))
+			self:CDBar(args.spellId, 36.5, CL.count:format(L.ebon_destruction, ebonDestructionCount))
 		end
 		castingEbonDestruction = true
 	end
