@@ -28,11 +28,20 @@ end
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
-local isClassic, isRetail, isClassicEra = loader.isClassic, loader.isRetail, loader.isVanilla
-local C_EncounterJournal_GetSectionInfo = isRetail and C_EncounterJournal.GetSectionInfo or function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
+local isClassic, isRetail, isClassicEra, isCata = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata
+local C_EncounterJournal_GetSectionInfo = isCata and function(key)
+	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
+end or C_EncounterJournal and C_EncounterJournal.GetSectionInfo or function(key)
+	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
+end
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
-local UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo = UnitGroupRolesAssigned, C_UIWidgetManager, EJ_GetEncounterInfo
+local UnitGroupRolesAssigned, C_UIWidgetManager = UnitGroupRolesAssigned, C_UIWidgetManager
+local EJ_GetEncounterInfo = isCata and function(key)
+	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
+end or EJ_GetEncounterInfo or function(key)
+	return BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
+end
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local UnitGUID, UnitHealth, UnitHealthMax, Ambiguate = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax, loader.Ambiguate
 local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
@@ -169,7 +178,7 @@ local spells = setmetatable({}, {__index =
 		return value
 	end
 })
-local bossNames = isRetail and setmetatable({}, {__index =
+local bossNames = setmetatable({}, {__index =
 	function(self, key)
 		local name = EJ_GetEncounterInfo(key)
 		if name then
@@ -181,18 +190,6 @@ local bossNames = isRetail and setmetatable({}, {__index =
 			return ""
 		end
 	end
-}) or setmetatable({}, {__index =
-function(self, key)
-	local name = BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
-	if name then
-		self[key] = name
-		return name
-	else
-		core:Print(format("An invalid boss name id (%d) is being used in a boss module.", key))
-		self[key] = ""
-		return ""
-	end
-end
 })
 
 -------------------------------------------------------------------------------
