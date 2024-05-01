@@ -73,7 +73,6 @@ local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
 local next, type, tonumber = next, type, tonumber
 
 local combatText = GARRISON_LANDING_STATUS_MISSION_COMBAT or "In Combat"
-local isWrath = BigWigsLoader.isWrath
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
@@ -169,7 +168,7 @@ do
 	end
 
 	function isInRange(unit)
-		if activeRangeChecker and (isWrath or not InCombatLockdown()) then
+		if activeRangeChecker and not InCombatLockdown() then
 			return activeRangeChecker(unit)
 		end
 	end
@@ -315,7 +314,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cff777777:-)|r")
@@ -338,7 +337,7 @@ do
 	function targetProximityText()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif isInRange(proximityPlayer) then
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -375,7 +374,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cff777777:-)|r")
@@ -410,7 +409,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cffff0202> STACK <|r") -- XXX localize or remove?
@@ -432,7 +431,7 @@ do
 	function reverseTargetProximityText()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif isInRange(proximityPlayer) then
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -467,7 +466,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			tinsert(tooClose, 1, "|cffff0202> STACK <|r") -- XXX localize or remove?
