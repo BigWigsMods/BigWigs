@@ -417,7 +417,7 @@ function mod:SunderReality(args)
 	self:PlaySound(args.spellId, "alert")
 	sunderRealityCount = sunderRealityCount + 1
 	if sunderRealityCount < (self:Easy() and 8 or 5) then -- 4 sets heroic/mythic, 7 sets normal/lfr
-		self:CDBar(args.spellId, 29.2, CL.count:format(CL.portals, sunderRealityCount))
+		self:CDBar(args.spellId, 35.2, CL.count:format(CL.portals, sunderRealityCount))
 	end
 end
 
