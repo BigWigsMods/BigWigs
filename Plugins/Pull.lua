@@ -307,7 +307,7 @@ do
 			self:CancelTimer(timer)
 		end
 		FlashClientIcon()
-		BigWigs:Print(L.pullStarted:format("BigWigs", name))
+		BigWigs:Print(L.pullStartedBy:format(name))
 		timer = self:ScheduleRepeatingTimer(printPull, 1, self)
 		if self.db.profile.combatLog then
 			isLogging = true

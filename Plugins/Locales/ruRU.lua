@@ -339,6 +339,7 @@ L.engageSoundTitle = "Воспроизвести звук, когда начин
 L.pullStartedSoundTitle = "Воспроизвести звук, когда запускается таймер атаки"
 L.pullFinishedSoundTitle = "Воспроизвести звук, когда завершается таймер атаки"
 L.pullStarted = "Таймер атаки начат %s игроком %s."
+--L.pullStartedBy = "Pull timer started by %s."
 L.pullStopped = "%s отменил таймер атаки."
 L.pullStoppedCombat = "Таймер атаки  отменен, поскольку Вы вступили в бой."
 L.pullIn = "Атакуем через %d сек"

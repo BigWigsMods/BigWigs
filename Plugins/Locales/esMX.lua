@@ -339,6 +339,7 @@ L.engageSoundTitle = "Toca un sonido cuando un encuentro con el jefe haya comenz
 L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se comienza"
 L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se termina"
 L.pullStarted = "Temporizador de llamada de jefe empezado por %s el jugador %s."
+--L.pullStartedBy = "Pull timer started by %s."
 L.pullStopped = "Temporizador de llamada de jefe cancelado por %s."
 L.pullStoppedCombat = "Temporizador de llamada de jefe cancelado porque tu entraste en combate"
 L.pullIn = "Llamada de jefe en %d seg"

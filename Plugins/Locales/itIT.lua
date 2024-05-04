@@ -339,6 +339,7 @@ L.engageSoundTitle = "Riproduci un suono quando inizia il combattimento con un b
 L.pullStartedSoundTitle = "Riproduci un suono quando comincia il timer di ingaggio"
 L.pullFinishedSoundTitle = "Riproduci un suono quando termina il timer di ingaggio"
 L.pullStarted = "Timer ingaggio iniziato da utente %s - %s."
+--L.pullStartedBy = "Pull timer started by %s."
 L.pullStopped = "Timer ingaggio cancellato da %s."
 L.pullStoppedCombat = "Timer ingaggio cancellato perchè è iniziato il combattimento."
 L.pullIn = "Ingaggio tra %d sec"
