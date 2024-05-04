@@ -331,11 +331,17 @@ do
 			self:CancelTimer(timer)
 			timer = nil
 			timeLeft = 0
-			local _, _, _, _, _, name = GetPlayerInfoByGUID(initiatedBy)
-			BigWigs:Print(L.pullStopped:format(name))
 			self:SendMessage("BigWigs_StopBar", self, L.pull)
-			self:SendMessage("BigWigs_StopPull", self, name)
 			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
+			if initiatedBy then
+				local _, _, _, _, _, name = GetPlayerInfoByGUID(initiatedBy)
+				BigWigs:Print(L.pullStopped:format(name))
+				self:SendMessage("BigWigs_StopPull", self, name)
+			else
+				BigWigs:Print(L.pullStoppedCombat)
+				self:SendMessage("BigWigs_StopPull", self, "COMBAT")
+			end
+
 		end
 	end
 end
