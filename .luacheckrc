@@ -5,6 +5,8 @@ exclude_files = {
 	"**/Libs",
 }
 files["**/Loader.lua"].ignore = {
+	"113/geterrorhandler",
+
 	"113/Ambiguate",
 	"113/BasicMessageDialog",
 	"113/C_AddOns",

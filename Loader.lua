@@ -913,6 +913,7 @@ function mod:ADDON_LOADED(addon)
 	local oldResult, result = RegisterAddonMessagePrefix("BigWigs")
 	if type(result) == "number" and result > 2 then
 		sysprint("Failed to register the BigWigs addon message prefix. Error code: ".. result)
+		geterrorhandler()("BigWigs: Failed to register the BigWigs addon message prefix. Error code: ".. result)
 	end
 	RegisterAddonMessagePrefix(dbmPrefix) -- DBM
 
@@ -1444,6 +1445,7 @@ do
 			local _, result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				sysprint("Failed to send initial version. Error code: ".. result)
+				geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. result)
 			end
 		end
 		timer = nil
@@ -1653,6 +1655,7 @@ do
 			local _, result = SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			if type(result) == "number" and result ~= 0 then
 				sysprint("Failed to send version response. Error code: ".. result)
+				geterrorhandler()("BigWigs: Failed to send version response. Error code: ".. result)
 			end
 			local name = UnitName("player")
 			local realm = GetRealmName()
@@ -1703,6 +1706,7 @@ function mod:BigWigs_CoreEnabled()
 		local _, result = SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		if type(result) == "number" and result ~= 0 then
 			sysprint("Failed to send initial (load) version. Error code: ".. result)
+			geterrorhandler()("BigWigs: Failed to send initial (load) version. Error code: ".. result)
 		end
 		local name = UnitName("player")
 		local realm = GetRealmName()
