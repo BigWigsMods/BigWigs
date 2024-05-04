@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-if BigWigsLoader.isClassic then return end
+if BigWigsLoader.isVanilla then return end
 
 local plugin = BigWigs:NewPlugin("AltPower")
 if not plugin then return end
