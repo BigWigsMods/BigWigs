@@ -1437,6 +1437,18 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	end
 end
 
+--[[
+	{ Name = "Success", Type = "SendAddonMessageResult", EnumValue = 0 },
+	{ Name = "InvalidPrefix", Type = "SendAddonMessageResult", EnumValue = 1 },
+	{ Name = "InvalidMessage", Type = "SendAddonMessageResult", EnumValue = 2 },
+	{ Name = "AddonMessageThrottle", Type = "SendAddonMessageResult", EnumValue = 3 },
+	{ Name = "InvalidChatType", Type = "SendAddonMessageResult", EnumValue = 4 },
+	{ Name = "NotInGroup", Type = "SendAddonMessageResult", EnumValue = 5 },
+	{ Name = "TargetRequired", Type = "SendAddonMessageResult", EnumValue = 6 },
+	{ Name = "InvalidChannel", Type = "SendAddonMessageResult", EnumValue = 7 },
+	{ Name = "ChannelThrottle", Type = "SendAddonMessageResult", EnumValue = 8 },
+	{ Name = "GeneralError", Type = "SendAddonMessageResult", EnumValue = 9 },
+]]
 local ResetVersionWarning
 do
 	local timer = nil
@@ -1446,6 +1458,10 @@ do
 			if type(result) == "number" and result ~= 0 then
 				sysprint("Failed to send initial version. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. result)
+				if result == 9 then
+					timer = CTimerNewTicker(3, sendMsg, 1)
+					return
+				end
 			end
 		end
 		timer = nil
@@ -1654,8 +1670,8 @@ do
 			grouped = groupType
 			local _, result = SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			if type(result) == "number" and result ~= 0 then
-				sysprint("Failed to send version response. Error code: ".. result)
-				geterrorhandler()("BigWigs: Failed to send version response. Error code: ".. result)
+				sysprint("Failed to ask for versions. Error code: ".. result)
+				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
 			local name = UnitName("player")
 			local realm = GetRealmName()
