@@ -1453,13 +1453,20 @@ local ResetVersionWarning
 do
 	local loadingFrame = CreateFrame("Frame")
 	local isLoading = false
+	local isChangingWorld = false
 	loadingFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
 	loadingFrame:RegisterEvent("LOADING_SCREEN_ENABLED")
+	loadingFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	loadingFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
 	loadingFrame:SetScript("OnEvent", function(_, event)
 		if event == "LOADING_SCREEN_ENABLED" then
 			isLoading = true
 		elseif event == "LOADING_SCREEN_DISABLED" then
 			isLoading = false
+		elseif event == "PLAYER_ENTERING_WORLD" then
+			isChangingWorld = false
+		elseif event == "PLAYER_LEAVING_WORLD" then
+			isChangingWorld = true
 		end
 	end)
 
@@ -1468,7 +1475,7 @@ do
 		if IsInGroup() then
 			local _, result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				local value = ("%d,%s"):format(result, isLoading and "true" or "false")
+				local value = ("%d,%s,%s"):format(result, isLoading and "true" or "false", isChangingWorld and "true" or "false")
 				sysprint("Failed to send initial version. Error code: ".. value)
 				geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. value)
 				if result == 9 then
@@ -1727,20 +1734,6 @@ function mod:BigWigs_CoreEnabled()
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_legacy.tga"
 	else -- Current raids, world content, anything else
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga"
-	end
-
-	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
-	-- which kills your ability to receive addon comms during the loading process.
-	if IsInGroup() then
-		local _, result = SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-		if type(result) == "number" and result ~= 0 then
-			sysprint("Failed to send initial (load) version. Error code: ".. result)
-			geterrorhandler()("BigWigs: Failed to send initial (load) version. Error code: ".. result)
-		end
-		local name = UnitName("player")
-		local realm = GetRealmName()
-		local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-		SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
