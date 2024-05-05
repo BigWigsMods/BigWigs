@@ -1451,13 +1451,26 @@ end
 ]]
 local ResetVersionWarning
 do
+	local loadingFrame = CreateFrame("Frame")
+	local isLoading = false
+	loadingFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
+	loadingFrame:RegisterEvent("LOADING_SCREEN_ENABLED")
+	loadingFrame:SetScript("OnEvent", function(_, event)
+		if event == "LOADING_SCREEN_ENABLED" then
+			isLoading = true
+		elseif event == "LOADING_SCREEN_DISABLED" then
+			isLoading = false
+		end
+	end)
+
 	local timer = nil
 	local function sendMsg()
 		if IsInGroup() then
 			local _, result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				sysprint("Failed to send initial version. Error code: ".. result)
-				geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. result)
+				local value = ("%d,%s"):format(result, isLoading and "true" or "false")
+				sysprint("Failed to send initial version. Error code: ".. value)
+				geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. value)
 				if result == 9 then
 					timer = CTimerNewTicker(3, sendMsg, 1)
 					return
