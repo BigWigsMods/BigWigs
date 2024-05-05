@@ -19,11 +19,13 @@ local difficultyTable = BigWigsLoader.isRetail and {
 	[15] = "heroic",
 	[16] = "mythic",
 	[17] = "LFR",
+	[7] = "LFR", -- Old LFR (Dragon Soul)
 } or {
 	[3] = "10N", -- 10N
 	[4] = "25N", -- 25N
 	[5] = "10H", -- 10H
 	[6] = "25H", -- 25H
+	[7] = "LFR", -- Old LFR (Dragon Soul)
 	[9] = "normal", -- raid40 (molten core/BWL/AQ40)
 	[175] = "normal", -- raid10 (karazhan) -- move from 3 (fake) to 175 (guessed)
 	[148] = "normal", -- raid20
@@ -42,7 +44,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-10.2.5
+10.2.6
 1. Normal
 2. Heroic
 3. 10 Player
@@ -88,7 +90,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 192. Challenge Level 1
 205. Follower
 
-3.4.3
+4.4.0
 1. Normal
 2. Heroic
 3. 10 Player
