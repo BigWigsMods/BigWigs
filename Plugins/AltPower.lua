@@ -38,7 +38,7 @@ plugin.displayName = L.altPowerTitle
 
 local powerList, powerMaxList, sortedUnitList, roleColoredList = nil, nil, nil, nil
 local unitList = nil
-local maxPlayers = 0
+local maxPlayers = -1
 local display, updater = nil, nil
 local opener = nil
 local currentTitle = nil
@@ -449,30 +449,30 @@ do
 	-- whilst the display is shown (more likely to happen in LFR). The display should not be shown outside of an encounter
 	-- where the event seems to fire frequently, which would make this very inefficient.
 	local function GROUP_ROSTER_UPDATE()
-		if not IsInGroup() then plugin:Close() return end
-
 		local players = GetNumGroupMembers()
 		if players ~= maxPlayers then
 			if updater then plugin:CancelTimer(updater) end
 
-			if repeatSync then
-				syncPowerList = {}
-				syncPowerMaxList = {}
-			end
-			maxPlayers = players
-			unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
-			powerList, powerMaxList, sortedUnitList, roleColoredList = {}, {}, {}, {}
+			if IsInGroup() then
+				if repeatSync then
+					syncPowerList = {}
+					syncPowerMaxList = {}
+				end
+				maxPlayers = players
+				unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
+				powerList, powerMaxList, sortedUnitList, roleColoredList = {}, {}, {}, {}
 
-			local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
-			local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
-			for i = 1, players do
-				local unit = unitList[i]
-				sortedUnitList[i] = unit
+				local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
+				local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+				for i = 1, players do
+					local unit = unitList[i]
+					sortedUnitList[i] = unit
 
-				local name = plugin:UnitName(unit, true) or "???"
-				local _, class = UnitClass(unit)
-				local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
-				roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+					local name = plugin:UnitName(unit, true) or "???"
+					local _, class = UnitClass(unit)
+					local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+					roleColoredList[unit] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+				end
 			end
 			updater = plugin:ScheduleRepeatingTimer(UpdateDisplay, 1)
 		end
@@ -578,7 +578,7 @@ do
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
 	function plugin:BigWigs_ShowAltPower(event, module, title, sorting, sync)
-		if db.disabled or not IsInGroup() then return end -- Solo runs of old content
+		if db.disabled then return end
 
 		self:RestyleWindow()
 		self:Close()
@@ -592,7 +592,7 @@ do
 		opener = module
 		sortDir = sorting
 		currentTitle = title
-		maxPlayers = 0 -- Force an update via GROUP_ROSTER_UPDATE
+		maxPlayers = -1 -- Force an update via GROUP_ROSTER_UPDATE
 		display:Show()
 		GROUP_ROSTER_UPDATE()
 		UpdateDisplay()
@@ -666,26 +666,35 @@ do
 	end
 
 	function UpdateDisplay()
-		for i = 1, maxPlayers do
-			local unit = unitList[i]
-			-- If we don't have sync data (players not using BigWigs) use whatever (potentially incorrect) data Blizz gives us.
-			powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
-			powerMaxList[unit] = syncPowerMaxList and syncPowerMaxList[unit] or UnitPowerMax(unit, 10) -- Enum.PowerType.Alternate = 10
+		local maxPower = UnitPowerMax("player", 10)
+		if maxPower ~= 0 then
+			local power = UnitPower("player", 10)
+			local percent = power / UnitPowerMax("player", 10)
+			display.bar:SetWidth(percent * (200+(db.additionalWidth*2)))
+			display.title:SetFormattedText(L.yourAltPower, currentTitle, power)
+		else
+			display.bar:SetWidth(0)
+			display.title:SetFormattedText(L.yourAltPower, currentTitle, 0)
 		end
-		local power = UnitPower("player", 10)
-		local percent = power / UnitPowerMax("player", 10)
-		display.bar:SetWidth(percent * (200+(db.additionalWidth*2)))
-		display.title:SetFormattedText(L.yourAltPower, currentTitle, power)
-		tsort(sortedUnitList, sortTbl)
-		for i = 1, db.expanded and 26 or 10 do
-			local unit = sortedUnitList[i]
-			if unit then
-				local power = powerList[unit]
-				local powerMax = powerMaxList[unit]
-				local r, g = colorize(power, powerMax)
-				display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, roleColoredList[unit])
-			else
-				display.text[i]:SetText("")
+
+		if sortedUnitList then
+			for i = 1, maxPlayers do
+				local unit = unitList[i]
+				-- If we don't have sync data (players not using BigWigs) use whatever (potentially incorrect) data Blizz gives us.
+				powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
+				powerMaxList[unit] = syncPowerMaxList and syncPowerMaxList[unit] or UnitPowerMax(unit, 10) -- Enum.PowerType.Alternate = 10
+			end
+			tsort(sortedUnitList, sortTbl)
+			for i = 1, db.expanded and 26 or 10 do
+				local unit = sortedUnitList[i]
+				if unit then
+					local power = powerList[unit]
+					local powerMax = powerMaxList[unit]
+					local r, g = colorize(power, powerMax)
+					display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, roleColoredList[unit])
+				else
+					display.text[i]:SetText("")
+				end
 			end
 		end
 	end
@@ -755,7 +764,7 @@ do
 		-- This is for people that don't show the AltPower display (event isn't registered to the display as it normally would be).
 		-- It will force sending the current power for those that do have the display shown but just had their power list reset by a
 		-- GROUP_ROSTER_UPDATE. Or someone DCd and is logging back on, so send an update.
-		if not IsInGroup() then plugin:Close() return end
+		if not IsInGroup() then return end
 		self:CancelTimer(repeatSync)
 		power = -1
 		repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
