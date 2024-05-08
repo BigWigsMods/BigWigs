@@ -1339,11 +1339,18 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized name from an id. Positive ids for spells (C_Spell.GetSpellName) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
+--- Get a localized spell name from an id. Positive ids for spells (C_Spell.GetSpellName) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
 -- @number spellIdOrSectionId The spell id or the journal-based section id (as a negative number)
 -- @return spell name
 function boss:SpellName(spellIdOrSectionId)
 	return spells[spellIdOrSectionId]
+end
+
+--- Get a spell texture from an id. Positive ids for spells (C_Spell.GetSpellTexture) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
+-- @number spellIdOrSectionId The spell id or the journal-based section id (as a negative number)
+-- @return spell texture
+function boss:SpellTexture(spellIdOrSectionId)
+	return icons[spellIdOrSectionId]
 end
 
 --- Get a localized boss name from a journal-based encounter id. (EJ_GetEncounterInfo)
