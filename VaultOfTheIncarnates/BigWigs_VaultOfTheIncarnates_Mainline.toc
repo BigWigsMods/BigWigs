@@ -1,4 +1,4 @@
-## Interface: 100206
+## Interface: 100207, 110000
 
 ## Title: BigWigs [|cffeda55fVault of the Incarnates|r]
 ## Title-deDE: BigWigs [|cffeda55fGewölbe der Inkarnationen|r]
