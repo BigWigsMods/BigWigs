@@ -45,6 +45,7 @@ local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local zoneList = BigWigsLoader.zoneTbl
 local isTestBuild = BigWigsLoader.isTestBuild
 local isClassic = BigWigsLoader.isClassic
+local isVanilla = BigWigsLoader.isVanilla
 local GetSubZoneText = GetSubZoneText
 local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
 local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
@@ -106,7 +107,7 @@ plugin.pluginOptions = {
 					desc = L.blockMoviesDesc,
 					width = "full",
 					order = 2,
-					hidden = isClassic,
+					hidden = isVanilla,
 				},
 				blockGarrison = {
 					type = "toggle",
@@ -409,6 +410,13 @@ do
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 
+		if not isVanilla then
+			self:RegisterEvent("CINEMATIC_START")
+			self:RegisterEvent("PLAY_MOVIE")
+			self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+			self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+		end
+
 		if not isClassic then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
 			if self.db.profile.redirectToastMsgs and zoneList[id] then -- Instances only
@@ -419,11 +427,6 @@ do
 				self:RegisterEvent("DISPLAY_EVENT_TOASTS")
 			end
 			self:RegisterEvent("TALKINGHEAD_REQUESTED")
-			self:RegisterEvent("CINEMATIC_START")
-			self:RegisterEvent("PLAY_MOVIE")
-			self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
-			self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
-
 			CheckElv(self)
 		end
 	end
@@ -885,9 +888,8 @@ do
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
 	function plugin:SiegeOfOrgrimmarCinematics()
 		local hasItem
-		local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount -- XXX 10.2.6
 		for i = 105930, 105935 do -- Vision of Time items
-			local count = GetItemCount(i)
+			local count = C_Item.GetItemCount(i)
 			if count > 0 then hasItem = true break end -- Item is found in our inventory
 		end
 		if hasItem and not self.SiegeOfOrgrimmarCinematicsFrame then
