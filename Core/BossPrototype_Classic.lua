@@ -3207,7 +3207,11 @@ do
 				else
 					msg = "B^".. msg
 				end
-				SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				local _, result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				if type(result) == "number" and result ~= 0 then
+					local errorMsg = format("Failed to send boss comm %q. Error code: %d", msg, result)
+					core:Error(errorMsg)
+				end
 			end
 		end
 	end

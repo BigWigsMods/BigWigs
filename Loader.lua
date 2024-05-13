@@ -1358,20 +1358,29 @@ do
 	local PForceDisable = 10
 
 	local timer = nil
-	local function sendMsg()
+	local function sendDBMMsg()
 		if IsInGroup() then
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
-			SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			local _, result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			if type(result) == "number" and result ~= 0 then
+				if result == 9 then
+					timer = CTimerNewTicker(3, sendDBMMsg, 1)
+					return
+				else
+					sysprint("Failed to send initial _ version. Error code: ".. result)
+					geterrorhandler()("BigWigs: Failed to send initial _ version. Error code: ".. result)
+				end
+			end
 		end
 		timer = nil
 	end
 	function mod:DBM_VersionCheck(prefix, sender, _, _, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			if timer then timer:Cancel() end
-			timer = CTimerNewTicker(3.3, sendMsg, 1)
+			timer = CTimerNewTicker(3.3, sendDBMMsg, 1)
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 		end
@@ -1451,36 +1460,17 @@ end
 ]]
 local ResetVersionWarning
 do
-	local loadingFrame = CreateFrame("Frame")
-	local isLoading = false
-	local isChangingWorld = false
-	loadingFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
-	loadingFrame:RegisterEvent("LOADING_SCREEN_ENABLED")
-	loadingFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	loadingFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
-	loadingFrame:SetScript("OnEvent", function(_, event)
-		if event == "LOADING_SCREEN_ENABLED" then
-			isLoading = true
-		elseif event == "LOADING_SCREEN_DISABLED" then
-			isLoading = false
-		elseif event == "PLAYER_ENTERING_WORLD" then
-			isChangingWorld = false
-		elseif event == "PLAYER_LEAVING_WORLD" then
-			isChangingWorld = true
-		end
-	end)
-
 	local timer = nil
 	local function sendMsg()
 		if IsInGroup() then
 			local _, result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				local value = ("%d,%s,%s"):format(result, isLoading and "true" or "false", isChangingWorld and "true" or "false")
-				sysprint("Failed to send initial version. Error code: ".. value)
-				geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. value)
 				if result == 9 then
 					timer = CTimerNewTicker(3, sendMsg, 1)
 					return
+				else
+					sysprint("Failed to send initial version. Error code: ".. result)
+					geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. result)
 				end
 			end
 		end
@@ -1696,7 +1686,11 @@ do
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			_, result = SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			if type(result) == "number" and result ~= 0 then
+				sysprint("Failed to ask for _ versions. Error code: ".. result)
+				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. result)
+			end
 		elseif grouped and not groupType then
 			grouped = nil
 			ResetVersionWarning()
