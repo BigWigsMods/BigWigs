@@ -11,8 +11,7 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local names = {}
 local descriptions = {}
 
-local GetSpellName, GetSpellTexture = BigWigsLoader.GetSpellName, BigWigsLoader.GetSpellTexture
-local GetSpellDescription = GetSpellDescription
+local GetSpellDescription, GetSpellName, GetSpellTexture = BigWigsLoader.GetSpellDescription, BigWigsLoader.GetSpellName, BigWigsLoader.GetSpellTexture
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 local C_EncounterJournal_GetSectionInfo = BigWigsLoader.isCata and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
