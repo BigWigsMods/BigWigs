@@ -2143,21 +2143,21 @@ end
 -- @param[opt] player the player name for a target proximity or a table containing multiple players
 -- @bool[opt] isReverse if true, reverse the logic to warn if not within range
 function boss:OpenProximity(key, range, player, isReverse)
-	if not solo and checkFlag(self, key, C.PROXIMITY) then
-		if type(key) == "number" then
-			self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse, spells[key], icons[key])
-		else
-			self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
-		end
-	end
+	--if not solo and checkFlag(self, key, C.PROXIMITY) then
+	--	if type(key) == "number" then
+	--		self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse, spells[key], icons[key])
+	--	else
+	--		self:SendMessage("BigWigs_ShowProximity", self, range, key, player, isReverse)
+	--	end
+	--end
 end
 
 --- Close the proximity display.
 -- @param[opt] key the option key to check ("proximity" if nil)
 function boss:CloseProximity(key)
-	if not solo and checkFlag(self, key or "proximity", C.PROXIMITY) then
-		self:SendMessage("BigWigs_HideProximity", self, key or "proximity")
-	end
+	--if not solo and checkFlag(self, key or "proximity", C.PROXIMITY) then
+	--	self:SendMessage("BigWigs_HideProximity", self, key or "proximity")
+	--end
 end
 
 -------------------------------------------------------------------------------
@@ -3108,12 +3108,12 @@ end
 -- @param key the option key
 -- @param[opt] icon the icon to pulse if PULSE is set (if nil, key is used)
 function boss:Flash(key, icon)
-	if checkFlag(self, key, C.FLASH) then
-		self:SendMessage("BigWigs_Flash", self, key)
-	end
-	if checkFlag(self, key, C.PULSE) then
-		self:SendMessage("BigWigs_Pulse", self, key, icons[icon or key])
-	end
+	--if checkFlag(self, key, C.FLASH) then
+	--	self:SendMessage("BigWigs_Flash", self, key)
+	--end
+	--if checkFlag(self, key, C.PULSE) then
+	--	self:SendMessage("BigWigs_Pulse", self, key, icons[icon or key])
+	--end
 end
 
 --- Play a sound.
