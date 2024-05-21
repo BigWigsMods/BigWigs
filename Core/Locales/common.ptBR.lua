@@ -133,6 +133,13 @@ L.south_west = "Sudoeste"
 L.west = "Oeste"
 L.north_west = "Noroeste"
 
+-- Schools
+L.fire = "Fogo"
+L.frost = "Gelo"
+L.shadow = "Sombra"
+L.nature = "Natureza"
+L.arcane = "Arcano"
+
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Absorção de Cura" -- Used for shield-like abilities that absorb healing only
@@ -173,6 +180,7 @@ L.orbs = "Orbes" -- Plural for L.orb
 L.curse = "Maldição" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Maldições" -- Plural of L.curse
 L.disease = "Doença" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "Espírito" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "Espíritos" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia

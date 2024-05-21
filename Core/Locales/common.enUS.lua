@@ -132,6 +132,13 @@ L.south_west = "South-West"
 L.west = "West"
 L.north_west = "North-West"
 
+-- Schools
+L.fire = "Fire"
+L.frost = "Frost"
+L.shadow = "Shadow"
+L.nature = "Nature"
+L.arcane = "Arcane"
+
 -- Common ability name replacements
 L.absorb = "Absorb" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Heal Absorb" -- Used for shield-like abilities that absorb healing only
@@ -172,6 +179,7 @@ L.orbs = "Orbs" -- Plural for L.orb
 L.curse = "Curse" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Curses" -- Plural of L.curse
 L.disease = "Disease" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.poison = "Poison" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "Spirit" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "Spirits" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia

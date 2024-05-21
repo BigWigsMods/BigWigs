@@ -133,6 +133,13 @@ L.south_west = "Юго-Запад"
 L.west = "Запад"
 L.north_west = "Северо-Запад"
 
+-- Schools
+L.fire = "Огонь"
+L.frost = "Лед"
+L.shadow = "Тень"
+L.nature = "Природа"
+L.arcane = "Тайная магия"
+
 -- Common ability name replacements
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Поглощение лечения" -- Used for shield-like abilities that absorb healing only
@@ -173,6 +180,7 @@ L.orbs = "Сферы" -- Plural for L.orb
 L.curse = "Проклятие" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Проклятия" -- Plural of L.curse
 L.disease = "Болезнь" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.poison = "Яд" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "Дух" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "Духи" -- Plural of L.spirit
 L.tornado = "Торнадо" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
