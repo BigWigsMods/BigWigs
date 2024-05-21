@@ -207,6 +207,10 @@ globals = {
 	-- framexml
 	"tContains",
 
+	-- Cataclysm
+	"GetTalentTreeRoles",
+	"GetTalentTabInfo",
+
 	-- everything else
 	"BigWigs3DB",
 	"BigWigsAnchor",

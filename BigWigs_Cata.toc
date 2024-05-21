@@ -34,5 +34,6 @@ locales.xml
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
+AutoRole.lua
 LFGTimer.lua
 modules_Classic.xml
