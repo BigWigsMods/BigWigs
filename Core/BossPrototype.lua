@@ -2184,7 +2184,9 @@ end
 function boss:MessageOld(key, color, sound, text, icon)
 	if icon == nil then icon = type(text) == "number" and text or key end
 	self:Message(key, color, text, icon)
-	self:PlaySound(key, sound)
+	if sound then
+		self:PlaySound(key, sound)
+	end
 end
 
 function boss:Message(key, color, text, icon, disableEmphasize)
@@ -2280,7 +2282,9 @@ do
 	function boss:StackMessageOld(key, player, stack, color, sound, text, icon)
 		if icon == nil then icon = type(text) == "number" and text or key end
 		self:StackMessage(key, color, player, stack, 0, text, icon)
-		self:PlaySound(key, sound)
+		if sound then
+			self:PlaySound(key, sound)
+		end
 	end
 
 	--- Display a buff/debuff stack warning message.
@@ -2315,12 +2319,14 @@ do
 	-- @bool[opt] alwaysPlaySound if true, play the sound even if player is not you
 	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
 		if icon == nil then icon = type(text) == "number" and text or key end
-		self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
 		if type(player) == "table" then
 			self:TargetsMessage(key, color, player, #player, text, icon)
 			twipe(player)
 		else
 			self:TargetMessage(key, color, player, text, icon)
+		end
+		if sound then
+			self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
 		end
 	end
 
