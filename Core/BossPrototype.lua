@@ -71,6 +71,7 @@ do -- Update some data that may be called at the top of modules (prior to initia
 	if LibSpec then
 		local _, role, position = LibSpec:MySpecialization()
 		myRole, myRolePosition = role, position
+		LibSpec:RequestSpecialization()
 	end
 end
 local updateData = function(module)
@@ -1709,10 +1710,9 @@ do
 end
 
 --- Ask LibSpecialization to update the role positions of everyone in your group.
--- @string[opt="channel"] channel the specific addon comm channel to use, empty for automatic (recommended).
-function boss:UpdateRolePositions(channel)
+function boss:UpdateRolePositions()
 	if LibSpec then
-		LibSpec:RequestSpecialization(channel)
+		LibSpec:RequestSpecialization()
 	end
 end
 
