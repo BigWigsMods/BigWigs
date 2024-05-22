@@ -57,14 +57,22 @@ local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
-local difficulty = 0
+local difficulty
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
-local myGUID, myRole, myDamagerRole = nil, nil, nil
-local myGroupGUIDs = {}
+local myGUID, myRole, myRolePosition
+local myGroupGUIDs, myGroupRoles, myGroupRolePositions = {}, {}, {}
 local solo = false
 local classColorMessages = true
 local englishSayMessages = false
-
+do -- Update some data that may be called at the top of modules (prior to initialization)
+	local _, _, diff = GetInstanceInfo()
+	difficulty = diff
+	myGUID = UnitGUID("player")
+	if LibSpec then
+		local _, role, position = LibSpec:MySpecialization()
+		myRole, myRolePosition = role, position
+	end
+end
 local talentRoles = {
 	DEATHKNIGHT = { "TANK", "DAMAGER", "DAMAGER" },
 	DRUID = { "DAMAGER","DAMAGER", "HEALER" },
@@ -77,7 +85,6 @@ local talentRoles = {
 	WARLOCK = { "DAMAGER", "DAMAGER", "DAMAGER" },
 	WARRIOR = { "DAMAGER", "DAMAGER", "TANK" },
 }
-
 local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
@@ -96,31 +103,25 @@ local updateData = function(module)
 	end
 
 	myRole = nil
-	myDamagerRole = nil
+	myRolePosition = nil
 
-	local _, class = UnitClass("player")
-	local spent = 0
-	local talentTree = 0
-	for tree = 1, 3 do
-		local pointsSpent = select(isCata and 5 or 3, GetTalentTabInfo(tree))
-		if pointsSpent > spent then
-			spent = pointsSpent
-			talentTree = tree
-			myRole = talentRoles[class][tree]
+	if isCata then
+		local _, role, position = LibSpec:MySpecialization()
+		myRole, myRolePosition = role, position
+	else
+		local _, class = UnitClass("player")
+		local spent = 0
+		local talentTree = 0
+		for tree = 1, 3 do
+			local pointsSpent = select(3, GetTalentTabInfo(tree))
+			if pointsSpent > spent then
+				spent = pointsSpent
+				talentTree = tree
+				myRole = talentRoles[class][tree]
+			end
 		end
-	end
 
-	if class == "DEATHKNIGHT" and talentTree == 1 then -- defaults to TANK
-		-- Using the LFG tool?
-		local role = UnitGroupRolesAssigned("player")
-		if role == "TANK" or role == "DAMAGER" then
-			myRole = role
-		elseif spent == 51 then
-			-- Meta tank spec was 43/27/1 with Blood DPS pretty much dead at this point in Wrath
-			myRole = "DAMAGER"
-		end
-	elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
-		if isClassicEra then
+		if class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
 			-- Check for bear talents
 			local feralInstinct = select(5, GetTalentInfo(2, 3))
 			local thickHide = select(5, GetTalentInfo(2, 5))
@@ -128,30 +129,16 @@ local updateData = function(module)
 			if feralInstinct == 5 and thickHide >= 2 and primalFury == 2 then
 				myRole = "TANK"
 			end
-		else
-			-- Using the LFG tool?
-			local role = UnitGroupRolesAssigned("player")
-			if role == "TANK" or role == "DAMAGER" then
-				myRole = role
-			else
-				-- Check for bear talents
-				local thickHide = select(5, GetTalentInfo(2, 1))
-				local survivalInstincts = select(5, GetTalentInfo(2, 15))
-				local naturalReaction = select(5, GetTalentInfo(2, 29))
-				if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
-					myRole = "TANK"
-				end
-			end
 		end
-	end
 
-	if myRole == "DAMAGER" then
-		myDamagerRole = "MELEE"
-		if
-			class == "MAGE" or class == "HUNTER" or class == "PRIEST" or class == "WARLOCK" or
-			(class == "DRUID" and talentTree == 1) or (class == "SHAMAN" and talentTree == 1)
-		then
-			myDamagerRole = "RANGED"
+		if myRole == "DAMAGER" then
+			myRolePosition = "MELEE"
+			if
+				class == "MAGE" or class == "HUNTER" or class == "PRIEST" or class == "WARLOCK" or
+				(class == "DRUID" and talentTree == 1) or (class == "SHAMAN" and talentTree == 1)
+			then
+				myRolePosition = "RANGED"
+			end
 		end
 	end
 
@@ -1765,16 +1752,44 @@ end
 -- Role checking
 -- @section role
 
---- Check if your talent tree role is TANK or MELEE.
--- @return boolean
-function boss:Melee()
-	return myRole == "TANK" or myDamagerRole == "MELEE"
+do
+	local function update(_, role, position, player)
+		myGroupRolePositions[player] = position
+		myGroupRoles[player] = role
+	end
+	if LibSpec then
+		LibSpec:Register(loader, update)
+	end
 end
 
---- Check if your talent tree role is HEALER or RANGED.
+--- Ask LibSpecialization to update the role positions of everyone in your group.
+-- @string[opt="channel"] channel the specific addon comm channel to use, empty for automatic (recommended).
+function boss:UpdateRolePositions(channel)
+	if LibSpec then
+		LibSpec:RequestSpecialization(channel)
+	end
+end
+
+--- Check if your talent tree role is MELEE.
+-- @string[opt="playerName"] playerName check if another player is MELEE.
 -- @return boolean
-function boss:Ranged()
-	return myRole == "HEALER" or myDamagerRole == "RANGED"
+function boss:Melee(playerName)
+	if playerName then
+		return myGroupRolePositions[playerName] == "MELEE"
+	else
+		return myRolePosition == "MELEE"
+	end
+end
+
+--- Check if your talent tree role is RANGED.
+-- @string[opt="playerName"] playerName check if another player is RANGED.
+-- @return boolean
+function boss:Ranged(playerName)
+	if playerName then
+		return myGroupRolePositions[playerName] == "RANGED"
+	else
+		return myRolePosition == "RANGED"
+	end
 end
 
 --- Check if your talent tree role is TANK.
@@ -1782,9 +1797,15 @@ end
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
-		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
+		local role = myGroupRoles[unit]
+		if role then
+			return role == "TANK"
+		else
+			return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
+		end
+	else
+		return myRole == "TANK"
 	end
-	return myRole == "TANK"
 end
 
 do
@@ -1814,9 +1835,15 @@ end
 -- @return boolean
 function boss:Healer(unit)
 	if unit then
-		return UnitGroupRolesAssigned(unit) == "HEALER"
+		local role = myGroupRoles[unit]
+		if role then
+			return role == "HEALER"
+		else
+			return UnitGroupRolesAssigned(unit) == "HEALER"
+		end
+	else
+		return myRole == "HEALER"
 	end
-	return myRole == "HEALER"
 end
 
 --- Check if your talent tree role is DAMAGER.
@@ -1824,9 +1851,17 @@ end
 -- @return boolean
 function boss:Damager(unit)
 	if unit then
-		return UnitGroupRolesAssigned(unit) == "DAMAGER"
+		local role = myGroupRoles[unit]
+		if role then
+			return role == "DAMAGER"
+		else
+			return UnitGroupRolesAssigned(unit) == "DAMAGER"
+		end
+	else
+		if myRole == "DAMAGER" then
+			return myRolePosition
+		end
 	end
-	return myDamagerRole
 end
 
 petUtilityFrame:SetScript("OnEvent", function()

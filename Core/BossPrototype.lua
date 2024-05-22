@@ -60,7 +60,7 @@ local allowedEvents = {}
 local difficulty
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myRolePosition
-local myGroupGUIDs, myGroupRolePositions = {}, {}
+local myGroupGUIDs, myGroupRoles, myGroupRolePositions = {}, {}, {}
 local solo = false
 local classColorMessages = true
 local englishSayMessages = false
@@ -68,8 +68,10 @@ do -- Update some data that may be called at the top of modules (prior to initia
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
 	myGUID = UnitGUID("player")
-	local _, role, position = LibSpec:MySpecialization()
-	myRole, myRolePosition = role, position
+	if LibSpec then
+		local _, role, position = LibSpec:MySpecialization()
+		myRole, myRolePosition = role, position
+	end
 end
 local updateData = function(module)
 	myGUID = UnitGUID("player")
@@ -1697,16 +1699,21 @@ end
 -- @section role
 
 do
-	local function update(_, _, position, player)
+	local function update(_, role, position, player)
 		myGroupRolePositions[player] = position
+		myGroupRoles[player] = role
 	end
-	LibSpec:Register(loader, update)
+	if LibSpec then
+		LibSpec:Register(loader, update)
+	end
 end
 
 --- Ask LibSpecialization to update the role positions of everyone in your group.
 -- @string[opt="channel"] channel the specific addon comm channel to use, empty for automatic (recommended).
 function boss:UpdateRolePositions(channel)
-	LibSpec:RequestSpecialization(channel)
+	if LibSpec then
+		LibSpec:RequestSpecialization(channel)
+	end
 end
 
 --- Check if your talent tree role is MELEE.
@@ -1736,7 +1743,12 @@ end
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
-		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
+		local role = myGroupRoles[unit]
+		if role then
+			return role == "TANK"
+		else
+			return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
+		end
 	else
 		return myRole == "TANK"
 	end
@@ -1769,7 +1781,12 @@ end
 -- @return boolean
 function boss:Healer(unit)
 	if unit then
-		return UnitGroupRolesAssigned(unit) == "HEALER"
+		local role = myGroupRoles[unit]
+		if role then
+			return role == "HEALER"
+		else
+			return UnitGroupRolesAssigned(unit) == "HEALER"
+		end
 	else
 		return myRole == "HEALER"
 	end
@@ -1780,7 +1797,12 @@ end
 -- @return boolean
 function boss:Damager(unit)
 	if unit then
-		return UnitGroupRolesAssigned(unit) == "DAMAGER"
+		local role = myGroupRoles[unit]
+		if role then
+			return role == "DAMAGER"
+		else
+			return UnitGroupRolesAssigned(unit) == "DAMAGER"
+		end
 	else
 		if myRole == "DAMAGER" then
 			return myRolePosition

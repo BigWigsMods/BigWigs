@@ -45,10 +45,9 @@ files["**/Loader.lua"].ignore = {
 	"11[23]/hash_SlashCmdList",
 }
 files["**/AutoRole.lua"].ignore = {
-	"113/GetSpecialization",
-	"113/GetSpecializationRole",
 	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
+	"113/UnitName",
 	"113/UnitSetRole",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
