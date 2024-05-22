@@ -105,9 +105,13 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/C_TalkingHead",
 	"113/GetDetailedItemLevelInfo",
 	"113/GetFramesRegisteredForEvent",
+	"113/GetTrackedAchievements",
+	"113/Questie_BaseFrame",
+	"113/QuestWatchFrame",
 	"113/RaidBossEmoteFrame_OnEvent",
 	"113/TooltipDataProcessor",
 	"113/UIErrorsFrame",
+	"113/WatchFrame",
 	"113/ZoneTextFrame",
 }
 files["**/Plugins/Countdown.lua"].ignore = {

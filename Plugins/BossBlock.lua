@@ -145,7 +145,7 @@ plugin.pluginOptions = {
 					desc = L.blockTooltipQuestsDesc,
 					width = "full",
 					order = 7,
-					hidden = isClassic, -- TooltipDataProcessor doesn't exist on classic
+					hidden = isVanilla, -- TooltipDataProcessor doesn't exist on vanilla
 				},
 				blockObjectiveTracker = {
 					type = "toggle",
@@ -153,7 +153,6 @@ plugin.pluginOptions = {
 					desc = L.blockObjectiveTrackerDesc,
 					width = "full",
 					order = 8,
-					hidden = isClassic, -- XXX make compatible with classic
 				},
 				blockTalkingHeads = {
 					type = "multiselect",
@@ -632,6 +631,27 @@ do
 					bbFrame.SetParent(ObjectiveTrackerFrame, bbFrame)
 				end
 			end
+		elseif not isVanilla then
+			local frame = Questie_BaseFrame or WatchFrame
+			local trackedAchievements = GetTrackedAchievements()
+			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not trackedAchievements and not bbFrame.IsProtected(frame) then
+				restoreObjectiveTracker = bbFrame.GetParent(frame)
+				if restoreObjectiveTracker then
+					bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+					bbFrame.SetFixedFrameLevel(frame, true)
+					bbFrame.SetParent(frame, bbFrame)
+				end
+			end
+		elseif isVanilla then
+			local frame = Questie_BaseFrame or QuestWatchFrame
+			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not bbFrame.IsProtected(frame) then
+				restoreObjectiveTracker = bbFrame.GetParent(frame)
+				if restoreObjectiveTracker then
+					bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+					bbFrame.SetFixedFrameLevel(frame, true)
+					bbFrame.SetParent(frame, bbFrame)
+				end
+			end
 		end
 	end
 
@@ -674,9 +694,10 @@ do
 		end
 
 		if restoreObjectiveTracker then
-			bbFrame.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
-			bbFrame.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
-			bbFrame.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
+			local frame = not isClassic and ObjectiveTrackerFrame or Questie_BaseFrame or WatchFrame or QuestWatchFrame
+			bbFrame.SetParent(frame, restoreObjectiveTracker)
+			bbFrame.SetFixedFrameStrata(frame, false)
+			bbFrame.SetFixedFrameLevel(frame, false)
 			restoreObjectiveTracker = nil
 		end
 	end
