@@ -648,184 +648,184 @@ end
 -- Options
 --
 
-do
-	local disabled = function() return plugin.db.profile.disabled end
-	plugin.pluginOptions = {
-		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity:20|t ".. L.proximity_name,
-		type = "group",
-		order = 13,
-		get = function(info)
-			local key = info[#info]
-			if key == "font" then
-				for i, v in next, media:List(FONT) do
-					if v == db.fontName then return i end
-				end
-			elseif key == "soundName" then
-				for i, v in next, media:List(SOUND) do
-					if v == db.soundName then return i end
-				end
-			else
-				return db[key]
-			end
-		end,
-		set = function(info, value)
-			local key = info[#info]
-			if key == "font" then
-				db.fontName = media:List(FONT)[value]
-			elseif key == "soundName" then
-				db.soundName = media:List(SOUND)[value]
-			else
-				db[key] = value
-			end
-			plugin:RestyleWindow()
-		end,
-		args = {
-			disabled = {
-				type = "toggle",
-				name = L.disabled,
-				desc = L.disabledDisplayDesc,
-				order = 1,
-			},
-			lock = {
-				type = "toggle",
-				name = L.lock,
-				desc = L.lockDesc,
-				order = 2,
-				disabled = disabled,
-			},
-			font = {
-				type = "select",
-				name = L.font,
-				order = 3,
-				values = media:List(FONT),
-				width = "full",
-				itemControl = "DDI-Font",
-			},
-			fontSize = {
-				type = "range",
-				name = L.fontSize,
-				desc = L.fontSizeDesc,
-				order = 4,
-				max = 200,
-				min = 8,
-				softMax = 40,
-				step = 1,
-				width = "full",
-			},
-			soundName = {
-				type = "select",
-				name = L.sound,
-				order = 5,
-				values = media:List(SOUND),
-				width = "full",
-				itemControl = "DDI-Sound"
-				--disabled = disabled,
-			},
-			soundDelay = {
-				type = "range",
-				name = L.soundDelay,
-				desc = L.soundDelayDesc,
-				order = 6,
-				max = 10,
-				min = 1,
-				step = 1,
-				width = "full",
-				disabled = disabled,
-			},
-			showHide = {
-				type = "group",
-				name = L.showHide,
-				inline = true,
-				order = 7,
-				get = function(info)
-					local key = info[#info]
-					return db.objects[key]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					db.objects[key] = value
-					plugin:RestyleWindow()
-				end,
-				disabled = disabled,
-				args = {
-					title = {
-						type = "toggle",
-						name = L.title,
-						desc = L.titleDesc,
-						order = 1,
-					},
-					background = {
-						type = "toggle",
-						name = L.background,
-						desc = L.backgroundDesc,
-						order = 2,
-					},
-					sound = {
-						type = "toggle",
-						name = L.soundButton,
-						desc = L.soundButtonDesc,
-						order = 3,
-					},
-					close = {
-						type = "toggle",
-						name = L.closeButton,
-						desc = L.closeButtonDesc,
-						order = 4,
-					},
-					ability = {
-						type = "toggle",
-						name = L.abilityName,
-						desc = L.abilityNameDesc,
-						order = 5,
-					},
-					tooltip = {
-						type = "toggle",
-						name = L.tooltip,
-						desc = L.tooltipDesc,
-						order = 6,
-					},
-				},
-			},
-			exactPositioning = {
-				type = "group",
-				name = L.positionExact,
-				order = 8,
-				inline = true,
-				args = {
-					posx = {
-						type = "range",
-						name = L.positionX,
-						desc = L.positionDesc,
-						min = -2048,
-						max = 2048,
-						step = 1,
-						order = 1,
-						width = "full",
-					},
-					posy = {
-						type = "range",
-						name = L.positionY,
-						desc = L.positionDesc,
-						min = -2048,
-						max = 2048,
-						step = 1,
-						order = 2,
-						width = "full",
-					},
-				},
-			},
-			reset = {
-				type = "execute",
-				name = L.resetAll,
-				desc = L.resetProximityDesc,
-				func = function()
-					plugin.db:ResetProfile()
-				end,
-				order = 9,
-			},
-		},
-	}
-end
+--do
+--	local disabled = function() return plugin.db.profile.disabled end
+--	plugin.pluginOptions = {
+--		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity:20|t ".. L.proximity_name,
+--		type = "group",
+--		order = 13,
+--		get = function(info)
+--			local key = info[#info]
+--			if key == "font" then
+--				for i, v in next, media:List(FONT) do
+--					if v == db.fontName then return i end
+--				end
+--			elseif key == "soundName" then
+--				for i, v in next, media:List(SOUND) do
+--					if v == db.soundName then return i end
+--				end
+--			else
+--				return db[key]
+--			end
+--		end,
+--		set = function(info, value)
+--			local key = info[#info]
+--			if key == "font" then
+--				db.fontName = media:List(FONT)[value]
+--			elseif key == "soundName" then
+--				db.soundName = media:List(SOUND)[value]
+--			else
+--				db[key] = value
+--			end
+--			plugin:RestyleWindow()
+--		end,
+--		args = {
+--			disabled = {
+--				type = "toggle",
+--				name = L.disabled,
+--				desc = L.disabledDisplayDesc,
+--				order = 1,
+--			},
+--			lock = {
+--				type = "toggle",
+--				name = L.lock,
+--				desc = L.lockDesc,
+--				order = 2,
+--				disabled = disabled,
+--			},
+--			font = {
+--				type = "select",
+--				name = L.font,
+--				order = 3,
+--				values = media:List(FONT),
+--				width = "full",
+--				itemControl = "DDI-Font",
+--			},
+--			fontSize = {
+--				type = "range",
+--				name = L.fontSize,
+--				desc = L.fontSizeDesc,
+--				order = 4,
+--				max = 200,
+--				min = 8,
+--				softMax = 40,
+--				step = 1,
+--				width = "full",
+--			},
+--			soundName = {
+--				type = "select",
+--				name = L.sound,
+--				order = 5,
+--				values = media:List(SOUND),
+--				width = "full",
+--				itemControl = "DDI-Sound"
+--				--disabled = disabled,
+--			},
+--			soundDelay = {
+--				type = "range",
+--				name = L.soundDelay,
+--				desc = L.soundDelayDesc,
+--				order = 6,
+--				max = 10,
+--				min = 1,
+--				step = 1,
+--				width = "full",
+--				disabled = disabled,
+--			},
+--			showHide = {
+--				type = "group",
+--				name = L.showHide,
+--				inline = true,
+--				order = 7,
+--				get = function(info)
+--					local key = info[#info]
+--					return db.objects[key]
+--				end,
+--				set = function(info, value)
+--					local key = info[#info]
+--					db.objects[key] = value
+--					plugin:RestyleWindow()
+--				end,
+--				disabled = disabled,
+--				args = {
+--					title = {
+--						type = "toggle",
+--						name = L.title,
+--						desc = L.titleDesc,
+--						order = 1,
+--					},
+--					background = {
+--						type = "toggle",
+--						name = L.background,
+--						desc = L.backgroundDesc,
+--						order = 2,
+--					},
+--					sound = {
+--						type = "toggle",
+--						name = L.soundButton,
+--						desc = L.soundButtonDesc,
+--						order = 3,
+--					},
+--					close = {
+--						type = "toggle",
+--						name = L.closeButton,
+--						desc = L.closeButtonDesc,
+--						order = 4,
+--					},
+--					ability = {
+--						type = "toggle",
+--						name = L.abilityName,
+--						desc = L.abilityNameDesc,
+--						order = 5,
+--					},
+--					tooltip = {
+--						type = "toggle",
+--						name = L.tooltip,
+--						desc = L.tooltipDesc,
+--						order = 6,
+--					},
+--				},
+--			},
+--			exactPositioning = {
+--				type = "group",
+--				name = L.positionExact,
+--				order = 8,
+--				inline = true,
+--				args = {
+--					posx = {
+--						type = "range",
+--						name = L.positionX,
+--						desc = L.positionDesc,
+--						min = -2048,
+--						max = 2048,
+--						step = 1,
+--						order = 1,
+--						width = "full",
+--					},
+--					posy = {
+--						type = "range",
+--						name = L.positionY,
+--						desc = L.positionDesc,
+--						min = -2048,
+--						max = 2048,
+--						step = 1,
+--						order = 2,
+--						width = "full",
+--					},
+--				},
+--			},
+--			reset = {
+--				type = "execute",
+--				name = L.resetAll,
+--				desc = L.resetProximityDesc,
+--				func = function()
+--					plugin.db:ResetProfile()
+--				end,
+--				order = 9,
+--			},
+--		},
+--	}
+--end
 
 -------------------------------------------------------------------------------
 -- Events
@@ -995,28 +995,5 @@ SlashCmdList.BigWigs_Proximity = function(input)
 	end
 end
 
-SlashCmdList.BigWigs_ProximityTarget = function(input)
-	if not plugin:IsEnabled() then BigWigs:Enable() end
-	input = input:lower()
-	local range, target, reverse = input:match("^(%d+)%s*(%S*)%s*(%S*)$")
-	range = tonumber(range)
-	if not range or not target or (not UnitInRaid(target) and not UnitInParty(target)) then
-		BigWigs:Print("Usage: /proximitytarget 1-100 player [true]") -- XXX translate
-	else
-		if range > 0 then
-			plugin:Close(true)
-			customProximityOpen = range
-			customProximityTarget = target
-			customProximityReverse = reverse == "true"
-			plugin:Open(range, nil, nil, customProximityTarget, customProximityReverse)
-		else
-			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
-			plugin:Close(true)
-		end
-	end
-end
-
 SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/range"
-SLASH_BigWigs_ProximityTarget1 = "/proximitytarget"
-SLASH_BigWigs_ProximityTarget2 = "/rangetarget"
