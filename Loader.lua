@@ -370,6 +370,7 @@ do
 		[725] = lw_cata, -- The Stonecore
 		[938] = lw_cata, -- End Time
 		[939] = lw_cata, -- Well of Eternity
+		[940] = lw_cata, -- Hour of Twilight
 		[657] = lw_cata, -- The Vortex Pinnacle
 		[670] = lw_cata, -- Grim Batol
 		--[[ LittleWigs: Mists of Pandaria ]]--
