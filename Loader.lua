@@ -308,9 +308,9 @@ do
 		[2657] = tww, -- Nerub'ar Palace
 
 		--[[ LittleWigs: Classic ]]--
-		[33] = lw_c, -- Shadowfang Keep
+		[33] = (public.isVanilla or public.isTBC or public.isWrath) and nil or lw_cata, -- Shadowfang Keep
 		--[34] = lw_c, -- The Stockade
-		[36] = lw_c, -- Deadmines
+		[36] = (public.isVanilla or public.isTBC or public.isWrath) and nil or lw_cata, -- Deadmines
 		--[43] = lw_c, -- Wailing Caverns
 		--[47] = lw_c, -- Razorfen Kraul
 		--[48] = lw_c, -- Blackfathom Deeps
