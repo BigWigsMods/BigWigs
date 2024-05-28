@@ -194,3 +194,4 @@ L.mind_control_short = "GK" -- Short version of Mind Control, mainly for bars
 L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Soaks" -- Plural of L.soak
 L.spell_reflection = "Zauberreflexion" -- Any ability that reflects spells
+L.parasite = "Parasit" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc

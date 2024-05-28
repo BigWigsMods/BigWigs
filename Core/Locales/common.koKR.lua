@@ -194,3 +194,4 @@ L.mind_control_short = "정신 지배" -- Short version of Mind Control, mainly 
 --L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 --L.soaks = "Soaks" -- Plural of L.soak
 L.spell_reflection = "주문 반사" -- Any ability that reflects spells
+L.parasite = "기생충" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
