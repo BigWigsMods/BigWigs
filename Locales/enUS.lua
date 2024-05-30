@@ -167,6 +167,33 @@ L.healer = "|cFFFF0000Healer alerts only.|r "
 L.tankhealer = "|cFFFF0000Tank & Healer alerts only.|r "
 L.dispeller = "|cFFFF0000Dispeller alerts only.|r "
 
+
+-- Sharing.lua
+L.import = "Import"
+L.export = "Export"
+L.exportString = "Export String"
+L.importString = "Import String"
+L.importSuccess = "Imported: %s" -- Imported: Bar Anchors, Message Colors
+L.anchors = "Anchors"
+L.settings = "Settings"
+L.barSmall = "bar"
+L.messageSmall = "message"
+L.anchors_import_desc = "Import the %s anchors." -- %s will be either barSmall: "bar" or messageSmall: "message"
+L.anchors_export_desc = "Export the %s anchors."
+L.settings_import_desc = "Import the general %s settings."
+L.settings_export_desc = "Export the general %s settings."
+L.colors_import_desc = "Import the general %s color options."
+L.colors_export_desc = "Export the general %s color options."
+L.confirmImport = "Are you sure you want to import the currently selected options? This will overwrite your current settings and may cause you to lose your current setup."
+L.noStringAvailable = "No import string stored to import. First import a string."
+L.noImportMessage = "No settings were imported."
+L.importedBarAnchors = "Bar Anchors"
+L.importedBarSettings = "Bar Settings"
+L.importedBarColors = "Bar Colors"
+L.importedMessageAnchors = "Message Anchors"
+L.importedMessageSettings = "Message Settings"
+L.importedMessageColors = "Message Colors"
+
 -- Statistics
 L.statistics = "Statistics"
 L.LFR = "LFR"
