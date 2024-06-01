@@ -218,7 +218,14 @@ do
 		return true
 	end
 
+	--- Decodes and stores an import string
+	-- When an import string is passed to this function, it will decode the string
+	-- and store the data in the importStringOptions table.
+	-- Afterwards you can call :SaveData to save the data to the BigWigs profile.
+	-- @param string The import string to decode.
+	-- @return True if the import string was successfully decoded
 	function sharing:DecodeImportString(string)
+		if not type(string) == "string" then return end
 		importStringOptions = {}
 		importedTableData = nil
 
@@ -317,6 +324,9 @@ do
 		BigWigs:Print(importMessage)
 	end
 
+	--- Saves the currently loaded import string to the BigWigs profile.
+	-- After importing a string with :DecodeImportString, this function
+	-- will save the data to the BigWigs profile.
 	function sharing:SaveData()
 		if not importedTableData then
 			BigWigs:Print(L.noStringAvailable)
