@@ -904,7 +904,8 @@ function mod:ADDON_LOADED(addon)
 
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+	bwFrame:RegisterEvent("GROUP_FORMED")
+	bwFrame:RegisterEvent("GROUP_LEFT")
 	if C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
 		bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
 		bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
@@ -1042,7 +1043,7 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	bwFrame:UnregisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 	self.UPDATE_FLOATING_CHAT_WINDOWS = nil
 
-	self:GROUP_ROSTER_UPDATE()
+	self:GROUP_FORMED()
 	self:PLAYER_ENTERING_WORLD()
 	self:ZONE_CHANGED()
 end
@@ -1677,7 +1678,7 @@ end
 
 do
 	local grouped = nil
-	function mod:GROUP_ROSTER_UPDATE()
+	function mod:GROUP_FORMED()
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
@@ -1701,6 +1702,7 @@ do
 			usersHash = {}
 		end
 	end
+	mod.GROUP_LEFT = mod.GROUP_FORMED
 end
 
 function mod:BigWigs_BossModuleRegistered(_, _, module)
