@@ -14,12 +14,16 @@ local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 local difficultyTable = BigWigsLoader.isRetail and {
+	[3] = "10N", -- 10N
+	[4] = "25N", -- 25N
+	[5] = "10H", -- 10H
+	[6] = "25H", -- 25H
+	[7] = "LFR", -- Old LFR (Dragon Soul)
 	--[9] = "normal", -- raid40 (molten core/BWL/AQ40)
 	[14] = "normal",
 	[15] = "heroic",
 	[16] = "mythic",
 	[17] = "LFR",
-	[7] = "LFR", -- Old LFR (Dragon Soul)
 } or {
 	[3] = "10N", -- 10N
 	[4] = "25N", -- 25N
@@ -27,9 +31,9 @@ local difficultyTable = BigWigsLoader.isRetail and {
 	[6] = "25H", -- 25H
 	[7] = "LFR", -- Old LFR (Dragon Soul)
 	[9] = "normal", -- raid40 (molten core/BWL/AQ40)
-	[175] = "normal", -- raid10 (karazhan) -- move from 3 (fake) to 175 (guessed)
-	[148] = "normal", -- raid20
-	[176] = "normal", -- raid 25 (sunwell)
+	--[175] = "normal", -- raid10 (karazhan) -- move from 3 (fake) to 175 (guessed)
+	--[148] = "normal", -- raid20
+	--[176] = "normal", -- raid 25 (sunwell)
 	[198] = "normal", -- raid10 (Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "normal", -- raid20 (Sunken Temple - Classic Season of Discovery)
 }
@@ -44,7 +48,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-10.2.6
+10.2.7
 1. Normal
 2. Heroic
 3. 10 Player
@@ -123,6 +127,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 213. Infinite
 214. DNT - Internal only
 215. Normal
+
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
 
