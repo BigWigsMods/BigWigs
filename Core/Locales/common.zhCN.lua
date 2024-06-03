@@ -195,3 +195,4 @@ L.soak = "分摊" -- Abilities you have to stand in on purpose to soak the damag
 L.soaks = "分摊" -- Plural of L.soak
 L.spell_reflection = "法术反射" -- Any ability that reflects spells
 L.parasite = "寄生" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
+L.rooted = "定身" -- Any ability that roots you in place, preventing you from moving

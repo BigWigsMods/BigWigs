@@ -195,3 +195,4 @@ L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage,
 L.soaks = "Soaks" -- Plural of L.soak
 L.spell_reflection = "Zauberreflexion" -- Any ability that reflects spells
 L.parasite = "Parasit" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
+L.rooted = "Bewegungsunfähig" -- Any ability that roots you in place, preventing you from moving

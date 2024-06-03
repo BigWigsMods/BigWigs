@@ -195,3 +195,4 @@ L.soak = "Сока" -- Abilities you have to stand in on purpose to soak the dam
 L.soaks = "Соки" -- Plural of L.soak
 L.spell_reflection = "Отражение заклинаний" -- Any ability that reflects spells
 L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
+L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving

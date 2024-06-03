@@ -195,3 +195,4 @@ L.mind_control_short = "정신 지배" -- Short version of Mind Control, mainly 
 --L.soaks = "Soaks" -- Plural of L.soak
 L.spell_reflection = "주문 반사" -- Any ability that reflects spells
 L.parasite = "기생충" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
+L.rooted = "묶임" -- Any ability that roots you in place, preventing you from moving
