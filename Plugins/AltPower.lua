@@ -541,7 +541,29 @@ do
 		end)
 		display.expand = expand
 
-		local header = display:CreateFontString()
+		local barDrag = CreateFrame("Frame", nil, display)
+		barDrag:SetClampedToScreen(true)
+		barDrag:EnableMouse(true)
+		barDrag:SetFrameStrata("MEDIUM")
+		barDrag:SetFixedFrameStrata(true)
+		barDrag:SetFrameLevel(125)
+		barDrag:SetFixedFrameLevel(true)
+		barDrag:RegisterForDrag("LeftButton")
+		barDrag:SetScript("OnDragStart", function()
+			if display:IsMovable() then
+				display:StartMoving()
+			end
+		end)
+		barDrag:SetScript("OnDragStop", function()
+			display:StopMovingOrSizing()
+			local point, _, relPoint, x, y = display:GetPoint()
+			db.position = {point, relPoint, x, y}
+			plugin:UpdateGUI() -- Update X/Y if GUI is open.
+		end)
+		barDrag:SetPoint("TOPLEFT", expand, "TOPRIGHT", 4, 0)
+		barDrag:SetPoint("BOTTOMRIGHT", close, "BOTTOMLEFT", -4, 0)
+
+		local header = barDrag:CreateFontString()
 		header:SetShadowOffset(1, -1)
 		header:SetTextColor(1,0.82,0,1)
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
@@ -549,7 +571,7 @@ do
 		bg:SetPoint("TOP", header, "TOP", 0, 2)
 		display.title = header
 
-		local bar = display:CreateTexture(nil, nil, nil, 1) -- above background
+		local bar = barDrag:CreateTexture(nil, nil, nil, 1) -- above background
 		bar:SetPoint("LEFT", expand, "RIGHT", 4, 0)
 		bar:SetPoint("BOTTOM", header, "BOTTOM")
 		bar:SetPoint("TOP", header, "TOP")
