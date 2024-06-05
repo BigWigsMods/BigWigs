@@ -440,10 +440,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 67 then -- Intermission 1 at 65%
+	local hp = self:GetHealth(unit)
+	if hp < 67 then -- Intermission 1 at 65%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message("stages", "green", CL.soon:format(CL.count:format(CL.intermission, 1)), false)
-		self:PlaySound("stages", "info")
+		if hp > 65 then
+			self:Message("stages", "green", CL.soon:format(CL.count:format(CL.intermission, 1)), false)
+			self:PlaySound("stages", "info")
+		end
 	end
 end
 

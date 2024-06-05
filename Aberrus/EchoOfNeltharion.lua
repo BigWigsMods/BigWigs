@@ -144,10 +144,13 @@ end
 
 -- General
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 63 then -- P2 at 60%
+	local hp = self:GetHealth(unit)
+	if hp < 63 then -- P2 at 60%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(2)), false)
-		self:PlaySound("stages", "info")
+		if hp > 60 then
+			self:Message("stages", "cyan", CL.soon:format(CL.stage:format(2)), false)
+			self:PlaySound("stages", "info")
+		end
 	end
 end
 

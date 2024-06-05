@@ -317,10 +317,13 @@ end
 --
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 72 then -- Intermission at 70%
+	local hp = self:GetHealth(unit)
+	if hp < 73 then -- Intermission at 70%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false) -- Intermission soon
-		self:PlaySound("stages", "info")
+		if hp > 70 then
+			self:Message("stages", "cyan", CL.soon:format(CL.intermission), false) -- Intermission soon
+			self:PlaySound("stages", "info")
+		end
 	end
 end
 
@@ -506,7 +509,6 @@ function mod:Incarnate(args)
 			self:CancelTimer(timerHandles[414187])
 			timerHandles[414187] = nil
 		end
-		self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 
 		self:SetStage(1.5) -- Intermission start
 		self:Bar(412761, 9.2, L.incarnate_intermission) -- Incarnate
