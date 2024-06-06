@@ -524,4 +524,4 @@ local sharingOptions = {
 }
 
 addonTable.sharingOptions = sharingOptions
-BigWigsSharing = sharing -- Set global so other addons can import/save data.
+BigWigsSharing = sharing -- Set global so other addons can import/save data using using BigWigsSharing:DecodeImportString() and BigWigsSharing:SaveData().
