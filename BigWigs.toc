@@ -37,3 +37,4 @@ Loader.lua
 AutoRole.lua
 LFGTimer.lua
 modules.xml
+bosses.xml

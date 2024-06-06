@@ -36,4 +36,4 @@ GuildVersion.lua
 Loader.lua
 AutoRole.lua
 LFGTimer.lua
-modules_Classic.xml
+modules_Cata.xml
