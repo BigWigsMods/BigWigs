@@ -122,13 +122,38 @@ local updateData = function(module)
 			end
 		end
 
-		if class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
-			-- Check for bear talents
-			local feralInstinct = select(5, GetTalentInfo(2, 3))
-			local thickHide = select(5, GetTalentInfo(2, 5))
-			local primalFury = select(5, GetTalentInfo(2, 12))
-			if feralInstinct == 5 and thickHide >= 2 and primalFury == 2 then
-				myRole = "TANK"
+		if class == "DEATHKNIGHT" and talentTree == 1 then -- defaults to TANK
+			-- Using the LFG tool?
+			local role = UnitGroupRolesAssigned("player")
+			if role == "TANK" or role == "DAMAGER" then
+				myRole = role
+			elseif spent == 51 then
+				-- Meta tank spec was 43/27/1 with Blood DPS pretty much dead at this point in Wrath
+				myRole = "DAMAGER"
+			end
+		elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
+			if isClassicEra then
+				-- Check for bear talents
+				local feralInstinct = select(5, GetTalentInfo(2, 3))
+				local thickHide = select(5, GetTalentInfo(2, 5))
+				local primalFury = select(5, GetTalentInfo(2, 12))
+				if feralInstinct == 5 and thickHide >= 2 and primalFury == 2 then
+					myRole = "TANK"
+				end
+			else
+				-- Using the LFG tool?
+				local role = UnitGroupRolesAssigned("player")
+				if role == "TANK" or role == "DAMAGER" then
+					myRole = role
+				else
+					-- Check for bear talents
+					local thickHide = select(5, GetTalentInfo(2, 1))
+					local survivalInstincts = select(5, GetTalentInfo(2, 15))
+					local naturalReaction = select(5, GetTalentInfo(2, 29))
+					if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
+						myRole = "TANK"
+					end
+				end
 			end
 		end
 
@@ -1777,7 +1802,7 @@ function boss:Melee(playerName)
 	if playerName then
 		return myGroupRolePositions[playerName] == "MELEE"
 	else
-		return myRolePosition == "MELEE"
+		return myRolePosition == "MELEE" or myRole == "TANK"
 	end
 end
 
@@ -1788,7 +1813,7 @@ function boss:Ranged(playerName)
 	if playerName then
 		return myGroupRolePositions[playerName] == "RANGED"
 	else
-		return myRolePosition == "RANGED"
+		return myRolePosition == "RANGED" or myRole == "HEALER"
 	end
 end
 

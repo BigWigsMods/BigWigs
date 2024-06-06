@@ -145,7 +145,7 @@ plugin.pluginOptions = {
 					desc = L.blockTooltipQuestsDesc,
 					width = "full",
 					order = 7,
-					hidden = isVanilla, -- TooltipDataProcessor doesn't exist on vanilla
+					hidden = GameTooltip and not GameTooltip.IsTooltipType, -- TooltipDataProcessor doesn't exist on classic
 				},
 				blockObjectiveTracker = {
 					type = "toggle",
@@ -332,7 +332,7 @@ do
 		end
 	end
 	function plugin:OnRegister()
-		if TooltipDataProcessor then
+		if TooltipDataProcessor and GameTooltip and GameTooltip.IsTooltipType then
 			TooltipDataProcessor.AddLinePreCall(8, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestObjective
 			TooltipDataProcessor.AddLinePreCall(17, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestTitle
 			TooltipDataProcessor.AddLinePreCall(18, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestPlayer
@@ -632,8 +632,8 @@ do
 				end
 			end
 		elseif not isVanilla then
-			local frame = Questie_BaseFrame or WatchFrame
-			local trackedAchievements = GetTrackedAchievements()
+			local frame = Questie_BaseFrame or WatchFrame or QuestWatchFrame
+			local trackedAchievements = GetTrackedAchievements and GetTrackedAchievements()
 			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not trackedAchievements and not bbFrame.IsProtected(frame) then
 				restoreObjectiveTracker = bbFrame.GetParent(frame)
 				if restoreObjectiveTracker then
