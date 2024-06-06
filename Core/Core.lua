@@ -96,7 +96,7 @@ end
 -- ENCOUNTER event handler
 --
 
-if loader.isRetail then
+if loader.isRetail or loader.isCata then
 	function mod:ENCOUNTER_START(_, id)
 		for _, module in next, bosses do
 			if module:GetEncounterID() == id and not module:IsEnabled() then
