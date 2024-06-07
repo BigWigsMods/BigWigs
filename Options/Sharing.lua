@@ -225,7 +225,7 @@ do
 	-- @param string The import string to decode.
 	-- @return True if the import string was successfully decoded
 	function sharing:DecodeImportString(string)
-		if not type(string) == "string" then return end
+		if type(string) ~= "string" then return end
 		importStringOptions = {}
 		importedTableData = nil
 
@@ -255,16 +255,11 @@ do
 		local colorSettings = BigWigs:GetPlugin("Colors")
 		local imported = {}
 
+		-- Re-write these calls to be 1 function call instead of individual updates
 		if sharingOptions.importBarAnchors and data.barAnchors then
 			wipeCurrentSettings(barAnchorsToExport, barSettings)
 			for k, v in pairs(data.barAnchors) do
 				barSettings.db.profile[k] = v
-			end
-			if BigWigsAnchor then
-				BigWigsAnchor:RefixPosition()
-			end
-			if BigWigsEmphasizeAnchor then
-				BigWigsEmphasizeAnchor:RefixPosition()
 			end
 			table.insert(imported, L.importedBarAnchors)
 		end
@@ -290,12 +285,6 @@ do
 			for k, v in pairs(data.messageAnchors) do
 				messageSettings.db.profile[k] = v
 			end
-			if normalMessageAnchor then
-				normalMessageAnchor:RefixPosition()
-			end
-			if emphMessageAnchor then
-				emphMessageAnchor:RefixPosition()
-			end
 			table.insert(imported, L.importedMessageAnchors)
 		end
 
@@ -320,6 +309,7 @@ do
 			return
 		end
 
+		BigWigs:SendMessage("BigWigs_ProfileUpdate")
 		local importMessage = L.importSuccess:format(table.concat(imported, ", "))
 		BigWigs:Print(importMessage)
 	end
