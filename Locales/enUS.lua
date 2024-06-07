@@ -161,7 +161,7 @@ L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated
 L.NAMEPLATEBAR = "Nameplate Bars"
 L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 L.PRIVATE = "Private Aura"
-L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
+L.PRIVATE_desc = "These settings are for general cast alerts and bars only!\n\nYou can change the sound to play when you are targeted by this ability by selecting \"Private Aura Sounds\" in the \"Select encounter\" dropdown in the top right."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"

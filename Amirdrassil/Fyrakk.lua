@@ -8,6 +8,15 @@ mod:RegisterEnableMob(204931) -- Fyrakk
 mod:SetEncounterID(2677)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
+mod:SetPrivateAuraSounds({
+	{414186, extra = {414187, 421825, 421826, 421827, 421828, 421829}}, -- Blaze
+	419060, -- Firestorm
+	{426370, mythic = true}, -- Darkflame Cleave
+	422520, -- Greater Firestorm
+	{428988, "alarm", mythic = true}, -- Molten Eruption
+	{428970, mythic = true}, -- Shadow Cage
+	425525, -- Eternal Firestorm
+})
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -123,7 +132,7 @@ function mod:GetOptions()
 		425483, -- Incinerated (Damage)
 		-- Mythic
 		{430441, "OFF"}, -- Darkflame Shades
-		{426368, "CASTBAR", "PRIVATE"}, -- Darkflame Cleave
+		{426368, "PRIVATE", "CASTBAR"}, -- Darkflame Cleave
 
 		-- Intermission: Amirdrassil in Peril
 		{419144, "CASTBAR"}, -- Corrupt
@@ -289,20 +298,6 @@ function mod:OnEngage()
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
-	self:SetPrivateAuraSound(414186, 414187) -- Blaze
-	self:SetPrivateAuraSound(414186, 421825)
-	self:SetPrivateAuraSound(414186, 421826)
-	self:SetPrivateAuraSound(414186, 421827)
-	self:SetPrivateAuraSound(414186, 421828)
-	self:SetPrivateAuraSound(414186, 421829)
-	self:SetPrivateAuraSound(419506, 419060) -- Firestorm
-	self:SetPrivateAuraSound(422518, 422520) -- Greater Firestorm
-	self:SetPrivateAuraSound(422935, 425525) -- Eternal Firestorm
-	if self:Mythic() then
-		self:SetPrivateAuraSound(426368, 426370) -- Darkflame Cleave
-		self:SetPrivateAuraSound(428971, 428988, "alarm") -- Molten Eruption
-		self:SetPrivateAuraSound(428970, 428970) -- Shadow Cage
-	end
 end
 
 function mod:BigWigs_EncounterEnd()

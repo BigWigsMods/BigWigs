@@ -19,6 +19,24 @@ options.SendMessage = loader.SendMessage
 local UnitName = loader.UnitName
 
 local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
+bwTooltip:SetScript("OnUpdate", function(self, elapsed)
+	-- basically GameTooltip_OnUpdate
+	self.updateTooltipTimer = self.updateTooltipTimer - elapsed
+	if self.updateTooltipTimer > 0 then return end
+	self.updateTooltipTimer = 0.2
+
+	local owner = self:GetOwner()
+	local widget = owner and owner.obj
+	if widget and widget:GetUserData("updateTooltip") then
+		widget:Fire("OnEnter")
+	elseif self.shouldRefreshData then -- TOOLTIP_DATA_UPDATE
+		self:RefreshData()
+	end
+end)
+local function bwTooltip_Hide()
+	-- common OnLeave handler
+	bwTooltip:Hide()
+end
 
 local colorModule
 local soundModule
@@ -447,10 +465,6 @@ local function slaveOptionMouseOver(self, event, value)
 	bwTooltip:Show()
 end
 
-local function slaveOptionMouseLeave()
-	bwTooltip:Hide()
-end
-
 local function getSlaveToggle(label, desc, key, module, flag, master, width, icon, ...)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(label)
@@ -476,7 +490,7 @@ local function getSlaveToggle(label, desc, key, module, flag, master, width, ico
 	toggle:SetUserData("master", master)
 	toggle:SetCallback("OnValueChanged", slaveOptionToggled)
 	toggle:SetCallback("OnEnter", slaveOptionMouseOver)
-	toggle:SetCallback("OnLeave", slaveOptionMouseLeave)
+	toggle:SetCallback("OnLeave", bwTooltip_Hide)
 	toggle:SetValue(getSlaveOption(toggle))
 	toggle.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	return toggle
@@ -525,10 +539,16 @@ local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
 	local advOpts = {}
 
+	local isPrivateAura = hasOptionFlag(dbKey, module, "PRIVATE")
+
 	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
 		-- Emphasize
-		advOpts[#advOpts+1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check, 0.3, icons.EMPHASIZE)
-		advOpts[#advOpts+1] = getSlaveToggle(L.ME_ONLY_EMPHASIZE, L.ME_ONLY_EMPHASIZE_desc, dbKey, module, C.ME_ONLY_EMPHASIZE, check, 0.5, icons.ME_ONLY_EMPHASIZE)
+		if not isPrivateAura or hasOptionFlag(dbKey, module, "ME_ONLY_EMPHASIZE") then
+			advOpts[#advOpts+1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check, 0.3, icons.EMPHASIZE)
+			advOpts[#advOpts+1] = getSlaveToggle(L.ME_ONLY_EMPHASIZE, L.ME_ONLY_EMPHASIZE_desc, dbKey, module, C.ME_ONLY_EMPHASIZE, check, 0.5, icons.ME_ONLY_EMPHASIZE)
+		else
+			advOpts[#advOpts+1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check, 0.8, icons.EMPHASIZE)
+		end
 		--
 
 		-- Bar & Countdown
@@ -544,9 +564,14 @@ local function advancedToggles(dbKey, module, check)
 		--
 
 		-- Messages & Sound
-		advOpts[#advOpts+1] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, 0.3, icons.MESSAGE)
-		advOpts[#advOpts+1] = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 0.4, icons.ME_ONLY)
-		advOpts[#advOpts+1] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 0.3, icons.SOUND)
+		if not isPrivateAura or hasOptionFlag(dbKey, module, "ME_ONLY") then
+			advOpts[#advOpts+1] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, 0.3, icons.MESSAGE)
+			advOpts[#advOpts+1] = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 0.4, icons.ME_ONLY)
+			advOpts[#advOpts+1] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 0.3, icons.SOUND)
+		else
+			advOpts[#advOpts+1] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, 0.3, icons.MESSAGE)
+			advOpts[#advOpts+1] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 0.5, icons.SOUND)
+		end
 		--
 	end
 
@@ -743,10 +768,6 @@ local function flagOnEnter(widget)
 	bwTooltip:Show()
 end
 
-local function flagOnLeave()
-	bwTooltip:Hide()
-end
-
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
@@ -845,7 +866,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			icon:SetImageSize(16, 16)
 			icon:SetUserData("tooltipText", L[key])
 			icon:SetCallback("OnEnter", flagOnEnter)
-			icon:SetCallback("OnLeave", flagOnLeave)
+			icon:SetCallback("OnLeave", bwTooltip_Hide)
 
 			if key == "TANK_HEALER" then
 				-- add both "TANK" and "HEALER" icons
@@ -855,7 +876,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				icon1:SetImageSize(16, 16)
 				icon1:SetUserData("tooltipText", L[key])
 				icon1:SetCallback("OnEnter", flagOnEnter)
-				icon1:SetCallback("OnLeave", flagOnLeave)
+				icon1:SetCallback("OnLeave", bwTooltip_Hide)
 				icon1.frame:SetParent(check.frame)
 				icon1.frame:Show()
 				flagIcons[#flagIcons+1] = icon1
@@ -996,6 +1017,110 @@ local function SecondsToTime(time)
 	return ("%d:%02d"):format(m, s)
 end
 
+local function populatePrivateAuraOptions(widget)
+	local scrollFrame = widget:GetUserData("parent")
+	scrollFrame:ReleaseChildren()
+	scrollFrame:PauseLayout()
+
+	local text = AceGUI:Create("Label")
+	text:SetText("Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability.")
+	text:SetColor(1, 0.75, 0.79)
+	text:SetImage(icons.PRIVATE)
+	text:SetFullWidth(true)
+	text:SetHeight(30)
+	scrollFrame:AddChild(text)
+
+	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
+	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	-- preserve module order
+	for _, module in ipairs(widget:GetUserData("moduleList")) do
+		local options = privateAuraSoundOptions[module]
+		if options then
+			if module.SetupOptions then module:SetupOptions() end -- init the db
+
+			local header = AceGUI:Create("Heading")
+			header:SetText(module.displayName)
+			header:SetFullWidth(true)
+			scrollFrame:AddChild(header)
+			for _, option in ipairs(options) do
+				local spellId = option[1]
+				local default = soundModule:GetDefaultSound(option[2]) or soundModule:GetDefaultSound("privateaura")
+				local key = ("pa_%d"):format(spellId)
+				local id = option.option or spellId
+
+				local name = loader.GetSpellName(id)
+				local texture = loader.GetSpellTexture(id)
+
+				local icon = AceGUI:Create("Icon")
+				icon:SetImage(texture)
+				icon:SetImageSize(40, 40)
+				icon:SetRelativeWidth(0.1)
+				icon:SetUserData("bossOption", id)
+				icon:SetUserData("updateTooltip", true)
+				icon:SetCallback("OnEnter", function(widget)
+					bwTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
+					bwTooltip:SetSpellByID(widget:GetUserData("bossOption"))
+					bwTooltip:Show()
+				end)
+				icon:SetCallback("OnLeave", bwTooltip_Hide)
+
+				local dropdown = AceGUI:Create("SharedDropdown")
+				if option.mythic then
+					dropdown:SetLabel(name .. _G.CreateTextureMarkup(521749, 256, 64, 24, 24, 0.5, 0.625, 0.5, 1)) -- 521749 = Interface\EncounterJournal\UI-EJ-Icons
+				else
+					dropdown:SetLabel(name)
+				end
+				dropdown:SetList(soundList, nil, "DDI-Sound")
+				dropdown:SetRelativeWidth(0.88)
+				dropdown:SetUserData("key", key)
+				dropdown:SetUserData("default", default)
+				dropdown:SetUserData("module", module)
+				dropdown:SetCallback("OnValueChanged", function(widget, _, value)
+					local key = widget:GetUserData("key")
+					local module = widget:GetUserData("module")
+					value = soundList[value]
+					if value == default then
+						value = nil
+					end
+					module.db.profile[key] = value
+				end)
+				local value = module.db.profile[key] or default
+				for i, v in next, soundList do
+				  if v == value then
+				    dropdown:SetValue(i)
+				    break
+				  end
+				end
+
+				scrollFrame:AddChildren(icon, dropdown)
+			end
+		end
+	end
+
+	local reset = AceGUI:Create("Button")
+	reset:SetFullWidth(true)
+	reset:SetText(BigWigsAPI:GetLocale("BigWigs: Plugins").reset)
+	reset:SetUserData("label", BigWigsAPI:GetLocale("BigWigs: Plugins").reset)
+	reset:SetUserData("desc", BigWigsAPI:GetLocale("BigWigs: Plugins").resetSoundDesc)
+	reset:SetUserData("scrollFrame", widget)
+	reset:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
+	reset:SetCallback("OnEnter", slaveOptionMouseOver)
+	reset:SetCallback("OnLeave", bwTooltip_Hide)
+	reset:SetCallback("OnClick", function(widget)
+		for module, options in next, widget:GetUserData("privateAuraSoundOptions") do
+			for _, option in next, options do
+				local key = "pa_" .. option[1]
+				module.db.profile[key] = nil
+			end
+		end
+		populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
+	end)
+	scrollFrame:AddChild(reset)
+
+	scrollFrame:ResumeLayout()
+	scrollFrame:PerformLayout()
+end
+
 local function populateToggleOptions(widget, module)
 	visibleSpellDescriptionWidgets = {}
 	local scrollFrame = widget:GetUserData("parent")
@@ -1127,7 +1252,6 @@ local function populateToggleOptions(widget, module)
 end
 
 function showToggleOptions(widget, event, group, noScrollReset)
-	local module = BigWigs:GetBossModule(group)
 	widget:SetUserData("bossIndex", group)
 	-- reset scroll bar if not hitting the back button
 	if not noScrollReset then
@@ -1136,7 +1260,12 @@ function showToggleOptions(widget, event, group, noScrollReset)
 	end
 	toggleOptionsStatusTable.offset = toggleOptionsStatusTable.restore_offset
 	toggleOptionsStatusTable.scrollvalue = toggleOptionsStatusTable.restore_scrollvalue
-	populateToggleOptions(widget, module)
+
+	if group == "Private Aura Sounds" then
+		populatePrivateAuraOptions(widget)
+	else
+		populateToggleOptions(widget, BigWigs:GetBossModule(group, true))
+	end
 end
 
 local function onZoneShow(treeWidget, id)
@@ -1147,11 +1276,24 @@ local function onZoneShow(treeWidget, id)
 	local moduleList = loader:GetZoneMenus()[id]
 	if type(moduleList) ~= "table" then return end -- No modules registered
 
-	local zoneList, zoneSort = {}, {}
-	for i = 1, #moduleList do
-		local module = moduleList[i]
-		zoneList[module.moduleName] = module.displayName
-		zoneSort[i] = module.moduleName
+	local zoneList, zoneSort, privateAuraSoundOptions = {}, {}, nil
+	do
+		for i = 1, #moduleList do
+			local module = moduleList[i]
+			zoneList[module.moduleName] = module.displayName
+			zoneSort[i] = module.moduleName
+			if module.privateAuraSoundOptions then
+				if not privateAuraSoundOptions then privateAuraSoundOptions = {} end
+				privateAuraSoundOptions[module] = module.privateAuraSoundOptions
+			end
+		end
+
+		-- Add the private aura plugin module
+		if privateAuraSoundOptions then
+			local moduleName = "Private Aura Sounds"
+			zoneList[moduleName] = "|cffffbfc9Private Aura Sounds|r" -- XXX LOCALIZE
+			zoneSort[#zoneSort+1] = moduleName
+		end
 	end
 
 	local outerContainer = AceGUI:Create("SimpleGroup")
@@ -1165,6 +1307,8 @@ local function onZoneShow(treeWidget, id)
 	innerContainer:SetLayout("Flow")
 	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
 	innerContainer:SetUserData("zone", id)
+	innerContainer:SetUserData("moduleList", moduleList)
+	innerContainer:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
 	innerContainer:SetGroupList(zoneList, zoneSort)
 
 	-- scroll is where we actually put stuff in case things
@@ -1186,8 +1330,8 @@ local function onZoneShow(treeWidget, id)
 	local index = 1
 	for i = 1, #zoneSort do
 		local name = zoneSort[i]
-		local m = BigWigs:GetBossModule(name)
-		if m:IsEnabled() and m:GetJournalID() then
+		local m = BigWigs:GetBossModule(name, true)
+		if m and m:IsEnabled() and m:GetJournalID() then
 			index = i
 			break
 		end
@@ -1254,31 +1398,27 @@ do
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
 
-	local function onControlEnter(widget)
-		bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
-		bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
-		bwTooltip:Show()
-	end
+	-- local function onControlEnter(widget)
+	-- 	bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+	-- 	bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
+	-- 	bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
+	-- 	bwTooltip:Show()
+	-- end
 
-	local function onControlLeave()
-		bwTooltip:Hide()
-	end
-
-	local function toggleAnchors(widget)
-		if not BigWigs:IsEnabled() then BigWigs:Enable() end
-		if options:InConfigureMode() then
-			widget:SetText(L.toggleAnchorsBtnShow)
-			widget:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
-			options:SendMessage("BigWigs_StopConfigureMode")
-		else
-			widget:SetText(L.toggleAnchorsBtnHide)
-			widget:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
-			options:SendMessage("BigWigs_StartConfigureMode")
-		end
-		onControlLeave()
-		onControlEnter(widget)
-	end
+	-- local function toggleAnchors(widget)
+	-- 	if not BigWigs:IsEnabled() then BigWigs:Enable() end
+	-- 	if options:InConfigureMode() then
+	-- 		widget:SetText(L.toggleAnchorsBtnShow)
+	-- 		widget:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
+	-- 		options:SendMessage("BigWigs_StopConfigureMode")
+	-- 	else
+	-- 		widget:SetText(L.toggleAnchorsBtnHide)
+	-- 		widget:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
+	-- 		options:SendMessage("BigWigs_StartConfigureMode")
+	-- 	end
+	-- 	bwTooltip:Hide()
+	-- 	onControlEnter(widget)
+	-- end
 
 	local function onTreeGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
@@ -1548,7 +1688,7 @@ do
 		--anchors:SetRelativeWidth(0.5)
 		--anchors:SetCallback("OnClick", toggleAnchors)
 		--anchors:SetCallback("OnEnter", onControlEnter)
-		--anchors:SetCallback("OnLeave", onControlLeave)
+		--anchors:SetCallback("OnLeave", bwTooltip_Hide)
 		--
 		--local testing = AceGUI:Create("Button")
 		--testing:SetText(L.testBarsBtn)
@@ -1556,7 +1696,7 @@ do
 		--testing:SetRelativeWidth(0.5)
 		--testing:SetCallback("OnClick", BigWigs.Test)
 		--testing:SetCallback("OnEnter", onControlEnter)
-		--testing:SetCallback("OnLeave", onControlLeave)
+		--testing:SetCallback("OnLeave", bwTooltip_Hide)
 		--
 		--bw:AddChildren(anchors, testing)
 
