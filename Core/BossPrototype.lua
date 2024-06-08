@@ -542,6 +542,34 @@ function boss:AddMarkerOption(state, markType, icon, id, ...)
 	return option
 end
 
+--- Create a custom auto talk option
+-- @bool state Boolean value to represent default state
+-- @string[opt] talkType The type of description to use ("boss" or nil for generic)
+-- @string[opt] name A unique name the option should have if you want to create multiple options in one module
+-- @return an option string to be used in conjuction with :GetOption
+function boss:AddAutoTalkOption(state, talkType, name)
+	if name and type(name) ~= "string" then
+		core:Error("Invalid auto talk name: ".. tostring(name))
+	elseif name then
+		name = "_".. name
+	end
+
+	local moduleLocale = self:GetLocale()
+	local option = format(state and "custom_on_autotalk%s" or "custom_off_autotalk%s", name or "")
+	if talkType == "boss" then
+		moduleLocale[option] = L.autotalk
+		moduleLocale[option.."_desc"] = L.autotalk_boss_desc
+		moduleLocale[option.."_icon"] = "ui_chat"
+	elseif not talkType then
+		moduleLocale[option] = L.autotalk
+		moduleLocale[option.."_desc"] = L.autotalk_generic_desc
+		moduleLocale[option.."_icon"] = "ui_chat"
+	else
+		core:Error("Invalid auto talk type: ".. tostring(talkType))
+	end
+	return option
+end
+
 -------------------------------------------------------------------------------
 -- Combat log functions
 -- @section combat_events

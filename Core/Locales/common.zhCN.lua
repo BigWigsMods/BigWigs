@@ -140,6 +140,11 @@ L.shadow = "暗影"
 L.nature = "自然"
 L.arcane = "奥术"
 
+-- Autotalk
+--L.autotalk = "Automatic NPC interaction"
+--L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
+--L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+
 -- Common ability name replacements
 L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "治疗吸收盾" -- Used for shield-like abilities that absorb healing only
