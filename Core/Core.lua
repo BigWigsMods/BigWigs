@@ -684,7 +684,7 @@ do
 				if not enablezones[eachId] then
 					enablezones[eachId] = true
 				end
-		  	end
+			end
 		elseif not enablezones[id] then
 			enablezones[id] = true
 		end
