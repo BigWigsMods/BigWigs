@@ -1710,7 +1710,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		local id = -(module.mapId)
 		enableZones[id] = "world"
 		worldBosses[module.worldBoss] = id
-	elseif type(module.instanceId) == 'table' then
+	elseif type(module.instanceId) == "table" then
 		for i = 1, #module.instanceId do
 			enableZones[module.instanceId[i]] = true
 		end

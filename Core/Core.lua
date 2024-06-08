@@ -499,7 +499,7 @@ do
 				m.displayName = moduleName
 			end
 
-			if type(zoneId) == 'table' or zoneId > 0 then
+			if type(zoneId) == "table" or zoneId > 0 then
 				m.instanceId = zoneId
 			else
 				m.mapId = -zoneId
@@ -679,7 +679,7 @@ do
 		core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
 		local id = module.instanceId or -(module.mapId)
-		if type(id) == 'table' then
+		if type(id) == "table" then
 			for i = 1, #id do
 				if not enablezones[id[i]] then
 					enablezones[id[i]] = true
