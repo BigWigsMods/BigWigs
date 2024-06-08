@@ -310,7 +310,7 @@ do
 		local id = module.instanceId
 		local journalId = module:GetJournalID()
 
-		if journalId and id and type(id) ~= "table" and id > 0 and not module.worldBoss then -- Raid restricted for now
+		if journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
 			activeDurations[journalId] = GetTime()
 
 			if diff and difficultyTable[diff] then
@@ -359,7 +359,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		end
 
 		local diff = module:Difficulty()
-		if difficultyTable[diff] and type(module.instanceId) ~= 'table' then
+		if difficultyTable[diff] then
 			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
 			if self.db.profile.saveKills then
 				sDB.kills = sDB.kills and sDB.kills + 1 or 1
@@ -393,7 +393,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			local diff = module:Difficulty()
 			if not difficultyTable[diff] and IsInRaid() and not dontPrint[diff] then
 				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
-			elseif difficultyTable[diff] and self.db.profile.saveWipes and type(module.instanceId) ~= 'table' then
+			elseif difficultyTable[diff] and self.db.profile.saveWipes then
 				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
