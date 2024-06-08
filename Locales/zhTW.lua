@@ -61,6 +61,7 @@ L.expansionNames = {
 	"地心之戰", -- The War Within
 }
 L.littleWigsExtras = {
+	["LittleWigs_Delves"] = "Delves",
 	["LittleWigs_CurrentSeason"] = "當前賽季",
 }
 
