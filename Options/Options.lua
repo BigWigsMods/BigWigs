@@ -1408,7 +1408,7 @@ do
 				if loader.currentExpansion.littleWigsExtras then
 					for i = 1, #loader.currentExpansion.littleWigsExtras do
 						local value = loader.currentExpansion.littleWigsExtras[i]
-						treeTbl[#treeTbl + i] = {
+						treeTbl[#treeTbl + 1] = {
 							text = L.littleWigsExtras[value],
 							value = value,
 							enabled = true,
