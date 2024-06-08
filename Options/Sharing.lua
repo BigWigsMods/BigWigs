@@ -242,67 +242,38 @@ do
 	end
 end
 
+
 do
-	local function SaveImportedTable(data)
-		local function wipeCurrentSettings(args, plugin)
-			for i, v in ipairs(args) do
-				plugin.db.profile[v] = nil
-			end
-		end
-
-		local barSettings = BigWigs:GetPlugin("Bars")
-		local messageSettings = BigWigs:GetPlugin("Messages")
-		local colorSettings = BigWigs:GetPlugin("Colors")
+	local function SaveImportedTable(tableData)
+		local data = tableData
 		local imported = {}
+		local barPlugin = BigWigs:GetPlugin("Bars")
+		local messageplugin = BigWigs:GetPlugin("Messages")
+		local colorplugin = BigWigs:GetPlugin("Colors")
 
-		-- Re-write these calls to be 1 function call instead of individual updates
-		if sharingOptions.importBarAnchors and data.barAnchors then
-			wipeCurrentSettings(barAnchorsToExport, barSettings)
-			for k, v in pairs(data.barAnchors) do
-				barSettings.db.profile[k] = v
+		local function resetCurrentSettings(plugin, args)
+			local profile = plugin.db.profile
+			for i, v in ipairs(args) do
+				profile[v] = nil
 			end
-			table.insert(imported, L.importedBarAnchors)
 		end
 
-		if sharingOptions.importBarSettings and data.barSettings then
-			wipeCurrentSettings(barSettingsToExport, barSettings)
-			for k, v in pairs(data.barSettings) do
-				barSettings.db.profile[k] = v
+		local function importSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
+			if sharingOptions[sharingOptionKey] and data[dataKey] then
+				resetCurrentSettings(plugin, settingsToExport)
+				for k, v in pairs(data[dataKey]) do
+					plugin.db.profile[k] = v
+				end
+				table.insert(imported, message)
 			end
-			table.insert(imported, L.importedBarSettings)
 		end
 
-		if sharingOptions.importBarColors and data.barColors then
-			wipeCurrentSettings(barColorsToExport, colorSettings)
-			for k, v in pairs(data.barColors) do
-				colorSettings.db.profile[k] = v
-			end
-			table.insert(imported, L.importedBarColors)
-		end
-
-		if sharingOptions.importMessageAnchors and data.messageAnchors then
-			wipeCurrentSettings(messageAnchorsToExport, messageSettings)
-			for k, v in pairs(data.messageAnchors) do
-				messageSettings.db.profile[k] = v
-			end
-			table.insert(imported, L.importedMessageAnchors)
-		end
-
-		if sharingOptions.importMessageSettings and data.messageSettings then
-			wipeCurrentSettings(messageSettingsToExport, messageSettings)
-			for k, v in pairs(data.messageSettings) do
-				messageSettings.db.profile[k] = v
-			end
-			table.insert(imported, L.importedMessageSettings)
-		end
-
-		if sharingOptions.importMessageColors and data.messageColors then
-			wipeCurrentSettings(messageColorsToExport, colorSettings)
-			for k, v in pairs(data.messageColors) do
-				colorSettings.db.profile[k] = v
-			end
-			table.insert(imported, L.importedMessageColors)
-		end
+		importSettings('importBarAnchors', 'barAnchors', barAnchorsToExport, barPlugin, L.importedBarAnchors)
+		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.importedBarSettings)
+		importSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.importedBarColors)
+		importSettings('importMessageAnchors', 'messageAnchors', messageAnchorsToExport, messageplugin, L.importedMessageAnchors)
+		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.importedMessageSettings)
+		importSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.importedMessageColors)
 
 		if #imported == 0 then
 			BigWigs:Print(L.noImportMessage)
