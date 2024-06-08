@@ -60,7 +60,9 @@ L.expansionNames = {
 	"Dragonflight", -- Dragonflight
 	"The War Within", -- The War Within
 }
-L.currentSeason = "Aktuelle Saison"
+L.littleWigsExtras = {
+	["LittleWigs_CurrentSeason"] = "Aktuelle Saison",
+}
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Hütet Euch (Algalon)"

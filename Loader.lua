@@ -180,45 +180,68 @@ do
 	if public.isVanilla then
 		public.currentExpansion = {
 			name = c,
-			littlewigsName = lw_c,
+			bigWigsBundled = {},
 			littlewigsDefault = lw_c,
+			littleWigsBundled = {},
 			zones = {},
 		}
 	elseif public.isTBC then
 		public.currentExpansion = {
 			name = bc,
-			littlewigsName = lw_bc,
+			bigWigsBundled = {},
 			littlewigsDefault = lw_bc,
+			littleWigsBundled = {},
 			zones = {},
 		}
 	elseif public.isWrath then
 		public.currentExpansion = {
 			name = wotlk,
-			littlewigsName = lw_wotlk,
+			bigWigsBundled = {},
 			littlewigsDefault = lw_wotlk,
+			littleWigsBundled = {},
 			zones = {},
 		}
 	elseif public.isCata then
 		public.currentExpansion = {
 			name = cata,
-			littlewigsName = lw_cata,
+			bigWigsBundled = {},
 			littlewigsDefault = lw_cata,
+			littleWigsBundled = {},
 			zones = {},
 		}
-	elseif public.isBeta then -- TWW Alpha/Beta
+	elseif public.isBeta then -- TWW Beta
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
-			littlewigsName = lw_tww,
+			bigWigsBundled = {
+				[df] = true,
+				[tww] = true,
+			},
 			littlewigsDefault = lw_tww,
+			littleWigsBundled = {
+				[lw_df] = true,
+				[lw_tww] = true,
+				[lw_cs] = true,
+			},
+			littleWigsExtras = {
+			},
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
 			}
 		}
-	else
+	else -- Dragonflight
 		public.currentExpansion = { -- Change on new expansion releases
 			name = df,
-			littlewigsName = lw_df,
+			bigWigsBundled = {
+				[df] = true,
+			},
 			littlewigsDefault = lw_cs,
+			littleWigsBundled = {
+				[lw_df] = true,
+				[lw_cs] = true,
+			},
+			littleWigsExtras = {
+				lw_cs,
+			},
 			zones = {
 				[2522] = "BigWigs_VaultOfTheIncarnates",
 				[2569] = "BigWigs_Aberrus",
@@ -1627,13 +1650,13 @@ do
 			zoneAddon = zoneAddon[1]
 		end
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
-			if zoneAddon == public.currentExpansion.name and public.isRetail and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
+			if public.usingBigWigsRepo and public.currentExpansion.bigWigsBundled[zoneAddon] then return end -- If we are a BW Git user, then bundled content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
 			if public.currentExpansion.zones[id] then
 				if guildDisableContentWarnings then return end
 				zoneAddon = public.currentExpansion.zones[id] -- Current BigWigs content has individual zone specific addons
-			elseif zoneAddon == public.currentExpansion.littlewigsName and public.isRetail then
-				zoneAddon = "LittleWigs" -- Current LittleWigs content is stored in the main addon
+			elseif public.currentExpansion.littleWigsBundled[zoneAddon] then
+				zoneAddon = "LittleWigs" -- Bundled LittleWigs content is stored in the main addon
 			end
 			if public:GetAddOnState(zoneAddon) == "MISSING" then
 				warnedThisZone[id] = true
