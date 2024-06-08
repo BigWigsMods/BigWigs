@@ -1416,15 +1416,6 @@ do
 						addonNameToHeader[value] = #treeTbl
 					end
 				end
-				-- add default LittleWigs to options if it doesn't match the current expansion's LittleWigs
-				if loader.currentExpansion.littlewigsName ~= loader.currentExpansion.littlewigsDefault then
-					treeTbl[#treeTbl + 1] = {
-						text = L.currentSeason,
-						value = defaultHeader,
-						enabled = true,
-					}
-					addonNameToHeader[defaultHeader] = #treeTbl
-				end
 			end
 
 			do

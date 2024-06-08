@@ -244,6 +244,9 @@ do
 				[lw_df] = true,
 				[lw_cs] = true,
 			},
+			littleWigsExtras = {
+				lw_cs,
+			},
 			zones = {
 				[2522] = "BigWigs_VaultOfTheIncarnates",
 				[2569] = "BigWigs_Aberrus",

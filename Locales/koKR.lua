@@ -61,8 +61,8 @@ L.expansionNames = {
 	"내부 전쟁", -- The War Within
 }
 L.littleWigsExtras = {
+	["LittleWigs_CurrentSeason"] = "현재 시즌",
 }
-L.currentSeason = "현재 시즌"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"
