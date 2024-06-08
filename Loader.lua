@@ -181,7 +181,6 @@ do
 		public.currentExpansion = {
 			name = c,
 			bigWigsBundled = {},
-			littlewigsName = lw_c,
 			littlewigsDefault = lw_c,
 			littleWigsBundled = {},
 			zones = {},
@@ -190,7 +189,6 @@ do
 		public.currentExpansion = {
 			name = bc,
 			bigWigsBundled = {},
-			littlewigsName = lw_bc,
 			littlewigsDefault = lw_bc,
 			littleWigsBundled = {},
 			zones = {},
@@ -199,7 +197,6 @@ do
 		public.currentExpansion = {
 			name = wotlk,
 			bigWigsBundled = {},
-			littlewigsName = lw_wotlk,
 			littlewigsDefault = lw_wotlk,
 			littleWigsBundled = {},
 			zones = {},
@@ -208,23 +205,22 @@ do
 		public.currentExpansion = {
 			name = cata,
 			bigWigsBundled = {},
-			littlewigsName = lw_cata,
 			littlewigsDefault = lw_cata,
 			littleWigsBundled = {},
 			zones = {},
 		}
-	elseif public.isBeta then -- TWW Alpha/Beta
+	elseif public.isBeta then -- TWW Beta
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
 			bigWigsBundled = {
 				[df] = true,
 				[tww] = true,
 			},
-			littlewigsName = lw_tww,
 			littlewigsDefault = lw_tww,
 			littleWigsBundled = {
 				[lw_df] = true,
 				[lw_tww] = true,
+				[lw_cs] = true,
 			},
 			littleWigsExtras = {
 			},
@@ -238,7 +234,6 @@ do
 			bigWigsBundled = {
 				[df] = true,
 			},
-			littlewigsName = lw_df,
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
 				[lw_df] = true,

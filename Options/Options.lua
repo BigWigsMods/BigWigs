@@ -1314,7 +1314,7 @@ do
 				end
 			end
 		elseif value:match("^LittleWigs_") then -- All LittleWigs content addons, all come from 1 zip
-			if loader.isRetail and loader.currentExpansion.littleWigsBundled[value] then
+			if loader.currentExpansion.littleWigsBundled[value] then -- bundled content is included in LittleWigs
 				value = "LittleWigs"
 			end
 			local addonState = loader:GetAddOnState(value)
