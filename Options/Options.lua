@@ -1006,7 +1006,7 @@ local function populateToggleOptions(widget, module)
 
 	local sDB = BigWigsStatsDB
 	local journalId = module:GetJournalID()
-	if journalId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][journalId] then
+	if journalId and id and type(id) ~= "table" and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][journalId] then
 		sDB = sDB[id][journalId]
 
 		if next(sDB) then -- Create statistics table

@@ -1710,13 +1710,25 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		local id = -(module.mapId)
 		enableZones[id] = "world"
 		worldBosses[module.worldBoss] = id
+	elseif type(module.instanceId) == 'table' then
+		for _, eachId in ipairs(module.instanceId) do
+			enableZones[eachId] = true
+		end
 	else
 		enableZones[module.instanceId] = true
 	end
 
 	local id = module.otherMenu or module.instanceId or -(module.mapId)
-	if type(menus[id]) ~= "table" then menus[id] = {} end
-	menus[id][#menus[id]+1] = module
+	if type(id) == "table" then
+		-- for multi-zone modules, create a menu for each zone
+		for _, eachId in ipairs(id) do
+			if type(menus[eachId]) ~= "table" then menus[eachId] = {} end
+			menus[eachId][#menus[eachId]+1] = module
+		end
+	else
+		if type(menus[id]) ~= "table" then menus[id] = {} end
+		menus[id][#menus[id]+1] = module
+	end
 end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
