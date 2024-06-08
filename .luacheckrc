@@ -222,6 +222,7 @@ globals = {
 	"BigWigsIconDB",
 	"BigWigsLoader",
 	"BigWigsOptions",
+	"BigWigsSharing",
 	"BigWigsStatsDB",
 	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
 	"C_EncounterJournal",
