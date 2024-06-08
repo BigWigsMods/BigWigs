@@ -680,9 +680,9 @@ do
 
 		local id = module.instanceId or -(module.mapId)
 		if type(id) == 'table' then
-			for _, eachId in ipairs(id) do
-				if not enablezones[eachId] then
-					enablezones[eachId] = true
+			for i = 1, #id do
+				if not enablezones[id[i]] then
+					enablezones[id[i]] = true
 				end
 			end
 		elseif not enablezones[id] then
