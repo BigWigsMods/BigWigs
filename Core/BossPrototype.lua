@@ -1929,50 +1929,80 @@ do
 end
 
 do
-	local GetSpellCooldown = loader.GetSpellCooldown
+
 	local canInterrupt = false
-	local spellList = isCata and {
-		80964, -- Skull Bash (Druid-Feral-Bear)
-		80965, -- Skull Bash (Druid-Feral-Cat)
-		78675, -- Solar Beam (Druid-Balance)
-		34490, -- Silencing Shot (Hunter-Marksmanship)
-		57994, -- Wind Shear (Shaman)
-		47528, -- Mind Freeze (Death Knight)
-		96231, -- Rebuke (Paladin)
-		15487, -- Silence (Priest-Shadow)
-		2139, -- Counterspell (Mage)
-		1766, -- Kick (Rogue)
-		6552, -- Pummel (Warrior)
-	} or {
-		106839, -- Skull Bash (Druid)
-		78675, -- Solar Beam (Druid-Balance)
-		116705, -- Spear Hand Strike (Monk)
-		147362, -- Counter Shot (Hunter)
-		187707, -- Muzzle (Hunter-Survival)
-		57994, -- Wind Shear (Shaman)
-		47528, -- Mind Freeze (Death Knight)
-		96231, -- Rebuke (Paladin)
-		15487, -- Silence (Priest)
-		2139, -- Counterspell (Mage)
-		1766, -- Kick (Rogue)
-		6552, -- Pummel (Warrior)
-		183752, -- Disrupt (Demon Hunter)
-		351338, -- Quell (Evoker)
-	}
-	function UpdateInterruptStatus()
-		if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-			canInterrupt = 19647
-			return
+	if isCata then
+		local spellList = {
+			78675, -- Solar Beam (Druid-Balance)
+			80964, -- Skull Bash (Druid-Feral-Bear)
+			80965, -- Skull Bash (Druid-Feral-Cat)
+			34490, -- Silencing Shot (Hunter-Marksmanship)
+			57994, -- Wind Shear (Shaman)
+			47528, -- Mind Freeze (Death Knight)
+			96231, -- Rebuke (Paladin)
+			15487, -- Silence (Priest-Shadow)
+			2139, -- Counterspell (Mage)
+			1766, -- Kick (Rogue)
+			6552, -- Pummel (Warrior)
+		}
+		function UpdateInterruptStatus()
+			if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+				canInterrupt = 19647
+				return
+			end
+			canInterrupt = false
+			for i = 1, #spellList do
+				local spell = spellList[i]
+				if IsSpellKnown(spell) then
+					if spell == 80964 then -- Skull Bash (Druid-Feral-Bear)
+						if myRole == "TANK" then
+							canInterrupt = spell
+						elseif myRolePosition == "RANGED" then
+							return
+						else
+							canInterrupt = 80965 -- Skull Bash (Druid-Feral-Cat)
+						end
+					else
+						canInterrupt = spell
+					end
+					break
+				end
+			end
 		end
-		canInterrupt = false
-		for i = 1, #spellList do
-			local spell = spellList[i]
-			if IsSpellKnown(spell) then
-				canInterrupt = spell
-				break
+	else
+		local spellList = {
+			78675, -- Solar Beam (Druid-Balance)
+			106839, -- Skull Bash (Druid)
+			116705, -- Spear Hand Strike (Monk)
+			147362, -- Counter Shot (Hunter)
+			187707, -- Muzzle (Hunter-Survival)
+			57994, -- Wind Shear (Shaman)
+			47528, -- Mind Freeze (Death Knight)
+			96231, -- Rebuke (Paladin)
+			15487, -- Silence (Priest)
+			2139, -- Counterspell (Mage)
+			1766, -- Kick (Rogue)
+			6552, -- Pummel (Warrior)
+			183752, -- Disrupt (Demon Hunter)
+			351338, -- Quell (Evoker)
+		}
+		function UpdateInterruptStatus()
+			if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+				canInterrupt = 19647
+				return
+			end
+			canInterrupt = false
+			for i = 1, #spellList do
+				local spell = spellList[i]
+				if IsSpellKnown(spell) then
+					canInterrupt = spell
+					break
+				end
 			end
 		end
 	end
+
+	local GetSpellCooldown = loader.GetSpellCooldown
 	--- Check if you can interrupt.
 	-- @string[opt] guid if not nil, will only return true if the GUID matches your target or focus.
 	-- @return boolean, if the unit can interrupt
