@@ -417,7 +417,7 @@ local function findCalls(lines, start, local_func, options)
 	return #keys > 0 and keys or nil
 end
 
-local function parseGetOptions(file_name, lines, start, marker_options)
+local function parseGetOptions(file_name, lines, start, special_options)
 	local chunk = nil
 	for i = start, #lines do
 		if i == start and lines[i]:match("^%s*return {.+}%s*$") then
@@ -458,7 +458,7 @@ local function parseGetOptions(file_name, lines, start, marker_options)
 			mod = mod,
 		}, {
 			__index = function(t, k)
-				if marker_options[k] then return "custom_off_" .. k end
+				if special_options[k] then return "custom_off_" .. k end
 				return k
 			end
 		})
@@ -579,7 +579,7 @@ local function parseLua(file)
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
 	local options, option_keys, option_key_used = {}, {}, {}
 	local options_block_start = 0
-	local marker_options = {}
+	local special_options = {}
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
 	local current_func = nil
@@ -615,11 +615,15 @@ local function parseLua(file)
 			end
 		end
 
-		-- save marker options
+		-- save marker and autotalk options
 		do
 			local var = line:match("(%w+) = .*:AddMarkerOption%(")
 			if var then
-				marker_options[var] = true
+				special_options[var] = true
+			end
+			var = line:match("(%w+) = .*:AddAutoTalkOption%(")
+			if var then
+				special_options[var] = true
 			end
 		end
 
@@ -664,7 +668,7 @@ local function parseLua(file)
 
 		--- loadstring the options table
 		if line:find("function mod:GetOptions(", nil, true) then
-			local opts, err = parseGetOptions(file_name, lines, n+1, marker_options)
+			local opts, err = parseGetOptions(file_name, lines, n+1, special_options)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
