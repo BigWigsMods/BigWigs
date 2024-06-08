@@ -60,6 +60,8 @@ L.expansionNames = {
 	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
 	"The War Within", -- The War Within
 }
+L.littleWigsExtras = {
+}
 L.currentSeason = "Текущий сезон"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

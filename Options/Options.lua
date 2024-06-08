@@ -1287,7 +1287,7 @@ do
 		local bigwigsContent = value:match("(BigWigs_%a+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif bigwigsContent and (loader.isClassic or value ~= loader.currentExpansion.name) then -- Any BigWigs content, but skip when clicking the current expansion header
+		elseif bigwigsContent and not loader.currentExpansion.bigWigsBundled[value] then -- Any BigWigs content except bundled expansion headers
 			local addonState = loader:GetAddOnState(bigwigsContent)
 			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
 			if string then
@@ -1314,7 +1314,7 @@ do
 				end
 			end
 		elseif value:match("^LittleWigs_") then -- All LittleWigs content addons, all come from 1 zip
-			if loader.isRetail and (value == loader.currentExpansion.littlewigsName or value == loader.currentExpansion.littlewigsDefault) then
+			if loader.isRetail and loader.currentExpansion.littleWigsBundled[value] then
 				value = "LittleWigs"
 			end
 			local addonState = loader:GetAddOnState(value)
@@ -1394,6 +1394,7 @@ do
 				end
 			elseif value == "littlewigs" then
 				defaultHeader = loader.currentExpansion.littlewigsDefault
+				-- add an entry for each expansion
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
@@ -1402,6 +1403,18 @@ do
 						enabled = true,
 					}
 					addonNameToHeader[value] = i
+				end
+				-- add any extra LittleWigs menus
+				if loader.currentExpansion.littleWigsExtras then
+					for i = 1, #loader.currentExpansion.littleWigsExtras do
+						local value = loader.currentExpansion.littleWigsExtras[i]
+						treeTbl[#treeTbl + i] = {
+							text = L.littleWigsExtras[value],
+							value = value,
+							enabled = true,
+						}
+						addonNameToHeader[value] = #treeTbl
+					end
 				end
 				-- add default LittleWigs to options if it doesn't match the current expansion's LittleWigs
 				if loader.currentExpansion.littlewigsName ~= loader.currentExpansion.littlewigsDefault then
