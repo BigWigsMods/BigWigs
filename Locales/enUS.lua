@@ -60,6 +60,7 @@ L.expansionNames = {
 	"The War Within", -- The War Within
 }
 L.littleWigsExtras = {
+	["LittleWigs_Delves"] = "Delves",
 	["LittleWigs_CurrentSeason"] = "Current Season",
 }
 

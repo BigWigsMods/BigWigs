@@ -45,10 +45,11 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 	[8] = true, -- Mythic+ Dungeon
 	[23] = true, -- Mythic Dungeon
 	[24] = true, -- Timewalking
+	[208] = true, -- Delves
 }
 
 --[[
-10.2.7
+11.0.0
 1. Normal
 2. Heroic
 3. 10 Player
@@ -93,6 +94,9 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 172. World Boss
 192. Challenge Level 1
 205. Follower
+208. Delves
+216. Quest
+220. Story
 
 4.4.0
 1. Normal

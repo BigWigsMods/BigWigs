@@ -174,6 +174,7 @@ do
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
 	local lw_tww = "LittleWigs_TheWarWithin"
+	local lw_delves = "LittleWigs_Delves"
 	local lw_cs = "LittleWigs_CurrentSeason"
 	local cap = "Capping"
 
@@ -220,9 +221,11 @@ do
 			littleWigsBundled = {
 				[lw_df] = true,
 				[lw_tww] = true,
+				[lw_delves] = true,
 				[lw_cs] = true,
 			},
 			littleWigsExtras = {
+				lw_delves,
 			},
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
@@ -474,6 +477,20 @@ do
 		[2661] = lw_tww, -- Cinderbrew Meadery
 		[2662] = lw_tww, -- The Dawnbreaker
 		[2669] = lw_tww, -- City of Threads
+		--[[ LittleWigs: Delves ]]--
+		[2664] = lw_delves, -- Fungal Folly
+		[2679] = lw_delves, -- Mycomancer Cavern
+		[2680] = lw_delves, -- Earthcrawl Mines
+		[2681] = lw_delves, -- Kriegval's Rest
+		[2682] = lw_delves, -- Zekvir's Lair
+		[2683] = lw_delves, -- The Waterworks
+		[2684] = lw_delves, -- The Dread Pit
+		[2685] = lw_delves, -- Skittering Breach
+		[2686] = lw_delves, -- Nightfall Sanctum
+		[2687] = lw_delves, -- The Sinkhole
+		[2688] = lw_delves, -- The Spiral Weave
+		[2689] = lw_delves, -- Tak-Rethan Abyss
+		[2690] = lw_delves, -- The Underkeep
 
 		--[[ Capping ]]--
 		[30] = cap, -- Alterac Valley
