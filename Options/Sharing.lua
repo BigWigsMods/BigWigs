@@ -154,10 +154,19 @@ local importedTableData = nil
 -- Functions
 --
 
-local function exportProfileSettings(args, pluginProfile)
+local function exportProfileColorSettings(argsToExport)
 	local export = {}
-	for i, v in ipairs(args) do
-		export[v] = pluginProfile[v]
+	local colorSettings = BigWigs:GetPlugin("Colors")
+	for i = 1, #argsToExport do
+		export[argsToExport[i]] = colorSettings.db.profile[argsToExport[i]]["BigWigs_Plugins_Colors"]["default"]
+	end
+	return export
+end
+
+local function exportProfileSettings(argsToExport, pluginProfile)
+	local export = {}
+	for i = 1, #argsToExport do
+		export[argsToExport[i]] = pluginProfile[argsToExport[i]]
 	end
 	return export
 end
@@ -169,7 +178,6 @@ local function GetExportString()
 
 	local barSettings = BigWigs:GetPlugin("Bars")
 	local messageSettings = BigWigs:GetPlugin("Messages")
-	local colorSettings = BigWigs:GetPlugin("Colors")
 
 	if sharingOptions.exportBarAnchors then
 		exportOptions["barAnchors"] = exportProfileSettings(barAnchorsToExport, barSettings.db.profile)
@@ -188,11 +196,11 @@ local function GetExportString()
 	end
 
 	if sharingOptions.exportMessageColors then
-		exportOptions["messageColors"] = exportProfileSettings(messageColorsToExport, colorSettings.db.profile)
+		exportOptions["messageColors"] = exportProfileColorSettings(messageColorsToExport)
 	end
 
 	if sharingOptions.exportBarColors then
-		exportOptions["barColors"] = exportProfileSettings(barColorsToExport, colorSettings.db.profile)
+		exportOptions["barColors"] = exportProfileColorSettings(barColorsToExport)
 	end
 
 	local serialized = LibSerialize:Serialize(exportOptions)
@@ -251,16 +259,26 @@ do
 		local messageplugin = BigWigs:GetPlugin("Messages")
 		local colorplugin = BigWigs:GetPlugin("Colors")
 
-		local function resetCurrentSettings(plugin, args)
-			local profile = plugin.db.profile
-			for i, v in ipairs(args) do
-				profile[v] = nil
+		-- Colors are stored for each plugin/module (e.g. BigWigs_Plugins_Colors for the defaults, BigWigs_Bosses_* for bosses)
+		-- We only want to modify the defaults with these imports right now.
+		local function importColorSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
+			if sharingOptions[sharingOptionKey] and data[dataKey] then
+				for k in next, plugin.db.profile do
+					plugin.db.profile[k]["BigWigs_Plugins_Colors"]["default"] = nil -- Reset defaults only
+				end
+				for k, v in pairs(data[dataKey]) do
+					plugin.db.profile[k]["BigWigs_Plugins_Colors"]["default"] = v
+				end
+				table.insert(imported, message)
 			end
 		end
 
 		local function importSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
 			if sharingOptions[sharingOptionKey] and data[dataKey] then
-				resetCurrentSettings(plugin, settingsToExport)
+				local profile = plugin.db.profile
+				for i = 1, #settingsToExport do
+					profile[settingsToExport[i]] = nil -- Reset current settings
+				end
 				for k, v in pairs(data[dataKey]) do
 					plugin.db.profile[k] = v
 				end
@@ -270,10 +288,10 @@ do
 
 		importSettings('importBarAnchors', 'barAnchors', barAnchorsToExport, barPlugin, L.importedBarAnchors)
 		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.importedBarSettings)
-		importSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.importedBarColors)
+		importColorSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.importedBarColors)
 		importSettings('importMessageAnchors', 'messageAnchors', messageAnchorsToExport, messageplugin, L.importedMessageAnchors)
 		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.importedMessageSettings)
-		importSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.importedMessageColors)
+		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.importedMessageColors)
 
 		if #imported == 0 then
 			BigWigs:Print(L.noImportMessage)
