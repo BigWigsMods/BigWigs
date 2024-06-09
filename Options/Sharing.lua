@@ -328,11 +328,18 @@ local sharingOptions = {
 		get = function(i) return sharingOptions[i[#i]] end,
 		set = function(i, value) sharingOptions[i[#i]] = value end,
 		args = {
+			importInfo = {
+				type = "description",
+				name = L.import_info,
+				order = 1,
+				width = "full",
+			},
 			importString = {
 				type = "input",
 				multiline = 5,
 				name = L.importString,
-				order = 1,
+				desc = L.importString_desc,
+				order = 2,
 				width = "full",
 				pattern = "^(%w+):(.+)$",
 				set = function(i, value)
@@ -412,7 +419,6 @@ local sharingOptions = {
 				width = "full",
 				func = function()
 					sharing:SaveData()
-					sharingOptions["importString"] = nil
 				end,
 				disabled = function() return not importedTableData end,
 				confirm = true,
@@ -427,11 +433,17 @@ local sharingOptions = {
 		get = function(i) return sharingOptions[i[#i]] end,
 		set = function(i, value) sharingOptions[i[#i]] = value end,
 		args = {
+			exportInfo = {
+				type = "description",
+				name = L.export_info,
+				order = 1,
+				width = "full",
+			},
 			bars = {
 				type = "group",
 				name = L.BAR,
 				inline = true,
-				order = 1,
+				order = 2,
 				args = {
 					exportBarAnchors = {
 						type = "toggle",
@@ -490,6 +502,7 @@ local sharingOptions = {
 				type = "input",
 				multiline = 5,
 				name = L.exportString,
+				desc = L.exportString_desc,
 				order = 100,
 				width = "full",
 				get = function()

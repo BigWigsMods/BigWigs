@@ -170,9 +170,13 @@ L.dispeller = "|cFFFF0000Dispeller alerts only.|r "
 
 -- Sharing.lua
 L.import = "Import"
+L.import_info = "After entering a string you can select what settings you would like to import.\nIf settings are not available in the import string they will not be selectable.\n\nThis import will only affect the general settings and does not affect boss specific settings."
 L.export = "Export"
+L.export_info = "Select which settings you would like to export and share with others.\n\nYou can only share general settings and these have no effect on boss specific settings."
 L.exportString = "Export String"
+L.exportString_desc = "Copy this BigWigs string if you want to share your settings."
 L.importString = "Import String"
+L.importString_desc = "Paste the BigWigs string you want to import here."
 L.importSuccess = "Imported: %s" -- Imported: Bar Anchors, Message Colors
 L.anchors = "Anchors"
 L.settings = "Settings"
