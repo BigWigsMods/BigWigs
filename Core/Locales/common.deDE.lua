@@ -100,7 +100,7 @@ L.affixes = "Affixe" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "%s markieren"
 L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s. Benötigt Leiter oder Assistent." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Von '%s' betroffene NPCs mit %s markieren. Benötigt Leiter oder Assistent." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "Verbindung"
@@ -141,9 +141,9 @@ L.nature = "Natur"
 L.arcane = "Arkan"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "Automatische NPC Interaktion"
+L.autotalk_boss_desc = "Automatisch die NPC Dialogoptionen wählen, welche den Bosskampf beginnen lassen."
+L.autotalk_generic_desc = "Automatisch die NPC Dialogoptionen wählen, welche die nächste Phase des Dungeons einleiten."
 
 -- Common ability name replacements
 L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
