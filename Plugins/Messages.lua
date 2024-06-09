@@ -28,6 +28,8 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
+RaidWarningFrame:SetHeight(40) -- Modded to remove the empty gap between raid warnings and boss emotes
+
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -45,22 +47,21 @@ plugin.defaultDB = {
 	chat = false,
 	useicons = true,
 	classcolor = true,
-	growUpwards = true,
+	growUpwards = false,
 	displaytime = 3,
 	fadetime = 2,
 	emphUppercase = true,
 	disabled = false,
 	emphDisabled = false,
-	-- Designed by default to grow up into the errors frame (which should be disabled in the BossBlock plugin in 99% of situations)
-	-- Should not enter the RaidWarningFrame by default (since we grow upwards), which we don't want to block view of
+	-- Designed by default to be just under the boss emote frame and grow down away from it
 	-- By order from top to bottom:
 	-- >> UIErrorsFrame (anchored to top of UIParent)
-	-- >> Our message frame (placed at bottom of UIErrorsFrame, growing upwards)
-	-- >> RaidWarningFrame (anchored to bottom of UIErrorsFrame)
+	-- >> RaidWarningFrame (anchored to bottom of UIErrorsFrame) which we mod from height 70 down to height 40
 	-- >> RaidBossEmoteFrame (anchored to bottom of RaidWarningFrame)
-	-- 122 (UIErrorsFrame Y position) + 60 (UIErrorsFrame height) = 182
-	-- Worth noting: RaidWarningFrame height = 70 & RaidBossEmoteFrame height = 80
-	normalPosition = {"TOP", "TOP", 0, -182},
+	-- >> Our message frame (placed at bottom of RaidBossEmoteFrame, growing downwards)
+	-- 122 (UIErrorsFrame Y position) + 60 (UIErrorsFrame height) + 40 (RaidWarningFrame modded height) + 40 (2 x 20 RaidBossEmoteFrame invidual fontstrings) = 262
+	-- Worth noting: RaidWarningFrame height = 70 & RaidBossEmoteFrame height = 80, fontstrings for both are size 20 and both frames have 2 fontstrings (40 each), the rest is wasted space
+	normalPosition = {"BOTTOM", "TOP", 0, -262},
 	emphPosition = {"CENTER", "CENTER", 0, 0},
 }
 
