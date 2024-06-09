@@ -942,6 +942,9 @@ function mod:ADDON_LOADED(addon)
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
 
+	if public.isBeta then -- Temporary workaround until the new event for delves is implemented
+		bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	end
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_FORMED")
@@ -1683,6 +1686,9 @@ do
 				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
 			end
 		end
+	end
+	if public.isBeta then
+		mod.ZONE_CHANGED_NEW_AREA = mod.PLAYER_ENTERING_WORLD
 	end
 end
 
