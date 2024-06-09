@@ -1965,7 +1965,7 @@ do
 					else
 						canInterrupt = spell
 					end
-					break
+					return
 				end
 			end
 		end
@@ -1996,7 +1996,7 @@ do
 				local spell = spellList[i]
 				if IsSpellKnown(spell) then
 					canInterrupt = spell
-					break
+					return
 				end
 			end
 		end
