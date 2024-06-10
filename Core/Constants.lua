@@ -133,7 +133,12 @@ end
 local function replaceIdWithDescription(msg)
 	local id = tonumber(msg)
 	if id > 0 then
-		local desc = GetSpellDescription(id)
+		local desc
+		if BigWigsLoader.isBeta then
+			desc = GetSpellDescription(id) or "" -- XXX in TWW returns nil instead of empty string if there's no description
+		else
+			desc = GetSpellDescription(id)
+		end
 		if desc then
 			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 		else
@@ -235,7 +240,12 @@ function BigWigs:GetBossOptionDetails(module, option)
 				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
 				spellName = option
 			end
-			local desc = GetSpellDescription(option)
+			local desc
+			if BigWigsLoader.isBeta then
+				desc = GetSpellDescription(option) or "" -- XXX in TWW returns nil instead of empty string if there's no description
+			else
+				desc = GetSpellDescription(option)
+			end
 			if not desc then
 				BigWigs:Error(("No spell description was returned for id %d!"):format(option))
 				desc = option
