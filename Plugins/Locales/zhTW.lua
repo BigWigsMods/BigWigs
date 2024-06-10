@@ -373,6 +373,7 @@ L.Long = "長響"
 L.Warning = "警報"
 L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"
 L.underyou = "當你需要離開一個地板技能的範圍時（跑位）"
+--L.privateaura = "Private aura on you"
 
 L.sound = "音效"
 
