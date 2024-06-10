@@ -95,6 +95,8 @@ L.test = "Тест"
 L.resetPositions = "Сброс позиции"
 L.colors = "Цвета"
 L.selectEncounter = "Выберите схватку"
+--L.privateAuraSounds = "Private Aura Sounds"
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
 L.listAbilities = "Вывести способности в групповой чат"
 
 L.dbmFaker = "Маскировка под DBM"

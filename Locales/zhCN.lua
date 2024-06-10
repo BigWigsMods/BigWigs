@@ -95,6 +95,8 @@ L.test = "测试"
 L.resetPositions = "重置位置"
 L.colors = "颜色"
 L.selectEncounter = "选择战斗"
+--L.privateAuraSounds = "Private Aura Sounds"
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
 L.listAbilities = "列出技能到团队聊天"
 
 L.dbmFaker = "伪装成 DBM 用户"

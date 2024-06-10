@@ -1023,7 +1023,7 @@ local function populatePrivateAuraOptions(widget)
 	scrollFrame:PauseLayout()
 
 	local text = AceGUI:Create("Label")
-	text:SetText("Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability.")
+	text:SetText(L.privateAuraSounds_desc)
 	text:SetColor(1, 0.75, 0.79)
 	text:SetImage(icons.PRIVATE)
 	text:SetFullWidth(true)
@@ -1291,7 +1291,7 @@ local function onZoneShow(treeWidget, id)
 		-- Add the private aura plugin module
 		if privateAuraSoundOptions then
 			local moduleName = "Private Aura Sounds"
-			zoneList[moduleName] = "|cffffbfc9Private Aura Sounds|r" -- XXX LOCALIZE
+			zoneList[moduleName] = ("|cffffbfc9%s|r"):format(L.privateAuraSounds)
 			zoneSort[#zoneSort+1] = moduleName
 		end
 	end
