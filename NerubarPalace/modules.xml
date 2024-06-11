@@ -11,7 +11,7 @@
 <Script file="Ansurek.lua"/>
 <!-- <Script file="Trash.lua"/> -->
 
-<!-- <Include file="Locales\locales.xml"/>
-<Include file="Options\options.xml"/> -->
+<Include file="Locales\locales.xml"/>
+<!-- <Include file="Options\options.xml"/> -->
 
 </Ui>
