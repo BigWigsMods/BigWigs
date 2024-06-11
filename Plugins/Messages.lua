@@ -28,8 +28,6 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
-RaidWarningFrame:SetHeight(40) -- Modded to remove the empty gap between raid warnings and boss emotes
-
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -48,8 +46,8 @@ plugin.defaultDB = {
 	useicons = true,
 	classcolor = true,
 	growUpwards = false,
-	displaytime = 3,
-	fadetime = 2,
+	displaytime = 2,
+	fadetime = 1.2,
 	emphUppercase = true,
 	disabled = false,
 	emphDisabled = false,
@@ -805,3 +803,6 @@ do
 		end
 	end
 end
+
+-- Always last to prevent a potential error breaking the plugin
+RaidWarningFrame:SetHeight(40) -- Modded to remove the empty gap between raid warnings and boss emotes
