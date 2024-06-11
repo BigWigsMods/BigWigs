@@ -836,10 +836,10 @@ do
 			else
 				self:Message(391989, "blue", msg)
 			end
-			self:Say(391989, sayMsg, true, false)
+			self:Say(391989, sayMsg, true)
 			self:PlaySound(391989, "warning")
 			if self:GetOption("custom_on_repeating_stormcharged") then
-				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, sayMsg, true, false)
+				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, sayMsg, true)
 			end
 		end
 	end
@@ -878,9 +878,9 @@ do
 				msg = L.positive
 				sayMsg = sayMessagesInversion[1] -- Cross/Red
 			end
-			self:Say(391989, sayMsg, true, false)
+			self:Say(391989, sayMsg, true)
 			if self:GetOption("custom_on_repeating_stormcharged") then
-				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, sayMsg, true, false)
+				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, sayMsg, true)
 			end
 		end
 	end

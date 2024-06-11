@@ -352,7 +352,7 @@ function mod:UnstableEssenceAppliedStacks(args)
 		if icon then
 			sayText = "{rt"..icon.."} "..args.amount.." {rt"..icon.."}"
 		end
-		self:Say(false, sayText, true, false)
+		self:Say(false, sayText, true)
 	end
 end
 

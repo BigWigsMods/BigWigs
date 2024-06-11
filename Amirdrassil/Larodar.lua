@@ -557,9 +557,9 @@ do
 				if currentHealthPercent < 75 then -- Only let players know when you are below 75%
 					local myIcon = self:GetIcon(args.destRaidFlags)
 					if myIcon then
-						self:Yell(false, ("{rt%d}%d%%"):format(myIcon, currentHealthPercent), true, false)
+						self:Yell(false, ("{rt%d}%d%%"):format(myIcon, currentHealthPercent), true)
 					else
-						self:Yell(false, ("%d%%"):format(currentHealthPercent), true, false)
+						self:Yell(false, ("%d%%"):format(currentHealthPercent), true)
 					end
 				end
 			end

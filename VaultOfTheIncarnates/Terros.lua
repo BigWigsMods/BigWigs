@@ -266,7 +266,7 @@ do
 			self:PersonalMessage(391592, nil, L.infused_fallout)
 			self:PlaySound(391592, "warning") -- debuffmove
 			if self:GetOption("custom_on_repeating_fallout") then
-				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, "{rt7}", true, false)
+				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, "{rt7}", true)
 			end
 		end
 	end
