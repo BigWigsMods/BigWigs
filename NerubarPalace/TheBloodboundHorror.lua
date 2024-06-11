@@ -38,7 +38,7 @@ function mod:GetOptions()
 		459444, -- Internal Hemorrhage
 		442530, -- Goresplatter
 		443305, -- Residual Membrane
-		{443042, "SAY", "SAY_COUNTDOWN"}, -- Grasp From Beyond
+		{443042, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Grasp From Beyond
 		445518, -- Black Blood
 		438696, -- Black Sepsis
 		-- Phase Two: The Unseeming
