@@ -1005,7 +1005,7 @@ local function parseLua(file)
 					error(string.format("    %s:%d: %s: Missing msg(2) with directPrint(3)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
 				end
 				-- Check for English chat messages (unless using directPrint)
-				if (method == "Say" or method == "Yell") and (args[3+offset] ~= "true" and not args[4+offset] or args[4+offset] == "nil") then
+				if (method == "Say" or method == "Yell") and (args[3+offset] ~= "true" and (not args[4+offset] or args[4+offset] == "nil")) then
 					error(string.format("    %s:%d: %s: Missing englishText(4)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
 				end
 				-- Set default keys
