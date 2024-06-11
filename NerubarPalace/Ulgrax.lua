@@ -48,7 +48,7 @@ function mod:GetOptions()
 		445123, -- Hulking Crash
 	},{
 		[434803] = -30011,
-		[441451] = -28845,
+		[-28848] = -28845,
 	}
 end
 
