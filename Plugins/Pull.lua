@@ -276,7 +276,7 @@ do
 				end
 			end
 			FlashClientIcon()
-			BigWigs:Print(L.pullStarted:format(isDBM and "DBM" or "BigWigs", nick))
+			BigWigs:Print(L.pullStartedBy:format(nick))
 			timer = self:ScheduleRepeatingTimer(printPull, 1, self)
 
 			if self.db.profile.combatLog then
@@ -411,16 +411,20 @@ SlashCmdList.BIGWIGSPULL = function(input)
 			BigWigs:Print(L.requiresLeadOrAssist)
 		end
 	else
-		if not plugin:IsEnabled() then BigWigs:Enable() end
-		if input == "" then
-			DoCountdown(10) -- Allow typing /pull to start a 10 second pull timer
-		else
-			local seconds = tonumber(input)
-			if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
-			if seconds ~= 0 then
-				BigWigs:Print(L.sendPull)
+		if not IsInGroup() or (IsInGroup(2) and UnitGroupRolesAssigned("player") == "TANK") or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or (IsInGroup(1) and not IsInRaid()) then -- Solo, tank in LFG, leader, assist, anyone in 5m
+			if not plugin:IsEnabled() then BigWigs:Enable() end
+			if input == "" then
+				DoCountdown(10) -- Allow typing /pull to start a 10 second pull timer
+			else
+				local seconds = tonumber(input)
+				if not seconds or seconds < 0 or seconds > 86400 then BigWigs:Print(L.wrongPullFormat) return end
+				if seconds ~= 0 then
+					BigWigs:Print(L.sendPull)
+				end
+				DoCountdown(seconds)
 			end
-			DoCountdown(seconds)
+		else
+			BigWigs:Print(L.requiresLeadOrAssist)
 		end
 	end
 end
