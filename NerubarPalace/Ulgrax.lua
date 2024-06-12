@@ -30,17 +30,17 @@ mod:SetRespawnTime(30)
 
 function mod:GetOptions()
 	return {
-		"stages",
+		-- "stages",
 		-- Gleeful Brutality
 		434803, -- Brutal Lashings
 		449268, -- Carnivorous Contest
 		441451, -- Stalkers Webbing
-		439419, -- Stalker Netting
+		-- 439419, -- Stalker Netting
 		435136, -- Venomous Lash
 		{434697, "TANK"}, -- Brutal Crush
 		{434705, "TANK"}, -- Tenderized
 		-- Feeding Frenzy
-		-28848, -- Ravenous Spawn
+		-- -28848, -- Ravenous Spawn
 		439037, -- Disembowel
 		436200, -- Juggernaut Charge
 		443842, -- Swallowing Darkness
@@ -48,7 +48,7 @@ function mod:GetOptions()
 		445123, -- Hulking Crash
 	},{
 		[434803] = -30011,
-		[-28848] = -28845,
+		[439037] = -28845,
 	}
 end
 
@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TenderizedApplied", 434705)
 
 	-- Feeding Frenzy
-	self:Death("RavenousSpawnKilled", 216205)
+	-- self:Death("RavenousSpawnKilled", 216205) -- Ravenous Spawn -- energy/feed message probably better?
 	self:Log("SPELL_AURA_APPLIED", "DisembowelApplied", 439037)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DisembowelApplied", 439037)
 	self:Log("SPELL_CAST_START", "JuggernautCharge", 436200, 436203) -- XXX Confirm if both ids are used
@@ -129,10 +129,10 @@ function mod:TenderizedApplied(args)
 end
 
 -- Feeding Frenzy
-function mod:RavenousSpawnKilled()
-	self:Message(-28848, "cyan", CL.killed(self:SpellName(-28848)), false)
-	self:PlaySound(-28848, "info")
-end
+-- function mod:RavenousSpawnKilled()
+-- 	self:Message(-28848, "cyan", CL.killed:format(self:SpellName(-28848)), false)
+-- 	self:PlaySound(-28848, "info")
+-- end
 
 function mod:DisembowelApplied(args)
 	if self:Me(args.destGUID) then

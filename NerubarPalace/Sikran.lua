@@ -100,7 +100,7 @@ end
 
 do
 	function mod:CaptainsFlourish(args)
-		self:Message(args.spellId, "cyan", CL.casting(CL.tank_combo))
+		self:Message(args.spellId, "cyan", CL.casting:format(CL.tank_combo))
 		self:PlaySound(args.spellId, "info")
 		--self:Bar(args.spellId, 42, CL.tank_combo)
 	end
@@ -136,10 +136,10 @@ do
 	end
 end
 
-function mod:PhaseBlades(args)
-	self:Message(args.spellId, "yellow")
--- 	self:Bar(433517, 42)
-end
+-- function mod:PhaseBlades(args)
+-- 	self:Message(args.spellId, "yellow")
+-- -- 	self:Bar(433517, 42)
+-- end
 
 function mod:PhaseBladesApplied(args)
 	if self:Me(args.destGUID) then
@@ -156,7 +156,7 @@ function mod:CosmicWoundApplied(args)
 	end
 end
 
-function mod:CosmicSimulacrum(args)
+function mod:RainOfArrows(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	--self:Bar(args.spellId, 42)
