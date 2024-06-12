@@ -190,7 +190,7 @@ local args_keys = {
 -- Set an exit code if we show an error.
 local exit_code = 0
 local error, warn, info
-if os.execute("tput colors 2>/dev/null") then
+if os.execute("tput colors >/dev/null 2>&1") then
 	function error(msg)
 		print("\27[31m" .. msg .. "\27[0m") -- red
 		exit_code = 1
@@ -1317,7 +1317,7 @@ local function parse(file)
 		if string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
 			parseLua(file)
-		elseif string.match(file, "modules.*%.xml$") then
+		elseif string.match(file, "modules.*%.xml$") or string.match(file, "bosses%.xml$") then
 			-- Scan module includes for lua files.
 			print(string.format("Checking %s", file))
 			parse(parseXML(file))
