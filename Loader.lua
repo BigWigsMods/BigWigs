@@ -942,8 +942,8 @@ function mod:ADDON_LOADED(addon)
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
 
-	if public.isBeta then -- Temporary workaround until the new event for delves is implemented
-		bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	if C_EventUtils.IsEventValid("ACTIVE_DELVE_DATA_UPDATE") then -- Temporary workaround until the new event for delves is implemented
+		bwFrame:RegisterEvent("ACTIVE_DELVE_DATA_UPDATE")
 	end
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -1688,7 +1688,7 @@ do
 		end
 	end
 	if public.isBeta then
-		mod.ZONE_CHANGED_NEW_AREA = mod.PLAYER_ENTERING_WORLD
+		mod.ACTIVE_DELVE_DATA_UPDATE = mod.PLAYER_ENTERING_WORLD
 	end
 end
 
