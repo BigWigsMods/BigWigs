@@ -6,7 +6,7 @@ if not BigWigsLoader.isBeta then return end -- Beta check
 
 local mod, CL = BigWigs:NewBoss("The Silken Court", 2657, 2608)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(217489, 217491) -- Anub'arash, Skeinspinner Takazj
 mod:SetEncounterID(2921)
 mod:SetRespawnTime(30)
 
