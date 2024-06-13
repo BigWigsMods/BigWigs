@@ -6,7 +6,7 @@ if not BigWigsLoader.isBeta then return end -- Beta check
 
 local mod, CL = BigWigs:NewBoss("Nexus-Princess Ky'veza", 2657, 2601)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(217748) -- Nexus-Princess Ky'veza
 mod:SetEncounterID(2920)
 mod:SetRespawnTime(30)
 
