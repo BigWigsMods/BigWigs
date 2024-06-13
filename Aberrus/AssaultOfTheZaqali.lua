@@ -22,7 +22,6 @@ local magmaMysticCount = 1
 local blazingFocusCount = 0
 local myFlamingCudgelStacks = 0
 local tempBlockBigAddMsg = false
-local hasFixate, hasBeam = false, false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -145,7 +144,6 @@ function mod:OnEngage()
 	blazingFocusCount = 0
 	myFlamingCudgelStacks = 0
 	tempBlockBigAddMsg = false
-	hasFixate, hasBeam = false, false
 
 	self:Bar(401258, 12) -- Heavy Cudgel
 	self:Bar(397383, self:Easy() and 26.5 or 28, L.add_bartext:format(L.molten_barrier, L.both, magmaMysticCount)) -- Molten Barrier
