@@ -42,7 +42,7 @@ function mod:GetOptions()
 		445936, -- Spewing Hemorrhage
 		459444, -- Internal Hemorrhage
 		442530, -- Goresplatter
-		443305, -- Crimson Rain
+		443203, -- Crimson Rain
 		{443042, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Grasp From Beyond
 		445518, -- Black Blood
 		438696, -- Black Sepsis
@@ -65,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SpewingHemorrhage", 445936)
 	self:Log("SPELL_AURA_APPLIED", "InternalHemorrhageApplied", 459444) -- Stacks?
 	self:Log("SPELL_CAST_START", "Goresplatter", 442530)
-	self:Log("SPELL_CAST_SUCCESS", "CrimsonRain", 443305)
+	self:Log("SPELL_CAST_SUCCESS", "CrimsonRain", 443203)
 	-- self:Log("SPELL_CAST_SUCCESS", "GraspFromBeyond", 443042)
 	self:Log("SPELL_AURA_APPLIED", "GraspFromBeyondApplied", 443042)
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 445518) -- Black Blood
@@ -89,7 +89,7 @@ function mod:OnEngage()
 	self:Bar(444363, 16, CL.count:format(self:SpellName(444363), gruesomeDisgorgeCount)) -- Gruesome Disgorge
 	self:Bar(445936, 32, CL.count:format(self:SpellName(445936), spewingHemorrhageCount)) -- Spewing Hemorrhage
 	self:Bar(442530, 120, CL.count:format(self:SpellName(442530), goresplatterCount)) -- Goresplatter
-	self:Bar(443305, 11, CL.count:format(self:SpellName(443305), crimsonRainCount)) -- Crimson Rain
+	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
 	self:Bar(443042, 22, CL.count:format(self:SpellName(443042), graspFromBeyondCount)) -- Grasp From Beyond
 end
 
