@@ -178,8 +178,6 @@ do
 		self:Bar(441362, volatileConcoctionCount > 2 and 20 or 36, CL.count:format(args.spellName, volatileConcoctionCount))
 	end
 
-	-- We cannot expect a nil args.amount as the APPLIED event has a fake absorb value (1234) so we intentionally separate APPLIED/_DOSE to know when the debuff actually stacked
-	-- "This was part of the hotfix that allowed player absorbs to reduce the amount of damage contribution the tank swaps were giving to the explosion"
 	function mod:VolatileConcoctionApplied(args)
 		self:TargetMessage(args.spellId, "purple", args.destName, lastMsg)
 		self:TargetBar(args.spellId, 8, args.destName, lastMsg)
