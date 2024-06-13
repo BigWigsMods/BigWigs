@@ -4,11 +4,6 @@ if L then
     --L.grasp_from_beyond_say = "Tentacles"
 end
 
-L = BigWigs:NewBossLocale("The Bloodbound Horror", "ptBR")
-if L then
-	--L.grasp_from_beyond_say = "Tentacles"
-end
-
 L = BigWigs:NewBossLocale("Eggtender Ovi'nax", "ptBR")
 if L then
     --L.unstable_web_say = "Web"
