@@ -46,6 +46,7 @@ L.general = "Общее" -- General settings, i.e. things that apply to normal, 
 L.door_open = "Дверь открыта" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Врата открыты" -- When a gate is open, usually after a speech from an NPC
 
+--L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s для %s сек" -- Spell for 10 seconds
 L.over = "%s завершается" -- Spell Over
 L.removed = "%s снято" -- Spell Removed

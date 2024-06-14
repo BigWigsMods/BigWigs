@@ -46,6 +46,7 @@ L.health_percent = "%d%% 生命值" -- "10% Health" The health percentage of an 
 L.door_open = "開門" -- 小的門 When a door is open, usually after a speech from an NPC
 L.gate_open = "開門" -- 大的門 When a gate is open, usually after a speech from an NPC
 
+--L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s持續%s秒" -- Spell for 10 seconds
 L.over = "%s結束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
