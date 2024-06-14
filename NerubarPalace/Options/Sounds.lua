@@ -50,6 +50,16 @@ BigWigs:AddSounds("Eggtender Ovi'nax", {
 })
 
 BigWigs:AddSounds("Nexus-Princess Ky'veza", {
+	[435405] = "long",
+	[435534] = "warning",
+	[436867] = "warning",
+	[437343] = "alarm",
+	[437620] = "alert",
+	[438245] = {"alert","warning"},
+	[439576] = "alarm",
+	[440377] = "alert",
+	[440576] = "warning",
+	[442277] = "alarm",
 })
 
 BigWigs:AddSounds("The Silken Court", {

@@ -52,7 +52,15 @@ BigWigs:AddColors("Eggtender Ovi'nax", {
 })
 
 BigWigs:AddColors("Nexus-Princess Ky'veza", {
-	["stages"] = "cyan",
+	[435405] = "cyan",
+	[436867] = {"blue","cyan"},
+	[437343] = "blue",
+	[437620] = "orange",
+	[438245] = "yellow",
+	[439576] = "yellow",
+	[440377] = "purple",
+	[440576] = {"blue","purple"},
+	[442277] = "red",
 })
 
 BigWigs:AddColors("The Silken Court", {
