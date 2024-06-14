@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NetherRift", 437620)
 	self:Log("SPELL_CAST_START", "NexusDaggers", 439576)
 	self:Log("SPELL_CAST_START", "VoidShredders", 440377)
-	self:Log("SPELL_AURA_APPLIED", "ChasmalGashApplied", 440576)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ChasmalGashApplied", 440576)
 
 	self:Log("SPELL_CAST_START", "StarlessNight", 435405)
 	self:Log("SPELL_CAST_START", "EternalNight", 442277)
@@ -196,8 +196,13 @@ function mod:VoidShredders(args)
 end
 
 function mod:ChasmalGashApplied(args)
-	self:TargetMessage(args.spellId, "purple", args.destName)
-	self:PlaySound(args.spellId, "warning") -- tankswap?
+	-- 4 stacks in 1.5s
+	if args.amount % 4 == 0 then
+		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 4)
+		if self:Tank() and not self:Me(args.destGUID) then
+			self:PlaySound(args.spellId, "warning") -- tankswap?
+		end
+	end
 end
 
 -- Stage Two: Starless Night
