@@ -36,9 +36,9 @@ function mod:GetOptions()
 		439787, -- Acidic Stupor
 		439785, -- Corrosion
 		439776, -- Acid Pool
-		439815, -- Infested Spawn XXX Private
+		{439815, "PRIVATE"}, -- Infested Spawn
 		455287, -- Infested Bite
-		{439784, "SAY"}, -- Spinneret's Strands
+		{439784, "PRIVATE"}, -- Spinneret's Strands
 		--439780, -- Sticky Webs XXX gtfo?
 		439795, -- Web Reave
 		439811, -- Erosive Spray
@@ -61,7 +61,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "InfestedBiteApplied", 455287)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "InfestedBiteApplied", 455287)
 	self:Log("SPELL_CAST_START", "SpinneretsStrands", 439784)
-	self:Log("SPELL_AURA_APPLIED", "SpinneretsStrandsTarget", 439783)
 	self:Log("SPELL_CAST_START", "WebReave", 439795)
 	self:Log("SPELL_CAST_START", "ErosiveSpray", 439811)
 	self:Log("SPELL_CAST_START", "AcidicEruption", 452806)
@@ -76,6 +75,10 @@ end
 
 function mod:OnEngage()
 	-- self:Bar(444687, 6) -- Savage Assault
+
+	self:SetPrivateAuraSound(439815) --  Infested Spawn
+	self:SetPrivateAuraSound(439784, 439783) --  Spinneret's Strands
+	self:SetPrivateAuraSound(439784, 434090)
 end
 
 --------------------------------------------------------------------------------
@@ -141,13 +144,6 @@ function mod:SpinneretsStrands(args)
 	-- self:Bar(args.spellId, 10)
 end
 
-function mod:SpinneretsStrandsTarget(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(439784)
-		self:Say(439784, L.spinnerets_strands_say, nil, "Strands")
-		self:PlaySound(439784, "warning")
-	end
-end
 
 function mod:WebReave(args)
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
