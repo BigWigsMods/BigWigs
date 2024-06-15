@@ -68,8 +68,8 @@ L.next_ability = "Nächste Fähigkeit" -- We don't know what ability will be nex
 -- Add related
 L.add_spawned = "Add erschienen" -- singular
 L.adds_spawned = "Adds erschienen" -- plural
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.add_spawning = "Add erscheint" -- singular
+L.adds_spawning = "Adds erscheinen" -- plural
 L.spawned = "%s erschienen"
 L.spawning = "%s entsteht"
 L.next_add = "Nächstes Add"
