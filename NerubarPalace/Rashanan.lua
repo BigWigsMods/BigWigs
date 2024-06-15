@@ -100,7 +100,7 @@ function mod:OnEngage()
 	self:CDBar(439795, timers[439795][webReaveCount], CL.count:format(self:SpellName(439795), webReaveCount)) -- Web Reave
 
 
-	self:SetPrivateAuraSound(439815) --  Infested Spawn
+	self:SetPrivateAuraSound(455373, 439815) --  Infested Spawn
 	self:SetPrivateAuraSound(439784, 439783) --  Spinneret's Strands
 	self:SetPrivateAuraSound(439784, 434090)
 end
