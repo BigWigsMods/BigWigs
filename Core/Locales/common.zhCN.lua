@@ -66,8 +66,10 @@ L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "下个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
-L.add_spawned = "小怪刷新"
-L.adds_spawned = "小怪刷新"
+L.add_spawned = "小怪刷新" -- singular
+L.adds_spawned = "小怪刷新" -- plural
+--L.add_spawning = "Add spawning" -- singular
+--L.adds_spawning = "Adds spawning" -- plural
 L.spawned = "%s已刷新"
 L.spawning = "%s刷新"
 L.next_add = "下一波小怪"

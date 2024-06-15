@@ -66,8 +66,10 @@ L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec 
 --L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
-L.add_spawned = "Помощник появился"
-L.adds_spawned = "Помощники появились"
+L.add_spawned = "Помощник появился" -- singular
+L.adds_spawned = "Помощники появились" -- plural
+--L.add_spawning = "Add spawning" -- singular
+--L.adds_spawning = "Adds spawning" -- plural
 L.spawned = "Появление: %s"
 L.spawning = "%s появление"
 L.next_add = "Следующий помощник"

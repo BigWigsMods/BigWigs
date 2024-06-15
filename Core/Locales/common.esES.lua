@@ -66,8 +66,10 @@ L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
-L.add_spawned = "Esbirro apareció"
-L.adds_spawned = "Esbirros aparecieron"
+L.add_spawned = "Esbirro apareció" -- singular
+L.adds_spawned = "Esbirros aparecieron" -- plural
+--L.add_spawning = "Add spawning" -- singular
+--L.adds_spawning = "Adds spawning" -- plural
 L.spawned = "%s apareció"
 L.spawning = "%s aparece"
 L.next_add = "Siguiente esbirro"
