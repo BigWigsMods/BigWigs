@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("The Bloodbound Horror", "frFR")
+local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "frFR")
 if not L then return end
+if L then
+	--L.chunky_viscera_debuff_msg = "Remember to Feed! (Special Action Button)"
+end
+
+L = BigWigs:NewBossLocale("The Bloodbound Horror", "frFR")
 if L then
     --L.grasp_from_beyond_say = "Tentacles"
 end
