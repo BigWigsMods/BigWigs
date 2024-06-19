@@ -373,6 +373,7 @@ L.Long = "Longo"
 L.Warning = "Aviso"
 L.onyou = "Um feitiço, buff, ou debuff em você"
 L.underyou = "Você precisa se mover do feitiço embaixo de você"
+--L.privateaura = "Private aura on you"
 
 L.sound = "Som"
 

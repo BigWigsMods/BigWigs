@@ -373,6 +373,7 @@ L.Long = "Long"
 L.Warning = "Avertissement"
 L.onyou = "Un sort, amélioration ou affaiblissement est sur vous"
 L.underyou = "Vous devez bouger hors d'un sort qui se trouve en dessous de vous"
+--L.privateaura = "Private aura on you"
 
 L.sound = "Son"
 

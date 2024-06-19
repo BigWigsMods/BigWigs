@@ -94,6 +94,8 @@ L.test = "Test"
 L.resetPositions = "Reset positions"
 L.colors = "Colors"
 L.selectEncounter = "Select encounter"
+L.privateAuraSounds = "Private Aura Sounds"
+L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
 L.listAbilities = "List abilities in group chat"
 
 L.dbmFaker = "Pretend I'm using DBM"
@@ -161,7 +163,7 @@ L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated
 L.NAMEPLATEBAR = "Nameplate Bars"
 L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 L.PRIVATE = "Private Aura"
-L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
+L.PRIVATE_desc = "These settings are for general cast alerts and bars only!\n\nYou can change the sound to play when you are targeted by this ability by selecting \"Private Aura Sounds\" in the \"Select encounter\" dropdown in the top right."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"

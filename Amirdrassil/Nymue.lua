@@ -8,6 +8,9 @@ mod:RegisterEnableMob(206172) -- Nymue
 mod:SetEncounterID(2708)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
+mod:SetPrivateAuraSounds({
+	427722, -- Weaver's Burden
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -48,7 +51,7 @@ function mod:GetOptions()
 		420846, -- Continuum
 		429615, -- Impending Loom
 		429983, -- Surging Growth
-		{426519, "TANK", "SAY", "ME_ONLY_EMPHASIZE", "PRIVATE"}, -- Weaver's Burden
+		{426519, "PRIVATE", "TANK", "SAY", "ME_ONLY_EMPHASIZE"}, -- Weaver's Burden
 		-- Mythic
 		430563, -- Ephemeral Flora
 		420907, -- Viridian Rain
@@ -119,8 +122,6 @@ function mod:OnEngage()
 		self:Bar(430563, 29, CL.count:format(L.ephemeral_flora, ephemeralFloraCount)) -- Ephemeral Flora
 		self:ScheduleTimer("EphemeralFlora", 29)
 	end
-
-	self:SetPrivateAuraSound(426519, 427722) -- Weaver's Burden
 end
 
 --------------------------------------------------------------------------------

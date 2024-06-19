@@ -9,6 +9,11 @@ if not mod then return end
 mod:RegisterEnableMob(214504) -- Rasha'nan
 mod:SetEncounterID(2918)
 mod:SetRespawnTime(30)
+mod:SetPrivateAuraSounds({
+	439790, -- Rolling Acid
+	{439815, extra = {455284}}, -- Infested Spawn
+	{439783, extra = {434090}}, -- Spinneret's Strands (XXX are both used?)
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -98,11 +103,6 @@ function mod:OnEngage()
 	self:CDBar(439811, timers[439811][erosiveSprayCount], CL.count:format(self:SpellName(439811), erosiveSprayCount)) -- Erosive Spray
 	self:CDBar(439784, timers[439784][spinneretsStrandsCount], CL.count:format(self:SpellName(439784), spinneretsStrandsCount)) -- Spinneret's Strands
 	self:CDBar(439795, timers[439795][webReaveCount], CL.count:format(self:SpellName(439795), webReaveCount)) -- Web Reave
-
-
-	self:SetPrivateAuraSound(455373, 439815) --  Infested Spawn
-	self:SetPrivateAuraSound(439784, 439783) --  Spinneret's Strands
-	self:SetPrivateAuraSound(439784, 434090)
 end
 
 --------------------------------------------------------------------------------

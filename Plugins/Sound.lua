@@ -23,6 +23,7 @@ local sounds = {
 	Warning = "BigWigs: Raid Warning",
 	--onyou = BL.spell_on_you,
 	underyou = BL.spell_under_you,
+	privateaura = "BigWigs: Raid Warning",
 }
 
 --------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ plugin.defaultDB = {
 		Warning = sounds.Warning,
 		--onyou = BL.spell_on_you,
 		underyou = BL.spell_under_you,
+		privateaura = sounds.privateaura,
 	},
 	Long = {},
 	Info = {},
@@ -45,6 +47,7 @@ plugin.defaultDB = {
 	Alarm = {},
 	Warning = {},
 	underyou = {},
+	privateaura = {},
 }
 
 plugin.pluginOptions = {
@@ -88,20 +91,28 @@ plugin.pluginOptions = {
 			width = "full",
 			itemControl = "DDI-Sound",
 		},
+		privateaura = {
+			type = "select",
+			name = L.privateaura,
+			order = 4,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+		},
 		newline2 = {
 			type = "description",
 			name = "\n\n",
-			order = 3.5,
+			order = 20,
 		},
 		oldSounds = {
 			type = "header",
 			name = L.oldSounds,
-			order = 4,
+			order = 21,
 		},
 		Alarm = {
 			type = "select",
 			name = L.Alarm,
-			order = 5,
+			order = 22,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -109,7 +120,7 @@ plugin.pluginOptions = {
 		Alert = {
 			type = "select",
 			name = L.Alert,
-			order = 6,
+			order = 23,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -117,7 +128,7 @@ plugin.pluginOptions = {
 		Info = {
 			type = "select",
 			name = L.Info,
-			order = 7,
+			order = 24,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -125,7 +136,7 @@ plugin.pluginOptions = {
 		Long = {
 			type = "select",
 			name = L.Long,
-			order = 8,
+			order = 25,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -133,7 +144,7 @@ plugin.pluginOptions = {
 		Warning = {
 			type = "select",
 			name = L.Warning,
-			order = 9,
+			order = 26,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -148,14 +159,14 @@ plugin.pluginOptions = {
 					plugin.db.profile.media[k] = sounds[k]
 				end
 			end,
-			order = 10,
+			order = 27,
 		},
 		resetAll = {
 			type = "execute",
 			name = L.resetAll,
 			desc = L.resetAllCustomSound,
 			func = function() plugin.db:ResetProfile() end,
-			order = 11,
+			order = 28,
 		},
 	}
 }
@@ -313,6 +324,20 @@ do
 			local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
 			return path
 		end
+	end
+
+	function plugin:GetDefaultSound(soundName)
+		if not soundName then return end
+		if soundName == "none" then
+			return "None"
+		end
+		soundName = tmp[soundName] or soundName
+
+		local custom = soundName:match("^name:(.+)$")
+		if custom and not media:Fetch(SOUND, custom, true) then
+			return
+		end
+		return custom or db.media[soundName]
 	end
 end
 

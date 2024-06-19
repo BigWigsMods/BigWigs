@@ -95,6 +95,8 @@ L.test = "Test"
 L.resetPositions = "Réinitialiser les positions"
 L.colors = "Couleurs"
 L.selectEncounter = "Sélectionnez une rencontre"
+--L.privateAuraSounds = "Private Aura Sounds"
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
 L.listAbilities = "Lister les techniques dans la discussion de groupe"
 
 L.dbmFaker = "Prétendre d'utiliser DBM"

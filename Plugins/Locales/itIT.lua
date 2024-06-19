@@ -373,6 +373,7 @@ L.Long = "Lungo"
 L.Warning = "Avviso"
 L.onyou = "Un'Incantesimo, un potenziamento o un depotenziamento su di te"
 L.underyou = "Devi muoverti fuori dall'incantesimo sotto di te"
+--L.privateaura = "Private aura on you"
 
 L.sound = "Suono"
 

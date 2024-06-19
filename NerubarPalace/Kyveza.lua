@@ -9,6 +9,10 @@ if not mod then return end
 mod:RegisterEnableMob(217748) -- Nexus-Princess Ky'veza
 mod:SetEncounterID(2920)
 mod:SetRespawnTime(30)
+mod:SetPrivateAuraSounds({
+	438141, -- Twilight Massacre
+	{435534, extra = {436663, 436664, 436665, 436666, 436671, 436677}}, -- Regicide
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -49,7 +53,7 @@ function mod:GetOptions()
 		{440576, "TANK"}, -- Chasmal Gash
 		-- Stage Two: Starless Night
 		435405, -- Starless Night
-		{435534, "PRIVATE"}, -- Regicide
+		-- {435534, "PRIVATE"}, -- Regicide XXX only a sound right now
 		442277, -- Eternal Night
 	}, {
 		[436867] = -28741,
@@ -86,15 +90,6 @@ function mod:OnEngage()
 	self:Bar(438245, 34.3, CL.count:format(self:SpellName(438245), twilightMassacreCount)) -- Twilight Massacre
 	self:Bar(439576, 45.3, CL.count:format(self:SpellName(439576), nexusDaggersCount)) -- Nexus Daggers
 	self:Bar(435405, 86.1, CL.count:format(self:SpellName(435405), starlessNightCount)) -- Starless Night
-
-	self:SetPrivateAuraSound(438245, 438141) -- Twilight Massacre
-	self:SetPrivateAuraSound(435534) -- Regicide
-	self:SetPrivateAuraSound(435534, 436663)
-	self:SetPrivateAuraSound(435534, 436664)
-	self:SetPrivateAuraSound(435534, 436665)
-	self:SetPrivateAuraSound(435534, 436666)
-	self:SetPrivateAuraSound(435534, 436671)
-	self:SetPrivateAuraSound(435534, 436677)
 end
 
 --------------------------------------------------------------------------------

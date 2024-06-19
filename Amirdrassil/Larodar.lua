@@ -8,6 +8,12 @@ mod:RegisterEnableMob(208445) -- Larodar, Keeper of the Flame
 mod:SetEncounterID(2731)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
+mod:SetPrivateAuraSounds({
+	420544, -- Scorching Pursuit
+	421461, -- Flash Fire
+	{425888, mythic = true}, -- Igniting Growth
+	{428901, mythic = true}, -- Ashen Devastation
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -121,7 +127,6 @@ function mod:GetOptions()
 		418520, -- Blistering Splinters
 		426524, -- Fiery Flourish
 		422614, -- Scorching Roots
-		{420544, "PRIVATE"}, -- Scorching Pursuit
 		{418655, "HEALER"}, -- Charred Brambles
 		426387, -- Scorching Bramblethorn
 		{418637, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "CASTBAR"}, -- Furious Charge
@@ -140,7 +145,7 @@ function mod:GetOptions()
 
 		-- Stage Two: Avatar of Ash
 		427252, -- Falling Embers
-		{427299, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Flash Fire
+		{427299, "PRIVATE", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Flash Fire
 		{427306, "SAY"}, -- Encased in Ash
 		427343, -- Fire Whirl
 		429973, -- Smoldering Backdraft
@@ -264,12 +269,6 @@ function mod:OnEngage()
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
-
-	self:SetPrivateAuraSound(420544) -- Scorching Pursuit
-	if self:Mythic() then
-		self:SetPrivateAuraSound(425889, 425888) -- Igniting Growth
-		self:SetPrivateAuraSound(428896, 428901) -- Ashen Devastation
-	end
 end
 
 --------------------------------------------------------------------------------

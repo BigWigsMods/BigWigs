@@ -95,6 +95,8 @@ L.test = "테스트"
 L.resetPositions = "위치 초기화"
 L.colors = "색상"
 L.selectEncounter = "우두머리 전투 선택"
+--L.privateAuraSounds = "Private Aura Sounds"
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
 L.listAbilities = "파티/공격대 대화에 능력 나열하기"
 
 L.dbmFaker = "DBM을 사용 중인 것처럼 위장하기"

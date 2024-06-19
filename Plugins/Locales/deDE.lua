@@ -373,6 +373,7 @@ L.Long = "Lang"
 L.Warning = "Warnung"
 L.onyou = "Ein Zauber, Stärkungs- oder Schwächungszauber ist auf Dir"
 L.underyou = "Du musst aus einem Zauber unter Dir herauslaufen"
+--L.privateaura = "Private aura on you"
 
 L.sound = "Sound"
 

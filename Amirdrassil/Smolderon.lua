@@ -8,6 +8,9 @@ mod:RegisterEnableMob(200927)
 mod:SetEncounterID(2824)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
+mod:SetPrivateAuraSounds({
+	{425885, mythic = true}, -- Seeking Inferno (XXX just text and not used currently?)
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -112,8 +115,6 @@ function mod:OnEngage()
 	heatingUpCount = 0
 	overheatedOnMe = false
 	castingWorldInFlames = false
-
-	self:SetPrivateAuraSound(425885, 426010) -- Seeking Inferno
 
 	self:Bar(421455, 10.5, CL.count:format(self:SpellName(421455), overheatedCount)) -- Overheated
 	self:Bar(421343, 13, CL.count:format(L.brand_of_damnation, brandOfDamnationCount)) -- Brand of Damnation

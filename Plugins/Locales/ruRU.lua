@@ -373,6 +373,7 @@ L.Long = "Долгий"
 L.Warning = "Предупреждение"
 L.onyou = "Заклинание, бафф или дебафф на тебе"
 L.underyou = "Тебе нужно выйти из заклинания под ногами"
+--L.privateaura = "Private aura on you"
 
 L.sound = "Звук"
 

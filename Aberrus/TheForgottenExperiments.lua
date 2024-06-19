@@ -8,6 +8,9 @@ mod:RegisterEnableMob(200912, 200913, 200918) -- Neldris, Thadrion, Rionthus
 mod:SetEncounterID(2693)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
+mod:SetPrivateAuraSounds({
+	406317, -- Rending Charge
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -73,7 +76,7 @@ function mod:GetOptions()
 		{406311, "TANK"}, -- Infused Strikes
 		407302, -- Infused Explosion
 		-- Neldris
-		{406358, "ICON", "SAY", "SAY_COUNTDOWN", "PRIVATE", "ME_ONLY_EMPHASIZE"}, -- Rending Charge
+		{406358, "PRIVATE", "ICON", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Rending Charge
 		404472, -- Massive Slam
 		404713, -- Bellowing Roar
 		-- Thadrion
@@ -156,8 +159,6 @@ function mod:OnEngage()
 	self:Bar(404713, self:Mythic() and 6 or 11, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	self:Bar(406358, self:Mythic() and 14 or 19, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
 	self:Bar(404472, self:Mythic() and 24 or 35, CL.count:format(CL.frontal_cone, massiveSlamCount)) -- Massive Slam
-
-	self:SetPrivateAuraSound(406358, 406317) -- Rending Charge
 end
 
 --------------------------------------------------------------------------------
