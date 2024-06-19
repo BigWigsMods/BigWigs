@@ -1214,33 +1214,35 @@ do
 
 			if self.privateAuraSoundOptions and not self.privateAuraSounds then
 				self.privateAuraSounds = {}
-				local soundModule = core:GetPlugin("Sounds")
-				for _, option in next, self.privateAuraSoundOptions do
-					local spellId = option[1]
-					local default = soundModule:GetDefaultSound("privateaura")
+				local soundModule = core:GetPlugin("Sounds", true)
+				if soundModule then
+					for _, option in next, self.privateAuraSoundOptions do
+						local spellId = option[1]
+						local default = soundModule:GetDefaultSound("privateaura")
 
-					local key = ("pa_%d"):format(spellId)
-					local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
-					if sound then
-						local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-							spellID = spellId,
-							unitToken = "player",
-							soundFileName = sound,
-							outputChannel = "master",
-						})
-						if privateAuraSoundId then
-							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
-						end
-						if option.extra then
-							for _, id in next, option.extra do
-								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-									spellID = spellId,
-									unitToken = "player",
-									soundFileName = sound,
-									outputChannel = "master",
-								})
-								if privateAuraSoundId then
-									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+						local key = ("pa_%d"):format(spellId)
+						local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
+						if sound then
+							local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+								spellID = spellId,
+								unitToken = "player",
+								soundFileName = sound,
+								outputChannel = "master",
+							})
+							if privateAuraSoundId then
+								self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+							end
+							if option.extra then
+								for _, id in next, option.extra do
+									local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+										spellID = spellId,
+										unitToken = "player",
+										soundFileName = sound,
+										outputChannel = "master",
+									})
+									if privateAuraSoundId then
+										self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+									end
 								end
 							end
 						end
