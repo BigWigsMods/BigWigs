@@ -9,6 +9,9 @@ if not mod then return end
 mod:RegisterEnableMob(214506) -- Eggtender Ovi'nax
 mod:SetEncounterID(2919)
 mod:SetRespawnTime(30)
+mod:SetPrivateAuraSounds({
+	440421, -- Experimental Dosage
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -86,8 +89,6 @@ function mod:OnEngage()
 	self:Bar(446349, 15, CL.count:format(self:SpellName(446349), unstableWebCount)) -- Unstable Web
 	self:Bar(442432, 20, CL.count:format(self:SpellName(442432), ingestBlackBloodCount)) -- Ingest Black Blood
 	self:Bar(442526, 51, CL.count:format(self:SpellName(442526), experimentalDosageCount)) -- Experimental Dosage
-
-	self:SetPrivateAuraSound(442526, 440421) -- Experimental Dosage
 end
 
 --------------------------------------------------------------------------------

@@ -13,7 +13,7 @@ mod:SetPrivateAuraSounds({
 	419060, -- Firestorm
 	{426370, mythic = true}, -- Darkflame Cleave
 	422520, -- Greater Firestorm
-	{428988, "alarm", mythic = true}, -- Molten Eruption
+	{428988, mythic = true}, -- Molten Eruption
 	{428970, mythic = true}, -- Shadow Cage
 	425525, -- Eternal Firestorm
 })
@@ -150,7 +150,6 @@ function mod:GetOptions()
 		422524, -- Shadowflame Devastation
 		419123, -- Flamefall
 		-- Mythic
-		{428971, "PRIVATE"}, -- Molten Eruption
 		{428970, "PRIVATE"}, -- Shadow Cage
 
 		-- Stage Three: Shadowflame Incarnate
@@ -172,7 +171,7 @@ function mod:GetOptions()
 		[419144] = -26667, -- Intermission: Amirdrassil in Peril
 		[429906] = "mythic",
 		[422032] = -26668, -- Stage Two: Children of the Stars
-		[428971] = "mythic",
+		[428970] = "mythic",
 		[422935] = -26670, -- Stage Three: Shadowflame Incarnate
 		[423601] = 423601, -- Seed of Amirdrassil
 		[430048] = "mythic",

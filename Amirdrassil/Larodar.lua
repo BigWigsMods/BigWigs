@@ -10,7 +10,7 @@ mod:SetRespawnTime(30)
 mod:SetStage(1)
 mod:SetPrivateAuraSounds({
 	420544, -- Scorching Pursuit
-	{421461, "alarm"}, -- Flash Fire
+	421461, -- Flash Fire
 	{425888, mythic = true}, -- Igniting Growth
 	{428901, mythic = true}, -- Ashen Devastation
 })
@@ -127,7 +127,6 @@ function mod:GetOptions()
 		418520, -- Blistering Splinters
 		426524, -- Fiery Flourish
 		422614, -- Scorching Roots
-		{420544, "PRIVATE"}, -- Scorching Pursuit
 		{418655, "HEALER"}, -- Charred Brambles
 		426387, -- Scorching Bramblethorn
 		{418637, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "CASTBAR"}, -- Furious Charge
