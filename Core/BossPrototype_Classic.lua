@@ -507,10 +507,8 @@ function boss:Disable(isWipe)
 
 		-- Unregister private aura sounds
 		if self.privateAuraSounds then
-			for _, id in next, self.privateAuraSounds do
-				if id then
-					C_UnitAuras.RemovePrivateAuraAppliedSound(id)
-				end
+			for i = 1, #self.privateAuraSounds do
+				C_UnitAuras.RemovePrivateAuraAppliedSound(self.privateAuraSounds[i])
 			end
 			self.privateAuraSounds = nil
 		end
@@ -1224,20 +1222,26 @@ do
 					local key = ("pa_%d"):format(spellId)
 					local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
 					if sound then
-						self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
+						local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
 							spellID = spellId,
 							unitToken = "player",
 							soundFileName = sound,
 							outputChannel = "master",
 						})
+						if privateAuraSoundId then
+							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+						end
 						if option.extra then
 							for _, id in next, option.extra do
-								self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
+								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
 									spellID = spellId,
 									unitToken = "player",
 									soundFileName = sound,
 									outputChannel = "master",
 								})
+								if privateAuraSoundId then
+									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+								end
 							end
 						end
 					end
