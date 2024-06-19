@@ -95,7 +95,7 @@ L.test = "测试"
 L.resetPositions = "重置位置"
 L.colors = "颜色"
 L.selectEncounter = "选择战斗"
-L.privateAuraSounds = "私有光环声音"
+L.privateAuraSounds = "私有光环音效"
 L.privateAuraSounds_desc = "私有光环无法被正常追踪，但你可以设置一个音效，在你被技能锁定时播放。"
 L.listAbilities = "列出技能到团队聊天"
 
