@@ -98,6 +98,7 @@ plugin.pluginOptions = {
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
+			hidden = BigWigsLoader.isClassic,
 		},
 		newline2 = {
 			type = "description",
