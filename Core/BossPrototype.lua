@@ -1145,7 +1145,7 @@ do
 				local soundModule = core:GetPlugin("Sounds")
 				for _, option in next, self.privateAuraSoundOptions do
 					local spellId = option[1]
-					local default = soundModule:GetDefaultSound(option[2]) or soundModule:GetDefaultSound("privateaura")
+					local default = soundModule:GetDefaultSound("privateaura")
 
 					local key = ("pa_%d"):format(spellId)
 					local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)

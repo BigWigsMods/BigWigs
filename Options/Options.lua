@@ -1044,7 +1044,7 @@ local function populatePrivateAuraOptions(widget)
 			scrollFrame:AddChild(header)
 			for _, option in ipairs(options) do
 				local spellId = option[1]
-				local default = soundModule:GetDefaultSound(option[2]) or soundModule:GetDefaultSound("privateaura")
+				local default = soundModule:GetDefaultSound("privateaura")
 				local key = ("pa_%d"):format(spellId)
 				local id = option.option or spellId
 
@@ -1078,6 +1078,7 @@ local function populatePrivateAuraOptions(widget)
 				dropdown:SetCallback("OnValueChanged", function(widget, _, value)
 					local key = widget:GetUserData("key")
 					local module = widget:GetUserData("module")
+					local default = widget:GetUserData("module")
 					value = soundList[value]
 					if value == default then
 						value = nil
