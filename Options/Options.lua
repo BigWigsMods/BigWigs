@@ -1066,7 +1066,8 @@ local function populatePrivateAuraOptions(widget)
 
 				local dropdown = AceGUI:Create("SharedDropdown")
 				if option.mythic then
-					dropdown:SetLabel(name .. _G.CreateTextureMarkup(521749, 256, 64, 24, 24, 0.5, 0.625, 0.5, 1)) -- 521749 = Interface\EncounterJournal\UI-EJ-Icons
+					-- dropdown:SetLabel(name .. _G.CreateTextureMarkup(521749, 256, 64, 24, 24, 0.5, 0.625, 0.5, 1)) -- 521749 = Interface\EncounterJournal\UI-EJ-Icons
+					dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
 				else
 					dropdown:SetLabel(name)
 				end
