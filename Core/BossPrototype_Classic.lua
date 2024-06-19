@@ -358,6 +358,15 @@ function boss:SetAllowWin(bool)
 	end
 end
 
+function boss:SetPrivateAuraSounds(opts)
+	for i = 1, #opts do
+		if type(opts[i]) ~= "table" then
+			opts[i] = { opts[i] }
+		end
+	end
+	self.privateAuraSoundOptions = opts
+end
+
 --- Check if a module option is enabled.
 -- This is a wrapper around the self.db.profile[key] table.
 -- @return boolean or number, depending on option type
@@ -496,10 +505,12 @@ function boss:Disable(isWipe)
 			end
 		end
 
-		-- Remove all private aura sounds
+		-- Unregister private aura sounds
 		if self.privateAuraSounds then
 			for _, id in next, self.privateAuraSounds do
-				C_UnitAuras.RemovePrivateAuraAppliedSound(id)
+				if id then
+					C_UnitAuras.RemovePrivateAuraAppliedSound(id)
+				end
 			end
 			self.privateAuraSounds = nil
 		end
@@ -1202,6 +1213,36 @@ do
 			self.isEngaged = true
 
 			self:Debug(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
+
+			if self.privateAuraSoundOptions and not self.privateAuraSounds then
+				self.privateAuraSounds = {}
+				local soundModule = core:GetPlugin("Sounds")
+				for _, option in next, self.privateAuraSoundOptions do
+					local spellId = option[1]
+					local default = soundModule:GetDefaultSound("privateaura")
+
+					local key = ("pa_%d"):format(spellId)
+					local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
+					if sound then
+						self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
+							spellID = spellId,
+							unitToken = "player",
+							soundFileName = sound,
+							outputChannel = "master",
+						})
+						if option.extra then
+							for _, id in next, option.extra do
+								self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
+									spellID = spellId,
+									unitToken = "player",
+									soundFileName = sound,
+									outputChannel = "master",
+								})
+							end
+						end
+					end
+				end
+			end
 
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
@@ -3264,25 +3305,6 @@ end
 -- @string[opt] channel the channel the sound should play on, defaults to "Master"
 function boss:PlaySoundFile(sound, channel)
 	PlaySoundFile(sound, channel or "Master")
-end
-
---- Register a sound to be played when a Private Aura is applied to you.
--- @param key the option key
--- @number[opt] spellId the spell id of the Private Aura if different from the key
--- @string[opt] soundCategory the sound to play, defaults to "warning"
-function boss:SetPrivateAuraSound(key, spellId, soundCategory)
-	if checkFlag(self, key, C.SOUND) then
-		local soundsModule = core:GetPlugin("Sounds", true)
-		if soundsModule then
-			if not self.privateAuraSounds then self.privateAuraSounds = {} end
-			self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
-				spellID = spellId or key,
-				unitToken = "player",
-				soundFileName = soundsModule:GetSoundFile(self, key, soundCategory or "warning"),
-				outputChannel = "master",
-			})
-		end
-	end
 end
 
 do
