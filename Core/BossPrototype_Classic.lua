@@ -68,9 +68,19 @@ do -- Update some data that may be called at the top of modules (prior to initia
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
 	myGUID = UnitGUID("player")
+	local function update(_, role, position, player)
+		myGroupRolePositions[player] = position
+		myGroupRoles[player] = role
+		if player == pName then
+			myRole, myRolePosition = role, position
+			if #enabledModules > 0 then
+				UpdateDispelStatus()
+				UpdateInterruptStatus()
+			end
+		end
+	end
 	if LibSpec then
-		local _, role, position = LibSpec:MySpecialization()
-		myRole, myRolePosition = role, position
+		LibSpec:Register(loader, update)
 		LibSpec:RequestSpecialization()
 	end
 end
@@ -1852,16 +1862,6 @@ end
 -------------------------------------------------------------------------------
 -- Role checking
 -- @section role
-
-do
-	local function update(_, role, position, player)
-		myGroupRolePositions[player] = position
-		myGroupRoles[player] = role
-	end
-	if LibSpec then
-		LibSpec:Register(loader, update)
-	end
-end
 
 --- Ask LibSpecialization to update the role positions of everyone in your group.
 function boss:UpdateRolePositions()
