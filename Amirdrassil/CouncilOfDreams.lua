@@ -659,7 +659,7 @@ end
 
 function mod:SongOfTheDragonRemoved(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(421029, false, CL.removed:format(L.song_of_the_dragon))
+		self:PersonalMessage(421029, "removed", L.song_of_the_dragon)
 		self:PlaySound(421029, "warning", nil, args.destName)
 		self:SimpleTimer(function() songOnMe = false end, 1) -- Give some time to get out before showing a damage warning
 	end
