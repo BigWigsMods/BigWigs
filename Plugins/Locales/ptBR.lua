@@ -68,6 +68,13 @@ L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Padrão"
 L.resetBarsDesc = "Reinicia todas as opções relacionadas a barras, incluindo a posição de âncora das barras."
+L.testBarsBtn = "Criar Barra de Teste"
+L.testBarsBtn_desc = "Criar uma barra para você testar suas configurações de exibição atuais"
+
+L.toggleAnchorsBtnShow = "Mostrar Âncoras de Movimentação"
+L.toggleAnchorsBtnHide = "Esconder Âncoras de Movimentação"
+L.toggleAnchorsBtnHide_desc = "Esconde todas as âncoras de movimentação, travando tudo em seu lugar."
+L.toggleBarsAnchorsBtnShow_desc = "Mostra todas as âncoras de movimentação, permitindo que você mova as barras."
 
 L.nameplateBars = "Barras de Identificação"
 L.nameplateAutoWidth = "Combinar a largura da placa de identificação"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "Configura a largura da barra de identificação com 
 L.nameplateOffsetY = "Deslocamento Y"
 L.nameplateOffsetYDesc = "Deslocamento de cima da barra de identificação para cima e a de baixo da barra de identificação para baixo das barras."
 L.nameplateAlphaDesc = "Controla o quão transparente serão as barras de identificação."
+L.testNameplate = "Alvo detectado, criando uma barra de identificação teste sobre a barra de identificação do alvo. |cFF33FF99Essa função é raramente usada, normalmente é somente 1 barra, e é necessária para manter o rastreio de recargas quando lutando com múltiplos chefes/adds que conjuram a mesma magia.|r"
 
 L.clickableBars = "Barras clicáveis"
 L.clickableBarsDesc = "As barras do BigWigs são clicáveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE através delas, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicáveis, isto deixará de funcionar.|r As barras interceptarão qualquer clique do mouse feito nelas."
@@ -265,6 +273,10 @@ L.infoBox = "Caixa de Informações"
 L.sinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens do BigWigs. Ela dá suporte a ícones, cores e pode mostrar até 4 mensagens na tela de uma vez. Mensagens novas crescerão de tamanho e encolherão de novo rapidamente para notificar o usuário."
 L.emphasizedSinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens enfatizadas do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
 L.resetMessagesDesc = "Reinicia todas as opções relacionadas a mensagens, incluindo a posição de âncora das mensagens."
+L.toggleMessagesAnchorsBtnShow_desc = "Mostra todas as âncoras de movimentação, permitindo que você mova as mensagens."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensagens"

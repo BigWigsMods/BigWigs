@@ -68,6 +68,13 @@ L.bars = "Barres"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Défaut"
 L.resetBarsDesc = "Réinitialise toutes les options relatives aux barres, y compris la position des ancres des barres."
+L.testBarsBtn = "Créer une barre de test"
+L.testBarsBtn_desc = "Créée une barre pour que vous puissiez tester vos paramètres d'affichage actuels."
+
+L.toggleAnchorsBtnShow = "Afficher les ancres"
+L.toggleAnchorsBtnHide = "Cacher les ancres"
+L.toggleAnchorsBtnHide_desc = "Cacher les ancres pour verrouiller les positions."
+L.toggleBarsAnchorsBtnShow_desc = "Afficher les ancres pour permettre de déplacer les barres."
 
 L.nameplateBars = "Barres d'info des unités"
 L.nameplateAutoWidth = "Même largeur que la barre d'info"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "Force la largeur des barres d'info à être de la m�
 L.nameplateOffsetY = "Décalage Y"
 L.nameplateOffsetYDesc = "Décalage à partir du haut de la barre d'info pour les barres allant vers le haut, à partir du bas de la barre d'info pour les barres allant vers le bas."
 L.nameplateAlphaDesc = "Contrôle à quel point les barres d'info des unités sont transparentes."
+L.testNameplate = "Cible détectée, création d'une barre d'info de test par dessus la barre d'info de la cible. |cFF33FF99Cette fonctionnalité est rarement utilisée : elle se présente habituellement sous la forme d'une seule barre, et est nécessaire pour le bon suivi des temps de recharge lors des combats face à plusieurs monstres qui utilisent le même sort.|r"
 
 L.clickableBars = "Barres cliquables"
 L.clickableBarsDesc = "Par défaut, les barres de BigWigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, ... tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne sera plus d'application.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
@@ -265,6 +273,10 @@ L.infoBox = "Boîte d'infos"
 L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des messages de BigWigs. Cet affichage supporte les icônes, les couleurs et peut afficher jusqu'à 4 messages à l'écran en même temps. Les messages récemment insérés grandiront et reviendront rapidement à leur taille initiale afin de bien capter l'attention du joueur."
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de BigWigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
 L.resetMessagesDesc = "Réinitialise toutes les options relatives aux messages, y compris la position des ancres des messages."
+L.toggleMessagesAnchorsBtnShow_desc = "Afficher les ancres pour permettre de déplacer les messages."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"

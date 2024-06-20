@@ -68,6 +68,13 @@ L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Predeterminado"
 L.resetBarsDesc = "Restablece todas las opciones relacionadas con las barras, incluyendo la posición de anclas de este."
+L.testBarsBtn = "Crear barra de prueba"
+L.testBarsBtn_desc = "Crea barras para que las pruebes con los ajustes actuales"
+
+L.toggleAnchorsBtnShow = "Mostrar anclajes móviles"
+L.toggleAnchorsBtnHide = "Ocultar anclajes móviles"
+L.toggleAnchorsBtnHide_desc = "Oculta todos los anclajes móviles, bloqueanto todo en su lugar."
+L.toggleBarsAnchorsBtnShow_desc = "Muestra todos los anclajes móviles, permitiendo mover las barras."
 
 L.nameplateBars = "Barras de nombres"
 L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "Establece la anchura de las barras de nombres con la
 L.nameplateOffsetY = "Desplazamiento en Y"
 L.nameplateOffsetYDesc = "Desplazamiento de la parte superior de la placa de nombre para las barras hacia arriba y la parte inferior de la placa de nombre para las barras hacia abajo."
 L.nameplateAlphaDesc = "Controla qué tan transparentes las barras de nombres deben ser."
+L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nombre sobre la placa de nombre del objetivo. |cFF33FF99Esta funcionalidad se usa muy poco, suele ser de sólo 1 barra, y es necesaria para llevar la cuenta de los enfriamientos cuando se lucha contra varios jefes/esbirros que lanzan el mismo hechizo.|r"
 
 L.clickableBars = "Barra cliqueable"
 L.clickableBarsDesc = "Las barras de BigWigs se les puede hacer clic por defecto. De esta manera puedes seleccionar objetos, lanzar hechizos AoE, cambiar el ángulo de la cámara, etc., mientras tu cursor está encima de las mismas. |cffff4411Si activas esta opción ya no se comportarán de esta forma.|r Las barras interceptarán los clics que hagas en ellas.\n"
@@ -265,6 +273,10 @@ L.infoBox = "Caja de información"
 L.sinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs. Esta pantalla soporta iconos, colores y puede mostrar hasta 4 mensajes en la pantalla a la vez. Los mensajes recién insertados crecerán en tamaño y se reducirán de nuevo rápidamente para notificar al usuario."
 L.emphasizedSinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs enfatizada. Esta pantalla admite texto y colores, y sólo puede mostrar un mensaje a la vez."
 L.resetMessagesDesc = "Restablece todas las opciones relacionadas con los mensajes, incluyendo la posición de anclas de este."
+L.toggleMessagesAnchorsBtnShow_desc = "Muestra todos los anclajes móviles, permitiendo mover los mensajes."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensajes"

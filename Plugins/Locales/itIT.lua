@@ -68,6 +68,13 @@ L.bars = "Barre"
 L.style = "Stile"
 L.bigWigsBarStyleName_Default = "Predefinito"
 L.resetBarsDesc = "Azzera tutte le opzioni delle barre, compresi gli ancoraggi delle barre."
+L.testBarsBtn = "Crea Barra Test"
+L.testBarsBtn_desc = "Crea una barra test per provare le tue impostazioni attuali."
+
+L.toggleAnchorsBtnShow = "Mostra Ancoraggi"
+L.toggleAnchorsBtnHide = "Nascondi Ancoraggi"
+L.toggleAnchorsBtnHide_desc = "Nasconde tutti i punti di ancoraggio. bloccando tutto sul posto."
+L.toggleBarsAnchorsBtnShow_desc = "Mostra tutti i punti di ancoraggio, permettendoti di muovere le barre."
 
 L.nameplateBars = "Barre dei nomi"
 L.nameplateAutoWidth = "Stessa larghezza della barra dei nomi"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "Imposta la larghezza delle barre del nome alla largh
 L.nameplateOffsetY = "Distanza Y"
 L.nameplateOffsetYDesc = "Distanza dal punto superiore della barra dei nomi verso l'alto e dal punto inferiore della barra dei nomi verso il basso."
 L.nameplateAlphaDesc = "Regola la trasparenza della barra dei nomi."
+L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo una barra, e serve per tracciare i tempi di recupero mentre si combattono più boss/add che lanciano la stessa magia.|r"
 
 L.clickableBars = "Barre Cliccabili"
 L.clickableBarsDesc = "Le barre di BigWigs non sono cliccabili di default. In questo modo puoi selezionare o lanciare le abilità anche dietro le barre, cambiare l'angolo della telecamera, e così via, mentre il cursore è su una barra. |cffff4411Se abiliti le Barre Cliccabili, questo non funzionerà più.|r Le barre intercetteranno i click del mouse.\n"
@@ -265,6 +273,10 @@ L.infoBox = "InfoBox"
 L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di BigWigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più recenti cresceranno in dimensioni per avvertire l'utente."
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di BigWigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
 L.resetMessagesDesc = "Reimposta tutte le opzioni relative ai messaggi, compresa la posizione dei messaggi d'ancoraggio."
+L.toggleMessagesAnchorsBtnShow_desc = "Mostra tutti i punti di ancoraggio, permettendoti di muovere i messaggi."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs Enfatizzato"
 L.messages = "Messaggi"

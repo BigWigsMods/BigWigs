@@ -521,6 +521,7 @@ plugin.defaultDB = {
 	RightButton = "countdown",
 }
 
+local inConfigureMode = false
 do
 	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	local clickOptions = {
@@ -596,6 +597,8 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
+	local lastNamePlateBar = 0
+	local testCount = 0
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars:20|t ".. L.bars,
@@ -615,27 +618,24 @@ do
 			anchorsButton = {
 				type = "execute",
 				name = function()
-					local BL = BigWigsAPI:GetLocale("BigWigs")
-					if BigWigsOptions:InConfigureMode() then
-						return BL.toggleAnchorsBtnHide
+					if inConfigureMode then
+						return L.toggleAnchorsBtnHide
 					else
-						return BL.toggleAnchorsBtnShow
+						return L.toggleAnchorsBtnShow
 					end
 				end,
 				desc = function()
-					local BL = BigWigsAPI:GetLocale("BigWigs")
-					if BigWigsOptions:InConfigureMode() then
-						return BL.toggleAnchorsBtnHide_desc
+					if inConfigureMode then
+						return L.toggleAnchorsBtnHide_desc
 					else
-						return BL.toggleAnchorsBtnShow_desc
+						return L.toggleBarsAnchorsBtnShow_desc
 					end
 				end,
 				func = function()
-					if not BigWigs:IsEnabled() then BigWigs:Enable() end
-					if BigWigsOptions:InConfigureMode() then
-						plugin:SendMessage("BigWigs_StopConfigureMode")
+					if inConfigureMode then
+						plugin:SendMessage("BigWigs_StopConfigureMode", "Bars")
 					else
-						plugin:SendMessage("BigWigs_StartConfigureMode")
+						plugin:SendMessage("BigWigs_StartConfigureMode", "Bars")
 					end
 				end,
 				width = 1.5,
@@ -643,10 +643,28 @@ do
 			},
 			testButton = {
 				type = "execute",
-				name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
-				desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
+				name = L.testBarsBtn,
+				desc = L.testBarsBtn_desc,
 				func = function()
-					BigWigs:Test()
+					testCount = testCount + 1
+					plugin:SendMessage("BigWigs_StartBar", plugin, nil, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), random(11, 30), "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+					if BigWigsLoader.isRetail then
+						local guid = plugin:UnitGUID("target")
+						if guid and UnitCanAttack("player", "target") then
+							for i = 1, 40 do
+								local unit = ("nameplate%d"):format(i)
+								if plugin:UnitGUID(unit) == guid then
+									local t = GetTime()
+									if (t - lastNamePlateBar) > 25 then
+										lastNamePlateBar = t
+										BigWigs:Print(L.testNameplate)
+										plugin:SendMessage("BigWigs_StartNameplateTimer", plugin, nil, L.test, 25, "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga", false, guid)
+									end
+									return
+								end
+							end
+						end
+					end
 				end,
 				width = 1.5,
 				order = 0.4,
@@ -1594,14 +1612,20 @@ do
 	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L.emphasizedBars)
 end
 
-local function showAnchors()
-	normalAnchor:Show()
-	emphasizeAnchor:Show()
+local function showAnchors(_, mode)
+	if not mode or mode == "Bars" then
+		inConfigureMode = true
+		normalAnchor:Show()
+		emphasizeAnchor:Show()
+	end
 end
 
-local function hideAnchors()
-	normalAnchor:Hide()
-	emphasizeAnchor:Hide()
+local function hideAnchors(_, mode)
+	if not mode or mode == "Bars" then
+		inConfigureMode = false
+		normalAnchor:Hide()
+		emphasizeAnchor:Hide()
+	end
 end
 
 local function updateProfile()

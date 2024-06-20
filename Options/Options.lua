@@ -89,43 +89,6 @@ local acOptions = {
 					fontSize = "medium",
 					width = "full",
 				},
-				anchorsButton = {
-					type = "execute",
-					name = function()
-						if options:InConfigureMode() then
-							return L.toggleAnchorsBtnHide
-						else
-							return L.toggleAnchorsBtnShow
-						end
-					end,
-					desc = function()
-						if options:InConfigureMode() then
-							return L.toggleAnchorsBtnHide_desc
-						else
-							return L.toggleAnchorsBtnShow_desc
-						end
-					end,
-					func = function()
-						if not BigWigs:IsEnabled() then BigWigs:Enable() end
-						if options:InConfigureMode() then
-							options:SendMessage("BigWigs_StopConfigureMode")
-						else
-							options:SendMessage("BigWigs_StartConfigureMode")
-						end
-					end,
-					width = 1.5,
-					order = 12.4,
-				},
-				testButton = {
-					type = "execute",
-					name = L.testBarsBtn,
-					desc = L.testBarsBtn_desc,
-					func = function()
-						BigWigs:Test()
-					end,
-					width = 1.5,
-					order = 12.5,
-				},
 				minimap = {
 					type = "toggle",
 					name = L.minimapIcon,
@@ -322,9 +285,6 @@ do
 			options:Register("BigWigs_PluginRegistered", name, module)
 		end
 
-		loader.RegisterMessage(options, "BigWigs_StartConfigureMode")
-		loader.RegisterMessage(options, "BigWigs_StopConfigureMode")
-
 		-- Wait with nilling, we don't know how many addons will load during this same execution.
 		loader.CTimerAfter(5, function() f:SetScript("OnEvent", nil) end)
 	end
@@ -367,17 +327,6 @@ end
 -------------------------------------------------------------------------------
 -- Plugin options
 --
-
-do
-	local configMode = nil
-	function options:InConfigureMode() return configMode end
-	function options:BigWigs_StartConfigureMode()
-		configMode = true
-	end
-	function options:BigWigs_StopConfigureMode()
-		configMode = nil
-	end
-end
 
 local function getMasterOption(self)
 	local key = self:GetUserData("key")
@@ -1400,28 +1349,6 @@ do
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
 
-	-- local function onControlEnter(widget)
-	-- 	bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-	-- 	bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
-	-- 	bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
-	-- 	bwTooltip:Show()
-	-- end
-
-	-- local function toggleAnchors(widget)
-	-- 	if not BigWigs:IsEnabled() then BigWigs:Enable() end
-	-- 	if options:InConfigureMode() then
-	-- 		widget:SetText(L.toggleAnchorsBtnShow)
-	-- 		widget:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
-	-- 		options:SendMessage("BigWigs_StopConfigureMode")
-	-- 	else
-	-- 		widget:SetText(L.toggleAnchorsBtnHide)
-	-- 		widget:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
-	-- 		options:SendMessage("BigWigs_StartConfigureMode")
-	-- 	end
-	-- 	bwTooltip:Hide()
-	-- 	onControlEnter(widget)
-	-- end
-
 	local function onTreeGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
@@ -1678,29 +1605,6 @@ do
 			configFrame = nil
 			options:SendMessage("BigWigs_CloseGUI")
 		end)
-
-		--local anchors = AceGUI:Create("Button")
-		--if self:InConfigureMode() then
-		--	anchors:SetText(L.toggleAnchorsBtnHide)
-		--	anchors:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
-		--else
-		--	anchors:SetText(L.toggleAnchorsBtnShow)
-		--	anchors:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
-		--end
-		--anchors:SetRelativeWidth(0.5)
-		--anchors:SetCallback("OnClick", toggleAnchors)
-		--anchors:SetCallback("OnEnter", onControlEnter)
-		--anchors:SetCallback("OnLeave", bwTooltip_Hide)
-		--
-		--local testing = AceGUI:Create("Button")
-		--testing:SetText(L.testBarsBtn)
-		--testing:SetUserData("desc", L.testBarsBtn_desc)
-		--testing:SetRelativeWidth(0.5)
-		--testing:SetCallback("OnClick", BigWigs.Test)
-		--testing:SetCallback("OnEnter", onControlEnter)
-		--testing:SetCallback("OnLeave", bwTooltip_Hide)
-		--
-		--bw:AddChildren(anchors, testing)
 
 		local tabs = AceGUI:Create("TabGroup")
 		tabs:SetLayout("Flow")

@@ -142,14 +142,21 @@ end
 -- Anchors & Frames
 --
 
-local function showAnchors()
-	normalMessageAnchor:Show()
-	emphMessageAnchor:Show()
+local inConfigureMode = false
+local function showAnchors(_, mode)
+	if not mode or mode == "Messages" then
+		inConfigureMode = true
+		normalMessageAnchor:Show()
+		emphMessageAnchor:Show()
+	end
 end
 
-local function hideAnchors()
-	normalMessageAnchor:Hide()
-	emphMessageAnchor:Hide()
+local function hideAnchors(_, mode)
+	if not mode or mode == "Messages" then
+		inConfigureMode = false
+		normalMessageAnchor:Hide()
+		emphMessageAnchor:Hide()
+	end
 end
 
 do
@@ -260,368 +267,376 @@ end
 -- Options
 --
 
-plugin.pluginOptions = {
-	type = "group",
-	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Messages:20|t ".. L.messages,
-	childGroups = "tab",
-	get = function(info) return plugin.db.profile[info[#info]] end,
-	set = function(info, value)
-		plugin.db.profile[info[#info]] = value
-		updateProfile()
-	end,
-	order = 2,
-	args = {
-		anchorsButton = {
-			type = "execute",
-			name = function()
-				local BL = BigWigsAPI:GetLocale("BigWigs")
-				if BigWigsOptions:InConfigureMode() then
-					return BL.toggleAnchorsBtnHide
-				else
-					return BL.toggleAnchorsBtnShow
-				end
-			end,
-			desc = function()
-				local BL = BigWigsAPI:GetLocale("BigWigs")
-				if BigWigsOptions:InConfigureMode() then
-					return BL.toggleAnchorsBtnHide_desc
-				else
-					return BL.toggleAnchorsBtnShow_desc
-				end
-			end,
-			func = function()
-				if not BigWigs:IsEnabled() then BigWigs:Enable() end
-				if BigWigsOptions:InConfigureMode() then
-					plugin:SendMessage("BigWigs_StopConfigureMode")
-				else
-					plugin:SendMessage("BigWigs_StartConfigureMode")
-				end
-			end,
-			width = 1.5,
-			order = 0.2,
-		},
-		testButton = {
-			type = "execute",
-			name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
-			desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
-			func = function()
-				BigWigs:Test()
-			end,
-			width = 1.5,
-			order = 0.4,
-		},
-		normal = {
-			type = "group",
-			name = L.messages,
-			order = 1,
-			args = {
-				fontName = {
-					type = "select",
-					name = L.font,
-					order = 1,
-					values = media:List(FONT),
-					itemControl = "DDI-Font",
-					get = function()
-						for i, v in next, media:List(FONT) do
-							if v == plugin.db.profile.fontName then return i end
-						end
-					end,
-					set = function(_, value)
-						local list = media:List(FONT)
-						plugin.db.profile.fontName = list[value]
-						updateProfile()
-					end,
-					width = 2,
-				},
-				outline = {
-					type = "select",
-					name = L.outline,
-					order = 2,
-					values = {
-						NONE = L.none,
-						OUTLINE = L.thin,
-						THICKOUTLINE = L.thick,
-					},
-				},
-				fontSize = {
-					type = "range",
-					name = L.fontSize,
-					desc = L.fontSizeDesc,
-					order = 3,
-					max = 200, softMax = 72,
-					min = 10,
-					step = 1,
-					width = 2,
-				},
-				monochrome = {
-					type = "toggle",
-					name = L.monochrome,
-					desc = L.monochromeDesc,
-					order = 4,
-				},
-				align = {
-					type = "select",
-					name = L.align,
-					values = {
-						L.left,
-						L.center,
-						L.right,
-					},
-					style = "radio",
-					order = 5,
-					get = function() return plugin.db.profile.align == "LEFT" and 1 or plugin.db.profile.align == "RIGHT" and 3 or 2 end,
-					set = function(_, value)
-						plugin.db.profile.align = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
-						updateProfile()
-					end,
-				},
-				useicons = {
-					type = "toggle",
-					name = L.useIcons,
-					desc = L.useIconsDesc,
-					order = 6,
-				},
-				classcolor = {
-					type = "toggle",
-					name = L.classColors,
-					desc = L.classColorsDesc,
-					order = 7,
-				},
-				growUpwards = {
-					type = "toggle",
-					name = L.growingUpwards,
-					desc = L.growingUpwardsDesc,
-					order = 8,
-				},
-				displaytime = {
-					type = "range",
-					name = L.displayTime,
-					desc = L.displayTimeDesc,
-					min = 1,
-					max = 10,
-					step = 0.5,
-					order = 9,
-					width = 1.5,
-				},
-				fadetime = {
-					type = "range",
-					name = L.fadeTime,
-					desc = L.fadeTimeDesc,
-					min = 1,
-					max = 10,
-					step = 0.5,
-					order = 10,
-					width = 1.5,
-				},
-				newline1 = {
-					type = "description",
-					name = "\n",
-					order = 11,
-				},
-				chat = {
-					type = "toggle",
-					name = L.chatFrameMessages,
-					desc = L.chatFrameMessagesDesc,
-					order = 12,
-					width = 2,
-				},
-				disabled = {
-					type = "toggle",
-					name = L.disabled,
-					--desc = "XXX",
-					order = 13,
-					confirm = function(_, value)
-						if value then
-							return L.disableDesc:format(L.messages)
-						end
-					end,
-				},
-				header1 = {
-					type = "header",
-					name = "",
-					order = 14,
-				},
-				reset = {
-					type = "execute",
-					name = L.resetAll,
-					desc = L.resetMessagesDesc,
-					func = function() plugin.db:ResetProfile() end,
-					order = 15,
-				},
+do
+	local testCount = 0
+	local colors = {"green", "red", "orange", "yellow", "cyan", "blue", "purple"}
+	local sounds = {"Long", "Warning", "Alert", "Alarm", "Info", "underyou", "Info"}
+	plugin.pluginOptions = {
+		type = "group",
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Messages:20|t ".. L.messages,
+		childGroups = "tab",
+		get = function(info) return plugin.db.profile[info[#info]] end,
+		set = function(info, value)
+			plugin.db.profile[info[#info]] = value
+			updateProfile()
+		end,
+		order = 2,
+		args = {
+			anchorsButton = {
+				type = "execute",
+				name = function()
+					if inConfigureMode then
+						return L.toggleAnchorsBtnHide
+					else
+						return L.toggleAnchorsBtnShow
+					end
+				end,
+				desc = function()
+					if inConfigureMode then
+						return L.toggleAnchorsBtnHide_desc
+					else
+						return L.toggleMessagesAnchorsBtnShow_desc
+					end
+				end,
+				func = function()
+					if inConfigureMode then
+						plugin:SendMessage("BigWigs_StopConfigureMode", "Messages")
+					else
+						plugin:SendMessage("BigWigs_StartConfigureMode", "Messages")
+					end
+				end,
+				width = 1.5,
+				order = 0.2,
 			},
-		},
-		emphasized = {
-			type = "group",
-			name = L.emphasizedMessages,
-			order = 2,
-			args = {
-				heading = {
-					type = "description",
-					name = L.emphasizedDesc.. "\n\n",
-					order = 1,
-					width = "full",
-					fontSize = "medium",
-				},
-				emphFontName = {
-					type = "select",
-					name = L.font,
-					order = 2,
-					values = media:List(FONT),
-					itemControl = "DDI-Font",
-					get = function()
-						for i, v in next, media:List(FONT) do
-							if v == plugin.db.profile.emphFontName then return i end
-						end
-					end,
-					set = function(_, value)
-						local list = media:List(FONT)
-						plugin.db.profile.emphFontName = list[value]
-						updateProfile()
-					end,
-				},
-				emphOutline = {
-					type = "select",
-					name = L.outline,
-					order = 3,
-					values = {
-						NONE = L.none,
-						OUTLINE = L.thin,
-						THICKOUTLINE = L.thick,
-					},
-				},
-				emphFontSize = {
-					type = "range",
-					name = L.fontSize,
-					desc = L.fontSizeDesc,
-					order = 4,
-					softMax = 100, max = 200, min = 20, step = 1,
-				},
-				emphMonochrome = {
-					type = "toggle",
-					name = L.monochrome,
-					desc = L.monochromeDesc,
-					order = 5,
-				},
-				emphUppercase = {
-					type = "toggle",
-					name = L.uppercase,
-					desc = L.uppercaseDesc,
-					order = 6,
-					width = 2,
-					hidden = function() -- Hide this option for CJK languages
-						local loc = GetLocale()
-						if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
-							return true
-						end
-					end,
-				},
-				emphDisabled = {
-					type = "toggle",
-					name = L.disabled,
-					--desc = "XXX",
-					order = 7,
-					confirm = function(_, value)
-						if value then
-							return L.disableDesc:format(L.emphasizedMessages)
-						end
-					end,
-				},
+			testButton = {
+				type = "execute",
+				name = L.testMessagesBtn,
+				desc = L.testMessagesBtn_desc,
+				func = function()
+					testCount = testCount + 1
+					local color = colors[testCount]
+					local sound = sounds[testCount]
+					local emphasized = testCount == 2
+					plugin:SendMessage("BigWigs_Message", plugin, nil, L[color], color, "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga", emphasized)
+					plugin:SendMessage("BigWigs_Sound", plugin, nil, sound)
+					if testCount == 7 then testCount = 0 end
+				end,
+				width = 1.5,
+				order = 0.4,
 			},
-		},
-		exactPositioning = {
-			type = "group",
-			name = L.positionExact,
-			order = 3,
-			childGroups = "tab",
-			args = {
-				normalPositioning = {
-					type = "group",
-					name = L.messages,
-					order = 1,
-					inline = true,
-					args = {
-						posx = {
-							type = "range",
-							name = L.positionX,
-							desc = L.positionDesc,
-							min = -2048,
-							max = 2048,
-							step = 1,
-							order = 1,
-							width = "full",
-							get = function()
-								return plugin.db.profile.normalPosition[3]
-							end,
-							set = function(_, value)
-								plugin.db.profile.normalPosition[3] = value
-								normalMessageAnchor:RefixPosition()
-							end,
-						},
-						posy = {
-							type = "range",
-							name = L.positionY,
-							desc = L.positionDesc,
-							min = -2048,
-							max = 2048,
-							step = 1,
-							order = 2,
-							width = "full",
-							get = function()
-								return plugin.db.profile.normalPosition[4]
-							end,
-							set = function(_, value)
-								plugin.db.profile.normalPosition[4] = value
-								normalMessageAnchor:RefixPosition()
-							end,
+			normal = {
+				type = "group",
+				name = L.messages,
+				order = 1,
+				args = {
+					fontName = {
+						type = "select",
+						name = L.font,
+						order = 1,
+						values = media:List(FONT),
+						itemControl = "DDI-Font",
+						get = function()
+							for i, v in next, media:List(FONT) do
+								if v == plugin.db.profile.fontName then return i end
+							end
+						end,
+						set = function(_, value)
+							local list = media:List(FONT)
+							plugin.db.profile.fontName = list[value]
+							updateProfile()
+						end,
+						width = 2,
+					},
+					outline = {
+						type = "select",
+						name = L.outline,
+						order = 2,
+						values = {
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
 						},
 					},
-				},
-				emphPositioning = {
-					type = "group",
-					name = L.emphasizedMessages,
-					order = 2,
-					inline = true,
-					args = {
-						posx = {
-							type = "range",
-							name = L.positionX,
-							desc = L.positionDesc,
-							min = -2048,
-							max = 2048,
-							step = 1,
-							order = 1,
-							width = "full",
-							get = function()
-								return plugin.db.profile.emphPosition[3]
-							end,
-							set = function(_, value)
-								plugin.db.profile.emphPosition[3] = value
-								emphMessageAnchor:RefixPosition()
-							end,
+					fontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						order = 3,
+						max = 200, softMax = 72,
+						min = 10,
+						step = 1,
+						width = 2,
+					},
+					monochrome = {
+						type = "toggle",
+						name = L.monochrome,
+						desc = L.monochromeDesc,
+						order = 4,
+					},
+					align = {
+						type = "select",
+						name = L.align,
+						values = {
+							L.left,
+							L.center,
+							L.right,
 						},
-						posy = {
-							type = "range",
-							name = L.positionY,
-							desc = L.positionDesc,
-							min = -2048,
-							max = 2048,
-							step = 1,
-							order = 2,
-							width = "full",
-							get = function()
-								return plugin.db.profile.emphPosition[4]
-							end,
-							set = function(_, value)
-								plugin.db.profile.emphPosition[4] = value
-								emphMessageAnchor:RefixPosition()
-							end,
-						},
+						style = "radio",
+						order = 5,
+						get = function() return plugin.db.profile.align == "LEFT" and 1 or plugin.db.profile.align == "RIGHT" and 3 or 2 end,
+						set = function(_, value)
+							plugin.db.profile.align = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+							updateProfile()
+						end,
+					},
+					useicons = {
+						type = "toggle",
+						name = L.useIcons,
+						desc = L.useIconsDesc,
+						order = 6,
+					},
+					classcolor = {
+						type = "toggle",
+						name = L.classColors,
+						desc = L.classColorsDesc,
+						order = 7,
+					},
+					growUpwards = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 8,
+					},
+					displaytime = {
+						type = "range",
+						name = L.displayTime,
+						desc = L.displayTimeDesc,
+						min = 1,
+						max = 10,
+						step = 0.5,
+						order = 9,
+						width = 1.5,
+					},
+					fadetime = {
+						type = "range",
+						name = L.fadeTime,
+						desc = L.fadeTimeDesc,
+						min = 1,
+						max = 10,
+						step = 0.5,
+						order = 10,
+						width = 1.5,
+					},
+					newline1 = {
+						type = "description",
+						name = "\n",
+						order = 11,
+					},
+					chat = {
+						type = "toggle",
+						name = L.chatFrameMessages,
+						desc = L.chatFrameMessagesDesc,
+						order = 12,
+						width = 2,
+					},
+					disabled = {
+						type = "toggle",
+						name = L.disabled,
+						--desc = "XXX",
+						order = 13,
+						confirm = function(_, value)
+							if value then
+								return L.disableDesc:format(L.messages)
+							end
+						end,
+					},
+					header1 = {
+						type = "header",
+						name = "",
+						order = 14,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetMessagesDesc,
+						func = function() plugin.db:ResetProfile() end,
+						order = 15,
 					},
 				},
 			},
+			emphasized = {
+				type = "group",
+				name = L.emphasizedMessages,
+				order = 2,
+				args = {
+					heading = {
+						type = "description",
+						name = L.emphasizedDesc.. "\n\n",
+						order = 1,
+						width = "full",
+						fontSize = "medium",
+					},
+					emphFontName = {
+						type = "select",
+						name = L.font,
+						order = 2,
+						values = media:List(FONT),
+						itemControl = "DDI-Font",
+						get = function()
+							for i, v in next, media:List(FONT) do
+								if v == plugin.db.profile.emphFontName then return i end
+							end
+						end,
+						set = function(_, value)
+							local list = media:List(FONT)
+							plugin.db.profile.emphFontName = list[value]
+							updateProfile()
+						end,
+					},
+					emphOutline = {
+						type = "select",
+						name = L.outline,
+						order = 3,
+						values = {
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
+						},
+					},
+					emphFontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						order = 4,
+						softMax = 100, max = 200, min = 20, step = 1,
+					},
+					emphMonochrome = {
+						type = "toggle",
+						name = L.monochrome,
+						desc = L.monochromeDesc,
+						order = 5,
+					},
+					emphUppercase = {
+						type = "toggle",
+						name = L.uppercase,
+						desc = L.uppercaseDesc,
+						order = 6,
+						width = 2,
+						hidden = function() -- Hide this option for CJK languages
+							local loc = GetLocale()
+							if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
+								return true
+							end
+						end,
+					},
+					emphDisabled = {
+						type = "toggle",
+						name = L.disabled,
+						--desc = "XXX",
+						order = 7,
+						confirm = function(_, value)
+							if value then
+								return L.disableDesc:format(L.emphasizedMessages)
+							end
+						end,
+					},
+				},
+			},
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				order = 3,
+				childGroups = "tab",
+				args = {
+					normalPositioning = {
+						type = "group",
+						name = L.messages,
+						order = 1,
+						inline = true,
+						args = {
+							posx = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								min = -2048,
+								max = 2048,
+								step = 1,
+								order = 1,
+								width = "full",
+								get = function()
+									return plugin.db.profile.normalPosition[3]
+								end,
+								set = function(_, value)
+									plugin.db.profile.normalPosition[3] = value
+									normalMessageAnchor:RefixPosition()
+								end,
+							},
+							posy = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								min = -2048,
+								max = 2048,
+								step = 1,
+								order = 2,
+								width = "full",
+								get = function()
+									return plugin.db.profile.normalPosition[4]
+								end,
+								set = function(_, value)
+									plugin.db.profile.normalPosition[4] = value
+									normalMessageAnchor:RefixPosition()
+								end,
+							},
+						},
+					},
+					emphPositioning = {
+						type = "group",
+						name = L.emphasizedMessages,
+						order = 2,
+						inline = true,
+						args = {
+							posx = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								min = -2048,
+								max = 2048,
+								step = 1,
+								order = 1,
+								width = "full",
+								get = function()
+									return plugin.db.profile.emphPosition[3]
+								end,
+								set = function(_, value)
+									plugin.db.profile.emphPosition[3] = value
+									emphMessageAnchor:RefixPosition()
+								end,
+							},
+							posy = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								min = -2048,
+								max = 2048,
+								step = 1,
+								order = 2,
+								width = "full",
+								get = function()
+									return plugin.db.profile.emphPosition[4]
+								end,
+								set = function(_, value)
+									plugin.db.profile.emphPosition[4] = value
+									emphMessageAnchor:RefixPosition()
+								end,
+							},
+						},
+					},
+				},
+			},
 		},
-	},
-}
+	}
+end
 
 -------------------------------------------------------------------------------
 -- Initialization

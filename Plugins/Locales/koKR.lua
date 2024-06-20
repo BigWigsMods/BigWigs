@@ -68,6 +68,13 @@ L.bars = "바"
 L.style = "모양"
 L.bigWigsBarStyleName_Default = "기본"
 L.resetBarsDesc = "위치를 비롯한 모든 바 관련 설정을 초기화합니다."
+L.testBarsBtn = "테스트 바 만들기"
+L.testBarsBtn_desc = "당신의 현재 표시 설정으로 테스트용 바를 만듭니다."
+
+L.toggleAnchorsBtnShow = "고정기 표시"
+L.toggleAnchorsBtnHide = "고정기 숨김"
+L.toggleAnchorsBtnHide_desc = "고정기를 모두 숨겨서 다 그자리에 고정시킵니다."
+--L.toggleBarsAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars."
 
 L.nameplateBars = "이름표 바"
 L.nameplateAutoWidth = "이름표 너비와 맞추기"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "이름표 바의 너비를 해당 이름표의 너�
 L.nameplateOffsetY = "세로 위치 조정"
 L.nameplateOffsetYDesc = "위로 확장을 사용할 경우 이름표의 상단으로부터, 그렇지 않은 경우 이름표의 하단으로부터의 거리입니다."
 L.nameplateAlphaDesc = "네임플레이트 바의 투명도를 조정합니다."
+L.testNameplate = "대상이 감지되면, 대상의 이름표 위에 임의로 이름표를 하나 만듭니다. |cFF33FF99이 기능은 거의 쓰이지 않고, 바 하나일 때가 많고, 주로 같은 스킬을 시전하는 여러마리의 넴드나 쫄들과 상대할때 그 쿨다운을 체크하기 위해 씁니다.|r"
 
 L.clickableBars = "클릭 가능한 바"
 L.clickableBarsDesc = "BigWigs 바는 기본적으로 클릭을 무시합니다. 이 방법으로 커서가 바 위에 있을 때도 바 뒤의 물건을 대상 지정할 수 있고 바 뒤에 있는 대상에게 광역 주문을 사용할 수 있으며, 카메라 각도를 변경하는 등의 동작을 가능하게 합니다. |cffff4411클릭 가능한 바를 활성화하면 이런 동작들이 더이상 작동하지 않습니다.|r 당신이 바를 마우스 클릭하면 바가 클릭을 차단합니다.\n"
@@ -265,6 +273,10 @@ L.infoBox = "정보 상자"
 L.sinkDescription = "이 애드온의 출력을 BigWigs 메시지 디스플레이에 출력합니다. 이 디스플레이는 아이콘과 색상, 그리고 동시에 4개의 메시지 출력을 지원합니다. 새롭게 삽입된 메시지는 사용자에게 알리기 위해 크기가 커졌다가 다시 빠르게 줄어듭니다."
 L.emphasizedSinkDescription = "이 애드온의 출력을 BigWigs 강조 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
 L.resetMessagesDesc = "위치를 비롯한 메시지에 관련된 모든 설정을 기본값으로 초기화합니다."
+--L.toggleMessagesAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the messages."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"

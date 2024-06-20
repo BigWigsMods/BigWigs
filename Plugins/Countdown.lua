@@ -125,17 +125,21 @@ end
 -- Anchors & Frames
 --
 
-local function showAnchors()
-	inConfigMode = true
-	countdownAnchor:Show()
-	countdownFrame:Show()
-	countdownText:SetText("5")
+local function showAnchors(_, mode)
+	if not mode or mode == "Messages" then
+		inConfigMode = true
+		countdownAnchor:Show()
+		countdownFrame:Show()
+		countdownText:SetText("5")
+	end
 end
 
-local function hideAnchors()
-	inConfigMode = false
-	countdownAnchor:Hide()
-	countdownFrame:Hide()
+local function hideAnchors(_, mode)
+	if not mode or mode == "Messages" then
+		inConfigMode = false
+		countdownAnchor:Hide()
+		countdownFrame:Hide()
+	end
 end
 
 do

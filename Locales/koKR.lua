@@ -20,7 +20,6 @@ L.adds_desc = "우두머리 전투 중 생성되는 다양한 추가 몹들과 �
 --L.health_desc = "Enable functions for displaying various health information during the boss encounter."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은;는; 이미 BigWigs 내에 모듈로 존재합니다, 하지만 무엇인가 다시 등록하려고 시도했습니다. 이는 일반적으로 몇몇 애드온 업데이터 오류로 인해 애드온 폴더 내에 이 모듈의 사본을 가지고 있다는 것을 의미합니다. 설치된 모든 BigWigs 폴더를 삭제한 후 처음부터 다시 설치하는 것을 권장합니다."
-L.testNameplate = "대상이 감지되면, 대상의 이름표 위에 임의로 이름표를 하나 만듭니다. |cFF33FF99이 기능은 거의 쓰이지 않고, 바 하나일 때가 많고, 주로 같은 스킬을 시전하는 여러마리의 넴드나 쫄들과 상대할때 그 쿨다운을 체크하기 위해 씁니다.|r"
 
 -- Loader / Options.lua
 L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
@@ -79,19 +78,12 @@ L.optionsKey = "ID: %s" -- The ID that messages/bars/options use
 L.raidBosses = "공격대 우두머리"
 L.dungeonBosses = "던전 우두머리"
 L.introduction = "우두머리 전투가 배회하는 BigWigs에 오신 걸 환영합니다. 안전 벨트를 착용하고, 땅콩을 먹으며 탑승을 즐기세요. 당신의 아이들을 먹진 않지만, 당신의 공격대를 위한 7-코스 저녁 식사로 새로운 우두머리 전투를 준비하는 데 도움을 줄겁니다."
-L.toggleAnchorsBtnShow = "고정기 표시"
-L.toggleAnchorsBtnHide = "고정기 숨김"
-L.toggleAnchorsBtnShow_desc = "고정기를 모두 표시해서 바, 메세지, 등을 이동할 수 있게 합니다."
-L.toggleAnchorsBtnHide_desc = "고정기를 모두 숨겨서 다 그자리에 고정시킵니다."
-L.testBarsBtn = "테스트 바 만들기"
-L.testBarsBtn_desc = "당신의 현재 표시 설정으로 테스트용 바를 만듭니다."
 L.sound = "소리"
 L.minimapIcon = "미니맵 아이콘"
 L.minimapToggle = "미니맵 아이콘의 표시/숨기기를 전환합니다."
 L.compartmentMenu = "미니맵 옆에 아이콘 표시"
 L.compartmentMenu_desc = "이 옵션을 끄면 미니맵에 빅윅 아이콘이 애드온 묶음에 표시됩니다. 이 옵션을 켜두는 것을 권장합니다."
 L.configure = "구성"
-L.test = "테스트"
 L.resetPositions = "위치 초기화"
 L.colors = "색상"
 L.selectEncounter = "우두머리 전투 선택"

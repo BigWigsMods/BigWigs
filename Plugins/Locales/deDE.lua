@@ -68,6 +68,13 @@ L.bars = "Leisten"
 L.style = "Stil"
 L.bigWigsBarStyleName_Default = "Standard"
 L.resetBarsDesc = "Setzt alle Optionen im Zusammenhang mit Leisten zurück, inklusive der Position der Anker für Leisten."
+L.testBarsBtn = "Testleiste erstellen"
+L.testBarsBtn_desc = "Erstellt eine Leiste zum Testen der aktuellen Einstellungen an."
+
+L.toggleAnchorsBtnShow = "Anker einblenden"
+L.toggleAnchorsBtnHide = "Anker ausblenden"
+L.toggleAnchorsBtnHide_desc = "Blendet alle Ankerpunkte aus und fixiert alle Anzeigen."
+--L.toggleBarsAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars."
 
 L.nameplateBars = "Leisten an Namensplaketten"
 L.nameplateAutoWidth = "Breite der Namensplaketten verwenden"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "Legt die Breite der Leisten auf die Breite der zugeh
 L.nameplateOffsetY = "Y Versatz"
 L.nameplateOffsetYDesc = "Versatz von der Oberkante der Namensplakette bei darüber angezeigten Leisten und von der Unterkante der Namensplakette bei darunter angezeigten Leisten."
 L.nameplateAlphaDesc = "Legt die Transparenz der Namensplaketten-Leisten fest."
+L.testNameplate = "Ziel erkannt, erstelle Test Leiste über Namensplakette des Ziels. |cFF33FF99Diese Funktion wird selten genutzt, besteht aus 1 Leiste und wird verwendet, wenn mehrere Bosse/Adds die gleichen Zauber wirken.|r"
 
 L.clickableBars = "Interaktive Leisten"
 L.clickableBarsDesc = "BigWigs-Leisten sind standardmäßig nicht anklickbar. Dies ermöglicht es, das Ziel zu wechseln, AoE-Zauber zu setzen und die Kameraperspektive zu ändern, während sich die Maus über den Leisten befindet. |cffff4411Die Aktivierung der Interaktiven Leisten verhindert dieses Verhalten.|r Die Leisten werden jeden Mausklick abfangen.\n"
@@ -265,6 +273,10 @@ L.infoBox = "InfoBox"
 L.sinkDescription = "Sendet die BigWigs-Ausgabe durch die normale BigWigs-Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen dann wieder schnell, um die Aufmerksamkeit dementsprechend zu lenken."
 L.emphasizedSinkDescription = "Sendet Ausgaben dieses Addons durch BigWigs’ Anzeige für hervorgehobene Nachrichten. Diese Anzeige unterstützt Text und Farbe und kann nur eine Nachricht gleichzeitig anzeigen."
 L.resetMessagesDesc = "Setzt alle Optionen im Zusammenhang mit Nachrichten zurück, inklusive der Position der Anker für Nachrichten."
+--L.toggleMessagesAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the messages."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs Hervorgehoben"
 L.messages = "Nachrichten"

@@ -68,6 +68,13 @@ L.bars = "Полосы"
 L.style = "Стиль"
 L.bigWigsBarStyleName_Default = "По умолчанию"
 L.resetBarsDesc = "Сбросить все параметры, связанные с полосами, включая позицию якоря."
+L.testBarsBtn = "Создать тестовый индикатор оповещений"
+L.testBarsBtn_desc = "Создаёт индикатор для теста ваших текущих настроек отображения оповещений BigWigs."
+
+L.toggleAnchorsBtnShow = "Показать фиксаторы"
+L.toggleAnchorsBtnHide = "Спрятать фиксаторы"
+L.toggleAnchorsBtnHide_desc = "Спрятать все фиксаторы, заблокировав их элементы на месте."
+--L.toggleBarsAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars."
 
 L.nameplateBars = "Полосы неймплейтов"
 L.nameplateAutoWidth = "Умещать в ширину неймплейта"
@@ -75,6 +82,7 @@ L.nameplateAutoWidthDesc = "Устанавливает ширину полосы
 L.nameplateOffsetY = "Смещение по Y"
 L.nameplateOffsetYDesc = "Для растущих вверх полос - смещение от верха неймплейта. Для растущих полос вниз - смещение от низа неймплейта."
 L.nameplateAlphaDesc = "Управление степенью прозрачности полос неймплейтов."
+L.testNameplate = "Цель обнаружена, создаю тестовую полосу неймплейта на неймплейте цели. |cFF33FF99Это редко используемая вещь, всего одна полоса, необходимая для отслеживания перезарядки при сражении с несколькими боссами / аддами, использующих одно и то же заклинание.|r"
 
 L.clickableBars = "Интерактивные полосы"
 L.clickableBarsDesc = "Полосы BigWigs по умолчанию не реагируют на щелчки мыши в их области. Таким образом, можно выделять объекты или применять АоЕ заклинания за ними, изменять ракурс камеры и т.д., в то время, как курсор находится в области полос. |cffff4411Если вы включите полосы, реагирующие на щелчки мыши, всё это будет невозможно.|r Полосы будут перехватывать любые щелчки мыши в пределах их области.\n"
@@ -265,6 +273,10 @@ L.infoBox = "ИнфоБлок"
 L.sinkDescription = "Пути вывода сообщений. Отображение поддерживает иконки, цвета и позволяет вывести до 4х сообщений на экран. Новые сообщения будут расти в размерах, и вновь сокращаться, чтобы уведомить игрока."
 L.emphasizedSinkDescription = "Пути вывода увеличенных сообщений. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
 L.resetMessagesDesc = "Сбросить все параметры, связанные с сообщениями, включая позиции якорей сообщений."
+--L.toggleMessagesAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the messages."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs Увеличение"
 L.messages = "Сообщения"

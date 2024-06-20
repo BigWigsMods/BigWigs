@@ -67,6 +67,13 @@ L.bars = "Bars"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Default"
 L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+L.testBarsBtn = "Create Test Bar"
+L.testBarsBtn_desc = "Creates a bar for you to test your current display settings with."
+
+L.toggleAnchorsBtnShow = "Show Moving Anchors"
+L.toggleAnchorsBtnHide = "Hide Moving Anchors"
+L.toggleAnchorsBtnHide_desc = "Hide all the moving anchors, locking everything in place."
+L.toggleBarsAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars."
 
 L.nameplateBars = "Nameplate Bars"
 L.nameplateAutoWidth = "Match width of nameplate"
@@ -74,6 +81,7 @@ L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of thei
 L.nameplateOffsetY = "Y Offset"
 L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
 L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
+L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
 
 L.clickableBars = "Clickable Bars"
 L.clickableBarsDesc = "BigWigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
@@ -264,6 +272,10 @@ L.infoBox = "InfoBox"
 L.sinkDescription = "Route output from this addon through the BigWigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
 L.emphasizedSinkDescription = "Route output from this addon through the BigWigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.toggleMessagesAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the messages."
+
+L.testMessagesBtn = "Create Test Message"
+L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs Emphasized"
 L.messages = "Messages"
