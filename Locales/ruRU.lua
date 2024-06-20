@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ruRU")
 if not L then return end
 
+--L.tempMessage = "Your bar positions have reset, but you can now Import/Export profiles."
+
 -- Core.lua
 L.berserk = "Берсерк"
 L.berserk_desc = "Предупреждать и отсчитывать время до берсерка."
