@@ -46,8 +46,8 @@ L.health_percent = "%d%% 血量" -- "10% Health" The health percentage of an NPC
 L.door_open = "门开了" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "门开了" -- When a gate is open, usually after a speech from an NPC
 
---L.remaining = "剩余：%d" -- 5 remaining
-L.duration = "%s持续%s秒" -- Spell for 10 seconds
+L.remaining = "剩余：%d" -- 5 remaining
+L.duration = "%s持续 %s 秒" -- Spell for 10 seconds
 L.over = "%s结束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
 L.removed_from = "%2$s已移除%1$s" -- Spell removed from Player
@@ -103,7 +103,7 @@ L.affixes = "词缀" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "%s标记"
 L.marker_player_desc = "标记受到%s影响的玩家为%s，需要权限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "标记%s为%s，需要权限。" -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "标记受到'%s'影响的NPC为%s，需要权限。" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "标记受到'%s'影响的 NPC 为%s，需要权限。" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "连接"
