@@ -8,6 +8,7 @@
 <Script file="Colors.lua"/>
 <Script file="Sound.lua"/>
 <Script file="Messages.lua"/>
+<Script file="BarStyles.lua"/>
 <Script file="Bars.lua"/>
 <Script file="BossBlock.lua"/>
 <Script file="InfoBox.lua"/>
