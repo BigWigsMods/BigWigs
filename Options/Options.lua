@@ -1001,7 +1001,7 @@ local function populatePrivateAuraOptions(widget)
 				local texture = loader.GetSpellTexture(id)
 
 				local icon = AceGUI:Create("Icon")
-				icon:SetImage(texture)
+				icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
 				icon:SetImageSize(40, 40)
 				icon:SetRelativeWidth(0.1)
 				icon:SetUserData("bossOption", id)
