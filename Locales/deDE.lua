@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "deDE")
 if not L then return end
 
---L.tempMessage = "Your bar positions have reset, but you can now Import/Export profiles."
+L.tempMessage = "Die Leistenpositionen wurden zurückgesetzt, aber es können jetzt Profile importiert/exportiert werden."
 
 -- Core.lua
 L.berserk = "Berserker"
@@ -89,8 +89,8 @@ L.configure = "Einstellungen"
 L.resetPositions = "Positionen zurücksetzen"
 L.colors = "Farben"
 L.selectEncounter = "Wähle Begegnung"
---L.privateAuraSounds = "Private Aura Sounds"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
+L.privateAuraSounds = "Private Aurasounds"
+L.privateAuraSounds_desc = "Private Auren können nicht normal verfolgt werden, aber es kann ein wiederzugebender Sound festgelegt werden, wenn Du von der Fähigkeit betroffen bist."
 L.listAbilities = "Fähigkeiten im Chat auflisten"
 
 L.dbmFaker = "Täusche DBM Nutzung vor"
