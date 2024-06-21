@@ -9,7 +9,7 @@ mod:SetEncounterID(2824)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
 mod:SetPrivateAuraSounds({
-	{425885, mythic = true}, -- Seeking Inferno (XXX just text and not used currently?)
+	{426010, mythic = true}, -- Seeking Inferno
 })
 
 --------------------------------------------------------------------------------
