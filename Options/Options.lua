@@ -21,7 +21,7 @@ local UnitName = loader.UnitName
 local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 bwTooltip:SetScript("OnUpdate", function(self, elapsed)
 	-- basically GameTooltip_OnUpdate
-	self.updateTooltipTimer = self.updateTooltipTimer - elapsed
+	self.updateTooltipTimer = (self.updateTooltipTimer or 0.2) - elapsed
 	if self.updateTooltipTimer > 0 then return end
 	self.updateTooltipTimer = 0.2
 
