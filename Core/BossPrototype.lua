@@ -1992,10 +1992,19 @@ do
 			1766, -- Kick (Rogue)
 			6552, -- Pummel (Warrior)
 		}
+		local petSpellList = {
+			19647, -- Spell Lock (Warlock Felhunter)
+			26090, -- Pummel (Hunter Gorilla)
+			50318, -- Serenity Dust (Hunter Moth)
+			50479, -- Nether Shock (Hunter Nether Ray)
+		}
 		function UpdateInterruptStatus()
-			if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-				canInterrupt = 19647
-				return
+			for i = 1, #petSpellList do
+				local spell = petSpellList[i]
+				if IsSpellKnown(spell, true) then
+					canInterrupt = spell
+					return
+				end
 			end
 			canInterrupt = false
 			for i = 1, #spellList do
