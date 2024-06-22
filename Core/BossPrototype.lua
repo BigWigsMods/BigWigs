@@ -383,7 +383,7 @@ function boss:Enable(isWipe)
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		end
 		local _, class = UnitClass("player")
-		if class == "WARLOCK" or class == "HUNTER" then
+		if class == "WARLOCK" or (class == "HUNTER" and isClassic) then
 			petUtilityFrame:RegisterUnitEvent("UNIT_PET", "player")
 		end
 
@@ -1999,13 +1999,6 @@ do
 			50479, -- Nether Shock (Hunter Nether Ray)
 		}
 		function UpdateInterruptStatus()
-			for i = 1, #petSpellList do
-				local spell = petSpellList[i]
-				if IsSpellKnown(spell, true) then
-					canInterrupt = spell
-					return
-				end
-			end
 			canInterrupt = false
 			for i = 1, #spellList do
 				local spell = spellList[i]
@@ -2021,6 +2014,13 @@ do
 					else
 						canInterrupt = spell
 					end
+					return
+				end
+			end
+			for i = 1, #petSpellList do
+				local spell = petSpellList[i]
+				if IsSpellKnown(spell, true) then
+					canInterrupt = spell
 					return
 				end
 			end
