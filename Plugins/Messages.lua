@@ -41,7 +41,7 @@ plugin.defaultDB = {
 	emphOutline = "THICKOUTLINE",
 	align = "CENTER",
 	fontSize = 20,
-	emphFontSize = 48,
+	emphFontSize = 44,
 	chat = false,
 	useicons = true,
 	classcolor = true,
@@ -214,7 +214,7 @@ do
 	end
 
 	normalMessageAnchor = createAnchor("normalPosition", L.messages, 12, 200, 20)
-	emphMessageAnchor = createAnchor("emphPosition", L.emphasizedMessages, 48, 650, 80, true)
+	emphMessageAnchor = createAnchor("emphPosition", L.emphasizedMessages, 44, 650, 80, true)
 
 	normalMessageFrame = CreateFrame("Frame", nil, UIParent)
 	normalMessageFrame:SetWidth(2000)
