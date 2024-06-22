@@ -229,7 +229,8 @@ globals = {
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
-	"C_Scenario",
+	"C_Scenario", -- XXX pre-11.0 compatibility in LittleWigs
+	"C_ScenarioInfo",
 	"C_Timer",
 	"ChatFrame_ImportListToHash",
 	"ChatTypeInfo",
