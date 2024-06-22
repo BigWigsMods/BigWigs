@@ -10,8 +10,8 @@ L.other = "%s: %s"
 L.onboss = "%s на БОССЕ"
 L.buff_boss = "Бафф на БОССЕ: %s"
 L.buff_other = "Бафф на %s: %s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.magic_buff_boss = "Магический бафф на боссе: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "Магический бафф на %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s на %s"
 L.stack = "%dx %s на %s"
 L.stackyou = "%dx %s на ТЕБЕ"
@@ -31,8 +31,8 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Фаза %d"
 L.stage = "Этап %d"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "Волна %d" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "Волна %d из %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Обычный режим"
 L.heroic = "Героический режим"
 L.mythic = "Эпохальный режим"
@@ -41,12 +41,12 @@ L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.ready = "Готов" -- When a player is ready to do something
 L.dead = "Смерть" -- When a player is dead
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.health = "Health" -- The health of an NPC
---L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
+L.health = "Здоровья" -- The health of an NPC
+L.health_percent = "%d%% Здоровья" -- "10% Health" The health percentage of an NPC
 L.door_open = "Дверь открыта" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Врата открыты" -- When a gate is open, usually after a speech from an NPC
 
---L.remaining = "%d remaining" -- 5 remaining
+L.remaining = "осталось %d" -- 5 remaining
 L.duration = "%s для %s сек" -- Spell for 10 seconds
 L.over = "%s завершается" -- Spell Over
 L.removed = "%s снято" -- Spell Removed
@@ -56,20 +56,20 @@ L.removed_after = "%s убран спустя %.1fс" -- "Spell removed after 1.
 L.incoming = "%s на подходе" -- Spell Incoming
 L.interrupted = "%s прервано" -- Spell Interrupted
 L.interrupted_by = "%s прерван %s" -- Spell interrupted by Player
---L.interruptible = "Interruptible" -- when a spell is interruptible
+L.interruptible = "Прерываемое" -- when a spell is interruptible
 L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s отменено" -- Spell Cancelled
 L.you_die = "Умираешь" -- You will die
 L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.next_ability = "Следующая способность" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 
 -- Add related
 L.add_spawned = "Помощник появился" -- singular
 L.adds_spawned = "Помощники появились" -- plural
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.add_spawning = "Спаун Адда" -- singular
+L.adds_spawning = "Спаун Аддов" -- plural
 L.spawned = "Появление: %s"
 L.spawning = "%s появление"
 L.next_add = "Следующий помощник"
@@ -103,7 +103,7 @@ L.affixes = "Аффикс" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "Метка %s"
 L.marker_player_desc = "Отмечать игроков, затронутых %s меткой %s, требуется быть помощником или лидером рейда." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Отмечать %s меткой %s, требуется быть помощником или лидером рейда." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Отмечает НПЦ под воздействием '%s' меткой %s, требуется быть помощником или лидером рейда." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "Связь"
@@ -144,9 +144,9 @@ L.nature = "Природа"
 L.arcane = "Тайная магия"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "Автоматическое взаимодействие с НПЦ"
+L.autotalk_boss_desc = "Автоматический выбирать вариант диалога с НПЦ для начала боя."
+L.autotalk_generic_desc = "Автоматический выбирать вариант диалога с НПЦ для продвижения по подземелью."
 
 -- Common ability name replacements
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing

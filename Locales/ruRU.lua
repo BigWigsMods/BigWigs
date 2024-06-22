@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ruRU")
 if not L then return end
 
---L.tempMessage = "Your bar positions have reset, but you can now Import/Export profiles."
+L.tempMessage = "Позиции панелей были изменены. Теперь возможен импорт/экспорт конфигурации."
 
 -- Core.lua
 L.berserk = "Берсерк"
@@ -18,8 +18,8 @@ L.proximity = "Отображение близости"
 L.proximity_desc = "Показывать окно близости при соответствующей схватке, выводя список игроков, которые стоят слишком близко к вам."
 L.adds = "Адды"
 L.adds_desc = "Включает функционал связанный с различными помощниками во время боя с боссом."
---L.health = "Health"
---L.health_desc = "Enable functions for displaying various health information during the boss encounter."
+L.health = "Здоровье"
+L.health_desc = "Активирует функционал Enable functions for displaying various health information during the boss encounter."
 
 L.already_registered = "|cffff0000ВНИМАНИЕ:|r |cff00ff00%s|r (|cffffff00%s|r) уже загружен как модуль BigWigs, но что-то пытается зарегистрировать его ещё раз. Обычно, это означает, что у вас две копии этого модуля в папке с модификациями (возможно, из-за ошибки программы для обновления модификаций). Мы рекомендуем вам удалить все папки BigWigs и установить его с нуля."
 
@@ -89,8 +89,8 @@ L.configure = "Настройка"
 L.resetPositions = "Сброс позиции"
 L.colors = "Цвета"
 L.selectEncounter = "Выберите схватку"
---L.privateAuraSounds = "Private Aura Sounds"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
+L.privateAuraSounds = "Приватные Ауры - Звуки"
+L.privateAuraSounds_desc = "Приватные ауры нельзя отслеживать стандартным методом, но есть возможность настроить звук, если вы цель заклинания."
 L.listAbilities = "Вывести способности в групповой чат"
 
 L.dbmFaker = "Маскировка под DBM"
