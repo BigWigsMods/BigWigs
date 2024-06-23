@@ -53,13 +53,13 @@ local L = BigWigsAPI:GetLocale("BigWigs")
 local myLocale = GetLocale()
 local sharingVersion = "BW1"
 
--- Anchor Args
-local barAnchorsToExport = {
+-- Position Args
+local barPositionsToExport = {
 	"normalPosition",
 	"expPosition",
 }
 
-local messageAnchorsToExport = {
+local messagePositionsToExport = {
 	"normalPosition",
 	"emphPosition",
 }
@@ -129,9 +129,6 @@ local messageSettingsToExport = {
 	"emphUppercase",
 	-- "disabled",
 	-- "emphDisabled",
-	-- Anchor Settings
-	-- "normalPosition",
-	-- "emphPosition",
 }
 
 -- Color Args
@@ -199,11 +196,11 @@ local function GetExportString()
 	local messageSettings = BigWigs:GetPlugin("Messages")
 
 	if sharingExportOptionsSettings.exportBarPositions then
-		exportOptions["barAnchors"] = exportProfileSettings(barAnchorsToExport, barSettings.db.profile)
+		exportOptions["barPositions"] = exportProfileSettings(barPositionsToExport, barSettings.db.profile)
 	end
 
 	if sharingExportOptionsSettings.exportMessagePositions then
-		exportOptions["messageAnchors"] = exportProfileSettings(messageAnchorsToExport, messageSettings.db.profile)
+		exportOptions["messagePositions"] = exportProfileSettings(messagePositionsToExport, messageSettings.db.profile)
 	end
 
 	if sharingExportOptionsSettings.exportBarSettings then
@@ -241,12 +238,12 @@ end
 
 local function IsOptionGroupAvailable(group)
 	if group == "bars" then
-		if IsOptionInString("barAnchors") or IsOptionInString("barSettings") or IsOptionInString("barColors") then
+		if IsOptionInString("barPositions") or IsOptionInString("barSettings") or IsOptionInString("barColors") then
 			return true
 		end
 	end
 	if group == "messages" then
-		if IsOptionInString("messageAnchors") or IsOptionInString("messageSettings") or IsOptionInString("messageColors") then
+		if IsOptionInString("messagePositions") or IsOptionInString("messageSettings") or IsOptionInString("messageColors") then
 			return true
 		end
 	end
@@ -329,10 +326,10 @@ do
 			end
 		end
 
-		importSettings('importBarPositions', 'barAnchors', barAnchorsToExport, barPlugin, L.imported_bar_positions)
+		importSettings('importBarPositions', 'barPositions', barPositionsToExport, barPlugin, L.imported_bar_positions)
 		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.imported_bar_settings)
 		importColorSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.imported_bar_colors)
-		importSettings('importMessagePositions', 'messageAnchors', messageAnchorsToExport, messageplugin, L.imported_message_positions)
+		importSettings('importMessagePositions', 'messagePositions', messagePositionsToExport, messageplugin, L.imported_message_positions)
 		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.imported_message_settings)
 		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.imported_message_colors)
 
@@ -411,7 +408,7 @@ local sharingOptions = {
 						desc = L.position_import_bars_desc,
 						order = 1,
 						width = 1,
-						disabled = function() return not IsOptionInString("barAnchors") end,
+						disabled = function() return not IsOptionInString("barPositions") end,
 					},
 					importBarSettings = {
 						type = "toggle",
@@ -444,7 +441,7 @@ local sharingOptions = {
 						desc = L.position_import_messages_desc,
 						order = 1,
 						width = 1,
-						disabled = function() return not IsOptionInString("messageAnchors") end,
+						disabled = function() return not IsOptionInString("messagePositions") end,
 					},
 					importMessageSettings = {
 						type = "toggle",
