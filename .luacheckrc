@@ -218,9 +218,7 @@ globals = {
 
 	-- everything else
 	"BigWigs3DB",
-	"BigWigsAnchor",
 	"BigWigsAPI",
-	"BigWigsEmphasizeAnchor",
 	"BigWigsIconDB",
 	"BigWigsLoader",
 	"BigWigsOptions",
