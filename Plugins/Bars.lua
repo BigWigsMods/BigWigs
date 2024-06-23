@@ -53,6 +53,8 @@ do
 	end
 end
 
+local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 14, 500, 50
+
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -80,10 +82,6 @@ plugin.defaultDB = {
 	emphasizeRestart = true,
 	emphasizeTime = 11,
 	emphasizeMultiplier = 1.1,
-	BigWigsAnchor_width = 220,
-	BigWigsAnchor_height = 16,
-	BigWigsEmphasizeAnchor_width = 320,
-	BigWigsEmphasizeAnchor_height = 22,
 	nameplateWidth = 100,
 	nameplateAutoWidth = true,
 	nameplateHeight = 12,
@@ -99,20 +97,34 @@ plugin.defaultDB = {
 	LeftButton = "report",
 	MiddleButton = "remove",
 	RightButton = "countdown",
+	normalWidth = 180,
+	normalHeight = 18,
+	expWidth = 260,
+	expHeight = 22,
+	normalPosition = {"CENTER", "CENTER", 450, 200},
+	expPosition = {"CENTER", "CENTER", 0, -100},
 }
 
 local function updateProfile()
 	db = plugin.db.profile
 
-	--for k, v in next, db do
-	--	local defaultType = type(plugin.defaultDB[k])
-	--	if defaultType == "nil" then
-	--		db[k] = nil
-	--	elseif type(v) ~= defaultType then
-	--		db[k] = plugin.defaultDB[k]
-	--	end
-	--end
+	for k, v in next, db do
+		local defaultType = type(plugin.defaultDB[k])
+		if defaultType == "nil" then
+			db[k] = nil
+		elseif type(v) ~= defaultType then
+			db[k] = plugin.defaultDB[k]
+		end
+	end
 
+	SetBarStyle(db.barStyle)
+
+	if not media:IsValid(FONT, db.fontName) then
+		db.fontName = plugin:GetDefaultFont()
+	end
+	if not media:IsValid(STATUSBAR, db.texture) then
+		db.texture = plugin.defaultDB.texture
+	end
 	if db.fontSize < 1 or db.fontSize > 200 then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
@@ -146,16 +158,76 @@ local function updateProfile()
 	if db.visibleBarLimitEmph < 1 or db.visibleBarLimitEmph > 100 then
 		db.visibleBarLimitEmph = plugin.defaultDB.visibleBarLimitEmph
 	end
+	if db.normalWidth < minBarWidth or db.normalWidth > maxBarWidth then
+		db.normalWidth = plugin.defaultDB.normalWidth
+	end
+	if db.normalHeight < minBarHeight or db.normalHeight > maxBarHeight then
+		db.normalHeight = plugin.defaultDB.normalHeight
+	end
+	if db.expWidth < minBarWidth or db.expWidth > maxBarWidth then
+		db.expWidth = plugin.defaultDB.expWidth
+	end
+	if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
+		db.expHeight = plugin.defaultDB.expHeight
+	end
 
+	normalAnchor:SetWidth(db.normalWidth)
+	normalAnchor:SetHeight(db.normalHeight)
+	emphasizeAnchor:SetWidth(db.expWidth)
+	emphasizeAnchor:SetHeight(db.expHeight)
 	normalAnchor:RefixPosition()
 	emphasizeAnchor:RefixPosition()
-	if plugin:IsEnabled() then
-		if not media:Fetch(STATUSBAR, db.texture, true) then
-			db.texture = plugin.defaultDB.texture
-		end
-		SetBarStyle(db.barStyle)
-		plugin:RegisterMessage("DBM_AddonMessage")
+
+	local flags = nil
+	if db.monochrome and db.outline ~= "NONE" then
+		flags = "MONOCHROME," .. db.outline
+	elseif db.monochrome then
+		flags = "MONOCHROME"
+	elseif db.outline ~= "NONE" then
+		flags = db.outline
 	end
+	local font = media:Fetch(FONT, db.fontName)
+	local texture = media:Fetch(STATUSBAR, db.texture)
+
+	for bar in next, normalAnchor.bars do
+		currentBarStyler.BarStopped(bar)
+		bar:SetHeight(db.normalHeight)
+		bar:SetTexture(texture)
+		bar:SetFill(db.fill)
+		bar:SetFont(font, db.fontSize, flags)
+		bar:SetLabelVisibility(db.text)
+		bar.candyBarLabel:SetJustifyH(db.alignText)
+		bar:SetTimeVisibility(db.time)
+		bar.candyBarDuration:SetJustifyH(db.alignTime)
+		if not db.icon then
+			bar:SetIcon(nil)
+		else
+			bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+		end
+		bar:SetIconPosition(db.iconPosition)
+		currentBarStyler.ApplyStyle(bar)
+	end
+	for bar in next, emphasizeAnchor.bars do
+		currentBarStyler.BarStopped(bar)
+		bar:SetHeight(db.expHeight)
+		bar:SetTexture(texture)
+		bar:SetFill(db.fill)
+		bar:SetFont(font, db.fontSizeEmph, flags)
+		bar:SetLabelVisibility(db.text)
+		bar.candyBarLabel:SetJustifyH(db.alignText)
+		bar:SetTimeVisibility(db.time)
+		bar.candyBarDuration:SetJustifyH(db.alignTime)
+		if not db.icon then
+			bar:SetIcon(nil)
+		else
+			bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+		end
+		bar:SetIconPosition(db.iconPosition)
+		currentBarStyler.ApplyStyle(bar)
+	end
+
+	rearrangeBars(normalAnchor)
+	rearrangeBars(emphasizeAnchor)
 end
 
 --------------------------------------------------------------------------------
@@ -204,40 +276,6 @@ do
 		},
 	}
 
-	local function updateFont(info, value)
-		if info then
-			local key = info[#info]
-			if key == "fontName" then
-				local list = media:List(FONT)
-				db[key] = list[value]
-			else
-				db[key] = value
-			end
-		end
-
-		local flags = nil
-		if db.monochrome and db.outline ~= "NONE" then
-			flags = "MONOCHROME," .. db.outline
-		elseif db.monochrome then
-			flags = "MONOCHROME"
-		elseif db.outline ~= "NONE" then
-			flags = db.outline
-		end
-		local f = media:Fetch(FONT, db.fontName)
-		for bar in next, normalAnchor.bars do
-			bar:SetFont(f, db.fontSize, flags)
-		end
-		for bar in next, emphasizeAnchor.bars do
-			bar:SetFont(f, db.fontSizeEmph, flags)
-		end
-	end
-
-	local function sortBars(info, value)
-		db[info[#info]] = value
-		rearrangeBars(normalAnchor)
-		rearrangeBars(emphasizeAnchor)
-	end
-
 	local lastNamePlateBar = 0
 	local testCount = 0
 	plugin.pluginOptions = {
@@ -249,10 +287,7 @@ do
 		end,
 		set = function(info, value)
 			db[info[#info]] = value
-			if BigWigsAnchor then
-				BigWigsAnchor:RefixPosition()
-				BigWigsEmphasizeAnchor:RefixPosition()
-			end
+			updateProfile()
 		end,
 		order = 1,
 		args = {
@@ -326,7 +361,11 @@ do
 								if v == db.fontName then return i end
 							end
 						end,
-						set = updateFont,
+						set = function(_, value)
+							local list = media:List(FONT)
+							db.fontName = list[value]
+							updateProfile()
+						end,
 					},
 					outline = {
 						type = "select",
@@ -337,14 +376,12 @@ do
 							OUTLINE = L.thin,
 							THICKOUTLINE = L.thick,
 						},
-						set = updateFont,
 					},
 					monochrome = {
 						type = "toggle",
 						name = L.monochrome,
 						desc = L.monochromeDesc,
 						order = 3,
-						set = updateFont,
 					},
 					header1 = {
 						type = "header",
@@ -358,7 +395,6 @@ do
 						values = function() return BigWigsAPI:GetBarStyleList() end,
 						set = function(info, value)
 							db[info[#info]] = value
-							SetBarStyle(value)
 							local style = BigWigsAPI:GetBarStyle(value)
 							if style then
 								if type(style.barSpacing) == "number" and style.barSpacing > 0 and style.barSpacing < 101 then
@@ -370,11 +406,13 @@ do
 								rearrangeBars(emphasizeAnchor)
 
 								if type(style.barHeight) == "number" and style.barHeight > 0 and style.barHeight < 201 then
-									db.BigWigsAnchor_height = style.barHeight
-									db.BigWigsEmphasizeAnchor_height = style.barHeight * 1.1
+									db.normalHeight = style.barHeight
+									local expHeight = style.barHeight * 1.1
+									expHeight = math.floor(expHeight+0.5)
+									db.expHeight = expHeight
 								else
-									db.BigWigsAnchor_height = plugin.defaultDB.BigWigsAnchor_height
-									db.BigWigsEmphasizeAnchor_height = plugin.defaultDB.BigWigsEmphasizeAnchor_height
+									db.normalHeight = plugin.defaultDB.normalHeight
+									db.expHeight = plugin.defaultDB.expHeight
 								end
 								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 and style.fontSizeNormal < 201 then
 									db.fontSize = style.fontSizeNormal
@@ -391,23 +429,10 @@ do
 								else
 									db.outline = plugin.defaultDB.outline
 								end
-								updateFont()
 
-								for bar in next, normalAnchor.bars do
-									currentBarStyler.BarStopped(bar)
-									bar:SetHeight(db.BigWigsAnchor_height)
-									currentBarStyler.ApplyStyle(bar)
-								end
-								for bar in next, emphasizeAnchor.bars do
-									currentBarStyler.BarStopped(bar)
-									bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-									currentBarStyler.ApplyStyle(bar)
-								end
-
-								BigWigsAnchor:RefixPosition()
-								BigWigsEmphasizeAnchor:RefixPosition()
 								plugin:UpdateGUI()
 							end
+							updateProfile()
 						end,
 					},
 					spacing = {
@@ -420,7 +445,6 @@ do
 						max = 100,
 						step = 1,
 						width = 2,
-						set = sortBars,
 						disabled = function()
 							-- Just throw in a random frame (normalAnchor) instead of a bar to see if it returns a value since we noop() styles that don't have a .GetSpacing entry
 							return currentBarStyler.GetSpacing(normalAnchor)
@@ -431,15 +455,6 @@ do
 						name = L.fill,
 						desc = L.fillDesc,
 						order = 7,
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								bar:SetFill(value)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								bar:SetFill(value)
-							end
-						end,
 					},
 					texture = {
 						type = "select",
@@ -453,21 +468,6 @@ do
 								if v == db[info[#info]] then return i end
 							end
 						end,
-						set = function(info, value)
-							local list = media:List(STATUSBAR)
-							local tex = list[value]
-							db[info[#info]] = tex
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetTexture(media:Fetch(STATUSBAR, tex))
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetTexture(media:Fetch(STATUSBAR, tex))
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 					},
 					header2 = {
 						type = "header",
@@ -479,19 +479,6 @@ do
 						name = L.text,
 						desc = L.textDesc,
 						order = 10,
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetLabelVisibility(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetLabelVisibility(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 					},
 					alignText = {
 						type = "select",
@@ -502,19 +489,6 @@ do
 							CENTER = L.center,
 							RIGHT = L.right,
 						},
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarLabel:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarLabel:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 					},
 					textSpacer = {
 						type = "description",
@@ -526,19 +500,6 @@ do
 						name = L.time,
 						desc = L.timeDesc,
 						order = 13,
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetTimeVisibility(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetTimeVisibility(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 					},
 					alignTime = {
 						type = "select",
@@ -549,19 +510,6 @@ do
 							CENTER = L.center,
 							RIGHT = L.right,
 						},
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarDuration:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarDuration:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 					},
 					timeSpacer = {
 						type = "description",
@@ -573,29 +521,6 @@ do
 						name = L.icon,
 						desc = L.iconDesc,
 						order = 16,
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								if value then
-									bar:SetIcon(bar:Get("bigwigs:iconoptionrestore") or 134337) -- Interface/Icons/INV_Misc_Orb_05
-								else
-									bar:Set("bigwigs:iconoptionrestore", bar:GetIcon())
-									bar:SetIcon(nil)
-								end
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								if value then
-									bar:SetIcon(bar:Get("bigwigs:iconoptionrestore") or 134337) -- Interface/Icons/INV_Misc_Orb_05
-								else
-									bar:Set("bigwigs:iconoptionrestore", bar:GetIcon())
-									bar:SetIcon(nil)
-								end
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 					},
 					iconPosition = {
 						type = "select",
@@ -606,19 +531,6 @@ do
 							LEFT = L.left,
 							RIGHT = L.right,
 						},
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetIconPosition(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetIconPosition(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
 						disabled = function() return not db.icon end,
 					},
 					header3 = {
@@ -645,7 +557,6 @@ do
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
 						order = 1,
-						set = sortBars,
 					},
 					visibleBarLimit = {
 						type = "range",
@@ -655,7 +566,6 @@ do
 						max = 100,
 						min = 1,
 						step = 1,
-						set = sortBars,
 					},
 					fontSize = {
 						type = "range",
@@ -666,7 +576,6 @@ do
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
-						set = updateFont,
 					},
 					exactPositioning = {
 						type = "group",
@@ -674,42 +583,56 @@ do
 						order = 4,
 						inline = true,
 						args = {
-							BigWigsAnchor_x = {
+							posx = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = -2048,
-								softMax = 2048,
+								max = 2048,
 								step = 1,
 								order = 1,
 								width = 3.2,
+								get = function()
+									return plugin.db.profile.normalPosition[3]
+								end,
+								set = function(_, value)
+									plugin.db.profile.normalPosition[3] = value
+									normalAnchor:RefixPosition()
+								end,
 							},
-							BigWigsAnchor_y = {
+							posy = {
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = -2048,
-								softMax = 2048,
+								max = 2048,
 								step = 1,
 								order = 2,
 								width = 3.2,
+								get = function()
+									return plugin.db.profile.normalPosition[4]
+								end,
+								set = function(_, value)
+									plugin.db.profile.normalPosition[4] = value
+									normalAnchor:RefixPosition()
+								end,
 							},
-							BigWigsAnchor_width = {
+							normalWidth = {
 								type = "range",
 								name = L.width,
 								desc = L.sizeDesc,
-								min = 80,
-								softMax = 2000,
+								min = minBarWidth,
+								max = maxBarWidth,
 								step = 1,
 								order = 3,
 								width = 1.6,
 							},
-							BigWigsAnchor_height = {
+							normalHeight = {
 								type = "range",
 								name = L.height,
 								desc = L.sizeDesc,
-								min = 8,
-								softMax = 150,
+								min = minBarHeight,
+								max = maxBarHeight,
 								step = 1,
 								order = 4,
 								width = 1.6,
@@ -739,7 +662,6 @@ do
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
 						order = 3,
-						set = sortBars,
 						disabled = function() return not db.emphasizeMove end, -- Disable when using 1 anchor
 					},
 					emphasizeMove = {
@@ -747,16 +669,6 @@ do
 						name = L.move,
 						desc = L.moveDesc,
 						order = 4,
-						set = function(_, value)
-							db.emphasizeMove = value
-							if not value then
-								db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
-								db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
-							else
-								db.BigWigsEmphasizeAnchor_width = BigWigsEmphasizeAnchor:GetWidth()
-								db.BigWigsEmphasizeAnchor_height = BigWigsEmphasizeAnchor:GetHeight()
-							end
-						end,
 					},
 					emphasizeMultiplier = {
 						type = "range",
@@ -767,11 +679,6 @@ do
 						max = 3,
 						min = 1,
 						step = 0.01,
-						set = function(_, value)
-							db.emphasizeMultiplier = value
-							db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*value
-							db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*value
-						end,
 						disabled = function() return db.emphasizeMove end, -- Disable when using 2 anchors
 					},
 					emphasizeTime = {
@@ -790,7 +697,6 @@ do
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
-						set = updateFont,
 					},
 					visibleBarLimitEmph = {
 						type = "range",
@@ -800,7 +706,6 @@ do
 						max = 100,
 						min = 1,
 						step = 1,
-						set = sortBars,
 					},
 					exactPositioning = {
 						type = "group",
@@ -808,42 +713,56 @@ do
 						order = 9,
 						inline = true,
 						args = {
-							BigWigsEmphasizeAnchor_x = {
+							posx = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = -2048,
-								softMax = 2048,
+								max = 2048,
 								step = 1,
 								order = 1,
 								width = 3.2,
+								get = function()
+									return plugin.db.profile.expPosition[3]
+								end,
+								set = function(_, value)
+									plugin.db.profile.expPosition[3] = value
+									emphasizeAnchor:RefixPosition()
+								end,
 							},
-							BigWigsEmphasizeAnchor_y = {
+							posy = {
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = -2048,
-								softMax = 2048,
+								max = 2048,
 								step = 1,
 								order = 2,
 								width = 3.2,
+								get = function()
+									return plugin.db.profile.expPosition[4]
+								end,
+								set = function(_, value)
+									plugin.db.profile.expPosition[4] = value
+									emphasizeAnchor:RefixPosition()
+								end,
 							},
-							BigWigsEmphasizeAnchor_width = {
+							expWidth = {
 								type = "range",
 								name = L.width,
 								desc = L.sizeDesc,
-								min = 80,
-								softMax = 2000,
+								min = minBarWidth,
+								max = maxBarWidth,
 								step = 1,
 								order = 3,
 								width = 1.6,
 							},
-							BigWigsEmphasizeAnchor_height = {
+							expHeight = {
 								type = "range",
 								name = L.height,
 								desc = L.sizeDesc,
-								min = 8,
-								softMax = 150,
+								min = minBarHeight,
+								max = maxBarHeight,
 								step = 1,
 								order = 4,
 								width = 1.6,
@@ -1138,73 +1057,88 @@ end
 -- Anchors
 --
 
-local defaultPositions = {
-	BigWigsAnchor = {"CENTER", UIParent, "CENTER", 450, 200},
-	BigWigsEmphasizeAnchor = {"CENTER", UIParent, "CENTER", 0, -100}, --Below the Emphasized Message frame, ish
-}
-
-local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
-local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() end
-local onResize
 do
-	local throttle = false
-	function onResize(self, width, height)
-		db[self.w] = width
-		db[self.h] = height
-		if self == normalAnchor and not db.emphasizeMove then
-			-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
-			db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
-			db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
-		end
-		if not throttle then
-			throttle = true
-			plugin:ScheduleTimer(function()
-				for k in next, self.bars do
-					currentBarStyler.BarStopped(k)
-					if db.emphasizeMove then
-						k:SetSize(db[self.w], db[self.h]) -- Move enabled, set the size no matter which anchor we are configuring
-					elseif self == normalAnchor then
-						-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
-						if k:Get("bigwigs:emphasized") then
-							k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
-						else
-							k:SetSize(db[self.w], db[self.h])
+	local OnSizeChanged
+	do
+		local throttle = false
+		function OnSizeChanged(self, width, height)
+			width = math.floor(width+0.5)
+			height = math.floor(height+0.5)
+			if self == normalAnchor then
+				db.normalWidth = width
+				db.normalHeight = height
+			else
+				db.expWidth = width
+				db.expHeight = height
+			end
+			if not throttle then
+				throttle = true
+				plugin:SimpleTimer(function()
+					for k in next, self.bars do
+						currentBarStyler.BarStopped(k)
+						if db.emphasizeMove then
+							if self == normalAnchor then
+								k:SetSize(db.normalWidth, db.normalHeight)
+							else
+								k:SetSize(db.expWidth, db.expHeight)
+							end
+						elseif self == normalAnchor then
+							-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
+							if k:Get("bigwigs:emphasized") then
+								k:SetSize(db.normalWidth * db.emphasizeMultiplier, db.normalHeight * db.emphasizeMultiplier)
+							else
+								k:SetSize(db.normalWidth, db.normalHeight)
+							end
 						end
+						currentBarStyler.ApplyStyle(k)
+						rearrangeBars(self)
 					end
-					currentBarStyler.ApplyStyle(k)
-					rearrangeBars(self)
-				end
-				if self:IsMouseOver() then -- Only if we're dragging the drag handle, not sliding the GUI slider
-					plugin:UpdateGUI() -- Update width/height if GUI is open
-				end
-				throttle = false
-			end, 0.1)
+					if BigWigsOptions and BigWigsOptions:IsOpen() then
+						plugin:UpdateGUI() -- Update width/height if GUI is open
+					end
+					throttle = false
+				end, 0.1)
+			end
 		end
 	end
-end
-local function onDragStart(self) self:StartMoving() end
-local function onDragStop(self)
-	self:StopMovingOrSizing()
-	local s = self:GetEffectiveScale()
-	db[self.x] = self:GetLeft() * s
-	db[self.y] = self:GetTop() * s
-	plugin:UpdateGUI() -- Update X/Y if GUI is open
-end
+	local function OnDragStart(self)
+		self:StartMoving()
+	end
+	local function OnDragStop(self)
+		self:StopMovingOrSizing()
+		local point, _, relPoint, x, y = self:GetPoint()
+		x = math.floor(x+0.5)
+		y = math.floor(y+0.5)
+		plugin.db.profile[self.position] = {point, relPoint, x, y}
+		self:RefixPosition()
+		if BigWigsOptions and BigWigsOptions:IsOpen() then
+			plugin:UpdateGUI() -- Update X/Y if GUI is open
+		end
+	end
+	local function RefixPosition(self)
+		self:ClearAllPoints()
+		local point, relPoint = plugin.db.profile[self.position][1], plugin.db.profile[self.position][2]
+		local x, y = plugin.db.profile[self.position][3], plugin.db.profile[self.position][4]
+		self:SetPoint(point, UIParent, relPoint, x, y)
+	end
+	local function OnMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
+	local function OnMouseUp(self) self:GetParent():StopMovingOrSizing() end
 
-do
-	local function createAnchor(frameName, title)
-		local display = CreateFrame("Frame", frameName, UIParent)
-		display.w, display.h, display.x, display.y = frameName .. "_width", frameName .. "_height", frameName .. "_x", frameName .. "_y"
+	local function createAnchor(position, title, frameLevel, width, height)
+		local display = CreateFrame("Frame", nil, UIParent)
 		display:EnableMouse(true)
 		display:SetClampedToScreen(true)
 		display:SetMovable(true)
 		display:SetResizable(true)
 		display:RegisterForDrag("LeftButton")
-		display:SetResizeBounds(80, 8)
+		display:SetResizeBounds(minBarWidth, minBarHeight, maxBarWidth, maxBarHeight)
 		display:SetFrameStrata("HIGH")
 		display:SetFixedFrameStrata(true)
-		display:SetFrameLevel(title == "BigWigsAnchor" and 10 or 15)
+		display:SetFrameLevel(frameLevel)
 		display:SetFixedFrameLevel(true)
+		display.position = position
+		display:SetWidth(width)
+		display:SetHeight(height)
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)
@@ -1222,35 +1156,28 @@ do
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
 		drag:EnableMouse(true)
-		drag:SetScript("OnMouseDown", onDragHandleMouseDown)
-		drag:SetScript("OnMouseUp", onDragHandleMouseUp)
+		drag:SetScript("OnMouseDown", OnMouseDown)
+		drag:SetScript("OnMouseUp", OnMouseUp)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
 		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
 		tex:SetPoint("CENTER", drag)
-		display:SetScript("OnSizeChanged", onResize)
-		display:SetScript("OnDragStart", onDragStart)
-		display:SetScript("OnDragStop", onDragStop)
 		display.bars = {}
-		display.RefixPosition = function(self)
-			self:ClearAllPoints()
-			if db[self.x] and db[self.y] then
-				local s = self:GetEffectiveScale()
-				self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
-			else
-				self:SetPoint(unpack(defaultPositions[self:GetName()]))
-			end
-			self:SetWidth(db[self.w] or plugin.defaultDB[self.w])
-			self:SetHeight(db[self.h] or plugin.defaultDB[self.h])
-		end
+		display.RefixPosition = RefixPosition
+		local point, relPoint = plugin.defaultDB[position][1], plugin.defaultDB[position][2]
+		local x, y = plugin.defaultDB[position][3], plugin.defaultDB[position][4]
+		display:SetPoint(point, UIParent, relPoint, x, y)
 		display:Hide()
+		display:SetScript("OnSizeChanged", OnSizeChanged)
+		display:SetScript("OnDragStart", OnDragStart)
+		display:SetScript("OnDragStop", OnDragStop)
 		return display
 	end
 
-	normalAnchor = createAnchor("BigWigsAnchor", L.bars)
-	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L.emphasizedBars)
+	normalAnchor = createAnchor("normalPosition", L.bars, 10, plugin.defaultDB.normalWidth, plugin.defaultDB.normalHeight)
+	emphasizeAnchor = createAnchor("expPosition", L.emphasizedBars, 15, plugin.defaultDB.expWidth, plugin.defaultDB.expHeight)
 end
 
 local function showAnchors(_, mode)
@@ -1273,16 +1200,10 @@ end
 -- Initialization
 --
 
-function plugin:OnRegister()
-	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
-
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-end
-
 function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
 	updateProfile()
+	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StartNameplateTimer", "StartNameplateBar")
@@ -1636,7 +1557,8 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 			end
 		end
 	else
-		width, height = db.BigWigsAnchor_width, db.BigWigsAnchor_height
+		width = db.normalWidth
+		height = db.normalHeight
 	end
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
 	bar:Set("bigwigs:module", module)
@@ -1777,8 +1699,13 @@ function plugin:EmphasizeBar(bar, freshBar)
 	bar:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	if db.emphasizeMove then
+		bar:SetHeight(db.expHeight)
+		bar:SetWidth(db.expWidth)
+	else
+		bar:SetHeight(db.normalHeight * db.emphasizeMultiplier)
+		bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+	end
 	bar:SetFrameLevel(105) -- Put emphasized bars just above normal bars (LibCandyBar 100)
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
