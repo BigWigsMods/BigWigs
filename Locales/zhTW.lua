@@ -197,7 +197,6 @@ L.dispeller = "|cFFFF0000只警報驅散和打斷。|r"
 --L.no_string_available = "No import string stored to import. First import a string."
 --L.no_import_message = "No settings were imported."
 --L.import_success = "Imported: %s" -- Imported: Bar Anchors, Message Colors
---L.import_success_seperator = ", " -- The seperator between imported strings, see L.import_success example.
 --L.imported_bar_positions = "Bar Positions"
 --L.imported_bar_settings = "Bar Settings"
 --L.imported_bar_colors = "Bar Colors"

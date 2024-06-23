@@ -50,6 +50,7 @@ end
 --
 
 local L = BigWigsAPI:GetLocale("BigWigs")
+local myLocale = GetLocale()
 local sharingVersion = "BW1"
 
 -- Anchor Args
@@ -295,6 +296,7 @@ end
 
 
 do
+	local comma = (myLocale == "zhTW" or myLocale == "zhCN") and "，" or ", "
 	local function SaveImportedTable(tableData)
 		local data = tableData
 		local imported = {}
@@ -342,7 +344,7 @@ do
 		end
 
 		BigWigs:SendMessage("BigWigs_ProfileUpdate")
-		local importMessage = L.import_success:format(table.concat(imported, ", "))
+		local importMessage = L.import_success:format(table.concat(imported, comma))
 		BigWigs:Print(importMessage)
 	end
 
