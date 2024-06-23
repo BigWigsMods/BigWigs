@@ -227,6 +227,10 @@ local function GetExportString()
 	return sharingVersion..":"..compressedForPrint
 end
 
+local function isImportStringAvailable()
+	return not not importedTableData
+end
+
 local function IsOptionInString(key)
 	if importStringOptions[key] then
 		return true
@@ -246,8 +250,7 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "any" then
-		if IsOptionInString("barAnchors") or IsOptionInString("barSettings") or IsOptionInString("barColors") or
-			IsOptionInString("messageAnchors") or IsOptionInString("messageSettings") or IsOptionInString("messageColors") then
+		if IsOptionGroupAvailable("bars") or IsOptionGroupAvailable("messages") then
 			return true
 		end
 	end
@@ -390,7 +393,7 @@ local sharingOptions = {
 				type = "description",
 				name = function() return IsOptionGroupAvailable("any") and L.import_info_active or L.import_info_none end,
 				order = 4.5,
-				hidden = function() return not importedTableData and not sharingOptionsSettings["importString"] end,
+				hidden = function() return not isImportStringAvailable() and not sharingOptionsSettings["importString"] end,
 				width = "full",
 			},
 			bars = {
@@ -398,7 +401,7 @@ local sharingOptions = {
 				name = L.BAR,
 				inline = true,
 				order = 5,
-				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("bars")) end,
+				hidden = function() return (not isImportStringAvailable() or not IsOptionGroupAvailable("bars")) end,
 				args = {
 					importBarPositions = {
 						type = "toggle",
@@ -431,7 +434,7 @@ local sharingOptions = {
 				name = L.MESSAGE,
 				inline = true,
 				order = 10,
-				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("messages")) end,
+				hidden = function() return (not isImportStringAvailable() or not IsOptionGroupAvailable("messages")) end,
 				args = {
 					importMessagePositions = {
 						type = "toggle",
@@ -467,7 +470,7 @@ local sharingOptions = {
 				func = function()
 					sharing:SaveData()
 				end,
-				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("all")) end,
+				hidden = function() return (not isImportStringAvailable() and not IsOptionGroupAvailable("all")) end,
 				confirm = true,
 				confirmText = L.confirm_import,
 			},
