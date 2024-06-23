@@ -96,6 +96,12 @@ local function updateProfile()
 	if db.fadetime < 1 or db.fadetime > 10 then
 		db.fadetime = plugin.defaultDB.fadetime
 	end
+	if not media:IsValid(FONT, db.fontName) then
+		db.fontName = plugin:GetDefaultFont()
+	end
+	if not media:IsValid(FONT, db.emphFontName) then
+		db.emphFontName = plugin:GetDefaultFont()
+	end
 
 	local emphFlags = nil
 	if db.emphMonochrome and db.emphOutline ~= "NONE" then
