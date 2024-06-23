@@ -155,7 +155,7 @@ local messageColorsToExport = {
 }
 
 -- Default Options
-local sharingOptionsSettings = {
+local sharingExportOptionsSettings = {
 	exportBarPositions = true,
 	exportMessagePositions = true,
 	exportBarSettings = true,
@@ -163,6 +163,8 @@ local sharingOptionsSettings = {
 	exportBarColors = true,
 	exportMessageColors = true,
 }
+
+local sharingImportOptionsSettings = {}
 
 -- Import String Storage
 local importStringOptions = {}
@@ -197,27 +199,27 @@ local function GetExportString()
 	local barSettings = BigWigs:GetPlugin("Bars")
 	local messageSettings = BigWigs:GetPlugin("Messages")
 
-	if sharingOptionsSettings.exportBarPositions then
+	if sharingExportOptionsSettings.exportBarPositions then
 		exportOptions["barAnchors"] = exportProfileSettings(barAnchorsToExport, barSettings.db.profile)
 	end
 
-	if sharingOptionsSettings.exportMessagePositions then
+	if sharingExportOptionsSettings.exportMessagePositions then
 		exportOptions["messageAnchors"] = exportProfileSettings(messageAnchorsToExport, messageSettings.db.profile)
 	end
 
-	if sharingOptionsSettings.exportBarSettings then
+	if sharingExportOptionsSettings.exportBarSettings then
 		exportOptions["barSettings"] = exportProfileSettings(barSettingsToExport, barSettings.db.profile)
 	end
 
-	if sharingOptionsSettings.exportMessageSettings then
+	if sharingExportOptionsSettings.exportMessageSettings then
 		exportOptions["messageSettings"] = exportProfileSettings(messageSettingsToExport, messageSettings.db.profile)
 	end
 
-	if sharingOptionsSettings.exportMessageColors then
+	if sharingExportOptionsSettings.exportMessageColors then
 		exportOptions["messageColors"] = exportProfileColorSettings(messageColorsToExport)
 	end
 
-	if sharingOptionsSettings.exportBarColors then
+	if sharingExportOptionsSettings.exportBarColors then
 		exportOptions["barColors"] = exportProfileColorSettings(barColorsToExport)
 	end
 
@@ -303,7 +305,7 @@ do
 		-- Colors are stored for each plugin/module (e.g. BigWigs_Plugins_Colors for the defaults, BigWigs_Bosses_* for bosses)
 		-- We only want to modify the defaults with these imports right now.
 		local function importColorSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
-			if sharingOptionsSettings[sharingOptionKey] and data[dataKey] then
+			if sharingImportOptionsSettings[sharingOptionKey] and data[dataKey] then
 				for k in next, plugin.db.profile do
 					plugin.db.profile[k]["BigWigs_Plugins_Colors"]["default"] = nil -- Reset defaults only
 				end
@@ -315,7 +317,7 @@ do
 		end
 
 		local function importSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
-			if sharingOptionsSettings[sharingOptionKey] and data[dataKey] then
+			if sharingImportOptionsSettings[sharingOptionKey] and data[dataKey] then
 				local profile = plugin.db.profile
 				for i = 1, #settingsToExport do
 					profile[settingsToExport[i]] = nil -- Reset current settings
@@ -366,8 +368,8 @@ local sharingOptions = {
 		type="group",
 		name = L.import,
 		order = 5,
-		get = function(i) return sharingOptionsSettings[i[#i]] end,
-		set = function(i, value) sharingOptionsSettings[i[#i]] = value end,
+		get = function(i) return sharingImportOptionsSettings[i[#i]] end,
+		set = function(i, value) sharingImportOptionsSettings[i[#i]] = value end,
 		args = {
 			importStringInfo = {
 				type = "description",
@@ -384,16 +386,16 @@ local sharingOptions = {
 				width = "full",
 				set = function(i, value)
 					local processed = sharing:DecodeImportString(value)
-					sharingOptionsSettings[i[#i]] = value
+					sharingImportOptionsSettings[i[#i]] = value
 				end,
-				get = function(i) return sharingOptionsSettings[i[#i]] end,
+				get = function(i) return sharingImportOptionsSettings[i[#i]] end,
 				control = "ImportStringMultiline",
 			},
 			importInfo = {
 				type = "description",
 				name = function() return IsOptionGroupAvailable("any") and L.import_info_active or L.import_info_none end,
 				order = 4.5,
-				hidden = function() return not isImportStringAvailable() and not sharingOptionsSettings["importString"] end,
+				hidden = function() return not isImportStringAvailable() and not sharingImportOptionsSettings["importString"] end,
 				width = "full",
 			},
 			bars = {
@@ -470,7 +472,16 @@ local sharingOptions = {
 				func = function()
 					sharing:SaveData()
 				end,
-				hidden = function() return (not isImportStringAvailable() and not IsOptionGroupAvailable("any")) end,
+				hidden = function()
+					local isSomethingSelected = false
+					for k, v in pairs(sharingImportOptionsSettings) do
+						if k ~= "importString" and v then
+							isSomethingSelected = true
+							break
+						end
+					end
+					return (not isSomethingSelected and not isImportStringAvailable() and not IsOptionGroupAvailable("any"))
+				end,
 				confirm = true,
 				confirmText = L.confirm_import,
 			},
@@ -480,8 +491,8 @@ local sharingOptions = {
 		type="group",
 		name = L.export,
 		order = 10,
-		get = function(i) return sharingOptionsSettings[i[#i]] end,
-		set = function(i, value) sharingOptionsSettings[i[#i]] = value end,
+		get = function(i) return sharingExportOptionsSettings[i[#i]] end,
+		set = function(i, value) sharingExportOptionsSettings[i[#i]] = value end,
 		args = {
 			exportInfo = {
 				type = "description",
