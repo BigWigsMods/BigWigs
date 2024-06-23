@@ -324,20 +324,20 @@ do
 			end
 		end
 
-		importSettings('importBarPositions', 'barAnchors', barAnchorsToExport, barPlugin, L.importedBarAnchors)
-		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.importedBarSettings)
-		importColorSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.importedBarColors)
-		importSettings('importMessagePositions', 'messageAnchors', messageAnchorsToExport, messageplugin, L.importedMessageAnchors)
-		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.importedMessageSettings)
-		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.importedMessageColors)
+		importSettings('importBarPositions', 'barAnchors', barAnchorsToExport, barPlugin, L.imported_bar_positions)
+		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.imported_bar_settings)
+		importColorSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.imported_bar_colors)
+		importSettings('importMessagePositions', 'messageAnchors', messageAnchorsToExport, messageplugin, L.imported_message_positions)
+		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.imported_message_settings)
+		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.imported_message_colors)
 
 		if #imported == 0 then
-			BigWigs:Print(L.noImportMessage)
+			BigWigs:Print(L.no_import_message)
 			return
 		end
 
 		BigWigs:SendMessage("BigWigs_ProfileUpdate")
-		local importMessage = L.importSuccess:format(table.concat(imported, ", "))
+		local importMessage = L.import_success:format(table.concat(imported, ", "))
 		BigWigs:Print(importMessage)
 	end
 
@@ -346,7 +346,7 @@ do
 	-- will save the data to the BigWigs profile.
 	function sharing:SaveData()
 		if not importedTableData then
-			BigWigs:Print(L.noStringAvailable)
+			BigWigs:Print(L.no_string_available)
 			return
 		end
 		-- Custom Popup to confirm import?
@@ -375,8 +375,8 @@ local sharingOptions = {
 			importString = {
 				type = "input",
 				multiline = 5,
-				name = L.importString,
-				desc = L.importString_desc,
+				name = L.import_string,
+				desc = L.import_string_desc,
 				order = 2,
 				width = "full",
 				set = function(i, value)
@@ -469,7 +469,7 @@ local sharingOptions = {
 				end,
 				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("all")) end,
 				confirm = true,
-				confirmText = L.confirmImport,
+				confirmText = L.confirm_import,
 			},
 		},
 	},
@@ -548,8 +548,8 @@ local sharingOptions = {
 			exportString = {
 				type = "input",
 				multiline = 5,
-				name = L.exportString,
-				desc = L.exportString_desc,
+				name = L.export_string,
+				desc = L.export_string_desc,
 				order = 100,
 				width = "full",
 				get = function()
