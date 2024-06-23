@@ -1052,6 +1052,11 @@ function mod:ADDON_LOADED(addon)
 		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "67108864") -- Set the cache to the "Small (64MB)" setting as a minimum
 	end
 
+	if not BigWigsBarsReset then
+		BigWigsBarsReset = true
+		sysprint(L.tempMessage)
+		Popup("BigWigs: ".. L.tempMessage)
+	end
 	--bwFrame:UnregisterEvent("ADDON_LOADED")
 	--self.ADDON_LOADED = nil
 end

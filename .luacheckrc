@@ -5,6 +5,8 @@ exclude_files = {
 	"**/Libs",
 }
 files["**/Loader.lua"].ignore = {
+	"11[13]/BigWigsBarsReset", -- XXX temp
+
 	"113/geterrorhandler",
 
 	"113/Ambiguate",
