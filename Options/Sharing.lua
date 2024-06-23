@@ -470,7 +470,7 @@ local sharingOptions = {
 				func = function()
 					sharing:SaveData()
 				end,
-				hidden = function() return (not isImportStringAvailable() and not IsOptionGroupAvailable("all")) end,
+				hidden = function() return (not isImportStringAvailable() and IsOptionGroupAvailable("any")) end,
 				confirm = true,
 				confirmText = L.confirm_import,
 			},
