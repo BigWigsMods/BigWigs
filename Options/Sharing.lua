@@ -470,6 +470,9 @@ local sharingOptions = {
 					sharing:SaveData()
 				end,
 				hidden = function()
+					return (not isImportStringAvailable() and not IsOptionGroupAvailable("any"))
+				end,
+				disabled = function()
 					local isSomethingSelected = false
 					for k, v in pairs(sharingImportOptionsSettings) do
 						if k ~= "importString" and v then
@@ -477,7 +480,7 @@ local sharingOptions = {
 							break
 						end
 					end
-					return (not isSomethingSelected and not isImportStringAvailable() and not IsOptionGroupAvailable("any"))
+					return not isSomethingSelected
 				end,
 				confirm = true,
 				confirmText = L.confirm_import,
