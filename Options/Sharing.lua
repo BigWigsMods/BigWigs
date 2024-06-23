@@ -155,7 +155,7 @@ local messageColorsToExport = {
 }
 
 -- Default Options
-local sharingOptions = {
+local sharingOptionsSettings = {
 	exportBarPositions = true,
 	exportMessagePositions = true,
 	exportBarSettings = true,
@@ -197,27 +197,27 @@ local function GetExportString()
 	local barSettings = BigWigs:GetPlugin("Bars")
 	local messageSettings = BigWigs:GetPlugin("Messages")
 
-	if sharingOptions.exportBarPositions then
+	if sharingOptionsSettings.exportBarPositions then
 		exportOptions["barAnchors"] = exportProfileSettings(barAnchorsToExport, barSettings.db.profile)
 	end
 
-	if sharingOptions.exportMessagePositions then
+	if sharingOptionsSettings.exportMessagePositions then
 		exportOptions["messageAnchors"] = exportProfileSettings(messageAnchorsToExport, messageSettings.db.profile)
 	end
 
-	if sharingOptions.exportBarSettings then
+	if sharingOptionsSettings.exportBarSettings then
 		exportOptions["barSettings"] = exportProfileSettings(barSettingsToExport, barSettings.db.profile)
 	end
 
-	if sharingOptions.exportMessageSettings then
+	if sharingOptionsSettings.exportMessageSettings then
 		exportOptions["messageSettings"] = exportProfileSettings(messageSettingsToExport, messageSettings.db.profile)
 	end
 
-	if sharingOptions.exportMessageColors then
+	if sharingOptionsSettings.exportMessageColors then
 		exportOptions["messageColors"] = exportProfileColorSettings(messageColorsToExport)
 	end
 
-	if sharingOptions.exportBarColors then
+	if sharingOptionsSettings.exportBarColors then
 		exportOptions["barColors"] = exportProfileColorSettings(barColorsToExport)
 	end
 
@@ -300,7 +300,7 @@ do
 		-- Colors are stored for each plugin/module (e.g. BigWigs_Plugins_Colors for the defaults, BigWigs_Bosses_* for bosses)
 		-- We only want to modify the defaults with these imports right now.
 		local function importColorSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
-			if sharingOptions[sharingOptionKey] and data[dataKey] then
+			if sharingOptionsSettings[sharingOptionKey] and data[dataKey] then
 				for k in next, plugin.db.profile do
 					plugin.db.profile[k]["BigWigs_Plugins_Colors"]["default"] = nil -- Reset defaults only
 				end
@@ -312,7 +312,7 @@ do
 		end
 
 		local function importSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
-			if sharingOptions[sharingOptionKey] and data[dataKey] then
+			if sharingOptionsSettings[sharingOptionKey] and data[dataKey] then
 				local profile = plugin.db.profile
 				for i = 1, #settingsToExport do
 					profile[settingsToExport[i]] = nil -- Reset current settings
@@ -363,8 +363,8 @@ local sharingOptions = {
 		type="group",
 		name = L.import,
 		order = 5,
-		get = function(i) return sharingOptions[i[#i]] end,
-		set = function(i, value) sharingOptions[i[#i]] = value end,
+		get = function(i) return sharingOptionsSettings[i[#i]] end,
+		set = function(i, value) sharingOptionsSettings[i[#i]] = value end,
 		args = {
 			importStringInfo = {
 				type = "description",
@@ -381,16 +381,16 @@ local sharingOptions = {
 				width = "full",
 				set = function(i, value)
 					local processed = sharing:DecodeImportString(value)
-					sharingOptions[i[#i]] = value
+					sharingOptionsSettings[i[#i]] = value
 				end,
-				get = function(i) return sharingOptions[i[#i]] end,
+				get = function(i) return sharingOptionsSettings[i[#i]] end,
 				control = "ImportStringMultiline",
 			},
 			importInfo = {
 				type = "description",
 				name = function() return IsOptionGroupAvailable("any") and L.import_info_active or L.import_info_none end,
 				order = 4.5,
-				hidden = function() return not importedTableData and not sharingOptions["importString"] end,
+				hidden = function() return not importedTableData and not sharingOptionsSettings["importString"] end,
 				width = "full",
 			},
 			bars = {
@@ -477,8 +477,8 @@ local sharingOptions = {
 		type="group",
 		name = L.export,
 		order = 10,
-		get = function(i) return sharingOptions[i[#i]] end,
-		set = function(i, value) sharingOptions[i[#i]] = value end,
+		get = function(i) return sharingOptionsSettings[i[#i]] end,
+		set = function(i, value) sharingOptionsSettings[i[#i]] = value end,
 		args = {
 			exportInfo = {
 				type = "description",
