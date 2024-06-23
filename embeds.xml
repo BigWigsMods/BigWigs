@@ -11,6 +11,8 @@
 <Include file="Libs\LibDBIcon-1.0\lib.xml"/>
 @end-non-debug@-->
 <!--@do-not-package@-->
-<Include file="Options\Libs\AceGUIWidget-SharedDropdown.lua"/>
+<Script file="Options\Libs\AceGUIWidget-SharedDropdown.lua"/>
+<Script file="Options\Libs\LibDeflate\LibDeflate.lua"/>
+<Script file="Options\Libs\LibSerialize\LibSerialize.lua"/>
 <!--@end-do-not-package@-->
 </Ui>
