@@ -7,6 +7,6 @@
 <Include file="Libs\AceDBOptions-3.0\AceDBOptions-3.0.xml"/>
 <Include file="Libs\LibDDI-1.0\lib.xml"/>
 <Script file="Libs\LibDeflate\LibDeflate.lua"/>
-<Include file="Libs\LibSerialize\lib.xml"/>
+<Script file="Libs\LibSerialize\LibSerialize.lua"/>
 </Ui>
 

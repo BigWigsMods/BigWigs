@@ -16,9 +16,6 @@ externals:
     Options/Libs/AceConfigRegistry-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0/AceConfigRegistry-3.0
     Options/Libs/AceDBOptions-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDBOptions-3.0
     Options/Libs/LibDDI-1.0: https://repos.wowace.com/wow/libddi-1-0/trunk
-    Options/Libs/LibSerialize:
-        url: https://github.com/rossnichols/LibSerialize
-        tag: v1.0.0
 
 move-folders:
     BigWigs/Core: BigWigs_Core

@@ -10,7 +10,7 @@ local LibDeflate = LibStub("LibDeflate")
 local AceGUI = LibStub("AceGUI-3.0")
 
 -------------------------------------------------------------------------------
--- Custom Widget
+-- Custom Widgets
 --
 
 do
@@ -25,6 +25,25 @@ do
 	AceGUI:RegisterWidgetType(Type, Constructor, Version)
 end
 
+do
+	local function OnTextChanged(self, userInput)
+		if userInput then
+			self = self.obj
+			self:Fire("OnEnterPressed", self.editBox:GetText())
+		end
+	end
+
+	local Type, Version = "ImportStringMultiline", 1
+	local function Constructor()
+		local multiLineEditBox = AceGUI:Create("MultiLineEditBox")
+		multiLineEditBox.type = Type
+		multiLineEditBox.editBox:SetScript("OnTextChanged", OnTextChanged)
+		multiLineEditBox.button:Hide()
+		multiLineEditBox.button.Show = function() end -- Prevent the button from being shown again
+		return multiLineEditBox
+	end
+	AceGUI:RegisterWidgetType(Type, Constructor, Version)
+end
 
 -------------------------------------------------------------------------------
 -- Locals
@@ -53,7 +72,6 @@ local barSettingsToExport = {
 	"fontSizeEmph",
 	"fontSizeNameplate",
 	"texture",
-	"font",
 	"monochrome",
 	"outline",
 	"growup",
@@ -75,15 +93,15 @@ local barSettingsToExport = {
 	"BigWigsAnchor_height",
 	"BigWigsEmphasizeAnchor_width",
 	"BigWigsEmphasizeAnchor_height",
-	"nameplateWidth", -- Do nameplate bars need their own export checkbox?
-	"nameplateAutoWidth",
-	"nameplateHeight",
-	"nameplateAlpha",
-	"nameplateOffsetY",
-	"nameplateGrowUp",
 	"spacing",
 	"visibleBarLimit",
 	"visibleBarLimitEmph",
+	-- "nameplateWidth", -- Do nameplate bars need their own export checkbox?
+	-- "nameplateAutoWidth",
+	-- "nameplateHeight",
+	-- "nameplateAlpha",
+	-- "nameplateOffsetY",
+	-- "nameplateGrowUp",
 	-- XXX Clickable Bars are not exported right now. Separate checkbox?
 	-- "interceptMouse",
 	-- "onlyInterceptOnKeypress",
@@ -110,8 +128,8 @@ local messageSettingsToExport = {
 	"displaytime",
 	"fadetime",
 	"emphUppercase",
-	"disabled",
-	"emphDisabled",
+	-- "disabled",
+	-- "emphDisabled",
 	-- Anchor Settings
 	-- "normalPosition",
 	-- "emphPosition",
@@ -216,6 +234,26 @@ local function IsOptionInString(key)
 	return false
 end
 
+local function IsOptionGroupAvailable(group)
+	if group == "bars" then
+		if IsOptionInString("barAnchors") or IsOptionInString("barSettings") or IsOptionInString("barColors") then
+			return true
+		end
+	end
+	if group == "messages" then
+		if IsOptionInString("messageAnchors") or IsOptionInString("messageSettings") or IsOptionInString("messageColors") then
+			return true
+		end
+	end
+	if group == "any" then
+		if IsOptionInString("barAnchors") or IsOptionInString("barSettings") or IsOptionInString("barColors") or
+			IsOptionInString("messageAnchors") or IsOptionInString("messageSettings") or IsOptionInString("messageColors") then
+			return true
+		end
+	end
+	return false
+end
+
 do
 
 	local function PreProcess(data)
@@ -237,14 +275,14 @@ do
 		importStringOptions = {}
 		importedTableData = nil
 
-		local version, importData = string:match("^(%w+):(.+)$")
-		if version ~= sharingVersion then return end
+		local versionPlain, importData = string:match("^(%w+):(.+)$")
+		if versionPlain ~= sharingVersion then return end
 		local decodedForPrint = LibDeflate:DecodeForPrint(importData)
 		if not decodedForPrint then return end
 		local decompressed = LibDeflate:DecompressDeflate(decodedForPrint)
 		if not decompressed then return end
 		local success, data = LibSerialize:Deserialize(decompressed)
-		if not success then return end
+		if not success or not data.version or data.version ~= sharingVersion then return end
 		local importSucceeded = PreProcess(data)
 		return importSucceeded
 	end
@@ -328,7 +366,7 @@ local sharingOptions = {
 		get = function(i) return sharingOptions[i[#i]] end,
 		set = function(i, value) sharingOptions[i[#i]] = value end,
 		args = {
-			importInfo = {
+			importStringInfo = {
 				type = "description",
 				name = L.import_info,
 				order = 1,
@@ -341,23 +379,31 @@ local sharingOptions = {
 				desc = L.importString_desc,
 				order = 2,
 				width = "full",
-				pattern = "^(%w+):(.+)$",
 				set = function(i, value)
 					local processed = sharing:DecodeImportString(value)
 					sharingOptions[i[#i]] = value
 				end,
 				get = function(i) return sharingOptions[i[#i]] end,
+				control = "ImportStringMultiline",
+			},
+			importInfo = {
+				type = "description",
+				name = function() return IsOptionGroupAvailable("any") and L.import_info_active or L.import_info_none end,
+				order = 4.5,
+				hidden = function() return not importedTableData and not sharingOptions["importString"] end,
+				width = "full",
 			},
 			bars = {
 				type = "group",
 				name = L.BAR,
 				inline = true,
 				order = 5,
+				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("bars")) end,
 				args = {
 					importBarAnchors = {
 						type = "toggle",
 						name = L.anchors,
-						desc = L.anchors_import_desc:format(L.barSmall),
+						desc = L.anchors_import_bars_desc,
 						order = 1,
 						width = 1,
 						disabled = function() return not IsOptionInString("barAnchors") end,
@@ -365,7 +411,7 @@ local sharingOptions = {
 					importBarSettings = {
 						type = "toggle",
 						name = L.settings,
-						desc = L.settings_import_desc:format(L.barSmall),
+						desc = L.settings_import_bars_desc,
 						order = 5,
 						width = 1,
 						disabled = function() return not IsOptionInString("barSettings") end,
@@ -373,7 +419,7 @@ local sharingOptions = {
 					importBarColors = {
 						type = "toggle",
 						name = L.colors,
-						desc = L.colors_import_desc:format(L.barSmall),
+						desc = L.colors_import_bars_desc,
 						order = 10,
 						width = 1,
 						disabled = function() return not IsOptionInString("barColors") end,
@@ -385,11 +431,12 @@ local sharingOptions = {
 				name = L.MESSAGE,
 				inline = true,
 				order = 10,
+				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("messages")) end,
 				args = {
 					importMessageAnchors = {
 						type = "toggle",
 						name = L.anchors,
-						desc = L.anchors_import_desc:format(L.messageSmall),
+						desc = L.anchors_import_messages_desc,
 						order = 1,
 						width = 1,
 						disabled = function() return not IsOptionInString("messageAnchors") end,
@@ -397,7 +444,7 @@ local sharingOptions = {
 					importMessageSettings = {
 						type = "toggle",
 						name =	L.settings,
-						desc = L.settings_import_desc:format(L.messageSmall),
+						desc = L.settings_import_messages_desc,
 						order = 5,
 						width = 1,
 						disabled = function() return not IsOptionInString("messageSettings") end,
@@ -405,7 +452,7 @@ local sharingOptions = {
 					importMessageColors = {
 						type = "toggle",
 						name = L.colors,
-						desc = L.colors_import_desc:format(L.messageSmall),
+						desc = L.colors_import_messages_desc,
 						order = 10,
 						width = 1,
 						disabled = function() return not IsOptionInString("messageColors") end,
@@ -420,7 +467,7 @@ local sharingOptions = {
 				func = function()
 					sharing:SaveData()
 				end,
-				disabled = function() return not importedTableData end,
+				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("all")) end,
 				confirm = true,
 				confirmText = L.confirmImport,
 			},
@@ -448,21 +495,21 @@ local sharingOptions = {
 					exportBarAnchors = {
 						type = "toggle",
 						name = L.anchors,
-						desc = L.anchors_export_desc:format(L.barSmall),
+						desc = L.anchors_export_bars_desc,
 						order = 1,
 						width = 1,
 					},
 					exportBarSettings = {
 						type = "toggle",
 						name = L.settings,
-						desc = L.settings_export_desc:format(L.barSmall),
+						desc = L.settings_export_bars_desc,
 						order = 5,
 						width = 1,
 					},
 					exportBarColors = {
 						type = "toggle",
 						name = L.colors,
-						desc = L.colors_export_desc:format(L.barSmall),
+						desc = L.colors_export_bars_desc,
 						order = 10,
 						width = 1,
 					},
@@ -477,21 +524,21 @@ local sharingOptions = {
 					exportMessageAnchors = {
 						type = "toggle",
 						name = L.anchors,
-						desc = L.anchors_export_desc:format(L.messageSmall),
+						desc = L.anchors_export_messages_desc,
 						order = 1,
 						width = 1,
 					},
 					exportMessageSettings = {
 						type = "toggle",
 						name = L.settings,
-						desc = L.settings_export_desc:format(L.messageSmall),
+						desc = L.settings_export_messages_desc,
 						order = 5,
 						width = 1,
 					},
 					exportMessageColors = {
 						type = "toggle",
 						name = L.colors,
-						desc = L.colors_export_desc:format(L.messageSmall),
+						desc = L.colors_export_messages_desc,
 						order = 10,
 						width = 1,
 					},
@@ -516,4 +563,3 @@ local sharingOptions = {
 }
 
 addonTable.sharingOptions = sharingOptions
-BigWigsSharing = sharing -- Set global so other addons can import/save data using using BigWigsSharing:DecodeImportString() and BigWigsSharing:SaveData().
