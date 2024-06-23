@@ -55,10 +55,8 @@ local sharingVersion = "BW1"
 
 -- Anchor Args
 local barAnchorsToExport = {
-	"BigWigsAnchor_x",
-	"BigWigsAnchor_y",
-	"BigWigsEmphasizeAnchor_x",
-	"BigWigsEmphasizeAnchor_y",
+	"normalPosition",
+	"expPosition",
 }
 
 local messageAnchorsToExport = {
