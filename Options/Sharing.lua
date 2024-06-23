@@ -156,8 +156,8 @@ local messageColorsToExport = {
 
 -- Default Options
 local sharingOptions = {
-	exportBarAnchors = true,
-	exportMessageAnchors = true,
+	exportBarPositions = true,
+	exportMessagePositions = true,
 	exportBarSettings = true,
 	exportMessageSettings = true,
 	exportBarColors = true,
@@ -197,11 +197,11 @@ local function GetExportString()
 	local barSettings = BigWigs:GetPlugin("Bars")
 	local messageSettings = BigWigs:GetPlugin("Messages")
 
-	if sharingOptions.exportBarAnchors then
+	if sharingOptions.exportBarPositions then
 		exportOptions["barAnchors"] = exportProfileSettings(barAnchorsToExport, barSettings.db.profile)
 	end
 
-	if sharingOptions.exportMessageAnchors then
+	if sharingOptions.exportMessagePositions then
 		exportOptions["messageAnchors"] = exportProfileSettings(messageAnchorsToExport, messageSettings.db.profile)
 	end
 
@@ -324,10 +324,10 @@ do
 			end
 		end
 
-		importSettings('importBarAnchors', 'barAnchors', barAnchorsToExport, barPlugin, L.importedBarAnchors)
+		importSettings('importBarPositions', 'barAnchors', barAnchorsToExport, barPlugin, L.importedBarAnchors)
 		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.importedBarSettings)
 		importColorSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.importedBarColors)
-		importSettings('importMessageAnchors', 'messageAnchors', messageAnchorsToExport, messageplugin, L.importedMessageAnchors)
+		importSettings('importMessagePositions', 'messageAnchors', messageAnchorsToExport, messageplugin, L.importedMessageAnchors)
 		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.importedMessageSettings)
 		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.importedMessageColors)
 
@@ -400,7 +400,7 @@ local sharingOptions = {
 				order = 5,
 				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("bars")) end,
 				args = {
-					importBarAnchors = {
+					importBarPositions = {
 						type = "toggle",
 						name = L.position,
 						desc = L.position_import_bars_desc,
@@ -433,7 +433,7 @@ local sharingOptions = {
 				order = 10,
 				hidden = function() return (not importedTableData or not IsOptionGroupAvailable("messages")) end,
 				args = {
-					importMessageAnchors = {
+					importMessagePositions = {
 						type = "toggle",
 						name = L.position,
 						desc = L.position_import_messages_desc,
@@ -492,7 +492,7 @@ local sharingOptions = {
 				inline = true,
 				order = 2,
 				args = {
-					exportBarAnchors = {
+					exportBarPositions = {
 						type = "toggle",
 						name = L.position,
 						desc = L.position_export_bars_desc,
@@ -521,7 +521,7 @@ local sharingOptions = {
 				inline = true,
 				order = 10,
 				args = {
-					exportMessageAnchors = {
+					exportMessagePositions = {
 						type = "toggle",
 						name = L.position,
 						desc = L.position_export_messages_desc,
