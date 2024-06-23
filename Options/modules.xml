@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Options.lua"/>
+<Script file="Sharing.lua"/>
 
 </Ui>
 

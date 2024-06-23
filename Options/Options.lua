@@ -251,18 +251,28 @@ local acOptions = {
 }
 
 do
-	local addonName = ...
+	local addonName, addonTable = ...
 	local f = CreateFrame("Frame")
 	f:RegisterEvent("ADDON_LOADED")
 	local function Initialize(_, _, addon)
 		if addon ~= addonName then return end
 		f:UnregisterEvent("ADDON_LOADED")
 
-		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
-		acOptions.args.general.args.profileOptions.order = 100
-		acOptions.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. acOptions.args.general.args.profileOptions.name
+		acOptions.args.general.args.profileOptions = {
+			type = "group",
+			childGroups = "tab",
+			order = 100,
+			args = {
+				profile = adbo:GetOptionsTable(BigWigs.db),
+				export = addonTable.sharingOptions.exportSection,
+				import = addonTable.sharingOptions.importSection,
+			},
+		}
+		acOptions.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. acOptions.args.general.args.profileOptions.args.profile.name
+		acOptions.args.general.args.profileOptions.args.profile.order = 1
+
 		if lds then
-			lds:EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
+			lds:EnhanceOptions(acOptions.args.general.args.profileOptions.args.profile, BigWigs.db)
 		end
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
