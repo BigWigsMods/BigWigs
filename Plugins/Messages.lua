@@ -102,6 +102,12 @@ local function updateProfile()
 	if not media:IsValid(FONT, db.emphFontName) then
 		db.emphFontName = plugin:GetDefaultFont()
 	end
+	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string" or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number" then
+		db.normalPosition = plugin.defaultDB.normalPosition
+	end
+	if type(db.emphPosition[1]) ~= "string" or type(db.emphPosition[2]) ~= "string" or type(db.emphPosition[3]) ~= "number" or type(db.emphPosition[4]) ~= "number" then
+		db.emphPosition = plugin.defaultDB.emphPosition
+	end
 
 	local emphFlags = nil
 	if db.emphMonochrome and db.emphOutline ~= "NONE" then

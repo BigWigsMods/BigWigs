@@ -170,6 +170,12 @@ local function updateProfile()
 	if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
 		db.expHeight = plugin.defaultDB.expHeight
 	end
+	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string" or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number" then
+		db.normalPosition = plugin.defaultDB.normalPosition
+	end
+	if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string" or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number" then
+		db.expPosition = plugin.defaultDB.expPosition
+	end
 
 	normalAnchor:SetWidth(db.normalWidth)
 	normalAnchor:SetHeight(db.normalHeight)
