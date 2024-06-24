@@ -385,7 +385,7 @@ L.Long = "长响"
 L.Warning = "警报"
 L.onyou = "一个法术，增益或负面效果在你身上"
 L.underyou = "你需要移动，离开你脚下的法术范围"
---L.privateaura = "Whenever a 'Private Aura' is on you"
+L.privateaura = "只要“私有光环”出现在你身上"
 
 L.sound = "音效"
 
