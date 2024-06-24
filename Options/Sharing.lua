@@ -64,6 +64,10 @@ local messagePositionsToExport = {
 	"emphPosition",
 }
 
+local countdownPositionsToExport = {
+	"position",
+}
+
 -- Settings Args
 local barSettingsToExport = {
 	"fontName",
@@ -131,6 +135,16 @@ local messageSettingsToExport = {
 	-- "emphDisabled",
 }
 
+local countdownSettingsToExport = {
+	"fontName",
+	"fontSize",
+	"outline",
+	"monochrome",
+	"voice",
+	"countdownTime",
+	-- "bossCountdowns", -- Not exporting boss specific settings
+}
+
 -- Color Args
 local barColorsToExport = {
 	"barBackground",
@@ -150,14 +164,21 @@ local messageColorsToExport = {
 	"purple",
 }
 
+local countdownColorsToExport = {
+	"fontColor",
+}
+
 -- Default Options
 local sharingExportOptionsSettings = {
 	exportBarPositions = true,
 	exportMessagePositions = true,
+	exportCountdownPositions = true,
 	exportBarSettings = true,
 	exportMessageSettings = true,
+	exportCountdownSettings = true,
 	exportBarColors = true,
 	exportMessageColors = true,
+	exportCountdownColors = true,
 }
 
 local sharingImportOptionsSettings = {}
@@ -194,6 +215,7 @@ local function GetExportString()
 
 	local barSettings = BigWigs:GetPlugin("Bars")
 	local messageSettings = BigWigs:GetPlugin("Messages")
+	local countdownSettings = BigWigs:GetPlugin("Countdown")
 
 	if sharingExportOptionsSettings.exportBarPositions then
 		exportOptions["barPositions"] = exportProfileSettings(barPositionsToExport, barSettings.db.profile)
@@ -201,6 +223,10 @@ local function GetExportString()
 
 	if sharingExportOptionsSettings.exportMessagePositions then
 		exportOptions["messagePositions"] = exportProfileSettings(messagePositionsToExport, messageSettings.db.profile)
+	end
+
+	if sharingExportOptionsSettings.exportCountdownPositions then
+		exportOptions["countdownPositions"] = exportProfileSettings(countdownPositionsToExport, countdownSettings.db.profile)
 	end
 
 	if sharingExportOptionsSettings.exportBarSettings then
@@ -211,12 +237,20 @@ local function GetExportString()
 		exportOptions["messageSettings"] = exportProfileSettings(messageSettingsToExport, messageSettings.db.profile)
 	end
 
+	if sharingExportOptionsSettings.exportCountdownSettings then
+		exportOptions["countdownSettings"] = exportProfileSettings(countdownSettingsToExport, countdownSettings.db.profile)
+	end
+
 	if sharingExportOptionsSettings.exportMessageColors then
 		exportOptions["messageColors"] = exportProfileColorSettings(messageColorsToExport)
 	end
 
 	if sharingExportOptionsSettings.exportBarColors then
 		exportOptions["barColors"] = exportProfileColorSettings(barColorsToExport)
+	end
+
+	if sharingExportOptionsSettings.exportCountdownColors then
+		exportOptions["countdownColors"] = exportProfileSettings(countdownColorsToExport, countdownSettings.db.profile) -- Not part of color plugin
 	end
 
 	local serialized = LibSerialize:Serialize(exportOptions)
@@ -247,8 +281,13 @@ local function IsOptionGroupAvailable(group)
 			return true
 		end
 	end
+	if group == "countdown" then
+		if IsOptionInString("countdownPositions") or IsOptionInString("countdownSettings") or IsOptionInString("countdownColors") then
+			return true
+		end
+	end
 	if group == "any" then
-		if IsOptionGroupAvailable("bars") or IsOptionGroupAvailable("messages") then
+		if IsOptionGroupAvailable("bars") or IsOptionGroupAvailable("messages") or IsOptionGroupAvailable("countdown") then
 			return true
 		end
 	end
@@ -297,6 +336,7 @@ do
 		local imported = {}
 		local barPlugin = BigWigs:GetPlugin("Bars")
 		local messageplugin = BigWigs:GetPlugin("Messages")
+		local countdownPlugin = BigWigs:GetPlugin("Countdown")
 		local colorplugin = BigWigs:GetPlugin("Colors")
 
 		-- Colors are stored for each plugin/module (e.g. BigWigs_Plugins_Colors for the defaults, BigWigs_Bosses_* for bosses)
@@ -332,6 +372,9 @@ do
 		importSettings('importMessagePositions', 'messagePositions', messagePositionsToExport, messageplugin, L.imported_message_positions)
 		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.imported_message_settings)
 		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.imported_message_colors)
+		importSettings('importCountdownPositions', 'countdownPositions', countdownPositionsToExport, countdownPlugin, L.imported_countdown_position)
+		importSettings('importCountdownSettings', 'countdownSettings', countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
+		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugin
 
 		if #imported == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -461,6 +504,39 @@ local sharingOptions = {
 					},
 				},
 			},
+			countdown = {
+				type = "group",
+				name = L.COUNTDOWN,
+				inline = true,
+				order = 15,
+				hidden = function() return (not isImportStringAvailable() or not IsOptionGroupAvailable("countdown")) end,
+				args = {
+					importCountdownPositions = {
+						type = "toggle",
+						name = L.position,
+						desc = L.position_import_countdown_desc,
+						order = 1,
+						width = 1,
+						disabled = function() return not IsOptionInString("countdownPositions") end,
+					},
+					importCountdownSettings = {
+						type = "toggle",
+						name =	L.settings,
+						desc = L.settings_import_countdown_desc,
+						order = 5,
+						width = 1,
+						disabled = function() return not IsOptionInString("countdownSettings") end,
+					},
+					importCountdownColors = {
+						type = "toggle",
+						name = L.colors,
+						desc = L.color_import_countdown_desc,
+						order = 10,
+						width = 1,
+						disabled = function() return not IsOptionInString("countdownColors") end,
+					},
+				},
+			},
 			acceptImportButton = {
 				type = "execute",
 				name = L.import,
@@ -557,7 +633,35 @@ local sharingOptions = {
 						width = 1,
 					},
 				},
-
+			},
+			countdown = {
+				type = "group",
+				name = L.COUNTDOWN,
+				inline = true,
+				order = 15,
+				args = {
+					exportCountdownPositions = {
+						type = "toggle",
+						name = L.position,
+						desc = L.position_export_countdown_desc,
+						order = 1,
+						width = 1,
+					},
+					exportCountdownSettings = {
+						type = "toggle",
+						name = L.settings,
+						desc = L.settings_export_countdown_desc,
+						order = 5,
+						width = 1,
+					},
+					exportCountdownColors = {
+						type = "toggle",
+						name = L.colors,
+						desc = L.color_export_countdown_desc,
+						order = 10,
+						width = 1,
+					},
+				},
 			},
 			exportString = {
 				type = "input",
