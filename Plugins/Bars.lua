@@ -91,12 +91,12 @@ plugin.defaultDB = {
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
-	interceptMouse = false,
-	onlyInterceptOnKeypress = true,
-	interceptKey = "CTRL",
-	LeftButton = "report",
-	MiddleButton = "remove",
-	RightButton = "countdown",
+	--interceptMouse = false,
+	--onlyInterceptOnKeypress = true,
+	--interceptKey = "CTRL",
+	--LeftButton = "report",
+	--MiddleButton = "remove",
+	--RightButton = "countdown",
 	normalWidth = 180,
 	normalHeight = 18,
 	expWidth = 260,
@@ -151,6 +151,9 @@ local function updateProfile()
 	end
 	if db.emphasizeMultiplier < 1 or db.emphasizeMultiplier > 3 then
 		db.emphasizeMultiplier = plugin.defaultDB.emphasizeMultiplier
+	end
+	if db.spacing < 0 or db.spacing > 20 then
+		db.spacing = plugin.defaultDB.spacing
 	end
 	if db.visibleBarLimit < 1 or db.visibleBarLimit > 100 then
 		db.visibleBarLimit = plugin.defaultDB.visibleBarLimit
@@ -260,45 +263,45 @@ end
 
 local inConfigureMode = false
 do
-	local function shouldDisable() return not plugin.db.profile.interceptMouse end
-	local clickOptions = {
-		countdown = {
-			type = "toggle",
-			name = L.countdown,
-			desc = L.temporaryCountdownDesc,
-			descStyle = "inline",
-			order = 1,
-			width = "full",
-			disabled = shouldDisable,
-		},
-		report = {
-			type = "toggle",
-			name = L.report,
-			desc = L.reportDesc,
-			descStyle = "inline",
-			order = 2,
-			width = "full",
-			disabled = shouldDisable,
-		},
-		remove = {
-			type = "toggle",
-			name = L.remove,
-			desc = L.removeBarDesc,
-			descStyle = "inline",
-			order = 3,
-			width = "full",
-			disabled = shouldDisable,
-		},
-		removeOther = {
-			type = "toggle",
-			name = L.removeOther,
-			desc = L.removeOtherBarDesc,
-			descStyle = "inline",
-			order = 4,
-			width = "full",
-			disabled = shouldDisable,
-		},
-	}
+	--local function shouldDisable() return not plugin.db.profile.interceptMouse end
+	--local clickOptions = {
+	--	countdown = {
+	--		type = "toggle",
+	--		name = L.countdown,
+	--		desc = L.temporaryCountdownDesc,
+	--		descStyle = "inline",
+	--		order = 1,
+	--		width = "full",
+	--		disabled = shouldDisable,
+	--	},
+	--	report = {
+	--		type = "toggle",
+	--		name = L.report,
+	--		desc = L.reportDesc,
+	--		descStyle = "inline",
+	--		order = 2,
+	--		width = "full",
+	--		disabled = shouldDisable,
+	--	},
+	--	remove = {
+	--		type = "toggle",
+	--		name = L.remove,
+	--		desc = L.removeBarDesc,
+	--		descStyle = "inline",
+	--		order = 3,
+	--		width = "full",
+	--		disabled = shouldDisable,
+	--	},
+	--	removeOther = {
+	--		type = "toggle",
+	--		name = L.removeOther,
+	--		desc = L.removeOtherBarDesc,
+	--		descStyle = "inline",
+	--		order = 4,
+	--		width = "full",
+	--		disabled = shouldDisable,
+	--	},
+	--}
 
 	local lastNamePlateBar = 0
 	local testCount = 0
@@ -464,9 +467,8 @@ do
 						name = L.spacing,
 						desc = L.spacingDesc,
 						order = 6,
-						softMax = 30,
 						min = 0,
-						max = 100,
+						max = 20,
 						step = 1,
 						width = 2,
 						disabled = function()
@@ -581,30 +583,111 @@ do
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
 						order = 1,
-					},
-					visibleBarLimit = {
-						type = "range",
-						name = L.visibleBarLimit,
-						desc = L.visibleBarLimitDesc,
-						order = 2,
-						max = 100,
-						min = 1,
-						step = 1,
+						width = 2,
 					},
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						width = 2,
-						order = 3,
+						order = 2,
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
 					},
-					exactPositioning = {
-						type = "group",
-						name = L.positionExact,
+					visibleBarLimit = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						width = 2,
+						order = 3,
+						max = 100,
+						min = 1,
+						step = 1,
+					},
+				},
+			},
+			emphasize = {
+				type = "group",
+				name = L.emphasizedBars,
+				order = 3,
+				args = {
+					emphasize = {
+						type = "toggle",
+						name = L.enable,
+						order = 1,
+					},
+					emphasizeRestart = {
+						type = "toggle",
+						name = L.restart,
+						desc = L.restartDesc,
+						order = 2,
+					},
+					emphasizeGrowup = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 3,
+						disabled = function() return not db.emphasizeMove end, -- Disable when using 1 anchor
+					},
+					emphasizeMove = {
+						type = "toggle",
+						name = L.move,
+						desc = L.moveDesc,
 						order = 4,
+					},
+					emphasizeMultiplier = {
+						type = "range",
+						name = L.emphasizeMultiplier,
+						desc = L.emphasizeMultiplierDesc,
+						width = 2,
+						order = 5,
+						max = 3,
+						min = 1,
+						step = 0.01,
+						disabled = function() return db.emphasizeMove end, -- Disable when using 2 anchors
+					},
+					emphasizeTime = {
+						type = "range",
+						name = L.emphasizeAt,
+						width = 2,
+						order = 6,
+						min = 6,
+						max = 60, softMax = 30, -- Don't encourage bars longer than 30s in the GUI
+						step = 1,
+					},
+					fontSizeEmph = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						width = 2,
+						order = 7,
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
+					},
+					visibleBarLimitEmph = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						width = 2,
+						order = 8,
+						max = 100,
+						min = 1,
+						step = 1,
+					},
+				},
+			},
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				order = 4,
+				childGroups = "tab",
+				args = {
+					normalPositioning = {
+						type = "group",
+						name = L.bars,
+						order = 1,
 						inline = true,
 						args = {
 							posx = {
@@ -663,78 +746,10 @@ do
 							},
 						},
 					},
-				},
-			},
-			emphasize = {
-				type = "group",
-				name = L.emphasizedBars,
-				order = 3,
-				args = {
-					emphasize = {
-						type = "toggle",
-						name = L.enable,
-						order = 1,
-					},
-					emphasizeRestart = {
-						type = "toggle",
-						name = L.restart,
-						desc = L.restartDesc,
-						order = 2,
-					},
-					emphasizeGrowup = {
-						type = "toggle",
-						name = L.growingUpwards,
-						desc = L.growingUpwardsDesc,
-						order = 3,
-						disabled = function() return not db.emphasizeMove end, -- Disable when using 1 anchor
-					},
-					emphasizeMove = {
-						type = "toggle",
-						name = L.move,
-						desc = L.moveDesc,
-						order = 4,
-					},
-					emphasizeMultiplier = {
-						type = "range",
-						name = L.emphasizeMultiplier,
-						desc = L.emphasizeMultiplierDesc,
-						width = 2,
-						order = 5,
-						max = 3,
-						min = 1,
-						step = 0.01,
-						disabled = function() return db.emphasizeMove end, -- Disable when using 2 anchors
-					},
-					emphasizeTime = {
-						type = "range",
-						name = L.emphasizeAt,
-						order = 6,
-						min = 6,
-						max = 60, softMax = 30, -- Don't encourage bars longer than 30s in the GUI
-						step = 1,
-					},
-					fontSizeEmph = {
-						type = "range",
-						name = L.fontSize,
-						desc = L.fontSizeDesc,
-						order = 7,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
-					},
-					visibleBarLimitEmph = {
-						type = "range",
-						name = L.visibleBarLimit,
-						desc = L.visibleBarLimitDesc,
-						order = 8,
-						max = 100,
-						min = 1,
-						step = 1,
-					},
-					exactPositioning = {
+					expPositioning = {
 						type = "group",
-						name = L.positionExact,
-						order = 9,
+						name = L.emphasizedBars,
+						order = 2,
 						inline = true,
 						args = {
 							posx = {
@@ -798,7 +813,7 @@ do
 			nameplateBars = {
 				name = L.nameplateBars,
 				type = "group",
-				order = 4,
+				order = 5,
 				set = function(info, value)
 					db[info[#info]] = value
 					if plugin:UnitGUID("target") then
@@ -872,81 +887,81 @@ do
 					},
 				},
 			},
-			clicking = {
-				name = L.clickableBars,
-				type = "group",
-				order = 5,
-				childGroups = "tab",
-				get = function(i) return plugin.db.profile[i[#i]] end,
-				set = function(i, value)
-					local key = i[#i]
-					plugin.db.profile[key] = value
-					if key == "interceptMouse" then
-						plugin:RefixClickIntercepts()
-					end
-				end,
-				args = {
-					heading = {
-						type = "description",
-						name = L.clickableBarsDesc,
-						order = 1,
-						width = "full",
-						fontSize = "medium",
-					},
-					interceptMouse = {
-						type = "toggle",
-						name = L.enable,
-						desc = L.interceptMouseDesc,
-						order = 2,
-						width = "full",
-					},
-					onlyInterceptOnKeypress = {
-						type = "toggle",
-						name = L.modifierKey,
-						desc = L.modifierKeyDesc,
-						order = 3,
-						disabled = shouldDisable,
-					},
-					interceptKey = {
-						type = "select",
-						name = L.modifier,
-						desc = L.modifierDesc,
-						values = {
-							CTRL = _G.CTRL_KEY,
-							ALT = _G.ALT_KEY,
-							SHIFT = _G.SHIFT_KEY,
-						},
-						order = 4,
-						disabled = function()
-							return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
-						end,
-					},
-					LeftButton = {
-						type = "group",
-						name = KEY_BUTTON1 or "Left",
-						order = 10,
-						args = clickOptions,
-						get = function(info) return plugin.db.profile.LeftButton == info[#info] end,
-						set = function(info, value) plugin.db.profile.LeftButton = value and info[#info] or nil end,
-					},
-					MiddleButton = {
-						type = "group",
-						name = KEY_BUTTON3 or "Middle",
-						order = 11,
-						args = clickOptions,
-						get = function(info) return plugin.db.profile.MiddleButton == info[#info] end,
-						set = function(info, value) plugin.db.profile.MiddleButton = value and info[#info] or nil end,
-					},
-					RightButton = {
-						type = "group",
-						name = KEY_BUTTON2 or "Right",
-						order = 12,
-						args = clickOptions,
-						get = function(info) return plugin.db.profile.RightButton == info[#info] end,
-						set = function(info, value) plugin.db.profile.RightButton = value and info[#info] or nil end,
-					},
-				},
-			},
+			--clicking = {
+			--	name = L.clickableBars,
+			--	type = "group",
+			--	order = 5,
+			--	childGroups = "tab",
+			--	get = function(i) return plugin.db.profile[i[#i]] end,
+			--	set = function(i, value)
+			--		local key = i[#i]
+			--		plugin.db.profile[key] = value
+			--		if key == "interceptMouse" then
+			--			plugin:RefixClickIntercepts()
+			--		end
+			--	end,
+			--	args = {
+			--		heading = {
+			--			type = "description",
+			--			name = L.clickableBarsDesc,
+			--			order = 1,
+			--			width = "full",
+			--			fontSize = "medium",
+			--		},
+			--		interceptMouse = {
+			--			type = "toggle",
+			--			name = L.enable,
+			--			desc = L.interceptMouseDesc,
+			--			order = 2,
+			--			width = "full",
+			--		},
+			--		onlyInterceptOnKeypress = {
+			--			type = "toggle",
+			--			name = L.modifierKey,
+			--			desc = L.modifierKeyDesc,
+			--			order = 3,
+			--			disabled = shouldDisable,
+			--		},
+			--		interceptKey = {
+			--			type = "select",
+			--			name = L.modifier,
+			--			desc = L.modifierDesc,
+			--			values = {
+			--				CTRL = _G.CTRL_KEY,
+			--				ALT = _G.ALT_KEY,
+			--				SHIFT = _G.SHIFT_KEY,
+			--			},
+			--			order = 4,
+			--			disabled = function()
+			--				return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
+			--			end,
+			--		},
+			--		LeftButton = {
+			--			type = "group",
+			--			name = KEY_BUTTON1 or "Left",
+			--			order = 10,
+			--			args = clickOptions,
+			--			get = function(info) return plugin.db.profile.LeftButton == info[#info] end,
+			--			set = function(info, value) plugin.db.profile.LeftButton = value and info[#info] or nil end,
+			--		},
+			--		MiddleButton = {
+			--			type = "group",
+			--			name = KEY_BUTTON3 or "Middle",
+			--			order = 11,
+			--			args = clickOptions,
+			--			get = function(info) return plugin.db.profile.MiddleButton == info[#info] end,
+			--			set = function(info, value) plugin.db.profile.MiddleButton = value and info[#info] or nil end,
+			--		},
+			--		RightButton = {
+			--			type = "group",
+			--			name = KEY_BUTTON2 or "Right",
+			--			order = 12,
+			--			args = clickOptions,
+			--			get = function(info) return plugin.db.profile.RightButton == info[#info] end,
+			--			set = function(info, value) plugin.db.profile.RightButton = value and info[#info] or nil end,
+			--		},
+			--	},
+			--},
 		},
 	}
 end
@@ -983,9 +998,9 @@ do
 				bar:EnableMouse(false)
 			elseif barLimit ~= 100 then
 				bar:SetAlpha(1)
-				if db.interceptMouse and not db.onlyInterceptOnKeypress then
-					bar:EnableMouse(true)
-				end
+				--if db.interceptMouse and not db.onlyInterceptOnKeypress then
+				--	bar:EnableMouse(true)
+				--end
 			end
 			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
 			bar:ClearAllPoints()
@@ -1243,8 +1258,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
-	self:RefixClickIntercepts()
-	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
+	--self:RefixClickIntercepts()
+	--self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
 
 	-- Nameplate bars
 	self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
@@ -1447,118 +1462,118 @@ end
 -- Clickable bars
 --
 
-local function barClicked(bar, button)
-	local action = plugin.db.profile[button]
-	if action and clickHandlers[action] then
-		clickHandlers[action](bar)
-	end
-end
-
-local function barOnEnter(bar)
-	bar:SetBackgroundColor(1, 1, 1, 0.8)
-end
-local function barOnLeave(bar)
-	local module = bar:Get("bigwigs:module")
-	local key = bar:Get("bigwigs:option")
-	bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
-end
-
-local function refixClickOnBar(intercept, bar)
-	if intercept then
-		bar:EnableMouse(true)
-		bar:SetScript("OnMouseDown", barClicked)
-		bar:SetScript("OnEnter", barOnEnter)
-		bar:SetScript("OnLeave", barOnLeave)
-	else
-		bar:EnableMouse(false)
-		bar:SetScript("OnMouseDown", nil)
-		bar:SetScript("OnEnter", nil)
-		bar:SetScript("OnLeave", nil)
-	end
-end
-local function refixClickOnAnchor(intercept, anchor)
-	for bar in next, anchor.bars do
-		if not intercept or bar:GetAlpha() > 0 then -- Don't enable for hidden bars
-			refixClickOnBar(intercept, bar)
-		end
-	end
-end
-
-do
-	local keymap = {
-		LALT = "ALT", RALT = "ALT",
-		LSHIFT = "SHIFT", RSHIFT = "SHIFT",
-		LCTRL = "CTRL", RCTRL = "CTRL",
-	}
-	function plugin:RefixClickIntercepts(event, key, state)
-		if not db.interceptMouse or not normalAnchor then return end
-		if not db.onlyInterceptOnKeypress or (db.onlyInterceptOnKeypress and type(key) == "string" and db.interceptKey == keymap[key] and state == 1) then
-			refixClickOnAnchor(true, normalAnchor)
-			refixClickOnAnchor(true, emphasizeAnchor)
-		else
-			refixClickOnAnchor(false, normalAnchor)
-			refixClickOnAnchor(false, emphasizeAnchor)
-		end
-	end
-end
-
--- Enable countdown on the clicked bar
-clickHandlers.countdown = function(bar)
-	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
-	local text = bar:GetLabel()
-	bar:Set("bigwigs:stopcountdown", text)
-	plugin:SendMessage("BigWigs_StartCountdown", plugin, nil, text, bar.remaining)
-end
-
--- Report the bar status to the active group type (raid, party, solo)
-do
-	local tformat1 = "%d:%02d"
-	local tformat2 = "%1.1f"
-	local tformat3 = "%.0f"
-	local function timeDetails(t)
-		if t >= 3600 then -- > 1 hour
-			local h = floor(t/3600)
-			local m = t - (h*3600)
-			return tformat1:format(h, m)
-		elseif t >= 60 then -- 1 minute to 1 hour
-			local m = floor(t/60)
-			local s = t - (m*60)
-			return tformat1:format(m, s)
-		elseif t < 10 then -- 0 to 10 seconds
-			return tformat2:format(t)
-		else -- 10 seconds to one minute
-			return tformat3:format(floor(t + .5))
-		end
-	end
-	local SendChatMessage = BigWigsLoader.SendChatMessage
-	clickHandlers.report = function(bar)
-		local text = ("%s: %s"):format(bar:GetLabel(), timeDetails(bar.remaining))
-		SendChatMessage(text, (IsInGroup(2) and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
-	end
-end
-
--- Removes the clicked bar
-clickHandlers.remove = function(bar)
-	bar:Stop()
-end
-
--- Removes all bars EXCEPT the clicked one
-clickHandlers.removeOther = function(bar)
-	if normalAnchor then
-		for k in next, normalAnchor.bars do
-			if k ~= bar then
-				k:Stop()
-			end
-		end
-	end
-	if emphasizeAnchor then
-		for k in next, emphasizeAnchor.bars do
-			if k ~= bar then
-				k:Stop()
-			end
-		end
-	end
-end
+--local function barClicked(bar, button)
+--	local action = plugin.db.profile[button]
+--	if action and clickHandlers[action] then
+--		clickHandlers[action](bar)
+--	end
+--end
+--
+--local function barOnEnter(bar)
+--	bar:SetBackgroundColor(1, 1, 1, 0.8)
+--end
+--local function barOnLeave(bar)
+--	local module = bar:Get("bigwigs:module")
+--	local key = bar:Get("bigwigs:option")
+--	bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
+--end
+--
+--local function refixClickOnBar(intercept, bar)
+--	if intercept then
+--		bar:EnableMouse(true)
+--		bar:SetScript("OnMouseDown", barClicked)
+--		bar:SetScript("OnEnter", barOnEnter)
+--		bar:SetScript("OnLeave", barOnLeave)
+--	else
+--		bar:EnableMouse(false)
+--		bar:SetScript("OnMouseDown", nil)
+--		bar:SetScript("OnEnter", nil)
+--		bar:SetScript("OnLeave", nil)
+--	end
+--end
+--local function refixClickOnAnchor(intercept, anchor)
+--	for bar in next, anchor.bars do
+--		if not intercept or bar:GetAlpha() > 0 then -- Don't enable for hidden bars
+--			refixClickOnBar(intercept, bar)
+--		end
+--	end
+--end
+--
+--do
+--	local keymap = {
+--		LALT = "ALT", RALT = "ALT",
+--		LSHIFT = "SHIFT", RSHIFT = "SHIFT",
+--		LCTRL = "CTRL", RCTRL = "CTRL",
+--	}
+--	function plugin:RefixClickIntercepts(event, key, state)
+--		if not db.interceptMouse or not normalAnchor then return end
+--		if not db.onlyInterceptOnKeypress or (db.onlyInterceptOnKeypress and type(key) == "string" and db.interceptKey == keymap[key] and state == 1) then
+--			refixClickOnAnchor(true, normalAnchor)
+--			refixClickOnAnchor(true, emphasizeAnchor)
+--		else
+--			refixClickOnAnchor(false, normalAnchor)
+--			refixClickOnAnchor(false, emphasizeAnchor)
+--		end
+--	end
+--end
+--
+---- Enable countdown on the clicked bar
+--clickHandlers.countdown = function(bar)
+--	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
+--	local text = bar:GetLabel()
+--	bar:Set("bigwigs:stopcountdown", text)
+--	plugin:SendMessage("BigWigs_StartCountdown", plugin, nil, text, bar.remaining)
+--end
+--
+---- Report the bar status to the active group type (raid, party, solo)
+--do
+--	local tformat1 = "%d:%02d"
+--	local tformat2 = "%1.1f"
+--	local tformat3 = "%.0f"
+--	local function timeDetails(t)
+--		if t >= 3600 then -- > 1 hour
+--			local h = floor(t/3600)
+--			local m = t - (h*3600)
+--			return tformat1:format(h, m)
+--		elseif t >= 60 then -- 1 minute to 1 hour
+--			local m = floor(t/60)
+--			local s = t - (m*60)
+--			return tformat1:format(m, s)
+--		elseif t < 10 then -- 0 to 10 seconds
+--			return tformat2:format(t)
+--		else -- 10 seconds to one minute
+--			return tformat3:format(floor(t + .5))
+--		end
+--	end
+--	local SendChatMessage = BigWigsLoader.SendChatMessage
+--	clickHandlers.report = function(bar)
+--		local text = ("%s: %s"):format(bar:GetLabel(), timeDetails(bar.remaining))
+--		SendChatMessage(text, (IsInGroup(2) and "INSTANCE_CHAT") or (IsInRaid() and "RAID") or (IsInGroup() and "PARTY") or "SAY")
+--	end
+--end
+--
+---- Removes the clicked bar
+--clickHandlers.remove = function(bar)
+--	bar:Stop()
+--end
+--
+---- Removes all bars EXCEPT the clicked one
+--clickHandlers.removeOther = function(bar)
+--	if normalAnchor then
+--		for k in next, normalAnchor.bars do
+--			if k ~= bar then
+--				k:Stop()
+--			end
+--		end
+--	end
+--	if emphasizeAnchor then
+--		for k in next, emphasizeAnchor.bars do
+--			if k ~= bar then
+--				k:Stop()
+--			end
+--		end
+--	end
+--end
 
 -----------------------------------------------------------------------
 -- Start bars
@@ -1623,9 +1638,9 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	bar:SetIconPosition(db.iconPosition)
 	bar:SetFill(db.fill)
 
-	if db.interceptMouse and not db.onlyInterceptOnKeypress and not unitGUID then
-		refixClickOnBar(true, bar)
-	end
+	--if db.interceptMouse and not db.onlyInterceptOnKeypress and not unitGUID then
+	--	refixClickOnBar(true, bar)
+	--end
 
 	return bar
 end
