@@ -140,9 +140,9 @@ local countdownSettingsToExport = {
 	"fontSize",
 	"outline",
 	"monochrome",
-	-- "voice", -- Not exporting non-visuals atm
-	-- "countdownTime",
-	-- "bossCountdowns",
+	"voice",
+	"countdownTime",
+	-- "bossCountdowns", -- Not exporting boss specific settings
 }
 
 -- Color Args
@@ -374,7 +374,7 @@ do
 		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.imported_message_colors)
 		importSettings('importCountdownPositions', 'countdownPositions', countdownPositionsToExport, countdownPlugin, L.imported_countdown_position)
 		importSettings('importCountdownSettings', 'countdownSettings', countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
-		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_colors)
+		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_color)
 
 		if #imported == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -530,7 +530,7 @@ local sharingOptions = {
 					importCountdownColors = {
 						type = "toggle",
 						name = L.colors,
-						desc = L.colors_import_countdown_desc,
+						desc = L.color_import_countdown_desc,
 						order = 10,
 						width = 1,
 						disabled = function() return not IsOptionInString("countdownColors") end,
@@ -657,7 +657,7 @@ local sharingOptions = {
 					exportCountdownColors = {
 						type = "toggle",
 						name = L.colors,
-						desc = L.colors_export_countdown_desc,
+						desc = L.color_export_countdown_desc,
 						order = 10,
 						width = 1,
 					},
