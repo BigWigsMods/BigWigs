@@ -172,9 +172,27 @@ local function updateProfile()
 	end
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string" or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number" then
 		db.normalPosition = plugin.defaultDB.normalPosition
+	else
+		local x = math.floor(db.normalPosition[3]+0.5)
+		if x ~= db.normalPosition[3] then
+			db.normalPosition[3] = x
+		end
+		local y = math.floor(db.normalPosition[4]+0.5)
+		if y ~= db.normalPosition[4] then
+			db.normalPosition[4] = y
+		end
 	end
 	if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string" or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number" then
 		db.expPosition = plugin.defaultDB.expPosition
+	else
+		local x = math.floor(db.expPosition[3]+0.5)
+		if x ~= db.expPosition[3] then
+			db.expPosition[3] = x
+		end
+		local y = math.floor(db.expPosition[4]+0.5)
+		if y ~= db.expPosition[4] then
+			db.expPosition[4] = y
+		end
 	end
 
 	normalAnchor:SetWidth(db.normalWidth)

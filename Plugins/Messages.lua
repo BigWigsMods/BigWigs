@@ -104,9 +104,27 @@ local function updateProfile()
 	end
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string" or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number" then
 		db.normalPosition = plugin.defaultDB.normalPosition
+	else
+		local x = math.floor(db.normalPosition[3]+0.5)
+		if x ~= db.normalPosition[3] then
+			db.normalPosition[3] = x
+		end
+		local y = math.floor(db.normalPosition[4]+0.5)
+		if y ~= db.normalPosition[4] then
+			db.normalPosition[4] = y
+		end
 	end
 	if type(db.emphPosition[1]) ~= "string" or type(db.emphPosition[2]) ~= "string" or type(db.emphPosition[3]) ~= "number" or type(db.emphPosition[4]) ~= "number" then
 		db.emphPosition = plugin.defaultDB.emphPosition
+	else
+		local x = math.floor(db.emphPosition[3]+0.5)
+		if x ~= db.emphPosition[3] then
+			db.emphPosition[3] = x
+		end
+		local y = math.floor(db.emphPosition[4]+0.5)
+		if y ~= db.emphPosition[4] then
+			db.emphPosition[4] = y
+		end
 	end
 
 	local emphFlags = nil
@@ -178,8 +196,13 @@ do
 	local function OnDragStop(self)
 		self:StopMovingOrSizing()
 		local point, _, relPoint, x, y = self:GetPoint()
+		x = math.floor(x+0.5)
+		y = math.floor(y+0.5)
 		plugin.db.profile[self.position] = {point, relPoint, x, y}
-		plugin:UpdateGUI() -- Update X/Y if GUI is open.
+		self:RefixPosition()
+		if BigWigsOptions and BigWigsOptions:IsOpen() then
+			plugin:UpdateGUI() -- Update X/Y if GUI is open
+		end
 	end
 	local function RefixPosition(self)
 		self:ClearAllPoints()
