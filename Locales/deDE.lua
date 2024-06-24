@@ -208,7 +208,7 @@ L.imported_bar_colors = "Leisten Farben"
 L.imported_message_positions = "Nachrichten Positionen"
 L.imported_message_settings = "Nachrichten Einstellugen"
 L.imported_message_colors = "Nachrichten Farben"
---L.imported_countdown_positions = "Countdown Positions"
+--L.imported_countdown_position = "Countdown Position"
 --L.imported_countdown_settings = "Countdown Settings"
 --L.imported_countdown_colors = "Countdown Colors"
 

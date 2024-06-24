@@ -208,7 +208,7 @@ L.dispeller = "|cFFFF0000무효화 시전자만 경보합니다.|r "
 --L.imported_message_positions = "Message Positions"
 --L.imported_message_settings = "Message Settings"
 --L.imported_message_colors = "Message Colors"
---L.imported_countdown_positions = "Countdown Positions"
+--L.imported_countdown_position = "Countdown Position"
 --L.imported_countdown_settings = "Countdown Settings"
 --L.imported_countdown_colors = "Countdown Colors"
 

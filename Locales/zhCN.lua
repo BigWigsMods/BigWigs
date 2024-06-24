@@ -208,7 +208,7 @@ L.imported_bar_colors = "计时条颜色"
 L.imported_message_positions = "信息位置"
 L.imported_message_settings = "信息设置"
 L.imported_message_colors = "信息颜色"
---L.imported_countdown_positions = "Countdown Positions"
+--L.imported_countdown_position = "Countdown Position"
 --L.imported_countdown_settings = "Countdown Settings"
 --L.imported_countdown_colors = "Countdown Colors"
 
