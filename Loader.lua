@@ -1054,8 +1054,10 @@ function mod:ADDON_LOADED(addon)
 
 	if not BigWigsBarsReset then
 		BigWigsBarsReset = true
-		sysprint(L.tempMessage)
-		Popup("BigWigs: ".. L.tempMessage)
+		if BigWigs3DB then
+			sysprint(L.tempMessage)
+			Popup("BigWigs: ".. L.tempMessage)
+		end
 	end
 	--bwFrame:UnregisterEvent("ADDON_LOADED")
 	--self.ADDON_LOADED = nil
