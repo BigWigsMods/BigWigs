@@ -73,7 +73,7 @@ local barSettingsToExport = {
 	"fontName",
 	"fontSize",
 	"fontSizeEmph",
-	"fontSizeNameplate",
+	--"fontSizeNameplate",
 	"texture",
 	"monochrome",
 	"outline",
