@@ -374,7 +374,7 @@ do
 		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.imported_message_colors)
 		importSettings('importCountdownPositions', 'countdownPositions', countdownPositionsToExport, countdownPlugin, L.imported_countdown_position)
 		importSettings('importCountdownSettings', 'countdownSettings', countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
-		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_color)
+		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugi
 
 		if #imported == 0 then
 			BigWigs:Print(L.no_import_message)
