@@ -218,7 +218,13 @@ local function updateProfile()
 
 	for bar in next, normalAnchor.bars do
 		currentBarStyler.BarStopped(bar)
-		bar:SetHeight(db.normalHeight)
+		if db.emphasizeMove then
+			bar:SetHeight(db.normalHeight)
+			bar:SetWidth(db.normalWidth)
+		elseif bar:Set("bigwigs:emphasized") then
+			bar:SetHeight(db.normalHeight * db.emphasizeMultiplier)
+			bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+		end
 		bar:SetTexture(texture)
 		bar:SetFill(db.fill)
 		bar:SetFont(font, db.fontSize, flags)
@@ -237,6 +243,7 @@ local function updateProfile()
 	for bar in next, emphasizeAnchor.bars do
 		currentBarStyler.BarStopped(bar)
 		bar:SetHeight(db.expHeight)
+		bar:SetWidth(db.expWidth)
 		bar:SetTexture(texture)
 		bar:SetFill(db.fill)
 		bar:SetFont(font, db.fontSizeEmph, flags)
@@ -1110,33 +1117,24 @@ do
 				db.expWidth = width
 				db.expHeight = height
 			end
-			if not throttle then
-				throttle = true
-				plugin:SimpleTimer(function()
-					for k in next, self.bars do
-						currentBarStyler.BarStopped(k)
-						if db.emphasizeMove then
-							if self == normalAnchor then
-								k:SetSize(db.normalWidth, db.normalHeight)
-							else
-								k:SetSize(db.expWidth, db.expHeight)
-							end
-						elseif self == normalAnchor then
-							-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
-							if k:Get("bigwigs:emphasized") then
-								k:SetSize(db.normalWidth * db.emphasizeMultiplier, db.normalHeight * db.emphasizeMultiplier)
-							else
-								k:SetSize(db.normalWidth, db.normalHeight)
-							end
-						end
-						currentBarStyler.ApplyStyle(k)
-						rearrangeBars(self)
+			for k in next, self.bars do
+				currentBarStyler.BarStopped(k)
+				if db.emphasizeMove then
+					if self == normalAnchor then
+						k:SetSize(db.normalWidth, db.normalHeight)
+					else
+						k:SetSize(db.expWidth, db.expHeight)
 					end
-					if BigWigsOptions and BigWigsOptions:IsOpen() then
-						plugin:UpdateGUI() -- Update width/height if GUI is open
+				elseif self == normalAnchor then
+					-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
+					if k:Get("bigwigs:emphasized") then
+						k:SetSize(db.normalWidth * db.emphasizeMultiplier, db.normalHeight * db.emphasizeMultiplier)
+					else
+						k:SetSize(db.normalWidth, db.normalHeight)
 					end
-					throttle = false
-				end, 0.1)
+				end
+				currentBarStyler.ApplyStyle(k)
+				rearrangeBars(self)
 			end
 		end
 	end
@@ -1160,8 +1158,15 @@ do
 		local x, y = plugin.db.profile[self.position][3], plugin.db.profile[self.position][4]
 		self:SetPoint(point, UIParent, relPoint, x, y)
 	end
-	local function OnMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
-	local function OnMouseUp(self) self:GetParent():StopMovingOrSizing() end
+	local function OnMouseDown(self)
+		self:GetParent():StartSizing("BOTTOMRIGHT")
+	end
+	local function OnMouseUp(self)
+		self:GetParent():StopMovingOrSizing()
+		if BigWigsOptions and BigWigsOptions:IsOpen() then
+			plugin:UpdateGUI() -- Update X/Y if GUI is open
+		end
+	end
 
 	local function createAnchor(position, title, frameLevel, width, height)
 		local display = CreateFrame("Frame", nil, UIParent)
