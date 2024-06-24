@@ -226,7 +226,7 @@ local function GetExportString()
 	end
 
 	if sharingExportOptionsSettings.exportCountdownPositions then
-		exportOptions["countdownPositions"] = exportProfileSettings(countdownPositionsToExport, BigWigs:GetPlugin("Countdown").db.profile)
+		exportOptions["countdownPositions"] = exportProfileSettings(countdownPositionsToExport, countdownSettings.db.profile)
 	end
 
 	if sharingExportOptionsSettings.exportBarSettings then
@@ -238,7 +238,7 @@ local function GetExportString()
 	end
 
 	if sharingExportOptionsSettings.exportCountdownSettings then
-		exportOptions["countdownSettings"] = exportProfileSettings(countdownSettingsToExport, BigWigs:GetPlugin("Countdown").db.profile)
+		exportOptions["countdownSettings"] = exportProfileSettings(countdownSettingsToExport, countdownSettings.db.profile)
 	end
 
 	if sharingExportOptionsSettings.exportMessageColors then
@@ -250,7 +250,7 @@ local function GetExportString()
 	end
 
 	if sharingExportOptionsSettings.exportCountdownColors then
-		exportOptions["countdownColors"] = exportProfileColorSettings(countdownColorsToExport)
+		exportOptions["countdownColors"] = exportProfileSettings(countdownColorsToExport, countdownSettings.db.profile) -- Not part of color plugin
 	end
 
 	local serialized = LibSerialize:Serialize(exportOptions)
