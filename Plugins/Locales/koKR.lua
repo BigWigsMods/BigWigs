@@ -385,7 +385,7 @@ L.Long = "길게"
 L.Warning = "경고"
 L.onyou = "나에게 적용되는 주문, 강화 효과, 약화 효과"
 L.underyou = "내 밑의 \"바닥\"을 피해야 할 때"
---L.privateaura = "Private aura on you"
+--L.privateaura = "Whenever a 'Private Aura' is on you"
 
 L.sound = "소리"
 

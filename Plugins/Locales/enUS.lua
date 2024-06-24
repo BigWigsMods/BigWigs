@@ -384,7 +384,7 @@ L.Long = "Long"
 L.Warning = "Warning"
 L.onyou = "A spell, buff, or debuff is on you"
 L.underyou = "You need to move out of a spell under you"
-L.privateaura = "Private aura on you"
+L.privateaura = "Whenever a 'Private Aura' is on you"
 
 L.sound = "Sound"
 

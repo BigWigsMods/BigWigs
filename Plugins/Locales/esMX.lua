@@ -385,7 +385,7 @@ L.Long = "Largo"
 L.Warning = "Aviso"
 L.onyou = "Una hechizo, efecto o perjuicio está en ti"
 L.underyou = "Debes moverte fuera del hechizo que está debajo de ti"
---L.privateaura = "Private aura on you"
+--L.privateaura = "Whenever a 'Private Aura' is on you"
 
 L.sound = "Sonido"
 
