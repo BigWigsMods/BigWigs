@@ -53,7 +53,7 @@ do
 	end
 end
 
-local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 14, 500, 50
+local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 500, 100
 
 --------------------------------------------------------------------------------
 -- Profile
