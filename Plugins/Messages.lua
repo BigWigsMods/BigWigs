@@ -28,6 +28,11 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
+local validFramePoints = {
+	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
+	["TOP"] = L.TOP, ["BOTTOM"] = L.BOTTOM, ["LEFT"] = L.LEFT, ["RIGHT"] = L.RIGHT, ["CENTER"] = L.CENTER,
+}
+
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -102,7 +107,9 @@ local function updateProfile()
 	if not media:IsValid(FONT, db.emphFontName) then
 		db.emphFontName = plugin:GetDefaultFont()
 	end
-	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string" or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number" then
+	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
+	or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number"
+	or not validFramePoints[db.normalPosition[1]] or not validFramePoints[db.normalPosition[2]] then
 		db.normalPosition = plugin.defaultDB.normalPosition
 	else
 		local x = math.floor(db.normalPosition[3]+0.5)
@@ -114,7 +121,9 @@ local function updateProfile()
 			db.normalPosition[4] = y
 		end
 	end
-	if type(db.emphPosition[1]) ~= "string" or type(db.emphPosition[2]) ~= "string" or type(db.emphPosition[3]) ~= "number" or type(db.emphPosition[4]) ~= "number" then
+	if type(db.emphPosition[1]) ~= "string" or type(db.emphPosition[2]) ~= "string"
+	or type(db.emphPosition[3]) ~= "number" or type(db.emphPosition[4]) ~= "number"
+	or not validFramePoints[db.emphPosition[1]] or not validFramePoints[db.emphPosition[2]] then
 		db.emphPosition = plugin.defaultDB.emphPosition
 	else
 		local x = math.floor(db.emphPosition[3]+0.5)

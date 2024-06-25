@@ -54,6 +54,11 @@ local countdownFrame = nil
 local countdownText = nil
 local inConfigMode = false
 
+local validFramePoints = {
+	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
+	["TOP"] = L.TOP, ["BOTTOM"] = L.BOTTOM, ["LEFT"] = L.LEFT, ["RIGHT"] = L.RIGHT, ["CENTER"] = L.CENTER,
+}
+
 -------------------------------------------------------------------------------
 -- Countdown Registration
 --
@@ -505,7 +510,9 @@ do
 		if db.countdownTime < 3 or db.countdownTime > 10 then
 			db.countdownTime = plugin.defaultDB.countdownTime
 		end
-		if type(db.position[1]) ~= "string" or type(db.position[2]) ~= "string" or type(db.position[3]) ~= "number" or type(db.position[4]) ~= "number" then
+		if type(db.position[1]) ~= "string" or type(db.position[2]) ~= "string"
+		or type(db.position[3]) ~= "number" or type(db.position[4]) ~= "number"
+		or not validFramePoints[db.position[1]] or not validFramePoints[db.position[2]] then
 			db.position = plugin.defaultDB.position
 		else
 			local x = math.floor(db.position[3]+0.5)
