@@ -221,7 +221,7 @@ local function updateProfile()
 		if db.emphasizeMove then
 			bar:SetHeight(db.normalHeight)
 			bar:SetWidth(db.normalWidth)
-		elseif bar:Set("bigwigs:emphasized") then
+		elseif bar:Get("bigwigs:emphasized") then
 			bar:SetHeight(db.normalHeight * db.emphasizeMultiplier)
 			bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
 		end
