@@ -350,8 +350,8 @@ do
 		-- We only want to modify the defaults with these imports right now.
 		local function importColorSettings(sharingOptionKey, dataKey, settingsToExport, plugin, message)
 			if sharingImportOptionsSettings[sharingOptionKey] and data[dataKey] then
-				for k in next, plugin.db.profile do
-					plugin.db.profile[k]["BigWigs_Plugins_Colors"]["default"] = nil -- Reset defaults only
+				for i = 1, #settingsToExport do
+					plugin.db.profile[settingsToExport[i]]["BigWigs_Plugins_Colors"]["default"] = nil -- Reset defaults only
 				end
 				for k, v in pairs(data[dataKey]) do
 					plugin.db.profile[k]["BigWigs_Plugins_Colors"]["default"] = v
