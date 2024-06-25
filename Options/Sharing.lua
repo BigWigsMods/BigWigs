@@ -14,12 +14,19 @@ local AceGUI = LibStub("AceGUI-3.0")
 --
 
 do
+	local function OnEditFocusGainedHighlight(frame)
+		AceGUI:SetFocus(frame.obj)
+		frame.obj:Fire("OnEditFocusGained")
+		frame.obj.editBox.obj:HighlightText()
+	end
+
 	local Type, Version = "NoAcceptMultiline", 1
 	local function Constructor()
 		local multiLineEditBox = AceGUI:Create("MultiLineEditBox")
 		multiLineEditBox.type = Type
 		multiLineEditBox.button:Hide()
 		multiLineEditBox.button.Show = function() end -- Prevent the button from being shown again
+		multiLineEditBox.editBox:SetScript("OnEditFocusGained", OnEditFocusGainedHighlight)
 		return multiLineEditBox
 	end
 	AceGUI:RegisterWidgetType(Type, Constructor, Version)
@@ -73,7 +80,6 @@ local barSettingsToExport = {
 	"fontName",
 	"fontSize",
 	"fontSizeEmph",
-	--"fontSizeNameplate",
 	"texture",
 	"monochrome",
 	"outline",
@@ -99,7 +105,8 @@ local barSettingsToExport = {
 	"spacing",
 	"visibleBarLimit",
 	"visibleBarLimitEmph",
-	-- "nameplateWidth", -- Do nameplate bars need their own export checkbox?
+	-- "fontSizeNameplate", -- Do nameplate bars need their own export checkbox?
+	-- "nameplateWidth",
 	-- "nameplateAutoWidth",
 	-- "nameplateHeight",
 	-- "nameplateAlpha",
