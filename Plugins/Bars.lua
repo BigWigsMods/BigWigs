@@ -105,10 +105,8 @@ plugin.defaultDB = {
 	normalHeight = 18,
 	expWidth = 260,
 	expHeight = 22,
-	normalPosition = {"CENTER", "CENTER", 450, 200},
-	expPosition = {"CENTER", "CENTER", 0, -100},
-	normalCustomAnchorPoint = "UIParent",
-	expCustomAnchorPoint = "UIParent",
+	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
+	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
 }
 
 local function updateProfile()
@@ -207,16 +205,16 @@ local function updateProfile()
 			db.expPosition[4] = y
 		end
 	end
-	if db.normalCustomAnchorPoint ~= plugin.defaultDB.normalCustomAnchorPoint then
-		local frame = _G[db.normalCustomAnchorPoint]
+	if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
+		local frame = _G[db.normalPosition[5]]
 		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
-			db.normalCustomAnchorPoint = plugin.defaultDB.normalCustomAnchorPoint
+			db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
 		end
 	end
-	if db.expCustomAnchorPoint ~= plugin.defaultDB.expCustomAnchorPoint then
-		local frame = _G[db.expCustomAnchorPoint]
+	if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
+		local frame = _G[db.expPosition[5]]
 		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
-			db.expCustomAnchorPoint = plugin.defaultDB.expCustomAnchorPoint
+			db.expPosition[5] = plugin.defaultDB.expPosition[5]
 		end
 	end
 
@@ -780,19 +778,17 @@ do
 							},
 							normalCustomAnchorPoint = {
 								type = "input",
+								get = function()
+									return db.normalPosition[5]
+								end,
 								set = function(_, value)
 									local frame = _G[value]
 									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
 										return
 									end
-									if value ~= plugin.defaultDB.normalCustomAnchorPoint then
-										db.normalCustomAnchorPoint = value
-										db.normalPosition[1] = "CENTER"
-										db.normalPosition[2] = "CENTER"
-										db.normalPosition[3] = 0
-										db.normalPosition[4] = 0
+									if value ~= plugin.defaultDB.normalPosition[5] then
+										db.normalPosition = {"CENTER", "CENTER", 0, 0, value}
 									else
-										db.normalCustomAnchorPoint = plugin.defaultDB.normalCustomAnchorPoint
 										db.normalPosition = plugin.defaultDB.normalPosition
 									end
 									updateProfile()
@@ -816,7 +812,7 @@ do
 								name = L.sourcePoint,
 								order = 6,
 								width = 1.6,
-								hidden = function() return db.normalCustomAnchorPoint == plugin.defaultDB.normalCustomAnchorPoint end,
+								hidden = function() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end,
 							},
 							normalCustomAnchorPointDestination = {
 								type = "select",
@@ -833,7 +829,7 @@ do
 								name = L.destinationPoint,
 								order = 7,
 								width = 1.6,
-								hidden = function() return db.normalCustomAnchorPoint == plugin.defaultDB.normalCustomAnchorPoint end,
+								hidden = function() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end,
 							},
 						},
 					},
@@ -898,19 +894,17 @@ do
 							},
 							expCustomAnchorPoint = {
 								type = "input",
+								get = function()
+									return db.expPosition[5]
+								end,
 								set = function(_, value)
 									local frame = _G[value]
 									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
 										return
 									end
-									if value ~= plugin.defaultDB.expCustomAnchorPoint then
-										db.expCustomAnchorPoint = value
-										db.expPosition[1] = "CENTER"
-										db.expPosition[2] = "CENTER"
-										db.expPosition[3] = 0
-										db.expPosition[4] = 0
+									if value ~= plugin.defaultDB.expPosition[5] then
+										db.expPosition = {"CENTER", "CENTER", 0, 0, value}
 									else
-										db.expCustomAnchorPoint = plugin.defaultDB.expCustomAnchorPoint
 										db.expPosition = plugin.defaultDB.expPosition
 									end
 									updateProfile()
@@ -934,7 +928,7 @@ do
 								name = L.sourcePoint,
 								order = 6,
 								width = 1.6,
-								hidden = function() return db.expCustomAnchorPoint == plugin.defaultDB.expCustomAnchorPoint end,
+								hidden = function() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end,
 							},
 							expCustomAnchorPointDestination = {
 								type = "select",
@@ -951,7 +945,7 @@ do
 								name = L.destinationPoint,
 								order = 7,
 								width = 1.6,
-								hidden = function() return db.expCustomAnchorPoint == plugin.defaultDB.expCustomAnchorPoint end,
+								hidden = function() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end,
 							},
 						},
 					},
@@ -1278,15 +1272,15 @@ do
 			end
 		end
 	end
-	local customAnchorDBToUse = {}
+
 	local positionDBToUse = {}
 	local function OnDragStart(self)
-		if db[customAnchorDBToUse[self]] == plugin.defaultDB[customAnchorDBToUse[self]] then
+		if db[positionDBToUse[self]][5] == plugin.defaultDB[positionDBToUse[self]][5] then
 			self:StartMoving()
 		end
 	end
 	local function OnDragStop(self)
-		if db[customAnchorDBToUse[self]] == plugin.defaultDB[customAnchorDBToUse[self]] then
+		if db[positionDBToUse[self]][5] == plugin.defaultDB[positionDBToUse[self]][5] then
 			self:StopMovingOrSizing()
 			local point, _, relPoint, x, y = self:GetPoint()
 			x = math.floor(x+0.5)
@@ -1302,7 +1296,7 @@ do
 		self:ClearAllPoints()
 		local point, relPoint = plugin.db.profile[positionDBToUse[self]][1], plugin.db.profile[positionDBToUse[self]][2]
 		local x, y = plugin.db.profile[positionDBToUse[self]][3], plugin.db.profile[positionDBToUse[self]][4]
-		self:SetPoint(point, db[customAnchorDBToUse[self]], relPoint, x, y)
+		self:SetPoint(point, db[positionDBToUse[self]][5], relPoint, x, y)
 	end
 	local function OnMouseDown(self)
 		self:GetParent():StartSizing("BOTTOMRIGHT")
@@ -1314,7 +1308,7 @@ do
 		end
 	end
 
-	local function createAnchor(position, title, frameLevel, width, height, customAnchorPointOption)
+	local function createAnchor(position, title, frameLevel, width, height)
 		local display = CreateFrame("Frame", nil, UIParent)
 		display:EnableMouse(true)
 		display:SetClampedToScreen(true)
@@ -1328,7 +1322,6 @@ do
 		display:SetFixedFrameLevel(true)
 		display:SetWidth(width)
 		display:SetHeight(height)
-		customAnchorDBToUse[display] = customAnchorPointOption
 		positionDBToUse[display] = position
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
@@ -1367,8 +1360,8 @@ do
 		return display
 	end
 
-	normalAnchor = createAnchor("normalPosition", L.bars, 10, plugin.defaultDB.normalWidth, plugin.defaultDB.normalHeight, "normalCustomAnchorPoint")
-	emphasizeAnchor = createAnchor("expPosition", L.emphasizedBars, 15, plugin.defaultDB.expWidth, plugin.defaultDB.expHeight, "expCustomAnchorPoint")
+	normalAnchor = createAnchor("normalPosition", L.bars, 10, plugin.defaultDB.normalWidth, plugin.defaultDB.normalHeight)
+	emphasizeAnchor = createAnchor("expPosition", L.emphasizedBars, 15, plugin.defaultDB.expWidth, plugin.defaultDB.expHeight)
 end
 
 local function showAnchors(_, mode)
