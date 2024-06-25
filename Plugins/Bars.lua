@@ -1285,7 +1285,7 @@ do
 			local point, _, relPoint, x, y = self:GetPoint()
 			x = math.floor(x+0.5)
 			y = math.floor(y+0.5)
-			plugin.db.profile[positionDBToUse[self]] = {point, relPoint, x, y}
+			plugin.db.profile[positionDBToUse[self]] = {point, relPoint, x, y, plugin.defaultDB[positionDBToUse[self]][5]}
 			self:RefixPosition()
 			if BigWigsOptions and BigWigsOptions:IsOpen() then
 				plugin:UpdateGUI() -- Update X/Y if GUI is open
