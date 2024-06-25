@@ -501,6 +501,12 @@ do
 								if v == db[info[#info]] then return i end
 							end
 						end,
+						set = function(info, value)
+							local list = media:List(STATUSBAR)
+							local tex = list[value]
+							db[info[#info]] = tex
+							updateProfile()
+						end,
 					},
 					header2 = {
 						type = "header",
