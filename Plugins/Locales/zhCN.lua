@@ -15,6 +15,17 @@ L.fontSizeDesc = "使用滑条或在框内输入数值可调整字体尺寸，�
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
 L.transparency = "透明度"
 
+-- Anchor Points
+L.TOP = "顶部"
+L.RIGHT = "右侧"
+L.BOTTOM = "底部"
+L.LEFT = "左侧"
+L.TOPRIGHT = "右上"
+L.TOPLEFT = "左上"
+L.BOTTOMRIGHT = "右下"
+L.BOTTOMLEFT = "左下"
+L.CENTER  = "中心"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

@@ -15,6 +15,17 @@ L.fontSizeDesc = "Schriftgröße über den Schieberegler oder durch Eingabe eine
 L.disableDesc = "Du bist dabei, das Feature '%s' zu deaktivieren, was |cffff4411nicht empfohlen|r wird.\n\nBist Du sicher, dass Du das tun willst?"
 L.transparency = "Transparenz"
 
+-- Anchor Points
+L.TOP = "Oben"
+L.RIGHT = "Rechts"
+L.BOTTOM = "Unten"
+L.LEFT = "Links"
+L.TOPRIGHT = "Oben Rechts"
+L.TOPLEFT = "Oben Links"
+L.BOTTOMRIGHT = "Unten Rechts"
+L.BOTTOMLEFT = "Unten Links"
+L.CENTER  = "Mitte"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

@@ -15,6 +15,19 @@ L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직
 L.disableDesc = "'%s' 기능을 비활성화 하려고 하지만 |cffff4411권장하지 않습니다|r.\n\n비활성화 하시겠습니까?"
 L.transparency = "투명도"
 
+-- Anchor Points
+L.TOP = "상단"
+L.RIGHT = "우측"
+L.BOTTOM = "하단"
+L.LEFT = "좌측"
+L.TOPRIGHT = "우측 상단"
+L.TOPLEFT = "좌측 상단"
+L.BOTTOMRIGHT = "우측 하단"
+L.BOTTOMLEFT = "좌측 하단"
+L.CENTER  = "중앙"
+
+
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

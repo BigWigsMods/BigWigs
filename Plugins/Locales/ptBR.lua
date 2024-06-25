@@ -15,6 +15,17 @@ L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitan
 L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
 L.transparency = "Transparência"
 
+-- Anchor Points
+--L.TOP = "Top"
+--L.RIGHT = "Right"
+--L.BOTTOM = "Bottom"
+--L.LEFT = "Left"
+--L.TOPRIGHT = "Top Right"
+--L.TOPLEFT = "Top Left"
+--L.BOTTOMRIGHT = "Bottom Right"
+--L.BOTTOMLEFT = "Bottom Left"
+--L.CENTER  = "Center"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

@@ -15,6 +15,17 @@ L.fontSizeDesc = "Regola la dimensione del carattere usando la barra slide o dig
 L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411non è consigliata|r.\n\nSei sicuro di questo?"
 L.transparency = "Trasparenza"
 
+-- Anchor Points
+--L.TOP = "Top"
+--L.RIGHT = "Right"
+--L.BOTTOM = "Bottom"
+--L.LEFT = "Left"
+--L.TOPRIGHT = "Top Right"
+--L.TOPLEFT = "Top Left"
+--L.BOTTOMRIGHT = "Bottom Right"
+--L.BOTTOMLEFT = "Bottom Left"
+--L.CENTER  = "Center"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

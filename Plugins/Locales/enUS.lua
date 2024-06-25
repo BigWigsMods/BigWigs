@@ -14,6 +14,17 @@ L.fontSizeDesc = "Adjust the font size using the slider or type the value into t
 L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 L.transparency = "Transparency"
 
+-- Anchor Points
+L.TOP = "Top"
+L.RIGHT = "Right"
+L.BOTTOM = "Bottom"
+L.LEFT = "Left"
+L.TOPRIGHT = "Top Right"
+L.TOPLEFT = "Top Left"
+L.BOTTOMRIGHT = "Bottom Right"
+L.BOTTOMLEFT = "Bottom Left"
+L.CENTER  = "Center"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --

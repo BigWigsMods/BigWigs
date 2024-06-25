@@ -15,6 +15,17 @@ L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tap
 L.disableDesc = "Vous allez désactiver la fonctionnalité '%s', ce qui n'est |cffff4411pas recommandé|r.\n\nÊtes-vous sûr de vouloir faire cela ?"
 L.transparency = "Transparence"
 
+-- Anchor Points
+L.TOP = "En haut"
+L.RIGHT = "Droite"
+L.BOTTOM = "En bas"
+L.LEFT = "Gauche"
+L.TOPRIGHT = "En haut à droite"
+L.TOPLEFT = "En haut à gauche"
+L.BOTTOMRIGHT = "En bas à droite"
+L.BOTTOMLEFT = "En bas à gauche"
+L.CENTER  = "Centre"
+
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
