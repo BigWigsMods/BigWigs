@@ -1103,6 +1103,9 @@ end
 -- Anchors
 --
 
+BigWigsAnchor = nil
+BigWigsEmphasizeAnchor = nil
+
 do
 	local OnSizeChanged
 	do
@@ -1222,6 +1225,12 @@ do
 
 	normalAnchor = createAnchor("normalPosition", L.bars, 10, plugin.defaultDB.normalWidth, plugin.defaultDB.normalHeight)
 	emphasizeAnchor = createAnchor("expPosition", L.emphasizedBars, 15, plugin.defaultDB.expWidth, plugin.defaultDB.expHeight)
+
+    -- Setup BigWigsAnchor & BigWigsEmphasizeAnchor for WA Raid Ability Timeline [url]https://wago.io/RaidAbilityTimeline/57[/url]
+    -- Since most people will only update their addons with CurseForge and unlikely update the WA from wago
+    -- I think it is a good idea to add some adjustments to adapt the old WA
+    BigWigsAnchor = normalAnchor
+    BigWigsEmphasizeAnchor = emphasizeAnchor
 end
 
 local function showAnchors(_, mode)
