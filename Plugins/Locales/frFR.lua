@@ -24,7 +24,10 @@ L.TOPRIGHT = "En haut à droite"
 L.TOPLEFT = "En haut à gauche"
 L.BOTTOMRIGHT = "En bas à droite"
 L.BOTTOMLEFT = "En bas à gauche"
-L.CENTER  = "Centre"
+L.CENTER = "Centre"
+--L.customAnchorPoint = "Advanced: Custom anchor point"
+--L.sourcePoint = "Source Point"
+--L.destinationPoint = "Destination Point"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

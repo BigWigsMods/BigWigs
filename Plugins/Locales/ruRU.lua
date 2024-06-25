@@ -24,7 +24,10 @@ L.TOPRIGHT = "Сверху справа"
 L.TOPLEFT = "Сверху слева"
 L.BOTTOMRIGHT = "Снизу справа"
 L.BOTTOMLEFT = "Снизу слева"
-L.CENTER  = "По центру"
+L.CENTER = "По центру"
+--L.customAnchorPoint = "Advanced: Custom anchor point"
+--L.sourcePoint = "Source Point"
+--L.destinationPoint = "Destination Point"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
