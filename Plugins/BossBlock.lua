@@ -547,16 +547,16 @@ do
 		end
 	end
 
-	function CheckElv(self)
+	function CheckElv(self, targetFrame)
 		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
-		if type(ObjectiveTrackerFrame.AutoHider) == "table" and bbFrame.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
+		if type(targetFrame.AutoHider) == "table" and type(targetFrame.AutoHider.GetObjectType) == "function" and bbFrame.GetParent(targetFrame.AutoHider) == targetFrame then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
 				self:RegisterEvent("PLAYER_REGEN_ENABLED", function()
-					bbFrame.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+					bbFrame.SetParent(targetFrame.AutoHider, (CreateFrame("Frame")))
 					self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 				end)
 			else
-				bbFrame.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+				bbFrame.SetParent(targetFrame.AutoHider, (CreateFrame("Frame")))
 			end
 		end
 	end
@@ -619,37 +619,47 @@ do
 		end
 
 		if not isClassic then
-			CheckElv(self)
-			-- Never hide when tracking achievements or in Mythic+
-			local _, _, diff = GetInstanceInfo()
-			local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
-			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not bbFrame.IsProtected(ObjectiveTrackerFrame) then
-				restoreObjectiveTracker = bbFrame.GetParent(ObjectiveTrackerFrame)
-				if restoreObjectiveTracker then
-					bbFrame.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
-					bbFrame.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
-					bbFrame.SetParent(ObjectiveTrackerFrame, bbFrame)
+			local frame = ObjectiveTrackerFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				CheckElv(self, frame)
+				-- Never hide when tracking achievements or in Mythic+
+				local _, _, diff = GetInstanceInfo()
+				local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
+				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not bbFrame.IsProtected(frame) then
+					restoreObjectiveTracker = bbFrame.GetParent(frame)
+					if restoreObjectiveTracker then
+						bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+						bbFrame.SetFixedFrameLevel(frame, true)
+						bbFrame.SetParent(frame, bbFrame)
+					end
 				end
 			end
 		elseif not isVanilla then
-			local frame = Questie_BaseFrame or WatchFrame or QuestWatchFrame
-			local trackedAchievements = GetTrackedAchievements and GetTrackedAchievements()
-			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not trackedAchievements and not bbFrame.IsProtected(frame) then
-				restoreObjectiveTracker = bbFrame.GetParent(frame)
-				if restoreObjectiveTracker then
-					bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
-					bbFrame.SetFixedFrameLevel(frame, true)
-					bbFrame.SetParent(frame, bbFrame)
+			local frame = Questie_BaseFrame or WatchFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				if frame == WatchFrame then
+					CheckElv(self, frame)
+				end
+				local trackedAchievements = GetTrackedAchievements and GetTrackedAchievements()
+				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not trackedAchievements and not bbFrame.IsProtected(frame) then
+					restoreObjectiveTracker = bbFrame.GetParent(frame)
+					if restoreObjectiveTracker then
+						bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+						bbFrame.SetFixedFrameLevel(frame, true)
+						bbFrame.SetParent(frame, bbFrame)
+					end
 				end
 			end
 		elseif isVanilla then
 			local frame = Questie_BaseFrame or QuestWatchFrame
-			if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not bbFrame.IsProtected(frame) then
-				restoreObjectiveTracker = bbFrame.GetParent(frame)
-				if restoreObjectiveTracker then
-					bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
-					bbFrame.SetFixedFrameLevel(frame, true)
-					bbFrame.SetParent(frame, bbFrame)
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not bbFrame.IsProtected(frame) then
+					restoreObjectiveTracker = bbFrame.GetParent(frame)
+					if restoreObjectiveTracker then
+						bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+						bbFrame.SetFixedFrameLevel(frame, true)
+						bbFrame.SetParent(frame, bbFrame)
+					end
 				end
 			end
 		end
