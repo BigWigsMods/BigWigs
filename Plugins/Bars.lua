@@ -57,7 +57,7 @@ local validFramePoints = {
 	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
 	["TOP"] = L.TOP, ["BOTTOM"] = L.BOTTOM, ["LEFT"] = L.LEFT, ["RIGHT"] = L.RIGHT, ["CENTER"] = L.CENTER,
 }
-local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 500, 100
+local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -177,6 +177,7 @@ local function updateProfile()
 	if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
 		db.expHeight = plugin.defaultDB.expHeight
 	end
+
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
 	or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number"
 	or not validFramePoints[db.normalPosition[1]] or not validFramePoints[db.normalPosition[2]] then
@@ -191,6 +192,13 @@ local function updateProfile()
 			db.normalPosition[4] = y
 		end
 	end
+	if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
+		local frame = _G[db.normalPosition[5]]
+		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
+			db.normalPosition = plugin.defaultDB.normalPosition
+		end
+	end
+
 	if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string"
 	or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number"
 	or not validFramePoints[db.expPosition[1]] or not validFramePoints[db.expPosition[2]] then
@@ -205,16 +213,10 @@ local function updateProfile()
 			db.expPosition[4] = y
 		end
 	end
-	if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
-		local frame = _G[db.normalPosition[5]]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
-			db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
-		end
-	end
 	if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
 		local frame = _G[db.expPosition[5]]
 		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
-			db.expPosition[5] = plugin.defaultDB.expPosition[5]
+			db.expPosition = plugin.defaultDB.expPosition
 		end
 	end
 
@@ -1352,7 +1354,7 @@ do
 		display.RefixPosition = RefixPosition
 		local point, relPoint = plugin.defaultDB[position][1], plugin.defaultDB[position][2]
 		local x, y = plugin.defaultDB[position][3], plugin.defaultDB[position][4]
-		display:SetPoint(point, UIParent, relPoint, x, y)
+		display:SetPoint(point, plugin.defaultDB[position][5], relPoint, x, y)
 		display:Hide()
 		display:SetScript("OnSizeChanged", OnSizeChanged)
 		display:SetScript("OnDragStart", OnDragStart)
