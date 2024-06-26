@@ -20,6 +20,10 @@ local IsEncounterInProgress = IsEncounterInProgress
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
+local addonName = ...
+local CL = LibStub("LibCombatLogging-1.0") ---@type LibCombatLogging
+local LoggingCombat = function(...) return CL.LoggingCombat(addonName, ...) end
+
 -------------------------------------------------------------------------------
 -- Options
 --
