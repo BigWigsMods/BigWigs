@@ -25,9 +25,9 @@ L.TOPLEFT = "左上"
 L.BOTTOMRIGHT = "右下"
 L.BOTTOMLEFT = "左下"
 L.CENTER = "中心"
---L.customAnchorPoint = "Advanced: Custom anchor point"
---L.sourcePoint = "Source Point"
---L.destinationPoint = "Destination Point"
+L.customAnchorPoint = "高级：自定义锚点"
+L.sourcePoint = "源点"
+L.destinationPoint = "目标点"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -93,8 +93,8 @@ L.toggleBarsAnchorsBtnShow_desc = "显示全部移动锚点，允许您移动计
 L.nameplateBars = "姓名板条"
 L.nameplateAutoWidth = "匹配姓名板宽度"
 L.nameplateAutoWidthDesc = "将姓名板条的宽度设置为其主姓名板。"
-L.nameplateOffsetY = "Y 偏移量"
-L.nameplateOffsetYDesc = "从姓名板顶部偏移量为向上的条，从姓名板底部偏移量为向下的条。"
+L.nameplateOffsetY = "垂直位置"
+L.nameplateOffsetYDesc = "启用 向上成长 时，在姓名板顶部的垂直位置。未启用 向上成长 时，在姓名板底部的垂直位置。"
 L.nameplateAlphaDesc = "控制姓名板条的透明度。"
 L.testNameplate = "检测到目标，在目标姓名板上创建一个测试计时条。 |cFF33FF99此功能很少用到，而且通常一次只存在一个计时条，用于追踪同时存在的多个目标的同个技能。|r"
 
