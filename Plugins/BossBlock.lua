@@ -426,7 +426,15 @@ do
 				self:RegisterEvent("DISPLAY_EVENT_TOASTS")
 			end
 			self:RegisterEvent("TALKINGHEAD_REQUESTED")
-			CheckElv(self)
+			local frame = ObjectiveTrackerFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				CheckElv(self, frame)
+			end
+		elseif not isVanilla then
+			local frame = WatchFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				CheckElv(self, frame)
+			end
 		end
 	end
 end
