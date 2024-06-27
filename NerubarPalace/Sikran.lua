@@ -90,6 +90,7 @@ do
 	local prev = 0
 	function mod:PhaseBladesApplied(args)
 		if args.time - prev > 10 then
+			prev = args.time
 			self:StopBar(CL.count:format(args.spellName, phaseBladesCount))
 			self:Message(args.spellId, "cyan", CL.count:format(args.spellName, phaseBladesCount))
 			-- self:PlaySound(args.spellId, "alert")
@@ -100,7 +101,7 @@ do
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, nil, nil, "Phase Blades")
-			self:SayCountdown(args.spellId, 8)
+			self:SayCountdown(args.spellId, 6)
 		end
 	end
 end
