@@ -610,9 +610,18 @@ local function loadAndEnableCore()
 	return loaded
 end
 
-local function loadCoreAndOpenOptions()
+local function loadCoreAndOptions()
 	loadAndEnableCore()
 	load(BigWigsOptions, "BigWigs_Options")
+end
+
+do
+	local _, tbl = ...
+	tbl.LoadCoreAndOptions = loadCoreAndOptions
+end
+
+local function loadCoreAndOpenOptions()
+	loadCoreAndOptions()
 	if BigWigsOptions then
 		BigWigsOptions:Open()
 	end
@@ -770,8 +779,7 @@ do
 					SlashCmdList[slashName] = function(text)
 						if strfind(name, "BigWigs", nil, true) then
 							-- Attempting to be smart. Only load core & config if it's a BW plugin.
-							loadAndEnableCore()
-							load(BigWigsOptions, "BigWigs_Options")
+							loadCoreAndOptions()
 						end
 						if load(nil, i) then -- Load the addon/plugin
 							-- Call the slash command again, which should have been set by the addon.

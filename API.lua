@@ -122,6 +122,21 @@ do
 	end
 end
 
+--------------------------------------------------------------------------------
+-- Automated profile imports
+--
+
+do
+	local _, tbl = ...
+	function API:ImportProfileString(addonName, profileString)
+		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
+		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
+		tbl.LoadCoreAndOptions()
+		--sharing:DecodeImportString(string)
+		--sharing:SaveData(addonName)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Global
 --
