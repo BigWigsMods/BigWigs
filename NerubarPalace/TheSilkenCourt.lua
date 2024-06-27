@@ -121,7 +121,7 @@ function mod:GetOptions()
 
 		-- Transition: Raging Fury (Anub'arash)
 		451277, -- Spike Storm
-		451327, -- Raging Fury
+		-- 451327, -- Raging Fury
 			443598, -- Enraged Ferocity
 
 		-- Stage Three: Unleashed Rage
