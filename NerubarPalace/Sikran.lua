@@ -46,6 +46,8 @@ function mod:GetOptions()
 			{432969, "TANK"}, -- Phase Lunge
 			{435410, "TANK"}, -- Pierced Defences
 		439559, -- Rain of Arrows
+	}, nil, {
+		[439511] = CL.tank_combo, -- Captain's Flourish (Tank Combo)
 	}
 end
 
