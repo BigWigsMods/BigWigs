@@ -543,6 +543,8 @@ do
 		appliedTime = args.time
 		self:StopBar(CL.count:format(CL.intermission, 2)) -- Transition: Raging Fury
 
+		impalingEruptionCount = 1
+
 		self:SetStage(2.5)
 		self:Message(args.spellId, "cyan")
 		self:Log(args.spellId, "long")
@@ -561,7 +563,7 @@ do
 			piercingStrikeCount = 1
 			recklessChargeCount = 1
 			stingingSwarmCount = 1
-			-- ragingFuryCount = 1
+			ragingFuryCount = 1
 
 			-- self:Bar(443092, 13.8, CL.count:format(self:SpellName(443092), impalingEruptionCount)) -- Spike Eruption
 			-- self:Bar(443063, 23.1, CL.count:format(self:SpellName(443063), callOfTheSwarmCount)) -- Unleashed Swarm
