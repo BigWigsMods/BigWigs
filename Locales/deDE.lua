@@ -24,6 +24,7 @@ L.health_desc = "Aktiviert Funktionen für die Anzeige verschiedener Gesundheits
 L.already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%s|r) existiert bereits als Modul in BigWigs, aber irgend etwas versucht es erneut anzumelden. Dies bedeutet normalerweise, dass Du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in Deinem Addon-Ordner hast. Es wird empfohlen, jegliche BigWigs-Ordner zu löschen und dann von Grund auf neu zu installieren."
 
 -- Loader / Options.lua
+L.okay = "OK"
 L.officialRelease = "Bei dir läuft ein offizieller Release von BigWigs %s (%s)."
 L.alphaRelease = "Bei dir läuft ein ALPHA RELEASE von BigWigs %s (%s)."
 L.sourceCheckout = "Bei dir läuft ein Source Code Checkout von BigWigs %s direkt aus dem Repository."

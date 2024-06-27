@@ -24,6 +24,7 @@ L.health_desc = "启用与首领战斗时显示血量变化信息。"
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已经存在，但该模块仍试图重新注册。这可能是因为更新失败，导致您的插件文件夹中同时存在两份相同模块的拷贝。建议删除所有 BigWigs 文件夹并重新安装。"
 
 -- Loader / Options.lua
+L.okay = "确定"
 L.officialRelease = "你所使用的 BigWigs %s 为官方正式版（%s）"
 L.alphaRelease = "你所使用的 BigWigs %s 为“α测试版”（%s）"
 L.sourceCheckout = "你所使用的 BigWigs %s 是从原始代码仓库直接下载的。"

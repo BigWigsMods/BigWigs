@@ -24,6 +24,7 @@ L.adds_desc = "Active les fonctions relatives aux adds qui apparaissent durant l
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans BigWigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de BigWigs et de le réinstaller complètement."
 
 -- Loader / Options.lua
+L.okay = "OK"
 L.officialRelease = "Vous utilisez une version FINALISÉE de BigWigs %s (%s)."
 L.alphaRelease = "Vous utilisez une version ALPHA de BigWigs %s (%s)."
 L.sourceCheckout = "Vous utilisez une version du dépôt de BigWigs %s."

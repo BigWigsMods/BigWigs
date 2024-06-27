@@ -24,6 +24,7 @@ L.health_desc = "顯示與首領戰鬥中相關的生命值資訊。"
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已經存在，但該模組仍試圖重新註冊。通常來說，這可能是由於更新失敗導致你的插件資料夾中同時存在兩份相同模組的拷貝。建議刪除所有 BigWigs 資料夾並重新安裝。"
 
 -- Loader / Options.lua
+L.okay = "確定"
 L.officialRelease = "你所使用的 BigWigs %s 為官方正式版（%s）"
 L.alphaRelease = "你所使用的 BigWigs %s 為「α測試版（%s）」"
 L.sourceCheckout = "你所使用的 BigWigs（%s）是直接從原始碼倉庫下載的版本。"

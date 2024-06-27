@@ -618,9 +618,32 @@ local function loadCoreAndOpenOptions()
 	end
 end
 
-local function Popup(msg)
-	BasicMessageDialog.Text:SetText(msg)
-	BasicMessageDialog:Show()
+local function Popup(msg, focus)
+	local frame = CreateFrame("Frame")
+	frame:SetFrameStrata("DIALOG")
+	frame:SetToplevel(true)
+	frame:SetSize(384, 128)
+	frame:SetPoint("CENTER", "UIParent", "CENTER")
+	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
+	text:SetSize(360, 0)
+	text:SetJustifyH("CENTER")
+	text:SetJustifyV("TOP")
+	text:SetNonSpaceWrap(true)
+	text:SetPoint("TOP", 0, -16)
+	local border = CreateFrame("Frame", nil, frame, focus and "DialogBorderOpaqueTemplate" or "DialogBorderTemplate")
+	border:SetAllPoints(frame)
+	local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+	button:SetSize(128, 32)
+	button:SetPoint("BOTTOM", 0, 16)
+	button:SetScript("OnClick", function(self)
+		self:GetParent():Hide()
+	end)
+	button:SetText(L.okay)
+	button:SetNormalFontObject("DialogButtonNormalText")
+	button:SetHighlightFontObject("DialogButtonHighlightText")
+
+	text:SetText(msg)
+	frame:Show()
 end
 
 C_PartyInfo.DoCountdown = function(num) -- Overwrite Blizz countdown
@@ -1056,7 +1079,7 @@ function mod:ADDON_LOADED(addon)
 		BigWigsBarsReset = true
 		if BigWigs3DB then
 			sysprint(L.tempMessage)
-			Popup("BigWigs: ".. L.tempMessage)
+			Popup("BigWigs: ".. L.tempMessage, true)
 		end
 	end
 	--bwFrame:UnregisterEvent("ADDON_LOADED")
@@ -1252,13 +1275,13 @@ do
 					local msg = L.removeAddOn:format(name, old[name])
 					delayedMessages[#delayedMessages+1] = msg
 					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
-						Popup(msg)
+						Popup(msg, true)
 					end
 				end
 			else
 				local msg = L.removeAddOn:format(name, old[name])
 				delayedMessages[#delayedMessages+1] = msg
-				Popup(msg)
+				Popup(msg, true)
 			end
 		end
 
@@ -1276,7 +1299,7 @@ do
 			if not foundReqAddons[k] then -- A required functional addon is missing
 				local msg = L.missingAddOn:format(k)
 				delayedMessages[#delayedMessages+1] = msg
-				Popup(msg)
+				Popup(msg, true)
 			end
 		end
 	end
@@ -1284,7 +1307,7 @@ do
 	if printMissingExpansionAddon and public.isClassic then
 		local msg = L.missingAddOn:format(public.currentExpansion.name)
 		delayedMessages[#delayedMessages+1] = msg
-		Popup(msg)
+		Popup(msg, true)
 	else
 		printMissingExpansionAddon = false
 	end
