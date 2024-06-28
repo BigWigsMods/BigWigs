@@ -201,6 +201,7 @@ L.colors_export_bars_desc = "Die Farben der Leisten exportieren."
 L.colors_export_messages_desc = "Die Farben der Nachrichten exportieren."
 L.color_export_countdown_desc = "Die Farbe des Countdowns exportieren."
 L.confirm_import = "Die zum Import gewählten Einstellungen überschreiben die Einstellungen im derzteit gewählten Profil:\n\n|cFF33FF99\"%s\"|r\n\nBist Du sicher, dass Du dies tun willst?"
+--L.confirm_import_addon = "The addon |cFF436EEE\"%s\"|r wants to automatically import new settings that will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 L.no_string_available = "Kein Import-String zum Importieren gespeichert. Zuerst einen String importieren."
 L.no_import_message = "Es wurden keine Einstellungen importiert."
 L.import_success = "Importiert: %s" -- Imported: Bar Anchors, Message Colors

@@ -201,6 +201,7 @@ L.colors_export_bars_desc = "导出 计时条 的颜色"
 L.colors_export_messages_desc = "导出 信息 的颜色"
 L.color_export_countdown_desc = "导出 倒数 的颜色"
 --L.confirm_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+--L.confirm_import_addon = "The addon |cFF436EEE\"%s\"|r wants to automatically import new settings that will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 L.no_string_available = "没有保存要导入的导入字符串。首先导入一个字符串。"
 L.no_import_message = "未导入任何设置。"
 L.import_success = "导入：%s" -- 导入：计时条、信息颜色、倒数等所有设置

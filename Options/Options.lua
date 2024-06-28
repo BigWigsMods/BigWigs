@@ -1673,4 +1673,37 @@ function options:ConfigTableChange(_, appName)
 	end
 end
 
+do
+	local _, addonTable = ...
+	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
+	-- Use BigWigsAPI:ImportProfileString(addonName, profileString)
+	function options:SaveImportStringDataFromAddOn(addonName, profileString)
+		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
+		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
+		-- All AceConfigDialog code, go there for original
+		local frame = acd.popup
+		frame:Show()
+		local profileName = BigWigs.db:GetCurrentProfile()
+		frame.text:SetText(L.confirm_import_addon:format(addonName, profileName))
+		local height = 61 + frame.text:GetHeight()
+		frame:SetHeight(height)
+
+		frame.accept:ClearAllPoints()
+		frame.accept:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", -6, 16)
+		frame.cancel:Show()
+
+		frame.accept:SetScript("OnClick", function(self)
+			frame:Hide()
+			self:SetScript("OnClick", nil)
+			frame.cancel:SetScript("OnClick", nil)
+			addonTable.SaveImportStringDataFromAddOn(profileString)
+		end)
+		frame.cancel:SetScript("OnClick", function(self)
+			frame:Hide()
+			self:SetScript("OnClick", nil)
+			frame.accept:SetScript("OnClick", nil)
+		end)
+	end
+end
+
 BigWigsOptions = options -- Set global

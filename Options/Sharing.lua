@@ -403,6 +403,41 @@ do
 		-- Custom Popup to confirm import?
 		SaveImportedTable(importedTableData)
 	end
+
+	local function ImportStringFromAddOn(string)
+		sharingModule:DecodeImportString(string)
+		sharingImportOptionsSettings.importString = string
+		if IsOptionInString("barPositions") then
+			sharingImportOptionsSettings.importBarPositions = true
+		end
+		if IsOptionInString("barSettings") then
+			sharingImportOptionsSettings.importBarSettings = true
+		end
+		if IsOptionInString("barColors") then
+			sharingImportOptionsSettings.importBarColors = true
+		end
+		if IsOptionInString("messagePositions") then
+			sharingImportOptionsSettings.importMessagePositions = true
+		end
+		if IsOptionInString("messageSettings") then
+			sharingImportOptionsSettings.importMessageSettings = true
+		end
+		if IsOptionInString("messageColors") then
+			sharingImportOptionsSettings.messageColors = true
+		end
+		if IsOptionInString("countdownPositions") then
+			sharingImportOptionsSettings.importCountdownPositions = true
+		end
+		if IsOptionInString("countdownSettings") then
+			sharingImportOptionsSettings.importCountdownSettings = true
+		end
+		if IsOptionInString("countdownColors") then
+			sharingImportOptionsSettings.importCountdownColors = true
+		end
+		sharingModule:SaveData()
+	end
+	local _, addonTable = ...
+	addonTable.SaveImportStringDataFromAddOn = ImportStringFromAddOn
 end
 
 --------------------------------------------------------------------------------
