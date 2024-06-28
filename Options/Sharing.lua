@@ -307,7 +307,7 @@ do
 		for k, v in pairs(data) do
 			importStringOptions[k] = true
 		end
-		return true
+		return importStringOptions
 	end
 
 	--- Decodes and stores an import string
@@ -315,8 +315,8 @@ do
 	-- and store the data in the importStringOptions table.
 	-- Afterwards you can call :SaveData to save the data to the BigWigs profile.
 	-- @param string The import string to decode.
-	-- @return True if the import string was successfully decoded
-	function sharingModule:DecodeImportString(string)
+	-- @return a table with all available options to import.
+	function sharing:DecodeImportString(string)
 		if type(string) ~= "string" then return end
 		importStringOptions = {}
 		importedTableData = nil
@@ -329,8 +329,9 @@ do
 		if not decompressed then return end
 		local success, data = LibSerialize:Deserialize(decompressed)
 		if not success or not data.version or data.version ~= sharingVersion then return end
-		local importSucceeded = PreProcess(data)
-		return importSucceeded
+		local availableOptions = PreProcess(data)
+		sharingImportOptionsSettings["importString"] = string
+		return availableOptions
 	end
 end
 
@@ -395,10 +396,20 @@ do
 	--- Saves the currently loaded import string to the BigWigs profile.
 	-- After importing a string with :DecodeImportString, this function
 	-- will save the data to the BigWigs profile.
-	function sharingModule:SaveData()
+	-- @param table a table where you set what setting to import.
+	-- Example:
+	-- table = {
+	-- 	importBarPositions = true,
+	-- 	importBarSettings = true,
+	-- 	importBarColors = false,
+	-- }
+	function sharing:SaveData(optionsToImport)
 		if not importedTableData then
 			BigWigs:Print(L.no_string_available)
 			return
+		end
+		if optionsToImport then
+			sharingImportOptionsSettings = optionsToImport
 		end
 		-- Custom Popup to confirm import?
 		SaveImportedTable(importedTableData)
@@ -431,8 +442,7 @@ local sharingOptions = {
 				order = 2,
 				width = "full",
 				set = function(i, value)
-					local processed = sharingModule:DecodeImportString(value)
-					sharingImportOptionsSettings[i[#i]] = value
+					local processed = sharing:DecodeImportString(value)
 				end,
 				get = function(i) return sharingImportOptionsSettings[i[#i]] end,
 				control = "ImportStringMultiline",
