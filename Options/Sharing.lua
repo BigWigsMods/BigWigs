@@ -318,6 +318,7 @@ do
 	-- @return a table with all available options to import.
 	function sharing:DecodeImportString(string)
 		if type(string) ~= "string" then return end
+		sharingImportOptionsSettings["importString"] = string
 		importStringOptions = {}
 		importedTableData = nil
 
@@ -330,7 +331,6 @@ do
 		local success, data = LibSerialize:Deserialize(decompressed)
 		if not success or not data.version or data.version ~= sharingVersion then return end
 		local availableOptions = PreProcess(data)
-		sharingImportOptionsSettings["importString"] = string
 		return availableOptions
 	end
 end
