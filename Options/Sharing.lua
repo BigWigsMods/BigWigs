@@ -1,5 +1,4 @@
-local _, addonTable = ...
-local sharing = {}
+local sharingModule = {}
 
 -------------------------------------------------------------------------------
 -- Libraries
@@ -57,7 +56,7 @@ end
 --
 
 local L = BigWigsAPI:GetLocale("BigWigs")
-local myLocale = GetLocale()
+local BigWigs = BigWigs
 local sharingVersion = "BW1"
 
 -- Position Args
@@ -317,7 +316,7 @@ do
 	-- Afterwards you can call :SaveData to save the data to the BigWigs profile.
 	-- @param string The import string to decode.
 	-- @return True if the import string was successfully decoded
-	function sharing:DecodeImportString(string)
+	function sharingModule:DecodeImportString(string)
 		if type(string) ~= "string" then return end
 		importStringOptions = {}
 		importedTableData = nil
@@ -337,7 +336,7 @@ end
 
 
 do
-	local comma = (myLocale == "zhTW" or myLocale == "zhCN") and "，" or ", "
+	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
 	local function SaveImportedTable(tableData)
 		local data = tableData
 		local imported = {}
@@ -396,7 +395,7 @@ do
 	--- Saves the currently loaded import string to the BigWigs profile.
 	-- After importing a string with :DecodeImportString, this function
 	-- will save the data to the BigWigs profile.
-	function sharing:SaveData()
+	function sharingModule:SaveData()
 		if not importedTableData then
 			BigWigs:Print(L.no_string_available)
 			return
@@ -432,7 +431,7 @@ local sharingOptions = {
 				order = 2,
 				width = "full",
 				set = function(i, value)
-					local processed = sharing:DecodeImportString(value)
+					local processed = sharingModule:DecodeImportString(value)
 					sharingImportOptionsSettings[i[#i]] = value
 				end,
 				get = function(i) return sharingImportOptionsSettings[i[#i]] end,
@@ -550,7 +549,7 @@ local sharingOptions = {
 				order = 100,
 				width = "full",
 				func = function()
-					sharing:SaveData()
+					sharingModule:SaveData()
 				end,
 				hidden = function()
 					return (not isImportStringAvailable() and not IsOptionGroupAvailable("any"))
@@ -565,8 +564,10 @@ local sharingOptions = {
 					end
 					return not isSomethingSelected
 				end,
-				confirm = true,
-				confirmText = L.confirm_import,
+				confirm = function()
+					local profileName = BigWigs.db:GetCurrentProfile()
+					return L.confirm_import:format(profileName)
+				end,
 			},
 		},
 	},
@@ -687,4 +688,5 @@ local sharingOptions = {
 	},
 }
 
+local _, addonTable = ...
 addonTable.sharingOptions = sharingOptions
