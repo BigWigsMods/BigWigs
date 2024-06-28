@@ -118,6 +118,7 @@ do
 			prev = args.time
 			playerList = {}
 			self:StopBar(CL.count:format(CL.charge, phaseBladesCount))
+			self:Message(args.spellId, "cyan", CL.count:format(CL.charge, phaseBladesCount))
 			phaseBladesCount = phaseBladesCount + 1
 			self:CDBar(args.spellId, timers[args.spellId][phaseBladesCount], CL.count:format(CL.charge, phaseBladesCount))
 		end
