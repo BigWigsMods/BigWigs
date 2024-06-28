@@ -442,7 +442,7 @@ local sharingOptions = {
 				order = 2,
 				width = "full",
 				set = function(i, value)
-					local processed = sharing:DecodeImportString(value)
+					sharing:DecodeImportString(value)
 				end,
 				get = function(i) return sharingImportOptionsSettings[i[#i]] end,
 				control = "ImportStringMultiline",
