@@ -27,7 +27,12 @@ local bloodcurdleCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.grasp_from_beyond = "Tentacles"
 	L.grasp_from_beyond_say = "Tentacles"
+	L.crimson_rain = "Rain"
+	L.bloodcurdle = "Spreads"
+	L.bloodcurdle_on_you = "Spread" -- Singular of Spread
+	L.goresplatter = "Run Away"
 end
 
 --------------------------------------------------------------------------------
@@ -95,14 +100,14 @@ function mod:OnEngage()
 	crimsonRainCount = 1
 	graspFromBeyondCount = 1
 
-	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
-	self:Bar(444363, 16, CL.count:format(self:SpellName(444363), gruesomeDisgorgeCount)) -- Gruesome Disgorge
-	self:Bar(443042, 22, CL.count:format(self:SpellName(443042), graspFromBeyondCount)) -- Grasp From Beyond
-	self:Bar(445936, 32, CL.count:format(self:SpellName(445936), spewingHemorrhageCount)) -- Spewing Hemorrhage
-	self:Bar(442530, 120, CL.count:format(self:SpellName(442530), goresplatterCount)) -- Goresplatter
-	-- if self:Mythic() then
-	-- 	self:Bar(452237, 60, CL.count:format(self:SpellName(452237), bloodcurdleCount)) -- Bloodcurdle
-	-- end
+	self:Bar(443203, 11, CL.count:format(L.crimson_rain, crimsonRainCount)) -- Crimson Rain
+	self:Bar(444363, self:Mythic() and 14 or 16, CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount)) -- Gruesome Disgorge
+	self:Bar(443042, 22, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount)) -- Grasp From Beyond
+	self:Bar(445936, 32, CL.count:format(CL.beams, spewingHemorrhageCount)) -- Spewing Hemorrhage
+	self:Bar(442530, 120, CL.count:format(L.goresplatter, goresplatterCount)) -- Goresplatter
+	if self:Mythic() then
+		self:Bar(452237, 9, CL.count:format(L.bloodcurdle, bloodcurdleCount)) -- Bloodcurdle
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -111,11 +116,15 @@ end
 
 -- Phase One: The Black Blood
 function mod:GruesomeDisgorge(args)
-	self:StopBar(CL.count:format(args.spellName, gruesomeDisgorgeCount))
-	self:Message(args.spellId, "purple")
+	self:StopBar(CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount))
+	self:Message(args.spellId, "purple", CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount))
 	self:PlaySound(args.spellId, "alert")
 	gruesomeDisgorgeCount = gruesomeDisgorgeCount + 1
-	self:Bar(args.spellId, gruesomeDisgorgeCount % 2 == 1 and 77 or 51, CL.count:format(args.spellName, gruesomeDisgorgeCount))
+	local cd = gruesomeDisgorgeCount % 2 == 0 and 51 or 77
+	if self:Mythic() then
+		cd = gruesomeDisgorgeCount % 2 == 0 and 59 or 69
+	end
+	self:Bar(args.spellId, cd, CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount))
 end
 
 function mod:BanefulShiftApplied(args)
@@ -140,11 +149,15 @@ function mod:UnseemingBlightRemoved(args)
 end
 
 function mod:SpewingHemorrhage(args)
-	self:StopBar(CL.count:format(args.spellName, spewingHemorrhageCount))
-	self:Message(args.spellId, "orange")
+	self:StopBar(CL.count:format(CL.beams, spewingHemorrhageCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.beams, spewingHemorrhageCount))
 	self:PlaySound(args.spellId, "alert")
 	spewingHemorrhageCount = spewingHemorrhageCount + 1
-	self:Bar(args.spellId, spewingHemorrhageCount % 2 == 1 and 79 or 49, CL.count:format(args.spellName, spewingHemorrhageCount))
+	local cd = spewingHemorrhageCount % 2 == 9 and 49 or 79
+	if self:Mythic() then
+		cd = spewingHemorrhageCount % 2 == 0 and 59 or 69
+	end
+	self:Bar(args.spellId, cd, CL.count:format(CL.beams, spewingHemorrhageCount))
 end
 
 function mod:InternalHemorrhageApplied(args)
@@ -155,19 +168,19 @@ function mod:InternalHemorrhageApplied(args)
 end
 
 function mod:Goresplatter(args)
-	self:StopBar(CL.count:format(args.spellName, goresplatterCount))
-	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:StopBar(CL.count:format(L.goresplatter, goresplatterCount))
+	self:Message(args.spellId, "red", CL.casting:format(L.goresplatter))
 	self:PlaySound(args.spellId, "warning")
 	goresplatterCount = goresplatterCount + 1
-	self:Bar(args.spellId, 120, CL.count:format(args.spellName, goresplatterCount))
+	self:Bar(args.spellId, 128, CL.count:format(L.goresplatter, goresplatterCount))
 end
 
 function mod:CrimsonRain(args)
-	self:StopBar(CL.count:format(args.spellName, crimsonRainCount))
-	self:Message(args.spellId, "yellow")
+	self:StopBar(CL.count:format(L.crimson_rain, crimsonRainCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.crimson_rain, crimsonRainCount))
 	self:PlaySound(args.spellId, "alert")
 	crimsonRainCount = crimsonRainCount + 1
-	self:Bar(args.spellId, 128, CL.count:format(args.spellName, crimsonRainCount))
+	self:Bar(args.spellId, 128, CL.count:format(L.crimson_rain, crimsonRainCount))
 end
 
 do
@@ -175,10 +188,14 @@ do
 	function mod:GraspFromBeyondApplied(args)
 		if args.time-prev > 2 then
 			prev = args.time
-			self:StopBar(CL.count:format(args.spellName, graspFromBeyondCount))
-			self:Message(args.spellId, "yellow")
+			self:StopBar(CL.count:format(L.grasp_from_beyond, graspFromBeyondCount))
+			self:Message(args.spellId, "yellow", CL.count:format(L.grasp_from_beyond, graspFromBeyondCount))
 			graspFromBeyondCount = graspFromBeyondCount + 1
-			self:Bar(args.spellId, graspFromBeyondCount % 4 == 1 and 44 or 28, CL.count:format(args.spellName, graspFromBeyondCount))
+			local cd = graspFromBeyondCount % 4 == 1 and 44 or 28
+			if self:Mythic() then
+				cd = graspFromBeyondCount % 4 == 1 and 41 or graspFromBeyondCount % 4 == 3 and 31 or 28
+			end
+			self:Bar(args.spellId, cd, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount))
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, L.grasp_from_beyond_say, nil, "Tentacles")
@@ -228,22 +245,23 @@ end
 -- Mythic
 
 function mod:Bloodcurdle(args)
-	self:StopBar(CL.count:format(args.spellName, bloodcurdleCount))
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, bloodcurdleCount)))
+	self:StopBar(CL.count:format(L.bloodcurdle, bloodcurdleCount))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.bloodcurdle, bloodcurdleCount)))
 	bloodcurdleCount = bloodcurdleCount + 1
-	-- self:Bar(args.spellId, bloodcurdleCount % 2 == 0 and 49 or 79, CL.count:format(args.spellName, bloodcurdleCount))
+	local cd = bloodcurdleCount % 4 == 1 and 37 or bloodcurdleCount % 2 == 0 and 32 or 27
+	self:Bar(args.spellId, cd, CL.count:format(L.bloodcurdle, bloodcurdleCount))
 end
 
 function mod:BloodcurdleApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(452237)
 		self:PlaySound(452237, "alarm") -- spread
-		self:TargetBar(452237, 5, args.destName)
+		self:TargetBar(452237, 5, args.destName, L.bloodcurdle_on_you)
 	end
 end
 
 function mod:BloodcurdleRemoved(args)
 	if self:Me(args.destGUID) then
-		self:StopBar(452237, args.destName)
+		self:StopBar(L.bloodcurdle_on_you, args.destName)
 	end
 end
