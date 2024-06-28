@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "zhCN")
 if not L then return end
 if L then
-	--L.chunky_viscera_message = "Feed Boss! (Special Action Button)"
+	L.chunky_viscera_message = "喂食首领！（额外快捷键）"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhCN")
