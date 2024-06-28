@@ -21,6 +21,14 @@ local shatteringSweepCount = 1
 local captainsFlourishCount = 1
 local rainOfArrowsCount = 1
 
+local timersHeroic = {
+	[439511] = {7.0, 22.3, 22.0, 23.1, 26.8, 22.0, 22.0, 22.3, 32.1, 23.2, 23.2, 22.4, 29.5}, -- Captain's Flourish
+	[433517] = {14.5, 45.5, 50.0, 43.0, 55.5, 43.0, 55.5}, -- Phase Blades
+	[442428] = {42.7, 40.2, 56.2, 38.3, 60.1, 39.7}, -- Decimate
+	[439559] = {35.6, 52.3, 42.8, 54.2, 44.2, 53.1}, -- Rain of Arrows
+}
+local timers = timersHeroic
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -59,10 +67,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CosmicShardsApplied", 459273)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CosmicShardsApplied", 459273)
 	self:Log("SPELL_CAST_START", "ShatteringSweep", 456420)
-	self:Log("SPELL_CAST_SUCCESS", "CaptainsFlourish", 439511)
+	self:Log("SPELL_CAST_START", "Expose", 432965)
 	self:Log("SPELL_AURA_APPLIED", "ExposeApplied", 438845)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExposeApplied", 438845)
 	self:Log("SPELL_CAST_START", "PhaseLunge", 435403)
+	self:Log("SPELL_CAST_SUCCESS", "PhaseLungeSuccess", 435403)
 	self:Log("SPELL_AURA_APPLIED", "PiercedDefencesApplied", 435410)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PiercedDefencesApplied", 435410)
 	self:Log("SPELL_CAST_START", "RainOfArrows", 439559)
@@ -75,11 +84,11 @@ function mod:OnEngage()
 	captainsFlourishCount = 1
 	rainOfArrowsCount = 1
 
-	-- self:Bar(433517, 5, CL.count:format(self:SpellName(433517), phaseBladesCount)) -- Phase Blades
-	-- self:Bar(442428, 5, CL.count:format(self:SpellName(442428), decimateCount)) -- Decimate
-	-- self:Bar(439511, 5, CL.count:format(self:SpellName(439511), captainsFlourishCount)) -- Captain's Flourish
-	-- self:Bar(432969, 5, CL.count:format(self:SpellName(432969), rainOfArrowsCount)) -- Rain of Arrows
-	-- self:Bar(456420, 120, CL.count:format(self:SpellName(456420), shatteringSweepCount)) -- Shattering Sweep
+	self:CDBar(439511, timers[439511][1], CL.count:format(CL.tank_combo, captainsFlourishCount)) -- Captain's Flourish
+	self:CDBar(433517, timers[433517][1], CL.count:format(self:SpellName(433517), phaseBladesCount)) -- Phase Blades
+	self:CDBar(432969, timers[432969][1], CL.count:format(self:SpellName(432969), rainOfArrowsCount)) -- Rain of Arrows
+	self:CDBar(442428, timers[442428][1], CL.count:format(self:SpellName(442428), decimateCount)) -- Decimate
+	self:CDBar(456420, 90, CL.count:format(self:SpellName(456420), shatteringSweepCount)) -- Shattering Sweep
 end
 
 --------------------------------------------------------------------------------
@@ -95,13 +104,13 @@ do
 			self:Message(args.spellId, "cyan", CL.count:format(args.spellName, phaseBladesCount))
 			-- self:PlaySound(args.spellId, "alert")
 			phaseBladesCount = phaseBladesCount + 1
-			-- self:Bar(args.spellId, 30, CL.count:format(args.spellName, phaseBladesCount))
+			self:CDBar(args.spellId, timers[args.spellId][phaseBladesCount], CL.count:format(args.spellName, phaseBladesCount))
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, nil, nil, "Phase Blades")
-			self:SayCountdown(args.spellId, 6)
+			self:SayCountdown(args.spellId, 5)
 		end
 	end
 end
@@ -124,7 +133,7 @@ function mod:Decimate(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, decimateCount))
 	self:PlaySound(args.spellId, "alert")
 	decimateCount = decimateCount + 1
-	-- self:Bar(args.spellId, 30, CL.count:format(args.spellName, decimateCount))
+	self:CDBar(args.spellId, timers[args.spellId][decimateCount], CL.count:format(args.spellName, decimateCount))
 end
 
 do
@@ -149,20 +158,20 @@ function mod:ShatteringSweep(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, shatteringSweepCount))
 	self:PlaySound(args.spellId, "long")
 	shatteringSweepCount = shatteringSweepCount + 1
-	-- self:Bar(args.spellId, 120, CL.count:format(args.spellName, shatteringSweepCount))
+	self:CDBar(args.spellId, 98, CL.count:format(args.spellName, shatteringSweepCount))
 end
 
--- Flourish cast (message/current tank sound) -> Expose debuff (message) -> Expose debuff (message) -> Phased Lunge cast (other tank sound) -> Pierced Defence (message)
-function mod:CaptainsFlourish(args)
-	-- XXX switch to a throttled Expose cast if this isn't... exposed
+-- Expose cast (message/current tank sound) -> Expose debuff (message) -> Expose debuff (message) -> Phased Lunge cast (other tank sound) -> Pierced Defence (message)
+function mod:Expose(args)
 	self:StopBar(CL.count:format(CL.tank_combo, captainsFlourishCount))
-	self:Message(args.spellId, "cyan", CL.count:format(CL.tank_combo, captainsFlourishCount))
+	self:Message(439511, "cyan", CL.count:format(CL.tank_combo, captainsFlourishCount))
 	if self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then -- boss1
-		self:PlaySound(args.spellId, "alarm") -- defensive
+		self:PlaySound(439511, "alarm") -- defensive
 	end
-	-- self:Bar(432969, 3.5) -- Phase Lunge
+	self:Bar(432969, 4) -- Phase Lunge
 	captainsFlourishCount = captainsFlourishCount + 1
-	-- self:Bar(args.spellId, 20, CL.count:format(CL.tank_combo, captainsFlourishCount))
+	-- local cd = captainsFlourishCount % 4 ~= 1 and 22 or 28
+	self:CDBar(439511, timers[439511][captainsFlourishCount], CL.count:format(CL.tank_combo, captainsFlourishCount))
 end
 
 function mod:ExposeApplied(args)
@@ -171,11 +180,14 @@ function mod:ExposeApplied(args)
 end
 
 function mod:PhaseLunge(args)
-	self:StopBar(432969)
 	-- self:Message(432969, "purple", CL.casting:format(args.spellName))
 	if self:Tank() and not self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then
 		self:PlaySound(432969, "warning") -- tauntswap
 	end
+end
+
+function mod:PhaseLungeSuccess(args)
+	self:StopBar(432969)
 end
 
 function mod:PiercedDefencesApplied(args)
@@ -187,5 +199,5 @@ function mod:RainOfArrows(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, rainOfArrowsCount))
 	self:PlaySound(args.spellId, "alarm")
 	rainOfArrowsCount = rainOfArrowsCount + 1
-	-- self:Bar(args.spellId, 60, CL.count:format(args.spellName, rainOfArrowsCount))
+	self:CDBar(args.spellId, timers[args.spellId][rainOfArrowsCount], CL.count:format(args.spellName, rainOfArrowsCount))
 end
