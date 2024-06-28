@@ -1699,9 +1699,9 @@ do
 				end
 			end
 			if found then
-				frame.text:SetText(L.confirm_import_addon_edit_profile:format(addonName, profileName))
+				frame.text:SetText(L.confirm_import_addon_edit_profile:format(addonName, customProfileName))
 			else
-				frame.text:SetText(L.confirm_import_addon_new_profile:format(addonName, profileName))
+				frame.text:SetText(L.confirm_import_addon_new_profile:format(addonName, customProfileName))
 			end
 		end
 		local height = 61 + frame.text:GetHeight()
