@@ -19,6 +19,7 @@ local spewingHemorrhageCount = 1
 local goresplatterCount = 1
 local crimsonRainCount = 1
 local graspFromBeyondCount = 1
+local bloodcurdleCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -50,9 +51,12 @@ function mod:GetOptions()
 		451288, -- Black Bulwark
 		-- {445016, "TANK"}, -- Spectral Slam
 		-- 445174, -- Manifest Horror
+		-- Mythic
+		452237, -- Bloodcurdle
 	},{
 		[444363] = -29061, -- Phase One: The Black Blood
 		[451288] = -29068, -- Phase Two: The Unseeming
+		[452237] = "mythic",
 	}
 end
 
@@ -77,6 +81,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BlackBulwark", 451288)
 	-- self:Log("SPELL_CAST_START", "SpectralSlam", 445016)
 	-- self:Log("SPELL_CAST_START", "ManifestHorror", 445174) -- multiple? spammy?
+
+	-- Mythic
+	self:Log("SPELL_CAST_START", "Bloodcurdle", 452237)
+	self:Log("SPELL_AURA_APPLIED", "BloodcurdleApplied", 452245)
+	self:Log("SPELL_AURA_REMOVED", "BloodcurdleRemoved", 452245)
 end
 
 function mod:OnEngage()
@@ -86,11 +95,14 @@ function mod:OnEngage()
 	crimsonRainCount = 1
 	graspFromBeyondCount = 1
 
+	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
 	self:Bar(444363, 16, CL.count:format(self:SpellName(444363), gruesomeDisgorgeCount)) -- Gruesome Disgorge
+	self:Bar(443042, 22, CL.count:format(self:SpellName(443042), graspFromBeyondCount)) -- Grasp From Beyond
 	self:Bar(445936, 32, CL.count:format(self:SpellName(445936), spewingHemorrhageCount)) -- Spewing Hemorrhage
 	self:Bar(442530, 120, CL.count:format(self:SpellName(442530), goresplatterCount)) -- Goresplatter
-	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
-	self:Bar(443042, 22, CL.count:format(self:SpellName(443042), graspFromBeyondCount)) -- Grasp From Beyond
+	-- if self:Mythic() then
+	-- 	self:Bar(452237, 60, CL.count:format(self:SpellName(452237), bloodcurdleCount)) -- Bloodcurdle
+	-- end
 end
 
 --------------------------------------------------------------------------------
@@ -212,3 +224,26 @@ end
 -- 	self:PlaySound(args.spellId, "alert")
 -- 	--self:Bar(args.spellId, 42)
 -- end
+
+-- Mythic
+
+function mod:Bloodcurdle(args)
+	self:StopBar(CL.count:format(args.spellName, bloodcurdleCount))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, bloodcurdleCount)))
+	bloodcurdleCount = bloodcurdleCount + 1
+	-- self:Bar(args.spellId, bloodcurdleCount % 2 == 0 and 49 or 79, CL.count:format(args.spellName, bloodcurdleCount))
+end
+
+function mod:BloodcurdleApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(452237)
+		self:PlaySound(452237, "alarm") -- spread
+		self:TargetBar(452237, 5, args.destName)
+	end
+end
+
+function mod:BloodcurdleRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(452237, args.destName)
+	end
+end
