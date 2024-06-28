@@ -29,7 +29,6 @@ local L = mod:GetLocale()
 if L then
 	L.grasp_from_beyond = "Tentacles"
 	L.grasp_from_beyond_say = "Tentacles"
-	L.crimson_rain = "Rain"
 	L.bloodcurdle = "Spreads"
 	L.bloodcurdle_on_you = "Spread" -- Singular of Spread
 	L.goresplatter = "Run Away"
@@ -62,6 +61,12 @@ function mod:GetOptions()
 		[444363] = -29061, -- Phase One: The Black Blood
 		[451288] = -29068, -- Phase Two: The Unseeming
 		[452237] = "mythic",
+	},{
+		[444363] = CL.frontal_cone, -- Gruesome Disgorge (Frontal Cone)
+		[445936] = CL.beams, -- Spewing Hemorrhage (Beams)
+		[442530] = L.goresplatter, -- Goresplatter (Run Away)
+		[443042] = L.grasp_from_beyond, -- Grasp From Beyond (Tentacles)
+		[452237] = L.bloodcurdle, -- Bloodcurdle (Spreads)
 	}
 end
 
@@ -100,7 +105,7 @@ function mod:OnEngage()
 	crimsonRainCount = 1
 	graspFromBeyondCount = 1
 
-	self:Bar(443203, 11, CL.count:format(L.crimson_rain, crimsonRainCount)) -- Crimson Rain
+	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
 	self:Bar(444363, self:Mythic() and 14 or 16, CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount)) -- Gruesome Disgorge
 	self:Bar(443042, 22, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount)) -- Grasp From Beyond
 	self:Bar(445936, 32, CL.count:format(CL.beams, spewingHemorrhageCount)) -- Spewing Hemorrhage
@@ -176,11 +181,11 @@ function mod:Goresplatter(args)
 end
 
 function mod:CrimsonRain(args)
-	self:StopBar(CL.count:format(L.crimson_rain, crimsonRainCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.crimson_rain, crimsonRainCount))
+	self:StopBar(CL.count:format(args.spellName, crimsonRainCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, crimsonRainCount))
 	self:PlaySound(args.spellId, "alert")
 	crimsonRainCount = crimsonRainCount + 1
-	self:Bar(args.spellId, 128, CL.count:format(L.crimson_rain, crimsonRainCount))
+	self:Bar(args.spellId, 128, CL.count:format(args.spellName, crimsonRainCount))
 end
 
 do

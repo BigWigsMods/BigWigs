@@ -8,7 +8,6 @@ L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhCN")
 if L then
 	--L.grasp_from_beyond = "Tentacles"
 	L.grasp_from_beyond_say = "触手"
-	--L.crimson_rain = "Rain"
 	--L.bloodcurdle = "Spreads"
 	--L.bloodcurdle_on_you = "Spread" -- Singular of Spread
 	--L.goresplatter = "Run Away"
