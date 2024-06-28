@@ -23,6 +23,7 @@ local brutalCrushCount = 1
 local hungeringBellowsCount = 1
 local hulkingCrashCount = 1
 local juggernautChargeCount = 1
+local foodOnMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,7 +31,7 @@ local juggernautChargeCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.chunky_viscera_debuff_msg = "Remember to Feed! (Special Action Button)"
+	L.chunky_viscera_message = "Feed Boss! (Special Action Button)"
 end
 
 --------------------------------------------------------------------------------
@@ -55,6 +56,7 @@ function mod:GetOptions()
 		438657, -- Chunky Viscera
 		436200, -- Juggernaut Charge
 		443842, -- Swallowing Darkness
+		440177, -- Ready to Feed
 		438012, -- Hungering Bellows
 		445123, -- Hulking Crash
 	},{
@@ -76,7 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BrutalLashingsPullRemoved", 434778)
 	self:Log("SPELL_AURA_APPLIED", "ContemptfulRageApplied", 440849)
 	self:Log("SPELL_CAST_START", "StalkersWebbing", 441452)
-	self:Log("SPELL_AURA_APPLIED", "StalkerNettingApplied", 439419)
+	self:Log("SPELL_AURA_APPLIED", "StalkerNettingApplied", 439419, 455831) -- Stalker Netting/Hardened Netting
 	self:Log("SPELL_CAST_START", "VenomousLash", 435136)
 	self:Log("SPELL_AURA_APPLIED", "DigestiveVenomApplied", 435138)
 	self:Log("SPELL_AURA_REMOVED", "DigestiveVenomRemoved", 435138)
@@ -87,10 +89,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ChitteringSwarm", 445052)
 	self:Log("SPELL_AURA_APPLIED", "DisembowelApplied", 439037)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DisembowelApplied", 439037)
-	self:Log("SPELL_AURA_APPLIED", "ChunkyVisceraApplied", 438657)
+	self:Log("SPELL_AURA_APPLIED", "ChunkyVisceraApplied", 438657, 457598) -- Chunky Viscera/Bile-Soaked Viscera
+	self:Log("SPELL_AURA_REMOVED", "ChunkyVisceraRemoved", 438657, 457598)
 	self:Log("SPELL_CAST_START", "JuggernautChargePreCast", 436200)
 	self:Log("SPELL_CAST_START", "JuggernautCharge", 436203)
 	self:Log("SPELL_CAST_START", "SwallowingDarkness", 443842)
+	self:Log("SPELL_AURA_APPLIED", "ReadyToEat", 440177)
 	self:Log("SPELL_CAST_START", "HungeringBellows", 438012)
 	self:Log("SPELL_CAST_START", "HulkingCrashTransition", 445123) -- First in Stage 2
 	self:Log("SPELL_CAST_START", "HulkingCrash", 445290)
@@ -102,6 +106,7 @@ function mod:OnEngage()
 	stalkersWebbingCount = 1
 	venomousLashCount = 1
 	brutalCrushCount = 1
+	foodOnMe = false
 
 	self:Bar(434697, 3, CL.count:format(self:SpellName(434697), brutalCrushCount)) -- Brutal Crush
 	self:Bar(441452, 8, CL.count:format(self:SpellName(441452), stalkersWebbingCount)) -- Stalkers Webbing
@@ -212,8 +217,8 @@ end
 
 function mod:StalkerNettingApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PersonalMessage(439419)
+		self:PlaySound(439419, "alarm")
 	end
 end
 
@@ -277,8 +282,15 @@ end
 
 function mod:ChunkyVisceraApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", L.chunky_viscera_debuff_msg)
-		self:PlaySound(args.spellId, "info")
+		self:Message(438657, "blue")
+		self:PlaySound(438657, "info")
+		foodOnMe = true
+	end
+end
+
+function mod:ChunkyVisceraRemoved(args)
+	if self:Me(args.destGUID) then
+		foodOnMe = false
 	end
 end
 
@@ -301,6 +313,16 @@ function mod:SwallowingDarkness(args)
 	self:StopBar(args.spellId)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm") -- possibly under you
+end
+
+function mod:ReadyToEat(args)
+	if foodOnMe then
+		self:Message(438657, "blue", L.chunky_viscera_message, 438324) -- Chunky Viscera
+		self:PlaySound(438657, "alert")
+	else
+		self:Message(args.spellId, "green")
+		self:PlaySound(args.spellId, "info")
+	end
 end
 
 function mod:HungeringBellows(args)
