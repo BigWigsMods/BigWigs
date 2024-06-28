@@ -41,7 +41,7 @@ BigWigs:AddSounds("The Forgotten Experiments", {
 	[405492] = "alarm",
 	[406227] = "alert",
 	[406311] = {"info","warning"},
-	[406358] = {"alert","warning"},
+	[406358] = "alert",
 	[407302] = {"info","warning"},
 	[407327] = "alarm",
 	[407552] = {"info","underyou"},
@@ -112,12 +112,10 @@ BigWigs:AddSounds("Echo of Neltharion", {
 	[403049] = "info",
 	[405433] = "alarm",
 	[407036] = "long",
-	[407221] = "warning",
 	[407790] = {"alarm","info","warning"},
 	[407917] = "warning",
 	[407919] = {"info","underyou"},
 	[407936] = "alert",
-	[410953] = "warning",
 	["stages"] = {"info","long"},
 })
 
