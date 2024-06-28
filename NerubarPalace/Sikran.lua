@@ -46,7 +46,7 @@ function mod:GetOptions()
 	return {
 		{433517, "SAY", "SAY_COUNTDOWN",  "ME_ONLY_EMPHASIZE"}, -- Phase Blades
 			434860, -- Cosmic Wound
-		442428, -- Decimate
+		{442428, "SAY", "SAY_COUNTDOWN"}, -- Decimate
 			459273, -- Cosmic Shards
 		456420, -- Shattering Sweep
 		{439511, "TANK"}, -- Captain's Flourish
@@ -63,6 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PhaseBladesApplied", 433517)
 	self:Log("SPELL_AURA_REMOVED", "PhaseBladesRemoved", 433517)
 	self:Log("SPELL_AURA_APPLIED", "CosmicWoundApplied", 434860)
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Decimate Targetting
 	self:Log("SPELL_CAST_START", "Decimate", 442428)
 	self:Log("SPELL_AURA_APPLIED", "CosmicShardsApplied", 459273)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CosmicShardsApplied", 459273)
@@ -125,6 +126,16 @@ function mod:CosmicWoundApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+	--|TInterface\\\\ICONS\\\\INV_Polearm_2H_NerubianRaid_D_01.blp:20|t You have been targeted by |cFFFF0000|Hspell:459349|h[Decimate]|h|r!
+	if msg:find("459349", nil, true) then
+		self:PersonalMessage(442428)
+		self:Say(442428, nil, nil, "Decimate")
+		self:SayCountdown(442428, 5.5)
+		self:PlaySound(442428, "warning")
 	end
 end
 
