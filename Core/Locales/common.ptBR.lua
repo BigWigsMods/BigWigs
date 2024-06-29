@@ -68,6 +68,7 @@ L.next_ability = "Próxima Habilidade" -- We don't know what ability will be nex
 -- Add related
 L.add_spawned = "Add surgiu" -- singular
 L.adds_spawned = "Adds surgiram" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 --L.add_spawning = "Add spawning" -- singular
 --L.adds_spawning = "Adds spawning" -- plural
 L.spawned = "%s surgiu"

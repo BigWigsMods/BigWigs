@@ -68,6 +68,7 @@ L.next_ability = "下个技能" -- We don't know what ability will be next, we o
 -- Add related
 L.add_spawned = "小怪已刷新" -- singular
 L.adds_spawned = "小怪已刷新" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "小怪刷新" -- singular
 L.adds_spawning = "小怪刷新" -- plural
 L.spawned = "%s已刷新"

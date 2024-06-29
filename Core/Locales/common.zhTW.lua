@@ -68,6 +68,7 @@ L.next_ability = "下個技能" -- We don't know what ability will be next, we o
 -- Add related
 L.add_spawned = "小怪出現" -- singular
 L.adds_spawned = "小怪出現" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "小怪出現" -- singular 小怪正在出現/小怪出現/小怪已出現，中文沒有英文那麼明確的時態和單複數之別
 L.adds_spawning = "小怪出現" -- plural
 L.spawned = "%s已重生"

@@ -68,6 +68,7 @@ L.you_die_sec = "Morirai in %d sec" -- "You die in 15 sec" (sec = seconds)
 -- Add related
 L.add_spawned = "Add Apparso" -- singular
 L.adds_spawned = "Adds Apparso" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 --L.add_spawning = "Add spawning" -- singular
 --L.adds_spawning = "Adds spawning" -- plural
 L.spawned = "%s Reinizializzato"

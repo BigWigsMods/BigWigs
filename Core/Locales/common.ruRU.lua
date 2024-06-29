@@ -68,6 +68,7 @@ L.next_ability = "Следующая способность" -- We don't know wh
 -- Add related
 L.add_spawned = "Помощник появился" -- singular
 L.adds_spawned = "Помощники появились" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Спаун Адда" -- singular
 L.adds_spawning = "Спаун Аддов" -- plural
 L.spawned = "Появление: %s"

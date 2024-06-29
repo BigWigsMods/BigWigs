@@ -68,6 +68,7 @@ L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
 L.adds_spawned = "추가 몹들 생성" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 --L.add_spawning = "Add spawning" -- singular
 --L.adds_spawning = "Adds spawning" -- plural
 L.spawned = "%s 생성"

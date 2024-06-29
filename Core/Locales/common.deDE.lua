@@ -68,6 +68,7 @@ L.next_ability = "Nächste Fähigkeit" -- We don't know what ability will be nex
 -- Add related
 L.add_spawned = "Add erschienen" -- singular
 L.adds_spawned = "Adds erschienen" -- plural
+--L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Add erscheint" -- singular
 L.adds_spawning = "Adds erscheinen" -- plural
 L.spawned = "%s erschienen"
