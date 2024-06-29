@@ -218,13 +218,13 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, CL.fixate)
 			self:PlaySound(args.spellId, "alarm")
-			myFixateList[args.destName] = true
+			myFixateList[args.sourceGUID] = true
 		end
 	end
 
 	function mod:FixateRemoved(args)
 		if self:Me(args.destGUID) then
-			myFixateList[args.destName] = nil
+			myFixateList[args.sourceGUID] = nil
 		end
 	end
 
