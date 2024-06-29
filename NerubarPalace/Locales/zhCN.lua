@@ -6,17 +6,17 @@ end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhCN")
 if L then
-	--L.grasp_from_beyond = "Tentacles"
+	L.grasp_from_beyond = "触手"
 	L.grasp_from_beyond_say = "触手"
-	--L.bloodcurdle = "Spreads"
-	--L.bloodcurdle_on_you = "Spread" -- Singular of Spread
-	--L.goresplatter = "Run Away"
+	L.bloodcurdle = "分散"
+	L.bloodcurdle_on_you = "分散" -- Singular of Spread
+	L.goresplatter = "跑开"
 end
 
 L = BigWigs:NewBossLocale("Sikran, Captain of the Sureki", "zhCN")
 if L then
-	--L.custom_on_repeating_phase_blades = "Repeating Phase Blades Say"
-	--L.custom_on_repeating_phase_blades_desc = "Repeating say messages for the Phase Blades ability using '1{rt1}' or '22{rt2}' or '333{rt3}' or '4444{rt4}' to make it clear in what order you will be hit."
+	--L.custom_on_repeating_phase_blades = "重复 相位之刃"
+	--L.custom_on_repeating_phase_blades_desc = "使用 '1{rt1}' 或 '22{rt2}' 或 '333{rt3}' 或 '4444{rt4}' 重复技能 相位之刃 的信息，明确你将被击中的顺序。"
 end
 
 L = BigWigs:NewBossLocale("Eggtender Ovi'nax", "zhCN")
