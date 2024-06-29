@@ -44,7 +44,7 @@ function mod:GetOptions()
 		-- Stage One: The Phantom Blade
 		{436867, "SAY", "SAY_COUNTDOWN"}, -- Assassination
 		assassinationMarker,
-		437343, -- Queensbane
+		{437343, "SAY_COUNTDOWN"}, -- Queensbane
 		439409, -- Dark Viscera
 		{438245, "PRIVATE"}, -- Twilight Massacre
 		437620, -- Nether Rift
@@ -62,6 +62,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage") -- XXX No Boss Frame Fix
 	self:Log("SPELL_CAST_SUCCESS", "Assassination", 436867, 442573, 440650) -- 3, 4, 5 targets
 	self:Log("SPELL_AURA_APPLIED", "AssassinationApplied", 436870)
 	self:Log("SPELL_AURA_REMOVED", "AssassinationRemoved", 436870)
@@ -140,6 +141,9 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
+			if not self:Easy() then
+				self:SayCountdown(args.spellId, 10)
+			end
 		end
 	end
 end
