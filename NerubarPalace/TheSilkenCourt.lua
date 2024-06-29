@@ -408,7 +408,7 @@ end
 do
 	function mod:StingingSwarmApplied(args)
 		if self:Me(args.destGUID) then
-			self:StackMessageMessage(438677, "blue", args.destName, args.amount or 1, 4)
+			self:StackMessage(438677, "blue", args.destName, args.amount or 1, 4)
 			self:PlaySound(438677, "warning")
 		end
 
