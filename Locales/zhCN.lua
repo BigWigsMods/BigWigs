@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.tempMessage = "您的计时条位置已重置，现在可以导入/导出配置文件。"
+L.tempMessage = "您的计时条位置已重置，现在可以使用新的导入/导出配置功能。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -63,7 +63,7 @@ L.expansionNames = {
 	"地心之战", -- The War Within
 }
 L.littleWigsExtras = {
-	["LittleWigs_Delves"] = "Delves",
+	["LittleWigs_Delves"] = "地下堡",
 	["LittleWigs_CurrentSeason"] = "当前赛季",
 }
 
@@ -200,11 +200,11 @@ L.color_import_countdown_desc = "导入 倒数 的颜色"
 L.colors_export_bars_desc = "导出 计时条 的颜色"
 L.colors_export_messages_desc = "导出 信息 的颜色"
 L.color_export_countdown_desc = "导出 倒数 的颜色"
---L.confirm_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
---L.confirm_import_addon = "The addon |cFF436EEE\"%s\"|r wants to automatically import new BigWigs settings that will overwrite the settings in your currently selected BigWigs profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
---L.confirm_import_addon_new_profile = "The addon |cFF436EEE\"%s\"|r wants to automatically create a new BigWigs profile called:\n\n|cFF33FF99\"%s\"|r\n\nAccepting this new profile will also swap to it."
---L.confirm_import_addon_edit_profile = "The addon |cFF436EEE\"%s\"|r wants to automatically edit one of your BigWigs profiles called:\n\n|cFF33FF99\"%s\"|r\n\nAccepting these changes will also swap to it."
-L.no_string_available = "没有保存要导入的导入字符串。首先导入一个字符串。"
+L.confirm_import = "您要导入的所选设置将覆盖您当前所选配置文件：\n\n|cFF33FF99\"%s\"|r 中的设置，\n\n您确定要这样做吗？"
+L.confirm_import_addon = "插件 |cFF436EEE\"%s\"|r 想要自动导入新的 BigWigs 设置，这些设置将覆盖您当前选择的 BigWigs 的设置：\n\n|cFF33FF99\"%s\"|r\n\n您确定要这样做吗？"
+L.confirm_import_addon_new_profile = "插件 |cFF436EEE\"%s\"|r 想自动创建一个名为：\n\n|cFF33FF99\"%s\"|r 的新 BigWigs 配置文件，\n\n 接受此新配置文件也会替换为它。"
+L.confirm_import_addon_edit_profile = "插件 |cFF436EEE\"%s\"|r 想要自动编辑您的一个名为：\n\n|cFF33FF99\"%s\"|r 的 BigWigs 配置文件，\n\n 接受这些更改也会替换为它。"
+L.no_string_available = "当前没有导入的字符串需要保存。首先导入一个字符串。"
 L.no_import_message = "未导入任何设置。"
 L.import_success = "导入：%s" -- 导入：计时条、信息颜色、倒数等所有设置
 L.imported_bar_positions = "计时条位置"
