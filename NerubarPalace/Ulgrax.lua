@@ -246,7 +246,7 @@ function mod:VenomousLash(args)
 	if venomousLashCount <= 3 then-- 3 per stage 1
 		local cd = venomousLashCount == 2 and 33 or 37
 		if self:Mythic() then
-			cd = stalkersWebbingCount == 2 and 25 or 28
+			cd = venomousLashCount == 2 and 25 or 28
 		end
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, venomousLashCount))
 	end
