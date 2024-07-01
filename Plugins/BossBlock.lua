@@ -576,12 +576,12 @@ do
 
 	local restoreObjectiveTracker = nil
 	function plugin:OnEngage(_, module)
-		if not module or not module:GetJournalID() or module.worldBoss then return end
+		if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
 		if next(activatedModules) then
-			activatedModules[module:GetJournalID()] = true
+			activatedModules[module] = true
 			return
 		else
-			activatedModules[module:GetJournalID()] = true
+			activatedModules[module] = true
 		end
 
 		if isTestBuild then -- Don't block emotes on WoW PTR
@@ -721,8 +721,8 @@ do
 	end
 
 	function plugin:BigWigs_OnBossDisable(_, module)
-		if not module or not module:GetJournalID() or module.worldBoss then return end
-		activatedModules[module:GetJournalID()] = nil
+		if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
+		activatedModules[module] = nil
 		if not next(activatedModules) then
 			activatedModules = {}
 			RestoreAll(self)
