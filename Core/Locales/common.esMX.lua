@@ -45,6 +45,7 @@ L.health = "Salud" -- The health of an NPC
 L.health_percent = "%d%% Salud" -- "10% Health" The health percentage of an NPC
 L.door_open = "Puerta abierta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech from an NPC
+L.threat = "Amenaza"
 
 --L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s durante %s seg" -- Spell for 10 seconds

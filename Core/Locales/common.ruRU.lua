@@ -45,6 +45,7 @@ L.health = "Здоровья" -- The health of an NPC
 L.health_percent = "%d%% Здоровья" -- "10% Health" The health percentage of an NPC
 L.door_open = "Дверь открыта" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Врата открыты" -- When a gate is open, usually after a speech from an NPC
+L.threat = "Угрозе"
 
 L.remaining = "Осталось: %d" -- 5 remaining
 L.duration = "%s для %s сек" -- Spell for 10 seconds
