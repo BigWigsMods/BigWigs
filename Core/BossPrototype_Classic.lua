@@ -368,6 +368,13 @@ function boss:SetAllowWin(bool)
 	end
 end
 
+--- Check if a module has a "win" condition.
+-- @return boolean
+-- @within Enable triggers
+function boss:GetAllowWin()
+	return self.allowWin and true or false
+end
+
 function boss:SetPrivateAuraSounds(opts)
 	for i = 1, #opts do
 		if type(opts[i]) ~= "table" then
