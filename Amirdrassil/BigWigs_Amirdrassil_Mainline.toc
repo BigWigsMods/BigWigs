@@ -1,4 +1,4 @@
-## Interface: 100207, 110000
+## Interface: 100207, 110000, 110002
 
 ## Title: BigWigs [|cffeda55fAmirdrassil, the Dream's Hope|r]
 ## Title-deDE: BigWigs [|cffeda55fAmirdrassil, Hoffnung des Traums|r]

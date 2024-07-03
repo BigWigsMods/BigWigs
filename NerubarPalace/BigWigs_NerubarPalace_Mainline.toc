@@ -1,4 +1,4 @@
-## Interface: 110000
+## Interface: 110000, 110002
 
 ## Title: BigWigs [|cffeda55fNerub'ar Palace|r]
 ## Title-deDE: BigWigs [|cffeda55fPalast der Nerub'ar|r]
