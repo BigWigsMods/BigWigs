@@ -115,7 +115,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
 
-1.15.2
+1.15.3
 1. Normal
 9. 40 Player
 148. 20 Player
@@ -132,6 +132,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 213. Infinite
 214. DNT - Internal only
 215. Normal
+226. 20 Player
 
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
