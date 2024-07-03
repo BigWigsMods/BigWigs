@@ -34,6 +34,7 @@ files["**/Loader.lua"].ignore = {
 	"113/SetRaidTarget",
 	"113/TimerTracker",
 	"113/UnitDetailedThreatSituation",
+	"113/UnitThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
 	"11[13]/BigWigsClassicDB",
@@ -329,6 +330,5 @@ globals = {
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
 	"UnitSex",
-	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 }

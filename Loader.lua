@@ -114,6 +114,7 @@ public.SendAddonMessage = SendAddonMessage
 public.SetRaidTarget = SetRaidTarget
 public.SendChatMessage = SendChatMessage
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
+public.UnitThreatSituation = UnitThreatSituation
 public.UnitGUID = UnitGUID
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax

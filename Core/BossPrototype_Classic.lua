@@ -1937,6 +1937,18 @@ do
 	end
 end
 
+do
+	local UnitThreatSituation = loader.UnitThreatSituation
+	--- Check if a player is the current threat target of a specific NPC, or any available NPC.
+	-- @string sourceUnit the unit token of the player you want the threat target status of
+	-- @string[opt] targetUnit the unit token of the specific NPC you want to check against, otherwise use nil to check all available NPCs
+	-- @return boolean
+	function boss:ThreatTarget(sourceUnit, targetUnit)
+		local status = UnitThreatSituation(sourceUnit, targetUnit)
+		return status == 2 or status == 3
+	end
+end
+
 --- Check if your talent tree role is HEALER.
 -- @string[opt="player"] unit check if the chosen role of another unit is set to HEALER.
 -- @return boolean
