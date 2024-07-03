@@ -33,36 +33,37 @@ local cataclysmicEntropyCount = 1
 
 local timersHeroic = {
 	{ -- Stage 1
-		[438801] = {8.0, 65.0, 0}, -- Call of the Swarm
-		[438218] = {15.0, 20.0, 27.0, 19.0, 0}, -- Piercing Strike
-		[440504] = {21.0, 36.0, 30.0, 31.0, 0}, -- Impaling Eruption
+		[438801] = {17.9, 65.0, 0}, -- Call of the Swarm
+		[438218] = {15.0, 20.0, 28.0, 18.0, 0}, -- Piercing Strike
+		[440504] = {20.9, 37.1, 28.9, 31.0, 0}, -- Impaling Eruption
 		[440246] = {43.5, 60.0, 0}, -- Reckless Charge
-		[438656] = {7.6, 31.8, 30.3, 30.3, 0}, -- Venomous Rain
-		[450045] = {15.2, 31.8, 28.8, 15.1, 15.2, 0}, -- Skittering Leap
-		[439838] = {24.2, 36.4, 0}, -- Web Bomb
+		[438656] = {7.4, 31.5, 31.5, 29.6, 0}, -- Venomous Rain
+		[450045] = {15.4, 31.9, 28.1, 15.7, 16.2, 0}, -- Skittering Leap
+		[439838] = {25.2, 36.0, 0}, -- Web Bomb
 	},
 	{ -- Stage 2
 		[440504] = {9.0, 40.0, 40.0, 0}, -- Impaling Eruption
-		[438218] = {14.0, 20.0, 20.0, 20.0, 20.0, 0}, -- Piercing Strike
-		[438801] = {31.1, 37.0, 0}, -- Call of the Swarm
-		[438677] = {39.0, 37.0, 0}, -- Stinging Swarm
-		[441782] = {14.2, 33.2, 34.1, 0}, -- Strands of Reality
+		[438218] = {15.0, 24.4, 15.5, 19.0, 21.0, 0}, -- Piercing Strike
+		[438801] = {31.0, 37.0, 0}, -- Call of the Swarm
+		[438677] = {41.0, 35.0, 0}, -- Stinging Swarm
+		[441782] = {14.2, 34.7, 32.8, 0}, -- Strands of Reality
 		[450483] = {27.2, 25.2, 26.0, 24.2, 0}, -- Void Step
 		[441626] = {32.2, 37.2, 36.2, 0}, -- Web Vortex
-		[450129] = {35.0, 37.2, 36.2, 0}, -- Entropic Desolation
-		[438355] = {55.5, 60.0, 0}, -- Cataclysmic Entropy
+		[450129] = {36.1, 36.4, 36.2, 0}, -- Entropic Desolation
+		[438355] = {55.6, 59.4, 0}, -- Cataclysmic Entropy
 	},
 	{ -- Stage 3
-		[443092] = {20.0, 111.0}, -- Spike Eruption
+		[443068] = {20.0, 111.0}, -- Spike Eruption
 		[442994] = {30.0, 89.0}, -- Unleashed Swarm
-		[438218] = {25.0, 20.0, 30.0, 20.0, 20.0, 20.0, 20.0}, -- Piercing Strike
-		[440246] = {59.5, 108.5}, -- Reckless Charge
-		[438677] = {93.1, 69.0}, -- Stinging Swarm
-		[450483] = {37.4, 51.0, 25.7, 23.2, 25.1, 9.1, 13.3, 2.9}, -- Void Step
-		[450129] = {45.3, 99.7}, -- Entropic Desolation
-		[441626] = {42.5, 99.8}, -- Web Vortex
-		[441782] = {28.5, 64.3, 56.4}, -- Strands of Reality
-		[438355] = {117.1, 73.5}, -- Cataclysmic Entropy
+		[438218] = {25.0, 20.0, 30.0, 21.0, 20.0, 20.4, 19.6}, -- Piercing Strike
+		[440246] = {59.2, 109.8}, -- Reckless Charge
+		[438677] = {93.0, 69.0}, -- Stinging Swarm
+		[451327] = {}, -- Raging Fury
+		[450483] = {37.4, 26.1, 25.0, 25.7, 23.2, 25.1, 9.1, 13.3, 2.9}, -- Void Step
+		[450129] = {45.6, 98.7}, -- Entropic Desolation
+		[441626] = {42.7, 98.7}, -- Web Vortex
+		[441782] = {28.6, 63.4, 58.4}, -- Strands of Reality
+		[438355] = {115.3, 76.4}, -- Cataclysmic Entropy
 	},
 }
 local timers = timersHeroic
@@ -126,7 +127,7 @@ function mod:GetOptions()
 
 		-- Stage Three: Unleashed Rage
 			-- Anub'arash
-			443092, -- Spike Eruption
+			443068, -- Spike Eruption
 			442994, -- Unleashed Swarm
 	}, {
 		[438218] = -29011, -- Stage 1
@@ -135,7 +136,7 @@ function mod:GetOptions()
 		[438677] = -29021, -- Stage 2
 		[441772] = "", -- boss split
 		[451277] = -29728, -- Intermission 2
-		[443092] = -29022, -- Stage 3
+		[443068] = -29022, -- Stage 3
 	}
 end
 
@@ -155,12 +156,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StingingSwarmApplied", 438708)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StingingSwarmApplied", 438708)
 	self:Log("SPELL_AURA_REMOVED", "StingingSwarmRemoved", 438708)
-	self:Log("SPELL_AURA_APPLIED", "StingingDeliriumApplied", 456245)
-	self:Log("SPELL_AURA_REMOVED", "StingingDeliriumRemoved", 456245)
+	self:Log("SPELL_AURA_APPLIED", "StingingDeliriumApplied", 456245, 456235) -- boss/player
+	self:Log("SPELL_AURA_REMOVED", "StingingDeliriumRemoved", 456245, 456235)
 
 	self:Log("SPELL_AURA_APPLIED", "SpikeStormApplied", 451277)
 	self:Log("SPELL_AURA_REMOVED", "SpikeStormRemoved", 451277)
-	self:Log("SPELL_CAST_SUCCESS", "SpikeEruption", 443092)
+	self:Log("SPELL_CAST_START", "SpikeEruption", 443068)
 	self:Log("SPELL_CAST_START", "RagingFury", 451327)
 	self:Log("SPELL_AURA_APPLIED", "EnragedFerocityApplied", 443598)
 	self:Log("SPELL_AURA_REMOVED", "EnragedFerocityRemoved", 443598)
@@ -273,6 +274,7 @@ end
 function mod:RecklessImpactApplied(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm") -- failed
+	self:Bar(args.spellId, 3)
 end
 
 function mod:RecklessImpactRemoved(args)
@@ -283,6 +285,7 @@ end
 function mod:EntangledApplied(args)
 	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "long") -- success
+	self:Bar(args.spellId, 7)
 end
 
 function mod:EntangledRemoved(args)
@@ -398,9 +401,7 @@ end
 function mod:StingingSwarm(args)
 	self:StopBar(CL.count:format(args.spellName, stingingSwarmCount))
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, stingingSwarmCount))
-	if self:Dispeller("magic") then
-		self:PlaySound(args.spellId, "alert") -- dispel
-	end
+	self:PlaySound(args.spellId, "alert") -- dispel
 	stingingSwarmCount = stingingSwarmCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][stingingSwarmCount], CL.count:format(args.spellName, stingingSwarmCount))
 end
@@ -436,18 +437,21 @@ end
 
 function mod:StingingDeliriumApplied(args)
 	if self:MobId(args.destGUID) == 217491 then -- Takazj
-		self:TargetMessage(args.spellId, "green", args.destName)
-		self:PlaySound(args.spellId, "long")
+		self:TargetMessage(456245, "green", args.destName)
+		self:PlaySound(456245, "long")
 	else
-		self:TargetMessage(args.spellId, "red", args.destName)
-		self:PlaySound(args.spellId, "alarm") -- fail
+		self:TargetMessage(456245, "red", args.destName)
+		self:PlaySound(456245, "alarm") -- fail
 	end
 end
 
 function mod:StingingDeliriumRemoved(args)
 	if self:MobId(args.destGUID) == 217491 then -- Takazj
-		self:Message(args.spellId, "green", CL.over:format(args.spellName))
-		self:PlaySound(args.spellId, "info")
+		self:Message(456245, "green", CL.over:format(args.spellName))
+		self:PlaySound(456245, "info")
+	elseif self:Me(args.destGUID) then
+		self:PersonalMessage(456245, "removed")
+		self:PlaySound(456245, "info")
 	end
 end
 
@@ -519,6 +523,8 @@ function mod:RagingFury(args)
 
 		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
 		self:PlaySound("stages", "long")
+
+		self:Bar(443598, 18) -- Enraged Ferocity
 	end
 end
 
@@ -557,7 +563,7 @@ do
 			recklessChargeCount = 1
 			stingingSwarmCount = 1
 
-			self:Bar(443092, timers[3][443092][1], CL.count:format(self:SpellName(443092), impalingEruptionCount)) -- Spike Eruption
+			self:Bar(443068, timers[3][443068][1], CL.count:format(self:SpellName(443068), impalingEruptionCount)) -- Spike Eruption
 			self:Bar(442994, timers[3][442994][1], CL.count:format(self:SpellName(442994), callOfTheSwarmCount)) -- Unleashed Swarm
 			self:Bar(438218, timers[3][438218][1], CL.count:format(self:SpellName(438218), piercingStrikeCount)) -- Piercing Strike
 			self:Bar(440246, timers[3][440246][1], CL.count:format(self:SpellName(440246), recklessChargeCount)) -- Reckless Charge
