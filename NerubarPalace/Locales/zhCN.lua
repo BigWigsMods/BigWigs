@@ -15,8 +15,8 @@ end
 
 L = BigWigs:NewBossLocale("Sikran, Captain of the Sureki", "zhCN")
 if L then
-	--L.custom_on_repeating_phase_blades = "重复 相位之刃"
-	--L.custom_on_repeating_phase_blades_desc = "使用 '1{rt1}' 或 '22{rt2}' 或 '333{rt3}' 或 '4444{rt4}' 重复技能 相位之刃 的信息，明确你将被击中的顺序。"
+	L.custom_on_repeating_phase_blades = "重复 相位之刃"
+	L.custom_on_repeating_phase_blades_desc = "使用 '1{rt1}' 或 '22{rt2}' 或 '333{rt3}' 或 '4444{rt4}' 重复技能 相位之刃 的信息，明确你将被击中的顺序。"
 end
 
 L = BigWigs:NewBossLocale("Eggtender Ovi'nax", "zhCN")
