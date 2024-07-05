@@ -108,7 +108,7 @@ BigWigs:AddColors("The Silken Court", {
 	[441772] = {"blue","purple"},
 	[441782] = "orange",
 	[442994] = "red",
-	[443092] = "orange",
+	[443068] = "orange",
 	[443598] = {"green","red"},
 	[449857] = "blue",
 	[450045] = "cyan",

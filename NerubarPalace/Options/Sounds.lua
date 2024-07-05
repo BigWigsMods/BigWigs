@@ -102,7 +102,7 @@ BigWigs:AddSounds("The Silken Court", {
 	[441626] = "alert",
 	[441782] = "alert",
 	[442994] = "alarm",
-	[443092] = "alarm",
+	[443068] = "alarm",
 	[443598] = {"alert","info"},
 	[449857] = "alarm",
 	[450129] = "warning",
