@@ -2524,12 +2524,25 @@ do
 		if icon == nil then icon = type(text) == "number" and text or key end
 		if type(player) == "table" then
 			self:TargetsMessage(key, color, player, #player, text, icon)
+			if sound then
+				if alwaysPlaySound then
+					self:PlaySound(key, sound)
+				else
+					for i = 1, #player do
+						local playerInTable = player[i]
+						if playerInTable == cpName then
+							self:PlaySound(key, sound)
+							break
+						end
+					end
+				end
+			end
 			twipe(player)
 		else
 			self:TargetMessage(key, color, player, text, icon)
-		end
-		if sound then
-			self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
+			if sound and (alwaysPlaySound or player == pName) then
+				self:PlaySound(key, sound, nil, player)
+			end
 		end
 	end
 
