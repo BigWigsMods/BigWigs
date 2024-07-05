@@ -69,7 +69,7 @@ L.next_ability = "下个技能" -- We don't know what ability will be next, we o
 -- Add related
 L.add_spawned = "小怪出现" -- singular
 L.adds_spawned = "小怪出现" -- plural
-L.adds_spawned_count = "%d |4增援:增援; 出现" -- 1 add spawned / 2 adds spawned
+L.adds_spawned_count = "%d 增援出现" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "小怪出现" -- singular
 L.adds_spawning = "小怪出现" -- plural
 L.spawned = "%s已刷新"
