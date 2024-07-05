@@ -1503,6 +1503,9 @@ do
 		[60] = 32825, -- Soul Cannon (TBC+ only)
 		[100] = 33119, -- Malister's Frost Wand (WotlK+ only)
 	}
+	for _,v in next, items do
+		C_Item.RequestLoadItemDataByID(v)
+	end
 	--- Check whether a hostile unit is within a specific range, check is performed based on specific item ranges.
 	-- Available Ranges: 10, 20, 30, 35, (TBC+: 40, 45, 60), (WotlK+: 100)
 	-- @string unit unit token or name

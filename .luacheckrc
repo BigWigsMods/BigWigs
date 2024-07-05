@@ -15,6 +15,7 @@ files["**/Loader.lua"].ignore = {
 	"113/C_ChatInfo",
 	"113/C_CVar",
 	"113/C_EventUtils",
+	"113/C_Item",
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
 	"113/C_Spell",
@@ -54,6 +55,7 @@ files["**/AutoRole.lua"].ignore = {
 	"113/UnitSetRole",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
+	"113/C_Item",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
@@ -65,6 +67,7 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
+	"113/C_Item",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
