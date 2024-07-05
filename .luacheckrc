@@ -253,6 +253,7 @@ globals = {
 	"GetDifficultyInfo",
 	"GetFramesRegisteredForEvent",
 	"GetInstanceInfo",
+	"GetItemCount",
 	"GetLocale",
 	"GetNumAddOns",
 	"GetPartyAssignment",
