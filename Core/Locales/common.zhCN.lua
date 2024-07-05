@@ -46,6 +46,7 @@ L.health_percent = "%d%% 血量" -- "10% Health" The health percentage of an NPC
 L.door_open = "门开了" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "门开了" -- When a gate is open, usually after a speech from an NPC
 L.threat = "威胁"
+L.energy = "能量"
 
 L.remaining = "剩余：%d" -- 5 remaining
 L.duration = "%s持续 %s 秒" -- Spell for 10 seconds

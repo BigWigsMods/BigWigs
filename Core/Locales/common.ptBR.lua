@@ -46,6 +46,7 @@ L.health_percent = "%d%% de Vida" -- "10% Health" The health percentage of an NP
 L.door_open = "Porta Aberta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Portão Aberto" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Ameaça"
+L.energy = "Energia"
 
 --L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s durante %s seg" -- Spell for 10 seconds

@@ -47,6 +47,7 @@ L.general = "Général" -- General settings, i.e. things that apply to normal, h
 --L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 --L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Menace"
+L.energy = "Énergie"
 
 --L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s pendant %s sec." -- Spell for 10 seconds

@@ -45,6 +45,7 @@ L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
 L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Threat"
+L.energy = "Energy"
 
 L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s for %s sec" -- Spell for 10 seconds

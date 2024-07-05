@@ -46,6 +46,7 @@ L.general = "일반" -- General settings, i.e. things that apply to normal, hero
 --L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
 --L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
 L.threat = "위협 수준"
+L.energy = "기력"
 
 --L.remaining = "%d remaining" -- 5 remaining
 L.duration = "%s %s초 남음" -- Spell for 10 seconds
