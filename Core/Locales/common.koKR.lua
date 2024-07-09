@@ -66,6 +66,7 @@ L.cancelled = "%s 취소됨" -- Spell Cancelled
 L.you_die = "당신은 죽습니다" -- You will die
 L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
 --L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+--L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
