@@ -149,7 +149,7 @@ L.nature = "Nature"
 L.arcane = "Arcanes"
 
 -- Autotalk
-L.autotalk = "Interaction automatique avec un PNJ."
+L.autotalk = "Interaction automatique avec un PNJ"
 L.autotalk_boss_desc = "Sélectionne automatiquement le diaglogue avec le PNJ qui lance la rencontre."
 L.autotalk_generic_desc = "Sélectionne automatiquement le diaglogue avec le PNJ qui vous fait progresser à la prochaine étape du donjon."
 
