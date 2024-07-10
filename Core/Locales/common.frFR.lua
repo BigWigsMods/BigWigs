@@ -72,7 +72,7 @@ L.landing = "%s atterri" -- "NPC_NAME is landing" Used when a flying NPC/dragon/
 -- Add related
 L.add_spawned = "Add apparu" -- singular
 L.adds_spawned = "Adds apparus" -- plural
-L.adds_spawned_count = "%d |4add:adds; apparus" -- 1 add spawned / 2 adds spawned
+L.adds_spawned_count = "%d |4add apparu:adds apparus;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Add en train d'apparaître" -- singular
 L.adds_spawning = "Adds en train d'apparaître" -- plural
 L.spawned = "%s apparu"
