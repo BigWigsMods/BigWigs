@@ -68,9 +68,9 @@ if L then
 	L.umbral_annihilation = "Annéantissement"
 	L.ebon_destruction = "Destruction d'ébène"
 
-	--L.wall_breaker = "Wall Breaker (Mythic)"
-	--L.wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked ({rt6}) and send a message in say chat. This is restricted to Mythic difficulty on stage 1."
-	--L.wall_breaker_message = "Wall Breaker"
+	L.wall_breaker = "Brise murs (Mythique)"
+	L.wall_breaker_desc = "Un joueur par ténèbres fulgurantes sera désigné comme briseur de murs. Ils seront marqués ({rt6}) et enverrons un message en dire. Cette mécanique est restreinte à la difficulté mythique, en première phase."
+	L.wall_breaker_message = "Brise murs"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "frFR")
@@ -80,7 +80,7 @@ if L then
 	L.emptiness_between_stars = "Vide interstellaire"
 	L.void_slash = "Frontal sur le Tank"
 
-	--L.ebon_might = "Adds Immune"
+	L.ebon_might = "Adds immunisés"
 end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "frFR")

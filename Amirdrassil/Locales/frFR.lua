@@ -111,11 +111,11 @@ if L then
 	L.eternal_firestorm_shortened_bar = "Tempête de feu [E]" -- E for Eternal
 	L.eternal_firestorm_message_full = "Tempête de feu [Éternelle]"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "Tempête de feu éternelle"
+	L.eternal_firestorm_swirl_desc = "Montre les timers lorsque les tempêtes de feu éternelles feront apparaître des piscines dans lesquelles vous ne devez pas rester."
 
-	--L.flame_orb = "Flame Orb"
-	--L.shadow_orb = "Shadow Orb"
+	L.flame_orb = "Orbes enflammées"
+	L.shadow_orb = "Orbes d'ombre"
 	--L.orb_message_flame = "You are Flame"
 	--L.orb_message_shadow = "You are Shadow"
 end
