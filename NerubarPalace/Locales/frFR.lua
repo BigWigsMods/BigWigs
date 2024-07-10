@@ -1,16 +1,16 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "frFR")
 if not L then return end
 if L then
-	--L.chunky_viscera_message = "Feed Boss! (Special Action Button)"
+	L.chunky_viscera_message = "Nourrissez le boss! (Bouton d'action spécial)"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "frFR")
 if L then
-	--L.grasp_from_beyond = "Tentacles"
-	--L.grasp_from_beyond_say = "Tentacles"
-	--L.bloodcurdle = "Spreads"
-	--L.bloodcurdle_on_you = "Spread" -- Singular of Spread
-	--L.goresplatter = "Run Away"
+	L.grasp_from_beyond = "Tentacule"
+	L.grasp_from_beyond_say = "Tentacules"
+	L.bloodcurdle = "Écartez-vous"
+	L.bloodcurdle_on_you = "Écartez-vous" -- Singular of Spread
+	L.goresplatter = "Courez"
 end
 
 L = BigWigs:NewBossLocale("Sikran, Captain of the Sureki", "frFR")
@@ -21,6 +21,6 @@ end
 
 L = BigWigs:NewBossLocale("Eggtender Ovi'nax", "frFR")
 if L then
-	--L.unstable_web_say = "Web"
-	--L.casting_infest_on_you = "Casting Infest on YOU!"
+	L.unstable_web_say = "Toiles"
+	L.casting_infest_on_you = "Lance Infester sur vous !"
 end
