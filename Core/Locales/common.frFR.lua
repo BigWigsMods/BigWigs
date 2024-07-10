@@ -11,8 +11,8 @@ L.other = "%s : %s"
 L.onboss = "%s sur le BOSS"
 L.buff_boss = "Buff sur le BOSS : %s"
 L.buff_other = "Buff sur %s : %s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.magic_buff_boss = "Buff magique sur BOSS : %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "Buff magique sur %s : %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s sur %s"
 L.stack = "%dx %s sur %s"
 L.stackyou = "%dx %s sur VOUS"
@@ -32,8 +32,8 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Phase %d"
 L.stage = "Phase %d"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "Vague %d" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "Vague %d sur %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Mode normal"
 L.heroic = "Mode héroïque"
 L.mythic = "Mode mythique"
@@ -42,10 +42,10 @@ L.active = "Actif" -- When a boss becomes active, after speech finishes
 L.ready = "Prêt" -- When a player is ready to do something
 L.dead = "Mort" -- When a player is dead
 L.general = "Général" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.health = "Health" -- The health of an NPC
---L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.health = "Vie" -- The health of an NPC
+L.health_percent = "%d%% vie" -- "10% Health" The health percentage of an NPC
+L.door_open = "Porte ouverte" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "Portail ouvert" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Menace"
 L.energy = "Énergie"
 
@@ -59,22 +59,22 @@ L.removed_after = "%s enlevé en %.1fs" -- "Spell removed after 1.1s" (s = secon
 L.incoming = "Arrivée |2 %s" -- Spell Incoming
 L.interrupted = "%s interrompu" -- Spell Interrupted
 L.interrupted_by = "%s interrompu par %s" -- Spell interrupted by Player
---L.interruptible = "Interruptible" -- when a spell is interruptible
+L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "Sans %s" -- No Spell
 L.intermission = "Intervalle"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s annulé" -- Spell Cancelled
 L.you_die = "Vous êtes mort" -- You will die
 L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
---L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.next_ability = "Prochaine compétence" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.landing = "%s atterri" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 
 -- Add related
 L.add_spawned = "Add apparu" -- singular
---L.adds_spawned = "Adds apparu" -- plural
---L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.adds_spawned = "Adds apparus" -- plural
+L.adds_spawned_count = "%d |4add:adds; apparus" -- 1 add spawned / 2 adds spawned
+L.add_spawning = "Add en train d'apparaître" -- singular
+L.adds_spawning = "Adds en train d'apparaître" -- plural
 L.spawned = "%s apparu"
 L.spawning = "Apparition |2 %s"
 L.next_add = "Prochain Add"
@@ -108,7 +108,7 @@ L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "Marquage %s"
 L.marker_player_desc = "Marque les joueurs affectés par %s avec %s. Nécessite d'être assistant ou chef de raid." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de raid." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Marque les PNJ affectés par '%s' avec %s. Requiert d'être assistant ou chef de groupe / raid." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "Lien"
@@ -149,14 +149,14 @@ L.nature = "Nature"
 L.arcane = "Arcanes"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "Interaction automatique avec un PNJ."
+L.autotalk_boss_desc = "Sélectionne automatiquement le diaglogue avec le PNJ qui lance la rencontre."
+L.autotalk_generic_desc = "Sélectionne automatiquement le diaglogue avec le PNJ qui vous fait progresser à la prochaine étape du donjon."
 
 -- Common ability name replacements
 L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
---L.heal_absorb = "Heal Absorb" -- Used for shield-like abilities that absorb healing only
---L.heal_absorbs = "Heal Absorbs" -- Plural of L.heal_absorb
+L.heal_absorb = "Soins absorbés" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Soins absorbés" -- Plural of L.heal_absorb
 L.tank_combo = "Combo Tank" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Lasers" -- Plural of L.lasers
