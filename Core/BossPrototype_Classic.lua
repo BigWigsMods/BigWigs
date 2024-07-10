@@ -124,7 +124,7 @@ local updateData = function(module)
 		local spent = 0
 		local talentTree = 0
 		for tree = 1, 3 do
-			local pointsSpent = select(5, GetTalentTabInfo(tree))
+			local pointsSpent = select(isClassicEra and 5 or 3, GetTalentTabInfo(tree))
 			if pointsSpent > spent then
 				spent = pointsSpent
 				talentTree = tree
