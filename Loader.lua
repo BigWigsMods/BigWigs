@@ -1334,10 +1334,10 @@ do
 		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
 		--ptBR = "Portuguese (ptBR)",
-		frFR = "French (frFR)",
+		--frFR = "French (frFR)",
 	}
 	local realms = {
-		[542] = locales.frFR, -- frFR
+		--[542] = locales.frFR, -- frFR
 		--[3207] = locales.ptBR, [3208] = locales.ptBR, [3209] = locales.ptBR, [3210] = locales.ptBR, [3234] = locales.ptBR, -- ptBR
 		--[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
 		--[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
