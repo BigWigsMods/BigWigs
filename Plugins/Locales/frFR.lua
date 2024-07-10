@@ -25,9 +25,9 @@ L.TOPLEFT = "En haut à gauche"
 L.BOTTOMRIGHT = "En bas à droite"
 L.BOTTOMLEFT = "En bas à gauche"
 L.CENTER = "Centre"
---L.customAnchorPoint = "Advanced: Custom anchor point"
---L.sourcePoint = "Source Point"
---L.destinationPoint = "Destination Point"
+L.customAnchorPoint = "Avancé : point d'ancrage personnalisé"
+L.sourcePoint = "Point source"
+L.destinationPoint = "Point destination"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -289,8 +289,8 @@ L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage d
 L.resetMessagesDesc = "Réinitialise toutes les options relatives aux messages, y compris la position des ancres des messages."
 L.toggleMessagesAnchorsBtnShow_desc = "Afficher les ancres pour permettre de déplacer les messages."
 
---L.testMessagesBtn = "Create Test Message"
---L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
+L.testMessagesBtn = "Créer un message test"
+L.testMessagesBtn_desc = "Créer un message pour vous, afin de tester les paramètres d'affichage actuels."
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
@@ -364,12 +364,12 @@ L.pull = "Pull"
 L.engageSoundTitle = "Jouer un son quand une rencontre de boss débute"
 L.pullStartedSoundTitle = "Jouer un son quand le délai de pull est lancé"
 L.pullFinishedSoundTitle = "Jouer un son quand le délai de pull est terminé"
---L.pullStartedBy = "Pull timer started by %s."
+L.pullStartedBy = "Délai de pull commencé par %s."
 L.pullStopped = "Délai de pull annulé par %s."
 L.pullStoppedCombat = "Délai de pull annulé car vous êtes entré en combat."
 L.pullIn = "Pull dans %d sec."
---L.sendPull = "Sending a pull timer to your group."
---L.wrongPullFormat = "Invalid pull timer. A correct example is: /pull 5"
+L.sendPull = "Envoi d'un signal de pull à votre groupe."
+L.wrongPullFormat = "Durée de pull invalide. Un exemple corret est : /pull 5"
 L.countdownBegins = "Début du compte à rebours"
 L.countdownBegins_desc = "Choisissez combien de temps il doit rester sur le délai de pull (en secondes) pour que le compte à rebours commence."
 
@@ -399,7 +399,7 @@ L.Long = "Long"
 L.Warning = "Avertissement"
 L.onyou = "Un sort, amélioration ou affaiblissement est sur vous"
 L.underyou = "Vous devez bouger hors d'un sort qui se trouve en dessous de vous"
---L.privateaura = "Whenever a 'Private Aura' is on you"
+L.privateaura = "Lorsqu'une 'aura privée' est sur vous"
 
 L.sound = "Son"
 
