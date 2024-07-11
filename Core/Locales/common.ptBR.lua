@@ -179,6 +179,7 @@ L.charge = "Investida" -- When a boss select a new target and charges at it quic
 L.full_energy = "Energia Cheia" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "Enfraquecido" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.immune = "Imune" -- When a boss becomes immune to all damage and you can no longer hurt it
+L.stunned = "Atordoado" -- When a boss becomes stunned and cannot cast abilities or move
 L.pool = "Poça" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Poças" -- Plural of L.pool
 L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon

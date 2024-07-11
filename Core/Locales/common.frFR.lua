@@ -180,6 +180,7 @@ L.charge = "Charge" -- When a boss select a new target and charges at it quickly
 L.full_energy = "Energie pleine" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "Affaibli" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.immune = "Insensible" -- When a boss becomes immune to all damage and you can no longer hurt it
+L.stunned = "Etourdi" -- When a boss becomes stunned and cannot cast abilities or move
 L.pool = "Flaque" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Flaques" -- Plural of L.pool
 L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
