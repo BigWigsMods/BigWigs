@@ -4,6 +4,9 @@ codes = true
 exclude_files = {
 	"**/Libs",
 }
+files["**/Init_Vanilla.lua"].ignore = {
+	"113/C_Seasons",
+}
 files["**/Loader.lua"].ignore = {
 	"11[13]/BigWigsBarsReset", -- XXX temp
 
@@ -18,7 +21,6 @@ files["**/Loader.lua"].ignore = {
 	"113/C_Item",
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
-	"113/C_Seasons",
 	"113/C_Spell",
 	"113/EnableAddOn",
 	"113/GetAddOnInfo",
