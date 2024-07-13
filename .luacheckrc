@@ -18,6 +18,7 @@ files["**/Loader.lua"].ignore = {
 	"113/C_Item",
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
+	"113/C_Seasons",
 	"113/C_Spell",
 	"113/EnableAddOn",
 	"113/GetAddOnInfo",
