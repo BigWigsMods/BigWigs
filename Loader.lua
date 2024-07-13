@@ -119,6 +119,7 @@ public.UnitGUID = UnitGUID
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitName = UnitName
+public.isSeasonOfDiscovery = C_Seasons and C_Seasons.GetActiveSeason() or false
 public.isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
@@ -358,6 +359,7 @@ do
 		--[349] = lw_c, -- Maraudon
 		--[389] = lw_c, -- Ragefire Chasm
 		--[429] = lw_c, -- Dire Maul
+		[2784] = public.isSeasonOfDiscovery and lw_c or nil, -- Demon Fall Canyon [Classic Season of Discovery Only]
 		--[[ LittleWigs: The Burning Crusade ]]--
 		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
 		[542] = lw_bc, -- Hellfire Citadel: The Blood Furnace
