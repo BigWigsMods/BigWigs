@@ -27,6 +27,7 @@ do
 	public.isRetail = tbl.isRetail
 	public.isClassic = tbl.isClassic
 	public.isVanilla = tbl.isVanilla
+	public.isSeasonOfDiscovery = tbl.isSeasonOfDiscovery
 	public.isTBC = tbl.isTBC
 	public.isWrath = tbl.isWrath
 	public.isCata = tbl.isCata
@@ -358,6 +359,7 @@ do
 		--[349] = lw_c, -- Maraudon
 		--[389] = lw_c, -- Ragefire Chasm
 		--[429] = lw_c, -- Dire Maul
+		[2784] = public.isSeasonOfDiscovery and lw_c or nil, -- Demon Fall Canyon [Classic Season of Discovery Only]
 		--[[ LittleWigs: The Burning Crusade ]]--
 		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
 		[542] = lw_bc, -- Hellfire Citadel: The Blood Furnace
