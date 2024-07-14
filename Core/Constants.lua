@@ -15,7 +15,7 @@ local GetSpellDescription, GetSpellName, GetSpellTexture = BigWigsLoader.GetSpel
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 local C_EncounterJournal_GetSectionInfo = BigWigsLoader.isCata and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
-end or C_EncounterJournal and C_EncounterJournal.GetSectionInfo or function(key)
+end or BigWigsLoader.isRetail and C_EncounterJournal and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
 
