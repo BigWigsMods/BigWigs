@@ -1677,13 +1677,15 @@ do
 	local _, addonTable = ...
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
 	-- Use BigWigsAPI:ImportProfileString(addonName, profileString)
-	function options:SaveImportStringDataFromAddOn(addonName, profileString, customProfileName)
+	function options:SaveImportStringDataFromAddOn(addonName, profileString, customProfileName, force)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
 		if customProfileName and (type(customProfileName) ~= "string" or #customProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original
 		local frame = acd.popup
-		frame:Show()
+		if not force then
+			frame:Show()
+		end
 		local profileName = BigWigs.db:GetCurrentProfile()
 		if not customProfileName or profileName == customProfileName then
 			customProfileName = nil
@@ -1704,27 +1706,34 @@ do
 				frame.text:SetText(L.confirm_import_addon_new_profile:format(addonName, customProfileName))
 			end
 		end
-		local height = 61 + frame.text:GetHeight()
-		frame:SetHeight(height)
-
-		frame.accept:ClearAllPoints()
-		frame.accept:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", -6, 16)
-		frame.cancel:Show()
-
-		frame.accept:SetScript("OnClick", function(self)
-			frame:Hide()
-			self:SetScript("OnClick", nil)
-			frame.cancel:SetScript("OnClick", nil)
+		if force then
 			if customProfileName then
 				BigWigs.db:SetProfile(customProfileName)
 			end
 			addonTable.SaveImportStringDataFromAddOn(profileString)
-		end)
-		frame.cancel:SetScript("OnClick", function(self)
-			frame:Hide()
-			self:SetScript("OnClick", nil)
-			frame.accept:SetScript("OnClick", nil)
-		end)
+		else
+			local height = 61 + frame.text:GetHeight()
+			frame:SetHeight(height)
+
+			frame.accept:ClearAllPoints()
+			frame.accept:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", -6, 16)
+			frame.cancel:Show()
+
+			frame.accept:SetScript("OnClick", function(self)
+				frame:Hide()
+				self:SetScript("OnClick", nil)
+				frame.cancel:SetScript("OnClick", nil)
+				if customProfileName then
+					BigWigs.db:SetProfile(customProfileName)
+				end
+				addonTable.SaveImportStringDataFromAddOn(profileString)
+			end)
+			frame.cancel:SetScript("OnClick", function(self)
+				frame:Hide()
+				self:SetScript("OnClick", nil)
+				frame.accept:SetScript("OnClick", nil)
+			end)
+		end
 	end
 end
 

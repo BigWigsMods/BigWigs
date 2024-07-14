@@ -129,12 +129,12 @@ end
 do
 	local _, tbl = ...
 	-- A custom profile name is completely optional
-	function API:ImportProfileString(addonName, profileString, customProfileName)
+	function API:ImportProfileString(addonName, profileString, customProfileName, force)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
 		if customProfileName and (type(customProfileName) ~= "string" or #customProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		tbl.LoadCoreAndOptions()
-		BigWigsOptions:SaveImportStringDataFromAddOn(addonName, profileString, customProfileName)
+		BigWigsOptions:SaveImportStringDataFromAddOn(addonName, profileString, customProfileName, force)
 	end
 end
 
