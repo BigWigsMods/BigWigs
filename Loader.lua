@@ -266,14 +266,16 @@ do
 		[-947] = public.isClassic and c or bfa, -- Azeroth (Fake Menu)
 
 		--[[ BigWigs: Classic ]]--
-		[48] = c, -- Blackfathom Deeps [Classic Season of Discovery Only]
-		[90] = c, -- Gnomeregan [Classic Season of Discovery Only]
-		[109] = c, -- Sunken Temple [Classic Season of Discovery Only]
-		[309] = c, -- Zul'Gurub [Classic Only]
+		[48] = public.isSeasonOfDiscovery and c or nil, -- Blackfathom Deeps [Classic Season of Discovery Only]
+		[90] = public.isSeasonOfDiscovery and c or nil, -- Gnomeregan [Classic Season of Discovery Only]
+		[109] = public.isSeasonOfDiscovery and c or nil, -- Sunken Temple [Classic Season of Discovery Only]
+		[309] = c, -- Zul'Gurub [Classic Only, dungeon has a different ID]
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
+		[2789] = public.isSeasonOfDiscovery and c or nil, -- The Tainted Scar (Lord Kazzak) [Classic Season of Discovery Only]
+		[2791] = public.isSeasonOfDiscovery and c or nil, -- Storm Cliffs (Azuregos) [Classic Season of Discovery Only]
 		--[[ BigWigs: The Burning Crusade ]]--
 		[-101] = bc, -- Outland (Fake Menu)
 		[-1945] = bc, -- Outland (Fake Menu) [Classic Only]
