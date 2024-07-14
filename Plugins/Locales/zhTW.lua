@@ -25,9 +25,9 @@ L.TOPLEFT = "左上"
 L.BOTTOMRIGHT = "右下"
 L.BOTTOMLEFT = "左下"
 L.CENTER = "中"
---L.customAnchorPoint = "Advanced: Custom anchor point"
---L.sourcePoint = "Source Point"
---L.destinationPoint = "Destination Point"
+L.customAnchorPoint = "進階：自定錨點"
+L.sourcePoint = "基準錨點"  -- 中文似乎沒有point和relativePoint的正式譯名?
+L.destinationPoint = "相對錨點"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -88,7 +88,7 @@ L.testBarsBtn_desc = "創建一個測試計時條以測試當前顯示設定。"
 L.toggleAnchorsBtnShow = "顯示移動錨點"
 L.toggleAnchorsBtnHide = "隱藏移動錨點"
 L.toggleAnchorsBtnHide_desc = "隱藏所有移動錨點，並鎖定所有元素的位置。"
---L.toggleBarsAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars."
+L.toggleBarsAnchorsBtnShow_desc = "顯示所有移動錨點，使你可以移動計時條。"
 
 L.nameplateBars = "名條計時條"
 L.nameplateAutoWidth = "匹配名條寬度"
@@ -399,7 +399,7 @@ L.Long = "長響"
 L.Warning = "警報"
 L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"
 L.underyou = "當你需要離開一個地板技能的範圍時（跑位）"
---L.privateaura = "Whenever a 'Private Aura' is on you"
+L.privateaura = "當私有光環施放在你身上時（點名）"
 
 L.sound = "音效"
 
