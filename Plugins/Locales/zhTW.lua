@@ -26,8 +26,8 @@ L.BOTTOMRIGHT = "右下"
 L.BOTTOMLEFT = "左下"
 L.CENTER = "中"
 L.customAnchorPoint = "進階：自定錨點"
---L.sourcePoint = "Source Point"
---L.destinationPoint = "Destination Point"
+L.sourcePoint = "基準錨點"  -- 中文似乎沒有point和relativePoint的正式譯名?
+L.destinationPoint = "相對錨點"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
