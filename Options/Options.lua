@@ -1677,31 +1677,32 @@ do
 	local _, addonTable = ...
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
 	-- Use BigWigsAPI:ImportProfileString(addonName, profileString)
-	function options:SaveImportStringDataFromAddOn(addonName, profileString, customProfileName)
+	function options:SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
-		if customProfileName and (type(customProfileName) ~= "string" or #customProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
+		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
+		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original
 		local frame = acd.popup
 		frame:Show()
 		local profileName = BigWigs.db:GetCurrentProfile()
-		if not customProfileName or profileName == customProfileName then
-			customProfileName = nil
+		if not optionalCustomProfileName or profileName == optionalCustomProfileName then
+			optionalCustomProfileName = nil
 			frame.text:SetText(L.confirm_import_addon:format(addonName, profileName))
 		else
 			local profiles = BigWigs.db:GetProfiles()
 			local found = false
 			for i = 1, #profiles do
 				local name = profiles[i]
-				if name == customProfileName then
+				if name == optionalCustomProfileName then
 					found = true
 					break
 				end
 			end
 			if found then
-				frame.text:SetText(L.confirm_import_addon_edit_profile:format(addonName, customProfileName))
+				frame.text:SetText(L.confirm_import_addon_edit_profile:format(addonName, optionalCustomProfileName))
 			else
-				frame.text:SetText(L.confirm_import_addon_new_profile:format(addonName, customProfileName))
+				frame.text:SetText(L.confirm_import_addon_new_profile:format(addonName, optionalCustomProfileName))
 			end
 		end
 		local height = 61 + frame.text:GetHeight()
@@ -1715,15 +1716,21 @@ do
 			frame:Hide()
 			self:SetScript("OnClick", nil)
 			frame.cancel:SetScript("OnClick", nil)
-			if customProfileName then
-				BigWigs.db:SetProfile(customProfileName)
+			if optionalCustomProfileName then
+				BigWigs.db:SetProfile(optionalCustomProfileName)
 			end
 			addonTable.SaveImportStringDataFromAddOn(profileString)
+			if optionalCallbackFunction then
+				optionalCallbackFunction(true)
+			end
 		end)
 		frame.cancel:SetScript("OnClick", function(self)
 			frame:Hide()
 			self:SetScript("OnClick", nil)
 			frame.accept:SetScript("OnClick", nil)
+			if optionalCallbackFunction then
+				optionalCallbackFunction(false)
+			end
 		end)
 	end
 end
