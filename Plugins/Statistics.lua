@@ -36,6 +36,7 @@ local difficultyTable = BigWigsLoader.isRetail and {
 	--[176] = "normal", -- 25 Player (sunwell)
 	[198] = "normal", -- Normal [10] (Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "normal", -- Normal [20] (Sunken Temple - Classic Season of Discovery)
+	[226] = "SOD", -- XXX verify or remove
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
@@ -50,7 +51,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-11.0.0
+11.0.2
 1. Normal
 2. Heroic
 3. 10 Player
@@ -83,7 +84,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 45. PvP
 147. Normal
 149. Heroic
-150. Normal
+150. Normal Scaling (1-5)
 151. Looking For Raid
 152. Visions of N'Zoth
 153. Teeming Island
