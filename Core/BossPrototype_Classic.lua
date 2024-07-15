@@ -287,7 +287,6 @@ local bossNames = setmetatable({}, {__index =
 --- Register the module to enable on mob id.
 -- @number ... Any number of mob ids
 function boss:RegisterEnableMob(...)
-	self.enableMobs = {}
 	core:RegisterEnableMob(self, ...)
 end
 
@@ -1397,7 +1396,7 @@ end
 function boss:EncounterEnd(_, id, name, diff, size, status)
 	if self:GetEncounterID() == id and self:IsEnabled() then
 		if status == 1 then
-			if self:GetJournalID() or self.allowWin then
+			if self:GetJournalID() or self:GetAllowWin() then
 				self:Win() -- Official boss module
 			else
 				self:Disable() -- Custom external boss module

@@ -402,6 +402,7 @@ do
 			local m = setmetatable({
 				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
 				moduleName = moduleName,
+				enableMobs = {},
 
 				-- Embed callback handler
 				RegisterMessage = loader.RegisterMessage,
