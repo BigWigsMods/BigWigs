@@ -64,12 +64,12 @@ BigWigs:AddColors("Rasha'nan", {
 	[458067] = {"blue","purple"},
 })
 
-BigWigs:AddColors("Eggtender Ovi'nax", {
+BigWigs:AddColors("Broodtwister Ovi'nax", {
 	[441362] = {"blue","purple"},
 	[442250] = "blue",
-	[442257] = "red",
+	[442257] = {"blue","red"},
 	[442432] = "cyan",
-	[442526] = "orange",
+	[442526] = {"blue","orange","yellow"},
 	[442660] = "blue",
 	[442799] = "blue",
 	[446349] = {"blue","yellow"},

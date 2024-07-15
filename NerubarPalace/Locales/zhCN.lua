@@ -19,8 +19,13 @@ if L then
 	L.custom_on_repeating_phase_blades_desc = "使用 '1{rt1}' 或 '22{rt2}' 或 '333{rt3}' 或 '4444{rt4}' 重复技能 相位之刃 的信息，明确你将被击中的顺序。"
 end
 
-L = BigWigs:NewBossLocale("Eggtender Ovi'nax", "zhCN")
+L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhCN")
 if L then
-	L.unstable_web_say = "网"
-	L.casting_infest_on_you = "对你施放感染！"
+	L.sticky_web_say = "网"
+	L.infest_message = "对你施放感染！"
+	--L.infest_say = "Parasites"
+	--L.experimental_dosage_say = "Soak Egg"
+	--L.unstable_infusion = "Swirls"
+	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
+	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
 end

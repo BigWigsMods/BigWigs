@@ -62,16 +62,16 @@ BigWigs:AddSounds("Rasha'nan", {
 	[458067] = "alarm",
 })
 
-BigWigs:AddSounds("Eggtender Ovi'nax", {
+BigWigs:AddSounds("Broodtwister Ovi'nax", {
 	[441362] = {"alarm","warning"},
 	[442250] = "alarm",
-	[442257] = "warning",
+	[442257] = {"alarm","warning"},
 	[442432] = "long",
-	[442526] = "alert",
+	[442526] = {"alert","warning"},
 	[442660] = "alarm",
 	[442799] = "alarm",
 	[446349] = "warning",
-	[446351] = "info",
+	[446351] = "alarm",
 	[446700] = "alarm",
 	[450661] = "alarm",
 	[458212] = "alarm",

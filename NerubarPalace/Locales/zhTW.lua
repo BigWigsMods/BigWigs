@@ -19,8 +19,13 @@ if L then
 	L.custom_on_repeating_phase_blades_desc = "以 「1{rt1}」、「22{rt2}」、「333{rt3}」和「4444{rt4}」持續喊話，提示你被相位之刃擊中的順序。"
 end
 
-L = BigWigs:NewBossLocale("Eggtender Ovi'nax", "zhTW")
+L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhTW")
 if L then
-	L.unstable_web_say = "蛛網"
-	L.casting_infest_on_you = "正在對你施放寄生！"
+	L.sticky_web_say = "蛛網"
+	L.infest_message = "正在對你施放寄生！"
+	--L.infest_say = "Parasites"
+	--L.experimental_dosage_say = "Soak Egg"
+	--L.unstable_infusion = "Swirls"
+	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
+	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
 end
