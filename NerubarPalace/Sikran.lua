@@ -21,40 +21,27 @@ local shatteringSweepCount = 1
 local captainsFlourishCount = 1
 local rainOfArrowsCount = 1
 
-local timersHeroic = {
-	[439511] = {7.0, 22.3, 22.0, 23.1, 26.8, 22.0, 22.0, 22.3, 32.1, 23.2, 23.2, 22.4, 29.5}, -- Captain's Flourish
-	[433517] = {14.5, 45.5, 50.0, 43.0, 55.5, 43.0, 55.5}, -- Phase Blades
-	[442428] = {42.7, 40.2, 56.2, 38.3, 60.1, 39.7}, -- Decimate
-	[439559] = {35.6, 52.3, 42.8, 54.2, 44.2, 53.1}, -- Rain of Arrows
+local timersHeroic = { -- 5:22
+	[439511] = {6.2, 23.2, 23.1, 22.7, 27.2, 23.1, 22.8, 23.1, 30.4, 23.1, 23.1, 23.1, 27.9, 22.7}, -- Captain's Flourish
+	[433517] = {17.8, 45.5, 51.1, 42.3, 57.1, 42.5, 54.7}, -- Phase Blades
+	[442428] = {42.5, 38.5, 59.7, 39.0, 58.3, 38.9}, -- Decimate
+	[439559] = {35.4, 53.2, 43.0, 53.2, 44.9, 53.5}, -- Rain of Arrows
 }
-local timersMythic = {
-	[439511] = {6.1, 25.4, 25.6, 25.6, 18.3, 28.0, 27.2, 28.0, 15.8, 28.0, 28.0, 28.2, 13.4, 28.0, 28.1, 28.0, 13.3, 27.9}, -- Captain's Flourish
-	[433517] = {16.6, 28.1, 28.1, 40.3, 28.2, 28.2, 42.6, 28.0, 28.2, 41.5, 28.1, 28.1, 41.3, 27.9}, -- Phase Blades
-	[442428] = {50.6, 27.7, 74.1, 28.1, 70.6, 28.2, 69.5, 28.0}, -- Decimate
-	[439559] = {22.9, 42.8, 53.7, 27.1, 26.3, 45.7, 26.8, 26.3, 44.5, 26.8, 26.4, 44.2, 26.7}, -- Rain of Arrows
+local timersMythic = { -- 8:08
+	[439511] = {6.9, 25.8, 25.1, 25.7, 18.7, 28.1, 28.0, 27.1, 15.8, 28.1, 28.1, 27.3, 15.3, 28.2, 27.1, 28.0, 15.4, 28.1, 27.2, 28.0}, -- Captain's Flourish
+	[433517] = {16.5, 27.3, 27.2, 42.1, 28.1, 28.2, 43.9, 28.2, 28.1, 41.6, 27.9, 28.0, 43.8, 28.0, 28.1}, -- Phase Blades
+	[442428] = {51.2, 26.6, 75.6, 27.1, 72.0, 28.1, 70.8, 27.9, 70.7, 28.0}, -- Decimate
+	[439559] = {22.8, 42.3, 55.5, 26.8, 27.1, 45.1, 27.0, 26.6, 45.5, 26.7, 26.7, 45.0, 26.9, 26.8}, -- Rain of Arrows
 }
 local timers = mod:Mythic() and timersMythic or timersHeroic
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-	L.custom_on_repeating_phase_blades = "Repeating Phase Blades Say"
-	L.custom_on_repeating_phase_blades_desc = "Repeating say messages for the Phase Blades ability using '1{rt1}' or '22{rt2}' or '333{rt3}' or '4444{rt4}' to make it clear in what order you will be hit."
-end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local phaseBladesMarker = mod:AddMarkerOption(false, "player", 1, 433517, 1, 2, 3, 4) -- Phase Blades
 function mod:GetOptions()
 	return {
 		{433517, "SAY", "ME_ONLY_EMPHASIZE"}, -- Phase Blades
-			phaseBladesMarker,
-			"custom_on_repeating_phase_blades",
 			434860, -- Cosmic Wound
 		{442428, "SAY", "SAY_COUNTDOWN"}, -- Decimate
 			459273, -- Cosmic Shards
@@ -71,8 +58,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "PhaseBladesApplied", 433517)
-	self:Log("SPELL_AURA_REMOVED", "PhaseBladesRemoved", 433517)
+	self:Log("SPELL_CAST_START", "PhaseBlades", 433519)
 	self:Log("SPELL_AURA_APPLIED", "CosmicWoundApplied", 434860)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Decimate Targetting
 	self:Log("SPELL_CAST_START", "Decimate", 442428)
@@ -108,43 +94,11 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	local playerList = {}
-	local sayTimer = nil
-	local sayMessages = {"1{rt1}","22{rt2}","333{rt3}","4444{rt4}"}
-	function mod:PhaseBladesApplied(args)
-		if args.time - prev > 10 then
-			prev = args.time
-			playerList = {}
-			self:StopBar(CL.count:format(CL.charge, phaseBladesCount))
-			self:Message(args.spellId, "cyan", CL.count:format(CL.charge, phaseBladesCount))
-			phaseBladesCount = phaseBladesCount + 1
-			self:CDBar(args.spellId, timers[args.spellId][phaseBladesCount], CL.count:format(CL.charge, phaseBladesCount))
-		end
-		local count = #playerList+1
-		playerList[count] = args.destName
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, CL.count_icon:format(CL.charge, count, count))
-			self:PlaySound(args.spellId, "warning")
-			local msg = sayMessages[count]
-			self:Say(args.spellId, msg, true, msg) -- No need to say "Charge on X", this is faster communication for players
-			if self:GetOption("custom_on_repeating_phase_blades") then
-				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, msg, true)
-			end
-		end
-		self:CustomIcon(phaseBladesMarker, args.destName, count)
-	end
-
-	function mod:PhaseBladesRemoved(args)
-		if self:Me(args.destGUID) then
-			if sayTimer then
-				self:CancelTimer(sayTimer)
-				sayTimer = nil
-			end
-			self:CustomIcon(phaseBladesMarker, args.destName)
-		end
-	end
+function mod:PhaseBlades(args)
+	self:StopBar(CL.count:format(CL.charge, phaseBladesCount))
+	self:Message(433517, "orange", CL.count:format(CL.charge, phaseBladesCount))
+	phaseBladesCount = phaseBladesCount + 1
+	self:CDBar(433517, timers[433517][phaseBladesCount], CL.count:format(CL.charge, phaseBladesCount))
 end
 
 function mod:CosmicWoundApplied(args)

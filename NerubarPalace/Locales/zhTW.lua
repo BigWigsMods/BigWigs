@@ -13,12 +13,6 @@ if L then
 	L.goresplatter = "遠離"
 end
 
-L = BigWigs:NewBossLocale("Sikran, Captain of the Sureki", "zhTW")
-if L then
-	L.custom_on_repeating_phase_blades = "重覆相位之刃喊話"
-	L.custom_on_repeating_phase_blades_desc = "以 「1{rt1}」、「22{rt2}」、「333{rt3}」和「4444{rt4}」持續喊話，提示你被相位之刃擊中的順序。"
-end
-
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhTW")
 if L then
 	L.sticky_web_say = "蛛網"

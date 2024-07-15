@@ -13,12 +13,6 @@ if L then
 	--L.goresplatter = "Run Away"
 end
 
-L = BigWigs:NewBossLocale("Sikran, Captain of the Sureki", "itIT")
-if L then
-	--L.custom_on_repeating_phase_blades = "Repeating Phase Blades Say"
-	--L.custom_on_repeating_phase_blades_desc = "Repeating say messages for the Phase Blades ability using '1{rt1}' or '22{rt2}' or '333{rt3}' or '4444{rt4}' to make it clear in what order you will be hit."
-end
-
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "itIT")
 if L then
 	--L.sticky_web_say = "Web"
