@@ -40,7 +40,6 @@ end
 
 function mod:GetOptions()
 	return {
-		-- Phase One: The Black Blood
 		444363, -- Gruesome Disgorge
 		443612, -- Baneful Shift
 		445570, -- Unseeming Blight
@@ -51,15 +50,16 @@ function mod:GetOptions()
 		{443042, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Grasp From Beyond
 		445518, -- Black Blood
 		438696, -- Black Sepsis
-		-- Phase Two: The Unseeming
+
+		-- The Unseeming
 		451288, -- Black Bulwark
 		-- {445016, "TANK"}, -- Spectral Slam
 		-- 445174, -- Manifest Horror
+
 		-- Mythic
 		452237, -- Bloodcurdle
 	},{
-		[444363] = -29061, -- Phase One: The Black Blood
-		[451288] = -29068, -- Phase Two: The Unseeming
+		[451288] = 462306, -- The Unseeming
 		[452237] = "mythic",
 	},{
 		[444363] = CL.frontal_cone, -- Gruesome Disgorge (Frontal Cone)
