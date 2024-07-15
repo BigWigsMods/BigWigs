@@ -422,6 +422,8 @@ function mod:EasySpellSelection()
 	elseif currentAltar == "Fire" or currentAltar == "Frost" then
 		key = alterSpellIdMap[currentAltar]["damage"]
 		text = L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"])
+	else
+		return -- Tanking it in the middle of the room in LFR..?
 	end
 
 	self:StopBar(CL.count:format(text, avoidCount))
