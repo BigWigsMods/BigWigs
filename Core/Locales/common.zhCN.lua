@@ -69,16 +69,16 @@ L.next_ability = "下个技能" -- We don't know what ability will be next, we o
 L.landing = "%s 正在着陆" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 
 -- Add related
-L.add_spawned = "小怪出现" -- singular
-L.adds_spawned = "小怪出现" -- plural
+L.add_spawned = "增援出现" -- singular
+L.adds_spawned = "增援出现" -- plural
 L.adds_spawned_count = "%d 增援出现" -- 1 add spawned / 2 adds spawned
-L.add_spawning = "小怪出现" -- singular
-L.adds_spawning = "小怪出现" -- plural
+L.add_spawning = "增援出现" -- singular
+L.adds_spawning = "增援出现" -- plural
 L.spawned = "%s已刷新"
 L.spawning = "%s出现"
-L.next_add = "下一波小怪"
-L.add_killed = "小怪已击杀（%d/%d）"
-L.add_remaining = "小怪已击杀，剩余 %d"
+L.next_add = "下一波增援"
+L.add_killed = "增援已击杀（%d/%d）"
+L.add_remaining = "增援已击杀，剩余 %d"
 L.add = "增援"
 L.adds = "增援"
 L.big_add = "大型增援" -- singular
