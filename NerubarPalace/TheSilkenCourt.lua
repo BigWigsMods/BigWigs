@@ -27,9 +27,45 @@ local venomousRainCount = 1
 local webBombCount = 1
 local strandsOfRealityCount = 1
 local cataclysmicEntropyCount = 1
+local intermissionSpellCount = 1
 
--- local stingingSwarmTargets = {}
--- local stingingSwarmMarks = {5, 4, 3, 2, 1}
+local SKIP_CAST_THRESHOLD = 2
+local checkTimer = nil
+
+local timersNormal = {
+	{ -- Stage 1
+		[438801] = {12.8, 64.9, 0}, -- Call of the Swarm
+		[438218] = {17.8, 20.0, 20.0, 23.0, 38.0, 0}, -- Piercing Strike
+		[440504] = {29.8, 33.0, 31.0, 0}, -- Impaling Eruption
+		[440246] = {43.7, 60.0, 0}, -- Reckless Charge
+		[438656] = {7.4, 31.9, 30.3, 30.3, 0}, -- Venomous Rain
+		[450045] = {16.6, 30.2, 30.3, 30.3, 0}, -- Skittering Leap
+		[439838] = {24.1, 33.4, 33.3, 0}, -- Web Bomb
+	},
+	{ -- Stage 2
+		[440504] = {9.0, 40.0, 40.0, 0}, -- Impaling Eruption
+		[438218] = {14.0, 20.0, 20.0, 20.0, 20.0, 20.0, 0}, -- Piercing Strike
+		[438801] = {26.0, 51.0, 0}, -- Call of the Swarm
+		[438677] = {46.0, 50.0, 0}, -- Stinging Swarm
+		[441782] = {18.2, 75.4, 0}, -- Strands of Reality
+		[450483] = {27.2, 26.7, 25.2, 23.6, 0}, -- Void Step
+		[441626] = {32.3, 49.8, 0}, -- Web Vortex
+		[450129] = {35.0, 49.8, 0}, -- Entropic Desolation
+		[438355] = {56.9, 48.8, 0}, -- Cataclysmic Entropy
+	},
+	{ -- Stage 3
+		[443068] = {45.1, 63.0, 63.0}, -- Spike Eruption
+		[442994] = {30.0, 119.0}, -- Unleashed Swarm
+		[438218] = {25.1, 23.0, 40.0, 23.0, 56.0, 20.0}, -- Piercing Strike
+		[440246] = {58.9, 75.0}, -- Reckless Charge
+		[438677] = {75.1, 100.0}, -- Stinging Swarm
+		[450483] = {37.4, 24.7, 25.2, 26.1, 24.7, 25.2, 24.2}, -- Void Step
+		[450129] = {45.2, 74.0}, -- Entropic Desolation
+		[441626] = {42.5, 73.9}, -- Web Vortex
+		[441782] = {26.4, 77.9, 76.2}, -- Strands of Reality
+		[438355] = {90.3, 100.2}, -- Cataclysmic Entropy
+	},
+}
 
 local timersHeroic = {
 	{ -- Stage 1
@@ -58,7 +94,6 @@ local timersHeroic = {
 		[438218] = {25.0, 20.0, 30.0, 21.0, 20.0, 20.4, 19.6}, -- Piercing Strike
 		[440246] = {59.2, 109.8}, -- Reckless Charge
 		[438677] = {93.0, 69.0}, -- Stinging Swarm
-		[451327] = {}, -- Raging Fury
 		[450483] = {37.4, 26.1, 25.0, 25.7, 23.2, 25.1, 9.1, 13.3, 2.9}, -- Void Step
 		[450129] = {45.6, 98.7}, -- Entropic Desolation
 		[441626] = {42.7, 98.7}, -- Web Vortex
@@ -66,22 +101,56 @@ local timersHeroic = {
 		[438355] = {115.3, 76.4}, -- Cataclysmic Entropy
 	},
 }
-local timers = timersHeroic
+
+local timersMythic = {
+	{ -- Stage 1
+		[438801] = {22.9, 50.0, 0}, -- Call of the Swarm
+		[438218] = {14.9, 23.0, 25.0, 24.0, 0}, -- Piercing Strike
+		[440504] = {7.9, 24.0, 25.0, 23.0, 0}, -- Impaling Eruption
+		[440246] = {42.8, 60.1, 0}, -- Reckless Charge
+		[438656] = {15.1, 41.9, 32.8, 0}, -- Venomous Rain
+		[450045] = {19.1, 27.3, 59.6, 0}, -- Skittering Leap
+		[439838] = {31.3, 32.8, 28.3, 0}, -- Web Bomb
+	},
+	{ -- Stage 2
+		[440504] = {0}, -- Impaling Eruption
+		[438218] = {0}, -- Piercing Strike
+		[438801] = {0}, -- Call of the Swarm
+		[438677] = {0}, -- Stinging Swarm
+		[441782] = {0}, -- Strands of Reality
+		[450483] = {0}, -- Void Step
+		[441626] = {0}, -- Web Vortex
+		[450129] = {0}, -- Entropic Desolation
+		[438355] = {0}, -- Cataclysmic Entropy
+	},
+	{ -- Stage 3
+		[443068] = {0}, -- Spike Eruption
+		[442994] = {0}, -- Unleashed Swarm
+		[438218] = {0}, -- Piercing Strike
+		[440246] = {0}, -- Reckless Charge
+		[438677] = {0}, -- Stinging Swarm
+		[450483] = {0}, -- Void Step
+		[450129] = {0}, -- Entropic Desolation
+		[441626] = {0}, -- Web Vortex
+		[441782] = {0}, -- Strands of Reality
+		[438355] = {0}, -- Cataclysmic Entropy
+	},
+}
+local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
-
--- end
+local L = mod:GetLocale()
+if L then
+	L.skipped_cast = "Skipped %s (%d)"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
--- local stingingSwarmMarker = mod:AddMarkerOption(false, "player", 1, 438677, 1, 2, 3, 4, 5) -- Stinging Swarm
 function mod:GetOptions()
 	return {
 		"stages",
@@ -92,6 +161,7 @@ function mod:GetOptions()
 			{440246, "ICON", "SAY"}, -- Reckless Charge
 				440178, -- Reckless Impact
 				440179, -- Entangled
+			-- 460360, -- Burrowed Eruption
 			440504, -- Impaling Eruption
 				{449857, "SAY"}, -- Impaled
 
@@ -104,13 +174,13 @@ function mod:GetOptions()
 
 		-- Transition: Void Ascension (Takazj)
 		450980, -- Shatter Existence
+		460600, -- Entropic Barrage
 
 		-- Stage Two: Grasp of the Void
 			-- Anub'arash
 			438677, -- Stinging Swarm
 				-- 449993, -- Stinging Burst
 				456245, -- Stinging Delirium
-			-- stingingSwarmMarker,
 
 			-- Skeinspinner Takazj
 			{441772, "TANK"}, -- Void Bolt
@@ -122,13 +192,19 @@ function mod:GetOptions()
 
 		-- Transition: Raging Fury (Anub'arash)
 		451277, -- Spike Storm
-		-- 451327, -- Raging Fury
-			443598, -- Enraged Ferocity
+		460364, -- Seismic Upheaval
 
 		-- Stage Three: Unleashed Rage
 			-- Anub'arash
 			443068, -- Spike Eruption
 			442994, -- Unleashed Swarm
+
+		-- Mythic
+		455849, -- Mark of Paranoia
+		460359, -- Void Degeneration
+		455850, -- Mark of Rage
+		460281, -- Burning Rage
+		455863, -- Mark of Death
 	}, {
 		[438218] = -29011, -- Stage 1
 		[438200] = "", -- boss split
@@ -137,6 +213,7 @@ function mod:GetOptions()
 		[441772] = "", -- boss split
 		[451277] = -29728, -- Intermission 2
 		[443068] = -29022, -- Stage 3
+		[455849] = "mythic",
 	}
 end
 
@@ -146,6 +223,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ImpalingEruption", 440504)
 	self:Log("SPELL_AURA_APPLIED", "ImpaledApplied", 449857)
 	self:Log("SPELL_CAST_START", "CallOfTheSwarm", 438801)
+	-- self:Log("SPELL_CAST_START", "BurrowedEruption", 441791)
 	self:Log("SPELL_CAST_START", "RecklessCharge", 440246)
 	self:Log("SPELL_AURA_APPLIED", "RecklessImpactApplied", 440178)
 	self:Log("SPELL_AURA_REMOVED", "RecklessImpactRemoved", 440178)
@@ -159,12 +237,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StingingDeliriumApplied", 456245, 456235) -- boss/player
 	self:Log("SPELL_AURA_REMOVED", "StingingDeliriumRemoved", 456245, 456235)
 
+	self:Log("SPELL_CAST_START", "UncontrollableRage", 443598)
 	self:Log("SPELL_AURA_APPLIED", "SpikeStormApplied", 451277)
 	self:Log("SPELL_AURA_REMOVED", "SpikeStormRemoved", 451277)
+	self:Log("SPELL_CAST_SUCCESS", "SeismicUpheaval", 460364)
+
 	self:Log("SPELL_CAST_START", "SpikeEruption", 443068)
-	self:Log("SPELL_CAST_START", "RagingFury", 451327)
-	self:Log("SPELL_AURA_APPLIED", "EnragedFerocityApplied", 443598)
-	self:Log("SPELL_AURA_REMOVED", "EnragedFerocityRemoved", 443598)
 	self:Log("SPELL_CAST_START", "UnleashedSwarm", 442994)
 
 	-- Skeinspinner Takazj
@@ -177,19 +255,27 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BindingWebsApplied", 440001)
 	self:Log("SPELL_AURA_REMOVED", "BindingWebsRemoved", 440001)
 
-	self:Log("SPELL_CAST_START", "VoidStep", 450483)
 	self:Log("SPELL_AURA_APPLIED", "ShatterExistenceApplied", 450980)
 	self:Log("SPELL_AURA_REMOVED", "ShatterExistenceRemoved", 450980)
-	self:Log("SPELL_CAST_START", "StrandsOfReality", 441782)
+	self:Log("SPELL_CAST_SUCCESS", "EntropicBarrage", 460600)
 
+	self:Log("SPELL_CAST_START", "VoidStep", 450483)
+	self:Log("SPELL_CAST_START", "StrandsOfReality", 441782)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidBoltApplied", 441772)
 	self:Log("SPELL_CAST_START", "EntropicDesolation", 450129)
 	self:Log("SPELL_CAST_START", "WebVortex", 441626)
 	self:Log("SPELL_CAST_START", "CataclysmicEntropy", 438355)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "MarkOfParanoiaApplied", 455849)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfRageApplied", 455850)
+	self:Log("SPELL_AURA_APPLIED", "MoteStack", 460359, 460281) -- Void Degeneration, Burning Rage
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MoteStack", 460359, 460281)
+	self:Log("SPELL_AURA_APPLIED", "MarkOfDeathApplied", 455863)
 end
 
 function mod:OnEngage()
-	timers = timersHeroic
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 
 	-- Anub'arash
@@ -199,9 +285,6 @@ function mod:OnEngage()
 	recklessChargeCount = 1
 	stingingSwarmCount = 1
 	unleashedSwarmCount = 1
-
-	-- stingingSwarmTargets = {}
-	-- stingingSwarmMarks = {5, 4, 3, 2, 1}
 
 	self:Bar(438801, timers[1][438801][1], CL.count:format(self:SpellName(438801), callOfTheSwarmCount)) -- Call of the Swarm
 	self:Bar(438218, timers[1][438218][1], CL.count:format(self:SpellName(438218), piercingStrikeCount)) -- Piercing Strike
@@ -214,11 +297,12 @@ function mod:OnEngage()
 	webBombCount = 1
 	strandsOfRealityCount = 1
 	cataclysmicEntropyCount = 1
+	intermissionSpellCount = 1
 
 	self:Bar(438656, timers[1][438656][1], CL.count:format(self:SpellName(438343), venomousRainCount)) -- Venomous Rain
 	self:Bar(450045, timers[1][450045][1], CL.count:format(self:SpellName(450045), skitteringLeapCount)) -- Skittering Leap
 	self:Bar(439838, timers[1][439838][1], CL.count:format(self:SpellName(439838), webBombCount)) -- Web Bomb
-	self:Bar("stages", 127.3, CL.count:format(CL.intermission, 1), 450483) -- Transition: Void Ascension (Void Step)
+	self:CDBar("stages", self:Mythic() and 132.3 or 127.3, CL.count:format(CL.intermission, 1), 450980) -- Transition: Void Ascension (Shatter Existence)
 end
 
 --------------------------------------------------------------------------------
@@ -259,8 +343,8 @@ function mod:CallOfTheSwarm(args)
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][callOfTheSwarmCount], CL.count:format(args.spellName, callOfTheSwarmCount))
 end
 
-function mod:Burrow(args)
-	self:Message(440246, "yellow", CL.soon:format(self:SpellName(440246))) -- Reckless Charge
+function mod:BurrowedEruption(args)
+	self:Message(440246, "orange", CL.soon:format(self:SpellName(440246))) -- Reckless Charge
 end
 
 function mod:RecklessCharge(args)
@@ -352,18 +436,43 @@ end
 
 -- Transistion: Void Ascension
 
+function mod:VoidStepTransition()
+	self:StopBar(CL.count:format(CL.intermission, 1))
+	self:SetStage(1.5)
+
+	self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), false)
+	self:PlaySound("stages", "long")
+	-- intermissionSpellCount = 1
+end
+
+function mod:EntropicBarrage(args)
+	self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
+	intermissionSpellCount = intermissionSpellCount + 1
+	self:Bar(args.spellId, 12, CL.count:format(args.spellName, intermissionSpellCount))
+end
+
 do
 	local appliedTime = 0
 	function mod:ShatterExistenceApplied(args)
+		if self:GetStage() == 1 then  -- XXX make sure we kill the bar
+			self:StopBar(CL.count:format(CL.intermission, 1))
+			self:SetStage(1.5)
+			self:PlaySound("stages", "long")
+		else
+			self:PlaySound(args.spellId, "info")
+		end
+
 		appliedTime = args.time
 		self:Message(args.spellId, "cyan")
-		self:PlaySound(args.spellId, "info")
 	end
 
 	function mod:ShatterExistenceRemoved(args)
 		if args.amount == 0 then
 			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
+
+			self:StopBar(args.spellId, CL.count:format(self:SpellName(460600), intermissionSpellCount)) -- Entropic Barrage
+			intermissionSpellCount = 1
 
 			self:SetStage(2)
 			-- Skeinspinner Takazj
@@ -378,7 +487,8 @@ do
 			self:Bar(441626, timers[2][441626][1], CL.count:format(self:SpellName(441626), webBombCount)) -- Web Vortex
 			self:Bar(450129, timers[2][450129][1], CL.count:format(self:SpellName(450129), venomousRainCount)) -- Entropic Desolation
 			self:Bar(438355, timers[2][438355][1], CL.count:format(self:SpellName(438355), cataclysmicEntropyCount)) -- Cataclysmic Entropy
-			self:Bar("stages", 133.0, CL.count:format(CL.intermission, 2), 451327) -- Transition: Raging Fury (Raging Fury)
+			checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", timers[2][438355][1] + SKIP_CAST_THRESHOLD, cataclysmicEntropyCount)
+			self:CDBar("stages", 133.0, CL.count:format(CL.intermission, 2), 451277) -- Transition: Raging Fury (Spike Storm)
 
 			-- Anub'arash
 			piercingStrikeCount = 1
@@ -406,18 +516,10 @@ function mod:StingingSwarm(args)
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][stingingSwarmCount], CL.count:format(args.spellName, stingingSwarmCount))
 end
 
-do
-	function mod:StingingSwarmApplied(args)
-		if self:Me(args.destGUID) then
-			self:StackMessage(438677, "blue", args.destName, args.amount or 1, 4)
-			self:PlaySound(438677, "warning")
-		end
-
-		-- local icon = table.remove(stingingSwarmMarks) or false
-		-- stingingSwarmTargets[args.destGUID] = icon
-		-- if icon then
-		-- 	self:CustomIcon(stingingSwarmMarker, args.destName, icon)
-		-- end
+function mod:StingingSwarmApplied(args)
+	if self:Me(args.destGUID) then
+		self:StackMessage(438677, "blue", args.destName, args.amount or 1, 4)
+		self:PlaySound(438677, "warning")
 	end
 end
 
@@ -426,13 +528,6 @@ function mod:StingingSwarmRemoved(args)
 		self:PersonalMessage(438677, "removed")
 		self:PlaySound(438677, "info")
 	end
-
-	-- local icon = stingingSwarmTargets[args.destGUID]
-	-- if icon then
-	-- 	table.insert(stingingSwarmMarks, icon)
-	-- 	self:CustomIcon(stingingSwarmMarker, args.destName)
-	-- end
-	-- stingingSwarmTargets[args.destGUID] = nil
 end
 
 function mod:StingingDeliriumApplied(args)
@@ -463,11 +558,7 @@ end
 
 function mod:VoidStep(args)
 	if self:GetStage() == 1 then -- Transition cast
-		self:StopBar(CL.count:format(CL.intermission, 1))
-		self:SetStage(1.5)
-
-		self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), false)
-		self:PlaySound("stages", "long")
+		self:VoidStepTransition()
 	else
 		self:StopBar(CL.count:format(args.spellName, skitteringLeapCount))
 		self:Message(args.spellId, "cyan", CL.count:format(args.spellName, skitteringLeapCount))
@@ -506,46 +597,64 @@ function mod:WebVortex(args)
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][webBombCount], CL.count:format(args.spellName, webBombCount))
 end
 
+function mod:CataclysmicEntropyCheck(castCount) -- stunned for cast
+	if castCount == cataclysmicEntropyCount then -- not on the next cast?
+		local spellName = self:SpellName(438355)
+		self:StopBar(CL.count:format(spellName, cataclysmicEntropyCount))
+		self:Message(438355, "green", L.skipped_cast:format(spellName, castCount))
+		cataclysmicEntropyCount = castCount + 1
+		local cd = timers[self:GetStage()][438355][cataclysmicEntropyCount]
+		if cd and cd > 0 then
+			self:Bar(438355, cd - SKIP_CAST_THRESHOLD, CL.count:format(spellName, cataclysmicEntropyCount))
+			checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", cd, cataclysmicEntropyCount)
+		end
+	end
+end
+
 function mod:CataclysmicEntropy(args)
 	self:StopBar(CL.count:format(args.spellName, cataclysmicEntropyCount))
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, cataclysmicEntropyCount))
 	self:PlaySound(args.spellId, "long")
 	cataclysmicEntropyCount = cataclysmicEntropyCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][cataclysmicEntropyCount], CL.count:format(args.spellName, cataclysmicEntropyCount))
+	local cd = timers[self:GetStage()][args.spellId][cataclysmicEntropyCount]
+	if cd and cd > 0 then
+		self:Bar(args.spellId, cd, CL.count:format(args.spellName, cataclysmicEntropyCount))
+		checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", cd + SKIP_CAST_THRESHOLD, cataclysmicEntropyCount)
+	end
 end
 
 -- Transistion: Raging Fury
 
-function mod:RagingFury(args)
+function mod:UncontrollableRage()
 	if self:GetStage() == 2 then -- Transition cast
 		self:StopBar(CL.count:format(CL.intermission, 2))
 		self:SetStage(2.5)
 
 		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
 		self:PlaySound("stages", "long")
-
-		self:Bar(443598, 18) -- Enraged Ferocity
+		-- intermissionSpellCount = 1
 	end
 end
 
-function mod:EnragedFerocityApplied(args)
-	self:Message(args.spellId, "red", CL.onboss:format(args.spellName))
-	if self:Dispeller("enrage", true) then
-		self:PlaySound(args.spellId, "alert") -- dispel
-	end
-end
-
-function mod:EnragedFerocityRemoved(args)
-	self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-	self:PlaySound(args.spellId, "info")
+function mod:SeismicUpheaval(args)
+	self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
+	intermissionSpellCount = intermissionSpellCount + 1
+	self:Bar(args.spellId, 15, CL.count:format(args.spellName, intermissionSpellCount))
 end
 
 do
 	local appliedTime = 0
 	function mod:SpikeStormApplied(args)
+		if self:GetStage() == 2 then -- XXX make sure we kill the bar
+			self:StopBar(CL.count:format(CL.intermission, 2))
+			self:SetStage(2.5)
+			self:PlaySound(args.spellId, "long")
+		else
+			self:PlaySound(args.spellId, "info")
+		end
+
 		appliedTime = args.time
 		self:Message(args.spellId, "cyan")
-		self:PlaySound(args.spellId, "info")
 
 		impalingEruptionCount = 1
 	end
@@ -554,6 +663,9 @@ do
 		if args.amount == 0 then
 			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
+
+			self:StopBar(args.spellId, CL.count:format(self:SpellName(460364), intermissionSpellCount)) -- Seismic Upheaval
+			intermissionSpellCount = 1
 
 			self:SetStage(3)
 			-- Anub'arash
@@ -568,7 +680,9 @@ do
 			self:Bar(438218, timers[3][438218][1], CL.count:format(self:SpellName(438218), piercingStrikeCount)) -- Piercing Strike
 			self:Bar(440246, timers[3][440246][1], CL.count:format(self:SpellName(440246), recklessChargeCount)) -- Reckless Charge
 			self:Bar(438677, timers[3][438677][1], CL.count:format(self:SpellName(438677), stingingSwarmCount)) -- Stinging Swarm
-			-- self:Bar("berserk", 129.0) -- hard enrage?
+			if self:Mythic() then
+				self:Bar("stages", 203.0, 26662, 26662) -- Berserk?
+			end
 
 			-- Skeinspinner Takazj
 			skitteringLeapCount = 1
@@ -582,6 +696,7 @@ do
 			self:Bar(441626, timers[3][441626][1], CL.count:format(self:SpellName(441626), webBombCount)) -- Web Vortex
 			self:Bar(441782, timers[3][441782][1], CL.count:format(self:SpellName(441782), strandsOfRealityCount)) -- Strands of Reality
 			self:Bar(438355, timers[3][438355][1], CL.count:format(self:SpellName(438355), cataclysmicEntropyCount)) -- Cataclysmic Entropy
+			checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", timers[3][438355][1] + SKIP_CAST_THRESHOLD, cataclysmicEntropyCount)
 		end
 	end
 end
@@ -606,4 +721,53 @@ function mod:UnleashedSwarm(args)
 	self:PlaySound(args.spellId, "alarm")
 	callOfTheSwarmCount = callOfTheSwarmCount + 1
 	self:Bar(args.spellId, timers[3][args.spellId][callOfTheSwarmCount], CL.count:format(args.spellName, callOfTheSwarmCount))
+end
+
+-- Mythic
+
+function mod:MarkOfParanoiaApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, _G.LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(args.spellName))
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
+function mod:MarkOfRageApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, _G.DULL_RED_FONT_COLOR:WrapTextInColorCode(args.spellName))
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
+do
+	local stacks = 0
+	local scheduled = nil
+	function mod:MoteStackMessage(spellId, player)
+		self:StackMessage(spellId, "blue", player, stacks, 2) -- SetOption:460359,460281:
+		if stacks < 3 then
+			self:PlaySound(spellId, "info") -- SetOption:460359,460281:
+		end
+		scheduled = nil
+	end
+
+	function mod:MoteStack(args)
+		if self:Me(args.destGUID) then
+			stacks = args.amount or 1
+			if stacks == 3 then
+				if scheduled then
+					self:CancelTimer(scheduled)
+				end
+				self:MoteStackMessage(args.spellId, args.destName)
+			elseif not scheduled and stacks <= 3 then
+				scheduled = self:ScheduleTimer("MoteStackMessage", 0.3, args.spellId, args.destName)
+			end
+		end
+	end
+end
+
+function mod:MarkOfDeathApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "red", CL.you:format(args.spellName))
+		self:PlaySound(args.spellId, "alarm") -- fail
+	end
 end
