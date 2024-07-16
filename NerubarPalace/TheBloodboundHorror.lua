@@ -108,7 +108,9 @@ function mod:OnEngage()
 	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
 	self:Bar(444363, self:Mythic() and 14 or 16, CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount)) -- Gruesome Disgorge
 	self:Bar(443042, 22, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount)) -- Grasp From Beyond
-	self:Bar(445936, 32, CL.count:format(CL.beams, spewingHemorrhageCount)) -- Spewing Hemorrhage
+	if not self:Easy() then
+		self:Bar(445936, 32, CL.count:format(CL.beams, spewingHemorrhageCount)) -- Spewing Hemorrhage
+	end
 	self:Bar(442530, 120, CL.count:format(L.goresplatter, goresplatterCount)) -- Goresplatter
 	if self:Mythic() then
 		self:Bar(452237, 9, CL.count:format(L.bloodcurdle, bloodcurdleCount)) -- Bloodcurdle
@@ -199,6 +201,8 @@ do
 			local cd = graspFromBeyondCount % 4 == 1 and 44 or 28
 			if self:Mythic() then
 				cd = graspFromBeyondCount % 4 == 1 and 41 or graspFromBeyondCount % 4 == 3 and 31 or 28
+			elseif self:Easy() then
+				cd = (graspFromBeyondCount - 1) % 6 == 0 and 47 or graspFromBeyondCount % 3 == 1 and 21 or 15
 			end
 			self:Bar(args.spellId, cd, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount))
 		end
