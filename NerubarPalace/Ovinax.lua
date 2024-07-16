@@ -44,7 +44,7 @@ end
 -- Initialization
 --
 
-local voraciousWormMarker = mod:AddMarkerOption(false, "npc", 1, -28999, 8, 7, 6, 5)
+local voraciousWormMarker = mod:AddMarkerOption(false, "npc", 8, -28999, 8, 7, 6, 5)
 function mod:GetOptions()
 	return {
 		{442526, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Experimental Dosage
