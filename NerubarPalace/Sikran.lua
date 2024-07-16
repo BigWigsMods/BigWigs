@@ -9,7 +9,9 @@ if not mod then return end
 mod:RegisterEnableMob(214503) -- Sikran
 mod:SetEncounterID(2898)
 mod:SetRespawnTime(30)
-mod:SetStage(1)
+mod:SetPrivateAuraSounds({
+	433517, -- Phase Blades
+})
 
 --------------------------------------------------------------------------------
 -- Locals

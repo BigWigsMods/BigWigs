@@ -217,6 +217,7 @@ do
 		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount))
 		experimentalDosageCount = experimentalDosageCount + 1
 
+		-- 16, 50, 50 // 16, 50, 50 // 16, 50, 50
 		local cd = (experimentalDosageCount - 1) % 3 == 0 and 66.7 or 50.0
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, experimentalDosageCount))
 
@@ -294,6 +295,7 @@ function mod:StickyWeb(args)
 	self:StopBar(CL.count:format(args.spellName, stickyWebCount))
 	self:Message(446349, "yellow", CL.count:format(args.spellName, stickyWebCount))
 	stickyWebCount = stickyWebCount + 1
+	-- 14.9 // 31, 30, 30, 30, 30 // 31, 30, 30, 30, 30 // 31, 30, 30, 30
 	local cd = stickyWebCount == 2 and 31.8 or (stickyWebCount - 2) % 5 == 0 and 46.7 or 30.0
 	self:Bar(446349, cd, CL.count:format(args.spellName, stickyWebCount))
 end
@@ -320,6 +322,7 @@ end
 function mod:VolatileConcoction(args)
 	self:StopBar(CL.count:format(args.spellName, volatileConcoctionCount))
 	volatileConcoctionCount = volatileConcoctionCount + 1
+	-- 2.1 // 18, 20, 20, 20, 20, 20, 20, 20 // 18, 20, 20, 20, 20, 20, 20, 20 // 18, 20, 20, 20, 20, 20
 	local cd = volatileConcoctionCount == 2 and 31.6 or (volatileConcoctionCount - 2) % 8 == 0 and 26.6 or 20.0
 	self:Bar(441362, cd, CL.count:format(args.spellName, volatileConcoctionCount))
 end
