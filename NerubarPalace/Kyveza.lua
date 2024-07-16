@@ -86,9 +86,9 @@ function mod:OnEngage()
 	self:Bar(440377, 6.0, CL.count:format(self:SpellName(440377), voidShreddersCount)) -- Void Shredders
 	self:Bar(436867, 10.0, CL.count:format(self:SpellName(436867), assassinationCount)) -- Assassination
 	self:Bar(437620, 22.0, CL.count:format(self:SpellName(437620), netherRiftCount)) -- Nether Rift
-	self:Bar(438245, 34.3, CL.count:format(self:SpellName(438245), twilightMassacreCount)) -- Twilight Massacre
-	self:Bar(439576, 45.3, CL.count:format(self:SpellName(439576), nexusDaggersCount)) -- Nexus Daggers
-	self:Bar(435405, self:Mythic() and 96.1 or 86.1, CL.count:format(self:SpellName(435405), starlessNightCount)) -- Starless Night
+	self:Bar(438245, 34.0, CL.count:format(self:SpellName(438245), twilightMassacreCount)) -- Twilight Massacre
+	self:Bar(439576, 45.0, CL.count:format(self:SpellName(439576), nexusDaggersCount)) -- Nexus Daggers
+	self:Bar(435405, 96.1, CL.count:format(self:SpellName(435405), starlessNightCount)) -- Starless Night
 end
 
 --------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ function mod:Assassination(args)
 	self:Message(436867, "cyan", CL.count:format(self:SpellName(436867), assassinationCount))
 	assassinationCount = assassinationCount + 1
 	if assassinationCount < 4 then
-		self:Bar(436867, self:Mythic() and 130.0 or 120.0, CL.count:format(self:SpellName(436867), assassinationCount))
+		self:Bar(436867, 130.0, CL.count:format(self:SpellName(436867), assassinationCount))
 	end
 end
 
@@ -129,7 +129,7 @@ function mod:TwilightMassacre(args)
 	self:PlaySound(args.spellId, "alert")
 	twilightMassacreCount = twilightMassacreCount + 1
 	if twilightMassacreCount < 7 then
-		self:Bar(args.spellId, twilightMassacreCount % 2 == 0 and 30.0 or (self:Mythic() and 100.0 or 90.0), CL.count:format(args.spellName, twilightMassacreCount))
+		self:Bar(args.spellId, twilightMassacreCount % 2 == 0 and 30.0 or 100.0, CL.count:format(args.spellName, twilightMassacreCount))
 	end
 end
 
@@ -139,12 +139,8 @@ function mod:NetherRift(args)
 		self:Message(args.spellId, "orange", CL.count:format(args.spellName, netherRiftCount))
 		self:PlaySound(args.spellId, "alert")
 		netherRiftCount = netherRiftCount + 1
-		if self:Mythic() then
-			if netherRiftCount < 10 then
-				self:Bar(args.spellId, netherRiftCount % 3 == 1 and 70.0 or 30.0, CL.count:format(args.spellName, netherRiftCount))
-			end
-		elseif netherRiftCount < 7 then
-			self:Bar(args.spellId, netherRiftCount % 2 == 0 and 30.0 or 90.0, CL.count:format(args.spellName, netherRiftCount))
+		if netherRiftCount < 10 then
+			self:Bar(args.spellId, netherRiftCount % 3 == 1 and 70.0 or 30.0, CL.count:format(args.spellName, netherRiftCount))
 		end
 	end
 end
@@ -156,7 +152,7 @@ function mod:NexusDaggers(args)
 		self:PlaySound(args.spellId, "alarm")
 		nexusDaggersCount = nexusDaggersCount + 1
 		if nexusDaggersCount < 7 then
-			self:Bar(args.spellId, nexusDaggersCount % 2 == 0 and 30.0 or (self:Mythic() and 100.0 or 90.0), CL.count:format(args.spellName, nexusDaggersCount))
+			self:Bar(args.spellId, nexusDaggersCount % 2 == 0 and 30.0 or 100.0, CL.count:format(args.spellName, nexusDaggersCount))
 		end
 	end
 end
@@ -167,7 +163,7 @@ function mod:VoidShredders(args)
 	self:PlaySound(args.spellId, "alert")
 	voidShreddersCount = voidShreddersCount + 1
 	if voidShreddersCount < 10 then
-		local timer = { 30.0, self:Mythic() and 66.0 or 56.0, 34.0 } -- 6.0, 34.0, 30.0, 56.0, 34.0, 30.0, 56.0
+		local timer = { 30.0, 66.0, 34.0 } -- 6.0, 34.0, 30.0, 66.0, 34.0, 30.0, 66.0
 		local cd = timer[voidShreddersCount % 3 + 1]
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, voidShreddersCount))
 	end
@@ -190,13 +186,16 @@ function mod:StarlessNight(args)
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, starlessNightCount))
 	self:PlaySound(args.spellId, "long")
 	starlessNightCount = starlessNightCount + 1
-	if starlessNightCount < 4 then
-		self:Bar(args.spellId, self:Mythic() and 130.0 or 120.0, CL.count:format(args.spellName, starlessNightCount))
+	if starlessNightCount == 3 then
+		self:Bar(442277, 130.0) -- Eternal Night
+	elseif starlessNightCount < 3 then
+		self:Bar(args.spellId, 130.0, CL.count:format(args.spellName, starlessNightCount))
 	end
 end
 
 function mod:EternalNight(args)
-	self:Message(442277, "red", CL.casting:format(args.spellName))
-	self:PlaySound(442277, "long")
-	self:Bar(442277, 34, 15097) -- 15097 = Enrage (cast hits the entire room and ramps)
+	self:StopBar(args.spellName)
+	self:Message(args.spellId, "red")
+	self:PlaySound(args.spellId, "long")
+	self:Bar(args.spellId, 34, 15097) -- 15097 = Enrage (cast hits the entire room and ramps)
 end
