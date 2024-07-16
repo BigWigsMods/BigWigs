@@ -23,6 +23,12 @@ local shatteringSweepCount = 1
 local captainsFlourishCount = 1
 local rainOfArrowsCount = 1
 
+local timersNormal = { -- 8:26
+	[439511] = {6.4, 22.5, 23.1, 23.1, 26.8, 23.1, 23.0, 23.1, 29.1, 23.1, 23.0, 23.1, 29.1, 23.1, 23.0, 23.1, 29.2, 23.0, 23.0, 23.1, 29.1}, -- Captain's Flourish
+	[433517] = {17.8, 46.2, 49.8, 42.5, 55.9, 42.5, 55.8, 42.5, 55.9, 42.4}, -- Phase Blades
+	[442428] = {43.3, 40.1, 55.9, 40.0, 58.2, 40.1, 58.2, 40.0, 58.3, 40.0}, -- Decimate
+	[439559] = {36.2, 52.3, 42.5, 53.4, 44.9, 53.4, 44.9, 53.4, 44.9, 53.4}, -- Rain of Arrows
+}
 local timersHeroic = { -- 5:22
 	[439511] = {6.2, 23.2, 23.1, 22.7, 27.2, 23.1, 22.8, 23.1, 30.4, 23.1, 23.1, 23.1, 27.9, 22.7}, -- Captain's Flourish
 	[433517] = {17.8, 45.5, 51.1, 42.3, 57.1, 42.5, 54.7}, -- Phase Blades
@@ -35,7 +41,7 @@ local timersMythic = { -- 8:08
 	[442428] = {51.2, 26.6, 75.6, 27.1, 72.0, 28.1, 70.8, 27.9, 70.7, 28.0}, -- Decimate
 	[439559] = {22.8, 42.3, 55.5, 26.8, 27.1, 45.1, 27.0, 26.6, 45.5, 26.7, 26.7, 45.0, 26.9, 26.8}, -- Rain of Arrows
 }
-local timers = mod:Mythic() and timersMythic or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -78,7 +84,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 	phaseBladesCount = 1
 	decimateCount = 1
 	shatteringSweepCount = 1
