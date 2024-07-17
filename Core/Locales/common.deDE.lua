@@ -115,6 +115,7 @@ L.link_with = "Verbunden mit %s"
 L.link_with_icon = "Verbunden mit |T13700%d:0|t%s"
 L.link_short = "Verbunden: %s"
 L.link_both = "%s verbunden mit %s"
+L.link_both_icon = "|T13700%d:0|t%s verbunden mit |T13700%d:0|t%s"
 L.link_removed = "Verbindung entfernt"
 
 -- Abbreviated numbers
