@@ -57,7 +57,7 @@ local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
-local difficulty
+local difficulty, maxPlayers
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myRolePosition
 local myGroupGUIDs, myGroupRoles, myGroupRolePositions = {}, {}, {}
@@ -65,8 +65,8 @@ local solo = false
 local classColorMessages = true
 local englishSayMessages = false
 do -- Update some data that may be called at the top of modules (prior to initialization)
-	local _, _, diff = GetInstanceInfo()
-	difficulty = diff
+	local _, _, diff, _, currentMaxPlayers = GetInstanceInfo()
+	difficulty, maxPlayers = diff, currentMaxPlayers
 	myGUID = UnitGUID("player")
 	local function update(_, role, position, player)
 		myGroupRolePositions[player] = position
@@ -1437,6 +1437,12 @@ do
 	end
 end
 
+--- Get the max player count of the current instance.
+-- @return number
+function boss:GetMaxPlayers()
+	return maxPlayers
+end
+
 --- Get the current instance difficulty.
 -- @return difficulty id
 function boss:Difficulty()
@@ -2435,15 +2441,10 @@ do
 	})
 	myNameWithColor = coloredNames[myName]
 
-	local mt = {
-		__newindex = function(self, key, value)
-			rawset(self, key, coloredNames[value])
-		end
-	}
-	--- Get a table that colors player names based on class.
+	--- Get a table that colors player names based on class. [DEPRECATED]
 	-- @return an empty table
 	function boss:NewTargetList()
-		return setmetatable({}, mt)
+		return {}
 	end
 
 	--- Color a player name based on class.
