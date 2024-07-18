@@ -11,6 +11,7 @@ mod:SetEncounterID(2920)
 mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
 	436870, -- Assassination
+	{437343, extra = {463273, 463276}}, -- Queensbane (Also A & B) XXX Initial spell not private yet, but they flagged the other 2 already.
 	438141, -- Twilight Massacre
 	{435534, extra = {436663, 436664, 436665, 436666, 436671, 436677}}, -- Regicide
 })
@@ -30,10 +31,12 @@ local starlessNightCount = 1
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
-
--- end
+local L = mod:GetLocale()
+if L then
+	L.assasination = "Phantoms"
+	L.twiligt_massacre = "Dashes"
+	L.nexus_daggers = "Daggers"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -53,16 +56,24 @@ function mod:GetOptions()
 
 		-- Stage Two: Starless Night
 		435405, -- Starless Night
-		-- {435534, "PRIVATE"}, -- Regicide XXX only a sound right now
+		-- {435534, "PRIVATE"}, -- Regicide PA Sounds only
 		442277, -- Eternal Night
 	}, {
-		[436867] = -28741,
-		[435405] = -28742,
+		[436867] = -28741, -- Stage One: The Phantom Blade
+		[435405] = -28742, -- Stage Two: Starless Night
+	}, {
+		[436867] = L.assasination, -- Assassination (Phantoms)
+		[439409] = CL.orbs, -- Dark Visera (Orbs)
+		[438245] = L.twiligt_massacre, -- Twilight Massacre (Dashes)
+		[437620] = CL.rifts, -- Nether Rift (Rifts)
+		[439576] = L.nexus_daggers, -- Nexus Daggers (Daggers)
+		[435405] = CL.stage:format(2), -- Starless Night (Stage 2)
+		[442277] = CL.count:format(CL.stage:format(2), 3), -- Eternal Night (Stage 2 (3))
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage") -- XXX No Boss Frame Fix
+	-- Stage One: The Phantom Blade
 	self:Log("SPELL_CAST_SUCCESS", "Assassination", 436867, 442573, 440650) -- 3, 4, 5 targets
 	self:Log("SPELL_AURA_APPLIED", "QueensbaneApplied", 437343)
 	self:Log("SPELL_CAST_START", "TwilightMassacre", 438245)
@@ -70,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NexusDaggers", 439576)
 	self:Log("SPELL_CAST_START", "VoidShredders", 440377)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ChasmalGashApplied", 440576)
-
+	-- Stage Two: Starless Night
 	self:Log("SPELL_CAST_START", "StarlessNight", 435405)
 	self:Log("SPELL_CAST_START", "EternalNight", 442277)
 end
@@ -84,11 +95,11 @@ function mod:OnEngage()
 	starlessNightCount = 1
 
 	self:Bar(440377, 6.0, CL.count:format(self:SpellName(440377), voidShreddersCount)) -- Void Shredders
-	self:Bar(436867, 10.0, CL.count:format(self:SpellName(436867), assassinationCount)) -- Assassination
-	self:Bar(437620, 22.0, CL.count:format(self:SpellName(437620), netherRiftCount)) -- Nether Rift
-	self:Bar(438245, 34.0, CL.count:format(self:SpellName(438245), twilightMassacreCount)) -- Twilight Massacre
-	self:Bar(439576, 45.0, CL.count:format(self:SpellName(439576), nexusDaggersCount)) -- Nexus Daggers
-	self:Bar(435405, 96.1, CL.count:format(self:SpellName(435405), starlessNightCount)) -- Starless Night
+	self:Bar(436867, 10.0, CL.count:format(L.assasination, assassinationCount)) -- Assassination
+	self:Bar(437620, 22.0, CL.count:format(CL.rifts, netherRiftCount)) -- Nether Rift
+	self:Bar(438245, 34.0, CL.count:format(L.twiligt_massacre, twilightMassacreCount)) -- Twilight Massacre
+	self:Bar(439576, 45.0, CL.count:format(L.nexus_daggers, nexusDaggersCount)) -- Nexus Daggers
+	self:Bar(435405, 96.1, CL.count:format(CL.stage:format(2), starlessNightCount)) -- Starless Night
 end
 
 --------------------------------------------------------------------------------
@@ -98,11 +109,12 @@ end
 -- Stage One: The Phantom Blade
 
 function mod:Assassination(args)
-	self:StopBar(CL.count:format(self:SpellName(436867), assassinationCount))
-	self:Message(436867, "cyan", CL.count:format(self:SpellName(436867), assassinationCount))
+	self:StopBar(CL.count:format(L.assasination, assassinationCount))
+	self:Message(436867, "cyan", CL.count:format(L.assasination, assassinationCount))
+	-- self:PlaySound(436867, "alert") -- Private sound when affected
 	assassinationCount = assassinationCount + 1
 	if assassinationCount < 4 then
-		self:Bar(436867, 130.0, CL.count:format(self:SpellName(436867), assassinationCount))
+		self:Bar(436867, 130.0, CL.count:format(L.assasination, assassinationCount))
 	end
 end
 
@@ -111,7 +123,7 @@ do
 	function mod:QueensbaneApplied(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Bar(439409, 10) -- Dark Viscera
+			self:Bar(439409, 10, CL.orbs) -- Dark Viscera
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
@@ -124,35 +136,35 @@ do
 end
 
 function mod:TwilightMassacre(args)
-	self:StopBar(CL.count:format(args.spellName, twilightMassacreCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, twilightMassacreCount))
+	self:StopBar(CL.count:format(L.twiligt_massacre, twilightMassacreCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.twiligt_massacre, twilightMassacreCount))
 	self:PlaySound(args.spellId, "alert")
 	twilightMassacreCount = twilightMassacreCount + 1
 	if twilightMassacreCount < 7 then
-		self:Bar(args.spellId, twilightMassacreCount % 2 == 0 and 30.0 or 100.0, CL.count:format(args.spellName, twilightMassacreCount))
+		self:Bar(args.spellId, twilightMassacreCount % 2 == 0 and 30.0 or 100.0, CL.count:format(L.twiligt_massacre, twilightMassacreCount))
 	end
 end
 
 function mod:NetherRift(args)
 	if self:MobId(args.sourceGUID) == 217748 then -- boss, not phantoms
-		self:StopBar(CL.count:format(args.spellName, netherRiftCount))
-		self:Message(args.spellId, "orange", CL.count:format(args.spellName, netherRiftCount))
+		self:StopBar(CL.count:format(CL.rifts, netherRiftCount))
+		self:Message(args.spellId, "orange", CL.count:format(CL.rifts, netherRiftCount))
 		self:PlaySound(args.spellId, "alert")
 		netherRiftCount = netherRiftCount + 1
 		if netherRiftCount < 10 then
-			self:Bar(args.spellId, netherRiftCount % 3 == 1 and 70.0 or 30.0, CL.count:format(args.spellName, netherRiftCount))
+			self:Bar(args.spellId, netherRiftCount % 3 == 1 and 70.0 or 30.0, CL.count:format(CL.rifts, netherRiftCount))
 		end
 	end
 end
 
 function mod:NexusDaggers(args)
 	if self:MobId(args.sourceGUID) == 217748 then -- boss, not phantoms
-		self:StopBar(CL.count:format(args.spellName, nexusDaggersCount))
-		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, nexusDaggersCount))
+		self:StopBar(CL.count:format(L.nexus_daggers, nexusDaggersCount))
+		self:Message(args.spellId, "yellow", CL.count:format(L.nexus_daggers, nexusDaggersCount))
 		self:PlaySound(args.spellId, "alarm")
 		nexusDaggersCount = nexusDaggersCount + 1
 		if nexusDaggersCount < 7 then
-			self:Bar(args.spellId, nexusDaggersCount % 2 == 0 and 30.0 or 100.0, CL.count:format(args.spellName, nexusDaggersCount))
+			self:Bar(args.spellId, nexusDaggersCount % 2 == 0 and 30.0 or 100.0, CL.count:format(L.nexus_daggers, nexusDaggersCount))
 		end
 	end
 end
@@ -182,20 +194,21 @@ end
 -- Stage Two: Starless Night
 
 function mod:StarlessNight(args)
-	self:StopBar(CL.count:format(args.spellName, starlessNightCount))
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, starlessNightCount))
+	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
+	self:Message(args.spellId, "cyan", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
 	starlessNightCount = starlessNightCount + 1
+	local cd = 130.0
 	if starlessNightCount == 3 then
-		self:Bar(442277, 130.0) -- Eternal Night
+		self:Bar(442277, cd, CL.count:format(CL.stage:format(2), starlessNightCount)) -- Eternal Night
 	elseif starlessNightCount < 3 then
-		self:Bar(args.spellId, 130.0, CL.count:format(args.spellName, starlessNightCount))
+		self:Bar(args.spellId, cd, CL.count:format(CL.stage:format(2), starlessNightCount))
 	end
 end
 
 function mod:EternalNight(args)
-	self:StopBar(args.spellName)
-	self:Message(args.spellId, "red")
+	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 34, 15097) -- 15097 = Enrage (cast hits the entire room and ramps)
 end
