@@ -49,7 +49,7 @@ local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or t
 
 function mod:GetOptions()
 	return {
-		{433517, "SAY", "ME_ONLY_EMPHASIZE"}, -- Phase Blades
+		{433517, "PRIVATE"}, -- Phase Blades
 			434860, -- Cosmic Wound
 		{442428, "SAY", "SAY_COUNTDOWN"}, -- Decimate
 			459273, -- Cosmic Shards
@@ -66,7 +66,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "PhaseBlades", 433519)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Phase Blades
 	self:Log("SPELL_AURA_APPLIED", "CosmicWoundApplied", 434860)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Decimate Targetting
 	self:Log("SPELL_CAST_START", "Decimate", 442428)
@@ -102,11 +102,13 @@ end
 -- Event Handlers
 --
 
-function mod:PhaseBlades(args)
-	self:StopBar(CL.count:format(CL.charge, phaseBladesCount))
-	self:Message(433517, "orange", CL.count:format(CL.charge, phaseBladesCount))
-	phaseBladesCount = phaseBladesCount + 1
-	self:CDBar(433517, timers[433517][phaseBladesCount], CL.count:format(CL.charge, phaseBladesCount))
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 433475 then -- Phase Blades
+		self:StopBar(CL.count:format(CL.charge, phaseBladesCount))
+		self:Message(433517, "orange", CL.count:format(CL.charge, phaseBladesCount))
+		phaseBladesCount = phaseBladesCount + 1
+		self:CDBar(433517, timers[433517][phaseBladesCount], CL.count:format(CL.charge, phaseBladesCount))
+	end
 end
 
 function mod:CosmicWoundApplied(args)
