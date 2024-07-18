@@ -209,7 +209,7 @@ function mod:OnEngage()
 	webReaveCount = 1
 	canStartPhase = false
 
-	self:Bar(439811, 3.0, CL.count:format(L.erosive_spray, erosiveSprayCount[2])) -- Erosive Spray
+	self:Bar(439811, 3.0, CL.count:format(L.erosive_spray, erosiveSprayCount[1])) -- Erosive Spray
 	self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
 	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
 	self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
