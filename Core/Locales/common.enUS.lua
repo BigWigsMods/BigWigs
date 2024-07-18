@@ -112,6 +112,7 @@ L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted 
 L.link = "Link"
 L.link_with = "Linked with %s"
 L.link_with_icon = "Linked with |T13700%d:0|t%s"
+L.link_with_rticon = "Linked with {rt%d}%s"
 L.link_short = "Linked: %s"
 L.link_both = "%s linked with %s"
 L.link_both_icon = "|T13700%d:0|t%s linked with |T13700%d:0|t%s"

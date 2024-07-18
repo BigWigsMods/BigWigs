@@ -113,6 +113,7 @@ L.marker_npc_desc = "Marchia %s con %s, necessario ruolo assistente o capo." -- 
 L.link = "Vincolo"
 L.link_with = "Vincolato a %s"
 L.link_with_icon = "Vincolato a |T13700%d:0|t%s"
+L.link_with_rticon = "Vincolato a {rt%d}%s"
 L.link_short = "Vincolo: %s"
 L.link_both = "%s vincolato a %s"
 L.link_both_icon = "|T13700%d:0|t%s vincolato a |T13700%d:0|t%s"

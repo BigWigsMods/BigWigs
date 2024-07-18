@@ -113,6 +113,7 @@ L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder." -- Mark NPC_N
 L.link = "Enlace"
 L.link_with = "Enlazado con %s"
 L.link_with_icon = "Enlazado con |T13700%d:0|t%s"
+L.link_with_rticon = "Enlazado con {rt%d}%s"
 L.link_short = "Enlazado: %s"
 L.link_both = "%s enlazado con %s"
 L.link_both_icon = "|T13700%d:0|t%s enlazado con |T13700%d:0|t%s"

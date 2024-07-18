@@ -113,6 +113,7 @@ L.marker_npc_aura_desc = "Отмечает НПЦ под воздействие�
 L.link = "Связь"
 L.link_with = "Связан с %s"
 L.link_with_icon = "Связан с |T13700%d:0|t%s"
+L.link_with_rticon = "Связан с {rt%d}%s"
 L.link_short = "Связь: %s"
 L.link_both = "%s связан с %s"
 L.link_both_icon = "|T13700%d:0|t%s связан с |T13700%d:0|t%s"

@@ -114,6 +114,7 @@ L.marker_npc_aura_desc = "Marque les PNJ affectés par '%s' avec %s. Nécessite 
 L.link = "Lien"
 L.link_with = (female and "Liée" or "Lié") .." avec %s"
 L.link_with_icon = (female and "Liée" or "Lié") .." avec |T13700%d:0|t%s"
+L.link_with_rticon = (female and "Liée" or "Lié") .." avec {rt%d}%s"
 L.link_short = (female and "Liée" or "Lié") .." : %s"
 L.link_both = "%s est ".. (female and "liée" or "lié") .." avec %s"
 L.link_both_icon = "|T13700%d:0|t%s est ".. (female and "liée" or "lié") .." avec |T13700%d:0|t%s"

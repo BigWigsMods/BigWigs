@@ -113,6 +113,7 @@ L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공
 L.link = "연결"
 L.link_with = "%s|1과;와; 연결됨"
 L.link_with_icon = "|T13700%d:0|t%s|1과;와; 연결됨"
+L.link_with_rticon = "{rt%d}%s|1과;와; 연결됨"
 L.link_short = "연결됨: %s"
 L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_both_icon = "|T13700%d:0|t%s|1과;와; |T13700%d:0|t%s|1이;가; 연결됨"
