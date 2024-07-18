@@ -241,7 +241,7 @@ end
 
 function mod:RollingAcid(args)
 	self:StopBar(CL.count:format(L.rolling_acid, rollingAcidCount[1]))
-	self:Message(args.spellId, "yellow", CL.casting:format(L.rolling_acid))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.rolling_acid, rollingAcidCount[1])))
 	-- self:PlaySound(args.spellId, "alert")
 	rollingAcidCount[1] = rollingAcidCount[1] + 1 -- Total
 	rollingAcidCount[2] = rollingAcidCount[2] + 1 -- Stage
@@ -295,7 +295,7 @@ end
 
 function mod:ErosiveSpray(args)
 	self:StopBar(CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow", CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
 	self:PlaySound(args.spellId, "alert")
 	erosiveSprayCount[1] = erosiveSprayCount[1] + 1 -- Total
 	erosiveSprayCount[2] = erosiveSprayCount[2] + 1 -- Stage
@@ -322,7 +322,7 @@ end
 
 function mod:EnvelopingWebs(args)
 	self:StopBar(CL.count:format(L.enveloping_webs, envelopingWebsCount[1]))
-	self:Message(args.spellId, "yellow", CL.incoming:format(L.enveloping_webs))
+	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.enveloping_webs, envelopingWebsCount[1])))
 	self:PlaySound(args.spellId, "alarm") -- watch feet
 	envelopingWebsCount[1] = envelopingWebsCount[1] + 1 -- Total
 	envelopingWebsCount[2] = envelopingWebsCount[2] + 1 -- Stage
