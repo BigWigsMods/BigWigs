@@ -13,6 +13,16 @@ if L then
 	L.goresplatter = "Courez"
 end
 
+L = BigWigs:NewBossLocale("Rasha'nan", "frFR")
+if L then
+	--L.rolling_acid = "Waves"
+	--L.spinnerets_strands = "Strands"
+	--L.enveloping_webs = "Webs"
+	--L.enveloping_web_say = "Web" -- Singular of Webs
+	--L.erosive_spray = "Spray"
+	--L.caustic_hail = "Next Position"
+end
+
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "frFR")
 if L then
 	L.sticky_web_say = "Toiles"
