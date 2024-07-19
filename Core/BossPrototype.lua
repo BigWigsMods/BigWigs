@@ -584,11 +584,11 @@ function boss:AddAutoTalkOption(state, talkType, name)
 	if talkType == "boss" then
 		moduleLocale[option] = L.autotalk
 		moduleLocale[option.."_desc"] = L.autotalk_boss_desc
-		moduleLocale[option.."_icon"] = "ui_chat"
+		moduleLocale[option.."_icon"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Say"
 	elseif not talkType then
 		moduleLocale[option] = L.autotalk
 		moduleLocale[option.."_desc"] = L.autotalk_generic_desc
-		moduleLocale[option.."_icon"] = "ui_chat"
+		moduleLocale[option.."_icon"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Say"
 	else
 		core:Error("Invalid auto talk type: ".. tostring(talkType))
 	end
