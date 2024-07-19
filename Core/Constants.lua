@@ -182,8 +182,12 @@ local function getIcon(icon, module, option)
 			BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
 		end
 		return icon
-	elseif type(icon) == "string" and not icon:find("\\", nil, true) then
-		return "Interface\\Icons\\" .. icon
+	elseif type(icon) == "string" then
+		if not icon:find("\\", nil, true) then
+			return "Interface\\Icons\\" .. icon
+		else
+			return icon
+		end
 	elseif customBossOptions[option] then
 		return customBossOptions[option][3]
 	end
