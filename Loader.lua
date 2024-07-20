@@ -354,7 +354,7 @@ do
 		--[129] = lw_c, -- Razorfen Downs
 		--[189] = lw_c, -- Scarlet Monastery
 		--[209] = lw_c, -- Zul'Farrak
-		--[229] = lw_c, -- Blackrock Spire
+		[229] = lw_c, -- Blackrock Spire
 		--[230] = lw_c, -- Blackrock Depths
 		--[289] = lw_c, -- Scholomance
 		--[329] = lw_c, -- Stratholme
