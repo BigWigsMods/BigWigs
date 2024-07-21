@@ -1,6 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Common", "frFR")
 if not L then return end
-local female = UnitSex("player") == 3
+local female = BigWigsLoader.UnitSex("player") == 3
 
 -- Prototype.lua common words
 L.you = "%s sur VOUS"

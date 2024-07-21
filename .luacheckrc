@@ -41,6 +41,7 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
+	"113/UnitSex",
 	"11[13]/BigWigsClassicDB",
 	"11[13]/BigWigsStatsClassicDB",
 
@@ -336,6 +337,5 @@ globals = {
 	"UnitPowerMax",
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
-	"UnitSex",
 	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 }
