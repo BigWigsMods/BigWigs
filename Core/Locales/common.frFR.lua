@@ -6,7 +6,7 @@ local female = UnitSex("player") == 3
 L.you = "%s sur VOUS"
 L.you_icon = "%s sur |T13700%d:0|tVOUS"
 L.underyou = "%s en dessous de VOUS"
-L.aboveyou = "%s au dessus de VOUS"
+L.aboveyou = "%s au-dessus de VOUS"
 L.other = "%s : %s"
 L.onboss = "%s sur le BOSS"
 L.buff_boss = "Buff sur le BOSS : %s"
@@ -49,7 +49,7 @@ L.gate_open = "Portail ouvert" -- When a gate is open, usually after a speech fr
 L.threat = "Menace"
 L.energy = "Énergie"
 
---L.remaining = "%d remaining" -- 5 remaining
+L.remaining = "%d |4restant:restants;" -- 5 remaining
 L.duration = "%s pendant %s sec." -- Spell for 10 seconds
 L.over = "%s terminé" -- Spell Over
 L.removed = "%s enlevé" -- Spell Removed
@@ -70,14 +70,14 @@ L.next_ability = "Prochaine compétence" -- We don't know what ability will be n
 L.landing = "%s atterri" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 
 -- Add related
-L.add_spawned = "Add apparu" -- singular
-L.adds_spawned = "Adds apparus" -- plural
-L.adds_spawned_count = "%d |4add apparu:adds apparus;" -- 1 add spawned / 2 adds spawned
+L.add_spawned = "Add est apparu" -- singular
+L.adds_spawned = "Adds sont apparus" -- plural
+L.adds_spawned_count = "%d |4add est apparu:adds sont apparus;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Add en train d'apparaître" -- singular
 L.adds_spawning = "Adds en train d'apparaître" -- plural
-L.spawned = "%s apparu"
-L.spawning = "Apparition |2 %s"
-L.next_add = "Prochain Add"
+L.spawned = "%s est apparu"
+L.spawning = "%s en train d'apparaître"
+L.next_add = "Prochain add"
 L.add_killed = "Add tué (%d/%d)"
 L.add_remaining = "Add tué, il en reste %d"
 L.add = "Add"
@@ -116,8 +116,8 @@ L.link_with = (female and "Liée" or "Lié") .." avec %s"
 L.link_with_icon = (female and "Liée" or "Lié") .." avec |T13700%d:0|t%s"
 L.link_with_rticon = (female and "Liée" or "Lié") .." avec {rt%d}%s"
 L.link_short = (female and "Liée" or "Lié") .." : %s"
-L.link_both = "%s est ".. (female and "liée" or "lié") .." avec %s"
-L.link_both_icon = "|T13700%d:0|t%s est ".. (female and "liée" or "lié") .." avec |T13700%d:0|t%s"
+L.link_both = "%s est lié(e) avec %s"
+L.link_both_icon = "|T13700%d:0|t%s est lié(e) avec |T13700%d:0|t%s"
 L.link_removed = "Lien enlevé"
 
 -- Abbreviated numbers
@@ -169,7 +169,7 @@ L.bombs = "Bombes" -- Plural of L.bomb
 L.explosion = "Explosion" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Fixer" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Repousser" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
-L.pushback = "Repousser continu" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
+L.pushback = "Repousse en continu" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Pièges" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Météore" -- This one will probably only ever be used for actual meteors
 L.shield = "Bouclier" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
