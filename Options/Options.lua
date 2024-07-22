@@ -1113,7 +1113,7 @@ local function populateToggleOptions(widget, module)
 			local difficulties = {}
 
 			-- Headers
-			local displayOrder = { "LFR", "normal", "heroic", "mythic", "10N", "25N", "10H", "25H" }
+			local displayOrder = { "LFR", "normal", "heroic", "mythic", "10N", "25N", "10H", "25H", "SOD", "level1", "level2", "level3" }
 			for _, diff in ipairs(displayOrder) do
 				if sDB[diff] then
 					difficulties[#difficulties+1] = diff
