@@ -103,6 +103,7 @@ public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
+public.GetPlayerAuraBySpellID = C_UnitAuras and C_UnitAuras.GetPlayerAuraBySpellID
 public.GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 public.GetSpellDescription = C_Spell and C_Spell.GetSpellDescription or GetSpellDescription
 public.GetSpellLink = C_Spell and C_Spell.GetSpellLink or GetSpellLink

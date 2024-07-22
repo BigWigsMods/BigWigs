@@ -1651,6 +1651,17 @@ function boss:GetHealth(unit)
 end
 
 do
+	local GetPlayerAuraBySpellID = loader.GetPlayerAuraBySpellID
+	--- Get the aura info of the player using a spell ID.
+	-- @number spellId the spell ID of the aura
+	-- @return table the table full of aura info, or nil if not found
+	function boss:GetPlayerAura(spellId)
+		local tbl = GetPlayerAuraBySpellID(spellId)
+		return tbl
+	end
+end
+
+do
 	local UnitAura = C_UnitAuras and C_UnitAuras.GetAuraDataByIndex or UnitAura
 	local blacklist = {}
 	--- Get the buff info of a unit.
