@@ -645,7 +645,8 @@ function mod:VoidFractureApplied(args)
 		if args.spellId == 404218 then -- Initial say only for the Stage 2 debuffs
 			self:Say(404218, CL.bomb, nil, "Bomb")
 		end
-		local _, _, duration = self:UnitDebuff(args.destName, args.spellId) -- Duration depends on when bomb is picked up, so always different
+		local tbl = self:GetPlayerAura(args.spellId) -- Duration depends on when bomb is picked up, so always different
+		local duration = tbl.duration
 		if duration < 2 then -- dont countdown below 2, just run
 			self:SayCountdown(404218, duration, nil, duration < 3 and 2) -- If we are between 3 and 2, start countdown at 2
 		end
