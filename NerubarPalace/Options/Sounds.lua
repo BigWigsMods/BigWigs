@@ -35,7 +35,6 @@ BigWigs:AddSounds("The Bloodbound Horror", {
 
 BigWigs:AddSounds("Sikran, Captain of the Sureki", {
 	[432969] = "warning",
-	[433517] = "warning",
 	[434860] = "alarm",
 	[439511] = "alarm",
 	[439559] = "alarm",
@@ -49,17 +48,17 @@ BigWigs:AddSounds("Rasha'nan", {
 	[439784] = "alert",
 	[439785] = "alarm",
 	[439787] = "alarm",
-	[439789] = "alert",
-	[439792] = "warning",
+	[439792] = "alarm",
 	[439795] = "long",
 	[439811] = "alert",
 	[444687] = "info",
-	[452806] = "alarm",
+	[452806] = {"alert","info"},
+	[454989] = {"alarm","warning"},
 	[455287] = "alarm",
-	[455373] = "alert",
-	[456853] = "info",
+	[455373] = "info",
 	[457877] = "info",
 	[458067] = "alarm",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Broodtwister Ovi'nax", {
@@ -79,14 +78,13 @@ BigWigs:AddSounds("Broodtwister Ovi'nax", {
 
 BigWigs:AddSounds("Nexus-Princess Ky'veza", {
 	[435405] = "long",
-	[436867] = "warning",
 	[437343] = "alarm",
 	[437620] = "alert",
 	[438245] = "alert",
 	[439576] = "alarm",
 	[440377] = "alert",
 	[440576] = "warning",
-	[442277] = "alarm",
+	[442277] = "long",
 })
 
 BigWigs:AddSounds("The Silken Court", {
@@ -103,12 +101,16 @@ BigWigs:AddSounds("The Silken Court", {
 	[441782] = "alert",
 	[442994] = "alarm",
 	[443068] = "alarm",
-	[443598] = {"alert","info"},
 	[449857] = "alarm",
 	[450129] = "warning",
 	[450980] = {"info","long"},
 	[451277] = {"info","long"},
+	[455849] = "info",
+	[455850] = "info",
+	[455863] = "alarm",
 	[456245] = {"alarm","info","long"},
+	[460281] = "info",
+	[460359] = "info",
 	["stages"] = "long",
 })
 
