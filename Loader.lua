@@ -1914,6 +1914,7 @@ SlashCmdList.BigWigs = function()
 end
 
 SLASH_BigWigsVersion1 = "/bwv"
+local UnitInPartyIsAI = UnitInPartyIsAI
 SlashCmdList.BigWigsVersion = function()
 	if not IsInGroup() then
 		sysprint(BIGWIGS_RELEASE_STRING)
@@ -1944,9 +1945,12 @@ SlashCmdList.BigWigsVersion = function()
 		unit = "raid%d"
 	end
 	for i = 1, GetNumGroupMembers() do
-		local n, s = UnitName((unit):format(i))
-		if n and s and s ~= "" then n = n.."-"..s end
-		if n then list[#list+1] = n end
+		local unitToken = (unit):format(i)
+		if not UnitInPartyIsAI or not UnitInPartyIsAI(unitToken) then -- Filter AI units from version list
+			local n, s = UnitName(unitToken)
+			if n and s and s ~= "" then n = n.."-"..s end
+			if n then list[#list+1] = n end
+		end
 	end
 
 	local good = {} -- highest release users

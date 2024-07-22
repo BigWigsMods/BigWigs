@@ -38,6 +38,7 @@ files["**/Loader.lua"].ignore = {
 	"113/SetRaidTarget",
 	"113/TimerTracker",
 	"113/UnitDetailedThreatSituation",
+	"113/UnitInPartyIsAI",
 	"113/UnitThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
