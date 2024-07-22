@@ -114,9 +114,8 @@ L.link = "Ligação"
 L.link_with = "Ligado com %s"
 L.link_with_icon = "Ligado com |T13700%d:0|t%s"
 L.link_with_rticon = "Ligado com {rt%d}%s"
-L.link_short = "Ligado: %s"
-L.link_both = "%s ligado com %s"
-L.link_both_icon = "|T13700%d:0|t%s ligado com |T13700%d:0|t%s"
+L.link_both = "%s ligado com %s" -- XXX needs updated
+L.link_both_icon = "|T13700%d:0|t%s ligado com |T13700%d:0|t%s" -- XXX needs updated
 L.link_removed = "Ligação removida"
 
 -- Abbreviated numbers
