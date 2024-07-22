@@ -37,7 +37,7 @@ L.warnOldBase = "你正在使用公会版本 BigWigs（%d），但是它是基�
 L.tooltipHint = "|cffeda55f右击|r打开选项。"
 L.activeBossModules = "激活首领模块："
 
-L.oldVersionsInGroup = "在你队伍里有人使用了旧版本或没有使用 BigWigs。你可以用 /bwv 获得详细信息。"
+L.oldVersionsInGroup = "在你队伍里有人使用了旧版本或没有使用 BigWigs。你可以用 /bwv 获得详细信息。" -- XXX needs updated
 L.upToDate = "已更新："
 L.outOfDate = "过期："
 L.dbmUsers = "DBM 用户："

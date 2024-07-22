@@ -37,7 +37,7 @@ L.warnOldBase = "Du nutzt eine Gildenversion von BigWigs (%d), aber die Basisver
 L.tooltipHint = "|cffeda55fRechtsklick|r, um auf die Optionen zuzugreifen."
 L.activeBossModules = "Aktive Bossmodule:"
 
-L.oldVersionsInGroup = "Es gibt Spieler in Deiner Gruppe mit veralteten Versionen oder ohne BigWigs. Mehr Details mit /bwv."
+L.oldVersionsInGroup = "Es gibt Spieler in Deiner Gruppe mit veralteten Versionen oder ohne BigWigs. Mehr Details mit /bwv." -- XXX needs updated
 L.upToDate = "Aktuell:"
 L.outOfDate = "Veraltet:"
 L.dbmUsers = "DBM-Nutzer:"

@@ -36,7 +36,7 @@ L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base ve
 L.tooltipHint = "|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"
 
-L.oldVersionsInGroup = "There are people in your group with older versions or without BigWigs. You can get more details with /bwv."
+L.oldVersionsInGroup = "There are people in your group with |cffff0000older versions|r of BigWigs. You can get more details with /bwv."
 L.upToDate = "Up to date:"
 L.outOfDate = "Out of date:"
 L.dbmUsers = "DBM users:"

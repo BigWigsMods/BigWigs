@@ -711,7 +711,7 @@ function dataBroker.OnTooltipShow(tt)
 	for i = 1, #tooltipFunctions do
 		tooltipFunctions[i](tt)
 	end
-	tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
+	tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, true)
 end
 
 -----------------------------------------------------------------------
@@ -719,19 +719,11 @@ end
 --
 
 tooltipFunctions[#tooltipFunctions+1] = function(tt)
-	local add, i = false, 0
 	for _, version in next, usersVersion do
-		i = i + 1
 		if version < highestFoundVersion then
-			add = true
+			tt:AddLine(L.oldVersionsInGroup, 1, 1, 1, true)
 			break
 		end
-	end
-	if not add and i ~= GetNumGroupMembers() then
-		add = true
-	end
-	if add then
-		tt:AddLine(L.oldVersionsInGroup, 1, 0, 0, 1)
 	end
 end
 

@@ -37,7 +37,7 @@ L.warnOldBase = "Estás usando un versión de hermandad de BigWigs (%d), pero tu
 L.tooltipHint = "|cffeda55fClic derecho|r para acceder a las opciones."
 L.activeBossModules = "Módulos de jefes activos:"
 
-L.oldVersionsInGroup = "Hay gente en tu grupo con versiones antiguas o sin BigWigs. Más detalles con /bwv."
+L.oldVersionsInGroup = "Hay gente en tu grupo con versiones antiguas o sin BigWigs. Más detalles con /bwv." -- XXX needs updated
 L.upToDate = "Al día:"
 L.outOfDate = "Desactualizado"
 L.dbmUsers = "Jugadores con DBM:"
