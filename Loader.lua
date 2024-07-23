@@ -125,7 +125,7 @@ public.UnitSex = UnitSex
 public.isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
-	public.isBeta = build >= 110000
+	public.isBeta = build >= 110002
 end
 
 -- Version
