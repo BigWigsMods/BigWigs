@@ -37,7 +37,7 @@ L.warnOldBase = "Vous utilisez une version guilde de BigWigs (%d), mais votre ve
 L.tooltipHint = "|cffeda55fClic droit|r pour accéder aux options."
 L.activeBossModules = "Modules de boss actifs :"
 
-L.oldVersionsInGroup = "Certains joueurs de votre groupe ont d'anciennes versions ou n'ont pas BigWigs. Tapez /bwv pour plus de détails." -- XXX needs updated
+L.oldVersionsInGroup = "Certains joueurs de votre groupe ont |cffff0000d'anciennes versions|r de BigWigs. Tapez /bwv pour plus de détails."
 L.upToDate = "À jour :"
 L.outOfDate = "Périmé :"
 L.dbmUsers = "Utilisateurs de DBM :"
@@ -63,8 +63,8 @@ L.expansionNames = {
 	"The War Within", -- The War Within
 }
 L.littleWigsExtras = {
-	["LittleWigs_Delves"] = "Delves",
-	["LittleWigs_CurrentSeason"] = "Current Season",
+	["LittleWigs_Delves"] = "Gouffres",
+	["LittleWigs_CurrentSeason"] = "Saison actuelle",
 }
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
@@ -200,13 +200,13 @@ L.color_import_countdown_desc = "Importez la couleur du compte à rebours."
 L.colors_export_bars_desc = "Exportez la couleur des barres."
 L.colors_export_messages_desc = "Exportez la couleur des messages."
 L.color_export_countdown_desc = "Exportez la couleur du compte à rebours."
-L.confirm_import = "Les paramètres sélectionnés que vous êtes sur le point d'importer écraseront les paramètres du profil sélectionné actuellement :\n\n|cFF33FF99\"%s\"|r\n\nÊtes-vous sûr de vouloir continuer ?"
+L.confirm_import = "Les paramètres sélectionnés que vous êtes sur le point d'importer écraseront les paramètres du profil sélectionné actuellement :\n\n|cFF33FF99\"%s\"|r\n\nÊtes-vous sûr de vouloir continuer ?"
 L.confirm_import_addon = "L'addon |cFF436EEE\"%s\"|r souhaite importer automatiquement de nouveaux paramètres BigWigs, qui écraserons les paramètres dans votre profil actuel :\n\n|cFF33FF99\"%s\"|r\n\nÊtes-vous sûr de vouloir continuer ?"
 L.confirm_import_addon_new_profile = "L'addon |cFF436EEE\"%s\"|r souhaite créer automatiquement un nouveau profil BigWigs appelé :\n\n|cFF33FF99\"%s\"|r\n\nAccepter ce nouveau profil vous feras basculer sur ce dernier."
 L.confirm_import_addon_edit_profile = "L'addon |cFF436EEE\"%s\"|r souhaite automatiquement éditer un de vos profils BigWigs appelé :\n\n|cFF33FF99\"%s\"|r\n\n Accepter ces changements vous fera basculter sur ce dernier."
 L.no_string_available = "Aucune chaîne stockée à importer. D'abord, importez une chaîne."
 L.no_import_message = "Aucun paramètre n'a été importé."
-L.import_success = "Importé : %s" -- Imported: Bar Anchors, Message Colors
+L.import_success = "Importé : %s" -- Imported: Bar Anchors, Message Colors
 L.imported_bar_positions = "Position de la barre"
 L.imported_bar_settings = "Paramètres de la barre"
 L.imported_bar_colors = "Couleurs de la barre"
@@ -226,7 +226,7 @@ L.mythic = "Mythique"
 L.wipes = "Échecs :"
 L.kills = "Victoires :"
 L.best = "Meilleur :"
---L.SOD = "Unknown"
---L.level1 = "Level 1"
---L.level2 = "Level 2"
---L.level3 = "Level 3"
+L.SOD = "Inconnu"
+L.level1 = "Niveau 1"
+L.level2 = "Niveau 2"
+L.level3 = "Niveau 3"
