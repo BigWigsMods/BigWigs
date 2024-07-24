@@ -1002,7 +1002,7 @@ function mod:ADDON_LOADED(addon)
 	if type(BigWigsIconDB) ~= "table" then
 		BigWigsIconDB = {}
 	end
-	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB, "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
 	-- XXX Classic DB Migration
 	-- Overwrite BigWigs3DB with BigWigsClassicDB

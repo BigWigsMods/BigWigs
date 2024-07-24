@@ -116,7 +116,7 @@ local acOptions = {
 						if v then
 							ldbi:RemoveButtonFromCompartment("BigWigs")
 						else
-							ldbi:AddButtonToCompartment("BigWigs", "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled")
+							ldbi:AddButtonToCompartment("BigWigs")
 						end
 					end,
 					hidden = loader.isClassic,
