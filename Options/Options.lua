@@ -119,7 +119,7 @@ local acOptions = {
 							ldbi:AddButtonToCompartment("BigWigs")
 						end
 					end,
-					hidden = loader.isClassic,
+					hidden = not ldbi:IsButtonCompartmentAvailable(),
 				},
 				separator3 = {
 					type = "description",
