@@ -28,6 +28,7 @@ local difficultyTable = {
 	[148] = "normal", -- 20 Player (AQ20)
 	--[175] = "normal", -- 10 Player (karazhan) -- move from 3 (fake) to 175 (guessed)
 	--[176] = "normal", -- 25 Player (sunwell)
+	[186] = "SOD", -- 40 Player (Onyxia - Classic Season of Discovery)
 	[198] = "normal", -- Normal [10] (Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "normal", -- Normal [20] (Sunken Temple - Classic Season of Discovery)
 	[220] = "story", -- Story
