@@ -1217,7 +1217,7 @@ local function populateToggleOptions(widget, module)
 				if tbl then
 					local difficultyText = AceGUI:Create("Label")
 					difficultyText:SetWidth(100)
-					difficultyText:SetText(diff or "?")
+					difficultyText:SetText(L[diff] or "?")
 					statGroup:AddChild(difficultyText)
 
 					local totalWipesLabel = AceGUI:Create("Label")
