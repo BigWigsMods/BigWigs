@@ -1204,7 +1204,7 @@ local function populateToggleOptions(widget, module)
 					if not tbl.fkDate then
 						firstKillDataLabel:SetText("-")
 					else
-						local text = table.concat({tbl.fkWipes or "0", tbl.fkDuration, tbl.fkDate}, " - ")
+						local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
 						firstKillDataLabel:SetText(text)
 					end
 					statGroup:AddChild(firstKillDataLabel)
@@ -1233,7 +1233,14 @@ local function populateToggleOptions(widget, module)
 					local fastestVictoryLabel = AceGUI:Create("Label")
 					fastestVictoryLabel:SetWidth(110)
 					local value = tbl.best and SecondsToTime(tbl.best)
-					fastestVictoryLabel:SetText(value or "-")
+					local bestDate = tbl.bestDate
+					if not value then
+						fastestVictoryLabel:SetText("-")
+					elseif value and bestDate then
+						fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
+					elseif value then
+						fastestVictoryLabel:SetText(value)
+					end
 					statGroup:AddChild(fastestVictoryLabel)
 
 					local firstKillDataLabel = AceGUI:Create("Label")
@@ -1241,7 +1248,7 @@ local function populateToggleOptions(widget, module)
 					if not tbl.fkDate then
 						firstKillDataLabel:SetText("-")
 					else
-						local text = table.concat({tbl.fkWipes or "0", tbl.fkDuration, tbl.fkDate}, " - ")
+						local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
 						firstKillDataLabel:SetText(text)
 					end
 					statGroup:AddChild(firstKillDataLabel)
