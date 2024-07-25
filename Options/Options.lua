@@ -1173,7 +1173,7 @@ local function populateToggleOptions(widget, module)
 				if not found then
 					local difficultyText = AceGUI:Create("Label")
 					difficultyText:SetWidth(100)
-					difficultyText:SetText(L.SOD)
+					difficultyText:SetText(L.unknown)
 					statGroup:AddChild(difficultyText)
 
 					local totalWipesLabel = AceGUI:Create("Label")

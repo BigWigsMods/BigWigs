@@ -32,7 +32,7 @@ local difficultyTable = {
 	[198] = "normal", -- Normal [10] (Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "normal", -- Normal [20] (Sunken Temple - Classic Season of Discovery)
 	[220] = "story", -- Story
-	[226] = "SOD", -- XXX verify or remove
+	[226] = "SOD", -- 20 Player (Molten Core - Classic Season of Discovery)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime, date = GetTime, BigWigsLoader.date
