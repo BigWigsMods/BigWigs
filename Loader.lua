@@ -96,6 +96,7 @@ local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
+public.date = date
 public.Ambiguate = Ambiguate
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker

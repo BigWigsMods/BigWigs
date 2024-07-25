@@ -34,7 +34,7 @@ local difficultyTable = {
 	[226] = "SOD", -- XXX verify or remove
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
-local GetTime = GetTime
+local GetTime, date = GetTime, BigWigsLoader.date
 local dontPrint = { -- Don't print a warning message for these difficulties
 	[1] = true, -- Normal Dungeon
 	[2] = true, -- Heroic Dungeon
@@ -393,7 +393,16 @@ function plugin:BigWigs_OnBossWin(event, module)
 			end
 			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
 			if self.db.profile.saveKills then
-				sDB.kills = sDB.kills and sDB.kills + 1 or 1
+				if not sDB.kills then
+					sDB.kills = 1
+					if sDB.wipes then
+						sDB.fkWipes = sDB.wipes
+					end
+					sDB.fkDuration = elapsed
+					sDB.fkDate = date("%Y/%m/%d")
+				else
+					sDB.kills = sDB.kills + 1
+				end
 			end
 
 			if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
@@ -402,6 +411,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 					BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
 				end
 				sDB.best = elapsed
+				sDB.bestDate = date("%Y/%m/%d")
 			end
 		elseif IsInRaid() and not dontPrint[diff] then
 			BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
