@@ -68,9 +68,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Stages
-
 	-- Gleeful Brutality
+	self:Log("SPELL_CAST_SUCCESS", "PhaseTransition", 441425)
 	self:Log("SPELL_CAST_START", "BrutalLashings", 434803)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Brutal Lashings Targetting
 	--self:Log("SPELL_AURA_APPLIED", "BrutalLashingsTargetApplied", 458129)
@@ -119,36 +118,27 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId) -- Used for Stages
-	if spellId == 441425 then -- Phase Transition None
-		-- Used when the boss runs out of energy, and then when it reaches 100 energy again in P2
-		-- For p1->p2 there is the first Hulking Crash, but there is no good alternative for p2 -> p1
-		-- Events around it as alteratives:
-		-- <162.42 21:00:32> [UNIT_POWER_UPDATE] boss1#Ulgrax the Devourer#TYPE:ENERGY/3#MAIN:100/100#ALT:0/0
-		-- <162.50 21:00:32> [UNIT_SPELLCAST_SUCCEEDED] Ulgrax the Devourer(9.5%-100.0%){Target:??} -Phase Transition None- [[boss1:Cast-3-2085-2657-32566-441425-00756B41CF:441425]]
-		-- <162.71 21:00:32> [CHAT_MSG_MONSTER_YELL] Still hungry!#Ulgrax the Devourer###Ulgrax the Devourer##0#0##0#4325#nil#0#false#false#false#false",
-		-- <166.66 21:00:36> [UNIT_SPELLCAST_SUCCEEDED] Ulgrax the Devourer(8.9%-100.0%){Target:??} -Phase Transition P2 -> P1- [[boss1:Cast-3-2085-2657-32566-441427-0006EB41D4:441427]]
-		if self:GetStage() == 2 then
-			self:StopBar(self:SpellName(445052)) -- Chittering Swarm
-			self:StopBar(self:SpellName(436200)) -- Juggernaut Charge
-			self:StopBar(self:SpellName(443842)) -- Swallowing Darkness
-			self:StopBar(CL.count:format(self:SpellName(438012), hungeringBellowsCount)) -- Hungering Bellows
-			self:StopBar(CL.count:format(self:SpellName(445123), hulkingCrashCount)) -- Hulking Crash
+function mod:PhaseTransition() -- Using HulkingCrashTransition for P1 -> P2, this is P2 -> P1
+	if self:GetStage() == 2 then
+		self:StopBar(self:SpellName(445052)) -- Chittering Swarm
+		self:StopBar(self:SpellName(436200)) -- Juggernaut Charge
+		self:StopBar(self:SpellName(443842)) -- Swallowing Darkness
+		self:StopBar(CL.count:format(self:SpellName(438012), hungeringBellowsCount)) -- Hungering Bellows
+		self:StopBar(CL.count:format(self:SpellName(445123), hulkingCrashCount)) -- Hulking Crash
 
-			self:SetStage(1)
-			brutalLashingsCount = 1
-			stalkersWebbingCount = 1
-			venomousLashCount = 1
-			brutalCrushCount = 1
+		self:SetStage(1)
+		brutalLashingsCount = 1
+		stalkersWebbingCount = 1
+		venomousLashCount = 1
+		brutalCrushCount = 1
 
-			self:Message("stages", "cyan", CL.stage:format(1), false)
+		self:Message("stages", "cyan", CL.stage:format(1), false)
 
-			self:Bar(434697, 7, CL.count:format(self:SpellName(434697), brutalCrushCount)) -- Brutal Crush
-			self:Bar(441452, self:Mythic() and 13 or 12, CL.count:format(self:SpellName(441452), stalkersWebbingCount)) -- Stalkers Webbing
-			self:Bar(435136, self:Mythic() and 9 or 18, CL.count:format(self:SpellName(435136), venomousLashCount)) -- Venomous Lash
-			self:Bar(434803, self:Mythic() and 37 or 27, CL.count:format(self:SpellName(434803), brutalLashingsCount)) -- Brutal Lashings
-			self:Bar("stages", 94, CL.stage:format(2), 438012) -- Hulking Crash Cast (id: 445123), Hungering Bellows icon
-		end
+		self:Bar(434697, 7, CL.count:format(self:SpellName(434697), brutalCrushCount)) -- Brutal Crush
+		self:Bar(441452, self:Mythic() and 13 or 12, CL.count:format(self:SpellName(441452), stalkersWebbingCount)) -- Stalkers Webbing
+		self:Bar(435136, self:Mythic() and 9 or 18, CL.count:format(self:SpellName(435136), venomousLashCount)) -- Venomous Lash
+		self:Bar(434803, self:Mythic() and 37 or 27, CL.count:format(self:SpellName(434803), brutalLashingsCount)) -- Brutal Lashings
+		self:Bar("stages", 94, CL.stage:format(2), 438012) -- Hulking Crash Cast (id: 445123), Hungering Bellows icon
 	end
 end
 
