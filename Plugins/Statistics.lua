@@ -13,33 +13,29 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-local difficultyTable = BigWigsLoader.isRetail and {
-	[3] = "10N", -- 10 Player
-	[4] = "25N", -- 25 Player
-	[5] = "10H", -- 10 Player (Heroic)
-	[6] = "25H", -- 25 Player (Heroic)
-	[7] = "LFR", -- Looking For Raid [old] (Dragon Soul)
-	--[9] = "normal", -- 40 Player (MC/BWL/AQ40)
-	[14] = "normal", -- Normal
-	[15] = "heroic", -- Heroic
-	[16] = "mythic", -- Mythic
-	[17] = "LFR", -- Looking For Raid
-} or {
+local difficultyTable = {
 	[3] = "10N", -- 10 Player
 	[4] = "25N", -- 25 Player
 	[5] = "10H", -- 10 Player (Heroic)
 	[6] = "25H", -- 25 Player (Heroic)
 	[7] = "LFR", -- Looking For Raid [old] (Dragon Soul)
 	[9] = "normal", -- 40 Player (MC/BWL/AQ40)
+	[14] = "normal", -- Normal
+	[15] = "heroic", -- Heroic
+	[16] = "mythic", -- Mythic
+	[17] = "LFR", -- Looking For Raid
+	[33] = "timewalk", -- Timewalking (raids)
 	[148] = "normal", -- 20 Player (AQ20)
 	--[175] = "normal", -- 10 Player (karazhan) -- move from 3 (fake) to 175 (guessed)
 	--[176] = "normal", -- 25 Player (sunwell)
+	[186] = "SOD", -- 40 Player (Onyxia - Classic Season of Discovery)
 	[198] = "normal", -- Normal [10] (Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "normal", -- Normal [20] (Sunken Temple - Classic Season of Discovery)
-	[226] = "SOD", -- XXX verify or remove
+	[220] = "story", -- Story
+	[226] = "SOD", -- 20 Player (Molten Core - Classic Season of Discovery)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
-local GetTime = GetTime
+local GetTime, date = GetTime, BigWigsLoader.date
 local dontPrint = { -- Don't print a warning message for these difficulties
 	[1] = true, -- Normal Dungeon
 	[2] = true, -- Heroic Dungeon
@@ -398,7 +394,16 @@ function plugin:BigWigs_OnBossWin(event, module)
 			end
 			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
 			if self.db.profile.saveKills then
-				sDB.kills = sDB.kills and sDB.kills + 1 or 1
+				if not sDB.kills then
+					sDB.kills = 1
+					if sDB.wipes then
+						sDB.fkWipes = sDB.wipes
+					end
+					sDB.fkDuration = elapsed
+					sDB.fkDate = date("%Y/%m/%d")
+				else
+					sDB.kills = sDB.kills + 1
+				end
 			end
 
 			if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
@@ -407,6 +412,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 					BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
 				end
 				sDB.best = elapsed
+				sDB.bestDate = date("%Y/%m/%d")
 			end
 		elseif IsInRaid() and not dontPrint[diff] then
 			BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)

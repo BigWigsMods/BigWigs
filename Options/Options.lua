@@ -116,10 +116,10 @@ local acOptions = {
 						if v then
 							ldbi:RemoveButtonFromCompartment("BigWigs")
 						else
-							ldbi:AddButtonToCompartment("BigWigs", "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled")
+							ldbi:AddButtonToCompartment("BigWigs")
 						end
 					end,
-					hidden = loader.isClassic,
+					hidden = not ldbi:IsButtonCompartmentAvailable(),
 				},
 				separator3 = {
 					type = "description",
@@ -1047,10 +1047,10 @@ local function populatePrivateAuraOptions(widget)
 				end)
 				local value = module.db.profile[key] or default
 				for i, v in next, soundList do
-				  if v == value then
-				    dropdown:SetValue(i)
-				    break
-				  end
+					if v == value then
+						dropdown:SetValue(i)
+						break
+					end
 				end
 
 				scrollFrame:AddChildren(icon, dropdown)
@@ -1082,11 +1082,33 @@ local function populatePrivateAuraOptions(widget)
 	scrollFrame:PerformLayout()
 end
 
+local function statsBestTimeLabelOnEnter(self)
+	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	bwTooltip:AddLine(L.best_desc, 1, 1, 1)
+	bwTooltip:Show()
+end
+
+local function statsFirstKillLabelOnEnter(self)
+	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	bwTooltip:AddLine(L.firstKill_desc, 1, 1, 1, true)
+	bwTooltip:Show()
+end
+
 local function populateToggleOptions(widget, module)
 	visibleSpellDescriptionWidgets = {}
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
 	scrollFrame:PauseLayout()
+
+	-- Add a small text label to the top right displaying the boss encounter ID
+	if module:GetEncounterID() then
+		local idLabel = AceGUI:Create("Label")
+		idLabel.label:SetFormattedText(L.optionsKey, module:GetEncounterID())
+		idLabel:SetColor(0.65, 0.65, 0.65)
+		idLabel:SetFullWidth(true)
+		idLabel.label:SetJustifyH("RIGHT")
+		scrollFrame:AddChild(idLabel)
+	end
 
 	local id = module.instanceId
 
@@ -1105,90 +1127,134 @@ local function populateToggleOptions(widget, module)
 			statGroup:SetFullWidth(true)
 			scrollFrame:AddChild(statGroup)
 
-			local statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
+			local emptyFirstColumnLabel = AceGUI:Create("Label")
+			emptyFirstColumnLabel:SetWidth(100)
+			emptyFirstColumnLabel:SetText("")
+			statGroup:AddChild(emptyFirstColumnLabel)
 
-			local difficulties = {}
+			local wipesColumnLabel = AceGUI:Create("Label")
+			wipesColumnLabel:SetWidth(100)
+			wipesColumnLabel:SetText(L.wipes)
+			statGroup:AddChild(wipesColumnLabel)
+
+			local killsLabel = AceGUI:Create("Label")
+			killsLabel:SetWidth(100)
+			killsLabel:SetText(L.kills)
+			statGroup:AddChild(killsLabel)
+
+			local bestTimeColumnLabel = AceGUI:Create("InteractiveLabel")
+			bestTimeColumnLabel:SetWidth(110)
+			bestTimeColumnLabel:SetText(L.best)
+			bestTimeColumnLabel:SetCallback("OnEnter", statsBestTimeLabelOnEnter)
+			bestTimeColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
+			statGroup:AddChild(bestTimeColumnLabel)
+
+			local firstKillColumnLabel = AceGUI:Create("InteractiveLabel")
+			firstKillColumnLabel:SetWidth(110)
+			firstKillColumnLabel:SetText(L.firstKill)
+			firstKillColumnLabel:SetCallback("OnEnter", statsFirstKillLabelOnEnter)
+			firstKillColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
+			statGroup:AddChild(firstKillColumnLabel)
 
 			-- Headers
-			local displayOrder = { "LFR", "normal", "heroic", "mythic", "10N", "25N", "10H", "25H", "SOD", "level1", "level2", "level3" }
-			for _, diff in ipairs(displayOrder) do
-				if sDB[diff] then
-					difficulties[#difficulties+1] = diff
-					statistics = AceGUI:Create("Label")
-					statistics:SetWidth(100)
-					statistics:SetText(L[diff])
-					statGroup:AddChild(statistics)
+			local displayOrder = {
+				"story", "timewalk", "LFR", "normal", "heroic", "mythic",
+				"10N", "25N", "10H", "25H",
+				"SOD", "level1", "level2", "level3"
+			}
+			for diff, tbl in next, sDB do -- Unknown Stats
+				local found = false
+				for i = 1, #displayOrder do
+					if displayOrder[i] == diff then
+						found = true
+						break
+					end
+				end
+				if not found then
+					local difficultyText = AceGUI:Create("Label")
+					difficultyText:SetWidth(100)
+					difficultyText:SetText(L.unknown)
+					statGroup:AddChild(difficultyText)
+
+					local totalWipesLabel = AceGUI:Create("Label")
+					totalWipesLabel:SetWidth(100)
+					totalWipesLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
+					statGroup:AddChild(totalWipesLabel)
+
+					local totalKillsLabel = AceGUI:Create("Label")
+					totalKillsLabel:SetWidth(100)
+					totalKillsLabel:SetText(tbl.kills or "-")
+					statGroup:AddChild(totalKillsLabel)
+
+					local fastestVictoryLabel = AceGUI:Create("Label")
+					fastestVictoryLabel:SetWidth(110)
+					local value = tbl.best and SecondsToTime(tbl.best)
+					local bestDate = tbl.bestDate
+					if not value then
+						fastestVictoryLabel:SetText("-")
+					elseif value and bestDate then
+						fastestVictoryLabel:SetFormattedText("%s (%s)", value, bestDate)
+					elseif value then
+						fastestVictoryLabel:SetText(value)
+					end
+					statGroup:AddChild(fastestVictoryLabel)
+
+					local firstKillDataLabel = AceGUI:Create("Label")
+					firstKillDataLabel:SetWidth(110)
+					if not tbl.fkDate then
+						firstKillDataLabel:SetText("-")
+					else
+						local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
+						firstKillDataLabel:SetText(text)
+					end
+					statGroup:AddChild(firstKillDataLabel)
 				end
 			end
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetFullWidth(true)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
+			for i = 1, #displayOrder do -- Known Stats
+				local diff = displayOrder[i]
+				local tbl = sDB[diff]
+				if tbl then
+					local difficultyText = AceGUI:Create("Label")
+					difficultyText:SetWidth(100)
+					difficultyText:SetText(L[diff] or "?")
+					statGroup:AddChild(difficultyText)
 
-			-- Wipes
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.wipes)
-			statGroup:AddChild(statistics)
+					local totalWipesLabel = AceGUI:Create("Label")
+					totalWipesLabel:SetWidth(100)
+					totalWipesLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
+					statGroup:AddChild(totalWipesLabel)
 
-			for _, diff in ipairs(difficulties) do
-				statistics = AceGUI:Create("Label")
-				statistics:SetWidth(100)
-				statistics:SetText(sDB[diff] and sDB[diff].wipes or "-")
-				statGroup:AddChild(statistics)
-			end
+					local totalKillsLabel = AceGUI:Create("Label")
+					totalKillsLabel:SetWidth(100)
+					totalKillsLabel:SetText(tbl.kills or "-")
+					statGroup:AddChild(totalKillsLabel)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetFullWidth(true)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
+					local fastestVictoryLabel = AceGUI:Create("Label")
+					fastestVictoryLabel:SetWidth(110)
+					local value = tbl.best and SecondsToTime(tbl.best)
+					local bestDate = tbl.bestDate
+					if not value then
+						fastestVictoryLabel:SetText("-")
+					elseif value and bestDate then
+						fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
+					elseif value then
+						fastestVictoryLabel:SetText(value)
+					end
+					statGroup:AddChild(fastestVictoryLabel)
 
-			-- Kills
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.kills)
-			statGroup:AddChild(statistics)
-
-			for _, diff in ipairs(difficulties) do
-				statistics = AceGUI:Create("Label")
-				statistics:SetWidth(100)
-				statistics:SetText(sDB[diff] and sDB[diff].kills or "-")
-				statGroup:AddChild(statistics)
-			end
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetFullWidth(true)
-			statistics:SetText("")
-			statGroup:AddChild(statistics)
-
-			-- Best Time
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.best)
-			statGroup:AddChild(statistics)
-
-			for _, diff in ipairs(difficulties) do
-				statistics = AceGUI:Create("Label")
-				statistics:SetWidth(100)
-				local value = sDB[diff] and sDB[diff].best and SecondsToTime(sDB[diff].best)
-				statistics:SetText(value or "-")
-				statGroup:AddChild(statistics)
+					local firstKillDataLabel = AceGUI:Create("Label")
+					firstKillDataLabel:SetWidth(110)
+					if not tbl.fkDate then
+						firstKillDataLabel:SetText("-")
+					else
+						local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
+						firstKillDataLabel:SetText(text)
+					end
+					statGroup:AddChild(firstKillDataLabel)
+				end
 			end
 		end -- End statistics table
-	end
-
-	-- Add a small text label to the top right displaying the boss encounter ID
-	if module:GetEncounterID() then
-		local idLabel = AceGUI:Create("Label")
-		idLabel.label:SetFormattedText(L.optionsKey, module:GetEncounterID())
-		idLabel:SetColor(0.65, 0.65, 0.65)
-		idLabel:SetFullWidth(true)
-		idLabel.label:SetJustifyH("RIGHT")
-		scrollFrame:AddChild(idLabel)
 	end
 
 	if module.SetupOptions then module:SetupOptions() end

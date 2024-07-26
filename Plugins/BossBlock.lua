@@ -570,7 +570,12 @@ do
 	end
 
 	local function EditEmotesOnPTR(event, msg, ...)
-		msg = "BigWigs |cFF3366ffNP|r: ".. msg
+		msg = "BigWigs PTR [E]: ".. msg
+		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
+	end
+
+	local function EditWhispersOnPTR(event, msg, ...)
+		msg = "BigWigs PTR [W]: ".. msg
 		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
 	end
 
@@ -588,7 +593,7 @@ do
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 			self:RegisterEvent("RAID_BOSS_EMOTE", EditEmotesOnPTR)
-			self:RegisterEvent("RAID_BOSS_WHISPER", EditEmotesOnPTR)
+			self:RegisterEvent("RAID_BOSS_WHISPER", EditWhispersOnPTR)
 		elseif self.db.profile.blockEmotes then
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")

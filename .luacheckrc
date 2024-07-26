@@ -10,6 +10,7 @@ files["**/Init_Vanilla.lua"].ignore = {
 files["**/Loader.lua"].ignore = {
 	"11[13]/BigWigsBarsReset", -- XXX temp
 
+	"113/date",
 	"113/geterrorhandler",
 
 	"113/Ambiguate",
@@ -175,7 +176,6 @@ globals = {
 	"bit",
 	"ceil",
 	"cos",
-	"date",
 	"debugstack",
 	"deg",
 	"exp",
