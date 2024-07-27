@@ -1432,6 +1432,19 @@ function boss:Vanilla()
 	return isClassicEra
 end
 
+do
+	local GetActiveSeason = C_Seasons and C_Seasons.GetActiveSeason
+	local season = 0
+	if GetActiveSeason then
+		season = GetActiveSeason() or 0
+	end
+	--- Get the current season.
+	-- @return number
+	function boss:GetSeason()
+		return season
+	end
+end
+
 --- Get the mob/npc id from a GUID.
 -- @string guid GUID of a mob/npc
 -- @return mob/npc id

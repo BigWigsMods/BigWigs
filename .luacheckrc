@@ -63,6 +63,7 @@ files["**/AutoRole.lua"].ignore = {
 }
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_Item",
+	"113/C_Seasons",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
@@ -75,6 +76,7 @@ files["**/Core/BossPrototype.lua"].ignore = {
 }
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_Item",
+	"113/C_Seasons",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
