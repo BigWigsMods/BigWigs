@@ -100,7 +100,7 @@ end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "ruRU")
 if L then
-	L.eggs_remaining = "Яиц осталось: %d!"
+	L.eggs_remaining = "Осталось %d |4яйцо:яиц:яйцо;!"
 	L.broodkeepers_bond = "Яиц осталось"
 	L.greatstaff_of_the_broodkeeper = "Великий Посох"
 	L.clutchwatchers_rage = "Ярость"
