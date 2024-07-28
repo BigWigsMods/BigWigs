@@ -206,8 +206,7 @@ L.confirm_import_addon_edit_profile = "Модификация |cFF436EEE\"%s\"|r
 L.no_string_available = "В строке импорте не найдено текста. Сперва импортируйте строку."
 L.no_import_message = "Никакие настройки не были импортированны."
 L.import_success = "Импортированно: %s" -- Imported: Bar Anchors, Message Colors
--- Intentionally used this format to make it easier on the first glance. Would need to swap first and second words otherwise
-L.imported_bar_positions = "Полосы: позиция"
+L.imported_bar_positions = "Полосы: позиция" -- Intentionally used this format to make it easier on the first glance. Would need to swap first and second words otherwise. Refers to all further lines
 L.imported_bar_settings = "Полосы: настройки"
 L.imported_bar_colors = "Полосы: цвет"
 L.imported_message_positions = "Сообщения: позиция"
