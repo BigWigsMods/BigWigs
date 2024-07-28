@@ -1048,15 +1048,27 @@ local function populatePrivateAuraOptions(widget)
 	scrollFrame:PerformLayout()
 end
 
-local function statsBestTimeLabelOnEnter(self)
+local function statsDefeatLabelOnEnter(self)
 	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	bwTooltip:AddLine(L.best_desc, 1, 1, 1)
+	bwTooltip:AddLine(L.defeat_desc, 1, 1, 1)
 	bwTooltip:Show()
 end
 
-local function statsFirstKillLabelOnEnter(self)
+local function statsVictoryLabelOnEnter(self)
 	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	bwTooltip:AddLine(L.firstKill_desc, 1, 1, 1, true)
+	bwTooltip:AddLine(L.victory_desc, 1, 1, 1)
+	bwTooltip:Show()
+end
+
+local function statsFastestLabelOnEnter(self)
+	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	bwTooltip:AddLine(L.fastest_desc, 1, 1, 1)
+	bwTooltip:Show()
+end
+
+local function statsFirstLabelOnEnter(self)
+	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	bwTooltip:AddLine(L.first_desc, 1, 1, 1)
 	bwTooltip:Show()
 end
 
@@ -1094,39 +1106,43 @@ local function populateToggleOptions(widget, module)
 			scrollFrame:AddChild(statGroup)
 
 			local emptyFirstColumnLabel = AceGUI:Create("Label")
-			emptyFirstColumnLabel:SetWidth(100)
+			emptyFirstColumnLabel:SetWidth(110)
 			emptyFirstColumnLabel:SetText("")
 			statGroup:AddChild(emptyFirstColumnLabel)
 
-			local wipesColumnLabel = AceGUI:Create("Label")
-			wipesColumnLabel:SetWidth(100)
-			wipesColumnLabel:SetText(L.wipes)
-			statGroup:AddChild(wipesColumnLabel)
+			local defeatColumnLabel = AceGUI:Create("InteractiveLabel")
+			defeatColumnLabel:SetWidth(100)
+			defeatColumnLabel:SetText(L.defeat)
+			defeatColumnLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
+			defeatColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
+			statGroup:AddChild(defeatColumnLabel)
 
-			local killsLabel = AceGUI:Create("Label")
-			killsLabel:SetWidth(100)
-			killsLabel:SetText(L.kills)
-			statGroup:AddChild(killsLabel)
+			local victoryColumnLabel = AceGUI:Create("InteractiveLabel")
+			victoryColumnLabel:SetWidth(100)
+			victoryColumnLabel:SetText(L.victory)
+			victoryColumnLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
+			victoryColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
+			statGroup:AddChild(victoryColumnLabel)
 
-			local bestTimeColumnLabel = AceGUI:Create("InteractiveLabel")
-			bestTimeColumnLabel:SetWidth(110)
-			bestTimeColumnLabel:SetText(L.best)
-			bestTimeColumnLabel:SetCallback("OnEnter", statsBestTimeLabelOnEnter)
-			bestTimeColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
-			statGroup:AddChild(bestTimeColumnLabel)
+			local fastestColumnLabel = AceGUI:Create("InteractiveLabel")
+			fastestColumnLabel:SetWidth(110)
+			fastestColumnLabel:SetText(L.fastest)
+			fastestColumnLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
+			fastestColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
+			statGroup:AddChild(fastestColumnLabel)
 
-			local firstKillColumnLabel = AceGUI:Create("InteractiveLabel")
-			firstKillColumnLabel:SetWidth(110)
-			firstKillColumnLabel:SetText(L.firstKill)
-			firstKillColumnLabel:SetCallback("OnEnter", statsFirstKillLabelOnEnter)
-			firstKillColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
-			statGroup:AddChild(firstKillColumnLabel)
+			local firstColumnLabel = AceGUI:Create("InteractiveLabel")
+			firstColumnLabel:SetWidth(110)
+			firstColumnLabel:SetText(L.first)
+			firstColumnLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
+			firstColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
+			statGroup:AddChild(firstColumnLabel)
 
 			-- Headers
 			local displayOrder = {
 				"story", "timewalk", "LFR", "normal", "heroic", "mythic",
 				"10N", "25N", "10H", "25H",
-				"SOD", "level1", "level2", "level3"
+				"SOD", "level1", "level2", "level3", "hardcore",
 			}
 			for diff, tbl in next, sDB do -- Unknown Stats
 				local found = false
@@ -1138,19 +1154,19 @@ local function populateToggleOptions(widget, module)
 				end
 				if not found then
 					local difficultyText = AceGUI:Create("Label")
-					difficultyText:SetWidth(100)
+					difficultyText:SetWidth(110)
 					difficultyText:SetText(L.unknown)
 					statGroup:AddChild(difficultyText)
 
-					local totalWipesLabel = AceGUI:Create("Label")
-					totalWipesLabel:SetWidth(100)
-					totalWipesLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
-					statGroup:AddChild(totalWipesLabel)
+					local defeatsLabel = AceGUI:Create("Label")
+					defeatsLabel:SetWidth(100)
+					defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
+					statGroup:AddChild(defeatsLabel)
 
-					local totalKillsLabel = AceGUI:Create("Label")
-					totalKillsLabel:SetWidth(100)
-					totalKillsLabel:SetText(tbl.kills or "-")
-					statGroup:AddChild(totalKillsLabel)
+					local victoriesLabel = AceGUI:Create("Label")
+					victoriesLabel:SetWidth(100)
+					victoriesLabel:SetText(tbl.kills or "-")
+					statGroup:AddChild(victoriesLabel)
 
 					local fastestVictoryLabel = AceGUI:Create("Label")
 					fastestVictoryLabel:SetWidth(110)
@@ -1182,19 +1198,19 @@ local function populateToggleOptions(widget, module)
 				local tbl = sDB[diff]
 				if tbl then
 					local difficultyText = AceGUI:Create("Label")
-					difficultyText:SetWidth(100)
+					difficultyText:SetWidth(110)
 					difficultyText:SetText(L[diff] or "?")
 					statGroup:AddChild(difficultyText)
 
-					local totalWipesLabel = AceGUI:Create("Label")
-					totalWipesLabel:SetWidth(100)
-					totalWipesLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
-					statGroup:AddChild(totalWipesLabel)
+					local defeatsLabel = AceGUI:Create("Label")
+					defeatsLabel:SetWidth(100)
+					defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
+					statGroup:AddChild(defeatsLabel)
 
-					local totalKillsLabel = AceGUI:Create("Label")
-					totalKillsLabel:SetWidth(100)
-					totalKillsLabel:SetText(tbl.kills or "-")
-					statGroup:AddChild(totalKillsLabel)
+					local victoriesLabel = AceGUI:Create("Label")
+					victoriesLabel:SetWidth(100)
+					victoriesLabel:SetText(tbl.kills or "-")
+					statGroup:AddChild(victoriesLabel)
 
 					local fastestVictoryLabel = AceGUI:Create("Label")
 					fastestVictoryLabel:SetWidth(110)
