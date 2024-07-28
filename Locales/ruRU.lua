@@ -36,8 +36,7 @@ L.warnOldBase = "Вы используете версию для гильдии 
 
 L.tooltipHint = "|cffeda55fПравый клик|r открыть настройки."
 L.activeBossModules = "Активные модули боссов:"
-
-L.oldVersionsInGroup = "В вашей группе есть игроки с устаревшими версиями или без BigWigs. Для получения более подробной информации введите команду /bwv." -- XXX needs updated
+L.oldVersionsInGroup = "В вашей группе есть игроки с устаревшими версиями BigWigs. Для получения более подробной информации введите команду /bwv." -- XXX needs updated
 L.upToDate = "Текущий:"
 L.outOfDate = "Устарело:"
 L.dbmUsers = "Пользователи DBM:"
@@ -63,7 +62,7 @@ L.expansionNames = {
 	"The War Within", -- The War Within
 }
 L.littleWigsExtras = {
-	["LittleWigs_Delves"] = "Delves",
+	["LittleWigs_Delves"] = "Вылазки",
 	["LittleWigs_CurrentSeason"] = "Текущий сезон",
 }
 
