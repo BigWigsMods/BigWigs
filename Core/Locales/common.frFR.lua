@@ -114,10 +114,12 @@ L.marker_npc_aura_desc = "Marque les PNJ affectés par '%s' avec %s. Nécessite 
 L.link = "Lien"
 L.link_with = (female and "Liée" or "Lié") .." avec %s"
 L.link_with_icon = (female and "Liée" or "Lié") .." avec |T13700%d:0|t%s"
-L.link_with_rticon = (female and "Liée" or "Lié") .." avec {rt%d}%s"
+L.link_with_rticon = "{rt%d}".. (female and "Liée" or "Lié") .." avec %s"
 L.link_both = "%s et %s sont liés"
 L.link_both_icon = "|T13700%d:0|t%s et |T13700%d:0|t%s sont liés"
 L.link_removed = "Lien enlevé"
+--L.link_say_option_name = "Repeating 'Linked' say messages"
+--L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
 
 -- Abbreviated numbers
 L.amount_one = "%dB" -- Billions 1,000,000,000

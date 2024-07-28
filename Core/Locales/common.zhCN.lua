@@ -113,10 +113,12 @@ L.marker_npc_aura_desc = "标记受到'%s'影响的 NPC 为%s，需要权限。"
 L.link = "连接"
 L.link_with = "与%s连接"
 L.link_with_icon = "与|T13700%d:0|t%s连接"
-L.link_with_rticon = "与{rt%d}%s连接"
+L.link_with_rticon = "{rt%d}与%s连接"
 L.link_both = "%s和%s连接"
 L.link_both_icon = "|T13700%d:0|t%s和|T13700%d:0|t%s连接"
 L.link_removed = "连接已移除"
+--L.link_say_option_name = "Repeating 'Linked' say messages"
+--L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
 
 -- Abbreviated numbers
 L.amount_one = "%.2f亿" -- Billions 1,000,000,000

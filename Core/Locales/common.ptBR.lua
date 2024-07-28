@@ -113,10 +113,12 @@ L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente." -- Mark NPC_
 L.link = "Ligação"
 L.link_with = "Ligado com %s"
 L.link_with_icon = "Ligado com |T13700%d:0|t%s"
-L.link_with_rticon = "Ligado com {rt%d}%s"
+L.link_with_rticon = "{rt%d}Ligado com %s"
 L.link_both = "%s ligado com %s" -- XXX needs updated
 L.link_both_icon = "|T13700%d:0|t%s ligado com |T13700%d:0|t%s" -- XXX needs updated
 L.link_removed = "Ligação removida"
+--L.link_say_option_name = "Repeating 'Linked' say messages"
+--L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
 
 -- Abbreviated numbers
 L.amount_one = "%dB" -- Billions 1,000,000,000

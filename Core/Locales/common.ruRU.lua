@@ -113,10 +113,12 @@ L.marker_npc_aura_desc = "Отмечает НПЦ под воздействие�
 L.link = "Связь"
 L.link_with = "Связан с %s"
 L.link_with_icon = "Связан с |T13700%d:0|t%s"
-L.link_with_rticon = "Связан с {rt%d}%s"
+L.link_with_rticon = "{rt%d}Связан с %s"
 L.link_both = "%s связан с %s" -- XXX needs updated
 L.link_both_icon = "|T13700%d:0|t%s связан с |T13700%d:0|t%s" -- XXX needs updated
 L.link_removed = "Связь прервана"
+--L.link_say_option_name = "Repeating 'Linked' say messages"
+--L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
 
 -- Abbreviated numbers
 L.amount_one = "%dмлрд" -- Billions 1,000,000,000

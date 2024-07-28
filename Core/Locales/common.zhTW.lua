@@ -113,10 +113,12 @@ L.marker_npc_aura_desc = "將受到%s影響的 NPC 標記為%s，需要權限。
 L.link = "連結"
 L.link_with = "與%s連結"
 L.link_with_icon = "與|T13700%d:0|t%s連結"
-L.link_with_rticon = "與{rt%d}%s連結"
+L.link_with_rticon = "{rt%d}與%s連結"
 L.link_both = "%s和%s連結"
 L.link_both_icon = "|T13700%d:0|t%s和|T13700%d:0|t%s連結"
 L.link_removed = "連結移除"
+--L.link_say_option_name = "Repeating 'Linked' say messages"
+--L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
 
 -- Abbreviated numbers
 L.amount_one = "%.2f億" -- Billions 1,000,000,000
