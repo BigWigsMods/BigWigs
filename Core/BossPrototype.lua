@@ -349,6 +349,40 @@ function boss:SetStage(stage)
 	end
 end
 
+do
+	local menuArt = {
+		MESSAGE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Messages",
+		ME_ONLY = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\MeOnly",
+		SOUND = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sounds",
+		ICON = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Markers",
+		FLASH = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash",
+		PULSE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pulse",
+		PROXIMITY = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity",
+		ALTPOWER = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AltPower",
+		INFOBOX = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Info",
+		COUNTDOWN = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Countdown",
+		CASTBAR_COUNTDOWN = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Countdown",
+		SAY = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Say",
+		SAY_COUNTDOWN = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\SayCountdown",
+		VOICE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Voice",
+		BAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
+		CASTBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
+		NAMEPLATEBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
+		TANK = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank",
+		HEALER = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer",
+		EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
+		ME_ONLY_EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessageMeOnly",
+		DISPEL = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Dispel",
+		PRIVATE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private",
+	}
+	--- Fetch the path to a specific menu icon
+	-- @string menuIcon the specific menu icon to fetch the path for
+	-- @return string
+	function boss:GetMenuIcon(menuIcon)
+		return menuArt[menuIcon]
+	end
+end
+
 --- Create a log entry in the Transcriptor addon if it is running
 -- @param ... any number of values to concatenate into the log entry
 function boss:Debug(...)
@@ -584,11 +618,11 @@ function boss:AddAutoTalkOption(state, talkType, name)
 	if talkType == "boss" then
 		moduleLocale[option] = L.autotalk
 		moduleLocale[option.."_desc"] = L.autotalk_boss_desc
-		moduleLocale[option.."_icon"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Say"
+		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
 	elseif not talkType then
 		moduleLocale[option] = L.autotalk
 		moduleLocale[option.."_desc"] = L.autotalk_generic_desc
-		moduleLocale[option.."_icon"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Say"
+		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
 	else
 		core:Error("Invalid auto talk type: ".. tostring(talkType))
 	end
