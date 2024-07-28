@@ -36,6 +36,7 @@ L.warnOldBase = "Вы используете версию для гильдии 
 
 L.tooltipHint = "|cffeda55fПравый клик|r открыть настройки."
 L.activeBossModules = "Активные модули боссов:"
+
 L.oldVersionsInGroup = "В вашей группе есть игроки с устаревшими версиями BigWigs. Для получения более подробной информации введите команду /bwv."
 L.upToDate = "Текущий:"
 L.outOfDate = "Устарело:"
@@ -234,7 +235,7 @@ L.heroic = "Героический"
 L.mythic = "Эпохальный"
 L.timewalk = "Путешествие во времени"
 L.story = "История"
-L.mplus = "М+ %d"
+L.mplus = "М+ %d
 L.SOD = "Season of Discovery"
 L.hardcore = "Хардкор"
 L.level1 = "Уровень 1"
