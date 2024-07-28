@@ -1303,13 +1303,13 @@ do
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
 
-				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
+				self:SendMessage("BigWigs_OnBossEngage", self)
 
 				if self.OnEngage then
 					self:OnEngage(difficulty)
 				end
 			elseif noEngage == "NoEngage" then
-				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
+				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self)
 			end
 		end
 	end
