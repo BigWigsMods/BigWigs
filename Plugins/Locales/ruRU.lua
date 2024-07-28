@@ -25,9 +25,9 @@ L.TOPLEFT = "Сверху слева"
 L.BOTTOMRIGHT = "Снизу справа"
 L.BOTTOMLEFT = "Снизу слева"
 L.CENTER = "По центру"
---L.customAnchorPoint = "Advanced: Custom anchor point"
---L.sourcePoint = "Source Point"
---L.destinationPoint = "Destination Point"
+L.customAnchorPoint = "Дополнительно: Пользовательские якоря"
+L.sourcePoint = "Начальная точка"
+L.destinationPoint = "Конечная точка"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -399,7 +399,7 @@ L.Long = "Долгий"
 L.Warning = "Предупреждение"
 L.onyou = "Заклинание, бафф или дебафф на тебе"
 L.underyou = "Тебе нужно выйти из заклинания под ногами"
---L.privateaura = "Whenever a 'Private Aura' is on you"
+L.privateaura = "Когда на вас 'Приватная Аура'"
 
 L.sound = "Звук"
 
