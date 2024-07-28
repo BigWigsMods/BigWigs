@@ -318,26 +318,31 @@ do
 			end
 		end
 	end
-	function plugin:BigWigs_OnBossEngage(event, module, diff)
+	function plugin:BigWigs_OnBossEngage(event, module)
 		local id = module.instanceId
 		local journalId = GetModuleID(module)
 
 		if journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
 			activeDurations[journalId] = GetTime()
 
+			local diff = module:Difficulty()
 			if diff and difficultyTable[diff] then
 				local sDB = BigWigsStatsDB
 				if not sDB[id] then sDB[id] = {} end
 				if not sDB[id][journalId] then sDB[id][journalId] = {} end
 				sDB = sDB[id][journalId]
 				local difficultyText = difficultyTable[diff]
-				if difficultyText == "SOD" then
+				if diff == 226 then
 					if module:GetPlayerAura(458841) then -- Sweltering Heat
 						difficultyText = "level1"
 					elseif module:GetPlayerAura(458842) then -- Blistering Heat
 						difficultyText = "level2"
 					elseif module:GetPlayerAura(458843) then -- Molten Heat
 						difficultyText = "level3"
+					end
+				elseif diff == 9 or diff == 148 then
+					if module:GetSeason() == 3 then
+						difficultyText = "hardcore"
 					end
 				end
 				if not sDB[difficultyText] then sDB[difficultyText] = {} end
@@ -383,13 +388,17 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local diff = module:Difficulty()
 		if difficultyTable[diff] then
 			local difficultyText = difficultyTable[diff]
-			if difficultyText == "SOD" then
+			if diff == 226 then
 				if module:GetPlayerAura(458841) then -- Sweltering Heat
 					difficultyText = "level1"
 				elseif module:GetPlayerAura(458842) then -- Blistering Heat
 					difficultyText = "level2"
 				elseif module:GetPlayerAura(458843) then -- Molten Heat
 					difficultyText = "level3"
+				end
+			elseif diff == 9 or diff == 148 then
+				if module:GetSeason() == 3 then
+					difficultyText = "hardcore"
 				end
 			end
 			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
@@ -437,13 +446,17 @@ function plugin:BigWigs_OnBossWipe(event, module)
 				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 			elseif difficultyTable[diff] and self.db.profile.saveWipes then
 				local difficultyText = difficultyTable[diff]
-				if difficultyText == "SOD" then
+				if diff == 226 then
 					if module:GetPlayerAura(458841) then -- Sweltering Heat
 						difficultyText = "level1"
 					elseif module:GetPlayerAura(458842) then -- Blistering Heat
 						difficultyText = "level2"
 					elseif module:GetPlayerAura(458843) then -- Molten Heat
 						difficultyText = "level3"
+					end
+				elseif diff == 9 or diff == 148 then
+					if module:GetSeason() == 3 then
+						difficultyText = "hardcore"
 					end
 				end
 				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
