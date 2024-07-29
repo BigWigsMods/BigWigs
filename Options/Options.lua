@@ -1111,28 +1111,28 @@ local function populateToggleOptions(widget, module)
 			statGroup:AddChild(emptyFirstColumnLabel)
 
 			local defeatColumnLabel = AceGUI:Create("InteractiveLabel")
-			defeatColumnLabel:SetWidth(100)
+			defeatColumnLabel:SetWidth(83)
 			defeatColumnLabel:SetText(L.defeat)
 			defeatColumnLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
 			defeatColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
 			statGroup:AddChild(defeatColumnLabel)
 
 			local victoryColumnLabel = AceGUI:Create("InteractiveLabel")
-			victoryColumnLabel:SetWidth(100)
+			victoryColumnLabel:SetWidth(83)
 			victoryColumnLabel:SetText(L.victory)
 			victoryColumnLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
 			victoryColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
 			statGroup:AddChild(victoryColumnLabel)
 
 			local fastestColumnLabel = AceGUI:Create("InteractiveLabel")
-			fastestColumnLabel:SetWidth(110)
+			fastestColumnLabel:SetWidth(130)
 			fastestColumnLabel:SetText(L.fastest)
 			fastestColumnLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
 			fastestColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
 			statGroup:AddChild(fastestColumnLabel)
 
 			local firstColumnLabel = AceGUI:Create("InteractiveLabel")
-			firstColumnLabel:SetWidth(110)
+			firstColumnLabel:SetWidth(140)
 			firstColumnLabel:SetText(L.first)
 			firstColumnLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
 			firstColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
@@ -1159,17 +1159,17 @@ local function populateToggleOptions(widget, module)
 					statGroup:AddChild(difficultyText)
 
 					local defeatsLabel = AceGUI:Create("Label")
-					defeatsLabel:SetWidth(100)
+					defeatsLabel:SetWidth(83)
 					defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
 					statGroup:AddChild(defeatsLabel)
 
 					local victoriesLabel = AceGUI:Create("Label")
-					victoriesLabel:SetWidth(100)
+					victoriesLabel:SetWidth(83)
 					victoriesLabel:SetText(tbl.kills or "-")
 					statGroup:AddChild(victoriesLabel)
 
 					local fastestVictoryLabel = AceGUI:Create("Label")
-					fastestVictoryLabel:SetWidth(110)
+					fastestVictoryLabel:SetWidth(130)
 					local value = tbl.best and SecondsToTime(tbl.best)
 					local bestDate = tbl.bestDate
 					if not value then
@@ -1182,7 +1182,7 @@ local function populateToggleOptions(widget, module)
 					statGroup:AddChild(fastestVictoryLabel)
 
 					local firstKillDataLabel = AceGUI:Create("Label")
-					firstKillDataLabel:SetWidth(110)
+					firstKillDataLabel:SetWidth(140)
 					if not tbl.fkDate then
 						firstKillDataLabel:SetText("-")
 					else
@@ -1203,17 +1203,17 @@ local function populateToggleOptions(widget, module)
 					statGroup:AddChild(difficultyText)
 
 					local defeatsLabel = AceGUI:Create("Label")
-					defeatsLabel:SetWidth(100)
+					defeatsLabel:SetWidth(83)
 					defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
 					statGroup:AddChild(defeatsLabel)
 
 					local victoriesLabel = AceGUI:Create("Label")
-					victoriesLabel:SetWidth(100)
+					victoriesLabel:SetWidth(83)
 					victoriesLabel:SetText(tbl.kills or "-")
 					statGroup:AddChild(victoriesLabel)
 
 					local fastestVictoryLabel = AceGUI:Create("Label")
-					fastestVictoryLabel:SetWidth(110)
+					fastestVictoryLabel:SetWidth(130)
 					local value = tbl.best and SecondsToTime(tbl.best)
 					local bestDate = tbl.bestDate
 					if not value then
@@ -1226,7 +1226,7 @@ local function populateToggleOptions(widget, module)
 					statGroup:AddChild(fastestVictoryLabel)
 
 					local firstKillDataLabel = AceGUI:Create("Label")
-					firstKillDataLabel:SetWidth(110)
+					firstKillDataLabel:SetWidth(140)
 					if not tbl.fkDate then
 						firstKillDataLabel:SetText("-")
 					else
