@@ -1490,6 +1490,13 @@ function boss:LFR()
 	return difficulty == 7 or difficulty == 17
 end
 
+--- Check if in a Follower, Quest, or Story instance.
+-- @return boolean
+function boss:Story()
+	-- 205: Follower, 216: Quest, 220: Story
+	return difficulty == 205 or difficulty == 216 or difficulty == 220
+end
+
 --- Check if in a Normal difficulty instance.
 -- @return boolean
 function boss:Normal()
