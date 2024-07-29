@@ -1234,7 +1234,7 @@ local function parseLocale(file)
 		end
 	end
 
-	-- reverse check the last locale in the file
+	-- reverse check the last locale block in the file
 	if current_module and not current_module:match("^BigWigs") then
 		reverseCheck(file_name, keys, current_module, current_module_line)
 	end
