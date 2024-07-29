@@ -1192,6 +1192,7 @@ local function parseLocale(file)
 			end
 		end
 		if module_name then
+			-- reverse check the previous locale block in the file
 			reverseCheck(file_name, keys, current_module, current_module_line)
 			current_module = module_name
 			current_module_line = n
