@@ -1135,6 +1135,17 @@ local function parseLua(file)
 	end
 end
 
+-- check that all module keys are defined in the locale file
+local function reverseCheck(file_name, keys, current_module, current_module_line)
+	if current_module and modules_locale[current_module] then
+		for key, value in next, modules_locale[current_module] do
+			if value and not key:match("_icon$") and keys[current_module][key] == nil then
+				warn(string.format("    %s:%d: %s: Missing locale key %q", file_name, current_module_line, current_module, key))
+			end
+		end
+	end
+end
+
 local function parseLocale(file)
 	local file_locale = file:match("Locales/(.-)%.lua$")
 	local file_name = file
@@ -1181,14 +1192,7 @@ local function parseLocale(file)
 			end
 		end
 		if module_name then
-			if current_module and modules_locale[current_module] then
-				-- reverse check
-				for key, value in next, modules_locale[current_module] do
-					if value and not key:match("_icon$") and keys[current_module][key] == nil then
-						warn(string.format("    %s:%d: %s: Missing locale key %q", file_name, current_module_line, current_module, key))
-					end
-				end
-			end
+			reverseCheck(file_name, keys, current_module, current_module_line)
 			current_module = module_name
 			current_module_line = n
 			if not keys[module_name] then
@@ -1228,6 +1232,11 @@ local function parseLocale(file)
 				end
 			end
 		end
+	end
+
+	-- reverse check the last locale in the file
+	if current_module and not current_module:match("^BigWigs") then
+		reverseCheck(file_name, keys, current_module, current_module_line)
 	end
 
 	-- Check that all enUS strings exist in the foreign locale
