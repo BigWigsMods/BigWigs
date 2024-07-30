@@ -411,24 +411,20 @@ L.resetAllCustomSound = "Wenn Du Sounds für Bossbegegnungen geändert hast, wer
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "'%s' wurde nach %s besiegt."
-L.bossWipeDurationPrint = "An '%s' nach %s gescheitert."
-L.newBestTime = "Neue Bestzeit!"
 L.bossStatistics = "Boss-Statistiken"
-L.bossStatsDescription = "Zeichnet verschiedene Statistiken der Bossbegegnungen wie die Anzahl der Siege und Niederlagen, sowie die Kampfdauer oder die Rekordzeiten auf. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
-L.enableStats = "Statistiken aktivieren"
-L.chatMessages = "Chatnachrichten"
-L.printBestTimeOption = "Benachrichtigung über Bestzeit"
-L.printDefeatOption = "Siegesdauer"
-L.printWipeOption = "Niederlagendauer"
-L.countDefeats = "Siege zählen"
-L.countWipes = "Niederlagen zählen"
-L.recordBestTime = "Bestzeiten speichern"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
 L.createTimeBar = "Bestzeittimer anzeigen"
 L.bestTimeBar = "Bestzeit"
-L.printHealthOption = "Bossgesundheit"
 L.healthPrint = "Gesundheit: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "Chatnachrichten"
+--L.newFastestVictoryOption = "New fastest victory"
+--L.victoryOption = "You were victorious"
+--L.defeatOption = "You were defeated"
+L.bossHealthOption = "Bossgesundheit"
+--L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+--L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+--L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

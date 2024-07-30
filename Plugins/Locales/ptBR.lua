@@ -411,24 +411,20 @@ L.resetAllCustomSound = "Se você personalizou sons para qualquer configuração
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "Derrotou '%s' após '%s'"
-L.bossWipeDurationPrint = "Foi derrotado por '%s' após %s"
-L.newBestTime = "Novo recorde!"
 L.bossStatistics = "Estatísticas do chefe."
-L.bossStatsDescription = "Grava várias estatísticas dos encontros, como o número de vezes que um chefe foi morto, quantas derrotas, tempo total de combate, ou a morte mais rápida. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
-L.enableStats = "Habilitar estatísticas"
-L.chatMessages = "Conversas"
-L.printBestTimeOption = "Notificação de melhor tempo"
-L.printDefeatOption = "Tempo de luta"
-L.printWipeOption = "Tempo até ser derrotado"
-L.countDefeats = "Contador de vitórias "
-L.countWipes = "Contador de derrotas"
-L.recordBestTime = "Gravar recorde"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
 L.createTimeBar = "Mostrar barra do melhor tempo"
 L.bestTimeBar = "Melhor tempo"
-L.printHealthOption = "Vida do chefe"
 L.healthPrint = "Vida: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "Conversas"
+--L.newFastestVictoryOption = "New fastest victory"
+--L.victoryOption = "You were victorious"
+--L.defeatOption = "You were defeated"
+L.bossHealthOption = "Vida do chefe"
+--L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+--L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+--L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

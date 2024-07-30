@@ -411,24 +411,20 @@ L.resetAllCustomSound = "Si has personalizado sonidos para algún encuentro con 
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "Derrotado '%s' después de %s."
-L.bossWipeDurationPrint = "Wipe en '%s' después de %s."
-L.newBestTime = "¡Nueva muerte más rápida!"
 L.bossStatistics = "Estadísticas de jefe"
-L.bossStatsDescription = "Registro de estadísticas de jefes, como el número de veces que ha sido derrotado, cantidad de wipes, tiempo total que duró el combate, o la muerte más rápida. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
-L.enableStats = "Activar estadísticas"
-L.chatMessages = "Mensajes de chat"
-L.printBestTimeOption = "Notificar muerte más rápida"
-L.printDefeatOption = "Tiempo de la muerte"
-L.printWipeOption = "Tiempo del wipe"
-L.countDefeats = "Contar muertes"
-L.countWipes = "Contar wipes"
-L.recordBestTime = "Recordar muertes más rápidas"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
 L.createTimeBar = "Mostrar barra de 'Mejor tiempo'"
 L.bestTimeBar = "Mejor tiempo"
-L.printHealthOption = "Salud del jefe"
 L.healthPrint = "Salud: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "Mensajes de chat"
+--L.newFastestVictoryOption = "New fastest victory"
+--L.victoryOption = "You were victorious"
+--L.defeatOption = "You were defeated"
+L.bossHealthOption = "Salud del jefe"
+--L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+--L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+--L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

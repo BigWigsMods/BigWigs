@@ -139,19 +139,16 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 --
 
 plugin.defaultDB = {
-	enabled = true,
-	saveKills = true,
-	saveWipes = true,
-	saveBestKill = true,
-	printKills = true,
-	printWipes = true,
-	printNewBestKill = true,
+	disabled = false,
+	printVictory = true,
+	printDefeat = true,
+	printNewFastestVictory = true,
 	printHealth = true,
 	showBar = false,
 }
 
 do
-	local function checkDisabled() return not plugin.db.profile.enabled end
+	local function checkDisabled() return plugin.db.profile.disabled end
 	plugin.pluginOptions = {
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Stats:20|t ".. BigWigsAPI:GetLocale("BigWigs").statistics,
 		type = "group",
@@ -167,77 +164,67 @@ do
 				width = "full",
 				fontSize = "medium",
 			},
-			enabled = {
-				type = "toggle",
-				name = L.enableStats,
-				order = 2,
-				width = "full",
-				set = function(i, value)
-					plugin.db.profile[i[#i]] = value
-					plugin:Disable()
-					plugin:Enable()
-				end,
-			},
 			printGroup = {
 				type = "group",
 				name = L.chatMessages,
-				order = 3,
+				order = 2,
 				disabled = checkDisabled,
 				inline = true,
 				args = {
-					printWipes = {
+					printDefeat = {
 						type = "toggle",
-						name = L.printWipeOption,
+						name = L.defeatOption,
 						order = 1,
 						width = 1.5,
 					},
-					printKills = {
+					printVictory = {
 						type = "toggle",
-						name = L.printDefeatOption,
+						name = L.victoryOption,
 						order = 2,
 						width = 1.5,
 					},
 					printHealth = {
 						type = "toggle",
-						name = L.printHealthOption,
+						name = L.bossHealthOption,
 						order = 3,
 						width = 1.5,
 					},
-					printNewBestKill = {
+					printNewFastestVictory = {
 						type = "toggle",
-						name = L.printBestTimeOption,
+						name = L.newFastestVictoryOption,
 						order = 4,
 						width = 1.5,
-						disabled = function() return not plugin.db.profile.saveBestKill or not plugin.db.profile.enabled end,
 					},
 				},
-			},
-			saveKills = {
-				type = "toggle",
-				name = L.countDefeats,
-				order = 4,
-				disabled = checkDisabled,
-				width = "full",
-			},
-			saveWipes = {
-				type = "toggle",
-				name = L.countWipes,
-				order = 5,
-				disabled = checkDisabled,
-				width = "full",
-			},
-			saveBestKill = {
-				type = "toggle",
-				name = L.recordBestTime,
-				order = 6,
-				disabled = checkDisabled,
-				width = "full",
 			},
 			showBar = {
 				type = "toggle",
 				name = L.createTimeBar,
-				order = 7,
+				order = 3,
 				disabled = checkDisabled,
+				width = "full",
+			},
+			spacer = {
+				type = "description",
+				name = "\n\n",
+				order = 4,
+				width = "full",
+				fontSize = "medium",
+			},
+			disabled = {
+				type = "toggle",
+				name = L.disabled,
+				order = 5,
+				confirm = function(_, value)
+					if value then
+						return L.disableDesc:format(L.bossStatistics)
+					end
+				end,
+				set = function(i, value)
+					plugin.db.profile[i[#i]] = value
+					plugin:Disable()
+					plugin:Enable()
+				end,
 				width = "full",
 			},
 		},
@@ -269,7 +256,7 @@ do
 	end
 
 	function plugin:OnPluginEnable()
-		if self.db.profile.enabled then
+		if not self.db.profile.disabled then
 			self:RegisterMessage("BigWigs_OnBossEngage")
 			self:RegisterMessage("BigWigs_OnBossWin")
 			self:RegisterMessage("BigWigs_OnBossWipe")
@@ -381,8 +368,8 @@ function plugin:BigWigs_OnBossWin(event, module)
 	if journalId and activeDurations[journalId] then
 		local elapsed = GetTime()-activeDurations[journalId]
 
-		if self.db.profile.printKills then
-			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed)))
+		if self.db.profile.printVictory then
+			BigWigs:ScheduleTimer("Print", 1, L.bossVictoryPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed)))
 		end
 
 		local diff = module:Difficulty()
@@ -402,23 +389,21 @@ function plugin:BigWigs_OnBossWin(event, module)
 				end
 			end
 			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
-			if self.db.profile.saveKills then
-				if not sDB.kills then
-					sDB.kills = 1
-					if sDB.wipes then
-						sDB.fkWipes = sDB.wipes
-					end
-					sDB.fkDuration = elapsed
-					sDB.fkDate = date("%Y/%m/%d")
-				else
-					sDB.kills = sDB.kills + 1
+			if not sDB.kills then
+				sDB.kills = 1
+				if sDB.wipes then
+					sDB.fkWipes = sDB.wipes
 				end
+				sDB.fkDuration = elapsed
+				sDB.fkDate = date("%Y/%m/%d")
+			else
+				sDB.kills = sDB.kills + 1
 			end
 
-			if self.db.profile.saveBestKill and (not sDB.best or elapsed < sDB.best) then
-				if self.db.profile.printNewBestKill and sDB.best then
+			if not sDB.best or elapsed < sDB.best then
+				if self.db.profile.printNewFastestVictory and sDB.best then
 					local t = sDB.best-elapsed
-					BigWigs:ScheduleTimer("Print", 1.1, ("%s (-%s)"):format(L.newBestTime, t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
+					BigWigs:ScheduleTimer("Print", 1.1, L.newFastestVictoryPrint:format(t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
 				end
 				sDB.best = elapsed
 				sDB.bestDate = date("%Y/%m/%d")
@@ -437,14 +422,14 @@ function plugin:BigWigs_OnBossWipe(event, module)
 		local elapsed = GetTime()-activeDurations[journalId]
 
 		if elapsed > 30 then -- Fight must last longer than 30 seconds to be an actual wipe worth noting
-			if self.db.profile.printWipes then
-				BigWigs:Print(L.bossWipeDurationPrint:format(module.displayName, SecondsToTime(elapsed)))
+			if self.db.profile.printDefeat then
+				BigWigs:Print(L.bossDefeatPrint:format(module.displayName, SecondsToTime(elapsed)))
 			end
 
 			local diff = module:Difficulty()
 			if not difficultyTable[diff] and IsInRaid() and not dontPrint[diff] then
 				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
-			elseif difficultyTable[diff] and self.db.profile.saveWipes then
+			elseif difficultyTable[diff] then
 				local difficultyText = difficultyTable[diff]
 				if diff == 226 then
 					if module:GetPlayerAura(458841) then -- Sweltering Heat

@@ -411,24 +411,20 @@ L.resetAllCustomSound = "어떤 우두머리 전투 설정에 사용자 설정�
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "전투 시작 %2$s만에 '%1$s'|1을;를; 처치했습니다."
-L.bossWipeDurationPrint = "전투 시작 %2$s만에 '%1$s'에서 전멸했습니다."
-L.newBestTime = "새로운 최고 기록!"
 L.bossStatistics = "우두머리 통계"
-L.bossStatsDescription = "우두머리를 처치하는 데 걸린 시간, 전멸 횟수, 지속된 총 전투 시간, 또는 가장 빠른 우두머리 처치와 같은 여러가지 우두머리 관련 통계 기록입니다. 이 통계들은 각 우두머리의 설정 화면에서 볼수 있지만, 기록된 통계가 없는 우두머리는 숨겨집니다."
-L.enableStats = "통계 활성화"
-L.chatMessages = "대화 메시지"
-L.printBestTimeOption = "최고 기록 알림"
-L.printDefeatOption = "처치 시간"
-L.printWipeOption = "전멸 시간"
-L.countDefeats = "처치 횟수"
-L.countWipes = "전멸 횟수"
-L.recordBestTime = "최고 기록 기억하기"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. 이 통계들은 각 우두머리의 설정 화면에서 볼수 있지만, 기록된 통계가 없는 우두머리는 숨겨집니다."
 L.createTimeBar = "'최고 기록' 바 표시"
 L.bestTimeBar = "최고 기록"
-L.printHealthOption = "우두머리 생명력"
 L.healthPrint = "생명력: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "대화 메시지"
+--L.newFastestVictoryOption = "New fastest victory"
+--L.victoryOption = "You were victorious"
+--L.defeatOption = "You were defeated"
+L.bossHealthOption = "우두머리 생명력"
+--L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+--L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+--L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

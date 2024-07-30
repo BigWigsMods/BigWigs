@@ -411,24 +411,20 @@ L.resetAllCustomSound = "Если вы используете свои звук�
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "'%s' терпит поражение спустя %s"
-L.bossWipeDurationPrint = "'%s' побеждает спустя %s"
-L.newBestTime = "Рекордное убийство!"
 L.bossStatistics = "Статистика боссов"
-L.bossStatsDescription = "Запись статистики боссов, включает в себя количество побед, поражений, общее время сражений или самое быстрое убийство. Эта статистика видна для каждого босса в окне настроек, либо спрятана, если нет записей."
-L.enableStats = "Включить Статистику"
-L.chatMessages = "Сообщения в чат"
-L.printBestTimeOption = "Уведомление о лучшем убийстве"
-L.printDefeatOption = "Время победы"
-L.printWipeOption = "Время поражения"
-L.countDefeats = "Количество побед"
-L.countWipes = "Количество поражений"
-L.recordBestTime = "Запоминать лучшее убийство"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Эта статистика видна для каждого босса в окне настроек, либо спрятана, если нет записей."
 L.createTimeBar = "Отображать полосу 'Лучшее время'"
 L.bestTimeBar = "Лучшее время"
-L.printHealthOption = "Здоровье босса"
 L.healthPrint = "Здоровье: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "Сообщения в чат"
+--L.newFastestVictoryOption = "New fastest victory"
+--L.victoryOption = "You were victorious"
+--L.defeatOption = "You were defeated"
+L.bossHealthOption = "Здоровье босса"
+--L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+--L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+--L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua
