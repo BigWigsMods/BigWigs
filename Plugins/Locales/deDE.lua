@@ -412,7 +412,7 @@ L.resetAllCustomSound = "Wenn Du Sounds für Bossbegegnungen geändert hast, wer
 --
 
 L.bossStatistics = "Boss-Statistiken"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
+L.bossStatsDescription = "Aufzeichnung verschiedener Boss-bezogener Statistiken wie die Anzahl der Siege, die Anzahl der Niederlagen, das Datum des ersten Sieges und der schnellste Sieg. Diese Statistiken können, falls vorhanden, in der Konfiguration der einzelnen Bosse eingesehen werden. Andernfalls werden diese ausgeblendet."
 L.createTimeBar = "Bestzeittimer anzeigen"
 L.bestTimeBar = "Bestzeit"
 L.healthPrint = "Gesundheit: %s."
