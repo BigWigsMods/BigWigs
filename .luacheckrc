@@ -45,8 +45,6 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitGUID",
 	"113/UnitName",
 	"113/UnitSex",
-	"11[13]/BigWigsClassicDB",
-	"11[13]/BigWigsStatsClassicDB",
 
 	-- Slash handling
 	"111/SLASH_BigWigs1",
