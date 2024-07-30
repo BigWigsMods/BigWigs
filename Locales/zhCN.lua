@@ -219,8 +219,8 @@ L.imported_countdown_color = "倒数颜色"
 
 -- Statistics
 L.statistics = "统计"
-L.defeat = "团灭"
-L.defeat_desc = "你在与该首领战斗时被团灭的总次数。"
+L.defeat = "被击败"
+L.defeat_desc = "你在与该首领战斗时被击败的总次数。"
 L.victory = "获胜"
 L.victory_desc = "你在与该首领战斗时获胜的总次数。"
 L.fastest = "最快"
