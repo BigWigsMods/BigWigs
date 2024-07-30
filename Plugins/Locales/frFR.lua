@@ -412,19 +412,19 @@ L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains para
 --
 
 L.bossStatistics = "Statistiques des boss"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Ces statistiques peuvent être visionnées sur l'écran de configuration de chaque boss, mais seront cachées pour les boss qui n'ont pas encore de statistiques enregistrées."
+L.bossStatsDescription = "L'enregistrement des diverses statistiques concernant les boss, comme le nombre de fois que vous les avez vaincu, le nombre de fois qu'ils vous ont vaincu, la date de première victoire, ainsi que la victoire la plus rapide. Ces statistiques peuvent être visionnées sur l'écran de configuration de chaque boss, mais seront cachées pour les boss qui n'ont pas encore de statistiques enregistrées."
 L.createTimeBar = "Afficher la barre 'Meilleur temps'"
 L.bestTimeBar = "Meilleur temps"
 L.healthPrint = "Vie : %s."
 L.healthFormat = "%s (%.1f%%)"
 L.chatMessages = "Messages de la fenêtre de discussion"
---L.newFastestVictoryOption = "New fastest victory"
---L.victoryOption = "You were victorious"
---L.defeatOption = "You were defeated"
+L.newFastestVictoryOption = "Victoire la plus rapide"
+L.victoryOption = "Vous êtes victorieux"
+L.defeatOption = "Vous êtes vaincus"
 L.bossHealthOption = "Vie du boss"
---L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
---L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
---L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
+L.bossVictoryPrint = "Vous êtes victorieux contre '%s' après %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "Vous êtes battus par '%s' après %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "Nouvelle victoire la plus rapide : (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua
