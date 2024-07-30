@@ -1095,7 +1095,7 @@ local function populateToggleOptions(widget, module)
 	if not journalId and module:GetAllowWin() and module:GetEncounterID() then
 		journalId =  -(module:GetEncounterID()) -- Fallback to show stats for modules with no journal ID, but set to allow win
 	end
-	if journalId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][journalId] then
+	if journalId and id and id > 0 and sDB and sDB[id] and sDB[id][journalId] then
 		sDB = sDB[id][journalId]
 
 		if next(sDB) then -- Create statistics table
