@@ -418,13 +418,13 @@ L.bestTimeBar = "Meilleur temps"
 L.healthPrint = "Vie : %s."
 L.healthFormat = "%s (%.1f%%)"
 L.chatMessages = "Messages de la fenêtre de discussion"
---L.newFastestVictoryOption = "New fastest victory"
---L.victoryOption = "You were victorious"
---L.defeatOption = "You were defeated"
+L.newFastestVictoryOption = "Victoire la plus rapide"
+L.victoryOption = "Vous êtes victorieux"
+L.defeatOption = "Vous êtes vaincus"
 L.bossHealthOption = "Vie du boss"
---L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
---L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
---L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
+L.bossVictoryPrint = "Vous êtes victorieux contre '%s' après %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "Vous êtes battus par '%s' après %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "Nouvelle victoire la plus rapide : (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua
