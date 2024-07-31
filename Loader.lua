@@ -642,10 +642,10 @@ local function Popup(msg, focus)
 	local frame = CreateFrame("Frame")
 	frame:SetFrameStrata("DIALOG")
 	frame:SetToplevel(true)
-	frame:SetSize(384, 128)
+	frame:SetSize(400, 150)
 	frame:SetPoint("CENTER", "UIParent", "CENTER")
 	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
-	text:SetSize(360, 0)
+	text:SetSize(380, 0)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("TOP")
 	text:SetNonSpaceWrap(true)
@@ -770,6 +770,14 @@ do
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
 			if meta then
 				loadOnWorldBoss[#loadOnWorldBoss + 1] = i
+			end
+			local minVersion = GetAddOnMetadata(i, "X-BigWigs-Minimum")
+			if minVersion and GetAddOnDependencies(i) == "BigWigs" then -- Safety
+				local version = tonumber(minVersion)
+				if version and version > BIGWIGS_VERSION then
+					Popup(L.outOfDateContentPopup:format(name), true)
+					RaidNotice_AddMessage(RaidWarningFrame, L.outOfDateContentRaidWarning:format(name, version, BIGWIGS_VERSION), {r=1,g=1,b=1}, 90)
+				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
