@@ -90,11 +90,11 @@ local timersHeroic = {
 		[385574] = {43.6, 30.0, 55.0, 20.0, 60}, -- Tempest Wing
 	},
 	[3] = {
-		[377594] = {31.3, 43.5, 42.0}, -- Lightning Breath
-		[385574] = {65.9, 64.0, 22.0, 31}, -- Tempest Wing
+		[377594] = {31.3, 43.5, 42.0, 75.0}, -- Lightning Breath
+		[385574] = {65.9, 64.0, 22.0, 31.0}, -- Tempest Wing
 		[377467] = {40.9, 60.0, 60.0}, -- Fulminating Charge
-		[386410] = {21.8, 30, 30, 30, 30, 30}, -- Thunderous Blast
-		[399713] = {25.9, 63.0, 34.0}, -- Magnetic Charge
+		[386410] = {21.8, 30, 30, 30, 30, 30, 27.0}, -- Thunderous Blast
+		[399713] = {25.9, 63.0, 34.0, 83.0}, -- Magnetic Charge
 	},
 }
 
