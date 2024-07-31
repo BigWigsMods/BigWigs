@@ -1943,7 +1943,8 @@ do
 	-- @string[opt="player"] sourceUnit If a player unit is specified, this unit will be checked to see if they are tanking, otherwise use nil to check yourself
 	-- @return boolean
 	function boss:Tanking(targetUnit, sourceUnit)
-		return UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
+		local isTanking, status =  UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
+		return isTanking or status == 2 or status == 3
 	end
 
 	--- Check if you have the highest threat on a specific NPC unit.
