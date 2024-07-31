@@ -48,8 +48,8 @@ L.missingAddOn = "Das |cFF436EEE%s|r Addon fehlt!"
 L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden nicht angezeigt."
 L.removeAddOn = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
---L.outOfDateContentPopup = "WARNING!\nYou updated |cFF436EEE%s|r but you also need to update the main |cFF436EEEBigWigs|r addon.\nIgnoring this will result in broken functionality."
---L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requires version %d of the main |cFF436EEEBigWigs|r addon to function correctly, but you're on version %d."
+L.outOfDateContentPopup = "WARNUNG!\nDu hast |cFF436EEE%s|r aktualisiert, aber Du musst auch das Haupt |cFF436EEEBigWigs|r Addon aktualisieren.\nAndernfalls wird die Funktionalität eingeschränkt sein."
+L.outOfDateContentRaidWarning = "|cFF436EEE%s|r benötigt Version %d des Haupt |cFF436EEEBigWigs|r Addons zur korrekten Funktion, allerdings hast Du Version %d."
 
 L.expansionNames = {
 	"Classic", -- Classic
