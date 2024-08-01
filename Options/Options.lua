@@ -1141,7 +1141,7 @@ local function populateToggleOptions(widget, module)
 			-- Headers
 			local displayOrder = {
 				"story", "timewalk", "LFR", "normal", "heroic", "mythic",
-				"10N", "25N", "10H", "25H",
+				"N10", "N25", "H10", "H25",
 				"SOD", "level1", "level2", "level3", "hardcore",
 			}
 			for diff, tbl in next, sDB do -- Unknown Stats
