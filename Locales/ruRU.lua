@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ruRU")
 if not L then return end
 
-L.tempMessage = "Позиции панелей были изменены. Теперь возможен импорт/экспорт конфигурации."
-
 -- Core.lua
 L.berserk = "Берсерк"
 L.berserk_desc = "Предупреждать и отсчитывать время до берсерка."

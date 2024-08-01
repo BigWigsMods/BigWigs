@@ -1,7 +1,5 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "enUS")
 
-L.tempMessage = "Your bar positions have reset, but you can now Import/Export profiles."
-
 -- Core.lua
 L.berserk = "Berserk"
 L.berserk_desc = "Show a bar and timed warnings for when the boss will go berserk."

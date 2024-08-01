@@ -8,8 +8,6 @@ files["**/Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
 }
 files["**/Loader.lua"].ignore = {
-	"11[13]/BigWigsBarsReset", -- XXX temp
-
 	"113/date",
 	"113/geterrorhandler",
 

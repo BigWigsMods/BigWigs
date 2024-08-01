@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.tempMessage = "您的计时条位置已重置，现在可以使用新的导入/导出配置功能。"
-
 -- Core.lua
 L.berserk = "狂暴"
 L.berserk_desc = "为首领狂暴显示计时器和警报。"

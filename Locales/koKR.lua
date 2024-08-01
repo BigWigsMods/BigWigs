@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "koKR")
 if not L then return end
 
---L.tempMessage = "Your bar positions have reset, but you can now Import/Export profiles."
-
 -- Core.lua
 L.berserk = "광폭화"
 L.berserk_desc = "우두머리가 언제 광폭화하는지 바와 시간 경고를 표시합니다."

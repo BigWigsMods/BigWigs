@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
---L.tempMessage = "Your bar positions have reset, but you can now Import/Export profiles."
-
 -- Core.lua
 L.berserk = "Frenesi"
 L.berserk_desc = "Mostra uma barra e um contador para quando o chefe entrar em Frenesi."
