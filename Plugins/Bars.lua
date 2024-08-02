@@ -1807,10 +1807,19 @@ do
 		if isApprox then
 			bar:SetPauseWhenDone(true)
 		end
-		bar:Start(maxTime)
 		if db.emphasize and time < db.emphasizeTime then
+			if db.emphasizeRestart then
+				if maxTime and maxTime < db.emphasizeTime then
+					bar:Start(db.emphasizeTime)
+				else
+					bar:Start()
+				end
+			else
+				bar:Start(maxTime)
+			end
 			self:EmphasizeBar(bar, true)
 		else
+			bar:Start(maxTime)
 			currentBarStyler.ApplyStyle(bar)
 			if db.emphasize then
 				bar:SetTimeCallback(moveBar, db.emphasizeTime)
