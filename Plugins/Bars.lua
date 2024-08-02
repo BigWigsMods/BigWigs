@@ -1813,12 +1813,8 @@ do
 			bar:SetPauseWhenDone(true)
 		end
 		if db.emphasize and time < db.emphasizeTime then
-			if db.emphasizeRestart then
-				if maxTime and maxTime < db.emphasizeTime then
-					bar:Start(db.emphasizeTime)
-				else
-					bar:Start()
-				end
+			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then
+				bar:Start(db.emphasizeTime)
 			else
 				bar:Start(maxTime)
 			end
