@@ -402,7 +402,7 @@ end
 
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
-	if not self.enabled then
+	if not self:IsEnabled() then
 		self.enabled = true
 
 		local isWiping = isWipe == true
@@ -440,7 +440,7 @@ function boss:Enable(isWipe)
 	end
 end
 function boss:Disable(isWipe)
-	if self.enabled then
+	if self:IsEnabled() then
 		self.enabled = nil
 
 		local isWiping = isWipe == true
@@ -543,7 +543,7 @@ function boss:Disable(isWipe)
 	end
 end
 function boss:Reboot(isWipe)
-	if self.enabled then
+	if self:IsEnabled() then
 		self:Debug("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
@@ -1183,7 +1183,7 @@ do
 	end
 
 	function boss:Engage(noEngage)
-		if not self:IsEngaged() then
+		if self:IsEnabled() and not self:IsEngaged() then
 			self.isEngaged = true
 
 			self:Debug(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
@@ -1241,18 +1241,22 @@ do
 	end
 
 	function boss:Win()
-		self:Debug(":Win", self:GetEncounterID(), self.moduleName)
-		twipe(icons) -- Wipe icon cache
-		twipe(spells)
-		if self.OnWin then self:OnWin() end
-		Timer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
-		self:SendMessage("BigWigs_OnBossWin", self)
-		self:SendMessage("BigWigs_VictorySound", self)
+		if self:IsEnabled() then
+			self:Debug(":Win", self:GetEncounterID(), self.moduleName)
+			twipe(icons) -- Wipe icon cache
+			twipe(spells)
+			if self.OnWin then self:OnWin() end
+			Timer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
+			self:SendMessage("BigWigs_OnBossWin", self)
+			self:SendMessage("BigWigs_VictorySound", self)
+		end
 	end
 
 	function boss:Wipe()
-		self:Reboot(true)
-		if self.OnWipe then self:OnWipe() end
+		if self:IsEnabled() then
+			self:Reboot(true)
+			if self.OnWipe then self:OnWipe() end
+		end
 	end
 end
 
