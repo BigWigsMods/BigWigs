@@ -1419,7 +1419,7 @@ do
 			onZoneShow(widget, tonumber(zoneId))
 		elseif bigwigsContent and not loader.currentExpansion.bigWigsBundled[value] then -- Any BigWigs content except bundled expansion headers
 			local addonState = loader:GetAddOnState(bigwigsContent)
-			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+			local string = addonState == "MISSING" and L.missingAddOnPopup or addonState == "DISABLED" and L.disabledAddOn
 			if string then
 				local container = AceGUI:Create("SimpleGroup")
 				container:SetFullWidth(true)
@@ -1448,7 +1448,7 @@ do
 				value = "LittleWigs"
 			end
 			local addonState = loader:GetAddOnState(value)
-			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+			local string = addonState == "MISSING" and L.missingAddOnPopup or addonState == "DISABLED" and L.disabledAddOn
 			if not loader.usingLittleWigsRepo and string then
 				local container = AceGUI:Create("SimpleGroup")
 				container:SetFullWidth(true)

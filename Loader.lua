@@ -776,7 +776,9 @@ do
 				local version = tonumber(minVersion)
 				if version and version > BIGWIGS_VERSION then
 					Popup(L.outOfDateContentPopup:format(name), true)
-					RaidNotice_AddMessage(RaidWarningFrame, L.outOfDateContentRaidWarning:format(name, version, BIGWIGS_VERSION), {r=1,g=1,b=1}, 90)
+					local msg = L.outOfDateContentRaidWarning:format(name, version, BIGWIGS_VERSION)
+					sysprint(msg)
+					RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 90)
 				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
@@ -1313,17 +1315,15 @@ do
 	if not public.usingBigWigsRepo and not guildDisableContentWarnings then -- We're not using BigWigs Git, but required functional addons are missing? Show a warning
 		for k in next, reqFuncAddons do -- List of required addons (core/plugins/options)
 			if not foundReqAddons[k] then -- A required functional addon is missing
-				local msg = L.missingAddOn:format(k)
-				delayedMessages[#delayedMessages+1] = msg
-				Popup(msg, true)
+				delayedMessages[#delayedMessages+1] = L.missingAddOnRaidWarning:format(k)
+				Popup(L.missingAddOnPopup:format(k), true)
 			end
 		end
 	end
 
 	if printMissingExpansionAddon and public.isClassic then
-		local msg = L.missingAddOn:format(public.currentExpansion.name)
-		delayedMessages[#delayedMessages+1] = msg
-		Popup(msg, true)
+		delayedMessages[#delayedMessages+1] = L.missingAddOnRaidWarning:format(public.currentExpansion.name)
+		Popup(L.missingAddOnPopup:format(public.currentExpansion.name), true)
 	else
 		printMissingExpansionAddon = false
 	end
@@ -1362,7 +1362,7 @@ do
 						sysprint(delayedMessages[i])
 					end
 					if printMissingExpansionAddon then
-						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format(public.currentExpansion.name), {r=1,g=1,b=1}, 120)
+						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOnRaidWarning:format(public.currentExpansion.name), {r=1,g=1,b=1}, 120)
 					end
 					delayedMessages = nil
 				end)
@@ -1728,10 +1728,10 @@ do
 			end
 			if public:GetAddOnState(zoneAddon) == "MISSING" then
 				warnedThisZone[id] = true
-				local msg = L.missingAddOn:format(zoneAddon)
+				Popup(L.missingAddOnPopup:format(zoneAddon))
+				local msg = L.missingAddOnRaidWarning:format(zoneAddon)
 				sysprint(msg)
-				Popup(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
 			end
 		end
 	end
