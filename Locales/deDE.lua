@@ -43,7 +43,7 @@ L.noBossMod = "Kein Bossmod:"
 L.offline = "Offline"
 
 L.missingAddOnPopup = "Das |cFF436EEE%s|r Addon fehlt!"
---L.missingAddOnRaidWarning = "Das |cFF436EEE%s|r Addon fehlt! No timers will be displayed in this zone!"
+L.missingAddOnRaidWarning = "Das |cFF436EEE%s|r Addon fehlt! In dieser Zone werden keine Timer angezeigt!"
 L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden nicht angezeigt."
 L.removeAddOn = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
