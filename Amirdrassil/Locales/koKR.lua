@@ -111,11 +111,11 @@ if L then
 	L.eternal_firestorm_shortened_bar = "영원한 화염폭풍" -- E for Eternal
 	L.eternal_firestorm_message_full = "영원한 화염폭풍"
 
-	--L.eternal_firestorm_swirl = "Eternal Firestorm Pools"
-	--L.eternal_firestorm_swirl_desc = "Show timers for when the Eternal Firestorm will spawn the pools that you need to avoid standing in."
+	L.eternal_firestorm_swirl = "영원한 화염폭풍 바닥"
+	L.eternal_firestorm_swirl_desc = "피해야 하는 영원한 화염폭풍 바닥이 생성되는 시간을 표시합니다."
 
-	--L.flame_orb = "Flame Orb"
-	--L.shadow_orb = "Shadow Orb"
-	--L.orb_message_flame = "You are Flame"
-	--L.orb_message_shadow = "You are Shadow"
+	L.flame_orb = "화염 구슬"
+	L.shadow_orb = "어둠의 구슬"
+	L.orb_message_flame = "당신은 화염"
+	L.orb_message_shadow = "당신은 어둠"
 end
