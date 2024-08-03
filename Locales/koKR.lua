@@ -16,8 +16,8 @@ L.proximity = "근접 디스플레이"
 L.proximity_desc = "이 우두머리 전투에 적절할 때 근접 창을 표시합니다, 자신과 너무 가깝게 서있는 플레이어를 보여줍니다."
 L.adds = "추가 몹"
 L.adds_desc = "우두머리 전투 중 생성되는 다양한 추가 몹들과 관련된 기능들을 사용 가능하게 합니다."
---L.health = "Health"
---L.health_desc = "Enable functions for displaying various health information during the boss encounter."
+L.health = "체력"
+L.health_desc = "보스와의 전투 중 다양한 체력 정보를 표시하는 기능을 활성화합니다."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은;는; 이미 BigWigs 내에 모듈로 존재합니다, 하지만 무엇인가 다시 등록하려고 시도했습니다. 이는 일반적으로 몇몇 애드온 업데이터 오류로 인해 애드온 폴더 내에 이 모듈의 사본을 가지고 있다는 것을 의미합니다. 설치된 모든 BigWigs 폴더를 삭제한 후 처음부터 다시 설치하는 것을 권장합니다."
 
@@ -43,12 +43,12 @@ L.noBossMod = "우두머리 모듈 없음:"
 L.offline = "접속 종료"
 
 L.missingAddOnPopup = "|cFF436EEE%s|r 애드온이 없습니다!"
---L.missingAddOnRaidWarning = "|cFF436EEE%s|r 애드온이 없습니다! No timers will be displayed in this zone!"
+L.missingAddOnRaidWarning = "|cFF436EEE%s|r 애드온이 없습니다! 이 지역에는 타이머가 표시되지 않습니다!"
 L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이머를 표시할 수 없습니다."
 L.removeAddOn = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
---L.outOfDateContentPopup = "WARNING!\nYou updated |cFF436EEE%s|r but you also need to update the main |cFF436EEEBigWigs|r addon.\nIgnoring this will result in broken functionality."
---L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requires version %d of the main |cFF436EEEBigWigs|r addon to function correctly, but you're on version %d."
+L.outOfDateContentPopup = "경고!\n |cFF436EEE%s|r을 업데이트했지만 기본 |cFF436EEEBigWigs|r 애드온도 업데이트해야 합니다.\n이를 무시하면 기능이 손상될 수 있습니다."
+L.outOfDateContentRaidWarning = "|cFF436EEE%s|r이 올바르게 작동하려면 기본 |cFF436EEEBigWigs|r 애드온의 %d 버전이 필요하지만 %d 버전을 사용 중입니다."
 
 L.expansionNames = {
 	"오리지널", -- Classic
@@ -91,8 +91,8 @@ L.configure = "구성"
 L.resetPositions = "위치 초기화"
 L.colors = "색상"
 L.selectEncounter = "우두머리 전투 선택"
---L.privateAuraSounds = "Private Aura Sounds"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
+L.privateAuraSounds = "비공개 오라 소리"
+L.privateAuraSounds_desc = "비공개 오라는 일반적으로 추적할 수 없지만, 능력으로 타깃이 되었을 때 재생되도록 사운드를 설정할 수 있습니다."
 L.listAbilities = "파티/공격대 대화에 능력 나열하기"
 
 L.dbmFaker = "DBM을 사용 중인 것처럼 위장하기"
