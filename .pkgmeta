@@ -11,6 +11,7 @@ externals:
     Core/Libs/LibChatAnims: https://repos.wowace.com/wow/libchatanims/trunk/LibChatAnims
     Plugins/Libs/LibSink-2.0: https://repos.wowace.com/wow/libsink-2-0/trunk/LibSink-2.0
     Plugins/Libs/LibCandyBar-3.0: https://repos.wowace.com/wow/libcandybar-3-0/trunk/LibCandyBar-3.0
+    Plugins/Libs/LibCustomGlow-1.0: https://github.com/Stanzilla/LibCustomGlow
     Options/Libs/AceGUI-3.0: https://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
     Options/Libs/AceConfigDialog-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0/AceConfigDialog-3.0
     Options/Libs/AceConfigRegistry-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0/AceConfigRegistry-3.0

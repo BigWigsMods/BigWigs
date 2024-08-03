@@ -26,32 +26,9 @@ local next = next
 local tremove = tremove
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
-local nameplateBars = {}
 local rearrangeBars
-local rearrangeNameplateBars
-local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
-
-local findUnitByGUID
-do
-	local unitTable = {
-		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
-		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
-		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
-		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
-	}
-	local unitTableCount = #unitTable
-	findUnitByGUID = function(id)
-		for i = 1, unitTableCount do
-			local unit = unitTable[i]
-			local guid = plugin:UnitGUID(unit)
-			if guid == id then
-				return unit
-			end
-		end
-	end
-end
 
 local validFramePoints = {
 	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
@@ -67,7 +44,6 @@ plugin.defaultDB = {
 	fontName = plugin:GetDefaultFont(),
 	fontSize = 10,
 	fontSizeEmph = 13,
-	fontSizeNameplate = 7,
 	texture = "BantoBar",
 	monochrome = false,
 	outline = "NONE",
@@ -86,12 +62,6 @@ plugin.defaultDB = {
 	emphasizeRestart = true,
 	emphasizeTime = 11,
 	emphasizeMultiplier = 1.1,
-	nameplateWidth = 100,
-	nameplateAutoWidth = true,
-	nameplateHeight = 12,
-	nameplateAlpha = 0.7,
-	nameplateOffsetY = 30,
-	nameplateGrowUp = true,
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
@@ -134,9 +104,6 @@ local function updateProfile()
 	end
 	if db.fontSizeEmph < 1 or db.fontSizeEmph > 200 then
 		db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
-	end
-	if db.fontSizeNameplate < 1 or db.fontSizeNameplate > 200 then
-		db.fontSizeNameplate = plugin.defaultDB.fontSizeNameplate
 	end
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 		db.outline = plugin.defaultDB.outline
@@ -332,7 +299,6 @@ do
 	--	},
 	--}
 
-	local lastNamePlateBar = 0
 	local testCount = 0
 	local testIcons = {
 		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_legacy.tga",
@@ -385,23 +351,6 @@ do
 				func = function()
 					testCount = testCount + 1
 					plugin:SendMessage("BigWigs_StartBar", plugin, nil, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), random(11, 30), testIcons[(testCount%3)+1])
-					if BigWigsLoader.isRetail then
-						local guid = plugin:UnitGUID("target")
-						if guid and UnitCanAttack("player", "target") then
-							for i = 1, 40 do
-								local unit = ("nameplate%d"):format(i)
-								if plugin:UnitGUID(unit) == guid then
-									local t = GetTime()
-									if (t - lastNamePlateBar) > 25 then
-										lastNamePlateBar = t
-										BigWigs:Print(L.testNameplate)
-										plugin:SendMessage("BigWigs_StartNameplateTimer", plugin, nil, L.test, 25, "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga", false, guid)
-									end
-									return
-								end
-							end
-						end
-					end
 				end,
 				width = 1.5,
 				order = 0.4,
@@ -958,83 +907,6 @@ do
 					},
 				},
 			},
-			nameplateBars = {
-				name = L.nameplateBars,
-				type = "group",
-				order = 5,
-				set = function(info, value)
-					db[info[#info]] = value
-					if plugin:UnitGUID("target") then
-						plugin:NAME_PLATE_UNIT_REMOVED(nil, "target")
-						plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
-					end
-				end,
-				args = {
-					nameplateWidth = {
-						type = "range",
-						name = L.width,
-						order = 1,
-						min = 75,
-						softMax = 200,
-						step = 1,
-						width = 1.6,
-						disabled = function() return db.nameplateAutoWidth end,
-					},
-					nameplateHeight = {
-						type = "range",
-						name = L.height,
-						order = 2,
-						min = 8,
-						softMax = 50,
-						step = 1,
-						width = 1.6,
-					},
-					nameplateAutoWidth = {
-						type = "toggle",
-						name = L.nameplateAutoWidth,
-						desc = L.nameplateAutoWidthDesc,
-						order = 3,
-						width = 1.6,
-					},
-					nameplateOffsetY = {
-						type = "range",
-						name = L.nameplateOffsetY,
-						desc = L.nameplateOffsetYDesc,
-						order = 4,
-						min = 0,
-						max = 400,
-						step = 1,
-						width = 1.6,
-					},
-					nameplateGrowUp = {
-						type = "toggle",
-						name = L.growingUpwards,
-						desc = L.growingUpwardsDesc,
-						order = 5,
-						width = 1.6,
-					},
-					fontSizeNameplate = {
-						type = "range",
-						name = L.fontSize,
-						desc = L.fontSizeDesc,
-						order = 6,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
-						width = 1.6,
-					},
-					nameplateAlpha = {
-						type = "range",
-						name = L.transparency,
-						desc = L.nameplateAlphaDesc,
-						order = 7,
-						max = 1,
-						min = 0.4,
-						step = 0.1,
-						width = 1.6,
-					},
-				},
-			},
 			--clicking = {
 			--	name = L.clickableBars,
 			--	type = "group",
@@ -1171,72 +1043,16 @@ do
 	end
 end
 
-do
-	-- returns table of bar texts ordered by time remaining
-	local function getOrder(bars)
-		local barTexts = {}
-		for text, _ in pairs(bars) do
-			barTexts[#barTexts+1] = text
-		end
-		table.sort(barTexts, function(a, b)
-			return bars[a].bar.remaining < bars[b].bar.remaining
-		end)
-		return barTexts
-	end
-
-	rearrangeNameplateBars = function(guid)
-		local unit = findUnitByGUID(guid)
-		if not unit then return end
-		local nameplate = GetNamePlateForUnit(unit)
-		local unitBars = nameplateBars[guid]
-		if unitBars then
-			local sorted = getOrder(nameplateBars[guid])
-			local offset = db.nameplateOffsetY
-			local barPoint = db.nameplateGrowUp and "BOTTOM" or "TOP"
-			local nameplatePoint = db.nameplateGrowUp and "TOP" or "BOTTOM"
-			for i, text in ipairs(sorted) do
-				local bar = unitBars[text].bar
-				bar:ClearAllPoints()
-				bar:SetParent(nameplate)
-				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
-				offset = offset + db.spacing + bar:GetHeight()
-			end
-		end
-	end
-end
-
-local function nameplateCascadeDelete(guid, text)
-	nameplateBars[guid][text] = nil
-	if not next(nameplateBars[guid]) then
-		nameplateBars[guid] = nil
-	end
-end
-
-local function createDeletionTimer(barInfo)
-	return C_Timer.NewTimer(barInfo.exp - GetTime(), function()
-		nameplateCascadeDelete(barInfo.unitGUID, barInfo.text)
-	end)
-end
-
 local function barStopped(event, bar)
 	local countdown = bar:Get("bigwigs:stopcountdown")
 	if countdown then
 		plugin:SendMessage("BigWigs_StopCountdown", plugin, countdown)
 	end
 	local a = bar:Get("bigwigs:anchor")
-	local unitGUID = bar:Get("bigwigs:unitGUID")
 	if a and a.bars and a.bars[bar] then
 		currentBarStyler.BarStopped(bar)
 		a.bars[bar] = nil
 		rearrangeBars(a)
-	elseif unitGUID then
-		currentBarStyler.BarStopped(bar)
-		local text = bar:GetLabel()
-		nameplateBars[unitGUID][text].bar = nil
-		if not bar:Get("bigwigs:offscreen") then
-			nameplateCascadeDelete(unitGUID, text)
-			rearrangeNameplateBars(unitGUID)
-		end
 	end
 end
 
@@ -1397,11 +1213,9 @@ function plugin:OnPluginEnable()
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
 	self:RegisterMessage("BigWigs_StartBar")
-	self:RegisterMessage("BigWigs_StartNameplateTimer", "StartNameplateBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
 	self:RegisterMessage("BigWigs_ResumeBar", "ResumeBar")
 	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
-	self:RegisterMessage("BigWigs_StopNameplateTimer", "StopNameplateBar")
 	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleBars")
@@ -1412,10 +1226,6 @@ function plugin:OnPluginEnable()
 
 	--self:RefixClickIntercepts()
 	--self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
-
-	-- Nameplate bars
-	self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-	self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
 
 	-- custom bars
 	self:RegisterMessage("BigWigs_PluginComm")
@@ -1541,19 +1351,6 @@ function plugin:StopSpecificBar(_, module, text)
 	end
 end
 
-function plugin:StopNameplateBar(_, module, text, guid)
-	if not nameplateBars[guid] then return end
-	local barInfo = nameplateBars[guid][text]
-	if barInfo and barInfo.module == module then
-		if barInfo.bar then
-			barInfo.bar:Stop()
-		else
-			barInfo.deletionTimer:Cancel()
-			nameplateCascadeDelete(guid, text)
-		end
-	end
-end
-
 function plugin:StopModuleBars(_, module)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
@@ -1564,18 +1361,6 @@ function plugin:StopModuleBars(_, module)
 	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
-		end
-	end
-	for _, bars in next, nameplateBars do
-		for _, barInfo in next, bars do
-			if barInfo.module == module then
-				if barInfo.bar then
-					barInfo.bar:Stop()
-				else
-					barInfo.deletionTimer:Cancel()
-					nameplateCascadeDelete(barInfo.unitGUID, barInfo.text)
-				end
-			end
 		end
 	end
 end
@@ -1732,34 +1517,16 @@ end
 --
 
 function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
+	if unitGUID then return end -- Handled in NameplateBars.lua
 	local width, height
-	if unitGUID then
-		width, height = db.nameplateWidth, db.nameplateHeight
-		if db.nameplateAutoWidth then
-			local unit = findUnitByGUID(unitGUID)
-			if unit then
-				local nameplate = GetNamePlateForUnit(unit)
-				local npWidth = nameplate and nameplate:GetWidth() or 110
-				if npWidth < 111 then
-					width = npWidth
-				else
-					width = 110
-				end
-			end
-		end
-	else
-		width = db.normalWidth
-		height = db.normalHeight
-	end
+	width = db.normalWidth
+	height = db.normalHeight
+
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:option", key)
-	if unitGUID then
-		bar:Set("bigwigs:unitGUID", unitGUID)
-	else
-		bar:Set("bigwigs:anchor", normalAnchor)
-		normalAnchor.bars[bar] = true
-	end
+	bar:Set("bigwigs:anchor", normalAnchor)
+	normalAnchor.bars[bar] = true
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetLabel(text)
 	bar:SetDuration(time, isApprox)
@@ -1778,12 +1545,7 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		flags = db.outline
 	end
 	local f = media:Fetch(FONT, db.fontName)
-	if unitGUID then
-		bar:SetFont(f, db.fontSizeNameplate, flags)
-		bar:SetAlpha(db.nameplateAlpha)
-	else
-		bar:SetFont(f, db.fontSize, flags)
-	end
+	bar:SetFont(f, db.fontSize, flags)
 
 	bar:SetTimeVisibility(db.time)
 	bar:SetLabelVisibility(db.text)
@@ -1833,34 +1595,6 @@ do
 		if bar:Get("bigwigs:emphasized") then
 			self:SendMessage("BigWigs_BarEmphasized", self, bar)
 		end
-	end
-end
-
-function plugin:StartNameplateBar(_, module, key, text, time, icon, isApprox, unitGUID)
-	if not text then text = "" end
-	self:StopNameplateBar(nil, module, text, unitGUID)
-
-	if not nameplateBars[unitGUID] then nameplateBars[unitGUID] = {} end
-	local barInfo = {
-		module = module,
-		key = key,
-		text = text,
-		time = time,
-		exp = GetTime() + time,
-		icon = icon,
-		isApprox = isApprox,
-		unitGUID = unitGUID,
-	}
-	nameplateBars[unitGUID][text] = barInfo
-
-	local unit = findUnitByGUID(unitGUID)
-	if unit then
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
-		barInfo.bar = bar
-		bar:Start()
-		rearrangeNameplateBars(unitGUID)
-	else
-		barInfo.deletionTimer = createDeletionTimer(barInfo)
 	end
 end
 
@@ -2043,50 +1777,6 @@ function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
 			startCustomBar(seconds, sender)
 		elseif msg == "Break" then
 			startBreak(seconds, sender)
-		end
-	end
-end
-
--------------------------------------------------------------------------------
--- Nameplate bar management
---
-
-function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
-	local guid = plugin:UnitGUID(unit)
-	local unitBars = nameplateBars[guid]
-	if not unitBars then return end
-	for _, barInfo in next, unitBars do
-		local time = barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
-		local bar = plugin:CreateBar(
-			barInfo.module,
-			barInfo.key,
-			barInfo.text,
-			time,
-			barInfo.icon,
-			barInfo.isApprox,
-			barInfo.unitGUID
-		)
-		barInfo.bar = bar
-		barInfo.deletionTimer:Cancel()
-		barInfo.deletionTimer = nil
-		bar:Start(barInfo.time)
-		if barInfo.paused then
-			bar:Pause()
-		end
-	end
-	rearrangeNameplateBars(guid)
-end
-
-function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-	local guid = plugin:UnitGUID(unit)
-	local unitBars = nameplateBars[guid]
-	if not unitBars then return end
-
-	for _, barInfo in next, unitBars do
-		barInfo.bar:Set("bigwigs:offscreen", true)
-		barInfo.bar:Stop()
-		if not barInfo.paused then
-			barInfo.deletionTimer = createDeletionTimer(barInfo)
 		end
 	end
 end
