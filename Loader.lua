@@ -32,6 +32,7 @@ do
 	public.isWrath = tbl.isWrath
 	public.isCata = tbl.isCata
 	public.dbmPrefix = "D5"
+	public.littlewigsVersionString = L.missingAddOnPopup:format("LittleWigs")
 
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local REPO = "REPO"
@@ -825,9 +826,22 @@ do
 			end
 		end
 
-		-- check if LittleWigs is installed from source
-		if name == "LittleWigs" and GetAddOnMetadata(i, "X-LittleWigs-Repo") then
-			public.usingLittleWigsRepo = true
+		-- check LittleWigs version
+		if name == "LittleWigs" then
+			if addonState == "DISABLED" then
+				public.littlewigsVersionString = L.disabledAddOn:format(name)
+			elseif GetAddOnMetadata(i, "X-LittleWigs-Repo") then
+				public.usingLittleWigsRepo = true
+				public.littlewigsVersionString = L.littlewigsSourceCheckout
+			else
+				local version = GetAddOnMetadata(i, "Version")
+				local alpha = strfind(version, "-", nil, true)
+				if alpha then
+					public.littlewigsVersionString = L.littlewigsAlphaRelease:format(version)
+				else
+					public.littlewigsVersionString = L.littlewigsOfficialRelease:format(version)
+				end
+			end
 		end
 
 		if next(loadOnSlash) then
