@@ -279,6 +279,9 @@ end
 do
 	local function DisableModules()
 		for _, module in next, bosses do
+			if module:IsEngaged() and (module:GetJournalID() or module:GetAllowWin()) then
+				module:Wipe()
+			end
 			module:Disable()
 		end
 		for _, module in next, plugins do
@@ -311,7 +314,7 @@ do
 		-- Not if you released spirit on a world boss or if the GUI is open
 		if not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) then
 			local bars = core:GetPlugin("Bars", true)
-			if bars and not bars:HasActiveBars() then -- Not if bars are showing
+			if not bars or not bars:HasActiveBars() then -- Not if bars are showing
 				DisableCore() -- Alive in a non-enable zone, disable
 			end
 		end

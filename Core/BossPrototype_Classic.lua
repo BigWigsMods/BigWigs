@@ -474,7 +474,7 @@ end
 
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
-	if not self.enabled then
+	if not self:IsEnabled() then
 		self.enabled = true
 
 		local isWiping = isWipe == true
@@ -512,7 +512,7 @@ function boss:Enable(isWipe)
 	end
 end
 function boss:Disable(isWipe)
-	if self.enabled then
+	if self:IsEnabled() then
 		self.enabled = nil
 
 		local isWiping = isWipe == true
@@ -575,7 +575,6 @@ function boss:Disable(isWipe)
 		self.isWiping = nil
 		self.isEngaged = nil
 		self.bossTargetChecks = nil
-		self.blockWinFunction = nil
 
 		self:CancelAllTimers()
 
@@ -617,7 +616,7 @@ function boss:Disable(isWipe)
 	end
 end
 function boss:Reboot(isWipe)
-	if self.enabled then
+	if self:IsEnabled() then
 		self:Debug("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
@@ -1257,7 +1256,7 @@ do
 	end
 
 	function boss:Engage(noEngage)
-		if not self:IsEngaged() then
+		if self:IsEnabled() and not self:IsEngaged() then
 			self.isEngaged = true
 
 			self:Debug(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
@@ -1315,21 +1314,22 @@ do
 	end
 
 	function boss:Win()
-		 -- Classic modules use both encounter event and death events which can cause double wins. Do this rather than changing and testing every module.
-		if self.blockWinFunction then return end
-		self.blockWinFunction = true
-		self:Debug(":Win", self:GetEncounterID(), self.moduleName)
-		twipe(icons) -- Wipe icon cache
-		twipe(spells)
-		if self.OnWin then self:OnWin() end
-		Timer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
-		self:SendMessage("BigWigs_OnBossWin", self)
-		self:SendMessage("BigWigs_VictorySound", self)
+		if self:IsEnabled() then
+			self:Debug(":Win", self:GetEncounterID(), self.moduleName)
+			twipe(icons) -- Wipe icon cache
+			twipe(spells)
+			if self.OnWin then self:OnWin() end
+			Timer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
+			self:SendMessage("BigWigs_OnBossWin", self)
+			self:SendMessage("BigWigs_VictorySound", self)
+		end
 	end
 
 	function boss:Wipe()
-		self:Reboot(true)
-		if self.OnWipe then self:OnWipe() end
+		if self:IsEnabled() then
+			self:Reboot(true)
+			if self.OnWipe then self:OnWipe() end
+		end
 	end
 end
 
@@ -2870,8 +2870,6 @@ end
 do
 	local badBar = "Attempted to start bar %q without a valid time."
 	local badTargetBar = "Attempted to start target bar %q without a valid time."
-	local badNameplateBarStart = "Attempted to start nameplate bar %q without a valid unitGUID."
-	local badNameplateBarStop = "Attempted to stop nameplate bar %q without a valid unitGUID."
 
 	local countString = "%((%d%d?)%)"
 	if myLocale == "zhCN" or myLocale == "zhTW" then
@@ -3046,57 +3044,16 @@ do
 		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
 	end
 
-	--- Display a nameplate bar.
-	-- @param key the option key
-	-- @number length the bar duration in seconds
-	-- @string guid Anchor to a unit's nameplate by GUID
-	-- @param[opt] text the bar text (if nil, key is used)
-	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:NameplateBar(key, length, guid, text, icon)
-		if type(length) ~= "number" or length == 0 then
-			core:Print(format(badBar, key))
-			return
-		elseif type(guid) ~= "string" then
-			core:Print(format(badNameplateBarStart, key))
-			return
-		end
-		if checkFlag(self, key, C.NAMEPLATEBAR) then
-			local msg = type(text) == "string" and text or spells[text or key]
-			self:SendMessage("BigWigs_StartNameplateTimer", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
-		end
+	--- [DEPRECATED] Does nothing
+	function boss:NameplateBar()
 	end
 
-	--- Display a nameplate cooldown bar.
-	-- Indicates an unreliable duration by prefixing the time with "~"
-	-- @param key the option key
-	-- @number length the bar duration in seconds
-	-- @string guid Anchor to a unit's nameplate by GUID
-	-- @param[opt] text the bar text (if nil, key is used)
-	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:NameplateCDBar(key, length, guid, text, icon)
-		if type(length) ~= "number" or length == 0 then
-			core:Print(format(badBar, key))
-			return
-		elseif type(guid) ~= "string" then
-			core:Print(format(badNameplateBarStart, key))
-			return
-		end
-
-		if checkFlag(self, key, C.NAMEPLATEBAR) then
-			local msg = type(text) == "string" and text or spells[text or key]
-			self:SendMessage("BigWigs_StartNameplateTimer", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
-		end
+	--- [DEPRECATED] Does nothing
+	function boss:NameplateCDBar()
 	end
 
-	--- Stop a nameplate bar.
-	-- @param text the bar text, or a spellId which is converted into the spell name and used
-	-- @string guid nameplate unit's guid
-	function boss:StopNameplateBar(text, guid)
-		if type(guid) ~= "string" then
-			core:Print(format(badNameplateBarStop, text))
-		end
-		local msg = type(text) == "number" and spells[text] or text
-		self:SendMessage("BigWigs_StopNameplateTimer", self, msg, guid)
+	--- [DEPRECATED] Does nothing
+	function boss:StopNameplateBar()
 	end
 end
 
@@ -3151,6 +3108,32 @@ function boss:BarTimeLeft(text)
 		return bars:GetBarTimeLeft(self, type(text) == "number" and spells[text] or text)
 	end
 	return 0
+end
+
+-------------------------------------------------------------------------------
+-- Nameplates.
+-- @section nameplates
+--
+
+do
+	--- Start showing a nameplate icon.
+	-- @param key the option key
+	-- @number length the duration in seconds
+	-- @string guid Anchor to a unit's nameplate by GUID
+	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:Nameplate(key, length, guid, hideOnExpire, icon)
+		if checkFlag(self, key, C.NAMEPLATEBAR) then
+			self:SendMessage("BigWigs_StartNameplate", self, key, length, guid, hideOnExpire, icons[icon or key])
+		end
+	end
+
+	--- Stop showing a nameplate icon.
+	-- @param key the option key
+	-- @string guid nameplate unit's guid
+	function boss:StopNameplate(key, guid)
+		self:SendMessage("BigWigs_StopNameplate", self, key, guid)
+	end
 end
 
 -------------------------------------------------------------------------------
