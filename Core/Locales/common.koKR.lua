@@ -10,8 +10,8 @@ L.other = "%s: %s"
 L.onboss = "우두머리에게 %s"
 L.buff_boss = "넴드에게 버프: %s"
 L.buff_other = "%s 에게 버프: %s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.magic_buff_boss = "보스에 마법 강화 효과: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = " %s에 마법 강화 효과: %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%2$s에게 %1$s"
 L.stack = "%3$s에게 %1$dx %2$s"
 L.stackyou = "당신에게 %dx %s"
@@ -31,8 +31,8 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "%d단계"
 L.stage = "%d단계"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "웨이브 %d" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "웨이브 %d of %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "일반 난이도"
 L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
@@ -41,14 +41,14 @@ L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.ready = "준비" -- When a player is ready to do something
 L.dead = "죽음" -- When a player is dead
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.health = "Health" -- The health of an NPC
---L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
---L.door_open = "Door open" -- When a door is open, usually after a speech from an NPC
---L.gate_open = "Gate open" -- When a gate is open, usually after a speech from an NPC
+L.health = "체력" -- The health of an NPC
+L.health_percent = "%d%% 체력" -- "10% Health" The health percentage of an NPC
+L.door_open = "문 열림" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "문 열림" -- When a gate is open, usually after a speech from an NPC
 L.threat = "위협 수준"
 L.energy = "기력"
 
---L.remaining = "%d remaining" -- 5 remaining
+L.remaining = "%d 남음" -- 5 remaining
 L.duration = "%s %s초 남음" -- Spell for 10 seconds
 L.over = "%s 종료" -- Spell Over
 L.removed = "%s 제거됨" -- Spell Removed
@@ -58,22 +58,22 @@ L.removed_after = "%s %.1f초 후 제거됨" -- "Spell removed after 1.1s" (s = 
 L.incoming = "곧 %s" -- Spell Incoming
 L.interrupted = "%s 시전 방해됨" -- Spell Interrupted
 L.interrupted_by = "%s 를 %s 가 차단" -- Spell interrupted by Player
---L.interruptible = "Interruptible" -- when a spell is interruptible
+L.interruptible = "차단 가능" -- when a spell is interruptible
 L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
 L.you_die = "당신은 죽습니다" -- You will die
 L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
---L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.next_ability = "다음 능력" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.landing = "%s 착륙 중" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
 L.adds_spawned = "추가 몹들 생성" -- plural
---L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.adds_spawned_count = "%d |4추가 몹:추가 몹들; 생성됨" -- 1 add spawned / 2 adds spawned
+L.add_spawning = "추가 몹 생성 중" -- singular
+L.adds_spawning = "추가 몹들 생성 중" -- plural
 L.spawned = "%s 생성"
 L.spawning = "%s 생성"
 L.next_add = "다음 몹 추가"
@@ -107,18 +107,18 @@ L.affixes = "어픽스" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "%s 징표 표시"
 L.marker_player_desc = "%s에 영향받는 플레이어를 %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "'%s'에 영향을 받은 NPC들을 %s로 표시합니다. (부공격대장이나 공격대장 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "연결"
 L.link_with = "%s|1과;와; 연결됨"
 L.link_with_icon = "|T13700%d:0|t%s|1과;와; 연결됨"
---L.link_with_rticon = "{rt%d}Linked with %s"
+L.link_with_rticon = "{rt%d}%s와 연결됨"
 L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_both_icon = "|T13700%d:0|t%s|1과;와; |T13700%d:0|t%s|1이;가; 연결됨"
 L.link_removed = "연결 사라짐"
---L.link_say_option_name = "Repeating 'Linked' say messages"
---L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
+L.link_say_option_name = "'연결됨' 반복 말하기 옵션"
+L.link_say_option_desc = "채팅에서 누구와 연결되었는지 반복적으로 알리는 말하기 메시지."
 
 -- Abbreviated numbers
 L.amount_one = "%.2f억" -- Billions 1,000,000,000
@@ -151,9 +151,9 @@ L.nature = "자연"
 L.arcane = "비전"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "자동 NPC 상호작용"
+L.autotalk_boss_desc = "보스 전투를 시작하는 NPC 대화 옵션을 자동으로 선택합니다."
+L.autotalk_generic_desc = "던전의 다음 단계로 진행하기 위해 필요한 NPC 대화 옵션을 자동으로 선택합니다."
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -207,8 +207,8 @@ L.mark = "징표" -- Short name for abilites with "Mark" in the name, for exampl
 L.marks = "징표" -- Plural of L.marks
 L.mind_control = "정신 지배" -- Any kind of Mind Control ability, where a player loses control of their character
 L.mind_control_short = "정신 지배" -- Short version of Mind Control, mainly for bars
---L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
---L.soaks = "Soaks" -- Plural of L.soak
+L.soak = "흡수" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "흡수" -- Plural of L.soak
 L.spell_reflection = "주문 반사" -- Any ability that reflects spells
 L.parasite = "기생충" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.rooted = "묶임" -- Any ability that roots you in place, preventing you from moving
