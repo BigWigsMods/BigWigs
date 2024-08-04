@@ -1406,7 +1406,6 @@ do
 	end
 
 	local statusTable = {}
-	local playerName = nil
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
 
@@ -1495,6 +1494,8 @@ do
 		widget:ReleaseChildren()
 
 		if value == "options" then
+			configFrame:SetTitle("BigWigs")
+			configFrame:SetStatusText(" "..loader:GetReleaseString())
 			-- Embed the AceConfig options in our AceGUI frame
 			local container = AceGUI:Create("SimpleGroup")
 			container.type = "BigWigsOptions" -- We want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
@@ -1512,6 +1513,8 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
+				configFrame:SetTitle("BigWigs")
+				configFrame:SetStatusText(" "..loader:GetReleaseString())
 				defaultHeader = loader.currentExpansion.name
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
@@ -1523,6 +1526,8 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
+				configFrame:SetTitle("LittleWigs")
+				configFrame:SetStatusText(" "..loader.littlewigsVersionString)
 				defaultHeader = loader.currentExpansion.littlewigsDefault
 				-- add an entry for each expansion
 				for i = 1, #expansionHeader do
@@ -1645,7 +1650,6 @@ do
 	end
 
 	function options:OpenConfig()
-		playerName = UnitName("player")
 		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
 
 		local bw = AceGUI:Create("Frame")
