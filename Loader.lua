@@ -828,9 +828,7 @@ do
 
 		-- check LittleWigs version
 		if name == "LittleWigs" then
-			if addonState == "DISABLED" then
-				public.littlewigsVersionString = L.disabledAddOn:format(name)
-			elseif GetAddOnMetadata(i, "X-LittleWigs-Repo") then
+			if GetAddOnMetadata(i, "X-LittleWigs-Repo") then
 				public.usingLittleWigsRepo = true
 				public.littlewigsVersionString = L.littlewigsSourceCheckout
 			else
