@@ -833,11 +833,13 @@ do
 				public.littlewigsVersionString = L.littlewigsSourceCheckout
 			else
 				local version = GetAddOnMetadata(i, "Version")
-				local alpha = strfind(version, "-", nil, true)
-				if alpha then
-					public.littlewigsVersionString = L.littlewigsAlphaRelease:format(version)
-				else
-					public.littlewigsVersionString = L.littlewigsOfficialRelease:format(version)
+				if version then
+					local alpha = strfind(version, "-", nil, true)
+					if alpha then
+						public.littlewigsVersionString = L.littlewigsAlphaRelease:format(version)
+					else
+						public.littlewigsVersionString = L.littlewigsOfficialRelease:format(version)
+					end
 				end
 			end
 		end
