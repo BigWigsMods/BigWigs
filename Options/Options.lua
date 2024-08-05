@@ -1406,7 +1406,6 @@ do
 	end
 
 	local statusTable = {}
-	local playerName = nil
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
 
@@ -1495,6 +1494,8 @@ do
 		widget:ReleaseChildren()
 
 		if value == "options" then
+			configFrame:SetTitle("BigWigs")
+			configFrame:SetStatusText(" "..loader:GetReleaseString())
 			-- Embed the AceConfig options in our AceGUI frame
 			local container = AceGUI:Create("SimpleGroup")
 			container.type = "BigWigsOptions" -- We want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
@@ -1512,6 +1513,8 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
+				configFrame:SetTitle("BigWigs")
+				configFrame:SetStatusText(" "..loader:GetReleaseString())
 				defaultHeader = loader.currentExpansion.name
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
@@ -1523,6 +1526,8 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
+				configFrame:SetTitle("LittleWigs")
+				configFrame:SetStatusText(" "..loader.littlewigsVersionString)
 				defaultHeader = loader.currentExpansion.littlewigsDefault
 				-- add an entry for each expansion
 				for i = 1, #expansionHeader do
@@ -1645,7 +1650,6 @@ do
 	end
 
 	function options:OpenConfig()
-		playerName = UnitName("player")
 		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
 
 		local bw = AceGUI:Create("Frame")
@@ -1725,6 +1729,48 @@ function options:ConfigTableChange(_, appName)
 end
 
 do
+	local popup = CreateFrame("Frame", nil, UIParent)
+	popup:Hide()
+	popup:SetPoint("CENTER", UIParent, "CENTER")
+	popup:SetSize(320, 72)
+	popup:EnableMouse(true) -- Do not allow click-through on the frame
+	popup:SetFrameStrata("TOOLTIP")
+	popup:SetFrameLevel(110) -- Lots of room to draw under it
+	popup:SetFixedFrameStrata(true)
+	popup:SetFixedFrameLevel(true)
+
+	local border = CreateFrame("Frame", nil, popup, "DialogBorderOpaqueTemplate")
+	border:SetAllPoints(popup)
+
+	local textFrame = popup:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	textFrame:SetSize(290, 0)
+	textFrame:SetPoint("TOP", 0, -16)
+
+	local function newButton(newText)
+		local button = CreateFrame("Button", nil, popup)
+		button:SetSize(128, 21)
+		button:SetNormalFontObject(GameFontNormal)
+		button:SetHighlightFontObject(GameFontHighlight)
+		button:SetNormalTexture(130763) -- "Interface\\Buttons\\UI-DialogBox-Button-Up"
+		button:GetNormalTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+		button:SetPushedTexture(130761) -- "Interface\\Buttons\\UI-DialogBox-Button-Down"
+		button:GetPushedTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+		button:SetHighlightTexture(130762) -- "Interface\\Buttons\\UI-DialogBox-Button-Highlight"
+		button:GetHighlightTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+		button:SetText(newText)
+		return button
+	end
+
+	local acceptButton = newButton(ACCEPT)
+	acceptButton:SetPoint("BOTTOMRIGHT", popup, "BOTTOM", -6, 16)
+	local cancelButton = newButton(CANCEL)
+	cancelButton:SetPoint("LEFT", acceptButton, "RIGHT", 13, 0)
+	popup:SetScript("OnKeyDown", function(_, key)
+		if key == "ESCAPE" then
+			cancelButton:Click()
+		end
+	end)
+
 	local _, addonTable = ...
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
 	-- Use BigWigsAPI:ImportProfileString(addonName, profileString)
@@ -1734,12 +1780,11 @@ do
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original
-		local frame = acd.popup
-		frame:Show()
+		popup:Show()
 		local profileName = BigWigs.db:GetCurrentProfile()
 		if not optionalCustomProfileName or profileName == optionalCustomProfileName then
 			optionalCustomProfileName = nil
-			frame.text:SetText(L.confirm_import_addon:format(addonName, profileName))
+			textFrame:SetText(L.confirm_import_addon:format(addonName, profileName))
 		else
 			local profiles = BigWigs.db:GetProfiles()
 			local found = false
@@ -1751,22 +1796,21 @@ do
 				end
 			end
 			if found then
-				frame.text:SetText(L.confirm_import_addon_edit_profile:format(addonName, optionalCustomProfileName))
+				textFrame:SetText(L.confirm_import_addon_edit_profile:format(addonName, optionalCustomProfileName))
 			else
-				frame.text:SetText(L.confirm_import_addon_new_profile:format(addonName, optionalCustomProfileName))
+				textFrame:SetText(L.confirm_import_addon_new_profile:format(addonName, optionalCustomProfileName))
 			end
 		end
-		local height = 61 + frame.text:GetHeight()
-		frame:SetHeight(height)
+		local height = 61 + textFrame:GetHeight()
+		popup:SetHeight(height)
 
-		frame.accept:ClearAllPoints()
-		frame.accept:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", -6, 16)
-		frame.cancel:Show()
+		acceptButton:ClearAllPoints()
+		acceptButton:SetPoint("BOTTOMRIGHT", popup, "BOTTOM", -6, 16)
 
-		frame.accept:SetScript("OnClick", function(self)
-			frame:Hide()
-			self:SetScript("OnClick", nil)
-			frame.cancel:SetScript("OnClick", nil)
+		acceptButton:SetScript("OnClick", function()
+			popup:Hide()
+			acceptButton:SetScript("OnClick", nil)
+			cancelButton:SetScript("OnClick", nil)
 			if optionalCustomProfileName then
 				BigWigs.db:SetProfile(optionalCustomProfileName)
 			end
@@ -1775,10 +1819,10 @@ do
 				optionalCallbackFunction(true)
 			end
 		end)
-		frame.cancel:SetScript("OnClick", function(self)
-			frame:Hide()
-			self:SetScript("OnClick", nil)
-			frame.accept:SetScript("OnClick", nil)
+		cancelButton:SetScript("OnClick", function()
+			popup:Hide()
+			cancelButton:SetScript("OnClick", nil)
+			acceptButton:SetScript("OnClick", nil)
 			if optionalCallbackFunction then
 				optionalCallbackFunction(false)
 			end

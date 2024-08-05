@@ -367,7 +367,7 @@ do
 		VOICE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Voice",
 		BAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
 		CASTBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
-		NAMEPLATEBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
+		NAMEPLATEBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pulse", -- XXX temp
 		TANK = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank",
 		HEALER = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer",
 		EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
@@ -2420,37 +2420,6 @@ function boss:CloseProximity(key)
 end
 
 -------------------------------------------------------------------------------
--- Nameplates.
--- @section nameplates
---
-
---- Toggle showing hostile nameplates to the enabled state.
-function boss:ShowPlates()
-	self:SendMessage("BigWigs_EnableHostileNameplates", self)
-end
-
---- Toggle showing hostile nameplates to the disabled state.
-function boss:HidePlates()
-	self:SendMessage("BigWigs_DisableHostileNameplates", self)
-end
-
---- Add icon to hostile nameplate.
--- @number spellId the associated spell id
--- @string guid the hostile unit guid
--- @number[opt] duration the duration of the aura
--- @bool[opt] desaturate true if the texture should be desaturated
-function boss:AddPlateIcon(spellId, guid, duration, desaturate)
-	self:SendMessage("BigWigs_AddNameplateIcon", self, guid, icons[spellId], duration, desaturate)
-end
-
---- Remove icon from hostile nameplate.
--- @number spellId the associated spell id, passing nil removes all icons
--- @string guid the hostile unit guid
-function boss:RemovePlateIcon(spellId, guid)
-	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
-end
-
--------------------------------------------------------------------------------
 -- Messages.
 -- @section messages
 --
@@ -3140,6 +3109,32 @@ do
 	function boss:StopNameplate(key, guid)
 		self:SendMessage("BigWigs_StopNameplate", self, key, guid)
 	end
+end
+
+--- [DEPRECATED] Toggle showing hostile nameplates to the enabled state.
+function boss:ShowPlates()
+	self:SendMessage("BigWigs_EnableHostileNameplates", self)
+end
+
+--- [DEPRECATED] Toggle showing hostile nameplates to the disabled state.
+function boss:HidePlates()
+	self:SendMessage("BigWigs_DisableHostileNameplates", self)
+end
+
+--- [DEPRECATED] Add icon to hostile nameplate.
+-- @number spellId the associated spell id
+-- @string guid the hostile unit guid
+-- @number[opt] duration the duration of the aura
+-- @bool[opt] desaturate true if the texture should be desaturated
+function boss:AddPlateIcon(spellId, guid, duration, desaturate)
+	self:SendMessage("BigWigs_AddNameplateIcon", self, guid, icons[spellId], duration, desaturate)
+end
+
+--- [DEPRECATED] Remove icon from hostile nameplate.
+-- @number spellId the associated spell id, passing nil removes all icons
+-- @string guid the hostile unit guid
+function boss:RemovePlateIcon(spellId, guid)
+	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
 end
 
 -------------------------------------------------------------------------------
