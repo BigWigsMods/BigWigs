@@ -46,12 +46,12 @@ L.noBossMod = "Нет аддона:"
 L.offline = "Не в сети"
 
 L.missingAddOnPopup = "Отсутствует модификация |cFF436EEE%s|r."
---L.missingAddOnRaidWarning = "Отсутствует модификация |cFF436EEE%s|r. No timers will be displayed in this zone!"
+L.missingAddOnRaidWarning = "Отсутствует модификация |cFF436EEE%s|r. В этой зоне не будут отображаться таймеры!"
 L.disabledAddOn = "У вас выключена модификация |cFF436EEE%s|r, таймеры не будут показываться."
 L.removeAddOn = "Пожалуйста, удалите '|cFF436EEE%s|r', ему на смену пришло '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
---L.outOfDateContentPopup = "WARNING!\nYou updated |cFF436EEE%s|r but you also need to update the main |cFF436EEEBigWigs|r addon.\nIgnoring this will result in broken functionality."
---L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requires version %d of the main |cFF436EEEBigWigs|r addon to function correctly, but you're on version %d."
+L.outOfDateContentPopup = "ВНИМАНИЕ!\nВы обновили |cFF436EEE%s|r но необходимо также обновить основную модификацию |cFF436EEEBigWigs|r .\nИгнорирование приведёт к ошибочному функционированию."
+L.outOfDateContentRaidWarning = "|cFF436EEE%s|r требует %d версию основной модификации |cFF436EEEBigWigs|r для грамотного функционирования. Текущая версия - %d."
 
 L.expansionNames = {
 	"Классика", -- Classic
@@ -160,8 +160,8 @@ L.SAY_COUNTDOWN = "Отсчет в /сказать"
 L.SAY_COUNTDOWN_desc = "Облачка чата легко заметить. BigWigs будет производить отсчет в /сказать, чтобы оповестить рядом стоящих игроков об окончании времени способности на Вас."
 L.ME_ONLY_EMPHASIZE = "Выделить (только для себя)"
 L.ME_ONLY_EMPHASIZE_desc = "С включенной опцией все сообщения, связанные с данной способностью будут выделены ТОЛЬКО тогда, когда использованы на Вас, становясь более заметными."
---L.NAMEPLATEBAR = "Nameplates"
---L.NAMEPLATEBAR_desc = "If enabled, features such as icons and text related to this specific ability will show on your nameplates. This makes it easier to see which specific NPC is casting an ability when there are multiple NPCs that cast it."
+L.NAMEPLATEBAR = "Полосы здоровья"
+L.NAMEPLATEBAR_desc = "С включенной опцией, функционал связанный с иконком или текстом, связанный с данной способностью, будет активирован. Это упрощает процесс поиска НПЦ, который использует данную способность, когда таких НПЦ несколько."
 L.PRIVATE = "Приватные ауры"
 L.PRIVATE_desc = "Приватные ауры не могут быть отслежены как обычно, но звуковое уведомление \"на себе\" может быть включено во вкладке Звука."
 
