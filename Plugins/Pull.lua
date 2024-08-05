@@ -300,12 +300,27 @@ do
 
 	function plugin:START_PLAYER_COUNTDOWN(_, initiatedBy, timeSeconds, totalTime)
 		if IsEncounterInProgress() then return end -- Doesn't make sense to allow this in combat
-		if timeLeft == timeSeconds then return end -- Throttle
-		timeLeft = timeSeconds
-		local _, _, _, _, _, name = GetPlayerInfoByGUID(initiatedBy)
+		local unitToken
+		local _, instanceType, _, _, _, _, _, instanceId = GetInstanceInfo()
+		for unit in self:IterateGroup(true) do
+			if self:UnitGUID(unit) == initiatedBy then
+				local _, _, _, tarInstanceId = UnitPosition(unit)
+				-- Don't fire pull timers from people in different zones...
+				-- ...unless you're in a raid instance and the sender isn't, to allow raid leaders outside to send you pull timers
+				if instanceId ~= tarInstanceId and not (instanceType == "raid" and not zoneTable[tarInstanceId]) then
+					return
+				end
+				unitToken = unit
+				break
+			end
+		end
+		if not unitToken then return end
+
+		local name = self:UnitName(unitToken)
 		if timer then
 			self:CancelTimer(timer)
 		end
+		timeLeft = timeSeconds
 		FlashClientIcon()
 		BigWigs:Print(L.pullStartedBy:format(name))
 		timer = self:ScheduleRepeatingTimer(printPull, 1, self)
@@ -328,20 +343,34 @@ do
 
 	function plugin:CANCEL_PLAYER_COUNTDOWN(_, initiatedBy)
 		if timer then
-			self:CancelTimer(timer)
-			timer = nil
-			timeLeft = 0
-			self:SendMessage("BigWigs_StopBar", self, L.pull)
-			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
 			if initiatedBy then
-				local _, _, _, _, _, name = GetPlayerInfoByGUID(initiatedBy)
+				local unitToken
+				local _, instanceType, _, _, _, _, _, instanceId = GetInstanceInfo()
+				for unit in self:IterateGroup(true) do
+					if self:UnitGUID(unit) == initiatedBy then
+						local _, _, _, tarInstanceId = UnitPosition(unit)
+						-- Don't fire pull timers from people in different zones...
+						-- ...unless you're in a raid instance and the sender isn't, to allow raid leaders outside to send you pull timers
+						if instanceId ~= tarInstanceId and not (instanceType == "raid" and not zoneTable[tarInstanceId]) then
+							return
+						end
+						unitToken = unit
+						break
+					end
+				end
+				if not unitToken then return end
+				local name = self:UnitName(unitToken)
 				BigWigs:Print(L.pullStopped:format(name))
 				self:SendMessage("BigWigs_StopPull", self, name)
 			else
 				BigWigs:Print(L.pullStoppedCombat)
 				self:SendMessage("BigWigs_StopPull", self, "COMBAT")
 			end
-
+			self:CancelTimer(timer)
+			timer = nil
+			timeLeft = 0
+			self:SendMessage("BigWigs_StopBar", self, L.pull)
+			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
 		end
 	end
 end
