@@ -67,6 +67,7 @@ L.you_die = "Morirás" -- You will die
 L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (seg = seconds (segundos))
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 --L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+--L.flying_available = "You can fly now"
 
 -- Add related
 L.add_spawned = "Esbirro apareció" -- singular

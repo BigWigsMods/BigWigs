@@ -67,6 +67,7 @@ L.you_die = "당신은 죽습니다" -- You will die
 L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "다음 능력" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s 착륙 중" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.flying_available = "비행 가능"
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular

@@ -138,7 +138,6 @@ if L then
 	L.flare_bomb = "Feathers"
 	L.too_close_to_edge = "Too close to the edge"
 	L.taking_damage_from_edge = "Taking damage from the edge"
-	L.flying_available = "You can fly now"
 
 	L.fly_time = "Fly Time"
 	L.fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."
@@ -197,7 +196,7 @@ function mod:GetOptions()
 		[424495] = L.mass_entanglement, -- Mass Entanglement (Roots)
 		[420540] = L.incarnation_moonkin, -- Incarnation: Moonkin (Moonkin Form)
 		[421636] = CL.pushback, -- Typhoon (Pushback)
-		[422509] = L.flying_available, -- Empowered Feather (You can fly now)
+		[422509] = CL.flying_available, -- Empowered Feather (You can fly now)
 		[422115] = L.incarnation_tree_of_flame, -- Incarnation: Tree of Flame (Tree Form)
 		[424579] = CL.heal_absorb, -- Suppressive Ember (Heal Absorb)
 		[423265] = L.flaming_germination, -- Flaming Germination (Seeds)
@@ -518,7 +517,7 @@ end
 function mod:EmpoweredFeatherApplied(args)
 	if self:Me(args.destGUID) then
 		self:Error("Feather ID available")
-		self:Message(args.spellId, "green", L.flying_available)
+		self:Message(args.spellId, "green", CL.flying_available)
 		self:PlaySound(args.spellId, "long")
 	end
 end
@@ -526,7 +525,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	--|TInterface\\ICONS\\Ability_DragonRiding_DragonRiding01.BLP:20|t Take flight!
 	if msg:find("Ability_DragonRiding_DragonRiding01", nil, true) then
-		self:Message(422509, "green", L.flying_available)
+		self:Message(422509, "green", CL.flying_available)
 		self:PlaySound(422509, "long")
 	end
 end

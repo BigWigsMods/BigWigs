@@ -84,7 +84,6 @@ if L then
 	L.flare_bomb = "羽毛"
 	L.too_close_to_edge = "太靠近邊緣"
 	L.taking_damage_from_edge = "受到邊緣傷害"
-	L.flying_available = "可以飛行"
 
 	L.fly_time = "飛行用時"
 	L.fly_time_desc = "顯示你在階段轉換期間到達下個平台的飛行用時。"

@@ -84,7 +84,6 @@ if L then
 	L.flare_bomb = "깃털"
 	L.too_close_to_edge = "가장자리에 너무 가까움"
 	L.taking_damage_from_edge = "가장자리에서 피해를 입음"
-	L.flying_available = "비행 가능"
 
 	L.fly_time = "비행 시간"
 	L.fly_time_desc = "사잇단계 동안 다른 단상으로 이동하는 데 걸린 시간을 보여줍니다."

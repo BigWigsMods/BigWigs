@@ -84,7 +84,6 @@ if L then
 	L.flare_bomb = "Plumas"
 	L.too_close_to_edge = "Demasiado cerca del borde"
 	L.taking_damage_from_edge = "Recibiendo daño del borde"
-	L.flying_available = "Puedes volar ahora"
 
 	--L.fly_time = "Fly Time"
 	--L.fly_time_desc = "Display a message showing you how long you took to fly over to the other platform in the intermissions."

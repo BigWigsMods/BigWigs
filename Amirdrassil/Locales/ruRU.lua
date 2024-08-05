@@ -84,7 +84,6 @@ if L then
 	L.flare_bomb = "Перья"
 	L.too_close_to_edge = "Слишком близко к краю"
 	L.taking_damage_from_edge = "Получаешь урон от края платформы"
-	L.flying_available = "Можешь лететь"
 
 	L.fly_time = "Полёт"
 	L.fly_time_desc = "Показывает сообщение с длительностью полёта между платформами на переходке."

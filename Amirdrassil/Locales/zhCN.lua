@@ -84,7 +84,6 @@ if L then
 	L.flare_bomb = "羽毛"
 	L.too_close_to_edge = "太靠近边缘"
 	L.taking_damage_from_edge = "在边缘受到伤害"
-	L.flying_available = "你现在可以起飞"
 
 	L.fly_time = "飞行用时"
 	L.fly_time_desc = "显示你在阶段转换期间到达另一个平台的飞行用时。"

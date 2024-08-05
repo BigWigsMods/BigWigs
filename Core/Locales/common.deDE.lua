@@ -67,6 +67,7 @@ L.you_die = "Du stirbst" -- You will die
 L.you_die_sec = "Du stirbst in %d Sek" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Nächste Fähigkeit" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s landet" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.flying_available = "Du kannst jetzt fliegen"
 
 -- Add related
 L.add_spawned = "Add erschienen" -- singular
