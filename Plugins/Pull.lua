@@ -314,9 +314,8 @@ do
 				break
 			end
 		end
-		if not unitToken then return end
 
-		local name = self:UnitName(unitToken)
+		local name = unitToken and self:UnitName(unitToken) or "?"
 		if timer then
 			self:CancelTimer(timer)
 		end
@@ -358,8 +357,7 @@ do
 						break
 					end
 				end
-				if not unitToken then return end
-				local name = self:UnitName(unitToken)
+				local name = unitToken and self:UnitName(unitToken) or "?"
 				BigWigs:Print(L.pullStopped:format(name))
 				self:SendMessage("BigWigs_StopPull", self, name)
 			else
