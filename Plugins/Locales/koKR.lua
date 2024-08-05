@@ -25,9 +25,9 @@ L.TOPLEFT = "좌측 상단"
 L.BOTTOMRIGHT = "우측 하단"
 L.BOTTOMLEFT = "좌측 하단"
 L.CENTER = "중앙"
---L.customAnchorPoint = "Advanced: Custom anchor point"
---L.sourcePoint = "Source Point"
---L.destinationPoint = "Destination Point"
+L.customAnchorPoint = "고급: 사용자 지정 앵커 지점"
+L.sourcePoint = "원본 지점"
+L.destinationPoint = "대상 지점"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -88,7 +88,7 @@ L.testBarsBtn_desc = "당신의 현재 표시 설정으로 테스트용 바를 �
 L.toggleAnchorsBtnShow = "고정기 표시"
 L.toggleAnchorsBtnHide = "고정기 숨김"
 L.toggleAnchorsBtnHide_desc = "고정기를 모두 숨겨서 다 그자리에 고정시킵니다."
---L.toggleBarsAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars."
+L.toggleBarsAnchorsBtnShow_desc = "모든 이동 앵커를 표시하여 바를 이동할 수 있게 합니다."
 
 L.nameplateBars = "이름표 바"
 L.nameplateAutoWidth = "이름표 너비와 맞추기"
@@ -287,10 +287,10 @@ L.infoBox = "정보 상자"
 L.sinkDescription = "이 애드온의 출력을 BigWigs 메시지 디스플레이에 출력합니다. 이 디스플레이는 아이콘과 색상, 그리고 동시에 4개의 메시지 출력을 지원합니다. 새롭게 삽입된 메시지는 사용자에게 알리기 위해 크기가 커졌다가 다시 빠르게 줄어듭니다."
 L.emphasizedSinkDescription = "이 애드온의 출력을 BigWigs 강조 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
 L.resetMessagesDesc = "위치를 비롯한 메시지에 관련된 모든 설정을 기본값으로 초기화합니다."
---L.toggleMessagesAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the messages."
+L.toggleMessagesAnchorsBtnShow_desc = "모든 이동 앵커를 표시하여 메시지를 이동할 수 있게 합니다."
 
---L.testMessagesBtn = "Create Test Message"
---L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
+L.testMessagesBtn = "테스트 메시지 생성"
+L.testMessagesBtn_desc = "현재 디스플레이 설정을 테스트할 메시지를 생성합니다."
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
@@ -364,12 +364,12 @@ L.pull = "전투 예정"
 L.engageSoundTitle = "우두머리 전투가 시작될때 소리 재생"
 L.pullStartedSoundTitle = "전투 예정 타이머가 시작되었을때 소리 재생"
 L.pullFinishedSoundTitle = "전투 예정 타이머가 끝났을때 소리 재생"
---L.pullStartedBy = "Pull timer started by %s."
+L.pullStartedBy = "%s에 의해 풀 타이머가 시작되었습니다."
 L.pullStopped = "%s|1이;가; 전투 예정 타이머를 취소했습니다."
 L.pullStoppedCombat = "전투가 이미 시작되었기 때문에 전투 예정 타이머가 취소되었습니다."
 L.pullIn = "%d초 후 전투 시작"
---L.sendPull = "Sending a pull timer to your group."
---L.wrongPullFormat = "Invalid pull timer. A correct example is: /pull 5"
+L.sendPull = "그룹에 풀 타이머를 전송합니다."
+L.wrongPullFormat = "잘못된 풀 타이머 형식입니다. 올바른 예: /pull 5"
 L.countdownBegins = "초읽기 시작"
 L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될 지 선택하세요."
 
@@ -399,7 +399,7 @@ L.Long = "길게"
 L.Warning = "경고"
 L.onyou = "나에게 적용되는 주문, 강화 효과, 약화 효과"
 L.underyou = "내 밑의 \"바닥\"을 피해야 할 때"
---L.privateaura = "Whenever a 'Private Aura' is on you"
+L.privateaura = "'비공개 오라'가 당신에게 있을 때"
 
 L.sound = "소리"
 
@@ -418,13 +418,13 @@ L.bestTimeBar = "최고 기록"
 L.healthPrint = "생명력: %s."
 L.healthFormat = "%s (%.1f%%)"
 L.chatMessages = "대화 메시지"
---L.newFastestVictoryOption = "New fastest victory"
---L.victoryOption = "You were victorious"
---L.defeatOption = "You were defeated"
+L.newFastestVictoryOption = "새로운 최고 승리 시간"
+L.victoryOption = "당신이 승리했습니다"
+L.defeatOption = "당신이 패배했습니다"
 L.bossHealthOption = "우두머리 생명력"
---L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
---L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
---L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
+L.bossVictoryPrint = "'%s'에게 %s 후 승리했습니다." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "'%s'에게 %s 후 패배했습니다." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "새로운 최고 승리 시간: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua
