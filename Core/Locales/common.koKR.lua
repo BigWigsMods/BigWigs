@@ -118,7 +118,7 @@ L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_both_icon = "|T13700%d:0|t%s|1과;와; |T13700%d:0|t%s|1이;가; 연결됨"
 L.link_removed = "연결 사라짐"
 L.link_say_option_name = "'연결됨' 반복 말하기 옵션"
-L.link_say_option_desc = "채팅에서 누구와 연결되었는지 반복적으로 알리는 말하기 메시지."
+L.link_say_option_desc = "일반 채팅에 반복적으로 말하기."
 
 -- Abbreviated numbers
 L.amount_one = "%.2f억" -- Billions 1,000,000,000
