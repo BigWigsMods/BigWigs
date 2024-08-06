@@ -115,7 +115,7 @@ if L then
 	L.lighting_devastation_trigger = "profonde inspiration" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	L.volatile_current = "Etincelles"
+	L.volatile_current = "Étincelles"
 	L.thunderous_blast = "Explosion"
 	L.lightning_strikes = "Frappes"
 	L.electric_scales = "Dégats Raid"
@@ -140,7 +140,7 @@ if L then
 
 	L.skipped_cast = "%s ignoré (%d)"
 
-	L.custom_off_raidleader_devastation = "Dévastation de foudre: Mode Leaser"
+	L.custom_off_raidleader_devastation = "Dévastation de foudre : Mode Laser"
 	L.custom_off_raidleader_devastation_desc = "Affiche une bar pour la Dévastation de foudre (Souffle) pour l'autre côté également."
 	L.breath_other = "%s [Opposé]" -- Breath on opposite platform
 end
