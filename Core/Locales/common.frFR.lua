@@ -123,9 +123,9 @@ L.link_say_option_name = "Répète '".. (female and "Liée" or "Lié") .."' dans
 L.link_say_option_desc = "Répète le message dans le canal de discussion en disant avec qui vous êtes liés."
 
 -- Abbreviated numbers
-L.amount_one = "%dG" -- Billions 1,000,000,000 G for Giga
-L.amount_two = "%dM" -- Millions 1,000,000 M for Mega
-L.amount_three = "%dk" -- Thousands 1,000 k for kilo
+L.amount_one = "%dMd" -- Billions 1,000,000,000
+L.amount_two = "%dM" -- Millions 1,000,000
+L.amount_three = "%dk" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
