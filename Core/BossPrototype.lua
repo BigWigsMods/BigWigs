@@ -3083,8 +3083,8 @@ do
 	-- @param key the option key
 	-- @number length the duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
-	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
 	-- @param[opt] icon the bar icon (spell id or texture name)
+	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
 	function boss:Nameplate(key, length, guid, icon, hideOnExpire)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, icons[icon or key], hideOnExpire)
