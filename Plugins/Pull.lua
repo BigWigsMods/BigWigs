@@ -190,6 +190,9 @@ do
 	end
 
 	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+
 		self:RegisterMessage("BigWigs_PluginComm")
 		self:RegisterMessage("DBM_AddonMessage")
 
@@ -198,13 +201,8 @@ do
 
 		self:RegisterMessage("BigWigs_OnBossEngage")
 
-		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		updateProfile()
-
-		if C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
-			self:RegisterEvent("START_PLAYER_COUNTDOWN")
-			self:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
-		end
+		self:RegisterMessage("Blizz_StartCountdown")
+		self:RegisterMessage("Blizz_StopCountdown")
 	end
 end
 
@@ -298,7 +296,7 @@ do
 		end
 	end
 
-	function plugin:START_PLAYER_COUNTDOWN(_, initiatedBy, timeSeconds, totalTime)
+	function plugin:Blizz_StartCountdown(_, initiatedBy, timeSeconds, totalTime)
 		if IsEncounterInProgress() then return end -- Doesn't make sense to allow this in combat
 		local unitToken
 		local _, instanceType, _, _, _, _, _, instanceId = GetInstanceInfo()
@@ -340,7 +338,7 @@ do
 		end
 	end
 
-	function plugin:CANCEL_PLAYER_COUNTDOWN(_, initiatedBy)
+	function plugin:Blizz_StopCountdown(_, initiatedBy)
 		if timer then
 			if initiatedBy then
 				local unitToken

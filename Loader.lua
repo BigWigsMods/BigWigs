@@ -1130,17 +1130,13 @@ function mod:GLOBAL_MOUSE_UP(button)
 	end
 end
 
-function mod:START_PLAYER_COUNTDOWN(initiatedBy, timeSeconds, totalTime)
+function mod:START_PLAYER_COUNTDOWN(...)
 	loadAndEnableCore()
-	if BigWigs and BigWigs.GetPlugin then -- XXX Clean this up
-		BigWigs:GetPlugin("Pull"):START_PLAYER_COUNTDOWN(nil, initiatedBy, timeSeconds, totalTime)
-	end
+	public:SendMessage("Blizz_StartCountdown", ...)
 end
-function mod:CANCEL_PLAYER_COUNTDOWN(initiatedBy)
+function mod:CANCEL_PLAYER_COUNTDOWN(...)
 	loadAndEnableCore()
-	if BigWigs and BigWigs.GetPlugin then -- XXX Clean this up
-		BigWigs:GetPlugin("Pull"):CANCEL_PLAYER_COUNTDOWN(nil, initiatedBy)
-	end
+	public:SendMessage("Blizz_StopCountdown", ...)
 end
 
 -- We can't do our addon loading in ADDON_LOADED as the target addons may be registering that
