@@ -3012,18 +3012,6 @@ do
 		local counter = msg:match(countString)
 		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
 	end
-
-	--- [DEPRECATED] Does nothing
-	function boss:NameplateBar()
-	end
-
-	--- [DEPRECATED] Does nothing
-	function boss:NameplateCDBar()
-	end
-
-	--- [DEPRECATED] Does nothing
-	function boss:StopNameplateBar()
-	end
 end
 
 --- Stop a bar.
@@ -3091,9 +3079,9 @@ do
 	-- @string guid Anchor to a unit's nameplate by GUID
 	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:Nameplate(key, length, guid, hideOnExpire, icon)
+	function boss:Nameplate(key, length, guid, icon, hideOnExpire)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
-			self:SendMessage("BigWigs_StartNameplate", self, key, length, guid, hideOnExpire, icons[icon or key])
+			self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, icons[icon or key], hideOnExpire)
 		end
 	end
 
@@ -3101,7 +3089,13 @@ do
 	-- @param key the option key
 	-- @string guid nameplate unit's guid
 	function boss:StopNameplate(key, guid)
-		self:SendMessage("BigWigs_StopNameplate", self, key, guid)
+		self:SendMessage("BigWigs_StopNameplate", self, guid, key)
+	end
+
+	--- Clear everything on a nameplate.
+	-- @string guid nameplate unit's guid
+	function boss:ClearNameplate(guid)
+		self:SendMessage("BigWigs_ClearNameplate", self, guid)
 	end
 end
 
@@ -3129,6 +3123,18 @@ end
 -- @string guid the hostile unit guid
 function boss:RemovePlateIcon(spellId, guid)
 	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
+end
+
+--- [DEPRECATED] Does nothing
+function boss:NameplateBar()
+end
+
+--- [DEPRECATED] Does nothing
+function boss:NameplateCDBar()
+end
+
+--- [DEPRECATED] Does nothing
+function boss:StopNameplateBar()
 end
 
 -------------------------------------------------------------------------------
