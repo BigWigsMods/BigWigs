@@ -90,7 +90,9 @@ local function iconLoop(updater)
 	local iconFrame = updater.parent
 	iconFrame.repeater:SetStartDelay(0)
 
-	local remaining = math.floor(iconFrame:GetRemaining() * 10 + 0.5) / 10 -- round to 1 decimal first
+	-- Rounding to 1 decimal place first as the timer is not precise to the 10000th of a second
+	-- This fixes things if there is 0.0000003 left when it would tick
+	local remaining = math.floor(iconFrame:GetRemaining() * 10 + 0.5) / 10
 	local timeToDisplay = math.ceil(remaining)
 	if timeToDisplay > 0 then
 		if db.nameplateIconCooldownTimer then
