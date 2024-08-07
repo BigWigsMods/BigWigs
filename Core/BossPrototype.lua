@@ -703,11 +703,7 @@ do
 						if m and m[mobId] then
 							local func = m[mobId]
 							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName, destFlags, destRaidFlags, time
-							if type(func) == "function" then
-								func(args)
-							else
-								self[func](self, args)
-							end
+							self[func](self, args)
 						end
 					end
 				end
@@ -722,11 +718,7 @@ do
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
 						args.spellId, args.spellName, args.spellSchool = spellId, spellName, spellSchool
 						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, amount, amount
-						if type(func) == "function" then
-							func(args)
-						else
-							self[func](self, args)
-						end
+						self[func](self, args)
 					end
 				end
 			else
@@ -740,11 +732,7 @@ do
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
 						args.spellId, args.spellName, args.spellSchool = spellId, spellName, spellSchool
 						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, amount, amount
-						if type(func) == "function" then
-							func(args)
-						else
-							self[func](self, args)
-						end
+						self[func](self, args)
 					end
 				end
 			end
