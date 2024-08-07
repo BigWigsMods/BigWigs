@@ -15,28 +15,28 @@ end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "frFR")
 if L then
-	--L.rolling_acid = "Waves"
+	L.rolling_acid = "Vagues"
 	--L.spinnerets_strands = "Strands"
-	--L.enveloping_webs = "Webs"
-	--L.enveloping_web_say = "Web" -- Singular of Webs
-	--L.erosive_spray = "Spray"
-	--L.caustic_hail = "Next Position"
+	L.enveloping_webs = "Toiles"
+	L.enveloping_web_say = "Toile" -- Singular of Webs
+	L.erosive_spray = "Écartez-vous"
+	L.caustic_hail = "Prochaine position"
 end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "frFR")
 if L then
 	L.sticky_web_say = "Toiles"
 	L.infest_message = "Lance Infester sur vous !"
-	--L.infest_say = "Parasites"
-	--L.experimental_dosage_say = "Soak Egg"
-	--L.unstable_infusion = "Swirls"
-	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
-	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
+	L.infest_say = "Parasites"
+	L.experimental_dosage_say = "Soak Œuf"
+	L.unstable_infusion = "Tourbillons"
+	L.custom_on_experimental_dosage_marks = "Assignements Dosage expérimental"
+	L.custom_on_experimental_dosage_marks_desc = "Assigne des joueurs affectés par 'Dosage expérimental' à {rt6}{rt4}{rt3}{rt7} avec un priorité mélée > distant > soigneur. Affecte les messages dire et cible."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "frFR")
 if L then
-	--L.assasination = "Phantoms"
-	--L.twiligt_massacre = "Dashes"
-	--L.nexus_daggers = "Daggers"
+	L.assasination = "Fantômes"
+	L.twiligt_massacre = "Dashes"
+	L.nexus_daggers = "Dagues"
 end

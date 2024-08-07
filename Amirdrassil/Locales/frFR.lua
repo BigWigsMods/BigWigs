@@ -115,6 +115,6 @@ if L then
 
 	L.flame_orb = "Orbes enflammées"
 	L.shadow_orb = "Orbes d'ombre"
-	--L.orb_message_flame = "You are Flame"
-	--L.orb_message_shadow = "You are Shadow"
+	L.orb_message_flame = "Vous êtes Flamme"
+	L.orb_message_shadow = "Vous êtes Ombre"
 end

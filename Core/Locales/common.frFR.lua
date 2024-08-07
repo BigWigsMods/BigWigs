@@ -119,13 +119,13 @@ L.link_with_rticon = "{rt%d}".. (female and "Liée" or "Lié") .." avec %s"
 L.link_both = "%s et %s sont liés"
 L.link_both_icon = "|T13700%d:0|t%s et |T13700%d:0|t%s sont liés"
 L.link_removed = "Lien enlevé"
---L.link_say_option_name = "Repeating 'Linked' say messages"
---L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
+L.link_say_option_name = "Répète '".. (female and "Liée" or "Lié") .."' dans le canal dire"
+L.link_say_option_desc = "Répète le message dans le canal de discussion en disant avec qui vous êtes liés."
 
 -- Abbreviated numbers
-L.amount_one = "%dB" -- Billions 1,000,000,000
+L.amount_one = "%dMd" -- Billions 1,000,000,000
 L.amount_two = "%dM" -- Millions 1,000,000
-L.amount_three = "%dK" -- Thousands 1,000
+L.amount_three = "%dk" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
