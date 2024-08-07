@@ -711,6 +711,24 @@ do
 						end
 					end
 				end
+			elseif event == "SPELL_DISPEL" or event == "SPELL_INTERRUPT" then
+				for i = #enabledModules, 1, -1 do
+					local self = enabledModules[i]
+					local m = eventMap[self][event]
+					if m and (m[extraSpellId] or m["*"]) then
+						local func = m[extraSpellId] or m["*"]
+						-- DEVS! Please ask if you need args attached to the table that we've missed out!
+						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
+						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
+						args.spellId, args.spellName, args.spellSchool = spellId, spellName, spellSchool
+						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, amount, amount
+						if type(func) == "function" then
+							func(args)
+						else
+							self[func](self, args)
+						end
+					end
+				end
 			else
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
