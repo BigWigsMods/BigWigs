@@ -99,23 +99,23 @@ do
 
 		local expansion = GetServerExpansionLevel()
 		local items = BigWigsLoader.isClassic and {
-			[1] = expansion > 3 and 90175, -- Gin-Ji Knife Set (5.0)
-			[3] = expansion > 1 and 42732, -- Everfrost Razor (3.0)
-			[5] = expansion > 1 and 37727, -- Ruby Acorn (3.0)
+			[1] = expansion > 3 and 90175 or nil, -- Gin-Ji Knife Set (5.0)
+			[3] = expansion > 1 and 42732 or nil, -- Everfrost Razor (3.0)
+			[5] = expansion > 1 and 37727 or nil, -- Ruby Acorn (3.0)
 			[8] = 8149, -- Voodoo Charm
 			-- [9]  = CheckInteractDistance 3
 			-- [10] = CheckInteractDistance 2
-			[13] = expansion > 0 and 32321, -- Sparrowhawk Net (2.1)
+			[13] = expansion > 0 and 32321 or nil, -- Sparrowhawk Net (2.1)
 			[18] = 14530, -- Heavy Runecloth Bandage
 			[23] = 21519, -- Mistletoe
 			[28] = 13289, -- Egan's Blaster
 			-- [30] = CheckInteractDistance 4
 			[33] = 955, -- Scroll of Intellect
 			[38] = 18904, -- Zorbin's Ultra-Shrinker
-			[43] = expansion > 0 and 34471, -- Vial of the Sunwell (2.4)
-			[48] = expansion > 0 and 32698, -- Wrangling Rope (2.1)
-			[53] = expansion > 4 and 116139, -- Haunting Memento (6.0)
-			[63] = expansion > 0 and 32825, -- Soul Cannon (2.1)
+			[43] = expansion > 0 and 34471 or nil, -- Vial of the Sunwell (2.4)
+			[48] = expansion > 0 and 32698 or nil, -- Wrangling Rope (2.1)
+			[53] = expansion > 4 and 116139 or nil, -- Haunting Memento (6.0)
+			[63] = expansion > 0 and 32825 or nil, -- Soul Cannon (2.1)
 		} or {
 			[1] = 90175, -- Gin-Ji Knife Set
 			[3] = 42732, -- Everfrost Razor
@@ -544,6 +544,7 @@ do
 		close:SetPoint("BOTTOMRIGHT", proxAnchor, "TOPRIGHT", -2, 2)
 		close:SetHeight(16)
 		close:SetWidth(16)
+		close:SetFrameLevel(125)
 		close.tooltipHeader = L.close
 		close.tooltipText = L.closeProximityDesc
 		close:SetScript("OnEnter", onControlEnter)
@@ -560,6 +561,7 @@ do
 		sound:SetPoint("BOTTOMLEFT", proxAnchor, "TOPLEFT", 2, 2)
 		sound:SetHeight(16)
 		sound:SetWidth(16)
+		sound:SetFrameLevel(125)
 		sound.tooltipHeader = L.toggleSound
 		sound.tooltipText = L.toggleSoundDesc
 		sound:SetScript("OnEnter", onControlEnter)
