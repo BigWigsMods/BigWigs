@@ -287,10 +287,10 @@ L.infoBox = "訊息盒"
 L.sinkDescription = "向外通過 BigWigs 插件訊息顯示。這些包含了圖示，顏色和在同一時間在螢幕上的顯示4個訊息。新的訊息將再一次快速的放大和縮小來提醒用戶。新插入的訊息將增大並立即縮小提醒用戶注意。"
 L.emphasizedSinkDescription = "以 BigWigs 強調訊息輸出此插件資訊。此訊息支持文字和顏色，同一時間只能顯示一條訊息。"
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
---L.toggleMessagesAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the messages."
+L.toggleMessagesAnchorsBtnShow_desc = "顯示所有移動錨點，使你可以移動訊息的位置。"
 
---L.testMessagesBtn = "Create Test Message"
---L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
+L.testMessagesBtn = "創建測試訊息"
+L.testMessagesBtn_desc = "生成一個測試用的訊息，讓你查看目前設定的訊息外觀。"
 
 L.bwEmphasized = "BigWigs 強調"
 L.messages = "訊息"
@@ -418,13 +418,13 @@ L.bestTimeBar = "最快時間"
 L.healthPrint = "血量：%s。"
 L.healthFormat = "%s（%.1f%%）"
 L.chatMessages = "聊天訊息"
---L.newFastestVictoryOption = "New fastest victory"
---L.victoryOption = "You were victorious"
---L.defeatOption = "You were defeated"
+L.newFastestVictoryOption = "新的最佳紀錄"
+L.victoryOption = "你的勝利"
+L.defeatOption = "你被擊敗"
 L.bossHealthOption = "首領血量"
---L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
---L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
---L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
+L.bossVictoryPrint = "你擊敗了「%s」，用時%s。" -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "你被「%s」擊敗，用時%s。" -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "新的最佳紀錄： (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua
