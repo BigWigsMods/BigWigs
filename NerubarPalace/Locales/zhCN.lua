@@ -31,7 +31,7 @@ if L then
 	L.experimental_dosage_say = "烧蛋"
 	L.unstable_infusion = "紫圈"
 	L.custom_on_experimental_dosage_marks = "试验性剂量分配"
-	L.custom_on_experimental_dosage_marks_desc = "将受到“试验性剂量” 的玩家以近战>远程>治疗的优先顺序分配 {rt6}{rt4}{rt3}{rt7} 标记。 影响“说”和“目标”信息。"
+	L.custom_on_experimental_dosage_marks_desc = "将受到“试验性剂量” 的玩家，按照 近战 > 远程 > 治疗 的优先顺序分配 {rt6}{rt4}{rt3}{rt7} 标记。 包含喊话和目标信息。"
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "zhCN")
