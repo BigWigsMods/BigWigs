@@ -2597,7 +2597,7 @@ do
 				else
 					for i = 1, #player do
 						local playerInTable = player[i]
-						if playerInTable == myNameWithColor then
+						if playerInTable == myNameWithColor or playerInTable == myName then
 							self:PlaySound(key, sound)
 							break
 						end
@@ -2621,7 +2621,7 @@ do
 				local msg = textType == "string" and text or spells[text or key]
 				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 
-				if playersInTable == 1 and playerTable[1] == myNameWithColor then
+				if playersInTable == 1 and (playerTable[1] == myNameWithColor or playerTable[1] == myName) then
 					local meEmphasized = band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
 					if not meEmphasized then -- We already did a ME_ONLY_EMPHASIZE print in :TargetsMessage
 						local emphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
@@ -2661,7 +2661,7 @@ do
 		function boss:TargetsMessageOld(key, color, playerTable, playerCount, text, icon, customTime, markers)
 			local playersInTable = #playerTable
 			if band(self.db.profile[key], C.ME_ONLY) == C.ME_ONLY then -- We allow ME_ONLY even if MESSAGE off
-				if playerTable[playersInTable] == myNameWithColor and checkFlag(self, key, C.ME_ONLY) then -- Use checkFlag for the role check
+				if (playerTable[playersInTable] == myNameWithColor or playerTable[playersInTable] == myName) and checkFlag(self, key, C.ME_ONLY) then -- Use checkFlag for the role check
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
 					local textType = type(text)
 					local msg = textType == "string" and text or spells[text or key]
@@ -2682,7 +2682,7 @@ do
 					end)
 				end
 			elseif checkFlag(self, key, C.MESSAGE) then
-				if playerTable[playersInTable] == myNameWithColor and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
+				if (playerTable[playersInTable] == myNameWithColor or playerTable[playersInTable] == myName) and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
 					local textType = type(text)
 					local msg = textType == "string" and text or spells[text or key]
 					local texture = icon ~= false and icons[icon or textType == "number" and text or key]
