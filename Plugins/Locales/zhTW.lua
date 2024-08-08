@@ -412,7 +412,7 @@ L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按�
 --
 
 L.bossStatistics = "首領統計"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory。你可以在每個首領的頁面查看統計數據，沒有首領記錄的統計數據會被隱藏。"
+L.bossStatsDescription = "記錄與首領相關的各種統計數據，例如你獲勝的次數、被擊敗的次數、首勝日期和最快紀錄。你可以在每個首領的頁面查看統計資料，沒有記錄的首領會隱藏統計資料。"
 L.createTimeBar = "顯示「最快擊敗」計時條"
 L.bestTimeBar = "最快時間"
 L.healthPrint = "血量：%s。"
@@ -420,7 +420,7 @@ L.healthFormat = "%s（%.1f%%）"
 L.chatMessages = "聊天訊息"
 L.newFastestVictoryOption = "新的最佳紀錄"
 L.victoryOption = "你的勝利"
-L.defeatOption = "你被擊敗"
+L.defeatOption = "你的戰敗"
 L.bossHealthOption = "首領血量"
 L.bossVictoryPrint = "你擊敗了「%s」，用時%s。" -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
 L.bossDefeatPrint = "你被「%s」擊敗，用時%s。" -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
