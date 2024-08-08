@@ -435,7 +435,7 @@ do
 			stopTestButton = {
 				type = "execute",
 				name = L.stopTestNameplateIconBtn,
-				desc = L.testNameplateIconBtn_desc,
+				desc = L.stopTestNameplateIconBtn_desc,
 				func = function()
 					plugin:StopModuleIcons(nil, plugin)
 				end,
