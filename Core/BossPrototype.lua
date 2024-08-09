@@ -3089,19 +3089,18 @@ do
 	-- @param key the option key
 	-- @number length the duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
-	-- @param[opt] icon the bar icon (spell id or texture name)
+	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
 	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
-	function boss:Nameplate(key, length, guid, icon, hideOnExpire)
-		if checkFlag(self, key, C.NAMEPLATEBAR) then
-			self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, icons[icon or key], hideOnExpire)
-		end
+	function boss:Nameplate(key, length, guid, customIconOrText, hideOnExpire)
+		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText, hideOnExpire)
 	end
 
 	--- Stop showing a nameplate icon.
 	-- @param key the option key
 	-- @string guid nameplate unit's guid
-	function boss:StopNameplate(key, guid)
-		self:SendMessage("BigWigs_StopNameplate", self, guid, key)
+	-- @string[opt] text the specific text to clear, if clearing text instead of an icon
+	function boss:StopNameplate(key, guid, text)
+		self:SendMessage("BigWigs_StopNameplate", self, guid, key, text)
 	end
 
 	--- Clear everything on a nameplate.
