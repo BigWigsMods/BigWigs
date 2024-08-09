@@ -98,17 +98,13 @@ local function iconLoop(updater)
 		if db.nameplateIconCooldownTimer then
 			iconFrame.countdownNumber:SetText(timeToDisplay)
 		end
-		return
-	end
-
-	if iconFrame.hideOnExpire then
-		iconFrame:StopIcon()
-		return
-	end
-
-	iconFrame.countdownNumber:Hide()
-	if db.nameplateIconExpireGlow and not iconFrame.activeGlow then
-		iconFrame:StartGlow(db.nameplateIconExpireGlowType)
+	else
+		iconFrame.countdownNumber:Hide()
+		if iconFrame.hideOnExpire then
+			iconFrame:StopIcon()
+		elseif db.nameplateIconExpireGlow and not iconFrame.activeGlow then
+			iconFrame:StartGlow(db.nameplateIconExpireGlowType)
+		end
 	end
 end
 
@@ -175,6 +171,7 @@ local function getIconFrame()
 	end
 
 	function iconFrame:SetDuration(duration)
+		self.countdownNumber:Hide()
 		local startTime, fullDuration
 		local time = GetTime()
 		if type(duration) == "table" then
