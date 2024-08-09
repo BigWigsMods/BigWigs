@@ -439,7 +439,7 @@ do
 		VOICE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Voice",
 		BAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
 		CASTBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
-		NAMEPLATEBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pulse", -- XXX temp
+		NAMEPLATE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pulse", -- XXX temp
 		TANK = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank",
 		HEALER = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer",
 		EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
@@ -3128,18 +3128,6 @@ end
 -- @string guid the hostile unit guid
 function boss:RemovePlateIcon(spellId, guid)
 	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
-end
-
---- [DEPRECATED] Does nothing
-function boss:NameplateBar()
-end
-
---- [DEPRECATED] Does nothing
-function boss:NameplateCDBar()
-end
-
---- [DEPRECATED] Does nothing
-function boss:StopNameplateBar()
 end
 
 -------------------------------------------------------------------------------
