@@ -433,7 +433,7 @@ do
 				name = L.stopTestNameplateIconBtn,
 				desc = L.stopTestNameplateIconBtn_desc,
 				func = function()
-					plugin:StopModuleIcons(nil, plugin)
+					plugin:StopModuleNameplates(nil, plugin)
 				end,
 				width = 1.5,
 				order = 1,
@@ -986,7 +986,8 @@ end
 function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, hideOnExpire)
 	if not module:CheckOption(key, "NAMEPLATE") then return end
 	if not customIconOrText or type(customIconOrText) == "number" then
-		StartNameplateIcon(module, guid, key, length, customIconOrText or key, hideOnExpire)
+		local icon = customIconOrText or GetSpellTexture(key)
+		StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	end
 end
 
