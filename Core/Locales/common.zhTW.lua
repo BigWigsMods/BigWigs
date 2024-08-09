@@ -118,8 +118,8 @@ L.link_with_rticon = "{rt%d}與%s連結"
 L.link_both = "%s和%s連結"
 L.link_both_icon = "|T13700%d:0|t%s和|T13700%d:0|t%s連結"
 L.link_removed = "連結移除"
---L.link_say_option_name = "Repeating 'Linked' say messages"
---L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
+L.link_say_option_name = "重覆「連結」喊話"
+L.link_say_option_desc = "不停地喊話你和誰連結了。" -- 可能需要再改
 
 -- Abbreviated numbers
 L.amount_one = "%.2f億" -- Billions 1,000,000,000
