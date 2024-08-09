@@ -986,7 +986,7 @@ end
 function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, hideOnExpire)
 	if not module:CheckOption(key, "NAMEPLATE") then return end
 	if not customIconOrText or type(customIconOrText) == "number" then
-		local icon = customIconOrText or module:GetSpellTexture(key)
+		local icon = customIconOrText or module:SpellTexture(key)
 		StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	end
 end
