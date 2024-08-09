@@ -100,7 +100,6 @@ local valid_methods = {
 	CloseInfo = "INFOBOX",
 	Nameplate = "NAMEPLATE",
 	StopNameplate = "NAMEPLATE",
-    ClearNameplate = "NAMEPLATE",
 	SetPrivateAuraSound = "PRIVATE",
 	PauseBar = true,
 	ResumeBar = true,

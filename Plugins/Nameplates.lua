@@ -32,7 +32,7 @@ local FONT = media.MediaType and media.MediaType.FONT or "font"
 
 local db = nil
 local nameplateIcons = {}
-local rearrangeNameplateAnchors, nameplateCascadeDelete, iconStopped
+local rearrangeNameplateAnchors, nameplateCascadeDelete, iconStopped, StartNameplateIcon
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local validFramePoints = {
@@ -421,8 +421,7 @@ do
 								testCount = testCount + 1
 								local testNumber = (testCount%3)+1
 								local key = "test"..testNumber
-								plugin:SendMessage("BigWigs_StartNameplate", plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
-								return
+								StartNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
 							end
 						end
 					else
@@ -849,13 +848,13 @@ end
 function plugin:OnPluginEnable()
 	updateProfile()
 
-	self:RegisterMessage("BigWigs_StartNameplate", "StartNameplateIcon")
-	self:RegisterMessage("BigWigs_StopNameplate", "StopNameplateIcon")
-	self:RegisterMessage("BigWigs_ClearNameplate", "StopUnitIcons")
-	self:RegisterMessage("BigWigs_StopBars", "StopModuleIcons")
-	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleIcons")
-	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleIcons")
-	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleIcons")
+	self:RegisterMessage("BigWigs_StartNameplate", "StartNameplate")
+	self:RegisterMessage("BigWigs_StopNameplate", "StopNameplate")
+	self:RegisterMessage("BigWigs_ClearNameplate", "StopUnitNameplate")
+	self:RegisterMessage("BigWigs_StopBars", "StopModuleNameplates")
+	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleNameplates")
+	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleNameplates")
+	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleNameplates")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
 	self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
@@ -889,21 +888,23 @@ local function removeIcon(iconInfo, guid, key)
 	end
 end
 
-function plugin:StopNameplateIcon(_, module, guid, key)
-	local iconInfo = nameplateIcons[guid] and nameplateIcons[guid][key]
-	if iconInfo and iconInfo.module == module then
-		removeIcon(iconInfo, guid, key)
+function plugin:StopNameplate(_, module, guid, key, text)
+	if not text then
+		local iconInfo = nameplateIcons[guid] and nameplateIcons[guid][key]
+		if iconInfo and iconInfo.module == module then
+			removeIcon(iconInfo, guid, key)
+		end
 	end
 end
 
-function plugin:StopUnitIcons(_, _, guid)
+function plugin:StopUnitNameplate(_, _, guid)
 	if not nameplateIcons[guid] then return end
 	for key, iconInfo in next, nameplateIcons[guid] do
 		removeIcon(iconInfo, guid, key)
 	end
 end
 
-function plugin:StopModuleIcons(_, module)
+function plugin:StopModuleNameplates(_, module)
 	for guid, icons in next, nameplateIcons do
 		for key, iconInfo in next, icons do
 			if iconInfo.module == module then
@@ -942,7 +943,7 @@ local function createNameplateIcon(module, guid, key, lenght, icon, hideOnExpire
 	return iconFrame
 end
 
-function plugin:StartNameplateIcon(_, module, guid, key, length, icon, hideOnExpire)
+function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	local time = GetTime()
     local expirationTime, timerDuration
 
@@ -960,7 +961,7 @@ function plugin:StartNameplateIcon(_, module, guid, key, length, icon, hideOnExp
         return
     end
 
-	self:StopNameplateIcon(nil, module, guid, key)
+	plugin:StopNameplate(nil, module, guid, key)
 
 	nameplateIcons[guid] = nameplateIcons[guid] or {}
 	local iconInfo = {
@@ -982,6 +983,13 @@ function plugin:StartNameplateIcon(_, module, guid, key, length, icon, hideOnExp
 	else
 		local remaining = expirationTime - GetTime()
 		iconInfo.deletionTimer = createDeletionTimer(iconInfo, remaining)
+	end
+end
+
+function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, hideOnExpire)
+	if not module:CheckOption(key, "NAMEPLATE") then return end
+	if not customIconOrText or type(customIconOrText) == "number" then
+		StartNameplateIcon(module, guid, key, length, customIconOrText or key, hideOnExpire)
 	end
 end
 
