@@ -31,8 +31,11 @@ local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 
 local db = nil
-local nameplateIcons = {}
-local rearrangeNameplateAnchors, nameplateCascadeDelete, iconStopped, StartNameplateIcon
+local nameplateIcons, nameplateTexts = {}, {}
+local StartNameplateIcon, showNameplateText
+local rearrangeNameplateIcons, rearrangeNameplateTexts
+local removeFrame, nameplateIconCascadeDelete, frameStopped
+
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local validFramePoints = {
@@ -75,6 +78,93 @@ do
 			end
 		end
 	end
+end
+--------------------------------------------------------------------------------
+-- Text Frames
+--
+
+local textFrameCache = {}
+local function recycleTextFrame(frame)
+	table.insert(textFrameCache, frame)
+end
+
+local function getTextFrame()
+	local textFrame
+
+	if (next(textFrameCache)) then
+		textFrame = table.remove(textFrameCache)
+	else
+
+		textFrame = CreateFrame("Frame", nil, UIParent)
+		textFrame:SetPoint("CENTER")
+		-- textFrame:SetSize(db.nameplateIconWidth, db.nameplateIconHeight)
+
+		local fontString = textFrame:CreateFontString(nil, "OVERLAY")
+		fontString:SetPoint("CENTER")
+		fontString:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
+		textFrame.fontString = fontString
+	end
+
+	function textFrame:SetText(text)
+		local textString = text
+		if db.textUppercase then
+			textString = string.upper(textString)
+			textString = string.gsub(textString, "(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
+		end
+		self.fontString:SetText(textString)
+		local flags = nil
+		if db.textMonochrome and db.textOutline ~= "NONE" then
+			flags = "MONOCHROME," .. db.textOutline
+		elseif db.textMonochrome then
+			flags = "MONOCHROME"
+		elseif db.textOutline ~= "NONE" then
+			flags = db.textOutline
+		end
+		self.fontString:SetFont(media:Fetch(FONT, db.textFontName), db.textFontSize, flags)
+		self.fontString:SetTextColor(unpack(db.textFontColor))
+		local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
+		self:SetSize(w, h)
+	end
+
+	function textFrame:Set(key, data)
+		if not self.data then
+			self.data = {}
+		end
+		self.data[key] = data
+	end
+
+	function textFrame:Get(key)
+		return self.data and self.data[key]
+	end
+
+	function textFrame:SetDuration(duration)
+		local time = GetTime()
+		if type(duration) == "table" then
+			self.expires = time + duration[1]
+		else
+			self.expires = time + duration
+		end
+	end
+
+	function textFrame:GetRemaining()
+		return self.expires - GetTime()
+	end
+
+	function textFrame:HideFrame()
+		self:Hide()
+		recycleTextFrame(self)
+	end
+
+	function textFrame:StartNameplate()
+		self:Show()
+	end
+
+	function textFrame:StopNameplate()
+		self:HideFrame()
+		frameStopped(self, true)
+	end
+
+	return textFrame
 end
 
 --------------------------------------------------------------------------------
@@ -305,16 +395,16 @@ local function getIconFrame()
 		return self.expires - GetTime()
 	end
 
-	function iconFrame:HideIcon()
+	function iconFrame:HideFrame()
 		self:StopGlows()
 		self.updater:Stop()
 		self:Hide()
 		recycleIconFrame(self)
 	end
 
-	function iconFrame:StopIcon()
-		self:HideIcon()
-		iconStopped(self)
+	function iconFrame:StopNameplate()
+		self:HideFrame()
+		frameStopped(self)
 	end
 
 	return iconFrame
@@ -325,7 +415,7 @@ end
 -- Profile
 --
 
-plugin.defaultDB = {
+local iconDefaults = {
 	iconGrowDirection = "LEFT",
 	iconGrowDirectionStart = "LEFT",
 	iconSpacing = 1,
@@ -354,6 +444,28 @@ plugin.defaultDB = {
 	nameplateIconBorderColor = {0, 0, 0, 1},
 }
 
+local textDefaults = {
+	textGrowDirection = "UP",
+	textGrowDirectionStart = "TOP",
+	textSpacing = 0,
+	textOffsetX = 0,
+	textOffsetY = 0,
+	textFontName = plugin:GetDefaultFont(),
+	textFontSize = 25,
+	textFontColor = {1, 1, 1, 1},
+	textOutline = "THICKOUTLINE",
+	textMonochrome = false,
+	textUppercase = true,
+}
+
+plugin.defaultDB = {}
+for k, v in next, iconDefaults do
+	plugin.defaultDB[k] = v
+end
+for k, v in next, textDefaults do
+	plugin.defaultDB[k] = v
+end
+
 local function updateProfile()
 	db = plugin.db.profile
 
@@ -369,13 +481,29 @@ local function updateProfile()
 	-- Add validations
 end
 
+local function setDefaults(options)
+	local defaults = options
+	local db = plugin.db.profile
+	for k, value  in next, defaults do
+		db[k] = value
+	end
+	updateProfile()
+end
+
 --------------------------------------------------------------------------------
 -- Options
 --
 
 do
-	local function resetIconFrames()
+	local function resetNameplates()
+		local guids = {}
 		for guid, _ in next, nameplateIcons do
+			guids[guid] = true
+		end
+		for guid, _ in next, nameplateTexts do
+			guids[guid] = true
+		end
+		for guid, _ in next, guids do
 			local unit = findUnitByGUID(guid)
 			if unit then
 				plugin:NAME_PLATE_UNIT_REMOVED(nil, unit)
@@ -405,7 +533,7 @@ do
 		end,
 		order = 2,
 		args = {
-			testButton = {
+			testIconButton = {
 				type = "execute",
 				name = L.testNameplateIconBtn,
 				desc = L.testNameplateIconBtn_desc,
@@ -426,7 +554,31 @@ do
 						BigWigs:Print(L.noNameplateTestTarget)
 					end
 				end,
-				width = 1.5,
+				width = 1,
+				order = 1,
+			},
+			testTextButton = {
+				type = "execute",
+				name = "Show Text Test", --L.testNameplateIconBtn,
+				desc = L.testNameplateIconBtn_desc,
+				func = function()
+					local guid = plugin:UnitGUID("target")
+					if guid and UnitCanAttack("player", "target") then
+						for i = 1, 40 do
+							local unit = ("nameplate%d"):format(i)
+							if plugin:UnitGUID(unit) == guid then
+								local t = GetTime()
+								testCount = testCount + 1
+								local testNumber = (testCount%3)+1
+								local key = "test"..testNumber
+								showNameplateText(plugin, guid, key, 5, key, true)
+							end
+						end
+					else
+						BigWigs:Print(L.noNameplateTestTarget)
+					end
+				end,
+				width = 1,
 				order = 1,
 			},
 			stopTestButton = {
@@ -436,7 +588,7 @@ do
 				func = function()
 					plugin:StopModuleNameplates(nil, plugin)
 				end,
-				width = 1.5,
+				width = 1,
 				order = 1,
 			},
 			nameplateIconSettings = {
@@ -445,7 +597,7 @@ do
 				order = 10,
 				set = function(info, value)
 					db[info[#info]] = value
-					resetIconFrames()
+					resetNameplates()
 				end,
 				args = {
 					anchoringHeader = {
@@ -542,7 +694,7 @@ do
 						end,
 						set = function(info, r, g, b, a)
 							plugin.db.profile.nameplateIconColor = {r, g, b, a}
-							resetIconFrames()
+							resetNameplates()
 						end,
 					},
 					nameplateIconDesaturate = {
@@ -581,7 +733,7 @@ do
 						end,
 						set = function(info, r, g, b, a)
 							plugin.db.profile.nameplateIconBorderColor = {r, g, b, a}
-							resetIconFrames()
+							resetNameplates()
 						end,
 					},
 					nameplateIconBorderSize = {
@@ -619,7 +771,7 @@ do
 						set = function(_, value)
 							local list = media:List(FONT)
 							db.nameplateIconCooldownTimerFontName = list[value]
-							resetIconFrames()
+							resetNameplates()
 						end,
 						width = 2,
 						disabled = checkCooldownTimerDisabled,
@@ -644,7 +796,7 @@ do
 						end,
 						set = function(info, r, g, b, a)
 							db.nameplateIconCooldownTimerFontColor = {r, g, b, a}
-							resetIconFrames()
+							resetNameplates()
 						end,
 						order = 24,
 						disabled = checkCooldownTimerDisabled,
@@ -715,7 +867,7 @@ do
 						end,
 						set = function(info, r, g, b, a)
 							plugin.db.profile.nameplateIconGlowColor = {r, g, b, a}
-							resetIconFrames()
+							resetNameplates()
 						end,
 					},
 					nameplateIconExpireGlowType = {
@@ -742,7 +894,159 @@ do
 						name = L.resetAll,
 						desc = L.resetNameplateIconsDesc,
 						func = function()
-							plugin.db:ResetProfile()
+							setDefaults(iconDefaults)
+							if plugin:UnitGUID("target") then
+								plugin:NAME_PLATE_UNIT_REMOVED(nil, "target")
+								plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
+							end
+						end,
+						order = 101,
+					},
+				},
+			},
+			nameplateTextSettings = {
+				type = "group",
+				name = "Text Settings", --L.nameplateIconSettings,
+				order = 20,
+				set = function(info, value)
+					db[info[#info]] = value
+					resetNameplates()
+				end,
+				args = {
+					anchoringHeader = {
+						type = "header",
+						name = L.anchoring,
+						order = 1,
+						width = "full",
+					},
+					textGrowDirectionStart = {
+						type = "select",
+						values = validFramePoints,
+						name = L.growStartPosition,
+						desc = L.growStartPositionDesc,
+						order = 2,
+						width = 1.5,
+					},
+					textGrowDirection = {
+						type = "select",
+						name = L.growDirection,
+						desc = L.growDirectionDesc,
+						order = 3,
+						width = 1.5,
+						values = validGrowDirections,
+					},
+					textOffsetX = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						order = 4,
+						min = -50,
+						max = 50,
+						step = 1,
+						width = 1,
+					},
+					textOffsetY = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						order = 5,
+						min = -50,
+						max = 50,
+						step = 1,
+						width = 1,
+					},
+					textSpacing = {
+						type = "range",
+						name = L.spacing,
+						desc = L.iconSpacingDesc,
+						order = 6,
+						min = 0,
+						max = 20,
+						step = 1,
+						width = 1,
+					},
+					fontHeader = {
+						type = "header",
+						name = "Font", --L.timer,
+						order = 20,
+					},
+					textFontName = {
+						type = "select",
+						name = L.font,
+						order = 22,
+						values = media:List(FONT),
+						itemControl = "DDI-Font",
+						get = function()
+							for i, v in next, media:List(FONT) do
+								if v == db.textFontName then return i end
+							end
+						end,
+						set = function(_, value)
+							local list = media:List(FONT)
+							db.textFontName = list[value]
+							resetNameplates()
+						end,
+						width = 2,
+					},
+					textOutline = {
+						type = "select",
+						name = L.outline,
+						order = 23,
+						values = {
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
+						},
+					},
+					textFontColor = {
+						type = "color",
+						name = L.fontColor,
+						hasAlpha = true,
+						get = function(info)
+							return unpack(db.textFontColor)
+						end,
+						set = function(info, r, g, b, a)
+							db.textFontColor = {r, g, b, a}
+							resetNameplates()
+						end,
+						order = 24,
+					},
+					textFontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						order = 25,
+						softMax = 100, max = 200, min = 5, step = 1,
+					},
+					textMonochrome = {
+						type = "toggle",
+						name = L.monochrome,
+						desc = L.monochromeDesc,
+						order = 26,
+					},
+					textUppercase = {
+						type = "toggle",
+						name = L.uppercase,
+						desc = L.uppercaseDesc,
+						order = 27,
+						hidden = function() -- Hide this option for CJK languages
+							local loc = GetLocale()
+							if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
+								return true
+							end
+						end,
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 100,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetNameplateIconsDesc,
+						func = function()
+							setDefaults(textDefaults)
 							if plugin:UnitGUID("target") then
 								plugin:NAME_PLATE_UNIT_REMOVED(nil, "target")
 								plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
@@ -769,17 +1073,17 @@ do
 			timerKeys[#timerKeys+1] = key
 		end
 		table.sort(timerKeys, function(a, b)
-			return timers[a].nameplateIcon:GetRemaining() < timers[b].nameplateIcon:GetRemaining()
+			return timers[a].nameplateFrame:GetRemaining() < timers[b].nameplateFrame:GetRemaining()
 		end)
 		return timerKeys
 	end
 
-	rearrangeNameplateAnchors = function(guid)
+	rearrangeNameplateIcons = function(guid)
 		local unit = findUnitByGUID(guid)
 		if not unit then return end
 		local nameplate = GetNamePlateForUnit(unit)
-		local unitTimers = nameplateIcons[guid]
-		if unitTimers then
+		local unitIcons = nameplateIcons[guid]
+		if unitIcons then
 			local sorted = getOrder(nameplateIcons[guid])
 			local offsetY = db.nameplateIconOffsetY
 			local offsetX = db.nameplateIconOffsetX
@@ -787,7 +1091,7 @@ do
 			local iconPoint = inverseAnchorPoint[db.iconGrowDirectionStart]
 			local nameplatePoint = db.iconGrowDirectionStart
 			for i, key in ipairs(sorted) do
-				local icon = unitTimers[key].nameplateIcon
+				local icon = unitIcons[key].nameplateFrame
 
 				if i > 1 then -- Only use setup offset for first icon
 					local growOffset = db.iconSpacing
@@ -812,30 +1116,84 @@ do
 			end
 		end
 	end
+
+	rearrangeNameplateTexts = function(guid)
+		local unit = findUnitByGUID(guid)
+		if not unit then return end
+		local nameplate = GetNamePlateForUnit(unit)
+		local unitTexts = nameplateTexts[guid]
+		if unitTexts then
+			local sorted = getOrder(nameplateTexts[guid])
+			local offsetY = db.textOffsetY
+			local offsetX = db.textOffsetX
+			local growDirection = db.textGrowDirection
+			local textPoint = inverseAnchorPoint[db.textGrowDirectionStart]
+			local nameplatePoint = db.textGrowDirectionStart
+			for i, key in ipairs(sorted) do
+				local text = unitTexts[key].nameplateFrame
+				local w, h = text:GetSize()
+				if i > 1 then -- Only use setup offset after first icon
+					local growOffset = db.textSpacing
+					if db.textGrowDirection == "UP" then
+						growOffset = growOffset + h
+						offsetY = offsetY + growOffset
+					elseif db.textGrowDirection == "DOWN" then
+						growOffset = -(growOffset + h)
+						offsetY = offsetY + growOffset
+					elseif db.textGrowDirection == "LEFT" then
+						growOffset = -(growOffset + w)
+						offsetX = offsetX + growOffset
+					else -- RIGHT
+						growOffset = growOffset + w
+						offsetX = offsetX + growOffset
+					end
+				end
+				text:ClearAllPoints()
+				text:SetParent(nameplate)
+				text:SetPoint(textPoint, nameplate, nameplatePoint, offsetX, offsetY)
+			end
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Delete Data Functions
 --
 
-local function nameplateCascadeDelete(guid, key)
+local function nameplateIconCascadeDelete(guid, key)
 	nameplateIcons[guid][key] = nil
 	if not next(nameplateIcons[guid]) then
 		nameplateIcons[guid] = nil
 	end
 end
 
-local function createDeletionTimer(iconInfo, remaining)
+local function nameplateTextCascadeDelete(guid, key)
+	nameplateTexts[guid][key] = nil
+	if not next(nameplateTexts[guid]) then
+		nameplateTexts[guid] = nil
+	end
+end
+
+local function createDeletionTimer(frameInfo, remaining)
 	return C_Timer.NewTimer(remaining, function()
-		nameplateCascadeDelete(iconInfo.unitGUID, iconInfo.key)
+		if frameInfo.text then
+			removeFrame(frameInfo)
+		else
+			nameplateIconCascadeDelete(frameInfo.unitGUID, frameInfo.key)
+		end
 	end)
 end
 
-function iconStopped(icon)
-	local unitGUID = icon:Get("bigwigs:unitGUID")
-	local key = icon:Get("bigwigs:key")
-	nameplateCascadeDelete(unitGUID, key)
-	rearrangeNameplateAnchors(unitGUID)
+function frameStopped(frame, isText)
+	local unitGUID = frame:Get("bigwigs:unitGUID")
+	local key = frame:Get("bigwigs:key")
+	if isText then
+		nameplateTextCascadeDelete(unitGUID, key)
+		rearrangeNameplateTexts(unitGUID)
+	else
+		nameplateIconCascadeDelete(unitGUID, key)
+		rearrangeNameplateIcons(unitGUID)
+	end
 end
 
 
@@ -861,60 +1219,97 @@ end
 
 function plugin:OnPluginDisable()
 	for _, icons in next, nameplateIcons do
-		for _, iconInfo in next, icons do
-			if iconInfo.nameplateIcon then
-				iconInfo.nameplateIcon:StopIcon()
+		for _, frameInfo in next, icons do
+			if frameInfo.nameplateFrame then
+				frameInfo.nameplateFrame:StopNameplate()
+			end
+		end
+	end
+	for _, texts in next, nameplateTexts do
+		for _, frameInfo in next, texts do
+			if frameInfo.nameplateFrame then
+				frameInfo.nameplateFrame:StopNameplate()
 			end
 		end
 	end
 	nameplateIcons = {}
+	nameplateTexts = {}
 end
 
 --------------------------------------------------------------------------------
 -- Stopping Icons
 --
 
-local function removeIcon(iconInfo, guid, key)
-	if iconInfo.deletionTimer then
-		iconInfo.deletionTimer:Cancel()
-		iconInfo.deletionTimer = nil
+function removeFrame(frameInfo)
+	if frameInfo.deletionTimer then
+		frameInfo.deletionTimer:Cancel()
+		frameInfo.deletionTimer = nil
 	end
-	if iconInfo.nameplateIcon then
-		iconInfo.nameplateIcon:StopIcon()
+	if frameInfo.nameplateFrame then
+		frameInfo.nameplateFrame:StopNameplate()
 	else
-		nameplateCascadeDelete(guid, key)
+		if frameInfo.text then
+			nameplateTextCascadeDelete(frameInfo.unitGUID, frameInfo.key)
+		else
+			nameplateIconCascadeDelete(frameInfo.unitGUID, frameInfo.key)
+		end
 	end
 end
 
 function plugin:StopNameplate(_, module, guid, key, text)
-	if not text then
-		local iconInfo = nameplateIcons[guid] and nameplateIcons[guid][key]
-		if iconInfo and iconInfo.module == module then
-			removeIcon(iconInfo, guid, key)
-		end
+	local frameInfo
+	if text then
+		frameInfo = nameplateTexts[guid] and nameplateTexts[guid][key]
+	else
+		frameInfo = nameplateIcons[guid] and nameplateIcons[guid][key]
+	end
+	if frameInfo and frameInfo.module == module then
+		removeFrame(frameInfo)
 	end
 end
 
 function plugin:StopUnitNameplate(_, _, guid)
 	if not nameplateIcons[guid] then return end
-	for key, iconInfo in next, nameplateIcons[guid] do
-		removeIcon(iconInfo, guid, key)
+	for _, frameInfo in next, nameplateIcons[guid] do
+		removeFrame(frameInfo)
+	end
+	for _, frameInfo in next, nameplateTexts[guid] do
+		removeFrame(frameInfo)
 	end
 end
 
 function plugin:StopModuleNameplates(_, module)
-	for guid, icons in next, nameplateIcons do
-		for key, iconInfo in next, icons do
-			if iconInfo.module == module then
-				removeIcon(iconInfo, guid, key)
+	for _, icons in next, nameplateIcons do
+		for _, frameInfo in next, icons do
+			if frameInfo.module == module then
+				removeFrame(frameInfo)
+			end
+		end
+	end
+	for _, texts in next, nameplateTexts do
+		for _, frameInfo in next, texts do
+			if frameInfo.module == module then
+				removeFrame(frameInfo)
 			end
 		end
 	end
 end
 
 -----------------------------------------------------------------------
--- Start Icons
+-- Start Namepaltes
 --
+
+local function createNameplateText(module, guid, key, length, text)
+	local textFrame = getTextFrame()
+
+	textFrame:Set("bigwigs:key", key)
+	textFrame:Set("bigwigs:unitGUID", guid)
+	textFrame:SetText(text)
+	textFrame:SetDuration(length)
+	textFrame:StartNameplate()
+
+	return textFrame
+end
 
 local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	local iconFrame = getIconFrame()
@@ -941,10 +1336,9 @@ local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire
 	return iconFrame
 end
 
-function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+local function getLenght(length)
 	local time = GetTime()
-    local expirationTime, timerDuration
-
+	local expirationTime, timerDuration
 	if type(length) == "table" then
 		expirationTime = time + length[1]
 		timerDuration = length[1]
@@ -952,6 +1346,12 @@ function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 		expirationTime = time + length
 		timerDuration = length
 	end
+	return expirationTime, timerDuration
+end
+
+function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+	local time = GetTime()
+    local expirationTime, timerDuration = getLenght(length)
 
     local currentIcon = nameplateIcons[guid] and nameplateIcons[guid][key]
     if currentIcon and currentIcon.exp < time and timerDuration <= 0 then
@@ -962,7 +1362,7 @@ function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	plugin:StopNameplate(nil, module, guid, key)
 
 	nameplateIcons[guid] = nameplateIcons[guid] or {}
-	local iconInfo = {
+	local frameInfo = {
 		module = module,
 		key = key,
 		length = timerDuration,
@@ -971,16 +1371,46 @@ function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 		unitGUID = guid,
 		hideOnExpire = hideOnExpire,
 	}
-	nameplateIcons[guid][key] = iconInfo
+	nameplateIcons[guid][key] = frameInfo
 
 	local unit = findUnitByGUID(guid)
 	if unit then
 		local nameplateIcon = createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
-		iconInfo.nameplateIcon = nameplateIcon
-		rearrangeNameplateAnchors(guid)
-	else
-		local remaining = expirationTime - GetTime()
-		iconInfo.deletionTimer = createDeletionTimer(iconInfo, remaining)
+		frameInfo.nameplateFrame = nameplateIcon
+		rearrangeNameplateIcons(guid)
+	elseif hideOnExpire then
+		local remaining = expirationTime - time
+		frameInfo.deletionTimer = createDeletionTimer(frameInfo, remaining)
+	end
+end
+
+function showNameplateText(module, guid, key, length, text, hideOnExpire)
+	plugin:StopNameplate(nil, module, guid, key, text)
+	local time = GetTime()
+    local expirationTime, timerDuration = getLenght(length)
+
+	nameplateTexts[guid] = nameplateTexts[guid] or {}
+	local textInfo = {
+		module = module,
+		key = key,
+		length = timerDuration,
+		exp = expirationTime,
+		text = text,
+		unitGUID = guid,
+		hideOnExpire = hideOnExpire,
+	}
+	nameplateTexts[guid][key] = textInfo
+
+	if hideOnExpire then
+		local remaining = expirationTime - time
+		textInfo.deletionTimer = createDeletionTimer(textInfo, remaining)
+	end
+
+	local unit = findUnitByGUID(guid)
+	if unit then
+		local nameplateText = createNameplateText(module, guid, key, length, text, hideOnExpire)
+		textInfo.nameplateFrame = nameplateText
+		rearrangeNameplateTexts(guid)
 	end
 end
 
@@ -989,6 +1419,8 @@ function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, h
 	if not customIconOrText or type(customIconOrText) == "number" then
 		local icon = customIconOrText or module:SpellTexture(key)
 		StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+	elseif type(customIconOrText) == "string" then
+		showNameplateText(module, guid, key, length, customIconOrText, hideOnExpire)
 	end
 end
 
@@ -996,50 +1428,83 @@ end
 -- Nameplate management
 --
 
-function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
-	local guid = self:UnitGUID(unit)
-	local unitIcons = nameplateIcons[guid]
-	if not unitIcons then return end
-	local inCombat = UnitAffectingCombat(unit)
-	for _, iconInfo in next, unitIcons do
-		if not inCombat and iconInfo.module ~= plugin then -- Don't stop test icons
-			self:StopNameplate(nil, iconInfo.module, guid, iconInfo.key)
-		else
-			local remainingTime = iconInfo.exp - GetTime()
-			local nameplateIcon = createNameplateIcon(
-				iconInfo.module,
-				iconInfo.unitGUID,
-				iconInfo.key,
-				{remainingTime, iconInfo.length},
-				iconInfo.icon,
-				iconInfo.hideOnExpire
+do
+	local function handleFrame(guid, frameInfo, inCombat)
+		if not inCombat and frameInfo.module ~= plugin then
+			plugin:StopNameplate(nil, frameInfo.module, guid, frameInfo.key, frameInfo.text)
+			 -- Don't re-pop when you've wiped
+			 -- Do re-pop for test icons
+			return
+		end
+		local remainingTime = frameInfo.exp - GetTime()
+		if frameInfo.text then
+			local nameplateFrame = createNameplateText(
+				frameInfo.module,
+				frameInfo.unitGUID,
+				frameInfo.key,
+				remainingTime,
+				frameInfo.text,
+				frameInfo.hideOnExpire
 			)
-			iconInfo.nameplateIcon = nameplateIcon
-			if iconInfo.deletionTimer then
-				iconInfo.deletionTimer:Cancel()
-				iconInfo.deletionTimer = nil
+			frameInfo.nameplateFrame = nameplateFrame
+		else
+			local nameplateFrame = createNameplateIcon(
+				frameInfo.module,
+				frameInfo.unitGUID,
+				frameInfo.key,
+				{remainingTime, frameInfo.length},
+				frameInfo.icon,
+				frameInfo.hideOnExpire
+			)
+			frameInfo.nameplateFrame = nameplateFrame
+			if frameInfo.deletionTimer then
+				frameInfo.deletionTimer:Cancel()
+				frameInfo.deletionTimer = nil
 			end
 		end
 	end
-	rearrangeNameplateAnchors(guid)
+
+	function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
+		local guid = self:UnitGUID(unit)
+		local unitIcons = nameplateIcons[guid] or {}
+		local unitTexts = nameplateTexts[guid] or {}
+		local inCombat = UnitAffectingCombat(unit)
+		for _, frameInfo in next, unitIcons do
+			handleFrame(guid, frameInfo, inCombat)
+		end
+		for _, frameInfo in next, unitTexts do
+			handleFrame(guid, frameInfo, inCombat)
+		end
+		rearrangeNameplateIcons(guid)
+		rearrangeNameplateTexts(guid)
+	end
 end
 
-function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-	local guid = self:UnitGUID(unit)
-	local unitIcons = nameplateIcons[guid]
-	if not unitIcons then return end
-	for _, iconInfo in next, unitIcons do
-		if iconInfo.nameplateIcon then
-			iconInfo.nameplateIcon:HideIcon()
+do
+	local function handleFrame(guid, frameInfo)
+		if frameInfo.nameplateFrame then
+			frameInfo.nameplateFrame:HideFrame()
 		end
-		if iconInfo.hideOnExpire then
-			local remaining = iconInfo.exp - GetTime()
+		if frameInfo.hideOnExpire and not frameInfo.text then
+			local remaining = frameInfo.exp - GetTime()
 			if remaining > 0 then
-				iconInfo.deletionTimer = createDeletionTimer(iconInfo, remaining)
+				frameInfo.deletionTimer = createDeletionTimer(frameInfo, remaining)
 			else
-				nameplateCascadeDelete(guid, iconInfo.key)
+				nameplateIconCascadeDelete(guid, frameInfo.key)
 			end
 		end
-		iconInfo.nameplateIcon = nil
+		frameInfo.nameplateFrame = nil
+	end
+
+	function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
+		local guid = self:UnitGUID(unit)
+		local unitIcons = nameplateIcons[guid] or {}
+		local unitTexts = nameplateTexts[guid] or {}
+		for _, frameInfo in next, unitIcons do
+			handleFrame(guid, frameInfo)
+		end
+		for _, frameInfo in next, unitTexts do
+			handleFrame(guid, frameInfo)
+		end
 	end
 end
