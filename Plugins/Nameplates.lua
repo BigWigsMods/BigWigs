@@ -1269,11 +1269,12 @@ function plugin:StopNameplate(_, module, guid, key, text)
 end
 
 function plugin:StopUnitNameplate(_, _, guid)
-	if not nameplateIcons[guid] then return end
-	for _, frameInfo in next, nameplateIcons[guid] do
+	local icons = nameplateIcons[guid] or {}
+	local texts = nameplateTexts[guid] or {}
+	for _, frameInfo in next, icons do
 		removeFrame(frameInfo)
 	end
-	for _, frameInfo in next, nameplateTexts[guid] do
+	for _, frameInfo in next, texts do
 		removeFrame(frameInfo)
 	end
 end
