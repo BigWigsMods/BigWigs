@@ -172,6 +172,7 @@ local function getIconFrame()
 
 	function iconFrame:SetDuration(duration)
 		self.countdownNumber:Hide()
+		self.cooldown:Clear()
 		local startTime, fullDuration
 		local time = GetTime()
 		if type(duration) == "table" then
@@ -915,7 +916,7 @@ end
 -- Start Icons
 --
 
-local function createNameplateIcon(module, guid, key, lenght, icon, hideOnExpire)
+local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	local iconFrame = getIconFrame()
 	local width = db.nameplateIconWidth
 	local height = db.nameplateIconHeight
@@ -934,7 +935,7 @@ local function createNameplateIcon(module, guid, key, lenght, icon, hideOnExpire
 	iconFrame.cooldown:SetDrawSwipe(db.nameplateIconCooldownSwipe)
 	iconFrame.cooldown:SetReverse(db.nameplateIconCooldownInverse)
 
-	iconFrame:SetDuration(lenght)
+	iconFrame:SetDuration(length)
 	iconFrame:Start()
 
 	return iconFrame
@@ -1002,7 +1003,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 	local inCombat = UnitAffectingCombat(unit)
 	for _, iconInfo in next, unitIcons do
 		if not inCombat and iconInfo.module ~= plugin then -- Don't stop test icons
-			self:StopNameplateIcon(nil, iconInfo.module, guid, iconInfo.key)
+			self:StopNameplate(nil, iconInfo.module, guid, iconInfo.key)
 		else
 			local remainingTime = iconInfo.exp - GetTime()
 			local nameplateIcon = createNameplateIcon(
