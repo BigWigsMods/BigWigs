@@ -424,7 +424,7 @@ L.defeatOption = "你的戰敗"
 L.bossHealthOption = "首領血量"
 L.bossVictoryPrint = "你擊敗了「%s」，用時%s。" -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
 L.bossDefeatPrint = "你被「%s」擊敗，用時%s。" -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
-L.newFastestVictoryPrint = "新的最快紀錄： (-%s)" -- New fastest victory: (-COMBAT_DURATION)
+L.newFastestVictoryPrint = "新的最快紀錄：（-%s）" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua
