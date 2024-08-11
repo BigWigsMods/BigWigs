@@ -45,13 +45,13 @@ L.dbmUsers = "使用 DBM："
 L.noBossMod = "沒有首領模組："
 L.offline = "離線"
 
-L.missingAddOnPopup = "缺少插件 |cFF436EEE%s|r！"
+L.missingAddOnPopup = "缺少 |cFF436EEE%s|r 模組！"
 L.missingAddOnRaidWarning = "缺少 |cFF436EEE%s|r 模組！無法為此區域提供計時條！"
 L.disabledAddOn = "模組 |cFF436EEE%s|r 已被禁用，無法顯示計時器。"
 L.removeAddOn = "請移除「|cFF436EEE%s|r」，其已被「|cFF436EEE%s|r」所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"
 L.outOfDateContentPopup = "警告！\n你更新了 |cFF436EEE%s|r，但還需要更新 |cFF436EEEBigWigs|r 主程式，\n忽略這件事可能使插件故障。"
-L.outOfDateContentRaidWarning = "需要安裝版本 %d 的|cFF436EEEBigWigs|r 主程式，才能使用 |cFF436EEE%s|r，但你目前使用的版本是 %d。"
+L.outOfDateContentRaidWarning = "需要安裝版本 %2$d 的|cFF436EEEBigWigs|r 主程式，才能使用 |cFF436EEE%1$s|r，但你目前使用的版本是 %3$d。"
 
 L.expansionNames = {
 	"艾澤拉斯", -- Classic
