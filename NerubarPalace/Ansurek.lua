@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Queen Ansurek", 2657, 2602)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(218370)
 mod:SetEncounterID(2922)
 mod:SetRespawnTime(30)
 
