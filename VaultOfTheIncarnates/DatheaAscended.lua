@@ -43,7 +43,7 @@ function mod:GetOptions()
 		387849, -- Coalescing Storm
 
 		397431, -- Diverted Essence
-		{385812, "TANK", "NAMEPLATEBAR"}, -- Aerial Slash
+		{385812, "TANK"}, -- Aerial Slash
 		395501, -- Blowback
 		volatileInfuserMarker,
 
@@ -192,7 +192,6 @@ function mod:AerialSlash(args)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
 	end
-	--self:NameplateBar(args.spellId, 12.2, args.sourceGUID)
 end
 
 function mod:StormBolt(args)

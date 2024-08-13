@@ -367,7 +367,7 @@ do
 		VOICE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Voice",
 		BAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
 		CASTBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars",
-		NAMEPLATEBAR = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pulse", -- XXX temp
+		NAMEPLATE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pulse", -- XXX temp
 		TANK = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank",
 		HEALER = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer",
 		EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
@@ -3089,19 +3089,18 @@ do
 	-- @param key the option key
 	-- @number length the duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
-	-- @param[opt] icon the bar icon (spell id or texture name)
+	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
 	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
-	function boss:Nameplate(key, length, guid, icon, hideOnExpire)
-		if checkFlag(self, key, C.NAMEPLATEBAR) then
-			self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, icons[icon or key], hideOnExpire)
-		end
+	function boss:Nameplate(key, length, guid, customIconOrText, hideOnExpire)
+		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText, hideOnExpire)
 	end
 
 	--- Stop showing a nameplate icon.
 	-- @param key the option key
 	-- @string guid nameplate unit's guid
-	function boss:StopNameplate(key, guid)
-		self:SendMessage("BigWigs_StopNameplate", self, guid, key)
+	-- @string[opt] text the specific text to clear, if clearing text instead of an icon
+	function boss:StopNameplate(key, guid, text)
+		self:SendMessage("BigWigs_StopNameplate", self, guid, key, text)
 	end
 
 	--- Clear everything on a nameplate.
@@ -3135,18 +3134,6 @@ end
 -- @string guid the hostile unit guid
 function boss:RemovePlateIcon(spellId, guid)
 	self:SendMessage("BigWigs_RemoveNameplateIcon", self, guid, spellId and icons[spellId])
-end
-
---- [DEPRECATED] Does nothing
-function boss:NameplateBar()
-end
-
---- [DEPRECATED] Does nothing
-function boss:NameplateCDBar()
-end
-
---- [DEPRECATED] Does nothing
-function boss:StopNameplateBar()
 end
 
 -------------------------------------------------------------------------------

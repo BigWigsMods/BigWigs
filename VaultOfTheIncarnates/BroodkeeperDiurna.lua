@@ -173,7 +173,6 @@ function mod:OnBossEnable()
 	-- Primalist Mage
 	self:Log("SPELL_CAST_START", "IceBarrage", 375716)
 	-- Tarasek Earthreaver
-	self:Log("SPELL_CAST_SUCCESS", "BurrowingStrike", 376266)
 	self:Log("SPELL_AURA_APPLIED", "BurrowingStrikeApplied", 376266)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BurrowingStrikeApplied", 376266)
 	self:Log("SPELL_CAST_START", "Tremors", 376257)
@@ -181,7 +180,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CauterizingFlashflames", 375485)
 	self:Log("SPELL_CAST_START", "FlameSentry", 375575)
 	-- Juvenile Frost Proto-Dragon
-	self:Log("SPELL_CAST_SUCCESS", "RendingBite", 375475)
 	self:Log("SPELL_AURA_APPLIED", "RendingBiteApplied", 375475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RendingBiteApplied", 375475)
 	self:Log("SPELL_CAST_START", "ChillingTantrum", 375457)
@@ -458,10 +456,6 @@ function mod:IceBarrage(args)
 end
 
 -- Tarasek Earthreaver
-function mod:BurrowingStrike(args)
-	--self:NameplateBar(args.spellId, 8.8, args.sourceGUID)
-end
-
 function mod:BurrowingStrikeApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
@@ -481,7 +475,6 @@ do
 			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alert")
 		end
-		--self:NameplateBar(args.spellId, 11.0, args.sourceGUID)
 	end
 end
 
@@ -495,7 +488,6 @@ do
 			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "alarm")
 		end
-		--self:NameplateBar(args.spellId, 11.5, args.sourceGUID)
 	end
 end
 
@@ -508,15 +500,10 @@ do
 			self:Message(args.spellId, "cyan")
 			self:PlaySound(args.spellId, "info")
 		end
-		--self:NameplateBar(args.spellId, 11.5, args.sourceGUID)
 	end
 end
 
 -- Juvenile Frost Proto-Dragon
-function mod:RendingBite(args)
-	--self:NameplateBar(args.spellId, 11.5, args.sourceGUID)
-end
-
 function mod:RendingBiteApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
 	if self:Me(args.destGUID) then
@@ -533,7 +520,6 @@ do
 			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alarm")
 		end
-		--self:NameplateBar(args.spellId, 11.5, args.sourceGUID)
 	end
 end
 
