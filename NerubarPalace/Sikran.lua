@@ -9,6 +9,7 @@ mod:SetEncounterID(2898)
 mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
 	433517, -- Phase Blades
+	439191, -- Decimate
 })
 
 --------------------------------------------------------------------------------
@@ -49,7 +50,7 @@ function mod:GetOptions()
 	return {
 		{433517, "PRIVATE"}, -- Phase Blades
 			434860, -- Cosmic Wound
-		{442428, "SAY", "SAY_COUNTDOWN"}, -- Decimate
+		{442428, "PRIVATE", "SAY", "SAY_COUNTDOWN"}, -- Decimate
 			459273, -- Cosmic Shards
 		456420, -- Shattering Sweep
 		{439511, "TANK"}, -- Captain's Flourish
