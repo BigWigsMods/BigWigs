@@ -219,7 +219,7 @@ do
 			littleWigsBundled = {},
 			zones = {},
 		}
-	elseif public.isBeta then -- TWW Beta
+	elseif public.isBeta and public.isTestBuild then -- TWW Beta
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
 			bigWigsBundled = {
