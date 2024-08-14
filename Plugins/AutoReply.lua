@@ -177,7 +177,7 @@ do
 			local playersTotal, playersAlive = 0, 0
 			for unit in curModule:IterateGroup() do
 				playersTotal = playersTotal + 1
-				if not UnitIsDeadOrGhost(unit) then
+				if not curModule:UnitIsDeadOrGhost(unit) then
 					playersAlive = playersAlive + 1
 				end
 			end
@@ -298,7 +298,7 @@ do
 			local playersTotal, playersAlive = 0, 0
 			for unit in curModule:IterateGroup() do
 				playersTotal = playersTotal + 1
-				if not UnitIsDeadOrGhost(unit) then
+				if not curModule:UnitIsDeadOrGhost(unit) then
 					playersAlive = playersAlive + 1
 				end
 			end
@@ -308,7 +308,7 @@ do
 			local playersTotal, playersAlive = 0, 0
 			for unit in curModule:IterateGroup() do
 				playersTotal = playersTotal + 1
-				if not UnitIsDeadOrGhost(unit) then
+				if not curModule:UnitIsDeadOrGhost(unit) then
 					playersAlive = playersAlive + 1
 				end
 			end

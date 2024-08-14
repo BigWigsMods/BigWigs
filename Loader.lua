@@ -122,6 +122,7 @@ public.UnitThreatSituation = UnitThreatSituation
 public.UnitGUID = UnitGUID
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
+public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
 public.UnitName = UnitName
 public.UnitSex = UnitSex
 public.isTestBuild = GetCurrentRegion() == 72 -- PTR/beta

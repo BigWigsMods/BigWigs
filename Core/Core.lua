@@ -32,8 +32,9 @@ local coreEnabled = false
 local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
-local UnitName = BigWigsLoader.UnitName
-local UnitGUID = BigWigsLoader.UnitGUID
+local UnitName = loader.UnitName
+local UnitGUID = loader.UnitGUID
+local UnitIsDeadOrGhost = loader.UnitIsDeadOrGhost
 
 -- Upvalues
 local next, type, setmetatable = next, type, setmetatable
@@ -279,7 +280,7 @@ end
 do
 	local function DisableModules()
 		for _, module in next, bosses do
-			if module:IsEngaged() and (module:GetJournalID() or module:GetAllowWin()) then
+			if module:IsEngaged() and (module:GetJournalID() or module:GetAllowWin()) and UnitIsDeadOrGhost("player") then
 				module:Wipe()
 			end
 			module:Disable()

@@ -41,6 +41,7 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitInPartyIsAI",
 	"113/UnitThreatSituation",
 	"113/UnitGUID",
+	"113/UnitIsDeadOrGhost",
 	"113/UnitName",
 	"113/UnitSex",
 
@@ -322,7 +323,6 @@ globals = {
 	"UnitIsConnected",
 	"UnitIsCorpse",
 	"UnitIsDead",
-	"UnitIsDeadOrGhost",
 	"UnitIsEnemy", -- Multiple old modules
 	"UnitIsFriend", -- MoP/SiegeOfOrgrimmar/TheFallenProtectors.lua
 	"UnitIsGroupAssistant",

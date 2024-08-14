@@ -1619,6 +1619,17 @@ do
 end
 
 do
+	local UnitIsDeadOrGhost = loader.UnitIsDeadOrGhost
+	--- Returns true if the unit is dead or in ghost form.
+	-- @string unit unit token or name
+	-- @return boolean
+	function boss:UnitIsDeadOrGhost(unit)
+		local isDeadOrGhost = UnitIsDeadOrGhost(unit)
+		return isDeadOrGhost
+	end
+end
+
+do
 	local UnitName = loader.UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
