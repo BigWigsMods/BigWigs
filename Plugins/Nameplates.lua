@@ -178,7 +178,7 @@ end
 
 local function iconLoop(updater)
 	local iconFrame = updater.parent
-	iconFrame.repeater:SetStartDelay(0)
+	iconFrame.repeater:SetStartDelay(1)
 
 	-- Rounding to 1 decimal place first as the timer is not precise to the 10000th of a second
 	-- This fixes things if there is 0.0000003 left when it would tick
@@ -190,6 +190,7 @@ local function iconLoop(updater)
 		end
 	else
 		iconFrame.countdownNumber:Hide()
+		iconFrame.updater:Stop()
 		if iconFrame.hideOnExpire then
 			iconFrame:StopIcon()
 		elseif db.nameplateIconExpireGlow and not iconFrame.activeGlow then
@@ -232,7 +233,8 @@ local function getIconFrame()
 		cooldown:SetDrawSwipe(db.nameplateIconCooldownSwipe)
 		cooldown:SetReverse(db.nameplateIconCooldownInverse)
 		cooldown:SetFrameLevel(100)
-		cooldown:SetHideCountdownNumbers(true)
+		cooldown:SetHideCountdownNumbers(true) -- Blizzard
+		cooldown.noCooldownCount = true -- OmniCC
 
 		local textFrame = CreateFrame("Frame", nil, iconFrame)
 		textFrame:SetAllPoints(iconFrame)
@@ -255,7 +257,7 @@ local function getIconFrame()
 		updater.parent = iconFrame
 		updater:SetScript("OnLoop", iconLoop)
 		local anim = updater:CreateAnimation()
-		anim:SetDuration(1)
+		anim:SetDuration(0)
 		iconFrame.updater = updater
 		iconFrame.repeater = anim
 	end
