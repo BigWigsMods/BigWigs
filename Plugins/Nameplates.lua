@@ -9,34 +9,17 @@ if not plugin then return end
 -- Locals
 --
 
-local LibCustomGlow = LibStub("LibCustomGlow-1.0")
-local glowFunctions = {
-	pixel = LibCustomGlow.PixelGlow_Start,
-	autocast = LibCustomGlow.AutoCastGlow_Start,
-	buttoncast = LibCustomGlow.ButtonGlow_Start,
-	proc = LibCustomGlow.ProcGlow_Start
-}
-local glowStopFunctions = {
-	pixel = LibCustomGlow.PixelGlow_Stop,
-	autocast = LibCustomGlow.AutoCastGlow_Stop,
-	buttoncast = LibCustomGlow.ButtonGlow_Stop,
-	proc = LibCustomGlow.ProcGlow_Stop
-}
-
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
-local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 plugin.displayName = L.nameplates
 
+local db = nil
 local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 
-local db = nil
-local nameplateIcons, nameplateTexts = {}, {}
-local StartNameplateIcon, showNameplateText
+local nameplateIcons, iconFrameCache, nameplateTexts, textFrameCache = {}, {}, {}, {}
+local startNameplateIcon, showNameplateText
 local rearrangeNameplateIcons, rearrangeNameplateTexts
 local removeFrame, nameplateIconCascadeDelete, frameStopped
-
-local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local validFramePoints = {
 	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
@@ -60,6 +43,8 @@ local inverseAnchorPoint = {
 	CENTER = "CENTER",
 }
 
+
+local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 local findUnitByGUID
 do
 	local unitTable = {
@@ -79,11 +64,25 @@ do
 		end
 	end
 end
+
+local LibCustomGlow = LibStub("LibCustomGlow-1.0")
+local glowFunctions = {
+	pixel = LibCustomGlow.PixelGlow_Start,
+	autocast = LibCustomGlow.AutoCastGlow_Start,
+	buttoncast = LibCustomGlow.ButtonGlow_Start,
+	proc = LibCustomGlow.ProcGlow_Start
+}
+local glowStopFunctions = {
+	pixel = LibCustomGlow.PixelGlow_Stop,
+	autocast = LibCustomGlow.AutoCastGlow_Stop,
+	buttoncast = LibCustomGlow.ButtonGlow_Stop,
+	proc = LibCustomGlow.ProcGlow_Stop
+}
+
 --------------------------------------------------------------------------------
 -- Text Frames
 --
 
-local textFrameCache = {}
 local function getTextFrame()
 	local textFrame
 
@@ -167,7 +166,6 @@ end
 -- Icon Frames
 --
 
-local iconFrameCache = {}
 local function iconLoop(updater)
 	local iconFrame = updater.parent
 	iconFrame.repeater:SetStartDelay(1)
@@ -541,7 +539,7 @@ do
 								testCount = testCount + 1
 								local testNumber = (testCount%3)+1
 								local key = "test"..testNumber
-								StartNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
+								startNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
 							end
 						end
 					else
@@ -1344,7 +1342,7 @@ local function getLenght(length)
 	return expirationTime, timerDuration
 end
 
-function StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	local time = GetTime()
     local expirationTime, timerDuration = getLenght(length)
 
@@ -1413,7 +1411,7 @@ function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, h
 	if not module:CheckOption(key, "NAMEPLATE") then return end
 	if not customIconOrText or type(customIconOrText) == "number" then
 		local icon = customIconOrText or module:SpellTexture(key)
-		StartNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+		startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	elseif type(customIconOrText) == "string" then
 		showNameplateText(module, guid, key, length, customIconOrText, hideOnExpire)
 	end
