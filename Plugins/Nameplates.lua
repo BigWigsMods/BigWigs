@@ -908,7 +908,7 @@ do
 			},
 			nameplateTextSettings = {
 				type = "group",
-				name = "Text Settings", --L.nameplateIconSettings,
+				name = L.nameplateTextSettings,
 				order = 20,
 				set = function(info, value)
 					db[info[#info]] = value
@@ -969,7 +969,7 @@ do
 					},
 					fontHeader = {
 						type = "header",
-						name = "Font", --L.timer,
+						name = L.font,
 						order = 20,
 					},
 					textFontName = {
@@ -1046,7 +1046,7 @@ do
 					reset = {
 						type = "execute",
 						name = L.resetAll,
-						desc = L.resetNameplateIconsDesc,
+						desc = L.resetNameplateTextDesc,
 						func = function()
 							setDefaults(textDefaults)
 							if plugin:UnitGUID("target") then

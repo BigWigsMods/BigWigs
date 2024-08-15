@@ -473,6 +473,8 @@ L.showRespawnBarDesc = "Zeigt nach einer Niederlage eine Leiste mit der Zeit bis
 --L.glowType = "Glow Type"
 --L.glowTypeDesc = "Change the type of glow that is shown around the icon."
 --L.resetNameplateIconsDesc = "Reset all the options related to nameplate icons."
+--L.nameplateTextSettings = "Text Settings"
+--L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
 
 -- Glow types as part of LibCustomGlow
 --L.pixelGlow = "Pixel Glow"
