@@ -28,6 +28,17 @@ BigWigs:AddColors("Liskanoth, The Futurebane", {
 	[391026] = {"red","yellow"},
 })
 
+BigWigs:AddColors("The Zaqali Elders", {
+	[402793] = "purple",
+	[402824] = "blue",
+	[402983] = "orange",
+	[402985] = "red",
+	[403384] = "blue",
+	[403772] = "purple",
+	[403779] = "blue",
+	[404171] = "red",
+})
+
 BigWigs:AddColors("Aurostor", {
 	[420895] = {"blue","purple"},
 	[420925] = "red",

@@ -27,6 +27,17 @@ BigWigs:AddSounds("Liskanoth, The Futurebane", {
 	[391026] = {"long","warning"},
 })
 
+BigWigs:AddSounds("The Zaqali Elders", {
+	[402793] = "alert",
+	[402824] = "alarm",
+	[402983] = "long",
+	[402985] = "warning",
+	[403384] = "underyou",
+	[403772] = "alert",
+	[403779] = "alarm",
+	[404171] = "warning",
+})
+
 BigWigs:AddSounds("Aurostor", {
 	[420895] = "warning",
 	[420925] = "long",
