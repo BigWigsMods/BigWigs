@@ -474,6 +474,7 @@ L.showRespawnBarDesc = "為滅團後首領重生倒數顯示計時器。"
 --L.glowTypeDesc = "Change the type of glow that is shown around the icon."
 --L.resetNameplateIconsDesc = "Reset all the options related to nameplate icons."
 --L.nameplateTextSettings = "Text Settings"
+--L.fixate_test = "Fixate Test" -- Text that displays to test on the frame
 --L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
 
 -- Glow types as part of LibCustomGlow

@@ -84,10 +84,6 @@ end
 --
 
 local textFrameCache = {}
-local function recycleTextFrame(frame)
-	table.insert(textFrameCache, frame)
-end
-
 local function getTextFrame()
 	local textFrame
 
@@ -152,7 +148,7 @@ local function getTextFrame()
 
 	function textFrame:HideFrame()
 		self:Hide()
-		recycleTextFrame(self)
+		table.insert(textFrameCache, self)
 	end
 
 	function textFrame:StartNameplate()
@@ -172,10 +168,6 @@ end
 --
 
 local iconFrameCache = {}
-local function recycleIconFrame(frame)
-	table.insert(iconFrameCache, frame)
-end
-
 local function iconLoop(updater)
 	local iconFrame = updater.parent
 	iconFrame.repeater:SetStartDelay(1)
@@ -401,7 +393,7 @@ local function getIconFrame()
 		self:StopGlows()
 		self.updater:Stop()
 		self:Hide()
-		recycleIconFrame(self)
+		table.insert(iconFrameCache, self)
 	end
 
 	function iconFrame:StopNameplate()
@@ -573,7 +565,7 @@ do
 								testCount = testCount + 1
 								local testNumber = (testCount%3)+1
 								local key = "test"..testNumber
-								showNameplateText(plugin, guid, key, 5, key, true)
+								showNameplateText(plugin, guid, key, 5, L.fixate_test, true)
 							end
 						end
 					else
@@ -1434,9 +1426,8 @@ end
 do
 	local function handleFrame(guid, frameInfo, inCombat)
 		if not inCombat and frameInfo.module ~= plugin then
+			-- Don't re-pop when you've wiped but do re-pop for test icons
 			plugin:StopNameplate(nil, frameInfo.module, guid, frameInfo.key, frameInfo.text)
-			 -- Don't re-pop when you've wiped
-			 -- Do re-pop for test icons
 			return
 		end
 		local remainingTime = frameInfo.exp - GetTime()

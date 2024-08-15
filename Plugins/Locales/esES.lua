@@ -474,6 +474,7 @@ L.showRespawnBarDesc = "Muestra una barra después de que mueres por un jefe mos
 --L.glowTypeDesc = "Change the type of glow that is shown around the icon."
 --L.resetNameplateIconsDesc = "Reset all the options related to nameplate icons."
 --L.nameplateTextSettings = "Text Settings"
+--L.fixate_test = "Fixate Test" -- Text that displays to test on the frame
 --L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
 
 -- Glow types as part of LibCustomGlow
