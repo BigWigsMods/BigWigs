@@ -515,8 +515,22 @@ do
 						C_Item.RequestLoadItemDataByID(itemID)
 					end
 				end
-			elseif not self.db.profile.blockDungeonToasts or (self.db.profile.blockDungeonToasts and tbl.eventToastID ~= 5) then -- Dungeon zone in popup
+			elseif tbl.eventToastID == 1 then -- Level up
+				-- tbl.title is "Level 46"
+				tbl.subtitle = nil -- Remove "You've Reached" text
 				printMessage(self, tbl)
+			elseif tbl.eventToastID == 156 then -- Talent point
+				-- tbl.title is "New Talent Point Available"
+				-- tbl.subtitle is "Your power increased!"
+				tbl.subtitle = tbl.title -- We only want the title, but we don't want it uppercase
+				tbl.title = nil
+				printMessage(self, tbl)
+			elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
+				if not self.db.profile.blockDungeonToasts then
+					printMessage(self, tbl)
+				end
+			else --if tbl.eventToastID == 3 then -- New ability
+				return
 			end
 			RemoveCurrentToast()
 			self:DISPLAY_EVENT_TOASTS()
@@ -639,12 +653,8 @@ do
 				local _, _, diff = GetInstanceInfo()
 				local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
 				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not bbFrame.IsProtected(frame) then
-					restoreObjectiveTracker = bbFrame.GetParent(frame)
-					if restoreObjectiveTracker then
-						bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
-						bbFrame.SetFixedFrameLevel(frame, true)
-						bbFrame.SetParent(frame, bbFrame)
-					end
+					restoreObjectiveTracker = true
+					frame:SetAlpha(0) -- XXX FIXME
 				end
 			end
 		elseif not isVanilla then
@@ -718,9 +728,13 @@ do
 
 		if restoreObjectiveTracker then
 			local frame = not isClassic and ObjectiveTrackerFrame or Questie_BaseFrame or WatchFrame or QuestWatchFrame
-			bbFrame.SetParent(frame, restoreObjectiveTracker)
-			bbFrame.SetFixedFrameStrata(frame, false)
-			bbFrame.SetFixedFrameLevel(frame, false)
+			if not isClassic then
+				frame:SetAlpha(1) -- XXX FIXME
+			else
+				bbFrame.SetParent(frame, restoreObjectiveTracker)
+				bbFrame.SetFixedFrameStrata(frame, false)
+				bbFrame.SetFixedFrameLevel(frame, false)
+			end
 			restoreObjectiveTracker = nil
 		end
 	end
@@ -817,12 +831,13 @@ do
 		[1] = 1, -- Normal Dungeon
 		[2] = 1, -- Heroic Dungeon
 		[8] = 2, -- Mythic+ Keystone Dungeon
-		[23] = 2, -- Mythic Dungeon
 		[14] = 3, -- Normal Raid
 		[15] = 3, -- Heroic Raid
 		[16] = 3, -- Mythic Raid
 		[17] = 3, -- LFR
+		[23] = 2, -- Mythic Dungeon
 		[24] = 4, -- Timewalking Dungeon
+		[205] = 1, -- Follower Dungeon
 	}
 	function plugin:TALKINGHEAD_REQUESTED()
 		local _, _, diff = GetInstanceInfo()
