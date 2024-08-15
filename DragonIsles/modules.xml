@@ -5,6 +5,7 @@
 <Script file="Basrikron.lua"/>
 <Script file="Bazual.lua"/>
 <Script file="Liskanoth.lua"/>
+<Script file="ZaqaliElders.lua"/>
 <Script file="Aurostor.lua"/>
 
 <Include file="Locales\locales.xml"/>
