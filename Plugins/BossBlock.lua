@@ -444,17 +444,17 @@ do
 	local delayedTbl = nil
 	local function printMessage(self, tbl)
 		if type(tbl.title) == "string" and #tbl.title > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor, nil, nil, 4)
 		end
 		if delayedTbl and delayedTbl.title and #delayedTbl.title > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor, nil, nil, 4)
 			delayedTbl.title = nil
 		end
 		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor, nil, nil, 4)
 		end
 		if type(tbl.instructionText) == "string" and #tbl.instructionText > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.toastsColor)
+			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.toastsColor, nil, nil, 4)
 		end
 		if type(tbl.showSoundKitID) == "number" then
 			PlaySound(tbl.showSoundKitID)
@@ -490,7 +490,7 @@ do
 					end
 				end
 			elseif tbl.eventToastID == 1 then -- Level up
-				-- tbl.title is "Level 46"
+				-- tbl.title is "Level 42"
 				tbl.subtitle = nil -- Remove "You've Reached" text
 				printMessage(self, tbl)
 			elseif tbl.eventToastID == 156 then -- Talent point
