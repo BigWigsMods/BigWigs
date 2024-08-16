@@ -29,7 +29,7 @@ plugin.defaultDB = {
 	disableMusic = false,
 	disableAmbience = false,
 	disableErrorSpeech = false,
-	redirectToastMsgs = true,
+	redirectTheToasts = true,
 	toastsColor = {0.2, 1, 1},
 	blockDungeonToasts = true,
 }
@@ -58,7 +58,6 @@ local CheckElv = nil
 local RestoreAll
 local hideQuestTrackingTooltips = false
 local activatedModules = {}
-local registeredToasts = {}
 local latestKill = {}
 local bbFrame = CreateFrame("Frame")
 bbFrame:Hide()
@@ -183,37 +182,26 @@ plugin.pluginOptions = {
 					inline = true,
 					hidden = isClassic,
 					args = {
-						redirectToastMsgs = {
+						redirectTheToasts = {
 							type = "toggle",
 							name = L.redirectPopups,
 							desc = L.redirectPopupsDesc,
 							set = function(_, value)
-								plugin.db.profile.redirectToastMsgs = value
+								plugin.db.profile.redirectTheToasts = value
 								if value then
 									local _, _, _, _, _, _, _, id = GetInstanceInfo()
 									if zoneList[id] then -- Instances only
-										registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+										local registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
 										for i = 1, #registeredToasts do
 											bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
 										end
 										plugin:RegisterEvent("DISPLAY_EVENT_TOASTS")
+										for i = 1, #registeredToasts do
+											bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+										end
 									end
 								else
 									plugin:UnregisterEvent("DISPLAY_EVENT_TOASTS")
-									if next(registeredToasts) then
-										-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
-										local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
-										for i = 1, #extraSafety do
-											bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
-										end
-										for i = 1, #registeredToasts do
-											bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
-										end
-										for i = 1, #extraSafety do
-											bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
-										end
-										registeredToasts = {}
-									end
 								end
 							end,
 							width = "full",
@@ -231,7 +219,7 @@ plugin.pluginOptions = {
 							width = "full",
 							order = 2,
 							disabled = function()
-								return not plugin.db.profile.redirectToastMsgs
+								return not plugin.db.profile.redirectTheToasts
 							end,
 						},
 						blockDungeonToasts = {
@@ -241,7 +229,7 @@ plugin.pluginOptions = {
 							width = "full",
 							order = 3,
 							disabled = function()
-								return not plugin.db.profile.redirectToastMsgs
+								return not plugin.db.profile.redirectTheToasts
 							end,
 						},
 					},
@@ -418,12 +406,15 @@ do
 
 		if not isClassic then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
-			if self.db.profile.redirectToastMsgs and zoneList[id] then -- Instances only
-				registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+			if self.db.profile.redirectTheToasts and zoneList[id] then -- Instances only
+				local registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
 				for i = 1, #registeredToasts do
 					bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
 				end
 				self:RegisterEvent("DISPLAY_EVENT_TOASTS")
+				for i = 1, #registeredToasts do
+					bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+				end
 			end
 			self:RegisterEvent("TALKINGHEAD_REQUESTED")
 			local frame = ObjectiveTrackerFrame
@@ -443,23 +434,6 @@ function plugin:OnPluginDisable()
 	activatedModules = {}
 	latestKill = {}
 	RestoreAll(self)
-	if not isClassic and self.db.profile.redirectToastMsgs then
-		self:UnregisterEvent("DISPLAY_EVENT_TOASTS")
-		if next(registeredToasts) then
-			-- In most cases this is just going to be the Blizz frame, but we need to try respect other potential addons
-			local extraSafety = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")} -- Remove anything that registered whilst we were active
-			for i = 1, #extraSafety do
-				bbFrame.UnregisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS")
-			end
-			for i = 1, #registeredToasts do
-				bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS") -- The frames we removed when we enabled should be first
-			end
-			for i = 1, #extraSafety do
-				bbFrame.RegisterEvent(extraSafety[i], "DISPLAY_EVENT_TOASTS") -- Now restore the ones that registered when we were active
-			end
-			registeredToasts = {}
-		end
-	end
 end
 
 -------------------------------------------------------------------------------
