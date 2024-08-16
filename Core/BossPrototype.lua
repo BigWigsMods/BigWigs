@@ -2481,10 +2481,10 @@ function boss:MessageOld(key, color, sound, text, icon)
 	end
 end
 
-function boss:Message(key, color, text, icon, disableEmphasize)
+function boss:Message(key, color, text, icon, disableEmphasize, customDisplayTime)
 	if checkFlag(self, key, C.MESSAGE) then
 		local isEmphasized = not disableEmphasize and band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-		self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized)
+		self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized, customDisplayTime)
 	end
 end
 
