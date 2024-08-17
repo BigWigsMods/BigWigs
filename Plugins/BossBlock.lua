@@ -442,19 +442,21 @@ end
 
 do
 	local delayedTbl = nil
+	local levelUpTbl = nil
 	local function printMessage(self, tbl)
+		local icon = type(tbl.iconFileID) == "number" and tbl.iconFileID or nil
 		if type(tbl.title) == "string" and #tbl.title > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor, nil, nil, 4)
+			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
 		end
 		if delayedTbl and delayedTbl.title and #delayedTbl.title > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor, nil, nil, 4)
+			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
 			delayedTbl.title = nil
 		end
 		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor, nil, nil, 4)
+			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
 		end
 		if type(tbl.instructionText) == "string" and #tbl.instructionText > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.toastsColor, nil, nil, 4)
+			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
 		end
 		if type(tbl.showSoundKitID) == "number" then
 			PlaySound(tbl.showSoundKitID)
@@ -470,11 +472,13 @@ do
 			plugin:UnregisterEvent("ITEM_DATA_LOAD_RESULT")
 		end
 	end
+	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
 			if tbl.eventToastID == 184 then -- Vault unlocked
-				self:SimpleTimer(function() printMessage(self, tbl) end, 5)
+				tbl.bwDuration = 4
+				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
 			elseif tbl.eventToastID == 185 then -- Vault upgraded
 				if type(tbl.subtitle) == "string" then
 					local itemID = C_Item.GetItemIDForItemInfo(tbl.subtitle)
@@ -486,21 +490,42 @@ do
 						tbl.title = nil
 						delayedTbl[#delayedTbl+1] = tbl
 						tbl.bwItemID = itemID
+						tbl.bwDuration = 4
 						C_Item.RequestLoadItemDataByID(itemID)
 					end
 				end
 			elseif tbl.eventToastID == 1 then -- Level up
 				-- tbl.title is "Level 42"
+				-- tbl.subtitle is "You've Reached"
 				tbl.subtitle = nil -- Remove "You've Reached" text
-				printMessage(self, tbl)
+				tbl.bwDuration = 4.5
+				levelUpTbl = tbl
+				self:SimpleTimer(function() levelUpTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the talent point toast to merge, if one is rewarded
 			elseif tbl.eventToastID == 156 then -- Talent point
 				-- tbl.title is "New Talent Point Available"
 				-- tbl.subtitle is "Your power increased!"
-				tbl.subtitle = tbl.title -- We only want the title, but we don't want it uppercase
+				if levelUpTbl then -- We merge this into the level up toast
+					levelUpTbl.subtitle = CL.other:format((levelUpTbl.title):upper(), tbl.title) -- Combine, without uppercase
+					levelUpTbl.title = nil
+					levelUpTbl.iconFileID = tbl.iconFileID
+				end
+			elseif tbl.eventToastID == 51 then -- Battleground
+				-- tbl.title is "Twin Peaks"
+				-- tbl.subtitle is "Battleground Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
 				tbl.title = nil
-				printMessage(self, tbl)
+				tbl.bwDuration = 2.5
+				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
+			elseif tbl.eventToastID == 3 then -- New ability
+				-- tbl.title is "Imprison"
+				-- tbl.subtitle is "New Ability Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+				tbl.title = nil
+				tbl.bwDuration = 4.5
+				self:SimpleTimer(function() printMessage(self, tbl) end, 0.6) -- Show after the level up toast
 			elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
 				if not self.db.profile.blockDungeonToasts then
+					tbl.bwDuration = 2
 					printMessage(self, tbl)
 				end
 			else --if tbl.eventToastID == 3 then -- New ability
