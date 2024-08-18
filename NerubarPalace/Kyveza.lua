@@ -13,6 +13,7 @@ mod:SetPrivateAuraSounds({
 	438141, -- Twilight Massacre
 	{435534, extra = {436663, 436664, 436665, 436666, 436671, 436677}}, -- Regicide
 })
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -81,10 +82,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ChasmalGashApplied", 440576)
 	-- Stage Two: Starless Night
 	self:Log("SPELL_CAST_START", "StarlessNight", 435405)
+	self:Log("SPELL_AURA_REMOVED", "StarlessNightOver", 435405)
 	self:Log("SPELL_CAST_START", "EternalNight", 442277)
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	assassinationCount = 1
 	twilightMassacreCount = 1
 	netherRiftCount = 1
@@ -190,8 +193,8 @@ function mod:ChasmalGashApplied(args)
 end
 
 -- Stage Two: Starless Night
-
 function mod:StarlessNight(args)
+	self:SetStage(2)
 	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:Message(args.spellId, "cyan", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
@@ -205,7 +208,12 @@ function mod:StarlessNight(args)
 	end
 end
 
+function mod:StarlessNightOver()
+	self:SetStage(1)
+end
+
 function mod:EternalNight(args)
+	self:SetStage(2)
 	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:Message(args.spellId, "red", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
