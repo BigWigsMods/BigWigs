@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Gnarlroot.lua"/>
+<Script file="Igira.lua"/>
+<Script file="Volcoross.lua"/>
+<Script file="CouncilOfDreams.lua"/>
+<Script file="Larodar.lua"/>
+<Script file="Nymue.lua"/>
+<Script file="Smolderon.lua"/>
+<Script file="Tindral.lua"/>
+<Script file="Fyrakk.lua"/>
+<!--<Script file="Trash.lua"/>-->
+
+<Include file="Locales\locales.xml"/>
+<Include file="Options\options.xml"/>
+
+</Ui>

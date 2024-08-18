@@ -22,13 +22,33 @@ local burstCount = 1
 local webCount = 1
 local stageCount = 0
 
-local timers = {
-	-- Stage 1
-	[371976] = {15.5, 39, 37, 28.5, 38, 22, 38.5, 38, 38}, -- Chilling Blast
-	[372082] = {17.9, 26.4, 26.4, 27.8, 24.0, 26.4, 27.5, 26.2, 20.5, 28.1, 31.9}, -- Enveloping Webs
-	[373405] = {33, 37.5, 67, 38, 60, 38}, -- Gossamer Burst
-	[372238] = {0, 25.5, 25.5, 38, 25.5, 25.5, 27, 27, 19, 27, 26, 26, 26, 24} -- Call Spiderlings
+local timersTable = { -- Stage 1
+	[14] = { -- Normal
+		[371976] = {16.1, 36.5, 37.7, 30.4, 36.5, 36.5, 26.6, 40.1}, -- Chilling Blast
+		[372082] = {18.5, 28, 29.1, 26.7, 20.6, 26.7, 30.3, 42.5, 27.9, 32.8, 29.9}, -- Enveloping Webs
+		[373405] = {33.2, 36.5, 68.1, 36.4, 64.8, 38.4, 35.1}, -- Gossamer Burst
+		[372238] = {2.7, 20.6, 20.7, 21.9, 20.6, 31.6, 26.7, 21.8, 20.7, 27.9, 20.6, 20.7, 20.6}, -- Call Spiderlings
+	},
+	[15] = { -- Heroic
+		[371976] = {15.5, 37.6, 37.4, 29.1, 37.2, 37.5, 21.9, 36.5, 37.3}, -- Chilling Blast
+		[372082] = {18.1, 26.7, 30.5, 44.8, 26.7, 30.4, 38.9, 26.4, 30.4, 32.8}, -- Enveloping Webs
+		[373405] = {32.8, 37.7, 65.5, 36.5, 59.6, 37.6}, -- Gossamer Burst
+		[372238] = {0, 25.5, 25.5, 26.7, 38.8, 25.5, 25.5, 25.5, 20.7, 26.7, 26.7, 25.4}, -- Call Spiderlings
+	},
+	[16] = { -- Mythic
+		[371976] = {15.7, 36.6, 37.6, 30.4, 40.1, 37.6, 22.0, 39.0}, -- Chilling Blast
+		[372082] = {19.1, 26.8, 31.6, 46.2, 26.7, 27.9, 45.0, 26.8, 34.1, 30.4}, -- Enveloping Webs
+		[373405] = {32.8, 37.6, 69.3, 38.8, 60.8, 37.8}, -- Gossamer Burst
+		[372238] = {0, 31.7, 30.3, 30.4, 23.2, 30.3, 30.4, 37.7, 31.7, 30.4}, -- Call Spiderlings
+	},
+	[17] = { -- LFR
+		[371976] = {0}, -- Chilling Blast
+		[372082] = {17.1, 27.9, 27.9, 27.9, 19.4, 28.0, 29.1, 42.5, 27.9, 27.6}, -- Enveloping Webs
+		[373405] = {30.7, 35.2, 35.2, 34.0, 35.2, 63.2, 34.8}, -- Gossamer Burst
+		[372238] = {1.5, 35.2, 35.2, 43.7, 31.6, 30.3, 37.7, 31.6, 32.4, 30.3}, -- Call Spiderlings
+	},
 }
+local timers = timersTable[mod:Difficulty()]
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,7 +64,6 @@ if L then
 	L.webs = "Webs"
 	L.web = "Web"
 	L.gossamer_burst = "Grip"
-	L.repelling_burst = "Pushback"
 end
 
 --------------------------------------------------------------------------------
@@ -66,7 +85,7 @@ function mod:GetOptions()
 		"ascend",
 		{372082, "SAY", "SAY_COUNTDOWN"}, -- Enveloping Webs
 		envelopingWebsMarker,
-		373405, -- Gossamer Burst
+		{373405, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Gossamer Burst
 		{385083, "TANK"}, -- Web Blast
 		-24899, -- Frostbreath Arachnid
 		374112, -- Freezing Breath
@@ -74,7 +93,7 @@ function mod:GetOptions()
 		372539, -- Apex of Ice
 		{373048, "SAY", "SAY_COUNTDOWN"}, -- Suffocating Webs
 		suffocatingWebsMarker,
-		371983, -- Repelling Burst
+		{371983, "CASTBAR"}, -- Repelling Burst
 	}, {
 		["stages"] = "general",
 		["ascend"] = -24883, -- Stage 1
@@ -89,8 +108,7 @@ function mod:GetOptions()
 		[373048] = L.webs, -- Suffocating Webs (Webs)
 		[-24899] = CL.big_add, -- Frostbreath Arachnid (Big Add)
 		[374112] = L.freezing_breath, -- Freezing Breath (Add Breath)
-		[373048] = L.webs, -- Suffocating Webs (Knock Webs)
-		[371983] = L.repelling_burst, -- Repelling Burst (Knockback)
+		[371983] = CL.pushback, -- Repelling Burst (Pushback)
 	}
 end
 
@@ -126,7 +144,8 @@ function mod:OnBossEnable()
 	-- XXX Ground Effects?
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
+	timers = timersTable[diff]
 	self:SetStage(1)
 	stageCount = 0
 	ascendCount = 1
@@ -136,7 +155,7 @@ function mod:OnEngage()
 	burstCount = 1
 	webCount = 1
 
-	--self:CDBar(372238, timers[372238][callSpiderlingsCount], CL.small_adds) -- Call Spiderlings // This happens at 0~1s right now
+	--self:CDBar(372238, timers[372238][callSpiderlingsCount], CL.count:format(CL.small_adds, callSpiderlingsCount)) -- Call Spiderlings // This happens at 0~1s right now
 	self:Bar(371976, timers[371976][chillingBlastCount], CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 	self:Bar(372082, timers[372082][webCount], CL.count:format(L.webs, webCount)) -- Enveloping Webs
 	self:Bar(373405, timers[373405][burstCount], CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
@@ -183,7 +202,7 @@ function mod:EncounterEvent(args)
 			self:CDBar(372238, 13.3, CL.small_adds) -- Call Spiderlings
 			self:Bar(371976, 15.7, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 			self:Bar(373048, 26.2, CL.count:format(L.webs, webCount)) -- Suffocating Webs
-			self:Bar(371983, 32.8, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
+			self:Bar(371983, 32.8, CL.count:format(CL.pushback, burstCount)) -- Repelling Burst
 		end
 	end
 end
@@ -222,13 +241,13 @@ function mod:WrappedInWebsApplied(args)
 end
 
 function mod:CallSpiderlings(args)
-	self:Message(args.spellId, "cyan", CL.small_adds)
+	self:StopBar(CL.count:format(CL.small_adds, callSpiderlingsCount))
 	callSpiderlingsCount = callSpiderlingsCount + 1
-	local cd = 0
+	local cd
 	if self:GetStage() == 1 then
 		cd = timers[args.spellId][callSpiderlingsCount]
 	else
-		cd = self:Easy() and 26 and self:Heroic() and 34 or 30
+		cd = self:Heroic() and 34 or 30
 	end
 	self:CDBar(args.spellId, cd, CL.small_adds)
 end
@@ -249,7 +268,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.rticon:format(L.web, count))
+			self:Say(args.spellId, CL.rticon:format(L.web, count), nil, ("Web ({rt%d})"):format(count))
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -315,7 +334,7 @@ function mod:ApexOfIceRemoved(args)
 	self:CDBar(372238, self:Easy() and 13 or 9, CL.small_adds) -- Call Spiderlings 8.5~10.5
 	self:Bar(371976, self:Easy() and 15 or 11, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 	self:Bar(373048, self:Easy() and 25 or 21, CL.count:format(L.webs, webCount)) -- Suffocating Webs
-	self:Bar(371983, self:Easy() and 34 or 28, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
+	self:Bar(371983, self:Easy() and 34 or 28, CL.count:format(CL.pushback, burstCount)) -- Repelling Burst
 end
 
 do
@@ -332,7 +351,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.rticon:format(L.web, count))
+			self:Say(args.spellId, CL.rticon:format(L.web, count), nil, ("Web ({rt%d})"):format(count))
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -349,10 +368,10 @@ do
 end
 
 function mod:RepellingBurst(args)
-	self:StopBar(CL.count:format(L.repelling_burst, burstCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.repelling_burst, burstCount)))
+	self:StopBar(CL.count:format(CL.pushback, burstCount))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(CL.pushback, burstCount)))
 	self:PlaySound(args.spellId, "warning") -- castmove
-	self:CastBar(args.spellId, 4, L.repelling_burst)
+	self:CastBar(args.spellId, 4, CL.pushback)
 	burstCount = burstCount + 1
-	self:Bar(args.spellId, 34.2, CL.count:format(L.repelling_burst, burstCount))
+	self:Bar(args.spellId, 34.2, CL.count:format(CL.pushback, burstCount))
 end

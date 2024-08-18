@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "在獵殺指令鎖定你的塔拉賽克名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 
 	L.molten_cleave = "正面順劈"
-	L.incinerating_roar = "咆哮"
 	L.molten_spikes = "尖刺"
 	L.collapsing_army = "烈焰大軍"
 	L.greater_flamerift = "大型增援"
@@ -14,12 +13,14 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "zhTW")
 if L then
-	L.rock_blast = "分攤"
 	L.resonating_annihilation = "清場"
 	L.awakened_earth = "地刺"
 	L.shattering_impact = "猛擊"
 	L.concussive_slam = "射線"
 	L.infused_fallout = "落塵"
+
+	L.custom_on_repeating_fallout = "重覆落塵喊話"
+	L.custom_on_repeating_fallout_desc = "以 {rt7} 持續喊話，方便你找人消除落塵。"
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "zhTW")
@@ -30,11 +31,8 @@ if L then
 	L.meteor_axe = "大圈分攤" -- Singular
 	L.meteor_axes_melee = "近戰分攤"
 	L.meteor_axes_ranged = "遠程分攤"
-	L.conductive_marks = "導電印記" -- Conductive Marks
-	L.conductive_mark = "導電印記" -- Singular
 
-	L.custom_on_stop_timers = "總是顯示計時器"
-	L.custom_on_stop_timers_desc = "啟用此選項後，導電印記的計時條會保持顯示。"
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhTW")
@@ -46,13 +44,10 @@ if L then
 	L.webs = "蛛網"
 	L.web = "蛛網"
 	L.gossamer_burst = "拉人"
-	L.repelling_burst = "擊退"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhTW")
 if L then
-	L.conductive_marks = "導電印記"
-	L.conductive_mark = "導電印記"
 	L.raging_burst = "狂怒風暴"
 	L.cyclone = "拉近"
 	L.crosswinds = "移動風暴"
@@ -81,25 +76,20 @@ if L then
 	L.Storm = "風暴"
 
 	-- Fire
-	L.magma_burst = "熔岩池"
 	L.molten_rupture = "熔岩波"
 	L.searing_carnage = "火圈跳舞"
 	L.raging_inferno = "吸收熔岩池"
 
 	-- Frost
 	L.biting_chill = "刺骨之寒"
-	L.frigid_torrent = "冰球跳舞"
-	L.absolute_zero = "大圈分攤"
 	L.absolute_zero_melee = "近戰分攤"
 	L.absolute_zero_ranged = "遠程分攤"
 
 	-- Earth
-	L.enveloping_earth = "吸收盾"
 	L.erupting_bedrock = "地震跳舞"
 
 	-- Storm
 	L.lightning_crash = "閃電暴擊"
-	L.thundering_strike = "接圈"
 
 	-- General
 	L.primal_attunement = "軟狂暴"
@@ -113,10 +103,8 @@ if L then
 	L.eggs_remaining = "還剩 %d 個蛋！"
 	L.broodkeepers_bond = "剩餘龍蛋"
 	L.greatstaff_of_the_broodkeeper = "巨杖"
-	L.greatstaffs_wrath = "射線"
 	L.clutchwatchers_rage = "狂怒"
 	L.rapid_incubation = "注入龍蛋"
-	L.icy_shroud = "減速吸收盾"
 	L.broodkeepers_fury = "狂怒"
 	L.frozen_shroud = "定身吸收盾"
 	L.detonating_stoneslam = "坦克分攤"
@@ -127,44 +115,34 @@ if L then
 	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
-	-- L.volatile_current = "Sparks"
-	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
-	-- L.lightning_strikes = "Strikes"
-	-- L.electric_scales = "Raid Damage"
-	-- L.electric_lash = "Lash"
-	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
+	L.volatile_current = "火花"
+	L.thunderous_blast = "射線"
+	L.lightning_strikes = "落雷"
+	L.electric_scales = "團隊傷害"
+	L.electric_lash = "電鞭"
 	-- Stage Two: Surging Power
-	-- L.absorb_text = "%s (%.0f%%)"
-	-- L.stormsurge = "Absorb Shield"
-	-- L.stormcharged = "Positive or Negative"
-	-- L.positive = "Positive"
-	-- L.negative = "Negative"
-	-- L.focused_charge = "Damage Buff"
-	-- L.tempest_wing = "Storm Wave"
-	-- L.fulminating_charge = "Charges"
-	-- L.fulminating_charge_debuff = "Charge"
+	L.absorb_text = "%s (%.0f%%)"
+	L.stormsurge = "帶電吸收盾"
+	L.stormcharged = "風暴充能"
+	L.positive = "正極"
+	L.negative = "負極"
+	L.focused_charge = "聚能電荷"
+	L.tempest_wing = "風暴之翼"
+	L.fulminating_charge = "電能炸裂"
+	L.fulminating_charge_debuff = "電能炸裂"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
-	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
+	L.ball_lightning = "閃電球"
 	-- Stage Three: Storm Incarnate
-	-- L.magnetic_charge = "Pull Charge"
+	L.magnetic_charge = "磁性電荷"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
-
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_on_repeating_stormcharged = "重複正負極"
+	L.custom_on_repeating_stormcharged_desc = "以 {rt1} 和 {rt3} 持續喊話正負極，方便你快速找到相同印記的隊友。"
 
 	-- L.skipped_cast = "Skipped %s (%d)"
 
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "閃電破滅：團長模式"
+	L.custom_off_raidleader_devastation_desc = "在另一個平台上也顯示閃電破滅（吐息）的計時器。"
+	L.breath_other = "[對面] %s" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhTW")

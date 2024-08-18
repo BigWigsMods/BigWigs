@@ -23,6 +23,7 @@ local sounds = {
 	Warning = "BigWigs: Raid Warning",
 	--onyou = BL.spell_on_you,
 	underyou = BL.spell_under_you,
+	privateaura = "BigWigs: Raid Warning",
 }
 
 --------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ plugin.defaultDB = {
 		Warning = sounds.Warning,
 		--onyou = BL.spell_on_you,
 		underyou = BL.spell_under_you,
+		privateaura = sounds.privateaura,
 	},
 	Long = {},
 	Info = {},
@@ -45,6 +47,7 @@ plugin.defaultDB = {
 	Alarm = {},
 	Warning = {},
 	underyou = {},
+	privateaura = {},
 }
 
 plugin.pluginOptions = {
@@ -60,7 +63,7 @@ plugin.pluginOptions = {
 	set = function(info, value)
 		local sound = info[#info]
 		db.media[sound] = soundList[value]
-		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
+		plugin:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
 	end,
 	order = 4,
 	args = {
@@ -88,20 +91,29 @@ plugin.pluginOptions = {
 			width = "full",
 			itemControl = "DDI-Sound",
 		},
+		privateaura = {
+			type = "select",
+			name = L.privateaura,
+			order = 4,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+			hidden = BigWigsLoader.isClassic,
+		},
 		newline2 = {
 			type = "description",
 			name = "\n\n",
-			order = 3.5,
+			order = 20,
 		},
 		oldSounds = {
 			type = "header",
 			name = L.oldSounds,
-			order = 4,
+			order = 21,
 		},
 		Alarm = {
 			type = "select",
 			name = L.Alarm,
-			order = 5,
+			order = 22,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -109,7 +121,7 @@ plugin.pluginOptions = {
 		Alert = {
 			type = "select",
 			name = L.Alert,
-			order = 6,
+			order = 23,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -117,7 +129,7 @@ plugin.pluginOptions = {
 		Info = {
 			type = "select",
 			name = L.Info,
-			order = 7,
+			order = 24,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -125,7 +137,7 @@ plugin.pluginOptions = {
 		Long = {
 			type = "select",
 			name = L.Long,
-			order = 8,
+			order = 25,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -133,7 +145,7 @@ plugin.pluginOptions = {
 		Warning = {
 			type = "select",
 			name = L.Warning,
-			order = 9,
+			order = 26,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -148,14 +160,14 @@ plugin.pluginOptions = {
 					plugin.db.profile.media[k] = sounds[k]
 				end
 			end,
-			order = 10,
+			order = 27,
 		},
 		resetAll = {
 			type = "execute",
 			name = L.resetAll,
 			desc = L.resetAllCustomSound,
 			func = function() plugin.db:ResetProfile() end,
-			order = 11,
+			order = 28,
 		},
 	}
 }
@@ -250,7 +262,7 @@ function plugin:OnRegister()
 				local optionName = info[#info]
 				if not db[optionName][name] then db[optionName][name] = {} end
 				db[optionName][name][key] = soundList[value]
-				PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
+				self:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
 				-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
 			end,
 			hidden = function(info)
@@ -302,21 +314,37 @@ do
 		["alarm"] = "Alarm",
 		["warning"] = "Warning",
 	}
-	local PlaySoundFile = PlaySoundFile
-	function plugin:BigWigs_Sound(event, module, key, soundName)
+	function plugin:GetSoundFile(module, key, soundName)
 		soundName = tmp[soundName] or soundName
 		local sDb = db[soundName]
 		if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
 			local path = db.media[soundName] and media:Fetch(SOUND, db.media[soundName], true) or media:Fetch(SOUND, soundName, true)
-			if path then
-				PlaySoundFile(path, "Master")
-			end
+			return path
 		else
 			local newSound = sDb[module.name][key]
 			local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
-			if path then
-				PlaySoundFile(path, "Master")
-			end
+			return path
 		end
+	end
+
+	function plugin:GetDefaultSound(soundName)
+		if not soundName then return end
+		if soundName == "none" then
+			return "None"
+		end
+		soundName = tmp[soundName] or soundName
+
+		local custom = soundName:match("^name:(.+)$")
+		if custom and not media:Fetch(SOUND, custom, true) then
+			return
+		end
+		return custom or db.media[soundName]
+	end
+end
+
+function plugin:BigWigs_Sound(event, module, key, soundName)
+	local soundPath = self:GetSoundFile(module, key, soundName)
+	if soundPath then
+		self:PlaySoundFile(soundPath)
 	end
 end

@@ -10,10 +10,24 @@ L.positionExact = "정확한 위치"
 L.positionDesc = "고정기로부터 정확한 위치를 원한다면 상자에 입력하거나 슬라이더를 움직이세요."
 L.width = "너비"
 L.height = "높이"
-L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요(최대값 제한 없음)."
+L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요."
 L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
 L.disableDesc = "'%s' 기능을 비활성화 하려고 하지만 |cffff4411권장하지 않습니다|r.\n\n비활성화 하시겠습니까?"
 L.transparency = "투명도"
+
+-- Anchor Points
+L.TOP = "상단"
+L.RIGHT = "우측"
+L.BOTTOM = "하단"
+L.LEFT = "좌측"
+L.TOPRIGHT = "우측 상단"
+L.TOPLEFT = "좌측 상단"
+L.BOTTOMRIGHT = "우측 하단"
+L.BOTTOMLEFT = "좌측 하단"
+L.CENTER = "중앙"
+L.customAnchorPoint = "고급: 사용자 지정 앵커 지점"
+L.sourcePoint = "원본 지점"
+L.destinationPoint = "대상 지점"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -68,6 +82,13 @@ L.bars = "바"
 L.style = "모양"
 L.bigWigsBarStyleName_Default = "기본"
 L.resetBarsDesc = "위치를 비롯한 모든 바 관련 설정을 초기화합니다."
+L.testBarsBtn = "테스트 바 만들기"
+L.testBarsBtn_desc = "당신의 현재 표시 설정으로 테스트용 바를 만듭니다."
+
+L.toggleAnchorsBtnShow = "고정기 표시"
+L.toggleAnchorsBtnHide = "고정기 숨김"
+L.toggleAnchorsBtnHide_desc = "고정기를 모두 숨겨서 다 그자리에 고정시킵니다."
+L.toggleBarsAnchorsBtnShow_desc = "모든 이동 앵커를 표시하여 바를 이동할 수 있게 합니다."
 
 L.nameplateBars = "이름표 바"
 L.nameplateAutoWidth = "이름표 너비와 맞추기"
@@ -75,6 +96,7 @@ L.nameplateAutoWidthDesc = "이름표 바의 너비를 해당 이름표의 너�
 L.nameplateOffsetY = "세로 위치 조정"
 L.nameplateOffsetYDesc = "위로 확장을 사용할 경우 이름표의 상단으로부터, 그렇지 않은 경우 이름표의 하단으로부터의 거리입니다."
 L.nameplateAlphaDesc = "네임플레이트 바의 투명도를 조정합니다."
+L.testNameplate = "대상이 감지되면, 대상의 이름표 위에 임의로 이름표를 하나 만듭니다. |cFF33FF99이 기능은 거의 쓰이지 않고, 바 하나일 때가 많고, 주로 같은 스킬을 시전하는 여러마리의 넴드나 쫄들과 상대할때 그 쿨다운을 체크하기 위해 씁니다.|r"
 
 L.clickableBars = "클릭 가능한 바"
 L.clickableBarsDesc = "BigWigs 바는 기본적으로 클릭을 무시합니다. 이 방법으로 커서가 바 위에 있을 때도 바 뒤의 물건을 대상 지정할 수 있고 바 뒤에 있는 대상에게 광역 주문을 사용할 수 있으며, 카메라 각도를 변경하는 등의 동작을 가능하게 합니다. |cffff4411클릭 가능한 바를 활성화하면 이런 동작들이 더이상 작동하지 않습니다.|r 당신이 바를 마우스 클릭하면 바가 클릭을 차단합니다.\n"
@@ -164,6 +186,8 @@ L.blockGuildChallenge = "길드 도전 알림 차단"
 L.blockGuildChallengeDesc = "길드 도전 알림은 여러가지를 표시하지만 주로 당신의 길드 파티의 영웅 던전이나 도전 모드 던전 완료를 표시합니다.\n\n이 알림들은 우두머리 전투 중 UI를 치명적으로 가릴 수 있습니다, 따라서 차단을 권장합니다."
 L.blockSpellErrors = "주문 실패 메시지 차단"
 L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"마법이 아직 준비되지 않았습니다\" 같은 메시지를 차단합니다."
+L.blockZoneChanges = "지역 변경 메시지 차단"
+L.blockZoneChangesDesc = "'|cFF33FF99스톰윈드|r' 또는 '|cFF33FF99오그리마|r'와 같이, 새로운 지역으로 이동할 경우 화면의 중상단에 나타나는 메시지를 차단합니다."
 L.audio = "음성"
 L.music = "배경음악"
 L.ambience = "환경 소리"
@@ -187,10 +211,17 @@ L.blockTalkingHeadRaids = "레이드"
 L.blockTalkingHeadTimewalking = "시간여행 (던전 및 레이드)"
 L.blockTalkingHeadScenarios = "시나리오"
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.redirectPopups = "BigWigs 메시지에 표시되는 팝업 배너"
+L.redirectPopupsDesc = "'|cFF33FF99금고 슬롯 잠금 해제됨|r' 배너 또는 신화 쐐기돌 던전에 입장할 때 표시되는 배너와 같이 화면 중앙에 있는 팝업 배너는 차단되고 대신 BigWigs 메시지로 표시됩니다. 이러한 배너는 상당히 클 수 있으며 오래 지속될 수 있습니다. 시간이 오래 걸리고 클릭 연결 기능이 차단됩니다."
+L.redirectPopupsColor = "표시되는 팝업 배너의 색상"
+L.blockDungeonPopups = "던전 팝업 배너 차단"
+L.blockDungeonPopupsDesc = "던전 입장 시 표시되는 팝업 배너에 텍스트가 매우 긴 경우가 있습니다. 이 기능을 활성화하면 BigWigs 메시지로 표시되는 대신 완전히 차단됩니다."
+L.itemLevel = "아이템 레벨: %d"
+
+L.userNotifySfx = "우두머리 기능 차단으로 비활성화된 음향 효과를 강제로 다시 활성화합니다."
+L.userNotifyMusic = "우두머리 기능 차단으로 비활성화된 배경음악를 강제로 다시 활성화합니다."
+L.userNotifyAmbience = "우두머리 기능 차단으로 비활성화된 환경 소리를 강제로 다시 활성화합니다."
+L.userNotifyErrorSpeech = "우두머리 기능 차단으로 비활성화된 오류 음성을 강제로 다시 활성화합니다."
 
 L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -204,7 +235,6 @@ L.colors = "색상"
 
 L.text = "문자"
 L.textShadow = "문자 그림자"
-L.flash = "깜빡임"
 L.normal = "일반"
 L.emphasized = "강조"
 
@@ -257,6 +287,10 @@ L.infoBox = "정보 상자"
 L.sinkDescription = "이 애드온의 출력을 BigWigs 메시지 디스플레이에 출력합니다. 이 디스플레이는 아이콘과 색상, 그리고 동시에 4개의 메시지 출력을 지원합니다. 새롭게 삽입된 메시지는 사용자에게 알리기 위해 크기가 커졌다가 다시 빠르게 줄어듭니다."
 L.emphasizedSinkDescription = "이 애드온의 출력을 BigWigs 강조 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
 L.resetMessagesDesc = "위치를 비롯한 메시지에 관련된 모든 설정을 기본값으로 초기화합니다."
+L.toggleMessagesAnchorsBtnShow_desc = "모든 이동 앵커를 표시하여 메시지를 이동할 수 있게 합니다."
+
+L.testMessagesBtn = "테스트 메시지 생성"
+L.testMessagesBtn_desc = "현재 디스플레이 설정을 테스트할 메시지를 생성합니다."
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
@@ -330,12 +364,12 @@ L.pull = "전투 예정"
 L.engageSoundTitle = "우두머리 전투가 시작될때 소리 재생"
 L.pullStartedSoundTitle = "전투 예정 타이머가 시작되었을때 소리 재생"
 L.pullFinishedSoundTitle = "전투 예정 타이머가 끝났을때 소리 재생"
-L.pullStarted = "%s 사용자 %s|1이;가; 전투 예정 타이머를 시작했습니다."
+L.pullStartedBy = "%s에 의해 풀 타이머가 시작되었습니다."
 L.pullStopped = "%s|1이;가; 전투 예정 타이머를 취소했습니다."
 L.pullStoppedCombat = "전투가 이미 시작되었기 때문에 전투 예정 타이머가 취소되었습니다."
 L.pullIn = "%d초 후 전투 시작"
-L.sendPull = "BigWigs와 DBM 사용자에게 전투 예정 타이머를 보냅니다."
-L.wrongPullFormat = "1초에서 60초 사이여야 합니다. 올바른 예제: /pull 5"
+L.sendPull = "그룹에 풀 타이머를 전송합니다."
+L.wrongPullFormat = "잘못된 풀 타이머 형식입니다. 올바른 예: /pull 5"
 L.countdownBegins = "초읽기 시작"
 L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될 지 선택하세요."
 
@@ -365,6 +399,7 @@ L.Long = "길게"
 L.Warning = "경고"
 L.onyou = "나에게 적용되는 주문, 강화 효과, 약화 효과"
 L.underyou = "내 밑의 \"바닥\"을 피해야 할 때"
+L.privateaura = "'비공개 오라'가 당신에게 있을 때"
 
 L.sound = "소리"
 
@@ -376,24 +411,20 @@ L.resetAllCustomSound = "어떤 우두머리 전투 설정에 사용자 설정�
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "전투 시작 %2$s만에 '%1$s'|1을;를; 처치했습니다."
-L.bossWipeDurationPrint = "전투 시작 %2$s만에 '%1$s'에서 전멸했습니다."
-L.newBestTime = "새로운 최고 기록!"
 L.bossStatistics = "우두머리 통계"
-L.bossStatsDescription = "우두머리를 처치하는 데 걸린 시간, 전멸 횟수, 지속된 총 전투 시간, 또는 가장 빠른 우두머리 처치와 같은 여러가지 우두머리 관련 통계 기록입니다. 이 통계들은 각 우두머리의 설정 화면에서 볼수 있지만, 기록된 통계가 없는 우두머리는 숨겨집니다."
-L.enableStats = "통계 활성화"
-L.chatMessages = "대화 메시지"
-L.printBestTimeOption = "최고 기록 알림"
-L.printDefeatOption = "처치 시간"
-L.printWipeOption = "전멸 시간"
-L.countDefeats = "처치 횟수"
-L.countWipes = "전멸 횟수"
-L.recordBestTime = "최고 기록 기억하기"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. 이 통계들은 각 우두머리의 설정 화면에서 볼수 있지만, 기록된 통계가 없는 우두머리는 숨겨집니다."
 L.createTimeBar = "'최고 기록' 바 표시"
 L.bestTimeBar = "최고 기록"
-L.printHealthOption = "우두머리 생명력"
 L.healthPrint = "생명력: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "대화 메시지"
+L.newFastestVictoryOption = "새로운 최고 승리 시간"
+L.victoryOption = "당신이 승리했습니다"
+L.defeatOption = "당신이 패배했습니다"
+L.bossHealthOption = "우두머리 생명력"
+L.bossVictoryPrint = "'%s'에게 %s 후 승리했습니다." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "'%s'에게 %s 후 패배했습니다." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "새로운 최고 승리 시간: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

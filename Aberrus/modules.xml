@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Kazzara.lua"/>
+<Script file="TheAmalgamationChamber.lua"/>
+<Script file="TheForgottenExperiments.lua"/>
+<Script file="AssaultOfTheZaqali.lua"/>
+<Script file="Rashok.lua"/>
+<Script file="Zskarn.lua"/>
+<Script file="Magmorax.lua"/>
+<Script file="EchoOfNeltharion.lua"/>
+<Script file="Sarkareth.lua"/>
+<Script file="Trash.lua"/>
+
+<Include file="Locales\locales.xml"/>
+<Include file="Options\options.xml"/>
+
+</Ui>

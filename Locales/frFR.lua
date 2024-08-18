@@ -9,21 +9,26 @@ L.altpower_desc = "Affiche la fenêtre de ressource alternative, qui montre la q
 L.infobox = "Boîte d'information"
 L.infobox_desc = "Affiche une boîte d'information concernant la rencontre."
 L.stages = "Phases"
-L.stages_desc = "Active les fonctions relatives aux différentes phases/étapes du boss telles que la proximité, les barres, etc."
+L.stages_desc = "Active les fonctions relatives aux différentes phases lors d'un combat de boss tels quel les avertissements de changement de phase, les bars de durée de phase, etc."
 L.warmup = "Préparation"
 L.warmup_desc = "Temps avant que le combat face au boss ne commence."
 L.proximity = "Affichage de proximité"
 L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
+L.adds = "Adds"
+L.adds_desc = "Active les fonctions relatives aux adds qui apparaissent durant le combat de boss."
+L.health = "Vie"
+L.health_desc = "Active les fonctions afin d'afficher diverses informations sur la vie durant le combat de boss."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans BigWigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de BigWigs et de le réinstaller complètement."
-L.testNameplate = "Cible détectée, création d'une barre d'info de test par dessus la barre d'info de la cible. |cFF33FF99Cette fonctionnalité est rarement utilisée : elle se présente habituellement sous la forme d'une seule barre, et est nécessaire pour le bon suivi des temps de recharge lors des combats face à plusieurs monstres qui utilisent le même sort.|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r: Vous utilisez la mauvaise version de BigWigs sur un serveur classique."
-L.classicWarning2 = "|cFF33FF99BigWigs|r: Veuillez installer la version classique de BigWigs."
+L.okay = "OK"
 L.officialRelease = "Vous utilisez une version FINALISÉE de BigWigs %s (%s)."
 L.alphaRelease = "Vous utilisez une version ALPHA de BigWigs %s (%s)."
 L.sourceCheckout = "Vous utilisez une version du dépôt de BigWigs %s."
+L.littlewigsOfficialRelease = "Vous utilisez une version FINALISÉE de LittleWigs (%s)."
+L.littlewigsAlphaRelease = "Vous utilisez une version ALPHA de LittleWigs (%s)."
+L.littlewigsSourceCheckout = "Vous utilisez une version du dépôt de LittleWigs."
 L.guildRelease = "Vous utilisez la version %d de BigWigs spécialement conçue pour votre guilde, basée sur la version %d de l'addon officiel."
 L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client CurseForge. Vous pouvez également le mettre à jour à partir de curseforge.com ou wowinterface.com."
 L.warnTwoReleases = "Votre BigWigs est obsolète de 2 versions ! Votre version risque de contenir des bugs, des fonctionnalités manquantes, voire même des délais totalement incorrects. Il est recommandé de faire la mise à jour."
@@ -33,19 +38,38 @@ L.warnOldBase = "Vous utilisez une version guilde de BigWigs (%d), mais votre ve
 L.tooltipHint = "|cffeda55fClic droit|r pour accéder aux options."
 L.activeBossModules = "Modules de boss actifs :"
 
-L.oldVersionsInGroup = "Certains joueurs de votre groupe ont d'anciennes versions ou n'ont pas BigWigs. Tapez /bwv pour plus de détails."
+L.oldVersionsInGroup = "Certains joueurs de votre groupe ont |cffff0000d'anciennes versions|r de BigWigs. Tapez /bwv pour plus de détails."
 L.upToDate = "À jour :"
 L.outOfDate = "Périmé :"
 L.dbmUsers = "Utilisateurs de DBM :"
 L.noBossMod = "Pas de boss mod :"
 L.offline = "Hors ligne"
 
-L.missingPlugin = "Notez que cette zone nécessite le plugin |cFF436EEE%s|r pour que les délais puissent s'afficher."
-L.missingAddOn = "L'addon |cFF436EEE%s|r est manquant !"
+L.missingAddOnPopup = "L'addon |cFF436EEE%s|r est manquant !"
+L.missingAddOnRaidWarning = "L'addon |cFF436EEE%s|r est manquant ! Aucun timers ne sera affiché dans cette zone !"
 L.disabledAddOn = "L'addon |cFF436EEE%s|r est désactivé, les délais ne seront pas affichés."
-
 L.removeAddOn = "Veuillez enlever '|cFF436EEE%s|r' étant donné qu'il a été remplacé par '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
+L.outOfDateContentPopup = "ATTENTION !\nVous avez mis à jour |cFF436EEE%s|r mais vous avez également besoin de mettre à jour l'addon principal |cFF436EEEBigWigs|r.\nIgnorer cela empêchera le fonctionnement de certaines fonctionnalités."
+L.outOfDateContentRaidWarning = "|cFF436EEE%s|r a besoin de la version %d de l'addon principal |cFF436EEEBigWigs|r afin de fonctionner correctement, mais vous êtes en version %d."
+
+L.expansionNames = {
+	"Classic", -- Classic
+	"The Burning Crusade", -- The Burning Crusade
+	"Wrath of the Lich King", -- Wrath of the Lich King
+	"Cataclysm", -- Cataclysm
+	"Mists of Pandaria", -- Mists of Pandaria
+	"Warlords of Draenor", -- Warlords of Draenor
+	"Legion", -- Legion
+	"Battle for Azeroth", -- Battle for Azeroth
+	"Shadowlands", -- Shadowlands
+	"Dragonflight", -- Dragonflight
+	"The War Within", -- The War Within
+}
+L.littleWigsExtras = {
+	["LittleWigs_Delves"] = "Gouffres",
+	["LittleWigs_CurrentSeason"] = "Saison actuelle",
+}
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attention (Algalon)"
@@ -57,31 +81,29 @@ L.spell_under_you = "BigWigs : sort en dessous de vous"
 
 -- Options.lua
 L.options = "Options"
+L.optionsKey = "ID : %s" -- The ID that messages/bars/options use
 L.raidBosses = "Boss de raid"
 L.dungeonBosses = "Boss de donjon"
 L.introduction = "Bienvenue sur BigWigs, votre compagnon des rencontres de boss. Attachez votre ceinture, gavez-vous de cacahouètes et profitez du voyage. Il ne fera pas de mal à vos enfants, mais vous aidera à préparer cette nouvelle rencontre de boss pour votre groupe de raid."
-L.toggleAnchorsBtnShow = "Afficher les ancres"
-L.toggleAnchorsBtnHide = "Cacher les ancres"
-L.toggleAnchorsBtnShow_desc = "Afficher les ancres pour permettre de déplacer les barres, les messages, etc."
-L.toggleAnchorsBtnHide_desc = "Cacher les ancres pour verrouiller les positions."
-L.testBarsBtn = "Créer une barre de test"
-L.testBarsBtn_desc = "Créée une barre pour que vous puissiez tester vos paramètres d'affichage actuels."
 L.sound = "Son"
-L.flashScreen = "Faire clignoter l'écran"
-L.flashScreenDesc = "Certaines techniques sont tellement importantes qu'elles nécessitent toute votre attention. Quand ces techniques vous affectent, BigWigs peut faire clignoter l'écran."
 L.minimapIcon = "Icône de la minicarte"
 L.minimapToggle = "Affiche ou non l'icône de la minicarte."
+L.compartmentMenu = "Aucun icône de compartiment"
+L.compartmentMenu_desc = "Désactiver cette option rendra Bigwigs visible dans le menu compartiment addon. Nous recommendons de laisser cette option activée."
 L.configure = "Configuration"
-L.test = "Test"
 L.resetPositions = "Réinitialiser les positions"
 L.colors = "Couleurs"
 L.selectEncounter = "Sélectionnez une rencontre"
+L.privateAuraSounds = "Sons privés d'aura"
+L.privateAuraSounds_desc = "Les auras privées ne peuvent être trackées normalement, mais vous pouvez enregistrer un son qui sera joué lorsque vous serez ciblé par la compétence."
 L.listAbilities = "Lister les techniques dans la discussion de groupe"
 
 L.dbmFaker = "Prétendre d'utiliser DBM"
 L.dbmFakerDesc = "Si un utilisateur de DBM effectue une vérification des versions pour voir qui utilise DBM, il vous verra sur la liste. Utile pour les guildes qui forcent l'utilisation de DBM."
 L.zoneMessages = "Afficher les messages de zone"
 L.zoneMessagesDesc = "La désactivation de ceci enlevera les messages qui s'affichent quand vous entrez dans une zone pour laquelle BigWigs a un module de délais que vous n'avez pas installé. Nous vous recommendons de laisser ceci activé, étant donné qu'il s'agit de la seule notification que vous recevrez si nous ajoutons un module que vous n'avez pas pour une nouvelle zone qui vous intéresse."
+L.englishSayMessages = "Messages dans le chat en anglais"
+L.englishSayMessagesDesc = "Tous les messages envoyés durant les combats de boss dans les discussions 'dire' et 'crier' seront toujours en anglais. Cette option peut être utile lorsque votre groupe est multilingue."
 
 L.slashDescTitle = "|cFFFED000Commandes :|r"
 L.slashDescPull = "|cFFFED000/pull :|r envoie un compte à rebours de pull à votre raid."
@@ -126,6 +148,8 @@ L.VOICE = "Voix"
 L.VOICE_desc = "Si vous avez un plugin vocal installé, cette option l'activera afin qu'il puisse jouer un fichier son qui dira cette alerte à voix haute pour vous."
 L.COUNTDOWN = "Compte à rebours"
 L.COUNTDOWN_desc = "Si activé, un compte à rebours vocal et visuel sera ajouté lors des 5 dernières secondes. Imaginez quelqu'un faisant le décompte \"5... 4... 3... 2... 1...\" en plus d'un gros chiffre au milieu de votre écran."
+L.CASTBAR_COUNTDOWN = "Compte à rebours (uniquement pour les barres d'incantation)"
+L.CASTBAR_COUNTDOWN_desc = "Si activé, un compte à rebours vocal et visuel sera ajouté lors des 5 dernières secondes de la barre d'incantation."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 L.SOUND = "Son"
@@ -136,8 +160,10 @@ L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
 L.ME_ONLY_EMPHASIZE = "Mise en évidence (sur moi)"
 L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tous les messages associés à cette technique UNIQUEMENT si vous en êtes la cible, les rendant plus grands et plus visibles."
-L.NAMEPLATEBAR = "Barres d'info"
-L.NAMEPLATEBAR_desc = "Des barres sont parfois attachées aux barres d'info des unités quand plus d'un monste incantent le même sort. Si cette capacité est accompagnée d'une barre d'info que vous voulez cacher, désactivez cette option."
+L.NAMEPLATE = "Barres de nom"
+L.NAMEPLATE_desc = "Si activé, les fonctionnalités telles que les icônes et le text relatif à cette technique spéciale s'affichera sur vos barres de noms. Cela permet de voir plus facilement quel PNJ est en train de lancer une capacité lorsqu'il y a plusieurs PNJs qui la lancent."
+L.PRIVATE = "Aura personnelle"
+L.PRIVATE_desc = "Les auras personnelles ne peuvent pas être suivies, cependant le son \"sur vous\" (Avertissement) peut être activé dans l'onglet Son."
 
 L.advanced = "Options avancées"
 L.back = "<< Retour"
@@ -147,15 +173,82 @@ L.healer = "|cFFFF0000Alertes pour soigneur uniquement.|r "
 L.tankhealer = "|cFFFF0000Alertes pour tank & soigneur uniquement.|r "
 L.dispeller = "|cFFFF0000Alertes pour dispeller uniquement.|r "
 
+-- Sharing.lua
+L.import = "Importer"
+L.import_info = "Après avoir entré une chaîne, vous pouvez sélectionner quels paramètres vous souhaitez importer.\nSi les paramètres ne sont pas disponibles dans la chaîne d'import, ils ne seront pas sélectionnables.\n\nCet import n'affectera que les paramètres généraux et non les paramètres spécifiques à chaque boss."
+L.import_info_active = "Choisissez quelles parties vous souhaitez importer, puis cliquez sur le bouton Importer."
+L.import_info_none = "|cFFFF0000La chaîne d'import est incompatible ou périmée.|r"
+L.export = "Exporter"
+L.export_info = "Sélectionnez quels paramètres vous souhaitez exporter et partager avec les autres.\n\nVous ne pouvez partager que les paramètres généraux et ces derniers n'ont aucun effet sur les paramètres spécifiques de boss."
+L.export_string = "Chaîne d'export"
+L.export_string_desc = "Copiez cette chaîne de caractères BigWigs si vous voulez partager vos paramètres."
+L.import_string = "Chaîne d'import"
+L.import_string_desc = "Collez la chaîne de caractères BigWigs que vous souhaitez importer ici."
+L.position = "Position"
+L.settings = "Paramètres"
+L.position_import_bars_desc = "Importer la position (ancres) des barres."
+L.position_import_messages_desc = "Importer la position (ancres) des messages."
+L.position_import_countdown_desc = "mporter la position (ancres) du compte à rebours."
+L.position_export_bars_desc = "Exporter la position (ancres) des barres."
+L.position_export_messages_desc = "Exporter la position (ancres) des messages."
+L.position_export_countdown_desc = "Exporter la position (ancres) du compte à rebours."
+L.settings_import_bars_desc = "Importez les paramètres généraux des barres, tels que la taille, la police, etc."
+L.settings_import_messages_desc = "Importez les paramètres généraux des messages, tels que la taille, la police, etc."
+L.settings_import_countdown_desc = "Importez les paramètres généraux du compte à rebours, tels que la voix, la taille, la police, etc."
+L.settings_export_bars_desc = "Exportez les paramètres généraux des barres, tels que la taille, la police, etc."
+L.settings_export_messages_desc = "Exportez les paramètres généraux des messages, tels que la taille, la police, etc."
+L.settings_export_countdown_desc = "Exportez les paramètres généraux du compte à rebours, tels que la voix, la taille, la police, etc."
+L.colors_import_bars_desc = "Importez la couleur des barres."
+L.colors_import_messages_desc = "Importez la couleur des messages."
+L.color_import_countdown_desc = "Importez la couleur du compte à rebours."
+L.colors_export_bars_desc = "Exportez la couleur des barres."
+L.colors_export_messages_desc = "Exportez la couleur des messages."
+L.color_export_countdown_desc = "Exportez la couleur du compte à rebours."
+L.confirm_import = "Les paramètres sélectionnés que vous êtes sur le point d'importer écraseront les paramètres du profil sélectionné actuellement :\n\n|cFF33FF99\"%s\"|r\n\nÊtes-vous sûr de vouloir continuer ?"
+L.confirm_import_addon = "L'addon |cFF436EEE\"%s\"|r souhaite importer automatiquement de nouveaux paramètres BigWigs, qui écraserons les paramètres dans votre profil actuel :\n\n|cFF33FF99\"%s\"|r\n\nÊtes-vous sûr de vouloir continuer ?"
+L.confirm_import_addon_new_profile = "L'addon |cFF436EEE\"%s\"|r souhaite créer automatiquement un nouveau profil BigWigs appelé :\n\n|cFF33FF99\"%s\"|r\n\nAccepter ce nouveau profil vous feras basculer sur ce dernier."
+L.confirm_import_addon_edit_profile = "L'addon |cFF436EEE\"%s\"|r souhaite automatiquement éditer un de vos profils BigWigs appelé :\n\n|cFF33FF99\"%s\"|r\n\n Accepter ces changements vous fera basculter sur ce dernier."
+L.no_string_available = "Aucune chaîne stockée à importer. D'abord, importez une chaîne."
+L.no_import_message = "Aucun paramètre n'a été importé."
+L.import_success = "Importé : %s" -- Imported: Bar Anchors, Message Colors
+L.imported_bar_positions = "Position de la barre"
+L.imported_bar_settings = "Paramètres de la barre"
+L.imported_bar_colors = "Couleurs de la barre"
+L.imported_message_positions = "Positions des messages"
+L.imported_message_settings = "Paramètres des messages"
+L.imported_message_colors = "Couleurs des messages"
+L.imported_countdown_position = "Position du compte à rebours"
+L.imported_countdown_settings = "Paramètres du compte à rebours"
+L.imported_countdown_color = "Couleur du compte à rebours"
+
 -- Statistics
 L.statistics = "Statistiques"
-L.lfr = "RdR"
+L.defeat = "Défaite"
+L.defeat_desc = "Le montant total de fois où vous avez été vaincu par le boss."
+L.victory = "Victoire"
+L.victory_desc = "Le montant total de fois où vous avez été victorieux face au boss."
+L.fastest = "Le plus rapide"
+L.fastest_desc = "La victoire la plus rapide, et la date à laquelle cela est arrivé (Année/Mois/Jour)"
+L.first = "Premier"
+L.first_desc = "La première fois où vous avez été victorieux contre ce boss, formaté comme ceci :\n[Nombre de défaites avant la première victoire] - [Durée du combat] - [Année/Mois/Jour de la victoire]"
+-- Difficulty levels for statistics display on bosses
+L.unknown = "Inconnu"
+L.LFR = "RdR"
 L.normal = "Normal"
 L.heroic = "Héroïque"
 L.mythic = "Mythique"
-L.wipes = "Échecs :"
-L.kills = "Victoires :"
-L.best = "Meilleur :"
+L.timewalk = "Marcheur du temps"
+L.story = "Histoire"
+L.mplus = "Mythique+ %d"
+L.SOD = "Saison de la Découverte"
+L.hardcore = "Hardcore"
+L.level1 = "Niveau 1"
+L.level2 = "Niveau 2"
+L.level3 = "Niveau 3"
+L.N10 = "10 joueurs"
+L.N25 = "25 joueurs"
+L.H10 = "Héroïque 10"
+L.H25 = "Héroïque 25"
 
 -- Non-instance specific modules
-L.dungeonAffixes = "Dungeon Affixes"
+--L.dungeonAffixes = "Dungeon Affixes"

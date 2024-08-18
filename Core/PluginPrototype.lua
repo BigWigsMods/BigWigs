@@ -5,7 +5,7 @@
 
 local plugin = {}
 local core
-local UnitName, UnitGUID, Timer = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.CTimerAfter
+
 do
 	local _, tbl =...
 	core = tbl.core
@@ -50,6 +50,7 @@ function plugin:Disable()
 end
 
 do
+	local UnitName = BigWigsLoader.UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
 	-- @bool[opt] trimServer append * instead of the server name
@@ -63,6 +64,10 @@ do
 		end
 		return name
 	end
+end
+
+do
+	local UnitGUID = BigWigsLoader.UnitGUID
 	--- Get the Globally Unique Identifier of a unit.
 	-- @string unit unit token or name
 	-- @return guid guid of the unit
@@ -120,12 +125,25 @@ do
 	end
 end
 
---- Trigger a function after a specific delay
--- @param func callback function to trigger after the delay
--- @number delay how long to wait until triggering the function
-function plugin:SimpleTimer(func, delay)
-	if delay < 0 then return end -- XXX This is a stopgap for BigWigs_StartCountdown going negative if started around 3
-	Timer(delay, func)
+do
+	local PlaySoundFile = BigWigsLoader.PlaySoundFile
+	--- Play a sound file.
+	-- @param sound Either a FileID (number), or the path to a sound file (string)
+	-- @string[opt] channel the channel the sound should play on, defaults to "Master"
+	function plugin:PlaySoundFile(sound, channel)
+		PlaySoundFile(sound, channel or "Master")
+	end
+end
+
+do
+	local Timer = BigWigsLoader.CTimerAfter
+	--- Trigger a function after a specific delay
+	-- @param func callback function to trigger after the delay
+	-- @number delay how long to wait until triggering the function
+	function plugin:SimpleTimer(func, delay)
+		if delay < 0 then return end -- XXX This is a stopgap for BigWigs_StartCountdown going negative if started around 3
+		Timer(delay, func)
+	end
 end
 
 --- Force the options panel to update.
@@ -168,7 +186,7 @@ end
 
 do
 	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
-	local pName = UnitName("player")
+	local pName = BigWigsLoader.UnitName("player")
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send
@@ -181,7 +199,11 @@ do
 				if extra then
 					msg = msg .."^".. extra
 				end
-				SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				local _, result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				if type(result) == "number" and result ~= 0 then
+					local errorMsg = format("Failed to send plugin comm %q. Error code: %d", msg, result)
+					core:Error(errorMsg)
+				end
 			end
 		end
 	end

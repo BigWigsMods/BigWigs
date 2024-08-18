@@ -6,8 +6,13 @@
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 
 <!--@non-debug@
+<Include file="Libs\LibSpecialization\LibSpecialization.xml"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Include file="Libs\LibDBIcon-1.0\lib.xml"/>
 @end-non-debug@-->
+<!--@do-not-package@-->
+<Script file="Options\Libs\AceGUIWidget-SharedDropdown.lua"/>
+<Script file="Options\Libs\LibDeflate\LibDeflate.lua"/>
+<Script file="Options\Libs\LibSerialize\LibSerialize.lua"/>
+<!--@end-do-not-package@-->
 </Ui>
-

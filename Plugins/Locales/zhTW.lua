@@ -10,10 +10,24 @@ L.positionExact = "精確位置"
 L.positionDesc = "在框中輸入座標或移動控制條把錨點定位至精確位置。"
 L.width = "寬度"
 L.height = "高度"
-L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精確的尺寸大小，可以調整這個值，或直接輸入到框中"
+L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精確的尺寸大小，可以調整這個值，或直接輸入到框中。"
 L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入精確數值，最大可以到 200。"
 L.disableDesc = "即將禁用「%s」的功能，但|cffff4411不建議|r這麼做。\n\n你確定要這麼做嗎？"
 L.transparency = "透明度"
+
+-- Anchor Points
+L.TOP = "上"
+L.RIGHT = "右"
+L.BOTTOM = "下"
+L.LEFT = "左"
+L.TOPRIGHT = "右上"
+L.TOPLEFT = "左上"
+L.BOTTOMRIGHT = "右下"
+L.BOTTOMLEFT = "左下"
+L.CENTER = "中"
+L.customAnchorPoint = "進階：自定錨點"
+L.sourcePoint = "基準錨點"  -- 中文似乎沒有point和relativePoint的正式譯名?
+L.destinationPoint = "相對錨點"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -68,6 +82,13 @@ L.bars = "計時條"
 L.style = "風格"
 L.bigWigsBarStyleName_Default = "預設"
 L.resetBarsDesc = "重設所有計時條自訂選項，包括錨點和位置。"
+L.testBarsBtn = "創建測試計時條"
+L.testBarsBtn_desc = "創建一個測試計時條以測試當前顯示設定。"
+
+L.toggleAnchorsBtnShow = "顯示移動錨點"
+L.toggleAnchorsBtnHide = "隱藏移動錨點"
+L.toggleAnchorsBtnHide_desc = "隱藏所有移動錨點，並鎖定所有元素的位置。"
+L.toggleBarsAnchorsBtnShow_desc = "顯示所有移動錨點，使你可以移動計時條。"
 
 L.nameplateBars = "名條計時條"
 L.nameplateAutoWidth = "匹配名條寬度"
@@ -75,6 +96,7 @@ L.nameplateAutoWidthDesc = "使計時條的寬度跟隨名條寬度自動調整�
 L.nameplateOffsetY = "Y 座標偏移"
 L.nameplateOffsetYDesc = "勾選向上成長時，計時條在名條上方的垂直偏移量。未勾選向上成長時，則代表計時條位於名條下方的垂直偏移量。"
 L.nameplateAlphaDesc = "調整名條計時條的透明度。"
+L.testNameplate = "檢測到目標，在目標名條上創建一個測試計時條。 |cFF33FF99這個功能相當少用，並且通常一次只會有一條；通常用於分別監視多個目標的同個技能冷卻。|r"
 
 L.clickableBars = "可點擊計時條"
 L.clickableBarsDesc = "BigWigs 計時條預設是點擊穿越的，在預設情況下，當滑鼠指針劃過計時條時可以點擊到遊戲中的物件，這樣可以選擇目標或使用 AoE 法術攻擊物體，更改鏡頭角度等等。|cffff4411如果啟用可點擊計時條，這些將不能實現。|r計時條將攔截任何滑鼠點擊並阻止相應功能。"
@@ -164,6 +186,8 @@ L.blockGuildChallenge = "封鎖公會挑戰彈出訊息"
 L.blockGuildChallengeDesc = "公會挑戰彈出訊息會顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面，使你看不見重要的提示，因此我們建議封鎖這些彈出訊息。"
 L.blockSpellErrors = "封鎖施法失敗訊息"
 L.blockSpellErrorsDesc = "如「法術還沒準備好」等顯示於畫面上方的訊息會被封鎖。"
+L.blockZoneChanges = "封鎖地區變更訊息"
+L.blockZoneChangesDesc = "封鎖畫面中間偏上的地區變更提示訊息，例如「|cFF33FF99暴風城|r」或「|cFF33FF99奧格瑪|r」。"
 L.audio = "音效"
 L.music = "音樂"
 L.ambience = "環境音效"
@@ -182,15 +206,22 @@ L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使�
 L.blockTalkingHead = "隱藏 NPC 說話時彈出的「會話頭像」"
 L.blockTalkingHeadDesc = "當 NPC 說話，|cffff4411有時候|r會在螢幕中下方彈出「會話頭像」的對話盒，內含 NPC 的頭像與台詞。\n\n你可以在特定模式的副本中將它設定為禁止顯示。\n\n|cFF33FF99請注意：|r\n 1) 此功能只會禁止框體顯示，不會禁用 NPC 語音，因此你仍然可以聽到 NPC 的對話。 \n 2) 為了安全起見，只有特定對像的會話頭像會被阻檔；任何特殊或獨特的對話（例如一次性任務）都不會被阻檔。 "
 L.blockTalkingHeadDungeons = "普通 & 英雄地城"
-L.blockTalkingHeadMythics = "傳奇 & 傳奇+地城"
+L.blockTalkingHeadMythics = "傳奇 & 傳奇鑰石地城"
 L.blockTalkingHeadRaids = "團隊副本"
 L.blockTalkingHeadTimewalking = "時光漫遊（地城 & 團隊副本）"
 L.blockTalkingHeadScenarios = "事件"
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.redirectPopups = "以 BigWigs 訊息取代地城橫幅"
+L.redirectPopupsDesc = "封鎖地城中的彈出式橫幅，改為以 BigWigs 訊息顯示其文本。彈出式橫幅是傳奇鑰石地城開始時顯示的副本訊息、或者其他副本提示例如「|cFF33FF99寶庫已解鎖|r」；它會懸浮在畫面中央數秒，遮擋你的視野，妨礙你點擊被橫幅蓋住的目標。"
+L.redirectPopupsColor = "橫幅替代訊息顏色"
+L.blockDungeonPopups = "封鎖地城橫幅"
+L.blockDungeonPopupsDesc = "有時候，進入地城彈出的橫幅會顯示很長的文本，啟用此選項可以完全隱藏橫幅，而非以 BigWigs 訊息替代。"
+L.itemLevel = "物品等級%d"
+
+L.userNotifySfx = "音效原被「首領戰訊息封鎖」功能關閉，現已強制重啟。"
+L.userNotifyMusic = "音樂原被「首領戰訊息封鎖」功能關閉，現已強制重啟。"
+L.userNotifyAmbience = "環境音效原被「首領戰訊息封鎖」功能關閉， 現已強制重啟。"
+L.userNotifyErrorSpeech = "錯誤提示語音原被「首領戰訊息封鎖」功能關閉，現已強制重啟。"
 
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -204,7 +235,6 @@ L.colors = "顏色"
 
 L.text = "文字"
 L.textShadow = "文字陰影"
-L.flash = "閃爍"
 L.normal = "普通"
 L.emphasized = "強調"
 
@@ -257,6 +287,10 @@ L.infoBox = "訊息盒"
 L.sinkDescription = "向外通過 BigWigs 插件訊息顯示。這些包含了圖示，顏色和在同一時間在螢幕上的顯示4個訊息。新的訊息將再一次快速的放大和縮小來提醒用戶。新插入的訊息將增大並立即縮小提醒用戶注意。"
 L.emphasizedSinkDescription = "以 BigWigs 強調訊息輸出此插件資訊。此訊息支持文字和顏色，同一時間只能顯示一條訊息。"
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
+L.toggleMessagesAnchorsBtnShow_desc = "顯示所有移動錨點，使你可以移動訊息的位置。"
+
+L.testMessagesBtn = "創建測試訊息"
+L.testMessagesBtn_desc = "生成一個測試用的訊息，讓你查看目前設定的訊息外觀。"
 
 L.bwEmphasized = "BigWigs 強調"
 L.messages = "訊息"
@@ -330,12 +364,12 @@ L.pull = "開怪倒數"
 L.engageSoundTitle = "首領戰開始時播放音效"
 L.pullStartedSoundTitle = "開怪倒數計時器開始時播放音效"
 L.pullFinishedSoundTitle = "開怪倒數計時器結束時播放音效"
-L.pullStarted = "%s使用者%s發起了開怪倒數計時器。"
-L.pullStopped = "%s取消了開怪計時器。"
-L.pullStoppedCombat = "開怪計時器因為你進入戰鬥而取消。"
+L.pullStartedBy = "%s發起開怪倒數。"
+L.pullStopped = "%s取消了開怪倒數。"
+L.pullStoppedCombat = "開怪倒數計時器因為你進入戰鬥而取消。"
 L.pullIn = "%d秒後開怪"
-L.sendPull = "發送一個拉怪倒數計時到BigWigs與DBM使用者."
-L.wrongPullFormat = "必須介於 1 至 60 秒之間。正確用法：/pull 5"
+L.sendPull = "向你的團隊發送開怪倒數計時器。"
+L.wrongPullFormat = "無效倒數。正確的格式範例： /pull 5"
 L.countdownBegins = "開始倒數"
 L.countdownBegins_desc = "以秒為單位，選擇在開怪計時器剩餘幾秒時開始倒數。"
 
@@ -365,6 +399,7 @@ L.Long = "長響"
 L.Warning = "警報"
 L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"
 L.underyou = "當你需要離開一個地板技能的範圍時（跑位）"
+L.privateaura = "當私有光環施放在你身上時（點名）"
 
 L.sound = "音效"
 
@@ -376,24 +411,20 @@ L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按�
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "「%s」已被擊敗，耗時 %s。"
-L.bossWipeDurationPrint = "「%s」戰鬥團滅，用時 %s。"
-L.newBestTime = "新的最快擊殺！"
 L.bossStatistics = "首領統計"
-L.bossStatsDescription = "首領戰鬥相關的統計數據，如首領被擊殺數量、團滅次數、戰鬥持續時間和最快擊殺記錄。你可以在每個首領的頁面查看統計數據，沒有首領記錄的統計數據會被隱藏。"
-L.enableStats = "啟用統計"
-L.chatMessages = "聊天訊息"
-L.printBestTimeOption = "最快擊殺提醒"
-L.printDefeatOption = "擊敗時間"
-L.printWipeOption = "團滅時間"
-L.countDefeats = "擊敗次數"
-L.countWipes = "團滅次數"
-L.recordBestTime = "記憶最快擊殺"
+L.bossStatsDescription = "記錄與首領相關的各種統計數據，例如你獲勝的次數、被擊敗的次數、首勝日期和最快紀錄。你可以在每個首領的頁面查看統計資料，沒有記錄的首領會隱藏統計資料。"
 L.createTimeBar = "顯示「最快擊敗」計時條"
 L.bestTimeBar = "最快時間"
-L.printHealthOption = "首領血量"
 L.healthPrint = "血量：%s。"
 L.healthFormat = "%s（%.1f%%）"
+L.chatMessages = "聊天訊息"
+L.newFastestVictoryOption = "新的最佳紀錄"
+L.victoryOption = "你的勝利"
+L.defeatOption = "你的戰敗"
+L.bossHealthOption = "首領血量"
+L.bossVictoryPrint = "你擊敗了「%s」，用時%s。" -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "你被「%s」擊敗，用時%s。" -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "新的最快紀錄：（-%s）" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

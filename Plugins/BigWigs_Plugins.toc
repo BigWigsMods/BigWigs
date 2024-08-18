@@ -1,4 +1,4 @@
-## Interface: 100002
+## Interface: 11502, 11503, 20504, 30403, 40400, 100207, 110000, 110002
 
 ## Title: BigWigs [|cffeda55fPlugins|r]
 ## Title-zhCN: BigWigs [|cffeda55f插件|r]
@@ -22,6 +22,7 @@
 ## Notes-ptBR: Plugins principais do BigWigs
 ## Notes-esES: Plugins del núcleo de BigWigs.
 ## Notes-esMX: Plugins del núcleo de BigWigs.
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
 ## LoadOnDemand: 1

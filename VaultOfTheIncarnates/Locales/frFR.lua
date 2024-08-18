@@ -1,11 +1,10 @@
 local L = BigWigs:NewBossLocale("Eranog", "frFR")
 if not L then return end
 if L then
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "Icône Nameplate fixée"
+	L.custom_on_nameplate_fixate_desc = "Affiche un icône sur le nameplate du Tarasèke frénétique qui vous fixe.\n\nNécessite l'utilisation des namemplates ennemi et un addon qui supporte les nameplates (KuiNameplates, Plater)."
 
 	L.molten_cleave = "Frontal"
-	L.incinerating_roar = "Hurlement"
 	L.molten_spikes = "Pointes"
 	L.collapsing_army = "Armée"
 	L.greater_flamerift = "Add Mythique"
@@ -14,12 +13,14 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "frFR")
 if L then
-	L.rock_blast = "Soak"
 	L.resonating_annihilation = "Annihilation"
 	L.awakened_earth = "Pilier"
 	L.shattering_impact = "Impact"
 	L.concussive_slam = "Ligne Tank"
 	L.infused_fallout = "Poussière"
+
+	L.custom_on_repeating_fallout = "Répéter Retombée imprégnée"
+	L.custom_on_repeating_fallout_desc = "Répéter Retombée imprégnée en message Dire avec l'icône {rt7} pour trouver un partenaire."
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "frFR")
@@ -30,32 +31,26 @@ if L then
 	L.meteor_axe = "Hache" -- Singular
 	L.meteor_axes_melee = "Hache Mêlée"
 	L.meteor_axes_ranged = "Hache Distance"
-	L.conductive_marks = "Marques" -- Conductive Marks
-	L.conductive_mark = "Marque" -- Singular
 
-	L.custom_on_stop_timers = "Toujours afficher les barres de techniques"
-	L.custom_on_stop_timers_desc = "Techniques qui seront toujours affichées : Marque conductrice"
+	L.skipped_cast = "%s ignoré (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "frFR")
 if L then
 	L.ascend = "Ascension"
 	L.ascend_desc = "Sennarth entame son ascension vers le précipe gelé."
-	-- L.chilling_blast = "Spread"
+	L.chilling_blast = "Spread"
 	L.freezing_breath = "Souffle Add"
 	L.webs = "Toiles"
 	L.web = "Toile"
 	L.gossamer_burst = "Attirer"
-	L.repelling_burst = "Repousser"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "frFR")
 if L then
-	L.conductive_marks = "Marques"
-	L.conductive_mark = "Marque"
 	L.raging_burst = "Nouvelles Tornades"
-	-- L.cyclone = "Pull In"
-	L.crosswinds = "Otrnades mobiles"
+	L.cyclone = "Attraction"
+	L.crosswinds = "Tornades mobiles"
 end
 
 L = BigWigs:NewBossLocale("Kurog Grimtotem", "frFR")
@@ -81,28 +76,23 @@ if L then
 	L.Storm = "Tempête"
 
 	-- Fire
-	L.magma_burst = "Flaques"
 	L.molten_rupture = "Vagues"
 	L.searing_carnage = "Danse"
-	-- L.raging_inferno = "Soak Pools"
+	L.raging_inferno = "Soak Flaques"
 
 	-- Frost
 	L.biting_chill = "DoT Frisson"
-	L.frigid_torrent = "Orbes"
-	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Soak Mêlée"
 	L.absolute_zero_ranged = "Soak Distance"
 
 	-- Earth
-	L.enveloping_earth = "Absorption Soins"
 	L.erupting_bedrock = "Tremblements"
 
 	-- Storm
 	L.lightning_crash = "Décharges"
-	L.thundering_strike = "Soaks"
 
 	-- General
-	-- L.primal_attunement = "Soft Enrage"
+	L.primal_attunement = "Enragé léger"
 
 	-- Stage 2
 	L.violent_upheaval = "Piliers"
@@ -113,58 +103,46 @@ if L then
 	L.eggs_remaining = "Il reste %d Œuf(s) !"
 	L.broodkeepers_bond = "Œufs restants"
 	L.greatstaff_of_the_broodkeeper = "Grand bâton"
-	L.greatstaffs_wrath = "Laser"
 	L.clutchwatchers_rage = "Fureur"
 	L.rapid_incubation = "Infusion Œufs"
-	L.icy_shroud = "Absorption Soins"
 	L.broodkeepers_fury = "Furie"
-	-- L.frozen_shroud = "Root Absorb"
-	-- L.detonating_stoneslam = "Tank Soak"
+	L.frozen_shroud = "Root Absorbant"
+	L.detonating_stoneslam = "Soak Tank"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "frFR")
 if L then
-	-- L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
+	L.lighting_devastation_trigger = "profonde inspiration" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
-	-- L.volatile_current = "Sparks"
-	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
-	-- L.lightning_strikes = "Strikes"
-	-- L.electric_scales = "Raid Damage"
-	-- L.electric_lash = "Lash"
-	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
+	L.volatile_current = "Étincelles"
+	L.thunderous_blast = "Explosion"
+	L.lightning_strikes = "Frappes"
+	L.electric_scales = "Dégats Raid"
+	L.electric_lash = "Fouet"
 	-- Stage Two: Surging Power
-	-- L.absorb_text = "%s (%.0f%%)"
-	-- L.stormsurge = "Absorb Shield"
-	-- L.stormcharged = "Positive or Negative"
-	-- L.positive = "Positive"
-	-- L.negative = "Negative"
-	-- L.focused_charge = "Damage Buff"
-	-- L.tempest_wing = "Storm Wave"
-	-- L.fulminating_charge = "Charges"
-	-- L.fulminating_charge_debuff = "Charge"
+	L.absorb_text = "%s (%.0f%%)"
+	L.stormsurge = "Bouclier Absorbant"
+	L.stormcharged = "Positif ou Négatif"
+	L.positive = "Positif"
+	L.negative = "Négatif"
+	L.focused_charge = "Amélioration de Dégats"
+	L.tempest_wing = "Vague Tempête"
+	L.fulminating_charge = "Charges"
+	L.fulminating_charge_debuff = "Charge"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
-	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
+	L.ball_lightning = "Boules"
 	-- Stage Three: Storm Incarnate
-	-- L.magnetic_charge = "Pull Charge"
+	L.magnetic_charge = "Charge attirante"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+	L.custom_on_repeating_stormcharged = "Répéter Positif ou Négatif"
+	L.custom_on_repeating_stormcharged_desc = "Répéter Positif ou Négatif en message Dire avec les icônes {rt1}, {rt3} pour trouver une correspondance et retirer le débuff."
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.skipped_cast = "%s ignoré (%d)"
 
-	-- L.skipped_cast = "Skipped %s (%d)"
-
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "Dévastation de foudre : Mode Laser"
+	L.custom_off_raidleader_devastation_desc = "Affiche une bar pour la Dévastation de foudre (Souffle) pour l'autre côté également."
+	L.breath_other = "%s [Opposé]" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "frFR")

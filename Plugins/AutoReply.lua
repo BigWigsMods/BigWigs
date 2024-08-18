@@ -21,13 +21,12 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local SendChatMessage, GetTime = BigWigsLoader.SendChatMessage, GetTime
+local Ambiguate, SendChatMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, GetTime
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
 local throttle, throttleBN, friendlies = {}, {}, {}
-local hogger = EJ_GetEncounterInfo(464)
 local healthPools, healthPoolNames = {}, {}
 local timer = nil
 
@@ -37,15 +36,17 @@ local timer = nil
 
 do
 	local disabled = function() return plugin.db.profile.disabled end
+	local bossText = BigWigsAPI:GetLocale("BigWigs: Common").boss
+	local heroicText = BigWigsAPI:GetLocale("BigWigs").heroic
 	local modeTbl = {
 		type = "select",
 		name = L.responseType,
 		order = 1,
 		values = {
 			L.autoReplyBasic,
-			L.autoReplyNormal:format(hogger),
-			L.autoReplyAdvanced:format(hogger, GetDifficultyInfo(2), 12, 20),
-			L.autoReplyExtreme:format(hogger, GetDifficultyInfo(2), 12, 20, L.healthFormat:format(hogger, 42)),
+			L.autoReplyNormal:format(bossText),
+			L.autoReplyAdvanced:format(bossText, heroicText, 12, 20),
+			L.autoReplyExtreme:format(bossText, heroicText, 12, 20, L.healthFormat:format(bossText, 42)),
 		},
 		width = "full",
 		style = "radio",
@@ -57,8 +58,8 @@ do
 		values = {
 			L.none,
 			L.autoReplyLeftCombatBasic,
-			"|cFF00FF00".. L.autoReplyLeftCombatNormalWin:format(hogger) .."|r   |cFFFF0000".. L.autoReplyLeftCombatNormalWipe:format(hogger) .. "|r",
-			"|cFF00FF00".. L.autoReplyLeftCombatAdvancedWin:format(hogger, 1, 20) .."|r   |cFFFF0000".. L.autoReplyLeftCombatAdvancedWipe:format(hogger, L.healthFormat:format(hogger, 0.1)) .."|r",
+			"|cFF00FF00".. L.autoReplyLeftCombatNormalWin:format(bossText) .."|r   |cFFFF0000".. L.autoReplyLeftCombatNormalWipe:format(bossText) .. "|r",
+			"|cFF00FF00".. L.autoReplyLeftCombatAdvancedWin:format(bossText, 1, 20) .."|r   |cFFFF0000".. L.autoReplyLeftCombatAdvancedWipe:format(bossText, L.healthFormat:format(bossText, 0.1)) .."|r",
 		},
 		width = "full",
 		style = "radio",
@@ -144,6 +145,7 @@ do
 		self:RegisterMessage("BigWigs_OnBossEngage")
 		self:RegisterMessage("BigWigs_OnBossWin", "WinOrWipe")
 		self:RegisterMessage("BigWigs_OnBossWipe", "WinOrWipe")
+		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
 	end
@@ -159,9 +161,9 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossEngage(event, module, difficulty)
-	if not self.db.profile.disabled and module and module.journalId and not module.worldBoss then
-		curDiff = difficulty
+function plugin:BigWigs_OnBossEngage(event, module)
+	if not self.db.profile.disabled and module and (module:GetJournalID() or module:GetAllowWin()) and not module.worldBoss then
+		curDiff = module:Difficulty()
 		curModule = module
 		throttle, throttleBN, friendlies = {}, {}, {}
 		self:RegisterEvent("CHAT_MSG_WHISPER")
@@ -175,7 +177,7 @@ do
 			local playersTotal, playersAlive = 0, 0
 			for unit in curModule:IterateGroup() do
 				playersTotal = playersTotal + 1
-				if not UnitIsDeadOrGhost(unit) then
+				if not curModule:UnitIsDeadOrGhost(unit) then
 					playersAlive = playersAlive + 1
 				end
 			end
@@ -252,6 +254,19 @@ do
 			curModule = nil
 		end
 	end
+
+	function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module
+		if not self.db.profile.disabled and module and module == curModule then
+			curDiff = 0
+			self:UnregisterEvent("CHAT_MSG_WHISPER")
+			self:UnregisterEvent("CHAT_MSG_BN_WHISPER")
+			if timer then
+				self:CancelTimer(timer)
+				timer = nil
+			end
+			curModule = nil
+		end
+	end
 end
 
 do
@@ -283,17 +298,17 @@ do
 			local playersTotal, playersAlive = 0, 0
 			for unit in curModule:IterateGroup() do
 				playersTotal = playersTotal + 1
-				if not UnitIsDeadOrGhost(unit) then
+				if not curModule:UnitIsDeadOrGhost(unit) then
 					playersAlive = playersAlive + 1
 				end
 			end
 			-- In combat with encounterName, difficulty, playersAlive
-			return L.autoReplyAdvanced:format(curModule.displayName, GetDifficultyInfo(curDiff), playersAlive, playersTotal)
+			return L.autoReplyAdvanced:format(curModule.displayName, GetDifficultyInfo(curDiff) or "??", playersAlive, playersTotal)
 		elseif mode == 4 then
 			local playersTotal, playersAlive = 0, 0
 			for unit in curModule:IterateGroup() do
 				playersTotal = playersTotal + 1
-				if not UnitIsDeadOrGhost(unit) then
+				if not curModule:UnitIsDeadOrGhost(unit) then
 					playersAlive = playersAlive + 1
 				end
 			end
@@ -312,7 +327,7 @@ do
 				end
 			end
 			-- In combat with encounterName, difficulty, playersAlive, bossHealth
-			return L.autoReplyExtreme:format(curModule.displayName, GetDifficultyInfo(curDiff), playersAlive, playersTotal, totalHp)
+			return L.autoReplyExtreme:format(curModule.displayName, GetDifficultyInfo(curDiff) or "??", playersAlive, playersTotal, totalHp)
 		else
 			return L.autoReplyBasic -- In combat
 		end

@@ -57,6 +57,7 @@ end
 plugin.defaultDB = {
 	disabled = false,
 	lock = false,
+	position = {"CENTER", "CENTER", -450, -40},
 	--fontName = plugin:GetDefaultFont(),
 	--fontSize = 12,
 	fontOutline = "",
@@ -67,7 +68,7 @@ plugin.defaultDB = {
 --
 
 do
-	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
+	display = CreateFrame("Frame", nil, UIParent)
 	display:SetSize(infoboxWidth, infoboxHeight)
 	display:SetFrameStrata("MEDIUM")
 	display:SetFixedFrameStrata(true)
@@ -77,13 +78,74 @@ do
 	display:EnableMouse(true)
 	display:SetMovable(true)
 	display:RegisterForDrag("LeftButton")
-	display:SetScript("OnDragStart", function(self) self:StartMoving() end)
+	display:SetScript("OnDragStart", function(self)
+		if self:IsMovable() then
+			self:StartMoving()
+		end
+	end)
 	display:SetScript("OnDragStop", function(self)
 		self:StopMovingOrSizing()
-		local s = self:GetEffectiveScale()
-		db.posx = self:GetLeft() * s
-		db.posy = self:GetTop() * s
+		local point, _, relPoint, x, y = self:GetPoint()
+		db.position = {point, relPoint, x, y}
+		--plugin:UpdateGUI() -- Update X/Y if GUI is open.
 	end)
+
+	local function dragStart()
+		if display:IsMovable() then
+			display:StartMoving()
+		end
+	end
+	local function dragStop()
+		display:StopMovingOrSizing()
+		local point, _, relPoint, x, y = display:GetPoint()
+		db.position = {point, relPoint, x, y}
+		--plugin:UpdateGUI() -- Update X/Y if GUI is open.
+	end
+	local display2 = CreateFrame("Frame", nil, display)
+	display2:Hide()
+	display2:SetSize(infoboxWidth, infoboxHeight)
+	display2:SetPoint("LEFT", display, "RIGHT")
+	display2:SetFrameStrata("MEDIUM")
+	display2:SetFixedFrameStrata(true)
+	display2:SetFrameLevel(130)
+	display2:SetFixedFrameLevel(true)
+	display2:SetClampedToScreen(true)
+	display2:EnableMouse(true)
+	display2:SetMovable(true)
+	display2:RegisterForDrag("LeftButton")
+	display2:SetScript("OnDragStart", dragStart)
+	display2:SetScript("OnDragStop", dragStop)
+	display.display2 = display2
+	local display3 = CreateFrame("Frame", nil, display)
+	display3:Hide()
+	display3:SetSize(infoboxWidth, infoboxHeight)
+	display3:SetPoint("TOP", display, "BOTTOM")
+	display3:SetFrameStrata("MEDIUM")
+	display3:SetFixedFrameStrata(true)
+	display3:SetFrameLevel(130)
+	display3:SetFixedFrameLevel(true)
+	display3:SetClampedToScreen(true)
+	display3:EnableMouse(true)
+	display3:SetMovable(true)
+	display3:RegisterForDrag("LeftButton")
+	display3:SetScript("OnDragStart", dragStart)
+	display3:SetScript("OnDragStop", dragStop)
+	display.display3 = display3
+	local display4 = CreateFrame("Frame", nil, display)
+	display4:Hide()
+	display4:SetSize(infoboxWidth, infoboxHeight)
+	display4:SetPoint("TOPLEFT", display, "BOTTOMRIGHT")
+	display4:SetFrameStrata("MEDIUM")
+	display4:SetFixedFrameStrata(true)
+	display4:SetFrameLevel(130)
+	display4:SetFixedFrameLevel(true)
+	display4:SetClampedToScreen(true)
+	display4:EnableMouse(true)
+	display4:SetMovable(true)
+	display4:RegisterForDrag("LeftButton")
+	display4:SetScript("OnDragStart", dragStart)
+	display4:SetScript("OnDragStop", dragStop)
+	display.display4 = display4
 
 	local bg = display:CreateTexture()
 	bg:SetAllPoints(display)
@@ -120,6 +182,7 @@ do
 		BigWigs:Print(L.toggleDisplayPrint)
 		plugin:Close()
 	end)
+	display.close = close
 
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFont(plugin:GetDefaultFont(12))
@@ -128,6 +191,23 @@ do
 	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 	header:SetText(L.infoBox)
 	display.title = header
+
+	local headerFrame = CreateFrame("Frame", nil, display)
+	headerFrame:Show()
+	headerFrame:SetWidth(infoboxWidth)
+	headerFrame:SetHeight(18)
+	headerFrame:SetPoint("BOTTOMLEFT", display, "TOPLEFT")
+	headerFrame:SetFrameStrata("MEDIUM")
+	headerFrame:SetFixedFrameStrata(true)
+	headerFrame:SetFrameLevel(130)
+	headerFrame:SetFixedFrameLevel(true)
+	headerFrame:SetClampedToScreen(true)
+	headerFrame:EnableMouse(true)
+	headerFrame:SetMovable(true)
+	headerFrame:RegisterForDrag("LeftButton")
+	headerFrame:SetScript("OnDragStart", dragStart)
+	headerFrame:SetScript("OnDragStop", dragStop)
+	display.headerFrame = headerFrame
 
 	display.text = {}
 	for i = 1, 20 do
@@ -192,35 +272,23 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
-	if display then
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = display:GetEffectiveScale()
-			display:ClearAllPoints()
-			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			display:ClearAllPoints()
-			display:SetPoint("CENTER", UIParent, "CENTER", -450, -40)
-		end
+	db.posx = nil
+	db.posy = nil
 
-		--plugin:RestyleWindow()
-	end
+	display:ClearAllPoints()
+	local point, relPoint = db.position[1], db.position[2]
+	local x, y = db.position[3], db.position[4]
+	display:SetPoint(point, UIParent, relPoint, x, y)
+
+	--plugin:RestyleWindow()
 end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowInfoBox")
 	self:RegisterMessage("BigWigs_HideInfoBox", "Close")
-	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
-	self:RegisterMessage("BigWigs_SetInfoBoxLine")
-	self:RegisterMessage("BigWigs_SetInfoBoxTable")
-	self:RegisterMessage("BigWigs_SetInfoBoxTableWithBars")
-	self:RegisterMessage("BigWigs_SetInfoBoxBar")
+
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
-
-	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
-	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
@@ -234,10 +302,16 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
+function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 	if opener then
 		self:Close()
 	end
+
+	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
+	self:RegisterMessage("BigWigs_SetInfoBoxLine")
+	self:RegisterMessage("BigWigs_SetInfoBoxTable")
+	self:RegisterMessage("BigWigs_SetInfoBoxTableWithBars")
+	self:RegisterMessage("BigWigs_SetInfoBoxBar")
 
 	opener = module or self
 	for unit in self:IterateGroup() do
@@ -246,14 +320,55 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 	display.title:SetText(title)
 	display:Show()
 
-	if TEMP then
-		display.xxx1:Show()
-		display.xxx2:Show()
-		display.xxx3:Show()
+	if lines then
+		if type(lines) == "number" then
+			if lines <= 5 then
+				display.xxx1:Hide()
+				display.xxx2:Hide()
+				display.xxx3:Hide()
+				display.display2:Hide()
+				display.display3:Hide()
+				display.display4:Hide()
+				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+				display.headerFrame:SetWidth(infoboxWidth)
+			elseif lines >= 11 then
+				display.xxx1:Show()
+				display.xxx2:Show()
+				display.xxx3:Show()
+				display.display2:Show()
+				display.display3:Show()
+				display.display4:Show()
+				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+				display.headerFrame:SetWidth(infoboxWidth*2)
+			else
+				display.xxx1:Hide()
+				display.xxx2:Show()
+				display.xxx3:Hide()
+				display.display2:Hide()
+				display.display3:Show()
+				display.display4:Hide()
+				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+				display.headerFrame:SetWidth(infoboxWidth)
+			end
+		else
+			display.xxx1:Show()
+			display.xxx2:Show()
+			display.xxx3:Show()
+			display.display2:Show()
+			display.display3:Show()
+			display.display4:Show()
+			display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
+			display.headerFrame:SetWidth(infoboxWidth*2)
+		end
 	else
 		display.xxx1:Hide()
 		display.xxx2:Hide()
 		display.xxx3:Hide()
+		display.display2:Hide()
+		display.display3:Hide()
+		display.display4:Hide()
+		display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+		display.headerFrame:SetWidth(infoboxWidth)
 	end
 end
 
@@ -261,8 +376,13 @@ function plugin:BigWigs_SetInfoBoxTitle(_, _, text)
 	display.title:SetText(text)
 end
 
-function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
+function plugin:BigWigs_SetInfoBoxLine(_, _, line, text, r, g, b)
 	display.text[line]:SetText(text)
+	if r then
+		display.text[line]:SetTextColor(r, g, b, 1)
+	else
+		display.text[line]:SetTextColor(1, 0.82, 0, 1)
+	end
 	local row = line
 	if line % 2 == 0 then
 		row = line-1
@@ -322,11 +442,11 @@ do
 	end
 	local tsort = table.sort
 	local colors = plugin:GetColoredNameTable()
-	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl, reverseOrder)
+	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl, tableEntries, lineStart, reverseOrder)
 		sortingTbl = tbl
 		tsort(nameList, reverseOrder and sortFuncReverse or sortFunc)
-		local line = 1
-		for i = 1, 5 do
+		local line = lineStart or 1
+		for i = 1, tableEntries or 5 do
 			local n = nameList[i]
 			local result = tbl[n]
 			if result then
@@ -434,14 +554,23 @@ do
 			display.bar[i]:Hide()
 		end
 		display.title:SetText(L.infoBox)
+		self:UnregisterMessage("BigWigs_SetInfoBoxTitle")
+		self:UnregisterMessage("BigWigs_SetInfoBoxLine")
+		self:UnregisterMessage("BigWigs_SetInfoBoxTable")
+		self:UnregisterMessage("BigWigs_SetInfoBoxTableWithBars")
+		self:UnregisterMessage("BigWigs_SetInfoBoxBar")
 	end
 end
 
 function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
 	local bar = display.bar[line]
 	percentage = min(1, percentage)
-	bar:SetColorTexture(r or 0.5, g or 0.5, b or 0.5, a or 0.5)
 	if percentage > 0 then
+		if r then
+			bar:SetColorTexture(r, g, b, a)
+		else
+			bar:SetColorTexture(0.5, 0.5, 0.5, 0.5)
+		end
 		bar:SetWidth(percentage * infoboxWidth)
 		bar:Show()
 	else
@@ -457,8 +586,15 @@ end
 
 function plugin:Test()
 	inTestMode = true
-	for i = 1, 10 do
-		display.text[i]:SetText(i)
-	end
-	display:Show()
+	self:BigWigs_ShowInfoBox(nil, self, L.infoBox, 5)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 1, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 2, 1)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 3, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 4, 2)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 5, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 6, 3)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 7, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 8, 4)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 9, L.test)
+	self:BigWigs_SetInfoBoxLine(nil, nil, 10, 5)
 end

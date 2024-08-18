@@ -9,21 +9,26 @@ L.altpower_desc = "顯示替代能量視窗，顯示團隊成員的替代能量�
 L.infobox = "訊息盒"
 L.infobox_desc = "顯示當前戰鬥相關的訊息。"
 L.stages = "階段"
-L.stages_desc = "對應首領的不同階段啟用相關功能，如玩家雷達、計時條等。"
+L.stages_desc = "啟用首領戰鬥中與階段相關的各種功能，例如階段轉換的訊息提示、階段持續時間的計時器等。"
 L.warmup = "預備"
 L.warmup_desc = "首領戰鬥之前的預備時間。"
 L.proximity = "玩家雷達"
 L.proximity_desc = "顯示玩家雷達視窗，列出距離你過近的玩家。"
+L.adds = "增援"
+L.adds_desc = "啟用與首領戰鬥中出現的增援相關的各種功能。"
+L.health = "生命值"
+L.health_desc = "顯示與首領戰鬥中相關的生命值資訊。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已經存在，但該模組仍試圖重新註冊。通常來說，這可能是由於更新失敗導致你的插件資料夾中同時存在兩份相同模組的拷貝。建議刪除所有 BigWigs 資料夾並重新安裝。"
-L.testNameplate = "檢測到目標，在目標名條上創建一個測試計時條。 |cFF33FF99這個功能相當少用，並且通常一次只會有一條；通常用於分別監視多個目標的同個技能冷卻。|r"
 
 -- Loader / Options.lua
-L.classicWarning1 = "|cFF33FF99BigWigs|r：你在經典版魔獸世界使用了正式版的 BigWigs，這是錯誤的版本。"
-L.classicWarning2 = "|cFF33FF99BigWigs|r：請安裝經典版的 BigWigs。"
+L.okay = "確定"
 L.officialRelease = "你所使用的 BigWigs %s 為官方正式版（%s）"
 L.alphaRelease = "你所使用的 BigWigs %s 為「α測試版（%s）」"
 L.sourceCheckout = "你所使用的 BigWigs（%s）是直接從原始碼倉庫下載的版本。"
+L.littlewigsOfficialRelease = "你所使用的 LittleWigs 為官方正式版（%s）"
+L.littlewigsAlphaRelease = "你所使用的 LittleWigs 為「α測試版（%s）」"
+L.littlewigsSourceCheckout = "你所使用的 LittleWigs 是直接從原始碼倉庫下載的版本。"
 L.guildRelease = "你正在使用公會製作的 BigWigs，版本 %d，其基於官方版 %d。"
 L.getNewRelease = "你的 BigWigs 已過期（/bwv）但是可以使用 CurseForge 客戶端簡單升級。另外，也可以從 curseforge.com 或 wowinterface.com 手動升級。"
 L.warnTwoReleases = "你的 BigWigs 已過期 2 個發行版！你的版本可能有錯誤，功能缺失或不正確的計時器。所以強烈建議你升級。"
@@ -33,19 +38,38 @@ L.warnOldBase = "你正在使用公會版 BigWigs（%d），但它所基於的�
 L.tooltipHint = "|cffeda55f右擊|r打開選項。"
 L.activeBossModules = "啟動首領模組："
 
-L.oldVersionsInGroup = "你隊伍中的其他成員使用了舊版本的 BigWigs 或沒有使用 BigWigs。輸入 /bwv 可以獲得詳細資訊。"
+L.oldVersionsInGroup = "你隊伍中的其他成員使用了舊版本的 BigWigs 或沒有使用 BigWigs。輸入 /bwv 可以獲得詳細資訊。" -- XXX needs updated
 L.upToDate = "已更新："
 L.outOfDate = "過期："
 L.dbmUsers = "使用 DBM："
 L.noBossMod = "沒有首領模組："
 L.offline = "離線"
 
-L.missingPlugin = "請注意這個區域需要此 |cFF436EEE%s|r 計時器掛件才能顯示。"
---L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
-L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，計時器將不被顯示。"
-
+L.missingAddOnPopup = "缺少 |cFF436EEE%s|r 模組！"
+L.missingAddOnRaidWarning = "缺少 |cFF436EEE%s|r 模組！無法為此區域提供計時條！"
+L.disabledAddOn = "模組 |cFF436EEE%s|r 已被禁用，無法顯示計時器。"
 L.removeAddOn = "請移除「|cFF436EEE%s|r」，其已被「|cFF436EEE%s|r」所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"
+L.outOfDateContentPopup = "警告！\n你更新了 |cFF436EEE%s|r，但還需要更新 |cFF436EEEBigWigs|r 主程式，\n忽略這件事可能使插件故障。"
+L.outOfDateContentRaidWarning = "需要安裝版本 %2$d 的|cFF436EEEBigWigs|r 主程式，才能使用 |cFF436EEE%1$s|r，但你目前使用的版本是 %3$d。"
+
+L.expansionNames = {
+	"艾澤拉斯", -- Classic
+	"燃燒的遠征", -- The Burning Crusade
+	"巫妖王之怒", -- Wrath of the Lich King
+	"浩劫與重生", -- Cataclysm
+	"潘達利亞之謎", -- Mists of Pandaria
+	"德拉諾之霸", -- Warlords of Draenor
+	"軍臨天下", -- Legion
+	"決戰艾澤拉斯", -- Battle for Azeroth
+	"暗影之境", -- Shadowlands
+	"巨龍崛起", -- Dragonflight
+	"地心之戰", -- The War Within
+}
+L.littleWigsExtras = {
+	["LittleWigs_Delves"] = "Delves",
+	["LittleWigs_CurrentSeason"] = "當前賽季",
+}
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "當心（艾爾加隆）"
@@ -57,31 +81,29 @@ L.spell_under_you = "BigWigs: 法術在你腳下"
 
 -- Options.lua
 L.options = "選項"
+L.optionsKey = "ID: %s" -- The ID that messages/bars/options use
 L.raidBosses = "團隊首領"
 L.dungeonBosses = "地城首領"
 L.introduction = "歡迎使用 BigWigs 戲弄各個首領。請繫好安全帶，吃吃花生並享受這次旅行。它不會吃了你的孩子，但會協助你的團隊與新的首領進行戰鬥，如同享受饕餮大餐一樣。"
-L.toggleAnchorsBtnShow = "顯示移動錨點"
-L.toggleAnchorsBtnHide = "隱藏移動錨點"
-L.toggleAnchorsBtnShow_desc = "顯示所有移動錨點，使你可以移動計時條、訊息等元素的位置。"
-L.toggleAnchorsBtnHide_desc = "隱藏所有移動錨點，並鎖定所有元素的位置。"
-L.testBarsBtn = "創建測試計時條"
-L.testBarsBtn_desc = "創建一個測試計時條以測試當前顯示設定。"
 L.sound = "音效"
-L.flashScreen = "螢幕閃爍"
-L.flashScreenDesc = "某些技能極其重要到需要充分被重視。當這些能力對你造成影響時 BigWigs 可以使螢幕閃爍。"
 L.minimapIcon = "小地圖圖示"
 L.minimapToggle = "打開或關閉小地圖圖示。"
+L.compartmentMenu = "隱藏暴雪插件收納按鈕"
+L.compartmentMenu_desc = "關閉此選項將會啟用暴雪的小地圖插件收納功能。我們推薦你啟用這個選項，隱藏暴雪插件收納按鈕。"
 L.configure = "配置"
-L.test = "測試"
 L.resetPositions = "重置位置"
 L.colors = "顏色"
 L.selectEncounter = "選擇戰鬥"
+L.privateAuraSounds = "私有光環音效"
+L.privateAuraSounds_desc = "插件無法用一般的方式追蹤私有光環，但可以指定一個音效，在你被光環鎖定時播放。"
 L.listAbilities = "將技能列表發送到團隊聊天頻道"
 
 L.dbmFaker = "假裝我是 DBM 用戶"
 L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。當你的公會強制要求使用DBM，這是很有用的。"
 L.zoneMessages = "顯示區域訊息"
 L.zoneMessagesDesc = "此選項於進入區域時提示可安裝的 BigWigs 模組。建議啟用此選項，因為當我們為一個新區域建立 BigWigs 模組，這將會是唯一的提示安裝訊息。"
+L.englishSayMessages = "英文喊話"
+L.englishSayMessagesDesc = "首領戰中所有以「說」與「大喊」發送的提示訊息都會以英文發送。這對多語言團隊非常有用。"
 
 L.slashDescTitle = "|cFFFED000指令：|r"
 L.slashDescPull = "|cFFFED000/pull:|r 發送拉怪倒數提示到團隊。"
@@ -126,6 +148,8 @@ L.VOICE = "語音"
 L.VOICE_desc = "如果安裝了語音插件，此選項可以開啟並播放警報音效文件。"
 L.COUNTDOWN = "倒數"
 L.COUNTDOWN_desc = "啟用後，倒數最後五秒會顯示聲音及文字。想像有人在你的畫面中央以巨大的數字倒數「5... 4... 3... 2... 1...」。"
+L.CASTBAR_COUNTDOWN = "施法倒數計時"
+L.CASTBAR_COUNTDOWN_desc = "啟用後，為施法條的最後五秒顯示巨大的文字與語音倒數。"
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 L.SOUND = "音效"
@@ -136,8 +160,10 @@ L.SAY_COUNTDOWN = "倒數報數"
 L.SAY_COUNTDOWN_desc = "聊天泡泡十分醒目，利用此特性，BigWigs 以倒數計時的說話訊息來提醒附近的人技能即將到期。"
 L.ME_ONLY_EMPHASIZE = "強調（只有我）"
 L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相關的訊息，使它們更大和更容易看到。"
-L.NAMEPLATEBAR = "名條計時條"
-L.NAMEPLATEBAR_desc = "當多個敵方單位施放相同的法術時，在名條上方顯示各自的計時條。如果不想要名條上依附的計時條，請停用此項。"
+L.NAMEPLATE = "名條"
+L.NAMEPLATE_desc = "啟用後，會在名條上顯示特定技能的圖示和文字。當場上存在多個目標時，這個功能可以使你更快地辨識出是哪個 NPC 在施放技能。"
+L.PRIVATE = "私有光環"
+L.PRIVATE_desc = "私有光環無法用一般方式追蹤，但可以在音效分頁指定「只對自身」的音效。"
 
 L.advanced = "進階選項"
 L.back = "<< 返回"
@@ -147,15 +173,82 @@ L.healer = "|cFFFF0000只警報治療。|r"
 L.tankhealer = "|cFFFF0000只警報坦克和治療。|r"
 L.dispeller = "|cFFFF0000只警報驅散和打斷。|r"
 
+-- Sharing.lua
+L.import = "匯入"
+L.import_info = "輸入字串後，可以勾選要分別匯入哪些設定。\n如果字串中不包含某些設定，該選項將無法勾選。\n\n導入的字串只會更改一般設定，不會更改針對特定首領技能調整的單獨設定。"
+L.import_info_active = "勾選要匯入的部份，再點擊匯入按鈕。"
+L.import_info_none = "|cFFFF0000匯入的字串格式不符，或者版本過舊已失效。|r"
+L.export = "匯出"
+L.export_info = "選擇你要匯出分享的設定。\n\n你只能分享一般設定，不能分享針對特定首領技能調整的單獨設定。"
+L.export_string = "匯出字串"
+L.export_string_desc = "如果要分享你的 BigWigs 設定，請複製這段字串。"
+L.import_string = "匯入字串"
+L.import_string_desc = "在這裡貼上你要匯入的 BigWigs 字串。"
+L.position = "位置"
+L.settings = "選項設定"
+L.position_import_bars_desc = "匯入計時條的錨點與位置。"
+L.position_import_messages_desc = "匯入訊息的錨點與位置。"
+L.position_import_countdown_desc = "匯入倒數的錨點與位置。"
+L.position_export_bars_desc = "匯出計時條的錨點與位置。"
+L.position_export_messages_desc = "匯出訊息的錨點與位置。"
+L.position_export_countdown_desc = "匯出倒數的錨點與位置。"
+L.settings_import_bars_desc = "匯入計時條的選項設定，例如字型和大小等等。"
+L.settings_import_messages_desc = "匯入訊息的選項設定，例如字型和大小等等。"
+L.settings_import_countdown_desc = "匯入倒數的選項設定，例如字型和大小等等。"
+L.settings_export_bars_desc = "匯出計時條的選項設定，例如文字和大小等等。"
+L.settings_export_messages_desc = "匯出訊息的選項設定，例如字型和大小等等。"
+L.settings_export_countdown_desc = "匯出倒數的選項設定，例如字型和大小等等。"
+L.colors_import_bars_desc = "匯入計時條的顏色設定。"
+L.colors_import_messages_desc = "匯入訊息的顏色設定。"
+L.color_import_countdown_desc = "匯入倒數文字的顏色設定。"
+L.colors_export_bars_desc = "匯出計時條的顏色設定。"
+L.colors_export_messages_desc = "匯出訊息的顏色設定。"
+L.color_export_countdown_desc = "匯出倒數文字的顏色設定。"
+L.confirm_import = "即將把你勾選的設定匯入設定檔：\n\n|cFF33FF99\"%s\"|r\n\n匯入後，會取代設定檔中原本的設定。確定要匯入嗎？"
+L.confirm_import_addon = "插件|cFF436EEE\"%s\"|r想要自動匯入新的 BigWigs 設定檔，取代你目前使用的設定檔：\n\n|cFF33FF99\"%s\"|r\n\n確定要匯入嗎？"
+L.confirm_import_addon_new_profile = "插件|cFF436EEE\"%s\"|r想要自動建立一個新的 BigWigs 設定檔：\n\n|cFF33FF99\"%s\"|r\n\n確定要建立嗎？建立新的設定檔後，會自動切換到該設定檔。"
+L.confirm_import_addon_edit_profile = "插件|cFF436EEE\"%s\"|r想要自動修改你的 BigWigs 設定檔：\n\n|cFF33FF99\"%s\"|r\n\n確定要修改嗎？修改設定檔後，會自動切換到該設定檔。"
+L.no_string_available = "沒有字串可以匯入。請先匯入一個字串。"
+L.no_import_message = "未導入任何設定。"
+L.import_success = "匯入：%s" -- Imported: Bar Anchors, Message Colors
+L.imported_bar_positions = "計時條位置"
+L.imported_bar_settings = "計時條選項設定"
+L.imported_bar_colors = "計時條顏色"
+L.imported_message_positions = "訊息位置"
+L.imported_message_settings = "訊息選項設定"
+L.imported_message_colors = "訊息顏色"
+L.imported_countdown_position = "倒數位置"
+L.imported_countdown_settings = "倒數選項設定"
+L.imported_countdown_color = "倒數文字顏色"
+
 -- Statistics
 L.statistics = "統計"
-L.lfr = "隨機團隊"
+L.defeat = "戰敗"
+L.defeat_desc = "你被該首領擊敗的總次數。"
+L.victory = "獲勝"
+L.victory_desc = "你戰勝該首領的總次數。"
+L.fastest = "最佳"
+L.fastest_desc = "你與該首領的最快獲勝紀錄，和創下紀錄的日期 (年/月/日)"
+L.first = "首勝"
+L.first_desc = "你與該首領的首次獲勝紀錄，格式是：:\n[首勝前的戰敗次數] - [戰鬥時長] - [獲勝的年/月/日]"
+-- Difficulty levels for statistics display on bosses
+L.unknown = "未知"
+L.LFR = "隨機團隊"
 L.normal = "普通模式"
 L.heroic = "英雄模式"
-L.mythic = "傳奇"
-L.wipes = "團滅："
-L.kills = "擊殺："
-L.best = "最快："
+L.mythic = "傳奇模式"
+L.timewalk = "時光漫遊"
+--L.story = "Story"	-- 劇情?
+L.mplus = "傳奇難度+ %d"
+L.SOD = "探索賽季"
+L.hardcore = "專家模式"
+--L.level1 = "Level 1"
+--L.level2 = "Level 2"
+--L.level3 = "Level 3"
+L.N10 = "10人普通"
+L.N25 = "25人普通"
+L.H10 = "10人英雄"
+L.H25 = "25人英雄"
 
 -- Non-instance specific modules
-L.dungeonAffixes = "Dungeon Affixes"
+--L.dungeonAffixes = "Dungeon Affixes"

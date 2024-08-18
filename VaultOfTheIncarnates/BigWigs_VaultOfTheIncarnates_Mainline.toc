@@ -1,4 +1,4 @@
-## Interface: 100002
+## Interface: 100207, 110000, 110002
 
 ## Title: BigWigs [|cffeda55fVault of the Incarnates|r]
 ## Title-deDE: BigWigs [|cffeda55fGewölbe der Inkarnationen|r]
@@ -12,16 +12,17 @@
 ## Title-zhCN: BigWigs [|cffeda55f化身巨龙牢窟|r]
 ## Title-zhTW: BigWigs [|cffeda55f洪荒化身牢獄|r]
 ## Notes: BigWigs Vault of the Incarnates Modules
-## Notes-deDE: BigWigs Vault of the Incarnates Modules
+## Notes-deDE: BigWigs Gewölbe der Inkarnationen Module
 ## Notes-esES: BigWigs Vault of the Incarnates Modules
 ## Notes-esMX: BigWigs Vault of the Incarnates Modules
 ## Notes-frFR: Modules BigWigs du Caveau des Incarnations
-## Notes-itIT: BigWigs Vault of the Incarnates Modules
+## Notes-itIT: Moduli BigWigs per le Segrete delle Incarnazioni
 ## Notes-koKR: BigWigs Vault of the Incarnates Modules
 ## Notes-ptBR: BigWigs Vault of the Incarnates Modules
 ## Notes-ruRU: BigWigs Vault of the Incarnates Modules
 ## Notes-zhCN: BigWigs 化身巨龙牢窟模块
 ## Notes-zhTW: BigWigs 洪荒化身牢獄模組
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
 ## LoadOnDemand: 1

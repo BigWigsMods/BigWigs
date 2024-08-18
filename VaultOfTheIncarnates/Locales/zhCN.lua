@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "杀戮指令标记你时在姓名板显示一个图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
 	L.molten_cleave = "正面顺劈"
-	L.incinerating_roar = "咆哮"
 	L.molten_spikes = "尖刺"
 	L.collapsing_army = "烈焰军团"
 	L.greater_flamerift = "大型增援"
@@ -14,12 +13,14 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "zhCN")
 if L then
-	L.rock_blast = "漩涡分摊"
 	L.resonating_annihilation = "湮灭"
 	L.awakened_earth = "石柱"
 	L.shattering_impact = "猛击"
 	L.concussive_slam = "坦克直线"
 	L.infused_fallout = "爆尘"
+
+	L.custom_on_repeating_fallout = "重复爆尘喊话"
+	L.custom_on_repeating_fallout_desc = "以 {rt7} 持续喊话，方便你找人消除爆尘"
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "zhCN")
@@ -30,11 +31,8 @@ if L then
 	L.meteor_axe = "团队分摊" -- Singular
 	L.meteor_axes_melee = "近战分摊"
 	L.meteor_axes_ranged = "远程分摊"
-	L.conductive_marks = "传导印记" -- Conductive Marks
-	L.conductive_mark = "传导印记" -- Singular
 
-	L.custom_on_stop_timers = "总是显示计时条"
-	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhCN")
@@ -45,16 +43,13 @@ if L then
 	L.freezing_breath = "大怪吐息"
 	L.webs = "蛛网"
 	L.web = "蛛网"
-	L.gossamer_burst = "拉近"
-	L.repelling_burst = "推离"
+	L.gossamer_burst = "拉人"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhCN")
 if L then
-	L.conductive_marks = "传导印记"
-	L.conductive_mark = "传导印记"
 	L.raging_burst = "狂怒风暴"
-	L.cyclone = "拉进"
+	L.cyclone = "拉近"
 	L.crosswinds = "纷乱之风"
 end
 
@@ -81,31 +76,26 @@ if L then
 	L.Storm = "风暴"
 
 	-- Fire
-	L.magma_burst = "岩浆池"
 	L.molten_rupture = "熔岩"
 	L.searing_carnage = "火焰跳舞"
 	L.raging_inferno = "吸收岩浆池"
 
 	-- Frost
 	L.biting_chill = "刺骨寒意"
-	L.frigid_torrent = "冰球跳舞"
-	L.absolute_zero = "团队分摊"
 	L.absolute_zero_melee = "近战分摊"
 	L.absolute_zero_ranged = "远程分摊"
 
 	-- Earth
-	L.enveloping_earth = "治疗吸收盾"
 	L.erupting_bedrock = "地震跳舞"
 
 	-- Storm
 	L.lightning_crash = "闪电崩裂"
-	L.thundering_strike = "接圈"
 
 	-- General
 	L.primal_attunement = "软狂暴"
 
 	-- Stage 2
-	L.violent_upheaval = "小怪"
+	L.violent_upheaval = "石柱"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhCN")
@@ -113,10 +103,8 @@ if L then
 	L.eggs_remaining = "剩余 %d 个龙蛋!"
 	L.broodkeepers_bond = "剩余龙蛋"
 	L.greatstaff_of_the_broodkeeper = "巨杖"
-	L.greatstaffs_wrath = "激光"
 	L.clutchwatchers_rage = "狂怒"
 	L.rapid_incubation = "灌注龙蛋"
-	L.icy_shroud = "治疗吸收盾"
 	L.broodkeepers_fury = "愤怒"
 	L.frozen_shroud = "定身吸收盾"
 	L.detonating_stoneslam = "坦克分摊"
@@ -127,17 +115,13 @@ if L then
 	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	L.hurricane_wing = "推开"
 	L.volatile_current = "火花"
 	L.thunderous_blast = "冲击"
-	L.lightning_breath = "吐息"
 	L.lightning_strikes = "打击"
 	L.electric_scales = "团队伤害"
 	L.electric_lash = "鞭笞"
-	-- Intermission: The Primalist Strike
-	L.lightning_devastation = "吐息"
-	L.shattering_shroud = "治疗吸收盾"
 	-- Stage Two: Surging Power
+	-- L.absorb_text = "%s (%.0f%%)"
 	L.stormsurge = "吸收护盾"
 	L.stormcharged = "正或负电荷"
 	L.positive = "正"
@@ -147,23 +131,18 @@ if L then
 	L.fulminating_charge = "积雷"
 	L.fulminating_charge_debuff = "积雷"
 	-- Intermission: The Vault Falters
-	L.storm_break = "传送"
 	L.ball_lightning = "闪电球"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "积雷倒数"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+	L.custom_on_repeating_stormcharged = "重复正和负"
+	L.custom_on_repeating_stormcharged_desc = "使用图标{rt1}, {rt3} 重复显示正和负的信息，来帮助你找到正确的位置。"
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.skipped_cast = "闪电吐息 %s (%d)"
 
-	-- L.skipped_cast = "Skipped %s (%d)"
-
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "闪电毁灭: 全局模式"
+	L.custom_off_raidleader_devastation_desc = "在另一个台子上也显示闪电毁灭（吐息）"
+	L.breath_other = "[对面] %s" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhCN")

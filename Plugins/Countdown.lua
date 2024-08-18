@@ -48,12 +48,16 @@ local FONT = media.MediaType and media.MediaType.FONT or "font"
 local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.countdown
-local PlaySoundFile = PlaySoundFile
 
 local countdownAnchor = nil
 local countdownFrame = nil
 local countdownText = nil
 local inConfigMode = false
+
+local validFramePoints = {
+	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
+	["TOP"] = L.TOP, ["BOTTOM"] = L.BOTTOM, ["LEFT"] = L.LEFT, ["RIGHT"] = L.RIGHT, ["CENTER"] = L.CENTER,
+}
 
 -------------------------------------------------------------------------------
 -- Countdown Registration
@@ -126,17 +130,21 @@ end
 -- Anchors & Frames
 --
 
-local function showAnchors()
-	inConfigMode = true
-	countdownAnchor:Show()
-	countdownFrame:Show()
-	countdownText:SetText("5")
+local function showAnchors(_, mode)
+	if not mode or mode == "Messages" then
+		inConfigMode = true
+		countdownAnchor:Show()
+		countdownFrame:Show()
+		countdownText:SetText("5")
+	end
 end
 
-local function hideAnchors()
-	inConfigMode = false
-	countdownAnchor:Hide()
-	countdownFrame:Hide()
+local function hideAnchors(_, mode)
+	if not mode or mode == "Messages" then
+		inConfigMode = false
+		countdownAnchor:Hide()
+		countdownFrame:Hide()
+	end
 end
 
 do
@@ -146,8 +154,13 @@ do
 	local function OnDragStop(self)
 		self:StopMovingOrSizing()
 		local point, _, relPoint, x, y = self:GetPoint()
+		x = math.floor(x+0.5)
+		y = math.floor(y+0.5)
 		plugin.db.profile.position = {point, relPoint, x, y}
-		plugin:UpdateGUI() -- Update X/Y if GUI is open.
+		self:RefixPosition()
+		if BigWigsOptions and BigWigsOptions:IsOpen() then
+			plugin:UpdateGUI() -- Update X/Y if GUI is open
+		end
 	end
 	local function RefixPosition(self)
 		self:ClearAllPoints()
@@ -255,6 +268,7 @@ do
 						handler = plugin,
 						func = "TestCountdown",
 						order = 3,
+						width = 1.2,
 					},
 					audioSpacer = {
 						type = "description",
@@ -467,55 +481,6 @@ end
 --
 
 do
-	local LOCALE = GetLocale()
-	local KEY = "%s: Default (Female)"
-	local function check(voice)
-		local lang = voice and voice:match("^(.+): Heroes of the Storm$")
-		if not lang then return end
-
-		if lang == "Español" then
-			-- Try to pick the correct Spanish locale
-			if LOCALE == "esMX" or LOCALE == "esES" then
-				return KEY:format(LOCALE)
-			end
-			return KEY:format(GetCurrentRegion() == 1 and "esMX" or "esES") -- NA or EU
-		end
-
-		for locale, info in next, voiceMap do
-			if info[1]:sub(1, #lang) == lang then
-				return KEY:format(locale)
-			end
-		end
-	end
-
-	local function upgradeDB(sv)
-		if not sv or not sv.profiles then return end
-		for profile, db in next, sv.profiles do
-			local voice = check(db.voice)
-			if voice then
-				db.voice = voice
-			end
-			if db.bossCountdowns then
-				for moduleName, abilities in next, db.bossCountdowns do
-					for k, v in next, abilities do
-						local voice = check(v)
-						if voice then
-							abilities[k] = voice
-						end
-					end
-				end
-			end
-		end
-	end
-
-	function plugin:OnRegister()
-		-- XXX temp 9.0.5
-		upgradeDB(self.db)
-		upgradeDB(BigWigs3DB.namespaces["BigWigs_Plugins_Pull"])
-	end
-end
-
-do
 	local function updateProfile()
 		local db = plugin.db.profile
 
@@ -528,6 +493,9 @@ do
 			end
 		end
 
+		if not media:IsValid(FONT, db.fontName) then
+			db.fontName = plugin:GetDefaultFont()
+		end
 		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 			db.outline = plugin.defaultDB.outline
 		end
@@ -541,6 +509,20 @@ do
 		end
 		if db.countdownTime < 3 or db.countdownTime > 10 then
 			db.countdownTime = plugin.defaultDB.countdownTime
+		end
+		if type(db.position[1]) ~= "string" or type(db.position[2]) ~= "string"
+		or type(db.position[3]) ~= "number" or type(db.position[4]) ~= "number"
+		or not validFramePoints[db.position[1]] or not validFramePoints[db.position[2]] then
+			db.position = plugin.defaultDB.position
+		else
+			local x = math.floor(db.position[3]+0.5)
+			if x ~= db.position[3] then
+				db.position[3] = x
+			end
+			local y = math.floor(db.position[4]+0.5)
+			if y ~= db.position[4] then
+				db.position[4] = y
+			end
 		end
 
 		UpdateFont()
@@ -637,7 +619,7 @@ do
 					end
 					local sound = BigWigsAPI:GetCountdownSound(voice, count)
 					if sound then
-						PlaySoundFile(sound, "Master")
+						self:PlaySoundFile(sound)
 					end
 					count = count - 1
 				end

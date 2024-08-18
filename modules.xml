@@ -4,8 +4,5 @@
 <Include file="Core\modules.xml"/>
 <Include file="Plugins\modules.xml"/>
 <Include file="Options\modules.xml"/>
-
-<Include file="DragonIsles\modules.xml"/>
-<Include file="VaultOfTheIncarnates\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

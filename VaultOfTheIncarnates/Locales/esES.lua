@@ -5,7 +5,6 @@ if L then
 	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 
 	-- L.molten_cleave = "Frontal"
-	-- L.incinerating_roar = "Roar"
 	-- L.molten_spikes = "Spikes"
 	-- L.collapsing_army = "Army"
 	-- L.greater_flamerift = "Mythic Add"
@@ -14,12 +13,14 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "esES")
 if L then
-	-- L.rock_blast = "Soak"
 	-- L.resonating_annihilation = "Annihilation"
 	-- L.awakened_earth = "Pillar"
 	-- L.shattering_impact = "Slam"
 	-- L.concussive_slam = "Tank Line"
 	-- L.infused_fallout = "Dust"
+
+	--L.custom_on_repeating_fallout = "Repeating Infused Fallout"
+	--L.custom_on_repeating_fallout_desc = "Repeating Infused Fallout say messages with icon {rt7} to find a partner."
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "esES")
@@ -30,11 +31,8 @@ if L then
 	-- L.meteor_axe = "Axe" -- Singular
 	-- L.meteor_axes_melee = "Melee Axe"
 	-- L.meteor_axes_ranged = "Ranged Axe"
-	-- L.conductive_marks = "Marks" -- Conductive Marks
-	-- L.conductive_mark = "Mark" -- Singular
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "esES")
@@ -46,13 +44,10 @@ if L then
 	-- L.webs = "Webs"
 	-- L.web = "Web"
 	-- L.gossamer_burst = "Grip"
-	-- L.repelling_burst = "Pushback"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "esES")
 if L then
-	-- L.conductive_marks = "Marks"
-	-- L.conductive_mark = "Mark"
 	-- L.raging_burst = "New Tornadoes"
 	-- L.cyclone = "Pull In"
 	-- L.crosswinds = "Moving Tornadoes"
@@ -81,25 +76,20 @@ if L then
 	L.Storm = "Tormenta"
 
 	-- Fire
-	-- L.magma_burst = "Pools"
 	-- L.molten_rupture = "Waves"
 	-- L.searing_carnage = "Dance"
 	-- L.raging_inferno = "Soak Pools"
 
 	-- Frost
 	-- L.biting_chill = "Chill DoT"
-	-- L.frigid_torrent = "Orbs"
-	-- L.absolute_zero = "Soaks"
 	-- L.absolute_zero_melee = "Melee Soak"
 	-- L.absolute_zero_ranged = "Ranged Soak"
 
 	-- Earth
-	-- L.enveloping_earth = "Heal Absorb"
 	-- L.erupting_bedrock = "Quakes"
 
 	-- Storm
 	-- L.lightning_crash = "Zaps"
-	-- L.thundering_strike = "Soaks"
 
 	-- General
 	-- L.primal_attunement = "Soft Enrage"
@@ -113,10 +103,8 @@ if L then
 	-- L.eggs_remaining = "%d Eggs Remaining!"
 	-- L.broodkeepers_bond = "Eggs Remaining"
 	-- L.greatstaff_of_the_broodkeeper = "Greatstaff"
-	-- L.greatstaffs_wrath = "Laser"
 	-- L.clutchwatchers_rage = "Rage"
 	-- L.rapid_incubation = "Infuse Eggs"
-	-- L.icy_shroud = "Heal Absorb"
 	-- L.broodkeepers_fury = "Fury"
 	-- L.frozen_shroud = "Root Absorb"
 	-- L.detonating_stoneslam = "Tank Soak"
@@ -127,16 +115,11 @@ if L then
 	-- L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
 	-- L.volatile_current = "Sparks"
 	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
 	-- L.lightning_strikes = "Strikes"
 	-- L.electric_scales = "Raid Damage"
 	-- L.electric_lash = "Lash"
-	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
 	-- Stage Two: Surging Power
 	-- L.absorb_text = "%s (%.0f%%)"
 	-- L.stormsurge = "Absorb Shield"
@@ -148,14 +131,9 @@ if L then
 	-- L.fulminating_charge = "Charges"
 	-- L.fulminating_charge_debuff = "Charge"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
 	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	-- L.magnetic_charge = "Pull Charge"
-
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
 
 	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
 	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."

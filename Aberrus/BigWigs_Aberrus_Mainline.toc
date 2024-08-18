@@ -1,0 +1,34 @@
+## Interface: 100207, 110000, 110002
+
+## Title: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-deDE: BigWigs [|cffeda55fAberrus, Schmelztiegel der Schatten|r]
+## Title-esES: BigWigs [|cffeda55fAberrus, el Crisol Ensombrecido|r]
+## Title-esMX: BigWigs [|cffeda55fAberrus, el Crisol Penumbroso|r]
+## Title-frFR: BigWigs [|cffeda55fAberrus, le creuset de l’Ombre|r]
+## Title-itIT: BigWigs [|cffeda55fAberrus, il Crogiolo d'Ombra|r]
+## Title-koKR: BigWigs [|cffeda55f어둠의 도가니 에베루스|r]
+## Title-ptBR: BigWigs [|cffeda55fAberrus, o Crisol Sombrio|r]
+## Title-ruRU: BigWigs [|cffeda55fАберрий, Затененное Горнило|r]
+## Title-zhCN: BigWigs [|cffeda55f亚贝鲁斯，焰影熔炉|r]
+## Title-zhTW: BigWigs [|cffeda55f『朧影實驗場』亞貝魯斯|r]
+## Notes: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-deDE: BigWigs Aberrus, Schmelztiegel der Schatten Module
+## Notes-esES: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-esMX: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-frFR: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-itIT: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-koKR: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-ptBR: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-ruRU: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-zhCN: BigWigs 亚贝鲁斯，焰影熔炉模块
+## Notes-zhTW: BigWigs 『朧影實驗場』亞貝魯斯模組
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2569
+
+modules.xml

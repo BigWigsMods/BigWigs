@@ -5,7 +5,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação do Tarasek Flamescama que está fixado em você.\n\nRequer o uso de placas de identificação inimigas e um addon de placas de identificação suportado (KuiNameplates, Plater)."
 
 	L.molten_cleave = "Frontal"
-	L.incinerating_roar = "Rugido"
 	L.molten_spikes = "Espetos"
 	L.collapsing_army = "Exército"
 	L.greater_flamerift = "Add Mítico"
@@ -14,12 +13,14 @@ end
 
 L = BigWigs:NewBossLocale("Terros", "ptBR")
 if L then
-	L.rock_blast = "Soak"
 	L.resonating_annihilation = "Aniquilação"
 	L.awakened_earth = "Pilar"
 	L.shattering_impact = "Batida"
 	L.concussive_slam = "Linha de Tanque"
 	L.infused_fallout = "Poeira"
+
+	--L.custom_on_repeating_fallout = "Repeating Infused Fallout"
+	--L.custom_on_repeating_fallout_desc = "Repeating Infused Fallout say messages with icon {rt7} to find a partner."
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "ptBR")
@@ -30,11 +31,8 @@ if L then
 	L.meteor_axe = "Machado" -- Singular
 	L.meteor_axes_melee = "Machado Melee"
 	L.meteor_axes_ranged = "Machado Ranged"
-	L.conductive_marks = "Marcas" -- Marcas Condutoras
-	L.conductive_mark = "Marca" -- Singular
 
-	L.custom_on_stop_timers = "Sempre mostrar as barras de habilidade"
-	L.custom_on_stop_timers_desc = "Habilidades que sempre serão mostradas: Marca Condutora"
+	L.skipped_cast = "Ignorado %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "ptBR")
@@ -46,13 +44,10 @@ if L then
 	L.webs = "Teias"
 	L.web = "Teia"
 	L.gossamer_burst = "Puxão"
-	L.repelling_burst = "Repulsão"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "ptBR")
 if L then
-	L.conductive_marks = "Marcas"
-	L.conductive_mark = "Marca"
 	L.raging_burst = "Novos Tornados"
 	L.cyclone = "Atração"
 	L.crosswinds = "Tornados em movimento"
@@ -73,7 +68,7 @@ if L then
 	L.ultimate_desc = "Mostra temporizadores para habilidades finais (Chacina Calcinante, Zero Absoluto, Ruptura Sísmica, Raio e Trovão) quando não sabemos em que altar o chefe está."
 	L.ultimate_bartext = "%s [Final]" -- {Spell} [Ult]
 
-	-- L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
+	L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
 
 	L.Fire = "Fogo"
 	L.Frost = "Gelo"
@@ -81,25 +76,20 @@ if L then
 	L.Storm = "Tempestade"
 
 	-- Fire
-	L.magma_burst = "Poças"
 	L.molten_rupture = "Ondas"
 	L.searing_carnage = "Dança"
-	-- L.raging_inferno = "Soak Pools"
+	L.raging_inferno = "Poças de Soak"
 
 	-- Frost
 	L.biting_chill = "DoT Congelante"
-	L.frigid_torrent = "Orbes"
-	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Soak Melee"
 	L.absolute_zero_ranged = "Soak Ranged"
 
 	-- Earth
-	L.enveloping_earth = "Cura Absorvida"
 	L.erupting_bedrock = "Terremotos"
 
 	-- Storm
 	L.lightning_crash = "Relâmpago"
-	L.thundering_strike = "Soaks"
 
 	-- General
 	L.primal_attunement = "Enfurecimento Suave"
@@ -113,58 +103,46 @@ if L then
 	L.eggs_remaining = "%d Ovos Restantes!"
 	L.broodkeepers_bond = "Ovos Restantes"
 	L.greatstaff_of_the_broodkeeper = "Grande Cajado"
-	L.greatstaffs_wrath = "Laser"
 	L.clutchwatchers_rage = "Raiva"
 	L.rapid_incubation = "Ovos Imbuídos"
-	L.icy_shroud = "Cura Absorvida"
 	L.broodkeepers_fury = "Fúria"
 	L.frozen_shroud = "Enraizamento e Cura Absorvida" -- XXX these should be short
-	-- L.detonating_stoneslam = "Tank Soak"
+	L.detonating_stoneslam = "Soak do Tank"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "ptBR")
 if L then
-	-- L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
+	L.lighting_devastation_trigger = "Respiração Profunda" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
-	-- L.volatile_current = "Sparks"
-	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
-	-- L.lightning_strikes = "Strikes"
-	-- L.electric_scales = "Raid Damage"
-	-- L.electric_lash = "Lash"
-	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
+	L.volatile_current = "Centelhas"
+	L.thunderous_blast = "Impacto"
+	L.lightning_strikes = "Raios"
+	L.electric_scales = "Dano na Raid"
+	L.electric_lash = "Açoite"
 	-- Stage Two: Surging Power
-	-- L.absorb_text = "%s (%.0f%%)"
-	-- L.stormsurge = "Absorb Shield"
-	-- L.stormcharged = "Positive or Negative"
-	-- L.positive = "Positive"
-	-- L.negative = "Negative"
-	-- L.focused_charge = "Damage Buff"
-	-- L.tempest_wing = "Storm Wave"
-	-- L.fulminating_charge = "Charges"
-	-- L.fulminating_charge_debuff = "Charge"
+	L.absorb_text = "%s (%.0f%%)"
+	L.stormsurge = "Escudo"
+	L.stormcharged = "Positivo ou Negativo"
+	L.positive = "Positivo"
+	L.negative = "Negativo"
+	L.focused_charge = "Buff de Dano"
+	L.tempest_wing = "Onda de Tempestade"
+	L.fulminating_charge = "Cargas"
+	L.fulminating_charge_debuff = "Carga"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
-	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
+	L.ball_lightning = "Bolas"
 	-- Stage Three: Storm Incarnate
-	-- L.magnetic_charge = "Pull Charge"
+	L.magnetic_charge = "Carga Puxante"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+	L.custom_on_repeating_stormcharged = "Repetição Positiva ou Negativa"
+	L.custom_on_repeating_stormcharged_desc = "Repetição Positiva ou Negativa fala mensagens com os ícones {rt1}, {rt3} para localizar parceiros com finalidade de remover seus Debuffs."
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.skipped_cast = "Ignorado %s (%d)"
 
-	-- L.skipped_cast = "Skipped %s (%d)"
-
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "Devastação Elétrica: Modo de lider"
+	L.custom_off_raidleader_devastation_desc = "Mostra uma barra para Devastação Elétrica (Sopro) mesmo estando do outro lado da plataforma."
+	L.breath_other = "%s [Oposta]" -- Sopro na plataforma oposta
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "ptBR")

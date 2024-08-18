@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout addon
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run luacheck
         uses: BigWigsMods/actions/luacheck@master

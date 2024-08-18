@@ -1,0 +1,34 @@
+## Interface: 110000, 110002
+
+## Title: BigWigs [|cffeda55fNerub'ar Palace|r]
+## Title-deDE: BigWigs [|cffeda55fPalast der Nerub'ar|r]
+## Title-esES: BigWigs [|cffeda55fPalacio Nerub'ar|r]
+## Title-esMX: BigWigs [|cffeda55fPalacio Nerub'ar|r]
+## Title-frFR: BigWigs [|cffeda55fPalais des Nérub’ar|r]
+## Title-itIT: BigWigs [|cffeda55fPalazzo dei Nerub'ar|r]
+## Title-koKR: BigWigs [|cffeda55f네룹아르 궁전|r]
+## Title-ptBR: BigWigs [|cffeda55fPalácio Nerub'ar|r]
+## Title-ruRU: BigWigs [|cffeda55fНеруб'арский дворец|r]
+## Title-zhCN: BigWigs [|cffeda55f尼鲁巴尔王宫|r]
+## Title-zhTW: BigWigs [|cffeda55f奈幽巴宮殿|r]
+## Notes: BigWigs Nerub'ar Palace Modules
+## Notes-deDE: BigWigs Nerub'ar Palace Module
+## Notes-esES: BigWigs Nerub'ar Palace Modules
+## Notes-esMX: BigWigs Nerub'ar Palace Modules
+## Notes-frFR: BigWigs Nerub'ar Palace Modules
+## Notes-itIT: BigWigs Nerub'ar Palace Modules
+## Notes-koKR: BigWigs Nerub'ar Palace Modules
+## Notes-ptBR: BigWigs Nerub'ar Palace Modules
+## Notes-ruRU: BigWigs Nerub'ar Palace Modules
+## Notes-zhCN: BigWigs 尼鲁巴尔王宫模块
+## Notes-zhTW: BigWigs 奈幽巴宮殿模組
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2657
+
+modules.xml

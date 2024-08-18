@@ -10,10 +10,24 @@ L.positionExact = "Posicionamento Exato"
 L.positionDesc = "Digite na caixa ou mova o cursor se precisa posicionamento exato para a âncora."
 L.width = "Largura"
 L.height = "Altura"
-L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa, que não tem um tamanho máximo."
+L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa."
 L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitando o valor na caixa que tem um limite muito maior de 200."
 L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
 L.transparency = "Transparência"
+
+-- Anchor Points
+--L.TOP = "Top"
+--L.RIGHT = "Right"
+--L.BOTTOM = "Bottom"
+--L.LEFT = "Left"
+--L.TOPRIGHT = "Top Right"
+--L.TOPLEFT = "Top Left"
+--L.BOTTOMRIGHT = "Bottom Right"
+--L.BOTTOMLEFT = "Bottom Left"
+--L.CENTER = "Center"
+--L.customAnchorPoint = "Advanced: Custom anchor point"
+--L.sourcePoint = "Source Point"
+--L.destinationPoint = "Destination Point"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -68,6 +82,13 @@ L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Padrão"
 L.resetBarsDesc = "Reinicia todas as opções relacionadas a barras, incluindo a posição de âncora das barras."
+L.testBarsBtn = "Criar Barra de Teste"
+L.testBarsBtn_desc = "Criar uma barra para você testar suas configurações de exibição atuais"
+
+L.toggleAnchorsBtnShow = "Mostrar Âncoras de Movimentação"
+L.toggleAnchorsBtnHide = "Esconder Âncoras de Movimentação"
+L.toggleAnchorsBtnHide_desc = "Esconde todas as âncoras de movimentação, travando tudo em seu lugar."
+L.toggleBarsAnchorsBtnShow_desc = "Mostra todas as âncoras de movimentação, permitindo que você mova as barras."
 
 L.nameplateBars = "Barras de Identificação"
 L.nameplateAutoWidth = "Combinar a largura da placa de identificação"
@@ -75,6 +96,7 @@ L.nameplateAutoWidthDesc = "Configura a largura da barra de identificação com 
 L.nameplateOffsetY = "Deslocamento Y"
 L.nameplateOffsetYDesc = "Deslocamento de cima da barra de identificação para cima e a de baixo da barra de identificação para baixo das barras."
 L.nameplateAlphaDesc = "Controla o quão transparente serão as barras de identificação."
+L.testNameplate = "Alvo detectado, criando uma barra de identificação teste sobre a barra de identificação do alvo. |cFF33FF99Essa função é raramente usada, normalmente é somente 1 barra, e é necessária para manter o rastreio de recargas quando lutando com múltiplos chefes/adds que conjuram a mesma magia.|r"
 
 L.clickableBars = "Barras clicáveis"
 L.clickableBarsDesc = "As barras do BigWigs são clicáveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE através delas, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicáveis, isto deixará de funcionar.|r As barras interceptarão qualquer clique do mouse feito nelas."
@@ -164,6 +186,8 @@ L.blockGuildChallenge = "Bloquear avisos de desafios de guilda"
 L.blockGuildChallengeDesc = "Avisos de desafio de guilda aparecem por alguns motivos, principalmente quando um grupo em sua guilda completa uma masmorra heroica ou uma masmorra em modo desafio.\n\nEsses avisos podem cobrir partes essenciais de sua interface durante uma luta contra um chefe, então recomendamos bloqueá-los."
 L.blockSpellErrors = "Bloquear mensagens sobre feitiços que falharam."
 L.blockSpellErrorsDesc = "Mensagens do tipo \"O feitiço não está pronto ainda\" que normalmente aparecem no topo da tela serão bloqueados."
+L.blockZoneChanges = "Bloquear mensagens de troca de zona"
+L.blockZoneChangesDesc = "As mensagens que aparecem na parte central superior da tela quando você entra em uma nova zona como '|cFF33FF99Ventobravo|r' ou '|cFF33FF99Orgrimmar|r' serão bloqueadas."
 L.audio = "Áudio"
 L.music = "Música"
 L.ambience = "Som ambiente"
@@ -187,10 +211,17 @@ L.blockTalkingHeadRaids = "Raides"
 L.blockTalkingHeadTimewalking = "Caminhada Temporal (Masmorras & Raides)"
 L.blockTalkingHeadScenarios = "Cenários"
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.redirectPopups = "Redirecionar banners pop-up para mensagens do BigWigs"
+L.redirectPopupsDesc = "Banners de pop-up no meio da sua tela, como o banner '|cFF33FF99novo espaço no grande cofre desbloqueado|r' ou o banner que você vê ao entrar em uma masmorra Mítico+ será bloqueado e, em vez disso, exibido como mensagens do BigWigs. Esses banners podem ser bastante grandes, durar muito tempo e impedir sua capacidade de clicar através deles."
+L.redirectPopupsColor = "Cor da mensagem redirecionada"
+L.blockDungeonPopups = "Bloquear banners pop-up em masmorras"
+L.blockDungeonPopupsDesc = "Os banners de pop-up que aparecem ao entrar em uma masmorra às vezes podem conter textos muito longos. Ativar essa função os bloqueará completamente em vez de redirecioná-los para mensagens do BigWigs."
+L.itemLevel = "Nível do Item: %d"
+
+L.userNotifySfx = "Os Efeitos Sonoros estavam desativados pelo BossBlock e agora estão sendo reativados."
+L.userNotifyMusic = "A Música estava desativada pelo BossBlock e agora está sendo reativada."
+L.userNotifyAmbience = "A Ambiência estava desativada pelo BossBlock e agora está sendo reativada."
+L.userNotifyErrorSpeech = "A fala de erro estava desativada pelo BossBlock e agora está sendo reativada."
 
 L.subzone_grand_bazaar = "Grande Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Porto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -204,7 +235,6 @@ L.colors = "Cores"
 
 L.text = "Texto"
 L.textShadow = "Sombra do texto"
-L.flash = "Piscar"
 L.normal = "Normal"
 L.emphasized = "Enfatizado"
 
@@ -257,6 +287,10 @@ L.infoBox = "Caixa de Informações"
 L.sinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens do BigWigs. Ela dá suporte a ícones, cores e pode mostrar até 4 mensagens na tela de uma vez. Mensagens novas crescerão de tamanho e encolherão de novo rapidamente para notificar o usuário."
 L.emphasizedSinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens enfatizadas do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
 L.resetMessagesDesc = "Reinicia todas as opções relacionadas a mensagens, incluindo a posição de âncora das mensagens."
+L.toggleMessagesAnchorsBtnShow_desc = "Mostra todas as âncoras de movimentação, permitindo que você mova as mensagens."
+
+--L.testMessagesBtn = "Create Test Message"
+--L.testMessagesBtn_desc = "Creates a message for you to test your current display settings with."
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensagens"
@@ -330,12 +364,12 @@ L.pull = "Pull"
 L.engageSoundTitle = "Tocar um som quando uma luta contra um Chefe começou"
 L.pullStartedSoundTitle = "Tocar um som quando o temporizador for iniciado"
 L.pullFinishedSoundTitle = "Tocar um som quando o temporizador terminar"
-L.pullStarted = "Pull iniciado por %s pelo usuário %s."
+--L.pullStartedBy = "Pull timer started by %s."
 L.pullStopped = "Pull cancelado por %s."
 L.pullStoppedCombat = "Temporizador cancelado porque você entrou em combate."
 L.pullIn = "Pull em %d seg"
-L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
-L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
+--L.sendPull = "Sending a pull timer to your group."
+--L.wrongPullFormat = "Invalid pull timer. A correct example is: /pull 5"
 L.countdownBegins = "Iniciar Contagem"
 L.countdownBegins_desc = "Escolhe quanto tempo deve restar de tempo de pull (em segundos) para começar a contagem."
 
@@ -365,6 +399,7 @@ L.Long = "Longo"
 L.Warning = "Aviso"
 L.onyou = "Um feitiço, buff, ou debuff em você"
 L.underyou = "Você precisa se mover do feitiço embaixo de você"
+--L.privateaura = "Whenever a 'Private Aura' is on you"
 
 L.sound = "Som"
 
@@ -376,24 +411,20 @@ L.resetAllCustomSound = "Se você personalizou sons para qualquer configuração
 -- Statistics.lua
 --
 
-L.bossDefeatDurationPrint = "Derrotou '%s' após '%s'"
-L.bossWipeDurationPrint = "Foi derrotado por '%s' após %s"
-L.newBestTime = "Novo recorde!"
 L.bossStatistics = "Estatísticas do chefe."
-L.bossStatsDescription = "Grava várias estatísticas dos encontros, como o número de vezes que um chefe foi morto, quantas derrotas, tempo total de combate, ou a morte mais rápida. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
-L.enableStats = "Habilitar estatísticas"
-L.chatMessages = "Conversas"
-L.printBestTimeOption = "Notificação de melhor tempo"
-L.printDefeatOption = "Tempo de luta"
-L.printWipeOption = "Tempo até ser derrotado"
-L.countDefeats = "Contador de vitórias "
-L.countWipes = "Contador de derrotas"
-L.recordBestTime = "Gravar recorde"
+L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
 L.createTimeBar = "Mostrar barra do melhor tempo"
 L.bestTimeBar = "Melhor tempo"
-L.printHealthOption = "Vida do chefe"
 L.healthPrint = "Vida: %s."
 L.healthFormat = "%s (%.1f%%)"
+L.chatMessages = "Conversas"
+--L.newFastestVictoryOption = "New fastest victory"
+--L.victoryOption = "You were victorious"
+--L.defeatOption = "You were defeated"
+L.bossHealthOption = "Vida do chefe"
+--L.bossVictoryPrint = "You were victorious against '%s' after %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+--L.bossDefeatPrint = "You were defeated by '%s' after %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+--L.newFastestVictoryPrint = "New fastest victory: (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Victory.lua

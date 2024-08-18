@@ -1,0 +1,29 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="encounter.enUS.lua"/>
+<Script file="encounter.deDE.lua"/>
+<Script file="encounter.frFR.lua"/>
+<Script file="encounter.koKR.lua"/>
+<Script file="encounter.zhCN.lua"/>
+<Script file="encounter.zhTW.lua"/>
+<Script file="encounter.esES.lua"/>
+<Script file="encounter.esMX.lua"/>
+<Script file="encounter.ruRU.lua"/>
+<Script file="encounter.ptBR.lua"/>
+<Script file="encounter.itIT.lua"/>
+
+<Script file="encounterInfo.enUS.lua"/>
+<Script file="encounterInfo.deDE.lua"/>
+<Script file="encounterInfo.frFR.lua"/>
+<Script file="encounterInfo.koKR.lua"/>
+<Script file="encounterInfo.zhCN.lua"/>
+<Script file="encounterInfo.zhTW.lua"/>
+<Script file="encounterInfo.esES.lua"/>
+<Script file="encounterInfo.esMX.lua"/>
+<Script file="encounterInfo.ruRU.lua"/>
+<Script file="encounterInfo.ptBR.lua"/>
+<Script file="encounterInfo.itIT.lua"/>
+
+</Ui>
+

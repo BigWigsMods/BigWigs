@@ -22,12 +22,16 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
-	blockTooltipQuests = true,
+	blockZoneChanges = true,
+	blockTooltipQuestText = true,
 	blockObjectiveTracker = true,
 	disableSfx = false,
 	disableMusic = false,
 	disableAmbience = false,
 	disableErrorSpeech = false,
+	redirectTheToasts = true,
+	toastsColor = {0.2, 1, 1},
+	blockDungeonToasts = true,
 }
 
 --------------------------------------------------------------------------------
@@ -38,13 +42,25 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
+local zoneList = BigWigsLoader.zoneTbl
+local isTestBuild = BigWigsLoader.isTestBuild
+local isClassic = BigWigsLoader.isClassic
+local isVanilla = BigWigsLoader.isVanilla
 local GetSubZoneText = GetSubZoneText
-local TalkingHeadLineInfo = C_TalkingHead.GetCurrentLineInfo
+local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
+local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
+local RemoveCurrentToast = C_EventToastManager and C_EventToastManager.RemoveCurrentToast
 local IsEncounterInProgress = IsEncounterInProgress
 local SetCVar = C_CVar.SetCVar
 local GetCVar = C_CVar.GetCVar
+local GetTime = GetTime
 local CheckElv = nil
 local RestoreAll
+local hideQuestTrackingTooltips = false
+local activatedModules = {}
+local latestKill = {}
+local bbFrame = CreateFrame("Frame")
+bbFrame:Hide()
 
 -------------------------------------------------------------------------------
 -- Options
@@ -90,6 +106,7 @@ plugin.pluginOptions = {
 					desc = L.blockMoviesDesc,
 					width = "full",
 					order = 2,
+					hidden = isVanilla,
 				},
 				blockGarrison = {
 					type = "toggle",
@@ -97,6 +114,7 @@ plugin.pluginOptions = {
 					desc = L.blockFollowerMissionDesc,
 					width = "full",
 					order = 3,
+					hidden = isClassic,
 				},
 				blockGuildChallenge = {
 					type = "toggle",
@@ -104,6 +122,7 @@ plugin.pluginOptions = {
 					desc = L.blockGuildChallengeDesc,
 					width = "full",
 					order = 4,
+					hidden = isClassic,
 				},
 				blockSpellErrors = {
 					type = "toggle",
@@ -112,20 +131,27 @@ plugin.pluginOptions = {
 					width = "full",
 					order = 5,
 				},
-				blockTooltipQuests = {
+				blockZoneChanges = {
+					type = "toggle",
+					name = L.blockZoneChanges,
+					desc = L.blockZoneChangesDesc,
+					width = "full",
+					order = 6,
+				},
+				blockTooltipQuestText = {
 					type = "toggle",
 					name = L.blockTooltipQuests,
 					desc = L.blockTooltipQuestsDesc,
 					width = "full",
-					order = 6,
-					hidden = function() return true end, -- XXX Do we want to hack the tooltip?
+					order = 7,
+					hidden = GameTooltip and not GameTooltip.IsTooltipType, -- TooltipDataProcessor doesn't exist on classic
 				},
 				blockObjectiveTracker = {
 					type = "toggle",
 					name = L.blockObjectiveTracker,
 					desc = L.blockObjectiveTrackerDesc,
 					width = "full",
-					order = 7,
+					order = 8,
 				},
 				blockTalkingHeads = {
 					type = "multiselect",
@@ -146,7 +172,67 @@ plugin.pluginOptions = {
 						plugin.db.profile[info[#info]][entry] = value
 					end,
 					width = 2,
-					order = 8,
+					order = 9,
+					hidden = isClassic,
+				},
+				toastsCategory = {
+					type = "group",
+					name = " ",
+					order = 10,
+					inline = true,
+					hidden = isClassic,
+					args = {
+						redirectTheToasts = {
+							type = "toggle",
+							name = L.redirectPopups,
+							desc = L.redirectPopupsDesc,
+							set = function(_, value)
+								plugin.db.profile.redirectTheToasts = value
+								if value then
+									local _, _, _, _, _, _, _, id = GetInstanceInfo()
+									if zoneList[id] then -- Instances only
+										local registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+										for i = 1, #registeredToasts do
+											bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+										end
+										plugin:RegisterEvent("DISPLAY_EVENT_TOASTS")
+										for i = 1, #registeredToasts do
+											bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+										end
+									end
+								else
+									plugin:UnregisterEvent("DISPLAY_EVENT_TOASTS")
+								end
+							end,
+							width = "full",
+							order = 1,
+						},
+						toastsColor = {
+							type = "color",
+							name = L.redirectPopupsColor,
+							get = function()
+								return plugin.db.profile.toastsColor[1], plugin.db.profile.toastsColor[2], plugin.db.profile.toastsColor[3]
+							end,
+							set = function(_, r, g, b)
+								plugin.db.profile.toastsColor = {r, g, b}
+							end,
+							width = "full",
+							order = 2,
+							disabled = function()
+								return not plugin.db.profile.redirectTheToasts
+							end,
+						},
+						blockDungeonToasts = {
+							type = "toggle",
+							name = L.blockDungeonPopups,
+							desc = L.blockDungeonPopupsDesc,
+							width = "full",
+							order = 3,
+							disabled = function()
+								return not plugin.db.profile.redirectTheToasts
+							end,
+						},
+					},
 				},
 			},
 		},
@@ -228,6 +314,21 @@ plugin.pluginOptions = {
 --
 
 do
+	local function ShouldFilterQuestProgress(tooltip)
+		if tooltip == GameTooltip and tooltip:IsTooltipType(2) then -- Enum.TooltipDataType.Unit
+			return hideQuestTrackingTooltips
+		end
+	end
+	function plugin:OnRegister()
+		if TooltipDataProcessor and GameTooltip and GameTooltip.IsTooltipType then
+			TooltipDataProcessor.AddLinePreCall(8, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestObjective
+			TooltipDataProcessor.AddLinePreCall(17, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestTitle
+			TooltipDataProcessor.AddLinePreCall(18, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestPlayer
+		end
+	end
+end
+
+do
 	local function updateProfile()
 		local db = plugin.db.profile
 
@@ -244,7 +345,14 @@ do
 			local n = db.blockTalkingHeads[i]
 			if type(n) ~= "boolean" then
 				db.blockTalkingHeads = plugin.defaultDB.blockTalkingHeads
-				break
+				break -- If 1 entry is bad, reset the whole table
+			end
+		end
+		for i = 1, 3 do
+			local n = db.toastsColor[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				db.toastsColor = plugin.defaultDB.toastsColor
+				break -- If 1 entry is bad, reset the whole table
 			end
 		end
 	end
@@ -252,8 +360,9 @@ do
 	function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
 		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
-		self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
-		self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
+		self:RegisterMessage("BigWigs_OnBossWin")
+		self:RegisterMessage("BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
 
@@ -266,9 +375,6 @@ do
 			end
 			SetCVar("Sound_EnableSFX", "1")
 		end
-		--if self.db.profile.blockTooltipQuests then
-		--	SetCVar("showQuestTrackingTooltips", "1")
-		--end
 		if self.db.profile.disableMusic then
 			local music = GetCVar("Sound_EnableMusic")
 			if music == "0" then
@@ -291,17 +397,42 @@ do
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 
-		self:RegisterEvent("TALKINGHEAD_REQUESTED")
-		self:RegisterEvent("CINEMATIC_START")
-		self:RegisterEvent("PLAY_MOVIE")
-		self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
-		self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+		if not isVanilla then
+			self:RegisterEvent("CINEMATIC_START")
+			self:RegisterEvent("PLAY_MOVIE")
+			self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+			self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+		end
 
-		--CheckElv(self)
+		if not isClassic then
+			local _, _, _, _, _, _, _, id = GetInstanceInfo()
+			if self.db.profile.redirectTheToasts and zoneList[id] then -- Instances only
+				local registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
+				for i = 1, #registeredToasts do
+					bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+				end
+				self:RegisterEvent("DISPLAY_EVENT_TOASTS")
+				for i = 1, #registeredToasts do
+					bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
+				end
+			end
+			self:RegisterEvent("TALKINGHEAD_REQUESTED")
+			local frame = ObjectiveTrackerFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				CheckElv(self, frame)
+			end
+		elseif not isVanilla then
+			local frame = WatchFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				CheckElv(self, frame)
+			end
+		end
 	end
 end
 
 function plugin:OnPluginDisable()
+	activatedModules = {}
+	latestKill = {}
 	RestoreAll(self)
 end
 
@@ -310,64 +441,199 @@ end
 --
 
 do
-	local trackerHider = CreateFrame("Frame")
-	trackerHider:Hide()
+	local delayedTbl = nil
+	local levelUpTbl = nil
+	local function printMessage(self, tbl)
+		local icon = type(tbl.iconFileID) == "number" and tbl.iconFileID or nil
+		if type(tbl.title) == "string" and #tbl.title > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
+		end
+		if delayedTbl and delayedTbl.title and #delayedTbl.title > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
+			delayedTbl.title = nil
+		end
+		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
+		end
+		if type(tbl.instructionText) == "string" and #tbl.instructionText > 2 then
+			self:SendMessage("BigWigs_Message", self, nil, tbl.instructionText, self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
+		end
+		if type(tbl.showSoundKitID) == "number" then
+			PlaySound(tbl.showSoundKitID)
+		end
+		if delayedTbl then
+			for i = 1, #delayedTbl do
+				local entryTbl = delayedTbl[i]
+				if not entryTbl.bwDone then
+					return
+				end
+			end
+			delayedTbl = nil
+			plugin:UnregisterEvent("ITEM_DATA_LOAD_RESULT")
+		end
+	end
+	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
+	function plugin:DISPLAY_EVENT_TOASTS()
+		local tbl = GetNextToastToDisplay()
+		if tbl then
+			if tbl.eventToastID == 184 then -- Vault unlocked
+				tbl.bwDuration = 4
+				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
+			elseif tbl.eventToastID == 185 then -- Vault upgraded
+				if type(tbl.subtitle) == "string" then
+					local itemID = C_Item.GetItemIDForItemInfo(tbl.subtitle)
+					if type(itemID) == "number" then
+						self:RegisterEvent("ITEM_DATA_LOAD_RESULT")
+						if not delayedTbl then
+							delayedTbl = {title = tbl.title}
+						end
+						tbl.title = nil
+						delayedTbl[#delayedTbl+1] = tbl
+						tbl.bwItemID = itemID
+						tbl.bwDuration = 4
+						C_Item.RequestLoadItemDataByID(itemID)
+					end
+				end
+			elseif tbl.eventToastID == 1 then -- Level up
+				-- tbl.title is "Level 42"
+				-- tbl.subtitle is "You've Reached"
+				tbl.subtitle = nil -- Remove "You've Reached" text
+				tbl.bwDuration = 4.5
+				levelUpTbl = tbl
+				self:SimpleTimer(function() levelUpTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the talent point toast to merge, if one is rewarded
+			elseif tbl.eventToastID == 156 then -- Talent point
+				-- tbl.title is "New Talent Point Available"
+				-- tbl.subtitle is "Your power increased!"
+				if levelUpTbl then -- We merge this into the level up toast
+					levelUpTbl.subtitle = CL.other:format((levelUpTbl.title):upper(), tbl.title) -- Combine, without uppercase
+					levelUpTbl.title = nil
+					levelUpTbl.iconFileID = tbl.iconFileID
+				end
+			elseif tbl.eventToastID == 2 or tbl.eventToastID == 51 then -- Dungeon, Battleground
+				-- tbl.title is "Ara-Kara, City of Echoes" / "Twin Peaks"
+				-- tbl.subtitle is "Dungeon Unlocked!" / "Battleground Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+				tbl.title = nil
+				tbl.bwDuration = 2.5
+				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
+			elseif tbl.eventToastID == 3 then -- New ability
+				-- tbl.title is "Imprison"
+				-- tbl.subtitle is "New Ability Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+				tbl.title = nil
+				tbl.bwDuration = 4.5
+				self:SimpleTimer(function() printMessage(self, tbl) end, 0.6) -- Show after the level up toast
+			elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
+				if not self.db.profile.blockDungeonToasts then
+					tbl.bwDuration = 2
+					printMessage(self, tbl)
+				end
+			else --if tbl.eventToastID == 3 then -- New ability
+				return
+			end
+			RemoveCurrentToast()
+			self:DISPLAY_EVENT_TOASTS()
+		end
+	end
+	function plugin:ITEM_DATA_LOAD_RESULT(_, id, success)
+		if delayedTbl then
+			for i = 1, #delayedTbl do
+				local tbl = delayedTbl[i]
+				if tbl.bwItemID == id and not tbl.bwDone then
+					tbl.bwDone = true
+					self:SimpleTimer(function() printMessage(self, tbl) end, 5)
+					local itemLevel = success and GetDetailedItemLevelInfo(tbl.subtitle) or 0
+					tbl.subtitle = L.itemLevel:format(itemLevel)
+					return
+				end
+			end
+		end
+	end
+end
+
+do
 	local unregisteredEvents = {}
 	local function KillEvent(frame, event)
 		-- The user might be running an addon that permanently unregisters one of these events.
 		-- Let's check that before we go re-registering that event and screwing with that addon.
-		if trackerHider.IsEventRegistered(frame, event) then
-			trackerHider.UnregisterEvent(frame, event)
+		if bbFrame.IsEventRegistered(frame, event) then
+			bbFrame.UnregisterEvent(frame, event)
 			unregisteredEvents[event] = true
 		end
 	end
 	local function RestoreEvent(frame, event)
 		if unregisteredEvents[event] then
-			trackerHider.RegisterEvent(frame, event)
+			bbFrame.RegisterEvent(frame, event)
 			unregisteredEvents[event] = nil
 		end
 	end
 
-	function CheckElv(self)
+	function CheckElv(self, targetFrame)
 		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
-		if type(ObjectiveTrackerFrame.AutoHider) == "table" and trackerHider.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
+		if type(targetFrame.AutoHider) == "table" and type(targetFrame.AutoHider.GetObjectType) == "function" and bbFrame.GetParent(targetFrame.AutoHider) == targetFrame then
 			if InCombatLockdown() or UnitAffectingCombat("player") then
 				self:RegisterEvent("PLAYER_REGEN_ENABLED", function()
-					trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+					bbFrame.SetParent(targetFrame.AutoHider, (CreateFrame("Frame")))
 					self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 				end)
 			else
-				trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+				bbFrame.SetParent(targetFrame.AutoHider, (CreateFrame("Frame")))
 			end
 		end
 	end
 
-	local restoreObjectiveTracker = nil
-	function plugin:OnEngage(event, module)
-		if not module or not module.journalId or module.worldBoss then return end
+	local function EditEmotesOnPTR(event, msg, ...)
+		msg = "BigWigs PTR [E]: ".. msg
+		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
+	end
 
-		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
+	local function EditWhispersOnPTR(event, msg, ...)
+		msg = "BigWigs PTR [W]: ".. msg
+		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
+	end
+
+	local restoreObjectiveTracker = nil
+	function plugin:OnEngage(_, module)
+		if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
+		if next(activatedModules) then
+			activatedModules[module] = true
+			return
+		else
+			activatedModules[module] = true
+		end
+
+		if isTestBuild then -- Don't block emotes on WoW PTR
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+			self:RegisterEvent("RAID_BOSS_EMOTE", EditEmotesOnPTR)
+			self:RegisterEvent("RAID_BOSS_WHISPER", EditWhispersOnPTR)
+		elseif self.db.profile.blockEmotes then
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
 		end
-		if self.db.profile.blockGarrison then
+		if self.db.profile.blockGarrison and not isClassic then
 			KillEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
 			KillEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
 			KillEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
 			KillEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
 		end
-		if self.db.profile.blockGuildChallenge then
+		if self.db.profile.blockGuildChallenge and not isClassic then
 			KillEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
 		end
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
+		if self.db.profile.blockZoneChanges then
+			KillEvent(ZoneTextFrame, "ZONE_CHANGED")
+			KillEvent(ZoneTextFrame, "ZONE_CHANGED_INDOORS")
+			KillEvent(ZoneTextFrame, "ZONE_CHANGED_NEW_AREA")
+		end
+		if self.db.profile.blockTooltipQuestText then
+			hideQuestTrackingTooltips = true
+		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "0")
 		end
-		--if self.db.profile.blockTooltipQuests then
-		--	SetCVar("showQuestTrackingTooltips", "0")
-		--end
 		if self.db.profile.disableMusic then
 			SetCVar("Sound_EnableMusic", "0")
 		end
@@ -378,42 +644,77 @@ do
 			SetCVar("Sound_EnableErrorSpeech", "0")
 		end
 
-		--CheckElv(self)
-		-- Never hide when tracking achievements or in Mythic+
-		--local _, _, diff = GetInstanceInfo()
-		--if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
-		--	restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
-		--	if restoreObjectiveTracker then
-		--		trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
-		--		trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
-		--		trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
-		--	end
-		--end
+		if not isClassic then
+			local frame = ObjectiveTrackerFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				CheckElv(self, frame)
+				-- Never hide when tracking achievements or in Mythic+
+				local _, _, diff = GetInstanceInfo()
+				local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
+				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not bbFrame.IsProtected(frame) then
+					restoreObjectiveTracker = true
+					frame:SetAlpha(0) -- XXX FIXME
+				end
+			end
+		elseif not isVanilla then
+			local frame = Questie_BaseFrame or WatchFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				if frame == WatchFrame then
+					CheckElv(self, frame)
+				end
+				local trackedAchievements = GetTrackedAchievements and GetTrackedAchievements()
+				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not trackedAchievements and not bbFrame.IsProtected(frame) then
+					restoreObjectiveTracker = bbFrame.GetParent(frame)
+					if restoreObjectiveTracker then
+						bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+						bbFrame.SetFixedFrameLevel(frame, true)
+						bbFrame.SetParent(frame, bbFrame)
+					end
+				end
+			end
+		elseif isVanilla then
+			local frame = Questie_BaseFrame or QuestWatchFrame
+			if type(frame) == "table" and type(frame.GetObjectType) == "function" then
+				if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not bbFrame.IsProtected(frame) then
+					restoreObjectiveTracker = bbFrame.GetParent(frame)
+					if restoreObjectiveTracker then
+						bbFrame.SetFixedFrameStrata(frame, true) -- Changing parent would change the strata & level, lock it first
+						bbFrame.SetFixedFrameLevel(frame, true)
+						bbFrame.SetParent(frame, bbFrame)
+					end
+				end
+			end
+		end
 	end
 
 	function RestoreAll(self)
-		if self.db.profile.blockEmotes then
-			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
-			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		-- blockEmotes
+		RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+		RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		if isTestBuild then
+			self:UnregisterEvent("RAID_BOSS_EMOTE")
+			self:UnregisterEvent("RAID_BOSS_WHISPER")
 		end
-		if self.db.profile.blockGarrison then
-			RestoreEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
-			RestoreEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
-			RestoreEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
-			RestoreEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
-		end
-		if self.db.profile.blockGuildChallenge then
-			RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
-		end
-		if self.db.profile.blockSpellErrors then
-			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		-- blockGarrison
+		RestoreEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
+		RestoreEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
+		RestoreEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
+		RestoreEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
+		-- blockGuildChallenge
+		RestoreEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
+		-- blockSpellErrors
+		RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		-- blockZoneChanges
+		RestoreEvent(ZoneTextFrame, "ZONE_CHANGED")
+		RestoreEvent(ZoneTextFrame, "ZONE_CHANGED_INDOORS")
+		RestoreEvent(ZoneTextFrame, "ZONE_CHANGED_NEW_AREA")
+
+		if self.db.profile.blockTooltipQuestText then
+			hideQuestTrackingTooltips = false
 		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "1")
 		end
-		--if self.db.profile.blockTooltipQuests then
-		--	SetCVar("showQuestTrackingTooltips", "1")
-		--end
 		if self.db.profile.disableMusic then
 			SetCVar("Sound_EnableMusic", "1")
 		end
@@ -423,28 +724,72 @@ do
 		if self.db.profile.disableErrorSpeech then
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
+
 		if restoreObjectiveTracker then
-			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
-			trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
-			trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
+			local frame = not isClassic and ObjectiveTrackerFrame or Questie_BaseFrame or WatchFrame or QuestWatchFrame
+			if not isClassic then
+				frame:SetAlpha(1) -- XXX FIXME
+			else
+				bbFrame.SetParent(frame, restoreObjectiveTracker)
+				bbFrame.SetFixedFrameStrata(frame, false)
+				bbFrame.SetFixedFrameLevel(frame, false)
+			end
 			restoreObjectiveTracker = nil
 		end
 	end
 
-	function plugin:OnWinOrWipe(event, module)
-		if not module or not module.journalId or module.worldBoss then return end
-		RestoreAll(self)
+	function plugin:BigWigs_OnBossDisable(_, module)
+		if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
+		activatedModules[module] = nil
+		if not next(activatedModules) then
+			activatedModules = {}
+			RestoreAll(self)
+		end
+	end
+end
+
+function plugin:BigWigs_OnBossWin(event, module)
+	local journalId = module:GetJournalID()
+	if journalId then
+		latestKill = {journalId, (GetTime())}
 	end
 end
 
 do
 	-- Talking Head blocking
 	local known = {
+		-- Black Rook Hold
+		[54567]=true,[54552]=true,[54566]=true,[54511]=true,[57890]=true,[54540]=true,
+		[54527]=true,[70619]=true,[70621]=true,[70623]=true,[70625]=true,[70627]=true,
 		-- Court of Stars
 		[70615]=true,[70199]=true,[70198]=true,[70197]=true,[70193]=true,
 		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
+		-- Darkheart Thicket
+		[54459]=true,[54460]=true,[54461]=true,[54462]=true,[54463]=true,
+		[54464]=true,[54465]=true,[54466]=true,[54467]=true,[70601]=true,
+		[70603]=true,[70607]=true,
 		-- Halls of Valor
 		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
+		-- Neltharion's Lair
+		[54610]=true,[54608]=true,[54697]=true,[54708]=true,[54709]=true,
+		[54718]=true,[54719]=true,[54720]=true,[58102]=true,[58104]=true,
+
+		-- Atal'Dazar
+		[97376]=true,[97377]=true,[97373]=true,[97374]=true,[97375]=true,[97372]=true,
+		[106402]=true,[106404]=true,[106406]=true,[106411]=true,[106412]=true,[106413]=true,
+		-- Freehold
+		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
+		-- Siege of Boralus
+		[101137]=true,[102115]=true,[106663]=true,[106674]=true,[106675]=true,[106676]=true,[106677]=true,
+		[106659]=true,[106660]=true,[106661]=true,[106662]=true,[106664]=true,[106667]=true,[106668]=true,
+		[106669]=true,[106670]=true,[106671]=true,
+		-- The Underrot
+		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,[110728]=true,[112208]=true,
+		[106877]=true,[106853]=true,[106855]=true,[106856]=true,[106434]=true,[110781]=true,
+		-- Waycrest Manor
+		[105953]=true,[105954]=true,[105955]=true,[105956]=true,[105962]=true,[105963]=true,[105964]=true,
+		[106722]=true,[104219]=true,[104220]=true,[104228]=true,[104229]=true,[103811]=true,[104628]=true,
+		[103812]=true,[104208]=true,[104209]=true,[106718]=true,[106720]=true,
 
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
@@ -483,18 +828,37 @@ do
 		[205814]=true,[205815]=true,[205567]=true,[205852]=true,
 		-- Uldaman: Legacy of Tyr
 		[203125]=true,[203126]=true,[203127]=true,
+
+		-- Ara-Kara
+		[247684]=true,
+		-- Cinderbrew Meadery
+		[251845]=true,[251846]=true,
+		-- City of Threads
+		[250773]=true,[250774]=true,[250775]=true,[250776]=true,[250777]=true,[250778]=true,[250779]=true,[250780]=true,
+		[250781]=true,[250782]=true,[250790]=true,[250791]=true,[250795]=true,
+		-- Priory of the Sacred Flame
+		[251154]=true,[251155]=true,[251156]=true,[251157]=true,[251162]=true,[251163]=true,[251169]=true,[251170]=true,
+		[251171]=true,[251176]=true,
+		-- The Dawnbreaker
+		[251195]=true,[251196]=true,[251197]=true,[251198]=true,[247638]=true,[251199]=true,[251200]=true,[251201]=true,
+		[251202]=true,[251203]=true,[251204]=true,[251205]=true,[251206]=true,[251207]=true,[251208]=true,[251184]=true,
+		[251209]=true,[251210]=true,[251211]=true,[251189]=true,[251212]=true,[251213]=true,[251214]=true,
+		-- The Stonevault
+		[250849]=true,[250850]=true,[250845]=true,[250851]=true,[250852]=true,[250853]=true,[250854]=true,[250855]=true,
+		[250856]=true,[250857]=true,[250858]=true,[250860]=true,[250861]=true,[250862]=true,[250863]=true,
 	}
 
 	local lookup = {
 		[1] = 1, -- Normal Dungeon
 		[2] = 1, -- Heroic Dungeon
 		[8] = 2, -- Mythic+ Keystone Dungeon
-		[23] = 2, -- Mythic Dungeon
 		[14] = 3, -- Normal Raid
 		[15] = 3, -- Heroic Raid
 		[16] = 3, -- Mythic Raid
 		[17] = 3, -- LFR
+		[23] = 2, -- Mythic Dungeon
 		[24] = 4, -- Timewalking Dungeon
+		[205] = 1, -- Follower Dungeon
 	}
 	function plugin:TALKINGHEAD_REQUESTED()
 		local _, _, diff = GetInstanceInfo()
@@ -534,6 +898,9 @@ do
 		[957] = true, -- Jailer intro
 		[958] = true, -- Jailer defeat
 		[964] = true, -- Raszageth defeat
+		[991] = true, -- Iridikron (DotI) defeat
+		[992] = true, -- Chrono-Lord Deios (DotI) defeat
+		[1003] = true, -- Amirdrassil, Fyrakk defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
@@ -563,8 +930,8 @@ do
 		[-573] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		[-575] = true, -- Shadowmoon Burial Grounds, final boss introduction
 		[-593] = { -- Auchindoun
-			"", -- "": Before the 1st boss, the tunnel doesn't have a sub zone
-			L.subzone_eastern_transept, -- Eastern Transept: After the 3rd boss, Teren'gor porting in
+			function() return GetSubZoneText() == "" end, -- "": Before the 1st boss, the tunnel doesn't have a sub zone
+			function() return GetSubZoneText() == L.subzone_eastern_transept end, -- Eastern Transept: After the 3rd boss, Teren'gor porting in
 		},
 		[-607] = true, -- Grimrail Depot, boarding the train
 		[-609] = true, -- Grimrail Depot, destroying the train
@@ -580,8 +947,8 @@ do
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
 		[-1345] = true, -- Crucible of Storms, after killing first boss
 		[-1352] = { -- Battle of Dazar'alor
-			L.subzone_grand_bazaar, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
-			L.subzone_port_of_zandalar, -- Port of Zandalar: After killing blockade, boat arriving
+			function() return GetSubZoneText() == L.subzone_grand_bazaar end, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
+			function() return GetSubZoneText() == L.subzone_port_of_zandalar end, -- Port of Zandalar: After killing blockade, boat arriving
 		},
 		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side only)
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
@@ -589,11 +956,19 @@ do
 		[-2000] = true, -- Soulrender Dormazain defeat
 		[-2002] = true, -- Sylvanas stage 2
 		[-2004] = true, -- Sylvanas defeat
+		[-2170] = true, -- Aberrus, Sarkareth defeat
+		[-2233] = true, -- Amirdrassil, Smolderon defeat
+		[-2234] = true, -- After killing Tindral, flying into the tree, usually 2238 but rarely can be 2234
+		[-2238] = { -- Amirdrassil
+			function() return latestKill[1] == 2565 end, -- After killing Tindral, flying into the tree
+			function() return latestKill[1] == 2519 and GetTime()-latestKill[2] < 6 end, -- After killing Fyrakk, but don't trigger when talking to the NPC after killing him
+		}
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
 	function plugin:SiegeOfOrgrimmarCinematics()
 		local hasItem
+		local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount -- XXX Wrath compat
 		for i = 105930, 105935 do -- Vision of Time items
 			local count = GetItemCount(i)
 			if count > 0 then hasItem = true break end -- Item is found in our inventory
@@ -643,8 +1018,8 @@ do
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
 					if type(BigWigs.db.global.watchedMovies[id]) ~= "table" then BigWigs.db.global.watchedMovies[id] = {} end
 					for i = 1, #cinematicZones[id] do
-						local subZone = cinematicZones[id][i]
-						if subZone == GetSubZoneText() then
+						local func = cinematicZones[id][i]
+						if func() then
 							if BigWigs.db.global.watchedMovies[id][i] then
 								BigWigs:Print(L.movieBlocked)
 								CinematicFrame_CancelCinematic()
@@ -666,4 +1041,3 @@ do
 		end
 	end
 end
-

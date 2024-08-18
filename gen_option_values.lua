@@ -48,6 +48,7 @@ local color_methods = {
 local sound_methods = {
 	PlaySound = 2,
 	MessageOld = 3,
+	SetPrivateAuraSound = 3,
 	TargetMessageOld = 4,
 	StackMessageOld = 5,
 	DelayedMessage = 6,
@@ -72,9 +73,12 @@ local removed_methods = {
 	Message2 = true,
 	TargetMessage2 = true,
 	Yell2 = true,
+	NameplateBar = true,
+	NameplateCDBar = true,
+	StopNameplateBar = true,
 }
 local valid_methods = {
-	-- CastBar = "CASTBAR",
+	CastBar = "CASTBAR",
 	PrimaryIcon = "ICON",
 	SecondaryIcon = "ICON",
 	Flash = "FLASH",
@@ -94,12 +98,11 @@ local valid_methods = {
 	SetInfo = "INFOBOX",
 	SetInfoBar = "INFOBOX",
 	CloseInfo = "INFOBOX",
-	NameplateBar = "NAMEPLATEBAR",
-	NameplateCDBar = "NAMEPLATEBAR",
-	PauseNameplateBar = "NAMEPLATEBAR",
-	ResumeNameplateBar = "NAMEPLATEBAR",
-	NameplateBarTimeLeft = "NAMEPLATEBAR",
-	StopNameplateBar = "NAMEPLATEBAR",
+	Nameplate = "NAMEPLATE",
+	StopNameplate = "NAMEPLATE",
+	SetPrivateAuraSound = "PRIVATE",
+	PauseBar = true,
+	ResumeBar = true,
 }
 local function add_valid_methods(t)
 	for k in next, t do
@@ -154,6 +157,9 @@ local log_events = {
 	["SPELL_PERIODIC_MISSED"] = true,
 	["SPELL_BUILDING_DAMAGE"] = true,
 	["SPELL_BUILDING_HEAL"] = true,
+	["SPELL_EMPOWER_START"] = true,
+	["SPELL_EMPOWER_END"] = true,
+	["SPELL_EMPOWER_INTERRUPT"] = true,
 	["ENVIRONMENTAL_DAMAGE"] = true,
 	["DAMAGE_SHIELD"] = true,
 	["DAMAGE_SHIELD_MISSED"] = true,
@@ -176,6 +182,7 @@ local args_keys = {
 	destRaidFlags = true,
 	spellId = true,
 	spellName = true,
+	spellSchool = true,
 	extraSpellId = true,
 	extraSpellName = true,
 	amount = true,
@@ -184,14 +191,17 @@ local args_keys = {
 
 -- Set an exit code if we show an error.
 local exit_code = 0
-local error, warn
-if package.config:sub(1,1) == "/" then -- linux path seperator
+local error, warn, info
+if os.execute("tput colors >/dev/null 2>&1") then
 	function error(msg)
 		print("\27[31m" .. msg .. "\27[0m") -- red
 		exit_code = 1
 	end
 	function warn(msg)
-		print("\27[33m" .. msg .. "\27[0m") -- yellow
+		print("\27[33m" .. msg .. "\27[0m") -- orange
+	end
+	function info(msg)
+		print("\27[36m" .. msg .. "\27[0m") -- cyan
 	end
 else
 	function error(msg)
@@ -199,6 +209,7 @@ else
 		exit_code = 1
 	end
 	warn = print
+	info = print
 end
 local function print(...)
 	if opt.quiet then return end
@@ -288,7 +299,7 @@ local function sortKeys(keys)
 end
 
 -- Write out a module option values to [module dir]/Options/[value].lua
-local function dumpValues(path, name, options_table)
+local function dumpValues(path, name, modules_table, options_table)
 	local file = path .. name .. ".lua"
 	local old_data = ""
 	local f = io.open(file, "r")
@@ -298,7 +309,7 @@ local function dumpValues(path, name, options_table)
 	end
 
 	local data = ""
-	for _, mod in ipairs(modules) do
+	for _, mod in ipairs(modules_table) do
 		local options = options_table[mod] or {}
 		data = data .. string.format("\r\nBigWigs:Add%s(%q, {\r\n", name, mod)
 		for _, key in ipairs(sortKeys(options)) do
@@ -328,10 +339,10 @@ local function dumpValues(path, name, options_table)
 			else
 				f:write(data)
 				f:close()
-				warn("    Updated " .. file)
+				info("    Updated " .. file)
 			end
 		else
-			warn("    Updated " .. file .. " (skipped)")
+			info("    Updated " .. file .. " (skipped)")
 		end
 	end
 end
@@ -408,7 +419,7 @@ local function findCalls(lines, start, local_func, options)
 	return #keys > 0 and keys or nil
 end
 
-local function parseGetOptions(file_name, lines, start)
+local function parseGetOptions(file_name, lines, start, special_options)
 	local chunk = nil
 	for i = start, #lines do
 		if i == start and lines[i]:match("^%s*return {.+}%s*$") then
@@ -416,14 +427,18 @@ local function parseGetOptions(file_name, lines, start)
 			chunk = lines[i]
 			break
 		end
-		if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
-			-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
-			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
-			-- TODO string parse the other tables for duplicates
-			break
-		end
-		if lines[i]:match("^%s*end") then
-			chunk = table.concat(lines, "\n", start, i-1) -- no headers, so we need to back up to the }
+		-- if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
+		-- 	-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
+		-- 	chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
+		-- 	-- TODO string parse the other tables for duplicates
+		-- 	break
+		-- -- end
+		-- if lines[i]:match("^%s*end") then
+		-- 	chunk = table.concat(lines, "\n", start, i-1) -- no headers, so we need to back up to the }
+		-- 	break
+		-- end
+		if lines[i]:match("^%s*}%s*$") then
+			chunk = table.concat(lines, "\n", start, i)
 			break
 		end
 	end
@@ -431,36 +446,81 @@ local function parseGetOptions(file_name, lines, start)
 		return false, "Something is wrong."
 	end
 
-	local f, err = loadstring(chunk)
-	if err then
-		return false, err
-	end
-	local success, result = pcall(f)
-	if success then
-		local options, option_flags = {}, {}
-		for _, opt in next, result do
-			local flags = true
-			if type(opt) == "table" then
-				flags = {}
-				for i=2, #opt do
-					flags[opt[i]] = true
-				end
-				opt = opt[1]
+	local chunk_func
+	do
+		-- sigh.
+		local s = setmetatable({}, { __index = function(t, k) return tostring(k) end })
+		local mod = {
+			SpellName = function(k) return tostring(k) end
+		}
+		local options_env = setmetatable({
+			CL = s,
+			L = s,
+			self = mod,
+			mod = mod,
+		}, {
+			__index = function(t, k)
+				if special_options[k] then return "custom_off_" .. k end
+				return k
 			end
-			if opt then -- marker option vars will be nil
-				if default_options[opt] then
-					flags = default_options[opt]
-				end
-				if options[opt] then
-					error(string.format("    %s:%d: Duplicate option key \"%s\"", file_name, start, tostring(opt)))
-				else
-					options[opt] = flags
-				end
+		})
+
+		if setfenv then
+			local f, err = loadstring(chunk, "optionstable")
+			if err then
+				return false, err
+			end
+			setfenv(f, options_env)
+			chunk_func = f
+		else
+			local f, err = load(chunk, "optionstable", "t", options_env)
+			if err then
+				return false, err
+			end
+			chunk_func = f
+		end
+	end
+	local success, toggles, headers, altNames = pcall(chunk_func)
+	if not success then
+		return success, toggles
+	end
+
+	local options, option_flags = {}, {}
+	for _, opt in next, toggles do
+		local flags = true
+		if type(opt) == "table" then
+			flags = {}
+			for i=2, #opt do
+				flags[opt[i]] = true
+			end
+			opt = opt[1]
+		end
+		if opt then -- marker option vars will be nil
+			if default_options[opt] then
+				flags = default_options[opt]
+			end
+			if options[opt] then
+				error(string.format("    %s:%d: Duplicate option key %q", file_name, start, tostring(opt)))
+			else
+				options[opt] = flags
 			end
 		end
-		return options
 	end
-	return success, result
+	if headers then
+		for key in next, headers do
+			if not options[key] then
+				error(string.format("    %s:%d: Invalid option header key %q", file_name, start, tostring(key)))
+			end
+		end
+	end
+	if altNames then
+		for key, name in next, altNames do
+			if not options[key] then
+				error(string.format("    %s:%d: Invalid option alt name key %q", file_name, start, tostring(key)))
+			end
+		end
+	end
+	return options
 end
 
 local function checkForAPI(line)
@@ -498,7 +558,7 @@ local function parseLua(file)
 	if module_args ~= "" then
 		local args = strsplit(module_args)
 		local ej_id = tonumber(args[2])
-		if ej_id then
+		if ej_id and ej_id > 0 then
 			if modules_bosses[ej_id] then
 				error(string.format("    %s:%d: Module \"%s\" is using journal id %d, which is already used by module \"%s\"", file_name, 1, module_name, ej_id, modules_bosses[ej_id]))
 			else -- execution isn't stopped, don't overwrite the original module name
@@ -516,17 +576,58 @@ local function parseLua(file)
 	for line in data:gmatch("(.-)\r?\n") do
 		lines[#lines+1] = line
 	end
-	data = nil
 
+	local module_encounter_id, module_set_stage = nil, nil
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
-	local options, option_keys = {}, {}
+	local options, option_keys, option_key_used = {}, {}, {}
+	local options_block_start = 0
+	local special_options = {}
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
 	local current_func = nil
-	local rep = {}
+	local rep = {} -- key replacements
+
 	for n, line in ipairs(lines) do
-		local comment = line:match("%-%-%s*(.*)") or ""
-		line = line:gsub("%-%-.*$", "") -- strip comments
+		-- save and strip comment
+		local comment = ""
+		if line:match("^%s*%-%-") then -- shortcut for full line comments
+			comment = line:gsub("^%s*%-%-%s*", "")
+			line = ""
+		else
+			-- pop off comments from the end (trying to protect strings)
+			while line:gsub('%b""', ''):match("%-%-") do
+				local new_line = line:reverse()
+				local start, stop = new_line:find("--", nil, true)
+				comment = comment .. new_line:sub(1, stop):reverse()
+				line = new_line:sub(stop + 1):reverse()
+			end
+		end
+
+		-- set some module flags
+		if line:match("^mod:SetEncounterID") then
+			module_encounter_id = true
+		end
+		if line:match("^mod:SetStage") then
+			module_set_stage = true
+		else
+			local method = line:match(":([GS]etStage)%(")
+			if method and not module_set_stage then
+				error(string.format("    %s:%d: %s: Missing initial mod:SetStage!", file_name, n, method))
+				module_set_stage = true
+			end
+		end
+
+		-- save marker and autotalk options
+		do
+			local var = line:match("(%w+) = .*:AddMarkerOption%(")
+			if var then
+				special_options[var] = true
+			end
+			var = line:match("(%w+) = .*:AddAutoTalkOption%(")
+			if var then
+				special_options[var] = true
+			end
+		end
 
 		-- locale checking
 		do
@@ -537,37 +638,74 @@ local function parseLua(file)
 					locale[locale_key] = true
 				end
 			end
-			local locale_key = line:match("L%.([%w_]+)%s*=") or line:match("L%[\"(.+)\"%]%s*=")
-			if locale_key then
-				locale[locale_key] = true
+			local locale_key, locale_value = line:match("L%.([%w_]+)%s*=%s*(.*)")
+			if not locale_key then
+				locale_key, locale_value = line:match("L%[\"(.+)\"%]%s*=%s*(.*)")
+			end
+			if locale_key and locale[locale_key] == nil then
+				locale_value = strtrim(locale_value)
+				-- check if we're all replacement tokens
+				local v = locale_value:gsub("%b{}", ""):gsub("\\n", "")
+				if v == '""' then locale_value = "" end
+
+				locale[locale_key] = locale_value:sub(1,1) == "{" or locale_value ~= unquote(locale_value)
 			end
 		end
 
 		-- check usage
-		for locale_type, locale_key, extra in line:gmatch("(C?L)%.([%w_]+)(%(?)") do
+		for locale_type, locale_key, extra in line:gsub("L%[\"([%w_]+)\"%]", "L.%1"):gmatch("(C?L)%.([%w_]+)(%(?)") do
 			if locale_type == "CL" then
 				-- CL is only set in the main project
 				if common_locale and not common_locale[locale_key] then
 					error(string.format("    %s:%d: Invalid locale string \"CL.%s\"", file_name, n, locale_key))
 				end
-			elseif locale_type == "L" and not locale[locale_key] then
+			elseif locale_type == "L" and locale[locale_key] == nil then
 				error(string.format("    %s:%d: Invalid locale string \"L.%s\"", file_name, n, locale_key))
 			end
 			-- trying to invoke the string (missing :format)
 			if extra == "(" then
-				error(string.format("    %s:%d: Invalid locale string format \"%s.%s%s\"", file_name, n, locale_type, locale_key, format))
+				error(string.format("    %s:%d: Missing locale string format \"%s.%s(\"", file_name, n, locale_type, locale_key))
 			end
 		end
 
 		--- loadstring the options table
-		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
-			local opts, err = parseGetOptions(file_name, lines, n+1)
+		if line:find("function mod:GetOptions(", nil, true) then
+			local opts, err = parseGetOptions(file_name, lines, n+1, special_options)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
-				-- return
+				return
 			else
-				option_keys = opts
+				if not next(option_keys) then
+					option_keys = opts
+					options_block_start = n + 1
+				else -- merge multiple :GetOptions
+					for key, flags in next, opts do
+						if type(option_keys[key]) == "table" and type(flags) == "table" then
+							for flag, v in next, flags do
+								option_keys[key][flag] = v
+							end
+						elseif not option_keys[key] or type(flags) == "table" then
+							option_keys[key] = flags
+						end
+					end
+				end
+				-- check string keys
+				local custom_options = {
+					berserk = true,
+					altpower = true,
+					infobox = true,
+					proximity = true,
+					stages = true,
+					warmup = true,
+					adds = true,
+					health = true,
+				}
+				for key in next, option_keys do
+					if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and locale[key] == nil then
+						error(string.format("    %s:%d: Missing option key locale for \"%s\"", file_name, options_block_start, key))
+					end
+				end
 			end
 		end
 		local toggle_options = line:match("^mod%.toggleOptions = ({.+})")
@@ -666,10 +804,12 @@ local function parseLua(file)
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
-		if res and line:match("spellId == %d+") then
-			rep.if_key = {}
-			for m in res:gmatch("spellId == (%d+)") do
-				rep.if_key[#rep.if_key+1] = m
+		if res then
+			if line:match("spellId == %d+") then
+				rep.if_key = {}
+				for m in res:gmatch("spellId == (%d+)") do
+					rep.if_key[#rep.if_key+1] = m
+				end
 			end
 		end
 		-- For expression keys used multiple times
@@ -683,7 +823,11 @@ local function parseLua(file)
 					rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 				end
 			else
-				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+				if res == "args.spellId" then
+					rep.if_key = rep.func_key
+				else
+					rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+				end
 			end
 		else
 			res = line:match("%s*local spellId,.+=%s*(.+),")
@@ -716,12 +860,80 @@ local function parseLua(file)
 			end
 		end
 
-		--- Parse message calls.
-		-- Check for function calls that will trigger a sound, including calls
-		-- delayed with ScheduleTimer.
+		-- Check :Me args
+		local args = line:match(":Me(%b())")
+		if args then
+			args = args:sub(2, -2)
+			if not string.find(string.lower(args), "guid", nil, true) then
+				error(string.format("    %s:%d: Me: Invalid guid(1)! guid=%s", file_name, n, args))
+			end
+		end
+
+		-- Check :CheckOption
+		local args = line:match(":CheckOption(%b())")
+		if args then
+			args = strsplit(clean(args:sub(2, -2)))
+			local f = tostring(current_func)
+			if rep.func_key then f = string.format("%s(%s)", f, table.concat(rep.func_key, ",")) end
+
+			local key = tonumber(args[1]) or unquote(args[1])
+			if key == "args.spellId" then
+				if rep.func_key and #rep.func_key == 1 then
+					key = rep.func_key[1]
+				else
+					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
+					key = nil
+				end
+			end
+			if key then
+				if not option_keys[key] then
+					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
+				end
+				option_key_used[key] = true
+			end
+		end
+
+		-- Check :Berserk
+		local args = line:match(":Berserk(%b())")
+		if args then
+			args = strsplit(clean(args:sub(2, -2)))
+			local f = tostring(current_func)
+			if rep.func_key then f = string.format("%s(%s)", f, table.concat(rep.func_key, ",")) end
+
+			local key = tonumber(args[4]) -- only numbers are used as a replacement key
+			if not key then
+				key = unquote(args[4])
+				if key == "args.spellId" then
+					if rep.func_key and #rep.func_key == 1 then
+						key = rep.func_key[1]
+					else
+						error(string.format("    %s:%d: Berserk: Invalid key! func=%s, key=%s", file_name, n, f, key))
+						key = nil
+					end
+				else -- arg is a string to use as the name
+					key = "berserk"
+				end
+			end
+			if key then
+				if not option_keys[key] then
+					error(string.format("    %s:%d: Berserk: Missing option key! func=%s, key=%s", file_name, n, f, key))
+				end
+				option_key_used[key] = true
+			end
+		end
+
+		-- Check registering IEEU when it could overwrite the encounter start handler
+		if line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\"") and current_func == "mod:OnBossEnable" then
+			if module_encounter_id and not line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\", \"CheckBossStatus\"%)") then
+				error(string.format("    %s:%d: Overwriting IEEU handler! Register in OnEngage instead. func=%s", file_name, n, tostring(current_func)))
+			end
+		end
+
+		--- Parse toggle option API calls.
 		if checkForAPI(line) then
-			local key, sound, color, icon, bitflag = nil, nil, nil, nil, nil
-			local obj, sugar, method, args = line:match("(%w+)([.:])(.-)%(%s*(.+)%s*%)")
+			local key, sound, color, bitflag = nil, nil, nil, nil
+			local obj, sugar, method, args = line:gsub("^.* = ", ""):match("(%w+)([.:])(.-)(%b())")
+			if args then args = args:sub(2, -2) end
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
 				method = args:match("^\"(.-)\"")
@@ -735,6 +947,9 @@ local function parseLua(file)
 				local sound_index = sound_methods[method]
 				if sound_index then
 					sound = unternary(args[sound_index+offset], "\"(.-)\"", valid_sounds)
+					if method == "SetPrivateAuraSound" and not sound then
+						sound = "warning"
+					end
 				end
 				local color_index = color_methods[method]
 				if color_index then
@@ -754,7 +969,7 @@ local function parseLua(file)
 				end
 				local icon_index = icon_methods[method]
 				if icon_index then
-					icon = args[icon_index+offset]
+					local icon = args[icon_index+offset]
 					-- Make sure methods with a string key set an icon.
 					if type(key) == "string" and key:match('^".*"$') and icon == nil then
 						-- Also check if text is nil or a (formatted)string if the method isn't :Flash
@@ -787,29 +1002,54 @@ local function parseLua(file)
 				if method == "PlaySound" and args[3+offset] and args[3+offset] ~= "nil" and not args[3+offset]:match("^\"(.-)\"$") and not args[3+offset]:match(" and \"(.-)\"$") then
 					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3+offset])))
 				end
+				-- Check chat directPrint
+				if (method == "Say" or method == "Yell") and (args[2+offset] == "nil" and args[3+offset] == "true") then
+					error(string.format("    %s:%d: %s: Missing msg(2) with directPrint(3)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
+				end
+				-- Check for English chat messages (unless using directPrint)
+				if (method == "Say" or method == "Yell") and (args[3+offset] ~= "true" and (not args[4+offset] or args[4+offset] == "nil")) then
+					error(string.format("    %s:%d: %s: Missing englishText(4)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
+				end
+				-- Set default keys
+				if method == "CloseAltPower" and not key then
+					key = "\"altpower\""
+				end
+				if method == "CloseProximity" and not key then
+					key = "\"proximity\""
+				end
 			end
 
 			-- -- SetOption:key:color:sound:
 			-- Handle manually setting the key, color, and sound with a comment. Has to be on the
 			-- same line as the function call. All three values can also be a comma seperated list
 			-- or left empty.
-			-- e.g.: -- SetOption:1234,1235:Urgent:Info,Alert:  or  -- SetOption:1234:::
-			local set_key, set_color, set_sound = comment:match("SetOption:(.*):(.*):(.*):")
-			if set_key then
-				if set_key ~= "" then
-					key = strsplit(set_key)
-					for k, v in next, key do
-						if not tonumber(v) then
-							-- string keys are expected to be quoted
-							key[k] = string.format("%q", unquote(v))
+			-- e.g.: -- SetOption:1234,1235:yellow:info,alert:  or  -- SetOption::1234,1235::info:  or  -- SetOption:1234:
+			do
+				local set_key, set_color, set_sound = comment:match("SetOption:(.*):(.*):(.*):")
+				if not set_key then
+					set_key, set_color = comment:match("SetOption:(.*):(.*):")
+					set_sound = ""
+				end
+				if not set_key then
+					set_key = comment:match("SetOption:(.*):")
+					set_color, set_sound = "", ""
+				end
+				if set_key then
+					if set_key ~= "" then
+						key = strsplit(set_key)
+						for k, v in next, key do
+							if not tonumber(v) then
+								-- string keys are expected to be quoted
+								key[k] = string.format("%q", unquote(v))
+							end
 						end
 					end
-				end
-				if set_color ~= "" then
-					color = strsplit(set_color)
-				end
-				if set_sound ~= "" then
-					sound = strsplit(set_sound)
+					if set_color ~= "" then
+						color = strsplit(set_color)
+					end
+					if set_sound ~= "" then
+						sound = strsplit(set_sound)
+					end
 				end
 			end
 
@@ -823,29 +1063,34 @@ local function parseLua(file)
 				if k == "args.spellId" and rep.func_key then
 					k = rep.func_key
 				end
-				if k == "spellId" and rep.if_key then
-					k = rep.if_key
-				end
-				if k == "spellId" and rep.local_func_key then
-					k = rep.local_func_key
+				if k == "spellId" then
+					if rep.if_key then
+						k = rep.if_key
+					end
+					if rep.local_func_key then
+						k = rep.local_func_key
+					end
 				end
 				for _, nk in next, tablize(k) do
 					keys[#keys+1] = nk
 				end
 			end
 			--- Validate keys.
-			for i, k in next, keys do
-				local key = tonumber(k) or unquote(k)
+			for i, nk in next, keys do
+				local k = tonumber(nk) or unquote(nk)
 				if key ~= "false" then
-					if not option_keys[key] then
-						error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
-						errors = true
-					elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
-						error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
-						errors = true
+					if not default_options[k] then
+						if not option_keys[k] then
+							error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, k))
+							errors = true
+						elseif bitflag and (type(option_keys[k]) ~= "table" or not option_keys[k][bitflag]) then
+							error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, k))
+							errors = true
+						end
 					end
+					option_key_used[k] = true
 				end
-				keys[i] = key
+				keys[i] = k
 			end
 
 			-- Add the color entries.
@@ -883,6 +1128,24 @@ local function parseLua(file)
 			error(string.format("    %s:%d: %q was registered as a callback, but it does not exist.", file_name, n, f))
 		end
 	end
+
+	-- Check for options that were set but never used.
+	for key in next, option_keys do
+		if not option_key_used[key] and not tostring(key):match("^custom_") then
+			error(string.format("    %s:%d: %q was registered as an option key, but was not used.", file_name, options_block_start, key))
+		end
+	end
+end
+
+-- check that all module keys are defined in the locale file
+local function reverseCheck(file_name, keys, current_module, current_module_line)
+	if current_module and modules_locale[current_module] then
+		for key, value in next, modules_locale[current_module] do
+			if value and not key:match("_icon$") and keys[current_module][key] == nil then
+				warn(string.format("    %s:%d: %s: Missing locale key %q", file_name, current_module_line, current_module, key))
+			end
+		end
+	end
 end
 
 local function parseLocale(file)
@@ -904,6 +1167,7 @@ local function parseLocale(file)
 
 	local keys = {}
 	local current_module
+	local current_module_line
 	local n = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		n = n + 1
@@ -930,7 +1194,10 @@ local function parseLocale(file)
 			end
 		end
 		if module_name then
+			-- reverse check the previous locale block in the file
+			reverseCheck(file_name, keys, current_module, current_module_line)
 			current_module = module_name
+			current_module_line = n
 			if not keys[module_name] then
 				keys[module_name] = {}
 			else
@@ -958,6 +1225,9 @@ local function parseLocale(file)
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=")
 			end
+			if not key then
+				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=")
+			end
 			if key then
 				keys[current_module][key] = comment == ""
 				if not modules_locale[current_module][key] then
@@ -965,6 +1235,11 @@ local function parseLocale(file)
 				end
 			end
 		end
+	end
+
+	-- reverse check the last locale block in the file
+	if current_module and not current_module:match("^BigWigs") then
+		reverseCheck(file_name, keys, current_module, current_module_line)
 	end
 
 	-- Check that all enUS strings exist in the foreign locale
@@ -986,7 +1261,11 @@ end
 local function parseXML(file)
 	local f = io.open(file, "r")
 	if not f then
-		error("    File not found!")
+		if opt.quiet then
+			error(string.format("    %s: File not found!", file))
+		else
+			error("    File not found!")
+		end
 		return
 	end
 
@@ -1010,7 +1289,11 @@ end
 local function parseTOC(file)
 	local f = io.open(file, "r")
 	if not f then
-		error("    File not found!")
+		if opt.quiet then
+			error(string.format("    %s: File not found!", file))
+		else
+			error("    File not found!")
+		end
 		return
 	end
 
@@ -1034,8 +1317,8 @@ local function parse(file)
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
 			local path = (file[1]:match(".*/") or "") .. "Options/"
-			dumpValues(path, "Colors", module_colors)
-			dumpValues(path, "Sounds", module_sounds)
+			dumpValues(path, "Colors", modules, module_colors)
+			dumpValues(path, "Sounds", modules, module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
 		end
 		-- Reset!
@@ -1046,7 +1329,7 @@ local function parse(file)
 		if string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
 			parseLua(file)
-		elseif string.match(file, "modules%.xml$") then
+		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
 			-- Scan module includes for lua files.
 			print(string.format("Checking %s", file))
 			parse(parseXML(file))

@@ -1,4 +1,4 @@
-## Interface: 100002
+## Interface: 100207, 110000, 110002
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -12,6 +12,7 @@
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-itIT: Un approccio modulare, leggero e non intrusivo per gli avvisi ai combattimenti con i boss.
 ## Notes-ptBR: Abordagem modular, leve e não intrusiva para avisos em encontros com chefes.
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Author: Funkydude, Nebula, Elvador, Justwait
 ## Version: @project-version@
 
@@ -20,15 +21,20 @@
 ## X-Website: https://github.com/BigWigsMods
 ## X-Curse-Project-ID: 2382
 ## X-WoWI-ID: 5086
+## X-Wago-ID: 5NRegwG3
 
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 embeds.xml
+Init.lua
 API.lua
 locales.xml
 
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
+AutoRole.lua
+LFGTimer.lua
 modules.xml
+bosses.xml

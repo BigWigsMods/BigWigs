@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -25,27 +24,36 @@ local slashCount = 1
 local earthenPillarCount = 1
 
 local timersTable = {
-	[14] = { -- 11:03
+	[14] = { -- Normal
 		[397134] = { 8.4, 43.7, 48.6, 43.7, 42.6, 47.4, 42.5, 43.7, 49.8, 40.1, 43.7, 46.2, 43.7, 43.7 }, -- Pillars
 		[374038] = { 42.6, 68.0, 66.9, 66.9, 66.8, 66.8, 66.8, 65.5, 66.8 }, -- Axes
 		[371624] = { 16.9, 71.7, 46.2, 45.0, 42.5, 44.9, 46.1, 43.7, 46.2, 43.7, 42.5, 44.9, 44.9 }, -- Marks
 		[373059] = { 60.6, 149.4, 132.4, 133.6 }, -- Blizzard
 	},
-	[15] = { -- 10:10
+	[15] = { -- Heroic
 		[397134] = { 7.7, 35.0, 37.9, 34.1, 37.7, 35.2, 34.1, 35.2, 37.8, 33.8, 35.5, 36.5, 36.4, 32.8, 37.7, 35.2, 34.0 }, -- Pillars
 		[374038] = { 34.5, 54.7, 53.5, 53.5, 53.5, 53.5, 53.5, 53.5, 54.3, 51.3, 53.5 }, -- Axes
 		[371624] = { 13.7, 57.2, 36.5, 36.5, 35.2, 37.7, 34.0, 36.5, 32.8, 36.5, 35.3, 35.2, 37.6, 32.8, 38.9, 35.2 }, -- Marks
 		[373059] = { 50.2, 117.9, 105.8, 107.0, 106.9, 106.9 }, -- Blizzard
 	},
-	[16] =  { -- 8:06
+	[16] =  { -- Mythic
 		[397134] = { 5.7, 25.5, 29.6, 26.3, 25.5, 28.3, 25.6, 26.7, 27.8, 25.7, 25.5, 29.2, 27.2, 23.8, 27.9, 26.7, 25.5, 29.1 }, -- Pillar
 		[374038] = { 27.7, 40.5, 40.1, 40.0, 40.1, 40.1, 40.1, 40.1, 39.7, 40.4, 40.0, 40.0 }, --  Axes
 		[371624] = { 12.1, 41.3, 27.9, 27.9, 51.0, 27.9, 25.5, 29.2, 24.3, 26.8, 28.0, 27.9, 24.2, 26.7, 26.7, 26.6, 26.7 }, -- Mark
 		[373059] = { 37.7, 89.8, 77.8, 82.7, 77.7, 81.3 }, -- Blizzard
 	},
+	[17] = { -- LFR
+		[397134] = { 8.5, 43.7, 53.5, 43.7, 42.6, 47.4, 42.5, 43.7, 49.8, 40.0, 43.7, 47.4, 42.5, 43.7 }, -- Pillars
+		[374038] = { 42.6, 72.9, 66.9, 66.8, 66.8, 66.8, 66.7, 66.8, 66.7 }, -- Axes
+		[371624] = { 18.2, 76.5, 47.4, 46.2, 40.1, 49.8, 42.5, 41.3, 47.3, 44.9, 41.3, 47.4, 46.1, 40.1, 49.8 }, -- Marks
+		[373059] = { 64.4, 144.6, 133.5, 134.7, 132.3 }, -- Blizzard
+	},
 }
-timersTable[17] = timersTable[14]
 local timers = timersTable[mod:Difficulty()]
+
+-- Skipped code
+local SKIP_CAST_THRESHOLD = 4
+local checkTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -59,11 +67,8 @@ if L then
 	L.meteor_axe = "Axe" -- Singular
 	L.meteor_axes_melee = "Melee Axe"
 	L.meteor_axes_ranged = "Ranged Axe"
-	L.conductive_marks = "Marks" -- Conductive Marks
-	L.conductive_mark = "Mark" -- Singular
 
-	L.custom_on_stop_timers = "Always show ability bars"
-	L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
+	L.skipped_cast = "Skipped %s (%d)"
 end
 
 --------------------------------------------------------------------------------
@@ -74,12 +79,11 @@ local conductiveMarkMarker = mod:AddMarkerOption(false, "player", 3, 371624, 3)
 local meteorAxeMarker = mod:AddMarkerOption(false, "player", 1, 374043, 1, 2)
 function mod:GetOptions()
 	return {
-		"custom_on_stop_timers",
 		-- Kadros Icewrath
-		373059, -- Primal Blizzard
+		{373059, "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Primal Blizzard
 		386661, -- Glacial Convocation
 		-- Dathea Stormlash
-		371624, -- Conductive Mark
+		{371624, "ME_ONLY_EMPHASIZE"}, -- Conductive Mark
 		conductiveMarkMarker, -- (vs ICON, leave skull/cross for boss marking)
 		{372279, "OFF"}, -- Chain Lightning
 		386375, -- Storming Convocation
@@ -88,26 +92,23 @@ function mod:GetOptions()
 		{372056, "TANK"}, -- Crush
 		386370, -- Quaking Convocation
 		-- Embar Firepath
-		{374038, "SAY", "SAY_COUNTDOWN"}, -- Meteor Axes
+		{374038, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Meteor Axes
 		{372027, "TANK"}, -- Slashing Blaze
 		meteorAxeMarker,
 		386289, -- Burning Convocation
 	}, {
-		["custom_on_stop_timers"] = "general",
-		[391599] = -24952, -- Kadros Icewrath
+		[373059] = -24952, -- Kadros Icewrath
 		[371624] = -24958, -- Dathea Stormlash
 		[397134] = -24967, -- Opalfang
 		[374038] = -24965, -- Embar Firepath
 	}, {
 		[373059] = L.primal_blizzard, -- Primal Blizzard (Blizzard)
 		[374038] = L.meteor_axes, -- Meteor Axes (Axes)
-		[371624] = L.conductive_marks, -- Conductive Mark (Mark)
+		[371624] = CL.marks, -- Conductive Mark (Marks)
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
-
 	-- Kadros Icewrath
 	self:Log("SPELL_CAST_START", "PrimalBlizzard", 373059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PrimalBlizzardApplied", 371836)
@@ -120,6 +121,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "StormingConvocation", 386375)
 	-- Opalfang
 	self:Log("SPELL_CAST_START", "EarthenPillar", 397134)
+	self:Log("SPELL_CAST_START", "Crush", 372056)
 	self:Log("SPELL_AURA_APPLIED", "CrushApplied", 372056)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushApplied", 372056)
 	self:Log("SPELL_CAST_SUCCESS", "QuakingConvocation", 386370)
@@ -140,11 +142,13 @@ function mod:OnEngage(diff)
 	slashCount = 1
 	earthenPillarCount = 1
 
-	self:Bar(372027, 11, CL.count:format(self:SpellName(372027), slashCount))
+	self:Bar(372027, 11, CL.count:format(self:SpellName(372027), slashCount)) -- Slashing Blaze
 	self:CDBar(372279, 12) -- Chain Lightning
 	self:Bar(372056, 19.5) -- Crush
 	self:Bar(397134, timers[397134][earthenPillarCount], CL.count:format(L.earthen_pillars, earthenPillarCount)) -- Earthen Pillar
-	self:Bar(371624, timers[371624][conductiveMarkCount], CL.count:format(L.conductive_marks, conductiveMarkCount))
+	local markCD = timers[371624][conductiveMarkCount]
+	self:Bar(371624, markCD, CL.count:format(CL.marks, conductiveMarkCount))
+	checkTimer = self:ScheduleTimer("ConductiveMarkCheck", markCD + SKIP_CAST_THRESHOLD, conductiveMarkCount)
 	self:Bar(374038, timers[374038][axeCount], CL.count:format(L.meteor_axes, axeCount))
 	self:Bar(373059, timers[373059][blizzardCount], CL.count:format(L.primal_blizzard, blizzardCount))
 end
@@ -153,25 +157,15 @@ end
 -- Event Handlers
 --
 
-do
-	local abilitysToPause = {
-		[371624] = true, -- Conductive Marks
-	}
-
-	local castPattern = CL.cast:gsub("%%s", ".+")
-
-	local function stopAtZeroSec(bar, key, text)
-		if bar.remaining < 0.045 then -- Pause at 0.0
-			bar:SetDuration(0.01) -- Make the bar look full
-			bar:Start()
-			bar:SetTimeVisibility(false)
-			mod:PauseBar(key, text)
-		end
-	end
-
-	function mod:BarCreated(_, _, bar, _, key, text)
-		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
-			bar:AddUpdateFunction(function() stopAtZeroSec(bar,key,text) end)
+function mod:ConductiveMarkCheck(castCount) -- Marks are rarely skipped
+	if castCount == conductiveMarkCount then -- not on the next cast?
+		mod:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
+		mod:Message(371624, "green", L.skipped_cast:format(CL.marks, castCount))
+		conductiveMarkCount = castCount + 1
+		local cd = timers[371624][conductiveMarkCount]
+		if cd then
+			mod:Bar(371624, cd - SKIP_CAST_THRESHOLD, CL.count:format(CL.marks, conductiveMarkCount))
+			checkTimer = mod:ScheduleTimer("ConductiveMarkCheck", cd, conductiveMarkCount)
 		end
 	end
 end
@@ -187,7 +181,7 @@ function mod:PrimalBlizzard(args)
 end
 
 function mod:PrimalBlizzardApplied(args)
-	if self:Me(args.destGUID) and (args.amount > 5 and args.amount % 3 == 0 or args.amount == 8) then -- 6, 8, 9
+	if self:Me(args.destGUID) and args.amount > 5 then
 		self:StackMessage(373059, "blue", args.destName, args.amount, 8)
 		if args.amount > 6 then
 			self:PlaySound(373059, "warning")
@@ -197,22 +191,29 @@ end
 
 function mod:GlacialConvocation(args)
 	self:StopBar(CL.count:format(args.spellName, blizzardCount))
-
 	self:Message(386661, "cyan")
 	self:PlaySound(386661, "info")
 end
 
 -- Dathea Stormlash
-function mod:ConductiveMark(args)
-	self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
-	self:Message(371624, "purple", CL.casting:format(CL.count:format(L.conductive_marks, conductiveMarkCount)))
+function mod:ConductiveMark()
+	self:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
+	self:Message(371624, "cyan", CL.casting:format(CL.count:format(CL.marks, conductiveMarkCount)))
 	conductiveMarkCount = conductiveMarkCount + 1
-	self:Bar(371624, timers[371624][conductiveMarkCount], CL.count:format(L.conductive_marks, conductiveMarkCount))
+	local cd = timers[371624][conductiveMarkCount]
+	self:CDBar(371624, cd, CL.count:format(CL.marks, conductiveMarkCount))
+	if cd then
+		checkTimer = self:ScheduleTimer("ConductiveMarkCheck", cd + SKIP_CAST_THRESHOLD, conductiveMarkCount)
+	end
 end
 
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
+		if args.amount then
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, CL.mark)
+		else
+			self:PersonalMessage(args.spellId, nil, CL.mark)
+		end
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -223,7 +224,7 @@ function mod:ChainLightning(args)
 end
 
 function mod:StormingConvocation(args)
-	self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
+	self:StopBar(CL.count:format(CL.marks, conductiveMarkCount))
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
 end
@@ -237,6 +238,10 @@ function mod:EarthenPillar(args)
 	self:Bar(args.spellId, timers[args.spellId][earthenPillarCount], CL.count:format(L.earthen_pillars, earthenPillarCount))
 end
 
+function mod:Crush(args)
+	self:Bar(args.spellId, 22)
+end
+
 function mod:CrushApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 	if self:Tank() and not self:Me(args.destGUID) and not self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then
@@ -244,7 +249,6 @@ function mod:CrushApplied(args)
 	elseif self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm") -- On you
 	end
-	self:Bar(args.spellId, 22)
 end
 
 function mod:QuakingConvocation(args)
@@ -291,9 +295,13 @@ do
 		table.sort(iconList, sortPriority) -- Priority for tanks > melee > ranged
 		for i = 1, #iconList do
 			if iconList[i].player == self:UnitName("player") then
-				local text = i == 1 and L.meteor_axes_melee or L.meteor_axes_ranged -- Melee or Ranged Axe
-				self:Say(374038, CL.rticon:format(text, i))
-				self:PersonalMessage(374038, nil, text)
+				if i == 1 then -- Melee Axe
+					self:Say(374038, CL.rticon:format(L.meteor_axes_melee, i), nil, ("Melee Axe ({rt%d})"):format(i))
+					self:PersonalMessage(374038, nil, L.meteor_axes_melee)
+				else -- Ranged Axe
+					self:Say(374038, CL.rticon:format(L.meteor_axes_ranged, i), nil, ("Ranged Axe ({rt%d})"):format(i))
+					self:PersonalMessage(374038, nil, L.meteor_axes_ranged)
+				end
 				self:SayCountdown(374038, 6, i)
 				self:PlaySound(374038, "warning") -- debuffmove
 				playedSound = true

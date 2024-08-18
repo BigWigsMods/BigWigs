@@ -18,15 +18,13 @@ plugin.defaultDB = {
 	yellow = { ["*"] = { ["*"] = { 1, 1, 0.1 } } },
 	green = { ["*"] = { ["*"] = { 0.2, 1, 0.2 } } },
 	cyan = { ["*"] = { ["*"] = { 0.2, 1, 1 } } },
-	purple = { ["*"] = { ["*"] = { 0.5, 0, 0.5 } } },
+	purple = { ["*"] = { ["*"] = { 0.7, 0, 0.7 } } },
 
 	barBackground = { ["*"] = { ["*"] = { 0.5, 0.5, 0.5, 0.3 } } },
 	barText = { ["*"] = { ["*"] = { 1, 1, 1, 1 } } },
 	barTextShadow = { ["*"] = { ["*"] = { 0, 0, 0, 1 } } },
 	barColor = { ["*"] = { ["*"] = { 0.25, 0.33, 0.68, 1 } } },
 	barEmphasized = { ["*"] = { ["*"] = { 1, 0, 0, 1 } } },
-
-	flash = { ["*"] = { ["*"] = { 0, 0, 1, 0.6 } } },
 }
 
 local function copyTable(to, from)
@@ -197,26 +195,12 @@ local colorOptions = {
 				},
 			},
 		},
-		flash = {
-			type = "group",
-			name = L.flash,
-			inline = true,
-			order = 3,
-			args = {
-				flash = {
-					name = L.flash,
-					type = "color",
-					hasAlpha = true,
-					order = 11,
-				},
-			},
-		},
 		reset = {
 			type = "execute",
 			name = L.reset,
 			desc = L.resetDesc,
 			func = reset,
-			order = 4,
+			order = 3,
 			width = "full",
 		},
 	},
@@ -242,16 +226,12 @@ function plugin:SetColorOptions(name, key, flags)
 	local t = addKey(colorOptions, keyTable)
 	t.args.messages.hidden = nil
 	t.args.bars.hidden = nil
-	t.args.flash.hidden = nil
 	if flags then
 		if bit.band(flags, C.MESSAGE) ~= C.MESSAGE then
 			t.args.messages.hidden = true
 		end
 		if bit.band(flags, C.BAR) ~= C.BAR then
 			t.args.bars.hidden = true
-		end
-		if bit.band(flags, C.FLASH) ~= C.FLASH then
-			t.args.flash.hidden = true
 		end
 	end
 	return t
@@ -268,45 +248,6 @@ plugin.pluginOptions.args.resetAll = {
 	desc = L.resetAllDesc,
 	func = resetAll,
 	order = 17,
-}
-plugin.pluginOptions.args.anchorsButton = {
-	type = "execute",
-	name = function()
-		local BL = BigWigsAPI:GetLocale("BigWigs")
-		if BigWigsOptions:InConfigureMode() then
-			return BL.toggleAnchorsBtnHide
-		else
-			return BL.toggleAnchorsBtnShow
-		end
-	end,
-	desc = function()
-		local BL = BigWigsAPI:GetLocale("BigWigs")
-		if BigWigsOptions:InConfigureMode() then
-			return BL.toggleAnchorsBtnHide_desc
-		else
-			return BL.toggleAnchorsBtnShow_desc
-		end
-	end,
-	func = function() 
-		if not BigWigs:IsEnabled() then BigWigs:Enable() end
-		if BigWigsOptions:InConfigureMode() then
-			plugin:SendMessage("BigWigs_StopConfigureMode")
-		else
-			plugin:SendMessage("BigWigs_StartConfigureMode")
-		end
-	end,
-	width = 1.5,
-	order = 0.2,
-}
-plugin.pluginOptions.args.testButton = {
-	type = "execute",
-	name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
-	desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
-	func = function() 
-		BigWigs:Test()
-	end,
-	width = 1.5,
-	order = 0.4,
 }
 
 local white = { 1, 1, 1 }
