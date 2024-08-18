@@ -509,9 +509,9 @@ do
 					levelUpTbl.title = nil
 					levelUpTbl.iconFileID = tbl.iconFileID
 				end
-			elseif tbl.eventToastID == 51 then -- Battleground
-				-- tbl.title is "Twin Peaks"
-				-- tbl.subtitle is "Battleground Unlocked!"
+			elseif tbl.eventToastID == 2 or tbl.eventToastID == 51 then -- Dungeon, Battleground
+				-- tbl.title is "Ara-Kara, City of Echoes" / "Twin Peaks"
+				-- tbl.subtitle is "Dungeon Unlocked!" / "Battleground Unlocked!"
 				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
 				tbl.title = nil
 				tbl.bwDuration = 2.5
