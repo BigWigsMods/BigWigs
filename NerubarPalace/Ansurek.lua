@@ -99,7 +99,7 @@ end
 function mod:OnBossEnable()
 	-- Stage One: A Queen's Venom
 	self:Log("SPELL_CAST_START", "ReactiveToxin", 437592)
-	self:Log("SPELL_AURA_APPLIED", "ReactiveToxinApplied", 437592) -- Prolly wrong ID... 100 spells, no debuffs.
+	self:Log("SPELL_AURA_APPLIED", "ReactiveToxinApplied", 437586)
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedToxinApplied", 451278)
 	self:Log("SPELL_AURA_APPLIED", "FrothyToxinApplied", 464638)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrothyToxinApplied", 464638)
@@ -200,10 +200,10 @@ end
 
 function mod:ReactiveToxinApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning") -- position?
-		self:Say(args.spellId, args.spellName, nil, "Reactive Toxin")
-		self:SayCountdown(args.spellId, 5)
+		self:PersonalMessage(437592)
+		self:PlaySound(437592, "warning") -- position?
+		self:Say(437592, args.spellName, nil, "Reactive Toxin")
+		self:SayCountdown(437592, 5)
 	end
 end
 
