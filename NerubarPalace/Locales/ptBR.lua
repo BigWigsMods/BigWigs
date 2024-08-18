@@ -40,3 +40,18 @@ if L then
 	--L.twiligt_massacre = "Dashes"
 	--L.nexus_daggers = "Daggers"
 end
+
+L = BigWigs:NewBossLocale("The Silken Court", "ptBR")
+if L then
+	--L.skipped_cast = "Skipped %s (%d)"
+
+	--L.venomous_rain = "Rain"
+	--L.burrowed_eruption = "Burrow"
+	--L.stinging_swarm = "Dispel Debuffs"
+	--L.strands_of_reality = "Frontal [S]" -- S for Skeinspinner Takazj
+	--L.impaling_eruption = "Frontal [A]" -- A for Anub'arash
+	--L.entropic_desolation = "Run Out"
+	--L.cataclysmic_entropy = "Big Boom" -- Interrupt before it casts
+	--L.spike_eruption = "Spikes"
+	--L.unleashed_swarm = "Swarm"
+end
