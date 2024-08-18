@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(214506) -- Broodtwister Ovi'nax
 mod:SetEncounterID(2919)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -108,6 +109,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	experimentalDosageCount = 1
 	ingestBlackBloodCount = 1
 	unstableInfusionCount = 1
@@ -164,6 +166,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 442430 then -- Ingest Black Blood (100 energy)
+		local stage = self:GetStage()
+		self:SetStage(stage + 1)
+
 		-- Experimental Dosage
 		self:Bar(442526, 16.0, CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		self:PauseBar(442526, CL.count:format(L.experimental_dosage, experimentalDosageCount))
