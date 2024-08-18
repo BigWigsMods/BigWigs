@@ -509,13 +509,6 @@ do
 					levelUpTbl.title = nil
 					levelUpTbl.iconFileID = tbl.iconFileID
 				end
-			elseif tbl.eventToastID == 2 or tbl.eventToastID == 51 then -- Dungeon, Battleground
-				-- tbl.title is "Ara-Kara, City of Echoes" / "Twin Peaks"
-				-- tbl.subtitle is "Dungeon Unlocked!" / "Battleground Unlocked!"
-				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
-				tbl.title = nil
-				tbl.bwDuration = 2.5
-				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
 			elseif tbl.eventToastID == 3 then -- New ability
 				-- tbl.title is "Imprison"
 				-- tbl.subtitle is "New Ability Unlocked!"
@@ -523,12 +516,19 @@ do
 				tbl.title = nil
 				tbl.bwDuration = 4.5
 				self:SimpleTimer(function() printMessage(self, tbl) end, 0.6) -- Show after the level up toast
+			elseif tbl.eventToastID == 2 or tbl.eventToastID == 51 then -- Dungeon, Battleground
+				-- tbl.title is "Ara-Kara, City of Echoes" / "Twin Peaks"
+				-- tbl.subtitle is "Dungeon Unlocked!" / "Battleground Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+				tbl.title = nil
+				tbl.bwDuration = 2.5
+				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
 			elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
 				if not self.db.profile.blockDungeonToasts then
 					tbl.bwDuration = 2
 					printMessage(self, tbl)
 				end
-			else --if tbl.eventToastID == 3 then -- New ability
+			else -- Something we don't support, pass to Blizz to process
 				return
 			end
 			RemoveCurrentToast()
