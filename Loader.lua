@@ -220,16 +220,15 @@ do
 			littleWigsBundled = {},
 			zones = {},
 		}
-	elseif public.isBeta and public.isTestBuild then -- TWW Beta
+	else -- War Within
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
 			bigWigsBundled = {
-				[df] = true,
+				[df] = true, -- XXX remove when split out
 				[tww] = true,
 			},
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
-				[lw_df] = true,
 				[lw_tww] = true,
 				[lw_delves] = true,
 				[lw_cs] = true,
@@ -239,27 +238,10 @@ do
 				lw_cs,
 			},
 			zones = {
+				[2522] = "BigWigs_VaultOfTheIncarnates", -- XXX remove when split out
+				[2569] = "BigWigs_Aberrus", -- XXX remove when split out
+				[2549] = "BigWigs_Amirdrassil", -- XXX remove when split out
 				[2657] = "BigWigs_NerubarPalace",
-			}
-		}
-	else -- Dragonflight
-		public.currentExpansion = { -- Change on new expansion releases
-			name = df,
-			bigWigsBundled = {
-				[df] = true,
-			},
-			littlewigsDefault = lw_cs,
-			littleWigsBundled = {
-				[lw_df] = true,
-				[lw_cs] = true,
-			},
-			littleWigsExtras = {
-				lw_cs,
-			},
-			zones = {
-				[2522] = "BigWigs_VaultOfTheIncarnates",
-				[2569] = "BigWigs_Aberrus",
-				[2549] = "BigWigs_Amirdrassil",
 			}
 		}
 	end
@@ -412,7 +394,7 @@ do
 		[939] = lw_cata, -- Well of Eternity
 		[940] = lw_cata, -- Hour of Twilight
 		[657] = lw_cata, -- The Vortex Pinnacle
-		[670] = (public.isBeta and public.isTestBuild) and {lw_cata, lw_cs} or lw_cata, -- Grim Batol
+		[670] = public.isTestBuild and {lw_cata, lw_cs} or lw_cata, -- Grim Batol
 		--[[ LittleWigs: Mists of Pandaria ]]--
 		[959] = lw_mop, -- Shado-Pan Monastery
 		[960] = lw_mop, -- Temple of the Jade Serpent
@@ -453,7 +435,7 @@ do
 		[1754] = lw_bfa, -- Freehold
 		[1762] = lw_bfa, -- King's Rest
 		[1864] = lw_bfa, -- Shrine of the Storm
-		[1822] = (public.isBeta and public.isTestBuild) and {lw_bfa, lw_cs} or lw_bfa, -- Siege of Boralus
+		[1822] = public.isTestBuild and {lw_bfa, lw_cs} or lw_bfa, -- Siege of Boralus
 		[1877] = lw_bfa, -- Temple of Sethraliss
 		[1594] = lw_bfa, -- The Undermine
 		[1771] = lw_bfa, -- Tol Dagor
@@ -465,32 +447,32 @@ do
 		--[[ LittleWigs: Shadowlands ]]--
 		[2284] = lw_s, -- Sanguine Depths
 		[2285] = lw_s, -- Spires of Ascension
-		[2286] = (public.isBeta and public.isTestBuild) and {lw_s, lw_cs} or lw_s, -- The Necrotic Wake
+		[2286] = public.isTestBuild and {lw_s, lw_cs} or lw_s, -- The Necrotic Wake
 		[2287] = lw_s, -- Halls of Atonement
 		[2289] = lw_s, -- Plaguefall
-		[2290] = (public.isBeta and public.isTestBuild) and {lw_s, lw_cs} or lw_s, -- Mists of Tirna Scithe
+		[2290] = public.isTestBuild and {lw_s, lw_cs} or lw_s, -- Mists of Tirna Scithe
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
 		--[[ LittleWigs: Dragonflight ]]--
-		[2451] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- Uldaman: Legacy of Tyr
-		[2515] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- The Azure Vault
-		[2516] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- The Nokhud Offensive
-		[2519] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- Neltharus
-		[2520] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- Brackenhide Hollow
-		[2521] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- Ruby Life Pools
-		[2526] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- Algeth'ar Academy
-		[2527] = not (public.isBeta and public.isTestBuild) and {lw_df, lw_cs} or lw_df, -- Halls of Infusion
+		[2451] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- Uldaman: Legacy of Tyr
+		[2515] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- The Azure Vault
+		[2516] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- The Nokhud Offensive
+		[2519] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- Neltharus
+		[2520] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- Brackenhide Hollow
+		[2521] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- Ruby Life Pools
+		[2526] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- Algeth'ar Academy
+		[2527] = not public.isTestBuild and {lw_df, lw_cs} or lw_df, -- Halls of Infusion
 		[2579] = lw_df, -- Dawn of the Infinite
 		--[[ LittleWigs: The War Within ]]--
 		[2648] = lw_tww, -- The Rookery
 		[2649] = lw_tww, -- Priory of the Sacred Flame
 		[2651] = lw_tww, -- Darkflame Cleft
-		[2652] = (public.isBeta and public.isTestBuild) and {lw_tww, lw_cs} or lw_tww, -- The Stonevault
-		[2660] = (public.isBeta and public.isTestBuild) and {lw_tww, lw_cs} or lw_tww, -- Ara-Kara, City of Echoes
+		[2652] = public.isTestBuild and {lw_tww, lw_cs} or lw_tww, -- The Stonevault
+		[2660] = public.isTestBuild and {lw_tww, lw_cs} or lw_tww, -- Ara-Kara, City of Echoes
 		[2661] = lw_tww, -- Cinderbrew Meadery
-		[2662] = (public.isBeta and public.isTestBuild) and {lw_tww, lw_cs} or lw_tww, -- The Dawnbreaker
-		[2669] = (public.isBeta and public.isTestBuild) and {lw_tww, lw_cs} or lw_tww, -- City of Threads
+		[2662] = public.isTestBuild and {lw_tww, lw_cs} or lw_tww, -- The Dawnbreaker
+		[2669] = public.isTestBuild and {lw_tww, lw_cs} or lw_tww, -- City of Threads
 		--[[ LittleWigs: Delves ]]--
 		[2664] = lw_delves, -- Fungal Folly
 		[2679] = lw_delves, -- Mycomancer Cavern
