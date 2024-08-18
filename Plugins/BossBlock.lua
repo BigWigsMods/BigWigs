@@ -779,6 +779,10 @@ do
 		[106402]=true,[106404]=true,[106406]=true,[106411]=true,[106412]=true,[106413]=true,
 		-- Freehold
 		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
+		-- Siege of Boralus
+		[101137]=true,[102115]=true,[106663]=true,[106674]=true,[106675]=true,[106676]=true,[106677]=true,
+		[106659]=true,[106660]=true,[106661]=true,[106662]=true,[106664]=true,[106667]=true,[106668]=true,
+		[106669]=true,[106670]=true,[106671]=true,
 		-- The Underrot
 		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,[110728]=true,[112208]=true,
 		[106877]=true,[106853]=true,[106855]=true,[106856]=true,[106434]=true,[110781]=true,
@@ -824,6 +828,24 @@ do
 		[205814]=true,[205815]=true,[205567]=true,[205852]=true,
 		-- Uldaman: Legacy of Tyr
 		[203125]=true,[203126]=true,[203127]=true,
+
+		-- Ara-Kara
+		[247684]=true,
+		-- Cinderbrew Meadery
+		[251845]=true,[251846]=true,
+		-- City of Threads
+		[250773]=true,[250774]=true,[250775]=true,[250776]=true,[250777]=true,[250778]=true,[250779]=true,[250780]=true,
+		[250781]=true,[250782]=true,[250790]=true,[250791]=true,[250795]=true,
+		-- Priory of the Sacred Flame
+		[251154]=true,[251155]=true,[251156]=true,[251157]=true,[251162]=true,[251163]=true,[251169]=true,[251170]=true,
+		[251171]=true,[251176]=true,
+		-- The Dawnbreaker
+		[251195]=true,[251196]=true,[251197]=true,[251198]=true,[247638]=true,[251199]=true,[251200]=true,[251201]=true,
+		[251202]=true,[251203]=true,[251204]=true,[251205]=true,[251206]=true,[251207]=true,[251208]=true,[251184]=true,
+		[251209]=true,[251210]=true,[251211]=true,[251189]=true,[251212]=true,[251213]=true,[251214]=true,
+		-- The Stonevault
+		[250849]=true,[250850]=true,[250845]=true,[250851]=true,[250852]=true,[250853]=true,[250854]=true,[250855]=true,
+		[250856]=true,[250857]=true,[250858]=true,[250860]=true,[250861]=true,[250862]=true,[250863]=true,
 	}
 
 	local lookup = {
