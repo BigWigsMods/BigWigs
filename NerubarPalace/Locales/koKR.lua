@@ -25,11 +25,15 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "koKR")
 if L then
-	L.sticky_web_say = "거미줄"
+	--L.sticky_web = "Webs"
+	L.sticky_web_say = "거미줄" -- Singular of Webs
 	L.infest_message = "당신에게 감연 시전 중!"
 	L.infest_say = "기생충"
-	L.experimental_dosage_say = "알 흡수"
+	--L.experimental_dosage = "Egg Breaks"
+	--L.experimental_dosage_say = "Egg Break"
+	--L.ingest_black_blood = "Next Container"
 	L.unstable_infusion = "이감 바닥"
+
 	L.custom_on_experimental_dosage_marks = "실험용 투여제 할당"
 	L.custom_on_experimental_dosage_marks_desc = "'실험용 투여제'에 영향을 받는 플레이어를 근접 > 원거리 > 힐러 우선 순위로 {rt6}{rt4}{rt3}{rt7}에 할당합니다. 채팅 및 대상 메시지에 영향을 미칩니다."
 end

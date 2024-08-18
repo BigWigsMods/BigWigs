@@ -25,11 +25,15 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "ptBR")
 if L then
-	--L.sticky_web_say = "Web"
+	--L.sticky_web = "Webs"
+	--L.sticky_web_say = "Web" -- Singular of Webs
 	--L.infest_message = "Casting Infest on YOU!"
 	--L.infest_say = "Parasites"
-	--L.experimental_dosage_say = "Soak Egg"
+	--L.experimental_dosage = "Egg Breaks"
+	--L.experimental_dosage_say = "Egg Break"
+	--L.ingest_black_blood = "Next Container"
 	--L.unstable_infusion = "Swirls"
+
 	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
 	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
 end

@@ -25,11 +25,15 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "frFR")
 if L then
-	L.sticky_web_say = "Toiles"
+	--L.sticky_web = "Webs"
+	L.sticky_web_say = "Toiles" -- Singular of Webs
 	L.infest_message = "Lance Infester sur vous !"
 	L.infest_say = "Parasites"
-	L.experimental_dosage_say = "Soak Œuf"
+	--L.experimental_dosage = "Egg Breaks"
+	--L.experimental_dosage_say = "Egg Break"
+	--L.ingest_black_blood = "Next Container"
 	L.unstable_infusion = "Tourbillons"
+
 	L.custom_on_experimental_dosage_marks = "Assignements Dosage expérimental"
 	L.custom_on_experimental_dosage_marks_desc = "Assigne des joueurs affectés par 'Dosage expérimental' à {rt6}{rt4}{rt3}{rt7} avec un priorité mélée > distant > soigneur. Affecte les messages dire et cible."
 end

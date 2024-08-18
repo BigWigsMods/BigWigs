@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Broodtwister Ovi'nax", 2657, 2612)
 if not mod then return end
-mod:RegisterEnableMob(214506)
+mod:RegisterEnableMob(214506) -- Broodtwister Ovi'nax
 mod:SetEncounterID(2919)
 mod:SetRespawnTime(30)
 
@@ -14,10 +14,12 @@ mod:SetRespawnTime(30)
 
 local experimentalDosageCount = 1
 local ingestBlackBloodCount = 1
+local nextIngest = 0
 local unstableInfusionCount = 1
 local stickyWebCount = 1
 local volatileConcoctionCount = 1
 local fixateOnMeList = {}
+
 local mobCollector = {}
 local mobMarks = {}
 
@@ -27,11 +29,13 @@ local mobMarks = {}
 
 local L = mod:GetLocale()
 if L then
-	L.sticky_web_say = "Web"
+	L.sticky_web = "Webs"
+	L.sticky_web_say = "Web" -- Singular of Webs
 	L.infest_message = "Casting Infest on YOU!"
 	L.infest_say = "Parasites"
-	L.experimental_dosage_say = "Soak Egg"
-
+	L.experimental_dosage = "Egg Breaks"
+	L.experimental_dosage_say = "Egg Break"
+	L.ingest_black_blood = "Next Container"
 	L.unstable_infusion = "Swirls" -- is also the heal absorb on the boss
 
 	L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
@@ -42,9 +46,10 @@ end
 -- Initialization
 --
 
-local voraciousWormMarker = mod:AddMarkerOption(false, "npc", 8, -28999, 8, 7, 6, 5)
+local voraciousWormMarker = mod:AddMarkerOption(false, "npc", 8, -28999, 8, 7, 6, 5) -- Voracious Worm
 function mod:GetOptions()
 	return {
+		"berserk",
 		{442526, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Experimental Dosage
 		442660, -- Experimental Dosage (was rupture/healing absorb)
 		"custom_on_experimental_dosage_marks",
@@ -64,8 +69,11 @@ function mod:GetOptions()
 	}, {
 		[458212] = "adds",
 	}, {
-		[442660] = CL.heal_absorb,
-		[443274] = L.unstable_infusion,
+		[442526] = L.experimental_dosage, -- Experimental Dosage (Egg Breaks)
+		[442660] = CL.heal_absorb, -- Experimental Dosage (Heal Absorb)
+		[442432] = L.ingest_black_blood, -- Ingest Black Blood (Next Container)
+		[443274] = L.unstable_infusion, -- Unstable Infusion (Swirls)
+		[446349] = L.sticky_web, -- Sticky Web (Webs)
 	}
 end
 
@@ -109,12 +117,17 @@ function mod:OnEngage()
 	mobCollector = {}
 	mobMarks = {}
 
-	self:Bar(441362, 2.1, CL.count:format(self:SpellName(441362), volatileConcoctionCount)) -- Volatile Concoction
+	self:Bar(441362, 2, CL.count:format(self:SpellName(441362), volatileConcoctionCount)) -- Volatile Concoction
 	if not self:Easy() then
-		self:Bar(446349, 14.9, CL.count:format(self:SpellName(446349), stickyWebCount)) -- Sticky Web
+		self:Bar(446349, 15, CL.count:format(L.sticky_web, stickyWebCount)) -- Sticky Web
 	end
-	self:CDBar(442432, 15.7, CL.count:format(self:SpellName(442432), ingestBlackBloodCount)) -- Ingest Black Blood
-	self:Bar(442526, 31.7, CL.count:format(self:SpellName(442526), experimentalDosageCount)) -- Experimental Dosage
+
+	local ingestCd = 15.7
+	nextIngest = GetTime() + ingestCd
+	self:CDBar(442432, ingestCd, CL.count:format(L.ingest_black_blood, ingestBlackBloodCount)) -- Ingest Black Blood
+	if self:Heroic() or self:Normal() then
+		self:Berserk(540) -- Normal + Heroic PTR
+	end
 
 	if self:GetOption(voraciousWormMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -151,17 +164,16 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 442430 then -- Ingest Black Blood (100 energy)
-		-- re-adjusts the bar time to the cast cd after ingest and pauses the bar while the boss moves
 		-- Experimental Dosage
-		self:Bar(442526, {16.0, experimentalDosageCount == 1 and 31.7 or 66.7}, CL.count:format(self:SpellName(442526), experimentalDosageCount))
-		self:PauseBar(442526, CL.count:format(self:SpellName(442526), experimentalDosageCount))
+		self:Bar(442526, 16.0, CL.count:format(L.experimental_dosage, experimentalDosageCount))
+		self:PauseBar(442526, CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		-- Volatile Concoction
-		self:Bar(441362, {18.0, volatileConcoctionCount == 2 and 31.6 or 26.6}, CL.count:format(self:SpellName(441362), volatileConcoctionCount))
+		self:Bar(441362, 18.5, CL.count:format(self:SpellName(441362), volatileConcoctionCount))
 		self:PauseBar(441362, CL.count:format(self:SpellName(441362), volatileConcoctionCount))
 		-- Sticky Web
 		if not self:Easy() then
-			self:Bar(446349, {31.0, stickyWebCount == 2 and 31.8 or 46.7}, CL.count:format(self:SpellName(446349), stickyWebCount))
-			self:PauseBar(446349, CL.count:format(self:SpellName(446349), stickyWebCount))
+			self:Bar(446349, 30, CL.count:format(L.sticky_web, stickyWebCount))
+			self:PauseBar(446349, CL.count:format(L.sticky_web, stickyWebCount))
 		end
 	end
 end
@@ -197,7 +209,7 @@ do
 				local text = icon and CL.rticon:format(L.experimental_dosage_say, icon) or L.experimental_dosage_say
 				self:Message(442526, "blue", text)
 				self:PlaySound(442526, "warning")
-				self:Say(442526, text, nil, icon and CL.rticon:format("Soak Egg", icon) or "Soak Egg")
+				self:Say(442526, text, nil, icon and CL.rticon:format("Break Egg", icon) or "Break Egg")
 				self:SayCountdown(442526, self:Easy() and 10 or self:Mythic() and 6 or 8, icon)
 			end
 			-- 8 names in mythic may be a bit much, maybe infobox (bleh)?
@@ -208,16 +220,16 @@ do
 	end
 
 	function mod:ExperimentalDosage(args)
-		self:StopBar(CL.count:format(args.spellName, experimentalDosageCount))
-		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, experimentalDosageCount)))
+		self:StopBar(CL.count:format(L.experimental_dosage, experimentalDosageCount))
+		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.experimental_dosage, experimentalDosageCount)))
 		self:PlaySound(args.spellId, "alert")
 		local debuffDuration = self:Easy() and 10 or self:Mythic() and 6 or 8
-		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount))
+		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount)) -- 1.5s Cast + debuffDuration
 		experimentalDosageCount = experimentalDosageCount + 1
 
-		-- 16, 50, 50 // 16, 50, 50 // 16, 50, 50
-		local cd = (experimentalDosageCount - 1) % 3 == 0 and 66.7 or 50.0
-		self:Bar(args.spellId, cd, CL.count:format(args.spellName, experimentalDosageCount))
+		if experimentalDosageCount > 9 and experimentalDosageCount % 3 ~= 1 then -- No more than 9, starting every 3rd on Ingest Black Blood
+			self:Bar(args.spellId, 50.0, CL.count:format(args.spellName, experimentalDosageCount))
+		end
 
 		playerList, iconList = {}, {}
 		if not scheduled then
@@ -252,16 +264,21 @@ function mod:RuptureApplied(args)
 end
 
 function mod:IngestBlackBlood(args)
-	self:StopBar(CL.count:format(args.spellName, ingestBlackBloodCount))
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, ingestBlackBloodCount))
+	self:StopBar(CL.count:format(L.ingest_black_blood, ingestBlackBloodCount))
+	self:Message(args.spellId, "cyan", CL.count:format(L.ingest_black_blood, ingestBlackBloodCount))
 	self:PlaySound(args.spellId, "long")
 	ingestBlackBloodCount = ingestBlackBloodCount + 1
-	self:CDBar(args.spellId, 165, CL.count:format(args.spellName, ingestBlackBloodCount)) -- ~time to USCS 442430
+
+	local cd = 165
+	nextIngest = GetTime() + cd
+	if ingestBlackBloodCount < 4 then -- Only 3 Containers
+		self:CDBar(args.spellId, cd, CL.count:format(L.ingest_black_blood, ingestBlackBloodCount)) -- ~time to USCS 442430
+	end
 
 	self:ResumeBar(442526, CL.count:format(self:SpellName(442526), experimentalDosageCount)) -- Experimental Dosage
 	self:ResumeBar(441362, CL.count:format(self:SpellName(441362), volatileConcoctionCount)) -- Volatile Concoction
 	if not self:Easy() then
-		self:ResumeBar(446349, CL.count:format(self:SpellName(446349), stickyWebCount)) -- Sticky Web
+		self:ResumeBar(446349, CL.count:format(L.sticky_web, stickyWebCount)) -- Sticky Web
 	end
 end
 
@@ -293,9 +310,11 @@ function mod:StickyWeb(args)
 	self:StopBar(CL.count:format(args.spellName, stickyWebCount))
 	self:Message(446349, "yellow", CL.count:format(args.spellName, stickyWebCount))
 	stickyWebCount = stickyWebCount + 1
-	-- 14.9 // 31, 30, 30, 30, 30 // 31, 30, 30, 30, 30 // 31, 30, 30, 30
-	local cd = stickyWebCount == 2 and 31.8 or (stickyWebCount - 2) % 5 == 0 and 46.7 or 30.0
-	self:Bar(446349, cd, CL.count:format(args.spellName, stickyWebCount))
+	local cd = 30
+	local ingestTimeLeft = nextIngest - GetTime()
+	if ingestTimeLeft > cd then
+		self:Bar(446349, cd, CL.count:format(args.spellName, stickyWebCount))
+	end
 end
 
 do
@@ -303,7 +322,7 @@ do
 	function mod:StickyWebApplied(args)
 		if self:Me(args.destGUID)  then
 			prevOnMe = args.time
-			self:PersonalMessage(args.spellId)
+			self:PersonalMessage(args.spellId, nil, L.sticky_web)
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.sticky_web_say, nil, "Web")
 		end
@@ -320,9 +339,11 @@ end
 function mod:VolatileConcoction(args)
 	self:StopBar(CL.count:format(args.spellName, volatileConcoctionCount))
 	volatileConcoctionCount = volatileConcoctionCount + 1
-	-- 2.1 // 18, 20, 20, 20, 20, 20, 20, 20 // 18, 20, 20, 20, 20, 20, 20, 20 // 18, 20, 20, 20, 20, 20
-	local cd = volatileConcoctionCount == 2 and 31.6 or (volatileConcoctionCount - 2) % 8 == 0 and 26.6 or 20.0
-	self:Bar(441362, cd, CL.count:format(args.spellName, volatileConcoctionCount))
+	local cd = 20
+	local ingestTimeLeft = nextIngest - GetTime()
+	if ingestTimeLeft > cd then
+		self:Bar(441362, cd, CL.count:format(args.spellName, volatileConcoctionCount))
+	end
 end
 
 function mod:VolatileConcoctionApplied(args)
@@ -362,13 +383,13 @@ function mod:FixateApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.fixate)
 		self:PlaySound(args.spellId, "alarm")
-		fixateOnMeList[args.destName] = true
+		fixateOnMeList[args.sourceGUID] = true
 	end
 end
 
 function mod:FixateRemoved(args)
 	if self:Me(args.destGUID) then
-		fixateOnMeList[args.destName] = nil
+		fixateOnMeList[args.sourceGUID] = nil
 	end
 end
 

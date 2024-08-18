@@ -25,11 +25,15 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhCN")
 if L then
-	L.sticky_web_say = "蛛网"
+	--L.sticky_web = "Webs"
+	L.sticky_web_say = "蛛网" -- Singular of Webs
 	L.infest_message = "对你施放感染！"
 	L.infest_say = "寄生"
-	L.experimental_dosage_say = "烧蛋"
+	--L.experimental_dosage = "Egg Breaks"
+	--L.experimental_dosage_say = "Egg Break"
+	--L.ingest_black_blood = "Next Container"
 	L.unstable_infusion = "紫圈"
+
 	L.custom_on_experimental_dosage_marks = "试验性剂量分配"
 	L.custom_on_experimental_dosage_marks_desc = "将受到“试验性剂量” 的玩家，按照 近战 > 远程 > 治疗 的优先顺序分配 {rt6}{rt4}{rt3}{rt7} 标记。 包含喊话和目标信息。"
 end
