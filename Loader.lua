@@ -1846,7 +1846,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		if type(module.instanceId) == 'table' then
 			for _, eachId in ipairs(module.instanceId) do
 				enableZones[eachId] = true
-		  	end
+			end
 		else
 			enableZones[module.instanceId] = true
 		end
