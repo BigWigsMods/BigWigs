@@ -1376,20 +1376,20 @@ do
 			"WrathOfTheLichKing",
 			"Cataclysm",
 		}
-	elseif loader.isBeta then
-		expansionHeader = {
-			"Classic",
-			"BurningCrusade",
-			"WrathOfTheLichKing",
-			"Cataclysm",
-			"MistsOfPandaria",
-			"WarlordsOfDraenor",
-			"Legion",
-			"BattleForAzeroth",
-			"Shadowlands",
-			"Dragonflight",
-			"TheWarWithin",
-		}
+	--elseif loader.isBeta then
+	--	expansionHeader = {
+	--		"Classic",
+	--		"BurningCrusade",
+	--		"WrathOfTheLichKing",
+	--		"Cataclysm",
+	--		"MistsOfPandaria",
+	--		"WarlordsOfDraenor",
+	--		"Legion",
+	--		"BattleForAzeroth",
+	--		"Shadowlands",
+	--		"Dragonflight",
+	--		"TheWarWithin",
+	--	}
 	else
 		expansionHeader = {
 			"Classic",
@@ -1402,6 +1402,7 @@ do
 			"BattleForAzeroth",
 			"Shadowlands",
 			"Dragonflight",
+			"TheWarWithin",
 		}
 	end
 
