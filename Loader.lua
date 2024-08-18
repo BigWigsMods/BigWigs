@@ -98,14 +98,6 @@ local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
-public.GetBestMapForUnit = GetBestMapForUnit
-public.GetMapInfo = GetMapInfo
-public.GetAffixInfo = GetAffixInfo
-public.IsChallengeModeActive = IsChallengeModeActive
-public.GetActiveKeystoneInfo = GetActiveKeystoneInfo
-public.GetInstanceInfo = GetInstanceInfo
-public.SendAddonMessage = SendAddonMessage
-public.SendChatMessage = SendChatMessage
 public.date = date
 public.Ambiguate = Ambiguate
 public.CTimerAfter = CTimerAfter
@@ -114,6 +106,9 @@ public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
+public.GetAffixInfo = GetAffixInfo
+public.IsChallengeModeActive = IsChallengeModeActive
+public.GetActiveKeystoneInfo = GetActiveKeystoneInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras and C_UnitAuras.GetPlayerAuraBySpellID
 public.GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 public.GetSpellDescription = C_Spell and C_Spell.GetSpellDescription or GetSpellDescription
@@ -1843,13 +1838,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 			enableZones[module.instanceId[i]] = true
 		end
 	else
-		if type(module.instanceId) == 'table' then
-			for _, eachId in ipairs(module.instanceId) do
-				enableZones[eachId] = true
-			end
-		else
-			enableZones[module.instanceId] = true
-		end
+		enableZones[module.instanceId] = true
 	end
 
 	local id = module.otherMenu or module.instanceId or -(module.mapId)

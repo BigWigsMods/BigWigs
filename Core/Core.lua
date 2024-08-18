@@ -447,6 +447,7 @@ do
 		return setmetatable({
 			name = name,
 			moduleName = moduleName,
+			enableMobs = {},
 
 			-- Embed callback handler
 			RegisterMessage = loader.RegisterMessage,
