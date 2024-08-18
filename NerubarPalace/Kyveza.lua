@@ -53,9 +53,9 @@ function mod:GetOptions()
 		{440576, "TANK"}, -- Chasmal Gash
 
 		-- Stage Two: Starless Night
-		435405, -- Starless Night
+		{435405, "CASTBAR"}, -- Starless Night
 		-- {435534, "PRIVATE"}, -- Regicide PA Sounds only
-		442277, -- Eternal Night
+		{442277, "CASTBAR"}, -- Eternal Night
 	}, {
 		[436867] = -28741, -- Stage One: The Phantom Blade
 		[435405] = -28742, -- Stage Two: Starless Night
@@ -195,6 +195,7 @@ function mod:StarlessNight(args)
 	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:Message(args.spellId, "cyan", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
+	self:CastBar(args.spellId, 24, CL.count:format(CL.stage:format(2), starlessNightCount))
 	starlessNightCount = starlessNightCount + 1
 	local cd = 130.0
 	if starlessNightCount == 3 then
@@ -208,5 +209,5 @@ function mod:EternalNight(args)
 	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:Message(args.spellId, "red", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 34, 15097) -- 15097 = Enrage (cast hits the entire room and ramps)
+	self:CastBar(args.spellId, 34, CL.count:format(CL.stage:format(2), starlessNightCount))
 end
