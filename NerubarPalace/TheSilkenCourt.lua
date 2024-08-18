@@ -230,18 +230,18 @@ function mod:GetOptions()
 		[455849] = "mythic",
 	}, {
 		[438801] = CL.adds, -- Call of the Swarm (Adds)
-        [440246] = CL.charge, -- Reckless Charge (Charge)
+		[440246] = CL.charge, -- Reckless Charge (Charge)
 		[441791] = L.burrowed_eruption, -- Burrowed Eruption (Burrow)
 		[440504] = L.impaling_eruption, -- Impaling Eruption (Frontal [A])
-        [438656] = L.venomous_rain, -- Venomous Rain (Rain)
-        [450045] = CL.leap, -- Skittering Leap (Leap)
-        [438677] = L.stinging_swarm, -- Stinging Swarm (Dispell Debuffs)
-        [450129] = L.entropic_desolation, -- Entropic Desolation (Run Out)
-        [441782] = L.strands_of_reality, -- Strands of Reality (Frontal [S])
-        [450483] = CL.teleport, -- Void Step (Teleport)
-        [438355] = L.cataclysmic_entropy, -- Cataclysmic Entropy (Big Boom)
-        [443068] = L.spike_eruption, -- Spike Eruption (Spikes)
-        [442994] = L.unleashed_swarm, -- Unleashed Swarm (Swarm)
+		[438656] = L.venomous_rain, -- Venomous Rain (Rain)
+		[450045] = CL.leap, -- Skittering Leap (Leap)
+		[438677] = L.stinging_swarm, -- Stinging Swarm (Dispell Debuffs)
+		[450129] = L.entropic_desolation, -- Entropic Desolation (Run Out)
+		[441782] = L.strands_of_reality, -- Strands of Reality (Frontal [S])
+		[450483] = CL.teleport, -- Void Step (Teleport)
+		[438355] = L.cataclysmic_entropy, -- Cataclysmic Entropy (Big Boom)
+		[443068] = L.spike_eruption, -- Spike Eruption (Spikes)
+		[442994] = L.unleashed_swarm, -- Unleashed Swarm (Swarm)
 	}
 end
 
