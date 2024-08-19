@@ -25,13 +25,13 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhCN")
 if L then
-	--L.sticky_web = "Webs"
+	L.sticky_web = "蛛网"
 	L.sticky_web_say = "蛛网" -- Singular of Webs
 	L.infest_message = "对你施放感染！"
 	L.infest_say = "寄生"
-	--L.experimental_dosage = "Egg Breaks"
-	--L.experimental_dosage_say = "Egg Break"
-	--L.ingest_black_blood = "Next Container"
+	L.experimental_dosage = "蛋已破"
+	L.experimental_dosage_say = "蛋已破"
+	L.ingest_black_blood = "下一个容器"
 	L.unstable_infusion = "紫圈"
 
 	L.custom_on_experimental_dosage_marks = "试验性剂量分配"
@@ -47,15 +47,15 @@ end
 
 L = BigWigs:NewBossLocale("The Silken Court", "zhCN")
 if L then
-	--L.skipped_cast = "Skipped %s (%d)"
+	L.skipped_cast = "跳舞 %s (%d)"
 
-	--L.venomous_rain = "Rain"
-	--L.burrowed_eruption = "Burrow"
-	--L.stinging_swarm = "Dispel Debuffs"
-	--L.strands_of_reality = "Frontal [S]" -- S for Skeinspinner Takazj
-	--L.impaling_eruption = "Frontal [A]" -- A for Anub'arash
-	--L.entropic_desolation = "Run Out"
-	--L.cataclysmic_entropy = "Big Boom" -- Interrupt before it casts
-	--L.spike_eruption = "Spikes"
-	--L.unleashed_swarm = "Swarm"
+	L.venomous_rain = "毒雨"
+	L.burrowed_eruption = "钻地"
+	L.stinging_swarm = "驱散Debuff"
+	L.strands_of_reality = "正面 [塔卡]" -- S for Skeinspinner Takazj 使用了首领名字前二个字“塔卡兹基”
+	L.impaling_eruption = "正面 [阿努]" -- A for Anub'arash 使用了首领名字前二个字“阿努巴拉什”
+	L.entropic_desolation = "熵能"  --使用技能名称。
+	L.cataclysmic_entropy = "大爆炸" -- Interrupt before it casts
+	L.spike_eruption = "尖刺"
+	L.unleashed_swarm = "虫群"
 end
