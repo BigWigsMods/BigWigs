@@ -1242,6 +1242,10 @@ do
 		BigWigs_CastleNathria = "BigWigs_Shadowlands",
 		BigWigs_SanctumOfDomination = "BigWigs_Shadowlands",
 		BigWigs_SepulcherOfTheFirstOnes = "BigWigs_Shadowlands",
+		BigWigs_Aberrus = "BigWigs_Dragonflight",
+		BigWigs_Amirdrassil = "BigWigs_Dragonflight",
+		BigWigs_DragonIsles = "BigWigs_Dragonflight",
+		BigWigs_VaultOfTheIncarnates = "BigWigs_Dragonflight",
 	}
 	local delayedMessages = {}
 	local foundReqAddons = {} -- Deciding whether or not we show a warning for core/options/plugins addons not existing
@@ -1262,6 +1266,7 @@ do
 		BigWigs_Legion = true,
 		BigWigs_BattleForAzeroth = true,
 		BigWigs_Shadowlands = true,
+		BigWigs_Dragonflight = true,
 		LittleWigs = true,
 		LittleWigs_Classic = true,
 		LittleWigs_BurningCrusade = true,
@@ -1272,10 +1277,9 @@ do
 		LittleWigs_Legion = true,
 		LittleWigs_BattleForAzeroth = true,
 		LittleWigs_Shadowlands = true,
+		LittleWigs_Dragonflight = true,
 		-- Dynamic content
-		BigWigs_DragonIsles = true,
-		BigWigs_VaultOfTheIncarnates = true,
-		BigWigs_Aberrus = true,
+		BigWigs_NerubarPalace = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
