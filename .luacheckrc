@@ -176,12 +176,9 @@ globals = {
 	"ceil",
 	"cos",
 	"debugstack",
-	"deg",
 	"exp",
 	"floor",
 	"format",
-	"frexp",
-	"getn",
 	"gmatch",
 	"gsub",
 	"hooksecurefunc",
@@ -221,8 +218,7 @@ globals = {
 	-- framexml
 	"tContains",
 
-	-- Cataclysm
-	"GetTalentTreeRoles",
+	-- Vanilla
 	"GetTalentTabInfo",
 
 	-- everything else
@@ -238,8 +234,7 @@ globals = {
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
-	"C_Scenario", -- XXX pre-11.0 compatibility in LittleWigs
-	"C_ScenarioInfo",
+	"C_ScenarioInfo", -- LittleWigs
 	"C_Timer",
 	"ChatFrame_ImportListToHash",
 	"ChatTypeInfo",

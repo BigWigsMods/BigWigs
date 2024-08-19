@@ -104,20 +104,6 @@ local barSettingsToExport = {
 	"spacing",
 	"visibleBarLimit",
 	"visibleBarLimitEmph",
-	-- "fontSizeNameplate", -- Do nameplate bars need their own export checkbox?
-	-- "nameplateWidth",
-	-- "nameplateAutoWidth",
-	-- "nameplateHeight",
-	-- "nameplateAlpha",
-	-- "nameplateOffsetY",
-	-- "nameplateGrowUp",
-	-- XXX Clickable Bars are not exported right now. Separate checkbox?
-	-- "interceptMouse",
-	-- "onlyInterceptOnKeypress",
-	-- "interceptKey",
-	-- "LeftButton",
-	-- "MiddleButton",
-	-- "RightButton",
 }
 
 local messageSettingsToExport = {
