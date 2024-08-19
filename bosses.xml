@@ -1,11 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 <!--@do-not-package@-->
-<Include file="DragonIsles\modules.xml"/>
-<Include file="VaultOfTheIncarnates\modules.xml"/>
-<Include file="Aberrus\modules.xml"/>
-<Include file="Amirdrassil\modules.xml"/>
-
 <Include file="NerubarPalace\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
