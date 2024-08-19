@@ -47,7 +47,7 @@ L.offline = "离线"
 
 L.missingAddOnPopup = "你缺少 |cFF436EEE%s|r 插件!"
 L.missingAddOnRaidWarning = "你缺少 |cFF436EEE%s|r 插件！此区域将不显示计时条！"
-L.outOfDateAddOnPopup = "|cFF436EEE%s|r 已过期！"
+L.outOfDateAddOnPopup = "|cFF436EEE%s|r 插件已过期！"
 L.outOfDateAddOnRaidWarning = "|cFF436EEE%s|r 插件已过期！它可能存在错误、功能缺失或计时器完全错误。"
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将无法显示。"
 L.removeAddOn = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”所替代。"
