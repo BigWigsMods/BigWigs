@@ -47,6 +47,8 @@ L.offline = "Hors ligne"
 
 L.missingAddOnPopup = "L'addon |cFF436EEE%s|r est manquant !"
 L.missingAddOnRaidWarning = "L'addon |cFF436EEE%s|r est manquant ! Aucun timers ne sera affiché dans cette zone !"
+--L.outOfDateAddOnPopup = "The |cFF436EEE%s|r addon is out of date!"
+--L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! It may have bugs, missing features, or completely incorrect timers."
 L.disabledAddOn = "L'addon |cFF436EEE%s|r est désactivé, les délais ne seront pas affichés."
 L.removeAddOn = "Veuillez enlever '|cFF436EEE%s|r' étant donné qu'il a été remplacé par '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"

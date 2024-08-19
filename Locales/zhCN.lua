@@ -47,6 +47,8 @@ L.offline = "离线"
 
 L.missingAddOnPopup = "你缺少 |cFF436EEE%s|r 插件!"
 L.missingAddOnRaidWarning = "你缺少 |cFF436EEE%s|r 插件！此副本将不显示计时条！"
+--L.outOfDateAddOnPopup = "The |cFF436EEE%s|r addon is out of date!"
+--L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! It may have bugs, missing features, or completely incorrect timers."
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将无法显示。"
 L.removeAddOn = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"

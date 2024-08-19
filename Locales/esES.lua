@@ -47,6 +47,8 @@ L.offline = "Desconectado"
 
 L.missingAddOnPopup = "No se encuentra el addon |cFF436EEE%s|r !"
 --L.missingAddOnRaidWarning = "No se encuentra el addon |cFF436EEE%s|r ! No timers will be displayed in this zone!"
+--L.outOfDateAddOnPopup = "The |cFF436EEE%s|r addon is out of date!"
+--L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! It may have bugs, missing features, or completely incorrect timers."
 L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostraran."
 L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
