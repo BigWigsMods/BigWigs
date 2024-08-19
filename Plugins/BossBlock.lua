@@ -443,14 +443,32 @@ end
 do
 	local delayedTbl = nil
 	local levelUpTbl = nil
+	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 	local function printMessage(self, tbl)
+		if delayedTbl and tbl == delayedTbl then
+			plugin:UnregisterEvent("ITEM_DATA_LOAD_RESULT")
+			local concatTbl = {}
+			for i = 1, #delayedTbl do
+				local entryTbl = delayedTbl[i]
+				if entryTbl.subtitle then
+					concatTbl[#concatTbl+1] = entryTbl.subtitle
+				end
+			end
+			if concatTbl[1] then
+				local itemLevels = table.concat(concatTbl, L.comma, 1, #concatTbl)
+				local msg = CL.other:format(tbl.title, itemLevels)
+				self:SendMessage("BigWigs_Message", self, nil, msg, self.db.profile.toastsColor, nil, nil, tbl.bwDuration)
+				if type(tbl.showSoundKitID) == "number" then
+					PlaySound(tbl.showSoundKitID)
+				end
+			end
+			delayedTbl = nil
+			return
+		end
+
 		local icon = type(tbl.iconFileID) == "number" and tbl.iconFileID or nil
 		if type(tbl.title) == "string" and #tbl.title > 2 then
 			self:SendMessage("BigWigs_Message", self, nil, (tbl.title):upper(), self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
-		end
-		if delayedTbl and delayedTbl.title and #delayedTbl.title > 2 then
-			self:SendMessage("BigWigs_Message", self, nil, (delayedTbl.title):upper(), self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
-			delayedTbl.title = nil
 		end
 		if type(tbl.subtitle) == "string" and #tbl.subtitle > 2 then
 			self:SendMessage("BigWigs_Message", self, nil, tbl.subtitle, self.db.profile.toastsColor, icon, nil, tbl.bwDuration)
@@ -461,36 +479,31 @@ do
 		if type(tbl.showSoundKitID) == "number" then
 			PlaySound(tbl.showSoundKitID)
 		end
-		if delayedTbl then
-			for i = 1, #delayedTbl do
-				local entryTbl = delayedTbl[i]
-				if not entryTbl.bwDone then
-					return
-				end
-			end
-			delayedTbl = nil
-			plugin:UnregisterEvent("ITEM_DATA_LOAD_RESULT")
-		end
 	end
-	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
 			if tbl.eventToastID == 184 then -- Vault unlocked
+				-- tbl.title is "GREAT VAULT SLOT UNLOCKED"
+				-- tbl.subtitle is "Complete 3 Delves or World Activities"
+				tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
+				tbl.title = nil
 				tbl.bwDuration = 4
 				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
 			elseif tbl.eventToastID == 185 then -- Vault upgraded
+				-- tbl.title is "GREAT VAULT SLOT UPGRADED"
+				-- tbl.subtitle is a random item to fetch ilvl info from "[Leggings of the Greatlynx]"
 				if type(tbl.subtitle) == "string" then
 					local itemID = C_Item.GetItemIDForItemInfo(tbl.subtitle)
 					if type(itemID) == "number" then
 						self:RegisterEvent("ITEM_DATA_LOAD_RESULT")
 						if not delayedTbl then
-							delayedTbl = {title = tbl.title}
+							delayedTbl = {title = tbl.title, showSoundKitID = tbl.showSoundKitID, bwDuration = 4}
 						end
-						tbl.title = nil
+						tbl.title = tbl.subtitle
+						tbl.subtitle = nil
 						delayedTbl[#delayedTbl+1] = tbl
 						tbl.bwItemID = itemID
-						tbl.bwDuration = 4
 						C_Item.RequestLoadItemDataByID(itemID)
 					end
 				end
@@ -501,8 +514,8 @@ do
 				tbl.bwDuration = 4.5
 				levelUpTbl = tbl
 				self:SimpleTimer(function() levelUpTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the talent point toast to merge, if one is rewarded
-			elseif tbl.eventToastID == 156 then -- Talent point
-				-- tbl.title is "New Talent Point Available"
+			elseif tbl.eventToastID == 156 or tbl.eventToastID == 200 then -- Talent point, Hero talent point
+				-- tbl.title is "New Talent Point Available" / "New Hero Talent Point Available"
 				-- tbl.subtitle is "Your power increased!"
 				if levelUpTbl then -- We merge this into the level up toast
 					levelUpTbl.subtitle = CL.other:format((levelUpTbl.title):upper(), tbl.title) -- Combine, without uppercase
@@ -523,11 +536,30 @@ do
 				tbl.title = nil
 				tbl.bwDuration = 2.5
 				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
+			elseif tbl.eventToastID == 183 then -- Discovery
+				-- tbl.title is "Discovery"
+				-- tbl.subtitle is "Respawn Point Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
+				tbl.title = nil
+				tbl.bwDuration = 3
+				printMessage(self, tbl)
+			elseif tbl.eventToastID == 208 or tbl.eventToastID == 212 or tbl.eventToastID == 260 then -- Brann Ability
+				-- tbl.title is "Combat Curios"
+				-- tbl.subtitle is "Brann Ability Unlocked!"
+				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+				tbl.title = nil
+				tbl.bwDuration = 2.5
+				printMessage(self, tbl)
 			elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
 				if not self.db.profile.blockDungeonToasts then
 					tbl.bwDuration = 2
 					printMessage(self, tbl)
 				end
+			elseif tbl.eventToastID == 199 then -- Feature unlock
+				-- tbl.title is "Hero Talents"
+				-- tbl.subtitle is "Feature Unlocked!"
+				-- We just hide this as we already show that you unlocked a point alongside the level up message
+				tbl.title = nil
 			else -- Something we don't support, pass to Blizz to process
 				return
 			end
@@ -535,14 +567,18 @@ do
 			self:DISPLAY_EVENT_TOASTS()
 		end
 	end
+	local GetDetailedItemLevelInfo = C_Item and C_Item.GetDetailedItemLevelInfo or GetDetailedItemLevelInfo
 	function plugin:ITEM_DATA_LOAD_RESULT(_, id, success)
 		if delayedTbl then
 			for i = 1, #delayedTbl do
 				local tbl = delayedTbl[i]
 				if tbl.bwItemID == id and not tbl.bwDone then
 					tbl.bwDone = true
-					self:SimpleTimer(function() printMessage(self, tbl) end, 5)
-					local itemLevel = success and GetDetailedItemLevelInfo(tbl.subtitle) or 0
+					if not delayedTbl.bwTimer then
+						delayedTbl.bwTimer = true
+						self:SimpleTimer(function() printMessage(self, delayedTbl) end, 5)
+					end
+					local itemLevel = success and GetDetailedItemLevelInfo(tbl.title) or 0
 					tbl.subtitle = L.itemLevel:format(itemLevel)
 					return
 				end
