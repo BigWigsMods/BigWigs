@@ -2,7 +2,8 @@
 
 ## Download
 
-<https://www.curseforge.com/wow/addons/big-wigs>
+* <https://www.curseforge.com/wow/addons/big-wigs>
+* <https://addons.wago.io/addons/bigwigs>
 
 ## Introduction
 
