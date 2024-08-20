@@ -480,6 +480,9 @@ do
 			PlaySound(tbl.showSoundKitID)
 		end
 	end
+	local branSkills = {
+		[208]=true,[212]=true,[260]=true,[211]=true,[220]=true,[219]=true,[218]=true,[221]=true,[223]=true,[224]=true,
+	}
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
@@ -543,9 +546,9 @@ do
 				tbl.title = nil
 				tbl.bwDuration = 3
 				printMessage(self, tbl)
-			elseif tbl.eventToastID == 208 or tbl.eventToastID == 212 or tbl.eventToastID == 260 then -- Brann Ability
-				-- tbl.title is "Combat Curios"
-				-- tbl.subtitle is "Brann Ability Unlocked!"
+			elseif branSkills[tbl.eventToastID] then -- Brann Ability, Brann power increase
+				-- tbl.title is "Combat Curios" / "Explorer's Ammunition Journal"
+				-- tbl.subtitle is "Brann Ability Unlocked!" / "Brann's power increased!"
 				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
 				tbl.title = nil
 				tbl.bwDuration = 2.5
