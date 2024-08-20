@@ -251,7 +251,7 @@ function mod:DigestiveAcid(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, digestiveAcidCount)))
 	self:PlaySound(args.spellId, "alert")
 	digestiveAcidCount = digestiveAcidCount + 1
-	if venomousLashCount <= 2 then-- 2 per stage 1
+	if digestiveAcidCount <= 2 then-- 2 per stage 1
 		self:Bar(args.spellId, 44, CL.count:format(args.spellName, digestiveAcidCount))
 	end
 end
