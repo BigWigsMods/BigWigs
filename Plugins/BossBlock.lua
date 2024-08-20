@@ -481,7 +481,9 @@ do
 		end
 	end
 	local branSkills = {
-		[208]=true,[212]=true,[260]=true,[211]=true,[220]=true,[219]=true,[218]=true,[221]=true,[223]=true,[224]=true,
+		[222]=true,[217]=true,[212]=true,[260]=true,[220]=true,[219]=true,[218]=true,[221]=true,[223]=true,
+		[213]=true,[215]=true,[178]=true,[209]=true,[214]=true,[216]=true,
+		[208]=true,[211]=true,[224]=true,[225]=true,[210]=true,
 	}
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
