@@ -1,61 +1,61 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "ruRU")
 if not L then return end
 if L then
-	--L.chunky_viscera_message = "Feed Boss! (Special Action Button)"
+	L.chunky_viscera_message = "Корми Босса! (Дополнительное действие)"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "ruRU")
 if L then
-	--L.grasp_from_beyond = "Tentacles"
-	--L.grasp_from_beyond_say = "Tentacles"
-	--L.bloodcurdle = "Spreads"
-	--L.bloodcurdle_on_you = "Spread" -- Singular of Spread
-	--L.goresplatter = "Run Away"
+	L.grasp_from_beyond = "Щупальца"
+	L.grasp_from_beyond_say = "Щупальца"
+	L.bloodcurdle = "Спреды"
+	L.bloodcurdle_on_you = "Спредай" -- Singular of Spread
+	L.goresplatter = "Убегай"
 end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "ruRU")
 if L then
-	--L.rolling_acid = "Waves"
-	--L.spinnerets_strands = "Strands"
-	--L.enveloping_webs = "Webs"
-	--L.enveloping_web_say = "Web" -- Singular of Webs
-	--L.erosive_spray = "Spray"
-	--L.caustic_hail = "Next Position"
+	L.rolling_acid = "Волны"
+	L.spinnerets_strands = "Нити"
+	L.enveloping_webs = "Паутины"
+	L.enveloping_web_say = "Паутина" -- Singular of Webs
+	L.erosive_spray = "Брызги"
+	L.caustic_hail = "Следующая позиция"
 end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "ruRU")
 if L then
-	--L.sticky_web = "Webs"
-	--L.sticky_web_say = "Web" -- Singular of Webs
-	--L.infest_message = "Casting Infest on YOU!"
-	--L.infest_say = "Parasites"
-	--L.experimental_dosage = "Egg Breaks"
-	--L.experimental_dosage_say = "Egg Break"
-	--L.ingest_black_blood = "Next Container"
-	--L.unstable_infusion = "Swirls"
+	L.sticky_web = "Паутины"
+	L.sticky_web_say = "Паутина" -- Singular of Webs
+	L.infest_message = "Заражение на ТЕБЕ!"
+	L.infest_say = "Паразиты"
+	L.experimental_dosage = "Яйца" -- best to keep concise
+	L.experimental_dosage_say = "Яйца"
+	L.ingest_black_blood = "Следующий контейнер"
+	L.unstable_infusion = "Доджи"
 
-	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
-	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
+	L.custom_on_experimental_dosage_marks = "Экспериментальная доза: метки"
+	L.custom_on_experimental_dosage_marks_desc = "Отмечает игроков с эффектом 'Экспериментальная доза' метками {rt6}{rt4}{rt3}{rt7} с приоритетом милики > ренджи > хилы. Затрагивает сообщения /сказать и цели."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "ruRU")
 if L then
-	--L.assasination = "Phantoms"
-	--L.twiligt_massacre = "Dashes"
-	--L.nexus_daggers = "Daggers"
+	L.assasination = "Фантомы"
+	L.twiligt_massacre = "Рывки"
+	L.nexus_daggers = "Кинжалы"
 end
 
 L = BigWigs:NewBossLocale("The Silken Court", "ruRU")
 if L then
-	--L.skipped_cast = "Skipped %s (%d)"
+	L.skipped_cast = "Пропущено %s (%d)"
 
-	--L.venomous_rain = "Rain"
-	--L.burrowed_eruption = "Burrow"
-	--L.stinging_swarm = "Dispel Debuffs"
-	--L.strands_of_reality = "Frontal [S]" -- S for Skeinspinner Takazj
-	--L.impaling_eruption = "Frontal [A]" -- A for Anub'arash
-	--L.entropic_desolation = "Run Out"
-	--L.cataclysmic_entropy = "Big Boom" -- Interrupt before it casts
-	--L.spike_eruption = "Spikes"
-	--L.unleashed_swarm = "Swarm"
+	L.venomous_rain = "Дождь"
+	L.burrowed_eruption = "Рывок"
+	L.stinging_swarm = "Дебаффы" -- to keep concise
+	L.strands_of_reality = "Фронтал [Н]" -- S for Skeinspinner Takazj
+	L.impaling_eruption = "Фронтал [А]" -- A for Anub'arash
+	L.entropic_desolation = "Выбегай"
+	L.cataclysmic_entropy = "Большой взрыв" -- Interrupt before it casts
+	L.spike_eruption = "Шиины"
+	L.unleashed_swarm = "Рой"
 end
