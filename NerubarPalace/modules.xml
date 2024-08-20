@@ -9,9 +9,9 @@
 <Script file="Kyveza.lua"/>
 <Script file="TheSilkenCourt.lua"/>
 <Script file="Ansurek.lua"/>
-<!-- <Script file="Trash.lua"/> -->
+<!--<Script file="Trash.lua"/>-->
 
 <Include file="Locales\locales.xml"/>
-<!-- <Include file="Options\options.xml"/> -->
+<Include file="Options\options.xml"/>
 
 </Ui>
