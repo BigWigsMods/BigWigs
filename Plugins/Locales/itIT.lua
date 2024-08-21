@@ -12,6 +12,7 @@ L.width = "Larghezza"
 L.height = "Altezza"
 L.sizeDesc = "In genere regoli la dimesione trascinando l'ancora. Se hai necessità di una dimensione specifica puoi usare la barra slide o digitare i valori nella casella."
 L.fontSizeDesc = "Regola la dimensione del carattere usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 200."
+L.disabled = "Disabilitato"
 L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411non è consigliata|r.\n\nSei sicuro di questo?"
 
 -- Anchor Points
@@ -35,7 +36,6 @@ L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411non �
 L.altPowerTitle = "Potere Alternativo"
 L.altPowerDesc = "Il Potere Alternativo verrà mostrato solo per quei boss che applicano Potere Alternativo ai giocatori, cosa estremamente rara. Il display misura l'ammontare di 'Potere Alternativo' tuo e del tuo gruppo, mostrandolo in una lista. Per muovere il riquadro, usa il pulsante di test qui sotto."
 L.toggleDisplayPrint = "Mostra il monitor per la prossima volta. Per disabilitarlo completamente in questo scontro, devi deselezionarlo dalle opzioni dello scontro specifico."
-L.disabled = "Disabilitato"
 L.disabledDisplayDesc = "Disattiva il monitor per tutti gli scontri che lo usano."
 L.resetAltPowerDesc = "Reimposta tutte le opzioni relative al Potere Alternativo, compreso il posizionamento dell'ancora di Potere Alternativo."
 L.test = "Test"
@@ -97,6 +97,7 @@ L.emphasize = "Enfatizza"
 L.emphasizeMultiplier = "Moltiplicatore di dimensioni"
 L.emphasizeMultiplierDesc = "Se disabiliti le barre muovendole dall'ancora di enfatizzazione, questa opzione deciderà la dimensione delle barre enfatizzate moltiplicando la dimensione delle barre normali."
 
+L.enable = "Attiva"
 L.move = "Muovi"
 L.moveDesc = "Muovi le Barre Enfatizzate all'Ancoraggio di Enfatizzazione. Se questa opzione non è abilitata, le barre enfatizzate cambieranno semplicemente scalatura e colore."
 L.emphasizedBars = "Barre Enfatizzate"

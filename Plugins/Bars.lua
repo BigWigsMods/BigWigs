@@ -554,7 +554,7 @@ do
 				args = {
 					emphasize = {
 						type = "toggle",
-						name = L.enable,
+						name = L.disabled,
 						order = 1,
 					},
 					emphasizeRestart = {
