@@ -201,7 +201,7 @@ end
 local function getIconFrame()
 	local iconFrame
 
-	if (next(iconFrameCache)) then
+	if next(iconFrameCache) then
 		iconFrame = table.remove(iconFrameCache)
 	else
 		iconFrame = CreateFrame("Frame", nil, UIParent)
@@ -234,6 +234,7 @@ local function getIconFrame()
 		local countdownNumber = textFrame:CreateFontString(nil, "OVERLAY")
 		countdownNumber:SetPoint("CENTER")
 		countdownNumber:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
+		countdownNumber:SetJustifyH("CENTER")
 		iconFrame.countdownNumber = countdownNumber
 
 		local border = CreateFrame("Frame", nil, iconFrame, "BackdropTemplate")
@@ -416,7 +417,7 @@ local iconDefaults = {
 	nameplateIconOffsetX = 0,
 	nameplateIconOffsetY = -4,
 	nameplateIconCooldownTimer = true,
-	nameplateIconCooldownTimerFontName = plugin:GetDefaultFont(),
+	nameplateIconCooldownTimerFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
 	nameplateIconCooldownTimerFontSize = 7,
 	nameplateIconCooldownTimerFontColor = {1, 1, 1, 1},
 	nameplateIconCooldownTimerOutline = "OUTLINE",
