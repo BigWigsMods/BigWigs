@@ -86,7 +86,7 @@ local glowStopFunctions = {
 local function getTextFrame()
 	local textFrame
 
-	if (next(textFrameCache)) then
+	if next(textFrameCache) then
 		textFrame = table.remove(textFrameCache)
 	else
 
@@ -1192,6 +1192,21 @@ end
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function plugin:OnRegister()
+	updateProfile()
+
+	-- Pre-create some frames
+	local dummyFrames = {}
+	for i = 1, 5 do
+		dummyFrames[i] = getIconFrame()
+	end
+	for i = 1, 5 do
+		dummyFrames[i]:HideFrame()
+	end
+	local dummyTextFrame = getTextFrame()
+	dummyTextFrame:HideFrame()
+end
 
 function plugin:OnPluginEnable()
 	updateProfile()
