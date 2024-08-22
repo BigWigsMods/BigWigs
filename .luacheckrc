@@ -104,7 +104,7 @@ files["**/Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
-files["**/Plugins/Bars.lua"].ignore = {
+files["**/Plugins/Nameplates.lua"].ignore = {
 	"113/C_NamePlate",
 }
 files["**/Plugins/BossBlock.lua"].ignore = {

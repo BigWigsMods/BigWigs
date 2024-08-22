@@ -2,5 +2,6 @@
 ..\FrameXML\UI.xsd">
 <Include file="Libs\LibSink-2.0\lib.xml"/>
 <Include file="Libs\LibCandyBar-3.0\lib.xml"/>
+<Include file="Libs\LibCustomGlow-1.0\LibCustomGlow-1.0.xml"/>
 </Ui>
 

@@ -14,7 +14,9 @@ L.fontSizeDesc = "Adjust the font size using the slider or type the value into t
 L.disabled = "Disabled"
 L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
--- Anchor Points
+-- Anchor Points / Grow Directions
+L.UP = "Up"
+L.DOWN = "Down"
 L.TOP = "Top"
 L.RIGHT = "Right"
 L.BOTTOM = "Bottom"
@@ -293,6 +295,62 @@ L.displayTime = "Display time"
 L.displayTimeDesc = "How long to display a message, in seconds"
 L.fadeTime = "Fade time"
 L.fadeTimeDesc = "How long to fade out a message, in seconds"
+
+-----------------------------------------------------------------------
+-- Nameplates.lua
+--
+
+L.nameplates = "Nameplates"
+L.testNameplateIconBtn = "Show Test Icon"
+L.testNameplateIconBtn_desc = "Creates a test icon for you to test your current display settings with on your targeted nameplate."
+L.stopTestNameplateIconBtn = "Stop Test Icons"
+L.stopTestNameplateIconBtn_desc = "Stops all test icons on your nameplates."
+L.noNameplateTestTarget = "You need to have a hostile target which is attackable selected to test nameplate functionality."
+L.anchoring = "Anchoring"
+L.growStartPosition = "Grow Start Position"
+L.growStartPositionDesc = "The starting position for the first icon."
+L.growDirection = "Grow Direction"
+L.growDirectionDesc = "The direction the icons will grow from the starting position."
+L.iconSpacingDesc = "Change the space between each icon."
+L.nameplateIconSettings = "Icon Settings"
+L.keepAspectRatio = "Keep Aspect Ratio"
+L.keepAspectRatioDesc = "Keep the aspect ratio of the icon 1:1 instead of stretching it to fit the size of the frame."
+L.iconColor = "Icon Color"
+L.iconColorDesc = "Change the color of the icon texture."
+L.desaturate = "Desaturate"
+L.desaturateDesc = "Desaturate the icon texture."
+L.zoom = "Zoom"
+L.zoomDesc = "Zoom the icon texture."
+L.showBorder = "Show Border"
+L.showBorderDesc = "Show a border around the icon."
+L.borderColor = "Border Color"
+L.borderSize = "Border Size"
+L.timer = "Timer"
+L.showTimer = "Show Timer"
+L.showTimerDesc = "Show a text timer on the icon."
+L.cooldown = "Cooldown"
+L.showCooldownSwipe = "Show Swipe"
+L.showCooldownSwipeDesc = "Show a swipe on the icon when the cooldown is active."
+L.showCooldownEdge = "Show Edge"
+L.showCooldownEdgeDesc = "Show an edge on the cooldown when the cooldown is active."
+L.inverse = "Inverse"
+L.inverseSwipeDesc = "Invert the cooldown animations."
+L.iconGlow = "Icon Glow"
+L.enableExpireGlow = "Enable Expire Glow"
+L.enableExpireGlowDesc = "Show a glow around the icon when the cooldown has expired."
+L.glowColor = "Glow Color"
+L.glowType = "Glow Type"
+L.glowTypeDesc = "Change the type of glow that is shown around the icon."
+L.resetNameplateIconsDesc = "Reset all the options related to nameplate icons."
+L.nameplateTextSettings = "Text Settings"
+L.fixate_test = "Fixate Test" -- Text that displays to test on the frame
+L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
+
+-- Glow types as part of LibCustomGlow
+L.pixelGlow = "Pixel Glow"
+L.autocastGlow = "Autocast Glow"
+L.buttonGlow = "Button Glow"
+L.procGlow = "Proc Glow"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
