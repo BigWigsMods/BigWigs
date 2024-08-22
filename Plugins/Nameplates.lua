@@ -1199,13 +1199,12 @@ function plugin:OnRegister()
 	-- Pre-create some frames
 	local dummyFrames = {}
 	for i = 1, 5 do
-		dummyFrames[i] = getIconFrame()
+		dummyFrames[i] = {icon = getIconFrame(), text = getTextFrame()}
 	end
 	for i = 1, 5 do
-		dummyFrames[i]:HideFrame()
+		dummyFrames[i].icon:HideFrame()
+		dummyFrames[i].text:HideFrame()
 	end
-	local dummyTextFrame = getTextFrame()
-	dummyTextFrame:HideFrame()
 end
 
 function plugin:OnPluginEnable()
