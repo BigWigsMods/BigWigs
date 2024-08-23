@@ -61,7 +61,6 @@ files["**/AutoRole.lua"].ignore = {
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_Item",
 	"113/C_Seasons",
-	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
@@ -74,7 +73,6 @@ files["**/Core/BossPrototype.lua"].ignore = {
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_Item",
 	"113/C_Seasons",
-	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
@@ -236,6 +234,7 @@ globals = {
 	"C_RaidLocks",
 	"C_ScenarioInfo", -- LittleWigs
 	"C_Timer",
+	"C_UIWidgetManager",
 	"ChatFrame_ImportListToHash",
 	"ChatTypeInfo",
 	"CheckInteractDistance",
