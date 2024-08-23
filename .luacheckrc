@@ -88,6 +88,7 @@ files["**/Core/BossPrototype_Classic.lua"].ignore = {
 }
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
+	"113/C_EventUtils",
 	"113/geterrorhandler",
 }
 files["**/Core/PluginPrototype.lua"].ignore = {

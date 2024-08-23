@@ -336,6 +336,9 @@ do
 			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			core.RegisterEvent(mod, "UNIT_TARGET", unitTargetChanged)
 			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", DisableCore) -- Simple disable when leaving instances
+			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then -- XXX implement a separate ID system for delves
+				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", DisableCore)
+			end
 			local _, instanceType = GetInstanceInfo()
 			if instanceType == "none" then -- We don't want to be disabling in instances
 				core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged) -- Special checks for disabling after world bosses

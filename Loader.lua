@@ -1002,7 +1002,7 @@ function mod:ADDON_LOADED(addon)
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
 
-	if C_EventUtils.IsEventValid("ACTIVE_DELVE_DATA_UPDATE") then -- Temporary workaround until the new event for delves is implemented
+	if C_EventUtils.IsEventValid("ACTIVE_DELVE_DATA_UPDATE") then -- XXX Update me to new event
 		bwFrame:RegisterEvent("ACTIVE_DELVE_DATA_UPDATE")
 	end
 	bwFrame:RegisterEvent("ZONE_CHANGED")
