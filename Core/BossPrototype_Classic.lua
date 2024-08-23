@@ -36,7 +36,7 @@ end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 end
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
-local UnitGroupRolesAssigned, C_UIWidgetManager = UnitGroupRolesAssigned, C_UIWidgetManager
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = isCata and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
 end or isRetail and EJ_GetEncounterInfo or function(key)
@@ -933,37 +933,60 @@ do
 	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
 	local noVisInfoDataFunction = "Module '%s' tried to register for all updates to a widget event, but the visInfoDataFunction is unknown."
 
-	function boss:UPDATE_UI_WIDGET(_, tbl)
-		local id = tbl.widgetID
-		local widgetEventEntry = widgetEventMap[self][id]
-		if widgetEventEntry then
-			local func, allUpdates = widgetEventEntry[1], widgetEventEntry[2]
-			local info
-			if allUpdates then
-				-- for known widget types, call the visualization info function directly. this
-				-- skips state checks that Blizzard might have defined in their widget template.
-				local widgetType = tbl.widgetType
-				if widgetType == 2 then -- Enum.UIWidgetVisualizationType.StatusBar
-					info = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo(id)
-				elseif widgetType == 8 then -- Enum.UIWidgetVisualizationType.TextWithState
-					info = C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo(id)
-				else -- unknown widget type
-					core:Print(format(noVisInfoDataFunction, self.moduleName))
-					return
-				end
-			else
-				local typeInfo = UIWidgetManager.widgetVisTypeInfo[tbl.widgetType]
-				info = typeInfo and typeInfo.visInfoDataFunction(id)
+	do
+		local GetStatusBarWidgetVisualizationInfo = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo
+		local GetTextWithStateWidgetVisualizationInfo = C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo
+		local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo
+
+		--- Get a widget info table by widget type
+		-- @string widgetType Choices are "bar", "text" or "delve"
+		-- @number id The id of the widget
+		-- @return table The widget info table
+		function boss:GetWidgetInfo(widgetType, id)
+			if widgetType == "bar" then
+				local info = GetStatusBarWidgetVisualizationInfo(id)
+				return info
+			elseif widgetType == "text" then
+				local info = GetTextWithStateWidgetVisualizationInfo(id)
+				return info
+			elseif widgetType == "delve" then
+				local info = GetScenarioHeaderDelvesWidgetVisualizationInfo(id)
+				return info
 			end
-			if info then
-				local value = info.text -- Remain compatible with older modules
-				if (not value or value == "") and info.barValue then
-					-- Type 2 (StatusBar) seems to be the most common modern widget we use and
-					-- info.overrideBarText is used for the actual bar text, so pass the bar
-					-- value to the callback for convenience.
-					value = info.barValue
+		end
+
+		function boss:UPDATE_UI_WIDGET(_, tbl)
+			local id = tbl.widgetID
+			local widgetEventEntry = widgetEventMap[self][id]
+			if widgetEventEntry then
+				local func, allUpdates = widgetEventEntry[1], widgetEventEntry[2]
+				local info
+				if allUpdates then
+					-- for known widget types, call the visualization info function directly. this
+					-- skips state checks that Blizzard might have defined in their widget template.
+					local widgetType = tbl.widgetType
+					if widgetType == 2 then -- Enum.UIWidgetVisualizationType.StatusBar
+						info = self:GetWidgetInfo("bar", id)
+					elseif widgetType == 8 then -- Enum.UIWidgetVisualizationType.TextWithState
+						info = self:GetWidgetInfo("text", id)
+					else -- unknown widget type
+						core:Print(format(noVisInfoDataFunction, self.moduleName))
+						return
+					end
+				else
+					local typeInfo = UIWidgetManager.widgetVisTypeInfo[tbl.widgetType]
+					info = typeInfo and typeInfo.visInfoDataFunction(id)
 				end
-				self[func](self, id, value, info)
+				if info then
+					local value = info.text -- Remain compatible with older modules
+					if (not value or value == "") and info.barValue then
+						-- Type 2 (StatusBar) seems to be the most common modern widget we use and
+						-- info.overrideBarText is used for the actual bar text, so pass the bar
+						-- value to the callback for convenience.
+						value = info.barValue
+					end
+					self[func](self, id, value, info)
+				end
 			end
 		end
 	end
