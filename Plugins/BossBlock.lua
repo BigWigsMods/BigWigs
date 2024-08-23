@@ -31,7 +31,7 @@ plugin.defaultDB = {
 	disableErrorSpeech = false,
 	redirectTheToasts = true,
 	toastsColor = {0.2, 1, 1},
-	blockDungeonToasts = true,
+	blockZoneInToasts = true,
 }
 
 --------------------------------------------------------------------------------
@@ -175,10 +175,18 @@ plugin.pluginOptions = {
 					order = 9,
 					hidden = isClassic,
 				},
+				blockZoneInToasts = {
+					type = "toggle",
+					name = L.blockDungeonPopups,
+					desc = L.blockDungeonPopupsDesc,
+					width = "full",
+					order = 10,
+					hidden = isClassic,
+				},
 				toastsCategory = {
 					type = "group",
 					name = " ",
-					order = 10,
+					order = 11,
 					inline = true,
 					hidden = isClassic,
 					args = {
@@ -186,24 +194,6 @@ plugin.pluginOptions = {
 							type = "toggle",
 							name = L.redirectPopups,
 							desc = L.redirectPopupsDesc,
-							set = function(_, value)
-								plugin.db.profile.redirectTheToasts = value
-								if value then
-									local _, _, _, _, _, _, _, id = GetInstanceInfo()
-									if zoneList[id] then -- Instances only
-										local registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
-										for i = 1, #registeredToasts do
-											bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
-										end
-										plugin:RegisterEvent("DISPLAY_EVENT_TOASTS")
-										for i = 1, #registeredToasts do
-											bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
-										end
-									end
-								else
-									plugin:UnregisterEvent("DISPLAY_EVENT_TOASTS")
-								end
-							end,
 							width = "full",
 							order = 1,
 						},
@@ -218,16 +208,6 @@ plugin.pluginOptions = {
 							end,
 							width = "full",
 							order = 2,
-							disabled = function()
-								return not plugin.db.profile.redirectTheToasts
-							end,
-						},
-						blockDungeonToasts = {
-							type = "toggle",
-							name = L.blockDungeonPopups,
-							desc = L.blockDungeonPopupsDesc,
-							width = "full",
-							order = 3,
 							disabled = function()
 								return not plugin.db.profile.redirectTheToasts
 							end,
@@ -406,7 +386,7 @@ do
 
 		if not isClassic then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
-			if self.db.profile.redirectTheToasts and zoneList[id] then -- Instances only
+			if zoneList[id] then -- Instances only
 				local registeredToasts = {GetFramesRegisteredForEvent("DISPLAY_EVENT_TOASTS")}
 				for i = 1, #registeredToasts do
 					bbFrame.UnregisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
@@ -488,88 +468,96 @@ do
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
-			if tbl.eventToastID == 184 then -- Vault unlocked
-				-- tbl.title is "GREAT VAULT SLOT UNLOCKED"
-				-- tbl.subtitle is "Complete 3 Delves or World Activities"
-				tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
-				tbl.title = nil
-				tbl.bwDuration = 4
-				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
-			elseif tbl.eventToastID == 185 then -- Vault upgraded
-				-- tbl.title is "GREAT VAULT SLOT UPGRADED"
-				-- tbl.subtitle is a random item to fetch ilvl info from "[Leggings of the Greatlynx]"
-				if type(tbl.subtitle) == "string" then
-					local itemID = C_Item.GetItemIDForItemInfo(tbl.subtitle)
-					if type(itemID) == "number" then
-						self:RegisterEvent("ITEM_DATA_LOAD_RESULT")
-						if not delayedTbl then
-							delayedTbl = {title = tbl.title, showSoundKitID = tbl.showSoundKitID, bwDuration = 4}
+			if tbl.eventToastID == 5 then -- Zone in popup
+				if self.db.profile.blockZoneInToasts then
+					-- We just kill zone in toasts, nothing useful to redirect
+					RemoveCurrentToast()
+					self:DISPLAY_EVENT_TOASTS()
+				end
+			elseif self.db.profile.redirectTheToasts then
+				if tbl.eventToastID == 184 then -- Vault unlocked
+					-- tbl.title is "GREAT VAULT SLOT UNLOCKED"
+					-- tbl.subtitle is "Complete 3 Delves or World Activities"
+					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
+					tbl.title = nil
+					tbl.bwDuration = 4
+					self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
+				elseif tbl.eventToastID == 185 then -- Vault upgraded
+					-- tbl.title is "GREAT VAULT SLOT UPGRADED"
+					-- tbl.subtitle is a random item to fetch ilvl info from "[Leggings of the Greatlynx]"
+					if type(tbl.subtitle) == "string" then
+						local itemID = C_Item.GetItemIDForItemInfo(tbl.subtitle)
+						if type(itemID) == "number" then
+							self:RegisterEvent("ITEM_DATA_LOAD_RESULT")
+							if not delayedTbl then
+								delayedTbl = {title = tbl.title, showSoundKitID = tbl.showSoundKitID, bwDuration = 4}
+							end
+							tbl.title = tbl.subtitle
+							tbl.subtitle = nil
+							delayedTbl[#delayedTbl+1] = tbl
+							tbl.bwItemID = itemID
+							C_Item.RequestLoadItemDataByID(itemID)
 						end
-						tbl.title = tbl.subtitle
-						tbl.subtitle = nil
-						delayedTbl[#delayedTbl+1] = tbl
-						tbl.bwItemID = itemID
-						C_Item.RequestLoadItemDataByID(itemID)
 					end
-				end
-			elseif tbl.eventToastID == 1 then -- Level up
-				-- tbl.title is "Level 42"
-				-- tbl.subtitle is "You've Reached"
-				tbl.subtitle = nil -- Remove "You've Reached" text
-				tbl.bwDuration = 4.5
-				levelUpTbl = tbl
-				self:SimpleTimer(function() levelUpTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the talent point toast to merge, if one is rewarded
-			elseif tbl.eventToastID == 156 or tbl.eventToastID == 200 then -- Talent point, Hero talent point
-				-- tbl.title is "New Talent Point Available" / "New Hero Talent Point Available"
-				-- tbl.subtitle is "Your power increased!"
-				if levelUpTbl then -- We merge this into the level up toast
-					levelUpTbl.subtitle = CL.other:format((levelUpTbl.title):upper(), tbl.title) -- Combine, without uppercase
-					levelUpTbl.title = nil
-					levelUpTbl.iconFileID = tbl.iconFileID
-				end
-			elseif tbl.eventToastID == 3 then -- New ability
-				-- tbl.title is "Imprison"
-				-- tbl.subtitle is "New Ability Unlocked!"
-				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
-				tbl.title = nil
-				tbl.bwDuration = 4.5
-				self:SimpleTimer(function() printMessage(self, tbl) end, 0.6) -- Show after the level up toast
-			elseif tbl.eventToastID == 2 or tbl.eventToastID == 51 then -- Dungeon, Battleground
-				-- tbl.title is "Ara-Kara, City of Echoes" / "Twin Peaks"
-				-- tbl.subtitle is "Dungeon Unlocked!" / "Battleground Unlocked!"
-				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
-				tbl.title = nil
-				tbl.bwDuration = 2.5
-				self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
-			elseif tbl.eventToastID == 183 then -- Discovery
-				-- tbl.title is "Discovery"
-				-- tbl.subtitle is "Respawn Point Unlocked!"
-				tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
-				tbl.title = nil
-				tbl.bwDuration = 3
-				printMessage(self, tbl)
-			elseif branSkills[tbl.eventToastID] then -- Brann Ability, Brann power increase
-				-- tbl.title is "Combat Curios" / "Explorer's Ammunition Journal"
-				-- tbl.subtitle is "Brann Ability Unlocked!" / "Brann's power increased!"
-				tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
-				tbl.title = nil
-				tbl.bwDuration = 2.5
-				printMessage(self, tbl)
-			elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
-				if not self.db.profile.blockDungeonToasts then
-					tbl.bwDuration = 2
+				elseif tbl.eventToastID == 1 then -- Level up
+					-- tbl.title is "Level 42"
+					-- tbl.subtitle is "You've Reached"
+					tbl.subtitle = nil -- Remove "You've Reached" text
+					tbl.bwDuration = 4.5
+					levelUpTbl = tbl
+					self:SimpleTimer(function() levelUpTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the talent point toast to merge, if one is rewarded
+				elseif tbl.eventToastID == 156 or tbl.eventToastID == 200 then -- Talent point, Hero talent point
+					-- tbl.title is "New Talent Point Available" / "New Hero Talent Point Available"
+					-- tbl.subtitle is "Your power increased!"
+					if levelUpTbl then -- We merge this into the level up toast
+						levelUpTbl.subtitle = CL.other:format((levelUpTbl.title):upper(), tbl.title) -- Combine, without uppercase
+						levelUpTbl.title = nil
+						levelUpTbl.iconFileID = tbl.iconFileID
+					end
+				elseif tbl.eventToastID == 3 then -- New ability
+					-- tbl.title is "Imprison"
+					-- tbl.subtitle is "New Ability Unlocked!"
+					tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+					tbl.title = nil
+					tbl.bwDuration = 4.5
+					self:SimpleTimer(function() printMessage(self, tbl) end, 0.6) -- Show after the level up toast
+				elseif tbl.eventToastID == 2 or tbl.eventToastID == 51 then -- Dungeon, Battleground
+					-- tbl.title is "Ara-Kara, City of Echoes" / "Twin Peaks"
+					-- tbl.subtitle is "Dungeon Unlocked!" / "Battleground Unlocked!"
+					tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+					tbl.title = nil
+					tbl.bwDuration = 2.5
+					self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Show after the level up and ability toast
+				elseif tbl.eventToastID == 183 then -- Discovery
+					-- tbl.title is "Discovery"
+					-- tbl.subtitle is "Respawn Point Unlocked!"
+					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
+					tbl.title = nil
+					tbl.bwDuration = 3
 					printMessage(self, tbl)
+				elseif branSkills[tbl.eventToastID] then -- Brann Ability, Brann power increase
+					-- tbl.title is "Combat Curios" / "Explorer's Ammunition Journal"
+					-- tbl.subtitle is "Brann Ability Unlocked!" / "Brann's power increased!"
+					tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
+					tbl.title = nil
+					tbl.bwDuration = 2.5
+					printMessage(self, tbl)
+				elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
+					if not self.db.profile.blockZoneInToasts then
+						tbl.bwDuration = 2
+						printMessage(self, tbl)
+					end
+				elseif tbl.eventToastID == 199 then -- Feature unlock
+					-- tbl.title is "Hero Talents"
+					-- tbl.subtitle is "Feature Unlocked!"
+					-- We just hide this as we already show that you unlocked a point alongside the level up message
+					tbl.title = nil
+				else -- Something we don't support, pass to Blizz to process
+					return
 				end
-			elseif tbl.eventToastID == 199 then -- Feature unlock
-				-- tbl.title is "Hero Talents"
-				-- tbl.subtitle is "Feature Unlocked!"
-				-- We just hide this as we already show that you unlocked a point alongside the level up message
-				tbl.title = nil
-			else -- Something we don't support, pass to Blizz to process
-				return
+				RemoveCurrentToast()
+				self:DISPLAY_EVENT_TOASTS()
 			end
-			RemoveCurrentToast()
-			self:DISPLAY_EVENT_TOASTS()
 		end
 	end
 	local GetDetailedItemLevelInfo = C_Item and C_Item.GetDetailedItemLevelInfo or GetDetailedItemLevelInfo
