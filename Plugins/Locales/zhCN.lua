@@ -344,7 +344,7 @@ L.glowType = "发光动画"
 L.glowTypeDesc = "更改图标周围显示的发光动画。"
 L.resetNameplateIconsDesc = "重置与姓名板图标相关的所有选项。"
 L.nameplateTextSettings = "文本设置"
-L.fixate_test = "固定测试" -- Text that displays to test on the frame
+L.fixate_test = "测试文本" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
 
 -- Glow types as part of LibCustomGlow
