@@ -552,8 +552,8 @@ do
 			},
 			testTextButton = {
 				type = "execute",
-				name = "Show Text Test", --L.testNameplateIconBtn,
-				desc = L.testNameplateIconBtn_desc,
+				name = L.testNameplateTextBtn,
+				desc = L.testNameplateTextBtn_desc,
 				func = function()
 					local guid = plugin:UnitGUID("target")
 					if guid and UnitCanAttack("player", "target") then
@@ -576,8 +576,8 @@ do
 			},
 			stopTestButton = {
 				type = "execute",
-				name = L.stopTestNameplateIconBtn,
-				desc = L.stopTestNameplateIconBtn_desc,
+				name = L.stopTestNameplateBtn,
+				desc = L.stopTestNameplateBtn_desc,
 				func = function()
 					plugin:StopModuleNameplates(nil, plugin)
 				end,
