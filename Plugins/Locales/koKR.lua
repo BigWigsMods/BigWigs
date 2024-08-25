@@ -16,8 +16,8 @@ L.disabled = "비활성"
 L.disableDesc = "'%s' 기능을 비활성화 하려고 하지만 |cffff4411권장하지 않습니다|r.\n\n비활성화 하시겠습니까?"
 
 -- Anchor Points
---L.UP = "Up"
---L.DOWN = "Down"
+L.UP = "위"
+L.DOWN = "아래"
 L.TOP = "상단"
 L.RIGHT = "우측"
 L.BOTTOM = "하단"
