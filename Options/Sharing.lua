@@ -344,7 +344,7 @@ do
 
 	local function PreProcess(data)
 		importedTableData = data
-		for k, v in pairs(data) do
+		for k, _ in pairs(data) do
 			importStringOptions[k] = true
 		end
 		return true
@@ -511,7 +511,7 @@ local sharingOptions = {
 				order = 2,
 				width = "full",
 				set = function(i, value)
-					local processed = sharingModule:DecodeImportString(value)
+					sharingModule:DecodeImportString(value)
 					sharingImportOptionsSettings[i[#i]] = value
 				end,
 				get = function(i) return sharingImportOptionsSettings[i[#i]] end,
@@ -632,7 +632,7 @@ local sharingOptions = {
 				args = {
 					importNameplateSettings = {
 						type = "toggle",
-						name = L.nameplates,
+						name = L.NAMEPLATE,
 						desc = L.nameplate_settings_import_desc,
 						order = 1,
 						width = 1,
@@ -776,7 +776,7 @@ local sharingOptions = {
 				args = {
 					exportNameplateSettings = {
 						type = "toggle",
-						name = L.nameplates,
+						name = L.NAMEPLATE,
 						desc = L.nameplate_settings_export_desc,
 						order = 20,
 						width = 1,

@@ -189,7 +189,6 @@ L.import_string_desc = "가져오려는 BigWigs 문자열을 여기에 붙여넣
 L.position = "위치"
 L.settings = "설정"
 --L.other_settings = "Other Settings"
---L.nameplates = "Nameplates"
 --L.nameplate_settings_import_desc = "Import all nameplate settings."
 --L.nameplate_settings_export_desc = "Export all nameplate settings."
 L.position_import_bars_desc = "바의 위치(앵커)를 가져옵니다."

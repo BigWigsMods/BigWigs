@@ -189,7 +189,6 @@ L.import_string_desc = "Collez la chaîne de caractères BigWigs que vous souhai
 L.position = "Position"
 L.settings = "Paramètres"
 --L.other_settings = "Other Settings"
---L.nameplates = "Nameplates"
 --L.nameplate_settings_import_desc = "Import all nameplate settings."
 --L.nameplate_settings_export_desc = "Export all nameplate settings."
 L.position_import_bars_desc = "Importer la position (ancres) des barres."
