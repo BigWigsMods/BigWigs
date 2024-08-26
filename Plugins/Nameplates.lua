@@ -42,7 +42,12 @@ local inverseAnchorPoint = {
 	RIGHT = "LEFT",
 	CENTER = "CENTER",
 }
-
+local glowValues = {
+	pixel = L.pixelGlow,
+	autocast = L.autocastGlow,
+	buttoncast = L.buttonGlow,
+	proc = L.procGlow,
+}
 
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 local findUnitByGUID
@@ -78,6 +83,189 @@ local glowStopFunctions = {
 	buttoncast = LibCustomGlow.ButtonGlow_Stop,
 	proc = LibCustomGlow.ProcGlow_Stop
 }
+
+--------------------------------------------------------------------------------
+-- Profile
+--
+
+local iconDefaults = {
+	iconGrowDirection = "LEFT",
+	iconGrowDirectionStart = "LEFT",
+	iconSpacing = 1,
+	nameplateIconWidth = 15,
+	nameplateIconHeight = 15,
+	nameplateIconOffsetX = 0,
+	nameplateIconOffsetY = -4,
+	nameplateIconCooldownTimer = true,
+	nameplateIconCooldownTimerFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
+	nameplateIconCooldownTimerFontSize = 7,
+	nameplateIconCooldownTimerFontColor = {1, 1, 1, 1},
+	nameplateIconCooldownTimerOutline = "OUTLINE",
+	nameplateIconCooldownTimerMonochrome = false,
+	nameplateIconCooldownEdge = true,
+	nameplateIconCooldownSwipe = true,
+	nameplateIconCooldownInverse = false,
+	nameplateIconExpireGlow = true,
+	nameplateIconExpireGlowType = "pixel",
+	nameplateIconZoom = 0,
+	nameplateIconAspectRatio = true,
+	nameplateIconDesaturate = false,
+	nameplateIconColor = {1, 1, 1, 1},
+	nameplateIconGlowColor = {0.95, 0.95, 0.32, 1},
+	nameplateIconBorder = true,
+	nameplateIconBorderSize = 1,
+	nameplateIconBorderColor = {0, 0, 0, 1},
+}
+
+local textDefaults = {
+	textGrowDirection = "UP",
+	textGrowDirectionStart = "TOP",
+	textSpacing = 0,
+	textOffsetX = 0,
+	textOffsetY = 0,
+	textFontName = plugin:GetDefaultFont(),
+	textFontSize = 18,
+	textFontColor = {1, 1, 1, 1},
+	textOutline = "THICKOUTLINE",
+	textMonochrome = false,
+	textUppercase = true,
+}
+
+plugin.defaultDB = {}
+for k, v in next, iconDefaults do
+	plugin.defaultDB[k] = v
+end
+for k, v in next, textDefaults do
+	plugin.defaultDB[k] = v
+end
+
+local function updateProfile()
+	db = plugin.db.profile
+
+	for k, v in next, db do
+		local defaultType = type(plugin.defaultDB[k])
+		if defaultType == "nil" then
+			db[k] = nil
+		elseif type(v) ~= defaultType then
+			db[k] = plugin.defaultDB[k]
+		end
+	end
+
+	if not validGrowDirections[db.iconGrowDirection] then
+		db.iconGrowDirection = plugin.defaultDB.iconGrowDirection
+	end
+	if not validFramePoints[db.iconGrowDirectionStart] then
+		db.iconGrowDirectionStart = plugin.defaultDB.iconGrowDirectionStart
+	end
+	if db.iconSpacing < 0 or db.iconSpacing > 20 then
+		db.iconSpacing = plugin.defaultDB.iconSpacing
+	end
+	if db.nameplateIconWidth < 8 or db.nameplateIconWidth > 50 then
+		db.nameplateIconWidth = plugin.defaultDB.nameplateIconWidth
+	end
+	if db.nameplateIconHeight < 8 or db.nameplateIconHeight > 50 then
+		db.nameplateIconHeight = plugin.defaultDB.nameplateIconHeight
+	end
+	if db.nameplateIconOffsetX < -50 or db.nameplateIconOffsetX > 50 then
+		db.nameplateIconOffsetX = plugin.defaultDB.nameplateIconOffsetX
+	end
+	if db.nameplateIconOffsetY < -50 or db.nameplateIconOffsetY > 50 then
+		db.nameplateIconOffsetY = plugin.defaultDB.nameplateIconOffsetY
+	end
+	if not media:IsValid(FONT, db.nameplateIconCooldownTimerFontName) then
+		db.nameplateIconCooldownTimerFontName = plugin.defaultDB.nameplateIconCooldownTimerFontName
+	end
+	if db.nameplateIconCooldownTimerFontSize < 5 or db.nameplateIconCooldownTimerFontSize > 200 then
+		db.nameplateIconCooldownTimerFontSize = plugin.defaultDB.nameplateIconCooldownTimerFontSize
+	end
+	for i = 1, 4 do
+		local n = db.nameplateIconCooldownTimerFontColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.nameplateIconCooldownTimerFontColor = plugin.defaultDB.nameplateIconCooldownTimerFontColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+	if db.nameplateIconCooldownTimerOutline ~= "NONE" and db.nameplateIconCooldownTimerOutline ~= "OUTLINE" and db.nameplateIconCooldownTimerOutline ~= "THICKOUTLINE" then
+		db.nameplateIconCooldownTimerOutline = plugin.defaultDB.nameplateIconCooldownTimerOutline
+	end
+	if not glowValues[db.nameplateIconExpireGlowType] then
+		db.nameplateIconExpireGlowType = plugin.defaultDB.nameplateIconExpireGlowType
+	end
+	if db.nameplateIconZoom < 0 or db.nameplateIconZoom > 0.5 then
+		db.nameplateIconZoom = plugin.defaultDB.nameplateIconZoom
+	end
+	for i = 1, 4 do
+		local n = db.nameplateIconColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.nameplateIconColor = plugin.defaultDB.nameplateIconColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+	if db.nameplateIconColor[4] < 0.3 then -- Limit lowest alpha value
+		db.nameplateIconColor = plugin.defaultDB.nameplateIconColor
+	end
+	for i = 1, 4 do
+		local n = db.nameplateIconGlowColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.nameplateIconGlowColor = plugin.defaultDB.nameplateIconGlowColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+	if db.nameplateIconBorderSize < 1 or db.nameplateIconBorderSize > 5 then
+		db.nameplateIconBorderSize = plugin.defaultDB.nameplateIconBorderSize
+	end
+	for i = 1, 4 do
+		local n = db.nameplateIconBorderColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.nameplateIconBorderColor = plugin.defaultDB.nameplateIconBorderColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+
+	if not validGrowDirections[db.textGrowDirection] then
+		db.textGrowDirection = plugin.defaultDB.textGrowDirection
+	end
+	if not validFramePoints[db.textGrowDirectionStart] then
+		db.textGrowDirectionStart = plugin.defaultDB.textGrowDirectionStart
+	end
+	if db.textSpacing < 0 or db.textSpacing > 20 then
+		db.textSpacing = plugin.defaultDB.textSpacing
+	end
+	if db.textOffsetX < -50 or db.textOffsetX > 50 then
+		db.textOffsetX = plugin.defaultDB.textOffsetX
+	end
+	if db.textOffsetY < -50 or db.textOffsetY > 50 then
+		db.textOffsetY = plugin.defaultDB.textOffsetY
+	end
+	if not media:IsValid(FONT, db.textFontName) then
+		db.textFontName = plugin:GetDefaultFont()
+	end
+	if db.textFontSize < 5 or db.textFontSize > 200 then
+		db.textFontSize = plugin.defaultDB.textFontSize
+	end
+	for i = 1, 4 do
+		local n = db.textFontColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.textFontColor = plugin.defaultDB.textFontColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+	if db.textFontColor[4] < 0.3 then -- Limit lowest alpha value
+		db.textFontColor = plugin.defaultDB.textFontColor
+	end
+	if db.textOutline ~= "NONE" and db.textOutline ~= "OUTLINE" and db.textOutline ~= "THICKOUTLINE" then
+		db.textOutline = plugin.defaultDB.textOutline
+	end
+end
+
+local function setDefaults(options)
+	local defaults = options
+	local db = plugin.db.profile
+	for k, value  in next, defaults do
+		db[k] = value
+	end
+	updateProfile()
+end
 
 --------------------------------------------------------------------------------
 -- Text Frames
@@ -403,86 +591,6 @@ local function getIconFrame()
 	return iconFrame
 end
 
-
---------------------------------------------------------------------------------
--- Profile
---
-
-local iconDefaults = {
-	iconGrowDirection = "LEFT",
-	iconGrowDirectionStart = "LEFT",
-	iconSpacing = 1,
-	nameplateIconWidth = 15,
-	nameplateIconHeight = 15,
-	nameplateIconOffsetX = 0,
-	nameplateIconOffsetY = -4,
-	nameplateIconCooldownTimer = true,
-	nameplateIconCooldownTimerFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
-	nameplateIconCooldownTimerFontSize = 7,
-	nameplateIconCooldownTimerFontColor = {1, 1, 1, 1},
-	nameplateIconCooldownTimerOutline = "OUTLINE",
-	nameplateIconCooldownTimerMonochrome = false,
-	nameplateIconCooldownEdge = true,
-	nameplateIconCooldownSwipe = true,
-	nameplateIconCooldownInverse = false,
-	nameplateIconExpireGlow = true,
-	nameplateIconExpireGlowType = "pixel",
-	nameplateIconZoom = 0,
-	nameplateIconAspectRatio = true,
-	nameplateIconDesaturate = false,
-	nameplateIconColor = {1, 1, 1, 1},
-	nameplateIconGlowColor = {0.95, 0.95, 0.32, 1},
-	nameplateIconBorder = true,
-	nameplateIconBorderSize = 1,
-	nameplateIconBorderColor = {0, 0, 0, 1},
-}
-
-local textDefaults = {
-	textGrowDirection = "UP",
-	textGrowDirectionStart = "TOP",
-	textSpacing = 0,
-	textOffsetX = 0,
-	textOffsetY = 0,
-	textFontName = plugin:GetDefaultFont(),
-	textFontSize = 18,
-	textFontColor = {1, 1, 1, 1},
-	textOutline = "THICKOUTLINE",
-	textMonochrome = false,
-	textUppercase = true,
-}
-
-plugin.defaultDB = {}
-for k, v in next, iconDefaults do
-	plugin.defaultDB[k] = v
-end
-for k, v in next, textDefaults do
-	plugin.defaultDB[k] = v
-end
-
-local function updateProfile()
-	db = plugin.db.profile
-
-	for k, v in next, db do
-		local defaultType = type(plugin.defaultDB[k])
-		if defaultType == "nil" then
-			db[k] = nil
-		elseif type(v) ~= defaultType then
-			db[k] = plugin.defaultDB[k]
-		end
-	end
-
-	-- Add validations
-end
-
-local function setDefaults(options)
-	local defaults = options
-	local db = plugin.db.profile
-	for k, value  in next, defaults do
-		db[k] = value
-	end
-	updateProfile()
-end
-
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -686,7 +794,7 @@ do
 							return unpack(plugin.db.profile.nameplateIconColor)
 						end,
 						set = function(info, r, g, b, a)
-							plugin.db.profile.nameplateIconColor = {r, g, b, a}
+							plugin.db.profile.nameplateIconColor = {r, g, b, a < 0.3 and 0.3 or a}
 							resetNameplates()
 						end,
 					},
@@ -875,12 +983,7 @@ do
 						order = 43,
 						width = 1,
 						disabled = function() return not db.nameplateIconExpireGlow end,
-						values = {
-							pixel = L.pixelGlow,
-							autocast = L.autocastGlow,
-							buttoncast = L.buttonGlow,
-							proc = L.procGlow,
-						},
+						values = glowValues,
 					},
 					resetHeader = {
 						type = "header",
@@ -1004,7 +1107,7 @@ do
 							return unpack(db.textFontColor)
 						end,
 						set = function(info, r, g, b, a)
-							db.textFontColor = {r, g, b, a}
+							db.textFontColor = {r, g, b, a < 0.3 and 0.3 or a}
 							resetNameplates()
 						end,
 						order = 24,
