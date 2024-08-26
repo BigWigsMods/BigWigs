@@ -25,6 +25,7 @@ do
 	tbl.bossPrototype = boss
 end
 
+local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
@@ -568,6 +569,13 @@ function boss:GetLocale()
 	return self.localization
 end
 boss.NewLocale = boss.GetLocale
+
+do
+	local SetSpellRename = BigWigsAPI.SetSpellRename
+	function boss:SetSpellRename(spellId, text)
+		SetSpellRename(spellId, text)
+	end
+end
 
 --- Create a custom marking option
 -- @bool state Boolean value to represent default state
