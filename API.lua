@@ -140,6 +140,23 @@ do
 	end
 end
 
+--------------------------------------------------------------------------------
+-- Spell renames
+--
+
+do
+	local tbl = {}
+	-- This function provides external addons with the spell renames that we use in our modules
+	function API:GetSpellRename(spellId)
+		return tbl[spellId]
+	end
+	function API:SetSpellRename(spellId, text)
+		if type(spellId) ~= "number" then error("Invalid spell ID for spell rename.") end
+		if type(text) ~= "string" or #text < 3 then error("Invalid spell text for spell rename.") end
+		tbl[spellId] = text
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Global
 --
