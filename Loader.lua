@@ -1002,8 +1002,8 @@ function mod:ADDON_LOADED(addon)
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
 	--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
 
-	if C_EventUtils.IsEventValid("ACTIVE_DELVE_DATA_UPDATE") then -- XXX Update me to new event
-		bwFrame:RegisterEvent("ACTIVE_DELVE_DATA_UPDATE")
+	if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+		bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
 	end
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -1726,7 +1726,7 @@ do
 		end
 
 		-- Lacking zone modules
-		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
+		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or mod.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if type(zoneAddon) == "table" then
 			-- default to the expansion addon for current season modules
@@ -1750,8 +1750,12 @@ do
 			end
 		end
 	end
-	if public.isRetail then
-		mod.ACTIVE_DELVE_DATA_UPDATE = mod.PLAYER_ENTERING_WORLD -- XXX Update me to new event
+	function mod:PLAYER_MAP_CHANGED(oldId, newId)
+		if oldId ~= -1 then -- Skip non-delve events
+			if enableZones[newId] then
+				CTimerAfter(0, mod.PLAYER_ENTERING_WORLD) -- Unfortunately, GetInstanceInfo() is not accurate until 1 frame later
+			end
+		end
 	end
 end
 

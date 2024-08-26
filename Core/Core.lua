@@ -326,6 +326,12 @@ do
 			module:Enable()
 		end
 	end
+	local zoneList = loader.zoneTbl
+	local function CheckIfLeavingDelve(_, oldId, newId)
+		if zoneList[oldId] and not zoneList[newId] then
+			DisableCore() -- Leaving a Delve
+		end
+	end
 	function core:Enable(unit)
 		if not coreEnabled then
 			coreEnabled = true
@@ -336,8 +342,8 @@ do
 			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			core.RegisterEvent(mod, "UNIT_TARGET", unitTargetChanged)
 			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", DisableCore) -- Simple disable when leaving instances
-			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then -- XXX implement a separate ID system for delves
-				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", DisableCore)
+			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", CheckIfLeavingDelve)
 			end
 			local _, instanceType = GetInstanceInfo()
 			if instanceType == "none" then -- We don't want to be disabling in instances
