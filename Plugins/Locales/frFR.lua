@@ -354,6 +354,20 @@ L.fadeTimeDesc = "Définit pendant combien de temps un message doit s'estomper (
 --L.autocastGlow = "Autocast Glow"
 --L.buttonGlow = "Button Glow"
 --L.procGlow = "Proc Glow"
+--L.speed = "Speed"
+--L.animation_speed_desc = "The speed at which the glow animation plays."
+--L.lines = "Lines"
+--L.lines_glow_desc = "The number of lines in the glow animation."
+--L.intensity = "Intensity"
+--L.intensity_glow_desc = "The intensity of the glow effect, higher means more sparks."
+--L.length = "Length"
+--L.length_glow_desc = "The length of the lines in the glow animation."
+--L.thickness = "Thickness"
+--L.thickness_glow_desc = "The thickness of the lines in the glow animation."
+--L.scale = "Scale"
+--L.scale_glow_desc = "The scale of the sparks in the animation."
+--L.startAnimation = "Start Animation"
+--L.startAnimation_glow_desc = "This glow has a starting animation, this will enable/disable that animation."
 
 -----------------------------------------------------------------------
 -- Proximity.lua
