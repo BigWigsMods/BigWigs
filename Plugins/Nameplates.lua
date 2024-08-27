@@ -114,7 +114,7 @@ local iconDefaults = {
 	nameplateIconGlowColor = {0.95, 0.95, 0.32, 1},
 	iconGlowFrequency = 0.25,
 	iconGlowPixelLines = 8,
-	iconGlowPixelLenght = 4,
+	iconGlowPixelLength = 4,
 	iconGlowPixelThickness = 1,
 	iconGlowAutoCastParticles = 8,
 	iconGlowAutoCastScale = 1,
@@ -205,8 +205,8 @@ local function updateProfile()
 	if db.iconGlowPixelLines < 1 or db.iconGlowPixelLines > 30 then
 		db.iconGlowPixelLines = plugin.defaultDB.iconGlowPixelLines
 	end
-	if db.iconGlowPixelLenght < 1 or db.iconGlowPixelLenght > 20 then
-		db.iconGlowPixelLenght = plugin.defaultDB.iconGlowPixelLenght
+	if db.iconGlowPixelLength < 1 or db.iconGlowPixelLength > 20 then
+		db.iconGlowPixelLength = plugin.defaultDB.iconGlowPixelLength
 	end
 	if db.iconGlowPixelThickness < 1 or db.iconGlowPixelThickness > 5 then
 		db.iconGlowPixelThickness = plugin.defaultDB.iconGlowPixelThickness
@@ -417,7 +417,7 @@ end
 
 local function getGlowSettings(glowType)
 	if glowType == "pixel" then
-		return {db.nameplateIconGlowColor, db.iconGlowPixelLines, db.iconGlowFrequency, db.iconGlowPixelLenght, db.iconGlowPixelThickness}
+		return {db.nameplateIconGlowColor, db.iconGlowPixelLines, db.iconGlowFrequency, db.iconGlowPixelLength, db.iconGlowPixelThickness}
 	elseif glowType == "autocast" then
 		return {db.nameplateIconGlowColor, db.iconGlowAutoCastParticles, db.iconGlowFrequency, db.iconGlowAutoCastScale}
 	elseif glowType == "proc" then
@@ -1106,7 +1106,7 @@ do
 						disabled = function() return not db.nameplateIconExpireGlow end,
 						hidden = function() return db.nameplateIconExpireGlowType ~= "proc" end,
 					},
-					iconGlowPixelLenght ={
+					iconGlowPixelLength ={
 						type = "range",
 						name = L.lenght,
 						desc = L.lenght_glow_desc,
