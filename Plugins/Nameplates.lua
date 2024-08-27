@@ -199,6 +199,27 @@ local function updateProfile()
 	if not glowValues[db.nameplateIconExpireGlowType] then
 		db.nameplateIconExpireGlowType = plugin.defaultDB.nameplateIconExpireGlowType
 	end
+	if db.iconGlowFrequency < -2 or db.iconGlowFrequency > 2 then
+		db.iconGlowFrequency = plugin.defaultDB.iconGlowFrequency
+	end
+	if db.iconGlowPixelLines < 1 or db.iconGlowPixelLines > 30 then
+		db.iconGlowPixelLines = plugin.defaultDB.iconGlowPixelLines
+	end
+	if db.iconGlowPixelLenght < 1 or db.iconGlowPixelLenght > 20 then
+		db.iconGlowPixelLenght = plugin.defaultDB.iconGlowPixelLenght
+	end
+	if db.iconGlowPixelThickness < 1 or db.iconGlowPixelThickness > 5 then
+		db.iconGlowPixelThickness = plugin.defaultDB.iconGlowPixelThickness
+	end
+	if db.iconGlowAutoCastParticles < 1 or db.iconGlowAutoCastParticles > 30 then
+		db.iconGlowAutoCastParticles = plugin.defaultDB.iconGlowAutoCastParticles
+	end
+	if db.iconGlowAutoCastScale < 0.5 or db.iconGlowAutoCastScale > 3 then
+		db.iconGlowAutoCastScale = plugin.defaultDB.iconGlowAutoCastScale
+	end
+	if db.iconGlowProcAnimDuration > 0.1 or db.iconGlowProcAnimDuration > 3 then
+		db.iconGlowProcAnimDuration = plugin.defaultDB.iconGlowProcAnimDuration
+	end
 	if db.nameplateIconZoom < 0 or db.nameplateIconZoom > 0.5 then
 		db.nameplateIconZoom = plugin.defaultDB.nameplateIconZoom
 	end
