@@ -217,7 +217,7 @@ local function updateProfile()
 	if db.iconGlowAutoCastScale < 0.5 or db.iconGlowAutoCastScale > 3 then
 		db.iconGlowAutoCastScale = plugin.defaultDB.iconGlowAutoCastScale
 	end
-	if db.iconGlowProcAnimDuration > 0.1 or db.iconGlowProcAnimDuration > 3 then
+	if db.iconGlowProcAnimDuration < 0.1 or db.iconGlowProcAnimDuration > 3 then
 		db.iconGlowProcAnimDuration = plugin.defaultDB.iconGlowProcAnimDuration
 	end
 	if db.nameplateIconZoom < 0 or db.nameplateIconZoom > 0.5 then
