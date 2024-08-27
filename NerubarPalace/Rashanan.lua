@@ -163,6 +163,15 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(439789, L.rolling_acid) -- Rolling Acid (Waves)
+	self:SetSpellRename(455373, CL.adds) -- Infested Spawn (Adds)
+	self:SetSpellRename(439784, L.spinnerets_strands) -- Spinneret's Strands (Strands)
+	self:SetSpellRename(439795, CL.soak) -- Web Reave (Soak)
+	self:SetSpellRename(439811, L.erosive_spray) -- Erosive Spray (Spray)
+	self:SetSpellRename(454989, L.enveloping_webs) -- Enveloping Webs (Webs)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SavageAssault", 444687)
 	self:Log("SPELL_AURA_APPLIED", "SavageWoundApplied", 458067)

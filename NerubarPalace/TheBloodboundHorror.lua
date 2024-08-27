@@ -68,6 +68,13 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(444363, CL.frontal_cone) -- Gruesome Disgorge (Frontal Cone)
+	self:SetSpellRename(445936, CL.beams) -- Spewing Hemorrhage (Beams)
+	self:SetSpellRename(442530, L.goresplatter) -- Goresplatter (Run Away)
+	self:SetSpellRename(452237, L.bloodcurdle) -- Bloodcurdle (Spreads)
+end
+
 function mod:OnBossEnable()
 	-- Phase One: The Black Blood
 	self:Log("SPELL_CAST_START", "GruesomeDisgorge", 444363)

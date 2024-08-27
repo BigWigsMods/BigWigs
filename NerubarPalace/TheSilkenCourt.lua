@@ -245,6 +245,21 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(438801, CL.adds) -- Call of the Swarm (Adds)
+	self:SetSpellRename(440246, CL.charge) -- Reckless Charge (Charge)
+	self:SetSpellRename(441791, L.burrowed_eruption) -- Burrowed Eruption (Burrow)
+	self:SetSpellRename(440504, L.impaling_eruption) -- Impaling Eruption (Frontal [A])
+	self:SetSpellRename(450045, CL.leap) -- Skittering Leap (Leap)
+	self:SetSpellRename(438677, L.stinging_swarm) -- Impaling Eruption (Frontal [A])
+	self:SetSpellRename(450129, L.entropic_desolation) -- Entropic Desolation (Run Out)
+	self:SetSpellRename(441782, L.strands_of_reality) -- Strands of Reality (Frontal [S])
+	self:SetSpellRename(450483, CL.teleport) -- Void Step (Teleport)
+	self:SetSpellRename(438355, L.cataclysmic_entropy) -- Cataclysmic Entropy (Big Boom)
+	self:SetSpellRename(443068, L.spike_eruption) -- Spike Eruption (Spikes)
+	self:SetSpellRename(442994, L.unleashed_swarm) -- Unleashed Swarm (Swarm)
+end
+
 function mod:OnBossEnable()
 	-- Marking
 	self:Log("SPELL_SUMMON", "ShattershellScarabSummon", 438249)

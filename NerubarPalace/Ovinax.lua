@@ -78,6 +78,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(442526, L.experimental_dosage) -- Experimental Dosage (Egg Breaks)
+end
+
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Ingest Black Blood adjustments
 

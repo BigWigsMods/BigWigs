@@ -71,6 +71,13 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(439409, CL.orbs) -- Dark Visera (Orbs)
+	self:SetSpellRename(438245, L.twiligt_massacre) -- Twilight Massacre (Dashes)
+	self:SetSpellRename(437620, CL.rifts) -- Nether Rift (Rifts)
+	self:SetSpellRename(439576, L.nexus_daggers) -- Nexus Daggers (Daggers)
+end
+
 function mod:OnBossEnable()
 	-- Stage One: The Phantom Blade
 	self:Log("SPELL_CAST_SUCCESS", "Assassination", 436867, 442573, 440650) -- 3, 4, 5 targets
