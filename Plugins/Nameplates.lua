@@ -19,7 +19,7 @@ local FONT = media.MediaType and media.MediaType.FONT or "font"
 local nameplateIcons, iconFrameCache, nameplateTexts, textFrameCache = {}, {}, {}, {}
 local startNameplateIcon, showNameplateText
 local rearrangeNameplateIcons, rearrangeNameplateTexts
-local removeFrame, nameplateIconCascadeDelete, frameStopped
+local removeFrame, frameStopped
 
 local validFramePoints = {
 	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
@@ -289,8 +289,7 @@ end
 
 local function setDefaults(options)
 	local defaults = options
-	local db = plugin.db.profile
-	for k, value  in next, defaults do
+	for k, value in next, defaults do
 		db[k] = value
 	end
 	updateProfile()
@@ -333,7 +332,7 @@ local function getTextFrame()
 			flags = db.textOutline
 		end
 		self.fontString:SetFont(media:Fetch(FONT, db.textFontName), db.textFontSize, flags)
-		self.fontString:SetTextColor(unpack(db.textFontColor))
+		self.fontString:SetTextColor(db.textFontColor[1], db.textFontColor[2], db.textFontColor[3], db.textFontColor[4])
 		local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
 		self:SetSize(w, h)
 	end
@@ -509,7 +508,7 @@ local function getIconFrame()
 					flags = db.nameplateIconCooldownTimerOutline
 				end
 				self.countdownNumber:SetFont(media:Fetch(FONT, db.nameplateIconCooldownTimerFontName), db.nameplateIconCooldownTimerFontSize, flags)
-				self.countdownNumber:SetTextColor(unpack(db.nameplateIconCooldownTimerFontColor))
+				self.countdownNumber:SetTextColor(db.nameplateIconCooldownTimerFontColor[1], db.nameplateIconCooldownTimerFontColor[2], db.nameplateIconCooldownTimerFontColor[3], db.nameplateIconCooldownTimerFontColor[4])
 
 				local timeToDisplay = math.ceil(remaining)
 				self.countdownNumber:SetText(timeToDisplay)
@@ -562,10 +561,10 @@ local function getIconFrame()
 		self.hideOnExpire = hideOnExpire
 	end
 
-	function iconFrame:ShowBorder(show, color, size)
+	function iconFrame:ShowBorder(show, color)
 		if show then
 			self.border:SetBackdrop(GetBorderBackdrop(db.nameplateIconBorderSize))
-			self.border:SetBackdropBorderColor(unpack(color))
+			self.border:SetBackdropBorderColor(color[1], color[2], color[3], color[4])
 			self.border:Show()
 		else
 			self.border:Hide()
@@ -577,7 +576,7 @@ local function getIconFrame()
 		local glowFunction = glowFunctions[glowType]
 		local glowOptions = getGlowSettings(glowType)
 		if glowFunction then
-			self.glowTimer = C_Timer.NewTimer(0.05, function()  -- delay so the frame is shown before the glow
+			self.glowTimer = C_Timer.NewTimer(0.05, function() -- delay so the frame is shown before the glow
 				glowFunction(self, unpack(glowOptions))
 				self.activeGlow = glowType
 			 end)
@@ -686,7 +685,6 @@ do
 						for i = 1, 40 do
 							local unit = ("nameplate%d"):format(i)
 							if plugin:UnitGUID(unit) == guid then
-								local t = GetTime()
 								testCount = testCount + 1
 								local testNumber = (testCount%3)+1
 								local key = "test"..testNumber
@@ -710,7 +708,6 @@ do
 						for i = 1, 40 do
 							local unit = ("nameplate%d"):format(i)
 							if plugin:UnitGUID(unit) == guid then
-								local t = GetTime()
 								testCount = testCount + 1
 								local testNumber = (testCount%3)+1
 								local key = "test"..testNumber
@@ -832,11 +829,11 @@ do
 						order = 14,
 						hasAlpha = true,
 						width = 1,
-						get = function(info)
-							return unpack(plugin.db.profile.nameplateIconColor)
+						get = function()
+							return db.nameplateIconColor[1], db.nameplateIconColor[2], db.nameplateIconColor[3], db.nameplateIconColor[4]
 						end,
-						set = function(info, r, g, b, a)
-							plugin.db.profile.nameplateIconColor = {r, g, b, a < 0.3 and 0.3 or a}
+						set = function(_, r, g, b, a)
+							db.nameplateIconColor = {r, g, b, a < 0.3 and 0.3 or a}
 							resetNameplates()
 						end,
 					},
@@ -872,11 +869,11 @@ do
 						hasAlpha = true,
 						width = 1,
 						disabled = function() return not db.nameplateIconBorder end,
-						get = function(info)
-							return unpack(plugin.db.profile.nameplateIconBorderColor)
+						get = function()
+							return db.nameplateIconBorderColor[1], db.nameplateIconBorderColor[2], db.nameplateIconBorderColor[3], db.nameplateIconBorderColor[4]
 						end,
-						set = function(info, r, g, b, a)
-							plugin.db.profile.nameplateIconBorderColor = {r, g, b, a}
+						set = function(_, r, g, b, a)
+							db.nameplateIconBorderColor = {r, g, b, a}
 							resetNameplates()
 						end,
 					},
@@ -936,10 +933,10 @@ do
 						type = "color",
 						name = L.fontColor,
 						hasAlpha = true,
-						get = function(info)
-							return unpack(db.nameplateIconCooldownTimerFontColor)
+						get = function()
+							return db.nameplateIconCooldownTimerFontColor[1], db.nameplateIconCooldownTimerFontColor[2], db.nameplateIconCooldownTimerFontColor[3], db.nameplateIconCooldownTimerFontColor[4]
 						end,
-						set = function(info, r, g, b, a)
+						set = function(_, r, g, b, a)
 							db.nameplateIconCooldownTimerFontColor = {r, g, b, a}
 							resetNameplates()
 						end,
@@ -1007,11 +1004,11 @@ do
 						hasAlpha = true,
 						width = 1,
 						disabled = function() return not db.nameplateIconExpireGlow end,
-						get = function(info)
-							return unpack(plugin.db.profile.nameplateIconGlowColor)
+						get = function()
+							return db.nameplateIconGlowColor[1], db.nameplateIconGlowColor[2], db.nameplateIconGlowColor[3], db.nameplateIconGlowColor[4]
 						end,
-						set = function(info, r, g, b, a)
-							plugin.db.profile.nameplateIconGlowColor = {r, g, b, a}
+						set = function(_, r, g, b, a)
+							db.nameplateIconGlowColor = {r, g, b, a}
 							resetNameplates()
 						end,
 					},
@@ -1236,10 +1233,10 @@ do
 						type = "color",
 						name = L.fontColor,
 						hasAlpha = true,
-						get = function(info)
-							return unpack(db.textFontColor)
+						get = function()
+							return db.textFontColor[1], db.textFontColor[2], db.textFontColor[3], db.textFontColor[4]
 						end,
-						set = function(info, r, g, b, a)
+						set = function(_, r, g, b, a)
 							db.textFontColor = {r, g, b, a < 0.3 and 0.3 or a}
 							resetNameplates()
 						end,
@@ -1329,13 +1326,13 @@ do
 
 				if i > 1 then -- Only use setup offset for first icon
 					local growOffset = db.iconSpacing
-					if db.iconGrowDirection == "UP" then
+					if growDirection == "UP" then
 						growOffset = growOffset + db.nameplateIconHeight
 						offsetY = offsetY + growOffset
-					elseif db.iconGrowDirection == "DOWN" then
+					elseif growDirection == "DOWN" then
 						growOffset = -(growOffset + db.nameplateIconHeight)
 						offsetY = offsetY + growOffset
-					elseif db.iconGrowDirection == "LEFT" then
+					elseif growDirection == "LEFT" then
 						growOffset = -(growOffset + db.nameplateIconWidth)
 						offsetX = offsetX + growOffset
 					else -- RIGHT
@@ -1368,13 +1365,13 @@ do
 				local w, h = text:GetSize()
 				if i > 1 then -- Only use setup offset after first icon
 					local growOffset = db.textSpacing
-					if db.textGrowDirection == "UP" then
+					if growDirection == "UP" then
 						growOffset = growOffset + h
 						offsetY = offsetY + growOffset
-					elseif db.textGrowDirection == "DOWN" then
+					elseif growDirection == "DOWN" then
 						growOffset = -(growOffset + h)
 						offsetY = offsetY + growOffset
-					elseif db.textGrowDirection == "LEFT" then
+					elseif growDirection == "LEFT" then
 						growOffset = -(growOffset + w)
 						offsetX = offsetX + growOffset
 					else -- RIGHT
@@ -1572,7 +1569,7 @@ local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire
 	iconFrame:ShowBorder(db.nameplateIconBorder, db.nameplateIconBorderColor)
 
 	iconFrame:SetIcon(icon)
-	iconFrame:SetIconColor(unpack(db.nameplateIconColor))
+	iconFrame:SetIconColor(db.nameplateIconColor[1], db.nameplateIconColor[2], db.nameplateIconColor[3], db.nameplateIconColor[4])
 	iconFrame:SetDesaturated(db.nameplateIconDesaturate)
 
 	iconFrame.cooldown:SetDrawEdge(db.nameplateIconCooldownEdge)
@@ -1600,13 +1597,13 @@ end
 
 function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	local time = GetTime()
-    local expirationTime, timerDuration = getLength(length)
+	local expirationTime, timerDuration = getLength(length)
 
-    local currentIcon = nameplateIcons[guid] and nameplateIcons[guid][key]
-    if currentIcon and currentIcon.exp < time and timerDuration <= 0 then
+	local currentIcon = nameplateIcons[guid] and nameplateIcons[guid][key]
+	if currentIcon and currentIcon.exp < time and timerDuration <= 0 then
 		-- Avoid restarting an already expired icon and its animations if the timer is 0 or less
-        return
-    end
+		return
+	end
 
 	plugin:StopNameplate(nil, module, guid, key)
 
@@ -1636,7 +1633,7 @@ end
 function showNameplateText(module, guid, key, length, text, hideOnExpire)
 	plugin:StopNameplate(nil, module, guid, key, text)
 	local time = GetTime()
-    local expirationTime, timerDuration = getLength(length)
+	local expirationTime, timerDuration = getLength(length)
 
 	nameplateTexts[guid] = nameplateTexts[guid] or {}
 	local textInfo = {
