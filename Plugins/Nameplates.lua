@@ -202,7 +202,7 @@ local function updateProfile()
 	if db.iconGlowFrequency < -2 or db.iconGlowFrequency > 2 then
 		db.iconGlowFrequency = plugin.defaultDB.iconGlowFrequency
 	end
-	if db.iconGlowPixelLines < 1 or db.iconGlowPixelLines > 30 then
+	if db.iconGlowPixelLines < 1 or db.iconGlowPixelLines > 15 then
 		db.iconGlowPixelLines = plugin.defaultDB.iconGlowPixelLines
 	end
 	if db.iconGlowPixelLength < 1 or db.iconGlowPixelLength > 20 then
@@ -211,7 +211,7 @@ local function updateProfile()
 	if db.iconGlowPixelThickness < 1 or db.iconGlowPixelThickness > 5 then
 		db.iconGlowPixelThickness = plugin.defaultDB.iconGlowPixelThickness
 	end
-	if db.iconGlowAutoCastParticles < 1 or db.iconGlowAutoCastParticles > 30 then
+	if db.iconGlowAutoCastParticles < 1 or db.iconGlowAutoCastParticles > 15 then
 		db.iconGlowAutoCastParticles = plugin.defaultDB.iconGlowAutoCastParticles
 	end
 	if db.iconGlowAutoCastScale < 0.5 or db.iconGlowAutoCastScale > 3 then
@@ -1039,7 +1039,7 @@ do
 						desc = L.lines_glow_desc,
 						order = 45,
 						min = 1,
-						max = 30,
+						max = 15,
 						step = 1,
 						width = 1,
 						disabled = function() return not db.nameplateIconExpireGlow end,
@@ -1051,7 +1051,7 @@ do
 						desc = L.intensity_glow_desc,
 						order = 45,
 						min = 1,
-						max = 30,
+						max = 15,
 						step = 1,
 						width = 1,
 						disabled = function() return not db.nameplateIconExpireGlow end,
