@@ -386,6 +386,18 @@ local function GetBorderBackdrop(size)
 	return borderBackdrop
 end
 
+local function getGlowSettings(glowType)
+	if glowType == "pixel" then
+		return {db.nameplateIconGlowColor, db.iconGlowPixelLines, db.iconGlowFrequency, db.iconGlowPixelLenght, db.iconGlowPixelThickness}
+	elseif glowType == "autocast" then
+		return {db.nameplateIconGlowColor, db.iconGlowAutoCastParticles, db.iconGlowFrequency, db.iconGlowAutoCastScale}
+	elseif glowType == "proc" then
+		return {{color = db.nameplateIconGlowColor, startAnim = db.iconGlowProcStartAnim, duration = db.iconGlowProcAnimDuration}}
+	elseif glowType == "buttoncast" then
+		return {db.nameplateIconGlowColor, db.iconGlowFrequency}
+	end
+end
+
 local function getIconFrame()
 	local iconFrame
 
@@ -534,9 +546,10 @@ local function getIconFrame()
 	function iconFrame:StartGlow(glowType)
 		self:StopGlows()
 		local glowFunction = glowFunctions[glowType]
+		local glowOptions = getGlowSettings(glowType)
 		if glowFunction then
 			self.glowTimer = C_Timer.NewTimer(0.05, function()  -- delay so the frame is shown before the glow
-				glowFunction(self, db.nameplateIconGlowColor)
+				glowFunction(self, unpack(glowOptions))
 				self.activeGlow = glowType
 			 end)
 		end
@@ -964,10 +977,7 @@ do
 						order = 42,
 						hasAlpha = true,
 						width = 1,
-						disabled = function()
-							-- proc has no glow color option
-							return not db.nameplateIconExpireGlow or db.nameplateIconExpireGlowType == "proc"
-						end,
+						disabled = function() return not db.nameplateIconExpireGlow end,
 						get = function(info)
 							return unpack(plugin.db.profile.nameplateIconGlowColor)
 						end,
@@ -984,6 +994,100 @@ do
 						width = 1,
 						disabled = function() return not db.nameplateIconExpireGlow end,
 						values = glowValues,
+					},
+					iconGlowFrequency = {
+						type = "range",
+						name = L.speed,
+						desc = L.animation_speed_desc,
+						order = 44,
+						min = -2,
+						max = 2,
+						step = 0.05,
+						width = 1,
+						hidden = function() return db.nameplateIconExpireGlowType == "proc" end,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+					},
+					iconGlowPixelLines = {
+						type = "range",
+						name = L.lines,
+						desc = L.lines_glow_desc,
+						order = 45,
+						min = 1,
+						max = 30,
+						step = 1,
+						width = 1,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "pixel" end,
+					},
+					iconGlowAutoCastParticles = {
+						type = "range",
+						name = L.intensity,
+						desc = L.intensity_glow_desc,
+						order = 45,
+						min = 1,
+						max = 30,
+						step = 1,
+						width = 1,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "autocast" end,
+					},
+					iconGlowPixelThickness = {
+						type = "range",
+						name = L.thickness,
+						desc = L.thickness_glow_desc,
+						order = 46,
+						min = 1,
+						max = 5,
+						step = 1,
+						width = 1,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "pixel" end,
+					},
+					iconGlowAutoCastScale = {
+						type = "range",
+						name = L.scale,
+						desc = L.scale_glow_desc,
+						order = 46,
+						min = 0.5,
+						max = 3,
+						step = 0.05,
+						width = 1,
+						isPercent = true,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "autocast" end,
+					},
+					iconGlowProcStartAnim = {
+						type = "toggle",
+						name = L.startAnimation,
+						desc = L.startAnimation_glow_desc,
+						order = 45,
+						width = 1,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "proc" end,
+					},
+					iconGlowProcAnimDuration = {
+						type = "range",
+						name = L.speed,
+						desc = L.animation_speed_desc,
+						order = 46,
+						min = 0.1,
+						max = 3,
+						step = 0.1,
+						width = 1,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "proc" end,
+					},
+					iconGlowPixelLenght ={
+						type = "range",
+						name = L.lenght,
+						desc = L.lenght_glow_desc,
+						order = 46,
+						min = 1,
+						max = 20,
+						step = 1,
+						width = 1,
+						disabled = function() return not db.nameplateIconExpireGlow end,
+						hidden = function() return db.nameplateIconExpireGlowType ~= "pixel" end,
 					},
 					resetHeader = {
 						type = "header",
