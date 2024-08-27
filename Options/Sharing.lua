@@ -187,7 +187,7 @@ local nameplateSettingsToExport = {
 	"nameplateIconGlowColor",
 	"iconGlowFrequency",
 	"iconGlowPixelLines",
-	"iconGlowPixelLenght",
+	"iconGlowPixelLength",
 	"iconGlowPixelThickness",
 	"iconGlowAutoCastParticles",
 	"iconGlowAutoCastScale",

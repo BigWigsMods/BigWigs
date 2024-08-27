@@ -1108,8 +1108,8 @@ do
 					},
 					iconGlowPixelLength ={
 						type = "range",
-						name = L.lenght,
-						desc = L.lenght_glow_desc,
+						name = L.length,
+						desc = L.length_glow_desc,
 						order = 46,
 						min = 1,
 						max = 20,
@@ -1585,7 +1585,7 @@ local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire
 	return iconFrame
 end
 
-local function getLenght(length)
+local function getLength(length)
 	local time = GetTime()
 	local expirationTime, timerDuration
 	if type(length) == "table" then
@@ -1600,7 +1600,7 @@ end
 
 function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	local time = GetTime()
-    local expirationTime, timerDuration = getLenght(length)
+    local expirationTime, timerDuration = getLength(length)
 
     local currentIcon = nameplateIcons[guid] and nameplateIcons[guid][key]
     if currentIcon and currentIcon.exp < time and timerDuration <= 0 then
@@ -1636,7 +1636,7 @@ end
 function showNameplateText(module, guid, key, length, text, hideOnExpire)
 	plugin:StopNameplate(nil, module, guid, key, text)
 	local time = GetTime()
-    local expirationTime, timerDuration = getLenght(length)
+    local expirationTime, timerDuration = getLength(length)
 
 	nameplateTexts[guid] = nameplateTexts[guid] or {}
 	local textInfo = {
