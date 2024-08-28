@@ -1003,8 +1003,8 @@ local function populatePrivateAuraOptions(widget)
 				dropdown:SetUserData("module", module)
 				dropdown:SetCallback("OnValueChanged", function(widget, _, value)
 					local key = widget:GetUserData("key")
+					local default = widget:GetUserData("default")
 					local module = widget:GetUserData("module")
-					local default = widget:GetUserData("module")
 					value = soundList[value]
 					if value == default then
 						value = nil
