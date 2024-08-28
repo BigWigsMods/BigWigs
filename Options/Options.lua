@@ -584,6 +584,17 @@ local advancedTabs = {
 	},
 }
 
+local customOptions = {
+	berserk = true,
+	altpower = true,
+	infobox = true,
+	proximity = true,
+	stages = true,
+	warmup = true,
+	adds = true,
+	health = true,
+}
+
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 	local widgets = {}
@@ -609,7 +620,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	widgets[#widgets + 1] = idLabel
 
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(alternativeName and alternativeName ~= name and L.alternativeName:format(name, alternativeName) or name)
 	check:SetTriState(true)
 	check:SetFullWidth(true)
 	check:SetDescription(desc)
@@ -625,6 +636,69 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
 	end
 	widgets[#widgets + 1] = check
+
+	if not customOptions[dbKey] and BigWigs:GetPlugin("Rename", true) then -- can't rename builtins
+		local customDesc = AceGUI:Create("Label")
+		customDesc:SetText("Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.")
+		customDesc:SetColor(1, 0.82, 0)
+		customDesc:SetFullWidth(true)
+		widgets[#widgets + 1] = customDesc
+
+		local customName = AceGUI:Create("EditBox")
+		customName:SetText(BigWigs:GetPlugin("Rename"):GetName(module, dbKey))
+		customName:SetUserData("key", dbKey)
+		customName:SetUserData("scrollFrame", scrollFrame)
+		customName:SetUserData("dropdown", dropdown)
+		customName:SetUserData("module", module)
+		customName:SetUserData("option", bossOption)
+		customName:SetCallback("OnEnterPressed", function(widget, event, value)
+			local module = widget:GetUserData("module")
+			local key = widget:GetUserData("key")
+
+			local renameModule = BigWigs:GetPlugin("Rename")
+			local default = renameModule:GetDefaultName(module, key)
+			if value == default then
+				value = nil
+			end
+			renameModule:SetName(module, key, value)
+			-- refresh
+			local dropdown = widget:GetUserData("dropdown")
+			local scrollFrame = widget:GetUserData("scrollFrame")
+			local bossOption = widget:GetUserData("option")
+			visibleSpellDescriptionWidgets = {}
+			scrollFrame:ReleaseChildren()
+			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+			scrollFrame:PerformLayout()
+		end)
+		customName:SetRelativeWidth(0.6)
+		widgets[#widgets + 1] = customName
+
+		local customReset = AceGUI:Create("Button")
+		customReset:SetText("Reset")
+		customReset:SetDisabled(not alternativeName or alternativeName == BigWigs:GetPlugin("Rename"):GetDefaultName(module, dbKey))
+		customReset:SetUserData("editbox", customName)
+		customReset:SetCallback("OnClick", function(widget, event, value)
+			local editbox = widget:GetUserData("editbox")
+			editbox:Fire("OnEnterPressed", "")
+		end)
+		customReset:SetRelativeWidth(0.2)
+		widgets[#widgets + 1] = customReset
+
+		local customDefault = AceGUI:Create("Button")
+		customDefault:SetText("Spell Name")
+		customDefault:SetDisabled(not alternativeName or alternativeName == name or BigWigs:GetPlugin("Rename"):GetDefaultName(module, dbKey) == module:SpellName(dbKey, true))
+		customDefault:SetUserData("editbox", customName)
+		customDefault:SetUserData("spell", name)
+		customDefault:SetUserData("desc", "This ability has a custom name by default, click this button to use the spell name instead.")
+		customDefault:SetCallback("OnEnter", slaveOptionMouseOver)
+		customDefault:SetCallback("OnLeave", bwTooltip_Hide)
+		customDefault:SetCallback("OnClick", function(widget, event, value)
+			local editbox = widget:GetUserData("editbox")
+			editbox:Fire("OnEnterPressed", widget:GetUserData("spell"))
+		end)
+		customDefault:SetRelativeWidth(0.2)
+		widgets[#widgets + 1] = customDefault
+	end
 
 	-- Create role-specific secondary checkbox
 	for i, key in next, BigWigs:GetRoleOptions() do
@@ -733,7 +807,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	end
 
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(alternativeName and alternativeName ~= name and L.alternativeName:format(name, alternativeName) or name)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
