@@ -619,6 +619,24 @@ do
 		end
 		setupOptions(self)
 		self.SetupOptions = nil
+
+		local renameModule = BigWigs:GetPlugin("Rename", true)
+		if renameModule then
+			for _, key in next, self.toggleOptions do
+				if type(key) == "table" then
+					key = key[1]
+				end
+				if type(key) == "number" then
+					self:SetSpellRename(key, renameModule:GetName(self, key))
+				end
+			end
+		elseif self.altNames then -- atleast set static alt names
+			for key, name in next, self.altNames do
+				if type(key) == "number" then
+					self:SetSpellRename(key, name)
+				end
+			end
+		end
 	end
 
 	function core:RegisterBossModule(module)
