@@ -228,10 +228,10 @@ local function updateProfile()
 	if db.iconHeight < 8 or db.iconHeight > 50 then
 		db.iconHeight = plugin.defaultDB.iconHeight
 	end
-	if db.iconOffsetX < -50 or db.iconOffsetX > 50 then
+	if db.iconOffsetX < -150 or db.iconOffsetX > 150 then
 		db.iconOffsetX = plugin.defaultDB.iconOffsetX
 	end
-	if db.iconOffsetY < -50 or db.iconOffsetY > 50 then
+	if db.iconOffsetY < -150 or db.iconOffsetY > 150 then
 		db.iconOffsetY = plugin.defaultDB.iconOffsetY
 	end
 	if not media:IsValid(FONT, db.iconFontName) then
@@ -314,10 +314,10 @@ local function updateProfile()
 	if db.textSpacing < 0 or db.textSpacing > 20 then
 		db.textSpacing = plugin.defaultDB.textSpacing
 	end
-	if db.textOffsetX < -50 or db.textOffsetX > 50 then
+	if db.textOffsetX < -150 or db.textOffsetX > 150 then
 		db.textOffsetX = plugin.defaultDB.textOffsetX
 	end
-	if db.textOffsetY < -50 or db.textOffsetY > 50 then
+	if db.textOffsetY < -150 or db.textOffsetY > 150 then
 		db.textOffsetY = plugin.defaultDB.textOffsetY
 	end
 	if not media:IsValid(FONT, db.textFontName) then
@@ -821,8 +821,8 @@ do
 						name = L.positionX,
 						desc = L.positionDesc,
 						order = 4,
-						min = -50,
-						max = 50,
+						max = 150, softMax = 100,
+						min = -150, softMin = -100,
 						step = 1,
 						width = 1,
 					},
@@ -831,8 +831,8 @@ do
 						name = L.positionY,
 						desc = L.positionDesc,
 						order = 5,
-						min = -50,
-						max = 50,
+						max = 150, softMax = 100,
+						min = -150, softMin = -100,
 						step = 1,
 						width = 1,
 					},
@@ -1225,8 +1225,8 @@ do
 						name = L.positionX,
 						desc = L.positionDesc,
 						order = 4,
-						min = -50,
-						max = 50,
+						max = 150, softMax = 100,
+						min = -150, softMin = -100,
 						step = 1,
 						width = 1,
 					},
@@ -1235,8 +1235,8 @@ do
 						name = L.positionY,
 						desc = L.positionDesc,
 						order = 5,
-						min = -50,
-						max = 50,
+						max = 150, softMax = 100,
+						min = -150, softMin = -100,
 						step = 1,
 						width = 1,
 					},
