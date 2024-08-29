@@ -228,10 +228,10 @@ local function updateProfile()
 	if db.iconHeight < 8 or db.iconHeight > 50 then
 		db.iconHeight = plugin.defaultDB.iconHeight
 	end
-	if db.iconOffsetX < -150 or db.iconOffsetX > 150 then
+	if db.iconOffsetX < -100 or db.iconOffsetX > 100 then
 		db.iconOffsetX = plugin.defaultDB.iconOffsetX
 	end
-	if db.iconOffsetY < -150 or db.iconOffsetY > 150 then
+	if db.iconOffsetY < -100 or db.iconOffsetY > 100 then
 		db.iconOffsetY = plugin.defaultDB.iconOffsetY
 	end
 	if not media:IsValid(FONT, db.iconFontName) then
@@ -821,8 +821,8 @@ do
 						name = L.positionX,
 						desc = L.positionDesc,
 						order = 4,
-						max = 150, softMax = 100,
-						min = -150, softMin = -100,
+						max = 100,
+						min = -100,
 						step = 1,
 						width = 1,
 					},
@@ -831,8 +831,8 @@ do
 						name = L.positionY,
 						desc = L.positionDesc,
 						order = 5,
-						max = 150, softMax = 100,
-						min = -150, softMin = -100,
+						max = 100,
+						min = -100,
 						step = 1,
 						width = 1,
 					},
