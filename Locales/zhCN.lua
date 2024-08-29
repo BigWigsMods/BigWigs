@@ -255,3 +255,6 @@ L.N10 = "10人普通"
 L.N25 = "25人普通"
 L.H10 = "10人英雄"
 L.H25 = "25人英雄"
+
+-- Non-instance specific modules
+--L.dungeonAffixes = "Dungeon Affixes"

@@ -255,3 +255,6 @@ L.mythic = "Mítico"
 --L.N25 = "Normal 25"
 --L.H10 = "Heroic 10"
 --L.H25 = "Heroic 25"
+
+-- Non-instance specific modules
+--L.dungeonAffixes = "Dungeon Affixes"

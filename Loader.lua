@@ -92,6 +92,7 @@ local tooltipFunctions = {}
 local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local GetAffixInfo, IsChallengeModeActive, GetActiveKeystoneInfo = C_ChallengeMode.GetAffixInfo, C_ChallengeMode.IsChallengeModeActive, C_ChallengeMode.GetActiveKeystoneInfo
 local Ambiguate, UnitName, UnitGUID = Ambiguate, UnitName, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
@@ -105,6 +106,9 @@ public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
+public.GetAffixInfo = GetAffixInfo
+public.IsChallengeModeActive = IsChallengeModeActive
+public.GetActiveKeystoneInfo = GetActiveKeystoneInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras and C_UnitAuras.GetPlayerAuraBySpellID
 public.GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 public.GetSpellDescription = C_Spell and C_Spell.GetSpellDescription or GetSpellDescription
@@ -186,6 +190,7 @@ do
 	local lw_tww = "LittleWigs_TheWarWithin"
 	local lw_delves = "LittleWigs_Delves"
 	local lw_cs = "LittleWigs_CurrentSeason"
+	local lw_affixes = "LittleWigs_Affixes"
 	local cap = "Capping"
 
 	if public.isVanilla then
@@ -505,6 +510,8 @@ do
 		[2688] = lw_delves, -- The Spiral Weave
 		[2689] = lw_delves, -- Tak-Rethan Abyss
 		[2690] = lw_delves, -- The Underkeep
+		--[[ LittleWigs: Affixes ]]--
+		["dungeonAffixes"] = lw_affixes, -- Dungeon Affixes
 
 		--[[ Capping ]]--
 		[30] = cap, -- Alterac Valley
@@ -899,8 +906,8 @@ do
 
 	local function addExtraMenus(addon, ...)
 		for i = 1, select("#", ...) do
-			local rawMenu = select(i, ...)
-			local id = tonumber(rawMenu:trim())
+			local rawMenu = select(i, ...):trim()
+			local id = tonumber(rawMenu)
 			if id then
 				local name
 				if id < 0 then
@@ -919,6 +926,11 @@ do
 
 					if not menus[id] then menus[id] = true end
 				end
+			elseif type(rawMenu) == "string" then
+				if not loadOnZone[rawMenu] then loadOnZone[rawMenu] = {} end
+				loadOnZone[rawMenu][#loadOnZone[rawMenu] + 1] = addon
+
+				if not menus[rawMenu] then menus[rawMenu] = true end
 			else
 				local name = GetAddOnInfo(addon)
 				sysprint(("The extra menu ID %q from the addon %q was not parsable."):format(tostring(rawMenu), name))

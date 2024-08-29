@@ -255,3 +255,6 @@ L.N10 = "일반 10"
 L.N25 = "일반 25"
 L.H10 = "영웅 10"
 L.H25 = "영웅 25"
+
+-- Non-instance specific modules
+--L.dungeonAffixes = "Dungeon Affixes"

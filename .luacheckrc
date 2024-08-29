@@ -230,6 +230,7 @@ globals = {
 	"BigWigsOptions",
 	"BigWigsStatsDB",
 	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
+	"C_ChallengeMode",
 	"C_EncounterJournal",
 	"C_GossipInfo",
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua

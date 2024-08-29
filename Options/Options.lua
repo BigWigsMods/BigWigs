@@ -1558,7 +1558,10 @@ do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
 					local zoneName
-					if k < 0 then
+					if type(k) == "string" then
+						-- check if the zone is a localized string key
+						zoneName = L[k] or k
+					elseif k < 0 then
 						local tbl = GetMapInfo(-k)
 						if tbl then
 							zoneName = tbl.name

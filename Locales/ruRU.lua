@@ -255,3 +255,6 @@ L.N10 = "Нормал 10"
 L.N25 = "Нормал 25"
 L.H10 = "Героик 10"
 L.H25 = "Героик 25"
+
+-- Non-instance specific modules
+--L.dungeonAffixes = "Dungeon Affixes"

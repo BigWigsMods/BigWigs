@@ -32,6 +32,9 @@ local coreEnabled = false
 local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
+local GetAffixInfo = loader.GetAffixInfo
+local IsChallengeModeActive = loader.IsChallengeModeActive
+local GetActiveKeystoneInfo = loader.GetActiveKeystoneInfo
 local UnitName = loader.UnitName
 local UnitGUID = loader.UnitGUID
 local UnitIsDeadOrGhost = loader.UnitIsDeadOrGhost
@@ -121,7 +124,7 @@ else
 end
 
 -------------------------------------------------------------------------------
--- Target monitoring
+-- Module Enablement
 --
 
 local enablezones, enablemobs = {}, {}
@@ -134,24 +137,66 @@ local function enableBossModule(module, sync)
 	end
 end
 
-local function shouldReallyEnable(unit, moduleName, mobId, sync)
+local function shouldReallyEnable(unit, moduleName, seenId, sync)
 	local module = bosses[moduleName]
 	if not module or module:IsEnabled() then return end
-	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId, GetBestMapForUnit("player"))) then
+	if (not module.VerifyEnable or module:VerifyEnable(unit, seenId, GetBestMapForUnit("player"))) then
 		enableBossModule(module, sync)
 	end
 end
 
-local function targetSeen(unit, targetModule, mobId, sync)
+local function targetSeen(unit, targetModule, seenId, sync)
 	if type(targetModule) == "string" then
-		shouldReallyEnable(unit, targetModule, mobId, sync)
+		shouldReallyEnable(unit, targetModule, seenId, sync)
 	else
 		for i = 1, #targetModule do
 			local module = targetModule[i]
-			shouldReallyEnable(unit, module, mobId, sync)
+			shouldReallyEnable(unit, module, seenId, sync)
 		end
 	end
 end
+
+-------------------------------------------------------------------------------
+-- Dungeon affix detection
+--
+
+local enableAffixes = {}
+local function affixCheck(sync)
+	local affixes = IsChallengeModeActive() and select(2, GetActiveKeystoneInfo())
+	if affixes then
+		for i = 1, #affixes do
+			local affixId = affixes[i]
+			if affixId and enableAffixes[affixId] then
+				targetSeen(nil, enableAffixes[affixId], affixId, sync)
+			end
+		end
+	end
+end
+
+function core:RegisterEnableAffix(module, ...)
+	for i = 1, select("#", ...) do
+		local affixId = select(i, ...)
+		if type(affixId) ~= "number" or affixId < 1 then
+			core:Error(("Module %q tried to register the affixId %q, but it wasn't a valid number."):format(module.moduleName, tostring(affixId)))
+		else
+			local entryType = type(enableAffixes[affixId])
+			if entryType == "nil" then
+				enableAffixes[affixId] = module.moduleName
+			elseif entryType == "table" then
+				enableAffixes[affixId][#enableAffixes[affixId] + 1] = module.moduleName
+			elseif entryType == "string" then -- Converting from 1 module registered to this affixId, to multiple modules
+				local previousModuleEntry = enableAffixes[affixId]
+				enableAffixes[affixId] = { previousModuleEntry, module.moduleName }
+			else
+				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, module.moduleName))
+			end
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Target monitoring
+--
 
 local function targetCheck(unit, sync)
 	local name = UnitName(unit)
@@ -168,8 +213,12 @@ local function targetCheck(unit, sync)
 	end
 end
 
-local function updateMouseover() targetCheck("mouseover", true) end
-local function unitTargetChanged(_, target)
+local function updateMouseover()
+	targetCheck("mouseover", true)
+	affixCheck(true)
+end
+
+local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
 end
 
@@ -402,6 +451,24 @@ end
 do
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local errorJournalIdInvalid = "%q is using the invalid journal id of %q."
+
+	local function createModule(name, moduleName, metatable)
+		return setmetatable({
+			name = name,
+			moduleName = moduleName,
+			enableMobs = {},
+
+			-- Embed callback handler
+			RegisterMessage = loader.RegisterMessage,
+			UnregisterMessage = loader.UnregisterMessage,
+			SendMessage = loader.SendMessage,
+
+			-- Embed event handler
+			RegisterEvent = core.RegisterEvent,
+			UnregisterEvent = core.UnregisterEvent,
+		}, metatable)
+	end
+
 	local bossMeta = { __index = bossPrototype, __metatable = false }
 	local EJ_GetEncounterInfo = loader.isCata and function(key)
 		return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
@@ -412,20 +479,7 @@ do
 		if bosses[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({
-				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-				enableMobs = {},
-
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
-
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, bossMeta)
+			local m = createModule("BigWigs_Bosses_"..moduleName, moduleName, bossMeta) -- XXX AceAddon/AceDB backwards compat
 			bosses[moduleName] = m
 			initModules[#initModules+1] = m
 
@@ -451,24 +505,36 @@ do
 		end
 	end
 
+	function core:NewDungeonAffix(moduleName, affixId, zoneIds)
+		if bosses[moduleName] then
+			core:Print(errorAlreadyRegistered:format(moduleName))
+		else
+			local m = createModule("BigWigs_Bosses_"..moduleName, moduleName, bossMeta) -- XXX AceAddon/AceDB backwards compat
+			bosses[moduleName] = m
+			initModules[#initModules+1] = m
+			if affixId then
+				m.displayName = select(1, GetAffixInfo(affixId))
+				m.affixId = affixId
+				core:RegisterEnableAffix(m, affixId)
+			else
+				m.displayName = moduleName
+			end
+			m.otherMenu = "dungeonAffixes"
+
+			if type(zoneIds) == 'table' or zoneIds > 0 then
+				m.instanceId = zoneIds
+			end
+
+			return m, CL
+		end
+	end
+
 	local pluginMeta = { __index = pluginPrototype, __metatable = false }
 	function core:NewPlugin(moduleName)
 		if plugins[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({
-				name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
-
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, pluginMeta)
+			local m = createModule("BigWigs_Plugins_"..moduleName, moduleName, pluginMeta) -- XXX AceAddon/AceDB backwards compat
 			plugins[moduleName] = m
 			initModules[#initModules+1] = m
 

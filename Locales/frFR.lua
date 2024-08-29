@@ -255,3 +255,6 @@ L.N10 = "10 joueurs"
 L.N25 = "25 joueurs"
 L.H10 = "Héroïque 10"
 L.H25 = "Héroïque 25"
+
+-- Non-instance specific modules
+--L.dungeonAffixes = "Dungeon Affixes"
