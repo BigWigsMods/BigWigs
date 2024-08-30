@@ -315,6 +315,11 @@ do
 	local testCount = 0
 	local colors = {"green", "red", "orange", "yellow", "cyan", "blue", "purple"}
 	local sounds = {"Long", "Warning", "Alert", "Alarm", "Info", "underyou", "Info"}
+	local testIcons = {
+		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_legacy.tga",
+		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga",
+		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga",
+	}
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Messages:20|t ".. L.messages,
@@ -361,7 +366,7 @@ do
 					local color = colors[testCount]
 					local sound = sounds[testCount]
 					local emphasized = testCount == 2
-					plugin:SendMessage("BigWigs_Message", plugin, nil, L[color], color, "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga", emphasized)
+					plugin:SendMessage("BigWigs_Message", plugin, nil, L[color], color, testIcons[(testCount%3)+1], emphasized)
 					plugin:SendMessage("BigWigs_Sound", plugin, nil, sound)
 					if testCount == 7 then testCount = 0 end
 				end,
