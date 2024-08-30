@@ -2,7 +2,12 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Colors")
+local plugin = BigWigs:NewPlugin("Colors", {
+	"db",
+	"SetColorOptions",
+	"GetColorTable",
+	"GetColor",
+})
 if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
@@ -263,7 +268,7 @@ function plugin:GetColorTable(hint, module, key)
 		name = module.name
 	end
 	local t = self.db.profile[hint][name][key] -- no key passed -> return our default
-	if compareTable(t, self.defaultDB[hint]["*"]["*"]) then -- unchanged profile entry, go with the defaultColors
+	if compareTable(t, plugin.defaultDB[hint]["*"]["*"]) then -- unchanged profile entry, go with the defaultColors
 		t = self.db.profile[hint][plugin.name][defaultKey]
 	end
 	return t

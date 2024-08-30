@@ -3,10 +3,11 @@
 -- @module BigWigs
 -- @alias core
 
-local core, bossPrototype, pluginPrototype
+local core, plugins, bossPrototype, pluginPrototype
 do
 	local _, tbl =...
 	core = tbl.core
+	plugins = tbl.plugins
 	bossPrototype = tbl.bossPrototype
 	pluginPrototype = tbl.pluginPrototype
 
@@ -25,7 +26,7 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local loader = BigWigsLoader
 core.SendMessage = loader.SendMessage
 
-local mod, bosses, plugins = {}, {}, {}
+local mod, bosses = {}, {}
 local coreEnabled = false
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
@@ -314,7 +315,7 @@ do
 	local function zoneChanged()
 		-- Not if you released spirit on a world boss or if the GUI is open
 		if not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) then
-			local bars = core:GetPlugin("Bars", true)
+			local bars = plugins.Bars
 			if not bars or not bars:HasActiveBars() then -- Not if bars are showing
 				DisableCore() -- Alive in a non-enable zone, disable
 			end
@@ -452,13 +453,14 @@ do
 	end
 
 	local pluginMeta = { __index = pluginPrototype, __metatable = false }
-	function core:NewPlugin(moduleName)
+	function core:NewPlugin(moduleName, globalFuncs)
 		if plugins[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
 			local m = setmetatable({
 				name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
 				moduleName = moduleName,
+				globalFuncs = globalFuncs or {"db"},
 
 				-- Embed callback handler
 				RegisterMessage = loader.RegisterMessage,
@@ -489,15 +491,28 @@ function core:GetBossModule(moduleName, silent)
 	end
 end
 
-function core:IteratePlugins()
-	return next, plugins
+function core:GetPluginOptions()
+	local tbl = {}
+	for moduleName,module in next, plugins do
+		tbl[moduleName] = {module.pluginOptions, module.subPanelOptions}
+	end
+	return tbl
 end
 
 function core:GetPlugin(moduleName, silent)
-	if not silent and not plugins[moduleName] then
-		error(("No plugin named '%s' found."):format(moduleName))
+	if not plugins[moduleName] then
+		if not silent then
+			error(("No plugin named '%s' found."):format(moduleName))
+		else
+			return
+		end
 	else
-		return plugins[moduleName]
+		local moduleTbl = {}
+		for i = 1, #plugins[moduleName].globalFuncs do
+			local entry = plugins[moduleName].globalFuncs[i]
+			moduleTbl[entry] = plugins[moduleName][entry]
+		end
+		return moduleTbl
 	end
 end
 
@@ -633,26 +648,17 @@ do
 		end
 	end
 
-	local function profileUpdate()
-		core:SendMessage("BigWigs_ProfileUpdate")
-	end
-
 	function core:RegisterPlugin(module)
 		if type(module.defaultDB) == "table" then
 			module.db = core.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
-			module.db.RegisterCallback(module, "OnProfileChanged", profileUpdate)
-			module.db.RegisterCallback(module, "OnProfileCopied", profileUpdate)
-			module.db.RegisterCallback(module, "OnProfileReset", profileUpdate)
 		end
-
-		setupOptions(module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
 			module.OnRegister = nil
 		end
-		core:SendMessage("BigWigs_PluginRegistered", module.moduleName, module)
+		core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
 
 		if coreEnabled then
 			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)

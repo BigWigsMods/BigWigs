@@ -1509,7 +1509,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopBars", "StopModuleNameplates")
 	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleNameplates")
 	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleNameplates")
-	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleNameplates")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
 	self:RegisterEvent("NAME_PLATE_UNIT_ADDED")

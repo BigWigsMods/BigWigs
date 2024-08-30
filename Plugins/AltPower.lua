@@ -7,26 +7,6 @@ if BigWigsLoader.isVanilla then return end
 local plugin = BigWigs:NewPlugin("AltPower")
 if not plugin then return end
 
-do
-	local name = plugin:GetDefaultFont()
-	local _, size = plugin:GetDefaultFont(12)
-	plugin.defaultDB = {
-		position = {"CENTER", "CENTER", 450, -160},
-		fontName = name,
-		fontSize = size,
-		outline = "NONE",
-		additionalWidth = 0,
-		additionalHeight = 0,
-		barTextColor = {1, 0.82, 0},
-		barColor = {0.2, 0, 1, 0.5},
-		backgroundColor = {0, 0, 0, 0.3},
-		monochrome = false,
-		expanded = false,
-		disabled = false,
-		lock = false,
-	}
-end
-
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -110,6 +90,79 @@ function plugin:RestyleWindow()
 	-- 210 = 16*13 + (1*2 padding - top and bottom)
 	-- 82 = 16*5 + (1*2 padding - top and bottom)
 	display:SetSize(240+(db.additionalWidth*2), db.expanded and 210+(db.additionalHeight*13) or 82+(db.additionalHeight*5))
+end
+
+--------------------------------------------------------------------------------
+-- Profile
+--
+
+do
+	local name = plugin:GetDefaultFont()
+	local _, size = plugin:GetDefaultFont(12)
+	plugin.defaultDB = {
+		position = {"CENTER", "CENTER", 450, -160},
+		fontName = name,
+		fontSize = size,
+		outline = "NONE",
+		additionalWidth = 0,
+		additionalHeight = 0,
+		barTextColor = {1, 0.82, 0},
+		barColor = {0.2, 0, 1, 0.5},
+		backgroundColor = {0, 0, 0, 0.3},
+		monochrome = false,
+		expanded = false,
+		disabled = false,
+		lock = false,
+	}
+end
+
+local function updateProfile()
+	db = plugin.db.profile
+
+	for k, v in next, db do
+		local defaultType = type(plugin.defaultDB[k])
+		if defaultType == "nil" then
+			db[k] = nil
+		elseif type(v) ~= defaultType then
+			db[k] = plugin.defaultDB[k]
+		end
+	end
+
+	if db.fontSize < 1 or db.fontSize > 200 then
+		db.fontSize = plugin.defaultDB.fontSize
+	end
+	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
+		db.outline = plugin.defaultDB.outline
+	end
+	if db.additionalWidth < 0 or db.additionalWidth > 100 then
+		db.additionalWidth = plugin.defaultDB.additionalWidth
+	end
+	if db.additionalHeight < 0 or db.additionalHeight > 100 then
+		db.additionalHeight = plugin.defaultDB.additionalHeight
+	end
+	for i = 1, 3 do
+		local n = db.barTextColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.barTextColor = plugin.defaultDB.barTextColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+	for i = 1, 4 do
+		local n = db.barColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.barColor = plugin.defaultDB.barColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+	for i = 1, 4 do
+		local n = db.backgroundColor[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			db.backgroundColor = plugin.defaultDB.backgroundColor
+			break -- If 1 entry is bad, reset the whole table
+		end
+	end
+
+	plugin:RestyleWindow()
 end
 
 -------------------------------------------------------------------------------
@@ -295,6 +348,7 @@ do
 						func = function()
 							plugin:Contract()
 							plugin.db:ResetProfile()
+							updateProfile()
 						end,
 						order = 16,
 					},
@@ -374,66 +428,14 @@ end
 -- Initialization
 --
 
-do
-	local function updateProfile()
-		db = plugin.db.profile
-
-		for k, v in next, db do
-			local defaultType = type(plugin.defaultDB[k])
-			if defaultType == "nil" then
-				db[k] = nil
-			elseif type(v) ~= defaultType then
-				db[k] = plugin.defaultDB[k]
-			end
-		end
-
-		if db.fontSize < 1 or db.fontSize > 200 then
-			db.fontSize = plugin.defaultDB.fontSize
-		end
-		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
-			db.outline = plugin.defaultDB.outline
-		end
-		if db.additionalWidth < 0 or db.additionalWidth > 100 then
-			db.additionalWidth = plugin.defaultDB.additionalWidth
-		end
-		if db.additionalHeight < 0 or db.additionalHeight > 100 then
-			db.additionalHeight = plugin.defaultDB.additionalHeight
-		end
-		for i = 1, 3 do
-			local n = db.barTextColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.barTextColor = plugin.defaultDB.barTextColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		for i = 1, 4 do
-			local n = db.barColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.barColor = plugin.defaultDB.barColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		for i = 1, 4 do
-			local n = db.backgroundColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.backgroundColor = plugin.defaultDB.backgroundColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-
-		plugin:RestyleWindow()
-	end
-
-	function plugin:OnPluginEnable()
-		self:RegisterMessage("BigWigs_StartSyncingPower")
-		self:RegisterMessage("BigWigs_ShowAltPower")
-		self:RegisterMessage("BigWigs_HideAltPower", "Close")
-		self:RegisterMessage("BigWigs_OnBossDisable")
-		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
-
-		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		updateProfile()
-	end
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_StartSyncingPower")
+	self:RegisterMessage("BigWigs_ShowAltPower")
+	self:RegisterMessage("BigWigs_HideAltPower", "Close")
+	self:RegisterMessage("BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
 function plugin:OnPluginDisable()

@@ -508,7 +508,7 @@ do
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetMessagesDesc,
-						func = function() plugin.db:ResetProfile() end,
+						func = function() plugin.db:ResetProfile() updateProfile() end,
 						order = 15,
 					},
 				},
