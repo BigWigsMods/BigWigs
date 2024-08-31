@@ -192,7 +192,7 @@ L.redirectPopups = "弹出式横幅在BigWigs信息中显示"
 L.redirectPopupsDesc = "屏幕中间的弹出式横幅，例如：“|cFF33FF99宏伟宝库栏位已解锁|r” 横幅或进入大秘境副本时看到的横幅，将被阻止并显示在 BigWigs 消息内。这些横幅可能很大，持续时间很长，而且会阻止你点击通过。"
 L.redirectPopupsColor = "横幅信息的颜色"
 L.blockDungeonPopups = "屏蔽地下城弹出式横幅"
-L.blockDungeonPopupsDesc = "进入地下城时弹出的横幅有时会包含很长的文字。启用此功能将完全屏蔽它们，而不是显示到 BigWigs 消息内。"
+L.blockDungeonPopupsDesc = "进入地下城时弹出的横幅有时会包含很长的文字。启用此功能将完全屏蔽它们。"
 L.itemLevel = "物品等级%d"
 
 L.userNotifySfx = "首领屏蔽禁用了声音效果，强制它重新启用。"

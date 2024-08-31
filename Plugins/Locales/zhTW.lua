@@ -192,7 +192,7 @@ L.redirectPopups = "以 BigWigs 訊息取代地城橫幅"
 L.redirectPopupsDesc = "封鎖地城中的彈出式橫幅，改為以 BigWigs 訊息顯示其文本。彈出式橫幅是傳奇鑰石地城開始時顯示的副本訊息、或者其他副本提示例如「|cFF33FF99寶庫已解鎖|r」；它會懸浮在畫面中央數秒，遮擋你的視野，妨礙你點擊被橫幅蓋住的目標。"
 L.redirectPopupsColor = "橫幅替代訊息顏色"
 L.blockDungeonPopups = "封鎖地城橫幅"
-L.blockDungeonPopupsDesc = "有時候，進入地城彈出的橫幅會顯示很長的文本，啟用此選項可以完全隱藏橫幅，而非以 BigWigs 訊息替代。"
+L.blockDungeonPopupsDesc = "有時候，進入地城彈出的橫幅會顯示很長的文本，啟用此選項可以完全隱藏橫幅。"
 L.itemLevel = "物品等級%d"
 
 L.userNotifySfx = "音效原被「首領戰訊息封鎖」功能關閉，現已強制重啟。"

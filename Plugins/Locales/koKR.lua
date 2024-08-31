@@ -192,7 +192,7 @@ L.redirectPopups = "BigWigs 메시지에 표시되는 팝업 배너"
 L.redirectPopupsDesc = "'|cFF33FF99금고 슬롯 잠금 해제됨|r' 배너 또는 신화 쐐기돌 던전에 입장할 때 표시되는 배너와 같이 화면 중앙에 있는 팝업 배너는 차단되고 대신 BigWigs 메시지로 표시됩니다. 이러한 배너는 상당히 클 수 있으며 오래 지속될 수 있습니다. 시간이 오래 걸리고 클릭 연결 기능이 차단됩니다."
 L.redirectPopupsColor = "표시되는 팝업 배너의 색상"
 L.blockDungeonPopups = "던전 팝업 배너 차단"
-L.blockDungeonPopupsDesc = "던전 입장 시 표시되는 팝업 배너에 텍스트가 매우 긴 경우가 있습니다. 이 기능을 활성화하면 BigWigs 메시지로 표시되는 대신 완전히 차단됩니다."
+--L.blockDungeonPopupsDesc = "던전 입장 시 표시되는 팝업 배너에 텍스트가 매우 긴 경우가 있습니다. Enabling this feature will completely block them."
 L.itemLevel = "아이템 레벨: %d"
 
 L.userNotifySfx = "우두머리 기능 차단으로 비활성화된 음향 효과를 강제로 다시 활성화합니다."

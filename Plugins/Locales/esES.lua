@@ -192,7 +192,7 @@ L.redirectPopups = "Redirigir los carteles emergentes a mensajes de BigWigs"
 L.redirectPopupsDesc = "Los carteles emergentes que aparecen el medio de tu pantalla como '|cFF33FF99recompensa de la gran cámara desbloqueada|r' o el cartel que ves al entrar en una mazmorra mítica+ serán bloqueados y en su lugar se mostrarán como mensajes de BigWigs. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear tu capacidad de hacer clic a través de ellos."
 L.redirectPopupsColor = "Color del mensaje redirigido"
 L.blockDungeonPopups = "Bloquear los carteles emergentes de mazmorras"
-L.blockDungeonPopupsDesc = "Los carteles emergentes que aparecen cuando entras a una mazmorras pueden contener texto que es muy largo. Activar esta opcion los bloqueara directamente en vez de ser redigidos a un mensaje de BigWigs."
+L.blockDungeonPopupsDesc = "Los carteles emergentes que aparecen cuando entras a una mazmorras pueden contener texto que es muy largo. Activar esta opcion los bloqueara directamente."
 L.itemLevel = "Nivel de objeto %d"
 
 L.userNotifySfx = "Los efectos de sonido fueron desactivados por el Bloque de jefe, forzándolos a volver a activarse."

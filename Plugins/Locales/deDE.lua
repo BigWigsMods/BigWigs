@@ -192,7 +192,7 @@ L.redirectPopups = "Popup Banner als BigWigs Nachrichten ausgeben"
 L.redirectPopupsDesc = "Popup Banner in der Mitte des Bildschirms wie das '|cFF33FF99Platz für Schatzkammer aufgewertet|r' Banner oder das Banner beim Betreten einer Mythisch+ Instanz werden blockiert und stattdessen als BigWigs Nachrichten angezeigt. Diese Banner können recht groß und lange Zeit angezeigt werden, was Fähigkeiten daran hindert durch diese hindurch zu Klicken."
 L.redirectPopupsColor = "Farbe der ausgegebenen Nachricht"
 L.blockDungeonPopups = "Popup Banner in Instanzen blockieren"
-L.blockDungeonPopupsDesc = "Die Popup Banner beim Betreten einer Instanz können sehr lange Texte enthalten. Die Aktivierung dieser Option blockiert diese komplett, statt diese als BigWigs Nachrichten auszugeben."
+L.blockDungeonPopupsDesc = "Die Popup Banner beim Betreten einer Instanz können sehr lange Texte enthalten. Die Aktivierung dieser Option blockiert diese komplett."
 L.itemLevel = "Gegenstandsstufe %d"
 
 L.userNotifySfx = "Soundeffekte wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."

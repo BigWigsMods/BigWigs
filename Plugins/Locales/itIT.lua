@@ -192,7 +192,7 @@ L.redirectPopups = "Reindirizza i banner popup nelle su bigwigs"
 L.redirectPopupsDesc = "I banner popup come Popup '|cFF33FF99Slot delle cassa sbloccato|r' o il banner che vedi quando entri in un dungeon mitica+ saranno bloccati e visualizzati come messaggi di Bigwigs. Questi banner possono essere abbastanza grandi, durare molto, e bloccare la possibilità di cliccarci attraverso."
 L.redirectPopupsColor = "Colore dei messaggi reindirizzati"
 L.blockDungeonPopups = "Blocca i banner popup dei dungeon"
-L.blockDungeonPopupsDesc = "I banner popup mostrati quando entri in un dungeon a volte possono contenere messaggi molto lunghi. Abilitando questa impostazione li bloccherà completamente invece di reindirizzarli."
+L.blockDungeonPopupsDesc = "I banner popup mostrati quando entri in un dungeon a volte possono contenere messaggi molto lunghi. Abilitando questa impostazione li bloccherà completamente."
 L.itemLevel = "Livello oggetto: %d"
 
 L.userNotifySfx = "Gli Effetti sonori sono disabilitati dal Blocco Boss, li riattivo forzatamente."
