@@ -92,6 +92,18 @@ L.killed = "%s 처치"
 L.mob_killed = "%s 처치 (%d/%d)"
 L.mob_remaining = "%s 처치, %d 남음"
 
+-- NPCs for follower dungeons
+L.garrick = "대장 개릭" -- AI paladin tank
+L.garrick_short = "*개릭"
+L.meredy = "메레디 헌츠웰" -- AI mage dps
+L.meredy_short = "*메레디"
+L.shuja = "슈자 그림액스" -- AI shaman dps
+L.shuja_short = "*슈자"
+L.crenna = "대지의 딸 크렌나" -- AI druid healer
+L.crenna_short = "*크렌나"
+L.austin = "오스틴 헉스워스" -- AI hunter dps
+L.austin_short = "*오스틴"
+
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"

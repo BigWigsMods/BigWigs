@@ -92,6 +92,18 @@ L.killed = "%s Ucciso"
 L.mob_killed = "%s Ucciso (%d/%d)"
 L.mob_remaining = "%s ucciso, %d rimasti"
 
+-- NPCs for follower dungeons
+L.garrick = "Capitana Garrick" -- AI paladin tank
+L.garrick_short = "*Garrick"
+L.meredy = "Meredy Caccialesta" -- AI mage dps
+L.meredy_short = "*Meredy"
+L.shuja = "Shuja Asciatetra" -- AI shaman dps
+L.shuja_short = "*Shuja"
+L.crenna = "Figlia della Terra Crenna" -- AI druid healer
+L.crenna_short = "*Crenna"
+L.austin = "Austin Huxworth" -- AI hunter dps
+L.austin_short = "*Austin"
+
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "Combattimento con %s iniziato - %s in %d min"
