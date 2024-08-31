@@ -859,7 +859,7 @@ do
 		[203125]=true,[203126]=true,[203127]=true,
 
 		-- Ara-Kara
-		[247684]=true,
+		[247684]=true,[250798]=true,
 		-- Cinderbrew Meadery
 		[251845]=true,[251846]=true,
 		-- City of Threads
@@ -867,7 +867,7 @@ do
 		[250781]=true,[250782]=true,[250790]=true,[250791]=true,[250795]=true,
 		-- Priory of the Sacred Flame
 		[251154]=true,[251155]=true,[251156]=true,[251157]=true,[251162]=true,[251163]=true,[251169]=true,[251170]=true,
-		[251171]=true,[251176]=true,
+		[251171]=true,[251176]=true,[251177]=true,
 		-- The Dawnbreaker
 		[251195]=true,[251196]=true,[251197]=true,[251198]=true,[247638]=true,[251199]=true,[251200]=true,[251201]=true,
 		[251202]=true,[251203]=true,[251204]=true,[251205]=true,[251206]=true,[251207]=true,[251208]=true,[251184]=true,
