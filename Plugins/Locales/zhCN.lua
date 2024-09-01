@@ -189,7 +189,7 @@ L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
 L.blockTalkingHeadScenarios = "场景事件"
 
 L.redirectPopups = "弹出式横幅在BigWigs信息中显示"
---L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages。这些横幅可能很大，持续时间很长，而且会阻止你点击通过。"
+L.redirectPopupsDesc = "屏幕中间的弹出式横幅，例如：“|cFF33FF99宏伟宝库已解锁|r”横幅将改为 BigWigs 信息显示。这些横幅可能很大，持续时间很长，而且会阻止你点击穿越。"
 L.redirectPopupsColor = "横幅信息的颜色"
 L.blockDungeonPopups = "屏蔽地下城弹出式横幅"
 L.blockDungeonPopupsDesc = "进入地下城时弹出的横幅有时会包含很长的文字。启用此功能将完全屏蔽它们。"
