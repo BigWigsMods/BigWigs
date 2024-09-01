@@ -189,7 +189,7 @@ L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos & Bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
 L.redirectPopups = "Redirigir carteles emergentes a mensajes de BigWigs"
-L.redirectPopupsDesc = "Los carteles emergentes en el medio de la pantalla como '|cFF33FF99recompensa de la gran cámara desbloqueada|r' o que ves al entrar a un calabozo Mítico+, se bloquearán y se mostrarán como mensajes de BigWigs. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear la posibilidad de hacer clic en ellos."
+--L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear la posibilidad de hacer clic en ellos."
 L.redirectPopupsColor = "Color del mensaje redirigido"
 L.blockDungeonPopups = "Bloquear carteles emergentes de calabozos"
 L.blockDungeonPopupsDesc = "Los carteles emergentes que se muestran al entrar a un calabozo a veces pueden contener texto muy largo. Al activar esta función los bloqueará completamente."

@@ -93,15 +93,15 @@ L.mob_killed = "%s убит (%d/%d)"
 L.mob_remaining = "%s убит, %d осталось"
 
 -- NPCs for follower dungeons
-L.garrick = "Капитан Гэррик" -- AI paladin tank
+L.garrick = "Капитан Гэррик" -- AI paladin tank (NPC 209057)
 L.garrick_short = "*Гэррик"
-L.meredy = "Мереди Крепкая Охота" -- AI mage dps
+L.meredy = "Мереди Крепкая Охота" -- AI mage dps (NPC 209059)
 L.meredy_short = "*Мереди"
-L.shuja = "Шуджа Люторез" -- AI shaman dps
+L.shuja = "Шуджа Люторез" -- AI shaman dps (NPC 214390)
 L.shuja_short = "*Шуджа"
-L.crenna = "Кренна Дочь Земли" -- AI druid healer
+L.crenna = "Кренна Дочь Земли" -- AI druid healer (NPC 209072)
 L.crenna_short = "*Кренна"
-L.austin = "Остин Хаксворт" -- AI hunter dps
+L.austin = "Остин Хаксворт" -- AI hunter dps (NPC 209065)
 L.austin_short = "*Остин"
 
 -- Localizers note:

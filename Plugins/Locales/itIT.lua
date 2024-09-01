@@ -189,7 +189,7 @@ L.blockTalkingHeadTimewalking = "Viaggi nel Tempo (Spedizioni & Incursioni)"
 L.blockTalkingHeadScenarios = "Scenari"
 
 L.redirectPopups = "Reindirizza i banner popup nelle su bigwigs"
-L.redirectPopupsDesc = "I banner popup come Popup '|cFF33FF99Slot delle cassa sbloccato|r' o il banner che vedi quando entri in un dungeon mitica+ saranno bloccati e visualizzati come messaggi di Bigwigs. Questi banner possono essere abbastanza grandi, durare molto, e bloccare la possibilità di cliccarci attraverso."
+--L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages. Questi banner possono essere abbastanza grandi, durare molto, e bloccare la possibilità di cliccarci attraverso."
 L.redirectPopupsColor = "Colore dei messaggi reindirizzati"
 L.blockDungeonPopups = "Blocca i banner popup dei dungeon"
 L.blockDungeonPopupsDesc = "I banner popup mostrati quando entri in un dungeon a volte possono contenere messaggi molto lunghi. Abilitando questa impostazione li bloccherà completamente."

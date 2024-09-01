@@ -93,15 +93,15 @@ L.mob_killed = "%s 처치 (%d/%d)"
 L.mob_remaining = "%s 처치, %d 남음"
 
 -- NPCs for follower dungeons
-L.garrick = "대장 개릭" -- AI paladin tank
+L.garrick = "대장 개릭" -- AI paladin tank (NPC 209057)
 L.garrick_short = "*개릭"
-L.meredy = "메레디 헌츠웰" -- AI mage dps
+L.meredy = "메레디 헌츠웰" -- AI mage dps (NPC 209059)
 L.meredy_short = "*메레디"
-L.shuja = "슈자 그림액스" -- AI shaman dps
+L.shuja = "슈자 그림액스" -- AI shaman dps (NPC 214390)
 L.shuja_short = "*슈자"
-L.crenna = "대지의 딸 크렌나" -- AI druid healer
+L.crenna = "대지의 딸 크렌나" -- AI druid healer (NPC 209072)
 L.crenna_short = "*크렌나"
-L.austin = "오스틴 헉스워스" -- AI hunter dps
+L.austin = "오스틴 헉스워스" -- AI hunter dps (NPC 209065)
 L.austin_short = "*오스틴"
 
 -- Localizers note:

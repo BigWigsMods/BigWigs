@@ -93,16 +93,16 @@ L.mob_killed = "%s已擊殺（%d/%d）"
 L.mob_remaining = "%s已擊殺，剩餘 %d"
 
 -- NPCs for follower dungeons
---L.garrick = "Captain Garrick" -- AI paladin tank
---L.garrick_short = "*Garrick"
---L.meredy = "Meredy Huntswell" -- AI mage dps
---L.meredy_short = "*Meredy"
---L.shuja = "Shuja Grimaxe" -- AI shaman dps
---L.shuja_short = "*Shuja"
---L.crenna = "Crenna Earth-Daughter" -- AI druid healer
---L.crenna_short = "*Crenna"
---L.austin = "Austin Huxworth" -- AI hunter dps
---L.austin_short = "*Austin"
+L.garrick = "蓋瑞克船長" -- AI paladin tank (NPC 209057)
+L.garrick_short = "*蓋瑞克"
+L.meredy = "美芮迪‧漢茲威爾" -- AI mage dps (NPC 209059)
+L.meredy_short = "*美芮迪"
+L.shuja = "秀嘉‧嚴斧" -- AI shaman dps (NPC 214390)
+L.shuja_short = "*秀嘉"
+L.crenna = "『大地之女』克蘭娜" -- AI druid healer (NPC 209072)
+L.crenna_short = "*克蘭娜"
+L.austin = "奧斯汀‧哈克斯沃" -- AI hunter dps (NPC 209065)
+L.austin_short = "*奧斯汀"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name

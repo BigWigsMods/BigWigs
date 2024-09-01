@@ -189,7 +189,7 @@ L.blockTalkingHeadTimewalking = "Caminhada Temporal (Masmorras & Raides)"
 L.blockTalkingHeadScenarios = "Cenários"
 
 L.redirectPopups = "Redirecionar banners pop-up para mensagens do BigWigs"
-L.redirectPopupsDesc = "Banners de pop-up no meio da sua tela, como o banner '|cFF33FF99novo espaço no grande cofre desbloqueado|r' ou o banner que você vê ao entrar em uma masmorra Mítico+ será bloqueado e, em vez disso, exibido como mensagens do BigWigs. Esses banners podem ser bastante grandes, durar muito tempo e impedir sua capacidade de clicar através deles."
+--L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages. Esses banners podem ser bastante grandes, durar muito tempo e impedir sua capacidade de clicar através deles."
 L.redirectPopupsColor = "Cor da mensagem redirecionada"
 L.blockDungeonPopups = "Bloquear banners pop-up em masmorras"
 L.blockDungeonPopupsDesc = "Os banners de pop-up que aparecem ao entrar em uma masmorra às vezes podem conter textos muito longos. Ativar essa função os bloqueará completamente."

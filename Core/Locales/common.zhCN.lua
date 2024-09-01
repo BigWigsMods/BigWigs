@@ -93,15 +93,15 @@ L.mob_killed = "%s已击杀（%d/%d）"
 L.mob_remaining = "%s已击杀，剩余 %d"
 
 -- NPCs for follower dungeons
-L.garrick = "嘉里克船长" -- AI paladin tank
+L.garrick = "嘉里克船长" -- AI paladin tank (NPC 209057)
 L.garrick_short = "*嘉里克"
-L.meredy = "梅瑞迪·寻涌" -- AI mage dps
+L.meredy = "梅瑞迪·寻涌" -- AI mage dps (NPC 209059)
 L.meredy_short = "*梅瑞迪"
-L.shuja = "修加·恐斧" -- AI shaman dps
+L.shuja = "修加·恐斧" -- AI shaman dps (NPC 214390)
 L.shuja_short = "*修加"
-L.crenna = "科蕾娜·大地之女" -- AI druid healer
+L.crenna = "科蕾娜·大地之女" -- AI druid healer (NPC 209072)
 L.crenna_short = "*科蕾娜"
-L.austin = "奥斯汀·哈克斯沃斯" -- AI hunter dps
+L.austin = "奥斯汀·哈克斯沃斯" -- AI hunter dps (NPC 209065)
 L.austin_short = "*奥斯汀"
 
 -- Localizers note:
