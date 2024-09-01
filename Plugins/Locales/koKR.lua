@@ -189,10 +189,10 @@ L.blockTalkingHeadTimewalking = "시간여행 (던전 및 레이드)"
 L.blockTalkingHeadScenarios = "시나리오"
 
 L.redirectPopups = "BigWigs 메시지에 표시되는 팝업 배너"
---L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages. 이러한 배너는 상당히 클 수 있으며 오래 지속될 수 있습니다. 시간이 오래 걸리고 클릭 연결 기능이 차단됩니다."
+L.redirectPopupsDesc = "화면 중앙에 나타나는 '|cFF33FF99금고 슬롯이 잠금 해제됨|r' 등의 팝업 배너가 대신 BigWigs 메시지로 표시됩니다. 이러한 배너는 크기가 크고, 오래 지속되며, 클릭을 방해할 수 있습니다."
 L.redirectPopupsColor = "표시되는 팝업 배너의 색상"
 L.blockDungeonPopups = "던전 팝업 배너 차단"
---L.blockDungeonPopupsDesc = "던전 입장 시 표시되는 팝업 배너에 텍스트가 매우 긴 경우가 있습니다. Enabling this feature will completely block them."
+L.blockDungeonPopupsDesc = "던전에 입장할 때 표시되는 팝업 배너는 때때로 매우 긴 텍스트를 포함할 수 있습니다. 이 기능을 활성화하면 이러한 팝업 배너가 완전히 차단됩니다."
 L.itemLevel = "아이템 레벨: %d"
 
 L.userNotifySfx = "우두머리 기능 차단으로 비활성화된 음향 효과를 강제로 다시 활성화합니다."
