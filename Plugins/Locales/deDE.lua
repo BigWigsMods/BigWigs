@@ -189,7 +189,7 @@ L.blockTalkingHeadTimewalking = "Zeitwanderung (Dungeons & Schlachtzüge)"
 L.blockTalkingHeadScenarios = "Szenarien"
 
 L.redirectPopups = "Popup Banner als BigWigs Nachrichten ausgeben"
---L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages. Diese Banner können recht groß und lange Zeit angezeigt werden, was Fähigkeiten daran hindert durch diese hindurch zu Klicken."
+L.redirectPopupsDesc = "Popup Banner in der Mitte des Bildschirms wie das '|cFF33FF99Platz für Schatzkammer aufgewertet|r' Banner werden stattdessen als BigWigs Nachrichten angezeigt. Diese Banner können recht groß und lange Zeit angezeigt werden, was die Möglichkeit blockiert durch diese hindurch zu Klicken."
 L.redirectPopupsColor = "Farbe der ausgegebenen Nachricht"
 L.blockDungeonPopups = "Popup Banner in Instanzen blockieren"
 L.blockDungeonPopupsDesc = "Die Popup Banner beim Betreten einer Instanz können sehr lange Texte enthalten. Die Aktivierung dieser Option blockiert diese komplett."
