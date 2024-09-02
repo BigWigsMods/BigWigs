@@ -25,12 +25,12 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhTW")
 if L then
-	--L.sticky_web = "Webs"
+	L.sticky_web = "蛛網"
 	L.sticky_web_say = "蛛網" -- Singular of Webs
 	L.infest_message = "正在對你施放寄生！"
 	L.infest_say = "寄生"
-	--L.experimental_dosage = "Egg Breaks"
-	--L.experimental_dosage_say = "Egg Break"
+	L.experimental_dosage = "破蛋"
+	L.experimental_dosage_say = "破蛋"
 	--L.ingest_black_blood = "Next Container"
 	--L.unstable_infusion = "Swirls"
 
