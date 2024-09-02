@@ -800,14 +800,14 @@ local function parseLua(file)
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
 		-- created earlier to set the associated spellId(s).
-		local res, params = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%((.*)%)")
+		local res, params = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*(%b())")
 		if res then
 			current_func = res
 			local name = res:match(":(.+)")
 			methods[name] = true
 			rep = {}
 			rep.func_key = options[name]
-			if params ~= "args" then
+			if params ~= "(args)" then
 				args_keys = {}
 			elseif unit_died_methods[name] then
 				args_keys = unit_died_args_keys
