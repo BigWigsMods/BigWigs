@@ -382,7 +382,7 @@ do
 	function mod:VoidspeakerDeath(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Message("stages", "cyan", CL.killed:format(args.sourceName), false)
+			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
 		end
 	end
 end
@@ -395,7 +395,7 @@ function mod:GloomTouchApplied(args)
 end
 
 function mod:WorshipperDeath(args)
-	self:Message("stages", "cyan", CL.killed:format(args.sourceName), false) -- XXX Count how many?
+	self:Message("stages", "cyan", CL.killed:format(args.destName), false) -- XXX Count how many?
 end
 
 function mod:Oust(args)
