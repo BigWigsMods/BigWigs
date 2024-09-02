@@ -1191,6 +1191,7 @@ do
 						type = "group",
 						name = L.advanced,
 						order = 4,
+						hidden = true,
 						args = {},
 					},
 				},
