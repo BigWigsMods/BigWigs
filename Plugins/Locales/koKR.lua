@@ -348,6 +348,8 @@ L.resetNameplateIconsDesc = "이름표 아이콘과 관련된 모든 옵션을 �
 L.nameplateTextSettings = "텍스트 설정"
 L.fixate_test = "고정 테스트" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "이름표 텍스트와 관련된 모든 옵션을 초기화합니다."
+--L.autoScale = "Auto Scale"
+--L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "픽셀 반짝임"

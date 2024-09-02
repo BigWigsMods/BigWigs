@@ -348,6 +348,8 @@ L.fadeTimeDesc = "Tempo até esmaecer a mensagem, em segundos."
 --L.nameplateTextSettings = "Text Settings"
 --L.fixate_test = "Fixate Test" -- Text that displays to test on the frame
 --L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
+--L.autoScale = "Auto Scale"
+--L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
 
 -- Glow types as part of LibCustomGlow
 --L.pixelGlow = "Pixel Glow"

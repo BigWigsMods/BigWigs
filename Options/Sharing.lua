@@ -169,6 +169,7 @@ local nameplateSettingsToExport = {
 	"iconHeight",
 	"iconOffsetX",
 	"iconOffsetY",
+	"iconAutoScale",
 	"iconCooldownNumbers",
 	"iconFontName",
 	"iconFontSize",

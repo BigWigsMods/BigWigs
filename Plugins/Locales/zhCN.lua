@@ -348,6 +348,8 @@ L.resetNameplateIconsDesc = "重置与姓名板图标相关的所有选项。"
 L.nameplateTextSettings = "文本设置"
 L.fixate_test = "测试文本" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
+--L.autoScale = "Auto Scale"
+--L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "线条发光"

@@ -96,6 +96,7 @@ local iconDefaults = {
 	iconHeight = 15,
 	iconOffsetX = 0,
 	iconOffsetY = 0,
+	iconAutoScale = true,
 	iconCooldownNumbers = true,
 	iconFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
 	iconFontSize = 7,
@@ -1191,8 +1192,14 @@ do
 						type = "group",
 						name = L.advanced,
 						order = 4,
-						hidden = true,
-						args = {},
+						args = {
+							iconAutoScale = {
+								type = "toggle",
+								name = L.autoScale,
+								desc = L.autoScaleDesc,
+								order = 1,
+							},
+						},
 					},
 				},
 			},
@@ -1403,6 +1410,7 @@ do
 				end
 
 				icon:ClearAllPoints()
+				icon:SetIgnoreParentScale(not db.iconAutoScale)
 				icon:SetParent(nameplate)
 				icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
 			end

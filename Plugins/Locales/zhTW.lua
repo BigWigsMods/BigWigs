@@ -348,6 +348,8 @@ L.resetNameplateIconsDesc = "將名條的圖示設定全部重設為預設值。
 L.nameplateTextSettings = "文字設定"
 L.fixate_test = "鎖定" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "將名條的文字設定全部重設為預設值。"
+--L.autoScale = "Auto Scale"
+--L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "像素發光"
