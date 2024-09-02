@@ -794,20 +794,22 @@ local function parseLua(file)
 		if event then
 			callback = event
 			registered_methods[callback] = n
-			unit_died_methods[callback] = n
+			unit_died_methods[callback] = true
 		end
 
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
 		-- created earlier to set the associated spellId(s).
-		local res = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%(")
+		local res, params = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%((.*)%)")
 		if res then
 			current_func = res
 			local name = res:match(":(.+)")
 			methods[name] = true
 			rep = {}
 			rep.func_key = options[name]
-			if unit_died_methods[name] then
+			if params ~= "args" then
+				args_keys = {}
+			elseif unit_died_methods[name] then
 				args_keys = unit_died_args_keys
 			else
 				args_keys = standard_args_keys
@@ -821,6 +823,7 @@ local function parseLua(file)
 			methods[res] = true
 			rep = {}
 			rep.local_func_key = findCalls(lines, n, current_func, options)
+			args_keys = {}
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
