@@ -531,16 +531,15 @@ do
 				elseif tbl.eventToastID == 183 then -- Discovery
 					-- tbl.title is "Discovery"
 					-- tbl.subtitle is "Respawn Point Unlocked!"
-					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
-					tbl.title = nil
-					tbl.bwDuration = 3
+					tbl.title = nil -- Remove title, keep subtitle only
+					tbl.bwDuration = 4
 					printMessage(self, tbl)
 				elseif branSkills[tbl.eventToastID] then -- Brann Ability, Brann power increase
 					-- tbl.title is "Combat Curios" / "Explorer's Ammunition Journal"
 					-- tbl.subtitle is "Brann Ability Unlocked!" / "Brann's power increased!"
 					tbl.subtitle = CL.other:format(tbl.subtitle, tbl.title) -- Combine, without uppercase
 					tbl.title = nil
-					tbl.bwDuration = 2.5
+					tbl.bwDuration = 3
 					printMessage(self, tbl)
 				elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
 					if not self.db.profile.blockZoneInToasts then
