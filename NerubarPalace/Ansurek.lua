@@ -411,9 +411,9 @@ do
 	function mod:GuardianDeath(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Message("stages", "cyan", CL.killed:format(args.sourceName), false)
+			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
 		end
-		self:ClearNameplate(args.sourceGUID)
+		self:ClearNameplate(args.destGUID)
 	end
 end
 
@@ -431,9 +431,9 @@ do
 	function mod:ExpellerDeath(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Message("stages", "cyan", CL.killed:format(args.sourceName), false)
+			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
 		end
-		self:ClearNameplate(args.sourceGUID)
+		self:ClearNameplate(args.destGUID)
 	end
 end
 
