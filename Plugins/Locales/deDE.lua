@@ -348,8 +348,8 @@ L.resetNameplateIconsDesc = "Setzt alle Optionen für Namensplaketten-Symbole zu
 L.nameplateTextSettings = "Texteinstellungen"
 L.fixate_test = "Fixierung Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Setzt die Optionen für Namensplaketten-Texte zurück."
---L.autoScale = "Auto Scale"
---L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
+L.autoScale = "Automatischer Maßstab"
+L.autoScaleDesc = "Ändert den Maßstab automatisch in Abhängigkeit vom Maßstab der Namensplakette."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Pixel-Leuchten"
