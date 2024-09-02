@@ -2,7 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhCN")
 if not L then return end
 
 L.general = "一般"
---L.advanced = "Advanced"
+L.advanced = "高级"
 L.comma = "，"
 
 L.positionX = "水平位置"
@@ -329,8 +329,8 @@ L.showBorder = "显示边框"
 L.showBorderDesc = "显示图标的边框"
 L.borderColor = "边框颜色"
 L.borderSize = "边框厚度"
---L.showNumbers = "Show Numbers"
---L.showNumbersDesc = "Show numbers on the icon."
+L.showNumbers = "显示数字"
+L.showNumbersDesc = "在图标上显示数字"
 L.cooldown = "冷却"
 L.showCooldownSwipe = "填充显示"
 L.showCooldownSwipeDesc = "当冷却激活时，在图标上显示转动动画。"
