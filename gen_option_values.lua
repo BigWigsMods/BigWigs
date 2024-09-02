@@ -920,6 +920,13 @@ local function parseLua(file)
 				if not option_keys[key] then
 					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
 				end
+				local bitflag = unquote(args[2])
+				if tracked_bitflags[bitflag] and option_keys[key] and option_keys[key][bitflag] then
+					if not bitflag_used[key] then
+						bitflag_used[key] = {}
+					end
+					bitflag_used[key][bitflag] = true
+				end
 				option_key_used[key] = true
 			end
 		end
