@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esMX")
 if not L then return end
 
 L.general = "General"
+--L.advanced = "Advanced"
 L.comma = ", "
 
 L.positionX = "Posición X"
@@ -328,9 +329,8 @@ L.fadeTimeDesc = "Cuánto tiempo tardará en desaparecer un mensaje, en segundos
 --L.showBorderDesc = "Show a border around the icon."
 --L.borderColor = "Border Color"
 --L.borderSize = "Border Size"
---L.timer = "Timer"
---L.showTimer = "Show Timer"
---L.showTimerDesc = "Show a text timer on the icon."
+--L.showNumbers = "Show Numbers"
+--L.showNumbersDesc = "Show numbers on the icon."
 --L.cooldown = "Cooldown"
 --L.showCooldownSwipe = "Show Swipe"
 --L.showCooldownSwipeDesc = "Show a swipe on the icon when the cooldown is active."
@@ -338,7 +338,7 @@ L.fadeTimeDesc = "Cuánto tiempo tardará en desaparecer un mensaje, en segundos
 --L.showCooldownEdgeDesc = "Show an edge on the cooldown when the cooldown is active."
 --L.inverse = "Inverse"
 --L.inverseSwipeDesc = "Invert the cooldown animations."
---L.iconGlow = "Icon Glow"
+--L.glow = "Glow"
 --L.enableExpireGlow = "Enable Expire Glow"
 --L.enableExpireGlowDesc = "Show a glow around the icon when the cooldown has expired."
 --L.glowColor = "Glow Color"

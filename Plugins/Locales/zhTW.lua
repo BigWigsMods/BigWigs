@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhTW")
 if not L then return end
 
 L.general = "一般"
+--L.advanced = "Advanced"
 L.comma = "，"
 
 L.positionX = "X 座標"
@@ -328,9 +329,8 @@ L.showBorder = "顯示邊框"
 L.showBorderDesc = "替圖示顯示邊框。"
 L.borderColor = "邊框顏色"
 L.borderSize = "邊框大小"
-L.timer = "計時"
-L.showTimer = "顯示倒數計時"
-L.showTimerDesc = "為圖示顯示計時文字。"
+--L.showNumbers = "Show Numbers"
+--L.showNumbersDesc = "Show numbers on the icon."
 L.cooldown = "冷卻"
 L.showCooldownSwipe = "顯示冷卻動畫"
 L.showCooldownSwipeDesc = "當圖示代表的技能正在冷卻中，顯示轉圈的冷卻動畫效果。"
@@ -338,7 +338,7 @@ L.showCooldownEdge = "顯示冷卻指針" -- not sure there' s a term in zh alre
 L.showCooldownEdgeDesc = "當圖示代表的技能正在冷卻中，顯示轉圈的發光指針效果。"
 L.inverse = "反轉"
 L.inverseSwipeDesc = "反轉冷卻動畫效果。"
-L.iconGlow = "圖示高亮"
+--L.glow = "Glow"
 L.enableExpireGlow = "啟用結束發光效果"
 L.enableExpireGlowDesc = "當技能冷卻結束，在圖示周圍顯示發光動畫效果。"
 L.glowColor = "發光顏色"

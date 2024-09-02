@@ -773,7 +773,7 @@ do
 					end
 				end,
 				width = 1,
-				order = 1,
+				order = 2,
 			},
 			stopTestButton = {
 				type = "execute",
@@ -783,409 +783,415 @@ do
 					plugin:StopModuleNameplates(nil, plugin)
 				end,
 				width = 1,
-				order = 1,
+				order = 3,
 			},
 			nameplateIconSettings = {
 				type = "group",
 				name = L.nameplateIconSettings,
+				childGroups = "tab",
 				order = 10,
 				set = function(info, value)
 					db[info[#info]] = value
 					resetNameplates()
 				end,
 				args = {
-					anchoringHeader = {
-						type = "header",
-						name = L.anchoring,
+					general = {
+						type = "group",
+						name = L.general,
 						order = 1,
-						width = "full",
-					},
-					iconGrowDirectionStart = {
-						type = "select",
-						values = validFramePoints,
-						name = L.growStartPosition,
-						desc = L.growStartPositionDesc,
-						order = 2,
-						width = 1.5,
-					},
-					iconGrowDirection = {
-						type = "select",
-						name = L.growDirection,
-						desc = L.growDirectionDesc,
-						order = 3,
-						width = 1.5,
-						values = validGrowDirections,
-					},
-					iconOffsetX = {
-						type = "range",
-						name = L.positionX,
-						desc = L.positionDesc,
-						order = 4,
-						max = 100,
-						min = -100,
-						step = 1,
-						width = 1,
-					},
-					iconOffsetY = {
-						type = "range",
-						name = L.positionY,
-						desc = L.positionDesc,
-						order = 5,
-						max = 100,
-						min = -100,
-						step = 1,
-						width = 1,
-					},
-					iconSpacing = {
-						type = "range",
-						name = L.spacing,
-						desc = L.iconSpacingDesc,
-						order = 6,
-						min = 0,
-						max = 20,
-						step = 1,
-						width = 1,
-					},
-					iconHeader = {
-						type = "header",
-						name = L.icon,
-						order = 10,
-					},
-					iconWidth = {
-						type = "range",
-						name = L.width,
-						order = 11,
-						min = 8,
-						max = 50,
-						step = 1,
-						width = 1,
-					},
-					iconHeight = {
-						type = "range",
-						name = L.height,
-						order = 12,
-						min = 8,
-						max = 50,
-						step = 1,
-						width = 1,
-					},
-					iconAspectRatio = {
-						type = "toggle",
-						name = L.keepAspectRatio,
-						desc = L.keepAspectRatioDesc,
-						order = 13,
-						width = 1,
-					},
-					iconColor = {
-						type = "color",
-						name = L.iconColor,
-						desc = L.iconColorDesc,
-						order = 14,
-						hasAlpha = true,
-						width = 1,
-						get = function()
-							return db.iconColor[1], db.iconColor[2], db.iconColor[3], db.iconColor[4]
-						end,
-						set = function(_, r, g, b, a)
-							db.iconColor = {r, g, b, a < 0.3 and 0.3 or a}
-							resetNameplates()
-						end,
-					},
-					iconDesaturate = {
-						type = "toggle",
-						name = L.desaturate,
-						desc = L.desaturateDesc,
-						order = 15,
-						width = 1,
-					},
-					iconZoom = {
-						type = "range",
-						name = L.zoom,
-						desc = L.zoomDesc,
-						order = 16,
-						min = 0,
-						max = 0.5,
-						step = 0.01,
-						width = 1,
-						isPercent = true,
-					},
-					iconBorder = {
-						type = "toggle",
-						name = L.showBorder,
-						desc = L.showBorderDesc,
-						order = 17,
-						width = 1,
-					},
-					iconBorderColor = {
-						type = "color",
-						name = L.borderColor,
-						order = 18,
-						hasAlpha = true,
-						width = 1,
-						disabled = function() return not db.iconBorder end,
-						get = function()
-							return db.iconBorderColor[1], db.iconBorderColor[2], db.iconBorderColor[3], db.iconBorderColor[4]
-						end,
-						set = function(_, r, g, b, a)
-							db.iconBorderColor = {r, g, b, a}
-							resetNameplates()
-						end,
-					},
-					iconBorderSize = {
-						type = "range",
-						name = L.borderSize,
-						order = 19,
-						min = 1,
-						max = 5,
-						step = 1,
-						width = 1,
-						disabled = function() return not db.iconBorder end,
-					},
-					cooldownTimerHeader = {
-						type = "header",
-						name = L.timer,
-						order = 20,
-					},
-					iconCooldownNumbers = {
-						type = "toggle",
-						name = L.showTimer,
-						desc = L.showTimerDesc,
-						order = 21,
-						width = 1.4,
-					},
-					iconFontName = {
-						type = "select",
-						name = L.font,
-						order = 22,
-						values = media:List(FONT),
-						itemControl = "DDI-Font",
-						get = function()
-							for i, v in next, media:List(FONT) do
-								if v == db.iconFontName then return i end
-							end
-						end,
-						set = function(_, value)
-							local list = media:List(FONT)
-							db.iconFontName = list[value]
-							resetNameplates()
-						end,
-						width = 2,
-						disabled = checkCooldownTimerDisabled,
-					},
-					iconFontOutline = {
-						type = "select",
-						name = L.outline,
-						order = 23,
-						values = {
-							NONE = L.none,
-							OUTLINE = L.thin,
-							THICKOUTLINE = L.thick,
+						args = {
+							anchoringHeader = {
+								type = "header",
+								name = L.anchoring,
+								order = 1,
+								width = "full",
+							},
+							iconGrowDirectionStart = {
+								type = "select",
+								values = validFramePoints,
+								name = L.growStartPosition,
+								desc = L.growStartPositionDesc,
+								order = 2,
+								width = 1.5,
+							},
+							iconGrowDirection = {
+								type = "select",
+								name = L.growDirection,
+								desc = L.growDirectionDesc,
+								order = 3,
+								width = 1.5,
+								values = validGrowDirections,
+							},
+							iconOffsetX = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								order = 4,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconOffsetY = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								order = 5,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconSpacing = {
+								type = "range",
+								name = L.spacing,
+								desc = L.iconSpacingDesc,
+								order = 6,
+								min = 0,
+								max = 20,
+								step = 1,
+								width = 1,
+							},
+							iconHeader = {
+								type = "header",
+								name = L.icon,
+								order = 10,
+							},
+							iconWidth = {
+								type = "range",
+								name = L.width,
+								order = 11,
+								min = 8,
+								max = 50,
+								step = 1,
+								width = 1,
+							},
+							iconHeight = {
+								type = "range",
+								name = L.height,
+								order = 12,
+								min = 8,
+								max = 50,
+								step = 1,
+								width = 1,
+							},
+							iconAspectRatio = {
+								type = "toggle",
+								name = L.keepAspectRatio,
+								desc = L.keepAspectRatioDesc,
+								order = 13,
+								width = 1,
+							},
+							iconColor = {
+								type = "color",
+								name = L.iconColor,
+								desc = L.iconColorDesc,
+								order = 14,
+								hasAlpha = true,
+								width = 1,
+								get = function()
+									return db.iconColor[1], db.iconColor[2], db.iconColor[3], db.iconColor[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.iconColor = {r, g, b, a < 0.3 and 0.3 or a}
+									resetNameplates()
+								end,
+							},
+							iconDesaturate = {
+								type = "toggle",
+								name = L.desaturate,
+								desc = L.desaturateDesc,
+								order = 15,
+								width = 1,
+							},
+							iconZoom = {
+								type = "range",
+								name = L.zoom,
+								desc = L.zoomDesc,
+								order = 16,
+								min = 0,
+								max = 0.5,
+								step = 0.01,
+								width = 1,
+								isPercent = true,
+							},
+							iconBorder = {
+								type = "toggle",
+								name = L.showBorder,
+								desc = L.showBorderDesc,
+								order = 17,
+								width = 1,
+							},
+							iconBorderColor = {
+								type = "color",
+								name = L.borderColor,
+								order = 18,
+								hasAlpha = true,
+								width = 1,
+								disabled = function() return not db.iconBorder end,
+								get = function()
+									return db.iconBorderColor[1], db.iconBorderColor[2], db.iconBorderColor[3], db.iconBorderColor[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.iconBorderColor = {r, g, b, a}
+									resetNameplates()
+								end,
+							},
+							iconBorderSize = {
+								type = "range",
+								name = L.borderSize,
+								order = 19,
+								min = 1,
+								max = 5,
+								step = 1,
+								width = 1,
+								disabled = function() return not db.iconBorder end,
+							},
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 100,
+							},
+							reset = {
+								type = "execute",
+								name = L.resetAll,
+								desc = L.resetNameplateIconsDesc,
+								func = function()
+									setDefaults(iconDefaults)
+									if plugin:UnitGUID("target") then
+										plugin:NAME_PLATE_UNIT_REMOVED(nil, "target")
+										plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
+									end
+								end,
+								order = 101,
+							},
 						},
-						disabled = checkCooldownTimerDisabled,
 					},
-					iconFontColor = {
-						type = "color",
-						name = L.fontColor,
-						hasAlpha = true,
-						get = function()
-							return db.iconFontColor[1], db.iconFontColor[2], db.iconFontColor[3], db.iconFontColor[4]
-						end,
-						set = function(_, r, g, b, a)
-							db.iconFontColor = {r, g, b, a}
-							resetNameplates()
-						end,
-						order = 24,
-						disabled = checkCooldownTimerDisabled,
-					},
-					iconFontSize = {
-						type = "range",
-						name = L.fontSize,
-						desc = L.fontSizeDesc,
-						order = 25,
-						softMax = 100, max = 200, min = 5, step = 1,
-						disabled = checkCooldownTimerDisabled,
-					},
-					iconFontMonochrome = {
-						type = "toggle",
-						name = L.monochrome,
-						desc = L.monochromeDesc,
-						order = 26,
-						disabled = checkCooldownTimerDisabled,
-					},
-					cooldownSwipeHeader = {
-						type = "header",
+					cooldown = {
+						type = "group",
 						name = L.cooldown,
-						order = 30,
+						order = 2,
+						args = {
+							iconCooldownSwipe = {
+								type = "toggle",
+								name = L.showCooldownSwipe,
+								desc = L.showCooldownSwipeDesc,
+								order = 1,
+							},
+							iconCooldownEdge =	{
+								type = "toggle",
+								name = L.showCooldownEdge,
+								desc = L.showCooldownEdgeDesc,
+								order = 2,
+							},
+							iconCooldownInverse = {
+								type = "toggle",
+								name = L.inverse,
+								desc = L.inverseSwipeDesc,
+								order = 3,
+								disabled = function() return not db.iconCooldownSwipe end,
+							},
+							iconCooldownNumbers = {
+								type = "toggle",
+								name = L.showNumbers,
+								desc = L.showNumbersDesc,
+								order = 4,
+								width = "full",
+							},
+							iconFontName = {
+								type = "select",
+								name = L.font,
+								order = 5,
+								values = media:List(FONT),
+								itemControl = "DDI-Font",
+								get = function()
+									for i, v in next, media:List(FONT) do
+										if v == db.iconFontName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = media:List(FONT)
+									db.iconFontName = list[value]
+									resetNameplates()
+								end,
+								width = 2,
+								disabled = checkCooldownTimerDisabled,
+							},
+							iconFontOutline = {
+								type = "select",
+								name = L.outline,
+								order = 6,
+								values = {
+									NONE = L.none,
+									OUTLINE = L.thin,
+									THICKOUTLINE = L.thick,
+								},
+								disabled = checkCooldownTimerDisabled,
+							},
+							iconFontColor = {
+								type = "color",
+								name = L.fontColor,
+								hasAlpha = true,
+								get = function()
+									return db.iconFontColor[1], db.iconFontColor[2], db.iconFontColor[3], db.iconFontColor[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.iconFontColor = {r, g, b, a}
+									resetNameplates()
+								end,
+								order = 7,
+								disabled = checkCooldownTimerDisabled,
+							},
+							iconFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 8,
+								softMax = 100, max = 200, min = 5, step = 1,
+								disabled = checkCooldownTimerDisabled,
+							},
+							iconFontMonochrome = {
+								type = "toggle",
+								name = L.monochrome,
+								desc = L.monochromeDesc,
+								order = 9,
+								disabled = checkCooldownTimerDisabled,
+							},
+						},
 					},
-					iconCooldownSwipe = {
-						type = "toggle",
-						name = L.showCooldownSwipe,
-						desc = L.showCooldownSwipeDesc,
-						order = 31,
-						width = 1,
+					glow = {
+						type = "group",
+						name = L.glow,
+						order = 3,
+						args = {
+							iconExpireGlow = {
+								type = "toggle",
+								name = L.enableExpireGlow,
+								desc = L.enableExpireGlowDesc,
+								order = 1,
+							},
+							iconGlowColor = {
+								type = "color",
+								name = L.glowColor,
+								order = 2,
+								hasAlpha = true,
+								disabled = function() return not db.iconExpireGlow end,
+								get = function()
+									return db.iconGlowColor[1], db.iconGlowColor[2], db.iconGlowColor[3], db.iconGlowColor[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.iconGlowColor = {r, g, b, a}
+									resetNameplates()
+								end,
+							},
+							iconExpireGlowType = {
+								type = "select",
+								name = L.glowType,
+								desc = L.glowTypeDesc,
+								order = 3,
+								disabled = function() return not db.iconExpireGlow end,
+								values = glowValues,
+							},
+							iconGlowFrequency = {
+								type = "range",
+								name = L.speed,
+								desc = L.animation_speed_desc,
+								order = 4,
+								min = -2,
+								max = 2,
+								step = 0.05,
+								width = 1.5,
+								hidden = function() return db.iconExpireGlowType == "proc" end,
+								disabled = function() return not db.iconExpireGlow end,
+							},
+							iconGlowPixelLines = {
+								type = "range",
+								name = L.lines,
+								desc = L.lines_glow_desc,
+								order = 5,
+								min = 1,
+								max = 15,
+								step = 1,
+								width = 1.5,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "pixel" end,
+							},
+							iconGlowAutoCastParticles = {
+								type = "range",
+								name = L.intensity,
+								desc = L.intensity_glow_desc,
+								order = 6,
+								min = 1,
+								max = 15,
+								step = 1,
+								width = 1.5,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "autocast" end,
+							},
+							iconGlowPixelThickness = {
+								type = "range",
+								name = L.thickness,
+								desc = L.thickness_glow_desc,
+								order = 7,
+								min = 1,
+								max = 5,
+								step = 1,
+								width = 1.5,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "pixel" end,
+							},
+							iconGlowAutoCastScale = {
+								type = "range",
+								name = L.scale,
+								desc = L.scale_glow_desc,
+								order = 8,
+								min = 0.5,
+								max = 3,
+								step = 0.05,
+								width = 1.5,
+								isPercent = true,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "autocast" end,
+							},
+							iconGlowProcStartAnim = {
+								type = "toggle",
+								name = L.startAnimation,
+								desc = L.startAnimation_glow_desc,
+								order = 9,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "proc" end,
+							},
+							iconGlowProcAnimDuration = {
+								type = "range",
+								name = L.speed,
+								desc = L.animation_speed_desc,
+								order = 10,
+								min = 0.1,
+								max = 3,
+								step = 0.1,
+								width = 1.5,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "proc" end,
+							},
+							iconGlowPixelLength ={
+								type = "range",
+								name = L.length,
+								desc = L.length_glow_desc,
+								order = 11,
+								min = 1,
+								max = 20,
+								step = 1,
+								width = 1.5,
+								disabled = function() return not db.iconExpireGlow end,
+								hidden = function() return db.iconExpireGlowType ~= "pixel" end,
+							},
+						},
 					},
-					iconCooldownEdge =	{
-						type = "toggle",
-						name = L.showCooldownEdge,
-						desc = L.showCooldownEdgeDesc,
-						order = 32,
-						width = 1,
-					},
-					iconCooldownInverse = {
-						type = "toggle",
-						name = L.inverse,
-						desc = L.inverseSwipeDesc,
-						order = 33,
-						width = 1,
-						disabled = function() return not db.iconCooldownSwipe end,
-					},
-					glowHeader = {
-						type = "header",
-						name = L.iconGlow,
-						order = 40,
-					},
-					iconExpireGlow = {
-						type = "toggle",
-						name = L.enableExpireGlow,
-						desc = L.enableExpireGlowDesc,
-						order = 41,
-						width = 1,
-					},
-					iconGlowColor = {
-						type = "color",
-						name = L.glowColor,
-						order = 42,
-						hasAlpha = true,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						get = function()
-							return db.iconGlowColor[1], db.iconGlowColor[2], db.iconGlowColor[3], db.iconGlowColor[4]
-						end,
-						set = function(_, r, g, b, a)
-							db.iconGlowColor = {r, g, b, a}
-							resetNameplates()
-						end,
-					},
-					iconExpireGlowType = {
-						type = "select",
-						name = L.glowType,
-						desc = L.glowTypeDesc,
-						order = 43,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						values = glowValues,
-					},
-					iconGlowFrequency = {
-						type = "range",
-						name = L.speed,
-						desc = L.animation_speed_desc,
-						order = 44,
-						min = -2,
-						max = 2,
-						step = 0.05,
-						width = 1,
-						hidden = function() return db.iconExpireGlowType == "proc" end,
-						disabled = function() return not db.iconExpireGlow end,
-					},
-					iconGlowPixelLines = {
-						type = "range",
-						name = L.lines,
-						desc = L.lines_glow_desc,
-						order = 45,
-						min = 1,
-						max = 15,
-						step = 1,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "pixel" end,
-					},
-					iconGlowAutoCastParticles = {
-						type = "range",
-						name = L.intensity,
-						desc = L.intensity_glow_desc,
-						order = 45,
-						min = 1,
-						max = 15,
-						step = 1,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "autocast" end,
-					},
-					iconGlowPixelThickness = {
-						type = "range",
-						name = L.thickness,
-						desc = L.thickness_glow_desc,
-						order = 46,
-						min = 1,
-						max = 5,
-						step = 1,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "pixel" end,
-					},
-					iconGlowAutoCastScale = {
-						type = "range",
-						name = L.scale,
-						desc = L.scale_glow_desc,
-						order = 46,
-						min = 0.5,
-						max = 3,
-						step = 0.05,
-						width = 1,
-						isPercent = true,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "autocast" end,
-					},
-					iconGlowProcStartAnim = {
-						type = "toggle",
-						name = L.startAnimation,
-						desc = L.startAnimation_glow_desc,
-						order = 45,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "proc" end,
-					},
-					iconGlowProcAnimDuration = {
-						type = "range",
-						name = L.speed,
-						desc = L.animation_speed_desc,
-						order = 46,
-						min = 0.1,
-						max = 3,
-						step = 0.1,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "proc" end,
-					},
-					iconGlowPixelLength ={
-						type = "range",
-						name = L.length,
-						desc = L.length_glow_desc,
-						order = 46,
-						min = 1,
-						max = 20,
-						step = 1,
-						width = 1,
-						disabled = function() return not db.iconExpireGlow end,
-						hidden = function() return db.iconExpireGlowType ~= "pixel" end,
-					},
-					resetHeader = {
-						type = "header",
-						name = "",
-						order = 100,
-					},
-					reset = {
-						type = "execute",
-						name = L.resetAll,
-						desc = L.resetNameplateIconsDesc,
-						func = function()
-							setDefaults(iconDefaults)
-							if plugin:UnitGUID("target") then
-								plugin:NAME_PLATE_UNIT_REMOVED(nil, "target")
-								plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
-							end
-						end,
-						order = 101,
+					advanced = {
+						type = "group",
+						name = L.advanced,
+						order = 4,
+						args = {},
 					},
 				},
 			},
