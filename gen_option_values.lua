@@ -170,7 +170,7 @@ local log_events = {
 	["UNIT_DISSIPATES"] = true,
 }
 
-local args_keys = {
+local standard_args_keys = {
 	time = true,
 	sourceGUID = true,
 	sourceName = true,
@@ -186,7 +186,15 @@ local args_keys = {
 	extraSpellId = true,
 	extraSpellName = true,
 	amount = true,
+}
+
+local unit_died_args_keys = {
 	mobId = true,
+	destGUID = true,
+	destName = true,
+	destFlags = true,
+	destRaidFlags = true,
+	time = true,
 }
 
 -- Set an exit code if we show an error.
@@ -582,9 +590,10 @@ local function parseLua(file)
 	local options, option_keys, option_key_used = {}, {}, {}
 	local options_block_start = 0
 	local special_options = {}
-	local methods, registered_methods = {Win=true}, {}
+	local methods, registered_methods, unit_died_methods = {Win=true,Disable=true}, {}, {}
 	local event_callbacks = {}
 	local current_func = nil
+	local args_keys = standard_args_keys
 	local rep = {} -- key replacements
 
 	for n, line in ipairs(lines) do
@@ -781,6 +790,12 @@ local function parseLua(file)
 			end
 			registered_methods[callback] = n
 		end
+		event = line:match(":Death%(\"(.-)\"%s*,.*")
+		if event then
+			callback = event
+			registered_methods[callback] = n
+			unit_died_methods[callback] = n
+		end
 
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
@@ -792,6 +807,11 @@ local function parseLua(file)
 			methods[name] = true
 			rep = {}
 			rep.func_key = options[name]
+			if unit_died_methods[name] then
+				args_keys = unit_died_args_keys
+			else
+				args_keys = standard_args_keys
+			end
 		end
 		-- For local functions, look ahead and record the key for the first function
 		-- that calls it.
@@ -847,7 +867,7 @@ local function parseLua(file)
 		--- Check callback args
 		for key in string.gmatch(line, "[^%w]*args%.([%w]+)[^%w]*") do
 			if not args_keys[key] then
-				error(string.format("    %s:%d: Invalid args key \"%s\"", file_name, n, key))
+				error(string.format("    %s:%d: func=%s, Invalid args key \"%s\"", file_name, n, tostring(current_func), key))
 			end
 		end
 
