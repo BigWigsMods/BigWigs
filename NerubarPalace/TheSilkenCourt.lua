@@ -172,12 +172,12 @@ function mod:GetOptions()
 			{438218, "TANK"}, -- Piercing Strike
 			438801, -- Call of the Swarm
 			shattershellScarabMarker,
-			{440246, "ICON", "SAY"}, -- Reckless Charge
+			440246, -- Reckless Charge
 				440178, -- Reckless Impact
 				440179, -- Entangled
 			441791, -- Burrowed Eruption
 			440504, -- Impaling Eruption
-				{449857, "SAY"}, -- Impaled
+				449857, -- Impaled
 
 			-- Skeinspinner Takazj
 			{438200, "TANK"}, -- Poison Bolt

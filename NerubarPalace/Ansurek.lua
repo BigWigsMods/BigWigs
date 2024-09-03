@@ -403,7 +403,8 @@ function mod:Oust(args)
 		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
 	end
-	--self:Nameplate(args.spellId, 10, args.sourceGUID)
+	self:Nameplate(args.spellId, 1, args.sourceGUID) -- fixme
+	self:ClearNameplate(args.sourceGUID)
 end
 
 do
@@ -423,7 +424,8 @@ function mod:ExpulsionBeam(args)
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert")
 	end
-	--self:Nameplate(args.spellId, 10, args.sourceGUID)
+	self:Nameplate(args.spellId, 1, args.sourceGUID) -- fixme
+	self:ClearNameplate(args.sourceGUID)
 end
 
 do
