@@ -2,7 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "koKR")
 if not L then return end
 
 L.general = "일반"
---L.advanced = "Advanced"
+L.advanced = "고급"
 L.comma = ", "
 
 L.positionX = "X 위치"
@@ -329,8 +329,8 @@ L.showBorder = "테두리 표시"
 L.showBorderDesc = "아이콘 주위에 테두리를 표시합니다."
 L.borderColor = "테두리 색상"
 L.borderSize = "테두리 크기"
---L.showNumbers = "Show Numbers"
---L.showNumbersDesc = "Show numbers on the icon."
+L.showNumbers = "숫자 표시"
+L.showNumbersDesc = "아이콘에 숫자 표시."
 L.cooldown = "쿨다운"
 L.showCooldownSwipe = "회전 애니메이션 표시"
 L.showCooldownSwipeDesc = "쿨다운이 활성화된 경우 아이콘에 회전 애니메이션을 표시합니다."
@@ -338,7 +338,7 @@ L.showCooldownEdge = "가장자리 표시"
 L.showCooldownEdgeDesc = "쿨다운이 활성화된 경우 가장자리를 표시합니다."
 L.inverse = "반전"
 L.inverseSwipeDesc = "쿨다운 애니메이션을 반전시킵니다."
---L.glow = "Glow"
+L.glow = "반짝임"
 L.enableExpireGlow = "만료 반짝임 활성화"
 L.enableExpireGlowDesc = "쿨다운이 만료된 경우 아이콘 주위에 반짝임를 표시합니다."
 L.glowColor = "반짝임 색상"
@@ -348,8 +348,8 @@ L.resetNameplateIconsDesc = "이름표 아이콘과 관련된 모든 옵션을 �
 L.nameplateTextSettings = "텍스트 설정"
 L.fixate_test = "고정 테스트" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "이름표 텍스트와 관련된 모든 옵션을 초기화합니다."
---L.autoScale = "Auto Scale"
---L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
+L.autoScale = "자동 크기 조정"
+L.autoScaleDesc = "이름표 크기에 따라 자동으로 크기을 변경합니다."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "픽셀 반짝임"
