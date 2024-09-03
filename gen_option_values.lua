@@ -76,6 +76,7 @@ local removed_methods = {
 	NameplateBar = true,
 	NameplateCDBar = true,
 	StopNameplateBar = true,
+	SetPrivateAuraSound = true,
 }
 local valid_methods = {
 	CastBar = "CASTBAR",
@@ -100,9 +101,19 @@ local valid_methods = {
 	CloseInfo = "INFOBOX",
 	Nameplate = "NAMEPLATE",
 	StopNameplate = "NAMEPLATE",
-	SetPrivateAuraSound = "PRIVATE",
 	PauseBar = true,
 	ResumeBar = true,
+}
+local tracked_bitflags = {
+	["CASTBAR"] = true,
+	["ICON"] = true,
+	["FLASH"] = true,
+	["SAY"] = true,
+	["SAY_COUNTDOWN"] = true,
+	["ALTPOWER"] = true,
+	["PROXIMITY"] = true,
+	["INFOBOX"] = true,
+	["NAMEPLATE"] = true,
 }
 local function add_valid_methods(t)
 	for k in next, t do
@@ -587,7 +598,7 @@ local function parseLua(file)
 
 	local module_encounter_id, module_set_stage = nil, nil
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
-	local options, option_keys, option_key_used = {}, {}, {}
+	local options, option_keys, option_key_used, bitflag_used = {}, {}, {}, {}
 	local options_block_start = 0
 	local special_options = {}
 	local methods, registered_methods, unit_died_methods = {Win=true,Disable=true}, {}, {}
@@ -912,6 +923,13 @@ local function parseLua(file)
 				if not option_keys[key] then
 					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
 				end
+				local bitflag = unquote(args[2])
+				if tracked_bitflags[bitflag] and option_keys[key] and option_keys[key][bitflag] then
+					if not bitflag_used[key] then
+						bitflag_used[key] = {}
+					end
+					bitflag_used[key][bitflag] = true
+				end
 				option_key_used[key] = true
 			end
 		end
@@ -1111,6 +1129,12 @@ local function parseLua(file)
 							errors = true
 						end
 					end
+					if bitflag and option_keys[k] and option_keys[k][bitflag] then
+						if not bitflag_used[k] then
+							bitflag_used[k] = {}
+						end
+						bitflag_used[k][bitflag] = true
+					end
 					option_key_used[k] = true
 				end
 				keys[i] = k
@@ -1156,6 +1180,17 @@ local function parseLua(file)
 	for key in next, option_keys do
 		if not option_key_used[key] and not tostring(key):match("^custom_") then
 			error(string.format("    %s:%d: %q was registered as an option key, but was not used.", file_name, options_block_start, key))
+		end
+	end
+
+	-- Check for bitflags that were set but never used.
+	for key, flags in next, option_keys do
+		if type(flags) == "table" then
+			for flag in next, flags do
+				if tracked_bitflags[flag] and (not bitflag_used[key] or not bitflag_used[key][flag]) then
+					error(string.format("    %s:%d: %q was added as a bitflag to option key %q, but was not used.", file_name, options_block_start, flag, key))
+				end
+			end
 		end
 	end
 end
