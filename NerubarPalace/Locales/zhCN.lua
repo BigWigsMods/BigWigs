@@ -10,7 +10,7 @@ if L then
 	L.grasp_from_beyond_say = "触手"
 	L.bloodcurdle = "分散"
 	L.bloodcurdle_on_you = "分散" -- Singular of Spread
-	L.goresplatter = "跑开"
+	L.goresplatter = "远离"
 end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "zhCN")
@@ -29,8 +29,8 @@ if L then
 	L.sticky_web_say = "蛛网" -- Singular of Webs
 	L.infest_message = "对你施放感染！"
 	L.infest_say = "寄生"
-	L.experimental_dosage = "蛋已破"
-	L.experimental_dosage_say = "蛋已破"
+	L.experimental_dosage = "破蛋"
+	L.experimental_dosage_say = "破蛋"
 	L.ingest_black_blood = "下一个容器"
 	L.unstable_infusion = "紫圈"
 
