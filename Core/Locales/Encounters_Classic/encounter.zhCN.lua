@@ -1,12 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "zhCN")
 if not L then return end
 
-L[89] = "格拉布托克"
-L[90] = "赫利克斯·破甲"
-L[91] = "死神5000"
-L[92] = "撕心狼将军"
-L[93] = "“船长”曲奇"
-L[95] = "梵妮莎·范克里夫"
 L[96] = "灰葬男爵"
 L[97] = "席瓦莱恩男爵"
 L[98] = "指挥官斯普林瓦尔"

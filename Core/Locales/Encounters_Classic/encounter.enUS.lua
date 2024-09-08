@@ -1,11 +1,5 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "enUS")
 
-L[89] = "Glubtok"
-L[90] = "Helix Gearbreaker"
-L[91] = "Foe Reaper 5000"
-L[92] = "Admiral Ripsnarl"
-L[93] = "\"Captain\" Cookie"
-L[95] = "Vanessa VanCleef"
 L[96] = "Baron Ashbury"
 L[97] = "Baron Silverlaine"
 L[98] = "Commander Springvale"

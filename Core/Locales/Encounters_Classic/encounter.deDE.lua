@@ -1,12 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "deDE")
 if not L then return end
 
-L[89] = "Glubtok"
-L[90] = "Helix Ritzelbrecher"
-L[91] = "Feindschnitter 5000"
-L[92] = "Admiral Knurrreißer"
-L[93] = "\"Kapitän\" Krümel"
-L[95] = "Vanessa van Cleef"
 L[96] = "Baron Ashbury"
 L[97] = "Baron Silberlein"
 L[98] = "Kommandant Grüntal"

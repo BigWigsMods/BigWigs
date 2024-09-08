@@ -1,12 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "koKR")
 if not L then return end
 
-L[89] = "글럽톡"
-L[90] = "헬릭스 기어브레이커"
-L[91] = "전투 절단기 5000"
-L[92] = "제독 으르렁니"
-L[93] = "\"선장\" 쿠키"
-L[95] = "바네사 밴클리프"
 L[96] = "남작 애쉬버리"
 L[97] = "남작 실버레인"
 L[98] = "사령관 스프링베일"
