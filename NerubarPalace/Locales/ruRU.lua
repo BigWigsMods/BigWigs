@@ -56,6 +56,6 @@ if L then
 	L.impaling_eruption = "Фронтал [А]" -- A for Anub'arash
 	L.entropic_desolation = "Выбегай"
 	L.cataclysmic_entropy = "Большой взрыв" -- Interrupt before it casts
-	L.spike_eruption = "Шиины"
+	L.spike_eruption = "Шипы"
 	L.unleashed_swarm = "Рой"
 end
