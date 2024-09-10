@@ -13,9 +13,10 @@
 ## Notes-itIT: Un approccio modulare, leggero e non intrusivo per gli avvisi ai combattimenti con i boss.
 ## Notes-ptBR: Abordagem modular, leve e não intrusiva para avisos em encontros com chefes.
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
-## Author: Funkydude, Nebula, Elvador, Justwait
+## Author: Funkeh, Nebula, Justwait, Delk
 ## Version: @project-version@
 
+## X-Credits: Ammo, Elvador, Vhaarr
 ## X-Category: Raid
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Website: https://github.com/BigWigsMods
