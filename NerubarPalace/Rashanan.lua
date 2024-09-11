@@ -30,25 +30,25 @@ local canStartPhase = false
 
 -- the stages are just segments of the fight with different cast sequences
 -- grouping by spell id instead of stage to make copy pasta easier
-local timersNormal = { -- 8:38
+local timersNormal = { -- 7:18
 	[439789] = { -- Rolling Acid
 		{43.3, 0},
-		{18.4, 0},
+		{18.4, 53.0, 0},
 		{65.5, 0},
 		{65.5, 0},
 		{18.4, 0},
 	},
 	[455373] = { -- Infested Spawn
-		{62.8, 0},
-		{41.9, 0},
-		{16.4, 0},
+		{62.5, 0},
+		{41.5, 0},
+		{15.9, 53.0, 0},
 		{42.0, 0},
 		{63.5, 0},
 	},
 	[439784] = { -- Spinneret's Strands
-		{14.8, 0},
+		{14.8, 52.9, 0},
 		{62.5, 0},
-		{40.9, 0},
+		{41.0, 0},
 		{15.4, 0},
 		{41.0, 0},
 	},
@@ -56,7 +56,7 @@ local timersNormal = { -- 8:38
 local timersHeroic = { -- 10:26
 	[439789] = { -- Rolling Acid
 		{41.4, 0},
-		{16.8, 30.3, 0},
+		{16.7, 30.3, 19.7, 0},
 		{61.2, 0},
 		{61.2, 0},
 		{16.8, 29.7, 20.3, 0},
@@ -220,7 +220,7 @@ function mod:OnEngage()
 	self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
 	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
 	self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
-	self:Bar("stages", self:Mythic() and 87 or self:Easy() and 90.0 or 104.5, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
+	self:Bar("stages", self:Easy() and 90.0 or 87, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
 	if self:Mythic() then
 		self:Bar(439795, 51.2, CL.count:format(CL.soak, webReaveCount)) -- Web Reave
 		self:Bar(454989, cd(454989, envelopingWebsCount[2]), CL.count:format(L.enveloping_webs, envelopingWebsCount[1])) -- Enveloping Webs
@@ -274,7 +274,7 @@ end
 
 function mod:InfestedSpawn(args)
 	self:StopBar(CL.count:format(CL.adds, infestedSpawnCount[1]))
-	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, infestedSpawnCount[1]))
+	self:Message(args.spellId, "cyan", CL.incoming:format(CL.count:format(CL.adds, infestedSpawnCount[1])))
 	self:PlaySound(args.spellId, "info") -- adds
 	infestedSpawnCount[1] = infestedSpawnCount[1] + 1 -- Total
 	infestedSpawnCount[2] = infestedSpawnCount[2] + 1 -- Stage
@@ -339,7 +339,7 @@ end
 function mod:EnvelopingWebsApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(454989)
-		self:PlaySound(454989, "warning") -- debuff applied
+		self:PlaySound(454989, "alarm") -- fail
 		self:Yell(454989, L.enveloping_web_say, nil, "Web") -- break me
 	end
 end
