@@ -204,12 +204,21 @@ function mod:OnEngage()
 	self:Bar(439814, 57.5, CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 	self:Bar(439299, 76.5, CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
 
-	self:Bar("stages", 157.9, CL.intermission, 447207) -- Predation
+	self:Bar("stages", 153.9, CL.intermission, 447207) -- Predation
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_HEALTH(event, unit)
+	if self:GetHealth(unit) < 37 then -- Intermission forced at 35%
+		self:UnregisterUnitEvent(event, unit)
+		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
+		self:PlaySound("stages", "info")
+	end
+end
 
 -- Stage One: A Queen's Venom
 function mod:ReactiveToxin(args)
@@ -280,8 +289,16 @@ function mod:SilkenTomb(args)
 	self:PlaySound(args.spellId, "alarm") -- spread
 	silkenTombCount = silkenTombCount + 1
 
-	local timer = {57.5, 47.9, 16.0}
-	self:Bar(args.spellId, timer[silkenTombCount] or 0, CL.count:format(L.silken_tomb, silkenTombCount))
+	local cd
+	if self:Easy() then
+		local timers = { 57.5, 54.0 } -- normal
+		cd = timers[silkenTombCount]
+	else
+		local timers = { 57.5, 47.9, 16.0 } -- heroic
+		cd = timers[silkenTombCount]
+	end
+
+	self:Bar(args.spellId, cd, CL.count:format(L.silken_tomb, silkenTombCount))
 end
 
 do
@@ -364,7 +381,7 @@ do
 			local cd
 			if self:GetStage() == 1 then
 				if self:Easy() then
-					local timers = { 12.5, 48.0, } -- normal
+					local timers = { 12.5, 48.0 } -- normal
 					cd = timers[webBladesCount]
 				else
 					local timers = { 20.4, 47.0, 47.0, 25.0 } -- heroic
