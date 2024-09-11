@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "koKR")
 if not L then return end
 if L then
-	--L.carnivorous_contest_pull = "Pull In"
+	L.carnivorous_contest_pull = "끌어당김"
 	L.chunky_viscera_message = "보스 먹이기! (엑스트라 버튼)"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "koKR")
 if L then
-	--L.gruesome_disgorge_debuff = "Phase Shift"
+	L.gruesome_disgorge_debuff = "위상 전환"
 	L.grasp_from_beyond = "촉수"
 	L.grasp_from_beyond_say = "촉수"
 	L.bloodcurdle = "산개"
