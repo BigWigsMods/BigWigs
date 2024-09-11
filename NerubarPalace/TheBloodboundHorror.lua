@@ -90,7 +90,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SpewingHemorrhage", 445936)
 	self:Log("SPELL_AURA_APPLIED", "InternalHemorrhageApplied", 459444) -- Stacks?
 	self:Log("SPELL_CAST_START", "Goresplatter", 442530)
-	self:Log("SPELL_CAST_SUCCESS", "CrimsonRain", 443203)
+	self:Log("SPELL_AURA_APPLIED", "CrimsonRainApplied", 443305)
 	-- self:Log("SPELL_CAST_SUCCESS", "GraspFromBeyond", 443042)
 	self:Log("SPELL_AURA_APPLIED", "GraspFromBeyondApplied", 443042)
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 445518) -- Black Blood
@@ -145,6 +145,7 @@ function mod:InvokeTerrors(args)
 	end
 	self:Bar(args.spellId, cd, CL.count:format(CL.adds_spawning, invokeTerrorsCount))
 end
+
 -- Phase One: The Black Blood
 function mod:GruesomeDisgorge(args)
 	self:StopBar(CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount))
@@ -207,12 +208,20 @@ function mod:Goresplatter(args)
 	self:Bar(args.spellId, 128, CL.count:format(L.goresplatter, goresplatterCount))
 end
 
-function mod:CrimsonRain(args)
-	self:StopBar(CL.count:format(args.spellName, crimsonRainCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, crimsonRainCount))
-	self:PlaySound(args.spellId, "alert")
-	crimsonRainCount = crimsonRainCount + 1
-	self:Bar(args.spellId, 128, CL.count:format(args.spellName, crimsonRainCount))
+do
+	local prev = 0
+	function mod:CrimsonRainApplied(args)
+		if args.time-prev > 10 then
+			prev = args.time
+			self:StopBar(CL.count:format(args.spellName, crimsonRainCount))
+			crimsonRainCount = crimsonRainCount + 1
+			self:CDBar(443203, crimsonRainCount % 4 == 1 and 40 or 30, CL.count:format(args.spellName, crimsonRainCount)) -- XXX Confirm exact timings, specificly each 4th
+		end
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(443203)
+			self:PlaySound(443203, "alert")
+		end
+	end
 end
 
 do
