@@ -141,32 +141,6 @@ local textDefaults = {
 }
 
 plugin.defaultDB = {
-	updated = false,
-
-	-- XXX old
-	nameplateIconWidth = 15,
-	nameplateIconHeight = 15,
-	nameplateIconOffsetX = 0,
-	nameplateIconOffsetY = -4,
-	nameplateIconCooldownTimer = true,
-	nameplateIconCooldownTimerFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
-	nameplateIconCooldownTimerFontSize = 7,
-	nameplateIconCooldownTimerFontColor = {1, 1, 1, 1},
-	nameplateIconCooldownTimerOutline = "OUTLINE",
-	nameplateIconCooldownTimerMonochrome = false,
-	nameplateIconCooldownEdge = true,
-	nameplateIconCooldownSwipe = true,
-	nameplateIconCooldownInverse = false,
-	nameplateIconExpireGlow = true,
-	nameplateIconExpireGlowType = "pixel",
-	nameplateIconZoom = 0,
-	nameplateIconAspectRatio = true,
-	nameplateIconDesaturate = false,
-	nameplateIconColor = {1, 1, 1, 1},
-	nameplateIconGlowColor = {0.95, 0.95, 0.32, 1},
-	nameplateIconBorder = true,
-	nameplateIconBorderSize = 1,
-	nameplateIconBorderColor = {0, 0, 0, 1},
 }
 for k, v in next, iconDefaults do
 	plugin.defaultDB[k] = v
@@ -185,33 +159,6 @@ local function updateProfile()
 		elseif type(v) ~= defaultType then
 			db[k] = plugin.defaultDB[k]
 		end
-	end
-
-	if not db.updated then
-		db.updated = true
-		db.iconWidth = db.nameplateIconWidth
-		db.iconHeight = db.nameplateIconHeight
-		db.iconOffsetX = db.nameplateIconOffsetX
-		db.iconOffsetY = db.nameplateIconOffsetY
-		db.iconCooldownNumbers = db.nameplateIconCooldownTimer
-		db.iconFontName = db.nameplateIconCooldownTimerFontName
-		db.iconFontSize = db.nameplateIconCooldownTimerFontSize
-		db.iconFontColor = db.nameplateIconCooldownTimerFontColor
-		db.iconFontOutline = db.nameplateIconCooldownTimerOutline
-		db.iconFontMonochrome = db.nameplateIconCooldownTimerMonochrome
-		db.iconCooldownEdge = db.nameplateIconCooldownEdge
-		db.iconCooldownSwipe = db.nameplateIconCooldownSwipe
-		db.iconCooldownInverse = db.nameplateIconCooldownInverse
-		db.iconExpireGlow = db.nameplateIconExpireGlow
-		db.iconExpireGlowType = db.nameplateIconExpireGlowType
-		db.iconZoom = db.nameplateIconZoom
-		db.iconAspectRatio = db.nameplateIconAspectRatio
-		db.iconDesaturate = db.nameplateIconDesaturate
-		db.iconColor = db.nameplateIconColor
-		db.iconGlowColor = db.nameplateIconGlowColor
-		db.iconBorder = db.nameplateIconBorder
-		db.iconBorderSize = db.nameplateIconBorderSize
-		db.iconBorderColor = db.nameplateIconBorderColor
 	end
 
 	if not validGrowDirections[db.iconGrowDirection] then
