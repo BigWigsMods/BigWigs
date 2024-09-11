@@ -28,6 +28,7 @@ BigWigs:AddColors("The Bloodbound Horror", {
 	[443203] = "yellow",
 	[443612] = "blue",
 	[444363] = "purple",
+	[444497] = "cyan",
 	[445518] = "blue",
 	[445570] = {"blue","green"},
 	[445936] = "orange",

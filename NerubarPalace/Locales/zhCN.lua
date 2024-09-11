@@ -7,6 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhCN")
 if L then
+	--L.gruesome_disgorge_debuff = "Phase Shift"
 	L.grasp_from_beyond = "触手"
 	L.grasp_from_beyond_say = "触手"
 	L.bloodcurdle = "分散"

@@ -12,6 +12,7 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
+local invokeTerrorsCount = 1
 local gruesomeDisgorgeCount = 1
 local spewingHemorrhageCount = 1
 local goresplatterCount = 1
@@ -25,6 +26,7 @@ local bloodcurdleCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.gruesome_disgorge_debuff = "Phase Shift"
 	L.grasp_from_beyond = "Tentacles"
 	L.grasp_from_beyond_say = "Tentacles"
 	L.bloodcurdle = "Spreads"
@@ -38,8 +40,9 @@ end
 
 function mod:GetOptions()
 	return {
+		444497, -- Invoke Terrors
 		444363, -- Gruesome Disgorge
-		443612, -- Baneful Shift
+		443612, -- Gruesome Disgorge (Debuff)
 		445570, -- Unseeming Blight
 		445936, -- Spewing Hemorrhage
 		459444, -- Internal Hemorrhage
@@ -60,7 +63,9 @@ function mod:GetOptions()
 		[451288] = 462306, -- The Unseeming
 		[452237] = "mythic",
 	},{
+		[444497] = CL.adds_spawning, -- Invoke Terrors (Adds Spawning)
 		[444363] = CL.frontal_cone, -- Gruesome Disgorge (Frontal Cone)
+		[443612] = L.gruesome_disgorge_debuff, -- Gruesome Disgorge (Phase Shift)
 		[445936] = CL.beams, -- Spewing Hemorrhage (Beams)
 		[442530] = L.goresplatter, -- Goresplatter (Run Away)
 		[443042] = L.grasp_from_beyond, -- Grasp From Beyond (Tentacles)
@@ -76,6 +81,7 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_SUCCESS", "InvokeTerrors", 444497)
 	-- Phase One: The Black Blood
 	self:Log("SPELL_CAST_START", "GruesomeDisgorge", 444363)
 	self:Log("SPELL_AURA_APPLIED", "BanefulShiftApplied", 443612)
@@ -104,15 +110,17 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	invokeTerrorsCount = 1
 	gruesomeDisgorgeCount = 1
 	spewingHemorrhageCount = 1
 	goresplatterCount = 1
 	crimsonRainCount = 1
 	graspFromBeyondCount = 1
 
+	self:Bar(444497, self:Mythic() and 3 or 5, CL.count:format(CL.adds_spawning, invokeTerrorsCount)) -- Invoke Terrors
 	self:Bar(443203, 11, CL.count:format(self:SpellName(443203), crimsonRainCount)) -- Crimson Rain
 	self:Bar(444363, self:Mythic() and 14 or 16, CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount)) -- Gruesome Disgorge
-	self:Bar(443042, 22, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount)) -- Grasp From Beyond
+	self:Bar(443042, self:Mythic() and 19 or 22, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount)) -- Grasp From Beyond
 	if not self:Easy() then
 		self:Bar(445936, 32, CL.count:format(CL.beams, spewingHemorrhageCount)) -- Spewing Hemorrhage
 	end
@@ -126,6 +134,17 @@ end
 -- Event Handlers
 --
 
+function mod:InvokeTerrors(args)
+	self:StopBar(CL.count:format(CL.adds_spawning, invokeTerrorsCount))
+	self:Message(args.spellId, "cyan", CL.count:format(CL.adds_spawning, invokeTerrorsCount))
+	self:PlaySound(args.spellId, "info") -- adds
+	invokeTerrorsCount = invokeTerrorsCount + 1
+	local cd = invokeTerrorsCount % 2 == 0 and 51 or 77
+	if self:Mythic() then
+		cd = invokeTerrorsCount % 2 == 0 and 59 or 69
+	end
+	self:Bar(args.spellId, cd, CL.count:format(CL.adds_spawning, invokeTerrorsCount))
+end
 -- Phase One: The Black Blood
 function mod:GruesomeDisgorge(args)
 	self:StopBar(CL.count:format(CL.frontal_cone, gruesomeDisgorgeCount))
@@ -143,20 +162,21 @@ function mod:BanefulShiftApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
+		self:TargetBar(args.spellId, 40, args.destName)
 	end
 end
 
 function mod:UnseemingBlightApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:UnseemingBlightRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-		self:PlaySound(args.spellId, "info")
+		-- self:PlaySound(args.spellId, "info")
 	end
 end
 
