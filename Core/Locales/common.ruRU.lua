@@ -225,3 +225,8 @@ L.soaks = "Соки" -- Plural of L.soak
 L.spell_reflection = "Отражение заклинаний" -- Any ability that reflects spells
 L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving
+
+-- Common ability name replacements A-Z
+--L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.health_drain = "Потеря здоровья" -- Any ability that drains health from the player
+--L.smash = "Удар" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"

@@ -225,3 +225,8 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spell_reflection = "Reflejo de hechizos" -- Any ability that reflects spells
 L.parasite = "Parásito" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
+
+-- Common ability name replacements A-Z
+--L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.health_drain = "Absorción de salud" -- Any ability that drains health from the player
+L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
