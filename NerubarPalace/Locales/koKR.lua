@@ -29,7 +29,7 @@ L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "koKR")
 if L then
 	L.sticky_web = "거미줄"
 	L.sticky_web_say = "거미줄" -- Singular of Webs
-	L.infest_message = "당신에게 감연 시전 중!"
+	L.infest_message = "당신에게 감염 시전 중!"
 	L.infest_say = "기생충"
 	L.experimental_dosage = "알 깨기"
 	L.experimental_dosage_say = "알 깨기"
@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("The Silken Court", "koKR")
 if L then
 	L.skipped_cast = "건너뛴 %s (%d)"
 
-	L.venomous_rain = "독비"
+	L.venomous_rain = "맹독의 비"
 	L.burrowed_eruption = "잠복"
 	L.stinging_swarm = "디버프 해제"
 	L.strands_of_reality = "전방 [S]" -- S for Skeinspinner Takazj
