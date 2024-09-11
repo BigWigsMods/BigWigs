@@ -215,7 +215,7 @@ do
 			prev = args.time
 			self:StopBar(CL.count:format(args.spellName, crimsonRainCount))
 			crimsonRainCount = crimsonRainCount + 1
-			self:CDBar(443203, crimsonRainCount % 4 == 1 and 40 or 30, CL.count:format(args.spellName, crimsonRainCount)) -- XXX Confirm exact timings, specificly each 4th
+			self:Bar(443203, crimsonRainCount % 4 == 1 and 38 or 30, CL.count:format(args.spellName, crimsonRainCount))
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(443203)
