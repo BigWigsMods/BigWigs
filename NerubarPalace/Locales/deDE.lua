@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "deDE")
 if not L then return end
 if L then
+	--L.carnivorous_contest_pull = "Pull In"
 	L.chunky_viscera_message = "Boss füttern! (Spezialaktionsbutton)"
 end
 

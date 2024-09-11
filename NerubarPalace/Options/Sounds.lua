@@ -2,20 +2,22 @@
 BigWigs:AddSounds("Ulgrax the Devourer", {
 	[434697] = "alert",
 	[434705] = "warning",
-	[434803] = {"info","warning"},
+	[434778] = {"alarm","info"},
+	[434803] = {"alert","warning"},
 	[435136] = "alert",
 	[435138] = {"alert","warning"},
-	[436200] = {"long","warning"},
+	[436200] = "warning",
 	[438012] = "alert",
 	[438657] = {"alert","info"},
 	[439037] = "alarm",
 	[439419] = "alarm",
 	[440177] = "info",
-	[440849] = "warning",
+	[440849] = "alarm",
 	[441452] = "info",
 	[443842] = "alarm",
 	[445052] = "alert",
-	[445123] = "warning",
+	[455831] = "alarm",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("The Bloodbound Horror", {
@@ -38,7 +40,6 @@ BigWigs:AddSounds("Sikran, Captain of the Sureki", {
 	[434860] = "alarm",
 	[439511] = "alarm",
 	[439559] = "alarm",
-	[442428] = {"alert","warning"},
 	[456420] = "long",
 	[459273] = "alarm",
 })

@@ -1,14 +1,15 @@
 
 BigWigs:AddColors("Ulgrax the Devourer", {
 	[434697] = "purple",
-	[434705] = {"blue","yellow"},
-	[434803] = {"blue","green","yellow"},
+	[434705] = {"blue","purple"},
+	[434778] = {"blue","green"},
+	[434803] = {"blue","orange"},
 	[435136] = "orange",
 	[435138] = {"blue","yellow"},
 	[436200] = {"cyan","red"},
 	[438012] = "yellow",
 	[438657] = "blue",
-	[439037] = {"blue","purple"},
+	[439037] = "blue",
 	[439419] = "blue",
 	[440177] = "green",
 	[440849] = "red",
@@ -16,6 +17,7 @@ BigWigs:AddColors("Ulgrax the Devourer", {
 	[443842] = "orange",
 	[445052] = "yellow",
 	[445123] = "red",
+	[455831] = "blue",
 	["stages"] = "cyan",
 })
 
@@ -35,13 +37,13 @@ BigWigs:AddColors("The Bloodbound Horror", {
 })
 
 BigWigs:AddColors("Sikran, Captain of the Sureki", {
+	[432969] = {"blue","purple"},
 	[433517] = "orange",
 	[434860] = "blue",
-	[435410] = {"blue","purple"},
 	[438845] = {"blue","purple"},
 	[439511] = "cyan",
 	[439559] = "yellow",
-	[442428] = {"blue","yellow"},
+	[442428] = "orange",
 	[456420] = "red",
 	[459273] = "blue",
 })
