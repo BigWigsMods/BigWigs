@@ -292,7 +292,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "SpikeStormApplied", 451277)
 	self:Log("SPELL_AURA_REMOVED", "SpikeStormRemoved", 451277)
-	self:Log("SPELL_CAST_SUCCESS", "SeismicUpheaval", 460364)
+	self:Log("SPELL_AURA_APPLIED", "SeismicUpheavalApplied", 460364)
 
 	self:Log("SPELL_CAST_START", "BurrowTransition", 456174)
 	self:Log("SPELL_CAST_START", "SpikeEruption", 443068)
@@ -313,7 +313,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "ShatterExistenceApplied", 450980)
 	self:Log("SPELL_AURA_REMOVED", "ShatterExistenceRemoved", 450980)
-	self:Log("SPELL_CAST_SUCCESS", "EntropicBarrage", 460600)
+	self:Log("SPELL_AURA_APPLIED", "EntropicBarrageApplied", 460600)
+	self:Log("SPELL_AURA_REFRESH", "EntropicBarrageApplied", 460600)
 
 	self:Log("SPELL_CAST_START", "VoidStep", 450483)
 	self:Log("SPELL_CAST_START", "StrandsOfReality", 441782)
@@ -525,41 +526,39 @@ end
 
 function mod:VoidStepTransition()
 	self:StopBar(CL.count:format(CL.intermission, 1))
-	self:SetStage(1.5)
 
+	self:SetStage(1.5)
 	self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), false)
 	self:PlaySound("stages", "long")
-	-- intermissionSpellCount = 1
+
+	intermissionSpellCount = 1
 end
 
-function mod:EntropicBarrage(args)
-	self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
-	intermissionSpellCount = intermissionSpellCount + 1
-	self:Bar(args.spellId, 12, CL.count:format(args.spellName, intermissionSpellCount))
+do
+	local prev = 0
+	function mod:EntropicBarrageApplied(args)
+		if args.time - prev > 3 then
+			self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
+			intermissionSpellCount = intermissionSpellCount + 1
+			self:Bar(args.spellId, self:LFR() and 16 or self:Normal() and 14 or 13, CL.count:format(args.spellName, intermissionSpellCount))
+		end
+	end
 end
 
 do
 	local appliedTime = 0
 	function mod:ShatterExistenceApplied(args)
-		if self:GetStage() == 1 then  -- XXX make sure we kill the bar
-			self:StopBar(CL.count:format(CL.intermission, 1))
-			self:SetStage(1.5)
-			self:PlaySound("stages", "long")
-		else
-			self:PlaySound(args.spellId, "info")
-		end
-
 		appliedTime = args.time
 		self:Message(args.spellId, "cyan")
+		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:ShatterExistenceRemoved(args)
 		if args.amount == 0 then
+			self:StopBar(CL.count:format(self:SpellName(460600), intermissionSpellCount)) -- Entropic Barrage
+
 			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
-
-			self:StopBar(args.spellId, CL.count:format(self:SpellName(460600), intermissionSpellCount)) -- Entropic Barrage
-			intermissionSpellCount = 1
 
 			self:SetStage(2)
 			-- Skeinspinner Takazj
@@ -711,45 +710,40 @@ end
 -- Transistion: Raging Fury
 
 function mod:BurrowTransition()
-	if self:GetStage() == 2 then -- Transition cast
-		self:StopBar(CL.count:format(CL.intermission, 2))
-		self:SetStage(2.5)
-		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
-		self:PlaySound("stages", "long")
-		-- intermissionSpellCount = 1
-	end
+	self:StopBar(CL.count:format(CL.intermission, 2))
+
+	self:SetStage(2.5)
+	self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
+	self:PlaySound("stages", "long")
+
+	intermissionSpellCount = 1
 end
 
-function mod:SeismicUpheaval(args)
-	self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
-	intermissionSpellCount = intermissionSpellCount + 1
-	self:Bar(args.spellId, 15, CL.count:format(args.spellName, intermissionSpellCount))
+do
+	local prev = 0
+	function mod:SeismicUpheavalApplied(args)
+		if args.time - prev > 3 then
+			self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
+			intermissionSpellCount = intermissionSpellCount + 1
+			self:Bar(args.spellId, self:LFR() and 27 or self:Normal() and 24 or 20, CL.count:format(args.spellName, intermissionSpellCount))
+		end
+	end
 end
 
 do
 	local appliedTime = 0
 	function mod:SpikeStormApplied(args)
-		if self:GetStage() == 2 then -- XXX make sure we kill the bar
-			self:StopBar(CL.count:format(CL.intermission, 2))
-			self:SetStage(2.5)
-			self:PlaySound(args.spellId, "long")
-		else
-			self:PlaySound(args.spellId, "info")
-		end
-
 		appliedTime = args.time
 		self:Message(args.spellId, "cyan")
-
-		impalingEruptionCount = 1
+		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:SpikeStormRemoved(args)
 		if args.amount == 0 then
+			self:StopBar(CL.count:format(self:SpellName(460364), intermissionSpellCount)) -- Seismic Upheaval
+
 			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
-
-			self:StopBar(args.spellId, CL.count:format(self:SpellName(460364), intermissionSpellCount)) -- Seismic Upheaval
-			intermissionSpellCount = 1
 
 			self:SetStage(3)
 			-- Anub'arash
