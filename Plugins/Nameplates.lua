@@ -666,7 +666,7 @@ do
 	}
 	plugin.pluginOptions = {
 		type = "group",
-		name = L.nameplates,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Nameplates:20|t ".. L.nameplates,
 		childGroups = "tab",
 		get = function(info)
 			return db[info[#info]]
