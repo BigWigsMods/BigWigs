@@ -143,6 +143,7 @@ function mod:PhaseTransition()
 		brutalCrushCount = 1
 		stalkersWebbingCount = 1
 		venomousLashCount = 1
+		digestiveAcidCount = 1
 		carnivorousContestCount = 1
 
 		self:Bar(434697, 8.0, CL.count:format(self:SpellName(434697), brutalCrushCount)) -- Brutal Crush
