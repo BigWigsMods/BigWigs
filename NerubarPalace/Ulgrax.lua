@@ -128,8 +128,7 @@ end
 --
 
 function mod:PhaseTransition()
-	local stage = self:GetStage()
-	if stage == 2 then
+	if self:GetStage() == 2 then
 		-- P2 -> P1
 		self:StopBar(445052) -- Chittering Swarm
 		self:StopBar(CL.count_amount:format(self:SpellName(436200), juggernautChargeCount, 4)) -- Juggernaut Charge
@@ -152,27 +151,6 @@ function mod:PhaseTransition()
 		self:Bar(435138, 20.0, CL.count:format(self:SpellName(435138), digestiveAcidCount)) -- Digestive Acid
 		self:Bar(434803, 38.0, CL.count:format(CL.soak, carnivorousContestCount)) -- Carnivorous Contest
 		self:Bar("stages", 94.0, CL.stage:format(2), 445123) -- Hulking Crash (Stage 2)
-
-	elseif stage == 1 then
-		-- P1 -> P2
-		self:StopBar(CL.stage:format(2))
-		self:StopBar(CL.count:format(self:SpellName(434697), brutalCrushCount)) -- Brutal Crush
-		self:StopBar(CL.count:format(self:SpellName(435136), venomousLashCount)) -- Venomous Lash
-		self:StopBar(CL.count:format(self:SpellName(441452), stalkersWebbingCount)) -- Stalkers Webbing
-		self:StopBar(CL.count:format(self:SpellName(435138), digestiveAcidCount)) -- Digestive Acid
-		self:StopBar(CL.count:format(CL.soak, carnivorousContestCount)) -- Carnivorous Contest
-
-		self:SetStage(2)
-		self:Message("stages", "cyan", CL.stage:format(2), false)
-		self:PlaySound("stages", "long")
-
-		juggernautChargeCount = 1
-		hungeringBellowsCount = 1
-
-		self:Bar(445052, 7.5) -- Chittering Swarm
-		self:Bar(436200, 17.7, CL.count_amount:format(self:SpellName(436200), juggernautChargeCount, 4)) -- Juggernaut Charge
-		self:Bar(443842, 48.3) -- Swallowing Darkness
-		self:Bar(438012, 60.8, CL.count:format(self:SpellName(438012), hungeringBellowsCount)) -- Hungering Bellows
 	end
 end
 
@@ -311,8 +289,27 @@ end
 
 -- Feeding Frenzy
 function mod:HulkingCrash(args)
+	-- P1 -> P2
+	self:StopBar(CL.stage:format(2))
+	self:StopBar(CL.count:format(self:SpellName(434697), brutalCrushCount)) -- Brutal Crush
+	self:StopBar(CL.count:format(self:SpellName(435136), venomousLashCount)) -- Venomous Lash
+	self:StopBar(CL.count:format(self:SpellName(441452), stalkersWebbingCount)) -- Stalkers Webbing
+	self:StopBar(CL.count:format(self:SpellName(435138), digestiveAcidCount)) -- Digestive Acid
+	self:StopBar(CL.count:format(CL.soak, carnivorousContestCount)) -- Carnivorous Contest
+
+	self:SetStage(2)
+	self:Message("stages", "cyan", CL.stage:format(2), false)
+	self:PlaySound("stages", "long")
+
+	juggernautChargeCount = 1
+	hungeringBellowsCount = 1
+
+	self:Bar(445052, 7.5) -- Chittering Swarm
+	self:Bar(436200, 17.7, CL.count_amount:format(self:SpellName(436200), juggernautChargeCount, 4)) -- Juggernaut Charge
+	self:Bar(443842, 48.3) -- Swallowing Darkness
+	self:Bar(438012, 60.8, CL.count:format(self:SpellName(438012), hungeringBellowsCount)) -- Hungering Bellows
+
 	self:Message(445123, "red")
-	-- self:PlaySound("stages", "long") -- same time as phase change
 end
 
 function mod:ChitteringSwarm(args)
