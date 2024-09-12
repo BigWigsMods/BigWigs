@@ -538,7 +538,8 @@ do
 	local prev = 0
 	function mod:EntropicBarrageApplied(args)
 		if args.time - prev > 3 then
-			self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
+			prev = args.time
+			self:StopBar(CL.count:format(args.spellName, intermissionSpellCount))
 			intermissionSpellCount = intermissionSpellCount + 1
 			self:Bar(args.spellId, self:LFR() and 16 or self:Normal() and 14 or 13, CL.count:format(args.spellName, intermissionSpellCount))
 		end
@@ -723,7 +724,8 @@ do
 	local prev = 0
 	function mod:SeismicUpheavalApplied(args)
 		if args.time - prev > 3 then
-			self:StopBar(args.spellId, CL.count:format(args.spellName, intermissionSpellCount))
+			prev = args.time
+			self:StopBar(CL.count:format(args.spellName, intermissionSpellCount))
 			intermissionSpellCount = intermissionSpellCount + 1
 			self:Bar(args.spellId, self:LFR() and 27 or self:Normal() and 24 or 20, CL.count:format(args.spellName, intermissionSpellCount))
 		end
