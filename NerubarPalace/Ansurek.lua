@@ -313,8 +313,8 @@ do
 end
 
 function mod:Liquefy(args)
-	self:StopBar(CL.count:format(L.reactive_toxin, liquefyCount))
-	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(L.reactive_toxin, liquefyCount)))
+	self:StopBar(CL.count:format(args.spellName, liquefyCount))
+	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, liquefyCount)))
 	if self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then
 		self:PlaySound(args.spellId, "alarm") -- defensive
 	else -- rest of the raid
@@ -330,7 +330,7 @@ function mod:Liquefy(args)
 		local timers = { 8.5, 39.9, 50.9 } -- heroic
 		cd = timers[liquefyCount]
 	end
-	self:Bar(args.spellId, cd, CL.count:format(L.reactive_toxin, liquefyCount))
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, liquefyCount))
 end
 
 function mod:LiquefyApplied(args)
