@@ -555,9 +555,8 @@ do
 	end
 
 	function mod:ShatterExistenceRemoved(args)
+		self:StopBar(CL.count:format(self:SpellName(460600), intermissionSpellCount)) -- Entropic Barrage
 		if args.amount == 0 then
-			self:StopBar(CL.count:format(self:SpellName(460600), intermissionSpellCount)) -- Entropic Barrage
-
 			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
 
@@ -741,9 +740,8 @@ do
 	end
 
 	function mod:SpikeStormRemoved(args)
+		self:StopBar(CL.count:format(self:SpellName(460364), intermissionSpellCount)) -- Seismic Upheaval
 		if args.amount == 0 then
-			self:StopBar(CL.count:format(self:SpellName(460364), intermissionSpellCount)) -- Seismic Upheaval
-
 			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
 
