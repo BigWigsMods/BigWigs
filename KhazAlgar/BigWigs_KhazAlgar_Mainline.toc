@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55fKhaz Algar|r]
 ## Title-zhTW: BigWigs [|cffeda55fKhaz Algar|r]
 ## Notes: BigWigs Khaz Algar Modules
-## Notes-deDE: BigWigs Khaz Algar Modules
+## Notes-deDE: BigWigs Khaz Algar Module
 ## Notes-esES: BigWigs Khaz Algar Modules
 ## Notes-esMX: BigWigs Khaz Algar Modules
 ## Notes-frFR: BigWigs Khaz Algar Modules

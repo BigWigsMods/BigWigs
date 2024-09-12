@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f尼鲁巴尔王宫|r]
 ## Title-zhTW: BigWigs [|cffeda55f奈幽巴宮殿|r]
 ## Notes: BigWigs Nerub'ar Palace Modules
-## Notes-deDE: BigWigs Nerub'ar Palace Module
+## Notes-deDE: BigWigs Palast der Nerub'ar Module
 ## Notes-esES: BigWigs Nerub'ar Palace Modules
 ## Notes-esMX: BigWigs Nerub'ar Palace Modules
 ## Notes-frFR: BigWigs Nerub'ar Palace Modules
