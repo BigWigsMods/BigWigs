@@ -2,5 +2,6 @@
 ..\FrameXML\UI.xsd">
 <!--@do-not-package@-->
 <Include file="NerubarPalace\modules.xml"/>
+<Include file="KhazAlgar\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
