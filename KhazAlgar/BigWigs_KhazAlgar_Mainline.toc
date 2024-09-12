@@ -1,0 +1,35 @@
+## Interface: 110005, 110000, 110002
+
+## Title: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-deDE: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-esES: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-esMX: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-frFR: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-itIT: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-koKR: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-ptBR: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-ruRU: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-zhCN: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-zhTW: BigWigs [|cffeda55fKhaz Algar|r]
+## Notes: BigWigs Khaz Algar Modules
+## Notes-deDE: BigWigs Khaz Algar Modules
+## Notes-esES: BigWigs Khaz Algar Modules
+## Notes-esMX: BigWigs Khaz Algar Modules
+## Notes-frFR: BigWigs Khaz Algar Modules
+## Notes-itIT: BigWigs Khaz Algar Modules
+## Notes-koKR: BigWigs Khaz Algar Modules
+## Notes-ptBR: BigWigs Khaz Algar Modules
+## Notes-ruRU: BigWigs Khaz Algar Modules
+## Notes-zhCN: BigWigs Khaz Algar Modules
+## Notes-zhTW: BigWigs Khaz Algar Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-ExtraMenu: -2274
+## X-BigWigs-LoadOn-WorldBoss: -2214, 220999
+
+modules.xml

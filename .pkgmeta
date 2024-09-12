@@ -23,6 +23,7 @@ move-folders:
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/NerubarPalace: BigWigs_NerubarPalace
+    BigWigs/KhazAlgar: BigWigs_KhazAlgar
 
 ignore:
   - .luacheckrc
