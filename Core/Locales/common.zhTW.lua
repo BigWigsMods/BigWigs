@@ -227,6 +227,6 @@ L.parasite = "寄生" -- Any ability where a parasite is involved e.g. "Parasiti
 L.rooted = "被定身" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.dodge = "躲開" -- 躲開/躲避/閃避/躲圈? When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 --L.health_drain = "Health Drain" -- Any ability that drains health from the player
---L.smash = "Smash" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+L.smash = "重擊" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
