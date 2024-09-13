@@ -422,7 +422,7 @@ end
 
 do
 	local delayedTbl = nil
-	local levelUpTbl = nil
+	local levelUpTbl, gainLifeTbl = nil, nil
 	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 	local function printMessage(self, tbl)
 		if delayedTbl and tbl == delayedTbl then
@@ -533,7 +533,14 @@ do
 					-- tbl.subtitle is "Respawn Point Unlocked!"
 					tbl.title = nil -- Remove title, keep subtitle only
 					tbl.bwDuration = 4
-					printMessage(self, tbl)
+					gainLifeTbl = tbl
+					self:SimpleTimer(function() gainLifeTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the +1 life toast to merge, if one is rewarded
+				elseif tbl.eventToastID == 263 then -- +1 Life
+					-- tbl.title is "+1 Life"
+					if gainLifeTbl then -- We merge this into the discovery/respawn toast
+						gainLifeTbl.subtitle = CL.extra:format(gainLifeTbl.subtitle, tbl.title) -- Combine
+						gainLifeTbl.iconFileID = tbl.iconFileID
+					end
 				elseif branSkills[tbl.eventToastID] then -- Brann Ability, Brann power increase
 					-- tbl.title is "Combat Curios" / "Explorer's Ammunition Journal"
 					-- tbl.subtitle is "Brann Ability Unlocked!" / "Brann's power increased!"
