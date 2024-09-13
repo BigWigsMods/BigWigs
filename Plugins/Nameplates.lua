@@ -1557,7 +1557,7 @@ function plugin:StopModuleNameplates(_, module)
 end
 
 -----------------------------------------------------------------------
--- Start Namepaltes
+-- Start Nameplates
 --
 
 local function createNameplateText(module, guid, key, length, text)
