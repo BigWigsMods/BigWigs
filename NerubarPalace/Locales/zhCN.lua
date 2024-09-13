@@ -64,7 +64,7 @@ end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
 if L then
-	L.stacks_onboss = "首领：%d层 %s" --同步L.stackyou的翻译 
+	L.stacks_onboss = "首领：%d层 %s"
 
 	L.reactive_toxin = "毒素"
 	L.silken_tomb = "缠绕" -- Raid being rooted in place
