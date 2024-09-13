@@ -541,6 +541,12 @@ do
 						gainLifeTbl.subtitle = CL.extra:format(gainLifeTbl.subtitle, tbl.title) -- Combine
 						gainLifeTbl.iconFileID = tbl.iconFileID
 					end
+				elseif tbl.eventToastID == 256 or tbl.eventToastID == 258 then -- 0 lives / 1 life remaining
+					-- tbl.title is "0 Lives Remaining" / "One Life Remaining!"
+					tbl.subtitle = tbl.title
+					tbl.title = nil
+					tbl.bwDuration = 3
+					printMessage(self, tbl)
 				elseif branSkills[tbl.eventToastID] then -- Brann Ability, Brann power increase
 					-- tbl.title is "Combat Curios" / "Explorer's Ammunition Journal"
 					-- tbl.subtitle is "Brann Ability Unlocked!" / "Brann's power increased!"
@@ -548,11 +554,6 @@ do
 					tbl.title = nil
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 5 then -- Dungeon zone in popup
-					if not self.db.profile.blockZoneInToasts then
-						tbl.bwDuration = 2
-						printMessage(self, tbl)
-					end
 				elseif tbl.eventToastID == 199 then -- Feature unlock
 					-- tbl.title is "Hero Talents"
 					-- tbl.subtitle is "Feature Unlocked!"
