@@ -161,7 +161,7 @@ function mod:BrutalCrush(args)
 	self:PlaySound(args.spellId, "alert")
 	brutalCrushCount = brutalCrushCount + 1
 
-	local timer = { 3.0, 15.0, 15.0, 19.0, 15.0 }
+	local timer = { 3.0, 15.0, 15.0, 19.0, 15.0, 0 }
 	self:Bar(args.spellId, timer[brutalCrushCount], CL.count:format(args.spellName, brutalCrushCount))
 end
 
@@ -257,7 +257,7 @@ function mod:VenomousLash(args)
 	self:PlaySound(args.spellId, "alert")
 	venomousLashCount = venomousLashCount + 1
 
-	local timer = { 5.0, 25.0, 28.0 }
+	local timer = { 5.0, 25.0, 28.0, 0 }
 	self:Bar(args.spellId, timer[venomousLashCount], CL.count:format(args.spellName, venomousLashCount))
 end
 
