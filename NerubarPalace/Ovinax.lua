@@ -285,7 +285,7 @@ function mod:IngestBlackBlood(args)
 	end
 
 	self:ResumeBar(442526, CL.count:format(L.experimental_dosage, experimentalDosageCount)) -- Experimental Dosage
-	self:ResumeBar(441362, CL.count:format(L.volatileConcoctionCount, volatileConcoctionCount)) -- Volatile Concoction
+	self:ResumeBar(441362, CL.count:format(self:SpellName(441362), volatileConcoctionCount)) -- Volatile Concoction
 	if not self:Easy() then
 		self:ResumeBar(446349, CL.count:format(L.sticky_web, stickyWebCount)) -- Sticky Web
 	end
