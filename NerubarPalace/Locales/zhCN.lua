@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhCN")
 if L then
-	L.gruesome_disgorge_debuff = "无明界"
+	L.gruesome_disgorge_debuff = "内场"
 	L.grasp_from_beyond = "触手"
 	L.grasp_from_beyond_say = "触手"
 	L.bloodcurdle = "分散"
@@ -22,7 +22,7 @@ if L then
 	L.enveloping_webs = "蛛网"
 	L.enveloping_web_say = "蛛网" -- Singular of Webs
 	L.erosive_spray = "喷涌"
-	L.caustic_hail = "下一个位置"
+	L.caustic_hail = "下个位置"
 end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "zhCN")
@@ -33,7 +33,7 @@ if L then
 	L.infest_say = "寄生"
 	L.experimental_dosage = "破蛋"
 	L.experimental_dosage_say = "破蛋"
-	L.ingest_black_blood = "下一个容器"
+	L.ingest_black_blood = "下个容器"
 	L.unstable_infusion = "紫圈"
 
 	L.custom_on_experimental_dosage_marks = "试验性剂量分配"
@@ -53,11 +53,20 @@ if L then
 
 	L.venomous_rain = "毒雨"
 	L.burrowed_eruption = "钻地"
-	L.stinging_swarm = "驱散Debuff"
+	L.stinging_swarm = "驱散减益"
 	L.strands_of_reality = "正面 [塔卡]" -- S for Skeinspinner Takazj 使用了首领名字前二个字“塔卡兹基”
 	L.impaling_eruption = "正面 [阿努]" -- A for Anub'arash 使用了首领名字前二个字“阿努巴拉什”
 	L.entropic_desolation = "熵能"  --使用技能名称。
 	L.cataclysmic_entropy = "大爆炸" -- Interrupt before it casts
 	L.spike_eruption = "尖刺"
 	L.unleashed_swarm = "虫群"
+end
+
+L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
+if L then
+	L.stacks_onboss = "首领：%d层 %s"
+
+	L.reactive_toxin = "毒素"
+	L.silken_tomb = "缠绕" -- Raid being rooted in place
+	L.wrest = "拉扯"
 end
