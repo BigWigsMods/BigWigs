@@ -9,8 +9,8 @@
 ## Title-koKR: BigWigs [|cffeda55fKhaz Algar|r]
 ## Title-ptBR: BigWigs [|cffeda55fKhaz Algar|r]
 ## Title-ruRU: BigWigs [|cffeda55fKhaz Algar|r]
-## Title-zhCN: BigWigs [|cffeda55fKhaz Algar|r]
-## Title-zhTW: BigWigs [|cffeda55fKhaz Algar|r]
+## Title-zhCN: BigWigs [|cffeda55f卡兹阿加|r]
+## Title-zhTW: BigWigs [|cffeda55f卡兹阿爾加|r]
 ## Notes: BigWigs Khaz Algar Modules
 ## Notes-deDE: BigWigs Khaz Algar Module
 ## Notes-esES: BigWigs Khaz Algar Modules
@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs Khaz Algar Modules
 ## Notes-ptBR: BigWigs Khaz Algar Modules
 ## Notes-ruRU: BigWigs Khaz Algar Modules
-## Notes-zhCN: BigWigs Khaz Algar Modules
-## Notes-zhTW: BigWigs Khaz Algar Modules
+## Notes-zhCN: BigWigs 卡兹阿加模块。
+## Notes-zhTW: BigWigs 卡兹阿爾加模組。
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
