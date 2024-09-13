@@ -349,7 +349,7 @@ L.nameplateTextSettings = "文本设置"
 L.fixate_test = "测试文本" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
 L.autoScale = "自动缩放"
-L.autoScaleDesc = "根据姓名板的比例自动缩放比例。"
+L.autoScaleDesc = "根据姓名板的比例自动缩放图标比例。"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "线条发光"
