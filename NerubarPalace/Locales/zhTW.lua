@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "zhTW")
 if not L then return end
 if L then
-	--L.carnivorous_contest_pull = "Pull In"
+	L.carnivorous_contest_pull = "拉扯" -- 要不...吃人?
 	L.chunky_viscera_message = "使用額外快捷鍵餵食首領！"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhTW")
 if L then
-	--L.gruesome_disgorge_debuff = "Phase Shift"
+	L.gruesome_disgorge_debuff = "內場" -- 非表象之境 名字太長了
 	L.grasp_from_beyond = "地刺" -- 觸手
 	L.grasp_from_beyond_say = "地刺"
 	L.bloodcurdle = "分散"
@@ -33,8 +33,8 @@ if L then
 	L.infest_say = "寄生"
 	L.experimental_dosage = "破蛋"
 	L.experimental_dosage_say = "破蛋"
-	--L.ingest_black_blood = "Next Container"
-	--L.unstable_infusion = "Swirls"
+	L.ingest_black_blood = "換場" -- 或 下個容器
+	L.unstable_infusion = "黑圈"  -- 或 旋渦
 
 	L.custom_on_experimental_dosage_marks = "實驗療法分配"
 	L.custom_on_experimental_dosage_marks_desc = "將受到「實驗療法」影響的玩家，按照近戰 > 遠程 > 治療的優先級，標記為 {rt6}{rt4}{rt3}{rt7}，包含喊話與目標訊息。"
@@ -51,13 +51,13 @@ L = BigWigs:NewBossLocale("The Silken Court", "zhTW")
 if L then
 	--L.skipped_cast = "Skipped %s (%d)"
 
-	--L.venomous_rain = "Rain"
-	--L.burrowed_eruption = "Burrow"
-	--L.stinging_swarm = "Dispel Debuffs"
-	--L.strands_of_reality = "Frontal [S]" -- S for Skeinspinner Takazj
-	--L.impaling_eruption = "Frontal [A]" -- A for Anub'arash
-	--L.entropic_desolation = "Run Out"
-	--L.cataclysmic_entropy = "Big Boom" -- Interrupt before it casts
-	--L.spike_eruption = "Spikes"
-	--L.unleashed_swarm = "Swarm"
+	L.venomous_rain = "毒雨" -- 毒圈 綠圈
+	L.burrowed_eruption = "鑽地"
+	L.stinging_swarm = "驅散魔法"
+	L.strands_of_reality = "塔卡正面" -- S for Skeinspinner Takazj 塔卡震懾波
+	L.impaling_eruption = "阿努正面" -- A for Anub'arash 阿努震懾波
+	L.entropic_desolation = "跑開"
+	L.cataclysmic_entropy = "大爆炸" -- 災變無序/災變
+	L.spike_eruption = "尖刺"
+	L.unleashed_swarm = "蟲群"
 end
