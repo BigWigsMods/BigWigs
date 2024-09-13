@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "zhTW")
 if L then
-	L.gruesome_disgorge_debuff = "階段轉換"
+	L.gruesome_disgorge_debuff = "內場" -- 非表象之境 名字太長了
 	L.grasp_from_beyond = "地刺" -- 觸手
 	L.grasp_from_beyond_say = "地刺"
 	L.bloodcurdle = "分散"
