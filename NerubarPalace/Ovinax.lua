@@ -236,8 +236,8 @@ do
 		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount)) -- 1.5s Cast + debuffDuration
 		experimentalDosageCount = experimentalDosageCount + 1
 
-		if experimentalDosageCount > 9 and experimentalDosageCount % 3 ~= 1 then -- No more than 9, starting every 3rd on Ingest Black Blood
-			self:Bar(args.spellId, 50.0, CL.count:format(args.spellName, experimentalDosageCount))
+		if experimentalDosageCount < 9 and experimentalDosageCount % 3 ~= 1 then -- No more than 9, starting every 3rd on Ingest Black Blood
+			self:Bar(args.spellId, 50.0, CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		end
 
 		playerList, iconList = {}, {}
@@ -284,8 +284,8 @@ function mod:IngestBlackBlood(args)
 		self:CDBar(args.spellId, cd, CL.count:format(L.ingest_black_blood, ingestBlackBloodCount)) -- ~time to USCS 442430
 	end
 
-	self:ResumeBar(442526, CL.count:format(self:SpellName(442526), experimentalDosageCount)) -- Experimental Dosage
-	self:ResumeBar(441362, CL.count:format(self:SpellName(441362), volatileConcoctionCount)) -- Volatile Concoction
+	self:ResumeBar(442526, CL.count:format(L.experimental_dosage, experimentalDosageCount)) -- Experimental Dosage
+	self:ResumeBar(441362, CL.count:format(L.volatileConcoctionCount, volatileConcoctionCount)) -- Volatile Concoction
 	if not self:Easy() then
 		self:ResumeBar(446349, CL.count:format(L.sticky_web, stickyWebCount)) -- Sticky Web
 	end
