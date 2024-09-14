@@ -49,7 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("The Silken Court", "zhCN")
 if L then
-	L.skipped_cast = "跳舞 %s (%d)"
+	L.skipped_cast = "跳过了 %s (%d)"
 
 	L.venomous_rain = "毒雨"
 	L.burrowed_eruption = "钻地"
