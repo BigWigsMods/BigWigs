@@ -49,7 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("The Silken Court", "zhCN")
 if L then
-	L.skipped_cast = "跳舞 %s (%d)"
+	L.skipped_cast = "跳过 %s (%d)"
 
 	L.venomous_rain = "毒雨"
 	L.burrowed_eruption = "钻地"
@@ -66,14 +66,14 @@ L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
 if L then
 	L.stacks_onboss = "首领：%d层 %s"
 
-	--L.knock = "Knock"
+	L.knock = "击飞"
 	L.reactive_toxin = "毒素"
-	--L.reactive_toxin_say = "Toxin"
-	--L.venom_nova = "Nova"
-	--L.web_blades = "Blades"
+	L.reactive_toxin_say = "毒素"
+	L.venom_nova = "新星"  -- 剧毒新星，暂时用新星，也可以用毒环
+	L.web_blades = "网刃"  -- 中文技能名称短直接使用技能名称
 	L.silken_tomb = "缠绕" -- Raid being rooted in place
 	L.wrest = "拉扯"
-	--L.slow = "Slow"
-	--L.royal_condemnation = "Shackles"
-	--L.frothing_gluttony = "Ring"
+	L.slow = "减速"
+	L.royal_condemnation = "镣铐"
+	L.frothing_gluttony = "能量环"
 end
