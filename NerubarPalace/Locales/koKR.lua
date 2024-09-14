@@ -64,15 +64,15 @@ end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "koKR")
 if L then
-	--L.stacks_onboss = "%dx %s on BOSS"
+	L.stacks_onboss = "넴드 %dx %s"
 
-	--L.reactive_toxin = "Toxins"
-	--L.reactive_toxin_say = "Toxin"
-	--L.venom_nova = "Nova"
-	--L.web_blades = "Blades"
-	--L.silken_tomb = "Roots" -- Raid being rooted in place
-	--L.wrest = "Pull In"
-	--L.slow = "Slow"
-	--L.royal_condemnation = "Shackles"
-	--L.frothing_gluttony = "Ring"
+	L.reactive_toxin = "독소"
+	L.reactive_toxin_say = "독소"
+	L.venom_nova = "회오리"
+	L.web_blades = "칼날"
+	L.silken_tomb = "이동 불가" -- Raid being rooted in place
+	L.wrest = "끌어당기기"
+	L.slow = "이감"
+	L.royal_condemnation = "족쇄"
+	L.frothing_gluttony = "고리"
 end
