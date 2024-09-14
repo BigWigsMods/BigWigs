@@ -141,7 +141,6 @@ BigWigs:AddColors("Queen Ansurek", {
 	[439814] = "yellow",
 	[440899] = {"blue","purple"},
 	[441556] = {"blue","red"},
-	[441865] = "blue",
 	[441958] = "blue",
 	[443325] = {"blue","purple"},
 	[443336] = {"blue","purple"},

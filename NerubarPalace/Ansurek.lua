@@ -39,7 +39,7 @@ local timersNormal = { -- 11:29
 	},
 	[3] = {
 		[444829] = { 113.7, 82.0 }, -- Queen's Summons
-		[438976] = { 47.6, 141.6 }, -- Royal Condemnation
+		[438976] = { 43.2, 141.6 }, -- Royal Condemnation
 		[443325] = { 29.2, 66.0, 80.0 }, -- Infest
 		[443336] = { 35.2, 66.0, 80.0 }, -- Gorge
 		[439299] = { 201.2 }, -- Web Blades
@@ -55,7 +55,7 @@ local timersHeroic = { -- 9:54
 	},
 	[3] = {
 		[444829] = { 119.0, 75.0 }, -- Queen's Summons
-		[438976] = { 47.5, 58.5, 99.5 }, -- Royal Condemnation
+		[438976] = { 43.2, 58.5, 99.5 }, -- Royal Condemnation
 		[443325] = { 29.0, 66.0, 82.0 }, -- Infest
 		[443336] = { 32.0, 66.0, 82.0 }, -- Gorge
 		[439299] = { 85.0, 39.0, 41.0, 18.5, 49.5 }, -- Web Blades
@@ -75,6 +75,7 @@ if L then
 	L.reactive_toxin = "Toxins"
 	L.silken_tomb = "Roots" -- Raid being rooted in place
 	L.wrest = "Pull In"
+	L.royal_condemnation = "Shackles"
 end
 
 --------------------------------------------------------------------------------
@@ -131,7 +132,6 @@ function mod:GetOptions()
 			445152, -- Acolyte's Essence
 			445021, -- Null Detonation
 		{438976, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Royal Condemnation
-			441865, -- Royal Shackles
 		{443325, "SAY", "SAY_COUNTDOWN"}, -- Infest
 			443726, -- Gloom Hatchling
 		443336, -- Gorge
@@ -145,7 +145,8 @@ function mod:GetOptions()
 		[437592] = L.reactive_toxin, -- Reactive Toxin (Toxins)
 		[439814] = L.silken_tomb, -- Silken Tomb (Roots)
 		[447411] = L.wrest, -- Wrest (Pull In)
-		[443888] = CL.portals -- Abyssal Infusion (Portals)
+		[443888] = CL.portals, -- Abyssal Infusion (Portals)
+		[438976] = L.royal_condemnation, -- Royal Condemnation (Shackles)
 	}
 end
 
@@ -214,7 +215,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NullDetonation", 445021)
 	self:Log("SPELL_CAST_START", "RoyalCondemnation", 438976)
 	self:Log("SPELL_AURA_APPLIED", "RoyalCondemnationApplied", 438974)
-	self:Log("SPELL_AURA_APPLIED", "RoyalShacklesApplied", 441865)
 	self:Log("SPELL_CAST_START", "Infest", 443325)
 	self:Log("SPELL_AURA_APPLIED", "InfestApplied", 443656)
 	self:Log("SPELL_AURA_REMOVED", "InfestRemoved", 443656)
@@ -614,7 +614,7 @@ function mod:AphoticCommunion(args)
 	-- XXX variance on these?
 	self:Bar(443325, timers[3][443325][1], CL.count:format(self:SpellName(443325), infestCount)) -- Infest
 	self:Bar(443336, timers[3][443336][1], CL.count:format(self:SpellName(443336), gorgeCount)) -- Gorge
-	self:Bar(438976, timers[3][438976][1], CL.count:format(self:SpellName(438976), royalCondemnationCount)) -- Royal Condemnation
+	self:CDBar(438976, timers[3][438976][1], CL.count:format(L.royal_condemnation, royalCondemnationCount)) -- Royal Condemnation
 	self:Bar(443888, 57.8, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
 	self:Bar(445422, 68.8, CL.count:format(self:SpellName(445422), frothingGluttonyCount)) -- Frothing Gluttony
 	self:Bar(444829, timers[3][444829][1], CL.count:format(self:SpellName(444829), queensSummonsCount)) -- Queen's Summons
@@ -702,27 +702,31 @@ function mod:NullDetonation(args)
 end
 
 function mod:RoyalCondemnation(args)
-	self:StopBar(CL.count:format(args.spellName, royalCondemnationCount))
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, royalCondemnationCount)))
+	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.royal_condemnation, royalCondemnationCount)))
 	self:PlaySound(args.spellId, "alert")
-	-- castbar?
-	royalCondemnationCount = royalCondemnationCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][royalCondemnationCount], CL.count:format(args.spellName, royalCondemnationCount))
 end
 
-function mod:RoyalCondemnationApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(438976)
-		self:PlaySound(438976, "warning")
-		self:Say(438976, nil, nil, "Royal Condemnation")
-		self:SayCountdown(438976, 6.5) -- projectile based application and trigger? z.z
-	end
-end
-
-function mod:RoyalShacklesApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+do
+	local prev = 0
+	local playerList = {}
+	function mod:RoyalCondemnationApplied(args)
+		if args.time - prev > 3 then
+			prev = args.time
+			self:StopBar(CL.count:format(L.royal_condemnation, royalCondemnationCount))
+			self:Bar(438976, 6.2, CL.on_group:format(L.royal_condemnation)) -- 6~6.5
+			royalCondemnationCount = royalCondemnationCount + 1
+			self:CDBar(438976, timers[self:GetStage()][438976][royalCondemnationCount], CL.count:format(L.royal_condemnation, royalCondemnationCount))
+			playerList = {}
+		end
+		playerList[#playerList + 1] = args.destName
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(438976)
+			self:PlaySound(438976, "warning")
+			self:Say(438976, L.royal_condemnation, nil, "Shackles")
+			self:SayCountdown(438976, 6) -- projectile based both ways? z.z
+		end
+		local count = self:Mythic() and 3 or self:LFR() and 1 or 2
+		self:TargetsMessage(438976, "yellow", playerList, count, CL.count:format(L.royal_condemnation, royalCondemnationCount-1))
 	end
 end
 

@@ -69,4 +69,5 @@ if L then
 	L.reactive_toxin = "毒素"
 	L.silken_tomb = "缠绕" -- Raid being rooted in place
 	L.wrest = "拉扯"
+	--L.royal_condemnation = "Shackles"
 end
