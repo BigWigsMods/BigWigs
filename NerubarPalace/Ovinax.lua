@@ -195,11 +195,11 @@ do
 
 	local function sortPriority(first, second)
 		if first and second then
-			if first.melee ~= second.melee then
-				return first.melee and not second.melee
-			end
 			if first.healer ~= second.healer then
 				return not first.healer and second.healer
+			end
+			if first.melee ~= second.melee then
+				return first.melee and not second.melee
 			end
 			return first.index < second.index
 		end
