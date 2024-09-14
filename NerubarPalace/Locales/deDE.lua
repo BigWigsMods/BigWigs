@@ -66,7 +66,6 @@ L = BigWigs:NewBossLocale("Queen Ansurek", "deDE")
 if L then
 	L.stacks_onboss = "%dx %s auf dem BOSS"
 
-	L.knock = "Zurückstoßen"
 	L.reactive_toxin = "Toxine"
 	L.reactive_toxin_say = "Toxin"
 	L.venom_nova = "Nova"

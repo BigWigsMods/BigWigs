@@ -73,7 +73,6 @@ local L = mod:GetLocale()
 if L then
 	L.stacks_onboss = "%dx %s on BOSS"
 
-	L.knock = "Knock"
 	L.reactive_toxin = "Toxins"
 	L.reactive_toxin_say = "Toxin"
 	L.venom_nova = "Nova"
@@ -156,7 +155,7 @@ function mod:GetOptions()
 		[439299] = L.web_blades, -- Web Blades (Blades)
 		[447456] = L.slow, -- Paralyzing Venom (Slow)
 		[447411] = L.wrest, -- Wrest (Pull In)
-		[448046] = L.knock, -- Gloom Eruption
+		[448046] = CL.knockback, -- Gloom Eruption (Knockback)
 		[443888] = CL.portals, -- Abyssal Infusion (Portals)
 		[445422] = L.frothing_gluttony, -- Frothing Gluttony (Ring)
 		[444829] = CL.big_adds, -- Queen's Summons (Big Adds)
@@ -549,7 +548,7 @@ do
 		if args.time - prev > 2 then
 			prev = args.time
 			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
-			self:Bar(448046, self:Easy() and 7.1 or 5.9, L.knock) -- Gloom Eruption
+			self:Bar(448046, self:Easy() and 7.1 or 5.9, CL.knockback) -- Gloom Eruption
 		end
 	end
 end

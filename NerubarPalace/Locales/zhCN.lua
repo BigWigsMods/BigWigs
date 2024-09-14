@@ -66,7 +66,6 @@ L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
 if L then
 	L.stacks_onboss = "首领：%d层 %s"
 
-	L.knock = "击飞"
 	L.reactive_toxin = "毒素"
 	L.reactive_toxin_say = "毒素"
 	L.venom_nova = "新星"  -- 剧毒新星，暂时用新星，也可以用毒环
