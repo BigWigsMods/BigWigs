@@ -21,7 +21,6 @@ local impalingEruptionCount = 1
 local callOfTheSwarmCount = 1
 local recklessChargeCount = 1
 local stingingSwarmCount = 1
-local unleashedSwarmCount = 1
 local burrowedEruptionCount = 1
 
 local skitteringLeapCount = 1
@@ -342,7 +341,6 @@ function mod:OnEngage()
 	burrowedEruptionCount = 1
 	recklessChargeCount = 1
 	stingingSwarmCount = 1
-	unleashedSwarmCount = 1
 
 	self:Bar(438801, timers[1][438801][1], CL.count:format(CL.adds, callOfTheSwarmCount)) -- Call of the Swarm
 	self:Bar(438218, timers[1][438218][1], CL.count:format(self:SpellName(438218), piercingStrikeCount)) -- Piercing Strike
@@ -711,6 +709,7 @@ end
 
 function mod:BurrowTransition()
 	self:StopBar(CL.count:format(CL.intermission, 2))
+	self:CancelTimer(checkTimer)
 
 	self:SetStage(2.5)
 	self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
