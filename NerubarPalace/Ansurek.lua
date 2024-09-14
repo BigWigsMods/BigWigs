@@ -615,7 +615,7 @@ function mod:AphoticCommunion(args)
 	self:Bar(443325, timers[3][443325][1], CL.count:format(self:SpellName(443325), infestCount)) -- Infest
 	self:Bar(443336, timers[3][443336][1], CL.count:format(self:SpellName(443336), gorgeCount)) -- Gorge
 	self:Bar(438976, timers[3][438976][1], CL.count:format(self:SpellName(438976), royalCondemnationCount)) -- Royal Condemnation
-	self:Bar(443888, 57.8, CL.count:format(self:SpellName(443888), abyssalInfusionCount)) -- Abyssal Infusion
+	self:Bar(443888, 57.8, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
 	self:Bar(445422, 68.8, CL.count:format(self:SpellName(445422), frothingGluttonyCount)) -- Frothing Gluttony
 	self:Bar(444829, timers[3][444829][1], CL.count:format(self:SpellName(444829), queensSummonsCount)) -- Queen's Summons
 	self:Bar(439299, timers[3][439299][1], CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
