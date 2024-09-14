@@ -61,3 +61,19 @@ if L then
 	L.spike_eruption = "Pointes"
 	L.unleashed_swarm = "Essaim"
 end
+
+L = BigWigs:NewBossLocale("Queen Ansurek", "frFR")
+if L then
+	--L.stacks_onboss = "%dx %s on BOSS"
+
+	--L.knock = "Knock"
+	--L.reactive_toxin = "Toxins"
+	--L.reactive_toxin_say = "Toxin"
+	--L.venom_nova = "Nova"
+	--L.web_blades = "Blades"
+	--L.silken_tomb = "Roots" -- Raid being rooted in place
+	--L.wrest = "Pull In"
+	--L.slow = "Slow"
+	--L.royal_condemnation = "Shackles"
+	--L.frothing_gluttony = "Ring"
+end

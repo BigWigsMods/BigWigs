@@ -22,6 +22,7 @@ local webBladesCount = 1
 
 local paralyzingVenomCount = 1
 local wrestCount = 1
+local worshipperKilled = 0
 
 local abyssalInfusionCount = 1
 local frothingGluttonyCount = 1
@@ -72,10 +73,16 @@ local L = mod:GetLocale()
 if L then
 	L.stacks_onboss = "%dx %s on BOSS"
 
+	L.knock = "Knock"
 	L.reactive_toxin = "Toxins"
+	L.reactive_toxin_say = "Toxin"
+	L.venom_nova = "Nova"
+	L.web_blades = "Blades"
 	L.silken_tomb = "Roots" -- Raid being rooted in place
 	L.wrest = "Pull In"
+	L.slow = "Slow"
 	L.royal_condemnation = "Shackles"
+	L.frothing_gluttony = "Ring"
 end
 
 --------------------------------------------------------------------------------
@@ -143,10 +150,19 @@ function mod:GetOptions()
 		[443888] = -28757, -- Stage 3
 	}, {
 		[437592] = L.reactive_toxin, -- Reactive Toxin (Toxins)
+		[451278] = CL.bomb, -- Concentrated Toxin (Bomb)
 		[439814] = L.silken_tomb, -- Silken Tomb (Roots)
+		[440899] = CL.pools, -- Liquefy (Pools)
+		[439299] = L.web_blades, -- Web Blades (Blades)
+		[447456] = L.slow, -- Paralyzing Venom (Slow)
 		[447411] = L.wrest, -- Wrest (Pull In)
+		[448046] = L.knock, -- Gloom Eruption
 		[443888] = CL.portals, -- Abyssal Infusion (Portals)
+		[445422] = L.frothing_gluttony, -- Frothing Gluttony (Ring)
+		[444829] = CL.big_adds, -- Queen's Summons (Big Adds)
 		[438976] = L.royal_condemnation, -- Royal Condemnation (Shackles)
+		[443325] = CL.small_adds, -- Infest (Small Adds)
+		[443336] = CL.pools, -- Gorge (Pools)
 	}
 end
 
@@ -181,7 +197,9 @@ function mod:OnBossEnable()
 
 	-- Stage Two: Royal Ascension
 	-- Queen Ansurek
-	self:Log("SPELL_CAST_START", "WrestStageTwo", 450191)
+	-- self:Log("SPELL_CAST_START", "WrestStageTwo", 450191)
+	self:Log("SPELL_AURA_APPLIED", "PredationThreadsApplied", 447170)
+
 	self:Log("SPELL_CAST_START", "AcidicApocalypse", 449940)
 	self:Log("SPELL_CAST_SUCCESS", "AcidicApocalypseSuccess", 449940)
 	-- Ascended Voidspeaker
@@ -241,12 +259,12 @@ function mod:OnEngage()
 	feastCount = 1
 	webBladesCount = 1
 
-	self:Bar(440899, timers[1][440899][1], CL.count:format(self:SpellName(440899), liquefyCount)) -- Liquefy
+	self:Bar(440899, timers[1][440899][1], CL.count:format(CL.pools, liquefyCount)) -- Liquefy
 	self:Bar(437093, timers[1][437093][1], CL.count:format(self:SpellName(437093), feastCount)) -- Feast
+	self:Bar(439299, timers[1][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 	self:Bar(437592, 18.5, CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
-	self:Bar(437417, 29.5, CL.count:format(self:SpellName(437417), venomNovaCount)) -- Venom Nova
+	self:Bar(437417, 29.5, CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 	self:Bar(439814, timers[1][439814][1], CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
-	self:Bar(439299, timers[1][439299][1], CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
 
 	self:Bar("stages", self:Easy() and 154 or 158, CL.intermission, 447207) -- Predation
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -276,18 +294,18 @@ end
 
 function mod:ReactiveToxinApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(437592)
+		self:PersonalMessage(437592, nil, L.reactive_toxin_say)
 		self:PlaySound(437592, "warning") -- position?
-		self:Say(437592, nil, nil, "Reactive Toxin")
+		self:Say(437592, L.reactive_toxin_say, nil, "Toxin")
 		self:SayCountdown(437592, 5)
 	end
 end
 
 function mod:ConcentratedToxinApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId, nil, CL.bomb)
 		self:PlaySound(args.spellId, "alarm") -- avoid others
-		self:Say(args.spellId, nil, nil, "Concentrated Toxin")
+		self:Say(args.spellId, CL.bomb, nil, "Bomb")
 		self:SayCountdown(args.spellId, 6)
 	end
 end
@@ -310,12 +328,12 @@ function mod:ToxicWavesDamage(args)
 end
 
 function mod:VenomNova(args)
-	self:StopBar(CL.count:format(args.spellName, venomNovaCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, venomNovaCount)))
+	self:StopBar(CL.count:format(L.venom_nova, venomNovaCount))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.venom_nova, venomNovaCount)))
 	self:PlaySound(args.spellId, "alert")
 	venomNovaCount = venomNovaCount + 1
 	if venomNovaCount < 4 then
-		self:Bar(args.spellId, 56.0, CL.count:format(args.spellName, venomNovaCount))
+		self:Bar(args.spellId, 56.0, CL.count:format(L.venom_nova, venomNovaCount))
 	end
 end
 
@@ -332,7 +350,7 @@ function mod:SilkenTomb(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.silken_tomb, silkenTombCount)))
 	self:PlaySound(args.spellId, "alarm") -- spread
 	silkenTombCount = silkenTombCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][silkenTombCount], CL.count:format(L.silken_tomb, silkenTombCount))
+	self:Bar(args.spellId, timers[1][args.spellId][silkenTombCount], CL.count:format(L.silken_tomb, silkenTombCount))
 end
 
 do
@@ -347,8 +365,8 @@ do
 end
 
 function mod:Liquefy(args)
-	self:StopBar(CL.count:format(args.spellName, liquefyCount))
-	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, liquefyCount)))
+	self:StopBar(CL.count:format(CL.pools, liquefyCount))
+	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.pools, liquefyCount)))
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
 		self:PlaySound(args.spellId, "alarm") -- defensive
@@ -356,7 +374,7 @@ function mod:Liquefy(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	liquefyCount = liquefyCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][liquefyCount], CL.count:format(args.spellName, liquefyCount))
+	self:Bar(args.spellId, timers[1][args.spellId][liquefyCount], CL.count:format(CL.pools, liquefyCount))
 end
 
 function mod:LiquefyApplied(args)
@@ -377,7 +395,7 @@ function mod:Feast(args)
 		self:PlaySound(args.spellId, "alarm") -- defensive
 	end
 	feastCount = feastCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][feastCount], CL.count:format(args.spellName, feastCount))
+	self:Bar(args.spellId, timers[1][args.spellId][feastCount], CL.count:format(args.spellName, feastCount))
 end
 
 function mod:FeastApplied(args)
@@ -393,11 +411,11 @@ do
 	function mod:WebBlades(args)
 		if args.time - prev > 5 then
 			prev = args.time
-			self:StopBar(CL.count:format(args.spellName, webBladesCount))
-			self:Message(args.spellId, "cyan", CL.incoming:format(CL.count:format(args.spellName, webBladesCount)))
+			self:StopBar(CL.count:format(L.web_blades, webBladesCount))
+			self:Message(args.spellId, "cyan", CL.incoming:format(CL.count:format(L.web_blades, webBladesCount)))
 			self:PlaySound(args.spellId, "long")
 			webBladesCount = webBladesCount + 1
-			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][webBladesCount], CL.count:format(args.spellName, webBladesCount))
+			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][webBladesCount], CL.count:format(L.web_blades, webBladesCount))
 		end
 	end
 end
@@ -408,12 +426,12 @@ do
 	function mod:Predation()
 		self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 		self:StopBar(CL.intermission)
-		self:StopBar(CL.count:format(self:SpellName(440899), liquefyCount)) -- Liquefy
+		self:StopBar(CL.count:format(CL.pools, liquefyCount)) -- Liquefy
 		self:StopBar(CL.count:format(self:SpellName(437093), feastCount)) -- Feast
 		self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
-		self:StopBar(CL.count:format(self:SpellName(437417), venomNovaCount)) -- Venom Nova
+		self:StopBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 		self:StopBar(CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
-		self:StopBar(CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
+		self:StopBar(CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 
 		self:SetStage(1.5)
 		self:Message("stages", "cyan", CL.intermission, false)
@@ -423,7 +441,7 @@ do
 		wrestCount = 1
 
 		self:Bar(447411, 2.0, CL.count:format(L.wrest, wrestCount)) -- Wrest
-		self:Bar(447456, 9.0, CL.count:format(self:SpellName(447456), paralyzingVenomCount)) -- Paralyzing Venom
+		self:Bar(447456, 9.0, CL.count:format(L.slow, paralyzingVenomCount)) -- Paralyzing Venom
 	end
 
 	function mod:PredationApplied(args)
@@ -431,7 +449,7 @@ do
 	end
 
 	function mod:PredationRemoved(args)
-		self:StopBar(CL.count:format(self:SpellName(447456), paralyzingVenomCount)) -- Paralyzing Venom
+		self:StopBar(CL.count:format(L.slow, paralyzingVenomCount)) -- Paralyzing Venom
 		self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
 
 		self:Message(447076, "green", CL.removed_after:format(args.spellName, args.time - predationApplied))
@@ -441,16 +459,16 @@ do
 		self:PlaySound("stages", "long")
 
 		wrestCount = 1
-
+		worshipperKilled = 0
 		self:Bar(447411, self:Easy() and 31.4 or 41.4, CL.count:format(L.wrest, wrestCount)) -- Wrest
 	end
 end
 
 function mod:ParalyzingVenom(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, paralyzingVenomCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.slow, paralyzingVenomCount))
 	-- self:PlaySound(args.spellId, "alert")
 	paralyzingVenomCount = paralyzingVenomCount + 1
-	self:Bar(args.spellId, paralyzingVenomCount % 3 == 1 and 11.0 or 4.0, CL.count:format(args.spellName, paralyzingVenomCount))
+	self:Bar(args.spellId, paralyzingVenomCount % 3 == 1 and 11.0 or 4.0, CL.count:format(L.slow, paralyzingVenomCount))
 end
 
 function mod:ParalyzingVenomApplied(args)
@@ -468,11 +486,40 @@ function mod:Wrest(args)
 end
 
 -- Stage Two: Royal Ascension
-function mod:WrestStageTwo()
-	self:Message(447411, "red", CL.count:format(L.wrest, wrestCount))
-	self:PlaySound(447411, "alert")
-	wrestCount = wrestCount + 1
-	self:Bar(447411, wrestCount % 3 == 1 and 18.5 or 8.0, CL.count:format(L.wrest, wrestCount))
+do
+	local prev, onMe, scheduled = 0, false, nil
+	function mod:WrestTimers()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+		wrestCount = wrestCount + 1
+		if not onMe then
+				if wrestCount > 8 then return end
+				self:CDBar(447411, {8.0, 16.0}, CL.count:format(L.wrest, wrestCount))
+		else
+				if wrestCount > 7 then return end
+				self:CDBar(447411, 16.0, CL.count:format(L.wrest, wrestCount + 1))
+		end
+	end
+
+	function mod:PredationThreadsApplied(args)
+		if self:GetStage() == 2 then
+			if args.time - prev > 2 then
+				prev = args.time
+				self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
+				onMe = false
+				if not scheduled then
+					scheduled = self:ScheduleTimer("WrestTimers", 0.1)
+				end
+			end
+			if self:Me(args.destGUID) then
+				self:Message(447411, "orange", CL.count:format(L.wrest, wrestCount))
+				self:PlaySound(447411, "alert")
+				onMe = true
+			end
+		end
+	end
 end
 
 function mod:AcidicApocalypse(args)
@@ -502,7 +549,7 @@ do
 		if args.time - prev > 2 then
 			prev = args.time
 			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
-			self:Bar(448046, self:Easy() and 7.1 or 5.9) -- Gloom Eruption
+			self:Bar(448046, self:Easy() and 7.1 or 5.9, L.knock) -- Gloom Eruption
 		end
 	end
 end
@@ -534,7 +581,8 @@ do
 end
 
 function mod:WorshipperDeath(args)
-	self:Message("stages", "cyan", CL.killed:format(args.destName), false) -- XXX Count how many?
+	worshipperKilled = worshipperKilled + 1
+	self:Message("stages", "cyan", CL.mob_remaining:format(args.destName, 2 - worshipperKilled), false)
 end
 
 -- Chamber Guardian
@@ -596,6 +644,7 @@ end
 -- Stage Three: Paranoia's Feast
 function mod:AphoticCommunion(args)
 	self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
+	self:StopBar(CL.count:format(L.wrest, wrestCount + 1)) -- Wrest
 	self:StopBar(449940) -- Acidic Apocalypse
 
 	self:SetStage(3)
@@ -612,13 +661,13 @@ function mod:AphoticCommunion(args)
 	webBladesCount = 1
 
 	-- XXX variance on these?
-	self:Bar(443325, timers[3][443325][1], CL.count:format(self:SpellName(443325), infestCount)) -- Infest
-	self:Bar(443336, timers[3][443336][1], CL.count:format(self:SpellName(443336), gorgeCount)) -- Gorge
+	self:Bar(443325, timers[3][443325][1], CL.count:format(CL.small_adds, infestCount)) -- Infest
+	self:Bar(443336, timers[3][443336][1], CL.count:format(CL.pools, gorgeCount)) -- Gorge
 	self:CDBar(438976, timers[3][438976][1], CL.count:format(L.royal_condemnation, royalCondemnationCount)) -- Royal Condemnation
 	self:Bar(443888, 57.8, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
-	self:Bar(445422, 68.8, CL.count:format(self:SpellName(445422), frothingGluttonyCount)) -- Frothing Gluttony
-	self:Bar(444829, timers[3][444829][1], CL.count:format(self:SpellName(444829), queensSummonsCount)) -- Queen's Summons
-	self:Bar(439299, timers[3][439299][1], CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
+	self:Bar(445422, 68.8, CL.count:format(L.frothing_gluttony, frothingGluttonyCount)) -- Frothing Gluttony
+	self:Bar(444829, timers[3][444829][1], CL.count:format(CL.big_adds, queensSummonsCount)) -- Queen's Summons
+	self:Bar(439299, timers[3][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 end
 
 function mod:AbyssalInfusion(args)
@@ -641,19 +690,19 @@ end
 
 function mod:AbyssalReverberationApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId) -- XXX Rename shorter / more clear?
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
 function mod:FrothingGluttony(args)
-	self:StopBar(CL.count:format(args.spellName, frothingGluttonyCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, frothingGluttonyCount)))
+	self:StopBar(CL.count:format(L.frothing_gluttony, frothingGluttonyCount))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.frothing_gluttony, frothingGluttonyCount)))
 	self:PlaySound(args.spellId, "alert")
 	frothingGluttonyCount = frothingGluttonyCount + 1
 	-- 4th (5th in LFR) cast triggers Cataclysmic Evolution
 	local cd = frothingGluttonyCount < (self:LFR() and 4 or 3) and 80 or 25.5
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, frothingGluttonyCount))
+	self:Bar(args.spellId, cd, CL.count:format(L.frothing_gluttony, frothingGluttonyCount))
 end
 
 do
@@ -674,11 +723,11 @@ do
 end
 
 function mod:QueensSummons(args)
-	self:StopBar(CL.count:format(args.spellName, queensSummonsCount))
-	self:Message(args.spellId, "cyan", CL.casting:format(CL.count:format(args.spellName, queensSummonsCount)))
+	self:StopBar(CL.count:format(CL.big_adds, queensSummonsCount))
+	self:Message(args.spellId, "cyan", CL.incoming:format(CL.count:format(CL.big_adds, queensSummonsCount)))
 	self:PlaySound(args.spellId, "info")
 	queensSummonsCount = queensSummonsCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][queensSummonsCount], CL.count:format(args.spellName, queensSummonsCount))
+	self:Bar(args.spellId, timers[3][args.spellId][queensSummonsCount], CL.count:format(CL.big_adds, queensSummonsCount))
 end
 
 function mod:AcolytesEssenceApplied(args)
@@ -731,14 +780,14 @@ do
 end
 
 function mod:Infest(args)
-	self:StopBar(CL.count:format(args.spellName, infestCount))
-	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, infestCount)))
+	self:StopBar(CL.count:format(CL.small_adds, infestCount))
+	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.small_adds, infestCount)))
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
 		self:PlaySound(args.spellId, "alarm") -- defensive
 	end
 	infestCount = infestCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][infestCount], CL.count:format(args.spellName, infestCount))
+	self:Bar(args.spellId, timers[3][args.spellId][infestCount], CL.count:format(CL.small_adds, infestCount))
 end
 
 function mod:InfestApplied(args)
@@ -749,7 +798,7 @@ function mod:InfestApplied(args)
 	end
 	self:TargetBar(443325, 5, args.destName)
 	if self:Me(args.destGUID) then
-		self:Say(443325, nil, nil, "Infest")
+		self:Say(443325, CL.small_adds, nil, "Small Adds")
 		self:SayCountdown(443325, 5)
 	end
 end
@@ -779,11 +828,11 @@ do
 end
 
 function mod:Gorge(args)
-	self:StopBar(CL.count:format(args.spellName, gorgeCount))
-	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, gorgeCount)))
+	self:StopBar(CL.count:format(CL.pools, gorgeCount))
+	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.pools, gorgeCount)))
 	self:PlaySound(args.spellId, "alert")
 	gorgeCount = gorgeCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][gorgeCount], CL.count:format(args.spellName, gorgeCount))
+	self:Bar(args.spellId, timers[3][args.spellId][gorgeCount], CL.count:format(CL.pools, gorgeCount))
 end
 
 do

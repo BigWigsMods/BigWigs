@@ -66,8 +66,14 @@ L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
 if L then
 	L.stacks_onboss = "首领：%d层 %s"
 
+	--L.knock = "Knock"
 	L.reactive_toxin = "毒素"
+	--L.reactive_toxin_say = "Toxin"
+	--L.venom_nova = "Nova"
+	--L.web_blades = "Blades"
 	L.silken_tomb = "缠绕" -- Raid being rooted in place
 	L.wrest = "拉扯"
+	--L.slow = "Slow"
 	--L.royal_condemnation = "Shackles"
+	--L.frothing_gluttony = "Ring"
 end
