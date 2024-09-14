@@ -230,3 +230,5 @@ L.rooted = "Immobilizzato" -- Any ability that roots you in place, preventing yo
 --L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.health_drain = "Risucchio di Salute" -- Any ability that drains health from the player
 L.smash = "Frantumazione" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+L.spike = "Spuntone" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
+L.spikes = "Spuntoni" -- Plural of L.spike

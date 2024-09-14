@@ -230,3 +230,5 @@ L.rooted = "被定身" -- Any ability that roots you in place, preventing you fr
 L.dodge = "躲開" -- 躲開/躲避/閃避/躲圈? When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 --L.health_drain = "Health Drain" -- Any ability that drains health from the player
 L.smash = "重擊" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+--L.spike = "Spike" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
+--L.spikes = "Spikes" -- Plural of L.spike

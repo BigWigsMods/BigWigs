@@ -230,3 +230,5 @@ L.rooted = "Bewegungsunfähig" -- Any ability that roots you in place, preventin
 L.dodge = "Ausweichen" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.health_drain = "Gesundheit entziehen" -- Any ability that drains health from the player
 L.smash = "Schmettern" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+L.spike = "Stachel" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
+L.spikes = "Stacheln" -- Plural of L.spike
