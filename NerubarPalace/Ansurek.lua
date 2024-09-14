@@ -231,7 +231,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	local timers = self:Easy() and timersNormal or timersHeroic
+	timers = self:Easy() and timersNormal or timersHeroic
 
 	self:SetStage(1)
 	reactiveToxinCount = 1
