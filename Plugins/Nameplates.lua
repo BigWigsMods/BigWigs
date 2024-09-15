@@ -307,12 +307,14 @@ local function getTextFrame()
 	if next(textFrameCache) then
 		textFrame = table.remove(textFrameCache)
 	else
-
 		textFrame = CreateFrame("Frame", nil, UIParent)
 		textFrame:SetPoint("CENTER")
-		-- textFrame:SetSize(db.iconWidth, db.iconHeight)
+		textFrame:SetFrameStrata("MEDIUM")
+		textFrame:SetFixedFrameStrata(true)
+		textFrame:SetFrameLevel(75)
+		textFrame:SetFixedFrameLevel(true)
 
-		local fontString = textFrame:CreateFontString(nil, "OVERLAY")
+		local fontString = textFrame:CreateFontString()
 		fontString:SetPoint("CENTER")
 		fontString:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
 		textFrame.fontString = fontString
@@ -1396,7 +1398,6 @@ do
 					end
 				end
 				text:ClearAllPoints()
-				text:SetParent(nameplate)
 				text:SetPoint(textPoint, nameplate, nameplatePoint, offsetX, offsetY)
 			end
 		end
@@ -1447,20 +1448,6 @@ end
 --------------------------------------------------------------------------------
 -- Initialization
 --
-
-function plugin:OnRegister()
-	updateProfile()
-
-	-- Pre-create some frames
-	local dummyFrames = {}
-	for i = 1, 5 do
-		dummyFrames[i] = {icon = getIconFrame(), text = getTextFrame()}
-	end
-	for i = 1, 5 do
-		dummyFrames[i].icon:HideFrame()
-		dummyFrames[i].text:HideFrame()
-	end
-end
 
 function plugin:OnPluginEnable()
 	updateProfile()
