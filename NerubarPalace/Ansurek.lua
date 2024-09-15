@@ -196,7 +196,6 @@ function mod:OnBossEnable()
 
 	-- Stage Two: Royal Ascension
 	-- Queen Ansurek
-	-- self:Log("SPELL_CAST_START", "WrestStageTwo", 450191)
 	self:Log("SPELL_AURA_APPLIED", "PredationThreadsApplied", 447170)
 
 	self:Log("SPELL_CAST_START", "AcidicApocalypse", 449940)
@@ -439,8 +438,8 @@ do
 		paralyzingVenomCount = 1
 		wrestCount = 1
 
-		self:Bar(447411, 2.0, CL.count:format(L.wrest, wrestCount)) -- Wrest
-		self:Bar(447456, 9.0, CL.count:format(L.slow, paralyzingVenomCount)) -- Paralyzing Venom
+		self:Bar(447411, 6.0, CL.count:format(L.wrest, wrestCount)) -- Wrest
+		self:Bar(447456, 13.0, CL.count:format(L.slow, paralyzingVenomCount)) -- Paralyzing Venom
 	end
 
 	function mod:PredationApplied(args)
