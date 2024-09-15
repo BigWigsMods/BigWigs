@@ -195,7 +195,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CausticHailDone", 456762)
 	self:Log("SPELL_CAST_START", "AcidicEruption", 452806)
 	self:Log("SPELL_AURA_APPLIED", "AcidicCarapace", 457877)
-	self:Log("SPELL_INTERRUPT", "AcidicEruptionInterrupted", "*")
+	self:Log("SPELL_INTERRUPT", "AcidicEruptionInterrupted", 452806)
 	self:Log("SPELL_CAST_START", "WebReave", 439795)
 	-- Damage
 	self:Log("SPELL_AURA_APPLIED", "AcidPoolDamage", 439776)
@@ -379,8 +379,8 @@ function mod:AcidicCarapace(args)
 end
 
 function mod:AcidicEruptionInterrupted(args)
-	if args.extraSpellId == 452806 and canStartPhase then -- Acidic Eruption
-		self:Message(452806, "green", CL.interrupted:format(args.extraSpellName))
+	if canStartPhase then -- Acidic Eruption
+		self:Message(452806, "green", CL.interrupted_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 		self:PlaySound(452806, "info")
 		local stage = self:GetStage() + 1
 		self:SetStage(stage)
