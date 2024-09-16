@@ -439,6 +439,7 @@ local function getIconFrame()
 	else
 		iconFrame = CreateFrame("Frame", nil, UIParent)
 		iconFrame:SetPoint("CENTER")
+		iconFrame:SetIgnoreParentScale(true)
 		iconFrame:SetFrameStrata("MEDIUM")
 		iconFrame:SetFixedFrameStrata(true)
 		iconFrame:SetFrameLevel(200)
@@ -1571,11 +1572,13 @@ local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire
 	local height = db.iconHeight
 
 	iconFrame:SetSize(width, height)
-	local target = module:UnitGUID("target")
-	if guid == target then
-		iconFrame:SetScale(GetCVar("nameplateSelectedScale"))
-	else
-		iconFrame:SetScale(GetCVar("nameplateGlobalScale"))
+	if db.iconAutoScale then
+		local target = module:UnitGUID("target")
+		if guid == target then
+			iconFrame:SetScale(GetCVar("nameplateSelectedScale"))
+		else
+			iconFrame:SetScale(GetCVar("nameplateGlobalScale"))
+		end
 	end
 	iconFrame:Set("bigwigs:key", key)
 	iconFrame:Set("bigwigs:unitGUID", guid)
