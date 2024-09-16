@@ -140,6 +140,7 @@ function mod:GetOptions()
 			445152, -- Acolyte's Essence
 			445021, -- Null Detonation
 		{438976, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Royal Condemnation
+			441865, -- Royal Shackles
 		{443325, "SAY", "SAY_COUNTDOWN"}, -- Infest
 			443726, -- Gloom Hatchling
 		443336, -- Gorge
@@ -162,6 +163,7 @@ function mod:GetOptions()
 		[445422] = L.frothing_gluttony, -- Frothing Gluttony (Ring)
 		[444829] = CL.big_adds, -- Queen's Summons (Big Adds)
 		[438976] = L.royal_condemnation, -- Royal Condemnation (Shackles)
+		[441865] = CL.link_with:format(L.royal_condemnation), -- Royal Shackles (Linked with Shackles)
 		[443325] = CL.small_adds, -- Infest (Small Adds)
 		[443336] = CL.pools, -- Gorge (Pools)
 	}
@@ -233,6 +235,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NullDetonation", 445021)
 	self:Log("SPELL_CAST_START", "RoyalCondemnation", 438976)
 	self:Log("SPELL_AURA_APPLIED", "RoyalCondemnationApplied", 438974)
+	self:Log("SPELL_AURA_APPLIED", "RoyalShacklesApplied", 441865)
 	self:Log("SPELL_CAST_START", "Infest", 443325)
 	self:Log("SPELL_AURA_APPLIED", "InfestApplied", 443656)
 	self:Log("SPELL_AURA_REMOVED", "InfestRemoved", 443656)
@@ -795,7 +798,11 @@ do
 		if args.time - prev > 3 then
 			prev = args.time
 			self:StopBar(CL.count:format(L.royal_condemnation, royalCondemnationCount))
-			self:Bar(438976, 6.2, CL.on_group:format(L.royal_condemnation)) -- 6~6.5
+			if self:Easy() then
+				self:Bar(438976, 6.2, CL.explosion) -- 6~6.5
+			else
+				self:Bar(438976, 8.3, CL.on_group:format(L.royal_condemnation))
+			end
 			royalCondemnationCount = royalCondemnationCount + 1
 			self:CDBar(438976, timers[self:GetStage()][438976][royalCondemnationCount], CL.count:format(L.royal_condemnation, royalCondemnationCount))
 			playerList = {}
@@ -809,6 +816,13 @@ do
 		end
 		local count = self:Mythic() and 3 or self:LFR() and 1 or 2
 		self:TargetsMessage(438976, "yellow", playerList, count, CL.count:format(L.royal_condemnation, royalCondemnationCount-1))
+	end
+end
+
+function mod:RoyalShacklesApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, "link_with", L.royal_condemnation) -- Linked with Shackles
+		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
