@@ -22,6 +22,8 @@ local webBladesCount = 1
 
 local paralyzingVenomCount = 1
 local wrestCount = 1
+
+local gloomTouchCount = 1
 local worshipperKilled = 0
 
 local abyssalInfusionCount = 1
@@ -118,7 +120,7 @@ function mod:GetOptions()
 		447950, -- Shadowblast
 		448046, -- Gloom Eruption
 		-- Devoted Worshipper
-		447967, -- Gloom Touch
+		{447967, "SAY", "ME_ONLY_EMPHASIZE"}, -- Gloom Touch
 		462558, -- Cosmic Rupture
 		448458, -- Cosmic Apocalypse
 		-- Chamber Guardian
@@ -260,7 +262,7 @@ function mod:OnEngage()
 	self:Bar(440899, timers[1][440899][1], CL.count:format(CL.pools, liquefyCount)) -- Liquefy
 	self:Bar(437093, timers[1][437093][1], CL.count:format(self:SpellName(437093), feastCount)) -- Feast
 	self:Bar(439299, timers[1][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
-	self:Bar(437592, 18.5, CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
+	self:Bar(437592, 20.2, CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
 	self:Bar(437417, 29.5, CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 	self:Bar(439814, timers[1][439814][1], CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 
@@ -281,21 +283,29 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 -- Stage One: A Queen's Venom
-function mod:ReactiveToxin(args)
-	self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount))
-	self:Message(437592, "yellow", CL.casting:format(CL.count:format(L.reactive_toxin, reactiveToxinCount)))
-	reactiveToxinCount = reactiveToxinCount + 1
-	if reactiveToxinCount < 4 then
-		self:Bar(437592, 56.0, CL.count:format(L.reactive_toxin, reactiveToxinCount))
-	end
-end
 
-function mod:ReactiveToxinApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(437592, nil, L.reactive_toxin_say)
-		self:PlaySound(437592, "warning") -- position?
-		self:Say(437592, L.reactive_toxin_say, nil, "Toxin")
-		self:SayCountdown(437592, 5)
+do
+	local playerList = {}
+	function mod:ReactiveToxin()
+		playerList = {}
+	end
+
+	function mod:ReactiveToxinApplied(args)
+		if #playerList == 0 then
+			self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount))
+			reactiveToxinCount = reactiveToxinCount + 1
+			if reactiveToxinCount < 4 then
+				self:Bar(437592, 56.0, CL.count:format(L.reactive_toxin, reactiveToxinCount))
+			end
+		end
+		playerList[#playerList + 1] = args.destName
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(437592, nil, L.reactive_toxin_say)
+			self:PlaySound(437592, "warning") -- position?
+			self:Say(437592, L.reactive_toxin_say, nil, "Toxin")
+			self:SayCountdown(437592, 5)
+		end
+		self:TargetsMessage(437592, "orange", playerList, nil, CL.count:format(L.reactive_toxin, reactiveToxinCount - 1))
 	end
 end
 
@@ -457,6 +467,7 @@ do
 		self:PlaySound("stages", "long")
 
 		wrestCount = 1
+		gloomTouchCount = 1
 		worshipperKilled = 0
 		self:Bar(447411, self:Easy() and 31.4 or 41.4, CL.count:format(L.wrest, wrestCount)) -- Wrest
 	end
@@ -553,10 +564,27 @@ do
 end
 
 -- Devoted Worshipper
-function mod:GloomTouchApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm") -- spread
+do
+	local prev, prevSource = 0, nil
+	local playerList = {}
+	function mod:GloomTouchApplied(args)
+		if args.sourceGUID ~= prevSource or args.time - prev > 5 then
+			prev = args.time
+			prevSource = args.sourceGUID
+			playerList = {}
+			gloomTouchCount = gloomTouchCount + 1
+		end
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "alarm") -- spread
+			self:Say(args.spellId, nil, nil, "Gloom Touch")
+		end
+
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
+		if unit and self:UnitWithinRange(unit, 40) then
+			playerList[#playerList + 1] = args.destName
+			self:TargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(args.spellName, gloomTouchCount - 1))
+		end
 	end
 end
 
@@ -662,27 +690,34 @@ function mod:AphoticCommunion(args)
 	self:Bar(443325, timers[3][443325][1], CL.count:format(CL.small_adds, infestCount)) -- Infest
 	self:Bar(443336, timers[3][443336][1], CL.count:format(CL.pools, gorgeCount)) -- Gorge
 	self:CDBar(438976, timers[3][438976][1], CL.count:format(L.royal_condemnation, royalCondemnationCount)) -- Royal Condemnation
-	self:Bar(443888, 57.8, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
+	self:Bar(443888, 59.1, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
 	self:Bar(445422, 68.8, CL.count:format(L.frothing_gluttony, frothingGluttonyCount)) -- Frothing Gluttony
 	self:Bar(444829, timers[3][444829][1], CL.count:format(CL.big_adds, queensSummonsCount)) -- Queen's Summons
 	self:Bar(439299, timers[3][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 end
 
-function mod:AbyssalInfusion(args)
-	self:StopBar(CL.count:format(CL.portals, abyssalInfusionCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.portals, abyssalInfusionCount))
-	abyssalInfusionCount = abyssalInfusionCount + 1
-	if abyssalInfusionCount < (self:LFR() and 5 or 4) then
-		self:Bar(args.spellId, 80, CL.count:format(CL.portals, abyssalInfusionCount))
+do
+	local playerList = {}
+	function mod:AbyssalInfusion()
+		playerList = {}
 	end
-end
 
-function mod:AbyssalInfusionApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(443888, nil, CL.portal)
-		self:PlaySound(443888, "warning") -- position?
-		self:Say(443888, CL.portal, nil, "Portal")
-		self:SayCountdown(443888, 6)
+	function mod:AbyssalInfusionApplied(args)
+		if #playerList == 0 then
+			self:StopBar(CL.count:format(CL.portals, abyssalInfusionCount))
+			abyssalInfusionCount = abyssalInfusionCount + 1
+			if abyssalInfusionCount < (self:LFR() and 5 or 4) then
+				self:Bar(443888, 80, CL.count:format(CL.portals, abyssalInfusionCount))
+			end
+		end
+		playerList[#playerList + 1] = args.destName
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(443888, nil, CL.portal)
+			self:PlaySound(443888, "warning") -- position?
+			self:Say(443888, CL.portal, nil, "Portal")
+			self:SayCountdown(443888, 6)
+		end
+		self:TargetsMessage(443888, "orange", playerList, 2, CL.count:format(CL.portals, abyssalInfusionCount-1))
 	end
 end
 

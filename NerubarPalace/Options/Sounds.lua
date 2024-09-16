@@ -128,6 +128,7 @@ BigWigs:AddSounds("Queen Ansurek", {
 	[439814] = "alarm",
 	[440899] = {"alarm","alert","warning"},
 	[441556] = "alarm",
+	[441865] = "alarm",
 	[441958] = "underyou",
 	[443325] = {"alarm","warning"},
 	[443336] = {"alarm","alert","warning"},
