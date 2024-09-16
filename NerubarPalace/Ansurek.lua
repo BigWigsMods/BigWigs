@@ -36,7 +36,7 @@ local timersNormal = { -- 11:29
 		[439814] = { 57.5, 54.0, 0 }, -- Silken Tomb
 		[440899] = { 8.5, 40.0, 55.0, 0 }, -- Liquefy
 		[437093] = { 12.5, 40.0, 55.0, 0 }, -- Feast
-		[439299] = { 12.5, 48.0, 0 }, -- Web Blades
+		[439299] = { 76.4, 48.0, 0 }, -- Web Blades
 	},
 	[3] = {
 		[444829] = { 113.7, 82.0 }, -- Queen's Summons
@@ -57,8 +57,8 @@ local timersHeroic = { -- 9:54
 	[3] = {
 		[444829] = { 119.0, 75.0 }, -- Queen's Summons
 		[438976] = { 43.2, 58.5, 99.5 }, -- Royal Condemnation
-		[443325] = { 29.0, 66.0, 82.0 }, -- Infest
-		[443336] = { 32.0, 66.0, 82.0 }, -- Gorge
+		[443325] = { 29.7, 66.0, 82.0 }, -- Infest
+		[443336] = { 32.7, 66.0, 82.0 }, -- Gorge
 		[439299] = { 85.0, 39.0, 41.0, 18.5, 49.5 }, -- Web Blades
 	},
 }
@@ -264,7 +264,7 @@ function mod:OnEngage()
 	self:Bar(437417, 29.5, CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 	self:Bar(439814, timers[1][439814][1], CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 
-	self:Bar("stages", self:Easy() and 154 or 158, CL.intermission, 447207) -- Predation
+	self:Bar("stages", 153.9, CL.intermission, 447207) -- Predation
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
@@ -699,7 +699,7 @@ function mod:FrothingGluttony(args)
 	self:PlaySound(args.spellId, "alert")
 	frothingGluttonyCount = frothingGluttonyCount + 1
 	-- 4th (5th in LFR) cast triggers Cataclysmic Evolution
-	local cd = frothingGluttonyCount < (self:LFR() and 4 or 3) and 80 or 25.5
+	local cd = frothingGluttonyCount < (self:LFR() and 5 or 4) and 80 or 25.5
 	self:Bar(args.spellId, cd, CL.count:format(L.frothing_gluttony, frothingGluttonyCount))
 end
 
