@@ -1779,12 +1779,16 @@ do
 		local guid = self:UnitGUID("target")
 		if nameplateIcons[guid] then
 			for _, tbl in next, nameplateIcons[guid] do
-				tbl.nameplateFrame:SetScale(GetCVar("nameplateSelectedScale"))
+				if tbl.nameplateFrame then
+					tbl.nameplateFrame:SetScale(GetCVar("nameplateSelectedScale"))
+				end
 			end
 		end
 		if prevTarget and nameplateIcons[prevTarget] then
 			for _, tbl in next, nameplateIcons[prevTarget] do
-				tbl.nameplateFrame:SetScale(GetCVar("nameplateGlobalScale"))
+				if tbl.nameplateFrame then
+					tbl.nameplateFrame:SetScale(GetCVar("nameplateGlobalScale"))
+				end
 			end
 		end
 		prevTarget = guid
