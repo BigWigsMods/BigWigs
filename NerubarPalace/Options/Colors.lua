@@ -24,7 +24,7 @@ BigWigs:AddColors("Ulgrax the Devourer", {
 BigWigs:AddColors("The Bloodbound Horror", {
 	[438696] = "red",
 	[442530] = "red",
-	[443042] = "yellow",
+	[443042] = {"blue","yellow"},
 	[443203] = "blue",
 	[443612] = "blue",
 	[444363] = "purple",
