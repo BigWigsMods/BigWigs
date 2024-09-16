@@ -40,6 +40,7 @@ end
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 
 		-- Gleeful Brutality
 		{434803, "CASTBAR", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Carnivorous Contest (Soak)
@@ -122,6 +123,7 @@ function mod:OnEngage()
 	self:Bar(435138, 15.0, CL.count:format(self:SpellName(435138), digestiveAcidCount)) -- Digestive Acid
 	self:Bar(434803, 34.0, CL.count:format(CL.soak, carnivorousContestCount)) -- Carnivorous Contest
 	self:Bar("stages", 90.0, CL.stage:format(2), 445123) -- Hulking Crash (Stage 2)
+	self:Berserk(601, true)
 end
 
 --------------------------------------------------------------------------------
