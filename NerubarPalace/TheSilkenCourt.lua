@@ -197,7 +197,7 @@ function mod:GetOptions()
 
 		-- Stage Two: Grasp of the Void
 			-- Anub'arash
-			438677, -- Stinging Swarm
+			{438677, "ME_ONLY_EMPHASIZE"}, -- Stinging Swarm
 				-- 449993, -- Stinging Burst
 				456245, -- Stinging Delirium
 
@@ -601,7 +601,11 @@ end
 
 function mod:StingingSwarmApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(438677, "blue", args.destName, args.amount or 1, 4)
+		if not args.amount then
+			self:PersonalMessage(438677)
+		else
+			self:StackMessage(438677, "blue", args.destName, args.amount, args.amount)
+		end
 		self:PlaySound(438677, "warning")
 	end
 end
