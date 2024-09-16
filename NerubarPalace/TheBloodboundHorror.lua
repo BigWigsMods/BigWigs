@@ -242,6 +242,7 @@ do
 			self:Bar(args.spellId, cd, CL.count:format(L.grasp_from_beyond, graspFromBeyondCount))
 		end
 		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, nil, L.grasp_from_beyond)
 			self:Say(args.spellId, L.grasp_from_beyond_say, nil, "Tentacles")
 			self:SayCountdown(args.spellId, 12)
 			self:PlaySound(args.spellId, "warning")
