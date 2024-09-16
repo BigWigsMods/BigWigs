@@ -472,7 +472,6 @@ do
 		wrestCount = 1
 		gloomTouchCount = 1
 		worshipperKilled = 0
-		self:Bar(447411, self:Easy() and 31.4 or 41.4, CL.count:format(L.wrest, wrestCount)) -- Wrest
 	end
 end
 
@@ -526,16 +525,19 @@ do
 				end
 			end
 			if self:Me(args.destGUID) then
-				self:Message(447411, "orange", CL.count:format(L.wrest, wrestCount))
+				self:Message(447411, "red", CL.count:format(L.wrest, wrestCount))
 				self:PlaySound(447411, "alert")
 				onMe = true
 			end
 		end
 	end
-end
 
-function mod:AcidicApocalypse(args)
-	-- self:Bar(args.spellId, 35)
+	function mod:AcidicApocalypse(args)
+		self:CancelTimer(scheduled)
+		self:StopBar(CL.count:format(L.wrest, wrestCount))
+		self:StopBar(CL.count:format(L.wrest, wrestCount + 1))
+		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+	end
 end
 
 function mod:AcidicApocalypseSuccess(args)
@@ -562,6 +564,9 @@ do
 			prev = args.time
 			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
 			self:Bar(448046, self:Easy() and 7.1 or 5.9, CL.knockback) -- Gloom Eruption
+			if wrestCount == 1 then
+				self:CDBar(447411, self:Easy() and 13.5 or 11.8, CL.count:format(L.wrest, wrestCount)) -- Wrest
+			end
 		end
 	end
 end
