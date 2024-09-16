@@ -102,8 +102,8 @@ function mod:OnEngage()
 	voidShreddersCount = 1
 	starlessNightCount = 1
 
-	self:Bar(440377, 6.0, CL.count:format(self:SpellName(440377), voidShreddersCount)) -- Void Shredders
-	self:Bar(436867, 10.0, CL.count:format(L.assasination, assassinationCount)) -- Assassination
+	self:Bar(436867, 8.5, CL.count:format(L.assasination, assassinationCount)) -- Assassination
+	self:Bar(440377, 10.0, CL.count:format(self:SpellName(440377), voidShreddersCount)) -- Void Shredders
 	self:Bar(437620, 22.0, CL.count:format(CL.rifts, netherRiftCount)) -- Nether Rift
 	self:Bar(438245, 34.0, CL.count:format(L.twiligt_massacre, twilightMassacreCount)) -- Twilight Massacre
 	self:Bar(439576, 45.0, CL.count:format(L.nexus_daggers, nexusDaggersCount)) -- Nexus Daggers
@@ -183,8 +183,8 @@ function mod:VoidShredders(args)
 	self:PlaySound(args.spellId, "alert")
 	voidShreddersCount = voidShreddersCount + 1
 	if voidShreddersCount < 10 then
-		local timer = { 30.0, 66.0, 34.0 } -- 6.0, 34.0, 30.0, 66.0, 34.0, 30.0, 66.0
-		local cd = timer[voidShreddersCount % 3 + 1]
+		-- 10.0, 30.0, 30.0, 70.0, 30.0, 30.0, 70.0, 30.0, 30.0
+		local cd = voidShreddersCount % 3 == 1 and 70 or 30
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, voidShreddersCount))
 	end
 end
