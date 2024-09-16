@@ -152,7 +152,7 @@ local function updateProfile()
 	end
 	if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
 		local frame = _G[db.normalPosition[5]]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
+		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
 			db.normalPosition = plugin.defaultDB.normalPosition
 		end
 	end
@@ -173,7 +173,7 @@ local function updateProfile()
 	end
 	if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
 		local frame = _G[db.expPosition[5]]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
+		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
 			db.expPosition = plugin.defaultDB.expPosition
 		end
 	end
@@ -690,7 +690,7 @@ do
 								end,
 								set = function(_, value)
 									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
 										return
 									end
 									if value ~= plugin.defaultDB.normalPosition[5] then
@@ -806,7 +806,7 @@ do
 								end,
 								set = function(_, value)
 									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" then
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
 										return
 									end
 									if value ~= plugin.defaultDB.expPosition[5] then
