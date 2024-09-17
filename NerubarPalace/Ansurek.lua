@@ -586,7 +586,7 @@ do
 				self:Message(447411, "red", CL.count:format(L.wrest, wrestCount))
 				self:PlaySound(447411, "alert")
 				onMe = true
-				self:CastBar(args.spellId, 5, CL.count:format(L.wrest, wrestCount))
+				self:CastBar(447411, 5, CL.count:format(L.wrest, wrestCount))
 			end
 		end
 	end
