@@ -185,7 +185,7 @@ function mod:SpewingHemorrhage(args)
 	self:StopBar(CL.count:format(CL.beams, spewingHemorrhageCount))
 	self:Message(args.spellId, "orange", CL.count:format(CL.beams, spewingHemorrhageCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 26)
+	self:CastBar(args.spellId, 26, CL.count:format(CL.beams, spewingHemorrhageCount))
 	spewingHemorrhageCount = spewingHemorrhageCount + 1
 	local cd = spewingHemorrhageCount % 2 == 9 and 49 or 79
 	if self:Mythic() then
