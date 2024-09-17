@@ -33,6 +33,10 @@ local royalCondemnationCount = 1
 local infestCount = 1
 local gorgeCount = 1
 
+local iconOrder = {6, 3, 7, 1, 2} -- blue, diamond, red, circle, star, skipping green due to the encounter being green tinted
+local addMarks = {8, 7, 4}
+local queenSummonsCollector, queenSummonsMarks = {}, {}
+
 local timersNormal = { -- 11:29
 	[1] = {
 		[439814] = { 57.5, 54.0, 0 }, -- Silken Tomb
@@ -90,11 +94,16 @@ end
 -- Initialization
 --
 
+local reactiveToxinMarker = mod:AddMarkerOption(true, "player", 6, 437592, 6, 3, 7, 1, 2) -- Reactive Toxin
+local abyssalInfusionMarker = mod:AddMarkerOption(true, "player", 6, 443888, 1, 2) -- Abyssal Infusion
+local royalCondemnationMarker = mod:AddMarkerOption(true, "player", 6, 438976, 6, 3) -- Royal Condemnation
+local queensSummonsMarker = mod:AddMarkerOption(true, "npc", 8, 444829, 8, 7, 4) -- Queen's Summons
 function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: A Queen's Venom
 		{437592, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Reactive Toxin
+			reactiveToxinMarker,
 			{451278, "SAY", "SAY_COUNTDOWN"}, -- Concentrated Toxin
 			464638, -- Frothy Toxin
 			438481, -- Toxic Waves (Damage)
@@ -115,14 +124,14 @@ function mod:GetOptions()
 		-- Stage Two: Royal Ascension
 		443403, -- Gloom (Damage)
 		-- Queen Ansurek
-		449940, -- Acidic Apocalypse
+		{449940, "CASTBAR"}, -- Acidic Apocalypse
 		-- Ascended Voidspeaker
 		447950, -- Shadowblast
-		448046, -- Gloom Eruption
+		{448046, "COUNTDOWN"}, -- Gloom Eruption
 		-- Devoted Worshipper
 		{447967, "SAY", "ME_ONLY_EMPHASIZE"}, -- Gloom Touch
 		462558, -- Cosmic Rupture
-		448458, -- Cosmic Apocalypse
+		{448458, "CASTBAR"}, -- Cosmic Apocalypse
 		-- Chamber Guardian
 		{448147, "NAMEPLATE"}, -- Oust
 		-- Chamber Expeller
@@ -133,13 +142,16 @@ function mod:GetOptions()
 		-- Stage Three: Paranoia's Feast
 		-- {449986, "CASTBAR"}, -- Aphotic Communion
 		{443888, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Abyssal Infusion
+			abyssalInfusionMarker,
 			455387, -- Abyssal Reverberation
 		445422, -- Frothing Gluttony
 			445880, -- Froth Vapor
 		444829, -- Queen's Summons
+			queensSummonsMarker,
 			445152, -- Acolyte's Essence
 			445021, -- Null Detonation
 		{438976, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Royal Condemnation
+			royalCondemnationMarker,
 			441865, -- Royal Shackles
 		{443325, "SAY", "SAY_COUNTDOWN"}, -- Infest
 			443726, -- Gloom Hatchling
@@ -209,6 +221,7 @@ function mod:OnBossEnable()
 	self:Death("VoidspeakerDeath", 223150)
 	-- Devoted Worshipper
 	self:Log("SPELL_AURA_APPLIED", "GloomTouchApplied", 447967)
+	self:Log("SPELL_CAST_START", "CosmicApocalypse", 448458)
 	self:Log("SPELL_CAST_SUCCESS", "CosmicApocalypseSuccess", 448458)
 	self:Death("WorshipperDeath", 223318)
 	self:Log("SPELL_AURA_APPLIED", "CosmicRuptureApplied", 462558)
@@ -231,6 +244,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrothVaporAppliedOnBoss", 445880)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrothVaporAppliedOnBoss", 445880)
 	self:Log("SPELL_CAST_START", "QueensSummons", 444829)
+	self:Log("SPELL_AURA_APPLIED", "DarkBarrierApplied", 445013)
 	self:Log("SPELL_AURA_APPLIED", "AcolytesEssenceApplied", 445152)
 	self:Log("SPELL_CAST_START", "NullDetonation", 445021)
 	self:Log("SPELL_CAST_START", "RoyalCondemnation", 438976)
@@ -277,6 +291,28 @@ end
 -- Event Handlers
 --
 
+local function addPlayerToIconList(list, playerName)
+	list[#list+1] = {
+		name = playerName,
+		melee = mod:Melee(playerName),
+		healer = mod:Healer(playerName),
+		index = UnitInRaid(playerName) or 99,
+	}
+	return list
+end
+
+local function sortPriority(first, second)
+	if first and second then
+		if first.healer ~= second.healer then
+			return not first.healer and second.healer
+		end
+		if first.melee ~= second.melee then
+			return first.melee and not second.melee
+		end
+		return first.index < second.index
+	end
+end
+
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 37 then -- Intermission forced at 35%
 		self:UnregisterUnitEvent(event, unit)
@@ -286,29 +322,50 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 -- Stage One: A Queen's Venom
-
 do
-	local playerList = {}
+	local playerList, iconList = {}, {}
+	local scheduled = nil
+	function mod:MarkToxinPlayers()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+		table.sort(iconList, sortPriority) -- Priority for melee > ranged > healer
+		for i = 1, #iconList do
+			local player = iconList[i].name
+			local icon = self:GetOption(reactiveToxinMarker) and iconOrder[i] or nil
+			if player == self:UnitName("player") then
+				local text = icon and CL.rticon:format(L.reactive_toxin_say, icon) or L.reactive_toxin_say
+				local msg = icon and CL.you_icon:format(L.reactive_toxin_say, icon) or nil
+				self:PlaySound(437592, "warning") -- position?
+				self:Say(437592, text, nil, icon and CL.rticon:format("Toxin", icon) or "Toxin")
+				self:SayCountdown(437592, 5, icon)
+			end
+			playerList[#playerList+1] = player
+			playerList[player] = icon
+			self:TargetsMessage(437592, "yellow", playerList, nil, CL.count:format(L.reactive_toxin, reactiveToxinCount - 1))
+			self:CustomIcon(reactiveToxinMarker, player, icon)
+		end
+	end
+
 	function mod:ReactiveToxin()
-		playerList = {}
+		playerList, iconList = {}, {}
 	end
 
 	function mod:ReactiveToxinApplied(args)
-		if #playerList == 0 then
+		if not scheduled then
 			self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount))
 			reactiveToxinCount = reactiveToxinCount + 1
 			if reactiveToxinCount < 4 then
 				self:Bar(437592, 56.0, CL.count:format(L.reactive_toxin, reactiveToxinCount))
 			end
+			scheduled = self:ScheduleTimer("MarkToxinPlayers", 0.5)
 		end
-		playerList[#playerList + 1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(437592, nil, L.reactive_toxin_say)
-			self:PlaySound(437592, "warning") -- position?
-			self:Say(437592, L.reactive_toxin_say, nil, "Toxin")
-			self:SayCountdown(437592, 5)
+		iconList = addPlayerToIconList(iconList, args.destName)
+		local requiredPlayers = self:Mythic() and 5 or self:Heroic() and 2 or 1
+		if #iconList == requiredPlayers then
+			self:MarkToxinPlayers()
 		end
-		self:TargetsMessage(437592, "orange", playerList, nil, CL.count:format(L.reactive_toxin, reactiveToxinCount - 1))
 	end
 end
 
@@ -537,6 +594,7 @@ do
 		self:StopBar(CL.count:format(L.wrest, wrestCount))
 		self:StopBar(CL.count:format(L.wrest, wrestCount + 1))
 		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+		self:CastBar(args.spellId, 35)
 	end
 end
 
@@ -605,6 +663,16 @@ end
 
 do
 	local prev = 0
+	function mod:CosmicApocalypse(args)
+		if args.time - prev > 2 then
+			prev = args.time
+			self:CastBar(args.spellId, 85)
+		end
+	end
+end
+
+do
+	local prev = 0
 	function mod:CosmicApocalypseSuccess(args)
 		if args.time - prev > 2 then
 			prev = args.time
@@ -617,6 +685,9 @@ end
 function mod:WorshipperDeath(args)
 	worshipperKilled = worshipperKilled + 1
 	self:Message("stages", "cyan", CL.mob_remaining:format(args.destName, 2 - worshipperKilled), false)
+	if worshipperKilled == 2 then
+		self:StopBar(CL.cast:format(self:SpellName(448458))) -- Cosmic Apocalypse
+	end
 end
 
 -- Chamber Guardian
@@ -679,7 +750,7 @@ end
 function mod:AphoticCommunion(args)
 	self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
 	self:StopBar(CL.count:format(L.wrest, wrestCount + 1)) -- Wrest
-	self:StopBar(449940) -- Acidic Apocalypse
+	self:StopBar(CL.cast:format(self:SpellName(449940))) -- Acidic Apocalypse
 
 	self:SetStage(3)
 	self:Message("stages", "cyan", CL.stage:format(3), false)
@@ -705,27 +776,48 @@ function mod:AphoticCommunion(args)
 end
 
 do
-	local playerList = {}
+	local playerList, iconList = {}, {}
+	local scheduled = nil
+	function mod:MarkAbyssalInfusionPlayers()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+		table.sort(iconList, sortPriority) -- Priority for melee > ranged > healer
+		for i = 1, #iconList do
+			local player = iconList[i].name
+			local icon = self:GetOption(abyssalInfusionMarker) and i or nil
+			if player == self:UnitName("player") then
+				local text = icon and CL.rticon:format(CL.portal, icon) or CL.portal
+				local msg = icon and CL.you_icon:format(CL.portal, icon) or nil
+				self:PlaySound(443888, "warning") -- position?
+				self:Say(443888, text, nil, icon and CL.rticon:format("Portal", icon) or "Portal")
+				self:SayCountdown(443888, 6, icon)
+			end
+			playerList[#playerList+1] = player
+			playerList[player] = icon
+			self:TargetsMessage(438976, "yellow", playerList, nil, CL.count:format(CL.portals, abyssalInfusionCount - 1), 2)
+			self:CustomIcon(abyssalInfusionMarker, player, icon)
+		end
+	end
+
 	function mod:AbyssalInfusion()
-		playerList = {}
+		playerList, iconList = {}, {}
 	end
 
 	function mod:AbyssalInfusionApplied(args)
-		if #playerList == 0 then
+		if not scheduled then
 			self:StopBar(CL.count:format(CL.portals, abyssalInfusionCount))
 			abyssalInfusionCount = abyssalInfusionCount + 1
 			if abyssalInfusionCount < (self:LFR() and 5 or 4) then
 				self:Bar(443888, 80, CL.count:format(CL.portals, abyssalInfusionCount))
 			end
+			scheduled = self:ScheduleTimer("MarkAbyssalInfusionPlayers", 0.5)
 		end
-		playerList[#playerList + 1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(443888, nil, CL.portal)
-			self:PlaySound(443888, "warning") -- position?
-			self:Say(443888, CL.portal, nil, "Portal")
-			self:SayCountdown(443888, 6)
+		iconList = addPlayerToIconList(iconList, args.destName)
+		if #iconList == 2 then
+			self:MarkAbyssalInfusionPlayers()
 		end
-		self:TargetsMessage(443888, "orange", playerList, 2, CL.count:format(CL.portals, abyssalInfusionCount-1))
 	end
 end
 
@@ -769,6 +861,30 @@ function mod:QueensSummons(args)
 	self:PlaySound(args.spellId, "info")
 	queensSummonsCount = queensSummonsCount + 1
 	self:Bar(args.spellId, timers[3][args.spellId][queensSummonsCount], CL.count:format(CL.big_adds, queensSummonsCount))
+
+	queenSummonsCollector, queenSummonsMarks = {}, {}
+	if self:GetOption(queensSummonsMarker) then
+		self:RegisterTargetEvents("QueensSummonsMarking")
+	end
+end
+
+function mod:QueensSummonsMarking(_, unit, guid)
+	if queenSummonsCollector[guid] then
+		self:CustomIcon(queensSummonsMarker, unit, queenSummonsCollector[guid]) -- icon order from Dark Barrioer _APPLIED
+		queenSummonsCollector[guid] = nil
+	end
+end
+
+function mod:DarkBarrierApplied(args)
+	if self:GetOption(queensSummonsMarker) then
+		for i = 1, #addMarks do
+			if not queenSummonsCollector[args.destGUID] and not queenSummonsMarks[i] then
+				queenSummonsMarks[i] = args.destGUID
+				queenSummonsCollector[args.destGUID] = addMarks[i]
+				return
+			end
+		end
+	end
 end
 
 function mod:AcolytesEssenceApplied(args)
@@ -780,7 +896,7 @@ end
 
 function mod:NullDetonation(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and not self:UnitBuff(unit, 445013) then -- Dark Barrier XXX Assumption you cannot kick whilst barrier is up
+	if unit and not self:UnitBuff(unit, 445013) then -- Dark Barrier
 		local canDo, ready = self:Interrupter(args.sourceGUID)
 		if canDo then
 			self:Message(args.spellId, "orange")
@@ -797,8 +913,38 @@ function mod:RoyalCondemnation(args)
 end
 
 do
+	local playerList, iconList = {}, {}
+	local scheduled = nil
 	local prev = 0
-	local playerList = {}
+	function mod:MarkRoyalCondemnationPlayers()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+		table.sort(iconList, sortPriority) -- Priority for melee > ranged > healer
+		local warned = false
+		for i = 1, #iconList do
+			local player = iconList[i].name
+			local icon = self:GetOption(royalCondemnationMarker) and iconOrder[i] or nil
+			if player == self:UnitName("player") then
+				local text = icon and CL.rticon:format(L.royal_condemnation, icon) or L.royal_condemnation
+				local msg = icon and CL.you_icon:format(L.royal_condemnation, icon) or nil
+				self:PlaySound(438976, "warning")
+				self:Say(438976, text, nil, icon and CL.rticon:format("Shackles", icon) or "Shackles")
+				self:SayCountdown(438976, 6, icon) -- projectile based both ways? z.z
+				warned = true
+			end
+			playerList[#playerList+1] = player
+			playerList[player] = icon
+			local count = self:Mythic() and 3 or self:LFR() and 1 or 2
+			self:TargetsMessage(438976, "yellow", playerList, count, CL.count:format(L.royal_condemnation, royalCondemnationCount - 1), 2)
+			self:CustomIcon(royalCondemnationMarker, player, icon)
+		end
+		if not warned then -- Sound for others
+			self:PlaySound(438976, "alert")
+		end
+	end
+
 	function mod:RoyalCondemnationApplied(args)
 		if args.time - prev > 3 then
 			prev = args.time
@@ -809,18 +955,17 @@ do
 				self:Bar(438976, 8.3, CL.on_group:format(L.royal_condemnation))
 			end
 			royalCondemnationCount = royalCondemnationCount + 1
-			self:CDBar(438976, timers[self:GetStage()][438976][royalCondemnationCount], CL.count:format(L.royal_condemnation, royalCondemnationCount))
-			playerList = {}
+			self:CDBar(438976, timers[3][438976][royalCondemnationCount], CL.count:format(L.royal_condemnation, royalCondemnationCount))
+			playerList, iconList = {}, {}
+			if not scheduled then
+				scheduled = self:ScheduleTimer("MarkRoyalCondemnationPlayers", 0.5)
+			end
 		end
-		playerList[#playerList + 1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(438976)
-			self:PlaySound(438976, "warning")
-			self:Say(438976, L.royal_condemnation, nil, "Shackles")
-			self:SayCountdown(438976, 6) -- projectile based both ways? z.z
-		end
+		iconList = addPlayerToIconList(iconList, args.destName)
 		local count = self:Mythic() and 3 or self:LFR() and 1 or 2
-		self:TargetsMessage(438976, "yellow", playerList, count, CL.count:format(L.royal_condemnation, royalCondemnationCount-1))
+		if #iconList == count then
+			self:MarkRoyalCondemnationPlayers()
+		end
 	end
 end
 
