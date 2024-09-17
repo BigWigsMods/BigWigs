@@ -392,14 +392,14 @@ function mod:AcidicEruptionInterrupted(args)
 		erosiveSprayCount[2] = 1
 		envelopingWebsCount[2] = 1
 
-		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(self:SpellName(439789), rollingAcidCount[1])) -- Rolling Acid
-		self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(self:SpellName(455373), infestedSpawnCount[1])) -- Infested Spawn
-		self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(self:SpellName(439784), spinneretsStrandsCount[1])) -- Spinneret's Strands
+		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
+		self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
+		self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
 		if self:Mythic() then
-			self:Bar(454989, cd(454989, envelopingWebsCount[2]), CL.count:format(self:SpellName(454989), envelopingWebsCount[1])) -- Enveloping Webs
+			self:Bar(454989, cd(454989, envelopingWebsCount[2]), CL.count:format(L.enveloping_webs, envelopingWebsCount[1])) -- Enveloping Webs
 		end
-		-- self:Bar(439795, 3.6, CL.count:format(self:SpellName(439795), webReaveCount)) -- Web Reave
-		self:Bar(439811, self:Easy() and 35.0 or 33.3, CL.count:format(self:SpellName(439811), erosiveSprayCount[1])) -- Erosive Spray
+		-- self:Bar(439795, 3.6, CL.count:format(CL.soak, webReaveCount)) -- Web Reave
+		self:Bar(439811, self:Easy() and 35.0 or 33.3, CL.count:format(L.erosive_spray, erosiveSprayCount[1])) -- Erosive Spray
 		self:Bar("stages", self:Easy() and 90.5 or 87.0, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
 	end
 end
