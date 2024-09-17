@@ -34,7 +34,7 @@ local infestCount = 1
 local gorgeCount = 1
 
 local iconOrder = {6, 3, 7, 1, 2} -- blue, diamond, red, circle, star, skipping green due to the encounter being green tinted
-local addMarks = {8, 7, 4}
+local addMarks = {8, 5, 4}
 local queenSummonsCollector, queenSummonsMarks = {}, {}
 
 local timersNormal = { -- 11:29
@@ -96,8 +96,8 @@ end
 
 local reactiveToxinMarker = mod:AddMarkerOption(true, "player", 6, 437592, 6, 3, 7, 1, 2) -- Reactive Toxin
 local abyssalInfusionMarker = mod:AddMarkerOption(true, "player", 6, 443888, 1, 2) -- Abyssal Infusion
-local royalCondemnationMarker = mod:AddMarkerOption(true, "player", 6, 438976, 6, 3) -- Royal Condemnation
-local queensSummonsMarker = mod:AddMarkerOption(true, "npc", 8, 444829, 8, 7, 4) -- Queen's Summons
+local royalCondemnationMarker = mod:AddMarkerOption(true, "player", 6, 438976, 6, 3, 7) -- Royal Condemnation
+local queensSummonsMarker = mod:AddMarkerOption(true, "npc", 8, 444829, 8, 5, 4) -- Queen's Summons
 function mod:GetOptions()
 	return {
 		"stages",
