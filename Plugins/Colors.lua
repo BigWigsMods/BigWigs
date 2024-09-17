@@ -242,6 +242,21 @@ function plugin:SetColorOptions(name, key, flags)
 	return t
 end
 
+local function barColorBasedOnSpellId(spellId)  
+    local colors = {
+        {1.00, 0.49, 0.04, 0.8}, -- Orange
+        {0.20, 0.58, 0.50, 0.8}, -- Dark Emerald 
+        {0.25, 0.78, 0.92, 0.8}, -- Light Blue
+        {0.96, 0.55, 0.73, 0.8}, -- Pink
+        {0.78, 0.61, 0.43, 0.8}, -- Tan
+        {0.53, 0.53, 0.93, 0.8}, -- Purple
+        {1.00, 0.96, 0.41, 0.8}, -- Yellow
+        {0.64, 0.19, 0.79, 0.8}, -- Dark Magenta
+    };
+
+    return colors[(spellId % 7) + 1]
+end
+
 local defaultKey = "default"
 -- the pluginOptions are a slightly altered copy of the defaults
 plugin.pluginOptions = copyTable({}, plugin:SetColorOptions(plugin.name, defaultKey))
@@ -269,7 +284,11 @@ function plugin:GetColorTable(hint, module, key)
 	end
 	local t = self.db.profile[hint][name][key] -- no key passed -> return our default
 	if compareTable(t, plugin.defaultDB[hint]["*"]["*"]) then -- unchanged profile entry, go with the defaultColors
-		t = self.db.profile[hint][plugin.name][defaultKey]
+		if type(key) == "number" and (hint == 'barColor' or hint == 'barEmphasized') then -- select bar color based on spellId
+			t = barColorBasedOnSpellId(key)
+		else
+			t = self.db.profile[hint][plugin.name][defaultKey]
+		end
 	end
 	return t
 end
