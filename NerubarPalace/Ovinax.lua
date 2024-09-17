@@ -225,6 +225,9 @@ do
 			playerList[#playerList+1] = player
 			playerList[player] = icon
 			self:TargetsMessage(442526, "yellow", playerList, nil, CL.count:format(self:SpellName(442526), experimentalDosageCount - 1))
+			if not self:Mythic() then
+				self:CustomIcon("custom_on_experimental_dosage_marks", player, icon)
+			end
 		end
 	end
 
@@ -261,6 +264,9 @@ do
 	function mod:ExperimentalDosageRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(442526)
+		end
+		if not self:Mythic() then
+			self:CustomIcon("custom_on_experimental_dosage_marks", args.destName)
 		end
 	end
 end
