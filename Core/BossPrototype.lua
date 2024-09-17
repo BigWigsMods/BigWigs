@@ -1243,19 +1243,23 @@ do
 								soundFileName = sound,
 								outputChannel = "master",
 							})
-							if privateAuraSoundId then
+							if type(privateAuraSoundId) == "number" then
 								self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+							else
+								self:Error("Failed to register Private Aura %q with return: %s", spellId, tostring(privateAuraSoundId))
 							end
 							if option.extra then
 								for _, id in next, option.extra do
-									local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-										spellID = spellId,
+									local extrasSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+										spellID = id,
 										unitToken = "player",
 										soundFileName = sound,
 										outputChannel = "master",
 									})
-									if privateAuraSoundId then
-										self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+									if type(extrasSoundId) == "number" then
+										self.privateAuraSounds[#self.privateAuraSounds + 1] = extrasSoundId
+									else
+										self:Error("Failed to register Private Aura %q with return: %s", id, tostring(extrasSoundId))
 									end
 								end
 							end
