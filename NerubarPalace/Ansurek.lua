@@ -119,7 +119,7 @@ function mod:GetOptions()
 		-- Intermission: The Spider's Web
 		447076, -- Predation
 		447456, -- Paralyzing Venom
-		447411, -- Wrest
+		{447411, "CASTBAR"}, -- Wrest
 
 		-- Stage Two: Royal Ascension
 		443403, -- Gloom (Damage)
@@ -551,6 +551,7 @@ function mod:Wrest(args)
 	self:PlaySound(args.spellId, "alert")
 	wrestCount = wrestCount + 1
 	self:Bar(args.spellId, 19.0, CL.count:format(L.wrest, wrestCount))
+	self:CastBar(args.spellId, 6, CL.count:format(L.wrest, wrestCount))
 end
 
 -- Stage Two: Royal Ascension
@@ -585,6 +586,7 @@ do
 				self:Message(447411, "red", CL.count:format(L.wrest, wrestCount))
 				self:PlaySound(447411, "alert")
 				onMe = true
+				self:CastBar(args.spellId, 5, CL.count:format(L.wrest, wrestCount))
 			end
 		end
 	end
