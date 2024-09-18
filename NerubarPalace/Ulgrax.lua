@@ -80,6 +80,7 @@ function mod:OnBossEnable()
 	-- Gleeful Brutality
 	self:Log("SPELL_CAST_START", "BrutalCrush", 434697)
 	self:Log("SPELL_AURA_APPLIED", "TenderizedApplied", 434705)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TenderizedApplied", 434705)
 	self:Log("SPELL_CAST_SUCCESS", "CarnivorousContest", 434803)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Carnivorous Contest target
 	-- self:Log("SPELL_AURA_APPLIED", "CarnivorousContestApplied", 434803) -- using cast target
@@ -170,7 +171,14 @@ end
 
 function mod:TenderizedApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
-	self:PlaySound(args.spellId, "warning") -- tankswap
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm")
+	else
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
+		if self:Tank() and unit and not self:Tanking(unit) then
+			self:PlaySound(args.spellId, "warning") -- tankswap
+		end
+	end
 end
 
 function mod:CarnivorousContest(args)
