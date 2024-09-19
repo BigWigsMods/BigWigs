@@ -232,3 +232,4 @@ L.dodge = "躲開" -- 躲開/躲避/閃避/躲圈? When you need to continually 
 L.smash = "重擊" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 --L.spike = "Spike" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 --L.spikes = "Spikes" -- Plural of L.spike
+--L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean

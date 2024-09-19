@@ -233,3 +233,4 @@ L.health_drain = "Drain de santé" -- Any ability that drains health from the pl
 L.smash = "Choc" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike
+--L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
