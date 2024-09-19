@@ -127,7 +127,6 @@ end
 
 local L = mod:GetLocale()
 if L then
-	L.rolling_acid = "Waves"
 	L.spinnerets_strands = "Strands"
 	L.enveloping_webs = "Webs"
 	L.enveloping_web_say = "Web" -- Singular of Webs
@@ -162,7 +161,7 @@ function mod:GetOptions()
 	}, {
 		[454989] = "mythic",
 	}, {
-		[439789] = L.rolling_acid, -- Rolling Acid (Waves)
+		[439789] = CL.waves, -- Rolling Acid (Waves)
 		[455373] = CL.adds, -- Infested Spawn (Adds)
 		[439784] = L.spinnerets_strands, -- Spinneret's Strands (Strands)
 		[439795] = CL.soak, -- Web Reave (Soak)
@@ -172,7 +171,7 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
-	self:SetSpellRename(439789, L.rolling_acid) -- Rolling Acid (Waves)
+	self:SetSpellRename(439789, CL.waves) -- Rolling Acid (Waves)
 	self:SetSpellRename(455373, CL.adds) -- Infested Spawn (Adds)
 	self:SetSpellRename(439784, L.spinnerets_strands) -- Spinneret's Strands (Strands)
 	self:SetSpellRename(439795, CL.soak) -- Web Reave (Soak)
@@ -226,7 +225,7 @@ function mod:OnEngage()
 
 	self:Bar(439811, self:Mythic() and 8.1 or 3.0, CL.count:format(L.erosive_spray, erosiveSprayCount[2])) -- Erosive Spray
 	self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
-	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
+	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1])) -- Rolling Acid
 	self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
 	self:Bar("stages", self:Mythic() and 56.7 or self:Easy() and 90.0 or 87, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
 	if self:Mythic() then
@@ -254,13 +253,13 @@ function mod:SavageWoundApplied(args)
 end
 
 function mod:RollingAcid(args)
-	self:StopBar(CL.count:format(L.rolling_acid, rollingAcidCount[1]))
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.rolling_acid, rollingAcidCount[1])))
+	self:StopBar(CL.count:format(CL.waves, rollingAcidCount[1]))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(CL.waves, rollingAcidCount[1])))
 	-- self:PlaySound(args.spellId, "alert")
 	rollingAcidCount[1] = rollingAcidCount[1] + 1 -- Total
 	rollingAcidCount[2] = rollingAcidCount[2] + 1 -- Stage
 	if not self:LFR() then -- 1 per in lfr
-		self:Bar(args.spellId, cd(args.spellId, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1]))
+		self:Bar(args.spellId, cd(args.spellId, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1]))
 	end
 end
 
@@ -408,7 +407,7 @@ function mod:AcidicEruptionInterrupted(args)
 		erosiveSprayCount[2] = 1
 		envelopingWebsCount[2] = 1
 
-		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
+		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1])) -- Rolling Acid
 		self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
 		self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
 		if self:Mythic() then

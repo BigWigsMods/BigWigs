@@ -17,7 +17,6 @@ end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "frFR")
 if L then
-	L.rolling_acid = "Vagues"
 	L.spinnerets_strands = "Brins"
 	L.enveloping_webs = "Toiles"
 	L.enveloping_web_say = "Toile" -- Singular of Webs
