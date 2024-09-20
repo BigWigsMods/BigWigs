@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
+--L.tempNPMsg = "Season 1 nameplate timers active."
+
 -- Core.lua
 L.berserk = "Frenesi"
 L.berserk_desc = "Mostra uma barra e um contador para quando o chefe entrar em Frenesi."
