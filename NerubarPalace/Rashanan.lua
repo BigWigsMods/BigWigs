@@ -30,27 +30,31 @@ local canStartPhase = false
 
 -- the stages are just segments of the fight with different cast sequences
 -- grouping by spell id instead of stage to make copy pasta easier
-local timersNormal = { -- 7:18
+local timersNormal = { -- 12:43
 	[439789] = { -- Rolling Acid
-		{43.3, 0},
+		{43.4, 0},
 		{18.4, 53.0, 0},
 		{65.5, 0},
 		{65.5, 0},
-		{18.4, 0},
+		{18.4, 53.0, 0},
+		{44.0, 0},
 	},
 	[455373] = { -- Infested Spawn
 		{62.5, 0},
 		{41.5, 0},
 		{15.9, 53.0, 0},
-		{42.0, 0},
+		{41.5, 0},
 		{63.5, 0},
+		{15.9, 53.0, 0},
 	},
 	[439784] = { -- Spinneret's Strands
-		{14.8, 52.9, 0},
+		{14.8, 53.0, 0},
 		{62.5, 0},
 		{41.0, 0},
-		{15.4, 0},
+		{15.4, 53.0, 0},
 		{41.0, 0},
+		{62.5, 0},
+		{15.4, 0},
 	},
 }
 local timersHeroic = { -- 10:26
@@ -314,7 +318,7 @@ end
 
 function mod:ErosiveSpray(args)
 	self:StopBar(CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
-	if self:Mythic() and erosiveSprayCount[1] == 12 then -- soft enrage?
+	if erosiveSprayCount[1] >= (self:Mythic() and 12 or self:Heroic() and 13 or 15) then -- soft enrage?
 		self:Message(args.spellId, "red", CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
 		self:PlaySound(args.spellId, "long")
 	else
@@ -334,7 +338,7 @@ function mod:ErosiveSpray(args)
 				cd = 40.0
 			end
 		else
-			local timer = {3.0, 29.6, 44.4}
+			local timer = { 3.0, 29.6, 44.4 }
 			cd = timer[erosiveSprayCount[2]]
 		end
 	elseif erosiveSprayCount[2] == 2 then -- then 2 per
