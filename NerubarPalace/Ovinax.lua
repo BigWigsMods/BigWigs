@@ -241,7 +241,7 @@ do
 		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount)) -- 1.5s Cast + debuffDuration
 		experimentalDosageCount = experimentalDosageCount + 1
 
-		if experimentalDosageCount < 9 and experimentalDosageCount % 3 ~= 1 then -- No more than 9, starting every 3rd on Ingest Black Blood
+		if experimentalDosageCount < 10 and experimentalDosageCount % 3 ~= 1 then -- No more than 9, starting every 3rd on Ingest Black Blood
 			self:Bar(args.spellId, 50.0, CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		end
 
