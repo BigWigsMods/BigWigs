@@ -24,6 +24,7 @@ local infestedSpawnCount = {1, 1}
 local spinneretsStrandsCount = {1, 1}
 local erosiveSprayCount = {1, 1}
 local envelopingWebsCount = {1, 1}
+local savageAssaultCount = 1
 local causticHailCount = 1
 local webReaveCount = 1
 local canStartPhase = false
@@ -223,10 +224,12 @@ function mod:OnEngage()
 	spinneretsStrandsCount = {1, 1}
 	erosiveSprayCount = {1, 1}
 	envelopingWebsCount = {1, 1}
+	savageAssaultCount = 1
 	causticHailCount = 1
 	webReaveCount = 1
 	canStartPhase = false
 
+	self:Bar(444687, self:Mythic() and 5.6 or 10.5, CL.count:format(self:SpellName(444687), savageAssaultCount)) -- Savage Assault
 	self:Bar(439811, self:Mythic() and 8.1 or 3.0, CL.count:format(L.erosive_spray, erosiveSprayCount[2])) -- Erosive Spray
 	self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
 	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1])) -- Rolling Acid
@@ -244,9 +247,36 @@ end
 function mod:SavageAssault(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
-	-- XXX can skip the short cast? that's annoying
-	-- [10.5] 14.8, 23.7, 5.9, 14.8, 3.7, 39.0
-	-- self:Bar(args.spellId, 10)
+	savageAssaultCount = savageAssaultCount + 1
+
+	-- XXX frequently skipped the follow up cast in testing, but seems fine now
+	local cd
+	if self:Mythic() then
+		if self:GetStage() == 1 then
+			local timer = { 5.6, 22.6, 2.0, 12.9, 2.5 }
+			cd = timer[savageAssaultCount]
+		else
+			local timer = { 9.8, 2.0, 18.0, 2.0, 11.8, 2.5 }
+			cd = timer[savageAssaultCount]
+		end
+	elseif self:Heroic() then
+		if self:GetStage() == 1 then
+			local timer = { 10.5, 14.8, 23.1, 6.5, 14.8 }
+			cd = timer[savageAssaultCount]
+		else
+			local timer = { 11.1, 14.8, 23.7, 5.9, 14.8, 3.7 }
+			cd = timer[savageAssaultCount]
+		end
+	else -- Easy
+		if self:GetStage() == 1 then
+			local timer = { 10.9, 15.7, 23.6, 7.8, 15.7 }
+			cd = timer[savageAssaultCount]
+		else
+			local timer = { 3.6, 7.8, 15.7, 23.5, 7.8, 15.7 }
+			cd = timer[savageAssaultCount]
+		end
+	end
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, savageAssaultCount))
 end
 
 function mod:SavageWoundApplied(args)
@@ -410,7 +440,9 @@ function mod:AcidicEruptionInterrupted(args)
 		spinneretsStrandsCount[2] = 1
 		erosiveSprayCount[2] = 1
 		envelopingWebsCount[2] = 1
+		savageAssaultCount = 1
 
+		self:Bar(444687, self:Mythic() and 9.8 or 11.1, CL.count:format(self:SpellName(444687), savageAssaultCount)) -- Savage Assault
 		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1])) -- Rolling Acid
 		self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
 		self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
