@@ -410,7 +410,8 @@ function mod:VenomNova(args)
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.venom_nova, venomNovaCount)))
 	self:PlaySound(args.spellId, "alert")
 	venomNovaCount = venomNovaCount + 1
-	if (not self:Story() and venomNovaCount < 4) or (self:Story() and venomNovaCount < 3) then
+	local maxCasts = self:Story() and 3 or 4
+	if venomNovaCount < maxCasts then
 		self:Bar(args.spellId, self:Story() and 38 or 56.0, CL.count:format(L.venom_nova, venomNovaCount))
 	end
 end
@@ -645,7 +646,7 @@ do
 		if args.time - prev > 2 then
 			prev = args.time
 			if self:Story() then
-				self:Message("stages", "cyan", L.stage_two_end_message_storymode, false, nil, 5)
+				self:Message("stages", "cyan", L.stage_two_end_message_storymode, false, nil, 5) -- Stay onscreen for 4s
 			else
 				self:Message("stages", "cyan", CL.killed:format(args.destName), false)
 				self:Bar(448046, self:Easy() and 7.1 or 5.9, CL.knockback) -- Gloom Eruption
@@ -865,7 +866,11 @@ function mod:FrothingGluttony(args)
 	self:PlaySound(args.spellId, "alert")
 	frothingGluttonyCount = frothingGluttonyCount + 1
 	-- 4th (5th in LFR) cast triggers Cataclysmic Evolution
-	local cd = self:Story() and 53.0 or (frothingGluttonyCount < (self:LFR() and 5 or 4) and 80 or 25.5)
+	local cataclysmicRequired = self:LFR() and 5 or 4
+	local cd = frothingGluttonyCount < cataclysmicRequired and 80 or 25.5
+	if self:Story() then
+		cd = 53
+	end
 	self:Bar(args.spellId, cd, CL.count:format(L.frothing_gluttony, frothingGluttonyCount))
 end
 
