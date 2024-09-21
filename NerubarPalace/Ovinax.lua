@@ -329,7 +329,7 @@ function mod:StickyWeb(args)
 	stickyWebCount = stickyWebCount + 1
 	local cd = 30
 	local ingestTimeLeft = nextIngest - GetTime()
-	if ingestTimeLeft > cd then
+	if ingestTimeLeft > cd or ingestBlackBloodCount > 3 then
 		self:Bar(446349, cd, CL.count:format(args.spellName, stickyWebCount))
 	end
 end
