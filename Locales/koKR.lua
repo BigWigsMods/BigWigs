@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "koKR")
 if not L then return end
 
---L.tempNPMsg = "Season 1 nameplate timers active."
+L.tempNPMsg = "시즌 1 이름표 타이머 활성화."
 
 -- Core.lua
 L.berserk = "광폭화"
