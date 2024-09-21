@@ -75,5 +75,5 @@ if L then
 	L.royal_condemnation = "족쇄"
 	L.frothing_gluttony = "고리"
 
-	--L.stage_two_end_message_storymode = "Run into the portal!"
+	--L.stage_two_end_message_storymode = "Run into the portal"
 end
