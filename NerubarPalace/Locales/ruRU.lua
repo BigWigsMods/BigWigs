@@ -74,4 +74,6 @@ if L then
 	--L.slow = "Slow"
 	--L.royal_condemnation = "Shackles"
 	--L.frothing_gluttony = "Ring"
+
+	--L.stage_two_end_message_storymode = "Run into the portal!"
 end

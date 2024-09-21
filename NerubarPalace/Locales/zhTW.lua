@@ -74,4 +74,6 @@ if L then
 	L.slow = "緩速"
 	L.royal_condemnation = "鐐銬"
 	L.frothing_gluttony = "暴食" -- 起沫暴食/黑環
+
+	--L.stage_two_end_message_storymode = "Run into the portal!"
 end
