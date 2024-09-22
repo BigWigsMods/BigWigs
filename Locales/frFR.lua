@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "frFR")
 if not L then return end
 
---L.tempNPMsg = "Season 1 nameplate timers active."
+L.tempNPMsg = "Comptes à rebours des barres d'infos de la saison 1 activés."
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -164,7 +164,7 @@ L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
 L.ME_ONLY_EMPHASIZE = "Mise en évidence (sur moi)"
 L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tous les messages associés à cette technique UNIQUEMENT si vous en êtes la cible, les rendant plus grands et plus visibles."
-L.NAMEPLATE = "Barres de nom"
+L.NAMEPLATE = "Barres d'infos"
 L.NAMEPLATE_desc = "Si activé, les fonctionnalités telles que les icônes et le text relatif à cette technique spéciale s'affichera sur vos barres de noms. Cela permet de voir plus facilement quel PNJ est en train de lancer une capacité lorsqu'il y a plusieurs PNJs qui la lancent."
 L.PRIVATE = "Aura personnelle"
 L.PRIVATE_desc = "Les auras personnelles ne peuvent pas être suivies, cependant le son \"sur vous\" (Avertissement) peut être activé dans l'onglet Son."
@@ -227,7 +227,7 @@ L.imported_message_colors = "Couleurs des messages"
 L.imported_countdown_position = "Position du compte à rebours"
 L.imported_countdown_settings = "Paramètres du compte à rebours"
 L.imported_countdown_color = "Couleur du compte à rebours"
---L.imported_nameplate_settings = "Nameplate Settings"
+L.imported_nameplate_settings = "Paramètres de barres d'infos"
 
 -- Statistics
 L.statistics = "Statistiques"
