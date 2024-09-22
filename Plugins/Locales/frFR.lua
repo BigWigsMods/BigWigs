@@ -142,8 +142,8 @@ L.sendBreak = "Envoi d'un temps de pause aux utilisateurs de BigWigs et DBM."
 L.breakStarted = "Temps de pause lancé par %2$s (%1$s)."
 L.breakStopped = "Temps de pause annulé par %s."
 L.breakBar = "Temps de pause"
-L.breakMinutes = "Fin de la pause dans %d |4minute:minutes; !"
-L.breakSeconds = "Fin de la pause dans %d |4seconde:secondes; !"
+L.breakMinutes = "Fin de la pause dans %d |4minute:minutes; !"
+L.breakSeconds = "Fin de la pause dans %d |4seconde:secondes; !"
 L.breakFinished = "Le temps de pause est terminé !"
 
 -----------------------------------------------------------------------

@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "frFR")
 if not L then return end
 if L then
-	--L.carnivorous_contest_pull = "Pull In"
-	L.chunky_viscera_message = "Nourrissez le boss! (Bouton d'action spécial)"
+	L.carnivorous_contest_pull = "Attraction"
+	L.chunky_viscera_message = "Nourrissez le boss ! (Bouton d'action spécial)"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "frFR")
 if L then
-	--L.gruesome_disgorge_debuff = "Phase Shift"
+	L.gruesome_disgorge_debuff = "Déphasage"
 	L.grasp_from_beyond = "Tentacule"
 	L.grasp_from_beyond_say = "Tentacules"
 	L.bloodcurdle = "Écartez-vous"
@@ -26,9 +26,9 @@ end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "frFR")
 if L then
-	--L.sticky_web = "Webs"
+	L.sticky_web = "Toile"
 	L.sticky_web_say = "Toiles" -- Singular of Webs
-	L.infest_message = "Lance Infester sur vous !"
+	L.infest_message = "Lance Infester sur vous !"
 	L.infest_say = "Parasites"
 	L.experimental_dosage = "Éclosion d'œufs"
 	L.experimental_dosage_say = "Casseur d'œufs"
@@ -63,17 +63,17 @@ end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "frFR")
 if L then
-	--L.stacks_onboss = "%dx %s on BOSS"
+	L.stacks_onboss = "%dx %s sur le Boss"
 
-	--L.reactive_toxin = "Toxins"
-	--L.reactive_toxin_say = "Toxin"
-	--L.venom_nova = "Nova"
-	--L.web_blades = "Blades"
-	--L.silken_tomb = "Roots" -- Raid being rooted in place
-	--L.wrest = "Pull In"
-	--L.slow = "Slow"
-	--L.royal_condemnation = "Shackles"
-	--L.frothing_gluttony = "Ring"
+	L.reactive_toxin = "Toxines"
+	L.reactive_toxin_say = "Toxine"
+	L.venom_nova = "Nova"
+	L.web_blades = "Lames"
+	L.silken_tomb = "Immobilisation" -- Raid being rooted in place
+	L.wrest = "Attraction"
+	L.slow = "Ralentissement"
+	L.royal_condemnation = "Entraves"
+	L.frothing_gluttony = "Anneau"
 
-	--L.stage_two_end_message_storymode = "Run into the portal"
+	L.stage_two_end_message_storymode = "Courez vers le portail"
 end
