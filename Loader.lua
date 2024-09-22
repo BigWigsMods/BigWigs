@@ -1735,7 +1735,7 @@ do
 		if type(zoneAddon) == "table" then
 			-- default to the expansion addon for current season modules
 			zoneAddon = zoneAddon[1]
-			if not BigWigsTempNameplates then
+			if enableZones[id] and not BigWigsTempNameplates then -- XXX temp
 				BigWigsTempNameplates = true
 				CTimerAfter(1, function() sysprint(L.tempNPMsg) end)
 				RaidNotice_AddMessage(RaidWarningFrame, "BigWigs: ".. L.tempNPMsg, {r=1,g=1,b=1}, 10)
