@@ -646,7 +646,7 @@ do
 		if args.time - prev > 2 then
 			prev = args.time
 			if self:Story() then
-				self:Message("stages", "cyan", L.stage_two_end_message_storymode, false, nil, 5) -- Stay onscreen for 4s
+				self:Message("stages", "cyan", L.stage_two_end_message_storymode, false, nil, 5) -- Stay onscreen for 5s
 			else
 				self:Message("stages", "cyan", CL.killed:format(args.destName), false)
 				self:Bar(448046, self:Easy() and 7.1 or 5.9, CL.knockback) -- Gloom Eruption
