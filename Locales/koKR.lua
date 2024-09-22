@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "koKR")
 if not L then return end
 
+L.tempNPMsg = "시즌 1 이름표 타이머 활성화."
+
 -- Core.lua
 L.berserk = "광폭화"
 L.berserk_desc = "우두머리가 언제 광폭화하는지 바와 시간 경고를 표시합니다."

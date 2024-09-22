@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "deDE")
 if not L then return end
 
+L.tempNPMsg = "Saison 1 Namensplaketten Timer aktiv."
+
 -- Core.lua
 L.berserk = "Berserker"
 L.berserk_desc = "Warnt, wenn der Boss zum Berserker wird."

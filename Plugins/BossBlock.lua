@@ -351,28 +351,28 @@ do
 		if self.db.profile.disableSfx then
 			local sfx = GetCVar("Sound_EnableSFX")
 			if sfx == "0" then
-				BigWigs:Print(L.userNotifySfx);
+				BigWigs:Print(L.userNotifySfx)
 			end
 			SetCVar("Sound_EnableSFX", "1")
 		end
 		if self.db.profile.disableMusic then
 			local music = GetCVar("Sound_EnableMusic")
 			if music == "0" then
-				BigWigs:Print(L.userNotifyMusic);
+				BigWigs:Print(L.userNotifyMusic)
 			end
 			SetCVar("Sound_EnableMusic", "1")
 		end
 		if self.db.profile.disableAmbience then
 			local ambience = GetCVar("Sound_EnableAmbience")
 			if ambience == "0" then
-				BigWigs:Print(L.userNotifyAmbience);
+				BigWigs:Print(L.userNotifyAmbience)
 			end
 			SetCVar("Sound_EnableAmbience", "1")
 		end
 		if self.db.profile.disableErrorSpeech then
 			local errorSpeech = GetCVar("Sound_EnableErrorSpeech")
 			if errorSpeech == "0" then
-				BigWigs:Print(L.userNotifyErrorSpeech);
+				BigWigs:Print(L.userNotifyErrorSpeech)
 			end
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
@@ -998,7 +998,9 @@ do
 		[-2238] = { -- Amirdrassil
 			function() return latestKill[1] == 2565 end, -- After killing Tindral, flying into the tree
 			function() return latestKill[1] == 2519 and GetTime()-latestKill[2] < 6 end, -- After killing Fyrakk, but don't trigger when talking to the NPC after killing him
-		}
+		},
+		[-2292] = true, -- Nerub-ar Palace, Ulgrax defeat
+		[-2296] = true, -- Nerub-ar Palace, Ansurek defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.

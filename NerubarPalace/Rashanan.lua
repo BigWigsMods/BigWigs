@@ -10,8 +10,8 @@ mod:SetRespawnTime(30)
 mod:SetStage(1)
 mod:SetPrivateAuraSounds({
 	439790, -- Rolling Acid
-	{439815, extra = {455284}}, -- Infested Spawn XXX Still unknown which is exactly used, neither in WCL.
-	{439783}, -- Spinneret's Strands
+	439815, -- Infested Spawn
+	439783, -- Spinneret's Strands
 })
 
 --------------------------------------------------------------------------------
@@ -24,33 +24,38 @@ local infestedSpawnCount = {1, 1}
 local spinneretsStrandsCount = {1, 1}
 local erosiveSprayCount = {1, 1}
 local envelopingWebsCount = {1, 1}
+local savageAssaultCount = 1
 local causticHailCount = 1
 local webReaveCount = 1
 local canStartPhase = false
 
 -- the stages are just segments of the fight with different cast sequences
 -- grouping by spell id instead of stage to make copy pasta easier
-local timersNormal = { -- 7:18
+local timersNormal = { -- 12:43
 	[439789] = { -- Rolling Acid
-		{43.3, 0},
+		{43.4, 0},
 		{18.4, 53.0, 0},
 		{65.5, 0},
 		{65.5, 0},
-		{18.4, 0},
+		{18.4, 53.0, 0},
+		{44.0, 0},
 	},
 	[455373] = { -- Infested Spawn
 		{62.5, 0},
 		{41.5, 0},
 		{15.9, 53.0, 0},
-		{42.0, 0},
+		{41.5, 0},
 		{63.5, 0},
+		{15.9, 53.0, 0},
 	},
 	[439784] = { -- Spinneret's Strands
-		{14.8, 52.9, 0},
+		{14.8, 53.0, 0},
 		{62.5, 0},
 		{41.0, 0},
-		{15.4, 0},
+		{15.4, 53.0, 0},
 		{41.0, 0},
+		{62.5, 0},
+		{15.4, 0},
 	},
 }
 local timersHeroic = { -- 10:26
@@ -81,28 +86,36 @@ local timersHeroic = { -- 10:26
 }
 local timersMythic = { -- 5:42
 	[439789] = { -- Rolling Acid
-		{16.2, 30.3, 0},
-		{61.2, 0},
-		{16.8, 29.7, 14.7, 0},
-		{},
+		{35.1, 0},
+		{40.7, 0},
+		{15.9, 0},
+		{0},
+		{20.7, 0},
+		{0},
 	},
 	[455373] = { -- Infested Spawn
-		{39.9, 0},
-		{20.8, 24.2, 0},
-		{20.8, 0},
-		{15.3, 25.3, 0},
+		{18.7, 0},
+		{14.4, 0},
+		{0},
+		{14.3, 20.0, 0},
+		{14.3, 24.8, 0},
+		{19.1, 0},
 	},
 	[439784] = { -- Spinneret's Strands
-		{19.6, 45.0, 0},
-		{40.0, 0},
-		{40.0, 0},
-		{20.3, 38.9, 0},
+		{14.2, 0},
+		{33.8, 0},
+		{18.7, 15.2, 0},
+		{18.7, 0},
+		{0},
+		{13.9, 20.0, 0},
 	},
 	[454989] = { -- Enveloping Webs
-		{60.1, 0},
-		{14.7, 50.0, 0},
-		{64.8, 0},
-		{45.1, 19.7, 0},
+		{38.1, 0},
+		{18.6, 0},
+		{38.6, 0},
+		{38.6, 0},
+		{33.9, 0},
+		{38.6, 0},
 	},
 }
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
@@ -119,7 +132,6 @@ end
 
 local L = mod:GetLocale()
 if L then
-	L.rolling_acid = "Waves"
 	L.spinnerets_strands = "Strands"
 	L.enveloping_webs = "Webs"
 	L.enveloping_web_say = "Web" -- Singular of Webs
@@ -154,7 +166,7 @@ function mod:GetOptions()
 	}, {
 		[454989] = "mythic",
 	}, {
-		[439789] = L.rolling_acid, -- Rolling Acid (Waves)
+		[439789] = CL.waves, -- Rolling Acid (Waves)
 		[455373] = CL.adds, -- Infested Spawn (Adds)
 		[439784] = L.spinnerets_strands, -- Spinneret's Strands (Strands)
 		[439795] = CL.soak, -- Web Reave (Soak)
@@ -164,7 +176,7 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
-	self:SetSpellRename(439789, L.rolling_acid) -- Rolling Acid (Waves)
+	self:SetSpellRename(439789, CL.waves) -- Rolling Acid (Waves)
 	self:SetSpellRename(455373, CL.adds) -- Infested Spawn (Adds)
 	self:SetSpellRename(439784, L.spinnerets_strands) -- Spinneret's Strands (Strands)
 	self:SetSpellRename(439795, CL.soak) -- Web Reave (Soak)
@@ -212,17 +224,18 @@ function mod:OnEngage()
 	spinneretsStrandsCount = {1, 1}
 	erosiveSprayCount = {1, 1}
 	envelopingWebsCount = {1, 1}
+	savageAssaultCount = 1
 	causticHailCount = 1
 	webReaveCount = 1
 	canStartPhase = false
 
-	self:Bar(439811, 3.0, CL.count:format(L.erosive_spray, erosiveSprayCount[1])) -- Erosive Spray
+	self:Bar(444687, self:Mythic() and 5.6 or 10.5, CL.count:format(self:SpellName(444687), savageAssaultCount)) -- Savage Assault
+	self:Bar(439811, self:Mythic() and 8.1 or 3.0, CL.count:format(L.erosive_spray, erosiveSprayCount[2])) -- Erosive Spray
 	self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
-	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
+	self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1])) -- Rolling Acid
 	self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
-	self:Bar("stages", self:Easy() and 90.0 or 87, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
+	self:Bar("stages", self:Mythic() and 56.7 or self:Easy() and 90.0 or 87, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
 	if self:Mythic() then
-		self:Bar(439795, 51.2, CL.count:format(CL.soak, webReaveCount)) -- Web Reave
 		self:Bar(454989, cd(454989, envelopingWebsCount[2]), CL.count:format(L.enveloping_webs, envelopingWebsCount[1])) -- Enveloping Webs
 	end
 end
@@ -234,9 +247,36 @@ end
 function mod:SavageAssault(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
-	-- XXX can skip the short cast? that's annoying
-	-- [10.5] 14.8, 23.7, 5.9, 14.8, 3.7, 39.0
-	-- self:Bar(args.spellId, 10)
+	savageAssaultCount = savageAssaultCount + 1
+
+	-- XXX frequently skipped the follow up cast in testing, but seems fine now
+	local cd
+	if self:Mythic() then
+		if self:GetStage() == 1 then
+			local timer = { 5.6, 22.6, 2.0, 12.9, 2.5 }
+			cd = timer[savageAssaultCount]
+		else
+			local timer = { 9.8, 2.0, 18.0, 2.0, 11.8, 2.5 }
+			cd = timer[savageAssaultCount]
+		end
+	elseif self:Heroic() then
+		if self:GetStage() == 1 then
+			local timer = { 10.5, 14.8, 23.1, 6.5, 14.8 }
+			cd = timer[savageAssaultCount]
+		else
+			local timer = { 11.1, 14.8, 23.7, 5.9, 14.8, 3.7 }
+			cd = timer[savageAssaultCount]
+		end
+	else -- Easy
+		if self:GetStage() == 1 then
+			local timer = { 10.9, 15.7, 23.6, 7.8, 15.7 }
+			cd = timer[savageAssaultCount]
+		else
+			local timer = { 3.6, 7.8, 15.7, 23.5, 7.8, 15.7 }
+			cd = timer[savageAssaultCount]
+		end
+	end
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, savageAssaultCount))
 end
 
 function mod:SavageWoundApplied(args)
@@ -247,12 +287,14 @@ function mod:SavageWoundApplied(args)
 end
 
 function mod:RollingAcid(args)
-	self:StopBar(CL.count:format(L.rolling_acid, rollingAcidCount[1]))
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.rolling_acid, rollingAcidCount[1])))
+	self:StopBar(CL.count:format(CL.waves, rollingAcidCount[1]))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(CL.waves, rollingAcidCount[1])))
 	-- self:PlaySound(args.spellId, "alert")
 	rollingAcidCount[1] = rollingAcidCount[1] + 1 -- Total
 	rollingAcidCount[2] = rollingAcidCount[2] + 1 -- Stage
-	self:Bar(args.spellId, cd(args.spellId, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1]))
+	if not self:LFR() then -- 1 per in lfr
+		self:Bar(args.spellId, cd(args.spellId, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1]))
+	end
 end
 
 function mod:AcidicStuporApplied(args)
@@ -278,7 +320,9 @@ function mod:InfestedSpawn(args)
 	self:PlaySound(args.spellId, "info") -- adds
 	infestedSpawnCount[1] = infestedSpawnCount[1] + 1 -- Total
 	infestedSpawnCount[2] = infestedSpawnCount[2] + 1 -- Stage
-	self:Bar(args.spellId, cd(args.spellId, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1]))
+	if not self:LFR() then -- 1 per in lfr
+		self:Bar(args.spellId, cd(args.spellId, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1]))
+	end
 end
 
 function mod:InfestedBiteApplied(args)
@@ -297,13 +341,20 @@ function mod:SpinneretsStrands(args)
 	self:PlaySound(args.spellId, "alert")
 	spinneretsStrandsCount[1] = spinneretsStrandsCount[1] + 1
 	spinneretsStrandsCount[2] = spinneretsStrandsCount[2] + 1
-	self:Bar(args.spellId, cd(args.spellId, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1]))
+	if not self:LFR() then -- 1 per in lfr
+		self:Bar(args.spellId, cd(args.spellId, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1]))
+	end
 end
 
 function mod:ErosiveSpray(args)
 	self:StopBar(CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
-	self:Message(args.spellId, "yellow", CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
-	self:PlaySound(args.spellId, "alert")
+	if erosiveSprayCount[1] >= (self:Mythic() and 12 or self:Heroic() and 13 or 15) then -- soft enrage?
+		self:Message(args.spellId, "red", CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
+		self:PlaySound(args.spellId, "long")
+	else
+		self:Message(args.spellId, "yellow", CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
+		self:PlaySound(args.spellId, "alert")
+	end
 	erosiveSprayCount[1] = erosiveSprayCount[1] + 1 -- Total
 	erosiveSprayCount[2] = erosiveSprayCount[2] + 1 -- Stage
 
@@ -312,12 +363,16 @@ function mod:ErosiveSpray(args)
 		if self:Easy() then
 			local timer = { 3.0, 31.4, 47.1 }
 			cd = timer[erosiveSprayCount[2]]
+		elseif self:Mythic() then
+			if erosiveSprayCount[2] == 2 then -- only 2
+				cd = 40.0
+			end
 		else
-			local timer = {3.0, 29.6, 44.4}
+			local timer = { 3.0, 29.6, 44.4 }
 			cd = timer[erosiveSprayCount[2]]
 		end
 	elseif erosiveSprayCount[2] == 2 then -- then 2 per
-		cd = self:Easy() and 47.0 or 44.4
+		cd = self:Mythic() and 25.0 or self:Easy() and 47.0 or 44.4
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
 end
@@ -351,17 +406,11 @@ function mod:CausticHail()
 	self:Message("stages", "cyan", CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red")
 	self:PlaySound("stages", "long")
 	causticHailCount = causticHailCount + 1
-
-	-- local timer = {14.0, 20.5, 25.1, 14.3}
-	-- self:CastBar(args.spellId, timer[causticHailCount])
 	canStartPhase = false
 end
 
 function mod:CausticHailDone(args)
-	-- XXX non-mythic lockout? casts 456853 -> 456841(x?) -> 456762, but interrupts before 456762 don't start the next phase
-	-- XXX mythic casts 456853 -> 456762(x?) so this still works, but ???
-	-- self:StopCastBar(args.spellId)
-	-- self:Message(args.spellId, "cyan", CL.over:format(args.spellName))
+	-- done moving
 	canStartPhase = true
 end
 
@@ -391,16 +440,20 @@ function mod:AcidicEruptionInterrupted(args)
 		spinneretsStrandsCount[2] = 1
 		erosiveSprayCount[2] = 1
 		envelopingWebsCount[2] = 1
+		savageAssaultCount = 1
 
-		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(L.rolling_acid, rollingAcidCount[1])) -- Rolling Acid
+		self:Bar(444687, self:Mythic() and 9.8 or 11.1, CL.count:format(self:SpellName(444687), savageAssaultCount)) -- Savage Assault
+		self:Bar(439789, cd(439789, rollingAcidCount[2]), CL.count:format(CL.waves, rollingAcidCount[1])) -- Rolling Acid
 		self:Bar(455373, cd(455373, infestedSpawnCount[2]), CL.count:format(CL.adds, infestedSpawnCount[1])) -- Infested Spawn
 		self:Bar(439784, cd(439784, spinneretsStrandsCount[2]), CL.count:format(L.spinnerets_strands, spinneretsStrandsCount[1])) -- Spinneret's Strands
 		if self:Mythic() then
 			self:Bar(454989, cd(454989, envelopingWebsCount[2]), CL.count:format(L.enveloping_webs, envelopingWebsCount[1])) -- Enveloping Webs
 		end
 		-- self:Bar(439795, 3.6, CL.count:format(CL.soak, webReaveCount)) -- Web Reave
-		self:Bar(439811, self:Easy() and 35.0 or 33.3, CL.count:format(L.erosive_spray, erosiveSprayCount[1])) -- Erosive Spray
-		self:Bar("stages", self:Easy() and 90.5 or 87.0, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
+		self:Bar(439811, self:Mythic() and 23.7 or self:Easy() and 35.0 or 33.3, CL.count:format(L.erosive_spray, erosiveSprayCount[1])) -- Erosive Spray
+		if not self:Mythic() or stage < 6 then -- XXX need to recheck other difficulties for enrage
+			self:Bar("stages", self:Mythic() and 57.3 or self:Easy() and 90.5 or 87.0, CL.count:format(L.caustic_hail, causticHailCount), "inv_dragonflypet_red") -- Caustic Hail, better icon
+		end
 	end
 end
 

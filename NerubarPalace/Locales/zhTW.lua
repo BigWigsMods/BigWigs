@@ -17,7 +17,6 @@ end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "zhTW")
 if L then
-	L.rolling_acid = "波浪"
 	L.spinnerets_strands = "絲線" -- 絲囊?
 	L.enveloping_webs = "蛛網"
 	L.enveloping_web_say = "蛛網" -- Singular of Webs
@@ -64,15 +63,17 @@ end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "zhTW")
 if L then
-	--L.stacks_onboss = "%dx %s on BOSS"
+	L.stacks_onboss = "首領：%d 層%s"
 
-	--L.reactive_toxin = "Toxins"
-	--L.reactive_toxin_say = "Toxin"
-	--L.venom_nova = "Nova"
-	--L.web_blades = "Blades"
-	--L.silken_tomb = "Roots" -- Raid being rooted in place
-	--L.wrest = "Pull In"
-	--L.slow = "Slow"
-	--L.royal_condemnation = "Shackles"
-	--L.frothing_gluttony = "Ring"
+	L.reactive_toxin = "毒素" -- 技能描述用了「毒素」
+	L.reactive_toxin_say = "毒素"
+	L.venom_nova = "新星"
+	L.web_blades = "刀刃" -- 技能描述「刀刃絲網」
+	L.silken_tomb = "絲網" -- Raid being rooted in place
+	L.wrest = "拉扯" -- 好像也不用轉？搶奪只有兩個字
+	L.slow = "緩速"
+	L.royal_condemnation = "鐐銬"
+	L.frothing_gluttony = "暴食" -- 起沫暴食/黑環
+
+	--L.stage_two_end_message_storymode = "Run into the portal"
 end

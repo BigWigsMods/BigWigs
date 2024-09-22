@@ -1,7 +1,7 @@
 
 BigWigs:AddSounds("Ulgrax the Devourer", {
 	[434697] = "alert",
-	[434705] = "warning",
+	[434705] = {"alarm","warning"},
 	[434778] = {"alarm","info"},
 	[434803] = {"alert","warning"},
 	[435136] = "alert",
@@ -52,7 +52,7 @@ BigWigs:AddSounds("Rasha'nan", {
 	[439787] = "alarm",
 	[439792] = "alarm",
 	[439795] = "long",
-	[439811] = "alert",
+	[439811] = {"alert","long"},
 	[444687] = "info",
 	[452806] = {"alert","info"},
 	[454989] = "alarm",

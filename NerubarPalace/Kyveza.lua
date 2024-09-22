@@ -205,7 +205,7 @@ function mod:StarlessNight(args)
 	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:Message(args.spellId, "cyan", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 24, CL.count:format(CL.stage:format(2), starlessNightCount))
+	self:CastBar(args.spellId, 29, CL.count:format(CL.stage:format(2), starlessNightCount))
 	starlessNightCount = starlessNightCount + 1
 	local cd = 130.0
 	if starlessNightCount == 3 then

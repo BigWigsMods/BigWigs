@@ -17,7 +17,6 @@ end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "esMX")
 if L then
-	--L.rolling_acid = "Waves"
 	--L.spinnerets_strands = "Strands"
 	--L.enveloping_webs = "Webs"
 	--L.enveloping_web_say = "Web" -- Singular of Webs
@@ -75,4 +74,6 @@ if L then
 	--L.slow = "Slow"
 	--L.royal_condemnation = "Shackles"
 	--L.frothing_gluttony = "Ring"
+
+	--L.stage_two_end_message_storymode = "Run into the portal"
 end

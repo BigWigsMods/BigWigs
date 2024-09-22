@@ -17,7 +17,6 @@ end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "koKR")
 if L then
-	L.rolling_acid = "파도"
 	L.spinnerets_strands = "가닥"
 	L.enveloping_webs = "거미줄"
 	L.enveloping_web_say = "거미줄" -- Singular of Webs
@@ -75,4 +74,6 @@ if L then
 	L.slow = "이감"
 	L.royal_condemnation = "족쇄"
 	L.frothing_gluttony = "고리"
+
+	--L.stage_two_end_message_storymode = "Run into the portal"
 end
