@@ -174,7 +174,7 @@ function mod:GetOptions()
 		"stages",
 		-- Stage One: Clash of Rivals
 			-- Anub'arash
-			440246, -- Reckless Charge
+			{440246, "CASTBAR"}, -- Reckless Charge
 				440178, -- Reckless Impact
 				440179, -- Entangled
 			441791, -- Burrowed Eruption
@@ -432,8 +432,10 @@ function mod:BurrowedEruption(args)
 end
 
 function mod:RecklessCharge(args)
-	self:StopBar(CL.count:format(CL.charge, recklessChargeCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.charge, recklessChargeCount))
+	local msg = CL.count:format(CL.charge, recklessChargeCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
+	self:CastBar(args.spellId, 6, msg)
 	self:PlaySound(args.spellId, "warning")
 	recklessChargeCount = recklessChargeCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][recklessChargeCount], CL.count:format(CL.charge, recklessChargeCount))
