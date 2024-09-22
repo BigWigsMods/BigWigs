@@ -110,7 +110,7 @@ function mod:GetOptions()
 			464638, -- Frothy Toxin
 			438481, -- Toxic Waves (Damage)
 			437078, -- Acid (Damage)
-		437417, -- Venom Nova
+		{437417, "CASTBAR"}, -- Venom Nova
 			441556, -- Reactive Vapor
 		439814, -- Silken Tomb
 			441958, -- Grasping Silk (Damage)
@@ -167,6 +167,7 @@ function mod:GetOptions()
 	}, {
 		[437592] = L.reactive_toxin, -- Reactive Toxin (Toxins)
 		[451278] = CL.bomb, -- Concentrated Toxin (Bomb)
+		[437417] = L.venom_nova, -- Venom Nova (Nova)
 		[439814] = L.silken_tomb, -- Silken Tomb (Roots)
 		[440899] = CL.pools, -- Liquefy (Pools)
 		[439299] = L.web_blades, -- Web Blades (Blades)
@@ -181,6 +182,16 @@ function mod:GetOptions()
 		[443325] = CL.small_adds, -- Infest (Small Adds)
 		[443336] = CL.pools, -- Gorge (Pools)
 	}
+end
+
+function mod:OnRegister()
+	self:SetSpellRename(439814, L.silken_tomb) -- Silken Tomb (Roots)
+	self:SetSpellRename(447456, L.slow) -- Paralyzing Venom (Slow)
+	self:SetSpellRename(447411, L.wrest) -- Wrest (Pull In)
+	self:SetSpellRename(443888, CL.portals) -- Abyssal Infusion (Portals)
+	self:SetSpellRename(445422, L.frothing_gluttony) -- Frothing Gluttony (Ring)
+	self:SetSpellRename(444829, CL.big_adds) -- Queen's Summons (Big Adds)
+	self:SetSpellRename(438976, L.royal_condemnation) -- Royal Condemnation (Shackles)
 end
 
 function mod:OnBossEnable()
@@ -406,8 +417,10 @@ function mod:ToxicWavesDamage(args)
 end
 
 function mod:VenomNova(args)
-	self:StopBar(CL.count:format(L.venom_nova, venomNovaCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.venom_nova, venomNovaCount)))
+	local msg = CL.count:format(L.venom_nova, venomNovaCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", CL.casting:format(msg))
+	self:CastBar(args.spellId, 6, msg)
 	self:PlaySound(args.spellId, "alert")
 	venomNovaCount = venomNovaCount + 1
 	local maxCasts = self:Story() and 3 or 4
