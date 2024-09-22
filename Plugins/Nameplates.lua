@@ -171,10 +171,10 @@ local function updateProfile()
 	if db.iconSpacing < 0 or db.iconSpacing > 20 then
 		db.iconSpacing = plugin.defaultDB.iconSpacing
 	end
-	if db.iconWidth < 8 or db.iconWidth > 50 then
+	if db.iconWidth < 12 or db.iconWidth > 50 then
 		db.iconWidth = plugin.defaultDB.iconWidth
 	end
-	if db.iconHeight < 8 or db.iconHeight > 50 then
+	if db.iconHeight < 12 or db.iconHeight > 50 then
 		db.iconHeight = plugin.defaultDB.iconHeight
 	end
 	if db.iconOffsetX < -100 or db.iconOffsetX > 100 then
@@ -819,7 +819,7 @@ do
 								type = "range",
 								name = L.width,
 								order = 11,
-								min = 8,
+								min = 12,
 								max = 50,
 								step = 1,
 								width = 1,
@@ -828,7 +828,7 @@ do
 								type = "range",
 								name = L.height,
 								order = 12,
-								min = 8,
+								min = 12,
 								max = 50,
 								step = 1,
 								width = 1,
