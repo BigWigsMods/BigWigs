@@ -75,5 +75,5 @@ if L then
 	L.royal_condemnation = "镣铐"
 	L.frothing_gluttony = "能量环"
 
-	--L.stage_two_end_message_storymode = "Run into the portal"
+	L.stage_two_end_message_storymode = "快进传送门"
 end
