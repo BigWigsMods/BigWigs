@@ -1,6 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "enUS")
 
-L.tempNPMsg = "Season 1 nameplate timers active."
+L.tempNPMsg = "Our season 1 nameplate timers are active."
 
 -- Core.lua
 L.berserk = "Berserk"
