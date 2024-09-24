@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.tempNPMsg = "第一赛季姓名板计时器已激活。"
+L.tempNPMsg = "我们的第1赛季姓名板计时器已激活。"
 
 -- Core.lua
 L.berserk = "狂暴"
