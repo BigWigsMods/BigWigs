@@ -99,7 +99,7 @@ BigWigs:AddColors("The Silken Court", {
 	[438200] = {"blue","purple"},
 	[438218] = "purple",
 	[438355] = {"green","red"},
-	[438656] = {"blue","orange"},
+	[438656] = "orange",
 	[438677] = {"blue","yellow"},
 	[438801] = "cyan",
 	[439838] = "yellow",
@@ -114,7 +114,6 @@ BigWigs:AddColors("The Silken Court", {
 	[441791] = "cyan",
 	[442994] = "red",
 	[443068] = "orange",
-	[443598] = "red",
 	[449857] = "blue",
 	[450045] = "cyan",
 	[450129] = "orange",
@@ -127,6 +126,7 @@ BigWigs:AddColors("The Silken Court", {
 	[456245] = {"blue","green","red"},
 	[460281] = "blue",
 	[460359] = "blue",
+	["berserk"] = "red",
 	["stages"] = "cyan",
 })
 

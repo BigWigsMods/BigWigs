@@ -49,16 +49,21 @@ end
 L = BigWigs:NewBossLocale("The Silken Court", "ruRU")
 if L then
 	L.skipped_cast = "Пропущено %s (%d)"
+	--L.intermission_trigger = "Apex of power!" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "Дождь"
 	L.burrowed_eruption = "Рывок"
 	L.stinging_swarm = "Дебаффы" -- to keep concise
 	L.strands_of_reality = "Фронтал [Н]" -- S for Skeinspinner Takazj
+	L.strands_of_reality_message = "Фронтал [Нитемот Таказдж]"
 	L.impaling_eruption = "Фронтал [А]" -- A for Anub'arash
+	L.impaling_eruption_message = "Фронтал [Ануб'араш]"
 	L.entropic_desolation = "Выбегай"
 	L.cataclysmic_entropy = "Большой взрыв" -- Interrupt before it casts
 	L.spike_eruption = "Шипы"
 	L.unleashed_swarm = "Рой"
+	--L.void_degeneration = "Blue Orb"
+	--L.burning_rage = "Red Orb"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "ruRU")

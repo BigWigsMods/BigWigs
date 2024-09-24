@@ -49,16 +49,21 @@ end
 L = BigWigs:NewBossLocale("The Silken Court", "zhTW")
 if L then
 	--L.skipped_cast = "Skipped %s (%d)"
+	--L.intermission_trigger = "Apex of power!" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "毒雨" -- 毒圈 綠圈
 	L.burrowed_eruption = "鑽地"
 	L.stinging_swarm = "驅散魔法"
 	L.strands_of_reality = "塔卡正面" -- S for Skeinspinner Takazj 塔卡震懾波
+	--L.strands_of_reality_message = "Frontal [Skeinspinner Takazj]"
 	L.impaling_eruption = "阿努正面" -- A for Anub'arash 阿努震懾波
+	--L.impaling_eruption_message = "Frontal [Anub'arash]"
 	L.entropic_desolation = "跑開"
 	L.cataclysmic_entropy = "大爆炸" -- 災變無序/災變
 	L.spike_eruption = "尖刺"
 	L.unleashed_swarm = "蟲群"
+	--L.void_degeneration = "Blue Orb"
+	--L.burning_rage = "Red Orb"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "zhTW")
