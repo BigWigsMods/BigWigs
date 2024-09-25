@@ -33,6 +33,43 @@ local intermissionSpellCount = 1
 local SKIP_CAST_THRESHOLD = 2
 local checkTimer = nil
 
+local timersLFR = { -- 7:12
+	{ -- Stage 1
+		[440504] = {29.4, 52.0, 30.6, 0}, -- Impaling Eruption
+		[438218] = {13.4, 26.6, 38.7, 26.6, 52.0, 0}, -- Piercing Strike
+		[438801] = {19.1, 0}, -- Call of the Swarm
+		[460360] = {42.7, 77.4, 0}, -- Burrowed Eruption
+		[440246] = {47.5, 77.4, 0}, -- Reckless Charge
+		[438656] = {9.6, 68.6, 70.6, 0}, -- Venomous Rain
+		[450045] = {51.9, 76.6, 0}, -- Skittering Leap
+		[439838] = {23.1, 78.6, 0}, -- Web Bomb
+	},
+	{ -- Stage 2
+		[440504] = {44.7, 0}, -- Impaling Eruption
+		[438218] = {19.4, 33.3, 32.0, 26.7, 0}, -- Piercing Strike
+		[438801] = {82.3, 0}, -- Call of the Swarm
+		[438677] = {36.7, 81.3, 0}, -- Stinging Swarm
+		[441782] = {27.5, 66.2, 0}, -- Strands of Reality
+		[450483] = {37.6, 49.4, 30.1, 0}, -- Void Step
+		[441626] = {106.4, 0}, -- Web Vortex
+		[450129] = {109.2, 0}, -- Entropic Desolation
+		[438355] = {41.6, 0}, -- Cataclysmic Entropy
+	},
+	{ -- Stage 3 >.>
+		[443068] = {61.4}, -- Spike Eruption
+		[442994] = {45.4}, -- Unleashed Swarm
+		[438218] = {36.0, 29.3}, -- Piercing Strike
+		[460360] = {}, -- Burrowed Eruption
+		[440246] = {}, -- Reckless Charge
+		[438677] = {}, -- Stinging Swarm
+		[441782] = {40.3}, -- Strands of Reality
+		[450483] = {}, -- Void Step
+		[441626] = {}, -- Web Vortex
+		[450129] = {}, -- Entropic Desolation
+		[438355] = {}, -- Cataclysmic Entropy
+	},
+}
+
 local timersNormal = { -- 14:02 (enrage)
 	{ -- Stage 1
 		[440504] = {22.0, 38.0, 25.0, 0}, -- Impaling Eruption
@@ -143,7 +180,7 @@ local timersMythic = {
 		[438355] = {92.7, 61.8}, -- Cataclysmic Entropy
 	},
 }
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Normal() and timersNormal or mod:LFR() and timersLFR or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -338,7 +375,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Normal() and timersNormal or self:LFR() and timersLFR or timersHeroic
 	self:SetStage(1)
 
 	-- Anub'arash
@@ -366,7 +403,7 @@ function mod:OnEngage()
 	self:Bar(438656, timers[1][438656][1], CL.count:format(L.venomous_rain, venomousRainCount)) -- Venomous Rain
 	self:Bar(450045, timers[1][450045][1], CL.count:format(CL.leap, skitteringLeapCount)) -- Skittering Leap
 	self:Bar(439838, timers[1][439838][1], CL.count:format(self:SpellName(439838), webBombCount)) -- Web Bomb
-	self:CDBar("stages", 127, CL.count:format(CL.intermission, 1), 450980) -- Transition: Void Ascension (Void Step) XXX 127~133?
+	self:CDBar("stages", self:LFR() and 166 or 127, CL.count:format(CL.intermission, 1), 450980) -- Transition: Void Ascension (Void Step) XXX 127~133?
 end
 
 --------------------------------------------------------------------------------
@@ -605,7 +642,7 @@ do
 			self:Bar(450129, timers[2][450129][1], CL.count:format(L.entropic_desolation, venomousRainCount)) -- Entropic Desolation
 			self:Bar(438355, timers[2][438355][1], CL.count:format(L.cataclysmic_entropy, cataclysmicEntropyCount)) -- Cataclysmic Entropy
 			checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", timers[2][438355][1] + SKIP_CAST_THRESHOLD, cataclysmicEntropyCount)
-			self:CDBar("stages", 131.2, CL.count:format(CL.intermission, 2), 451277) -- Transition: Raging Fury (Spike Storm)
+			self:CDBar("stages", self:LFR() and 126 or 131, CL.count:format(CL.intermission, 2), 451277) -- Transition: Raging Fury (Spike Storm)
 
 			-- Anub'arash
 			impalingEruptionCount = 1
