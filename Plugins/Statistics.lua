@@ -33,6 +33,7 @@ local difficultyTable = {
 	[215] = "SOD", -- Normal (20 player Sunken Temple - Classic Season of Discovery)
 	[220] = "story", -- Story
 	[226] = "SOD", -- 20 Player (Molten Core - Classic Season of Discovery)
+	[231] = "SOD", -- XXX verify BWL
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime, date = GetTime, BigWigsLoader.date
@@ -113,7 +114,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
 
-1.15.3
+1.15.4
 1. Normal
 9. 40 Player
 148. 20 Player
@@ -131,6 +132,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 214. DNT - Internal only
 215. Normal
 226. 20 Player
+231. Normal
 
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
