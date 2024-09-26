@@ -12,3 +12,9 @@ BigWigs:AddSounds("Shurrai, Atrocity of the Undersea", {
 	[453875] = "long",
 	[455275] = "alarm",
 })
+
+BigWigs:AddSounds("Orta, the Broken Mountain", {
+	[450407] = "info",
+	[450454] = "warning",
+	[450677] = "long",
+})

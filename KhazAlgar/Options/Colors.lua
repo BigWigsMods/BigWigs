@@ -12,3 +12,10 @@ BigWigs:AddColors("Shurrai, Atrocity of the Undersea", {
 	[453875] = "red",
 	[455275] = "yellow",
 })
+
+BigWigs:AddColors("Orta, the Broken Mountain", {
+	[450407] = "yellow",
+	[450454] = "red",
+	[450677] = "orange",
+	[450929] = {"blue","yellow"},
+})
