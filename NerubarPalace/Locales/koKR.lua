@@ -49,7 +49,7 @@ end
 L = BigWigs:NewBossLocale("The Silken Court", "koKR")
 if L then
 	L.skipped_cast = "건너뛴 %s (%d)"
-	--L.intermission_trigger = "Apex of power!" -- Skeinspinner Takazj 100 energy yell
+	L.intermission_trigger = "힘의 정점!" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "맹독의 비"
 	L.burrowed_eruption = "잠복"
@@ -62,8 +62,8 @@ if L then
 	L.cataclysmic_entropy = "큰 폭발" -- Interrupt before it casts
 	L.spike_eruption = "가시"
 	L.unleashed_swarm = "무리"
-	--L.void_degeneration = "Blue Orb"
-	--L.burning_rage = "Red Orb"
+	L.void_degeneration = "파란 구슬"
+	L.burning_rage = "빨간 구슬"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "koKR")
