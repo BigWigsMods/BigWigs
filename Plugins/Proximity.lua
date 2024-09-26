@@ -252,13 +252,13 @@ function plugin:RestyleWindow()
 		end
 	end
 	proxAnchor.text:SetFont(media:Fetch(FONT, db.fontName), db.fontSize)
-	if db.lock then
-		locked = nil
-		lockDisplay()
-	else
+	--if db.lock then
+	--	locked = nil
+	--	lockDisplay()
+	--else
 		locked = true
 		unlockDisplay()
-	end
+	--end
 
 	local x = db.posx
 	local y = db.posy
