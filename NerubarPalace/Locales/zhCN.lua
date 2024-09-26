@@ -49,7 +49,7 @@ end
 L = BigWigs:NewBossLocale("The Silken Court", "zhCN")
 if L then
 	L.skipped_cast = "跳过 %s (%d)"
-	--L.intermission_trigger = "Apex of power!" -- Skeinspinner Takazj 100 energy yell
+	L.intermission_trigger = "巅峰之力！" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "毒雨"
 	L.burrowed_eruption = "钻地"
@@ -62,8 +62,8 @@ if L then
 	L.cataclysmic_entropy = "大爆炸" -- Interrupt before it casts
 	L.spike_eruption = "尖刺"
 	L.unleashed_swarm = "虫群"
-	--L.void_degeneration = "Blue Orb"
-	--L.burning_rage = "Red Orb"
+	L.void_degeneration = "蓝球"
+	L.burning_rage = "红球"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
