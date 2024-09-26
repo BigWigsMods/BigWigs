@@ -350,6 +350,8 @@ L.fixate_test = "Тест фиксации" -- Text that displays to test on the
 L.resetNameplateTextDesc = "Сбросить все настройки, связанные с текстом панели здоровья."
 L.autoScale = "Авто. масштаб"
 L.autoScaleDesc = "Автоматически меняет масштаб относительно масштаба полосы здоровья."
+--L.glowAt = "Glow at... (seconds)"
+--L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Пиксельное свечение"

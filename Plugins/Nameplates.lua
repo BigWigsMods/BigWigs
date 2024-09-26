@@ -122,6 +122,7 @@ local iconDefaults = {
 	iconGlowAutoCastScale = 1,
 	iconGlowProcStartAnim = true,
 	iconGlowProcAnimDuration = 1,
+	iconGlowTimeLeft = 0,
 	iconBorder = true,
 	iconBorderSize = 1,
 	iconBorderColor = {0, 0, 0, 1},
@@ -222,6 +223,9 @@ local function updateProfile()
 	end
 	if db.iconGlowProcAnimDuration < 0.1 or db.iconGlowProcAnimDuration > 3 then
 		db.iconGlowProcAnimDuration = plugin.defaultDB.iconGlowProcAnimDuration
+	end
+	if db.iconGlowTimeLeft < 0 or db.iconGlowTimeLeft > 3 then
+		db.iconGlowTimeLeft = plugin.defaultDB.iconGlowTimeLeft
 	end
 	if db.iconZoom < 0 or db.iconZoom > 0.5 then
 		db.iconZoom = plugin.defaultDB.iconZoom
@@ -398,6 +402,9 @@ local function iconLoop(updater)
 	if timeToDisplay > 0 then
 		if db.iconCooldownNumbers then
 			iconFrame.countdownNumber:SetText(timeToDisplay)
+		end
+		if db.iconGlowTimeLeft > 0 and timeToDisplay <= db.iconGlowTimeLeft and not iconFrame.activeGlow then
+			iconFrame:StartGlow(db.iconExpireGlowType)
 		end
 	else
 		iconFrame.countdownNumber:Hide()
@@ -1142,6 +1149,16 @@ do
 								width = 1.5,
 								disabled = function() return not db.iconExpireGlow end,
 								hidden = function() return db.iconExpireGlowType ~= "pixel" end,
+							},
+							iconGlowTimeLeft = {
+								type = "range",
+								name = L.glowAt,
+								desc = L.glowAt_desc,
+								order = 12,
+								min = 0,
+								max = 3,
+								step = 1,
+								width = 2,
 							},
 						},
 					},

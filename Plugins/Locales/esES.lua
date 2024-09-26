@@ -350,6 +350,8 @@ L.fadeTimeDesc = "Cuánto tiempo tardará en desaparecer un mensaje, en segundos
 --L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
 --L.autoScale = "Auto Scale"
 --L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
+--L.glowAt = "Glow at... (seconds)"
+--L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
 
 -- Glow types as part of LibCustomGlow
 --L.pixelGlow = "Pixel Glow"

@@ -349,6 +349,8 @@ L.fixate_test = "Fixate Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Reset all the options related to nameplate text."
 L.autoScale = "Auto Scale"
 L.autoScaleDesc = "Automatically change scale according to the nameplate scale."
+L.glowAt = "Glow at... (seconds)"
+L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Pixel Glow"
