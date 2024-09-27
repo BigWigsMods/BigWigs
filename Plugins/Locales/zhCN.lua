@@ -350,8 +350,8 @@ L.fixate_test = "测试文本" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
 L.autoScale = "自动缩放"
 L.autoScaleDesc = "根据姓名板的比例自动缩放图标比例。"
---L.glowAt = "Glow at... (seconds)"
---L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
+L.glowAt = "…（秒）后高亮"
+L.glowAt_desc = "选择在冷却计时剩余多少秒时开始高亮。"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "线条发光"
@@ -442,7 +442,7 @@ L.secondaryDesc = "战斗时使用的第二个团队标记。"
 --
 
 L.Sounds = "音效"
-L.soundsDesc = "BigWigs 使用“主音量”通道播放全部音效。如果发现音效过小或过大，打开游戏声音设置并调整“主音量”滑块到所需的级别。\n\n下面可以全局配置为特定操作播放的不同音效，或将它们设置为“无”来将其禁用。如果只想更改特定首领技能音效，可以在首领模块的技能列表内点击“>>”后进行指定设置。\n\n"
+L.soundsDesc = "BigWigs 使用“主音量”通道播放全部音效。如果发现音效过小或过大，打开游戏声音设置并调整“主音量”滑块到所需的级别。\n\n下面可以全局配置为特定操作播放的不同音效，或将它们设置为“None（无）”来将其禁用。如果只想更改特定首领技能音效，可以在首领模块的技能列表内点击“>>”后进行指定设置。\n\n"
 L.oldSounds = "传统音效"
 
 L.Alarm = "警示"
