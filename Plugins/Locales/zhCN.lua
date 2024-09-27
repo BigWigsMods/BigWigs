@@ -350,7 +350,7 @@ L.fixate_test = "测试文本" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
 L.autoScale = "自动缩放"
 L.autoScaleDesc = "根据姓名板的比例自动缩放图标比例。"
---L.glowAt = "Begin Glow (seconds)"
+L.glowAt = "开始高亮（秒）"
 L.glowAt_desc = "选择在冷却计时剩余多少秒时开始高亮。"
 
 -- Glow types as part of LibCustomGlow
