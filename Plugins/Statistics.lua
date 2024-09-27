@@ -28,12 +28,11 @@ local difficultyTable = {
 	[148] = "normal", -- 20 Player (AQ20/ZG)
 	[175] = "N10", -- 10 Player (Ulduar 10 & Karazhan)
 	[176] = "N25", -- 25 Player (Ulduar 25 & TBC raids)
-	[186] = "SOD", -- 40 Player (Onyxia - Classic Season of Discovery)
+	[186] = "SOD", -- 40 Player (Onyxia & BWL - Classic Season of Discovery)
 	[198] = "SOD", -- Normal (10 player Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "SOD", -- Normal (20 player Sunken Temple - Classic Season of Discovery)
 	[220] = "story", -- Story
-	[226] = "SOD", -- 20 Player (Molten Core - Classic Season of Discovery)
-	[231] = "SOD", -- XXX verify BWL
+	[226] = "SOD", -- 20 Player (Molten Core & ZG - Classic Season of Discovery)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime, date = GetTime, BigWigsLoader.date
