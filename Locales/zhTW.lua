@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
---L.tempNPMsg = "Our season 1 nameplate timers are active."
+L.tempNPMsg = "第一賽季名條計時器已啟動。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -246,13 +246,13 @@ L.normal = "普通模式"
 L.heroic = "英雄模式"
 L.mythic = "傳奇模式"
 L.timewalk = "時光漫遊"
---L.story = "Story"	-- 劇情?
+L.story = "故事"
 L.mplus = "傳奇難度+ %d"
 L.SOD = "探索賽季"
 L.hardcore = "專家模式"
---L.level1 = "Level 1"
---L.level2 = "Level 2"
---L.level3 = "Level 3"
+L.level1 = "等級 1"
+L.level2 = "等級 2"
+L.level3 = "等級 3"
 L.N10 = "10人普通"
 L.N25 = "25人普通"
 L.H10 = "10人英雄"
