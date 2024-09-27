@@ -1,18 +1,18 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "esES")
 if not L then return end
 if L then
-	--L.carnivorous_contest_pull = "Pull In"
-	--L.chunky_viscera_message = "Feed Boss! (Special Action Button)"
+	--L.carnivorous_contest_pull = "Atraer"
+	--L.chunky_viscera_message = "¡Aliméntalo! (Special Action Button)"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "esES")
 if L then
-	--L.gruesome_disgorge_debuff = "Phase Shift"
-	--L.grasp_from_beyond = "Tentacles"
-	--L.grasp_from_beyond_say = "Tentacles"
-	--L.bloodcurdle = "Spreads"
-	--L.bloodcurdle_on_you = "Spread" -- Singular of Spread
-	--L.goresplatter = "Run Away"
+	--L.gruesome_disgorge_debuff = "Cambio de dimensión"
+	--L.grasp_from_beyond = "Tentáculos"
+	--L.grasp_from_beyond_say = "Tentáculos"
+	--L.bloodcurdle = "Propagación"
+	--L.bloodcurdle_on_you = "Sepárate" -- Singular of Spread
+	--L.goresplatter = "Huye"
 end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "esES")
