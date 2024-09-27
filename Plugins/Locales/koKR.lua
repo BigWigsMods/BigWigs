@@ -350,7 +350,7 @@ L.fixate_test = "고정 테스트" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "이름표 텍스트와 관련된 모든 옵션을 초기화합니다."
 L.autoScale = "자동 크기 조정"
 L.autoScaleDesc = "이름표 크기에 따라 자동으로 크기을 변경합니다."
---L.glowAt = "Glow at... (seconds)"
+--L.glowAt = "Begin Glow (seconds)"
 --L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
 
 -- Glow types as part of LibCustomGlow

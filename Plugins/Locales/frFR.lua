@@ -350,7 +350,7 @@ L.fixate_test = "Fixe Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Réinitialise toutes les options liées au texte des barres d'infos."
 L.autoScale = "Mise à l'échelle automatique"
 L.autoScaleDesc = "Change automatiquement l'échelle par rapport à celle de la barre d'infos."
---L.glowAt = "Glow at... (seconds)"
+--L.glowAt = "Begin Glow (seconds)"
 --L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
 
 -- Glow types as part of LibCustomGlow

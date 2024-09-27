@@ -350,7 +350,7 @@ L.fixate_test = "鎖定" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "將名條的文字設定全部重設為預設值。"
 L.autoScale = "自動縮放"
 L.autoScaleDesc = "根據名條的縮放比，自動調整圖示大小。"
---L.glowAt = "Glow at... (seconds)"
+--L.glowAt = "Begin Glow (seconds)"
 --L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
 
 -- Glow types as part of LibCustomGlow
