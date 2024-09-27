@@ -350,8 +350,8 @@ L.fixate_test = "Fixierung Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Setzt die Optionen für Namensplaketten-Texte zurück."
 L.autoScale = "Automatischer Maßstab"
 L.autoScaleDesc = "Ändert den Maßstab automatisch in Abhängigkeit vom Maßstab der Namensplakette."
---L.glowAt = "Begin Glow (seconds)"
---L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
+L.glowAt = "Leuchten beginnen (Sekunden)"
+L.glowAt_desc = "Legt fest, bei welcher verbleibenden Abklingzeit in Sekunden das Leuchten beginnt."
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Pixel-Leuchten"
