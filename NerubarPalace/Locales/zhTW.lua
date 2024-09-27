@@ -62,8 +62,8 @@ if L then
 	L.cataclysmic_entropy = "大爆炸" -- 災變無序/災變
 	L.spike_eruption = "尖刺"
 	L.unleashed_swarm = "蟲群"
-	--L.void_degeneration = "Blue Orb"
-	--L.burning_rage = "Red Orb"
+	L.void_degeneration = "藍球"
+	L.burning_rage = "紅球"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "zhTW")
@@ -80,5 +80,5 @@ if L then
 	L.royal_condemnation = "鐐銬"
 	L.frothing_gluttony = "暴食" -- 起沫暴食/黑環
 
-	--L.stage_two_end_message_storymode = "Run into the portal"
+	L.stage_two_end_message_storymode = "快進傳送門"
 end
