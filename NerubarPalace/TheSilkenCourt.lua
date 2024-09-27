@@ -33,7 +33,7 @@ local intermissionSpellCount = 1
 local SKIP_CAST_THRESHOLD = 2
 local checkTimer = nil
 
-local timersLFR = { -- 7:12
+local timersLFR = { -- 9:27
 	{ -- Stage 1
 		[440504] = {29.4, 52.0, 30.6, 0}, -- Impaling Eruption
 		[438218] = {13.4, 26.6, 38.7, 26.6, 52.0, 0}, -- Piercing Strike
@@ -58,14 +58,14 @@ local timersLFR = { -- 7:12
 	{ -- Stage 3 >.>
 		[443068] = {61.4}, -- Spike Eruption
 		[442994] = {45.4}, -- Unleashed Swarm
-		[438218] = {36.0, 29.3}, -- Piercing Strike
-		[441791] = {}, -- Burrowed Eruption
-		[440246] = {}, -- Reckless Charge
+		[438218] = {36.0, 29.3, 26.7, 40.0}, -- Piercing Strike
+		[441791] = {96.0}, -- Burrowed Eruption
+		[440246] = {100.9}, -- Reckless Charge
 		[438677] = {}, -- Stinging Swarm
-		[441782] = {40.3}, -- Strands of Reality
-		[450483] = {}, -- Void Step
-		[441626] = {}, -- Web Vortex
-		[450129] = {}, -- Entropic Desolation
+		[441782] = {40.3, 47.6, 46.3}, -- Strands of Reality
+		[450483] = {106.0}, -- Void Step
+		[441626] = {77.2}, -- Web Vortex
+		[450129] = {79.9}, -- Entropic Desolation
 		[438355] = {}, -- Cataclysmic Entropy
 	},
 }
@@ -159,7 +159,7 @@ local timersMythic = {
 		[440504] = {11.0, 30.0, 30.0, 30.0, 0}, -- Impaling Eruption
 		[438218] = {16.0, 20.0, 25.0, 15.0, 20.0, 25.0, 0}, -- Piercing Strike
 		[438801] = {31.0, 61.0, 0}, -- Call of the Swarm
-		[438677] = {25.0, 58.0, 0}, -- Stinging Swarm
+		[438677] = {25.0, 58.0, 0}, -- Stinging Swarmgit
 		[441782] = {32.0, 36.0, 24.0, 0}, -- Strands of Reality
 		[450483] = {38.7, 34.2, 23.6, 29.2, 0}, -- Void Step
 		[441626] = {20.2, 55.8, 0}, -- Web Vortex
