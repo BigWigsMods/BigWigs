@@ -450,7 +450,6 @@ local function getIconFrame()
 		iconFrame:SetFrameStrata("MEDIUM")
 		iconFrame:SetFixedFrameStrata(true)
 		iconFrame:SetFrameLevel(5500)
-		iconFrame:SetFixedFrameLevel(true)
 		iconFrame:SetSize(db.iconWidth, db.iconHeight)
 
 		local icon = iconFrame:CreateTexture()
@@ -467,18 +466,10 @@ local function getIconFrame()
 		cooldown:SetDrawEdge(db.iconCooldownEdge)
 		cooldown:SetDrawSwipe(db.iconCooldownSwipe)
 		cooldown:SetReverse(db.iconCooldownInverse)
-		cooldown:SetFrameLevel(5510)
-		cooldown:SetFixedFrameLevel(true)
 		cooldown:SetHideCountdownNumbers(true) -- Blizzard
 		cooldown.noCooldownCount = true -- OmniCC
 
-		local textFrame = CreateFrame("Frame", nil, iconFrame)
-		textFrame:SetAllPoints(iconFrame)
-		textFrame:SetPoint("CENTER")
-		textFrame:SetFrameLevel(5520)
-		textFrame:SetFixedFrameLevel(true)
-
-		local countdownNumber = textFrame:CreateFontString()
+		local countdownNumber = cooldown:CreateFontString(nil, "OVERLAY")
 		countdownNumber:SetPoint("CENTER")
 		countdownNumber:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
 		countdownNumber:SetJustifyH("CENTER")
@@ -1589,11 +1580,15 @@ local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire
 	local height = db.iconHeight
 
 	iconFrame:SetSize(width, height)
-	if db.iconAutoScale then
-		local target = module:UnitGUID("target")
-		if guid == target then
+	local target = module:UnitGUID("target")
+	if guid == target then
+		iconFrame:SetFrameLevel(5555)
+		if db.iconAutoScale then
 			iconFrame:SetScale(GetCVar("nameplateSelectedScale"))
-		else
+		end
+	else
+		iconFrame:SetFrameLevel(5500)
+		if db.iconAutoScale then
 			iconFrame:SetScale(GetCVar("nameplateGlobalScale"))
 		end
 	end
@@ -1791,20 +1786,24 @@ end
 do
 	local prevTarget = nil
 	function plugin:PLAYER_TARGET_CHANGED()
-		if not db.iconAutoScale then return end
-
 		local guid = self:UnitGUID("target")
 		if nameplateIcons[guid] then
 			for _, tbl in next, nameplateIcons[guid] do
 				if tbl.nameplateFrame then
-					tbl.nameplateFrame:SetScale(GetCVar("nameplateSelectedScale"))
+					tbl.nameplateFrame:SetFrameLevel(5555)
+					if db.iconAutoScale then
+						tbl.nameplateFrame:SetScale(GetCVar("nameplateSelectedScale"))
+					end
 				end
 			end
 		end
 		if prevTarget and nameplateIcons[prevTarget] then
 			for _, tbl in next, nameplateIcons[prevTarget] do
 				if tbl.nameplateFrame then
-					tbl.nameplateFrame:SetScale(GetCVar("nameplateGlobalScale"))
+					tbl.nameplateFrame:SetFrameLevel(5500)
+					if db.iconAutoScale then
+						tbl.nameplateFrame:SetScale(GetCVar("nameplateGlobalScale"))
+					end
 				end
 			end
 		end
