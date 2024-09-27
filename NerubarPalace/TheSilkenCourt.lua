@@ -38,7 +38,7 @@ local timersLFR = { -- 7:12
 		[440504] = {29.4, 52.0, 30.6, 0}, -- Impaling Eruption
 		[438218] = {13.4, 26.6, 38.7, 26.6, 52.0, 0}, -- Piercing Strike
 		[438801] = {19.1, 0}, -- Call of the Swarm
-		[460360] = {42.7, 77.4, 0}, -- Burrowed Eruption
+		[441791] = {42.7, 77.4, 0}, -- Burrowed Eruption
 		[440246] = {47.5, 77.4, 0}, -- Reckless Charge
 		[438656] = {9.6, 68.6, 70.6, 0}, -- Venomous Rain
 		[450045] = {51.9, 76.6, 0}, -- Skittering Leap
@@ -59,7 +59,7 @@ local timersLFR = { -- 7:12
 		[443068] = {61.4}, -- Spike Eruption
 		[442994] = {45.4}, -- Unleashed Swarm
 		[438218] = {36.0, 29.3}, -- Piercing Strike
-		[460360] = {}, -- Burrowed Eruption
+		[441791] = {}, -- Burrowed Eruption
 		[440246] = {}, -- Reckless Charge
 		[438677] = {}, -- Stinging Swarm
 		[441782] = {40.3}, -- Strands of Reality
@@ -149,7 +149,7 @@ local timersMythic = {
 		[440504] = {8.0, 20.0, 34.0, 20.0, 0}, -- Impaling Eruption
 		[438218] = {13.0, 20.0, 27.0, 20.0, 0}, -- Piercing Strike
 		[438801] = {25.0, 53.0, 0}, -- Call of the Swarm
-		[460360] = {35.0, 60.0, 0}, -- Burrowed Eruption
+		[441791] = {35.0, 60.0, 0}, -- Burrowed Eruption
 		[440246] = {38.5, 60.0, 0}, -- Reckless Charge
 		[450045] = {42.1, 60.0, 0}, -- Skittering Leap
 		[439838] = {16.7, 70.2, 0}, -- Web Bomb
@@ -170,13 +170,13 @@ local timersMythic = {
 		[443068] = {40.1, 31.0, 64.0}, -- Spike Eruption
 		[438218] = {20.0, 17.0, 32.0, 20.0, 21.0, 20.0, 36.0}, -- Piercing Strike
 		[442994] = {23.0, 75.0, 70.0, 37.0}, -- Unleashed Swarm
-		[460360] = {43.0, 98.0}, -- Burrowed Eruption
+		[441791] = {43.0, 98.0}, -- Burrowed Eruption
 		[440246] = {46.1, 98.0}, -- Reckless Charge
 		[438677] = {81.1, 57.0}, -- Stinging Swarm
 		[441782] = {22.2, 33.7, 24.9, 43.0, 33.8, 24.9, 43.0}, -- Strands of Reality
 		[450483] = {49.3, 40.5, 29.1, 30.1, 2.6, 38.4, 29.2, 30.1, 2.7}, -- Void Step
-		[441626] = {33.5, 33.7, 61.9, 33.7, 64.0}, -- Web Vortex
-		[450129] = {38.7, 33.7, 61.9, 33.7, 64.0}, -- Entropic Desolation
+		[441626] = {33.4, 33.7, 63.8, 33.7, 64.0}, -- Web Vortex
+		[450129] = {38.7, 33.7, 63.8, 33.7, 64.0}, -- Entropic Desolation
 		[438355] = {92.7, 61.8}, -- Cataclysmic Entropy
 	},
 }
@@ -838,7 +838,7 @@ do
 			self:Bar(443068, timers[3][443068][1], CL.count:format(L.spike_eruption, impalingEruptionCount)) -- Spike Eruption
 			self:Bar(442994, timers[3][442994][1], CL.count:format(L.unleashed_swarm, callOfTheSwarmCount)) -- Unleashed Swarm
 			self:Bar(438218, timers[3][438218][1], CL.count:format(self:SpellName(438218), piercingStrikeCount)) -- Piercing Strike
-			self:Bar(441791, timers[3][441791][1], CL.count:format(self:SpellName(460360), burrowedEruptionCount)) -- Burrowed Eruption
+			self:Bar(441791, timers[3][441791][1], CL.count:format(self:SpellName(441791), burrowedEruptionCount)) -- Burrowed Eruption
 			self:Bar(440246, timers[3][440246][1], CL.count:format(CL.charge, recklessChargeCount)) -- Reckless Charge
 			self:Bar(438677, timers[3][438677][1], CL.count:format(L.stinging_swarm, stingingSwarmCount)) -- Stinging Swarm
 			if not self:LFR() then
