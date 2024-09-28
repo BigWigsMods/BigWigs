@@ -34,16 +34,18 @@ end
 function mod:OnBossEnable()
 	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
+end
 
+function mod:OnEngage()
+	self:CheckForWipe()
+
+	-- World bosses will wipe but keep listening to events if you fly away, so we only register OnEngage
 	self:Log("SPELL_CAST_START", "ColossalSlam", 450407)
 	self:Log("SPELL_CAST_START", "TectonicRoar", 450454)
 	self:Log("SPELL_CAST_START", "RupturingRunes", 450677)
 	self:Log("SPELL_CAST_START", "MountainsGrasp", 450929)
 	self:Log("SPELL_AURA_APPLIED", "MountainsGraspApplied", 450929)
-end
 
-function mod:OnEngage()
-	self:CheckForWipe()
 	self:CDBar(450407, 5, CL.frontal_cone) -- Colossal Slam
 	self:CDBar(450454, 22.1, CL.knockback) -- Tectonic Roar
 	self:CDBar(450677, 13.3, CL.dodge) -- Rupturing Runes

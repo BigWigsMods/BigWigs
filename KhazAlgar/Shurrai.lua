@@ -46,12 +46,6 @@ end
 function mod:OnBossEnable()
 	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
-
-	self:Log("SPELL_CAST_SUCCESS", "AbyssalStrike", 453607)
-	self:Log("SPELL_AURA_APPLIED", "AbyssalStrikeApplied", 453618)
-	self:Log("SPELL_CAST_START", "RegurgitateSouls", 453875)
-	self:Log("SPELL_CAST_START", "BrinyVomit", 453733)
-	self:Log("SPELL_CAST_START", "DarkTide", 455275)
 end
 
 function mod:OnEngage()
@@ -59,6 +53,14 @@ function mod:OnEngage()
 	brinyVomitCount = 1
 	darkTideCount = 1
 	self:CheckForWipe()
+
+	-- World bosses will wipe but keep listening to events if you fly away, so we only register OnEngage
+	self:Log("SPELL_CAST_SUCCESS", "AbyssalStrike", 453607)
+	self:Log("SPELL_AURA_APPLIED", "AbyssalStrikeApplied", 453618)
+	self:Log("SPELL_CAST_START", "RegurgitateSouls", 453875)
+	self:Log("SPELL_CAST_START", "BrinyVomit", 453733)
+	self:Log("SPELL_CAST_START", "DarkTide", 455275)
+
 	self:CDBar(453618, 7.5, CL.heal_absorb) -- Abyssal Strike
 	self:CDBar(453733, 10, CL.dodge) -- Briny Vomit
 	self:CDBar(455275, 17.3, CL.waves) -- Dark Tide

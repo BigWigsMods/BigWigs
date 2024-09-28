@@ -42,15 +42,17 @@ end
 function mod:OnBossEnable()
 	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
-
-	self:Log("SPELL_CAST_START", "CrystallineBarrage", 452205)
-	self:Log("SPELL_CAST_START", "DarkAwakening", 453271)
-	self:Log("SPELL_CAST_START", "Voidquake", 452980)
-	self:Log("SPELL_CAST_START", "CrystalStrike", 453294)
 end
 
 function mod:OnEngage()
 	self:CheckForWipe()
+
+	-- World bosses will wipe but keep listening to events if you fly away, so we only register OnEngage
+	self:Log("SPELL_CAST_START", "CrystallineBarrage", 452205)
+	self:Log("SPELL_CAST_START", "DarkAwakening", 453271)
+	self:Log("SPELL_CAST_START", "Voidquake", 452980)
+	self:Log("SPELL_CAST_START", "CrystalStrike", 453294)
+
 	self:CDBar(452980, 9) -- Voidquake
 	self:CDBar(452205, 25, L.void_rocks) -- Crystal Strike
 end
