@@ -55,9 +55,9 @@ if L then
 	L.burrowed_eruption = "鑽地"
 	L.stinging_swarm = "驅散魔法"
 	L.strands_of_reality = "塔卡正面" -- S for Skeinspinner Takazj 塔卡震懾波
-	--L.strands_of_reality_message = "Frontal [Skeinspinner Takazj]"
+	L.strands_of_reality_message = "塔卡茲：正面衝擊波
 	L.impaling_eruption = "阿努正面" -- A for Anub'arash 阿努震懾波
-	--L.impaling_eruption_message = "Frontal [Anub'arash]"
+	L.impaling_eruption_message = "阿努巴拉許：正面衝擊波"
 	L.entropic_desolation = "跑開"
 	L.cataclysmic_entropy = "大爆炸" -- 災變無序/災變
 	L.spike_eruption = "尖刺"
