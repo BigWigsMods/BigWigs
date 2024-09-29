@@ -72,7 +72,7 @@ L.flying_available = "Puedes volar ahora"
 -- Add related
 L.add_spawned = "Esbirro apareció" -- singular
 L.adds_spawned = "Esbirros aparecieron" -- plural
-L.adds_spawned_count = "%d |4enemigo:enemigos; aparecido(s)" -- 1 add spawned / 2 adds spawned
+L.adds_spawned_count = "%d |4enemigo aparecido:enemigos aparecidos;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Enemigo apareciendo" -- singular
 L.adds_spawning = "Enemigos apareciendo" -- plural
 L.spawned = "%s apareció"
