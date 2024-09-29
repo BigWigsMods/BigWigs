@@ -1065,13 +1065,13 @@ end
 do
 	local unitTable = {
 		"boss1", "boss2", "boss3", "boss4", "boss5",
-		"target", "targettarget",
-		"mouseover", "mouseovertarget",
-		"focus", "focustarget",
+		"softenemy", "target", "mouseover", "focus",
 		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
 		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
 		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
 		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
+
+		"targettarget", "mouseovertarget", "focustarget",
 		"party1target", "party2target", "party3target", "party4target",
 		"raid1target", "raid2target", "raid3target", "raid4target", "raid5target",
 		"raid6target", "raid7target", "raid8target", "raid9target", "raid10target",
@@ -1080,15 +1080,27 @@ do
 		"raid21target", "raid22target", "raid23target", "raid24target", "raid25target",
 		"raid26target", "raid27target", "raid28target", "raid29target", "raid30target",
 		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
-		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target"
+		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target",
 	}
 	local unitTableCount = #unitTable
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
 		if not isNumber and UnitTokenFromGUID then
 			local unit = UnitTokenFromGUID(id)
-			if unit then return unit end
+			if unit then
+				return unit
+			else
+				for i = 50, unitTableCount do -- Begin at "targettarget" (50th) in the table
+					local unit = unitTable[i]
+					local guid = UnitGUID(unit)
+					if guid == id then
+						return unit
+					end
+				end
+			end
+			return
 		end
+
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
@@ -1169,54 +1181,37 @@ do
 		unitTargetScans[#unitTargetScans+1] = {self, func, solo and 0.1 or tankCheckExpiry, guid, 0} -- Tiny allowance when solo
 	end
 
-	local function scan(self)
-		for mobId, entry in next, core:GetEnableMobs() do
-			if type(entry) == "table" then
-				for i = 1, #entry do
-					local module = entry[i]
-					if module == self.moduleName then
-						local unit = findTargetByGUID(mobId)
-						if unit and UnitAffectingCombat(unit) then return unit end
-						break
-					end
-				end
-			elseif entry == self.moduleName then
-				local unit = findTargetByGUID(mobId)
-				if unit and UnitAffectingCombat(unit) then return unit end
-			end
-		end
-	end
-
 	--- Start a repeating timer checking if your group is in combat with a boss.
 	function boss:CheckForEngage()
-		local go = scan(self)
-		if go then
-			self:Debug(":CheckForEngage() scan found active boss entities, calling :Engage", self:GetEncounterID(), self.moduleName)
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-			self:Engage()
-		else
-			self:Debug(":CheckForEngage() scan found nothing, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
-			self:ScheduleTimer("CheckForEngage", .5)
+		if self:IsEnabled() then
+			for mobId in next, self.enableMobs do
+				local unit = findTargetByGUID(mobId)
+				if unit and UnitAffectingCombat(unit) then
+					self:Debug(":CheckForEngage() scan passed, calling :Engage()", self:GetEncounterID(), self.moduleName, unit, mobId)
+					self:Engage()
+					return
+				end
+			end
+
+			self:Debug(":CheckForEngage() scan failed, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
+			self:SimpleTimer(function() self:CheckForEngage() end, .5)
 		end
 	end
 
-	-- What if we die and then get battleressed?
-	-- First of all, the CheckForWipe every 2 seconds would continue scanning.
-	-- Secondly, if the boss module registers for PLAYER_REGEN_DISABLED, it would
-	-- trigger again, and CheckForEngage (possibly) invoked, which results in
-	-- a new Engage sync -> :Engage -> :OnEngage on the module.
-	-- Possibly a concern?
-
 	--- Start a repeating timer checking if your group has left combat with a boss.
-	-- @string[opt] first The event name when used as a callback
-	function boss:CheckForWipe(first)
-		local go = scan(self)
-		if not first and not go then
+	function boss:CheckForWipe()
+		if self:IsEnabled() then
+			for mobId in next, self.enableMobs do
+				local unit = findTargetByGUID(mobId)
+				if unit and UnitAffectingCombat(unit) then
+					self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", self:GetEncounterID(), self.moduleName, unit, mobId)
+					self:SimpleTimer(function() self:CheckForWipe() end, 2)
+					return
+				end
+			end
+
 			self:Debug(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID(), self.moduleName)
 			self:Wipe()
-		else
-			self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self:GetEncounterID(), self.moduleName)
-			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
 
