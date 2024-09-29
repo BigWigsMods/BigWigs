@@ -31,8 +31,8 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Fase %d"
 L.stage = "Etapa %d"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "Oleada %d" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "Oleada %d de %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Modo normal"
 L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
@@ -48,7 +48,7 @@ L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech fr
 L.threat = "Amenaza"
 L.energy = "Energía"
 
---L.remaining = "%d remaining" -- 5 remaining
+L.remaining = "%d restantes" -- 5 remaining
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s terminado" -- Spell Over
 L.removed = "%s eliminado" -- Spell Removed
@@ -66,15 +66,15 @@ L.cancelled = "%s cancelado" -- Spell Cancelled
 L.you_die = "Morirás" -- You will die
 L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
---L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.landing = "%s está aterrizando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Puedes volar ahora"
 
 -- Add related
 L.add_spawned = "Esbirro apareció" -- singular
 L.adds_spawned = "Esbirros aparecieron" -- plural
---L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.adds_spawned_count = "%d |4enemigo aparecido:enemigos aparecidos;" -- 1 add spawned / 2 adds spawned
+L.add_spawning = "Enemigo apareciendo" -- singular
+L.adds_spawning = "Enemigos apareciendo" -- plural
 L.spawned = "%s apareció"
 L.spawning = "%s aparece"
 L.next_add = "Siguiente esbirro"
@@ -120,18 +120,18 @@ L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "%s marcador"
 L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudante o líder." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Marcar NPCs afectados por '%s' con %s, requiere ser ayudante o líder." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "Enlace"
 L.link_with = "Enlazado con %s"
 L.link_with_icon = "Enlazado con |T13700%d:0|t%s"
 L.link_with_rticon = "{rt%d}Enlazado con %s"
-L.link_both = "%s enlazado con %s" -- XXX needs updated
-L.link_both_icon = "|T13700%d:0|t%s enlazado con |T13700%d:0|t%s" -- XXX needs updated
+ L.link_both = "%s + %s están vinculados"
+L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s están vinculados"
 L.link_removed = "Enlace eliminado"
---L.link_say_option_name = "Repeating 'Linked' say messages"
---L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
+L.link_say_option_name = "Repetir mensajes de 'Vinculado' en el chat"
+L.link_say_option_desc = "Repetir mensajes en el chat indicando con quién estás vinculado."
 
 -- Abbreviated numbers
 L.amount_one = "%dB" -- Billions 1,000,000,000
@@ -164,9 +164,9 @@ L.nature = "Naturaleza"
 L.arcane = "Arcano"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "Interacción automática con NPC"
+L.autotalk_boss_desc = "Seleccionar automáticamente las opciones de diálogo del NPC que hacen que comience el encuentro con el jefe."
+L.autotalk_generic_desc = "Seleccionar automáticamente las opciones de diálogo del NPC que te permiten avanzar a la siguiente etapa de la mazmorra."
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
@@ -227,9 +227,9 @@ L.parasite = "Parásito" -- Any ability where a parasite is involved e.g. "Paras
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.dodge = "Esquivar" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.health_drain = "Absorción de salud" -- Any ability that drains health from the player
 L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Púas" -- Plural of L.spike
---L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.waves = "Oleadas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
