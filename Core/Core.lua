@@ -197,14 +197,6 @@ function core:RegisterEnableMob(module, ...)
 	end
 end
 
-function core:GetEnableMobs()
-	local t = {}
-	for k,v in next, enablemobs do
-		t[k] = v
-	end
-	return t
-end
-
 -------------------------------------------------------------------------------
 -- Communication
 --
