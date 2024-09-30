@@ -53,10 +53,10 @@ local timersLFR = { -- 9:27
 		[450483] = {37.6, 49.4, 30.1, 0}, -- Void Step
 		[441626] = {106.4, 0}, -- Web Vortex
 		[450129] = {109.2, 0}, -- Entropic Desolation
-		[438355] = {41.6, 0}, -- Cataclysmic Entropy
+		[438355] = {41.5, 80.3, 0}, -- Cataclysmic Entropy
 	},
 	{ -- Stage 3 >.>
-		[443068] = {61.4}, -- Spike Eruption
+		[443068] = {61.4, 82.7}, -- Spike Eruption
 		[442994] = {45.4}, -- Unleashed Swarm
 		[438218] = {36.0, 29.3, 26.7, 40.0}, -- Piercing Strike
 		[441791] = {96.0}, -- Burrowed Eruption
@@ -840,8 +840,8 @@ do
 			self:Bar(438218, timers[3][438218][1], CL.count:format(self:SpellName(438218), piercingStrikeCount)) -- Piercing Strike
 			self:Bar(441791, timers[3][441791][1], CL.count:format(self:SpellName(441791), burrowedEruptionCount)) -- Burrowed Eruption
 			self:Bar(440246, timers[3][440246][1], CL.count:format(CL.charge, recklessChargeCount)) -- Reckless Charge
-			self:Bar(438677, timers[3][438677][1], CL.count:format(L.stinging_swarm, stingingSwarmCount)) -- Stinging Swarm
 			if not self:LFR() then
+				self:Bar(438677, timers[3][438677][1], CL.count:format(L.stinging_swarm, stingingSwarmCount)) -- Stinging Swarm
 				self:Berserk(self:Mythic() and 180 or 410, 0) -- Uncontrollable Rage / Apex of Entropy
 			end
 
@@ -856,8 +856,10 @@ do
 			self:Bar(450129, timers[3][450129][1], CL.count:format(L.entropic_desolation, venomousRainCount)) -- Entropic Desolation
 			self:Bar(441626, timers[3][441626][1], CL.count:format(self:SpellName(441626), webBombCount)) -- Web Vortex
 			self:Bar(441782, timers[3][441782][1], CL.count:format(L.strands_of_reality, strandsOfRealityCount)) -- Strands of Reality
-			self:Bar(438355, timers[3][438355][1], CL.count:format(L.cataclysmic_entropy, cataclysmicEntropyCount)) -- Cataclysmic Entropy
-			checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", timers[3][438355][1] + SKIP_CAST_THRESHOLD, cataclysmicEntropyCount)
+			if not self:LFR() then
+				self:Bar(438355, timers[3][438355][1], CL.count:format(L.cataclysmic_entropy, cataclysmicEntropyCount)) -- Cataclysmic Entropy
+				checkTimer = self:ScheduleTimer("CataclysmicEntropyCheck", timers[3][438355][1] + SKIP_CAST_THRESHOLD, cataclysmicEntropyCount)
+			end
 		end
 	end
 end
