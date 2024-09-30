@@ -917,11 +917,14 @@ do
 end
 
 local function barStopped(event, bar)
-	local a = bar:Get("bigwigs:anchor")
-	if a and a.bars and a.bars[bar] then
-		currentBarStyler.BarStopped(bar)
-		a.bars[bar] = nil
-		rearrangeBars(a)
+	local anchorText = bar:Get("bigwigs:anchor")
+	if anchorText then
+		local anchor = anchorText == "expPosition" and emphasizeAnchor or normalAnchor
+		if anchor and anchor.bars and anchor.bars[bar] then
+			currentBarStyler.BarStopped(bar)
+			anchor.bars[bar] = nil
+			rearrangeBars(anchor)
+		end
 	end
 end
 
@@ -1268,7 +1271,7 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox)
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:option", key)
-	bar:Set("bigwigs:anchor", normalAnchor)
+	bar:Set("bigwigs:anchor", "normalPosition")
 	normalAnchor.bars[bar] = true
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetLabel(text)
@@ -1327,7 +1330,8 @@ do
 				bar:SetTimeCallback(moveBar, db.emphasizeTime)
 			end
 		end
-		rearrangeBars(bar:Get("bigwigs:anchor"))
+		local anchor = bar:Get("bigwigs:anchor") == "expPosition" and emphasizeAnchor or normalAnchor
+		rearrangeBars(anchor)
 		self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
 		-- Check if :EmphasizeBar(bar) was run and trigger the callback.
 		-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
@@ -1345,7 +1349,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
-		bar:Set("bigwigs:anchor", emphasizeAnchor)
+		bar:Set("bigwigs:anchor", "expPosition")
 	end
 	if not freshBar then
 		currentBarStyler.BarStopped(bar) -- Only call BarStopped on bars that have already started (ApplyStyle was called on them first)
