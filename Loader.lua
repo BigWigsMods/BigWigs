@@ -1112,12 +1112,12 @@ function mod:ADDON_LOADED(addon)
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
 	local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
-	if num < 64 then
-		C_CVar.SetCVar("Sound_NumChannels", "64") -- Blizzard keeps screwing with addon sound priority so we force this minimum
+	if num < 90 then
+		C_CVar.SetCVar("Sound_NumChannels", "90") -- 64 is the default, enforce a little higher as a minimum to prevent sound clipping issues with addons
 	end
 	num = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
-	if num < 67108864 then
-		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "67108864") -- Set the cache to the "Small (64MB)" setting as a minimum
+	if num < 134217728 then
+		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "134217728") -- "Large (128MB)" is the default, enforce it as a minimum
 	end
 
 	--bwFrame:UnregisterEvent("ADDON_LOADED")
