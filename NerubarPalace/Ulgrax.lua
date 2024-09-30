@@ -185,10 +185,10 @@ function mod:CarnivorousContest(args)
 	self:StopBar(CL.count:format(CL.soak, carnivorousContestCount))
 	if UnitInRaid(args.destName) then -- XXX not targetting [DNT] Tug of War Stalker 1
 		self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(CL.soak, carnivorousContestCount))
-		self:TargetBar(args.spellId, 8, args.destName)
+		self:TargetBar(args.spellId, 8, args.destName, CL.soak)
 	else
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(CL.soak, carnivorousContestCount)))
-		self:CastBar(args.spellId, 8)
+		self:CastBar(args.spellId, 8, CL.soak)
 	end
 	carnivorousContestCount = carnivorousContestCount + 1
 	if carnivorousContestCount < 3 then
