@@ -3092,6 +3092,14 @@ function boss:StopBar(text, player)
 	end
 end
 
+--- Stop a cast bar.
+-- @param text the bar text, or a spellId which is converted into the spell name and used
+function boss:StopCastBar(text)
+	local msg = format(L.cast, type(text) == "number" and spells[text] or text)
+	self:SendMessage("BigWigs_StopBar", self, msg)
+	self:SendMessage("BigWigs_StopCountdown", self, msg)
+end
+
 --- Pause a bar.
 -- @param key the option key
 -- @param[opt] text the bar text
