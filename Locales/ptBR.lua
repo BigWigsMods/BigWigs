@@ -231,14 +231,15 @@ L.dispeller = "|cFFFF0000Alerta para Dissipadores apenas.|r "
 
 -- Statistics
 L.statistics = "Estatísticas"
---L.defeat = "Defeat"
---L.defeat_desc = "The total amount of times you've been defeated by this boss encounter."
---L.victory = "Victory"
---L.victory_desc = "The total amount of times you were victorious against this boss encounter."
---L.fastest = "Fastest"
---L.fastest_desc = "The fastest victory and the date it occured on (Year/Month/Day)"
---L.first = "First"
---L.first_desc = "The first time you were victorious against this boss encounter, formatted as:\n[Amount of defeats prior to first victory] - [Combat duration] - [Year/Month/Day of victory]"
+L.defeat = "Derrotado"
+L.defeat_desc = "A quantidade total de vezes que você foi derrotado por esse chefe."
+L.victory = "Vitória"
+L.victory_desc = "A quantidade total de vezes que você venceu a luta com esse chefe."
+L.fastest = "Rápido"
+L.fastest_desc = "A vitória mais rápida e a data em que ocorreu (Ano/Mês/Dia)"
+L.first = "Primeiro"
+L.first_desc =
+	"A primeira vez que você venceu a luta com esse chefe, formatado como:\n[Quantidade de derrotas antes da primeira vitória] - [Duração do combate] - [Ano/Mês/Dia da vitória]"
 -- Difficulty levels for statistics display on bosses
 --L.unknown = "Unknown"
 L.LFR = "LDR"
