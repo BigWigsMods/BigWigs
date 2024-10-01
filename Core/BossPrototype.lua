@@ -1033,14 +1033,6 @@ do
 		"raid26target", "raid27target", "raid28target", "raid29target", "raid30target",
 		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
 		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target",
-		"nameplate1target", "nameplate2target", "nameplate3target", "nameplate4target", "nameplate5target",
-		"nameplate6target", "nameplate7target", "nameplate8target", "nameplate9target", "nameplate10target",
-		"nameplate11target", "nameplate12target", "nameplate13target", "nameplate14target", "nameplate15target",
-		"nameplate16target", "nameplate17target", "nameplate18target", "nameplate19target", "nameplate20target",
-		"nameplate21target", "nameplate22target", "nameplate23target", "nameplate24target", "nameplate25target",
-		"nameplate26target", "nameplate27target", "nameplate28target", "nameplate29target", "nameplate30target",
-		"nameplate31target", "nameplate32target", "nameplate33target", "nameplate34target", "nameplate35target",
-		"nameplate36target", "nameplate37target", "nameplate38target", "nameplate39target", "nameplate40target",
 	}
 	local unitTableCount = #targetOnlyUnitTable
 	--- Fetches a unit id by scanning available targets.
@@ -1091,7 +1083,7 @@ do
 				return unit
 			else
 				for i = 50, unitTableCount do -- Begin at "targettarget" (50th) in the table
-					local unit = unitTable[i]
+					unit = unitTable[i]
 					local guid = UnitGUID(unit)
 					if guid == id then
 						return unit
