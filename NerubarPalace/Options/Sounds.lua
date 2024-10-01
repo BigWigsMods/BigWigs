@@ -119,7 +119,7 @@ BigWigs:AddSounds("The Silken Court", {
 
 BigWigs:AddSounds("Queen Ansurek", {
 	[437078] = "underyou",
-	[437093] = {"alarm","warning"},
+	[437093] = "alarm",
 	[437417] = "alert",
 	[437592] = "warning",
 	[438481] = "underyou",
@@ -150,8 +150,8 @@ BigWigs:AddSounds("Queen Ansurek", {
 	[451278] = "alarm",
 	[451600] = "alert",
 	[451832] = "alarm",
+	[455374] = "alarm",
 	[455387] = "alarm",
-	[462558] = "warning",
 	[464638] = "alarm",
 	["stages"] = {"info","long"},
 })

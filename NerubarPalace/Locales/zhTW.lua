@@ -76,7 +76,6 @@ if L then
 	L.web_blades = "刀刃" -- 技能描述「刀刃絲網」
 	L.silken_tomb = "絲網" -- Raid being rooted in place
 	L.wrest = "拉扯" -- 好像也不用轉？搶奪只有兩個字
-	L.slow = "緩速"
 	L.royal_condemnation = "鐐銬"
 	L.frothing_gluttony = "暴食" -- 起沫暴食/黑環
 

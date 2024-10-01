@@ -76,7 +76,6 @@ if L then
 	L.web_blades = "Hojas"
 	L.silken_tomb = "Enraizar" -- Raid being rooted in place
 	L.wrest = "Atraer"
-	L.slow = "Ralentización"
 	L.royal_condemnation = "Cadenas"
 	L.frothing_gluttony = "Anillo"
 

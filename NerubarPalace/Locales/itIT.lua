@@ -76,7 +76,6 @@ if L then
 	--L.web_blades = "Blades"
 	--L.silken_tomb = "Roots" -- Raid being rooted in place
 	--L.wrest = "Pull In"
-	--L.slow = "Slow"
 	--L.royal_condemnation = "Shackles"
 	--L.frothing_gluttony = "Ring"
 

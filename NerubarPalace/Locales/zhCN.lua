@@ -76,7 +76,6 @@ if L then
 	L.web_blades = "网刃"  -- 中文技能名称短直接使用技能名称
 	L.silken_tomb = "缠绕" -- Raid being rooted in place
 	L.wrest = "拉扯"
-	L.slow = "减速"
 	L.royal_condemnation = "镣铐"
 	L.frothing_gluttony = "能量环"
 

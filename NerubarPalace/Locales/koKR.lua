@@ -76,7 +76,6 @@ if L then
 	L.web_blades = "칼날"
 	L.silken_tomb = "이동 불가" -- Raid being rooted in place
 	L.wrest = "끌어당김"
-	L.slow = "이감"
 	L.royal_condemnation = "족쇄"
 	L.frothing_gluttony = "고리"
 

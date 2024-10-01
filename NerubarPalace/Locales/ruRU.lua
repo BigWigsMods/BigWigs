@@ -76,7 +76,6 @@ if L then
 	L.web_blades = "Клинки"
 	L.silken_tomb = "Корни" -- Raid being rooted in place
 	L.wrest = "Притяжка"
-	L.slow = "Замедление"
 	L.royal_condemnation = "Связывание"
 	L.frothing_gluttony = "Кольцо"
 
