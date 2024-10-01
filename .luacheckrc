@@ -45,6 +45,7 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitGUID",
 	"113/UnitIsDeadOrGhost",
 	"113/UnitName",
+	"113/UnitNameUnmodified",
 	"113/UnitSex",
 
 	-- Slash handling
@@ -57,7 +58,7 @@ files["**/Loader.lua"].ignore = {
 files["**/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
-	"113/UnitName",
+	"113/UnitNameUnmodified",
 	"113/UnitSetRole",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
