@@ -1175,7 +1175,7 @@ do
 
 	--- Start a repeating timer checking if your group is in combat with a boss.
 	function boss:CheckForEngage()
-		if self:IsEnabled() then
+		if self:IsEnabled() and not self:IsEngaged() then
 			for mobId in next, self.enableMobs do
 				local unit = findTargetByGUID(mobId)
 				if unit and UnitAffectingCombat(unit) then
@@ -1192,7 +1192,7 @@ do
 
 	--- Start a repeating timer checking if your group has left combat with a boss.
 	function boss:CheckForWipe()
-		if self:IsEnabled() then
+		if self:IsEnabled() and self:IsEngaged() then
 			for mobId in next, self.enableMobs do
 				local unit = findTargetByGUID(mobId)
 				if unit and UnitAffectingCombat(unit) then
