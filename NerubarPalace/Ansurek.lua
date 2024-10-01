@@ -437,7 +437,6 @@ do
 			local icon = self:GetOption(reactiveToxinMarker) and iconOrder[i] or nil
 			if player == self:UnitName("player") then
 				local text = icon and CL.rticon:format(L.reactive_toxin_say, icon) or L.reactive_toxin_say
-				local msg = icon and CL.you_icon:format(L.reactive_toxin_say, icon) or nil
 				self:PlaySound(437592, "warning") -- position?
 				self:Say(437592, text, nil, icon and CL.rticon:format("Toxin", icon) or "Toxin")
 				self:SayCountdown(437592, 5, icon)
@@ -453,7 +452,7 @@ do
 		playerList, iconList = {}, {}
 	end
 
-	function mod:ReactiveToxinSuccess(args)
+	function mod:ReactiveToxinSuccess()
 		if self:LFR() then -- No ReactiveToxinApplied in LFR
 			self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount))
 			self:Message(437592, "orange", CL.count:format(L.reactive_toxin, reactiveToxinCount))
@@ -603,6 +602,7 @@ do
 		self:StopBar(CL.count:format(self:SpellName(437093), feastCount)) -- Feast
 		self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
 		self:StopBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
+		self:StopCastBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 		self:StopBar(CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 		self:StopBar(CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 
@@ -664,9 +664,10 @@ function mod:Wrest(args)
 end
 
 -- Stage Two: Royal Ascension
-function mod:CosmicProtection(args) -- Story Mode
+function mod:CosmicProtection() -- Story Mode
 	self:StopBar(CL.stage:format(2))
 	self:StopBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
+	self:StopCastBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 	self:StopBar(CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 	self:StopBar(CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 
@@ -828,10 +829,10 @@ end
 -- Ascended Voidspeaker
 
 function mod:Shadowblast(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo then
+	local isPossible, isReady = self:Interrupter(args.sourceGUID)
+	if isPossible then
 		self:Message(args.spellId, "orange")
-		if ready then
+		if isReady then
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -965,10 +966,10 @@ end
 
 -- Chamber Acolyte
 function mod:DarkDetonation(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo then
+	local isPossible, isReady = self:Interrupter(args.sourceGUID)
+	if isPossible then
 		self:Message(args.spellId, "yellow")
-		if ready then
+		if isReady then
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -1078,7 +1079,6 @@ do
 			local icon = self:GetOption(abyssalInfusionMarker) and i or nil
 			if player == self:UnitName("player") then
 				local text = icon and CL.rticon:format(CL.portal, icon) or CL.portal
-				local msg = icon and CL.you_icon:format(CL.portal, icon) or nil
 				self:PlaySound(443888, "warning") -- position?
 				self:Say(443888, text, nil, icon and CL.rticon:format("Portal", icon) or "Portal")
 				self:SayCountdown(443888, 6, icon)
@@ -1094,7 +1094,7 @@ do
 		playerList, iconList = {}, {}
 	end
 
-	function mod:AbyssalInfusionSuccess(args)
+	function mod:AbyssalInfusionSuccess()
 		if self:LFR() then -- No AbyssalInfusionApplied in LFR
 			self:StopBar(CL.count:format(CL.portals, abyssalInfusionCount))
 			self:Message(443888, "orange", CL.count:format(CL.portals, abyssalInfusionCount))
@@ -1181,10 +1181,10 @@ end
 function mod:NullDetonation(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and not self:UnitBuff(unit, 445013) then -- Dark Barrier
-		local canDo, ready = self:Interrupter(args.sourceGUID)
-		if canDo then
+		local isPossible, isReady = self:Interrupter(args.sourceGUID)
+		if isPossible then
 			self:Message(args.spellId, "yellow")
-			if ready then
+			if isReady then
 				self:PlaySound(args.spellId, "alert")
 			end
 		end
@@ -1207,7 +1207,6 @@ do
 			local icon = self:GetOption(royalCondemnationMarker) and iconOrder[i] or nil
 			if player == self:UnitName("player") then
 				local text = icon and CL.rticon:format(L.royal_condemnation, icon) or L.royal_condemnation
-				local msg = icon and CL.you_icon:format(L.royal_condemnation, icon) or nil
 				self:PlaySound(438976, "warning")
 				self:Say(438976, text, nil, icon and CL.rticon:format("Shackles", icon) or "Shackles")
 				self:SayCountdown(438976, 6, icon) -- projectile based both ways? z.z
