@@ -221,7 +221,7 @@ do
 				self:Message(442526, "blue", text)
 				self:PlaySound(442526, "warning")
 				self:Say(442526, text, nil, icon and CL.rticon:format("Break Egg", icon) or "Break Egg")
-				self:SayCountdown(442526, self:Easy() and 10 or self:Mythic() and 6 or 8, icon)
+				self:SayCountdown(442526, self:Easy() and 10 or 8, icon)
 			end
 			-- 8 names in mythic may be a bit much, maybe infobox (bleh)?
 			playerList[#playerList+1] = player
