@@ -89,7 +89,7 @@ local function updateProfile()
 	if db.align ~= "LEFT" and db.align ~= "CENTER" and db.align ~= "RIGHT" then
 		db.align = plugin.defaultDB.align
 	end
-	if db.fontSize < 10 or db.fontSize > 200 then
+	if db.fontSize < 14 or db.fontSize > 200 then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
 	if db.emphFontSize < 20 or db.emphFontSize > 200 then
@@ -411,10 +411,8 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 3,
-						max = 200, softMax = 72,
-						min = 10,
-						step = 1,
 						width = 2,
+						softMax = 100, max = 200, min = 14, step = 1,
 					},
 					monochrome = {
 						type = "toggle",

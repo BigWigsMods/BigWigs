@@ -187,7 +187,7 @@ local function updateProfile()
 	if not media:IsValid(FONT, db.iconFontName) then
 		db.iconFontName = plugin.defaultDB.iconFontName
 	end
-	if db.iconFontSize < 5 or db.iconFontSize > 200 then
+	if db.iconFontSize < 6 or db.iconFontSize > 200 then
 		db.iconFontSize = plugin.defaultDB.iconFontSize
 	end
 	for i = 1, 4 do
@@ -276,7 +276,7 @@ local function updateProfile()
 	if not media:IsValid(FONT, db.textFontName) then
 		db.textFontName = plugin:GetDefaultFont()
 	end
-	if db.textFontSize < 5 or db.textFontSize > 200 then
+	if db.textFontSize < 10 or db.textFontSize > 200 then
 		db.textFontSize = plugin.defaultDB.textFontSize
 	end
 	for i = 1, 4 do
@@ -1003,7 +1003,7 @@ do
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
 								order = 8,
-								softMax = 100, max = 200, min = 5, step = 1,
+								softMax = 100, max = 200, min = 6, step = 1,
 								disabled = checkCooldownTimerDisabled,
 							},
 							iconFontMonochrome = {
@@ -1280,7 +1280,7 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 25,
-						softMax = 100, max = 200, min = 5, step = 1,
+						softMax = 100, max = 200, min = 10, step = 1,
 					},
 					textMonochrome = {
 						type = "toggle",

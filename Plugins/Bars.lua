@@ -90,10 +90,10 @@ local function updateProfile()
 	if not media:IsValid(STATUSBAR, db.texture) then
 		db.texture = plugin.defaultDB.texture
 	end
-	if db.fontSize < 1 or db.fontSize > 200 then
+	if db.fontSize < 10 or db.fontSize > 200 then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
-	if db.fontSizeEmph < 1 or db.fontSizeEmph > 200 then
+	if db.fontSizeEmph < 10 or db.fontSizeEmph > 200 then
 		db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
 	end
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
@@ -531,9 +531,7 @@ do
 						desc = L.fontSizeDesc,
 						width = 2,
 						order = 2,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
+						softMax = 100, max = 200, min = 10, step = 1,
 					},
 					visibleBarLimit = {
 						type = "range",
@@ -602,9 +600,7 @@ do
 						desc = L.fontSizeDesc,
 						width = 2,
 						order = 7,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
+						softMax = 100, max = 200, min = 10, step = 1,
 					},
 					visibleBarLimitEmph = {
 						type = "range",

@@ -128,7 +128,7 @@ local function updateProfile()
 		end
 	end
 
-	if db.fontSize < 1 or db.fontSize > 200 then
+	if db.fontSize < 10 or db.fontSize > 200 then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
@@ -298,9 +298,7 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 11,
-						max = 200, softMax = 25,
-						min = 1,
-						step = 1,
+						softMax = 25, max = 200, min = 10, step = 1,
 						disabled = disabled,
 					},
 					outline = {
