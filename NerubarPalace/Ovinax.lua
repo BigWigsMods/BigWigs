@@ -237,7 +237,7 @@ do
 		self:StopBar(CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.experimental_dosage, experimentalDosageCount)))
 		self:PlaySound(args.spellId, "alert")
-		local debuffDuration = self:Easy() and 10 or self:Mythic() and 6 or 8
+		local debuffDuration = self:Easy() and 10 or 8
 		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount)) -- 1.5s Cast + debuffDuration
 		experimentalDosageCount = experimentalDosageCount + 1
 
