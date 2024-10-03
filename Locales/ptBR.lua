@@ -236,10 +236,9 @@ L.defeat_desc = "A quantidade total de vezes que você foi derrotado por esse ch
 L.victory = "Vitória"
 L.victory_desc = "A quantidade total de vezes que você venceu a luta com esse chefe."
 L.fastest = "Rápido"
-L.fastest_desc = "A vitória mais rápida e a data em que ocorreu (Ano/Mês/Dia)"
+L.fastest_desc = "A vitória mais rápida e a data em que ocorreu. (Ano/Mês/Dia)"
 L.first = "Primeiro"
-L.first_desc =
-	"A primeira vez que você venceu a luta com esse chefe, formatado como:\n[Quantidade de derrotas antes da primeira vitória] - [Duração do combate] - [Ano/Mês/Dia da vitória]"
+L.first_desc =	"A primeira vez que você venceu a luta com esse chefe, formatado como:\n[Quantidade de derrotas antes da primeira vitória] - [Duração do combate] - [Ano/Mês/Dia da vitória]"
 -- Difficulty levels for statistics display on bosses
 L.unknown = "Desconhecido"
 L.LFR = "LDR"
