@@ -165,14 +165,24 @@ function mod:NetherRift(args)
 	end
 end
 
-function mod:NexusDaggers(args)
-	if self:MobId(args.sourceGUID) == 217748 then -- boss, not phantoms
-		self:StopBar(CL.count:format(L.nexus_daggers, nexusDaggersCount))
-		self:Message(args.spellId, "yellow", CL.count:format(L.nexus_daggers, nexusDaggersCount))
-		self:PlaySound(args.spellId, "alarm")
-		nexusDaggersCount = nexusDaggersCount + 1
-		if nexusDaggersCount < 7 then
-			self:Bar(args.spellId, nexusDaggersCount % 2 == 0 and 30.0 or 100.0, CL.count:format(L.nexus_daggers, nexusDaggersCount))
+do
+	local daggerCastedCount = 0
+	function mod:NexusDaggers(args)
+		if self:MobId(args.sourceGUID) == 217748 then -- boss, not phantoms
+			self:StopBar(CL.count:format(L.nexus_daggers, nexusDaggersCount))
+			self:Message(args.spellId, "yellow", CL.count:format(L.nexus_daggers, nexusDaggersCount))
+			self:PlaySound(args.spellId, "alarm")
+			nexusDaggersCount = nexusDaggersCount + 1
+			if nexusDaggersCount < 7 then
+				self:Bar(args.spellId, nexusDaggersCount % 2 == 0 and 30.0 or 100.0, CL.count:format(L.nexus_daggers, nexusDaggersCount))
+			end
+			daggerCastedCount = 0
+		else -- phantoms
+			daggerCastedCount = daggerCastedCount + 1
+			if daggerCastedCount == 5 then
+				self:Message(args.spellId, "cyan", CL.over:format(L.nexus_daggers))
+				self:PlaySound(args.spellId, "info")
+			end
 		end
 	end
 end
@@ -224,5 +234,5 @@ function mod:EternalNight(args)
 	self:StopBar(CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:Message(args.spellId, "red", CL.count:format(CL.stage:format(2), starlessNightCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 34, CL.count:format(CL.stage:format(2), starlessNightCount))
+	self:CastBar(args.spellId, 38, CL.count:format(CL.stage:format(2), starlessNightCount))
 end
