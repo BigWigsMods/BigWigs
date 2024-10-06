@@ -3137,9 +3137,8 @@ do
 	-- @number length the duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
 	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
-	-- @bool[opt] hideOnExpire Removes the icon when the duration expires instead of keeping it on screen
-	function boss:Nameplate(key, length, guid, customIconOrText, hideOnExpire)
-		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText, hideOnExpire)
+	function boss:Nameplate(key, length, guid, customIconOrText)
+		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText)
 	end
 
 	--- Stop showing a nameplate icon.

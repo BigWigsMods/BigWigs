@@ -392,9 +392,7 @@ local function iconLoop(updater)
 	else
 		iconFrame.countdownNumber:Hide()
 		iconFrame.updater:Stop()
-		if iconFrame.hideOnExpire then
-			iconFrame:StopIcon()
-		elseif db.iconExpireGlow and not iconFrame.activeGlow then
+		if db.iconExpireGlow and not iconFrame.activeGlow then
 			iconFrame:StartGlow(db.iconExpireGlowType)
 		end
 	end
@@ -433,6 +431,7 @@ local function getIconFrame()
 		iconFrame:SetFrameStrata("MEDIUM")
 		iconFrame:SetFixedFrameStrata(true)
 		iconFrame:SetFrameLevel(5500)
+		iconFrame:SetClampedToScreen(true)
 		iconFrame:SetSize(db.iconWidth, db.iconHeight)
 
 		local icon = iconFrame:CreateTexture()
@@ -548,10 +547,6 @@ local function getIconFrame()
 
 	function iconFrame:SetDesaturated(desaturate)
 		self.icon:SetDesaturated(desaturate)
-	end
-
-	function iconFrame:SetHideOnExpire(hideOnExpire)
-		self.hideOnExpire = hideOnExpire
 	end
 
 	function iconFrame:ShowBorder(show, color)
@@ -675,15 +670,10 @@ do
 				func = function()
 					local guid = plugin:UnitGUID("target")
 					if guid and UnitCanAttack("player", "target") then
-						for i = 1, 40 do
-							local unit = ("nameplate%d"):format(i)
-							if plugin:UnitGUID(unit) == guid then
-								testCount = testCount + 1
-								local testNumber = (testCount%3)+1
-								local key = "test"..testNumber
-								startNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
-							end
-						end
+						testCount = testCount + 1
+						local testNumber = (testCount%3)+1
+						local key = "test"..testNumber
+						startNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
 					else
 						BigWigs:Print(L.noNameplateTestTarget)
 					end
@@ -1325,12 +1315,12 @@ do
 		return timerKeys
 	end
 
-	rearrangeNameplateIcons = function(guid)
+	rearrangeNameplateIcons = function(guid, nameplateFromStart)
 		local unitIcons = nameplateIcons[guid]
 		if unitIcons then
 			local unit = UnitTokenFromGUID(guid)
 			if unit then
-				local nameplate = GetNamePlateForUnit(unit)
+				local nameplate = nameplateFromStart or GetNamePlateForUnit(unit)
 				if nameplate then
 					local sorted = getOrder(nameplateIcons[guid])
 					local offsetY = db.iconOffsetY
@@ -1366,12 +1356,12 @@ do
 		end
 	end
 
-	rearrangeNameplateTexts = function(guid)
+	rearrangeNameplateTexts = function(guid, nameplateFromStart)
 		local unitTexts = nameplateTexts[guid]
 		if unitTexts then
 			local unit = UnitTokenFromGUID(guid)
 			if unit then
-				local nameplate = GetNamePlateForUnit(unit)
+				local nameplate = nameplateFromStart or GetNamePlateForUnit(unit)
 				if nameplate then
 					local sorted = getOrder(nameplateTexts[guid])
 					local offsetY = db.textOffsetY
@@ -1423,16 +1413,6 @@ local function nameplateTextCascadeDelete(guid, key)
 	if not next(nameplateTexts[guid]) then
 		nameplateTexts[guid] = nil
 	end
-end
-
-local function createDeletionTimer(frameInfo, remaining)
-	return C_Timer.NewTimer(remaining, function()
-		if frameInfo.text then
-			removeFrame(frameInfo)
-		else
-			nameplateIconCascadeDelete(frameInfo.unitGUID, frameInfo.key)
-		end
-	end)
 end
 
 function frameStopped(frame, isText)
@@ -1563,7 +1543,7 @@ local function createNameplateText(_, guid, key, length, text)
 	return textFrame
 end
 
-local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+local function createNameplateIcon(module, guid, key, length, icon)
 	local iconFrame = getIconFrame()
 	local width = db.iconWidth
 	local height = db.iconHeight
@@ -1583,7 +1563,6 @@ local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire
 	end
 	iconFrame:Set("bigwigs:key", key)
 	iconFrame:Set("bigwigs:unitGUID", guid)
-	iconFrame:SetHideOnExpire(hideOnExpire)
 	iconFrame:ShowBorder(db.iconBorder, db.iconBorderColor)
 
 	iconFrame:SetIcon(icon)
@@ -1613,7 +1592,7 @@ local function getLength(length)
 	return expirationTime, timerDuration
 end
 
-function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+function startNameplateIcon(module, guid, key, length, icon)
 	local time = GetTime()
 	local expirationTime, timerDuration = getLength(length)
 
@@ -1635,24 +1614,22 @@ function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 		exp = expirationTime,
 		icon = icon,
 		unitGUID = guid,
-		hideOnExpire = hideOnExpire,
 	}
 	nameplateIcons[guid][key] = frameInfo
 
 	local unit = UnitTokenFromGUID(guid)
 	if unit and UnitCanAttack("player", unit) then -- Mind control protection
-		local nameplateIcon = createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
-		frameInfo.nameplateFrame = nameplateIcon
-		rearrangeNameplateIcons(guid)
-	elseif hideOnExpire then
-		local remaining = expirationTime - time
-		frameInfo.deletionTimer = createDeletionTimer(frameInfo, remaining)
+		local nameplate = GetNamePlateForUnit(unit)
+		if nameplate then
+			local nameplateIcon = createNameplateIcon(module, guid, key, length, icon)
+			frameInfo.nameplateFrame = nameplateIcon
+			rearrangeNameplateIcons(guid, nameplate)
+		end
 	end
 end
 
-function showNameplateText(module, guid, key, length, text, hideOnExpire)
+function showNameplateText(module, guid, key, length, text)
 	plugin:StopNameplate(nil, module, guid, key, text)
-	local time = GetTime()
 	local expirationTime, timerDuration = getLength(length)
 
 	nameplateTexts[guid] = nameplateTexts[guid] or {}
@@ -1663,30 +1640,27 @@ function showNameplateText(module, guid, key, length, text, hideOnExpire)
 		exp = expirationTime,
 		text = text,
 		unitGUID = guid,
-		hideOnExpire = hideOnExpire,
 	}
 	nameplateTexts[guid][key] = textInfo
 
-	if hideOnExpire then
-		local remaining = expirationTime - time
-		textInfo.deletionTimer = createDeletionTimer(textInfo, remaining)
-	end
-
 	local unit = UnitTokenFromGUID(guid)
 	if unit and UnitCanAttack("player", unit) then -- Mind control protection
-		local nameplateText = createNameplateText(module, guid, key, length, text, hideOnExpire)
-		textInfo.nameplateFrame = nameplateText
-		rearrangeNameplateTexts(guid)
+		local nameplate = GetNamePlateForUnit(unit)
+		if nameplate then
+			local nameplateText = createNameplateText(module, guid, key, length, text)
+			textInfo.nameplateFrame = nameplateText
+			rearrangeNameplateTexts(guid, nameplate)
+		end
 	end
 end
 
-function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, hideOnExpire)
+function plugin:StartNameplate(_, module, guid, key, length, customIconOrText)
 	if not module:CheckOption(key, "NAMEPLATE") then return end
 	if not customIconOrText or type(customIconOrText) == "number" then
 		local icon = customIconOrText or module:SpellTexture(key)
-		startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+		startNameplateIcon(module, guid, key, length, icon)
 	elseif type(customIconOrText) == "string" then
-		showNameplateText(module, guid, key, length, customIconOrText, hideOnExpire)
+		showNameplateText(module, guid, key, length, customIconOrText)
 	end
 end
 
@@ -1708,8 +1682,7 @@ do
 				frameInfo.unitGUID,
 				frameInfo.key,
 				remainingTime,
-				frameInfo.text,
-				frameInfo.hideOnExpire
+				frameInfo.text
 			)
 			frameInfo.nameplateFrame = nameplateFrame
 		else
@@ -1718,8 +1691,7 @@ do
 				frameInfo.unitGUID,
 				frameInfo.key,
 				{remainingTime, frameInfo.length},
-				frameInfo.icon,
-				frameInfo.hideOnExpire
+				frameInfo.icon
 			)
 			frameInfo.nameplateFrame = nameplateFrame
 			if frameInfo.deletionTimer then
@@ -1749,34 +1721,23 @@ do
 	end
 end
 
-do
-	local function handleFrame(guid, frameInfo)
-		if frameInfo.nameplateFrame then
-			frameInfo.nameplateFrame:HideFrame()
-		end
-		if frameInfo.hideOnExpire and not frameInfo.text then
-			local remaining = frameInfo.exp - GetTime()
-			if remaining > 0 then
-				frameInfo.deletionTimer = createDeletionTimer(frameInfo, remaining)
-			else
-				nameplateIconCascadeDelete(guid, frameInfo.key)
+function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
+	local guid = self:UnitGUID(unit)
+	local unitIcons = nameplateIcons[guid]
+	if unitIcons then
+		for _, frameInfo in next, unitIcons do
+			if frameInfo.nameplateFrame then
+				frameInfo.nameplateFrame:HideFrame()
+				frameInfo.nameplateFrame = nil
 			end
 		end
-		frameInfo.nameplateFrame = nil
 	end
-
-	function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-		local guid = self:UnitGUID(unit)
-		local unitIcons = nameplateIcons[guid]
-		if unitIcons then
-			for _, frameInfo in next, unitIcons do
-				handleFrame(guid, frameInfo)
-			end
-		end
-		local unitTexts = nameplateTexts[guid]
-		if unitTexts then
-			for _, frameInfo in next, unitTexts do
-				handleFrame(guid, frameInfo)
+	local unitTexts = nameplateTexts[guid]
+	if unitTexts then
+		for _, frameInfo in next, unitTexts do
+			if frameInfo.nameplateFrame then
+				frameInfo.nameplateFrame:HideFrame()
+				frameInfo.nameplateFrame = nil
 			end
 		end
 	end
