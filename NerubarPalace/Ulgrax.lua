@@ -50,7 +50,7 @@ function mod:GetOptions()
 			439419, -- Stalker Netting
 		{435138, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Digestive Acid
 		435136, -- Venomous Lash
-		434697, -- Brutal Crush
+		{434697, "TANK"}, -- Brutal Crush
 			{434705, "TANK"}, -- Tenderized
 
 		-- Feeding Frenzy
