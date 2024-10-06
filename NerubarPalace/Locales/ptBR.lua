@@ -2,82 +2,82 @@ local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "ptBR")
 if not L then return end
 if L then
 	--L.carnivorous_contest_pull = "Pull In"
-	--L.chunky_viscera_message = "Feed Boss! (Special Action Button)"
+	L.chunky_viscera_message = "Alimente o Chefe! (Botão para Ação Especial)"
 end
 
 L = BigWigs:NewBossLocale("The Bloodbound Horror", "ptBR")
 if L then
-	--L.gruesome_disgorge_debuff = "Phase Shift"
-	--L.grasp_from_beyond = "Tentacles"
-	--L.grasp_from_beyond_say = "Tentacles"
-	--L.bloodcurdle = "Spreads"
-	--L.bloodcurdle_on_you = "Spread" -- Singular of Spread
-	--L.goresplatter = "Run Away"
+	L.gruesome_disgorge_debuff = "Troca de Fase"
+	L.grasp_from_beyond = "Tentáculos"
+	L.grasp_from_beyond_say = "Tentáculos"
+	L.bloodcurdle = "Espalhamento"
+	L.bloodcurdle_on_you = "Espalhar" -- Singular of Spread
+	L.goresplatter = "Corra para Longe"
 end
 
 L = BigWigs:NewBossLocale("Rasha'nan", "ptBR")
 if L then
-	--L.spinnerets_strands = "Strands"
-	--L.enveloping_webs = "Webs"
-	--L.enveloping_web_say = "Web" -- Singular of Webs
-	--L.erosive_spray = "Spray"
-	--L.caustic_hail = "Next Position"
+	L.spinnerets_strands = "Fios"
+	L.enveloping_webs = "Teias"
+	L.enveloping_web_say = "Teia" -- Singular of Webs
+	L.erosive_spray = "Pulverizar"
+	L.caustic_hail = "Próxima Posição"
 end
 
 L = BigWigs:NewBossLocale("Broodtwister Ovi'nax", "ptBR")
 if L then
-	--L.sticky_web = "Webs"
-	--L.sticky_web_say = "Web" -- Singular of Webs
-	--L.infest_message = "Casting Infest on YOU!"
-	--L.infest_say = "Parasites"
-	--L.experimental_dosage = "Egg Breaks"
-	--L.experimental_dosage_say = "Egg Break"
-	--L.ingest_black_blood = "Next Container"
-	--L.unstable_infusion = "Swirls"
+	L.sticky_web = "Teias"
+	L.sticky_web_say = "Teia" -- Singular of Webs
+	L.infest_message = "Lançando Infestação em VOCÊ!"
+	L.infest_say = "Parasitas"
+	L.experimental_dosage = "Quebrar os Ovos"
+	L.experimental_dosage_say = "Quebrar os Ovo"
+	L.ingest_black_blood = "Próximo Contêiner"
+	L.unstable_infusion = "Redemoinhos"
 
-	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
-	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
+	L.custom_on_experimental_dosage_marks = "Atribuição de Dosagem Experimental"
+	L.custom_on_experimental_dosage_marks_desc = "Atribuir jogadores afetados por 'Dosagem Experimental' para {rt6}{rt4}{rt3}{rt7} com o melee > ranged > healer prioritariamente. Afeta Falas e mensagens de Alvos."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "ptBR")
 if L then
-	--L.assasination = "Phantoms"
-	--L.twiligt_massacre = "Dashes"
-	--L.nexus_daggers = "Daggers"
+	L.assasination = "Fantasmas"
+	L.twiligt_massacre = "Traços"
+	L.nexus_daggers = "Adagas"
 end
 
 L = BigWigs:NewBossLocale("The Silken Court", "ptBR")
 if L then
-	--L.skipped_cast = "Skipped %s (%d)"
-	--L.intermission_trigger = "Apex of power!" -- Skeinspinner Takazj 100 energy yell
+	L.skipped_cast = "Pulou %s (%d)"
+	L.intermission_trigger = "Ápice do poder!" -- Skeinspinner Takazj 100 energy yell
 
-	--L.venomous_rain = "Rain"
-	--L.burrowed_eruption = "Burrow"
-	--L.stinging_swarm = "Dispel Debuffs"
-	--L.strands_of_reality = "Frontal [S]" -- S for Skeinspinner Takazj
-	--L.strands_of_reality_message = "Frontal [Skeinspinner Takazj]"
-	--L.impaling_eruption = "Frontal [A]" -- A for Anub'arash
-	--L.impaling_eruption_message = "Frontal [Anub'arash]"
-	--L.entropic_desolation = "Run Out"
-	--L.cataclysmic_entropy = "Big Boom" -- Interrupt before it casts
-	--L.spike_eruption = "Spikes"
-	--L.unleashed_swarm = "Swarm"
-	--L.void_degeneration = "Blue Orb"
-	--L.burning_rage = "Red Orb"
+	L.venomous_rain = "Chuva"
+	L.burrowed_eruption = "Escavação"
+	L.stinging_swarm = "Dissipar Debuffs"
+	L.strands_of_reality = "Frontal [S]" -- S for Skeinspinner Takazj
+	L.strands_of_reality_message = "Frontal [Skeinspinner Takazj]"
+	L.impaling_eruption = "Frontal [A]" -- A for Anub'arash
+	L.impaling_eruption_message = "Frontal [Anub'arash]"
+	L.entropic_desolation = "Fugir"
+	L.cataclysmic_entropy = "Grande Explosão" -- Interrupt before it casts
+	L.spike_eruption = "Espinhos"
+	L.unleashed_swarm = "Enxame"
+	L.void_degeneration = "Esfera Azul"
+	L.burning_rage = "Esfera Vermelha"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "ptBR")
 if L then
-	--L.stacks_onboss = "%dx %s on BOSS"
+	L.stacks_onboss = "%dx %s no CHEFE"
 
-	--L.reactive_toxin = "Toxins"
-	--L.reactive_toxin_say = "Toxin"
-	--L.venom_nova = "Nova"
-	--L.web_blades = "Blades"
-	--L.silken_tomb = "Roots" -- Raid being rooted in place
+	L.reactive_toxin = "Toxinas"
+	L.reactive_toxin_say = "Toxina"
+	L.venom_nova = "Nova"
+	L.web_blades = "Lâminas"
+	L.silken_tomb = "Enraizar" -- Raid being rooted in place
 	--L.wrest = "Pull In"
-	--L.royal_condemnation = "Shackles"
-	--L.frothing_gluttony = "Ring"
+	L.royal_condemnation = "Algemas"
+	L.frothing_gluttony = "Anel"
 
-	--L.stage_two_end_message_storymode = "Run into the portal"
+	L.stage_two_end_message_storymode = "Corra para dentro do portal"
 end
