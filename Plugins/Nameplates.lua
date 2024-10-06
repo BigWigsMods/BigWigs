@@ -51,25 +51,8 @@ local glowValues = {
 
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 local GetCVar = C_CVar.GetCVar
-local findUnitByGUID
-do
-	local unitTable = {
-		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
-		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
-		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
-		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
-	}
-	local unitTableCount = #unitTable
-	findUnitByGUID = function(id)
-		for i = 1, unitTableCount do
-			local unit = unitTable[i]
-			local guid = plugin:UnitGUID(unit)
-			if guid == id then
-				return unit
-			end
-		end
-	end
-end
+local UnitCanAttack = BigWigsLoader.UnitCanAttack
+local UnitTokenFromGUID = BigWigsLoader.UnitTokenFromGUID
 
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 local glowFunctions = {
@@ -655,9 +638,9 @@ do
 		for guid, _ in next, nameplateTexts do
 			guids[guid] = true
 		end
-		for guid, _ in next, guids do
-			local unit = findUnitByGUID(guid)
-			if unit then
+		for guid in next, guids do
+			local unit = UnitTokenFromGUID(guid)
+			if unit and UnitCanAttack("player", unit) then -- Mind control protection
 				plugin:NAME_PLATE_UNIT_REMOVED(nil, unit)
 				plugin:NAME_PLATE_UNIT_ADDED(nil, unit)
 			end
@@ -1343,76 +1326,82 @@ do
 	end
 
 	rearrangeNameplateIcons = function(guid)
-		local unit = findUnitByGUID(guid)
-		if not unit then return end
-		local nameplate = GetNamePlateForUnit(unit)
 		local unitIcons = nameplateIcons[guid]
 		if unitIcons then
-			local sorted = getOrder(nameplateIcons[guid])
-			local offsetY = db.iconOffsetY
-			local offsetX = db.iconOffsetX
-			local growDirection = db.iconGrowDirection
-			local iconPoint = inverseAnchorPoint[db.iconGrowDirectionStart]
-			local nameplatePoint = db.iconGrowDirectionStart
-			for i, key in ipairs(sorted) do
-				local icon = unitIcons[key].nameplateFrame
+			local unit = UnitTokenFromGUID(guid)
+			if unit then
+				local nameplate = GetNamePlateForUnit(unit)
+				if nameplate then
+					local sorted = getOrder(nameplateIcons[guid])
+					local offsetY = db.iconOffsetY
+					local offsetX = db.iconOffsetX
+					local growDirection = db.iconGrowDirection
+					local iconPoint = inverseAnchorPoint[db.iconGrowDirectionStart]
+					local nameplatePoint = db.iconGrowDirectionStart
+					for i, key in ipairs(sorted) do
+						local icon = unitIcons[key].nameplateFrame
 
-				if i > 1 then -- Only use setup offset for first icon
-					local growOffset = db.iconSpacing
-					if growDirection == "UP" then
-						growOffset = growOffset + db.iconHeight
-						offsetY = offsetY + growOffset
-					elseif growDirection == "DOWN" then
-						growOffset = -(growOffset + db.iconHeight)
-						offsetY = offsetY + growOffset
-					elseif growDirection == "LEFT" then
-						growOffset = -(growOffset + db.iconWidth)
-						offsetX = offsetX + growOffset
-					else -- RIGHT
-						growOffset = growOffset + db.iconWidth
-						offsetX = offsetX + growOffset
+						if i > 1 then -- Only use setup offset for first icon
+							local growOffset = db.iconSpacing
+							if growDirection == "UP" then
+								growOffset = growOffset + db.iconHeight
+								offsetY = offsetY + growOffset
+							elseif growDirection == "DOWN" then
+								growOffset = -(growOffset + db.iconHeight)
+								offsetY = offsetY + growOffset
+							elseif growDirection == "LEFT" then
+								growOffset = -(growOffset + db.iconWidth)
+								offsetX = offsetX + growOffset
+							else -- RIGHT
+								growOffset = growOffset + db.iconWidth
+								offsetX = offsetX + growOffset
+							end
+						end
+
+						icon:ClearAllPoints()
+						icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
 					end
 				end
-
-				icon:ClearAllPoints()
-				icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
 			end
 		end
 	end
 
 	rearrangeNameplateTexts = function(guid)
-		local unit = findUnitByGUID(guid)
-		if not unit then return end
-		local nameplate = GetNamePlateForUnit(unit)
 		local unitTexts = nameplateTexts[guid]
 		if unitTexts then
-			local sorted = getOrder(nameplateTexts[guid])
-			local offsetY = db.textOffsetY
-			local offsetX = db.textOffsetX
-			local growDirection = db.textGrowDirection
-			local textPoint = inverseAnchorPoint[db.textGrowDirectionStart]
-			local nameplatePoint = db.textGrowDirectionStart
-			for i, key in ipairs(sorted) do
-				local text = unitTexts[key].nameplateFrame
-				local w, h = text:GetSize()
-				if i > 1 then -- Only use setup offset after first icon
-					local growOffset = db.textSpacing
-					if growDirection == "UP" then
-						growOffset = growOffset + h
-						offsetY = offsetY + growOffset
-					elseif growDirection == "DOWN" then
-						growOffset = -(growOffset + h)
-						offsetY = offsetY + growOffset
-					elseif growDirection == "LEFT" then
-						growOffset = -(growOffset + w)
-						offsetX = offsetX + growOffset
-					else -- RIGHT
-						growOffset = growOffset + w
-						offsetX = offsetX + growOffset
+			local unit = UnitTokenFromGUID(guid)
+			if unit then
+				local nameplate = GetNamePlateForUnit(unit)
+				if nameplate then
+					local sorted = getOrder(nameplateTexts[guid])
+					local offsetY = db.textOffsetY
+					local offsetX = db.textOffsetX
+					local growDirection = db.textGrowDirection
+					local textPoint = inverseAnchorPoint[db.textGrowDirectionStart]
+					local nameplatePoint = db.textGrowDirectionStart
+					for i, key in ipairs(sorted) do
+						local text = unitTexts[key].nameplateFrame
+						local w, h = text:GetSize()
+						if i > 1 then -- Only use setup offset after first icon
+							local growOffset = db.textSpacing
+							if growDirection == "UP" then
+								growOffset = growOffset + h
+								offsetY = offsetY + growOffset
+							elseif growDirection == "DOWN" then
+								growOffset = -(growOffset + h)
+								offsetY = offsetY + growOffset
+							elseif growDirection == "LEFT" then
+								growOffset = -(growOffset + w)
+								offsetX = offsetX + growOffset
+							else -- RIGHT
+								growOffset = growOffset + w
+								offsetX = offsetX + growOffset
+							end
+						end
+						text:ClearAllPoints()
+						text:SetPoint(textPoint, nameplate, nameplatePoint, offsetX, offsetY)
 					end
 				end
-				text:ClearAllPoints()
-				text:SetPoint(textPoint, nameplate, nameplatePoint, offsetX, offsetY)
 			end
 		end
 	end
@@ -1562,7 +1551,7 @@ end
 -- Start Nameplates
 --
 
-local function createNameplateText(module, guid, key, length, text)
+local function createNameplateText(_, guid, key, length, text)
 	local textFrame = getTextFrame()
 
 	textFrame:Set("bigwigs:key", key)
@@ -1636,7 +1625,9 @@ function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 
 	plugin:StopNameplate(nil, module, guid, key)
 
-	nameplateIcons[guid] = nameplateIcons[guid] or {}
+	if not nameplateIcons[guid] then
+		nameplateIcons[guid] = {}
+	end
 	local frameInfo = {
 		module = module,
 		key = key,
@@ -1648,8 +1639,8 @@ function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 	}
 	nameplateIcons[guid][key] = frameInfo
 
-	local unit = findUnitByGUID(guid)
-	if unit then
+	local unit = UnitTokenFromGUID(guid)
+	if unit and UnitCanAttack("player", unit) then -- Mind control protection
 		local nameplateIcon = createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 		frameInfo.nameplateFrame = nameplateIcon
 		rearrangeNameplateIcons(guid)
@@ -1681,8 +1672,8 @@ function showNameplateText(module, guid, key, length, text, hideOnExpire)
 		textInfo.deletionTimer = createDeletionTimer(textInfo, remaining)
 	end
 
-	local unit = findUnitByGUID(guid)
-	if unit then
+	local unit = UnitTokenFromGUID(guid)
+	if unit and UnitCanAttack("player", unit) then -- Mind control protection
 		local nameplateText = createNameplateText(module, guid, key, length, text, hideOnExpire)
 		textInfo.nameplateFrame = nameplateText
 		rearrangeNameplateTexts(guid)
@@ -1740,14 +1731,18 @@ do
 
 	function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 		local guid = self:UnitGUID(unit)
-		local unitIcons = nameplateIcons[guid] or {}
-		local unitTexts = nameplateTexts[guid] or {}
 		local inCombat = UnitAffectingCombat(unit)
-		for _, frameInfo in next, unitIcons do
-			handleFrame(guid, frameInfo, inCombat)
+		local unitIcons = nameplateIcons[guid]
+		if unitIcons then
+			for _, frameInfo in next, unitIcons do
+				handleFrame(guid, frameInfo, inCombat)
+			end
 		end
-		for _, frameInfo in next, unitTexts do
-			handleFrame(guid, frameInfo, inCombat)
+		local unitTexts = nameplateTexts[guid]
+		if unitTexts then
+			for _, frameInfo in next, unitTexts do
+				handleFrame(guid, frameInfo, inCombat)
+			end
 		end
 		rearrangeNameplateIcons(guid)
 		rearrangeNameplateTexts(guid)
@@ -1772,13 +1767,17 @@ do
 
 	function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
 		local guid = self:UnitGUID(unit)
-		local unitIcons = nameplateIcons[guid] or {}
-		local unitTexts = nameplateTexts[guid] or {}
-		for _, frameInfo in next, unitIcons do
-			handleFrame(guid, frameInfo)
+		local unitIcons = nameplateIcons[guid]
+		if unitIcons then
+			for _, frameInfo in next, unitIcons do
+				handleFrame(guid, frameInfo)
+			end
 		end
-		for _, frameInfo in next, unitTexts do
-			handleFrame(guid, frameInfo)
+		local unitTexts = nameplateTexts[guid]
+		if unitTexts then
+			for _, frameInfo in next, unitTexts do
+				handleFrame(guid, frameInfo)
+			end
 		end
 	end
 end

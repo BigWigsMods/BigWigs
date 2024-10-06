@@ -47,6 +47,7 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitName",
 	"113/UnitNameUnmodified",
 	"113/UnitSex",
+	"113/UnitTokenFromGUID",
 
 	-- Slash handling
 	"111/SLASH_BigWigs1",
@@ -71,7 +72,6 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitIsInteractable",
-	"113/UnitTokenFromGUID",
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
@@ -86,7 +86,6 @@ files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitIsInteractable",
-	"113/UnitTokenFromGUID",
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Core/Core.lua"].ignore = {

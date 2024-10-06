@@ -117,6 +117,7 @@ public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 public.SendAddonMessage = SendAddonMessage
 public.SetRaidTarget = SetRaidTarget
 public.SendChatMessage = SendChatMessage
+public.UnitCanAttack = UnitCanAttack
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
 public.UnitThreatSituation = UnitThreatSituation
 public.UnitGUID = UnitGUID
@@ -125,6 +126,7 @@ public.UnitHealthMax = UnitHealthMax
 public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
 public.UnitName = UnitName
 public.UnitSex = UnitSex
+public.UnitTokenFromGUID = UnitTokenFromGUID
 public.isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
