@@ -528,17 +528,6 @@ function mod:SilkenTomb(args)
 	self:Bar(args.spellId, self:Story() and 38.0 or timers[1][args.spellId][silkenTombCount], CL.count:format(L.silken_tomb, silkenTombCount))
 end
 
-do
-	local prev = 0
-	function mod:GraspingSilkDamage(args)
-		if self:Me(args.destGUID) and args.time - prev > 5 then
-			prev = args.time
-			self:PersonalMessage(args.spellId, "underyou")
-			self:PlaySound(args.spellId, "underyou")
-		end
-	end
-end
-
 function mod:Liquefy(args)
 	self:StopBar(CL.count:format(CL.pools, liquefyCount))
 	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.pools, liquefyCount)))
