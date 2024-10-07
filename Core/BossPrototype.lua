@@ -845,6 +845,12 @@ do
 		engageUtilityFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 		engageUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 	end
+	--- Checks if a mob is engaged.
+	-- @param guid a mob to check
+	-- @return boolean
+	function boss:IsMobEngaged(guid)
+		return engagedGUIDs[guid] and true or false
+	end
 end
 
 -------------------------------------------------------------------------------
