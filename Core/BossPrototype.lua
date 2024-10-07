@@ -3196,7 +3196,7 @@ do
 	-- @string guid Anchor to a unit's nameplate by GUID
 	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
 	function boss:Nameplate(key, length, guid, customIconOrText)
-		if engagedGUIDs and not engagedGUIDs[guid] then
+		if not engagedGUIDs[guid] then
 			-- in some cases a NPC can start casting just before UNIT_THREAT_LIST_UPDATE, make sure this timer isn't overwritten
 			engagedGUIDs[guid] = true
 			self:Debug("engaging in :Nameplate", guid)
