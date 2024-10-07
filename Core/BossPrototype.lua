@@ -58,6 +58,7 @@ local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local engageUtilityFrame = CreateFrame("Frame")
+local engagedGUIDs = {}
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
 local difficulty, maxPlayers
@@ -458,7 +459,7 @@ function boss:Disable(isWipe)
 			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
 			engageUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
-			engageUtilityFrame.engagedGUIDs = nil
+			engagedGUIDs = {}
 			unitTargetScans = {}
 		else
 			for i = #unitTargetScans, 1, -1 do
@@ -798,49 +799,50 @@ do
 	end
 	do
 		local args = {}
-		function boss:UNIT_THREAT_LIST_UPDATE(event, unit)
-			if UnitAffectingCombat(unit) then
-				local guid = UnitGUID(unit)
-				if not engageUtilityFrame.engagedGUIDs[guid] then
-					engageUtilityFrame.engagedGUIDs[guid] = true
-					local _, _, _, _, _, id = strsplit("-", guid)
-					local mobId = tonumber(id)
-					if mobId then
-						for i = #enabledModules, 1, -1 do
-							local self = enabledModules[i]
-							local m = eventMap[self][event]
-							if m and m[mobId] then
-								self:Debug(":MobEngaged", guid)
-								local func = m[mobId]
-								args.mobId, args.destGUID = mobId, guid
-								self[func](self, args)
+		local UnitAffectingCombat = UnitAffectingCombat
+		engageUtilityFrame:SetScript("OnEvent", function(_, event, unit)
+			if event == "UNIT_THREAT_LIST_UPDATE" then
+				if UnitAffectingCombat(unit) then
+					local guid = UnitGUID(unit)
+					if not engagedGUIDs[guid] then
+						engagedGUIDs[guid] = true
+						local _, _, _, _, _, id = strsplit("-", guid)
+						local mobId = tonumber(id)
+						if mobId then
+							for i = #enabledModules, 1, -1 do
+								local self = enabledModules[i]
+								local m = eventMap[self][event]
+								if m and m[mobId] then
+									self:Debug(":MobEngaged", guid)
+									local func = m[mobId]
+									args.mobId, args.destGUID = mobId, guid
+									self[func](self, args)
+								end
 							end
 						end
 					end
 				end
+			else -- NAME_PLATE_UNIT_ADDED
+				if not UnitAffectingCombat(unit) then
+					local guid = UnitGUID(unit)
+					if guid and engagedGUIDs[guid] then
+						engagedGUIDs[guid] = nil
+					end
+				end
 			end
-		end
+		end)
 	end
-	engageUtilityFrame:SetScript("OnEvent", function(self, _, unit)
-		if not UnitAffectingCombat(unit) then
-			local guid = UnitGUID(unit)
-			if guid and self.engagedGUIDs[guid] then
-				self.engagedGUIDs[guid] = nil
-			end
-		end
-	end)
-	--- Register a callback for the first UNIT_THREAT_LIST_UPDATE after a NPC enters combat.
-	-- @param func callback function, passed a keyed table (unit, mobId, destGUID)
+	--- Register a callback for UNIT_THREAT_LIST_UPDATE.
+	-- @param func callback function, passed a keyed table (mobId, destGUID)
 	-- @number ... any number of mob ids
 	function boss:MobEngaged(func, ...)
 		if not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].UNIT_THREAT_LIST_UPDATE then eventMap[self].UNIT_THREAT_LIST_UPDATE = {} end
-		if not engageUtilityFrame.engagedGUIDs then engageUtilityFrame.engagedGUIDs = {} end
 		for i = 1, select("#", ...) do
 			eventMap[self]["UNIT_THREAT_LIST_UPDATE"][(select(i, ...))] = func
 		end
-		self:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
+		engageUtilityFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 		engageUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 	end
 end
@@ -3188,9 +3190,9 @@ do
 	-- @string guid Anchor to a unit's nameplate by GUID
 	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
 	function boss:Nameplate(key, length, guid, customIconOrText)
-		if engageUtilityFrame.engagedGUIDs and not engageUtilityFrame.engagedGUIDs[guid] then
+		if engagedGUIDs and not engagedGUIDs[guid] then
 			-- in some cases a NPC can start casting just before UNIT_THREAT_LIST_UPDATE, make sure this timer isn't overwritten
-			engageUtilityFrame.engagedGUIDs[guid] = true
+			engagedGUIDs[guid] = true
 			self:Debug("engaging in :Nameplate", guid)
 		end
 		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText)
