@@ -4,6 +4,7 @@
 <Script file="AggregationOfHorrors.lua"/>
 <Script file="Shurrai.lua"/>
 <Script file="Orta.lua"/>
+<Script file="Kordac.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
