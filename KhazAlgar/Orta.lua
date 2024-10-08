@@ -86,7 +86,7 @@ do
 		playerList = {}
 		self:Message(args.spellId, "yellow")
 		self:CDBar(args.spellId, 31.8)
-		self:PlaySound(args.spellId)
+		self:PlaySound(args.spellId, "alarm")
 	end
 
 	function mod:MountainsGraspApplied(args)
