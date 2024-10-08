@@ -57,7 +57,7 @@ local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
-local engageUtilityFrame = CreateFrame("Frame")
+local engageUtilityFrame, unengageUtilityFrame = CreateFrame("Frame"), CreateFrame("Frame")
 local engagedGUIDs = {}
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
@@ -458,7 +458,8 @@ function boss:Disable(isWipe)
 		if #enabledModules == 0 then
 			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
-			engageUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+			engageUtilityFrame:UnregisterEvent("UNIT_THREAT_LIST_UPDATE")
+			unengageUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 			engagedGUIDs = {}
 			unitTargetScans = {}
 		else
@@ -800,34 +801,33 @@ do
 	do
 		local args = {}
 		local UnitAffectingCombat = UnitAffectingCombat
-		engageUtilityFrame:SetScript("OnEvent", function(_, event, unit)
-			if event == "UNIT_THREAT_LIST_UPDATE" then
-				if UnitAffectingCombat(unit) then
-					local guid = UnitGUID(unit)
-					if not engagedGUIDs[guid] then
-						engagedGUIDs[guid] = true
-						local _, _, _, _, _, id = strsplit("-", guid)
-						local mobId = tonumber(id)
-						if mobId then
-							for i = #enabledModules, 1, -1 do
-								local self = enabledModules[i]
-								local m = eventMap[self][event]
-								if m and m[mobId] then
-									self:Debug(":MobEngaged", guid)
-									local func = m[mobId]
-									args.mobId, args.destGUID = mobId, guid
-									self[func](self, args)
-								end
+		engageUtilityFrame:SetScript("OnEvent", function(_, _, unit)
+			if UnitAffectingCombat(unit) then
+				local guid = UnitGUID(unit)
+				if not engagedGUIDs[guid] then
+					engagedGUIDs[guid] = true
+					local _, _, _, _, _, id = strsplit("-", guid)
+					local mobId = tonumber(id)
+					if mobId then
+						for i = #enabledModules, 1, -1 do
+							local self = enabledModules[i]
+							local m = eventMap[self]["UNIT_THREAT_LIST_UPDATE"]
+							if m and m[mobId] then
+								self:Debug(":MobEngaged", guid)
+								local func = m[mobId]
+								args.mobId, args.destGUID = mobId, guid
+								self[func](self, args)
 							end
 						end
 					end
 				end
-			else -- NAME_PLATE_UNIT_ADDED
-				if not UnitAffectingCombat(unit) then
-					local guid = UnitGUID(unit)
-					if guid and engagedGUIDs[guid] then
-						engagedGUIDs[guid] = nil
-					end
+			end
+		end)
+		unengageUtilityFrame:SetScript("OnEvent", function(_, _, unit)
+			if not UnitAffectingCombat(unit) then
+				local guid = UnitGUID(unit)
+				if guid and engagedGUIDs[guid] then
+					engagedGUIDs[guid] = nil
 				end
 			end
 		end)
@@ -843,7 +843,7 @@ do
 			eventMap[self]["UNIT_THREAT_LIST_UPDATE"][(select(i, ...))] = func
 		end
 		engageUtilityFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
-		engageUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+		unengageUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 	end
 	--- Checks if a mob is engaged.
 	-- @param guid a mob to check
