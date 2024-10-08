@@ -3197,7 +3197,6 @@ do
 		if not engagedGUIDs[guid] then
 			-- in some cases a NPC can start casting just before UNIT_THREAT_LIST_UPDATE, make sure this timer isn't overwritten
 			engagedGUIDs[guid] = true
-			self:Debug("engaging in :Nameplate", guid)
 		end
 		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText)
 	end
