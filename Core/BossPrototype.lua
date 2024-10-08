@@ -802,22 +802,20 @@ do
 		local args = {}
 		local UnitAffectingCombat = UnitAffectingCombat
 		engageUtilityFrame:SetScript("OnEvent", function(_, _, unit)
-			if UnitAffectingCombat(unit) then
-				local guid = UnitGUID(unit)
-				if not engagedGUIDs[guid] then
-					engagedGUIDs[guid] = true
-					local _, _, _, _, _, id = strsplit("-", guid)
-					local mobId = tonumber(id)
-					if mobId then
-						for i = #enabledModules, 1, -1 do
-							local self = enabledModules[i]
-							local m = eventMap[self]["UNIT_THREAT_LIST_UPDATE"]
-							if m and m[mobId] then
-								self:Debug(":MobEngaged", guid)
-								local func = m[mobId]
-								args.mobId, args.destGUID = mobId, guid
-								self[func](self, args)
-							end
+			local guid = UnitGUID(unit)
+			if not engagedGUIDs[guid] and UnitAffectingCombat(unit) then
+				engagedGUIDs[guid] = true
+				local _, _, _, _, _, id = strsplit("-", guid)
+				local mobId = tonumber(id)
+				if mobId then
+					for i = #enabledModules, 1, -1 do
+						local self = enabledModules[i]
+						local m = eventMap[self]["UNIT_THREAT_LIST_UPDATE"]
+						if m and m[mobId] then
+							self:Debug(":MobEngaged", guid)
+							local func = m[mobId]
+							args.mobId, args.destGUID = mobId, guid
+							self[func](self, args)
 						end
 					end
 				end
