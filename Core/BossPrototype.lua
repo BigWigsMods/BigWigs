@@ -57,7 +57,7 @@ local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
-local engageUtilityFrame, unengageUtilityFrame = CreateFrame("Frame"), CreateFrame("Frame")
+local activeNameplateUtilityFrame, inactiveNameplateUtilityFrame = CreateFrame("Frame"), CreateFrame("Frame")
 local engagedGUIDs = {}
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
@@ -458,8 +458,9 @@ function boss:Disable(isWipe)
 		if #enabledModules == 0 then
 			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
-			engageUtilityFrame:UnregisterEvent("UNIT_THREAT_LIST_UPDATE")
-			unengageUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+			activeNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+			inactiveNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
+			activeNameplateUtilityFrame.nameplateWatcher:Pause()
 			engagedGUIDs = {}
 			unitTargetScans = {}
 		else
@@ -800,48 +801,58 @@ do
 	end
 	do
 		local args = {}
+		local activeNameplates = {}
 		local UnitAffectingCombat = UnitAffectingCombat
-		engageUtilityFrame:SetScript("OnEvent", function(_, _, unit)
-			local guid = UnitGUID(unit)
-			if not engagedGUIDs[guid] and UnitAffectingCombat(unit) then
-				engagedGUIDs[guid] = true
-				local _, _, _, _, _, id = strsplit("-", guid)
-				local mobId = tonumber(id)
-				if mobId then
-					for i = #enabledModules, 1, -1 do
-						local self = enabledModules[i]
-						local m = eventMap[self]["UNIT_THREAT_LIST_UPDATE"]
-						if m and m[mobId] then
-							self:Debug(":MobEngaged", guid)
-							local func = m[mobId]
-							args.mobId, args.destGUID = mobId, guid
-							self[func](self, args)
+		activeNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
+			activeNameplates[unit] = true
+		end)
+		inactiveNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
+			activeNameplates[unit] = nil
+		end)
+		local nameplateWatcher = activeNameplateUtilityFrame:CreateAnimationGroup()
+		nameplateWatcher:SetLooping("REPEAT")
+		local anim = nameplateWatcher:CreateAnimation()
+		anim:SetDuration(0.5)
+		activeNameplateUtilityFrame.nameplateWatcher = nameplateWatcher
+		nameplateWatcher:SetScript("OnLoop", function()
+			for unit in next, activeNameplates do
+				local guid = UnitGUID(unit)
+				local engaged = engagedGUIDs[guid]
+				if not engaged and UnitAffectingCombat(unit) then
+					engagedGUIDs[guid] = true
+					local _, _, _, _, _, id = strsplit("-", guid)
+					local mobId = tonumber(id)
+					if mobId then
+						for i = #enabledModules, 1, -1 do
+							local self = enabledModules[i]
+							local m = eventMap[self]["UNIT_ENTERING_COMBAT"]
+							if m and m[mobId] then
+								self:Debug(":MobEngaged", guid)
+								local func = m[mobId]
+								args.mobId, args.destGUID = mobId, guid
+								self[func](self, args)
+							end
 						end
 					end
-				end
-			end
-		end)
-		unengageUtilityFrame:SetScript("OnEvent", function(_, _, unit)
-			if not UnitAffectingCombat(unit) then
-				local guid = UnitGUID(unit)
-				if guid and engagedGUIDs[guid] then
+				elseif engaged and not UnitAffectingCombat(unit) then
 					engagedGUIDs[guid] = nil
 				end
 			end
 		end)
-	end
-	--- Register a callback for UNIT_THREAT_LIST_UPDATE.
-	-- @param func callback function, passed a keyed table (mobId, destGUID)
-	-- @number ... any number of mob ids
-	function boss:MobEngaged(func, ...)
-		if not func then core:Print(format(missingArgument, self.moduleName)) return end
-		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
-		if not eventMap[self].UNIT_THREAT_LIST_UPDATE then eventMap[self].UNIT_THREAT_LIST_UPDATE = {} end
-		for i = 1, select("#", ...) do
-			eventMap[self]["UNIT_THREAT_LIST_UPDATE"][(select(i, ...))] = func
+		--- Register a callback for a unit nameplate entering combat.
+		-- @param func callback function, passed a keyed table (mobId, destGUID)
+		-- @number ... any number of mob ids
+		function boss:MobEngaged(func, ...)
+			if not func then core:Print(format(missingArgument, self.moduleName)) return end
+			if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
+			if not eventMap[self].UNIT_ENTERING_COMBAT then eventMap[self].UNIT_ENTERING_COMBAT = {} end
+			for i = 1, select("#", ...) do
+				eventMap[self]["UNIT_ENTERING_COMBAT"][select(i, ...)] = func
+			end
+			activeNameplateUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+			inactiveNameplateUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+			nameplateWatcher:Play()
 		end
-		engageUtilityFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
-		unengageUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 	end
 	--- Checks if a mob is engaged.
 	-- @param guid a mob to check
@@ -3195,7 +3206,7 @@ do
 	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
 	function boss:Nameplate(key, length, guid, customIconOrText)
 		if not engagedGUIDs[guid] then
-			-- in some cases a NPC can start casting just before UNIT_THREAT_LIST_UPDATE, make sure this timer isn't overwritten
+			-- in rare cases a NPC can start casting before being engaged, make sure this timer isn't overwritten
 			engagedGUIDs[guid] = true
 		end
 		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText)
