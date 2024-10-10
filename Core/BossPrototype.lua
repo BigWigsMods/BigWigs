@@ -826,7 +826,7 @@ do
 							local self = enabledModules[i]
 							local m = eventMap[self]["UNIT_ENTERING_COMBAT"]
 							if m and m[mobId] then
-								self:Debug(":MobEngaged", guid)
+								self:Debug(":RegisterEngageMob", guid)
 								local func = m[mobId]
 								self[func](self, guid, mobId)
 							end
@@ -840,7 +840,7 @@ do
 		--- Register a callback for a unit nameplate entering combat.
 		-- @param func callback function, passed (guid, mobId)
 		-- @number ... any number of mob ids
-		function boss:MobEngaged(func, ...)
+		function boss:RegisterEngageMob(func, ...)
 			if not func then core:Print(format(missingArgument, self.moduleName)) return end
 			if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 			if not eventMap[self].UNIT_ENTERING_COMBAT then eventMap[self].UNIT_ENTERING_COMBAT = {} end
