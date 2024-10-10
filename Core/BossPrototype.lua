@@ -58,7 +58,7 @@ local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local activeNameplateUtilityFrame, inactiveNameplateUtilityFrame = CreateFrame("Frame"), CreateFrame("Frame")
-local engagedGUIDs = {}
+local engagedGUIDs, activeNameplates = {}, {}
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
 local difficulty, maxPlayers
@@ -462,6 +462,7 @@ function boss:Disable(isWipe)
 			inactiveNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
 			activeNameplateUtilityFrame.nameplateWatcher:Stop()
 			engagedGUIDs = {}
+			activeNameplates = {}
 			unitTargetScans = {}
 		else
 			for i = #unitTargetScans, 1, -1 do
@@ -801,7 +802,6 @@ do
 	end
 	do
 		local args = {}
-		local activeNameplates = {}
 		local UnitAffectingCombat = UnitAffectingCombat
 		activeNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
 			activeNameplates[unit] = true
