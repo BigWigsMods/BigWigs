@@ -415,7 +415,7 @@ do
 				for i = 1, #settingsToImport do -- Only import settings that match entries in our table
 					local nameOfSetting = settingsToImport[i]
 					local value = data[dataKey][nameOfSetting]
-					if value then
+					if type(value) ~= "nil" then -- We need to store values set to false
 						plugin.db.profile[nameOfSetting] = value
 					end
 				end
