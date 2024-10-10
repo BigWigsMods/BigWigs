@@ -460,7 +460,7 @@ function boss:Disable(isWipe)
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
 			activeNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 			inactiveNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
-			activeNameplateUtilityFrame.nameplateWatcher:Pause()
+			activeNameplateUtilityFrame.nameplateWatcher:Stop()
 			engagedGUIDs = {}
 			unitTargetScans = {}
 		else
