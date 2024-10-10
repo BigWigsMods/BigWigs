@@ -801,7 +801,6 @@ do
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	do
-		local args = {}
 		local UnitAffectingCombat = UnitAffectingCombat
 		activeNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
 			activeNameplates[unit] = true
@@ -829,8 +828,7 @@ do
 							if m and m[mobId] then
 								self:Debug(":MobEngaged", guid)
 								local func = m[mobId]
-								args.mobId, args.destGUID = mobId, guid
-								self[func](self, args)
+								self[func](self, guid, mobId)
 							end
 						end
 					end
@@ -840,7 +838,7 @@ do
 			end
 		end)
 		--- Register a callback for a unit nameplate entering combat.
-		-- @param func callback function, passed a keyed table (mobId, destGUID)
+		-- @param func callback function, passed (guid, mobId)
 		-- @number ... any number of mob ids
 		function boss:MobEngaged(func, ...)
 			if not func then core:Print(format(missingArgument, self.moduleName)) return end

@@ -208,11 +208,6 @@ local unit_died_args_keys = {
 	time = true,
 }
 
-local mob_engaged_args_keys = {
-	mobId = true,
-	destGUID = true,
-}
-
 -- Set an exit code if we show an error.
 local exit_code = 0
 local error, warn, info
@@ -834,7 +829,7 @@ local function parseLua(file)
 			elseif unit_died_methods[name] then
 				args_keys = unit_died_args_keys
 			elseif mob_engaged_methods[name] then
-				args_keys = mob_engaged_args_keys
+				args_keys = {}
 			else
 				args_keys = standard_args_keys
 			end
