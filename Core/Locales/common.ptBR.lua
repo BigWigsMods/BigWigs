@@ -72,7 +72,7 @@ L.flying_available = "Pode voar agora"
 -- Add related
 L.add_spawned = "Add surgiu" -- singular
 L.adds_spawned = "Adds surgiram" -- plural
-L.adds_spawned_count = "%d |4add:adds; surgiram" -- 1 add spawned / 2 adds spawned
+L.adds_spawned_count = "%d |4add surgiu:adds surgiram;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Add surgindo" -- singular
 L.adds_spawning = "Adds surgindo" -- plural
 L.spawned = "%s surgiu"
