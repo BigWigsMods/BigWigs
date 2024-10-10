@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Ulgrax the Devourer", "ptBR")
 if not L then return end
 if L then
-	--L.carnivorous_contest_pull = "Pull In"
+	L.carnivorous_contest_pull = "Arrastar para Perto"
 	L.chunky_viscera_message = "Alimente o Chefe! (Botão para Ação Especial)"
 end
 
@@ -75,7 +75,7 @@ if L then
 	L.venom_nova = "Nova"
 	L.web_blades = "Lâminas"
 	L.silken_tomb = "Enraizar" -- Raid being rooted in place
-	--L.wrest = "Pull In"
+	L.wrest = "Arrastar para Perto"
 	L.royal_condemnation = "Algemas"
 	L.frothing_gluttony = "Anel"
 

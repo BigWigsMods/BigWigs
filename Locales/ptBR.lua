@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
---L.tempNPMsg = "Our season 1 nameplate timers are active."
+L.tempNPMsg = "Nossos temporizadores de placas de identificação da temporada 1 estão ativos."
 
 -- Core.lua
 L.berserk = "Frenesi"
@@ -249,7 +249,7 @@ L.timewalk = "Caminhada Temporal"
 L.story = "Histórias"
 L.mplus = "Mítica+ %d"
 L.SOD = "Temporada de Descobertas"
---L.hardcore = "Hardcore"
+L.hardcore = "Hardcore"
 L.level1 = "Nível 1"
 L.level2 = "Nível 2"
 L.level3 = "Nível 3"

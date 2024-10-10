@@ -31,8 +31,8 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Fase %d"
 L.stage = "Estágio %d"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "Onda %d" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "Onda %d de %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Modo normal"
 L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
@@ -48,7 +48,7 @@ L.gate_open = "Portão Aberto" -- When a gate is open, usually after a speech fr
 L.threat = "Ameaça"
 L.energy = "Energia"
 
---L.remaining = "%d remaining" -- 5 remaining
+L.remaining = "%d restantes" -- 5 remaining
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s acabou" -- Spell Over
 L.removed = "%s removido" -- Spell Removed
@@ -66,15 +66,15 @@ L.cancelled = "%s Cancelado" -- Spell Cancelled
 L.you_die = "Você morrerá" -- You will die
 L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima Habilidade" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
---L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.landing = "%s está pousando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Pode voar agora"
 
 -- Add related
 L.add_spawned = "Add surgiu" -- singular
 L.adds_spawned = "Adds surgiram" -- plural
---L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.adds_spawned_count = "%d |4add surgiu:adds surgiram;" -- 1 add spawned / 2 adds spawned
+L.add_spawning = "Add surgindo" -- singular
+L.adds_spawning = "Adds surgindo" -- plural
 L.spawned = "%s surgiu"
 L.spawning = "%s Chegando"
 L.next_add = "Próximo add"
@@ -120,24 +120,24 @@ L.affixes = "Afixos" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "Marcador %s"
 L.marker_player_desc = "Marca jogadores afetados por %s com %s, requer líder ou assistente." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Marca NPCs afetados por '%s' com %s, requer líder ou assistente." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
-L.link = "Ligação"
-L.link_with = "Ligado com %s"
-L.link_with_icon = "Ligado com |T13700%d:0|t%s"
-L.link_with_rticon = "{rt%d}Ligado com %s"
-L.link_both = "%s ligado com %s" -- XXX needs updated
-L.link_both_icon = "|T13700%d:0|t%s ligado com |T13700%d:0|t%s" -- XXX needs updated
-L.link_removed = "Ligação removida"
---L.link_say_option_name = "Repeating 'Linked' say messages"
---L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
+L.link = "Vínculo"
+L.link_with = "Vínculo com %s"
+L.link_with_icon = "Vinculado com |T13700%d:0|t%s"
+L.link_with_rticon = "{rt%d}Vinculado com %s"
+L.link_both = "%s + %s estão vinculados"
+L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s estão vinculados"
+L.link_removed = "Vínculo removido"
+L.link_say_option_name = "Repetir mensagens de 'Vínculo'"
+L.link_say_option_desc = "Mensagens no chat que dizem com quem você está vínculado se repetem."
 
 -- Abbreviated numbers
-L.amount_one = "%dB" -- Billions 1,000,000,000
-L.amount_two = "%dM" -- Millions 1,000,000
-L.amount_three = "%dK" -- Thousands 1,000
-L.seconds = "%.1fs" -- 1.1 seconds
+L.amount_one = "%dB" -- Bilhões 1,000,000,000
+L.amount_two = "%dM" -- Milhões 1,000,000
+L.amount_three = "%dK" -- Milhares 1,000
+L.seconds = "%.1fs" -- 1.1 segundos
 
 -- Directions
 L.top = "Topo"
@@ -164,9 +164,9 @@ L.nature = "Natureza"
 L.arcane = "Arcano"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "Interação automática com NPC"
+L.autotalk_boss_desc = "Seleciona automaticamente as opções de diálogo do NPC que iniciam o encontro com o chefe."
+L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do NPC que permitem você progredir para o próximo estágio da masmorra."
 
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
@@ -227,9 +227,9 @@ L.parasite = "Parasita" -- Any ability where a parasite is involved e.g. "Parasi
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.dodge = "Esquiva" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.health_drain = "Dreno de Vida" -- Any ability that drains health from the player
---L.smash = "Esmagamento" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
-L.spike = "Espeto" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
-L.spikes = "Espetos" -- Plural of L.spike
---L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.smash = "Esmagamento" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+L.spike = "Espinho" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
+L.spikes = "Espinhos" -- Plural of L.spike
+L.waves = "Ondas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
