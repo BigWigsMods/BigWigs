@@ -36,7 +36,7 @@ local C_EncounterJournal_GetSectionInfo = isCata and function(key)
 end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
-local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
+local UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = isCata and function(key)
@@ -58,7 +58,7 @@ local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local activeNameplateUtilityFrame, inactiveNameplateUtilityFrame = CreateFrame("Frame"), CreateFrame("Frame")
-local engagedGUIDs, activeNameplates = {}, {}
+local engagedGUIDs, activeNameplates, nameplateWatcher = {}, {}, nil
 local enabledModules, unitTargetScans = {}, {}
 local allowedEvents = {}
 local difficulty, maxPlayers
@@ -460,7 +460,7 @@ function boss:Disable(isWipe)
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
 			activeNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 			inactiveNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
-			activeNameplateUtilityFrame.nameplateWatcher:Stop()
+			nameplateWatcher:Stop()
 			engagedGUIDs = {}
 			activeNameplates = {}
 			unitTargetScans = {}
@@ -800,6 +800,7 @@ do
 		allowedEvents.UNIT_DIED = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
+
 	do
 		local UnitAffectingCombat = UnitAffectingCombat
 		activeNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
@@ -808,11 +809,10 @@ do
 		inactiveNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
 			activeNameplates[unit] = nil
 		end)
-		local nameplateWatcher = activeNameplateUtilityFrame:CreateAnimationGroup()
+		nameplateWatcher = activeNameplateUtilityFrame:CreateAnimationGroup()
 		nameplateWatcher:SetLooping("REPEAT")
 		local anim = nameplateWatcher:CreateAnimation()
 		anim:SetDuration(0.5)
-		activeNameplateUtilityFrame.nameplateWatcher = nameplateWatcher
 		nameplateWatcher:SetScript("OnLoop", function()
 			for unit in next, activeNameplates do
 				local guid = UnitGUID(unit)
@@ -837,6 +837,7 @@ do
 				end
 			end
 		end)
+		local GetNamePlates = C_NamePlate.GetNamePlates
 		--- Register a callback for a unit nameplate entering combat.
 		-- @param func callback function, passed (guid, mobId)
 		-- @number ... any number of mob ids
@@ -847,9 +848,18 @@ do
 			for i = 1, select("#", ...) do
 				eventMap[self]["UNIT_ENTERING_COMBAT"][select(i, ...)] = func
 			end
-			activeNameplateUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-			inactiveNameplateUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-			nameplateWatcher:Play()
+			if not nameplateWatcher:IsPlaying() then
+				activeNameplateUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+				inactiveNameplateUtilityFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+				local nameplates = GetNamePlates()
+				for i = 1, #nameplates do
+					local nameplateFrame = nameplates[i]
+					if nameplateFrame.namePlateUnitToken and UnitCanAttack("player", nameplateFrame.namePlateUnitToken) then
+						activeNameplates[nameplateFrame.namePlateUnitToken] = true
+					end
+				end
+				nameplateWatcher:Play()
+			end
 		end
 	end
 	--- Checks if a mob is engaged.
@@ -1238,6 +1248,7 @@ do
 		unitTargetScans[#unitTargetScans+1] = {self, func, solo and 0.1 or tankCheckExpiry, guid, 0} -- Tiny allowance when solo
 	end
 
+	local UnitAffectingCombat = UnitAffectingCombat
 	--- Start a repeating timer checking if your group is in combat with a boss.
 	function boss:CheckForEngage()
 		if self:IsEnabled() and not self:IsEngaged() then
