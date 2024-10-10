@@ -371,7 +371,7 @@ L.thickness_glow_desc = "A espessura das linhas na animação de brilho."
 L.scale = "Escala"
 L.scale_glow_desc = "A escala das faíscas na animação."
 L.startAnimation = "Iniciar Animação"
-L.startAnimation_glow_desc = "Esse brilho tem uma animação inicial, isso irá habilitar/desabilitar essa animação"
+L.startAnimation_glow_desc = "Esse brilho tem uma animação inicial, isso irá habilitar/desabilitar essa animação."
 
 -----------------------------------------------------------------------
 -- Proximity.lua
