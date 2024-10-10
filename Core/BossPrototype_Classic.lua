@@ -899,7 +899,7 @@ do
 							local self = enabledModules[i]
 							local m = eventMap[self]["UNIT_ENTERING_COMBAT"]
 							if m and m[mobId] then
-								self:Debug(":RegisterEngageMob", guid)
+								self:Debug("UNIT_ENTERING_COMBAT", guid)
 								local func = m[mobId]
 								self[func](self, guid, mobId)
 							end
