@@ -83,7 +83,7 @@ BigWigs:AddSounds("Nexus-Princess Ky'veza", {
 	[437343] = "alarm",
 	[437620] = "alert",
 	[438245] = "alert",
-	[439576] = "alarm",
+	[439576] = {"alarm","info"},
 	[440377] = "alert",
 	[440576] = "warning",
 	[442277] = "long",

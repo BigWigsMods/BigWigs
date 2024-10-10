@@ -19,3 +19,11 @@ BigWigs:AddColors("Orta, the Broken Mountain", {
 	[450677] = "orange",
 	[450929] = {"blue","yellow"},
 })
+
+BigWigs:AddColors("Kordac, the Dormant Protector", {
+	[458329] = "orange",
+	[458423] = "red",
+	[458695] = "blue",
+	[458799] = "blue",
+	[458838] = {"blue","yellow"},
+})

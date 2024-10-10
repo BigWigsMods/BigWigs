@@ -89,7 +89,7 @@ BigWigs:AddColors("Nexus-Princess Ky'veza", {
 	[437343] = "blue",
 	[437620] = "orange",
 	[438245] = "yellow",
-	[439576] = "yellow",
+	[439576] = {"cyan","yellow"},
 	[440377] = "purple",
 	[440576] = {"blue","purple"},
 	[442277] = "red",
