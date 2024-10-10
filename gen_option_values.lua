@@ -601,7 +601,7 @@ local function parseLua(file)
 	local options, option_keys, option_key_used, bitflag_used = {}, {}, {}, {}
 	local options_block_start = 0
 	local special_options = {}
-	local methods, registered_methods, unit_died_methods = {Win=true,Disable=true}, {}, {}
+	local methods, registered_methods, unit_died_methods, mob_engaged_methods = {Win=true,Disable=true}, {}, {}, {}
 	local event_callbacks = {}
 	local current_func = nil
 	local args_keys = standard_args_keys
@@ -807,6 +807,12 @@ local function parseLua(file)
 			registered_methods[callback] = n
 			unit_died_methods[callback] = true
 		end
+		event = line:match(":MobEngaged%(\"(.-)\"%s*,.*")
+		if event then
+			callback = event
+			registered_methods[callback] = n
+			mob_engaged_methods[callback] = true
+		end
 
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
@@ -822,6 +828,8 @@ local function parseLua(file)
 				args_keys = {}
 			elseif unit_died_methods[name] then
 				args_keys = unit_died_args_keys
+			elseif mob_engaged_methods[name] then
+				args_keys = {}
 			else
 				args_keys = standard_args_keys
 			end
