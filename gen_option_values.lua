@@ -807,7 +807,7 @@ local function parseLua(file)
 			registered_methods[callback] = n
 			unit_died_methods[callback] = true
 		end
-		event = line:match(":MobEngaged%(\"(.-)\"%s*,.*")
+		event = line:match(":RegisterEngageMob%(\"(.-)\"%s*,.*")
 		if event then
 			callback = event
 			registered_methods[callback] = n
