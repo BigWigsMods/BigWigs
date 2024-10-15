@@ -129,15 +129,15 @@ end
 do
 	local prev = 0
 	function mod:QueensbaneApplied(args)
-		if args.time - prev > 2 then
+		if not self:Easy() and args.time - prev > 2 then
 			prev = args.time
-			self:Bar(439409, 10, CL.orbs) -- Dark Viscera
+			self:Bar(439409, 9, CL.orbs) -- Dark Viscera
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
 			if not self:Easy() then
-				self:SayCountdown(args.spellId, 10)
+				self:SayCountdown(args.spellId, 9)
 			end
 		end
 	end
