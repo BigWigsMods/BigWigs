@@ -18,8 +18,8 @@ L.proximity = "Monitor di Prossimità"
 L.proximity_desc = "Visualizza il monitor di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 L.adds = "Adds"
 L.adds_desc = "Abilita le varie funzioni relative agli add che usciranno durante il boss."
---L.health = "Health"
---L.health_desc = "Enable functions for displaying various health information during the boss encounter."
+L.health = "Salute"
+L.health_desc = "Abilita le funzioni per visualizzare le varie informazioni che riguardano la Salute durante l'incontro col boss"
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 
@@ -48,14 +48,14 @@ L.noBossMod = "Nessun Boss mod:"
 L.offline = "Disconnesso"
 
 L.missingAddOnPopup = "L'addon |cFF436EEE%s|r è mancante!"
---L.missingAddOnRaidWarning = "L'addon |cFF436EEE%s|r è mancante! No timers will be displayed in this zone!"
---L.outOfDateAddOnPopup = "The |cFF436EEE%s|r addon is out of date!"
---L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! It may have bugs, missing features, or completely incorrect timers."
+L.missingAddOnRaidWarning = "L'addon |cFF436EEE%s|r è mancante! Nessun timer sarà visualizzato in questa zona!"
+L.outOfDateAddOnPopup = "L'addon |cFF436EEE%s|r non è aggiornato!"
+L.outOfDateAddOnRaidWarning = "L'addon |cFF436EEE%s|r non è aggiornato! Potrebbe contenere bug, mancare funzionalità o timer non corretti."
 L.disabledAddOn = "L'addon |cFF436EEE%s|r è disattivato, i timer non saranno mostrati."
 L.removeAddOn = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
---L.outOfDateContentPopup = "WARNING!\nYou updated |cFF436EEE%s|r but you also need to update the main |cFF436EEEBigWigs|r addon.\nIgnoring this will result in broken functionality."
---L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requires version %d of the main |cFF436EEEBigWigs|r addon to function correctly, but you're on version %d."
+L.outOfDateContentPopup = "WARNING!\nHai aggiornato |cFF436EEE%s|r ma devi anche aggiornare l'addon principale|cFF436EEEBigWigs|r.\nIgnorando questo poterà a funzionalità anomala e non funzionante."
+L.outOfDateContentRaidWarning = "|cFF436EEE%s|r richiede la versione %d dell' addon principale |cFF436EEEBigWigs|r per funzionare correttamente, tu hai la versione %d installata attualmente."
 
 L.expansionNames = {
 	"Classiche", -- Classic
@@ -85,7 +85,7 @@ L.spell_under_you = "BigWigs: Abilità sotto di te"
 
 -- Options.lua
 L.options = "Opzioni"
---L.optionsKey = "ID: %s" -- The ID that messages/bars/options use
+L.optionsKey = "ID: %s" -- L'ID che i messaggi/barre/opzioni useranno
 L.raidBosses = "Boss delle Incursioni"
 L.dungeonBosses = "Boss delle Spedizioni"
 L.introduction = "Benvenuto in BigWigs, dove imposti i combattimenti dei boss. Allacciati le cinture, Prendi le patatine e goditi il viaggio. Non mangia i tuoi bambini, ma ti aiuta a preparare i nuovi boss in modo completo per le tue incursioni."
@@ -98,8 +98,8 @@ L.configure = "Configura"
 L.resetPositions = "Ripristina le Posizioni"
 L.colors = "Colori"
 L.selectEncounter = "Seleziona il Combattimento"
---L.privateAuraSounds = "Private Aura Sounds"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
+L.privateAuraSounds = "Suoni per le Aura Private"
+L.privateAuraSounds_desc = "Le Aure Private non possono essere visualizzate normalmente, ma puoi impostare un suono che suonerà quando sei il bersaglio dell'abilità"
 L.listAbilities = "Elenca le Abilità nella Chat"
 
 L.dbmFaker = "Fingi di usare DBM"
@@ -167,7 +167,7 @@ L.ME_ONLY_EMPHASIZE_desc = "Se attivo enfatizzerà tutti i messaggi associati a 
 --L.NAMEPLATE = "Nameplates"
 --L.NAMEPLATE_desc = "If enabled, features such as icons and text related to this specific ability will show on your nameplates. This makes it easier to see which specific NPC is casting an ability when there are multiple NPCs that cast it."
 L.PRIVATE = "Auree privata"
-L.PRIVATE_desc = "Le auree private non possono essere tracciare normalmente, ma il suono ''su di te'' può essere impostato nella tabella dei suoni."
+L.PRIVATE_desc = "Le auree private non possono essere tracciate normalmente, ma il suono ''su di te'' può essere impostato nella tabella dei suoni."
 
 L.advanced = "Opzioni Avanzate"
 L.back = "<< Indietro"
