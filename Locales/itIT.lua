@@ -99,7 +99,7 @@ L.resetPositions = "Ripristina le Posizioni"
 L.colors = "Colori"
 L.selectEncounter = "Seleziona il Combattimento"
 L.privateAuraSounds = "Suoni per le Aura Private"
-L.privateAuraSounds_desc = "Le Aure Private non possono essere visualizzate normalmente, ma puoi impostare un suono che suonerà quando sei il bersaglio dell'abilità"
+L.privateAuraSounds_desc = "Le Aure Private non possono essere visualizzate normalmente, ma puoi impostare un suono che suonerà quando sei il bersaglio dell'abilità."
 L.listAbilities = "Elenca le Abilità nella Chat"
 
 L.dbmFaker = "Fingi di usare DBM"
