@@ -26,6 +26,7 @@ function plugin:GetDefaultName(module, key)
 		return
 	end
 	local altName = module.altNames and module.altNames[key]
+	if altName == CL.mythic then altName = nil end -- XXX using altnames as labels/descriptors z.z
 	return altName or module:SpellName(key, true)
 end
 
@@ -36,6 +37,7 @@ function plugin:GetName(module, key)
 		return
 	end
 	local altName = module.altNames and module.altNames[key]
+	if altName == CL.mythic then altName = nil end
 	local moduleDb = plugin.db.profile[module.name]
 	return moduleDb and moduleDb[key] or altName
 end
