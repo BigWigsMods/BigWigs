@@ -40,7 +40,7 @@ L.warnOldBase = "Stai utilizzando una versione di BigWigs per la gilda (%d), ma 
 L.tooltipHint = "|cffeda55fClic-Destro|r per aprire le Opzioni."
 L.activeBossModules = "Moduli dei Combattimenti Attivi:"
 
-L.oldVersionsInGroup = "Hai giocatori nel tuo gruppo con |cffff0000versioni vecchie|r di BigWigs. Puoi avere maggiori dettagli scrivendo /bwv." -- XXX needs updated
+L.oldVersionsInGroup = "Hai giocatori nel tuo gruppo con |cffff0000versioni vecchie|r di BigWigs. Puoi avere maggiori dettagli scrivendo /bwv."
 L.upToDate = "Aggiornati:"
 L.outOfDate = "Obsoleti:"
 L.dbmUsers = "Utilizzatori DBM:"
