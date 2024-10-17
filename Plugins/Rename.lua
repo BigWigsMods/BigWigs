@@ -2,7 +2,11 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Rename")
+local plugin, CL = BigWigs:NewPlugin("Rename", {
+	"GetDefaultName",
+	"GetName",
+	"SetName",
+})
 if not plugin then return end
 
 --------------------------------------------------------------------------------
@@ -21,7 +25,8 @@ function plugin:GetDefaultName(module, key)
 		BigWigs:Error(("Rename: Missing module or key (%q, %q)"):format(tostringall(module, key)))
 		return
 	end
-	return module.altNames and module.altNames[key] or module:SpellName(key, true)
+	local altName = module.altNames and module.altNames[key]
+	return altName or module:SpellName(key, true)
 end
 
 function plugin:GetName(module, key)
@@ -31,7 +36,7 @@ function plugin:GetName(module, key)
 		return
 	end
 	local altName = module.altNames and module.altNames[key]
-	local moduleDb = self.db.profile[module.name]
+	local moduleDb = plugin.db.profile[module.name]
 	return moduleDb and moduleDb[key] or altName
 end
 
@@ -45,9 +50,9 @@ function plugin:SetName(module, key, value)
 		value = nil
 	end
 	local moduleName = module.name
-	if value and not self.db.profile[moduleName] then
-		self.db.profile[moduleName] = {}
+	if value and not plugin.db.profile[moduleName] then
+		plugin.db.profile[moduleName] = {}
 	end
-	self.db.profile[moduleName][key] = value
+	plugin.db.profile[moduleName][key] = value
 	module:SetSpellRename(key, value)
 end

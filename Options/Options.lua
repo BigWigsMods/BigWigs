@@ -584,7 +584,7 @@ local advancedTabs = {
 	},
 }
 
-local customOptions = {
+local builtinOptions = {
 	berserk = true,
 	altpower = true,
 	infobox = true,
@@ -594,6 +594,31 @@ local customOptions = {
 	adds = true,
 	health = true,
 }
+
+local function setRenameValue(widget, _, value)
+	local module = widget:GetUserData("module")
+	local key = widget:GetUserData("key")
+	local default = widget:GetUserData("default")
+
+	local renameModule = BigWigs:GetPlugin("Rename")
+	if value == default then
+		value = nil
+	end
+	renameModule:SetName(module, key, value)
+	-- refresh
+	local dropdown = widget:GetUserData("dropdown")
+	local scrollFrame = widget:GetUserData("scrollFrame")
+	local bossOption = widget:GetUserData("option")
+	visibleSpellDescriptionWidgets = {}
+	scrollFrame:ReleaseChildren()
+	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+	scrollFrame:PerformLayout()
+end
+
+local function resetRenameValue(widget, _, value)
+	local editbox = widget:GetUserData("editbox")
+	editbox:Fire("OnEnterPressed", "")
+end
 
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
@@ -637,56 +662,38 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	end
 	widgets[#widgets + 1] = check
 
-	if not customOptions[dbKey] and BigWigs:GetPlugin("Rename", true) then -- can't rename builtins
+	local renameModule = BigWigs:GetPlugin("Rename", true)
+	if not builtinOptions[dbKey] and renameModule then -- can't rename builtins
 		local customDesc = AceGUI:Create("Label")
 		customDesc:SetText("Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.")
 		customDesc:SetColor(1, 0.82, 0)
 		customDesc:SetFullWidth(true)
 		widgets[#widgets + 1] = customDesc
 
+		local default = renameModule:GetDefaultName(module, dbKey)
 		local customName = AceGUI:Create("EditBox")
-		customName:SetText(BigWigs:GetPlugin("Rename"):GetName(module, dbKey))
+		customName:SetText(renameModule:GetName(module, dbKey))
 		customName:SetUserData("key", dbKey)
+		customName:SetUserData("default", default)
 		customName:SetUserData("scrollFrame", scrollFrame)
 		customName:SetUserData("dropdown", dropdown)
 		customName:SetUserData("module", module)
 		customName:SetUserData("option", bossOption)
-		customName:SetCallback("OnEnterPressed", function(widget, event, value)
-			local module = widget:GetUserData("module")
-			local key = widget:GetUserData("key")
-
-			local renameModule = BigWigs:GetPlugin("Rename")
-			local default = renameModule:GetDefaultName(module, key)
-			if value == default then
-				value = nil
-			end
-			renameModule:SetName(module, key, value)
-			-- refresh
-			local dropdown = widget:GetUserData("dropdown")
-			local scrollFrame = widget:GetUserData("scrollFrame")
-			local bossOption = widget:GetUserData("option")
-			visibleSpellDescriptionWidgets = {}
-			scrollFrame:ReleaseChildren()
-			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
-			scrollFrame:PerformLayout()
-		end)
+		customName:SetCallback("OnEnterPressed", setRenameValue)
 		customName:SetRelativeWidth(0.6)
 		widgets[#widgets + 1] = customName
 
 		local customReset = AceGUI:Create("Button")
 		customReset:SetText("Reset")
-		customReset:SetDisabled(not alternativeName or alternativeName == BigWigs:GetPlugin("Rename"):GetDefaultName(module, dbKey))
+		customReset:SetDisabled(not alternativeName or alternativeName == default)
 		customReset:SetUserData("editbox", customName)
-		customReset:SetCallback("OnClick", function(widget, event, value)
-			local editbox = widget:GetUserData("editbox")
-			editbox:Fire("OnEnterPressed", "")
-		end)
+		customReset:SetCallback("OnClick", resetRenameValue)
 		customReset:SetRelativeWidth(0.2)
 		widgets[#widgets + 1] = customReset
 
 		local customDefault = AceGUI:Create("Button")
 		customDefault:SetText("Spell Name")
-		customDefault:SetDisabled(not alternativeName or alternativeName == name or BigWigs:GetPlugin("Rename"):GetDefaultName(module, dbKey) == module:SpellName(dbKey, true))
+		customDefault:SetDisabled(not alternativeName or alternativeName == name or default == module:SpellName(dbKey, true))
 		customDefault:SetUserData("editbox", customName)
 		customDefault:SetUserData("spell", name)
 		customDefault:SetUserData("desc", "This ability has a custom name by default, click this button to use the spell name instead.")
@@ -698,6 +705,49 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		end)
 		customDefault:SetRelativeWidth(0.2)
 		widgets[#widgets + 1] = customDefault
+
+		if module.renameStrings and module.renameStrings[dbKey] then
+			local spacer = AceGUI:Create("Label")
+			spacer:SetFullWidth(true)
+			widgets[#widgets + 1] = spacer
+
+			for _, stringKey in next, module.renameStrings[dbKey] do
+				local default = module.renameStringDefaults[stringKey]
+				local text = renameModule:GetName(module, stringKey) or default
+				-- XXX just title case the key for now
+				local label = stringKey:gsub("_", " "):gsub("(%a)(%w*)", function(a, b) return a:upper()..b:lower() end)
+				-- suffix -> localized category
+				-- local titles = {
+				-- 	me = "On Me",
+				-- 	cast = "Cast Message",
+				-- 	castbar = "Cast Bar",
+				-- 	singular = "Singular Form (Target Message/Bar)",
+				-- }
+				-- local suffix = stringKey:match("_(.-)$")
+				-- local label = titles[suffix]
+
+				local customStringName = AceGUI:Create("EditBox")
+				customStringName:SetLabel(label)
+				customStringName:SetText(text)
+				customStringName:SetUserData("key", stringKey)
+				customStringName:SetUserData("default", default)
+				customStringName:SetUserData("scrollFrame", scrollFrame)
+				customStringName:SetUserData("dropdown", dropdown)
+				customStringName:SetUserData("module", module)
+				customStringName:SetUserData("option", bossOption)
+				customStringName:SetCallback("OnEnterPressed", setRenameValue)
+				customStringName:SetRelativeWidth(0.6)
+				widgets[#widgets + 1] = customStringName
+
+				local customStringReset = AceGUI:Create("Button")
+				customStringReset:SetText("Reset")
+				customStringReset:SetDisabled(text == default)
+				customStringReset:SetUserData("editbox", customStringName)
+				customStringReset:SetCallback("OnClick", resetRenameValue)
+				customStringReset:SetRelativeWidth(0.4)
+				widgets[#widgets + 1] = customStringReset
+			end
+		end
 	end
 
 	-- Create role-specific secondary checkbox
@@ -806,8 +856,18 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		return dropdown
 	end
 
+	if alternativeName == name then alternativeName = nil end -- altname set to spell name
+	if module.renameStrings and module.renameStrings[dbKey] then
+		local count = #module.renameStrings[dbKey]
+		if alternativeName then
+			alternativeName = ("%s, +%d"):format(alternativeName, count)
+		else
+			alternativeName = ("+%d"):format(count)
+		end
+	end
+
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and alternativeName ~= name and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
@@ -854,7 +914,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local flagIcons = {}
 	local showFlags = {
 		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "COUNTDOWN", "CASTBAR_COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
+		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "CASTBAR", "COUNTDOWN", "CASTBAR_COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
 		"PROXIMITY", "INFOBOX", "ALTPOWER", "NAMEPLATE", "PRIVATE",
 	}
 	for i = 1, #showFlags do
@@ -1027,6 +1087,7 @@ local function populatePrivateAuraOptions(widget)
 
 	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
 	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local defaultSound = soundModule:GetDefaultSound("privateaura")
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
 		local options = privateAuraSoundOptions[module]
@@ -1039,9 +1100,8 @@ local function populatePrivateAuraOptions(widget)
 			scrollFrame:AddChild(header)
 			for _, option in ipairs(options) do
 				local spellId = option[1]
-				local default = soundModule:GetDefaultSound("privateaura")
 				local key = ("pa_%d"):format(spellId)
-				local id = option.option or spellId
+				local id = option.tooltip or option.option or spellId -- XXX compat
 
 				local name = loader.GetSpellName(id)
 				local texture = loader.GetSpellTexture(id)
@@ -1050,18 +1110,17 @@ local function populatePrivateAuraOptions(widget)
 				icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
 				icon:SetImageSize(40, 40)
 				icon:SetRelativeWidth(0.1)
-				icon:SetUserData("bossOption", id)
+				icon:SetUserData("spellId", id)
 				icon:SetUserData("updateTooltip", true)
 				icon:SetCallback("OnEnter", function(widget)
 					bwTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-					bwTooltip:SetSpellByID(widget:GetUserData("bossOption"))
+					bwTooltip:SetSpellByID(widget:GetUserData("spellId"))
 					bwTooltip:Show()
 				end)
 				icon:SetCallback("OnLeave", bwTooltip_Hide)
 
 				local dropdown = AceGUI:Create("SharedDropdown")
 				if option.mythic then
-					-- dropdown:SetLabel(name .. _G.CreateTextureMarkup(521749, 256, 64, 24, 24, 0.5, 0.625, 0.5, 1)) -- 521749 = Interface\EncounterJournal\UI-EJ-Icons
 					dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
 				else
 					dropdown:SetLabel(name)
@@ -1069,7 +1128,7 @@ local function populatePrivateAuraOptions(widget)
 				dropdown:SetList(soundList, nil, "DDI-Sound")
 				dropdown:SetRelativeWidth(0.88)
 				dropdown:SetUserData("key", key)
-				dropdown:SetUserData("default", default)
+				dropdown:SetUserData("default", defaultSound)
 				dropdown:SetUserData("module", module)
 				dropdown:SetCallback("OnValueChanged", function(widget, _, value)
 					local key = widget:GetUserData("key")
@@ -1081,7 +1140,7 @@ local function populatePrivateAuraOptions(widget)
 					end
 					module.db.profile[key] = value
 				end)
-				local value = module.db.profile[key] or default
+				local value = module.db.profile[key] or defaultSound
 				for i, v in next, soundList do
 					if v == value then
 						dropdown:SetValue(i)
@@ -1106,7 +1165,7 @@ local function populatePrivateAuraOptions(widget)
 	reset:SetCallback("OnClick", function(widget)
 		for module, options in next, widget:GetUserData("privateAuraSoundOptions") do
 			for _, option in next, options do
-				local key = "pa_" .. option[1]
+				local key = ("pa_%d"):format(option[1])
 				module.db.profile[key] = nil
 			end
 		end

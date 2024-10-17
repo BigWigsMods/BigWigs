@@ -316,10 +316,18 @@ function boss:GetAllowWin()
 	return self.allowWin and true or false
 end
 
+--- Register private auras.
+-- @param opts the options table
 function boss:SetPrivateAuraSounds(opts)
 	for i = 1, #opts do
-		if type(opts[i]) ~= "table" then
-			opts[i] = { opts[i] }
+		local o = opts[i]
+		if type(o) ~= "table" then
+			opts[i] = { o }
+		elseif o.extra then -- XXX compat
+			for j, v in ipairs(o.extra) do
+				o[j + 1] = v
+			end
+			o.extra = nil
 		end
 	end
 	self.privateAuraSoundOptions = opts
@@ -592,7 +600,7 @@ do
 	local SetSpellRename = BigWigsAPI.SetSpellRename
 	function boss:SetSpellRename(spellId, text)
 		rawset(spells, spellId, text)
-		-- External API is ment for cast events? so need a way to translate locale and ej keys (and keys with a different cast spell) to the cast spell id
+		-- External API is ment for SPELL_CAST_START/SPELL_CAST_SUCCESS? so need a way to translate locale and ej keys to the cast id
 		if type(spellId) == "number" and spellId > 0 then
 			SetSpellRename(spellId, text)
 		end
@@ -1330,40 +1338,39 @@ do
 				self.privateAuraSounds = {}
 				local soundModule = plugins.Sounds
 				if soundModule then
-					for _, option in next, self.privateAuraSoundOptions do
-						local spellId = option[1]
-						local default = soundModule:GetDefaultSound("privateaura")
-
-						local key = ("pa_%d"):format(spellId)
+					local default = soundModule:GetDefaultSound("privateaura")
+					for _, opt in next, self.privateAuraSoundOptions do
+						local key = ("pa_%d"):format(opt[1])
 						local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
 						if sound then
-							local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-								spellID = spellId,
-								unitToken = "player",
-								soundFileName = sound,
-								outputChannel = "master",
-							})
-							if type(privateAuraSoundId) == "number" then
-								self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
-							else
-								self:Error("Failed to register Private Aura %q with return: %s", spellId, tostring(privateAuraSoundId))
-							end
-							if option.extra then
-								for _, id in next, option.extra do
-									local extrasSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-										spellID = id,
-										unitToken = "player",
-										soundFileName = sound,
-										outputChannel = "master",
-									})
-									if type(extrasSoundId) == "number" then
-										self.privateAuraSounds[#self.privateAuraSounds + 1] = extrasSoundId
-									else
-										self:Error("Failed to register Private Aura %q with return: %s", id, tostring(extrasSoundId))
-									end
+							for i = 1, #opt do
+								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+									spellID = opt[i],
+									unitToken = "player",
+									soundFileName = sound,
+									outputChannel = "master",
+								})
+								if privateAuraSoundId then
+									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
 								end
 							end
 						end
+					end
+				end
+			end
+
+			-- rename updates
+			local renameModule = plugins.Rename
+			if renameModule then
+				-- update cleu spells
+				for spellId, key in next, self.renameSpells do
+					self:SetSpellRename(spellId, renameModule:GetName(self, key))
+				end
+				-- update locale string overrides
+				if self.renameStringDefaults then
+					local ML = self:GetLocale()
+					for key, value in next, self.renameStringDefaults do
+						ML[key] = renameModule:GetName(self, key) or value
 					end
 				end
 			end
