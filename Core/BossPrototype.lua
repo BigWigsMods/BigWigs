@@ -3414,7 +3414,14 @@ do
 			if englishSayMessages and englishText then
 				SendChatMessage(format(on, englishText, myName), "SAY")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "SAY")
+				-- never use renames for chat messages
+				local text = msg
+				if not text then
+					text = self:SpellName(key, true)
+				elseif type(text) == "number" then
+					text = self:SpellName(text, true)
+				end
+				SendChatMessage(format(L.on, text, myName), "SAY")
 			end
 		end
 		self:Debug(":Say", key, msg, directPrint, englishText)
@@ -3433,7 +3440,14 @@ do
 			if englishSayMessages and englishText then
 				SendChatMessage(format(on, englishText, myName), "YELL")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "YELL")
+				-- never use renames for chat messages
+				local text = msg
+				if not text then
+					text = self:SpellName(key, true)
+				elseif type(text) == "number" then
+					text = self:SpellName(text, true)
+				end
+				SendChatMessage(format(L.on, text, myName), "YELL")
 			end
 		end
 		self:Debug(":Yell", key, msg, directPrint, englishText)
