@@ -363,6 +363,7 @@ end
 function mod:AddMarking(_, unit, guid)
 	if self:MobId(guid) == 226200 and not mobCollector[guid] then -- Chamber Acolyte
 		mobCollector[guid] = true
+		-- use the spawn counter from the mob spawn uid for marking (1/2)
 		local uid = select(7, strsplit("-", guid))
 		local index = bit.rshift(bit.band(tonumber(string.sub(uid, 1, 5), 16), 0xffff8), 3) + 1
 		self:CustomIcon(chamberAcolyteMarker, unit, index)
@@ -631,6 +632,7 @@ do
 			if self:GetOption(chamberAcolyteMarker) then
 				self:RegisterTargetEvents("AddMarking")
 			end
+			self:RegisterEvent("NAME_PLATE_UNIT_ADDED", "ShadowgateNameplateCheck")
 			self:RegisterEvent("UNIT_SPELLCAST_START")
 			self:RegisterEvent("UNIT_SPELLCAST_STOP")
 		end
@@ -668,7 +670,23 @@ do
 	-- Shadowgate
 	local prev = nil
 	local casterGUID = nil
+
 	-- cast events from nameplates, requires looking at the gate D;
+	function mod:ShadowgateNameplateCheck(event, unit)
+		local guid = self:UnitGUID(unit)
+		if self:MobId(guid) == 228617 and casterGUID ~= guid then -- Shadowgate
+			casterGUID = guid
+			local name, _, _, _, endTime = UnitCastingInfo(unit)
+			if name then
+				local remaining = endTime / 1000 - GetTime()
+				self:CastBar(460369, {remaining, 12})
+			end
+		end
+		if self.targetEventFunc then -- for RegisterTargetEvents
+			self:NAME_PLATE_UNIT_ADDED(event, unit)
+		end
+	end
+
 	function mod:UNIT_SPELLCAST_START(_, unit, castGUID, spellId)
 		if spellId == 460369 and prev ~= castGUID then -- Shadowgate
 			firstShadowgate = false
@@ -677,6 +695,7 @@ do
 			self:CastBar(460369, 12)
 		end
 	end
+
 	function mod:UNIT_SPELLCAST_STOP(_, unit, _, spellId)
 		if spellId == 460369 then -- Shadowgate
 			casterGUID = self:UnitGUID(unit)
@@ -690,7 +709,7 @@ do
 			self:CastBar(args.spellId, 12)
 		elseif casterGUID == args.sourceGUID then
 			-- show the cast for the last gate you saw a nameplate for
-			self:CastBar(args.spellId, 10)
+			self:CastBar(args.spellId, 12)
 		end
 	end
 
