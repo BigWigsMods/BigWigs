@@ -10,8 +10,8 @@ L.other = "%s: %s"
 L.onboss = "%s sul BOSS"
 L.buff_boss = "Potenziamento sul BOSS: %s"
 L.buff_other = "Potenziamento su %s: %s"
---L.magic_buff_boss = "Magic buff on BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
---L.magic_buff_other = "Magic buff on %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.magic_buff_boss = "Beneficio magico sul BOSS: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "Beneficio magico su %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s su %s"
 L.stack = "%dx %s su %s"
 L.stackyou = "%dx %s su DI TE"
@@ -31,8 +31,8 @@ L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Fase %d"
 L.stage = "Fase %d"
---L.wave = "Wave %d" -- e.g. "Wave 1" (Waves of adds)
---L.wave_count = "Wave %d of %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "Ondata %d" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "Ondata %d di %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Modalità Normale"
 L.heroic = "Modalità Eroica"
 L.mythic = "Modalità Mitica"
@@ -41,14 +41,14 @@ L.active = "Attivo" -- When a boss becomes active, after speech finishes
 L.ready = "Pronto" -- When a player is ready to do something
 L.dead = "Morto" -- When a player is dead
 L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
---L.health = "Health" -- The health of an NPC
---L.health_percent = "%d%% Health" -- "10% Health" The health percentage of an NPC
+L.health = "Salute" -- The health of an NPC
+L.health_percent = "%d%% Salute" -- "10% Health" The health percentage of an NPC
 L.door_open = "Porta aperta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Cancello aperto" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Minaccia"
 L.energy = "Energia"
 
---L.remaining = "%d remaining" -- 5 remaining
+L.remaining = "%d rimanenti" -- 5 remaining
 L.duration = "%s per %s sec" -- Spell for 10 seconds
 L.over = "%s Terminato" -- Spell Over
 L.removed = "%s Rimosso" -- Spell Removed
@@ -58,23 +58,23 @@ L.removed_after = "%s rimosso dopo %.1fs" -- "Spell removed after 1.1s" (s = sec
 L.incoming = "%s Tra Poco" -- Spell Incoming
 L.interrupted = "%s Interrotto" -- Spell Interrupted
 L.interrupted_by = "%s interrotto da %s" -- Spell interrupted by Player
---L.interruptible = "Interruptible" -- when a spell is interruptible
+L.interruptible = "Interrompibile" -- when a spell is interruptible
 L.no = "Nessun %s" -- No Spell
 L.intermission = "Intermezzo"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancellata" -- Spell Cancelled
 L.you_die = "Tu muori" -- You will die
 L.you_die_sec = "Morirai in %d sec" -- "You die in 15 sec" (sec = seconds)
---L.next_ability = "Next ability" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
---L.landing = "%s is landing" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.next_ability = "Prossima abilità" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
+L.landing = "%s sta atterrando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Adesso puoi volare"
 
 -- Add related
 L.add_spawned = "Add Apparso" -- singular
 L.adds_spawned = "Adds Apparso" -- plural
---L.adds_spawned_count = "%d |4add:adds; spawned" -- 1 add spawned / 2 adds spawned
---L.add_spawning = "Add spawning" -- singular
---L.adds_spawning = "Adds spawning" -- plural
+L.adds_spawned_count = "%d |4add:adds; Apparsi" -- 1 add spawned / 2 adds spawned
+L.add_spawning = "Add a breve" -- singular
+L.adds_spawning = "Adds a breve" -- plural
 L.spawned = "%s Reinizializzato"
 L.spawning = "Apparizione di %s"
 L.next_add = "Prossimo Add"
@@ -120,18 +120,18 @@ L.affixes = "Modificatori" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "Icona bersaglio %s"
 L.marker_player_desc = "Marchia i giocatori affetti da %s con %s, necessario ruolo assistente o capo." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Marchia %s con %s, necessario ruolo assistente o capo." -- Mark NPC_NAME with SKULL_ICON
---L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Marchia NPCs che hanno '%s' con %s, richiede promozione or capogruppo." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 
 -- Ability where two players have to move close to each other
 L.link = "Vincolo"
 L.link_with = "Vincolato a %s"
 L.link_with_icon = "Vincolato a |T13700%d:0|t%s"
 L.link_with_rticon = "{rt%d}Vincolato a %s"
-L.link_both = "%s vincolato a %s" -- XXX needs updated
-L.link_both_icon = "|T13700%d:0|t%s vincolato a |T13700%d:0|t%s" -- XXX needs updated
+L.link_both = "%s + %s sono vincolati"
+L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s sono vincolati"
 L.link_removed = "Vincolo rimosso"
---L.link_say_option_name = "Repeating 'Linked' say messages"
---L.link_say_option_desc = "Repeating say messages in chat stating who you are linked with."
+L.link_say_option_name = "Ripetendo 'Collegato' messaggi say "
+L.link_say_option_desc = "Ripetendo messaggi say in chat dicendo con chi sei collegato."
 
 -- Abbreviated numbers
 L.amount_one = "%dMrd" -- Billions 1,000,000,000
@@ -164,9 +164,9 @@ L.nature = "Natura"
 L.arcane = "Arcano"
 
 -- Autotalk
---L.autotalk = "Automatic NPC interaction"
---L.autotalk_boss_desc = "Automatically select the NPC dialog options that cause the boss encounter to begin."
---L.autotalk_generic_desc = "Automatically select the NPC dialog options that cause you to progress to the next stage of the dungeon."
+L.autotalk = "Interazione NPC Automatica"
+L.autotalk_boss_desc = "Automaticamente selezione l'opzione di dialogo NPC che fanno iniziare l'icontro col Boss."
+L.autotalk_generic_desc = "Automaticamente selezione l'opzione di dialogo NPC che fanno iniziare la prossima fase della spedizione."
 
 -- Common ability name replacements
 L.absorb = "Assorbimento" -- Used for shield-like abilities that absorb damage or healing
@@ -227,9 +227,9 @@ L.parasite = "Parassita" -- Any ability where a parasite is involved e.g. "Paras
 L.rooted = "Immobilizzato" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.dodge = "Schiva" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.health_drain = "Risucchio di Salute" -- Any ability that drains health from the player
 L.smash = "Frantumazione" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Spuntone" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Spuntoni" -- Plural of L.spike
---L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.waves = "Onde" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
