@@ -1,6 +1,6 @@
 ---
-name: Issue for Classic
-about: Create a report to help us improve the Classic version of BigWigs
+name: Issue for Classic Era/Vanilla
+about: Create a report to help us improve the Classic Era/Vanilla version of BigWigs.
 title: ''
 labels: classic
 assignees: ''
@@ -15,7 +15,7 @@ assignees: ''
 2.  
 3.  
 
-### Consider attaching a screenshot below to help describe your issue (Attach directly, do not link to other websites)
+### Attach a screenshot below to help describe your issue (Attach directly, do not link to other websites)
 
 
 ### What version of BigWigs are you using? (Stating 'latest' is not useful)

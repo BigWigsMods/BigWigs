@@ -1,8 +1,8 @@
 ---
-name: Issue for PTR or Beta testing content
-about: Create a report to help us improve upcoming content
+name: Issue for Cataclysm Classic
+about: Create a report to help us improve the Cataclysm Classic version of BigWigs.
 title: ''
-labels: ptr/beta
+labels: cataclysm
 assignees: ''
 ---
 
@@ -15,7 +15,7 @@ assignees: ''
 2.  
 3.  
 
-### Consider attaching a screenshot below to help describe your issue (Attach directly, do not link to other websites)
+### Attach a screenshot below to help describe your issue (Attach directly, do not link to other websites)
 
 
 ### What version of BigWigs are you using? (Stating 'latest' is not useful)

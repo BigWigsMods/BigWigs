@@ -1,6 +1,6 @@
 ---
-name: Issue for Retail
-about: Create a report to help us improve current content
+name: Issue for Retail/Live
+about: Create a report to help us improve the Retail/Live version of BigWigs.
 title: ''
 labels: retail
 assignees: ''
@@ -15,7 +15,7 @@ assignees: ''
 2.  
 3.  
 
-### Consider attaching a screenshot below to help describe your issue (Attach directly, do not link to other websites)
+### Attach a screenshot below to help describe your issue (Attach directly, do not link to other websites)
 
 
 ### What version of BigWigs are you using? (Stating 'latest' is not useful)
