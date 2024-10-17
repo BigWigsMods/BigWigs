@@ -620,20 +620,42 @@ do
 		setupOptions(self)
 		self.SetupOptions = nil
 
-		local renameModule = BigWigs:GetPlugin("Rename", true)
+		local renameModule = plugins.Rename
 		if renameModule then
+			self.renameSpells = {} -- spellId -> option key
+			if self.altNames then
+				local ML = self:GetLocale()
+				for key, value in next, self.altNames do
+					if type(value) == "table" then
+						self.altNames[key] = value[1] -- reduce back to a simple lookup table
+						for i = 2, #value do
+							local v = value[i]
+							if type(v) == "number" then -- set rename for additional spell ids
+								self.renameSpells[v] = key
+								self:SetSpellRename(v, renameModule:GetName(self, key))
+							elseif type(v) == "string" then -- locale string key
+								if not self.renameStrings then
+									self.renameStrings = {} -- option key -> locale string keys
+									self.renameStringDefaults = {} -- locale string key -> default value
+								end
+								if not self.renameStrings[key] then
+									self.renameStrings[key] = {}
+								end
+								table.insert(self.renameStrings[key], v)
+								self.renameStringDefaults[v] = ML[v]
+							end
+						end
+					end
+				end
+			end
+			-- set current renames
 			for _, key in next, self.toggleOptions do
 				if type(key) == "table" then
 					key = key[1]
 				end
 				if type(key) == "number" then
+					self.renameSpells[key] = key
 					self:SetSpellRename(key, renameModule:GetName(self, key))
-				end
-			end
-		elseif self.altNames then -- atleast set static alt names
-			for key, name in next, self.altNames do
-				if type(key) == "number" then
-					self:SetSpellRename(key, name)
 				end
 			end
 		end

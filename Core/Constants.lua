@@ -196,8 +196,13 @@ function BigWigs:GetBossOptionDetails(module, option)
 		optionType = type(option)
 	end
 
+	local alternativeName
 	local renameModule = self:GetPlugin("Rename", true)
-	local alternativeName = renameModule and renameModule:GetName(module, option) or module.altNames and module.altNames[option]
+	if renameModule then
+		alternativeName = renameModule:GetName(module, option)
+	else
+		alternativeName = module.altNames and module.altNames[option]
+	end
 	local moduleLocale = module:GetLocale(true)
 
 	if optionType == "string" then
