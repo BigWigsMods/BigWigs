@@ -1354,7 +1354,7 @@ do
 		--ruRU = "Russian (ruRU)",
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
-		itIT = "Italian (itIT)",
+		--itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
 		--esES = "Spanish (esES)",
 		esMX = "Spanish (esMX)",
@@ -1366,13 +1366,14 @@ do
 		--[542] = locales.frFR, -- frFR
 		--[3207] = locales.ptBR, [3208] = locales.ptBR, [3209] = locales.ptBR, [3210] = locales.ptBR, [3234] = locales.ptBR, -- ptBR
 		[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
-		[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
+		--[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
 		--[1378] = locales.esES, [1379] = locales.esES, [1380] = locales.esES, [1381] = locales.esES, [1382] = locales.esES, [1383] = locales.esES, -- esES
 	}
 	local language = locales[myLocale]
 	local realmLanguage = realms[GetRealmID()]
 	if public.isRetail and (language or realmLanguage) then
-		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help?"):format(language or realmLanguage)
+		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s."):format(language or realmLanguage)
+		delayedMessages[#delayedMessages+1] = "Can you help?"
 		delayedMessages[#delayedMessages+1] = "Ask us on Discord for more info."
 	end
 
