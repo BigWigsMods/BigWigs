@@ -918,10 +918,10 @@ do
 	local scheduled = nil
 	function mod:MoteStackMessage(spellId, player)
 		local spellName = spellId == 460359 and L.void_degeneration or L.burning_rage
-		self:StackMessage(spellId, "blue", player, stacks, 2, spellName) -- SetOption:460359,460281:
-		if stacks == 1 then
+		self:StackMessage(spellId, "blue", player, stacks, 3, spellName) -- SetOption:460359,460281:
+		if stacks == 2 then
 			self:PlaySound(spellId, "info") -- SetOption:460359,460281:
-		elseif stacks == 2 then
+		elseif stacks == 3 then
 			self:PlaySound(spellId, "warning") -- SetOption:460359,460281:
 		end
 		scheduled = nil
@@ -930,7 +930,7 @@ do
 	function mod:MoteStack(args)
 		if self:Me(args.destGUID) then
 			stacks = args.amount or 1
-			if stacks == 3 then
+			if stacks == 4 then
 				if scheduled then
 					self:CancelTimer(scheduled)
 				end
