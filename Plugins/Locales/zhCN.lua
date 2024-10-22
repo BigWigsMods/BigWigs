@@ -354,9 +354,9 @@ L.glowAt = "开始高亮（秒）"
 L.glowAt_desc = "选择在冷却计时剩余多少秒时开始高亮。"
 
 -- Glow types as part of LibCustomGlow
-L.pixelGlow = "线条发光"
-L.autocastGlow = "亮点发光"
-L.buttonGlow = "耀斑发光"
+L.pixelGlow = "像素发光"
+L.autocastGlow = "自动施法发光"
+L.buttonGlow = "快捷键发光"
 L.procGlow = "脉冲发光"
 L.speed = "速度"
 L.animation_speed_desc = "发光动画效果的播放速度。"
