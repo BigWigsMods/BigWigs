@@ -1196,6 +1196,7 @@ do
 	local unitTableCount = #targetOnlyUnitTable
 	--- Fetches a unit id by scanning available targets.
 	-- @string guid The GUID of the unit to find
+	-- @bool[opt] isFriendly Check only friendly units
 	-- @return unit id if found, nil otherwise
 	function boss:UnitTokenFromGUID(guid, isFriendly)
 		if isFriendly and not UnitTokenFromGUID then -- Hack for classic content where UnitTokenFromGUID doesn't exist
