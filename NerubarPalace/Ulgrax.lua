@@ -76,13 +76,15 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Carnivorous Contest target
+
 	self:Log("SPELL_CAST_SUCCESS", "PhaseTransition", 441425)
 	-- Gleeful Brutality
 	self:Log("SPELL_CAST_START", "BrutalCrush", 434697)
 	self:Log("SPELL_AURA_APPLIED", "TenderizedApplied", 434705)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TenderizedApplied", 434705)
 	self:Log("SPELL_CAST_SUCCESS", "CarnivorousContest", 434803)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Carnivorous Contest target
 	-- self:Log("SPELL_AURA_APPLIED", "CarnivorousContestApplied", 434803) -- using cast target
 	self:Log("SPELL_AURA_REMOVED", "CarnivorousContestRemoved", 434803)
 	self:Log("SPELL_AURA_APPLIED", "CarnivorousContestPullApplied", 434778)
@@ -130,6 +132,23 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:RaidBossWhisperSync(msg, player)
+	if msg:find("spell:434776", nil, true) then
+		self:TargetMessage(434803, "red", player, CL.soak)
+		self:PlaySound(434803, "warning")
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+	-- |TInterface\\ICONS\\INV_Misc_Web_01.blp:20|t  Ulgrax engages you in a |cFFFF0000|Hspell:434776|h[Carnivorous Contest]|h|r!
+	if msg:find("spell:434776", nil, true) then
+		--self:PersonalMessage(434803, nil, CL.soak)
+		self:Yell(434803, CL.soak, nil, "Soak")
+		self:YellCountdown(434803, 8, nil, 6)
+		--self:PlaySound(434803, "warning")
+	end
+end
 
 function mod:PhaseTransition()
 	if self:GetStage() == 2 then
@@ -203,16 +222,6 @@ function mod:CarnivorousContest(args)
 	-- else
 		self:PlaySound(args.spellId, "alert") -- soak
 	-- end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	-- |TInterface\\ICONS\\INV_Misc_Web_01.blp:20|t  Ulgrax engages you in a |cFFFF0000|Hspell:434776|h[Carnivorous Contest]|h|r!
-	if msg:find("spell:434776", nil, true) then
-		self:PersonalMessage(434803, nil, CL.soak)
-		self:Yell(434803, CL.soak, nil, "Soak")
-		self:YellCountdown(434803, 8, nil, 6)
-		self:PlaySound(434803, "warning")
-	end
 end
 
 -- function mod:CarnivorousContestApplied(args)
