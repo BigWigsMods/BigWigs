@@ -1669,12 +1669,7 @@ end
 --
 
 do
-	local function handleFrame(guid, frameInfo, inCombat)
-		if not inCombat and frameInfo.module ~= plugin then
-			-- Don't re-pop when you've wiped but do re-pop for test icons
-			plugin:StopNameplate(nil, frameInfo.module, guid, frameInfo.key, frameInfo.text)
-			return
-		end
+	local function handleFrame(guid, frameInfo)
 		local remainingTime = frameInfo.exp - GetTime()
 		if frameInfo.text then
 			local nameplateFrame = createNameplateText(
@@ -1703,17 +1698,16 @@ do
 
 	function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 		local guid = self:UnitGUID(unit)
-		local inCombat = UnitAffectingCombat(unit)
 		local unitIcons = nameplateIcons[guid]
 		if unitIcons then
 			for _, frameInfo in next, unitIcons do
-				handleFrame(guid, frameInfo, inCombat)
+				handleFrame(guid, frameInfo)
 			end
 		end
 		local unitTexts = nameplateTexts[guid]
 		if unitTexts then
 			for _, frameInfo in next, unitTexts do
-				handleFrame(guid, frameInfo, inCombat)
+				handleFrame(guid, frameInfo)
 			end
 		end
 		rearrangeNameplateIcons(guid)
