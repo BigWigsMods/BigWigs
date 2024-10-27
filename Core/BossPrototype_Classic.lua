@@ -321,6 +321,16 @@ function boss:GetEncounterID()
 	end
 end
 
+--- Set the journal id used for this module. (As used by the dungeon journal)
+-- Usually not set directly, but via the :NewBoss API
+-- @number journalId The journal id
+-- @within Enable triggers
+function boss:SetJournalID(journalId)
+	if type(journalId) == "number" then
+		self.journalId = journalId
+	end
+end
+
 --- Get the journal id used for this module. (As used by the dungeon journal)
 -- @return number
 -- @within Enable triggers
