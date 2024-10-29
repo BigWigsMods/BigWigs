@@ -144,7 +144,7 @@ function mod:GetOptions()
 		-- Intermission: The Spider's Web
 		447076, -- Predation
 		447456, -- Paralyzing Venom
-		{447411, "CASTBAR"}, -- Wrest
+		{447411, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Wrest
 
 		-- Stage Two: Royal Ascension
 		443403, -- Gloom (Damage)
