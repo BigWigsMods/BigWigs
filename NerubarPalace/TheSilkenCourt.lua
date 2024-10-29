@@ -278,6 +278,7 @@ function mod:GetOptions()
 		[443068] = -29022, -- Stage 3
 		[455849] = "mythic",
 	}, {
+		[440179] = CL.weakened, -- Entangled (Weakened)
 		[438801] = CL.adds, -- Call of the Swarm (Adds)
 		[438749] = CL.fixate, -- Scarab Fixation (Fixate)
 		[440246] = CL.charge, -- Reckless Charge (Charge)
@@ -286,6 +287,7 @@ function mod:GetOptions()
 		[438656] = L.venomous_rain, -- Venomous Rain (Rain)
 		[450045] = CL.leap, -- Skittering Leap (Leap)
 		[438677] = L.stinging_swarm, -- Stinging Swarm (Dispell Debuffs)
+		[456245] = CL.weakened, -- Stinging Delirium (Weakened)
 		[450129] = L.entropic_desolation, -- Entropic Desolation (Run Out)
 		[441782] = L.strands_of_reality, -- Strands of Reality (Frontal [S])
 		[450483] = CL.teleport, -- Void Step (Teleport)
@@ -298,6 +300,7 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
+	self:SetSpellRename(440179, CL.weakened) -- Entangled (Weakened)
 	self:SetSpellRename(438801, CL.adds) -- Call of the Swarm (Adds)
 	self:SetSpellRename(438749, CL.fixate) -- Scarab Fixation (Fixate)
 	self:SetSpellRename(440246, CL.charge) -- Reckless Charge (Charge)
@@ -308,6 +311,7 @@ function mod:OnRegister()
 	self:SetSpellRename(450129, L.entropic_desolation) -- Entropic Desolation (Run Out)
 	self:SetSpellRename(441782, L.strands_of_reality) -- Strands of Reality (Frontal [S])
 	self:SetSpellRename(450483, CL.teleport) -- Void Step (Teleport)
+	self:SetSpellRename(456245, CL.weakened) -- Stinging Delirium (Weakened)
 	self:SetSpellRename(438355, L.cataclysmic_entropy) -- Cataclysmic Entropy (Big Boom)
 	self:SetSpellRename(443068, L.spike_eruption) -- Spike Eruption (Spikes)
 	self:SetSpellRename(442994, L.unleashed_swarm) -- Unleashed Swarm (Swarm)
@@ -516,14 +520,14 @@ function mod:RecklessImpactRemoved(args)
 end
 
 function mod:EntangledApplied(args)
-	self:Message(args.spellId, "green")
+	self:TargetMessage(args.spellId, "green", args.destName, CL.weakened)
 	self:PlaySound(args.spellId, "long") -- success
-	self:Bar(args.spellId, 12)
+	self:TargetBar(args.spellId, 12, args.destName, CL.weakened)
 end
 
 function mod:EntangledRemoved(args)
-	self:StopBar(args.spellName)
-	self:Message(args.spellId, "green", CL.over:format(args.spellName))
+	self:StopBar(CL.weakened, args.destName)
+	self:Message(args.spellId, "green", CL.over:format(CL.weakened))
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -700,7 +704,7 @@ end
 
 function mod:StingingDeliriumApplied(args)
 	if self:MobId(args.destGUID) == 217491 then -- Takazj
-		self:TargetMessage(456245, "green", args.destName)
+		self:TargetMessage(456245, "green", args.destName, CL.weakened)
 		self:PlaySound(456245, "long")
 	else
 		self:TargetMessage(456245, "red", args.destName)
@@ -710,7 +714,7 @@ end
 
 function mod:StingingDeliriumRemoved(args)
 	if self:MobId(args.destGUID) == 217491 then -- Takazj
-		self:Message(456245, "green", CL.over:format(args.spellName))
+		self:Message(456245, "green", CL.over:format(CL.weakened))
 		self:PlaySound(456245, "info")
 	elseif self:Me(args.destGUID) then
 		self:PersonalMessage(456245, "removed")
