@@ -223,6 +223,7 @@ function mod:GetOptions()
 			441791, -- Burrowed Eruption
 			438801, -- Call of the Swarm
 				shattershellScarabMarker,
+				438749, -- Scarab Fixation
 			440504, -- Impaling Eruption
 				449857, -- Impaled
 			{438218, "TANK"}, -- Piercing Strike
@@ -278,6 +279,7 @@ function mod:GetOptions()
 		[455849] = "mythic",
 	}, {
 		[438801] = CL.adds, -- Call of the Swarm (Adds)
+		[438749] = CL.fixate, -- Scarab Fixation (Fixate)
 		[440246] = CL.charge, -- Reckless Charge (Charge)
 		[441791] = L.burrowed_eruption, -- Burrowed Eruption (Burrow)
 		[440504] = L.impaling_eruption, -- Impaling Eruption (Frontal [A])
@@ -297,6 +299,7 @@ end
 
 function mod:OnRegister()
 	self:SetSpellRename(438801, CL.adds) -- Call of the Swarm (Adds)
+	self:SetSpellRename(438749, CL.fixate) -- Scarab Fixation (Fixate)
 	self:SetSpellRename(440246, CL.charge) -- Reckless Charge (Charge)
 	self:SetSpellRename(441791, L.burrowed_eruption) -- Burrowed Eruption (Burrow)
 	self:SetSpellRename(440504, L.impaling_eruption) -- Impaling Eruption (Frontal [A])
@@ -320,6 +323,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ImpalingEruption", 440504)
 	self:Log("SPELL_AURA_APPLIED", "ImpaledApplied", 449857)
 	self:Log("SPELL_CAST_SUCCESS", "CallOfTheSwarm", 438801)
+	self:Log("SPELL_AURA_APPLIED", "ScarabFixationApplied", 438749)
 	self:Log("SPELL_CAST_START", "BurrowedEruption", 441791)
 	self:Log("SPELL_CAST_START", "RecklessCharge", 440246)
 	self:Log("SPELL_AURA_APPLIED", "RecklessImpactApplied", 440178)
@@ -471,6 +475,13 @@ function mod:AddMarking(_, unit, guid)
 	if scarabCollector[guid] then
 		self:CustomIcon(shattershellScarabMarker, unit, scarabCollector[guid]) -- icon order from SPELL_SUMMON
 		scarabCollector[guid] = nil
+	end
+end
+
+function mod:ScarabFixationApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, CL.fixate)
+		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
