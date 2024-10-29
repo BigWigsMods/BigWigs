@@ -439,7 +439,7 @@ do
 				local text = icon and CL.rticon:format(L.reactive_toxin_say, icon) or L.reactive_toxin_say
 				self:PlaySound(437592, "warning") -- position?
 				self:Say(437592, text, nil, icon and CL.rticon:format("Toxin", icon) or "Toxin")
-				self:SayCountdown(437592, 5, icon)
+				self:SayCountdown(437592, self:Mythic() and 5 or 6, icon)
 			end
 			playerList[#playerList+1] = player
 			playerList[player] = icon
