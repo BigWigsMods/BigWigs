@@ -38,7 +38,7 @@ if L then
 	--L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
 	--L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
 
-	--L.custom_on_volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff and when it will expire."
+	--L.custom_on_volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "esMX")
