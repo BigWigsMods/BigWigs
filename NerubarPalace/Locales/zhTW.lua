@@ -37,6 +37,8 @@ if L then
 
 	L.custom_on_experimental_dosage_marks = "實驗療法分配"
 	L.custom_on_experimental_dosage_marks_desc = "將受到「實驗療法」影響的玩家，按照近戰 > 遠程 > 治療的優先級，標記為 {rt6}{rt4}{rt3}{rt7}，包含喊話與目標訊息。"
+
+	--L.custom_on_volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff and when it will expire."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "zhTW")

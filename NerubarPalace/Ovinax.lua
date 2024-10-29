@@ -41,6 +41,9 @@ if L then
 
 	L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
 	L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
+
+	L.custom_on_volatile_concoction_explosion = mod:SpellName(441362)
+	L.custom_on_volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff and when it will expire."
 end
 
 --------------------------------------------------------------------------------
@@ -63,6 +66,7 @@ function mod:GetOptions()
 		{446349, "SAY", "ME_ONLY_EMPHASIZE"}, -- Sticky Web
 			446351, -- Web Eruption
 		{441362, "TANK_HEALER"}, -- Volatile Concoction
+			"custom_on_volatile_concoction_explosion",
 		-- Adds
 		458212, -- Necrotic Wound
 		446700, -- Poison Burst
@@ -77,6 +81,7 @@ function mod:GetOptions()
 		[442432] = L.ingest_black_blood, -- Ingest Black Blood (Next Container)
 		[443274] = L.unstable_infusion, -- Unstable Infusion (Swirls)
 		[446349] = L.sticky_web, -- Sticky Web (Webs)
+		["custom_on_volatile_concoction_explosion"] = CL.explosion, -- Volatile Concoction Explosion
 	}
 end
 
@@ -365,7 +370,7 @@ end
 
 function mod:VolatileConcoctionApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, volatileConcoctionCount - 1))
-	self:TargetBar(args.spellId, 8, args.destName)
+	self:TargetBar("custom_on_volatile_concoction_explosion", 8, args.destName, args.spellName, args.spellId)
 	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
 		self:PlaySound(args.spellId, "warning") -- Taunt
@@ -375,7 +380,7 @@ function mod:VolatileConcoctionApplied(args)
 end
 
 function mod:VolatileConcoctionRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(args.spellName, args.destName)
 end
 
 function mod:NecroticWoundApplied(args)
