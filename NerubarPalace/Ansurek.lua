@@ -198,7 +198,9 @@ function mod:GetOptions()
 		[439299] = L.web_blades, -- Web Blades (Blades)
 		[447456] = CL.waves, -- Paralyzing Venom (Waves)
 		[447411] = L.wrest, -- Wrest (Pull In)
+		[449940] = CL.you_die, -- Acidic Apocalypse (You die)
 		[448046] = CL.knockback, -- Gloom Eruption (Knockback)
+		[448458] = CL.you_die, -- Cosmic Apocalypse (You die)
 		[443888] = CL.portals, -- Abyssal Infusion (Portals)
 		[445422] = L.frothing_gluttony, -- Frothing Gluttony (Ring)
 		[444829] = CL.big_adds, -- Queen's Summons (Big Adds)
@@ -213,6 +215,8 @@ function mod:OnRegister()
 	self:SetSpellRename(439814, L.silken_tomb) -- Silken Tomb (Roots)
 	self:SetSpellRename(447456, CL.waves) -- Paralyzing Venom (Waves)
 	self:SetSpellRename(447411, L.wrest) -- Wrest (Pull In)
+	self:SetSpellRename(449940, CL.you_die) -- Acidic Apocalypse (You die)
+	self:SetSpellRename(448458, CL.you_die) -- Cosmic Apocalypse (You die)
 	self:SetSpellRename(443888, CL.portals) -- Abyssal Infusion (Portals)
 	self:SetSpellRename(445422, L.frothing_gluttony) -- Frothing Gluttony (Ring)
 	self:SetSpellRename(444829, CL.big_adds) -- Queen's Summons (Big Adds)
@@ -823,13 +827,13 @@ do
 	end
 
 	function mod:AcidicApocalypse(args)
-		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-		self:CastBar(args.spellId, self:Easy() and 50 or 35)
+		self:Message(args.spellId, "yellow", CL.casting:format(CL.you_die))
+		self:CastBar(args.spellId, self:Easy() and 50 or 35, CL.you_die)
 	end
 end
 
 function mod:AcidicApocalypseSuccess(args)
-	self:Message(args.spellId, "red")
+	self:Message(args.spellId, "red", CL.you_die)
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -901,7 +905,7 @@ do
 	function mod:CosmicApocalypse(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:CastBar(args.spellId, self:Mythic() and 80 or self:Easy() and 95 or 85)
+			self:CastBar(args.spellId, self:Mythic() and 80 or self:Easy() and 95 or 85, CL.you_die)
 		end
 	end
 end
@@ -911,7 +915,7 @@ do
 	function mod:CosmicApocalypseSuccess(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Message(args.spellId, "red")
+			self:Message(args.spellId, "red", CL.you_die)
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -921,7 +925,7 @@ function mod:WorshipperDeath(args)
 	worshippersKilled = worshippersKilled + 1
 	self:Message("stages", "cyan", CL.mob_killed:format(args.destName, worshippersKilled, 2), false)
 	if worshippersKilled == 2 then
-		self:StopCastBar(448458) -- Cosmic Apocalypse
+		self:StopCastBar(CL.you_die) -- Cosmic Apocalypse
 	end
 end
 
@@ -1002,7 +1006,7 @@ end
 
 -- Stage Three: Paranoia's Feast
 function mod:AphoticCommunion(args)
-	self:StopCastBar(449940) -- Acidic Apocalypse
+	self:StopCastBar(CL.you_die) -- Acidic Apocalypse
 	if self:Mythic() then
 		self:UnregisterTargetEvents()
 		self:UnregisterEvent("UNIT_SPELLCAST_START")
