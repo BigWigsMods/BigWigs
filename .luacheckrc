@@ -56,6 +56,9 @@ files["**/Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 	"11[23]/hash_SlashCmdList",
 }
+files["**/API.lua"].ignore = {
+	"113/geterrorhandler",
+}
 files["**/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
