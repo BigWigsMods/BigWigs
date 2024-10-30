@@ -1145,6 +1145,7 @@ do
 			self:CancelSayCountdown(args.spellId)
 		end
 		self:CustomIcon(abyssalInfusionMarker, args.destName)
+	end
 end
 
 function mod:AbyssalReverberationApplied(args)
@@ -1277,6 +1278,7 @@ do
 			self:CancelSayCountdown(args.spellId)
 		end
 		self:CustomIcon(royalCondemnationMarker, args.destName)
+	end
 end
 
 function mod:RoyalShacklesApplied(args)
