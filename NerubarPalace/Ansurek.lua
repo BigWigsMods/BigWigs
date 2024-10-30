@@ -150,13 +150,13 @@ function mod:GetOptions()
 		443403, -- Gloom (Damage)
 		{460369, "CASTBAR"}, -- Shadowgate
 		-- Queen Ansurek
-		{449940, "CASTBAR"}, -- Acidic Apocalypse (Fail)
+		449940, -- Acidic Apocalypse (Fail)
 		-- Ascended Voidspeaker
 		447950, -- Shadowblast
 		{448046, "COUNTDOWN"}, -- Gloom Eruption
 		-- Devoted Worshipper
 		{447967, "SAY", "ME_ONLY_EMPHASIZE"}, -- Gloom Touch
-		{448458, "CASTBAR"}, -- Cosmic Apocalypse (Fail)
+		448458, -- Cosmic Apocalypse (Fail)
 		-- Chamber Guardian
 		{448147, "TANK"}, -- Oust
 		-- Chamber Expeller
@@ -827,8 +827,7 @@ do
 	end
 
 	function mod:AcidicApocalypse(args)
-		self:Message(args.spellId, "yellow", CL.casting:format(CL.you_die))
-		self:CastBar(args.spellId, self:Easy() and 50 or 35, CL.you_die)
+		self:Bar(args.spellId, self:Easy() and 50 or 35, CL.you_die)
 	end
 end
 
@@ -905,7 +904,7 @@ do
 	function mod:CosmicApocalypse(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:CastBar(args.spellId, self:Mythic() and 80 or self:Easy() and 95 or 85, CL.you_die)
+			self:Bar(args.spellId, self:Mythic() and 80 or self:Easy() and 95 or 85, CL.you_die)
 		end
 	end
 end
@@ -925,7 +924,7 @@ function mod:WorshipperDeath(args)
 	worshippersKilled = worshippersKilled + 1
 	self:Message("stages", "cyan", CL.mob_killed:format(args.destName, worshippersKilled, 2), false)
 	if worshippersKilled == 2 then
-		self:StopCastBar(CL.you_die) -- Cosmic Apocalypse
+		self:StopBar(CL.you_die) -- Cosmic Apocalypse
 	end
 end
 
@@ -1006,7 +1005,7 @@ end
 
 -- Stage Three: Paranoia's Feast
 function mod:AphoticCommunion(args)
-	self:StopCastBar(CL.you_die) -- Acidic Apocalypse
+	self:StopBar(CL.you_die) -- Acidic Apocalypse
 	if self:Mythic() then
 		self:UnregisterTargetEvents()
 		self:UnregisterEvent("UNIT_SPELLCAST_START")
