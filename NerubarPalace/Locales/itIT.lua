@@ -38,7 +38,7 @@ if L then
 	L.custom_on_experimental_dosage_marks = "Assegnamento Dose Sperimentale"
 	L.custom_on_experimental_dosage_marks_desc = "Assegna giocatori con 'Dose Sperimentale' a {rt6}{rt4}{rt3}{rt7} con una priorità mischia > ranged > curatori. Impatta messagio Bersaglio e Say"
 
-	--L.custom_on_volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
+	--L.volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "itIT")
