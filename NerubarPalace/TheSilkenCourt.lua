@@ -286,11 +286,13 @@ function mod:GetOptions()
 		[440504] = L.impaling_eruption, -- Impaling Eruption (Frontal [A])
 		[438656] = L.venomous_rain, -- Venomous Rain (Rain)
 		[450045] = CL.leap, -- Skittering Leap (Leap)
+		[450980] = CL.shield, -- Shatter Existence (Shield)
 		[438677] = L.stinging_swarm, -- Stinging Swarm (Dispell Debuffs)
 		[456245] = CL.weakened, -- Stinging Delirium (Weakened)
 		[450129] = L.entropic_desolation, -- Entropic Desolation (Run Out)
 		[441782] = L.strands_of_reality, -- Strands of Reality (Frontal [S])
 		[450483] = CL.teleport, -- Void Step (Teleport)
+		[451277] = CL.shield, -- Spike Storm (Shield)
 		[438355] = L.cataclysmic_entropy, -- Cataclysmic Entropy (Big Boom)
 		[443068] = L.spike_eruption, -- Spike Eruption (Spikes)
 		[442994] = L.unleashed_swarm, -- Unleashed Swarm (Swarm)
@@ -307,10 +309,12 @@ function mod:OnRegister()
 	self:SetSpellRename(441791, L.burrowed_eruption) -- Burrowed Eruption (Burrow)
 	self:SetSpellRename(440504, L.impaling_eruption) -- Impaling Eruption (Frontal [A])
 	self:SetSpellRename(450045, CL.leap) -- Skittering Leap (Leap)
+	self:SetSpellRename(450980, CL.shield) -- Shatter Existence (Shield)
 	self:SetSpellRename(438677, L.stinging_swarm) -- Impaling Eruption (Frontal [A])
 	self:SetSpellRename(450129, L.entropic_desolation) -- Entropic Desolation (Run Out)
 	self:SetSpellRename(441782, L.strands_of_reality) -- Strands of Reality (Frontal [S])
 	self:SetSpellRename(450483, CL.teleport) -- Void Step (Teleport)
+	self:SetSpellRename(451277, CL.shield) -- Spike Storm (Shield)
 	self:SetSpellRename(456245, CL.weakened) -- Stinging Delirium (Weakened)
 	self:SetSpellRename(438355, L.cataclysmic_entropy) -- Cataclysmic Entropy (Big Boom)
 	self:SetSpellRename(443068, L.spike_eruption) -- Spike Eruption (Spikes)
@@ -633,14 +637,14 @@ do
 	local appliedTime = 0
 	function mod:ShatterExistenceApplied(args)
 		appliedTime = args.time
-		self:Message(args.spellId, "cyan")
+		self:TargetMessage(args.spellId, "cyan", args.destName, CL.shield)
 		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:ShatterExistenceRemoved(args)
 		self:StopBar(CL.count:format(self:SpellName(460600), intermissionSpellCount)) -- Entropic Barrage
 		if args.amount == 0 then
-			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
+			self:Message(args.spellId, "green", CL.removed_after:format(CL.shield, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
 
 			self:SetStage(2)
@@ -831,14 +835,14 @@ do
 	local appliedTime = 0
 	function mod:SpikeStormApplied(args)
 		appliedTime = args.time
-		self:Message(args.spellId, "cyan")
+		self:TargetMessage(args.spellId, "cyan", args.destName, CL.shield)
 		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:SpikeStormRemoved(args)
 		self:StopBar(CL.count:format(self:SpellName(460364), intermissionSpellCount)) -- Seismic Upheaval
 		if args.amount == 0 then
-			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
+			self:Message(args.spellId, "green", CL.removed_after:format(CL.shield, args.time - appliedTime))
 			self:PlaySound(args.spellId, "long")
 
 			self:SetStage(3)
