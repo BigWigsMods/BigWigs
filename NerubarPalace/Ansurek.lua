@@ -481,7 +481,7 @@ do
 			self:MarkToxinPlayers()
 		end
 	end
-	
+
 	function mod:ReactiveToxinRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
@@ -1139,7 +1139,7 @@ do
 			self:MarkAbyssalInfusionPlayers()
 		end
 	end
-	
+
 	function mod:AbyssalInfusionRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
@@ -1272,7 +1272,7 @@ do
 			self:MarkRoyalCondemnationPlayers()
 		end
 	end
-	
+
 	function mod:RoyalCondemnationRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
