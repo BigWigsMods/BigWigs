@@ -38,7 +38,7 @@ if L then
 	L.custom_on_experimental_dosage_marks = "Experimentelle Dosierung Zuweisungen"
 	L.custom_on_experimental_dosage_marks_desc = "Weist den von 'Experimentelle Dosierung' betroffenen Spielern {rt6}{rt4}{rt3}{rt7} mit der Priorität Nahkampf > Fernkampf > Heiler zu. Betrifft Sagen- und Ziel-Nachrichten."
 
-	--L.custom_on_volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
+	L.custom_on_volatile_concoction_explosion_desc = "Zeigt eine Zielleiste für den Debuff von Instabiles Gebräu."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "deDE")
