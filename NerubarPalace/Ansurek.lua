@@ -484,7 +484,7 @@ do
 
 	function mod:ReactiveToxinRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(437592)
 		end
 		self:CustomIcon(reactiveToxinMarker, args.destName)
 	end
@@ -1142,7 +1142,7 @@ do
 
 	function mod:AbyssalInfusionRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(443888)
 		end
 		self:CustomIcon(abyssalInfusionMarker, args.destName)
 	end
@@ -1275,7 +1275,7 @@ do
 
 	function mod:RoyalCondemnationRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(438976)
 		end
 		self:CustomIcon(royalCondemnationMarker, args.destName)
 	end
