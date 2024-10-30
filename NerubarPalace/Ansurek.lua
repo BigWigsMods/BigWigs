@@ -232,6 +232,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ReactiveToxin", 437592)
 	self:Log("SPELL_CAST_SUCCESS", "ReactiveToxinSuccess", 437592) -- LFR
 	self:Log("SPELL_AURA_APPLIED", "ReactiveToxinApplied", 437586)
+	self:Log("SPELL_AURA_REMOVED", "ReactiveToxinRemoved", 437586)
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedToxinApplied", 451278)
 	self:Log("SPELL_AURA_APPLIED", "FrothyToxinApplied", 464638)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrothyToxinApplied", 464638)
@@ -289,6 +290,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AbyssalInfusion", 443888)
 	self:Log("SPELL_CAST_SUCCESS", "AbyssalInfusionSuccess", 443888) -- LFR
 	self:Log("SPELL_AURA_APPLIED", "AbyssalInfusionApplied", 443903)
+	self:Log("SPELL_AURA_REMOVED", "AbyssalInfusionRemoved", 443903)
 	self:Log("SPELL_AURA_APPLIED", "AbyssalReverberationApplied", 455387)
 	self:Log("SPELL_CAST_START", "FrothingGluttony", 445422)
 	self:Log("SPELL_AURA_APPLIED", "FrothVaporAppliedOnBoss", 445880)
@@ -297,6 +299,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcolytesEssenceApplied", 445152)
 	self:Log("SPELL_CAST_START", "NullDetonation", 445021)
 	self:Log("SPELL_AURA_APPLIED", "RoyalCondemnationApplied", 438974)
+	self:Log("SPELL_AURA_REMOVED", "RoyalCondemnationRemoved", 438974)
 	self:Log("SPELL_AURA_APPLIED", "RoyalShacklesApplied", 441865)
 	self:Log("SPELL_CAST_START", "Infest", 443325)
 	self:Log("SPELL_AURA_APPLIED", "InfestApplied", 443656)
@@ -477,6 +480,13 @@ do
 		if #iconList == requiredPlayers then
 			self:MarkToxinPlayers()
 		end
+	end
+
+	function mod:ReactiveToxinRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(437592)
+		end
+		self:CustomIcon(reactiveToxinMarker, args.destName)
 	end
 end
 
@@ -1129,6 +1139,13 @@ do
 			self:MarkAbyssalInfusionPlayers()
 		end
 	end
+
+	function mod:AbyssalInfusionRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(443888)
+		end
+		self:CustomIcon(abyssalInfusionMarker, args.destName)
+	end
 end
 
 function mod:AbyssalReverberationApplied(args)
@@ -1254,6 +1271,13 @@ do
 		if #iconList == count then
 			self:MarkRoyalCondemnationPlayers()
 		end
+	end
+
+	function mod:RoyalCondemnationRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(438976)
+		end
+		self:CustomIcon(royalCondemnationMarker, args.destName)
 	end
 end
 
