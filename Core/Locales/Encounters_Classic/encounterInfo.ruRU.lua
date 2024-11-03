@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "ruRU")
 if not L then return end
 
 L[2138] = { title = "Щит вероломства", description = "Когда у командира Спрингвейла накапливается 3 заряда нечистой силы, он может начать использовать энергию своего щита. Способность \"Щит вероломства\" в течение 3 сек. каждые 0.5 сек. наносит всем противникам 17 ед. урона от темной магии в узком секторе шириной 25 градусов перед Спрингвейлом. В героическом режиме ширина сектора увеличивается до 150 градусов.", abilityIcon = 132390 }
+L[4906] = { title = "Ферра", description = "", abilityIcon = nil }
+L[4921] = { title = "Облик сатира", description = "", abilityIcon = nil }
+L[4925] = { title = "Облик лютого волка", description = "", abilityIcon = nil }
+L[4926] = { title = "Древесный облик", description = "", abilityIcon = nil }
+L[5019] = { title = "Некрум Кишкожуй", description = "", abilityIcon = nil }
+L[5020] = { title = "Жрец Тьмы Шезз'зиз", description = "", abilityIcon = nil }
 L[5041] = { title = "Сконцентрированный огонь", description = "Ширрак Страж Мертвых целится туда, где находится игрок, и выпускает залп ракет, которые наносят урон от огня всем игрокам в радиусе 12 м.", abilityIcon = 132212 }
 L[5045] = { title = "Вызов аватары", description = "Когда у Экзарха Маладаара остается 25% здоровья, он призывает Аватару Мученика.", abilityIcon = 136187 }
 L[5046] = { title = "Аватара Мученика", description = "", abilityIcon = nil }

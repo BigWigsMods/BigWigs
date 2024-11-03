@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "frFR")
 if not L then return end
 
 L[2138] = { title = "Bouclier du perfide", description = "Quand le commandant Printeval dispose de trois charges de Puissance impie, il les dépense et libère le pouvoir de son bouclier. Le Bouclier du perfide inflige 17 points de dégâts d'Ombre toutes les 0.5 s dans un cône de 25 degrés d’amplitude devant Printeval pendant 3 secondes. En mode héroïque, le cône s’élargit pour atteindre une amplitude de 150 degrés.", abilityIcon = 132390 }
+L[4906] = { title = "Ferra", description = "", abilityIcon = nil }
+L[4921] = { title = "Forme de Satyre", description = "", abilityIcon = nil }
+L[4925] = { title = "Forme de loup redoutable", description = "", abilityIcon = nil }
+L[4926] = { title = "Forme d'arbre", description = "", abilityIcon = nil }
+L[5019] = { title = "Nekrum Mâchentrailles", description = "", abilityIcon = nil }
+L[5020] = { title = "Prêtre des ombres Sezz’ziz", description = "", abilityIcon = nil }
 L[5041] = { title = "Focalisation du feu", description = "Shirrak le Veillemort cible l’emplacement d’un personnage-joueur et tire une salve de projectiles infligeant des dégâts de Feu à tous les personnages-joueurs qui se trouvent à moins de 12 mètres.", abilityIcon = 132212 }
 L[5045] = { title = "Invocation d'un avatar", description = "Quand l’exarque Maladaar n’a plus que 25% de ses points de vie, il invoque un avatar des martyrs.", abilityIcon = 136187 }
 L[5046] = { title = "Avatar des martyrs", description = "", abilityIcon = nil }

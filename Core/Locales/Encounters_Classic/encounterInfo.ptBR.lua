@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "ptBR")
 if not L then return end
 
 L[2138] = { title = "Escudo do Pérfido", description = "Quando o Comandante Floraval acumula três cargas de Poder Profano, ele consome as cargas e libera o poder do escudo dele. O Escudo do Pérfido causa 17 de dano de Sombra a cada 0.5 s em um cone estreito de 25 graus à frente dele por 3 segundos. No modo Heroico, o cone se expande para 150 graus.", abilityIcon = 132390 }
+L[4906] = { title = "Fera", description = "", abilityIcon = nil }
+L[4921] = { title = "Forma de Sátiro", description = "", abilityIcon = nil }
+L[4925] = { title = "Forma de Lobo Hediondo", description = "", abilityIcon = nil }
+L[4926] = { title = "Forma de Árvore", description = "", abilityIcon = nil }
+L[5019] = { title = "Nekrum Cometripas", description = "", abilityIcon = nil }
+L[5020] = { title = "Sacerdote Sombrio Diz'ieh", description = "", abilityIcon = nil }
 L[5041] = { title = "Fogo Concentrado", description = "Shirrak, o Vigia dos Mortos, mira o local onde está um jogador, disparando uma salva de mísseis que causam dano de Fogo a todos os jogadores em um raio de 12 metros.", abilityIcon = 132212 }
 L[5045] = { title = "Evocar Avatar", description = "Quando o Exarca Maladaar chega a 25% de vida, ele evoca um Avatar do Mártir.", abilityIcon = 136187 }
 L[5046] = { title = "Avatar do Mártir", description = "", abilityIcon = nil }

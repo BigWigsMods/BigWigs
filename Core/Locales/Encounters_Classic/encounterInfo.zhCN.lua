@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "zhCN")
 if not L then return end
 
 L[2138] = { title = "不忠之盾", description = "当指挥官斯普林瓦尔获得三层邪恶能量后，他会消耗它们，从盾中释放这股力量。不忠之盾每0.5秒对指挥官斯普林瓦尔正前方25度角范围内的敌人造成17点暗影伤害，持续3秒。 在英雄难度下，攻击角度扩大至150度。", abilityIcon = 132390 }
+L[4906] = { title = "费拉", description = "", abilityIcon = nil }
+L[4921] = { title = "萨特形态", description = "", abilityIcon = nil }
+L[4925] = { title = "恐狼形态", description = "", abilityIcon = nil }
+L[4926] = { title = "树形态", description = "", abilityIcon = nil }
+L[5019] = { title = "耐克鲁姆", description = "", abilityIcon = nil }
+L[5020] = { title = "暗影祭司塞瑟斯", description = "", abilityIcon = nil }
 L[5041] = { title = "集中火力", description = "死亡观察者希尔拉克向一名玩家所在位置射出一片弹幕，对12码范围内的所有玩家造成火焰伤害。", abilityIcon = 132212 }
 L[5045] = { title = "召唤化身", description = "当大主教玛拉达尔的生命值降至25%时，他将召唤一个殉难者的化身。", abilityIcon = 136187 }
 L[5046] = { title = "殉难者的化身", description = "", abilityIcon = nil }

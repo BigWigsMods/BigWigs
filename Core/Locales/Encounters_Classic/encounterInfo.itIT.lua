@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "itIT")
 if not L then return end
 
 L[2138] = { title = "Scudo della Perfidia", description = "Quando il Comandante Primavalle ha tre cariche di potenza empia, le consuma per scatenare il potere del suo scudo. Scudo della Perfidia infligge 17 danni da ombra ogni 0.5 s in un cono frontale di 25 gradi per 3 secondi. In modalità Eroica, il cono è di 150 gradi.", abilityIcon = 132390 }
+L[4906] = { title = "Ferra", description = "", abilityIcon = nil }
+L[4921] = { title = "Forma di Satiro", description = "", abilityIcon = nil }
+L[4925] = { title = "Forma di Metalupo", description = "", abilityIcon = nil }
+L[4926] = { title = "Forma d'Albero", description = "", abilityIcon = nil }
+L[5019] = { title = "Nekrum Mangiabudella", description = "", abilityIcon = nil }
+L[5020] = { title = "Sezz'ziz il Sacerdote dell'Ombra", description = "", abilityIcon = nil }
 L[5041] = { title = "Focalizzazione", description = "Shirrak il Guardiano dei Morti spara una raffica di missili nella posizione di un personaggio, infliggendo danni da fuoco a tutti i personaggi entro 12 m.", abilityIcon = 132212 }
 L[5045] = { title = "Evocazione: Avatar", description = "Quando raggiunge il 25% di salute restante, l'Esarca Maladaar evoca l'Avatar del Martire.", abilityIcon = 136187 }
 L[5046] = { title = "Avatar del Martire", description = "", abilityIcon = nil }

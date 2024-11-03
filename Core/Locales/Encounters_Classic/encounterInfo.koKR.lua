@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "koKR")
 if not L then return end
 
 L[2138] = { title = "교활의 방패", description = "사령관 스프링베일은 부정의 힘 효과 세 개를 모으면 이를 소비해 방패에서 에너지를 발산합니다. 교활의 방패가 시전되면 스프링베일 전방 25도 범위의 플레이어는 3 초 동안 0.5초마다 17의 암흑 피해를 입습니다. 영웅 난이도에서는 피해를 입는 범위가 전방 150도로 증가합니다.", abilityIcon = 132390 }
+L[4906] = { title = "페라", description = "", abilityIcon = nil }
+L[4921] = { title = "사티로스 변신", description = "", abilityIcon = nil }
+L[4925] = { title = "광포한 늑대 변신", description = "", abilityIcon = nil }
+L[4926] = { title = "나무 변신", description = "", abilityIcon = nil }
+L[5019] = { title = "네크룸 거트츄어", description = "", abilityIcon = nil }
+L[5020] = { title = "암흑사제 세즈지즈", description = "", abilityIcon = nil }
 L[5041] = { title = "화염 집중", description = "죽음의 감시인 쉴라크가 특정 플레이어의 위치에 집중 공격을 퍼부어, 해당 위치로부터 12미터 반경 내에 있는 모든 플레이어에게 화염 피해를 입힙니다.", abilityIcon = 132212 }
 L[5045] = { title = "화신 소환", description = "총독 말라다르는 생명력이 25% 이하로 떨어지면 순교자의 화신을 소환합니다.", abilityIcon = 136187 }
 L[5046] = { title = "순교자의 화신", description = "", abilityIcon = nil }

@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "esES")
 if not L then return end
 
 L[2138] = { title = "Escudo del pérfido", description = "Cuando el comandante Vallefont tiene tres cargas de Poder profano, las consume y libera el poder de su escudo. Escudo del pérfido inflige 17 p. de daño de las Sombras cada 0.5 s en un cono reducido de 25 grados al frente de Vallefont durante 3 segundos. En dificultad heroica, el cono se amplía a 150 grados.", abilityIcon = 132390 }
+L[4906] = { title = "Ferra", description = "", abilityIcon = nil }
+L[4921] = { title = "Forma de sátiro", description = "", abilityIcon = nil }
+L[4925] = { title = "Forma de lobo temible", description = "", abilityIcon = nil }
+L[4926] = { title = "Forma de árbol", description = "", abilityIcon = nil }
+L[5019] = { title = "Nekrum Cometripas", description = "", abilityIcon = nil }
+L[5020] = { title = "Sacerdote oscuro Sezz'ziz", description = "", abilityIcon = nil }
 L[5041] = { title = "Enfocar Fuego", description = "Shirrak el Vigía de los Muertos selecciona la ubicación de un jugador, donde lanza una descarga de misiles que infligen daño de Fuego a todos los jugadores en un radio de 12 m.", abilityIcon = 132212 }
 L[5045] = { title = "Invocar avatar", description = "Cuando su salud llega al 25%, el exarca Maladaar invoca a un Avatar de los Martirizados.", abilityIcon = 136187 }
 L[5046] = { title = "Avatar de los Martirizados", description = "", abilityIcon = nil }
