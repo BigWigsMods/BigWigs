@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "deDE")
 if not L then return end
 
 L[2138] = { title = "Schild des Hinterhältigen", description = "Wenn Kommandant Grüntal drei Aufladungen Unheilige Kraft hat, verbraucht er diese und entfesselt ihre Macht durch seinen Schild. 'Schild des Hinterhältigen' verursacht in einem engen, frontalen Kegel (25°) 3 sekunden lang alle 0.5 Sek. 17 Schattenschaden. [Heroisch] Die Größe des Schadenskegels ist auf 150° erweitert.", abilityIcon = 132390 }
+L[4906] = { title = "Ferra", description = "", abilityIcon = nil }
+L[4921] = { title = "Satyrgestalt", description = "", abilityIcon = nil }
+L[4925] = { title = "Terrorwolfsgestalt", description = "", abilityIcon = nil }
+L[4926] = { title = "Baumgestalt", description = "", abilityIcon = nil }
+L[5019] = { title = "Nekrum der Ausweider", description = "", abilityIcon = nil }
+L[5020] = { title = "Schattenpriester Sezz'ziz", description = "", abilityIcon = nil }
 L[5041] = { title = "Fokussiertes Feuer", description = "Shirrak der Totenwächter visiert den Standort eines Spielercharakters an und feuert eine Salve von Geschossen ab, die allen Spielercharakteren im Umkreis von 12 Metern Feuerschaden zufügen.", abilityIcon = 132212 }
 L[5045] = { title = "Avatar beschwören", description = "Wenn Exarch Maladaar noch 25% seiner Gesundheit verbleiben, beschwört er einen Avatar des Gemarterten.", abilityIcon = 136187 }
 L[5046] = { title = "Avatar des Gemarterten", description = "", abilityIcon = nil }

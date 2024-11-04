@@ -1,6 +1,12 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "enUS")
 
 L[2138] = { title = "Shield of the Perfidious", description = "When Commander Springvale has three charges of Unholy Power, he consumes the charges and unleashes the power from his shield. Shield of the Perfidious deals 17 Shadow damage every 0.5 seconds in a narrow 25 degree cone in front of Springvale for 3 seconds. In Heroic Difficulty, the cone expands to 150 degrees.", abilityIcon = 132390 }
+L[4906] = { title = "Ferra", description = "", abilityIcon = nil }
+L[4921] = { title = "Satyr Form", description = "", abilityIcon = nil }
+L[4925] = { title = "Dire Wolf Form", description = "", abilityIcon = nil }
+L[4926] = { title = "Tree Form", description = "", abilityIcon = nil }
+L[5019] = { title = "Nekrum Gutchewer", description = "", abilityIcon = nil }
+L[5020] = { title = "Shadow Priest Sezz'ziz", description = "", abilityIcon = nil }
 L[5041] = { title = "Focus Fire", description = "Shirrak the Dead Watcher targets a player's location, firing a barrage of missiles that inflict Fire damage to all players within 12 yards.", abilityIcon = 132212 }
 L[5045] = { title = "Summon Avatar", description = "When Exarch Maladaar reaches 25% remaining health, he summons an Avatar of the Martyred.", abilityIcon = 136187 }
 L[5046] = { title = "Avatar of the Martyred", description = "", abilityIcon = nil }

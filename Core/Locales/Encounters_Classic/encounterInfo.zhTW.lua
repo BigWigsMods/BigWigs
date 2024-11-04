@@ -2,6 +2,12 @@ local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "zhTW")
 if not L then return end
 
 L[2138] = { title = "背信之盾", description = "當指揮官斯普林瓦爾累積三道穢邪之力時，他能消耗這股力量並解放盾牌的威力。背信之盾對斯普林瓦爾前方25度狹窄錐形範圍內的敵人造成每0.5秒17點的暗影傷害，持續3秒。 在英雄難度中，錐形範圍擴張為150度角。", abilityIcon = 132390 }
+L[4906] = { title = "費拉", description = "", abilityIcon = nil }
+L[4921] = { title = "薩特形態", description = "", abilityIcon = nil }
+L[4925] = { title = "恐狼形態", description = "", abilityIcon = nil }
+L[4926] = { title = "樹形", description = "", abilityIcon = nil }
+L[5019] = { title = "耐克倫‧嚼腸者", description = "", abilityIcon = nil }
+L[5020] = { title = "暗影祭司塞瑟斯", description = "", abilityIcon = nil }
 L[5041] = { title = "專注之火", description = "死亡看守者辛瑞克以一名玩家所在地點為目標，發射一陣彈幕，對12碼範圍內的所有玩家造成火焰傷害。", abilityIcon = 132212 }
 L[5045] = { title = "召喚化身", description = "當瑪拉達爾主教剩下25%生命力時，他會召喚一個馬丁瑞德的化身。", abilityIcon = 136187 }
 L[5046] = { title = "馬丁瑞德的化身", description = "", abilityIcon = nil }
