@@ -221,13 +221,6 @@ do
 		for i = 1, #iconList do
 			local player = iconList[i].player
 			local icon = self:GetOption("custom_on_experimental_dosage_marks") and (self:Mythic() and markOrder[i] or markOrder[(i * 2) - 1]) or nil
-			if player == self:UnitName("player") then
-				local text = icon and CL.rticon:format(L.experimental_dosage_say, icon) or L.experimental_dosage_say
-				self:Message(442526, "blue", text)
-				self:PlaySound(442526, "warning")
-				self:Say(442526, text, nil, icon and CL.rticon:format("Break Egg", icon) or "Break Egg")
-				self:SayCountdown(442526, self:Easy() and 10 or 8, icon)
-			end
 			-- 8 names in mythic may be a bit much, maybe infobox (bleh)?
 			playerList[#playerList+1] = player
 			playerList[player] = icon
@@ -235,13 +228,21 @@ do
 			if not self:Mythic() then
 				self:CustomIcon(experimentalDosageMarker, player, icon)
 			end
+			if player == self:UnitName("player") then
+				local text = icon and CL.rticon:format(L.experimental_dosage_say, icon) or L.experimental_dosage_say
+				self:Message(442526, "blue", text)
+				self:Say(442526, text, nil, icon and CL.rticon:format("Break Egg", icon) or "Break Egg")
+				self:SayCountdown(442526, self:Easy() and 10 or 8, icon)
+				self:PlaySound(442526, "warning")
+			end
 		end
 	end
 
 	function mod:ExperimentalDosage(args)
+		playerList, iconList = {}, {}
+
 		self:StopBar(CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.experimental_dosage, experimentalDosageCount)))
-		self:PlaySound(args.spellId, "alert")
 		local debuffDuration = self:Easy() and 10 or 8
 		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount)) -- 1.5s Cast + debuffDuration
 		experimentalDosageCount = experimentalDosageCount + 1
@@ -250,10 +251,10 @@ do
 			self:Bar(args.spellId, 50.0, CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		end
 
-		playerList, iconList = {}, {}
 		if not scheduled then
 			scheduled = self:ScheduleTimer("MarkPlayers", 1.8) -- 1.5s cast
 		end
+		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:ExperimentalDosageApplied(args)
@@ -288,7 +289,7 @@ end
 function mod:IngestBlackBlood(args)
 	self:StopBar(CL.count:format(L.ingest_black_blood, ingestBlackBloodCount))
 	self:Message(args.spellId, "cyan", CL.count:format(L.ingest_black_blood, ingestBlackBloodCount))
-	self:PlaySound(args.spellId, "long")
+
 	ingestBlackBloodCount = ingestBlackBloodCount + 1
 
 	local cd = 165
@@ -302,6 +303,7 @@ function mod:IngestBlackBlood(args)
 	if not self:Easy() then
 		self:ResumeBar(446349, CL.count:format(L.sticky_web, stickyWebCount)) -- Sticky Web
 	end
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:SanguineOverflowApplied(args)
@@ -345,8 +347,8 @@ do
 		if self:Me(args.destGUID)  then
 			prevOnMe = args.time
 			self:PersonalMessage(args.spellId, nil, L.sticky_web)
-			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.sticky_web_say, nil, "Web")
+			self:PlaySound(args.spellId, "warning")
 		end
 	end
 
