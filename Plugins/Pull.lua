@@ -385,6 +385,10 @@ end
 
 function plugin:BigWigs_OnBossWin()
 	if isLogging then
+		-- Do not stop logging on encounter end while in m+
+		if C_ChallengeMode and C_ChallengeMode.IsChallengeModeActive() then
+			return
+		end
 		isLogging = false
 		self:ScheduleTimer(LoggingCombat, 2, isLogging) -- Delay to prevent any death events being cut out the log
 	end
