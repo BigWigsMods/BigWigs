@@ -76,18 +76,18 @@ local timersHeroic = { -- 10:09 (enrage)
 
 local timersMythic = { -- 10:10 (enrage)
 	[1] = {
-		[437592] = { 21.1, 56.0, 53.0, 0 }, -- Reactive Toxin
-		[439814] = { 12.3, 40.0, 54.0, 26.0, 0 }, -- Silken Tomb
+		[437592] = { 21.1, 56.0, 56.0, 0 }, -- Reactive Toxin
+		[439814] = { 12.3, 40.0, 57.0, 0 }, -- Silken Tomb
 		[440899] = { 6.4, 40.0, 54.0, 0 }, -- Liquefy
 		[437093] = { 8.4, 40.0, 54.0, 0 }, -- Feast
-		[439299] = { 20.3, 40.0, 13.0, 25.0, 16.0, 26.0, 0 }, -- Web Blades
+		[439299] = { 20.3, 40.0, 13.0, 25.0, 19.0, 23.0, 0 }, -- Web Blades
 	},
 	[3] = {
 		[444829] = { 43.3, 64.0, 83.0, 0 }, -- Queen's Summons
-		[438976] = { 111.4, 51.9, 34.0, 0 }, -- Royal Condemnation
+		[438976] = { 111.4, 86.0, 0 }, -- Royal Condemnation
 		[443325] = { 30.0, 66.0, 82.0, 0 }, -- Infest
 		[443336] = { 32.0, 66.0, 82.0, 0 }, -- Gorge
-		[439299] = { 48.3, 11.0, 26.0, 21.0, 17.0, 16.0, 47.0, 19.0, 14.0, 22.0, 0 }, -- Web Blades
+		[439299] = { 48.3, 37.0, 21.0, 17.0, 42.0, 21.0, 19.0, 36.0, 0 }, -- Web Blades
 		[445422] = { 45.0, 80.0, 88.0, 35.5 }, -- Frothing Gluttony
 	},
 }
@@ -476,7 +476,7 @@ do
 			scheduled = self:ScheduleTimer("MarkToxinPlayers", 0.5)
 		end
 		iconList = addPlayerToIconList(iconList, args.destName)
-		local requiredPlayers = self:Mythic() and reactiveToxinCount or self:Easy() and 1 or 2
+		local requiredPlayers = self:Mythic() and math.min(reactiveToxinCount, 3) or self:Easy() and 1 or 2
 		if #iconList == requiredPlayers then
 			self:MarkToxinPlayers()
 		end
