@@ -28,6 +28,7 @@ local gloomTouchCount = 1
 local platformAddsKilled = 0
 local worshippersKilled = 0
 local acolytesKilled = 0
+local lastAcolyteMarked = nil
 
 local abyssalInfusionCount = 1
 local frothingGluttonyCount = 1
@@ -367,13 +368,47 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:AddMarking(_, unit, guid)
-	if self:MobId(guid) == 226200 and not mobCollector[guid] then -- Chamber Acolyte
-		mobCollector[guid] = true
-		-- use the spawn counter from the mob spawn uid for marking (1/2)
-		local uid = select(7, strsplit("-", guid))
-		local index = bit.rshift(bit.band(tonumber(string.sub(uid, 1, 5), 16), 0xffff8), 3) + 1
-		self:CustomIcon(chamberAcolyteMarker, unit, index)
+do
+	local function getSpawnIndex(guid)
+		local spawnUID = select(7, strsplit("-", guid))
+		local spawnIndex = bit.rshift(bit.band(tonumber(string.sub(spawnUID, 1, 5), 16), 0xffff8), 3) + 1
+		return spawnIndex
+	end
+	local function getSpawnTime(guid)
+		local spawnUID = select(7, strsplit("-", guid))
+		local spawnEpochOffset = bit.band(tonumber(string.sub(spawnUID, 5), 16), 0x7fffff)
+		local serverTime = GetServerTime() -- luacheck: ignore
+		local spawnTime = serverTime - (serverTime % 2 ^ 23) + spawnEpochOffset
+		if spawnTime > serverTime then
+			spawnTime = spawnTime - ((2 ^ 23) - 1)
+		end
+		return spawnTime
+	end
+
+	function mod:AddMarking(_, unit, guid)
+		if self:MobId(guid) == 226200 and not mobCollector[guid] then -- Chamber Acolyte
+			mobCollector[guid] = true
+			if self:GetIcon(unit) and not lastAcolyteMarked then
+				-- try to minimize icon shuffle with multiple people marking
+				return
+			end
+
+			-- use the spawn time and counter from the mob spawn uid for marking star/circle (1/2)
+			local index = getSpawnIndex(guid)
+			if index == 1 and lastAcolyteMarked then -- staggered spawn
+				local spawnA, spawnB = getSpawnTime(lastAcolyteMarked), getSpawnTime(guid)
+				if spawnA < spawnB then
+					-- this is the second spawn
+					index = 2
+				else
+					-- this is the first spawn, remark other add
+					local otherUnit = self:UnitTokenFromGUID(lastAcolyteMarked)
+					self:CustomIcon(chamberAcolyteMarker, otherUnit, 2)
+				end
+			end
+			self:CustomIcon(chamberAcolyteMarker, unit, index)
+			lastAcolyteMarked = guid
+		end
 	end
 end
 
@@ -640,6 +675,7 @@ do
 		platformAddsKilled = 0
 		worshippersKilled = 0
 		acolytesKilled = 0
+		lastAcolyteMarked = nil
 		firstShadowgate = true
 
 		if self:Mythic() then
