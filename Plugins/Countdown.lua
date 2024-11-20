@@ -105,6 +105,10 @@ local function updateProfile()
 	if db.countdownTime < 3 or db.countdownTime > 10 then
 		db.countdownTime = plugin.defaultDB.countdownTime
 	end
+	local checkCount = math.floor(db.countdownTime+0.5)
+	if checkCount ~= db.countdownTime then
+		db.countdownTime = checkCount
+	end
 	if type(db.position[1]) ~= "string" or type(db.position[2]) ~= "string"
 	or type(db.position[3]) ~= "number" or type(db.position[4]) ~= "number"
 	or not validFramePoints[db.position[1]] or not validFramePoints[db.position[2]] then
@@ -607,9 +611,11 @@ do
 			if not timers[module] then
 				timers[module] = {}
 			end
-			local count = customStart or self.db.profile.countdownTime
-			while count >= time do
-				count = count - 1
+			local textCount = customStart or self.db.profile.countdownTime
+			local countWithVoiceOffset = textCount + 0.3 -- We want the "five" voice file to begin playing at 5.3 so it ends on or around 5.0
+			while countWithVoiceOffset > time do
+				countWithVoiceOffset = countWithVoiceOffset - 1
+				textCount = textCount - 1
 			end
 			local cancelTimer = {false}
 			timers[module][text] = cancelTimer
@@ -618,17 +624,16 @@ do
 			local function printTime()
 				if not cancelTimer[1] then
 					if not audioOnly and plugin.db.profile.textEnabled then
-						plugin:SetText(count, cancelTimer)
+						plugin:SetText(textCount, cancelTimer)
 					end
-					local sound = BigWigsAPI:GetCountdownSound(voice, count)
+					local sound = BigWigsAPI:GetCountdownSound(voice, textCount)
 					if sound then
 						self:PlaySoundFile(sound)
 					end
-					count = count - 1
+					textCount = textCount - 1
 				end
 			end
-			local startOffset = count + 0.3
-			for i = 1.3, startOffset do
+			for i = 1.3, countWithVoiceOffset do
 				self:SimpleTimer(printTime, time-i)
 			end
 		end
