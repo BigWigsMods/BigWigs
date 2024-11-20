@@ -328,6 +328,8 @@ function mod:OnBossEnable()
 
 	-- Anub'arash
 	self:Log("SPELL_CAST_START", "PiercingStrike", 438218)
+	self:Log("SPELL_AURA_APPLIED", "PiercingStrikeApplied", 438218)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PiercingStrikeApplied", 438218)
 	self:Log("SPELL_CAST_START", "ImpalingEruption", 440504)
 	self:Log("SPELL_AURA_APPLIED", "ImpaledApplied", 449857)
 	self:Log("SPELL_CAST_SUCCESS", "CallOfTheSwarm", 438801)
@@ -437,6 +439,23 @@ function mod:PiercingStrike(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, piercingStrikeCount))
 	piercingStrikeCount = piercingStrikeCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][piercingStrikeCount], CL.count:format(args.spellName, piercingStrikeCount))
+
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if unit and self:Tanking(unit) then
+		self:PlaySound(args.spellId, "alert") -- targetted
+	end
+end
+
+function mod:PiercingStrikeApplied(args)
+	self:TargetMessage(args.spellId, "purple", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm")
+	else
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
+		if self:Tank() and unit and not self:Tanking(unit) then
+			self:PlaySound(args.spellId, "warning") -- tankswap
+		end
+	end
 end
 
 function mod:ImpalingEruption(args)
