@@ -97,7 +97,7 @@ BigWigs:AddColors("Nexus-Princess Ky'veza", {
 
 BigWigs:AddColors("The Silken Court", {
 	[438200] = {"blue","purple"},
-	[438218] = "purple",
+	[438218] = {"blue","purple"},
 	[438355] = {"green","red"},
 	[438656] = "orange",
 	[438677] = {"blue","yellow"},

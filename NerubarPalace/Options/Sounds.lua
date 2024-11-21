@@ -90,6 +90,7 @@ BigWigs:AddSounds("Nexus-Princess Ky'veza", {
 })
 
 BigWigs:AddSounds("The Silken Court", {
+	[438218] = {"alarm","alert","warning"},
 	[438355] = "long",
 	[438656] = "alarm",
 	[438677] = {"alert","info","warning"},
