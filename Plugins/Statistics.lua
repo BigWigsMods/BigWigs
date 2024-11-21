@@ -332,7 +332,7 @@ do
 					end
 				elseif diff == 9 or diff == 148 then
 					local season = module:GetSeason()
-					if season == 3 then
+					if season == 3 or season == 12 then
 						difficultyText = "hardcore"
 					elseif season == 2 and diff == 9 then
 						difficultyText = "SOD"
