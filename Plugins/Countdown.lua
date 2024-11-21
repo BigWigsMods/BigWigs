@@ -550,6 +550,9 @@ end
 --
 
 function plugin:OnPluginEnable()
+	updateProfile()
+	createOptions()
+
 	self:RegisterMessage("BigWigs_StartCountdown")
 	self:RegisterMessage("BigWigs_StopCountdown")
 	self:RegisterMessage("BigWigs_OnBossDisable")
@@ -557,8 +560,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-	updateProfile()
-	createOptions()
 end
 
 -------------------------------------------------------------------------------
