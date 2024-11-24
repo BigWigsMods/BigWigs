@@ -140,10 +140,10 @@ do
 	end
 
 	-- DEVS: Use BigWigsAPI.RegisterProfile, nothing changed other than the name of the API and access via . instead of :
-	function API:ImportProfileString(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction) -- DEPRECATED
-		API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-		geterrorhandler()(("The addon %q is using the deprecated import API for BigWigs, tell the author to update."):format(addonName))
-	end
+	--function API:ImportProfileString(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction) -- DEPRECATED
+	--	API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
+	--	geterrorhandler()(("The addon %q is using the deprecated import API for BigWigs, tell the author to update."):format(addonName))
+	--end
 end
 
 --------------------------------------------------------------------------------
