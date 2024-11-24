@@ -30,7 +30,7 @@ local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
-local isClassic, isRetail, isClassicEra, isCata = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata
+local isClassic, isRetail, isClassicEra, isCata, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.season
 local C_EncounterJournal_GetSectionInfo = isCata and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
@@ -1688,17 +1688,10 @@ function boss:Vanilla()
 	return isClassicEra
 end
 
-do
-	local GetActiveSeason = C_Seasons and C_Seasons.GetActiveSeason
-	local season = 0
-	if GetActiveSeason then
-		season = GetActiveSeason() or 0
-	end
-	--- Get the current season.
-	-- @return number
-	function boss:GetSeason()
-		return season
-	end
+--- Get the current season.
+-- @return number
+function boss:GetSeason()
+	return season
 end
 
 --- Get the mob/npc id from a GUID.

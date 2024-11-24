@@ -27,6 +27,7 @@ do
 	public.isRetail = tbl.isRetail
 	public.isClassic = tbl.isClassic
 	public.isVanilla = tbl.isVanilla
+	public.season = tbl.season
 	public.isSeasonOfDiscovery = tbl.isSeasonOfDiscovery
 	public.isTBC = tbl.isTBC
 	public.isWrath = tbl.isWrath

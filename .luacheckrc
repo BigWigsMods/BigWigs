@@ -56,9 +56,6 @@ files["**/Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 	"11[23]/hash_SlashCmdList",
 }
-files["**/API.lua"].ignore = {
-	"113/geterrorhandler",
-}
 files["**/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
@@ -68,7 +65,6 @@ files["**/AutoRole.lua"].ignore = {
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_Item",
 	"113/C_NamePlate",
-	"113/C_Seasons",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
@@ -81,7 +77,6 @@ files["**/Core/BossPrototype.lua"].ignore = {
 files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_Item",
 	"113/C_NamePlate",
-	"113/C_Seasons",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
