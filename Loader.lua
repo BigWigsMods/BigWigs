@@ -364,14 +364,14 @@ do
 		--[109] = lw_c, -- Sunken Temple
 		--[129] = lw_c, -- Razorfen Downs
 		--[189] = lw_c, -- Scarlet Monastery
-		--[209] = lw_c, -- Zul'Farrak
+		[209] = lw_c, -- Zul'Farrak
 		[229] = lw_c, -- Blackrock Spire
 		--[230] = lw_c, -- Blackrock Depths
 		--[289] = lw_c, -- Scholomance
-		--[329] = lw_c, -- Stratholme
+		[329] = lw_c, -- Stratholme
 		--[349] = lw_c, -- Maraudon
 		--[389] = lw_c, -- Ragefire Chasm
-		--[429] = lw_c, -- Dire Maul
+		[429] = lw_c, -- Dire Maul
 		[2784] = public.isSeasonOfDiscovery and lw_c or nil, -- Demon Fall Canyon [Classic Season of Discovery Only]
 		--[[ LittleWigs: The Burning Crusade ]]--
 		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
