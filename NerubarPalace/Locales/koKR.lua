@@ -38,7 +38,7 @@ if L then
 	L.custom_on_experimental_dosage_marks = "실험용 투여제 할당"
 	L.custom_on_experimental_dosage_marks_desc = "'실험용 투여제'에 영향을 받는 플레이어를 근접 > 원거리 > 힐러 우선 순위로 {rt6}{rt4}{rt3}{rt7}에 할당합니다. 채팅 및 대상 메시지에 영향을 미칩니다."
 
-	--L.volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
+	L.volatile_concoction_explosion_desc = "휘발성 혼합물 디버프의 대상 바를 표시합니다."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "koKR")
