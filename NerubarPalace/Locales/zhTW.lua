@@ -38,7 +38,7 @@ if L then
 	L.custom_on_experimental_dosage_marks = "實驗療法分配"
 	L.custom_on_experimental_dosage_marks_desc = "將受到「實驗療法」影響的玩家，按照近戰 > 遠程 > 治療的優先級，標記為 {rt6}{rt4}{rt3}{rt7}，包含喊話與目標訊息。"
 
-	--L.volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
+	L.volatile_concoction_explosion_desc = "當有玩家受到「爆炸性混合物」的減益效果影響時，顯示計時條。"
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "zhTW")
@@ -50,8 +50,8 @@ end
 
 L = BigWigs:NewBossLocale("The Silken Court", "zhTW")
 if L then
-	--L.skipped_cast = "Skipped %s (%d)"
-	--L.intermission_trigger = "Apex of power!" -- Skeinspinner Takazj 100 energy yell
+	L.skipped_cast = "跳過%s（%d）"
+	L.intermission_trigger = "要使出全力了！" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "毒雨" -- 毒圈 綠圈
 	L.burrowed_eruption = "鑽地"
