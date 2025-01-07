@@ -1,0 +1,34 @@
+## Interface: 110005, 110007, 110002
+
+## Title: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-deDE: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-esES: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-esMX: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-frFR: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-itIT: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-koKR: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-ptBR: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-ruRU: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-zhCN: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-zhTW: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Notes: BigWigs Liberation of Undermine Modules
+## Notes-deDE: BigWigs Liberation of Undermine Module
+## Notes-esES: BigWigs Liberation of Undermine Modules
+## Notes-esMX: BigWigs Liberation of Undermine Modules
+## Notes-frFR: BigWigs Liberation of Undermine Modules
+## Notes-itIT: BigWigs Liberation of Undermine Modules
+## Notes-koKR: BigWigs Liberation of Undermine Modules
+## Notes-ptBR: BigWigs Liberation of Undermine Modules
+## Notes-ruRU: BigWigs Liberation of Undermine Modules
+## Notes-zhCN: BigWigs Liberation of Undermine Modules
+## Notes-zhTW: BigWigs Liberation of Undermine Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2769
+
+modules.xml

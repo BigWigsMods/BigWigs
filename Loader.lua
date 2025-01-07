@@ -352,6 +352,7 @@ do
 		--[[ BigWigs: The War Within ]]--
 		[-2274] = tww, -- Khaz Algar (Fake Menu)
 		[2657] = tww, -- Nerub'ar Palace
+		[2769] = tww, -- Liberation of Undermine
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = not (public.isVanilla or public.isTBC or public.isWrath) and lw_cata or nil, -- Shadowfang Keep
