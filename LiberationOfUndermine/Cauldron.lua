@@ -5,7 +5,7 @@ if not BigWigsLoader.isTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Cauldron of Carnage", 2769, 2640)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(229181, 237230) -- Flarendo, Enric Torque -- Confirm on PTR
 mod:SetEncounterID(3010)
 mod:SetRespawnTime(30)
 

@@ -5,7 +5,7 @@ if not BigWigsLoader.isTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Vexie and the Geargrinders", 2769, 2639)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(225821, 225822) -- The Geargrinder, Vexie Fullthrottle -- XXX Confirm on PTR
 mod:SetEncounterID(3009)
 mod:SetPrivateAuraSounds({
 	459669, -- Spew Oil

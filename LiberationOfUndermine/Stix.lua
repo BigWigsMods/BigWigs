@@ -5,7 +5,7 @@ if not BigWigsLoader.isTestBuild then return end
 
 local mod, CL = BigWigs:NewBoss("Stix Bunkjunker", 2769, 2642)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(230322) -- Stix Bunkjunker XXX Confirm on PTR
 mod:SetEncounterID(3012)
 mod:SetRespawnTime(30)
 
