@@ -1,14 +1,14 @@
 ## Interface: 110005, 110007, 110100
 
 ## Title: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-deDE: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-esES: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-esMX: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-frFR: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-itIT: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-koKR: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-ptBR: BigWigs [|cffeda55fLiberation of Undermine|r]
-## Title-ruRU: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-deDE: BigWigs [|cffeda55fBefreiung von Lorenhall|r]
+## Title-esES: BigWigs [|cffeda55fLiberación de Minahonda|r]
+## Title-esMX: BigWigs [|cffeda55fLiberación de Minahonda|r]
+## Title-frFR: BigWigs [|cffeda55fLibération de Terremine|r]
+## Title-itIT: BigWigs [|cffeda55fLiberazione di Cavafonda|r]
+## Title-koKR: BigWigs [|cffeda55f언더마인 해방전선|r]
+## Title-ptBR: BigWigs [|cffeda55fLibertação da Inframina|r]
+## Title-ruRU: BigWigs [|cffeda55fОсвобождение Нижней Шахты|r]
 ## Title-zhCN: BigWigs [|cffeda55f解放安德麦|r]
 ## Title-zhTW: BigWigs [|cffeda55f解放幽坑城|r]
 ## Notes: BigWigs Liberation of Undermine Modules
