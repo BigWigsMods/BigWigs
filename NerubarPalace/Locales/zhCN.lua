@@ -38,7 +38,7 @@ if L then
 	L.custom_on_experimental_dosage_marks = "试验性剂量分配"
 	L.custom_on_experimental_dosage_marks_desc = "将受到“试验性剂量” 的玩家，按照 近战 > 远程 > 治疗 的优先顺序分配 {rt6}{rt4}{rt3}{rt7} 标记。 包含喊话和目标信息。"
 
-	L.volatile_concoction_explosion_desc = "显示受到不稳定的混合物减益效果影响的目标计时条。"
+	L.volatile_concoction_explosion_desc = "当玩家受到“不稳定的混合物”的减益效果影响时，显示计时条。"
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "zhCN")
