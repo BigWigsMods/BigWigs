@@ -1,4 +1,4 @@
-## Interface: 40400, 40401
+## Interface: 40402, 40401
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.

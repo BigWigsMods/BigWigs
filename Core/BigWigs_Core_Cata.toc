@@ -1,4 +1,4 @@
-## Interface: 40400, 40401
+## Interface: 40402, 40401
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]

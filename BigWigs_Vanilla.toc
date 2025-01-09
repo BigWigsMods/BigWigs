@@ -1,4 +1,4 @@
-## Interface: 11504, 11505
+## Interface: 11506, 11505
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
