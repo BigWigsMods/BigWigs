@@ -31,29 +31,28 @@ local betaLaunchCount = 1
 function mod:GetOptions()
 	return {
 		-- "stages",
-		-- Stage One: Alpha Test
-		473276, -- Alpha Test
-		1217083, -- Product Deployment
+		-- Stage One: Assembly Required
+		473276, -- Activate Inventions!
+			-- XXX nameplate cds for weaponry? probably just spammed
+			-- Goblin Inventions XXX key this for conveyor belt messages?
+				-- 1216414, -- Blazing Beam
+				-- 1216525, -- Rocket Barrage
+				-- 1215858, -- Mega Magnetize
+			-- Empowered Inventions
+				-- 1216674, -- Void Laser (Fire Turret -> Void Turret)
+				-- 1216699, -- Void Hell (Rocket Cannon -> Void Cannon)
+		1217083, -- Foot-Blasters
 			-- Unstable Explosion -- XXX count mines?
-			1218342, -- Unstable Shrapnel (danger)
-		{465917, "TANK"}, -- Gravi-Gunk
-		1214878, -- Pyro Party Pack
+			1218342, -- Unstable Shrapnel
+		1218418, -- Wire Transfer
 		1216509, -- Screw Up "SAY"
 			-- Screwed!
 		465232, -- Sonic Ba-Boom
-		1218418, -- Wire Transfer
+		471308, -- Firecracker Trap
+		1214878, -- Pyro Party Pack
+		{465917, "TANK"}, -- Gravi-Gunk
 
-		-- XXX nameplate cds for weaponry? probably just spammed
-		-- Base Model Goblin Weaponry XXX key this/"Goblin Weaponry" for converyor belt messages?
-			-- 1216525, -- Rocket Hell (Rocket Cannon)
-			-- 1216414, -- Fire Laser (Fire Turret)
-			-- 1215858, -- Mega Magnetize (Mega Magent)
-			-- 471308, -- Firecracker Trap
-		-- New And Improved Goblin Weaponry
-			-- 1216674, -- Void Laser (Fire Turret -> Void Turret)
-			-- 1216699, -- Void Hell (Rocket Cannon -> Void Cannon)
-
-		-- Stage Two: System Update
+		-- Stage Two: Research and Destruction
 		466765, -- Beta Launch
 		466860, -- Bleeding Edge
 			1218319, -- Voidsplosion
@@ -65,8 +64,8 @@ end
 
 function mod:OnBossEnable()
 	-- Stage 1
-	self:Log("SPELL_CAST_START", "AlphaTest", 473276)
-	self:Log("SPELL_CAST_SUCCESS", "ProductDeployment", 1217083)
+	self:Log("SPELL_CAST_START", "ActivateInventions", 473276)
+	self:Log("SPELL_CAST_SUCCESS", "FootBlasters", 1217083)
 	self:Log("SPELL_AURA_APPLIED", "UnstableShrapnelApplied", 1218342)
 	self:Log("SPELL_AURA_APPLIED", "GraviGunkApplied", 465917)
 	self:Log("SPELL_CAST_START", "PyroPartyPack", 1214872)
@@ -75,6 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ScrewUp", 1216508)
 	self:Log("SPELL_AURA_APPLIED", "ScrewUpApplied", 1216509)
 	self:Log("SPELL_CAST_START", "SonicBaBoom", 465232)
+	self:Log("SPELL_CAST_SUCCESS", "FirecrackerTrap", 471308)
 	self:Log("SPELL_CAST_START", "WireTransfer", 1218418)
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "BetaLaunch", 466765)
@@ -89,8 +89,8 @@ function mod:OnEngage()
 	betaLaunchCount = 1
 	self:SetStage(1)
 
-	-- self:Bar(473276, 10) -- Alpha Test
-	-- self:Bar(1217083, 20) -- Product Deployment
+	-- self:Bar(473276, 10) -- Activate Inventions!
+	-- self:Bar(1217083, 20) -- Foot-Blasters
 	-- self:Bar(1216509, 30) -- Screw Up
 	-- self:Bar(465232, 40) -- Sonic Ba-Boom
 	-- self:Bar(1218418, 50) -- Wire Transfer
@@ -103,13 +103,13 @@ end
 
 -- Stage 1
 
-function mod:AlphaTest(args)
+function mod:ActivateInventions(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alarm") -- dodge?
 	-- self:Bar(args.spellId, 30)
 end
 
-function mod:ProductDeployment(args)
+function mod:FootBlasters(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	-- self:Bar(args.spellId, 30)
@@ -173,6 +173,12 @@ function mod:SonicBaBoom(args)
 	-- self:Bar(args.spellId, 30)
 end
 
+function mod:FirecrackerTrap(args)
+	self:Message(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "alarm") -- dodge
+	-- self:Bar(args.spellId, 30)
+end
+
 function mod:WireTransfer(args)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alarm") -- dodge
@@ -183,8 +189,8 @@ end
 
 function mod:BetaLaunch(args)
 	-- self:StopBar(CL.count:format(args.spellName, betaLaunchCount)) -- Beta Launch
-	-- self:StopBar(473276) -- Alpha Test
-	-- self:StopBar(1217083) -- Product Deployment
+	-- self:StopBar(473276) -- Activate Inventions!
+	-- self:StopBar(1217083) -- Foot-Blasters
 	-- self:StopBar(1216509) -- Screw Up
 	-- self:StopBar(465232) -- Sonic Ba-Boom
 	-- self:StopBar(1218418) -- Wire Transfer
@@ -192,9 +198,9 @@ function mod:BetaLaunch(args)
 	self:SetStage(2)
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, betaLaunchCount))
 	self:PlaySound(args.spellId, "long")
+	-- self:CastBar(args.spellId, 2, CL.knockback)
 	betaLaunchCount = betaLaunchCount + 1
 
-	-- self:Bar(args.spellId, 2, CL.knockback)
 	-- self:Bar(1218319, 7) -- Voidsplosion
 end
 
@@ -218,8 +224,8 @@ function mod:BleedingEdgeRemoved(args)
 	self:Message(args.spellId, "cyan", CL.over:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 
-	-- self:Bar(473276, 10) -- Alpha Test
-	-- self:Bar(1217083, 20) -- Product Deployment
+	-- self:Bar(473276, 10) -- Activate Inventions!
+	-- self:Bar(1217083, 20) -- Foot-Blasters
 	-- self:Bar(1216509, 30) -- Screw Up
 	-- self:Bar(465232, 40) -- Sonic Ba-Boom
 	-- self:Bar(1218418, 50) -- Wire Transfer
