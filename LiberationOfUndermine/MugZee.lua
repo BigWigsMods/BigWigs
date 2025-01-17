@@ -68,9 +68,9 @@ function mod:GetOptions()
 		-- Mug'Zee
 			463967, -- Bloodlust
 	},{
-		[472631] = -31738, -- Mug
+		[472631] = -31677, -- Mug
 		[466539] = -31693, -- Zee
-		[1215898] = "intermission",
+		[1215898] = -30517, -- Intermission
 		[463967] = -30510, -- Stage 2
 	}
 end
