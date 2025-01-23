@@ -1,1 +1,132 @@
--- Nice
+
+BigWigs:AddColors("Vexie and the Geargrinders", {
+	[459678] = {"blue","yellow"},
+	[459683] = "blue",
+	[459943] = "yellow",
+	[459978] = "blue",
+	[460116] = "green",
+	[465865] = {"blue","purple"},
+	[466615] = "cyan",
+	[468216] = {"blue","orange"},
+	[471403] = "red",
+})
+
+BigWigs:AddColors("Cauldron of Carnage", {
+	[463900] = "yellow",
+	[463925] = "blue",
+	[465833] = "yellow",
+	[466178] = "purple",
+	[471557] = {"blue","cyan"},
+	[472222] = "blue",
+	[472225] = "blue",
+	[472233] = {"blue","yellow"},
+	[473650] = "orange",
+	[474159] = "blue",
+	[1213690] = "blue",
+	[1213994] = {"blue","yellow"},
+	[1214039] = "blue",
+	[1214190] = "purple",
+})
+
+BigWigs:AddColors("Rik Reverb", {
+	[464518] = {"blue","purple"},
+	[466093] = "red",
+	[466866] = "orange",
+	[466979] = {"blue","yellow"},
+	[467606] = "red",
+	[468119] = {"blue","cyan"},
+	[472306] = "yellow",
+	[473260] = {"blue","red"},
+	[473748] = "yellow",
+	[1214164] = {"blue","cyan"},
+	[1214598] = "blue",
+	[1217122] = {"blue","cyan"},
+	["stages"] = "cyan",
+})
+
+BigWigs:AddColors("Stix Bunkjunker", {
+	[461536] = "blue",
+	[464112] = {"blue","purple"},
+	[464149] = "yellow",
+	[464248] = "blue",
+	[464399] = "orange",
+	[464854] = "blue",
+	[465611] = "cyan",
+	[466748] = "blue",
+	[467109] = "yellow",
+	[467117] = "cyan",
+	[472893] = "blue",
+	[1217954] = "purple",
+	[1217975] = "red",
+	[1219384] = "yellow",
+})
+
+BigWigs:AddColors("Sprocketmonger Lockenstock", {
+	[465232] = "yellow",
+	[465917] = {"blue","purple"},
+	[466765] = "cyan",
+	[466860] = {"cyan","yellow"},
+	[471308] = "yellow",
+	[473276] = "yellow",
+	[1214878] = {"blue","purple"},
+	[1216509] = {"blue","yellow"},
+	[1217083] = "orange",
+	[1218319] = "orange",
+	[1218342] = "blue",
+	[1218418] = "orange",
+})
+
+BigWigs:AddColors("The One-Armed Bandit", {
+	[460181] = "yellow",
+	[460444] = "green",
+	[460472] = {"blue","purple"},
+	[460576] = "blue",
+	[460582] = "yellow",
+	[461060] = "cyan",
+	[461068] = "red",
+	[464705] = {"blue","cyan"},
+	[465009] = "blue",
+	[465309] = "red",
+	[465322] = "orange",
+	[465432] = "cyan",
+	[465580] = "yellow",
+	[465587] = "red",
+	[469993] = "orange",
+	[471927] = {"blue","yellow"},
+	[473178] = "blue",
+	[474665] = "yellow",
+	[474731] = "blue",
+	["rewards"] = "yellow",
+})
+
+BigWigs:AddColors("Mug'Zee, Heads of Security", {
+	[-31712] = "green",
+	[463967] = "red",
+	[466385] = "red",
+	[466476] = {"blue","red"},
+	[466509] = "orange",
+	[466518] = "purple",
+	[466539] = "yellow",
+	[466545] = "orange",
+	[467202] = {"blue","green","purple"},
+	[467381] = {"blue","orange"},
+	[469043] = "blue",
+	[469391] = "blue",
+	[469490] = {"blue","orange"},
+	[470089] = "blue",
+	[470910] = "orange",
+	[471574] = "yellow",
+	[472057] = "blue",
+	[472631] = {"blue","orange"},
+	[472782] = "yellow",
+	[474554] = "blue",
+	[1214623] = "red",
+	[1215591] = "green",
+	[1215898] = {"blue","orange"},
+	[1216142] = "red",
+	["stages"] = "cyan",
+})
+
+BigWigs:AddColors("Chrome King Gallywix", {
+	["stages"] = "yellow",
+})
