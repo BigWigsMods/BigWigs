@@ -97,6 +97,8 @@ function mod:OnEngage()
 	self:Bar(464112, 17.7, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
 	self:Bar(464399, 22.2, CL.count:format(self:SpellName(464399), electromagneticSortingCount)) -- Electromagnetic Sorting
 	self:Bar(1217954, 44.5, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
+
+	self:Bar(467117, 111.1) -- Overdrive
 end
 
 --------------------------------------------------------------------------------
