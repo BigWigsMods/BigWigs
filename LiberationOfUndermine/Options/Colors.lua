@@ -65,15 +65,16 @@ BigWigs:AddColors("Sprocketmonger Lockenstock", {
 	[465232] = "yellow",
 	[465917] = {"blue","purple"},
 	[466765] = "cyan",
-	[466860] = {"cyan","yellow"},
-	[471308] = "yellow",
-	[473276] = "yellow",
+	[466860] = "yellow",
+	[468791] = "red",
+	[473276] = "cyan",
 	[1214878] = {"blue","purple"},
 	[1216509] = {"blue","yellow"},
-	[1217083] = "orange",
+	[1217231] = "orange",
 	[1218319] = "orange",
 	[1218342] = "blue",
 	[1218418] = "orange",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("The One-Armed Bandit", {

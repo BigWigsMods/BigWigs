@@ -64,15 +64,16 @@ BigWigs:AddSounds("Sprocketmonger Lockenstock", {
 	[465232] = "alert",
 	[465917] = {"alarm","warning"},
 	[466765] = "long",
-	[466860] = {"info","long"},
-	[471308] = "alarm",
-	[473276] = "alarm",
+	[466860] = "info",
+	[468791] = "alarm",
+	[473276] = "long",
 	[1214878] = {"info","warning"},
 	[1216509] = "warning",
-	[1217083] = "alert",
+	[1217231] = "alert",
 	[1218319] = "alert",
 	[1218342] = "warning",
 	[1218418] = "alarm",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("The One-Armed Bandit", {
