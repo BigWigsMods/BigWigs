@@ -23,18 +23,18 @@ local wireTransferCount = 1
 local betaLaunchCount = 1
 local voidsplosionCount = 1
 
+local timersNormal = {
+	[1218418] = { 0.0, 41.0, 30.0, 30.0, 0 }, -- Wire Transfer
+	[1216509] = { 16.0, 34.0, 31.0, 0 }, -- Screw Up
+	[465232] = { 6.0, 30.0, 30.0, 30.0, 0 }, -- Sonic Ba-Boom
+	[1214878] = { 26.1, 32.0, 30.0, 23.0, 0 }, -- Pyro Party Pack
+}
 local timersHeroic = {
 	[1217231] = { 12.0, 62.0, 31.0, 0 }, -- Foot-Blasters
 	[1218418] = { 0.0, 41.0, 28.0, 28.0, 0 }, -- Wire Transfer
 	[1216509] = { 47.0, 33.0, 32.0, 0 }, -- Screw Up
 	[465232]  = { 6.0, 28.0, 29.0, 30.0, 0 }, -- Sonic Ba-Boom
 	[1214878] = { 23.0, 34.0, 30.0, 0}, -- Pyro Party Pack
-}
-local timersNormal = {
-	[1218418] = { 0.0, 41.0, 30.0, 30.0, 0 }, -- Wire Transfer
-	[1216509] = { 16.0, 34.0, 31.0, 0 }, -- Screw Up
-	[465232]  = { 6.0, 30.0, 30.0, 30.0, 0 }, -- Sonic Ba-Boom
-	[1214878] = { 26.1, 32.0, 30.0, 23.0, 0}, -- Pyro Party Pack
 }
 local timers = mod:Easy() and timersNormal or timersHeroic
 
@@ -154,7 +154,7 @@ function mod:FootBlasters(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, footBlasterCount))
 	self:PlaySound(args.spellId, "alert")
 	footBlasterCount = footBlasterCount + 1
-	self:Bar(args.spellId, timers[footBlasterCount], CL.count:format(args.spellName, footBlasterCount))
+	self:Bar(args.spellId, timers[args.spellId][footBlasterCount], CL.count:format(args.spellName, footBlasterCount))
 end
 
 function mod:UnstableShrapnelApplied(args)
@@ -191,7 +191,7 @@ function mod:PyroPartyPackApplied(args)
 		self:PlaySound(args.spellId, "warning") -- not great being the same as taunt?
 	end
 	pyroPartyPackCount = pyroPartyPackCount + 1
-	self:Bar(args.spellId, timers[pyroPartyPackCount], CL.count:format(args.spellName, pyroPartyPackCount))
+	self:Bar(args.spellId, timers[args.spellId][pyroPartyPackCount], CL.count:format(args.spellName, pyroPartyPackCount))
 end
 
 function mod:PyroPartyPackRemoved(args)
@@ -202,7 +202,7 @@ function mod:ScrewUp(args)
 	self:StopBar(CL.count:format(args.spellName, screwUpCount))
 	self:Message(1216509, "yellow", CL.count:format(args.spellName, screwUpCount))
 	screwUpCount = screwUpCount + 1
-	self:Bar(1216509, timers[screwUpCount], CL.count:format(args.spellName, screwUpCount))
+	self:Bar(1216509, timers[1216509][screwUpCount], CL.count:format(args.spellName, screwUpCount))
 end
 
 function mod:ScrewUpApplied(args)
@@ -218,7 +218,7 @@ function mod:SonicBaBoom(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, sonicBaBoomCount)))
 	self:PlaySound(args.spellId, "alert") -- healer
 	sonicBaBoomCount = sonicBaBoomCount + 1
-	self:Bar(args.spellId, timers[sonicBaBoomCount], CL.count:format(args.spellName, sonicBaBoomCount))
+	self:Bar(args.spellId, timers[args.spellId][sonicBaBoomCount], CL.count:format(args.spellName, sonicBaBoomCount))
 end
 
 function mod:WireTransfer(args)
@@ -226,7 +226,7 @@ function mod:WireTransfer(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, wireTransferCount))
 	self:PlaySound(args.spellId, "alarm")
 	wireTransferCount = wireTransferCount + 1
-	self:Bar(args.spellId, timers[wireTransferCount], CL.count:format(args.spellName, wireTransferCount))
+	self:Bar(args.spellId, timers[args.spellId][wireTransferCount], CL.count:format(args.spellName, wireTransferCount))
 end
 
 -- Stage 2
