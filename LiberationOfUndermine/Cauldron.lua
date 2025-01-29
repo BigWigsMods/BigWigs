@@ -13,6 +13,8 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
+local bars = {}
+
 local colossalClashCount = 1
 
 local scrapbombCount = 1
@@ -31,6 +33,9 @@ local lightningBashCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_fade_out_bars = "Fade out bars"
+	L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range."
+
 	L.bomb_explosion = "Bomb Explosion"
 	L.bomb_explosion_desc = "Show a timer for the explosion off the bombs."
 end
@@ -41,6 +46,7 @@ end
 
 function mod:GetOptions()
 	return {
+		"custom_on_fade_out_bars",
 		465833, -- Colossal Clash
 			-- 463800, -- Zapbolt
 			-- 465446, -- Fiery Wave
@@ -53,7 +59,7 @@ function mod:GetOptions()
 		1214039, -- Molten Pool
 			-- 465446, -- Fiery Waves
 		1213690, -- Molten Phlegm
-		{472233, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Blastburn Roarcannon
+		{472233, "SAY"}, -- Blastburn Roarcannon
 		1214190, -- Eruption Stomp
 		-- Torq the Tempest
 		472225, -- Galvanized Spite
@@ -110,6 +116,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	bars = {}
 	colossalClashCount = 1
 
 	scrapbombCount = 1
@@ -128,20 +135,138 @@ function mod:OnEngage()
 	self:Bar("bomb_explosion", bombCd + 10, CL.count:format(L.bomb_explosion, scrapbombCount), 133613) -- Scrapbomb, bomb icon
 	self:Bar(472233, 15.0, CL.count:format(CL.beam, blastburnRoarcannonCount)) -- Blastburn Roarcannon
 	self:Bar(1214190, 27.0, CL.count:format(self:SpellName(1214190), eruptionStombCount)) -- Eruption Stomp
-	self:Bar(1213690, 48.5, CL.count:format(self:SpellName(1213690), moltenPhlegmCount)) -- Molten Phlegm
+	self:Bar(1213690, self:Mythic() and 24.6 or 48.5, CL.count:format(self:SpellName(1213690), moltenPhlegmCount)) -- Molten Phlegm
 
 	-- Torq
 	self:Bar(474159, 9, CL.count:format(self:SpellName(474159), staticChargeCount)) -- Static Charge
 	self:Bar(463900, 10, CL.count:format(self:SpellName(463900), thunderdrumSalvoCount)) -- Thunderdrum Salvo
-	self:Bar(466178, 21.2, CL.count:format(self:SpellName(466178), lightningBashCount)) -- Lightning Bash
+	self:Bar(466178, 21, CL.count:format(self:SpellName(466178), lightningBashCount)) -- Lightning Bash
 	self:Bar(1213994, 29, CL.count:format(self:SpellName(1213994), voltaicImageCount)) -- Voltaic Image
 
-	self:Bar(465833, 71.5, CL.count:format(CL.full_energy, colossalClashCount)) -- Colossal Clash
+	self:Bar(465833, 70.5, CL.count:format(CL.full_energy, colossalClashCount)) -- Colossal Clash
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- Fading Bar Tech
+-- Fading Bar Tech
+function mod:IsFlarendoInRange()
+	local unit = self:GetUnitIdByGUID(229181)
+	if unit then
+		return self:UnitWithinRange(unit, 45)
+	end
+end
+function mod:IsTorqueInRange()
+	local unit = self:GetUnitIdByGUID(229177)
+	if unit then
+		return self:UnitWithinRange(unit, 45)
+	end
+end
+
+do
+	local colors
+
+	local flarendoAbilities = {
+		[473650] = true, -- Scrapbomb
+		[472233] = true, -- Blastburn Roarcannon
+		[1214190] = true, -- Eruption Stomp
+		[1213690] = true,  -- Molten Phlegm
+	}
+
+	local torqueAbilities = {
+		[474159] = true, -- Static Charge
+		[463900] = true,-- Thunderdrum Salvo
+		[466178] = true, -- Lightning Bash
+		[1213994] = true, -- Voltaic Image
+	}
+
+	local function colorBar(self, bar)
+		colors = colors or BigWigs:GetPlugin("Colors")
+		local key = bar:Get("bigwigs:option")
+		bar:SetTextColor(colors:GetColor("barText", self, key))
+		bar:SetShadowColor(colors:GetColor("barTextShadow", self, key))
+
+		if bar:Get("bigwigs:emphasized") then
+			bar:SetColor(colors:GetColor("barEmphasized", self, key))
+		else
+			bar:SetColor(colors:GetColor("barColor", self, key))
+		end
+	end
+
+	local function fadeOutBar(self, bar)
+		colors = colors or BigWigs:GetPlugin("Colors")
+		local key = bar:Get("bigwigs:option")
+		local r, g, b, a = colors:GetColor("barText", self, key)
+		if a > 0.33 then
+			bar:SetTextColor(r, g, b, 0.33)
+		end
+		r, g, b, a = colors:GetColor("barTextShadow", self, key)
+		if a > 0.33 then
+			bar:SetShadowColor(r, g, b, 0.33)
+		end
+
+		if bar:Get("bigwigs:emphasized") then
+			r, g, b, a = colors:GetColor("barEmphasized", self, key)
+			if a > 0.5 then
+				bar:SetColor(r, g, b, 0.5)
+			end
+		else
+			r, g, b, a = colors:GetColor("barColor", self, key)
+			if a > 0.5 then
+				bar:SetColor(r, g, b, 0.5)
+			end
+		end
+	end
+
+	local function handleBarColor(self, bar)
+		if flarendoAbilities[bar:Get("bigwigs:option")] then
+			if self:IsFlarendoInRange() then
+				colorBar(self, bar)
+			else
+				fadeOutBar(self, bar)
+			end
+		elseif torqueAbilities[bar:Get("bigwigs:option")] then
+			if self:IsTorqueInRange() then
+				colorBar(self, bar)
+			else
+				fadeOutBar(self, bar)
+			end
+		end
+	end
+
+	function mod:CheckBossRange()
+		if not self:GetOption("custom_on_fade_out_bars") then return end
+		for k in next, bars do
+			if k:Get("bigwigs:module") == self and k:Get("bigwigs:option") then
+				handleBarColor(self, k)
+			end
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key)
+		if not self:GetOption("custom_on_fade_out_bars") then return end
+		bars[bar] = true
+		if flarendoAbilities[key] then
+			if not self:IsFlarendoInRange() then
+				fadeOutBar(self, bar)
+			end
+		elseif torqueAbilities[key] then
+			if not self:IsTorqueInRange() then
+				fadeOutBar(self, bar)
+			end
+		end
+	end
+
+	function mod:BarEmphasized(_, _, bar)
+		if not self:GetOption("custom_on_fade_out_bars") then return end
+		bars[bar] = true
+		if bar:Get("bigwigs:module") == self and bar:Get("bigwigs:option") then
+			handleBarColor(self, bar)
+		end
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 465833 then -- clash inc
@@ -154,6 +279,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound(spellId, "alert")
 		voltaicImageCount = voltaicImageCount + 1
 		local cd = voltaicImageCount % 2 == 1 and 65.0 or 30.0
+		if self:Mythic() then
+			cd = 95
+		end
 		self:Bar(spellId, cd, CL.count:format(self:SpellName(spellId), voltaicImageCount))
 	end
 end
@@ -186,38 +314,50 @@ end
 function mod:BlisteringSpiteApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		local tooHigh = 20
+		local tooHigh = 25
 		if amount % 4 == 1 or amount >= tooHigh then
 			self:StackMessage(args.spellId, "blue", args.destName, amount, tooHigh)
 			if amount >= tooHigh then
 				self:PlaySound(args.spellId, "alarm") -- too many stacks
 			end
 		end
+		if self:GetOption("custom_on_fade_out_bars") then
+			self:CheckBossRange()
+		end
 	end
 end
 
 function mod:Scrapbomb(args)
+	self:StopBar(CL.count:format(CL.bomb, scrapbombCount))
+	self:Bar("bomb_explosion", 10, CL.count:format(L.bomb_explosion, scrapbombCount), 133613) -- Scrapbomb, bomb icon
 	self:Message(args.spellId, "orange", CL.count:format(CL.bomb, scrapbombCount))
 	self:PlaySound(args.spellId, "alert") -- soak bombs
 	scrapbombCount = scrapbombCount + 1
 	local cd = scrapbombCount % 3 == 1 and 47.0 or 24.0
+	if self:Mythic() then
+		cd = scrapbombCount % 3 == 1 and 48 or scrapbombCount % 3 == 2 and 24 or 23
+	end
 	self:Bar(args.spellId, cd, CL.count:format(CL.bomb, scrapbombCount))
 	self:Bar("bomb_explosion", cd + 10, CL.count:format(L.bomb_explosion, scrapbombCount), 133613) -- Scrapbomb, bomb icon
 end
 
 do
 	local prev = 0
-function mod:MoltenPhlegmApplied(args)
-	if args.time - prev > 2 then
-		prev = args.time
-		moltenPhlegmCount = moltenPhlegmCount + 1
-		self:Bar(args.spellId, 95, CL.count:format(args.spellName, moltenPhlegmCount))
+	function mod:MoltenPhlegmApplied(args)
+		if args.time - prev > 2 then
+			prev = args.time
+			moltenPhlegmCount = moltenPhlegmCount + 1
+			local cd = 95
+			if self:Mythic() then
+				cd = moltenPhlegmCount % 2 == 1 and 67.6 or 27.4
+			end
+			self:Bar(args.spellId, 95, CL.count:format(args.spellName, moltenPhlegmCount))
+		end
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "alarm")
+		end
 	end
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
-	end
-end
 end
 
 
@@ -227,15 +367,16 @@ do
 			self:PersonalMessage(472233, nil, CL.beam)
 			self:PlaySound(472233, "warning")
 			self:Say(472233, CL.beam, nil, "Beam")
-			self:SayCountdown(472233, 3.5)
 		end
-		self:PrimaryIcon(472233, player)
 	end
 
 	function mod:BlastburnRoarcannonStart(args)
 			self:Message(args.spellId, "yellow", CL.count:format(CL.beam, blastburnRoarcannonCount))
 			blastburnRoarcannonCount = blastburnRoarcannonCount + 1
 			local cd = blastburnRoarcannonCount % 3 == 1 and 47.0 or 24.0
+			if self:Mythic() then
+				cd = blastburnRoarcannonCount % 3 == 1 and 48 or blastburnRoarcannonCount % 3 == 2 and 24 or 23
+			end
 			self:Bar(args.spellId, cd, CL.count:format(CL.beam, blastburnRoarcannonCount))
 			self:GetBossTarget(printTarget, 1, args.sourceGUID) -- targets player
 	end
@@ -257,12 +398,15 @@ end
 function mod:GalvanizedSpiteApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		local tooHigh = 20
+		local tooHigh = 25
 		if amount % 4 == 1 or amount >= tooHigh then
 			self:StackMessage(args.spellId, "blue", args.destName, amount, tooHigh)
 			if amount >= tooHigh then
 				self:PlaySound(args.spellId, "alarm") -- too many stacks
 			end
+		end
+		if self:GetOption("custom_on_fade_out_bars") then
+			self:CheckBossRange()
 		end
 	end
 end
