@@ -47,7 +47,7 @@ function mod:GetOptions()
 			-- 465795, -- Noise Pollution
 			466093, -- Haywire -- XXX Check if this warning is needed
 		466866, -- Echoing Chant
-		467606, -- Sound Cannon
+		{467606, "SAY"}, -- Sound Cannon
 		466979, -- Faulty Zap
 		472306, -- Sparkblast Ignition
 			1214164, -- Excitement
@@ -107,7 +107,7 @@ function mod:OnEngage()
 	self:Bar(466866, 21.5, CL.count:format(self:SpellName(466866), echoingChantCount)) -- Echoing Chant
 	self:Bar(467606, 27.5, CL.count:format(self:SpellName(467606), soundCannonCount)) -- Sound Cannon
 	self:Bar(466979, 39.5, CL.count:format(self:SpellName(466979), faultyZapCount)) -- Faulty Zap
-	self:Bar("stages", 116, CL.stage:format(2), 66911) -- disco ball icon
+	self:Bar("stages", 121, CL.stage:format(2), 66911) -- disco ball icon // until _applied
 end
 
 --------------------------------------------------------------------------------
@@ -118,10 +118,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message(spellId, "yellow", CL.count:format(self:SpellName(spellId), sparkblastIgnitionCount))
 		self:PlaySound(spellId, "alert")
 		sparkblastIgnitionCount = sparkblastIgnitionCount + 1
-		-- 15.0, 43.5, 44.6, 64.9, 43.5, 44.7
 		local cdTable = {44.6, 64.9, 43.5}
 		local cdCount = sparkblastIgnitionCount % 3 + 1
-		self:Bar(spellId, cdTable[cdCount], CL.count:format(self:SpellName(spellId), sparkblastIgnitionCount))
+		local cd = cdTable[cdCount]
+		if self:Mythic() then
+			cd = sparkblastIgnitionCount % 2 == 0 and 82.5 or 66.5
+		end
+		self:Bar(spellId, cd, CL.count:format(self:SpellName(spellId), sparkblastIgnitionCount))
 	end
 end
 
@@ -133,6 +136,9 @@ function mod:Amplification(args)
 	self:PlaySound(args.spellId, "alert") -- spawning amplifier
 	amplificationCount = amplificationCount + 1
 	local cd = amplificationCount % 3 == 1 and 73.0 or 40.2
+	if self:Mythic() then
+		cd = amplificationCount % 3 == 1 and 69.5 or 40.1
+	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, amplificationCount))
 end
 
@@ -181,24 +187,47 @@ function mod:EchoingChant(args)
 	self:PlaySound(args.spellId, "alert") -- watch amplifiers
 	echoingChantCount = echoingChantCount + 1
 	local cdTable = {28.5, 66.5, 58.0}
+	if self:Mythic() then
+		cdTable = {53.5, 63.0, 32.5}
+	end
 	local cdCount = echoingChantCount % 3 + 1
 	self:Bar(args.spellId, cdTable[cdCount], CL.count:format(args.spellName, echoingChantCount))
 end
 
-function mod:SoundCannon(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, soundCannonCount))
-	self:PlaySound(args.spellId, "alert") -- watch facing/private aura
-	soundCannonCount = soundCannonCount + 1
-	local cd = soundCannonCount % 2 == 1 and 34.5 or 118.5
-	-- 27.5, 34.5, 118.5, 34.5
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, soundCannonCount))
+do
+	local function printTarget(self, player, guid)
+		if self:Me(guid) then
+			self:PersonalMessage(467606)
+			self:PlaySound(467606, "warning")
+			local englishText = "Sound Cannon"
+			if self:Mythic() then -- soak
+				self:Yell(467606, nil, nil, englishText)
+			else -- avoid
+				self:Say(467606, nil, nil, englishText)
+			end
+		end
+	end
+
+	function mod:SoundCannon(args)
+		self:Message(args.spellId, "red", CL.count:format(args.spellName, soundCannonCount))
+		self:PlaySound(args.spellId, "alert") -- watch facing/private aura
+		soundCannonCount = soundCannonCount + 1
+		local cd = soundCannonCount % 2 == 1 and 34.5 or 118.5
+		if self:Mythic() then
+			cd = soundCannonCount % 2 == 1 and 37.2 or 111.8
+		end
+		self:Bar(args.spellId, cd, CL.count:format(args.spellName, soundCannonCount))
+		self:GetBossTarget(printTarget, 1, args.sourceGUID) -- targets player
+	end
 end
 
 function mod:FaultyZap(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, faultyZapCount))
 	faultyZapCount = faultyZapCount + 1
-	-- 39.5, 35.5, 26.0, 91.6, 35.5, 26.0
 	local cdTable = {26.0, 91.6, 35.5}
+	if self:Mythic() then
+		cdTable = {26.0, 88.5, 34.5}
+	end
 	local cdCount = faultyZapCount % 3 + 1
 	self:Bar(args.spellId, cdTable[cdCount], CL.count:format(args.spellName, faultyZapCount))
 end
@@ -249,15 +278,17 @@ function mod:SoundCloudApplied(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long") -- stage 2
-	self:Bar("stages", 36, CL.stage:format(1), args.spellId)
+	self:Bar("stages", self:Mythic() and 28 or 36, CL.stage:format(1), args.spellId)
 	blaringDropCount = 1
+
+	-- XXX Stop All bars, restart on Removed?
 end
 
 function mod:SoundCloudRemoved(args)
 	self:SetStage(1)
 	self:Message("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long") -- stage 1
-	self:Bar("stages", 116, CL.stage:format(2), 66911) -- disco ball icon
+	self:Bar("stages", 121, CL.stage:format(2), 66911) -- disco ball icon
 end
 
 function mod:BlaringDropStart(args)
