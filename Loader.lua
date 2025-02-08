@@ -376,6 +376,7 @@ do
 		--[389] = lw_c, -- Ragefire Chasm
 		[429] = lw_c, -- Dire Maul
 		[2784] = public.isSeasonOfDiscovery and lw_c or nil, -- Demon Fall Canyon [Classic Season of Discovery Only]
+		[2875] = public.isSeasonOfDiscovery and lw_c or nil, -- Karazhan Crypts [Classic Season of Discovery Only]
 		--[[ LittleWigs: The Burning Crusade ]]--
 		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
 		[542] = lw_bc, -- Hellfire Citadel: The Blood Furnace
