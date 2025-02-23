@@ -576,12 +576,17 @@ local function parseLua(file)
 
 	if module_args ~= "" then
 		local args = strsplit(module_args)
-		local ej_id = tonumber(args[2])
-		if ej_id and ej_id > 0 then
-			if modules_bosses[ej_id] then
-				error(string.format("    %s:%d: Module \"%s\" is using journal id %d, which is already used by module \"%s\"", file_name, 1, module_name, ej_id, modules_bosses[ej_id]))
-			else -- execution isn't stopped, don't overwrite the original module name
-				modules_bosses[ej_id] = module_name
+		if #args > 1 then
+			local journalId = args[#args]
+			if string.sub(journalId, -1) ~= "}" then -- filter mods with multiple zoneIds and no journalId
+				local ej_id = tonumber(journalId)
+				if ej_id and ej_id > 0 then
+					if modules_bosses[ej_id] then
+						error(string.format("    %s:%d: Module \"%s\" is using journal id %d, which is already used by module \"%s\"", file_name, 1, module_name, ej_id, modules_bosses[ej_id]))
+					else -- execution isn't stopped, don't overwrite the original module name
+						modules_bosses[ej_id] = module_name
+					end
+				end
 			end
 		end
 	end
