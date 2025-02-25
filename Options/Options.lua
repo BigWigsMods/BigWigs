@@ -916,7 +916,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local flagIcons = {}
 	local showFlags = {
 		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "CASTBAR", "COUNTDOWN", "CASTBAR_COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
+		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "COUNTDOWN", "CASTBAR_COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
 		"PROXIMITY", "INFOBOX", "ALTPOWER", "NAMEPLATE", "PRIVATE",
 	}
 	for i = 1, #showFlags do
@@ -1089,7 +1089,6 @@ local function populatePrivateAuraOptions(widget)
 
 	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
 	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
-	local defaultSound = soundModule:GetDefaultSound("privateaura")
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
 		local options = privateAuraSoundOptions[module]
@@ -1102,8 +1101,9 @@ local function populatePrivateAuraOptions(widget)
 			scrollFrame:AddChild(header)
 			for _, option in ipairs(options) do
 				local spellId = option[1]
+				local default = soundModule:GetDefaultSound("privateaura")
 				local key = ("pa_%d"):format(spellId)
-				local id = option.tooltip or option.option or spellId -- XXX compat
+				local id = option.option or spellId
 
 				local name = loader.GetSpellName(id)
 				local texture = loader.GetSpellTexture(id)
@@ -1112,17 +1112,18 @@ local function populatePrivateAuraOptions(widget)
 				icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
 				icon:SetImageSize(40, 40)
 				icon:SetRelativeWidth(0.1)
-				icon:SetUserData("spellId", id)
+				icon:SetUserData("bossOption", id)
 				icon:SetUserData("updateTooltip", true)
 				icon:SetCallback("OnEnter", function(widget)
 					bwTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-					bwTooltip:SetSpellByID(widget:GetUserData("spellId"))
+					bwTooltip:SetSpellByID(widget:GetUserData("bossOption"))
 					bwTooltip:Show()
 				end)
 				icon:SetCallback("OnLeave", bwTooltip_Hide)
 
 				local dropdown = AceGUI:Create("SharedDropdown")
 				if option.mythic then
+					-- dropdown:SetLabel(name .. _G.CreateTextureMarkup(521749, 256, 64, 24, 24, 0.5, 0.625, 0.5, 1)) -- 521749 = Interface\EncounterJournal\UI-EJ-Icons
 					dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
 				else
 					dropdown:SetLabel(name)
@@ -1130,7 +1131,7 @@ local function populatePrivateAuraOptions(widget)
 				dropdown:SetList(soundList, nil, "DDI-Sound")
 				dropdown:SetRelativeWidth(0.88)
 				dropdown:SetUserData("key", key)
-				dropdown:SetUserData("default", defaultSound)
+				dropdown:SetUserData("default", default)
 				dropdown:SetUserData("module", module)
 				dropdown:SetCallback("OnValueChanged", function(widget, _, value)
 					local key = widget:GetUserData("key")
@@ -1142,7 +1143,7 @@ local function populatePrivateAuraOptions(widget)
 					end
 					module.db.profile[key] = value
 				end)
-				local value = module.db.profile[key] or defaultSound
+				local value = module.db.profile[key] or default
 				for i, v in next, soundList do
 					if v == value then
 						dropdown:SetValue(i)
@@ -1167,7 +1168,7 @@ local function populatePrivateAuraOptions(widget)
 	reset:SetCallback("OnClick", function(widget)
 		for module, options in next, widget:GetUserData("privateAuraSoundOptions") do
 			for _, option in next, options do
-				local key = ("pa_%d"):format(option[1])
+				local key = "pa_" .. option[1]
 				module.db.profile[key] = nil
 			end
 		end
