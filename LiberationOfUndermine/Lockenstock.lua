@@ -61,6 +61,7 @@ if L then
 	L.foot_blasters = "Mines"
 	L.screw_up = "Drills"
 	L.sonic_ba_boom = "Raid Damage"
+	L.polarization_generator = "Color Swaps"
 end
 
 --------------------------------------------------------------------------------
@@ -105,6 +106,7 @@ function mod:GetOptions()
 		[1216509] = L.screw_up,
 		[465232] = L.sonic_ba_boom,
 		[1214878] = CL.bomb,
+		[1216802] = L.polarization_generator,
 	}
 end
 
@@ -159,7 +161,7 @@ function mod:OnEngage()
 	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
 	self:Bar("stages", self:Easy() and 121.8 or 127.4, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
 	if self:Mythic() then
-		self:Bar(1216802, timers[1216802][1], CL.count:format(self:SpellName(1217355), polarizationGenerator))
+		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGenerator))
 	end
 end
 
@@ -269,7 +271,7 @@ function mod:BetaLaunch(args)
 	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:StopBar(CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
 	self:StopBar(CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
-	self:StopBar(CL.count:format(self:SpellName(1216802), polarizationGenerator)) -- Polarization Generator
+	self:StopBar(CL.count:format(L.polarization_generator, polarizationGenerator)) -- Polarization Generator
 
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), args.spellId)
@@ -327,7 +329,7 @@ function mod:UpgradedBloodtechApplied(args)
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
 	if self:Mythic() then
-		self:Bar(1216802, timers[1216802][1], CL.count:format(self:SpellName(1217355), polarizationGenerator)) -- Polarization Generator
+		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGenerator)) -- Polarization Generator
 	end
 	if betaLaunchCount < 3 then
 		self:Bar("stages", 120.3, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
