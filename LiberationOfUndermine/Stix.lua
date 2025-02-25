@@ -27,6 +27,9 @@ local L = mod:GetLocale()
 if L then
 	L.rolled_over_by = "Rolled over by %s" -- Rolled over by PlayerX
 	L.landing = "Landing"
+
+	L.electromagnetic_sorting = "Sorting"
+	L.incinerator = "Fire Circles"
 end
 
 --------------------------------------------------------------------------------
@@ -52,14 +55,20 @@ function mod:GetOptions()
 		{1217954, "TANK"}, -- Meltdown
 		467117, -- Overdrive
 			467109, -- Trash Compactor
+		-- Mythic
+		1220648, -- Marked for Recycling
 	},{ -- Sections
-
+		[1220648] = CL.mythic,
 	},{ -- Renames
+		[464399] = L.electromagnetic_sorting, -- Electromagnetic Sorting (Balls + Adds)
+		[464149] = L.incinerator, -- Incinerator (Fire)
 		[467109] = L.landing, -- Trash Compactor (Landing)
 	}
 end
 
 function mod:OnRegister()
+	self:SetSpellRename(464399, L.electromagnetic_sorting) -- Electromagnetic Sorting (Balls + Adds)
+	self:SetSpellRename(464149, L.incinerator) -- Incinerator (Fire)
 	self:SetSpellRename(467109, L.landing) -- Trash Compactor (Landing)
 end
 
@@ -80,6 +89,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Overdrive", 467117)
 	self:Log("SPELL_CAST_START", "TrashCompactor", 467109)
 
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "MarkedForRecyclingApplied", 1220648)
+
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 464854, 464248) -- Garbage Pile, Hot Garbage
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 464854, 464248)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 464854, 464248)
@@ -93,12 +105,12 @@ function mod:OnEngage()
 	demolishCount = 1
 	meltdownCount = 1
 
-	self:Bar(464149, 11.1, CL.count:format(self:SpellName(464149), incineratorCount)) -- Incinerator
+	self:Bar(464149, 11.1, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator -- Fire
 	self:Bar(464112, 17.7, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
-	self:Bar(464399, 22.2, CL.count:format(self:SpellName(464399), electromagneticSortingCount)) -- Electromagnetic Sorting
+	self:Bar(464399, 22.2, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)) -- Electromagnetic Sorting -- Balls + Adds
 	self:Bar(1217954, 44.5, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
 
-	self:Bar(467117, 111.1) -- Overdrive
+	self:Bar(467117, self:Mythic() and 66.7 or 111.1) -- Overdrive
 end
 
 --------------------------------------------------------------------------------
@@ -106,10 +118,15 @@ end
 --
 
 function mod:ElectromagneticSorting(args)
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, electromagneticSortingCount))
+	self:StopBar(CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
 	self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
 	electromagneticSortingCount = electromagneticSortingCount + 1
-	self:Bar(args.spellId, electromagneticSortingCount == 3 and 72.2 or 51.1, CL.count:format(args.spellName, electromagneticSortingCount))
+	local cd = electromagneticSortingCount == 3 and 72.2 or 51.1
+	if self:Mythic() then
+		cd = electromagneticSortingCount == 2 and 79.3 or 51.1
+	end
+	self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
 end
 
 function mod:SortedApplied(args)
@@ -156,10 +173,15 @@ function mod:InfectedBiteApplied(args)
 end
 
 function mod:Incinerator(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, incineratorCount))
+	self:StopBar(CL.count:format(L.incinerator, incineratorCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.incinerator, incineratorCount))
 	self:PlaySound(args.spellId, "alert") -- debuffs
 	incineratorCount = incineratorCount + 1
-	self:Bar(args.spellId, incineratorCount == 5 and 46.7 or 25.6, CL.count:format(args.spellName, incineratorCount))
+	local cd = incineratorCount == 5 and 46.7 or 25
+	if self:Mythic() then
+		cd = incineratorCount == 4 and 28.2 or 25.5
+	end
+	self:Bar(args.spellId, cd, CL.count:format(L.incinerator, incineratorCount))
 end
 
 function mod:IncinerationApplied(args)
@@ -170,10 +192,15 @@ function mod:IncinerationApplied(args)
 end
 
 function mod:Demolish(args)
+	self:StopBar(CL.count:format(args.spellName, demolishCount))
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, demolishCount))
 	self:PlaySound(args.spellId, "info")
 	demolishCount = demolishCount + 1
-	self:Bar(args.spellId, demolishCount == 3 and 72.2 or 51.5, CL.count:format(args.spellName, demolishCount)) -- Delayed once due to overdrive?
+	local cd = demolishCount == 3 and 72.2 or 51.5
+	if self:Mythic() then
+		cd = demolishCount == 2 and 79.3 or 51.1
+	end
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, demolishCount)) -- Delayed once due to overdrive?
 end
 
 function mod:DemolishApplied(args)
@@ -184,13 +211,19 @@ function mod:DemolishApplied(args)
 end
 
 function mod:Meltdown(args)
+	self:StopBar(CL.count:format(args.spellName, meltdownCount))
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, meltdownCount))
 	self:PlaySound(args.spellId, "info") -- XXX change to play for current target?
 	meltdownCount = meltdownCount + 1
-	self:Bar(args.spellId, meltdownCount == 3 and 72.2 or 51.5, CL.count:format(args.spellName, meltdownCount)) -- Delayed once due to overdrive?
+	local cd = meltdownCount == 3 and 72.2 or 51.5
+	if self:Mythic() then
+		cd = meltdownCount == 2 and 79.4 or 51.1
+	end
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, meltdownCount)) -- Delayed once due to overdrive?
 end
 
 function mod:Overdrive(args)
+	self:StopBar(args.spellId)
 	self:SetStage(2)
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long") -- flying away
@@ -201,6 +234,13 @@ function mod:TrashCompactor(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "warning") -- watch drop location
 	self:Bar(467109, {3.75, 13.25}, L.landing) -- Specify landing time by cast time
+end
+
+function mod:MarkedForRecyclingApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		-- self:PlaySound(args.spellId, "info") -- should be saved
+	end
 end
 
 do
