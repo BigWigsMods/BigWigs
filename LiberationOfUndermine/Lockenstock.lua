@@ -1,4 +1,9 @@
 if not BigWigsLoader.isTestBuild then return end
+
+--------------------------------------------------------------------------------
+-- TODO: Negative / Positive charge warnings on players in mythic
+--
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -22,6 +27,7 @@ local sonicBaBoomCount = 1
 local wireTransferCount = 1
 local betaLaunchCount = 1
 local voidsplosionCount = 1
+local polarizationGenerator = 1
 
 local timersNormal = {
 	[1218418] = { 0.0, 41.0, 30.0, 30.0, 0 }, -- Wire Transfer
@@ -36,15 +42,26 @@ local timersHeroic = {
 	[465232]  = { 6.0, 28.0, 29.0, 30.0, 0 }, -- Sonic Ba-Boom
 	[1214878] = { 23.0, 34.0, 30.0, 0}, -- Pyro Party Pack
 }
-local timers = mod:Easy() and timersNormal or timersHeroic
+local timersMythic = {
+	[1217231] = { 12.1, 33.0, 30.0, 30.0, 0 }, -- Foot-Blasters
+	[1218418] = { 0.0, 40.9, 69.9, 0 }, -- Wire Transfer
+	[1216509] = { 18.0, 30.0, 32.0, 27.0, 0 }, -- Screw Up
+	[465232]  = { 8.9, 25.0, 27.0, 31.9, 17.9, 0 }, -- Sonic Ba-Boom
+	[1214878] = { 23.0, 33.0, 30.0, 0 }, -- Pyro Party Pack
+	[1216802] = { 4, 66.9, 46.0, 0 }, -- Polarization Generator
+}
+local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
--- end
+local L = mod:GetLocale()
+if L then
+	L.foot_blasters = "Mines"
+	L.screw_up = "Drills"
+	L.sonic_ba_boom = "Raid Damage"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -66,7 +83,7 @@ function mod:GetOptions()
 			-- Unstable Explosion -- XXX count mines?
 			1218342, -- Unstable Shrapnel
 		1218418, -- Wire Transfer
-		{1216509, "COUNTDOWN"}, -- Screw Up "SAY"
+		1216509, -- Screw Up
 			-- Screwed!
 		465232, -- Sonic Ba-Boom
 		-- 471308, -- Firecracker Trap
@@ -74,13 +91,20 @@ function mod:GetOptions()
 		{465917, "TANK"}, -- Gravi-Gunk
 
 		-- Stage Two: Research and Destruction
-		466765, -- Beta Launch
+		-- 466765, -- Beta Launch
 		466860, -- Bleeding Edge
 			1218319, -- Voidsplosion
 		{468791, "CASTBAR"}, -- Gigadeath
+		1216802, -- Polarization Generator
 	},{
 		[473276] = -30425, -- Stage 1
-		[466765] = -30427, -- Stage 2
+		[466860] = -30427, -- Stage 2
+		[1216802] = "mythic",
+	},{
+		[1217231] = L.foot_blasters,
+		[1216509] = L.screw_up,
+		[465232] = L.sonic_ba_boom,
+		[1214878] = CL.bomb,
 	}
 end
 
@@ -108,10 +132,12 @@ function mod:OnBossEnable()
 
 	-- self:Log("SPELL_AURA_APPLIED", "GroundDamage", 466235) -- Wire Transfer XXX kind of awkward a damage event not having it's own option
 
-	timers = self:Easy() and timersNormal or timersHeroic
+	-- Mythic
+	self:Log("SPELL_CAST_SUCCESS", "PolarizationGenerator", 1217355)
 end
 
 function mod:OnEngage()
+	timers = self:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 	activateInventions = 1
 	footBlasterCount = 1
@@ -120,16 +146,21 @@ function mod:OnEngage()
 	sonicBaBoomCount = 1
 	wireTransferCount = 1
 	betaLaunchCount = 1
+	polarizationGenerator = 1
 
 	-- self:Bar(1218418, timers[1218418][1], CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer (casted immediately)
 	self:Bar(465232, timers[465232][1], CL.count:format(self:SpellName(465232), sonicBaBoomCount)) -- Sonic Ba-Boom
 	if not self:Easy() then
-		self:Bar(1217231, timers[1217231][1], CL.count:format(self:SpellName(1217231), footBlasterCount)) -- Foot-Blasters
+		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	end
-	self:Bar(1214878, timers[1214878][1], CL.count:format(self:SpellName(1214878), pyroPartyPackCount)) -- Pyro Party Pack
-	self:Bar(1216509, timers[1216509][1], CL.count:format(self:SpellName(1216509), screwUpCount)) -- Screw Up
+
+	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
-	self:Bar(466765, self:Easy() and 121.8 or 127.4, CL.count:format(self:SpellName(466765), betaLaunchCount)) -- Beta Launch
+	self:Bar("stages", self:Easy() and 121.8 or 127.4, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
+	if self:Mythic() then
+		self:Bar(1216802, timers[1216802][1], CL.count:format(self:SpellName(1217355), polarizationGenerator))
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -150,11 +181,11 @@ function mod:ActivateInventions(args)
 end
 
 function mod:FootBlasters(args)
-	self:StopBar(CL.count:format(args.spellName, footBlasterCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, footBlasterCount))
+	self:StopBar(CL.count:format(L.foot_blasters, footBlasterCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.foot_blasters, footBlasterCount))
 	self:PlaySound(args.spellId, "alert")
 	footBlasterCount = footBlasterCount + 1
-	self:Bar(args.spellId, timers[args.spellId][footBlasterCount], CL.count:format(args.spellName, footBlasterCount))
+	self:Bar(args.spellId, timers[args.spellId][footBlasterCount], CL.count:format(L.foot_blasters, footBlasterCount))
 end
 
 function mod:UnstableShrapnelApplied(args)
@@ -176,49 +207,48 @@ function mod:GraviGunkApplied(args)
 	end
 end
 
-function mod:PyroPartyPack(args)
+function mod:PyroPartyPack()
 	if self:Tank() then
-		self:Message(1214878, "purple", CL.casting:format(args.spellName))
+		self:Message(1214878, "purple", CL.casting:format(CL.bomb))
 		self:PlaySound(1214878, "info")
 	end
 end
 
 function mod:PyroPartyPackApplied(args)
-	self:StopBar(CL.count:format(args.spellName, pyroPartyPackCount))
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, pyroPartyPackCount))
-	self:TargetBar(args.spellId, 6, args.destName)
+	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.bomb, pyroPartyPackCount))
+	self:TargetBar(args.spellId, 6, args.destName, CL.bomb)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning") -- not great being the same as taunt?
 	end
 	pyroPartyPackCount = pyroPartyPackCount + 1
-	self:Bar(args.spellId, timers[args.spellId][pyroPartyPackCount], CL.count:format(args.spellName, pyroPartyPackCount))
+	self:Bar(args.spellId, timers[args.spellId][pyroPartyPackCount], CL.count:format(CL.bomb, pyroPartyPackCount))
 end
 
 function mod:PyroPartyPackRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 end
 
-function mod:ScrewUp(args)
-	self:StopBar(CL.count:format(args.spellName, screwUpCount))
-	self:Message(1216509, "yellow", CL.count:format(args.spellName, screwUpCount))
+function mod:ScrewUp()
+	self:StopBar(CL.count:format(L.screw_up, screwUpCount))
+	self:Message(1216509, "yellow", CL.count:format(L.screw_up, screwUpCount))
 	screwUpCount = screwUpCount + 1
-	self:Bar(1216509, timers[1216509][screwUpCount], CL.count:format(args.spellName, screwUpCount))
+	self:Bar(1216509, timers[1216509][screwUpCount], CL.count:format(L.screw_up, screwUpCount))
 end
 
 function mod:ScrewUpApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId, nil, L.screw_up)
 		self:PlaySound(args.spellId, "warning")
-		-- self:Say(args.spellId, nil, nil, "Screw Up")
 	end
 end
 
 function mod:SonicBaBoom(args)
-	self:StopBar(CL.count:format(args.spellName, sonicBaBoomCount))
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, sonicBaBoomCount)))
+	self:StopBar(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)))
 	self:PlaySound(args.spellId, "alert") -- healer
 	sonicBaBoomCount = sonicBaBoomCount + 1
-	self:Bar(args.spellId, timers[args.spellId][sonicBaBoomCount], CL.count:format(args.spellName, sonicBaBoomCount))
+	self:Bar(args.spellId, timers[args.spellId][sonicBaBoomCount], CL.count:format(L.sonic_ba_boom, sonicBaBoomCount))
 end
 
 function mod:WireTransfer(args)
@@ -232,17 +262,18 @@ end
 -- Stage 2
 
 function mod:BetaLaunch(args)
-	self:StopBar(CL.count:format(args.spellName, betaLaunchCount)) -- Beta Launch
+	self:StopBar(CL.count:format(CL.stage:format(2), betaLaunchCount)) -- Beta Launch
 	self:StopBar(CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer
-	self:StopBar(CL.count:format(self:SpellName(465232), sonicBaBoomCount)) -- Sonic Ba-Boom
-	self:StopBar(CL.count:format(self:SpellName(1217231), footBlasterCount)) -- Foot-Blasters
-	self:StopBar(CL.count:format(self:SpellName(1214878), pyroPartyPackCount)) -- Pyro Party Pack
+	self:StopBar(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
+	self:StopBar(CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
+	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:StopBar(CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
-	self:StopBar(CL.count:format(self:SpellName(1216509), screwUpCount)) -- Screw Up
+	self:StopBar(CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
+	self:StopBar(CL.count:format(self:SpellName(1216802), polarizationGenerator)) -- Polarization Generator
 
 	self:SetStage(2)
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, betaLaunchCount))
-	self:PlaySound(args.spellId, "long")
+	self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), args.spellId)
+	self:PlaySound("stages", "long")
 	-- self:CastBar(args.spellId, 2, CL.knockback)
 	betaLaunchCount = betaLaunchCount + 1
 
@@ -254,7 +285,7 @@ end
 function mod:BleedingEdge(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 20, CL.stage:format(1))
+	self:Bar("stages", 20, CL.stage:format(1), args.spellId)
 end
 
 do
@@ -285,17 +316,21 @@ function mod:UpgradedBloodtechApplied(args)
 	sonicBaBoomCount = 1
 	wireTransferCount = 1
 	betaLaunchCount = 1
+	polarizationGenerator = 1
 
 	-- self:Bar(1218418, timers[1218418][1], CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer (casted immediately)
-	self:Bar(465232, timers[465232][1], CL.count:format(self:SpellName(465232), sonicBaBoomCount)) -- Sonic Ba-Boom
+	self:Bar(465232, timers[465232][1], CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
 	if not self:Easy() then
-		self:Bar(1217231, timers[1217231][1], CL.count:format(self:SpellName(1217231), footBlasterCount)) -- Foot-Blasters
+		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	end
-	self:Bar(1214878, timers[1214878][1], CL.count:format(self:SpellName(1214878), pyroPartyPackCount)) -- Pyro Party Pack
-	self:Bar(1216509, timers[1216509][1], CL.count:format(self:SpellName(1216509), screwUpCount)) -- Screw Up
+	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
+	if self:Mythic() then
+		self:Bar(1216802, timers[1216802][1], CL.count:format(self:SpellName(1217355), polarizationGenerator)) -- Polarization Generator
+	end
 	if betaLaunchCount < 3 then
-		self:Bar(466765, 120.3, CL.count:format(self:SpellName(466765), betaLaunchCount)) -- Beta Launch
+		self:Bar("stages", 120.3, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
 	elseif betaLaunchCount == 3 then
 		self:Bar(468791, 120.3) -- Gigadeath
 	end
@@ -317,3 +352,12 @@ end
 -- 		end
 -- 	end
 -- end
+
+-- Mythic
+function mod:PolarizationGenerator(args)
+	self:StopBar(CL.count:format(L.polarization_generator, polarizationGenerator))
+--	self:Message(args.spellId, "orange", CL.count:format(L.polarization_generator, polarizationGenerator))
+--	self:PlaySound(args.spellId, "alert")
+	polarizationGenerator = polarizationGenerator + 1
+	self:Bar(1216802, timers[1216802][polarizationGenerator], CL.count:format(L.polarization_generator, polarizationGenerator))
+end
