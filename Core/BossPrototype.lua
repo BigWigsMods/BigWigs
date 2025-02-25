@@ -1330,20 +1330,37 @@ do
 				self.privateAuraSounds = {}
 				local soundModule = plugins.Sounds
 				if soundModule then
-					local default = soundModule:GetDefaultSound("privateaura")
-					for _, opt in next, self.privateAuraSoundOptions do
-						local key = ("pa_%d"):format(opt[1])
+					for _, option in next, self.privateAuraSoundOptions do
+						local spellId = option[1]
+						local default = soundModule:GetDefaultSound("privateaura")
+
+						local key = ("pa_%d"):format(spellId)
 						local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
 						if sound then
-							for i = 1, #opt do
-								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-									spellID = opt[i],
-									unitToken = "player",
-									soundFileName = sound,
-									outputChannel = "master",
-								})
-								if privateAuraSoundId then
-									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+							local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+								spellID = spellId,
+								unitToken = "player",
+								soundFileName = sound,
+								outputChannel = "master",
+							})
+							if type(privateAuraSoundId) == "number" then
+								self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+							else
+								self:Error("Failed to register Private Aura %q with return: %s", spellId, tostring(privateAuraSoundId))
+							end
+							if option.extra then
+								for _, id in next, option.extra do
+									local extrasSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+										spellID = id,
+										unitToken = "player",
+										soundFileName = sound,
+										outputChannel = "master",
+									})
+									if type(extrasSoundId) == "number" then
+										self.privateAuraSounds[#self.privateAuraSounds + 1] = extrasSoundId
+									else
+										self:Error("Failed to register Private Aura %q with return: %s", id, tostring(extrasSoundId))
+									end
 								end
 							end
 						end
