@@ -664,47 +664,49 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 
 	local renameModule = BigWigs:GetPlugin("Rename", true)
 	if not builtinOptions[dbKey] and renameModule then -- can't rename builtins
-		local customDesc = AceGUI:Create("Label")
-		customDesc:SetText("Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.")
-		customDesc:SetColor(1, 0.82, 0)
-		customDesc:SetFullWidth(true)
-		widgets[#widgets + 1] = customDesc
+		if type(dbKey) == "number" then -- don't show general rename for string keys
+			local customDesc = AceGUI:Create("Label")
+			customDesc:SetText("Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.")
+			customDesc:SetColor(1, 0.82, 0)
+			customDesc:SetFullWidth(true)
+			widgets[#widgets + 1] = customDesc
 
-		local default = renameModule:GetDefaultName(module, dbKey)
-		local customName = AceGUI:Create("EditBox")
-		customName:SetText(renameModule:GetName(module, dbKey))
-		customName:SetUserData("key", dbKey)
-		customName:SetUserData("default", default)
-		customName:SetUserData("scrollFrame", scrollFrame)
-		customName:SetUserData("dropdown", dropdown)
-		customName:SetUserData("module", module)
-		customName:SetUserData("option", bossOption)
-		customName:SetCallback("OnEnterPressed", setRenameValue)
-		customName:SetRelativeWidth(0.6)
-		widgets[#widgets + 1] = customName
+			local default = renameModule:GetDefaultName(module, dbKey)
+			local customName = AceGUI:Create("EditBox")
+			customName:SetText(renameModule:GetName(module, dbKey))
+			customName:SetUserData("key", dbKey)
+			customName:SetUserData("default", default)
+			customName:SetUserData("scrollFrame", scrollFrame)
+			customName:SetUserData("dropdown", dropdown)
+			customName:SetUserData("module", module)
+			customName:SetUserData("option", bossOption)
+			customName:SetCallback("OnEnterPressed", setRenameValue)
+			customName:SetRelativeWidth(0.6)
+			widgets[#widgets + 1] = customName
 
-		local customReset = AceGUI:Create("Button")
-		customReset:SetText("Reset")
-		customReset:SetDisabled(not alternativeName or alternativeName == default)
-		customReset:SetUserData("editbox", customName)
-		customReset:SetCallback("OnClick", resetRenameValue)
-		customReset:SetRelativeWidth(0.2)
-		widgets[#widgets + 1] = customReset
+			local customReset = AceGUI:Create("Button")
+			customReset:SetText("Reset")
+			customReset:SetDisabled(not alternativeName or alternativeName == default)
+			customReset:SetUserData("editbox", customName)
+			customReset:SetCallback("OnClick", resetRenameValue)
+			customReset:SetRelativeWidth(0.2)
+			widgets[#widgets + 1] = customReset
 
-		local customDefault = AceGUI:Create("Button")
-		customDefault:SetText("Spell Name")
-		customDefault:SetDisabled(not alternativeName or alternativeName == name or default == module:SpellName(dbKey, true))
-		customDefault:SetUserData("editbox", customName)
-		customDefault:SetUserData("spell", name)
-		customDefault:SetUserData("desc", "This ability has a custom name by default, click this button to use the spell name instead.")
-		customDefault:SetCallback("OnEnter", slaveOptionMouseOver)
-		customDefault:SetCallback("OnLeave", bwTooltip_Hide)
-		customDefault:SetCallback("OnClick", function(widget, event, value)
-			local editbox = widget:GetUserData("editbox")
-			editbox:Fire("OnEnterPressed", widget:GetUserData("spell"))
-		end)
-		customDefault:SetRelativeWidth(0.2)
-		widgets[#widgets + 1] = customDefault
+			local customDefault = AceGUI:Create("Button")
+			customDefault:SetText("Spell Name")
+			customDefault:SetDisabled(not alternativeName or alternativeName == name or default == module:SpellName(dbKey, true))
+			customDefault:SetUserData("editbox", customName)
+			customDefault:SetUserData("spell", name)
+			customDefault:SetUserData("desc", "This ability has a custom name by default, click this button to use the spell name instead.")
+			customDefault:SetCallback("OnEnter", slaveOptionMouseOver)
+			customDefault:SetCallback("OnLeave", bwTooltip_Hide)
+			customDefault:SetCallback("OnClick", function(widget, event, value)
+				local editbox = widget:GetUserData("editbox")
+				editbox:Fire("OnEnterPressed", widget:GetUserData("spell"))
+			end)
+			customDefault:SetRelativeWidth(0.2)
+			widgets[#widgets + 1] = customDefault
+		end
 
 		if module.renameStrings and module.renameStrings[dbKey] then
 			local spacer = AceGUI:Create("Label")
