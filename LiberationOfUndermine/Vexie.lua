@@ -31,7 +31,7 @@ local L = mod:GetLocale()
 if L then
 	L.plating_removed = "%d Protective Plating left"
 	L.exhaust_fumes = "Raid Damage"
-	L.incendiary_fire = "Fire"
+	L.incendiary_fire = "Fire" -- Short for Incendiary Fire
 end
 
 --------------------------------------------------------------------------------
