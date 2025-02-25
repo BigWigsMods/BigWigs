@@ -127,6 +127,10 @@ local updateData = function(module)
 	end
 end
 
+local function trimPlayerName(name)
+	return gsub(name, "%-.+", "*") -- Replace server names with *
+end
+
 -------------------------------------------------------------------------------
 -- Metatables
 --
@@ -2635,15 +2639,14 @@ do
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
 			if key then
-				local shortKey = gsub(key, "%-.+", "*") -- Replace server names with *
+				local shortKey = trimPlayerName(key)
 				local _, class = UnitClass(key)
 				if class then
 					local newKey = hexColors[class] .. shortKey .. "|r"
 					self[key] = newKey
 					return newKey
-				else
-					return shortKey
 				end
+				return shortKey
 			end
 		end
 	})
@@ -2652,7 +2655,11 @@ do
 	coloredNames[L.shuja] = hexColors.SHAMAN .. L.shuja_short .. "|r" -- AI shaman dps
 	coloredNames[L.crenna] = hexColors.DRUID .. L.crenna_short .. "|r" -- AI druid healer
 	coloredNames[L.austin] = hexColors.HUNTER .. L.austin_short .. "|r" -- AI hunter dps
-	myNameWithColor = coloredNames[myName]
+	do
+		local _, class = UnitClass("player")
+		coloredNames[myName] = hexColors[class] .. myName .. "|r"
+		myNameWithColor = coloredNames[myName]
+	end
 
 	--- Get a table that colors player names based on class. [DEPRECATED]
 	-- @return an empty table
@@ -2672,19 +2679,17 @@ do
 					tmp[i] = coloredNames[player[i]]
 				end
 				return tmp
-			else
-				return coloredNames[player]
 			end
+			return coloredNames[player]
 		else
 			if type(player) == "table" then
 				local tmp = {}
 				for i = 1, #player do
-					tmp[i] = gsub(player[i], "%-.+", "*") -- Replace server names with *
+					tmp[i] = trimPlayerName(player[i])
 				end
 				return tmp
-			else
-				return gsub(player, "%-.+", "*") -- Replace server names with *
 			end
+			return trimPlayerName(player)
 		end
 	end
 
@@ -3129,8 +3134,7 @@ do
 			local counter = msg:match(countString)
 			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], player, isBarEnabled)
 		else
-			local trimPlayer = gsub(player, "%-.+", "*")
-			local msg = format(L.other, textType == "string" and text or spells[text or key], trimPlayer)
+			local msg = format(L.other, textType == "string" and text or spells[text or key], trimPlayerName(player))
 			if not checkFlag(self, key, C.ME_ONLY) and isBarEnabled then
 				self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 			end
@@ -3183,7 +3187,7 @@ function boss:StopBar(text, player)
 			self:SendMessage("BigWigs_StopBar", self, msg)
 			self:SendMessage("BigWigs_StopCountdown", self, msg)
 		else
-			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, gsub(player, "%-.+", "*")))
+			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, trimPlayerName(player)))
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, msg)
