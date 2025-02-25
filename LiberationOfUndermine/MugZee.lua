@@ -25,6 +25,7 @@ local moltenGoldKnucklesCount = 1
 local unstableCrawlerMinesCount = 1
 local goblinGuidedRocketsCount = 1
 local sprayAndPrayCount = 1
+local doubleWhammyShotCount = 1
 local electroShockerDead = 0
 
 local staticChargeCount = 1
@@ -35,15 +36,24 @@ local mobCollector, mobMarks = {}, {}
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
--- end
+local L = mod:GetLocale()
+if L then
+	L.earthshaker_gaol = "Prisons"
+	L.frostshatter_boots = "Frost Boots" -- Short for Frostshatter Boots
+	L.frostshatter_spear = "Frost Spears" -- Short for Frostshatter Spears
+	L.stormfury_finger_gun = "Finger Gun" -- Short for Stormfury Finger Gun
+	L.molten_gold_knuckles = "Tank Frontal"
+	L.unstable_crawler_mines = "Mines"
+	L.goblin_guided_rocket = "Rocket"
+	L.spray_and_pray = "Spray" -- Short for Spray and Pray
+	L.double_whammy_shot = "Tank Soak"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local electroShockerMarker = mod:AddMarkerOption(false, "npc", 8, -31712, 8, 7)
+local electroShockerMarker = mod:AddMarkerOption(false, "npc", 8, -31766, 8, 7)
 local unstableCrawlerMinesMarker = mod:AddMarkerOption(false, "npc", 1, 466539, 1, 2, 3, 4, 5, 6)
 function mod:GetOptions()
 	return {
@@ -69,13 +79,13 @@ function mod:GetOptions()
 			469043, -- Searing Shrapnel
 		467380, -- Goblin-guided Rocket
 		466545, -- Spray and Pray
-		-31712, -- Mk II Electro Shocker
+		-31766, -- Mk II Electro Shocker
 			1215595, -- Faulty Wiring
 		469491, -- Double Whammy Shot (tank) "SAY", "SAY_COUNTDOWN"
 			469391, -- Perforating Wound
 
 		-- Intermission (40%)
-		{1215898, "SAY", "SAY_COUNTDOWN"}, -- Static Charge (line soak)
+		1215953, -- Static Charge
 			-- Storming Impact
 		{471574, "CASTBAR"}, -- Bulletstorm
 
@@ -84,14 +94,26 @@ function mod:GetOptions()
 	},{
 		[472631] = -31677, -- Mug
 		[466539] = -31693, -- Zee
-		[1215898] = -30517, -- Intermission
+		[1215953] = -30517, -- Intermission
 		[463967] = -30510, -- Stage 2
 	},{
-		-- Renames
+		[1216142] = CL.full_energy,
+		[472631] = L.earthshaker_gaol,
+		[466476] = L.frostshatter_boots,
+		[466480] = L.frostshatter_spear,
+		[466509] = L.stormfury_finger_gun,
+		[466518] = L.molten_gold_knuckles,
+		[466539] = L.unstable_crawler_mines,
+		[467380] = L.goblin_guided_rocket,
+		[466545] = L.spray_and_pray,
+		[469491] = L.double_whammy_shot,
+		[1215953] = CL.charge,
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Double Whammy Shot
+
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MoxieApplied", 466385)
 	self:Log("SPELL_CAST_START", "DoubleMindedFury", 1216142)
 	-- Mug
@@ -113,13 +135,13 @@ function mod:OnBossEnable()
 	-- self:Log("SPELL_CAST_SUCCESS", "GoblinGuidedRocket", 467379)
 	self:Log("SPELL_AURA_APPLIED", "GoblinGuidedRocketApplied", 467380) -- XXX wasn't shown in log in heroic
 	self:Log("SPELL_CAST_START", "SprayAndPray", 466545)
-	self:Log("SPELL_CAST_START", "DoubleWhammyShot", 469491)
+	-- self:Log("SPELL_CAST_START", "DoubleWhammyShot", 469491) -- USCS
 	-- self:Log("SPELL_AURA_APPLIED", "DoubleWhammyShotApplied", 469491) -- XXX not shown in log
 	self:Log("SPELL_AURA_APPLIED", "PerforatingWoundApplied", 469391)
 	self:Log("SPELL_AURA_REMOVED", "PerforatingWoundRemoved", 469391)
 	self:Death("ElectroShockerDeath", 230316)
 	-- Intermission
-	self:Log("SPELL_AURA_APPLIED", "StaticChargeApplied", 1215898)
+	self:Log("SPELL_CAST_START", "StaticChargeStart", 1215953)
 	self:Log("SPELL_CAST_SUCCESS", "Bulletstorm", 471574)
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "Bloodlust", 463967)
@@ -200,18 +222,18 @@ function mod:MoxieApplied(args)
 end
 
 function mod:DoubleMindedFury(args)
-	self:Message(args.spellId, "red")
+	self:Message(args.spellId, "red", CL.full_energy)
 	self:PlaySound(args.spellId, "alarm") -- fail
 end
 
 -- Mug
 
 function mod:MugTakingCharge(args)
-	self:StopBar(1216142) -- Double-Minded Fury
-	self:StopBar(CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-	self:StopBar(CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-	self:StopBar(466545) -- Spray and Pray
-	self:StopBar(469490) -- Double Whammy Shot
+	self:StopBar(CL.full_energy) -- Double-Minded Fury
+	self:StopBar(CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+	self:StopBar(CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+	self:StopBar(CL.count:format(L.spray_and_pray, sprayAndPrayCount)) -- Spray and Pray
+	self:StopBar(CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
 
 	self:SetStage(1)
 	self:Message("stages", "cyan", self:SpellName(468728), false) -- 468728 = Mug Taking Charge
@@ -222,11 +244,11 @@ function mod:MugTakingCharge(args)
 	fingerGunCount = 1
 	moltenGoldKnucklesCount = 1
 
-	self:Bar(472631, 10.4, CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
-	self:Bar(466518, 20, CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-	self:Bar(466476, 27.1, CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
-	self:Bar(466509, 36.1, CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
-	self:Bar(1216142, 79.4) -- Double-Minded Fury
+	self:Bar(472631, 10.4, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+	self:Bar(466518, 20, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+	self:Bar(466476, 27.1, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+	self:Bar(466509, 36.1, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
+	self:Bar(1216142, self:Mythic() and 64.7 or 79.4, CL.full_energy) -- Double-Minded Fury
 end
 
 do
@@ -240,13 +262,13 @@ do
 			playerList = {}
 			gaolOnMe = false
 
-			self:StopBar(CL.count:format(args.spellName, earthershakerGaolCount))
-			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, earthershakerGaolCount))
+			self:StopBar(CL.count:format(L.earthshaker_gaol, earthershakerGaolCount))
+			self:CastBar(args.spellId, 6, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount))
 			earthershakerGaolCount = earthershakerGaolCount + 1
-			if self:GetStage() < 3 and earthershakerGaolCount < 3 then -- 2 per in heroic/normal
-				self:Bar(args.spellId, 34.7, CL.count:format(args.spellName, earthershakerGaolCount))
+			if not self:Mythic() and self:GetStage() < 3 and earthershakerGaolCount < 3 then -- 2 per in heroic/normal, 1 in mythic
+				self:Bar(args.spellId, 34.7, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount))
 			elseif self:GetStage() == 3 and earthershakerGaolCount < 3 then -- 2 per in heroic/normal
-				self:Bar(args.spellId, 72.0, CL.count:format(args.spellName, earthershakerGaolCount))
+				self:Bar(args.spellId, 72.0, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount))
 			end
 		end
 		playerList[#playerList + 1] = args.destName
@@ -256,7 +278,7 @@ do
 			self:SayCountdown(args.spellId, 6)
 		end
 		local count = self:Mythic() and 4 or 2
-		self:TargetsMessage(args.spellId, "orange", playerList, count)
+		self:TargetsMessage(args.spellId, "orange", playerList, count, L.earthshaker_gaol)
 		if #playerList == count then
 			if gaolOnMe then
 				self:PlaySound(args.spellId, "warning") -- stack
@@ -305,41 +327,41 @@ do
 	function mod:FrostshatterBootsApplied(args)
 		if args.time - prev > 3 then
 			prev = args.time
-			self:StopBar(CL.count:format(args.spellName, frostshatterBootsCount))
-			self:Message(args.spellId, "red", CL.count:format(args.spellName, frostshatterBootsCount))
-			self:Bar(466480, 8) -- Frostshatter Spear
+			self:StopBar(CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
+			self:Message(args.spellId, "red", CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
+			self:Bar(466480, 8, L.frostshatter_spear) -- Frostshatter Spear
 			frostshatterBootsCount = frostshatterBootsCount + 1
-			if self:GetStage() < 3 and frostshatterBootsCount < 3 then -- 2 per in heroic/normal
-				self:Bar(args.spellId, 30.0, CL.count:format(args.spellName, frostshatterBootsCount))
+			if not self:Mythic() and self:GetStage() < 3 and frostshatterBootsCount < 3 then -- 2 per in heroic/normal, 1 in mythic
+				self:Bar(args.spellId, 30.0, CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
 			end
 		end
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId)
+			self:PersonalMessage(args.spellId, nil, L.frostshatter_boots)
 			self:PlaySound(args.spellId, "warning")
 		end
 	end
 end
 
 function mod:StormfuryFingerGun(args)
-	self:StopBar(CL.count:format(args.spellName, fingerGunCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, fingerGunCount))
+	self:StopBar(CL.count:format(L.stormfury_finger_gun, fingerGunCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.stormfury_finger_gun, fingerGunCount))
 	self:PlaySound(args.spellId, "alert") -- frontal
 	fingerGunCount = fingerGunCount + 1
-	if self:GetStage() < 3 and fingerGunCount < 3 then -- 2 per in heroic/normal
-		self:Bar(args.spellId, 30.0, CL.count:format(args.spellName, fingerGunCount))
+	if not self:Mythic() and self:GetStage() < 3 and fingerGunCount < 3 then -- 2 per in heroic/normal, 1 in mythic
+		self:Bar(args.spellId, 30.0, CL.count:format(L.stormfury_finger_gun, fingerGunCount))
 	end
 end
 
 function mod:MoltenGoldKunckles(args)
-	self:StopBar(CL.count:format(args.spellName, moltenGoldKnucklesCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, moltenGoldKnucklesCount))
+	self:StopBar(CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount))
+	self:Message(args.spellId, "purple", CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount))
 	self:PlaySound(args.spellId, "alert") -- frontal
 	moltenGoldKnucklesCount = moltenGoldKnucklesCount + 1
-	if self:GetStage() < 3 and moltenGoldKnucklesCount < 3 then -- 2 per in heroic/normal
-		self:Bar(args.spellId, 40.0, CL.count:format(args.spellName, moltenGoldKnucklesCount))
+	if not self:Mythic() and self:GetStage() < 3 and moltenGoldKnucklesCount < 3 then -- 2 per in heroic/normal, 1 in mythic
+		self:Bar(args.spellId, 40.0, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount))
 	elseif self:GetStage() == 3 then
 		local timer = { 40.0, 6.0, 56.0, 16.0, 0 }
-		self:Bar(args.spellId, timer[moltenGoldKnucklesCount], CL.count:format(args.spellName, moltenGoldKnucklesCount))
+		self:Bar(args.spellId, timer[moltenGoldKnucklesCount], CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount))
 	end
 end
 
@@ -363,27 +385,28 @@ end
 -- Zee
 
 function mod:ZeeTakingCharge(args)
-	self:StopBar(1216142) -- Double-Minded Fury
-	self:StopBar(CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
-	self:StopBar(CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-	self:StopBar(CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
-	self:StopBar(CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
+	self:StopBar(CL.full_energy) -- Double-Minded Fury
+	self:StopBar(CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+	self:StopBar(CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+	self:StopBar(CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+	self:StopBar(CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
 
 	self:SetStage(2)
 	self:Message("stages", "cyan", self:SpellName(468794), false) -- 468728 = Zee Taking Charge
 	self:PlaySound("stages", "long")
 
+	doubleWhammyShotCount = 1
 	unstableCrawlerMinesCount = 1
 	goblinGuidedRocketsCount = 1
 	sprayAndPrayCount = 1
 	electroShockerDead = 0
 	mobMarks = {}
 
-	self:Bar(466539, 14.6, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-	self:Bar(467380, 27.0, CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-	self:Bar(469491, 38.5) -- Double Whammy Shot
-	self:Bar(466545, 45.0) -- Spray and Pray
-	self:Bar(1216142, 79.4) -- Double-Minded Fury
+	self:Bar(466539, 13.9, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+	self:Bar(467380, 27.8, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+	self:Bar(469491, 42.4, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
+	self:Bar(466545, 50.0, CL.count:format(L.spray_and_pray, sprayAndPrayCount)) -- Spray and Pray
+	self:Bar(1216142, self:Mythic() and 61.4 or 79.4, CL.full_energy) -- Double-Minded Fury
 end
 
 function mod:FaultyWiringApplied(args)
@@ -394,17 +417,18 @@ end
 
 function mod:ElectroShockerDeath(args)
 	electroShockerDead = electroShockerDead + 1
-	self:Message(-31712, "green", CL.mob_killed:format(args.destName, electroShockerDead, 2), false)
-	self:PlaySound(-31712, "info")
+	self:Message(-31766, "green", CL.mob_killed:format(args.destName, electroShockerDead, 2), false)
+	self:PlaySound(-31766, "info")
 end
 
 function mod:UnstableCrawlerMines(args)
-	self:StopBar(CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
-	self:Message(466539, "yellow", CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
-	if self:GetStage() < 3 and unstableCrawlerMinesCount < 3 then -- 2 per in heroic/normal
-		self:Bar(466539, 44.0, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
+	self:StopBar(CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
+	self:Message(466539, "yellow", CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
+	unstableCrawlerMinesCount = unstableCrawlerMinesCount + 1
+	if self:GetStage() < 3 and unstableCrawlerMinesCount < 3 then -- 2 per in heroic/normal/mythic
+		self:Bar(466539, 44.0, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
 	elseif self:GetStage() == 3 and unstableCrawlerMinesCount < 3 then -- 2 per in heroic/normal
-		self:Bar(466539, 72.0, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
+		self:Bar(466539, 72.0, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
 	end
 end
 
@@ -416,59 +440,68 @@ function mod:SearingShrapnelApplied(args)
 end
 
 -- function mod:GoblinGuidedRocket(args)
--- 	self:Message(467380, "orange", CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount))
+-- 	self:Message(467380, "orange", CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
 -- 	self:PlaySound(467380, "alert")
 -- 	goblinGuidedRocketsCount = goblinGuidedRocketsCount + 1
 -- 	if self:GetStage() < 3 and goblinGuidedRocketsCount < 3 then -- 2 per in heroic/normal
--- 		self:Bar(467380, 42.1, CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount))
+-- 		self:Bar(467380, 42.1, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
 -- 	end
 -- end
 
 function mod:GoblinGuidedRocketApplied(args)
-	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(args.spellName, goblinGuidedRocketsCount))
+	self:StopBar(CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
+	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 	else
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 	end
 	goblinGuidedRocketsCount = goblinGuidedRocketsCount + 1
-	if self:GetStage() < 3 and goblinGuidedRocketsCount < 3 then -- 2 per in heroic/normal
-		self:Bar(args.spellId, 42.1, CL.count:format(args.spellName, goblinGuidedRocketsCount))
+	if not self:Mythic() and  self:GetStage() < 3 and goblinGuidedRocketsCount < 3 then -- 2 per in heroic/normal, 1 in mythic
+		self:Bar(args.spellId, 42.1, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
 	end
 end
 
 function mod:SprayAndPray(args)
-	self:Message(args.spellId, "orange")
+	self:StopBar(CL.count:format(L.spray_and_pray, sprayAndPrayCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.spray_and_pray, sprayAndPrayCount))
 	self:PlaySound(args.spellId, "alert") -- frontal
-
-	-- self:Bar(args.spellId, 30) -- 1 per in heroic/normal
-	if self:GetStage() == 3 and sprayAndPrayCount < 3 then -- 2 per in heroic/normal
-		self:Bar(args.spellId, 78.2, CL.count:format(args.spellName, sprayAndPrayCount))
+	if not self:Mythic() and self:GetStage() == 3 and sprayAndPrayCount < 3 then -- 2 per in heroic/normal, 1 in mythic
+		self:Bar(args.spellId, 78.2, CL.count:format(L.spray_and_pray, sprayAndPrayCount))
 	end
 end
 
 do
 	local woundOnMe = false
 
-	function mod:DoubleWhammyShot(args)
-		self:Message(args.spellId, "purple")
-		self:TargetBar(args.spellId, 6, "???")
-		if self:Tank() and not woundOnMe then
-			self:PlaySound(args.spellId, "warning") -- soak
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+		if spellId == 469490 then -- Double Whammy Shot, someone has debuff
+			self:DoubleWhammyShot()
 		end
 	end
 
+	function mod:DoubleWhammyShot()
+		self:StopBar(CL.count:format(L.double_whammy_shot, doubleWhammyShotCount))
+		self:Message(469491, "purple", CL.count:format(L.double_whammy_shot, doubleWhammyShotCount))
+		self:TargetBar(469491, 6, "???", CL.count:format(L.double_whammy_shot, doubleWhammyShotCount))
+		if self:Tank() and not woundOnMe then
+			self:PlaySound(469491, "warning") -- soak
+		end
+		doubleWhammyShotCount = doubleWhammyShotCount + 1
+	end
+
 	-- function mod:DoubleWhammyShotApplied(args)
-	-- 	self:TargetMessage(args.spellId, "purple", args.destName)
+	-- 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount))
 	-- 	if self:Me(args.destGUID) or self:Tank() then
-	-- 		self:TargetBar(args.spellId, 6, args.destName)
+	-- 		self:TargetBar(args.spellId, 6, args.destName, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount))
 	-- 		if not woundOnMe then
 	-- 			self:PlaySound(args.spellId, "warning") -- soak
 	-- 		end
-	-- 		-- self:Say(args.spellId, nil, nil, "Double Whammy Shot")
+	-- 		-- self:Say(args.spellId, L.double_whammy_shot, nil, "Tank Soak")
 	-- 		-- self:SayCountdown(args.spellId, 6)
 	-- 	end
-	-- 	-- self:Bar(args.spellId, 30) -- 1 per in heroic
+	-- doubleWhammyShotCount = doubleWhammyShotCount + 1
+	-- 	-- self:Bar(args.spellId, 30, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- 1 per in heroic
 	-- end
 
 	function mod:PerforatingWoundApplied(args)
@@ -490,15 +523,15 @@ end
 
 function mod:IntermissionStart(skip)
 	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
-	self:StopBar(1216142) -- Double-Minded Fury
-	self:StopBar(CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-	self:StopBar(CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-	self:StopBar(466545) -- Spray and Pray
-	self:StopBar(469490) -- Double Whammy Shot
-	self:StopBar(CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
-	self:StopBar(CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-	self:StopBar(CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
-	self:StopBar(CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
+	self:StopBar(CL.full_energy) -- Double-Minded Fury
+	self:StopBar(CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+	self:StopBar(CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+	self:StopBar(CL.count:format(L.spray_and_pray, sprayAndPrayCount)) -- Spray and Pray
+	self:StopBar(CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
+	self:StopBar(CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+	self:StopBar(CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+	self:StopBar(CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+	self:StopBar(CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
 
 	self:SetStage(2.5)
 	self:Message("stages", "cyan", CL.intermission, false)
@@ -508,29 +541,22 @@ function mod:IntermissionStart(skip)
 		-- "<306.90 00:18:39> [UNIT_POWER_UPDATE] boss1#Mug'Zee#TYPE:ENERGY/3#MAIN:0/100#ALT:0/0",
 		-- "<316.90 00:18:49> [CLEU] SPELL_CAST_START#Creature-0-5770-2769-13207-229953-00000D94EE#Mug'Zee(37.6%-0.0%)##nil#1215953#Static Charge#nil#nil#nil#nil#nil#nil",
 		-- "<364.88 00:19:37> [CLEU] SPELL_CAST_START#Creature-0-5770-2769-13207-229953-00000D94EE#Mug'Zee(26.7%-0.0%)##nil#463967#Bloodlust#nil#nil#nil#nil#nil#nil",
-		self:Bar(1215898, 10.0, CL.count:format(self:SpellName(1215898), staticChargeCount)) -- Static Charge
-		self:Bar("stages", 58.0, CL.stage:format(2), "inv_111_raid_achievement_mugzeeheadsofsecurity")
+		self:Bar(1215953, 10.0, CL.count:format(CL.charge, staticChargeCount)) -- Static Charge
+		self:Bar("stages", 64.0, CL.stage:format(2), "inv_111_raid_achievement_mugzeeheadsofsecurity")
 	end
 end
 
-function mod:StaticChargeApplied(args)
+function mod:StaticChargeStart(args)
 	if self:GetStage() < 2.5 then -- just in case
 		self:IntermissionStart(true)
-		self:Bar("stages", 48.0, CL.stage:format(2), "inv_111_raid_achievement_mugzeeheadsofsecurity")
+		self:Bar("stages", 54.0, CL.stage:format(2), "inv_111_raid_achievement_mugzeeheadsofsecurity")
 	end
-	self:StopBar(CL.count:format(args.spellName, staticChargeCount))
-	self:TargetMessage(args.spellId, "orange", args.destName, CL.count_amount:format(args.spellName, staticChargeCount, 3))
-	self:TargetBar(args.spellId, 5, args.destName, CL.count:format(args.spellName, staticChargeCount))
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, nil, nil, "Static Charge")
-		self:SayCountdown(args.spellId, 5)
-	else
-		self:PlaySound(args.spellId, "alert", nil, args.destName) -- soak
-	end
+	self:StopBar(CL.count:format(CL.charge, staticChargeCount))
+	self:Message(args.spellId, "orange", CL.count_amount:format(CL.charge, staticChargeCount, 3))
+	self:PlaySound(args.spellId, "alert", nil, args.destName) -- watch out
 	staticChargeCount = staticChargeCount + 1
-	if staticChargeCount < 4 then -- 3 in normal/heroic
-		self:Bar(args.spellId, 16.0, CL.count:format(args.spellName, staticChargeCount))
+	if staticChargeCount < 4 then -- 3 in normal/heroic/mythic
+		self:Bar(args.spellId, 18.0, CL.count:format(CL.charge, staticChargeCount))
 	end
 end
 
@@ -548,24 +574,25 @@ function mod:Bloodlust()
 	self:PlaySound("stages", "long")
 
 	earthershakerGaolCount = 1
-	-- frostshatterBootsCount = 1
-	-- fingerGunCount = 1
+	frostshatterBootsCount = 1
+	fingerGunCount = 1
 	moltenGoldKnucklesCount = 1
 
 	unstableCrawlerMinesCount = 1
 	goblinGuidedRocketsCount = 1
 	sprayAndPrayCount = 1
+	doubleWhammyShotCount = 1
 	mobMarks = {}
 
-	self:Bar(466539, 17.2, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-	self:Bar(472631, 22.0, CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
-	self:Bar(466545, 30.0, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
-	self:Bar(466518, 40.1, CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-	self:Bar(469491, 54.2) -- Double Whammy Shot
-	self:Bar(466509, 60.1) -- Stormfury Finger Gun
-	self:Bar(467380, 69.7) -- Goblin-guided Rockets
-	self:Bar(466476, 79.5) -- Frostshatter Boots
-	self:Bar(1216142, 125.6) -- Double-Minded Fury
+	self:Bar(466539, 17.2, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+	self:Bar(472631, 22.0, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+	self:Bar(466545, 30.0, CL.count:format(CL.frontal_cone, sprayAndPrayCount)) -- Spray and Pray
+	self:Bar(466518, 40.1, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+	self:Bar(469491, 54.2, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
+	self:Bar(466509, 60.1, CL.count:format(CL.frontal_cone, fingerGunCount)) -- Stormfury Finger Gun
+	self:Bar(467380, 69.7, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+	self:Bar(466476, 79.5, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+	self:Bar(1216142, 125.6, CL.full_energy) -- Double-Minded Fury
 end
 
 function mod:BloodlustSuccess(args)
