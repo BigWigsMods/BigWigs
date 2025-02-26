@@ -132,6 +132,7 @@ public.isTestBuild = GetCurrentRegion() == 72 or GetCurrentRegion() == 90 -- PTR
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = build >= 120000
+	public.isNext = build >= 110105
 end
 
 -- Version
