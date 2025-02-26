@@ -1,4 +1,4 @@
-if not BigWigsLoader.isTestBuild then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -44,7 +44,7 @@ local timers = timersMythic
 local L = mod:GetLocale()
 if L then
 	L.amplification = "Amplifiers"
-	L.echoing_chant = "Discs"
+	L.echoing_chant = "Echoes"
 	L.faulty_zap = "Zaps"
 	L.sparkblast_ignition = "Barrels"
 end
@@ -75,7 +75,7 @@ function mod:GetOptions()
 
 	},{ -- Renames
 		[473748] = L.amplification, -- Amplification! (Amplifiers)
-		[466866] = L.echoing_chant, -- Echoing Chant(Discs)
+		[466866] = L.echoing_chant, -- Echoing Chant (Echoes)
 		[466979] = L.faulty_zap, -- Faulty Zap (Zaps)
 		[472306] = L.sparkblast_ignition, -- Sparkblast Ignition (Barrels)
 	}
@@ -83,7 +83,7 @@ end
 
 function mod:OnRegister()
 	self:SetSpellRename(473748, L.amplification) -- Amplification! (Amplifiers)
-	self:SetSpellRename(466866, L.echoing_chant) -- Echoing Chant(Discs)
+	self:SetSpellRename(466866, L.echoing_chant) -- Echoing Chant (Echoes)
 	self:SetSpellRename(466979, L.faulty_zap) -- Faulty Zap (Zaps)
 	self:SetSpellRename(472306, L.sparkblast_ignition) -- Sparkblast Ignition (Barrels)
 end

@@ -1,4 +1,4 @@
-if not BigWigsLoader.isTestBuild then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -31,7 +31,6 @@ local L = mod:GetLocale()
 if L then
 	L.plating_removed = "%d Protective Plating left"
 	L.exhaust_fumes = "Raid Damage"
-	L.incendiary_fire = "Fire" -- Short for Incendiary Fire
 end
 
 --------------------------------------------------------------------------------
@@ -58,7 +57,7 @@ function mod:GetOptions()
 	},{ -- Renames
 		[471403] = CL.full_energy, -- Unrelenting CAR-nage (Full Energy)
 		[459943] = CL.adds, -- Call Bikers (Adds)
-		[468216] = L.incendiary_fire, -- Incendiary Fire (Fire)
+		[468216] = CL.fire, -- Incendiary Fire (Fire)
 		[468147] = L.exhaust_fumes, -- Exhaust Fumes (Raid Damage)
 		[460116] = CL.weakened, -- Tune-Up (Weakened)
 	}
@@ -67,7 +66,7 @@ end
 function mod:OnRegister()
 	self:SetSpellRename(471403, CL.full_energy) -- Unrelenting CAR-nage (Full Energy)
 	self:SetSpellRename(459943, CL.adds) -- Call Bikers (Adds)
-	self:SetSpellRename(468487, L.incendiary_fire) -- Incendiary Fire (Fire)
+	self:SetSpellRename(468487, CL.fire) -- Incendiary Fire (Fire)
 	self:SetSpellRename(460603, CL.weakened) -- Mechanical Breakdown (Weakened)
 	self:SetSpellRename(460116, CL.weakened) -- Tune-Up (Weakened)
 end
@@ -110,7 +109,7 @@ function mod:OnEngage()
 	end
 	self:CDBar(459678, 12.2, CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:CDBar(459943, 20.4, CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
-	self:CDBar(468216, 15, CL.count:format(L.incendiary_fire, incediaryFireCount)) -- Incendiary Fire
+	self:CDBar(468216, 15, CL.count:format(CL.fire, incediaryFireCount)) -- Incendiary Fire
 	self:Bar(471403, 121, CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 end
 
@@ -159,17 +158,17 @@ function mod:SpewOilApplied(args)
 end
 
 function mod:IncendiaryFire(args)
-	self:StopBar(CL.count:format(L.incendiary_fire, incediaryFireCount))
-	self:Message(468216, "orange", CL.count:format(L.incendiary_fire, incediaryFireCount))
+	self:StopBar(CL.count:format(CL.fire, incediaryFireCount))
+	self:Message(468216, "orange", CL.count:format(CL.fire, incediaryFireCount))
 	incediaryFireCount = incediaryFireCount + 1
 	-- 25.7, 31.0, 25.3, 92.0, 35.4, 89.5, 35.3, 36.4
-	self:CDBar(468216, 30.5, CL.count:format(L.incendiary_fire, incediaryFireCount))
+	self:CDBar(468216, 30.5, CL.count:format(CL.fire, incediaryFireCount))
 end
 
 function mod:IncendiaryFireApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:Say(args.spellId, L.incendiary_fire, nil, "Fire")
+		self:Say(args.spellId, CL.fire, nil, "Fire")
 		self:SayCountdown(args.spellId, 6)
 	end
 end
@@ -217,7 +216,7 @@ function mod:MechanicalBreakdown()
 	self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
 	self:StopBar(CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
-	self:StopBar(CL.count:format(L.incendiary_fire, incediaryFireCount)) -- Incendiary Fire
+	self:StopBar(CL.count:format(CL.fire, incediaryFireCount)) -- Incendiary Fire
 	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 
 	self:SetStage(2)
@@ -243,7 +242,7 @@ function mod:TuneUpRemoved(args)
 	self:CDBar(468147, 6.2 + 1.5, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
 	self:CDBar(459678, 12.2, CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:CDBar(459943, 20.4, CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
-	self:CDBar(468216, 15, CL.count:format(L.incendiary_fire, incediaryFireCount)) -- Incendiary Fire
+	self:CDBar(468216, 15, CL.count:format(CL.fire, incediaryFireCount)) -- Incendiary Fire
 	self:Bar(471403, 121, CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 end
 

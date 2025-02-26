@@ -1,4 +1,3 @@
-if not BigWigsLoader.isTestBuild then return end
 
 --------------------------------------------------------------------------------
 -- TODO: Negative / Positive charge warnings on players in mythic

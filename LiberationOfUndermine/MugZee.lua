@@ -1,4 +1,4 @@
-if not BigWigsLoader.isTestBuild then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -45,7 +45,6 @@ if L then
 	L.molten_gold_knuckles = "Tank Frontal"
 	L.unstable_crawler_mines = "Mines"
 	L.goblin_guided_rocket = "Rocket"
-	L.spray_and_pray = "Spray" -- Short for Spray and Pray
 	L.double_whammy_shot = "Tank Soak"
 end
 
@@ -105,7 +104,6 @@ function mod:GetOptions()
 		[466518] = L.molten_gold_knuckles,
 		[466539] = L.unstable_crawler_mines,
 		[467380] = L.goblin_guided_rocket,
-		[466545] = L.spray_and_pray,
 		[469491] = L.double_whammy_shot,
 		[1215953] = CL.charge,
 	}
@@ -232,7 +230,7 @@ function mod:MugTakingCharge(args)
 	self:StopBar(CL.full_energy) -- Double-Minded Fury
 	self:StopBar(CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
 	self:StopBar(CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-	self:StopBar(CL.count:format(L.spray_and_pray, sprayAndPrayCount)) -- Spray and Pray
+	self:StopBar(CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
 	self:StopBar(CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
 
 	self:SetStage(1)
@@ -405,7 +403,7 @@ function mod:ZeeTakingCharge(args)
 	self:Bar(466539, 13.9, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
 	self:Bar(467380, 27.8, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
 	self:Bar(469491, 42.4, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
-	self:Bar(466545, 50.0, CL.count:format(L.spray_and_pray, sprayAndPrayCount)) -- Spray and Pray
+	self:Bar(466545, 50.0, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
 	self:Bar(1216142, self:Mythic() and 61.4 or 79.4, CL.full_energy) -- Double-Minded Fury
 end
 
@@ -463,11 +461,11 @@ function mod:GoblinGuidedRocketApplied(args)
 end
 
 function mod:SprayAndPray(args)
-	self:StopBar(CL.count:format(L.spray_and_pray, sprayAndPrayCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.spray_and_pray, sprayAndPrayCount))
+	self:StopBar(CL.count:format(args.spellName, sprayAndPrayCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, sprayAndPrayCount))
 	self:PlaySound(args.spellId, "alert") -- frontal
 	if not self:Mythic() and self:GetStage() == 3 and sprayAndPrayCount < 3 then -- 2 per in heroic/normal, 1 in mythic
-		self:Bar(args.spellId, 78.2, CL.count:format(L.spray_and_pray, sprayAndPrayCount))
+		self:Bar(args.spellId, 78.2, CL.count:format(args.spellName, sprayAndPrayCount))
 	end
 end
 
@@ -526,7 +524,7 @@ function mod:IntermissionStart(skip)
 	self:StopBar(CL.full_energy) -- Double-Minded Fury
 	self:StopBar(CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
 	self:StopBar(CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-	self:StopBar(CL.count:format(L.spray_and_pray, sprayAndPrayCount)) -- Spray and Pray
+	self:StopBar(CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
 	self:StopBar(CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
 	self:StopBar(CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
 	self:StopBar(CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles

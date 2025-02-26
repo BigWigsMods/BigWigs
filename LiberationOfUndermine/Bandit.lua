@@ -1,4 +1,4 @@
-if not BigWigsLoader.isTestBuild then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -28,10 +28,10 @@ local theBigHitCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.rewards = mod:SpellName(-30584) -- Fabulous Prizes
+	L.rewards = "Prizes" -- Fabulous Prizes
 	L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
 	L.rewards_icon = "inv_111_vendingmachine_blackwater"
-	L.deposit_time = "Deposit Time"
+	L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Coins"
 	L.shock = "Shock"

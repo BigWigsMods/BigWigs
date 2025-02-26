@@ -1,4 +1,4 @@
-if not BigWigsLoader.isTestBuild then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -26,9 +26,9 @@ local meltdownCount = 1
 local L = mod:GetLocale()
 if L then
 	L.rolled_over_by = "Rolled over by %s" -- Rolled over by PlayerX
-	L.landing = "Landing"
+	L.landing = "Landing" -- Landing down from the sky
 
-	L.electromagnetic_sorting = "Sorting"
+	L.electromagnetic_sorting = "Sorting" -- Short for Electromagnetic Sorting
 	L.incinerator = "Fire Circles"
 end
 
