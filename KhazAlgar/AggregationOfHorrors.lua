@@ -35,7 +35,6 @@ function mod:GetOptions()
 	},nil,{
 		[452205] = L.void_rocks, -- Crystalline Barrage (Void Rocks)
 		[453271] = CL.explosion, -- Dark Awakening (Explosion)
-		[453294] = CL.interruptible, -- Crystal Strike (Interruptible)
 	}
 end
 
@@ -54,7 +53,7 @@ function mod:OnEngage()
 	self:Log("SPELL_CAST_START", "CrystalStrike", 453294)
 
 	self:CDBar(452980, 9) -- Voidquake
-	self:CDBar(452205, 25, L.void_rocks) -- Crystal Strike
+	self:CDBar(452205, 25, L.void_rocks) -- Crystalline Barrage
 end
 
 --------------------------------------------------------------------------------
@@ -87,6 +86,6 @@ function mod:Voidquake(args)
 end
 
 function mod:CrystalStrike(args)
-	self:Message(args.spellId, "purple", CL.extra:format(args.spellName, CL.interruptible))
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 end
