@@ -9,6 +9,7 @@ mod:RegisterEnableMob(225821) -- The Geargrinder
 mod:SetEncounterID(3009)
 mod:SetPrivateAuraSounds({
 	459669, -- Spew Oil
+	468486, -- Incendiary Fire
 })
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -20,7 +21,7 @@ mod:SetStage(1)
 local tankBusterCount = 1
 local spewOilCount = 1
 local callBikersCount = 1
-local incediaryFireCount = 1
+local incendiaryFireCount = 1
 local unrelentingCarnageCount = 1
 
 --------------------------------------------------------------------------------
@@ -45,7 +46,7 @@ function mod:GetOptions()
 		459943, -- Call Bikers
 		459678, -- Spew Oil
 			459683, -- Oil Slick
-		{468216, "SAY", "SAY_COUNTDOWN"}, -- Incendiary Fire
+		{468216, "PRIVATE"}, -- Incendiary Fire
 		459978, -- Bomb Voyage!
 		{465865, "TANK"}, -- Tank Buster
 			468147,	-- Exhaust Fumes (DPS / Healers)
@@ -78,8 +79,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SpewOil", 459671)
 	self:Log("SPELL_AURA_APPLIED", "SpewOilApplied", 459678) -- DOT after getting hit
 	self:Log("SPELL_CAST_START", "IncendiaryFire", 468487)
-	self:Log("SPELL_AURA_APPLIED", "IncendiaryFireApplied", 468216)
-	self:Log("SPELL_AURA_REMOVED", "IncendiaryFireRemoved", 468216)
 	self:Log("SPELL_AURA_APPLIED", "BombVoyageApplied", 459978) -- DOT after getting hit
 	self:Log("SPELL_CAST_START", "TankBuster", 459627)
 	self:Log("SPELL_CAST_SUCCESS", "TankBusterSuccess", 459627)
@@ -100,7 +99,7 @@ function mod:OnEngage()
 	tankBusterCount = 1
 	spewOilCount = 1
 	callBikersCount = 1
-	incediaryFireCount = 1
+	incendiaryFireCount = 1
 	unrelentingCarnageCount = 1
 
 	self:CDBar(465865, 6.2, CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
@@ -109,7 +108,7 @@ function mod:OnEngage()
 	end
 	self:CDBar(459678, 12.2, CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:CDBar(459943, 20.4, CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
-	self:CDBar(468216, 15, CL.count:format(CL.fire, incediaryFireCount)) -- Incendiary Fire
+	self:CDBar(468216, 15, CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
 	self:Bar(471403, 121, CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 end
 
@@ -128,6 +127,12 @@ function mod:ProtectivePlatingRemoved(args)
 end
 
 function mod:UnrelentingCARnage(args)
+	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
+	self:StopBar(CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
+	self:StopBar(CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
+	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
+	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
+
 	self:Message(args.spellId, "red", CL.count:format(CL.full_energy, unrelentingCarnageCount))
 	self:PlaySound(args.spellId, "warning") -- big damage inc
 end
@@ -158,25 +163,11 @@ function mod:SpewOilApplied(args)
 end
 
 function mod:IncendiaryFire(args)
-	self:StopBar(CL.count:format(CL.fire, incediaryFireCount))
-	self:Message(468216, "orange", CL.count:format(CL.fire, incediaryFireCount))
-	incediaryFireCount = incediaryFireCount + 1
+	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount))
+	self:Message(468216, "orange", CL.count:format(CL.fire, incendiaryFireCount))
+	incendiaryFireCount = incendiaryFireCount + 1
 	-- 25.7, 31.0, 25.3, 92.0, 35.4, 89.5, 35.3, 36.4
-	self:CDBar(468216, 30.5, CL.count:format(CL.fire, incediaryFireCount))
-end
-
-function mod:IncendiaryFireApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:Say(args.spellId, CL.fire, nil, "Fire")
-		self:SayCountdown(args.spellId, 6)
-	end
-end
-
-function mod:IncendiaryFireRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
-	end
+	self:CDBar(468216, 30.5, CL.count:format(CL.fire, incendiaryFireCount))
 end
 
 function mod:BombVoyageApplied(args) -- cast every 8s
@@ -216,7 +207,7 @@ function mod:MechanicalBreakdown()
 	self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
 	self:StopBar(CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
-	self:StopBar(CL.count:format(CL.fire, incediaryFireCount)) -- Incendiary Fire
+	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
 	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 
 	self:SetStage(2)
@@ -235,14 +226,14 @@ function mod:TuneUpRemoved(args)
 	tankBusterCount = 1
 	spewOilCount = 1
 	callBikersCount = 1
-	incediaryFireCount = 1
+	incendiaryFireCount = 1
 	unrelentingCarnageCount = unrelentingCarnageCount + 1
 
 	self:CDBar(465865, 6.2, CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
 	self:CDBar(468147, 6.2 + 1.5, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
 	self:CDBar(459678, 12.2, CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:CDBar(459943, 20.4, CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
-	self:CDBar(468216, 15, CL.count:format(CL.fire, incediaryFireCount)) -- Incendiary Fire
+	self:CDBar(468216, 15, CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
 	self:Bar(471403, 121, CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 end
 
