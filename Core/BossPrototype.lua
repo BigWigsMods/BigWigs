@@ -3034,14 +3034,15 @@ do
 		end
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
-		if checkFlag(self, key, C.BAR) then
+		local isBarEnabled = checkFlag(self, key, C.BAR)
+		if isBarEnabled then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 		local counter = msg:match(countString)
-		self:SendMessage("BigWigs_Timer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
+		self:SendMessage("BigWigs_Timer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], false, isBarEnabled)
 	end
 
 	--- Display a cooldown bar.
@@ -3081,6 +3082,7 @@ do
 		end
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
+		local isBarEnabled = checkFlag(self, key, C.BAR)
 		if checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], true, maxTime)
 		end
@@ -3088,7 +3090,7 @@ do
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 		local counter = msg:match(countString)
-		self:SendMessage("BigWigs_CooldownTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
+		self:SendMessage("BigWigs_Timer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], true, isBarEnabled)
 	end
 
 	--- Display a target bar.
@@ -3111,28 +3113,29 @@ do
 			time = length
 		end
 		local textType = type(text)
-		if not player and checkFlag(self, key, C.BAR) then
+		local isBarEnabled = checkFlag(self, key, C.BAR)
+		if not player and isBarEnabled then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), time, icons[icon or textType == "number" and text or key], false, maxTime)
 			return
 		end
 		if player == myName then
 			local msg = format(L.you, textType == "string" and text or spells[text or key])
-			if checkFlag(self, key, C.BAR) then
+			if isBarEnabled then
 				self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 			end
 			if checkFlag(self, key, C.COUNTDOWN) then
 				self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 			end
 			local counter = msg:match(countString)
-			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key], player)
+			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], player, isBarEnabled)
 		else
 			local trimPlayer = gsub(player, "%-.+", "*")
 			local msg = format(L.other, textType == "string" and text or spells[text or key], trimPlayer)
-			if not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
+			if not checkFlag(self, key, C.ME_ONLY) and isBarEnabled then
 				self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 			end
 			local counter = msg:match(countString)
-			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key], player)
+			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], player, isBarEnabled)
 		end
 	end
 
@@ -3155,15 +3158,17 @@ do
 			time = length
 		end
 		local textType = type(text)
-		local msg = format(L.cast, textType == "string" and text or spells[text or key])
-		if checkFlag(self, key, C.CASTBAR) then
+		local rawText = textType == "string" and text or spells[text or key]
+		local msg = format(L.cast, rawText)
+		local isBarEnabled = checkFlag(self, key, C.CASTBAR)
+		if isBarEnabled then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 		end
 		if checkFlag(self, key, C.CASTBAR_COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 		local counter = msg:match(countString)
-		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
+		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], rawText, isBarEnabled)
 	end
 end
 
