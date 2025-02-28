@@ -438,7 +438,7 @@ do
 					},
 					sorting = {
                         type = "select",
-                        name = "Sorting",
+                        name = L.sorting,
                         order = 9,
                         values = {
                             ASCENDING = L.ascending,
