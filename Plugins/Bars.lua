@@ -47,6 +47,7 @@ plugin.defaultDB = {
 	growup = false,
 	text = true,
 	time = true,
+    sorting = "ASCENDING",
 	alignText = "LEFT",
 	alignTime = "RIGHT",
 	icon = true,
@@ -435,21 +436,30 @@ do
 							updateProfile()
 						end,
 					},
+					sorting = {
+                        type = "select",
+                        name = "Sorting",
+                        order = 9,
+                        values = {
+                            ASCENDING = L.ascending,
+                            DESCENDING = L.descending,
+                        },
+                    },
 					header2 = {
 						type = "header",
 						name = "",
-						order = 9,
+						order = 10,
 					},
 					text = {
 						type = "toggle",
 						name = L.text,
 						desc = L.textDesc,
-						order = 10,
+						order = 11,
 					},
 					alignText = {
 						type = "select",
 						name = L.alignText,
-						order = 11,
+						order = 12,
 						values = {
 							LEFT = L.left,
 							CENTER = L.center,
@@ -459,18 +469,18 @@ do
 					textSpacer = {
 						type = "description",
 						name = " ",
-						order = 12,
+						order = 13,
 					},
 					time = {
 						type = "toggle",
 						name = L.time,
 						desc = L.timeDesc,
-						order = 13,
+						order = 14,
 					},
 					alignTime = {
 						type = "select",
 						name = L.alignTime,
-						order = 14,
+						order = 15,
 						values = {
 							LEFT = L.left,
 							CENTER = L.center,
@@ -480,19 +490,19 @@ do
 					timeSpacer = {
 						type = "description",
 						name = " ",
-						order = 15,
+						order = 16,
 					},
 					icon = {
 						type = "toggle",
 						name = L.icon,
 						desc = L.iconDesc,
-						order = 16,
+						order = 17,
 					},
 					iconPosition = {
 						type = "select",
 						name = L.iconPosition,
 						desc = L.iconPositionDesc,
-						order = 17,
+						order = 18,
 						values = {
 							LEFT = L.left,
 							RIGHT = L.right,
@@ -502,14 +512,14 @@ do
 					header3 = {
 						type = "header",
 						name = "",
-						order = 18,
+						order = 19,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 19,
+						order = 20,
 					},
 				},
 			},
@@ -863,9 +873,13 @@ end
 --
 
 do
-	local function barSorter(a, b)
-		return a.remaining < b.remaining and true or false
-	end
+    local function ascendSorter(a, b)
+        return a.remaining < b.remaining and true or false
+    end
+
+    local function descendSorter(a, b)
+        return a.remaining > b.remaining and true or false
+    end
 	rearrangeBars = function(anchor)
 		if not anchor or not next(anchor.bars) then return end
 
@@ -873,6 +887,9 @@ do
 		for bar in next, anchor.bars do
 			tmp[#tmp + 1] = bar
 		end
+
+        local ascending = db.sorting == "ASCENDING"
+        local barSorter = ascending and ascendSorter or descendSorter
 		table.sort(tmp, barSorter)
 		local lastBar = nil
 		local up, barLimit
@@ -883,6 +900,25 @@ do
 			up = db.emphasizeGrowup
 			barLimit = db.visibleBarLimitEmph
 		end
+
+        -- This is a workaround when descending to not get the bars to
+        -- keep getting shoved upwards by the hidden new bars. Ideally it
+        -- would be a good idea to separate `timers` and `bars`, and only
+        -- create bars when something should be visible. Then lots of logic
+        -- for sorting bars and this rule when descending could be avoided.
+        if #tmp > barLimit and not ascending then
+            local shift = (#tmp - barLimit) % #tmp
+            local rotated = {}
+            for i = 1, #tmp do
+                local fromIndex = ((i - 1) + shift) % #tmp + 1
+                rotated[i] = tmp[fromIndex]
+            end
+
+            for i = 1, #tmp do
+                tmp[i] = rotated[i]
+            end
+        end
+
 		for i = 1, #tmp do
 			local bar = tmp[i]
 			if i > barLimit then
