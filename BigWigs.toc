@@ -24,6 +24,18 @@
 ## X-WoWI-ID: 5086
 ## X-Wago-ID: 5NRegwG3
 
+## Category-enUS: Dungeons & Raids
+## Category-deDE: Dungeons & Schlachtzüge
+## Category-esES: Mazmorras y bandas
+## Category-esMX: Calabozos y bandas
+## Category-frFR: Donjons et raids
+## Category-itIT: Spedizioni e incursioni
+## Category-koKR: 던전 및 공격대
+## Category-ptBR: Masmorras e Raides
+## Category-ruRU: Подземелья и рейды
+## Category-zhCN: 地下城和团队副本
+## Category-zhTW: 地城與團隊
+
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB, BigWigsTempNameplates
 
