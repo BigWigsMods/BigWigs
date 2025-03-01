@@ -37,7 +37,7 @@ local timersHeroic = {
 	[1218418] = { 0.0, 41.0, 28.0, 28.0, 0 }, -- Wire Transfer
 	[1216509] = { 47.0, 33.0, 32.0, 0 }, -- Screw Up
 	[465232]  = { 6.0, 28.0, 29.0, 30.0, 0 }, -- Sonic Ba-Boom
-	[1214878] = { 23.0, 34.0, 30.0, 0}, -- Pyro Party Pack
+	[1214878] = { 23.0, 34.0, 30.0, 0 }, -- Pyro Party Pack
 }
 local timersMythic = {
 	[1217231] = { 12.0, 33.0, 30.0, 30.0, 0 }, -- Foot-Blasters
@@ -108,11 +108,11 @@ function mod:GetOptions()
 		[473276] = -30425, -- Stage 1
 		[466860] = -30427, -- Stage 2
 	},{
+		[1216802] = L.polarization_generator,
 		[1217231] = L.foot_blasters,
 		[1216509] = L.screw_up,
 		[465232] = L.sonic_ba_boom,
 		[1214878] = CL.bomb,
-		[1216802] = L.polarization_generator,
 		[1216911] = L.posi_polarization,
 		[1216934] = L.nega_polarization,
 	}
@@ -171,7 +171,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGeneratorCount))
 	end
-	self:Bar(465232, timers[465232][1], CL.count:format(self:SpellName(465232), sonicBaBoomCount)) -- Sonic Ba-Boom
+	self:Bar(465232, timers[465232][1], CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
 	if not self:Easy() then
 		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	end
