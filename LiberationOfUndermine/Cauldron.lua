@@ -421,9 +421,7 @@ do
 				cd = blastburnRoarcannonCount % 3 == 1 and 48 or blastburnRoarcannonCount % 3 == 2 and 24 or 23
 			end
 			self:Bar(args.spellId, cd, CL.count:format(CL.beam, blastburnRoarcannonCount))
-			if not self:Mythic() then -- (3 targets)
-				self:GetBossTarget(printTarget, 1, args.sourceGUID) -- targets a player
-			end
+			self:GetBossTarget(printTarget, 1, args.sourceGUID) -- targets a player
 	end
 end
 
@@ -465,7 +463,7 @@ function mod:ThunderdrumSalvoSuccess(args)
 end
 
 function mod:VoltaicImage()
-	self:StopBar(CL.count:format(self:SpellName(1213994), moltenPhlegmCount))
+	self:StopBar(CL.count:format(self:SpellName(1213994), voltaicImageCount))
 	if self:IsTorqueInRange() then
 		self:Message(1213994, "orange", CL.count:format(self:SpellName(1213994), voltaicImageCount))
 		self:PlaySound(1213994, "alert")
