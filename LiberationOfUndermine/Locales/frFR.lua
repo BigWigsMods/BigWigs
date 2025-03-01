@@ -42,6 +42,8 @@ if L then
 	--L.screw_up = "Drills"
 	--L.sonic_ba_boom = "Raid Damage"
 	--L.polarization_generator = "Color Swaps"
+
+	--L.polarization_soon = "Color Swap Soon: %s"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "frFR")

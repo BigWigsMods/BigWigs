@@ -1,9 +1,5 @@
 
 --------------------------------------------------------------------------------
--- TODO: Negative / Positive charge warnings on players in mythic
---
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -26,7 +22,9 @@ local sonicBaBoomCount = 1
 local wireTransferCount = 1
 local betaLaunchCount = 1
 local voidsplosionCount = 1
-local polarizationGenerator = 1
+local polarizationGeneratorCount = 1
+
+local myCharge = nil
 
 local timersNormal = {
 	[1218418] = { 0.0, 41.0, 30.0, 30.0, 0 }, -- Wire Transfer
@@ -42,12 +40,12 @@ local timersHeroic = {
 	[1214878] = { 23.0, 34.0, 30.0, 0}, -- Pyro Party Pack
 }
 local timersMythic = {
-	[1217231] = { 12.1, 33.0, 30.0, 30.0, 0 }, -- Foot-Blasters
-	[1218418] = { 0.0, 40.9, 69.9, 0 }, -- Wire Transfer
+	[1217231] = { 12.0, 33.0, 30.0, 30.0, 0 }, -- Foot-Blasters
+	[1218418] = { 0.0, 40.9, 60.0, 0 }, -- Wire Transfer
 	[1216509] = { 18.0, 30.0, 32.0, 27.0, 0 }, -- Screw Up
-	[465232]  = { 8.9, 25.0, 27.0, 31.9, 17.9, 0 }, -- Sonic Ba-Boom
-	[1214878] = { 23.0, 33.0, 30.0, 0 }, -- Pyro Party Pack
-	[1216802] = { 4, 66.9, 46.0, 0 }, -- Polarization Generator
+	[465232]  = { 8.9, 25.0, 27.0, 31.9, 18.0, 0 }, -- Sonic Ba-Boom
+	[1214878] = { 24.6, 33.0, 30.0, 0 }, -- Pyro Party Pack
+	[1216802] = { 4.0, 66.9, 46.0 }, -- Polarization Generator
 }
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
@@ -61,6 +59,10 @@ if L then
 	L.screw_up = "Drills"
 	L.sonic_ba_boom = "Raid Damage"
 	L.polarization_generator = "Color Swaps"
+	L.posi_polarization = _G.BLUE_GEM
+	L.nega_polarization = _G.RED_GEM
+
+	L.polarization_soon = "Color Swap Soon: %s"
 end
 
 --------------------------------------------------------------------------------
@@ -70,6 +72,13 @@ end
 function mod:GetOptions()
 	return {
 		"stages",
+
+		-- Mythic
+		1216802, -- Polarization Generator
+		1216911, -- Posi-Polarization
+		1216934, -- Nega-Polarization
+		1219047, -- Polarized Catastro-Blast
+
 		-- Stage One: Assembly Required
 		473276, -- Activate Inventions!
 			-- Goblin Inventions XXX key this for conveyor belt messages?
@@ -86,7 +95,6 @@ function mod:GetOptions()
 		1216509, -- Screw Up
 			-- Screwed!
 		465232, -- Sonic Ba-Boom
-		-- 471308, -- Firecracker Trap
 		1214878, -- Pyro Party Pack
 		{465917, "TANK"}, -- Gravi-Gunk
 
@@ -95,17 +103,18 @@ function mod:GetOptions()
 		466860, -- Bleeding Edge
 			1218319, -- Voidsplosion
 		{468791, "CASTBAR"}, -- Gigadeath
-		1216802, -- Polarization Generator
 	},{
+		[1216802] = "mythic",
 		[473276] = -30425, -- Stage 1
 		[466860] = -30427, -- Stage 2
-		[1216802] = "mythic",
 	},{
 		[1217231] = L.foot_blasters,
 		[1216509] = L.screw_up,
 		[465232] = L.sonic_ba_boom,
 		[1214878] = CL.bomb,
 		[1216802] = L.polarization_generator,
+		[1216911] = L.posi_polarization,
+		[1216934] = L.nega_polarization,
 	}
 end
 
@@ -135,10 +144,17 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "PolarizationGenerator", 1217355)
+	self:Log("SPELL_AURA_APPLIED", "PolarizationGeneratorPosiApplied", 1217357)
+	self:Log("SPELL_AURA_APPLIED", "PolarizationGeneratorNegaApplied", 1217358)
+	self:Log("SPELL_AURA_APPLIED", "PosiPolarizationApplied", 1216911)
+	self:Log("SPELL_AURA_APPLIED", "NegaPolarizationApplied", 1216934)
+	self:Log("SPELL_AURA_APPLIED", "PolarizedCatastroBlastApplied", 1219047)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PolarizedCatastroBlastApplied", 1219047)
+
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 	activateInventions = 1
 	footBlasterCount = 1
@@ -147,21 +163,22 @@ function mod:OnEngage()
 	sonicBaBoomCount = 1
 	wireTransferCount = 1
 	betaLaunchCount = 1
-	polarizationGenerator = 1
+	polarizationGeneratorCount = 1
+
+	myCharge = nil
 
 	-- self:Bar(1218418, timers[1218418][1], CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer (casted immediately)
+	if self:Mythic() then
+		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGeneratorCount))
+	end
 	self:Bar(465232, timers[465232][1], CL.count:format(self:SpellName(465232), sonicBaBoomCount)) -- Sonic Ba-Boom
 	if not self:Easy() then
 		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	end
-
 	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
 	self:Bar("stages", self:Easy() and 121.8 or 127.4, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
-	if self:Mythic() then
-		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGenerator))
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -270,7 +287,7 @@ function mod:BetaLaunch(args)
 	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:StopBar(CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
 	self:StopBar(CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
-	self:StopBar(CL.count:format(L.polarization_generator, polarizationGenerator)) -- Polarization Generator
+	-- self:StopBar(CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
 
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), args.spellId)
@@ -317,9 +334,12 @@ function mod:UpgradedBloodtechApplied(args)
 	sonicBaBoomCount = 1
 	wireTransferCount = 1
 	betaLaunchCount = 1
-	polarizationGenerator = 1
+	-- polarizationGeneratorCount = 1
 
 	-- self:Bar(1218418, timers[1218418][1], CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer (casted immediately)
+	-- if self:Mythic() then
+	-- 	self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
+	-- end
 	self:Bar(465232, timers[465232][1], CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
 	if not self:Easy() then
 		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
@@ -327,9 +347,6 @@ function mod:UpgradedBloodtechApplied(args)
 	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
-	if self:Mythic() then
-		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGenerator)) -- Polarization Generator
-	end
 	if betaLaunchCount < 3 then
 		self:Bar("stages", 120.3, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
 	elseif betaLaunchCount == 3 then
@@ -355,10 +372,66 @@ end
 -- end
 
 -- Mythic
+
 function mod:PolarizationGenerator(args)
-	self:StopBar(CL.count:format(L.polarization_generator, polarizationGenerator))
---	self:Message(args.spellId, "orange", CL.count:format(L.polarization_generator, polarizationGenerator))
---	self:PlaySound(args.spellId, "alert")
-	polarizationGenerator = polarizationGenerator + 1
-	self:Bar(1216802, timers[1216802][polarizationGenerator], CL.count:format(L.polarization_generator, polarizationGenerator))
+	self:StopBar(CL.count:format(L.polarization_generator, polarizationGeneratorCount))
+	polarizationGeneratorCount = polarizationGeneratorCount + 1
+	self:Bar(1216802, timers[1216802][polarizationGeneratorCount], CL.count:format(L.polarization_generator, polarizationGeneratorCount))
+end
+
+function mod:PolarizationGeneratorPosiApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(1216802, "cyan", L.polarization_soon:format(_G.LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(L.posi_polarization)))
+		if myCharge ~= "blue" then
+			self:PlaySound(1216802, "warning")
+		end
+	end
+end
+
+function mod:PolarizationGeneratorNegaApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message(1216802, "cyan", L.polarization_soon:format(_G.DULL_RED_FONT_COLOR:WrapTextInColorCode(L.nega_polarization)))
+		if myCharge ~= "red" then
+			self:PlaySound(1216802, "warning")
+		end
+	end
+end
+
+function mod:PosiPolarizationApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, _G.LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(L.posi_polarization))
+		self:PlaySound(args.spellId, "info")
+		myCharge = "blue"
+	end
+end
+
+function mod:NegaPolarizationApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, _G.DULL_RED_FONT_COLOR:WrapTextInColorCode(L.nega_polarization))
+		self:PlaySound(args.spellId, "info")
+		myCharge = "red"
+	end
+end
+
+do
+	local stacks = 0
+	local scheduled = nil
+	function mod:PolarizedCatastroBlastMessage()
+		if stacks == 1 then
+			self:Message(1219047, "red")
+		else
+			self:Message(1219047, "red", CL.stackyou:format(stacks, self:SpellName(1219047)))
+		end
+		self:PlaySound(1219047, "alarm") -- boom
+		scheduled = nil
+	end
+
+	function mod:PolarizedCatastroBlastApplied(args)
+		if self:Me(args.destGUID) then
+			stacks = args.amount or 1
+			if not scheduled then
+				scheduled = self:ScheduleTimer("PolarizedCatastroBlastMessage", 1)
+			end
+		end
+	end
 end

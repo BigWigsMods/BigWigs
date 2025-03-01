@@ -43,6 +43,8 @@ if L then
 	L.screw_up = "钻头"
 	L.sonic_ba_boom = "团队伤害"
 	L.polarization_generator = "正负极"
+
+	--L.polarization_soon = "Color Swap Soon: %s"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
