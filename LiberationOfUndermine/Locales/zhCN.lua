@@ -24,11 +24,17 @@ end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "zhCN")
 if L then
-	L.rolled_over_by = "被 %s 碾过" -- Rolled over by PlayerX
-	L.landing = "降落" -- Landing down from the sky
+	--L.ball_size_medium = "Medium Ball!"
+	--L.ball_size_large = "Large Ball!"
+	--L.rolled_on_you = "%s rolled over YOU" -- PlayerX rolled over you
+	--L.rolled_from_you = "Rolled over %s" -- (you) Rolled over PlayerX
+	--L.garbage_dump_message = "YOU hit BOSS for %s"
 
 	L.electromagnetic_sorting = "电磁分拣" --中文技能名称短，就不简写了
+	--L.muffled_doomsplosion = "Bomb Soaked"
 	L.incinerator = "火圈"
+	L.landing = "降落" -- Landing down from the sky
+
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhCN")

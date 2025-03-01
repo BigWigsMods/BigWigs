@@ -24,11 +24,16 @@ end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "koKR")
 if L then
-	--L.rolled_over_by = "Rolled over by %s" -- Rolled over by PlayerX
-	--L.landing = "Landing" -- Landing down from the sky
+	--L.ball_size_medium = "Medium Ball!"
+	--L.ball_size_large = "Large Ball!"
+	--L.rolled_on_you = "%s rolled over YOU" -- PlayerX rolled over you
+	--L.rolled_from_you = "Rolled over %s" -- (you) Rolled over PlayerX
+	--L.garbage_dump_message = "YOU hit BOSS for %s"
 
 	--L.electromagnetic_sorting = "Sorting" -- Short for Electromagnetic Sorting
+	--L.muffled_doomsplosion = "Bomb Soaked"
 	--L.incinerator = "Fire Circles"
+	--L.landing = "Landing" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "koKR")
