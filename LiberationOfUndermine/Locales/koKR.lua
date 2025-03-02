@@ -1,84 +1,84 @@
 local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "koKR")
 if not L then return end
 if L then
-    --L.plating_removed = "%d Protective Plating left"
-	--L.exhaust_fumes = "Raid Damage"
+    L.plating_removed = "남은 방호 장갑 %d 개"
+	L.exhaust_fumes = "전체 데미지"
 end
 
 L = BigWigs:NewBossLocale("Cauldron of Carnage", "koKR")
 if L then
-	--L.custom_on_fade_out_bars = "Fade out bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range."
+	L.custom_on_fade_out_bars = "바 투명도"
+	L.custom_on_fade_out_bars_desc = "거리가 닿지 않는 보스 관련 바의 투명도를 낮춥니다."
 
-	--L.bomb_explosion = "Bomb Explosion"
-	--L.bomb_explosion_desc = "Show a timer for the explosion off the bombs."
+	L.bomb_explosion = "폭탄 폭발"
+	L.bomb_explosion_desc = "폭탄이 폭파되기까지의 타이머 표시."
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "koKR")
 if L then
-	--L.amplification = "Amplifiers"
-	--L.echoing_chant = "Echoes"
-	--L.faulty_zap = "Zaps"
-	--L.sparkblast_ignition = "Barrels"
+	L.amplification = "증폭기 소환"
+	L.echoing_chant = "메아리"
+	L.faulty_zap = "감전"
+	L.sparkblast_ignition = "배럴 소환"
 end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "koKR")
 if L then
-	--L.ball_size_medium = "Medium Ball!"
-	--L.ball_size_large = "Large Ball!"
-	--L.rolled_on_you = "%s rolled over YOU" -- PlayerX rolled over you
-	--L.rolled_from_you = "Rolled over %s" -- (you) Rolled over PlayerX
-	--L.garbage_dump_message = "YOU hit BOSS for %s"
+	L.ball_size_medium = "중형 구체!"
+	L.ball_size_large = "대형 구체!"
+	L.rolled_on_you = "%s 에게 치임" -- PlayerX rolled over you
+	L.rolled_from_you = "%s 를 침" -- (you) Rolled over PlayerX
+	L.garbage_dump_message = "보스에게 %s 피해를 입힘"
 
-	--L.electromagnetic_sorting = "Sorting" -- Short for Electromagnetic Sorting
-	--L.muffled_doomsplosion = "Bomb Soaked"
-	--L.incinerator = "Fire Circles"
-	--L.landing = "Landing" -- Landing down from the sky
+	L.electromagnetic_sorting = "분류" -- Short for Electromagnetic Sorting
+	L.muffled_doomsplosion = "폭탄 처리됨"
+	L.incinerator = "소각"
+	L.landing = "착륙" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "koKR")
 if L then
-	--L.foot_blasters = "Mines"
-	--L.screw_up = "Drills"
-	--L.sonic_ba_boom = "Raid Damage"
-	--L.polarization_generator = "Color Swaps"
+	--L.foot_blasters = "지뢰"
+	--L.screw_up = "드릴"
+	--L.sonic_ba_boom = "공대 피해"
+	--L.polarization_generator = "극성 바뀜!"
 
-	--L.polarization_soon = "Color Swap Soon: %s"
+	--L.polarization_soon = "%s 초 후 극성바뀜"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "koKR")
 if L then
-	--L.rewards = "Prizes" -- Fabulous Prizes
-	--L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
-	--L.rewards_icon = "inv_111_vendingmachine_blackwater"
-	--L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
+	L.rewards = "경품" -- Fabulous Prizes
+	L.rewards_desc = "두개의 토큰이 정해지면, \"환상적인 경품\" 이 나옵니다. \n어떤 경품이 나왔는지 메시지로 알려줍니다.\n정보박스로 어떤 경품이 아직 남았는지 보여줍니다."
+	L.rewards_icon = "inv_111_vendingmachine_blackwater"
+	L.deposit_time = "토큰 주입 마무리" -- Timer that indicates how long you have left to deposit the tokens.
 
-	--L.pay_line = "Coins"
-	--L.shock = "Shock"
-	--L.flame = "Flame"
-	--L.coin = "Coin"
+	L.pay_line = "칩 소환"
+	L.shock = "Shock"
+	L.flame = "Flame"
+	L.coin = "칩"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "koKR")
 if L then
-	--L.earthshaker_gaol = "Prisons"
-	--L.frostshatter_boots = "Frost Boots" -- Short for Frostshatter Boots
-	--L.frostshatter_spear = "Frost Spears" -- Short for Frostshatter Spears
-	--L.stormfury_finger_gun = "Finger Gun" -- Short for Stormfury Finger Gun
-	--L.molten_gold_knuckles = "Tank Frontal"
-	--L.unstable_crawler_mines = "Mines"
-	--L.goblin_guided_rocket = "Rocket"
-	--L.double_whammy_shot = "Tank Soak"
+	L.earthshaker_gaol = "감옥"
+	L.frostshatter_boots = "냉기 장화" -- Short for Frostshatter Boots
+	L.frostshatter_spear = "냉기 창" -- Short for Frostshatter Spears
+	-L.stormfury_finger_gun = "지건" -- Short for Stormfury Finger Gun
+	L.molten_gold_knuckles = "탱커 전방기"
+	L.unstable_crawler_mines = "지뢰"
+	L.goblin_guided_rocket = "로켓"
+	L.double_whammy_shot = "탱 가로막기"
 end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "koKR")
 if L then
-	--L.scatterblast_canisters = "Cone Soak"
-	--L.fused_canisters = "Group Soaks"
-	--L.tick_tock_canisters = "Soaks"
+	L.scatterblast_canisters = "브레스 같이맞기"
+	L.fused_canisters = "용기 같이맞기"
+	L.tick_tock_canisters = "바닥밟기"
 
-	--L.duds = "Duds" -- Short for 1500-Pound "Dud"
-	--L.all_duds_detontated = "All Duds Detonated!"
-	--L.duds_remaining = "%d |4Dud:Duds; remaining" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
-	--L.duds_soak = "Soak Duds (%d left)"
+	L.duds = "불발탄" -- Short for 1500-Pound "Dud"
+	L.all_duds_detontated = "모든 불발탄 해체완료!"
+	L.duds_remaining = "|4불발탄:불발탄; %d 개 남음" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	L.duds_soak = "불발탄 바닥밟기 (%d 개 남음)"
 end
