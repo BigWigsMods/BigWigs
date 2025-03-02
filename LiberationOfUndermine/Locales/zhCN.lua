@@ -79,7 +79,7 @@ if L then
 	L.tick_tock_canisters = "分摊"
 
 	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
-	L.all_duds_detontated = "所有哑弹已引爆"
+	L.all_duds_detontated = "所有哑弹已引爆！"
 	L.duds_remaining = "剩余：%d 个哑弹" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
 	L.duds_soak = "分摊哑弹 （剩余：%d 个）"
 end
