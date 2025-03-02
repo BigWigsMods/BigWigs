@@ -70,3 +70,15 @@ if L then
 	--L.goblin_guided_rocket = "Rocket"
 	--L.double_whammy_shot = "Tank Soak"
 end
+
+L = BigWigs:NewBossLocale("Chrome King Gallywix", "esMX")
+if L then
+	--L.scatterblast_canisters = "Cone Soak"
+	--L.fused_canisters = "Group Soaks"
+	--L.tick_tock_canisters = "Soaks"
+
+	--L.duds = "Duds" -- Short for 1500-Pound "Dud"
+	--L.all_duds_detontated = "All Duds Detonated!"
+	--L.duds_remaining = "%d |4Dud:Duds; remaining" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	--L.duds_soak = "Soak Duds (%d left)"
+end
