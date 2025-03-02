@@ -47,12 +47,14 @@ end
 -- Initialization
 --
 
+local rollingRubbishMarker = mod:AddMarkerOption(false, "player", 1, 461536, 1, 2, 3, 4)
 local territorialBombshellMarker = mod:AddMarkerOption(false, "npc", 1, -30451, 8, 7, 6, 5, 4)
 function mod:GetOptions()
 	return {
 		territorialBombshellMarker,
 		464399, -- Electromagnetic Sorting
 			{461536, "ME_ONLY_EMPHASIZE"}, -- Rolling Rubbish
+				rollingRubbishMarker,
 				465741, -- Garbage Dump
 				465611, -- Rolled!
 			464854, -- Garbage Pile
@@ -186,23 +188,62 @@ function mod:ShortFuseApplied(args)
 	end
 end
 
-function mod:ElectromagneticSorting(args)
-	self:StopBar(CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-	self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
-	electromagneticSortingCount = electromagneticSortingCount + 1
-	muffledDoomsplosionCount = 0
-	local cd = electromagneticSortingCount == 3 and 72.2 or 51.1
-	if self:Mythic() then
-		cd = electromagneticSortingCount == 2 and 79.3 or 51.1
+do
+	local iconList = {}
+	local scheduled = nil
+	local function sortPriority(first, second)
+		if first and second then
+			if first.healer ~= second.healer then
+				return not first.healer and second.healer
+			end
+			if first.tank ~= second.tank then
+				return first.tank and not second.tank
+			end
+			return first.index < second.index
+		end
 	end
-	self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-end
 
-function mod:SortedApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(461536) -- Rolling Rubbish
-		self:PlaySound(461536, "warning") -- you're becoming rubbish
+	function mod:MarkPlayers()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+		table.sort(iconList, sortPriority) -- Priority for tank > others > healers
+		for i = 1, #iconList do
+			local player = iconList[i].player
+			self:CustomIcon(rollingRubbishMarker, player, i)
+		end
+	end
+
+	function mod:ElectromagneticSorting(args)
+		self:StopBar(CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+		self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+		self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
+		electromagneticSortingCount = electromagneticSortingCount + 1
+		muffledDoomsplosionCount = 0
+		local cd = electromagneticSortingCount == 3 and 72.2 or 51.1
+		if self:Mythic() then
+			cd = electromagneticSortingCount == 2 and 79.3 or 51.1
+		end
+		self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+		iconList = {}
+	end
+
+	function mod:SortedApplied(args)
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(461536) -- Rolling Rubbish
+			self:PlaySound(461536, "warning") -- you're becoming rubbish
+		end
+
+		iconList[#iconList+1] = {
+			player = args.destName,
+			tank = self:Tank(args.destName),
+			healer = self:Healer(args.destName),
+			index = UnitInRaid(args.destName) or 99, -- 99 for players not in your raid (or if you have no raid)
+		}
+		if not scheduled then
+			scheduled = self:ScheduleTimer("MarkPlayers", 0.1)
+		end
 	end
 end
 
@@ -235,6 +276,7 @@ do
 			self:PlaySound(461536, "info")
 			self:UnregisterUnitEvent("UNIT_POWER_UPDATE", "player", "vehicle")
 		end
+		self:CustomIcon(rollingRubbishMarker, args.destName)
 	end
 end
 
