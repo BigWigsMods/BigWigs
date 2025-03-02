@@ -352,7 +352,7 @@ function mod:FocusedDetonationApplied(args)
 end
 
 function mod:FocusedDetonationRemoved(args)
-	self:StopBar(1217292, args.destName) -- Time-Release Crackle
+	self:StopBar(CL.explosion, args.destName) -- Time-Release Crackle
 end
 
 function mod:Suppression(args)
@@ -516,7 +516,7 @@ end
 function mod:Cratering(args)
 	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 
-	self:Message(args.spellId, "red", CL.percent:format(50, args.spellId))
+	self:Message(args.spellId, "red", CL.percent:format(50, args.spellName))
 	self:PlaySound(args.spellId, "long")
 
 	-- self:Bar(1214229, 5.0) -- Armageddon-class Plating
