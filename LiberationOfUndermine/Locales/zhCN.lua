@@ -24,14 +24,14 @@ end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "zhCN")
 if L then
-	--L.ball_size_medium = "Medium Ball!"
-	--L.ball_size_large = "Large Ball!"
-	--L.rolled_on_you = "%s rolled over YOU" -- PlayerX rolled over you
-	--L.rolled_from_you = "Rolled over %s" -- (you) Rolled over PlayerX
-	--L.garbage_dump_message = "YOU hit BOSS for %s"
+	L.ball_size_medium = "中型球！"
+	L.ball_size_large = "大型球！"
+	L.rolled_on_you = "%s 碾过你" -- PlayerX rolled over you
+	L.rolled_from_you = "你碾过 %s" -- (you) Rolled over PlayerX
+	L.garbage_dump_message = "你对首领造成了 %s 伤害"
 
 	L.electromagnetic_sorting = "电磁分拣" --中文技能名称短，就不简写了
-	--L.muffled_doomsplosion = "Bomb Soaked"
+	L.muffled_doomsplosion = "炸弹吸收"
 	L.incinerator = "火圈"
 	L.landing = "降落" -- Landing down from the sky
 
@@ -44,7 +44,7 @@ if L then
 	L.sonic_ba_boom = "团队伤害"
 	L.polarization_generator = "正负极"
 
-	--L.polarization_soon = "Color Swap Soon: %s"
+	L.polarization_soon = "极性改变: %s"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
@@ -74,12 +74,12 @@ end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "zhCN")
 if L then
-	--L.scatterblast_canisters = "Cone Soak"
-	--L.fused_canisters = "Group Soaks"
-	--L.tick_tock_canisters = "Soaks"
+	L.scatterblast_canisters = "裂破分摊" --使用技能名“裂破弹药筒”前2字做提醒
+	L.fused_canisters = "引线分摊" --使用技能名“引线弹药筒”前2字做提醒
+	L.tick_tock_canisters = "分摊"
 
-	--L.duds = "Duds" -- Short for 1500-Pound "Dud"
-	--L.all_duds_detontated = "All Duds Detonated!"
-	--L.duds_remaining = "%d |4Dud:Duds; remaining" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
-	--L.duds_soak = "Soak Duds (%d left)"
+	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
+	L.all_duds_detontated = "所有哑弹已引爆"
+	L.duds_remaining = "剩余：%d 个哑弹" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	L.duds_soak = "分摊哑弹 （剩余：%d 个）"
 end
