@@ -1930,6 +1930,10 @@ function public:GetVersionString()
 	return BIGWIGS_VERSION_STRING
 end
 
+function public:GetVersion()
+	return BIGWIGS_VERSION, BIGWIGS_GUILD_VERSION
+end
+
 function public:GetZoneMenus()
 	return menus
 end
