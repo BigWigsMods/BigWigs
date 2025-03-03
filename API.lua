@@ -167,6 +167,10 @@ do
 	function API.GetVersion()
 		return tbl.version, tbl.guildVersion
 	end
+	-- Returns the BigWigs version hash from Git as a string
+	function API.GetVersionHash()
+		return tbl.versionHash
+	end
 end
 
 -------------------------------------------------------------------------------

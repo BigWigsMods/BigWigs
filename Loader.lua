@@ -54,6 +54,7 @@ do
 		releaseType = REPO
 		public.usingBigWigsRepo = true
 	end
+	tbl.versionHash = myGitHash
 
 	if releaseType == REPO then
 		releaseString = L.sourceCheckout:format(BIGWIGS_VERSION)
