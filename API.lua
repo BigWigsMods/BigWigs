@@ -138,12 +138,6 @@ do
 		tbl.LoadCoreAndOptions()
 		BigWigsOptions:SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	end
-
-	-- DEVS: Use BigWigsAPI.RegisterProfile, nothing changed other than the name of the API and access via . instead of :
-	--function API:ImportProfileString(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction) -- DEPRECATED
-	--	API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-	--	geterrorhandler()(("The addon %q is using the deprecated import API for BigWigs, tell the author to update."):format(addonName))
-	--end
 end
 
 --------------------------------------------------------------------------------
@@ -160,6 +154,18 @@ do
 		if type(spellId) ~= "number" then error("Invalid spell ID for spell rename.") end
 		if type(text) ~= "string" or #text < 3 then error("Invalid spell text for spell rename.") end
 		tbl[spellId] = text
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Versions
+--
+
+do
+	local _, tbl = ...
+	-- Returns the BigWigs version as a number
+	function API.GetVersion()
+		return tbl.version, tbl.guildVersion
 	end
 end
 
