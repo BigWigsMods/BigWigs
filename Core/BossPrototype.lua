@@ -2653,8 +2653,8 @@ do
 	-- @param player The player name, or a table containing a list of names
 	-- @bool[opt] overwrite Ignore whatever the "class color message" feature is set to
 	-- @return colored player name, or table containing colored names
-	function boss:ColorName(player, overwrite)
-		if classColorMessages or overwrite then
+	function boss:ColorName(player, overwrite, disableBarColors) -- XXX add a proper option for bar colors
+		if not disableBarColors and classColorMessages or overwrite then
 			if type(player) == "table" then
 				local tmp = {}
 				for i = 1, #player do
@@ -3118,8 +3118,7 @@ do
 			local counter = msg:match(countString)
 			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], player, isBarEnabled)
 		else
-			local trimPlayer = gsub(player, "%-.+", "*")
-			local msg = format(L.other, textType == "string" and text or spells[text or key], trimPlayer)
+			local msg = format(L.other, textType == "string" and text or spells[text or key], self:ColorName(player, nil, true))
 			if not checkFlag(self, key, C.ME_ONLY) and isBarEnabled then
 				self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 			end
@@ -3172,7 +3171,7 @@ function boss:StopBar(text, player)
 			self:SendMessage("BigWigs_StopBar", self, msg)
 			self:SendMessage("BigWigs_StopCountdown", self, msg)
 		else
-			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, gsub(player, "%-.+", "*")))
+			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, self:ColorName(player, nil, true)))
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, msg)
