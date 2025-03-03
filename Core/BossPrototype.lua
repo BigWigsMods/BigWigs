@@ -2652,6 +2652,7 @@ do
 	--- Color a player name based on class.
 	-- @param player The player name, or a table containing a list of names
 	-- @bool[opt] overwrite Ignore whatever the "class color message" feature is set to
+	-- @bool[opt] disableBarColors Not for current use
 	-- @return colored player name, or table containing colored names
 	function boss:ColorName(player, overwrite, disableBarColors) -- XXX add a proper option for bar colors
 		if not disableBarColors and classColorMessages or overwrite then
