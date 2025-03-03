@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "koKR")
 if not L then return end
 if L then
-    L.plating_removed = "남은 방호 장갑 %d 개"
+	L.plating_removed = "남은 방호 장갑 %d 개"
 	L.exhaust_fumes = "전체 데미지"
 end
 
@@ -50,7 +50,6 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "koKR")
 if L then
 	L.rewards = "경품" -- Fabulous Prizes
 	L.rewards_desc = "두개의 토큰이 정해지면, \"환상적인 경품\" 이 나옵니다. \n어떤 경품이 나왔는지 메시지로 알려줍니다.\n정보박스로 어떤 경품이 아직 남았는지 보여줍니다."
-	L.rewards_icon = "inv_111_vendingmachine_blackwater"
 	L.deposit_time = "토큰 주입 마무리" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "칩 소환"
@@ -79,6 +78,6 @@ if L then
 
 	L.duds = "불발탄" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "모든 불발탄 해체완료!"
-	L.duds_remaining = "불발탄 %d 개 남음" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	L.duds_remaining = "불발탄 %d 개 남음" -- 1 Dud Remains | 2 Duds Remaining
 	L.duds_soak = "불발탄 바닥밟기 (%d 개 남음)"
 end

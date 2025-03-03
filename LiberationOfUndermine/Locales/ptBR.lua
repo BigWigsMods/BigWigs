@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "ptBR")
 if not L then return end
 if L then
-    --L.plating_removed = "%d Protective Plating left"
+	--L.plating_removed = "%d Protective Plating left"
 	--L.exhaust_fumes = "Raid Damage"
 end
 
@@ -50,7 +50,6 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "ptBR")
 if L then
 	--L.rewards = "Prizes" -- Fabulous Prizes
 	--L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
-	--L.rewards_icon = "inv_111_vendingmachine_blackwater"
 	--L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
 
 	--L.pay_line = "Coins"
@@ -79,6 +78,6 @@ if L then
 
 	--L.duds = "Duds" -- Short for 1500-Pound "Dud"
 	--L.all_duds_detontated = "All Duds Detonated!"
-	--L.duds_remaining = "%d |4Dud:Duds; remaining" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	--L.duds_remaining = "%d |4Dud remains:Duds remaining;" -- 1 Dud Remains | 2 Duds Remaining
 	--L.duds_soak = "Soak Duds (%d left)"
 end

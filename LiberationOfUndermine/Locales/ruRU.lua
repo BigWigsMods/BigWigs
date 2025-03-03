@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "ruRU")
 if not L then return end
 if L then
-    L.plating_removed = "%d пластин осталось"
+	L.plating_removed = "%d пластин осталось"
 	L.exhaust_fumes = "Рейд урон"
 end
 
@@ -50,7 +50,6 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "ruRU")
 if L then
 	L.rewards = "Призы" -- Fabulous Prizes
 	L.rewards_desc = "После сдачи 2 токенов, \"Потрясающие Призы\" активируется.\nСообщения скажут, что было выдано.\nИнфобокс покажет, какие награды всё ещё доступны."
-	L.rewards_icon = "inv_111_vendingmachine_blackwater"
 	L.deposit_time = "Время для сдачи" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Монетки"
@@ -79,6 +78,6 @@ if L then
 
 	L.duds = "Ждуны" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "Все Ждуны Детонированы!"
-	L.duds_remaining = "%d |4Ждун:Ждуны; осталось" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	L.duds_remaining = "%d |4Ждун осталось:Ждуны осталось;" -- 1 Dud Remains | 2 Duds Remaining
 	L.duds_soak = "Сокай Ждунов (%d осталось)"
 end

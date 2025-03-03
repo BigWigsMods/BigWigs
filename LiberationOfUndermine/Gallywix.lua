@@ -72,7 +72,7 @@ if L then
 
 	L.duds = "Duds" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "All Duds Detonated!"
-	L.duds_remaining = "%d |4Dud:Duds; remaining" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	L.duds_remaining = "%d |4Dud remains:Duds remaining;" -- 1 Dud Remains | 2 Duds Remaining
 	L.duds_soak = "Soak Duds (%d left)"
 end
 

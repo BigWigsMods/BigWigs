@@ -51,7 +51,6 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
 if L then
 	L.rewards = "豪华大奖" -- Fabulous Prizes
 	L.rewards_desc = "当2种礼卷被组合后，将发放\"豪华大奖\"。\n信息会提醒你获得了哪种奖励。\n信息框也会显示哪些奖励任然可用。"
-	--L.rewards_icon = "inv_111_vendingmachine_blackwater"
 	L.deposit_time = "投卷计时" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "凭证"
@@ -80,6 +79,6 @@ if L then
 
 	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "所有哑弹已引爆！"
-	L.duds_remaining = "剩余：%d 个哑弹" -- 1 Bomb Remaning, 2 Bombs Remaining.. etc
+	L.duds_remaining = "剩余：%d 个哑弹" -- 1 Dud Remains | 2 Duds Remaining
 	L.duds_soak = "分摊哑弹 （剩余：%d 个）"
 end
