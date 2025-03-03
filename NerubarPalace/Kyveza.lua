@@ -9,9 +9,9 @@ mod:SetEncounterID(2920)
 mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
 	436870, -- Assassination
-	{437343, extra = {463273, 463276}}, -- Queensbane (Also A & B) XXX Initial spell not private yet, but they flagged the other 2 already.
+	{437343, 463273, 463276}, -- Queensbane (Also A & B) XXX Initial spell not private yet, but they flagged the other 2 already.
 	438141, -- Twilight Massacre
-	{435534, extra = {436663, 436664, 436665, 436666, 436671}}, -- Regicide
+	{435534, 436663, 436664, 436665, 436666, 436671}, -- Regicide
 })
 mod:SetStage(1)
 

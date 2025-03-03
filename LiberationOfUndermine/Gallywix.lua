@@ -14,9 +14,8 @@ mod:SetPrivateAuraSounds({
 	466155, -- Sapper's Satchel
 	466344, -- Fused Canisters
 	{ -- Overloaded Rockets
-		1214760,
-		extra = { 1214749, 1214750, 1214757, 1214758, 1214759, 1214761,
-				1214762, 1214763, 1214764, 1214765, 1214766, 1214767 }
+		1214760, 1214749, 1214750, 1214757, 1214758, 1214759, 1214761,
+		1214762, 1214763, 1214764, 1214765, 1214766, 1214767
 	},
 	1219279, -- Gallybux Pest Eliminator
 	1218550 -- Biggest Baddest Bomb Barrage
