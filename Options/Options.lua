@@ -967,7 +967,7 @@ local function populatePrivateAuraOptions(widget)
 			for _, option in ipairs(options) do
 				local spellId = option[1]
 				local key = ("pa_%d"):format(spellId)
-				local id = option.tooltip or option.option or spellId -- XXX compat
+				local id = option.tooltip or spellId
 
 				local name = loader.GetSpellName(id)
 				local texture = loader.GetSpellTexture(id)

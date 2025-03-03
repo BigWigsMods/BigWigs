@@ -317,20 +317,15 @@ function boss:GetAllowWin()
 end
 
 --- Register private auras.
--- @param opts the options table
-function boss:SetPrivateAuraSounds(opts)
-	for i = 1, #opts do
-		local o = opts[i]
+-- @param spellIDTable the options table
+function boss:SetPrivateAuraSounds(spellIDTable)
+	for i = 1, #spellIDTable do
+		local o = spellIDTable[i]
 		if type(o) ~= "table" then
-			opts[i] = { o }
-		elseif o.extra then -- XXX compat
-			for j, v in ipairs(o.extra) do
-				o[j + 1] = v
-			end
-			o.extra = nil
+			spellIDTable[i] = { o }
 		end
 	end
-	self.privateAuraSoundOptions = opts
+	self.privateAuraSoundOptions = spellIDTable
 end
 
 --- Check if a module option is enabled.
