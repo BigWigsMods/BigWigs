@@ -320,9 +320,14 @@ end
 -- @param spellIDTable the options table
 function boss:SetPrivateAuraSounds(spellIDTable)
 	for i = 1, #spellIDTable do
-		local o = spellIDTable[i]
-		if type(o) ~= "table" then
-			spellIDTable[i] = { o }
+		local spellId = spellIDTable[i]
+		local idType = type(spellId)
+		if idType == "number" then
+			spellIDTable[i] = { spellId }
+		elseif idType == "table" then
+			spellIDTable[i] = spellId
+		else
+			core:Error(("Module %s tried to add an invalid private aura spell id at position #%d. Expected number or table, got %s."):format(self.moduleName, i, idType))
 		end
 	end
 	self.privateAuraSoundOptions = spellIDTable
