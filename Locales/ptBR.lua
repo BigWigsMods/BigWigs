@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
-L.tempNPMsg = "Nossos temporizadores de placas de identificação da temporada 1 estão ativos."
-
 -- Core.lua
 L.berserk = "Frenesi"
 L.berserk_desc = "Mostra uma barra e um contador para quando o chefe entrar em Frenesi."

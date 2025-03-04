@@ -1,7 +1,5 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "enUS")
 
-L.tempNPMsg = "Our season 1 nameplate timers are active."
-
 -- Core.lua
 L.berserk = "Berserk"
 L.berserk_desc = "Show a bar and timed warnings for when the boss will go berserk."

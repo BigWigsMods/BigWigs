@@ -1753,12 +1753,6 @@ do
 		if type(zoneAddon) == "table" then
 			-- default to the expansion addon for current season modules
 			zoneAddon = zoneAddon[1]
-			if enableZones[id] and not BigWigsTempNameplates then -- XXX temp
-				BigWigsTempNameplates = true
-				CTimerAfter(1, function() sysprint(L.tempNPMsg) end)
-				RaidNotice_AddMessage(RaidWarningFrame, "BigWigs: ".. L.tempNPMsg, {r=1,g=1,b=1}, 10)
-				Popup("BigWigs: ".. L.tempNPMsg)
-			end
 		end
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
 			if public.usingBigWigsRepo and public.currentExpansion.bigWigsBundled[zoneAddon] then return end -- If we are a BW Git user, then bundled content can't be missing, so return

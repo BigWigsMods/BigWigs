@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "frFR")
 if not L then return end
 
-L.tempNPMsg = "Comptes à rebours des barres d'infos de la saison 1 activés."
-
 -- Core.lua
 L.berserk = "Berserk"
 L.berserk_desc = "Prévient quand le boss devient fou furieux."

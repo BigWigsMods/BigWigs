@@ -1,8 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "itIT")
 if not L then return end
 
-L.tempNPMsg = "I nostri timer della Stagione 1 sulle barre delle unità sono attivi."
-
 -- Core.lua
 L.berserk = "Infuriato"
 L.berserk_desc = "Visualizza un timer e un avviso quando il boss si infurierà."
