@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "Restablecer todas las opciones relacionadas con los
 L.nameplateTextSettings = "Configuraciones de Texto"
 L.fixate_test = "Prueba de Fijación" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Restablecer todas las opciones relacionadas con el texto de las placas de nombre."
-L.autoScale = "Escala Automático"
-L.autoScaleDesc = "Cambiar automáticamente la escala según el tamaño de la placa de nombre."
 L.glowAt = "Comenzar Brillo (segundos)"
 L.glowAt_desc = "Elige cuántos segundos deben quedar en el tiempo de reutilización para que comience el brillo."
+--L.headerIconSizeTarget = "Icon size of your current target"
+--L.headerIconSizeOthers = "Icon size of all other targets"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Brillo de Píxel"

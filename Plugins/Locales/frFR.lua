@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "Réinitialise toutes les options liées aux icônes
 L.nameplateTextSettings = "Paramètres de texte"
 L.fixate_test = "Fixe Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Réinitialise toutes les options liées au texte des barres d'infos."
-L.autoScale = "Mise à l'échelle automatique"
-L.autoScaleDesc = "Change automatiquement l'échelle par rapport à celle de la barre d'infos."
 L.glowAt = "Commencer la surbrillance (secondes)"
 L.glowAt_desc = "Choisissez combien il doit rester de secondes sur le temps de recharge afin d'activer la surbrillance."
+--L.headerIconSizeTarget = "Icon size of your current target"
+--L.headerIconSizeOthers = "Icon size of all other targets"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Surbrillance discontinue"

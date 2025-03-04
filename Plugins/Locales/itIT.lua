@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "Resetta tutte le opzioni associate con le icone sul
 L.nameplateTextSettings = "Impostazioni testo"
 L.fixate_test = "Fissato Prova" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Resetta tutte le opzioni associate con il testo dulle barre delle unità."
-L.autoScale = "Scala di dimensioni automatico"
-L.autoScaleDesc = "Cambia automaticamente la scala in base alla scala delle barre delle unità."
 L.glowAt = "Inizia Spendlore (secondi)"
 L.glowAt_desc = "Scegli quanti secondi di recupero rimanenti dovrebbero esserci quando lo splendore inizia a vedersi."
+--L.headerIconSizeTarget = "Icon size of your current target"
+--L.headerIconSizeOthers = "Icon size of all other targets"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Spendlore Pixel"

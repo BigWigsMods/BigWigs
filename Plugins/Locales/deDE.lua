@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "Setzt alle Optionen für Namensplaketten-Symbole zu
 L.nameplateTextSettings = "Texteinstellungen"
 L.fixate_test = "Fixierung Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Setzt die Optionen für Namensplaketten-Texte zurück."
-L.autoScale = "Automatischer Maßstab"
-L.autoScaleDesc = "Ändert den Maßstab automatisch in Abhängigkeit vom Maßstab der Namensplakette."
 L.glowAt = "Leuchten beginnen (Sekunden)"
 L.glowAt_desc = "Legt fest, bei welcher verbleibenden Abklingzeit in Sekunden das Leuchten beginnt."
+--L.headerIconSizeTarget = "Icon size of your current target"
+--L.headerIconSizeOthers = "Icon size of all other targets"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Pixel-Leuchten"

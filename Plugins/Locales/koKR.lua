@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "이름표 아이콘과 관련된 모든 옵션을 �
 L.nameplateTextSettings = "텍스트 설정"
 L.fixate_test = "고정 테스트" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "이름표 텍스트와 관련된 모든 옵션을 초기화합니다."
-L.autoScale = "자동 크기 조정"
-L.autoScaleDesc = "이름표 크기에 따라 자동으로 크기을 변경합니다."
 L.glowAt = "반짝임 시작 (초)"
 L.glowAt_desc = "반짝임이 시작될 때 재사용 대기시간이 몇 초 남았는지 선택합니다."
+--L.headerIconSizeTarget = "Icon size of your current target"
+--L.headerIconSizeOthers = "Icon size of all other targets"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "픽셀 반짝임"

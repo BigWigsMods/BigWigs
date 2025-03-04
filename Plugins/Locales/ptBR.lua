@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "Reiniciar todas as opções relacionadas aos ícone
 L.nameplateTextSettings = "Configurações de texto"
 L.fixate_test = "Teste de Fixar" -- Texto que exibe para testar no quadro
 L.resetNameplateTextDesc = "Reiniciar todas as opções relacionadas ao texto da placa de identificação."
-L.autoScale = "Escala Automática"
-L.autoScaleDesc = "Muda automaticamente a escala de acordo com a escala da placa de identificação."
 L.glowAt = "Começar brilho (segundos)"
 L.glowAt_desc = "Escolha quantos segundos no tempo de recarga devem restar quando o brilho começar."
+--L.headerIconSizeTarget = "Icon size of your current target"
+--L.headerIconSizeOthers = "Icon size of all other targets"
 
 -- Tipos de brilho como parte de LibCustomGlow
 L.pixelGlow = "Brilho de Pixel"

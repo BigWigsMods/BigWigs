@@ -50,7 +50,6 @@ local glowValues = {
 }
 
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
-local GetCVar = C_CVar.GetCVar
 local UnitCanAttack = BigWigsLoader.UnitCanAttack
 local UnitTokenFromGUID = BigWigsLoader.UnitTokenFromGUID
 
@@ -76,11 +75,12 @@ local iconDefaults = {
 	iconGrowDirection = "LEFT",
 	iconGrowDirectionStart = "LEFT",
 	iconSpacing = 1,
-	iconWidth = 15,
-	iconHeight = 15,
+	iconWidthTarget = 16,
+	iconHeightTarget = 16,
+	iconWidthOthers = 16,
+	iconHeightOthers = 16,
 	iconOffsetX = 0,
 	iconOffsetY = 0,
-	iconAutoScale = true,
 	iconCooldownNumbers = true,
 	iconFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
 	iconFontSize = 7,
@@ -155,11 +155,17 @@ local function updateProfile()
 	if db.iconSpacing < 0 or db.iconSpacing > 20 then
 		db.iconSpacing = plugin.defaultDB.iconSpacing
 	end
-	if db.iconWidth < 12 or db.iconWidth > 50 then
-		db.iconWidth = plugin.defaultDB.iconWidth
+	if db.iconWidthTarget < 12 or db.iconWidthTarget > 50 then
+		db.iconWidthTarget = plugin.defaultDB.iconWidthTarget
 	end
-	if db.iconHeight < 12 or db.iconHeight > 50 then
-		db.iconHeight = plugin.defaultDB.iconHeight
+	if db.iconHeightTarget < 12 or db.iconHeightTarget > 50 then
+		db.iconHeightTarget = plugin.defaultDB.iconHeightTarget
+	end
+	if db.iconWidthOthers < 12 or db.iconWidthOthers > 50 then
+		db.iconWidthOthers = plugin.defaultDB.iconWidthOthers
+	end
+	if db.iconHeightOthers < 12 or db.iconHeightOthers > 50 then
+		db.iconHeightOthers = plugin.defaultDB.iconHeightOthers
 	end
 	if db.iconOffsetX < -100 or db.iconOffsetX > 100 then
 		db.iconOffsetX = plugin.defaultDB.iconOffsetX
@@ -432,7 +438,7 @@ local function getIconFrame()
 		iconFrame:SetFixedFrameStrata(true)
 		iconFrame:SetFrameLevel(5500)
 		iconFrame:SetClampedToScreen(true)
-		iconFrame:SetSize(db.iconWidth, db.iconHeight)
+		iconFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
 
 		local icon = iconFrame:CreateTexture()
 		icon:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark")
@@ -729,10 +735,56 @@ do
 						name = L.general,
 						order = 1,
 						args = {
+							iconSizeTargetHeader = {
+								type = "header",
+								name = L.headerIconSizeTarget,
+								order = 1,
+							},
+							iconWidthTarget = {
+								type = "range",
+								name = L.width,
+								order = 2,
+								min = 12,
+								max = 50,
+								step = 1,
+								width = 1.5,
+							},
+							iconHeightTarget = {
+								type = "range",
+								name = L.height,
+								order = 3,
+								min = 12,
+								max = 50,
+								step = 1,
+								width = 1.5,
+							},
+							iconSizeOthersHeader = {
+								type = "header",
+								name = L.headerIconSizeOthers,
+								order = 4,
+							},
+							iconWidthOthers = {
+								type = "range",
+								name = L.width,
+								order = 5,
+								min = 12,
+								max = 50,
+								step = 1,
+								width = 1.5,
+							},
+							iconHeightOthers = {
+								type = "range",
+								name = L.height,
+								order = 6,
+								min = 12,
+								max = 50,
+								step = 1,
+								width = 1.5,
+							},
 							anchoringHeader = {
 								type = "header",
 								name = L.anchoring,
-								order = 1,
+								order = 7,
 								width = "full",
 							},
 							iconGrowDirectionStart = {
@@ -740,14 +792,14 @@ do
 								values = validFramePoints,
 								name = L.growStartPosition,
 								desc = L.growStartPositionDesc,
-								order = 2,
+								order = 8,
 								width = 1.5,
 							},
 							iconGrowDirection = {
 								type = "select",
 								name = L.growDirection,
 								desc = L.growDirectionDesc,
-								order = 3,
+								order = 9,
 								width = 1.5,
 								values = validGrowDirections,
 							},
@@ -755,7 +807,7 @@ do
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								order = 4,
+								order = 10,
 								max = 100,
 								min = -100,
 								step = 1,
@@ -765,7 +817,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								order = 5,
+								order = 11,
 								max = 100,
 								min = -100,
 								step = 1,
@@ -775,7 +827,7 @@ do
 								type = "range",
 								name = L.spacing,
 								desc = L.iconSpacingDesc,
-								order = 6,
+								order = 12,
 								min = 0,
 								max = 20,
 								step = 1,
@@ -784,38 +836,20 @@ do
 							iconHeader = {
 								type = "header",
 								name = L.icon,
-								order = 10,
-							},
-							iconWidth = {
-								type = "range",
-								name = L.width,
-								order = 11,
-								min = 12,
-								max = 50,
-								step = 1,
-								width = 1,
-							},
-							iconHeight = {
-								type = "range",
-								name = L.height,
-								order = 12,
-								min = 12,
-								max = 50,
-								step = 1,
-								width = 1,
+								order = 13,
 							},
 							iconAspectRatio = {
 								type = "toggle",
 								name = L.keepAspectRatio,
 								desc = L.keepAspectRatioDesc,
-								order = 13,
+								order = 14,
 								width = 1,
 							},
 							iconColor = {
 								type = "color",
 								name = L.iconColor,
 								desc = L.iconColorDesc,
-								order = 14,
+								order = 15,
 								hasAlpha = true,
 								width = 1,
 								get = function()
@@ -830,14 +864,14 @@ do
 								type = "toggle",
 								name = L.desaturate,
 								desc = L.desaturateDesc,
-								order = 15,
+								order = 16,
 								width = 1,
 							},
 							iconZoom = {
 								type = "range",
 								name = L.zoom,
 								desc = L.zoomDesc,
-								order = 16,
+								order = 17,
 								min = 0,
 								max = 0.5,
 								step = 0.01,
@@ -848,13 +882,13 @@ do
 								type = "toggle",
 								name = L.showBorder,
 								desc = L.showBorderDesc,
-								order = 17,
+								order = 18,
 								width = 1,
 							},
 							iconBorderColor = {
 								type = "color",
 								name = L.borderColor,
-								order = 18,
+								order = 19,
 								hasAlpha = true,
 								width = 1,
 								disabled = function() return not db.iconBorder end,
@@ -869,7 +903,7 @@ do
 							iconBorderSize = {
 								type = "range",
 								name = L.borderSize,
-								order = 19,
+								order = 20,
 								min = 1,
 								max = 5,
 								step = 1,
@@ -879,7 +913,7 @@ do
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 100,
+								order = 21,
 							},
 							reset = {
 								type = "execute",
@@ -892,7 +926,7 @@ do
 										plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
 									end
 								end,
-								order = 101,
+								order = 22,
 							},
 						},
 					},
@@ -1131,11 +1165,25 @@ do
 						name = L.advanced,
 						order = 4,
 						args = {
-							iconAutoScale = {
-								type = "toggle",
-								name = L.autoScale,
-								desc = L.autoScaleDesc,
+							iconFrameStrata = {
+								type = "select",
+								values = {MEDIUM="MEDIUM"},
+								name = "Icon Strata (NYI)",
+								get = function() return "MEDIUM" end,
 								order = 1,
+								width = 2,
+								disabled = true,
+							},
+							iconFrameLevel = {
+								type = "range",
+								name = "Icon Level (NYI)",
+								get = function() return 5500 end,
+								order = 2,
+								min = 0,
+								max = 10000,
+								step = 1,
+								width = 2,
+								disabled = true,
 							},
 						},
 					},
@@ -1334,16 +1382,16 @@ do
 						if i > 1 then -- Only use setup offset for first icon
 							local growOffset = db.iconSpacing
 							if growDirection == "UP" then
-								growOffset = growOffset + db.iconHeight
+								growOffset = growOffset + (plugin:UnitGUID("target") == guid and db.iconHeightTarget or db.iconHeightOthers)
 								offsetY = offsetY + growOffset
 							elseif growDirection == "DOWN" then
-								growOffset = -(growOffset + db.iconHeight)
+								growOffset = -(growOffset + (plugin:UnitGUID("target") == guid and db.iconHeightTarget or db.iconHeightOthers))
 								offsetY = offsetY + growOffset
 							elseif growDirection == "LEFT" then
-								growOffset = -(growOffset + db.iconWidth)
+								growOffset = -(growOffset + (plugin:UnitGUID("target") == guid and db.iconWidthTarget or db.iconWidthOthers))
 								offsetX = offsetX + growOffset
 							else -- RIGHT
-								growOffset = growOffset + db.iconWidth
+								growOffset = growOffset + (plugin:UnitGUID("target") == guid and db.iconWidthTarget or db.iconWidthOthers)
 								offsetX = offsetX + growOffset
 							end
 						end
@@ -1545,21 +1593,13 @@ end
 
 local function createNameplateIcon(module, guid, key, length, icon)
 	local iconFrame = getIconFrame()
-	local width = db.iconWidth
-	local height = db.iconHeight
-
-	iconFrame:SetSize(width, height)
 	local target = module:UnitGUID("target")
 	if guid == target then
+		iconFrame:SetSize(db.iconWidthTarget, db.iconHeightTarget)
 		iconFrame:SetFrameLevel(5555)
-		if db.iconAutoScale then
-			iconFrame:SetScale(GetCVar("nameplateSelectedScale"))
-		end
 	else
+		iconFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
 		iconFrame:SetFrameLevel(5500)
-		if db.iconAutoScale then
-			iconFrame:SetScale(GetCVar("nameplateGlobalScale"))
-		end
 	end
 	iconFrame:Set("bigwigs:key", key)
 	iconFrame:Set("bigwigs:unitGUID", guid)
@@ -1744,22 +1784,20 @@ do
 		if nameplateIcons[guid] then
 			for _, tbl in next, nameplateIcons[guid] do
 				if tbl.nameplateFrame then
+					tbl.nameplateFrame:SetSize(db.iconWidthTarget, db.iconHeightTarget)
 					tbl.nameplateFrame:SetFrameLevel(5555)
-					if db.iconAutoScale then
-						tbl.nameplateFrame:SetScale(GetCVar("nameplateSelectedScale"))
-					end
 				end
 			end
+			rearrangeNameplateIcons(guid)
 		end
 		if prevTarget and nameplateIcons[prevTarget] then
 			for _, tbl in next, nameplateIcons[prevTarget] do
 				if tbl.nameplateFrame then
+					tbl.nameplateFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
 					tbl.nameplateFrame:SetFrameLevel(5500)
-					if db.iconAutoScale then
-						tbl.nameplateFrame:SetScale(GetCVar("nameplateGlobalScale"))
-					end
 				end
 			end
+			rearrangeNameplateIcons(prevTarget)
 		end
 		prevTarget = guid
 	end
