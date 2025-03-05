@@ -44,7 +44,7 @@ if L then
 	L.sonic_ba_boom = "团队伤害"
 	L.polarization_generator = "正负极" -- 极性发生器
 
-	L.polarization_soon = "极性改变: %s" 
+	L.polarization_soon = "极性改变: %s"
 
 	L.activate_inventions = "激活：%s"  --激活发明！
 	L.blazing_beam = "光束" --炙热光束
