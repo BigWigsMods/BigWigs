@@ -475,7 +475,7 @@ end
 
 function mod:SearingShrapnelApplied(args)
 	if self:Me(args.destGUID) then
-		self:Personal(args.spellId)
+		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
