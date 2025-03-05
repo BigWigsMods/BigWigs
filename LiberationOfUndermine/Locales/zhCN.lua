@@ -42,16 +42,16 @@ if L then
 	L.foot_blasters = "地雷"
 	L.screw_up = "钻头"
 	L.sonic_ba_boom = "团队伤害"
-	L.polarization_generator = "正负极"
+	L.polarization_generator = "正负极" -- 极性发生器
 
 	L.polarization_soon = "极性改变: %s"
 
-	--L.activate_inventions = "Activate: %s"
-	--L.blazing_beam = "Beams"
-	--L.rocket_barrage = "Rockets"
-	--L.mega_magnetize = "Magnets"
-	--L.jumbo_void_beam = "Big Beams"
-	--L.void_barrage = "Balls"
+	L.activate_inventions = "激活：%s"  --激活发明！
+	L.blazing_beam = "光束" --炙热光束
+	L.rocket_barrage = "火箭" --火箭弹幕
+	L.mega_magnetize = "磁吸" --超级磁吸
+	L.jumbo_void_beam = "大光束" --大号虚空光束
+	L.void_barrage = "黑球" --虚空弹幕
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
