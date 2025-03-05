@@ -350,8 +350,8 @@ L.fixate_test = "测试文本" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
 L.glowAt = "开始高亮（秒）"
 L.glowAt_desc = "选择在冷却计时剩余多少秒时开始高亮。"
---L.headerIconSizeTarget = "Icon size of your current target"
---L.headerIconSizeOthers = "Icon size of all other targets"
+L.headerIconSizeTarget = "当前目标的图标大小"
+L.headerIconSizeOthers = "其他所有目标的图标大小"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "像素发光"
