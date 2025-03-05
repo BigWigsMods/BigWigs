@@ -464,6 +464,7 @@ do
 		[222]=true,[217]=true,[212]=true,[260]=true,[220]=true,[219]=true,[218]=true,[221]=true,[223]=true,
 		[213]=true,[215]=true,[178]=true,[209]=true,[214]=true,[216]=true,
 		[208]=true,[211]=true,[224]=true,[225]=true,[210]=true,
+		[279]=true,[280]=true,[281]=true,[282]=true,[283]=true,[284]=true,[285]=true,[286]=true,
 	}
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
@@ -559,6 +560,11 @@ do
 					-- tbl.subtitle is "Feature Unlocked!"
 					-- We just hide this as we already show that you unlocked a point alongside the level up message
 					tbl.title = nil
+				elseif tbl.eventToastID == 277 then -- Nemesis Strongbox Upgraded
+					-- tbl.title is "Nemesis Strongbox Upgraded"
+					tbl.subtitle = tbl.title
+					tbl.title = nil
+					printMessage(self, tbl)
 				else -- Something we don't support, pass to Blizz to process
 					return
 				end
