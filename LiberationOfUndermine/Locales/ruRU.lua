@@ -45,12 +45,12 @@ if L then
 
 	L.polarization_soon = "Смена цвета скоро: %s"
 
-	--L.activate_inventions = "Activate: %s"
-	--L.blazing_beam = "Beams"
-	--L.rocket_barrage = "Rockets"
-	--L.mega_magnetize = "Magnets"
-	--L.jumbo_void_beam = "Big Beams"
-	--L.void_barrage = "Balls"
+	L.activate_inventions = "Активированы: %s"
+	L.blazing_beam = "Лучи"
+	L.rocket_barrage = "Ракеты"
+	L.mega_magnetize = "Магниты"
+	L.jumbo_void_beam = "Большие лучи"
+	L.void_barrage = "Шарики"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "ruRU")
