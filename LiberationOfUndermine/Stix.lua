@@ -23,7 +23,7 @@ local powercoilCount = 1
 local muffledDoomsplosionCount = 0
 
 local mobCollector = {}
-local mobMarks = {}
+local mobMark = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -48,7 +48,7 @@ end
 --
 
 local rollingRubbishMarker = mod:AddMarkerOption(false, "player", 1, 461536, 1, 2, 3, 4)
-local territorialBombshellMarker = mod:AddMarkerOption(false, "npc", 1, -30451, 8, 7, 6, 5, 4)
+local territorialBombshellMarker = mod:AddMarkerOption(false, "npc", 1, -30451, 8, 7, 6, 5)
 function mod:GetOptions()
 	return {
 		territorialBombshellMarker,
@@ -70,7 +70,7 @@ function mod:GetOptions()
 			466748, -- Infected Bite
 
 		-- Incinerator
-		464149, -- Incinerator
+		{464149, "CASTBAR"}, -- Incinerator
 			472893, -- Incineration
 			464248, -- Hot Garbage
 
@@ -126,6 +126,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "Overdrive", 467117)
 	self:Log("SPELL_CAST_START", "TrashCompactor", 467109)
+	self:Log("SPELL_CAST_SUCCESS", "TrashCompactorSuccess", 467109)
 
 	self:Log("SPELL_DAMAGE", "GarbageDumpDamage", 465741) -- for Rolling Rubbish hitting the boss
 	self:Log("SPELL_DAMAGE", "MuffledDoomsplosionDamage", 465747) -- for Rolling Rubbish picking up Doomsplosives
@@ -152,13 +153,12 @@ function mod:OnEngage()
 	powercoilCount = 1
 
 	mobCollector = {}
-	mobMarks = {}
 
 	self:Bar(464149, 11.1, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator -- Fire
 	self:Bar(464112, 17.7, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
 	self:Bar(464399, 22.2, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)) -- Electromagnetic Sorting -- Balls + Adds
 	self:Bar(1217954, 45.5, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
-	self:Bar(467117, self:Mythic() and 66.7 or 100.0) -- Overdrive
+	self:Bar(467117, self:Mythic() and 66.7 or 111.2) -- Overdrive
 	if self:Mythic() then
 		self:Bar(1218704, 33.3, CL.count:format(self:SpellName(1218704), powercoilCount)) -- Prototype Powercoil
 	end
@@ -175,17 +175,14 @@ end
 function mod:AddMarking(_, unit, guid)
 	if mobCollector[guid] and self:GetOption(territorialBombshellMarker) then
 		self:CustomIcon(territorialBombshellMarker, unit, mobCollector[guid])
+		mobCollector[guid] = nil
 	end
 end
 
 function mod:ShortFuseApplied(args)
-	for i = 8, 4, -1 do
-		if not mobMarks[i] then
-			mobCollector[args.destGUID] = i
-			mobMarks[i] = args.destGUID
-			return
-		end
-	end
+	if mobMark < 5 then return end -- 8, 7, 6, 5
+	mobCollector[args.destGUID] = mobMark
+	mobMark = mobMark - 1
 end
 
 do
@@ -220,12 +217,17 @@ do
 		self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
 		self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
 		electromagneticSortingCount = electromagneticSortingCount + 1
-		muffledDoomsplosionCount = 0
-		local cd = electromagneticSortingCount == 3 and 72.2 or 51.1
+
+		local cd
 		if self:Mythic() then
-			cd = electromagneticSortingCount == 2 and 79.3 or 51.1
+			cd = electromagneticSortingCount == 2 and (33.4 + 22.5) or 51.1
+		else
+			cd = electromagneticSortingCount == 3 and (37.8 + 22.5) or 51.1
 		end
 		self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+
+		muffledDoomsplosionCount = 0
+		mobMark = 8
 		iconList = {}
 	end
 
@@ -306,6 +308,7 @@ do
 		end
 	end
 end
+
 do
 	local prev = 0
 	function mod:MuffledDoomsplosionDamage(args)
@@ -338,12 +341,16 @@ end
 
 function mod:Incinerator(args)
 	self:StopBar(CL.count:format(L.incinerator, incineratorCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.incinerator, incineratorCount))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.incinerator, incineratorCount)))
+	self:CastBar(args.spellId, 3)
 	self:PlaySound(args.spellId, "alert") -- debuffs
 	incineratorCount = incineratorCount + 1
-	local cd = incineratorCount == 5 and 46.7 or 25
+
+	local cd
 	if self:Mythic() then
-		cd = incineratorCount == 4 and 28.2 or 25.5
+		cd = incineratorCount == 4 and (14.5 + 11.4) or 25.6
+	else
+		cd = incineratorCount == 5 and (23.4 + 11.4) or 25.6
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.incinerator, incineratorCount))
 end
@@ -360,9 +367,12 @@ function mod:Demolish(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, demolishCount))
 	self:PlaySound(args.spellId, "info")
 	demolishCount = demolishCount + 1
-	local cd = demolishCount == 3 and 72.2 or 51.5
+
+	local cd
 	if self:Mythic() then
-		cd = demolishCount == 2 and 79.3 or 51.1
+		cd = demolishCount == 2 and (48.9 + 18.1) or 51.1
+	else
+		cd = demolishCount == 3 and (42.2 + 18.0) or 51.1
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, demolishCount)) -- Delayed once due to overdrive?
 end
@@ -386,9 +396,12 @@ function mod:Meltdown(args)
 		self:PlaySound(args.spellId, "alert") -- healer
 	end
 	meltdownCount = meltdownCount + 1
-	local cd = meltdownCount == 3 and 72.2 or 51.5
+
+	local cd
 	if self:Mythic() then
-		cd = meltdownCount == 2 and 79.4 or 51.1
+		cd = meltdownCount == 2 and (21.2 + 45.7) or 51.1
+	else
+		cd = meltdownCount == 3 and (14.5 + 45.7) or 51.1
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, meltdownCount)) -- Delayed once due to overdrive?
 end
@@ -398,15 +411,30 @@ function mod:Overdrive(args)
 	self:SetStage(2)
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long") -- flying away
-	-- self:Bar(467109, 13.25, L.landing) -- Trash Compactor // 12.5~14s
 
-	-- XXX maybe make the gap bar time to overdrive + cd then just pause here? (ala broodtwister)
+	self:PauseBar(464149, CL.count:format(self:SpellName(464149), incineratorCount)) -- Incinerator
+	self:PauseBar(464112, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
+	self:PauseBar(464399, CL.count:format(self:SpellName(464399), electromagneticSortingCount)) -- Electromagnetic Sorting
+	self:PauseBar(1217954, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
+	if self:Mythic() then
+		self:PauseBar(1218704, CL.count:format(self:SpellName(1218704), powercoilCount))
+	end
 end
 
 function mod:TrashCompactor(args)
 	self:Message(467135, "red")
 	self:PlaySound(467135, "warning") -- watch drop location
 	self:CastBar(467135, 3.75)
+end
+
+function mod:TrashCompactorSuccess(args)
+	self:ResumeBar(464149, CL.count:format(self:SpellName(464149), incineratorCount)) -- Incinerator
+	self:ResumeBar(464112, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
+	self:ResumeBar(464399, CL.count:format(self:SpellName(464399), electromagneticSortingCount)) -- Electromagnetic Sorting
+	self:ResumeBar(1217954, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
+	if self:Mythic() then
+		self:ResumeBar(1218704, CL.count:format(self:SpellName(1218704), powercoilCount)) -- Prototype Powercoil
+	end
 end
 
 function mod:MarkedForRecyclingApplied(args)
@@ -431,7 +459,9 @@ do
 			self:StopBar(CL.count:format(args.spellName, powercoilCount))
 			self:Message(args.spellId, "cyan", CL.count:format(args.spellName, powercoilCount))
 			powercoilCount = powercoilCount + 1
-			self:Bar(args.spellId, powercoilCount == 2 and 69.6 or 51.5, CL.count:format(args.spellName, powercoilCount))
+
+			local cd = powercoilCount == 2 and (33.4 + 33.6) or 51.1
+			self:Bar(args.spellId, cd, CL.count:format(args.spellName, powercoilCount))
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
