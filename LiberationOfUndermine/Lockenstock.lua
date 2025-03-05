@@ -75,7 +75,7 @@ end
 local inventions = {
 	{ L.blazing_beam, L.rocket_barrage, L.mega_magnetize },
 	{ L.jumbo_void_beam, CL.plus:format(L.jumbo_void_beam, L.rocket_barrage), CL.plus:format(L.jumbo_void_beam, L.mega_magnetize) },
-	{ L.void_barrage, CL.plus:format(L.mega_magnetize, L.void_barrage), CL.plus:format(L.jumbo_void_beam, L.void_barrage) }
+	{ L.void_barrage, CL.plus:format(L.mega_magnetize, L.void_barrage), CL.plus:format(L.blazing_beam, CL.plus:format(L.mega_magnetize, L.void_barrage)) }
 }
 
 --------------------------------------------------------------------------------
