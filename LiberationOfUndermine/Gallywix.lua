@@ -124,7 +124,7 @@ function mod:GetOptions()
 				1216845, -- Wrench XXX Nameplate flag when implemented
 				1216852, -- Lumbering Rage
 		-- Intermission: Docked and Loaded
-			1214226, -- Cratering
+			-- 1214226, -- Cratering
 			1214229, -- Armageddon-class Plating
 			1219319, -- Radiant Electricity
 			{1214369, "CASTBAR"}, -- TOTAL DESTRUCTION!!!
