@@ -365,6 +365,9 @@ do
 			-- if not self:Mythic() and self:GetStage() < 3 and frostshatterBootsCount < 3 then -- 2 per in heroic/normal, 1 in mythic
 			-- 	self:Bar(args.spellId, 30.0, CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
 			-- end
+			if self:GetStage() == 3 and frostshatterBootsCount < 3 then -- 2 per in normal
+				self:Bar(args.spellId, 86.2, CL.count:format(args.spellName, frostshatterBootsCount))
+			end
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.frostshatter_boots)
@@ -464,9 +467,10 @@ function mod:UnstableCrawlerMines(args)
 	unstableCrawlerMinesCount = unstableCrawlerMinesCount + 1
 	-- if self:GetStage() < 3 and unstableCrawlerMinesCount < 3 then -- 2 per in heroic/normal/mythic
 	-- 	self:Bar(466539, 44.0, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
-	-- elseif self:GetStage() == 3 and unstableCrawlerMinesCount < 3 then -- 2 per in heroic/normal
-	-- 	self:Bar(466539, 72.0, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
 	-- end
+	if self:GetStage() == 3 and unstableCrawlerMinesCount < 3 then -- 2 per in normal
+		self:Bar(466539, 88.7, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
+	end
 end
 
 function mod:SearingShrapnelApplied(args)
