@@ -139,7 +139,7 @@ function mod:GetOptions()
 	},{
 		[466340] = -30490, -- Stage One: The House of Chrome
 		[469286] = -30497, -- Stage Two: Mechanical Maniac
-		[1214226] = -31558, -- Intermission: Docked and Loaded
+		[1214229] = -31558, -- Intermission: Docked and Loaded
 		[1214607] = -31445, -- Stage Three: What an Arsenal!
 	},{
 		[1220761] = CL.heal_absorb, -- Mechengineer's Canisters
