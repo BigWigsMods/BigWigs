@@ -358,7 +358,7 @@ do
 			prev = args.time
 			self:StopBar(CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
 			self:Message(args.spellId, "red", CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
-			if not self:Mythic() then
+			if not self:Easy() then
 				self:Bar(466480, 8, L.frostshatter_spear) -- Frostshatter Spear
 			end
 			frostshatterBootsCount = frostshatterBootsCount + 1
