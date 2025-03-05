@@ -31,15 +31,27 @@ local fullSparkblastIgnitionCount = 1
 local mobCollector = {}
 local mobMarks = {}
 
-local timersMythic = {
-	[473748] = {10.7, 38.1, 41.0, 0}, -- Amplification!
-	[472306] = {17.0, 43.0, 41.2, 0}, -- Sparkblast Ignition
-	[466866] = {22.0, 57.5, 0}, -- Echoing Chant
-	[467606] = {30.1, 37.0, 0}, -- Sound Cannon
-	[466979] = {38.0, 37.0, 24.0, 0}, -- Faulty Zap
+local timersNormal = {
+	[473748] = { 10.0, 41.2, 37.8, 0 }, -- Amplification!
+	[466866] = { 24.5, 58.5, 28.5, 0 }, -- Echoing Chant
+	[467606] = { 32.0, 35.0, 0 }, -- Sound Cannon
+	[466979] = { 43.5, 31.5, 26.5, 0 }, -- Faulty Zap
 }
-
-local timers = timersMythic
+local timersHeroic = {
+	[473748] = { 10.9, 39.6, 39.2, 0 }, -- Amplification!
+	[466866] = { 24.6, 58.5, 0 }, -- Echoing Chant
+	[467606] = { 32.1, 35.0, 0 }, -- Sound Cannon
+	[466979] = { 43.5, 31.5, 26.0, 0 }, -- Faulty Zap
+	[472306] = { 26.1, 39.9, 42.9, 0 }, -- Sparkblast Ignition
+}
+local timersMythic = {
+	[473748] = { 10.7, 38.1, 41.0, 0 }, -- Amplification!
+	[466866] = { 25.0, 57.5, 0 }, -- Echoing Chant
+	[467606] = { 30.1, 37.0, 0 }, -- Sound Cannon
+	[466979] = { 38.0, 37.0, 24.0, 0 }, -- Faulty Zap
+	[472306] = { 17.0, 43.0, 41.2, 0 }, -- Sparkblast Ignition
+}
+local timers = mod:Easy() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -106,7 +118,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ResonantEchoesApplied", 468119)
 	self:Log("SPELL_AURA_APPLIED", "EntrancedApplied", 1214598)
 	self:Log("SPELL_AURA_APPLIED", "HaywireApplied", 466093)
-	self:Log("SPELL_CAST_START", "EchoingChant", 466866)
+	self:Log("SPELL_CAST_SUCCESS", "EchoingChant", 466866)
 	self:Log("SPELL_CAST_START", "SoundCannon", 467606)
 	self:Log("SPELL_AURA_APPLIED", "SoundCannonApplied", 469380)
 	self:Log("SPELL_AURA_REMOVED", "SoundCannonRemoved", 469380)
@@ -128,7 +140,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HypeFever", 473655)
 	self:Log("SPELL_CAST_SUCCESS", "HypeFeverSuccess", 473655)
 
-	timers = timersMythic
+	timers = self:Easy() and timersNormal or self:Mythic() and timersMythic or timersHeroic
 end
 
 function mod:OnEngage()
@@ -249,9 +261,11 @@ function mod:EntrancedApplied(args)
 end
 
 function mod:HaywireApplied(args)
-	local icon = self:GetIconTexture(self:GetIcon(args.destRaidFlags)) or ""
-	self:Message(args.spellId, "red", args.spellName .. icon)
-	self:PlaySound(args.spellId, "alarm")
+	if self:GetStage() == 1 then
+		local icon = self:GetIconTexture(self:GetIcon(args.destRaidFlags)) or ""
+		self:Message(args.spellId, "red", args.spellName .. icon)
+		self:PlaySound(args.spellId, "alarm")
+	end
 end
 
 function mod:EchoingChant(args)
@@ -260,8 +274,9 @@ function mod:EchoingChant(args)
 	self:PlaySound(args.spellId, "alert") -- watch amplifiers
 	echoingChantCount = echoingChantCount + 1
 	fullEchoingChantCount = fullEchoingChantCount + 1
+
 	local cd = timers[args.spellId][echoingChantCount]
-	if fullEchoingChantCount == 3 then -- 3 before first p2, then 2
+	if fullEchoingChantCount == 3 and self:Mythic() then -- 3 before first p2, then 2
 		cd = 32.5
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.echoing_chant, fullEchoingChantCount))
@@ -301,7 +316,8 @@ function mod:SoundCannonRemoved(args)
 	end
 end
 
-function mod:SoundCannonSuccess(args) -- increase count here incase of re-casting
+function mod:SoundCannonSuccess(args)
+	-- increase count here incase of re-casting
 	soundCannonCount = soundCannonCount + 1
 	fullSoundCannonCount = fullSoundCannonCount + 1
 end
@@ -370,7 +386,7 @@ function mod:SoundCloudApplied(args)
 	self:PlaySound("stages", "long") -- stage 2
 	soundCloudCount = soundCloudCount + 1
 	if soundCloudCount < 3 then
-		self:Bar("stages", 28, CL.stage:format(1), args.spellId)
+		self:Bar("stages", 32, CL.stage:format(1), args.spellId)
 	end
 
 	blaringDropCount = 1
@@ -384,7 +400,7 @@ function mod:SoundCloudRemoved(args)
 	self:Message("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long") -- stage 1
 	if soundCloudCount < 3 then
-		self:Bar("stages", 121, CL.stage:format(2), 66911) -- disco ball icon // until _applied
+		self:Bar("stages", 120, CL.stage:format(2), 66911) -- disco ball icon // until _applied
 	else
 		self:Bar(473655, 115) -- third cast -> Hype Fever
 	end
