@@ -44,6 +44,13 @@ if L then
 	--L.polarization_generator = "Color Swaps"
 
 	--L.polarization_soon = "Color Swap Soon: %s"
+
+	--L.activate_inventions = "Activate: %s"
+	--L.blazing_beam = "Beams"
+	--L.rocket_barrage = "Rockets"
+	--L.mega_magnetize = "Magnets"
+	--L.jumbo_void_beam = "Big Beams"
+	--L.void_barrage = "Balls"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "frFR")

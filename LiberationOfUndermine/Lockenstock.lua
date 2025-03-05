@@ -14,7 +14,7 @@ mod:SetStage(1)
 -- Locals
 --
 
-local activateInventions = 1
+local activateInventionsCount = 1
 local footBlasterCount = 1
 local pyroPartyPackCount = 1
 local screwUpCount = 1
@@ -27,14 +27,14 @@ local polarizationGeneratorCount = 1
 local myCharge = nil
 
 local timersNormal = {
-	[1218418] = { 0.0, 41.0, 30.0, 30.0, 0 }, -- Wire Transfer
-	[1216509] = { 16.0, 34.0, 31.0, 0 }, -- Screw Up
-	[465232] = { 6.0, 30.0, 30.0, 30.0, 0 }, -- Sonic Ba-Boom
-	[1214878] = { 26.1, 32.0, 30.0, 23.0, 0 }, -- Pyro Party Pack
+	[1218418] = { 2.0, 39.0, 60.0, 0 }, -- Wire Transfer
+	[1216509] = { 47.0, 31.0, 31.0, 0 }, -- Screw Up
+	[465232] = { 8.0, 28.0, 27.0, 32.0, 0 }, -- Sonic Ba-Boom
+	[1214878] = { 23.1, 34.0, 30.1, 0 }, -- Pyro Party Pack
 }
 local timersHeroic = {
-	[1217231] = { 12.0, 62.0, 31.0, 0 }, -- Foot-Blasters
-	[1218418] = { 0.0, 41.0, 28.0, 28.0, 0 }, -- Wire Transfer
+	[1217231] = { 12.0, 62.0, 0 }, -- Foot-Blasters
+	[1218418] = { 0.0, 41.0, 56.0, 0 }, -- Wire Transfer
 	[1216509] = { 47.0, 33.0, 32.0, 0 }, -- Screw Up
 	[465232]  = { 6.0, 28.0, 29.0, 30.0, 0 }, -- Sonic Ba-Boom
 	[1214878] = { 23.0, 34.0, 30.0, 0 }, -- Pyro Party Pack
@@ -63,7 +63,20 @@ if L then
 	L.nega_polarization = _G.RED_GEM
 
 	L.polarization_soon = "Color Swap Soon: %s"
+
+	L.activate_inventions = "Activate: %s"
+	L.blazing_beam = "Beams"
+	L.rocket_barrage = "Rockets"
+	L.mega_magnetize = "Magnets"
+	L.jumbo_void_beam = "Big Beams"
+	L.void_barrage = "Balls"
 end
+
+local inventions = {
+	{ L.blazing_beam, L.rocket_barrage, L.mega_magnetize },
+	{ L.jumbo_void_beam, CL.plus:format(L.jumbo_void_beam, L.rocket_barrage), CL.plus:format(L.jumbo_void_beam, L.mega_magnetize) },
+	{ L.void_barrage, CL.plus:format(L.mega_magnetize, L.void_barrage), CL.plus:format(L.jumbo_void_beam, L.void_barrage) }
+}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -156,7 +169,7 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	activateInventions = 1
+	activateInventionsCount = 1
 	footBlasterCount = 1
 	pyroPartyPackCount = 1
 	screwUpCount = 1
@@ -177,8 +190,8 @@ function mod:OnEngage()
 	end
 	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
-	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
-	self:Bar("stages", self:Easy() and 121.8 or 127.4, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
+	self:Bar(473276, 30.0, CL.count:format(inventions[1][1], activateInventionsCount)) -- Activate Inventions!
+	self:Bar("stages", 121.6, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
 end
 
 --------------------------------------------------------------------------------
@@ -188,13 +201,13 @@ end
 -- Stage 1
 
 function mod:ActivateInventions(args)
-	self:StopBar(CL.count:format(args.spellName, activateInventions))
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, activateInventions))
+	self:StopBar(CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount))
+	self:Message(args.spellId, "cyan", CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount))
 	self:PlaySound(args.spellId, "long")
-	activateInventions = activateInventions + 1
+	activateInventionsCount = activateInventionsCount + 1
 
-	if activateInventions < 4 then -- 3 per
-		self:Bar(args.spellId, 30, CL.count:format(args.spellName, activateInventions))
+	if activateInventionsCount < 4 then -- 3 per
+		self:Bar(args.spellId, 30, CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount))
 	end
 end
 
@@ -285,25 +298,25 @@ function mod:BetaLaunch(args)
 	self:StopBar(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
 	self:StopBar(CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
-	self:StopBar(CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
+	-- self:StopBar(CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount)) -- Activate Inventions!
 	self:StopBar(CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	-- self:StopBar(CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
 
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), args.spellId)
 	self:PlaySound("stages", "long")
-	-- self:CastBar(args.spellId, 2, CL.knockback)
+	-- self:CastBar(args.spellId, 4, L.beta_launch_cast)
 	betaLaunchCount = betaLaunchCount + 1
 
 	voidsplosionCount = 1
 
-	self:Bar(1218319, 4.8, CL.count:format(self:SpellName(1218319), voidsplosionCount)) -- Voidsplosion
+	self:Bar(1218319, self:Mythic() and 4.8 or 6.3, CL.count:format(self:SpellName(1218319), voidsplosionCount)) -- Voidsplosion
 end
 
 function mod:BleedingEdge(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
-	self:Bar("stages", 20, CL.stage:format(1), args.spellId)
+	self:Bar("stages", self:Easy() and 10 or 20, CL.stage:format(1), args.spellId)
 end
 
 do
@@ -315,7 +328,7 @@ do
 			self:Message(args.spellId, "orange", CL.count:format(args.spellName, voidsplosionCount))
 			self:PlaySound(args.spellId, "alert") -- healer
 			voidsplosionCount = voidsplosionCount + 1
-			if voidsplosionCount < 5 then
+			if voidsplosionCount < (self:Easy() and 3 or 5) then
 				self:Bar(args.spellId, 5, CL.count:format(args.spellName, voidsplosionCount)) -- Voidsplosion
 			end
 		end
@@ -327,13 +340,12 @@ function mod:UpgradedBloodtechApplied(args)
 	self:Message("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long")
 
-	activateInventions = 1
+	activateInventionsCount = 1
 	footBlasterCount = 1
 	pyroPartyPackCount = 1
 	screwUpCount = 1
 	sonicBaBoomCount = 1
 	wireTransferCount = 1
-	betaLaunchCount = 1
 	-- polarizationGeneratorCount = 1
 
 	-- self:Bar(1218418, timers[1218418][1], CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer (casted immediately)
@@ -346,7 +358,7 @@ function mod:UpgradedBloodtechApplied(args)
 	end
 	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
-	self:Bar(473276, 30.0, CL.count:format(self:SpellName(473276), activateInventions)) -- Activate Inventions!
+	self:Bar(473276, 30.0, CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount)) -- Activate Inventions!
 	if betaLaunchCount < 3 then
 		self:Bar("stages", 120.3, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
 	elseif betaLaunchCount == 3 then

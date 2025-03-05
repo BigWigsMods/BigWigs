@@ -45,6 +45,13 @@ if L then
 	L.polarization_generator = "正负极"
 
 	L.polarization_soon = "极性改变: %s"
+
+	--L.activate_inventions = "Activate: %s"
+	--L.blazing_beam = "Beams"
+	--L.rocket_barrage = "Rockets"
+	--L.mega_magnetize = "Magnets"
+	--L.jumbo_void_beam = "Big Beams"
+	--L.void_barrage = "Balls"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
