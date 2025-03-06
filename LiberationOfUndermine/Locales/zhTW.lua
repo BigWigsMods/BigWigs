@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "zhTW")
 if not L then return end
 if L then
-	L.plating_removed = "還剩 %d 層防身板金"
+	L.plating_removed = "剩餘 %d 層防身板金"
 	L.exhaust_fumes = "煙霧" --排出煙霧
 end
 
@@ -31,7 +31,7 @@ if L then
 	L.garbage_dump_message = "你對首領造成了 %s 點傷害"　-- 視百分比或數值再調整
 
 	L.electromagnetic_sorting = "電磁" -- Short for Electromagnetic Sorting
-	L.muffled_doomsplosion = "悶響爆炸" --悶響末日爆炸 暫定
+	L.muffled_doomsplosion = "悶響爆炸" -- 悶響末日爆炸 暫定
 	L.incinerator = "火圈" -- 火圈/焚化/燒垃圾
 	L.landing = "降落" -- Landing down from the sky
 end
@@ -39,7 +39,7 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhTW")
 if L then
 	L.foot_blasters = "地雷"
-	L.screw_up = "躦頭"
+	L.screw_up = "鑽頭"
 	L.sonic_ba_boom = "音波" --音速轟爆
 	L.polarization_generator = "極性切換" -- 顏色切換/正負極?
 
@@ -70,7 +70,7 @@ if L then
 	L.earthshaker_gaol = "土牢"
 	L.frostshatter_boots = "冰靴" -- Short for Frostshatter Boots 或者乾脆叫「腳滑」吧
 	L.frostshatter_spear = "冰矛" -- Short for Frostshatter Spears
-	L.stormfury_finger_gun = "指槍" -- Short for Stormfury Finger Gun 指槍/閃電/射線
+	L.stormfury_finger_gun = "手指槍" -- Short for Stormfury Finger Gun 指槍/閃電/射線
 	L.molten_gold_knuckles = "坦克擊飛"
 	L.unstable_crawler_mines = "地雷"
 	L.goblin_guided_rocket = "火箭" --或分攤
