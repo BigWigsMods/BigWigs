@@ -292,12 +292,11 @@ function mod:SoundCannonApplied(args)
 	self:TargetBar(467606, 5, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(467606, "warning")
-		local englishText = "Sound Cannon"
 		if self:Mythic() then -- soak
-			self:Yell(467606, nil, nil, englishText)
+			self:Yell(467606, nil, nil, "Sound Cannon")
 			self:YellCountdown(467606, 5)
 		else -- avoid
-			self:Say(467606, nil, nil, englishText)
+			self:Say(467606, nil, nil, "Sound Cannon")
 			self:SayCountdown(467606, 5)
 		end
 	else
