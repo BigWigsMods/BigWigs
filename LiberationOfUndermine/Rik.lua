@@ -32,7 +32,7 @@ local mobCollector = {}
 local mobMarks = {}
 
 local timersNormal = {
-	[473748] = { 10.0, 41.2, 37.8, 0 }, -- Amplification!
+	[473748] = { 9.5, 40.1, 37.8, 0 }, -- Amplification!
 	[466866] = { 24.5, 58.5, 28.5, 0 }, -- Echoing Chant
 	[467606] = { 32.0, 35.0, 0 }, -- Sound Cannon
 	[466979] = { 43.5, 31.5, 26.5, 0 }, -- Faulty Zap
@@ -163,7 +163,7 @@ function mod:OnEngage()
 	mobMarks = {}
 
 
-	self:Bar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
+	self:CDBar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
 	if not self:Easy() then
 		self:Bar(472306, timers[472306][sparkblastIgnitionCount], CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount)) -- Sparkblast Ignition
 	end
@@ -228,7 +228,7 @@ function mod:Amplification(args)
 	self:PlaySound(args.spellId, "alert") -- spawning amplifier
 	amplificationCount = amplificationCount + 1
 	fullAmplificationCount = fullAmplificationCount + 1
-	self:Bar(args.spellId, timers[args.spellId][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount))
+	self:CDBar(args.spellId, timers[args.spellId][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount))
 end
 
 function mod:LingeringVoltageApplied(args)
@@ -411,7 +411,7 @@ function mod:SoundCloudRemoved(args)
 	faultyZapCount = 1
 	sparkblastIgnitionCount = 1
 
-	self:Bar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
+	self:CDBar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
 	if not self:Easy() then
 		self:Bar(472306, timers[472306][sparkblastIgnitionCount], CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount)) -- Sparkblast Ignition
 	end
