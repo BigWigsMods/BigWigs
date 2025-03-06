@@ -28,7 +28,7 @@ if L then
 	L.ball_size_large = "大球！"
 	L.rolled_on_you = "%s 碾了你" -- PlayerX rolled over you
 	L.rolled_from_you = "你碾了 %s" -- (you) Rolled over PlayerX
-	L.garbage_dump_message = "你對首領造成了 %s 點傷害"　-- 視百分比或數值再調整
+	L.garbage_dump_message = "你對首領造成了 %s 點傷害" -- 視百分比或數值再調整
 
 	L.electromagnetic_sorting = "電磁" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "悶響爆炸" -- 悶響末日爆炸 暫定
