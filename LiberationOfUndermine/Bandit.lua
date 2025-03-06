@@ -369,7 +369,7 @@ function mod:WitheringFlamesApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning") -- debuff
-		self:Say(args.spellId, "Flames", nil, "Flames")
+		self:Say(args.spellId, nil, nil, "Flames")
 	end
 end
 
