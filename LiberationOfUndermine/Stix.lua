@@ -53,7 +53,7 @@ function mod:GetOptions()
 	return {
 		territorialBombshellMarker,
 		464399, -- Electromagnetic Sorting
-			{461536, "ME_ONLY_EMPHASIZE"}, -- Rolling Rubbish
+			{461536, "ME_ONLY_EMPHASIZE", "COUNTDOWN"}, -- Rolling Rubbish
 				rollingRubbishMarker,
 				465741, -- Garbage Dump
 				465611, -- Rolled!
@@ -255,6 +255,7 @@ do
 		if self:Me(args.destGUID) then
 			ballSize = 0
 			self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "player", "vehicle")
+			self:TargetBar(args.spellId, 24, args.destName)
 		end
 	end
 
@@ -274,6 +275,7 @@ do
 
 	function mod:RollingRubbishRemoved(args)
 		if self:Me(args.destGUID) then
+			self:StopBar(args.spellName, args.destName)
 			self:PersonalMessage(461536, "removed")
 			self:PlaySound(461536, "info")
 			self:UnregisterUnitEvent("UNIT_POWER_UPDATE", "player", "vehicle")
@@ -422,7 +424,7 @@ function mod:Overdrive(args)
 end
 
 function mod:TrashCompactor(args)
-	self:Message(467135, "red")
+	self:Message(467135, "red", L.landing)
 	self:PlaySound(467135, "warning") -- watch drop location
 	self:CastBar(467135, 3.75)
 end
