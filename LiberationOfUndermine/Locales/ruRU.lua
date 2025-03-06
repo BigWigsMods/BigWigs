@@ -75,6 +75,7 @@ if L then
 	L.unstable_crawler_mines = "Мины"
 	L.goblin_guided_rocket = "Ракета"
 	L.double_whammy_shot = "Танк Соак"
+	--L.electro_shocker = "Shocker"
 end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "ruRU")

@@ -47,6 +47,7 @@ if L then
 	L.unstable_crawler_mines = "Mines"
 	L.goblin_guided_rocket = "Rocket"
 	L.double_whammy_shot = "Tank Soak"
+	L.electro_shocker = "Shocker"
 end
 
 --------------------------------------------------------------------------------
@@ -128,6 +129,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GoldenDripRemoved", 467202)
 	-- Zee
 	self:Log("SPELL_CAST_SUCCESS", "ZeeTakingCharge", 468794)
+	self:Log("SPELL_AURA_APPLIED", "ElectroShockerSpawn", 1215591) -- Faulty Wiring (initial buff)
 	self:Log("SPELL_CAST_SUCCESS", "FaultyWiringApplied", 1215595)
 	self:Log("SPELL_AURA_REMOVED", "ElectroChargedShieldRemoved", 1222948)
 	self:Log("SPELL_CAST_SUCCESS", "UnstableCrawlerMines", 472458)
@@ -268,16 +270,16 @@ function mod:MugTakingCharge(args)
 	self:Message("stages", "cyan", self:SpellName(468728), false) -- 468728 = Mug Taking Charge
 	self:PlaySound("stages", "long")
 
-	earthershakerGaolCount = 1
-	frostshatterBootsCount = 1
-	fingerGunCount = 1
-	moltenGoldKnucklesCount = 1
+	-- earthershakerGaolCount = 1
+	-- frostshatterBootsCount = 1
+	-- fingerGunCount = 1
+	-- moltenGoldKnucklesCount = 1
 
 	self:Bar(472631, 13.9, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
-	self:Bar(466518, self:Easy() and 33.4 or 27.8, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-	self:Bar(466476, self:Easy() and 48.7 or 36.8, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
-	self:Bar(466509, self:Easy() and 60.0 or 50.0, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
-	self:Bar(1216142, self:Easy() and 76.4 or 62, CL.full_energy) -- Double-Minded Fury
+	self:Bar(466518, self:Easy() and 33.4 or self:Heroic() and 30.6 or 27.8, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+	self:Bar(466476, self:Easy() and 48.7 or self:Heroic() and 44.8 or 36.8, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+	self:Bar(466509, self:Easy() and 60.0 or self:Heroic() and 55.0 or 50.0, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
+	self:Bar(1216142, self:Easy() and 76.4 or self:Heroic() and 69.4 or 62, CL.full_energy) -- Double-Minded Fury
 end
 
 do
@@ -365,7 +367,7 @@ do
 			-- if not self:Mythic() and self:GetStage() < 3 and frostshatterBootsCount < 3 then -- 2 per in heroic/normal, 1 in mythic
 			-- 	self:Bar(args.spellId, 30.0, CL.count:format(L.frostshatter_boots, frostshatterBootsCount))
 			-- end
-			if self:GetStage() == 3 and frostshatterBootsCount < 3 then -- 2 per in normal
+			if self:GetStage() == 3 and frostshatterBootsCount < 3 then -- 2 per
 				self:Bar(args.spellId, 86.2, CL.count:format(args.spellName, frostshatterBootsCount))
 			end
 		end
@@ -437,10 +439,18 @@ function mod:ZeeTakingCharge(args)
 	mobMarks = {}
 
 	self:Bar(466539, 15.3, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-	self:Bar(467380, self:Easy() and 35.4 or 29.8, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-	self:Bar(469491, self:Easy() and 50.2 or 42.3, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
-	self:Bar(466545, self:Easy() and 60.0 or 49.9, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
-	self:Bar(1216142, self:Easy() and 76.4 or 62, CL.full_energy) -- Double-Minded Fury
+	self:Bar(467380, self:Easy() and 35.4 or self:Heroic() and 32.6 or 29.8, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+	self:Bar(469491, self:Easy() and 46.7 or self:Heroic() and 42.8 or 38.8, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot
+	self:Bar(466545, self:Easy() and 60.0 or self:Heroic() and 55.0 or 49.9, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
+	self:Bar(1216142, self:Easy() and 76.4 or self:Heroic() and 69.4 or 62, CL.full_energy) -- Double-Minded Fury
+end
+
+function mod:ElectroShockerSpawn(args)
+	if self:GetStage() == 3 then
+		self:StopBar(L.electro_shocker)
+		self:Message(-31766, "cyan", CL.spawned:format(L.electro_shocker), false)
+		self:PlaySound(-31766, "info")
+	end
 end
 
 function mod:FaultyWiringApplied(args)
@@ -457,7 +467,11 @@ end
 
 function mod:ElectroShockerDeath(args)
 	electroShockerDead = electroShockerDead + 1
-	self:Message(-31766, "green", CL.mob_killed:format(args.destName, electroShockerDead, 2), false)
+	if self:GetStage() == 3 then
+		self:Message(-31766, "green", CL.killed:format(L.electro_shocker), false)
+	else
+		self:Message(-31766, "green", CL.mob_killed:format(L.electro_shocker, electroShockerDead, 2), false)
+	end
 	self:PlaySound(-31766, "info")
 end
 
@@ -468,7 +482,7 @@ function mod:UnstableCrawlerMines(args)
 	-- if self:GetStage() < 3 and unstableCrawlerMinesCount < 3 then -- 2 per in heroic/normal/mythic
 	-- 	self:Bar(466539, 44.0, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
 	-- end
-	if self:GetStage() == 3 and unstableCrawlerMinesCount < 3 then -- 2 per in normal
+	if self:GetStage() == 3 and unstableCrawlerMinesCount < 3 then -- 2 per
 		self:Bar(466539, 88.7, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
 	end
 end
@@ -479,15 +493,6 @@ function mod:SearingShrapnelApplied(args)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
-
--- function mod:GoblinGuidedRocket(args)
--- 	self:Message(467380, "orange", CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
--- 	self:PlaySound(467380, "alert")
--- 	goblinGuidedRocketsCount = goblinGuidedRocketsCount + 1
--- 	if self:GetStage() < 3 and goblinGuidedRocketsCount < 3 then -- 2 per in heroic/normal
--- 		self:Bar(467380, 42.1, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
--- 	end
--- end
 
 function mod:GoblinGuidedRocketApplied(args)
 	self:StopBar(CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount))
@@ -587,7 +592,7 @@ end
 function mod:StaticCharge(args)
 	if self:GetStage() < 2.5 then -- just in case
 		self:IntermissionStart(true)
-		self:Bar("stages", 42.3, CL.stage:format(2), "inv_111_raid_achievement_mugzeeheadsofsecurity")
+		self:Bar("stages", 42.9, CL.stage:format(2), "inv_111_raid_achievement_mugzeeheadsofsecurity")
 	end
 	local totalCount = 3
 	self:StopBar(CL.count:format(CL.charge, staticChargeCount))
@@ -627,27 +632,31 @@ function mod:Bloodlust()
 	doubleWhammyShotCount = 1
 	sprayAndPrayCount = 1
 
+	electroShockerDead = 0
+
 	mobMarks = {}
 
 	-- XXX just split it per diff for now
-	if self:Easy() then
+	if not self:Mythic() then -- normal/heroic live
 		self:Bar(466539, 4.9, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
 		self:Bar(466476, 17.8, CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
 		self:Bar(472631, 28.7, CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
 		self:Bar(467380, 40.3, CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+		self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
 		self:Bar(466518, 50.0, CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
 		self:Bar(466509, 62.5, CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
-		self:Bar(469491, 75.3, CL.count:format(self:SpellName(469491), doubleWhammyShotCount)) -- Double Whammy Shot
+		self:Bar(469491, 71.8, CL.count:format(self:SpellName(469491), doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
 		self:Bar(466545, 81.2, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
-		self:Bar(1216142, 118.1) -- Double-Minded Fury
-	else
+		self:Bar(1216142, 118) -- Double-Minded Fury
+	else -- mythic testing
 		self:Bar(466539, 21.5, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
 		self:Bar(466476, 36.2, CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
 		self:Bar(472631, 48.9, CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
 		self:Bar(466518, 60.3, CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+		-- self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
 		self:Bar(467380, 75.2, CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
 		self:Bar(466509, 87.5, CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
-		self:Bar(469491, 99.6, CL.count:format(self:SpellName(469491), doubleWhammyShotCount)) -- Double Whammy Shot
+		self:Bar(469491, 96.1, CL.count:format(self:SpellName(469491), doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
 		self:Bar(466545, 102.1, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
 		self:Bar(1216142, 126) -- Double-Minded Fury
 	end
