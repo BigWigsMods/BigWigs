@@ -350,8 +350,8 @@ L.fixate_test = "고정 테스트" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "이름표 텍스트와 관련된 모든 옵션을 초기화합니다."
 L.glowAt = "반짝임 시작 (초)"
 L.glowAt_desc = "반짝임이 시작될 때 재사용 대기시간이 몇 초 남았는지 선택합니다."
---L.headerIconSizeTarget = "Icon size of your current target"
---L.headerIconSizeOthers = "Icon size of all other targets"
+L.headerIconSizeTarget = "현재 대상의 아이콘 크기"
+L.headerIconSizeOthers = "다른 모든 대상의 아이콘 크기"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "픽셀 반짝임"
