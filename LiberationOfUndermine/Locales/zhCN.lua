@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "zhCN")
 if not L then return end
 if L then
 	L.plating_removed = "剩余 %d 层防御护板"
-	L.exhaust_fumes = "团队伤害"
+	L.exhaust_fumes = "废气"
 end
 
 L = BigWigs:NewBossLocale("Cauldron of Carnage", "zhCN")
@@ -19,7 +19,7 @@ if L then
 	L.amplification = "增幅器"
 	L.echoing_chant = "音波"
 	L.faulty_zap = "电击"
-	L.sparkblast_ignition = "桶"
+	L.sparkblast_ignition = "烟花桶"
 end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "zhCN")
@@ -31,7 +31,7 @@ if L then
 	L.garbage_dump_message = "你对首领造成了 %s 伤害"
 
 	L.electromagnetic_sorting = "电磁分拣" --中文技能名称短，就不简写了
-	L.muffled_doomsplosion = "炸弹吸收"
+	L.muffled_doomsplosion = "炸弹爆炸"
 	L.incinerator = "火圈"
 	L.landing = "降落" -- Landing down from the sky
 
@@ -41,7 +41,7 @@ L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhCN")
 if L then
 	L.foot_blasters = "地雷"
 	L.screw_up = "钻头"
-	L.sonic_ba_boom = "团队伤害"
+	L.sonic_ba_boom = "声波爆轰"
 	L.polarization_generator = "正负极" -- 极性发生器
 
 	L.polarization_soon = "极性改变: %s"
@@ -50,7 +50,7 @@ if L then
 	L.blazing_beam = "光束" --炙热光束
 	L.rocket_barrage = "火箭" --火箭弹幕
 	L.mega_magnetize = "磁吸" --超级磁吸
-	L.jumbo_void_beam = "大光束" --大号虚空光束
+	L.jumbo_void_beam = "虚空光束" --大号虚空光束
 	L.void_barrage = "黑球" --虚空弹幕
 end
 
@@ -72,10 +72,10 @@ if L then
 	L.frostshatter_boots = "冰靴" -- “霜裂冰靴”简写
 	L.frostshatter_spear = "长矛" -- “霜裂长矛”简写
 	L.stormfury_finger_gun = "手指枪" -- “风暴手指枪”简写
-	L.molten_gold_knuckles = "坦克正面"
+	L.molten_gold_knuckles = "真金指虎" --“熔火真金指虎”
 	L.unstable_crawler_mines = "地雷"
 	L.goblin_guided_rocket = "火箭"
-	L.double_whammy_shot = "坦克分摊"
+	L.double_whammy_shot = "双厄射击"
 	L.electro_shocker = "振荡器" --Mk II型电击振荡器
 end
 
