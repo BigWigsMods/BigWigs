@@ -81,9 +81,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IncendiaryFire", 468487)
 	self:Log("SPELL_AURA_APPLIED", "BombVoyageApplied", 459978) -- DOT after getting hit
 	self:Log("SPELL_CAST_START", "TankBuster", 459627)
-	self:Log("SPELL_CAST_SUCCESS", "TankBusterSuccess", 459627)
 	self:Log("SPELL_AURA_APPLIED", "TankBusterApplied", 465865)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankBusterApplied", 465865)
+	self:Log("SPELL_AURA_APPLIED", "ExhaustFumesApplied", 468149) -- On Boss
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ExhaustFumesApplied", 468149)
 
 	self:Log("SPELL_CAST_START", "MechanicalBreakdown", 460603)
 	self:Log("SPELL_AURA_APPLIED", "TuneUpApplied", 460116)
@@ -129,6 +130,7 @@ end
 function mod:UnrelentingCARnage(args)
 	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 	self:StopBar(CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
+	self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
 	self:StopBar(CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
 	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
@@ -177,28 +179,40 @@ function mod:BombVoyageApplied(args) -- cast every 8s
 	end
 end
 
-do
-	local tankbusterCD = 17.0
-	function mod:TankBuster()
-		self:StopBar(CL.count:format(self:SpellName(465865), tankBusterCount))
-		self:Message(465865, "purple", CL.count:format(self:SpellName(465865), tankBusterCount))
-		self:PlaySound(465865, "info")
-		-- 6.2, 23.0, 27.1, 22.1, 59.1, 17.2, 16.7, 20.0, 22.0, 19.7, 75.6, 17.0, 17.0
-		self:Bar(465865, tankbusterCD, CL.count:format(self:SpellName(465865), tankBusterCount + 1))
-	end
+function mod:TankBuster(args)
+	local msg = CL.count:format(self:SpellName(465865), tankBusterCount)
+	self:StopBar(msg)
 
-	function mod:TankBusterSuccess()
-		self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes for non-tanks
-		tankBusterCount = tankBusterCount + 1
-		if not self:Tank() then
-			self:CDBar(468147, tankbusterCD, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes for non-tanks
-		end
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	local destGUID, targetName = nil, nil
+	if unit then
+		local unitTarget = unit.."target"
+		targetName = self:UnitName(unitTarget)
+		destGUID = self:UnitGUID(unitTarget)
 	end
+	if destGUID and targetName then
+		self:TargetMessage(465865, "purple", targetName, msg)
+		if self:Me(destGUID) then
+			self:PlaySound(465865, "alarm", nil, targetName) -- On you
+		elseif self:Tank() then
+			self:PlaySound(465865, "warning", nil, targetName) -- Taunt
+		end
+	else
+		self:Message(465865, "purple", msg)
+		self:PlaySound(465865, "alarm") -- maybe you?
+	end
+	tankBusterCount = tankBusterCount + 1
+	-- 6.2, 23.0, 27.1, 22.1, 59.1, 17.2, 16.7, 20.0, 22.0, 19.7, 75.6, 17.0, 17.0
+	self:CDBar(465865, 17.0, CL.count:format(self:SpellName(465865), tankBusterCount))
 end
-function mod:TankBusterApplied(args)
-	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- On you
+
+function mod:ExhaustFumesApplied(args)
+	-- reusing tankBusterCount as this is a result of that cast
+	if not self:Tank() then
+		self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount-1)) -- Exhaust Fumes for non-tanks
+		self:Message(468147, "yellow", CL.count:format(L.exhaust_fumes, tankBusterCount-1))
+		self:PlaySound(468147, "info") -- raid dot effect
+		self:CDBar(468147, 17.0, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes for non-tanks
 	end
 end
 
