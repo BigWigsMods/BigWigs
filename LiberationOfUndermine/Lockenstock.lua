@@ -72,11 +72,7 @@ if L then
 	L.void_barrage = "Balls"
 end
 
-local inventions = {
-	{ L.blazing_beam, L.rocket_barrage, L.mega_magnetize },
-	{ L.jumbo_void_beam, CL.plus:format(L.jumbo_void_beam, L.rocket_barrage), CL.plus:format(L.jumbo_void_beam, L.mega_magnetize) },
-	{ L.void_barrage, CL.plus:format(L.mega_magnetize, L.void_barrage), CL.plus:format(L.blazing_beam, CL.plus:format(L.mega_magnetize, L.void_barrage)) }
-}
+local inventions
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -165,6 +161,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PolarizedCatastroBlastApplied", 1219047)
 
 	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+end
+
+function mod:OnRegister()
+	inventions = {
+		{ L.blazing_beam, L.rocket_barrage, L.mega_magnetize },
+		{ L.jumbo_void_beam, CL.plus:format(L.jumbo_void_beam, L.rocket_barrage), CL.plus:format(L.jumbo_void_beam, L.mega_magnetize) },
+		{ L.void_barrage, CL.plus:format(L.mega_magnetize, L.void_barrage), CL.plus:format(L.blazing_beam, CL.plus:format(L.mega_magnetize, L.void_barrage)) }
+	}
 end
 
 function mod:OnEngage()
