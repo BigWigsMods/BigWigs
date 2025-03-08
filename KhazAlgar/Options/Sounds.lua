@@ -27,3 +27,10 @@ BigWigs:AddSounds("Kordac, the Dormant Protector", {
 	[458799] = "underyou",
 	[458838] = "alarm",
 })
+
+BigWigs:AddSounds("The Gobfather", {
+	[1216505] = "info",
+	[1216687] = "alert",
+	[1216709] = "long",
+	[1216812] = "warning",
+})

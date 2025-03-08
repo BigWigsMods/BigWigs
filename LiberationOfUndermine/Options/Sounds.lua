@@ -11,13 +11,13 @@ BigWigs:AddSounds("Vexie and the Geargrinders", {
 })
 
 BigWigs:AddSounds("Cauldron of Carnage", {
-	[463900] = "alert",
+	[463900] = "alarm",
 	[463925] = "underyou",
 	[465833] = "long",
 	[466178] = "alarm",
 	[471557] = "long",
 	[471660] = "warning",
-	[472233] = "warning",
+	[472233] = {"alarm","warning"},
 	[473650] = "alert",
 	[474159] = "info",
 	[1213690] = "alarm",
@@ -34,7 +34,7 @@ BigWigs:AddSounds("Rik Reverb", {
 	[466979] = "alarm",
 	[467606] = {"alert","warning"},
 	[468119] = "alarm",
-	[472306] = "alert",
+	[472306] = "info",
 	[473260] = "warning",
 	[473655] = {"alarm","long"},
 	[473748] = "alert",
@@ -118,9 +118,10 @@ BigWigs:AddSounds("Mug'Zee, Heads of Security", {
 	[472631] = {"alert","warning"},
 	[472782] = "alert",
 	[1214623] = "alarm",
-	[1215595] = "info",
-	[1215953] = "alert",
+	[1215591] = "info",
+	[1215953] = "alarm",
 	[1216142] = "alarm",
+	[1222948] = "info",
 	["stages"] = {"info","long"},
 })
 

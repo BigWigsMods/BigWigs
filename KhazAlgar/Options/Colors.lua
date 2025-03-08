@@ -27,3 +27,10 @@ BigWigs:AddColors("Kordac, the Dormant Protector", {
 	[458799] = "blue",
 	[458838] = {"blue","yellow"},
 })
+
+BigWigs:AddColors("The Gobfather", {
+	[1216505] = "yellow",
+	[1216687] = "red",
+	[1216709] = "orange",
+	[1216812] = "red",
+})

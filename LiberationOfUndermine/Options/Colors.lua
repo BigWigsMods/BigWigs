@@ -36,14 +36,14 @@ BigWigs:AddColors("Rik Reverb", {
 	[466866] = "orange",
 	[466979] = {"blue","yellow"},
 	[467606] = {"blue","red"},
-	[468119] = {"blue","cyan"},
-	[472306] = "yellow",
+	[468119] = "blue",
+	[472306] = "cyan",
 	[473260] = {"blue","red"},
 	[473655] = "red",
 	[473748] = "yellow",
-	[1214164] = {"blue","cyan"},
-	[1214598] = "blue",
-	[1217122] = {"blue","cyan"},
+	[1214164] = "green",
+	[1214598] = {"blue","red"},
+	[1217122] = "blue",
 	["stages"] = "cyan",
 })
 
@@ -108,7 +108,7 @@ BigWigs:AddColors("The One-Armed Bandit", {
 })
 
 BigWigs:AddColors("Mug'Zee, Heads of Security", {
-	[-31766] = "green",
+	[-31766] = {"cyan","green"},
 	[463967] = "red",
 	[466385] = "red",
 	[466476] = {"blue","red"},
@@ -118,6 +118,7 @@ BigWigs:AddColors("Mug'Zee, Heads of Security", {
 	[466545] = "orange",
 	[467202] = {"blue","green","purple"},
 	[467380] = {"blue","orange"},
+	[469043] = "blue",
 	[469391] = "blue",
 	[469491] = "purple",
 	[470910] = "orange",
@@ -125,9 +126,10 @@ BigWigs:AddColors("Mug'Zee, Heads of Security", {
 	[472631] = {"blue","orange"},
 	[472782] = "yellow",
 	[1214623] = "red",
-	[1215595] = "green",
+	[1215591] = "green",
 	[1215953] = "orange",
 	[1216142] = "red",
+	[1222948] = "green",
 	["stages"] = "cyan",
 })
 
