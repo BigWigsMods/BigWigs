@@ -81,8 +81,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IncendiaryFire", 468487)
 	self:Log("SPELL_AURA_APPLIED", "BombVoyageApplied", 459978) -- DOT after getting hit
 	self:Log("SPELL_CAST_START", "TankBuster", 459627)
-	self:Log("SPELL_AURA_APPLIED", "TankBusterApplied", 465865)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TankBusterApplied", 465865)
 	self:Log("SPELL_AURA_APPLIED", "ExhaustFumesApplied", 468149) -- On Boss
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExhaustFumesApplied", 468149)
 
@@ -199,7 +197,7 @@ function mod:TankBuster(args)
 		end
 	else
 		self:Message(465865, "purple", msg)
-		self:PlaySound(465865, "alarm") -- maybe you?
+		self:PlaySound(465865, "alarm") -- Backup if unit scan fails
 	end
 	tankBusterCount = tankBusterCount + 1
 	-- 6.2, 23.0, 27.1, 22.1, 59.1, 17.2, 16.7, 20.0, 22.0, 19.7, 75.6, 17.0, 17.0
