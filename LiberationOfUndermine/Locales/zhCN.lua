@@ -19,7 +19,7 @@ if L then
 	L.amplification = "增幅器"
 	L.echoing_chant = "音波"
 	L.faulty_zap = "电击"
-	L.sparkblast_ignition = "烟花桶"
+	L.sparkblast_ignition = "烟火桶"
 end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "zhCN")
