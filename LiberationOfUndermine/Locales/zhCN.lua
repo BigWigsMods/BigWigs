@@ -30,7 +30,7 @@ if L then
 	L.rolled_from_you = "你碾过 %s" -- (you) Rolled over PlayerX
 	L.garbage_dump_message = "你对首领造成了 %s 伤害"
 
-	L.electromagnetic_sorting = "电磁分拣" --中文技能名称短，就不简写了
+	L.electromagnetic_sorting = "电磁分拣" -- 中文技能名称短，就不简写了
 	L.muffled_doomsplosion = "炸弹爆炸"
 	L.incinerator = "火圈"
 	L.landing = "降落" -- Landing down from the sky
@@ -42,16 +42,16 @@ if L then
 	L.foot_blasters = "地雷"
 	L.screw_up = "钻头"
 	L.sonic_ba_boom = "声波爆轰"
-	L.polarization_generator = "正负极" -- 极性发生器
+	L.polarization_generator = "极性转化" -- 极性发生器
 
 	L.polarization_soon = "极性改变: %s"
 
 	L.activate_inventions = "激活：%s"  --激活发明！
-	L.blazing_beam = "光束" --炙热光束
-	L.rocket_barrage = "火箭" --火箭弹幕
-	L.mega_magnetize = "磁吸" --超级磁吸
-	L.jumbo_void_beam = "虚空光束" --大号虚空光束
-	L.void_barrage = "黑球" --虚空弹幕
+	L.blazing_beam = "光束" -- 炙热光束
+	L.rocket_barrage = "火箭" -- 火箭弹幕
+	L.mega_magnetize = "磁吸" -- 超级磁吸
+	L.jumbo_void_beam = "虚空光束" -- 大号虚空光束
+	L.void_barrage = "黑球" -- 虚空弹幕
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
@@ -72,19 +72,19 @@ if L then
 	L.frostshatter_boots = "冰靴" -- “霜裂冰靴”简写
 	L.frostshatter_spear = "长矛" -- “霜裂长矛”简写
 	L.stormfury_finger_gun = "手指枪" -- “风暴手指枪”简写
-	L.molten_gold_knuckles = "真金指虎" --“熔火真金指虎”
+	L.molten_gold_knuckles = "真金指虎" -- “熔火真金指虎”
 	L.unstable_crawler_mines = "地雷"
 	L.goblin_guided_rocket = "火箭"
 	L.double_whammy_shot = "双厄射击"
-	L.electro_shocker = "振荡器" --Mk II型电击振荡器
+	L.electro_shocker = "振荡器" -- Mk II型电击振荡器
 end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "zhCN")
 if L then
-	L.scatterblast_canisters = "裂破分摊" --使用技能名“裂破弹药筒”前2字做提醒
-	L.fused_canisters = "引线分摊" --使用技能名“引线弹药筒”前2字做提醒
+	L.scatterblast_canisters = "裂破分摊" -- 使用技能名“裂破弹药筒”前2字做提醒
+	L.fused_canisters = "引线分摊" -- 使用技能名“引线弹药筒”前2字做提醒
 	L.tick_tock_canisters = "分摊"
-	--L.total_destruction = "DESTRUCTION!"
+	L.total_destruction = "毁灭！" -- 毁灭一切！！！
 
 	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "所有哑弹已引爆！"
