@@ -262,24 +262,24 @@ function mod:GetOptions()
 		[1214229] = -31558, -- Intermission: Docked and Loaded
 		[1214607] = -31445, -- Stage Three: What an Arsenal!
 	},{
-		-- [1220761] = CL.heal_absorb, -- Mechengineer's Canisters
-		-- [466340] = L.scatterblast_canisters, -- Scatterblast Canisters (Cone Soak)
-		-- [465952] = CL.bombs, -- Big Bad Buncha Bombs (Bombs)
-		-- [466165] = L.duds, -- 1500-Pound "Dud" (Duds)
-		-- [1217292] = CL.explosion, -- Time-Release Crackle (Explosion)
-		-- [1214229] = CL.shield, -- Armageddon-class Plating (Shield)
-		-- [466341] = L.fused_canisters, -- Fused Canisters (Group Soaks)
-		-- [1214607] = CL.bombs, -- Bigger Badder Bomb Blast (Bombs)
-		-- [466342] = L.tick_tock_canisters, -- Tick-Tock Canisters (Soaks)
+		[1220761] = CL.heal_absorb, -- Mechengineer's Canisters
+		[466340] = L.scatterblast_canisters, -- Scatterblast Canisters (Cone Soak)
+		[465952] = CL.bombs, -- Big Bad Buncha Bombs (Bombs)
+		[466165] = L.duds, -- 1500-Pound "Dud" (Duds)
+		[1217292] = CL.explosion, -- Time-Release Crackle (Explosion)
+		[1214229] = CL.shield, -- Armageddon-class Plating (Shield)
+		[466341] = L.fused_canisters, -- Fused Canisters (Group Soaks)
+		[1214607] = CL.bombs, -- Bigger Badder Bomb Blast (Bombs)
+		[466342] = L.tick_tock_canisters, -- Tick-Tock Canisters (Soaks)
 	}
 end
 
 function mod:OnRegister()
-	-- self:SetSpellRename(466340, L.scatterblast_canisters) -- Scatterblast Canisters (Cone Soak)
-	-- self:SetSpellRename(465952, CL.bombs) -- Big Bad Buncha Bombs (Bombs)
-	-- self:SetSpellRename(466341, L.fused_canisters) -- Fused Canisters (Group Soaks)
-	-- self:SetSpellRename(1214607, CL.bombs) -- Bigger Badder Bomb Blast (Bombs)
-	-- self:SetSpellRename(466342, L.tick_tock_canisters) -- Tick-Tock Canisters (Soaks)
+	self:SetSpellRename(466340, L.scatterblast_canisters) -- Scatterblast Canisters (Cone Soak)
+	self:SetSpellRename(465952, CL.bombs) -- Big Bad Buncha Bombs (Bombs)
+	self:SetSpellRename(466341, L.fused_canisters) -- Fused Canisters (Group Soaks)
+	self:SetSpellRename(1214607, CL.bombs) -- Bigger Badder Bomb Blast (Bombs)
+	self:SetSpellRename(466342, L.tick_tock_canisters) -- Tick-Tock Canisters (Soaks)
 end
 
 function mod:OnBossEnable()
