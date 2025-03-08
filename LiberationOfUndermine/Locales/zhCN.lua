@@ -13,9 +13,9 @@ if L then
 	L.bomb_explosion = "炸弹爆炸"
 	L.bomb_explosion_desc = "显示炸弹爆炸的倒计时。"
 
-	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
-	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
-	--L.voltaic_image = "Fixates" -- Multiple of Fixate
+	L.eruption_stomp = "重踏" -- 喷发重踏
+	L.thunderdrum_salvo = "齐射" -- 雷鼓齐射
+	L.voltaic_image = "镜像" -- 流电镜像
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "zhCN")
@@ -23,7 +23,7 @@ if L then
 	L.amplification = "增幅器"
 	L.echoing_chant = "音波"
 	L.faulty_zap = "电击"
-	L.sparkblast_ignition = "烟花桶"
+	L.sparkblast_ignition = "烟火桶"
 end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "zhCN")
