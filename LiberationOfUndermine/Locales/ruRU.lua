@@ -83,6 +83,7 @@ if L then
 	L.scatterblast_canisters = "Конус делёжка"
 	L.fused_canisters = "Групповая делёжка"
 	L.tick_tock_canisters = "Делёжка"
+	--L.total_destruction = "DESTRUCTION!"
 
 	L.duds = "Ждуны" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "Все Ждуны Детонированы!"

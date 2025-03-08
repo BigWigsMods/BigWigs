@@ -28,39 +28,160 @@ mod:SetStage(1)
 --
 
 local canistersCount = 1
-local bigBadBunchaBombsCount = 1
+local bombsCount = 1
 local suppressionCount = 1
 local ventingHeatCount = 1
+local egoCheckCount = 1
+
+local fullCanistersCount = 1
+local fullBombsCount = 1
+local fullSuppressionCount = 1
+local fullVentingHeatCount = 1
 
 local gigaCoilsCount = 1
 local gigaBlastCount = 1
-local controlMeltdownCount = 1
 
+local encounterStart = 0
 local spawnedDuds = 0
 
+-- Rashanan style timers: Each Giga Coils starts a mini-phase
 local timersNormal = {
 	{ -- Phase 1
 		[466340] = { 7.3, 18.9, 20.4, 21.0, 18.4, 22.9, 0 }, -- Scatterblast Canisters
-		[465952] = { 20.2, 39.3, 39.3, 0 }, -- Big Bad Buncha Bombs
+		[465952] = { 22.3, 39.3, 39.3, 0 }, -- Big Bad Buncha Bombs
 		[467182] = { 34.9, 43.2, 37.4, 0 }, -- Suppression
 		[466751] = { 13.9, 28.7, 31.5, 30.6, 0 }, -- Venting Heat
 	},
-	{ -- Phase 2 SAA + 3s
-		[469286] = {}, -- Giga Coils XXX Varies?
-		[466341] = { 27.7 + 3 }, -- Fused Canisters
-		[465952] = { 59.8 + 3 }, -- Big Bad Buncha Bombs
-		[467182] = { 45.1 + 3 }, -- Suppression
-		[466751] = { 40.7 + 3 }, -- Venting Heat
+	{ -- Phase 2
+		[469286] = { 132.4, 70.7 }, -- Giga Coils
+		[466341] = { -- Fused Canisters
+			{ 12.7, 41.2, 0 },
+		},
+		[465952] = { -- Big Bad Buncha Bombs
+			{ 44.7, 0 },
+		},
+		[467182] = { -- Suppression
+			{ 29.9, 0 },
+			{ 8.9, 0 },
+		},
+		[466751] = { -- Venting Heat
+			{ 25.5, 0 },
+		},
 	},
 	{ -- Phase 3
-		[469286] = { 60.7, 86.3 }, -- Giga Coils XXX Varies?
-		[466342] = { 22.0, 70.5, 35.0, 67.0 }, -- Tick-Tock Canisters
-		[1214607] = { 8.0, 34.0, 72.6, 69.0 }, -- Bigger Badder Bomb Blast
-		[467182] = { 33.0, 72.5, 69.0 }, -- Suppression
-		[466751] = { 18.0, 79.5, 36.0 }, -- Venting Heat
+		[469286] = { 60.1, 59.5, 66.4, 54.5, 60.0, 67.8 }, -- Giga Coils
+		[466342] = { -- Tick-Tock Canisters
+			{ 22.0, 0 },
+			{ 6.5, 35.0, 0 },
+			{ 27.3, 0 },
+			{ 6.0, 35.0, 0 },
+			{ 31.6, 0 },
+			{ 17.6, 37.0, 0 },
+		},
+		[1214607] = { -- Bigger Badder Bomb Blast
+			{ 8.0, 34.0, 0 },
+			{ 28.5, 0 },
+			{ 16.9, 37.0, 0 },
+			{ 25.6, 0 },
+			{ 34.0, 0 },
+			{ 30.2, 0 },
+		},
+		[466958] = { -- Ego Check
+			{ 14.1, 13.0, 15.0, 8.1, 0 },
+			{ 15.4, 13.5, 8.1, 10.0, 0 },
+			{ 16.5, 8.0, 9.0, 26.1, 0 },
+			{ 11.3 },
+		},
+		[467182] = { -- Suppression
+			{ 33.0, 0 },
+			{ 20.9, 0 },
+			{ 7.3, 37.0, 0 },
+			{ 31.6, 0 },
+			{ 17.6, 0 },
+			{ 5.2, 37.0, 0 },
+		},
+		[466751] = { -- Venting Heat
+			{ 18.0, 0 },
+			{ 12.9, 36.0, 0 },
+			{ 38.9, 0 },
+			{ 22.1, 0 },
+			{ 26.1, 0 },
+			{ 14.2, 37.0, 0 },
+		},
 	}
 }
-local timers = timersNormal
+local timersHeroic = {
+	{ -- Phase 1
+		[466340] = { 6.5, 17.2, 18.4, 17.1, 18.3, 18.9, 0 }, -- Scatterblast Canisters
+		[465952] = { 20.2, 35.5, 33.7, 0 }, -- Big Bad Buncha Bombs
+		[467182] = { 31.6, 37.2, 33.7, 0 }, -- Suppression
+		[466751] = { 12.6, 25.9, 26.7, 27.6, 0 }, -- Venting Heat
+	},
+	{ -- Phase 2
+		[469286] = { 120.0, 58.7 }, -- Giga Coils
+		[466341] = { -- Fused Canisters
+			{ 10.2, 32.9, 0 },
+			{ 27.7, 0 },
+		},
+		[465952] = { -- Big Bad Buncha Bombs
+			{ 36.5, 0 },
+			{ 37.8, 0 },
+		},
+		[467182] = { -- Suppression
+			{ 24.0, 0 },
+			{ 9.4, 0 },
+		},
+		[466751] = { -- Venting Heat
+			{ 20.5, 0 },
+			{ 18.2, 0 },
+		},
+	},
+	{ -- Phase 3
+		[469286] = { 60.6, 60.4, 69.9 }, -- Giga Coils
+		[466342] = { -- Tick-Tock Canisters
+			{ 22.0, 0 },
+			{ 6.9, 35.0, 0 },
+			{ 27.9, 0 },
+			{ 3.4, 0 },
+		},
+		[1214607] = { -- Bigger Badder Bomb Blast
+			{ 8.0, 36.0, 0 },
+			{ 31.0, 0 },
+			{ 18.5, 25.0, 0 },
+			{ 23.3, 0 },
+		},
+		[466958] = { -- Ego Check
+			{ 14.1, 13.0, 15.0, 8.1, 0 },
+			{ 15.4, 13.5, 8.1, 10.0, 0 },
+			{ 16.5, 8.0, 9.0, 26.1, 0 },
+			{ 11.3 },
+		},
+		[467182] = { -- Suppression
+			{ 33.0, 0 },
+			{ 20.0, 0 },
+			{ 7.4, 37.0, 0 },
+			{ 32.4, 0 },
+		},
+		[466751] = { -- Venting Heat
+			{ 18.0, 0 },
+			{ 11.9, 37.1, 0 },
+			{ 38.4, 0 },
+		},
+	}
+}
+local timers = mod:Easy() and timersNormal or timersHeroic
+
+local function cd(spellId, count)
+	-- not knowing the full fight sequence makes normal table lookups sketchy without metatables
+	local coilCount = gigaCoilsCount
+	local stage = mod:GetStage()
+	if stage == 1 then
+		return timers[stage][spellId][count]
+	elseif stage == 2 then
+		coilCount = coilCount - 1 -- there's no before the first coil phase like in p3
+	end
+	return timers[stage][spellId][coilCount] and timers[stage][spellId][coilCount][count]
+end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -71,6 +192,7 @@ if L then
 	L.scatterblast_canisters = "Cone Soak"
 	L.fused_canisters = "Group Soaks"
 	L.tick_tock_canisters = "Soaks"
+	L.total_destruction = "DESTRUCTION!"
 
 	L.duds = "Duds" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "All Duds Detonated!"
@@ -96,7 +218,7 @@ function mod:GetOptions()
 			-- 466338, -- Zagging Zizzler
 		467182, -- Suppression
 		466751, -- Venting Heat
-			--466753, -- Overheating
+		1222831, -- Overloaded Coils
 
 		-- Stage One: The House of Chrome
 			466340, -- Scatterblast Canisters
@@ -109,32 +231,30 @@ function mod:GetOptions()
 			469362, -- Charged Giga Bomb
 				469404, -- Giga BOOM! (fail damage)
 				469795, -- Giga Bomb Detonation
-					-- 469297, -- Sabotaged Controls
-					1215209, -- Sabotage Zone
-						1220846, -- Control Meltdown
+					1220669, -- Sabotaged Controls
+						1215209, -- Sabotage Zone
+						-- 1220846, -- Control Meltdown
 			{466341, "PRIVATE"}, -- Fused Canisters
 		-- Darkfuse Cronies
-			-- 1223126, -- Party Crashing Rocket (spawn timer?)
 			-- Darkfuse Technician
 				-- -31482, -- Darkfuse Technician
 				-- 471352, -- Juice It!
 			-- Sharpshot Sentry
-				466834, -- Shock Barrage XXX Nameplate flag when implemented
+				466834, -- Shock Barrage
 			-- Darkfuse Wrenchmonger
-				1216845, -- Wrench XXX Nameplate flag when implemented
+				{1216845, "NAMEPLATE"}, -- Wrench
 				1216852, -- Lumbering Rage
 		-- Intermission: Docked and Loaded
-			-- 1214226, -- Cratering
 			1214229, -- Armageddon-class Plating
-			1219319, -- Radiant Electricity
+			-- 1219319, -- Radiant Electricity
 			{1214369, "CASTBAR"}, -- TOTAL DESTRUCTION!!!
 		-- Stage Three: What an Arsenal!
 			1214607, -- Bigger Badder Bomb Blast
-				-- {1214755, "PRIVATE"}, -- Overloaded Rockets
+				{1214755, "PRIVATE"}, -- Overloaded Rockets
 			466342, -- Tick-Tock Canisters
-			-- 1219333, -- Gallybux Finale Blast (Suppression Stage 3)
+			1219333, -- Gallybux Finale Blast (Suppression Stage 3)
 		-- Greedy Goblin's Armaments
-			466958, -- Ego Check
+			{466958, "TANK_HEALER"}, -- Ego Check
 				-- 467064, -- Checked Ego
 	},{
 		[466340] = -30490, -- Stage One: The House of Chrome
@@ -142,106 +262,112 @@ function mod:GetOptions()
 		[1214229] = -31558, -- Intermission: Docked and Loaded
 		[1214607] = -31445, -- Stage Three: What an Arsenal!
 	},{
-		[1220761] = CL.heal_absorb, -- Mechengineer's Canisters
-		[466340] = L.scatterblast_canisters, -- Scatterblast Canisters (Cone Soak)
-		[465952] = CL.bombs, -- Big Bad Buncha Bombs (Bombs)
-		[466165] = L.duds, -- 1500-Pound "Dud" (Duds)
-		[1217292] = CL.explosion, -- Time-Release Crackle (Explosion)
-		[466341] = L.fused_canisters, -- Fused Canisters (Group Soaks)
-		[1214607] = CL.bombs, -- Bigger Badder Bomb Blast (Bombs)
-		[466342] = L.tick_tock_canisters, -- Tick-Tock Canisters (Soaks)
+		-- [1220761] = CL.heal_absorb, -- Mechengineer's Canisters
+		-- [466340] = L.scatterblast_canisters, -- Scatterblast Canisters (Cone Soak)
+		-- [465952] = CL.bombs, -- Big Bad Buncha Bombs (Bombs)
+		-- [466165] = L.duds, -- 1500-Pound "Dud" (Duds)
+		-- [1217292] = CL.explosion, -- Time-Release Crackle (Explosion)
+		-- [1214229] = CL.shield, -- Armageddon-class Plating (Shield)
+		-- [466341] = L.fused_canisters, -- Fused Canisters (Group Soaks)
+		-- [1214607] = CL.bombs, -- Bigger Badder Bomb Blast (Bombs)
+		-- [466342] = L.tick_tock_canisters, -- Tick-Tock Canisters (Soaks)
 	}
 end
 
 function mod:OnRegister()
-	self:SetSpellRename(466340, L.scatterblast_canisters) -- Scatterblast Canisters (Cone Soak)
-	self:SetSpellRename(465952, CL.bombs) -- Big Bad Buncha Bombs (Bombs)
-	self:SetSpellRename(466341, L.fused_canisters) -- Fused Canisters (Group Soaks)
-	self:SetSpellRename(1214607, CL.bombs) -- Bigger Badder Bomb Blast (Bombs)
-	self:SetSpellRename(466342, L.tick_tock_canisters) -- Tick-Tock Canisters (Soaks)
+	-- self:SetSpellRename(466340, L.scatterblast_canisters) -- Scatterblast Canisters (Cone Soak)
+	-- self:SetSpellRename(465952, CL.bombs) -- Big Bad Buncha Bombs (Bombs)
+	-- self:SetSpellRename(466341, L.fused_canisters) -- Fused Canisters (Group Soaks)
+	-- self:SetSpellRename(1214607, CL.bombs) -- Bigger Badder Bomb Blast (Bombs)
+	-- self:SetSpellRename(466342, L.tick_tock_canisters) -- Tick-Tock Canisters (Soaks)
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 1215209) -- Sabotage Zone
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 1215209)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 1215209)
 
 	self:Log("SPELL_AURA_APPLIED", "MechengineersCanistersApplied", 1220761)
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	-- self:Log("SPELL_CAST_START", "BigBadBunchaBombs", 465952) -- EMOTE
 	self:Log("SPELL_AURA_APPLIED", "BlastBurnsApplied", 466154)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlastBurnsApplied", 466154)
-	self:Log("SPELL_AURA_APPLIED", "FifteenHundredPoundDudApplied", 466165) -- Counts the bombs spawned?
-	self:Log("SPELL_AURA_REMOVED", "FifteenHundredPoundDudRemoved", 466165) -- Counts the bombs soaked?
+	self:Log("SPELL_AURA_APPLIED", "FifteenHundredPoundDudApplied", 466165)
+	self:Log("SPELL_AURA_REMOVED", "FifteenHundredPoundDudRemoved", 466165)
 	self:Log("SPELL_AURA_APPLIED", "FocusedDetonationApplied", 466246)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FocusedDetonationApplied", 466246)
 	self:Log("SPELL_AURA_REMOVED", "FocusedDetonationRemoved", 466246)
 	self:Log("SPELL_CAST_START", "Suppression", 467182)
 	self:Log("SPELL_CAST_START", "VentingHeat", 466751)
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 1215209) -- Sabotage Zone
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 1215209)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 1215209)
 	-- self:Log("SPELL_AURA_APPLIED", "TrickShotsApplied", 1220290)
 	-- self:Log("SPELL_AURA_APPLIED_DOSE", "TrickShotsApplied", 1220290)
-	-- self:Log("SPELL_AURA_REMOVED", "TrickShotsRemoved", 1220290)
+	-- self:Log("SPELL_AURA_REMOVED", "TrickShotsRemoved", 1220290) -- XXX used as phase 2 start below
 
-	-- Stage One: The House of Chrome
+	-- Stage 1
 	self:Log("SPELL_CAST_START", "ScatterblastCanisters", 466340)
 
-	-- Stage Two: Mechanical Maniac
-	-- self:Log("SPELL_CAST_START", "GigaCoils", 469286)
+	-- Stage 2
+	self:Log("SPELL_AURA_REMOVED", "TrickShotsRemoved", 1220290)
+	-- self:Log("SPELL_CAST_START", "GigaCoils", 469286) -- USCS 469286
+	self:Log("SPELL_AURA_REMOVED", "GigaCoilsRemoved", 469293)
 	self:Log("SPELL_CAST_START", "GigaBlast", 469327)
 	self:Log("SPELL_AURA_APPLIED", "ChargedGigaBombApplied", 469362)
 	self:Log("SPELL_AURA_APPLIED", "GigaBoomApplied", 469404)
-	self:Log("SPELL_AURA_APPLIED", "GigaBombDetonationApplied", 469795)
 	-- self:Log("SPELL_AURA_APPLIED_DOSE", "GigaBoomApplied", 469404)
-	self:Log("SPELL_AURA_APPLIED", "ControlMeltdownApplied", 1220846)
-	-- self:Log("SPELL_AURA_REMOVED", "ControlMeltdownRemoved", 1220846)
+	self:Log("SPELL_AURA_APPLIED", "GigaBombDetonationApplied", 469795)
+	self:Log("SPELL_AURA_APPLIED", "SabotagedControlsApplied", 1220669)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SabotagedControlsApplied", 1220669)
 	self:Log("SPELL_CAST_START", "FusedCanisters", 466341)
 
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1") -- Giga Coils
-	self:Death("TechnicianDeath", 231977) -- Darkfuse Technician
-	self:Log("SPELL_CAST_START", "JuiceIt", 471352)
+	-- self:Log("SPELL_CAST_START", "JuiceIt", 471352)
 	self:Log("SPELL_CAST_START", "ShockBarrage", 466834)
-	-- self:Log("SPELL_CAST_START", "Wrench", 1216845)
+	self:Log("SPELL_CAST_START", "Wrench", 1216845)
 	self:Log("SPELL_AURA_APPLIED", "WrenchApplied", 1216845)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrenchApplied", 1216845)
 	self:Log("SPELL_AURA_APPLIED", "LumberingRageApplied", 1216852)
-	self:Death("AddsDeath", 231978, 231939) -- Sharpshot Sentry, Darkfuse Wrenchmonger
+	self:Death("AddsDeath", 231978, 231939, 231977) -- Sharpshot Sentry, Darkfuse Wrenchmonger, Darkfuse Technician
 
-	-- Intermission: Docked and Loaded
-	-- self:Log("SPELL_CAST_START", "Cratering", 1214226)
+	-- Intermission
 	self:Log("SPELL_AURA_APPLIED", "ArmageddonClassPlatingApplied", 1214229)
 	self:Log("SPELL_AURA_REMOVED", "ArmageddonClassPlatingRemoved", 1214229)
-	self:Log("SPELL_AURA_APPLIED", "RadiantElectricityApplied", 1219319)
 	self:Log("SPELL_CAST_START", "TotalDestruction", 1214369)
 	self:Log("SPELL_INTERRUPT", "TotalDestructionInterrupted", 1214369)
 
-	-- Stage Three: What an Arsenal!
+	-- Stage 3
 	self:Log("SPELL_CAST_START", "BiggerBadderBombBlast", 1214607)
 	self:Log("SPELL_CAST_START", "TickTockCanisters", 466342)
 	self:Log("SPELL_CAST_START", "EgoCheck", 466958)
-	self:Log("SPELL_AURA_APPLIED", "EgoCheckApplied", 467064)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "EgoCheckApplied", 467064)
+	self:Log("SPELL_AURA_APPLIED", "EgoCheckApplied", 466958)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "EgoCheckApplied", 466958)
+	self:Log("SPELL_CAST_START", "OverloadedCoils", 1222831)
 
-	timers = timersNormal
+	timers = self:Easy() and timersNormal or timersHeroic
 end
 
 function mod:OnEngage()
 	self:SetStage(1)
 
 	canistersCount = 1
-	bigBadBunchaBombsCount = 1
+	bombsCount = 1
 	suppressionCount = 1
 	ventingHeatCount = 1
 
+	fullCanistersCount = 1
+	fullBombsCount = 1
+	fullSuppressionCount = 1
+	fullVentingHeatCount = 1
+
 	gigaCoilsCount = 1
 	gigaBlastCount = 1
-	controlMeltdownCount = 1
 
-	self:Bar(466340, timers[1][466340][1], CL.count:format(L.scatterblast_canisters, canistersCount)) -- Scatterblast Canisters
-	self:Bar(465952, timers[1][465952][1], CL.count:format(CL.bombs, bigBadBunchaBombsCount)) -- Big Bad Buncha Bombs
-	self:Bar(467182, timers[1][467182][1], CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
-	self:Bar(466751, timers[1][466751][1], CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
-	self:Bar("stages", 132.3, CL.stage:format(2), "ability_siege_engineer_magnetic_crush")
+	encounterStart = GetTime()
+
+	self:Bar(466340, cd(466340, 1), CL.count:format(L.scatterblast_canisters, canistersCount)) -- Scatterblast Canisters
+	self:Bar(465952, cd(465952, 1) - 2.2, CL.count:format(CL.bombs, bombsCount)) -- Big Bad Buncha Bombs (emote is 2.2s earlier)
+	self:Bar(467182, cd(467182, 1), CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
+	self:Bar(466751, cd(466751, 1), CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
+	self:Bar("stages", self:Easy() and 123.4 or 111.0, CL.stage:format(2), "ability_siege_engineer_magnetic_crush")
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -251,7 +377,7 @@ end
 --
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 53 then -- Intermission at 50%
+	if self:GetHealth(unit) < 53 then -- Intermission at ~50%
 		self:UnregisterUnitEvent(event, unit)
 		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
 		self:PlaySound("stages", "info")
@@ -281,33 +407,29 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	-- [CHAT_MSG_RAID_BOSS_EMOTE] |TInterface\\ICONS\\Ships_ABILITY_Bombers.BLP:20|t %s begins to cast |cFFFF0000|Hspell:465952|h[Big Bad Buncha Bombs]|h|r!#Chrome King Gallywix
 	if msg:find("spell:465952", nil, true) then
-		-- big circles spawn
-		self:StopBar(CL.count:format(self:SpellName(465952), bigBadBunchaBombsCount))
-		self:Message(465952, "red", CL.count:format(self:SpellName(465952), bigBadBunchaBombsCount))
+		-- a bit earlier than the cast
+		self:StopBar(CL.count:format(CL.bombs, fullBombsCount))
+		self:Message(465952, "red", CL.count:format(CL.bombs, fullBombsCount))
 		self:PlaySound(465952, "alert")
-		bigBadBunchaBombsCount = bigBadBunchaBombsCount + 1
-		self:Bar(465952, timers[self:GetStage()][465952][bigBadBunchaBombsCount], CL.count:format(self:SpellName(465952), bigBadBunchaBombsCount))
+		bombsCount = bombsCount + 1
+		fullBombsCount = fullBombsCount + 1
+		self:CDBar(465952, cd(465952, bombsCount), CL.count:format(CL.bombs, fullBombsCount))
 
 		spawnedDuds = 0
-		self:Bar(466153, 11.7) -- Bad Belated Boom (explode all at once? in series?)
-		-- if not self:Easy() then
-		-- 	self:Bar(466165, 18) -- 1500-Pound "Dud"
-		-- end
+		self:Bar(466153, 11.9) -- Bad Belated Boom
 	end
 end
 
 -- function mod:BigBadBunchaBombs(args)
--- 	self:StopBar(CL.count:format(args.spellName, bigBadBunchaBombsCount))
--- 	self:Message(args.spellId, "red", CL.count:format(args.spellName, bigBadBunchaBombsCount))
+-- 	self:StopBar(CL.count:format(CL.bombs, fullBombsCount))
+-- 	self:Message(args.spellId, "red", CL.count:format(CL.bombs, fullBombsCount))
 -- 	self:PlaySound(args.spellId, "alert")
--- 	bigBadBunchaBombsCount = bigBadBunchaBombsCount + 1
--- 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][bigBadBunchaBombsCount], CL.count:format(args.spellName, bigBadBunchaBombsCount))
+-- 	bombsCount = bombsCount + 1
+-- 	fullBombsCount = fullBombsCount + 1
+-- 	self:CDBar(args.spellId, cd(465952, bombsCount), CL.count:format(CL.bombs, fullBombsCount))
 
 -- 	spawnedDuds = 0
--- 	self:Bar(466153, 9.5) -- Bad Belated Boom (explode all at once? in series?)
--- 	-- if not self:Easy() then
--- 	-- 	self:Bar(466165, 18) -- 1500-Pound "Dud"
--- 	-- end
+-- 	self:Bar(466153, 9.7) -- Bad Belated Boom
 -- end
 
 do
@@ -340,6 +462,9 @@ do
 	function mod:FifteenHundredPoundDudApplied(args)
 		-- self:StopBar(L.duds_soak:format(spawnedDuds))
 		spawnedDuds = spawnedDuds + 1
+		if args.time - prev > 2 then
+			self:Bar(args.spellId, 15, L.duds)
+		end
 		-- if args.time - prev > 2 then
 		-- 	prev = args.time
 		-- 	self:Message(args.spellId, "red", CL.spawned:format(L.duds))
@@ -352,6 +477,7 @@ do
 
 	function mod:FifteenHundredPoundDudRemoved(args)
 		-- self:StopBar(L.duds_soak:format(spawnedDuds))
+		self:StopBar(L.duds)
 		spawnedDuds = spawnedDuds - 1
 		-- self:Message(args.spellId, "green", L.duds_remaining:format(spawnedDuds))
 		-- local timeLeft = 15 - (args.time - prev)
@@ -378,19 +504,24 @@ function mod:FocusedDetonationRemoved(args)
 end
 
 function mod:Suppression(args)
-	self:StopBar(CL.count:format(args.spellName, suppressionCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, suppressionCount))
+	self:StopBar(CL.count:format(args.spellName, fullSuppressionCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, fullSuppressionCount))
 	self:PlaySound(args.spellId, "alarm") -- avoid
+	if self:GetStage() == 3 then
+		self:Bar(1219333, 6) -- Gallybux Finale Blast
+	end
 	suppressionCount = suppressionCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][suppressionCount], CL.count:format(args.spellName, suppressionCount))
+	fullSuppressionCount = fullSuppressionCount + 1
+	self:CDBar(args.spellId, cd(args.spellId, suppressionCount), CL.count:format(args.spellName, fullSuppressionCount))
 end
 
 function mod:VentingHeat(args)
-	self:StopBar(CL.count:format(args.spellName, ventingHeatCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, ventingHeatCount))
+	self:StopBar(CL.count:format(args.spellName, fullVentingHeatCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, fullVentingHeatCount))
 	self:PlaySound(args.spellId, "alert") -- raid damage
 	ventingHeatCount = ventingHeatCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][ventingHeatCount], CL.count:format(args.spellName, ventingHeatCount))
+	fullVentingHeatCount = fullVentingHeatCount + 1
+	self:CDBar(args.spellId, cd(args.spellId, ventingHeatCount), CL.count:format(args.spellName, fullVentingHeatCount))
 end
 
 -- do
@@ -405,7 +536,6 @@ end
 -- 		end
 -- 		self:Bar(args.spellId, 4, CL.count:format(args.spellName, trickShotsAmount + 1))
 -- 	end
-
 -- 	function mod:TrickShotsRemoved(args)
 -- 		self:StopBar(CL.count:format(args.spellName, trickShotsAmount + 1))
 -- 		trickShotsAmount = 0
@@ -413,63 +543,101 @@ end
 -- end
 
 -- Stage One: The House of Chrome
+
 function mod:ScatterblastCanisters(args)
-	self:StopBar(CL.count:format(L.scatterblast_canisters, canistersCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.scatterblast_canisters, canistersCount))
+	self:StopBar(CL.count:format(L.scatterblast_canisters, fullCanistersCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.scatterblast_canisters, fullCanistersCount))
 	self:PlaySound(args.spellId, "alert") -- soak
-	-- self:Bar(474447, 33, CL.count:format(self:SpellName(474447), canistersCount)) -- Canister Detonation
 	canistersCount = canistersCount + 1
-	self:Bar(args.spellId, timers[1][args.spellId][canistersCount], CL.count:format(L.scatterblast_canisters, canistersCount))
+	fullCanistersCount = fullCanistersCount + 1
+	self:CDBar(args.spellId, cd(args.spellId, canistersCount), CL.count:format(L.scatterblast_canisters, fullCanistersCount))
 end
 
 -- Stage Two: Mechanical Maniac
 
-function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
-	if spellId == 469286 then
-		self:GigaCoils()
-	end
-end
-
-function mod:GigaCoils()
-	if self:GetStage() == 1 then -- XXX Should find an event before this
+function mod:TrickShotsRemoved()
+	-- self:StopBar(CL.count:format(args.spellName, trickShotsAmount + 1))
+	-- trickShotsAmount = 0
+	if self:GetStage() == 1 then
 		self:StopBar(CL.stage:format(2))
-		self:StopBar(CL.count:format(L.scatterblast_canisters, canistersCount)) -- Scatterblast Canisters
-		self:StopBar(CL.count:format(CL.bombs, bigBadBunchaBombsCount)) -- Big Bad Buncha Bombs
-		self:StopBar(CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
-		self:StopBar(CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
+		self:StopBar(CL.count:format(L.scatterblast_canisters, fullCanistersCount)) -- Scatterblast Canisters
+		self:StopBar(CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
+		self:StopBar(CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
+		self:StopBar(CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
 
 		self:SetStage(2)
-		self:Message(469286, "cyan")
-		self:PlaySound(469286, "long") -- stage 2?
+		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:PlaySound("stages", "info")
 
-		canistersCount = 1 -- re-used for Fused Canisters
-		bigBadBunchaBombsCount = 1
-		suppressionCount = 1
-		ventingHeatCount = 1
+		fullCanistersCount = 1
+		fullBombsCount = 1
+		fullSuppressionCount = 1
+		fullVentingHeatCount = 1
 
 		gigaCoilsCount = 1
 		gigaBlastCount = 1
-		controlMeltdownCount = 1
 
-		-- self:Bar(469286, timers[2][args.spellId][1], CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
-		self:Bar(466341, timers[2][466341][1], CL.count:format(L.fused_canisters, canistersCount)) -- Fused Canisters
-		self:Bar(465952, timers[2][465952][1], CL.count:format(CL.bombs, bigBadBunchaBombsCount)) -- Big Bad Buncha Bombs
-		self:Bar(467182, timers[2][467182][1], CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
-		self:Bar(466751, timers[2][466751][1], CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
-	else -- repeat cast / stage 3 casts
+		-- self:CDBar(469286, 4, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+	end
+end
+
+function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
+	if spellId == 469286 then -- Giga Coils
+		self:StopBar(CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		self:StopBar(CL.count:format(L.scatterblast_canisters, fullCanistersCount)) -- Scatterblast Canisters
+		self:StopBar(CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
+		self:StopBar(CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+		self:StopBar(CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs/Bigger Badder Bomb Blast
+		self:StopBar(CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
+		self:StopBar(CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
+		self:StopBar(CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
+
 		self:Message(469286, "cyan", CL.count:format(self:SpellName(469286), gigaCoilsCount))
-		self:PlaySound(469286, "alert")
-		gigaCoilsCount = gigaCoilsCount + 1
-		self:Bar(469286, timers[self:GetStage()][469286][gigaCoilsCount], CL.count:format(self:SpellName(469286), gigaCoilsCount))
+		self:PlaySound(469286, "long")
+
+		gigaBlastCount = 1
+	end
+end
+
+function mod:GigaCoilsRemoved()
+	self:StopBar(CL.count:format(self:SpellName(469327), gigaBlastCount))
+
+	self:Message(469286, "cyan", CL.over:format(CL.count:format(self:SpellName(469286), gigaCoilsCount)))
+	self:PlaySound(469286, "long")
+	gigaCoilsCount = gigaCoilsCount + 1
+
+	canistersCount = 1 -- re-used for Fused Canisters
+	bombsCount = 1
+	suppressionCount = 1
+	ventingHeatCount = 1
+	egoCheckCount = 1
+
+	local stage = self:GetStage()
+	if stage == 2 then
+		self:CDBar(466341, cd(466341, canistersCount), CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
+		self:CDBar(465952, cd(465952, bombsCount), CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
+	elseif stage == 3 then
+		if not self:Easy() then
+			self:CDBar(466958, cd(466958, egoCheckCount), CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
+		end
+		self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+		self:CDBar(1214607, cd(1214607, bombsCount), CL.count:format(CL.bombs, fullBombsCount)) -- Bigger Badder Bomb Blast
+	end
+	self:CDBar(467182, cd(467182, suppressionCount), CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
+	self:CDBar(466751, cd(466751, ventingHeatCount), CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
+
+	local gigaCoilsCD = timers[stage][469286][gigaCoilsCount]
+	if gigaCoilsCD then
+		self:CDBar(469286, gigaCoilsCD - 3, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils (USCS is 3s earlier)
 	end
 end
 
 function mod:GigaBlast(args)
 	self:StopBar(CL.count:format(args.spellName, gigaBlastCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, gigaBlastCount))
-	-- self:PlaySound(args.spellId, "alert") -- Watch beam?
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, gigaBlastCount))
+	self:PlaySound(args.spellId, "alert") -- Watch beam?
 	gigaBlastCount = gigaBlastCount + 1
-	-- self:Bar(args.spellId, 6.5, CL.count:format(args.spellName, gigaBlastCount))
+	self:Bar(args.spellId, 6.5, CL.count:format(args.spellName, gigaBlastCount))
 end
 
 function mod:ChargedGigaBombApplied(args)
@@ -493,42 +661,34 @@ function mod:GigaBombDetonationApplied(args)
 	end
 end
 
-function mod:ControlMeltdownApplied(args)
-	self:Message(args.spellId, "green")
-	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 15, CL.count:format(args.spellName, controlMeltdownCount))
-	controlMeltdownCount = controlMeltdownCount + 1
-
-	-- XXX interrupt event?
-	-- self:StopBar(CL.count:format(self:SpellName(469327), gigaBlastCount))
-	-- gigaBlastCount = 1
+function mod:SabotagedControlsApplied(args)
+	-- XXX should this even exist?
+	self:Message(args.spellId, "green", CL.count:format(args.spellName, args.amount or 1))
+	-- self:PlaySound(args.spellId, "info")
+	-- if not self:LFR() then
+	-- 	self:Bar(1220846, self:Easy() and 60 or self:Mythic() and 15 or 20) -- Control Meltdown
+	-- end
 end
 
 function mod:FusedCanisters(args)
-	self:StopBar(CL.count:format(L.fused_canisters, canistersCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.fused_canisters, canistersCount))
+	self:StopBar(CL.count:format(L.fused_canisters, fullCanistersCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.fused_canisters, fullCanistersCount))
 	self:PlaySound(args.spellId, "alert") -- soak
-	-- self:Bar(474447, 33, CL.count:format(self:SpellName(474447), canistersCount)) -- Canister Detonation
 	canistersCount = canistersCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][canistersCount], CL.count:format(L.fused_canisters, canistersCount))
+	fullCanistersCount = fullCanistersCount + 1
+	self:CDBar(args.spellId, cd(args.spellId, canistersCount), CL.count:format(L.fused_canisters, fullCanistersCount))
 end
 
-function mod:JuiceIt(args)
-	-- local unit = self:GetUnitIdByGUID(args.sourceGUID)
-	-- if unit then
-	-- 	if self:UnitWithinRange(unit, 10) then
-	-- 		self:Message(args.spellId, "orange")
-	-- 		self:PlaySound(args.spellId, "alarm") -- watch out
-	-- 	end
-	-- end
-	-- self:Nameplate(args.spellId, 20, args.sourceGUID)
-end
-
-function mod:TechnicianDeath(args)
-	-- self:Message(-31482, "cyan", CL.killed:format(args.destName), false)
-	-- self:PlaySound(-31482, "info")
-	self:ClearNameplate(args.destGUID)
-end
+-- function mod:JuiceIt(args)
+-- 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
+-- 	if unit then
+-- 		if self:UnitWithinRange(unit, 10) then
+-- 			self:Message(args.spellId, "orange")
+-- 			self:PlaySound(args.spellId, "alarm") -- watch out
+-- 		end
+-- 	end
+-- 	self:Nameplate(args.spellId, 20, args.sourceGUID)
+-- end
 
 function mod:ShockBarrage(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
@@ -536,11 +696,11 @@ function mod:ShockBarrage(args)
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert")
 	end
-	-- self:Nameplate(466834, 10, args.sourceGUID)
+	-- self:Nameplate(466834, 2.5, args.sourceGUID) -- XXX 2.5 recast >.>
 end
 
 function mod:Wrench(args)
-	-- self:Nameplate(1216845, 10, args.sourceGUID)
+	self:Nameplate(1216845, 7.4, args.sourceGUID)
 end
 
 function mod:WrenchApplied(args)
@@ -553,10 +713,14 @@ function mod:WrenchApplied(args)
 	end
 end
 
-function mod:LumberingRageApplied(args)
-	if self:Dispeller("enrage", true) then
-		self:Message(args.spellId, "red")
-		self:PlaySound(args.spellId, "warning") -- 200% damage increase and movement? DO IT
+do
+	local prev = 0
+	function mod:LumberingRageApplied(args)
+		if self:Dispeller("enrage", true) and args.time - prev > 2 then
+			prev = args.time
+			self:Message(args.spellId, "red")
+			self:PlaySound(args.spellId, "warning") -- 200% damage increase and movement? DO IT
+		end
 	end
 end
 
@@ -566,123 +730,113 @@ end
 
 -- Intermission: Docked and Loaded
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
-	-- if spellId == 1213157 then
-	-- 	self:Cratering()
-	-- end
-end
-
--- function mod:Cratering(args)
--- 	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
--- 	self:StopBar(CL.count:format(self:SpellName(465952), bigBadBunchaBombsCount)) -- Big Bad Buncha Bombs
--- 	self:StopBar(CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
--- 	self:StopBar(CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
--- 	self:StopBar(CL.count:format(self:SpellName(466340), canistersCount)) -- Scatterblast Canisters
--- 	self:StopBar(CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
--- 	self:StopBar(CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
--- 	self:StopBar(CL.count:format(self:SpellName(466341), canistersCount)) -- Fused Canisters
-
--- 	self:SetStage(2.5)
--- 	self:Message(1214226, "red")
--- 	self:PlaySound(1214226, "long")
-
--- 	-- self:Bar(1214229, 5.0) -- Armageddon-class Plating
--- end
-
 do
 	local appliedTime = 0
 	function mod:ArmageddonClassPlatingApplied(args)
-		if self:GetStage() < 2.5 then
-			self:SetStage(2.5)
-			self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
-			self:StopBar(CL.count:format(L.fused_canisters, canistersCount)) -- Fused Canisters
-			self:StopBar(CL.count:format(CL.bombs, bigBadBunchaBombsCount)) -- Big Bad Buncha Bombs
-			self:StopBar(CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
-			self:StopBar(CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
-			self:StopBar(CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
-			self:StopBar(CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
-		end
+		self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
+		self:StopBar(CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
+		self:StopBar(CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
+		self:StopBar(CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
+		self:StopBar(CL.count:format(L.scatterblast_canisters, fullCanistersCount)) -- Scatterblast Canisters
+		self:StopBar(CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		self:StopBar(CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
+		self:StopBar(CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
+		self:StopBar(CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
 
 		appliedTime = args.time
-		self:Message(args.spellId, "cyan", CL.onboss:format(CL.shield))
-		self:PlaySound(args.spellId, "long")
-	end
 
+		self:SetStage(2.5)
+		self:Message(args.spellId, "cyan", CL.onboss:format(CL.shield))
+		self:PlaySound(args.spellId, "warning") -- immune
+
+		self:CDBar(1214369, 9.6, L.total_destruction) -- TOTAL DESTRUCTION!!!
+	end
 	function mod:ArmageddonClassPlatingRemoved(args)
 		if args.amount == 0 then
-			self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
+			self:Message(args.spellId, "green", CL.removed_after:format(CL.shield, args.time - appliedTime))
 			self:PlaySound(args.spellId, "info")
 		end
 	end
 end
 
-function mod:RadiantElectricityApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
-	end
-end
-
 function mod:TotalDestruction(args)
-	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+	self:StopBar(L.total_destruction)
+	self:Message(args.spellId, "yellow", CL.casting:format(L.total_destruction))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 33)
+	self:CastBar(args.spellId, 33, L.total_destruction)
 end
 
 function mod:TotalDestructionInterrupted(args)
-	self:StopCastBar(1214369)
-	self:Message(1214369, "green", CL.interrupted_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
+	self:StopCastBar(L.total_destruction)
+	-- self:Message(1214369, "green", CL.interrupted_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 
 	self:SetStage(3)
 	self:Message("stages", "cyan", CL.stage:format(3), false)
 	self:PlaySound("stages", "long") -- stage 3
 
-	bigBadBunchaBombsCount = 1 -- re-used for Bigger Badder Bomb Blast
+	bombsCount = 1 -- re-used for Bigger Badder Bomb Blast
 	canistersCount = 1 -- re-used for Tick-Tock Canisters
-	gigaCoilsCount = 1
-	gigaBlastCount = 1
 	suppressionCount = 1
 	ventingHeatCount = 1
+	egoCheckCount = 1
 
-	self:Bar(469286, timers[3][469286][1], CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
-	-- self:Bar(469327, timers[3][469327][1], CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
-	self:Bar(466342, timers[3][466342][1], CL.count:format(L.tick_tock_canisters, canistersCount)) -- Tick-Tock Canisters
-	self:Bar(1214607, timers[3][1214607][1], CL.count:format(CL.bombs, bigBadBunchaBombsCount)) -- Bigger Badder Bomb Blast
-	self:Bar(467182, timers[3][467182][1], CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
-	self:Bar(466751, timers[3][466751][1], CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
+	fullCanistersCount = 1
+	fullBombsCount = 1
+	fullSuppressionCount = 1
+	fullVentingHeatCount = 1
+
+	gigaCoilsCount = 1
+	gigaBlastCount = 1
+
+	if not self:Easy() then
+		self:CDBar(466958, cd(466958, egoCheckCount), CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
+	end
+	self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+	self:CDBar(1214607, cd(1214607, bombsCount), CL.count:format(CL.bombs, fullBombsCount)) -- Bigger Badder Bomb Blast
+	self:CDBar(467182, cd(467182, suppressionCount), CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
+	self:CDBar(466751, cd(466751, ventingHeatCount), CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
+	self:CDBar(469286, timers[3][469286][gigaCoilsCount] - 3, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+
+	if encounterStart > 0 and (self:Normal() or self:Heroic()) then
+		-- hard enrage at 9:37
+		local enrageCD = 577.5 - (GetTime() - encounterStart)
+		self:Bar(1222831, enrageCD) -- Overloaded Coils
+	end
 end
 
 -- Stage Three: What an Arsenal!
 
 function mod:BiggerBadderBombBlast(args)
-	self:StopBar(CL.count:format(CL.bombs, bigBadBunchaBombsCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.bombs, bigBadBunchaBombsCount))
+	self:StopBar(CL.count:format(CL.bombs, fullBombsCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.bombs, fullBombsCount))
 	self:PlaySound(args.spellId, "warning") -- dodge
-	bigBadBunchaBombsCount = bigBadBunchaBombsCount + 1
-	self:Bar(args.spellId, timers[3][args.spellId][bigBadBunchaBombsCount], CL.count:format(CL.bombs, bigBadBunchaBombsCount))
+	bombsCount = bombsCount + 1
+	fullBombsCount = fullBombsCount + 1
+	self:Bar(args.spellId, cd(args.spellId, bombsCount), CL.count:format(CL.bombs, fullBombsCount))
 
 	spawnedDuds = 0
-	-- self:Bar(1214755, 9) -- Overloaded Rockets
-	-- self:Bar(466153, 13) -- Bad Belated Boom (explode all at once? in series?)
-	-- self:Bar(466165, 18) -- 1500-Pound "Dud"
+	self:Bar(1214755, 11.7) -- Overloaded Rockets
+	-- self:Bar(466153, 11.9) -- Bad Belated Boom (basically explode when the rockets fire)
 end
 
 function mod:TickTockCanisters(args)
-	self:StopBar(CL.count:format(L.tick_tock_canisters, canistersCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.tick_tock_canisters, canistersCount))
+	self:StopBar(CL.count:format(L.tick_tock_canisters, fullCanistersCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.tick_tock_canisters, fullCanistersCount))
 	self:PlaySound(args.spellId, "alert") -- soak
-	-- self:Bar(474447, 33, CL.count:format(self:SpellName(474447), canistersCount)) -- Canister Detonation
 	canistersCount = canistersCount + 1
-	self:Bar(args.spellId, timers[3][args.spellId][canistersCount], CL.count:format(L.tick_tock_canisters, canistersCount))
+	fullCanistersCount = fullCanistersCount + 1
+	self:Bar(args.spellId, cd(args.spellId, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount))
 end
 
 function mod:EgoCheck(args)
-	self:Message(args.spellId, "purple")
+	self:StopBar(CL.count:format(args.spellName, egoCheckCount))
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, egoCheckCount))
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
 		self:PlaySound(args.spellId, "alarm") -- defensive
 	end
-	-- self:Bar(args.spellId, 18)
+	egoCheckCount = egoCheckCount + 1
+	self:Bar(args.spellId, cd(args.spellId, egoCheckCount), CL.count:format(args.spellName, egoCheckCount))
 end
 
 function mod:EgoCheckApplied(args)
@@ -691,4 +845,11 @@ function mod:EgoCheckApplied(args)
 	if unit and not self:Tanking(unit) then -- XXX Confirm swap on every cast?
 		self:PlaySound(466958, "warning") -- tauntswap?
 	end
+end
+
+function mod:OverloadedCoils(args)
+	self:StopBar(args.spellId)
+	self:Message(args.spellId, "red")
+	self:PlaySound(args.spellId, "alarm") -- enrage
+	-- self:CastBar(args.spellId, 10)
 end

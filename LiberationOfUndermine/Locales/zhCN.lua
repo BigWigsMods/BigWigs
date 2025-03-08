@@ -84,6 +84,7 @@ if L then
 	L.scatterblast_canisters = "裂破分摊" --使用技能名“裂破弹药筒”前2字做提醒
 	L.fused_canisters = "引线分摊" --使用技能名“引线弹药筒”前2字做提醒
 	L.tick_tock_canisters = "分摊"
+	--L.total_destruction = "DESTRUCTION!"
 
 	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "所有哑弹已引爆！"

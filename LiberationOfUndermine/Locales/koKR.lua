@@ -83,6 +83,7 @@ if L then
 	L.scatterblast_canisters = "브레스 같이맞기"
 	L.fused_canisters = "용기 같이맞기"
 	L.tick_tock_canisters = "바닥밟기"
+	--L.total_destruction = "DESTRUCTION!"
 
 	L.duds = "불발탄" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "모든 불발탄 해체완료!"
