@@ -483,7 +483,7 @@ function mod:UnstableCrawlerMines(args)
 	-- 	self:Bar(466539, 44.0, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
 	-- end
 	if self:GetStage() == 3 and unstableCrawlerMinesCount < 3 then -- 2 per
-		self:Bar(466539, 88.7, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount))
+		self:Bar(466539, 88.7, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount))
 	end
 end
 
@@ -638,25 +638,25 @@ function mod:Bloodlust()
 
 	-- XXX just split it per diff for now
 	if not self:Mythic() then -- normal/heroic live
-		self:Bar(466539, 4.9, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-		self:Bar(466476, 17.8, CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
-		self:Bar(472631, 28.7, CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
-		self:Bar(467380, 40.3, CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+		self:Bar(466539, 4.9, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+		self:Bar(466476, 17.8, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+		self:Bar(472631, 28.7, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+		self:Bar(467380, 40.3, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
 		self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
-		self:Bar(466518, 50.0, CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-		self:Bar(466509, 62.5, CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
-		self:Bar(469491, 71.8, CL.count:format(self:SpellName(469491), doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
+		self:Bar(466518, 50.0, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+		self:Bar(466509, 62.5, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
+		self:Bar(469491, 71.8, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
 		self:Bar(466545, 81.2, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
 		self:Bar(1216142, 118) -- Double-Minded Fury
 	else -- mythic testing
-		self:Bar(466539, 21.5, CL.count:format(self:SpellName(466539), unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-		self:Bar(466476, 36.2, CL.count:format(self:SpellName(466476), frostshatterBootsCount)) -- Frostshatter Boots
-		self:Bar(472631, 48.9, CL.count:format(self:SpellName(472631), earthershakerGaolCount)) -- Earthshaker Gaol
-		self:Bar(466518, 60.3, CL.count:format(self:SpellName(466518), moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+		self:Bar(466539, 21.5, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+		self:Bar(466476, 36.2, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+		self:Bar(472631, 48.9, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+		self:Bar(466518, 60.3, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
 		-- self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
-		self:Bar(467380, 75.2, CL.count:format(self:SpellName(467380), goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-		self:Bar(466509, 87.5, CL.count:format(self:SpellName(466509), fingerGunCount)) -- Stormfury Finger Gun
-		self:Bar(469491, 96.1, CL.count:format(self:SpellName(469491), doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
+		self:Bar(467380, 75.2, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+		self:Bar(466509, 87.5, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
+		self:Bar(469491, 96.1, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
 		self:Bar(466545, 102.1, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
 		self:Bar(1216142, 126) -- Double-Minded Fury
 	end
