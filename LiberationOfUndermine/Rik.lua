@@ -42,14 +42,14 @@ local timersHeroic = {
 	[466866] = { 24.6, 58.5, 0 }, -- Echoing Chant
 	[467606] = { 32.1, 35.0, 0 }, -- Sound Cannon
 	[466979] = { 43.5, 31.5, 26.0, 0 }, -- Faulty Zap
-	[472306] = { 26.1, 39.9, 42.9, 0 }, -- Sparkblast Ignition
+	[472306] = { 25.0, 39.5, 43.2, 0 }, -- Sparkblast Ignition
 }
 local timersMythic = {
-	[473748] = { 10.7, 38.1, 41.0, 0 }, -- Amplification!
-	[466866] = { 25.0, 57.5, 0 }, -- Echoing Chant
-	[467606] = { 30.1, 37.0, 0 }, -- Sound Cannon
-	[466979] = { 38.0, 37.0, 24.0, 0 }, -- Faulty Zap
-	[472306] = { 17.0, 43.0, 41.2, 0 }, -- Sparkblast Ignition
+	[473748] = { 11.0, 40.0, 39.0, 0 }, -- Amplification!
+	[466866] = { 24.5, 39.0, 0 }, -- Echoing Chant
+	[467606] = { 32.0, 35.0, 0 }, -- Sound Cannon
+	[466979] = { 43.5, 31.5, 26.0, 0 }, -- Faulty Zap
+	[472306] = { 25.0, 59.0, 21.5, 0 }, -- Sparkblast Ignition
 }
 local timers = mod:Easy() and timersNormal or mod:Mythic() and timersMythic or timersHeroic
 
@@ -109,8 +109,6 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-
 	self:Log("SPELL_CAST_START", "Amplification", 473748)
 	self:Log("SPELL_AURA_APPLIED", "LingeringVoltageApplied", 1217122)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringVoltageApplied", 1217122)
@@ -125,7 +123,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SoundCannonSuccess", 467606)
 	self:Log("SPELL_CAST_START", "FaultyZap", 466979)
 	self:Log("SPELL_AURA_APPLIED", "FaultyZapApplied", 467108) -- pre debuffs
-	-- self:Log("SPELL_CAST_START", "SparkblastIgnition", 472306) -- USCS
+	self:Log("SPELL_SUMMON", "PyrotechnicsSpawn", 1214688) -- Sparkblast Ignition
 	self:Log("SPELL_AURA_APPLIED", "ExcitementApplied", 1214164)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExcitementApplied", 1214164)
 	self:Log("SPELL_AURA_APPLIED", "TinnitusApplied", 464518)
@@ -161,7 +159,6 @@ function mod:OnEngage()
 
 	mobCollector = {}
 	mobMarks = {}
-
 
 	self:CDBar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
 	if not self:Easy() then
@@ -209,17 +206,6 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 472306 then -- Sparkblast Ignition
-		self:StopBar(CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
-		self:Message(spellId, "yellow", CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
-		self:PlaySound(spellId, "alert")
-		sparkblastIgnitionCount = sparkblastIgnitionCount + 1
-		fullSparkblastIgnitionCount = fullSparkblastIgnitionCount + 1
-		self:Bar(spellId, timers[spellId][sparkblastIgnitionCount], CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
-	end
-end
-
 -- Stage One: Party Starter
 
 function mod:Amplification(args)
@@ -236,7 +222,7 @@ function mod:LingeringVoltageApplied(args)
 		local amount = args.amount or 1
 		local tooHigh = 10 -- XXX Check what is high enough
 		if amount % 2 == 1 or amount > tooHigh then
-			self:StackMessage(args.spellId, "cyan", args.destName, amount, tooHigh)
+			self:StackMessage(args.spellId, "blue", args.destName, amount, tooHigh)
 			if amount > tooHigh then
 				self:PlaySound(args.spellId, "alarm") -- watch stacks
 			end
@@ -246,7 +232,7 @@ end
 
 function mod:ResonantEchoesApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "cyan", args.destName, args.amount, 1)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
 		if self:Easy() then -- Warning sound in heroic+ from Entranced!
 			self:PlaySound(args.spellId, "alarm") -- watch stacks
 		end
@@ -254,8 +240,8 @@ function mod:ResonantEchoesApplied(args)
 end
 
 function mod:EntrancedApplied(args)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning") -- lured in
 	end
 end
@@ -276,9 +262,6 @@ function mod:EchoingChant(args)
 	fullEchoingChantCount = fullEchoingChantCount + 1
 
 	local cd = timers[args.spellId][echoingChantCount]
-	if fullEchoingChantCount == 3 and self:Mythic() then -- 3 before first p2, then 2
-		cd = 32.5
-	end
 	self:Bar(args.spellId, cd, CL.count:format(L.echoing_chant, fullEchoingChantCount))
 end
 
@@ -288,7 +271,7 @@ function mod:SoundCannon(args)
 end
 
 function mod:SoundCannonApplied(args)
-	self:TargetMessage(467606, "red", args.destName, CL.count:format(args.spellName, fullSoundCannonCount))
+	self:TargetMessage(467606, "red", args.destName, CL.count:format(self:SpellName(467606), fullSoundCannonCount))
 	self:TargetBar(467606, 5, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(467606, "warning")
@@ -336,22 +319,26 @@ function mod:FaultyZapApplied(args)
 	end
 end
 
--- do
--- 	local prev = 0
--- 	function mod:SparkblastIgnition(args)
--- 		if args.time - prev > 10 then -- Will multiple spawn at the same time?
--- 			prev = args.time
--- 			self:Message(args.spellId, "orange")
--- 			self:PlaySound(args.spellId, "long") -- kill pyrotechnics?
--- 		end
--- 	end
--- end
+do
+	local prev = 0
+	function mod:PyrotechnicsSpawn(args)
+		if args.time - prev > 3 then
+			prev = args.time
+			self:StopBar(CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
+			self:Message(472306, "cyan", CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
+			self:PlaySound(472306, "info") -- adds
+			sparkblastIgnitionCount = sparkblastIgnitionCount + 1
+			fullSparkblastIgnitionCount = fullSparkblastIgnitionCount + 1
+			self:Bar(472306, timers[472306][sparkblastIgnitionCount], CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
+		end
+	end
+end
 
 function mod:ExcitementApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 1 then
-			self:StackMessage(args.spellId, "cyan", args.destName, amount, 0)
+			self:Message(args.spellId, "green", CL.stackyou:format(amount, args.spellName))
 			self:PlaySound(args.spellId, "info") -- buffs!
 		end
 	end
@@ -385,7 +372,7 @@ function mod:SoundCloudApplied(args)
 	self:PlaySound("stages", "long") -- stage 2
 	soundCloudCount = soundCloudCount + 1
 	if soundCloudCount < 3 then
-		self:Bar("stages", 32, CL.stage:format(1), args.spellId)
+		self:Bar("stages", self:Mythic() and 28 or 32, CL.stage:format(1), args.spellId)
 	end
 
 	blaringDropCount = 1
