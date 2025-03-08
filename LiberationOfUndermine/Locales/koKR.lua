@@ -12,6 +12,10 @@ if L then
 
 	L.bomb_explosion = "폭탄 폭발"
 	L.bomb_explosion_desc = "폭탄이 폭파되기까지의 타이머 표시."
+
+	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
+	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
+	--L.voltaic_image = "Fixates" -- Multiple of Fixate
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "koKR")

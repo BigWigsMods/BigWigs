@@ -12,6 +12,10 @@ if L then
 
 	L.bomb_explosion = "炸弹爆炸"
 	L.bomb_explosion_desc = "显示炸弹爆炸的倒计时。"
+
+	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
+	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
+	--L.voltaic_image = "Fixates" -- Multiple of Fixate
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "zhCN")
