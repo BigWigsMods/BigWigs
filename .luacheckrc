@@ -216,6 +216,7 @@ globals = {
 	"time",
 	"tinsert",
 	"tremove",
+	"tostringall",
 
 	-- framexml
 	"tContains",
