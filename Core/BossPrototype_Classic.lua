@@ -306,8 +306,23 @@ end
 -- @number encounterId The encounter id
 -- @within Enable triggers
 function boss:SetEncounterID(encounterId)
-	if type(encounterId) == "number" then
+	local encounterIdType = type(encounterId)
+	if encounterIdType == "number" then
 		self.engageId = encounterId
+	elseif encounterIdType == "table" then
+		for i = 1, #encounterId do
+			local encounterIdTableType = encounterId[i]
+			if encounterIdTableType ~= "number" then
+				core:Error(("Module %q tried to set an invalid encounter ID at position #%d. Expected number, got %s."):format(self.moduleName, i, encounterIdTableType))
+			end
+		end
+		self.engageId = encounterId[1]
+		self.extraEncounterIDs = {}
+		for i = 2, #encounterId do
+			self.extraEncounterIDs[#self.extraEncounterIDs+1] = encounterId[i]
+		end
+	else
+		core:Error(("Module %q tried to set an invalid encounter ID. Expected number or table, got %s."):format(self.moduleName, encounterIdType))
 	end
 end
 
@@ -315,10 +330,19 @@ end
 -- @return number
 -- @within Enable triggers
 function boss:GetEncounterID()
-	local encounterId = self.engageId
-	if type(encounterId) == "number" then
-		return encounterId
+	if self.extraEncounterIDs then
+		return self.engageId, unpack(self.extraEncounterIDs)
+	else
+		return self.engageId
 	end
+end
+
+--- Check if a specific encounter ID is registered this module.
+-- @number encounterId A singular specific encounter ID
+-- @return boolean
+-- @within Enable triggers
+function boss:IsEncounterID(encounterId)
+	return encounterId == self.engageId or (self.extraEncounterIDs and self.extraEncounterIDs[encounterId])
 end
 
 --- Set the journal id used for this module. (As used by the dungeon journal)

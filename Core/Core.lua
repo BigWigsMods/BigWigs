@@ -98,9 +98,9 @@ end
 --
 
 if loader.isRetail or loader.isCata then
-	function mod:ENCOUNTER_START(_, id)
+	function mod:ENCOUNTER_START(_, encounterId)
 		for _, module in next, bosses do
-			if module:GetEncounterID() == id and not module:IsEnabled() then
+			if module:IsEncounterID(encounterId) and not module:IsEnabled() then
 				module:Enable()
 				if UnitGUID("boss1") then -- Only if _START fired after IEEU
 					module:Engage()
@@ -109,9 +109,9 @@ if loader.isRetail or loader.isCata then
 		end
 	end
 else
-	function mod:ENCOUNTER_START(_, id)
+	function mod:ENCOUNTER_START(_, encounterId)
 		for _, module in next, bosses do
-			if module:GetEncounterID() == id then
+			if module:IsEncounterID(encounterId) then
 				if not module:IsEnabled() then
 					module:Enable()
 				end
