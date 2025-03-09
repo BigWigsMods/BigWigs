@@ -310,16 +310,18 @@ function boss:SetEncounterID(encounterId)
 	if encounterIdType == "number" then
 		self.engageId = encounterId
 	elseif encounterIdType == "table" then
-		for i = 1, #encounterId do
-			local encounterIdTableType = encounterId[i]
-			if encounterIdTableType ~= "number" then
-				core:Error(("Module %q tried to set an invalid encounter ID at position #%d. Expected number, got %s."):format(self.moduleName, i, encounterIdTableType))
-			end
-		end
-		self.engageId = encounterId[1]
 		self.extraEncounterIDs = {}
-		for i = 2, #encounterId do
-			self.extraEncounterIDs[#self.extraEncounterIDs+1] = encounterId[i]
+		for i = 1, #encounterId do
+			local actualId = encounterId[i]
+			local actualIdType = type(actualId)
+			if actualIdType ~= "number" then
+				core:Error(("Module %q tried to set an invalid encounter ID at position #%d. Expected number, got %s."):format(self.moduleName, i, actualIdType))
+			elseif i > 1 then
+				self.extraEncounterIDs[actualId] = true
+				self.extraEncounterIDs[#self.extraEncounterIDs+1] = actualId
+			else
+				self.engageId = actualId
+			end
 		end
 	else
 		core:Error(("Module %q tried to set an invalid encounter ID. Expected number or table, got %s."):format(self.moduleName, encounterIdType))
