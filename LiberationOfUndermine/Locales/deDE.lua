@@ -1,96 +1,96 @@
 local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "deDE")
 if not L then return end
 if L then
-	--L.plating_removed = "%d Protective Plating left"
-	--L.exhaust_fumes = "Raid Damage"
+	L.plating_removed = "%d Schutzpanzerung noch übrig"
+	L.exhaust_fumes = "Raid Schaden"
 end
 
 L = BigWigs:NewBossLocale("Cauldron of Carnage", "deDE")
 if L then
-	--L.custom_on_fade_out_bars = "Fade out bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range."
+	L.custom_on_fade_out_bars = "Leisten abblenden"
+	L.custom_on_fade_out_bars_desc = "Blendet die Leisten ab, welche zum aus der Reichweite befindlichen Boss gehören."
 
-	--L.bomb_explosion = "Bomb Explosion"
-	--L.bomb_explosion_desc = "Show a timer for the explosion off the bombs."
+	L.bomb_explosion = "Bombenexplosion"
+	L.bomb_explosion_desc = "Zeigt einen Timer für die Explosion der Bomben."
 
-	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
-	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
-	--L.voltaic_image = "Fixates" -- Multiple of Fixate
+	L.eruption_stomp = "Stampfen" -- Short for Eruption Stomp
+	L.thunderdrum_salvo = "Salve" -- Short for Thunderdrum Salvo
+	L.voltaic_image = "Fixierungen" -- Multiple of Fixate
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "deDE")
 if L then
-	--L.amplification = "Amplifiers"
-	--L.echoing_chant = "Echoes"
-	--L.faulty_zap = "Zaps"
-	--L.sparkblast_ignition = "Barrels"
+	L.amplification = "Verstärker"
+	L.echoing_chant = "Echos"
+	L.faulty_zap = "Schocker"
+	L.sparkblast_ignition = "Fässer"
 end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "deDE")
 if L then
-	--L.ball_size_medium = "Medium Ball!"
-	--L.ball_size_large = "Large Ball!"
-	--L.rolled_on_you = "%s rolled over YOU" -- PlayerX rolled over you
-	--L.rolled_from_you = "Rolled over %s" -- (you) Rolled over PlayerX
-	--L.garbage_dump_message = "YOU hit BOSS for %s"
+	L.ball_size_medium = "Mittlerer Ball!"
+	L.ball_size_large = "Großer Ball!"
+	L.rolled_on_you = "%s ist über DICH gerollt" -- PlayerX rolled over you
+	L.rolled_from_you = "Ist über %s gerollt" -- (you) Rolled over PlayerX
+	L.garbage_dump_message = "DU hast den BOSS getroffen für %s"
 
-	--L.electromagnetic_sorting = "Sorting" -- Short for Electromagnetic Sorting
-	--L.muffled_doomsplosion = "Bomb Soaked"
-	--L.incinerator = "Fire Circles"
-	--L.landing = "Landing" -- Landing down from the sky
+	L.electromagnetic_sorting = "Sortierung" -- Short for Electromagnetic Sorting
+	L.muffled_doomsplosion = "Bombe absorbiert"
+	L.incinerator = "Feuerkreise"
+	L.landing = "Landung" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "deDE")
 if L then
-	--L.foot_blasters = "Mines"
-	--L.screw_up = "Drills"
-	--L.sonic_ba_boom = "Raid Damage"
-	--L.polarization_generator = "Color Swaps"
+	L.foot_blasters = "Minen"
+	L.screw_up = "Bohrer"
+	L.sonic_ba_boom = "Raid Schaden"
+	L.polarization_generator = "Farbänderungen"
 
-	--L.polarization_soon = "Color Swap Soon: %s"
+	L.polarization_soon = "Farbänderung bald: %s"
 
-	--L.activate_inventions = "Activate: %s"
-	--L.blazing_beam = "Beams"
-	--L.rocket_barrage = "Rockets"
-	--L.mega_magnetize = "Magnets"
-	--L.jumbo_void_beam = "Big Beams"
-	--L.void_barrage = "Balls"
+	L.activate_inventions = "Aktiviert: %s"
+	L.blazing_beam = "Strahlen"
+	L.rocket_barrage = "Raketen"
+	L.mega_magnetize = "Magneten"
+	L.jumbo_void_beam = "Große Strahlen"
+	L.void_barrage = "Bälle"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "deDE")
 if L then
-	--L.rewards = "Prizes" -- Fabulous Prizes
-	--L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
-	--L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
+	L.rewards = "Preise" -- Fabulous Prizes
+	L.rewards_desc = "Wenn zwei Walzen eingerastet sind, wird die \"fabelhafte Belohnung\" ausgegeben.\nNachrichten weisen darauf hin, welche ausgegeben wird.\nDie Infobox zeigt an, welche Preise noch verfügbar sind."
+	L.deposit_time = "Einwurfzeit" -- Timer that indicates how long you have left to deposit the tokens.
 
-	--L.pay_line = "Coins"
-	--L.shock = "Shock"
-	--L.flame = "Flame"
-	--L.coin = "Coin"
+	L.pay_line = "Münzen"
+	L.shock = "Schock"
+	L.flame = "Flamme"
+	L.coin = "Münze"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "deDE")
 if L then
-	--L.earthshaker_gaol = "Prisons"
-	--L.frostshatter_boots = "Frost Boots" -- Short for Frostshatter Boots
-	--L.frostshatter_spear = "Frost Spears" -- Short for Frostshatter Spears
-	--L.stormfury_finger_gun = "Finger Gun" -- Short for Stormfury Finger Gun
-	--L.molten_gold_knuckles = "Tank Frontal"
-	--L.unstable_crawler_mines = "Mines"
-	--L.goblin_guided_rocket = "Rocket"
-	--L.double_whammy_shot = "Tank Soak"
-	--L.electro_shocker = "Shocker"
+	L.earthshaker_gaol = "Gefängnisse"
+	L.frostshatter_boots = "Froststiefel" -- Short for Frostshatter Boots
+	L.frostshatter_spear = "Frostspeere" -- Short for Frostshatter Spears
+	L.stormfury_finger_gun = "Fingerpistole" -- Short for Stormfury Finger Gun
+	L.molten_gold_knuckles = "Tank Frontal"
+	L.unstable_crawler_mines = "Minen"
+	L.goblin_guided_rocket = "Rakete"
+	L.double_whammy_shot = "Tank Soak"
+	L.electro_shocker = "Schocker"
 end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "deDE")
 if L then
-	--L.scatterblast_canisters = "Cone Soak"
-	--L.fused_canisters = "Group Soaks"
-	--L.tick_tock_canisters = "Soaks"
-	--L.total_destruction = "DESTRUCTION!"
+	L.scatterblast_canisters = "Kegel Soak"
+	L.fused_canisters = "Gruppen Soaks"
+	L.tick_tock_canisters = "Soaks"
+	L.total_destruction = "ZERSTÖRUNG!"
 
-	--L.duds = "Duds" -- Short for 1500-Pound "Dud"
-	--L.all_duds_detontated = "All Duds Detonated!"
-	--L.duds_remaining = "%d |4Dud remains:Duds remaining;" -- 1 Dud Remains | 2 Duds Remaining
-	--L.duds_soak = "Soak Duds (%d left)"
+	L.duds = "Blindgänger" -- Short for 1500-Pound "Dud"
+	L.all_duds_detontated = "Alle Blindgänger detoniert!"
+	L.duds_remaining = "%d Blindgänger übrig" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_soak = "Soak Blindgänger (%d übrig)"
 end
