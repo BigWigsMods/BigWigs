@@ -1074,9 +1074,10 @@ local function populateToggleOptions(widget, module)
 	scrollFrame:PauseLayout()
 
 	-- Add a small text label to the top right displaying the boss encounter ID
-	if module:GetEncounterID() then
+	local encounterId, multiple = module:GetEncounterID()
+	if encounterId then
 		local idLabel = AceGUI:Create("Label")
-		idLabel.label:SetFormattedText(L.optionsKey, module:GetEncounterID())
+		idLabel.label:SetFormattedText(L.optionsKey, multiple and module:TableToString({module:GetEncounterID()}) or encounterId)
 		idLabel:SetColor(0.65, 0.65, 0.65)
 		idLabel:SetFullWidth(true)
 		idLabel.label:SetJustifyH("RIGHT")
@@ -1087,8 +1088,8 @@ local function populateToggleOptions(widget, module)
 
 	local sDB = BigWigsStatsDB
 	local journalId = module:GetJournalID()
-	if not journalId and module:GetAllowWin() and module:GetEncounterID() then
-		journalId =  -(module:GetEncounterID()) -- Fallback to show stats for modules with no journal ID, but set to allow win
+	if not journalId and module:GetAllowWin() and encounterId then
+		journalId =  -(encounterId) -- Fallback to show stats for modules with no journal ID, but set to allow win
 	end
 	if journalId and id and id > 0 and sDB and sDB[id] and sDB[id][journalId] then
 		sDB = sDB[id][journalId]
