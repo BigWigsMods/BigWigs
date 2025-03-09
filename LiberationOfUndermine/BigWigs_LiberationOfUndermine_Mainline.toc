@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f解放安德麦|r]
 ## Title-zhTW: BigWigs [|cffeda55f解放幽坑城|r]
 ## Notes: BigWigs Liberation of Undermine Modules
-## Notes-deDE: BigWigs Liberation of Undermine Module
+## Notes-deDE: BigWigs Befreiung von Lorenhall Module
 ## Notes-esES: BigWigs Liberation of Undermine Modules
 ## Notes-esMX: BigWigs Liberation of Undermine Modules
 ## Notes-frFR: BigWigs Liberation of Undermine Modules
