@@ -36,6 +36,7 @@ if L then
 
 	L.electromagnetic_sorting = "Сортировка" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "Бомба поглощена"
+	--L.short_fuse = "Bombshell Explosion"
 	L.incinerator = "Огонь войды"
 	L.landing = "Приземление" -- Landing down from the sky
 end

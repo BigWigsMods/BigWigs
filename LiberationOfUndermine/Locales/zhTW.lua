@@ -36,6 +36,7 @@ if L then
 
 	L.electromagnetic_sorting = "電磁" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "悶響爆炸" -- 悶響末日爆炸 暫定
+	--L.short_fuse = "Bombshell Explosion"
 	L.incinerator = "火圈" -- 火圈/焚化/燒垃圾
 	L.landing = "降落" -- Landing down from the sky
 end

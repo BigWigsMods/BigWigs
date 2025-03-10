@@ -36,6 +36,7 @@ if L then
 
 	L.electromagnetic_sorting = "분류" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "폭탄 처리됨"
+	--L.short_fuse = "Bombshell Explosion"
 	L.incinerator = "소각"
 	L.landing = "착륙" -- Landing down from the sky
 end

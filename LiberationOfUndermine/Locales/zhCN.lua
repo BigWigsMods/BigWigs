@@ -36,6 +36,7 @@ if L then
 
 	L.electromagnetic_sorting = "电磁分拣" -- 中文技能名称短，就不简写了
 	L.muffled_doomsplosion = "炸弹爆炸"
+	--L.short_fuse = "Bombshell Explosion"
 	L.incinerator = "火圈"
 	L.landing = "降落" -- Landing down from the sky
 
