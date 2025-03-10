@@ -308,19 +308,19 @@ do
 		end
 	end
 	function plugin:BigWigs_OnBossEngage(event, module)
-		local id = module.instanceId
+		local instanceId = type(module.instanceId) == "table" and module.instanceId[1] or module.instanceId
 		local journalId = GetModuleID(module)
 
-		if journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
+		if journalId and instanceId and instanceId > 0 and not module.worldBoss then -- Raid restricted for now
 			local t = GetTime()
 			activeDurations[journalId] = {t}
 
 			local diff = module:Difficulty()
 			if diff and difficultyTable[diff] then
 				local sDB = BigWigsStatsDB
-				if not sDB[id] then sDB[id] = {} end
-				if not sDB[id][journalId] then sDB[id][journalId] = {} end
-				sDB = sDB[id][journalId]
+				if not sDB[instanceId] then sDB[instanceId] = {} end
+				if not sDB[instanceId][journalId] then sDB[instanceId][journalId] = {} end
+				sDB = sDB[instanceId][journalId]
 				local difficultyText = difficultyTable[diff]
 				if diff == 226 then
 					if module:GetPlayerAura(458841) then -- Sweltering Heat
@@ -382,7 +382,8 @@ function plugin:BigWigs_OnBossWin(event, module)
 
 		local diff = module:Difficulty()
 		if difficultyText then
-			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
+			local instanceId = type(module.instanceId) == "table" and module.instanceId[1] or module.instanceId
+			local sDB = BigWigsStatsDB[instanceId][journalId][difficultyText]
 			if not sDB.kills then
 				sDB.kills = 1
 				if sDB.wipes then
@@ -425,7 +426,8 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			if not difficultyText and IsInRaid() and not dontPrint[diff] then
 				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
 			elseif difficultyText then
-				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
+				local instanceId = type(module.instanceId) == "table" and module.instanceId[1] or module.instanceId
+				local sDB = BigWigsStatsDB[instanceId][journalId][difficultyText]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
 
