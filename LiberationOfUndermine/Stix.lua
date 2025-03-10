@@ -223,6 +223,25 @@ do
 		end
 	end
 
+	function mod:ElectromagneticSorting(args)
+		self:StopBar(CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+		self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+		self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
+		electromagneticSortingCount = electromagneticSortingCount + 1
+
+		local cd
+		if self:Mythic() then
+			cd = electromagneticSortingCount == 2 and (44.4 + 22.5) or 51.1
+		else
+			cd = electromagneticSortingCount == 3 and (37.8 + 22.5) or 51.1
+		end
+		self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
+
+		muffledDoomsplosionCount = 0
+		mobMark = 8
+		iconList = {}
+	end
+
 	function mod:SortedApplied(args)
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(461536) -- Rolling Rubbish
@@ -324,25 +343,6 @@ do
 			self:PlaySound(args.spellId, "alarm") -- failed
 		end
 	end
-end
-
-function mod:ElectromagneticSorting(args)
-	self:StopBar(CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-	self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
-	electromagneticSortingCount = electromagneticSortingCount + 1
-
-	local cd
-	if self:Mythic() then
-		cd = electromagneticSortingCount == 2 and (44.4 + 22.5) or 51.1
-	else
-		cd = electromagneticSortingCount == 3 and (37.8 + 22.5) or 51.1
-	end
-	self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-
-	muffledDoomsplosionCount = 0
-	mobMark = 8
-	iconList = {}
 end
 
 function mod:Incinerator(args)
