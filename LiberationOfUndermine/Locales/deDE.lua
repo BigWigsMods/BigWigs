@@ -36,7 +36,7 @@ if L then
 
 	L.electromagnetic_sorting = "Sortierung" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "Bombe absorbiert"
-	--L.short_fuse = "Bombshell Explosion"
+	L.short_fuse = "Bombenhülse Explosion"
 	L.incinerator = "Feuerkreise"
 	L.landing = "Landung" -- Landing down from the sky
 end
