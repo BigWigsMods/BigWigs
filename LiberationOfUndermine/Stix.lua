@@ -24,7 +24,6 @@ local muffledDoomsplosionCount = 0
 
 local mobCollector = {}
 local mobMark = 0
-local scrapmasterMarks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -131,8 +130,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DemolishApplied", 464112)
 	self:Log("SPELL_CAST_SUCCESS", "Meltdown", 1217954)
 	-- Scrapmaster
-	self:Log("SPELL_CAST_START", "DumpsterDive", 466742)
-	self:Log("SPELL_AURA_APPLIED", "MessedUpApplied", 1217685)
+	self:Log("SPELL_CAST_SUCCESS", "MessedUp", 1217685)
 	self:Log("SPELL_CAST_SUCCESS", "ScrapRockets", 1219384)
 	-- Junkyard Hyena
 	self:Log("SPELL_AURA_APPLIED", "InfectedBiteApplied", 466748)
@@ -165,7 +163,6 @@ function mod:OnEngage()
 	powercoilCount = 1
 
 	mobCollector = {}
-	scrapmasterMarks = {}
 
 	if not self:Easy() then
 		self:Berserk(self:Mythic() and 386 or 481, true) -- 6:25/8:00
@@ -412,22 +409,10 @@ function mod:Meltdown(args)
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, meltdownCount))
 end
 
-function mod:DumpsterDive(args)
-	-- set marks based on spawn order so multiple people will get consistent marks
-	if not scrapmasterMarks[args.sourceGUID] then
-		scrapmasterMarks[args.sourceGUID] = mobMark
+function mod:MessedUp(args)
+	if self:MobId(args.sourceGUID) == 231839 then -- Scrapmaster
+		mobCollector[args.sourceGUID] = mobMark
 		mobMark = mobMark - 1
-
-	-- flag the guid for marking if it wasn't rolled over
-	elseif mobCollector[args.sourceGUID] == nil then
-		mobCollector[args.sourceGUID] = scrapmasterMarks[args.sourceGUID]
-	end
-end
-
-function mod:MessedUpApplied(args)
-	-- flag the guid for marking
-	if scrapmasterMarks[args.destGUID] then
-		mobCollector[args.destGUID] = scrapmasterMarks[args.destGUID]
 	end
 end
 
@@ -438,8 +423,9 @@ function mod:ScrapRockets(args)
 		self:PlaySound(args.spellId, "alarm")
 	end
 	-- flag the guid for marking if it wasn't rolled over
-	if scrapmasterMarks[args.sourceGUID] and mobCollector[args.sourceGUID] == nil then
-		mobCollector[args.sourceGUID] = scrapmasterMarks[args.sourceGUID]
+	if mobCollector[args.sourceGUID] == nil then
+		mobCollector[args.sourceGUID] = mobMark
+		mobMark = mobMark - 1
 	end
 end
 
