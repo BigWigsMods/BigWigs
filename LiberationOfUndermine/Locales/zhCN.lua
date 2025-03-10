@@ -35,8 +35,8 @@ if L then
 	L.garbage_dump_message = "你对首领造成了 %s 伤害"
 
 	L.electromagnetic_sorting = "电磁分拣" -- 中文技能名称短，就不简写了
-	L.muffled_doomsplosion = "炸弹爆炸"
-	--L.short_fuse = "Bombshell Explosion"
+	L.muffled_doomsplosion = "炸弹爆炸" -- 闷声毁灭爆炸
+	L.short_fuse = "爆壳蟹爆炸" -- 超短引线
 	L.incinerator = "火圈"
 	L.landing = "降落" -- Landing down from the sky
 
