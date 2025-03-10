@@ -5,8 +5,9 @@ BigWigs:AddSounds("Vexie and the Geargrinders", {
 	[459943] = "alert",
 	[459978] = "alarm",
 	[460116] = "long",
-	[465865] = {"alarm","info"},
+	[465865] = {"alarm","warning"},
 	[466615] = "info",
+	[468147] = "info",
 	[471403] = "warning",
 })
 
@@ -55,9 +56,10 @@ BigWigs:AddSounds("Stix Bunkjunker", {
 	[466748] = "alarm",
 	[467117] = "long",
 	[467135] = "warning",
-	[472893] = "alarm",
+	[472893] = "warning",
+	[473119] = "alarm",
 	[1217954] = {"alarm","alert"},
-	[1217975] = "warning",
+	[1217975] = "alarm",
 	[1218704] = "alarm",
 	[1219384] = "alarm",
 })

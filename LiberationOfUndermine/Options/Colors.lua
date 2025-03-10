@@ -7,6 +7,7 @@ BigWigs:AddColors("Vexie and the Geargrinders", {
 	[460116] = "green",
 	[465865] = {"blue","purple"},
 	[466615] = "cyan",
+	[468147] = "yellow",
 	[468216] = "orange",
 	[471403] = "red",
 })
@@ -61,6 +62,7 @@ BigWigs:AddColors("Stix Bunkjunker", {
 	[467117] = "cyan",
 	[467135] = "red",
 	[472893] = "blue",
+	[473119] = "red",
 	[1217954] = {"blue","purple"},
 	[1217975] = "red",
 	[1218704] = {"blue","cyan"},
