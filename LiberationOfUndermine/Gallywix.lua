@@ -52,20 +52,23 @@ local timersNormal = {
 		[467182] = { 34.9, 43.2, 37.4, 0 }, -- Suppression
 		[466751] = { 13.9, 28.7, 31.5, 30.6, 0 }, -- Venting Heat
 	},
-	{ -- Phase 2
-		[469286] = { 132.4, 70.7 }, -- Giga Coils
+	{ -- Phase 2 (4:48 third coils)
+		[469286] = { 9.0, 70.7, 70.7 }, -- Giga Coils
 		[466341] = { -- Fused Canisters
 			{ 12.7, 41.2, 0 },
+			{ 34.0, 0 },
 		},
 		[465952] = { -- Big Bad Buncha Bombs
 			{ 44.7, 0 },
+			{ 46.3, 0 },
 		},
 		[467182] = { -- Suppression
 			{ 29.9, 0 },
-			{ 8.9, 0 },
+			{ 8.9, 43.7, 0 },
 		},
 		[466751] = { -- Venting Heat
 			{ 25.5, 0 },
+			{ 20.8, 0 },
 		},
 	},
 	{ -- Phase 3
@@ -85,12 +88,6 @@ local timersNormal = {
 			{ 25.6, 0 },
 			{ 34.0, 0 },
 			{ 30.2, 0 },
-		},
-		[466958] = { -- Ego Check
-			{ 14.1, 13.0, 15.0, 8.1, 0 },
-			{ 15.4, 13.5, 8.1, 10.0, 0 },
-			{ 16.5, 8.0, 9.0, 26.1, 0 },
-			{ 11.3 },
 		},
 		[467182] = { -- Suppression
 			{ 33.0, 0 },
@@ -118,7 +115,7 @@ local timersHeroic = {
 		[466751] = { 12.6, 25.9, 26.7, 27.6, 0 }, -- Venting Heat
 	},
 	{ -- Phase 2
-		[469286] = { 120.0, 58.7 }, -- Giga Coils
+		[469286] = { 9.0, 57.7 }, -- Giga Coils
 		[466341] = { -- Fused Canisters
 			{ 10.2, 32.9, 0 },
 			{ 27.7, 0 },
@@ -137,35 +134,36 @@ local timersHeroic = {
 		},
 	},
 	{ -- Phase 3
-		[469286] = { 60.6, 60.4, 69.9 }, -- Giga Coils
+		[469286] = { 60.1, 60.4, 69.0 }, -- Giga Coils
 		[466342] = { -- Tick-Tock Canisters
 			{ 22.0, 0 },
 			{ 6.9, 35.0, 0 },
 			{ 27.9, 0 },
-			{ 3.4, 0 },
+			{ 3.4 },
 		},
 		[1214607] = { -- Bigger Badder Bomb Blast
 			{ 8.0, 36.0, 0 },
 			{ 31.0, 0 },
-			{ 18.5, 25.0, 0 },
-			{ 23.3, 0 },
+			{ 18.5, 25.0, 0 }, -- XXX 19.0, 35.0 ???
+			{ 23.3 },
 		},
 		[466958] = { -- Ego Check
 			{ 14.1, 13.0, 15.0, 8.1, 0 },
 			{ 15.4, 13.5, 8.1, 10.0, 0 },
 			{ 16.5, 8.0, 9.0, 26.1, 0 },
-			{ 11.3 },
+			{ 10.6, 18.5, 11.0 },
 		},
 		[467182] = { -- Suppression
 			{ 33.0, 0 },
 			{ 20.0, 0 },
-			{ 7.4, 37.0, 0 },
-			{ 32.4, 0 },
+			{ 7.4, 37.0, 0 }, -- XXX 7.6, 43.0 ???
+			{ 31.2 },
 		},
 		[466751] = { -- Venting Heat
 			{ 18.0, 0 },
 			{ 11.9, 37.1, 0 },
 			{ 38.4, 0 },
+			{ 19.6 },
 		},
 	}
 }
@@ -577,7 +575,7 @@ function mod:TrickShotsRemoved()
 		gigaCoilsCount = 1
 		gigaBlastCount = 1
 
-		-- self:CDBar(469286, 4, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		self:CDBar(469286, timers[2][469286][1], CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
 	end
 end
 
