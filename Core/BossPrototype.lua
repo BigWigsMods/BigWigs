@@ -1508,7 +1508,7 @@ do
 end
 
 function boss:EncounterEnd(_, id, name, diff, size, status)
-	if self:GetEncounterID() == id and self:IsEnabled() then
+	if self:IsEncounterID(id) and self:IsEnabled() then
 		if status == 1 then
 			if self:GetJournalID() or self:GetAllowWin() then
 				self:Win() -- Official boss module
