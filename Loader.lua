@@ -130,7 +130,7 @@ public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
 public.UnitName = UnitName
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
-public.isTestBuild = GetCurrentRegion() == 72 or GetCurrentRegion() == 90 -- PTR/beta
+public.isTestBuild = GetCurrentRegion() == 72 or GetCurrentRegion() == 90 or (IsPublicTestClient and IsPublicTestClient()) -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = build >= 120000

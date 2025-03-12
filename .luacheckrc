@@ -33,6 +33,7 @@ files["**/Loader.lua"].ignore = {
 	"113/GetSpellLink",
 	"113/GetSpellTexture",
 	"113/IsItemInRange",
+	"113/IsPublicTestClient",
 	"113/PlaySoundFile",
 	"113/securecallfunction",
 	"113/SendChatMessage",
