@@ -187,6 +187,8 @@ end
 
 local L = mod:GetLocale()
 if L then
+	L.story_phase_trigger = "What, you think you won?" -- What, you think you won? Nah, I got somethin' else for ya.
+
 	L.scatterblast_canisters = "Cone Soak"
 	L.fused_canisters = "Group Soaks"
 	L.tick_tock_canisters = "Soaks"
@@ -283,7 +285,7 @@ end
 function mod:OnBossEnable()
 	if self:Story() then
 		self:Log("SPELL_CAST_SUCCESS", "GigaBlastSuccess", 469327) -- mini phase
-		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- phase 2
+		self:RegisterEvent("CHAT_MSG_MONSTER_YELL") -- phase 2
 	end
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 1215209) -- Sabotage Zone
@@ -419,8 +421,8 @@ function mod:GigaBlastSuccess()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
-	if spellId == 45313 then -- Anchor Here
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.story_phase_trigger, nil, true) then
 		self:StopBar(CL.count:format(self:SpellName(465952), fullBombsCount)) -- Big Bad Buncha Bombs
 		self:StopBar(CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
 		self:StopBar(CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
