@@ -86,7 +86,7 @@ end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "zhCN")
 if L then
-	--L.story_phase_trigger = "What, you think you won?" -- What, you think you won? Nah, I got somethin' else for ya.
+	L.story_phase_trigger = "怎么，自以为胜利了？" -- 怎么，自以为胜利了？呵，我给你准备了惊喜。
 
 	L.scatterblast_canisters = "裂破分摊" -- 使用技能名“裂破弹药筒”前2字做提醒
 	L.fused_canisters = "引线分摊" -- 使用技能名“引线弹药筒”前2字做提醒
