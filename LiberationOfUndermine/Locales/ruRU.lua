@@ -85,6 +85,8 @@ end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "ruRU")
 if L then
+	--L.story_phase_trigger = "What, you think you won?" -- What, you think you won? Nah, I got somethin' else for ya.
+
 	L.scatterblast_canisters = "Конус делёжка"
 	L.fused_canisters = "Групповая делёжка"
 	L.tick_tock_canisters = "Делёжка"
