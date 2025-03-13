@@ -254,6 +254,7 @@ function mod:MoxieApplied(args)
 end
 
 function mod:DoubleMindedFury(args)
+	self:StopBar(CL.full_energy)
 	self:Message(args.spellId, "red", CL.full_energy)
 	self:PlaySound(args.spellId, "alarm") -- fail
 end
@@ -299,7 +300,10 @@ do
 			self:Yell(args.spellId, nil, nil, "Earthshaker Gaol")
 			self:YellCountdown(args.spellId, 6)
 		end
-		local count = self:Mythic() and 4 or 2
+		local count = 2
+		if self:Mythic() then
+			count = self:GetStage() == 3 and 4 or math.min(earthershakerGaolCount, 4) -- surely it caps, right?
+		end
 		self:TargetsMessage(args.spellId, "orange", playerList, count, L.earthshaker_gaol)
 		if #playerList == count then
 			if gaolOnMe then
@@ -621,30 +625,16 @@ function mod:Bloodlust()
 
 	mobMarks = {}
 
-	-- XXX just split it per diff for now
-	if not self:Mythic() then -- normal/heroic live
-		self:Bar(466539, 4.9, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-		self:Bar(466476, 17.8, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
-		self:Bar(472631, 28.7, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
-		self:Bar(467380, 40.3, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-		self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
-		self:Bar(466518, 50.0, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-		self:Bar(466509, 62.5, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
-		self:Bar(469491, 71.8, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
-		self:Bar(466545, 81.2, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
-		self:Bar(1216142, 118) -- Double-Minded Fury
-	else -- mythic testing
-		self:Bar(466539, 21.5, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
-		self:Bar(466476, 36.2, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
-		self:Bar(472631, 48.9, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
-		self:Bar(466518, 60.3, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
-		-- self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
-		self:Bar(467380, 75.2, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
-		self:Bar(466509, 87.5, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
-		self:Bar(469491, 96.1, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
-		self:Bar(466545, 102.1, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
-		self:Bar(1216142, 126) -- Double-Minded Fury
-	end
+	self:Bar(466539, self:Mythic() and 5.3 or 4.9, CL.count:format(L.unstable_crawler_mines, unstableCrawlerMinesCount)) -- Unstable Crawler Mines
+	self:Bar(466476, self:Mythic() and 18.3 or 17.8, CL.count:format(L.frostshatter_boots, frostshatterBootsCount)) -- Frostshatter Boots
+	self:Bar(472631, 28.7, CL.count:format(L.earthshaker_gaol, earthershakerGaolCount)) -- Earthshaker Gaol
+	self:Bar(467380, self:Mythic() and 40.8 or 40.3, CL.count:format(L.goblin_guided_rocket, goblinGuidedRocketsCount)) -- Goblin-guided Rockets
+	self:Bar(-31766, 47.5, L.electro_shocker, "inv_misc_enggizmos_02") -- Mk II Electro Shocker
+	self:Bar(466518, 50.0, CL.count:format(L.molten_gold_knuckles, moltenGoldKnucklesCount)) -- Molten Gold Knuckles
+	self:Bar(466509, 62.5, CL.count:format(L.stormfury_finger_gun, fingerGunCount)) -- Stormfury Finger Gun
+	self:Bar(469491, self:Mythic() and 71.3 or 71.8, CL.count:format(L.double_whammy_shot, doubleWhammyShotCount)) -- Double Whammy Shot (-3.5s from SCS)
+	self:Bar(466545, 81.2, CL.count:format(self:SpellName(466545), sprayAndPrayCount)) -- Spray and Pray
+	self:Bar(1216142, 118) -- Double-Minded Fury
 end
 
 function mod:BloodlustSuccess(args)
