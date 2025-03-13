@@ -1007,6 +1007,8 @@ do
 		},
 		[-2292] = true, -- Nerub-ar Palace, Ulgrax defeat
 		[-2296] = true, -- Nerub-ar Palace, Ansurek defeat
+		[-2406] = true, -- Liberation of Undermine, entering the Gallagio
+		[-2409] = true, -- Liberation of Undermine, Gallywix defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
