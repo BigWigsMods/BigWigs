@@ -334,7 +334,7 @@ function mod:BetaLaunch(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), args.spellId)
 	self:PlaySound("stages", "long")
-	self:Bar("stages", 4, CL.knockback)
+	self:Bar("stages", 4, CL.knockback, args.spellId)
 	betaLaunchCount = betaLaunchCount + 1
 
 	voidsplosionCount = 1
