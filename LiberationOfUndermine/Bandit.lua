@@ -21,6 +21,8 @@ local spinToWinCount = 1
 local payLineCount = 1
 local foulExhauntCount = 1
 local theBigHitCount = 1
+local availableCombos
+local comboColours
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -38,15 +40,6 @@ if L then
 	L.flame = "Flame"
 	L.coin = "Coin"
 end
-
-local availableCombos = {
-	[1] = {L.shock, L.flame, 464772}, -- Blue + Red
-	[2] = {L.shock, CL.bomb, 464801}, -- Blue + Purple
-	[3] = {L.flame, CL.bomb, 464804}, -- Red + Purple
-	[4] = {L.flame, L.coin, 464806}, -- Red + Yellow
-	[5] = {L.coin, L.shock, 464809}, -- Yellow + Blue
-	[6] = {L.coin, CL.bomb, 464810}, -- Yellow + Purple
-}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -100,6 +93,21 @@ function mod:OnRegister()
 	self:SetSpellRename(465009, CL.fixate) -- Explosive Gaze (Fixate)
 	self:SetSpellRename(469993, CL.heal_absorbs) -- Foul Exhaust (Heal Absorbs)
 	self:SetSpellRename(460181, L.pay_line) -- Pay-Line (Coins)
+
+	availableCombos = {
+		[1] = {L.shock, L.flame, 464772}, -- Blue + Red
+		[2] = {L.shock, CL.bomb, 464801}, -- Blue + Purple
+		[3] = {L.flame, CL.bomb, 464804}, -- Red + Purple
+		[4] = {L.flame, L.coin, 464806}, -- Red + Yellow
+		[5] = {L.coin, L.shock, 464809}, -- Yellow + Blue
+		[6] = {L.coin, CL.bomb, 464810}, -- Yellow + Purple
+	}
+	comboColours = {
+		[L.shock] = "00FFFF", -- cyan
+		[L.flame] = "FF0000", -- red
+		[CL.bomb] = "FF00FF", -- pink
+		[L.coin] = "FFFF00", -- yellow
+	}
 end
 
 function mod:OnBossEnable()
@@ -144,7 +152,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:SetStage(1)
 	availableCombos = {
 		[1] = {L.shock, L.flame, 464772}, -- Blue + Red
 		[2] = {L.shock, CL.bomb, 464801}, -- Blue + Purple
@@ -157,6 +164,7 @@ function mod:OnEngage()
 	payLineCount = 1
 	foulExhauntCount = 1
 	theBigHitCount = 1
+	self:SetStage(1)
 
 	self:CDBar(460181, self:Mythic() and 3.5 or self:Easy() and 65.4 or 4.9, CL.count:format(L.pay_line, payLineCount)) -- Pay-Line
 	self:CDBar(469993, self:Mythic() and 8.5 or self:Easy() and 8.4 or 9.9, CL.count:format(CL.heal_absorbs, foulExhauntCount)) -- Foul Exhaust
@@ -238,12 +246,6 @@ end
 do
 	local spinToWinTimer, startTime = 32, 0 -- from cast_start (2s) until the (30s) buff expires
 	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
-	local comboColours = {
-		[L.shock] = "00FFFF", -- cyan
-		[L.flame] = "FF0000", -- red
-		[CL.bomb] = "FF00FF", -- pink
-		[L.coin] = "FFFF00", -- yellow
-	}
 
 	local function updateInfoBoxBar(self)
 		if self.isEngaged then
