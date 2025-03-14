@@ -103,10 +103,10 @@ L.crenna = "대지의 딸 크렌나" -- AI druid healer (NPC 209072)
 L.crenna_short = "*크렌나"
 L.austin = "오스틴 헉스워스" -- AI hunter dps (NPC 209065)
 L.austin_short = "*오스틴"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "장군 브레카 그림액스" -- AI warrior tank (NPC 215517)
+L.breka_short = "*브레카"
+L.henry = "헨리 개릭" -- AI priest healer (NPC 215011)
+L.henry_short = "*헨리"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
