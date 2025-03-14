@@ -67,10 +67,10 @@ BigWigs:AddSounds("Stix Bunkjunker", {
 BigWigs:AddSounds("Sprocketmonger Lockenstock", {
 	[465232] = "alert",
 	[465917] = {"alarm","warning"},
-	[466860] = "info",
 	[468791] = "alarm",
 	[473276] = "long",
 	[1214878] = {"info","warning"},
+	[1216406] = "alarm",
 	[1216509] = "warning",
 	[1216802] = "warning",
 	[1216911] = "info",

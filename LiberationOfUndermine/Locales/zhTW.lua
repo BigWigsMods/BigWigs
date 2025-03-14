@@ -44,11 +44,13 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhTW")
 if L then
 	L.foot_blasters = "地雷"
+	--L.unstable_shrapnel = "Mine Soaked"
 	L.screw_up = "鑽頭"
 	L.sonic_ba_boom = "音波" --音速轟爆
-	L.polarization_generator = "極性切換" -- 顏色切換/正負極?
+	--L.polarization_generator = "Colors"
 
-	L.polarization_soon = "極性改變：%s"
+	--L.polarization_soon = "Color Soon: %s"
+	--L.polarization_soon_change = "Color SWITCH Soon: %s"
 
 	L.activate_inventions = "啟動：%s"
 	L.blazing_beam = "光束" --熾炎光束
@@ -56,6 +58,7 @@ if L then
 	L.mega_magnetize = "磁鐵" --超能磁化
 	L.jumbo_void_beam = "虛無光束" --就不改了
 	--L.void_barrage = "Balls" --虛無彈幕
+	--L.everything = "Everything"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhTW")

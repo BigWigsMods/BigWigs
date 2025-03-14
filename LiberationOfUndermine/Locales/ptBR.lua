@@ -44,11 +44,13 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "ptBR")
 if L then
 	--L.foot_blasters = "Mines"
+	--L.unstable_shrapnel = "Mine Soaked"
 	--L.screw_up = "Drills"
 	--L.sonic_ba_boom = "Raid Damage"
-	--L.polarization_generator = "Color Swaps"
+	--L.polarization_generator = "Colors"
 
-	--L.polarization_soon = "Color Swap Soon: %s"
+	--L.polarization_soon = "Color Soon: %s"
+	--L.polarization_soon_change = "Color SWITCH Soon: %s"
 
 	--L.activate_inventions = "Activate: %s"
 	--L.blazing_beam = "Beams"
@@ -56,6 +58,7 @@ if L then
 	--L.mega_magnetize = "Magnets"
 	--L.jumbo_void_beam = "Big Beams"
 	--L.void_barrage = "Balls"
+	--L.everything = "Everything"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "ptBR")

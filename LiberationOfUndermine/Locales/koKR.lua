@@ -44,11 +44,13 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "koKR")
 if L then
 	L.foot_blasters = "지뢰"
+	--L.unstable_shrapnel = "Mine Soaked"
 	L.screw_up = "드릴"
 	L.sonic_ba_boom = "공대 피해"
-	L.polarization_generator = "극성 바뀜!"
+	--L.polarization_generator = "Colors"
 
-	L.polarization_soon = "%s 초 후 극성바뀜"
+	--L.polarization_soon = "Color Soon: %s"
+	--L.polarization_soon_change = "Color SWITCH Soon: %s"
 
 	L.activate_inventions = "활성화: %s"
 	L.blazing_beam = "광선"
@@ -56,6 +58,7 @@ if L then
 	L.mega_magnetize = "자석"
 	L.jumbo_void_beam = "강력 광선"
 	L.void_barrage = "공허 구슬"
+	--L.everything = "Everything"
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "koKR")
