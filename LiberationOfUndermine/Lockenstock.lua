@@ -140,6 +140,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BleedingEdge", 466860)
 	self:Log("SPELL_AURA_APPLIED", "VoidsplosionApplied", 1218319)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidsplosionApplied", 1218319)
+	self:Log("SPELL_AURA_APPLIED", "UpgradedBloodtechApplied", 1218344)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "UpgradedBloodtechApplied", 1218344)
 	self:Log("SPELL_AURA_REMOVED", "BleedingRemoved", 1218318)
 	self:Log("SPELL_CAST_START", "Gigadeath", 468791)
 
@@ -359,6 +361,17 @@ do
 				self:Bar(args.spellId, 5, CL.count:format(args.spellName, voidsplosionCount)) -- Voidsplosion
 			end
 		end
+	end
+end
+
+function mod:UpgradedBloodtechApplied(args)
+	if self:GetStage() == 1 then
+		local printString = ""
+		for k, v in next, args do
+			printString = k..":"..tostring(v)..", "
+		end
+		self:Error("BigWigs Error: "..printString)
+		return
 	end
 end
 
