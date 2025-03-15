@@ -821,10 +821,15 @@ do
 		[106402]=true,[106404]=true,[106406]=true,[106411]=true,[106412]=true,[106413]=true,
 		-- Freehold
 		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
+		-- Operation: Mechagon
+		[132374]=true,[132375]=true,[132376]=true,[132377]=true,[132405]=true,[132385]=true,[132386]=true,
+		[132352]=true,[132353]=true,[132354]=true,[132355]=true,[132388]=true,[132389]=true,
 		-- Siege of Boralus
-		[101137]=true,[102115]=true,[106663]=true,[106674]=true,[106675]=true,[106676]=true,[106677]=true,
-		[106659]=true,[106660]=true,[106661]=true,[106662]=true,[106664]=true,[106667]=true,[106668]=true,
-		[106669]=true,[106670]=true,[106671]=true,
+		[101137]=true,[102115]=true,[106657]=true,[106663]=true,[106674]=true,[106675]=true,[106676]=true,
+		[106677]=true,[106659]=true,[106660]=true,[106661]=true,[106662]=true,[106664]=true,[106665]=true,
+		[106666]=true,[106667]=true,[106668]=true,[106669]=true,[106670]=true,[106671]=true,[113764]=true,
+		[113765]=true,[113766]=true,[107844]=true,[107845]=true,[107848]=true,[107851]=true,[107852]=true,
+		[107853]=true,[106655]=true,[102055]=true,[103182]=true,[103183]=true,[103184]=true,
 		-- The Underrot
 		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,[110728]=true,[112208]=true,
 		[106877]=true,[106853]=true,[106855]=true,[106856]=true,[106434]=true,[110781]=true,
@@ -834,8 +839,8 @@ do
 		[103812]=true,[104208]=true,[104209]=true,[106718]=true,[106720]=true,
 
 		-- De Other Side
-		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
-		[163835]=true,[163836]=true,[163837]=true,[163819]=true,[163820]=true,[163821]=true,
+		[163819]=true,[163820]=true,[163821]=true,[163822]=true,[163823]=true,[163824]=true,[163828]=true,
+		[163829]=true,[163830]=true,[163831]=true,[163834]=true,[163835]=true,[163836]=true,[163837]=true,
 		-- The Necrotic Wake
 		[155159]=true,[155160]=true,[155161]=true,[154899]=true,[162802]=true,
 		[162803]=true,[154900]=true,[155162]=true,[154573]=true,
@@ -850,8 +855,9 @@ do
 		[155744]=true,[155745]=true,[155746]=true,[155747]=true,[155748]=true,[155749]=true,[155750]=true,[155751]=true,
 		[155752]=true,[155753]=true,[155754]=true,[160654]=true,[155756]=true,[155757]=true,[155758]=true,[155759]=true,
 		-- Theater of Pain
-		[152417]=true,[152416]=true,[152415]=true,[152414]=true,[152410]=true,[152409]=true,[152408]=true,[152505]=true,[154933]=true,
-		[152533]=true,[154937]=true,[152517]=true,[154942]=true,[154943]=true,[154938]=true,[154939]=true,[154940]=true,[154941]=true,
+		[152411]=true,[152413]=true,[152417]=true,[152416]=true,[152415]=true,[152414]=true,[152410]=true,[152409]=true,
+		[152408]=true,[152505]=true,[154933]=true,[152533]=true,[154937]=true,[152517]=true,[154942]=true,[154943]=true,
+		[154938]=true,[154939]=true,[154940]=true,[154941]=true,
 		-- Plaguefall
 		[152641]=true,[152640]=true,[152639]=true,[152615]=true,[152614]=true,[152638]=true,
 		[152637]=true,[152636]=true,[152635]=true,[153196]=true,[153197]=true,
@@ -888,6 +894,8 @@ do
 		-- The Stonevault
 		[250849]=true,[250850]=true,[250845]=true,[250851]=true,[250852]=true,[250853]=true,[250854]=true,[250855]=true,
 		[250856]=true,[250857]=true,[250858]=true,[250860]=true,[250861]=true,[250862]=true,[250863]=true,
+		-- Operation: Floodgate
+		[269146]=true,[269152]=true,
 	}
 
 	local lookup = {
