@@ -446,9 +446,9 @@ function mod:Overdrive(args)
 	self:PlaySound(args.spellId, "long") -- flying away
 
 	-- The Overdrive "gap" cds are ((Overdrive _START - last cast) + (next cast - Trash Compactor _SUCCESS))
-	self:PauseBar(464149, CL.count:format(self:SpellName(464149), incineratorCount)) -- Incinerator
+	self:PauseBar(464149, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator
 	self:PauseBar(464112, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
-	self:PauseBar(464399, CL.count:format(self:SpellName(464399), electromagneticSortingCount)) -- Electromagnetic Sorting
+	self:PauseBar(464399, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)) -- Electromagnetic Sorting
 	self:PauseBar(1217954, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
 	if self:Mythic() then
 		self:PauseBar(1218704, CL.count:format(self:SpellName(1218704), powercoilCount))
@@ -470,9 +470,9 @@ function mod:TrashCompactor(args)
 end
 
 function mod:TrashCompactorSuccess(args)
-	self:ResumeBar(464149, CL.count:format(self:SpellName(464149), incineratorCount)) -- Incinerator
+	self:ResumeBar(464149, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator
 	self:ResumeBar(464112, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
-	self:ResumeBar(464399, CL.count:format(self:SpellName(464399), electromagneticSortingCount)) -- Electromagnetic Sorting
+	self:ResumeBar(464399, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)) -- Electromagnetic Sorting
 	self:ResumeBar(1217954, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
 	if self:Mythic() then
 		self:ResumeBar(1218704, CL.count:format(self:SpellName(1218704), powercoilCount)) -- Prototype Powercoil
