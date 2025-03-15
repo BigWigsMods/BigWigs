@@ -8,7 +8,7 @@ end
 L = BigWigs:NewBossLocale("Cauldron of Carnage", "zhCN")
 if L then
 	L.custom_on_fade_out_bars = "淡出计时器"
-	L.custom_on_fade_out_bars_desc = "当首领超出范围时，淡出其相关的技能计时器。"
+	L.custom_on_fade_out_bars_desc = "当首领超出范围时，淡出其相关技能的计时器。"
 
 	L.bomb_explosion = "炸弹爆炸"
 	L.bomb_explosion_desc = "显示炸弹爆炸的倒计时。"
@@ -45,13 +45,13 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhCN")
 if L then
 	L.foot_blasters = "地雷"
-	--L.unstable_shrapnel = "Mine Soaked"
+	L.unstable_shrapnel = "地雷爆炸"
 	L.screw_up = "钻头"
 	L.sonic_ba_boom = "声波爆轰"
-	--L.polarization_generator = "Colors"
+	L.polarization_generator = "极性转化"
 
-	--L.polarization_soon = "Color Soon: %s"
-	--L.polarization_soon_change = "Color SWITCH Soon: %s"
+	L.polarization_soon = "极性改变：%s"
+	L.polarization_soon_change = "极性即将改变：%s"
 
 	L.activate_inventions = "激活：%s"  --激活发明！
 	L.blazing_beam = "光束" -- 炙热光束
@@ -59,7 +59,7 @@ if L then
 	L.mega_magnetize = "磁吸" -- 超级磁吸
 	L.jumbo_void_beam = "虚空光束" -- 大号虚空光束
 	L.void_barrage = "黑球" -- 虚空弹幕
-	--L.everything = "Everything"
+	L.everything = "全体技能" -- 全体AOE？ 
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
