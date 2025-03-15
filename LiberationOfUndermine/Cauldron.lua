@@ -68,7 +68,7 @@ function mod:GetOptions()
 		1214039, -- Molten Pool
 			-- 465446, -- Fiery Waves
 		1213690, -- Molten Phlegm
-		{472233, "SAY"}, -- Blastburn Roarcannon
+		{472233, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Blastburn Roarcannon
 		1214190, -- Eruption Stomp
 		-- Torq the Tempest
 		472225, -- Galvanized Spite
@@ -123,6 +123,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "ScrapbombSpawn", 1217753)
 	self:Log("SPELL_AURA_APPLIED", "MoltenPhlegmApplied", 1213690)
 	self:Log("SPELL_CAST_START", "BlastburnRoarcannon", 472233)
+	self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Blastburn Roarcannon target
 	self:Log("SPELL_CAST_START", "EruptionStomp", 1214190)
 
 	-- Torq the Tempest
@@ -444,20 +446,39 @@ do
 end
 
 do
-	local function printTarget(self, player, guid)
-		self:TargetMessage(472233, "red", player, CL.count:format(CL.beam, blastburnRoarcannonCount-1))
-		if self:Me(guid) then
-			self:PlaySound(472233, "warning")
+	--local function printTarget(self, player, guid)
+	--	self:TargetMessage(472233, "red", player, CL.count:format(CL.beam, blastburnRoarcannonCount-1))
+	--	if self:Me(guid) then
+	--		self:PlaySound(472233, "warning")
+	--		self:Say(472233, CL.beam, nil, "Beam")
+	--	else
+	--		self:PlaySound(472233, "alarm", nil, player)
+	--	end
+	--end
+
+	function mod:RaidBossWhisperSync(msg, player)
+		if msg:find("spell:472233", nil, true) then
+			self:TargetMessage(472233, "red", player, CL.count:format(CL.beam, blastburnRoarcannonCount-1))
+			if player == self:UnitName("player") then
+				self:PlaySound(472233, "warning", nil, player)
+			elseif self:IsFlarendoInRange() then
+				self:PlaySound(472233, "alarm", nil, player)
+			end
+		end
+	end
+
+	function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+		-- |TInterface\\ICONS\\Spell_Shaman_ShockingLava.BLP:20|t Flarendo targets you with |cFFFF0000|Hspell:472233|h[Blastburn Roarcannon]|h|r!
+		if msg:find("spell:472233", nil, true) then
 			self:Say(472233, CL.beam, nil, "Beam")
-		else
-			self:PlaySound(472233, "alarm", nil, player)
+			self:SayCountdown(472233, 3.5, nil, 2)
 		end
 	end
 
 	function mod:BlastburnRoarcannon(args)
 		self:StopBar(CL.count:format(CL.beam, blastburnRoarcannonCount))
 		blastburnRoarcannonCount = blastburnRoarcannonCount + 1
-		self:GetBossTarget(printTarget, 1, args.sourceGUID) -- targets a player
+		--self:GetBossTarget(printTarget, 1, args.sourceGUID) -- targets a player
 
 		local cd
 		if self:Easy() then -- 2 per
