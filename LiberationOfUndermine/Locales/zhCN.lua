@@ -59,7 +59,7 @@ if L then
 	L.mega_magnetize = "磁吸" -- 超级磁吸
 	L.jumbo_void_beam = "虚空光束" -- 大号虚空光束
 	L.void_barrage = "黑球" -- 虚空弹幕
-	L.everything = "全体技能" -- 全体AOE？ 
+	L.everything = "全体技能" -- 全体AOE？
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
