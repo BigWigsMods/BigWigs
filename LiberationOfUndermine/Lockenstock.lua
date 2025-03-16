@@ -142,7 +142,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidsplosionApplied", 1218319)
 	self:Log("SPELL_AURA_APPLIED", "UpgradedBloodtechApplied", 1218344)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "UpgradedBloodtechApplied", 1218344)
-	self:Log("SPELL_AURA_REMOVED", "BleedingRemoved", 1218318)
+	-- self:Log("SPELL_AURA_REMOVED", "BleedingRemoved", 1218318) -- XXX Alternate stage 1 event
 	self:Log("SPELL_CAST_START", "Gigadeath", 468791)
 
 	-- self:Log("SPELL_AURA_APPLIED", "GroundDamage", 466235) -- Wire Transfer XXX kind of awkward a damage event not having it's own option
@@ -373,9 +373,6 @@ function mod:UpgradedBloodtechApplied(args)
 		self:Error("BigWigs Error: "..printString)
 		return
 	end
-end
-
-function mod:BleedingRemoved()
 	self:SetStage(1)
 	self:Message("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long")
