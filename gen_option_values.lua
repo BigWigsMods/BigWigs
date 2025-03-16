@@ -829,9 +829,7 @@ local function parseLua(file)
 			methods[name] = true
 			rep = {}
 			rep.func_key = options[name]
-			if params ~= "(args)" then
-				args_keys = {}
-			elseif unit_died_methods[name] then
+			if unit_died_methods[name] then
 				args_keys = unit_died_args_keys
 			elseif mob_engaged_methods[name] then
 				args_keys = {}
