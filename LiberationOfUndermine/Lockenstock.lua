@@ -366,10 +366,13 @@ end
 
 function mod:UpgradedBloodtechApplied(args)
 	if self:GetStage() == 1 then
-		local printString = ""
+		local _, class = UnitClass("player")
+		local printString = class ..": "
 		for k, v in next, args do
-			printString = k..":"..tostring(v)..", "
+			printString = printString..k..":"..tostring(v)..", "
 		end
+		local _, _, diff = GetInstanceInfo()
+		printString = printString.."diff:"..tostring(diff)
 		self:Error("BigWigs Error: "..printString)
 		return
 	end
