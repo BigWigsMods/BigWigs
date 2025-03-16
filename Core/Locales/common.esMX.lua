@@ -232,6 +232,7 @@ L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you fr
 
 -- Common ability name replacements A-Z
 --L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.health_drain = "Absorción de salud" -- Any ability that drains health from the player
 L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"

@@ -232,6 +232,7 @@ L.rooted = "묶임" -- Any ability that roots you in place, preventing you from 
 
 -- Common ability name replacements A-Z
 L.dodge = "피하기" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.enrage = "격노" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.health_drain = "체력 흡수" -- Any ability that drains health from the player
 L.smash = "강타" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "쐐기" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
