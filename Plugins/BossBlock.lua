@@ -895,7 +895,7 @@ do
 		[250849]=true,[250850]=true,[250845]=true,[250851]=true,[250852]=true,[250853]=true,[250854]=true,[250855]=true,
 		[250856]=true,[250857]=true,[250858]=true,[250860]=true,[250861]=true,[250862]=true,[250863]=true,
 		-- Operation: Floodgate
-		[269146]=true,[269152]=true,
+		[269139]=true,[269140]=true,[269142]=true,[269143]=true,[269146]=true,[269150]=true,[269152]=true,
 	}
 
 	local lookup = {
