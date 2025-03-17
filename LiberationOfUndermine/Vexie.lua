@@ -48,7 +48,7 @@ function mod:GetOptions()
 		{465865, "TANK"}, -- Tank Buster
 			468147,	-- Exhaust Fumes (DPS / Healers)
 		-- Stage Two: Pit Stop
-		{460116, "CASTBAR"}, -- Tune-Up
+		460116, -- Tune-Up
 	},{ -- Sections
 		[466615] = CL.stage:format(1),
 		[460116] = CL.stage:format(2),
