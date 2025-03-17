@@ -339,7 +339,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 1215209)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 1215209)
 
-	self:Log("SPELL_AURA_APPLIED", "MechengineersCanistersApplied", 1220761)
+	self:Log("SPELL_AURA_APPLIED", "MechengineersCanistersApplied", 1220761, 474130) -- + mythic
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	-- self:Log("SPELL_CAST_START", "BigBadBunchaBombs", 465952) -- EMOTE
 	self:Log("SPELL_AURA_APPLIED", "BlastBurnsApplied", 466154)
@@ -406,7 +406,6 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "ScatterbombCanisters", 1218488)
 	-- self:Log("SPELL_CAST_START", "BiggestBaddestBombBarrage", 1218546) -- EMOTE
-	self:Log("SPELL_AURA_APPLIED", "MechengineersCanistersApplied", 474130)
 
 	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 end
