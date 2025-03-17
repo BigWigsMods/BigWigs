@@ -1,6 +1,4 @@
 
--- TODO: Mark bomb adds: Darkfuse Technician / Giga-Juiced Technician
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -44,6 +42,8 @@ local mayhemRocketsCount = 1
 
 local encounterStart = 0
 local spawnedDuds = 0
+
+local mobCollector, mobMarks = {}, {}
 
 -- Rashanan style timers: Each Giga Coils starts a mini-phase
 local timersNormal = {
@@ -232,8 +232,15 @@ end
 -- Initialization
 --
 
+local wrenchmongerMarker = mod:AddMarkerOption(false, "npc", 8, -31036, 8, 7, 6) -- Darkfuse Wrenchmonger
+local gigaJuicedTechnicanMarker = mod:AddMarkerOption(false, "npc", 4, -31029, 4, 5) -- Giga-Juiced Technician
+local sharpshotSentryMarker = mod:AddMarkerOption(false, "npc", 1, -31487, 1, 2, 3, 6) -- Sharpshot Sentry
 function mod:GetOptions()
 	return {
+		wrenchmongerMarker,
+		gigaJuicedTechnicanMarker,
+		sharpshotSentryMarker,
+
 		"stages",
 		1220761, -- Mechengineer's Canisters
 			-- 474447, -- Canister Detonation
@@ -407,6 +414,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ScatterbombCanisters", 1218488)
 	-- self:Log("SPELL_CAST_START", "BiggestBaddestBombBarrage", 1218546) -- EMOTE
 
+	self:Log("SPELL_AURA_APPLIED", "WrenchmongerSpawn", 1216846) -- Holding a Wrench
+
 	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 end
 
@@ -427,6 +436,9 @@ function mod:OnEngage()
 	gigaCoilsCount = 1
 	gigaBlastCount = 1
 
+	mobCollector = {}
+	mobMarks = {}
+
 	encounterStart = GetTime()
 
 	if self:Story() then
@@ -445,6 +457,10 @@ function mod:OnEngage()
 		self:Bar("stages", self:Easy() and 123.4 or 111.0, CL.stage:format(2), "ability_siege_engineer_magnetic_crush")
 		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 	end
+
+	if self:GetOption(wrenchmongerMarker) or self:GetOption(sharpshotSentryMarker) or self:GetOption(gigaJuicedTechnicanMarker) then
+		self:RegisterTargetEvents("AddMarking")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -456,6 +472,39 @@ function mod:UNIT_HEALTH(event, unit)
 		self:UnregisterUnitEvent(event, unit)
 		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
 		self:PlaySound("stages", "info")
+	end
+end
+
+-- Marking
+
+function mod:WrenchmongerSpawn(args)
+	-- flag marks for the six prespawned mobs alternating 8/7
+	-- and then use 876 for the three that jump down
+	if not mobCollector[args.sourceGUID] then
+		local icon = mobMarks[231939] or 8
+		mobCollector[args.sourceGUID] = icon
+		icon = icon - 1
+		if icon < (gigaCoilsCount < 3 and 7 or 6) then
+			icon = 8
+		end
+		mobMarks[231939] = icon
+	end
+end
+
+function mod:AddMarking(_, unit, guid)
+	if mobCollector[guid] then
+		if self:MobId(guid) == 231939 then
+			self:CustomIcon(wrenchmongerMarker, unit, mobCollector[guid])
+		elseif self:MobId(guid) == 237192 then
+			self:CustomIcon(gigaJuicedTechnicanMarker, unit, mobCollector[guid])
+		elseif self:MobId(guid) == 231978 then
+			self:CustomIcon(sharpshotSentryMarker, unit, mobCollector[guid])
+		end
+	elseif self:MobId(guid) == 237192 then -- IEEU is too slow, just use target events
+		local icon = mobMarks[237192] or 4
+		mobCollector[guid] = icon
+		self:CustomIcon(gigaJuicedTechnicanMarker, unit, icon)
+		mobMarks[237192] = icon + 1
 	end
 end
 
@@ -759,6 +808,10 @@ function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
 		if self:Mythic() then
 			gigaCoilsCount = gigaCoilsCount + 1
 			self:CDBar(469286, cd(469286, gigaCoilsCount), CL.count:format(self:SpellName(469286), gigaCoilsCount))
+
+			if gigaCoilsCount == 3 then
+				mobMarks[231939] = 8
+			end
 		end
 	end
 end
@@ -865,13 +918,27 @@ end
 -- 	self:Nameplate(args.spellId, 20, args.sourceGUID)
 -- end
 
-function mod:ShockBarrage(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo and ready then
-		self:Message(args.spellId, "yellow")
-		self:PlaySound(args.spellId, "alert")
+do
+	local prev = 0
+	function mod:ShockBarrage(args)
+		-- use cast order for marks (was hoping their positions were consistent, but they weren't.)
+		if not mobCollector[args.sourceGUID] then
+			if args.time - prev > 3 then
+				prev = args.time
+				mobMarks[231978] = 1
+			end
+			local icon = mobMarks[231978] or 1
+			mobCollector[args.sourceGUID] = icon
+			mobMarks[231978] = icon + 1
+		end
+
+		local canDo, ready = self:Interrupter(args.sourceGUID)
+		if canDo and ready then
+			self:Message(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+		end
+		-- self:Nameplate(466834, 2.5, args.sourceGUID) -- XXX 2.5 recast >.>
 	end
-	-- self:Nameplate(466834, 2.5, args.sourceGUID) -- XXX 2.5 recast >.>
 end
 
 function mod:Wrench(args)
@@ -901,6 +968,11 @@ end
 
 function mod:AddsDeath(args)
 	self:ClearNameplate(args.destGUID)
+
+	if args.mobId == 237192 or args.mobId == 231939 then -- Giga-Juiced Technican, Darkfuse Wrenchmonger
+		-- the initial mobs are all up at the same time, but you only pull a set at a time, so just reset here
+		mobMarks[237192] = nil -- Giga-Juiced Technican
+	end
 end
 
 -- Intermission: Docked and Loaded
@@ -1114,6 +1186,7 @@ function mod:CircuitRebootApplied(args)
 	self:PlaySound("stages", "long")
 
 	mayhemRocketsCount = 1
+	mobMarks[231978] = 1 -- Sharpshot Sentry
 
 	self:CDBar("stages", 34, CL.stage:format(stage + 0.5), "inv_misc_desecrated_leatherglove")
 end
