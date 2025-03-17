@@ -1,11 +1,5 @@
-local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "zhCN")
+local L = BigWigs:NewBossLocale("Cauldron of Carnage", "zhCN")
 if not L then return end
-if L then
-	L.plating_removed = "剩余 %d 层防御护板"
-	L.exhaust_fumes = "废气"
-end
-
-L = BigWigs:NewBossLocale("Cauldron of Carnage", "zhCN")
 if L then
 	L.custom_on_fade_out_bars = "淡出计时器"
 	L.custom_on_fade_out_bars_desc = "当首领超出范围时，淡出其相关技能的计时器。"

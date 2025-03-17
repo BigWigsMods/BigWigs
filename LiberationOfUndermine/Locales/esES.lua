@@ -1,11 +1,5 @@
-local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "esES")
+local L = BigWigs:NewBossLocale("Cauldron of Carnage", "esES")
 if not L then return end
-if L then
-	--L.plating_removed = "%d Protective Plating left"
-	--L.exhaust_fumes = "Raid Damage"
-end
-
-L = BigWigs:NewBossLocale("Cauldron of Carnage", "esES")
 if L then
 	--L.custom_on_fade_out_bars = "Fade out bars"
 	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range."

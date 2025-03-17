@@ -1,11 +1,5 @@
-local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "ruRU")
+local L = BigWigs:NewBossLocale("Cauldron of Carnage", "ruRU")
 if not L then return end
-if L then
-	L.plating_removed = "%d пластин осталось"
-	L.exhaust_fumes = "Рейд урон"
-end
-
-L = BigWigs:NewBossLocale("Cauldron of Carnage", "ruRU")
 if L then
 	L.custom_on_fade_out_bars = "Скрывать полосы"
 	L.custom_on_fade_out_bars_desc = "Скрывать полосы боссов вне ренджа."

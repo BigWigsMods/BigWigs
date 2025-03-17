@@ -1,11 +1,5 @@
-local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "deDE")
+local L = BigWigs:NewBossLocale("Cauldron of Carnage", "deDE")
 if not L then return end
-if L then
-	L.plating_removed = "%d Schutzpanzerung noch übrig"
-	L.exhaust_fumes = "Raid Schaden"
-end
-
-L = BigWigs:NewBossLocale("Cauldron of Carnage", "deDE")
 if L then
 	L.custom_on_fade_out_bars = "Leisten abblenden"
 	L.custom_on_fade_out_bars_desc = "Blendet die Leisten ab, welche zum aus der Reichweite befindlichen Boss gehören."

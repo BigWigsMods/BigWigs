@@ -1,11 +1,5 @@
-local L = BigWigs:NewBossLocale("Vexie and the Geargrinders", "koKR")
+local L = BigWigs:NewBossLocale("Cauldron of Carnage", "koKR")
 if not L then return end
-if L then
-	L.plating_removed = "남은 방호 장갑 %d 개"
-	L.exhaust_fumes = "공대 피해"
-end
-
-L = BigWigs:NewBossLocale("Cauldron of Carnage", "koKR")
 if L then
 	L.custom_on_fade_out_bars = "바 투명도 감소"
 	L.custom_on_fade_out_bars_desc = "범위를 벗어난 보스 관련 바의 투명도를 낮춥니다."

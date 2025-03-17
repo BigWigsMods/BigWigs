@@ -25,18 +25,15 @@ local incendiaryFireCount = 1
 local unrelentingCarnageCount = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-	L.plating_removed = "%d Protective Plating left"
-	L.exhaust_fumes = "Raid Damage"
-end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:OnRegister()
+	self:SetSpellRename(471403, CL.full_energy) -- Unrelenting CAR-nage (Full Energy)
+	self:SetSpellRename(459943, CL.adds) -- Call Bikers (Adds)
+	self:SetSpellRename(468487, CL.fire) -- Incendiary Fire (Fire)
+	self:SetSpellRename(460116, CL.weakened) -- Tune-Up (Weakened)
+end
 
 function mod:GetOptions()
 	return {
@@ -59,17 +56,9 @@ function mod:GetOptions()
 		[471403] = CL.full_energy, -- Unrelenting CAR-nage (Full Energy)
 		[459943] = CL.adds, -- Call Bikers (Adds)
 		[468216] = CL.fire, -- Incendiary Fire (Fire)
-		[468147] = L.exhaust_fumes, -- Exhaust Fumes (Raid Damage)
+		[468147] = CL.raid_damage, -- Exhaust Fumes (Raid Damage)
 		[460116] = CL.weakened, -- Tune-Up (Weakened)
 	}
-end
-
-function mod:OnRegister()
-	self:SetSpellRename(471403, CL.full_energy) -- Unrelenting CAR-nage (Full Energy)
-	self:SetSpellRename(459943, CL.adds) -- Call Bikers (Adds)
-	self:SetSpellRename(468487, CL.fire) -- Incendiary Fire (Fire)
-	self:SetSpellRename(460603, CL.weakened) -- Mechanical Breakdown (Weakened)
-	self:SetSpellRename(460116, CL.weakened) -- Tune-Up (Weakened)
 end
 
 function mod:OnBossEnable()
@@ -88,9 +77,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TuneUpApplied", 460116)
 	self:Log("SPELL_AURA_REMOVED", "TuneUpRemoved", 460116)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 459683) -- Oil Slick
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 459683)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 459683)
+	self:Log("SPELL_AURA_APPLIED", "OilSlickDamage", 459683) -- Oil Slick
+	self:Log("SPELL_PERIODIC_DAMAGE", "OilSlickDamage", 459683)
+	self:Log("SPELL_PERIODIC_MISSED", "OilSlickDamage", 459683)
 end
 
 function mod:OnEngage()
@@ -103,7 +92,7 @@ function mod:OnEngage()
 
 	self:CDBar(465865, 6.2, CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
 	if not self:Tank() then
-		self:CDBar(468147, 6.2 + 1.5, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
+		self:CDBar(468147, 7.7, CL.count:format(CL.raid_damage, tankBusterCount)) -- Exhaust Fumes (Tank Buster cooldown 6.2 + cast time 1.5 = 7.7)
 	end
 	self:CDBar(459678, 12.2, CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:CDBar(459943, 20.4, CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
@@ -116,19 +105,17 @@ end
 --
 
 function mod:ProtectivePlatingRemoved(args)
-	local platingsLeft = args.amount or 0
-	if platingsLeft < 3 or platingsLeft % 2 == 0 then
-		self:Message(args.spellId, "cyan", L.plating_removed:format(platingsLeft))
-		if platingsLeft < 3 then
-			self:PlaySound(args.spellId, "info") -- breaking soon
-		end
+	local higherThanOne = args.amount > 1
+	self:StackMessage(args.spellId, "cyan", CL.boss, args.amount, higherThanOne and 100 or 1)
+	if not higherThanOne then
+		self:PlaySound(args.spellId, "info") -- breaking soon
 	end
 end
 
 function mod:UnrelentingCARnage(args)
 	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
 	self:StopBar(CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
-	self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
+	self:StopBar(CL.count:format(CL.raid_damage, tankBusterCount)) -- Exhaust Fumes
 	self:StopBar(CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
 	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
@@ -140,10 +127,10 @@ end
 function mod:CallBikers(args)
 	self:StopBar(CL.count:format(CL.adds, callBikersCount))
 	self:Message(args.spellId, "yellow", CL.count:format(CL.adds, callBikersCount))
-	self:PlaySound(args.spellId, "alert") -- adds incoming
 	callBikersCount = callBikersCount + 1
 	-- 20.4, 28.6, 28.2, 73.9, 28.2, 33.0, 28.1, 82.7
 	self:CDBar(args.spellId, 28.2, CL.count:format(CL.adds, callBikersCount))
+	self:PlaySound(args.spellId, "alert") -- adds incoming
 end
 
 function mod:SpewOil(args)
@@ -157,8 +144,9 @@ end
 
 function mod:SpewOilApplied(args)
 	if self:Me(args.destGUID) then
+		-- Debuff after Private Aura expires
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
@@ -173,13 +161,16 @@ end
 function mod:BombVoyageApplied(args) -- cast every 8s
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
 function mod:TankBuster(args)
 	local msg = CL.count:format(self:SpellName(465865), tankBusterCount)
 	self:StopBar(msg)
+	tankBusterCount = tankBusterCount + 1
+	-- 6.2, 23.0, 27.1, 22.1, 59.1, 17.2, 16.7, 20.0, 22.0, 19.7, 75.6, 17.0, 17.0
+	self:CDBar(465865, 17.0, CL.count:format(self:SpellName(465865), tankBusterCount))
 
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	local destGUID, targetName = nil, nil
@@ -199,40 +190,36 @@ function mod:TankBuster(args)
 		self:Message(465865, "purple", msg)
 		self:PlaySound(465865, "alarm") -- Backup if unit scan fails
 	end
-	tankBusterCount = tankBusterCount + 1
-	-- 6.2, 23.0, 27.1, 22.1, 59.1, 17.2, 16.7, 20.0, 22.0, 19.7, 75.6, 17.0, 17.0
-	self:CDBar(465865, 17.0, CL.count:format(self:SpellName(465865), tankBusterCount))
 end
 
 function mod:ExhaustFumesApplied(args)
 	-- reusing tankBusterCount as this is a result of that cast
 	if not self:Tank() then
-		self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount-1)) -- Exhaust Fumes for non-tanks
-		self:Message(468147, "yellow", CL.count:format(L.exhaust_fumes, tankBusterCount-1))
+		self:StopBar(CL.count:format(CL.raid_damage, tankBusterCount-1)) -- Exhaust Fumes for non-tanks
+		self:Message(468147, "yellow", CL.count:format(CL.raid_damage, tankBusterCount-1))
+		self:CDBar(468147, 17.0, CL.count:format(CL.raid_damage, tankBusterCount)) -- Exhaust Fumes for non-tanks
 		self:PlaySound(468147, "info") -- raid dot effect
-		self:CDBar(468147, 17.0, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes for non-tanks
 	end
 end
 
 function mod:MechanicalBreakdown()
 	self:StopBar(CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
-	self:StopBar(CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
+	self:StopBar(CL.count:format(CL.raid_damage, tankBusterCount)) -- Exhaust Fumes
 	self:StopBar(CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
 	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
 	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
-
-	self:SetStage(2)
-	self:Message(460116, "green", CL.casting:format(CL.weakened))
-	self:PlaySound(460116, "long")
 end
 
 function mod:TuneUpApplied(args)
-	self:CastBar(args.spellId, 45, CL.weakened)
+	self:SetStage(2)
+	self:Message(args.spellId, "green", CL.weakened)
+	self:Bar(args.spellId, 45, CL.weakened)
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:TuneUpRemoved(args)
-	self:StopCastBar(CL.weakened)
+	self:StopBar(CL.weakened)
 
 	self:SetStage(1)
 	tankBusterCount = 1
@@ -242,20 +229,23 @@ function mod:TuneUpRemoved(args)
 	unrelentingCarnageCount = unrelentingCarnageCount + 1
 
 	self:CDBar(465865, 6.2, CL.count:format(self:SpellName(465865), tankBusterCount)) -- Tank Buster
-	self:CDBar(468147, 6.2 + 1.5, CL.count:format(L.exhaust_fumes, tankBusterCount)) -- Exhaust Fumes
+	self:CDBar(468147, 7.7, CL.count:format(CL.raid_damage, tankBusterCount)) -- Exhaust Fumes (Tank Buster cooldown 6.2 + cast time 1.5 = 7.7)
 	self:CDBar(459678, 12.2, CL.count:format(self:SpellName(459678), spewOilCount)) -- Spew Oil
 	self:CDBar(459943, 20.4, CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
 	self:CDBar(468216, 15, CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
 	self:Bar(471403, 121, CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
+
+	self:Message(args.spellId, "green", CL.over:format(CL.weakened))
+	self:PlaySound(args.spellId, "info")
 end
 
 do
 	local prev = 0
-	function mod:GroundDamage(args)
+	function mod:OilSlickDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
 		end
 	end
 end
