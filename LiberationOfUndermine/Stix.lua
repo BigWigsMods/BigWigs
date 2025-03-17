@@ -48,8 +48,10 @@ end
 -- Initialization
 --
 
-local rollingRubbishMarker = mod:AddMarkerOption(false, "player", 1, 461536, 1, 2, 3, 4)
-local scrapmasterMarker = mod:AddMarkerOption(false, "npc", 8, -31645, 8, 7, 6, 5)
+local rollingRubbishMarkerMapTable = {1, 2, 3, 4} -- Easier to adjust which icons are used
+local rollingRubbishMarker = mod:AddMarkerOption(false, "player", rollingRubbishMarkerMapTable[1], 461536, unpack(rollingRubbishMarkerMapTable))
+local scrapmasterMarkerMapTable = {8, 7, 6, 5}
+local scrapmasterMarker = mod:AddMarkerOption(false, "npc", scrapmasterMarkerMapTable[1], -31645, unpack(scrapmasterMarkerMapTable))
 function mod:GetOptions()
 	return {
 		"berserk",
@@ -61,7 +63,7 @@ function mod:GetOptions()
 			464854, -- Garbage Pile
 				465747, -- Muffled Doomsplosion
 				1217975, -- Doomsploded
-			-- Territorial Bombshell -- XXX announce/count deaths? show bar until all dead?
+			-- Territorial Bombshell
 				473119, -- Short Fuse
 
 		-- Cleanup Crew
@@ -188,7 +190,8 @@ end
 
 function mod:AddMarking(_, unit, guid)
 	if mobCollector[guid] then
-		self:CustomIcon(scrapmasterMarker, unit, mobCollector[guid])
+		local icon = scrapmasterMarkerMapTable[mobCollector[guid]]
+		self:CustomIcon(scrapmasterMarker, unit, icon)
 		mobCollector[guid] = false
 	end
 end
@@ -216,7 +219,8 @@ do
 		table.sort(iconList, sortPriority) -- Priority for tank > others > healers
 		for i = 1, #iconList do
 			local player = iconList[i].player
-			self:CustomIcon(rollingRubbishMarker, player, i)
+			local icon = rollingRubbishMarkerMapTable[i]
+			self:CustomIcon(rollingRubbishMarker, player, icon)
 		end
 	end
 
@@ -235,7 +239,7 @@ do
 		self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
 
 		muffledDoomsplosionCount = 0
-		mobMark = 8
+		mobMark = 1
 		iconList = {}
 	end
 
@@ -412,7 +416,7 @@ end
 function mod:MessedUp(args)
 	if self:MobId(args.sourceGUID) == 231839 then -- Scrapmaster
 		mobCollector[args.sourceGUID] = mobMark
-		mobMark = mobMark - 1
+		mobMark = mobMark + 1
 	end
 end
 
@@ -425,7 +429,7 @@ function mod:ScrapRockets(args)
 	-- flag the guid for marking if it wasn't rolled over
 	if mobCollector[args.sourceGUID] == nil then
 		mobCollector[args.sourceGUID] = mobMark
-		mobMark = mobMark - 1
+		mobMark = mobMark + 1
 	end
 end
 
