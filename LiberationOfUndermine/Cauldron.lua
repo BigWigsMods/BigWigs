@@ -491,9 +491,9 @@ do
 end
 
 function mod:EruptionStomp(args)
-	self:StopBar(CL.count:format(args.spellName, eruptionStompCount))
+	self:StopBar(CL.count:format(L.eruption_stomp, eruptionStompCount))
 	if self:IsFlarendoInRange() then
-		self:Message(args.spellId, "purple", CL.count:format(args.spellName, eruptionStompCount))
+		self:Message(args.spellId, "purple", CL.count:format(L.eruption_stomp, eruptionStompCount))
 	end
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
@@ -509,7 +509,7 @@ function mod:EruptionStomp(args)
 	else -- 1 per
 		cd = 95.0
 	end
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, eruptionStompCount))
+	self:Bar(args.spellId, cd, CL.count:format(L.eruption_stomp, eruptionStompCount))
 end
 
 -- Torq the Tempest
