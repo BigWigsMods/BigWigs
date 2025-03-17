@@ -46,7 +46,7 @@ if L then
 	L.foot_blasters = "Minen"
 	L.unstable_shrapnel = "Mine absorbiert"
 	L.screw_up = "Bohrer"
-	--L.screw_up_single = "Drill" -- Singular of Drills
+	L.screw_up_single = "Bohrer" -- Singular of Drills
 	L.sonic_ba_boom = "Raid Schaden"
 	L.polarization_generator = "Farben"
 
@@ -61,7 +61,7 @@ if L then
 	L.void_barrage = "Bälle"
 	L.everything = "Alles"
 
-	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
+	L.under_you_comment = "Unter Dir" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "deDE")
