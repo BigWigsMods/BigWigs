@@ -68,7 +68,7 @@ L.you_die_sec = "Du stirbst in %d Sek" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Nächste Fähigkeit" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s landet" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Du kannst jetzt fliegen"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "Bosse sind zu nah zusammen" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "Add erschienen" -- singular
@@ -234,10 +234,10 @@ L.rooted = "Bewegungsunfähig" -- Any ability that roots you in place, preventin
 L.dodge = "Ausweichen" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Wutanfall" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fixate = "Fixieren" -- Used when a boss or add is chasing/fixated on a player
---L.fixates = "Fixates" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.fixates = "Fixierungen" -- Plural of L.fixate
+L.group_damage = "Gruppenschaden" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Gesundheit entziehen" -- Any ability that drains health from the player
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "Raidschaden " -- Any ability that causes damage to every player in the raid
 L.smash = "Schmettern" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Stachel" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Stacheln" -- Plural of L.spike
