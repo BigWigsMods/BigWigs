@@ -46,6 +46,7 @@ if L then
 	L.foot_blasters = "Мины"
 	--L.unstable_shrapnel = "Mine Soaked"
 	L.screw_up = "Буры"
+	--L.screw_up_single = "Drill" -- Singular of Drills
 	L.sonic_ba_boom = "Рейд урон"
 	--L.polarization_generator = "Colors"
 
@@ -59,6 +60,8 @@ if L then
 	L.jumbo_void_beam = "Большие лучи"
 	L.void_barrage = "Шарики"
 	--L.everything = "Everything"
+
+	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "ruRU")

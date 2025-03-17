@@ -59,6 +59,7 @@ if L then
 	L.foot_blasters = "Mines"
 	L.unstable_shrapnel = "Mine Soaked"
 	L.screw_up = "Drills"
+	L.screw_up_single = "Drill" -- Singular of Drills
 	L.sonic_ba_boom = "Raid Damage"
 	L.polarization_generator = "Colors"
 	L.polarization_soon = "Color Soon: %s"
@@ -73,6 +74,8 @@ if L then
 	L.jumbo_void_beam = "Big Beams"
 	L.void_barrage = "Balls"
 	L.everything = "Everything"
+
+	L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
 end
 
 local inventions
@@ -84,27 +87,30 @@ local inventions
 function mod:GetOptions()
 	return {
 		"stages",
+		{468791, "CASTBAR"}, -- Gigadeath
 
 		-- Mythic
 		1216802, -- Polarization Generator
 		1216911, -- Posi-Polarization
 		1216934, -- Nega-Polarization
 		1219047, -- Polarized Catastro-Blast
+		1216706, -- Void Barrage
 
 		-- Stage One: Assembly Required
 		473276, -- Activate Inventions!
+		1221320, -- Activate Inventions! (Under You)
 		1217231, -- Foot-Blasters
 			1216406, -- Unstable Explosion
 			1218342, -- Unstable Shrapnel
 		1218418, -- Wire Transfer
-		1216509, -- Screw Up
+		466235, -- Wire Transfer (Under You)
+		{1216509, "SAY"}, -- Screw Up
 		465232, -- Sonic Ba-Boom
-		1214878, -- Pyro Party Pack
+		{1214878, "TANK_HEALER"}, -- Pyro Party Pack
 		{465917, "TANK"}, -- Gravi-Gunk
 
 		-- Stage Two: Research and Destruction
 		1218319, -- Voidsplosion
-		{468791, "CASTBAR"}, -- Gigadeath
 	},{
 		[1216802] = "mythic",
 		[473276] = -30425, -- Stage 1
@@ -113,8 +119,10 @@ function mod:GetOptions()
 		[1216802] = L.polarization_generator,
 		[1217231] = L.foot_blasters,
 		[1216509] = L.screw_up,
+		[1221320] = L.under_you_comment,
+		[466235] = L.under_you_comment,
 		[465232] = L.sonic_ba_boom,
-		[1214878] = CL.bomb,
+		[1214878] = CL.bomb.."/"..CL.explosion,
 		[1216911] = L.posi_polarization,
 		[1216934] = L.nega_polarization,
 	}
@@ -145,7 +153,7 @@ function mod:OnBossEnable()
 	-- self:Log("SPELL_AURA_REMOVED", "BleedingRemoved", 1218318) -- XXX Alternate stage 1 event
 	self:Log("SPELL_CAST_START", "Gigadeath", 468791)
 
-	-- self:Log("SPELL_AURA_APPLIED", "GroundDamage", 466235) -- Wire Transfer XXX kind of awkward a damage event not having it's own option
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 466235, 1221320) -- Wire Transfer, Activate Inventions
 
 	-- Mythic
 	self:Log("SPELL_CAST_SUCCESS", "PolarizationGenerator", 1217355)
@@ -154,6 +162,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PosiPolarizationApplied", 1216911)
 	self:Log("SPELL_AURA_APPLIED", "NegaPolarizationApplied", 1216934)
 	self:Log("SPELL_DAMAGE", "PolarizedCatastroBlast", 1219047)
+	self:Log("SPELL_DAMAGE", "VoidBarrageHit", 1216706)
+	self:Log("SPELL_MISSED", "VoidBarrageHit", 1216706)
 
 	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 	if self:Mythic() then
@@ -193,7 +203,11 @@ function mod:OnEngage()
 	if not self:Easy() then
 		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	end
-	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	if self:Healer() then -- until bomb explodes
+		self:Bar(1214878, timers[1214878][1] + 7.5, CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack
+	else
+		self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	end
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0 + 4.0, CL.count:format(inventions[1][1], activateInventionsCount)) -- Activate Inventions! (bar to when the inventions cast)
 	self:Bar("stages", 121.6, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
@@ -273,14 +287,24 @@ function mod:PyroPartyPack()
 end
 
 function mod:PyroPartyPackApplied(args)
+	local bombDuration = 6
 	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount))
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.bomb, pyroPartyPackCount))
-	self:TargetBar(args.spellId, 6, args.destName, CL.bomb)
+	if self:Healer() then
+		self:Bar(args.spellId, {bombDuration, (timers[args.spellId][pyroPartyPackCount] or bombDuration)}, CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack
+	else
+		self:TargetBar(args.spellId, bombDuration, args.destName, CL.bomb)
+	end
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning") -- not great being the same as taunt?
 	end
 	pyroPartyPackCount = pyroPartyPackCount + 1
-	self:Bar(args.spellId, timers[args.spellId][pyroPartyPackCount], CL.count:format(CL.bomb, pyroPartyPackCount))
+	local cd = timers[args.spellId][pyroPartyPackCount]
+	if self:Healer() and cd and cd > 0 then -- until bomb explodes
+		self:Bar(args.spellId, cd + bombDuration, CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack
+	else
+		self:Bar(args.spellId, cd, CL.count:format(CL.bomb, pyroPartyPackCount))
+	end
 end
 
 function mod:PyroPartyPackRemoved(args)
@@ -300,6 +324,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.screw_up)
 			self:PlaySound(args.spellId, "warning")
+			self:Say(args.spellId, L.screw_up_single, true, "Drill") -- Keep the message short
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.screw_up, screwUpCount-1))
 	end
@@ -328,7 +353,8 @@ function mod:BetaLaunch(args)
 	self:StopBar(CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer
 	self:StopBar(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
 	self:StopBar(CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
-	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	self:StopBar(CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack (Healer Explosion)
+	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack (Tank Bomb)
 	-- self:StopBar(CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount)) -- Activate Inventions!
 	self:StopBar(CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:StopBar(CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
@@ -346,6 +372,9 @@ end
 
 function mod:BleedingEdge(args)
 	self:Bar("stages", self:Easy() and 10 or 20, CL.stage:format(1), args.spellId)
+	if self:Mythic() then
+		self:Bar(1216802, timers[1216802][1] + 20, CL.count:format(L.polarization_generator, 1)) -- Polarization Generator
+	end
 end
 
 do
@@ -390,13 +419,17 @@ function mod:UpgradedBloodtechApplied(args)
 
 	-- self:Bar(1218418, timers[1218418][1], CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer (casted immediately)
 	if self:Mythic() then
-		self:Bar(1216802, timers[1216802][1], CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
+		self:Bar(1216802, {timers[1216802][1], timers[1216802][1] + 20}, CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
 	end
 	self:Bar(465232, timers[465232][1], CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
 	if not self:Easy() then
 		self:Bar(1217231, timers[1217231][1], CL.count:format(L.foot_blasters, footBlasterCount)) -- Foot-Blasters
 	end
-	self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	if self:Healer() then -- until bomb explodes
+		self:Bar(1214878, timers[1214878][1] + 7.5, CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack
+	else
+		self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
+	end
 	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:Bar(473276, 30.0, CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount)) -- Activate Inventions!
 	if betaLaunchCount < 3 then
@@ -412,16 +445,16 @@ function mod:Gigadeath(args)
 	self:CastBar(args.spellId, 4)
 end
 
--- do
--- 	local prev = 0
--- 	function mod:GroundDamage(args)
--- 		if self:Me(args.destGUID) and args.time - prev > 2 then
--- 			prev = args.time
--- 			self:PlaySound(args.spellId, "underyou")
--- 			self:PersonalMessage(args.spellId, "underyou")
--- 		end
--- 	end
--- end
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) and args.time - prev > 2 then
+			prev = args.time
+			self:PlaySound(args.spellId, "underyou")
+			self:PersonalMessage(args.spellId, "underyou")
+		end
+	end
+end
 
 -- Mythic
 
@@ -478,4 +511,9 @@ do
 			self:PlaySound(args.spellId, "alarm") -- boom
 		end
 	end
+end
+
+function mod:VoidBarrageHit(args)
+	self:TargetMessage(args.spellId, "red", args.destName)
+	self:PlaySound(args.spellId, "warning")
 end
