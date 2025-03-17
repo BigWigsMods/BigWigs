@@ -69,6 +69,7 @@ L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = second
 L.next_ability = "Prochaine compétence" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s atterri" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Vous pouvez maintenant voler"
+--L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "Add est apparu" -- singular
@@ -185,7 +186,6 @@ L.beams = "Rayons" -- Plural of L.beam
 L.bomb = "Bombe" -- Used for debuffs that make players explode
 L.bombs = "Bombes" -- Plural of L.bomb
 L.explosion = "Explosion" -- When the explosion from a bomb-like ability will occur
-L.fixate = "Fixer" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Repousser" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.pushback = "Repousse en continu" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Pièges" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
@@ -234,7 +234,11 @@ L.rooted = "Immobilisé" -- Any ability that roots you in place, preventing you 
 -- Common ability name replacements A-Z
 L.dodge = "Esquive" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enrager" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
+L.fixate = "Fixer" -- Used when a boss or add is chasing/fixated on a player
+--L.fixates = "Fixates" -- Plural of L.fixate
+--L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Drain de santé" -- Any ability that drains health from the player
+--L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
 L.smash = "Choc" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike

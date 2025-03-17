@@ -68,6 +68,7 @@ L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds
 L.next_ability = "Próxima Habilidade" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s está pousando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Pode voar agora"
+--L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "Add surgiu" -- singular
@@ -184,7 +185,6 @@ L.beams = "Feixes" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Explosão" -- When the explosion from a bomb-like ability will occur
-L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Empurrão" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.pushback = "Repulsão" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Armadilhas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
@@ -233,7 +233,11 @@ L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you fr
 -- Common ability name replacements A-Z
 L.dodge = "Esquiva" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
+L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
+--L.fixates = "Fixates" -- Plural of L.fixate
+--L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Dreno de Vida" -- Any ability that drains health from the player
+--L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
 L.smash = "Esmagamento" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Espinho" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Espinhos" -- Plural of L.spike
