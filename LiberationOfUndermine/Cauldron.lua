@@ -45,12 +45,20 @@ if L then
 
 	L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
-	L.voltaic_image = "Fixates" -- Multiple of Fixate
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:OnRegister()
+	self:SetSpellRename(471660, CL.bosses_too_close) -- Raised Guard (Bosses are too close)
+	self:SetSpellRename(473650, CL.bomb) -- Scrapbomb (Bomb)
+	self:SetSpellRename(472233, CL.beam) -- Blastburn Roarcannon (Beam)
+	self:SetSpellRename(1214190, L.eruption_stomp) -- Eruption Stomp (Stomp)
+	self:SetSpellRename(463900, L.thunderdrum_salvo) -- Thunderdrum Salvo (Salvo)
+	self:SetSpellRename(1213994, CL.adds) -- Voltaic Image (Adds)
+end
 
 function mod:GetOptions()
 	return {
@@ -83,20 +91,13 @@ function mod:GetOptions()
 		[472225] = -30344, -- Torq the Tempest
 	},{ -- Renames
 		[465833] = CL.full_energy, -- Colossal Clash (Full Energy)
+		[471660] = CL.bosses_too_close, -- Raised Guard (Bosses are too close)
 		[473650] = CL.bomb, -- Scrapbomb (Bomb)
 		[472233] = CL.beam, -- Blastburn Roarcannon (Beam)
 		[1214190] = L.eruption_stomp, -- Eruption Stomp (Stomp)
 		[463900] = L.thunderdrum_salvo, -- Thunderdrum Salvo (Salvo)
-		[1213994] = L.voltaic_image, -- Voltaic Image (Fixates)
+		[1213994] = CL.adds, -- Voltaic Image (Adds)
 	}
-end
-
-function mod:OnRegister()
-	self:SetSpellRename(473650, CL.bomb) -- Scrapbomb (Bomb)
-	self:SetSpellRename(472233, CL.beam) -- Blastburn Roarcannon (Beam)
-	self:SetSpellRename(1214190, L.eruption_stomp) -- Stomp
-	self:SetSpellRename(463900, L.thunderdrum_salvo) -- Salvo
-	self:SetSpellRename(1213994, L.voltaic_image) -- Fixates
 end
 
 function mod:OnBossEnable()
@@ -174,7 +175,7 @@ function mod:OnEngage()
 	self:Bar(463900, self:Easy() and 20.0 or 10.0, CL.count:format(L.thunderdrum_salvo, thunderdrumSalvoCount)) -- Thunderdrum Salvo
 	self:Bar(466178, self:Easy() and 35.0 or 21.0, CL.count:format(self:SpellName(466178), lightningBashCount)) -- Lightning Bash
 	if not self:Easy() then
-		self:Bar(1213994, 30, CL.count:format(L.voltaic_image, voltaicImageCount)) -- Voltaic Image
+		self:Bar(1213994, 30, CL.count:format(CL.adds, voltaicImageCount)) -- Voltaic Image
 	end
 end
 
@@ -323,7 +324,7 @@ function mod:Deaths(args)
 	elseif args.mobId == 229177 then -- Torq
 		self:StopBar(CL.count:format(self:SpellName(474159), staticChargeCount)) -- Static Charge
 		self:StopBar(CL.count:format(L.thunderdrum_salvo, thunderdrumSalvoCount)) -- Thunderdrum Salvo
-		self:StopBar(CL.count:format(L.voltaic_image, voltaicImageCount)) -- Voltaic Image
+		self:StopBar(CL.count:format(CL.adds, voltaicImageCount)) -- Voltaic Image
 		self:StopBar(CL.count:format(self:SpellName(466178), lightningBashCount)) -- Lightning Bash
 	end
 end
@@ -352,10 +353,7 @@ do
 	function mod:RaisedGuardApplied(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Message(args.spellId, "red")
-			if self:Tank() then
-				self:PlaySound(args.spellId, "warning")
-			end
+			self:Message(args.spellId, "red", CL.bosses_too_close)
 		end
 	end
 end
@@ -545,9 +543,9 @@ function mod:ThunderdrumSalvo(args)
 end
 
 function mod:VoltaicImage()
-	self:StopBar(CL.count:format(L.voltaic_image, voltaicImageCount))
+	self:StopBar(CL.count:format(CL.adds, voltaicImageCount))
 	if self:IsTorqueInRange() then
-		self:Message(1213994, "orange", CL.count:format(L.voltaic_image, voltaicImageCount))
+		self:Message(1213994, "orange", CL.count:format(CL.adds, voltaicImageCount))
 		self:PlaySound(1213994, "alert")
 	end
 	voltaicImageCount = voltaicImageCount + 1
@@ -558,7 +556,7 @@ function mod:VoltaicImage()
 	else -- 2 per
 		cd = voltaicImageCount % 2 == 1 and 65.0 or 30.0 -- 30.0, 30.0
 	end
-	self:Bar(1213994, cd, CL.count:format(L.voltaic_image, voltaicImageCount))
+	self:Bar(1213994, cd, CL.count:format(CL.adds, voltaicImageCount))
 end
 
 function mod:VoltaicImageFixateApplied(args)
@@ -593,8 +591,8 @@ do
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
 		end
 	end
 end

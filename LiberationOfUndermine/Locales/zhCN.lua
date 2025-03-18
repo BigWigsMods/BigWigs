@@ -9,7 +9,6 @@ if L then
 
 	L.eruption_stomp = "重踏" -- 喷发重踏
 	L.thunderdrum_salvo = "齐射" -- 雷鼓齐射
-	L.voltaic_image = "镜像" -- 流电镜像
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "zhCN")

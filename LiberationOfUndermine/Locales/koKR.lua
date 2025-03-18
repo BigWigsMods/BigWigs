@@ -9,7 +9,6 @@ if L then
 
 	L.eruption_stomp = "분출" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "바닥" -- Short for Thunderdrum Salvo
-	L.voltaic_image = "환영" -- Multiple of Fixate
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "koKR")

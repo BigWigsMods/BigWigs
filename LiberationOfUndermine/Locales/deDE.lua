@@ -9,7 +9,6 @@ if L then
 
 	L.eruption_stomp = "Stampfen" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "Salve" -- Short for Thunderdrum Salvo
-	L.voltaic_image = "Fixierungen" -- Multiple of Fixate
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "deDE")
