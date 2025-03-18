@@ -68,7 +68,7 @@ L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "下个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s 正在着陆" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "可以起飞"  --改为简短提示
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "首领过于靠近" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "增援出现" -- singular
@@ -104,10 +104,10 @@ L.crenna = "科蕾娜·大地之女" -- AI druid healer (NPC 209072)
 L.crenna_short = "*科蕾娜"
 L.austin = "奥斯汀·哈克斯沃斯" -- AI hunter dps (NPC 209065)
 L.austin_short = "*奥斯汀"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "督军布雷卡·恐斧" -- AI warrior tank (NPC 215517)
+L.breka_short = "*布雷卡"
+L.henry = "亨利·嘉里克" -- AI priest healer (NPC 215011)
+L.henry_short = "*亨利"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -235,9 +235,9 @@ L.dodge = "躲开" -- When you need to continually run around to dodge abilities
 L.enrage = "激怒" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fixate = "锁定" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "锁定" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.group_damage = "小队伤害" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "吸血" -- Any ability that drains health from the player
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "团队伤害" -- Any ability that causes damage to every player in the raid
 L.smash = "重击" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "尖刺" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "尖刺" -- Plural of L.spike
