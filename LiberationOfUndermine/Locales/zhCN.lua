@@ -41,7 +41,7 @@ if L then
 	L.foot_blasters = "地雷"
 	L.unstable_shrapnel = "地雷爆炸"
 	L.screw_up = "钻头"
-	--L.screw_up_single = "Drill" -- Singular of Drills
+	L.screw_up_single = "钻头" -- Singular of Drills
 	L.sonic_ba_boom = "声波爆轰"
 	L.polarization_generator = "极性转化"
 
@@ -56,7 +56,7 @@ if L then
 	L.void_barrage = "黑球" -- 虚空弹幕
 	L.everything = "组合技" -- 所有？全部？
 
-	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
+	L.under_you_comment = "在你脚下" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
