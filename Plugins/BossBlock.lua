@@ -823,7 +823,8 @@ do
 		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
 		-- Operation: Mechagon
 		[132374]=true,[132375]=true,[132376]=true,[132377]=true,[132405]=true,[132385]=true,[132386]=true,
-		[132352]=true,[132353]=true,[132354]=true,[132355]=true,[132388]=true,[132389]=true,
+		[132352]=true,[132353]=true,[132354]=true,[132355]=true,[132380]=true,[132387]=true,[132388]=true,
+		[132389]=true,[132390]=true,[132391]=true,[132392]=true,[132393]=true,
 		-- Siege of Boralus
 		[101137]=true,[102115]=true,[106657]=true,[106663]=true,[106674]=true,[106675]=true,[106676]=true,
 		[106677]=true,[106659]=true,[106660]=true,[106661]=true,[106662]=true,[106664]=true,[106665]=true,
