@@ -42,6 +42,8 @@ if L then
 	L.short_fuse = "Bombshell Explosion"
 	L.incinerator = "Fire Circles"
 	L.landing = "Landing" -- Landing down from the sky
+
+	L["467109_desc"] = 467135 -- XXX description fixed in 11.1.5
 end
 
 --------------------------------------------------------------------------------
@@ -85,7 +87,7 @@ function mod:GetOptions()
 
 		-- Overdrive
 		467117, -- Overdrive
-			{467135, "CASTBAR"}, -- Trash Compactor
+			{467109, "CASTBAR"}, -- Trash Compactor
 		-- Mythic
 		1218704, -- Prototype Powercoil
 	},{ -- Sections
@@ -101,7 +103,7 @@ function mod:GetOptions()
 		[465747] = L.muffled_doomsplosion, -- Muffled Doomsplosion (Bomb Soaked)
 		[473119] = L.short_fuse, -- Short Fuse (Bombshell Explosion)
 		[464149] = L.incinerator, -- Incinerator (Fire Circles)
-		[467135] = L.landing, -- Trash Compactor (Landing)
+		[467109] = L.landing, -- Trash Compactor (Landing)
 	}
 end
 
@@ -468,9 +470,9 @@ function mod:OverdriveRemoved(args)
 end
 
 function mod:TrashCompactor(args)
-	self:Message(467135, "red", L.landing)
-	self:PlaySound(467135, "warning") -- watch drop location
-	self:CastBar(467135, 3.75, L.landing)
+	self:Message(args.spellId, "red", L.landing)
+	self:PlaySound(args.spellId, "warning") -- watch drop location
+	self:CastBar(args.spellId, 3.75, L.landing)
 end
 
 function mod:TrashCompactorSuccess(args)
