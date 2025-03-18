@@ -267,7 +267,7 @@ do
 		if self:Me(args.destGUID) then
 			ballSize = 0
 			self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "player", "vehicle")
-			self:TargetBar(args.spellId, self:Mythic() and 20 or 24, args.destName)
+			self:TargetBar(args.spellId, 24, args.destName)
 		end
 	end
 
