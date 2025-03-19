@@ -68,7 +68,7 @@ L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec 
 L.next_ability = "다음 능력" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s 착륙 중" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "비행 가능"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "보스가 너무 가깝습니다" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
@@ -235,9 +235,9 @@ L.dodge = "피하기" -- When you need to continually run around to dodge abilit
 L.enrage = "격노" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "시선 고정" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.group_damage = "파티 피해" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "체력 흡수" -- Any ability that drains health from the player
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "공격대 피해" -- Any ability that causes damage to every player in the raid
 L.smash = "강타" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "쐐기" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "쐐기" -- Plural of L.spike
