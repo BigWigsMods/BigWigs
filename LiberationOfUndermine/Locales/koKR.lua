@@ -37,14 +37,14 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "koKR")
 if L then
 	L.foot_blasters = "지뢰"
-	--L.unstable_shrapnel = "Mine Soaked"
+	L.unstable_shrapnel = "지뢰 밟음"
 	L.screw_up = "드릴"
-	--L.screw_up_single = "Drill" -- Singular of Drills
+	L.screw_up_single = "드릴" -- Singular of Drills
 	L.sonic_ba_boom = "공대 피해"
-	--L.polarization_generator = "Colors"
+	L.polarization_generator = "극성"
 
-	--L.polarization_soon = "Color Soon: %s"
-	--L.polarization_soon_change = "Color SWITCH Soon: %s"
+	L.polarization_soon = "곧 극성: %s"
+	L.polarization_soon_change = "곧 극성 변환: %s"
 
 	L.activate_inventions = "활성화: %s"
 	L.blazing_beam = "광선"
@@ -52,9 +52,9 @@ if L then
 	L.mega_magnetize = "자석"
 	L.jumbo_void_beam = "강력 광선"
 	L.void_barrage = "공허 구슬"
-	--L.everything = "Everything"
+	L.everything = "모든 것" -- ??
 
-	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
+	L.under_you_comment = "바닥" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "koKR")
