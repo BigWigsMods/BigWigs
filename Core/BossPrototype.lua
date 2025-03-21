@@ -1466,19 +1466,8 @@ do
 			self[self.targetEventFunc](self, event, "mouseover", guid)
 		end
 	end
-	function boss:UNIT_TARGET(event, unit)
-		local unitTarget = unit.."target"
-		local guid = UnitGUID(unitTarget)
-		if guid and not myGroupGUIDs[guid] then
-			self[self.targetEventFunc](self, event, unitTarget, guid)
-		end
-
-		if self.targetEventFunc then -- Event is still registered, continue
-			guid = UnitGUID(unit)
-			if guid and not myGroupGUIDs[guid] then
-				self[self.targetEventFunc](self, event, unit, guid)
-			end
-		end
+	function boss:BigWigs_UNIT_TARGET(_, _, unitTarget, guid)
+		self[self.targetEventFunc](self, "UNIT_TARGET", unitTarget, guid)
 	end
 	function boss:NAME_PLATE_UNIT_ADDED(event, unit)
 		local guid = UnitGUID(unit)
@@ -1494,7 +1483,7 @@ do
 		if self[func] then
 			self.targetEventFunc = func
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-			self:RegisterEvent("UNIT_TARGET")
+			self:RegisterMessage("BigWigs_UNIT_TARGET")
 			self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 		end
 	end
@@ -1502,7 +1491,7 @@ do
 	function boss:UnregisterTargetEvents()
 		self.targetEventFunc = nil
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
-		self:UnregisterEvent("UNIT_TARGET")
+		self:UnregisterMessage("BigWigs_UNIT_TARGET")
 		self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 	end
 end

@@ -87,6 +87,7 @@ files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/C_EventUtils",
 	"113/geterrorhandler",
+	"113/UnitIsCorpse",
 }
 files["**/Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",
@@ -311,7 +312,6 @@ globals = {
 	"UnitInRaid",
 	"UnitInVehicle",
 	"UnitIsConnected",
-	"UnitIsCorpse",
 	"UnitIsDead",
 	"UnitIsEnemy", -- Multiple old modules
 	"UnitIsFriend", -- MoP/SiegeOfOrgrimmar/TheFallenProtectors.lua
@@ -321,7 +321,6 @@ globals = {
 	"UnitIsUnit",
 	"UnitLevel",
 	"UnitPhaseReason",
-	"UnitPlayerControlled",
 	"UnitPosition",
 	"UnitPower",
 	"UnitPowerMax",

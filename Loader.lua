@@ -1024,7 +1024,6 @@ function mod:ADDON_LOADED(addon)
 	if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
 		bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
 	end
-	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_FORMED")
 	bwFrame:RegisterEvent("GROUP_LEFT")
@@ -1167,7 +1166,6 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 
 	self:GROUP_FORMED()
 	self:PLAYER_ENTERING_WORLD()
-	self:ZONE_CHANGED()
 end
 
 -- Various temporary printing stuff
@@ -1723,19 +1721,73 @@ do
 end
 
 do
+	local RegisterUnitTargetEvents, UnregisterUnitTargetEvents
+	local areEventsRegistered = false
+	do
+		local eventFrames = {
+			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
+			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
+		}
+		local UnitIsPlayer = UnitIsPlayer
+		local function UNIT_TARGET(frame, event, unit)
+			local unitTarget = unit.."target"
+			local guid = UnitGUID(unitTarget)
+			if guid and not UnitIsPlayer(unitTarget) then
+				local _, _, _, _, _, mobIdString = strsplit("-", guid)
+				local mobId = tonumber(mobIdString)
+				if mobId then
+					local zoneId = worldBosses[mobId]
+					if zoneId and loadAndEnableCore() then
+						loadZone(zoneId)
+						BigWigs:Enable()
+					end
+
+					public:SendMessage("BigWigs_UNIT_TARGET", mobId, unitTarget, guid)
+				end
+			end
+		end
+		for i = 1, 12 do
+			eventFrames[i]:SetScript("OnEvent", UNIT_TARGET)
+		end
+		function RegisterUnitTargetEvents()
+			areEventsRegistered = true
+			eventFrames[1]:RegisterUnitEvent("UNIT_TARGET", "raid1", "raid2", "raid3", "raid4")
+			eventFrames[2]:RegisterUnitEvent("UNIT_TARGET", "raid5", "raid6", "raid7", "raid8")
+			eventFrames[3]:RegisterUnitEvent("UNIT_TARGET", "raid9", "raid10", "raid11", "raid12")
+			eventFrames[4]:RegisterUnitEvent("UNIT_TARGET", "raid13", "raid14", "raid15", "raid16")
+			eventFrames[5]:RegisterUnitEvent("UNIT_TARGET", "raid17", "raid18", "raid19", "raid20")
+			eventFrames[6]:RegisterUnitEvent("UNIT_TARGET", "raid21", "raid22", "raid23", "raid24")
+			eventFrames[7]:RegisterUnitEvent("UNIT_TARGET", "raid25", "raid26", "raid27", "raid28")
+			eventFrames[8]:RegisterUnitEvent("UNIT_TARGET", "raid29", "raid30", "raid31", "raid32")
+			eventFrames[9]:RegisterUnitEvent("UNIT_TARGET", "raid33", "raid34", "raid35", "raid36")
+			eventFrames[10]:RegisterUnitEvent("UNIT_TARGET", "raid37", "raid38", "raid39", "raid40")
+			eventFrames[11]:RegisterUnitEvent("UNIT_TARGET", "party1", "party2", "party3", "party4")
+			eventFrames[12]:RegisterUnitEvent("UNIT_TARGET", "player")
+		end
+		function UnregisterUnitTargetEvents()
+			areEventsRegistered = false
+			for i = 1, 12 do
+				eventFrames[i]:UnregisterEvent("UNIT_TARGET")
+			end
+		end
+	end
+
 	local warnedThisZone = {}
 	function mod:PLAYER_ENTERING_WORLD() -- Raid bosses
 		-- Zone checking
-		local _, _, _, _, _, _, _, id = GetInstanceInfo()
+		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 
 		-- Module loading
 		if enableZones[id] then
 			if loadAndEnableCore() then
 				loadZone(id)
 			end
-		elseif BigWigs3DB and BigWigs3DB.breakTime then -- Break timer restoration
-			loadAndEnableCore()
+			RegisterUnitTargetEvents()
+			bwFrame:UnregisterEvent("ZONE_CHANGED")
 		else
+			if BigWigs3DB and BigWigs3DB.breakTime then -- Break timer restoration
+				loadAndEnableCore()
+			end
 			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[id])
 				sysprint(msg)
@@ -1744,6 +1796,13 @@ do
 				-- Only print once
 				warnedThisZone[id] = true
 				disabledZones[id] = nil
+			end
+			if instanceType == "none" then
+				bwFrame:RegisterEvent("ZONE_CHANGED")
+				self:ZONE_CHANGED()
+			else
+				bwFrame:UnregisterEvent("ZONE_CHANGED")
+				UnregisterUnitTargetEvents()
 			end
 		end
 
@@ -1779,22 +1838,6 @@ do
 			end
 		end
 	end
-end
-
-do
-	function mod:UNIT_TARGET(unit)
-		local unitTarget = unit.."target"
-		local guid = UnitGUID(unitTarget)
-		if guid then
-			local _, _, _, _, _, mobId = strsplit("-", guid)
-			mobId = tonumber(mobId)
-			local id = mobId and worldBosses[mobId]
-			if id and loadAndEnableCore() then
-				loadZone(id)
-				BigWigs:Enable(unitTarget)
-			end
-		end
-	end
 	function mod:ZONE_CHANGED() -- For world bosses, not useful for raids as it fires after loading has ended
 		local id = 0
 		local mapId = GetBestMapForUnit("player")
@@ -1804,9 +1847,11 @@ do
 
 		-- Module loading
 		if enableZones[id] == "world" then
-			bwFrame:RegisterEvent("UNIT_TARGET")
-		else
-			bwFrame:UnregisterEvent("UNIT_TARGET")
+			if not areEventsRegistered then
+				RegisterUnitTargetEvents()
+			end
+		elseif areEventsRegistered then
+			UnregisterUnitTargetEvents()
 		end
 	end
 end
