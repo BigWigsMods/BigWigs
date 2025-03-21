@@ -52,7 +52,7 @@ if L then
 	L.mega_magnetize = "자석"
 	L.jumbo_void_beam = "강력 광선"
 	L.void_barrage = "공허 구슬"
-	L.everything = "모든 것" -- ??
+	L.everything = "발명품 활성화" -- ??
 
 	L.under_you_comment = "바닥" -- Implies this setting is for the damage from the ground effect under you
 end
