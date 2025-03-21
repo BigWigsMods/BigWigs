@@ -377,7 +377,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local difficultyText = activeDurations[journalId][2]
 
 		if self.db.profile.printVictory then
-			BigWigs:ScheduleTimer("Print", 1, L.bossVictoryPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed)))
+			self:SimpleTimer(function() BigWigs:Print(L.bossVictoryPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed))) end, 1)
 		end
 
 		local diff = module:Difficulty()
@@ -398,7 +398,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 			if not sDB.best or elapsed < sDB.best then
 				if self.db.profile.printNewFastestVictory and sDB.best then
 					local t = sDB.best-elapsed
-					BigWigs:ScheduleTimer("Print", 1.1, L.newFastestVictoryPrint:format(t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
+					self:SimpleTimer(function() BigWigs:Print(L.newFastestVictoryPrint:format(t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t))) end, 1.1)
 				end
 				sDB.best = elapsed
 				sDB.bestDate = date("%Y/%m/%d")

@@ -12,11 +12,6 @@ do
 	pluginPrototype = tbl.pluginPrototype
 
 	core.name = "BigWigs"
-
-	local at = LibStub("AceTimer-3.0")
-	at:Embed(core)
-	at:Embed(bossPrototype)
-	at:Embed(pluginPrototype)
 end
 
 local adb = LibStub("AceDB-3.0")
@@ -295,8 +290,6 @@ do
 			core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
 			core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
 			loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
-
-			core:CancelAllTimers()
 
 			core:SendMessage("BigWigs_StopConfigureMode")
 			if BigWigsOptions then

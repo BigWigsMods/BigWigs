@@ -104,6 +104,7 @@ public.date = date
 public.Ambiguate = Ambiguate
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
+public.CTimerNewTimer = C_Timer.NewTimer
 public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
