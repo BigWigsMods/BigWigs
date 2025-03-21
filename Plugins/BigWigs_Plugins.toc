@@ -1,4 +1,4 @@
-## Interface: 11506, 11505, 20504, 30403, 40402, 40401, 110005, 110007, 110100
+## Interface: 11506, 11505, 20504, 30404, 40402, 40401, 110005, 110007, 110100
 
 ## Title: BigWigs [|cffeda55fPlugins|r]
 ## Title-zhCN: BigWigs [|cffeda55f插件|r]
