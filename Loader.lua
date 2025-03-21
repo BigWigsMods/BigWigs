@@ -1027,12 +1027,10 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_FORMED")
 	bwFrame:RegisterEvent("GROUP_LEFT")
-	if C_EventUtils.IsEventValid("START_PLAYER_COUNTDOWN") then
-		bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
-		bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
-		TimerTracker:UnregisterEvent("START_PLAYER_COUNTDOWN")
-		TimerTracker:UnregisterEvent("CANCEL_PLAYER_COUNTDOWN")
-	end
+	bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
+	bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
+	TimerTracker:UnregisterEvent("START_PLAYER_COUNTDOWN")
+	TimerTracker:UnregisterEvent("CANCEL_PLAYER_COUNTDOWN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	local oldResult, result = RegisterAddonMessagePrefix("BigWigs")
@@ -1545,13 +1543,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		elseif bwPrefix == "B" then
 			public:SendMessage("BigWigs_BossComm", bwMsg, extra, sender)
 		elseif bwPrefix == "P" then
-			if bwMsg == "Pull" then
-				local _, _, _, instanceId = UnitPosition("player")
-				local _, _, _, tarInstanceId = UnitPosition(sender)
-				if instanceId == tarInstanceId then
-					loadAndEnableCore() -- Force enable the core when receiving a pull timer.
-				end
-			elseif bwMsg == "Break" then
+			if bwMsg == "Break" then
 				loadAndEnableCore() -- Force enable the core when receiving a break timer.
 			end
 			public:SendMessage("BigWigs_PluginComm", bwMsg, extra, sender)
@@ -1562,13 +1554,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		if subPrefix == "V" or subPrefix == "H" then
 			self:DBM_VersionCheck(subPrefix, sender, arg1, arg2, arg3)
 		elseif subPrefix == "U" or subPrefix == "PT" or subPrefix == "M" or subPrefix == "BT" then
-			if subPrefix == "PT" then
-				local _, _, _, instanceId = UnitPosition("player")
-				local _, _, _, tarInstanceId = UnitPosition(sender)
-				if instanceId == tarInstanceId then
-					loadAndEnableCore() -- Force enable the core when receiving a pull timer.
-				end
-			elseif subPrefix == "BT" then
+			if subPrefix == "BT" then
 				loadAndEnableCore() -- Force enable the core when receiving a break timer.
 			end
 			public:SendMessage("DBM_AddonMessage", sender, subPrefix, arg1, arg2, arg3, arg4)
