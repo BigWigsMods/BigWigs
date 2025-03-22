@@ -209,7 +209,7 @@ end
 
 function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
 	if msg ~= "" and IsInGroup() then
-		local _, result = SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+		local result = SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		if type(result) == "number" and result ~= 0 then
 			core:Error("Failed to send TS comm. Error code: ".. result)
 		end
