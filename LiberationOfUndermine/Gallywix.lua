@@ -206,6 +206,13 @@ local function cd(spellId, count)
 	elseif stage == 2 then
 		coilCount = coilCount - 1 -- there's no before the first coil phase like in p3
 	end
+	if not timers[stage] then
+		mod:Error("Invalid stage ".. tostring(stage))
+		return 0
+	elseif not timers[stage][spellId] then
+		mod:Error("Invalid spellId ".. tostring(spellId))
+		return 0
+	end
 	return timers[stage][spellId][coilCount] and timers[stage][spellId][coilCount][count]
 end
 
