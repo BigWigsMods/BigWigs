@@ -95,7 +95,7 @@ local tooltipFunctions = {}
 local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
-local Ambiguate, UnitName, UnitGUID = Ambiguate, UnitNameUnmodified or UnitName, UnitGUID
+local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 
@@ -128,7 +128,7 @@ public.UnitGUID = UnitGUID
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
-public.UnitName = UnitName
+public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
 public.isTestBuild = GetCurrentRegion() == 72 or GetCurrentRegion() == 90 or (IsPublicTestClient and IsPublicTestClient()) -- PTR/beta
@@ -566,14 +566,14 @@ end
 --
 
 local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
-local EnableAddOn = C_AddOns.EnableAddOn or EnableAddOn
-local GetAddOnInfo = C_AddOns.GetAddOnInfo or GetAddOnInfo
-local LoadAddOn = C_AddOns.LoadAddOn or LoadAddOn
-local IsAddOnLoaded = C_AddOns.IsAddOnLoaded or IsAddOnLoaded
-local GetAddOnDependencies = C_AddOns.GetAddOnDependencies or GetAddOnDependencies
-local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies or GetAddOnOptionalDependencies
-local GetNumAddOns = C_AddOns.GetNumAddOns or GetNumAddOns
-local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand or IsAddOnLoadOnDemand
+local EnableAddOn = C_AddOns.EnableAddOn
+local GetAddOnInfo = C_AddOns.GetAddOnInfo
+local LoadAddOn = C_AddOns.LoadAddOn
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local GetAddOnDependencies = C_AddOns.GetAddOnDependencies
+local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies
+local GetNumAddOns = C_AddOns.GetNumAddOns
+local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 public.EnableAddOn = EnableAddOn
 
@@ -1098,7 +1098,7 @@ function mod:ADDON_LOADED(addon)
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-			local name = UnitName("player")
+			local name = UnitNameUnmodified("player")
 			local realm = GetRealmName()
 			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
 				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
@@ -1489,7 +1489,7 @@ do
 	local timer = nil
 	local function sendDBMMsg()
 		if IsInGroup() then
-			local name = UnitName("player")
+			local name = UnitNameUnmodified("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
@@ -1854,7 +1854,7 @@ do
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
-			local name = UnitName("player")
+			local name = UnitNameUnmodified("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			_, result = SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
@@ -2017,7 +2017,7 @@ SlashCmdList.BigWigsVersion = function()
 	local list = {}
 	local unit
 	if not IsInRaid() then
-		list[1] = UnitName("player")
+		list[1] = UnitNameUnmodified("player")
 		unit = "party%d"
 	else
 		unit = "raid%d"
@@ -2025,7 +2025,7 @@ SlashCmdList.BigWigsVersion = function()
 	for i = 1, GetNumGroupMembers() do
 		local unitToken = (unit):format(i)
 		if not UnitInPartyIsAI or not UnitInPartyIsAI(unitToken) then -- Filter AI units from version list
-			local n, s = UnitName(unitToken)
+			local n, s = UnitNameUnmodified(unitToken)
 			if n and s and s ~= "" then n = n.."-"..s end
 			if n then list[#list+1] = n end
 		end
