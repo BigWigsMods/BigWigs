@@ -570,7 +570,7 @@ function mod:ScatteredPayout(args)
 	self:PlaySound(465309, "long") -- ticking damage inc
 
 	local cd = self:Easy() and 29.9 or 25.1
-	self:Bar(args.spellId, cd, L.cheat:format(L.explosive_jackpot)) -- Cheat to Win - Explosive Jackpot
+	self:Bar(465587, cd, L.cheat:format(L.explosive_jackpot)) -- Cheat to Win - Explosive Jackpot
 end
 
 function mod:ExplosiveJackpot(args)
