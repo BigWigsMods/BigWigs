@@ -67,6 +67,14 @@ if L then
 	L.shock = "Champ"
 	L.flame = "Flamme"
 	L.coin = "Pièce"
+
+	L.withering_flames = "Flammes" -- Short for Withering Flames
+
+	L.cheat = "Activation : %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "Bobines"
+	L.linked_machine = "Bobine" -- Singular of Coils
+	L.hot_hot_heat = "Débuff châleur"
+	L.explosive_jackpot = "Incantation finale"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "frFR")
@@ -93,6 +101,6 @@ if L then
 
 	L.duds = "Obus" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "Tous les obus ont détonné !"
-	L.duds_remaining = "%d Obus restant(s)" -- 1 Dud Remains | 2 Duds Remaining
-	L.duds_soak = "Soak Obus (%d restant(s))"
+	L.duds_remaining = "%d Obus |4restant:restants;" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_soak = "Soak Obus (%d |4restant:restants;)"
 end

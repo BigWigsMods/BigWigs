@@ -67,6 +67,14 @@ if L then
 	L.shock = "Schock"
 	L.flame = "Flamme"
 	L.coin = "Münze"
+
+	L.withering_flames = "Flammen" -- Short for Withering Flames
+
+	L.cheat = "Aktiviert: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "Spulen"
+	L.linked_machine = "Spule" -- Singular of Coils
+	L.hot_hot_heat = "Heiße Debuffs"
+	L.explosive_jackpot = "Letzter Zauber"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "deDE")

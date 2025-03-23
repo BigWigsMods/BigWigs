@@ -1,4 +1,4 @@
-## Interface: 110005, 110007, 110100
+## Interface: 110105, 110007, 110100
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]

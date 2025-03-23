@@ -19,10 +19,22 @@ mod:SetStage(1)
 
 local spinToWinCount = 1
 local payLineCount = 1
+local payLineTotalCount = 1
 local foulExhauntCount = 1
+local foulExhaustTotalCount = 1
 local theBigHitCount = 1
+local theBigHitTotalCount = 1
+local linkedMachinesCount = 1
+local hotHotHeatCount = 1
+local mobCollector = {}
 local availableCombos
 local comboColours
+
+local stageOneResetTimers = {
+	[469993] = {10, 32.0, 20.5}, -- Foul Exhaust
+	[460472] = {16.0, 20.5, 31.5}, -- The Big Hit
+	[460181] = {5.0, 26.7}, -- Pay-Line
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -36,6 +48,14 @@ if L then
 	L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Coins"
+	L.withering_flames = "Flames" -- Short for Withering Flames
+
+	L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "Coils"
+	L.linked_machine = "Coil" -- Singular of Coils
+	L.hot_hot_heat = "Hot Debuffs"
+	L.explosive_jackpot = "Final Cast"
+
 	L.shock = "Shock"
 	L.flame = "Flame"
 	L.coin = "Coin"
@@ -51,7 +71,7 @@ function mod:GetOptions()
 		460181, -- Pay-Line
 			460444, -- High Roller!
 		469993, -- Foul Exhaust
-		{460472, "TANK"},-- The Big Hit
+		460472,-- The Big Hit
 
 		-- Stage One: That's RNG, Baby!
 		461060, -- Spin To Win!
@@ -68,31 +88,42 @@ function mod:GetOptions()
 			-- 464810, -- Reward: Coin and Bomb
 			{464705, "OFF"}, -- Golden Ticket
 			-- Reel Assistant
-				460582, -- Overload!
+				{460582, "NAMEPLATE"}, -- Overload!
 				{471927, "SAY", "NAMEPLATE"}, -- Withering Flames
 				-- 460847, -- Electric Blast
 
 		-- Stage Two: This Game Is Rigged
+		{465309, "OFF"}, -- Cheat To Win!
 		465765, -- Maintenance Cycle
-		465432, -- Linked Machines
-		{465322, "PRIVATE"}, -- Hot Hot Hot
-		465580, -- Scattered Payout
+		473195, -- Linked Machines (Coil spawning)
+		{465432, "OFF"}, -- Linked Machines (Knockback)
+		{465322, "PRIVATE"}, -- Hot Hot Heat (Debuffs)
+		{465325, "OFF"}, -- Hot Hot Heat (Beams)
 		{465587, "CASTBAR"}, -- Explosive Jackpot
 	},{
 		[461060] = -30083, -- Stage 1
-		[465765] = -30086, -- Stage 2
+		[465309] = -30086, -- Stage 2
 	},{
 		[460181] = L.pay_line, -- Pay-Line (Coins)
 		[469993] = CL.heal_absorbs, -- Foul Exhaust (Heal Absorbs)
 		[465009] = CL.fixate, -- Explosive Gaze (Fixate)
 		[465765] = CL.stunned, -- Maintenance Cycle (Stunned)
+		[473195] = L.linked_machine, -- Linked Machines (Coil)
+		[465432] = CL.knockback, -- Linked Machines (Knockback)
+		[465322] = L.hot_hot_heat, -- Hot Hot Heat (Debuffs)
+		[465325] = CL.beams, -- Hot Hot Heat (Beams)
 	}
 end
 
 function mod:OnRegister()
-	self:SetSpellRename(465009, CL.fixate) -- Explosive Gaze (Fixate)
-	self:SetSpellRename(469993, CL.heal_absorbs) -- Foul Exhaust (Heal Absorbs)
 	self:SetSpellRename(460181, L.pay_line) -- Pay-Line (Coins)
+	self:SetSpellRename(469993, CL.heal_absorbs) -- Foul Exhaust (Heal Absorbs)
+	self:SetSpellRename(465009, CL.fixate) -- Explosive Gaze (Fixate)
+	self:SetSpellRename(465765, CL.stunned) -- Maintenance Cycle (Stunned)
+	self:SetSpellRename(473195, L.linked_machine) -- Linked Machines (Coil)
+	self:SetSpellRename(465432, CL.knockback) -- Linked Machines (Knockback)
+	self:SetSpellRename(465322, L.hot_hot_heat) -- Hot Hot Heat (Debuffs)
+	self:SetSpellRename(465325, CL.beams) -- Hot Hot Heat (Beams)
 
 	availableCombos = {
 		[1] = {L.shock, L.flame, 464772}, -- Blue + Red
@@ -138,7 +169,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CoinMagnet", 474665)
 
 	-- Reel Assistant
+	self:Log("SPELL_AURA_APPLIED", "SpinToWinApplied", 471720) -- Add spawn
 	self:Log("SPELL_CAST_START", "Overload", 460582)
+	self:Log("SPELL_INTERRUPT", "OverloadInterrupt", 460582)
+	self:Log("SPELL_CAST_SUCCESS", "OverloadSuccess", 460582)
 	self:Log("SPELL_CAST_SUCCESS", "WitheringFlames", 471930)
 	self:Log("SPELL_AURA_APPLIED", "WitheringFlamesApplied", 471927)
 	self:Death("ReelAssistantDeath", 232599, 228463) -- Reel Assistants (on pull, spawned)
@@ -146,6 +180,8 @@ function mod:OnBossEnable()
 	-- Stage Two: This Game Is Rigged!
 	self:Log("SPELL_CAST_SUCCESS", "MaintenanceCycle", 465765)
 	self:Log("SPELL_CAST_START", "LinkedMachines", 465432)
+	self:Log("SPELL_AURA_APPLIED", "LinkedMachinesApplied", 473195)
+	self:Log("SPELL_AURA_REFRESH", "LinkedMachinesApplied", 473195)
 	self:Log("SPELL_CAST_START", "HotHotHeat", 465322)
 	self:Log("SPELL_CAST_START", "ScatteredPayout", 465580)
 	self:Log("SPELL_CAST_START", "ExplosiveJackpot", 465587)
@@ -162,15 +198,18 @@ function mod:OnEngage()
 	}
 	spinToWinCount = 1
 	payLineCount = 1
+	payLineTotalCount = 1
 	foulExhauntCount = 1
+	foulExhaustTotalCount = 1
 	theBigHitCount = 1
+	theBigHitTotalCount = 1
+	mobCollector = {}
 	self:SetStage(1)
 
-	self:CDBar(460181, self:Mythic() and 3.5 or self:Easy() and 65.4 or 4.9, CL.count:format(L.pay_line, payLineCount)) -- Pay-Line
-	self:CDBar(469993, self:Mythic() and 8.5 or self:Easy() and 8.4 or 9.9, CL.count:format(CL.heal_absorbs, foulExhauntCount)) -- Foul Exhaust
+	self:CDBar(460181, self:Mythic() and 3.5 or self:Easy() and 65.4 or 4.9, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
+	self:CDBar(469993, self:Mythic() and 8.5 or self:Easy() and 8.4 or 9.9, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
 	self:CDBar(461060, self:Mythic() and 14.5 or self:Easy() and 18.2 or 16.1, CL.count:format(self:SpellName(461060), spinToWinCount)) -- Spin To Win!
-	self:CDBar(460472, 17.9, CL.count:format(self:SpellName(460472), theBigHitCount)) -- The Big Hit
-	-- self:CDBar(460472, self:Easy() and 14.9 or 19.8) -- The Big Hit
+	self:CDBar(460472, 17.9, CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -190,15 +229,22 @@ end
 -- Stage 1
 
 function mod:PayLine(args)
-	self:StopBar(CL.count:format(L.pay_line, payLineCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.pay_line, payLineCount))
+	self:StopBar(CL.count:format(L.pay_line, payLineTotalCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.pay_line, payLineTotalCount))
 	self:PlaySound(args.spellId, "alert") -- Dodge coin path and get close
 	payLineCount = payLineCount + 1
-	if self:GetStage() == 2 then
-		self:CDBar(args.spellId, 30, CL.count:format(L.pay_line, payLineCount))
-	else
-		self:CDBar(args.spellId, self:Mythic() and 26.1 or self:Easy() and 84 or 32, CL.count:format(L.pay_line, payLineCount))
+	payLineTotalCount = payLineTotalCount + 1
+	local cd = self:Easy() and 84 or 41.5
+	if self:Mythic() and self:GetStage() == 1 then
+		cd = stageOneResetTimers[args.spellId][payLineCount]
+	elseif self:GetStage() == 2 then
+		local stageTwoTimers = { 24.2, 36.7 } -- Heroic XXX Need to check normal/lfr
+		if self:Mythic() then
+			stageTwoTimers = { 23.5, 36.5 } -- Mythic
+		end
+		cd = stageTwoTimers[payLineCount]
 	end
+	self:CDBar(args.spellId, cd, CL.count:format(L.pay_line, payLineTotalCount))
 end
 
 function mod:HighRollerApplied(args)
@@ -209,37 +255,57 @@ function mod:HighRollerApplied(args)
 end
 
 function mod:FoulExhaust(args)
-	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhauntCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.heal_absorbs, foulExhauntCount))
+	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhaustTotalCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.heal_absorbs, foulExhaustTotalCount))
 	self:PlaySound(args.spellId, "alert") -- debuffs inc
 	foulExhauntCount = foulExhauntCount + 1
-	if self:GetStage() == 2 then
-		self:CDBar(args.spellId, 25.6, CL.count:format(CL.heal_absorbs, foulExhauntCount))
-	else
-		self:CDBar(args.spellId, 31.6, CL.count:format(CL.heal_absorbs, foulExhauntCount))
+	foulExhaustTotalCount = foulExhaustTotalCount + 1
+	local cd = 31.0
+	if self:Mythic() and self:GetStage() == 1 then
+		cd = stageOneResetTimers[args.spellId][foulExhauntCount]
+	elseif self:GetStage() == 2 then
+		local stageTwoTimers = { 18.1, 26.9, 30.2 } -- Heroic XXX Need to check normal/lfr
+		if self:Mythic() then
+			stageTwoTimers = { 17.45, 25.5, 30.44 } -- Mythic
+		end
+		cd = stageTwoTimers[foulExhauntCount]
 	end
+	self:CDBar(args.spellId, cd, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount))
 end
 
 function mod:TheBigHit(args)
-	self:StopBar(CL.count:format(args.spellName, theBigHitCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, theBigHitCount))
+	self:StopBar(CL.count:format(args.spellName, theBigHitTotalCount))
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, theBigHitTotalCount))
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
 		self:PlaySound(args.spellId, "alarm") -- defensive
 	end
+	theBigHitTotalCount = theBigHitTotalCount + 1
 	theBigHitCount = theBigHitCount + 1
-	local cd = 20.6
-	if self:GetStage() == 2 then
-		cd = 18.2
+	local cd = 19.5 -- stage 1 non-mythic
+	if self:Mythic() and self:GetStage() == 1 then
+		if #availableCombos == 6 then -- before first deposit
+			cd = 18.3
+		else
+			cd = stageOneResetTimers[args.spellId][theBigHitCount]
+		end
+	elseif self:GetStage() == 2 then
+		local stageTwoTimers = {28.7, 22.0, 18.3, 18.8} -- Heroic
+		if self:Mythic() then
+			stageTwoTimers = {28.4, 20.7, 18.27, 18.2} -- Mythic
+		end
+		cd = stageTwoTimers[theBigHitCount]
 	end
-	self:CDBar(args.spellId, 19.6, CL.count:format(args.spellName, theBigHitCount))
+	self:CDBar(args.spellId, cd, CL.count:format(args.spellName, theBigHitTotalCount))
 end
 
 function mod:TheBigHitApplied(args)
-	self:TargetMessage(args.spellId, "purple", args.destName)
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and not self:Tanking(unit) then -- XXX Confirm swap on 1
-		self:PlaySound(args.spellId, "warning") -- tauntswap
+	if self:Tank() then
+		self:TargetMessage(args.spellId, "purple", args.destName)
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
+		if unit and not self:Tanking(unit) then
+			self:PlaySound(args.spellId, "warning") -- tauntswap
+		end
 	end
 end
 
@@ -308,12 +374,41 @@ do
 end
 
 function mod:FraudDetected(args)
+	self:StopBar(471927) -- Withering Flames
+	self:StopBar(CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
+	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
+	self:StopBar(CL.count:format(self:SpellName(461060), spinToWinCount)) -- Spin To Win!
+	self:StopBar(CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
+	self:StopBar(CL.stage:format(2)) -- Last Spin To Win!
+
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm") -- TILT TILT TILT!
 	self:CloseInfo("rewards")
 end
 
 function mod:Rewards(args)
+	self:StopBar(471927) -- Withering Flames
+
+	foulExhauntCount = 1
+	theBigHitCount = 1
+	payLineCount = 1
+
+	-- Cooldowns Reset here, restart the bars with new timers (Not Spin To Win)
+	local flameAndCoin = args.spellId == 464806 -- different from the others due to channel
+	local payLineCd = flameAndCoin and 11 or 5.2
+	local foulExhaustCD = flameAndCoin and 15.5 or 10.5
+	local bigHitCd = flameAndCoin and 20.5 or 16.5
+	if self:Mythic() then
+		local extraTime = flameAndCoin and 7 or 0 -- Extra time due to the channel of Flame and Coin
+		payLineCd = stageOneResetTimers[460181][payLineCount] + extraTime
+		bigHitCd = stageOneResetTimers[460472][theBigHitCount] + extraTime
+		foulExhaustCD = stageOneResetTimers[469993][foulExhauntCount] + extraTime
+	end
+
+	self:CDBar(460181, payLineCd, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
+	self:CDBar(469993, foulExhaustCD, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
+	self:CDBar(460472, bigHitCd, CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
+
 	self:Message("rewards", "cyan", args.spellName, args.spellId)
 	self:PlaySound("rewards", "long") -- Rewards incoming
 
@@ -346,12 +441,27 @@ function mod:CoinMagnet(args)
 	self:PlaySound(args.spellId, "alert") -- getting pulled in
 end
 
+function mod:SpinToWinApplied(args) -- Add spawn
+	if not mobCollector[args.destGUID] then
+		mobCollector[args.destGUID] = true
+		self:Nameplate(460582, 16.2, args.destGUID) -- Overload!
+	end
+end
+
 function mod:Overload(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo and ready then
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alarm")
 	end
+end
+
+function mod:OverloadInterrupt(args)
+	self:Nameplate(460582, 21.9, args.destGUID)
+end
+
+function mod:OverloadSuccess(args)
+	self:Nameplate(args.spellId, 21.9, args.sourceGUID)
 end
 
 do
@@ -363,7 +473,7 @@ do
 			self:Message(471927, "yellow")
 			self:PlaySound(471927, "alert") -- debuffs inc
 		end
-		self:Nameplate(471927, 20, args.sourceGUID)
+		self:Nameplate(471927, 18.5, args.sourceGUID)
 	end
 end
 
@@ -371,7 +481,7 @@ function mod:WitheringFlamesApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning") -- debuff
-		self:Say(args.spellId, nil, nil, "Flames")
+		self:Say(args.spellId, L.withering_flames, nil, "Flames")
 	end
 end
 
@@ -386,10 +496,11 @@ end
 
 -- Stage Two: This Game Is Rigged!
 function mod:MaintenanceCycle(args)
-	self:StopBar(CL.count:format(L.pay_line, payLineCount)) -- Pay-Line
-	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhauntCount)) -- Foul Exhaust
+	self:StopBar(471927) -- Withering Flames
+	self:StopBar(CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
+	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
 	self:StopBar(CL.count:format(self:SpellName(461060), spinToWinCount)) -- Spin To Win!
-	self:StopBar(CL.count:format(self:SpellName(460472), theBigHitCount)) -- The Big Hit
+	self:StopBar(CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
 	self:StopBar(CL.stage:format(2)) -- Last Spin To Win!
 	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 
@@ -398,39 +509,86 @@ function mod:MaintenanceCycle(args)
 	self:PlaySound("stages", "long")
 
 	payLineCount = 1
+	payLineTotalCount = 1
 	foulExhauntCount = 1
+	foulExhaustTotalCount = 1
 	theBigHitCount = 1
+	theBigHitTotalCount = 1
+	linkedMachinesCount = 1
+	hotHotHeatCount = 1
 
 	self:Bar(args.spellId, 6, CL.stunned) -- Stunned
-	self:Bar(465432, 13.0) -- Cheat to Win - Linked Machines
-	self:CDBar(469993, 17.0, CL.count:format(CL.heal_absorbs, foulExhauntCount)) -- Foul Exhaust
-	self:CDBar(460181, 23.0, CL.count:format(L.pay_line, payLineCount)) -- Pay-Line
-	self:CDBar(460472, 28.0, CL.count:format(self:SpellName(460472), theBigHitCount)) -- The Big Hit
+	local cheatCD = self:Mythic() and 12.8 or 13.0
+	self:CDBar(465309, cheatCD, L.cheat:format(L.linked_machines)) -- Cheat to Win - Linked Machines
+	self:CDBar(473195, cheatCD + 4.5, CL.count:format(L.linked_machine, linkedMachinesCount)) -- Coil Spawn
+	self:CDBar(469993, 17.0, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
+	self:CDBar(460181, 23.0, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
+	self:CDBar(460472, 28.5, CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
 end
 
 function mod:LinkedMachines(args)
-	self:StopBar(args.spellId)
-	self:Message(args.spellId, "cyan", CL.count_amount:format(args.spellName, 1, 4))
-	self:PlaySound(args.spellId, "long") -- electric links inc
+	self:StopBar(L.cheat:format(L.linked_machines)) -- Cheat to Win - Linked Machines
+	self:Message(465309, "cyan", CL.count_amount:format(L.cheat:format(L.linked_machines), 1, 4))
+	self:PlaySound(465309, "long") -- electric links inc
 
-	self:Bar(465322, self:Easy() and 29.6 or 25.5) -- Cheat to Win - Hot Hot Heat
+	local intialCheatCD = 13.0
+	local nextPylon = 4.5
+	local pylonLandingTime = 3
+	self:Bar(473195, {nextPylon, intialCheatCD + nextPylon}, CL.count:format(L.linked_machine, linkedMachinesCount))
+	self:ScheduleTimer("Bar", nextPylon, 465432, pylonLandingTime, CL.count:format(CL.knockback, linkedMachinesCount)) -- Scheduled to reduce bars on screen
+
+	-- Next Cheat
+	local initialHotHotHeatCD = self:Easy() and 29.6 or 25.5 -- Also adjust in HotHotHeat()
+	self:Bar(465309, initialHotHotHeatCD, L.cheat:format(L.hot_hot_heat)) -- Cheat to Win - Hot Hot Heat
+	self:Bar(465322, initialHotHotHeatCD + 3, CL.count:format(L.hot_hot_heat, hotHotHeatCount)) -- first debuffs on _success
+end
+
+function mod:LinkedMachinesApplied(args)
+	linkedMachinesCount = linkedMachinesCount + 1
+	local nextPylon = 15
+	local pylonLandingTime = 3
+	self:Bar(473195, nextPylon, CL.count:format(L.linked_machine, linkedMachinesCount))
+	self:ScheduleTimer("Bar", nextPylon, 465432, pylonLandingTime, CL.count:format(CL.knockback, linkedMachinesCount)) -- Scheduled to reduce bars on screen
 end
 
 function mod:HotHotHeat(args)
-	self:Message(args.spellId, "cyan", CL.count_amount:format(args.spellName, 2, 4))
-	self:PlaySound(args.spellId, "long") -- fire lines inc
+	self:StopBar(L.cheat:format(L.hot_hot_heat)) -- Cheat to Win - Hot Hot Heat
+	self:Message(465309, "cyan", CL.count_amount:format(L.cheat:format(L.hot_hot_heat), 2, 4))
+	self:PlaySound(465309, "long") -- fire lines inc
 
-	self:Bar(465580, self:Easy() and 30.8 or 26.7) -- Cheat to Win - Scattered Payout
+	local cd = self:Easy() and 30.8 or 26.7
+	self:Bar(465309, cd, L.cheat:format(CL.raid_damage)) -- Cheat to Win - Scattered Payout
+
+	local initialHotHotHeatCD = self:Easy() and 29.6 or 25.5 -- Also Adjust in LinkedMachines()
+	local castTime = 3
+	self:Bar(465322, {castTime, initialHotHotHeatCD + castTime}, CL.count:format(L.hot_hot_heat, hotHotHeatCount)) -- first debuffs on _success
+	self:ScheduleTimer("HotHotHeatApplied", 3)
+end
+
+function mod:HotHotHeatApplied() -- Private Aura, scheduled function, no events
+	local debuffDuration = 5
+	local cooldown = 12
+	self:Bar(465325, debuffDuration, CL.count:format(CL.beams, hotHotHeatCount), "ability_evoker_firebreath") -- Beams // Different icon than Hot Hot Heat
+	hotHotHeatCount = hotHotHeatCount + 1
+	self:Bar(465322, cooldown, CL.count:format(L.hot_hot_heat, hotHotHeatCount)) -- first debuffs on _success
+	self:ScheduleTimer("HotHotHeatApplied", debuffDuration + cooldown)
 end
 
 function mod:ScatteredPayout(args)
-	self:Message(args.spellId, "cyan", CL.count_amount:format(args.spellName, 3, 4))
-	self:PlaySound(args.spellId, "long") -- ticking damage inc
+	self:StopBar(L.cheat:format(CL.raid_damage)) -- Cheat to Win - Scattered Payout
+	self:Message(465309, "cyan", CL.count_amount:format(L.cheat:format(CL.raid_damage), 3, 4))
+	self:PlaySound(465309, "long") -- ticking damage inc
 
-	self:Bar(465587, self:Easy() and 29.9 or 25.1) -- Cheat to Win - Explosive Jackpot
+	local cd = self:Easy() and 29.9 or 25.1
+	self:Bar(465587, cd, L.cheat:format(L.explosive_jackpot)) -- Cheat to Win - Explosive Jackpot
 end
 
 function mod:ExplosiveJackpot(args)
+	self:StopBar(CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
+	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
+	self:StopBar(CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
+	self:StopBar(L.cheat:format(L.explosive_jackpot)) -- Cheat to Win - Explosive Jackpot
+
 	self:Message(args.spellId, "red", CL.count_amount:format(args.spellName, 4, 4))
 	self:PlaySound(args.spellId, "alarm") -- enrage
 	self:CastBar(args.spellId, 10)

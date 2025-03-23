@@ -12,7 +12,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 377
+local BIGWIGS_VERSION = 378
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -95,7 +95,7 @@ local tooltipFunctions = {}
 local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
-local Ambiguate, UnitName, UnitGUID = Ambiguate, UnitNameUnmodified or UnitName, UnitGUID
+local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 
@@ -104,6 +104,7 @@ public.date = date
 public.Ambiguate = Ambiguate
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
+public.CTimerNewTimer = C_Timer.NewTimer
 public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
@@ -127,7 +128,7 @@ public.UnitGUID = UnitGUID
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
-public.UnitName = UnitName
+public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
 public.isTestBuild = GetCurrentRegion() == 72 or GetCurrentRegion() == 90 or (IsPublicTestClient and IsPublicTestClient()) -- PTR/beta
@@ -565,14 +566,14 @@ end
 --
 
 local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
-local EnableAddOn = C_AddOns.EnableAddOn or EnableAddOn
-local GetAddOnInfo = C_AddOns.GetAddOnInfo or GetAddOnInfo
-local LoadAddOn = C_AddOns.LoadAddOn or LoadAddOn
-local IsAddOnLoaded = C_AddOns.IsAddOnLoaded or IsAddOnLoaded
-local GetAddOnDependencies = C_AddOns.GetAddOnDependencies or GetAddOnDependencies
-local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies or GetAddOnOptionalDependencies
-local GetNumAddOns = C_AddOns.GetNumAddOns or GetNumAddOns
-local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand or IsAddOnLoadOnDemand
+local EnableAddOn = C_AddOns.EnableAddOn
+local GetAddOnInfo = C_AddOns.GetAddOnInfo
+local LoadAddOn = C_AddOns.LoadAddOn
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local GetAddOnDependencies = C_AddOns.GetAddOnDependencies
+local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies
+local GetNumAddOns = C_AddOns.GetNumAddOns
+local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 public.EnableAddOn = EnableAddOn
 
@@ -1097,7 +1098,7 @@ function mod:ADDON_LOADED(addon)
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-			local name = UnitName("player")
+			local name = UnitNameUnmodified("player")
 			local realm = GetRealmName()
 			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
 				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
@@ -1478,9 +1479,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20250317033325" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "11.1.10" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20250316000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20250321071603" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "11.1.11" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20250321000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 16
@@ -1488,11 +1489,11 @@ do
 	local timer = nil
 	local function sendDBMMsg()
 		if IsInGroup() then
-			local name = UnitName("player")
+			local name = UnitNameUnmodified("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
-			local _, result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 9 then
 					timer = CTimerNewTicker(3, sendDBMMsg, 1)
@@ -1573,13 +1574,14 @@ end
 	{ Name = "InvalidChannel", Type = "SendAddonMessageResult", EnumValue = 7 },
 	{ Name = "ChannelThrottle", Type = "SendAddonMessageResult", EnumValue = 8 },
 	{ Name = "GeneralError", Type = "SendAddonMessageResult", EnumValue = 9 },
+	{ Name = "NotInGuild", Type = "SendAddonMessageResult", EnumValue = 10 },
 ]]
 local ResetVersionWarning
 do
 	local timer = nil
 	local function sendMsg()
 		if IsInGroup() then
-			local _, result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 9 then
 					timer = CTimerNewTicker(3, sendMsg, 1)
@@ -1848,18 +1850,18 @@ do
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
-			local _, result = SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
+			local result = SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			if type(result) == "number" and result ~= 0 then
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
-			local name = UnitName("player")
+			local name = UnitNameUnmodified("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			_, result = SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
-			if type(result) == "number" and result ~= 0 then
-				sysprint("Failed to ask for _ versions. Error code: ".. result)
-				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. result)
+			local dbmResult = SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			if type(dbmResult) == "number" and dbmResult ~= 0 then
+				sysprint("Failed to ask for _ versions. Error code: ".. dbmResult)
+				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. dbmResult)
 			end
 		elseif grouped and not groupType then
 			grouped = nil
@@ -2016,7 +2018,7 @@ SlashCmdList.BigWigsVersion = function()
 	local list = {}
 	local unit
 	if not IsInRaid() then
-		list[1] = UnitName("player")
+		list[1] = UnitNameUnmodified("player")
 		unit = "party%d"
 	else
 		unit = "raid%d"
@@ -2024,7 +2026,7 @@ SlashCmdList.BigWigsVersion = function()
 	for i = 1, GetNumGroupMembers() do
 		local unitToken = (unit):format(i)
 		if not UnitInPartyIsAI or not UnitInPartyIsAI(unitToken) then -- Filter AI units from version list
-			local n, s = UnitName(unitToken)
+			local n, s = UnitNameUnmodified(unitToken)
 			if n and s and s ~= "" then n = n.."-"..s end
 			if n then list[#list+1] = n end
 		end
