@@ -101,6 +101,6 @@ if L then
 
 	L.duds = "Obus" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "Tous les obus ont détonné !"
-	L.duds_remaining = "%d Obus |4restant:restants;" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_remaining = "%d |4Obus restant:Obus restants;" -- 1 Dud Remains | 2 Duds Remaining
 	L.duds_soak = "Soak Obus (%d |4restant:restants;)"
 end
