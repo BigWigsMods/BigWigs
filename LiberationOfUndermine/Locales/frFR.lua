@@ -1,106 +1,106 @@
 local L = BigWigs:NewBossLocale("Cauldron of Carnage", "frFR")
 if not L then return end
 if L then
-	--L.custom_on_fade_out_bars = "Fade out bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range."
+	L.custom_on_fade_out_bars = "Masquage des barres"
+	L.custom_on_fade_out_bars_desc = "Masque les barres qui appartiennent au boss qui est hors de portée."
 
-	--L.bomb_explosion = "Bomb Explosion"
-	--L.bomb_explosion_desc = "Show a timer for the explosion off the bombs."
+	L.bomb_explosion = "Explosion de bombe"
+	L.bomb_explosion_desc = "Affiche un timer pour l'explosion des bombes."
 
-	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
-	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
+	L.eruption_stomp = "Piétinement" -- Short for Eruption Stomp
+	L.thunderdrum_salvo = "Salve" -- Short for Thunderdrum Salvo
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "frFR")
 if L then
-	--L.amplification = "Amplifiers"
-	--L.echoing_chant = "Echoes"
-	--L.faulty_zap = "Zaps"
-	--L.sparkblast_ignition = "Barrels"
+	L.amplification = "Amplificateur"
+	L.echoing_chant = "Échos"
+	L.faulty_zap = "Décharges"
+	L.sparkblast_ignition = "Ignition"
 end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "frFR")
 if L then
-	--L.ball_size_medium = "Medium Ball!"
-	--L.ball_size_large = "Large Ball!"
-	--L.rolled_on_you = "%s rolled over YOU" -- PlayerX rolled over you
-	--L.rolled_from_you = "Rolled over %s" -- (you) Rolled over PlayerX
-	--L.garbage_dump_message = "YOU hit BOSS for %s"
+	L.ball_size_medium = "Boule moyenne !"
+	L.ball_size_large = "Boule large !!"
+	L.rolled_on_you = "%s vous a roulé dessus" -- PlayerX rolled over you
+	L.rolled_from_you = "Vous avez roulé sur %s" -- (you) Rolled over PlayerX
+	L.garbage_dump_message = "Vous avez frappé le boss pour %s"
 
-	--L.electromagnetic_sorting = "Sorting" -- Short for Electromagnetic Sorting
-	--L.muffled_doomsplosion = "Bomb Soaked"
-	--L.short_fuse = "Bombshell Explosion"
-	--L.incinerator = "Fire Circles"
-	--L.landing = "Landing" -- Landing down from the sky
+	L.electromagnetic_sorting = "Tri" -- Short for Electromagnetic Sorting
+	L.muffled_doomsplosion = "Explosion fatale étouffée"
+	L.short_fuse = "Explosion de crabombe"
+	L.incinerator = "Cercles de feu"
+	L.landing = "Atterrissage" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "frFR")
 if L then
-	--L.foot_blasters = "Mines"
-	--L.unstable_shrapnel = "Mine Soaked"
-	--L.screw_up = "Drills"
-	--L.screw_up_single = "Drill" -- Singular of Drills
-	--L.sonic_ba_boom = "Raid Damage"
-	--L.polarization_generator = "Colors"
+	L.foot_blasters = "Mines"
+	L.unstable_shrapnel = "Mine absorbée"
+	L.screw_up = "Foreuses"
+	L.screw_up_single = "Foreuse" -- Singular of Drills
+	L.sonic_ba_boom = "Dégâts sur le raid"
+	L.polarization_generator = "Couleurs"
 
-	--L.polarization_soon = "Color Soon: %s"
-	--L.polarization_soon_change = "Color SWITCH Soon: %s"
+	L.polarization_soon = "Couleurs imminentes : %s"
+	L.polarization_soon_change = "CHANGEMENT de couleurs imminent : %s"
 
-	--L.activate_inventions = "Activate: %s"
-	--L.blazing_beam = "Beams"
-	--L.rocket_barrage = "Rockets"
-	--L.mega_magnetize = "Magnets"
-	--L.jumbo_void_beam = "Big Beams"
-	--L.void_barrage = "Balls"
-	--L.everything = "Everything"
+	L.activate_inventions = "Activation : %s"
+	L.blazing_beam = "Rayons"
+	L.rocket_barrage = "Fusées"
+	L.mega_magnetize = "Aimants"
+	L.jumbo_void_beam = "Gros rayons"
+	L.void_barrage = "Boules"
+	L.everything = "Tout"
 
-	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
+	L.under_you_comment = "E" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "frFR")
 if L then
-	--L.rewards = "Prizes" -- Fabulous Prizes
-	--L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
-	--L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
+	L.rewards = "Prix" -- Fabulous Prizes
+	L.rewards_desc = "Lorsque deux jetons sont verrouillés, un  \"prix fabuleux\" est distribué.\nLes messages vous laisseront savoir lequel a été obtenu.\nLa boîte d'info affichera quels prix sont encore disponibles."
+	L.deposit_time = "Temps de dépôt" -- Timer that indicates how long you have left to deposit the tokens.
 
-	--L.pay_line = "Coins"
-	--L.shock = "Shock"
-	--L.flame = "Flame"
-	--L.coin = "Coin"
+	L.pay_line = "Ligne pièces"
+	L.shock = "Champ"
+	L.flame = "Flamme"
+	L.coin = "Pièce"
 
-	--L.withering_flames = "Flames" -- Short for Withering Flames
+	L.withering_flames = "Flammes" -- Short for Withering Flames
 
-	--L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
-	--L.linked_machines = "Coils"
-	--L.linked_machine = "Coil" -- Singular of Coils
-	--L.hot_hot_heat = "Hot Debuffs"
-	--L.explosive_jackpot = "Final Cast"
+	L.cheat = "Activation : %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "Bobines"
+	L.linked_machine = "Bobine" -- Singular of Coils
+	L.hot_hot_heat = "Débuff châleur"
+	L.explosive_jackpot = "Incantation finale"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "frFR")
 if L then
-	--L.earthshaker_gaol = "Prisons"
-	--L.frostshatter_boots = "Frost Boots" -- Short for Frostshatter Boots
-	--L.frostshatter_spear = "Frost Spears" -- Short for Frostshatter Spears
-	--L.stormfury_finger_gun = "Finger Gun" -- Short for Stormfury Finger Gun
-	--L.molten_gold_knuckles = "Tank Frontal"
-	--L.unstable_crawler_mines = "Mines"
-	--L.goblin_guided_rocket = "Rocket"
-	--L.double_whammy_shot = "Tank Soak"
-	--L.electro_shocker = "Shocker"
+	L.earthshaker_gaol = "Prisons"
+	L.frostshatter_boots = "Bottes de givre" -- Short for Frostshatter Boots
+	L.frostshatter_spear = "Lances de givre" -- Short for Frostshatter Spears
+	L.stormfury_finger_gun = "Doigt-pistolet" -- Short for Stormfury Finger Gun
+	L.molten_gold_knuckles = "Frontal Tank"
+	L.unstable_crawler_mines = "Mines"
+	L.goblin_guided_rocket = "Fusée"
+	L.double_whammy_shot = "Tank Soak"
+	L.electro_shocker = "Électrochoqueur mod. II"
 end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "frFR")
 if L then
-	--L.story_phase_trigger = "What, you think you won?" -- What, you think you won? Nah, I got somethin' else for ya.
+	L.story_phase_trigger = "Vous pensez avoir gagné ?" -- What, you think you won? Nah, I got somethin' else for ya.
 
-	--L.scatterblast_canisters = "Cone Soak"
-	--L.fused_canisters = "Group Soaks"
-	--L.tick_tock_canisters = "Soaks"
-	--L.total_destruction = "DESTRUCTION!"
+	L.scatterblast_canisters = "Cone Soak"
+	L.fused_canisters = "Groupe Soaks"
+	L.tick_tock_canisters = "Soaks"
+	L.total_destruction = "DESTRUCTION !"
 
-	--L.duds = "Duds" -- Short for 1500-Pound "Dud"
-	--L.all_duds_detontated = "All Duds Detonated!"
-	--L.duds_remaining = "%d |4Dud remains:Duds remaining;" -- 1 Dud Remains | 2 Duds Remaining
-	--L.duds_soak = "Soak Duds (%d left)"
+	L.duds = "Obus" -- Short for 1500-Pound "Dud"
+	L.all_duds_detontated = "Tous les obus ont détonné !"
+	L.duds_remaining = "%d |4Obus restant:Obus restants;" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_soak = "Soak Obus (%d |4restant:restants;)"
 end

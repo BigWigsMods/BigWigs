@@ -17,8 +17,8 @@ L.disabled = "Désactivé"
 L.disableDesc = "Vous allez désactiver la fonctionnalité '%s', ce qui n'est |cffff4411pas recommandé|r.\n\nÊtes-vous sûr de vouloir faire cela ?"
 
 -- Anchor Points
---L.UP = "Up"
---L.DOWN = "Down"
+L.UP = "Au-dessus"
+L.DOWN = "En-dessous"
 L.TOP = "En haut"
 L.RIGHT = "Droite"
 L.BOTTOM = "En bas"
@@ -350,8 +350,8 @@ L.fixate_test = "Fixe Test" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Réinitialise toutes les options liées au texte des barres d'infos."
 L.glowAt = "Commencer la surbrillance (secondes)"
 L.glowAt_desc = "Choisissez combien il doit rester de secondes sur le temps de recharge afin d'activer la surbrillance."
---L.headerIconSizeTarget = "Icon size of your current target"
---L.headerIconSizeOthers = "Icon size of all other targets"
+L.headerIconSizeTarget = "Taille d'icône de votre cible actuelle"
+L.headerIconSizeOthers = "Taille d'icône de toutes les autres cibles"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Surbrillance discontinue"
@@ -475,8 +475,8 @@ L.newFastestVictoryOption = "Victoire la plus rapide"
 L.victoryOption = "Vous êtes victorieux"
 L.defeatOption = "Vous êtes vaincus"
 L.bossHealthOption = "Vie du boss"
-L.bossVictoryPrint = "Vous êtes victorieux contre '%s' après %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
-L.bossDefeatPrint = "Vous êtes battus par '%s' après %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.bossVictoryPrint = "Vous avez vaincu '%s' après %s." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "Vous avez été vaincu par '%s' après %s." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
 L.newFastestVictoryPrint = "Nouvelle victoire la plus rapide : (-%s)" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
