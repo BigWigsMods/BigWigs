@@ -67,6 +67,14 @@ if L then
 	L.shock = "電擊"
 	L.flame = "烈焰"
 	L.coin = "硬幣" -- 應該是獎勵的硬幣
+
+	--L.withering_flames = "Flames" -- Short for Withering Flames
+
+	--L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	--L.linked_machines = "Coils"
+	--L.linked_machine = "Coil" -- Singular of Coils
+	--L.hot_hot_heat = "Hot Debuffs"
+	--L.explosive_jackpot = "Final Cast"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "zhTW")
