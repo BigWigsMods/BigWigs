@@ -26,6 +26,7 @@ local theBigHitCount = 1
 local theBigHitTotalCount = 1
 local linkedMachinesCount = 1
 local hotHotHeatCount = 1
+local mobCollector = {}
 local availableCombos
 local comboColours
 
@@ -115,9 +116,14 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
-	self:SetSpellRename(465009, CL.fixate) -- Explosive Gaze (Fixate)
-	self:SetSpellRename(469993, CL.heal_absorbs) -- Foul Exhaust (Heal Absorbs)
 	self:SetSpellRename(460181, L.pay_line) -- Pay-Line (Coins)
+	self:SetSpellRename(469993, CL.heal_absorbs) -- Foul Exhaust (Heal Absorbs)
+	self:SetSpellRename(465009, CL.fixate) -- Explosive Gaze (Fixate)
+	self:SetSpellRename(465765, CL.stunned) -- Maintenance Cycle (Stunned)
+	self:SetSpellRename(473195, L.linked_machine) -- Linked Machines (Coil)
+	self:SetSpellRename(465432, CL.knockback) -- Linked Machines (Knockback)
+	self:SetSpellRename(465322, L.hot_hot_heat) -- Hot Hot Heat (Debuffs)
+	self:SetSpellRename(465325, CL.beams) -- Hot Hot Heat (Beams)
 
 	availableCombos = {
 		[1] = {L.shock, L.flame, 464772}, -- Blue + Red
@@ -163,7 +169,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CoinMagnet", 474665)
 
 	-- Reel Assistant
-	self:RegisterEngageMob("ReelAssistantEngaged", 228463)
+	self:Log("SPELL_AURA_APPLIED", "SpinToWinApplied", 471720) -- Add spawn
 	self:Log("SPELL_CAST_START", "Overload", 460582)
 	self:Log("SPELL_INTERRUPT", "OverloadInterrupt", 460582)
 	self:Log("SPELL_CAST_SUCCESS", "OverloadSuccess", 460582)
@@ -197,6 +203,7 @@ function mod:OnEngage()
 	foulExhaustTotalCount = 1
 	theBigHitCount = 1
 	theBigHitTotalCount = 1
+	mobCollector = {}
 	self:SetStage(1)
 
 	self:CDBar(460181, self:Mythic() and 3.5 or self:Easy() and 65.4 or 4.9, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
@@ -434,8 +441,11 @@ function mod:CoinMagnet(args)
 	self:PlaySound(args.spellId, "alert") -- getting pulled in
 end
 
-function mod:ReelAssistantEngaged(guid)
-	self:Nameplate(460582, 16.2, guid) -- Overload!
+function mod:SpinToWinApplied(args) -- Add spawn
+	if not mobCollector[args.destGUID] then
+		mobCollector[args.destGUID] = true
+		self:Nameplate(460582, 16.2, args.destGUID) -- Overload!
+	end
 end
 
 function mod:Overload(args)
@@ -451,7 +461,7 @@ function mod:OverloadInterrupt(args)
 end
 
 function mod:OverloadSuccess(args)
-	self:Nameplate(460582, 21.9, args.sourceGUID)
+	self:Nameplate(args.spellId, 21.9, args.sourceGUID)
 end
 
 do
