@@ -98,18 +98,32 @@ function mod:GetOptions()
 		[1215953] = -30517, -- Intermission
 		[463967] = -30510, -- Stage 2
 	},{
-		[1216142] = CL.full_energy, -- Double-Minded Fury
-		[472631] = L.earthshaker_gaol,
-		[466476] = L.frostshatter_boots,
-		[466480] = L.frostshatter_spear,
-		[466509] = L.stormfury_finger_gun,
-		[466518] = L.molten_gold_knuckles,
-		[466539] = L.unstable_crawler_mines,
-		[467380] = L.goblin_guided_rocket,
-		[1215591] = CL.weakened, -- Faulty Wiring
-		[469491] = L.double_whammy_shot,
-		[1215953] = CL.charge, -- Static Charge
+		[1216142] = CL.full_energy, -- Double-Minded Fury (Full Energy)
+		[472631] = L.earthshaker_gaol, -- Earthshaker Gaol (Prisons)
+		[466476] = L.frostshatter_boots, -- Frostshatter Boots (Frost Boots)
+		[466480] = L.frostshatter_spear, -- Frostshatter Spear (Frost Spears)
+		[466509] = L.stormfury_finger_gun, -- Stormfury Finger Gun (Finger Gun)
+		[466518] = L.molten_gold_knuckles, -- Molten Gold Knuckles (Tank Frontal)
+		[466539] = L.unstable_crawler_mines, -- Unstable Crawler Mines (Mines)
+		[467380] = L.goblin_guided_rocket, -- Goblin-guided Rocket (Rocket)
+		[1215591] = CL.weakened, -- Faulty Wiring (Weakened)
+		[469491] = L.double_whammy_shot, -- Double Whammy Shot (Tank Soak)
+		[1215953] = CL.charge, -- Static Charge (Charge)
 	}
+end
+
+function mod:OnRegister()
+	self:SetSpellRename(1216142, CL.full_energy) -- Double-Minded Fury (Full Energy)
+	self:SetSpellRename(472631, L.earthshaker_gaol) -- Earthshaker Gaol (Prisons)
+	self:SetSpellRename(466476, L.frostshatter_boots) -- Frostshatter Boots (Frost Boots)
+	self:SetSpellRename(466480, L.frostshatter_spear) -- Frostshatter Spear (Frost Spears)
+	self:SetSpellRename(466509, L.stormfury_finger_gun) -- Stormfury Finger Gun (Finger Gun)
+	self:SetSpellRename(466518, L.molten_gold_knuckles) -- Molten Gold Knuckles (Tank Frontal)
+	self:SetSpellRename(466539, L.unstable_crawler_mines) -- Unstable Crawler Mines (Mines)
+	self:SetSpellRename(467380, L.goblin_guided_rocket) -- Goblin-guided Rocket (Rocket)
+	self:SetSpellRename(1215591, CL.weakened) -- Faulty Wiring (Weakened)
+	self:SetSpellRename(469491, L.double_whammy_shot) -- Double Whammy Shot (Tank Soak)
+	self:SetSpellRename(1215953, CL.charge) -- Static Charge (Charge)
 end
 
 function mod:OnBossEnable()
