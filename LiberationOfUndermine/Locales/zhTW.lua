@@ -7,8 +7,8 @@ if L then
 	L.bomb_explosion = "炸彈爆炸"
 	L.bomb_explosion_desc = "替炸彈爆炸顯示倒數計時。"
 
-	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
-	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
+	L.eruption_stomp = "踐踏" -- Short for Eruption Stomp
+	L.thunderdrum_salvo = "電圈" -- Short for Thunderdrum Salvo
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "zhTW")
@@ -29,7 +29,7 @@ if L then
 
 	L.electromagnetic_sorting = "電磁" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "悶響爆炸" -- 悶響末日爆炸 暫定
-	--L.short_fuse = "Bombshell Explosion"
+	L.short_fuse = "螃蟹爆炸" -- 表意
 	L.incinerator = "火圈" -- 火圈/焚化/燒垃圾
 	L.landing = "降落" -- Landing down from the sky
 end
@@ -37,14 +37,14 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhTW")
 if L then
 	L.foot_blasters = "地雷"
-	--L.unstable_shrapnel = "Mine Soaked"
+	L.unstable_shrapnel = "地雷爆炸" -- 或者 踩雷
 	L.screw_up = "鑽頭"
-	--L.screw_up_single = "Drill" -- Singular of Drills
+	L.screw_up_single = "鑽頭" -- Singular of Drills
 	L.sonic_ba_boom = "音波" --音速轟爆
-	--L.polarization_generator = "Colors"
+	L.polarization_generator = "極化"
 
-	--L.polarization_soon = "Color Soon: %s"
-	--L.polarization_soon_change = "Color SWITCH Soon: %s"
+	L.polarization_soon = "極化：%s"
+	L.polarization_soon_change = "即將極化：%s"
 
 	L.activate_inventions = "啟動：%s"
 	L.blazing_beam = "光束" --熾炎光束
@@ -70,11 +70,11 @@ if L then
 
 	--L.withering_flames = "Flames" -- Short for Withering Flames
 
-	--L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
-	--L.linked_machines = "Coils"
-	--L.linked_machine = "Coil" -- Singular of Coils
-	--L.hot_hot_heat = "Hot Debuffs"
-	--L.explosive_jackpot = "Final Cast"
+	L.cheat = "啟動：%s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "線圈"
+	L.linked_machine = "線圈" -- Singular of Coils
+	L.hot_hot_heat = "燒燙燙"
+	L.explosive_jackpot = "火爆大獎"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "zhTW")
@@ -95,12 +95,12 @@ if L then
 	--L.story_phase_trigger = "What, you think you won?" -- What, you think you won? Nah, I got somethin' else for ya.
 
 	L.scatterblast_canisters = "碎爆分攤" --碎爆罐
-	--L.fused_canisters = "Group Soaks"
-	--L.tick_tock_canisters = "Soaks"
-	--L.total_destruction = "DESTRUCTION!"
+	L.fused_canisters = "融合罐分攤"
+	L.tick_tock_canisters = "嘀答罐分攤"
+	L.total_destruction = "毀滅！"
 
 	L.duds = "爆彈" -- Short for 1500-Pound "Dud" dud是啞彈但手冊是爆彈
 	L.all_duds_detontated = "爆彈已全部引爆！"
-	--L.duds_remaining = "%d |4Dud remains:Duds remaining;" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_remaining = "剩餘 %d 個爆彈"
 	--L.duds_soak = "Soak Duds (%d left)"
 end
