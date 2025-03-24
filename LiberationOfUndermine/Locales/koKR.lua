@@ -68,13 +68,13 @@ if L then
 	L.flame = "불꽃"
 	L.coin = "동전"
 
-	--L.withering_flames = "Flames" -- Short for Withering Flames
+	L.withering_flames = "회오리" -- Short for Withering Flames
 
-	--L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
-	--L.linked_machines = "Coils"
-	--L.linked_machine = "Coil" -- Singular of Coils
-	--L.hot_hot_heat = "Hot Debuffs"
-	--L.explosive_jackpot = "Final Cast"
+	L.cheat = "활성화: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "감줄"
+	L.linked_machine = "감줄" -- Singular of Coils
+	L.hot_hot_heat = "불길"
+	L.explosive_jackpot = "광폭화"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "koKR")
