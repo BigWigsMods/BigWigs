@@ -31,9 +31,9 @@ local availableCombos
 local comboColours
 
 local stageOneResetTimers = {
-	[469993] = {10, 32.0, 20.5}, -- Foul Exhaust
-	[460472] = {16.0, 20.5, 31.5}, -- The Big Hit
-	[460181] = {5.0, 26.7}, -- Pay-Line
+	[469993] = {10, 32.0, 0}, -- Foul Exhaust
+	[460472] = {16.0, 20.5, 0}, -- The Big Hit
+	[460181] = {5.0, 26.7, 0}, -- Pay-Line
 }
 
 --------------------------------------------------------------------------------
@@ -373,28 +373,12 @@ do
 	end
 end
 
-function mod:FraudDetected(args)
-	self:StopBar(471927) -- Withering Flames
-	self:StopBar(CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
-	self:StopBar(CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
-	self:StopBar(CL.count:format(self:SpellName(461060), spinToWinCount)) -- Spin To Win!
-	self:StopBar(CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
-	self:StopBar(CL.stage:format(2)) -- Last Spin To Win!
-
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alarm") -- TILT TILT TILT!
-	self:CloseInfo("rewards")
-end
-
-function mod:Rewards(args)
-	self:StopBar(471927) -- Withering Flames
-
+function mod:RestartRewardTimers(flameAndCoin)
+	-- Cooldowns Reset on rewards or fraud detected, restart the bars with new timers (Not Spin To Win)
 	foulExhauntCount = 1
 	theBigHitCount = 1
 	payLineCount = 1
 
-	-- Cooldowns Reset here, restart the bars with new timers (Not Spin To Win)
-	local flameAndCoin = args.spellId == 464806 -- different from the others due to channel
 	local payLineCd = flameAndCoin and 11 or 5.2
 	local foulExhaustCD = flameAndCoin and 15.5 or 10.5
 	local bigHitCd = flameAndCoin and 20.5 or 16.5
@@ -408,9 +392,25 @@ function mod:Rewards(args)
 	self:CDBar(460181, payLineCd, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
 	self:CDBar(469993, foulExhaustCD, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount)) -- Foul Exhaust
 	self:CDBar(460472, bigHitCd, CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
+end
+
+function mod:FraudDetected(args)
+	self:StopBar(471927) -- Withering Flames
+
+	self:Message(args.spellId, "red")
+	self:PlaySound(args.spellId, "alarm") -- TILT TILT TILT!
+	self:CloseInfo("rewards")
+
+	self:RestartRewardTimers()
+end
+
+function mod:Rewards(args)
+	self:StopBar(471927) -- Withering Flames
 
 	self:Message("rewards", "cyan", args.spellName, args.spellId)
 	self:PlaySound("rewards", "long") -- Rewards incoming
+
+	self:RestartRewardTimers(args.spellId == 464806)
 
 	-- Infobox Stuff
 	self:CloseInfo("rewards")
