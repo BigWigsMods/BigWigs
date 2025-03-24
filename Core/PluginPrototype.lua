@@ -28,12 +28,11 @@ end
 function plugin:Enable()
 	if not self.enabled then
 		self.enabled = true
+		scheduledEvents[self] = {}
 
 		if type(self.OnPluginEnable) == "function" then
 			self:OnPluginEnable()
 		end
-
-		scheduledEvents[self] = {}
 	end
 end
 
