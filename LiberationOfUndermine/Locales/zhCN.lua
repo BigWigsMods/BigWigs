@@ -103,5 +103,5 @@ if L then
 	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "所有哑弹已引爆！"
 	L.duds_remaining = "剩余：%d 个哑弹" -- 1 Dud Remains | 2 Duds Remaining
-	L.duds_soak = "哑弹引爆 （剩余：%d 个）"
+	L.duds_soak = "哑弹爆炸 （剩余：%d 个）"
 end
