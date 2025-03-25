@@ -348,10 +348,10 @@ L.resetNameplateIconsDesc = "Сбросить все настройки, свя�
 L.nameplateTextSettings = "Настройки текста"
 L.fixate_test = "Тест фиксации" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Сбросить все настройки, связанные с текстом панели здоровья."
---L.glowAt = "Begin Glow (seconds)"
---L.glowAt_desc = "Choose how many seconds on the cooldown should be remaining when the glow begins."
---L.headerIconSizeTarget = "Icon size of your current target"
---L.headerIconSizeOthers = "Icon size of all other targets"
+L.glowAt = "Начало свечения (секунды)"
+L.glowAt_desc = "Выбрать, на скольки секундах оставшегося кулдауна начинается свечение."
+L.headerIconSizeTarget = "Размер иконки текущей цели"
+L.headerIconSizeOthers = "Размер иконки всех других целей"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "Пиксельное свечение"
