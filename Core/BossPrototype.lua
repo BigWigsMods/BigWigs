@@ -53,6 +53,7 @@ local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
 local myName = loader.UnitName("player")
 local myNameWithColor
+local myNickname
 local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
@@ -104,6 +105,8 @@ local updateData = function(module)
 	else
 		englishSayMessages = false
 	end
+
+	myNickname = core.db.profile.nickname or myName
 
 	if LibSpec then
 		local _, role, position = LibSpec:MySpecialization()
@@ -3412,9 +3415,9 @@ do
 			SendChatMessage(englishSayMessages and englishText or msg, "SAY")
 		else
 			if englishSayMessages and englishText then
-				SendChatMessage(format(on, englishText, myName), "SAY")
+				SendChatMessage(format(on, englishText, myNickname), "SAY")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "SAY")
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myNickname), "SAY")
 			end
 		end
 		self:Debug(":Say", key, msg, directPrint, englishText)
@@ -3431,9 +3434,9 @@ do
 			SendChatMessage(englishSayMessages and englishText or msg, "YELL")
 		else
 			if englishSayMessages and englishText then
-				SendChatMessage(format(on, englishText, myName), "YELL")
+				SendChatMessage(format(on, englishText, myNickname), "YELL")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "YELL")
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myNickname), "YELL")
 			end
 		end
 		self:Debug(":Yell", key, msg, directPrint, englishText)
