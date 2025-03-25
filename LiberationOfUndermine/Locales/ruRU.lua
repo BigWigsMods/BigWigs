@@ -7,8 +7,8 @@ if L then
 	L.bomb_explosion = "Взрыв Бомбы"
 	L.bomb_explosion_desc = "Показывать таймер взрыва бомбы."
 
-	--L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
-	--L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
+	L.eruption_stomp = "Топот" -- Short for Eruption Stomp
+	L.thunderdrum_salvo = "Залп" -- Short for Thunderdrum Salvo
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "ruRU")
@@ -29,7 +29,7 @@ if L then
 
 	L.electromagnetic_sorting = "Сортировка" -- Short for Electromagnetic Sorting
 	L.muffled_doomsplosion = "Бомба поглощена"
-	--L.short_fuse = "Bombshell Explosion"
+	L.short_fuse = "Взрыв краба"
 	L.incinerator = "Огонь войды"
 	L.landing = "Приземление" -- Landing down from the sky
 end
@@ -37,14 +37,14 @@ end
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "ruRU")
 if L then
 	L.foot_blasters = "Мины"
-	--L.unstable_shrapnel = "Mine Soaked"
+	L.unstable_shrapnel = "Мина взорвана"
 	L.screw_up = "Буры"
-	--L.screw_up_single = "Drill" -- Singular of Drills
+	L.screw_up_single = "Бур" -- Singular of Drills
 	L.sonic_ba_boom = "Рейд урон"
-	--L.polarization_generator = "Colors"
+	L.polarization_generator = "Цвета"
 
-	--L.polarization_soon = "Color Soon: %s"
-	--L.polarization_soon_change = "Color SWITCH Soon: %s"
+	L.polarization_soon = "Цвет скоро: %s"
+	L.polarization_soon_change = "Цвет СМЕНА СКОРО: %s"
 
 	L.activate_inventions = "Активированы: %s"
 	L.blazing_beam = "Лучи"
@@ -52,9 +52,9 @@ if L then
 	L.mega_magnetize = "Магниты"
 	L.jumbo_void_beam = "Большие лучи"
 	L.void_barrage = "Шарики"
-	--L.everything = "Everything"
+	L.everything = "Всё"
 
-	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
+	L.under_you_comment = "Под тобой" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "ruRU")
@@ -68,13 +68,13 @@ if L then
 	L.flame = "Огонь"
 	L.coin = "Монета"
 
-	--L.withering_flames = "Flames" -- Short for Withering Flames
+	L.withering_flames = "Пламя" -- Short for Withering Flames
 
-	--L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
-	--L.linked_machines = "Coils"
-	--L.linked_machine = "Coil" -- Singular of Coils
-	--L.hot_hot_heat = "Hot Debuffs"
-	--L.explosive_jackpot = "Final Cast"
+	L.cheat = "Активировано: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "Катушки"
+	L.linked_machine = "Катушка" -- Singular of Coils
+	L.hot_hot_heat = "Огоньки"
+	L.explosive_jackpot = "Вайп"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "ruRU")
@@ -87,7 +87,7 @@ if L then
 	L.unstable_crawler_mines = "Мины"
 	L.goblin_guided_rocket = "Ракета"
 	L.double_whammy_shot = "Танк Соак"
-	--L.electro_shocker = "Shocker"
+	L.electro_shocker = "Дрон"
 end
 
 L = BigWigs:NewBossLocale("Chrome King Gallywix", "ruRU")
@@ -97,7 +97,7 @@ if L then
 	L.scatterblast_canisters = "Конус делёжка"
 	L.fused_canisters = "Групповая делёжка"
 	L.tick_tock_canisters = "Делёжка"
-	--L.total_destruction = "DESTRUCTION!"
+	L.total_destruction = "УНИЧТОЖЕНИЕ!"
 
 	L.duds = "Ждуны" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "Все Ждуны Детонированы!"

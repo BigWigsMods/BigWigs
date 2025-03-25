@@ -68,7 +68,7 @@ L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec 
 L.next_ability = "Следующая способность" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s приземляется" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Можешь лететь"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "Разведи боссов" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc. -- changed translation meaning, but intent is the same
 
 -- Add related
 L.add_spawned = "Помощник появился" -- singular
@@ -196,7 +196,7 @@ L.breath = "Дыхание" -- When a boss breathes fire/frost/etc on to a playe
 L.roar = "Рык" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
 L.leap = "Прыжок" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
 L.charge = "Рывок" -- When a boss select a new target and charges at it quickly, in the same way someone playing a warrior can charge at a target
-L.full_energy = "Макс. энергя" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
+L.full_energy = "Макс. энергия" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.weakened = "Ослабленный" -- When a boss becomes weakened and sometimes takes extra damage, usually the "hit all your cooldowns" part of the fight
 L.immune = "Невосприимчивость" -- When a boss becomes immune to all damage and you can no longer hurt it
 L.stunned = "Оглушение" -- When a boss becomes stunned and cannot cast abilities or move
@@ -231,14 +231,14 @@ L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "
 L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
+L.dodge = "Избегай" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Исступление" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
---L.fixates = "Fixates" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.fixates = "Фиксации" -- Plural of L.fixate
+L.group_damage = "Пати Урон" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Потеря здоровья" -- Any ability that drains health from the player
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
---L.smash = "Удар" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+L.raid_damage = "Рейд Урон" -- Any ability that causes damage to every player in the raid
+L.smash = "Удар" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Шип" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Шипы" -- Plural of L.spike
---L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.waves = "Пельмени" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean -- technically speaking "waves" is "Волны" but current tl is a very common name
