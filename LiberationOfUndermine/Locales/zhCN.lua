@@ -53,7 +53,7 @@ if L then
 	L.mega_magnetize = "磁吸" -- 超级磁吸
 	L.jumbo_void_beam = "虚空光束" -- 大号虚空光束
 	L.void_barrage = "黑球" -- 虚空弹幕
-	L.everything = "组合技" -- 所有？全部？
+	L.everything = "组合技" -- 光束+火箭+磁吸等组合技能
 
 	L.under_you_comment = "在你脚下" -- Implies this setting is for the damage from the ground effect under you
 end
@@ -69,13 +69,13 @@ if L then
 	L.flame = "烈焰"
 	L.coin = "硬币"
 
-	--L.withering_flames = "Flames" -- Short for Withering Flames
+	L.withering_flames = "烈焰" -- Short for Withering Flames
 
-	--L.cheat = "Activate: %s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
-	--L.linked_machines = "Coils"
-	--L.linked_machine = "Coil" -- Singular of Coils
-	--L.hot_hot_heat = "Hot Debuffs"
-	--L.explosive_jackpot = "Final Cast"
+	L.cheat = "激活：%s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
+	L.linked_machines = "线圈"
+	L.linked_machine = "线圈" -- Singular of Coils
+	L.hot_hot_heat = "烈焰减益"
+	L.explosive_jackpot = "爆破大奖"
 end
 
 L = BigWigs:NewBossLocale("Mug'Zee, Heads of Security", "zhCN")
@@ -103,5 +103,5 @@ if L then
 	L.duds = "哑弹" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "所有哑弹已引爆！"
 	L.duds_remaining = "剩余：%d 个哑弹" -- 1 Dud Remains | 2 Duds Remaining
-	L.duds_soak = "分摊哑弹 （剩余：%d 个）"
+	L.duds_soak = "哑弹爆炸 （剩余：%d 个）"
 end
