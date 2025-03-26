@@ -112,12 +112,9 @@ function mod:GetOptions()
 		-- Stage Two: Research and Destruction
 		1218319, -- Voidsplosion
 	},{
+		[1216802] = "mythic",
 		[473276] = -30425, -- Stage 1
 		[1218319] = -30427, -- Stage 2
-		{
-			tabName = CL.mythic,
-			{1216802, 1216911, 1216934, 1219047, 1216706}
-		},
 	},{
 		[1216802] = L.polarization_generator,
 		[1217231] = L.foot_blasters,

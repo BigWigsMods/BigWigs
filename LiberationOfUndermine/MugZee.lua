@@ -93,26 +93,10 @@ function mod:GetOptions()
 		-- Mug'Zee
 		463967, -- Bloodlust
 	},{
-		{
-			tabName = "Marking",
-			{unstableCrawlerMinesMarker, electroShockerMarker}
-		},
-		{
-			tabName = self:SpellName(-31677), -- Mug
-			{472631, 1214623, 472782, 470910, 466476, 466480, 466509, 466518, 467202}
-		},
-		{
-			tabName = self:SpellName(-31693), -- Zee
-			{466539, unstableCrawlerMinesMarker, 469043, 467380, 466545, -31766, electroShockerMarker, 1215591, 1222948, 469491, 469391}
-		},
-		{
-			tabName = CL.intermission,
-			{1215953, 471574}
-		},
-		{
-			tabName = CL.stage:format(2),
-			{463967}
-		},
+		[472631] = -31677, -- Mug
+		[466539] = -31693, -- Zee
+		[1215953] = -30517, -- Intermission
+		[463967] = -30510, -- Stage 2
 	},{
 		[1216142] = CL.full_energy, -- Double-Minded Fury
 		[472631] = L.earthshaker_gaol,
