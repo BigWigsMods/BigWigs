@@ -30,12 +30,6 @@ local mobCollector = {}
 local availableCombos
 local comboColours
 
-local stageOneResetTimers = {
-	[469993] = {10, 32.0, 0}, -- Foul Exhaust
-	[460472] = {16.0, 20.5, 0}, -- The Big Hit
-	[460181] = {5.0, 26.7, 0}, -- Pay-Line
-}
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -236,7 +230,7 @@ function mod:PayLine(args)
 	payLineTotalCount = payLineTotalCount + 1
 	local cd = self:Easy() and 84 or 41.5
 	if self:Mythic() and self:GetStage() == 1 then
-		cd = stageOneResetTimers[args.spellId][payLineCount]
+		cd = payLineCount == 2 and 26.7 or 0 -- 2 per rewards round
 	elseif self:GetStage() == 2 then
 		local stageTwoTimers = { 24.2, 36.7 } -- Heroic XXX Need to check normal/lfr
 		if self:Mythic() then
@@ -262,7 +256,7 @@ function mod:FoulExhaust(args)
 	foulExhaustTotalCount = foulExhaustTotalCount + 1
 	local cd = 31.0
 	if self:Mythic() and self:GetStage() == 1 then
-		cd = stageOneResetTimers[args.spellId][foulExhauntCount]
+		cd = foulExhauntCount == 2 and 32.0 or 0 -- 2 per rewards round
 	elseif self:GetStage() == 2 then
 		local stageTwoTimers = { 18.1, 26.9, 30.2 } -- Heroic XXX Need to check normal/lfr
 		if self:Mythic() then
@@ -289,7 +283,7 @@ function mod:TheBigHit(args)
 		if #availableCombos == 6 then -- before first deposit
 			cd = 18.3
 		else
-			cd = stageOneResetTimers[args.spellId][theBigHitCount]
+			cd = theBigHitCount == 2 and 20.5 or 0 -- 2 per rewards round
 		end
 	elseif self:GetStage() == 2 then
 		local stageTwoTimers = {28.7, 22.0, 18.3, 18.8} -- Heroic
@@ -386,9 +380,9 @@ function mod:RestartRewardTimers(flameAndCoin)
 	local bigHitCd = flameAndCoin and 20.5 or 16.5
 	if self:Mythic() then
 		local extraTime = flameAndCoin and 7 or 0 -- Extra time due to the channel of Flame and Coin
-		payLineCd = stageOneResetTimers[460181][payLineCount] + extraTime
-		bigHitCd = stageOneResetTimers[460472][theBigHitCount] + extraTime
-		foulExhaustCD = stageOneResetTimers[469993][foulExhauntCount] + extraTime
+		payLineCd = 5.0 + extraTime
+		foulExhaustCD = 10.0 + extraTime
+		bigHitCd = 16.0 + extraTime
 	end
 
 	self:CDBar(460181, payLineCd, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
