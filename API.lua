@@ -165,16 +165,16 @@ end
 do
 	local tbl = {}
 
-	-- This function provides external addons with the player renames that we use in our modules
+	-- This function player renames that we use in our modules
 	-- @param name string
-	-- @param string
+	-- @return string?
 	function API.GetPlayerRename(name)
 		return tbl[name]
 	end
 
-	-- Set the name of a player
-	-- @param name string
-	-- @param string
+	-- Set the a new name for a player
+	-- @param old_name string
+	-- @param new_name string
 	function API.SetPlayerRename(old_name, new_name)
 		if type(old_name) ~= "string" or #old_name < 3 then error("Invalid old name for player rename.") end
 		if type(new_name) ~= "string" or #new_name < 3 then error("Invalid new name for player rename.") end
