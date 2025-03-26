@@ -1533,8 +1533,7 @@ do
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
 			if key then
-				local shortKey = gsub(key, "%-.+", "*") -- Replace server names with *
-				shortKey = BigWigsAPI.GetPlayerRename(key) or shortKey
+				local shortKey = BigWigsAPI.GetPlayerRename(key) or gsub(key, "%-.+", "*") -- Replace server names with *
 				local _, class = UnitClass(key)
 				if class then
 					local newKey = hexColors[class] .. shortKey .. "|r"
