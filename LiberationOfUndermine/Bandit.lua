@@ -279,6 +279,8 @@ function mod:TheBigHit(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
 		self:PlaySound(args.spellId, "alarm") -- defensive
+	elseif self:Mythic() and not self:Tank()  then -- Possibly getting debuffed soon, but no actual debuff :(
+		self:PlaySound(args.spellId, "alert") -- watch yourself
 	end
 	theBigHitTotalCount = theBigHitTotalCount + 1
 	theBigHitCount = theBigHitCount + 1
