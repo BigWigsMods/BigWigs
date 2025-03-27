@@ -779,8 +779,6 @@ function mod:TrickShotsRemoved()
 		self:StopBar(CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
 
 		self:SetStage(2)
-		self:Message("stages", "cyan", CL.stage:format(2), false)
-		self:PlaySound("stages", "info")
 
 		fullCanistersCount = 1
 		fullBombsCount = 1
@@ -790,7 +788,11 @@ function mod:TrickShotsRemoved()
 		gigaCoilsCount = 1
 		gigaBlastCount = 1
 
-		self:CDBar(469286, timers[2][469286][1], CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		if not self:LFR() then
+			self:Message("stages", "cyan", CL.stage:format(2), false)
+			self:PlaySound("stages", "info")
+			self:CDBar(469286, timers[2][469286][1], CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		end
 	end
 end
 
@@ -807,6 +809,11 @@ function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
 			self:StopBar(CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
 
 			gigaBlastCount = 1
+
+			-- No Trick Shots in LFR
+			if self:LFR() and self:GetStage() == 1 then
+				self:TrickShotsRemoved()
+			end
 		end
 
 		self:Message(469286, "cyan", CL.count:format(self:SpellName(469286), gigaCoilsCount))
@@ -1022,7 +1029,7 @@ function mod:TotalDestruction(args)
 	self:CastBar(args.spellId, self:Mythic() and 27.6 or 33, L.total_destruction)
 end
 
-function mod:TotalDestructionRemoved(args)
+function mod:TotalDestructionRemoved()
 	self:StopCastBar(L.total_destruction)
 
 	if not self:Mythic() then
@@ -1072,6 +1079,11 @@ function mod:TotalDestructionRemoved(args)
 end
 
 function mod:TotalDestructionInterrupted(args)
+	-- You can break the shield and interrupt before Gallywix gains TOTAL DESTRUCTION!!!
+	if (not self:Mythic() and self:GetStage() < 3) or (self:Mythic() and self:GetStage() < 1) then
+		self:TotalDestructionRemoved()
+	end
+
 	self:Message(1214369, "green", CL.interrupted_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 end
 
