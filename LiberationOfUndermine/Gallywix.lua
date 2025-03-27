@@ -606,7 +606,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		spawnedDuds = 0
 		if not self:Story() then
 			local bombsCD = cd(465952, bombsCount)
-			if bombsCD then
+			if bombsCD and bombsCD > 0 then
 				self:CDBar(465952, bombsCD - 2.3, CL.count:format(CL.bombs, fullBombsCount))
 			end
 			self:Bar(466153, 11.9) -- Bad Belated Boom
@@ -622,7 +622,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		bombsCount = bombsCount + 1
 		fullBombsCount = fullBombsCount + 1
 		local bombsCD = cd(1218546, bombsCount)
-		if bombsCD then
+		if bombsCD and bombsCD > 0 then
 			self:Bar(1218546, bombsCD - 2.3, CL.count:format(CL.bombs, fullBombsCount))
 		end
 
@@ -857,8 +857,8 @@ function mod:GigaCoilsRemoved()
 	local stage = self:GetStage()
 	if stage == 2 then
 		self:CDBar(466341, cd(466341, canistersCount), CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
-		local bombsCD =  cd(465952, bombsCount)
-		if bombsCD then
+		local bombsCD = cd(465952, bombsCount)
+		if bombsCD and bombsCD > 0 then
 			self:CDBar(465952, bombsCD - 4.5, CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
 		end
 	elseif stage == 3 then
