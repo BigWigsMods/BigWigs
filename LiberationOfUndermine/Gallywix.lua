@@ -605,7 +605,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		fullBombsCount = fullBombsCount + 1
 		spawnedDuds = 0
 		if not self:Story() then
-			self:CDBar(465952, cd(465952, bombsCount) - 2.3, CL.count:format(CL.bombs, fullBombsCount))
+			local bombsCD = cd(465952, bombsCount)
+			if bombsCD then
+				self:CDBar(465952, bombsCD - 2.3, CL.count:format(CL.bombs, fullBombsCount))
+			end
 			self:Bar(466153, 11.9) -- Bad Belated Boom
 		-- elseif fullBombsCount == 2 then -- 1 per Giga Blast, except 2 before the first Giga Blast
 		-- 	self:CDBar(465952, 25.1, CL.count:format(self:SpellName(465952), fullBombsCount))
@@ -618,7 +621,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:PlaySound(1218546, "alarm") -- avoid
 		bombsCount = bombsCount + 1
 		fullBombsCount = fullBombsCount + 1
-		self:Bar(1218546, cd(1218546, bombsCount) - 2.3, CL.count:format(CL.bombs, fullBombsCount))
+		local bombsCD = cd(1218546, bombsCount)
+		if bombsCD then
+			self:Bar(1218546, bombsCD - 2.3, CL.count:format(CL.bombs, fullBombsCount))
+		end
 
 		self:Bar(1214755, 7.7) -- Overloaded Rockets
 	end
@@ -851,7 +857,10 @@ function mod:GigaCoilsRemoved()
 	local stage = self:GetStage()
 	if stage == 2 then
 		self:CDBar(466341, cd(466341, canistersCount), CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
-		self:CDBar(465952, cd(465952, bombsCount) - 4.5, CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
+		local bombsCD =  cd(465952, bombsCount)
+		if bombsCD then
+			self:CDBar(465952, bombsCD - 4.5, CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
+		end
 	elseif stage == 3 then
 		if not self:Easy() then
 			self:CDBar(466958, cd(466958, egoCheckCount), CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
