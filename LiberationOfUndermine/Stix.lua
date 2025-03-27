@@ -172,11 +172,13 @@ function mod:OnEngage()
 		self:Berserk(self:Mythic() and 386 or 481, true) -- 6:25/8:00
 	end
 
-	self:Bar(464149, 11.1, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator -- Fire
-	self:Bar(464112, 17.7, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
-	self:Bar(464399, 22.2, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)) -- Electromagnetic Sorting -- Balls + Adds
-	self:Bar(1217954, 45.5, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
-	self:Bar(467117, self:Mythic() and 66.7 or 111.2) -- Overdrive
+	self:Bar(464149, self:Easy() and 10.0 or 11.1, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator -- Fire
+	self:Bar(464112,  self:Easy() and 16.0 or 17.7, CL.count:format(self:SpellName(464112), demolishCount)) -- Demolish
+	self:Bar(464399, self:Easy() and 20.0 or 22.2, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)) -- Electromagnetic Sorting -- Balls + Adds
+	if not self:LFR() then
+		self:Bar(1217954, self:Easy() and 41.0 or 45.5, CL.count:format(self:SpellName(1217954), meltdownCount)) -- Meltdown
+	end
+	self:Bar(467117, self:Mythic() and 66.7 or self:Easy() and 100.1 or 111.2) -- Overdrive
 	if self:Mythic() then
 		self:Bar(1218704, 33.3, CL.count:format(self:SpellName(1218704), powercoilCount)) -- Prototype Powercoil
 	end
@@ -235,6 +237,8 @@ do
 		local cd
 		if self:Mythic() then
 			cd = electromagneticSortingCount == 2 and (44.4 + 22.5) or 51.1
+		elseif self:Easy() then
+			cd = electromagneticSortingCount == 3 and (34.0 + 20.3) or 46.0
 		else
 			cd = electromagneticSortingCount == 3 and (37.8 + 22.5) or 51.1
 		end
@@ -358,6 +362,8 @@ function mod:Incinerator(args)
 	local cd
 	if self:Mythic() then
 		cd = incineratorCount == 4 and (4.5 + 11.4) or 25.6
+	elseif self:Easy() then
+		cd = incineratorCount == 5 and (21.0 + 10.3) or 23.0
 	else
 		cd = incineratorCount == 5 and (23.4 + 11.4) or 25.6
 	end
@@ -380,6 +386,8 @@ function mod:Demolish(args)
 	local cd
 	if self:Mythic() then
 		cd = demolishCount == 2 and (48.9 + 18.1) or 51.1
+	elseif self:Easy() then
+		cd = demolishCount == 3 and (38.0 + 16.3) or 46.0
 	else
 		cd = demolishCount == 3 and (42.2 + 18.0) or 51.1
 	end
@@ -409,6 +417,8 @@ function mod:Meltdown(args)
 	local cd
 	if self:Mythic() then
 		cd = meltdownCount == 2 and (21.2 + 45.7) or 51.1
+	elseif self:Easy() then
+		cd = meltdownCount == 3 and (13.1 + 41.3) or 46.0
 	else
 		cd = meltdownCount == 3 and (14.5 + 45.7) or 51.1
 	end
