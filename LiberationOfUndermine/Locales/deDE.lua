@@ -10,7 +10,7 @@ if L then
 	L.eruption_stomp = "Stampfen" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "Salve" -- Short for Thunderdrum Salvo
 
-	--L.static_charge_high = "%d - You're moving too much"
+	L.static_charge_high = "%d - Du bewegst Dich zuviel"
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "deDE")
