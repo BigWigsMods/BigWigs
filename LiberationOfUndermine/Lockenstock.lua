@@ -27,6 +27,11 @@ local polarizationGeneratorCount = 1
 local numMinesExploded = 0
 local myCharge = nil
 
+local timersLFR = {
+	[1218418] = { 2.0, 46.0, 53.0, 0 }, -- Wire Transfer
+	[465232] = { 8.0, 33.0, 35.0, 35.0, 0 }, -- Sonic Ba-Boom
+	[1214878] = { 23.1, 34.0, 30.1, 0 }, -- Pyro Party Pack
+}
 local timersNormal = {
 	[1218418] = { 2.0, 39.0, 60.0, 0 }, -- Wire Transfer
 	[1216509] = { 49.0, 31.0, 31.0, 0 }, -- Screw Up
@@ -48,7 +53,7 @@ local timersMythic = {
 	[1214878] = { 22.6, 46.0, 46.0, 0 }, -- Pyro Party Pack
 	[1216802] = { 4.0, 67.0, 46.0, 0 }, -- Polarization Generator
 }
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Normal() and timersNormal or mod:LFR() and timersLFR or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -165,7 +170,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "VoidBarrageHit", 1216706)
 	self:Log("SPELL_MISSED", "VoidBarrageHit", 1216706)
 
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Normal() and timersNormal or self:LFR() and timersLFR or timersHeroic
 	if self:Mythic() then
 		inventions = {
 			{ L.blazing_beam,  CL.plus:format(L.blazing_beam, L.rocket_barrage), L.everything },
@@ -208,7 +213,9 @@ function mod:OnEngage()
 	else
 		self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	end
-	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
+	if not self:LFR() then
+		self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
+	end
 	self:Bar(473276, 30.0 + 4.0, CL.count:format(inventions[1][1], activateInventionsCount)) -- Activate Inventions! (bar to when the inventions cast)
 	self:Bar("stages", 121.6, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
 end
@@ -430,7 +437,9 @@ function mod:UpgradedBloodtechApplied(args)
 	else
 		self:Bar(1214878, timers[1214878][1], CL.count:format(CL.bomb, pyroPartyPackCount)) -- Pyro Party Pack
 	end
-	self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
+	if not self:LFR() then
+		self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
+	end
 	self:Bar(473276, 30.0, CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount)) -- Activate Inventions!
 	if betaLaunchCount < 3 then
 		self:Bar("stages", self:Mythic() and 121.7 or 120.3, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
