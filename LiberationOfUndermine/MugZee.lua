@@ -197,6 +197,10 @@ function mod:OnEngage()
 	end
 end
 
+function mod:OnBossDisable()
+	numElectroShockers = 0 -- Electro Shockers spawn before engage fires if you start on Zee
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
