@@ -1,6 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "ruRU")
 if not L then return end
-local isCata = BigWigsLoader.isCata
+local _, addonTbl = ...
+local isCata = addonTbl.isCata
 
 L[186] = "Акил'зон"
 L[187] = "Налоракк"

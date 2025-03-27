@@ -30,6 +30,7 @@
 embeds.xml
 Init.lua
 API.lua
+
 locales.xml
 
 Media\Media.lua

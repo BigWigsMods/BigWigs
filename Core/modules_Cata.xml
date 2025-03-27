@@ -2,7 +2,6 @@
 ..\FrameXML\UI.xsd">
 
 <Include file="Locales\locales.xml"/>
-<Include file="Locales\Encounters_Classic\locales.xml"/>
 
 <Script file="Constants.lua"/>
 <Script file="BossPrototype.lua"/>

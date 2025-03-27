@@ -1,5 +1,6 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "enUS")
-local isCata = BigWigsLoader.isCata
+local _, addonTbl = ...
+local isCata = addonTbl.isCata
 
 L[186] = "Akil'zon"
 L[187] = "Nalorakk"
