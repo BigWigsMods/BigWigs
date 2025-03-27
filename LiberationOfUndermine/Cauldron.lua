@@ -45,6 +45,8 @@ if L then
 
 	L.eruption_stomp = "Stomp" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "Salvo" -- Short for Thunderdrum Salvo
+
+	L.static_charge_high = "%d - You're moving too much"
 end
 
 --------------------------------------------------------------------------------
@@ -106,6 +108,7 @@ function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_BarEmphasized", "BarEmphasized")
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "player")
 
 	-- self:Log("SPELL_CAST_SUCCESS", "ColossalClash", 465833) -- XXX USCS
 	self:Log("SPELL_CAST_SUCCESS", "ColossalClashSuccess", 465863) -- Flarendo's cast
@@ -130,7 +133,6 @@ function mod:OnBossEnable()
 
 	-- Torq the Tempest
 	self:Log("SPELL_CAST_SUCCESS", "StaticCharge", 473994)
-	self:Log("SPELL_AURA_APPLIED", "StaticChargeApplied", 474159)
 	self:Log("SPELL_CAST_SUCCESS", "ThunderdrumSalvo", 463900)
 	-- self:Log("SPELL_CAST_SUCCESS", "VoltaicImage", 1213994) -- XXX USCS
 	self:Log("SPELL_AURA_APPLIED", "VoltaicImageFixateApplied", 1214009)
@@ -306,6 +308,30 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:ColossalClash()
 	elseif spellId == 1213994 then -- Voltaic Image
 		self:VoltaicImage()
+	end
+end
+
+do
+	local times = {
+		[75] = 0,
+		[85] = 0,
+		[90] = 0,
+		[95] = 0,
+	}
+	function mod:UNIT_POWER_UPDATE(event, unit, powerType)
+		if powerType == "ALTERNATE" then
+			local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
+			if times[power] then
+				local t = GetTime()
+				if t - times[power] > 10 then
+					times[power] = t
+					self:PersonalMessage(474159, false, L.static_charge_high:format(power))
+					if power > 80 then
+						self:PlaySound(474159, "info")
+					end
+				end
+			end
+		end
 	end
 end
 
@@ -515,14 +541,6 @@ function mod:StaticCharge()
 	self:StopBar(CL.count:format(self:SpellName(474159), staticChargeCount))
 	staticChargeCount = staticChargeCount + 1
 	self:Bar(474159, 95, CL.count:format(self:SpellName(474159), staticChargeCount)) -- Static Charge
-end
-
-function mod:StaticChargeApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "info") -- watch steps
-		-- XXX track charge and warn when high altpower?
-	end
 end
 
 function mod:ThunderdrumSalvo(args)
