@@ -206,13 +206,6 @@ local function cd(spellId, count)
 	elseif stage == 2 then
 		coilCount = coilCount - 1 -- there's no before the first coil phase like in p3
 	end
-	if not timers[stage] then
-		mod:Error("Invalid stage ".. tostring(stage))
-		return 0
-	elseif not timers[stage][spellId] then
-		mod:Error("Invalid spellId ".. tostring(spellId))
-		return 0
-	end
 	return timers[stage][spellId][coilCount] and timers[stage][spellId][coilCount][count]
 end
 
@@ -798,6 +791,11 @@ function mod:TrickShotsRemoved()
 			self:Message("stages", "cyan", CL.stage:format(2), false)
 			self:PlaySound("stages", "info")
 			self:CDBar(469286, timers[2][469286][1], CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		else
+			self:SimpleTimer(function() -- Delay a little on LFR so it doesn't show at the same time as the Giga Coils message
+				self:Message("stages", "cyan", CL.stage:format(2), false)
+				self:PlaySound("stages", "info")
+			end, 1)
 		end
 	end
 end
