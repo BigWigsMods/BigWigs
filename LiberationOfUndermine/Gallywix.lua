@@ -1071,7 +1071,7 @@ function mod:TotalDestructionRemoved()
 	self:CDBar(467182, cd(467182, suppressionCount), CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
 	self:CDBar(466751, cd(466751, ventingHeatCount), CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
 	if self:Mythic() then
-		self:CDBar(1217987, cd(1217987, canistersCount), CL.count:format(self:SpellName(1217987), fullCanistersCount)) -- Combination Canisters
+		self:CDBar(1217987, cd(1217987, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Combination Canisters
 		self:CDBar(469327, cd(469327, gigaBlastCount), CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
 		self:CDBar(469286, cd(469286, gigaCoilsCount) - 2, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
 		self:Bar("stages", 208.7, CL.intermission, "ability_mount_rocketmountblue")
@@ -1198,10 +1198,9 @@ end
 
 function mod:CircuitRebootApplied(args)
 	self:StopBar(CL.intermission)
-	self:StopBar(CL.count:format(self:SpellName(1214607), fullBombsCount)) -- Bigger Badder Bomb Blast
-	self:StopBar(CL.count:format(self:SpellName(1218546), fullBombsCount)) -- Biggest Baddest Bomb Barrage
-	self:StopBar(CL.count:format(self:SpellName(1217987), fullCanistersCount)) -- Combination Canisters
-	self:StopBar(CL.count:format(self:SpellName(1218488), fullCanistersCount)) -- Scatterbomb Canisters
+	self:StopBar(CL.count:format(CL.bombs, fullBombsCount)) -- Biggest Baddest Bomb Barrage/Bigger Badder Bomb Blast
+	self:StopBar(CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Combination Canisters
+	self:StopBar(CL.count:format(L.scatterblast_canisters, fullCanistersCount)) -- Scatterbomb Canisters
 	self:StopBar(CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
 	self:StopBar(CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
 	self:StopBar(CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
@@ -1247,10 +1246,10 @@ function mod:CircuitRebootRemoved(args)
 	fullVentingHeatCount = 1
 
 	self:CDBar(466751, cd(466751, ventingHeatCount), CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
-	self:CDBar(1218488, cd(1218488, canistersCount), CL.count:format(self:SpellName(1218488), fullCanistersCount)) -- Scatterbomb Canisters
+	self:CDBar(1218488, cd(1218488, canistersCount), CL.count:format(L.scatterblast_canisters, fullCanistersCount)) -- Scatterbomb Canisters
 	self:CDBar(466958, cd(466958, egoCheckCount), CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
 	self:CDBar(467182, cd(467182, suppressionCount), CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
-	self:CDBar(1218546, cd(1218546, bombsCount) - 4.5, CL.count:format(self:SpellName(1218546), fullBombsCount)) -- Biggest Baddest Bomb Barrage
+	self:CDBar(1218546, cd(1218546, bombsCount) - 4.5, CL.count:format(CL.bombs, fullBombsCount)) -- Biggest Baddest Bomb Barrage
 	self:CDBar(469327, cd(469327, gigaBlastCount), CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
 
 	if encounterStart > 0 and self:GetStage() == 3 then
