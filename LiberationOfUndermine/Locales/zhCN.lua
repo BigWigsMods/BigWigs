@@ -10,7 +10,7 @@ if L then
 	L.eruption_stomp = "重踏" -- 喷发重踏
 	L.thunderdrum_salvo = "齐射" -- 雷鼓齐射
 
-	--L.static_charge_high = "%d - You're moving too much"
+	L.static_charge_high = "%d - 你移动得太频繁"
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "zhCN")
