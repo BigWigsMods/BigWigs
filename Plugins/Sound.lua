@@ -14,8 +14,7 @@ if not plugin then return end
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
-local BL = BigWigsAPI:GetLocale("BigWigs")
+local L = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
@@ -26,8 +25,8 @@ local sounds = {
 	Alert = "BigWigs: Alert",
 	Alarm = "BigWigs: Alarm",
 	Warning = "BigWigs: Raid Warning",
-	--onyou = BL.spell_on_you,
-	underyou = BL.spell_under_you,
+	--onyou = L.spell_on_you,
+	underyou = L.spell_under_you,
 	privateaura = "BigWigs: Raid Warning",
 }
 
@@ -42,8 +41,8 @@ plugin.defaultDB = {
 		Alert = sounds.Alert,
 		Alarm = sounds.Alarm,
 		Warning = sounds.Warning,
-		--onyou = BL.spell_on_you,
-		underyou = BL.spell_under_you,
+		--onyou = L.spell_on_you,
+		underyou = L.spell_under_you,
 		privateaura = sounds.privateaura,
 	},
 	Long = {},

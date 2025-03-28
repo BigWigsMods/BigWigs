@@ -1021,9 +1021,9 @@ local function populatePrivateAuraOptions(widget)
 
 	local reset = AceGUI:Create("Button")
 	reset:SetFullWidth(true)
-	reset:SetText(BigWigsAPI:GetLocale("BigWigs: Plugins").reset)
-	reset:SetUserData("label", BigWigsAPI:GetLocale("BigWigs: Plugins").reset)
-	reset:SetUserData("desc", BigWigsAPI:GetLocale("BigWigs: Plugins").resetSoundDesc)
+	reset:SetText(L.reset)
+	reset:SetUserData("label", L.reset)
+	reset:SetUserData("desc", L.resetSoundDesc)
 	reset:SetUserData("scrollFrame", widget)
 	reset:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
 	reset:SetCallback("OnEnter", slaveOptionMouseOver)
@@ -1428,7 +1428,7 @@ do
 
 				if addonState == "DISABLED" then
 					local reload = AceGUI:Create("Button")
-					reload:SetText(BigWigsAPI:GetLocale("BigWigs: Plugins").enable)
+					reload:SetText(L.enable)
 					reload:SetAutoWidth(true)
 					reload:SetUserData("addonName", bigwigsContent)
 					reload:SetCallback("OnClick", function(reloadWidget)
@@ -1457,7 +1457,7 @@ do
 
 				if addonState == "DISABLED" then
 					local reload = AceGUI:Create("Button")
-					reload:SetText(BigWigsAPI:GetLocale("BigWigs: Plugins").enable)
+					reload:SetText(L.enable)
 					reload:SetAutoWidth(true)
 					reload:SetUserData("addonName", value)
 					reload:SetCallback("OnClick", function(reloadWidget)

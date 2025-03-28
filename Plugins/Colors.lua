@@ -10,7 +10,7 @@ local plugin = BigWigs:NewPlugin("Colors", {
 })
 if not plugin then return end
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs")
 
 --------------------------------------------------------------------------------
 -- Options

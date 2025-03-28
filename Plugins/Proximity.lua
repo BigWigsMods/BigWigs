@@ -35,7 +35,7 @@ plugin.defaultDB = {
 
 local db = nil
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.proximity_name
 local L_proximityTitle = L.proximityTitle
 

@@ -4,7 +4,7 @@
 ]]
 
 do
-	local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
+	local L = BigWigsAPI:GetLocale("BigWigs")
 	BigWigsAPI:RegisterBarStyle("Default", {
 		apiVersion = 1,
 		version = 1,
