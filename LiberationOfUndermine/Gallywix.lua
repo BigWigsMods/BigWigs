@@ -866,12 +866,14 @@ function mod:GigaCoilsRemoved()
 		self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
 		self:CDBar(1214607, cd(1214607, bombsCount), CL.count:format(CL.bombs, fullBombsCount)) -- Bigger Badder Bomb Blast
 	end
-	self:CDBar(467182, cd(467182, suppressionCount), CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
-	self:CDBar(466751, cd(466751, ventingHeatCount), CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
+	if stage == 2 or stage == 3 then
+		self:CDBar(467182, cd(467182, suppressionCount), CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression
+		self:CDBar(466751, cd(466751, ventingHeatCount), CL.count:format(self:SpellName(466751), fullVentingHeatCount)) -- Venting Heat
 
-	local gigaCoilsCD = timers[stage][469286][gigaCoilsCount]
-	if gigaCoilsCD then
-		self:CDBar(469286, gigaCoilsCD - 3, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils (USCS is 3s earlier)
+		local gigaCoilsCD = timers[stage][469286][gigaCoilsCount]
+		if gigaCoilsCD then
+			self:CDBar(469286, gigaCoilsCD - 3, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils (USCS is 3s earlier)
+		end
 	end
 end
 
