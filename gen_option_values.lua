@@ -1416,11 +1416,11 @@ end
 local function setCommonLocale(path)
 	-- For repos other than BigWigs proper, try to load the CL without erroring
 	path = path:match("^(.*)/") or "."
-	local file = path .. "/Core/Locales/common.enUS.lua"
+	local file = path .. "/Locales/enUS_common.lua"
 	local f = io.open(file, "r")
 	if not f then
 		-- module(s) file directly?
-		file = path .. "../Core/Locales/common.enUS.lua"
+		file = path .. "../Locales/enUS_common.lua"
 		f = io.open(file, "r")
 		if not f then
 			return
