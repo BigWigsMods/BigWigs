@@ -10,7 +10,7 @@ if L then
 	L.eruption_stomp = "분출" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "바닥" -- Short for Thunderdrum Salvo
 
-	--L.static_charge_high = "%d - You're moving too much"
+	L.static_charge_high = "%d - 너무 많이 움직입니다."
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "koKR")
