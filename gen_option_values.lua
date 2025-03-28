@@ -1223,7 +1223,9 @@ local function parseLocale(file)
 	if not opt.quiet then
 		file_name = "Locales/"..file_locale..".lua"
 	end
-	file_locale = file_locale:gsub("^.*%.", "")
+	file_locale = file_locale:gsub("^.*[%._]", "") -- Extract what locale this file should be from files with the naming structure of xyz.enUS
+	file_locale = file_locale:gsub("^(%l%l%u%u)_.*$", "%1") -- Extract what locale this file should be from files with the naming structure of enUS_xyz
+
 
 	local f = io.open(file, "r")
 	if not f then
