@@ -97,6 +97,7 @@ function mod:GetOptions()
 		[473650] = CL.bomb, -- Scrapbomb (Bomb)
 		[472233] = CL.beam, -- Blastburn Roarcannon (Beam)
 		[1214190] = L.eruption_stomp, -- Eruption Stomp (Stomp)
+		[474159] = L.static_charge_high:format(75), -- Static Charge (75 - You're moving too much)
 		[463900] = L.thunderdrum_salvo, -- Thunderdrum Salvo (Salvo)
 		[1213994] = CL.adds, -- Voltaic Image (Adds)
 	}
