@@ -31,33 +31,39 @@ embeds.xml
 Init.lua
 API.lua
 
+## Define the L var
+## Previously loaded in locales.xml file
 Locales\enUS.lua
-Locales\enUS_common.lua
 Locales\deDE.lua
-Locales\deDE_common.lua
 Locales\frFR.lua
-Locales\frFR_common.lua
 Locales\koKR.lua
-Locales\koKR_common.lua
 Locales\zhCN.lua
-Locales\zhCN_common.lua
 Locales\zhTW.lua
-Locales\zhTW_common.lua
 Locales\esES.lua
-Locales\esES_common.lua
 Locales\esMX.lua
-Locales\esMX_common.lua
 Locales\ruRU.lua
-Locales\ruRU_common.lua
 Locales\ptBR.lua
-Locales\ptBR_common.lua
 Locales\itIT.lua
-Locales\itIT_common.lua
 
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
 AutoRole.lua
 LFGTimer.lua
+
+## Require BW global vars (Loader)
+## Previously loaded in modules.xml file
+Locales\enUS_common.lua
+Locales\deDE_common.lua
+Locales\frFR_common.lua
+Locales\koKR_common.lua
+Locales\zhCN_common.lua
+Locales\zhTW_common.lua
+Locales\esES_common.lua
+Locales\esMX_common.lua
+Locales\ruRU_common.lua
+Locales\ptBR_common.lua
+Locales\itIT_common.lua
+
 modules.xml
 bosses.xml
