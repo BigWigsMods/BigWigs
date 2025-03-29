@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Cauldron of Carnage", "ptBR")
 if not L then return end
 if L then
 	L.custom_on_fade_out_bars = "Desvanecer barras"
-	L.custom_on_fade_out_bars_desc = "Desvanece as barras pertencentes ao chefe que está fora de alcance."
+	L.custom_on_fade_out_bars_desc = "Desvanece as barras do chefe que está fora de alcance."
 
 	L.bomb_explosion = "Explosão da Bomba"
 	L.bomb_explosion_desc = "Exibe um cronômetro para a explosão das bombas."
