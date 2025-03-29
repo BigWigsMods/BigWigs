@@ -103,6 +103,6 @@ if L then
 
 	L.duds = "Torpedos" -- Short for 1500-Pound "Dud"
 	L.all_duds_detontated = "Todos los torpedos detonados!"
-	L.duds_remaining = "Quedan %d torpedos" -- 1 Dud Remains | 2 Duds Remaining
-	L.duds_soak = "Soak torpedos (%d left)"
+	L.duds_remaining = "Quedan %d |4torpedo:torpedos;" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_soak = "Soak torpedos (Quedan %d)"
 end
