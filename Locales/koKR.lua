@@ -38,7 +38,7 @@ L.warnOldBase = "당신은 길드 버전의 BigWigs(%d) 를 사용하고 있지�
 L.tooltipHint = "옵션에 접근하려면 |cffeda55f오른쪽 클릭|r하세요."
 L.activeBossModules = "활성화된 우두머리 모듈:"
 
-L.oldVersionsInGroup = "파티 내에 BigWigs가 없거나 구버전을 가진 사람입니다. /bwv 명령어로 더 자세한 정보를 얻을 수 있습니다." -- XXX needs updated
+--L.oldVersionsInGroup = "There are people in your group with |cffff0000older versions|r of BigWigs. You can get more details with /bwv."
 L.upToDate = "최신 버전:"
 L.outOfDate = "구버전:"
 L.dbmUsers = "DBM 사용자:"
@@ -48,7 +48,7 @@ L.offline = "접속 종료"
 L.missingAddOnPopup = "|cFF436EEE%s|r 애드온이 없습니다!"
 L.missingAddOnRaidWarning = "|cFF436EEE%s|r 애드온이 없습니다! 이 지역에는 타이머가 표시되지 않습니다!"
 L.outOfDateAddOnPopup = "|cFF436EEE%s|r 애드온이 오래되었습니다!"
-L.outOfDateAddOnRaidWarning = "|cFF436EEE%s|r 애드온이 오래되었습니다! 이 애드온에는 버그가 있거나, 기능이 누락되었거나, 타이머가 완전히 잘못될 수 있습니다."
+--L.outOfDateAddOnRaidWarning = "|cFF436EEE%s|r 애드온이 오래되었습니다! You have v%s.%s.%s%s but the latest is v%d.%d.%d!"
 L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이머를 표시할 수 없습니다."
 L.removeAddOn = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 L.alternativeName = "%s (|cFF436EEE%s|r)"

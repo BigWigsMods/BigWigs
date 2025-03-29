@@ -38,7 +38,7 @@ L.warnOldBase = "Estás usando la versión de hermandad de BigWigs (%d), pero tu
 L.tooltipHint = "|cffeda55fClic derecho|r para acceder a las opciones."
 L.activeBossModules = "Módulos de jefes activos:"
 
-L.oldVersionsInGroup = "Hay gente en tu grupo con versiones antiguas o sin BigWigs. Más detalles con /bwv." -- XXX needs updated
+--L.oldVersionsInGroup = "There are people in your group with |cffff0000older versions|r of BigWigs. You can get more details with /bwv."
 L.upToDate = "Al día:"
 L.outOfDate = "Desactualizado"
 L.dbmUsers = "Jugadores con DBM:"
@@ -48,7 +48,7 @@ L.offline = "Desconectado"
 L.missingAddOnPopup = "¡Falta el addon |cFF436EEE%s|r!"
 --L.missingAddOnRaidWarning = "¡Falta el addon |cFF436EEE%s|r! No timers will be displayed in this zone!"
 --L.outOfDateAddOnPopup = "The |cFF436EEE%s|r addon is out of date!"
---L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! It may have bugs, missing features, or completely incorrect timers."
+--L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! You have v%s.%s.%s%s but the latest is v%d.%d.%d!"
 L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r desactivado, los contadores no se mostrarán."
 L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
