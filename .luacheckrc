@@ -7,6 +7,9 @@ exclude_files = {
 files["**/Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
 }
+files["**/API.lua"].ignore = {
+	"113/UnitSex",
+}
 files["**/Loader.lua"].ignore = {
 	"113/date",
 	"113/geterrorhandler",

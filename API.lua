@@ -2,6 +2,8 @@
 local API = {}
 local type, next, error = type, next, error
 
+BigWigsAPI.UnitSex = UnitSex -- XXX Move back to Loader? needs adjustment for Fr locales.
+
 --------------------------------------------------------------------------------
 -- Locale
 --
