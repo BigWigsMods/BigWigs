@@ -98,6 +98,7 @@ local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.Ge
 local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
+local myName = UnitNameUnmodified("player")
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.date = date
@@ -574,6 +575,7 @@ local GetAddOnDependencies = C_AddOns.GetAddOnDependencies
 local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies
 local GetNumAddOns = C_AddOns.GetNumAddOns
 local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand
+local GetAddOnEnableState = C_AddOns.GetAddOnEnableState
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 public.EnableAddOn = EnableAddOn
 
@@ -768,7 +770,7 @@ do
 			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		end
 
-		if addonState ~= "DISABLED" then
+		if GetAddOnEnableState(name, myName) == 2 then -- if addonState ~= "DISABLED" then (only works when disabled on ALL characters)
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				if name == "BigWigs_Plugins" then -- Always first
@@ -1098,7 +1100,7 @@ function mod:ADDON_LOADED(addon)
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-			local name = UnitNameUnmodified("player")
+			local name = myName
 			local realm = GetRealmName()
 			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
 				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
@@ -1301,7 +1303,7 @@ do
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
 		local name, _, _, _, addonState = GetAddOnInfo(i)
-		if addonState ~= "DISABLED" and not IsAddOnLoadOnDemand(i) then
+		if GetAddOnEnableState(name, myName) == 2 and not IsAddOnLoadOnDemand(i) then -- if addonState ~= "DISABLED" and not IsAddOnLoadOnDemand(i) then (only works when disabled on ALL characters)
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				local addonName = tostring(meta)
@@ -1489,7 +1491,7 @@ do
 	local timer = nil
 	local function sendDBMMsg()
 		if IsInGroup() then
-			local name = UnitNameUnmodified("player")
+			local name = myName
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
@@ -1855,7 +1857,7 @@ do
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
-			local name = UnitNameUnmodified("player")
+			local name = myName
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local dbmResult = SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
@@ -1972,6 +1974,11 @@ function public:GetAddOnState(name)
 	return addonState
 end
 
+function public:IsAddOnEnabled(name)
+	local addonState = GetAddOnEnableState(name, myName)
+	return addonState == 2
+end
+
 -----------------------------------------------------------------------
 -- Slash commands
 --
@@ -2018,7 +2025,7 @@ SlashCmdList.BigWigsVersion = function()
 	local list = {}
 	local unit
 	if not IsInRaid() then
-		list[1] = UnitNameUnmodified("player")
+		list[1] = myName
 		unit = "party%d"
 	else
 		unit = "raid%d"
