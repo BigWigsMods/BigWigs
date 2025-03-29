@@ -1106,16 +1106,15 @@ function mod:ADDON_LOADED(addon)
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-			local name = myName
 			local realm = GetRealmName()
-			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
-				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
+			if myName and realm and BigWigs3DB.profileKeys[myName.." - "..realm] then
+				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[myName.." - "..realm]]
 				if key then
 					self.isFakingDBM = key.fakeDBMVersion
 					self.isShowingZoneMessages = key.showZoneMessages
 				end
-				if BigWigs3DB.namespaces and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[name.." - "..realm]] then
-					self.isSoundOn = BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[name.." - "..realm]].sound
+				if BigWigs3DB.namespaces and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[myName.." - "..realm]] then
+					self.isSoundOn = BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[myName.." - "..realm]].sound
 				end
 			end
 		end
@@ -1519,10 +1518,9 @@ do
 	local timer = nil
 	local function sendDBMMsg()
 		if IsInGroup() then
-			local name = myName
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
+			local msg = myName.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
 			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 9 then
@@ -1885,10 +1883,9 @@ do
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
-			local name = myName
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local dbmResult = SendAddonMessage(dbmPrefix, name.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			local dbmResult = SendAddonMessage(dbmPrefix, myName.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			if type(dbmResult) == "number" and dbmResult ~= 0 then
 				sysprint("Failed to ask for _ versions. Error code: ".. dbmResult)
 				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. dbmResult)
