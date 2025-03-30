@@ -3,13 +3,11 @@ if not L then return end
 if L then
 	L.custom_on_fade_out_bars = "Desvanecer barras"
 	L.custom_on_fade_out_bars_desc = "Desvanece as barras do chefe que está fora de alcance."
-	
 	L.bomb_explosion = "Explosão da Bomba"
 	L.bomb_explosion_desc = "Exibe um cronômetro para a explosão das bombas."
 
 	L.eruption_stomp = "Pisada" -- Abreviação de Pisada Eruptiva
 	L.thunderdrum_salvo = "Tamborilar" -- Abreviação de Salva do Tamborilar trovejante
-	
 	L.static_charge_high = "%d - Você está se movendo demais"
 end
 
