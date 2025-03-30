@@ -68,7 +68,7 @@ L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s está aterrizando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Puedes volar ahora"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "Los jefes están demasiado cerca" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "Esbirro apareció" -- singular
@@ -104,10 +104,10 @@ L.crenna = "Crenna Hija de la Tierra" -- AI druid healer (NPC 209072)
 L.crenna_short = "*Crenna"
 L.austin = "Austin Huxworth" -- AI hunter dps (NPC 209065)
 L.austin_short = "*Austin"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "Señora de la guerra Breka Hacha Macabra" -- AI warrior tank (NPC 215517)
+L.breka_short = "*Breka"
+L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
+L.henry_short = "*Henry"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -179,7 +179,7 @@ L.heal_absorb = "Absorción de curación" -- Used for shield-like abilities that
 L.heal_absorbs = "Absorciones de curación" -- Plural of L.heal_absorb
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
-L.lasers = "Lasers" -- Plural of L.lasers
+L.lasers = "Láseres" -- Plural of L.lasers
 L.beam = "Rayo" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Rayos" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
@@ -234,10 +234,10 @@ L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you fr
 L.dodge = "Esquivar" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
---L.fixates = "Fixates" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.fixates = "Fijaciones" -- Plural of L.fixate
+L.group_damage = "Daño grupal" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Absorción de salud" -- Any ability that drains health from the player
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "Daño de raid" -- Any ability that causes damage to every player in the raid
 L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Púas" -- Plural of L.spike
