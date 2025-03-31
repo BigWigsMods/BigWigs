@@ -1404,6 +1404,7 @@ do
 	local statusTable = {}
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
+	local remappedZones = loader.remappedZones
 
 	local function onTreeGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
@@ -1621,6 +1622,9 @@ do
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
 			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
+			if remappedZones[id] then
+				id = remappedZones[id]
+			end
 			local zoneAddon = loader.zoneTbl[id]
 			if type(zoneAddon) == "table" then
 				-- on Retail default to Current Season, on Classic default to the expansion addon

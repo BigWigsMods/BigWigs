@@ -551,6 +551,8 @@ do
 		[489] = cap, -- Warsong Gulch (Classic)
 		[2118] = cap, -- Wintergrasp
 	}
+	public.remappedZones = {
+	}
 
 	public.zoneTblWorld = {
 		-- Classic
