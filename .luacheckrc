@@ -103,8 +103,8 @@ files["**/Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
-files["**/Plugins/Nameplates.lua"].ignore = {
-	"113/C_NamePlate",
+files["**/Plugins/Bars.lua"].ignore = {
+	"113/time",
 }
 files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/AlertFrame",
@@ -125,8 +125,8 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/WatchFrame",
 	"113/ZoneTextFrame",
 }
-files["**/Plugins/Countdown.lua"].ignore = {
-	"113/GetCurrentRegion",
+files["**/Plugins/Nameplates.lua"].ignore = {
+	"113/C_NamePlate",
 }
 files["**/Plugins/Proximity.lua"].ignore = {
 	"113/GetNumGroupMembers",
@@ -210,7 +210,6 @@ globals = {
 	"strupper",
 	"table.wipe",
 	"tan",
-	"time",
 	"tinsert",
 	"tremove",
 
