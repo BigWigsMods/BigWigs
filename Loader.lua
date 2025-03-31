@@ -484,6 +484,8 @@ do
 		[2097] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Operation: Mechagon
 		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
 		[2213] = lw_bfa, -- Horrific Vision of Stormwind
+		[2827] = lw_bfa, -- Horrific Vision of Stormwind (Revisited)
+		[2828] = lw_bfa, -- Horrific Vision of Orgrimmar (Revisited)
 		--[[ LittleWigs: Shadowlands ]]--
 		[2284] = lw_s, -- Sanguine Depths
 		[2285] = lw_s, -- Spires of Ascension
@@ -552,6 +554,8 @@ do
 		[2118] = cap, -- Wintergrasp
 	}
 	public.remappedZones = {
+		[2827] = 2213, -- Horrific Vision of Stormwind (Revisited) -> Horrific Vision of Stormwind
+		[2828] = 2212, -- Horrific Vision of Orgrimmar (Revisited) -> Horrific Vision of Orgrimmar
 	}
 
 	public.zoneTblWorld = {
