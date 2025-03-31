@@ -105,6 +105,7 @@ local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, U
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 local myName = UnitNameUnmodified("player")
+local myGUID = UnitGUID("player")
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.date = date
@@ -776,7 +777,7 @@ do
 			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		end
 
-		if GetAddOnEnableState(name, myName) == 2 then -- if addonState ~= "DISABLED" then (only works when disabled on ALL characters)
+		if GetAddOnEnableState(name, myGUID) == 2 then -- if addonState ~= "DISABLED" then (only works when disabled on ALL characters)
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				if name == "BigWigs_Plugins" then -- Always first
@@ -1308,7 +1309,7 @@ do
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
 		local name, _, _, _, addonState = GetAddOnInfo(i)
-		if GetAddOnEnableState(name, myName) == 2 and not IsAddOnLoadOnDemand(i) then -- if addonState ~= "DISABLED" and not IsAddOnLoadOnDemand(i) then (only works when disabled on ALL characters)
+		if GetAddOnEnableState(name, myGUID) == 2 and not IsAddOnLoadOnDemand(i) then -- if addonState ~= "DISABLED" and not IsAddOnLoadOnDemand(i) then (only works when disabled on ALL characters)
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				local addonName = tostring(meta)
@@ -2000,7 +2001,7 @@ function public:GetAddOnState(name)
 end
 
 function public:IsAddOnEnabled(name)
-	local addonState = GetAddOnEnableState(name, myName)
+	local addonState = GetAddOnEnableState(name, myGUID)
 	return addonState == 2
 end
 
