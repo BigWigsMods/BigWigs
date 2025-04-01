@@ -46,6 +46,43 @@ local spawnedDuds = 0
 local mobCollector, mobMarks = {}, {}
 
 -- Rashanan style timers: Each Giga Coils starts a mini-phase
+local timersLFR = {
+	{ -- Phase 1
+		[465952] = { 17.3, 31.4, 0 }, -- Big Bad Buncha Bombs
+		[467182] = { 33.3, 0 }, -- Suppression
+		[466751] = { 22.2, 31.4, 0 }, -- Venting Heat
+	},
+	{ -- Phase 2
+		[469286] = { 73.7, 74.9 }, -- Giga Coils
+		[465952] = { -- Big Bad Buncha Bombs
+			{ 45.1, 0 },
+		},
+		[467182] = { -- Suppression
+			{ 25.9, 32.0, 0 },
+		},
+		[466751] = { -- Venting Heat
+			{ 12.6, 40.8, 0 },
+		},
+	},
+	{ -- Phase 3
+		[469286] = { 83.6, 74.0, 74.6 }, -- Giga Coils
+		[1214607] = { -- Bigger Badder Bomb Blast
+			{ 26.2, 33.1, 0 },
+			{ 25.8, 0 },
+			{ 38.9 },
+		},
+		[467182] = { -- Suppression
+			{ 34.3, 32.5, 0 },
+			{ 33.3, 23.7, 0 },
+			{ 26.4, 31.3 },
+		},
+		[466751] = { -- Venting Heat
+			{ 21.8, 31.2, 0 },
+			{ 13.3, 31.3, 0 },
+			{ 13.9, 32.5 },
+		},
+	}
+}
 local timersNormal = {
 	{ -- Phase 1
 		[466340] = { 7.3, 18.9, 20.4, 21.0, 18.4, 22.9, 0 }, -- Scatterblast Canisters
@@ -195,7 +232,7 @@ local timersMythic = {
 		[466751] = { 19.5, 33.5, 20.5, }, -- Venting Heat
 	}
 }
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Normal() and timersNormal or mod:LFR() and timersLFR or timersHeroic
 
 local function cd(spellId, count)
 	-- not knowing the full fight sequence makes normal table lookups sketchy without metatables
@@ -275,9 +312,9 @@ function mod:GetOptions()
 			469362, -- Charged Giga Bomb
 				469404, -- Giga BOOM! (fail damage)
 				469795, -- Giga Bomb Detonation
-					{1220669, "OFF"}, -- Sabotaged Controls
-						1215209, -- Sabotage Zone
-						-- 1220846, -- Control Meltdown
+					1215209, -- Sabotage Zone
+					-- 1220846, -- Control Meltdown
+
 			{466341, "PRIVATE"}, -- Fused Canisters
 		-- Darkfuse Cronies
 			-- Darkfuse Technician
@@ -374,8 +411,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GigaBoomApplied", 469404)
 	-- self:Log("SPELL_AURA_APPLIED_DOSE", "GigaBoomApplied", 469404)
 	self:Log("SPELL_AURA_APPLIED", "GigaBombDetonationApplied", 469795)
-	self:Log("SPELL_AURA_APPLIED", "SabotagedControlsApplied", 1220669)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "SabotagedControlsApplied", 1220669)
 	self:Log("SPELL_CAST_START", "FusedCanisters", 466341)
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1") -- Giga Coils
@@ -416,7 +451,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "WrenchmongerSpawn", 1216846) -- Holding a Wrench
 
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Normal() and timersNormal or self:LFR() and timersLFR or timersHeroic
 end
 
 function mod:OnEngage()
@@ -450,7 +485,9 @@ function mod:OnEngage()
 		-- self:Bar(469327, 64, CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
 		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 	elseif not self:Mythic() then
-		self:Bar(466340, cd(466340, 1), CL.count:format(L.scatterblast_canisters, canistersCount)) -- Scatterblast Canisters
+		if not self:LFR() then
+			self:Bar(466340, cd(466340, 1), CL.count:format(L.scatterblast_canisters, canistersCount)) -- Scatterblast Canisters
+		end
 		self:Bar(465952, cd(465952, 1) - 4.5, CL.count:format(CL.bombs, bombsCount)) -- Big Bad Buncha Bombs (emote is 2.2s earlier)
 		self:Bar(467182, cd(467182, 1), CL.count:format(self:SpellName(467182), suppressionCount)) -- Suppression
 		self:Bar(466751, cd(466751, 1), CL.count:format(self:SpellName(466751), ventingHeatCount)) -- Venting Heat
@@ -814,7 +851,7 @@ function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
 
 			gigaBlastCount = 1
 
-			-- No Trick Shots in LFR
+			-- No Trick Shots in LFR so manually trigger the phase change
 			if self:LFR() and self:GetStage() == 1 then
 				self:TrickShotsRemoved()
 			end
@@ -827,6 +864,7 @@ function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
 			gigaCoilsCount = gigaCoilsCount + 1
 			self:CDBar(469286, cd(469286, gigaCoilsCount), CL.count:format(self:SpellName(469286), gigaCoilsCount))
 
+			-- In mythic, after two sets of Giga Coils, the adds drop down instead of start on a platform
 			if gigaCoilsCount == 3 then
 				mobMarks[231939] = 8
 			end
@@ -854,7 +892,9 @@ function mod:GigaCoilsRemoved()
 
 	local stage = self:GetStage()
 	if stage == 2 then
-		self:CDBar(466341, cd(466341, canistersCount), CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
+		if not self:LFR() then
+			self:CDBar(466341, cd(466341, canistersCount), CL.count:format(L.fused_canisters, fullCanistersCount)) -- Fused Canisters
+		end
 		local bombsCD = cd(465952, bombsCount)
 		if bombsCD and bombsCD > 0 then
 			self:CDBar(465952, bombsCD - 4.5, CL.count:format(CL.bombs, fullBombsCount)) -- Big Bad Buncha Bombs
@@ -863,7 +903,9 @@ function mod:GigaCoilsRemoved()
 		if not self:Easy() then
 			self:CDBar(466958, cd(466958, egoCheckCount), CL.count:format(self:SpellName(466958), egoCheckCount)) -- Ego Check
 		end
-		self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+		if not self:LFR() then
+			self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+		end
 		self:CDBar(1214607, cd(1214607, bombsCount), CL.count:format(CL.bombs, fullBombsCount)) -- Bigger Badder Bomb Blast
 	end
 	if stage == 2 or stage == 3 then
@@ -885,7 +927,7 @@ function mod:GigaBlast(args)
 	if self:Mythic() then
 		self:CDBar(args.spellId, cd(469327, gigaBlastCount), CL.count:format(args.spellName, gigaBlastCount)) -- Giga Blast
 	elseif not self:Story() then
-		self:Bar(args.spellId, 6.5, CL.count:format(args.spellName, gigaBlastCount))
+		self:Bar(args.spellId, self:LFR() and 7.5 or 6.5, CL.count:format(args.spellName, gigaBlastCount))
 	elseif gigaBlastCount % 3 ~= 1 then
 		self:Bar(args.spellId, 7.5, CL.count:format(args.spellName, gigaBlastCount))
 	end
@@ -910,15 +952,6 @@ function mod:GigaBombDetonationApplied(args)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "info")
 	end
-end
-
-function mod:SabotagedControlsApplied(args)
-	-- XXX should this even exist?
-	self:Message(args.spellId, "green", CL.count:format(args.spellName, args.amount or 1))
-	-- self:PlaySound(args.spellId, "info")
-	-- if not self:LFR() then
-	-- 	self:Bar(1220846, self:Easy() and 60 or self:Mythic() and 15 or 20) -- Control Meltdown
-	-- end
 end
 
 function mod:FusedCanisters(args)
@@ -993,7 +1026,7 @@ function mod:AddsDeath(args)
 	self:ClearNameplate(args.destGUID)
 
 	if args.mobId == 237192 or args.mobId == 231939 then -- Giga-Juiced Technican, Darkfuse Wrenchmonger
-		-- the initial mobs are all up at the same time, but you only pull a set at a time, so just reset here
+		-- In mythic, the initial mobs are all up at the same time, but you only pull a set at a time, so just reset here
 		mobMarks[237192] = nil -- Giga-Juiced Technican
 	end
 end
@@ -1021,7 +1054,7 @@ do
 		self:Message(args.spellId, "cyan", CL.onboss:format(CL.shield))
 		self:PlaySound(args.spellId, "warning") -- immune
 
-		self:CDBar(1214369, self:Mythic() and 8.6 or 9.6, L.total_destruction) -- TOTAL DESTRUCTION!!!
+		self:CDBar(1214369, self:Mythic() and 8.6 or self:LFR() and 10.6 or 9.6, L.total_destruction) -- TOTAL DESTRUCTION!!!
 	end
 	function mod:ArmageddonClassPlatingRemoved(args)
 		if args.amount == 0 then
@@ -1076,7 +1109,9 @@ function mod:TotalDestructionRemoved()
 		self:CDBar(469286, cd(469286, gigaCoilsCount) - 2, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
 		self:Bar("stages", 208.7, CL.intermission, "ability_mount_rocketmountblue")
 	else
-		self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+		if not self:LFR() then
+			self:CDBar(466342, cd(466342, canistersCount), CL.count:format(L.tick_tock_canisters, fullCanistersCount)) -- Tick-Tock Canisters
+		end
 		self:CDBar(469286, timers[3][469286][gigaCoilsCount] - 3, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
 	end
 
