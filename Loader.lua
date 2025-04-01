@@ -1355,21 +1355,25 @@ do
 		local addonToCheck = CONTENT_PACK_VERSIONS[name]
 		if addonToCheck then
 			local meta = GetAddOnMetadata(i, "Version")
-			local _, wowMajorStr, wowMinorStr, actualVersionStr, possibleRepoHash = strsplit("v.-", meta) -- v1.2.3-hash returns "", 1, 2, 3, hash
-			local wowMajor, wowMinor, actualVersion = tonumber(wowMajorStr), tonumber(wowMinorStr), tonumber(actualVersionStr)
-			if wowMajor and wowMinor and actualVersion then
-				local versionDifference = addonToCheck[3] - actualVersion
-				if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference > 0 then -- Any version difference = chat print
-					delayedMessages[#delayedMessages+1] = L.outOfDateAddOnRaidWarning:format(name,
-						wowMajorStr, wowMinorStr, actualVersionStr, possibleRepoHash and "-"..possibleRepoHash or "",
-						addonToCheck[1], addonToCheck[2], addonToCheck[3]
-					)
+			if meta then
+				local _, wowMajorStr, wowMinorStr, actualVersionStr, possibleRepoHash = strsplit("v.-", meta) -- v1.2.3-hash returns "", 1, 2, 3, hash
+				local wowMajor, wowMinor, actualVersion = tonumber(wowMajorStr), tonumber(wowMinorStr), tonumber(actualVersionStr)
+				if wowMajor and wowMinor and actualVersion then
+					local versionDifference = addonToCheck[3] - actualVersion
+					if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference > 0 then -- Any version difference = chat print
+						delayedMessages[#delayedMessages+1] = L.outOfDateAddOnRaidWarning:format(name,
+							wowMajorStr, wowMinorStr, actualVersionStr, possibleRepoHash and "-"..possibleRepoHash or "",
+							addonToCheck[1], addonToCheck[2], addonToCheck[3]
+						)
+					end
+					if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference >= 3 then -- Large version difference = popup
+						Popup(L.outOfDateAddOnPopup:format(name), true)
+					end
+				elseif not strfind(meta, "@", nil, true) then -- Don't error for repo users
+					geterrorhandler()(("BigWigs: Failed version check of %q. Got %q with split values of %q, %q, %q."):format(name, meta, tostring(wowMajorStr), tostring(wowMinorStr), tostring(actualVersionStr)))
 				end
-				if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference >= 3 then -- Large version difference = popup
-					Popup(L.outOfDateAddOnPopup:format(name), true)
-				end
-			elseif not strfind(meta, "@", nil, true) then -- Don't error for repo users
-				geterrorhandler()(("BigWigs: Failed version check of %q. Got %q with split values of %q, %q, %q."):format(name, meta, tostring(wowMajorStr), tostring(wowMinorStr), tostring(actualVersionStr)))
+			else
+				geterrorhandler()(("BigWigs: Failed to fetch version metadata for %q."):format(name))
 			end
 		end
 	end
