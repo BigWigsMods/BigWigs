@@ -27,6 +27,7 @@ local theBigHitTotalCount = 1
 local linkedMachinesCount = 1
 local hotHotHeatCount = 1
 local mobCollector = {}
+local mobMark = 1
 local availableCombos
 local comboColours
 
@@ -59,8 +60,11 @@ end
 -- Initialization
 --
 
+local reelAssistantMarkerMapTable = {8, 7, 6, 5}
+local reelAssistantMarker = mod:AddMarkerOption(false, "npc", reelAssistantMarkerMapTable[1], -30085, unpack(reelAssistantMarkerMapTable))
 function mod:GetOptions()
 	return {
+		reelAssistantMarker,
 		"stages",
 		460181, -- Pay-Line
 			460444, -- High Roller!
@@ -198,6 +202,7 @@ function mod:OnEngage()
 	theBigHitCount = 1
 	theBigHitTotalCount = 1
 	mobCollector = {}
+	mobMark = 1
 	self:SetStage(1)
 
 	self:CDBar(460181, self:Mythic() and 3.5 or self:Easy() and 65.4 or 4.9, CL.count:format(L.pay_line, payLineTotalCount)) -- Pay-Line
@@ -205,12 +210,27 @@ function mod:OnEngage()
 	self:CDBar(461060, self:Mythic() and 14.5 or self:Easy() and 18.2 or 16.1, CL.count:format(self:SpellName(461060), spinToWinCount)) -- Spin To Win!
 	self:CDBar(460472, 17.9, CL.count:format(self:SpellName(460472), theBigHitTotalCount)) -- The Big Hit
 
+	if self:GetOption(reelAssistantMarker) then
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	end
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 8 do
+		local unit = ("boss%d"):format(i)
+		local guid = self:UnitGUID(unit)
+		if mobCollector[guid] then -- Reel Assistant
+			local icon = reelAssistantMarkerMapTable[mobCollector[guid]]
+			self:CustomIcon(reelAssistantMarker, unit, icon)
+			mobCollector[guid] = false
+		end
+	end
+end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 33 then -- Forced Stage 2 at 30%
@@ -361,7 +381,9 @@ do
 		elseif spinToWinCount == 7 then
 			self:Bar(args.spellId, cd, CL.stage:format(2))
 		end
+
 		self:CDBar(471927, 15) -- Withering Flames
+		mobMark = 1
 
 		-- Infobox stuff
 		self:OpenInfo("rewards", L.rewards, #availableCombos + 1) -- Fabulous Prizes, First line is the castbar
@@ -408,6 +430,12 @@ function mod:Rewards(args)
 
 	self:RestartRewardTimers(args.spellId == 464806)
 
+	-- move left over add to backup kick mark
+	local guid = self:UnitGUID("boss2")
+	if guid and mobCollector[guid] == false then -- Reel Assistant
+		self:CustomIcon(reelAssistantMarker, "boss2", reelAssistantMarkerMapTable[4])
+	end
+
 	-- Infobox Stuff
 	self:CloseInfo("rewards")
 	for i, combo in ipairs(availableCombos) do
@@ -438,8 +466,9 @@ function mod:CoinMagnet(args)
 end
 
 function mod:SpinToWinApplied(args) -- Add spawn
-	if not mobCollector[args.destGUID] then
-		mobCollector[args.destGUID] = true
+	if mobCollector[args.destGUID] == nil then
+		mobCollector[args.destGUID] = mobMark
+		mobMark = mobMark + 1
 		self:Nameplate(460582, 16.2, args.destGUID) -- Overload!
 	end
 end
