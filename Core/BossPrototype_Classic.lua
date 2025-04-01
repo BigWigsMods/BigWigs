@@ -3223,9 +3223,9 @@ function boss:ResumeBar(key, text)
 	local msg = text or spells[key]
 	self:SendMessage("BigWigs_ResumeBar", self, msg)
 	if checkFlag(self, key, C.COUNTDOWN) then
-		local length = self:BarTimeLeft(msg)
-		if length > 0 then
-			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
+		local seconds = self:BarTimeLeft(msg)
+		if seconds > 0 then
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, seconds)
 		end
 	end
 end
@@ -3249,15 +3249,18 @@ end
 do
 	--- Start showing a nameplate icon.
 	-- @param key the option key
-	-- @number length the duration in seconds
+	-- @number seconds the duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
 	-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
-	function boss:Nameplate(key, length, guid, customIconOrText)
+	function boss:Nameplate(key, seconds, guid, customIconOrText)
 		if not engagedGUIDs[guid] then
 			-- in rare cases a NPC can start casting before being engaged, make sure this timer isn't overwritten
 			engagedGUIDs[guid] = true
 		end
-		self:SendMessage("BigWigs_StartNameplate", self, guid, key, length, customIconOrText)
+		self:SendMessage("BigWigs_StartNameplate", self, guid, key, seconds, customIconOrText)
+		if checkFlag(self, key, C.NAMEPLATE) and checkFlag(self, key, C.COUNTDOWN) then
+			self:SendMessage("BigWigs_StartCountdown", self, key, spells[key], seconds, guid)
+		end
 	end
 
 	--- Stop showing a nameplate icon.
@@ -3266,6 +3269,9 @@ do
 	-- @string[opt] text the specific text to clear, if clearing text instead of an icon
 	function boss:StopNameplate(key, guid, text)
 		self:SendMessage("BigWigs_StopNameplate", self, guid, key, text)
+		if checkFlag(self, key, C.COUNTDOWN) then
+			self:SendMessage("BigWigs_StopCountdown", self, spells[key], guid)
+		end
 	end
 
 	--- Clear everything on a nameplate.

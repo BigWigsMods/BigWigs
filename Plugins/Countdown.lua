@@ -557,6 +557,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopCountdown")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_ClearNameplate")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
@@ -606,57 +607,130 @@ end
 
 do
 	local timers = {}
-	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, customStart, audioOnly)
-		if module and time > 1.3 then
-			self:BigWigs_StopCountdown(nil, module, text)
-			if not timers[module] then
-				timers[module] = {}
+	local GUIDtimers = {}
+	do
+		local GetTime = GetTime
+		local function LowestCountdown(tableToMatch, module, text)
+			local lowestText, lowestCountdownTable
+			if timers[module] and timers[module][text] and not timers[module][text][2] then
+				lowestText = timers[module][text][1]
+				lowestCountdownTable = timers[module][text]
 			end
-			local textCount = customStart or self.db.profile.countdownTime
-			local countWithVoiceOffset = textCount + 0.3 -- We want the "five" voice file to begin playing at 5.3 so it ends on or around 5.0
-			while countWithVoiceOffset > time do
-				countWithVoiceOffset = countWithVoiceOffset - 1
-				textCount = textCount - 1
-			end
-			local cancelTimer = {false}
-			timers[module][text] = cancelTimer
 
-			local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
-			local function printTime()
-				if not cancelTimer[1] then
-					if not audioOnly and plugin.db.profile.textEnabled then
-						plugin:SetText(textCount, cancelTimer)
+			if GUIDtimers[module] and GUIDtimers[module][text] then
+				local currentTime = GetTime()
+				for _, countdownTable in next, GUIDtimers[module][text] do
+					local timeInTable = countdownTable[1]
+					if not countdownTable[2] and (not lowestText or timeInTable < lowestText) and timeInTable > currentTime then
+						lowestText = timeInTable
+						lowestCountdownTable = countdownTable
 					end
-					local sound = BigWigsAPI:GetCountdownSound(voice, textCount)
-					if sound then
-						self:PlaySoundFile(sound)
-					end
-					textCount = textCount - 1
 				end
 			end
-			for i = 1.3, countWithVoiceOffset do
-				self:SimpleTimer(printTime, time-i)
+			return lowestCountdownTable == tableToMatch
+		end
+
+		function plugin:BigWigs_StartCountdown(_, module, key, text, time, guid, customVoice, customStart, audioOnly)
+			if module and time >= 1 then
+				local countdownTable = {GetTime()+time}
+				if guid then
+					if GUIDtimers[module] then
+						if GUIDtimers[module][text] then
+							if GUIDtimers[module][text][guid] then
+								GUIDtimers[module][text][guid][2] = true
+							end
+						else
+							GUIDtimers[module][text] = {}
+						end
+					else
+						GUIDtimers[module] = {}
+						GUIDtimers[module][text] = {}
+					end
+					GUIDtimers[module][text][guid] = countdownTable
+				else
+					if timers[module] then
+						if timers[module][text] then
+							timers[module][text][2] = true
+						end
+					else
+						timers[module] = {}
+					end
+					timers[module][text] = countdownTable
+				end
+
+				local textCount = customStart or self.db.profile.countdownTime
+				if time < textCount then
+					textCount = math.floor(time)
+				end
+
+				local function announce()
+					if not countdownTable[2] then
+						local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
+						if LowestCountdown(countdownTable, module, text) then
+							if not audioOnly and plugin.db.profile.textEnabled then
+								plugin:SetText(textCount, countdownTable)
+							end
+							local sound = BigWigsAPI:GetCountdownSound(voice, textCount)
+							if sound then
+								self:PlaySoundFile(sound)
+							end
+						end
+						textCount = textCount - 1
+					end
+				end
+				for i = 1, textCount do
+					self:SimpleTimer(announce, time-i)
+				end
 			end
 		end
 	end
-	function plugin:BigWigs_StopCountdown(_, module, text)
-		local moduleTimers = timers[module]
-		if moduleTimers and moduleTimers[text] then
-			moduleTimers[text][1] = true
-			if latestCountdown == moduleTimers[text] then
+	function plugin:BigWigs_StopCountdown(_, module, text, guid)
+		local countdownTable
+		if guid then
+			countdownTable = GUIDtimers[module] and GUIDtimers[module][text] and GUIDtimers[module][text][guid]
+		else
+			countdownTable = timers[module] and timers[module][text]
+		end
+		if countdownTable then
+			countdownTable[2] = true
+			if latestCountdown == countdownTable then
 				self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
 			end
 		end
 	end
 	function plugin:BigWigs_OnBossDisable(_, module)
 		if timers[module] then
-			for _, timer in next, timers[module] do
-				timer[1] = true
-				if latestCountdown == timer then
+			for _, countdownTable in next, timers[module] do
+				countdownTable[2] = true
+				if latestCountdown == countdownTable then
 					self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
 				end
 			end
 			timers[module] = nil
+		end
+		if GUIDtimers[module] then
+			for _, guidTable in next, GUIDtimers[module] do
+				for _, countdownTable in next, guidTable do
+					countdownTable[2] = true
+					if latestCountdown == countdownTable then
+						self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
+					end
+				end
+			end
+			GUIDtimers[module] = nil
+		end
+	end
+	function plugin:BigWigs_ClearNameplate(_, module, guid)
+		if GUIDtimers[module] then
+			for _, guidTable in next, GUIDtimers[module] do
+				local countdownTable = guidTable[guid]
+				if countdownTable then
+					countdownTable[2] = true
+					if latestCountdown == countdownTable then
+						self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
+					end
+				end
+			end
 		end
 	end
 end
