@@ -3,11 +3,13 @@ if not L then return end
 if L then
 	L.custom_on_fade_out_bars = "Desvanecer barras"
 	L.custom_on_fade_out_bars_desc = "Desvanece as barras do chefe que está fora de alcance."
+
 	L.bomb_explosion = "Explosão da Bomba"
 	L.bomb_explosion_desc = "Exibe um cronômetro para a explosão das bombas."
 
 	L.eruption_stomp = "Pisada" -- Abreviação de Pisada Eruptiva
 	L.thunderdrum_salvo = "Tamborilar" -- Abreviação de Salva do Tamborilar trovejante
+
 	L.static_charge_high = "%d - Você está se movendo demais"
 end
 
@@ -59,8 +61,10 @@ end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "ptBR")
 if L then
+	--L.rewards = "Prizes" -- Fabulous Prizes
 	L.rewards_desc = "Quando dois Tokens são travados, o \"Prêmio Fabuloso\" é concedido.\nMensagens informarão qual prêmio foi obtido.\nA caixa de informações mostrará quais prêmios ainda estão disponíveis."
 	L.deposit_time = "Tempo para entregar fichas" -- Tempo restante para depositar as fichas
+
 	L.pay_line = "Moedas"
 	L.shock = "Choque"
 	L.flame = "Chama"
