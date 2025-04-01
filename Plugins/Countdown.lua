@@ -665,11 +665,11 @@ do
 
 				local function announce()
 					if not countdownTable[2] then
-						local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
 						if LowestCountdown(countdownTable, module, text) then
 							if not audioOnly and plugin.db.profile.textEnabled then
 								plugin:SetText(textCount, countdownTable)
 							end
+							local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
 							local sound = BigWigsAPI:GetCountdownSound(voice, textCount)
 							if sound then
 								self:PlaySoundFile(sound)
