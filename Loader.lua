@@ -99,7 +99,7 @@ end
 
 local tooltipFunctions = {}
 local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
-local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTicker
+local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTimer = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTimer
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
 local debugstack, print = debugstack, print
@@ -111,8 +111,8 @@ local myGUID = UnitGUID("player")
 public.date = date
 public.Ambiguate = Ambiguate
 public.CTimerAfter = CTimerAfter
-public.CTimerNewTicker = CTimerNewTicker
-public.CTimerNewTimer = C_Timer.NewTimer
+public.CTimerNewTicker = C_Timer.NewTicker
+public.CTimerNewTimer = CTimerNewTimer
 public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
@@ -1525,11 +1525,11 @@ do
 		if IsInGroup() then
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local msg = myName.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
+			local msg = myName.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
 			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 9 then
-					timer = CTimerNewTicker(3, sendDBMMsg, 1)
+					timer = CTimerNewTimer(3, sendDBMMsg)
 					return
 				else
 					sysprint("Failed to send initial _ version. Error code: ".. result)
@@ -1542,7 +1542,7 @@ do
 	function mod:DBM_VersionCheck(prefix, sender, _, _, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			if timer then timer:Cancel() end
-			timer = CTimerNewTicker(3.3, sendDBMMsg, 1)
+			timer = CTimerNewTimer(3, sendDBMMsg)
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
 		end
@@ -1617,7 +1617,7 @@ do
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 9 then
-					timer = CTimerNewTicker(3, sendMsg, 1)
+					timer = CTimerNewTimer(3, sendMsg)
 					return
 				else
 					sysprint("Failed to send initial version. Error code: ".. result)
@@ -1657,7 +1657,7 @@ do
 		end
 		if warnedExtremelyOutOfDate > 1 then
 			if verTimer then verTimer:Cancel() end
-			verTimer = CTimerNewTicker(3, function()
+			verTimer = CTimerNewTimer(3, function()
 				hasWarned = 3
 				verTimer = nil
 				local diff = highestFoundVersion - BIGWIGS_VERSION
@@ -1669,22 +1669,22 @@ do
 				else
 					sysprint(L.warnOldBase:format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION, diff))
 				end
-			end, 1)
+			end)
 		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 and not customGuildName then
 			if verTimer then verTimer:Cancel() end
-			verTimer = CTimerNewTicker(3, function()
+			verTimer = CTimerNewTimer(3, function()
 				hasWarned = 2
 				verTimer = nil
 				sysprint(L.warnTwoReleases)
 				RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1}, 20)
-			end, 1)
+			end)
 		elseif warnedOutOfDate > 1 and hasWarned < 1 and not customGuildName then
 			if verTimer then verTimer:Cancel() end
-			verTimer = CTimerNewTicker(3, function()
+			verTimer = CTimerNewTimer(3, function()
 				hasWarned = 1
 				verTimer = nil
 				sysprint(L.getNewRelease)
-			end, 1)
+			end)
 		end
 	end
 
@@ -1698,19 +1698,19 @@ do
 		end
 		if warnedOutOfDate > 1 and not hasGuildWarned then
 			if verGuildTimer then verGuildTimer:Cancel() end
-			verGuildTimer = CTimerNewTicker(3, function()
+			verGuildTimer = CTimerNewTimer(3, function()
 				hasGuildWarned = true
 				verGuildTimer = nil
 				sysprint(guildWarnMessage)
 				Popup(guildWarnMessage)
-			end, 1)
+			end)
 		end
 	end
 
 	function mod:VersionCheck(prefix, verString, hash, guildVerString, guildName, sender)
 		if prefix == "Q" then
 			if timer then timer:Cancel() end
-			timer = CTimerNewTicker(3, sendMsg, 1)
+			timer = CTimerNewTimer(3, sendMsg)
 		end
 		if prefix == "V" or prefix == "Q" then -- V = version response, Q = version query
 			local version = tonumber(verString)
