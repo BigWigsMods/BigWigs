@@ -103,9 +103,6 @@ files["**/Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
-files["**/Plugins/Bars.lua"].ignore = {
-	"113/time",
-}
 files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/AlertFrame",
 	"112/BigWigs",
@@ -124,6 +121,9 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/UIErrorsFrame",
 	"113/WatchFrame",
 	"113/ZoneTextFrame",
+}
+files["**/Plugins/Break.lua"].ignore = {
+	"113/time",
 }
 files["**/Plugins/Nameplates.lua"].ignore = {
 	"113/C_NamePlate",

@@ -16,6 +16,7 @@
 <Script file="Flash.lua"/>
 <Script file="Countdown.lua"/>
 <Script file="Pull.lua"/>
+<Script file="Break.lua"/>
 <Script file="Statistics.lua"/>
 <Script file="Victory.lua"/>
 <Script file="Wipe.lua"/>
