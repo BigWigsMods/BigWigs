@@ -361,7 +361,7 @@ do
 			self:SetInfo("rewards", 1 + (i * 2),  CL.plus:format(leftText, rightText))
 		end
 		startTime = GetTime()
-		self:SetInfo("rewards", 1, "Deposit Time:")
+		self:SetInfo("rewards", 1, L.deposit_time)
 		updateInfoBoxBar(self)
 	end
 
