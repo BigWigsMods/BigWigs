@@ -1356,15 +1356,12 @@ do
 		if addonToCheck then
 			local meta = GetAddOnMetadata(i, "Version")
 			if meta then
-				local _, wowMajorStr, wowMinorStr, actualVersionStr, possibleRepoHash = strsplit("v.-", meta) -- v1.2.3-hash returns "", 1, 2, 3, hash
+				local _, wowMajorStr, wowMinorStr, actualVersionStr = strsplit("v.-", meta) -- v1.2.3 returns "", 1, 2, 3
 				local wowMajor, wowMinor, actualVersion = tonumber(wowMajorStr), tonumber(wowMinorStr), tonumber(actualVersionStr)
 				if wowMajor and wowMinor and actualVersion then
 					local versionDifference = addonToCheck[3] - actualVersion
 					if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference > 0 then -- Any version difference = chat print
-						delayedMessages[#delayedMessages+1] = L.outOfDateAddOnRaidWarning:format(name,
-							wowMajorStr, wowMinorStr, actualVersionStr, possibleRepoHash and "-"..possibleRepoHash or "",
-							addonToCheck[1], addonToCheck[2], addonToCheck[3]
-						)
+						delayedMessages[#delayedMessages+1] = L.outOfDateAddOnRaidWarning:format(name, wowMajor, wowMinor, actualVersion, addonToCheck[1], addonToCheck[2], addonToCheck[3])
 					end
 					if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference >= 3 then -- Large version difference = popup
 						Popup(L.outOfDateAddOnPopup:format(name), true)
