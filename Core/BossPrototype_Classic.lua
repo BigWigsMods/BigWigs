@@ -347,6 +347,21 @@ function boss:IsEncounterID(encounterId)
 	return encounterId == self.engageId or (self.extraEncounterIDs and self.extraEncounterIDs[encounterId])
 end
 
+--- Get the zone ID used for this module. (Negative for mapArtID, positive for instanceID)
+-- @return number
+-- @within Enable triggers
+function boss:GetZoneID()
+	if self.mapId then
+		return self.mapId
+	else
+		if type(self.instanceId) == "table" then
+			return unpack(self.instanceId)
+		else
+			return self.instanceId
+		end
+	end
+end
+
 --- Set the journal id used for this module. (As used by the dungeon journal)
 -- Usually not set directly, but via the :NewBoss API
 -- @number journalId The journal id
