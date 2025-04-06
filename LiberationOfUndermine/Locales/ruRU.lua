@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "ruRU")
 if L then
 	L.rewards = "Призы" -- Fabulous Prizes
 	L.rewards_desc = "После сдачи 2 токенов, \"Потрясающие Призы\" активируется.\nСообщения скажут, что было выдано.\nИнфобокс покажет, какие награды всё ещё доступны."
-	L.deposit_time = "Время для сдачи" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "Время для сдачи:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Монетки"
 	L.shock = "Шок"

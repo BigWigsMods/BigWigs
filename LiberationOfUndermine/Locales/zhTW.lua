@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhTW")
 if L then
 	L.rewards = "酷炫獎勵" -- Fabulous Prizes
 	L.rewards_desc = "投入二枚代幣後會立即發放「酷炫獎勵」，訊息將會顯示你獲得的獎勵，訊息盒則顯示你尚未領取過的獎勵。"
-	L.deposit_time = "投幣時限" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "投幣時限：" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "錢幣" -- 籌碼？滾錢幣
 	L.shock = "電擊"

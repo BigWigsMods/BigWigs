@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "deDE")
 if L then
 	L.rewards = "Preise" -- Fabulous Prizes
 	L.rewards_desc = "Wenn zwei Walzen eingerastet sind, wird die \"fabelhafte Belohnung\" ausgegeben.\nNachrichten weisen darauf hin, welche ausgegeben wird.\nDie Infobox zeigt an, welche Preise noch verfügbar sind."
-	L.deposit_time = "Einwurfzeit" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "Einwurfzeit:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Münzen"
 	L.shock = "Schock"

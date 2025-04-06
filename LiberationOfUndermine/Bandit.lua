@@ -40,7 +40,7 @@ if L then
 	L.rewards = "Prizes" -- Fabulous Prizes
 	L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
 	L.rewards_icon = "inv_111_vendingmachine_blackwater"
-	L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "Deposit Time:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Coins"
 	L.withering_flames = "Flames" -- Short for Withering Flames
@@ -361,7 +361,7 @@ do
 			self:SetInfo("rewards", 1 + (i * 2),  CL.plus:format(leftText, rightText))
 		end
 		startTime = GetTime()
-		self:SetInfo("rewards", 1, "Deposit Time:")
+		self:SetInfo("rewards", 1, L.deposit_time)
 		updateInfoBoxBar(self)
 	end
 

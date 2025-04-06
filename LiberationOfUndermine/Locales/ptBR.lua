@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "ptBR")
 if L then
 	--L.rewards = "Prizes" -- Fabulous Prizes
 	L.rewards_desc = "Quando dois Tokens são travados, o \"Prêmio Fabuloso\" é concedido.\nMensagens informarão qual prêmio foi obtido.\nA caixa de informações mostrará quais prêmios ainda estão disponíveis."
-	L.deposit_time = "Tempo para entregar fichas" -- Tempo restante para depositar as fichas
+	L.deposit_time = "Tempo para entregar fichas:" -- Tempo restante para depositar as fichas
 
 	L.pay_line = "Moedas"
 	L.shock = "Choque"

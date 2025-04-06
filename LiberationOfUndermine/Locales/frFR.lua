@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "frFR")
 if L then
 	L.rewards = "Prix" -- Fabulous Prizes
 	L.rewards_desc = "Lorsque deux jetons sont verrouillés, un  \"prix fabuleux\" est distribué.\nLes messages vous laisseront savoir lequel a été obtenu.\nLa boîte d'info affichera quels prix sont encore disponibles."
-	L.deposit_time = "Temps de dépôt" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "Temps de dépôt:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Ligne pièces"
 	L.shock = "Champ"

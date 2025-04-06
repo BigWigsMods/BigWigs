@@ -64,7 +64,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhCN")
 if L then
 	L.rewards = "豪华大奖" -- Fabulous Prizes
 	L.rewards_desc = "当2种礼卷被组合后，将发放\"豪华大奖\"。\n信息会提醒你获得了哪种奖励。\n信息框也会显示哪些奖励任然可用。"
-	L.deposit_time = "投卷计时" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "投卷计时：" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "凭证"
 	L.shock = "震击"

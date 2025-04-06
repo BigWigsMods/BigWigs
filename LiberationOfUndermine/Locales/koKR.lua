@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "koKR")
 if L then
 	L.rewards = "경품" -- Fabulous Prizes
 	L.rewards_desc = "두개의 토큰이 정해지면, \"환상적인 경품\" 이 나옵니다. \n어떤 경품이 나왔는지 메시지로 알려줍니다.\n정보박스로 어떤 경품이 아직 남았는지 보여줍니다."
-	L.deposit_time = "토큰 주입 마무리" -- Timer that indicates how long you have left to deposit the tokens.
+	L.deposit_time = "토큰 주입 마무리:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "당첨선"
 	L.shock = "전격"

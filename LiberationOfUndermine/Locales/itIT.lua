@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("The One-Armed Bandit", "itIT")
 if L then
 	--L.rewards = "Prizes" -- Fabulous Prizes
 	--L.rewards_desc = "When two Tokens are locked in, the \"Fabulous Prize\" is dispensed.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
-	--L.deposit_time = "Deposit Time" -- Timer that indicates how long you have left to deposit the tokens.
+	--L.deposit_time = "Deposit Time:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	--L.pay_line = "Coins"
 	--L.shock = "Shock"
