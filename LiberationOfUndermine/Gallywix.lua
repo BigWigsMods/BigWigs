@@ -157,6 +157,7 @@ local timersHeroic = {
 		[466341] = { -- Fused Canisters
 			{ 10.2, 32.9, 0 },
 			{ 27.7, 0 },
+			{ 11.6, },
 		},
 		[465952] = { -- Big Bad Buncha Bombs
 			{ 36.5, 0 },
@@ -165,10 +166,12 @@ local timersHeroic = {
 		[467182] = { -- Suppression
 			{ 24.0, 0 },
 			{ 9.4, 35.2, 0 },
+			{ 28.9, },
 		},
 		[466751] = { -- Venting Heat
 			{ 20.5, 0 },
 			{ 18.2, 0 },
+			{ 16.6, },
 		},
 	},
 	{ -- Phase 3
