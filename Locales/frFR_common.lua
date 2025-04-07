@@ -69,7 +69,7 @@ L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = second
 L.next_ability = "Prochaine compétence" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.landing = "%s atterri" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Vous pouvez maintenant voler"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "Bosses trop près" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 
 -- Add related
 L.add_spawned = "Add est apparu" -- singular
@@ -105,10 +105,10 @@ L.crenna = "Crenna Fille-de-la-Terre" -- AI druid healer (NPC 209072)
 L.crenna_short = "*Crenna"
 L.austin = "Austin Huxworth" -- AI hunter dps (NPC 209065)
 L.austin_short = "*Austin"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "Seigneur de guerre Breka Hache-Sinistre" -- AI warrior tank (NPC 215517)
+L.breka_short = "*Breka"
+L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
+L.henry_short = "*Henry"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -234,11 +234,11 @@ L.rooted = "Immobilisé" -- Any ability that roots you in place, preventing you 
 -- Common ability name replacements A-Z
 L.dodge = "Esquive" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enrager" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
-L.fixate = "Fixer" -- Used when a boss or add is chasing/fixated on a player
---L.fixates = "Fixates" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.fixate = "Fixé" -- Used when a boss or add is chasing/fixated on a player
+L.fixates = "Fixés" -- Plural of L.fixate
+L.group_damage = "Dégâts sur le groupe" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Drain de santé" -- Any ability that drains health from the player
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "Dégâts sur le raid" -- Any ability that causes damage to every player in the raid
 L.smash = "Choc" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike
