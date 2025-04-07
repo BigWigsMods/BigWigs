@@ -267,7 +267,6 @@ do
 	core.RegisterEvent(mod, "ADDON_LOADED")
 end
 
-local pluginsInOrder = {}
 do
 	local function DisableModules()
 		for _, module in next, bosses do
@@ -276,8 +275,8 @@ do
 			end
 			module:Disable()
 		end
-		for i = #pluginsInOrder, 1, -1 do
-			pluginsInOrder[i]:Disable()
+		for i = #plugins, 1, -1 do
+			plugins[i]:Disable()
 		end
 	end
 	local function DisableCore()
@@ -311,8 +310,8 @@ do
 	end
 
 	local function EnablePlugins()
-		for i = 1, #pluginsInOrder, 1 do
-			pluginsInOrder[i]:Enable()
+		for i = 1, #plugins do
+			plugins[i]:Enable()
 		end
 	end
 	local zoneList = loader.zoneTbl
@@ -460,9 +459,9 @@ do
 				RegisterEvent = core.RegisterEvent,
 				UnregisterEvent = core.UnregisterEvent,
 			}, pluginMeta)
+			plugins[#plugins+1] = m
 			plugins[moduleName] = m
 			initModules[#initModules+1] = m
-			pluginsInOrder[#pluginsInOrder+1] = m
 
 			return m, CL
 		end
@@ -483,8 +482,9 @@ end
 
 function core:GetPluginOptions()
 	local tbl = {}
-	for moduleName,module in next, plugins do
-		tbl[moduleName] = {module.pluginOptions, module.subPanelOptions}
+	for i = 1, #plugins do
+		local module = plugins[i]
+		tbl[module.moduleName] = {module.pluginOptions, module.subPanelOptions}
 	end
 	return tbl
 end

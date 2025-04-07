@@ -150,31 +150,19 @@ end
 
 do
 	local Timer = BigWigsLoader.CTimerNewTimer
-	function plugin:ScheduleTimer(func, delay, one, two, three, four, five, six, seven, eight)
-		if type(func) == "function" then
-			local timerId = Timer(delay, function() func(one, two, three, four, five, six, seven, eight) end)
-			scheduledEvents[self][timerId] = true
-			return timerId
-		else
-			local timerId = Timer(delay, function() self[func](self, one, two, three, four, five, six, seven, eight) end)
-			scheduledEvents[self][timerId] = true
-			return timerId
-		end
+	function plugin:ScheduleTimer(func, delay)
+		local timerId = Timer(delay, func)
+		scheduledEvents[self][timerId] = true
+		return timerId
 	end
 end
 
 do
 	local Ticker = BigWigsLoader.CTimerNewTicker
-	function plugin:ScheduleRepeatingTimer(func, delay, one, two, three, four, five, six, seven, eight)
-		if type(func) == "function" then
-			local timerId = Ticker(delay, function() func(one, two, three, four, five, six, seven, eight) end)
-			scheduledEvents[self][timerId] = true
-			return timerId
-		else
-			local timerId = Ticker(delay, function() self[func](self, one, two, three, four, five, six, seven, eight) end)
-			scheduledEvents[self][timerId] = true
-			return timerId
-		end
+	function plugin:ScheduleRepeatingTimer(func, delay)
+		local timerId = Ticker(delay, func)
+		scheduledEvents[self][timerId] = true
+		return timerId
 	end
 end
 
