@@ -75,7 +75,25 @@ end
 --
 
 do
-	local timerTbl, lastBreak = nil, 0
+	local function Print60()
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)
+	end
+	local function Print30()
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062)
+	end
+	local function Print10()
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062)
+	end
+	local function Print5()
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062)
+	end
+	local function PrintFinished()
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062)
+		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
+		BigWigs3DB.breakTime = nil
+	end
+
+	local lastBreak = 0
 	function plugin:StartBreak(seconds, nick, isDBM, reboot)
 		if not reboot then
 			if (not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) and not UnitIsUnit(nick, "player")) or IsEncounterInProgress() then return end
@@ -86,18 +104,17 @@ do
 			if t-lastBreak < 0.5 then return else lastBreak = t end -- Throttle
 		end
 
-		if timerTbl then
-			for i = 1, #timerTbl do
-				plugin:CancelTimer(timerTbl[i])
-			end
+		if BigWigs3DB.breakTime then
+			self:CancelAllTimers()
 			if seconds == 0 then
-				timerTbl = nil
 				BigWigs3DB.breakTime = nil
 				BigWigs:Print(L.breakStopped:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L.breakBar)
 				plugin:SendMessage("BigWigs_StopBreak", plugin, seconds, nick, isDBM, reboot)
 				return
 			end
+		elseif seconds == 0 then
+			return
 		end
 
 		if not reboot then
@@ -106,28 +123,25 @@ do
 
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
 
-		timerTbl = {}
 		if seconds > 30 then
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062) -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
+			plugin:ScheduleTimer(Print30, seconds - 30) -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
 		end
 		if seconds > 10 then
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062)
+			plugin:ScheduleTimer(Print10, seconds - 10)
 		end
 		if seconds > 5 then
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062)
+			plugin:ScheduleTimer(Print5, seconds - 5)
 		end
-		timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062)
-		timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long")
-		timerTbl[#timerTbl+1] = plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
+		plugin:ScheduleTimer(PrintFinished, seconds)
 
 		if seconds > 119 then -- 2min
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)
+			plugin:ScheduleTimer(Print60, seconds - 60)
 		end
 		if seconds > 239 then -- 4min
 			local half = seconds / 2
 			local m = half % 60
 			local halfMin = (half - m) / 60
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "yellow", 134062)
+			plugin:ScheduleTimer(function() self:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "yellow", 134062) end, half + m)
 		end
 
 		plugin:SendMessage("BigWigs_Message", plugin, nil, seconds < 61 and L.breakSeconds:format(seconds) or L.breakMinutes:format(seconds/60), "green", 134062)

@@ -214,30 +214,30 @@ end
 
 do
 	local timer, timeLeft = nil, 0
-	local function printPull(self)
+	local function printPull()
 		timeLeft = timeLeft - 1
 		if timeLeft == 0 then
-			self:CancelTimer(timer)
+			plugin:CancelTimer(timer)
 			timer = nil
-			if self.db.profile.countType == "emphasized" then
-				self:SendMessage("BigWigs_StopCountdown", self, "pulling time") -- Remove the countdown text
+			if plugin.db.profile.countType == "emphasized" then
+				plugin:SendMessage("BigWigs_StopCountdown", plugin, "pulling time") -- Remove the countdown text
 			end
-			local soundName = self.db.profile.endPullSound
+			local soundName = plugin.db.profile.endPullSound
 			if soundName ~= "None" then
 				local sound = media:Fetch(SOUND, soundName, true)
 				if sound then
-					self:PlaySoundFile(sound)
+					plugin:PlaySoundFile(sound)
 				end
 			end
 		elseif timeLeft > 1 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
-			self:CancelTimer(timer)
+			plugin:CancelTimer(timer)
 			timeLeft = 0
 			BigWigs:Print(L.pullStoppedCombat)
-			self:SendMessage("BigWigs_StopBar", self, L.pull)
-			self:SendMessage("BigWigs_StopPull", self, "COMBAT")
-			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
-		elseif timeLeft <= self.db.profile.countBegin and self.db.profile.countType ~= "emphasized" then
-			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
+			plugin:SendMessage("BigWigs_StopBar", plugin, L.pull)
+			plugin:SendMessage("BigWigs_StopPull", plugin, "COMBAT")
+			plugin:SendMessage("BigWigs_StopCountdown", plugin, "pulling time")
+		elseif timeLeft <= plugin.db.profile.countBegin and plugin.db.profile.countType ~= "emphasized" then
+			plugin:SendMessage("BigWigs_Message", plugin, nil, L.pullIn:format(timeLeft), "yellow")
 		end
 	end
 
@@ -265,7 +265,7 @@ do
 		timeLeft = timeSeconds
 		FlashClientIcon()
 		BigWigs:Print(L.pullStartedBy:format(name))
-		timer = self:ScheduleRepeatingTimer(printPull, 1, self)
+		timer = self:ScheduleRepeatingTimer(printPull, 1)
 		if self.db.profile.combatLog then
 			isLogging = true
 			LoggingCombat(isLogging)
@@ -319,7 +319,7 @@ end
 function plugin:BigWigs_OnBossWin()
 	if isLogging then
 		isLogging = false
-		self:ScheduleTimer(LoggingCombat, 2, isLogging) -- Delay to prevent any death events being cut out the log
+		self:SimpleTimer(function() LoggingCombat(false) end, 2) -- Delay to prevent any death events being cut out the log
 	end
 end
 

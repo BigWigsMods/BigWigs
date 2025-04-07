@@ -1021,6 +1021,7 @@ do
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
+	local function ReRegister() plugin:RegisterEvent("CINEMATIC_START") end
 	function plugin:SiegeOfOrgrimmarCinematics()
 		local hasItem
 		for i = 105930, 105935 do -- Vision of Time items
@@ -1034,7 +1035,7 @@ do
 			self.SiegeOfOrgrimmarCinematicsFrame:SetScript("OnEvent", function(_, _, _, _, spellId)
 				if tbl[spellId] and plugin:IsEnabled() then
 					plugin:UnregisterEvent("CINEMATIC_START")
-					plugin:ScheduleTimer("RegisterEvent", 10, "CINEMATIC_START")
+					plugin:ScheduleTimer(ReRegister, 10)
 				end
 			end)
 			self.SiegeOfOrgrimmarCinematicsFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
@@ -1056,7 +1057,7 @@ do
 				self.toysFrame:SetScript("OnEvent", function(_, _, _, _, spellId)
 					if tbl[spellId] and plugin:IsEnabled() then
 						plugin:UnregisterEvent("CINEMATIC_START")
-						plugin:ScheduleTimer("RegisterEvent", 5, "CINEMATIC_START")
+						plugin:ScheduleTimer(ReRegister, 5)
 					end
 				end)
 				self.toysFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")

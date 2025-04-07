@@ -350,7 +350,7 @@ do
 			if self.db.profile.printHealth then
 				healthPools[journalID] = {
 					names = {},
-					timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module),
+					timer = self:ScheduleRepeatingTimer(function() StoreHealth(module) end, 2),
 				}
 			end
 		end

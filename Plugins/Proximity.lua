@@ -969,7 +969,7 @@ do
 
 		functionToFire = nil -- Kill previous updater
 		self:CancelTimer(updateTimer)
-		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
+		updateTimer = self:ScheduleTimer(function() openProx(self, range, module, key, player, isReverse, spellName, spellIcon) end, 0.1)
 	end
 end
 
