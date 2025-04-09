@@ -240,4 +240,6 @@ L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player 
 L.smash = "Smash" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Spike" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Spikes" -- Plural of L.spike
+L.tentacle = "Tentacle" -- Used for bosses that summon tentacles
+L.tentacles = "Tentacles" -- Plural of L.tentacle
 L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean

@@ -241,4 +241,6 @@ L.raid_damage = "Daño de raid" -- Any ability that causes damage to every playe
 L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Púas" -- Plural of L.spike
+L.tentacle = "Tentáculo" -- Used for bosses that summon tentacles
+L.tentacles = "Tentáculos" -- Plural of L.tentacle
 L.waves = "Oleadas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean

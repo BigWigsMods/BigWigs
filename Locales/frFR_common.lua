@@ -242,4 +242,6 @@ L.raid_damage = "Dégâts sur le raid" -- Any ability that causes damage to ever
 L.smash = "Choc" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike
+L.tentacle = "Tentacule" -- Used for bosses that summon tentacles
+L.tentacles = "Tentacules" -- Plural of L.tentacle
 L.waves = "Vagues" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
