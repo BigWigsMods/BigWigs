@@ -1416,13 +1416,24 @@ do
 		[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
 		[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
 		--[1378] = locales.esES, [1379] = locales.esES, [1380] = locales.esES, [1381] = locales.esES, [1382] = locales.esES, [1383] = locales.esES, -- esES
+		--[1384] = locales.esES, [1385] = locales.esES, [1386] = locales.esES, [1387] = locales.esES, [1395] = locales.esES, -- esES
 	}
+	local criticalList = {
+		[locales.esMX] = true,
+	}
+
 	local language = locales[myLocale]
 	local realmLanguage = realms[GetRealmID()]
 	if public.isRetail and (language or realmLanguage) then
-		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s."):format(language or realmLanguage)
-		delayedMessages[#delayedMessages+1] = "Can you help?"
-		delayedMessages[#delayedMessages+1] = "Ask us on Discord for more info."
+		local msg1 = ("BigWigs is missing translations for %s."):format(language or realmLanguage)
+		local msg2 = "Can you help?"
+		local msg3 = "Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = msg1
+		delayedMessages[#delayedMessages+1] = msg2
+		delayedMessages[#delayedMessages+1] = msg3
+		if criticalList[language or realmLanguage] then
+			Popup(msg1.. "\n" ..msg2.. "\n" ..msg3, true)
+		end
 	end
 
 	if #delayedMessages > 0 then
