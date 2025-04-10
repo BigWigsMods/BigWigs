@@ -555,7 +555,33 @@ function boss:Enable(isWipe)
 		if self:GetEncounterID() then
 			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
+		else
+			if self.privateAuraSoundOptions and not self.privateAuraSounds then -- Some modules don't engage (trash modules) so we register them here
+				self.privateAuraSounds = {}
+				local soundModule = plugins.Sounds
+				if soundModule then
+					local default = soundModule:GetDefaultSound("privateaura")
+					for _, opt in next, self.privateAuraSoundOptions do
+						local key = ("pa_%d"):format(opt[1])
+						local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
+						if sound then
+							for i = 1, #opt do
+								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
+									spellID = opt[i],
+									unitToken = "player",
+									soundFileName = sound,
+									outputChannel = "master",
+								})
+								if privateAuraSoundId then
+									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
+								end
+							end
+						end
+					end
+				end
+			end
 		end
+
 		local _, class = UnitClass("player")
 		if class == "WARLOCK" or class == "HUNTER" then
 			petUtilityFrame:RegisterUnitEvent("UNIT_PET", "player")
@@ -1422,10 +1448,11 @@ do
 	function boss:Engage(noEngage)
 		if self:IsEnabled() and not self:IsEngaged() then
 			self.isEngaged = true
+			local encounterID = self:GetEncounterID()
 
-			self:Debug(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
+			self:Debug(":Engage", "noEngage:", noEngage, encounterID, self.moduleName)
 
-			if self.privateAuraSoundOptions and not self.privateAuraSounds then
+			if encounterID and self.privateAuraSoundOptions and not self.privateAuraSounds then
 				self.privateAuraSounds = {}
 				local soundModule = plugins.Sounds
 				if soundModule then
