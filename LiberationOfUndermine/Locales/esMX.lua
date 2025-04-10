@@ -4,20 +4,20 @@ if L then
 	L.custom_on_fade_out_bars = "Barras que desaparecen"
 	L.custom_on_fade_out_bars_desc = "Barras que desaparecen del jefe que esta fuera de rango."
 
-	L.bomb_explosion = "Explosion de la bomba"
-	L.bomb_explosion_desc = "Muestra el tiempo de explosion de la bomba."
+	L.bomb_explosion = "Explosión de la bomba"
+	L.bomb_explosion_desc = "Muestra el tiempo de explosión de la bomba."
 
 	L.eruption_stomp = "Pisotón" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "Salva" -- Short for Thunderdrum Salvo
 
-	L.static_charge_high = "%d - Te estas moviendo mucho"
+	L.static_charge_high = "%d - Te estás moviendo mucho"
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "esMX")
 if L then
 	L.amplification = "Amplificadores"
 	L.echoing_chant = "Ecos Resonantes"
-	L.faulty_zap = "Voltajes persistentes"
+	L.faulty_zap = "Voltajes Persistentes"
 	L.sparkblast_ignition = "Barriles"
 end
 
@@ -62,7 +62,7 @@ end
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "esMX")
 if L then
 	L.rewards = "Premios" -- Fabulous Prizes
-	L.rewards_desc = "Cuando dos fichas se entregan, el \"Premio Fabuloso\" es repartido.\nMessages will let you know which one has been rewarded.\nThe infobox will show which prizes are still available."
+	L.rewards_desc = "Cuando dos fichas se entregan, el \"Premio Fabuloso\" es repartido.\nMensajes te harán saber que premio ha sido entregado.\nEl cuadro de información te mostrará que premios aún están disponibles."
 	L.deposit_time = "Tiempo para depositar:" -- Timer that indicates how long you have left to deposit the tokens.
 
 	L.pay_line = "Monedas"
@@ -102,7 +102,7 @@ if L then
 	L.total_destruction = "DESTRUCCIÓN!"
 
 	L.duds = "DÑD" -- Short for 1500-Pound "Dud"
-	L.all_duds_detontated = "TODAS las DÑD exlotadas!"
-	L.duds_remaining = "%d |4DÑD faltantes:DÑD faltantes;" -- 1 Dud Remains | 2 Duds Remaining
-	L.duds_soak = "Pisa DÑD (%d left)"
+	L.all_duds_detontated = "TODAS las DÑD han sido explotadas!"
+	L.duds_remaining = "%d |4DÑD faltante:DÑD faltantes;" -- 1 Dud Remains | 2 Duds Remaining
+	L.duds_soak = "Pisa DÑD (%d vivas aún)"
 end
