@@ -285,7 +285,7 @@ do
 		[533] = public.isVanilla and c or wotlk, -- Naxxramas
 		[249] = public.isVanilla and c or wotlk, -- Onyxia's Lair
 		[568] = (public.isTBC or public.isWrath) and bc or lw_cata, -- Zul'Aman
-		[-947] = public.isClassic and c or bfa, -- Azeroth (Fake Menu)
+		[-947] = public.isRetail and bfa or (public.isVanilla and not public.isSeasonOfDiscovery and c) or nil, -- Azeroth (Fake Menu)
 
 		--[[ BigWigs: Classic ]]--
 		[48] = public.isSeasonOfDiscovery and c or nil, -- Blackfathom Deeps [Classic Season of Discovery Only]
