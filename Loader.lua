@@ -1405,7 +1405,7 @@ do
 		itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
 		--esES = "Spanish (esES)",
-		esMX = "Spanish (esMX)",
+		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
 		ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
@@ -1413,13 +1413,13 @@ do
 	local realms = {
 		--[542] = locales.frFR, -- frFR
 		[3207] = locales.ptBR, [3208] = locales.ptBR, [3209] = locales.ptBR, [3210] = locales.ptBR, [3234] = locales.ptBR, -- ptBR
-		[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
+		--[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
 		[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
 		--[1378] = locales.esES, [1379] = locales.esES, [1380] = locales.esES, [1381] = locales.esES, [1382] = locales.esES, [1383] = locales.esES, -- esES
 		--[1384] = locales.esES, [1385] = locales.esES, [1386] = locales.esES, [1387] = locales.esES, [1395] = locales.esES, -- esES
 	}
 	local criticalList = {
-		[locales.esMX] = true,
+		--[locales.esMX] = true,
 	}
 
 	local language = locales[myLocale]
