@@ -176,7 +176,7 @@ L.healer = "|cFFFF0000Solo alertas para sanadores.|r "
 L.tankhealer = "|cFFFF0000Solo alertas para tanque y sanador.|r "
 L.dispeller = "|cFFFF0000Alertas para dispelear únicamente.|r "
 
-Sharing.lua
+--Sharing.lua
 L.import = "Importar"
 L.import_info = "Después de ingresar la cadena de importación, puedes seleccionar que opciones quieres importar.\nSi no hay opciones disponibles en la cadena de importación estas no podrán ser seleccionadas.\n\n|cffff4411Este importe solo afectará las opciones generales y no afecta ninguna opcion especifica de jefes.|r"
 L.import_info_active = "Elige que partes te gustaría importar y luego presiona el botom de importar."
