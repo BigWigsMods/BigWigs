@@ -132,11 +132,11 @@ L.link = "Enlace"
 L.link_with = "Enlazado con %s"
 L.link_with_icon = "Enlazado con |T13700%d:0|t%s"
 L.link_with_rticon = "{rt%d}Enlazado con %s"
-L.link_both = "%s + %s están linkeados"
-L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s están linkeados."
+L.link_both = "%s + %s están enlazados"
+L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s están enlazados"
 L.link_removed = "Enlace eliminado"
-L.link_say_option_name = "Repetir 'Linkeado' mensaje en decir"
-L.link_say_option_desc = "Repetir el mensaje en decir diciendo con quien estas linkeado."
+L.link_say_option_name = "Repetir 'enlazado' mensaje en decir"
+L.link_say_option_desc = "Repetir el mensaje en decir diciendo con quien estas enlazado."
 
 -- Abbreviated numbers
 L.amount_one = "%dB" -- Miles de millones 1,000,000,000
