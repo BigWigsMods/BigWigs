@@ -236,6 +236,7 @@ L.fastest = "Più Veloce"
 L.fastest_desc = "La vittoria più veloce e la data in cui è successa (Anno/Mese/Giorno)"
 L.first = "Primo"
 L.first_desc = "La prima volta che sei stato vittorioso contro questo Boss, formattato come:\n[Numero di sconfitte prima della prima vittoria] - [Durata combattimento] - [Anno/Mese/Giorno della vittoria]"
+
 -- Difficulty levels for statistics display on bosses
 L.unknown = "Non Trovato"
 L.LFR = "RDI"

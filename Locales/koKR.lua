@@ -237,6 +237,7 @@ L.fastest = "최고 기록"
 L.fastest_desc = "최고 승리 시간과 그 날짜입니다 (년/월/일)."
 L.first = "최초 승리"
 L.first_desc = "이 보스 전투에서 처음 승리한 시간, 형식은 다음과 같습니다:\n[최초 승리 전 패배 횟수] - [전투 지속 시간] - [승리한 년/월/일]"
+
 -- Difficulty levels for statistics display on bosses
 L.unknown = "알 수 없음"
 L.LFR = "공찾"

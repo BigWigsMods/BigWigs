@@ -237,6 +237,7 @@ L.fastest = "最快"
 L.fastest_desc = "与该首领战斗最快获胜及发生的日期（年/月/日）"
 L.first = "首胜"
 L.first_desc = "你在与该首领战斗时首次获胜的详细信息，格式为：\n[首次获胜前被团灭次数] - [战斗时间] - [年/月/日 首胜]"
+
 -- Difficulty levels for statistics display on bosses
 L.unknown = "未知"
 L.LFR = "随机团队"

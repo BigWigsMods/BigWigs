@@ -237,6 +237,7 @@ L.fastest = "Schnellster"
 L.fastest_desc = "Der schellste Sieg und das Datum wann dieser war (Jahr/Monat/Tag)"
 L.first = "Erster"
 L.first_desc = "Der erste Sieg über diesen Gegner, folgend formatiert:\n[Anzahl der Niederlagen vor dem ersten Sieg] - [Kampfdauer] - [Jahr/Monat/Tag des Sieges]"
+
 -- Difficulty levels for statistics display on bosses
 L.unknown = "Unbekannt"
 L.LFR = "LFR"

@@ -237,6 +237,7 @@ L.fastest = "最佳"
 L.fastest_desc = "你與該首領的最快獲勝紀錄，和創下紀錄的日期 (年/月/日)"
 L.first = "首勝"
 L.first_desc = "你與該首領的首次獲勝紀錄，格式是：:\n[首勝前的戰敗次數] - [戰鬥時長] - [獲勝的年/月/日]"
+
 -- Difficulty levels for statistics display on bosses
 L.unknown = "未知"
 L.LFR = "隨機團隊"

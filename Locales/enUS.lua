@@ -236,6 +236,7 @@ L.fastest = "Fastest"
 L.fastest_desc = "The fastest victory and the date it occured on. (Year/Month/Day)"
 L.first = "First"
 L.first_desc = "The first time you were victorious against this boss encounter, formatted as:\n[Amount of defeats prior to first victory] - [Combat duration] - [Year/Month/Day of victory]"
+
 -- Difficulty levels for statistics display on bosses
 L.unknown = "Unknown"
 L.LFR = "LFR"
