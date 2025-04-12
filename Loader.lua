@@ -14,8 +14,8 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 381
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 1, 27},
-	["BigWigs_Classic"] = {11, 1, 6},
+	["LittleWigs"] = {11, 1, 28},
+	["BigWigs_Classic"] = {11, 1, 10},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 2},
 	["BigWigs_Cataclysm"] = {11, 1, 2},
 }
@@ -1528,9 +1528,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20250410193935" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "11.1.15" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20250410000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20250411230356" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "11.1.16" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20250411000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 17
