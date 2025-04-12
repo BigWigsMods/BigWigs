@@ -97,7 +97,7 @@ L = BigWigs:NewBossLocale("Chrome King Gallywix", "zhCN")
 if L then
 	L.story_phase_trigger = "怎么，自以为胜利了？" -- 怎么，自以为胜利了？呵，我给你准备了惊喜。
 
-	L.scatterblast_canisters = "裂破分摊" -- 使用技能名“裂破弹药筒”前2字做提醒
+	L.scatterblast_canisters = "弹药筒分摊" -- 因为“裂破弹药筒”和“散射弹药筒”使用相同本地化，改成“弹药筒”
 	L.fused_canisters = "引线分摊" -- 使用技能名“引线弹药筒”前2字做提醒
 	L.tick_tock_canisters = "分摊"
 	L.total_destruction = "毁灭！" -- 毁灭一切！！！
