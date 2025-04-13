@@ -67,13 +67,13 @@ L.you_die = "你将死亡" -- You will die
 L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "下个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s 正在着陆" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
---L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "着陆" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "可以起飞"  --改为简短提示
 L.bosses_too_close = "首领过于靠近" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
---L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
---L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
---L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
---L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.keep_moving = "保持移动" -- An ability that forces you to keep moving or you will take damage
+L.stand_still = "禁止移动" -- An ability that forces you to stand still or you will take damage
+L.safe_to_stop = "停止移动" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "可以移动" -- When an ability to forces you to stand still fades from you, allowing you to move again
 
 -- Add related
 L.add_spawned = "增援出现" -- singular
@@ -250,9 +250,9 @@ L.spike = "尖刺" -- Short for any ability with the name "spike" in it e.g. "Gl
 L.spikes = "尖刺" -- Plural of L.spike
 L.spread = "分散" -- An ability that forces you to spread out away from other players, or you might damage them
 L.tank_combo = "坦克连击" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
---L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
---L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+L.tank_debuff = "坦克减益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "坦克分摊" -- Similar to L.soak but only applies to tanks
 L.tentacle = "触手" -- Used for bosses that summon tentacles
 L.tentacles = "触手" -- Plural of L.tentacle
 L.waves = "波浪" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
