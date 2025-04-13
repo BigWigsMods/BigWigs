@@ -66,9 +66,14 @@ L.cancelled = "%s отменено" -- Spell Cancelled
 L.you_die = "Умираешь" -- You will die
 L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Следующая способность" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
-L.landing = "%s приземляется" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.boss_landing = "%s приземляется" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+--L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Можешь лететь"
 L.bosses_too_close = "Разведи боссов" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc. -- changed translation meaning, but intent is the same
+--L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
+--L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
+--L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+--L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
 
 -- Add related
 L.add_spawned = "Помощник появился" -- singular
@@ -177,7 +182,6 @@ L.autotalk_generic_desc = "Автоматический выбирать вар�
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Поглощение лечения" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "Поглощения лечения" -- Plural of L.heal_absorb
-L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Лазеры" -- Plural of L.lasers
 L.beam = "Луч" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
@@ -227,20 +231,30 @@ L.mind_control_short = "КР" -- Short version of Mind Control, mainly for bars
 L.soak = "Соак" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Соки" -- Plural of L.soak
 L.spell_reflection = "Отражение заклинаний" -- Any ability that reflects spells
-L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+L.blind = "Ослепление" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Избегай" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Исступление" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Фиксации" -- Plural of L.fixate
 L.group_damage = "Пати Урон" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Потеря здоровья" -- Any ability that drains health from the player
+L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
+--L.parasites = "Parasites" -- Plural of L.parasite
+L.pull_in = "Притяжка" -- An ability that pulls you in towards the boss against your will
 L.raid_damage = "Рейд Урон" -- Any ability that causes damage to every player in the raid
 L.smash = "Удар" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
+L.soak = "Соак" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "Соки" -- Plural of L.soak
 L.spike = "Шип" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Шипы" -- Plural of L.spike
+L.spread = "Спредай" -- An ability that forces you to spread out away from other players, or you might damage them
+L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+--L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+--L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
+--L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Щупальце" -- Used for bosses that summon tentacles
 L.tentacles = "Щупальца" -- Plural of L.tentacle
 L.waves = "Пельмени" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean -- technically speaking "waves" is "Волны" but current tl is a very common name
