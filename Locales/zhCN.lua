@@ -475,7 +475,7 @@ L.colors = "颜色"
 
 L.text = "文本"
 L.textShadow = "文本阴影"
-L.normal = "标准"
+L.normal = "普通"
 L.emphasized = "醒目"
 
 L.reset = "重置"
