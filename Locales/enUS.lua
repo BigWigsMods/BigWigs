@@ -93,7 +93,6 @@ L.compartmentMenu = "No compartment icon"
 L.compartmentMenu_desc = "Turning this option off will make BigWigs show up in the addon compartment menu. We recommend leaving this option enabled."
 L.configure = "Configure"
 L.resetPositions = "Reset positions"
-L.colors = "Colors"
 L.selectEncounter = "Select encounter"
 L.privateAuraSounds = "Private Aura Sounds"
 L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when you are targeted with the ability."
@@ -153,7 +152,7 @@ L.CASTBAR_COUNTDOWN = "Countdown (cast bars only)"
 L.CASTBAR_COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for the last 5 seconds of the cast bars."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "Sound"
+L.SOUND = L.sound
 L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
 L.CASTBAR = "Cast Bars"
 L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
@@ -166,7 +165,7 @@ L.NAMEPLATE_desc = "If enabled, features such as icons and text related to this 
 L.PRIVATE = "Private Aura"
 L.PRIVATE_desc = "These settings are for general cast alerts and bars only!\n\nYou can change the sound to play when you are targeted by this ability by selecting \"Private Aura Sounds\" in the \"Select encounter\" dropdown in the top right."
 
-L.advanced = "Advanced options"
+L.advanced_options = "Advanced options"
 L.back = "<< Back"
 
 L.tank = "|cFFFF0000Tank alerts only.|r "
@@ -357,7 +356,7 @@ L.emphasizeAt = "Emphasize at... (seconds)"
 L.growingUpwards = "Grow upwards"
 L.growingUpwardsDesc = "Toggle growing upwards or downwards from the anchor."
 L.texture = "Texture"
-L.emphasize = "Emphasize"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "Size Multiplier"
 L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
 
@@ -368,9 +367,6 @@ L.emphasizedBars = "Emphasized bars"
 L.align = "Align"
 L.alignText = "Align Text"
 L.alignTime = "Align Time"
-L.left = "Left"
-L.center = "Center"
-L.right = "Right"
 L.time = "Time"
 L.timeDesc = "Whether to show or hide the time left on the bars."
 L.textDesc = "Whether to show or hide the text displayed on the bars."
@@ -474,7 +470,7 @@ L.colors = "Colors"
 
 L.text = "Text"
 L.textShadow = "Text Shadow"
-L.normal = "Normal"
+L.expiring_normal = "Normal"
 L.emphasized = "Emphasized"
 
 L.reset = "Reset"
@@ -517,7 +513,7 @@ L.resetAllCountdownDesc = "If you've selected custom countdown voices for any bo
 -- InfoBox.lua
 --
 
-L.infoBox = "InfoBox"
+L.infobox_short = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -714,8 +710,6 @@ L.Warning = "Warning"
 L.onyou = "A spell, buff, or debuff is on you"
 L.underyou = "You need to move out of a spell under you"
 L.privateaura = "Whenever a 'Private Aura' is on you"
-
-L.sound = "Sound"
 
 L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module."
 L.resetSoundDesc = "Resets the above sounds to their defaults."

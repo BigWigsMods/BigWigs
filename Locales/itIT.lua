@@ -87,14 +87,13 @@ L.optionsKey = "ID: %s" -- L'ID che i messaggi/barre/opzioni useranno
 L.raidBosses = "Boss delle Incursioni"
 L.dungeonBosses = "Boss delle Spedizioni"
 L.introduction = "Benvenuto in BigWigs, dove imposti i combattimenti dei boss. Allacciati le cinture, Prendi le patatine e goditi il viaggio. Non mangia i tuoi bambini, ma ti aiuta a preparare i nuovi boss in modo completo per le tue incursioni."
-L.sound = "Suoni"
+L.sound = "Suono"
 L.minimapIcon = "Icona MiniMappa"
 L.minimapToggle = "Visualizza/Nasconde l'icona di BigWigs nella minimappa."
 L.compartmentMenu = "No Icona menu addon"
 L.compartmentMenu_desc = "Disattivando quest'opzione farà in modo che BigWigs figurerà nella zona addon del menu. Consigliamo di lasciare quest'opzione abilitata."
 L.configure = "Configura"
 L.resetPositions = "Ripristina le Posizioni"
-L.colors = "Colori"
 L.selectEncounter = "Seleziona il Combattimento"
 L.privateAuraSounds = "Suoni per le Aura Private"
 L.privateAuraSounds_desc = "Le Aure Private non possono essere visualizzate normalmente, ma puoi impostare un suono che suonerà quando sei il bersaglio dell'abilità."
@@ -154,7 +153,7 @@ L.CASTBAR_COUNTDOWN = "Conto alla rovescia (Solo barre dei lanci)"
 L.CASTBAR_COUNTDOWN_desc = "Se abilitato, un avviso verbale e visivo saranno aggiunti per negli ultimi 5 secondi delle barre dei lanci."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "Suono"
+L.SOUND = L.sound
 L.SOUND_desc = "Le abilità dei boss di solito riproducono dei suoni per aiutarti ad avvertirle. Se disattivi questa opzione non verrà riprodotto alcun suono."
 L.CASTBAR = "Barra di lancio"
 L.CASTBAR_desc = "Le barre di lancio sono mostrate su alcuni boss, per avvertirti di abilità in arrivo. Se questa abilità è accompagnata da una barra di lancio che vuoi nascondere, disattiva questa opzione."
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "Se Abilitata, opzioni come icone e testi relativi a questa a
 L.PRIVATE = "Auree privata"
 L.PRIVATE_desc = "Le auree private non possono essere tracciate normalmente, ma il suono ''su di te'' può essere impostato nella tabella dei suoni."
 
-L.advanced = "Opzioni Avanzate"
+L.advanced_options = "Opzioni Avanzate"
 L.back = "<< Indietro"
 
 L.tank = "|cFFFF0000Messaggio solo per Difensori.|r "
@@ -357,7 +356,7 @@ L.emphasizeAt = "Enfatizza a... (secondi)"
 L.growingUpwards = "Cresci verso l'altro"
 L.growingUpwardsDesc = "Attiva o disattiva il riempimento crescente o decrescente rispetto al punto di ancoraggio."
 L.texture = "Texture"
-L.emphasize = "Enfatizza"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "Moltiplicatore di dimensioni"
 L.emphasizeMultiplierDesc = "Se disabiliti le barre muovendole dall'ancora di enfatizzazione, questa opzione deciderà la dimensione delle barre enfatizzate moltiplicando la dimensione delle barre normali."
 
@@ -368,9 +367,6 @@ L.emphasizedBars = "Barre Enfatizzate"
 L.align = "Allineamento"
 L.alignText = "Allinea il Testo"
 L.alignTime = "Allinea il Tempo"
-L.left = "Sinistra"
-L.center = "Centro"
-L.right = "Destra"
 L.time = "Tempo Rimasto"
 L.timeDesc = "Visualizza o nasconde il tempo rimasto sulle barre."
 L.textDesc = "Mostra o nascondi il testo delle barre."
@@ -474,7 +470,7 @@ L.colors = "Colori"
 
 L.text = "Testo"
 L.textShadow = "Ombra Testo"
-L.normal = "Normale"
+L.expiring_normal = "Normale"
 L.emphasized = "Enfatizzato"
 
 L.reset = "Reimposta"
@@ -517,7 +513,7 @@ L.resetAllCountdownDesc = "Se hai scelto delle voci personalizzate in qualsiasi 
 -- InfoBox.lua
 --
 
-L.infoBox = "InfoBox"
+L.infobox_short = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -714,8 +710,6 @@ L.Warning = "Avviso"
 L.onyou = "Un'Incantesimo, un potenziamento o un depotenziamento su di te"
 L.underyou = "Devi muoverti fuori dall'incantesimo sotto di te"
 L.privateaura = "Quando una 'Aura Privata' è su di te"
-
-L.sound = "Suono"
 
 L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo."
 L.resetSoundDesc = "Reimposta i suoni precedenti ai loro valori predefiniti."

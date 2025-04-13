@@ -15,7 +15,7 @@ if not plugin then return end
 local L = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
-plugin.displayName = L.infoBox
+plugin.displayName = L.infobox_short
 
 local min = math.min
 
@@ -189,7 +189,7 @@ do
 	header:SetShadowOffset(1, -1)
 	header:SetTextColor(1,0.82,0,1)
 	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
-	header:SetText(L.infoBox)
+	header:SetText(L.infobox_short)
 	display.title = header
 
 	local headerFrame = CreateFrame("Frame", nil, display)
@@ -553,7 +553,7 @@ do
 		for i = 1, 40, 2 do
 			display.bar[i]:Hide()
 		end
-		display.title:SetText(L.infoBox)
+		display.title:SetText(L.infobox_short)
 		self:UnregisterMessage("BigWigs_SetInfoBoxTitle")
 		self:UnregisterMessage("BigWigs_SetInfoBoxLine")
 		self:UnregisterMessage("BigWigs_SetInfoBoxTable")
@@ -586,7 +586,7 @@ end
 
 function plugin:Test()
 	inTestMode = true
-	self:BigWigs_ShowInfoBox(nil, self, L.infoBox, 5)
+	self:BigWigs_ShowInfoBox(nil, self, L.infobox_short, 5)
 	self:BigWigs_SetInfoBoxLine(nil, nil, 1, L.test)
 	self:BigWigs_SetInfoBoxLine(nil, nil, 2, 1)
 	self:BigWigs_SetInfoBoxLine(nil, nil, 3, L.test)

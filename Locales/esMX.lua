@@ -94,7 +94,6 @@ L.compartmentMenu = "Sin icono de compartimento"
 L.compartmentMenu_desc = "Al desactivar esta opción, BigWigs aparecerá en el menú de compartimiento de addon. Recomendamos dejar esta opción activada."
 L.configure = "Configurar"
 L.resetPositions = "Restablecer posiciones"
-L.colors = "Colores"
 L.selectEncounter = "Seleccionar encuentro"
 L.privateAuraSounds = "Sonidos de aura privada"
 L.privateAuraSounds_desc = "Las auras privadas no pueden ser trackeadas correctamente, pero puedes asignar un sonido para cuando seas objetivo de la habilidad."
@@ -154,7 +153,7 @@ L.CASTBAR_COUNTDOWN = "Cuenta regresiva (sólo barras de lanzamiento)"
 L.CASTBAR_COUNTDOWN_desc = "Si está activado, se agregará una cuenta regresiva vocal y visual durante los últimos 5 segundos de las barras de lanzamiento."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "Sonido"
+L.SOUND = L.sound
 L.SOUND_desc = "Las habilidades de jefes habitualmente reproducen sonidos para ayudarte con ellas. Si desactivas esta opción, ningún sonido adjunto sonará."
 L.CASTBAR = "Barras de lanzamiento"
 L.CASTBAR_desc = "Barras de lanzamiento se muestran a veces con ciertos jefes, normalmente para atraer la atención de que una habilidad crítica está en camino. Si esta habilidad está acompañada por una barra de lanzamiento que quieres ocultar, desactiva esta opción."
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "Si se activa, algunas funciones, como iconos y texto relacio
 L.PRIVATE = "Aura privada"
 L.PRIVATE_desc = "Las auras privadas no se pueden rastrear normalmente, pero el sonido \"sobre ti\" (aviso) se puede configurar en la pestaña Sonido."
 
-L.advanced = "Opciones avanzadas"
+L.advanced_options = "Opciones avanzadas"
 L.back = "<< Volver"
 
 L.tank = "|cFFFF0000Solo alertas para tanques.|r "
@@ -358,7 +357,7 @@ L.emphasizeAt = "Enfatiza en... (segundos)"
 L.growingUpwards = "Crecer hacia arriba"
 L.growingUpwardsDesc = "Alterna el crecimiento hacia arriba o abajo desde el punto de anclaje."
 L.texture = "Textura"
-L.emphasize = "Enfatizar"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "Multiplicador de tamaño"
 L.emphasizeMultiplierDesc = "Si desactiva las barras moviéndose el anclaje enfatizado, esta opción decidirá el tamaño de las barras enfatizadas multiplicando el tamaño de las barras normales."
 
@@ -369,9 +368,6 @@ L.emphasizedBars = "Barras enfatizadas"
 L.align = "Alinear"
 L.alignText = "Alinear el texto"
 L.alignTime = "Alinear el tiempo"
-L.left = "Izquierda"
-L.center = "Centro"
-L.right = "Derecha"
 L.time = "Tiempo"
 L.timeDesc = "Muestra u oculta el tiempo que queda en las barras."
 L.textDesc = "Muestra u oculta el texto que aparece en las barras."
@@ -475,7 +471,7 @@ L.colors = "Colores"
 
 L.text = "Texto"
 L.textShadow = "Sombra de texto"
-L.normal = "Normal"
+L.expiring_normal = "Normal"
 L.emphasized = "Enfatizado"
 
 L.reset = "Restablecer"
@@ -518,7 +514,7 @@ L.resetAllCountdownDesc = "Si has seleccionado voces de cuenta regresiva persona
 -- InfoBox.lua
 --
 
-L.infoBox = "Caja de información"
+L.infobox_short = "Caja de información"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -715,8 +711,6 @@ L.Warning = "Aviso"
 L.onyou = "Una hechizo, efecto o perjuicio está en ti"
 L.underyou = "Debes moverte fuera del hechizo que está debajo de ti"
 L.privateaura = "Cuando un 'Aura Privada' esta sobre ti"
-
-L.sound = "Sonido"
 
 L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del suministrado por el módulo."
 L.resetSoundDesc = "Restablece los sonidos anteriores a sus valores predeterminados."

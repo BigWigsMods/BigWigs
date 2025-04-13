@@ -94,7 +94,6 @@ L.compartmentMenu = "Sem icone de compartimento"
 L.compartmentMenu_desc = "Desativar esta opção fará com que BigWigs apareça no menu do compartimento de Addons. Recomendamos deixar esta opção habilitada."
 L.configure = "Configurar"
 L.resetPositions = "Resetar posições"
-L.colors = "Cores"
 L.selectEncounter = "Selecionar Encontro"
 L.privateAuraSounds = "Sons de Auras Privadas"
 L.privateAuraSounds_desc = "Auras privadas não podem ser rastreadas normalmente, mas você pode definir um som para ser reproduzido quando você for alvo da habilidade."
@@ -154,7 +153,7 @@ L.CASTBAR_COUNTDOWN = "Contagem regressiva (Apenas barras de lançamento)"
 L.CASTBAR_COUNTDOWN_desc = "Se ativado, uma contagem regressiva vocal e visual será adicionada nos últimos 5 segundos das barras de lançamento."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "Som"
+L.SOUND = L.sound
 L.SOUND_desc = "Habilidades de chefe normalmente tocam sons para lhe ajudar a vê-las. Se você desabilitar esta opção, nenhum dos sons anexados a ele irão tocar."
 L.CASTBAR = "Barras de Conjuração"
 L.CASTBAR_desc = "Barras de Conjuração são mostradas as vezes em alguns chefes, normalmente para chamar a atenção para uma habilidade crítica. Se essa habilidade vem acompanhada de uma barra de conjuração que você quer esconder, desabilite essa opção."
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "Se habilitado, recursos como ícones e texto relacionados a 
 L.PRIVATE = "Aura Privada"
 L.PRIVATE_desc = "Auras privadas não podem ser rastreadas normalmente, mas o som \"em você\" (Aviso) pode ser definido na guia Som."
 
-L.advanced = "Opções Avançadas"
+L.advanced_options = "Opções Avançadas"
 L.back = "<< Voltar"
 
 L.tank = "|cFFFF0000Alertas para Tanques apenas.|r "
@@ -358,7 +357,7 @@ L.emphasizeAt = "Enfatizar em... (segundos)"
 L.growingUpwards = "Crescimento para cima"
 L.growingUpwardsDesc = "Alterna crescimento para cima ou para baixo a partir da âncora."
 L.texture = "Textura"
-L.emphasize = "Enfatizar"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "Multiplicador de Tamanho"
 L.emphasizeMultiplierDesc = "Se você desabilitar as barras movendo-as para a âncora em destaque, esta opção irá decidir qual tamanho as barras em destaque terão, ao se multiplicar o tamanho das barras normais."
 
@@ -369,9 +368,6 @@ L.emphasizedBars = "Barras enfatizadas"
 L.align = "Alinhamento"
 L.alignText = "Alinhar texto"
 L.alignTime = "Alinhar tempo"
-L.left = "Esquerda"
-L.center = "Centro"
-L.right = "Direita"
 L.time = "Tempo"
 L.timeDesc = "Mostra ou oculta o tempo restante nas barras."
 L.textDesc = "Quando mostrar ou esconder o texto mostrado nas barras."
@@ -475,7 +471,7 @@ L.colors = "Cores"
 
 L.text = "Texto"
 L.textShadow = "Sombra do texto"
-L.normal = "Normal"
+L.expiring_normal = "Normal"
 L.emphasized = "Enfatizado"
 
 L.reset = "Reiniciar"
@@ -518,7 +514,7 @@ L.resetAllCountdownDesc = "Se você selecionou alguma voz customizada de contage
 -- InfoBox.lua
 --
 
-L.infoBox = "Caixa de Informações"
+L.infobox_short = "Caixa de Informações"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -715,8 +711,6 @@ L.Warning = "Aviso"
 L.onyou = "Um feitiço, buff, ou debuff em você"
 L.underyou = "Você precisa se mover do feitiço embaixo de você"
 L.privateaura = "Sempre que uma 'Aura Privada' está em você"
-
-L.sound = "Som"
 
 L.customSoundDesc = "Reproduzir um som personalizado ao invés do padrão do módulo."
 L.resetSoundDesc = "Reinicia os sons acima para os padrões."

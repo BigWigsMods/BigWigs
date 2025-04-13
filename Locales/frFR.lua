@@ -94,7 +94,6 @@ L.compartmentMenu = "Aucun icône de compartiment"
 L.compartmentMenu_desc = "Désactiver cette option rendra Bigwigs visible dans le menu compartiment addon. Nous recommendons de laisser cette option activée."
 L.configure = "Configuration"
 L.resetPositions = "Réinitialiser les positions"
-L.colors = "Couleurs"
 L.selectEncounter = "Sélectionnez une rencontre"
 L.privateAuraSounds = "Sons privés d'aura"
 L.privateAuraSounds_desc = "Les auras privées ne peuvent être trackées normalement, mais vous pouvez enregistrer un son qui sera joué lorsque vous serez ciblé par la compétence."
@@ -154,7 +153,7 @@ L.CASTBAR_COUNTDOWN = "Compte à rebours (uniquement pour les barres d'incantati
 L.CASTBAR_COUNTDOWN_desc = "Si activé, un compte à rebours vocal et visuel sera ajouté lors des 5 dernières secondes de la barre d'incantation."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "Son"
+L.SOUND = L.sound
 L.SOUND_desc = "Les techniques des boss sont habituellement accompagnées de sons afin de vous aider à les repérer. Si vous désactivez cette option, aucun des sons qui l'accompagnent ne seront joués."
 L.CASTBAR = "Barres d'incantation"
 L.CASTBAR_desc = "Les barres d'incantation sont parfois affichées sur certains boss, habituellement pour attirer l'attention sur une technique critique imminente. Si cette technique est accompagnée d'une barre d'incantation que vous souhaitez cacher, désactivez cette option."
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "Si activé, les fonctionnalités telles que les icônes et l
 L.PRIVATE = "Aura personnelle"
 L.PRIVATE_desc = "Les auras personnelles ne peuvent pas être suivies, cependant le son \"sur vous\" (Avertissement) peut être activé dans l'onglet Son."
 
-L.advanced = "Options avancées"
+L.advanced_options = "Options avancées"
 L.back = "<< Retour"
 
 L.tank = "|cFFFF0000Alertes pour tank uniquement.|r "
@@ -358,7 +357,7 @@ L.emphasizeAt = "Mettre en évidence à... (secondes)"
 L.growingUpwards = "Ajouter vers le haut"
 L.growingUpwardsDesc = "Permute le sens d'ajout des éléments par rapport à l'ancre entre vers le haut et vers le bas."
 L.texture = "Texture"
-L.emphasize = "Mise en évidence"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "Multiplicateur de taille"
 L.emphasizeMultiplierDesc = "Si vous désactivez le déplacement des barres vers l'ancre de mise en évidence, cette option décidera la taille des barres mises en évidence en multipliant la taille des barres normales."
 
@@ -369,9 +368,6 @@ L.emphasizedBars = "Barres en évidence"
 L.align = "Alignement"
 L.alignText = "Alignement du texte"
 L.alignTime = "Alignement du temps"
-L.left = "Gauche"
-L.center = "Centre"
-L.right = "Droite"
 L.time = "Temps"
 L.timeDesc = "Affiche ou non le temps restant sur les barres."
 L.textDesc = "Affiche ou non le texte des barres."
@@ -475,7 +471,7 @@ L.colors = "Couleurs"
 
 L.text = "Texte"
 L.textShadow = "Ombre du texte"
-L.normal = "Normal"
+L.expiring_normal = "Normal"
 L.emphasized = "En évidence"
 
 L.reset = "Réinitialiser"
@@ -518,7 +514,7 @@ L.resetAllCountdownDesc = "Si vous avez sélectionné des voix de compte à rebo
 -- InfoBox.lua
 --
 
-L.infoBox = "Boîte d'infos"
+L.infobox_short = "Boîte d'infos"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -715,8 +711,6 @@ L.Warning = "Avertissement"
 L.onyou = "Un sort, amélioration ou affaiblissement est sur vous"
 L.underyou = "Vous devez bouger hors d'un sort qui se trouve en dessous de vous"
 L.privateaura = "Lorsqu'une 'aura privée' est sur vous"
-
-L.sound = "Son"
 
 L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module."
 L.resetSoundDesc = "Réinitialise les sons ci-dessous à leurs valeurs par défaut."

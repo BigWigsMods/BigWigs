@@ -94,7 +94,6 @@ L.compartmentMenu = "Kein Addonmenü Icon"
 L.compartmentMenu_desc = "Durch Deaktivieren dieser Option wird BigWigs im Addons Menü an der Minimap angezeigt. Wir empfehlen, diese Option aktiviert zu lassen."
 L.configure = "Einstellungen"
 L.resetPositions = "Positionen zurücksetzen"
-L.colors = "Farben"
 L.selectEncounter = "Wähle Begegnung"
 L.privateAuraSounds = "Private Aurasounds"
 L.privateAuraSounds_desc = "Private Auren können nicht normal verfolgt werden, aber es kann ein wiederzugebender Sound festgelegt werden, wenn Du von der Fähigkeit betroffen bist."
@@ -152,7 +151,7 @@ L.COUNTDOWN = "Countdown"
 L.COUNTDOWN_desc = "Wenn aktiviert, wird ein hör- und sichtbarer Countdown für die letzten 5 Sekunden hinzugefügt. Stell Dir vor es zählt jemand runter \"5... 4... 3... 2... 1...\" mit einer großen Zahl in der Mitte des Bildschirms."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "Sound"
+L.SOUND = L.sound
 L.SOUND_desc = "Bossfähigkeiten nutzen in der Regel Sounds um wahrgenommen zu werden. Wenn diese Option deaktiviert wird, werden die zugehörigen Sounds nicht abgespielt."
 L.CASTBAR = "Zauberbalken"
 L.CASTBAR_desc = "Manchmal werden Zauberbalken bei diversen Bossen angezeigt um auf wichtige Fähigkeiten aufmerksam zu machen. Wenn diese Zauberbalken nicht angezeigt werden sollen, muss diese Option deaktiviert werden."
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "Wenn aktiviert, werden Funktionen wie Symbole und Text zu di
 L.PRIVATE = "Private Aura"
 L.PRIVATE_desc = "Diese Einstellungen sind nur für allgemeine Zauberwarnungen und Leisten!\n\nDu kannst den abzuspielenden Sound wenn Du von dieser Fähigkeit betroffen bist unter \"Private Aurasounds\" im \"Wähle Begegnung\" Dropdown-Menü oben rechts ändern."
 
-L.advanced = "Erweiterte Optionen"
+L.advanced_options = "Erweiterte Optionen"
 L.back = "<< Zurück"
 
 L.tank = "|cFFFF0000Warnungen nur für Tanks.|r "
@@ -358,7 +357,7 @@ L.emphasizeAt = "Hervorheben bei... (Sekunden)"
 L.growingUpwards = "Nach oben erweitern"
 L.growingUpwardsDesc = "Legt fest, ob die Leisten aufwärts oder abwärts vom Ankerpunkt angezeigt werden."
 L.texture = "Textur"
-L.emphasize = "Hervorheben"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "Größenmultiplikator"
 L.emphasizeMultiplierDesc = "Wenn das Bewegen der Leisten zu den hervorgehobenen Leisten deaktiviert ist, entscheidet diese Option welche Größe die hervorgehobenen Leisten multipliziert mit den normalen Leisten haben."
 
@@ -369,9 +368,6 @@ L.emphasizedBars = "Hervorgehobene Leisten"
 L.align = "Ausrichtung"
 L.alignText = "Textausrichtung"
 L.alignTime = "Zeitausrichtung"
-L.left = "Links"
-L.center = "Mittig"
-L.right = "Rechts"
 L.time = "Zeit"
 L.timeDesc = "Bestimmt, ob die verbleibende Zeit auf den Leisten angezeigt wird."
 L.textDesc = "Text in den Leisten anzeigen oder verstecken."
@@ -475,7 +471,7 @@ L.colors = "Farben"
 
 L.text = "Text"
 L.textShadow = "Textschatten"
-L.normal = "Normal"
+L.expiring_normal = "Normal"
 L.emphasized = "Hervorgehoben"
 
 L.reset = "Zurücksetzen"
@@ -518,7 +514,7 @@ L.resetAllCountdownDesc = "Wenn Du veränderte Countdowns für Bossbegegnungen g
 -- InfoBox.lua
 --
 
-L.infoBox = "InfoBox"
+L.infobox_short = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -715,8 +711,6 @@ L.Warning = "Warnung"
 L.onyou = "Ein Zauber, Stärkungs- oder Schwächungszauber ist auf Dir"
 L.underyou = "Du musst aus einem Zauber unter Dir herauslaufen"
 L.privateaura = "Immer wenn eine 'Private Aura' auf Dir ist"
-
-L.sound = "Sound"
 
 L.customSoundDesc = "Den speziell gewählten Sound anstatt des vom Modul bereitgestellten abspielen."
 L.resetSoundDesc = "Setzt die obigen Sounds auf ihren Standard zurück."

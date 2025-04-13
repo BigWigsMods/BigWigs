@@ -571,7 +571,7 @@ end
 
 local advancedTabs = {
 	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sliders:20|t ".. L.advanced,
+		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sliders:20|t ".. L.advanced_options,
 		value = "options",
 	},
 	{

@@ -449,9 +449,9 @@ do
 						name = L.alignText,
 						order = 11,
 						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
+							LEFT = L.LEFT,
+							CENTER = L.CENTER,
+							RIGHT = L.RIGHT,
 						},
 					},
 					textSpacer = {
@@ -470,9 +470,9 @@ do
 						name = L.alignTime,
 						order = 14,
 						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
+							LEFT = L.LEFT,
+							CENTER = L.CENTER,
+							RIGHT = L.RIGHT,
 						},
 					},
 					timeSpacer = {
@@ -492,8 +492,8 @@ do
 						desc = L.iconPositionDesc,
 						order = 17,
 						values = {
-							LEFT = L.left,
-							RIGHT = L.right,
+							LEFT = L.LEFT,
+							RIGHT = L.RIGHT,
 						},
 						disabled = function() return not db.icon end,
 					},

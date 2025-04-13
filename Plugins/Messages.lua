@@ -424,9 +424,9 @@ do
 						type = "select",
 						name = L.align,
 						values = {
-							L.left,
-							L.center,
-							L.right,
+							L.LEFT,
+							L.CENTER,
+							L.RIGHT,
 						},
 						style = "radio",
 						order = 5,

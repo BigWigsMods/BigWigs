@@ -94,7 +94,6 @@ L.compartmentMenu = "미니맵 옆에 아이콘 표시"
 L.compartmentMenu_desc = "이 옵션을 끄면 미니맵에 빅윅 아이콘이 애드온 묶음에 표시됩니다. 이 옵션을 켜두는 것을 권장합니다."
 L.configure = "구성"
 L.resetPositions = "위치 초기화"
-L.colors = "색상"
 L.selectEncounter = "우두머리 전투 선택"
 L.privateAuraSounds = "비공개 오라 소리"
 L.privateAuraSounds_desc = "비공개 오라는 일반적으로 추적할 수 없지만, 능력으로 타깃이 되었을 때 재생되도록 사운드를 설정할 수 있습니다."
@@ -154,7 +153,7 @@ L.CASTBAR_COUNTDOWN = "초읽기(시전바만)"
 L.CASTBAR_COUNTDOWN_desc = "활성화하면 시전바의 마지막 5초동안 음성 및 시각적 효과가 추가됩니다."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "소리"
+L.SOUND = L.sound
 L.SOUND_desc = "보스의 능력들을 소리를 통해서 알려줍니다. 이 옵션을 비활성화 한다면 이 능력에 해당하는 소리가 들리지 않을 것입니다."
 L.CASTBAR = "시전 바"
 L.CASTBAR_desc = "주로 특정 중요 능력들을 시전하는 보스들을 상대할 때는 시전바가 표시됩니다. 이 능력에 해당하는 시전바를 숨기고 싶다면 이 옵션을 비활성화하세요."
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "활성화하면 특정 능력에 대한 아이콘과 텍스�
 L.PRIVATE = "개인 오라"
 L.PRIVATE_desc = "일반적으로 개인 오라는 추적되지 않지만, \"나에게\"소리(경고)는 소리 탭에서 설정할수 있습니다."
 
-L.advanced = "고급 옵션"
+L.advanced_options = "고급 옵션"
 L.back = "<< 뒤로"
 
 L.tank = "|cFFFF0000방어 전담만 경보합니다.|r "
@@ -358,7 +357,7 @@ L.emphasizeAt = "다음에 강조... (초)"
 L.growingUpwards = "위로 확장"
 L.growingUpwardsDesc = "고정기로부터 위 또는 아래로 확장하도록 전환합니다."
 L.texture = "텍스쳐"
-L.emphasize = "강조"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "배율"
 L.emphasizeMultiplierDesc = "강조 고정기로 이동하는 바가 활성화되지 않았을때, 이 옵션은 해당 바를 강조 바로 이동하지 않고 바의 크기를 주어진 배율만큼 확대시킵니다."
 
@@ -369,9 +368,6 @@ L.emphasizedBars = "강조된 바"
 L.align = "정렬"
 L.alignText = "문자 정렬"
 L.alignTime = "시간 정렬"
-L.left = "왼쪽"
-L.center = "중앙"
-L.right = "오른쪽"
 L.time = "시간"
 L.timeDesc = "바에 남은 시간을 표시하거나 숨깁니다."
 L.textDesc = "바에 문자를 표시하거나 숨깁니다."
@@ -475,7 +471,7 @@ L.colors = "색상"
 
 L.text = "문자"
 L.textShadow = "문자 그림자"
-L.normal = "일반"
+L.expiring_normal = "일반"
 L.emphasized = "강조"
 
 L.reset = "초기화"
@@ -518,7 +514,7 @@ L.resetAllCountdownDesc = "위의 초읽기 관련 설정들은 물론 우두머
 -- InfoBox.lua
 --
 
-L.infoBox = "정보 상자"
+L.infobox_short = "정보 상자"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -715,8 +711,6 @@ L.Warning = "경고"
 L.onyou = "나에게 적용되는 주문, 강화 효과, 약화 효과"
 L.underyou = "내 밑의 \"바닥\"을 피해야 할 때"
 L.privateaura = "'비공개 오라'가 당신에게 있을 때"
-
-L.sound = "소리"
 
 L.customSoundDesc = "모듈이 제공한 소리 대신에 선택된 사용자 설정 소리를 재생합니다."
 L.resetSoundDesc = "소리에 관련된 모든 설정을 기본값으로 초기화합니다."

@@ -94,7 +94,6 @@ L.compartmentMenu = "隐藏暴雪插件收纳按钮"
 L.compartmentMenu_desc = "关闭此选项将会启用暴雪的小地图插件收纳功能。我们推荐你启用这个选项，隐藏暴雪插件收纳按钮。"
 L.configure = "配置"
 L.resetPositions = "重置位置"
-L.colors = "颜色"
 L.selectEncounter = "选择战斗"
 L.privateAuraSounds = "私有光环音效"
 L.privateAuraSounds_desc = "私有光环无法被正常追踪，但你可以设置一个音效，在你被技能锁定时播放。"
@@ -154,7 +153,7 @@ L.CASTBAR_COUNTDOWN = "施法条倒数计时"
 L.CASTBAR_COUNTDOWN_desc = "启用后，为施法条的最后五秒显示巨大的文字与语音倒数。"
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
-L.SOUND = "音效"
+L.SOUND = L.sound
 L.SOUND_desc = "首领技能通常会播放音效来帮助你注意到它。如禁用此选项，不会在游戏时附加音效。"
 L.CASTBAR = "施法条"
 L.CASTBAR_desc = "施法条会在某些首领战斗中出现，一些即将到来的重要技能通常会引起注意。如果想隐藏此技能相关的施法条，请禁用此选项。"
@@ -167,7 +166,7 @@ L.NAMEPLATE_desc = "如果启用，与此特定技能的相关图标和文字等
 L.PRIVATE = "私有光环"
 L.PRIVATE_desc = "私有光环无法用常规手段追踪，但可以在音效分页指定只有“私有光环”出现在你身上时的音效。"
 
-L.advanced = "高级选项"
+L.advanced_options = "高级选项"
 L.back = "<< 返回"
 
 L.tank = "|cFFFF0000只警报坦克。|r"
@@ -358,7 +357,7 @@ L.emphasizeAt = "…（秒）后醒目"
 L.growingUpwards = "向上成长"
 L.growingUpwardsDesc = "切换在锚点向上或向下成长。"
 L.texture = "材质"
-L.emphasize = "醒目"
+L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "尺寸倍数"
 L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以尺寸倍数作为醒目计时条的尺寸。"
 
@@ -369,9 +368,6 @@ L.emphasizedBars = "醒目计时条"
 L.align = "对齐"
 L.alignText = "文本对齐"
 L.alignTime = "时间对齐"
-L.left = "左"
-L.center = "中"
-L.right = "右"
 L.time = "时间"
 L.timeDesc = "在计时条上显示或隐藏时间。"
 L.textDesc = "显示或隐藏计时条上的文本。"
@@ -475,7 +471,7 @@ L.colors = "颜色"
 
 L.text = "文本"
 L.textShadow = "文本阴影"
-L.normal = "标准"
+L.expiring_normal = "普通"
 L.emphasized = "醒目"
 
 L.reset = "重置"
@@ -518,7 +514,7 @@ L.resetAllCountdownDesc = "如果为任何首领战斗的设置选择了自定�
 -- InfoBox.lua
 --
 
-L.infoBox = "信息盒"
+L.infobox_short = "信息盒"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -715,8 +711,6 @@ L.Warning = "警报"
 L.onyou = "一个法术，增益或负面效果在你身上"
 L.underyou = "你需要移动，离开你脚下的法术范围"
 L.privateaura = "只要“私有光环”出现在你身上"
-
-L.sound = "音效"
 
 L.customSoundDesc = "播放选定的自定义的声音，而不是由模块提供的。"
 L.resetSoundDesc = "重置以上音效为默认。"

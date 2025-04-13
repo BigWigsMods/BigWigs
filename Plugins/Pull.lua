@@ -84,7 +84,7 @@ do
 				name = L.countdownType,
 				order = 1,
 				values = {
-					normal = L.normal,
+					normal = L.expiring_normal,
 					emphasized = L.emphasized,
 				},
 			},
