@@ -143,6 +143,7 @@ function mod:OnBossEnable()
 	-- Stage One: That's RNG, Baby!
 	self:Log("SPELL_CAST_START", "PayLine", 460181)
 	self:Log("SPELL_AURA_APPLIED", "HighRollerApplied", 460444)
+	self:Log("SPELL_AURA_REFRESH", "HighRollerApplied", 460444)
 	self:Log("SPELL_CAST_START", "FoulExhaust", 469993)
 	self:Log("SPELL_CAST_START", "TheBigHit", 460472)
 	self:Log("SPELL_AURA_APPLIED", "TheBigHitApplied", 460472)
@@ -261,10 +262,14 @@ function mod:PayLine(args)
 	self:CDBar(args.spellId, cd, CL.count:format(L.pay_line, payLineTotalCount))
 end
 
-function mod:HighRollerApplied(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.you:format(args.spellName))
-		self:PlaySound(args.spellId, "info") --	buffed
+do
+	local prev = 0
+	function mod:HighRollerApplied(args)
+		if self:Me(args.destGUID) and args.time - prev > 3 then -- Throttle when coins are thrown at the same time
+			prev = args.time
+			self:Message(args.spellId, "green", CL.you:format(args.spellName))
+			self:PlaySound(args.spellId, "info") --	buffed
+		end
 	end
 end
 
