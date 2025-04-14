@@ -253,10 +253,7 @@ function mod:PayLine(args)
 	if self:Mythic() and self:GetStage() == 1 then
 		cd = payLineCount == 2 and 26.7 or 0 -- 2 per rewards round
 	elseif self:GetStage() == 2 then
-		local stageTwoTimers = { 24.2, 36.7 } -- Heroic XXX Need to check normal/lfr
-		if self:Mythic() then
-			stageTwoTimers = { 23.5, 36.5 } -- Mythic
-		end
+		local stageTwoTimers = { 23.5, 36.5, 36.4 }
 		cd = stageTwoTimers[payLineCount]
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(L.pay_line, payLineTotalCount))
@@ -279,14 +276,11 @@ function mod:FoulExhaust(args)
 	self:PlaySound(args.spellId, "alert") -- debuffs inc
 	foulExhauntCount = foulExhauntCount + 1
 	foulExhaustTotalCount = foulExhaustTotalCount + 1
-	local cd = 31.0
+	local cd = foulExhauntCount == 2 and 31.5 or 0
 	if self:Mythic() and self:GetStage() == 1 then
 		cd = foulExhauntCount == 2 and 32.0 or 0 -- 2 per rewards round
 	elseif self:GetStage() == 2 then
-		local stageTwoTimers = { 18.1, 26.9, 30.2 } -- Heroic XXX Need to check normal/lfr
-		if self:Mythic() then
-			stageTwoTimers = { 17.45, 25.5, 30.44 } -- Mythic
-		end
+		local stageTwoTimers = { 17.45, 25.5, 30.4, 28.0 }
 		cd = stageTwoTimers[foulExhauntCount]
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount))
@@ -311,10 +305,7 @@ function mod:TheBigHit(args)
 			cd = theBigHitCount == 2 and 20.5 or 0 -- 2 per rewards round
 		end
 	elseif self:GetStage() == 2 then
-		local stageTwoTimers = {28.7, 22.0, 18.3, 18.8} -- Heroic
-		if self:Mythic() then
-			stageTwoTimers = {28.4, 20.7, 18.27, 18.2} -- Mythic
-		end
+		local stageTwoTimers = {28.5, 20.7, 18.25, 18.2}
 		cd = stageTwoTimers[theBigHitCount]
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(args.spellName, theBigHitTotalCount))
