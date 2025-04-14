@@ -337,7 +337,7 @@ local function buildOptionString(data, mod, option_type, options_table)
 	return data
 end
 
--- Write out a module option values to [module dir]/Options/Options.lua
+-- Write out module option values to [module dir]/Options/Options.lua
 local function dumpValues(path, modules_table, colors_table, sounds_table)
 	local file = path .. "Options.lua"
 	local old_data = ""
