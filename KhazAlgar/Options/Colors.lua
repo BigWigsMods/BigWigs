@@ -6,13 +6,6 @@ BigWigs:AddColors("Aggregation of Horrors", {
 	[453294] = "purple",
 })
 
-BigWigs:AddSounds("Aggregation of Horrors", {
-	[452205] = "long",
-	[452980] = "info",
-	[453271] = "warning",
-	[453294] = "alarm",
-})
-
 BigWigs:AddColors("Shurrai, Atrocity of the Undersea", {
 	[453618] = {"blue","purple"},
 	[453733] = "orange",
@@ -20,25 +13,11 @@ BigWigs:AddColors("Shurrai, Atrocity of the Undersea", {
 	[455275] = "yellow",
 })
 
-BigWigs:AddSounds("Shurrai, Atrocity of the Undersea", {
-	[453618] = "warning",
-	[453733] = "info",
-	[453875] = "long",
-	[455275] = "alarm",
-})
-
 BigWigs:AddColors("Orta, the Broken Mountain", {
 	[450407] = "yellow",
 	[450454] = "red",
 	[450677] = "orange",
 	[450929] = {"blue","yellow"},
-})
-
-BigWigs:AddSounds("Orta, the Broken Mountain", {
-	[450407] = "info",
-	[450454] = "warning",
-	[450677] = "long",
-	[450929] = "alarm",
 })
 
 BigWigs:AddColors("Kordac, the Dormant Protector", {
@@ -49,24 +28,9 @@ BigWigs:AddColors("Kordac, the Dormant Protector", {
 	[458838] = {"blue","yellow"},
 })
 
-BigWigs:AddSounds("Kordac, the Dormant Protector", {
-	[458329] = "info",
-	[458423] = "long",
-	[458695] = "warning",
-	[458799] = "underyou",
-	[458838] = "alarm",
-})
-
 BigWigs:AddColors("The Gobfather", {
 	[1216505] = "yellow",
 	[1216687] = "red",
 	[1216709] = "orange",
 	[1216812] = "red",
-})
-
-BigWigs:AddSounds("The Gobfather", {
-	[1216505] = "info",
-	[1216687] = "alert",
-	[1216709] = "long",
-	[1216812] = "warning",
 })

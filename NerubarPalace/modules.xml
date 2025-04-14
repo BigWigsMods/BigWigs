@@ -12,6 +12,6 @@
 <!--<Script file="Trash.lua"/>-->
 
 <Include file="Locales\locales.xml"/>
-<Script file="Options\Options.lua"/>
+<Include file="Options\options.xml"/>
 
 </Ui>
