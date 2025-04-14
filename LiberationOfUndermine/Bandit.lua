@@ -253,7 +253,10 @@ function mod:PayLine(args)
 	if self:Mythic() and self:GetStage() == 1 then
 		cd = payLineCount == 2 and 26.7 or 0 -- 2 per rewards round
 	elseif self:GetStage() == 2 then
-		local stageTwoTimers = { 23.5, 36.5, 36.4 }
+		local stageTwoTimers = { 23.5, 36.5, 0 }
+		if self:Easy() then -- 1 extra cast
+			stageTwoTimers = { 23.5, 36.5, 36.4, 0 }
+		end
 		cd = stageTwoTimers[payLineCount]
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(L.pay_line, payLineTotalCount))
@@ -280,7 +283,10 @@ function mod:FoulExhaust(args)
 	if self:Mythic() and self:GetStage() == 1 then
 		cd = foulExhauntCount == 2 and 32.0 or 0 -- 2 per rewards round
 	elseif self:GetStage() == 2 then
-		local stageTwoTimers = { 17.45, 25.5, 30.4, 28.0 }
+		local stageTwoTimers = { 17.45, 25.5, 30.4, 0 }
+		if self:Easy() then -- 1 extra cast
+			stageTwoTimers = { 17.45, 25.5, 30.4, 28.0, 0 }
+		end
 		cd = stageTwoTimers[foulExhauntCount]
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(CL.heal_absorbs, foulExhaustTotalCount))
@@ -305,7 +311,7 @@ function mod:TheBigHit(args)
 			cd = theBigHitCount == 2 and 20.5 or 0 -- 2 per rewards round
 		end
 	elseif self:GetStage() == 2 then
-		local stageTwoTimers = {28.5, 20.7, 18.25, 18.2}
+		local stageTwoTimers = {28.5, 20.7, 18.25, 18.2, 0}
 		cd = stageTwoTimers[theBigHitCount]
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(args.spellName, theBigHitTotalCount))
