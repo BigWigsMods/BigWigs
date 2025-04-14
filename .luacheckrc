@@ -152,7 +152,7 @@ files["**/Plugins/*.lua"].ignore = {
 files["**/Options/Options.lua"].ignore = {
 	"113/C_UI",
 }
-files["**/Locales/*.lua"].ignore = {
+files["**/?Locales/*.lua"].ignore = {
 	"542", -- Empty if branch
 }
 files["gen_option_values.lua"].ignore = {
