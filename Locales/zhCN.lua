@@ -280,18 +280,18 @@ L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\
 -- Anchor Points
 L.UP = "向上"
 L.DOWN = "向下"
-L.TOP = "顶部"
-L.RIGHT = "右侧"
-L.BOTTOM = "底部"
-L.LEFT = "左侧"
+L.TOP = "上"
+L.RIGHT = "右"
+L.BOTTOM = "下"
+L.LEFT = "左"
 L.TOPRIGHT = "右上"
 L.TOPLEFT = "左上"
 L.BOTTOMRIGHT = "右下"
 L.BOTTOMLEFT = "左下"
-L.CENTER = "中心"
+L.CENTER = "中"
 L.customAnchorPoint = "高级：自定义锚点"
 L.sourcePoint = "源点"
-L.destinationPoint = "目标点"
+L.destinationPoint = "相对锚点"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
