@@ -109,7 +109,7 @@ function mod:GetOptions()
 			1218342, -- Unstable Shrapnel
 		1218418, -- Wire Transfer
 		466235, -- Wire Transfer (Under You)
-		{1216509, "SAY"}, -- Screw Up
+		{1216509, "SAY", "ME_ONLY_EMPHASIZE"}, -- Screw Up
 		465232, -- Sonic Ba-Boom
 		{1214878, "TANK_HEALER"}, -- Pyro Party Pack
 		{465917, "TANK"}, -- Gravi-Gunk
@@ -329,10 +329,10 @@ do
 
 	function mod:ScrewUpApplied(args)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, L.screw_up)
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.screw_up_single, true, "Drill") -- Keep the message short
 		end
+		playerList[#playerList+1] = args.destName
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.screw_up, screwUpCount-1))
 	end
 end
