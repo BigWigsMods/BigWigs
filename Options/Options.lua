@@ -368,8 +368,12 @@ local function masterOptionToggled(self, event, value)
 	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
-	if type(key) == "string" and key:find("custom_", nil, true) then
-		module.db.profile[key] = value or false
+	if type(key) == "string" then
+		if key:find("custom_select", nil, true) then
+			module.db.profile[key] = value or 1
+		elseif key:find("custom_", nil, true) then
+			module.db.profile[key] = value or false
+		end
 	else
 		if value then
 			-- If an option is disabled by default using the "OFF" toggle flag, then when we turn it on, we want all the default flags on also
@@ -730,6 +734,48 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		dropdown:SetValue(module.db.profile[dbKey] or 0)
 
 		return dropdown
+	end
+
+	if type(dbKey) == "string" and dbKey:find("^custom_select_") then
+		local L = module:GetLocale()
+		local values = {}
+		local i = 1
+		local value = L[dbKey.."_value"..i]
+		repeat
+			values[i] = value
+			i = i + 1
+			value = L[dbKey.."_value"..i]
+		until not value
+
+		local dropdown = AceGUI:Create("Dropdown")
+		if desc then
+			-- The label will truncate at ~74 chars, be careful
+			dropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
+		else
+			dropdown:SetLabel(name)
+		end
+		dropdown:SetMultiselect(false)
+		dropdown:SetList(values)
+		dropdown:SetUserData("key", dbKey)
+		dropdown:SetUserData("module", module)
+		dropdown:SetCallback("OnValueChanged", function(widget, _, value)
+			local key = widget:GetUserData("key")
+			local module = widget:GetUserData("module")
+			module.db.profile[key] = value or false
+		end)
+		dropdown:SetValue(module.db.profile[dbKey] or 1)
+
+		if icon then
+			local iconWidget = AceGUI:Create("Icon")
+			iconWidget:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
+			iconWidget:SetImageSize(20, 20)
+			iconWidget:SetRelativeWidth(0.05)
+			dropdown:SetRelativeWidth(0.88)
+			return iconWidget, dropdown
+		else
+			dropdown:SetFullWidth(true)
+			return dropdown
+		end
 	end
 
 	local check = AceGUI:Create("CheckBox")

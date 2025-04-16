@@ -584,6 +584,8 @@ do
 					local custom = v:match("^custom_(o[nf]f?)_.*")
 					if custom then
 						module.toggleDefaults[v] = custom == "on" and true or false
+					elseif v:find("custom_select", nil, true) then
+						module.toggleDefaults[v] = 1
 					else
 						module.toggleDefaults[v] = bitflags
 					end
