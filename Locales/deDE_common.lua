@@ -259,5 +259,5 @@ L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentakel" -- Used for bosses that summon tentacles
 L.tentacles = "Tentakel" -- Plural of L.tentacle
 L.waves = "Wellen" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
-L.whelp = "Welpen" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
---L.whelps = "Whelps" -- Plural of L.whelp
+L.whelp = "Welpe" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
+L.whelps = "Welpen" -- Plural of L.whelp
