@@ -150,10 +150,14 @@ L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
 L.top = "Top"
+L.top_right = "Top Right"
+L.top_left = "Top Left"
 L.up = "Up"
 L.middle = "Middle"
 L.down = "Down"
 L.bottom = "Bottom"
+L.bottom_right = "Bottom Right"
+L.bottom_left = "Bottom Left"
 L.left = "Left"
 L.right = "Right"
 L.north = "North"
@@ -254,3 +258,5 @@ L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentacle" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacles" -- Plural of L.tentacle
 L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.whelp = "Whelp" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
+L.whelps = "Whelps" -- Plural of L.whelp

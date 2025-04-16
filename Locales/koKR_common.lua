@@ -151,10 +151,14 @@ L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Directions
 L.top = "최상단"
+L.top_right = "우측 상단"
+L.top_left = "좌측 상단"
 L.up = "상단"
 L.middle = "중간"
 L.down = "하단"
 L.bottom = "최하"
+L.bottom_right = "우측 하단"
+L.bottom_left = "좌측 하단"
 L.left = "왼쪽"
 L.right = "오른쪽"
 L.north = "북쪽"
@@ -255,3 +259,5 @@ L.tank_soak = "탱 바닥" -- Similar to L.soak but only applies to tanks
 L.tentacle = "촉수" -- Used for bosses that summon tentacles
 L.tentacles = "촉수" -- Plural of L.tentacle
 L.waves = "웨이브" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.whelp = "새끼용" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
+L.whelps = "새끼용" -- Plural of L.whelp

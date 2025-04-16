@@ -151,10 +151,14 @@ L.seconds = "%.1fс" -- 1.1 seconds
 
 -- Directions
 L.top = "Верх" -- need to make sure usage is good (1)
+L.top_right = "Сверху справа"
+L.top_left = "Сверху слева"
 L.up = "Вверх" -- need to make sure usage is good (1)
 L.middle = "Центр"
 L.down = "Вниз" -- need to make sure usage is good (2)
 L.bottom = "Низ" -- need to make sure usage is good (2)
+L.bottom_right = "Снизу справа"
+L.bottom_left = "Снизу слева"
 L.left = "Лево"
 L.right = "Право"
 L.north = "Север"
@@ -255,3 +259,5 @@ L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics
 L.tentacle = "Щупальце" -- Used for bosses that summon tentacles
 L.tentacles = "Щупальца" -- Plural of L.tentacle
 L.waves = "Пельмени" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean -- technically speaking "waves" is "Волны" but current tl is a very common name
+--L.whelp = "Whelp" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
+--L.whelps = "Whelps" -- Plural of L.whelp

@@ -152,10 +152,14 @@ L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Directions
 L.top = "En haut"
+L.top_right = "En haut à droite"
+L.top_left = "En haut à gauche"
 L.up = "En haut"
 L.middle = "Au milieu"
 L.down = "En bas"
 L.bottom = "En bas"
+L.bottom_right = "En bas à droite"
+L.bottom_left = "En bas à gauche"
 L.left = "À gauche"
 L.right = "À droite"
 L.north = "Nord"
@@ -256,3 +260,5 @@ L.tank_combo = "Combo Tank" -- Used for tank swap mechanics where the boss casts
 L.tentacle = "Tentacule" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacules" -- Plural of L.tentacle
 L.waves = "Vagues" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.whelp = "Dragonnet" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
+L.whelps = "Dragonnets" -- Plural of L.whelp
