@@ -448,11 +448,17 @@ function mod:Rewards(args)
 	end
 end
 
-function mod:ExplosiveGazeApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning") -- fixated
-		self:Nameplate(args.spellId, 0, args.sourceGUID, ">"..CL.fixate.."<")
+do
+	local prev = 0
+	function mod:ExplosiveGazeApplied(args)
+		if self:Me(args.destGUID) then
+			if args.time - prev > 1 then -- throttle for multiple fixates
+				prev = args.time
+				self:PersonalMessage(args.spellId, nil, CL.fixate)
+				self:PlaySound(args.spellId, "warning") -- fixated
+			end
+			self:Nameplate(args.spellId, 0, args.sourceGUID, ">"..CL.fixate.."<")
+		end
 	end
 end
 
