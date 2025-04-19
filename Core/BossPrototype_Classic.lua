@@ -552,6 +552,8 @@ function boss:Enable(isWipe)
 		end
 		enabledModules[#enabledModules+1] = self
 
+		if self.SetupOptions then self:SetupOptions() end
+
 		if self:GetEncounterID() then
 			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
@@ -587,7 +589,6 @@ function boss:Enable(isWipe)
 			petUtilityFrame:RegisterUnitEvent("UNIT_PET", "player")
 		end
 
-		if self.SetupOptions then self:SetupOptions() end
 		if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
 		if IsEncounterInProgress() and not isWiping then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
