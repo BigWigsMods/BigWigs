@@ -299,7 +299,9 @@ do
 				desc = L.testBarsBtn_desc,
 				func = function()
 					testCount = testCount + 1
-					plugin:SendMessage("BigWigs_StartBar", plugin, nil, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), random(11, 30), testIcons[(testCount%3)+1])
+					local time = random(11, 30)
+					plugin:SendMessage("BigWigs_StartBar", plugin, nil, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), time, testIcons[(testCount%3)+1])
+					plugin:SendMessage("BigWigs_Timer", plugin, nil, time, time, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), 0, testIcons[(testCount%3)+1], false, true)
 				end,
 				width = 1.5,
 				order = 0.4,

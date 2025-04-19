@@ -100,7 +100,9 @@ end
 function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 	if status == 0 and module then
 		if module:GetRespawnTime() and self.db.profile.respawnBar then
-			self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module:GetRespawnTime(), 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
+			local time = module:GetRespawnTime()
+			self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, time, 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
+			self:SendMessage("BigWigs_Timer", self, nil, time, time, L.respawn, 0, 236372, false, true)
 		end
 		if module:GetJournalID() or module:GetAllowWin() then
 			local soundName = self.db.profile.wipeSound
