@@ -130,6 +130,7 @@ L.marker = "%s marker"
 L.marker_player_desc = "Mark players affected by '%s' with %s, requires promoted or leader." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Mark %s with %s, requires promoted or leader." -- Mark NPC_NAME with SKULL_ICON
 L.marker_npc_aura_desc = "Mark NPCs affected by '%s' with %s, requires promoted or leader." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.disabled = "Disabled"
 
 -- Ability where two players have to move close to each other
 L.link = "Link"

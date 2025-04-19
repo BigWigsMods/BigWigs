@@ -131,6 +131,7 @@ L.marker = "%s标记"
 L.marker_player_desc = "标记受到%s影响的玩家为%s，需要权限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "标记%s为%s，需要权限。" -- Mark NPC_NAME with SKULL_ICON
 L.marker_npc_aura_desc = "标记受到'%s'影响的 NPC 为%s，需要权限。" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.disabled = "禁用"
 
 -- Ability where two players have to move close to each other
 L.link = "连接"
