@@ -67,13 +67,13 @@ L.you_die = "Você morrerá" -- You will die
 L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima Habilidade" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s está pousando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
---L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "Aterrisar" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Pode voar agora"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
---L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
---L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
---L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
---L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.bosses_too_close = "Chefes muito próximos um do outro" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.keep_moving = "Continue se movendo" -- An ability that forces you to keep moving or you will take damage
+L.stand_still = "Fique parado" -- An ability that forces you to stand still or you will take damage
+L.safe_to_stop = "É seguro ficar parado" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "É seguro se mover" -- When an ability to forces you to stand still fades from you, allowing you to move again
 
 -- Add related
 L.add_spawned = "Add surgiu" -- singular
@@ -109,10 +109,10 @@ L.crenna = "Crenna Filha da Terra" -- AI druid healer (NPC 209072)
 L.crenna_short = "*Crenna"
 L.austin = "Austin Huxworth" -- AI hunter dps (NPC 209065)
 L.austin_short = "*Austin"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "Senhora da Guerra Bekka Sinistracha" -- AI warrior tank (NPC 215517)
+L.breka_short = "*Bekka"
+L.henry = "Henrique Garrick" -- AI priest healer (NPC 215011)
+L.henry_short = "*Henrique"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -240,13 +240,13 @@ L.dodge = "Esquiva" -- When you need to continually run around to dodge abilitie
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Medo" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
---L.fixates = "Fixates" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.fixates = "Fixados" -- Plural of L.fixate
+L.group_damage = "Dano no Grupo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Dreno de Vida" -- Any ability that drains health from the player
 L.parasite = "Parasita" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
---L.parasites = "Parasites" -- Plural of L.parasite
+L.parasites = "Parasitas" -- Plural of L.parasite
 L.pull_in = "Arrastar para Perto" -- An ability that pulls you in towards the boss against your will
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "Dano na Raid" -- Any ability that causes damage to every player in the raid
 L.smash = "Esmagamento" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Soaks" -- Plural of L.soak
@@ -254,9 +254,9 @@ L.spike = "Espinho" -- Short for any ability with the name "spike" in it e.g. "G
 L.spikes = "Espinhos" -- Plural of L.spike
 L.spread = "Espalhar" -- An ability that forces you to spread out away from other players, or you might damage them
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
---L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
---L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "Frontal Tanque" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "Soak Tanque" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentáculo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentáculos" -- Plural of L.tentacle
 L.waves = "Ondas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
