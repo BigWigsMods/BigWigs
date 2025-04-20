@@ -1425,6 +1425,10 @@ local function parse(file)
 		options_path = nil
 	elseif file then
 		if string.match(file, "!Options.lua$") then
+			if options_path then
+				error(string.format("    %s: Multiple !Options.lua paths found!", options_path))
+				error(string.format("    %s: Multiple !Options.lua paths found!", file:match(".*/")))
+			end
 			options_path = file:match(".*/")
 		elseif string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
