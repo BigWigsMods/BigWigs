@@ -67,7 +67,7 @@ L.you_die = "Você morrerá" -- You will die
 L.you_die_sec = "Você morrerá em %d seg" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Próxima Habilidade" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s está pousando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
-L.landing = "Aterrisar" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "Pousando" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Pode voar agora"
 L.bosses_too_close = "Chefes muito próximos um do outro" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 L.keep_moving = "Continue se movendo" -- An ability that forces you to keep moving or you will take damage
