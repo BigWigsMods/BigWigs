@@ -11,6 +11,7 @@ local modules_locale = {}
 
 local module_colors = {}
 local module_sounds = {}
+local options_path = nil
 
 local default_options = {
 	altpower = {ALTPOWER = true},
@@ -1413,7 +1414,7 @@ local function parse(file)
 		end
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
-			local path = (file[1]:match(".*/") or "")
+			local path = options_path or file[1]:match(".*/") or ""
 			dumpValues(path, modules, module_colors, module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
 		end
@@ -1421,8 +1422,15 @@ local function parse(file)
 		modules = {}
 		module_colors = {}
 		module_sounds = {}
+		options_path = nil
 	elseif file then
-		if string.match(file, "%.lua$") then
+		if string.match(file, "!Options.lua$") then
+			if options_path then
+				error(string.format("    %s: Multiple !Options.lua paths found!", options_path))
+				error(string.format("    %s: Multiple !Options.lua paths found!", file:match(".*/")))
+			end
+			options_path = file:match(".*/")
+		elseif string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
 			parseLua(file)
 		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
