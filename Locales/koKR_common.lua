@@ -72,8 +72,8 @@ L.flying_available = "비행 가능"
 L.bosses_too_close = "보스가 너무 가깝습니다" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 L.keep_moving = "계속 이동" -- An ability that forces you to keep moving or you will take damage
 L.stand_still = "정지" -- An ability that forces you to stand still or you will take damage
-L.safe_to_stop = "정지 안전" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
-L.safe_to_move = "이동 안전" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.safe_to_stop = "정지 가능" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "이동 가능" -- When an ability to forces you to stand still fades from you, allowing you to move again
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
