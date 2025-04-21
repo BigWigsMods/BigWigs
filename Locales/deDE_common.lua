@@ -74,6 +74,8 @@ L.keep_moving = "In Bewegung bleiben" -- An ability that forces you to keep movi
 L.stand_still = "Stehen bleiben" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "Stehen möglich" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 L.safe_to_move = "Bewegen möglich" -- When an ability to forces you to stand still fades from you, allowing you to move again
+--L.safe = "Safe" -- You are safe from a bad ability
+--L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Add erschienen" -- singular

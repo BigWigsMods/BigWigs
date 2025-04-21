@@ -74,6 +74,8 @@ L.keep_moving = "Continue se movendo" -- An ability that forces you to keep movi
 L.stand_still = "Fique parado" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "É seguro ficar parado" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 L.safe_to_move = "É seguro se mover" -- When an ability to forces you to stand still fades from you, allowing you to move again
+--L.safe = "Safe" -- You are safe from a bad ability
+--L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Add surgiu" -- singular

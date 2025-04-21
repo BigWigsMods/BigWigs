@@ -74,6 +74,8 @@ L.keep_moving = "계속 이동" -- An ability that forces you to keep moving or 
 L.stand_still = "정지" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "정지 가능" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 L.safe_to_move = "이동 가능" -- When an ability to forces you to stand still fades from you, allowing you to move again
+--L.safe = "Safe" -- You are safe from a bad ability
+--L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular

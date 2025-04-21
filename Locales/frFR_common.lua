@@ -75,6 +75,8 @@ L.bosses_too_close = "Bosses trop près" -- When 2 or more bosses are too close 
 --L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
 --L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 --L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
+--L.safe = "Safe" -- You are safe from a bad ability
+--L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Add est apparu" -- singular
