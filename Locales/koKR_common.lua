@@ -173,6 +173,11 @@ L.south_west = "남서쪽"
 L.west = "서쪽"
 L.north_west = "북서쪽"
 
+-- Sizes
+--L.small = "Small"
+--L.medium = "Medium"
+--L.large = "Large"
+
 -- Schools
 L.fire = "화염"
 L.frost = "냉기"
@@ -237,6 +242,8 @@ L.spell_reflection = "주문 반사" -- Any ability that reflects spells
 L.rooted = "묶임" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.ball = "Ball" -- A ball, like a football, basketball, etc
+--L.balls = "Balls" -- Plural of L.ball
 L.blind = "실명" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "피하기" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "격노" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)

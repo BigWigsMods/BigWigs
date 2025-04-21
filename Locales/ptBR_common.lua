@@ -173,6 +173,11 @@ L.south_west = "Sudoeste"
 L.west = "Oeste"
 L.north_west = "Noroeste"
 
+-- Sizes
+--L.small = "Small"
+--L.medium = "Medium"
+--L.large = "Large"
+
 -- Schools
 L.fire = "Fogo"
 L.frost = "Gelo"
@@ -237,6 +242,8 @@ L.spell_reflection = "Reflexão de Feitiço" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.ball = "Ball" -- A ball, like a football, basketball, etc
+--L.balls = "Balls" -- Plural of L.ball
 L.blind = "Cegar" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Esquiva" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)

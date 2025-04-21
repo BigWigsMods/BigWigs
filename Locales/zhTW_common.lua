@@ -173,6 +173,11 @@ L.south_west = "西南"
 L.west = "西方"
 L.north_west = "西北"
 
+-- Sizes
+--L.small = "Small"
+--L.medium = "Medium"
+--L.large = "Large"
+
 -- Schools
 L.fire = "火焰"
 L.frost = "冰霜"
@@ -237,6 +242,8 @@ L.spell_reflection = "法術反射" -- Any ability that reflects spells
 L.rooted = "被定身" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.ball = "Ball" -- A ball, like a football, basketball, etc
+--L.balls = "Balls" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "躲開" -- 躲開/躲避/閃避/躲圈? When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "狂怒" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)

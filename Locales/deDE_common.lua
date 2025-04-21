@@ -173,6 +173,11 @@ L.south_west = "Südwesten"
 L.west = "Westen"
 L.north_west = "Nordwesten"
 
+-- Sizes
+--L.small = "Small"
+--L.medium = "Medium"
+--L.large = "Large"
+
 -- Schools
 L.fire = "Feuer"
 L.frost = "Frost"
@@ -237,6 +242,8 @@ L.spell_reflection = "Zauberreflexion" -- Any ability that reflects spells
 L.rooted = "Bewegungsunfähig" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.ball = "Ball" -- A ball, like a football, basketball, etc
+--L.balls = "Balls" -- Plural of L.ball
 L.blind = "Blenden" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Ausweichen" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Wutanfall" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)

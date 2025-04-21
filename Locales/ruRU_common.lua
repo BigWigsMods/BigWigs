@@ -173,6 +173,11 @@ L.south_west = "Юго-Запад"
 L.west = "Запад"
 L.north_west = "Северо-Запад"
 
+-- Sizes
+--L.small = "Small"
+--L.medium = "Medium"
+--L.large = "Large"
+
 -- Schools
 L.fire = "Огонь"
 L.frost = "Лед"
@@ -237,6 +242,8 @@ L.spell_reflection = "Отражение заклинаний" -- Any ability th
 L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.ball = "Ball" -- A ball, like a football, basketball, etc
+--L.balls = "Balls" -- Plural of L.ball
 L.blind = "Ослепление" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Избегай" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Исступление" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
