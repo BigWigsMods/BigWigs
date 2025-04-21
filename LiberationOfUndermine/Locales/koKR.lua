@@ -23,8 +23,6 @@ end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "koKR")
 if L then
-	L.ball_size_medium = "중형 구체!"
-	L.ball_size_large = "대형 구체!"
 	L.rolled_on_you = "%s 에게 치임" -- PlayerX rolled over you
 	L.rolled_from_you = "%s 를 치고감" -- (you) Rolled over PlayerX
 	L.garbage_dump_message = "보스에게 %s 피해를 입힘"
@@ -33,7 +31,6 @@ if L then
 	L.muffled_doomsplosion = "폭탄 처리됨"
 	L.short_fuse = "폭탄 폭발"
 	L.incinerator = "소각"
-	L.landing = "착륙" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "koKR")

@@ -23,8 +23,6 @@ end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "zhTW")
 if L then
-	L.ball_size_medium = "中球！"
-	L.ball_size_large = "大球！"
 	L.rolled_on_you = "%s 碾了你" -- PlayerX rolled over you
 	L.rolled_from_you = "你碾了 %s" -- (you) Rolled over PlayerX
 	L.garbage_dump_message = "你對首領造成了 %s 點傷害" -- 視百分比或數值再調整
@@ -33,7 +31,6 @@ if L then
 	L.muffled_doomsplosion = "悶響爆炸" -- 悶響末日爆炸 暫定
 	L.short_fuse = "螃蟹爆炸" -- 表意
 	L.incinerator = "火圈" -- 火圈/焚化/燒垃圾
-	L.landing = "降落" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "zhTW")

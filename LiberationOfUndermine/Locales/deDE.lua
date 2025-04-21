@@ -23,8 +23,6 @@ end
 
 L = BigWigs:NewBossLocale("Stix Bunkjunker", "deDE")
 if L then
-	L.ball_size_medium = "Mittlerer Ball!"
-	L.ball_size_large = "Großer Ball!"
 	L.rolled_on_you = "%s ist über DICH gerollt" -- PlayerX rolled over you
 	L.rolled_from_you = "Ist über %s gerollt" -- (you) Rolled over PlayerX
 	L.garbage_dump_message = "DU hast den BOSS getroffen für %s"
@@ -33,7 +31,6 @@ if L then
 	L.muffled_doomsplosion = "Bombe absorbiert"
 	L.short_fuse = "Bombenhülse Explosion"
 	L.incinerator = "Feuerkreise"
-	L.landing = "Landung" -- Landing down from the sky
 end
 
 L = BigWigs:NewBossLocale("Sprocketmonger Lockenstock", "deDE")
