@@ -74,8 +74,8 @@ L.keep_moving = "계속 이동" -- An ability that forces you to keep moving or 
 L.stand_still = "정지" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "정지 가능" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 L.safe_to_move = "이동 가능" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.safe = "안전" -- You are safe from a bad ability
+L.unsafe = "위험" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
@@ -174,9 +174,9 @@ L.west = "서쪽"
 L.north_west = "북서쪽"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "작은"
+L.medium = "중간"
+L.large = "큰"
 
 -- Schools
 L.fire = "화염"
@@ -242,8 +242,8 @@ L.spell_reflection = "주문 반사" -- Any ability that reflects spells
 L.rooted = "묶임" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "공" -- A ball, like a football, basketball, etc
+L.balls = "공" -- Plural of L.ball
 L.blind = "실명" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "피하기" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "격노" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
