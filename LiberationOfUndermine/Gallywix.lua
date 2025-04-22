@@ -711,7 +711,7 @@ do
 	local prev = 0
 	function mod:FifteenHundredPoundDudApplied(args)
 		-- self:StopBar(L.duds_soak:format(spawnedDuds))
-		-- spawnedDuds = spawnedDuds + 1
+		spawnedDuds = spawnedDuds + 1
 		if args.time - prev > 2 then
 			self:Bar(args.spellId, 15, L.duds)
 		end
