@@ -74,8 +74,8 @@ L.keep_moving = "保持移动" -- An ability that forces you to keep moving or y
 L.stand_still = "禁止移动" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "停止移动" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 L.safe_to_move = "可以移动" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.safe = "安全" -- You are safe from a bad ability
+L.unsafe = "危险" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "增援出现" -- singular
@@ -174,9 +174,9 @@ L.west = "西"
 L.north_west = "西北"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "小"
+L.medium = "中"
+L.large = "大"
 
 -- Schools
 L.fire = "火焰"
@@ -242,8 +242,8 @@ L.spell_reflection = "法术反射" -- Any ability that reflects spells
 L.rooted = "定身" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "球" -- A ball, like a football, basketball, etc
+L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "躲开" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "激怒" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
