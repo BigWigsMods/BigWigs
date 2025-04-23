@@ -134,6 +134,7 @@ L.marker_player_desc = "Отмечать игроков, затронутых %s
 L.marker_npc_desc = "Отмечать %s меткой %s, требуется быть помощником или лидером рейда." -- Mark NPC_NAME with SKULL_ICON
 L.marker_npc_aura_desc = "Отмечает НПЦ под воздействием '%s' меткой %s, требуется быть помощником или лидером рейда." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Отключено"
+L.none = "Нет"
 
 -- Ability where two players have to move close to each other
 L.link = "Связь"

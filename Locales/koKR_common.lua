@@ -134,6 +134,7 @@ L.marker_player_desc = "%s에 영향받는 플레이어를 %s|1으로;로; 징�
 L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark NPC_NAME with SKULL_ICON
 L.marker_npc_aura_desc = "'%s'에 영향을 받은 NPC들을 %s로 표시합니다. (부공격대장이나 공격대장 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "사용 안 함"
+L.none = "없음"
 
 -- Ability where two players have to move close to each other
 L.link = "연결"
