@@ -654,11 +654,13 @@ local function load(obj, index)
 	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
-		local msg = L.addOnLoadFailedWithReason:format(GetAddOnInfo(index), reason)
+		local addonName = GetAddOnInfo(index)
+		local msg = L.addOnLoadFailedWithReason:format(addonName, reason)
 		sysprint(msg)
 		Popup(msg, true)
 	elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX added in 11.1.5, compat code for classic
-		local msg = L.addOnLoadFailedUnknownError:format(GetAddOnInfo(index))
+		local addonName = GetAddOnInfo(index)
+		local msg = L.addOnLoadFailedUnknownError:format(addonName)
 		sysprint(msg)
 		Popup(msg, true)
 	end
