@@ -21,6 +21,7 @@ local meltdownCount = 1
 local powercoilCount = 1
 
 local muffledDoomsplosionCount = 0
+local muffledDoomsplosionPlayersHit = {}
 
 local mobCollector = {}
 local mobMark = 0
@@ -119,6 +120,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_DAMAGE", "DiscardedDoomsplosiveDamage", 464865) -- Doomsplosives detonating
 	self:Log("SPELL_MISSED", "DiscardedDoomsplosiveDamage", 464865)
+	self:Log("SPELL_DAMAGE", "MuffledDoomsplosionDamage", 465747) -- Rolling Rubbish picking up Doomsplosives
+	self:Log("SPELL_MISSED", "MuffledDoomsplosionDamage", 465747)
 	self:Log("SPELL_AURA_APPLIED", "ShortFuseApplied", 473119) -- Bombshell detonating
 
 	self:Log("SPELL_CAST_START", "ElectromagneticSorting", 464399)
@@ -240,6 +243,7 @@ do
 		self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
 
 		muffledDoomsplosionCount = 0
+		muffledDoomsplosionPlayersHit = {}
 		mobMark = 1
 		iconList = {}
 	end
@@ -296,9 +300,6 @@ do
 	end
 
 	function mod:RollingRubbishRemoved(args)
-		self:Log("SPELL_DAMAGE", "MuffledDoomsplosionDamage", 465747) -- Rolling Rubbish picking up Doomsplosives
-		self:Log("SPELL_MISSED", "MuffledDoomsplosionDamage", 465747)
-
 		if self:Me(args.destGUID) then
 			self:StopBar(CL.ball, args.destName)
 			self:PersonalMessage(args.spellId, "removed", CL.ball)
@@ -336,17 +337,17 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:MuffledDoomsplosionDamage(args)
-		if args.time - prev > 0.2 then
-			prev = args.time
-			muffledDoomsplosionCount = muffledDoomsplosionCount + 1
-			self:RemoveLog("SPELL_DAMAGE", args.spellId)
-			self:RemoveLog("SPELL_MISSED", args.spellId)
+function mod:MuffledDoomsplosionDamage(args)
+	if not muffledDoomsplosionPlayersHit[args.destGUID] then
+		muffledDoomsplosionPlayersHit[args.destGUID] = true
+		if muffledDoomsplosionCount == 0 then
+			muffledDoomsplosionCount = 1
 			self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:GetStage()))
-			-- self:PlaySound(args.spellId, "info")
 		end
+	elseif muffledDoomsplosionCount == 1 then
+		muffledDoomsplosionCount = 2
+		self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:GetStage()))
+		self:PlaySound(args.spellId, "long")
 	end
 end
 
