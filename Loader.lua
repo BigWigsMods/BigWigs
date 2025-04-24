@@ -139,11 +139,11 @@ public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
 public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
-public.isTestBuild = GetCurrentRegion() == 72 or GetCurrentRegion() == 90 or (IsPublicTestClient and IsPublicTestClient()) -- PTR/beta
+public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Supported on Retail + Mists, not Cata + Vanilla]
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = build >= 120000
-	public.isNext = build >= 110105
+	public.isNext = build >= 110107
 end
 
 -- Version

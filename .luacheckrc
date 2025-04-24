@@ -26,7 +26,6 @@ files["**/Loader.lua"].ignore = {
 	"113/C_Spell",
 	"113/C_UnitAuras",
 	"113/GetBuildInfo",
-	"113/GetCurrentRegion",
 	"113/GetNumGroupMembers",
 	"113/GetRealmID",
 	"113/IsPublicTestClient",
