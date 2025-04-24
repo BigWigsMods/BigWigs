@@ -532,23 +532,23 @@ local function parseGetOptions(file_name, lines, start, special_options)
 	end
 
 	local options, option_flags = {}, {}
-	for _, opt in next, toggles do
+	for _, entry in next, toggles do
 		local flags = true
-		if type(opt) == "table" then
+		if type(entry) == "table" then
 			flags = {}
-			for i=2, #opt do
-				flags[opt[i]] = true
+			for i=2, #entry do
+				flags[entry[i]] = true
 			end
-			opt = opt[1]
+			entry = entry[1]
 		end
-		if opt then -- marker option vars will be nil
-			if default_options[opt] then
-				flags = default_options[opt]
+		if entry then -- marker option vars will be nil
+			if default_options[entry] then
+				flags = default_options[entry]
 			end
-			if options[opt] then
-				error(string.format("    %s:%d: Duplicate option key %q", file_name, start, tostring(opt)))
+			if options[entry] then
+				error(string.format("    %s:%d: Duplicate option key %q", file_name, start, tostring(entry)))
 			else
-				options[opt] = flags
+				options[entry] = flags
 			end
 		end
 	end
@@ -764,20 +764,20 @@ local function parseLua(file)
 		if toggle_options then
 			local success, result = pcall(loadstring("return " .. toggle_options))
 			if success then
-				for _, opt in next, result do
+				for _, entry in next, result do
 					local flags = true
-					if type(opt) == "table" then
+					if type(entry) == "table" then
 						flags = {}
-						for i=2, #opt do
-							flags[opt[i]] = true
+						for i=2, #entry do
+							flags[entry[i]] = true
 						end
-						opt = opt[1]
+						entry = entry[1]
 					end
-					if opt then -- marker option vars will be nil
-						if default_options[opt] then
-							flags = default_options[opt]
+					if entry then -- marker option vars will be nil
+						if default_options[entry] then
+							flags = default_options[entry]
 						end
-						option_keys[opt] = flags
+						option_keys[entry] = flags
 					end
 				end
 			end
@@ -924,44 +924,44 @@ local function parseLua(file)
 		end
 
 		--- Check timer args (callback, timer)
-		local method, args = line:match(":(%a+Timer)(%b())")
+		local method, timerArgs = line:match(":(%a+Timer)(%b())")
 		if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" or method == "SimpleTimer" then
-			args = strsplit(args:sub(2, -2))
-			if tonumber(args[1]) then
-				error(string.format("    %s:%d: Invalid args for \":%s\" callback=%s, delay=%s", file_name, n, method, tostring(args[1]), tostring(args[2])))
+			timerArgs = strsplit(timerArgs:sub(2, -2))
+			if tonumber(timerArgs[1]) then
+				error(string.format("    %s:%d: Invalid args for \":%s\" callback=%s, delay=%s", file_name, n, method, tostring(timerArgs[1]), tostring(timerArgs[2])))
 			end
 		end
 
 		-- Check :Me args
-		local args = line:match(":Me(%b())")
-		if args then
-			args = args:sub(2, -2)
-			if not string.find(string.lower(args), "guid", nil, true) then
-				error(string.format("    %s:%d: Me: Invalid guid(1)! guid=%s", file_name, n, args))
+		local meArgs = line:match(":Me(%b())")
+		if meArgs then
+			meArgs = meArgs:sub(2, -2)
+			if not string.find(string.lower(meArgs), "guid", nil, true) then
+				error(string.format("    %s:%d: Me: Invalid guid(1)! guid=%s", file_name, n, meArgs))
 			end
 		end
 
 		-- Check :CheckOption
-		local args = line:match(":CheckOption(%b())")
-		if args then
-			args = strsplit(clean(args:sub(2, -2)))
-			local f = tostring(current_func)
-			if rep.func_key then f = string.format("%s(%s)", f, table.concat(rep.func_key, ",")) end
+		local checkOptionArgs = line:match(":CheckOption(%b())")
+		if checkOptionArgs then
+			checkOptionArgs = strsplit(clean(checkOptionArgs:sub(2, -2)))
+			local funcAsString = tostring(current_func)
+			if rep.func_key then funcAsString = string.format("%s(%s)", funcAsString, table.concat(rep.func_key, ",")) end
 
-			local key = tonumber(args[1]) or unquote(args[1])
+			local key = tonumber(checkOptionArgs[1]) or unquote(checkOptionArgs[1])
 			if key == "args.spellId" then
 				if rep.func_key and #rep.func_key == 1 then
 					key = rep.func_key[1]
 				else
-					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
+					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, funcAsString, key))
 					key = nil
 				end
 			end
 			if key then
 				if not option_keys[key] then
-					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, f, key))
+					error(string.format("    %s:%d: CheckOption: Invalid key! func=%s, key=%s", file_name, n, funcAsString, key))
 				end
-				local bitflag = unquote(args[2])
+				local bitflag = unquote(checkOptionArgs[2])
 				if tracked_bitflags[bitflag] and type(option_keys[key]) == "table" and option_keys[key][bitflag] then
 					if not bitflag_used[key] then
 						bitflag_used[key] = {}
@@ -976,8 +976,8 @@ local function parseLua(file)
 		local args = line:match(":Berserk(%b())")
 		if args then
 			args = strsplit(clean(args:sub(2, -2)))
-			local f = tostring(current_func)
-			if rep.func_key then f = string.format("%s(%s)", f, table.concat(rep.func_key, ",")) end
+			local funcAsString = tostring(current_func)
+			if rep.func_key then funcAsString = string.format("%s(%s)", funcAsString, table.concat(rep.func_key, ",")) end
 
 			local key = tonumber(args[4]) -- only numbers are used as a replacement key
 			if not key then
@@ -986,7 +986,7 @@ local function parseLua(file)
 					if rep.func_key and #rep.func_key == 1 then
 						key = rep.func_key[1]
 					else
-						error(string.format("    %s:%d: Berserk: Invalid key! func=%s, key=%s", file_name, n, f, key))
+						error(string.format("    %s:%d: Berserk: Invalid key! func=%s, key=%s", file_name, n, funcAsString, key))
 						key = nil
 					end
 				else -- arg is a string to use as the name
@@ -995,7 +995,7 @@ local function parseLua(file)
 			end
 			if key then
 				if not option_keys[key] then
-					error(string.format("    %s:%d: Berserk: Missing option key! func=%s, key=%s", file_name, n, f, key))
+					error(string.format("    %s:%d: Berserk: Missing option key! func=%s, key=%s", file_name, n, funcAsString, key))
 				end
 				option_key_used[key] = true
 			end
@@ -1011,89 +1011,89 @@ local function parseLua(file)
 		--- Parse toggle option API calls.
 		if checkForAPI(line) then
 			local key, sound, color, bitflag = nil, nil, nil, nil
-			local obj, sugar, method, args = line:gsub("^.* = ", ""):match("(%w+)([.:])(.-)(%b())")
-			if args then args = args:sub(2, -2) end
+			local obj, sugar, functionName, argsList = line:gsub("^.* = ", ""):match("(%w+)([.:])(.-)(%b())")
+			if argsList then argsList = argsList:sub(2, -2) end
 			local offset = 0
-			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
-				method = args:match("^\"(.-)\"")
+			if functionName == "ScheduleTimer" or functionName == "ScheduleRepeatingTimer" then
+				functionName = argsList:match("^\"(.-)\"")
 				offset = 2
 			end
-			if removed_methods[method] then
-				error(string.format("    %s:%d: Invalid API method! func=%s, method=%s", file_name, n, tostring(current_func), method))
-			elseif valid_methods[method] then
-				args = strsplit(clean(args))
-				key = unternary(args[1+offset], "(-?%d+)") -- XXX doesn't allow for string keys
-				local sound_index = sound_methods[method]
+			if removed_methods[functionName] then
+				error(string.format("    %s:%d: Invalid API method! func=%s, method=%s", file_name, n, tostring(current_func), functionName))
+			elseif valid_methods[functionName] then
+				argsList = strsplit(clean(argsList))
+				key = unternary(argsList[1+offset], "(-?%d+)") -- XXX doesn't allow for string keys
+				local sound_index = sound_methods[functionName]
 				if sound_index then
-					sound = unternary(args[sound_index+offset], "\"(.-)\"", valid_sounds)
-					if method == "SetPrivateAuraSound" and not sound then
+					sound = unternary(argsList[sound_index+offset], "\"(.-)\"", valid_sounds)
+					if functionName == "SetPrivateAuraSound" and not sound then
 						sound = "warning"
 					end
 				end
-				local color_index = color_methods[method]
+				local color_index = color_methods[functionName]
 				if color_index then
-					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
-					if method:sub(1, 6) == "Target" or method == "StackMessageOld" or method == "StackMessage" then
+					color = tablize(unternary(argsList[color_index+offset], "\"(.-)\"", valid_colors))
+					if functionName:sub(1, 6) == "Target" or functionName == "StackMessageOld" or functionName == "StackMessage" then
 						color[#color+1] = "blue" -- used when on the player
 					end
 				end
-				if method == "PersonalMessage" then
+				if functionName == "PersonalMessage" then
 					color = {"blue"}
-					local locale_string = args[2+offset]
+					local locale_string = argsList[2+offset]
 					if (locale_string == "nil" or locale_string == "false") then locale_string = nil end
 					if common_locale and (locale_string and not common_locale[unquote(locale_string)]) then
-						local text = args[3+offset]
+						local text = argsList[3+offset]
 						error(string.format("    %s:%d: PersonalMessage: Invalid localeString(2)! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
 					end
 				end
-				local icon_index = icon_methods[method]
+				local icon_index = icon_methods[functionName]
 				if icon_index then
-					local icon = args[icon_index+offset]
+					local icon = argsList[icon_index+offset]
 					-- Make sure methods with a string key set an icon.
 					if type(key) == "string" and key:match('^".*"$') and icon == nil then
 						-- Also check if text is nil or a (formatted)string if the method isn't :Flash
-						local text = args[icon_index+offset-1]
-						if method == "Flash" or (not text or text:match('^".*"$') or text:match(":format") or text:match("C?L%.%a")) then
+						local text = argsList[icon_index+offset-1]
+						if functionName == "Flash" or (not text or text:match('^".*"$') or text:match(":format") or text:match("C?L%.%a")) then
 							error(string.format("    %s:%d: Missing icon! func=%s, key=%s, text=%s, icon=%s", file_name, n, tostring(current_func), key, tostring(text), tostring(icon)))
 						end
 					end
 				end
-				if valid_methods[method] ~= true then
-					bitflag = valid_methods[method]
+				if valid_methods[functionName] ~= true then
+					bitflag = valid_methods[functionName]
 				end
 
 				-- Check for method call typo (API should always be invoked with ":" syntax)
 				-- Note, may need to add a check for using table notation with SimpleTimer or
 				-- such, but local functions are typically used for repeating callbacks
 				if sugar == "." then
-					local call = obj..sugar..method
+					local call = obj..sugar..functionName
 					error(string.format("    %s:%d: Invalid API call \"%s\"! func=%s, key=%s", file_name, n, call, tostring(current_func), key))
 				end
 				-- Check for wrong API (Message instead of TargetMessage)
-				if method == "Message" and (args[3+offset] == "destName" or args[3+offset] == "args.destName" or args[3+offset] == "name" or args[3+offset] == "args.sourceName" or args[3+offset] == "sourceName") then
-					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
+				if functionName == "Message" and (argsList[3+offset] == "destName" or argsList[3+offset] == "args.destName" or argsList[3+offset] == "name" or argsList[3+offset] == "args.sourceName" or argsList[3+offset] == "sourceName") then
+					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, argsList[3]))
 				end
 				-- Check that noEmphUntil is set
-				if method == "StackMessage" and (not args[5+offset] or args[5+offset] == "nil") then
+				if functionName == "StackMessage" and (not argsList[5+offset] or argsList[5+offset] == "nil") then
 					error(string.format("    %s:%d: StackMessage: Missing noEmphUntil(5)! func=%s, key=%s", file_name, n, tostring(current_func), key))
 				end
 				-- Check that voice wasn't forgotten (like the feature was >.>), passes simple expressions like `self:Dispeller("magic") and "dispel"`
-				if method == "PlaySound" and args[3+offset] and args[3+offset] ~= "nil" and not args[3+offset]:match("^\"(.-)\"$") and not args[3+offset]:match(" and \"(.-)\"$") then
-					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3+offset])))
+				if functionName == "PlaySound" and argsList[3+offset] and argsList[3+offset] ~= "nil" and not argsList[3+offset]:match("^\"(.-)\"$") and not argsList[3+offset]:match(" and \"(.-)\"$") then
+					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(argsList[3+offset])))
 				end
 				-- Check chat directPrint
-				if (method == "Say" or method == "Yell") and (args[2+offset] == "nil" and args[3+offset] == "true") then
-					error(string.format("    %s:%d: %s: Missing msg(2) with directPrint(3)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
+				if (functionName == "Say" or functionName == "Yell") and (argsList[2+offset] == "nil" and argsList[3+offset] == "true") then
+					error(string.format("    %s:%d: %s: Missing msg(2) with directPrint(3)! func=%s, key=%s", file_name, n, functionName, tostring(current_func), key))
 				end
 				-- Check for English chat messages (unless using directPrint)
-				if (method == "Say" or method == "Yell") and (args[3+offset] ~= "true" and (not args[4+offset] or args[4+offset] == "nil")) then
-					error(string.format("    %s:%d: %s: Missing englishText(4)! func=%s, key=%s", file_name, n, method, tostring(current_func), key))
+				if (functionName == "Say" or functionName == "Yell") and (argsList[3+offset] ~= "true" and (not argsList[4+offset] or argsList[4+offset] == "nil")) then
+					error(string.format("    %s:%d: %s: Missing englishText(4)! func=%s, key=%s", file_name, n, functionName, tostring(current_func), key))
 				end
 				-- Set default keys
-				if method == "CloseAltPower" and not key then
+				if functionName == "CloseAltPower" and not key then
 					key = "\"altpower\""
 				end
-				if method == "CloseProximity" and not key then
+				if functionName == "CloseProximity" and not key then
 					key = "\"proximity\""
 				end
 			end
@@ -1132,8 +1132,8 @@ local function parseLua(file)
 				end
 			end
 
-			local f = tostring(current_func)
-			if rep.func_key then f = string.format("%s(%s)", f, table.concat(rep.func_key, ",")) end
+			local funcAsString = tostring(current_func)
+			if rep.func_key then funcAsString = string.format("%s(%s)", funcAsString, table.concat(rep.func_key, ",")) end
 
 			local errors = nil
 			local keys = {}
@@ -1160,10 +1160,10 @@ local function parseLua(file)
 				if key ~= "false" then
 					if not default_options[k] then
 						if not option_keys[k] then
-							error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, k))
+							error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, funcAsString, k))
 							errors = true
 						elseif bitflag and (type(option_keys[k]) ~= "table" or not option_keys[k][bitflag]) then
-							error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, k))
+							error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, funcAsString, k))
 							errors = true
 						end
 					end
@@ -1187,7 +1187,7 @@ local function parseLua(file)
 					end
 				elseif c and c ~= "nil" then
 					-- A color was set but didn't match an actual color, so warn about it.
-					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file_name, n, f, table.concat(keys, " "), c))
+					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file_name, n, funcAsString, table.concat(keys, " "), c))
 				end
 			end
 
@@ -1200,7 +1200,7 @@ local function parseLua(file)
 					end
 				elseif s and s ~= "nil" then
 					-- A sound was set but didn't match an actual sound, so warn about it.
-					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file_name, n, f, table.concat(keys, " "), s))
+					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file_name, n, funcAsString, table.concat(keys, " "), s))
 				end
 			end
 		end
@@ -1208,9 +1208,9 @@ local function parseLua(file)
 
 	-- Check for callbacks that were registered but don't exist.
 	-- This will also error when using a local function as a callback.
-	for f, n in next, registered_methods do
-		if not methods[f] then
-			error(string.format("    %s:%d: %q was registered as a callback, but it does not exist.", file_name, n, f))
+	for functionName, n in next, registered_methods do
+		if not methods[functionName] then
+			error(string.format("    %s:%d: %q was registered as a callback, but it does not exist.", file_name, n, functionName))
 		end
 	end
 
