@@ -163,7 +163,6 @@ ignore = {
 	"212/self",
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
 	"2",
-	"4",
 }
 not_globals = {
 	"arg", -- arg is a standard global, so without this it won't error when we typo "args" in a module
@@ -181,25 +180,21 @@ globals = {
 	"gmatch",
 	"gsub",
 	"hooksecurefunc",
-	"ldexp",
 	"max",
 	"min",
 	"mod",
 	"rad",
 	"random",
-	"scrub",
 	"sin",
 	"sort",
 	"sqrt",
 	"strbyte",
 	"strchar",
-	"strcmputf8i",
 	"strconcat",
 	"strfind",
 	"string.join",
 	"strjoin",
 	"strlen",
-	"strlenutf8",
 	"strlower",
 	"strmatch",
 	"strrep",
