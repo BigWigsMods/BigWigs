@@ -54,6 +54,8 @@ L.removeAddOn = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "경고!\n |cFF436EEE%s|r을 업데이트했지만 기본 |cFF436EEEBigWigs|r 애드온도 업데이트해야 합니다.\n이를 무시하면 기능이 손상될 수 있습니다."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r이 올바르게 작동하려면 기본 |cFF436EEEBigWigs|r 애드온의 %d 버전이 필요하지만 %d 버전을 사용 중입니다."
+--L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
+--L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
 
 L.expansionNames = {
 	"오리지널", -- Classic

@@ -590,6 +590,7 @@ local GetAddOnOptionalDependencies = C_AddOns.GetAddOnOptionalDependencies
 local GetNumAddOns = C_AddOns.GetNumAddOns
 local IsAddOnLoadOnDemand = C_AddOns.IsAddOnLoadOnDemand
 local GetAddOnEnableState = C_AddOns.GetAddOnEnableState
+local DoesAddOnHaveLoadError = C_AddOns.DoesAddOnHaveLoadError
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 public.EnableAddOn = EnableAddOn
 
@@ -598,6 +599,34 @@ local reqFuncAddons = {
 	BigWigs_Options = true,
 	BigWigs_Plugins = true,
 }
+
+local function Popup(msg, focus)
+	local frame = CreateFrame("Frame")
+	frame:SetFrameStrata("DIALOG")
+	frame:SetToplevel(true)
+	frame:SetSize(400, 150)
+	frame:SetPoint("CENTER", "UIParent", "CENTER")
+	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
+	text:SetSize(380, 0)
+	text:SetJustifyH("CENTER")
+	text:SetJustifyV("TOP")
+	text:SetNonSpaceWrap(true)
+	text:SetPoint("TOP", 0, -16)
+	local border = CreateFrame("Frame", nil, frame, focus and "DialogBorderOpaqueTemplate" or "DialogBorderTemplate")
+	border:SetAllPoints(frame)
+	local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+	button:SetSize(128, 32)
+	button:SetPoint("BOTTOM", 0, 16)
+	button:SetScript("OnClick", function(self)
+		self:GetParent():Hide()
+	end)
+	button:SetText(L.okay)
+	button:SetNormalFontObject("DialogButtonNormalText")
+	button:SetHighlightFontObject("DialogButtonHighlightText")
+
+	text:SetText(msg)
+	frame:Show()
+end
 
 local function sysprint(msg)
 	print("|cFF33FF99BigWigs|r: "..msg)
@@ -625,7 +654,13 @@ local function load(obj, index)
 	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
-		sysprint(ADDON_LOAD_FAILED:format(GetAddOnInfo(index), _G["ADDON_"..reason]))
+		local msg = L.addOnLoadFailedWithReason:format(GetAddOnInfo(index), reason)
+		sysprint(msg)
+		Popup(msg, true)
+	elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX added in 11.1.5, compat code for classic
+		local msg = L.addOnLoadFailedUnknownError:format(GetAddOnInfo(index))
+		sysprint(msg)
+		Popup(msg, true)
 	end
 	return loaded
 end
@@ -674,34 +709,6 @@ local function loadCoreAndOpenOptions()
 	if BigWigsOptions then
 		BigWigsOptions:Open()
 	end
-end
-
-local function Popup(msg, focus)
-	local frame = CreateFrame("Frame")
-	frame:SetFrameStrata("DIALOG")
-	frame:SetToplevel(true)
-	frame:SetSize(400, 150)
-	frame:SetPoint("CENTER", "UIParent", "CENTER")
-	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
-	text:SetSize(380, 0)
-	text:SetJustifyH("CENTER")
-	text:SetJustifyV("TOP")
-	text:SetNonSpaceWrap(true)
-	text:SetPoint("TOP", 0, -16)
-	local border = CreateFrame("Frame", nil, frame, focus and "DialogBorderOpaqueTemplate" or "DialogBorderTemplate")
-	border:SetAllPoints(frame)
-	local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-	button:SetSize(128, 32)
-	button:SetPoint("BOTTOM", 0, 16)
-	button:SetScript("OnClick", function(self)
-		self:GetParent():Hide()
-	end)
-	button:SetText(L.okay)
-	button:SetNormalFontObject("DialogButtonNormalText")
-	button:SetHighlightFontObject("DialogButtonHighlightText")
-
-	text:SetText(msg)
-	frame:Show()
 end
 
 C_PartyInfo.DoCountdown = function(num) -- Overwrite Blizz countdown

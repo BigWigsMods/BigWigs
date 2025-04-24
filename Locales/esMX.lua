@@ -54,6 +54,8 @@ L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplaz
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "CUIDADO!\nActualizaste |cFF436EEE%s|r pero también necesitas actualizar el addon |cFF436EEEBigWigs|r principal.\nIgnorar esto, significa que no funcionará correctamente."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requiere la versión %d del addon principal de|cFF436EEEBigWigs|r para que funcione correctamente, pero tu estan en la versión %d."
+--L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
+--L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
 
 L.expansionNames = {
 	"Clásico", -- Classic
