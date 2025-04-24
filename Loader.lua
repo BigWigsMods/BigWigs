@@ -182,7 +182,7 @@ do
 	local bc = "BigWigs_BurningCrusade"
 	local wotlk = "BigWigs_WrathOfTheLichKing"
 	local cata = "BigWigs_Cataclysm"
-	local mop = "BigWigs_MistsOfPandaria"
+	local mists = "BigWigs_MistsOfPandaria"
 	local wod = "BigWigs_WarlordsOfDraenor"
 	local l = "BigWigs_Legion"
 	local bfa = "BigWigs_BattleForAzeroth"
@@ -193,7 +193,7 @@ do
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
 	local lw_cata = "LittleWigs_Cataclysm"
-	local lw_mop = "LittleWigs_MistsOfPandaria"
+	local lw_mists = "LittleWigs_MistsOfPandaria"
 	local lw_wod = "LittleWigs_WarlordsOfDraenor"
 	local lw_l = "LittleWigs_Legion"
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
@@ -233,6 +233,14 @@ do
 			name = cata,
 			bigWigsBundled = {},
 			littlewigsDefault = lw_cata,
+			littleWigsBundled = {},
+			zones = {},
+		}
+	elseif public.isMists then
+		public.currentExpansion = {
+			name = mists,
+			bigWigsBundled = {},
+			littlewigsDefault = lw_mists,
 			littleWigsBundled = {},
 			zones = {},
 		}
@@ -328,12 +336,12 @@ do
 		[720] = cata, -- Firelands
 		[967] = cata, -- Dragon Soul
 		--[[ BigWigs: Mists of Pandaria ]]--
-		[-424] = mop, -- Pandaria (Fake Menu)
-		[1009] = mop, -- Heart of Fear
-		[996] = mop, -- Terrace of Endless Spring
-		[1008] = mop, -- Mogu'shan Vaults
-		[1098] = mop, -- Throne of Thunder
-		[1136] = mop, -- Siege of Orgrimmar
+		[-424] = mists, -- Pandaria (Fake Menu)
+		[1009] = mists, -- Heart of Fear
+		[996] = mists, -- Terrace of Endless Spring
+		[1008] = mists, -- Mogu'shan Vaults
+		[1098] = mists, -- Throne of Thunder
+		[1136] = mists, -- Siege of Orgrimmar
 		--[[ BigWigs: Warlords of Draenor ]]--
 		[-572] = wod, -- Draenor (Fake Menu)
 		[1228] = wod, -- Highmaul
@@ -437,16 +445,16 @@ do
 		[657] = lw_cata, -- The Vortex Pinnacle
 		[670] = lw_cata, -- Grim Batol
 		--[[ LittleWigs: Mists of Pandaria ]]--
-		[959] = lw_mop, -- Shado-Pan Monastery
-		[960] = lw_mop, -- Temple of the Jade Serpent
-		[961] = lw_mop, -- Stormstout Brewery
-		[962] = lw_mop, -- Gate of the Setting Sun
-		[994] = lw_mop, -- Mogu'shan Palace
-		[1001] = lw_mop, -- Scarlet Halls
-		[1007] = lw_mop, -- Scholomance
-		[1011] = lw_mop, -- Siege of Niuzao Temple
-		[1112] = lw_mop, -- Pursuing the Black Harvest
-		[1004] = lw_mop, -- Scarlet Monastery
+		[959] = lw_mists, -- Shado-Pan Monastery
+		[960] = lw_mists, -- Temple of the Jade Serpent
+		[961] = lw_mists, -- Stormstout Brewery
+		[962] = lw_mists, -- Gate of the Setting Sun
+		[994] = lw_mists, -- Mogu'shan Palace
+		[1001] = lw_mists, -- Scarlet Halls
+		[1007] = lw_mists, -- Scholomance
+		[1011] = lw_mists, -- Siege of Niuzao Temple
+		[1112] = lw_mists, -- Pursuing the Black Harvest
+		[1004] = lw_mists, -- Scarlet Monastery
 		--[[ LittleWigs: Warlords of Draenor ]]--
 		[1209] = lw_wod, -- Skyreach
 		[1176] = lw_wod, -- Shadowmoon Burial Grounds
