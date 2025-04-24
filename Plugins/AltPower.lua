@@ -637,8 +637,8 @@ do
 
 		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 		local sortedUnitListTest, powerListTest = {}, {}
-		local amount = db.expanded and 26 or 10
-		for i = 1, amount do
+		local count = db.expanded and 26 or 10
+		for i = 1, count do
 			sortedUnitListTest[i] = i
 			powerListTest[i] = math.random(1, 99)
 		end
@@ -650,7 +650,7 @@ do
 				return px > py
 			end
 		end)
-		for i = 1, amount do
+		for i = 1, count do
 			local unitNumber = sortedUnitListTest[i]
 			local tableSize = #classList
 			local tableEntry = unitNumber % tableSize

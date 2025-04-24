@@ -5,6 +5,7 @@ local options = {}
 local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
+local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 
 local ldbi = LibStub("LibDBIcon-1.0")
 local acr = LibStub("AceConfigRegistry-3.0")
@@ -697,84 +698,88 @@ local function flagOnEnter(widget)
 	bwTooltip:Show()
 end
 
+local function customDropdownWithBoolValueChanged(widget, _, value)
+	if value == 0 then value = false end
+	local key = widget:GetUserData("key")
+	local module = widget:GetUserData("module")
+	module.db.profile[key] = value or false
+end
+
+local function customDropdownValueChanged(widget, _, value)
+	local key = widget:GetUserData("key")
+	local module = widget:GetUserData("module")
+	module.db.profile[key] = value or 1
+end
+
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	-- jesus this is so hacky. should probably be "custom_select_" with values as a
 	-- :GetBossOptionDetails return, but this keeps changes to a minimum for now
 	if type(dbKey) == "string" and dbKey:find("^custom_off_select_") then
-		local L = module:GetLocale()
-		local values = { [0] = _G.ADDON_DISABLED }
+		local moduleLocale = module:GetLocale()
+		local values = { [0] = CL.disabled }
 		local i = 1
-		local value = L[dbKey.."_value"..i]
+		local value = moduleLocale[dbKey.."_value"..i]
 		repeat
 			values[i] = value
 			i = i + 1
-			value = L[dbKey.."_value"..i]
+			value = moduleLocale[dbKey.."_value"..i]
 		until not value
 
-		local dropdown = AceGUI:Create("Dropdown")
+		local customDropdown = AceGUI:Create("Dropdown")
 		if desc then
 			-- The label will truncate at ~74 chars, but showing the desc in a tooltip seems awkward
-			dropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
+			customDropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
 		else
-			dropdown:SetLabel(name)
+			customDropdown:SetLabel(name)
 		end
-		dropdown:SetMultiselect(false)
-		dropdown:SetList(values)
-		dropdown:SetFullWidth(true)
-		dropdown:SetUserData("key", dbKey)
-		dropdown:SetUserData("module", module)
-		dropdown:SetCallback("OnValueChanged", function(widget, _, value)
-			if value == 0 then value = false end
-			local key = widget:GetUserData("key")
-			local module = widget:GetUserData("module")
-			module.db.profile[key] = value or false
-		end)
-		dropdown:SetValue(module.db.profile[dbKey] or 0)
+		customDropdown:SetMultiselect(false)
+		customDropdown:SetList(values)
+		customDropdown:SetFullWidth(true)
+		customDropdown:SetUserData("key", dbKey)
+		customDropdown:SetUserData("module", module)
+		customDropdown:SetCallback("OnValueChanged", customDropdownWithBoolValueChanged)
+		customDropdown:SetValue(module.db.profile[dbKey] or 0)
 
-		return dropdown
+		return customDropdown
 	end
 
 	if type(dbKey) == "string" and dbKey:find("^custom_select_") then
-		local L = module:GetLocale()
+		local moduleLocale = module:GetLocale()
 		local values = {}
 		local i = 1
-		local value = L[dbKey.."_value"..i]
+		local value = moduleLocale[dbKey.."_value"..i]
 		repeat
 			values[i] = value
 			i = i + 1
-			value = L[dbKey.."_value"..i]
+			value = moduleLocale[dbKey.."_value"..i]
 		until not value
 
-		local dropdown = AceGUI:Create("Dropdown")
+		local customDropdown = AceGUI:Create("Dropdown")
 		if desc then
 			-- The label will truncate at ~74 chars, be careful
-			dropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
+			customDropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
 		else
-			dropdown:SetLabel(name)
+			customDropdown:SetLabel(name)
 		end
-		dropdown:SetMultiselect(false)
-		dropdown:SetList(values)
-		dropdown:SetUserData("key", dbKey)
-		dropdown:SetUserData("module", module)
-		dropdown:SetCallback("OnValueChanged", function(widget, _, value)
-			local key = widget:GetUserData("key")
-			local module = widget:GetUserData("module")
-			module.db.profile[key] = value or false
-		end)
-		dropdown:SetValue(module.db.profile[dbKey] or 1)
+		customDropdown:SetMultiselect(false)
+		customDropdown:SetList(values)
+		customDropdown:SetUserData("key", dbKey)
+		customDropdown:SetUserData("module", module)
+		customDropdown:SetCallback("OnValueChanged", customDropdownValueChanged)
+		customDropdown:SetValue(module.db.profile[dbKey] or 1)
 
 		if icon then
 			local iconWidget = AceGUI:Create("Icon")
 			iconWidget:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
 			iconWidget:SetImageSize(20, 20)
 			iconWidget:SetRelativeWidth(0.05)
-			dropdown:SetRelativeWidth(0.88)
-			return iconWidget, dropdown
+			customDropdown:SetRelativeWidth(0.88)
+			return iconWidget, customDropdown
 		else
-			dropdown:SetFullWidth(true)
-			return dropdown
+			customDropdown:SetFullWidth(true)
+			return customDropdown
 		end
 	end
 
@@ -807,8 +812,8 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			spellId = dbKey
 		end
 	else
-		local L = module:GetLocale(true)
-		local title, description = L[dbKey], L[dbKey .. "_desc"]
+		local moduleLocale = module:GetLocale(true)
+		local title, description = moduleLocale[dbKey], moduleLocale[dbKey .. "_desc"]
 		if type(title) == "number" and not description then
 			spellId = title
 		elseif type(description) == "number" then
@@ -832,12 +837,12 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	for i = 1, #showFlags do
 		local key = showFlags[i]
 		if hasOptionFlag(dbKey, module, key) then
-			local icon = AceGUI:Create("Icon")
-			icon:SetWidth(16)
-			icon:SetImageSize(16, 16)
-			icon:SetUserData("tooltipText", L[key])
-			icon:SetCallback("OnEnter", flagOnEnter)
-			icon:SetCallback("OnLeave", bwTooltip_Hide)
+			local iconWidget = AceGUI:Create("Icon")
+			iconWidget:SetWidth(16)
+			iconWidget:SetImageSize(16, 16)
+			iconWidget:SetUserData("tooltipText", L[key])
+			iconWidget:SetCallback("OnEnter", flagOnEnter)
+			iconWidget:SetCallback("OnLeave", bwTooltip_Hide)
 
 			if key == "TANK_HEALER" then
 				-- add both "TANK" and "HEALER" icons
@@ -853,17 +858,17 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				flagIcons[#flagIcons+1] = icon1
 				-- first icon, don't bother with SetPoint
 
-				icon:SetImage(module:GetMenuIcon("HEALER"))
+				iconWidget:SetImage(module:GetMenuIcon("HEALER"))
 			else
-				icon:SetImage(module:GetMenuIcon(key))
+				iconWidget:SetImage(module:GetMenuIcon(key))
 			end
 
-			icon.frame:SetParent(check.frame)
-			icon.frame:Show()
+			iconWidget.frame:SetParent(check.frame)
+			iconWidget.frame:Show()
 
-			flagIcons[#flagIcons+1] = icon
+			flagIcons[#flagIcons+1] = iconWidget
 			if #flagIcons > 1 then
-				icon:SetPoint("LEFT", flagIcons[#flagIcons-1].frame, "RIGHT", 1, 0)
+				iconWidget:SetPoint("LEFT", flagIcons[#flagIcons-1].frame, "RIGHT", 1, 0)
 			end
 		end
 	end
@@ -875,8 +880,8 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		-- need to clean these up since they are not added to a container
 		check:SetUserData("icons", flagIcons)
 		check:SetCallback("OnRelease", function(widget)
-			for _, icon in next, widget:GetUserData("icons") do
-				icon:Release()
+			for _, iconWidget in next, widget:GetUserData("icons") do
+				iconWidget:Release()
 			end
 			widget.frame:SetHitRectInsets(0, 0, 0, 0) -- Reset hit area to default, set this again as it will overwrite the OnRelease above
 		end)
@@ -952,9 +957,9 @@ do
 					end
 				end
 			elseif type(o) == "string" then -- Attempt to build links for strings that are just basic spell renaming
-				local L = module:GetLocale()
-				if L then
-					local name, desc, icon = L[o], L[o.."_desc"], L[o.."_icon"]
+				local moduleLocale = module:GetLocale()
+				if moduleLocale then
+					local name, desc, icon = moduleLocale[o], moduleLocale[o.."_desc"], moduleLocale[o.."_icon"]
 					if name and type(desc) == "number" and desc == icon then
 						if desc > 0 then
 							local spellName = loader.GetSpellName(desc)
@@ -984,7 +989,36 @@ local function SecondsToTime(time)
 	return ("%d:%02d"):format(m, s)
 end
 
-local function populatePrivateAuraOptions(widget)
+local function privateAuraOnEnter(widget)
+	bwTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
+	bwTooltip:SetSpellByID(widget:GetUserData("spellId"))
+	bwTooltip:Show()
+end
+
+local function privateAuraDropdownValueChanged(widget, _, value)
+	local key = widget:GetUserData("key")
+	local default = widget:GetUserData("default")
+	local module = widget:GetUserData("module")
+	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	value = soundList[value]
+	if value == default then
+		value = nil
+	end
+	module.db.profile[key] = value
+end
+
+local populatePrivateAuraOptions
+local function privateAuraResetOnClick(widget)
+	for module, paOptions in next, widget:GetUserData("privateAuraSoundOptions") do
+		for _, option in next, paOptions do
+			local key = ("pa_%d"):format(option[1])
+			module.db.profile[key] = nil
+		end
+	end
+	populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
+end
+
+function populatePrivateAuraOptions(widget)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
 	scrollFrame:PauseLayout()
@@ -1002,15 +1036,15 @@ local function populatePrivateAuraOptions(widget)
 	local defaultSound = soundModule:GetDefaultSound("privateaura")
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
-		local options = privateAuraSoundOptions[module]
-		if options then
+		local paOptions = privateAuraSoundOptions[module]
+		if paOptions then
 			if module.SetupOptions then module:SetupOptions() end -- init the db
 
 			local header = AceGUI:Create("Heading")
 			header:SetText(module.displayName)
 			header:SetFullWidth(true)
 			scrollFrame:AddChild(header)
-			for _, option in ipairs(options) do
+			for _, option in ipairs(paOptions) do
 				local spellId = option[1]
 				local key = ("pa_%d"):format(spellId)
 				local id = option.tooltip or spellId
@@ -1024,11 +1058,7 @@ local function populatePrivateAuraOptions(widget)
 				icon:SetRelativeWidth(0.1)
 				icon:SetUserData("spellId", id)
 				icon:SetUserData("updateTooltip", true)
-				icon:SetCallback("OnEnter", function(widget)
-					bwTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-					bwTooltip:SetSpellByID(widget:GetUserData("spellId"))
-					bwTooltip:Show()
-				end)
+				icon:SetCallback("OnEnter", privateAuraOnEnter)
 				icon:SetCallback("OnLeave", bwTooltip_Hide)
 
 				local dropdown = AceGUI:Create("SharedDropdown")
@@ -1042,16 +1072,7 @@ local function populatePrivateAuraOptions(widget)
 				dropdown:SetUserData("key", key)
 				dropdown:SetUserData("default", defaultSound)
 				dropdown:SetUserData("module", module)
-				dropdown:SetCallback("OnValueChanged", function(widget, _, value)
-					local key = widget:GetUserData("key")
-					local default = widget:GetUserData("default")
-					local module = widget:GetUserData("module")
-					value = soundList[value]
-					if value == default then
-						value = nil
-					end
-					module.db.profile[key] = value
-				end)
+				dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
 				local value = module.db.profile[key] or defaultSound
 				for i, v in next, soundList do
 					if v == value then
@@ -1074,15 +1095,7 @@ local function populatePrivateAuraOptions(widget)
 	reset:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
 	reset:SetCallback("OnEnter", slaveOptionMouseOver)
 	reset:SetCallback("OnLeave", bwTooltip_Hide)
-	reset:SetCallback("OnClick", function(widget)
-		for module, options in next, widget:GetUserData("privateAuraSoundOptions") do
-			for _, option in next, options do
-				local key = ("pa_%d"):format(option[1])
-				module.db.profile[key] = nil
-			end
-		end
-		populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
-	end)
+	reset:SetCallback("OnClick", privateAuraResetOnClick)
 	scrollFrame:AddChild(reset)
 
 	scrollFrame:ResumeLayout()
@@ -1562,13 +1575,13 @@ do
 				configFrame:SetStatusText(" "..loader:GetReleaseString())
 				defaultHeader = loader.currentExpansion.name
 				for i = 1, #expansionHeader do
-					local value = "BigWigs_" .. expansionHeader[i]
+					local addonName = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = L.expansionNames[i],
-						value = value,
+						value = addonName,
 						enabled = true,
 					}
-					addonNameToHeader[value] = i
+					addonNameToHeader[addonName] = i
 				end
 			elseif value == "littlewigs" then
 				configFrame:SetTitle("LittleWigs")
@@ -1576,24 +1589,24 @@ do
 				defaultHeader = loader.currentExpansion.littlewigsDefault
 				-- add an entry for each expansion
 				for i = 1, #expansionHeader do
-					local value = "LittleWigs_" .. expansionHeader[i]
+					local addonName = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = L.expansionNames[i],
-						value = value,
+						value = addonName,
 						enabled = true,
 					}
-					addonNameToHeader[value] = i
+					addonNameToHeader[addonName] = i
 				end
 				-- add any extra LittleWigs menus
 				if loader.currentExpansion.littleWigsExtras then
 					for i = 1, #loader.currentExpansion.littleWigsExtras do
-						local value = loader.currentExpansion.littleWigsExtras[i]
+						local addonName = loader.currentExpansion.littleWigsExtras[i]
 						treeTbl[#treeTbl + 1] = {
-							text = L.littleWigsExtras[value],
-							value = value,
+							text = L.littleWigsExtras[addonName],
+							value = addonName,
 							enabled = true,
 						}
-						addonNameToHeader[value] = #treeTbl
+						addonNameToHeader[addonName] = #treeTbl
 					end
 				end
 			end
@@ -1687,8 +1700,8 @@ do
 
 			if parent then
 				local moduleList = id and loader:GetZoneMenus()[id]
-				local value = treeTbl[parent].value
-				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, id) or value)
+				local current = treeTbl[parent].value
+				tree:SelectByValue(moduleList and ("%s\001%d"):format(current, id) or current)
 			else
 				tree:SelectByValue(defaultHeader)
 			end
