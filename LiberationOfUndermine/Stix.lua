@@ -290,10 +290,9 @@ do
 			local power = UnitPower(unit, 10)
 			if power >= 200 and ballSize < 200 then
 				self:Message(461536, "green", CL.medium) -- Rolling Rubbish
-				self:PlaySound(461536, "info")
 			elseif power >= 100 and ballSize < 100 then
 				self:Message(461536, "green", CL.large) -- Rolling Rubbish
-				self:PlaySound(461536, "alert")
+				self:PlaySound(461536, "long")
 			end
 			ballSize = power
 		end
@@ -347,7 +346,7 @@ function mod:MuffledDoomsplosionDamage(args)
 	elseif muffledDoomsplosionCount == 1 then
 		muffledDoomsplosionCount = 2
 		self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:GetStage()))
-		self:PlaySound(args.spellId, "long")
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
