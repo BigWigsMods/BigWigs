@@ -984,8 +984,8 @@ do
 end
 
 local function SecondsToTime(time)
-	local m = floor(time/60)
-	local s = mod(time, 60)
+	local m = math.floor(time/60)
+	local s = time % 60
 	return ("%d:%02d"):format(m, s)
 end
 
