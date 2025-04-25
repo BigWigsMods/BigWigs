@@ -86,7 +86,7 @@ function mod:GetOptions()
 		466979, -- Faulty Zap
 		472306, -- Sparkblast Ignition
 			1214164, -- Excitement
-		464518, -- Tinnitus
+		{464518, "EMPHASIZE"}, -- Tinnitus
 		-- Stage Two: Hype Hustle
 		{473260, "CASTBAR"}, -- Blaring Drop
 		{473655, "CASTBAR"}, -- Hype Fever!
@@ -349,13 +349,17 @@ end
 function mod:TinnitusApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "purple", args.destName, amount, 0, CL.tank_debuff)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, self:Me(args.destGUID) and 100 or 6, CL.tank_debuff) -- Only emphasize when not on you and reached 6+
 		if amount > 5 and amount % 2 == 0 then -- 6, 8...
 			self:PlaySound(args.spellId, "warning") -- swap?
 		end
 	elseif self:Me(args.destGUID) then -- Not a tank
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0, CL.tank_debuff)
-		self:PlaySound(args.spellId, "warning")
+		local amount = args.amount or 1
+		local shouldEmphasize = amount == 2 and amount or amount == 3 and amount or 100
+		self:StackMessage(args.spellId, "blue", args.destName, amount, shouldEmphasize, CL.tank_debuff) -- Emphasize on 2 or 3, nothing else
+		if amount <= 3 then -- If we reach 4+ we likely don't care
+			self:PlaySound(args.spellId, "warning")
+		end
 	end
 end
 
