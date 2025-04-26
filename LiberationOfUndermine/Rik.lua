@@ -89,7 +89,7 @@ function mod:GetOptions()
 			1214164, -- Excitement
 		{464518, "EMPHASIZE"}, -- Tinnitus
 		-- Stage Two: Hype Hustle
-		{473260, "CASTBAR"}, -- Blaring Drop
+		{473260, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Blaring Drop
 		{473655, "CASTBAR"}, -- Hype Fever!
 	},{ -- Sections
 		[473748] = -31656, -- Stage 1
@@ -353,7 +353,9 @@ function mod:TinnitusApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
 		if self:Me(args.destGUID) then
 			tankDebuffOnMe = true
-			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 100, CL.tank_debuff) -- No emphasize when on you
+			if not args.amount or args.amount >= 5 then -- 1x (move if you're not tanking) or 5+
+				self:StackMessage(args.spellId, "blue", args.destName, args.amount, 100, CL.tank_debuff) -- No emphasize when on you
+			end
 		else
 			local amount = args.amount or 1
 			if amount >= 5 then
