@@ -47,7 +47,7 @@ end
 --
 
 local rollingRubbishMarkerMapTable = {1, 2, 3, 4} -- Easier to adjust which icons are used
-local rollingRubbishMarker = mod:AddMarkerOption(false, "player", rollingRubbishMarkerMapTable[1], 461536, unpack(rollingRubbishMarkerMapTable))
+local rollingRubbishMarker = mod:AddMarkerOption(false, "player", rollingRubbishMarkerMapTable[1], 461536, unpack(rollingRubbishMarkerMapTable)) -- Rolling Rubbish
 local scrapmasterMarkerMapTable = {8, 7, 6, 5}
 local scrapmasterMarker = mod:AddMarkerOption(false, "npc", scrapmasterMarkerMapTable[1], -31645, unpack(scrapmasterMarkerMapTable))
 function mod:GetOptions()
@@ -248,13 +248,13 @@ do
 		iconList = {}
 	end
 
-	function mod:SortedApplied(args)
+	function mod:SortedApplied(args) -- You're about to become a ball
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(461536, nil, CL.ball) -- Rolling Rubbish
 			self:TargetBar(461536, 4.5, args.destName, CL.ball)
 			self:Say(461536, CL.ball, nil, "Ball")
 			self:SayCountdown(461536, 4.5)
-			self:PlaySound(461536, "warning") -- you're becoming rubbish
+			self:PlaySound(461536, "warning")
 		end
 
 		iconList[#iconList+1] = {
@@ -281,7 +281,7 @@ do
 		if self:Me(args.destGUID) then
 			ballSize = 0
 			self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "player", "vehicle")
-			self:TargetBar(args.spellId, 24, args.destName)
+			self:TargetBar(args.spellId, 24, args.destName, CL.ball)
 		end
 	end
 
@@ -289,10 +289,10 @@ do
 		if powerType == "ALTERNATE" then
 			local power = UnitPower(unit, 10)
 			if power >= 200 and ballSize < 200 then
-				self:Message(461536, "green", CL.medium) -- Rolling Rubbish
-			elseif power >= 100 and ballSize < 100 then
 				self:Message(461536, "green", CL.large) -- Rolling Rubbish
 				self:PlaySound(461536, "long")
+			elseif power >= 100 and ballSize < 100 then
+				self:Message(461536, "green", CL.medium) -- Rolling Rubbish
 			end
 			ballSize = power
 		end
