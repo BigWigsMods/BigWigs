@@ -1150,7 +1150,7 @@ function mod:ADDON_LOADED(addon)
 			for k,v in next, BigWigs3DB.namespaces do
 				if not next(v) then
 					toDelete[k] = true
-				elseif strfind(k, " Trash", nil, true) and GetAddOnInfo("QuaziiUI") then
+				elseif strfind(k, " Trash", nil, true) and public:GetAddOnState("QuaziiUI") ~= "MISSING" then
 					toDelete[k] = true
 				end
 			end
