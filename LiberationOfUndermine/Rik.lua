@@ -30,6 +30,7 @@ local fullSparkblastIgnitionCount = 1
 
 local mobCollector = {}
 local mobMarks = {}
+local tankDebuffOnMe = false
 
 local timersNormal = {
 	[473748] = { 9.5, 40.1, 37.8, 0 }, -- Amplification!
@@ -130,6 +131,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExcitementApplied", 1214164)
 	self:Log("SPELL_AURA_APPLIED", "TinnitusApplied", 464518)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TinnitusApplied", 464518)
+	self:Log("SPELL_AURA_REMOVED", "TinnitusRemoved", 464518)
 
 	-- Stage Two: Hype Hustle
 	self:Log("SPELL_AURA_APPLIED", "SoundCloudApplied", 1213817)
@@ -161,6 +163,7 @@ function mod:OnEngage()
 
 	mobCollector = {}
 	mobMarks = {}
+	tankDebuffOnMe = false
 
 	self:CDBar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
 	if not self:Easy() then
@@ -348,10 +351,17 @@ end
 
 function mod:TinnitusApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
-		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "purple", args.destName, amount, self:Me(args.destGUID) and 100 or 6, CL.tank_debuff) -- Only emphasize when not on you and reached 6+
-		if amount > 5 and amount % 2 == 0 then -- 6, 8...
-			self:PlaySound(args.spellId, "warning") -- swap?
+		if self:Me(args.destGUID) then
+			tankDebuffOnMe = true
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 100, CL.tank_debuff) -- No emphasize when on you
+		else
+			local amount = args.amount or 1
+			if amount >= 5 then
+				self:StackMessage(args.spellId, "purple", args.destName, amount, tankDebuffOnMe and 100 or 6, CL.tank_debuff) -- Only emphasize when not on you and reached 6+
+				if amount >= 6 then
+					self:PlaySound(args.spellId, "warning") -- Swap?
+				end
+			end
 		end
 	elseif self:Me(args.destGUID) then -- Not a tank
 		local amount = args.amount or 1
@@ -360,6 +370,12 @@ function mod:TinnitusApplied(args)
 		if amount <= 3 then -- If we reach 4+ we likely don't care
 			self:PlaySound(args.spellId, "warning")
 		end
+	end
+end
+
+function mod:TinnitusRemoved(args)
+	if self:Me(args.destGUID) then
+		tankDebuffOnMe = false
 	end
 end
 
