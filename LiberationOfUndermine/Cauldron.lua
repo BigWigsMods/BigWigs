@@ -79,7 +79,7 @@ function mod:GetOptions()
 			-- 465446, -- Fiery Waves
 		1213690, -- Molten Phlegm
 		{472233, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Blastburn Roarcannon
-		1214190, -- Eruption Stomp
+		{1214190, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Eruption Stomp
 		-- Torq the Tempest
 		472225, -- Galvanized Spite
 		474159, -- Static Charge
@@ -87,7 +87,7 @@ function mod:GetOptions()
 		463900, -- Thunderdrum Salvo
 		1213994, -- Voltaic Image
 			463925, -- Lingering Electricity
-		{466178, "TANK"}, -- Lightning Bash
+		{466178, "TANK", "ME_ONLY_EMPHASIZE"}, -- Lightning Bash
 	},{ -- Sections
 		[472222] = -30339, -- Flarendo the Furious
 		[472225] = -30344, -- Torq the Tempest
@@ -516,13 +516,27 @@ do
 end
 
 function mod:EruptionStomp(args)
-	self:StopBar(CL.count:format(L.eruption_stomp, eruptionStompCount))
+	local msg = CL.count:format(L.eruption_stomp, eruptionStompCount)
+	self:StopBar(msg)
 	if self:IsFlarendoInRange() then
-		self:Message(args.spellId, "purple", CL.count:format(L.eruption_stomp, eruptionStompCount))
-	end
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and self:Tanking(unit) then
-		self:PlaySound(args.spellId, "alarm") -- defensive and move
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
+
+		local destGUID, targetName = nil, nil
+		if unit then
+			local unitTarget = unit.."target"
+			targetName = self:UnitName(unitTarget)
+			destGUID = self:UnitGUID(unitTarget)
+		end
+		if destGUID and targetName then
+			self:TargetMessage(args.spellId, "purple", targetName, msg)
+			if self:Me(destGUID) then
+				self:Say(args.spellId, L.eruption_stomp, nil, "Stomp")
+				self:SayCountdown(args.spellId, 4, nil, 2)
+				self:PlaySound(args.spellId, "warning", nil, targetName) -- Defensive and move
+			end
+		elseif self:Tank() then
+			self:Message(args.spellId, "purple", msg)
+		end
 	end
 	eruptionStompCount = eruptionStompCount + 1
 
@@ -586,13 +600,25 @@ function mod:VoltaicImageFixateApplied(args)
 end
 
 function mod:LightningBash(args)
-	self:StopBar(CL.count:format(args.spellName, lightningBashCount))
+	local msg = CL.count:format(args.spellName, lightningBashCount)
+	self:StopBar(msg)
 	if self:IsTorqueInRange() then
-		self:Message(args.spellId, "purple", CL.count:format(args.spellName, lightningBashCount))
-	end
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and self:Tanking(unit) then
-		self:PlaySound(args.spellId, "alarm") -- defensive
+		local unit = self:UnitTokenFromGUID(args.sourceGUID)
+
+		local destGUID, targetName = nil, nil
+		if unit then
+			local unitTarget = unit.."target"
+			targetName = self:UnitName(unitTarget)
+			destGUID = self:UnitGUID(unitTarget)
+		end
+		if destGUID and targetName then
+			self:TargetMessage(args.spellId, "purple", targetName, msg)
+			if self:Me(destGUID) then
+				self:PlaySound(args.spellId, "warning", nil, targetName) -- Defensive
+			end
+		elseif self:Tank() then
+			self:Message(args.spellId, "purple", msg)
+		end
 	end
 	lightningBashCount = lightningBashCount + 1
 
