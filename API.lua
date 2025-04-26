@@ -131,6 +131,7 @@ do
 	-- A custom profile name and callback function is completely optional
 	-- When specified, a callback function will be called with a boolean as the first arg. True if the user accepted, false otherwise
 	function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
+		if optionalCustomProfileName == "QuaziiUI" then error("This profile is blocked from being imported until it stops tampering with BigWigs bitflag options.") end
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end

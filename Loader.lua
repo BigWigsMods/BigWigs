@@ -1145,12 +1145,18 @@ function mod:ADDON_LOADED(addon)
 		end
 		-- Cleanup function.
 		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
+		local toDelete = {}
 		if BigWigs3DB.namespaces then
 			for k,v in next, BigWigs3DB.namespaces do
-				if strfind(k, "BigWigs_Bosses_", nil, true) and not next(v) then
-					BigWigs3DB.namespaces[k] = nil
+				if not next(v) then
+					toDelete[k] = true
+				elseif strfind(k, " Trash", nil, true) and GetAddOnInfo("QuaziiUI") then
+					toDelete[k] = true
 				end
 			end
+		end
+		for k in next, toDelete do
+			BigWigs3DB.namespaces[k] = nil
 		end
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
