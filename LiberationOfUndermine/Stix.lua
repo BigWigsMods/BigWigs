@@ -341,11 +341,11 @@ function mod:MuffledDoomsplosionDamage(args)
 		muffledDoomsplosionPlayersHit[args.destGUID] = true
 		if muffledDoomsplosionCount == 0 then
 			muffledDoomsplosionCount = 1
-			self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:GetStage()))
+			self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:LFR() and 1 or self:GetStage()))
 		end
 	elseif muffledDoomsplosionCount == 1 then
 		muffledDoomsplosionCount = 2
-		self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:GetStage()))
+		self:Message(args.spellId, "green", CL.count_amount:format(L.muffled_doomsplosion, muffledDoomsplosionCount, self:LFR() and 1 or self:GetStage()))
 		self:PlaySound(args.spellId, "info")
 	end
 end
