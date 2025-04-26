@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Vexie and the Geargrinders", 2769, 2639)
 if not mod then return end
-mod:RegisterEnableMob(225821) -- The Geargrinder
+mod:RegisterEnableMob(225821, 225822) -- The Geargrinder, Vexie Fullthrottle
 mod:SetEncounterID(3009)
 mod:SetPrivateAuraSounds({
 	459669, -- Spew Oil
@@ -25,16 +25,20 @@ local incendiaryFireCount = 1
 local unrelentingCarnageCount = 1
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	local _, vexie = EJ_GetCreatureInfo(2, 2639)
+	L.vexie = vexie
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
-function mod:OnRegister()
-	self:SetSpellRename(471403, CL.full_energy) -- Unrelenting CAR-nage (Full Energy)
-	self:SetSpellRename(459943, CL.adds) -- Call Bikers (Adds)
-	self:SetSpellRename(468487, CL.fire) -- Incendiary Fire (Fire)
-	self:SetSpellRename(460116, CL.weakened) -- Tune-Up (Weakened)
-end
-
+local vexieMarker = mod:AddMarkerOption(true, "npc", 8, "vexie", 8) -- Vexie
 function mod:GetOptions()
 	return {
 		-- Stage One: Fury Road
@@ -45,13 +49,16 @@ function mod:GetOptions()
 			459683, -- Oil Slick
 		{468216, "PRIVATE"}, -- Incendiary Fire
 		459978, -- Bomb Voyage!
-		{465865, "TANK"}, -- Tank Buster
+		{465865, "TANK", "EMPHASIZE"}, -- Tank Buster
 			468147,	-- Exhaust Fumes (DPS / Healers)
 		-- Stage Two: Pit Stop
 		460116, -- Tune-Up
+		vexieMarker,
+		"stages",
 	},{ -- Sections
 		[466615] = CL.stage:format(1),
 		[460116] = CL.stage:format(2),
+		[vexieMarker] = CL.stage:format(3),
 	},{ -- Renames
 		[471403] = CL.full_energy, -- Unrelenting CAR-nage (Full Energy)
 		[459943] = CL.adds, -- Call Bikers (Adds)
@@ -61,8 +68,16 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(471403, CL.full_energy) -- Unrelenting CAR-nage (Full Energy)
+	self:SetSpellRename(459943, CL.adds) -- Call Bikers (Adds)
+	self:SetSpellRename(468487, CL.fire) -- Incendiary Fire (Fire)
+	self:SetSpellRename(460116, CL.weakened) -- Tune-Up (Weakened)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED_DOSE", "ProtectivePlatingRemoved", 466615)
+	self:Log("SPELL_AURA_REMOVED", "ProtectivePlatingRemoved", 466615)
 	self:Log("SPELL_CAST_START", "UnrelentingCARnage", 471403)
 	self:Log("SPELL_CAST_START", "CallBikers", 459943)
 	self:Log("SPELL_CAST_START", "SpewOil", 459671)
@@ -80,6 +95,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "OilSlickDamage", 459683) -- Oil Slick
 	self:Log("SPELL_PERIODIC_DAMAGE", "OilSlickDamage", 459683)
 	self:Log("SPELL_PERIODIC_MISSED", "OilSlickDamage", 459683)
+
+	self:Death("GeargrinderDeath", 225821)
 end
 
 function mod:OnEngage()
@@ -105,11 +122,8 @@ end
 --
 
 function mod:ProtectivePlatingRemoved(args)
-	local higherThanOne = args.amount > 1
-	self:StackMessage(args.spellId, "cyan", CL.boss, args.amount, higherThanOne and 100 or 1)
-	if not higherThanOne then
-		self:PlaySound(args.spellId, "info") -- breaking soon
-	end
+	local amount = args.amount or 0
+	self:StackMessage(args.spellId, "cyan", CL.boss, amount, amount <= 1 and amount or 100) -- Only emph on 1 and 0
 end
 
 function mod:UnrelentingCARnage(args)
@@ -180,14 +194,15 @@ function mod:TankBuster(args)
 		destGUID = self:UnitGUID(unitTarget)
 	end
 	if destGUID and targetName then
-		self:TargetMessage(465865, "purple", targetName, msg)
 		if self:Me(destGUID) then
+			self:PersonalMessage(465865)
 			self:PlaySound(465865, "alarm", nil, targetName) -- On you
 		elseif self:Tank() then
+			self:TargetMessage(465865, "purple", targetName, msg)
 			self:PlaySound(465865, "warning", nil, targetName) -- Taunt
 		end
 	else
-		self:Message(465865, "purple", msg)
+		self:Message(465865, "purple", msg, nil, true) -- Disable emphasize
 		self:PlaySound(465865, "alarm") -- Backup if unit scan fails
 	end
 end
@@ -247,5 +262,21 @@ do
 			self:PersonalMessage(args.spellId, "underyou")
 			self:PlaySound(args.spellId, "underyou")
 		end
+	end
+end
+
+do
+	function mod:VexieMarking(_, unit, guid)
+		if self:MobId(guid) == 225822 then
+			self:CustomIcon(vexieMarker, unit, 8)
+			self:UnregisterTargetEvents()
+		end
+	end
+
+	function mod:GeargrinderDeath()
+		self:SetStage(3)
+		self:RegisterTargetEvents("VexieMarking")
+		self:Message("stages", "cyan", L.vexie, 8)
+		self:PlaySound("stages", "info")
 	end
 end
