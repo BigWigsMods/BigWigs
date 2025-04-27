@@ -1456,11 +1456,11 @@ local function parseTOC(file)
 	return list
 end
 
-local function parse(file, relativePath)
+local function parse(file, relative_path)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
 		for _, f in next, file do
-			parse(f, relativePath)
+			parse(f, relative_path)
 		end
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
@@ -1477,7 +1477,7 @@ local function parse(file, relativePath)
 		options_path = nil
 		options_file_name = nil
 	elseif file then
-		local file_path = relativePath and relativePath..file or file
+		local file_path = relative_path and relative_path..file or file
 		local options_file = string.match(file, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 		if options_file then
 			if options_path then
@@ -1498,8 +1498,8 @@ local function parse(file, relativePath)
 				parseLocale(f)
 			end
 		elseif string.match(file, "%.toc$") then
-			local tocRelativePath = file:match("^(.+/)(.+)$")
-			parse(parseTOC(file), tocRelativePath)
+			local toc_relative_path = file:match("^(.+/)(.+)$")
+			parse(parseTOC(file), toc_relative_path)
 		elseif file ~= "embeds.xml" then
 			-- unrecognized file name pattern
 			warn("Ignoring file: "..file)
