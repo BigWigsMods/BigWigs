@@ -503,7 +503,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 	local chunk_func
 	do
 		-- sigh.
-		local s = setmetatable({}, { __index = function(t, k) return tostring(k) end })
+		local s = setmetatable({}, { __index = function(_, k) return tostring(k) end })
 		local mod = {
 			SpellName = function(k) return tostring(k) end
 		}
@@ -513,7 +513,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 			self = mod,
 			mod = mod,
 		}, {
-			__index = function(t, k)
+			__index = function(_, k)
 				if special_options[k] then return "custom_off_" .. k end
 				return k
 			end
@@ -539,7 +539,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 		return success, toggles
 	end
 
-	local options, option_flags = {}, {}
+	local options = {}
 	for _, entry in next, toggles do
 		local flags = true
 		if type(entry) == "table" then
@@ -568,7 +568,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 		end
 	end
 	if altNames then
-		for key, name in next, altNames do
+		for key in next, altNames do
 			if not options[key] then
 				error(string.format("    %s:%d: Invalid option alt name key %q", file_name, start, tostring(key)))
 			end
@@ -805,7 +805,7 @@ local function parseLua(file)
 			-- pop off comments from the end (trying to protect strings)
 			while line:gsub('%b""', ''):match("%-%-") do
 				local new_line = line:reverse()
-				local start, stop = new_line:find("--", nil, true)
+				local _, stop = new_line:find("--", nil, true)
 				comment = comment .. new_line:sub(1, stop):reverse()
 				line = new_line:sub(stop + 1):reverse()
 			end
@@ -1005,7 +1005,7 @@ local function parseLua(file)
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
 		-- created earlier to set the associated spellId(s).
-		local res, params = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*(%b())")
+		local res = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%b()")
 		if res then
 			current_func = res
 			local name = res:match(":(.+)")
@@ -1047,7 +1047,7 @@ local function parseLua(file)
 			local set_key = comment:match("SetOption:(.-):")
 			if set_key and set_key ~= "" then
 				rep.if_key = {}
-				for k, v in next, strsplit(set_key) do
+				for _, v in next, strsplit(set_key) do
 					rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 				end
 			else
@@ -1063,7 +1063,7 @@ local function parseLua(file)
 				local set_key = comment:match("SetOption:(.-):")
 				if set_key and set_key ~= "" then
 					rep.if_key = {}
-					for k, v in next, strsplit(set_key) do
+					for _, v in next, strsplit(set_key) do
 						rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 					end
 				else
