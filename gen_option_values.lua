@@ -11,7 +11,7 @@ local modules_locale = {}
 
 local module_colors = {}
 local module_sounds = {}
-local options_path = nil
+local options_path, options_file_name = nil, nil
 
 local default_options = {
 	altpower = {ALTPOWER = true},
@@ -338,9 +338,9 @@ local function buildOptionString(data, mod, option_type, options_table)
 	return data
 end
 
--- Write out module option values to [module dir]/Options/Options.lua
-local function dumpValues(path, modules_table, colors_table, sounds_table)
-	local file = path .. "!Options.lua"
+-- Write out module option values to !Options.lua (or any defined !Options file)
+local function dumpValues(path, fileName, modules_table, colors_table, sounds_table)
+	local file = path .. fileName
 	local old_data = ""
 	local f = io.open(file, "r")
 	if f then
@@ -1427,8 +1427,10 @@ local function parse(file)
 		end
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
+			-- prefer a defined !Options path with a fallback to writing !Options.lua in the same directory as the module
 			local path = options_path or file[1]:match(".*/") or ""
-			dumpValues(path, modules, module_colors, module_sounds)
+			local file_name = options_file_name or "!Options.lua"
+			dumpValues(path, file_name, modules, module_colors, module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
 		end
 		-- Reset!
@@ -1436,12 +1438,16 @@ local function parse(file)
 		module_colors = {}
 		module_sounds = {}
 		options_path = nil
+		options_file_name = nil
 	elseif file then
-		if string.match(file, "!Options.lua$") then
+		local options_file = string.match(file, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
+		if options_file then
 			if options_path then
-				error(string.format("    %s: Multiple !Options.lua paths found!", options_path))
-				error(string.format("    %s: Multiple !Options.lua paths found!", file:match(".*/")))
+				error(string.format("    %s: Multiple Options paths found!", options_path))
+				error(string.format("    %s: Multiple Options paths found!", file:match(".*/")))
 			end
+			-- if a file has defined a path to a specific !Options file, save it to write to later
+			options_file_name = options_file
 			options_path = file:match(".*/")
 		elseif string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
