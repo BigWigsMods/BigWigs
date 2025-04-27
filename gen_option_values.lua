@@ -1496,6 +1496,9 @@ local function parse(file, relativePath)
 			print(string.format("Checking %s", file))
 			local tocRelativePath = file:match("^(.+/)(.+)$")
 			parse(parseTOC(file), tocRelativePath)
+		elseif file ~= "embeds.xml" then
+			-- unrecognized file name pattern
+			warn("Ignoring file: "..file)
 		end
 	end
 end
