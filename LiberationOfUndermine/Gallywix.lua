@@ -872,7 +872,9 @@ function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
 
 		if self:Mythic() then
 			gigaCoilsCount = gigaCoilsCount + 1
-			self:CDBar(469286, cd(469286, gigaCoilsCount), CL.count:format(self:SpellName(469286), gigaCoilsCount))
+			if gigaCoilsCount < 5 then
+				self:CDBar(469286, cd(469286, gigaCoilsCount), CL.count:format(self:SpellName(469286), gigaCoilsCount))
+			end
 
 			-- In mythic, after two sets of Giga Coils, the adds drop down instead of start on a platform
 			if gigaCoilsCount == 3 then
@@ -1297,7 +1299,11 @@ function mod:CircuitRebootRemoved(args)
 	self:CDBar(1218546, cd(1218546, bombsCount) - 4.5, CL.count:format(CL.bombs, fullBombsCount)) -- Biggest Baddest Bomb Barrage
 	self:CDBar(469327, cd(469327, gigaBlastCount), CL.count:format(self:SpellName(469327), gigaBlastCount)) -- Giga Blast
 
-	if encounterStart > 0 and self:GetStage() == 3 then
+	-- XXX should probably compare against the enrage time
+	if stage == 2 then
+		self:Bar(469286, 159.2 - 2, CL.count:format(self:SpellName(469286), gigaCoilsCount)) -- Giga Coils
+		self:Bar("stages", 167.2, CL.intermission, "ability_mount_rocketmountblue")
+	elseif stage == 3 and encounterStart > 0 then
 		-- hard enrage at 9:38
 		local enrageCD = 578 - (GetTime() - encounterStart)
 		self:Bar(1222831, enrageCD) -- Overloaded Coils
