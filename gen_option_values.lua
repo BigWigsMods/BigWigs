@@ -350,18 +350,18 @@ end
 local function dumpValues(path, fileName, modules_table, colors_table, sounds_table)
 	local file = path .. fileName
 	local old_data = ""
-	local f = io.open(file, "r")
-	if f then
-		old_data = f:read("*all")
-		f:close()
+	local file_handle = io.open(file, "r")
+	if file_handle then
+		old_data = file_handle:read("*all")
+		file_handle:close()
 	end
 
 	-- XXX temp cleanup old files
 	local modulesFile = path .. "modules.xml"
-	f = io.open(modulesFile, "r")
-	if f then
-		local modulesfile_data = f:read("*all")
-		f:close()
+	file_handle = io.open(modulesFile, "r")
+	if file_handle then
+		local modulesfile_data = file_handle:read("*all")
+		file_handle:close()
 		if modulesfile_data:find('<Include file="Options\\options.xml"/>') then
 			-- remove old files
 			local oldOptionsFile = path .. "Options\\Options.xml"
@@ -372,9 +372,9 @@ local function dumpValues(path, fileName, modules_table, colors_table, sounds_ta
 			os.remove(oldColorsFile)
 			-- update path to new file
 			modulesfile_data = modulesfile_data:gsub('<Include file="Options\\options.xml"/>', '<Script file="!Options.lua"/>')
-			f = io.open(modulesFile, "w")
-			f:write(modulesfile_data)
-			f:close()
+			file_handle = io.open(modulesFile, "w")
+			file_handle:write(modulesfile_data)
+			file_handle:close()
 		end
 	end
 	-- XXX end temp
@@ -387,12 +387,12 @@ local function dumpValues(path, fileName, modules_table, colors_table, sounds_ta
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		if not opt.dryrun then
-			f = io.open(file, "wb")
-			if not f then
+			file_handle = io.open(file, "wb")
+			if not file_handle then
 				error(string.format("    %s: File not found!", file))
 			else
-				f:write(data)
-				f:close()
+				file_handle:write(data)
+				file_handle:close()
 				info("    Updated " .. file)
 			end
 		else
@@ -613,15 +613,15 @@ local function parseLocale(file)
 	file_locale = file_locale:gsub("^(%l%l%u%u)_.*$", "%1") -- Extract what locale this file should be from files with the naming structure of enUS_xyz
 
 	-- open the file
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		error(string.format("    \"%s\" not found!", file))
 		return
 	end
 
 	-- read the file
-	local data = f:read("*all")
-	f:close()
+	local data = file_handle:read("*all")
+	file_handle:close()
 
 	-- validate the file line by line
 	local keys = {}
@@ -730,14 +730,14 @@ local function parseLua(file)
 		file_name = file
 	end
 
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		error(string.format("    \"%s\" not found!", file_name))
 		return
 	end
 
-	local data = f:read("*all")
-	f:close()
+	local data = file_handle:read("*all")
+	file_handle:close()
 
 	-- First, check to make sure this is actually a boss module file.
 	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
@@ -1396,8 +1396,8 @@ local function parseXML(file)
 		return {}
 	end
 
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		if opt.quiet then
 			error(string.format("    %s: File not found!", file))
 		else
@@ -1411,7 +1411,7 @@ local function parseXML(file)
 	-- xml file for opening the file relative to the project root.
 	local path = file:match(".*/") or ""
 
-	for line in f:lines() do
+	for line in file_handle:lines() do
 		local file_name = line:match("^%s*<Include file=\"(.-)\"") or line:match("^%s*<Script file=\"(.-)\"")
 		if file_name then
 			file = path .. file_name
@@ -1429,8 +1429,8 @@ local function parseTOC(file)
 		return
 	end
 
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		if opt.quiet then
 			error(string.format("    %s: File not found!", file))
 		else
@@ -1440,7 +1440,7 @@ local function parseTOC(file)
 	end
 
 	local list = {}
-	for line in f:lines() do
+	for line in file_handle:lines() do
 		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub("\\", "/")
 		if line ~= "" then
 			table.insert(list, line)
@@ -1507,16 +1507,16 @@ local function setCommonLocale(path)
 	-- For repos other than BigWigs proper, try to load the CL without erroring
 	path = path:match("^(.*)/") or "."
 	local file = path .. "/Locales/enUS_common.lua"
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		-- module(s) file directly?
 		file = path .. "../Locales/enUS_common.lua"
-		f = io.open(file, "r")
-		if not f then
+		file_handle = io.open(file, "r")
+		if not file_handle then
 			return
 		end
 	end
-	f:close()
+	file_handle:close()
 
 	parseLocale(file)
 end
