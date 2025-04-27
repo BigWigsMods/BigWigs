@@ -681,6 +681,7 @@ local function parseLocale(file)
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=")
 			end
+			-- validate that the locale key exists in the module
 			if key then
 				keys[current_module][key] = comment == ""
 				if not modules_locale[current_module][key] then
