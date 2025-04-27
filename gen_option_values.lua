@@ -1494,8 +1494,8 @@ local function parse(file, relative_path)
 			-- Scan module includes for lua files.
 			parse(parseXML(file_path))
 		elseif string.match(file, "locales%.xml$") then
-			for _, f in next, parseXML(file_path) do
-				parseLocale(f)
+			for _, locale_file in next, parseXML(file_path) do
+				parseLocale(locale_file)
 			end
 		elseif string.match(file, "%.toc$") then
 			local toc_relative_path = file:match("^(.+/)(.+)$")
