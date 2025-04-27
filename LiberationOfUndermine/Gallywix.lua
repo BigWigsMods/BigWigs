@@ -1186,7 +1186,7 @@ function mod:BiggerBadderBombBlast(args)
 	self:PlaySound(args.spellId, "warning") -- dodge
 	bombsCount = bombsCount + 1
 	fullBombsCount = fullBombsCount + 1
-	spawnedDuds = self:Mythic() and 4 or 2
+	spawnedDuds = 0
 	if not self:Story() then
 		self:Bar(args.spellId, cd(args.spellId, bombsCount), CL.count:format(CL.bombs, fullBombsCount))
 		self:Bar(1214755, 6.5) -- Overloaded Rockets
