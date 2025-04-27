@@ -1427,7 +1427,7 @@ local function parse(file)
 		end
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
-			-- prefer a defined !Options path with a fallback to writing !Options.lua in the same directory as the module
+			-- prefer a defined !Options path with a fallback of writing to !Options.lua in the same directory as the module
 			local path = options_path or file[1]:match(".*/") or ""
 			local file_name = options_file_name or "!Options.lua"
 			dumpValues(path, file_name, modules, module_colors, module_sounds)
