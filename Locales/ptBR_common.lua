@@ -74,8 +74,8 @@ L.keep_moving = "Continue se movendo" -- An ability that forces you to keep movi
 L.stand_still = "Fique parado" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "É seguro ficar parado" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
 L.safe_to_move = "É seguro se mover" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.safe = "Seguro" -- You are safe from a bad ability
+L.unsafe = "Perigo" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Add surgiu" -- singular
@@ -175,9 +175,9 @@ L.west = "Oeste"
 L.north_west = "Noroeste"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "Pequeno"
+L.medium = "Médio"
+L.large = "Grande"
 
 -- Schools
 L.fire = "Fogo"
@@ -243,8 +243,8 @@ L.spell_reflection = "Reflexão de Feitiço" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "Bola" -- A ball, like a football, basketball, etc
+L.balls = "Bolas" -- Plural of L.ball
 L.blind = "Cegar" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Esquiva" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
