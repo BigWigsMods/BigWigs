@@ -25,13 +25,13 @@ do
 	media:Register(SOUND, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Alert.ogg")
 	media:Register(SOUND, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Alarm.ogg")
 
-	-- Ingame sounds that DBM uses for DBM converts
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.FlagTaken, 569200) -- Sound\\Spells\\PVPFlagTaken
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.Beware, 543587) -- Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.Destruction, 553193) -- Sound\\Creature\\KilJaeden\\KILJAEDEN02
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.RunAway, 552035) -- Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01
+	-- Ingame sounds
+	media:Register(SOUND, "BigWigs: ".. L.FlagTaken, 569200) -- Sound\\Spells\\PVPFlagTaken
+	media:Register(SOUND, "BigWigs: ".. L.Beware, 543587) -- Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01
+	media:Register(SOUND, "BigWigs: ".. L.Destruction, 553193) -- Sound\\Creature\\KilJaeden\\KILJAEDEN02
+	media:Register(SOUND, "BigWigs: ".. L.RunAway, 552035) -- Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01
 
-	-- Ingame sounds used by Blizzard
+	-- Ingame sounds used for raid warning messages
 	media:Register(SOUND, "BigWigs: Raid Warning", 567397) -- Sound\\Interface\\RaidWarning
 	media:Register(SOUND, "BigWigs: Raid Boss Whisper", 876098) -- Sound\\Interface\\UI_RaidBossWhisperWarning
 
