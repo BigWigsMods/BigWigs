@@ -1498,7 +1498,7 @@ local function parse(file, relative_path)
 				parseLocale(locale_file)
 			end
 		elseif string.match(file, "%.toc$") then
-			local toc_relative_path = file:match("^(.+/)(.+)$")
+			local toc_relative_path = file:match("^(.+/).+$")
 			parse(parseTOC(file), toc_relative_path)
 		elseif file ~= "embeds.xml" then
 			-- unrecognized file name pattern
