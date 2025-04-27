@@ -5,6 +5,7 @@ local loadstring = loadstring or load -- 5.2 compat
 
 local opt = {}
 
+local visited_files = {}
 local modules = {}
 local modules_bosses = {}
 local modules_locale = {}
@@ -236,6 +237,15 @@ local function print(...)
 	_G.print(...)
 end
 
+-- visit a file, return true if the file has already been parsed
+local function visit(file, check_only)
+	if visited_files[file] then
+		return true
+	end
+	if not check_only then
+		visited_files[file] = true
+	end
+end
 
 -- Return a table containing the value if value is not a table.
 local function tablize(value)
@@ -342,18 +352,18 @@ end
 local function dumpValues(path, fileName, modules_table, colors_table, sounds_table)
 	local file = path .. fileName
 	local old_data = ""
-	local f = io.open(file, "r")
-	if f then
-		old_data = f:read("*all")
-		f:close()
+	local file_handle = io.open(file, "r")
+	if file_handle then
+		old_data = file_handle:read("*all")
+		file_handle:close()
 	end
 
 	-- XXX temp cleanup old files
 	local modulesFile = path .. "modules.xml"
-	f = io.open(modulesFile, "r")
-	if f then
-		local modulesfile_data = f:read("*all")
-		f:close()
+	file_handle = io.open(modulesFile, "r")
+	if file_handle then
+		local modulesfile_data = file_handle:read("*all")
+		file_handle:close()
 		if modulesfile_data:find('<Include file="Options\\options.xml"/>') then
 			-- remove old files
 			local oldOptionsFile = path .. "Options\\Options.xml"
@@ -364,9 +374,9 @@ local function dumpValues(path, fileName, modules_table, colors_table, sounds_ta
 			os.remove(oldColorsFile)
 			-- update path to new file
 			modulesfile_data = modulesfile_data:gsub('<Include file="Options\\options.xml"/>', '<Script file="!Options.lua"/>')
-			f = io.open(modulesFile, "w")
-			f:write(modulesfile_data)
-			f:close()
+			file_handle = io.open(modulesFile, "w")
+			file_handle:write(modulesfile_data)
+			file_handle:close()
 		end
 	end
 	-- XXX end temp
@@ -379,12 +389,12 @@ local function dumpValues(path, fileName, modules_table, colors_table, sounds_ta
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		if not opt.dryrun then
-			f = io.open(file, "wb")
-			if not f then
+			file_handle = io.open(file, "wb")
+			if not file_handle then
 				error(string.format("    %s: File not found!", file))
 			else
-				f:write(data)
-				f:close()
+				file_handle:write(data)
+				file_handle:close()
 				info("    Updated " .. file)
 			end
 		else
@@ -495,7 +505,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 	local chunk_func
 	do
 		-- sigh.
-		local s = setmetatable({}, { __index = function(t, k) return tostring(k) end })
+		local s = setmetatable({}, { __index = function(_, k) return tostring(k) end })
 		local mod = {
 			SpellName = function(k) return tostring(k) end
 		}
@@ -505,7 +515,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 			self = mod,
 			mod = mod,
 		}, {
-			__index = function(t, k)
+			__index = function(_, k)
 				if special_options[k] then return "custom_off_" .. k end
 				return k
 			end
@@ -531,7 +541,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 		return success, toggles
 	end
 
-	local options, option_flags = {}, {}
+	local options = {}
 	for _, entry in next, toggles do
 		local flags = true
 		if type(entry) == "table" then
@@ -560,7 +570,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 		end
 	end
 	if altNames then
-		for key, name in next, altNames do
+		for key in next, altNames do
 			if not options[key] then
 				error(string.format("    %s:%d: Invalid option alt name key %q", file_name, start, tostring(key)))
 			end
@@ -590,6 +600,11 @@ local function reverseCheck(file, keys, current_module, current_module_line)
 end
 
 local function parseLocale(file)
+	-- check if this file has already been visited
+	if visit(file) then
+		return
+	end
+
 	-- determine which locale this file is named for based on the file name
 	local file_locale = file:match("Locales/(.-)%.lua$")
 	if not file_locale then
@@ -600,15 +615,15 @@ local function parseLocale(file)
 	file_locale = file_locale:gsub("^(%l%l%u%u)_.*$", "%1") -- Extract what locale this file should be from files with the naming structure of enUS_xyz
 
 	-- open the file
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		error(string.format("    \"%s\" not found!", file))
 		return
 	end
 
 	-- read the file
-	local data = f:read("*all")
-	f:close()
+	local data = file_handle:read("*all")
+	file_handle:close()
 
 	-- validate the file line by line
 	local keys = {}
@@ -712,19 +727,24 @@ end
 
 -- Read boss module file and parse it for colors and sounds.
 local function parseLua(file)
+	-- check if this file has already been visited, but don't mark it as visited yet
+	if visit(file, true) then
+		return
+	end
+
 	local file_name = file:match(".*/(.*)$") or file
 	if opt.quiet then
 		file_name = file
 	end
 
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		error(string.format("    \"%s\" not found!", file_name))
 		return
 	end
 
-	local data = f:read("*all")
-	f:close()
+	local data = file_handle:read("*all")
+	file_handle:close()
 
 	-- First, check to make sure this is actually a boss module file.
 	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
@@ -732,9 +752,14 @@ local function parseLua(file)
 		-- redirect any Locale files which are loaded from toc, modules.xml, etc
 		if data:match("L = BigWigsAPI:NewLocale") or data:match("L = BigWigs:NewBossLocale") then
 			parseLocale(file)
+		else
+			-- mark this non-boss, non-locale lua file as visited
+			visit(file)
 		end
 		return
 	end
+	-- mark this module file as visited
+	visit(file)
 
 	if module_args ~= "" then
 		local args = strsplit(module_args)
@@ -784,7 +809,7 @@ local function parseLua(file)
 			-- pop off comments from the end (trying to protect strings)
 			while line:gsub('%b""', ''):match("%-%-") do
 				local new_line = line:reverse()
-				local start, stop = new_line:find("--", nil, true)
+				local _, stop = new_line:find("--", nil, true)
 				comment = comment .. new_line:sub(1, stop):reverse()
 				line = new_line:sub(stop + 1):reverse()
 			end
@@ -984,7 +1009,7 @@ local function parseLua(file)
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
 		-- created earlier to set the associated spellId(s).
-		local res, params = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*(%b())")
+		local res = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%b()")
 		if res then
 			current_func = res
 			local name = res:match(":(.+)")
@@ -1026,7 +1051,7 @@ local function parseLua(file)
 			local set_key = comment:match("SetOption:(.-):")
 			if set_key and set_key ~= "" then
 				rep.if_key = {}
-				for k, v in next, strsplit(set_key) do
+				for _, v in next, strsplit(set_key) do
 					rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 				end
 			else
@@ -1042,7 +1067,7 @@ local function parseLua(file)
 				local set_key = comment:match("SetOption:(.-):")
 				if set_key and set_key ~= "" then
 					rep.if_key = {}
-					for k, v in next, strsplit(set_key) do
+					for _, v in next, strsplit(set_key) do
 						rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 					end
 				else
@@ -1370,14 +1395,20 @@ end
 
 -- Read modules.xml and return a table of file paths.
 local function parseXML(file)
-	local f = io.open(file, "r")
-	if not f then
+	-- check if this file has already been visited
+	if visit(file) then
+		return {}
+	end
+	print(string.format("Checking %s", file))
+
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		if opt.quiet then
 			error(string.format("    %s: File not found!", file))
 		else
 			error("    File not found!")
 		end
-		return
+		return {}
 	end
 
 	local list = {}
@@ -1385,7 +1416,7 @@ local function parseXML(file)
 	-- xml file for opening the file relative to the project root.
 	local path = file:match(".*/") or ""
 
-	for line in f:lines() do
+	for line in file_handle:lines() do
 		local file_name = line:match("^%s*<Include file=\"(.-)\"") or line:match("^%s*<Script file=\"(.-)\"")
 		if file_name then
 			file = path .. file_name
@@ -1398,8 +1429,14 @@ local function parseXML(file)
 end
 
 local function parseTOC(file)
-	local f = io.open(file, "r")
-	if not f then
+	-- check if this file has already been visited
+	if visit(file) then
+		return
+	end
+	print(string.format("Checking %s", file))
+
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		if opt.quiet then
 			error(string.format("    %s: File not found!", file))
 		else
@@ -1409,7 +1446,7 @@ local function parseTOC(file)
 	end
 
 	local list = {}
-	for line in f:lines() do
+	for line in file_handle:lines() do
 		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub("\\", "/")
 		if line ~= "" then
 			table.insert(list, line)
@@ -1419,11 +1456,11 @@ local function parseTOC(file)
 	return list
 end
 
-local function parse(file)
+local function parse(file, relative_path)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
 		for _, f in next, file do
-			parse(f)
+			parse(f, relative_path)
 		end
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
@@ -1440,6 +1477,7 @@ local function parse(file)
 		options_path = nil
 		options_file_name = nil
 	elseif file then
+		local file_path = relative_path and relative_path..file or file
 		local options_file = string.match(file, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 		if options_file then
 			if options_path then
@@ -1451,18 +1489,20 @@ local function parse(file)
 			options_path = file:match(".*/")
 		elseif string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
-			parseLua(file)
+			parseLua(file_path)
 		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
 			-- Scan module includes for lua files.
-			print(string.format("Checking %s", file))
-			parse(parseXML(file))
+			parse(parseXML(file_path))
 		elseif string.match(file, "locales%.xml$") then
-			for _, f in next, parseXML(file) do
-				parseLocale(f)
+			for _, locale_file in next, parseXML(file_path) do
+				parseLocale(locale_file)
 			end
 		elseif string.match(file, "%.toc$") then
-			print(string.format("Checking %s", file))
-			parse(parseTOC(file))
+			local toc_relative_path = file:match("^(.+/).+$")
+			parse(parseTOC(file), toc_relative_path)
+		elseif file ~= "embeds.xml" then
+			-- unrecognized file name pattern
+			warn("Ignoring file: "..file)
 		end
 	end
 end
@@ -1471,16 +1511,16 @@ local function setCommonLocale(path)
 	-- For repos other than BigWigs proper, try to load the CL without erroring
 	path = path:match("^(.*)/") or "."
 	local file = path .. "/Locales/enUS_common.lua"
-	local f = io.open(file, "r")
-	if not f then
+	local file_handle = io.open(file, "r")
+	if not file_handle then
 		-- module(s) file directly?
 		file = path .. "../Locales/enUS_common.lua"
-		f = io.open(file, "r")
-		if not f then
+		file_handle = io.open(file, "r")
+		if not file_handle then
 			return
 		end
 	end
-	f:close()
+	file_handle:close()
 
 	parseLocale(file)
 end
@@ -1488,10 +1528,11 @@ end
 
 -- aaaaaand start
 local start_path = "modules.xml"
+local arg_paths = {}
 
 -- simple arg parser
 if arg then
-	for k, v in ipairs(arg) do
+	for _, v in ipairs(arg) do
 		if string.sub(v, 1, 1) == "-" then
 			v = string.match(v, "^[-]+(.+)$")
 			if v == "q" or v == "quiet" then
@@ -1501,7 +1542,7 @@ if arg then
 				opt.dryrun = true
 			end
 		else
-			local path = arg[1]:gsub("\\", "/")
+			local path = v:gsub("\\", "/")
 			local ext = path:sub(-4)
 			local is_file = ext == ".lua" or ext == ".xml" or ext == ".toc"
 			if path:sub(-1) ~= "/" and not is_file then
@@ -1513,11 +1554,12 @@ if arg then
 			else
 				start_path = path .. start_path
 			end
+			arg_paths[#arg_paths + 1] = start_path
 		end
 	end
 end
 
 setCommonLocale(start_path)
-parse(start_path)
+parse(arg_paths)
 
 os.exit(exit_code)
