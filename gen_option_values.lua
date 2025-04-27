@@ -673,6 +673,10 @@ local function parseLocale(file)
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=")
 			end
+			-- ensure there are no duplicate string keys in the same file
+			if key and keys[current_module][key] ~= nil then
+				error(string.format("    %s:%d: %s: Duplicate locale key %q", file, n, current_module, key))
+			end
 			-- parse special-case keys whose values are tables
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=")
