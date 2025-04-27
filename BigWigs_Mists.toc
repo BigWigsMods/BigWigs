@@ -1,4 +1,4 @@
-## Interface: 40402, 40401
+## Interface: 50500
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -28,7 +28,7 @@
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 embeds.xml
-Init_Cata.lua
+Init_Mists.lua
 API.lua
 
 Locales\Encounters_Classic\encounter.enUS.lua
