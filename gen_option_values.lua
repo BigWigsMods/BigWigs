@@ -590,29 +590,37 @@ local function reverseCheck(file, keys, current_module, current_module_line)
 end
 
 local function parseLocale(file)
+	-- determine which locale this file is named for based on the file name
 	local file_locale = file:match("Locales/(.-)%.lua$")
+	if not file_locale then
+		error(string.format("    %s: Unable to determine locale from file name!", file))
+		return
+	end
 	file_locale = file_locale:gsub("^.*%.", "") -- Extract what locale this file should be from files with the naming structure of xyz.enUS
 	file_locale = file_locale:gsub("^(%l%l%u%u)_.*$", "%1") -- Extract what locale this file should be from files with the naming structure of enUS_xyz
 
+	-- open the file
 	local f = io.open(file, "r")
 	if not f then
 		error(string.format("    \"%s\" not found!", file))
 		return
 	end
 
+	-- read the file
 	local data = f:read("*all")
 	f:close()
 
+	-- validate the file line by line
 	local keys = {}
-	local current_module
-	local current_module_line
+	local current_module, current_module_line
 	local n = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		n = n + 1
 
+		-- check for a new locale block in the locale file, and parse out the module name and locale from the block
 		local module_name, locale
 		if file_locale == "esES" then
-			-- Handle combined es locales
+			-- special handling for combined esES and esMX locales
 			local module_name2, locale2
 			module_name, locale, module_name2, locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
 			if module_name then
@@ -626,14 +634,18 @@ local function parseLocale(file)
 			end
 		end
 		if not module_name then
+			-- standard parsing for single-locale files
 			module_name, locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
 			if not module_name then
 				module_name, locale = line:match("L = BigWigsAPI:NewLocale%(\"(.-)\", \"(.-)\"%)")
 			end
 		end
+
+		-- if we found the start of a new locale block
 		if module_name then
 			-- reverse check the previous locale block in the file
 			reverseCheck(file, keys, current_module, current_module_line)
+			-- update state for the new locale block
 			current_module = module_name
 			current_module_line = n
 			if not keys[module_name] then
@@ -645,10 +657,7 @@ local function parseLocale(file)
 			if file_locale == "enUS" then
 				modules_locale[module_name] = keys[module_name]
 			end
-		end
-
-		-- Check API args
-		if module_name then
+			-- Check API args
 			if locale ~= file_locale then
 				error(string.format("    %s:%d: Invalid locale! %q should be %q", file, n, locale, file_locale))
 			end
@@ -657,12 +666,14 @@ local function parseLocale(file)
 			end
 		end
 
-		-- Check that the string exists in enUS
+		-- validate all locale entries
 		if modules_locale[current_module] then
+			-- parse out standard string keys
 			local comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%s*=")
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=")
 			end
+			-- parse special-case keys whose values are tables
 			if not key then
 				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=")
 			end
@@ -713,7 +724,7 @@ local function parseLua(file)
 	-- First, check to make sure this is actually a boss module file.
 	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
 	if not module_name then
-		-- redirect any referenced Locale files
+		-- redirect any Locale files which are loaded from toc, modules.xml, etc
 		if data:match("L = BigWigsAPI:NewLocale") or data:match("L = BigWigs:NewBossLocale") then
 			parseLocale(file)
 		end
