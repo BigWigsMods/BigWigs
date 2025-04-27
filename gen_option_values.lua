@@ -238,11 +238,13 @@ local function print(...)
 end
 
 -- visit a file, return true if the file has already been parsed
-local function visit(file)
+local function visit(file, check_only)
 	if visited_files[file] then
 		return true
 	end
-	visited_files[file] = true
+	if not check_only then
+		visited_files[file] = true
+	end
 end
 
 -- Return a table containing the value if value is not a table.
@@ -725,6 +727,11 @@ end
 
 -- Read boss module file and parse it for colors and sounds.
 local function parseLua(file)
+	-- check if this file has already been visited, but don't mark it as visited yet
+	if visit(file, true) then
+		return
+	end
+
 	local file_name = file:match(".*/(.*)$") or file
 	if opt.quiet then
 		file_name = file
@@ -751,11 +758,8 @@ local function parseLua(file)
 		end
 		return
 	end
-
-	-- check if this file has already been visited
-	if visit(file) then
-		return
-	end
+	-- mark this module file as visited
+	visit(file)
 
 	if module_args ~= "" then
 		local args = strsplit(module_args)
