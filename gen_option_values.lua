@@ -1395,6 +1395,7 @@ local function parseXML(file)
 	if visit(file) then
 		return {}
 	end
+	print(string.format("Checking %s", file))
 
 	local file_handle = io.open(file, "r")
 	if not file_handle then
@@ -1428,6 +1429,7 @@ local function parseTOC(file)
 	if visit(file) then
 		return
 	end
+	print(string.format("Checking %s", file))
 
 	local file_handle = io.open(file, "r")
 	if not file_handle then
@@ -1486,14 +1488,12 @@ local function parse(file, relativePath)
 			parseLua(file_path)
 		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
 			-- Scan module includes for lua files.
-			print(string.format("Checking %s", file_path))
 			parse(parseXML(file_path))
 		elseif string.match(file, "locales%.xml$") then
 			for _, f in next, parseXML(file_path) do
 				parseLocale(f)
 			end
 		elseif string.match(file, "%.toc$") then
-			print(string.format("Checking %s", file))
 			local tocRelativePath = file:match("^(.+/)(.+)$")
 			parse(parseTOC(file), tocRelativePath)
 		elseif file ~= "embeds.xml" then
