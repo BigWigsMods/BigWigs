@@ -613,9 +613,9 @@ local function parseLocale(file)
 	-- validate the file line by line
 	local keys = {}
 	local current_module, current_module_line
-	local n = 0
+	local line_number = 0
 	for line in data:gmatch("(.-)\r?\n") do
-		n = n + 1
+		line_number = line_number + 1
 
 		-- check for a new locale block in the locale file, and parse out the module name and locale from the block
 		local module_name, locale
@@ -626,10 +626,10 @@ local function parseLocale(file)
 			if module_name then
 				-- Check :NewBossLocale args
 				if module_name ~= module_name2 then
-					error(string.format("    %s:%d: Module name mismatch! %q != %q", file, n, module_name, module_name2))
+					error(string.format("    %s:%d: Module name mismatch! %q != %q", file, line_number, module_name, module_name2))
 				end
 				if locale2 ~= "esMX" then
-					error(string.format("    %s:%d: Invalid locale! %q should be %q", file, n, locale2, "esMX"))
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file, line_number, locale2, "esMX"))
 				end
 			end
 		end
@@ -647,11 +647,11 @@ local function parseLocale(file)
 			reverseCheck(file, keys, current_module, current_module_line)
 			-- update state for the new locale block
 			current_module = module_name
-			current_module_line = n
+			current_module_line = line_number
 			if not keys[module_name] then
 				keys[module_name] = {}
 			else
-				error(string.format("    %s:%d: Duplicate module name %q", file, n, module_name))
+				error(string.format("    %s:%d: Duplicate module name %q", file, line_number, module_name))
 			end
 			-- Save base keys for non-boss locales
 			if file_locale == "enUS" then
@@ -659,10 +659,10 @@ local function parseLocale(file)
 			end
 			-- Check API args
 			if locale ~= file_locale then
-				error(string.format("    %s:%d: Invalid locale! %q should be %q", file, n, locale, file_locale))
+				error(string.format("    %s:%d: Invalid locale! %q should be %q", file, line_number, locale, file_locale))
 			end
 			if not modules_locale[module_name] then
-				error(string.format("    %s:%d: Invalid module name %q", file, n, module_name))
+				error(string.format("    %s:%d: Invalid module name %q", file, line_number, module_name))
 			end
 		end
 
@@ -675,7 +675,7 @@ local function parseLocale(file)
 			end
 			-- ensure there are no duplicate string keys in the same file
 			if key and keys[current_module][key] ~= nil then
-				error(string.format("    %s:%d: %s: Duplicate locale key %q", file, n, current_module, key))
+				error(string.format("    %s:%d: %s: Duplicate locale key %q", file, line_number, current_module, key))
 			end
 			-- parse special-case keys whose values are tables
 			if not key then
@@ -685,7 +685,7 @@ local function parseLocale(file)
 			if key then
 				keys[current_module][key] = comment == ""
 				if not modules_locale[current_module][key] then
-					error(string.format("    %s:%d: %s: Invalid locale key %q", file, n, current_module, key))
+					error(string.format("    %s:%d: %s: Invalid locale key %q", file, line_number, current_module, key))
 				end
 			end
 		end
