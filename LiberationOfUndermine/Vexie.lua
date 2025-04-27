@@ -9,7 +9,7 @@ mod:RegisterEnableMob(225821, 225822) -- The Geargrinder, Vexie Fullthrottle
 mod:SetEncounterID(3009)
 mod:SetPrivateAuraSounds({
 	459669, -- Spew Oil
-	468486, -- Incendiary Fire
+	468486, -- Incendiary Fire (Pre-debuff on SPELL_CAST_START)
 })
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -47,7 +47,7 @@ function mod:GetOptions()
 		459943, -- Call Bikers
 		459678, -- Spew Oil
 			459683, -- Oil Slick
-		{468216, "PRIVATE"}, -- Incendiary Fire
+		{468216, "PRIVATE", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Incendiary Fire
 		459978, -- Bomb Voyage!
 		{465865, "TANK", "EMPHASIZE"}, -- Tank Buster
 			468147,	-- Exhaust Fumes (DPS / Healers)
@@ -76,13 +76,14 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_REMOVED_DOSE", "ProtectivePlatingRemoved", 466615)
-	self:Log("SPELL_AURA_REMOVED", "ProtectivePlatingRemoved", 466615)
+	self:Log("SPELL_AURA_REMOVED_DOSE", "ProtectivePlatingRemovedDose", 466615)
 	self:Log("SPELL_CAST_START", "UnrelentingCARnage", 471403)
 	self:Log("SPELL_CAST_START", "CallBikers", 459943)
 	self:Log("SPELL_CAST_START", "SpewOil", 459671)
 	self:Log("SPELL_AURA_APPLIED", "SpewOilApplied", 459678) -- DOT after getting hit
 	self:Log("SPELL_CAST_START", "IncendiaryFire", 468487)
+	self:Log("SPELL_AURA_APPLIED", "IncendiaryFireApplied", 468216)
+	self:Log("SPELL_AURA_REMOVED", "IncendiaryFireRemoved", 468216)
 	self:Log("SPELL_AURA_APPLIED", "BombVoyageApplied", 459978) -- DOT after getting hit
 	self:Log("SPELL_CAST_START", "TankBuster", 459627)
 	self:Log("SPELL_AURA_APPLIED", "ExhaustFumesApplied", 468149) -- On Boss
@@ -121,9 +122,8 @@ end
 -- Event Handlers
 --
 
-function mod:ProtectivePlatingRemoved(args)
-	local amount = args.amount or 0
-	self:StackMessage(args.spellId, "cyan", CL.boss, amount, amount <= 1 and amount or 100) -- Only emph on 1 and 0
+function mod:ProtectivePlatingRemovedDose(args)
+	self:StackMessage(args.spellId, "cyan", CL.boss, args.amount, args.amount == 1 and 1 or 100) -- Only emph on 1
 end
 
 function mod:UnrelentingCARnage(args)
@@ -170,6 +170,21 @@ function mod:IncendiaryFire(args)
 	incendiaryFireCount = incendiaryFireCount + 1
 	-- 25.7, 31.0, 25.3, 92.0, 35.4, 89.5, 35.3, 36.4
 	self:CDBar(468216, 30.5, CL.count:format(CL.fire, incendiaryFireCount))
+end
+
+function mod:IncendiaryFireApplied(args) -- There's a Private Aura for the pre-debuff (3 sec cast) and then this applies
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:Say(args.spellId, CL.fire, nil, "Fire")
+		self:SayCountdown(args.spellId, 6)
+		self:PlaySound(args.spellId, "warning", nil, args.destName)
+	end
+end
+
+function mod:IncendiaryFireRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 function mod:BombVoyageApplied(args) -- cast every 8s
@@ -224,6 +239,7 @@ function mod:MechanicalBreakdown()
 	self:StopBar(CL.count:format(CL.adds, callBikersCount)) -- Call Bikers
 	self:StopBar(CL.count:format(CL.fire, incendiaryFireCount)) -- Incendiary Fire
 	self:StopBar(CL.count:format(CL.full_energy, unrelentingCarnageCount)) -- Unrelenting CAR-nage
+	self:StackMessage(466615, "cyan", CL.boss, 0, 0) -- Do this here instead of in the REMOVED function, to prevent showing a "0 stacks" message when she ejects
 end
 
 function mod:TuneUpApplied(args)
