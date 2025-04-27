@@ -47,7 +47,7 @@ function mod:GetOptions()
 		459943, -- Call Bikers
 		459678, -- Spew Oil
 			459683, -- Oil Slick
-		{468216, "PRIVATE", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Incendiary Fire
+		{468216, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Incendiary Fire
 		459978, -- Bomb Voyage!
 		{465865, "TANK", "EMPHASIZE"}, -- Tank Buster
 			468147,	-- Exhaust Fumes (DPS / Healers)
