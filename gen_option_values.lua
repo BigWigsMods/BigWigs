@@ -669,9 +669,9 @@ local function parseLocale(file)
 		-- validate all locale entries
 		if modules_locale[current_module] then
 			-- parse out standard string keys
-			local comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%s*=")
+			local comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%s*=") -- L.key =
 			if not key then
-				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=")
+				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=") -- L.["key"] =
 			end
 			-- ensure there are no duplicate string keys in the same file
 			if key and keys[current_module][key] ~= nil then
@@ -679,7 +679,7 @@ local function parseLocale(file)
 			end
 			-- parse special-case keys whose values are tables
 			if not key then
-				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=")
+				comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%b[]%s*=") -- L.key[sub_key] =
 			end
 			-- validate that the locale key exists in the module
 			if key then
