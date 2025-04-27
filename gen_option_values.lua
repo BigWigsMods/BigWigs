@@ -5,6 +5,7 @@ local loadstring = loadstring or load -- 5.2 compat
 
 local opt = {}
 
+local visited_files = {}
 local modules = {}
 local modules_bosses = {}
 local modules_locale = {}
@@ -236,6 +237,13 @@ local function print(...)
 	_G.print(...)
 end
 
+-- visit a file, return true if the file has already been parsed
+local function visit(file)
+	if visited_files[file] then
+		return true
+	end
+	visited_files[file] = true
+end
 
 -- Return a table containing the value if value is not a table.
 local function tablize(value)
@@ -590,6 +598,11 @@ local function reverseCheck(file, keys, current_module, current_module_line)
 end
 
 local function parseLocale(file)
+	-- check if this file has already been visited
+	if visit(file) then
+		return
+	end
+
 	-- determine which locale this file is named for based on the file name
 	local file_locale = file:match("Locales/(.-)%.lua$")
 	if not file_locale then
@@ -732,7 +745,15 @@ local function parseLua(file)
 		-- redirect any Locale files which are loaded from toc, modules.xml, etc
 		if data:match("L = BigWigsAPI:NewLocale") or data:match("L = BigWigs:NewBossLocale") then
 			parseLocale(file)
+		else
+			-- mark this non-boss, non-locale lua file as visited
+			visit(file)
 		end
+		return
+	end
+
+	-- check if this file has already been visited
+	if visit(file) then
 		return
 	end
 
@@ -1370,6 +1391,11 @@ end
 
 -- Read modules.xml and return a table of file paths.
 local function parseXML(file)
+	-- check if this file has already been visited
+	if visit(file) then
+		return {}
+	end
+
 	local f = io.open(file, "r")
 	if not f then
 		if opt.quiet then
@@ -1377,7 +1403,7 @@ local function parseXML(file)
 		else
 			error("    File not found!")
 		end
-		return
+		return {}
 	end
 
 	local list = {}
@@ -1398,6 +1424,11 @@ local function parseXML(file)
 end
 
 local function parseTOC(file)
+	-- check if this file has already been visited
+	if visit(file) then
+		return
+	end
+
 	local f = io.open(file, "r")
 	if not f then
 		if opt.quiet then
@@ -1419,11 +1450,11 @@ local function parseTOC(file)
 	return list
 end
 
-local function parse(file)
+local function parse(file, relativePath)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
 		for _, f in next, file do
-			parse(f)
+			parse(f, relativePath)
 		end
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
@@ -1440,6 +1471,7 @@ local function parse(file)
 		options_path = nil
 		options_file_name = nil
 	elseif file then
+		local file_path = relativePath and relativePath..file or file
 		local options_file = string.match(file, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 		if options_file then
 			if options_path then
@@ -1451,18 +1483,19 @@ local function parse(file)
 			options_path = file:match(".*/")
 		elseif string.match(file, "%.lua$") then
 			-- We have an actual lua file so parse it!
-			parseLua(file)
+			parseLua(file_path)
 		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
 			-- Scan module includes for lua files.
-			print(string.format("Checking %s", file))
-			parse(parseXML(file))
+			print(string.format("Checking %s", file_path))
+			parse(parseXML(file_path))
 		elseif string.match(file, "locales%.xml$") then
-			for _, f in next, parseXML(file) do
+			for _, f in next, parseXML(file_path) do
 				parseLocale(f)
 			end
 		elseif string.match(file, "%.toc$") then
 			print(string.format("Checking %s", file))
-			parse(parseTOC(file))
+			local tocRelativePath = file:match("^(.+/)(.+)$")
+			parse(parseTOC(file), tocRelativePath)
 		end
 	end
 end
@@ -1488,10 +1521,11 @@ end
 
 -- aaaaaand start
 local start_path = "modules.xml"
+local arg_paths = {}
 
 -- simple arg parser
 if arg then
-	for k, v in ipairs(arg) do
+	for _, v in ipairs(arg) do
 		if string.sub(v, 1, 1) == "-" then
 			v = string.match(v, "^[-]+(.+)$")
 			if v == "q" or v == "quiet" then
@@ -1501,7 +1535,7 @@ if arg then
 				opt.dryrun = true
 			end
 		else
-			local path = arg[1]:gsub("\\", "/")
+			local path = v:gsub("\\", "/")
 			local ext = path:sub(-4)
 			local is_file = ext == ".lua" or ext == ".xml" or ext == ".toc"
 			if path:sub(-1) ~= "/" and not is_file then
@@ -1513,11 +1547,12 @@ if arg then
 			else
 				start_path = path .. start_path
 			end
+			arg_paths[#arg_paths + 1] = start_path
 		end
 	end
 end
 
 setCommonLocale(start_path)
-parse(start_path)
+parse(arg_paths)
 
 os.exit(exit_code)
