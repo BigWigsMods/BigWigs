@@ -643,7 +643,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:PlaySound(465952, "alert")
 		bombsCount = bombsCount + 1
 		fullBombsCount = fullBombsCount + 1
-		spawnedDuds = 0
+		spawnedDuds = self:Mythic() and 4 or 2
 		if not self:Story() then
 			local bombsCD = cd(465952, bombsCount)
 			if bombsCD and bombsCD > 0 then
@@ -678,7 +678,7 @@ end
 -- 	fullBombsCount = fullBombsCount + 1
 -- 	self:CDBar(args.spellId, cd(465952, bombsCount), CL.count:format(CL.bombs, fullBombsCount))
 
--- 	spawnedDuds = 0
+-- 	spawnedDuds = self:Mythic() and 4 or 2
 -- 	self:Bar(466153, 9.7) -- Bad Belated Boom
 -- end
 
@@ -711,7 +711,6 @@ do
 	local prev = 0
 	function mod:FifteenHundredPoundDudApplied(args)
 		-- self:StopBar(L.duds_soak:format(spawnedDuds))
-		spawnedDuds = spawnedDuds + 1
 		if args.time - prev > 2 then
 			self:Bar(args.spellId, 15, L.duds)
 		end
@@ -1186,7 +1185,7 @@ function mod:BiggerBadderBombBlast(args)
 	self:PlaySound(args.spellId, "warning") -- dodge
 	bombsCount = bombsCount + 1
 	fullBombsCount = fullBombsCount + 1
-	spawnedDuds = 0
+	spawnedDuds = self:Mythic() and 4 or 2
 	if not self:Story() then
 		self:Bar(args.spellId, cd(args.spellId, bombsCount), CL.count:format(CL.bombs, fullBombsCount))
 		self:Bar(1214755, 6.5) -- Overloaded Rockets
