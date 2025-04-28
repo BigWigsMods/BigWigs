@@ -4,19 +4,19 @@ if not L then return end
 -- Prototype.lua common words
 L.you = "당신에게 %s"
 L.you_icon = "|T13700%2$d:0|t당신에게 %1$s"
-L.underyou = "당신 밑에 %s"
+L.underyou = "당신 발밑에 %s"
 L.aboveyou = "당신 위에 %s"
 L.other = "%s: %s"
-L.onboss = "우두머리에게 %s"
-L.buff_boss = "넴드에게 버프: %s"
-L.buff_other = "%s 에게 버프: %s"
-L.magic_buff_boss = "보스에 마법 강화 효과: %s" -- Magic buff on BOSS: SPELL_NAME
-L.magic_buff_other = " %s에 마법 강화 효과: %s" -- Magic buff on NPC_NAME: SPELL_NAME
-L.on = "%2$s에게 %1$s"
-L.stack = "%3$s에게 %1$dx %2$s"
-L.stackyou = "당신에게 %dx %s"
+L.onboss = "보스: %s"
+L.buff_boss = "보스 버프: %s"
+L.buff_other = "%s 버프: %s"
+L.magic_buff_boss = "보스 마법 버프: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "%s 마법 버프: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.on = "%s: %s"
+L.stack = "%3$s: %1$d중첩 %2$s"
+L.stackyou = "당신: %d중첩 %s"
 L.cast = "<시전: %s>"
-L.casting = "%s 시전"
+L.casting = "%s 시전 중"
 L.soon = "곧 %s"
 L.count = "%s (%d)"
 L.count_amount = "%s (%d/%d)"
@@ -25,24 +25,24 @@ L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
 L.near = "당신 근처에 %s"
 L.on_group = "파티에 %s" -- spell on group
-L.boss = "우두머리"
+L.boss = "보스"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "%d단계"
 L.stage = "%d단계"
-L.wave = "웨이브 %d" -- e.g. "Wave 1" (Waves of adds)
-L.wave_count = "웨이브 %d 의 %d" -- Wave 1 of 3 (Usually waves of adds)
+L.wave = "%d웨이브" -- e.g. "Wave 1" (Waves of adds)
+L.wave_count = "%d/%d웨이브" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "일반 난이도"
 L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
 L.hard = "어려움 모드"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
-L.ready = "준비" -- When a player is ready to do something
-L.dead = "죽음" -- When a player is dead
+L.ready = "준비 완료" -- When a player is ready to do something
+L.dead = "사망" -- When a player is dead
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.health = "체력" -- The health of an NPC
-L.health_percent = "%d%% 체력" -- "10% Health" The health percentage of an NPC
+L.health = "생명력" -- The health of an NPC
+L.health_percent = "%d%% 생명력" -- "10% Health" The health percentage of an NPC
 L.door_open = "문 열림" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "문 열림" -- When a gate is open, usually after a speech from an NPC
 L.threat = "위협 수준"
@@ -57,19 +57,19 @@ L.removed_by = "%2$s|1이;가; %1$s 제거함" -- Spell removed by Player
 L.removed_after = "%s %.1f초 후 제거됨" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "곧 %s" -- Spell Incoming
 L.interrupted = "%s 시전 방해됨" -- Spell Interrupted
-L.interrupted_by = "%s 를 %s 가 차단" -- Spell interrupted by Player
+L.interrupted_by = "%2$s|1이;가; %1$s 차단" -- Spell interrupted by Player
 L.interruptible = "차단 가능" -- when a spell is interruptible
 L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
 L.you_die = "당신은 죽습니다" -- You will die
-L.you_die_sec = "당신은 %d 초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
+L.you_die_sec = "당신은 %d초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "다음 능력" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s 착륙 중" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.landing = "착륙" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "비행 가능"
-L.bosses_too_close = "보스가 너무 가깝습니다" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.bosses_too_close = "보스가 너무 가깝움" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
 L.keep_moving = "계속 이동" -- An ability that forces you to keep moving or you will take damage
 L.stand_still = "정지" -- An ability that forces you to stand still or you will take damage
 L.safe_to_stop = "정지 가능" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
@@ -79,21 +79,21 @@ L.unsafe = "위험" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "추가 몹 생성" -- singular
-L.adds_spawned = "추가 몹들 생성" -- plural
-L.adds_spawned_count = "%d |4추가 몹:추가 몹들; 생성됨" -- 1 add spawned / 2 adds spawned
+L.adds_spawned = "추가 몹 생성" -- plural
+L.adds_spawned_count = "%d 추가 몹 생성됨" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "추가 몹 생성 중" -- singular
-L.adds_spawning = "추가 몹들 생성 중" -- plural
-L.spawned = "%s 생성"
-L.spawning = "%s 생성"
-L.next_add = "다음 몹 추가"
+L.adds_spawning = "추가 몹 생성 중" -- plural
+L.spawned = "%s 생성됨"
+L.spawning = "%s 생성중"
+L.next_add = "다음 추가 몹"
 L.add_killed = "추가 몹 처치 (%d/%d)"
 L.add_remaining = "추가 몹 처치, %d 남음"
 L.add = "추가 몹"
-L.adds = "추가 몹들"
-L.big_add = "큰 추가 몹" -- singular
-L.big_adds = "큰 추가 몹들" -- plural
-L.small_add = "작은 추가 몹" -- singular
-L.small_adds = "작은 추가 몹들" -- plural
+L.adds = "추가 몹"
+L.big_add = "대형 추가 몹" -- singular
+L.big_adds = "대형 추가 몹" -- plural
+L.small_add = "소형 추가 몹" -- singular
+L.small_adds = "소형 추가 몹" -- plural
 
 -- Mob related
 L.killed = "%s 처치"
@@ -118,22 +118,22 @@ L.henry_short = "*헨리"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
-L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
-L.custom_start_s = "%1$s 전투 개시 - %3$d초 후 %2$s"
+L.custom_start = "%1$s 전투 시작 - %3$d분 후 %2$s"
+L.custom_start_s = "%1$s 전투 시작 - %3$d초 후 %2$s"
 L.custom_end = "%s - %s"
 L.custom_min = "%2$d분 후 %1$s"
 L.custom_sec = "%2$d초 후 %1$s"
 
 L.focus_only = "|cffff0000주시 대상만 경고합니다.|r "
-L.trash = "일반몹"
+L.trash = "일반 몹"
 L.affixes = "어픽스" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
-L.marker = "%s 징표 표시"
-L.marker_player_desc = "%s에 영향받는 플레이어를 %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
-L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark NPC_NAME with SKULL_ICON
-L.marker_npc_aura_desc = "'%s'에 영향을 받은 NPC들을 %s로 표시합니다. (부공격대장이나 공격대장 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
-L.disabled = "사용 안 함"
+L.marker = "%s 징표 설정"
+L.marker_player_desc = "'%s' 영향을 받는 플레이어를 %s|1으로;로; 징표 설정합니다. (부공대장 이상 권한 필요)" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 설정합니다. (부공대장 이상 권한 필요)" -- Mark NPC_NAME with SKULL_ICON
+L.marker_npc_aura_desc = "'%s' 영향을 받은 NPC를 %s|1으로;로; 표시합니다. (부공대장 이상 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.disabled = "비활성화"
 L.none = "없음"
 
 -- Ability where two players have to move close to each other
@@ -143,9 +143,9 @@ L.link_with_icon = "|T13700%d:0|t%s|1과;와; 연결됨"
 L.link_with_rticon = "%s와 연결됨{rt%d}"
 L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_both_icon = "|T13700%d:0|t%s|1과;와; |T13700%d:0|t%s|1이;가; 연결됨"
-L.link_removed = "연결 사라짐"
-L.link_say_option_name = "'연결됨' 반복 말하기 옵션"
-L.link_say_option_desc = "일반 채팅에서 내가 누구와 연결되어 있는지 알려주는 메시지를 반복합니다."
+L.link_removed = "연결 해제됨"
+L.link_say_option_name = "'연결' 알림 반복 설정"
+L.link_say_option_desc = "연결된 대상을 일반 채팅으로 반복 알립니다."
 
 -- Abbreviated numbers
 L.amount_one = "%.2f억" -- Billions 1,000,000,000
@@ -154,30 +154,30 @@ L.amount_three = "%d천" -- Thousands 1,000
 L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Directions
-L.top = "최상단"
+L.top = "상단"
 L.top_right = "우측 상단"
 L.top_left = "좌측 상단"
-L.up = "상단"
-L.middle = "중간"
-L.down = "하단"
-L.bottom = "최하"
+L.up = "위쪽"
+L.middle = "중앙"
+L.down = "아래쪽"
+L.bottom = "하단"
 L.bottom_right = "우측 하단"
 L.bottom_left = "좌측 하단"
-L.left = "왼쪽"
-L.right = "오른쪽"
-L.north = "북쪽"
-L.north_east = "북동쪽"
-L.east = "동쪽"
-L.south_east = "남동쪽"
-L.south = "남쪽"
-L.south_west = "남서쪽"
-L.west = "서쪽"
-L.north_west = "북서쪽"
+L.left = "좌측"
+L.right = "우측"
+L.north = "북"
+L.north_east = "북동"
+L.east = "동"
+L.south_east = "남동"
+L.south = "남"
+L.south_west = "남서"
+L.west = "서"
+L.north_west = "북서"
 
 -- Sizes
-L.small = "작은"
-L.medium = "중간"
-L.large = "큰"
+L.small = "소형"
+L.medium = "중형"
+L.large = "대형"
 
 -- Schools
 L.fire = "화염"
@@ -187,9 +187,9 @@ L.nature = "자연"
 L.arcane = "비전"
 
 -- Autotalk
-L.autotalk = "자동 NPC 상호작용"
-L.autotalk_boss_desc = "보스 전투를 시작하는 NPC 대화 옵션을 자동으로 선택합니다."
-L.autotalk_generic_desc = "던전의 다음 단계로 진행하기 위해 필요한 NPC 대화 옵션을 자동으로 선택합니다."
+L.autotalk = "NPC 자동 상호작용"
+L.autotalk_boss_desc = "보스 전투 시작 NPC 대화를 자동 선택합니다."
+L.autotalk_generic_desc = "던전 다음 단계 진행에 필요한 NPC 대화를 자동 선택합니다."
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -252,21 +252,21 @@ L.fear = "공포" -- Similar to a warlock or priest ability, when a boss casts a
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "시선 고정" -- Plural of L.fixate
 L.group_damage = "파티 피해" -- Any ability that causes damage to every player in the 5 player group
-L.health_drain = "체력 흡수" -- Any ability that drains health from the player
+L.health_drain = "생명력 흡수" -- Any ability that drains health from the player
 L.parasite = "기생충" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "기생충" -- Plural of L.parasite
 L.pull_in = "끌어당김" -- An ability that pulls you in towards the boss against your will
 L.raid_damage = "공격대 피해" -- Any ability that causes damage to every player in the raid
 L.smash = "강타" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
-L.soak = "바닥 흡수" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
-L.soaks = "바닥 흡수" -- Plural of L.soak
-L.spike = "쐐기" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
-L.spikes = "쐐기" -- Plural of L.spike
+L.soak = "맞아주기" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
+L.soaks = "맞아주기" -- Plural of L.soak
+L.spike = "가시" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
+L.spikes = "가시" -- Plural of L.spike
 L.spread = "산개" -- An ability that forces you to spread out away from other players, or you might damage them
-L.tank_combo = "탱 콤보" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
-L.tank_debuff = "탱 디버프" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "탱 정면" -- Similar to L.frontal_cone but only applies to tanks
-L.tank_soak = "탱 바닥" -- Similar to L.soak but only applies to tanks
+L.tank_combo = "탱커 연계기" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_debuff = "탱커 디버프" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "탱커 정면기" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tanks
 L.tentacle = "촉수" -- Used for bosses that summon tentacles
 L.tentacles = "촉수" -- Plural of L.tentacle
 L.waves = "웨이브" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
