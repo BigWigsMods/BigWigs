@@ -23,14 +23,14 @@ L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) 
 
 -- Loader / Options.lua
 L.okay = "OK"
-L.officialRelease = "Stai usando una versione ufficiale di BigWigs %s (%s)"
-L.alphaRelease = "Stai usando una VERSIONE ALPHA di BigWigs %s (%s)"
+L.officialRelease = "Stai usando una versione ufficiale di BigWigs %s (%s)."
+L.alphaRelease = "Stai usando una VERSIONE ALPHA di BigWigs %s (%s)."
 L.sourceCheckout = "Stai usando una versione di BigWigs %s presa direttamente dal repository."
-L.littlewigsOfficialRelease = "Stai usando una versione ufficiale di LittleWigs (%s)"
-L.littlewigsAlphaRelease = "Stai usando una VERSIONE ALPHA di LittleWigs (%s)"
+L.littlewigsOfficialRelease = "Stai usando una versione ufficiale di LittleWigs (%s)."
+L.littlewigsAlphaRelease = "Stai usando una VERSIONE ALPHA di LittleWigs (%s)."
 L.littlewigsSourceCheckout = "Stai usando una versione di LittleWigs presa direttamente dal repository."
 L.guildRelease = "Stai utilizzando la versione %d di BigWigs creata per la tua Gilda, basata sulla versione %d dell'addon ufficiale."
-L.getNewRelease = "BigWigs non è aggiornato (/bwv) ma puoi farlo semplicemente usando CurseForge Client. In alternativa puoi aggiornarlo manualmente da curseforge.com o wowinterface.com."
+L.getNewRelease = "BigWigs non è aggiornato (/bwv) ma puoi farlo semplicemente usando CurseForge Client. In alternativa puoi aggiornarlo manualmente da curseforge.com o addons.wago.io."
 L.warnTwoReleases = "BigWigs è indietro di due versioni! La tua versione può avere dei bug, funzioni mancanti, o timer sbagliati. Ti consigliamo di aggiornare."
 L.warnSeveralReleases = "|cffff0000BigWigs è vecchio di %d versioni!! Ti consigliamo FORTEMENTE di aggiornare per evitare problemi di sincronizzazione con gli altri giocatori!|r"
 L.warnOldBase = "Stai utilizzando una versione di BigWigs per la gilda (%d), ma la tua versione base (%d) è vecchia di %d versioni. Potrebbe avere dei problemi."
@@ -722,7 +722,7 @@ L.resetAllCustomSound = "Se hai personalizzzato i suoni per qualsiasi boss, ques
 --
 
 L.bossStatistics = "Statistiche del Boss"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Queste statistiche possono essere viste nella finestra di configurazione di ogni singolo boss, ma saranno nascoste per quei boss di cui non c'é nessuna informazione statistica."
+--L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Queste statistiche possono essere viste nella finestra di configurazione di ogni singolo boss, ma saranno nascoste per quei boss di cui non c'é nessuna informazione statistica."
 L.createTimeBar = "Mostra la barra 'Miglior Tempo'"
 L.bestTimeBar = "Migliore"
 L.healthPrint = "Salute: %s."

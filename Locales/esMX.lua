@@ -23,14 +23,14 @@ L.already_registered = "|cffff0000ATENCIÓN:|r |cff00ff00%s|r (|cffffff00%s|r) y
 
 -- Loader / Options.lua
 L.okay = "Aceptar"
-L.officialRelease = "Estás usando la versión oficial de BigWigs %s (%s)"
-L.alphaRelease = "Estás usando la VERSIÓN ALFA de BigWigs %s (%s)"
+L.officialRelease = "Estás usando la versión oficial de BigWigs %s (%s)."
+L.alphaRelease = "Estás usando la VERSIÓN ALFA de BigWigs %s (%s)."
 L.sourceCheckout = "Estás usando la versión de BigWigs %s directamente del repositorio."
-L.littlewigsOfficialRelease = "Estás usando la versión oficial de LittleWigs (%s)"
-L.littlewigsAlphaRelease = "Estás usando la VERSIÓN ALFA de LittleWigs (%s)"
+L.littlewigsOfficialRelease = "Estás usando la versión oficial de LittleWigs (%s)."
+L.littlewigsAlphaRelease = "Estás usando la VERSIÓN ALFA de LittleWigs (%s)."
 L.littlewigsSourceCheckout = "Estás usando la versión de LittleWigs directamente del repositorio."
 L.guildRelease = "Estás usando la versión %d de BigWigs hecha para tu hermandad, basado en la versión %d del addon oficial."
-L.getNewRelease = "Tu BigWigs está desactualizado (/bwv) pero puedes actualizarlo fácilmente con el cliente de CurseForge. También puedes actualizarlo manualmente desde curseforge.com o wowinterface.com."
+L.getNewRelease = "Tu BigWigs está desactualizado (/bwv) pero puedes actualizarlo fácilmente con el cliente de CurseForge. También puedes actualizarlo manualmente desde curseforge.com o addons.wago.io."
 L.warnTwoReleases = "Tu BigWigs está 2 versiones desactualizado! Tu versión puede tener fallos, faltarle características, o temporizadores incorrectos. Es muy recomendable que lo actualices."
 L.warnSeveralReleases = "|cffff0000Tu BigWigs está desactualizado %d actualizaciones!! Te recomendamos MUCHÍSIMO que lo actualices cuanto antes para prevenir problemas de sincronización con otros jugadores!|r"
 L.warnOldBase = "Estás usando la versión de hermandad de BigWigs (%d), pero tu versión base (%d) está %d versiones desactualizada. Esto puede provocar problemas."
@@ -723,7 +723,7 @@ L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuent
 --
 
 L.bossStatistics = "Estadísticas del jefe"
-L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Estas estadísticas pueden verse en la pantalla de configuración de cada jefe, pero se ocultarán para los jefes que no tengan estadísticas registradas."
+--L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Estas estadísticas pueden verse en la pantalla de configuración de cada jefe, pero se ocultarán para los jefes que no tengan estadísticas registradas."
 L.createTimeBar = "Mostrar la barra 'Mejor tiempo'"
 L.bestTimeBar = "Mejor tiempo"
 L.healthPrint = "Vida: %s."
