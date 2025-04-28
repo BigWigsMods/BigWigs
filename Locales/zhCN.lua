@@ -54,7 +54,7 @@ L.removeAddOn = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”�
 L.alternativeName = "%s（|cFF436EEE%s|r）"
 L.outOfDateContentPopup = "警告！\n你更新了 |cFF436EEE%s|r 但你还需要更新 |cFF436EEEBigWigs|r 主插件。\n忽略这一点将导致功能崩溃。"
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r 需要安装 %d 版本的 |cFF436EEEBigWigs|r 主插件才能正常运行，但你使用了 %d 版本。"
-L.addOnLoadFailedWithReason = "BigWigs 无法加载 |cFF436EEE%s|r 插件，原因为 %q。请通知 BigWigs 的开发者！"
+L.addOnLoadFailedWithReason = "BigWigs 未能加载 |cFF436EEE%s|r 插件，原因： %q。请通知 BigWigs 的开发者！"
 L.addOnLoadFailedUnknownError = "BigWigs 在加载 |cFF436EEE%s|r 插件时遇到了错误。请通知 BigWigs 的开发者！"
 
 L.expansionNames = {
