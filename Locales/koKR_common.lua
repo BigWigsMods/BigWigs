@@ -63,8 +63,8 @@ L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s 취소됨" -- Spell Cancelled
-L.you_die = "당신은 죽습니다" -- You will die
-L.you_die_sec = "당신은 %d초 후 죽습니다" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "당신은 죽습니다." -- You will die
+L.you_die_sec = "당신은 %d초 후 죽습니다." -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "다음 능력" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s 착륙 중" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.landing = "착륙" -- Used when a flying NPC/dragon/boss is landing
