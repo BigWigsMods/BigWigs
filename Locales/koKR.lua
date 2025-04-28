@@ -23,11 +23,11 @@ L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은
 
 -- Loader / Options.lua
 L.okay = "확인"
-L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다."
-L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 릴리스 버전을 실행 중입니다."
+L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
+L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 릴리스 버전을 실행 중입니다"
 L.sourceCheckout = "당신은 저장소로부터 직접 가져온 BigWigs %s의 소스를 실행 중입니다."
-L.littlewigsOfficialRelease = "당신은 LittleWigs (%s)의 공식 배포 버전을 실행 중입니다."
-L.littlewigsAlphaRelease = "당신은 LittleWigs (%s)의 알파 릴리스 버전을 실행 중입니다."
+L.littlewigsOfficialRelease = "당신은 LittleWigs (%s)의 공식 배포 버전을 실행 중입니다"
+L.littlewigsAlphaRelease = "당신은 LittleWigs (%s)의 알파 릴리스 버전을 실행 중입니다"
 L.littlewigsSourceCheckout = "당신은 저장소로부터 직접 가져온 LittleWigs 의 소스를 실행 중입니다."
 L.guildRelease = "당신은 %2$d 버전 공식 애드온을 바탕으로한 길드용 %1$d 버전의 BigWigs를 사용하고 있습니다."
 L.getNewRelease = "당신의 BigWigs는 구버전이지만 (/bwv) CurseForge 클라이언트를 사용해 쉽게 업데이트할 수 있습니다. 또는 curseforge.com이나 wowinterface.com에서 직접 업데이트할 수 있습니다."
@@ -730,8 +730,8 @@ L.healthPrint = "생명력: %s."
 L.healthFormat = "%s (%.1f%%)"
 L.chatMessages = "대화 메시지"
 L.newFastestVictoryOption = "새로운 가장 빠른 승리"
-L.victoryOption = "당신이 승리했습니다."
-L.defeatOption = "당신이 패배했습니다."
+L.victoryOption = "당신이 승리했습니다"
+L.defeatOption = "당신이 패배했습니다"
 L.bossHealthOption = "보스 생명력"
 L.bossVictoryPrint = "'%s'에게 %s 후 승리했습니다." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
 L.bossDefeatPrint = "'%s'에게 %s 후 패배했습니다." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
