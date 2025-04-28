@@ -23,11 +23,11 @@ L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은
 
 -- Loader / Options.lua
 L.okay = "확인"
-L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
-L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 릴리스 버전을 실행 중입니다"
+L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다."
+L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 릴리스 버전을 실행 중입니다."
 L.sourceCheckout = "당신은 저장소로부터 직접 가져온 BigWigs %s의 소스를 실행 중입니다."
-L.littlewigsOfficialRelease = "당신은 LittleWigs (%s)의 공식 배포 버전을 실행 중입니다"
-L.littlewigsAlphaRelease = "당신은 LittleWigs (%s)의 알파 릴리스 버전을 실행 중입니다"
+L.littlewigsOfficialRelease = "당신은 LittleWigs (%s)의 공식 배포 버전을 실행 중입니다."
+L.littlewigsAlphaRelease = "당신은 LittleWigs (%s)의 알파 릴리스 버전을 실행 중입니다."
 L.littlewigsSourceCheckout = "당신은 저장소로부터 직접 가져온 LittleWigs 의 소스를 실행 중입니다."
 L.guildRelease = "당신은 %2$d 버전 공식 애드온을 바탕으로한 길드용 %1$d 버전의 BigWigs를 사용하고 있습니다."
 L.getNewRelease = "당신의 BigWigs는 구버전이지만 (/bwv) CurseForge 클라이언트를 사용해 쉽게 업데이트할 수 있습니다. 또는 curseforge.com이나 wowinterface.com에서 직접 업데이트할 수 있습니다."
@@ -136,7 +136,7 @@ L.ICON_desc = "BigWigs은 능력에 영향을 받는 캐릭터를 징표로 표�
 L.SAY_desc = "대화 말풍선은 눈에 잘 띕니다. BigWigs은 자신에게 걸린 효과에 대하여 주위 사람에게 알리는데 일반 대화 메시지를 사용합니다."
 L.EMPHASIZE_desc = "활성화하면 이 능력과 연관된 모든 메시지를 강조합니다, 더 크고 더 잘 보이게 만듭니다. 강조된 메시지의 크기와 글꼴을 주 옵션의 \"메시지\"에서 설정할 수 있습니다."
 L.PROXIMITY = "근접 표시"
-L.PROXIMITY_desc = "일부 능력은 종종 산개 진형을 요구합니다. 이럴 때 BigWigs은 해당 능력에 맞춰 거리 표시창을 띄워주어, 한눈에 안전한지 아닌지 바로 확인할 수 있게 해줍니다"
+L.PROXIMITY_desc = "일부 능력은 종종 산개 진형을 요구합니다. 이럴 때 BigWigs은 해당 능력에 맞춰 거리 표시창을 띄워주어, 한눈에 안전한지 아닌지 바로 확인할 수 있게 해줍니다."
 L.ALTPOWER = "보조 자원 표시"
 L.ALTPOWER_desc = "몇몇 보스 전투는 파티 내의 플레이어에게 보조 자원 메커니즘을 사용합니다. 보조 자원 표시는 최소/최대 보조 자원을 가진 사람을 간략하게 보여줍니다, 특정 공략이나 전술에 유용할 수 있습니다."
 L.TANK = "방어 전담만"
@@ -730,8 +730,8 @@ L.healthPrint = "생명력: %s."
 L.healthFormat = "%s (%.1f%%)"
 L.chatMessages = "대화 메시지"
 L.newFastestVictoryOption = "새로운 가장 빠른 승리"
-L.victoryOption = "당신이 승리했습니다"
-L.defeatOption = "당신이 패배했습니다"
+L.victoryOption = "당신이 승리했습니다."
+L.defeatOption = "당신이 패배했습니다."
 L.bossHealthOption = "보스 생명력"
 L.bossVictoryPrint = "'%s'에게 %s 후 승리했습니다." -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
 L.bossDefeatPrint = "'%s'에게 %s 후 패배했습니다." -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
@@ -749,7 +749,7 @@ L.victoryMessageBigWigs = "BigWigs 메시지 표시"
 L.victoryMessageBigWigsDesc = "BigWigs 메시지는 단순한 \"보스를 처치했습니다\" 메시지입니다."
 L.victoryMessageBlizzard = "블리자드 메시지 표시"
 L.victoryMessageBlizzardDesc = "Blizzard 메시지는 화면 중앙의 아주 큰 \"보스 처치\" 애니메이션입니다."
-L.defeated = "%s|1을;를; 처치했습니다"
+L.defeated = "%s|1을;를; 처치했습니다."
 
 -----------------------------------------------------------------------
 -- Wipe.lua
