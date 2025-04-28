@@ -118,22 +118,22 @@ L.henry_short = "*헨리"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
-L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
-L.custom_start_s = "%1$s 전투 개시 - %3$d초 후 %2$s"
+L.custom_start = "%1$s 전투 시작 - %3$d분 후 %2$s"
+L.custom_start_s = "%1$s 전투 시작 - %3$d초 후 %2$s"
 L.custom_end = "%s - %s"
 L.custom_min = "%2$d분 후 %1$s"
 L.custom_sec = "%2$d초 후 %1$s"
 
 L.focus_only = "|cffff0000주시 대상만 경고합니다.|r "
-L.trash = "일반몹"
+L.trash = "일반 몹"
 L.affixes = "어픽스" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
-L.marker = "%s 징표 표시"
-L.marker_player_desc = "%s에 영향받는 플레이어를 %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
-L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다." -- Mark NPC_NAME with SKULL_ICON
-L.marker_npc_aura_desc = "'%s'에 영향을 받은 NPC들을 %s로 표시합니다. (부공격대장이나 공격대장 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
-L.disabled = "사용 안 함"
+L.marker = "%s 징표 설정"
+L.marker_player_desc = "'%s' 영향을 받는 플레이어를 %s|1으로;로; 징표 설정합니다. (부공대장 이상 권한 필요)" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 설정합니다. (부공대장 이상 권한 필요)" -- Mark NPC_NAME with SKULL_ICON
+L.marker_npc_aura_desc = "'%s' 영향을 받은 NPC를 %s|1으로;로; 표시합니다. (부공대장 이상 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.disabled = "비활성화"
 L.none = "없음"
 
 -- Ability where two players have to move close to each other
@@ -143,9 +143,9 @@ L.link_with_icon = "|T13700%d:0|t%s|1과;와; 연결됨"
 L.link_with_rticon = "%s와 연결됨{rt%d}"
 L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_both_icon = "|T13700%d:0|t%s|1과;와; |T13700%d:0|t%s|1이;가; 연결됨"
-L.link_removed = "연결 사라짐"
-L.link_say_option_name = "'연결됨' 반복 말하기 옵션"
-L.link_say_option_desc = "일반 채팅에서 내가 누구와 연결되어 있는지 알려주는 메시지를 반복합니다."
+L.link_removed = "연결 해제됨"
+L.link_say_option_name = "'연결' 알림 반복 설정"
+L.link_say_option_desc = "연결된 대상을 일반 채팅으로 반복 알립니다."
 
 -- Abbreviated numbers
 L.amount_one = "%.2f억" -- Billions 1,000,000,000
@@ -154,30 +154,30 @@ L.amount_three = "%d천" -- Thousands 1,000
 L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Directions
-L.top = "최상단"
+L.top = "상단"
 L.top_right = "우측 상단"
 L.top_left = "좌측 상단"
-L.up = "상단"
-L.middle = "중간"
-L.down = "하단"
-L.bottom = "최하"
+L.up = "위쪽"
+L.middle = "중앙"
+L.down = "아래쪽"
+L.bottom = "하단"
 L.bottom_right = "우측 하단"
 L.bottom_left = "좌측 하단"
-L.left = "왼쪽"
-L.right = "오른쪽"
-L.north = "북쪽"
-L.north_east = "북동쪽"
-L.east = "동쪽"
-L.south_east = "남동쪽"
-L.south = "남쪽"
-L.south_west = "남서쪽"
-L.west = "서쪽"
-L.north_west = "북서쪽"
+L.left = "좌측"
+L.right = "우측"
+L.north = "북"
+L.north_east = "북동"
+L.east = "동"
+L.south_east = "남동"
+L.south = "남"
+L.south_west = "남서"
+L.west = "서"
+L.north_west = "북서"
 
 -- Sizes
-L.small = "작은"
-L.medium = "중간"
-L.large = "큰"
+L.small = "소형"
+L.medium = "중형"
+L.large = "대형"
 
 -- Schools
 L.fire = "화염"
@@ -187,9 +187,9 @@ L.nature = "자연"
 L.arcane = "비전"
 
 -- Autotalk
-L.autotalk = "자동 NPC 상호작용"
-L.autotalk_boss_desc = "보스 전투를 시작하는 NPC 대화 옵션을 자동으로 선택합니다."
-L.autotalk_generic_desc = "던전의 다음 단계로 진행하기 위해 필요한 NPC 대화 옵션을 자동으로 선택합니다."
+L.autotalk = "NPC 자동 상호작용"
+L.autotalk_boss_desc = "보스 전투 시작 NPC 대화를 자동 선택합니다."
+L.autotalk_generic_desc = "던전 다음 단계 진행에 필요한 NPC 대화를 자동 선택합니다."
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
