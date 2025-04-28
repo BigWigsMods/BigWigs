@@ -484,15 +484,15 @@ L.resetAllDesc = "보스 전투 설정에 사용자 설정 색상을 적용했�
 L.red = "빨강"
 L.redDesc = "일반적인 경보"
 L.blue = "파랑"
-L.blueDesc = "디버프가 적용되는 등 자신에게 직접적으로 영향을 미치는 사항에 대한 경고"
+L.blueDesc = "디버프가 적용되는 등 자신에게 직접적으로 영향을 미치는 사항에 대한 경고."
 L.orange = "주황"
 L.yellow = "노랑"
 L.green = "초록"
-L.greenDesc = "디버프가 제거되는 등 좋은 일이 발생하면 경고"
+L.greenDesc = "디버프가 제거되는 등 좋은 일이 발생하면 경고."
 L.cyan = "청록"
-L.cyanDesc = "다음 단계로 넘어가는 등 전투 상태의 변화에 ​​대한 경고"
+L.cyanDesc = "다음 단계로 넘어가는 등 전투 상태의 변화에 ​​대한 경고."
 L.purple = "보라"
-L.purpleDesc = "탱커 디버프 중첩 등 탱커 관련 능력에 대한 경고"
+L.purpleDesc = "탱커 디버프 중첩 등 탱커 관련 능력에 대한 경고."
 
 -----------------------------------------------------------------------
 -- Countdown.lua
@@ -693,9 +693,9 @@ L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될
 L.icons = "징표"
 L.raidIconsDescription = "일부 보스 전투에서는 폭탄형 능력처럼 특정 플레이어를 지정하거나, 쫓기는 플레이어, 혹은 다른 방식으로 주목해야 하는 플레이어가 있을 수 있습니다. 이곳에서는 이런 플레이어를 표시할 때 사용할 공격대 징표를 직접 지정할 수 있습니다.\n\n|cffff4411참고: 플레이어가 이미 수동으로 표시된 경우 BigWigs은 해당 플레이어의 징표를 변경하지 않습니다.|r"
 L.primary = "첫번째"
-L.primaryDesc = "첫 번째로 사용할 공격대 징표"
+L.primaryDesc = "첫 번째로 사용할 공격대 징표."
 L.secondary = "두번째"
-L.secondaryDesc = "두 번째로 사용할 공격대 징표"
+L.secondaryDesc = "두 번째로 사용할 공격대 징표."
 
 -----------------------------------------------------------------------
 -- Sound.lua
@@ -749,7 +749,7 @@ L.victoryMessageBigWigs = "BigWigs 메시지 표시"
 L.victoryMessageBigWigsDesc = "BigWigs 메시지는 단순한 \"보스를 처치했습니다\" 메시지입니다."
 L.victoryMessageBlizzard = "블리자드 메시지 표시"
 L.victoryMessageBlizzardDesc = "Blizzard 메시지는 화면 중앙의 아주 큰 \"보스 처치\" 애니메이션입니다."
-L.defeated = "%s|1을;를; 처치했습니다."
+L.defeated = "%s|1을;를; 처치했습니다"
 
 -----------------------------------------------------------------------
 -- Wipe.lua
