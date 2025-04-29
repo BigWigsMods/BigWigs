@@ -666,11 +666,13 @@ local function load(obj, index)
 		local msg = L.addOnLoadFailedWithReason:format(addonName, reason)
 		sysprint(msg)
 		Popup(msg, true)
-	elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX added in 11.1.5, compat code for classic
+	elseif DoesAddOnHaveLoadError then
 		local addonName = GetAddOnInfo(index)
-		local msg = L.addOnLoadFailedUnknownError:format(addonName)
-		sysprint(msg)
-		Popup(msg, true)
+		if DoesAddOnHaveLoadError(addonName) then -- XXX added in 11.1.5, compat code for classic
+			local msg = L.addOnLoadFailedUnknownError:format(addonName)
+			sysprint(msg)
+			Popup(msg, true)
+		end
 	end
 	return loaded
 end
