@@ -640,23 +640,14 @@ local function sysprint(msg)
 	print("|cFF33FF99BigWigs|r: "..msg)
 end
 
-local function load(obj, index)
-	if obj then return true end
+local function load(index)
+	if IsAddOnLoaded(index) then return true end
 
-	if loadOnSlash[index] then
-		if not IsAddOnLoaded(index) then -- Check if we need remove our slash handler stub.
-			for _, slash in next, loadOnSlash[index] do
-				hash_SlashCmdList[slash] = nil
-			end
+	if loadOnSlash[index] then -- Check if we need remove our slash handler stub.
+		for _, slash in next, loadOnSlash[index] do
+			hash_SlashCmdList[slash] = nil
 		end
 		loadOnSlash[index] = nil
-	end
-
-	if reqFuncAddons[index] then
-		reqFuncAddons[index] = nil
-		if index == "BigWigs_Core" then
-			reqFuncAddons.BigWigs_Plugins = nil
-		end
 	end
 
 	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
@@ -666,13 +657,11 @@ local function load(obj, index)
 		local msg = L.addOnLoadFailedWithReason:format(addonName, reason)
 		sysprint(msg)
 		Popup(msg, true)
-	elseif DoesAddOnHaveLoadError then
+	elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX only available in 11.1.5 and 1.15.7 atm
 		local addonName = GetAddOnInfo(index)
-		if DoesAddOnHaveLoadError(addonName) then -- XXX added in 11.1.5, compat code for classic
-			local msg = L.addOnLoadFailedUnknownError:format(addonName)
-			sysprint(msg)
-			Popup(msg, true)
-		end
+		local msg = L.addOnLoadFailedUnknownError:format(addonName)
+		sysprint(msg)
+		Popup(msg, true)
 	end
 	return loaded
 end
@@ -682,7 +671,7 @@ local function loadAddons(tbl)
 
 	for i = 1, #tbl do
 		local index = tbl[i]
-		if not IsAddOnLoaded(index) and load(nil, index) then
+		if not IsAddOnLoaded(index) and load(index) then
 			local name = GetAddOnInfo(index)
 			public:SendMessage("BigWigs_ModulePackLoaded", name)
 		end
@@ -698,17 +687,19 @@ local function loadZone(zone)
 	end
 end
 
+local indexOfCore
 local function loadAndEnableCore()
-	local loaded = load(BigWigs, "BigWigs_Core")
+	local loaded = load(indexOfCore)
 	if not BigWigs then return end
 	loadAddons(loadOnCoreEnabled)
 	BigWigs:Enable()
 	return loaded
 end
 
+local indexOfOptions
 local function loadCoreAndOptions()
 	loadAndEnableCore()
-	load(BigWigsOptions, "BigWigs_Options")
+	load(indexOfOptions)
 end
 
 do
@@ -799,6 +790,11 @@ do
 
 	for i = 1, GetNumAddOns() do
 		local name, _, _, _, addonState = GetAddOnInfo(i)
+		if name == "BigWigs_Core" then
+			indexOfCore = i
+		elseif name == "BigWigs_Options" then
+			indexOfOptions = i
+		end
 		if reqFuncAddons[name] then
 			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		end
@@ -851,7 +847,7 @@ do
 							-- Attempting to be smart. Only load core & config if it's a BW plugin.
 							loadCoreAndOptions()
 						end
-						if load(nil, i) then -- Load the addon/plugin
+						if load(i) then -- Load the addon/plugin
 							-- Call the slash command again, which should have been set by the addon.
 							-- Authors, do NOT delay setting it in OnInitialize/OnEnable/etc.
 							ChatFrame_ImportListToHash(SlashCmdList, hash_SlashCmdList)
