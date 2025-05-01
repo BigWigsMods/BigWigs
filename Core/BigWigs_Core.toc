@@ -1,4 +1,4 @@
-## Interface: 40402, 40401, 50500, 110105, 110007, 110100
+## Interface: 40402, 40401, 50500, 110105, 110107, 110100
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]

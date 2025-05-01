@@ -1,4 +1,4 @@
-## Interface: 110105, 110007, 110100
+## Interface: 110105, 110107, 110100
 
 ## Title: BigWigs [|cffeda55fLiberation of Undermine|r]
 ## Title-deDE: BigWigs [|cffeda55fBefreiung von Lorenhall|r]
