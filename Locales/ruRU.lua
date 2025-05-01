@@ -48,14 +48,14 @@ L.offline = "Не в сети"
 L.missingAddOnPopup = "Отсутствует модификация |cFF436EEE%s|r."
 L.missingAddOnRaidWarning = "Отсутствует модификация |cFF436EEE%s|r. В этой зоне не будут отображаться таймеры!"
 L.outOfDateAddOnPopup = "Аддон |cFF436EEE%s|r устарел!"
---L.outOfDateAddOnRaidWarning = "Аддон |cFF436EEE%s|r устарел! You have v%d.%d.%d but the latest is v%d.%d.%d!"
+L.outOfDateAddOnRaidWarning = "Аддон |cFF436EEE%s|r устарел! Текущая версия: v%d.%d.%d последняя: v%d.%d.%d!"
 L.disabledAddOn = "У вас выключена модификация |cFF436EEE%s|r, таймеры не будут показываться."
 L.removeAddOn = "Пожалуйста, удалите '|cFF436EEE%s|r', ему на смену пришло '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "ВНИМАНИЕ!\nВы обновили |cFF436EEE%s|r но необходимо также обновить основную модификацию |cFF436EEEBigWigs|r .\nИгнорирование приведёт к ошибочному функционированию."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r требует %d версию основной модификации |cFF436EEEBigWigs|r для грамотного функционирования. Текущая версия - %d."
---L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
---L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
+L.addOnLoadFailedWithReason = "BigWigs не смог загрузить аддон |cFF436EEE%s|r по причине: %q. Сообщи разрабу BigWigs!"
+L.addOnLoadFailedUnknownError = "BigWigs вызвал ошибку при попытке загрузить аддон |cFF436EEE%s|r. Сообщи разрабу BigWigs!"
 
 L.expansionNames = {
 	"Классика", -- Classic
@@ -723,7 +723,7 @@ L.resetAllCustomSound = "Если вы используете свои звук�
 --
 
 L.bossStatistics = "Статистика боссов"
---L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Эта статистика видна для каждого босса в окне настроек, либо спрятана, если нет записей."
+L.bossStatsDescription = "Запись различных статистик связанных с боссами, такие как количество побед, поражений; дату первого убийства и информацию о самой быстрой победе. Эта статистика видна для каждого босса в окне настроек, либо спрятана, если нет записей."
 L.createTimeBar = "Отображать полосу 'Лучшее время'"
 L.bestTimeBar = "Лучшее время"
 L.healthPrint = "Здоровье: %s."
