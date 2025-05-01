@@ -693,7 +693,7 @@ local function loadAndEnableCore()
 	if not BigWigs then return end
 	loadAddons(loadOnCoreEnabled)
 	BigWigs:Enable()
-	return loaded
+	return true
 end
 
 local indexOfOptions
