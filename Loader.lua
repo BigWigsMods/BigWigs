@@ -689,17 +689,21 @@ end
 
 local indexOfCore
 local function loadAndEnableCore()
-	local loaded = load(indexOfCore)
-	if not BigWigs then return end
-	loadAddons(loadOnCoreEnabled)
-	BigWigs:Enable()
+	if indexOfCore then -- Repo users don't have separate addons
+		local loaded = load(indexOfCore)
+		if not BigWigs then return end
+		loadAddons(loadOnCoreEnabled)
+		BigWigs:Enable()
+	end
 	return true
 end
 
 local indexOfOptions
 local function loadCoreAndOptions()
-	loadAndEnableCore()
-	load(indexOfOptions)
+	if indexOfOptions then -- Repo users don't have separate addons
+		loadAndEnableCore()
+		load(indexOfOptions)
+	end
 end
 
 do
