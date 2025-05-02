@@ -46,7 +46,7 @@ local configFrame, isPluginOpen
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local toggleOptionsStatusTable = {}
 
-local C_EncounterJournal_GetSectionInfo = loader.isClassic and function(key)
+local C_EncounterJournal_GetSectionInfo = (loader.isClassic and not loader.isMists) and function(key)
 	local info = loader.isCata and C_EncounterJournal.GetSectionInfo(key)
 	if info then
 		-- Cataclysm only has section info for Cataclysm content, return it if found
@@ -1429,6 +1429,14 @@ do
 			"BurningCrusade",
 			"WrathOfTheLichKing",
 			"Cataclysm",
+		}
+	elseif loader.isMists then
+		expansionHeader = {
+			"Classic",
+			"BurningCrusade",
+			"WrathOfTheLichKing",
+			"Cataclysm",
+			"MistsOfPandaria",
 		}
 	--elseif loader.isBeta then
 	--	expansionHeader = {
