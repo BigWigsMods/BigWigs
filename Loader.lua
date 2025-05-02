@@ -39,6 +39,7 @@ do
 	public.isTBC = tbl.isTBC
 	public.isWrath = tbl.isWrath
 	public.isCata = tbl.isCata
+	public.isMists = tbl.isMists
 	public.dbmPrefix = "D5"
 	public.littlewigsVersionString = L.missingAddOnPopup:format("LittleWigs")
 
