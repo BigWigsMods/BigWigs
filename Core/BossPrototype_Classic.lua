@@ -674,6 +674,7 @@ function boss:Disable(isWipe)
 		self.missing = nil
 		self.isWiping = nil
 		self.isEngaged = nil
+		self.isWinning = nil
 		self.bossTargetChecks = nil
 
 		if not isWiping then
@@ -1431,7 +1432,7 @@ do
 
 	--- Start a repeating timer checking if your group has left combat with a boss.
 	function boss:CheckForWipe()
-		if self:IsEnabled() and self:IsEngaged() then
+		if self:IsEnabled() and self:IsEngaged() and not self.isWinning then
 			for mobId in next, self.enableMobs do
 				local unit = findTargetByGUID(mobId)
 				if unit and UnitAffectingCombat(unit) then
@@ -1499,6 +1500,7 @@ do
 			twipe(spells)
 			if self.OnWin then self:OnWin() end
 			SimpleTimer(1, function() self:Disable() end) -- Delay a little to prevent re-enabling
+			self.isWinning = true -- Prevent a :CheckForWipe returning true during this 1 second delay
 			self:SendMessage("BigWigs_OnBossWin", self)
 			self:SendMessage("BigWigs_VictorySound", self)
 		end
