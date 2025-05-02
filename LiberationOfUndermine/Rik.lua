@@ -216,10 +216,10 @@ end
 function mod:Amplification(args)
 	self:StopBar(CL.count:format(L.amplification, fullAmplificationCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.amplification, fullAmplificationCount))
-	self:PlaySound(args.spellId, "alert") -- spawning amplifier
 	amplificationCount = amplificationCount + 1
 	fullAmplificationCount = fullAmplificationCount + 1
 	self:CDBar(args.spellId, timers[args.spellId][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount))
+	self:PlaySound(args.spellId, "alert") -- spawning amplifier
 end
 
 function mod:LingeringVoltageApplied(args)
@@ -262,12 +262,12 @@ end
 function mod:EchoingChant(args)
 	self:StopBar(CL.count:format(L.echoing_chant, fullEchoingChantCount))
 	self:Message(args.spellId, "orange", CL.count:format(L.echoing_chant, fullEchoingChantCount))
-	self:PlaySound(args.spellId, "alert") -- watch amplifiers
 	echoingChantCount = echoingChantCount + 1
 	fullEchoingChantCount = fullEchoingChantCount + 1
 
 	local cd = timers[args.spellId][echoingChantCount]
 	self:Bar(args.spellId, cd, CL.count:format(L.echoing_chant, fullEchoingChantCount))
+	self:PlaySound(args.spellId, "alert") -- watch amplifiers
 end
 
 function mod:SoundCannon(args)
@@ -279,7 +279,6 @@ function mod:SoundCannonApplied(args)
 	self:TargetMessage(467606, "red", args.destName, CL.count:format(self:SpellName(467606), fullSoundCannonCount))
 	self:TargetBar(467606, 5, args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(467606, "warning")
 		if self:Mythic() then -- soak
 			self:Yell(467606, nil, nil, "Sound Cannon")
 			self:YellCountdown(467606, 5)
@@ -287,6 +286,7 @@ function mod:SoundCannonApplied(args)
 			self:Say(467606, nil, nil, "Sound Cannon")
 			self:SayCountdown(467606, 5)
 		end
+		self:PlaySound(467606, "warning")
 	else
 		self:PlaySound(467606, "alert", nil, args.destName) -- avoid / soak
 	end
@@ -331,10 +331,10 @@ do
 			prev = args.time
 			self:StopBar(CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
 			self:Message(472306, "cyan", CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
-			self:PlaySound(472306, "info") -- adds
 			sparkblastIgnitionCount = sparkblastIgnitionCount + 1
 			fullSparkblastIgnitionCount = fullSparkblastIgnitionCount + 1
 			self:Bar(472306, timers[472306][sparkblastIgnitionCount], CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount))
+			self:PlaySound(472306, "info") -- adds
 		end
 	end
 end
@@ -391,36 +391,33 @@ function mod:SoundCloudApplied(args)
 	self:StopBar(CL.count:format(self:SpellName(466979), fullFaultyZapCount)) -- Faulty Zap
 	self:StopBar(CL.stage:format(2))
 
+	blaringDropCount = 1
 	self:SetStage(2)
-	self:Message("stages", "cyan", CL.stage:format(2), false)
-	self:PlaySound("stages", "long") -- stage 2
 	soundCloudCount = soundCloudCount + 1
+	self:Message("stages", "cyan", CL.stage:format(2), false)
 	if soundCloudCount < 3 then
 		self:Bar("stages", self:Mythic() and 28 or 32, CL.stage:format(1), args.spellId)
 	end
 
-	blaringDropCount = 1
+	self:PlaySound("stages", "long") -- stage 2
 end
 
 function mod:SoundCloudRemoved(args)
 	if self:GetStage() == 3 then return end
 	self:StopBar(CL.stage:format(1))
 
-	self:SetStage(1)
-	self:Message("stages", "cyan", CL.stage:format(1), false)
-	self:PlaySound("stages", "long") -- stage 1
-	if soundCloudCount < 3 then
-		self:Bar("stages", 120, CL.stage:format(2), 66911) -- disco ball icon // until _applied
-	else
-		self:Bar(473655, 115) -- third cast -> Hype Fever
-	end
-
 	amplificationCount = 1
 	echoingChantCount = 1
 	soundCannonCount = 1
 	faultyZapCount = 1
 	sparkblastIgnitionCount = 1
+	self:SetStage(1)
 
+	if soundCloudCount < 3 then
+		self:Bar("stages", 120, CL.stage:format(2), 66911) -- disco ball icon // until _applied
+	else
+		self:Bar(473655, 115) -- third cast -> Hype Fever
+	end
 	self:CDBar(473748, timers[473748][amplificationCount], CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
 	if not self:Easy() then
 		self:Bar(472306, timers[472306][sparkblastIgnitionCount], CL.count:format(L.sparkblast_ignition, fullSparkblastIgnitionCount)) -- Sparkblast Ignition
@@ -428,13 +425,16 @@ function mod:SoundCloudRemoved(args)
 	self:Bar(466866, timers[466866][echoingChantCount], CL.count:format(L.echoing_chant, fullEchoingChantCount)) -- Echoing Chant
 	self:Bar(467606, timers[467606][soundCannonCount], CL.count:format(self:SpellName(467606), fullSoundCannonCount)) -- Sound Cannon
 	self:Bar(466979, timers[466979][faultyZapCount], CL.count:format(L.faulty_zap, fullFaultyZapCount)) -- Faulty Zap
+
+	self:Message("stages", "cyan", CL.stage:format(1), false)
+	self:PlaySound("stages", "long") -- stage 1
 end
 
 function mod:BlaringDropStart(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, blaringDropCount))
-	self:PlaySound(args.spellId, "warning") -- go amplifier
 	self:CastBar(args.spellId, 5, CL.count_amount:format(args.spellName, blaringDropCount, 4))
 	blaringDropCount = blaringDropCount + 1
+	self:PlaySound(args.spellId, "warning") -- go amplifier
 end
 
 function mod:BlaringDropApplied(args)
@@ -445,6 +445,8 @@ function mod:BlaringDropApplied(args)
 end
 
 function mod:HypeFever(args)
+	blaringDropCount = 1
+
 	self:StopBar(args.spellId)
 	self:StopBar(CL.count:format(L.amplification, fullAmplificationCount)) -- Amplification!
 	self:StopBar(CL.count:format(L.echoing_chant, fullEchoingChantCount)) -- Echoing Chant
@@ -454,10 +456,8 @@ function mod:HypeFever(args)
 
 	self:SetStage(3)
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 5)
-
-	blaringDropCount = 1
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:HypeFeverSuccess(args)

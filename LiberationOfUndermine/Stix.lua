@@ -227,9 +227,14 @@ do
 	end
 
 	function mod:ElectromagneticSorting(args)
-		self:StopBar(CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-		self:Message(args.spellId, "orange", CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
-		self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
+		muffledDoomsplosionCount = 0
+		muffledDoomsplosionPlayersHit = {}
+		mobMark = 1
+		iconList = {}
+
+		local msg = CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount)
+		self:StopBar(msg)
+		self:Message(args.spellId, "orange", msg)
 		electromagneticSortingCount = electromagneticSortingCount + 1
 
 		local cd
@@ -242,21 +247,10 @@ do
 		end
 		self:Bar(args.spellId, cd, CL.count:format(L.electromagnetic_sorting, electromagneticSortingCount))
 
-		muffledDoomsplosionCount = 0
-		muffledDoomsplosionPlayersHit = {}
-		mobMark = 1
-		iconList = {}
+		self:PlaySound(args.spellId, "long") -- damage and garbage over 5 seconds
 	end
 
 	function mod:SortedApplied(args) -- You're about to become a ball
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(461536, nil, CL.ball) -- Rolling Rubbish
-			self:TargetBar(461536, 4.5, args.destName, CL.ball)
-			self:Say(461536, CL.ball, nil, "Ball")
-			self:SayCountdown(461536, 4.5)
-			self:PlaySound(461536, "warning")
-		end
-
 		iconList[#iconList+1] = {
 			player = args.destName,
 			tank = self:Tank(args.destName),
@@ -265,6 +259,13 @@ do
 		}
 		if not scheduled then
 			scheduled = self:ScheduleTimer("MarkPlayers", 0.1)
+		end
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(461536, nil, CL.ball) -- Rolling Rubbish
+			self:TargetBar(461536, 4.5, args.destName, CL.ball)
+			self:Say(461536, CL.ball, nil, "Ball")
+			self:SayCountdown(461536, 4.5)
+			self:PlaySound(461536, "warning")
 		end
 	end
 
@@ -289,8 +290,10 @@ do
 		if powerType == "ALTERNATE" then
 			local power = UnitPower(unit, 10)
 			if power >= 200 and ballSize < 200 then
+				ballSize = power
 				self:Message(461536, "green", CL.large) -- Rolling Rubbish
 				self:PlaySound(461536, "long")
+				return
 			elseif power >= 100 and ballSize < 100 then
 				self:Message(461536, "green", CL.medium) -- Rolling Rubbish
 			end
@@ -299,13 +302,13 @@ do
 	end
 
 	function mod:RollingRubbishRemoved(args)
+		self:CustomIcon(rollingRubbishMarker, args.destName)
 		if self:Me(args.destGUID) then
+			self:UnregisterUnitEvent("UNIT_POWER_UPDATE", "player", "vehicle")
 			self:StopBar(CL.ball, args.destName)
 			self:PersonalMessage(args.spellId, "removed", CL.ball)
 			self:PlaySound(args.spellId, "info")
-			self:UnregisterUnitEvent("UNIT_POWER_UPDATE", "player", "vehicle")
 		end
-		self:CustomIcon(rollingRubbishMarker, args.destName)
 	end
 end
 
@@ -365,7 +368,6 @@ function mod:Incinerator(args)
 	self:StopBar(CL.count:format(L.incinerator, incineratorCount))
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.incinerator, incineratorCount)))
 	self:CastBar(args.spellId, 3)
-	self:PlaySound(args.spellId, "alert") -- debuffs
 	incineratorCount = incineratorCount + 1
 
 	local cd
@@ -377,6 +379,7 @@ function mod:Incinerator(args)
 		cd = incineratorCount == 5 and (23.4 + 11.4) or 25.6
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.incinerator, incineratorCount))
+	self:PlaySound(args.spellId, "alert") -- debuffs
 end
 
 function mod:IncinerationApplied(args)
@@ -387,9 +390,9 @@ function mod:IncinerationApplied(args)
 end
 
 function mod:Demolish(args)
-	self:StopBar(CL.count:format(args.spellName, demolishCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, demolishCount))
-	self:PlaySound(args.spellId, "info")
+	local msg = CL.count:format(args.spellName, demolishCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "purple", msg)
 	demolishCount = demolishCount + 1
 
 	local cd
@@ -401,6 +404,7 @@ function mod:Demolish(args)
 		cd = demolishCount == 3 and (42.2 + 18.0) or 51.1
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, demolishCount))
+	self:PlaySound(args.spellId, "info")
 end
 
 function mod:DemolishApplied(args)
@@ -414,13 +418,9 @@ function mod:DemolishApplied(args)
 end
 
 function mod:Meltdown(args)
-	self:StopBar(CL.count:format(args.spellName, meltdownCount))
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, meltdownCount))
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- On you
-	else
-		self:PlaySound(args.spellId, "alert") -- healer
-	end
+	local msg = CL.count:format(args.spellName, meltdownCount)
+	self:StopBar(msg)
+	self:TargetMessage(args.spellId, "purple", args.destName, msg)
 	meltdownCount = meltdownCount + 1
 
 	local cd
@@ -432,6 +432,12 @@ function mod:Meltdown(args)
 		cd = meltdownCount == 3 and (14.5 + 45.7) or 51.1
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, meltdownCount))
+
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm") -- On you
+	else
+		self:PlaySound(args.spellId, "alert") -- healer
+	end
 end
 
 function mod:MessedUp(args)
@@ -442,15 +448,16 @@ function mod:MessedUp(args)
 end
 
 function mod:ScrapRockets(args)
+	-- flag the guid for marking if it wasn't rolled over
+	if mobCollector[args.sourceGUID] == nil then -- We do false checks also
+		mobCollector[args.sourceGUID] = mobMark
+		mobMark = mobMark + 1
+	end
+
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo and ready then
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alarm")
-	end
-	-- flag the guid for marking if it wasn't rolled over
-	if mobCollector[args.sourceGUID] == nil then
-		mobCollector[args.sourceGUID] = mobMark
-		mobMark = mobMark + 1
 	end
 end
 
@@ -467,8 +474,6 @@ end
 function mod:Overdrive(args)
 	self:StopBar(args.spellId)
 	self:SetStage(2)
-	self:Message(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "long") -- flying away
 
 	-- The Overdrive "gap" cds are ((Overdrive _START - last cast) + (next cast - Trash Compactor _SUCCESS))
 	self:PauseBar(464149, CL.count:format(L.incinerator, incineratorCount)) -- Incinerator
@@ -478,6 +483,9 @@ function mod:Overdrive(args)
 	if self:Mythic() then
 		self:PauseBar(1218704, CL.count:format(self:SpellName(1218704), powercoilCount))
 	end
+
+	self:Message(args.spellId, "cyan")
+	self:PlaySound(args.spellId, "long") -- flying away
 end
 
 function mod:OverdriveApplied(args)
@@ -490,8 +498,8 @@ end
 
 function mod:TrashCompactor(args)
 	self:Message(args.spellId, "red", CL.landing)
-	self:PlaySound(args.spellId, "warning") -- watch drop location
 	self:CastBar(args.spellId, 3.75, CL.landing)
+	self:PlaySound(args.spellId, "warning") -- watch drop location
 end
 
 function mod:TrashCompactorSuccess(args)
@@ -532,8 +540,8 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "alarm")
 			self:TargetBar(args.spellId, 10, args.destName)
+			self:PlaySound(args.spellId, "alarm")
 		end
 	end
 
@@ -549,8 +557,8 @@ do
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
 		end
 	end
 end

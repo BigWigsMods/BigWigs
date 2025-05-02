@@ -359,9 +359,9 @@ end
 function mod:ColossalClash()
 	self:StopBar(CL.count:format(CL.full_energy, colossalClashCount))
 	self:Message(465833, "cyan", CL.count:format(CL.full_energy, colossalClashCount))
-	self:PlaySound(465833, "long") -- 20s clash
 	colossalClashCount = colossalClashCount + 1
 	self:Bar(465833, 95, CL.count:format(CL.full_energy, colossalClashCount))
+	self:PlaySound(465833, "long") -- 20s clash
 end
 
 function mod:ColossalClashSuccess(args)
@@ -424,10 +424,6 @@ do
 	local expectedExplosion = 0
 	function mod:Scrapbomb(args)
 		self:StopBar(CL.count:format(CL.bomb, scrapbombCount))
-		if self:IsFlarendoInRange() then
-			self:Message(args.spellId, "orange", CL.count:format(CL.bomb, scrapbombCount))
-			self:PlaySound(args.spellId, "alert") -- soak bombs
-		end
 		scrapbombCount = scrapbombCount + 1
 
 		local cd
@@ -439,6 +435,11 @@ do
 		expectedExplosion = cd + 14 -- storing this so we can correct the bar without jumping total duration around
 		self:Bar(args.spellId, cd, CL.count:format(CL.bomb, scrapbombCount))
 		self:Bar("bomb_explosion", expectedExplosion, CL.count:format(L.bomb_explosion, scrapbombCount), L.bomb_explosion_icon) -- Scrapbomb Explosion
+
+		if self:IsFlarendoInRange() then
+			self:Message(args.spellId, "orange", CL.count:format(CL.bomb, scrapbombCount-1))
+			self:PlaySound(args.spellId, "alert") -- soak bombs
+		end
 	end
 
 	function mod:ScrapbombSpawn() -- When spawned, 10s to explosion
@@ -560,10 +561,6 @@ end
 
 function mod:ThunderdrumSalvo(args)
 	self:StopBar(CL.count:format(L.thunderdrum_salvo, thunderdrumSalvoCount))
-	if self:IsTorqueInRange() then
-		self:Message(args.spellId, "yellow", CL.count:format(L.thunderdrum_salvo, thunderdrumSalvoCount))
-		self:PlaySound(args.spellId, "alarm")
-	end
 	thunderdrumSalvoCount = thunderdrumSalvoCount + 1
 
 	local cd
@@ -573,14 +570,15 @@ function mod:ThunderdrumSalvo(args)
 		cd = thunderdrumSalvoCount % 2 == 1 and 65.0 or 30.0 -- 10.0, 30.0
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.thunderdrum_salvo, thunderdrumSalvoCount))
+
+	if self:IsTorqueInRange() then
+		self:Message(args.spellId, "yellow", CL.count:format(L.thunderdrum_salvo, thunderdrumSalvoCount-1))
+		self:PlaySound(args.spellId, "alarm")
+	end
 end
 
 function mod:VoltaicImage()
 	self:StopBar(CL.count:format(CL.adds, voltaicImageCount))
-	if self:IsTorqueInRange() then
-		self:Message(1213994, "orange", CL.count:format(CL.adds, voltaicImageCount))
-		self:PlaySound(1213994, "alert")
-	end
 	voltaicImageCount = voltaicImageCount + 1
 
 	local cd
@@ -590,6 +588,11 @@ function mod:VoltaicImage()
 		cd = voltaicImageCount % 2 == 1 and 65.0 or 30.0 -- 30.0, 30.0
 	end
 	self:Bar(1213994, cd, CL.count:format(CL.adds, voltaicImageCount))
+
+	if self:IsTorqueInRange() then
+		self:Message(1213994, "orange", CL.count:format(CL.adds, voltaicImageCount-1))
+		self:PlaySound(1213994, "alert")
+	end
 end
 
 function mod:VoltaicImageFixateApplied(args)
@@ -602,6 +605,16 @@ end
 function mod:LightningBash(args)
 	local msg = CL.count:format(args.spellName, lightningBashCount)
 	self:StopBar(msg)
+	lightningBashCount = lightningBashCount + 1
+
+	local cd
+	if self:Easy() then -- 2 per
+		cd = lightningBashCount % 2 == 1 and 70.0 or 25.0 -- 35.0, 25.0
+	else -- 2 per
+		cd = lightningBashCount % 2 == 1 and 65.0 or 30.0 -- 21.0, 30.0
+	end
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, lightningBashCount))
+
 	if self:IsTorqueInRange() then
 		local unit = self:UnitTokenFromGUID(args.sourceGUID)
 
@@ -620,15 +633,6 @@ function mod:LightningBash(args)
 			self:Message(args.spellId, "purple", msg)
 		end
 	end
-	lightningBashCount = lightningBashCount + 1
-
-	local cd
-	if self:Easy() then -- 2 per
-		cd = lightningBashCount % 2 == 1 and 70.0 or 25.0 -- 35.0, 25.0
-	else -- 2 per
-		cd = lightningBashCount % 2 == 1 and 65.0 or 30.0 -- 21.0, 30.0
-	end
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, lightningBashCount))
 end
 
 do
