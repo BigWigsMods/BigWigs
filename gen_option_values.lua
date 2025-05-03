@@ -1499,7 +1499,7 @@ local function parse(file, relative_path)
 			parse(parseTOC(file), toc_relative_path)
 		elseif file ~= "embeds.xml" then
 			-- unrecognized file name pattern
-			warn("Ignoring file: "..file)
+			warn("    Ignoring file: "..file)
 		end
 	end
 end
