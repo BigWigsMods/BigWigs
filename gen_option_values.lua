@@ -6,6 +6,7 @@ local loadstring = loadstring or load -- 5.2 compat
 local opt = {}
 
 local visited_files = {}
+local file_to_module = {}
 local modules = {}
 local modules_bosses = {}
 local modules_locale = {}
@@ -726,6 +727,11 @@ end
 local function parseLua(file)
 	-- check if this file has already been visited, but don't mark it as visited yet
 	if visit(file, true) then
+		local module_name = file_to_module[file]
+		if module_name then
+			-- if this lua file represents a boss module, track that we visited it again
+			table.insert(modules, module_name)
+		end
 		return
 	end
 
@@ -777,6 +783,7 @@ local function parseLua(file)
 
 	-- `modules` is used output the boss modules in the order they were parsed.
 	table.insert(modules, module_name)
+	file_to_module[file] = module_name
 	modules_locale[module_name] = {}
 
 	-- Split the file into a table
@@ -1469,8 +1476,6 @@ local function parse(file, relative_path)
 		end
 		-- Reset!
 		modules = {}
-		module_colors = {}
-		module_sounds = {}
 		options_path = nil
 		options_file_name = nil
 	elseif file then
