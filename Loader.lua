@@ -658,11 +658,11 @@ local function load(index)
 		local msg = L.addOnLoadFailedWithReason:format(addonName, reason)
 		sysprint(msg)
 		Popup(msg, true)
-	elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX only available in 11.1.5 and 1.15.7 atm
-		local addonName = GetAddOnInfo(index)
-		local msg = L.addOnLoadFailedUnknownError:format(addonName)
-		sysprint(msg)
-		Popup(msg, true)
+	--elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX only available in 11.1.5 and 1.15.7 atm
+	--	local addonName = GetAddOnInfo(index)
+	--	local msg = L.addOnLoadFailedUnknownError:format(addonName)
+	--	sysprint(msg)
+	--	Popup(msg, true)
 	end
 	return loaded
 end
