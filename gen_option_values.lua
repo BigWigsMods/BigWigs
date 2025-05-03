@@ -338,10 +338,7 @@ local function buildOptionString(data, mod, option_type, options_table)
 			data = data .. string.format("\t[%s] = %q,\r\n", key, values[1])
 		else
 			table.sort(values, cmp)
-			for i = 1, #values do
-				values[i] = string.format("%q", values[i])
-			end
-			data = data .. string.format("\t[%s] = {%s},\r\n", key, table.concat(values, ","))
+			data = data .. string.format("\t[%s] = {\"%s\"},\r\n", key, table.concat(values, "\",\""))
 		end
 	end
 	data = data .. "})\r\n"
