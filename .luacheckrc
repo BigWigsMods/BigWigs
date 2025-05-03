@@ -4,6 +4,9 @@ codes = true
 exclude_files = {
 	"**/Libs",
 }
+files["**/API.lua"].ignore = {
+	"113/C_AddOns",
+}
 files["**/Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
 }
