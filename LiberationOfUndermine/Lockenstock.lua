@@ -115,11 +115,12 @@ function mod:GetOptions()
 		{465917, "TANK"}, -- Gravi-Gunk
 
 		-- Stage Two: Research and Destruction
+		{466765, "CASTBAR", "EMPHASIZE"}, -- Beta Launch
 		1218319, -- Voidsplosion
 	},{
 		[1216802] = "mythic",
 		[473276] = -30425, -- Stage 1
-		[1218319] = -30427, -- Stage 2
+		[466765] = -30427, -- Stage 2
 	},{
 		[1216802] = L.polarization_generator,
 		[1217231] = L.foot_blasters,
@@ -131,6 +132,13 @@ function mod:GetOptions()
 		[1216911] = L.posi_polarization,
 		[1216934] = L.nega_polarization,
 	}
+end
+
+function mod:OnRegister()
+	self:SetSpellRename(1217231, L.foot_blasters) -- Foot-Blasters (Mines)
+	self:SetSpellRename(1216509, L.screw_up) -- Screw Up (Drills)
+	self:SetSpellRename(465232, L.sonic_ba_boom) -- Sonic Ba-Boom (Raid Damage)
+	self:SetSpellRename(466765, CL.knockback) -- Beta Launch (Knockback)
 end
 
 function mod:OnBossEnable()
@@ -150,6 +158,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WireTransfer", 1218418)
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "BetaLaunch", 466765)
+	self:Log("SPELL_CAST_SUCCESS", "BetaLaunchSuccess", 466765)
 	self:Log("SPELL_CAST_SUCCESS", "BleedingEdge", 466860)
 	self:Log("SPELL_AURA_APPLIED", "VoidsplosionApplied", 1218319)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidsplosionApplied", 1218319)
@@ -217,7 +226,7 @@ function mod:OnEngage()
 		self:Bar(1216509, timers[1216509][1], CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	end
 	self:Bar(473276, 30.0 + 4.0, CL.count:format(inventions[1][1], activateInventionsCount)) -- Activate Inventions! (bar to when the inventions cast)
-	self:Bar("stages", 121.6, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
+	self:Bar(466765, 121.6, CL.count:format(CL.knockback, betaLaunchCount)) -- Beta Launch
 end
 
 --------------------------------------------------------------------------------
@@ -356,6 +365,8 @@ end
 -- Stage 2
 
 function mod:BetaLaunch(args)
+	voidsplosionCount = 1
+
 	self:StopBar(CL.count:format(CL.stage:format(2), betaLaunchCount)) -- Beta Launch
 	self:StopBar(CL.count:format(self:SpellName(1218418), wireTransferCount)) -- Wire Transfer
 	self:StopBar(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)) -- Sonic Ba-Boom
@@ -366,15 +377,21 @@ function mod:BetaLaunch(args)
 	self:StopBar(CL.count:format(L.screw_up, screwUpCount)) -- Screw Up
 	self:StopBar(CL.count:format(L.polarization_generator, polarizationGeneratorCount)) -- Polarization Generator
 
-	self:SetStage(2)
-	self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), args.spellId)
-	self:PlaySound("stages", "long")
-	self:Bar("stages", 4, CL.knockback, args.spellId)
-	betaLaunchCount = betaLaunchCount + 1
-
-	voidsplosionCount = 1
-
 	self:Bar(1218319, 6.3, CL.count:format(self:SpellName(1218319), voidsplosionCount)) -- Voidsplosion
+	self:CastBar(args.spellId, 4, CL.knockback)
+	self:Message(args.spellId, "red", CL.knockback)
+	self:PlaySound(args.spellId, "warning")
+end
+
+function mod:BetaLaunchSuccess(args)
+	self:SetStage(2)
+	if betaLaunchCount == 1 then
+		self:Message("stages", "cyan", CL.stage:format(2), false)
+	else
+		self:Message("stages", "cyan", CL.count:format(CL.stage:format(2), betaLaunchCount), false)
+	end
+	betaLaunchCount = betaLaunchCount + 1
+	self:PlaySound("stages", "long")
 end
 
 function mod:BleedingEdge(args)
@@ -442,7 +459,7 @@ function mod:UpgradedBloodtechApplied(args)
 	end
 	self:Bar(473276, 30.0, CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount)) -- Activate Inventions!
 	if betaLaunchCount < 3 then
-		self:Bar("stages", self:Mythic() and 121.7 or 120.3, CL.count:format(CL.stage:format(2), betaLaunchCount), 466765) -- Beta Launch
+		self:Bar(466765, self:Mythic() and 121.7 or 120.3, CL.count:format(CL.knockback, betaLaunchCount)) -- Beta Launch
 	elseif betaLaunchCount == 3 then
 		self:Bar(468791, self:Mythic() and 121.7 or 120.3) -- Gigadeath
 	end
