@@ -238,21 +238,21 @@ end
 function mod:ActivateInventions(args)
 	-- self:StopBar(CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount))
 	self:Message(args.spellId, "cyan", CL.count:format(L.activate_inventions:format(inventions[betaLaunchCount][activateInventionsCount]), activateInventionsCount))
-	self:PlaySound(args.spellId, "long")
 	activateInventionsCount = activateInventionsCount + 1
 	if activateInventionsCount < 4 then -- 3 per
 		self:ScheduleTimer("Bar", 4.0, args.spellId, 30, CL.count:format(inventions[betaLaunchCount][activateInventionsCount], activateInventionsCount))
 	end
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:FootBlasters(args)
-	self:StopBar(CL.count:format(L.foot_blasters, footBlasterCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.foot_blasters, footBlasterCount))
-	self:PlaySound(args.spellId, "alert")
+	numMinesExploded = 0
+	local msg = CL.count:format(L.foot_blasters, footBlasterCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	footBlasterCount = footBlasterCount + 1
 	self:Bar(args.spellId, timers[args.spellId][footBlasterCount], CL.count:format(L.foot_blasters, footBlasterCount))
-
-	numMinesExploded = 0
+	self:PlaySound(args.spellId, "alert")
 end
 
 do
@@ -304,15 +304,13 @@ end
 
 function mod:PyroPartyPackApplied(args)
 	local bombDuration = 6
-	self:StopBar(CL.count:format(CL.bomb, pyroPartyPackCount))
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.bomb, pyroPartyPackCount))
+	local msg = CL.count:format(CL.bomb, pyroPartyPackCount)
+	self:StopBar(msg)
+	self:TargetMessage(args.spellId, "purple", args.destName, msg)
 	if self:Healer() then
 		self:Bar(args.spellId, {bombDuration, (timers[args.spellId][pyroPartyPackCount] or bombDuration)}, CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack
 	else
 		self:TargetBar(args.spellId, bombDuration, args.destName, CL.bomb)
-	end
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "warning") -- not great being the same as taunt?
 	end
 	pyroPartyPackCount = pyroPartyPackCount + 1
 	local cd = timers[args.spellId][pyroPartyPackCount]
@@ -320,6 +318,9 @@ function mod:PyroPartyPackApplied(args)
 		self:Bar(args.spellId, cd + bombDuration, CL.count:format(CL.explosion, pyroPartyPackCount)) -- Pyro Party Pack
 	else
 		self:Bar(args.spellId, cd, CL.count:format(CL.bomb, pyroPartyPackCount))
+	end
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning") -- not great being the same as taunt?
 	end
 end
 
@@ -337,29 +338,31 @@ do
 	end
 
 	function mod:ScrewUpApplied(args)
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, L.screw_up_single, true, "Drill") -- Keep the message short
-		end
 		playerList[#playerList+1] = args.destName
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.screw_up, screwUpCount-1))
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, L.screw_up_single, true, "Drill") -- Keep the message short
+			self:PlaySound(args.spellId, "warning")
+		end
 	end
 end
 
 function mod:SonicBaBoom(args)
-	self:StopBar(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount))
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)))
-	self:PlaySound(args.spellId, "alert") -- healer
+	local msg = CL.count:format(L.sonic_ba_boom, sonicBaBoomCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "yellow", CL.casting:format(msg))
 	sonicBaBoomCount = sonicBaBoomCount + 1
 	self:Bar(args.spellId, timers[args.spellId][sonicBaBoomCount], CL.count:format(L.sonic_ba_boom, sonicBaBoomCount))
+	self:PlaySound(args.spellId, "alert") -- healer
 end
 
 function mod:WireTransfer(args)
-	self:StopBar(CL.count:format(args.spellName, wireTransferCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, wireTransferCount))
-	self:PlaySound(args.spellId, "alarm")
+	local msg = CL.count:format(args.spellName, wireTransferCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	wireTransferCount = wireTransferCount + 1
 	self:Bar(args.spellId, timers[args.spellId][wireTransferCount], CL.count:format(args.spellName, wireTransferCount))
+	self:PlaySound(args.spellId, "alarm")
 end
 
 -- Stage 2
@@ -406,13 +409,14 @@ do
 	function mod:VoidsplosionApplied(args)
 		if args.time - prev > 3 then
 			prev = args.time
-			self:StopBar(CL.count:format(args.spellName, voidsplosionCount))
-			self:Message(args.spellId, "orange", CL.count:format(args.spellName, voidsplosionCount))
-			self:PlaySound(args.spellId, "alert") -- healer
+			local msg = CL.count:format(args.spellName, voidsplosionCount)
+			self:StopBar(msg)
+			self:Message(args.spellId, "orange", msg)
 			voidsplosionCount = voidsplosionCount + 1
 			if voidsplosionCount < (self:Easy() and 3 or 5) then
 				self:Bar(args.spellId, 5, CL.count:format(args.spellName, voidsplosionCount)) -- Voidsplosion
 			end
+			self:PlaySound(args.spellId, "alert") -- healer
 		end
 	end
 end
@@ -430,8 +434,6 @@ function mod:UpgradedBloodtechApplied(args)
 		return
 	end
 	self:SetStage(1)
-	self:Message("stages", "cyan", CL.stage:format(1), false)
-	self:PlaySound("stages", "long")
 
 	activateInventionsCount = 1
 	footBlasterCount = 1
@@ -463,12 +465,15 @@ function mod:UpgradedBloodtechApplied(args)
 	elseif betaLaunchCount == 3 then
 		self:Bar(468791, self:Mythic() and 121.7 or 120.3) -- Gigadeath
 	end
+
+	self:Message("stages", "cyan", CL.stage:format(1), false)
+	self:PlaySound("stages", "long")
 end
 
 function mod:Gigadeath(args)
 	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alarm") -- enrage
 	self:CastBar(args.spellId, 4)
+	self:PlaySound(args.spellId, "alarm") -- enrage
 end
 
 do
@@ -476,8 +481,8 @@ do
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
 		end
 	end
 end
@@ -514,17 +519,17 @@ end
 
 function mod:PosiPolarizationApplied(args)
 	if self:Me(args.destGUID) then
+		myCharge = "blue"
 		self:PersonalMessage(args.spellId, nil, _G.LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(L.posi_polarization))
 		self:PlaySound(args.spellId, "info")
-		myCharge = "blue"
 	end
 end
 
 function mod:NegaPolarizationApplied(args)
 	if self:Me(args.destGUID) then
+		myCharge = "red"
 		self:PersonalMessage(args.spellId, nil, _G.DULL_RED_FONT_COLOR:WrapTextInColorCode(L.nega_polarization))
 		self:PlaySound(args.spellId, "info")
-		myCharge = "red"
 	end
 end
 
