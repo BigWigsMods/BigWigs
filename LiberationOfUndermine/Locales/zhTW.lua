@@ -50,8 +50,8 @@ if L then
 	L.rocket_barrage = "火箭" --火箭彈幕
 	L.mega_magnetize = "磁鐵" --超能磁化
 	L.jumbo_void_beam = "虛無光束" --就不改了
-	--L.void_barrage = "Balls" --虛無彈幕
-	--L.everything = "Everything"
+	L.void_barrage = "黑球" --虛無彈幕
+	L.everything = "組合技" -- 所有發明物/合擊
 
 	L.under_you_comment = "在你腳下" -- Implies this setting is for the damage from the ground effect under you
 end
