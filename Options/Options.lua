@@ -369,12 +369,11 @@ local function masterOptionToggled(self, event, value)
 	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
-	if type(key) == "string" then
-		if key:find("custom_select", nil, true) then
-			module.db.profile[key] = value or 1
-		elseif key:find("custom_", nil, true) then
-			module.db.profile[key] = value or false
-		end
+	local keyIsString = type(key) == "string"
+	if keyIsString and key:find("custom_select", nil, true) then
+		module.db.profile[key] = value or 1
+	elseif keyIsString and key:find("custom_", nil, true) then
+		module.db.profile[key] = value or false
 	else
 		if value then
 			-- If an option is disabled by default using the "OFF" toggle flag, then when we turn it on, we want all the default flags on also
