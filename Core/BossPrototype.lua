@@ -53,6 +53,7 @@ local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
 local myName = loader.UnitName("player")
 local myNameWithColor
+local myNameRenamed
 local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
@@ -104,6 +105,8 @@ local updateData = function(module)
 	else
 		englishSayMessages = false
 	end
+
+	myNameRenamed = BigWigsAPI.GetPlayerRename(myName) or myName
 
 	if LibSpec then
 		local _, role, position = LibSpec:MySpecialization()
@@ -1553,7 +1556,7 @@ do
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
 			if key then
-				local shortKey = gsub(key, "%-.+", "*") -- Replace server names with *
+				local shortKey = BigWigsAPI.GetPlayerRename(key) or gsub(key, "%-.+", "*") -- Replace server names with *
 				local _, class = UnitClass(key)
 				if class then
 					local newKey = hexColors[class] .. shortKey .. "|r"
@@ -1600,11 +1603,11 @@ do
 			if type(player) == "table" then
 				local tmp = {}
 				for i = 1, #player do
-					tmp[i] = gsub(player[i], "%-.+", "*") -- Replace server names with *
+					tmp[i] = BigWigsAPI.GetPlayerRename(player[i]) or gsub(player[i], "%-.+", "*") -- Replace server names with *
 				end
 				return tmp
 			else
-				return gsub(player, "%-.+", "*") -- Replace server names with *
+				return BigWigsAPI.GetPlayerRename(player) or gsub(player, "%-.+", "*") -- Replace server names with *
 			end
 		end
 	end
@@ -3441,9 +3444,9 @@ do
 			SendChatMessage(englishSayMessages and englishText or msg, "SAY")
 		else
 			if englishSayMessages and englishText then
-				SendChatMessage(format(on, englishText, myName), "SAY")
+				SendChatMessage(format(on, englishText, myNameRenamed), "SAY")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "SAY")
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myNameRenamed), "SAY")
 			end
 		end
 		self:Debug(":Say", key, msg, directPrint, englishText)
@@ -3460,9 +3463,9 @@ do
 			SendChatMessage(englishSayMessages and englishText or msg, "YELL")
 		else
 			if englishSayMessages and englishText then
-				SendChatMessage(format(on, englishText, myName), "YELL")
+				SendChatMessage(format(on, englishText, myNameRenamed), "YELL")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "YELL")
+				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myNameRenamed), "YELL")
 			end
 		end
 		self:Debug(":Yell", key, msg, directPrint, englishText)
