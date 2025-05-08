@@ -154,7 +154,7 @@ do
 	end
 	function API.SetSpellRename(spellId, text)
 		if type(spellId) ~= "number" then error("Invalid spell ID for spell rename.") end
-		if type(text) ~= "string" or #text < 3 then error("Invalid spell text for spell rename.") end
+		if text and type(text) ~= "string" then error("Invalid spell text for spell rename.") end
 		tbl[spellId] = text
 	end
 end
