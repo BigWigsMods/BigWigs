@@ -98,7 +98,6 @@ end
 -- Locals
 --
 
-local tooltipFunctions = {}
 local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTimer = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTimer
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
@@ -763,23 +762,13 @@ function dataBroker.OnTooltipShow(tt)
 			end
 		end
 	end
-	for i = 1, #tooltipFunctions do
-		tooltipFunctions[i](tt)
-	end
-	tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, true)
-end
-
------------------------------------------------------------------------
--- Version listing functions
---
-
-tooltipFunctions[#tooltipFunctions+1] = function(tt)
 	for _, version in next, usersVersion do
 		if version < highestFoundVersion then
 			tt:AddLine(L.oldVersionsInGroup, 1, 1, 1, true)
 			break
 		end
 	end
+	tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, true)
 end
 
 -----------------------------------------------------------------------
@@ -2014,15 +2003,6 @@ public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 -----------------------------------------------------------------------
 -- API
 --
-
-function public:RegisterTooltipInfo(func)
-	for i = 1, #tooltipFunctions do
-		if tooltipFunctions[i] == func then
-			error(("The function %q has already been registered."):format(func))
-		end
-	end
-	tooltipFunctions[#tooltipFunctions+1] = func
-end
 
 function public:GetReleaseString()
 	return BIGWIGS_RELEASE_STRING
