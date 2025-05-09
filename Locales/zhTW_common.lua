@@ -67,15 +67,15 @@ L.you_die = "你將死亡" -- You will die
 L.you_die_sec = "你將在%d秒後死亡" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "下個技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s即將著陸" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing 即將著陸、正在降落
---L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "著陸" -- Used when a flying NPC/dragon/boss is landing，沿用上一條
 L.flying_available = "可以飛行"
 --L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
---L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
---L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
---L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
---L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.keep_moving = "保持移動" -- An ability that forces you to keep moving or you will take damage
+L.stand_still = "站住別動" -- An ability that forces you to stand still or you will take damage 站住別動、禁止移動、不要移動，或乾脆兩個字，別動
+L.safe_to_stop = "停止移動" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "可以移動" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.safe = "安全" -- You are safe from a bad ability
+L.unsafe = "危險" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "增援出現" -- singular 小怪OR增援，開發者要求用增援
@@ -111,10 +111,10 @@ L.crenna = "『大地之女』克蘭娜" -- AI druid healer (NPC 209072)
 L.crenna_short = "*克蘭娜"
 L.austin = "奧斯汀‧哈克斯沃" -- AI hunter dps (NPC 209065)
 L.austin_short = "*奧斯汀"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "督軍布瑞卡‧嚴斧" -- AI warrior tank (NPC 215517)
+L.breka_short = "*布瑞卡"
+L.henry = "亨利‧蓋瑞克" -- AI priest healer (NPC 215011)
+L.henry_short = "*亨利"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -175,9 +175,9 @@ L.west = "西方"
 L.north_west = "西北"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "小"
+L.medium = "中"
+L.large = "大"
 
 -- Schools
 L.fire = "火焰"
@@ -243,20 +243,20 @@ L.spell_reflection = "法術反射" -- Any ability that reflects spells
 L.rooted = "被定身" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "球" -- A ball, like a football, basketball, etc 球，可能還有寶珠
+L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "躲開" -- 躲開/躲避/閃避/躲圈? When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "狂怒" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "恐懼" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "鎖定" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "鎖定" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.group_damage = "團隊傷害" -- Any ability that causes damage to every player in the 5 player group 五人本中每個人都會受到的傷害，那還是團隊傷害啊？
 L.health_drain = "吸血" -- Any ability that drains health from the player 吸血類的技能，就是術士的吸取生命那種直接吸血的法術
 L.parasite = "寄生" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "寄生" -- Plural of L.parasite
 L.pull_in = "拉扯" -- An ability that pulls you in towards the boss against your will
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "團隊傷害" -- Any ability that causes damage to every player in the raid 團隊傷害
 L.smash = "重擊" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "分攤" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "分攤" -- Plural of L.soak
@@ -264,9 +264,9 @@ L.spike = "尖刺" -- Short for any ability with the name "spike" in it e.g. "Gl
 L.spikes = "尖刺" -- Plural of L.spike
 L.spread = "分散" -- An ability that forces you to spread out away from other players, or you might damage them
 L.tank_combo = "坦克連擊" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
---L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
---L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+L.tank_debuff = "坦克減益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "坦克分攤" -- Similar to L.soak but only applies to tanks
 L.tentacle = "觸手" -- Used for bosses that summon tentacles
 L.tentacles = "觸手" -- Plural of L.tentacle
 L.waves = "波浪" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean

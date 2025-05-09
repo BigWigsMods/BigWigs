@@ -10,7 +10,7 @@ if L then
 	L.eruption_stomp = "踐踏" -- Short for Eruption Stomp
 	L.thunderdrum_salvo = "電圈" -- Short for Thunderdrum Salvo
 
-	--L.static_charge_high = "%d - You're moving too much"
+	L.static_charge_high = "%d - 移動過於頻繁"
 end
 
 L = BigWigs:NewBossLocale("Rik Reverb", "zhTW")
@@ -50,10 +50,10 @@ if L then
 	L.rocket_barrage = "火箭" --火箭彈幕
 	L.mega_magnetize = "磁鐵" --超能磁化
 	L.jumbo_void_beam = "虛無光束" --就不改了
-	--L.void_barrage = "Balls" --虛無彈幕
-	--L.everything = "Everything"
+	L.void_barrage = "黑球" --虛無彈幕
+	L.everything = "組合技" -- 所有發明物/合擊
 
-	--L.under_you_comment = "Under You" -- Implies this setting is for the damage from the ground effect under you
+	L.under_you_comment = "在你腳下" -- Implies this setting is for the damage from the ground effect under you
 end
 
 L = BigWigs:NewBossLocale("The One-Armed Bandit", "zhTW")
@@ -67,7 +67,7 @@ if L then
 	L.flame = "烈焰"
 	L.coin = "硬幣" -- 應該是獎勵的硬幣
 
-	--L.withering_flames = "Flames" -- Short for Withering Flames
+	L.withering_flames = "烈焰" -- Short for Withering Flames
 
 	L.cheat = "啟動：%s" -- Cheat: Coils, Cheat: Debuffs, Cheat: Raid Damage, Cheat: Final Cast
 	L.linked_machines = "線圈"
