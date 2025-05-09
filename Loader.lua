@@ -2130,11 +2130,3 @@ end
 --
 
 BigWigsLoader = setmetatable({}, { __index = public, __newindex = function() end, __metatable = false })
-
--- XXX Temp locale compat
-local tempLocale = BigWigsAPI:NewLocale("BigWigs: Plugins", myLocale)
-if tempLocale then
-	for k,v in next, L do
-		tempLocale[k] = v
-	end
-end
