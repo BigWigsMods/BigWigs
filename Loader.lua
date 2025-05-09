@@ -21,7 +21,7 @@ local CONTENT_PACK_VERSIONS = {
 	["BigWigs_Cataclysm"] = {11, 1, 5},
 	["BigWigs_MistsOfPandaria"] = {11, 1, 0},
 }
-local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING
+local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
 local BIGWIGS_GUILD_VERSION = 0
@@ -85,11 +85,9 @@ do
 		releaseString = L.guildRelease:format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION)
 		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
-		BIGWIGS_VERSION_STRING = ("%d/%d-%s"):format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION, myGitHash)
 	else
 		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, 0, "")
 		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, 0, "")
-		BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
 	end
 
 	BIGWIGS_RELEASE_STRING = releaseString
@@ -2028,10 +2026,6 @@ end
 
 function public:GetReleaseString()
 	return BIGWIGS_RELEASE_STRING
-end
-
-function public:GetVersionString()
-	return BIGWIGS_VERSION_STRING
 end
 
 function public:GetZoneMenus()
