@@ -265,6 +265,7 @@ L.soaks = "Соки" -- Plural of L.soak
 L.spike = "Шип" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Шипы" -- Plural of L.spike
 L.spread = "Спредай" -- An ability that forces you to spread out away from other players, or you might damage them
+--L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Танк Дебафф" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Танк Фронтал" -- Similar to L.frontal_cone but only applies to tanks

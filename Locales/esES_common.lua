@@ -265,6 +265,7 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Púas" -- Plural of L.spike
 L.spread = "Sepárate" -- An ability that forces you to spread out away from other players, or you might damage them
+--L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 --L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 --L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
