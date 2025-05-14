@@ -28,6 +28,7 @@ local difficultyTable = {
 	[148] = "normal", -- 20 Player (AQ20/ZG)
 	[175] = "N10", -- 10 Player (Ulduar 10 & Karazhan)
 	[176] = "N25", -- 25 Player (Ulduar 25 & TBC raids)
+	[185] = "SOD", -- 20 Player (AQ20 - Classic Season of Discovery)
 	[186] = "SOD", -- 40 Player (Onyxia & BWL - Classic Season of Discovery)
 	[198] = "SOD", -- Normal (10 player Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "SOD", -- Normal (20 player Sunken Temple - Classic Season of Discovery)
@@ -48,7 +49,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-11.0.2
+11.1.5
 1. Normal
 2. Heroic
 3. 10 Player
@@ -96,8 +97,31 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 208. Delves
 216. Quest
 220. Story
+230. Heroic
+232. Event
 
-4.4.0
+5.5.0
+1. Normal
+2. Heroic
+3. 10 Player
+4. 25 Player
+5. 10 Player (Heroic)
+6. 25 Player (Heroic)
+7. Looking For Raid
+8. Challenge Mode
+9. 40 Player
+11. Heroic Scenario
+12. Normal Scenario
+14. Flexible
+148. 20 Player
+173. Normal
+174. Heroic
+175. 10 Player
+176. 25 Player
+193. 10 Player (Heroic)
+194. 25 Player (Heroic)
+
+4.4.2
 1. Normal
 2. Heroic
 3. 10 Player
@@ -113,7 +137,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
 
-1.15.4
+1.15.7
 1. Normal
 9. 40 Player
 148. 20 Player
