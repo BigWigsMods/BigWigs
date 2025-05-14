@@ -440,6 +440,7 @@ do
 		end
 	end
 
+	local L = BigWigsAPI:GetLocale("BigWigs")
 	local pluginMeta = { __index = pluginPrototype, __metatable = false }
 	function core:NewPlugin(moduleName, globalFuncs)
 		if plugins[moduleName] then
@@ -463,7 +464,7 @@ do
 			plugins[moduleName] = m
 			initModules[#initModules+1] = m
 
-			return m, CL
+			return m, L
 		end
 	end
 end

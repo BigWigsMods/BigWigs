@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Nameplates")
+local plugin, L = BigWigs:NewPlugin("Nameplates")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.nameplates
 
 local db = nil

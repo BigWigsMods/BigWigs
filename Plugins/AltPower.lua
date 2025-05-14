@@ -4,14 +4,13 @@
 
 if BigWigsLoader.isVanilla then return end
 
-local plugin = BigWigs:NewPlugin("AltPower")
+local plugin, L = BigWigs:NewPlugin("AltPower")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 plugin.displayName = L.altPowerTitle

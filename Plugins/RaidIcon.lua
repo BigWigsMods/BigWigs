@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Raid Icons")
+local plugin, L = BigWigs:NewPlugin("Raid Icons")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -12,7 +12,6 @@ if not plugin then return end
 local lastplayer = {}
 local SetRaidTarget = BigWigsLoader.SetRaidTarget
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 local icons = {
 	RAID_TARGET_1,
 	RAID_TARGET_2,

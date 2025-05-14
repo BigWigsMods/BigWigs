@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Bars")
+local plugin, L = BigWigs:NewPlugin("Bars")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.bars
 
 local currentBarStyler = nil

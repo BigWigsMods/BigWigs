@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Proximity")
+local plugin, L = BigWigs:NewPlugin("Proximity")
 if not plugin then return end
 
 plugin.defaultDB = {
@@ -35,7 +35,6 @@ plugin.defaultDB = {
 
 local db = nil
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.proximity_name
 local L_proximityTitle = L.proximityTitle
 

@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Statistics")
+local plugin, L = BigWigs:NewPlugin("Statistics")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}

@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("AutoReply")
+local plugin, L = BigWigs:NewPlugin("AutoReply")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -22,7 +22,6 @@ plugin.defaultDB = {
 --
 
 local Ambiguate, SendChatMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, GetTime
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil

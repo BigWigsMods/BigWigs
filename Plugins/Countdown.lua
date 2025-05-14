@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Countdown")
+local plugin, L = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
 local voiceMap = {
@@ -33,7 +33,6 @@ end
 local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 local BigWigsAPI = BigWigsAPI
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.countdown
 
 local countdownAnchor = nil

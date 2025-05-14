@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Victory")
+local plugin, L = BigWigs:NewPlugin("Victory")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 

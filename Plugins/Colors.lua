@@ -2,15 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Colors", {
+local plugin, L = BigWigs:NewPlugin("Colors", {
 	"db",
 	"SetColorOptions",
 	"GetColorTable",
 	"GetColor",
 })
 if not plugin then return end
-
-local L = BigWigsAPI:GetLocale("BigWigs")
 
 --------------------------------------------------------------------------------
 -- Options

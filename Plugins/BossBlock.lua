@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("BossBlock")
+local plugin, L = BigWigs:NewPlugin("BossBlock")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -38,7 +38,6 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo

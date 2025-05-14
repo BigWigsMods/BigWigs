@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Pull")
+local plugin, L = BigWigs:NewPlugin("Pull")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local DoCountdown = BigWigsLoader.DoCountdown
 local zoneTable = BigWigsLoader.zoneTbl

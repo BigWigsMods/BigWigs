@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Sounds", {
+local plugin, L = BigWigs:NewPlugin("Sounds", {
 	"db",
 	"soundOptions",
 	"SetSoundOptions",
@@ -14,7 +14,6 @@ if not plugin then return end
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil

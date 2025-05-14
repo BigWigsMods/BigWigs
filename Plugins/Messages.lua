@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Messages")
+local plugin, L = BigWigs:NewPlugin("Messages")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -25,7 +25,6 @@ local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
 
 local db = nil
 
-local L = BigWigsAPI:GetLocale("BigWigs")
 plugin.displayName = L.messages
 
 local validFramePoints = {
