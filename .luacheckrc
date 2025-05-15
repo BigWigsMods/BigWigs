@@ -195,6 +195,7 @@ globals = {
 	"tan",
 	"tinsert",
 	"tremove",
+	"tostringall",
 
 	-- framexml
 	"tContains",

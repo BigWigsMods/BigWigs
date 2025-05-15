@@ -672,7 +672,11 @@ boss.NewLocale = boss.GetLocale
 do
 	local SetSpellRename = BigWigsAPI.SetSpellRename
 	function boss:SetSpellRename(spellId, text)
-		SetSpellRename(spellId, text)
+		rawset(spells, spellId, text)
+		-- External API is ment for SPELL_CAST_START/SPELL_CAST_SUCCESS? so need a way to translate locale and ej keys to the cast id
+		if type(spellId) == "number" and spellId > 0 then
+			SetSpellRename(spellId, text)
+		end
 	end
 end
 
@@ -824,7 +828,7 @@ do
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
 						args.spellId, args.spellName, args.spellSchool = spellId, spellName, spellSchool
-						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, amount, amount
+						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, rawget(spells, extraSpellId) or amount, nil
 						self[func](self, args)
 					end
 				end
@@ -837,7 +841,7 @@ do
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-						args.spellId, args.spellName, args.spellSchool = spellId, spellName, spellSchool
+						args.spellId, args.spellName, args.spellSchool = spellId, rawget(spells, spellId) or spellName, spellSchool
 						args.time, args.extraSpellId, args.extraSpellName, args.amount = time, extraSpellId, amount, amount
 						self[func](self, args)
 					end
@@ -1407,6 +1411,22 @@ do
 				end
 			end
 
+			-- rename updates
+			local renameModule = plugins.Rename
+			if renameModule then
+				-- update cleu spells
+				for spellId, key in next, self.renameSpells do
+					self:SetSpellRename(spellId, renameModule:GetName(self, key))
+				end
+				-- update locale string overrides
+				if self.renameStringDefaults then
+					local ML = self:GetLocale()
+					for key, value in next, self.renameStringDefaults do
+						ML[key] = renameModule:GetName(self, key) or value
+					end
+				end
+			end
+
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
 
@@ -1730,8 +1750,16 @@ end
 
 --- Get a localized spell name from an id. Positive ids for spells (C_Spell.GetSpellName) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
 -- @number spellIdOrSectionId The spell id or the journal-based section id (as a negative number)
+-- @bool[opt] noAltName Set to force an API lookup for the name
 -- @return spell name
-function boss:SpellName(spellIdOrSectionId)
+function boss:SpellName(spellIdOrSectionId, noAltName)
+	if noAltName then
+		if spellIdOrSectionId < 0 then
+			local info = C_EncounterJournal_GetSectionInfo(-spellIdOrSectionId)
+			return info and info.title
+		end
+		return GetSpellName(spellIdOrSectionId)
+	end
 	return spells[spellIdOrSectionId]
 end
 
@@ -3444,7 +3472,14 @@ do
 			if englishSayMessages and englishText then
 				SendChatMessage(format(on, englishText, myName), "SAY")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "SAY")
+				-- never use renames for chat messages
+				local text = msg
+				if not text then
+					text = self:SpellName(key, true)
+				elseif type(text) == "number" then
+					text = self:SpellName(text, true)
+				end
+				SendChatMessage(format(L.on, text, myName), "SAY")
 			end
 		end
 		self:Debug(":Say", key, msg, directPrint, englishText)
@@ -3463,7 +3498,14 @@ do
 			if englishSayMessages and englishText then
 				SendChatMessage(format(on, englishText, myName), "YELL")
 			else
-				SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], myName), "YELL")
+				-- never use renames for chat messages
+				local text = msg
+				if not text then
+					text = self:SpellName(key, true)
+				elseif type(text) == "number" then
+					text = self:SpellName(text, true)
+				end
+				SendChatMessage(format(L.on, text, myName), "YELL")
 			end
 		end
 		self:Debug(":Yell", key, msg, directPrint, englishText)

@@ -21,4 +21,6 @@
 <Script file="Victory.lua"/>
 <Script file="Wipe.lua"/>
 
+<Script file="Rename.lua"/>
+
 </Ui>
