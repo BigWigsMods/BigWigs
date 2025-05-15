@@ -45,10 +45,11 @@ L.dead = "사망" -- When a player is dead
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.health = "생명력" -- The health of an NPC
 L.health_percent = "%d%% 생명력" -- "10% Health" The health percentage of an NPC
+L.energy = "기력"
+--L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "문 열림" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "문 열림" -- When a gate is open, usually after a speech from an NPC
 L.threat = "위협 수준"
-L.energy = "기력"
 
 L.remaining = "%d 남음" -- 5 remaining
 L.duration = "%s %s초 남음" -- Spell for 10 seconds

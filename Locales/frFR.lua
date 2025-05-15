@@ -18,6 +18,8 @@ L.adds = "Adds"
 L.adds_desc = "Active les fonctions relatives aux adds qui apparaissent durant le combat de boss."
 L.health = "Vie"
 L.health_desc = "Active les fonctions afin d'afficher diverses informations sur la vie durant le combat de boss."
+L.energy = "Énergie"
+--L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans BigWigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de BigWigs et de le réinstaller complètement."
 

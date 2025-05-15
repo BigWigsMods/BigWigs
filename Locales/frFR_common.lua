@@ -46,10 +46,11 @@ L.dead = "Mort" -- When a player is dead
 L.general = "Général" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.health = "Vie" -- The health of an NPC
 L.health_percent = "%d%% vie" -- "10% Health" The health percentage of an NPC
+L.energy = "Énergie"
+--L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Porte ouverte" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Portail ouvert" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Menace"
-L.energy = "Énergie"
 
 L.remaining = "%d |4restant:restants;" -- 5 remaining
 L.duration = "%s pendant %s sec." -- Spell for 10 seconds

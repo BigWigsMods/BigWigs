@@ -18,6 +18,8 @@ L.adds = "Adds"
 L.adds_desc = "Abilita le varie funzioni relative agli add che usciranno durante il boss."
 L.health = "Salute"
 L.health_desc = "Abilita le funzioni per visualizzare le varie informazioni che riguardano la Salute durante l'incontro col boss"
+L.energy = "Energia"
+--L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 

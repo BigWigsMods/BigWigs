@@ -18,6 +18,8 @@ L.adds = "추가 몹"
 L.adds_desc = "보스 전투 중 소환되는 다양한 추가 몹들과 관련된 기능들을 활성화합니다."
 L.health = "체력"
 L.health_desc = "보스와의 전투 중 다양한 체력 정보를 표시하는 기능을 활성화합니다."
+L.energy = "기력"
+--L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은;는; 이미 BigWigs 내에 모듈로 존재합니다, 하지만 무엇인가 다시 등록하려고 시도했습니다. 이는 일반적으로 몇몇 애드온 업데이터 오류로 인해 애드온 폴더 내에 이 모듈의 사본을 가지고 있다는 것을 의미합니다. 설치된 모든 BigWigs 폴더를 삭제한 후 처음부터 다시 설치하는 것을 권장합니다."
 

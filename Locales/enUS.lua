@@ -17,6 +17,8 @@ L.adds = "Adds"
 L.adds_desc = "Enable functions related to the various adds that will spawn during the boss encounter."
 L.health = "Health"
 L.health_desc = "Enable functions for displaying various health information during the boss encounter."
+L.energy = "Energy"
+L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
 

@@ -161,6 +161,7 @@ local customBossOptions = { -- Adding core generic toggles
 	warmup = {L.warmup, L.warmup_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Warmup"},
 	adds = {L.adds, L.adds_desc, false},
 	health = {L.health, L.health_desc, false},
+	energy = {L.energy, L.energy_desc, false},
 }
 
 local function getIcon(icon, module, option)

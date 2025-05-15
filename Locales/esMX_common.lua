@@ -45,10 +45,11 @@ L.dead = "Muerto" -- When a player is dead
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.health = "Salud" -- The health of an NPC
 L.health_percent = "%d%% Salud" -- "10% Health" The health percentage of an NPC
+L.energy = "Energía"
+--L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Puerta abierta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Amenaza"
-L.energy = "Energía"
 
 L.remaining = "%d faltantes" -- 5 remaining
 L.duration = "%s durante %s seg" -- Spell for 10 seconds

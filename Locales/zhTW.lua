@@ -18,6 +18,8 @@ L.adds = "增援"
 L.adds_desc = "啟用與首領戰鬥中出現的增援相關的各種功能。"
 L.health = "生命值"
 L.health_desc = "顯示與首領戰鬥中相關的生命值資訊。"
+L.energy = "能量"
+--L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已經存在，但該模組仍試圖重新註冊。通常來說，這可能是由於更新失敗導致你的插件資料夾中同時存在兩份相同模組的拷貝。建議刪除所有 BigWigs 資料夾並重新安裝。"
 
