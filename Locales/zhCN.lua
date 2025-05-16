@@ -19,7 +19,7 @@ L.adds_desc = "启用与首领战斗中出现的各种增援相关的功能。"
 L.health = "血量"
 L.health_desc = "启用与首领战斗时显示血量变化信息。"
 L.energy = "能量"
---L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
+L.energy_desc = "启用与首领战斗中各种能量等级信息的功能。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已经存在，但该模块仍试图重新注册。这可能是因为更新失败，导致您的插件文件夹中同时存在两份相同模块的拷贝。建议删除所有 BigWigs 文件夹并重新安装。"
 
