@@ -623,14 +623,14 @@ do
 		end
 	end
 
-	local function EditEmotesOnPTR(event, msg, ...)
+	local function EditEmotesOnPTR(event, msg, playerName, _, ...)
 		msg = "BigWigs PTR [E]: ".. msg
-		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
+		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, playerName, 3, ...) -- We don't need emotes lasting 10 sec, reduce to 3
 	end
 
-	local function EditWhispersOnPTR(event, msg, ...)
+	local function EditWhispersOnPTR(event, msg, playerName, _, ...)
 		msg = "BigWigs PTR [W]: ".. msg
-		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, ...)
+		RaidBossEmoteFrame_OnEvent(RaidBossEmoteFrame, event, msg, playerName, 3, ...)
 	end
 
 	local restoreObjectiveTracker = nil
