@@ -821,15 +821,18 @@ do
 		-- Freehold
 		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
 		-- Operation: Mechagon
-		[132374]=true,[132375]=true,[132376]=true,[132377]=true,[132405]=true,[132385]=true,[132386]=true,
-		[132352]=true,[132353]=true,[132354]=true,[132355]=true,[132380]=true,[132387]=true,[132388]=true,
-		[132389]=true,[132390]=true,[132391]=true,[132392]=true,[132393]=true,
+		[132189]=true,[132190]=true,[132349]=true,[132350]=true,[132351]=true,[132352]=true,[132353]=true,
+		[132354]=true,[132355]=true,[132374]=true,[132375]=true,[132376]=true,[132377]=true,[132380]=true,
+		[132385]=true,[132386]=true,[132387]=true,[132388]=true,[132389]=true,[132390]=true,[132391]=true,
+		[132392]=true,[132393]=true,[132405]=true,
 		-- Siege of Boralus
 		[101137]=true,[102115]=true,[106657]=true,[106663]=true,[106674]=true,[106675]=true,[106676]=true,
 		[106677]=true,[106659]=true,[106660]=true,[106661]=true,[106662]=true,[106664]=true,[106665]=true,
 		[106666]=true,[106667]=true,[106668]=true,[106669]=true,[106670]=true,[106671]=true,[113764]=true,
 		[113765]=true,[113766]=true,[107844]=true,[107845]=true,[107848]=true,[107851]=true,[107852]=true,
 		[107853]=true,[106655]=true,[102055]=true,[103182]=true,[103183]=true,[103184]=true,
+		-- The MOTHERLODE!!
+		[104611]=true,[106390]=true,[106392]=true,
 		-- The Underrot
 		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,[110728]=true,[112208]=true,
 		[106877]=true,[106853]=true,[106855]=true,[106856]=true,[106434]=true,[110781]=true,
@@ -895,7 +898,8 @@ do
 		[250849]=true,[250850]=true,[250845]=true,[250851]=true,[250852]=true,[250853]=true,[250854]=true,[250855]=true,
 		[250856]=true,[250857]=true,[250858]=true,[250860]=true,[250861]=true,[250862]=true,[250863]=true,
 		-- Operation: Floodgate
-		[269139]=true,[269140]=true,[269142]=true,[269143]=true,[269146]=true,[269150]=true,[269152]=true,
+		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269145]=true,[269146]=true,[269150]=true,
+		[269152]=true,
 	}
 
 	local lookup = {
