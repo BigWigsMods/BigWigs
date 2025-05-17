@@ -1285,9 +1285,6 @@ do
 		BigWigs_VaultOfTheIncarnates = "BigWigs_Dragonflight",
 	}
 	local DisableAddOn = C_AddOns.DisableAddOn
-	local broken = {
-		ElvUI_ProjectHopes = true,
-	}
 	local delayedMessages = {}
 	local foundReqAddons = {} -- Deciding whether or not we show a warning for core/options/plugins addons not existing
 	local printMissingExpansionAddon = true
@@ -1358,9 +1355,6 @@ do
 				delayedMessages[#delayedMessages+1] = msg
 				Popup(msg, true)
 			end
-			DisableAddOn(i)
-		end
-		if broken[name] then
 			DisableAddOn(i)
 		end
 
