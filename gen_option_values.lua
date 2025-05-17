@@ -482,7 +482,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 			break
 		end
 		-- if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
-		-- 	-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
+		-- 	-- we don't want to parse headers or notes (to avoid setfenv) so stop here
 		-- 	chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
 		-- 	-- TODO string parse the other tables for duplicates
 		-- 	break
@@ -534,7 +534,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 			chunk_func = f
 		end
 	end
-	local success, toggles, headers, altNames = pcall(chunk_func)
+	local success, toggles, headers, notes = pcall(chunk_func)
 	if not success then
 		return success, toggles
 	end
@@ -567,10 +567,10 @@ local function parseGetOptions(file_name, lines, start, special_options)
 			end
 		end
 	end
-	if altNames then
-		for key in next, altNames do
+	if notes then
+		for key in next, notes do
 			if not options[key] then
-				error(string.format("    %s:%d: Invalid option alt name key %q", file_name, start, tostring(key)))
+				error(string.format("    %s:%d: Invalid option note with key %q", file_name, start, tostring(key)))
 			end
 		end
 	end

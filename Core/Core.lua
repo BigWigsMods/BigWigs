@@ -608,10 +608,10 @@ do
 
 	local function moduleOptions(self)
 		if self.GetOptions then
-			local toggles, headers, altNames = self:GetOptions(CL)
+			local toggles, headers, notes = self:GetOptions(CL) -- XXX stop passing CL at some point
 			if toggles then self.toggleOptions = toggles end
 			if headers then self.optionHeaders = headers end
-			if altNames then self.altNames = altNames end
+			if notes then self.notes = notes end
 			self.GetOptions = nil
 		end
 		setupOptions(self)
