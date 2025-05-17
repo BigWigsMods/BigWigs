@@ -1052,6 +1052,7 @@ function mod:ADDON_LOADED(addon)
 	end
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_FORMED")
+	self:GROUP_FORMED() -- If you're already in a group, the event only fires when logging on, not when reloading UI, so we force a check
 	bwFrame:RegisterEvent("GROUP_LEFT")
 	bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
 	bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
@@ -1185,16 +1186,6 @@ end
 function mod:CANCEL_PLAYER_COUNTDOWN(...)
 	loadAndEnableCore()
 	public:SendMessage("Blizz_StopCountdown", ...)
-end
-
--- We can't do our addon loading in ADDON_LOADED as the target addons may be registering that
--- which would break that event for those addons. Use this event instead.
-function mod:UPDATE_FLOATING_CHAT_WINDOWS()
-	bwFrame:UnregisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
-	self.UPDATE_FLOATING_CHAT_WINDOWS = nil
-
-	self:GROUP_FORMED()
-	self:PLAYER_ENTERING_WORLD()
 end
 
 -- Various temporary printing stuff
@@ -1602,7 +1593,6 @@ bwFrame:SetScript("OnEvent", function(_, event, ...)
 	mod[event](mod, ...)
 end)
 bwFrame:RegisterEvent("ADDON_LOADED")
-bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
