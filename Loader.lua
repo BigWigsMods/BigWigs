@@ -1142,7 +1142,7 @@ function mod:ADDON_LOADED(addon)
 			for k,v in next, BigWigs3DB.namespaces do
 				if not next(v) then
 					toDelete[k] = true
-				elseif strfind(k, " Trash", nil, true) and public:GetAddOnState("QuaziiUI") ~= "MISSING" then
+				elseif (strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true)) and (public:GetAddOnState("QuaziiUI") ~= "MISSING" or public:GetAddOnState("ElvUI_ProjectHopes") ~= "MISSING") then
 					toDelete[k] = true
 				end
 			end
@@ -1293,6 +1293,10 @@ do
 		BigWigs_DragonIsles = "BigWigs_Dragonflight",
 		BigWigs_VaultOfTheIncarnates = "BigWigs_Dragonflight",
 	}
+	local DisableAddOn = C_AddOns.DisableAddOn
+	local broken = {
+		ElvUI_ProjectHopes = true,
+	}
 	local delayedMessages = {}
 	local foundReqAddons = {} -- Deciding whether or not we show a warning for core/options/plugins addons not existing
 	local printMissingExpansionAddon = true
@@ -1363,6 +1367,10 @@ do
 				delayedMessages[#delayedMessages+1] = msg
 				Popup(msg, true)
 			end
+			DisableAddOn(i)
+		end
+		if broken[name] then
+			DisableAddOn(i)
 		end
 
 		if reqFuncAddons[name] then
