@@ -603,6 +603,15 @@ do
 				end
 			end
 			module.db = core.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
+			local db = module.db.profile
+			for k, v in next, db do -- Option validation
+				local defaultType = type(module.toggleDefaults[k])
+				if defaultType == "nil" then
+					db[k] = nil
+				elseif type(v) ~= defaultType then
+					db[k] = module.toggleDefaults[k]
+				end
+			end
 		end
 	end
 
