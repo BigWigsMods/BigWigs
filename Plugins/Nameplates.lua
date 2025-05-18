@@ -31,15 +31,50 @@ local validGrowDirections = {
 	DOWN = L.DOWN,
 }
 local inverseAnchorPoint = {
-	TOPLEFT = "BOTTOMRIGHT",
-	TOPRIGHT = "BOTTOMLEFT",
-	BOTTOMLEFT = "TOPRIGHT",
-	BOTTOMRIGHT = "TOPLEFT",
-	TOP = "BOTTOM",
-	BOTTOM = "TOP",
-	LEFT = "RIGHT",
-	RIGHT = "LEFT",
-	CENTER = "CENTER",
+	LEFT = {
+		TOPLEFT = "BOTTOMRIGHT",
+		TOPRIGHT = "BOTTOMRIGHT",
+		BOTTOMLEFT = "TOPRIGHT",
+		BOTTOMRIGHT = "TOPRIGHT",
+		TOP = "BOTTOM",
+		BOTTOM = "TOP",
+		LEFT = "RIGHT",
+		RIGHT = "RIGHT",
+		CENTER = "CENTER",
+	},
+	RIGHT = {
+		TOPLEFT = "BOTTOMLEFT",
+		TOPRIGHT = "BOTTOMLEFT",
+		BOTTOMLEFT = "TOPLEFT",
+		BOTTOMRIGHT = "TOPLEFT",
+		TOP = "BOTTOM",
+		BOTTOM = "TOP",
+		LEFT = "LEFT",
+		RIGHT = "LEFT",
+		CENTER = "CENTER",
+	},
+	UP = {
+		TOPLEFT = "BOTTOMRIGHT",
+		TOPRIGHT = "BOTTOMLEFT",
+		BOTTOMLEFT = "BOTTOMRIGHT",
+		BOTTOMRIGHT = "BOTTOMLEFT",
+		TOP = "BOTTOM",
+		BOTTOM = "BOTTOM",
+		LEFT = "RIGHT",
+		RIGHT = "LEFT",
+		CENTER = "CENTER",
+	},
+	DOWN = {
+		TOPLEFT = "TOPRIGHT",
+		TOPRIGHT = "TOPLEFT",
+		BOTTOMLEFT = "TOPRIGHT",
+		BOTTOMRIGHT = "TOPLEFT",
+		TOP = "TOP",
+		BOTTOM = "TOP",
+		LEFT = "RIGHT",
+		RIGHT = "LEFT",
+		CENTER = "CENTER",
+	},
 }
 local glowValues = {
 	pixel = L.pixelGlow,
@@ -432,7 +467,9 @@ local function getIconFrame()
 	else
 		iconFrame = CreateFrame("Frame", nil, UIParent)
 		iconFrame:SetPoint("CENTER")
-		iconFrame:SetIgnoreParentScale(true)
+		if not BigWigsLoader.isNext then -- XXX change for 11.1.7, oh boy
+			iconFrame:SetIgnoreParentScale(true)
+		end
 		iconFrame:SetFrameStrata("MEDIUM")
 		iconFrame:SetFixedFrameStrata(true)
 		iconFrame:SetFrameLevel(5500)
@@ -1373,7 +1410,7 @@ do
 					local offsetY = db.iconOffsetY
 					local offsetX = db.iconOffsetX
 					local growDirection = db.iconGrowDirection
-					local iconPoint = inverseAnchorPoint[db.iconGrowDirectionStart]
+					local iconPoint = inverseAnchorPoint[db.iconGrowDirection][db.iconGrowDirectionStart]
 					local nameplatePoint = db.iconGrowDirectionStart
 					for i, key in ipairs(sorted) do
 						local icon = unitIcons[key].nameplateFrame
@@ -1414,7 +1451,7 @@ do
 					local offsetY = db.textOffsetY
 					local offsetX = db.textOffsetX
 					local growDirection = db.textGrowDirection
-					local textPoint = inverseAnchorPoint[db.textGrowDirectionStart]
+					local textPoint = inverseAnchorPoint[db.textGrowDirection][db.textGrowDirectionStart]
 					local nameplatePoint = db.textGrowDirectionStart
 					for i, key in ipairs(sorted) do
 						local text = unitTexts[key].nameplateFrame
