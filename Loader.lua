@@ -14,12 +14,12 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 387
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 1, 45},
+	["LittleWigs"] = {11, 1, 46},
 	["BigWigs_Classic"] = {11, 1, 49},
 	["BigWigs_BurningCrusade"] = {11, 1, 2},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 4},
 	["BigWigs_Cataclysm"] = {11, 1, 5},
-	["BigWigs_MistsOfPandaria"] = {11, 1, 1},
+	["BigWigs_MistsOfPandaria"] = {11, 1, 2},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
