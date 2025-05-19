@@ -650,7 +650,7 @@ local function parseLocale(file)
 			-- standard parsing for single-locale files
 			module_name, locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
 			if not module_name then
-				module_name, locale = line:match("L = BigWigsAPI:NewLocale%(\"(.-)\", \"(.-)\"%)")
+				module_name, locale = line:match("L =.*API:NewLocale%(\"(.-)\", \"(.-)\"%)")
 			end
 		end
 
@@ -753,7 +753,7 @@ local function parseLua(file)
 	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
 	if not module_name then
 		-- redirect any Locale files which are loaded from toc, modules.xml, etc
-		if data:match("L = BigWigsAPI:NewLocale") or data:match("L = BigWigs:NewBossLocale") then
+		if data:match("L =.*API:NewLocale") or data:match("L = BigWigs:NewBossLocale") then
 			parseLocale(file)
 		else
 			-- mark this non-boss, non-locale lua file as visited
