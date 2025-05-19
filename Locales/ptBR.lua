@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
 -- Core.lua

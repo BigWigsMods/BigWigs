@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "enUS")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "enUS")
 
 L[2138] = { title = "Shield of the Perfidious", description = "When Commander Springvale has three charges of Unholy Power, he consumes the charges and unleashes the power from his shield. Shield of the Perfidious deals 17 Shadow damage every 0.5 seconds in a narrow 25 degree cone in front of Springvale for 3 seconds. In Heroic Difficulty, the cone expands to 150 degrees.", abilityIcon = 132390 }
 L[4906] = { title = "Ferra", description = "", abilityIcon = nil }

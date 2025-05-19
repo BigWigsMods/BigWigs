@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "ptBR")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "ptBR")
 if not L then return end
 
 L[2138] = { title = "Escudo do Pérfido", description = "Quando o Comandante Floraval acumula três cargas de Poder Profano, ele consome as cargas e libera o poder do escudo dele. O Escudo do Pérfido causa 17 de dano de Sombra a cada 0.5 s em um cone estreito de 25 graus à frente dele por 3 segundos. No modo Heroico, o cone se expande para 150 graus.", abilityIcon = 132390 }

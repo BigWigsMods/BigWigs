@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "deDE")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "deDE")
 if not L then return end
 
 L[2138] = { title = "Schild des Hinterhältigen", description = "Wenn Kommandant Grüntal drei Aufladungen Unheilige Kraft hat, verbraucht er diese und entfesselt ihre Macht durch seinen Schild. 'Schild des Hinterhältigen' verursacht in einem engen, frontalen Kegel (25°) 3 sekunden lang alle 0.5 Sek. 17 Schattenschaden. [Heroisch] Die Größe des Schadenskegels ist auf 150° erweitert.", abilityIcon = 132390 }

@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Common", "zhTW")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Common", "zhTW")
 if not L then return end
 
 -- Prototype.lua common words

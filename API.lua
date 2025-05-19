@@ -1,5 +1,10 @@
-
+local addonTbl
+do
+	local _
+	_, addonTbl = ...
+end
 local API = {}
+addonTbl.API = API
 local type, next, error = type, next, error
 
 --------------------------------------------------------------------------------
@@ -127,7 +132,6 @@ end
 --
 
 do
-	local _, tbl = ...
 	-- A custom profile name and callback function is completely optional
 	-- When specified, a callback function will be called with a boolean as the first arg. True if the user accepted, false otherwise
 	local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
@@ -137,7 +141,7 @@ do
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
-		tbl.LoadCoreAndOptions()
+		addonTbl.LoadCoreAndOptions()
 		BigWigsOptions:SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	end
 end
@@ -164,14 +168,13 @@ end
 --
 
 do
-	local _, tbl = ...
 	-- Returns the BigWigs version as a number
 	function API.GetVersion()
-		return tbl.version, tbl.guildVersion
+		return addonTbl.version, addonTbl.guildVersion
 	end
 	-- Returns the BigWigs version hash from Git as a string
 	function API.GetVersionHash()
-		return tbl.versionHash
+		return addonTbl.versionHash
 	end
 end
 

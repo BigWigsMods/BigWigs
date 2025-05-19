@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "zhCN")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "zhCN")
 if not L then return end
 
 L[2138] = { title = "不忠之盾", description = "当指挥官斯普林瓦尔获得三层邪恶能量后，他会消耗它们，从盾中释放这股力量。不忠之盾每0.5秒对指挥官斯普林瓦尔正前方25度角范围内的敌人造成17点暗影伤害，持续3秒。 在英雄难度下，攻击角度扩大至150度。", abilityIcon = 132390 }

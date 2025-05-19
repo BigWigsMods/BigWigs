@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "zhTW")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "zhTW")
 if not L then return end
 
 L[2138] = { title = "背信之盾", description = "當指揮官斯普林瓦爾累積三道穢邪之力時，他能消耗這股力量並解放盾牌的威力。背信之盾對斯普林瓦爾前方25度狹窄錐形範圍內的敵人造成每0.5秒17點的暗影傷害，持續3秒。 在英雄難度中，錐形範圍擴張為150度角。", abilityIcon = 132390 }

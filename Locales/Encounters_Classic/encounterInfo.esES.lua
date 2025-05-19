@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "esES")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "esES")
 if not L then return end
 
 L[2138] = { title = "Escudo del pérfido", description = "Cuando el comandante Vallefont tiene tres cargas de Poder profano, las consume y libera el poder de su escudo. Escudo del pérfido inflige 17 p. de daño de las Sombras cada 0.5 s en un cono reducido de 25 grados al frente de Vallefont durante 3 segundos. En dificultad heroica, el cono se amplía a 150 grados.", abilityIcon = 132390 }

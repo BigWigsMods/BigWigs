@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Common", "enUS")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Common", "enUS")
 
 -- Prototype.lua common words
 L.you = "%s on YOU"

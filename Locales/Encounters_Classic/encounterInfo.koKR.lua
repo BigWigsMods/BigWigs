@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "koKR")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "koKR")
 if not L then return end
 
 L[2138] = { title = "교활의 방패", description = "사령관 스프링베일은 부정의 힘 효과 세 개를 모으면 이를 소비해 방패에서 에너지를 발산합니다. 교활의 방패가 시전되면 스프링베일 전방 25도 범위의 플레이어는 3 초 동안 0.5초마다 17의 암흑 피해를 입습니다. 영웅 난이도에서는 피해를 입는 범위가 전방 150도로 증가합니다.", abilityIcon = 132390 }

@@ -1,5 +1,5 @@
 
-local L = BigWigsAPI:GetLocale("BigWigs")
+local L
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
@@ -30,6 +30,7 @@ local guildDisableContentWarnings = false
 
 do
 	local _, tbl = ...
+	L = tbl.API:GetLocale("BigWigs")
 	tbl.loaderPublic = public
 	tbl.loaderPrivate = mod
 	tbl.version = BIGWIGS_VERSION

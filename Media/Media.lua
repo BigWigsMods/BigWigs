@@ -1,5 +1,5 @@
-
-local L = BigWigsAPI:GetLocale("BigWigs")
+local _, addonTbl = ...
+local L = addonTbl.API:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 
 -- Bar Textures

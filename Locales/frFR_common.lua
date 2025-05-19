@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Common", "frFR")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Common", "frFR")
 if not L then return end
 local female = UnitSex("player") == 3
 

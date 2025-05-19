@@ -1,6 +1,6 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "koKR")
-if not L then return end
 local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounters", "koKR")
+if not L then return end
 local isCata = addonTbl.isCata
 
 L[186] = "아킬존"

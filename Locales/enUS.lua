@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs", "enUS")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs", "enUS")
 
 -- Core.lua
 L.berserk = "Berserk"

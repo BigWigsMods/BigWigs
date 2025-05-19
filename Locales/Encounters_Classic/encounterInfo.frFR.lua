@@ -1,4 +1,5 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Encounter Info", "frFR")
+local _, addonTbl = ...
+local L = addonTbl.API:NewLocale("BigWigs: Encounter Info", "frFR")
 if not L then return end
 
 L[2138] = { title = "Bouclier du perfide", description = "Quand le commandant Printeval dispose de trois charges de Puissance impie, il les dépense et libère le pouvoir de son bouclier. Le Bouclier du perfide inflige 17 points de dégâts d'Ombre toutes les 0.5 s dans un cône de 25 degrés d’amplitude devant Printeval pendant 3 secondes. En mode héroïque, le cône s’élargit pour atteindre une amplitude de 150 degrés.", abilityIcon = 132390 }
