@@ -492,8 +492,8 @@ do
 		[1841] = lw_bfa, -- Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
 		[2097] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Operation: Mechagon
-		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
-		[2213] = lw_bfa, -- Horrific Vision of Stormwind
+		[2212] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Orgrimmar
+		[2213] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Stormwind
 		[2827] = lw_bfa, -- Horrific Vision of Stormwind (Revisited)
 		[2828] = lw_bfa, -- Horrific Vision of Orgrimmar (Revisited)
 		--[[ LittleWigs: Shadowlands ]]--
