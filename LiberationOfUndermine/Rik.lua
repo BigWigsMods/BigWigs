@@ -432,7 +432,7 @@ end
 
 function mod:BlaringDropStart(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, blaringDropCount))
-	self:CastBar(args.spellId, 5, CL.count_amount:format(args.spellName, blaringDropCount, 4))
+	self:CastBar(args.spellId, self:Mythic() and 5 or 6, CL.count_amount:format(args.spellName, blaringDropCount, 4))
 	blaringDropCount = blaringDropCount + 1
 	self:PlaySound(args.spellId, "warning") -- go amplifier
 end
