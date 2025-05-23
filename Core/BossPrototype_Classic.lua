@@ -36,7 +36,7 @@ local C_EncounterJournal_GetSectionInfo = isCata and function(key)
 end or (isRetail or isMists) and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
-local UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
+local UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = isCata and function(key)
@@ -1315,7 +1315,7 @@ do
 		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target",
 	}
 	local unitTableCount = #unitTable
-	local function findTargetByGUID(id)
+	local function findTargetByGUID(self, id)
 		local isNumber = type(id) == "number"
 		if not isNumber and UnitTokenFromGUID then
 			local unit = UnitTokenFromGUID(id)
@@ -1336,7 +1336,7 @@ do
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
-			if guid and not UnitIsPlayer(unit) then
+			if guid and not self:UnitIsPlayer(unit) then
 				if isNumber then
 					local _, _, _, _, _, mobId = strsplit("-", guid)
 					guid = tonumber(mobId)
@@ -1350,7 +1350,7 @@ do
 	-- in an attempt to find a valid unit id to return.
 	-- @param id GUID or mob/npc id
 	-- @return unit id if found, nil otherwise
-	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
+	function boss:GetUnitIdByGUID(id) return findTargetByGUID(self, id) end
 
 	--- Fetches a unit id by scanning boss units 1 to 5 only.
 	-- @param id Either the GUID or the mob/npc id of the boss unit to find
@@ -1378,7 +1378,7 @@ do
 			local elapsed = unitTargetScans[i][5] + 0.05
 			unitTargetScans[i][5] = elapsed
 
-			local unit = findTargetByGUID(guid)
+			local unit = findTargetByGUID(self, guid)
 			if unit then
 				local unitTarget = unit.."target"
 				local playerGUID = UnitGUID(unitTarget)
@@ -1418,7 +1418,7 @@ do
 	function boss:CheckForEngage()
 		if self:IsEnabled() and not self:IsEngaged() then
 			for mobId in next, self.enableMobs do
-				local unit = findTargetByGUID(mobId)
+				local unit = findTargetByGUID(self, mobId)
 				if unit and UnitAffectingCombat(unit) then
 					self:Debug(":CheckForEngage() scan passed, calling :Engage()", self:GetEncounterID(), self.moduleName, unit, mobId)
 					self:Engage()
@@ -1435,7 +1435,7 @@ do
 	function boss:CheckForWipe()
 		if self:IsEnabled() and self:IsEngaged() and not self.isWinning then
 			for mobId in next, self.enableMobs do
-				local unit = findTargetByGUID(mobId)
+				local unit = findTargetByGUID(self, mobId)
 				if unit and UnitAffectingCombat(unit) then
 					self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", self:GetEncounterID(), self.moduleName, unit, mobId)
 					self:SimpleTimer(function() self:CheckForWipe() end, 2)
@@ -1849,6 +1849,17 @@ do
 	function boss:UnitIsDeadOrGhost(unit)
 		local isDeadOrGhost = UnitIsDeadOrGhost(unit)
 		return isDeadOrGhost
+	end
+end
+
+do
+	local UnitIsPlayer = loader.UnitIsPlayer
+	--- Returns true if the unit is a player.
+	-- @string unit unit token or name
+	-- @return boolean
+	function boss:UnitIsPlayer(unit)
+		local isPlayer = UnitIsPlayer(unit)
+		return isPlayer
 	end
 end
 
