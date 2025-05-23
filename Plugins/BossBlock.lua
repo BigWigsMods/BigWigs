@@ -840,7 +840,7 @@ do
 		[105953]=true,[105954]=true,[105955]=true,[105956]=true,[105962]=true,[105963]=true,[105964]=true,
 		[106722]=true,[104219]=true,[104220]=true,[104228]=true,[104229]=true,[103811]=true,[104628]=true,
 		[103812]=true,[104208]=true,[104209]=true,[106718]=true,[106720]=true,
-		-- Visions of N'Zoth
+		-- Horrific Vision of Stormwind
 		[144361]=true,[144356]=true,[143213]=true,[143240]=true,[143241]=true,[145948]=true,[144378]=true,
 		[144380]=true,[146020]=true,[144377]=true,
 
