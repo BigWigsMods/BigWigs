@@ -429,7 +429,7 @@ function boss:GetAllowWin()
 	return self.allowWin and true or false
 end
 
---- Register private auras.
+--- Set private aura spell IDs.
 -- @param spellIDTable the options table
 function boss:SetPrivateAuraSounds(spellIDTable)
 	for i = 1, #spellIDTable do
@@ -442,6 +442,31 @@ function boss:SetPrivateAuraSounds(spellIDTable)
 		end
 	end
 	self.privateAuraSoundOptions = spellIDTable
+end
+
+function boss:RegisterPrivateAuraSounds()
+	if not self.privateAuraSoundOptions or self.privateAuraSounds then return end
+	local soundModule = plugins.Sounds
+	if not soundModule then return end
+
+	self.privateAuraSounds = {}
+	for _, opt in next, self.privateAuraSoundOptions do
+		local key = opt[1]
+		local sound = soundModule:GetSoundFile(self, key, "privateaura")
+		if sound then
+			for i = 1, #opt do
+				local privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
+					spellID = opt[i],
+					unitToken = "player",
+					soundFileName = sound,
+					outputChannel = "master",
+				})
+				if privateAuraSoundID then
+					self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+				end
+			end
+		end
+	end
 end
 
 --- Check if a module option is enabled.
@@ -558,30 +583,8 @@ function boss:Enable(isWipe)
 			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		else
-			if self.privateAuraSoundOptions and not self.privateAuraSounds then -- Some modules don't engage (trash modules) so we register them here
-				self.privateAuraSounds = {}
-				local soundModule = plugins.Sounds
-				if soundModule then
-					local default = soundModule:GetDefaultSound("privateaura")
-					for _, opt in next, self.privateAuraSoundOptions do
-						local key = ("pa_%d"):format(opt[1])
-						local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
-						if sound then
-							for i = 1, #opt do
-								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-									spellID = opt[i],
-									unitToken = "player",
-									soundFileName = sound,
-									outputChannel = "master",
-								})
-								if privateAuraSoundId then
-									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
-								end
-							end
-						end
-					end
-				end
-			end
+			-- Some modules don't engage (trash modules) so we register them here
+			self:RegisterPrivateAuraSounds()
 		end
 
 		local _, class = UnitClass("player")
@@ -1455,29 +1458,8 @@ do
 
 			self:Debug(":Engage", "noEngage:", noEngage, encounterID, self.moduleName)
 
-			if encounterID and self.privateAuraSoundOptions and not self.privateAuraSounds then
-				self.privateAuraSounds = {}
-				local soundModule = plugins.Sounds
-				if soundModule then
-					local default = soundModule:GetDefaultSound("privateaura")
-					for _, opt in next, self.privateAuraSoundOptions do
-						local key = ("pa_%d"):format(opt[1])
-						local sound = soundModule:GetSoundFile(nil, nil, self.db.profile[key] or default)
-						if sound then
-							for i = 1, #opt do
-								local privateAuraSoundId = C_UnitAuras.AddPrivateAuraAppliedSound({
-									spellID = opt[i],
-									unitToken = "player",
-									soundFileName = sound,
-									outputChannel = "master",
-								})
-								if privateAuraSoundId then
-									self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundId
-								end
-							end
-						end
-					end
-				end
+			if encounterID then
+				self:RegisterPrivateAuraSounds()
 			end
 
 			if not noEngage or noEngage ~= "NoEngage" then
