@@ -1138,9 +1138,9 @@ function mod:ADDON_LOADED(addon)
 				end
 			end
 		end
-		if BigWigs3DB.namespaces then
+		if BigWigs3DB.namespaces and public:GetAddOnState("QuaziiUI") ~= "MISSING" then
 			for k,v in next, BigWigs3DB.namespaces do
-				if (strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true)) and (public:GetAddOnState("QuaziiUI") ~= "MISSING" or public:GetAddOnState("ElvUI_ProjectHopes") ~= "MISSING") then
+				if strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true) then
 					BigWigs3DB.namespaces[k] = nil
 				end
 			end
