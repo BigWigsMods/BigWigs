@@ -1003,16 +1003,19 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 	if value == default then
 		value = nil
 	end
-	module.db.profile[key] = value
+
+	local sDB = soundModule.db.profile["privateaura"]
+	if not sDB[module.name] then
+		sDB[module.name] = {}
+	end
+	sDB[module.name][key] = value
 end
 
 local populatePrivateAuraOptions
 local function privateAuraResetOnClick(widget)
+	local sDB = soundModule.db.profile["privateaura"]
 	for module, paOptions in next, widget:GetUserData("privateAuraSoundOptions") do
-		for _, option in next, paOptions do
-			local key = ("pa_%d"):format(option[1])
-			module.db.profile[key] = nil
-		end
+		sDB[module.name] = nil
 	end
 	populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
 end
@@ -1033,6 +1036,7 @@ function populatePrivateAuraOptions(widget)
 	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
 	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
 	local defaultSound = soundModule:GetDefaultSound("privateaura")
+	local sDB = soundModule.db.profile["privateaura"]
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
 		local paOptions = privateAuraSoundOptions[module]
@@ -1045,7 +1049,7 @@ function populatePrivateAuraOptions(widget)
 			scrollFrame:AddChild(header)
 			for _, option in ipairs(paOptions) do
 				local spellId = option[1]
-				local key = ("pa_%d"):format(spellId)
+				local key = spellId
 				local id = option.tooltip or spellId
 
 				local name = loader.GetSpellName(id)
@@ -1072,7 +1076,7 @@ function populatePrivateAuraOptions(widget)
 				dropdown:SetUserData("default", defaultSound)
 				dropdown:SetUserData("module", module)
 				dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
-				local value = module.db.profile[key] or defaultSound
+				local value = sDB[module.name] and sDB[module.name][key] or defaultSound
 				for i, v in next, soundList do
 					if v == value then
 						dropdown:SetValue(i)
