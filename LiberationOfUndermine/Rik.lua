@@ -129,7 +129,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FaultyZap", 466979)
 	self:Log("SPELL_AURA_APPLIED", "FaultyZapApplied", 467108) -- pre debuffs
 	self:Log("SPELL_SUMMON", "PyrotechnicsSpawn", 1214688) -- Sparkblast Ignition
-	self:Log("SPELL_AURA_APPLIED", "ExcitementApplied", 1214164)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExcitementApplied", 1214164)
 	self:Log("SPELL_AURA_APPLIED", "TinnitusApplied", 464518)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TinnitusApplied", 464518)
@@ -352,12 +351,9 @@ do
 end
 
 function mod:ExcitementApplied(args)
-	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		if amount % 2 == 1 then
-			self:Message(args.spellId, "green", CL.stackyou:format(amount, args.spellName))
-			self:PlaySound(args.spellId, "info") -- buffs!
-		end
+	if self:Me(args.destGUID) and args.amount == 3 then -- 3 is the max
+		self:Message(args.spellId, "green", CL.stackyou:format(args.amount, args.spellName))
+		self:PlaySound(args.spellId, "info") -- buffs!
 	end
 end
 
