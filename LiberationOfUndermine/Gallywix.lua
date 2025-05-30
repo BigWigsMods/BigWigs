@@ -228,9 +228,9 @@ local timersMythic = {
 	{ -- Phase 2
 		[469327] = { 49.6, 56.5, 43.6 }, -- Giga Blast
 		[1218546] = { 37.5, 48.0, 54.1 }, -- Biggest Baddest Bomb Barrage
-		[1218488] = { 12.6, 42.5, 37.0, 34.5 }, -- Scatterbomb Canisters
+		[1218488] = { 12.6, 42.5, 37.0, 34.5, 51.6 }, -- Scatterbomb Canisters
 		[466958] = { 21.1, 26.5, 28.6, 27.9, 29.0, 22.1 }, -- Ego Check
-		[467182] = { 23.1, 44.0, 44.9 }, -- Suppression
+		[467182] = { 23.1, 44.0, 44.9, 55.1 }, -- Suppression
 		[466751] = { 9.0, 35.0, 19.6, 36.9, 20.5, 25.1 }, -- Venting Heat
 	},
 	{ -- Phase 3
