@@ -19,7 +19,7 @@ local CONTENT_PACK_VERSIONS = {
 	["BigWigs_BurningCrusade"] = {11, 1, 2},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 5},
 	["BigWigs_Cataclysm"] = {11, 1, 6},
-	["BigWigs_MistsOfPandaria"] = {11, 1, 2},
+	["BigWigs_MistsOfPandaria"] = {11, 1, 3},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
