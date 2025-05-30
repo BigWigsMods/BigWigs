@@ -842,7 +842,9 @@ do
 		[103812]=true,[104208]=true,[104209]=true,[106718]=true,[106720]=true,
 		-- Horrific Vision of Stormwind
 		[144361]=true,[144356]=true,[143213]=true,[143240]=true,[143241]=true,[145948]=true,[144378]=true,
-		[144380]=true,[146020]=true,[144377]=true,
+		[144380]=true,[146020]=true,[144376]=true,[144377]=true,[144379]=true,
+		-- Horrific Vision of Orgrimmar
+		[144375]=true,[145045]=true,[145047]=true,[145054]=true,[145067]=true,[145069]=true,
 
 		-- De Other Side
 		[163819]=true,[163820]=true,[163821]=true,[163822]=true,[163823]=true,[163824]=true,[163828]=true,
