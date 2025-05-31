@@ -1338,18 +1338,21 @@ do
 			if name == "BigWigs_Shadowlands" then
 				local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 				if not meta then
+					DisableAddOn(i)
 					local msg = L.removeAddOn:format(name, old[name])
 					delayedMessages[#delayedMessages+1] = msg
 					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
 						Popup(msg, true)
 					end
+				else
+					EnableAddOn(i) -- XXX temp as we were accidentally disabling the Shadowlands addon for a while
 				end
 			else
+				DisableAddOn(i)
 				local msg = L.removeAddOn:format(name, old[name])
 				delayedMessages[#delayedMessages+1] = msg
 				Popup(msg, true)
 			end
-			DisableAddOn(i)
 		end
 
 		if reqFuncAddons[name] then
