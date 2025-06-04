@@ -528,6 +528,7 @@ do
 		[2669] = lw_tww, -- City of Threads
 		[2710] = lw_tww, -- Awakening the Machine
 		[2773] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Operation: Floodgate
+		[2849] = public.isRetail and {lw_tww, lw_cs} or nil, -- Dastardly Dome
 		--[[ LittleWigs: Delves ]]--
 		[2664] = lw_delves, -- Fungal Folly
 		[2679] = lw_delves, -- Mycomancer Cavern
