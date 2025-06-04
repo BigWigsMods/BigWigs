@@ -42,11 +42,14 @@ local pName = loader.UnitName("player")
 
 do
 	local noEvent = "Module %q tried to register/unregister an event without specifying which event."
-	local noFunc = "Module %q tried to register an event with the function '%s' which doesn't exist in the module."
+	local noFunc = "Module %q tried to register event %q to the function %q which doesn't exist in the module."
+	local curEvent = "Module %q tried to register event %q to the function %q but the event is in the middle of dispatching."
 
 	local eventMap = {}
 	local bwUtilityFrame = CreateFrame("Frame")
+	local currentEvent = nil
 	bwUtilityFrame:SetScript("OnEvent", function(_, event, ...)
+		currentEvent = event
 		for k,v in next, eventMap[event] do
 			if type(v) == "function" then
 				v(event, ...)
@@ -54,12 +57,16 @@ do
 				k[v](k, event, ...)
 			end
 		end
+		currentEvent = nil
 	end)
 
 	function core:RegisterEvent(event, func)
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
-		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", func or event)) end
+		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", event, func or event)) end
 		if not eventMap[event] then eventMap[event] = {} end
+		if event == currentEvent then
+			core:Error(curEvent:format(self.moduleName or "?", event, func or event))
+		end
 		eventMap[event][self] = func or event
 		bwUtilityFrame:RegisterEvent(event)
 	end
