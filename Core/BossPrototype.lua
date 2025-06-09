@@ -59,7 +59,7 @@ local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local activeNameplateUtilityFrame, inactiveNameplateUtilityFrame = CreateFrame("Frame"), CreateFrame("Frame")
 local engagedGUIDs, activeNameplates, nameplateWatcher = {}, {}, nil
-local enabledModules, unitTargetScans, scheduledEvents = {}, {}, {}
+local enabledModules, unitTargetScans, scheduledEvents, ieeuEvents = {}, {}, {}, {}
 local allowedEvents = {}
 local difficulty, maxPlayers
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
@@ -558,12 +558,14 @@ function boss:Disable(isWipe)
 			activeNameplates = {}
 			unitTargetScans = {}
 			scheduledEvents = {}
+			ieeuEvents = {}
 		else
 			for i = #unitTargetScans, 1, -1 do
 				if self == unitTargetScans[i][1] then
 					tremove(unitTargetScans, i)
 				end
 			end
+			ieeuEvents[self] = nil
 		end
 
 		-- Unregister the Unit Events for this module
@@ -1146,35 +1148,6 @@ do
 		end
 	end
 
-	local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-	-- Update module engage status from querying boss units.
-	-- Engages modules if boss1-boss5 matches an registered enabled mob,
-	-- disables the module if set as engaged but has no boss match.
-	-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
-	function boss:CheckForEncounterEngage(noEngage)
-		if not self:IsEngaged() then
-			for i = 1, 5 do
-				local bossUnit = bosses[i]
-				local guid = UnitGUID(bossUnit)
-				if guid and UnitHealth(bossUnit) > 0 then
-					local mobId = self:MobId(guid)
-					if self:IsEnableMob(mobId) then
-						self:Engage(noEngage == "NoEngage" and noEngage)
-						return
-					elseif not self.disableTimer then
-						self.disableTimer = true
-						self:SimpleTimer(function()
-							self.disableTimer = nil
-							if not self:IsEngaged() then
-								self:Disable()
-							end
-						end, 3) -- 3 seconds should be enough time for the IEEU event to enable all the boss frames (fires once per boss frame)
-					end
-				end
-			end
-		end
-	end
-
 	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
@@ -1187,6 +1160,84 @@ do
 		else
 			self:Debug(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID(), self.moduleName)
 		end
+	end
+
+	do
+		local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5", "boss6", "boss7", "boss8", "boss9", "boss10"}
+		-- Update module engage status from querying boss units.
+		-- Engages modules if boss1-boss5 matches an registered enabled mob,
+		-- disables the module if set as engaged but has no boss match.
+		-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
+		function boss:CheckForEncounterEngage(noEngage)
+			if not self:IsEngaged() then
+				for i = 1, 10 do
+					local bossUnit = bosses[i]
+					local guid = self:UnitGUID(bossUnit)
+					if guid and self:GetHealth(bossUnit) > 0 then
+						local mobId = self:MobId(guid)
+						if self:IsEnableMob(mobId) then
+							self:Engage(noEngage == "NoEngage" and noEngage)
+							return
+						elseif not self.disableTimer then
+							self.disableTimer = true
+							self:SimpleTimer(function()
+								self.disableTimer = nil
+								if not self:IsEngaged() then
+									self:Disable()
+								end
+							end, 3) -- 3 seconds should be enough time for the IEEU event to enable all the boss frames (fires once per boss frame)
+						end
+					end
+				end
+			end
+		end
+
+		function boss:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+			if self:GetEncounterID() then
+				self:CheckForEncounterEngage()
+			end
+			ieeuEvents[self].dispatching = true
+			for i = 1, 10 do
+				local bossUnit = bosses[i]
+				local bossGUID = self:UnitGUID(bossUnit)
+				if bossGUID then
+					local bossID = self:MobId(bossGUID)
+					if ieeuEvents[self][bossID] then
+						self[ieeuEvents[self][bossID]](self, bossGUID, bossUnit, bossID)
+					end
+				else
+					break
+				end
+			end
+			ieeuEvents[self].dispatching = nil
+		end
+
+		local noBossID = "Module %q tried to register the boss unit event without specifying a boss ID."
+		local noBossFunc = "Module %q tried to register a boss unit event with the function %q which doesn't exist in the module."
+		local curBossEvent = "Module %q tried to register a boss event using ID %q to the function %q but the event is in the middle of dispatching."
+		--- Register a callback for the INSTANCE_ENCOUNTER_ENGAGE_UNIT event for the specified boss ID. If the bossID is found to be a boss unit, the callback will be dispatched.
+		-- @number bossID the ID of a boss to scan the boss units for
+		-- @param func callback function, passed (bossGUID, bossUnit, bossID)
+		function boss:RegisterBossEvent(bossID, func)
+			if type(bossID) ~= "number" then core:Print(format(noBossID, self.moduleName)) return end
+			if type(func) ~= "string" or not self[func] then core:Print(format(noBossFunc, self.moduleName, tostring(func))) return end
+			if not ieeuEvents[self] then ieeuEvents[self] = {} end
+			if ieeuEvents[self][bossID] then
+				ieeuEvents[self][bossID] = func
+			else
+				if ieeuEvents[self].dispatching then
+					core:Error(curBossEvent:format(self.moduleName, bossID, func))
+				end
+				ieeuEvents[self][bossID] = func
+				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+			end
+		end
+	end
+
+	--- Unregister a callback for the INSTANCE_ENCOUNTER_ENGAGE_UNIT event.
+	-- @number bossID the ID of a boss unit to stop listening to
+	function boss:UnregisterBossEvent(bossID)
+		ieeuEvents[self][bossID] = nil
 	end
 end
 
