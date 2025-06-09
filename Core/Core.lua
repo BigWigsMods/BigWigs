@@ -64,11 +64,16 @@ do
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
 		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", event, func or event)) end
 		if not eventMap[event] then eventMap[event] = {} end
-		if event == currentEvent then
-			core:Error(curEvent:format(self.moduleName or "?", event, func or event))
+
+		if eventMap[event][self] then -- Event is already registered to this specific module, just change the assigned function
+			eventMap[event][self] = func or event
+		else -- Event has not been previously registered to this specific module
+			if event == currentEvent then
+				core:Error(curEvent:format(self.moduleName or "?", event, func or event))
+			end
+			eventMap[event][self] = func or event
+			bwUtilityFrame:RegisterEvent(event)
 		end
-		eventMap[event][self] = func or event
-		bwUtilityFrame:RegisterEvent(event)
 	end
 	function core:UnregisterEvent(event)
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
