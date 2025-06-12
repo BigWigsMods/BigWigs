@@ -57,7 +57,7 @@ Locales\itIT_common.lua
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
-AutoRole.lua
-LFGTimer.lua
+Tools\AutoRole.lua
+Tools\LFGTimer.lua
 modules.xml
 bosses.xml

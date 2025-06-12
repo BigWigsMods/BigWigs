@@ -79,5 +79,5 @@ Locales\itIT_common.lua
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
-LFGTimer.lua
+Tools\LFGTimer.lua
 modules_Classic.xml
