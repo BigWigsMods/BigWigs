@@ -55,12 +55,6 @@ files["**/Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 	"11[23]/hash_SlashCmdList",
 }
-files["**/AutoRole.lua"].ignore = {
-	"113/RolePollPopup",
-	"113/UnitGroupRolesAssigned",
-	"113/UnitNameUnmodified",
-	"113/UnitSetRole",
-}
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_Item",
 	"113/C_NamePlate",
@@ -162,6 +156,20 @@ files["**/?Locales/*.lua"].ignore = {
 files["gen_option_values.lua"].ignore = {
 	"113/arg", -- We use global arg in the parser
 }
+files["Tools/AutoRole.lua"].ignore = {
+	"113/RolePollPopup",
+	"113/UnitGroupRolesAssigned",
+	"113/UnitNameUnmodified",
+	"113/UnitSetRole",
+}
+files["Tools/Keystones.lua"].ignore = {
+	"113/C_ClassColor",
+	"111/SLASH_BigWigsTestKS1",
+	"112/SlashCmdList",
+}
+files["Tools/LFGTimer.lua"].ignore = {
+	"113/LFGDungeonReadyPopup",
+}
 ignore = {
 	"113/BigWigs",
 	"212/self",
@@ -259,7 +267,6 @@ globals = {
 	"IsPartyLFG",
 	"IsPlayerSpell",
 	"IsSpellKnown",
-	"LFGDungeonReadyPopup",
 	"LibStub",
 	"LoggingCombat",
 	"MovieFrame",

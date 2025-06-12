@@ -7,6 +7,7 @@
 
 <!--@non-debug@
 <Include file="Libs\LibSpecialization\LibSpecialization.xml"/>
+<Script file="Libs\LibKeystone\LibKeystone.lua"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Include file="Libs\LibDBIcon-1.0\lib.xml"/>
 @end-non-debug@-->

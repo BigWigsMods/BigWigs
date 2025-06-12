@@ -5,6 +5,7 @@ externals:
     Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
     Libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
     Libs/LibSpecialization: https://repos.wowace.com/wow/libspecialization/trunk/LibSpecialization
+    Libs/LibKeystone: https://github.com/BigWigsMods/LibKeystone.git/LibKeystone
     Core/Libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
     Core/Libs/LibDualSpec-1.0: https://repos.wowace.com/wow/libdualspec-1-0
     Core/Libs/LibChatAnims: https://repos.wowace.com/wow/libchatanims/trunk/LibChatAnims
