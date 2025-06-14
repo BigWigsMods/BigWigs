@@ -609,16 +609,18 @@ do
 		end
 	end
 
-	function CheckElv(self, targetFrame)
+	function CheckElv()
 		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
-		if type(targetFrame.AutoHider) == "table" and type(targetFrame.AutoHider.GetObjectType) == "function" and bbFrame.GetParent(targetFrame.AutoHider) == targetFrame then
-			if InCombatLockdown() or UnitAffectingCombat("player") then
-				self:RegisterEvent("PLAYER_REGEN_ENABLED", function()
-					bbFrame.SetParent(targetFrame.AutoHider, (CreateFrame("Frame")))
-					self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-				end)
-			else
-				bbFrame.SetParent(targetFrame.AutoHider, (CreateFrame("Frame")))
+		if ElvUI then
+			local tbl = {UIParent:GetChildren()}
+			for i = 1, #tbl do
+				local frame = tbl[i]
+				if type(frame.GetObjectType) == "function" and type(frame.IsForbidden) == "function" and not frame:IsForbidden() and type(frame.GetAttribute) == "function" and frame:GetAttribute("_onstate-objectiveHider") then
+					frame:SetScript("OnHide", nil)
+					frame:SetScript("OnShow", nil)
+					CheckElv = function() end
+					return
+				end
 			end
 		end
 	end
