@@ -13,17 +13,17 @@ do
 end
 
 local roleIcons = {
-	TANK = INLINE_TANK_ICON,
-	HEALER = INLINE_HEALER_ICON,
-	DAMAGER = INLINE_DAMAGER_ICON,
+	TANK = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:16:16|t",
+	HEALER = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer:16:16|t",
+	DAMAGER = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:16:16|t",
 }
 local dungeonNames = {
-	[1594] = "MTHR",
-	[2097] = "MECH",
+	[1594] = "ML",
+	[2097] = "WORK",
 	[2293] = "TOP",
 	[2648] = "ROOK",
-	[2649] = "PRI",
-	[2651] = "DARK",
+	[2649] = "PRIORY",
+	[2651] = "DFC",
 	[2661] = "BREW",
 	[2773] = "FLOOD",
 }
@@ -156,8 +156,8 @@ local function UpdateCells(playerList)
 		if specID then
 			local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
 			local color = C_ClassColor.GetClassColor(classFile)
-			decoratedName = format("|T%d:0|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color:GenerateHexColor(), gsub(pName, "%-.+", "*"))
-			nameTooltip = format("%s|c%s%s|r |A:classicon-%s:12:12|a%s |T%d:0|t%s", roleIcons[role] or "", color:GenerateHexColor(), pName, classFile, className, specIcon, specName)
+			decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color:GenerateHexColor(), gsub(pName, "%-.+", "*"))
+			nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color:GenerateHexColor(), pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
 		end
 		sortedplayerList[#sortedplayerList+1] = {
 			name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
