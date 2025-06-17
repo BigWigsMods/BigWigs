@@ -5,6 +5,8 @@ externals:
     Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
     Libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
     Libs/LibSpecialization: https://repos.wowace.com/wow/libspecialization/trunk/LibSpecialization
+    Libs/LibLatency: https://repos.wowace.com/wow/liblatency/trunk/LibLatency
+    Libs/LibDurability: https://repos.wowace.com/wow/libdurability/trunk/LibDurability
     Libs/LibKeystone: https://github.com/BigWigsMods/LibKeystone.git/LibKeystone
     Core/Libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
     Core/Libs/LibDualSpec-1.0: https://repos.wowace.com/wow/libdualspec-1-0
@@ -16,6 +18,9 @@ externals:
     Options/Libs/AceConfigRegistry-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0/AceConfigRegistry-3.0
     Options/Libs/AceDBOptions-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDBOptions-3.0
     Options/Libs/LibDDI-1.0: https://repos.wowace.com/wow/libddi-1-0/trunk
+
+embedded-libraries:
+  - libkeystone
 
 move-folders:
     BigWigs/Core: BigWigs_Core
