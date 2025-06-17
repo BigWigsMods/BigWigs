@@ -114,6 +114,7 @@ local function CreateCell()
 	if cell then
 		cellsAvailable[#cellsAvailable] = nil
 		cell:Show()
+		cellsCurrentlyShowing[cell] = true
 		return cell
 	else
 		cell = CreateFrame("Frame", nil, scrollChild)
