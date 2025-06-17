@@ -17,6 +17,7 @@ local roleIcons = {
 	HEALER = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer:16:16|t",
 	DAMAGER = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:16:16|t",
 }
+local hiddenIcon = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:16:16|t"
 local dungeonNames = {
 	[1594] = "ML",
 	[2097] = "WORK",
@@ -28,6 +29,7 @@ local dungeonNames = {
 	[2773] = "FLOOD",
 }
 local cellsCurrentlyShowing = {}
+local cellsAvailable = {}
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "SettingsFrameTemplate")
 mainPanel:Hide()
@@ -38,10 +40,18 @@ mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
 mainPanel.NineSlice.Text:SetText("BigWigs Keystones")
-mainPanel.ClosePanelButton:SetScript("OnClick", function() mainPanel:Hide() end)
 mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
 mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
-mainPanel:SetScript("OnHide", function() cellsCurrentlyShowing = {} end)
+
+local function WipeCells()
+	for cell in next, cellsCurrentlyShowing do
+		cell:Hide()
+		cell:ClearAllPoints()
+		cellsAvailable[#cellsAvailable+1] = cell
+	end
+	cellsCurrentlyShowing = {}
+end
+mainPanel.ClosePanelButton:SetScript("OnClick", function() WipeCells() mainPanel:Hide() end)
 
 local scrollArea = CreateFrame("ScrollFrame", nil, mainPanel, "ScrollFrameTemplate")
 scrollArea:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", 8, -30)
@@ -94,30 +104,22 @@ guildRefreshButton:SetScript("OnEnter", function(self)
 end)
 guildRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
 
-local hiddenCellTable = {}
-local OnLeaveFunction = function(self)
-	if self.tooltip then
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetText(self.tooltip)
-		GameTooltip:Show()
-	end
-end
-local OnHideFunction = function(self)
-	self:ClearAllPoints()
-	hiddenCellTable[#hiddenCellTable+1] = self
+local OnEnterShowTooltip = function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetText(self.tooltip)
+	GameTooltip:Show()
 end
 local function CreateCell()
-	local cell = hiddenCellTable[#hiddenCellTable]
+	local cell = cellsAvailable[#cellsAvailable]
 	if cell then
-		hiddenCellTable[#hiddenCellTable] = nil
+		cellsAvailable[#cellsAvailable] = nil
 		cell:Show()
 		return cell
 	else
 		cell = CreateFrame("Frame", nil, scrollChild)
 		cell:SetSize(20, 20)
-		cell:SetScript("OnEnter", OnLeaveFunction)
+		cell:SetScript("OnEnter", OnEnterShowTooltip)
 		cell:SetScript("OnLeave", GameTooltip_Hide)
-		cell:SetScript("OnHide", OnHideFunction)
 
 		cell.text = cell:CreateFontString(nil, nil, "GameFontNormal")
 		cell.text:SetPoint("CENTER")
@@ -126,6 +128,7 @@ local function CreateCell()
 		bg:SetAllPoints(cell)
 		bg:SetColorTexture(0, 0, 0, 0.6)
 
+		cellsCurrentlyShowing[cell] = true
 		return cell
 	end
 end
@@ -141,36 +144,34 @@ SlashCmdList.BigWigsTestKS = function()
 end
 
 local nameWidth, levelWidth, mapWidth, ratingWidth = 160, 24, 90, 42
-local function WipeCells()
-	for cell in next, cellsCurrentlyShowing do
-		cell:Hide()
-	end
-	cellsCurrentlyShowing = {}
-end
-local function UpdateCells(playerList)
+local function UpdateCells(playerList, isGuildList)
 	local sortedplayerList = {}
 	for pName, pData in next, playerList do
-		local decoratedName = nil
-		local nameTooltip = pName
-		local specID = specs[pName]
-		if specID then
-			local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
-			local color = C_ClassColor.GetClassColor(classFile)
-			decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color:GenerateHexColor(), gsub(pName, "%-.+", "*"))
-			nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color:GenerateHexColor(), pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+		if not isGuildList or (isGuildList and not partyList[pName]) then
+			local decoratedName = nil
+			local nameTooltip = pName
+			local specID = specs[pName]
+			if specID then
+				local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
+				local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
+				decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, gsub(pName, "%-.+", "*"))
+				nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+			end
+			sortedplayerList[#sortedplayerList+1] = {
+				name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
+				level = pData[1], levelTooltip = ("Keystone level: |cFFFFFFFF%s|r"):format(pData[1] == -1 and hiddenIcon or pData[1]),
+				map = dungeonNames[pData[2]] or pData[2] > 0 and pData[2] or pData[2] == -1 and hiddenIcon or "-", mapTooltip = ("Dungeon: |cFFFFFFFF%s|r"):format(pData[2] > 0 and GetRealZoneText(pData[2]) or pData[2] == -1 and hiddenIcon or "-"),
+				rating = pData[3], ratingTooltip = ("Mythic+ rating: |cFFFFFFFF%d|r"):format(pData[3]),
+			}
 		end
-		sortedplayerList[#sortedplayerList+1] = {
-			name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
-			level = pData[1], levelTooltip = ("Keystone level: |cFFFFFFFF%d|r"):format(pData[1]),
-			map = dungeonNames[pData[2]] or pData[2] > 0 and pData[2] or "-", mapTooltip = ("Dungeon: |cFFFFFFFF%s|r"):format(pData[2] > 0 and GetRealZoneText(pData[2]) or "-"),
-			rating = pData[3], ratingTooltip = ("Mythic+ rating: |cFFFFFFFF%d|r"):format(pData[3]),
-		}
 	end
 	-- Sort list by level descending, or by name if equal level
 	table.sort(sortedplayerList, function(a, b)
-		if a.level > b.level then
+		local firstLevel = a.level == -1 and 1 or a.level
+		local secondLevel = b.level == -1 and 1 or b.level
+		if firstLevel > secondLevel then
 			return true
-		elseif a.level == b.level then
+		elseif firstLevel == secondLevel then
 			return a.name < b.name
 		end
 	end)
@@ -181,7 +182,7 @@ local function UpdateCells(playerList)
 		local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 		if i == 1 then
 			cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
-			cellLevel:SetPoint("TOP", playerList == partyList and partyHeader or guildHeader, "BOTTOM", 0, -12)
+			cellLevel:SetPoint("TOP", isGuildList and guildHeader or partyHeader, "BOTTOM", 0, -12)
 			cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 			cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
 		else
@@ -193,19 +194,15 @@ local function UpdateCells(playerList)
 		cellName:SetWidth(nameWidth)
 		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
 		cellName.tooltip = sortedplayerList[i].nameTooltip
-		cellsCurrentlyShowing[cellName] = true
 		cellLevel:SetWidth(levelWidth)
-		cellLevel.text:SetText(sortedplayerList[i].level)
+		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 		cellLevel.tooltip = sortedplayerList[i].levelTooltip
-		cellsCurrentlyShowing[cellLevel] = true
 		cellMap:SetWidth(mapWidth)
 		cellMap.text:SetText(sortedplayerList[i].map)
 		cellMap.tooltip = sortedplayerList[i].mapTooltip
-		cellsCurrentlyShowing[cellMap] = true
 		cellRating:SetWidth(ratingWidth)
 		cellRating.text:SetText(sortedplayerList[i].rating)
 		cellRating.tooltip = sortedplayerList[i].ratingTooltip
-		cellsCurrentlyShowing[cellRating] = true
 		prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
 
 		if i == tableSize then
@@ -216,7 +213,7 @@ local function UpdateCells(playerList)
 		end
 	end
 
-	if playerList == partyList then
+	if not isGuildList then
 		guildHeader:ClearAllPoints()
 		local y = 24 + tableSize*26
 		guildHeader:SetPoint("TOP", partyHeader, "BOTTOM", 0, -y)
@@ -230,7 +227,7 @@ LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, ch
 		if mainPanel:IsShown() then
 			WipeCells()
 			UpdateCells(partyList)
-			UpdateCells(guildList)
+			UpdateCells(guildList, true)
 		end
 	elseif channel == "GUILD" then
 		guildList[playerName] = {keyLevel, keyMap, playerRating}
@@ -238,7 +235,7 @@ LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, ch
 		if mainPanel:IsShown() then
 			WipeCells()
 			UpdateCells(partyList)
-			UpdateCells(guildList)
+			UpdateCells(guildList, true)
 		end
 	end
 end)
