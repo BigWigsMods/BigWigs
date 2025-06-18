@@ -109,15 +109,15 @@ local iconDefaults = {
 	iconGrowDirection = "LEFT",
 	iconGrowDirectionStart = "LEFT",
 	iconSpacing = 1,
-	iconWidthTarget = BigWigsLoader.isNext and 20 or 16, -- XXX
-	iconHeightTarget = BigWigsLoader.isNext and 20 or 16,
-	iconWidthOthers = BigWigsLoader.isNext and 20 or 16,
-	iconHeightOthers = BigWigsLoader.isNext and 20 or 16,
+	iconWidthTarget = 20,
+	iconHeightTarget = 20,
+	iconWidthOthers = 20,
+	iconHeightOthers = 20,
 	iconOffsetX = 0,
 	iconOffsetY = 0,
 	iconCooldownNumbers = true,
 	iconFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
-	iconFontSize = BigWigsLoader.isNext and 8 or 7, -- XXX
+	iconFontSize = 8,
 	iconFontColor = {1, 1, 1, 1},
 	iconFontOutline = "OUTLINE",
 	iconFontMonochrome = false,
@@ -467,9 +467,6 @@ local function getIconFrame()
 	else
 		iconFrame = CreateFrame("Frame", nil, UIParent)
 		iconFrame:SetPoint("CENTER")
-		if not BigWigsLoader.isNext then -- XXX change for 11.1.7, oh boy
-			iconFrame:SetIgnoreParentScale(true)
-		end
 		iconFrame:SetFrameStrata("MEDIUM")
 		iconFrame:SetFixedFrameStrata(true)
 		iconFrame:SetFrameLevel(5500)
