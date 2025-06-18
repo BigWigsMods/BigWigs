@@ -119,7 +119,7 @@ public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
-public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX doesn't exist on Cata + Vanilla
+public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX doesn't exist on Vanilla
 public.GetSpellDescription = C_Spell.GetSpellDescription
 public.GetSpellLink = C_Spell.GetSpellLink
 public.GetSpellName = C_Spell.GetSpellName
@@ -141,11 +141,11 @@ public.UnitIsPlayer = UnitIsPlayer
 public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
-public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Supported on Retail + Mists, not Cata + Vanilla]
+public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Supported on Retail + Mists, not Vanilla]
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = build >= 120000
-	public.isNext = build >= 110107
+	public.isNext = build >= 110200
 end
 
 -- Version
