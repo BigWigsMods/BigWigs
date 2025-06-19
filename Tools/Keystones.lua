@@ -1,3 +1,9 @@
+local L
+do
+	local _, tbl = ...
+	L = tbl.API:GetLocale("BigWigs")
+end
+
 local LibKeystone = LibStub("LibKeystone")
 local LibSpec = LibStub("LibSpecialization")
 
@@ -39,7 +45,7 @@ mainPanel:SetFrameStrata("DIALOG")
 mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
-mainPanel:SetTitle("BigWigs Keystones")
+mainPanel:SetTitle(L.keystoneTitle)
 mainPanel:SetBorder("HeldBagLayout")
 mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
@@ -66,7 +72,7 @@ scrollChild:SetSize(350, 320)
 
 local partyHeader = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
 partyHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
-partyHeader:SetText("Party")
+partyHeader:SetText(L.keystoneHeaderParty)
 partyHeader:SetJustifyH("CENTER")
 
 local partyRefreshButton = CreateFrame("Button", nil, scrollChild)
@@ -81,13 +87,13 @@ partyRefreshButton:SetScript("OnClick", function()
 end)
 partyRefreshButton:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText("Refresh Party")
+	GameTooltip:SetText(L.keystoneRefreshParty)
 	GameTooltip:Show()
 end)
 partyRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
 
 local guildHeader = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
-guildHeader:SetText("Guild")
+guildHeader:SetText(L.keystoneHeaderGuild)
 guildHeader:SetJustifyH("CENTER")
 
 -- Refresh button for Guild section
@@ -104,7 +110,7 @@ guildRefreshButton:SetScript("OnClick", function()
 end)
 guildRefreshButton:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText("Refresh Guild")
+	GameTooltip:SetText(L.keystoneRefreshGuild)
 	GameTooltip:Show()
 end)
 guildRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
@@ -166,9 +172,9 @@ local function UpdateCells(playerList, isGuildList)
 			end
 			sortedplayerList[#sortedplayerList+1] = {
 				name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
-				level = pData[1], levelTooltip = ("Keystone level: |cFFFFFFFF%s|r"):format(pData[1] == -1 and hiddenIcon or pData[1]),
-				map = dungeonNames[pData[2]] or pData[2] > 0 and pData[2] or pData[2] == -1 and hiddenIcon or "-", mapTooltip = ("Dungeon: |cFFFFFFFF%s|r"):format(pData[2] > 0 and GetRealZoneText(pData[2]) or pData[2] == -1 and hiddenIcon or "-"),
-				rating = pData[3], ratingTooltip = ("Mythic+ rating: |cFFFFFFFF%d|r"):format(pData[3]),
+				level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
+				map = dungeonNames[pData[2]] or pData[2] > 0 and pData[2] or pData[2] == -1 and hiddenIcon or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] > 0 and GetRealZoneText(pData[2]) or pData[2] == -1 and L.keystoneHiddenTooltip or "-"),
+				rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
 			}
 		end
 	end
