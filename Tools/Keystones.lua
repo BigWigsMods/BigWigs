@@ -31,15 +31,18 @@ local dungeonNames = {
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
 
-local mainPanel = CreateFrame("Frame", nil, UIParent, "SettingsFrameTemplate")
+local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameFlatTemplate")
 mainPanel:Hide()
 mainPanel:SetSize(350, 320)
-mainPanel:SetPoint("LEFT", 50)
+mainPanel:SetPoint("LEFT", 15, 0)
 mainPanel:SetFrameStrata("DIALOG")
 mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
-mainPanel.NineSlice.Text:SetText("BigWigs Keystones")
+mainPanel:SetTitle("BigWigs Keystones")
+mainPanel:SetBorder("HeldBagLayout")
+mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
+mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
 mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
 
@@ -51,7 +54,7 @@ local function WipeCells()
 	end
 	cellsCurrentlyShowing = {}
 end
-mainPanel.ClosePanelButton:SetScript("OnClick", function() WipeCells() mainPanel:Hide() end)
+mainPanel.CloseButton:SetScript("OnClick", function() WipeCells() mainPanel:Hide() end)
 
 local scrollArea = CreateFrame("ScrollFrame", nil, mainPanel, "ScrollFrameTemplate")
 scrollArea:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", 8, -30)
