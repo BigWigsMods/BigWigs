@@ -611,7 +611,7 @@ local reqFuncAddons = {
 	BigWigs_Plugins = true,
 }
 
-local function Popup(msg, focus)
+local Popup = public.isRetail and function(msg, focus)
 	local frame = CreateFrame("Frame", nil, UIParent, focus and "PortraitFrameTexturedBaseTemplate" or "PortraitFrameFlatBaseTemplate")
 	frame:SetFrameStrata("DIALOG")
 	frame:SetToplevel(true)
@@ -640,6 +640,31 @@ local function Popup(msg, focus)
 
 	text:SetText(msg)
 	frame:Show()
+end or function(msg, focus)
+	local frame = CreateFrame("Frame")
+	frame:SetFrameStrata("DIALOG")
+	frame:SetToplevel(true)
+	frame:SetSize(400, 150)
+	frame:SetPoint("CENTER", "UIParent", "CENTER")
+	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
+	text:SetSize(380, 0)
+	text:SetJustifyH("CENTER")
+	text:SetJustifyV("TOP")
+	text:SetNonSpaceWrap(true)
+	text:SetPoint("TOP", 0, -16)
+	local border = CreateFrame("Frame", nil, frame, focus and "DialogBorderOpaqueTemplate" or "DialogBorderTemplate")
+	border:SetAllPoints(frame)
+	local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+	button:SetSize(128, 32)
+	button:SetPoint("BOTTOM", 0, 16)
+	button:SetScript("OnClick", function(self)
+		self:GetParent():Hide()
+	end)
+	button:SetText(L.okay)
+	button:SetNormalFontObject("DialogButtonNormalText")
+	button:SetHighlightFontObject("DialogButtonHighlightText")
+
+	text:SetText(msg)
 end
 
 local function sysprint(msg)
