@@ -33,7 +33,7 @@ local cellsAvailable = {}
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "SettingsFrameTemplate")
 mainPanel:Hide()
-mainPanel:SetSize(400, 350)
+mainPanel:SetSize(350, 320)
 mainPanel:SetPoint("LEFT", 50)
 mainPanel:SetFrameStrata("DIALOG")
 mainPanel:SetMovable(true)
@@ -59,11 +59,12 @@ scrollArea:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", -25, 5)
 
 local scrollChild = CreateFrame("Frame", nil, scrollArea)
 scrollArea:SetScrollChild(scrollChild)
-scrollChild:SetSize(400, 350)
+scrollChild:SetSize(350, 320)
 
 local partyHeader = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
 partyHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
 partyHeader:SetText("Party")
+partyHeader:SetJustifyH("CENTER")
 
 local partyRefreshButton = CreateFrame("Button", nil, scrollChild)
 partyRefreshButton:SetSize(20, 20)
@@ -84,6 +85,7 @@ partyRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
 
 local guildHeader = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
 guildHeader:SetText("Guild")
+guildHeader:SetJustifyH("CENTER")
 
 -- Refresh button for Guild section
 local guildRefreshButton = CreateFrame("Button", nil, scrollChild)
@@ -123,7 +125,8 @@ local function CreateCell()
 		cell:SetScript("OnLeave", GameTooltip_Hide)
 
 		cell.text = cell:CreateFontString(nil, nil, "GameFontNormal")
-		cell.text:SetPoint("CENTER")
+		cell.text:SetAllPoints(cell)
+		cell.text:SetJustifyH("CENTER")
 
 		local bg = cell:CreateTexture()
 		bg:SetAllPoints(cell)
@@ -144,7 +147,7 @@ SlashCmdList.BigWigsTestKS = function()
 	C_Timer.After(0.1, function() LibKeystone.Request("GUILD") end)
 end
 
-local nameWidth, levelWidth, mapWidth, ratingWidth = 160, 24, 90, 42
+local nameWidth, levelWidth, mapWidth, ratingWidth = 150, 24, 66, 42
 local function UpdateCells(playerList, isGuildList)
 	local sortedplayerList = {}
 	for pName, pData in next, playerList do
