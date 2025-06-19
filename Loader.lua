@@ -119,7 +119,7 @@ public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
-public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX doesn't exist on Vanilla
+public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
 public.GetSpellDescription = C_Spell.GetSpellDescription
 public.GetSpellLink = C_Spell.GetSpellLink
 public.GetSpellName = C_Spell.GetSpellName
@@ -129,7 +129,7 @@ public.PlaySoundFile = PlaySoundFile
 public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 public.SendAddonMessage = SendAddonMessage
 public.SetRaidTarget = SetRaidTarget
-public.SendChatMessage = SendChatMessage
+public.SendChatMessage = C_ChatInfo and C_ChatInfo.SendChatMessage or SendChatMessage -- XXX [11.1.7:✗ 11.2:✓ MoP:✗ Wrath:✗ Vanilla:✗]
 public.UnitCanAttack = UnitCanAttack
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
 public.UnitThreatSituation = UnitThreatSituation
@@ -141,7 +141,7 @@ public.UnitIsPlayer = UnitIsPlayer
 public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
-public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Supported on Retail + Mists, not Vanilla]
+public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = build >= 120000
