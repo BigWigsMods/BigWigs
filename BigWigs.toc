@@ -1,4 +1,4 @@
-## Interface: 110105, 110107, 110100
+## Interface: 110105, 110107, 110200
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.

@@ -1,4 +1,4 @@
-## Interface: 110105, 110107, 110100
+## Interface: 110105, 110107, 110200
 
 ## Title: BigWigs [|cffeda55fKhaz Algar|r]
 ## Title-deDE: BigWigs [|cffeda55fKhaz Algar|r]
