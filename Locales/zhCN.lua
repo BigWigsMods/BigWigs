@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
---L.tempNew = "NEW: You can now type |cFFFFFFFF/bwtemp|r to see the Mythic+ keystones of your party members."
+L.tempNew = "新：现在输入 |cFFFFFFFF/bwtemp|r 可以查看队伍的史诗钥石信息。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -272,15 +272,15 @@ L.H25 = "25人英雄"
 -- Keystones.lua
 --
 
---L.keystoneTitle = "BigWigs Keystones"
---L.keystoneHeaderParty = "Party"
---L.keystoneRefreshParty = "Refresh Party"
---L.keystoneHeaderGuild = "Guild"
---L.keystoneRefreshGuild = "Refresh Guild"
---L.keystoneLevelTooltip = "Keystone level: |cFFFFFFFF%s|r"
---L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
---L.keystoneRatingTooltip = "Mythic+ rating: |cFFFFFFFF%d|r"
---L.keystoneHiddenTooltip = "The player has chosen to hide this information."
+L.keystoneTitle = "BigWigs 钥石信息"
+L.keystoneHeaderParty = "队伍"
+L.keystoneRefreshParty = "刷新队伍"
+L.keystoneHeaderGuild = "公会"
+L.keystoneRefreshGuild = "刷新公会"
+L.keystoneLevelTooltip = "钥石等级：|cFFFFFFFF%s|r"
+L.keystoneMapTooltip = "地下城：|cFFFFFFFF%s|r"
+L.keystoneRatingTooltip = "史诗评分：|cFFFFFFFF%d|r"
+L.keystoneHiddenTooltip = "该玩家选择隐藏此信息。"
 
 -----------------------------------------------------------------------
 -- PLUGINS
