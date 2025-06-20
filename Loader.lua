@@ -488,25 +488,25 @@ do
 		[1864] = lw_bfa, -- Shrine of the Storm
 		[1822] = lw_bfa, -- Siege of Boralus
 		[1877] = lw_bfa, -- Temple of Sethraliss
-		[1594] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- The Motherlode!!
+		[1594] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- The Motherlode!!
 		[1771] = lw_bfa, -- Tol Dagor
 		[1841] = lw_bfa, -- Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
-		[2097] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Operation: Mechagon
-		[2212] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Orgrimmar
-		[2213] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Stormwind
+		[2097] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- Operation: Mechagon
+		[2212] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Orgrimmar
+		[2213] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Stormwind
 		[2827] = lw_bfa, -- Horrific Vision of Stormwind (Revisited)
 		[2828] = lw_bfa, -- Horrific Vision of Orgrimmar (Revisited)
 		--[[ LittleWigs: Shadowlands ]]--
 		[2284] = lw_s, -- Sanguine Depths
 		[2285] = lw_s, -- Spires of Ascension
 		[2286] = lw_s, -- The Necrotic Wake
-		[2287] = lw_s, -- Halls of Atonement
+		[2287] = (public.isRetail and public.isNext) and {lw_s, lw_cs} or lw_s, -- Halls of Atonement
 		[2289] = lw_s, -- Plaguefall
 		[2290] = lw_s, -- Mists of Tirna Scithe
 		[2291] = lw_s, -- De Other Side
-		[2293] = public.isRetail and {lw_s, lw_cs} or lw_s, -- Theater of Pain
-		[2441] = lw_s, -- Tazavesh, the Veiled Market
+		[2293] = (public.isRetail and not public.isNext) and {lw_s, lw_cs} or lw_s, -- Theater of Pain
+		[2441] = (public.isRetail and public.isNext) and {lw_s, lw_cs} or lw_s, -- Tazavesh, the Veiled Market
 		--[[ LittleWigs: Dragonflight ]]--
 		[2451] = lw_df, -- Uldaman: Legacy of Tyr
 		[2515] = lw_df, -- The Azure Vault
@@ -518,17 +518,18 @@ do
 		[2527] = lw_df, -- Halls of Infusion
 		[2579] = lw_df, -- Dawn of the Infinite
 		--[[ LittleWigs: The War Within ]]--
-		[2648] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- The Rookery
+		[2648] = (public.isRetail and not public.isNext) and {lw_tww, lw_cs} or lw_tww, -- The Rookery
 		[2649] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Priory of the Sacred Flame
-		[2651] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Darkflame Cleft
+		[2651] = (public.isRetail and not public.isNext) and {lw_tww, lw_cs} or lw_tww, -- Darkflame Cleft
 		[2652] = lw_tww, -- The Stonevault
-		[2660] = lw_tww, -- Ara-Kara, City of Echoes
-		[2661] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Cinderbrew Meadery
-		[2662] = lw_tww, -- The Dawnbreaker
+		[2660] = (public.isRetail and public.isNext) and {lw_tww, lw_cs} or lw_tww, -- Ara-Kara, City of Echoes
+		[2661] = (public.isRetail and not public.isNext) and {lw_tww, lw_cs} or lw_tww, -- Cinderbrew Meadery
+		[2662] = (public.isRetail and public.isNext) and {lw_tww, lw_cs} or lw_tww, -- The Dawnbreaker
 		[2669] = lw_tww, -- City of Threads
 		[2710] = lw_tww, -- Awakening the Machine
 		[2773] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Operation: Floodgate
-		[2849] = public.isRetail and {lw_tww, lw_cs} or nil, -- Dastardly Dome
+		[2830] = (public.isRetail and public.isNext) and {lw_tww, lw_cs} or nil, -- Eco-Dome Al'dani
+		[2849] = (public.isRetail and not public.isNext) and {lw_tww, lw_cs} or nil, -- Dastardly Dome
 		--[[ LittleWigs: Delves ]]--
 		[2664] = lw_delves, -- Fungal Folly
 		[2679] = lw_delves, -- Mycomancer Cavern
