@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "koKR")
 if not L then return end
 
---L.tempNew = "NEW: You can now type |cFFFFFFFF/bwtemp|r to see the Mythic+ keystones of your party members."
+L.tempNew = "신규: 이제 |cFFFFFFFF/bwtemp|r을 입력하면 파티원의 신화+ 쐐기돌을 볼 수 있습니다."
 
 -- Core.lua
 L.berserk = "광폭화"
@@ -272,15 +272,15 @@ L.H25 = "영웅 25"
 -- Keystones.lua
 --
 
---L.keystoneTitle = "BigWigs Keystones"
---L.keystoneHeaderParty = "Party"
---L.keystoneRefreshParty = "Refresh Party"
---L.keystoneHeaderGuild = "Guild"
---L.keystoneRefreshGuild = "Refresh Guild"
---L.keystoneLevelTooltip = "Keystone level: |cFFFFFFFF%s|r"
---L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
---L.keystoneRatingTooltip = "Mythic+ rating: |cFFFFFFFF%d|r"
---L.keystoneHiddenTooltip = "The player has chosen to hide this information."
+L.keystoneTitle = "BigWigs 쐐기돌"
+L.keystoneHeaderParty = "파티"
+L.keystoneRefreshParty = "파티 새로 고침"
+L.keystoneHeaderGuild = "길드"
+L.keystoneRefreshGuild = "길드 새로 고침"
+L.keystoneLevelTooltip = "쐐기돌 레벨: |cFFFFFFFF%s|r"
+L.keystoneMapTooltip = "던전: |cFFFFFFFF%s|r"
+L.keystoneRatingTooltip = "신화+ 등급: |cFFFFFFFF%d|r"
+L.keystoneHiddenTooltip = "플레이어가 이 정보를 숨기도록 선택했습니다."
 
 -----------------------------------------------------------------------
 -- PLUGINS
