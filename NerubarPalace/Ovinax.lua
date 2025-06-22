@@ -196,7 +196,6 @@ end
 
 do
 	local playerList, iconList = {}, {}
-	local prev = 0
 	local scheduled = nil
 	local markOrder = { 6, 6, 4, 4, 3, 3, 7, 7 } -- blue, green, purple, red (wm 1-4)
 
