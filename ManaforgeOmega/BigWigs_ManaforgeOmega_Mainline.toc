@@ -9,8 +9,8 @@
 ## Title-koKR: BigWigs [|cffeda55fManaforge Omega|r]
 ## Title-ptBR: BigWigs [|cffeda55fManaforge Omega|r]
 ## Title-ruRU: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-zhCN: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-zhTW: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-zhCN: BigWigs [|cffeda55f法力熔炉：欧米伽|r]
+## Title-zhTW: BigWigs [|cffeda55f法力熔爐歐美加|r]
 ## Notes: BigWigs Manaforge Omega Modules
 ## Notes-deDE: BigWigs Manaforge Omega Module
 ## Notes-esES: BigWigs Manaforge Omega Modules
@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs Manaforge Omega Modules
 ## Notes-ptBR: BigWigs Manaforge Omega Modules
 ## Notes-ruRU: BigWigs Manaforge Omega Modules
-## Notes-zhCN: BigWigs Manaforge Omega Modules
-## Notes-zhTW: BigWigs Manaforge Omega Modules
+## Notes-zhCN: BigWigs 法力熔炉：欧米伽模块
+## Notes-zhTW: BigWigs 法力熔爐歐美加模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
