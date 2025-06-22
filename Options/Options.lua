@@ -1327,7 +1327,7 @@ local function populateToggleOptions(widget, module)
 	if module.SetupOptions then module:SetupOptions() end
 
 	local tabs = {}
-	if module.optionHeaders then -- Pre check if there's any tabs setup in optionHeaders
+	if module.optionHeaders then
 		for i, optionHeader in next, module.optionHeaders do
 			if type(optionHeader) == "table" and optionHeader.tabName then
 				table.insert(tabs, optionHeader)
@@ -1344,10 +1344,10 @@ local function populateToggleOptions(widget, module)
 			if text == "general" then
 				generalTabExists = true
 			end
-			local options = tab[1]
+			local tabData = tab[1]
 			table.insert(tabInfo, { text = text, value = text })
-			tabOptions[text] = options
-			for i, option in next, options do
+			tabOptions[text] = tabData
+			for j, option in next, tabData do
 				tabbedOptions[option] = true
 			end
 		end
@@ -1355,9 +1355,8 @@ local function populateToggleOptions(widget, module)
 		for i, option in next, module.toggleOptions do
 			local o = option
 			if type(o) == "table" then o = option[1] end
-			if not tabbedOptions[o] then -- not mapped
-				if not generalTabExists then -- Any non-mapped options will go to the general tab
-					local CL = BigWigsAPI:GetLocale("BigWigs: Common")
+			if not tabbedOptions[o] then -- Any options that are not assigned will go to the general tab
+				if not generalTabExists then
 					table.insert(tabInfo, 1, { text = CL.general, value = "general" })
 					generalTabExists = true
 				end
@@ -1366,18 +1365,18 @@ local function populateToggleOptions(widget, module)
 			end
 		end
 
-		local tabs = AceGUI:Create("TabGroup")
-		tabs:SetLayout("Flow")
-		tabs:SetTabs(tabInfo)
-		tabs:SetFullWidth(true)
-		tabs:SetCallback("OnGroupSelected", toggleOptionsTabSelected)
-		tabs:SetUserData("module", module)
-		tabs:SetUserData("scrollFrame", scrollFrame)
-		tabs:SetUserData("dropdown", widget)
-		tabs:SetUserData("tabOptions", tabOptions)
-		tabs:SelectTab(lastOptionsTab and lastOptionsTab or tabInfo[1].value)
+		local tabsWidget = AceGUI:Create("TabGroup")
+		tabsWidget:SetLayout("Flow")
+		tabsWidget:SetTabs(tabInfo)
+		tabsWidget:SetFullWidth(true)
+		tabsWidget:SetCallback("OnGroupSelected", toggleOptionsTabSelected)
+		tabsWidget:SetUserData("module", module)
+		tabsWidget:SetUserData("scrollFrame", scrollFrame)
+		tabsWidget:SetUserData("dropdown", widget)
+		tabsWidget:SetUserData("tabOptions", tabOptions)
+		tabsWidget:SelectTab(lastOptionsTab and lastOptionsTab or tabInfo[1].value)
 
-		scrollFrame:AddChild(tabs)
+		scrollFrame:AddChild(tabsWidget)
 	else -- no tabs
 		for i, option in next, module.toggleOptions do
 			local o = option
