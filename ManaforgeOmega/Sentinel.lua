@@ -1,4 +1,4 @@
-if not BigWigsLoader.isNext then return end
+if not BigWigsLoader.isTestBuild then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration

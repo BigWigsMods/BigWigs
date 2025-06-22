@@ -1,4 +1,4 @@
-if not BigWigsLoader.isNext then return end
+if not BigWigsLoader.isTestBuild then return end
 
 -- TODO:
 -- - Re-evaluate stage numbers, order might be wrong from journal? 2 intermissions in a row?
