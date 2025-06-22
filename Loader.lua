@@ -138,6 +138,7 @@ public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
 public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
 public.UnitIsPlayer = UnitIsPlayer
+public.UnitLevel = UnitLevel
 public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID

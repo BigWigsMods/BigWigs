@@ -4,16 +4,16 @@ codes = true
 exclude_files = {
 	"**/Libs",
 }
-files["**/API.lua"].ignore = {
+files["API.lua"].ignore = {
 	"113/C_AddOns",
 }
-files["**/Init_Vanilla.lua"].ignore = {
+files["Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
 }
-files["**/Locales/frFR_common.lua"].ignore = {
+files["Locales/frFR_common.lua"].ignore = {
 	"113/UnitSex",
 }
-files["**/Loader.lua"].ignore = {
+files["Loader.lua"].ignore = {
 	"113/date",
 	"113/geterrorhandler",
 
@@ -44,6 +44,7 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitGUID",
 	"113/UnitIsDeadOrGhost",
 	"113/UnitIsPlayer",
+	"113/UnitLevel",
 	"113/UnitNameUnmodified",
 	"113/UnitSex",
 	"113/UnitTokenFromGUID",
@@ -168,6 +169,7 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_PlayerInfo",
 	"113/C_SpecializationInfo",
 	"113/GameFontHighlightSmall",
+	"113/GetMaxPlayerLevel",
 	"113/GetSpecialization",
 	"113/GetSpecializationInfo",
 	"111/SLASH_BigWigsTestKS1",
@@ -308,7 +310,6 @@ globals = {
 	"UnitIsGroupAssistant",
 	"UnitIsGroupLeader",
 	"UnitIsUnit",
-	"UnitLevel",
 	"UnitPhaseReason",
 	"UnitPosition",
 	"UnitPower",

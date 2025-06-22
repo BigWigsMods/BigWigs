@@ -57,6 +57,10 @@ mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
 do
 	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 	mainPanel:SetScript("OnEvent", function()
+		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
+			return
+		end
+
 		if type(BigWigs3DB.myKeystones) ~= "table" then
 			BigWigs3DB.myKeystones = {}
 		end
