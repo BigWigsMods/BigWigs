@@ -131,12 +131,20 @@ function plugin:BigWigs_OnBossWin(event, module)
 	end
 end
 
-function plugin:BigWigs_VictorySound()
-	local soundName = self.db.profile.soundName
-	if soundName ~= "None" then
-		local sound = media:Fetch(SOUND, soundName, true)
-		if sound then
-			self:PlaySoundFile(sound)
+do
+	local prev = 0
+	local GetTime = GetTime
+	function plugin:BigWigs_VictorySound()
+		local t = GetTime()
+		if t-prev > 5 then -- Dastardly Duos sanity preservation
+			prev = t
+			local soundName = self.db.profile.soundName
+			if soundName ~= "None" then
+				local sound = media:Fetch(SOUND, soundName, true)
+				if sound then
+					self:PlaySoundFile(sound)
+				end
+			end
 		end
 	end
 end
