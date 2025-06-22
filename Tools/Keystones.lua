@@ -1,13 +1,15 @@
-local L
+local L, LoaderPublic
 do
 	local _, tbl = ...
 	L = tbl.API:GetLocale("BigWigs")
+	LoaderPublic = tbl.loaderPublic
 end
 
 local LibKeystone = LibStub("LibKeystone")
 local LibSpec = LibStub("LibSpecialization")
 
 local guildList, partyList = {}, {}
+local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
 
 local specs = {}
 do
@@ -36,6 +38,7 @@ local dungeonNames = {
 }
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
+local RequestData
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameFlatTemplate")
 mainPanel:Hide()
@@ -51,6 +54,64 @@ mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
 mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
+do
+	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
+	mainPanel:SetScript("OnEvent", function()
+		if type(BigWigs3DB.myKeystones) ~= "table" then
+			BigWigs3DB.myKeystones = {}
+		end
+		local resetStart = C_DateAndTime.GetWeeklyResetStartTime()
+		if type(BigWigs3DB.prevWeeklyReset) ~= "number" or resetStart ~= BigWigs3DB.prevWeeklyReset then
+			BigWigs3DB.prevWeeklyReset = resetStart
+			BigWigs3DB.myKeystones = {}
+		end
+
+		local keyLevel = C_MythicPlus.GetOwnedKeystoneLevel()
+		if type(keyLevel) ~= "number" then
+			keyLevel = 0
+		end
+		-- Keystone instance ID
+		local keyMap = C_MythicPlus.GetOwnedKeystoneMapID()
+		if type(keyMap) ~= "number" then
+			keyMap = 0
+		end
+		-- M+ rating
+		local playerRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("player")
+		local playerRating = 0
+		if type(playerRatingSummary) == "table" and type(playerRatingSummary.currentSeasonScore) == "number" then
+			playerRating = playerRatingSummary.currentSeasonScore
+		end
+
+		local guid = LoaderPublic.UnitGUID("player")
+		local name = LoaderPublic.UnitName("player")
+		local realm = GetRealmName()
+		local spec = GetSpecialization()
+		local specId = 0
+		if type(spec) == "number" and spec > 0 then
+			local mySpecId = GetSpecializationInfo(spec)
+			specId = type(mySpecId) == "number" and mySpecId or 0
+		end
+		BigWigs3DB.myKeystones[guid] = {
+			keyLevel = keyLevel,
+			keyMap = keyMap,
+			playerRating = playerRating,
+			specId = specId,
+			name = name,
+			realm = realm,
+		}
+	end)
+end
+mainPanel:RegisterEvent("PLAYER_LOGIN")
+
+local tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+tab1:SetSize(50, 26)
+tab1:SetPoint("BOTTOMLEFT", 10, -25)
+tab1.Text:SetText(L.keystoneTabOnline)
+
+local tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+tab2:SetSize(50, 26)
+tab2:SetPoint("BOTTOMLEFT", 90, -25)
+tab2.Text:SetText(L.keystoneTabAlts)
 
 local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
@@ -146,17 +207,174 @@ local function CreateCell()
 	end
 end
 
+tab1:SetScript("OnClick", function(self)
+	WipeCells()
+	RequestData()
+
+	partyHeader:SetText(L.keystoneHeaderParty)
+	partyRefreshButton:Show()
+	guildHeader:Show()
+	guildRefreshButton:Show()
+
+	-- Select tab 1
+	self.Left:Hide()
+	self.Middle:Hide()
+	self.Right:Hide()
+	self:Disable()
+	self:SetDisabledFontObject(GameFontHighlightSmall)
+
+	local offsetY = self.selectedTextY or -3
+	if self.isTopTab then
+		offsetY = -offsetY - 7
+	end
+
+	self.Text:SetPoint("CENTER", self, "CENTER", (self.selectedTextX or 0), offsetY)
+
+	self.LeftActive:Show()
+	self.MiddleActive:Show()
+	self.RightActive:Show()
+
+	-- Deselect tab 2
+	tab2.Left:Show()
+	tab2.Middle:Show()
+	tab2.Right:Show()
+	tab2:Enable()
+
+	offsetY = tab2.deselectedTextY or 2
+	if tab2.isTopTab then
+		offsetY = -offsetY - 6
+	end
+
+	tab2.Text:SetPoint("CENTER", tab2, "CENTER", (tab2.deselectedTextX or 0), offsetY)
+
+	tab2.LeftActive:Hide()
+	tab2.MiddleActive:Hide()
+	tab2.RightActive:Hide()
+
+	PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
+end)
+tab2:SetScript("OnClick", function(self)
+	WipeCells()
+
+	partyHeader:SetText(L.keystoneHeaderMyCharacters)
+	partyRefreshButton:Hide()
+	guildHeader:Hide()
+	guildRefreshButton:Hide()
+
+	-- Select tab 2
+	self.Left:Hide()
+	self.Middle:Hide()
+	self.Right:Hide()
+	self:Disable()
+	self:SetDisabledFontObject(GameFontHighlightSmall)
+
+	local offsetY = self.selectedTextY or -3
+	if self.isTopTab then
+		offsetY = -offsetY - 7
+	end
+
+	self.Text:SetPoint("CENTER", self, "CENTER", (self.selectedTextX or 0), offsetY)
+
+	self.LeftActive:Show()
+	self.MiddleActive:Show()
+	self.RightActive:Show()
+
+	-- Deselect tab 1
+	tab1.Left:Show()
+	tab1.Middle:Show()
+	tab1.Right:Show()
+	tab1:Enable()
+
+	offsetY = tab1.deselectedTextY or 2
+	if tab1.isTopTab then
+		offsetY = -offsetY - 6
+	end
+
+	tab1.Text:SetPoint("CENTER", tab1, "CENTER", (tab1.deselectedTextX or 0), offsetY)
+
+	tab1.LeftActive:Hide()
+	tab1.MiddleActive:Hide()
+	tab1.RightActive:Hide()
+
+	local sortedplayerList = {}
+	for _, pData in next, BigWigs3DB.myKeystones do
+		local decoratedName = nil
+		local nameTooltip = pData.name .. " [" .. pData.realm .. "]"
+		local specID = pData.specId
+		if specID > 0 then
+			local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
+			local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
+			decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, pData.name)
+			nameTooltip = format("|c%s%s|r [%s] |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pData.name, pData.realm, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+		end
+		sortedplayerList[#sortedplayerList+1] = {
+			name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
+			level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
+			map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(pData.keyMap > 0 and GetRealZoneText(pData.keyMap) or "-"),
+			rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
+		}
+	end
+	-- Sort list by level descending, or by name if equal level
+	table.sort(sortedplayerList, function(a, b)
+		if a.level > b.level then
+			return true
+		elseif a.level == b.level then
+			return a.name < b.name
+		end
+	end)
+
+	local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
+	local tableSize = #sortedplayerList
+	for i = 1, tableSize do
+		local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
+		if i == 1 then
+			cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
+			cellLevel:SetPoint("TOP", partyHeader, "BOTTOM", 0, -12)
+			cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
+			cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
+		else
+			cellName:SetPoint("TOP", prevName, "BOTTOM", 0, -6)
+			cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
+			cellMap:SetPoint("TOP", prevMap, "BOTTOM", 0, -6)
+			cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
+		end
+		cellName:SetWidth(WIDTH_NAME)
+		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
+		cellName.tooltip = sortedplayerList[i].nameTooltip
+		cellLevel:SetWidth(WIDTH_LEVEL)
+		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
+		cellLevel.tooltip = sortedplayerList[i].levelTooltip
+		cellMap:SetWidth(WIDTH_MAP)
+		cellMap.text:SetText(sortedplayerList[i].map)
+		cellMap.tooltip = sortedplayerList[i].mapTooltip
+		cellRating:SetWidth(WIDTH_RATING)
+		cellRating.text:SetText(sortedplayerList[i].rating)
+		cellRating.tooltip = sortedplayerList[i].ratingTooltip
+		prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
+
+		if i == tableSize then
+			-- Calculate scroll height
+			local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
+			local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+			scrollChild:SetHeight(newHeight)
+		end
+	end
+
+	PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
+end)
+
 SLASH_BigWigsTestKS1 = "/bwtemp" -- temp
-SlashCmdList.BigWigsTestKS = function()
+function RequestData()
 	partyList = {}
 	guildList = {}
 	mainPanel:Show()
 	LibKeystone.Request("PARTY")
 	LibSpec.RequestGuildSpecialization()
 	C_Timer.After(0.1, function() LibKeystone.Request("GUILD") end)
+	tab1:Click()
 end
+SlashCmdList.BigWigsTestKS = RequestData
 
-local nameWidth, levelWidth, mapWidth, ratingWidth = 150, 24, 66, 42
 local function UpdateCells(playerList, isGuildList)
 	local sortedplayerList = {}
 	for pName, pData in next, playerList do
@@ -204,16 +422,16 @@ local function UpdateCells(playerList, isGuildList)
 			cellMap:SetPoint("TOP", prevMap, "BOTTOM", 0, -6)
 			cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
 		end
-		cellName:SetWidth(nameWidth)
+		cellName:SetWidth(WIDTH_NAME)
 		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
 		cellName.tooltip = sortedplayerList[i].nameTooltip
-		cellLevel:SetWidth(levelWidth)
+		cellLevel:SetWidth(WIDTH_LEVEL)
 		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 		cellLevel.tooltip = sortedplayerList[i].levelTooltip
-		cellMap:SetWidth(mapWidth)
+		cellMap:SetWidth(WIDTH_MAP)
 		cellMap.text:SetText(sortedplayerList[i].map)
 		cellMap.tooltip = sortedplayerList[i].mapTooltip
-		cellRating:SetWidth(ratingWidth)
+		cellRating:SetWidth(WIDTH_RATING)
 		cellRating.text:SetText(sortedplayerList[i].rating)
 		cellRating.tooltip = sortedplayerList[i].ratingTooltip
 		prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
@@ -237,7 +455,7 @@ LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, ch
 	if channel == "PARTY" then
 		partyList[playerName] = {keyLevel, keyMap, playerRating}
 
-		if mainPanel:IsShown() then
+		if mainPanel:IsShown() and not tab1:IsEnabled() then
 			WipeCells()
 			UpdateCells(partyList)
 			UpdateCells(guildList, true)
@@ -245,7 +463,7 @@ LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, ch
 	elseif channel == "GUILD" then
 		guildList[playerName] = {keyLevel, keyMap, playerRating}
 
-		if mainPanel:IsShown() then
+		if mainPanel:IsShown() and not tab1:IsEnabled() then
 			WipeCells()
 			UpdateCells(partyList)
 			UpdateCells(guildList, true)

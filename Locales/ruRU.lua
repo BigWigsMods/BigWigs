@@ -281,6 +281,9 @@ L.H25 = "Героик 25"
 --L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
 --L.keystoneRatingTooltip = "Mythic+ rating: |cFFFFFFFF%d|r"
 --L.keystoneHiddenTooltip = "The player has chosen to hide this information."
+--L.keystoneTabOnline = "Online"
+--L.keystoneTabAlts = "Alts"
+--L.keystoneHeaderMyCharacters = "My Characters"
 
 -----------------------------------------------------------------------
 -- PLUGINS

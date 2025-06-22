@@ -163,6 +163,13 @@ files["Tools/AutoRole.lua"].ignore = {
 }
 files["Tools/Keystones.lua"].ignore = {
 	"113/C_ClassColor",
+	"113/C_DateAndTime",
+	"113/C_MythicPlus",
+	"113/C_PlayerInfo",
+	"113/C_SpecializationInfo",
+	"113/GameFontHighlightSmall",
+	"113/GetSpecialization",
+	"113/GetSpecializationInfo",
 	"111/SLASH_BigWigsTestKS1",
 	"112/SlashCmdList",
 }

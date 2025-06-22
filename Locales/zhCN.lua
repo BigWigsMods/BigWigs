@@ -281,6 +281,9 @@ L.keystoneLevelTooltip = "钥石等级：|cFFFFFFFF%s|r"
 L.keystoneMapTooltip = "地下城：|cFFFFFFFF%s|r"
 L.keystoneRatingTooltip = "史诗评分：|cFFFFFFFF%d|r"
 L.keystoneHiddenTooltip = "该玩家选择隐藏此信息。"
+--L.keystoneTabOnline = "Online"
+--L.keystoneTabAlts = "Alts"
+--L.keystoneHeaderMyCharacters = "My Characters"
 
 -----------------------------------------------------------------------
 -- PLUGINS
