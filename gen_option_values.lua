@@ -561,8 +561,17 @@ local function parseGetOptions(file_name, lines, start, special_options)
 		end
 	end
 	if headers then
-		for key in next, headers do
-			if not options[key] then
+		for key, header in next, headers do
+			if type(header) == "table" then
+				if not header.tabName then
+					error(string.format("    %s:%d: Missing tabName for a tab", file_name, start, tostring(key)))
+				end
+				for _, optionInTab in next, header[1] do
+					if not options[optionInTab] then
+						error(string.format("    %s:%d: Invalid option key %q in tab", file_name, start, tostring(optionInTab)))
+					end
+				end
+			elseif not options[key] then
 				error(string.format("    %s:%d: Invalid option header key %q", file_name, start, tostring(key)))
 			end
 		end

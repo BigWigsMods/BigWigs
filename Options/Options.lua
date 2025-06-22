@@ -44,7 +44,7 @@ local soundModule
 local configFrame, isPluginOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
-local toggleOptionsStatusTable = {}
+local toggleOptionsStatusTable, lastOptionsTab = {}, nil
 
 local C_EncounterJournal_GetSectionInfo = (loader.isClassic and not loader.isMists) and function(key)
 	local info = loader.isCata and C_EncounterJournal.GetSectionInfo(key)
@@ -1129,6 +1129,34 @@ local function statsFirstLabelOnEnter(self)
 	bwTooltip:Show()
 end
 
+local function toggleOptionsTabSelected(widget, callback, tab)
+	widget:PauseLayout()
+	widget:ReleaseChildren()
+
+	local module = widget:GetUserData("module")
+	local scrollFrame = widget:GetUserData("scrollFrame")
+	local dropdown = widget:GetUserData("dropdown")
+	local tabOptions = widget:GetUserData("tabOptions")
+	for i, option in next, tabOptions[tab] do
+		local o = option
+		if type(o) == "table" then o = option[1] end
+		if module.optionHeaders and module.optionHeaders[o] then
+			local header = AceGUI:Create("Heading")
+			header:SetText(module.optionHeaders[o])
+			header:SetFullWidth(true)
+			widget:AddChild(header)
+		end
+		widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+	end
+
+	-- Store last active tab
+	lastOptionsTab = tab
+
+	widget:ResumeLayout()
+	scrollFrame:PerformLayout()
+	widget:PerformLayout()
+end
+
 local function populateToggleOptions(widget, module)
 	visibleSpellDescriptionWidgets = {}
 	local scrollFrame = widget:GetUserData("parent")
@@ -1297,16 +1325,71 @@ local function populateToggleOptions(widget, module)
 	end
 
 	if module.SetupOptions then module:SetupOptions() end
-	for i, option in next, module.toggleOptions do
-		local o = option
-		if type(o) == "table" then o = option[1] end
-		if module.optionHeaders and module.optionHeaders[o] then
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.optionHeaders[o])
-			header:SetFullWidth(true)
-			scrollFrame:AddChild(header)
+
+	local tabs = {}
+	if module.optionHeaders then -- Pre check if there's any tabs setup in optionHeaders
+		for i, optionHeader in next, module.optionHeaders do
+			if type(optionHeader) == "table" and optionHeader.tabName then
+				table.insert(tabs, optionHeader)
+			end
 		end
-		scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
+	end
+
+	if #tabs > 0 then -- tabs!
+		local generalTabExists = false
+		local tabbedOptions = {}
+		local tabInfo, tabsCreated, tabOptions  = {}, {}, {}
+		for i, tab in next, tabs do
+			local text = tab.tabName
+			if text == "general" then
+				generalTabExists = true
+			end
+			local options = tab[1]
+			table.insert(tabInfo, { text = text, value = text })
+			tabOptions[text] = options
+			for i, option in next, options do
+				tabbedOptions[option] = true
+			end
+		end
+
+		for i, option in next, module.toggleOptions do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if not tabbedOptions[o] then -- not mapped
+				if not generalTabExists then -- Any non-mapped options will go to the general tab
+					local CL = BigWigsAPI:GetLocale("BigWigs: Common")
+					table.insert(tabInfo, 1, { text = CL.general, value = "general" })
+					generalTabExists = true
+				end
+				tabOptions["general"] = tabOptions["general"] or {}
+				table.insert(tabOptions["general"], option)
+			end
+		end
+
+		local tabs = AceGUI:Create("TabGroup")
+		tabs:SetLayout("Flow")
+		tabs:SetTabs(tabInfo)
+		tabs:SetFullWidth(true)
+		tabs:SetCallback("OnGroupSelected", toggleOptionsTabSelected)
+		tabs:SetUserData("module", module)
+		tabs:SetUserData("scrollFrame", scrollFrame)
+		tabs:SetUserData("dropdown", widget)
+		tabs:SetUserData("tabOptions", tabOptions)
+		tabs:SelectTab(lastOptionsTab and lastOptionsTab or tabInfo[1].value)
+
+		scrollFrame:AddChild(tabs)
+	else -- no tabs
+		for i, option in next, module.toggleOptions do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if module.optionHeaders and module.optionHeaders[o] then
+				local header = AceGUI:Create("Heading")
+				header:SetText(module.optionHeaders[o])
+				header:SetFullWidth(true)
+				scrollFrame:AddChild(header)
+			end
+			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
+		end
 	end
 
 	local list = AceGUI:Create("Button")
@@ -1326,6 +1409,7 @@ function showToggleOptions(widget, event, group, noScrollReset)
 	if not noScrollReset then
 		toggleOptionsStatusTable.restore_offset = nil
 		toggleOptionsStatusTable.restore_scrollvalue = nil
+		lastOptionsTab = nil
 	end
 	toggleOptionsStatusTable.offset = toggleOptionsStatusTable.restore_offset
 	toggleOptionsStatusTable.scrollvalue = toggleOptionsStatusTable.restore_scrollvalue
