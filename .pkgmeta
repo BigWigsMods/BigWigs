@@ -29,6 +29,7 @@ move-folders:
     BigWigs/NerubarPalace: BigWigs_NerubarPalace
     BigWigs/KhazAlgar: BigWigs_KhazAlgar
     BigWigs/LiberationOfUndermine: BigWigs_LiberationOfUndermine
+    BigWigs/ManaforgeOmega: BigWigs_ManaforgeOmega
 
 ignore:
   - .luacheckrc
