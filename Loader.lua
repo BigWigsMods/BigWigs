@@ -377,6 +377,7 @@ do
 		[-2274] = tww, -- Khaz Algar (Fake Menu)
 		[2657] = tww, -- Nerub'ar Palace
 		[2769] = tww, -- Liberation of Undermine
+		[2810] = tww, -- Manaforge Omega
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = not (public.isVanilla or public.isTBC or public.isWrath) and lw_cata or nil, -- Shadowfang Keep

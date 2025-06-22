@@ -1,0 +1,34 @@
+## Interface: 110105, 110007, 110100
+
+## Title: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-deDE: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-esES: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-esMX: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-frFR: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-itIT: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-koKR: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-ptBR: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-ruRU: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-zhCN: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-zhTW: BigWigs [|cffeda55fManaforge Omega|r]
+## Notes: BigWigs Manaforge Omega Modules
+## Notes-deDE: BigWigs Manaforge Omega Module
+## Notes-esES: BigWigs Manaforge Omega Modules
+## Notes-esMX: BigWigs Manaforge Omega Modules
+## Notes-frFR: BigWigs Manaforge Omega Modules
+## Notes-itIT: BigWigs Manaforge Omega Modules
+## Notes-koKR: BigWigs Manaforge Omega Modules
+## Notes-ptBR: BigWigs Manaforge Omega Modules
+## Notes-ruRU: BigWigs Manaforge Omega Modules
+## Notes-zhCN: BigWigs Manaforge Omega Modules
+## Notes-zhTW: BigWigs Manaforge Omega Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2810
+
+modules.xml

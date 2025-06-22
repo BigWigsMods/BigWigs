@@ -4,5 +4,6 @@
 <Include file="NerubarPalace\modules.xml"/>
 <Include file="KhazAlgar\modules.xml"/>
 <Include file="LiberationOfUndermine\modules.xml"/>
+<Include file="ManaforgeOmega\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
