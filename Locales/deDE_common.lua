@@ -139,6 +139,7 @@ L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent." -- Ma
 L.marker_npc_aura_desc = "Von '%s' betroffene NPCs mit %s markieren. Benötigt Leiter oder Assistent." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Deaktiviert"
 L.none = "Nichts"
+--L.markers = "Markers" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Verbindung"

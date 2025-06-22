@@ -139,6 +139,7 @@ L.marker_npc_desc = "Marchia %s con %s, necessario ruolo assistente o capo." -- 
 L.marker_npc_aura_desc = "Marchia NPCs che hanno '%s' con %s, richiede promozione or capogruppo." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Disattivato"
 L.none = "Nessuno"
+--L.markers = "Markers" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Vincolo"

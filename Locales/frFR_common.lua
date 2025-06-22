@@ -140,6 +140,7 @@ L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de 
 L.marker_npc_aura_desc = "Marque les PNJ affectés par '%s' avec %s. Nécessite d'être assistant ou chef de raid." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Désactivé"
 L.none = "Aucun"
+--L.markers = "Markers" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Lien"

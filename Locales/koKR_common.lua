@@ -139,6 +139,7 @@ L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 설정합니다. (부�
 L.marker_npc_aura_desc = "'%s' 영향을 받은 NPC를 %s|1으로;로; 표시합니다. (부공대장 이상 권한 필요)" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "비활성화"
 L.none = "없음"
+--L.markers = "Markers" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "연결"

@@ -139,6 +139,7 @@ L.marker_npc_desc = "Отмечать %s меткой %s, требуется б�
 L.marker_npc_aura_desc = "Отмечает НПЦ под воздействием '%s' меткой %s, требуется быть помощником или лидером рейда." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Отключено"
 L.none = "Нет"
+--L.markers = "Markers" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Связь"
