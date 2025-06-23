@@ -63,8 +63,6 @@ function mod:OnRegister()
 	self:SetSpellRename(1225016, CL.breath) -- Command Besiege (Breath)
 end
 
-local banishmentMarkerMap = {1, 2, 3, 4}
-local banishmentMarker = mod:AddMarkerOption(false, "player", banishmentMarkerMap[1], 1227549, unpack(banishmentMarkerMap)) -- Banishment
 function mod:GetOptions()
 	return {
 		-- Stage One: Oath-Breakers
@@ -76,8 +74,7 @@ function mod:GetOptions()
 			1224776, -- Subjugation Rule
 				{1224787, "CASTBAR"}, -- Conquer
 				1224812, -- Vanquish
-			{1227549, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Banishment
-				banishmentMarker, -- XXX Might be overkill
+			{1227549, "ME_ONLY_EMPHASIZE"}, -- Banishment
 			1224906, -- Invoke the Oath
 			-- 1224822, -- Tyranny -- Permanently in p1?
 			-- Royal Voidwing
@@ -123,7 +120,7 @@ function mod:GetOptions()
 		-- Tabs
 		{
 			tabName = CL.stage:format(1),
-			{1224731, 1224737, 1224767, 1224776, 1224787, 1224812, 1227549, banishmentMarker, 1224906, 1225099, 1224827, 1231097, 1227470}
+			{1224731, 1224737, 1224767, 1224776, 1224787, 1224812, 1227549, 1224906, 1225099, 1224827, 1231097, 1227470}
 		},
 		{
 			tabName = CL.stage:format(2),
@@ -140,10 +137,6 @@ function mod:GetOptions()
 		{
 			tabName = CL.stage:format(3),
 			{1225319, 1225444, 1225645, 1234907, 1226362, 1226413, 1226024}
-		},
-		{
-			tabName = CL.markers,
-			{banishmentMarker}
 		},
 		-- Sections
 		-- Stage 1
@@ -184,7 +177,6 @@ function mod:OnBossEnable()
 		self:Log("SPELL_CAST_START", "Vanquish", 1224812)
 		self:Log("SPELL_CAST_SUCCESS", "Banishment", 1227529)
 		self:Log("SPELL_AURA_APPLIED", "BanishmentApplied", 1227549)
-		self:Log("SPELL_AURA_REMOVED", "BanishmentRemoved", 1227549)
 		self:Log("SPELL_CAST_START", "InvokeTheOath", 1224906)
 
 		-- Royal Voidwing
@@ -324,70 +316,21 @@ end
 
 
 do
-	local playerList, iconList = {}, {}
-	local scheduled = nil
-	local function sortPriority(first, second) -- melee > ranged > healers
-		if first and second then
-			if first.healer ~= second.healer then
-				return not first.healer and second.healer
-			end
-			if first.melee ~= second.melee then
-				return first.melee and not second.melee
-			end
-			return first.index < second.index
-		end
-	end
-
-	function mod:MarkPlayers()
-		if scheduled then
-			self:CancelTimer(scheduled)
-			scheduled = nil
-		end
-		table.sort(iconList, sortPriority)
-		for i = 1, #iconList do
-			local player = iconList[i].player
-			local icon = banishmentMarkerMap[i]
-			playerList[#playerList+1] = player
-			playerList[player] = icon
-			self:TargetsMessage(1227549, "yellow", playerList, nil, CL.count:format(self:SpellName(1227549), banishmentCount - 1))
-			if player == self:UnitName("player") then
-				local text = CL.rticon:format(self:SpellName(1227549), icon)
-				self:Say(1227549, text, nil, CL.rticon:format("Banishment", icon))
-				self:SayCountdown(1227549, self:Easy() and 10 or 8, icon)
-				self:PlaySound(1227549, "warning")
-			end
-			self:CustomIcon(banishmentMarker, player, icon)
-		end
-	end
+	local playerList = {}
 
 	function mod:Banishment(args)
-		playerList, iconList = {}, {}
-
+		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, banishmentCount))
 		banishmentCount = banishmentCount + 1
 		-- self:Bar(1227549, CL.count:format(args.spellName, banishmentCount), 0)
-
-		if not scheduled then
-			scheduled = self:ScheduleTimer("MarkPlayers", 0.4)
-		end
 	end
 
 	function mod:BanishmentApplied(args)
-		iconList[#iconList+1] = {
-			player = args.destName,
-			melee = self:Melee(args.destName),
-			healer = self:Healer(args.destName),
-			index = UnitInRaid(args.destName) or 99, -- 99 for players not in your raid (or if you have no raid)
-		}
-		if #iconList == 4 then -- MaxTargets 4 on 1227529
-			self:MarkPlayers()
-		end
-	end
-
-	function mod:BanishmentRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(1227549)
+			self:PlaySound(args.spellId, "warning")
 		end
+		playerList[#playerList+1] = args.destName
+		self:TargetsMessage(args.spellId, "yellow", playerList, 4, CL.count:format(args.spellName, banishmentCount-1))
 	end
 end
 
