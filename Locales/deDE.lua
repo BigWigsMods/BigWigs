@@ -281,9 +281,9 @@ L.keystoneLevelTooltip = "Schlüsselstein Stufe: |cFFFFFFFF%s|r"
 L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
 L.keystoneRatingTooltip = "Mythisch+ Wertung: |cFFFFFFFF%d|r"
 L.keystoneHiddenTooltip = "Der Spieler hat entschieden diese Information zu verstecken."
---L.keystoneTabOnline = "Online"
---L.keystoneTabAlts = "Alts"
---L.keystoneHeaderMyCharacters = "My Characters"
+L.keystoneTabOnline = "Online"
+L.keystoneTabAlts = "Twinks"
+L.keystoneHeaderMyCharacters = "Meine Charaktere"
 
 -----------------------------------------------------------------------
 -- PLUGINS
