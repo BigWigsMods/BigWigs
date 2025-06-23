@@ -282,7 +282,7 @@ L.keystoneMapTooltip = "던전: |cFFFFFFFF%s|r"
 L.keystoneRatingTooltip = "신화+ 등급: |cFFFFFFFF%d|r"
 L.keystoneHiddenTooltip = "플레이어가 이 정보를 숨기도록 선택했습니다."
 L.keystoneTabOnline = "온라인"
-L.keystoneTabAlts = "Alts"
+L.keystoneTabAlts = "부캐"
 L.keystoneHeaderMyCharacters = "내 캐릭터"
 
 -----------------------------------------------------------------------
