@@ -267,6 +267,7 @@ L.H25 = "Heroisch 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
+--L.youAreInCombat = "You cannot do that in combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -283,6 +284,7 @@ L.keystoneRatingTooltip = "Mythisch+ Wertung: |cFFFFFFFF%d|r"
 L.keystoneHiddenTooltip = "Der Spieler hat entschieden diese Information zu verstecken."
 L.keystoneTabOnline = "Online"
 L.keystoneTabAlts = "Twinks"
+--L.keystoneTabTeleports = "Teleports"
 L.keystoneHeaderMyCharacters = "Meine Charaktere"
 
 -----------------------------------------------------------------------

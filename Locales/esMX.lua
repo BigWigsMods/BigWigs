@@ -267,6 +267,7 @@ L.H25 = "Heroico 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
+--L.youAreInCombat = "You cannot do that in combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -283,6 +284,7 @@ L.H25 = "Heroico 25"
 --L.keystoneHiddenTooltip = "The player has chosen to hide this information."
 --L.keystoneTabOnline = "Online"
 --L.keystoneTabAlts = "Alts"
+--L.keystoneTabTeleports = "Teleports"
 --L.keystoneHeaderMyCharacters = "My Characters"
 
 -----------------------------------------------------------------------

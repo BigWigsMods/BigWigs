@@ -107,6 +107,9 @@ local debugstack, print = debugstack, print
 local myLocale = GetLocale()
 local myName = UnitNameUnmodified("player")
 local myGUID = UnitGUID("player")
+local function sysprint(msg)
+	print("|cFF33FF99BigWigs|r: "..msg)
+end
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.date = date
@@ -142,6 +145,7 @@ public.UnitLevel = UnitLevel
 public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
+public.Print = sysprint
 public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
 do
 	local _, _, _, build = GetBuildInfo()
@@ -490,7 +494,7 @@ do
 		[1864] = lw_bfa, -- Shrine of the Storm
 		[1822] = lw_bfa, -- Siege of Boralus
 		[1877] = lw_bfa, -- Temple of Sethraliss
-		[1594] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- The Motherlode!!
+		[1594] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- The MOTHERLODE!!
 		[1771] = lw_bfa, -- Tol Dagor
 		[1841] = lw_bfa, -- Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
@@ -668,10 +672,6 @@ end or function(msg, focus)
 	button:SetHighlightFontObject("DialogButtonHighlightText")
 
 	text:SetText(msg)
-end
-
-local function sysprint(msg)
-	print("|cFF33FF99BigWigs|r: "..msg)
 end
 
 local function load(index)

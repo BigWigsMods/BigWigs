@@ -1,3 +1,4 @@
+-- This module is WIP, expect all code to be awful
 local L, LoaderPublic
 do
 	local _, tbl = ...
@@ -36,9 +37,20 @@ local dungeonNames = {
 	[2661] = "BREW",
 	[2773] = "FLOOD",
 }
+local teleports = {
+	[1594] = 467553, -- The MOTHERLODE!!
+	[2097] = 373274, -- Operation: Mechagon [Workshop]
+	[2293] = 354467, -- Theater of Pain
+	[2648] = 445443, -- The Rookery
+	[2649] = 445444, -- Priory of the Sacred Flame
+	[2651] = 445441, -- Darkflame Cleft
+	[2661] = 445440, -- Cinderbrew Meadery
+	[2773] = 1216786, -- Operation: Floodgate
+}
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
 local RequestData
+local prevTab = 1
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameFlatTemplate")
 mainPanel:Hide()
@@ -52,8 +64,21 @@ mainPanel:SetTitle(L.keystoneTitle)
 mainPanel:SetBorder("HeldBagLayout")
 mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
-mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
-mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
+mainPanel:SetScript("OnDragStart", function(self)
+	if prevTab == 3 and InCombatLockdown() then
+		LoaderPublic.Print(L.youAreInCombat)
+		return
+	end
+	self:StartMoving()
+end)
+mainPanel:SetScript("OnDragStop", function(self)
+	if prevTab == 3 and InCombatLockdown() then
+		LoaderPublic.Print(L.youAreInCombat)
+		return
+	end
+	self:StopMovingOrSizing()
+end)
+
 do
 	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 	mainPanel:SetScript("OnEvent", function()
@@ -114,8 +139,13 @@ tab1.Text:SetText(L.keystoneTabOnline)
 
 local tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab2:SetSize(50, 26)
-tab2:SetPoint("BOTTOMLEFT", 90, -25)
+tab2:SetPoint("LEFT", tab1, "RIGHT", 4, 0)
 tab2.Text:SetText(L.keystoneTabAlts)
+
+local tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+tab3:SetSize(50, 26)
+tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
+tab3.Text:SetText(L.keystoneTabTeleports)
 
 local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
@@ -125,7 +155,14 @@ local function WipeCells()
 	end
 	cellsCurrentlyShowing = {}
 end
-mainPanel.CloseButton:SetScript("OnClick", function() WipeCells() mainPanel:Hide() end)
+mainPanel.CloseButton:SetScript("OnClick", function()
+	if prevTab == 3 and InCombatLockdown() then
+		LoaderPublic.Print(L.youAreInCombat)
+		return
+	end
+	WipeCells()
+	mainPanel:Hide()
+end)
 
 local scrollArea = CreateFrame("ScrollFrame", nil, mainPanel, "ScrollFrameTemplate")
 scrollArea:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", 8, -30)
@@ -211,7 +248,50 @@ local function CreateCell()
 	end
 end
 
+local teleportButtons = {}
+for mapID, spellID in next, teleports do
+	local button = CreateFrame("Button", nil, nil, "SecureActionButtonTemplate")
+	teleportButtons[#teleportButtons+1] = button
+	button:SetAttribute("type", "spell")
+	button:SetAttribute("spell", spellID)
+	button:Hide()
+	button:SetSize(240, 20)
+	--button:SetScript("OnEnter", OnEnterShowTooltip)
+	--button:SetScript("OnLeave", GameTooltip_Hide)
+	button:EnableMouse(true)
+	button:RegisterForClicks("AnyDown", "AnyUp")
+
+	button.text = button:CreateFontString(nil, nil, "GameFontNormal")
+	button.text:SetAllPoints(button)
+	button.text:SetJustifyH("CENTER")
+	local mapName = GetRealZoneText(mapID)
+	button.text:SetText(mapName)
+
+	local bg = button:CreateTexture()
+	bg:SetAllPoints(button)
+	bg:SetColorTexture(0, 0, 0, 0.6)
+end
+table.sort(teleportButtons, function(buttonA, buttonB)
+	return buttonA.text:GetText() < buttonB.text:GetText()
+end)
+for i = 2, #teleportButtons do
+	teleportButtons[i]:SetPoint("TOP", teleportButtons[i-1], "BOTTOM", 0, -6)
+end
+
 tab1:SetScript("OnClick", function(self)
+	if prevTab == 3 then
+		if InCombatLockdown() then
+			LoaderPublic.Print(L.youAreInCombat)
+			return
+		else
+			teleportButtons[1]:ClearAllPoints()
+			for i = 1, #teleportButtons do
+				teleportButtons[i]:SetParent(nil)
+				teleportButtons[i]:Hide()
+			end
+		end
+	end
+	prevTab = 1
 	WipeCells()
 	RequestData()
 
@@ -255,9 +335,39 @@ tab1:SetScript("OnClick", function(self)
 	tab2.MiddleActive:Hide()
 	tab2.RightActive:Hide()
 
+	-- Deselect tab 3
+	tab3.Left:Show()
+	tab3.Middle:Show()
+	tab3.Right:Show()
+	tab3:Enable()
+
+	offsetY = tab3.deselectedTextY or 2
+	if tab3.isTopTab then
+		offsetY = -offsetY - 6
+	end
+
+	tab3.Text:SetPoint("CENTER", tab3, "CENTER", (tab3.deselectedTextX or 0), offsetY)
+
+	tab3.LeftActive:Hide()
+	tab3.MiddleActive:Hide()
+	tab3.RightActive:Hide()
+
 	PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
 end)
 tab2:SetScript("OnClick", function(self)
+	if prevTab == 3 then
+		if InCombatLockdown() then
+			LoaderPublic.Print(L.youAreInCombat)
+			return
+		else
+			teleportButtons[1]:ClearAllPoints()
+			for i = 1, #teleportButtons do
+				teleportButtons[i]:SetParent(nil)
+				teleportButtons[i]:Hide()
+			end
+		end
+	end
+	prevTab = 2
 	WipeCells()
 
 	partyHeader:SetText(L.keystoneHeaderMyCharacters)
@@ -300,6 +410,24 @@ tab2:SetScript("OnClick", function(self)
 	tab1.MiddleActive:Hide()
 	tab1.RightActive:Hide()
 
+	-- Deselect tab 3
+	tab3.Left:Show()
+	tab3.Middle:Show()
+	tab3.Right:Show()
+	tab3:Enable()
+
+	offsetY = tab3.deselectedTextY or 2
+	if tab3.isTopTab then
+		offsetY = -offsetY - 6
+	end
+
+	tab3.Text:SetPoint("CENTER", tab3, "CENTER", (tab3.deselectedTextX or 0), offsetY)
+
+	tab3.LeftActive:Hide()
+	tab3.MiddleActive:Hide()
+	tab3.RightActive:Hide()
+
+	-- Begin Display of alts
 	local sortedplayerList = {}
 	for _, pData in next, BigWigs3DB.myKeystones do
 		local decoratedName = nil
@@ -363,6 +491,85 @@ tab2:SetScript("OnClick", function(self)
 			scrollChild:SetHeight(newHeight)
 		end
 	end
+
+	PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
+end)
+tab3:SetScript("OnClick", function(self)
+	if InCombatLockdown() then
+		LoaderPublic.Print(L.youAreInCombat)
+		return
+	end
+	prevTab = 3
+	WipeCells()
+
+	partyHeader:SetText(L.keystoneTabTeleports)
+	partyRefreshButton:Hide()
+	guildHeader:Hide()
+	guildRefreshButton:Hide()
+
+	teleportButtons[1]:ClearAllPoints()
+	teleportButtons[1]:SetPoint("TOP", scrollChild, "TOP", 0, -30)
+	for i = 1, #teleportButtons do
+		teleportButtons[i]:SetParent(scrollChild)
+		teleportButtons[i]:Show()
+	end
+
+	-- Calculate scroll height
+	local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons]:GetBottom()
+	local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+	scrollChild:SetHeight(newHeight)
+
+	-- Select tab 3
+	self.Left:Hide()
+	self.Middle:Hide()
+	self.Right:Hide()
+	self:Disable()
+	self:SetDisabledFontObject(GameFontHighlightSmall)
+
+	local offsetY = self.selectedTextY or -3
+	if self.isTopTab then
+		offsetY = -offsetY - 7
+	end
+
+	self.Text:SetPoint("CENTER", self, "CENTER", (self.selectedTextX or 0), offsetY)
+
+	self.LeftActive:Show()
+	self.MiddleActive:Show()
+	self.RightActive:Show()
+
+	-- Deselect tab 1
+	tab1.Left:Show()
+	tab1.Middle:Show()
+	tab1.Right:Show()
+	tab1:Enable()
+
+	offsetY = tab1.deselectedTextY or 2
+	if tab1.isTopTab then
+		offsetY = -offsetY - 6
+	end
+
+	tab1.Text:SetPoint("CENTER", tab1, "CENTER", (tab1.deselectedTextX or 0), offsetY)
+
+	tab1.LeftActive:Hide()
+	tab1.MiddleActive:Hide()
+	tab1.RightActive:Hide()
+
+	-- Deselect tab 2
+	tab2.Left:Show()
+	tab2.Middle:Show()
+	tab2.Right:Show()
+	tab2:Enable()
+
+	offsetY = tab2.deselectedTextY or 2
+	if tab2.isTopTab then
+		offsetY = -offsetY - 6
+	end
+
+	tab2.Text:SetPoint("CENTER", tab2, "CENTER", (tab2.deselectedTextX or 0), offsetY)
+
+	tab2.LeftActive:Hide()
+	tab2.MiddleActive:Hide()
+	tab2.RightActive:Hide()
 
 	PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
 end)
