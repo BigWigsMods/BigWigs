@@ -267,7 +267,7 @@ L.H25 = "25人英雄"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.youAreInCombat = "You cannot do that in combat."
+L.youAreInCombat = "你不能在战斗中这样做"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -284,7 +284,7 @@ L.keystoneRatingTooltip = "史诗评分：|cFFFFFFFF%d|r"
 L.keystoneHiddenTooltip = "该玩家选择隐藏此信息。"
 L.keystoneTabOnline = "在线"
 L.keystoneTabAlts = "角色"
---L.keystoneTabTeleports = "Teleports"
+L.keystoneTabTeleports = "传送"
 L.keystoneHeaderMyCharacters = "我的角色"
 
 -----------------------------------------------------------------------
