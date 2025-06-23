@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fManaforge Omega|r]
 ## Title-frFR: BigWigs [|cffeda55fManaforge Omega|r]
 ## Title-itIT: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-koKR: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-koKR: BigWigs [|cffeda55f마나괴철로 종극점|r]
 ## Title-ptBR: BigWigs [|cffeda55fManaforge Omega|r]
 ## Title-ruRU: BigWigs [|cffeda55fManaforge Omega|r]
 ## Title-zhCN: BigWigs [|cffeda55f法力熔炉：欧米伽|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Manaforge Omega Modules
 ## Notes-frFR: BigWigs Manaforge Omega Modules
 ## Notes-itIT: BigWigs Manaforge Omega Modules
-## Notes-koKR: BigWigs Manaforge Omega Modules
+## Notes-koKR: BigWigs 마나괴철로 종극점 모듈
 ## Notes-ptBR: BigWigs Manaforge Omega Modules
 ## Notes-ruRU: BigWigs Manaforge Omega Modules
 ## Notes-zhCN: BigWigs 法力熔炉：欧米伽模块
