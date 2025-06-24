@@ -298,7 +298,7 @@ do
 				desc = L.testBarsBtn_desc,
 				func = function()
 					testCount = testCount + 1
-					local time = random(11, 30)
+					local time = math.random(11, 30)
 					plugin:SendMessage("BigWigs_StartBar", plugin, nil, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), time, testIcons[(testCount%3)+1])
 					plugin:SendMessage("BigWigs_Timer", plugin, nil, time, time, BigWigsAPI:GetLocale("BigWigs: Common").count:format(L.test, testCount), 0, testIcons[(testCount%3)+1], false, true)
 				end,
@@ -1447,7 +1447,7 @@ do
 	local SendAddonMessage = BigWigsLoader.SendAddonMessage
 	local dbmPrefix = BigWigsLoader.dbmPrefix
 	local times
-	BigWigsAPI.RegisterSlashCommand("raidbar", function(input)
+	BigWigsAPI.RegisterSlashCommand("/raidbar", function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
 		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
@@ -1475,7 +1475,7 @@ do
 	end)
 end
 
-BigWigsAPI.RegisterSlashCommand("localbar", function(input)
+BigWigsAPI.RegisterSlashCommand("/localbar", function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
 	local seconds, barText = input:match("(%S+) (.*)")

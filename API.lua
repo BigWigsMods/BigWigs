@@ -155,7 +155,7 @@ do
 	-- Registers a slash command
 	function API.RegisterSlashCommand(slashName, slashFunc)
 		if not slashTable[slashName] then
-			_G["SLASH_"..slashName.."1"] = "/".. slashName
+			_G["SLASH_"..slashName.."1"] = slashName
 			SlashCmdList[slashName] = function(text)
 				local slashFunction
 				while slashFunction ~= slashTable[slashName] do

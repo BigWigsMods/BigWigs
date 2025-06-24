@@ -996,5 +996,5 @@ local function slash(input)
 	end
 end
 
-BigWigsAPI.RegisterSlashCommand("proximity", slash)
-BigWigsAPI.RegisterSlashCommand("range", slash)
+BigWigsAPI.RegisterSlashCommand("/proximity", slash)
+BigWigsAPI.RegisterSlashCommand("/range", slash)

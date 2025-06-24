@@ -99,7 +99,7 @@ end
 -- Locals
 --
 
-local next, tonumber, type, strsplit, strsub = next, tonumber, type, strsplit, string.sub
+local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTimer = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTimer
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
@@ -864,8 +864,7 @@ do
 				local slashCommandsTable = {strsplit(",", meta)}
 				for slashNumInTable = 1, #slashCommandsTable do
 					local slash = slashCommandsTable[slashNumInTable]:trim()
-					local slashName = strsub(slash, 2) -- strip the "/"
-					RegisterSlashCommand(slashName, function()
+					RegisterSlashCommand(slash, function()
 						if strfind(name, "BigWigs", nil, true) then
 							-- Attempting to be smart. Only load core & config if it's a BW plugin.
 							loadCoreAndOptions()
