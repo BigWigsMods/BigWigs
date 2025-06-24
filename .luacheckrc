@@ -168,6 +168,7 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_MythicPlus",
 	"113/C_PlayerInfo",
 	"113/C_SpecializationInfo",
+	"113/C_Spell",
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
 	"113/GetSpecialization",

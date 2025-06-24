@@ -38,7 +38,7 @@ local dungeonNames = {
 	[2773] = "FLOOD",
 }
 local teleports = {
-	[1594] = 467553, -- The MOTHERLODE!!
+	[1594] = UnitFactionGroup("player") == "Alliance" and 467553 or 467555, -- The MOTHERLODE!!
 	[2097] = 373274, -- Operation: Mechagon [Workshop]
 	[2293] = 354467, -- Theater of Pain
 	[2648] = 445443, -- The Rookery
@@ -252,6 +252,8 @@ local teleportButtons = {}
 for mapID, spellID in next, teleports do
 	local button = CreateFrame("Button", nil, nil, "SecureActionButtonTemplate")
 	teleportButtons[#teleportButtons+1] = button
+	button.text = GetRealZoneText(mapID)
+	button.spellID = spellID
 	button:SetAttribute("type", "spell")
 	button:SetAttribute("spell", spellID)
 	button:Hide()
@@ -261,18 +263,23 @@ for mapID, spellID in next, teleports do
 	button:EnableMouse(true)
 	button:RegisterForClicks("AnyDown", "AnyUp")
 
-	button.text = button:CreateFontString(nil, nil, "GameFontNormal")
-	button.text:SetAllPoints(button)
-	button.text:SetJustifyH("CENTER")
-	local mapName = GetRealZoneText(mapID)
-	button.text:SetText(mapName)
+	local text = button:CreateFontString(nil, nil, "GameFontNormal")
+	text:SetAllPoints(button)
+	text:SetJustifyH("CENTER")
+	text:SetText(button.text)
 
-	local bg = button:CreateTexture()
-	bg:SetAllPoints(button)
-	bg:SetColorTexture(0, 0, 0, 0.6)
+	button.bg = button:CreateTexture()
+	button.bg:SetAllPoints(button)
+	button.bg:SetColorTexture(0, 0, 0, 0.6)
+
+	button.cdbar = button:CreateTexture()
+	button.cdbar:SetPoint("TOPLEFT")
+	button.cdbar:SetPoint("BOTTOMLEFT")
+	button.cdbar:SetColorTexture(1, 1, 1, 0.6)
+	button.cdbar:Hide()
 end
 table.sort(teleportButtons, function(buttonA, buttonB)
-	return buttonA.text:GetText() < buttonB.text:GetText()
+	return buttonA.text < buttonB.text
 end)
 for i = 2, #teleportButtons do
 	teleportButtons[i]:SetPoint("TOP", teleportButtons[i-1], "BOTTOM", 0, -6)
@@ -512,6 +519,19 @@ tab3:SetScript("OnClick", function(self)
 	for i = 1, #teleportButtons do
 		teleportButtons[i]:SetParent(scrollChild)
 		teleportButtons[i]:Show()
+		if not IsSpellKnown(teleportButtons[i].spellID) then
+			teleportButtons[i].bg:SetColorTexture(1, 0, 0, 0.6)
+		else
+			local cd = C_Spell.GetSpellCooldown(teleportButtons[i].spellID)
+			if cd.startTime > 0 and cd.duration > 0 then
+				local remaining = (cd.startTime + cd.duration) - GetTime()
+				local percentage = remaining / cd.duration
+				teleportButtons[i].cdbar:Show()
+				teleportButtons[i].cdbar:SetWidth(percentage * teleportButtons[i]:GetWidth())
+			else
+				teleportButtons[i].cdbar:Hide()
+			end
+		end
 	end
 
 	-- Calculate scroll height
