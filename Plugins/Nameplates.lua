@@ -712,7 +712,7 @@ do
 						testCount = testCount + 1
 						local testNumber = (testCount%3)+1
 						local key = "test"..testNumber
-						startNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
+						startNameplateIcon(plugin, guid, key, math.random(50, 200)/10, testIcons[testNumber])
 					else
 						BigWigs:Print(L.noNameplateTestTarget)
 					end
