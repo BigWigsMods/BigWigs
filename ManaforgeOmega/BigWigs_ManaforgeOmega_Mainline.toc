@@ -1,18 +1,18 @@
-## Interface: 110105, 110007, 110100
+## Interface: 110105, 110107, 110200
 
 ## Title: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-deDE: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-esES: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-esMX: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-frFR: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-itIT: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-deDE: BigWigs [|cffeda55fManaschmiede Omega|r]
+## Title-esES: BigWigs [|cffeda55fForja de Maná Omega|r]
+## Title-esMX: BigWigs [|cffeda55fForja de Maná Omega|r]
+## Title-frFR: BigWigs [|cffeda55fManaforge Oméga|r]
+## Title-itIT: BigWigs [|cffeda55fManaforgia Omega|r]
 ## Title-koKR: BigWigs [|cffeda55f마나괴철로 종극점|r]
-## Title-ptBR: BigWigs [|cffeda55fManaforge Omega|r]
-## Title-ruRU: BigWigs [|cffeda55fManaforge Omega|r]
+## Title-ptBR: BigWigs [|cffeda55fManaforja Ômeg|r]
+## Title-ruRU: BigWigs [|cffeda55fМанагорн Омега|r]
 ## Title-zhCN: BigWigs [|cffeda55f法力熔炉：欧米伽|r]
 ## Title-zhTW: BigWigs [|cffeda55f法力熔爐歐美加|r]
 ## Notes: BigWigs Manaforge Omega Modules
-## Notes-deDE: BigWigs Manaforge Omega Module
+## Notes-deDE: BigWigs Manaforge Omega Modules
 ## Notes-esES: BigWigs Manaforge Omega Modules
 ## Notes-esMX: BigWigs Manaforge Omega Modules
 ## Notes-frFR: BigWigs Manaforge Omega Modules
