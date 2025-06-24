@@ -152,15 +152,17 @@ end
 
 do
 	local slashTable = {}
+	local sub = string.sub
 	-- Registers a slash command
-	function API.RegisterSlashCommand(slashName, slashFunc)
+	function API.RegisterSlashCommand(rawSlashName, slashFunc)
+		local slashName = sub(rawSlashName, 2)
 		if not slashTable[slashName] then
-			_G["SLASH_"..slashName.."1"] = slashName
+			_G["SLASH_"..slashName.."1"] = rawSlashName
 			SlashCmdList[slashName] = function(text)
-				local slashFunction
-				while slashFunction ~= slashTable[slashName] do
-					slashFunction = slashTable[slashName]
-					slashFunction(text)
+				local func = slashTable[slashName]
+				func(text)
+				if slashTable[slashName] ~= func then -- Did this slash command load an addon that changed what the slash command does?
+					slashTable[slashName](text) -- Then call the new function also
 				end
 			end
 		end
