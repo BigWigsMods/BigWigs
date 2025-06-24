@@ -147,6 +147,28 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Slash commands
+--
+
+do
+	local slashTable = {}
+	-- Registers a slash command
+	function API.RegisterSlashCommand(slashName, slashFunc)
+		if not slashTable[slashName] then
+			_G["SLASH_"..slashName.."1"] = "/".. slashName
+			SlashCmdList[slashName] = function(text)
+				local slashFunction
+				while slashFunction ~= slashTable[slashName] do
+					slashFunction = slashTable[slashName]
+					slashFunction(text)
+				end
+			end
+		end
+		slashTable[slashName] = slashFunc
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Spell renames
 --
 

@@ -338,7 +338,7 @@ end
 -- Slash Handler
 --
 
-SlashCmdList.BIGWIGSPULL = function(input)
+BigWigsAPI.RegisterSlashCommand("pull", function(input)
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 
 	if not IsInGroup() or (IsInGroup(2) and UnitGroupRolesAssigned("player") == "TANK") or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or (IsInGroup(1) and not IsInRaid()) then -- Solo, tank in LFG, leader, assist, anyone in 5m
@@ -356,5 +356,4 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
 	end
-end
-SLASH_BIGWIGSPULL1 = "/pull"
+end)

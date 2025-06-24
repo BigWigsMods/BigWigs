@@ -1443,11 +1443,11 @@ end
 -- Slashcommand
 --
 
-local SendAddonMessage = BigWigsLoader.SendAddonMessage
-local dbmPrefix = BigWigsLoader.dbmPrefix
 do
+	local SendAddonMessage = BigWigsLoader.SendAddonMessage
+	local dbmPrefix = BigWigsLoader.dbmPrefix
 	local times
-	SlashCmdList.BIGWIGSRAIDBAR = function(input)
+	BigWigsAPI.RegisterSlashCommand("raidbar", function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
 		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
@@ -1472,11 +1472,10 @@ do
 				BigWigs:Error("BigWigs: Failed to send raid bar. Error code: ".. result)
 			end
 		end
-	end
-	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
+	end)
 end
 
-SlashCmdList.BIGWIGSLOCALBAR = function(input)
+BigWigsAPI.RegisterSlashCommand("localbar", function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
 	local seconds, barText = input:match("(%S+) (.*)")
@@ -1486,5 +1485,4 @@ SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	if not seconds then BigWigs:Print(L.wrongTime) return end
 
 	startCustomBar(seconds, plugin:UnitName("player"), barText)
-end
-SLASH_BIGWIGSLOCALBAR1 = "/localbar"
+end)

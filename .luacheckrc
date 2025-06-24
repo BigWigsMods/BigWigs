@@ -6,6 +6,7 @@ exclude_files = {
 }
 files["API.lua"].ignore = {
 	"113/C_AddOns",
+	"112/SlashCmdList",
 }
 files["Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
@@ -54,7 +55,6 @@ files["Loader.lua"].ignore = {
 	"111/SLASH_BigWigs2",
 	"111/SLASH_BigWigsVersion1",
 	"11[23]/SlashCmdList",
-	"11[23]/hash_SlashCmdList",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/C_Item",
@@ -234,8 +234,6 @@ globals = {
 	"C_RaidLocks",
 	"C_ScenarioInfo", -- LittleWigs
 	"C_Timer",
-	"ChatFrame_ImportListToHash",
-	"ChatTypeInfo",
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
 	"CombatLogGetCurrentEventInfo",

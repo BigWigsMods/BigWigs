@@ -167,7 +167,6 @@ local dbmPrefix = public.dbmPrefix
 local isMouseDown = false
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
-local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
@@ -677,13 +676,6 @@ end
 local function load(index)
 	if IsAddOnLoaded(index) then return true end
 
-	if loadOnSlash[index] then -- Check if we need remove our slash handler stub.
-		for _, slash in next, loadOnSlash[index] do
-			hash_SlashCmdList[slash] = nil
-		end
-		loadOnSlash[index] = nil
-	end
-
 	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
@@ -815,6 +807,11 @@ do
 	local extraMenus = {} -- Addons that contain extra zone menus to appear in the GUI
 	local noMenus = {} -- Addons that contain zones that shouldn't create a menu
 	local blockedMenus = {} -- Zones that shouldn't create a menu
+	local RegisterSlashCommand
+	do
+		local _, tbl = ...
+		RegisterSlashCommand = tbl.API.RegisterSlashCommand
+	end
 
 	for i = 1, GetNumAddOns() do
 		local name, _, _, _, addonState = GetAddOnInfo(i)
@@ -864,32 +861,17 @@ do
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
-				loadOnSlash[i] = {}
-				local tbl = {strsplit(",", meta)}
-				for j=1, #tbl do
-					local slash = tbl[j]:trim():upper()
-					local slashName = "BIGWIGS"..strsub(slash, 2) -- strip the "/"
-					_G["SLASH_"..slashName.."1"] = slash
-					SlashCmdList[slashName] = function(text)
+				local slashCommandsTable = {strsplit(",", meta)}
+				for slashNumInTable = 1, #slashCommandsTable do
+					local slash = slashCommandsTable[slashNumInTable]:trim()
+					local slashName = strsub(slash, 2) -- strip the "/"
+					RegisterSlashCommand(slashName, function()
 						if strfind(name, "BigWigs", nil, true) then
 							-- Attempting to be smart. Only load core & config if it's a BW plugin.
 							loadCoreAndOptions()
 						end
-						if load(i) then -- Load the addon/plugin
-							-- Call the slash command again, which should have been set by the addon.
-							-- Authors, do NOT delay setting it in OnInitialize/OnEnable/etc.
-							ChatFrame_ImportListToHash(SlashCmdList, hash_SlashCmdList)
-							local func = hash_SlashCmdList[slash]
-							if func then
-								func(text)
-								return
-							end
-						end
-						-- Addon didn't register the slash command for whatever reason, print the default invalid slash message.
-						local info = ChatTypeInfo["SYSTEM"]
-						DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT_SIMPLE, info.r, info.g, info.b, info.id)
-					end
-					loadOnSlash[i][j] = slash
+						load(i) -- Load the addon/plugin
+					end)
 				end
 			end
 		else
@@ -922,10 +904,6 @@ do
 					end
 				end
 			end
-		end
-
-		if next(loadOnSlash) then
-			ChatFrame_ImportListToHash(SlashCmdList, hash_SlashCmdList) -- Add our slashes to the hash.
 		end
 	end
 
