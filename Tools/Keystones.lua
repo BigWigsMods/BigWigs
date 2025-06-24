@@ -522,6 +522,7 @@ tab3:SetScript("OnClick", function(self)
 		if not IsSpellKnown(teleportButtons[i].spellID) then
 			teleportButtons[i].bg:SetColorTexture(1, 0, 0, 0.6)
 		else
+			teleportButtons[i].bg:SetColorTexture(0, 0, 0, 0.6)
 			local cd = C_Spell.GetSpellCooldown(teleportButtons[i].spellID)
 			if cd.startTime > 0 and cd.duration > 0 then
 				local remaining = (cd.startTime + cd.duration) - GetTime()
