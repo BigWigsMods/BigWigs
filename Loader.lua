@@ -746,9 +746,7 @@ end
 
 C_PartyInfo.DoCountdown = function(num) -- Overwrite Blizz countdown
 	loadAndEnableCore()
-	if SlashCmdList.BIGWIGSPULL then
-		SlashCmdList.BIGWIGSPULL(num)
-	end
+	SlashCmdList.pull(num)
 end
 
 -----------------------------------------------------------------------
