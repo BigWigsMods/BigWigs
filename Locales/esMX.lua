@@ -305,6 +305,7 @@ L.sizeDesc = "Normalmente se ajusta el tamaño arrastrando el ancla. Si necesita
 L.fontSizeDesc = "Ajuste el tamaño de la fuente utilizando el control deslizante o escriba el valor en la casilla que tiene un máximo de 200."
 L.disabled = "Desactivado"
 L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacer esto?"
+--L.keybinding = "Keybinding"
 
 -- Anchor Points
 L.UP = "Arriba"
@@ -712,6 +713,7 @@ L.sendPull = "Mandar un pull para tu grupo."
 L.wrongPullFormat = "Contador inválido para el pull. Usa algo como: /pull 5"
 L.countdownBegins = "Comenzar cuenta regresiva"
 L.countdownBegins_desc = "Elige cuánto tiempo restante debe de quedar en la llamada de jefe (en segundos) cuando la cuenta regresiva comience."
+--L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

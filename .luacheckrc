@@ -132,9 +132,11 @@ files["**/Plugins/Proximity.lua"].ignore = {
 	"113/GetServerExpansionLevel", -- Classic support
 	"113/UnitInPhase", -- Classic support
 }
-files["**/Plugins/Pull.lua"].ignore = {
+files["Plugins/Pull.lua"].ignore = {
 	"113/C_EventUtils",
+	"113/ClearOverrideBindings",
 	"113/GetPlayerInfoByGUID",
+	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
 }
 files["**/Plugins/RaidIcon.lua"].ignore = {

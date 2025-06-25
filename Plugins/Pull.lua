@@ -17,6 +17,13 @@ local IsEncounterInProgress = IsEncounterInProgress
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
+local BWPull = CreateFrame("Button", "BWPull")
+BWPull:SetSize(1, 1)
+BWPull:Hide()
+BWPull:SetScript("OnClick", function()
+	DoCountdown(10)
+end)
+
 -------------------------------------------------------------------------------
 -- Options
 --
@@ -42,6 +49,7 @@ do
 		startPullSound = "BigWigs: Long",
 		endPullSound = "BigWigs: Alarm",
 		voice = voiceMap[GetLocale()] or "English: Amy",
+		keybind = "",
 	}
 end
 
@@ -157,6 +165,17 @@ do
 				order = 10,
 				width = "full",
 			},
+			keybind = {
+				type = "keybinding",
+				name = L.keybinding,
+				desc = L.pullKeybindingDesc,
+				order = 11,
+				set = function(a, key)
+					plugin.db.profile.keybind = key
+					ClearOverrideBindings(BWPull)
+					SetOverrideBindingClick(BWPull, true, key, "BWPull")
+				end,
+			},
 		},
 	}
 end
@@ -183,6 +202,11 @@ do
 		end
 		if db.countBegin < 5 or db.countBegin > 10 then
 			db.countBegin = plugin.defaultDB.countBegin
+		end
+
+		ClearOverrideBindings(BWPull)
+		if plugin.db.profile.keybind ~= "" then
+			SetOverrideBindingClick(BWPull, true, plugin.db.profile.keybind, "BWPull")
 		end
 	end
 

@@ -305,6 +305,7 @@ L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você 
 L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitando o valor na caixa que tem um limite muito maior de 200."
 L.disabled = "Desativado"
 L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
+--L.keybinding = "Keybinding"
 
 -- Anchor Points
 L.UP = "Cima"
@@ -712,6 +713,7 @@ L.sendPull = "Enviando um temporizador de pull para seu grupo."
 L.wrongPullFormat = "Temporizador de pull inválido. Um exemplo correto seria: /pull 5"
 L.countdownBegins = "Iniciar Contagem"
 L.countdownBegins_desc = "Escolhe quanto tempo deve restar de tempo de pull (em segundos) para começar a contagem."
+--L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

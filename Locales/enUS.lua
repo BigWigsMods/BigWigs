@@ -304,6 +304,7 @@ L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an e
 L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
 L.disabled = "Disabled"
 L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+L.keybinding = "Keybinding"
 
 -- Anchor Points / Grow Directions
 L.UP = "Up"
@@ -711,6 +712,7 @@ L.sendPull = "Sending a pull timer to your group."
 L.wrongPullFormat = "Invalid pull timer. A correct example is: /pull 5"
 L.countdownBegins = "Begin Countdown"
 L.countdownBegins_desc = "Choose how much time should be remaining on the pull timer (in seconds) when the countdown begins."
+L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

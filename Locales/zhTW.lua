@@ -305,6 +305,7 @@ L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精
 L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入精確數值，最大可以到 200。"
 L.disabled = "停用"
 L.disableDesc = "即將禁用「%s」的功能，但|cffff4411不建議|r這麼做。\n\n你確定要這麼做嗎？"
+--L.keybinding = "Keybinding"
 
 -- Anchor Points
 L.UP = "向上"
@@ -712,6 +713,7 @@ L.sendPull = "向你的團隊發送開怪倒數計時器。"
 L.wrongPullFormat = "無效倒數。正確的格式範例： /pull 5"
 L.countdownBegins = "開始倒數"
 L.countdownBegins_desc = "以秒為單位，選擇在開怪計時器剩餘幾秒時開始倒數。"
+--L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

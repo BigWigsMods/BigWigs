@@ -305,6 +305,7 @@ L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한
 L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
 L.disabled = "비활성"
 L.disableDesc = "'%s' 기능을 비활성화하려고 합니다. |cffff4411권장하지 않음|r.\n\n정말로 비활성화하시겠습니까?"
+--L.keybinding = "Keybinding"
 
 -- Anchor Points
 L.UP = "위"
@@ -712,6 +713,7 @@ L.sendPull = "그룹에 풀 타이머를 전송합니다."
 L.wrongPullFormat = "잘못된 풀 타이머 형식입니다. 올바른 예: /pull 5"
 L.countdownBegins = "초읽기 시작"
 L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될 지 선택하세요."
+--L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
