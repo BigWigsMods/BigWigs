@@ -2026,6 +2026,9 @@ end
 -- Slash commands
 --
 
+-- XXX compat code
+SlashCmdList.BIGWIGSPULL = function() Popup("Use /pull to start pull timers.", true) error("Use /pull to start pull timers.") end
+
 SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
 SlashCmdList.BigWigs = function()
