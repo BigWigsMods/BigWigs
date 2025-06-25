@@ -79,9 +79,15 @@ mainPanel:SetScript("OnDragStop", function(self)
 	self:StopMovingOrSizing()
 end)
 
+local UpdateMyKeystone
 do
+	local GetMaxPlayerLevel = GetMaxPlayerLevel
+	local GetWeeklyResetStartTime = C_DateAndTime.GetWeeklyResetStartTime
+	local GetOwnedKeystoneLevel, GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneMapID
+	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+	local GetRealmName = GetRealmName
 	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
-	mainPanel:SetScript("OnEvent", function()
+	UpdateMyKeystone = function()
 		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
 			return
 		end
@@ -89,23 +95,23 @@ do
 		if type(BigWigs3DB.myKeystones) ~= "table" then
 			BigWigs3DB.myKeystones = {}
 		end
-		local resetStart = C_DateAndTime.GetWeeklyResetStartTime()
+		local resetStart = GetWeeklyResetStartTime()
 		if type(BigWigs3DB.prevWeeklyReset) ~= "number" or resetStart ~= BigWigs3DB.prevWeeklyReset then
 			BigWigs3DB.prevWeeklyReset = resetStart
 			BigWigs3DB.myKeystones = {}
 		end
 
-		local keyLevel = C_MythicPlus.GetOwnedKeystoneLevel()
+		local keyLevel = GetOwnedKeystoneLevel()
 		if type(keyLevel) ~= "number" then
 			keyLevel = 0
 		end
 		-- Keystone instance ID
-		local keyMap = C_MythicPlus.GetOwnedKeystoneMapID()
+		local keyMap = GetOwnedKeystoneMapID()
 		if type(keyMap) ~= "number" then
 			keyMap = 0
 		end
 		-- M+ rating
-		local playerRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("player")
+		local playerRatingSummary = GetPlayerMythicPlusRatingSummary("player")
 		local playerRating = 0
 		if type(playerRatingSummary) == "table" and type(playerRatingSummary.currentSeasonScore) == "number" then
 			playerRating = playerRatingSummary.currentSeasonScore
@@ -128,9 +134,10 @@ do
 			name = name,
 			realm = realm,
 		}
-	end)
+	end
+	mainPanel:SetScript("OnEvent", UpdateMyKeystone)
 end
-mainPanel:RegisterEvent("PLAYER_LOGIN")
+mainPanel:RegisterEvent("PLAYER_LOGOUT")
 
 local tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab1:SetSize(50, 26)
@@ -435,6 +442,8 @@ tab2:SetScript("OnClick", function(self)
 	tab3.RightActive:Hide()
 
 	-- Begin Display of alts
+	UpdateMyKeystone()
+
 	local sortedplayerList = {}
 	for _, pData in next, BigWigs3DB.myKeystones do
 		local decoratedName = nil
