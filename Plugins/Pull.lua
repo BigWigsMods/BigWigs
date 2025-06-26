@@ -23,6 +23,13 @@ BWPull:Hide()
 BWPull:SetScript("OnClick", function()
 	DoCountdown(10)
 end)
+BWPull:SetScript("OnEvent", function(self, event)
+	self:UnregisterEvent(event)
+	ClearOverrideBindings(self)
+	if plugin.db.profile.keybind ~= "" then
+		SetOverrideBindingClick(self, true, plugin.db.profile.keybind, "BWPull")
+	end
+end)
 
 -------------------------------------------------------------------------------
 -- Options
@@ -179,8 +186,14 @@ do
 				order = 12,
 				set = function(a, key)
 					plugin.db.profile.keybind = key
-					ClearOverrideBindings(BWPull)
-					SetOverrideBindingClick(BWPull, true, key, "BWPull")
+					if not InCombatLockdown() then
+						ClearOverrideBindings(BWPull)
+						if key ~= "" then
+							SetOverrideBindingClick(BWPull, true, key, "BWPull")
+						end
+					else
+						BWPull:RegisterEvent("PLAYER_REGEN_ENABLED")
+					end
 				end,
 			},
 		},
@@ -211,9 +224,13 @@ do
 			db.countBegin = plugin.defaultDB.countBegin
 		end
 
-		ClearOverrideBindings(BWPull)
-		if plugin.db.profile.keybind ~= "" then
-			SetOverrideBindingClick(BWPull, true, plugin.db.profile.keybind, "BWPull")
+		if not InCombatLockdown() then
+			ClearOverrideBindings(BWPull)
+			if plugin.db.profile.keybind ~= "" then
+				SetOverrideBindingClick(BWPull, true, plugin.db.profile.keybind, "BWPull")
+			end
+		else
+			BWPull:RegisterEvent("PLAYER_REGEN_ENABLED")
 		end
 	end
 
