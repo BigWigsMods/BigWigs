@@ -549,9 +549,11 @@ do
 		[2688] = lw_delves, -- The Spiral Weave
 		[2689] = lw_delves, -- Tak-Rethan Abyss
 		[2690] = lw_delves, -- The Underkeep
+		[2803] = lw_delves, -- Archival Assault
 		[2815] = lw_delves, -- Excavation Site 9
 		[2826] = lw_delves, -- Sidestreet Sluice
 		[2831] = lw_delves, -- Demolition Dome
+		[2951] = lw_delves, -- Voidrazor Sanctuary
 
 		--[[ Capping ]]--
 		[30] = cap, -- Alterac Valley
