@@ -2300,7 +2300,39 @@ end)
 
 do
 	local offDispel, defDispel = {}, {}
-	if isCata then
+	if isMists then
+		function UpdateDispelStatus()
+			offDispel, defDispel = {}, {}
+			if IsSpellKnown(19801) or IsSpellKnown(30449) or IsSpellKnown(370) or IsSpellKnown(528) or IsSpellKnown(32375) or IsPlayerSpell(58375) or IsSpellKnown(19505, true) then
+				-- Tranquilizing Shot (Hunter), Spellsteal (Mage), Purge (Shaman), Dispel Magic (Priest), Mass Dispel (Priest), Glyph of Shield Slam (Warrior), Devour Magic (Warlock Felhunter)
+				offDispel.magic = true
+			end
+			if IsSpellKnown(2908) or IsSpellKnown(19801) or IsSpellKnown(5938) then
+				-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue)
+				offDispel.enrage = true
+			end
+			if IsPlayerSpell(88423) or IsPlayerSpell(77130) or IsPlayerSpell(53551) or IsSpellKnown(527) or IsSpellKnown(32375) or IsSpellKnown(89808, true) or IsSpellKnown(115451) then
+				-- Nature's Cure (Druid), Purify Spirit (Shaman), Sacred Cleansing (Paladin), Purify (Priest), Mass Dispel (Priest), Singe Magic (Warlock Imp), Internal Medicine (Monk)
+				defDispel.magic = true
+			end
+			if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(115450) then
+				-- Cleanse (Paladin), Purify (Priest), Detox (Monk)
+				defDispel.disease = true
+			end
+			if IsPlayerSpell(88423) or IsSpellKnown(2782) or IsSpellKnown(4987) or IsSpellKnown(115450) then
+				-- Nature's Cure (Druid), Remove Corruption (Druid), Cleanse (Paladin), Detox (Monk)
+				defDispel.poison = true
+			end
+			if IsPlayerSpell(88423) or IsSpellKnown(2782) or IsSpellKnown(475) or IsSpellKnown(51886) then
+				-- Nature's Cure (Druid), Remove Corruption (Druid), Remove Curse (Mage), Cleanse Spirit (Shaman)
+				defDispel.curse = true
+			end
+			if IsSpellKnown(1044) or IsSpellKnown(116841) then
+				-- Hand of Freedom (Paladin), Tiger's Lust (Monk)
+				defDispel.movement = true
+			end
+		end
+	elseif isCata then
 		function UpdateDispelStatus()
 			offDispel, defDispel = {}, {}
 			if IsSpellKnown(19801) or IsSpellKnown(30449) or IsSpellKnown(370) or IsSpellKnown(527) or IsSpellKnown(32375) or IsSpellKnown(23922) or IsSpellKnown(19505, true) then
@@ -2332,7 +2364,7 @@ do
 				defDispel.movement = true
 			end
 		end
-	else
+	else -- Retail
 		function UpdateDispelStatus()
 			offDispel, defDispel = {}, {}
 			if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or IsSpellKnown(19801) then
@@ -2382,9 +2414,42 @@ do
 end
 
 do
-
 	local canInterrupt = false
-	if isCata then
+	if isMists then
+		local spellList = {
+			78675, -- Solar Beam (Druid-Balance)
+			106839, -- Skull Bash (Druid)
+			147362, -- Counter Shot (Hunter)
+			57994, -- Wind Shear (Shaman)
+			47528, -- Mind Freeze (Death Knight)
+			96231, -- Rebuke (Paladin)
+			15487, -- Silence (Priest-Shadow)
+			2139, -- Counterspell (Mage)
+			1766, -- Kick (Rogue)
+			6552, -- Pummel (Warrior)
+			116705, -- Spear Hand Strike (Monk)
+		}
+		function UpdateInterruptStatus()
+			if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+				canInterrupt = 19647
+				return
+			end
+			canInterrupt = false
+			for i = 1, #spellList do
+				local spell = spellList[i]
+				if IsSpellKnown(spell) then
+					if spell == 147362 then -- Counter Shot
+						if IsPlayerSpell(34490) then -- Silencing Shot (replaces Counter Shot for Marksmanship)
+							canInterrupt = 34490
+							return
+						end
+					end
+					canInterrupt = spell
+					return
+				end
+			end
+		end
+	elseif isCata then
 		local spellList = {
 			78675, -- Solar Beam (Druid-Balance)
 			80964, -- Skull Bash (Druid-Feral-Bear)
@@ -2431,7 +2496,7 @@ do
 				end
 			end
 		end
-	else
+	else -- Retail
 		local spellList = {
 			78675, -- Solar Beam (Druid-Balance)
 			106839, -- Skull Bash (Druid)
