@@ -713,6 +713,7 @@ L.sendPull = "Отправляю пулл таймер группе."
 L.wrongPullFormat = "Неправильная команда. Пример правильного формата: /pull 5"
 L.countdownBegins = "Начать отсчет"
 L.countdownBegins_desc = "Выберите, сколько времени должно оставаться до пулла (в секундах), когда начнется обратный отсчет."
+--L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
 --L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------

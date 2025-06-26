@@ -713,6 +713,7 @@ L.sendPull = "Envoi d'un signal de pull à votre groupe."
 L.wrongPullFormat = "Durée de pull invalide. Un exemple corret est : /pull 5"
 L.countdownBegins = "Début du compte à rebours"
 L.countdownBegins_desc = "Choisissez combien de temps il doit rester sur le délai de pull (en secondes) pour que le compte à rebours commence."
+--L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
 --L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------

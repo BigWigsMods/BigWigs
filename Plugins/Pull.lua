@@ -165,11 +165,18 @@ do
 				order = 10,
 				width = "full",
 			},
+			explainer = {
+				type = "description",
+				name = L.pullExplainer,
+				order = 11,
+				width = "full",
+				fontSize = "medium",
+			},
 			keybind = {
 				type = "keybinding",
 				name = L.keybinding,
 				desc = L.pullKeybindingDesc,
-				order = 11,
+				order = 12,
 				set = function(a, key)
 					plugin.db.profile.keybind = key
 					ClearOverrideBindings(BWPull)

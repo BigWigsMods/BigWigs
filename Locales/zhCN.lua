@@ -713,6 +713,7 @@ L.sendPull = "向您的队伍/团队发送开怪倒数计时器。"
 L.wrongPullFormat = "无效的开怪倒数。正确用法：/pull 5"
 L.countdownBegins = "开始倒计时"
 L.countdownBegins_desc = "选择开怪计时器上倒计开始时应剩余多少时间（以秒为单位）。"
+--L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
 --L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------

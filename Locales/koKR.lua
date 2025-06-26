@@ -713,6 +713,7 @@ L.sendPull = "그룹에 풀 타이머를 전송합니다."
 L.wrongPullFormat = "잘못된 풀 타이머 형식입니다. 올바른 예: /pull 5"
 L.countdownBegins = "초읽기 시작"
 L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될 지 선택하세요."
+--L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
 --L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------

@@ -713,6 +713,7 @@ L.sendPull = "Mandar un pull para tu grupo."
 L.wrongPullFormat = "Contador inválido para el pull. Usa algo como: /pull 5"
 L.countdownBegins = "Comenzar cuenta regresiva"
 L.countdownBegins_desc = "Elige cuánto tiempo restante debe de quedar en la llamada de jefe (en segundos) cuando la cuenta regresiva comience."
+--L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
 --L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
 
 -----------------------------------------------------------------------
