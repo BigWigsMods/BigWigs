@@ -267,7 +267,7 @@ L.H25 = "25人英雄"
 -- TOOLS
 -----------------------------------------------------------------------
 
-L.youAreInCombat = "你不能在战斗中这样做"
+L.youAreInCombat = "你不能在战斗中这样做。"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -305,7 +305,7 @@ L.sizeDesc = "通常情况下，您可以通过移动滑条来设置尺寸。如
 L.fontSizeDesc = "使用滑条或在框内输入数值可调整字体尺寸，最大数值为200。"
 L.disabled = "禁用"
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
---L.keybinding = "Keybinding"
+L.keybinding = "按键设置"
 
 -- Anchor Points
 L.UP = "向上"
@@ -713,8 +713,7 @@ L.sendPull = "向您的队伍/团队发送开怪倒数计时器。"
 L.wrongPullFormat = "无效的开怪倒数。正确用法：/pull 5"
 L.countdownBegins = "开始倒计时"
 L.countdownBegins_desc = "选择开怪计时器上倒计开始时应剩余多少时间（以秒为单位）。"
---L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
---L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
+L.pullKeybindingDesc = "为启用开怪计时器选择一个按键设置。"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
