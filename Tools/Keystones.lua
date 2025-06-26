@@ -88,7 +88,7 @@ do
 	local GetRealmName = GetRealmName
 	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 	UpdateMyKeystone = function()
-		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
+		if not BigWigs3DB or LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
 			return
 		end
 
@@ -444,67 +444,69 @@ tab2:SetScript("OnClick", function(self)
 	-- Begin Display of alts
 	UpdateMyKeystone()
 
-	local sortedplayerList = {}
-	for _, pData in next, BigWigs3DB.myKeystones do
-		local decoratedName = nil
-		local nameTooltip = pData.name .. " [" .. pData.realm .. "]"
-		local specID = pData.specId
-		if specID > 0 then
-			local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
-			local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
-			decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, pData.name)
-			nameTooltip = format("|c%s%s|r [%s] |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pData.name, pData.realm, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+	if BigWigs3DB and BigWigs3DB.myKeystones then
+		local sortedplayerList = {}
+		for _, pData in next, BigWigs3DB.myKeystones do
+			local decoratedName = nil
+			local nameTooltip = pData.name .. " [" .. pData.realm .. "]"
+			local specID = pData.specId
+			if specID > 0 then
+				local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
+				local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
+				decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, pData.name)
+				nameTooltip = format("|c%s%s|r [%s] |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pData.name, pData.realm, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+			end
+			sortedplayerList[#sortedplayerList+1] = {
+				name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
+				level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
+				map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(pData.keyMap > 0 and GetRealZoneText(pData.keyMap) or "-"),
+				rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
+			}
 		end
-		sortedplayerList[#sortedplayerList+1] = {
-			name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
-			level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
-			map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(pData.keyMap > 0 and GetRealZoneText(pData.keyMap) or "-"),
-			rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
-		}
-	end
-	-- Sort list by level descending, or by name if equal level
-	table.sort(sortedplayerList, function(a, b)
-		if a.level > b.level then
-			return true
-		elseif a.level == b.level then
-			return a.name < b.name
-		end
-	end)
+		-- Sort list by level descending, or by name if equal level
+		table.sort(sortedplayerList, function(a, b)
+			if a.level > b.level then
+				return true
+			elseif a.level == b.level then
+				return a.name < b.name
+			end
+		end)
 
-	local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
-	local tableSize = #sortedplayerList
-	for i = 1, tableSize do
-		local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
-		if i == 1 then
-			cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
-			cellLevel:SetPoint("TOP", partyHeader, "BOTTOM", 0, -12)
-			cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
-			cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
-		else
-			cellName:SetPoint("TOP", prevName, "BOTTOM", 0, -6)
-			cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
-			cellMap:SetPoint("TOP", prevMap, "BOTTOM", 0, -6)
-			cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
-		end
-		cellName:SetWidth(WIDTH_NAME)
-		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
-		cellName.tooltip = sortedplayerList[i].nameTooltip
-		cellLevel:SetWidth(WIDTH_LEVEL)
-		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
-		cellLevel.tooltip = sortedplayerList[i].levelTooltip
-		cellMap:SetWidth(WIDTH_MAP)
-		cellMap.text:SetText(sortedplayerList[i].map)
-		cellMap.tooltip = sortedplayerList[i].mapTooltip
-		cellRating:SetWidth(WIDTH_RATING)
-		cellRating.text:SetText(sortedplayerList[i].rating)
-		cellRating.tooltip = sortedplayerList[i].ratingTooltip
-		prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
+		local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
+		local tableSize = #sortedplayerList
+		for i = 1, tableSize do
+			local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
+			if i == 1 then
+				cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
+				cellLevel:SetPoint("TOP", partyHeader, "BOTTOM", 0, -12)
+				cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
+				cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
+			else
+				cellName:SetPoint("TOP", prevName, "BOTTOM", 0, -6)
+				cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
+				cellMap:SetPoint("TOP", prevMap, "BOTTOM", 0, -6)
+				cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
+			end
+			cellName:SetWidth(WIDTH_NAME)
+			cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
+			cellName.tooltip = sortedplayerList[i].nameTooltip
+			cellLevel:SetWidth(WIDTH_LEVEL)
+			cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
+			cellLevel.tooltip = sortedplayerList[i].levelTooltip
+			cellMap:SetWidth(WIDTH_MAP)
+			cellMap.text:SetText(sortedplayerList[i].map)
+			cellMap.tooltip = sortedplayerList[i].mapTooltip
+			cellRating:SetWidth(WIDTH_RATING)
+			cellRating.text:SetText(sortedplayerList[i].rating)
+			cellRating.tooltip = sortedplayerList[i].ratingTooltip
+			prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
 
-		if i == tableSize then
-			-- Calculate scroll height
-			local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
-			local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
-			scrollChild:SetHeight(newHeight)
+			if i == tableSize then
+				-- Calculate scroll height
+				local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
+				local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+				scrollChild:SetHeight(newHeight)
+			end
 		end
 	end
 
