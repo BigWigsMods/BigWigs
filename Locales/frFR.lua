@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "frFR")
 if not L then return end
 
---L.tempNew = "NEW: You can now type |cFFFFFFFF/bwtemp|r to see the Mythic+ keystones of your party members."
+L.tempNew = "NOUVEAU : Vous pouvez écrire |cFFFFFFFF/bwtemp|r afin de voir les clefs mythiques +des membres de votre groupe."
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -22,7 +22,7 @@ L.adds_desc = "Active les fonctions relatives aux adds qui apparaissent durant l
 L.health = "Vie"
 L.health_desc = "Active les fonctions afin d'afficher diverses informations sur la vie durant le combat de boss."
 L.energy = "Énergie"
---L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
+L.energy_desc = "Active les fonctions d'information d'affichage par rapport aux différents niveaux d'énergie durant les rencontres."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans BigWigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de BigWigs et de le réinstaller complètement."
 
@@ -59,8 +59,8 @@ L.removeAddOn = "Veuillez enlever '|cFF436EEE%s|r' étant donné qu'il a été r
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "ATTENTION !\nVous avez mis à jour |cFF436EEE%s|r mais vous avez également besoin de mettre à jour l'addon principal |cFF436EEEBigWigs|r.\nIgnorer cela empêchera le fonctionnement de certaines fonctionnalités."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r a besoin de la version %d de l'addon principal |cFF436EEEBigWigs|r afin de fonctionner correctement, mais vous êtes en version %d."
---L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
---L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
+L.addOnLoadFailedWithReason = "BigWigs a échoué à charger l'addon |cFF436EEE%s|r avec comme raison %q. Avertissez les développeurs de BigWigs !"
+L.addOnLoadFailedUnknownError = "BigWigs a rencontré une erreur lors du chargement de l'addon |cFF436EEE%s|r. Avertissez les développeurs de BigWigs !"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -267,25 +267,25 @@ L.H25 = "Héroïque 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.youAreInCombat = "You cannot do that in combat."
+L.youAreInCombat = "Vous ne pouvez pas faire cela en combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
 
---L.keystoneTitle = "BigWigs Keystones"
---L.keystoneHeaderParty = "Party"
---L.keystoneRefreshParty = "Refresh Party"
---L.keystoneHeaderGuild = "Guild"
---L.keystoneRefreshGuild = "Refresh Guild"
---L.keystoneLevelTooltip = "Keystone level: |cFFFFFFFF%s|r"
---L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
---L.keystoneRatingTooltip = "Mythic+ rating: |cFFFFFFFF%d|r"
---L.keystoneHiddenTooltip = "The player has chosen to hide this information."
---L.keystoneTabOnline = "Online"
---L.keystoneTabAlts = "Alts"
---L.keystoneTabTeleports = "Teleports"
---L.keystoneHeaderMyCharacters = "My Characters"
+L.keystoneTitle = "BigWigs clefs mythique +"
+L.keystoneHeaderParty = "Groupe"
+L.keystoneRefreshParty = "MàJ Groupe"
+L.keystoneHeaderGuild = "Guilde"
+L.keystoneRefreshGuild = "MàJ Guilde"
+L.keystoneLevelTooltip = "Niveau de clef : |cFFFFFFFF%s|r"
+L.keystoneMapTooltip = "Donjon : |cFFFFFFFF%s|r"
+L.keystoneRatingTooltip = "Côte mythique + : |cFFFFFFFF%d|r"
+L.keystoneHiddenTooltip = "Le joueur a choisi de cacher cette information."
+L.keystoneTabOnline = "En ligne"
+L.keystoneTabAlts = "Rerolls"
+L.keystoneTabTeleports = "Téléportations"
+L.keystoneHeaderMyCharacters = "Mes personnages"
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -305,7 +305,7 @@ L.sizeDesc = "Normalement, la taille peut être définie en tirant sur l'ancre. 
 L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 200."
 L.disabled = "Désactivé"
 L.disableDesc = "Vous allez désactiver la fonctionnalité '%s', ce qui n'est |cffff4411pas recommandé|r.\n\nÊtes-vous sûr de vouloir faire cela ?"
---L.keybinding = "Keybinding"
+L.keybinding = "Raccourci clavier"
 
 -- Anchor Points
 L.UP = "Au-dessus"
@@ -713,8 +713,8 @@ L.sendPull = "Envoi d'un signal de pull à votre groupe."
 L.wrongPullFormat = "Durée de pull invalide. Un exemple corret est : /pull 5"
 L.countdownBegins = "Début du compte à rebours"
 L.countdownBegins_desc = "Choisissez combien de temps il doit rester sur le délai de pull (en secondes) pour que le compte à rebours commence."
---L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
---L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
+L.pullExplainer = "\n|cFF33FF99/pull|r démarrera un timer de pull normal.\n|cFF33FF99/pull 7|r démarrera un timer de pull de 7 secondes, vous pouvez utiliser n'importe quel nombre.\nAutrement, vous pouvez aussi attribuer un raccourci clavier ci-dessous.\n\n"
+L.pullKeybindingDesc = "Choisissez un raccourci clavier afinde lancer un pull."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
