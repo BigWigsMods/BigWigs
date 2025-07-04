@@ -1461,7 +1461,8 @@ local function parseTOC(file)
 
 	local list = {}
 	for line in file_handle:lines() do
-		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub("\\", "/")
+		-- ignore carriage returns, commented lines, and [AllowLoad] blocks
+		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub(" %[.*%]", ""):gsub("\\", "/")
 		if line ~= "" then
 			table.insert(list, line)
 		end
