@@ -17,8 +17,8 @@ L.magic_buff_other = "Buff magique sur %s : %s" -- Magic buff on NPC_NAME: SPEL
 L.on = "%s sur %s"
 L.stack = "%dx %s sur %s" -- "5x SPELL_NAME on PLAYER_OR_NPC" showing how many stacks of a buff/debuff are on a player or NPC
 L.stackyou = "%dx %s sur VOUS" -- "5x SPELL_NAME on YOU" showing how many stacks of a buff/debuff are on you
---L.stackboss = "%dx %s on BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
---L.stack_gained = "Gained %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
+L.stackboss = "%dx %s sur BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
+L.stack_gained = "Gain de %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
 L.cast = "<%s incanté>"
 L.casting = "%s en incantation"
 L.soon = "%s bientôt"
@@ -48,7 +48,7 @@ L.general = "Général" -- General settings, i.e. things that apply to normal, h
 L.health = "Vie" -- The health of an NPC
 L.health_percent = "%d%% vie" -- "10% Health" The health percentage of an NPC
 L.energy = "Énergie"
---L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
+L.energy_percent = "%d%% Énergie" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Porte ouverte" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Portail ouvert" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Menace"
@@ -72,15 +72,15 @@ L.you_die = "Vous êtes mort" -- You will die
 L.you_die_sec = "Vous mourrez dans %d sec." -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Prochaine compétence" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s atterri" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
---L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "Aterrissage" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Vous pouvez maintenant voler"
 L.bosses_too_close = "Bosses trop près" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
---L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
---L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
---L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
---L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.keep_moving = "Rester en déplacement" -- An ability that forces you to keep moving or you will take damage
+L.stand_still = "Ne pas bouger" -- An ability that forces you to stand still or you will take damage
+L.safe_to_stop = "En sécurité pour s'arrêter" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "En sécurité pour se déplacer" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.safe = "Sûr" -- You are safe from a bad ability
+L.unsafe = "Dangereux" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Add est apparu" -- singular
@@ -140,7 +140,7 @@ L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de 
 L.marker_npc_aura_desc = "Marque les PNJ affectés par '%s' avec %s. Nécessite d'être assistant ou chef de raid." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Désactivé"
 L.none = "Aucun"
---L.markers = "Markers" -- Plural of marker
+L.markers = "Marqueurs" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Lien"
@@ -181,9 +181,9 @@ L.west = "Ouest"
 L.north_west = "Nord-ouest"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "Petit"
+L.medium = "Moyen"
+L.large = "Large"
 
 -- Schools
 L.fire = "Feu"
@@ -249,8 +249,8 @@ L.spell_reflection = "Renvoi de sort" -- Any ability that reflects spells
 L.rooted = "Immobilisé" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "Boule" -- A ball, like a football, basketball, etc
+L.balls = "Boules" -- Plural of L.ball
 L.blind = "Cécité" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Esquive" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enrager" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
@@ -260,7 +260,7 @@ L.fixates = "Fixés" -- Plural of L.fixate
 L.group_damage = "Dégâts sur le groupe" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Drain de santé" -- Any ability that drains health from the player
 L.parasite = "Parasite" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
---L.parasites = "Parasites" -- Plural of L.parasite
+L.parasites = "Parasites" -- Plural of L.parasite
 L.pull_in = "Attraction" -- An ability that pulls you in towards the boss against your will
 L.raid_damage = "Dégâts sur le raid" -- Any ability that causes damage to every player in the raid
 L.smash = "Choc" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
@@ -269,11 +269,11 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike
 L.spread = "Écartez-vous" -- An ability that forces you to spread out away from other players, or you might damage them
---L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
+L.tank_bomb = "Bombe Tank" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo Tank" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
---L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
---L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+L.tank_debuff = "Debuff Tank" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "Frontal Tank" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentacule" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacules" -- Plural of L.tentacle
 L.waves = "Vagues" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
