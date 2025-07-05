@@ -99,7 +99,7 @@ local updateData = function(module)
 		classColorMessages = true
 	end
 
-	if core.db.profile.englishSayMessages then
+	if loader.db.profile.englishSayMessages then
 		englishSayMessages = true
 	else
 		englishSayMessages = false
