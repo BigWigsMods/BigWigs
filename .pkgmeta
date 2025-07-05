@@ -19,9 +19,6 @@ externals:
     Options/Libs/AceDBOptions-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDBOptions-3.0
     Options/Libs/LibDDI-1.0: https://repos.wowace.com/wow/libddi-1-0/trunk
 
-embedded-libraries:
-  - libkeystone
-
 move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
