@@ -88,7 +88,7 @@ do
 	local GetRealmName = GetRealmName
 	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 	UpdateMyKeystone = function()
-		if not BigWigs3DB or LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
+		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
 			return
 		end
 
@@ -444,7 +444,7 @@ tab2:SetScript("OnClick", function(self)
 	-- Begin Display of alts
 	UpdateMyKeystone()
 
-	if BigWigs3DB and BigWigs3DB.myKeystones then
+	if BigWigs3DB.myKeystones then
 		local sortedplayerList = {}
 		for _, pData in next, BigWigs3DB.myKeystones do
 			local decoratedName = nil

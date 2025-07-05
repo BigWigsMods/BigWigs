@@ -1087,7 +1087,6 @@ if public.isRetail or public.isMists then -- XXX Support for LoadSavedVariablesF
 			englishSayMessages = false,
 		},
 		global = {
-			optionShiftIndexes = {},
 			watchedMovies = {},
 		},
 	}
@@ -1146,7 +1145,6 @@ else
 				englishSayMessages = false,
 			},
 			global = {
-				optionShiftIndexes = {},
 				watchedMovies = {},
 			},
 		}
