@@ -169,12 +169,10 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
 	"113/C_PlayerInfo",
-	"113/C_SpecializationInfo",
 	"113/C_Spell",
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
-	"113/GetSpecialization",
-	"113/GetSpecializationInfo",
+	"113/GetSpecializationInfoByID",
 	"111/SLASH_BigWigsTestKS1",
 	"112/SlashCmdList",
 }
@@ -258,7 +256,6 @@ globals = {
 	"GetRaidRosterInfo", -- Classic/AQ40/Cthun.lua
 	"GetRealmName",
 	"GetRealZoneText",
-	"GetSpecializationInfoByID",
 	"GetSubZoneText",
 	"GetTime",
 	"GetUnitSpeed", -- Dragonflight/Amirdrassil/TindralSageswift.lua

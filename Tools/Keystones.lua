@@ -86,9 +86,10 @@ do
 	local GetOwnedKeystoneLevel, GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneMapID
 	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 	local GetRealmName = GetRealmName
-	local GetSpecialization, GetSpecializationInfo = C_SpecializationInfo.GetSpecialization or GetSpecialization, C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
-	UpdateMyKeystone = function()
-		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
+
+	local myKeyLevel, myKeyMap, myRating = 0, 0, 0
+	UpdateMyKeystone = function(_, event, id)
+		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() or (event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" and id ~= 3 and id ~= 49) then -- 3 = Gossip (key downgrade NPC), 49 = WeeklyRewards (vault)
 			return
 		end
 
@@ -102,42 +103,37 @@ do
 		end
 
 		local keyLevel = GetOwnedKeystoneLevel()
-		if type(keyLevel) ~= "number" then
-			keyLevel = 0
+		if type(keyLevel) == "number" then
+			myKeyLevel = keyLevel
 		end
 		-- Keystone instance ID
 		local keyMap = GetOwnedKeystoneMapID()
-		if type(keyMap) ~= "number" then
-			keyMap = 0
+		if type(keyMap) == "number" then
+			myKeyMap = keyMap
 		end
 		-- M+ rating
 		local playerRatingSummary = GetPlayerMythicPlusRatingSummary("player")
-		local playerRating = 0
 		if type(playerRatingSummary) == "table" and type(playerRatingSummary.currentSeasonScore) == "number" then
-			playerRating = playerRatingSummary.currentSeasonScore
+			myRating = playerRatingSummary.currentSeasonScore
 		end
 
 		local guid = LoaderPublic.UnitGUID("player")
 		local name = LoaderPublic.UnitName("player")
 		local realm = GetRealmName()
-		local spec = GetSpecialization()
-		local specId = 0
-		if type(spec) == "number" and spec > 0 then
-			local mySpecId = GetSpecializationInfo(spec)
-			specId = type(mySpecId) == "number" and mySpecId or 0
-		end
 		BigWigs3DB.myKeystones[guid] = {
-			keyLevel = keyLevel,
-			keyMap = keyMap,
-			playerRating = playerRating,
-			specId = specId,
+			keyLevel = myKeyLevel,
+			keyMap = myKeyMap,
+			playerRating = myRating,
+			specId = specs[name] or 0,
 			name = name,
 			realm = realm,
 		}
 	end
 	mainPanel:SetScript("OnEvent", UpdateMyKeystone)
 end
-mainPanel:RegisterEvent("PLAYER_LOGOUT")
+-- If only PLAYER_LOGOUT would work for keystone info, sigh :(
+mainPanel:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_HIDE")
+mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 local tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab1:SetSize(50, 26)
