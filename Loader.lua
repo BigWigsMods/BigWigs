@@ -164,7 +164,7 @@ local highestFoundGuildVersion = BIGWIGS_GUILD_VERSION
 local dbmPrefix = public.dbmPrefix
 
 -- Loading
-local isMouseDown = false
+--local isMouseDown = false
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
@@ -1041,146 +1041,155 @@ do
 	end
 end
 
-function mod:ADDON_LOADED(addon)
-	if addon ~= "BigWigs" then
-		-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
-		--if reqFuncAddons[addon] then
-		--	local trace = debugstack(2)
-		--	public.lstack = trace
-		--	sysprint("|cFFff0000WARNING!|r")
-		--	sysprint("One of your addons is force loading the BigWigs options.")
-		--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-		--	reqFuncAddons = {}
-		--end
-		return
-	end
-
-	--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
-	--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
-
-	if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
-		bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
-	end
-	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	bwFrame:RegisterEvent("GROUP_FORMED")
-	self:GROUP_FORMED() -- If you're already in a group, the event only fires when logging on, not when reloading UI, so we force a check
-	bwFrame:RegisterEvent("GROUP_LEFT")
-	bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
-	bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
-	TimerTracker:UnregisterEvent("START_PLAYER_COUNTDOWN")
-	TimerTracker:UnregisterEvent("CANCEL_PLAYER_COUNTDOWN")
-
-	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-	local oldResult, result = RegisterAddonMessagePrefix("BigWigs")
-	if type(result) == "number" and result > 2 then
+if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+	bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
+end
+bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+bwFrame:RegisterEvent("GROUP_FORMED")
+bwFrame:RegisterEvent("GROUP_LEFT")
+bwFrame:RegisterEvent("START_PLAYER_COUNTDOWN")
+bwFrame:RegisterEvent("CANCEL_PLAYER_COUNTDOWN")
+TimerTracker:UnregisterEvent("START_PLAYER_COUNTDOWN")
+TimerTracker:UnregisterEvent("CANCEL_PLAYER_COUNTDOWN")
+bwFrame:RegisterEvent("CHAT_MSG_ADDON")
+do
+	local result = RegisterAddonMessagePrefix("BigWigs")
+	-- 0=success, 1=duplicate, 2=invalid, 3=toomany
+	if type(result) == "number" and result > 1 then
 		sysprint("Failed to register the BigWigs addon message prefix. Error code: ".. result)
 		geterrorhandler()("BigWigs: Failed to register the BigWigs addon message prefix. Error code: ".. result)
 	end
 	RegisterAddonMessagePrefix(dbmPrefix) -- DBM
+end
+do
+	local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
+	if num < 90 then
+		C_CVar.SetCVar("Sound_NumChannels", "90") -- 64 is the default, enforce a little higher as a minimum to prevent sound clipping issues with addons
+	end
+	local cache = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
+	if cache < 134217728 then
+		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "134217728") -- "Large (128MB)" is the default, enforce it as a minimum
+	end
+end
 
+if public.isRetail or public.isMists then -- XXX Support for LoadSavedVariablesFirst [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
 	-- LibDBIcon setup
 	if type(BigWigsIconDB) ~= "table" then
 		BigWigsIconDB = {}
 	end
 	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
-	-- Updates for BigWigsStatsDB, 11.0.0
-	if type(BigWigsStatsDB) == "table" then
-		local knownStats = {
-			["story"]=true, ["timewalk"]=true, ["LFR"]=true, ["normal"]=true, ["heroic"]=true, ["mythic"]=true,
-			["10N"]=true, ["25N"]=true, ["10H"]=true, ["25H"]=true,
-			["SOD"]=true, ["level1"]=true, ["level2"]=true, ["level3"]=true, ["hardcore"]=true,
-			["10"]=true,["25"]=true,["10h"]=true,["25h"]=true,["flex"]=true,["lfr"]=true,
-			["N10"]=true, ["N25"]=true,["H10"]=true,["H25"]=true,
-		}
-		local thingsToModify = {}
-		local lookup = {["10N"]="N10", ["25N"]="N25", ["10H"]="H10", ["25H"]="H25"}
-		-- BigWigsStatsDB[instanceId][journalId][diff].[best|kills|wipes|fkWipes|fkDuration|fkDate|bestDate]
-		for instanceId, encounters in next, BigWigsStatsDB do
-			for journalId, difficulties in next, encounters do
-				for diff, statEntry in next, difficulties do
-					if diff == "normal" and (instanceId == 2789 or instanceId == 2791 or instanceId == 109 or instanceId == 90 or instanceId == 48) then
-						-- Kazzak, Azuregos, Sunken Temple, Gnomeregan, Blackfathom Deeps
-						if not thingsToModify[instanceId] then thingsToModify[instanceId] = {} end
-						if not thingsToModify[instanceId][journalId] then thingsToModify[instanceId][journalId] = {} end
-						thingsToModify[instanceId][journalId][diff] = true
-					elseif lookup[diff] then
-						if not thingsToModify[instanceId] then thingsToModify[instanceId] = {} end
-						if not thingsToModify[instanceId][journalId] then thingsToModify[instanceId][journalId] = {} end
-						thingsToModify[instanceId][journalId][diff] = true
-					elseif not knownStats[diff] then
-						sysprint("Unknown stat: ".. tostring(diff))
-						geterrorhandler()("BigWigs: Unknown stat: ".. tostring(diff))
-					end
-				end
-			end
-		end
-		for instanceId, encounters in next, thingsToModify do
-			for journalId, difficulties in next, encounters do
-				for diff, statEntry in next, difficulties do
-					if diff == "normal" and (instanceId == 2789 or instanceId == 2791 or instanceId == 109 or instanceId == 90 or instanceId == 48) then
-						-- Kazzak, Azuregos, Sunken Temple, Gnomeregan, Blackfathom Deeps
-						BigWigsStatsDB[instanceId][journalId].SOD = BigWigsStatsDB[instanceId][journalId][diff]
-						BigWigsStatsDB[instanceId][journalId][diff] = nil
-					elseif lookup[diff] then
-						BigWigsStatsDB[instanceId][journalId][lookup[diff]] = BigWigsStatsDB[instanceId][journalId][diff]
-						BigWigsStatsDB[instanceId][journalId][diff] = nil
-					end
-				end
-			end
-		end
-		-- Add old stats to new stats? [10,25,10h,25h,flex,lfr]
+	-- Core DB setup
+	local defaults = {
+		profile = {
+			showZoneMessages = true,
+			fakeDBMVersion = false,
+			englishSayMessages = false,
+		},
+		global = {
+			optionShiftIndexes = {},
+			watchedMovies = {},
+		},
+	}
+	local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
+	local lds = LibStub("LibDualSpec-1.0", true)
+	if lds then
+		lds:EnhanceDatabase(db, "BigWigs3DB")
 	end
 
-	if BigWigs3DB then
-		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
-		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
-			local realm = GetRealmName()
-			if myName and realm and BigWigs3DB.profileKeys[myName.." - "..realm] then
-				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[myName.." - "..realm]]
-				if key then
-					self.isFakingDBM = key.fakeDBMVersion
-					self.isShowingZoneMessages = key.showZoneMessages
-				end
-				if BigWigs3DB.namespaces and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[myName.." - "..realm]] then
-					self.isSoundOn = BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[myName.." - "..realm]].sound
-				end
+	local function profileUpdate()
+		public:SendMessage("BigWigs_ProfileUpdate")
+	end
+
+	db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
+	db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
+	db.RegisterCallback(mod, "OnProfileReset", profileUpdate)
+	public.db = db
+
+	local _, _, _, _, addonState = GetAddOnInfo("QuaziiUI")
+	if type(BigWigs3DB.namespaces) == "table" and addonState ~= "MISSING" then
+		for k,v in next, BigWigs3DB.namespaces do
+			if strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true) then
+				BigWigs3DB.namespaces[k] = nil
 			end
 		end
-		if BigWigs3DB.namespaces and public:GetAddOnState("QuaziiUI") ~= "MISSING" then
+	end
+else
+	bwFrame:RegisterEvent("ADDON_LOADED")
+	function mod:ADDON_LOADED(addon)
+		if addon ~= "BigWigs" then
+			-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
+			--if reqFuncAddons[addon] then
+			--	local trace = debugstack(2)
+			--	public.lstack = trace
+			--	sysprint("|cFFff0000WARNING!|r")
+			--	sysprint("One of your addons is force loading the BigWigs options.")
+			--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+			--	reqFuncAddons = {}
+			--end
+			return
+		end
+		--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
+		--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
+
+		-- LibDBIcon setup
+		if type(BigWigsIconDB) ~= "table" then
+			BigWigsIconDB = {}
+		end
+		ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
+
+		-- Core DB setup
+		local defaults = {
+			profile = {
+				showZoneMessages = true,
+				fakeDBMVersion = false,
+				englishSayMessages = false,
+			},
+			global = {
+				optionShiftIndexes = {},
+				watchedMovies = {},
+			},
+		}
+		local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
+		local lds = LibStub("LibDualSpec-1.0", true)
+		if lds then
+			lds:EnhanceDatabase(db, "BigWigs3DB")
+		end
+
+		local function profileUpdate()
+			public:SendMessage("BigWigs_ProfileUpdate")
+		end
+
+		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
+		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
+		db.RegisterCallback(mod, "OnProfileReset", profileUpdate)
+		public.db = db
+
+		local _, _, _, _, addonState = GetAddOnInfo("QuaziiUI")
+		if type(BigWigs3DB.namespaces) == "table" and addonState ~= "MISSING" then
 			for k,v in next, BigWigs3DB.namespaces do
 				if strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true) then
 					BigWigs3DB.namespaces[k] = nil
 				end
 			end
 		end
-	end
-	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
-	local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
-	if num < 90 then
-		C_CVar.SetCVar("Sound_NumChannels", "90") -- 64 is the default, enforce a little higher as a minimum to prevent sound clipping issues with addons
-	end
-	num = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
-	if num < 134217728 then
-		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "134217728") -- "Large (128MB)" is the default, enforce it as a minimum
-	end
-
-	--bwFrame:UnregisterEvent("ADDON_LOADED")
-	--self.ADDON_LOADED = nil
-end
-
-function mod:GLOBAL_MOUSE_DOWN(button)
-	if button == "RightButton" then
-		isMouseDown = true
+		bwFrame:UnregisterEvent("ADDON_LOADED")
+		self.ADDON_LOADED = nil
 	end
 end
 
-function mod:GLOBAL_MOUSE_UP(button)
-	if button == "RightButton" then
-		isMouseDown = false
-	end
-end
+--function mod:GLOBAL_MOUSE_DOWN(button)
+--	if button == "RightButton" then
+--		isMouseDown = true
+--	end
+--end
+
+--function mod:GLOBAL_MOUSE_UP(button)
+--	if button == "RightButton" then
+--		isMouseDown = false
+--	end
+--end
 
 function mod:START_PLAYER_COUNTDOWN(...)
 	loadAndEnableCore()
@@ -1569,7 +1578,7 @@ do
 		timer = nil
 	end
 	function mod:DBM_VersionCheck(prefix, sender, _, _, displayVersion)
-		if prefix == "H" and (BigWigs and BigWigs.db and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
+		if prefix == "H" and public.db.profile.fakeDBMVersion then
 			if timer then timer:Cancel() end
 			timer = CTimerNewTimer(3, sendDBMMsg)
 		elseif prefix == "V" then
@@ -1578,13 +1587,6 @@ do
 	end
 end
 
-function mod:BigWigs_CoreOptionToggled(_, key, value)
-	if key == "fakeDBMVersion" and value and IsInGroup() then
-		self:DBM_VersionCheck("H") -- Send addon message if feature is being turned on inside a raid/group.
-	end
-end
-public.RegisterMessage(mod, "BigWigs_CoreOptionToggled")
-
 -----------------------------------------------------------------------
 -- Events
 --
@@ -1592,7 +1594,6 @@ public.RegisterMessage(mod, "BigWigs_CoreOptionToggled")
 bwFrame:SetScript("OnEvent", function(_, event, ...)
 	mod[event](mod, ...)
 end)
-bwFrame:RegisterEvent("ADDON_LOADED")
 
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
@@ -1856,7 +1857,7 @@ do
 		end
 
 		-- Lacking zone modules
-		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or mod.isShowingZoneMessages == false then return end
+		if not public.db.profile.showZoneMessages then return end
 		local zoneAddon = public.zoneTbl[id]
 		if type(zoneAddon) == "table" then
 			-- default to the expansion addon for current season modules
@@ -1931,6 +1932,7 @@ do
 		end
 	end
 	mod.GROUP_LEFT = mod.GROUP_FORMED
+	mod:GROUP_FORMED() -- If you're already in a group, the event only fires when logging on, not when reloading UI, so we force a check
 end
 
 function mod:BigWigs_BossModuleRegistered(_, _, module)
@@ -1980,11 +1982,6 @@ function mod:BigWigs_CoreEnabled()
 	else -- Current raids, world content, anything else
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga"
 	end
-
-	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
-	self.isFakingDBM = nil
-	self.isShowingZoneMessages = nil
-	self.isSoundOn = nil
 
 	-- Make sure we've loaded everything. git checkout installs will load core
 	-- immediately, but won't hit loadAndEnableCore until a boss module loads.

@@ -14,9 +14,6 @@ do
 	core.name = "BigWigs"
 end
 
-local adb = LibStub("AceDB-3.0")
-local lds = LibStub("LibDualSpec-1.0", true)
-
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local loader = BigWigsLoader
 core.SendMessage = loader.SendMessage
@@ -244,34 +241,9 @@ do
 		end
 	end
 
-	local function profileUpdate()
-		core:SendMessage("BigWigs_ProfileUpdate")
-	end
-
 	local addonName = ...
 	function mod:ADDON_LOADED(_, name)
 		if name ~= addonName then return end
-
-		local defaults = {
-			profile = {
-				showZoneMessages = true,
-				fakeDBMVersion = false,
-				englishSayMessages = false,
-			},
-			global = {
-				optionShiftIndexes = {},
-				watchedMovies = {},
-			},
-		}
-		local db = adb:New("BigWigs3DB", defaults, true)
-		if lds then
-			lds:EnhanceDatabase(db, "BigWigs3DB")
-		end
-
-		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
-		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
-		db.RegisterCallback(mod, "OnProfileReset", profileUpdate)
-		core.db = db
 
 		mod.ADDON_LOADED = InitializeModules
 		InitializeModules()
@@ -614,7 +586,7 @@ do
 					end
 				end
 			end
-			module.db = core.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
+			module.db = loader.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
 			local db = module.db.profile
 			for k, v in next, db do -- Option validation
 				local defaultType = type(module.toggleDefaults[k])
@@ -653,7 +625,7 @@ do
 
 	function core:RegisterPlugin(module)
 		if type(module.defaultDB) == "table" then
-			module.db = core.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
+			module.db = loader.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)

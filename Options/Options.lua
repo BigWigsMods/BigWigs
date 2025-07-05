@@ -70,12 +70,11 @@ local acOptions = {
 	type = "group",
 	name = "BigWigs",
 	get = function(info)
-		return BigWigs.db.profile[info[#info]]
+		return loader.db.profile[info[#info]]
 	end,
 	set = function(info, value)
 		local key = info[#info]
-		BigWigs.db.profile[key] = value
-		options:SendMessage("BigWigs_CoreOptionToggled", key, value)
+		loader.db.profile[key] = value
 	end,
 	args = {
 		general = {
@@ -264,7 +263,7 @@ do
 			childGroups = "tab",
 			order = 100,
 			args = {
-				profile = adbo:GetOptionsTable(BigWigs.db),
+				profile = adbo:GetOptionsTable(loader.db),
 				export = addonTable.sharingOptions.exportSection,
 				import = addonTable.sharingOptions.importSection,
 			},
@@ -273,7 +272,7 @@ do
 		acOptions.args.general.args.profileOptions.args.profile.order = 1
 
 		if lds then
-			lds:EnhanceOptions(acOptions.args.general.args.profileOptions.args.profile, BigWigs.db)
+			lds:EnhanceOptions(acOptions.args.general.args.profileOptions.args.profile, loader.db)
 		end
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
@@ -1931,12 +1930,12 @@ do
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original
 		popup:Show()
-		local profileName = BigWigs.db:GetCurrentProfile()
+		local profileName = loader.db:GetCurrentProfile()
 		if not optionalCustomProfileName or profileName == optionalCustomProfileName then
 			optionalCustomProfileName = nil
 			textFrame:SetText(L.confirm_import_addon:format(addonName, profileName))
 		else
-			local profiles = BigWigs.db:GetProfiles()
+			local profiles = loader.db:GetProfiles()
 			local found = false
 			for i = 1, #profiles do
 				local name = profiles[i]
@@ -1962,7 +1961,7 @@ do
 			acceptButton:SetScript("OnClick", nil)
 			cancelButton:SetScript("OnClick", nil)
 			if optionalCustomProfileName then
-				BigWigs.db:SetProfile(optionalCustomProfileName)
+				loader.db:SetProfile(optionalCustomProfileName)
 			end
 			addonTable.SaveImportStringDataFromAddOn(profileString)
 			if optionalCallbackFunction then

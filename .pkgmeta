@@ -8,8 +8,8 @@ externals:
     Libs/LibLatency: https://repos.wowace.com/wow/liblatency/trunk/LibLatency
     Libs/LibDurability: https://repos.wowace.com/wow/libdurability/trunk/LibDurability
     Libs/LibKeystone: https://github.com/BigWigsMods/LibKeystone.git/LibKeystone
-    Core/Libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
-    Core/Libs/LibDualSpec-1.0: https://repos.wowace.com/wow/libdualspec-1-0
+    Libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
+    Libs/LibDualSpec-1.0: https://repos.wowace.com/wow/libdualspec-1-0
     Core/Libs/LibChatAnims: https://repos.wowace.com/wow/libchatanims/trunk/LibChatAnims
     Plugins/Libs/LibSink-2.0: https://repos.wowace.com/wow/libsink-2-0/trunk/LibSink-2.0
     Plugins/Libs/LibCandyBar-3.0: https://repos.wowace.com/wow/libcandybar-3-0/trunk/LibCandyBar-3.0
