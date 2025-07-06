@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "esES")
 if not L then return end
 
---L.tempNew = "NEW: You can now type |cFFFFFFFF/bwtemp|r to see the Mythic+ keystones of your party members."
+L.tempNew = "NUEVO: Ahora puedes escribir |cFFFFFFFF/bwtemp|r para ver las Piedras Angulares de los miembros de tu grupo."
 
 -- Core.lua
 L.berserk = "Rabia"
