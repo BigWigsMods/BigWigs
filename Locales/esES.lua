@@ -12,17 +12,17 @@ L.altpower_desc = "Muestra la ventana de poder alternativo, que indica la cantid
 L.infobox = "Caja de información"
 L.infobox_desc = "Muestra un marco con información relacionada con el encuentro."
 L.stages = "Fases"
-L.stages_desc = "Activa funciones relacionadas con varias etapas/fases del jefe como cambios de etapa, barras de temporizador de duración de etapa, etc."
+L.stages_desc = "Activa las funciones relacionadas con varias etapas/fases del jefe como cambios de etapa, barras de temporizador de duración de etapa, etc."
 L.warmup = "Calentamiento"
 L.warmup_desc = "Tiempo hasta que el combate con el jefe comience."
 L.proximity = "Visualizar proximidad"
 L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropidada para este encuentro, lista los jugadores que están demasiado cerca tuya."
 L.adds = "Esbirros"
-L.adds_desc = "Activa funciones relacionadas con los esbirros que aparecerán durante un encuentro con un jefe."
+L.adds_desc = "Activa las funciones relacionadas con los esbirros que aparecerán durante un encuentro con un jefe."
 L.health = "Salud"
-L.health_desc = "Activa funciones para mostrar varias informaciones de salud durante un encuentro con un jefe."
+L.health_desc = "Activa las funciones para mostrar varias informaciones de salud durante un encuentro con un jefe."
 L.energy = "Energía"
---L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
+L.energy_desc = "Activa las funciones para mostrar varias informaciones de energía durante un encuentro con un jefe."
 
 L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de BigWigs y lo reinstales por completo."
 
@@ -59,8 +59,8 @@ L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplaz
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "¡ADVERTENCIA!\nHas actualizado |cFF436EEE%s|r pero también necesitas actualizar el addon principal |cFF436EEEBigWigs|r.\nIgnorar esto resultará en un mal funcionamiento."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requiere la versión %d del addon principal |cFF436EEEBigWigs|r para funcionar correctamente, pero estás en la versión %d."
---L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
---L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
+L.addOnLoadFailedWithReason = "BigWigs falló al cargar el addon |cFF436EEE%s|r por razones %q. ¡Avisa a los desarrolladores de BigWigs!"
+L.addOnLoadFailedUnknownError = "BigWigs ha encontrado un error al cargar el addon |cFF436EEE%s|r. ¡Avisa a los desarrolladores de BigWigs!"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -267,25 +267,25 @@ L.H25 = "Heroico 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.youAreInCombat = "You cannot do that in combat."
+L.youAreInCombat = "No puedes hacer eso en combate."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
 
---L.keystoneTitle = "BigWigs Keystones"
---L.keystoneHeaderParty = "Party"
---L.keystoneRefreshParty = "Refresh Party"
---L.keystoneHeaderGuild = "Guild"
---L.keystoneRefreshGuild = "Refresh Guild"
---L.keystoneLevelTooltip = "Keystone level: |cFFFFFFFF%s|r"
---L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
---L.keystoneRatingTooltip = "Mythic+ rating: |cFFFFFFFF%d|r"
---L.keystoneHiddenTooltip = "The player has chosen to hide this information."
---L.keystoneTabOnline = "Online"
---L.keystoneTabAlts = "Alts"
---L.keystoneTabTeleports = "Teleports"
---L.keystoneHeaderMyCharacters = "My Characters"
+L.keystoneTitle = "BigWigs Piedras angulares"
+L.keystoneHeaderParty = "Grupo"
+L.keystoneRefreshParty = "Actualizar Grupo"
+L.keystoneHeaderGuild = "Hermandad"
+L.keystoneRefreshGuild = "Actualizar Hermandad"
+L.keystoneLevelTooltip = "Nivel de Piedra: |cFFFFFFFF%s|r"
+L.keystoneMapTooltip = "Mazmorra: |cFFFFFFFF%s|r"
+L.keystoneRatingTooltip = "Puntuación Mítica+: |cFFFFFFFF%d|r"
+L.keystoneHiddenTooltip = "El jugador ha escogido ocultar esta información."
+L.keystoneTabOnline = "En línea"
+L.keystoneTabAlts = "Alters"
+L.keystoneTabTeleports = "Teletransportes"
+L.keystoneHeaderMyCharacters = "Mis Personajes"
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -305,7 +305,7 @@ L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesita
 L.fontSizeDesc = "Ajusta el tamaño de la letra con el control deslizante o escribe el valor en la casilla cuyo máximo es 200."
 L.disabled = "Desactivado"
 L.disableDesc = "Estás a punto de desactivar la función '%s', aunque |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacerlo?"
---L.keybinding = "Keybinding"
+L.keybinding = "Atajo de teclado"
 
 -- Anchor Points
 L.UP = "Arriba"
@@ -713,8 +713,8 @@ L.sendPull = "Enviando un temporizador de pull a tu grupo."
 L.wrongPullFormat = "Temporizador de pull inválido o formato inválido. Un ejemplo correcto es: /pull 5"
 L.countdownBegins = "Comienzo de la cuenta atrás"
 L.countdownBegins_desc = "Elige cuánto tiempo debe quedar en el temporizador de pull (en segundos) para que comience la cuenta atrás."
---L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
---L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
+L.pullExplainer = "\n|cFF33FF99/pull|r empezará una cuenta atrás normal.\n|cFF33FF99/pull 7|r empezará una cuenta atrás de 7 segundos, puedes utilizar cualquier número.\nO bien puedes asignar un atajo debajo.\n\n"
+L.pullKeybindingDesc = "Elige un atajo para empezar una cuenta atrás."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -753,7 +753,7 @@ L.resetAllCustomSound = "Si has personalizado sonidos para algún encuentro con 
 --
 
 L.bossStatistics = "Estadísticas de jefe"
---L.bossStatsDescription = "Recording of various boss-related statistics such as the amount of times you were victorious, the amount of times you were defeated, date of first victory, and the fastest victory. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
+L.bossStatsDescription = "Registro de varias estadísticas relacionadas con los jefes como la cantidad de veces que has salido victorioso, la cantidad de veces que has sido derrotado, la fecha de la primera victoria y la victoria más rápida. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
 L.createTimeBar = "Mostrar barra de 'Mejor tiempo'"
 L.bestTimeBar = "Mejor tiempo"
 L.healthPrint = "Salud: %s."
