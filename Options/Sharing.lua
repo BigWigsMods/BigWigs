@@ -673,7 +673,7 @@ local sharingOptions = {
 					return not isSomethingSelected
 				end,
 				confirm = function()
-					local profileName = BigWigs.db:GetCurrentProfile()
+					local profileName = BigWigsLoader.db:GetCurrentProfile()
 					return L.confirm_import:format(profileName)
 				end,
 			},

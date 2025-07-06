@@ -39,12 +39,13 @@ plugin.defaultDB = {
 --
 
 plugin.displayName = L.bossBlock
-local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
-local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
-local zoneList = BigWigsLoader.zoneTbl
-local isTestBuild = BigWigsLoader.isTestBuild
-local isClassic = BigWigsLoader.isClassic
-local isVanilla = BigWigsLoader.isVanilla
+local loader = BigWigsLoader
+local GetBestMapForUnit = loader.GetBestMapForUnit
+local GetInstanceInfo = loader.GetInstanceInfo
+local zoneList = loader.zoneTbl
+local isTestBuild = loader.isTestBuild
+local isClassic = loader.isClassic
+local isVanilla = loader.isVanilla
 local GetSubZoneText = GetSubZoneText
 local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
 local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
@@ -937,11 +938,11 @@ do
 
 	function plugin:PLAY_MOVIE(_, id)
 		if knownMovies[id] and self.db.profile.blockMovies then
-			if BigWigs.db.global.watchedMovies[id] then
+			if loader.db.global.watchedMovies[id] then
 				BigWigs:Print(L.movieBlocked)
 				MovieFrame:Hide()
 			else
-				BigWigs.db.global.watchedMovies[id] = true
+				loader.db.global.watchedMovies[id] = true
 			end
 		end
 	end
@@ -1052,25 +1053,25 @@ do
 
 			if cinematicZones[id] then
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
-					if type(BigWigs.db.global.watchedMovies[id]) ~= "table" then BigWigs.db.global.watchedMovies[id] = {} end
+					if type(loader.db.global.watchedMovies[id]) ~= "table" then loader.db.global.watchedMovies[id] = {} end
 					for i = 1, #cinematicZones[id] do
 						local func = cinematicZones[id][i]
 						if func() then
-							if BigWigs.db.global.watchedMovies[id][i] then
+							if loader.db.global.watchedMovies[id][i] then
 								BigWigs:Print(L.movieBlocked)
 								CinematicFrame_CancelCinematic()
 							else
-								BigWigs.db.global.watchedMovies[id][i] = true
+								loader.db.global.watchedMovies[id][i] = true
 							end
 							return
 						end
 					end
 				else
-					if BigWigs.db.global.watchedMovies[id] then
+					if loader.db.global.watchedMovies[id] then
 						BigWigs:Print(L.movieBlocked)
 						CinematicFrame_CancelCinematic()
 					else
-						BigWigs.db.global.watchedMovies[id] = true
+						loader.db.global.watchedMovies[id] = true
 					end
 				end
 			end
