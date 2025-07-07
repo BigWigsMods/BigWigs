@@ -114,7 +114,7 @@ tbl.API.SetToolOptionsTable("LFGTimer", {
 			name = L.lfgTimerExplainer,
 			order = 0,
 			width = "full",
-			fontSize = "medium",
+			fontSize = "large",
 		},
 		useMaster = {
 			type = "toggle",

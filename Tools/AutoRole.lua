@@ -39,7 +39,7 @@ addonTbl.API.SetToolOptionsTable("AutoRole", {
 			name = L.autoRoleExplainer,
 			order = 0,
 			width = "full",
-			fontSize = "medium",
+			fontSize = "large",
 		},
 	},
 })
