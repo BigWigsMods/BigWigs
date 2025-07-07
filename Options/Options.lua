@@ -251,7 +251,15 @@ local acOptions = {
 			order = 1,
 			type = "group",
 			name = L.tools,
-			args = {},
+			args = {
+				toolsDesc = {
+					type = "description",
+					name = L.toolsDesc,
+					fontSize = "large",
+					order = 0,
+					width = "full",
+				},
+			},
 		},
 	},
 }

@@ -268,6 +268,7 @@ L.H25 = "영웅 25"
 -----------------------------------------------------------------------
 
 --L.tools = "Tools"
+--L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
 L.youAreInCombat = "전투 중에는 그렇게 할 수 없습니다."
 
 -----------------------------------------------------------------------
