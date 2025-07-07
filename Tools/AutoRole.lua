@@ -27,3 +27,19 @@ frame:SetScript("OnEvent", function(self, event)
 		end
 	end
 end)
+
+local _, addonTbl = ...
+local L = addonTbl.API:GetLocale("BigWigs")
+addonTbl.API.SetToolOptionsTable("AutoRole", {
+	type = "group",
+	name = L.autoRoleTitle,
+	args = {
+		explainer = {
+			type = "description",
+			name = L.autoRoleExplainer,
+			order = 0,
+			width = "full",
+			fontSize = "medium",
+		},
+	},
+})

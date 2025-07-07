@@ -271,6 +271,13 @@ L.H25 = "Героик 25"
 --L.youAreInCombat = "You cannot do that in combat."
 
 -----------------------------------------------------------------------
+-- AutoRole.lua
+--
+
+--L.autoRoleTitle = "Auto Role"
+--L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+
+-----------------------------------------------------------------------
 -- Keystones.lua
 --
 
