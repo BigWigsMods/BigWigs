@@ -267,16 +267,16 @@ L.H25 = "25人英雄"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
+L.tools = "工具"
+L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"用于简化和加速首领战斗流程。点击 |cFF33FF99+|r 图标展开菜单可查看所有功能。"
 L.youAreInCombat = "你不能在战斗中这样做。"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "自动分配职责"
+L.autoRoleExplainer = "当你加入一个队伍，或者在队伍中切换你的天赋专精时，BigWigs 将自动调整你在队伍中的职责（坦克、治疗者、伤害输出者）。\n\n"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -300,10 +300,10 @@ L.keystoneHeaderMyCharacters = "我的角色"
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "LFG Timer"
-L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
-L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
-L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "寻找组队计时器"
+L.lfgTimerExplainer = "每当寻找组队队列确认窗口出现时，BigWigs 会创建一个计时条，告诉你还有多长时间必须接受队列。\n\n"
+L.lfgUseMaster = "在'主'声道播放寻找组队就绪提示音"
+L.lfgUseMasterDesc = "启用此选项后，寻找组队就绪提示音将通过'主'声道播放。如果禁用此选项，则会通过'%s'声道播放。"
 
 -----------------------------------------------------------------------
 -- PLUGINS
