@@ -12,6 +12,8 @@ local LibSpec = LibStub("LibSpecialization")
 local guildList, partyList = {}, {}
 local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
 
+local GetMapUIInfo, GetRealZoneText = C_ChallengeMode.GetMapUIInfo, GetRealZoneText
+
 local specs = {}
 do
 	local function addToTable(specID, _, _, playerName)
@@ -28,6 +30,23 @@ local roleIcons = {
 }
 local hiddenIcon = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:16:16|t"
 local dungeonNames = {
+	[500] = "ROOK", -- The Rookery
+	[504] = "DFC", -- Darkflame Cleft
+	[499] = "PRIORY", -- Priory of the Sacred Flame
+	[506] = "BREW", -- Cinderbrew Meadery
+	[525] = "FLOOD", -- Operation: Floodgate
+	[382] = "TOP", -- Theater of Pain
+	[247] = "ML", -- The MOTHERLODE!!
+	[370] = "WORK", -- Operation: Mechagon - Workshop
+
+	[542] = "ALDANI", -- Eco-Dome Al'dani
+	[378] = "HALLS", -- Halls of Atonement
+	[503] = "ARA", -- Ara-Kara, City of Echoes
+	[392] = "GAMBIT", -- Tazavesh: So'leah's Gambit
+	[391] = "STREETS", -- Tazavesh: Streets of Wonder
+	[505] = "DAWN", -- The Dawnbreaker
+
+	-- XXX remove below eventually
 	[1594] = "ML",
 	[2097] = "WORK",
 	[2293] = "TOP",
@@ -37,9 +56,17 @@ local dungeonNames = {
 	[2661] = "BREW",
 	[2773] = "FLOOD",
 }
-local teleports = {
+local teleports = BigWigsLoader.isNext and {
+	[2830] = 1237215, -- Eco-Dome Al'dani
+	[2287] = 354465, -- Halls of Atonement
+	[2660] = 445417, -- Ara-Kara, City of Echoes
+	[2441] = 367416, -- Tazavesh, the Veiled Market
+	[2662] = 445414, -- The Dawnbreaker
+	[2649] = 445444, -- Priory of the Sacred Flame
+	[2773] = 1216786, -- Operation: Floodgate
+} or {
 	[1594] = UnitFactionGroup("player") == "Alliance" and 467553 or 467555, -- The MOTHERLODE!!
-	[2097] = 373274, -- Operation: Mechagon [Workshop]
+	[2097] = 373274, -- Operation: Mechagon
 	[2293] = 354467, -- Theater of Pain
 	[2648] = 445443, -- The Rookery
 	[2649] = 445444, -- Priory of the Sacred Flame
@@ -84,7 +111,7 @@ local UpdateMyKeystone
 do
 	local GetMaxPlayerLevel = GetMaxPlayerLevel
 	local GetWeeklyResetStartTime = C_DateAndTime.GetWeeklyResetStartTime
-	local GetOwnedKeystoneLevel, GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneMapID
+	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID
 	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 	local GetRealmName = GetRealmName
 
@@ -108,9 +135,9 @@ do
 			myKeyLevel = keyLevel
 		end
 		-- Keystone instance ID
-		local keyMap = GetOwnedKeystoneMapID()
-		if type(keyMap) == "number" then
-			myKeyMap = keyMap
+		local keyChallengeMapID = GetOwnedKeystoneChallengeMapID()
+		if type(keyChallengeMapID) == "number" then
+			myKeyMap = keyChallengeMapID
 		end
 		-- M+ rating
 		local playerRatingSummary = GetPlayerMythicPlusRatingSummary("player")
@@ -457,7 +484,7 @@ tab2:SetScript("OnClick", function(self)
 			sortedplayerList[#sortedplayerList+1] = {
 				name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
 				level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
-				map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(pData.keyMap > 0 and GetRealZoneText(pData.keyMap) or "-"),
+				map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(pData.keyMap > 1000 and GetRealZoneText(pData.keyMap) or pData.keyMap > 0 and GetMapUIInfo(pData.keyMap) or"-"),
 				rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
 			}
 		end
@@ -632,7 +659,7 @@ local function UpdateCells(playerList, isGuildList)
 			sortedplayerList[#sortedplayerList+1] = {
 				name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 				level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
-				map = dungeonNames[pData[2]] or pData[2] > 0 and pData[2] or pData[2] == -1 and hiddenIcon or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] > 0 and GetRealZoneText(pData[2]) or pData[2] == -1 and L.keystoneHiddenTooltip or "-"),
+				map = dungeonNames[pData[2]] or pData[2] > 0 and pData[2] or pData[2] == -1 and hiddenIcon or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] > 1000 and GetRealZoneText(pData[2]) or pData[2] > 0 and GetMapUIInfo(pData[2]) or pData[2] == -1 and L.keystoneHiddenTooltip or "-"),
 				rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
 			}
 		end

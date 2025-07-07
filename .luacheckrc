@@ -165,6 +165,7 @@ files["Tools/AutoRole.lua"].ignore = {
 	"113/UnitSetRole",
 }
 files["Tools/Keystones.lua"].ignore = {
+	"113/C_ChallengeMode",
 	"113/C_ClassColor",
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
