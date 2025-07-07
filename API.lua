@@ -165,6 +165,35 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Tools option tables
+--
+
+do
+	local function CopyTable(settingsTable)
+		local copy = {}
+		for key, value in next, settingsTable do
+			if type(value) == "table" then
+				copy[key] = CopyTable(value)
+			else
+				copy[key] = value
+			end
+		end
+		return copy
+	end
+	local tbl = {}
+	-- Get all AceGUI option tables under the "Tools" category
+	function API.GetToolOptionTables()
+		return CopyTable(tbl)
+	end
+	-- Register an AceGUI options table for a module under the "Tools" category
+	function API.SetToolOptionsTable(key, settingsTable)
+		if type(key) ~= "string" then error("The key needs to be a string.") end
+		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+		tbl[key] = settingsTable
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Versions
 --
 
@@ -178,7 +207,6 @@ do
 		return addonTbl.versionHash
 	end
 end
-
 
 --------------------------------------------------------------------------------
 -- Voice
