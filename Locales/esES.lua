@@ -289,6 +289,15 @@ L.keystoneTabTeleports = "Teletransportes"
 L.keystoneHeaderMyCharacters = "Mis Personajes"
 
 -----------------------------------------------------------------------
+-- LFGTimer.lua
+--
+
+L.lfgTimerTitle = "LFG Timer"
+L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
+L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
+L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+
+-----------------------------------------------------------------------
 -- PLUGINS
 -----------------------------------------------------------------------
 

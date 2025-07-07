@@ -8,6 +8,36 @@ local _, tbl = ...
 local LoaderPublic = tbl.loaderPublic
 local PlaySound, StopSound, GetTime = PlaySound, StopSound, GetTime
 
+local db
+local defaults = {
+	useMaster = true
+}
+if LoaderPublic.isRetail or LoaderPublic.isMists then -- XXX I hate having to wait for changes to sync across classic flavors
+	db = LoaderPublic.db:RegisterNamespace("LFGTimer", {profile = defaults})
+	for k, v in next, db do
+		local defaultType = type(defaults[k])
+		if defaultType == "nil" then
+			db.profile[k] = nil
+		elseif type(v) ~= defaultType then
+			db.profile[k] = defaults[k]
+		end
+	end
+else
+	local func = tbl.initToolDBForClassicTemp
+	tbl.initToolDBForClassicTemp = function()
+		db = LoaderPublic.db:RegisterNamespace("LFGTimer", {profile = defaults})
+		for k, v in next, db do
+			local defaultType = type(defaults[k])
+			if defaultType == "nil" then
+				db.profile[k] = nil
+			elseif type(v) ~= defaultType then
+				db.profile[k] = defaults[k]
+			end
+		end
+		return func and func() or nil
+	end
+end
+
 local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
 timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
 
@@ -47,13 +77,12 @@ timerBar:SetScript("OnEvent", function()
 	-- Play in Master for those that have SFX off or very low.
 	-- Using false as third arg to avoid the "only one of each sound at a time" throttle.
 	-- Only play via the "Master" channel if we have sounds turned on
-	-- XXX add option for this
-	--if (BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound) or LoaderPrivate.isSoundOn ~= false then
+	if db.profile.useMaster then
 		local _, id = PlaySound(8960, "Master", false) -- SOUNDKIT.READY_CHECK
 		if id then
 			StopSound(id-1) -- Should work most of the time to stop the blizz sound
 		end
-	--end
+	end
 
 end)
 timerBar:RegisterEvent("LFG_PROPOSAL_SHOW")
@@ -67,3 +96,32 @@ timerBar:SetScript("OnUpdate", function(f)
 		end
 	end
 end)
+
+local L = tbl.API:GetLocale("BigWigs")
+tbl.API.SetToolOptionsTable("LFGTimer", {
+	type = "group",
+	name = L.lfgTimerTitle,
+	get = function(info)
+		return db.profile[info[#info]]
+	end,
+	set = function(info, value)
+		local key = info[#info]
+		db.profile[key] = value
+	end,
+	args = {
+		explainer = {
+			type = "description",
+			name = L.lfgTimerExplainer,
+			order = 0,
+			width = "full",
+			fontSize = "medium",
+		},
+		useMaster = {
+			type = "toggle",
+			name = L.lfgUseMaster,
+			desc = L.lfgUseMasterDesc:format(L.sfx),
+			order = 1,
+			width = "full",
+		},
+	},
+})
