@@ -38,7 +38,7 @@ if L then
 	L.custom_on_experimental_dosage_marks = "Asignaciones de Dosis experimentales"
 	L.custom_on_experimental_dosage_marks_desc = "Asigna a las personas afectadas por Dosis experimental a {rt6}{rt4}{rt3}{rt7} con prioridad: melee > ranged > healer. Afecta a los mensajes enviados."
 
-	--L.volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
+	L.volatile_concoction_explosion_desc = "Muestra una barra para el jugador seleccionado por el Brebaje Volátil."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "esES")

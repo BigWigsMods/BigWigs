@@ -16,8 +16,8 @@ L.magic_buff_other = "Beneficio de magia en %s: %s" -- Magic buff on NPC_NAME: S
 L.on = "%s en %s"
 L.stack = "%dx %s en %s" -- "5x SPELL_NAME on PLAYER_OR_NPC" showing how many stacks of a buff/debuff are on a player or NPC
 L.stackyou = "%dx %s en TI" -- "5x SPELL_NAME on YOU" showing how many stacks of a buff/debuff are on you
---L.stackboss = "%dx %s on BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
---L.stack_gained = "Gained %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
+L.stackboss = "%dx %s en el JEFE" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
+L.stack_gained = "Obtenido %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
 L.cast = "<Lanza: %s>"
 L.casting = "Lanzando %s"
 L.soon = "%s pronto"
@@ -47,7 +47,7 @@ L.general = "General" -- General settings, i.e. things that apply to normal, her
 L.health = "Salud" -- The health of an NPC
 L.health_percent = "%d%% Salud" -- "10% Health" The health percentage of an NPC
 L.energy = "Energía"
---L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
+L.energy_percent = "%d%% Energía" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Puerta abierta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Puerta abierta" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Amenaza"
@@ -71,15 +71,15 @@ L.you_die = "Morirás" -- You will die
 L.you_die_sec = "Morirás en %d seg" -- "You die in 15 sec" (seg = seconds (segundos))
 L.next_ability = "Próxima habilidad" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s está aterrizando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
---L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "Aterrizando" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Ahora puedes volar"
 L.bosses_too_close = "Los jefes están muy cerca" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
---L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
---L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
---L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
---L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.keep_moving = "Sigue moviéndote" -- An ability that forces you to keep moving or you will take damage
+L.stand_still = "No te muevas" -- An ability that forces you to stand still or you will take damage
+L.safe_to_stop = "Puedes pararte" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "Puedes moverte" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.safe = "Seguro" -- You are safe from a bad ability
+L.unsafe = "Peligro" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Esbirro apareció" -- singular
@@ -136,10 +136,10 @@ L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 L.marker = "%s marcador"
 L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudante o líder." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder." -- Mark NPC_NAME with SKULL_ICON
-L.marker_npc_aura_desc = "Marca NPC afectados por '%s' con %s, Se necesita ser lider o ser promovido." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Marca NPC afectados por '%s' con %s, requiere ayudante o líder." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Desactivado"
 L.none = "Nada"
---L.markers = "Markers" -- Plural of marker
+L.markers = "Marcas" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Enlace"
@@ -180,9 +180,9 @@ L.west = "Oeste"
 L.north_west = "Noroeste"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "Pequeño"
+L.medium = "Mediano"
+L.large = "Grande"
 
 -- Schools
 L.fire = "Fuego"
@@ -248,8 +248,8 @@ L.spell_reflection = "Reflejo de hechizos" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "Bola" -- A ball, like a football, basketball, etc
+L.balls = "Bolas" -- Plural of L.ball
 L.blind = "Ceguera" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Esquivar" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
@@ -259,8 +259,8 @@ L.fixates = "Fijados" -- Plural of L.fixate
 L.group_damage = "Daño de grupo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Absorción de salud" -- Any ability that drains health from the player
 L.parasite = "Parásito" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
---L.parasites = "Parasites" -- Plural of L.parasite
---L.pull_in = "Pull In" -- An ability that pulls you in towards the boss against your will
+L.parasites = "Parásitos" -- Plural of L.parasite
+L.pull_in = "Atraer" -- An ability that pulls you in towards the boss against your will
 L.raid_damage = "Daño de banda" -- Any ability that causes damage to every player in the raid
 L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
