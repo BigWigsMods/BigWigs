@@ -1115,6 +1115,7 @@ if public.isRetail or public.isMists then -- XXX Support for LoadSavedVariablesF
 	end
 else
 	bwFrame:RegisterEvent("ADDON_LOADED")
+	local _, addonTbl = ...
 	function mod:ADDON_LOADED(addon)
 		if addon ~= "BigWigs" then
 			-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
@@ -1172,6 +1173,10 @@ else
 			end
 		end
 
+		if addonTbl.initToolDBForClassicTemp then
+			addonTbl.initToolDBForClassicTemp()
+			addonTbl.initToolDBForClassicTemp = nil
+		end
 		bwFrame:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 	end
