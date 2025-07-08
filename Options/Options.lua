@@ -260,6 +260,7 @@ local acOptions = {
 					width = "full",
 				},
 			},
+			hidden = loader.isVanilla,
 		},
 	},
 }
