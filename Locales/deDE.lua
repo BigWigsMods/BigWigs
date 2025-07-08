@@ -267,16 +267,16 @@ L.H25 = "Heroisch 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
+L.tools = "Werkzeuge"
+L.toolsDesc = "BigWigs bietet verschiedene Werkzeuge oder Features der \"Lebensqualität\" zur Beschleunigung und Vereinfachung von Bossbegegnungen. Menü durch Klicken des |cFF33FF99+|r Symbols erweitern, um alle zu sehen."
 L.youAreInCombat = "Das ist im Kampf nicht möglich."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "Automatische Rollenwahl"
+L.autoRoleExplainer = "Jedes mal, wenn einer Gruppe beigetreten wird, oder die Talentspezialisierung in einer Gruppe geändert wird, passt BigWigs automatisch die Gruppenrolle (Tank, Heiler, Schaden) entsprechend an.\n\n"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
