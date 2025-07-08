@@ -267,16 +267,16 @@ L.H25 = "영웅 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
+L.tools = "도구"
+L.toolsDesc = "BigWigs은 보스와의 전투를 더욱 빠르고 간편하게 만들어 주는 다양한 도구 또는 \"편의 기능\"을 제공합니다. |cFF33FF99+|r 아이콘을 클릭하여 메뉴를 확장하면 모든 기능을 확인할 수 있습니다."
 L.youAreInCombat = "전투 중에는 그렇게 할 수 없습니다."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "자동 역할"
+L.autoRoleExplainer = "그룹에 가입하거나 그룹에 있는 동안 특성 전문화를 변경할 때마다 BigWigs이 자동으로 그룹 역할(탱커, 힐러, 딜러)을 그에 맞게 조정합니다.\n\n"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -300,10 +300,10 @@ L.keystoneHeaderMyCharacters = "내 캐릭터"
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "LFG Timer"
-L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
-L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
-L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "파티 찾기 타이머"
+L.lfgTimerExplainer = "파티 찾기 대기열 창이 표시될 때마다 BigWigs은 대기열을 수락하기까지 남은 시간을 표시하는 타이머 바를 생성합니다.\n\n"
+L.lfgUseMaster = "'주 음량' 오디오 채널에서 파티 찾기 준비 완료 사운드 재생"
+L.lfgUseMasterDesc = "이 옵션을 활성화하면 파티 찾기 준비 완료음이 '주 음량' 오디오 채널을 통해 재생됩니다. 이 옵션을 비활성화하면 '%s' 오디오 채널을 통해 재생됩니다."
 
 -----------------------------------------------------------------------
 -- PLUGINS
