@@ -301,7 +301,7 @@ L.keystoneHeaderMyCharacters = "Meine Charaktere"
 --
 
 L.lfgTimerTitle = "Dungeonbrowser Timer"
-L.lfgTimerExplainer = "Immer wenn ein Dungeonbrowser Popup erscheint, erstellt BigWigs einen Timer mit der verbleibenden Zeit zum Akzeptieren.\n\n"
+L.lfgTimerExplainer = "Immer wenn ein Dungeonbrowser Popup für eine Warteschlange erscheint, erstellt BigWigs einen Timer mit der verbleibenden Zeit zum Akzeptieren.\n\n"
 L.lfgUseMaster = "Dungeonbrowser Bereitschaftssound auf 'Master' Audiokanal wiedergeben"
 L.lfgUseMasterDesc = "Wenn diese Option aktiviert ist, wird der Bereitschaftssound des Dungeonbrowsers auf dem 'Master' Audiokanal wiedergegeben. Wenn diese Option deaktiviert ist, wird dieser stattdessen auf dem '%s' Audiokanal wiedergegeben."
 
