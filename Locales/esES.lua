@@ -268,7 +268,6 @@ L.H25 = "Heroico 25"
 -----------------------------------------------------------------------
 
 L.tools = "Herramientas"
-
 L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calidad de vida\" para acelerar y simplificar el proceso de enfrentamiento con los jefes. Expande el menú clicando el |cFF33FF99+|r icono para mostrarlas todas."
 L.youAreInCombat = "No puedes hacer eso en combate."
 
