@@ -181,7 +181,7 @@ L.north_west = "Noroeste"
 
 -- Sizes
 L.small = "Pequeño"
-L.medium = "Medio"
+L.medium = "Mediano"
 L.large = "Grande"
 
 -- Schools
