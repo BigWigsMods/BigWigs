@@ -267,16 +267,16 @@ L.H25 = "Heroisch 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
+L.tools = "Werkzeuge"
+L.toolsDesc = "BigWigs bietet verschiedene Werkzeuge oder Features der \"Lebensqualität\" zur Beschleunigung und Vereinfachung von Bossbegegnungen. Menü durch Klicken des |cFF33FF99+|r Symbols erweitern, um alle zu sehen."
 L.youAreInCombat = "Das ist im Kampf nicht möglich."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "Automatische Rollenwahl"
+L.autoRoleExplainer = "Jedes mal, wenn einer Gruppe beigetreten wird, oder die Talentspezialisierung in einer Gruppe geändert wird, passt BigWigs automatisch die Gruppenrolle (Tank, Heiler, Schaden) entsprechend an.\n\n"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -300,10 +300,10 @@ L.keystoneHeaderMyCharacters = "Meine Charaktere"
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "LFG Timer"
-L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
-L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
-L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "Dungeonbrowser Timer"
+L.lfgTimerExplainer = "Immer wenn ein Dungeonbrowser Popup für eine Warteschlange erscheint, erstellt BigWigs einen Timer mit der verbleibenden Zeit zum Akzeptieren.\n\n"
+L.lfgUseMaster = "Dungeonbrowser Bereitschaftssound auf 'Master' Audiokanal wiedergeben"
+L.lfgUseMasterDesc = "Wenn diese Option aktiviert ist, wird der Bereitschaftssound des Dungeonbrowsers auf dem 'Master' Audiokanal wiedergegeben. Wenn diese Option deaktiviert ist, wird dieser stattdessen auf dem '%s' Audiokanal wiedergegeben."
 
 -----------------------------------------------------------------------
 -- PLUGINS
