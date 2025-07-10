@@ -30,31 +30,31 @@ local roleIcons = {
 }
 local hiddenIcon = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:16:16|t"
 local dungeonNames = {
-	[500] = "ROOK", -- The Rookery
-	[504] = "DFC", -- Darkflame Cleft
-	[499] = "PRIORY", -- Priory of the Sacred Flame
-	[506] = "BREW", -- Cinderbrew Meadery
-	[525] = "FLOOD", -- Operation: Floodgate
-	[382] = "TOP", -- Theater of Pain
-	[247] = "ML", -- The MOTHERLODE!!
-	[370] = "WORK", -- Operation: Mechagon - Workshop
+	[500] = L.keystoneShortName_TheRookery, -- ROOK
+	[504] = L.keystoneShortName_DarkflameCleft, -- DFC
+	[499] = L.keystoneShortName_PrioryOfTheSacredFlame, -- PRIORY
+	[506] = L.keystoneShortName_CinderbrewMeadery, -- BREW
+	[525] = L.keystoneShortName_OperationFloodgate, -- FLOOD
+	[382] = L.keystoneShortName_TheaterOfPain, -- TOP
+	[247] = L.keystoneShortName_TheMotherlode, -- ML
+	[370] = L.keystoneShortName_OperationMechagonWorkshop, -- WORK
 
-	[542] = "ALDANI", -- Eco-Dome Al'dani
-	[378] = "HALLS", -- Halls of Atonement
-	[503] = "ARA", -- Ara-Kara, City of Echoes
-	[392] = "GAMBIT", -- Tazavesh: So'leah's Gambit
-	[391] = "STREETS", -- Tazavesh: Streets of Wonder
-	[505] = "DAWN", -- The Dawnbreaker
+	[542] = L.keystoneShortName_EcoDomeAldani, -- ALDANI
+	[378] = L.keystoneShortName_HallsOfAtonement, -- HOA
+	[503] = L.keystoneShortName_AraKaraCityOfEchoes, -- ARAK
+	[392] = L.keystoneShortName_TazaveshSoleahsGambit, -- GAMBIT
+	[391] = L.keystoneShortName_TazaveshStreetsOfWonder, -- STREET
+	[505] = L.keystoneShortName_TheDawnbreaker, -- DAWN
 
-	-- XXX remove below eventually
-	[1594] = "ML",
-	[2097] = "WORK",
-	[2293] = "TOP",
-	[2648] = "ROOK",
-	[2649] = "PRIORY",
-	[2651] = "DFC",
-	[2661] = "BREW",
-	[2773] = "FLOOD",
+	-- XXX remove below after 11.2 (and remove GetRealZoneText code from keystone tooltip)
+	[1594] = L.keystoneShortName_TheMotherlode,
+	[2097] = L.keystoneShortName_OperationMechagonWorkshop,
+	[2293] = L.keystoneShortName_TheaterOfPain,
+	[2648] = L.keystoneShortName_TheRookery,
+	[2649] = L.keystoneShortName_PrioryOfTheSacredFlame,
+	[2651] = L.keystoneShortName_DarkflameCleft,
+	[2661] = L.keystoneShortName_CinderbrewMeadery,
+	[2773] = L.keystoneShortName_OperationFloodgate,
 }
 local teleports = BigWigsLoader.isNext and {
 	[2830] = 1237215, -- Eco-Dome Al'dani
