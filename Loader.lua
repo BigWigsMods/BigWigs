@@ -1072,7 +1072,7 @@ do
 	end
 end
 
-if public.isRetail or public.isMists or public.isWrath then -- XXX Support for LoadSavedVariablesFirst [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
+if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
 	-- LibDBIcon setup
 	if type(BigWigsIconDB) ~= "table" then
 		BigWigsIconDB = {}

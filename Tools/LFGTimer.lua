@@ -9,10 +9,10 @@ local LoaderPublic = tbl.loaderPublic
 local PlaySound, StopSound, GetTime = PlaySound, StopSound, GetTime
 
 local db
-local defaults = {
-	useMaster = true
-}
-if LoaderPublic.isRetail or LoaderPublic.isMists then -- XXX I hate having to wait for changes to sync across classic flavors
+do
+	local defaults = {
+		useMaster = true
+	}
 	db = LoaderPublic.db:RegisterNamespace("LFGTimer", {profile = defaults})
 	for k, v in next, db do
 		local defaultType = type(defaults[k])
@@ -21,20 +21,6 @@ if LoaderPublic.isRetail or LoaderPublic.isMists then -- XXX I hate having to wa
 		elseif type(v) ~= defaultType then
 			db.profile[k] = defaults[k]
 		end
-	end
-else
-	local func = tbl.initToolDBForClassicTemp
-	tbl.initToolDBForClassicTemp = function()
-		db = LoaderPublic.db:RegisterNamespace("LFGTimer", {profile = defaults})
-		for k, v in next, db do
-			local defaultType = type(defaults[k])
-			if defaultType == "nil" then
-				db.profile[k] = nil
-			elseif type(v) ~= defaultType then
-				db.profile[k] = defaults[k]
-			end
-		end
-		return func and func() or nil
 	end
 end
 
