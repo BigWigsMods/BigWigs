@@ -122,7 +122,7 @@ public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfo
 public.GetMapInfo = GetMapInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
-public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
+public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
 public.GetSpellDescription = C_Spell.GetSpellDescription
 public.GetSpellLink = C_Spell.GetSpellLink
 public.GetSpellName = C_Spell.GetSpellName
@@ -146,7 +146,7 @@ public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitTokenFromGUID = UnitTokenFromGUID
 public.Print = sysprint
-public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
+public.isTestBuild = IsPublicTestClient and IsPublicTestClient() -- PTR/beta XXX [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = build >= 120000
@@ -685,7 +685,7 @@ local function load(index)
 		local msg = L.addOnLoadFailedWithReason:format(addonName, reason)
 		sysprint(msg)
 		Popup(msg, true)
-	--elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX only available in 11.1.5 and 1.15.7 atm
+	--elseif DoesAddOnHaveLoadError and DoesAddOnHaveLoadError(index) then -- XXX their implementation is broken
 	--	local addonName = GetAddOnInfo(index)
 	--	local msg = L.addOnLoadFailedUnknownError:format(addonName)
 	--	sysprint(msg)
@@ -1072,7 +1072,7 @@ do
 	end
 end
 
-if public.isRetail or public.isMists then -- XXX Support for LoadSavedVariablesFirst [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
+if public.isRetail or public.isMists or public.isWrath then -- XXX Support for LoadSavedVariablesFirst [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
 	-- LibDBIcon setup
 	if type(BigWigsIconDB) ~= "table" then
 		BigWigsIconDB = {}
