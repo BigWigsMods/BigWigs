@@ -302,8 +302,8 @@ L.keystoneHeaderMyCharacters = "Mis Personajes"
 
 L.lfgTimerTitle = "Temporizador de BDG"
 L.lfgTimerExplainer = "Cuando aparece la ventana emergente del BDG, BigWigs creará una barra diciéndote cuanto tiempo tienes para aceptar la cola.\n\n"
-L.lfgUseMaster = "Reproduce el sonido de BDG listo en el canal de audio 'Maestro'"
-L.lfgUseMasterDesc = "Cuando esta opción se activa el sonido de BDG listo se reproducirá en el canal de audio 'Maestro'. Si desactivas esta opción se reproducirá en el canal de audio '%s'."
+L.lfgUseMaster = "Reproduce el sonido de BDG listo en el canal de audio 'General'"
+L.lfgUseMasterDesc = "Cuando esta opción se activa el sonido de BDG listo se reproducirá en el canal de audio 'General'. Si desactivas esta opción se reproducirá en el canal de audio '%s'."
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -750,7 +750,7 @@ L.secondaryDesc = "El segundo icono de objetivo de banda que se debe utilizar en
 --
 
 L.Sounds = "Sonidos"
-L.soundsDesc = "BigWigs utiliza el canal de sonido 'Maestro' para reproducir todos sus sonidos. Si consideras que los sonidos son demasiado silenciosos o demasiado altos, abre la configuración de sonido de WoW y ajusta el deslizador de 'Volumen general' a un nivel que te guste.\n\nAbajo puedes configurar globalmente los diferentes sonidos que se reproducen para acciones específicas, o ponerlos en 'None' para desactivarlos. Si solo quieres cambiar un sonido para una habilidad específica de un jefe, puedes hacerlo en los ajustes del encuentro con el jefe.\n\n"
+L.soundsDesc = "BigWigs utiliza el canal de sonido 'General' para reproducir todos sus sonidos. Si consideras que los sonidos son demasiado silenciosos o demasiado altos, abre la configuración de sonido de WoW y ajusta el deslizador de 'Volumen general' a un nivel que te guste.\n\nAbajo puedes configurar globalmente los diferentes sonidos que se reproducen para acciones específicas, o ponerlos en 'None' para desactivarlos. Si solo quieres cambiar un sonido para una habilidad específica de un jefe, puedes hacerlo en los ajustes del encuentro con el jefe.\n\n"
 L.oldSounds = "Sonidos antiguos"
 
 L.Alarm = "Alarma"
