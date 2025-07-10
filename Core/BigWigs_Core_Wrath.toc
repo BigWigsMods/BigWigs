@@ -1,4 +1,4 @@
-## Interface: 30404
+## Interface: 30405
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]
