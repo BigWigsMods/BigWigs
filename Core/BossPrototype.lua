@@ -31,17 +31,17 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
 local isClassic, isRetail, isClassicEra, isCata, isMists, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.isMists, loader.season
-local C_EncounterJournal_GetSectionInfo = isCata and function(key)
+local C_EncounterJournal_GetSectionInfo = (isCata or isMists) and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
-end or (isRetail or isMists) and C_EncounterJournal.GetSectionInfo or function(key)
+end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
 local UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local EJ_GetEncounterInfo = isCata and function(key)
+local EJ_GetEncounterInfo = (isCata or isMists) and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
-end or (isRetail or isMists) and EJ_GetEncounterInfo or function(key)
+end or isRetail and EJ_GetEncounterInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
 end
 local SendChatMessage, GetInstanceInfo, SimpleTimer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
