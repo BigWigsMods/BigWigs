@@ -14,12 +14,17 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 391
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 1, 58},
-	["BigWigs_Classic"] = {11, 1, 51},
-	["BigWigs_BurningCrusade"] = {11, 1, 2},
-	["BigWigs_WrathOfTheLichKing"] = {11, 1, 6},
-	["BigWigs_Cataclysm"] = {11, 1, 6},
+	["LittleWigs"] = {11, 1, 59},
+	["BigWigs_Classic"] = {11, 1, 52},
+	["BigWigs_BurningCrusade"] = {11, 1, 3},
+	["BigWigs_WrathOfTheLichKing"] = {11, 1, 7},
+	["BigWigs_Cataclysm"] = {11, 1, 7},
 	["BigWigs_MistsOfPandaria"] = {11, 1, 6},
+	["BigWigs_WarlordsOfDraenor"] = {11, 1, 1},
+	["BigWigs_Legion"] = {11, 1, 1},
+	["BigWigs_BattleForAzeroth"] = {11, 1, 1},
+	["BigWigs_Shadowlands"] = {11, 1, 1},
+	["BigWigs_Dragonflight"] = {11, 1, 2},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
@@ -291,6 +296,7 @@ do
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
 				[2769] = "BigWigs_LiberationOfUndermine",
+				[2810] = "BigWigs_ManaforgeOmega",
 			}
 		}
 	end
