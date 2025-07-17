@@ -391,10 +391,12 @@ BigWigsAPI.RegisterSlashCommand("/pull", function(input)
 
 	if not IsInGroup() or (IsInGroup(2) and UnitGroupRolesAssigned("player") == "TANK") or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or (IsInGroup(1) and not IsInRaid()) then -- Solo, tank in LFG, leader, assist, anyone in 5m
 		if not plugin:IsEnabled() then BigWigs:Enable() end
-		if input == "" then
+
+		local pullTime = SecureCmdOptionParse(input)
+		if pullTime == "" then
 			DoCountdown(10) -- Allow typing /pull to start a 10 second pull timer
 		else
-			local seconds = tonumber(input)
+			local seconds = tonumber(pullTime)
 			if not seconds or seconds < 0 or seconds > 86400 then BigWigs:Print(L.wrongPullFormat) return end
 			if seconds ~= 0 then
 				BigWigs:Print(L.sendPull)
