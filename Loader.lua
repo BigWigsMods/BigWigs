@@ -1494,12 +1494,13 @@ end
 
 do
 	local callbackMap = {}
-	function public:RegisterMessage(msg, func)
+	local currentEvent = nil
+	function public:RegisterMessage(event, func)
 		if self == BigWigsLoader then
 			error(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.")
 		end
 
-		if type(msg) ~= "string" then
+		if type(event) ~= "string" then
 			error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!")
 		end
 
@@ -1507,37 +1508,43 @@ do
 		if funcType == "string" then
 			if not self[func] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(func)) end
 		elseif funcType == "nil" then
-			if not self[msg] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(msg)) end
+			if not self[event] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(event)) end
 		elseif funcType ~= "function" then
 			error(":RegisterMessage(message, function) attempted to register an invalid function!")
 		end
 
-		if not callbackMap[msg] then callbackMap[msg] = {} end
-		callbackMap[msg][self] = func or msg
+		if not callbackMap[event] then callbackMap[event] = {} end
+		if callbackMap[event][self] or event ~= currentEvent then -- Event is already registered to this specific module, just change the assigned function
+			callbackMap[event][self] = func or event
+		else -- Event has not been previously registered to this specific module and the same event is currently in the middle of dispatching
+			CTimerAfter(0, function() callbackMap[event][self] = func or event end)
+		end
 	end
-	function public:UnregisterMessage(msg)
+	function public:UnregisterMessage(event)
 		if self == BigWigsLoader then
 			error(".UnregisterMessage(addon, message, function) attempted to unregister a function from BigWigsLoader, you might be using : instead of . to register the callback.")
 		end
 
-		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
-		if not callbackMap[msg] then return end
-		callbackMap[msg][self] = nil
-		if not next(callbackMap[msg]) then
-			callbackMap[msg] = nil
+		if type(event) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
+		if not callbackMap[event] then return end
+		callbackMap[event][self] = nil
+		if not next(callbackMap[event]) then
+			callbackMap[event] = nil
 		end
 	end
 
 	local securecallfunction = securecallfunction
-	function public:SendMessage(msg, ...)
-		if callbackMap[msg] then
-			for k,v in next, callbackMap[msg] do
+	function public:SendMessage(event, ...)
+		if callbackMap[event] then
+			for k,v in next, callbackMap[event] do
+				currentEvent = event
 				if type(v) == "function" then
-					securecallfunction(v, msg, ...)
+					securecallfunction(v, event, ...)
 				else
-					securecallfunction(k[v], k, msg, ...)
+					securecallfunction(k[v], k, event, ...)
 				end
 			end
+			currentEvent = nil
 		end
 	end
 
