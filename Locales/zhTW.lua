@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
-L.tempNew = "新功能:你可以輸入 |cFFFFFFFF/bwtemp|r 查看隊友的鑰石。"
+L.tempNew = "新功能：你可以輸入 |cFFFFFFFF/bwtemp|r 查看隊友的鑰石。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -269,7 +269,7 @@ L.H25 = "25人英雄"
 
 L.tools = "工具"
 L.toolsDesc = "BigWigs 提供了多種實用工具或便利功能，讓你可以輕鬆寫意地擊敗首領。點擊 |cFF33FF99+|r 圖示以展開選單，查看所有功能。"
-L.youAreInCombat = "戰鬥中無法這麼做。"
+L.youAreInCombat = "你無法在戰鬥中這麼做。" --ERR_NOT_IN_COMBAT
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -283,7 +283,7 @@ L.autoRoleExplainer = "當你加入隊伍或是在隊伍中更換專精時，Big
 --
 
 L.keystoneTitle = "BigWigs 鑰石資訊"
-L.keystoneHeaderParty = "隊伍y"
+L.keystoneHeaderParty = "隊伍"
 L.keystoneRefreshParty = "更新隊伍"
 L.keystoneHeaderGuild = "公會"
 L.keystoneRefreshGuild = "更新公會"
@@ -292,7 +292,7 @@ L.keystoneMapTooltip = "地城：|cFFFFFFFF%s|r"
 L.keystoneRatingTooltip = "傳奇鑰石分數：|cFFFFFFFF%d|r" --按I介面就是傳奇鑰石分數，不是傳奇+
 L.keystoneHiddenTooltip = "該玩家隱藏了資訊。"
 L.keystoneTabOnline = "線上"
-L.keystoneTabAlts = "分身"
+L.keystoneTabAlts = "分身" --NOT SURE
 L.keystoneTabTeleports = "傳送"
 L.keystoneHeaderMyCharacters = "我的角色"
 
@@ -319,7 +319,7 @@ L.keystoneShortName_TheDawnbreaker = "破曉者號" --破曉
 L.lfgTimerTitle = "佇列就續計時" --加入佇列/從佇列移除/副本已就續/離開佇列
 L.lfgTimerExplainer = "「副本已就續」的視窗彈出時，BigWigs 會在確認視窗下方顯示一個計時條，告訴你還有幾秒可以接受邀請。\n\n"
 L.lfgUseMaster = "以主音效頻道播放準備確認音效"
-L.lfgUseMasterDesc = "啟用後，以主音效頻道播放副本就續的提示音效。若停用此選項，則會改為透過「%s」聲道播放。"
+L.lfgUseMasterDesc = "啟用後，以主音效頻道播放副本就續的提示音效。若停用此選項，則會改為透過「%s」頻道播放。"
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -747,8 +747,8 @@ L.sendPull = "向你的團隊發送開怪倒數計時器。"
 L.wrongPullFormat = "無效倒數。正確的格式範例： /pull 5"
 L.countdownBegins = "開始倒數"
 L.countdownBegins_desc = "以秒為單位，選擇在開怪計時器剩餘幾秒時開始倒數。"
-L.pullExplainer = "\n|cFF33FF99/pull|r C會啟動預設的 10 秒倒數計時器。\n|cFF33FF99/pull 7|r 會啟動一個 7 秒倒數計時器，你可以自行設定秒數。\n另外，你也可以在下方設定倒數快捷鍵。\n\n"
-L.pullKeybindingDesc = "設定用來啟動倒數計時的快捷鍵。"
+L.pullExplainer = "\n|cFF33FF99/pull|r 會啟動預設的 10 秒倒數計時器。\n|cFF33FF99/pull 7|r 會啟動一個 7 秒倒數計時器，你可以自行設定秒數。\n另外，你也可以在下方設定倒數快捷鍵。\n\n"
+L.pullKeybindingDesc = "設定用來啟動開怪倒數的快捷鍵。"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
