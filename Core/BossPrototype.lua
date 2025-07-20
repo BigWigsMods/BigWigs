@@ -106,6 +106,9 @@ local updateData = function(module)
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
 
+	local _, role, position = LibSpec.MySpecialization()
+	myRole, myRolePosition = role, position
+
 	UpdateDispelStatus()
 	UpdateInterruptStatus()
 

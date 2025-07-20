@@ -117,7 +117,10 @@ local updateData = function(module)
 		englishSayMessages = false
 	end
 
-	do
+	if isCata then
+		local _, role, position = LibSpec.MySpecialization()
+		myRole, myRolePosition = role, position
+	else
 		local _, class = UnitClass("player")
 		local spent = 0
 		local talentTree = 0
