@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
---L.tempNew = "NEW: You can now type |cFFFFFFFF/bwtemp|r to see the Mythic+ keystones of your party members."
+L.tempNew = "新功能:你可以輸入 |cFFFFFFFF/bwtemp|r 查看隊友的鑰石。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -14,7 +14,7 @@ L.infobox_desc = "顯示當前戰鬥相關的訊息。"
 L.stages = "階段"
 L.stages_desc = "啟用首領戰鬥中與階段相關的各種功能，例如階段轉換的訊息提示、階段持續時間的計時器等。"
 L.warmup = "預備"
-L.warmup_desc = "首領戰鬥之前的預備時間。"
+L.warmup_desc = "首領戰鬥開始之前的預備時間。"
 L.proximity = "玩家雷達"
 L.proximity_desc = "顯示玩家雷達視窗，列出距離你過近的玩家。"
 L.adds = "增援"
@@ -22,7 +22,7 @@ L.adds_desc = "啟用與首領戰鬥中出現的增援相關的各種功能。"
 L.health = "生命值"
 L.health_desc = "顯示與首領戰鬥中相關的生命值資訊。"
 L.energy = "能量"
---L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
+L.energy_desc = "啟用後，在首領戰鬥中顯示各種能量等級的資訊。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已經存在，但該模組仍試圖重新註冊。通常來說，這可能是由於更新失敗導致你的插件資料夾中同時存在兩份相同模組的拷貝。建議刪除所有 BigWigs 資料夾並重新安裝。"
 
@@ -267,59 +267,59 @@ L.H25 = "25人英雄"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
---L.youAreInCombat = "You cannot do that in combat."
+L.tools = "工具"
+L.toolsDesc = "BigWigs 提供了多種實用工具或便利功能，讓你可以輕鬆寫意地擊敗首領。點擊 |cFF33FF99+|r 圖示以展開選單，查看所有功能。"
+L.youAreInCombat = "戰鬥中無法這麼做。"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "自動設定職責"
+L.autoRoleExplainer = "當你加入隊伍或是在隊伍中更換專精時，BigWigs 會自動根據你的專精調整你的隊伍職責（坦克、治療者、傷害輸出）。\n\n"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
 
---L.keystoneTitle = "BigWigs Keystones"
---L.keystoneHeaderParty = "Party"
---L.keystoneRefreshParty = "Refresh Party"
---L.keystoneHeaderGuild = "Guild"
---L.keystoneRefreshGuild = "Refresh Guild"
---L.keystoneLevelTooltip = "Keystone level: |cFFFFFFFF%s|r"
---L.keystoneMapTooltip = "Dungeon: |cFFFFFFFF%s|r"
---L.keystoneRatingTooltip = "Mythic+ rating: |cFFFFFFFF%d|r"
---L.keystoneHiddenTooltip = "The player has chosen to hide this information."
---L.keystoneTabOnline = "Online"
---L.keystoneTabAlts = "Alts"
---L.keystoneTabTeleports = "Teleports"
---L.keystoneHeaderMyCharacters = "My Characters"
+L.keystoneTitle = "BigWigs 鑰石資訊"
+L.keystoneHeaderParty = "隊伍y"
+L.keystoneRefreshParty = "更新隊伍"
+L.keystoneHeaderGuild = "公會"
+L.keystoneRefreshGuild = "更新公會"
+L.keystoneLevelTooltip = "鑰石等級：|cFFFFFFFF%s|r"
+L.keystoneMapTooltip = "地城：|cFFFFFFFF%s|r"
+L.keystoneRatingTooltip = "傳奇鑰石分數：|cFFFFFFFF%d|r" --按I介面就是傳奇鑰石分數，不是傳奇+
+L.keystoneHiddenTooltip = "該玩家隱藏了資訊。"
+L.keystoneTabOnline = "線上"
+L.keystoneTabAlts = "分身"
+L.keystoneTabTeleports = "傳送"
+L.keystoneHeaderMyCharacters = "我的角色"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
---L.keystoneShortName_TheRookery = "ROOK"
---L.keystoneShortName_DarkflameCleft = "DFC"
---L.keystoneShortName_PrioryOfTheSacredFlame = "PRIORY"
---L.keystoneShortName_CinderbrewMeadery = "BREW"
---L.keystoneShortName_OperationFloodgate = "FLOOD"
---L.keystoneShortName_TheaterOfPain = "TOP"
---L.keystoneShortName_TheMotherlode = "ML"
---L.keystoneShortName_OperationMechagonWorkshop = "WORK"
---L.keystoneShortName_EcoDomeAldani = "ALDANI"
---L.keystoneShortName_HallsOfAtonement = "HOA"
---L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
---L.keystoneShortName_TazaveshSoleahsGambit = "GAMBIT"
---L.keystoneShortName_TazaveshStreetsOfWonder = "STREET"
---L.keystoneShortName_TheDawnbreaker = "DAWN"
+L.keystoneShortName_TheRookery = "培育所" --培育
+L.keystoneShortName_DarkflameCleft = "暗焰裂縫" --暗焰
+L.keystoneShortName_PrioryOfTheSacredFlame = "聖焰隱修院" --聖焰
+L.keystoneShortName_CinderbrewMeadery = "燼釀酒莊" --酒莊
+L.keystoneShortName_OperationFloodgate = "水閘行動" --水閘
+L.keystoneShortName_TheaterOfPain = "苦痛劇場" --劇場
+L.keystoneShortName_TheMotherlode = "晶喜鎮" --晶喜
+L.keystoneShortName_OperationMechagonWorkshop = "工坊"
+L.keystoneShortName_EcoDomeAldani = "埃達尼秘境" --秘境
+L.keystoneShortName_HallsOfAtonement = "贖罪之殿" --贖罪
+L.keystoneShortName_AraKaraCityOfEchoes = "回音之城" --回音
+L.keystoneShortName_TazaveshSoleahsGambit = "索利亞的險招" --索立亞?
+L.keystoneShortName_TazaveshStreetsOfWonder = "奇觀街道" --街道
+L.keystoneShortName_TheDawnbreaker = "破曉者號" --破曉
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "LFG Timer"
-L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
-L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
-L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "佇列就續計時" --加入佇列/從佇列移除/副本已就續/離開佇列
+L.lfgTimerExplainer = "「副本已就續」的視窗彈出時，BigWigs 會在確認視窗下方顯示一個計時條，告訴你還有幾秒可以接受邀請。\n\n"
+L.lfgUseMaster = "以主音效頻道播放準備確認音效"
+L.lfgUseMasterDesc = "啟用後，以主音效頻道播放副本就續的提示音效。若停用此選項，則會改為透過「%s」聲道播放。"
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -339,7 +339,7 @@ L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精
 L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入精確數值，最大可以到 200。"
 L.disabled = "停用"
 L.disableDesc = "即將禁用「%s」的功能，但|cffff4411不建議|r這麼做。\n\n你確定要這麼做嗎？"
---L.keybinding = "Keybinding"
+L.keybinding = "按鍵綁定"
 
 -- Anchor Points
 L.UP = "向上"
@@ -672,8 +672,8 @@ L.fixate_test = "鎖定" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "將名條的文字設定全部重設為預設值。"
 L.glowAt = "開始發光（秒）"
 L.glowAt_desc = "設定技能的冷卻時間剩下幾秒時觸發發光效果。"
---L.headerIconSizeTarget = "Icon size of your current target"
---L.headerIconSizeOthers = "Icon size of all other targets"
+L.headerIconSizeTarget = "當前目標的圖示尺寸"
+L.headerIconSizeOthers = "其他目標的圖示尺寸"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "像素發光"
@@ -747,8 +747,8 @@ L.sendPull = "向你的團隊發送開怪倒數計時器。"
 L.wrongPullFormat = "無效倒數。正確的格式範例： /pull 5"
 L.countdownBegins = "開始倒數"
 L.countdownBegins_desc = "以秒為單位，選擇在開怪計時器剩餘幾秒時開始倒數。"
---L.pullExplainer = "\n|cFF33FF99/pull|r will start a normal pull timer.\n|cFF33FF99/pull 7|r will start a 7 second pull timer, you can use any number.\nAlternatively, you can also set a keybinding below.\n\n"
---L.pullKeybindingDesc = "Choose a keybinding for starting a pull timer."
+L.pullExplainer = "\n|cFF33FF99/pull|r C會啟動預設的 10 秒倒數計時器。\n|cFF33FF99/pull 7|r 會啟動一個 7 秒倒數計時器，你可以自行設定秒數。\n另外，你也可以在下方設定倒數快捷鍵。\n\n"
+L.pullKeybindingDesc = "設定用來啟動倒數計時的快捷鍵。"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
