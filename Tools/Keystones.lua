@@ -19,7 +19,7 @@ do
 	local function addToTable(specID, _, _, playerName)
 		specs[playerName] = specID
 	end
-	LibSpec:Register(specs, addToTable)
+	LibSpec.RegisterGroup(specs, addToTable)
 	LibSpec.RegisterGuild(specs, addToTable)
 end
 

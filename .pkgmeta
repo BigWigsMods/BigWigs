@@ -4,7 +4,7 @@ wowi-archive-previous: no
 externals:
     Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
     Libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
-    Libs/LibSpecialization: https://repos.wowace.com/wow/libspecialization/trunk/LibSpecialization
+    Libs/LibSpecialization: https://github.com/BigWigsMods/LibSpecialization.git/LibSpecialization
     Libs/LibLatency: https://repos.wowace.com/wow/liblatency/trunk/LibLatency
     Libs/LibDurability: https://repos.wowace.com/wow/libdurability/trunk/LibDurability
     Libs/LibKeystone: https://github.com/BigWigsMods/LibKeystone.git/LibKeystone

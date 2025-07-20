@@ -28,7 +28,7 @@ end
 
 local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
-local LibSpec = LibStub("LibSpecialization", true)
+local LibSpec = LibStub("LibSpecialization")
 local loader = BigWigsLoader
 local isClassic, isRetail, isClassicEra, isCata, isMists, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.isMists, loader.season
 local C_EncounterJournal_GetSectionInfo = (isCata or isMists) and function(key)
@@ -83,10 +83,8 @@ do -- Update some data that may be called at the top of modules (prior to initia
 			end
 		end
 	end
-	if LibSpec then
-		LibSpec:Register(loader, update)
-		LibSpec:RequestSpecialization()
-	end
+	LibSpec.RegisterGroup({}, update)
+	LibSpec.RequestGroupSpecialization()
 end
 local updateData = function(module)
 	myGUID = UnitGUID("player")
@@ -103,11 +101,6 @@ local updateData = function(module)
 		englishSayMessages = true
 	else
 		englishSayMessages = false
-	end
-
-	if LibSpec then
-		local _, role, position = LibSpec:MySpecialization()
-		myRole, myRolePosition = role, position
 	end
 
 	local _, _, diff = GetInstanceInfo()
@@ -2181,9 +2174,7 @@ end
 
 --- Ask LibSpecialization to update the role positions of everyone in your group.
 function boss:UpdateRolePositions()
-	if LibSpec then
-		LibSpec:RequestSpecialization()
-	end
+	LibSpec.RequestGroupSpecialization()
 end
 
 --- Check if your talent tree role is MELEE.

@@ -84,8 +84,8 @@ do -- Update some data that may be called at the top of modules (prior to initia
 		end
 	end
 	if LibSpec then
-		LibSpec:Register(loader, update)
-		LibSpec:RequestSpecialization()
+		LibSpec.RegisterGroup({}, update)
+		LibSpec.RequestGroupSpecialization()
 	end
 end
 local talentRoles = {
@@ -117,13 +117,7 @@ local updateData = function(module)
 		englishSayMessages = false
 	end
 
-	myRole = nil
-	myRolePosition = nil
-
-	if isCata then
-		local _, role, position = LibSpec:MySpecialization()
-		myRole, myRolePosition = role, position
-	else
+	do
 		local _, class = UnitClass("player")
 		local spent = 0
 		local talentTree = 0
@@ -2255,7 +2249,7 @@ end
 --- Ask LibSpecialization to update the role positions of everyone in your group.
 function boss:UpdateRolePositions()
 	if LibSpec then
-		LibSpec:RequestSpecialization()
+		LibSpec.RequestGroupSpecialization()
 	end
 end
 

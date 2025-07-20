@@ -8,7 +8,7 @@ local IsInGroup, IsPartyLFG = IsInGroup, IsPartyLFG
 local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
 local UnitGroupRolesAssigned, UnitSetRole = UnitGroupRolesAssigned, UnitSetRole
 
-LibSpec:Register(frame, function(_, role, _, player)
+LibSpec.RegisterGroup({}, function(_, role, _, player)
 	if myName == player and IsInGroup() and not IsPartyLFG() and UnitGroupRolesAssigned("player") ~= role then
 		if InCombatLockdown() or UnitAffectingCombat("player") then
 			frame:RegisterEvent("PLAYER_REGEN_ENABLED")
