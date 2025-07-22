@@ -267,16 +267,16 @@ L.H25 = "Héroïque 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
+L.tools = "Outils"
+L.toolsDesc = "BigWigs propose divers outils ou des fonctionnalités \"qualité de vie\" afin d'accélérer et simplifier les combats de boss. Depliez le menu en cliquant sur |cFF33FF99+|r l'icône afin de tous les voir."
 L.youAreInCombat = "Vous ne pouvez pas faire cela en combat."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "Rôle automatique"
+L.autoRoleExplainer = "Lorsque vous rejoignez un groupe, ou que vous changez de spécialisation alors que vous êtes en groupe, BigWigs mettra à jour automatiquement votre rôle de groupe (Tank, Soigneur, Dégâts) en conséquence.\n\n"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -297,20 +297,20 @@ L.keystoneTabTeleports = "Téléportations"
 L.keystoneHeaderMyCharacters = "Mes personnages"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
---L.keystoneShortName_TheRookery = "ROOK"
---L.keystoneShortName_DarkflameCleft = "DFC"
---L.keystoneShortName_PrioryOfTheSacredFlame = "PRIORY"
---L.keystoneShortName_CinderbrewMeadery = "BREW"
---L.keystoneShortName_OperationFloodgate = "FLOOD"
---L.keystoneShortName_TheaterOfPain = "TOP"
---L.keystoneShortName_TheMotherlode = "ML"
---L.keystoneShortName_OperationMechagonWorkshop = "WORK"
---L.keystoneShortName_EcoDomeAldani = "ALDANI"
---L.keystoneShortName_HallsOfAtonement = "HOA"
---L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
---L.keystoneShortName_TazaveshSoleahsGambit = "GAMBIT"
---L.keystoneShortName_TazaveshStreetsOfWonder = "STREET"
---L.keystoneShortName_TheDawnbreaker = "DAWN"
+L.keystoneShortName_TheRookery = "COLONIE"
+L.keystoneShortName_DarkflameCleft = "FAILLE"
+L.keystoneShortName_PrioryOfTheSacredFlame = "PRIEURÉ"
+L.keystoneShortName_CinderbrewMeadery = "HYDROM"
+L.keystoneShortName_OperationFloodgate = "VANNES"
+L.keystoneShortName_TheaterOfPain = "SOUFFR"
+L.keystoneShortName_TheMotherlode = "FILON"
+L.keystoneShortName_OperationMechagonWorkshop = "ATELIER"
+L.keystoneShortName_EcoDomeAldani = "ALDANI"
+L.keystoneShortName_HallsOfAtonement = "EXPIA"
+L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
+L.keystoneShortName_TazaveshSoleahsGambit = "STRAT"
+L.keystoneShortName_TazaveshStreetsOfWonder = "RUES"
+L.keystoneShortName_TheDawnbreaker = "BRISE"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
