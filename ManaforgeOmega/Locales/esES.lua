@@ -11,3 +11,12 @@ if L then
 	--L.soulfray_annihilation = "Lines" -- Lines that shoot out an orb along that path
 	--L.soulfray_annihilation_single = "Line" -- Single from Lines
 end
+
+L = BigWigs:NewBossLocale("Fractillus", "esES")
+if L then
+	--L.crystalline_eruption = "Walls"
+	--L.shattershell = "Breaks"
+	--L.shockwave_slam = "Tank Wall"
+	--L.nexus_shrapnel = "Shrapnel Lands"
+	--L.crystal_lacerations = "Bleed"
+end
