@@ -102,7 +102,7 @@ files["**/Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
-files["**/Plugins/BossBlock.lua"].ignore = {
+files["/Plugins/BossBlock.lua"].ignore = {
 	"113/AlertFrame",
 	"112/BigWigs",
 	"113/C_ContentTracking",
@@ -110,6 +110,7 @@ files["**/Plugins/BossBlock.lua"].ignore = {
 	"113/C_EventToastManager",
 	"113/C_Item",
 	"113/C_TalkingHead",
+	"113/DeadlyDebuffFrame",
 	"113/GetFramesRegisteredForEvent",
 	"113/GetTrackedAchievements",
 	"113/Questie_BaseFrame",
