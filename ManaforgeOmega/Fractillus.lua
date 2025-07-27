@@ -15,7 +15,6 @@ mod:SetRespawnTime(30)
 --
 
 local conjunctionCount = 1
-local backhandCount = 1
 local crystallizationCount = 1
 local slamCount = 1
 
@@ -95,7 +94,6 @@ end
 
 function mod:OnEngage()
 	conjunctionCount = 1
-	backhandCount = 1
 	crystallizationCount = 1
 	slamCount = 1
 
@@ -127,7 +125,6 @@ do
 	end
 end
 
-
 function mod:NullConsumptionApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.bomb)
@@ -149,7 +146,7 @@ function mod:EnragedShatteringApplied(args)
 	self:PlaySound(args.spellId, "warning") -- enrage/failed walls
 end
 
-function mod:EntropicConjunctionApplied(args)
+function mod:EntropicConjunctionApplied()
 	self:StopBar(CL.count:format(L.crystalline_eruption, conjunctionCount))
 	self:Message(1233416, "orange", CL.count:format(L.crystalline_eruption, conjunctionCount))
 	-- self:PlaySound(1233416, "alert")
@@ -188,7 +185,7 @@ end
 do
 	local prev = 0
 	local knockbackOnMe = false
-	function mod:ShatteringBackhand(args)
+	function mod:ShatteringBackhand()
 			if knockbackOnMe then
 				self:Bar(1220394, {2.5, 9}, CL.knockback)
 			end
