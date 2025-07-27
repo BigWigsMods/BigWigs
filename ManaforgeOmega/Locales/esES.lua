@@ -25,3 +25,13 @@ if L then
 	--L.nexus_shrapnel = "Shrapnel Lands"
 	--L.crystal_lacerations = "Bleed"
 end
+
+L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "esES")
+if L then
+	--L.oath_bound_removed_dose = "1x Oath-Bound Removed"
+	--L.behead = "Claws" -- Claws of a dragon
+	--L.netherbreaker = "Circles"
+	--L.galaxy_smash = "Smashes" -- Short for Galactic Smash, and multiple of them.
+	--L.starkiller_swing = "Starkillers" -- Short for Starkiller Swing, and multiple of them.
+	--L.vengeful_oath = "Spirits"
+end
