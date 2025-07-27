@@ -252,7 +252,7 @@ function mod:SilkenSnareApplied(args)
 	end
 end
 
-function mod:PiercingStrand(args)
+function mod:PiercingStrand()
 	self:StopBar(CL.count:format(CL.tank_frontal, piercingStrandCount))
 	self:Message(1237212, "purple", CL.count:format(CL.tank_frontal, piercingStrandCount))
 	self:PlaySound(1237212, "alert") -- tank hit inc
