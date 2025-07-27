@@ -14,9 +14,9 @@ end
 
 L = BigWigs:NewBossLocale("Fractillus", "koKR")
 if L then
-	--L.crystalline_eruption = "Walls"
-	--L.shattershell = "Breaks"
-	--L.shockwave_slam = "Tank Wall"
-	--L.nexus_shrapnel = "Shrapnel Lands"
-	--L.crystal_lacerations = "Bleed"
+	L.crystalline_eruption = "벽"
+	L.shattershell = "제거"
+	L.shockwave_slam = "탱커 벽"
+	L.nexus_shrapnel = "파편"
+	L.crystal_lacerations = "출혈"
 end
