@@ -12,6 +12,11 @@ if L then
 	--L.soulfray_annihilation_single = "Line" -- Single from Lines
 end
 
+L = BigWigs:NewBossLocale("Forgeweaver Araz", "ruRU")
+if L then
+	--L.invoke_collector = "Collector" -- Short for Arcane Collector
+end
+
 L = BigWigs:NewBossLocale("Fractillus", "ruRU")
 if L then
 	--L.crystalline_eruption = "Walls"
