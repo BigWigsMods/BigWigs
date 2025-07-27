@@ -15,7 +15,6 @@ mod:SetRespawnTime(30)
 --
 
 local soulCallingCount = 1
-local essenceImplosionCount = 1
 local soulfrayAnnihilationCount = 1
 local mysticLashCount = 1
 local arcaneExpulsionCount = 1
@@ -97,7 +96,6 @@ end
 
 function mod:OnEngage()
 	soulCallingCount = 1
-	essenceImplosionCount = 1
 	soulfrayAnnihilationCount = 1
 	mysticLashCount = 1
 	arcaneExpulsionCount = 1
@@ -178,7 +176,7 @@ do
 			local englishSayText = icon and CL.rticon:format(englishText, icon) or englishText
 			self:PersonalMessage(args.spellId, nil, L.soulfray_annihilation)
 			self:PlaySound(args.spellId, "warning") -- move
-			self:Say(args.spellId, sayText, nil, englishText)
+			self:Say(args.spellId, sayText, nil, englishSayText)
 			self:SayCountdown(args.spellId, 6, icon)
 		end
 		if icon then
@@ -218,7 +216,7 @@ function mod:MysticLashApplied(args)
 	end
 end
 
-function mod:ArcaneExpulsion(args)
+function mod:ArcaneExpulsion()
 	self:StopBar(CL.count:format(CL.knockback, arcaneExpulsionCount))
 	self:Message(1223859, "orange", CL.count:format(CL.knockback, arcaneExpulsionCount))
 	self:PlaySound(1223859, "warning")
