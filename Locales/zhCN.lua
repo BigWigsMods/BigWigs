@@ -297,7 +297,7 @@ L.keystoneTabTeleports = "传送"
 L.keystoneHeaderMyCharacters = "我的角色"
 L.keystoneTeleportNotLearned = "传送法术 '|cFFFFFFFF%s|r' |cFFFF4411尚未学习|r 。"
 L.keystoneTeleportOnCooldown = "传送法术 '|cFFFFFFFF%s|r' 目前处于 |cFFFF4411冷却中|r ，还需 %d 小时 %d 分钟可用。"
-L.keystoneTeleportReady = "传送法术 '|cFFFFFFFF%s|r' |cFF33FF99已就绪|r点击施放。"
+L.keystoneTeleportReady = "传送法术 '|cFFFFFFFF%s|r' |cFF33FF99已就绪|r，点击施放。"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷"
