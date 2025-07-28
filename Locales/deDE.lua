@@ -295,9 +295,9 @@ L.keystoneTabOnline = "Online"
 L.keystoneTabAlts = "Twinks"
 L.keystoneTabTeleports = "Teleports"
 L.keystoneHeaderMyCharacters = "Meine Charaktere"
---L.keystoneTeleportNotLearned = "The teleport spell '|cFFFFFFFF%s|r' is |cFFFF4411not learned|r yet."
---L.keystoneTeleportOnCooldown = "The teleport spell '|cFFFFFFFF%s|r' is currently |cFFFF4411on cooldown|r for %d |4hour:hours; and %d |4minute:minutes;."
---L.keystoneTeleportReady = "The teleport spell '|cFFFFFFFF%s|r' is |cFF33FF99ready|r, click to cast it."
+L.keystoneTeleportNotLearned = "Der Teleportzauber '|cFFFFFFFF%s|r' wurde noch |cFFFF4411nicht erlernt|r."
+L.keystoneTeleportOnCooldown = "Der Teleportzauber '|cFFFFFFFF%s|r' |cFFFF4411klingt ab|r für %d |4Stunde:Stunden; und %d |4Minute:Minuten;."
+L.keystoneTeleportReady = "Der Teleportzauber '|cFFFFFFFF%s|r' ist |cFF33FF99bereit|r, klicken zum Wirken."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"
