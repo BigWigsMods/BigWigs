@@ -12,6 +12,11 @@ if L then
 	L.soulfray_annihilation_single = "라인" -- Single from Lines
 end
 
+L = BigWigs:NewBossLocale("Forgeweaver Araz", "koKR")
+if L then
+	--L.invoke_collector = "Collector" -- Short for Arcane Collector
+end
+
 L = BigWigs:NewBossLocale("Fractillus", "koKR")
 if L then
 	L.crystalline_eruption = "벽"
@@ -19,4 +24,14 @@ if L then
 	L.shockwave_slam = "탱커 벽"
 	L.nexus_shrapnel = "파편"
 	L.crystal_lacerations = "출혈"
+end
+
+L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "koKR")
+if L then
+	--L.oath_bound_removed_dose = "1x Oath-Bound Removed"
+	--L.behead = "Claws" -- Claws of a dragon
+	--L.netherbreaker = "Circles"
+	--L.galaxy_smash = "Smashes" -- Short for Galactic Smash, and multiple of them.
+	--L.starkiller_swing = "Starkillers" -- Short for Starkiller Swing, and multiple of them.
+	--L.vengeful_oath = "Spirits"
 end

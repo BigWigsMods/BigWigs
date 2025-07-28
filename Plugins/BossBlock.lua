@@ -304,6 +304,13 @@ do
 			TooltipDataProcessor.AddLinePreCall(17, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestTitle
 			TooltipDataProcessor.AddLinePreCall(18, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestPlayer
 		end
+		if DeadlyDebuffFrame then
+			DeadlyDebuffFrame:HookScript("OnShow", function(frame)
+				if next(activatedModules) then
+					bbFrame.Hide(frame)
+				end
+			end)
+		end
 	end
 end
 

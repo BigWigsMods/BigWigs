@@ -1343,7 +1343,7 @@ local function populateToggleOptions(widget, module)
 
 	local tabs = {}
 	if module.optionHeaders then
-		for i, optionHeader in next, module.optionHeaders do
+		for _, optionHeader in next, module.optionHeaders do
 			if type(optionHeader) == "table" and optionHeader.tabName then
 				table.insert(tabs, optionHeader)
 			end
@@ -1351,32 +1351,33 @@ local function populateToggleOptions(widget, module)
 	end
 
 	if #tabs > 0 then -- tabs!
-		local generalTabExists = false
+		local generalTabExists = nil
 		local tabbedOptions = {}
-		local tabInfo, tabsCreated, tabOptions  = {}, {}, {}
-		for i, tab in next, tabs do
+		local tabInfo, tabOptions  = {}, {}
+		for _, tab in next, tabs do
 			local text = tab.tabName
-			if text == "general" then
-				generalTabExists = true
+			if text == "general" or text == CL.general then
+				generalTabExists = text
 			end
 			local tabData = tab[1]
 			table.insert(tabInfo, { text = text, value = text })
 			tabOptions[text] = tabData
-			for j, option in next, tabData do
+			for _, option in next, tabData do
 				tabbedOptions[option] = true
 			end
 		end
 
-		for i, option in next, module.toggleOptions do
+		for _, option in next, module.toggleOptions do
 			local o = option
 			if type(o) == "table" then o = option[1] end
 			if not tabbedOptions[o] then -- Any options that are not assigned will go to the general tab
 				if not generalTabExists then
-					table.insert(tabInfo, 1, { text = CL.general, value = "general" })
-					generalTabExists = true
+					local value = "general"
+					table.insert(tabInfo, 1, { text = CL.general, value = value })
+					generalTabExists = value
 				end
-				tabOptions["general"] = tabOptions["general"] or {}
-				table.insert(tabOptions["general"], option)
+				tabOptions[generalTabExists] = tabOptions[generalTabExists] or {}
+				table.insert(tabOptions[generalTabExists], option)
 			end
 		end
 
