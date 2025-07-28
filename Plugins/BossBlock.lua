@@ -562,6 +562,11 @@ do
 					tbl.subtitle = tbl.title
 					tbl.title = nil
 					printMessage(self, tbl)
+				elseif tbl.eventToastID == 288 then -- Discovery: Waystone
+					-- tbl.title is "Discovery", tbl.subtitle is "Waystone"
+					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle)
+					tbl.title = nil
+					printMessage(self, tbl)
 				else -- Something we don't support, pass to Blizz to process
 					return
 				end
