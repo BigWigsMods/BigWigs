@@ -1,37 +1,37 @@
 local L = BigWigs:NewBossLocale("Loom'ithar", "zhCN")
 if not L then return end
 if L then
-	--L.lair_weaving = "Webs" -- Webs that spawn on the edge of the room
-	--L.infusion_pylons = "Pylons" -- Short for Infusion Pylons
+	L.lair_weaving = "蛛网" -- Webs that spawn on the edge of the room
+	L.infusion_pylons = "晶塔" -- 技能“注能晶塔”的简称
 end
 
 L = BigWigs:NewBossLocale("Soulbinder Naazindhri", "zhCN")
 if L then
-	--L.voidblade_ambush = "Ambush" -- Short for Voidblade Ambush
-	--L.soulfray_annihilation = "Lines" -- Lines that shoot out an orb along that path
-	--L.soulfray_annihilation_single = "Line" -- Single from Lines
+	L.voidblade_ambush = "奇袭" -- 技能“虚空剑士奇袭”的简称
+	L.soulfray_annihilation = "射线" -- Lines that shoot out an orb along that path
+	L.soulfray_annihilation_single = "射线" -- Single from Lines
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "zhCN")
 if L then
-	--L.invoke_collector = "Collector" -- Short for Arcane Collector
+	L.invoke_collector = "收集者" -- NPC“唤动收集者”的简称
 end
 
 L = BigWigs:NewBossLocale("Fractillus", "zhCN")
 if L then
-	--L.crystalline_eruption = "Walls"
-	--L.shattershell = "Breaks"
-	--L.shockwave_slam = "Tank Wall"
-	--L.nexus_shrapnel = "Shrapnel Lands"
-	--L.crystal_lacerations = "Bleed"
+	L.crystalline_eruption = "水晶墙"
+	L.shattershell = "破墙"
+	L.shockwave_slam = "坦克墙"
+	L.nexus_shrapnel = "碎片落地"
+	L.crystal_lacerations = "流血"
 end
 
 L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "zhCN")
 if L then
-	--L.oath_bound_removed_dose = "1x Oath-Bound Removed"
-	--L.behead = "Claws" -- Claws of a dragon
-	--L.netherbreaker = "Circles"
-	--L.galaxy_smash = "Smashes" -- Short for Galactic Smash, and multiple of them.
-	--L.starkiller_swing = "Starkillers" -- Short for Starkiller Swing, and multiple of them.
-	--L.vengeful_oath = "Spirits"
+	L.oath_bound_removed_dose = "移除1层誓言约束"
+	L.behead = "处斩" -- Claws of a dragon
+	L.netherbreaker = "虚空圈"
+	L.galaxy_smash = "重碾" -- 星河重碾的简称
+	L.starkiller_swing = "歼星斩" -- 歼星斩
+	L.vengeful_oath = "幻影"
 end
