@@ -102,7 +102,7 @@ files["**/Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
-files["/Plugins/BossBlock.lua"].ignore = {
+files["Plugins/BossBlock.lua"].ignore = {
 	"113/AlertFrame",
 	"112/BigWigs",
 	"113/C_ContentTracking",
@@ -171,7 +171,6 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
 	"113/C_PlayerInfo",
-	"113/C_Spell",
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
 	"113/GetSpecializationInfoByID",

@@ -250,7 +250,7 @@ end)
 guildRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
 
 local OnEnterShowTooltip = function(self)
-	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:SetOwner(self, "ANCHOR_TOP")
 	GameTooltip:SetText(self.tooltip)
 	GameTooltip:Show()
 end
@@ -281,40 +281,61 @@ local function CreateCell()
 end
 
 local teleportButtons = {}
-for mapID, spellID in next, teleports do
-	local button = CreateFrame("Button", nil, nil, "SecureActionButtonTemplate")
-	teleportButtons[#teleportButtons+1] = button
-	button.text = GetRealZoneText(mapID)
-	button.spellID = spellID
-	button:SetAttribute("type", "spell")
-	button:SetAttribute("spell", spellID)
-	button:Hide()
-	button:SetSize(240, 20)
-	--button:SetScript("OnEnter", OnEnterShowTooltip)
-	--button:SetScript("OnLeave", GameTooltip_Hide)
-	button:EnableMouse(true)
-	button:RegisterForClicks("AnyDown", "AnyUp")
+do
+	local function OnEnter(self)
+		GameTooltip:SetOwner(self, "ANCHOR_TOP")
+		local spellName = LoaderPublic.GetSpellName(self.spellID)
+		if not IsSpellKnown(self.spellID) then
+			GameTooltip:SetText(L.keystoneTeleportNotLearned:format(spellName))
+		else
+			local cd = LoaderPublic.GetSpellCooldown(self.spellID)
+			if cd.startTime > 0 and cd.duration > 0 then
+				local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+				local hours = math.floor(remainingSeconds / 3600)
+				remainingSeconds = remainingSeconds % 3600
+				local minutes = math.floor(remainingSeconds / 60)
+				GameTooltip:SetText(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+			else
+				GameTooltip:SetText(L.keystoneTeleportReady:format(spellName))
+			end
+		end
+		GameTooltip:Show()
+	end
+	for mapID, spellID in next, teleports do
+		local button = CreateFrame("Button", nil, nil, "SecureActionButtonTemplate")
+		teleportButtons[#teleportButtons+1] = button
+		button.text = GetRealZoneText(mapID)
+		button.spellID = spellID
+		button:SetAttribute("type", "spell")
+		button:SetAttribute("spell", spellID)
+		button:Hide()
+		button:SetSize(240, 20)
+		button:SetScript("OnEnter", OnEnter)
+		button:SetScript("OnLeave", GameTooltip_Hide)
+		button:EnableMouse(true)
+		button:RegisterForClicks("AnyDown", "AnyUp")
 
-	local text = button:CreateFontString(nil, nil, "GameFontNormal")
-	text:SetAllPoints(button)
-	text:SetJustifyH("CENTER")
-	text:SetText(button.text)
+		local text = button:CreateFontString(nil, nil, "GameFontNormal")
+		text:SetAllPoints(button)
+		text:SetJustifyH("CENTER")
+		text:SetText(button.text)
 
-	button.bg = button:CreateTexture()
-	button.bg:SetAllPoints(button)
-	button.bg:SetColorTexture(0, 0, 0, 0.6)
+		button.bg = button:CreateTexture(nil, nil, nil, 5)
+		button.bg:SetAllPoints(button)
+		button.bg:SetColorTexture(0, 0, 0, 0.6)
 
-	button.cdbar = button:CreateTexture()
-	button.cdbar:SetPoint("TOPLEFT")
-	button.cdbar:SetPoint("BOTTOMLEFT")
-	button.cdbar:SetColorTexture(1, 1, 1, 0.6)
-	button.cdbar:Hide()
-end
-table.sort(teleportButtons, function(buttonA, buttonB)
-	return buttonA.text < buttonB.text
-end)
-for i = 2, #teleportButtons do
-	teleportButtons[i]:SetPoint("TOP", teleportButtons[i-1], "BOTTOM", 0, -6)
+		button.cdbar = button:CreateTexture(nil, nil, nil, -5)
+		button.cdbar:SetPoint("TOPLEFT")
+		button.cdbar:SetPoint("BOTTOMLEFT")
+		button.cdbar:SetColorTexture(1, 1, 1, 0.6)
+		button.cdbar:Hide()
+	end
+	table.sort(teleportButtons, function(buttonA, buttonB)
+		return buttonA.text < buttonB.text
+	end)
+	for i = 2, #teleportButtons do
+		teleportButtons[i]:SetPoint("TOP", teleportButtons[i-1], "BOTTOM", 0, -6)
+	end
 end
 
 tab1:SetScript("OnClick", function(self)
@@ -559,7 +580,7 @@ tab3:SetScript("OnClick", function(self)
 			teleportButtons[i].bg:SetColorTexture(1, 0, 0, 0.6)
 		else
 			teleportButtons[i].bg:SetColorTexture(0, 0, 0, 0.6)
-			local cd = C_Spell.GetSpellCooldown(teleportButtons[i].spellID)
+			local cd = LoaderPublic.GetSpellCooldown(teleportButtons[i].spellID)
 			if cd.startTime > 0 and cd.duration > 0 then
 				local remaining = (cd.startTime + cd.duration) - GetTime()
 				local percentage = remaining / cd.duration
