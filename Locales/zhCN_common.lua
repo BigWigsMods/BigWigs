@@ -48,8 +48,8 @@ L.health = "血量" -- The health of an NPC
 L.health_percent = "%d%% 血量" -- "10% Health" The health percentage of an NPC
 L.energy = "能量"
 L.energy_percent = "%d%% 能量" -- "80% Energy" The energy percentage of an NPC
-L.door_open = "门开了" -- When a door is open, usually after a speech from an NPC
-L.gate_open = "门开了" -- When a gate is open, usually after a speech from an NPC
+L.door_open = "开门" -- When a door is open, usually after a speech from an NPC
+L.gate_open = "开门" -- When a gate is open, usually after a speech from an NPC
 L.threat = "威胁"
 
 L.remaining = "剩余：%d" -- 5 remaining
