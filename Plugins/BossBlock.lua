@@ -346,7 +346,6 @@ do
 	function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
 		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
-		self:RegisterMessage("BigWigs_OnBossWin")
 		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -382,6 +381,8 @@ do
 			end
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
+
+		self:RegisterEvent("BOSS_KILL")
 
 		if not isVanilla then
 			self:RegisterEvent("CINEMATIC_START")
@@ -530,6 +531,7 @@ do
 					-- tbl.title is "Discovery"
 					-- tbl.subtitle is "Respawn Point Unlocked!"
 					tbl.title = nil -- Remove title, keep subtitle only
+					tbl.subtitle = L.newRespawnPoint
 					tbl.bwDuration = 4
 					gainLifeTbl = tbl
 					self:SimpleTimer(function() gainLifeTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the +1 life toast to merge, if one is rewarded
@@ -564,9 +566,14 @@ do
 					printMessage(self, tbl)
 				elseif tbl.eventToastID == 288 then -- Discovery: Waystone
 					-- tbl.title is "Discovery", tbl.subtitle is "Waystone"
-					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle)
 					tbl.title = nil
-					printMessage(self, tbl)
+					if not latestKill[1] or GetTime()-latestKill[1] > 4 then -- Not after a boss kill
+						tbl.subtitle = L.newRespawnPoint -- New Respawn Point
+						printMessage(self, tbl)
+					else -- After a boss kill
+						tbl.subtitle = CL.other:format(L.newRespawnPoint, latestKill[3]) -- New Respawn Point: Boss Name
+						self:SimpleTimer(function() printMessage(self, tbl) end, 1) -- Delay a little after the boss kill
+					end
 				else -- Something we don't support, pass to Blizz to process
 					return
 				end
@@ -774,11 +781,8 @@ do
 	end
 end
 
-function plugin:BigWigs_OnBossWin(event, module)
-	local journalId = module:GetJournalID()
-	if journalId then
-		latestKill = {journalId, (GetTime())}
-	end
+function plugin:BOSS_KILL(_, encounterID, encounterName)
+	latestKill = {GetTime(), encounterID, encounterName}
 end
 
 do
@@ -1005,8 +1009,8 @@ do
 		[-2233] = true, -- Amirdrassil, Smolderon defeat
 		[-2234] = true, -- After killing Tindral, flying into the tree, usually 2238 but rarely can be 2234
 		[-2238] = { -- Amirdrassil
-			function() return latestKill[1] == 2565 end, -- After killing Tindral, flying into the tree
-			function() return latestKill[1] == 2519 and GetTime()-latestKill[2] < 6 end, -- After killing Fyrakk, but don't trigger when talking to the NPC after killing him
+			function() return latestKill[2] == 2786 end, -- After killing Tindral, flying into the tree
+			function() return latestKill[2] == 2677 and GetTime()-latestKill[1] < 6 end, -- After killing Fyrakk, but don't trigger when talking to the NPC after killing him
 		},
 		[-2292] = true, -- Nerub-ar Palace, Ulgrax defeat
 		[-2296] = true, -- Nerub-ar Palace, Ansurek defeat

@@ -519,6 +519,7 @@ L.redirectPopupsColor = "Color of the redirected message"
 L.blockDungeonPopups = "Block dungeon popup banners"
 L.blockDungeonPopupsDesc = "The popup banners that show when entering a dungeon can sometimes contain text which is very long. Enabling this feature will completely block them."
 L.itemLevel = "Item Level %d"
+L.newRespawnPoint = "New Respawn Point"
 
 L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
 L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."

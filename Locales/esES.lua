@@ -520,6 +520,7 @@ L.redirectPopupsColor = "Color del mensaje redirigido"
 L.blockDungeonPopups = "Bloquear las ventanas emergentes de mazmorras"
 L.blockDungeonPopupsDesc = "Los carteles emergentes que aparecen cuando entras a una mazmorras pueden contener texto que es muy largo. Activar esta opcion los bloqueara directamente."
 L.itemLevel = "Nivel de objeto %d"
+--L.newRespawnPoint = "New Respawn Point"
 
 L.userNotifySfx = "Los efectos de sonido fueron desactivados por el Bloque de jefe, forzándolos a volver a activarse."
 L.userNotifyMusic = "La música fue desactivada por el Bloque de jefe, forzándola a volver a activarse."

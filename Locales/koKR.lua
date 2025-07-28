@@ -520,6 +520,7 @@ L.redirectPopupsColor = "표시되는 팝업 배너의 색상"
 L.blockDungeonPopups = "던전 팝업 배너 차단"
 L.blockDungeonPopupsDesc = "던전에 입장할 때 표시되는 팝업 배너는 때때로 매우 긴 텍스트를 포함할 수 있습니다. 이 기능을 활성화하면 이러한 팝업 배너가 완전히 차단됩니다."
 L.itemLevel = "아이템 레벨: %d"
+--L.newRespawnPoint = "New Respawn Point"
 
 L.userNotifySfx = "보스 기능 차단으로 비활성화된 사운드 효과를 강제로 다시 활성화합니다."
 L.userNotifyMusic = "보스 기능 차단으로 비활성화된 배경음악를 강제로 다시 활성화합니다."

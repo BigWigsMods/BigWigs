@@ -520,6 +520,7 @@ L.redirectPopupsColor = "Farbe der ausgegebenen Nachricht"
 L.blockDungeonPopups = "Popup Banner in Instanzen blockieren"
 L.blockDungeonPopupsDesc = "Die Popup Banner beim Betreten einer Instanz können sehr lange Texte enthalten. Die Aktivierung dieser Option blockiert diese komplett."
 L.itemLevel = "Gegenstandsstufe %d"
+--L.newRespawnPoint = "New Respawn Point"
 
 L.userNotifySfx = "Soundeffekte wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
 L.userNotifyMusic = "Musik wurde von BossBlock deaktiviert, Aktivierung wird erzwungen."
