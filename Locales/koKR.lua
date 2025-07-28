@@ -298,6 +298,13 @@ L.keystoneHeaderMyCharacters = "내 캐릭터"
 L.keystoneTeleportNotLearned = "'|cFFFFFFFF%s|r'순간이동 주문을 아직 |cFFFF4411배우지 않았습니다|r."
 L.keystoneTeleportOnCooldown = "'|cFFFFFFFF%s|r'순간이동 주문은 현재 %d 시간 %d 분 동안 |cFFFF4411재사용 대기 중입니다|r."
 L.keystoneTeleportReady = "'|cFFFFFFFF%s|r'순간이동 주문은 |cFF33FF99사용할 수 있습니다|r. 클릭하여 시전하세요."
+--L.keystoneTabHistory = "History"
+--L.keystoneHeaderThisWeek = "This Week"
+--L.keystoneHeaderOlder = "Older"
+--L.keystoneScoreTooltip = "Dungeon Score: |cFFFFFFFF%d|r"
+--L.keystoneScoreGainedTooltip = "Score Gained: |cFFFFFFFF+%d|r"
+--L.keystoneCompletedTooltip = "Completed in time"
+--L.keystoneFailedTooltip = "Failed to complete in time"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"

@@ -298,6 +298,13 @@ L.keystoneHeaderMyCharacters = "Meine Charaktere"
 L.keystoneTeleportNotLearned = "Der Teleportzauber '|cFFFFFFFF%s|r' wurde noch |cFFFF4411nicht erlernt|r."
 L.keystoneTeleportOnCooldown = "Der Teleportzauber '|cFFFFFFFF%s|r' |cFFFF4411klingt ab|r für %d |4Stunde:Stunden; und %d |4Minute:Minuten;."
 L.keystoneTeleportReady = "Der Teleportzauber '|cFFFFFFFF%s|r' ist |cFF33FF99bereit|r, klicken zum Wirken."
+--L.keystoneTabHistory = "History"
+--L.keystoneHeaderThisWeek = "This Week"
+--L.keystoneHeaderOlder = "Older"
+--L.keystoneScoreTooltip = "Dungeon Score: |cFFFFFFFF%d|r"
+--L.keystoneScoreGainedTooltip = "Score Gained: |cFFFFFFFF+%d|r"
+--L.keystoneCompletedTooltip = "Completed in time"
+--L.keystoneFailedTooltip = "Failed to complete in time"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"
