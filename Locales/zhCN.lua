@@ -304,7 +304,7 @@ L.keystoneHeaderOlder = "更早"
 L.keystoneScoreTooltip = "史诗钥石评分：|cFFFFFFFF%d|r"
 L.keystoneScoreGainedTooltip = "获得评分：|cFFFFFFFF+%d|r"
 L.keystoneCompletedTooltip = "限时完成"
-L.keystoneFailedTooltip = "未能在限时完成"
+L.keystoneFailedTooltip = "未能在限时内完成"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷"
