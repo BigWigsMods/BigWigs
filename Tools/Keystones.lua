@@ -46,7 +46,7 @@ local dungeonNames = {
 	[391] = L.keystoneShortName_TazaveshStreetsOfWonder, -- STREET
 	[505] = L.keystoneShortName_TheDawnbreaker, -- DAWN
 }
-local teleports = BigWigsLoader.isNext and {
+local teleports = BigWigsLoader.isTestBuild and {
 	[2830] = 1237215, -- Eco-Dome Al'dani
 	[2287] = 354465, -- Halls of Atonement
 	[2660] = 445417, -- Ara-Kara, City of Echoes
@@ -454,7 +454,7 @@ do
 			else
 				for i = 1, #teleportButtons do
 					local cd = LoaderPublic.GetSpellCooldown(teleportButtons[i].spellID)
-					if cd.startTime > 0 and cd.duration > 2 and IsSpellKnown(teleportButtons[i].spellID) then
+					if cd and cd.startTime > 0 and cd.duration > 2 and IsSpellKnown(teleportButtons[i].spellID) then
 						local remaining = (cd.startTime + cd.duration) - GetTime()
 						local percentage = remaining / cd.duration
 						teleportButtons[i].cdbar:SetColorTexture(1, 0, 0, 0.6)
