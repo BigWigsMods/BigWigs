@@ -1,4 +1,4 @@
-if not BigWigsLoader.isTestBuild then return end
+if not BigWigsLoader.isNext then return end
 
 -- XXX What happens with intermisoin/ultimates if they die?
 
