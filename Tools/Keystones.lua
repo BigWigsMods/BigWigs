@@ -83,14 +83,14 @@ mainPanel:SetBorder("HeldBagLayout")
 mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 mainPanel:SetScript("OnDragStart", function(self)
-	if prevTab == 3 and InCombatLockdown() then
+	if prevTab == 2 and InCombatLockdown() then
 		LoaderPublic.Print(L.youAreInCombat)
 		return
 	end
 	self:StartMoving()
 end)
 mainPanel:SetScript("OnDragStop", function(self)
-	if prevTab == 3 and InCombatLockdown() then
+	if prevTab == 2 and InCombatLockdown() then
 		LoaderPublic.Print(L.youAreInCombat)
 		return
 	end
@@ -161,12 +161,12 @@ tab1.Text:SetText(L.keystoneTabOnline)
 local tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab2:SetSize(50, 26)
 tab2:SetPoint("LEFT", tab1, "RIGHT", 4, 0)
-tab2.Text:SetText(L.keystoneTabAlts)
+tab2.Text:SetText(L.keystoneTabTeleports)
 
 local tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab3:SetSize(50, 26)
 tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
-tab3.Text:SetText(L.keystoneTabTeleports)
+tab3.Text:SetText(L.keystoneTabAlts)
 
 local tab4 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab4:SetSize(50, 26)
@@ -182,10 +182,21 @@ local function WipeCells()
 	end
 	cellsCurrentlyShowing = {}
 end
+
+local teleportButtons = {}
 mainPanel.CloseButton:SetScript("OnClick", function()
-	if prevTab == 3 and InCombatLockdown() then
-		LoaderPublic.Print(L.youAreInCombat)
-		return
+	if prevTab == 2 then
+		if InCombatLockdown() then
+			LoaderPublic.Print(L.youAreInCombat)
+			return
+		else
+			teleportButtons[1]:ClearAllPoints()
+			teleportButtons[1]:SetScript("OnUpdate", nil)
+			for i = 1, #teleportButtons do
+				teleportButtons[i]:SetParent(nil)
+				teleportButtons[i]:Hide()
+			end
+		end
 	end
 	WipeCells()
 	mainPanel:Hide()
@@ -276,7 +287,6 @@ local function CreateCell()
 	end
 end
 
-local teleportButtons = {}
 do
 	local function OnEnter(self)
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
@@ -305,22 +315,34 @@ do
 		button:SetAttribute("type", "spell")
 		button:SetAttribute("spell", spellID)
 		button:Hide()
-		button:SetSize(240, 20)
+		button:SetSize(90, 48)
 		button:SetScript("OnEnter", OnEnter)
 		button:SetScript("OnLeave", GameTooltip_Hide)
 		button:EnableMouse(true)
 		button:RegisterForClicks("AnyDown", "AnyUp")
 
 		local text = button:CreateFontString(nil, nil, "GameFontNormal")
-		text:SetAllPoints(button)
+		text:SetPoint("CENTER")
+		text:SetSize(86, 44) -- Button size minus 4
 		text:SetJustifyH("CENTER")
 		text:SetText(button.text)
+		while text:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
+			text:SetTextScale(text:GetTextScale() - 0.01)
+		end
 
-		button.bg = button:CreateTexture(nil, nil, nil, 5)
-		button.bg:SetAllPoints(button)
-		button.bg:SetColorTexture(0, 0, 0, 0.6)
+		local icon = button:CreateTexture()
+		icon:SetSize(48, 48)
+		icon:SetPoint("RIGHT", button, "LEFT", -4, 0)
+		local texture = LoaderPublic.GetSpellTexture(spellID)
+		icon:SetTexture(texture)
+		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+		button.icon = icon
 
-		button.cdbar = button:CreateTexture(nil, nil, nil, -5)
+		local bg = button:CreateTexture(nil, nil, nil, -5)
+		bg:SetAllPoints(button)
+		bg:SetColorTexture(0, 0, 0, 0.6)
+
+		button.cdbar = button:CreateTexture(nil, nil, nil, 5)
 		button.cdbar:SetPoint("TOPLEFT")
 		button.cdbar:SetPoint("BOTTOMLEFT")
 		button.cdbar:SetColorTexture(1, 1, 1, 0.6)
@@ -330,7 +352,11 @@ do
 		return buttonA.text < buttonB.text
 	end)
 	for i = 2, #teleportButtons do
-		teleportButtons[i]:SetPoint("TOP", teleportButtons[i-1], "BOTTOM", 0, -6)
+		if i % 2 == 0 then
+			teleportButtons[i]:SetPoint("LEFT", teleportButtons[i-1], "RIGHT", 60, 0)
+		else
+			teleportButtons[i]:SetPoint("TOP", teleportButtons[i-2], "BOTTOM", 0, -6)
+		end
 	end
 end
 
@@ -363,12 +389,13 @@ do
 		tab.RightActive:Hide()
 	end
 	tab1:SetScript("OnClick", function(self)
-		if prevTab == 3 then
+		if prevTab == 2 then
 			if InCombatLockdown() then
 				LoaderPublic.Print(L.youAreInCombat)
 				return
 			else
 				teleportButtons[1]:ClearAllPoints()
+				teleportButtons[1]:SetScript("OnUpdate", nil)
 				for i = 1, #teleportButtons do
 					teleportButtons[i]:SetParent(nil)
 					teleportButtons[i]:Hide()
@@ -390,19 +417,92 @@ do
 		DeselectTab(tab4)
 	end)
 	tab2:SetScript("OnClick", function(self)
-		if prevTab == 3 then
+		if InCombatLockdown() then
+			LoaderPublic.Print(L.youAreInCombat)
+			return
+		end
+		prevTab = 2
+		WipeCells()
+
+		partyHeader:SetText(L.keystoneTabTeleports)
+		partyRefreshButton:Hide()
+		guildHeader:Hide()
+		guildRefreshButton:Hide()
+
+		teleportButtons[1]:ClearAllPoints()
+		teleportButtons[1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
+		local UnitCastingInfo = UnitCastingInfo
+		teleportButtons[1]:SetScript("OnUpdate", function()
+			local _, _, _, startTimeMs, endTimeMs, _, _, _, spellId = UnitCastingInfo("player")
+			if spellId then
+				for i = 1, #teleportButtons do
+					if spellId == teleportButtons[i].spellID then
+						local startTimeSec = startTimeMs / 1000
+						local endTimeSec = endTimeMs / 1000
+						local castDuration = endTimeSec - startTimeSec
+						if castDuration > 0 then
+							local percentage = (GetTime() - startTimeSec) / castDuration
+							if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
+							teleportButtons[i].cdbar:SetColorTexture(0, 0, 1, 0.6)
+							teleportButtons[i].cdbar:Show()
+							teleportButtons[i].cdbar:SetWidth(percentage * teleportButtons[i]:GetWidth())
+						else
+							teleportButtons[i].cdbar:Hide()
+						end
+					end
+				end
+			else
+				for i = 1, #teleportButtons do
+					local cd = LoaderPublic.GetSpellCooldown(teleportButtons[i].spellID)
+					if cd.startTime > 0 and cd.duration > 2 and IsSpellKnown(teleportButtons[i].spellID) then
+						local remaining = (cd.startTime + cd.duration) - GetTime()
+						local percentage = remaining / cd.duration
+						teleportButtons[i].cdbar:SetColorTexture(1, 0, 0, 0.6)
+						teleportButtons[i].cdbar:Show()
+						teleportButtons[i].cdbar:SetWidth(percentage * teleportButtons[i]:GetWidth())
+					else
+						teleportButtons[i].cdbar:Hide()
+					end
+				end
+			end
+		end)
+		for i = 1, #teleportButtons do
+			teleportButtons[i]:SetParent(scrollChild)
+			teleportButtons[i]:Show()
+			teleportButtons[i].cdbar:Hide()
+			if not IsSpellKnown(teleportButtons[i].spellID) then
+				teleportButtons[i].icon:SetTexture(136813)
+			else
+				local texture = LoaderPublic.GetSpellTexture(teleportButtons[i].spellID)
+				teleportButtons[i].icon:SetTexture(texture)
+			end
+		end
+
+		-- Calculate scroll height
+		local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons]:GetBottom()
+		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+		scrollChild:SetHeight(newHeight)
+
+		SelectTab(tab2)
+		DeselectTab(tab1)
+		DeselectTab(tab3)
+		DeselectTab(tab4)
+	end)
+	tab3:SetScript("OnClick", function(self)
+		if prevTab == 2 then
 			if InCombatLockdown() then
 				LoaderPublic.Print(L.youAreInCombat)
 				return
 			else
 				teleportButtons[1]:ClearAllPoints()
+				teleportButtons[1]:SetScript("OnUpdate", nil)
 				for i = 1, #teleportButtons do
 					teleportButtons[i]:SetParent(nil)
 					teleportButtons[i]:Hide()
 				end
 			end
 		end
-		prevTab = 2
+		prevTab = 3
 		WipeCells()
 
 		partyHeader:SetText(L.keystoneHeaderMyCharacters)
@@ -410,9 +510,9 @@ do
 		guildHeader:Hide()
 		guildRefreshButton:Hide()
 
-		SelectTab(tab2)
+		SelectTab(tab3)
 		DeselectTab(tab1)
-		DeselectTab(tab3)
+		DeselectTab(tab2)
 		DeselectTab(tab4)
 
 		-- Begin Display of alts
@@ -484,57 +584,14 @@ do
 			end
 		end
 	end)
-	tab3:SetScript("OnClick", function(self)
-		if InCombatLockdown() then
-			LoaderPublic.Print(L.youAreInCombat)
-			return
-		end
-		prevTab = 3
-		WipeCells()
-
-		partyHeader:SetText(L.keystoneTabTeleports)
-		partyRefreshButton:Hide()
-		guildHeader:Hide()
-		guildRefreshButton:Hide()
-
-		teleportButtons[1]:ClearAllPoints()
-		teleportButtons[1]:SetPoint("TOP", scrollChild, "TOP", 0, -30)
-		for i = 1, #teleportButtons do
-			teleportButtons[i]:SetParent(scrollChild)
-			teleportButtons[i]:Show()
-			if not IsSpellKnown(teleportButtons[i].spellID) then
-				teleportButtons[i].bg:SetColorTexture(1, 0, 0, 0.6)
-			else
-				teleportButtons[i].bg:SetColorTexture(0, 0, 0, 0.6)
-				local cd = LoaderPublic.GetSpellCooldown(teleportButtons[i].spellID)
-				if cd.startTime > 0 and cd.duration > 0 then
-					local remaining = (cd.startTime + cd.duration) - GetTime()
-					local percentage = remaining / cd.duration
-					teleportButtons[i].cdbar:Show()
-					teleportButtons[i].cdbar:SetWidth(percentage * teleportButtons[i]:GetWidth())
-				else
-					teleportButtons[i].cdbar:Hide()
-				end
-			end
-		end
-
-		-- Calculate scroll height
-		local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons]:GetBottom()
-		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
-		scrollChild:SetHeight(newHeight)
-
-		SelectTab(tab3)
-		DeselectTab(tab1)
-		DeselectTab(tab2)
-		DeselectTab(tab4)
-	end)
 	tab4:SetScript("OnClick", function(self)
-		if prevTab == 3 then
+		if prevTab == 2 then
 			if InCombatLockdown() then
 				LoaderPublic.Print(L.youAreInCombat)
 				return
 			else
 				teleportButtons[1]:ClearAllPoints()
+				teleportButtons[1]:SetScript("OnUpdate", nil)
 				for i = 1, #teleportButtons do
 					teleportButtons[i]:SetParent(nil)
 					teleportButtons[i]:Hide()
