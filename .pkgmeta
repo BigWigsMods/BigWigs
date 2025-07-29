@@ -32,6 +32,14 @@ move-folders:
 ignore:
   - gen_option_values.lua
   - ldoc.ltp
+  - Core/Libs/LibChatAnims/LibChatAnims.xml
+  - Libs/AceDB-3.0/AceDB-3.0.xml
+  - Libs/LibDBIcon-1.0/lib.xml
+  - Libs/LibDualSpec-1.0/LibDualSpec-1.0.toc
+  - Libs/LibDualSpec-1.0/LibStub.lua
+  - Libs/LibDurability/LibDurability.xml
+  - Libs/LibLatency/LibLatency.xml
+  - Libs/LibSharedMedia-3.0/lib.xml
   - Media/Sounds/spell_on_you.flac
   - Media/Sounds/spell_under_you.flac
   - Media/Sounds/Long.wav
@@ -46,5 +54,15 @@ ignore:
   - Media/Sounds/Jim/countdown.wav
   - Media/Icons/Source
   - Media/Icons/Menus/Source
+  - Options/Libs/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml
+  - Options/Libs/AceConfigDialog-3.0/AceConfigDialog-3.0.xml
+  - Options/Libs/AceDBOptions-3.0/AceDBOptions-3.0.xml
+  - Options/Libs/LibDDI-1.0/lib.xml
+  - Options/Libs/LibDDI-1.0/LibDDI-1.0.toc
+  - Plugins/Libs/LibCandyBar-3.0/lib.xml
   - Plugins/Libs/LibCustomGlow-1.0/LibCustomGlow-1.0.toc
   - Plugins/Libs/LibCustomGlow-1.0/LibCustomGlow-1.0.xml
+  - Plugins/Libs/LibCustomGlow-1.0/cspell.json
+  - Plugins/Libs/LibCustomGlow-1.0/LICENSE
+  - Plugins/Libs/LibCustomGlow-1.0/README.md
+  - Plugins/Libs/LibSink-2.0/lib.xml
