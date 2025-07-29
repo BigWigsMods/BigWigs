@@ -35,3 +35,16 @@ if L then
 	L.starkiller_swing = "별 부수기" -- Short for Starkiller Swing, and multiple of them.
 	L.vengeful_oath = "영혼"
 end
+
+L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "koKR")
+if L then
+	--L.shattered_space = "Hands" -- Dimensius reaches down with both hands
+	--L.reverse_gravity = "Gravity" -- Short for Reverse Gravity
+	--L.extinction = "Fragment" -- Dimensius hurls a fragment of a broken world
+	--L.slows = "Slows"
+	--L.slow = "Slow" -- Singular of Slows
+	--L.stardust_nova = "Nova" -- Short for Stardust Nova
+	--L.extinguish_the_stars = "Stars" -- Short for Extinguish the Stars
+	--L.darkened_sky = "Rings"
+	--L.cosmic_collapse = "Collapse" -- Short for Cosmic Collapse
+end
