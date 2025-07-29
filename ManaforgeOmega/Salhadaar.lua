@@ -70,11 +70,17 @@ function mod:OnRegister()
 	self:SetSpellRename(1225016, CL.breath) -- Command Besiege (Breath)
 
 	-- Stage 2
+	self:SetSpellRename(1227734, CL.knockback) -- Coalesce Voidwing (Knockback)
 	self:SetSpellRename(1228115, L.netherbreaker) -- Netherbreaker (Circles)
 	self:SetSpellRename(1228163, CL.beams) -- Dimension Breath (Beams)
 
+	-- Intermission 1
+	self:SetSpellRename(1228075, CL.beams) -- Nexus Beams (Beams)
+
 	-- Stage 3
+	self:SetSpellRename(1226648, L.galaxy_smash) -- Galactic Smash (Smashes)
 	self:SetSpellRename(1225319, L.galaxy_smash) -- Galactic Smash (Smashes)
+	self:SetSpellRename(1226442, L.starkiller_swing) -- Starkiller Swing (Starkillers)
 	self:SetSpellRename(1226024, L.starkiller_swing) -- Starkiller Swing (Starkillers)
 end
 
@@ -96,6 +102,7 @@ function mod:GetOptions()
 			1227470, -- Besiege
 		-- Stage Two: Rider of the Dark
 			-- Nexus-King Salhadaar
+			{1227734, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Coalesce Voidwing
 			{1228115, "PRIVATE"}, -- Netherbreaker
 			-- Royal Voidwing
 			1228163, -- Dimension Breath
@@ -111,24 +118,28 @@ function mod:GetOptions()
 			-- Nexus-King Salhadaar
 			{1228265, "CASTBAR"}, -- King's Hunger
 		-- Stage Three: World in Twilight
-			{1225319, "CASTBAR", "PRIVATE"}, -- Galactic Smash
+			{1226648, "CASTBAR", "PRIVATE"}, -- Galactic Smash
 					1225444, -- Atomized
 					1225645, -- Twilight Spikes
 				1226362, -- Twilight Scar
-				1226413, -- Starshattered
-			{1226024, "CASTBAR", "PRIVATE"}, -- Starkiller Swing
-			1249234, -- World in Twilight
+				{1226413, "TANK"}, -- Starshattered
+			{1226442, "CASTBAR", "PRIVATE"}, -- Starkiller Swing
+			1225634, -- World in Twilight
 		-- Mythic
 		1238975, -- Vengeful Oath
 	},{
 		-- Tabs
+		{
+			tabName = CL.general,
+			{"stages"}
+		},
 		{
 			tabName = CL.stage:format(1),
 			{1224737, 1224767, 1224776, 1224787, 1224812, 1227549, 1224906, 1224827, 1231097, 1227470, 1238975}
 		},
 		{
 			tabName = CL.stage:format(2),
-			{1228115, 1228163, 1234529, 1224827, 1231097}
+			{1227734, 1228115, 1228163, 1234529, 1224827, 1231097}
 		},
 		{
 			tabName = CL.count:format(CL.intermission, 1),
@@ -140,14 +151,14 @@ function mod:GetOptions()
 		},
 		{
 			tabName = CL.stage:format(3),
-			{1225319, 1225444, 1225645, 1226362, 1226413, 1226024, 1249234}
+			{1226648, 1225444, 1225645, 1226362, 1226413, 1226442, 1225634}
 		},
 		-- Sections
 		-- Stage 1
 		[1224737] = -32227, -- Nexus-King Salhadaar
 		[1224827] = -32228, -- Royal Voidwing
 		-- Stage 2
-		[1228115] = -32227, -- Nexus-King Salhadaar
+		[1227734] = -32227, -- Nexus-King Salhadaar
 		[1228163] = -32228, -- Royal Voidwing
 		-- Intermission 1
 		[1230302] = -32639, -- Manaforged Titan
@@ -156,14 +167,17 @@ function mod:GetOptions()
 		[1238975] = "mythic", -- Vengeful Oath
 	},
 	{
-		[1224827] = L.behead, -- Behead
-		[1224776] = CL.tank_combo, -- Subjugation Rule
-		[1224787] = CL.soak, -- Conquer
-		[1227470] = CL.breath, -- Besiege
-		[1228163] = CL.beams, -- Dimension Breath
-		[1225319] = L.galaxy_smash, -- Galactic Smash
-		[1226024] = L.starkiller_swing, -- Starkiller Swing
-		[1238975] = L.vengeful_oath, -- Vengeful Oath
+		[1224827] = L.behead, -- Behead (Claws)
+		[1224776] = CL.tank_combo, -- Subjugation Rule (Tank Combo)
+		[1224787] = CL.soak, -- Conquer (Soak)
+		[1227470] = CL.breath, -- Besiege (Breath)
+		[1227734] = CL.knockback, -- Coalesce Voidwing (Knockback)
+		[1228115] = L.netherbreaker, -- Netherbreaker (Circles)
+		[1228163] = CL.beams, -- Dimension Breath (Beams)
+		[1228075] = CL.beams, -- Nexus Beams (Beams)
+		[1226648] = L.galaxy_smash, -- Galactic Smash (Smashes)
+		[1226442] = L.starkiller_swing, -- Starkiller Swing (Starkillers)
+		[1238975] = L.vengeful_oath, -- Vengeful Oath (Spirits)
 	}
 end
 
@@ -193,6 +207,7 @@ function mod:OnBossEnable()
 		self:Log("SPELL_CAST_START", "CommandBesiege", 1225016)
 
 	-- Stage Two: Rider of the Dark
+		self:Log("SPELL_CAST_START", "CoalesceVoidwing", 1227734)
 		-- Nexus-King Salhadaar
 		self:Log("SPELL_CAST_START", "Netherbreaker", 1228115)
 		self:Log("SPELL_CAST_START", "DimensionBreath", 1228163)
@@ -202,24 +217,27 @@ function mod:OnBossEnable()
 	-- Intermission One: Nexus Descent
 		-- Nexus-King Salhadaar
 		self:Log("SPELL_CAST_START", "RallyTheShadowguard", 1228065)
+		self:Log("SPELL_AURA_REMOVED", "RoyalWardRemoved", 1228284)
+
 		-- Manaforged Titan
 		self:Log("SPELL_CAST_START", "SelfDestruct", 1230302)
 		self:Log("SPELL_CAST_START", "DreadMortar", 1232399)
 		self:Death("ManaforgedTitanDeath", 241800)
+
+		-- Nexus-Prince Ky'vor / Nexus-Prince Xevvos
 		self:Log("SPELL_CAST_START", "NexusBeams", 1228075)
 		self:Log("SPELL_CAST_START", "Netherblast", 1230261)
-
-		self:Log("SPELL_AURA_REMOVED", "RoyalWardRemoved", 1228284)
 
 	-- Intermission Two: King's Hunger
 		self:Log("SPELL_CAST_START", "KingsHunger", 1228265)
 		self:Log("SPELL_AURA_REMOVED", "KingsHungerRemoved", 1228265)
 
 	-- Stage Three: World in Twilight
-		self:Log("SPELL_CAST_START", "GalacticSmash", 1225319)
+		self:Log("SPELL_CAST_SUCCESS", "GalacticSmash", 1226648)
 		self:Log("SPELL_AURA_APPLIED", "TwilightScarApplied", 1226362)
 		self:Log("SPELL_AURA_APPLIED", "StarshatteredApplied", 1226413)
-		self:Log("SPELL_CAST_START", "StarkillerSwing", 1226024)
+		self:Log("SPELL_CAST_SUCCESS", "StarkillerSwing", 1226442)
+		self:Log("SPELL_CAST_START", "WorldInTwilight", 1225634)
 end
 
 function mod:OnEngage()
@@ -328,7 +346,6 @@ function mod:Vanquish(args)
 	self:PlaySound(args.spellId, "alarm") -- avoid or face away from raid
 end
 
-
 do
 	local playerList = {}
 	function mod:Banishment(args)
@@ -351,6 +368,7 @@ do
 end
 
 function mod:InvokeTheOath(args)
+	self:StopBar(args.spellId)
 	self:Message(args.spellId, "orange")
 	if oathStacksOnMe > 0 then
 		self:PlaySound(args.spellId, "warning") -- mind control incoming
@@ -405,7 +423,6 @@ function mod:Stage2Start()
 	breathCount = 1
 	cosmicMawCount = 1
 
-	-- Knockback timer for cast?
 	self:Bar(1228115, self:Mythic() and 9.0 or 12.0, CL.count:format(L.netherbreaker, breakerCount)) -- Netherbreaker
 	if not self:Mythic() then
 		self:Bar(1224827, 21, CL.count:format(L.behead, beheadCount)) -- Behead
@@ -415,10 +432,20 @@ function mod:Stage2Start()
 	self:Bar("stages", 38.9, CL.count:format(CL.intermission, 1), 1228065) -- Rally the Shadowguard
 end
 
+function mod:CoalesceVoidwing(args)
+	self:Message(args.spellId, "red", CL.casting:format(CL.knockback))
+	self:PlaySound(args.spellId, "warning") -- knockback incoming
+	self:CastBar(args.spellId, 6.2, CL.knockback) -- Coalesce Voidwing
+end
+
 function mod:Netherbreaker(args)
 	self:StopBar(CL.count:format(L.netherbreaker, breakerCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.netherbreaker, breakerCount))
 	-- No Sound, Debuffs are Private
+	-- In Mythic it's on the floor so we do play a sound
+	if self:Mythic() then
+		self:PlaySound(args.spellId, "alert") -- watch circles
+	end
 	breakerCount = breakerCount + 1
 	if intermissionDone then
 		self:Bar(args.spellId, 39.0, CL.count:format(L.netherbreaker, breakerCount))
@@ -457,7 +484,7 @@ end
 -- Intermission One: Nexus Descent
 -- Nexus-King Salhadaar
 function mod:RallyTheShadowguard()
-	self:SetStage(2.5) -- Intermission
+	self:SetStage(1.5) -- Intermission 1
 	intermissionDone = false
 
 	self:StopBar(CL.count:format(L.behead, beheadCount)) -- Behead
@@ -485,8 +512,11 @@ do
 	end
 end
 function mod:DreadMortar(args)
-	self:Message(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert") -- watch feet
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if unit and self:UnitWithinRange(unit, 45) then
+		self:Message(args.spellId, "yellow")
+		self:PlaySound(args.spellId, "alert") -- watch feet
+	end
 end
 
 function mod:ManaforgedTitanDeath()
@@ -496,14 +526,11 @@ function mod:ManaforgedTitanDeath()
 	end
 end
 
-do
-	local prev = 0
-	function mod:NexusBeams(args)
-		if args.time - prev > 2 then -- throttle if casts are too close together
-			prev = args.time
-			self:Message(args.spellId, "orange", CL.incoming:format(args.spellName))
-			self:PlaySound(args.spellId, "alert") -- watch beams
-		end
+function mod:NexusBeams(args)
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if unit and self:UnitWithinRange(unit, 45) then
+		self:Message(args.spellId, "orange", CL.beams)
+		self:PlaySound(args.spellId, "alert") -- watch beams
 	end
 end
 
@@ -561,9 +588,9 @@ function mod:KingsHungerRemoved(args)
 	smashCount = 1
 	swingCount = 1
 
-	self:Bar(1225319, 9, CL.count:format(L.galaxy_smash, smashCount)) -- Galactic Smash
-	self:Bar(1226024, self:Normal() and 46.8 or 36.8, CL.count:format(L.starkiller_swing, swingCount)) -- Starkiller Swing
-	self:Bar(1249234, 185.0) -- World in Twilight // end of channel aka full room XXX Correct this on cast start.
+	self:Bar(1226648, 9, CL.count:format(L.galaxy_smash, smashCount)) -- Galactic Smash
+	self:Bar(1226442, self:Normal() and 46.8 or 36.8, CL.count:format(L.starkiller_swing, swingCount)) -- Starkiller Swing
+	self:Bar(1225634, 182.5) -- World in Twilight // end of channel aka full room (Also adjust time in _START function)
 end
 
 function mod:GalacticSmash(args)
@@ -593,23 +620,23 @@ function mod:StarshatteredApplied(args)
 	end
 end
 
-do
-	local prev = 0
-	function mod:StarkillerSwing(args)
-		if args.time - prev > 2 then -- cast by all images
-			prev = args.time
-			self:StopBar(CL.count:format(L.starkiller_swing, swingCount))
-			self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.starkiller_swing, swingCount)))
-			-- No Sounds, Private Debuffs
-			self:CastBar(args.spellId, 6, CL.count:format(L.starkiller_swing, swingCount))
-			swingCount = swingCount + 1
-			if swingCount <= 3 then -- only 3 before enrage
-				local cd = swingCount % 2 == 0 and 15 or 40
-				if self:Easy() then
-					cd = 55
-				end
-				self:Bar(args.spellId, cd, CL.count:format(L.starkiller_swing, swingCount))
-			end
+function mod:StarkillerSwing(args)
+	self:StopBar(CL.count:format(L.starkiller_swing, swingCount))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.starkiller_swing, swingCount)))
+	-- No Sounds, Private Debuffs
+	self:CastBar(args.spellId, 6, CL.count:format(L.starkiller_swing, swingCount))
+	swingCount = swingCount + 1
+	if swingCount <= 3 then -- only 3 before enrage
+			local cd = swingCount % 2 == 0 and 15 or 40 -- Heroic
+		if self:Easy() then
+			cd = 55
 		end
+		self:Bar(args.spellId, cd, CL.count:format(L.starkiller_swing, swingCount))
 	end
+end
+
+function mod:WorldInTwilight(args)
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "long") -- enrage
+	self:Bar(args.spellId, {12.5, 182.5}) -- Update remaining time until room full
 end
