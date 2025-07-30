@@ -38,13 +38,13 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "koKR")
 if L then
-	--L.shattered_space = "Hands" -- Dimensius reaches down with both hands
-	--L.reverse_gravity = "Gravity" -- Short for Reverse Gravity
-	--L.extinction = "Fragment" -- Dimensius hurls a fragment of a broken world
-	--L.slows = "Slows"
-	--L.slow = "Slow" -- Singular of Slows
-	--L.stardust_nova = "Nova" -- Short for Stardust Nova
-	--L.extinguish_the_stars = "Stars" -- Short for Extinguish the Stars
-	--L.darkened_sky = "Rings"
-	--L.cosmic_collapse = "Collapse" -- Short for Cosmic Collapse
+	L.shattered_space = "부서진 공간" -- Dimensius reaches down with both hands
+	L.reverse_gravity = "중력" -- Short for Reverse Gravity
+	L.extinction = "파편" -- Dimensius hurls a fragment of a broken world
+	L.slows = "이감"
+	L.slow = "이감" -- Singular of Slows
+	L.stardust_nova = "별조각" -- Short for Stardust Nova
+	L.extinguish_the_stars = "소실" -- Short for Extinguish the Stars
+	L.darkened_sky = "충격파"
+	L.cosmic_collapse = "붕괴" -- Short for Cosmic Collapse
 end
