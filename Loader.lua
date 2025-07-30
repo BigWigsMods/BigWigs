@@ -296,7 +296,7 @@ do
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
 				[2769] = "BigWigs_LiberationOfUndermine",
-				[2810] = "BigWigs_ManaforgeOmega",
+				[2810] = public.isNext and "BigWigs_ManaforgeOmega" or nil,
 			}
 		}
 	end
@@ -1340,6 +1340,7 @@ do
 		-- Dynamic content
 		BigWigs_NerubarPalace = true,
 		BigWigs_LiberationOfUndermine = true,
+		BigWigs_ManaforgeOmega = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
