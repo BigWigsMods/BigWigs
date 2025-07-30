@@ -38,13 +38,13 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "zhCN")
 if L then
-	--L.shattered_space = "Hands" -- Dimensius reaches down with both hands
-	--L.reverse_gravity = "Gravity" -- Short for Reverse Gravity
-	--L.extinction = "Fragment" -- Dimensius hurls a fragment of a broken world
-	--L.slows = "Slows"
-	--L.slow = "Slow" -- Singular of Slows
-	--L.stardust_nova = "Nova" -- Short for Stardust Nova
-	--L.extinguish_the_stars = "Stars" -- Short for Extinguish the Stars
-	--L.darkened_sky = "Rings"
-	--L.cosmic_collapse = "Collapse" -- Short for Cosmic Collapse
+	L.shattered_space = "破碎空间" -- 描述是双手撕裂空间，暂使用技能名字
+	L.reverse_gravity = "引力" -- 技能“引力倒逆”的简称
+	L.extinction = "碎片" -- 迪门修斯投掷出破碎世界的碎片
+	L.slows = "减速"
+	L.slow = "减速"
+	L.stardust_nova = "新星" -- 技能“星辰新星”的简称
+	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
+	L.darkened_sky = "环形"
+	L.cosmic_collapse = "崩塌" -- 技能“寰宇崩塌”的简称
 end
