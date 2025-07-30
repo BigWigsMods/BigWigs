@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "koKR")
 if L then
-	L.shattered_space = "깨진 공간" -- Dimensius reaches down with both hands
+	L.shattered_space = "부서진 공간" -- Dimensius reaches down with both hands
 	L.reverse_gravity = "중력" -- Short for Reverse Gravity
 	L.extinction = "파편" -- Dimensius hurls a fragment of a broken world
 	L.slows = "이감"
