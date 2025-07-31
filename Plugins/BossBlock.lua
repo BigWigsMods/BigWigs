@@ -61,6 +61,8 @@ local latestKill = {}
 local bbFrame = CreateFrame("Frame")
 bbFrame:Hide()
 
+local nemesisBoxes = 0
+
 -------------------------------------------------------------------------------
 -- Options
 --
@@ -351,6 +353,8 @@ do
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
 
+		nemesisBoxes = 0
+
 		-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 		-- Additionally, notify the user if a CVar has been force enabled by BossBlock.
 		if self.db.profile.disableSfx then
@@ -464,6 +468,7 @@ do
 		[208]=true,[211]=true,[224]=true,[225]=true,[210]=true,
 		[279]=true,[280]=true,[281]=true,[282]=true,[283]=true,[284]=true,[285]=true,[286]=true,
 	}
+	local nemesisBoxCounts = {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4}
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
@@ -562,7 +567,22 @@ do
 					tbl.title = nil
 				elseif tbl.eventToastID == 277 then -- Nemesis Strongbox Upgraded
 					-- tbl.title is "Nemesis Strongbox Upgraded"
-					tbl.subtitle = tbl.title
+					nemesisBoxes = nemesisBoxes + 1
+					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
+					local level = info and tonumber(info.tierText)
+					if level then
+						local total = nemesisBoxCounts[level]
+						if total then
+							tbl.subtitle = CL.count_amount:format(tbl.title, nemesisBoxes, total)
+							if total == nemesisBoxes then
+								tbl.bwDuration = 4
+							end
+						else
+							tbl.subtitle = tbl.title
+						end
+					else
+						tbl.subtitle = tbl.title
+					end
 					tbl.title = nil
 					printMessage(self, tbl)
 				elseif tbl.eventToastID == 288 then -- Discovery: Waystone
