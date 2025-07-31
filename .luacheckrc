@@ -169,6 +169,7 @@ files["Tools/AutoRole.lua"].ignore = {
 files["Tools/Keystones.lua"].ignore = {
 	"113/C_ChallengeMode",
 	"113/C_ClassColor",
+	"113/C_Container",
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
 	"113/C_PlayerInfo",
@@ -177,6 +178,7 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/GetSpecializationInfoByID",
 	"111/SLASH_BigWigsTestKS1",
 	"112/SlashCmdList",
+	"113/TimerTracker",
 }
 files["Tools/LFGTimer.lua"].ignore = {
 	"113/LFGDungeonReadyPopup",

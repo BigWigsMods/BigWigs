@@ -1,12 +1,42 @@
 -- This module is WIP, expect all code to be awful
-local L, LoaderPublic
+local L, LoaderPublic, db
 do
 	local _, tbl = ...
 	L = tbl.API:GetLocale("BigWigs")
 	LoaderPublic = tbl.loaderPublic
+
+	local defaultVoice = "English: Amy"
+	do
+		local locale = GetLocale()
+		if locale ~= "enUS" then
+			defaultVoice = ("%s: Default (Female)"):format(locale)
+		end
+	end
+
+	local defaults = {
+		autoSlotKeystone = true,
+		hideFromGuild = false,
+		countVoice = defaultVoice,
+		countBegin = 5,
+	}
+	db = LoaderPublic.db:RegisterNamespace("MythicPlus", {profile = defaults})
+	for k, v in next, db do
+		local defaultType = type(defaults[k])
+		if defaultType == "nil" then
+			db.profile[k] = nil
+		elseif type(v) ~= defaultType then
+			db.profile[k] = defaults[k]
+		end
+	end
+	if db.profile.countBegin < 3 or db.profile.countBegin > 10 then
+		db.profile.countBegin = defaults.countBegin
+	end
 end
 
 local LibKeystone = LibStub("LibKeystone")
+if db.profile.hideFromGuild then
+	LibKeystone.SetGuildHidden(true)
+end
 local LibSpec = LibStub("LibSpecialization")
 
 local guildList, partyList = {}, {}
@@ -106,8 +136,56 @@ do
 	local GetRealmName = GetRealmName
 
 	local myKeyLevel, myKeyMap, myRating = 0, 0, 0
-	UpdateMyKeystone = function(_, event, id)
-		if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() or (event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" and id ~= 3 and id ~= 49) then -- 3 = Gossip (key downgrade NPC), 49 = WeeklyRewards (vault)
+	UpdateMyKeystone = function(self, event, id, timeSeconds)
+		if event == "CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN" then
+			if db.profile.autoSlotKeystone and not C_ChallengeMode.HasSlottedKeystone() then
+				local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
+				if C_MythicPlus.GetOwnedKeystoneMapID() == instanceID then
+					for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
+						local slots = C_Container.GetContainerNumSlots(currentBag)
+						for currentSlot = 1, slots do
+							local itemLink = C_Container.GetContainerItemLink(currentBag, currentSlot)
+							if itemLink and itemLink:find("Hkeystone", nil, true) then
+								C_Container.PickupContainerItem(currentBag, currentSlot)
+								C_ChallengeMode.SlotKeystone()
+								LoaderPublic.Print(L.keystoneAutoSlotMessage:format(itemLink))
+							end
+						end
+					end
+				end
+			end
+			return
+		elseif event == "CHALLENGE_MODE_RESET" then
+			local _, _, diffID = GetInstanceInfo()
+			if diffID == 8 then
+				TimerTracker:UnregisterEvent("START_TIMER")
+				LoaderPublic.CTimerAfter(1, function()
+					TimerTracker:RegisterEvent("START_TIMER")
+					self:UnregisterEvent("START_TIMER")
+				end)
+				self:RegisterEvent("START_TIMER")
+			end
+			return
+		elseif event == "START_TIMER" then
+			LoaderPublic:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", timeSeconds, nil, db.profile.countVoice, db.profile.countBegin)
+			LoaderPublic.CTimerAfter(1, function()
+				local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
+				local challengeMapID = C_ChallengeMode.GetActiveChallengeMapID()
+				if keyLevel and keyLevel > 0 then
+					LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), timeSeconds-1, 525134) -- 525134 = inv_relics_hourglass
+				else
+					LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, timeSeconds-1, 525134) -- 525134 = inv_relics_hourglass
+				end
+			end)
+			LoaderPublic.CTimerAfter(9, function()
+				local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
+				local challengeMapID = C_ChallengeMode.GetActiveChallengeMapID()
+				local challengeMapName = C_ChallengeMode.GetMapUIInfo(challengeMapID)
+				LoaderPublic:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan")
+				LoaderPublic.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+			end)
+			return
+		elseif LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() or (event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" and id ~= 3 and id ~= 49) then -- 3 = Gossip (key downgrade NPC), 49 = WeeklyRewards (vault)
 			return
 		end
 
@@ -152,6 +230,8 @@ end
 -- If only PLAYER_LOGOUT would work for keystone info, sigh :(
 mainPanel:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_HIDE")
 mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
+mainPanel:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
+mainPanel:RegisterEvent("CHALLENGE_MODE_RESET")
 
 local tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab1:SetSize(50, 26)
@@ -803,3 +883,122 @@ LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, ch
 		end
 	end
 end)
+
+do
+	local function voiceSorting()
+		local list = BigWigsAPI.GetCountdownList()
+		local sorted = {}
+		for k in next, list do
+			if k ~= L.none then
+				sorted[#sorted + 1] = k
+			end
+		end
+		table.sort(sorted, function(a, b) return list[a] < list[b] end)
+		table.insert(sorted, 1, L.none)
+		return sorted
+	end
+
+	local _, addonTbl = ...
+	addonTbl.API.SetToolOptionsTable("MythicPlus", {
+		type = "group",
+		childGroups = "tab",
+		name = L.keystoneModuleName,
+		get = function(info)
+			return db.profile[info[#info]]
+		end,
+		set = function(info, value)
+			local key = info[#info]
+			db.profile[key] = value
+		end,
+		args = {
+			explainer = {
+				type = "description",
+				name = L.keystoneExplainer,
+				order = 0,
+				width = "full",
+				fontSize = "large",
+			},
+			general = {
+				type = "group",
+				name = L.general,
+				order = 1,
+				args = {
+					autoSlotKeystone = {
+						type = "toggle",
+						name = L.keystoneAutoSlot,
+						desc = L.keystoneAutoSlotDesc,
+						order = 1,
+						width = "full",
+					},
+					spacer = {
+						type = "description",
+						name = "\n\n",
+						order = 2,
+						width = "full",
+					},
+					countdown = {
+						type = "group",
+						name = L.countdown,
+						order = 3,
+						inline = true,
+						width = "full",
+						args = {
+							countdownExplainer = {
+								type = "description",
+								name = L.keystoneCountdownExplainer,
+								order = 1,
+								width = "full",
+							},
+							countBegin = {
+								name = L.countdownBegins,
+								desc = L.keystoneCountdownBeginsDesc,
+								type = "range", min = 3, max = 10, step = 1,
+								order = 2,
+								width = 1
+							},
+							countVoice = {
+								name = L.countdownVoice,
+								type = "select",
+								values = BigWigsAPI.GetCountdownList,
+								sorting = voiceSorting,
+								order = 3,
+								width = 2,
+							},
+						},
+					},
+					suggestions = { -- XXX temp
+						type = "description",
+						name = "\n\n\n|cFF33FF99Want more features? Have some ideas?\nSubmit your suggestions on our Discord!|r",
+						order = 4,
+						width = "full",
+						fontSize = "medium",
+					},
+				},
+			},
+			keystoneViewer = {
+				type = "group",
+				name = L.keystoneViewerTitle,
+				order = 2,
+				args = {
+					hideFromGuild = {
+						type = "toggle",
+						name = L.keystoneHideGuildTitle,
+						desc = L.keystoneHideGuildDesc,
+						order = 1,
+						width = "full",
+						set = function(info, value)
+							local key = info[#info]
+							db.profile[key] = value
+							LibKeystone.SetGuildHidden(value)
+						end,
+						confirm = function(_, value)
+							if value then
+								return L.keystoneHideGuildWarning
+							end
+						end,
+					},
+				},
+			},
+		},
+	})
+end
