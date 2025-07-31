@@ -532,6 +532,7 @@ do
 					-- tbl.subtitle is "Respawn Point Unlocked!"
 					tbl.title = nil -- Remove title, keep subtitle only
 					tbl.subtitle = L.newRespawnPoint
+					tbl.iconFileID = tbl.iconFileID or 3084684 -- inv_hearthstone_aether
 					tbl.bwDuration = 4
 					gainLifeTbl = tbl
 					self:SimpleTimer(function() gainLifeTbl = nil printMessage(self, tbl) end, 0.5) -- Delay to allow time for the +1 life toast to merge, if one is rewarded
@@ -567,6 +568,7 @@ do
 				elseif tbl.eventToastID == 288 then -- Discovery: Waystone
 					-- tbl.title is "Discovery", tbl.subtitle is "Waystone"
 					tbl.title = nil
+					tbl.iconFileID = tbl.iconFileID or 3084684 -- inv_hearthstone_aether
 					if not latestKill[1] or GetTime()-latestKill[1] > 4 then -- Not after a boss kill
 						tbl.subtitle = L.newRespawnPoint -- New Respawn Point
 						printMessage(self, tbl)
