@@ -136,7 +136,7 @@ do
 	local GetRealmName = GetRealmName
 
 	local myKeyLevel, myKeyMap, myRating = 0, 0, 0
-	UpdateMyKeystone = function(self, event, id, timeSeconds)
+	UpdateMyKeystone = function(self, event, id)
 		if event == "CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN" then
 			if db.profile.autoSlotKeystone and not C_ChallengeMode.HasSlottedKeystone() then
 				local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
@@ -161,27 +161,23 @@ do
 				TimerTracker:UnregisterEvent("START_TIMER")
 				LoaderPublic.CTimerAfter(1, function()
 					TimerTracker:RegisterEvent("START_TIMER")
-					self:UnregisterEvent("START_TIMER")
+					self:UnregisterEvent("CHALLENGE_MODE_START")
 				end)
-				self:RegisterEvent("START_TIMER")
+				self:RegisterEvent("CHALLENGE_MODE_START")
 			end
 			return
-		elseif event == "START_TIMER" then
-			LoaderPublic:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", timeSeconds, nil, db.profile.countVoice, db.profile.countBegin)
-			LoaderPublic.CTimerAfter(1, function()
-				local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
-				local challengeMapID = C_ChallengeMode.GetActiveChallengeMapID()
-				if keyLevel and keyLevel > 0 then
-					LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), timeSeconds-1, 525134) -- 525134 = inv_relics_hourglass
-				else
-					LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, timeSeconds-1, 525134) -- 525134 = inv_relics_hourglass
-				end
-			end)
+		elseif event == "CHALLENGE_MODE_START" then
+			local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
+			local challengeMapID = C_ChallengeMode.GetActiveChallengeMapID()
+			LoaderPublic:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, db.profile.countBegin)
+			if keyLevel and keyLevel > 0 then
+				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
+			else
+				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
+			end
 			LoaderPublic.CTimerAfter(9, function()
-				local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
-				local challengeMapID = C_ChallengeMode.GetActiveChallengeMapID()
-				local challengeMapName = C_ChallengeMode.GetMapUIInfo(challengeMapID)
-				LoaderPublic:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan")
+				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
+				LoaderPublic:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
 				LoaderPublic.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
 			end)
 			return
