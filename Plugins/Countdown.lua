@@ -629,7 +629,7 @@ do
 			return lowestCountdownTable == tableToMatch
 		end
 
-		function plugin:BigWigs_StartCountdown(_, module, key, text, time, guid, customVoice, customStart, audioOnly)
+		function plugin:BigWigs_StartCountdown(_, module, key, text, time, guid, customVoice, customStart, audioOnly, customAudioStart)
 			if module and time >= 1 then
 				local countdownTable = {GetTime()+time}
 				if guid then
@@ -669,7 +669,7 @@ do
 								plugin:SetText(textCount, countdownTable)
 							end
 							local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
-							local sound = BigWigsAPI:GetCountdownSound(voice, textCount)
+							local sound = textCount <= (customAudioStart or textCount) and BigWigsAPI:GetCountdownSound(voice, textCount)
 							if sound then
 								self:PlaySoundFile(sound)
 							end
