@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "koKR")
 if not L then return end
 
-L.tempNew = "신규: 이제 |cFFFFFFFF/bwtemp|r을 입력하면 파티원의 신화+ 쐐기돌을 볼 수 있습니다."
+L.tempNew = "신규: 이제 |cFFFFFFFF/key|r을 입력하면 파티원의 신화+ 쐐기돌을 볼 수 있습니다."
 
 -- Core.lua
 L.berserk = "광폭화"
@@ -315,9 +315,15 @@ L.keystoneStartMessage = "%s +%d 지금 시작합니다!" -- Format is LONG_DUNG
 L.keystoneCountdownExplainer = "신화+ 던전을 시작하면 카운트다운이 재생됩니다. 듣고 싶은 음성과 카운트다운을 시작 시간을 선택하세요.\n\n"
 L.keystoneCountdownBeginsDesc = "신화+ 시작 타이머에서 카운트다운 재생이 시작될 남은 시간을 선택하세요."
 L.keystoneViewerTitle = "쐐기돌 뷰어"
-L.keystoneHideGuildTitle = "길드원에게 쐐기돌 숨기기"
+--L.keystoneHideGuildTitle = "Hide my keystone from my guild members"
 L.keystoneHideGuildDesc = "|cffff4411권장하지 않습니다.|r 이 기능은 길드원들이 당신의 쐐기돌을 볼 수 없도록 합니다. 파티 내의 다른 멤버들은 여전히 이를 확인할 수 있습니다."
 L.keystoneHideGuildWarning = "길드원이 당신의 쐐기돌을 볼 수 없도록 하는 것은 |cffff4411권장하지 않습니다|r.\n\n정말로 이 기능을 사용하시겠습니까?"
+--L.keystoneAutoShowZoneIn = "Show when entering a dungeon"
+--L.keystoneAutoShowZoneInDesc = "Automatically show the keystone viewer when entering a Mythic dungeon.\n\n|cFF33FF99This can help remind you which player owns the keystone that you're about to do.|r"
+--L.keystoneAutoShowEndOfRun = "Show when the Mythic+ is over"
+--L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
+--L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
+--L.keystoneViewerOpen = "Open the keystone viewer"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"

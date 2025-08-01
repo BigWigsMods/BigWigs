@@ -15,9 +15,11 @@ do
 
 	local defaults = {
 		autoSlotKeystone = true,
-		hideFromGuild = false,
 		countVoice = defaultVoice,
 		countBegin = 5,
+		autoShowZoneIn = true,
+		autoShowEndOfRun = true,
+		hideFromGuild = false,
 	}
 	db = LoaderPublic.db:RegisterNamespace("MythicPlus", {profile = defaults})
 	for k, v in next, db do
@@ -28,7 +30,7 @@ do
 			db.profile[k] = defaults[k]
 		end
 	end
-	if db.profile.countBegin < 3 or db.profile.countBegin > 10 then
+	if db.profile.countBegin < 3 or db.profile.countBegin > 9 then
 		db.profile.countBegin = defaults.countBegin
 	end
 end
@@ -76,7 +78,7 @@ local dungeonNames = {
 	[391] = L.keystoneShortName_TazaveshStreetsOfWonder, -- STREET
 	[505] = L.keystoneShortName_TheDawnbreaker, -- DAWN
 }
-local teleports = BigWigsLoader.isTestBuild and {
+local teleports = LoaderPublic.isTestBuild and {
 	[2830] = 1237215, -- Eco-Dome Al'dani
 	[2287] = 354465, -- Halls of Atonement
 	[2660] = 445417, -- Ara-Kara, City of Echoes
@@ -93,6 +95,16 @@ local teleports = BigWigsLoader.isTestBuild and {
 	[2651] = 445441, -- Darkflame Cleft
 	[2661] = 445440, -- Cinderbrew Meadery
 	[2773] = 1216786, -- Operation: Floodgate
+}
+local tempTranslate = { -- XXX remove in 11.2
+	[247] = 1594, -- The MOTHERLODE!!
+	[370] = 2097, -- Operation: Mechagon
+	[382] = 2293, -- Theater of Pain
+	[500] = 2648, -- The Rookery
+	[499] = 2649, -- Priory of the Sacred Flame
+	[504] = 2651, -- Darkflame Cleft
+	[506] = 2661, -- Cinderbrew Meadery
+	[525] = 2773, -- Operation: Floodgate
 }
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
@@ -131,57 +143,25 @@ local UpdateMyKeystone
 do
 	local GetMaxPlayerLevel = GetMaxPlayerLevel
 	local GetWeeklyResetStartTime = C_DateAndTime.GetWeeklyResetStartTime
-	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID
+	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID, GetCurrentSeason = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID, C_MythicPlus.GetCurrentSeason
 	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 	local GetRealmName = GetRealmName
 
 	local myKeyLevel, myKeyMap, myRating = 0, 0, 0
-	UpdateMyKeystone = function(self, event, id)
-		if event == "CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN" then
-			if db.profile.autoSlotKeystone and not C_ChallengeMode.HasSlottedKeystone() then
-				local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
-				if C_MythicPlus.GetOwnedKeystoneMapID() == instanceID then
-					for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
-						local slots = C_Container.GetContainerNumSlots(currentBag)
-						for currentSlot = 1, slots do
-							local itemLink = C_Container.GetContainerItemLink(currentBag, currentSlot)
-							if itemLink and itemLink:find("Hkeystone", nil, true) then
-								C_Container.PickupContainerItem(currentBag, currentSlot)
-								C_ChallengeMode.SlotKeystone()
-								LoaderPublic.Print(L.keystoneAutoSlotMessage:format(itemLink))
-							end
-						end
+	UpdateMyKeystone = function(self, event, id, isReloadingUi)
+		if event == "PLAYER_ENTERING_WORLD" then
+			if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
+				return
+			elseif not id and not isReloadingUi then -- Don't show when logging in (arg1) or reloading UI (arg2)
+				LoaderPublic.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
+					local _, _, diffID = LoaderPublic.GetInstanceInfo()
+					local season = GetCurrentSeason()
+					if diffID == 23 and season > 0 then
+						RequestData()
 					end
-				end
-			end
-			return
-		elseif event == "CHALLENGE_MODE_RESET" then
-			local _, _, diffID = GetInstanceInfo()
-			if diffID == 8 then
-				TimerTracker:UnregisterEvent("START_TIMER")
-				LoaderPublic.CTimerAfter(1, function()
-					TimerTracker:RegisterEvent("START_TIMER")
-					self:UnregisterEvent("CHALLENGE_MODE_START")
 				end)
-				self:RegisterEvent("CHALLENGE_MODE_START")
 			end
-			return
-		elseif event == "CHALLENGE_MODE_START" then
-			local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
-			local challengeMapID = C_ChallengeMode.GetActiveChallengeMapID()
-			LoaderPublic:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, db.profile.countBegin)
-			if keyLevel and keyLevel > 0 then
-				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
-			else
-				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
-			end
-			LoaderPublic.CTimerAfter(9, function()
-				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
-				LoaderPublic:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
-				LoaderPublic.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
-			end)
-			return
-		elseif LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() or (event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" and id ~= 3 and id ~= 49) then -- 3 = Gossip (key downgrade NPC), 49 = WeeklyRewards (vault)
+		elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" and id ~= 3 and id ~= 49 then -- 3 = Gossip (key downgrade NPC), 49 = WeeklyRewards (vault)
 			return
 		end
 
@@ -226,18 +206,73 @@ end
 -- If only PLAYER_LOGOUT would work for keystone info, sigh :(
 mainPanel:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_HIDE")
 mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
-mainPanel:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
-mainPanel:RegisterEvent("CHALLENGE_MODE_RESET")
 
 local tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab1:SetSize(50, 26)
 tab1:SetPoint("BOTTOMLEFT", 10, -25)
 tab1.Text:SetText(L.keystoneTabOnline)
+tab1:UnregisterAllEvents() -- Remove events registered by the template
+tab1:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
+do
+	local HasSlottedKeystone, SlotKeystone = C_ChallengeMode.HasSlottedKeystone, C_ChallengeMode.SlotKeystone
+	local GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneMapID
+	local GetContainerNumSlots, GetContainerItemLink, PickupContainerItem = C_Container.GetContainerNumSlots, C_Container.GetContainerItemLink, C_Container.PickupContainerItem
+	tab1:SetScript("OnEvent", function()
+		if db.profile.autoSlotKeystone and not HasSlottedKeystone() then
+			local _, _, _, _, _, _, _, instanceID = LoaderPublic.GetInstanceInfo()
+			if GetOwnedKeystoneMapID() == instanceID then
+				for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
+					local slots = GetContainerNumSlots(currentBag)
+					for currentSlot = 1, slots do
+						local itemLink = GetContainerItemLink(currentBag, currentSlot)
+						if itemLink and itemLink:find("Hkeystone", nil, true) then
+							PickupContainerItem(currentBag, currentSlot)
+							SlotKeystone()
+							LoaderPublic.Print(L.keystoneAutoSlotMessage:format(itemLink))
+						end
+					end
+				end
+			end
+		end
+	end)
+end
 
 local tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab2:SetSize(50, 26)
 tab2:SetPoint("LEFT", tab1, "RIGHT", 4, 0)
 tab2.Text:SetText(L.keystoneTabTeleports)
+tab2:UnregisterAllEvents() -- Remove events registered by the template
+tab2:RegisterEvent("CHALLENGE_MODE_RESET")
+do
+	local GetActiveKeystoneInfo, GetActiveChallengeMapID = C_ChallengeMode.GetActiveKeystoneInfo, C_ChallengeMode.GetActiveChallengeMapID
+	tab2:SetScript("OnEvent", function(self, event)
+		if event == "CHALLENGE_MODE_START" then
+			local keyLevel = GetActiveKeystoneInfo()
+			local challengeMapID = GetActiveChallengeMapID()
+			LoaderPublic:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
+			if keyLevel and keyLevel > 0 then
+				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
+			else
+				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
+			end
+			LoaderPublic.CTimerAfter(9, function()
+				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
+				LoaderPublic:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
+				LoaderPublic.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+			end)
+		else
+			local _, _, diffID = LoaderPublic.GetInstanceInfo()
+			if diffID == 8 then
+				TimerTracker:UnregisterEvent("START_TIMER")
+				LoaderPublic.CTimerAfter(1, function()
+					TimerTracker:RegisterEvent("START_TIMER")
+					self:UnregisterEvent("CHALLENGE_MODE_START")
+				end)
+				self:RegisterEvent("CHALLENGE_MODE_START")
+			end
+		end
+	end)
+end
 
 local tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab3:SetSize(50, 26)
@@ -253,6 +288,10 @@ local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
 		cell:Hide()
 		cell.tooltip = nil
+		if cell.isGlowing then
+			cell.isGlowing = nil
+			LibStub("LibCustomGlow-1.0").PixelGlow_Stop(cell)
+		end
 		cell:ClearAllPoints()
 		cellsAvailable[#cellsAvailable+1] = cell
 	end
@@ -266,6 +305,7 @@ mainPanel.CloseButton:SetScript("OnClick", function()
 			LoaderPublic.Print(L.youAreInCombat)
 			return
 		else
+			prevTab = 1
 			teleportButtons[1]:ClearAllPoints()
 			teleportButtons[1]:SetScript("OnUpdate", nil)
 			for i = 1, #teleportButtons do
@@ -276,6 +316,12 @@ mainPanel.CloseButton:SetScript("OnClick", function()
 	end
 	WipeCells()
 	mainPanel:Hide()
+end)
+mainPanel.CloseButton:RegisterEvent("PLAYER_LEAVING_WORLD")
+mainPanel.CloseButton:SetScript("OnEvent", function(self)
+	if mainPanel:IsShown() then
+		self:Click()
+	end
 end)
 
 local scrollArea = CreateFrame("ScrollFrame", nil, mainPanel, "ScrollFrameTemplate")
@@ -606,10 +652,11 @@ do
 					decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, pData.name)
 					nameTooltip = format("|c%s%s|r [%s] |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pData.name, pData.realm, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
 				end
+				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData.keyMap)
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
-					map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(GetMapUIInfo(pData.keyMap) or "-"),
+					map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID or tempTranslate[pData.keyMap],
 					rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
 				}
 			end
@@ -617,6 +664,13 @@ do
 			table.sort(sortedplayerList, function(a, b)
 				if a.level > b.level then
 					return true
+				elseif a.level == 0 and b.level == 0 then
+					-- If both levels are 0 then sort by rating first, then sort by name
+					if a.rating > b.rating then
+						return true
+					else
+						return a.name < b.name
+					end
 				elseif a.level == b.level then
 					return a.name < b.name
 				end
@@ -624,6 +678,7 @@ do
 
 			local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
 			local tableSize = #sortedplayerList
+			local _, _, _, _, _, _, _, instanceID = LoaderPublic.GetInstanceInfo()
 			for i = 1, tableSize do
 				local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 				if i == 1 then
@@ -640,6 +695,10 @@ do
 				cellName:SetWidth(WIDTH_NAME)
 				cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
 				cellName.tooltip = sortedplayerList[i].nameTooltip
+				if instanceID == sortedplayerList[i].mapID then
+					cellName.isGlowing = true
+					LibStub("LibCustomGlow-1.0").PixelGlow_Start(cellName, nil, nil, 0.06) -- If you're in the dungeon of this players key, glow
+				end
 				cellLevel:SetWidth(WIDTH_LEVEL)
 				cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 				cellLevel.tooltip = sortedplayerList[i].levelTooltip
@@ -772,17 +831,15 @@ do
 	end)
 end
 
-SLASH_BigWigsTestKS1 = "/bwtemp" -- temp
 function RequestData()
 	partyList = {}
 	guildList = {}
-	mainPanel:Show()
 	LibSpec.RequestGuildSpecialization()
+	mainPanel:Show()
 	LibKeystone.Request("PARTY")
 	C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
 	tab1:Click()
 end
-SlashCmdList.BigWigsTestKS = RequestData
 
 local function UpdateCells(playerList, isGuildList)
 	local sortedplayerList = {}
@@ -797,10 +854,11 @@ local function UpdateCells(playerList, isGuildList)
 				decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, gsub(pName, "%-.+", "*"))
 				nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
 			end
+			local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
 			sortedplayerList[#sortedplayerList+1] = {
 				name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 				level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
-				map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or GetMapUIInfo(pData[2]) or "-"),
+				map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-"), mapID = mapID or tempTranslate[pData[2]],
 				rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
 			}
 		end
@@ -811,6 +869,13 @@ local function UpdateCells(playerList, isGuildList)
 		local secondLevel = b.level == -1 and 1 or b.level
 		if firstLevel > secondLevel then
 			return true
+		elseif firstLevel == 0 and secondLevel == 0 then
+			-- If both levels are 0 then sort by rating first, then sort by name
+			if a.rating > b.rating then
+				return true
+			else
+				return a.name < b.name
+			end
 		elseif firstLevel == secondLevel then
 			return a.name < b.name
 		end
@@ -818,6 +883,7 @@ local function UpdateCells(playerList, isGuildList)
 
 	local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
 	local tableSize = #sortedplayerList
+	local _, _, _, _, _, _, _, instanceID = LoaderPublic.GetInstanceInfo()
 	for i = 1, tableSize do
 		local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 		if i == 1 then
@@ -834,6 +900,10 @@ local function UpdateCells(playerList, isGuildList)
 		cellName:SetWidth(WIDTH_NAME)
 		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
 		cellName.tooltip = sortedplayerList[i].nameTooltip
+		if not isGuildList and instanceID == sortedplayerList[i].mapID then
+			cellName.isGlowing = true
+			LibStub("LibCustomGlow-1.0").PixelGlow_Start(cellName, nil, nil, 0.06) -- If you're in the dungeon of this players key, glow
+		end
 		cellLevel:SetWidth(WIDTH_LEVEL)
 		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 		cellLevel.tooltip = sortedplayerList[i].levelTooltip
@@ -894,7 +964,16 @@ do
 		return sorted
 	end
 
+	local function ShowViewer()
+		if not mainPanel:IsShown() then
+			RequestData()
+		end
+	end
+
 	local _, addonTbl = ...
+	addonTbl.API.RegisterSlashCommand("/key", ShowViewer)
+	addonTbl.API.RegisterSlashCommand("/bwkey", ShowViewer)
+
 	addonTbl.API.SetToolOptionsTable("MythicPlus", {
 		type = "group",
 		childGroups = "tab",
@@ -948,7 +1027,7 @@ do
 							countBegin = {
 								name = L.countdownBegins,
 								desc = L.keystoneCountdownBeginsDesc,
-								type = "range", min = 3, max = 10, step = 1,
+								type = "range", min = 3, max = 9, step = 1,
 								order = 2,
 								width = 1
 							},
@@ -976,11 +1055,44 @@ do
 				name = L.keystoneViewerTitle,
 				order = 2,
 				args = {
+					explainViewer = {
+						type = "description",
+						name = L.keystoneViewerExplainer,
+						order = 1,
+						width = "full",
+					},
+					openViewer = {
+						type = "execute",
+						name = L.keystoneViewerOpen,
+						func = ShowViewer,
+						order = 2,
+						width = 1.5,
+					},
+					spacerViewer = {
+						type = "description",
+						name = "\n\n",
+						order = 3,
+						width = "full",
+					},
+					autoShowZoneIn = {
+						type = "toggle",
+						name = L.keystoneAutoShowZoneIn,
+						desc = L.keystoneAutoShowZoneInDesc,
+						order = 4,
+						width = "full",
+					},
+					autoShowEndOfRun = {
+						type = "toggle",
+						name = L.keystoneAutoShowEndOfRun,
+						desc = L.keystoneAutoShowEndOfRunDesc,
+						order = 5,
+						width = "full",
+					},
 					hideFromGuild = {
 						type = "toggle",
 						name = L.keystoneHideGuildTitle,
 						desc = L.keystoneHideGuildDesc,
-						order = 1,
+						order = 6,
 						width = "full",
 						set = function(info, value)
 							local key = info[#info]

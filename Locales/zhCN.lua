@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.tempNew = "新：现在输入 |cFFFFFFFF/bwtemp|r 可以查看队伍的史诗钥石信息。"
+L.tempNew = "新：现在输入 |cFFFFFFFF/key|r 可以查看队伍的史诗钥石信息。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -315,9 +315,15 @@ L.keystoneStartMessage = "%s +%d 挑战开始！" -- Format is LONG_DUNGEON_NAME
 L.keystoneCountdownExplainer = "当你开始一个史诗钥石地下城时，将会播放倒计时语音。请选择你想听到的声音以及你希望倒计时何时开始。\n\n"
 L.keystoneCountdownBeginsDesc = "选择当史诗钥石地下城的起始计时器还剩多少时间时，倒计时语音开始播放。"
 L.keystoneViewerTitle = "钥石查看器"
-L.keystoneHideGuildTitle = "对公会成员隐藏钥石信息"
+--L.keystoneHideGuildTitle = "Hide my keystone from my guild members"
 L.keystoneHideGuildDesc = "|cffff4411不推荐。|r 此功能将阻止公会成员看到你拥有的钥石信息。你队伍中的其他成员仍然可以看到它。"
 L.keystoneHideGuildWarning = "禁用公会成员查看你钥石信息的功能是 |cffff4411不推荐|r 的。\n\n你确定要这样做吗？"
+--L.keystoneAutoShowZoneIn = "Show when entering a dungeon"
+--L.keystoneAutoShowZoneInDesc = "Automatically show the keystone viewer when entering a Mythic dungeon.\n\n|cFF33FF99This can help remind you which player owns the keystone that you're about to do.|r"
+--L.keystoneAutoShowEndOfRun = "Show when the Mythic+ is over"
+--L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
+--L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
+--L.keystoneViewerOpen = "Open the keystone viewer"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷"
