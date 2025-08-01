@@ -150,6 +150,11 @@ do
 	local myKeyLevel, myKeyMap, myRating = 0, 0, 0
 	UpdateMyKeystone = function(self, event, id, isReloadingUi)
 		if event == "PLAYER_ENTERING_WORLD" then
+			if id or isReloadingUi then
+				if SLASH_KEYSTONE3 then
+					SLASH_KEYSTONE3 = nil
+				end
+			end
 			if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
 				return
 			elseif not id and not isReloadingUi then -- Don't show when logging in (arg1) or reloading UI (arg2)
@@ -664,15 +669,12 @@ do
 			table.sort(sortedplayerList, function(a, b)
 				if a.level > b.level then
 					return true
-				elseif a.level == 0 and b.level == 0 then
-					-- If both levels are 0 then sort by rating first, then sort by name
-					if a.rating > b.rating then
-						return true
+				elseif a.level == b.level then
+					if a.rating ~= b.rating then -- If both levels are equal then sort by rating first, then sort by name
+						return a.rating > b.rating
 					else
 						return a.name < b.name
 					end
-				elseif a.level == b.level then
-					return a.name < b.name
 				end
 			end)
 
@@ -869,15 +871,12 @@ local function UpdateCells(playerList, isGuildList)
 		local secondLevel = b.level == -1 and 1 or b.level
 		if firstLevel > secondLevel then
 			return true
-		elseif firstLevel == 0 and secondLevel == 0 then
-			-- If both levels are 0 then sort by rating first, then sort by name
-			if a.rating > b.rating then
-				return true
+		elseif firstLevel == secondLevel then
+			if a.rating ~= b.rating then -- If both levels are equal then sort by rating first, then sort by name
+				return a.rating > b.rating
 			else
 				return a.name < b.name
 			end
-		elseif firstLevel == secondLevel then
-			return a.name < b.name
 		end
 	end)
 
