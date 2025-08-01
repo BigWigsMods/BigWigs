@@ -161,7 +161,7 @@ do
 				LoaderPublic.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
 					local _, _, diffID = LoaderPublic.GetInstanceInfo()
 					local season = GetCurrentSeason()
-					if diffID == 23 and season > 0 then
+					if diffID == 23 and season > 0 and db.profile.autoShowZoneIn then
 						RequestData()
 					end
 				end)
@@ -283,11 +283,19 @@ local tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab3:SetSize(50, 26)
 tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
 tab3.Text:SetText(L.keystoneTabAlts)
+tab3:UnregisterAllEvents() -- Remove events registered by the template
+tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+tab3:SetScript("OnEvent", function()
+	if db.profile.autoShowEndOfRun then
+		LoaderPublic.CTimerAfter(2, RequestData)
+	end
+end)
 
 local tab4 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab4:SetSize(50, 26)
 tab4:SetPoint("LEFT", tab3, "RIGHT", 4, 0)
 tab4.Text:SetText(L.keystoneTabHistory)
+tab4:UnregisterAllEvents() -- Remove events registered by the template
 
 local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
