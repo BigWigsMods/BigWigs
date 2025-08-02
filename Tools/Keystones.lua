@@ -1,9 +1,10 @@
 -- This module is WIP, expect all code to be awful
-local L, LoaderPublic, db
+local L, BigWigsLoader, BigWigsAPI, db
 do
 	local _, tbl = ...
-	L = tbl.API:GetLocale("BigWigs")
-	LoaderPublic = tbl.loaderPublic
+	BigWigsAPI = tbl.API
+	L = BigWigsAPI:GetLocale("BigWigs")
+	BigWigsLoader = tbl.loaderPublic
 
 	local defaultVoice = "English: Amy"
 	do
@@ -17,11 +18,13 @@ do
 		autoSlotKeystone = true,
 		countVoice = defaultVoice,
 		countBegin = 5,
+		countStartSound = "BigWigs: Long",
+		countEndSound = "BigWigs: Alarm",
 		autoShowZoneIn = true,
 		autoShowEndOfRun = true,
 		hideFromGuild = false,
 	}
-	db = LoaderPublic.db:RegisterNamespace("MythicPlus", {profile = defaults})
+	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 	for k, v in next, db do
 		local defaultType = type(defaults[k])
 		if defaultType == "nil" then
@@ -40,6 +43,7 @@ if db.profile.hideFromGuild then
 	LibKeystone.SetGuildHidden(true)
 end
 local LibSpec = LibStub("LibSpecialization")
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 local guildList, partyList = {}, {}
 local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
@@ -78,7 +82,7 @@ local dungeonNames = {
 	[391] = L.keystoneShortName_TazaveshStreetsOfWonder, -- STREET
 	[505] = L.keystoneShortName_TheDawnbreaker, -- DAWN
 }
-local teleports = LoaderPublic.isTestBuild and {
+local teleports = BigWigsLoader.isTestBuild and {
 	[2830] = 1237215, -- Eco-Dome Al'dani
 	[2287] = 354465, -- Halls of Atonement
 	[2660] = 445417, -- Ara-Kara, City of Echoes
@@ -126,14 +130,14 @@ mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 mainPanel:SetScript("OnDragStart", function(self)
 	if prevTab == 2 and InCombatLockdown() then
-		LoaderPublic.Print(L.youAreInCombat)
+		BigWigsLoader.Print(L.youAreInCombat)
 		return
 	end
 	self:StartMoving()
 end)
 mainPanel:SetScript("OnDragStop", function(self)
 	if prevTab == 2 and InCombatLockdown() then
-		LoaderPublic.Print(L.youAreInCombat)
+		BigWigsLoader.Print(L.youAreInCombat)
 		return
 	end
 	self:StopMovingOrSizing()
@@ -155,11 +159,11 @@ do
 					SLASH_KEYSTONE3 = nil
 				end
 			end
-			if LoaderPublic.UnitLevel("player") ~= GetMaxPlayerLevel() then
+			if BigWigsLoader.UnitLevel("player") ~= GetMaxPlayerLevel() then
 				return
 			elseif not id and not isReloadingUi then -- Don't show when logging in (arg1) or reloading UI (arg2)
-				LoaderPublic.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
-					local _, _, diffID = LoaderPublic.GetInstanceInfo()
+				BigWigsLoader.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
+					local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 					local season = GetCurrentSeason()
 					if diffID == 23 and season > 0 and db.profile.autoShowZoneIn then
 						RequestData()
@@ -194,8 +198,8 @@ do
 			myRating = playerRatingSummary.currentSeasonScore
 		end
 
-		local guid = LoaderPublic.UnitGUID("player")
-		local name = LoaderPublic.UnitName("player")
+		local guid = BigWigsLoader.UnitGUID("player")
+		local name = BigWigsLoader.UnitName("player")
 		local realm = GetRealmName()
 		BigWigs3DB.myKeystones[guid] = {
 			keyLevel = myKeyLevel,
@@ -224,7 +228,7 @@ do
 	local GetContainerNumSlots, GetContainerItemLink, PickupContainerItem = C_Container.GetContainerNumSlots, C_Container.GetContainerItemLink, C_Container.PickupContainerItem
 	tab1:SetScript("OnEvent", function()
 		if db.profile.autoSlotKeystone and not HasSlottedKeystone() then
-			local _, _, _, _, _, _, _, instanceID = LoaderPublic.GetInstanceInfo()
+			local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 			if GetOwnedKeystoneMapID() == instanceID then
 				for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
 					local slots = GetContainerNumSlots(currentBag)
@@ -233,7 +237,7 @@ do
 						if itemLink and itemLink:find("Hkeystone", nil, true) then
 							PickupContainerItem(currentBag, currentSlot)
 							SlotKeystone()
-							LoaderPublic.Print(L.keystoneAutoSlotMessage:format(itemLink))
+							BigWigsLoader.Print(L.keystoneAutoSlotMessage:format(itemLink))
 						end
 					end
 				end
@@ -254,22 +258,37 @@ do
 		if event == "CHALLENGE_MODE_START" then
 			local keyLevel = GetActiveKeystoneInfo()
 			local challengeMapID = GetActiveChallengeMapID()
-			LoaderPublic:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
+			local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
+			BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
 			if keyLevel and keyLevel > 0 then
-				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
+				BigWigsLoader:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
 			else
-				LoaderPublic:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
+				BigWigsLoader:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
 			end
-			LoaderPublic.CTimerAfter(9, function()
-				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
-				LoaderPublic:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
-				LoaderPublic.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+			BigWigsLoader.CTimerAfter(9, function()
+				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
+				BigWigsLoader.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+				local soundName = db.profile.countEndSound
+				if soundName ~= "None" then
+					local sound = LibSharedMedia:Fetch("sound", soundName, true)
+					if sound then
+						BigWigsLoader.PlaySoundFile(sound)
+					end
+				end
 			end)
+			BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(challengeMapName, keyLevel), 9), "cyan", icon)
+			local soundName = db.profile.countStartSound
+			if soundName ~= "None" then
+				local sound = LibSharedMedia:Fetch("sound", soundName, true)
+				if sound then
+					BigWigsLoader.PlaySoundFile(sound)
+				end
+			end
 		else
-			local _, _, diffID = LoaderPublic.GetInstanceInfo()
+			local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 			if diffID == 8 then
 				TimerTracker:UnregisterEvent("START_TIMER")
-				LoaderPublic.CTimerAfter(1, function()
+				BigWigsLoader.CTimerAfter(1, function()
 					TimerTracker:RegisterEvent("START_TIMER")
 					self:UnregisterEvent("CHALLENGE_MODE_START")
 				end)
@@ -287,7 +306,7 @@ tab3:UnregisterAllEvents() -- Remove events registered by the template
 tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 tab3:SetScript("OnEvent", function()
 	if db.profile.autoShowEndOfRun then
-		LoaderPublic.CTimerAfter(2, RequestData)
+		BigWigsLoader.CTimerAfter(2, RequestData)
 	end
 end)
 
@@ -315,7 +334,7 @@ local teleportButtons = {}
 mainPanel.CloseButton:SetScript("OnClick", function()
 	if prevTab == 2 then
 		if InCombatLockdown() then
-			LoaderPublic.Print(L.youAreInCombat)
+			BigWigsLoader.Print(L.youAreInCombat)
 			return
 		else
 			prevTab = 1
@@ -425,11 +444,11 @@ end
 do
 	local function OnEnter(self)
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		local spellName = LoaderPublic.GetSpellName(self.spellID)
+		local spellName = BigWigsLoader.GetSpellName(self.spellID)
 		if not IsSpellKnown(self.spellID) then
 			GameTooltip:SetText(L.keystoneTeleportNotLearned:format(spellName))
 		else
-			local cd = LoaderPublic.GetSpellCooldown(self.spellID)
+			local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
 			if cd.startTime > 0 and cd.duration > 0 then
 				local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
 				local hours = math.floor(remainingSeconds / 3600)
@@ -468,7 +487,7 @@ do
 		local icon = button:CreateTexture()
 		icon:SetSize(48, 48)
 		icon:SetPoint("RIGHT", button, "LEFT", -4, 0)
-		local texture = LoaderPublic.GetSpellTexture(spellID)
+		local texture = BigWigsLoader.GetSpellTexture(spellID)
 		icon:SetTexture(texture)
 		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		button.icon = icon
@@ -526,7 +545,7 @@ do
 	tab1:SetScript("OnClick", function(self)
 		if prevTab == 2 then
 			if InCombatLockdown() then
-				LoaderPublic.Print(L.youAreInCombat)
+				BigWigsLoader.Print(L.youAreInCombat)
 				return
 			else
 				teleportButtons[1]:ClearAllPoints()
@@ -553,7 +572,7 @@ do
 	end)
 	tab2:SetScript("OnClick", function(self)
 		if InCombatLockdown() then
-			LoaderPublic.Print(L.youAreInCombat)
+			BigWigsLoader.Print(L.youAreInCombat)
 			return
 		end
 		prevTab = 2
@@ -588,7 +607,7 @@ do
 				end
 			else
 				for i = 1, #teleportButtons do
-					local cd = LoaderPublic.GetSpellCooldown(teleportButtons[i].spellID)
+					local cd = BigWigsLoader.GetSpellCooldown(teleportButtons[i].spellID)
 					if cd and cd.startTime > 0 and cd.duration > 2 and IsSpellKnown(teleportButtons[i].spellID) then
 						local remaining = (cd.startTime + cd.duration) - GetTime()
 						local percentage = remaining / cd.duration
@@ -608,7 +627,7 @@ do
 			if not IsSpellKnown(teleportButtons[i].spellID) then
 				teleportButtons[i].icon:SetTexture(136813)
 			else
-				local texture = LoaderPublic.GetSpellTexture(teleportButtons[i].spellID)
+				local texture = BigWigsLoader.GetSpellTexture(teleportButtons[i].spellID)
 				teleportButtons[i].icon:SetTexture(texture)
 			end
 		end
@@ -626,7 +645,7 @@ do
 	tab3:SetScript("OnClick", function(self)
 		if prevTab == 2 then
 			if InCombatLockdown() then
-				LoaderPublic.Print(L.youAreInCombat)
+				BigWigsLoader.Print(L.youAreInCombat)
 				return
 			else
 				teleportButtons[1]:ClearAllPoints()
@@ -688,7 +707,7 @@ do
 
 			local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
 			local tableSize = #sortedplayerList
-			local _, _, _, _, _, _, _, instanceID = LoaderPublic.GetInstanceInfo()
+			local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 			for i = 1, tableSize do
 				local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 				if i == 1 then
@@ -732,7 +751,7 @@ do
 	tab4:SetScript("OnClick", function(self)
 		if prevTab == 2 then
 			if InCombatLockdown() then
-				LoaderPublic.Print(L.youAreInCombat)
+				BigWigsLoader.Print(L.youAreInCombat)
 				return
 			else
 				teleportButtons[1]:ClearAllPoints()
@@ -890,7 +909,7 @@ local function UpdateCells(playerList, isGuildList)
 
 	local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
 	local tableSize = #sortedplayerList
-	local _, _, _, _, _, _, _, instanceID = LoaderPublic.GetInstanceInfo()
+	local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 	for i = 1, tableSize do
 		local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 		if i == 1 then
@@ -971,17 +990,27 @@ do
 		return sorted
 	end
 
+	local function soundGet(info)
+		for i, v in next, LibSharedMedia:List("sound") do
+			if v == db.profile[info[#info]] then
+				return i
+			end
+		end
+	end
+	local function soundSet(info, value)
+		db.profile[info[#info]] = LibSharedMedia:List("sound")[value]
+	end
+
 	local function ShowViewer()
 		if not mainPanel:IsShown() then
 			RequestData()
 		end
 	end
 
-	local _, addonTbl = ...
-	addonTbl.API.RegisterSlashCommand("/key", ShowViewer)
-	addonTbl.API.RegisterSlashCommand("/bwkey", ShowViewer)
+	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer)
+	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer)
 
-	addonTbl.API.SetToolOptionsTable("MythicPlus", {
+	BigWigsAPI.SetToolOptionsTable("MythicPlus", {
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,
@@ -1045,6 +1074,26 @@ do
 								sorting = voiceSorting,
 								order = 3,
 								width = 2,
+							},
+							countStartSound = {
+								type = "select",
+								name = L.keystoneCountdownBeginsSound,
+								order = 4,
+								get = soundGet,
+								set = soundSet,
+								values = LibSharedMedia:List("sound"),
+								width = 2.5,
+								itemControl = "DDI-Sound",
+							},
+							countEndSound = {
+								type = "select",
+								name = L.keystoneCountdownEndsSound,
+								order = 5,
+								get = soundGet,
+								set = soundSet,
+								values = LibSharedMedia:List("sound"),
+								width = 2.5,
+								itemControl = "DDI-Sound",
 							},
 						},
 					},
