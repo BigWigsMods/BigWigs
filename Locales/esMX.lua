@@ -87,6 +87,7 @@ L.Destruction = "Destrucción (Kil'jaeden)"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
 L.spell_on_you = "BigWigs: Habilidad en ti"
 L.spell_under_you = "BigWigs: Habilidad debajo de ti"
+--L.simple_no_voice = "Simple (No Voice)"
 
 -- Options.lua
 L.options = "Opciones"

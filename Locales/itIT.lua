@@ -87,6 +87,7 @@ L.Destruction = "Distruzione (Kil'jaeden)"
 L.RunAway = "Scappa ragazzina, scappa!!! (Lupo Cattivo)"
 L.spell_on_you = "BigWigs: Abilità su di te"
 L.spell_under_you = "BigWigs: Abilità sotto di te"
+--L.simple_no_voice = "Simple (No Voice)"
 
 -- Options.lua
 L.options = "Opzioni"

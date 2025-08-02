@@ -87,6 +87,7 @@ L.Destruction = "Разрушение (Кил'джеден)"
 L.RunAway = "Беги, малышка, беги (Злой и страшный серый волк)"
 L.spell_on_you = "BigWigs: Заклинание на тебе"
 L.spell_under_you = "BigWigs: Заклинание под тобой"
+--L.simple_no_voice = "Simple (No Voice)"
 
 -- Options.lua
 L.options = "Настройки"

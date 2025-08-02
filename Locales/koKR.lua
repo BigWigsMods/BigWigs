@@ -87,6 +87,7 @@ L.Destruction = "파괴 (킬제덴)"
 L.RunAway = "도망쳐라 꼬마야 달아나라 (커다란 나쁜 늑대)"
 L.spell_on_you = "BigWigs: 당신에게 주문"
 L.spell_under_you = "BigWigs: 발밑에 바닥"
+--L.simple_no_voice = "Simple (No Voice)"
 
 -- Options.lua
 L.options = "옵션"

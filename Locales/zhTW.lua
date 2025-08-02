@@ -87,6 +87,7 @@ L.Destruction = "毀滅（基爾加丹）"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
 L.spell_on_you = "BigWigs: 法術在你身上"
 L.spell_under_you = "BigWigs: 法術在你腳下"
+--L.simple_no_voice = "Simple (No Voice)"
 
 -- Options.lua
 L.options = "選項"

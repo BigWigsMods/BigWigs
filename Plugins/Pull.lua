@@ -76,12 +76,13 @@ do
 		local list = BigWigsAPI:GetCountdownList()
 		local sorted = {}
 		for k in next, list do
-			if k ~= L.none then
+			if k ~= "none" and k ~= "simple" then
 				sorted[#sorted + 1] = k
 			end
 		end
-		sort(sorted, function(a, b) return list[a] < list[b] end)
-		tinsert(sorted, 1, L.none)
+		table.sort(sorted, function(a, b) return list[a] < list[b] end)
+		table.insert(sorted, 1, "none")
+		table.insert(sorted, 2, "simple")
 		return sorted
 	end
 
