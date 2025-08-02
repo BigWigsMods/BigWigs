@@ -15,6 +15,8 @@ files["Locales/frFR_common.lua"].ignore = {
 	"113/UnitSex",
 }
 files["Loader.lua"].ignore = {
+	"11[13]/BigWigsTempKeystones", -- XXX temp
+
 	"113/date",
 	"113/geterrorhandler",
 

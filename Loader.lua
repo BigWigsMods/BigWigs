@@ -1209,7 +1209,10 @@ function mod:CANCEL_PLAYER_COUNTDOWN(...)
 	public:SendMessage("Blizz_StopCountdown", ...)
 end
 
--- Various temporary printing stuff
+-----------------------------------------------------------------------
+-- Popups and user notifications
+--
+
 do
 	local old = {
 		BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
@@ -1486,6 +1489,11 @@ do
 			self.LOADING_SCREEN_DISABLED = nil
 		end
 		bwFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
+	end
+
+	if public.isRetail and not BigWigsTempKeystones then -- XXX temp
+		BigWigsTempKeystones = true
+		Popup(L.tempNew, true)
 	end
 end
 
