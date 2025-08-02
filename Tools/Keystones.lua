@@ -253,6 +253,23 @@ tab2.Text:SetText(L.keystoneTabTeleports)
 tab2:UnregisterAllEvents() -- Remove events registered by the template
 tab2:RegisterEvent("CHALLENGE_MODE_RESET")
 do
+	local dungeonNamesForBar = {
+		[500] = L.keystoneShortName_TheRookery_Bar, -- ROOK
+		[504] = L.keystoneShortName_DarkflameCleft_Bar, -- DFC
+		[499] = L.keystoneShortName_PrioryOfTheSacredFlame_Bar, -- PRIORY
+		[506] = L.keystoneShortName_CinderbrewMeadery_Bar, -- BREW
+		[525] = L.keystoneShortName_OperationFloodgate_Bar, -- FLOOD
+		[382] = L.keystoneShortName_TheaterOfPain_Bar, -- TOP
+		[247] = L.keystoneShortName_TheMotherlode_Bar, -- ML
+		[370] = L.keystoneShortName_OperationMechagonWorkshop_Bar, -- WORK
+
+		[542] = L.keystoneShortName_EcoDomeAldani_Bar, -- ALDANI
+		[378] = L.keystoneShortName_HallsOfAtonement_Bar, -- HOA
+		[503] = L.keystoneShortName_AraKaraCityOfEchoes_Bar, -- ARAK
+		[392] = L.keystoneShortName_TazaveshSoleahsGambit_Bar, -- GAMBIT
+		[391] = L.keystoneShortName_TazaveshStreetsOfWonder_Bar, -- STREET
+		[505] = L.keystoneShortName_TheDawnbreaker_Bar, -- DAWN
+	}
 	local GetActiveKeystoneInfo, GetActiveChallengeMapID = C_ChallengeMode.GetActiveKeystoneInfo, C_ChallengeMode.GetActiveChallengeMapID
 	tab2:SetScript("OnEvent", function(self, event)
 		if event == "CHALLENGE_MODE_START" then
@@ -261,7 +278,7 @@ do
 			local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
 			BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
 			if keyLevel and keyLevel > 0 then
-				BigWigsLoader:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNames[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
+				BigWigsLoader:SendMessage("BigWigs_StartBar", self, nil, L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID] or "?", keyLevel), 9, 525134) -- 525134 = inv_relics_hourglass
 			else
 				BigWigsLoader:SendMessage("BigWigs_StartBar", self, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
 			end
