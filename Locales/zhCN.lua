@@ -87,7 +87,7 @@ L.Destruction = "毁灭（基尔加丹）"
 L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
 L.spell_on_you = "BigWigs：法术在你身上"
 L.spell_under_you = "BigWigs：法术在你脚下"
---L.simple_no_voice = "Simple (No Voice)"
+L.simple_no_voice = "简单（无语音）"
 
 -- Options.lua
 L.options = "选项"
@@ -346,20 +346,20 @@ L.keystoneShortName_TheDawnbreaker = "破晨"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
---L.keystoneShortName_TheRookery_Bar = "Rookery"
---L.keystoneShortName_DarkflameCleft_Bar = "Darkflame"
---L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "Priory"
---L.keystoneShortName_CinderbrewMeadery_Bar = "Cinderbrew"
---L.keystoneShortName_OperationFloodgate_Bar = "Floodgate"
---L.keystoneShortName_TheaterOfPain_Bar = "Theater"
---L.keystoneShortName_TheMotherlode_Bar = "Motherlode"
---L.keystoneShortName_OperationMechagonWorkshop_Bar = "Workshop"
---L.keystoneShortName_EcoDomeAldani_Bar = "Al'dani"
---L.keystoneShortName_HallsOfAtonement_Bar = "Halls"
---L.keystoneShortName_AraKaraCityOfEchoes_Bar = "Ara-Kara"
---L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambit"
---L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
---L.keystoneShortName_TheDawnbreaker_Bar = "Dawnbreaker"
+L.keystoneShortName_TheRookery_Bar = "驭雷栖巢"
+L.keystoneShortName_DarkflameCleft_Bar = "暗焰裂口"
+L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "隐修院"
+L.keystoneShortName_CinderbrewMeadery_Bar = "燧酿酒庄"
+L.keystoneShortName_OperationFloodgate_Bar = "水闸行动"
+L.keystoneShortName_TheaterOfPain_Bar = "伤逝剧场"
+L.keystoneShortName_TheMotherlode_Bar = "暴富矿区"
+L.keystoneShortName_OperationMechagonWorkshop_Bar = "车间"
+L.keystoneShortName_EcoDomeAldani_Bar = "生态圆顶"
+L.keystoneShortName_HallsOfAtonement_Bar = "赎罪大厅"
+L.keystoneShortName_AraKaraCityOfEchoes_Bar = "回响之城"
+L.keystoneShortName_TazaveshSoleahsGambit_Bar = "索·莉亚宏图"
+L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "琳彩天街"
+L.keystoneShortName_TheDawnbreaker_Bar = "破晨号"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
