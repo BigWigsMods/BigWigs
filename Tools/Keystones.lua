@@ -296,7 +296,7 @@ do
 					end
 				end
 			end)
-			BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(challengeMapName, keyLevel), 9), "cyan", icon)
+			BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID], keyLevel), 9), "cyan", icon)
 			local soundName = db.profile.countStartSound
 			if soundName ~= "None" then
 				local sound = LibSharedMedia:Fetch("sound", soundName, true)
