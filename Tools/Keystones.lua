@@ -579,6 +579,7 @@ do
 
 		partyHeader:SetText(L.keystoneHeaderParty)
 		partyRefreshButton:Show()
+		guildHeader:SetText(L.keystoneHeaderGuild)
 		guildHeader:Show()
 		guildRefreshButton:Show()
 
