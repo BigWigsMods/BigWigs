@@ -367,6 +367,7 @@ do
 				local best = sDB[difficultyText].best
 				if self.db.profile.showBar and best then
 					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 237538) -- 237538 = "Interface\\Icons\\spell_holy_borrowedtime"
+					self:SendMessage("BigWigs_Timer", self, nil, best, best, L.bestTimeBar, 0, 237538, false, true)
 				end
 			end
 
