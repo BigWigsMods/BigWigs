@@ -1491,10 +1491,10 @@ do
 		bwFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
 	end
 
-	--if public.isRetail and not BigWigsTempKeystones then -- XXX temp
-	--	BigWigsTempKeystones = true
-	--	Popup(L.tempNew, true)
-	--end
+	if public.isRetail and not BigWigsTempKeystones then -- XXX temp
+		BigWigsTempKeystones = true
+		Popup(L.tempNew, true)
+	end
 end
 
 -----------------------------------------------------------------------
