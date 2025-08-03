@@ -2170,19 +2170,15 @@ do
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
-	local GossipOptionSort = _G.GossipOptionSort -- XXX temp, only available on 10.0
+	local GossipOptionSort = _G.GossipOptionSort
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
-		if GossipOptionSort then -- XXX 10.0 compat
-			local gossipOptions = GetOptions()
-			if gossipOptions and gossipOptions[1] then
-				table.sort(gossipOptions, GossipOptionSort)
-				local gossipOptionID = gossipOptions[optionNumber] and gossipOptions[optionNumber].gossipOptionID
-				if gossipOptionID then
-					SelectOption(gossipOptionID, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
-				end
+		local gossipOptions = GetOptions()
+		if gossipOptions and gossipOptions[1] then
+			table.sort(gossipOptions, GossipOptionSort)
+			local gossipOptionID = gossipOptions[optionNumber] and gossipOptions[optionNumber].gossipOptionID
+			if gossipOptionID then
+				self:SelectGossipID(gossipOptionID, skipConfirmDialogBox)
 			end
-		else
-			SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
 		end
 	end
 
@@ -2201,7 +2197,13 @@ do
 	--- Select a specific NPC gossip entry by ID
 	-- @number id The ID of the specific gossip option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
+	local autotalk_notice = L.autotalk_notice
+	local UnitName = loader.UnitName
 	function boss:SelectGossipID(id, skipConfirmDialogBox)
+		local npc = UnitName("npc")
+		if npc then
+			core:Print(format(autotalk_notice, npc))
+		end
 		SelectOption(id, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
 	end
 end

@@ -195,6 +195,7 @@ L.arcane = "비전"
 L.autotalk = "NPC 자동 상호작용"
 L.autotalk_boss_desc = "보스 전투 시작 NPC 대화를 자동 선택합니다."
 L.autotalk_generic_desc = "던전 다음 단계 진행에 필요한 NPC 대화를 자동 선택합니다."
+--L.autotalk_notice = "Automatically interacting with NPC %s."
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
