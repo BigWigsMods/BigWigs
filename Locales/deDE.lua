@@ -87,7 +87,7 @@ L.Destruction = "Zerstörung (Kil'jaeden)"
 L.RunAway = "Lauf kleines Mädchen, lauf (Der große böse Wolf)"
 L.spell_on_you = "BigWigs: Zauber auf Dir"
 L.spell_under_you = "BigWigs: Zauber unter Dir"
-L.simple_no_voice = "Einfach (keine Stimme)"
+L.simple_no_voice = "Einfach (Keine Stimme)"
 
 -- Options.lua
 L.options = "Optionen"
