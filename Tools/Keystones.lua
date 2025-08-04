@@ -369,7 +369,8 @@ mainPanel.CloseButton:SetScript("OnClick", function()
 	WipeCells()
 	mainPanel:Hide()
 end)
-mainPanel.CloseButton:RegisterEvent("PLAYER_LEAVING_WORLD")
+mainPanel.CloseButton:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
+mainPanel.CloseButton:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
 mainPanel.CloseButton:SetScript("OnEvent", function(self)
 	if mainPanel:IsShown() then
 		self:Click()
