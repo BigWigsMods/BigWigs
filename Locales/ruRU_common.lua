@@ -195,6 +195,7 @@ L.arcane = "Тайная магия"
 L.autotalk = "Автоматическое взаимодействие с НПЦ"
 L.autotalk_boss_desc = "Автоматический выбирать вариант диалога с НПЦ для начала боя."
 L.autotalk_generic_desc = "Автоматический выбирать вариант диалога с НПЦ для продвижения по подземелью."
+--L.autotalk_notice = "Automatically interacting with NPC %s."
 
 -- Common ability name replacements
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing

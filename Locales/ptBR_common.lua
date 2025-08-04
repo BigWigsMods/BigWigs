@@ -195,6 +195,7 @@ L.arcane = "Arcano"
 L.autotalk = "Interação automática com NPC"
 L.autotalk_boss_desc = "Seleciona automaticamente as opções de diálogo do NPC que iniciam o encontro com o chefe."
 L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do NPC que permitem você progredir para o próximo estágio da masmorra."
+--L.autotalk_notice = "Automatically interacting with NPC %s."
 
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
