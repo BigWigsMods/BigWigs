@@ -195,7 +195,7 @@ L.arcane = "奥术"
 L.autotalk = "自动与NPC对话"
 L.autotalk_boss_desc = "自动选择NPC对话选项，使首领战开始。"
 L.autotalk_generic_desc = "自动选择使你进入地下城下一阶段的NPC对话选项。"
---L.autotalk_notice = "Automatically interacting with NPC %s."
+L.autotalk_notice = "自动与NPC %s 交互。"
 
 -- Common ability name replacements
 L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
