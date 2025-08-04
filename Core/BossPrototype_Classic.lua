@@ -2167,10 +2167,13 @@ do
 		end
 	end
 
+	local function GossipOptionSort(leftInfo, rightInfo)
+		return leftInfo.orderIndex < rightInfo.orderIndex
+	end
+
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
-	local GossipOptionSort = _G.GossipOptionSort
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
 		local gossipOptions = GetOptions()
 		if gossipOptions and gossipOptions[1] then
