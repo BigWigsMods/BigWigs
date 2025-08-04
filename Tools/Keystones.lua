@@ -279,11 +279,11 @@ do
 			BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
 			if keyLevel and keyLevel > 0 then
 				local msg = L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID] or "?", keyLevel)
-				BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, msg, 9, 525134) -- 525134 = inv_relics_hourglass
-				BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, msg, 0, 525134, false, true)
+				BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, msg, 9, icon)
+				BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, msg, 0, icon, false, true)
 			else
-				BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, L.keystoneModuleName, 9, 525134) -- 525134 = inv_relics_hourglass
-				BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, L.keystoneModuleName, 0, 525134, false, true)
+				BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, L.keystoneModuleName, 9, icon)
+				BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, L.keystoneModuleName, 0, icon, false, true)
 			end
 			BigWigsLoader.CTimerAfter(9, function()
 				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
@@ -1027,6 +1027,8 @@ do
 	local function ShowViewer()
 		if not mainPanel:IsShown() then
 			RequestData()
+		else
+			mainPanel.CloseButton:Click()
 		end
 	end
 
