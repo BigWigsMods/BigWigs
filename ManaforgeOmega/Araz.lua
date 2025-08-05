@@ -290,7 +290,7 @@ function mod:OverwhelmingPowerApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, "purple", args.destName, amount, highStacks)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	elseif self:Tank() and amount >= highStacks then
 		self:PlaySound(args.spellId, "warning") -- swap?
 	end
@@ -323,7 +323,7 @@ end
 function mod:SilencingTempestApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1228188, nil, CL.pools)
-		self:PlaySound(1228188, "warning") -- move out
+		self:PlaySound(1228188, "warning", nil, args.destName) -- move out
 		self:Say(1228188, CL.pools, true, "Pools")
 	end
 end
@@ -363,7 +363,7 @@ end
 function mod:AstralHarvestApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning") -- move out
+		self:PlaySound(args.spellId, "warning", nil, args.destName) -- move out
 		self:Say(args.spellId, CL.orb, nil, "Orb")
 		self:SayCountdown(args.spellId, 4)
 	end
@@ -373,7 +373,7 @@ function mod:AstralSurgeApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
-		self:PlaySound(args.spellId, "alarm") -- raid dot
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- raid dot
 	end
 end
 
@@ -422,7 +422,7 @@ do
 	function mod:FocusingIrisDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -453,7 +453,7 @@ function mod:RampingPowerApplied(args)
 	if amount == 5 or amount >= highStacks then -- 5 & 10 (capped at 10?)
 		self:StackMessage(args.spellId, "purple", args.destName, amount, highStacks)
 		if amount >= highStacks then
-			self:PlaySound(args.spellId, "alarm") -- swap?
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- swap?
 		end
 	end
 end
@@ -502,7 +502,7 @@ function mod:AstralBurnApplied(args)
 		local amount = args.amount or 1
 		if amount % 3 == 1 then -- 1, 4, 7, etc.
 			self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
-			self:PlaySound(args.spellId, "alarm") -- stacking debuff
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- stacking debuff
 		end
 	end
 end
@@ -531,7 +531,7 @@ do
 	function mod:CrushingDarknessDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -549,7 +549,7 @@ end
 function mod:VoidHarvestApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning") -- move out
+		self:PlaySound(args.spellId, "warning", nil, args.destName) -- move out
 		self:Say(args.spellId, CL.orb, nil, "Orb")
 		self:SayCountdown(args.spellId, 4)
 	end
@@ -559,7 +559,7 @@ function mod:VoidSurgeApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
-		self:PlaySound(args.spellId, "alarm") -- raid dot
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- raid dot
 	end
 end
 

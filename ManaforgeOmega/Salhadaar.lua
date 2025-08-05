@@ -275,7 +275,7 @@ do
 	function mod:AvoidableDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -303,7 +303,7 @@ function mod:OathBoundDoseRemoved(args)
 	if self:Me(args.destGUID) then
 		oathStacksOnMe = args.amount
 		self:Message(args.spellId, "blue", L.oath_bound_removed_dose)
-		self:PlaySound(args.spellId, "info") -- stack removed
+		self:PlaySound(args.spellId, "info", nil, args.destName) -- stack removed
 	end
 end
 
@@ -311,7 +311,7 @@ function mod:OathBoundRemoved(args)
 	if self:Me(args.destGUID) then
 		oathStacksOnMe = 0
 		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-		self:PlaySound(args.spellId, "long") -- stacks cleared
+		self:PlaySound(args.spellId, "long", nil, args.destName) -- stacks cleared
 	end
 end
 
@@ -475,7 +475,7 @@ end
 function mod:CosmicMawApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- On you
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- On you
 	elseif self:Tank() then
 		self:PlaySound(args.spellId, "warning") -- taunt for breath
 	end
@@ -607,14 +607,14 @@ end
 function mod:TwilightScarApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
 function mod:StarshatteredApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- On you
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- On you
 	elseif self:Tank() then
 		self:PlaySound(args.spellId, "warning") -- taunt
 	end

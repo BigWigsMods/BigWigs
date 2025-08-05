@@ -309,14 +309,14 @@ end
 function mod:ExcessMassApplied(args)
 	self:TargetMessage(args.spellId, "green", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "info") -- carrying excess mass
+		self:PlaySound(args.spellId, "info", nil, args.destName) -- carrying excess mass
 	end
 end
 
 function mod:CollectiveGravityApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, "underyou")
-		self:PlaySound(args.spellId, "underyou")
+		self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		collectiveGravityOnMe = true
 		collectiveGravityStacksOnMe = args.amount or 1
 	end
@@ -336,7 +336,7 @@ end
 function mod:MortalFragilityApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- debuffed
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- debuffed
 	elseif self:Tank() then
 		self:PlaySound(args.spellId, "warning") -- taunt?
 	end
@@ -394,7 +394,7 @@ do
 	function mod:DarkEnergyDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -410,14 +410,14 @@ end
 function mod:AntimatterHit(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, "underyou")
-		self:PlaySound(args.spellId, "underyou") -- soaking, but do notify
+		self:PlaySound(args.spellId, "underyou", nil, args.destName) -- soaking, but do notify
 	end
 end
 
 function mod:SpatialFragmentApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "blue", CL.stunned) -- "Stun on YOU!" better?
-		self:PlaySound(args.spellId, "warning") -- stunned
+		self:PlaySound(args.spellId, "warning", nil, args.destName) -- stunned
 	end
 end
 
@@ -434,7 +434,7 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.reverse_gravity)
-			self:PlaySound(args.spellId, "warning") -- move
+			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
 			self:Say(args.spellId, L.reverse_gravity, nil, "Gravity")
 			self:SayCountdown(args.spellId, 6)
 		end
@@ -450,14 +450,14 @@ end
 function mod:AirborneApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm") -- airborne
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- airborne
 	end
 end
 
 function mod:AirborneRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-		self:PlaySound(args.spellId, "info") -- back on the ground
+		self:PlaySound(args.spellId, "info", nil, args.destName) -- back on the ground
 	end
 end
 
@@ -465,7 +465,7 @@ end
 function mod:SoaringReshiiApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.flying_available)
-		self:PlaySound(args.spellId, "info")
+		self:PlaySound(args.spellId, "info", nil, args.destName)
 	end
 end
 
@@ -474,7 +474,7 @@ do
 	function mod:AstrophysicalJetDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -496,7 +496,7 @@ end
 function mod:StellarCoreApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "info")
+		self:PlaySound(args.spellId, "info", nil, args.destName)
 	end
 end
 
@@ -535,7 +535,7 @@ do
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
 			self:PersonalMessage(args.spellId, "underyou")
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -550,7 +550,7 @@ end
 function mod:VoidwardingApplied(args)
 	if self:Me(args.destGUID) then
 		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
-		self:PlaySound(args.spellId, "underyou") -- avoidable / standing in it
+		self:PlaySound(args.spellId, "underyou", nil, args.destName) -- avoidable / standing in it
 	end
 end
 
@@ -565,7 +565,7 @@ function mod:TouchOfOblivionApplied(args)
 	local highStacks = self:Mythic() and 7 or 12
 	self:StackMessage(args.spellId, "blue", args.destName, amount, highStacks)
 	if self:Me(args.destGUID) and (amount % 2 == 1 or amount >= highStacks) then
-		self:PlaySound(args.spellId, amount >= highStacks and "warning" or "info") -- care above 6
+		self:PlaySound(args.spellId, amount >= highStacks and "warning" or "info", nil, args.destName) -- care above 6
 	elseif amount >= highStacks then
 		self:PlaySound(args.spellId, "warning") -- taunt?
 	end
@@ -610,7 +610,7 @@ do
 	function mod:AccretionDiskDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -642,10 +642,10 @@ do
 		if self:Me(args.destGUID) then
 			if castingDevour then
 				self:Message(args.spellId, "green", CL.you:format(args.spellName))
-				self:PlaySound(args.spellId, "info") -- good
+				self:PlaySound(args.spellId, "info", nil, args.destName) -- good
 			else
 				self:PersonalMessage(args.spellId, "underyou")
-				self:PlaySound(args.spellId, "underyou") -- bad
+				self:PlaySound(args.spellId, "underyou", nil, args.destName) -- bad
 			end
 			gravityWellOnMe = true
 		end
@@ -682,7 +682,7 @@ function mod:ShadowquakeApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, 2)
-		self:PlaySound(args.spellId, amount == 1 and "info" or "warning")
+		self:PlaySound(args.spellId, amount == 1 and "info" or "warning", nil, args.destName)
 	end
 end
 
@@ -696,7 +696,7 @@ end
 function mod:CosmicFragilityApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- debuffed
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- debuffed
 	elseif self:Tank() then
 		self:PlaySound(args.spellId, "warning") -- taunt?
 	end
@@ -722,7 +722,7 @@ do
 		if self:Me(args.destGUID) then
 			prev = args.time
 			self:PersonalMessage(args.spellId, nil, L.slow)
-			self:PlaySound(args.spellId, "alarm") -- slowed
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- slowed
 		end
 	end
 end

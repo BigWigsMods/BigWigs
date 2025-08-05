@@ -176,7 +176,7 @@ end
 function mod:PhaseBlinkApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "info") -- buffed
+		self:PlaySound(args.spellId, "info", nil, args.destName) -- buffed
 	end
 end
 
@@ -190,7 +190,7 @@ do
 	function mod:AvoidableDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -201,7 +201,7 @@ do
 	function mod:ArcaneRadiationDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -220,7 +220,7 @@ end
 function mod:ManifestMatricesApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1219450, nil, CL.pool)
-		self:PlaySound(1219450, "warning") -- spread out
+		self:PlaySound(1219450, "warning", nil, args.destName) -- spread out
 		self:SayCountdown(1219450, 6)
 	end
 end
@@ -228,7 +228,7 @@ end
 function mod:DisplacementMatrixApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.stunned)
-		self:PlaySound(args.spellId, "warning") -- stunned
+		self:PlaySound(args.spellId, "warning", nil, args.destName) -- stunned
 	end
 end
 
@@ -237,7 +237,7 @@ do
 	function mod:PotentResidueDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -257,7 +257,7 @@ function mod:ObliterationArcanocannonApplied(args)
 		self:SayCountdown(1219263, 6)
 	end
 	if self:Me(args.destGUID) or self:Tank() then
-		self:PlaySound(1219263, "warning") -- taunt / run away
+		self:PlaySound(1219263, "warning", nil, args.destName) -- taunt / run away
 	else
 		self:PlaySound(1219263, "alarm") -- raid damage inc (falloff bomb damage)
 	end
@@ -270,7 +270,7 @@ function mod:EradicatingSalvoApplied(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId, CL.soak, nil, "Soak")
 		self:SayCountdown(args.spellId, 5)
-		self:PlaySound(args.spellId, "warning") -- targetted
+		self:PlaySound(args.spellId, "warning", nil, args.destName) -- targetted
 	else
 		self:PlaySound(args.spellId, "alert") -- soak your missile?
 	end
@@ -314,7 +314,7 @@ end
 
 function mod:EnergyCutterApplied(args)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId)
+		self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		self:PersonalMessage(args.spellId)
 	end
 end

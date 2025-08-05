@@ -233,7 +233,7 @@ function mod:DevourersIreApplied(args)
 	if self:Me(args.destGUID) then
 		devourersIreOnMe = true
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
@@ -241,7 +241,7 @@ function mod:DevourersIreRemoved(args)
 	if self:Me(args.destGUID) then
 		devourersIreOnMe = false
 		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-		self:PlaySound(args.spellId, "info") -- no more damge incoming from consume
+		self:PlaySound(args.spellId, "info", nil, args.destName) -- no more damge incoming from consume
 	end
 end
 
@@ -251,7 +251,7 @@ function mod:UnendingHungerApplied(args)
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, highStacks)
 		if amount >= highStacks then -- high stacks
-			self:PlaySound(args.spellId, "warning") -- high stacks
+			self:PlaySound(args.spellId, "warning", nil, args.destName) -- high stacks
 		end
 	end
 end
@@ -272,7 +272,7 @@ do
 	function mod:HungeringSlashDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -284,7 +284,7 @@ do
 		if not devourersIreOnMe -- You can soak void if you have Devourer's Ire so don't warn.
 		    and self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -302,9 +302,9 @@ function mod:DarkResidueApplied(args)
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "yellow", args.destName, amount, highStacks)
 		if amount >= highStacks then
-			self:PlaySound(args.spellId, "alarm") -- high stacks
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- high stacks
 		else
-			self:PlaySound(args.spellId, "info") -- low stacks
+			self:PlaySound(args.spellId, "info", nil, args.destName) -- low stacks
 		end
 	end
 end
@@ -314,7 +314,7 @@ do
 	function mod:EventHorizonDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -386,7 +386,7 @@ function mod:FelSingedApplied(args)
 		local amount = args.amount or 1
 		if amount % 2 == 0 then -- 2 / 4 / 6 / 8 (assuming it ends at 8 if you take the full beam)
 			self:StackMessage(args.spellId, "blue", args.destName, amount, 6)
-			self:PlaySound(args.spellId, "alarm")
+			self:PlaySound(args.spellId, "alarm", nil, args.destName)
 		end
 	end
 end
@@ -394,7 +394,7 @@ end
 function mod:FelbladeApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- big dot
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- big dot
 	end
 end
 
@@ -422,7 +422,7 @@ function mod:Fracture(args)
 	end
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
-		self:PlaySound(args.spellId, "alarm") -- defensive
+		self:PlaySound(args.spellId, "alarm", nil, self:UnitName("player")) -- defensive
 	end
 end
 
@@ -430,14 +430,14 @@ function mod:ShatteredSoulApplied(args)
 	if self:Me(args.destGUID) then -- does the offtank need to know?
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
-		self:PlaySound(args.spellId, "info")
+		self:PlaySound(args.spellId, "info", nil, args.destName)
 	end
 end
 
 function mod:FrailtyTankRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(1241946, "green", CL.removed:format(args.spellName))
-		self:PlaySound(1241946, "info") -- saved
+		self:PlaySound(1241946, "info", nil, args.destName) -- saved
 	end
 end
 
@@ -446,9 +446,9 @@ function mod:FrailtySoakApplied(args)
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, amount, 2)
 		if amount >= 2 then
-			self:PlaySound(args.spellId, "alarm") -- watch health
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- watch health
 		else
-			self:PlaySound(args.spellId, "info")
+			self:PlaySound(args.spellId, "info", nil, args.destName)
 		end
 	end
 end
@@ -467,7 +467,7 @@ end
 function mod:SoulcrushRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.removed:format(CL.heal_absorb))
-		self:PlaySound(args.spellId, "info") -- heal absorb removed
+		self:PlaySound(args.spellId, "info", nil, args.destName) -- heal absorb removed
 	end
 end
 
@@ -504,7 +504,7 @@ function mod:WitheringFlamesApplied(args)
 	if self:Me(args.destGUID) then
 		if args.amount % 5 == 1 then
 			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 10)
-			self:PlaySound(args.spellId, "alarm") -- high stacks
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- high stacks
 		end
 	end
 end

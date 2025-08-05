@@ -118,7 +118,7 @@ do
 		if hasAura and not applied then
 			applied = true
 			self:PersonalMessage(1233416, nil, L.crystalline_eruption)
-			self:PlaySound(1233416, "warning") -- Spawning Walls
+			self:PlaySound(1233416, "warning", nil, self:UnitName("player")) -- Spawning Walls
 		elseif not hasAura and applied then
 			applied = false
 		end
@@ -128,7 +128,7 @@ end
 function mod:NullConsumptionApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.bomb)
-		self:PlaySound(args.spellId, "warning")
+		self:PlaySound(args.spellId, "warning", nil, args.destName)
 		-- too many ppl get things, lets not do say messages. There is decent visuals.
 		-- self:Say(args.spellId, CL.bomb, nil, "Bomb")
 		-- self:SayCountdown(args.spellId, 6)
@@ -205,7 +205,7 @@ do
 		if self:Me(args.destGUID) then
 			knockbackOnMe = true
 			self:PersonalMessage(args.spellId, nil, L.shattershell)
-			self:PlaySound(args.spellId, "alarm") -- getting knocked back soon
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- getting knocked back soon
 			self:Bar(1220394, 9, CL.knockback)
 		end
 	end
@@ -214,7 +214,7 @@ end
 function mod:CrystalEncasementApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.rooted)
-		self:PlaySound(args.spellId, "alarm") -- Rooted
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- Rooted
 	end
 end
 
@@ -231,7 +231,7 @@ function mod:ShockwaveSlamApplied(args)
 	if self:Tank() then -- No need to warn others about this
 		self:TargetMessage(args.spellId, "purple", args.destName)
 		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "alarm") -- On you
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- On you
 		else
 			self:PlaySound(args.spellId, "warning") -- tankswap
 		end

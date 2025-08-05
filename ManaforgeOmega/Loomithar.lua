@@ -229,7 +229,7 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, CL.pull_in)
-			self:PlaySound(args.spellId, "warning") -- break tether
+			self:PlaySound(args.spellId, "warning", nil, args.destName) -- break tether
 		end
 	end
 end
@@ -239,7 +239,7 @@ do
 	function mod:LivingSilkDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
@@ -248,7 +248,7 @@ end
 function mod:SilkenSnareApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.stunned)
-		self:PlaySound(args.spellId, "warning") -- stunned
+		self:PlaySound(args.spellId, "warning", nil, args.destName) -- stunned
 	end
 end
 
@@ -265,7 +265,7 @@ end
 function mod:PiercingStrandApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm") -- big dot
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- big dot
 	elseif self:Tank() then
 		self:PlaySound(args.spellId, "warning") -- taunt?
 	end
@@ -278,7 +278,7 @@ do
 	function mod:ArcaneIchorDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end

@@ -127,7 +127,7 @@ end
 function mod:VoidbladeAmbushTargetApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1227048, nil, L.voidblade_ambush)
-		self:PlaySound(1227048, "warning") -- position yourself
+		self:PlaySound(1227048, "warning", nil, args.destName) -- position yourself
 		self:Say(1227048, L.voidblade_ambush, nil, "Ambush")
 		self:SayCountdown(1227048, 4) -- XXX 3 is tooltip on wowhead, changed?
 	end
@@ -148,7 +148,7 @@ end
 function mod:VoidVolleyApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm") -- dot on you
+		self:PlaySound(args.spellId, "alarm", nil, args.destName) -- dot on you
 	end
 end
 
@@ -175,7 +175,7 @@ do
 			local sayText = icon and CL.rticon:format(L.soulfray_annihilation_single, icon) or L.soulfray_annihilation_single
 			local englishSayText = icon and CL.rticon:format(englishText, icon) or englishText
 			self:PersonalMessage(args.spellId, nil, L.soulfray_annihilation)
-			self:PlaySound(args.spellId, "warning") -- move
+			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
 			self:Say(args.spellId, sayText, nil, englishSayText)
 			self:SayCountdown(args.spellId, 6, icon)
 		end
@@ -209,7 +209,7 @@ function mod:MysticLashApplied(args)
 	if amount % 2 == 1 then -- multiple stacks during cast?
 		self:StackMessage(1241100, "purple", args.destName, args.amount, 4)
 		if self:Me(args.destGUID) then
-			self:PlaySound(1241100, "alarm")
+			self:PlaySound(1241100, "alarm", nil, args.destName)
 		elseif self:Tank() and amount > 4 then
 			self:PlaySound(1241100, "warning") -- taunt?
 		end
@@ -246,7 +246,7 @@ end
 function mod:SoulfireConvergenceApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1225616, nil, CL.orbs)
-		self:PlaySound(1225616, "warning") -- move
+		self:PlaySound(1225616, "warning", nil, args.destName) -- move
 		self:Say(1225616, CL.orbs, nil, "Orbs")
 		self:SayCountdown(1225616, 5, nil, 3)
 	end
@@ -255,7 +255,7 @@ end
 function mod:SoulrendOrbApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
@@ -264,7 +264,7 @@ do
 	function mod:ArcaneEnergyDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
