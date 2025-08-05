@@ -570,6 +570,7 @@ do
 					nemesisBoxes = nemesisBoxes + 1
 					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
 					local level = info and tonumber(info.tierText)
+					tbl.bwDuration = 3
 					if level then
 						local total = nemesisBoxCounts[level]
 						if total then
@@ -589,6 +590,7 @@ do
 					-- tbl.title is "Discovery", tbl.subtitle is "Waystone"
 					tbl.title = nil
 					tbl.iconFileID = tbl.iconFileID or 3084684 -- inv_hearthstone_aether
+					tbl.bwDuration = 4
 					if not latestKill[1] or GetTime()-latestKill[1] > 4 then -- Not after a boss kill
 						tbl.subtitle = L.newRespawnPoint -- New Respawn Point
 						printMessage(self, tbl)
