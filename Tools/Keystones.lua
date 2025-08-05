@@ -600,7 +600,7 @@ do
 		prevTab = 2
 		WipeCells()
 
-		partyHeader:SetText(L.keystoneTabTeleports)
+		partyHeader:SetText(L.littleWigsExtras.LittleWigs_CurrentSeason)
 		partyRefreshButton:Hide()
 		guildHeader:Hide()
 		guildRefreshButton:Hide()
@@ -980,20 +980,24 @@ end
 
 LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, channel)
 	if channel == "PARTY" then
-		partyList[playerName] = {keyLevel, keyMap, playerRating}
+		if not partyList[playerName] or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
+			partyList[playerName] = {keyLevel, keyMap, playerRating}
 
-		if mainPanel:IsShown() and not tab1:IsEnabled() then
-			WipeCells()
-			UpdateCells(partyList)
-			UpdateCells(guildList, true)
+			if mainPanel:IsShown() and not tab1:IsEnabled() then
+				WipeCells()
+				UpdateCells(partyList)
+				UpdateCells(guildList, true)
+			end
 		end
 	elseif channel == "GUILD" then
-		guildList[playerName] = {keyLevel, keyMap, playerRating}
+		if not guildList[playerName] or guildList[playerName][1] ~= keyLevel or guildList[playerName][2] ~= keyMap or guildList[playerName][3] ~= playerRating then
+			guildList[playerName] = {keyLevel, keyMap, playerRating}
 
-		if mainPanel:IsShown() and not tab1:IsEnabled() then
-			WipeCells()
-			UpdateCells(partyList)
-			UpdateCells(guildList, true)
+			if mainPanel:IsShown() and not tab1:IsEnabled() then
+				WipeCells()
+				UpdateCells(partyList)
+				UpdateCells(guildList, true)
+			end
 		end
 	end
 end)
