@@ -495,6 +495,7 @@ do
 		button:SetScript("OnLeave", GameTooltip_Hide)
 		button:EnableMouse(true)
 		button:RegisterForClicks("AnyDown", "AnyUp")
+		button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
 		local text = button:CreateFontString(nil, nil, "GameFontNormal")
 		text:SetPoint("CENTER")
