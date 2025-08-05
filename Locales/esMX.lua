@@ -270,7 +270,6 @@ L.H25 = "Heroico 25"
 
 L.tools = "Herramientas"
 L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calidad de vida\" para acelerar y simplificar el proceso de enfrentamiento con los jefes. Expande el menú clicando el |cFF33FF99+|r icono para mostrarlas todas."
-L.youAreInCombat = "No puedes hacer eso en combate."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -299,6 +298,7 @@ L.keystoneHeaderMyCharacters = "Mis Personajes"
 --L.keystoneTeleportNotLearned = "The teleport spell '|cFFFFFFFF%s|r' is |cFFFF4411not learned|r yet."
 --L.keystoneTeleportOnCooldown = "The teleport spell '|cFFFFFFFF%s|r' is currently |cFFFF4411on cooldown|r for %d |4hour:hours; and %d |4minute:minutes;."
 --L.keystoneTeleportReady = "The teleport spell '|cFFFFFFFF%s|r' is |cFF33FF99ready|r, click to cast it."
+--L.keystoneTeleportInCombat = "You cannot teleport here whilst you are in combat."
 --L.keystoneTabHistory = "History"
 --L.keystoneHeaderThisWeek = "This Week"
 --L.keystoneHeaderOlder = "Older"

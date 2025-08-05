@@ -269,7 +269,6 @@ L.H25 = "Eroico 25"
 
 --L.tools = "Tools"
 --L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses. Expand the menu by clicking the |cFF33FF99+|r icon to see them all."
---L.youAreInCombat = "You cannot do that in combat."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -298,6 +297,7 @@ L.H25 = "Eroico 25"
 --L.keystoneTeleportNotLearned = "The teleport spell '|cFFFFFFFF%s|r' is |cFFFF4411not learned|r yet."
 --L.keystoneTeleportOnCooldown = "The teleport spell '|cFFFFFFFF%s|r' is currently |cFFFF4411on cooldown|r for %d |4hour:hours; and %d |4minute:minutes;."
 --L.keystoneTeleportReady = "The teleport spell '|cFFFFFFFF%s|r' is |cFF33FF99ready|r, click to cast it."
+--L.keystoneTeleportInCombat = "You cannot teleport here whilst you are in combat."
 --L.keystoneTabHistory = "History"
 --L.keystoneHeaderThisWeek = "This Week"
 --L.keystoneHeaderOlder = "Older"

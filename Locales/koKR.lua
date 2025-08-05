@@ -270,7 +270,6 @@ L.H25 = "영웅 25"
 
 L.tools = "도구"
 L.toolsDesc = "BigWigs은 보스와의 전투를 더욱 빠르고 간편하게 만들어 주는 다양한 도구 또는 \"편의 기능\"을 제공합니다. |cFF33FF99+|r 아이콘을 클릭하여 메뉴를 확장하면 모든 기능을 확인할 수 있습니다."
-L.youAreInCombat = "전투 중에는 그렇게 할 수 없습니다."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -299,6 +298,7 @@ L.keystoneHeaderMyCharacters = "내 캐릭터"
 L.keystoneTeleportNotLearned = "'|cFFFFFFFF%s|r'순간이동 주문을 아직 |cFFFF4411배우지 않았습니다|r."
 L.keystoneTeleportOnCooldown = "'|cFFFFFFFF%s|r'순간이동 주문은 현재 %d 시간 %d 분 동안 |cFFFF4411재사용 대기 중입니다|r."
 L.keystoneTeleportReady = "'|cFFFFFFFF%s|r'순간이동 주문은 |cFF33FF99사용할 수 있습니다|r. 클릭하여 시전하세요."
+--L.keystoneTeleportInCombat = "You cannot teleport here whilst you are in combat."
 L.keystoneTabHistory = "기록"
 L.keystoneHeaderThisWeek = "이번 주"
 L.keystoneHeaderOlder = "이전 기록"

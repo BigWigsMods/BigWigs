@@ -128,20 +128,8 @@ mainPanel:SetTitleOffsets(0, 0)
 mainPanel:SetBorder("HeldBagLayout")
 mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
-mainPanel:SetScript("OnDragStart", function(self)
-	if prevTab == 2 and InCombatLockdown() then
-		BigWigsLoader.Print(L.youAreInCombat)
-		return
-	end
-	self:StartMoving()
-end)
-mainPanel:SetScript("OnDragStop", function(self)
-	if prevTab == 2 and InCombatLockdown() then
-		BigWigsLoader.Print(L.youAreInCombat)
-		return
-	end
-	self:StopMovingOrSizing()
-end)
+mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
+mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
 
 local UpdateMyKeystone
 do
@@ -353,17 +341,12 @@ end
 local teleportButtons = {}
 mainPanel.CloseButton:SetScript("OnClick", function()
 	if prevTab == 2 then
-		if InCombatLockdown() then
-			BigWigsLoader.Print(L.youAreInCombat)
-			return
-		else
-			prevTab = 1
-			teleportButtons[1]:ClearAllPoints()
-			teleportButtons[1]:SetScript("OnUpdate", nil)
-			for i = 1, #teleportButtons do
-				teleportButtons[i]:SetParent(nil)
-				teleportButtons[i]:Hide()
-			end
+		prevTab = 1
+		teleportButtons[1]:ClearAllPoints()
+		teleportButtons[1]:SetScript("OnUpdate", nil)
+		for i = 1, #teleportButtons do
+			teleportButtons[i]:SetParent(nil)
+			teleportButtons[i]:Hide()
 		end
 	end
 	WipeCells()
@@ -465,25 +448,29 @@ end
 do
 	local function OnEnter(self)
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		local spellName = BigWigsLoader.GetSpellName(self.spellID)
-		if not IsSpellKnown(self.spellID) then
-			GameTooltip:SetText(L.keystoneTeleportNotLearned:format(spellName))
+		if InCombatLockdown() then
+			GameTooltip:SetText(L.keystoneTeleportInCombat)
 		else
-			local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
-			if cd.startTime > 0 and cd.duration > 0 then
-				local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
-				local hours = math.floor(remainingSeconds / 3600)
-				remainingSeconds = remainingSeconds % 3600
-				local minutes = math.floor(remainingSeconds / 60)
-				GameTooltip:SetText(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+			local spellName = BigWigsLoader.GetSpellName(self.spellID)
+			if not IsSpellKnown(self.spellID) then
+				GameTooltip:SetText(L.keystoneTeleportNotLearned:format(spellName))
 			else
-				GameTooltip:SetText(L.keystoneTeleportReady:format(spellName))
+				local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
+				if cd.startTime > 0 and cd.duration > 0 then
+					local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+					local hours = math.floor(remainingSeconds / 3600)
+					remainingSeconds = remainingSeconds % 3600
+					local minutes = math.floor(remainingSeconds / 60)
+					GameTooltip:SetText(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+				else
+					GameTooltip:SetText(L.keystoneTeleportReady:format(spellName))
+				end
 			end
 		end
 		GameTooltip:Show()
 	end
 	for mapID, spellID in next, teleports do
-		local button = CreateFrame("Button", nil, nil, "SecureActionButtonTemplate")
+		local button = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
 		teleportButtons[#teleportButtons+1] = button
 		button.text = GetRealZoneText(mapID)
 		button.spellID = spellID
@@ -566,16 +553,11 @@ do
 	end
 	tab1:SetScript("OnClick", function(self)
 		if prevTab == 2 then
-			if InCombatLockdown() then
-				BigWigsLoader.Print(L.youAreInCombat)
-				return
-			else
-				teleportButtons[1]:ClearAllPoints()
-				teleportButtons[1]:SetScript("OnUpdate", nil)
-				for i = 1, #teleportButtons do
-					teleportButtons[i]:SetParent(nil)
-					teleportButtons[i]:Hide()
-				end
+			teleportButtons[1]:ClearAllPoints()
+			teleportButtons[1]:SetScript("OnUpdate", nil)
+			for i = 1, #teleportButtons do
+				teleportButtons[i]:SetParent(nil)
+				teleportButtons[i]:Hide()
 			end
 		end
 		prevTab = 1
@@ -594,10 +576,6 @@ do
 		DeselectTab(tab4)
 	end)
 	tab2:SetScript("OnClick", function(self)
-		if InCombatLockdown() then
-			BigWigsLoader.Print(L.youAreInCombat)
-			return
-		end
 		prevTab = 2
 		WipeCells()
 
@@ -667,16 +645,11 @@ do
 	end)
 	tab3:SetScript("OnClick", function(self)
 		if prevTab == 2 then
-			if InCombatLockdown() then
-				BigWigsLoader.Print(L.youAreInCombat)
-				return
-			else
-				teleportButtons[1]:ClearAllPoints()
-				teleportButtons[1]:SetScript("OnUpdate", nil)
-				for i = 1, #teleportButtons do
-					teleportButtons[i]:SetParent(nil)
-					teleportButtons[i]:Hide()
-				end
+			teleportButtons[1]:ClearAllPoints()
+			teleportButtons[1]:SetScript("OnUpdate", nil)
+			for i = 1, #teleportButtons do
+				teleportButtons[i]:SetParent(nil)
+				teleportButtons[i]:Hide()
 			end
 		end
 		prevTab = 3
@@ -773,16 +746,11 @@ do
 	end)
 	tab4:SetScript("OnClick", function(self)
 		if prevTab == 2 then
-			if InCombatLockdown() then
-				BigWigsLoader.Print(L.youAreInCombat)
-				return
-			else
-				teleportButtons[1]:ClearAllPoints()
-				teleportButtons[1]:SetScript("OnUpdate", nil)
-				for i = 1, #teleportButtons do
-					teleportButtons[i]:SetParent(nil)
-					teleportButtons[i]:Hide()
-				end
+			teleportButtons[1]:ClearAllPoints()
+			teleportButtons[1]:SetScript("OnUpdate", nil)
+			for i = 1, #teleportButtons do
+				teleportButtons[i]:SetParent(nil)
+				teleportButtons[i]:Hide()
 			end
 		end
 		prevTab = 4

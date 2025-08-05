@@ -270,7 +270,6 @@ L.H25 = "25人英雄"
 
 L.tools = "工具"
 L.toolsDesc = "BigWigs 提供了多種實用工具或便利功能，讓你可以輕鬆寫意地擊敗首領。點擊 |cFF33FF99+|r 圖示以展開選單，查看所有功能。"
-L.youAreInCombat = "你無法在戰鬥中這麼做。" --ERR_NOT_IN_COMBAT
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -299,6 +298,7 @@ L.keystoneHeaderMyCharacters = "我的角色"
 L.keystoneTeleportNotLearned = "|cFFFF4411尚未學會|r傳送法術「|cFFFFFFFF%s|r」。"
 L.keystoneTeleportOnCooldown = "傳送法術「|cFFFFFFFF%s|r」正在|cFFFF4411冷卻中|r，%d 小時  %d 分後可用。"
 L.keystoneTeleportReady = "傳送法術「|cFFFFFFFF%s|r」已|cFF33FF99就緒|r，點擊施放。"
+--L.keystoneTeleportInCombat = "You cannot teleport here whilst you are in combat."
 --L.keystoneTabHistory = "History"
 --L.keystoneHeaderThisWeek = "This Week"
 --L.keystoneHeaderOlder = "Older"
