@@ -195,7 +195,7 @@ L.arcane = "Arkan"
 L.autotalk = "Automatische NPC Interaktion"
 L.autotalk_boss_desc = "Automatisch die NPC Dialogoptionen wählen, welche den Bosskampf beginnen lassen."
 L.autotalk_generic_desc = "Automatisch die NPC Dialogoptionen wählen, welche die nächste Phase des Dungeons einleiten."
---L.autotalk_notice = "Automatically interacting with NPC %s."
+L.autotalk_notice = "Automatisch mit NPC %s interagiert."
 
 -- Common ability name replacements
 L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
