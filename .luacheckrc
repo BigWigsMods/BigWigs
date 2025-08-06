@@ -238,6 +238,7 @@ globals = {
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
 	"C_ScenarioInfo", -- LittleWigs
+	"C_SpellBook",
 	"C_Timer",
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",

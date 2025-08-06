@@ -452,7 +452,7 @@ do
 			GameTooltip:SetText(L.keystoneTeleportInCombat)
 		else
 			local spellName = BigWigsLoader.GetSpellName(self.spellID)
-			if not IsSpellKnown(self.spellID) then
+			if not C_SpellBook.IsSpellKnownOrInSpellBook(self.spellID) then
 				GameTooltip:SetText(L.keystoneTeleportNotLearned:format(spellName))
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
@@ -609,7 +609,7 @@ do
 			else
 				for i = 1, #teleportButtons do
 					local cd = BigWigsLoader.GetSpellCooldown(teleportButtons[i].spellID)
-					if cd and cd.startTime > 0 and cd.duration > 2 and IsSpellKnown(teleportButtons[i].spellID) then
+					if cd and cd.startTime > 0 and cd.duration > 2 and C_SpellBook.IsSpellKnownOrInSpellBook(teleportButtons[i].spellID) then
 						local remaining = (cd.startTime + cd.duration) - GetTime()
 						local percentage = remaining / cd.duration
 						teleportButtons[i].cdbar:SetColorTexture(1, 0, 0, 0.6)
@@ -625,7 +625,7 @@ do
 			teleportButtons[i]:SetParent(scrollChild)
 			teleportButtons[i]:Show()
 			teleportButtons[i].cdbar:Hide()
-			if not IsSpellKnown(teleportButtons[i].spellID) then
+			if not C_SpellBook.IsSpellKnownOrInSpellBook(teleportButtons[i].spellID) then
 				teleportButtons[i].icon:SetTexture(136813)
 			else
 				local texture = BigWigsLoader.GetSpellTexture(teleportButtons[i].spellID)
