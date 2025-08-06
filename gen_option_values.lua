@@ -15,6 +15,19 @@ local module_colors = {}
 local module_sounds = {}
 local options_path, options_file_name = nil, nil
 
+local all_locales = {
+	"enUS",
+	"deDE",
+	"esES",
+	"esMX",
+	"frFR",
+	"itIT",
+	"koKR",
+	"ptBR",
+	"ruRU",
+	"zhCN",
+	"zhTW",
+}
 local default_options = {
 	altpower = {ALTPOWER = true},
 	infobox = {INFOBOX = true},
@@ -1461,8 +1474,8 @@ local function parseTOC(file)
 
 	local list = {}
 	for line in file_handle:lines() do
-		-- ignore carriage returns, commented lines, and [AllowLoad] blocks
-		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub(" %[.*%]$", ""):gsub("\\", "/")
+		-- ignore carriage returns and commented lines
+		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub("\\", "/")
 		if line ~= "" then
 			table.insert(list, line)
 		end
@@ -1490,32 +1503,50 @@ local function parse(file, relative_path)
 		options_path = nil
 		options_file_name = nil
 	elseif file then
-		local file_path = relative_path and relative_path..file or file
-		local options_file = string.match(file, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
-		if options_file then
-			if options_path then
-				error(string.format("    %s: Multiple !Options paths found!", options_path))
-				error(string.format("    %s: Multiple !Options paths found!", file:match(".*/")))
+		-- split any optional [AllowLoad] condition out from the file name
+		local file_name, condition = string.match(file, "^(%S+)%s*(%[?.-%]?)$")
+		local file_path = relative_path and relative_path..file_name or file_name
+		if string.match(file_name, "%.lua$") then
+			local options_file = string.match(file_name, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
+			if options_file then
+				if options_path then
+					error(string.format("    %s: Multiple !Options paths found!", options_path))
+					error(string.format("    %s: Multiple !Options paths found!", file_name:match(".*/")))
+				end
+				-- if a file has defined a path to a specific !Options file, save it to write to later
+				options_file_name = options_file
+				options_path = file_name:match(".*/")
+			elseif string.find(file_name, "[TextLocale]", nil, true) then
+				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
+				-- first look for [AllowLoadTextLocale ...]
+				local allowed_locales = string.match(condition, "^%[AllowLoadTextLocale (.+)%]$")
+				if not allowed_locales then
+					-- if [AllowLoadTextLocale ...] isn't found then substitute all locales
+					allowed_locales = all_locales
+				else
+					allowed_locales = strsplit(allowed_locales)
+				end
+				for _, locale in next, allowed_locales do
+					-- shortcut to parseLocale, assuming any path with [TextLocale] is directly pointing to a locale file
+					parseLocale(file_path:gsub("%[TextLocale%]", locale))
+				end
+			else
+				-- We have an actual lua file so parse it!
+				parseLua(file_path)
 			end
-			-- if a file has defined a path to a specific !Options file, save it to write to later
-			options_file_name = options_file
-			options_path = file:match(".*/")
-		elseif string.match(file, "%.lua$") then
-			-- We have an actual lua file so parse it!
-			parseLua(file_path)
-		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
+		elseif string.match(file_name, "modules.*%.xml$") or file_name == "bosses.xml" then
 			-- Scan module includes for lua files.
 			parse(parseXML(file_path))
-		elseif string.match(file, "locales%.xml$") then
+		elseif string.match(file_name, "locales%.xml$") then
 			for _, locale_file in next, parseXML(file_path) do
 				parseLocale(locale_file)
 			end
-		elseif string.match(file, "%.toc$") then
-			local toc_relative_path = file:match("^(.+/).+$")
-			parse(parseTOC(file), toc_relative_path)
-		elseif file ~= "embeds.xml" then
+		elseif string.match(file_name, "%.toc$") then
+			local toc_relative_path = file_name:match("^(.+/).+$")
+			parse(parseTOC(file_name), toc_relative_path)
+		elseif file_name ~= "embeds.xml" then
 			-- unrecognized file name pattern
-			warn("    Ignoring file: "..file)
+			warn("    Ignoring file: "..file_name)
 		end
 	end
 end
