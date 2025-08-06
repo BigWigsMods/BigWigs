@@ -37,7 +37,7 @@ end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
 local UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
-local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
+local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell, IsSpellKnownOrInSpellBook = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell, C_SpellBook.IsSpellKnownOrInSpellBook
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = (isCata or isMists) and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
@@ -2366,31 +2366,31 @@ do
 	else -- Retail
 		function UpdateDispelStatus()
 			offDispel, defDispel = {}, {}
-			if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or IsSpellKnown(19801) then
-				-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Tranquilizing Shot (Hunter)
+			if IsSpellKnownOrInSpellBook(32375) or IsSpellKnownOrInSpellBook(528) or IsSpellKnownOrInSpellBook(370) or IsSpellKnownOrInSpellBook(378773) or IsSpellKnownOrInSpellBook(30449) or IsSpellKnownOrInSpellBook(278326) or IsSpellKnownOrInSpellBook(19505, 1) or IsSpellKnownOrInSpellBook(19801) then
+				-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Greater Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Tranquilizing Shot (Hunter)
 				offDispel.magic = true
 			end
-			if IsSpellKnown(2908) or IsSpellKnown(19801) or IsSpellKnown(5938) or IsPlayerSpell(450432) then
+			if IsSpellKnownOrInSpellBook(2908) or IsSpellKnownOrInSpellBook(19801) or IsSpellKnownOrInSpellBook(5938) or IsSpellKnownOrInSpellBook(450432) then
 				-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue), Pressure Points (Monk)
 				offDispel.enrage = true
 			end
-			if IsPlayerSpell(527) or IsPlayerSpell(77130) or IsPlayerSpell(115450) or IsPlayerSpell(4987) or IsPlayerSpell(88423) or IsPlayerSpell(360823) or IsSpellKnown(89808, true) then -- XXX Add DPS priest mass dispel?
+			if IsSpellKnownOrInSpellBook(527) or IsSpellKnownOrInSpellBook(77130) or IsSpellKnownOrInSpellBook(115450) or IsSpellKnownOrInSpellBook(4987) or IsSpellKnownOrInSpellBook(88423) or IsSpellKnownOrInSpellBook(360823) or IsSpellKnownOrInSpellBook(89808, 1) then -- XXX Add DPS priest mass dispel?
 				-- Purify (Heal Priest), Purify Spirit (Heal Shaman), Detox (Heal Monk), Cleanse (Heal Paladin), Nature's Cure (Heal Druid), Naturalize (Heal Evoker), Singe Magic (Warlock Imp)
 				defDispel.magic = true
 			end
-			if IsPlayerSpell(390632) or IsSpellKnown(213634) or IsPlayerSpell(388874) or IsSpellKnown(218164) or IsPlayerSpell(393024) or IsSpellKnown(213644) then
+			if IsSpellKnownOrInSpellBook(390632) or IsSpellKnownOrInSpellBook(213634) or IsSpellKnownOrInSpellBook(388874) or IsSpellKnownOrInSpellBook(218164) or IsSpellKnownOrInSpellBook(393024) or IsSpellKnownOrInSpellBook(213644) then
 				-- Improved Purify (Heal Priest), Purify Disease (DPS Priest), Improved Detox (Heal Monk), Detox (Tank/DPS Monk), Improved Cleanse (Heal Paladin), Cleanse Toxins (Tank/DPS Paladin)
 				defDispel.disease = true
 			end
-			if IsPlayerSpell(392378) or IsSpellKnown(2782) or IsPlayerSpell(388874) or IsSpellKnown(218164) or IsPlayerSpell(393024) or IsSpellKnown(213644) or IsPlayerSpell(360823) or IsSpellKnown(365585) then
+			if IsSpellKnownOrInSpellBook(392378) or IsSpellKnownOrInSpellBook(2782) or IsSpellKnownOrInSpellBook(388874) or IsSpellKnownOrInSpellBook(218164) or IsSpellKnownOrInSpellBook(393024) or IsSpellKnownOrInSpellBook(213644) or IsSpellKnownOrInSpellBook(360823) or IsSpellKnownOrInSpellBook(365585) then
 				-- Improved Nature's Cure (Heal Druid), Remove Corruption (Tank/DPS Druid), Improved Detox (Heal Monk), Detox (Tank/DPS Monk), Improved Cleanse (Heal Paladin), Cleanse Toxins (DPS Paladin), Naturalize (Heal Evoker), Expunge (DPS Evoker)
 				defDispel.poison = true
 			end
-			if IsPlayerSpell(392378) or IsSpellKnown(2782) or IsPlayerSpell(383016) or IsSpellKnown(51886) or IsSpellKnown(475) then
+			if IsSpellKnownOrInSpellBook(392378) or IsSpellKnownOrInSpellBook(2782) or IsSpellKnownOrInSpellBook(383016) or IsSpellKnownOrInSpellBook(51886) or IsSpellKnownOrInSpellBook(475) then
 				-- Improved Nature's Cure (Heal Druid), Remove Corruption (Tank/DPS Druid), Improved Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman), Remove Curse (Mage)
 				defDispel.curse = true
 			end
-			if IsSpellKnown(1044) or IsSpellKnown(116841) then
+			if IsSpellKnownOrInSpellBook(1044) or IsSpellKnownOrInSpellBook(116841) then
 				-- Blessing of Freedom (Paladin), Tiger's Lust (Monk)
 				defDispel.movement = true
 			end
@@ -2513,14 +2513,14 @@ do
 			351338, -- Quell (Evoker)
 		}
 		function UpdateInterruptStatus()
-			if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+			if IsSpellKnownOrInSpellBook(19647, 1) then -- Spell Lock (Warlock Felhunter), Enum.SpellBookSpellBank.Pet
 				canInterrupt = 19647
 				return
 			end
 			canInterrupt = false
 			for i = 1, #spellList do
 				local spell = spellList[i]
-				if IsSpellKnown(spell) then
+				if IsSpellKnownOrInSpellBook(spell) then
 					canInterrupt = spell
 					return
 				end

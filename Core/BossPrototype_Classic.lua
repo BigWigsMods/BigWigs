@@ -37,7 +37,7 @@ end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
 local UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
-local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell
+local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell, IsSpellKnownOrInSpellBook = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell, C_SpellBook.IsSpellKnownOrInSpellBook
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = (isCata or isMists) and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
