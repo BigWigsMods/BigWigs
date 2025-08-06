@@ -100,16 +100,6 @@ local teleports = BigWigsLoader.isTestBuild and {
 	[2661] = 445440, -- Cinderbrew Meadery
 	[2773] = 1216786, -- Operation: Floodgate
 }
-local tempTranslate = { -- XXX remove in 11.2
-	[247] = 1594, -- The MOTHERLODE!!
-	[370] = 2097, -- Operation: Mechagon
-	[382] = 2293, -- Theater of Pain
-	[500] = 2648, -- The Rookery
-	[499] = 2649, -- Priory of the Sacred Flame
-	[504] = 2651, -- Darkflame Cleft
-	[506] = 2661, -- Cinderbrew Meadery
-	[525] = 2773, -- Operation: Floodgate
-}
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
 local RequestData
@@ -684,7 +674,7 @@ do
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
-					map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID or tempTranslate[pData.keyMap],
+					map = dungeonNames[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID,
 					rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
 				}
 			end
@@ -878,7 +868,7 @@ local function UpdateCells(playerList, isGuildList)
 			sortedplayerList[#sortedplayerList+1] = {
 				name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 				level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
-				map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-"), mapID = mapID or tempTranslate[pData[2]],
+				map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-"), mapID = mapID,
 				rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
 			}
 		end
