@@ -85,7 +85,7 @@ BigWigs:AddSounds("Rik Reverb", {
 	[466866] = "alert",
 	[466979] = "alarm",
 	[467606] = {"alert","warning"},
-	[468119] = "alarm",
+	[468119] = "warning",
 	[472306] = "info",
 	[473260] = "warning",
 	[473655] = {"alarm","long"},
