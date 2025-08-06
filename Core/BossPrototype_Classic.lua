@@ -37,7 +37,7 @@ end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end
 local UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitPosition, UnitIsConnected, UnitClass, loader.UnitTokenFromGUID
-local GetSpellName, GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell, IsSpellKnownOrInSpellBook = loader.GetSpellName, loader.GetSpellTexture, GetTime, IsSpellKnown, IsPlayerSpell, C_SpellBook.IsSpellKnownOrInSpellBook
+local GetSpellName, GetSpellTexture, GetTime = loader.GetSpellName, loader.GetSpellTexture, GetTime
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = (isCata or isMists) and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
@@ -2374,120 +2374,126 @@ petUtilityFrame:SetScript("OnEvent", function()
 end)
 
 do
-	local offDispel, defDispel = {}, {}
-	function UpdateDispelStatus()
-		offDispel, defDispel = {}, {}
-		-- local shieldslam = isClassic and (IsSpellKnown(47488) or IsSpellKnown(47487) or IsSpellKnown(30356) or IsSpellKnown(25258) or IsSpellKnown(23925) or IsSpellKnown(23924) or IsSpellKnown(23923) or IsSpellKnown(23922))
-		local devourMagic = IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) or IsSpellKnown(27276, true) or IsSpellKnown(27277, true) or IsSpellKnown(48011, true)
-		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) or IsSpellKnown(370) or IsSpellKnown(8012) or devourMagic then
-			-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W], Purge r1/r2 (Shaman), Devour Magic (Warlock Felhunter)
-			offDispel.magic = true
+	local IsSpellKnownOrInSpellBook = loader.IsSpellKnownOrInSpellBook
+	local IsSpellKnown = loader.IsSpellKnown
+	local IsPlayerSpell = loader.IsPlayerSpell
+	do
+		local offDispel, defDispel = {}, {}
+		function UpdateDispelStatus()
+			offDispel, defDispel = {}, {}
+			-- local shieldslam = isClassic and (IsSpellKnown(47488) or IsSpellKnown(47487) or IsSpellKnown(30356) or IsSpellKnown(25258) or IsSpellKnown(23925) or IsSpellKnown(23924) or IsSpellKnown(23923) or IsSpellKnown(23922))
+			local devourMagic = IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) or IsSpellKnown(27276, true) or IsSpellKnown(27277, true) or IsSpellKnown(48011, true)
+			if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) or IsSpellKnown(370) or IsSpellKnown(8012) or devourMagic then
+				-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W], Purge r1/r2 (Shaman), Devour Magic (Warlock Felhunter)
+				offDispel.magic = true
+			end
+			if IsSpellKnown(19801) then
+				-- Tranquilizing Shot (Hunter)
+				offDispel.enrage = true
+			end
+			if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) then
+				-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W]
+				defDispel.magic = true
+			end
+			if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (isClassicEra and IsSpellKnown(2870)) or (isClassic and IsSpellKnown(526)) or IsSpellKnown(8170) then
+				-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman)[C,BC], Cure Toxins (Shaman)[W], Disease Cleansing Totem (Shaman)
+				defDispel.disease = true
+			end
+			if IsSpellKnown(2893) or IsSpellKnown(8946) or IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(526) or IsSpellKnown(8166) then
+				-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison/Toxins (Shaman), Poison Cleansing Totem (Shaman)
+				defDispel.poison = true
+			end
+			if IsSpellKnown(2782) or IsSpellKnown(475) or IsSpellKnown(51886) then
+				-- Remove Curse (Druid), Remove Lesser Curse (Mage), Cleanse Spirit (Shaman)[W]
+				defDispel.curse = true
+			end
+			if IsSpellKnown(1044) then
+				-- Blessing of Freedom (Paladin)
+				defDispel.movement = true
+			end
 		end
-		if IsSpellKnown(19801) then
-			-- Tranquilizing Shot (Hunter)
-			offDispel.enrage = true
-		end
-		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) then
-			-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W]
-			defDispel.magic = true
-		end
-		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (isClassicEra and IsSpellKnown(2870)) or (isClassic and IsSpellKnown(526)) or IsSpellKnown(8170) then
-			-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman)[C,BC], Cure Toxins (Shaman)[W], Disease Cleansing Totem (Shaman)
-			defDispel.disease = true
-		end
-		if IsSpellKnown(2893) or IsSpellKnown(8946) or IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(526) or IsSpellKnown(8166) then
-			-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison/Toxins (Shaman), Poison Cleansing Totem (Shaman)
-			defDispel.poison = true
-		end
-		if IsSpellKnown(2782) or IsSpellKnown(475) or IsSpellKnown(51886) then
-			-- Remove Curse (Druid), Remove Lesser Curse (Mage), Cleanse Spirit (Shaman)[W]
-			defDispel.curse = true
-		end
-		if IsSpellKnown(1044) then
-			-- Blessing of Freedom (Paladin)
-			defDispel.movement = true
+		--- Check if you can dispel.
+		-- @string dispelType dispel type (magic, enrage, disease, poison, curse, movement)
+		-- @bool[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
+		-- @param[opt] key module option key to check
+		-- @return boolean
+		function boss:Dispeller(dispelType, isOffensive, key)
+			if key then
+				local o = self.db.profile[key]
+				if not o then core:Print(format("Module %s uses %q as a dispel lookup, but it doesn't exist in the module options.", self.name, key)) return end
+				if band(o, C.DISPEL) ~= C.DISPEL then return true end
+			end
+			local dispelTable = isOffensive and offDispel or defDispel
+			return dispelTable[dispelType]
 		end
 	end
-	--- Check if you can dispel.
-	-- @string dispelType dispel type (magic, enrage, disease, poison, curse, movement)
-	-- @bool[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
-	-- @param[opt] key module option key to check
-	-- @return boolean
-	function boss:Dispeller(dispelType, isOffensive, key)
-		if key then
-			local o = self.db.profile[key]
-			if not o then core:Print(format("Module %s uses %q as a dispel lookup, but it doesn't exist in the module options.", self.name, key)) return end
-			if band(o, C.DISPEL) ~= C.DISPEL then return true end
-		end
-		local dispelTable = isOffensive and offDispel or defDispel
-		return dispelTable[dispelType]
-	end
-end
 
-do
-	local GetSpellCooldown = loader.GetSpellCooldown
-	local canInterrupt = false
-	local spellListClassic = {
-		-- 16979, -- Feral Charge (Druid)
-		2139, -- Counterspell (Mage)
-		15487, -- Silence (Priest)
-		38768, 1769, 1768, 1767, 1766, -- Kick (Rogue)
-		25454, 10414, 10413, 10412, 8046, 8045, 8044, 8042, -- Earth Shock (Shaman)
-		6554, 6552, -- Pummel (Warrior)
-		-- 29704, 1672, 1671, 72, -- Shield Bash (Warrior)
-	}
-	local spellListWrath = {
-		-- 16979, -- Feral Charge (Druid)
-		2139, -- Counterspell (Mage)
-		15487, -- Silence (Priest)
-		1766, -- Kick (Rogue)
-		6555, -- Pummel (Warrior)
-		-- 72, -- Shield Bash (Warrior)
-		47528, -- Mind Freeze (Death Knight)
-		57994, -- Wind Shear (Shaman)
-	}
-	local spellList = isClassicEra and spellListClassic or spellListWrath
-	function UpdateInterruptStatus()
-		if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-			canInterrupt = GetSpellName(19647)
-			return
-		end
-		canInterrupt = false
-		for i = 1, #spellList do
-			local spell = spellList[i]
-			if IsSpellKnown(spell) then
-				canInterrupt = spell
-				break
-			end
-		end
-	end
-	--- Check if you can interrupt.
-	-- @string[opt] guid if not nil, will only return true if the GUID matches your target or focus.
-	-- @return boolean, if the unit can interrupt
-	-- @return boolean, if the interrupt is off cooldown and ready to use
-	function boss:Interrupter(guid)
-		if canInterrupt then
-			local ready = true
-			local start, duration = GetSpellCooldown(canInterrupt)
-			if type(start) == "table" then
-				start, duration = start.startTime, start.duration
-			end
-			if start > 0 then -- On cooldown currently
-				local endTime = start + duration
-				local t = GetTime()
-				if endTime - t > 1 then -- Greater than 1 second remaining on cooldown, not ready
-					ready = false
-				end
-			end
-
-			if guid then
-				if UnitGUID("target") == guid or UnitGUID("focus") == guid then
-					return canInterrupt, ready
-				end
+	do
+		local canInterrupt = false
+		local spellListClassic = {
+			-- 16979, -- Feral Charge (Druid)
+			2139, -- Counterspell (Mage)
+			15487, -- Silence (Priest)
+			38768, 1769, 1768, 1767, 1766, -- Kick (Rogue)
+			25454, 10414, 10413, 10412, 8046, 8045, 8044, 8042, -- Earth Shock (Shaman)
+			6554, 6552, -- Pummel (Warrior)
+			-- 29704, 1672, 1671, 72, -- Shield Bash (Warrior)
+		}
+		local spellListWrath = {
+			-- 16979, -- Feral Charge (Druid)
+			2139, -- Counterspell (Mage)
+			15487, -- Silence (Priest)
+			1766, -- Kick (Rogue)
+			6555, -- Pummel (Warrior)
+			-- 72, -- Shield Bash (Warrior)
+			47528, -- Mind Freeze (Death Knight)
+			57994, -- Wind Shear (Shaman)
+		}
+		local spellList = isClassicEra and spellListClassic or spellListWrath
+		function UpdateInterruptStatus()
+			if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+				canInterrupt = GetSpellName(19647)
 				return
 			end
+			canInterrupt = false
+			for i = 1, #spellList do
+				local spell = spellList[i]
+				if IsSpellKnown(spell) then
+					canInterrupt = spell
+					break
+				end
+			end
+		end
 
-			return canInterrupt, ready
+		local GetSpellCooldown = loader.GetSpellCooldown
+		--- Check if you can interrupt.
+		-- @string[opt] guid if not nil, will only return true if the GUID matches your target or focus.
+		-- @return boolean, if the unit can interrupt
+		-- @return boolean, if the interrupt is off cooldown and ready to use
+		function boss:Interrupter(guid)
+			if canInterrupt then
+				local ready = true
+				local start, duration = GetSpellCooldown(canInterrupt)
+				if type(start) == "table" then
+					start, duration = start.startTime, start.duration
+				end
+				if start > 0 then -- On cooldown currently
+					local endTime = start + duration
+					local t = GetTime()
+					if endTime - t > 1 then -- Greater than 1 second remaining on cooldown, not ready
+						ready = false
+					end
+				end
+
+				if guid then
+					if UnitGUID("target") == guid or UnitGUID("focus") == guid then
+						return canInterrupt, ready
+					end
+					return
+				end
+
+				return canInterrupt, ready
+			end
 		end
 	end
 end

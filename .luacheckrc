@@ -21,7 +21,6 @@ files["Loader.lua"].ignore = {
 	"113/geterrorhandler",
 
 	"113/Ambiguate",
-	"113/BasicMessageDialog",
 	"113/C_AddOns",
 	"113/C_ChatInfo",
 	"113/C_CVar",
@@ -30,15 +29,18 @@ files["Loader.lua"].ignore = {
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
 	"113/C_Spell",
+	"113/C_SpellBook",
 	"113/C_UnitAuras",
 	"113/GetBuildInfo",
 	"113/GetNumGroupMembers",
 	"113/GetRealmID",
-	"113/GetSpellCooldown",
+	"113/GetSpellCooldown", -- XXX temp
+	"113/IsPlayerSpell", -- XXX temp
+	"113/IsSpellKnown", -- XXX temp
 	"113/IsPublicTestClient",
 	"113/PlaySoundFile",
 	"113/securecallfunction",
-	"113/SendChatMessage",
+	"113/SendChatMessage", -- XXX temp
 	"113/SetRaidTarget",
 	"113/TimerTracker",
 	"113/UnitDetailedThreatSituation",
@@ -58,7 +60,7 @@ files["Loader.lua"].ignore = {
 	"111/SLASH_BigWigsVersion1",
 	"11[23]/SlashCmdList",
 }
-files["**/Core/BossPrototype.lua"].ignore = {
+files["Core/BossPrototype.lua"].ignore = {
 	"113/C_Item",
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
@@ -70,7 +72,7 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
 }
-files["**/Core/BossPrototype_Classic.lua"].ignore = {
+files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_Item",
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
@@ -84,20 +86,20 @@ files["**/Core/BossPrototype_Classic.lua"].ignore = {
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
 }
-files["**/Core/Core.lua"].ignore = {
+files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/C_EventUtils",
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
 }
-files["**/Core/PluginPrototype.lua"].ignore = {
+files["Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",
 }
-files["**/Plugins/AltPower.lua"].ignore = {
+files["Plugins/AltPower.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/UnitGroupRolesAssigned",
 }
-files["**/Plugins/AutoReply.lua"].ignore = {
+files["Plugins/AutoReply.lua"].ignore = {
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
 	"113/BNSendWhisper",
@@ -124,13 +126,13 @@ files["Plugins/BossBlock.lua"].ignore = {
 	"113/WatchFrame",
 	"113/ZoneTextFrame",
 }
-files["**/Plugins/Break.lua"].ignore = {
+files["Plugins/Break.lua"].ignore = {
 	"113/time",
 }
-files["**/Plugins/Nameplates.lua"].ignore = {
+files["Plugins/Nameplates.lua"].ignore = {
 	"113/C_NamePlate",
 }
-files["**/Plugins/Proximity.lua"].ignore = {
+files["Plugins/Proximity.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
 	"113/GetServerExpansionLevel", -- Classic support
@@ -143,17 +145,17 @@ files["Plugins/Pull.lua"].ignore = {
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
 }
-files["**/Plugins/RaidIcon.lua"].ignore = {
+files["Plugins/RaidIcon.lua"].ignore = {
 	"113/GetRaidTargetIndex",
 }
-files["**/Plugins/Victory.lua"].ignore = {
+files["Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
 }
 files["**/Plugins/*.lua"].ignore = {
 	"112/SlashCmdList",
 	"111/SLASH_.*", -- slash handlers
 }
-files["**/Options/Options.lua"].ignore = {
+files["Options/Options.lua"].ignore = {
 	"113/C_UI",
 }
 files["**/?Locales/*.lua"].ignore = {
@@ -238,7 +240,6 @@ globals = {
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
 	"C_ScenarioInfo", -- LittleWigs
-	"C_SpellBook",
 	"C_Timer",
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
@@ -276,8 +277,6 @@ globals = {
 	"IsLoggedIn",
 	"IsMounted", -- Dragonflight/Amirdrassil/TindralSageswift.lua
 	"IsPartyLFG",
-	"IsPlayerSpell",
-	"IsSpellKnown",
 	"LibStub",
 	"LoggingCombat",
 	"MovieFrame",

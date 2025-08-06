@@ -133,11 +133,14 @@ public.GetSpellLink = C_Spell.GetSpellLink
 public.GetSpellName = C_Spell.GetSpellName
 public.GetSpellTexture = C_Spell.GetSpellTexture
 public.IsItemInRange = C_Item.IsItemInRange
+public.IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+public.IsPlayerSpell = public.IsSpellKnownOrInSpellBook or IsPlayerSpell
+public.IsSpellKnown = public.IsSpellKnownOrInSpellBook or IsSpellKnown
 public.PlaySoundFile = PlaySoundFile
 public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 public.SendAddonMessage = SendAddonMessage
 public.SetRaidTarget = SetRaidTarget
-public.SendChatMessage = C_ChatInfo and C_ChatInfo.SendChatMessage or SendChatMessage -- XXX [11.1.7:✗ 11.2:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+public.SendChatMessage = C_ChatInfo and C_ChatInfo.SendChatMessage or SendChatMessage -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
 public.UnitCanAttack = UnitCanAttack
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
 public.UnitThreatSituation = UnitThreatSituation
@@ -1372,9 +1375,7 @@ do
 					DisableAddOn(i)
 					local msg = L.removeAddOn:format(name, old[name])
 					delayedMessages[#delayedMessages+1] = msg
-					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
-						Popup(msg, true)
-					end
+					Popup(msg, true)
 				else
 					EnableAddOn(i) -- XXX temp as we were accidentally disabling the Shadowlands addon for a while
 				end
