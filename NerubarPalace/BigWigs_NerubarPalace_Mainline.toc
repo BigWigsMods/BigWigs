@@ -31,4 +31,14 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-InstanceId: 2657
 
-modules.xml
+Ulgrax.lua
+TheBloodboundHorror.lua
+Sikran.lua
+Rashanan.lua
+Ovinax.lua
+Kyveza.lua
+TheSilkenCourt.lua
+Ansurek.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua

@@ -31,4 +31,14 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-InstanceId: 2769
 
-modules.xml
+Vexie.lua
+Cauldron.lua
+Rik.lua
+Stix.lua
+Lockenstock.lua
+Bandit.lua
+MugZee.lua
+Gallywix.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua

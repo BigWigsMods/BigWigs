@@ -31,4 +31,14 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-InstanceId: 2810
 
-modules.xml
+Sentinel.lua
+Loomithar.lua
+Naazindhri.lua
+Araz.lua
+Hunters.lua
+Fractillus.lua
+Salhadaar.lua
+Dimensius.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua
