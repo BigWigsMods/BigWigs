@@ -143,7 +143,7 @@ do
 				BigWigsLoader.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
 					local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 					local season = GetCurrentSeason()
-					if diffID == 23 and season > 0 and db.profile.autoShowZoneIn then
+					if diffID == 23 and GetWeeklyResetStartTime() > 1754625600 and db.profile.autoShowZoneIn then
 						RequestData()
 					end
 				end)
