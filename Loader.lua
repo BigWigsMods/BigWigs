@@ -1404,10 +1404,10 @@ do
 				local wowMajor, wowMinor, actualVersion = tonumber(wowMajorStr), tonumber(wowMinorStr), tonumber(actualVersionStr)
 				if wowMajor and wowMinor and actualVersion then
 					local versionDifference = addonToCheck[3] - actualVersion
-					if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference > 0 then -- Any version difference = chat print
+					if addonToCheck[1] > wowMajor or (addonToCheck[1] == wowMajor and addonToCheck[2] > wowMinor) or (addonToCheck[1] == wowMajor and addonToCheck[2] == wowMinor and versionDifference > 0) then -- Any version difference = chat print
 						delayedMessages[#delayedMessages+1] = L.outOfDateAddOnRaidWarning:format(name, wowMajor, wowMinor, actualVersion, addonToCheck[1], addonToCheck[2], addonToCheck[3])
 					end
-					if addonToCheck[1] ~= wowMajor or addonToCheck[2] ~= wowMinor or versionDifference >= 3 then -- Large version difference = popup
+					if addonToCheck[1] > wowMajor or (addonToCheck[1] == wowMajor and addonToCheck[2] > wowMinor) or (addonToCheck[1] == wowMajor and addonToCheck[2] == wowMinor and versionDifference >= 3) then -- Large version difference = popup
 						Popup(L.outOfDateAddOnPopup:format(name), true)
 					end
 				elseif not strfind(meta, "@", nil, true) then -- Don't error for repo users
