@@ -1504,19 +1504,19 @@ local function parse(file, relative_path)
 		options_file_name = nil
 	elseif file then
 		-- split any optional [AllowLoad] condition out from the file name
-		local file, condition = string.match(file, "^(%S+)%s*(%[?.-%]?)$")
-		local file_path = relative_path and relative_path..file or file
-		if string.match(file, "%.lua$") then
-			local options_file = string.match(file, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
+		local file_name, condition = string.match(file, "^(%S+)%s*(%[?.-%]?)$")
+		local file_path = relative_path and relative_path..file_name or file_name
+		if string.match(file_name, "%.lua$") then
+			local options_file = string.match(file_name, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 			if options_file then
 				if options_path then
 					error(string.format("    %s: Multiple !Options paths found!", options_path))
-					error(string.format("    %s: Multiple !Options paths found!", file:match(".*/")))
+					error(string.format("    %s: Multiple !Options paths found!", file_name:match(".*/")))
 				end
 				-- if a file has defined a path to a specific !Options file, save it to write to later
 				options_file_name = options_file
-				options_path = file:match(".*/")
-			elseif string.find(file, "[TextLocale]", nil, true) then
+				options_path = file_name:match(".*/")
+			elseif string.find(file_name, "[TextLocale]", nil, true) then
 				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
 				-- first look for [AllowLoadTextLocale ...]
 				local allowed_locales = string.match(condition, "^%[AllowLoadTextLocale (.+)%]$")
@@ -1534,19 +1534,19 @@ local function parse(file, relative_path)
 				-- We have an actual lua file so parse it!
 				parseLua(file_path)
 			end
-		elseif string.match(file, "modules.*%.xml$") or file == "bosses.xml" then
+		elseif string.match(file_name, "modules.*%.xml$") or file_name == "bosses.xml" then
 			-- Scan module includes for lua files.
 			parse(parseXML(file_path))
-		elseif string.match(file, "locales%.xml$") then
+		elseif string.match(file_name, "locales%.xml$") then
 			for _, locale_file in next, parseXML(file_path) do
 				parseLocale(locale_file)
 			end
-		elseif string.match(file, "%.toc$") then
-			local toc_relative_path = file:match("^(.+/).+$")
-			parse(parseTOC(file), toc_relative_path)
-		elseif file ~= "embeds.xml" then
+		elseif string.match(file_name, "%.toc$") then
+			local toc_relative_path = file_name:match("^(.+/).+$")
+			parse(parseTOC(file_name), toc_relative_path)
+		elseif file_name ~= "embeds.xml" then
 			-- unrecognized file name pattern
-			warn("    Ignoring file: "..file)
+			warn("    Ignoring file: "..file_name)
 		end
 	end
 end
