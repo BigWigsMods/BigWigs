@@ -102,7 +102,7 @@ local teleports = BigWigsLoader.isTestBuild and {
 }
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
-local RequestData
+local tab1
 local prevTab = 1
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameTemplate")
@@ -125,7 +125,7 @@ local UpdateMyKeystone
 do
 	local GetMaxPlayerLevel = GetMaxPlayerLevel
 	local GetWeeklyResetStartTime = C_DateAndTime.GetWeeklyResetStartTime
-	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID, GetCurrentSeason = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID, C_MythicPlus.GetCurrentSeason
+	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID
 	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 	local GetRealmName = GetRealmName
 
@@ -142,9 +142,9 @@ do
 			elseif not id and not isReloadingUi then -- Don't show when logging in (arg1) or reloading UI (arg2)
 				BigWigsLoader.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
 					local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-					local season = GetCurrentSeason()
-					if diffID == 23 and GetWeeklyResetStartTime() > 1754625600 and db.profile.autoShowZoneIn then
-						RequestData()
+					if diffID == 23 and GetWeeklyResetStartTime() > 1754625600 and db.profile.autoShowZoneIn and not BigWigsLoader.isTestBuild then
+						mainPanel:Show()
+						tab1:Click()
 					end
 				end)
 			end
@@ -194,7 +194,7 @@ end
 mainPanel:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_HIDE")
 mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-local tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab1:SetSize(50, 26)
 tab1:SetPoint("BOTTOMLEFT", 10, -25)
 tab1.Text:SetText(L.keystoneTabOnline)
@@ -282,7 +282,7 @@ do
 					BigWigsLoader.PlaySoundFile(sound)
 				end
 			end
-		else
+		else -- CHALLENGE_MODE_RESET
 			local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 			if diffID == 8 then
 				TimerTracker:UnregisterEvent("START_TIMER")
@@ -302,11 +302,14 @@ tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
 tab3.Text:SetText(L.keystoneTabAlts)
 tab3:UnregisterAllEvents() -- Remove events registered by the template
 tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-tab3:SetScript("OnEvent", function()
-	if db.profile.autoShowEndOfRun then
-		BigWigsLoader.CTimerAfter(2, RequestData)
-	end
-end)
+do
+	local function Open() mainPanel:Show() tab1:Click() end
+	tab3:SetScript("OnEvent", function()
+		if db.profile.autoShowEndOfRun and not not BigWigsLoader.isTestBuild then
+			BigWigsLoader.CTimerAfter(2, Open)
+		end
+	end)
+end
 
 local tab4 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 tab4:SetSize(50, 26)
@@ -318,6 +321,7 @@ local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
 		cell:Hide()
 		cell.tooltip = nil
+		cell.isGuildList = nil
 		if cell.isGlowing then
 			cell.isGlowing = nil
 			LibStub("LibCustomGlow-1.0").PixelGlow_Stop(cell)
@@ -329,7 +333,8 @@ local function WipeCells()
 end
 
 local teleportButtons = {}
-mainPanel.CloseButton:SetScript("OnClick", function()
+mainPanel.CloseButton:SetScript("OnClick", function(self)
+	self:UnregisterAllEvents()
 	if prevTab == 2 then
 		prevTab = 1
 		teleportButtons[1]:ClearAllPoints()
@@ -341,9 +346,9 @@ mainPanel.CloseButton:SetScript("OnClick", function()
 	end
 	WipeCells()
 	mainPanel:Hide()
+	tab1:Enable() -- Enable tab1 so :Click always works when we open the main panel again
 end)
-mainPanel.CloseButton:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
-mainPanel.CloseButton:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
+mainPanel.CloseButton:UnregisterAllEvents() -- Remove events registered by the template
 mainPanel.CloseButton:SetScript("OnEvent", function(self)
 	if mainPanel:IsShown() then
 		self:Click()
@@ -552,7 +557,6 @@ do
 		end
 		prevTab = 1
 		WipeCells()
-		RequestData()
 
 		partyHeader:SetText(L.keystoneHeaderParty)
 		partyRefreshButton:Show()
@@ -564,6 +568,16 @@ do
 		DeselectTab(tab2)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
+
+		mainPanel.CloseButton:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
+		mainPanel.CloseButton:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
+		mainPanel.CloseButton:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
+
+		partyList = {}
+		guildList = {}
+		LibSpec.RequestGuildSpecialization()
+		LibKeystone.Request("PARTY")
+		C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
 	end)
 	tab2:SetScript("OnClick", function(self)
 		prevTab = 2
@@ -573,6 +587,11 @@ do
 		partyRefreshButton:Hide()
 		guildHeader:Hide()
 		guildRefreshButton:Hide()
+
+		SelectTab(tab2)
+		DeselectTab(tab1)
+		DeselectTab(tab3)
+		DeselectTab(tab4)
 
 		teleportButtons[1]:ClearAllPoints()
 		teleportButtons[1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
@@ -627,11 +646,6 @@ do
 		local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons]:GetBottom()
 		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
 		scrollChild:SetHeight(newHeight)
-
-		SelectTab(tab2)
-		DeselectTab(tab1)
-		DeselectTab(tab3)
-		DeselectTab(tab4)
 	end)
 	tab3:SetScript("OnClick", function(self)
 		if prevTab == 2 then
@@ -841,16 +855,6 @@ do
 	end)
 end
 
-function RequestData()
-	partyList = {}
-	guildList = {}
-	LibSpec.RequestGuildSpecialization()
-	mainPanel:Show()
-	LibKeystone.Request("PARTY")
-	C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
-	tab1:Click()
-end
-
 local function UpdateCells(playerList, isGuildList)
 	local sortedplayerList = {}
 	for pName, pData in next, playerList do
@@ -873,6 +877,8 @@ local function UpdateCells(playerList, isGuildList)
 			}
 		end
 	end
+	if #sortedplayerList == 0 then return end -- The guild list can be empty
+
 	-- Sort list by level descending, or by name if equal level
 	table.sort(sortedplayerList, function(a, b)
 		local firstLevel = a.level == -1 and 1 or a.level
@@ -907,6 +913,7 @@ local function UpdateCells(playerList, isGuildList)
 		cellName:SetWidth(WIDTH_NAME)
 		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
 		cellName.tooltip = sortedplayerList[i].nameTooltip
+		cellName.isGuildList = isGuildList
 		if not isGuildList and instanceID == sortedplayerList[i].mapID then
 			cellName.isGlowing = true
 			LibStub("LibCustomGlow-1.0").PixelGlow_Start(cellName, nil, nil, 0.06) -- If you're in the dungeon of this players key, glow
@@ -914,21 +921,22 @@ local function UpdateCells(playerList, isGuildList)
 		cellLevel:SetWidth(WIDTH_LEVEL)
 		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 		cellLevel.tooltip = sortedplayerList[i].levelTooltip
+		cellLevel.isGuildList = isGuildList
 		cellMap:SetWidth(WIDTH_MAP)
 		cellMap.text:SetText(sortedplayerList[i].map)
 		cellMap.tooltip = sortedplayerList[i].mapTooltip
+		cellMap.isGuildList = isGuildList
 		cellRating:SetWidth(WIDTH_RATING)
 		cellRating.text:SetText(sortedplayerList[i].rating)
 		cellRating.tooltip = sortedplayerList[i].ratingTooltip
+		cellRating.isGuildList = isGuildList
 		prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
-
-		if i == tableSize then
-			-- Calculate scroll height
-			local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
-			local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
-			scrollChild:SetHeight(newHeight)
-		end
 	end
+
+	-- Calculate scroll height
+	local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
+	local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+	scrollChild:SetHeight(newHeight)
 
 	if not isGuildList then
 		guildHeader:ClearAllPoints()
@@ -937,29 +945,43 @@ local function UpdateCells(playerList, isGuildList)
 	end
 end
 
-LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, channel)
-	if channel == "PARTY" then
-		if not partyList[playerName] or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
-			partyList[playerName] = {keyLevel, keyMap, playerRating}
-
-			if mainPanel:IsShown() and not tab1:IsEnabled() then
-				WipeCells()
-				UpdateCells(partyList)
-				UpdateCells(guildList, true)
-			end
-		end
-	elseif channel == "GUILD" then
-		if not guildList[playerName] or guildList[playerName][1] ~= keyLevel or guildList[playerName][2] ~= keyMap or guildList[playerName][3] ~= playerRating then
-			guildList[playerName] = {keyLevel, keyMap, playerRating}
-
-			if mainPanel:IsShown() and not tab1:IsEnabled() then
-				WipeCells()
-				UpdateCells(partyList)
-				UpdateCells(guildList, true)
+do
+	local function WipeGuildCells()
+		for cell in next, cellsCurrentlyShowing do
+			if cell.isGuildList then
+				cell:Hide()
+				cell.tooltip = nil
+				cell.isGuildList = nil
+				cell:ClearAllPoints()
+				cellsCurrentlyShowing[cell] = nil
+				cellsAvailable[#cellsAvailable+1] = cell
 			end
 		end
 	end
-end)
+
+	LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, channel)
+		if channel == "PARTY" then
+			if not partyList[playerName] or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
+				partyList[playerName] = {keyLevel, keyMap, playerRating}
+
+				if mainPanel:IsShown() and not tab1:IsEnabled() then
+					WipeCells()
+					UpdateCells(partyList)
+					UpdateCells(guildList, true)
+				end
+			end
+		elseif channel == "GUILD" then
+			if not guildList[playerName] or guildList[playerName][1] ~= keyLevel or guildList[playerName][2] ~= keyMap or guildList[playerName][3] ~= playerRating then
+				guildList[playerName] = {keyLevel, keyMap, playerRating}
+
+				if mainPanel:IsShown() and not tab1:IsEnabled() then
+					WipeGuildCells()
+					UpdateCells(guildList, true)
+				end
+			end
+		end
+	end)
+end
 
 do
 	local function voiceSorting()
@@ -989,7 +1011,8 @@ do
 
 	local function ShowViewer()
 		if not mainPanel:IsShown() then
-			RequestData()
+			mainPanel:Show()
+			tab1:Click()
 		else
 			mainPanel.CloseButton:Click()
 		end
