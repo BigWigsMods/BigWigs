@@ -409,6 +409,9 @@ do
 			end
 			self:RegisterEvent("TALKINGHEAD_REQUESTED")
 		end
+
+		MuteSoundFile(567394) -- SOUNDKIT.RAID_BOSS_EMOTE_WARNING
+		MuteSoundFile(876098) -- SOUNDKIT.UI_RAID_BOSS_WHISPER_WARNING
 	end
 end
 
@@ -416,6 +419,9 @@ function plugin:OnPluginDisable()
 	activatedModules = {}
 	latestKill = {}
 	RestoreAll(self)
+
+	UnmuteSoundFile(567394) -- SOUNDKIT.RAID_BOSS_EMOTE_WARNING
+	UnmuteSoundFile(876098) -- SOUNDKIT.UI_RAID_BOSS_WHISPER_WARNING
 end
 
 -------------------------------------------------------------------------------
