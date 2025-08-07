@@ -1,5 +1,9 @@
--- This module is WIP, expect all code to be awful
 local L, BigWigsLoader, BigWigsAPI, db
+
+--------------------------------------------------------------------------------
+-- Settings
+--
+
 do
 	local _, tbl = ...
 	BigWigsAPI = tbl.API
@@ -38,26 +42,9 @@ do
 	end
 end
 
-local LibKeystone = LibStub("LibKeystone")
-if db.profile.hideFromGuild then
-	LibKeystone.SetGuildHidden(true)
-end
-local LibSpec = LibStub("LibSpecialization")
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-
-local guildList, partyList = {}, {}
-local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
-
-local GetMapUIInfo, GetRealZoneText = C_ChallengeMode.GetMapUIInfo, GetRealZoneText
-
-local specs = {}
-do
-	local function addToTable(specID, _, _, playerName)
-		specs[playerName] = specID
-	end
-	LibSpec.RegisterGroup(specs, addToTable)
-	LibSpec.RegisterGuild(specs, addToTable)
-end
+--------------------------------------------------------------------------------
+-- Data
+--
 
 local roleIcons = {
 	TANK = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:16:16|t",
@@ -82,28 +69,160 @@ local dungeonNames = {
 	[391] = L.keystoneShortName_TazaveshStreetsOfWonder, -- STREET
 	[505] = L.keystoneShortName_TheDawnbreaker, -- DAWN
 }
-local teleports = BigWigsLoader.isTestBuild and {
-	[2830] = 1237215, -- Eco-Dome Al'dani
-	[2287] = 354465, -- Halls of Atonement
-	[2660] = 445417, -- Ara-Kara, City of Echoes
-	[2441] = 367416, -- Tazavesh, the Veiled Market
-	[2662] = 445414, -- The Dawnbreaker
-	[2649] = 445444, -- Priory of the Sacred Flame
-	[2773] = 1216786, -- Operation: Floodgate
-} or {
-	[1594] = UnitFactionGroup("player") == "Alliance" and 467553 or 467555, -- The MOTHERLODE!!
-	[2097] = 373274, -- Operation: Mechagon
-	[2293] = 354467, -- Theater of Pain
-	[2648] = 445443, -- The Rookery
-	[2649] = 445444, -- Priory of the Sacred Flame
-	[2651] = 445441, -- Darkflame Cleft
-	[2661] = 445440, -- Cinderbrew Meadery
-	[2773] = 1216786, -- Operation: Floodgate
+local teleportList = {
+	-- Current Season (Built Automatically)
+	{},
+	-- The War Within
+	{
+		[2648] = 445443, -- The Rookery
+		[2649] = 445444, -- Priory of the Sacred Flame
+		[2651] = 445441, -- Darkflame Cleft
+		[2652] = 445269, -- The Stonevault
+		[2660] = 445417, -- Ara-Kara, City of Echoes
+		[2661] = 445440, -- Cinderbrew Meadery
+		[2662] = 445414, -- The Dawnbreaker
+		[2669] = 445416, -- City of Threads
+		[2773] = 1216786, -- Operation: Floodgate
+		[2830] = 1237215, -- Eco-Dome Al'dani
+	},
+	-- Dragonflight
+	{
+		[2451] = 393222, -- Uldaman: Legacy of Tyr
+		[2515] = 393279, -- The Azure Vault
+		[2516] = 393262, -- The Nokhud Offensive
+		[2519] = 393276, -- Neltharus
+		[2520] = 393267, -- Brackenhide Hollow
+		[2521] = 393256, -- Ruby Life Pools
+		[2526] = 393273, -- Algeth'ar Academy
+		[2527] = 393283, -- Halls of Infusion
+		[2579] = 424197, -- Dawn of the Infinite
+	},
+	-- Shadowlands
+	{
+		[2284] = 354469, -- Sanguine Depths
+		[2285] = 354466, -- Spires of Ascension
+		[2286] = 354462, -- The Necrotic Wake
+		[2287] = 354465, -- Halls of Atonement
+		[2289] = 354463, -- Plaguefall
+		[2290] = 354464, -- Mists of Tirna Scithe
+		[2291] = 354468, -- De Other Side
+		[2293] = 354467, -- Theater of Pain
+		[2441] = 367416, -- Tazavesh, the Veiled Market
+	},
+	-- Battle for Azeroth
+	{
+		[1763] = 424187, -- Atal'Dazar
+		[1754] = 410071, -- Freehold
+		--[1762] = lw_bfa, -- King's Rest
+		--[1864] = lw_bfa, -- Shrine of the Storm
+		[1822] = UnitFactionGroup("player") == "Alliance" and 445418 or 464256, -- Siege of Boralus
+		--[1877] = lw_bfa, -- Temple of Sethraliss
+		[1594] = UnitFactionGroup("player") == "Alliance" and 467553 or 467555, -- The MOTHERLODE!!
+		--[1771] = lw_bfa, -- Tol Dagor
+		[1841] = 410074, -- The Underrot
+		[1862] = 424167, -- Waycrest Manor
+		[2097] = 373274, -- Operation: Mechagon
+	},
+	-- Legion
+	{
+		--[1544] = lw_l, -- Assault on Violet Hold
+		--[1677] = lw_l, -- Cathedral of Eternal Night
+		[1571] = 393766, -- Court of Stars
+		[1651] = 373262, -- Return to Karazhan
+		[1501] = 424153, -- Black Rook Hold
+		--[1516] = lw_l, -- The Arcway
+		[1466] = 424163, -- Darkheart Thicket
+		[1458] = 410078, -- Neltharion's Lair
+		--[1456] = lw_l, -- Eye of Azshara
+		--[1492] = lw_l, -- Maw of Souls
+		[1477] = 393764, -- Halls of Valor
+		--[1493] = lw_l, -- Vault of the Wardens
+		--[1753] = lw_l, -- Seat of the Triumvirate
+	},
+	-- Warlords of Draenor
+	{
+		[1209] = 159898, -- Skyreach
+		[1176] = 159899, -- Shadowmoon Burial Grounds
+		[1208] = 159900, -- Grimrail Depot
+		[1279] = 159901, -- The Everbloom
+		[1195] = 159896, -- Iron Docks
+		[1182] = 159897, -- Auchindoun
+		[1175] = 159895, -- Bloodmaul Slag Mines
+		[1358] = 159902, -- Upper Blackrock Spire
+	},
+	-- Mists of Pandaria
+	{
+		[959] = 131206, -- Shado-Pan Monastery
+		[960] = 131204, -- Temple of the Jade Serpent
+		[961] = 131205, -- Stormstout Brewery
+		[962] = 131225, -- Gate of the Setting Sun
+		[994] = 131222, -- Mogu'shan Palace
+		[1001] = 131231, -- Scarlet Halls
+		[1007] = 131232, -- Scholomance
+		[1011] = 131228, -- Siege of Niuzao Temple
+		--[1112] = lw_mists, -- Pursuing the Black Harvest
+		[1004] = 131229, -- Scarlet Monastery
+	},
+	-- Cataclysm
+	{
+		--[859] = lw_cata, -- Zul'Gurub
+		[643] = 424142, -- Throne of the Tides
+		--[644] = lw_cata, -- Halls of Origination
+		--[645] = lw_cata, -- Blackrock Caverns
+		--[755] = lw_cata, -- Lost City of the Tol'vir
+		--[725] = lw_cata, -- The Stonecore
+		--[938] = lw_cata, -- End Time
+		--[939] = lw_cata, -- Well of Eternity
+		--[940] = lw_cata, -- Hour of Twilight
+		[657] = 410080, -- The Vortex Pinnacle
+		[670] = 445424, -- Grim Batol
+	},
 }
+for mapID, data in next, BigWigsLoader.zoneTbl do -- Automatically build the current season list
+	if type(data) == "table" then
+		for i = 1, #data do
+			local tableEntry = data[i]
+			if tableEntry == "LittleWigs_CurrentSeason" then
+				for teleportListIndex = 2, #teleportList do
+					if teleportList[teleportListIndex][mapID] then
+						teleportList[1][mapID] = teleportList[teleportListIndex][mapID]
+						break
+					end
+				end
+				break
+			end
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local LibKeystone = LibStub("LibKeystone")
+if db.profile.hideFromGuild then
+	LibKeystone.SetGuildHidden(true)
+end
+local LibSpec = LibStub("LibSpecialization")
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+
+local guildList, partyList = {}, {}
+local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
+
+local GetMapUIInfo, GetRealZoneText = C_ChallengeMode.GetMapUIInfo, GetRealZoneText
+
+local specs = {}
+do
+	local function addToTable(specID, _, _, playerName)
+		specs[playerName] = specID
+	end
+	LibSpec.RegisterGroup(specs, addToTable)
+	LibSpec.RegisterGuild(specs, addToTable)
+end
+
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
 local tab1
-local prevTab = 1
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameTemplate")
 mainPanel:Hide()
@@ -335,15 +454,7 @@ end
 local teleportButtons = {}
 mainPanel.CloseButton:SetScript("OnClick", function(self)
 	self:UnregisterAllEvents()
-	if prevTab == 2 then
-		prevTab = 1
-		teleportButtons[1]:ClearAllPoints()
-		teleportButtons[1]:SetScript("OnUpdate", nil)
-		for i = 1, #teleportButtons do
-			teleportButtons[i]:SetParent(nil)
-			teleportButtons[i]:Hide()
-		end
-	end
+	tab2:SetScript("OnUpdate", nil)
 	WipeCells()
 	mainPanel:Hide()
 	tab1:Enable() -- Enable tab1 so :Click always works when we open the main panel again
@@ -422,7 +533,7 @@ local function CreateCell()
 		cellsCurrentlyShowing[cell] = true
 		return cell
 	else
-		cell = CreateFrame("Frame", nil, scrollChild)
+		cell = CreateFrame("Button", nil, scrollChild, "InsecureActionButtonTemplate")
 		cell:SetSize(20, 20)
 		cell:SetScript("OnEnter", OnEnterShowTooltip)
 		cell:SetScript("OnLeave", GameTooltip_Hide)
@@ -434,6 +545,7 @@ local function CreateCell()
 		local bg = cell:CreateTexture()
 		bg:SetAllPoints(cell)
 		bg:SetColorTexture(0, 0, 0, 0.6)
+		cell.bg = bg
 
 		cellsCurrentlyShowing[cell] = true
 		return cell
@@ -464,56 +576,68 @@ do
 		end
 		GameTooltip:Show()
 	end
-	for mapID, spellID in next, teleports do
-		local button = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
-		teleportButtons[#teleportButtons+1] = button
-		button.text = GetRealZoneText(mapID)
-		button.spellID = spellID
-		button:SetAttribute("type", "spell")
-		button:SetAttribute("spell", spellID)
-		button:Hide()
-		button:SetSize(90, 48)
-		button:SetScript("OnEnter", OnEnter)
-		button:SetScript("OnLeave", GameTooltip_Hide)
-		button:EnableMouse(true)
-		button:RegisterForClicks("AnyDown", "AnyUp")
-		button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
-		local text = button:CreateFontString(nil, nil, "GameFontNormal")
-		text:SetPoint("CENTER")
-		text:SetSize(86, 44) -- Button size minus 4
-		text:SetJustifyH("CENTER")
-		text:SetText(button.text)
-		while text:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
-			text:SetTextScale(text:GetTextScale() - 0.01)
+	local prevButton = nil
+	for expansionIndex = 1, #teleportList do
+		if not teleportButtons[expansionIndex] then
+			teleportButtons[expansionIndex] = {}
 		end
 
-		local icon = button:CreateTexture()
-		icon:SetSize(48, 48)
-		icon:SetPoint("RIGHT", button, "LEFT", -4, 0)
-		local texture = BigWigsLoader.GetSpellTexture(spellID)
-		icon:SetTexture(texture)
-		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-		button.icon = icon
+		for mapID, spellID in next, teleportList[expansionIndex] do
+			local button = CreateFrame("Button", nil, scrollChild, "InsecureActionButtonTemplate")
+			teleportButtons[expansionIndex][#teleportButtons[expansionIndex]+1] = button
+			button.text = GetRealZoneText(mapID)
+			button.spellID = spellID
+			button:SetAttribute("type", "spell")
+			button:SetAttribute("spell", spellID)
+			button:Hide()
+			button:SetSize(90, 48)
+			button:SetScript("OnEnter", OnEnter)
+			button:SetScript("OnLeave", GameTooltip_Hide)
+			button:EnableMouse(true)
+			button:RegisterForClicks("AnyDown", "AnyUp")
+			button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
-		local bg = button:CreateTexture(nil, nil, nil, -5)
-		bg:SetAllPoints(button)
-		bg:SetColorTexture(0, 0, 0, 0.6)
+			local text = button:CreateFontString(nil, nil, "GameFontNormal")
+			text:SetPoint("CENTER")
+			text:SetSize(86, 44) -- Button size minus 4
+			text:SetJustifyH("CENTER")
+			text:SetText(button.text)
+			while text:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
+				text:SetTextScale(text:GetTextScale() - 0.01)
+			end
 
-		button.cdbar = button:CreateTexture(nil, nil, nil, 5)
-		button.cdbar:SetPoint("TOPLEFT")
-		button.cdbar:SetPoint("BOTTOMLEFT")
-		button.cdbar:SetColorTexture(1, 1, 1, 0.6)
-		button.cdbar:Hide()
-	end
-	table.sort(teleportButtons, function(buttonA, buttonB)
-		return buttonA.text < buttonB.text
-	end)
-	for i = 2, #teleportButtons do
-		if i % 2 == 0 then
-			teleportButtons[i]:SetPoint("LEFT", teleportButtons[i-1], "RIGHT", 60, 0)
-		else
-			teleportButtons[i]:SetPoint("TOP", teleportButtons[i-2], "BOTTOM", 0, -6)
+			local icon = button:CreateTexture()
+			icon:SetSize(48, 48)
+			icon:SetPoint("RIGHT", button, "LEFT", -4, 0)
+			local texture = BigWigsLoader.GetSpellTexture(spellID)
+			icon:SetTexture(texture)
+			icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+			button.icon = icon
+
+			local bg = button:CreateTexture(nil, nil, nil, -5)
+			bg:SetAllPoints(button)
+			bg:SetColorTexture(0, 0, 0, 0.6)
+
+			button.cdbar = button:CreateTexture(nil, nil, nil, 5)
+			button.cdbar:SetPoint("TOPLEFT")
+			button.cdbar:SetPoint("BOTTOMLEFT")
+			button.cdbar:SetColorTexture(1, 1, 1, 0.6)
+			button.cdbar:Hide()
+		end
+		table.sort(teleportButtons[expansionIndex], function(buttonA, buttonB)
+			return buttonA.text < buttonB.text
+		end)
+		if expansionIndex > 1 then
+			teleportButtons[expansionIndex][1]:SetPoint("TOP", prevButton, "BOTTOM", 0, -36)
+		end
+		for i = 2, #teleportButtons[expansionIndex] do
+			if i % 2 == 0 then
+				teleportButtons[expansionIndex][i]:SetPoint("LEFT", teleportButtons[expansionIndex][i-1], "RIGHT", 60, 0)
+			else
+				prevButton = teleportButtons[expansionIndex][i]
+				prevButton:SetPoint("TOP", teleportButtons[expansionIndex][i-2], "BOTTOM", 0, -6)
+			end
 		end
 	end
 end
@@ -547,15 +671,7 @@ do
 		tab.RightActive:Hide()
 	end
 	tab1:SetScript("OnClick", function(self)
-		if prevTab == 2 then
-			teleportButtons[1]:ClearAllPoints()
-			teleportButtons[1]:SetScript("OnUpdate", nil)
-			for i = 1, #teleportButtons do
-				teleportButtons[i]:SetParent(nil)
-				teleportButtons[i]:Hide()
-			end
-		end
-		prevTab = 1
+		tab2:SetScript("OnUpdate", nil)
 		WipeCells()
 
 		partyHeader:SetText(L.keystoneHeaderParty)
@@ -580,7 +696,6 @@ do
 		C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
 	end)
 	tab2:SetScript("OnClick", function(self)
-		prevTab = 2
 		WipeCells()
 
 		partyHeader:SetText(L.littleWigsExtras.LittleWigs_CurrentSeason)
@@ -593,70 +708,73 @@ do
 		DeselectTab(tab3)
 		DeselectTab(tab4)
 
-		teleportButtons[1]:ClearAllPoints()
-		teleportButtons[1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
+		teleportButtons[1][1]:ClearAllPoints()
+		teleportButtons[1][1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
 		local UnitCastingInfo = UnitCastingInfo
-		teleportButtons[1]:SetScript("OnUpdate", function()
+		self:SetScript("OnUpdate", function()
 			local _, _, _, startTimeMs, endTimeMs, _, _, _, spellId = UnitCastingInfo("player")
 			if spellId then
-				for i = 1, #teleportButtons do
-					if spellId == teleportButtons[i].spellID then
-						local startTimeSec = startTimeMs / 1000
-						local endTimeSec = endTimeMs / 1000
-						local castDuration = endTimeSec - startTimeSec
-						if castDuration > 0 then
-							local percentage = (GetTime() - startTimeSec) / castDuration
-							if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
-							teleportButtons[i].cdbar:SetColorTexture(0, 0, 1, 0.6)
-							teleportButtons[i].cdbar:Show()
-							teleportButtons[i].cdbar:SetWidth(percentage * teleportButtons[i]:GetWidth())
-						else
-							teleportButtons[i].cdbar:Hide()
+				for expansionIndex = 1, #teleportButtons do
+					local list = teleportButtons[expansionIndex]
+					for i = 1, #list do
+						local button = list[i]
+						if spellId == button.spellID then
+							local startTimeSec = startTimeMs / 1000
+							local endTimeSec = endTimeMs / 1000
+							local castDuration = endTimeSec - startTimeSec
+							if castDuration > 0 then
+								local percentage = (GetTime() - startTimeSec) / castDuration
+								if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
+								button.cdbar:SetColorTexture(0, 0, 1, 0.6)
+								button.cdbar:Show()
+								button.cdbar:SetWidth(percentage * button:GetWidth())
+							else
+								button.cdbar:Hide()
+							end
 						end
 					end
 				end
 			else
-				for i = 1, #teleportButtons do
-					local cd = BigWigsLoader.GetSpellCooldown(teleportButtons[i].spellID)
-					if cd and cd.startTime > 0 and cd.duration > 2 and BigWigsLoader.IsSpellKnownOrInSpellBook(teleportButtons[i].spellID) then
-						local remaining = (cd.startTime + cd.duration) - GetTime()
-						local percentage = remaining / cd.duration
-						teleportButtons[i].cdbar:SetColorTexture(1, 0, 0, 0.6)
-						teleportButtons[i].cdbar:Show()
-						teleportButtons[i].cdbar:SetWidth(percentage * teleportButtons[i]:GetWidth())
-					else
-						teleportButtons[i].cdbar:Hide()
+				for expansionIndex = 1, #teleportButtons do
+					local list = teleportButtons[expansionIndex]
+					for i = 1, #list do
+						local button = list[i]
+						local cd = BigWigsLoader.GetSpellCooldown(button.spellID)
+						if cd and cd.startTime > 0 and cd.duration > 2 and BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
+							local remaining = (cd.startTime + cd.duration) - GetTime()
+							local percentage = remaining / cd.duration
+							button.cdbar:SetColorTexture(1, 0, 0, 0.6)
+							button.cdbar:Show()
+							button.cdbar:SetWidth(percentage * button:GetWidth())
+						else
+							button.cdbar:Hide()
+						end
 					end
 				end
 			end
 		end)
-		for i = 1, #teleportButtons do
-			teleportButtons[i]:SetParent(scrollChild)
-			teleportButtons[i]:Show()
-			teleportButtons[i].cdbar:Hide()
-			if not BigWigsLoader.IsSpellKnownOrInSpellBook(teleportButtons[i].spellID) then
-				teleportButtons[i].icon:SetTexture(136813)
-			else
-				local texture = BigWigsLoader.GetSpellTexture(teleportButtons[i].spellID)
-				teleportButtons[i].icon:SetTexture(texture)
+		for expansionIndex = 1, #teleportButtons do
+			local list = teleportButtons[expansionIndex]
+			for i = 1, #list do
+				local button = list[i]
+				button:Show()
+				button.cdbar:Hide()
+				if not BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
+					button.icon:SetTexture(136813)
+				else
+					local texture = BigWigsLoader.GetSpellTexture(button.spellID)
+					button.icon:SetTexture(texture)
+				end
 			end
 		end
 
 		-- Calculate scroll height
-		local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons]:GetBottom()
+		local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons][#teleportButtons[#teleportButtons]]:GetBottom()
 		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
 		scrollChild:SetHeight(newHeight)
 	end)
 	tab3:SetScript("OnClick", function(self)
-		if prevTab == 2 then
-			teleportButtons[1]:ClearAllPoints()
-			teleportButtons[1]:SetScript("OnUpdate", nil)
-			for i = 1, #teleportButtons do
-				teleportButtons[i]:SetParent(nil)
-				teleportButtons[i]:Hide()
-			end
-		end
-		prevTab = 3
+		tab2:SetScript("OnUpdate", nil)
 		WipeCells()
 
 		partyHeader:SetText(L.keystoneHeaderMyCharacters)
@@ -749,15 +867,7 @@ do
 		end
 	end)
 	tab4:SetScript("OnClick", function(self)
-		if prevTab == 2 then
-			teleportButtons[1]:ClearAllPoints()
-			teleportButtons[1]:SetScript("OnUpdate", nil)
-			for i = 1, #teleportButtons do
-				teleportButtons[i]:SetParent(nil)
-				teleportButtons[i]:Hide()
-			end
-		end
-		prevTab = 4
+		tab2:SetScript("OnUpdate", nil)
 		WipeCells()
 
 		partyHeader:SetText(L.keystoneHeaderThisWeek)
