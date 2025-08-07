@@ -1,5 +1,3 @@
-if not BigWigsLoader.isNext then return end
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

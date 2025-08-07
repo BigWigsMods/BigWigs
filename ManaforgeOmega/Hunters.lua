@@ -1,7 +1,3 @@
-if not BigWigsLoader.isNext then return end
-
--- XXX What happens with intermisoin/ultimates if they die?
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -11,6 +7,8 @@ if not mod then return end
 mod:RegisterEnableMob(237661, 248404, 237662) -- Adarus Duskblaze, Velaryn Bloodwrath, Ilyssa Darksorrow
 mod:SetEncounterID(3122)
 mod:SetRespawnTime(30)
+
+-- XXX What happens with intermission/ultimates if they die?
 
 --------------------------------------------------------------------------------
 -- Locals
