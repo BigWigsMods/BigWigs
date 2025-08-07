@@ -504,7 +504,7 @@ do
 		[1877] = lw_bfa, -- Temple of Sethraliss
 		[1594] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- The MOTHERLODE!!
 		[1771] = lw_bfa, -- Tol Dagor
-		[1841] = lw_bfa, -- Underrot
+		[1841] = lw_bfa, -- The Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
 		[2097] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- Operation: Mechagon
 		[2212] = (public.isRetail and not public.isNext) and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Orgrimmar
