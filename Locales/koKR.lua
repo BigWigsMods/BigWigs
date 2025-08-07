@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "koKR")
 if not L then return end
 
-L.tempNew = "신규: 이제 |cFFFFFFFF/key|r을 입력하면 파티원의 신화+ 쐐기돌을 볼 수 있습니다."
+L.tempNew = "신규: |cFFFFFFFF/key|r를 입력하면 파티원의 쐐기돌을 볼 수 있습니다."
 
 -- Core.lua
 L.berserk = "광폭화"
