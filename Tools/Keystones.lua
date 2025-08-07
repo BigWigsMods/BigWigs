@@ -644,6 +644,15 @@ end
 
 do
 	local function SelectTab(tab)
+		tab2:SetScript("OnUpdate", nil)
+		WipeCells()
+		for expansionIndex = 1, #teleportButtons do
+			local list = teleportButtons[expansionIndex]
+			for i = 1, #list do
+				list[i]:Hide()
+			end
+		end
+
 		tab.Left:Hide()
 		tab.Middle:Hide()
 		tab.Right:Hide()
@@ -671,9 +680,6 @@ do
 		tab.RightActive:Hide()
 	end
 	tab1:SetScript("OnClick", function(self)
-		tab2:SetScript("OnUpdate", nil)
-		WipeCells()
-
 		partyHeader:SetText(L.keystoneHeaderParty)
 		partyRefreshButton:Show()
 		guildHeader:SetText(L.keystoneHeaderGuild)
@@ -696,8 +702,6 @@ do
 		C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
 	end)
 	tab2:SetScript("OnClick", function(self)
-		WipeCells()
-
 		partyHeader:SetText(L.littleWigsExtras.LittleWigs_CurrentSeason)
 		partyRefreshButton:Hide()
 		guildHeader:Hide()
@@ -774,9 +778,6 @@ do
 		scrollChild:SetHeight(newHeight)
 	end)
 	tab3:SetScript("OnClick", function(self)
-		tab2:SetScript("OnUpdate", nil)
-		WipeCells()
-
 		partyHeader:SetText(L.keystoneHeaderMyCharacters)
 		partyRefreshButton:Hide()
 		guildHeader:Hide()
@@ -867,9 +868,6 @@ do
 		end
 	end)
 	tab4:SetScript("OnClick", function(self)
-		tab2:SetScript("OnUpdate", nil)
-		WipeCells()
-
 		partyHeader:SetText(L.keystoneHeaderThisWeek)
 		partyRefreshButton:Hide()
 		guildHeader:SetText(L.keystoneHeaderOlder)
