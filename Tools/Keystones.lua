@@ -1014,7 +1014,9 @@ end
 
 do
 	local function GetTeleportTextForSpellID(spellID)
-		if InCombatLockdown() then
+		if spellID == 0 then
+			return ""
+		elseif InCombatLockdown() then
 			return L.keystoneTeleportInCombat
 		else
 			local spellName = BigWigsLoader.GetSpellName(spellID)
@@ -1049,7 +1051,7 @@ do
 					nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
 				end
 				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
-				local teleportSpellID = teleportList[1][mapID]
+				local teleportSpellID = mapID and teleportList[1][mapID] or 0
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
@@ -1106,8 +1108,10 @@ do
 			cellLevel.tooltip = sortedplayerList[i].levelTooltip
 			cellLevel.isGuildList = isGuildList
 			cellMap:SetWidth(WIDTH_MAP)
-			cellMap:SetAttribute("type", "spell")
-			cellMap:SetAttribute("spell", teleportList[1][sortedplayerList[i].mapID])
+			if sortedplayerList[i].mapID then
+				cellMap:SetAttribute("type", "spell")
+				cellMap:SetAttribute("spell", teleportList[1][sortedplayerList[i].mapID])
+			end
 			cellMap.text:SetText(sortedplayerList[i].map)
 			cellMap.tooltip = sortedplayerList[i].mapTooltip
 			cellMap.isGuildList = isGuildList
