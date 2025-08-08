@@ -881,6 +881,8 @@ do
 		[155736]=true,[155737]=true,[155738]=true,[155739]=true,[155740]=true,[155741]=true,[155742]=true,[155743]=true,
 		[155744]=true,[155745]=true,[155746]=true,[155747]=true,[155748]=true,[155749]=true,[155750]=true,[155751]=true,
 		[155752]=true,[155753]=true,[155754]=true,[160654]=true,[155756]=true,[155757]=true,[155758]=true,[155759]=true,
+		-- Tazavesh, the Veiled Market
+		[181561]=true,[181563]=true,[181564]=true,[181565]=true,[180360]=true,[180361]=true,[181547]=true,
 		-- Theater of Pain
 		[152411]=true,[152413]=true,[152417]=true,[152416]=true,[152415]=true,[152414]=true,[152410]=true,[152409]=true,
 		[152408]=true,[152505]=true,[154933]=true,[152533]=true,[154937]=true,[152517]=true,[154942]=true,[154943]=true,
