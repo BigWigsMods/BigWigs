@@ -178,19 +178,11 @@ local teleportList = {
 		[670] = 445424, -- Grim Batol
 	},
 }
-for mapID, data in next, BigWigsLoader.zoneTbl do -- Automatically build the current season list
-	if type(data) == "table" then
-		for i = 1, #data do
-			local tableEntry = data[i]
-			if tableEntry == "LittleWigs_CurrentSeason" then
-				for teleportListIndex = 2, #teleportList do
-					if teleportList[teleportListIndex][mapID] then
-						teleportList[1][mapID] = teleportList[teleportListIndex][mapID]
-						break
-					end
-				end
-				break
-			end
+for mapID in next, BigWigsLoader.currentExpansion.currentSeason do -- Automatically build the current season list
+	for teleportListIndex = 2, #teleportList do
+		if teleportList[teleportListIndex][mapID] then
+			teleportList[1][mapID] = teleportList[teleportListIndex][mapID]
+			break
 		end
 	end
 end
@@ -711,6 +703,11 @@ do
 		DeselectTab(tab1)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
+
+		if #teleportButtons[1] == 0 then
+			-- if the currentSeason is empty
+			return
+		end
 
 		teleportButtons[1][1]:ClearAllPoints()
 		teleportButtons[1][1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
