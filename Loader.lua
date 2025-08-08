@@ -224,6 +224,7 @@ do
 			bigWigsBundled = {},
 			littlewigsDefault = lw_c,
 			littleWigsBundled = {},
+			currentSeason = {},
 			zones = {},
 		}
 	elseif public.isTBC then
@@ -232,6 +233,7 @@ do
 			bigWigsBundled = {},
 			littlewigsDefault = lw_bc,
 			littleWigsBundled = {},
+			currentSeason = {},
 			zones = {},
 		}
 	elseif public.isWrath then
@@ -240,6 +242,7 @@ do
 			bigWigsBundled = {},
 			littlewigsDefault = lw_wotlk,
 			littleWigsBundled = {},
+			currentSeason = {},
 			zones = {},
 		}
 	elseif public.isCata then
@@ -248,6 +251,7 @@ do
 			bigWigsBundled = {},
 			littlewigsDefault = lw_cata,
 			littleWigsBundled = {},
+			currentSeason = {},
 			zones = {},
 		}
 	elseif public.isMists then
@@ -256,6 +260,7 @@ do
 			bigWigsBundled = {},
 			littlewigsDefault = lw_mists,
 			littleWigsBundled = {},
+			currentSeason = {},
 			zones = {},
 		}
 	--elseif public.isBeta and public.isTestBuild then -- Retail Beta
@@ -276,6 +281,7 @@ do
 	--			lw_delves,
 	--			lw_cs,
 	--		},
+	--		currentSeason = {},
 	--		zones = {
 	--			[2657] = "BigWigs_NerubarPalace",
 	--		}
@@ -295,6 +301,17 @@ do
 			littleWigsExtras = {
 				lw_delves,
 				lw_cs,
+			},
+			currentSeason = {
+				[2212] = lw_cs, -- Horrific Vision of Orgrimmar
+				[2213] = lw_cs, -- Horrific Vision of Stormwind
+				[2287] = lw_cs, -- Halls of Atonement
+				[2441] = lw_cs, -- Tazavesh, the Veiled Market
+				[2649] = lw_cs, -- Priory of the Sacred Flame
+				[2660] = lw_cs, -- Ara-Kara, City of Echoes
+				[2662] = lw_cs, -- The Dawnbreaker
+				[2773] = lw_cs, -- Operation: Floodgate
+				[2830] = lw_cs, -- Eco-Dome Al'dani
 			},
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
@@ -507,20 +524,20 @@ do
 		[1841] = lw_bfa, -- The Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
 		[2097] = lw_bfa, -- Operation: Mechagon
-		[2212] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Orgrimmar
-		[2213] = public.isRetail and {lw_bfa, lw_cs} or lw_bfa, -- Horrific Vision of Stormwind
+		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
+		[2213] = lw_bfa, -- Horrific Vision of Stormwind
 		[2827] = lw_bfa, -- Horrific Vision of Stormwind (Revisited)
 		[2828] = lw_bfa, -- Horrific Vision of Orgrimmar (Revisited)
 		--[[ LittleWigs: Shadowlands ]]--
 		[2284] = lw_s, -- Sanguine Depths
 		[2285] = lw_s, -- Spires of Ascension
 		[2286] = lw_s, -- The Necrotic Wake
-		[2287] = public.isRetail and {lw_s, lw_cs} or lw_s, -- Halls of Atonement
+		[2287] = lw_s, -- Halls of Atonement
 		[2289] = lw_s, -- Plaguefall
 		[2290] = lw_s, -- Mists of Tirna Scithe
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
-		[2441] = public.isRetail and {lw_s, lw_cs} or lw_s, -- Tazavesh, the Veiled Market
+		[2441] = lw_s, -- Tazavesh, the Veiled Market
 		--[[ LittleWigs: Dragonflight ]]--
 		[2451] = lw_df, -- Uldaman: Legacy of Tyr
 		[2515] = lw_df, -- The Azure Vault
@@ -533,17 +550,17 @@ do
 		[2579] = lw_df, -- Dawn of the Infinite
 		--[[ LittleWigs: The War Within ]]--
 		[2648] = lw_tww, -- The Rookery
-		[2649] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Priory of the Sacred Flame
+		[2649] = lw_tww, -- Priory of the Sacred Flame
 		[2651] = lw_tww, -- Darkflame Cleft
 		[2652] = lw_tww, -- The Stonevault
-		[2660] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Ara-Kara, City of Echoes
+		[2660] = lw_tww, -- Ara-Kara, City of Echoes
 		[2661] = lw_tww, -- Cinderbrew Meadery
-		[2662] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- The Dawnbreaker
+		[2662] = lw_tww, -- The Dawnbreaker
 		[2669] = lw_tww, -- City of Threads
 		[2710] = lw_tww, -- Awakening the Machine
-		[2773] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Operation: Floodgate
-		[2830] = public.isRetail and {lw_tww, lw_cs} or lw_tww, -- Eco-Dome Al'dani
-		--[2849] = public.isRetail and lw_cs or nil, -- Dastardly Dome
+		[2773] = lw_tww, -- Operation: Floodgate
+		[2830] = lw_tww, -- Eco-Dome Al'dani
+		--[2849] = lw_tww, -- Dastardly Dome
 		--[[ LittleWigs: Delves ]]--
 		[2664] = lw_delves, -- Fungal Folly
 		[2679] = lw_delves, -- Mycomancer Cavern
@@ -1885,10 +1902,6 @@ do
 		-- Lacking zone modules
 		if not public.db.profile.showZoneMessages then return end
 		local zoneAddon = public.zoneTbl[id]
-		if type(zoneAddon) == "table" then
-			-- default to the expansion addon for current season modules
-			zoneAddon = zoneAddon[1]
-		end
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
 			if public.usingBigWigsRepo and public.currentExpansion.bigWigsBundled[zoneAddon] then return end -- If we are a BW Git user, then bundled content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
@@ -1997,10 +2010,6 @@ public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 function mod:BigWigs_CoreEnabled()
 	local _, _, _, _, _, _, _, id = GetInstanceInfo()
 	local zoneAddon = public.zoneTbl[id]
-	if type(zoneAddon) == "table" then
-		-- default to the expansion addon for current season modules
-		zoneAddon = zoneAddon[1]
-	end
 	if zoneAddon and zoneAddon:find("LittleWigs", nil, true) then
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga"
 	elseif zoneAddon and zoneAddon:find("BigWigs", nil, true) and zoneAddon ~= public.currentExpansion.name then

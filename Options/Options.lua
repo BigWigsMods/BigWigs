@@ -1770,13 +1770,9 @@ do
 					end
 
 					-- add zones to options
-					local zoneAddon = loader.zoneTbl[id]
-					if type(zoneAddon) == "table" then
-						for j = 1, #zoneAddon do
-							addModuleToOptions(zoneAddon[j], treeTbl, addonNameToHeader, name or id, zoneName)
-						end
-					else
-						addModuleToOptions(zoneAddon, treeTbl, addonNameToHeader, name or id, zoneName)
+					addModuleToOptions(loader.zoneTbl[id], treeTbl, addonNameToHeader, name or id, zoneName)
+					if loader.currentExpansion.currentSeason[id] then
+						addModuleToOptions(loader.currentExpansion.currentSeason[id], treeTbl, addonNameToHeader, name or id, zoneName)
 					end
 				end
 			end
@@ -1794,11 +1790,7 @@ do
 			if remappedZones[id] then
 				id = remappedZones[id]
 			end
-			local zoneAddon = loader.zoneTbl[id]
-			if type(zoneAddon) == "table" then
-				-- on Retail default to Current Season, on Classic default to the expansion addon
-				zoneAddon = loader.isRetail and zoneAddon[#zoneAddon] or zoneAddon[1]
-			end
+			local zoneAddon = loader.currentExpansion.currentSeason[id] or loader.zoneTbl[id]
 			local parent = zoneAddon and addonNameToHeader[zoneAddon]
 			if instanceType == "none" then
 				local mapId = GetBestMapForUnit("player")
