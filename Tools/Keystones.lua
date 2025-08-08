@@ -179,9 +179,9 @@ local teleportList = {
 	},
 }
 for mapID in next, BigWigsLoader.currentExpansion.currentSeason do -- Automatically build the current season list
-	for teleportListIndex = 2, #teleportList do
-		if teleportList[teleportListIndex][mapID] then
-			teleportList[1][mapID] = teleportList[teleportListIndex][mapID]
+	for expansionIndex = 2, #teleportList do
+		if teleportList[expansionIndex][mapID] then
+			teleportList[1][mapID] = teleportList[expansionIndex][mapID]
 			break
 		end
 	end
@@ -201,7 +201,7 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local guildList, partyList = {}, {}
 local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
 
-local GetMapUIInfo, GetRealZoneText = C_ChallengeMode.GetMapUIInfo, GetRealZoneText
+local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 
 local specs = {}
 do
@@ -211,6 +211,10 @@ do
 	LibSpec.RegisterGroup(specs, addToTable)
 	LibSpec.RegisterGuild(specs, addToTable)
 end
+
+--------------------------------------------------------------------------------
+-- GUI widgets
+--
 
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
@@ -431,6 +435,7 @@ tab4:UnregisterAllEvents() -- Remove events registered by the template
 local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
 		cell:Hide()
+		cell:ClearAttributes()
 		cell.tooltip = nil
 		cell.isGuildList = nil
 		if cell.isGlowing then
@@ -442,12 +447,24 @@ local function WipeCells()
 	end
 	cellsCurrentlyShowing = {}
 end
+local headersAvailable = {}
+local headersCurrentlyShowing = {}
+local function WipeHeaders()
+	for i = 1, #headersCurrentlyShowing do
+		local header = headersCurrentlyShowing[i]
+		header:Hide()
+		header:ClearAllPoints()
+		headersAvailable[#headersAvailable+1] = header
+	end
+	headersCurrentlyShowing = {}
+end
 
 local teleportButtons = {}
 mainPanel.CloseButton:SetScript("OnClick", function(self)
 	self:UnregisterAllEvents()
 	tab2:SetScript("OnUpdate", nil)
 	WipeCells()
+	WipeHeaders()
 	mainPanel:Hide()
 	tab1:Enable() -- Enable tab1 so :Click always works when we open the main panel again
 end)
@@ -467,14 +484,9 @@ scrollArea:SetScrollChild(scrollChild)
 scrollChild:SetSize(scrollArea:GetWidth(), 320)
 scrollChild:SetPoint("LEFT")
 
-local partyHeader = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
-partyHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
-partyHeader:SetText(L.keystoneHeaderParty)
-partyHeader:SetJustifyH("CENTER")
-
 local partyRefreshButton = CreateFrame("Button", nil, scrollChild)
+partyRefreshButton:Hide()
 partyRefreshButton:SetSize(20, 20)
-partyRefreshButton:SetPoint("LEFT", partyHeader, "RIGHT", 5, 0)
 partyRefreshButton:SetNormalTexture("Interface\\Buttons\\UI-RefreshButton")
 partyRefreshButton:SetPushedTexture("Interface\\Buttons\\UI-RefreshButton-Down")
 partyRefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-RefreshButton")
@@ -489,14 +501,10 @@ partyRefreshButton:SetScript("OnEnter", function(self)
 end)
 partyRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
 
-local guildHeader = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
-guildHeader:SetText(L.keystoneHeaderGuild)
-guildHeader:SetJustifyH("CENTER")
-
 -- Refresh button for Guild section
 local guildRefreshButton = CreateFrame("Button", nil, scrollChild)
+guildRefreshButton:Hide()
 guildRefreshButton:SetSize(20, 20)
-guildRefreshButton:SetPoint("LEFT", guildHeader, "RIGHT", 5, 0)
 guildRefreshButton:SetNormalTexture("Interface\\Buttons\\UI-RefreshButton")
 guildRefreshButton:SetPushedTexture("Interface\\Buttons\\UI-RefreshButton-Down")
 guildRefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-RefreshButton")
@@ -529,6 +537,7 @@ local function CreateCell()
 		cell:SetSize(20, 20)
 		cell:SetScript("OnEnter", OnEnterShowTooltip)
 		cell:SetScript("OnLeave", GameTooltip_Hide)
+		cell:RegisterForClicks("AnyDown", "AnyUp")
 
 		cell.text = cell:CreateFontString(nil, nil, "GameFontNormal")
 		cell.text:SetAllPoints(cell)
@@ -541,6 +550,20 @@ local function CreateCell()
 
 		cellsCurrentlyShowing[cell] = true
 		return cell
+	end
+end
+local function CreateHeader()
+	local header = headersAvailable[#headersAvailable]
+	if header then
+		headersAvailable[#headersAvailable] = nil
+		headersCurrentlyShowing[#headersCurrentlyShowing+1] = header
+		header:Show()
+		return header
+	else
+		header = scrollChild:CreateFontString(nil, nil, "GameFontNormalLarge")
+		header:SetJustifyH("CENTER")
+		headersCurrentlyShowing[#headersCurrentlyShowing+1] = header
+		return header
 	end
 end
 
@@ -569,6 +592,7 @@ do
 		GameTooltip:Show()
 	end
 
+	local GetRealZoneText = GetRealZoneText
 	local prevButton = nil
 	for expansionIndex = 1, #teleportList do
 		if not teleportButtons[expansionIndex] then
@@ -586,7 +610,6 @@ do
 			button:SetSize(90, 48)
 			button:SetScript("OnEnter", OnEnter)
 			button:SetScript("OnLeave", GameTooltip_Hide)
-			button:EnableMouse(true)
 			button:RegisterForClicks("AnyDown", "AnyUp")
 			button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
@@ -634,16 +657,26 @@ do
 	end
 end
 
+--------------------------------------------------------------------------------
+-- Tab click handlers
+--
+
 do
 	local function SelectTab(tab)
 		tab2:SetScript("OnUpdate", nil)
 		WipeCells()
+		WipeHeaders()
 		for expansionIndex = 1, #teleportButtons do
 			local list = teleportButtons[expansionIndex]
 			for i = 1, #list do
 				list[i]:Hide()
 			end
 		end
+
+		partyRefreshButton:ClearAllPoints()
+		partyRefreshButton:Hide()
+		guildRefreshButton:ClearAllPoints()
+		guildRefreshButton:Hide()
 
 		tab.Left:Hide()
 		tab.Middle:Hide()
@@ -671,17 +704,24 @@ do
 		tab.MiddleActive:Hide()
 		tab.RightActive:Hide()
 	end
-	tab1:SetScript("OnClick", function(self)
-		partyHeader:SetText(L.keystoneHeaderParty)
-		partyRefreshButton:Show()
-		guildHeader:SetText(L.keystoneHeaderGuild)
-		guildHeader:Show()
-		guildRefreshButton:Show()
 
-		SelectTab(tab1)
+	-- Tab 1 (Online)
+	tab1:SetScript("OnClick", function(self)
+		SelectTab(self)
 		DeselectTab(tab2)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
+
+		local partyHeader = CreateHeader()
+		partyHeader:SetText(L.keystoneHeaderParty)
+		partyHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
+		partyRefreshButton:SetPoint("LEFT", partyHeader, "RIGHT", 5, 0)
+		partyRefreshButton:Show()
+
+		local guildHeader = CreateHeader()
+		guildHeader:SetText(L.keystoneHeaderGuild)
+		guildRefreshButton:SetPoint("LEFT", guildHeader, "RIGHT", 5, 0)
+		guildRefreshButton:Show()
 
 		mainPanel.CloseButton:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
 		mainPanel.CloseButton:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
@@ -693,26 +733,11 @@ do
 		LibKeystone.Request("PARTY")
 		C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
 	end)
-	tab2:SetScript("OnClick", function(self)
-		partyHeader:SetText(L.littleWigsExtras.LittleWigs_CurrentSeason)
-		partyRefreshButton:Hide()
-		guildHeader:Hide()
-		guildRefreshButton:Hide()
 
-		SelectTab(tab2)
-		DeselectTab(tab1)
-		DeselectTab(tab3)
-		DeselectTab(tab4)
-
-		if #teleportButtons[1] == 0 then
-			-- if the currentSeason is empty
-			return
-		end
-
-		teleportButtons[1][1]:ClearAllPoints()
-		teleportButtons[1][1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
+	-- Tab 2 (Teleports)
+	do
 		local UnitCastingInfo = UnitCastingInfo
-		self:SetScript("OnUpdate", function()
+		local function OnUpdate()
 			local _, _, _, startTimeMs, endTimeMs, _, _, _, spellId = UnitCastingInfo("player")
 			if spellId then
 				for expansionIndex = 1, #teleportButtons do
@@ -753,37 +778,60 @@ do
 					end
 				end
 			end
-		end)
-		for expansionIndex = 1, #teleportButtons do
-			local list = teleportButtons[expansionIndex]
-			for i = 1, #list do
-				local button = list[i]
-				button:Show()
-				button.cdbar:Hide()
-				if not BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
-					button.icon:SetTexture(136813)
-				else
-					local texture = BigWigsLoader.GetSpellTexture(button.spellID)
-					button.icon:SetTexture(texture)
+		end
+		tab2:SetScript("OnClick", function(self)
+			SelectTab(self)
+			DeselectTab(tab1)
+			DeselectTab(tab3)
+			DeselectTab(tab4)
+
+			local currentSeasonHeader = CreateHeader()
+			currentSeasonHeader:SetText(L.littleWigsExtras.LittleWigs_CurrentSeason)
+			currentSeasonHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
+
+			teleportButtons[1][1]:ClearAllPoints()
+			teleportButtons[1][1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
+			self:SetScript("OnUpdate", OnUpdate)
+
+			local numExpansions = #L.expansionNames
+			for expansionIndex = 1, #teleportButtons do
+				if expansionIndex > 1 then
+					local expansionNameHeader = CreateHeader()
+					expansionNameHeader:SetText(L.expansionNames[numExpansions - (expansionIndex - 2)])
+					local distanceBetween = currentSeasonHeader:GetBottom() - teleportButtons[expansionIndex][1]:GetTop()
+					expansionNameHeader:SetPoint("TOP", scrollChild, "TOP", 0, -(distanceBetween - 10))
+				end
+				local list = teleportButtons[expansionIndex]
+				for i = 1, #list do
+					local button = list[i]
+					button:Show()
+					button.cdbar:Hide()
+					if not BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
+						button.icon:SetTexture(136813)
+					else
+						local texture = BigWigsLoader.GetSpellTexture(button.spellID)
+						button.icon:SetTexture(texture)
+					end
 				end
 			end
-		end
 
-		-- Calculate scroll height
-		local contentsHeight = partyHeader:GetTop() - teleportButtons[#teleportButtons][#teleportButtons[#teleportButtons]]:GetBottom()
-		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
-		scrollChild:SetHeight(newHeight)
-	end)
+			-- Calculate scroll height
+			local contentsHeight = currentSeasonHeader:GetTop() - teleportButtons[#teleportButtons][#teleportButtons[#teleportButtons]]:GetBottom() -- The bottom of the last teleport button
+			local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+			scrollChild:SetHeight(newHeight)
+		end)
+	end
+
+	-- Tab 3 (Alts)
 	tab3:SetScript("OnClick", function(self)
-		partyHeader:SetText(L.keystoneHeaderMyCharacters)
-		partyRefreshButton:Hide()
-		guildHeader:Hide()
-		guildRefreshButton:Hide()
-
-		SelectTab(tab3)
+		SelectTab(self)
 		DeselectTab(tab1)
 		DeselectTab(tab2)
 		DeselectTab(tab4)
+
+		local myCharactersHeader = CreateHeader()
+		myCharactersHeader:SetText(L.keystoneHeaderMyCharacters)
+		myCharactersHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
 
 		-- Begin Display of alts
 		UpdateMyKeystone()
@@ -828,7 +876,7 @@ do
 				local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 				if i == 1 then
 					cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
-					cellLevel:SetPoint("TOPLEFT", partyHeader, "CENTER", 3, -12)
+					cellLevel:SetPoint("TOPLEFT", myCharactersHeader, "CENTER", 3, -12)
 					cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
 				else
@@ -857,24 +905,26 @@ do
 
 				if i == tableSize then
 					-- Calculate scroll height
-					local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
+					local contentsHeight = myCharactersHeader:GetTop() - prevName:GetBottom()
 					local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
 					scrollChild:SetHeight(newHeight)
 				end
 			end
 		end
 	end)
-	tab4:SetScript("OnClick", function(self)
-		partyHeader:SetText(L.keystoneHeaderThisWeek)
-		partyRefreshButton:Hide()
-		guildHeader:SetText(L.keystoneHeaderOlder)
-		guildHeader:Show()
-		guildRefreshButton:Hide()
 
-		SelectTab(tab4)
+	-- Tab 4 (History)
+	tab4:SetScript("OnClick", function(self)
+		SelectTab(self)
 		DeselectTab(tab1)
 		DeselectTab(tab2)
 		DeselectTab(tab3)
+
+		local thisWeekHeader = CreateHeader()
+		thisWeekHeader:SetText(L.keystoneHeaderThisWeek)
+		thisWeekHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
+		local olderHeader = CreateHeader()
+		olderHeader:SetText(L.keystoneHeaderOlder)
 
 		-- Begin Display of history
 		local runs = C_MythicPlus.GetRunHistory(true, true)
@@ -902,7 +952,7 @@ do
 				if i == tableSize then
 					cellMapName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
 					cellLevel:SetPoint("RIGHT", cellScore, "LEFT", -6, 0)
-					cellScore:SetPoint("TOPLEFT", partyHeader, "CENTER", -6, -12)
+					cellScore:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", -6, -12)
 					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
@@ -915,9 +965,15 @@ do
 			else
 				if not firstOldRun then
 					firstOldRun = true
+					if totalThisWeek == 0 then
+						totalThisWeek = 1
+					end
+					local y = 24 + totalThisWeek*26
+					olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
+
 					cellMapName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
 					cellLevel:SetPoint("RIGHT", cellScore, "LEFT", -6, 0)
-					cellScore:SetPoint("TOPLEFT", guildHeader, "CENTER", -6, -12)
+					cellScore:SetPoint("TOPLEFT", olderHeader, "CENTER", -6, -12)
 					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
@@ -948,109 +1004,131 @@ do
 
 			if i == 1 then
 				-- Calculate scroll height
-				local contentsHeight = partyHeader:GetTop() - prevMapName:GetBottom()
+				local contentsHeight = thisWeekHeader:GetTop() - prevMapName:GetBottom()
 				local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
 				scrollChild:SetHeight(newHeight)
 			end
 		end
-
-		guildHeader:ClearAllPoints()
-		local y = 24 + totalThisWeek*26
-		guildHeader:SetPoint("TOP", partyHeader, "BOTTOM", 0, -y)
 	end)
-end
-
-local function UpdateCells(playerList, isGuildList)
-	local sortedplayerList = {}
-	for pName, pData in next, playerList do
-		if not isGuildList or (isGuildList and not partyList[pName]) then
-			local decoratedName = nil
-			local nameTooltip = pName
-			local specID = specs[pName]
-			if specID then
-				local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
-				local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
-				decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, gsub(pName, "%-.+", "*"))
-				nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
-			end
-			local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
-			sortedplayerList[#sortedplayerList+1] = {
-				name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
-				level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
-				map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-", mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-"), mapID = mapID,
-				rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
-			}
-		end
-	end
-	if #sortedplayerList == 0 then return end -- The guild list can be empty
-
-	-- Sort list by level descending, or by name if equal level
-	table.sort(sortedplayerList, function(a, b)
-		local firstLevel = a.level == -1 and 1 or a.level
-		local secondLevel = b.level == -1 and 1 or b.level
-		if firstLevel > secondLevel then
-			return true
-		elseif firstLevel == secondLevel then
-			if a.rating ~= b.rating then -- If both levels are equal then sort by rating first, then sort by name
-				return a.rating > b.rating
-			else
-				return a.name < b.name
-			end
-		end
-	end)
-
-	local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
-	local tableSize = #sortedplayerList
-	local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
-	for i = 1, tableSize do
-		local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
-		if i == 1 then
-			cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
-			cellLevel:SetPoint("TOPLEFT", isGuildList and guildHeader or partyHeader, "CENTER", 3, -12)
-			cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
-			cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
-		else
-			cellName:SetPoint("TOP", prevName, "BOTTOM", 0, -6)
-			cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
-			cellMap:SetPoint("TOP", prevMap, "BOTTOM", 0, -6)
-			cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
-		end
-		cellName:SetWidth(WIDTH_NAME)
-		cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
-		cellName.tooltip = sortedplayerList[i].nameTooltip
-		cellName.isGuildList = isGuildList
-		if not isGuildList and instanceID == sortedplayerList[i].mapID then
-			cellName.isGlowing = true
-			LibStub("LibCustomGlow-1.0").PixelGlow_Start(cellName, nil, nil, 0.06) -- If you're in the dungeon of this players key, glow
-		end
-		cellLevel:SetWidth(WIDTH_LEVEL)
-		cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
-		cellLevel.tooltip = sortedplayerList[i].levelTooltip
-		cellLevel.isGuildList = isGuildList
-		cellMap:SetWidth(WIDTH_MAP)
-		cellMap.text:SetText(sortedplayerList[i].map)
-		cellMap.tooltip = sortedplayerList[i].mapTooltip
-		cellMap.isGuildList = isGuildList
-		cellRating:SetWidth(WIDTH_RATING)
-		cellRating.text:SetText(sortedplayerList[i].rating)
-		cellRating.tooltip = sortedplayerList[i].ratingTooltip
-		cellRating.isGuildList = isGuildList
-		prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
-	end
-
-	-- Calculate scroll height
-	local contentsHeight = partyHeader:GetTop() - prevName:GetBottom()
-	local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
-	scrollChild:SetHeight(newHeight)
-
-	if not isGuildList then
-		guildHeader:ClearAllPoints()
-		local y = 24 + tableSize*26
-		guildHeader:SetPoint("TOP", partyHeader, "BOTTOM", 0, -y)
-	end
 end
 
 do
+	local function GetTeleportTextForSpellID(spellID)
+		if InCombatLockdown() then
+			return L.keystoneTeleportInCombat
+		else
+			local spellName = BigWigsLoader.GetSpellName(spellID)
+			if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
+				return L.keystoneTeleportNotLearned:format(spellName)
+			else
+				local cd = BigWigsLoader.GetSpellCooldown(spellID)
+				if cd.startTime > 0 and cd.duration > 0 then
+					local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+					local hours = math.floor(remainingSeconds / 3600)
+					remainingSeconds = remainingSeconds % 3600
+					local minutes = math.floor(remainingSeconds / 60)
+					return L.keystoneTeleportOnCooldown:format(spellName, hours, minutes)
+				else
+					return L.keystoneTeleportReady:format(spellName)
+				end
+			end
+		end
+	end
+
+	local function UpdateCellsForOnlineTab(playerList, isGuildList)
+		local sortedplayerList = {}
+		for pName, pData in next, playerList do
+			if not isGuildList or (isGuildList and not partyList[pName]) then
+				local decoratedName = nil
+				local nameTooltip = pName
+				local specID = specs[pName]
+				if specID then
+					local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
+					local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
+					decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, gsub(pName, "%-.+", "*"))
+					nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+				end
+				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
+				local teleportSpellID = teleportList[1][mapID]
+				sortedplayerList[#sortedplayerList+1] = {
+					name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
+					level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
+					map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-",
+					mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-") .."\n".. GetTeleportTextForSpellID(teleportSpellID),
+					mapID = mapID,
+					rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
+				}
+			end
+		end
+		if #sortedplayerList == 0 then return end -- The guild list can be empty
+
+		-- Sort list by level descending, or by name if equal level
+		table.sort(sortedplayerList, function(a, b)
+			local firstLevel = a.level == -1 and 1 or a.level
+			local secondLevel = b.level == -1 and 1 or b.level
+			if firstLevel > secondLevel then
+				return true
+			elseif firstLevel == secondLevel then
+				if a.rating ~= b.rating then -- If both levels are equal then sort by rating first, then sort by name
+					return a.rating > b.rating
+				else
+					return a.name < b.name
+				end
+			end
+		end)
+
+		local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
+		local tableSize = #sortedplayerList
+		local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
+		for i = 1, tableSize do
+			local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
+			if i == 1 then
+				cellName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
+				cellLevel:SetPoint("TOPLEFT", isGuildList and headersCurrentlyShowing[2] or headersCurrentlyShowing[1], "CENTER", 3, -12)
+				cellMap:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
+				cellRating:SetPoint("LEFT", cellMap, "RIGHT", 6, 0)
+			else
+				cellName:SetPoint("TOP", prevName, "BOTTOM", 0, -6)
+				cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
+				cellMap:SetPoint("TOP", prevMap, "BOTTOM", 0, -6)
+				cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
+			end
+			cellName:SetWidth(WIDTH_NAME)
+			cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
+			cellName.tooltip = sortedplayerList[i].nameTooltip
+			cellName.isGuildList = isGuildList
+			if not isGuildList and instanceID == sortedplayerList[i].mapID then
+				cellName.isGlowing = true
+				LibStub("LibCustomGlow-1.0").PixelGlow_Start(cellName, nil, nil, 0.06) -- If you're in the dungeon of this players key, glow
+			end
+			cellLevel:SetWidth(WIDTH_LEVEL)
+			cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
+			cellLevel.tooltip = sortedplayerList[i].levelTooltip
+			cellLevel.isGuildList = isGuildList
+			cellMap:SetWidth(WIDTH_MAP)
+			cellMap:SetAttribute("type", "spell")
+			cellMap:SetAttribute("spell", teleportList[1][sortedplayerList[i].mapID])
+			cellMap.text:SetText(sortedplayerList[i].map)
+			cellMap.tooltip = sortedplayerList[i].mapTooltip
+			cellMap.isGuildList = isGuildList
+			cellRating:SetWidth(WIDTH_RATING)
+			cellRating.text:SetText(sortedplayerList[i].rating)
+			cellRating.tooltip = sortedplayerList[i].ratingTooltip
+			cellRating.isGuildList = isGuildList
+			prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
+		end
+
+		-- Calculate scroll height
+		local contentsHeight = headersCurrentlyShowing[1]:GetTop() - prevName:GetBottom()
+		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+		scrollChild:SetHeight(newHeight)
+
+		if not isGuildList then
+			local y = 24 + tableSize*26
+			headersCurrentlyShowing[2]:SetPoint("TOP", headersCurrentlyShowing[1], "BOTTOM", 0, -y)
+		end
+	end
+
 	local function WipeGuildCells()
 		for cell in next, cellsCurrentlyShowing do
 			if cell.isGuildList then
@@ -1071,8 +1149,8 @@ do
 
 				if mainPanel:IsShown() and not tab1:IsEnabled() then
 					WipeCells()
-					UpdateCells(partyList)
-					UpdateCells(guildList, true)
+					UpdateCellsForOnlineTab(partyList)
+					UpdateCellsForOnlineTab(guildList, true)
 				end
 			end
 		elseif channel == "GUILD" then
@@ -1081,7 +1159,7 @@ do
 
 				if mainPanel:IsShown() and not tab1:IsEnabled() then
 					WipeGuildCells()
-					UpdateCells(guildList, true)
+					UpdateCellsForOnlineTab(guildList, true)
 				end
 			end
 		end
