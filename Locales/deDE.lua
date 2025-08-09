@@ -393,7 +393,7 @@ L.fontSizeDesc = "Schriftgröße über den Schieberegler oder durch Eingabe eine
 L.disabled = "Deaktivieren"
 L.disableDesc = "Du bist dabei, das Feature '%s' zu deaktivieren, was |cffff4411nicht empfohlen|r wird.\n\nBist Du sicher, dass Du das tun willst?"
 L.keybinding = "Tastenbelegung"
---L.dragToResize = "Drag to resize"
+L.dragToResize = "Zum Anpassen ziehen"
 
 -- Anchor Points
 L.UP = "Hoch"
