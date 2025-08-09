@@ -393,6 +393,7 @@ L.fontSizeDesc = "使用滑条或在框内输入数值可调整字体尺寸，�
 L.disabled = "禁用"
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
 L.keybinding = "按键设置"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "向上"

@@ -196,9 +196,6 @@ end
 --
 
 local LibKeystone = LibStub("LibKeystone")
-if db.profile.hideFromGuild then
-	LibKeystone.SetGuildHidden(true)
-end
 local LibSpec = LibStub("LibSpecialization")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
@@ -207,13 +204,16 @@ local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
 
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 
-local specs = {}
+if db.profile.hideFromGuild then
+	LibKeystone.SetGuildHidden(true)
+end
+local specializationPlayerList = {}
 do
 	local function addToTable(specID, _, _, playerName)
-		specs[playerName] = specID
+		specializationPlayerList[playerName] = specID
 	end
-	LibSpec.RegisterGroup(specs, addToTable)
-	LibSpec.RegisterGuild(specs, addToTable)
+	LibSpec.RegisterGroup(specializationPlayerList, addToTable)
+	LibSpec.RegisterGuild(specializationPlayerList, addToTable)
 end
 
 --------------------------------------------------------------------------------
@@ -244,6 +244,7 @@ mainPanel:SetResizeBounds(350, 320, 350, 620)
 do
 	local function OnMouseDown(self)
 		self:GetParent():StartSizing("BOTTOMRIGHT")
+		GameTooltip_Hide()
 	end
 	local function OnMouseUp(self)
 		local parent = self:GetParent()
@@ -261,6 +262,12 @@ do
 	drag:EnableMouse(true)
 	drag:SetScript("OnMouseDown", OnMouseDown)
 	drag:SetScript("OnMouseUp", OnMouseUp)
+	drag:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(L.dragToResize)
+		GameTooltip:Show()
+	end)
+	drag:SetScript("OnLeave", GameTooltip_Hide)
 	local tex = drag:CreateTexture(nil, "OVERLAY")
 	tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 	tex:SetAllPoints(drag)
@@ -328,7 +335,7 @@ do
 			keyLevel = myKeyLevel,
 			keyMap = myKeyMap,
 			playerRating = myRating,
-			specId = specs[name] or 0,
+			specId = specializationPlayerList[name] or 0,
 			name = name,
 			realm = realm,
 		}
@@ -1066,7 +1073,7 @@ do
 			if not isGuildList or (isGuildList and not partyList[pName]) then
 				local decoratedName = nil
 				local nameTooltip = pName
-				local specID = specs[pName]
+				local specID = specializationPlayerList[pName]
 				if specID then
 					local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
 					local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()

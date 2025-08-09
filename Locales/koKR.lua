@@ -393,6 +393,7 @@ L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직
 L.disabled = "비활성"
 L.disableDesc = "'%s' 기능을 비활성화하려고 합니다. |cffff4411권장하지 않음|r.\n\n정말로 비활성화하시겠습니까?"
 L.keybinding = "키 설정"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "위"

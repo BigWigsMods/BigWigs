@@ -393,6 +393,7 @@ L.fontSizeDesc = "Отрегулируйте размер шрифта с пом
 L.disabled = "Отключить"
 L.disableDesc = "Вы собираетесь отключить функцию '%s', делать это |cffff4411не рекомендуется|r.\n\nВы уверены, что хотите этого?"
 --L.keybinding = "Keybinding"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "Верх"

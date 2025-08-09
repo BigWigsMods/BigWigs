@@ -393,6 +393,7 @@ L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitan
 L.disabled = "Desativado"
 L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
 --L.keybinding = "Keybinding"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "Cima"

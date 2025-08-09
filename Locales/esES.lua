@@ -393,6 +393,7 @@ L.fontSizeDesc = "Ajusta el tamaño de la letra con el control deslizante o escr
 L.disabled = "Desactivado"
 L.disableDesc = "Estás a punto de desactivar la función '%s', aunque |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacerlo?"
 L.keybinding = "Atajo de teclado"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "Arriba"

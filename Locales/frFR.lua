@@ -393,6 +393,7 @@ L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tap
 L.disabled = "Désactivé"
 L.disableDesc = "Vous allez désactiver la fonctionnalité '%s', ce qui n'est |cffff4411pas recommandé|r.\n\nÊtes-vous sûr de vouloir faire cela ?"
 L.keybinding = "Raccourci clavier"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "Au-dessus"

@@ -393,6 +393,7 @@ L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入�
 L.disabled = "停用"
 L.disableDesc = "即將禁用「%s」的功能，但|cffff4411不建議|r這麼做。\n\n你確定要這麼做嗎？"
 L.keybinding = "按鍵綁定"
+--L.dragToResize = "Drag to resize"
 
 -- Anchor Points
 L.UP = "向上"

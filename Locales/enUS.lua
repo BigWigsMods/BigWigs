@@ -392,6 +392,7 @@ L.fontSizeDesc = "Adjust the font size using the slider or type the value into t
 L.disabled = "Disabled"
 L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 L.keybinding = "Keybinding"
+L.dragToResize = "Drag to resize"
 
 -- Anchor Points / Grow Directions
 L.UP = "Up"
