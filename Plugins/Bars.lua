@@ -986,12 +986,18 @@ do
 	end
 	local function OnMouseDown(self)
 		self:GetParent():StartSizing("BOTTOMRIGHT")
+		GameTooltip_Hide()
 	end
 	local function OnMouseUp(self)
 		self:GetParent():StopMovingOrSizing()
 		if BigWigsOptions and BigWigsOptions:IsOpen() then
 			plugin:UpdateGUI() -- Update X/Y if GUI is open
 		end
+	end
+	local function OnEnter(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(L.dragToResize)
+		GameTooltip:Show()
 	end
 
 	local function createAnchor(position, title, frameLevel, width, height)
@@ -1024,16 +1030,16 @@ do
 		local drag = CreateFrame("Frame", nil, display)
 		drag:SetWidth(16)
 		drag:SetHeight(16)
-		drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
+		drag:SetPoint("BOTTOMRIGHT", -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", OnMouseDown)
 		drag:SetScript("OnMouseUp", OnMouseUp)
+		drag:SetScript("OnEnter", OnEnter)
+		drag:SetScript("OnLeave", GameTooltip_Hide)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
 		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
-		tex:SetWidth(16)
-		tex:SetHeight(16)
+		tex:SetAllPoints(drag)
 		tex:SetBlendMode("ADD")
-		tex:SetPoint("CENTER", drag)
 		display.bars = {}
 		display.RefixPosition = RefixPosition
 		local point, relPoint = plugin.defaultDB[position][1], plugin.defaultDB[position][2]
