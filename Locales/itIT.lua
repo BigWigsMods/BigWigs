@@ -326,6 +326,10 @@ L.H25 = "Eroico 25"
 --L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 --L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
 --L.keystoneViewerOpen = "Open the keystone viewer"
+--L.keystoneClickToWhisper = "Click to open a whisper dialog"
+--L.keystoneClickToTeleportNow = "\nClick to teleport here"
+--L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
+--L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 --L.keystoneShortName_TheRookery = "ROOK"

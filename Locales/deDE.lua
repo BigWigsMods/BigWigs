@@ -327,6 +327,10 @@ L.keystoneAutoShowEndOfRun = "Nach Beenden von Mythisch+ anzeigen"
 L.keystoneAutoShowEndOfRunDesc = "Die Schlüsselstein Anzeige automatisch nach Abschluss des Mythisch+ Dungeons anzeigen.\n\n|cFF33FF99Dies kann helfen, die neu erhaltenen Schlüsselsteine der Gruppe zu sehen.|r"
 L.keystoneViewerExplainer = "Die Schlüsselstein Anzeige kann durch Nutzung des Befehls |cFF33FF99/key|r oder die untenstehende Schaltfläche geöffnet werden.\n\n"
 L.keystoneViewerOpen = "Schlüsselstein Anzeige öffnen"
+--L.keystoneClickToWhisper = "Click to open a whisper dialog"
+--L.keystoneClickToTeleportNow = "\nClick to teleport here"
+--L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
+--L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"

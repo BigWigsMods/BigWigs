@@ -327,6 +327,10 @@ L.keystoneAutoShowEndOfRun = "Affiche lorsque le mythique + est terminé"
 L.keystoneAutoShowEndOfRunDesc = "Montre automatiquement la vue des clefs lorsque le donjon mythique + est terminé.\n\n|cFF33FF99Cela peut vous aider à voir les nouvelles clefs que votre groupe a obtenu.|r"
 L.keystoneViewerExplainer = "Vous pouvez ouvrir la vue des clefs en utilisant la commande |cFF33FF99/key|r ou en cliquant sur le bouton ci-dessous.\n\n"
 L.keystoneViewerOpen = "Ouvre l'affichage des clefs"
+--L.keystoneClickToWhisper = "Click to open a whisper dialog"
+--L.keystoneClickToTeleportNow = "\nClick to teleport here"
+--L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
+--L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "COLONIE"

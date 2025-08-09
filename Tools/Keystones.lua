@@ -437,7 +437,6 @@ local function WipeCells()
 		cell:Hide()
 		cell:ClearAttributes()
 		cell.tooltip = nil
-		cell.isGuildList = nil
 		if cell.isGlowing then
 			cell.isGlowing = nil
 			LibStub("LibCustomGlow-1.0").PixelGlow_Stop(cell)
@@ -469,11 +468,7 @@ mainPanel.CloseButton:SetScript("OnClick", function(self)
 	tab1:Enable() -- Enable tab1 so :Click always works when we open the main panel again
 end)
 mainPanel.CloseButton:UnregisterAllEvents() -- Remove events registered by the template
-mainPanel.CloseButton:SetScript("OnEvent", function(self)
-	if mainPanel:IsShown() then
-		self:Click()
-	end
-end)
+mainPanel.CloseButton:SetScript("OnEvent", mainPanel.CloseButton.Click)
 
 local scrollArea = CreateFrame("ScrollFrame", nil, mainPanel, "ScrollFrameTemplate")
 scrollArea:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", 8, -30)
@@ -1016,27 +1011,22 @@ do
 	local function GetTeleportTextForSpellID(spellID)
 		if spellID == 0 then
 			return ""
-		elseif InCombatLockdown() then
-			return L.keystoneTeleportInCombat
 		else
 			local spellName = BigWigsLoader.GetSpellName(spellID)
 			if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
-				return L.keystoneTeleportNotLearned:format(spellName)
+				return L.keystoneClickToTeleportNotLearned
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(spellID)
 				if cd.startTime > 0 and cd.duration > 0 then
-					local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
-					local hours = math.floor(remainingSeconds / 3600)
-					remainingSeconds = remainingSeconds % 3600
-					local minutes = math.floor(remainingSeconds / 60)
-					return L.keystoneTeleportOnCooldown:format(spellName, hours, minutes)
+					return L.keystoneClickToTeleportCooldown
 				else
-					return L.keystoneTeleportReady:format(spellName)
+					return L.keystoneClickToTeleportNow
 				end
 			end
 		end
 	end
 
+	local guildCellsCurrentlyShowing = {}
 	local function UpdateCellsForOnlineTab(playerList, isGuildList)
 		local sortedplayerList = {}
 		for pName, pData in next, playerList do
@@ -1048,7 +1038,7 @@ do
 					local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
 					local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
 					decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, gsub(pName, "%-.+", "*"))
-					nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+					nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s\n%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "", L.keystoneClickToWhisper)
 				end
 				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
 				local teleportSpellID = mapID and teleportList[1][mapID] or 0
@@ -1056,7 +1046,7 @@ do
 					name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
 					map = pData[2] == -1 and hiddenIcon or dungeonNames[pData[2]] or "-",
-					mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-") .."\n".. GetTeleportTextForSpellID(teleportSpellID),
+					mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-") .. GetTeleportTextForSpellID(teleportSpellID),
 					mapID = mapID,
 					rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
 				}
@@ -1098,15 +1088,15 @@ do
 			cellName:SetWidth(WIDTH_NAME)
 			cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
 			cellName.tooltip = sortedplayerList[i].nameTooltip
-			cellName.isGuildList = isGuildList
 			if not isGuildList and instanceID == sortedplayerList[i].mapID then
 				cellName.isGlowing = true
 				LibStub("LibCustomGlow-1.0").PixelGlow_Start(cellName, nil, nil, 0.06) -- If you're in the dungeon of this players key, glow
 			end
+			cellName:SetAttribute("type", "macro")
+			cellName:SetAttribute("macrotext", "/run ChatFrame_SendTell(\"".. sortedplayerList[i].name .."\")")
 			cellLevel:SetWidth(WIDTH_LEVEL)
 			cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 			cellLevel.tooltip = sortedplayerList[i].levelTooltip
-			cellLevel.isGuildList = isGuildList
 			cellMap:SetWidth(WIDTH_MAP)
 			if sortedplayerList[i].mapID then
 				cellMap:SetAttribute("type", "spell")
@@ -1114,12 +1104,17 @@ do
 			end
 			cellMap.text:SetText(sortedplayerList[i].map)
 			cellMap.tooltip = sortedplayerList[i].mapTooltip
-			cellMap.isGuildList = isGuildList
 			cellRating:SetWidth(WIDTH_RATING)
 			cellRating.text:SetText(sortedplayerList[i].rating)
 			cellRating.tooltip = sortedplayerList[i].ratingTooltip
-			cellRating.isGuildList = isGuildList
 			prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
+			if isGuildList then
+				local num = #guildCellsCurrentlyShowing
+				guildCellsCurrentlyShowing[num+1] = cellName
+				guildCellsCurrentlyShowing[num+2] = cellLevel
+				guildCellsCurrentlyShowing[num+3] = cellMap
+				guildCellsCurrentlyShowing[num+4] = cellRating
+			end
 		end
 
 		-- Calculate scroll height
@@ -1134,15 +1129,13 @@ do
 	end
 
 	local function WipeGuildCells()
-		for cell in next, cellsCurrentlyShowing do
-			if cell.isGuildList then
-				cell:Hide()
-				cell.tooltip = nil
-				cell.isGuildList = nil
-				cell:ClearAllPoints()
-				cellsCurrentlyShowing[cell] = nil
-				cellsAvailable[#cellsAvailable+1] = cell
-			end
+		for i = 1, #guildCellsCurrentlyShowing do
+			local cell = guildCellsCurrentlyShowing[i]
+			cell:Hide()
+			cell.tooltip = nil
+			cell:ClearAllPoints()
+			cellsCurrentlyShowing[cell] = nil
+			cellsAvailable[#cellsAvailable+1] = cell
 		end
 	end
 
@@ -1151,8 +1144,9 @@ do
 			if not partyList[playerName] or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
 				partyList[playerName] = {keyLevel, keyMap, playerRating}
 
-				if mainPanel:IsShown() and not tab1:IsEnabled() then
+				if not tab1:IsEnabled() then -- Only if tab 1 (online) is showing
 					WipeCells()
+					guildCellsCurrentlyShowing = {}
 					UpdateCellsForOnlineTab(partyList)
 					UpdateCellsForOnlineTab(guildList, true)
 				end
@@ -1161,8 +1155,9 @@ do
 			if not guildList[playerName] or guildList[playerName][1] ~= keyLevel or guildList[playerName][2] ~= keyMap or guildList[playerName][3] ~= playerRating then
 				guildList[playerName] = {keyLevel, keyMap, playerRating}
 
-				if mainPanel:IsShown() and not tab1:IsEnabled() then
+				if not tab1:IsEnabled() then -- Only if tab 1 (online) is showing
 					WipeGuildCells()
+					guildCellsCurrentlyShowing = {}
 					UpdateCellsForOnlineTab(guildList, true)
 				end
 			end

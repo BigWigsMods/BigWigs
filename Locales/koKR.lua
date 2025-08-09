@@ -327,6 +327,10 @@ L.keystoneAutoShowEndOfRun = "신화+ 던전이 종료될 때 표시"
 L.keystoneAutoShowEndOfRunDesc = "신화+ 던전이 종료될 때 자동으로 쐐기돌 뷰어를 표시합니다.\n\n|cFF33FF99이 기능을 사용하면 파티가 획득한 새로운 쐐기돌을 확인할 수 있습니다.|r"
 L.keystoneViewerExplainer = "쐐기돌 뷰어를 열려면 |cFF33FF99/key|r 명령어를 사용하거나 아래 버튼을 클릭하세요.\n\n"
 L.keystoneViewerOpen = "쐐기돌 뷰어 열기"
+--L.keystoneClickToWhisper = "Click to open a whisper dialog"
+--L.keystoneClickToTeleportNow = "\nClick to teleport here"
+--L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
+--L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"
