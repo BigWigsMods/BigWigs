@@ -1,7 +1,7 @@
 local L, BigWigsLoader, BigWigsAPI, db
 
 --------------------------------------------------------------------------------
--- Settings
+-- Saved Settings
 --
 
 do
@@ -217,12 +217,12 @@ do
 end
 
 --------------------------------------------------------------------------------
--- GUI widgets
+-- GUI Widgets
 --
 
 local cellsCurrentlyShowing = {}
 local cellsAvailable = {}
-local tab1
+local tab1, tab2
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameTemplate")
 mainPanel:Hide()
@@ -345,129 +345,6 @@ end
 -- If only PLAYER_LOGOUT would work for keystone info, sigh :(
 mainPanel:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_HIDE")
 mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
-
-tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
-tab1:SetSize(50, 26)
-tab1:SetPoint("BOTTOMLEFT", 10, -25)
-tab1.Text:SetText(L.keystoneTabOnline)
-tab1:UnregisterAllEvents() -- Remove events registered by the template
-tab1:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
-do
-	local HasSlottedKeystone, SlotKeystone = C_ChallengeMode.HasSlottedKeystone, C_ChallengeMode.SlotKeystone
-	local GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneMapID
-	local GetContainerNumSlots, GetContainerItemLink, PickupContainerItem = C_Container.GetContainerNumSlots, C_Container.GetContainerItemLink, C_Container.PickupContainerItem
-	tab1:SetScript("OnEvent", function()
-		if db.profile.autoSlotKeystone and not HasSlottedKeystone() then
-			local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
-			if GetOwnedKeystoneMapID() == instanceID then
-				for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
-					local slots = GetContainerNumSlots(currentBag)
-					for currentSlot = 1, slots do
-						local itemLink = GetContainerItemLink(currentBag, currentSlot)
-						if itemLink and itemLink:find("Hkeystone", nil, true) then
-							PickupContainerItem(currentBag, currentSlot)
-							SlotKeystone()
-							BigWigsLoader.Print(L.keystoneAutoSlotMessage:format(itemLink))
-						end
-					end
-				end
-			end
-		end
-	end)
-end
-
-local tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
-tab2:SetSize(50, 26)
-tab2:SetPoint("LEFT", tab1, "RIGHT", 4, 0)
-tab2.Text:SetText(L.keystoneTabTeleports)
-tab2:UnregisterAllEvents() -- Remove events registered by the template
-tab2:RegisterEvent("CHALLENGE_MODE_RESET")
-do
-	local dungeonNamesForBar = {
-		[500] = L.keystoneShortName_TheRookery_Bar, -- ROOK
-		[504] = L.keystoneShortName_DarkflameCleft_Bar, -- DFC
-		[499] = L.keystoneShortName_PrioryOfTheSacredFlame_Bar, -- PRIORY
-		[506] = L.keystoneShortName_CinderbrewMeadery_Bar, -- BREW
-		[525] = L.keystoneShortName_OperationFloodgate_Bar, -- FLOOD
-		[382] = L.keystoneShortName_TheaterOfPain_Bar, -- TOP
-		[247] = L.keystoneShortName_TheMotherlode_Bar, -- ML
-		[370] = L.keystoneShortName_OperationMechagonWorkshop_Bar, -- WORK
-
-		[542] = L.keystoneShortName_EcoDomeAldani_Bar, -- ALDANI
-		[378] = L.keystoneShortName_HallsOfAtonement_Bar, -- HOA
-		[503] = L.keystoneShortName_AraKaraCityOfEchoes_Bar, -- ARAK
-		[392] = L.keystoneShortName_TazaveshSoleahsGambit_Bar, -- GAMBIT
-		[391] = L.keystoneShortName_TazaveshStreetsOfWonder_Bar, -- STREET
-		[505] = L.keystoneShortName_TheDawnbreaker_Bar, -- DAWN
-	}
-	local GetActiveKeystoneInfo, GetActiveChallengeMapID = C_ChallengeMode.GetActiveKeystoneInfo, C_ChallengeMode.GetActiveChallengeMapID
-	tab2:SetScript("OnEvent", function(self, event)
-		if event == "CHALLENGE_MODE_START" then
-			local keyLevel = GetActiveKeystoneInfo()
-			local challengeMapID = GetActiveChallengeMapID()
-			local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
-			BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
-			if keyLevel and keyLevel > 0 then
-				local msg = L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID] or "?", keyLevel)
-				BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, msg, 9, icon)
-				BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, msg, 0, icon, false, true)
-			else
-				BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, L.keystoneModuleName, 9, icon)
-				BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, L.keystoneModuleName, 0, icon, false, true)
-			end
-			BigWigsLoader.CTimerAfter(9, function()
-				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
-				BigWigsLoader.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
-				local soundName = db.profile.countEndSound
-				if soundName ~= "None" then
-					local sound = LibSharedMedia:Fetch("sound", soundName, true)
-					if sound then
-						BigWigsLoader.PlaySoundFile(sound)
-					end
-				end
-			end)
-			BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID], keyLevel), 9), "cyan", icon)
-			local soundName = db.profile.countStartSound
-			if soundName ~= "None" then
-				local sound = LibSharedMedia:Fetch("sound", soundName, true)
-				if sound then
-					BigWigsLoader.PlaySoundFile(sound)
-				end
-			end
-		else -- CHALLENGE_MODE_RESET
-			local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-			if diffID == 8 then
-				TimerTracker:UnregisterEvent("START_TIMER")
-				BigWigsLoader.CTimerAfter(1, function()
-					TimerTracker:RegisterEvent("START_TIMER")
-					self:UnregisterEvent("CHALLENGE_MODE_START")
-				end)
-				self:RegisterEvent("CHALLENGE_MODE_START")
-			end
-		end
-	end)
-end
-
-local tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
-tab3:SetSize(50, 26)
-tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
-tab3.Text:SetText(L.keystoneTabAlts)
-tab3:UnregisterAllEvents() -- Remove events registered by the template
-tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-do
-	local function Open() mainPanel:Show() tab1:Click() end
-	tab3:SetScript("OnEvent", function()
-		if db.profile.autoShowEndOfRun and not not BigWigsLoader.isTestBuild then
-			BigWigsLoader.CTimerAfter(2, Open)
-		end
-	end)
-end
-
-local tab4 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
-tab4:SetSize(50, 26)
-tab4:SetPoint("LEFT", tab3, "RIGHT", 4, 0)
-tab4.Text:SetText(L.keystoneTabHistory)
-tab4:UnregisterAllEvents() -- Remove events registered by the template
 
 local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
@@ -690,7 +567,7 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Tab click handlers
+-- GUI Tabs
 --
 
 do
@@ -737,7 +614,40 @@ do
 		tab.RightActive:Hide()
 	end
 
+	local tab3, tab4
+
 	-- Tab 1 (Online)
+	tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+	tab1:SetSize(50, 26)
+	tab1:SetPoint("BOTTOMLEFT", 10, -25)
+	tab1.Text:SetText(L.keystoneTabOnline)
+	tab1:UnregisterAllEvents() -- Remove events registered by the template
+	tab1:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
+	-- Tab 1 Event Handler (Used for auto slotting the keystone)
+	do
+		local HasSlottedKeystone, SlotKeystone = C_ChallengeMode.HasSlottedKeystone, C_ChallengeMode.SlotKeystone
+		local GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneMapID
+		local GetContainerNumSlots, GetContainerItemLink, PickupContainerItem = C_Container.GetContainerNumSlots, C_Container.GetContainerItemLink, C_Container.PickupContainerItem
+		tab1:SetScript("OnEvent", function()
+			if db.profile.autoSlotKeystone and not HasSlottedKeystone() then
+				local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
+				if GetOwnedKeystoneMapID() == instanceID then
+					for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
+						local slots = GetContainerNumSlots(currentBag)
+						for currentSlot = 1, slots do
+							local itemLink = GetContainerItemLink(currentBag, currentSlot)
+							if itemLink and itemLink:find("Hkeystone", nil, true) then
+								PickupContainerItem(currentBag, currentSlot)
+								SlotKeystone()
+								BigWigsLoader.Print(L.keystoneAutoSlotMessage:format(itemLink))
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
+	-- Tab 1 Click Handler
 	tab1:SetScript("OnClick", function(self)
 		SelectTab(self)
 		DeselectTab(tab2)
@@ -767,6 +677,79 @@ do
 	end)
 
 	-- Tab 2 (Teleports)
+	tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+	tab2:SetSize(50, 26)
+	tab2:SetPoint("LEFT", tab1, "RIGHT", 4, 0)
+	tab2.Text:SetText(L.keystoneTabTeleports)
+	tab2:UnregisterAllEvents() -- Remove events registered by the template
+	tab2:RegisterEvent("CHALLENGE_MODE_RESET")
+	-- Tab 2 Event Handler (Used for handling the initial countdown)
+	do
+		local dungeonNamesForBar = {
+			[500] = L.keystoneShortName_TheRookery_Bar, -- ROOK
+			[504] = L.keystoneShortName_DarkflameCleft_Bar, -- DFC
+			[499] = L.keystoneShortName_PrioryOfTheSacredFlame_Bar, -- PRIORY
+			[506] = L.keystoneShortName_CinderbrewMeadery_Bar, -- BREW
+			[525] = L.keystoneShortName_OperationFloodgate_Bar, -- FLOOD
+			[382] = L.keystoneShortName_TheaterOfPain_Bar, -- TOP
+			[247] = L.keystoneShortName_TheMotherlode_Bar, -- ML
+			[370] = L.keystoneShortName_OperationMechagonWorkshop_Bar, -- WORK
+
+			[542] = L.keystoneShortName_EcoDomeAldani_Bar, -- ALDANI
+			[378] = L.keystoneShortName_HallsOfAtonement_Bar, -- HOA
+			[503] = L.keystoneShortName_AraKaraCityOfEchoes_Bar, -- ARAK
+			[392] = L.keystoneShortName_TazaveshSoleahsGambit_Bar, -- GAMBIT
+			[391] = L.keystoneShortName_TazaveshStreetsOfWonder_Bar, -- STREET
+			[505] = L.keystoneShortName_TheDawnbreaker_Bar, -- DAWN
+		}
+		local GetActiveKeystoneInfo, GetActiveChallengeMapID = C_ChallengeMode.GetActiveKeystoneInfo, C_ChallengeMode.GetActiveChallengeMapID
+		tab2:SetScript("OnEvent", function(self, event)
+			if event == "CHALLENGE_MODE_START" then
+				local keyLevel = GetActiveKeystoneInfo()
+				local challengeMapID = GetActiveChallengeMapID()
+				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
+				BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
+				if keyLevel and keyLevel > 0 then
+					local msg = L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID] or "?", keyLevel)
+					BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, msg, 9, icon)
+					BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, msg, 0, icon, false, true)
+				else
+					BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, L.keystoneModuleName, 9, icon)
+					BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, L.keystoneModuleName, 0, icon, false, true)
+				end
+				BigWigsLoader.CTimerAfter(9, function()
+					BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
+					BigWigsLoader.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+					local soundName = db.profile.countEndSound
+					if soundName ~= "None" then
+						local sound = LibSharedMedia:Fetch("sound", soundName, true)
+						if sound then
+							BigWigsLoader.PlaySoundFile(sound)
+						end
+					end
+				end)
+				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(dungeonNamesForBar[challengeMapID], keyLevel), 9), "cyan", icon)
+				local soundName = db.profile.countStartSound
+				if soundName ~= "None" then
+					local sound = LibSharedMedia:Fetch("sound", soundName, true)
+					if sound then
+						BigWigsLoader.PlaySoundFile(sound)
+					end
+				end
+			else -- CHALLENGE_MODE_RESET
+				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
+				if diffID == 8 then
+					TimerTracker:UnregisterEvent("START_TIMER")
+					BigWigsLoader.CTimerAfter(1, function()
+						TimerTracker:RegisterEvent("START_TIMER")
+						self:UnregisterEvent("CHALLENGE_MODE_START")
+					end)
+					self:RegisterEvent("CHALLENGE_MODE_START")
+				end
+			end
+		end)
+	end
+	-- Tab 2 Click Handler
 	do
 		local UnitCastingInfo = UnitCastingInfo
 		local function OnUpdate()
@@ -855,6 +838,22 @@ do
 	end
 
 	-- Tab 3 (Alts)
+	tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+	tab3:SetSize(50, 26)
+	tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
+	tab3.Text:SetText(L.keystoneTabAlts)
+	tab3:UnregisterAllEvents() -- Remove events registered by the template
+	tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+	-- Tab 3 Event Handler (Used for automatically showing the window when the dungeon ends)
+	do
+		local function Open() mainPanel:Show() tab1:Click() end
+		tab3:SetScript("OnEvent", function()
+			if db.profile.autoShowEndOfRun and not not BigWigsLoader.isTestBuild then
+				BigWigsLoader.CTimerAfter(2, Open)
+			end
+		end)
+	end
+	-- Tab 3 Click Handler
 	tab3:SetScript("OnClick", function(self)
 		SelectTab(self)
 		DeselectTab(tab1)
@@ -946,6 +945,12 @@ do
 	end)
 
 	-- Tab 4 (History)
+	tab4 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
+	tab4:SetSize(50, 26)
+	tab4:SetPoint("LEFT", tab3, "RIGHT", 4, 0)
+	tab4.Text:SetText(L.keystoneTabHistory)
+	tab4:UnregisterAllEvents() -- Remove events registered by the template
+	-- Tab 4 Click Handler
 	tab4:SetScript("OnClick", function(self)
 		SelectTab(self)
 		DeselectTab(tab1)
@@ -1204,6 +1209,10 @@ do
 		end
 	end)
 end
+
+--------------------------------------------------------------------------------
+-- Options Table
+--
 
 do
 	local function voiceSorting()
