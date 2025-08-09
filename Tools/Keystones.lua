@@ -27,6 +27,7 @@ do
 		autoShowZoneIn = true,
 		autoShowEndOfRun = true,
 		hideFromGuild = false,
+		windowHeight = 320,
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 	for k, v in next, db do
@@ -39,6 +40,9 @@ do
 	end
 	if db.profile.countBegin < 3 or db.profile.countBegin > 9 then
 		db.profile.countBegin = defaults.countBegin
+	end
+	if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 then
+		db.profile.windowHeight = defaults.windowHeight
 	end
 end
 
@@ -222,7 +226,7 @@ local tab1
 
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameTemplate")
 mainPanel:Hide()
-mainPanel:SetSize(350, 320)
+mainPanel:SetSize(350, db.profile.windowHeight)
 mainPanel:SetPoint("LEFT", 15, 0)
 mainPanel:SetFrameStrata("DIALOG")
 mainPanel:SetMovable(true)
@@ -235,6 +239,32 @@ mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
 mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
+mainPanel:SetResizable(true)
+mainPanel:SetResizeBounds(350, 320, 350, 620)
+do
+	local function OnMouseDown(self)
+		self:GetParent():StartSizing("BOTTOMRIGHT")
+	end
+	local function OnMouseUp(self)
+		local parent = self:GetParent()
+		parent:StopMovingOrSizing()
+		local height = parent:GetHeight()
+		height = math.floor(height+0.5)
+		db.profile.windowHeight = height
+		parent:SetHeight(height)
+	end
+
+	local drag = CreateFrame("Frame", nil, mainPanel)
+	drag:SetWidth(12)
+	drag:SetHeight(12)
+	drag:SetPoint("BOTTOMRIGHT", -3, 5)
+	drag:EnableMouse(true)
+	drag:SetScript("OnMouseDown", OnMouseDown)
+	drag:SetScript("OnMouseUp", OnMouseUp)
+	local tex = drag:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
+	tex:SetAllPoints(drag)
+end
 
 local UpdateMyKeystone
 do
@@ -924,6 +954,9 @@ do
 		-- Begin Display of history
 		local runs = C_MythicPlus.GetRunHistory(true, true)
 		local tableSize = #runs
+		if tableSize == 0 then
+			olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50) -- Make sure the header shows even with no runs
+		end
 		local highestScoreByMap = {}
 		for i = 1, tableSize do
 			if not highestScoreByMap[runs[i].mapChallengeModeID] then
@@ -961,11 +994,11 @@ do
 				if not firstOldRun then
 					firstOldRun = true
 					if totalThisWeek == 0 then
-						totalThisWeek = 1
+						olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50)
+					else
+						local y = 24 + totalThisWeek*26
+						olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
 					end
-					local y = 24 + totalThisWeek*26
-					olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
-
 					cellMapName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
 					cellLevel:SetPoint("RIGHT", cellScore, "LEFT", -6, 0)
 					cellScore:SetPoint("TOPLEFT", olderHeader, "CENTER", -6, -12)
