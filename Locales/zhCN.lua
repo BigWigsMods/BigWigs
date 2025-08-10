@@ -327,10 +327,10 @@ L.keystoneAutoShowEndOfRun = "史诗钥石地下城结束时显示"
 L.keystoneAutoShowEndOfRunDesc = "当史诗钥石地下城结束时自动显示钥石查看器。\n\n|cFF33FF99这可以帮助你查看队伍成员获得了哪些新钥石。|r"
 L.keystoneViewerExplainer = "你可以使用|cFF33FF99/key|r 命令或点击下方按钮打开钥石查看器。\n\n"
 L.keystoneViewerOpen = "打开钥石查看器"
---L.keystoneClickToWhisper = "Click to open a whisper dialog"
---L.keystoneClickToTeleportNow = "\nClick to teleport here"
---L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
---L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
+L.keystoneClickToWhisper = "点击开启密语窗口"
+L.keystoneClickToTeleportNow = "\n点击传送至此"
+L.keystoneClickToTeleportCooldown = "\n无法传送，法术尚未冷却"
+L.keystoneClickToTeleportNotLearned = "\n无法传送，尚未学会该法术"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷"
@@ -393,7 +393,7 @@ L.fontSizeDesc = "使用滑条或在框内输入数值可调整字体尺寸，�
 L.disabled = "禁用"
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
 L.keybinding = "按键设置"
---L.dragToResize = "Drag to resize"
+L.dragToResize = "拖动调整尺寸"
 
 -- Anchor Points
 L.UP = "向上"
