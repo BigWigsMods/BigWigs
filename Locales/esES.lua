@@ -5,7 +5,7 @@ if not L then return end
 L.tempNew = "NUEVO: Ahora puedes escribir |cFFFFFFFF/key|r para ver las Piedras Angulares de los miembros de tu grupo."
 
 -- API.lua
---L.showAddonBar = "The addon '%s' created the '%s' bar."
+L.showAddonBar = "El addon '%s' creó la barra '%s'."
 
 -- Core.lua
 L.berserk = "Rabia"
@@ -90,7 +90,7 @@ L.Destruction = "Destrucción (Kil'jaeden)"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
 L.spell_on_you = "BigWigs: Hechizo sobre tí"
 L.spell_under_you = "BigWigs: Hechizo debajo de tí"
---L.simple_no_voice = "Simple (No Voice)"
+L.simple_no_voice = "Simple (Sin voz)"
 
 -- Options.lua
 L.options = "Opciones"
@@ -353,20 +353,20 @@ L.keystoneViewerOpen = "Abrir el visor de piedras angular"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
---L.keystoneShortName_TheRookery_Bar = "Rookery"
---L.keystoneShortName_DarkflameCleft_Bar = "Darkflame"
---L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "Priory"
---L.keystoneShortName_CinderbrewMeadery_Bar = "Cinderbrew"
---L.keystoneShortName_OperationFloodgate_Bar = "Floodgate"
---L.keystoneShortName_TheaterOfPain_Bar = "Theater"
---L.keystoneShortName_TheMotherlode_Bar = "Motherlode"
---L.keystoneShortName_OperationMechagonWorkshop_Bar = "Workshop"
---L.keystoneShortName_EcoDomeAldani_Bar = "Al'dani"
---L.keystoneShortName_HallsOfAtonement_Bar = "Halls"
---L.keystoneShortName_AraKaraCityOfEchoes_Bar = "Ara-Kara"
---L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambit"
---L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
---L.keystoneShortName_TheDawnbreaker_Bar = "Dawnbreaker"
+L.keystoneShortName_TheRookery_Bar = "Grajero"
+L.keystoneShortName_DarkflameCleft_Bar = "Grieta"
+L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "Priorato"
+L.keystoneShortName_CinderbrewMeadery_Bar = "Lagar"
+L.keystoneShortName_OperationFloodgate_Bar = "Compuerta"
+L.keystoneShortName_TheaterOfPain_Bar = "Teatro"
+L.keystoneShortName_TheMotherlode_Bar = "Veta Madre"
+L.keystoneShortName_OperationMechagonWorkshop_Bar = "Taller"
+L.keystoneShortName_EcoDomeAldani_Bar = "Al'dani"
+L.keystoneShortName_HallsOfAtonement_Bar = "Salas"
+L.keystoneShortName_AraKaraCityOfEchoes_Bar = "Ara-Kara"
+L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambito"
+L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Calles"
+L.keystoneShortName_TheDawnbreaker_Bar = "Rompealbas"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -574,7 +574,7 @@ L.redirectPopupsColor = "Color del mensaje redirigido"
 L.blockDungeonPopups = "Bloquear las ventanas emergentes de mazmorras"
 L.blockDungeonPopupsDesc = "Los carteles emergentes que aparecen cuando entras a una mazmorras pueden contener texto que es muy largo. Activar esta opcion los bloqueara directamente."
 L.itemLevel = "Nivel de objeto %d"
---L.newRespawnPoint = "New Respawn Point"
+L.newRespawnPoint = "Nueva ubicación de reaparición"
 
 L.userNotifySfx = "Los efectos de sonido fueron desactivados por el Bloque de jefe, forzándolos a volver a activarse."
 L.userNotifyMusic = "La música fue desactivada por el Bloque de jefe, forzándola a volver a activarse."
