@@ -147,6 +147,9 @@ files["Plugins/Pull.lua"].ignore = {
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
 }
+files["Plugins/Statistics.lua"].ignore = {
+	"113/C_UIWidgetManager",
+}
 files["Plugins/RaidIcon.lua"].ignore = {
 	"113/GetRaidTargetIndex",
 }

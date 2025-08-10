@@ -1243,6 +1243,7 @@ local function populateToggleOptions(widget, module)
 				"story", "timewalk", "LFR", "normal", "heroic", "mythic",
 				"N10", "N25", "H10", "H25",
 				"SOD", "level1", "level2", "level3", "hardcore",
+				"tier8", "tier11",
 			}
 			for diff, tbl in next, sDB do -- Unknown Stats
 				local found = false
