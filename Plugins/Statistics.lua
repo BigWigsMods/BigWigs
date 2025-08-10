@@ -334,14 +334,16 @@ do
 		local diff = module:Difficulty()
 		if diff then
 			if diff == 208 then -- Delves
-				-- only recording stats for Nemesis delves
-				local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
-				if info and info.shownState == 1 then
-					return "tier8"
-				end
-				info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6185) -- ?? Difficulty
-				if info and info.shownState == 1 then
-					return "tier11"
+				-- only recording stats for solo Nemesis delves
+				if module:Solo() then
+					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
+					if info and info.shownState == 1 then
+						return "tier8"
+					end
+					info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6185) -- ?? Difficulty
+					if info and info.shownState == 1 then
+						return "tier11"
+					end
 				end
 			elseif diff == 226 then -- SOD
 				if module:GetPlayerAura(458841) then -- Sweltering Heat
