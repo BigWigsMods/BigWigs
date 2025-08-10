@@ -331,9 +331,9 @@ L.keystoneAutoShowEndOfRunDesc = "Enseña automáticamente el visor de piedra an
 L.keystoneViewerExplainer = "Puedes abrir el visor de piedras angular usando el comando |cFF33FF99/key|r o clicando el botón de abajo.\n\n"
 L.keystoneViewerOpen = "Abrir el visor de piedras angular"
 --L.keystoneClickToWhisper = "Click to open a whisper dialog"
---L.keystoneClickToTeleportNow = "\nClick to teleport here"
---L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
---L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
+L.keystoneClickToTeleportNow = "\nClica para teletransportarte aquí"
+L.keystoneClickToTeleportCooldown = "\nNo puedes teletransportarte, hechizo en reutilización"
+L.keystoneClickToTeleportNotLearned = "\nNo puedes teletransportarte, hechizo no aprendido"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 --L.keystoneShortName_TheRookery = "ROOK"
@@ -396,7 +396,7 @@ L.fontSizeDesc = "Ajusta el tamaño de la letra con el control deslizante o escr
 L.disabled = "Desactivado"
 L.disableDesc = "Estás a punto de desactivar la función '%s', aunque |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacerlo?"
 L.keybinding = "Atajo de teclado"
---L.dragToResize = "Drag to resize"
+L.dragToResize = "Arrastra para cambiar el tamaño"
 
 -- Anchor Points
 L.UP = "Arriba"
