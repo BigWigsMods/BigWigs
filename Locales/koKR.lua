@@ -4,6 +4,9 @@ if not L then return end
 
 L.tempNew = "신규: |cFFFFFFFF/key|r를 입력하면 파티원의 쐐기돌을 볼 수 있습니다."
 
+-- API.lua
+--L.showAddonBar = "The addon '%s' created the '%s' bar."
+
 -- Core.lua
 L.berserk = "광폭화"
 L.berserk_desc = "보스가 언제 광폭화하는지 바와 시간 경고를 표시합니다."

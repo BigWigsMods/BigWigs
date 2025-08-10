@@ -4,6 +4,9 @@ if not L then return end
 
 L.tempNew = "NUEVO: Ahora puedes escribir |cFFFFFFFF/key|r para ver las Piedras Angulares de los miembros de tu grupo."
 
+-- API.lua
+--L.showAddonBar = "The addon '%s' created the '%s' bar."
+
 -- Core.lua
 L.berserk = "Enfurecer"
 L.berserk_desc = "Muestra un contador que avisa cuando el jefe entrará en enfurecer"

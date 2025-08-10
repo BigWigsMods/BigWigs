@@ -763,6 +763,7 @@ end
 do
 	local _, tbl = ...
 	tbl.LoadCoreAndOptions = loadCoreAndOptions
+	tbl.LoadAndEnableCore = loadAndEnableCore
 end
 
 local function loadCoreAndOpenOptions()

@@ -8,6 +8,38 @@ addonTbl.API = API
 local type, next, error = type, next, error
 
 --------------------------------------------------------------------------------
+-- Addons creating bars
+--
+
+-- Allows addons to show a bar to the user
+function API.CreateBarFromAddon(addonName, text, icon, barTime)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for bar creation.") end
+	if type(text) ~= "string" or #text < 3 then error("Invalid text for bar creation.") end
+	local iconType = type(icon)
+	if iconType ~= "string" and iconType ~= "number" then error("Invalid icon for bar creation.") end
+	if type(barTime) ~= "number" then error("Invalid bar time for bar creation.") end
+	local L = API:GetLocale("BigWigs")
+	addonTbl.loaderPublic.Print(L.showAddonBar:format(addonName, text))
+	addonTbl.LoadAndEnableCore()
+	addonTbl.loaderPublic:SendMessage("BigWigs_StartBar", nil, nil, text, barTime, icon)
+	addonTbl.loaderPublic:SendMessage("BigWigs_Timer", nil, nil, barTime, barTime, text, 0, icon, false, true)
+end
+
+--------------------------------------------------------------------------------
+-- Addons creating messages
+--
+
+-- Allows addons to show a message to the user
+function API.CreateMessageFromAddon(addonName, text, icon)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for message creation.") end
+	if type(text) ~= "string" or #text < 3 then error("Invalid text for message creation.") end
+	local iconType = type(icon)
+	if iconType ~= "string" and iconType ~= "number" then error("Invalid icon for message creation.") end
+	addonTbl.LoadAndEnableCore()
+	addonTbl.loaderPublic:SendMessage("BigWigs_Message", nil, nil, text, "yellow", icon)
+end
+
+--------------------------------------------------------------------------------
 -- Bar Styles
 --
 
