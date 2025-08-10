@@ -1096,9 +1096,6 @@ function plugin:OnPluginEnable()
 	-- custom bars
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
-
-	-- XXX temporary workaround for wow custom font loading issues, start a dummy bar to force load the selected font into memory
-	self:SendMessage("BigWigs_StartBar", self, nil, "test", 0.01, 134376)
 end
 
 function plugin:OnPluginDisable()
@@ -1254,41 +1251,52 @@ end
 -- Start bars
 --
 
-function plugin:CreateBar(module, key, text, time, icon, isApprox)
-	local width, height
-	width = db.normalWidth
-	height = db.normalHeight
-	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
-	bar:Set("bigwigs:module", module)
-	bar:Set("bigwigs:option", key)
-	bar:Set("bigwigs:anchor", "normalPosition")
-	normalAnchor.bars[bar] = true
-	bar:SetIcon(db.icon and icon or nil)
-	bar:SetLabel(text)
-	bar:SetDuration(time, isApprox)
-	bar:SetColor(colors:GetColor("barColor", module, key))
-	bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
-	bar:SetTextColor(colors:GetColor("barText", module, key))
-	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
-	bar.candyBarLabel:SetJustifyH(db.alignText)
-	bar.candyBarDuration:SetJustifyH(db.alignTime)
-	local flags = nil
-	if db.monochrome and db.outline ~= "NONE" then
-		flags = "MONOCHROME," .. db.outline
-	elseif db.monochrome then
-		flags = "MONOCHROME"
-	elseif db.outline ~= "NONE" then
-		flags = db.outline
+do
+	local initial = true
+	function plugin:CreateBar(module, key, text, time, icon, isApprox)
+		local width, height
+		width = db.normalWidth
+		height = db.normalHeight
+		local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
+		local flags = nil
+		if db.monochrome and db.outline ~= "NONE" then
+			flags = "MONOCHROME," .. db.outline
+		elseif db.monochrome then
+			flags = "MONOCHROME"
+		elseif db.outline ~= "NONE" then
+			flags = db.outline
+		end
+		local f = media:Fetch(FONT, db.fontName)
+		bar:SetFont(f, db.fontSize, flags)
+		bar:Set("bigwigs:module", module)
+		bar:Set("bigwigs:option", key)
+		bar:Set("bigwigs:anchor", "normalPosition")
+		normalAnchor.bars[bar] = true
+		bar:SetIcon(db.icon and icon or nil)
+		bar:SetDuration(time, isApprox)
+		bar:SetColor(colors:GetColor("barColor", module, key))
+		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
+		bar:SetTextColor(colors:GetColor("barText", module, key))
+		bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
+		bar.candyBarLabel:SetJustifyH(db.alignText)
+		bar.candyBarDuration:SetJustifyH(db.alignTime)
+
+		bar:SetTimeVisibility(db.time)
+		bar:SetLabelVisibility(db.text)
+		bar:SetIconPosition(db.iconPosition)
+		bar:SetFill(db.fill)
+		bar:SetLabel(text)
+		if initial then
+			-- Workaround for wow custom font loading issues
+			self:SimpleTimer(function()
+				initial = false
+				bar:SetLabel("-1")
+				bar:SetLabel(text)
+			end, 0.3)
+		end
+
+		return bar
 	end
-	local f = media:Fetch(FONT, db.fontName)
-	bar:SetFont(f, db.fontSize, flags)
-
-	bar:SetTimeVisibility(db.time)
-	bar:SetLabelVisibility(db.text)
-	bar:SetIconPosition(db.iconPosition)
-	bar:SetFill(db.fill)
-
-	return bar
 end
 
 do
