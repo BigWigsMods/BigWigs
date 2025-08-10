@@ -5,7 +5,7 @@ if not L then return end
 L.tempNew = "NEU: Du kannst jetzt |cFFFFFFFF/key|r eingeben, um die Mythisch+ Schlüsselsteine Deiner Gruppenmitglieder zu sehen."
 
 -- API.lua
---L.showAddonBar = "The addon '%s' created the '%s' bar."
+L.showAddonBar = "Das Addon '%s' hat die Leiste '%s' erstellt."
 
 -- Core.lua
 L.berserk = "Berserker"
