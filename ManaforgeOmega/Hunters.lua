@@ -175,6 +175,7 @@ function mod:OnEngage()
 	self:Bar(1227355, 25.7, CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
 
 	-- Velaryn Bloodwrath
+	velarynAlive = false
 	theHuntCount = 1
 	bladeDanceCount = 1
 	eyeBeamCount = 1
@@ -305,9 +306,8 @@ function mod:Voidstep(args)
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, voidstepCount))
 	self:PlaySound(args.spellId, "info") -- boss moving
 	voidstepCount = voidstepCount + 1
-	if voidstepCount <= 5 then -- 5 in total, not used during the 2nd part of the encounter. bugged?
-		local cd = voidstepCount % 3 == 2 and 29 or voidstepCount % 3 == 0 and 26.2 or 67.3
-		self:Bar(args.spellId, cd, CL.count:format(args.spellName, voidstepCount))
+	if voidstepCount <= 5 and voidstepCount % 2 == 0 then -- 5 in total, odds are after intermissions
+		self:Bar(args.spellId, 31.5, CL.count:format(args.spellName, voidstepCount))
 	end
 end
 
@@ -500,9 +500,8 @@ function mod:SpiritBomb(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.raid_damage, spiritBombCount))
 	self:PlaySound(args.spellId, "alarm") -- raid damage
 	spiritBombCount = spiritBombCount + 1
-	if spiritBombCount <= 10 then -- 10 total
-		local cd = spiritBombCount % 3 == 1 and 57.3 or 32.6
-		self:Bar(args.spellId, cd, CL.count:format(CL.raid_damage, spiritBombCount))
+	if spiritBombCount <= 10 and spiritBombCount % 3 ~= 1 then -- 10 total, don't show those after intermissions
+		self:Bar(args.spellId, 31.9, CL.count:format(CL.raid_damage, spiritBombCount))
 	end
 end
 
