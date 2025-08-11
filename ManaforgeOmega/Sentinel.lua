@@ -312,8 +312,8 @@ end
 
 function mod:EnergyCutterApplied(args)
 	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, "underyou")
 		self:PlaySound(args.spellId, "underyou", nil, args.destName)
-		self:PersonalMessage(args.spellId)
 	end
 end
 
