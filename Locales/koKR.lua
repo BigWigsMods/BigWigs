@@ -5,7 +5,7 @@ if not L then return end
 L.tempNew = "신규: |cFFFFFFFF/key|r를 입력하면 파티원의 쐐기돌을 볼 수 있습니다."
 
 -- API.lua
---L.showAddonBar = "The addon '%s' created the '%s' bar."
+L.showAddonBar = "'%s' 애드온이 '%s' 바를 생성했습니다."
 
 -- Core.lua
 L.berserk = "광폭화"
@@ -330,10 +330,10 @@ L.keystoneAutoShowEndOfRun = "신화+ 던전이 종료될 때 표시"
 L.keystoneAutoShowEndOfRunDesc = "신화+ 던전이 종료될 때 자동으로 쐐기돌 뷰어를 표시합니다.\n\n|cFF33FF99이 기능을 사용하면 파티가 획득한 새로운 쐐기돌을 확인할 수 있습니다.|r"
 L.keystoneViewerExplainer = "쐐기돌 뷰어를 열려면 |cFF33FF99/key|r 명령어를 사용하거나 아래 버튼을 클릭하세요.\n\n"
 L.keystoneViewerOpen = "쐐기돌 뷰어 열기"
---L.keystoneClickToWhisper = "Click to open a whisper dialog"
---L.keystoneClickToTeleportNow = "\nClick to teleport here"
---L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
---L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
+L.keystoneClickToWhisper = "귓속말 대화 상자를 열려면 클릭"
+L.keystoneClickToTeleportNow = "\n여기로 순간이동 하려면 클릭"
+L.keystoneClickToTeleportCooldown = "\n순간이동 불가, 재사용 대기 중"
+L.keystoneClickToTeleportNotLearned = "\n순간이동 불가, 주문 미습득"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"
@@ -396,7 +396,7 @@ L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직
 L.disabled = "비활성"
 L.disableDesc = "'%s' 기능을 비활성화하려고 합니다. |cffff4411권장하지 않음|r.\n\n정말로 비활성화하시겠습니까?"
 L.keybinding = "키 설정"
---L.dragToResize = "Drag to resize"
+L.dragToResize = "드래그하여 크기 조정"
 
 -- Anchor Points
 L.UP = "위"
