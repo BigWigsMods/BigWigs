@@ -91,8 +91,8 @@ function mod:GetOptions()
 				{1224767, "ME_ONLY", "ME_ONLY_EMPHASIZE"}, -- King's Thrall
 			1224776, -- Subjugation Rule
 				{1224787, "CASTBAR"}, -- Conquer
-				1224812, -- Vanquish
-			{1227549, "ME_ONLY_EMPHASIZE"}, -- Banishment
+				{1224812, "TANK"}, -- Vanquish
+			{1227549, "ME_ONLY", "ME_ONLY_EMPHASIZE"}, -- Banishment
 			1224906, -- Invoke the Oath
 			-- Royal Voidwing
 				{1224827, "PRIVATE"}, -- Behead
@@ -231,7 +231,8 @@ function mod:OnBossEnable()
 		self:Log("SPELL_AURA_REMOVED", "KingsHungerRemoved", 1228265)
 
 	-- Stage Three: World in Twilight
-		self:Log("SPELL_CAST_SUCCESS", "GalacticSmash", 1226648)
+		self:Log("SPELL_CAST_SUCCESS", "GalacticSmashApplied", 1226648) -- PA Debuffs applying
+		self:Log("SPELL_CAST_SUCCESS", "GalacticSmashStart", 1225319)
 		self:Log("SPELL_AURA_APPLIED", "TwilightScarApplied", 1226362)
 		self:Log("SPELL_AURA_APPLIED", "StarshatteredApplied", 1226413)
 		self:Log("SPELL_CAST_SUCCESS", "StarkillerSwing", 1226442)
@@ -591,15 +592,18 @@ function mod:KingsHungerRemoved(args)
 	self:Bar(1225634, 182.5) -- World in Twilight // end of channel aka full room (Also adjust time in _START function)
 end
 
-function mod:GalacticSmash(args)
+function mod:GalacticSmashApplied(args)
 	self:StopBar(CL.count:format(L.galaxy_smash, smashCount))
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.galaxy_smash, smashCount)))
 	-- No Sounds, Private Debuffs
-	self:CastBar(args.spellId, 8, CL.count:format(L.galaxy_smash, smashCount))
 	smashCount = smashCount + 1
 	if smashCount <= 3 then -- only 3 before enrage
 		self:Bar(args.spellId, 55, CL.count:format(L.galaxy_smash, smashCount))
 	end
+end
+
+function mod:GalacticSmashStart(args)
+	self:Message(1226648, "orange", CL.casting:format(CL.count:format(L.galaxy_smash, smashCount)))
+	self:CastBar(1226648, 8, CL.count:format(L.galaxy_smash, smashCount))
 end
 
 function mod:TwilightScarApplied(args)
