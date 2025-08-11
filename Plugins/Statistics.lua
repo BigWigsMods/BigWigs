@@ -338,11 +338,11 @@ do
 				if module:Solo() then
 					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
 					if info and info.shownState == 1 then
-						return "tier8"
+						return "solotier8"
 					end
 					info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6185) -- ?? Difficulty
 					if info and info.shownState == 1 then
-						return "tier11"
+						return "solotier11"
 					end
 				end
 			elseif diff == 226 then -- SOD
