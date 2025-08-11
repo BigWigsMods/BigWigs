@@ -100,7 +100,7 @@ function mod:GetOptions()
 					1219354, -- Potent Residue
 			{1219263, "CASTBAR", "SAY", "SAY_COUNTDOWN"}, -- Obliteration Arcanocannon
 		-- Stage Two: The Sieve Awakens
-				1237084, -- Energy Cutter
+				1218668, -- Energy Cutter
 				1233110, -- Purging Lightning
 				1219471, -- Expulsion Zone
 	},{
@@ -114,7 +114,7 @@ function mod:GetOptions()
 		},
 		{
 			tabName = CL.stage:format(2),
-			{1237084, 1233110, 1219471},
+			{1218668, 1233110, 1219471},
 		},
 	},{
 		[1219450] = CL.pools, -- Manifest Matrices (Pools)
@@ -127,7 +127,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PhaseBlinkApplied", 1220679)
 	self:Log("SPELL_CAST_START", "CleanseTheChamber", 1234733)
-	self:Log("SPELL_DAMAGE", "AvoidableDamage", 1219223, 1227794, 1219471) -- Atomize, Arcane Lightning, Expulsion Zone
+	self:Log("SPELL_DAMAGE", "AvoidableDamage", 1219223, 1227794, 1219471, 1218668) -- Atomize, Arcane Lightning, Expulsion Zone, Energy Cutter
 	self:Log("SPELL_AURA_APPLIED", "ArcaneRadiationDamage", 1219248)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ArcaneRadiationDamage", 1219248)
 	self:Log("SPELL_PERIODIC_MISSED", "ArcaneRadiationDamage", 1219248)
@@ -307,13 +307,6 @@ function mod:ProtocolPurgeRemoved()
 		self:Bar("stages", 94.0, CL.count:format(self:SpellName(1234733), protocolPurgeCount), 1234733) -- Cleanse the Chamber
 	else
 		self:Bar("stages", 94.0, CL.count:format(CL.stage:format(2), protocolPurgeCount), 1220489) -- Stage 2 (Protocol: Purge)
-	end
-end
-
-function mod:EnergyCutterApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, "underyou")
-		self:PlaySound(args.spellId, "underyou", nil, args.destName)
 	end
 end
 
