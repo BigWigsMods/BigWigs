@@ -330,11 +330,11 @@ do
 			end
 		end
 	end
-	local function getDifficultyText(module)
+	local function GetDifficultyText(module)
 		local diff = module:Difficulty()
 		if diff then
 			if diff == 208 then -- Delves
-				-- only recording stats for solo Nemesis delves
+				-- Only record stats for solo Nemesis delves
 				if module:Solo() then
 					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
 					if info and info.shownState == 1 then
@@ -372,7 +372,7 @@ do
 			local t = GetTime()
 			activeDurations[journalID] = {t}
 
-			local difficultyText = getDifficultyText(module)
+			local difficultyText = GetDifficultyText(module)
 			if difficultyText then
 				local sDB = BigWigsStatsDB
 				if not sDB[instanceID] then sDB[instanceID] = {} end
@@ -453,10 +453,10 @@ function plugin:BigWigs_OnBossWin(event, module)
 end
 
 do
-	local function getMinimumDuration(module)
+	local function GetMinimumEncounterDuration(module)
 		local diff = module:Difficulty()
 		if diff == 208 then -- Delves
-			-- as solo content, Delve encounters can be over quickly
+			-- As solo content, Delve encounters can be over quickly
 			return 5
 		end
 		-- Raid encounters must last longer than 30 seconds to be an actual wipe worth noting
@@ -468,7 +468,7 @@ do
 			local elapsed = GetTime()-activeDurations[journalID][1]
 			local difficultyText = activeDurations[journalID][2]
 
-			if elapsed > getMinimumDuration(module) then
+			if elapsed > GetMinimumEncounterDuration(module) then
 				if self.db.profile.printDefeat then
 					BigWigs:Print(L.bossDefeatPrint:format(module.displayName, SecondsToTime(elapsed)))
 				end
