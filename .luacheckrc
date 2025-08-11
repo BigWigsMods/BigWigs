@@ -69,6 +69,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/GetRaidTargetIndex",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
+	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
 }
@@ -83,6 +84,7 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/GetTalentTabInfo",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
+	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
 }
@@ -146,6 +148,9 @@ files["Plugins/Pull.lua"].ignore = {
 	"113/GetPlayerInfoByGUID",
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
+}
+files["Plugins/Statistics.lua"].ignore = {
+	"113/C_UIWidgetManager",
 }
 files["Plugins/RaidIcon.lua"].ignore = {
 	"113/GetRaidTargetIndex",
