@@ -146,7 +146,6 @@ function mod:OnBossEnable()
 	-- Stage Two: The Sieve Awakens
 	self:Log("SPELL_CAST_START", "ProtocolPurge", 1220489, 1220553, 1220555)
 	self:Log("SPELL_AURA_REMOVED", "ProtocolPurgeRemoved", 1220618, 1220981, 1220982) -- End of Stage 2
-	self:Log("SPELL_AURA_APPLIED", "EnergyCutterApplied", 1237084)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PurgingLightningApplied", 1233110)
 
 	timers = self:Mythic() and timersMythic or timersOther
