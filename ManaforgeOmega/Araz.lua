@@ -300,7 +300,8 @@ function mod:ArcaneObliteration(args)
 	self:PlaySound(args.spellId, "warning") -- soak if needed
 	arcaneObliterationCount = arcaneObliterationCount + 1
 	arcaneObliterationTotalCount = arcaneObliterationTotalCount + 1 -- Total count as in mythic you can only soak 1 in the whole fight.
-	self:Bar(args.spellId, getTimers(args.spellId, arcaneObliterationCount), CL.count:format(CL.soak, arcaneObliterationTotalCount))
+	local cd = getTimers(args.spellId, arcaneObliterationCount)
+	self:Bar(args.spellId, cd, CL.count:format(CL.soak, arcaneObliterationTotalCount))
 end
 
 function mod:AstralMarkApplied(args)
@@ -345,7 +346,7 @@ function mod:InvokeCollector(args)
 	self:Message(args.spellId, "cyan", CL.count:format(L.invoke_collector, invokerCollectorCount))
 	self:PlaySound(args.spellId, "long") -- debuffs incoming
 	invokerCollectorCount = invokerCollectorCount + 1
-	local cd = getTimers(args.spellId, silencingTempestCount)
+	local cd = getTimers(args.spellId, invokerCollectorCount)
 	self:Bar(args.spellId, cd, CL.count:format(L.invoke_collector, invokerCollectorCount))
 end
 
@@ -516,9 +517,9 @@ function mod:Stage2Start()
 	overwhelmingPowerCount = 1
 	deathThroesCount = 1
 
-	self:Bar(1228502, 8, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
-	self:Bar(1243901, 16.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
-	self:Bar(1228188, 66.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
+	self:Bar(1228502, self:Mythic() and 4 or 8, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
+	self:Bar(1243901, self:Mythic() and 8 or 16.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
+	self:Bar(1228188, self:Mythic() and 12 or 66.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	if self:Mythic() then
 		self:Bar(1232221, 39.0, CL.count:format(CL.knockback, deathThroesCount)) -- Death Throes
 	end
@@ -541,6 +542,9 @@ function mod:VoidHarvest()
 	self:PlaySound(1243901, "info") -- debuffs incoming
 	voidHarvestCount = voidHarvestCount + 1
 	local cd = voidHarvestCount % 2 == 0 and 8 or voidHarvestCount == 3 and 80 or 46
+	if self:Mythic() then
+		cd = voidHarvestCount % 3 == 1 and 25 or 8
+	end
 	self:Bar(1243901, cd, CL.count:format(CL.orbs, voidHarvestCount))
 end
 
