@@ -1,3 +1,7 @@
+
+-- TODO:
+-- -- XXX What happens with intermission/ultimates if they die?
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -8,8 +12,6 @@ mod:RegisterEnableMob(237661, 248404, 237662) -- Adarus Duskblaze, Velaryn Blood
 mod:SetEncounterID(3122)
 mod:SetRespawnTime(30)
 
--- XXX What happens with intermission/ultimates if they die?
-
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -17,15 +19,18 @@ mod:SetRespawnTime(30)
 local bossesKilled = 0
 
 -- Adarus Duskblaze
+local adarusAlive = true
 local devourersIreOnMe = false
 local voidstepCount = 1
 
 -- Velaryn Bloodwrath
+local velarynAlive = true
 local theHuntCount = 1
 local bladeDanceCount = 1
 local eyeBeamCount = 1
 
 -- Ilyssa Darksorrow
+local ilyssaAlive = true
 local fractureCount = 1
 local spiritBombCount = 1
 local sigilOfChainsCount = 1
@@ -105,8 +110,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
-	self:Log("SPELL_CAST_START", "Metamorphosis", 1231501, 1232568, 1232569) -- Meta Cast to track intermissions
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3") -- Blade Dance & Intermission end
+	self:Log("SPELL_CAST_START", "Metamorphosis", 1231501, 1232568, 1232569) -- Meta Cast to track intermission start
 
 	-- Adarus Duskblaze
 	self:Log("SPELL_AURA_APPLIED", "DevourersIreApplied", 1222232)
@@ -163,10 +168,11 @@ end
 function mod:OnEngage()
 	bossesKilled = 0
 	-- Adarus Duskblaze
+	adarusAlive = false
 	devourersIreOnMe = false
 	voidstepCount = 1
 
-	self:Bar(1227355, 31.5, CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
+	self:Bar(1227355, 25.7, CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
 
 	-- Velaryn Bloodwrath
 	theHuntCount = 1
@@ -177,6 +183,7 @@ function mod:OnEngage()
 	self:Bar(1218103, 19.3, CL.count:format(self:SpellName(1218103), eyeBeamCount)) -- Eye Beam
 
 	-- Ilyssa Darksorrow
+	ilyssaAlive = false
 	fractureCount = 1
 	spiritBombCount = 1
 	sigilOfChainsCount = 1
@@ -195,9 +202,61 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 1241254 then -- Blade Dance
-		self:BladeDance()
+do
+	local prev = 0
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+		if spellId == 1241254 then -- Blade Dance
+			self:BladeDance()
+		elseif spellId == 1233388 or spellId == 1234694 or spellId == 1234724 then -- Meta Land USCS Events
+			local time = GetTime()
+			if time - prev > 3 then -- end of intermission
+				prev = time
+				self:Message("stages", "green", CL.over:format(CL.intermission), false) -- Intermission Over
+				self:PlaySound("stages", "long")
+				if metaCount == 2 or metaCount == 3 then
+					-- Adarus Duskblaze
+					if adarusAlive and metaCount == 3 then -- XXX Wasn't cast between 1nd and 2nd meta for some reason on mythic, check on live
+						self:Bar(1227355, 14.2, CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
+					end
+
+					-- Velaryn Bloodwrath
+					if velarynAlive then
+						self:Bar(1227809, 28.7, CL.count:format(CL.soak, theHuntCount)) -- The Hunt
+						self:Bar(1241306, 18.4, CL.count:format(CL.dodge, bladeDanceCount)) -- Blade Dance
+						self:Bar(1218103, 7.8, CL.count:format(self:SpellName(1218103), eyeBeamCount)) -- Eye Beam
+					end
+
+					-- Ilyssa Darksorrow
+					if ilyssaAlive then
+						self:Bar(1241833, 3.5, CL.count:format(self:SpellName(1241833), fractureCount)) -- Fracture
+						self:Bar(1242259, 19.5, CL.count:format(CL.raid_damage, spiritBombCount)) -- Spirit Bomb
+						if self:Mythic() then
+							self:Bar(1240891, 26.4, CL.count:format(CL.pull_in, sigilOfChainsCount)) -- Sigil of Chains
+						end
+					end
+
+					self:Bar("stages", 90.9, CL.count:format(CL.intermission, metaCount), metaCount == 3 and 1227117 or 1233863) -- Fel Rush / Fel Devastation icons
+				elseif metaCount == 4 then
+					-- Adarus Duskblaze
+					if adarusAlive then
+						self:Bar(1227355, 8.9, CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
+					end
+
+					-- Velaryn Bloodwrath
+					if velarynAlive then
+						self:Bar(1227809, 7.5, CL.count:format(CL.soak, theHuntCount)) -- The Hunt
+					end
+
+					-- Ilyssa Darksorrow
+					if ilyssaAlive then
+						self:Bar(1241833, 4.5, CL.count:format(self:SpellName(1241833), fractureCount)) -- Fracture
+						self:Bar(1242259, 14.1, CL.count:format(CL.raid_damage, spiritBombCount)) -- Spirit Bomb
+					end
+
+					self:Bar("stages", 21.2, CL.count:format(CL.intermission, metaCount), 1231501) -- All
+				end
+			end
+		end
 	end
 end
 
@@ -206,22 +265,9 @@ do
 	function mod:Metamorphosis(args)
 		if args.time - prev > 10 then -- next intermission
 			prev = args.time
-			metaCount = metaCount + 1
-			local cd = nil
-			local icon = args.spellId
-			if metaCount == 2 then
-				cd = 122
-				icon = 1233863 -- Fel Rush
-			elseif metaCount == 3 then
-				cd = 122
-				icon = 1227117 -- Fel Devastation
-			elseif metaCount == 4 then -- All Next
-				cd = 52
-			end
-			self:Message("stages", "cyan", CL.count:format(CL.intermission, metaCount - 1), false) -- Intermission
+			self:Message("stages", "cyan", CL.count:format(CL.intermission, metaCount), false) -- Intermission
 			self:PlaySound("stages", "long")
-			self:Bar("stages", cd, CL.count:format(CL.intermission, metaCount), icon)
-
+			metaCount = metaCount + 1
 			infernalStrikeCount = 1
 		end
 	end
@@ -321,7 +367,8 @@ end
 function mod:AdarusDuskblazeDeath(args)
 	self:StopBar(CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
 	bossesKilled = bossesKilled + 1
-	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled), false)
+	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	adarusAlive = false
 end
 
 -- Velaryn Bloodwrath
@@ -341,18 +388,17 @@ do
 			subCount = 1
 			local messageText = CL.count:format(CL.soak, theHuntCount)
 			if self:Mythic() then
-				messageText = CL.count_amount:format(messageText, subCount, 3)
+				messageText = CL.count_amount:format(CL.soak, subCount, 3)
 			end
 			self:Message(args.spellId, "orange", messageText)
 			self:PlaySound(args.spellId, "long") -- watch charge(s)
 			theHuntCount = theHuntCount + 1
-			if theHuntCount <= 7 then  -- 7 in total
-				local cd = theHuntCount == 7 and 69.9 or theHuntCount % 2 == 1 and 89.9 or 32.6
-				self:Bar(args.spellId, cd, CL.count:format(CL.soak, theHuntCount))
+			if theHuntCount <= 7 and theHuntCount % 2 == 0 then  -- 7 in total, odds are after intermissions
+				self:Bar(args.spellId, 32.6, CL.count:format(CL.soak, theHuntCount))
 			end
 		else -- Should only happen in Mythic
 			subCount = subCount + 1
-			self:Message(args.spellId, "orange", CL.count_amount:format(CL.count:format(CL.soak, theHuntCount - 1), subCount, 3))
+			self:Message(args.spellId, "orange", CL.count_amount:format(CL.soak, subCount, 3))
 		end
 	end
 end
@@ -362,9 +408,8 @@ function mod:BladeDance()
 	self:Message(1241306, "red", CL.count:format(CL.dodge, bladeDanceCount))
 	self:PlaySound(1241306, "alert") -- watch dances
 	bladeDanceCount = bladeDanceCount + 1
-	if bladeDanceCount <= 9 then -- 9 total
-		local cd = bladeDanceCount % 3 == 1 and 57.3 or 32.6
-		self:Bar(1241306, cd, CL.count:format(CL.dodge, bladeDanceCount))
+	if bladeDanceCount <= 9 and bladeDanceCount % 3 ~= 1 then -- 9 total, don't show those after intermissions
+		self:Bar(1241306, 31.9, CL.count:format(CL.dodge, bladeDanceCount))
 	end
 end
 
@@ -373,9 +418,8 @@ function mod:EyeBeam(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, eyeBeamCount))
 	-- self:PlaySound(args.spellId, "alert") -- Sounds from getting hit is enough.
 	eyeBeamCount = eyeBeamCount + 1
-	if eyeBeamCount <= 9 then -- 9 total
-		local cd = eyeBeamCount % 3 == 1 and 57.3 or 32.6
-		self:Bar(args.spellId, cd, CL.count:format(args.spellName, eyeBeamCount))
+	if eyeBeamCount <= 9 and eyeBeamCount % 3 ~= 1 then -- 9 total, don't show those after intermissions
+		self:Bar(args.spellId, 31.9, CL.count:format(args.spellName, eyeBeamCount))
 	end
 end
 
@@ -406,7 +450,8 @@ function mod:VelarynBloodwrathDeath(args)
 	self:StopBar(CL.count:format(CL.dodge, bladeDanceCount)) -- Blade Dance
 	self:StopBar(CL.count:format(self:SpellName(1218103), eyeBeamCount)) -- Eye Beam
 	bossesKilled = bossesKilled + 1
-	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled), false)
+	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	velarynAlive = false
 end
 
 -- Ilyssa Darksorrow
@@ -414,9 +459,8 @@ function mod:Fracture(args)
 	self:StopBar(CL.count:format(args.spellName, fractureCount))
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, fractureCount))
 	fractureCount = fractureCount + 1
-	if fractureCount <= 10 then -- 10 total
-		local cd = fractureCount % 3 == 1 and 57.3 or 32.6
-		self:Bar(args.spellId, cd, CL.count:format(args.spellName, fractureCount))
+	if fractureCount <= 10 and fractureCount % 3 ~= 1 then -- 10 total, don't show those after intermissions
+		self:Bar(args.spellId, 31.9, CL.count:format(args.spellName, fractureCount))
 	end
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:Tanking(unit) then
@@ -512,9 +556,8 @@ function mod:SigilOfChains(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.pull_in, sigilOfChainsCount))
 	self:PlaySound(args.spellId, "warning") -- pull in
 	sigilOfChainsCount = sigilOfChainsCount + 1
-	if sigilOfChainsCount <= 6 then -- 6 total
-		local cd = sigilOfChainsCount % 2 == 1 and 90.9 or 32.0
-		self:Bar(args.spellId, cd, CL.count:format(CL.pull_in, sigilOfChainsCount))
+	if sigilOfChainsCount <= 6 and sigilOfChainsCount % 2 == 0 then -- 6 total, odds are after intermissions
+		self:Bar(args.spellId, 31.9, CL.count:format(CL.pull_in, sigilOfChainsCount))
 	end
 end
 
@@ -524,5 +567,6 @@ function mod:IlyssaDarksorrowDeath(args)
 	self:StopBar(CL.count:format(CL.pull_in, sigilOfChainsCount)) -- Sigil of Chains
 	self:StopBar(CL.count:format(CL.leap, infernalStrikeCount)) -- Infernal Strike
 	bossesKilled = bossesKilled + 1
-	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled), false)
+	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	ilyssaAlive = false
 end
