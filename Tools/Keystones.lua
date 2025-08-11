@@ -17,6 +17,10 @@ do
 			defaultVoice = ("%s: Default (Female)"):format(locale)
 		end
 	end
+	local validFramePoints = {
+		["TOPLEFT"] = true, ["TOPRIGHT"] = true, ["BOTTOMLEFT"] = true, ["BOTTOMRIGHT"] = true,
+		["TOP"] = true, ["BOTTOM"] = true, ["LEFT"] = true, ["RIGHT"] = true, ["CENTER"] = true,
+	}
 
 	local defaults = {
 		autoSlotKeystone = true,
@@ -24,10 +28,11 @@ do
 		countBegin = 5,
 		countStartSound = "BigWigs: Long",
 		countEndSound = "BigWigs: Alarm",
-		autoShowZoneIn = true,
-		autoShowEndOfRun = true,
+		showViewerOnZoneIn = true,
+		showViewerDungeonEnd = true,
 		hideFromGuild = false,
 		windowHeight = 320,
+		viewerPosition = {"LEFT", "LEFT", 15, 0},
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 	for k, v in next, db do
@@ -43,6 +48,20 @@ do
 	end
 	if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 then
 		db.profile.windowHeight = defaults.windowHeight
+	end
+	if type(db.profile.viewerPosition[1]) ~= "string" or type(db.profile.viewerPosition[2]) ~= "string"
+	or type(db.profile.viewerPosition[3]) ~= "number" or type(db.profile.viewerPosition[4]) ~= "number"
+	or not validFramePoints[db.profile.viewerPosition[1]] or not validFramePoints[db.profile.viewerPosition[2]] then
+		db.profile.viewerPosition = defaults.viewerPosition
+	else
+		local x = math.floor(db.profile.viewerPosition[3]+0.5)
+		if x ~= db.profile.viewerPosition[3] then
+			db.profile.viewerPosition[3] = x
+		end
+		local y = math.floor(db.profile.viewerPosition[4]+0.5)
+		if y ~= db.profile.viewerPosition[4] then
+			db.profile.viewerPosition[4] = y
+		end
 	end
 end
 
@@ -227,7 +246,11 @@ local tab1, tab2
 local mainPanel = CreateFrame("Frame", nil, UIParent, "PortraitFrameTemplate")
 mainPanel:Hide()
 mainPanel:SetSize(350, db.profile.windowHeight)
-mainPanel:SetPoint("LEFT", 15, 0)
+do
+	local point, relPoint = db.profile.viewerPosition[1], db.profile.viewerPosition[2]
+	local x, y = db.profile.viewerPosition[3], db.profile.viewerPosition[4]
+	mainPanel:SetPoint(point, UIParent, relPoint, x, y)
+end
 mainPanel:SetFrameStrata("DIALOG")
 mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
@@ -238,7 +261,13 @@ mainPanel:SetBorder("HeldBagLayout")
 mainPanel:SetPortraitTextureSizeAndOffset(38, -5, 0)
 mainPanel:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 mainPanel:SetScript("OnDragStart", mainPanel.StartMoving)
-mainPanel:SetScript("OnDragStop", mainPanel.StopMovingOrSizing)
+mainPanel:SetScript("OnDragStop", function(self)
+	self:StopMovingOrSizing()
+	local point, _, relPoint, x, y = self:GetPoint()
+	x = math.floor(x+0.5)
+	y = math.floor(y+0.5)
+	db.profile.viewerPosition = {point, relPoint, x, y}
+end)
 mainPanel:SetResizable(true)
 mainPanel:SetResizeBounds(350, 320, 350, 620)
 do
@@ -294,7 +323,7 @@ do
 			elseif not id and not isReloadingUi then -- Don't show when logging in (arg1) or reloading UI (arg2)
 				BigWigsLoader.CTimerAfter(0, function() -- Difficulty info isn't accurate until 1 frame after PEW
 					local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-					if diffID == 23 and GetWeeklyResetStartTime() > 1754625600 and db.profile.autoShowZoneIn and not BigWigsLoader.isTestBuild then
+					if diffID == 23 and GetWeeklyResetStartTime() > 1754625600 and db.profile.showViewerOnZoneIn and not BigWigsLoader.isTestBuild then
 						mainPanel:Show()
 						tab1:Click()
 					end
@@ -848,7 +877,7 @@ do
 	do
 		local function Open() mainPanel:Show() tab1:Click() end
 		tab3:SetScript("OnEvent", function()
-			if db.profile.autoShowEndOfRun and not not BigWigsLoader.isTestBuild then
+			if db.profile.showViewerDungeonEnd and not not BigWigsLoader.isTestBuild then
 				BigWigsLoader.CTimerAfter(2, Open)
 			end
 		end)
@@ -1372,14 +1401,14 @@ do
 						order = 3,
 						width = "full",
 					},
-					autoShowZoneIn = {
+					showViewerOnZoneIn = {
 						type = "toggle",
 						name = L.keystoneAutoShowZoneIn,
 						desc = L.keystoneAutoShowZoneInDesc,
 						order = 4,
 						width = "full",
 					},
-					autoShowEndOfRun = {
+					showViewerDungeonEnd = {
 						type = "toggle",
 						name = L.keystoneAutoShowEndOfRun,
 						desc = L.keystoneAutoShowEndOfRunDesc,
