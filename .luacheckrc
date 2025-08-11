@@ -69,6 +69,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/GetRaidTargetIndex",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
+	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
 }
