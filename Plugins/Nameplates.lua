@@ -108,13 +108,18 @@ local glowStopFunctions = {
 local iconDefaults = {
 	iconGrowDirection = "LEFT",
 	iconGrowDirectionStart = "LEFT",
+	iconGrowDirectionTarget = "LEFT",
+	iconGrowDirectionStartTarget = "LEFT",
 	iconSpacing = 1,
+	iconSpacingTarget = 1,
+	iconOffsetX = 0,
+	iconOffsetY = 0,
+	iconOffsetXTarget = 0,
+	iconOffsetYTarget = 0,
 	iconWidthTarget = 20,
 	iconHeightTarget = 20,
 	iconWidthOthers = 20,
 	iconHeightOthers = 20,
-	iconOffsetX = 0,
-	iconOffsetY = 0,
 	iconCooldownNumbers = true,
 	iconFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
 	iconFontSize = 8,
@@ -160,6 +165,7 @@ local textDefaults = {
 }
 
 plugin.defaultDB = {
+	migratePosition = false,
 }
 for k, v in next, iconDefaults do
 	plugin.defaultDB[k] = v
@@ -170,6 +176,15 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
+
+	if not db.migratePosition then -- XXX temp
+		db.migratePosition = true
+		db.iconGrowDirectionTarget = db.iconGrowDirection
+		db.iconGrowDirectionStartTarget = db.iconGrowDirectionStart
+		db.iconSpacingTarget = db.iconSpacing
+		db.iconOffsetXTarget = db.iconOffsetX
+		db.iconOffsetYTarget = db.iconOffsetY
+	end
 
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
@@ -186,8 +201,17 @@ local function updateProfile()
 	if not validFramePoints[db.iconGrowDirectionStart] then
 		db.iconGrowDirectionStart = plugin.defaultDB.iconGrowDirectionStart
 	end
+	if not validGrowDirections[db.iconGrowDirectionTarget] then
+		db.iconGrowDirectionTarget = plugin.defaultDB.iconGrowDirectionTarget
+	end
+	if not validFramePoints[db.iconGrowDirectionStartTarget] then
+		db.iconGrowDirectionStartTarget = plugin.defaultDB.iconGrowDirectionStartTarget
+	end
 	if db.iconSpacing < 0 or db.iconSpacing > 20 then
 		db.iconSpacing = plugin.defaultDB.iconSpacing
+	end
+	if db.iconSpacingTarget < 0 or db.iconSpacingTarget > 20 then
+		db.iconSpacingTarget = plugin.defaultDB.iconSpacingTarget
 	end
 	if db.iconWidthTarget < 12 or db.iconWidthTarget > 50 then
 		db.iconWidthTarget = plugin.defaultDB.iconWidthTarget
@@ -206,6 +230,12 @@ local function updateProfile()
 	end
 	if db.iconOffsetY < -100 or db.iconOffsetY > 100 then
 		db.iconOffsetY = plugin.defaultDB.iconOffsetY
+	end
+	if db.iconOffsetXTarget < -100 or db.iconOffsetXTarget > 100 then
+		db.iconOffsetXTarget = plugin.defaultDB.iconOffsetXTarget
+	end
+	if db.iconOffsetYTarget < -100 or db.iconOffsetYTarget > 100 then
+		db.iconOffsetYTarget = plugin.defaultDB.iconOffsetYTarget
 	end
 	if not media:IsValid(FONT, db.iconFontName) then
 		db.iconFontName = plugin.defaultDB.iconFontName
@@ -763,10 +793,126 @@ do
 					resetNameplates()
 				end,
 				args = {
-					general = {
+					position = {
 						type = "group",
-						name = L.general,
+						name = L.position,
 						order = 1,
+						args = {
+							iconPositionTargetHeader = {
+								type = "header",
+								name = L.headerIconPositionTarget,
+								order = 1,
+								width = "full",
+							},
+							iconGrowDirectionStartTarget = {
+								type = "select",
+								values = validFramePoints,
+								name = L.growStartPosition,
+								desc = L.growStartPositionDesc,
+								order = 2,
+								width = 1.5,
+							},
+							iconGrowDirectionTarget = {
+								type = "select",
+								name = L.growDirection,
+								desc = L.growDirectionDesc,
+								order = 3,
+								width = 1.5,
+								values = validGrowDirections,
+							},
+							iconOffsetXTarget = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								order = 4,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconOffsetYTarget = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								order = 5,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconSpacingTarget = {
+								type = "range",
+								name = L.spacing,
+								desc = L.iconSpacingDesc,
+								order = 6,
+								min = 0,
+								max = 20,
+								step = 1,
+								width = 1,
+							},
+							spacer = {
+								type = "description",
+								name = "\n\n",
+								order = 7,
+								width = "full",
+							},
+							iconPositionOthersHeader = {
+								type = "header",
+								name = L.headerIconPositionOthers,
+								order = 8,
+							},
+							iconGrowDirectionStart = {
+								type = "select",
+								values = validFramePoints,
+								name = L.growStartPosition,
+								desc = L.growStartPositionDesc,
+								order = 9,
+								width = 1.5,
+							},
+							iconGrowDirection = {
+								type = "select",
+								name = L.growDirection,
+								desc = L.growDirectionDesc,
+								order = 10,
+								width = 1.5,
+								values = validGrowDirections,
+							},
+							iconOffsetX = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								order = 11,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconOffsetY = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								order = 12,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconSpacing = {
+								type = "range",
+								name = L.spacing,
+								desc = L.iconSpacingDesc,
+								order = 13,
+								min = 0,
+								max = 20,
+								step = 1,
+								width = 1,
+							},
+						},
+					},
+					size = {
+						type = "group",
+						name = L.size,
+						order = 2,
 						args = {
 							iconSizeTargetHeader = {
 								type = "header",
@@ -791,15 +937,21 @@ do
 								step = 1,
 								width = 1.5,
 							},
+							spacer = {
+								type = "description",
+								name = "\n\n",
+								order = 4,
+								width = "full",
+							},
 							iconSizeOthersHeader = {
 								type = "header",
 								name = L.headerIconSizeOthers,
-								order = 4,
+								order = 5,
 							},
 							iconWidthOthers = {
 								type = "range",
 								name = L.width,
-								order = 5,
+								order = 6,
 								min = 12,
 								max = 50,
 								step = 1,
@@ -808,81 +960,31 @@ do
 							iconHeightOthers = {
 								type = "range",
 								name = L.height,
-								order = 6,
+								order = 7,
 								min = 12,
 								max = 50,
 								step = 1,
 								width = 1.5,
 							},
-							anchoringHeader = {
-								type = "header",
-								name = L.anchoring,
-								order = 7,
-								width = "full",
-							},
-							iconGrowDirectionStart = {
-								type = "select",
-								values = validFramePoints,
-								name = L.growStartPosition,
-								desc = L.growStartPositionDesc,
-								order = 8,
-								width = 1.5,
-							},
-							iconGrowDirection = {
-								type = "select",
-								name = L.growDirection,
-								desc = L.growDirectionDesc,
-								order = 9,
-								width = 1.5,
-								values = validGrowDirections,
-							},
-							iconOffsetX = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								order = 10,
-								max = 100,
-								min = -100,
-								step = 1,
-								width = 1,
-							},
-							iconOffsetY = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								order = 11,
-								max = 100,
-								min = -100,
-								step = 1,
-								width = 1,
-							},
-							iconSpacing = {
-								type = "range",
-								name = L.spacing,
-								desc = L.iconSpacingDesc,
-								order = 12,
-								min = 0,
-								max = 20,
-								step = 1,
-								width = 1,
-							},
-							iconHeader = {
-								type = "header",
-								name = L.icon,
-								order = 13,
-							},
+						},
+					},
+					general = {
+						type = "group",
+						name = L.general,
+						order = 3,
+						args = {
 							iconAspectRatio = {
 								type = "toggle",
 								name = L.keepAspectRatio,
 								desc = L.keepAspectRatioDesc,
-								order = 14,
+								order = 1,
 								width = 1,
 							},
 							iconColor = {
 								type = "color",
 								name = L.iconColor,
 								desc = L.iconColorDesc,
-								order = 15,
+								order = 2,
 								hasAlpha = true,
 								width = 1,
 								get = function()
@@ -897,14 +999,14 @@ do
 								type = "toggle",
 								name = L.desaturate,
 								desc = L.desaturateDesc,
-								order = 16,
+								order = 3,
 								width = 1,
 							},
 							iconZoom = {
 								type = "range",
 								name = L.zoom,
 								desc = L.zoomDesc,
-								order = 17,
+								order = 4,
 								min = 0,
 								max = 0.5,
 								step = 0.01,
@@ -915,13 +1017,13 @@ do
 								type = "toggle",
 								name = L.showBorder,
 								desc = L.showBorderDesc,
-								order = 18,
+								order = 5,
 								width = 1,
 							},
 							iconBorderColor = {
 								type = "color",
 								name = L.borderColor,
-								order = 19,
+								order = 6,
 								hasAlpha = true,
 								width = 1,
 								disabled = function() return not db.iconBorder end,
@@ -936,7 +1038,7 @@ do
 							iconBorderSize = {
 								type = "range",
 								name = L.borderSize,
-								order = 20,
+								order = 7,
 								min = 1,
 								max = 5,
 								step = 1,
@@ -946,7 +1048,7 @@ do
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 21,
+								order = 8,
 							},
 							reset = {
 								type = "execute",
@@ -959,14 +1061,14 @@ do
 										plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
 									end
 								end,
-								order = 22,
+								order = 9,
 							},
 						},
 					},
 					cooldown = {
 						type = "group",
 						name = L.cooldown,
-						order = 2,
+						order = 4,
 						args = {
 							iconCooldownSwipe = {
 								type = "toggle",
@@ -1058,7 +1160,7 @@ do
 					glow = {
 						type = "group",
 						name = L.glow,
-						order = 3,
+						order = 5,
 						args = {
 							iconExpireGlow = {
 								type = "toggle",
@@ -1196,7 +1298,7 @@ do
 					advanced = {
 						type = "group",
 						name = L.advanced,
-						order = 4,
+						order = 6,
 						args = {
 							iconFrameStrata = {
 								type = "select",
@@ -1403,34 +1505,66 @@ do
 			if unit then
 				local nameplate = nameplateFromStart or GetNamePlateForUnit(unit)
 				if nameplate then
-					local sorted = getOrder(nameplateIcons[guid])
-					local offsetY = db.iconOffsetY
-					local offsetX = db.iconOffsetX
-					local growDirection = db.iconGrowDirection
-					local iconPoint = inverseAnchorPoint[db.iconGrowDirection][db.iconGrowDirectionStart]
-					local nameplatePoint = db.iconGrowDirectionStart
-					for i, key in ipairs(sorted) do
-						local icon = unitIcons[key].nameplateFrame
+					if guid == plugin:UnitGUID("target") then
+						local sorted = getOrder(nameplateIcons[guid])
+						local offsetY = db.iconOffsetYTarget
+						local offsetX = db.iconOffsetXTarget
+						local growDirection = db.iconGrowDirectionTarget
+						local iconPoint = inverseAnchorPoint[db.iconGrowDirectionTarget][db.iconGrowDirectionStartTarget]
+						local nameplatePoint = db.iconGrowDirectionStartTarget
+						for i, key in ipairs(sorted) do
+							local icon = unitIcons[key].nameplateFrame
 
-						if i > 1 then -- Only use setup offset for first icon
-							local growOffset = db.iconSpacing
-							if growDirection == "UP" then
-								growOffset = growOffset + (plugin:UnitGUID("target") == guid and db.iconHeightTarget or db.iconHeightOthers)
-								offsetY = offsetY + growOffset
-							elseif growDirection == "DOWN" then
-								growOffset = -(growOffset + (plugin:UnitGUID("target") == guid and db.iconHeightTarget or db.iconHeightOthers))
-								offsetY = offsetY + growOffset
-							elseif growDirection == "LEFT" then
-								growOffset = -(growOffset + (plugin:UnitGUID("target") == guid and db.iconWidthTarget or db.iconWidthOthers))
-								offsetX = offsetX + growOffset
-							else -- RIGHT
-								growOffset = growOffset + (plugin:UnitGUID("target") == guid and db.iconWidthTarget or db.iconWidthOthers)
-								offsetX = offsetX + growOffset
+							if i > 1 then -- Only use setup offset for first icon
+								local growOffset = db.iconSpacingTarget
+								if growDirection == "UP" then
+									growOffset = growOffset + db.iconHeightTarget
+									offsetY = offsetY + growOffset
+								elseif growDirection == "DOWN" then
+									growOffset = -(growOffset + db.iconHeightTarget)
+									offsetY = offsetY + growOffset
+								elseif growDirection == "LEFT" then
+									growOffset = -(growOffset + db.iconWidthTarget)
+									offsetX = offsetX + growOffset
+								else -- RIGHT
+									growOffset = growOffset + db.iconWidthTarget
+									offsetX = offsetX + growOffset
+								end
 							end
-						end
 
-						icon:ClearAllPoints()
-						icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
+							icon:ClearAllPoints()
+							icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
+						end
+					else
+						local sorted = getOrder(nameplateIcons[guid])
+						local offsetY = db.iconOffsetY
+						local offsetX = db.iconOffsetX
+						local growDirection = db.iconGrowDirection
+						local iconPoint = inverseAnchorPoint[db.iconGrowDirection][db.iconGrowDirectionStart]
+						local nameplatePoint = db.iconGrowDirectionStart
+						for i, key in ipairs(sorted) do
+							local icon = unitIcons[key].nameplateFrame
+
+							if i > 1 then -- Only use setup offset for first icon
+								local growOffset = db.iconSpacing
+								if growDirection == "UP" then
+									growOffset = growOffset + db.iconHeightOthers
+									offsetY = offsetY + growOffset
+								elseif growDirection == "DOWN" then
+									growOffset = -(growOffset + db.iconHeightOthers)
+									offsetY = offsetY + growOffset
+								elseif growDirection == "LEFT" then
+									growOffset = -(growOffset + db.iconWidthOthers)
+									offsetX = offsetX + growOffset
+								else -- RIGHT
+									growOffset = growOffset + db.iconWidthOthers
+									offsetX = offsetX + growOffset
+								end
+							end
+
+							icon:ClearAllPoints()
+							icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
+						end
 					end
 				end
 			end
