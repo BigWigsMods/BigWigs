@@ -71,3 +71,15 @@ BigWigs:AddSounds("The Gobfather", {
 	[1216709] = "long",
 	[1216812] = "warning",
 })
+
+BigWigs:AddColors("Reshanor, The Untethered", {
+	[1237893] = "orange",
+	[1237905] = "red",
+	["stages"] = "cyan",
+})
+
+BigWigs:AddSounds("Reshanor, The Untethered", {
+	[1237893] = "warning",
+	[1237905] = "alert",
+	["stages"] = {"info","long"},
+})

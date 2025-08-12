@@ -6,6 +6,7 @@
 <Script file="Orta.lua"/>
 <Script file="Kordac.lua"/>
 <Script file="Gobfather.lua"/>
+<Script file="Reshanor.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Script file="!Options.lua"/>
