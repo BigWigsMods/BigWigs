@@ -1,50 +1,50 @@
 local L = BigWigs:NewBossLocale("Loom'ithar", "esES")
 if not L then return end
 if L then
-	--L.lair_weaving = "Webs" -- Webs that spawn on the edge of the room
-	--L.infusion_pylons = "Pylons" -- Short for Infusion Pylons
+	L.lair_weaving = "Telarañas" -- Webs that spawn on the edge of the room
+	L.infusion_pylons = "Pilones" -- Short for Infusion Pylons
 end
 
 L = BigWigs:NewBossLocale("Soulbinder Naazindhri", "esES")
 if L then
-	--L.voidblade_ambush = "Ambush" -- Short for Voidblade Ambush
-	--L.soulfray_annihilation = "Lines" -- Lines that shoot out an orb along that path
-	--L.soulfray_annihilation_single = "Line" -- Single from Lines
+	L.voidblade_ambush = "Emboscada" -- Short for Voidblade Ambush
+	L.soulfray_annihilation = "Líneas" -- Lines that shoot out an orb along that path
+	L.soulfray_annihilation_single = "Línea" -- Single from Lines
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "esES")
 if L then
-	--L.invoke_collector = "Collector" -- Short for Arcane Collector
+	L.invoke_collector = "Recolector" -- Short for Arcane Collector
 end
 
 L = BigWigs:NewBossLocale("Fractillus", "esES")
 if L then
-	--L.crystalline_eruption = "Walls"
-	--L.shattershell = "Breaks"
-	--L.shockwave_slam = "Tank Wall"
-	--L.nexus_shrapnel = "Shrapnel Lands"
-	--L.crystal_lacerations = "Bleed"
+	L.crystalline_eruption = "Muros"
+	L.shattershell = "Destruído"
+	L.shockwave_slam = "Muro de tanque"
+	L.nexus_shrapnel = "Cae metralla"
+	L.crystal_lacerations = "Sangrado"
 end
 
 L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "esES")
 if L then
-	--L.oath_bound_removed_dose = "1x Oath-Bound Removed"
-	--L.behead = "Claws" -- Claws of a dragon
-	--L.netherbreaker = "Circles"
-	--L.galaxy_smash = "Smashes" -- Short for Galactic Smash, and multiple of them.
-	--L.starkiller_swing = "Starkillers" -- Short for Starkiller Swing, and multiple of them.
-	--L.vengeful_oath = "Spirits"
+	L.oath_bound_removed_dose = "1x Vinculado por el voto eliminado"
+	L.behead = "Garras" -- Claws of a dragon
+	L.netherbreaker = "Círculos"
+	L.galaxy_smash = "Machaques" -- Short for Galactic Smash, and multiple of them.
+	L.starkiller_swing = "Mataestrellas" -- Short for Starkiller Swing, and multiple of them.
+	L.vengeful_oath = "Espíritus"
 end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "esES")
 if L then
-	--L.shattered_space = "Hands" -- Dimensius reaches down with both hands
-	--L.reverse_gravity = "Gravity" -- Short for Reverse Gravity
-	--L.extinction = "Fragment" -- Dimensius hurls a fragment of a broken world
-	--L.slows = "Slows"
-	--L.slow = "Slow" -- Singular of Slows
-	--L.stardust_nova = "Nova" -- Short for Stardust Nova
-	--L.extinguish_the_stars = "Stars" -- Short for Extinguish the Stars
-	--L.darkened_sky = "Rings"
-	--L.cosmic_collapse = "Collapse" -- Short for Cosmic Collapse
+	L.shattered_space = "Manos" -- Dimensius reaches down with both hands
+	L.reverse_gravity = "Gravedad" -- Short for Reverse Gravity
+	L.extinction = "Fragmento" -- Dimensius hurls a fragment of a broken world
+	L.slows = "Frenados"
+	L.slow = "Frenado" -- Singular of Slows
+	L.stardust_nova = "Nova" -- Short for Stardust Nova
+	L.extinguish_the_stars = "Estrellas" -- Short for Extinguish the Stars
+	L.darkened_sky = "Anillos"
+	L.cosmic_collapse = "Colapso" -- Short for Cosmic Collapse
 end
