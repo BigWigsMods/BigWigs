@@ -46,8 +46,8 @@ function mod:OnEngage()
 	self:Log("SPELL_CAST_START", "GigaRocketSlam", 1216812)
 
 	self:CDBar(1216505, 5.1) -- Bombfield
-	self:CDBar(1216687, 17.6, CL.frontal_cone) -- Frontal Cone
-	self:CDBar(1216709, 26.8, CL.frontal_cone) -- Death From Above
+	self:CDBar(1216687, 17.6, CL.frontal_cone) -- Flaming Flames
+	self:CDBar(1216709, 26.8, CL.dodge) -- Death From Above
 	self:CDBar(1216812, 44.2, CL.knockback) -- Giga-Rocket Slam
 end
 
