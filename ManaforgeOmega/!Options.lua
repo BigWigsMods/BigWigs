@@ -2,6 +2,7 @@
 
 BigWigs:AddColors("Plexus Sentinel", {
 	[1218625] = "blue",
+	[1218668] = "blue",
 	[1219223] = "blue",
 	[1219248] = "blue",
 	[1219263] = {"blue","purple"},
@@ -12,12 +13,12 @@ BigWigs:AddColors("Plexus Sentinel", {
 	[1220679] = "blue",
 	[1227794] = "blue",
 	[1233110] = {"blue","purple"},
-	[1237084] = "blue",
 	["stages"] = {"green","yellow"},
 })
 
 BigWigs:AddSounds("Plexus Sentinel", {
 	[1218625] = "warning",
+	[1218668] = "underyou",
 	[1219223] = "underyou",
 	[1219248] = "underyou",
 	[1219263] = {"alarm","warning"},
@@ -28,7 +29,6 @@ BigWigs:AddSounds("Plexus Sentinel", {
 	[1220679] = "info",
 	[1227794] = "underyou",
 	[1233110] = {"alarm","info"},
-	[1237084] = "underyou",
 	["stages"] = "long",
 })
 
