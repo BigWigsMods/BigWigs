@@ -877,7 +877,7 @@ do
 	do
 		local function Open() mainPanel:Show() tab1:Click() end
 		tab3:SetScript("OnEvent", function()
-			if db.profile.showViewerDungeonEnd and not not BigWigsLoader.isTestBuild then
+			if db.profile.showViewerDungeonEnd and not BigWigsLoader.isTestBuild then
 				BigWigsLoader.CTimerAfter(2, Open)
 			end
 		end)
