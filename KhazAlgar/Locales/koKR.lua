@@ -6,5 +6,5 @@ end
 
 L = BigWigs:NewBossLocale("Reshanor, The Untethered", "koKR")
 if L then
-	L.run = "포털로 이동 하여 엑스트라 버튼을 누르세요."
+	L.run = "포털로 이동해 엑스트라 버튼을 누르세요."
 end
