@@ -275,6 +275,7 @@ function mod:OnEngage()
 	shatteredSpaceCount = 1
 	reverseGravityCount = 1
 
+	collectiveGravityOnMe = false
 	collectiveGravityStacksOnMe = 0
 	growingHungerOnBoss = 0
 
@@ -290,6 +291,11 @@ function mod:OnEngage()
 	massEjectionCount = 1
 	conquerorsCrossCount = 1
 	stardustNovaCount = 1
+
+	darkenedSkyCount = 1
+	cosmicCollapseCount = 1
+	supernovaCount = 1
+	voidgraspCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -357,7 +363,7 @@ do
 
 		mod:Message(1228207, "blue", CL.no:format(collectiveGravitySpellName))
 		mod:PlaySound(1228207, "warning") -- no collective gravity
-		collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 1)
+		--collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 1)
 	end
 
 	function mod:DevourP1(args)
@@ -365,7 +371,7 @@ do
 		self:PlaySound(args.spellId, "warning") -- get safe
 		devourCount = devourCount + 1
 		-- self:Bar(args.spellId, timers[1][args.spellId][devourCount], CL.count:format(args.spellName, devourCount))
-		collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 2.5) -- check last 4~ seconds
+		--collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 2.5) -- check last 4~ seconds
 	end
 
 	function mod:DevourP1Removed()
@@ -633,7 +639,7 @@ do
 
 		mod:Message(1232394, "blue", CL.no:format(gravityWellSpellName))
 		mod:PlaySound(1232394, "warning") -- no gravity well
-		gravityWellCheck = mod:ScheduleTimer(checkForGravityWell, 1)
+		--gravityWellCheck = mod:ScheduleTimer(checkForGravityWell, 1)
 	end
 
 	function mod:GravityWellApplied(args)
@@ -661,7 +667,7 @@ do
 		devourCount = devourCount + 1
 		-- self:Bar(args.spellId, timers[3][args.spellId][devourCount], CL.count:format(args.spellName, devourCount))
 		castingDevour = true
-		gravityWellCheck = mod:ScheduleTimer(checkForGravityWell, 4.5) -- check last 2~ seconds
+		--gravityWellCheck = mod:ScheduleTimer(checkForGravityWell, 4.5) -- check last 2~ seconds
 	end
 
 	function mod:DevourP3Removed()
