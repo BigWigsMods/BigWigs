@@ -22,53 +22,82 @@ local protocolPurgeCount = 1
 -- Timers
 --
 
-local timersOther = {
+local timersNormal = {
 	[1] = {
-		[1219450] = {11.1, 33.1, 0}, -- Manifest Matrices
-		[1219263] = {20.9, 33.0, 0}, -- Obliteration Arcanocannon
-		[1219607] = {30.8, 0}, -- Eradicating Salvo
+		[1219450] = { 12.8, 34.0, 0 }, -- Manifest Matrices
+		[1219263] = { 21.7, 32.8, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 30.8, 0 }, -- Eradicating Salvo
 	},
 	[2] = {
-		[1219450] = {6.2, 35.3, 35.3, 0}, -- Manifest Matrices
-		[1219263] = {28.3, 34.0, 34.0, 0}, -- Obliteration Arcanocannon
-		[1219607] = {28.3, 34.0, 0}, -- Eradicating Salvo
+		[1219450] = { 7.2, 36.0, 35.2, 0 }, -- Manifest Matrices
+		[1219263] = { 18.1, 34.0, 34.0, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 27.8, 35.2, 0 }, -- Eradicating Salvo
 	},
 	[3] = {
-		[1219450] = {6.2, 35.3, 35.3, 0}, -- Manifest Matrices
-		[1219263] = {28.3, 34.0, 34.0, 0}, -- Obliteration Arcanocannon
-		[1219607] = {28.3, 34.0, 0}, -- Eradicating Salvo
+		[1219450] = { 8.0, 35.2, 35.2, 0 }, -- Manifest Matrices
+		[1219263] = { 18.1, 33.9, 34.0, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 27.9, 35.2, 0 }, -- Eradicating Salvo
 	},
 	[4] = {
-		[1219450] = {6.2, 34.0, 34.0, 38.9, 36.5, 36.5, 36.5}, -- Manifest Matrices
-		[1219263] = {28.3, 34.0, 34.0, 36.5, 36.5, 36.5, 36.5}, -- Obliteration Arcanocannon
-		[1219607] = {28.3, 35.2, 34.0, 36.5, 36.5, 36.5, 36.5}, -- Eradicating Salvo
+		[1219450] = { 8.9, 35.2, 35.2, 35.2, 36.5, 36.5, 36.5 }, -- Manifest Matrices
+		[1219263] = { 19.0, 34.0, 33.9, 34.0, 34.7, 34.5 }, -- Obliteration Arcanocannon
+		[1219607] = { 28.8, 35.3, 35.1, 38.9, 35.3, 35.3, 35.3 }, -- Eradicating Salvo
+		[1234733] = { 93.1, 13.3, 9.3, 11.3, 7.3, 10.9, 7.3, 9.7, 7.3, 10.9 }, -- Cleanse the Chamber
+	},
+}
+
+local timersHeroic = {
+	[1] = {
+		[1219450] = { 13.0, 33.1, 0 }, -- Manifest Matrices
+		[1219263] = { 22.2, 33.0, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 30.8, 0 }, -- Eradicating Salvo
+	},
+	[2] = {
+		[1219450] = { 8.2, 35.3, 35.3, 0 }, -- Manifest Matrices
+		[1219263] = { 18.7, 33.3, 33.3, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 28.5, 34.7, 0 }, -- Eradicating Salvo
+	},
+	[3] = {
+		[1219450] = { 8.2, 35.3, 35.3, 0 }, -- Manifest Matrices
+		[1219263] = { 17.7, 34.0, 34.0, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 27.7, 34.0, 0 }, -- Eradicating Salvo
+	},
+	[4] = {
+		[1219450] = { 8.2, 34.0, 34.0, 38.9, 36.5, 36.5, 36.5 }, -- Manifest Matrices
+		[1219263] = { 28.3, 34.0, 34.0, 36.5, 36.5, 36.5, 36.5 }, -- Obliteration Arcanocannon
+		[1219607] = { 28.3, 35.2, 34.0, 36.5, 36.5, 36.5, 36.5 }, -- Eradicating Salvo
+		[1234733] = { 63.0, 12.2, 8.2, 5.3, 9.8, 12.1, 8.2, 5.2, 9.7, 11.0, 6.1, 7.0, 5.2, 9.7, 11.0, 6.1, 6.9, 10.1, 10.9, 6.1 }, -- Cleanse the Chamber
 	},
 }
 
 local timersMythic = {
 	[1] = {
-		[1219450] = {9.5, 28.5, 0}, -- Manifest Matrices
-		[1219263] = {21.9, 30.8, 0}, -- Obliteration Arcanocannon
-		[1219607] = {41.3, 0}, -- Eradicating Salvo
+		[1219450] = { 11.6, 29.3, 0 }, -- Manifest Matrices
+		[1219263] = { 21.8, 30.4, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 42.1, 0 }, -- Eradicating Salvo
+		[1234733] = { 0.0, 0 }, -- Cleanse the Chamber
 	},
 	[2] = {
-		[1219450] = {5.5, 26.5, 27, 23.2, 0}, -- Manifest Matrices
-		[1219263] = {13, 28.1, 28.1, 0}, -- Obliteration Arcanocannon
-		[1219607] = {21, 31.9, 33.8, 0}, -- Eradicating Salvo
+		[1219450] = { 6.9, 23.2, 23.3, 25.7, 0 }, -- Manifest Matrices
+		[1219263] = { 14.1, 28.2, 29.2, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 20.8, 34.0, 32.2, 0 }, -- Eradicating Salvo
+		[1234733] = { 28.0, 0 }, -- Cleanse the Chamber
 	},
 	[3] = {
-		[1219450] = {5.5, 35.3, 35.3, 0}, -- Manifest Matrices
-		[1219263] = {13, 28.1, 28.1, 0}, -- Obliteration Arcanocannon
-		[1219607] = {21, 31.9, 33.8, 0}, -- Eradicating Salvo
+		[1219450] = { 7.5, 28.1, 26.8, 23.0, 0 }, -- Manifest Matrices
+		[1219263] = { 14.1, 28.2, 29.2, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 21.5, 31.7, 34.0, 0 }, -- Eradicating Salvo
+		[1234733] = { 31.7, 0 }, -- Cleanse the Chamber
 	},
 	[4] = {
-		[1219450] = {5.5, 23.1, 23.1, 32.0, 32.0, 32.0, 32.0, 32.0}, -- Manifest Matrices
-		[1219263] = {13, 29.2, 29.2, 32.0, 32.0, 32.0, 32.0, 32.0}, -- Obliteration Arcanocannon
-		[1219607] = {21, 33.7, 31.6, 38.2, 38.2, 38.2, 38.2, 38.2}, -- Eradicating Salvo
+		[1219450] = { 7.9, 23.1, 23.1, 32.8, 32.8, 32.8, 32.8, 32.8 }, -- Manifest Matrices
+		[1219263] = { 14.3, 29.1, 29.2, 32.8, 32.8, 32.8, 32.8 }, -- Obliteration Arcanocannon
+		[1219607] = { 21.7, 33.7, 38.1, 32.8, 32.8, 32.8, 32.8, 32.8 }, -- Eradicating Salvo
+		[1234733] = { 63.0, 6.1, 11.0, 8.1, 12.5, 12.1, 8.1 }, -- Cleanse the Chamber
 	},
 }
 
-local timers = mod:Mythic() and timersMythic or timersOther
+local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or timersNormal
 local function getNextTimer(spellId, count)
 	if timers[protocolPurgeCount] then
 		return timers[protocolPurgeCount][spellId][count]
@@ -148,7 +177,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ProtocolPurgeRemoved", 1220618, 1220981, 1220982) -- End of Stage 2
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PurgingLightningApplied", 1233110)
 
-	timers = self:Mythic() and timersMythic or timersOther
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersNormal
 end
 
 function mod:OnEngage()
