@@ -207,8 +207,7 @@ function mod:OverinfusionBurst(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.full_energy, overinfusionBurstCount))
 	self:PlaySound(args.spellId, "warning") -- move away
 	overinfusionBurstCount = overinfusionBurstCount + 1
-	local cd = 85
-	self:Bar(args.spellId, cd, CL.count:format(CL.full_energy, overinfusionBurstCount))
+	self:Bar(args.spellId, 85, CL.count:format(CL.full_energy, overinfusionBurstCount))
 end
 
 do
@@ -219,10 +218,7 @@ do
 			self:StopBar(CL.count:format(CL.pull_in, overinfusionBurstCount))
 			self:Message(1226311, "cyan", CL.count:format(CL.pull_in, overinfusionBurstCount))
 			overinfusionBurstCount = overinfusionBurstCount + 1
-			local cd = overinfusionBurstCount % 2 == 1 and 46 or 39
-			if not self:Easy() then
-				cd = overinfusionBurstCount % 2 == 1 and 41 or 44
-			end
+			local cd = overinfusionBurstCount % 2 == 1 and 41 or 44
 			self:Bar(1226311, cd, CL.count:format(CL.pull_in, overinfusionBurstCount))
 		end
 		if self:Me(args.destGUID) then
