@@ -28,18 +28,18 @@ local deathThroesCount = 1
 local timersEasy = {
 	[1] = { -- from pull
 		[1228502] = {4.0, 22.0, 22.0, 22.0, 22.0, 22.0, 0}, -- Overwhelming Power
-		[1228216] = {30.9, 45.0, 0}, -- Arcane Obliteration
-		[1228188] = {97.9, 0}, -- Silencing Tempest
-		[1231720] = {10.9, 44.0, 0}, -- Invoke Collector
-		[1228214] = {19.9, 44.0, 8.0, 23.0, 8.0, 0}, -- Astral Harvest
+		[1228216] = {31.0, 45.0, 0}, -- Arcane Obliteration
+		[1228188] = {98.0, 0}, -- Silencing Tempest
+		[1231720] = {9, 44.0, 0}, -- Invoke Collector
+		[1228214] = {20.0, 44.0, 8.0, 23.0, 8.0, 0}, -- Astral Harvest
 		[1248171] = {0}, -- Void Tear
 	},
 	[2] = { -- from Mana Sacrifice _START
-		[1228502] = {18.6, 22.0, 22.0, 22.0, 22.0, 0}, -- Overwhelming Power
-		[1228216] = {68.6, 0}, -- Arcane Obliteration
-		[1228188] = {47.2, 0}, -- Silencing Tempest
+		[1228502] = {18.5, 22.0, 22.0, 0}, -- Overwhelming Power
+		[1228216] = {45.5, 0}, -- Arcane Obliteration
+		[1228188] = {67.5, 0}, -- Silencing Tempest
 		[1231720] = {25.7, 22.0, 0}, -- Invoke Collector
-		[1228214] = {34.7, 22.0, 8.0, 23.0, 8.0, 0}, -- Astral Harvest
+		[1228214] = {34.5, 8.0, 0}, -- Astral Harvest
 		[1248171] = {0}, -- Void Tear
 	},
 }
@@ -47,18 +47,18 @@ local timersEasy = {
 local timersHeroic = {
 	[1] = { -- from pull
 		[1228502] = {4.0, 22.0, 22.0, 22.0, 22.0, 22.0, 0}, -- Overwhelming Power
-		[1228216] = {30.9, 45.0, 0}, -- Arcane Obliteration
+		[1228216] = {31.0, 45.0, 0}, -- Arcane Obliteration
 		[1228188] = {63.0, 44.0, 23.0, 0}, -- Silencing Tempest
 		[1231720] = {9.0, 44.0, 44.0, 0}, -- Invoke Collector
 		[1228214] = {20.0, 46.0, 8.0, 36.0, 8.0, 8.0, 0}, -- Astral Harvest
 		[1248171] = {0}, -- Void Tear
 	},
 	[2] = { -- from Mana Sacrifice _START
-		[1228502] = {18.6, 22.0, 22.0, 22.0, 22.0, 22.0, 0}, -- Overwhelming Power
-		[1228216] = {68.6, 0}, -- Arcane Obliteration
-		[1228188] = {57.6, 44.0, 21.0, 0}, -- Silencing Tempest
-		[1231720] = {23.6, 22.0, 44.0, 0}, -- Invoke Collector
-		[1228214] = {34.6, 22.0, 8.0, 36.0, 8.0, 8.0, 0}, -- Astral Harvest
+		[1228502] = {18.6, 22.0, 22.0, 0}, -- Overwhelming Power
+		[1228216] = {45.7, 0}, -- Arcane Obliteration
+		[1228188] = {67.7, 0}, -- Silencing Tempest
+		[1231720] = {23.7, 0}, -- Invoke Collector(s)
+		[1228214] = {34.7, 8.0, 8.0}, -- Astral Harvest
 		[1248171] = {0}, -- Void Tear
 	},
 }
@@ -195,7 +195,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SilencingTempestApplied", 1228188, 1238874) -- Silencing Tempest, Echoing Tempest
 	self:Log("SPELL_AURA_REMOVED", "SilencingTempestRemoved", 1228188, 1238874)
 	self:Log("SPELL_CAST_START", "ArcaneExpulsion", 1227631)
-	self:Log("SPELL_CAST_START", "InvokeCollector", 1231720)
+	self:Log("SPELL_CAST_START", "InvokeCollector", 1231720, 1254321) -- Single, All
 	self:Log("SPELL_CAST_START", "AstralHarvest", 1228213)
 	self:Log("SPELL_AURA_APPLIED", "AstralHarvestApplied", 1228214)
 	self:Log("SPELL_AURA_APPLIED", "AstralSurgeApplied", 1236207)
@@ -316,6 +316,10 @@ function mod:SilencingTempest()
 	self:Message(1228188, "cyan", CL.count:format(CL.pools, silencingTempestCount))
 	silencingTempestCount = silencingTempestCount + 1
 	local cd = getTimers(1228188, silencingTempestCount)
+	if self:GetStage() == 2 then
+		local stageTwoHeroicTimers = {12, 21, 23, 21}
+		cd = self:Easy() and 44 or stageTwoHeroicTimers[silencingTempestCount]
+	end
 	self:Bar(1228188, cd, CL.count:format(CL.pools, silencingTempestCount))
 end
 
@@ -341,13 +345,13 @@ function mod:ArcaneExpulsion(args)
 	arcaneExpulsionCount = arcaneExpulsionCount + 1
 end
 
-function mod:InvokeCollector(args)
+function mod:InvokeCollector()
 	self:StopBar(CL.count:format(L.invoke_collector, invokerCollectorCount))
-	self:Message(args.spellId, "cyan", CL.count:format(L.invoke_collector, invokerCollectorCount))
-	self:PlaySound(args.spellId, "long") -- debuffs incoming
+	self:Message(1231720, "cyan", CL.count:format(L.invoke_collector, invokerCollectorCount))
+	self:PlaySound(1231720, "long") -- debuffs incoming
 	invokerCollectorCount = invokerCollectorCount + 1
-	local cd = getTimers(args.spellId, invokerCollectorCount)
-	self:Bar(args.spellId, cd, CL.count:format(L.invoke_collector, invokerCollectorCount))
+	local cd = getTimers(1231720, invokerCollectorCount)
+	self:Bar(1231720, cd, CL.count:format(L.invoke_collector, invokerCollectorCount))
 end
 
 function mod:AstralHarvest()
@@ -476,7 +480,7 @@ function mod:ManaSacrifice() -- Back to P1 / P2
 		self:Bar(1228214, getTimers(1228214, astralHarvestCount), CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
 		self:Bar(1228188, getTimers(1228188, silencingTempestCount), CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 		self:Bar(1231720, getTimers(1231720, invokerCollectorCount), CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-		self:Bar(1227631, self:Easy() and 120.0 or 140.0, CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
+		self:Bar(1227631, self:Easy() and 79.5 or 81.1, CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
 		if self:Mythic() then
 			self:Bar(1248171, getTimers(1248171, voidTearCount), CL.count:format(self:SpellName(1248171), voidTearCount)) -- Void Tear
 		end
@@ -517,9 +521,9 @@ function mod:Stage2Start()
 	overwhelmingPowerCount = 1
 	deathThroesCount = 1
 
-	self:Bar(1228502, self:Mythic() and 4 or 8, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
-	self:Bar(1243901, self:Mythic() and 8 or 16.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
-	self:Bar(1228188, self:Mythic() and 12 or 66.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
+	self:Bar(1228502, 4.0, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
+	self:Bar(1243901, 8.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
+	self:Bar(1228188, 12.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	if self:Mythic() then
 		self:Bar(1232221, 39.0, CL.count:format(CL.knockback, deathThroesCount)) -- Death Throes
 	end
@@ -541,7 +545,7 @@ function mod:VoidHarvest()
 	self:Message(1243901, "yellow", CL.count:format(CL.orbs, voidHarvestCount))
 	self:PlaySound(1243901, "info") -- debuffs incoming
 	voidHarvestCount = voidHarvestCount + 1
-	local cd = voidHarvestCount % 2 == 0 and 8 or voidHarvestCount == 3 and 80 or 46
+	local cd = voidHarvestCount % 2 == 1 and 36 or 8
 	if self:Mythic() then
 		cd = voidHarvestCount % 3 == 1 and 25 or 8
 	end
