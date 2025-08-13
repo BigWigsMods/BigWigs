@@ -248,11 +248,13 @@ function mod:OnEngage()
 	beheadCount = 1
 	besiegeCount = 1
 
-	self:Bar(1224776, 14.4, CL.count:format(CL.tank_combo, tankComboCount)) -- Subjugation Rule
-	self:Bar(1227549, 30.4, CL.count:format(self:SpellName(1227549), banishmentCount)) -- Banishment
-	self:Bar(1224827, 32.4, CL.count:format(L.behead, beheadCount)) -- Behead
-	self:Bar(1227470, 48.9, CL.count:format(CL.breath, besiegeCount)) -- Besiege
-	self:Bar(1224906, 117) -- Invoke the Oath
+	self:Bar(1224776, 13.5, CL.count:format(CL.tank_combo, tankComboCount)) -- Subjugation Rule
+	if not self:Easy() then
+		self:Bar(1227549, 33.1, CL.count:format(self:SpellName(1227549), banishmentCount)) -- Banishment
+	end
+	self:Bar(1224827, 34.5, CL.count:format(L.behead, beheadCount)) -- Behead
+	self:Bar(1227470, self:Easy() and 46 or 49.0, CL.count:format(CL.breath, besiegeCount)) -- Besiege
+	self:Bar(1224906, 115.0) -- Invoke the Oath
 end
 
 --------------------------------------------------------------------------------
@@ -351,10 +353,8 @@ do
 		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, banishmentCount))
 		banishmentCount = banishmentCount + 1
-		if banishmentCount <= 4 then -- 4 in p1
-			local cd = banishmentCount % 2 == 0 and 16 or 24
-			self:Bar(1227549, cd, CL.count:format(args.spellName, banishmentCount))
-		end
+		local banishmentTimers = {33.1, 13.4, 23.6, 16.4, 0}
+		self:Bar(1227549, banishmentTimers[banishmentCount], CL.count:format(args.spellName, banishmentCount))
 	end
 
 	function mod:BanishmentApplied(args)
@@ -384,11 +384,8 @@ function mod:CommandBehead()
 	beheadCount = beheadCount + 1
 
 	local stage = self:GetStage()
-	if stage == 1 and beheadCount > 2 then return end -- 2x in stage 1
-	if stage == 2 and not intermissionDone then return end -- Only 1 cast pre-intermission in stage 2 in heroic
-
-	local cd = stage == 2 and 100 or 40
-	self:Bar(1224827, cd, CL.count:format(L.behead, beheadCount))
+	if stage == 2 or (stage == 1 and beheadCount > 2) then return end -- 2x in stage 1, 1x stage 2
+	self:Bar(1224827, 38.0, CL.count:format(L.behead, beheadCount))
 end
 
 function mod:CommandBesiege()
@@ -496,7 +493,9 @@ function mod:RallyTheShadowguard()
 	self:PlaySound("stages", "long") -- intermission
 
 	manaForgedTitansKilled = 0
-	self:Bar(1230302, 64) -- Self-Destruct, until success
+	self:Bar(1228075, 24.4, CL.beams) -- Nexus Beams eta
+	self:Bar(1232399, 15.9) -- Dread Mortar eta
+	self:Bar(1230302, 64.0) -- Self-Destruct, until success
 end
 
 do
@@ -506,22 +505,25 @@ do
 			self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 			self:PlaySound(args.spellId, "warning") -- self destructing
 			-- update the bar so it fits the end
-			self:Bar(1230302, {10, 64}) -- Update remaining time
+			self:Bar(1230302, {10.0, 64.0}) -- Update remaining time
 		end
 	end
 end
+
 function mod:DreadMortar(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert") -- watch feet
+		self:Bar(args.spellId, 24.5)
 	end
 end
 
 function mod:ManaforgedTitanDeath()
 	manaForgedTitansKilled = manaForgedTitansKilled + 1
 	if manaForgedTitansKilled == 2 then
-		self:StopBar(1230302)
+		self:StopBar(1230302) -- Self-Destruct
+		self:StopBar(1232399) -- Dread Mortar
 	end
 end
 
@@ -530,6 +532,7 @@ function mod:NexusBeams(args)
 	if unit and self:UnitWithinRange(unit, 45) then
 		self:Message(args.spellId, "orange", CL.beams)
 		self:PlaySound(args.spellId, "alert") -- watch beams
+		self:Bar(args.spellId, 20.9, CL.beams)
 	end
 end
 
@@ -556,10 +559,11 @@ function mod:RoyalWardRemoved(args)
 
 		local time = GetTime()
 		local stage2Offset = time - stage2StartTime
-		self:Bar(1228115, 114 - stage2Offset, CL.count:format(L.netherbreaker, breakerCount)) -- Netherbreaker
-		self:Bar(1224827, 120.9 - stage2Offset, CL.count:format(L.behead, beheadCount)) -- Behead
+		self:Bar(1228115, 114.0 - stage2Offset, CL.count:format(L.netherbreaker, breakerCount)) -- Netherbreaker
+		self:Bar(1224827, 121.0 - stage2Offset, CL.count:format(L.behead, beheadCount)) -- Behead
 		self:Bar(1234529, 123.0 - stage2Offset, CL.count:format(self:SpellName(1234529), cosmicMawCount)) -- Cosmic Maw
-		self:Bar(1228163, 129 - stage2Offset, CL.count:format(CL.beams, breathCount)) -- Dimension Breath
+		self:Bar(1228163, 129.0 - stage2Offset, CL.count:format(CL.beams, breathCount)) -- Dimension Breath
+		self:Bar("stages", 140.5 - stage2Offset, CL.intermission, 1228265) -- King's Hunger icon
 	end
 end
 
@@ -575,7 +579,7 @@ function mod:KingsHunger(args)
 	self:Message("stages", "green", CL.count:format(CL.intermission, 2), false)
 	self:PlaySound("stages", "long") -- intermission 2
 	self:SetStage(2.5)
-	self:CastBar(args.spellId, 30, CL.count:format(args.spellName, 1)) -- King's Hunger
+	self:CastBar(args.spellId, 36, CL.count:format(args.spellName, 1)) -- King's Hunger
 end
 
 function mod:KingsHungerRemoved(args)
@@ -589,7 +593,7 @@ function mod:KingsHungerRemoved(args)
 
 	self:Bar(1226648, 9, CL.count:format(L.galaxy_smash, smashCount)) -- Galactic Smash
 	self:Bar(1226442, self:Normal() and 46.8 or 36.8, CL.count:format(L.starkiller_swing, swingCount)) -- Starkiller Swing
-	self:Bar(1225634, 182.5) -- World in Twilight // end of channel aka full room (Also adjust time in _START function)
+	self:Bar(1225634, 182.0) -- World in Twilight // end of channel aka full room (Also adjust time in _START function)
 end
 
 function mod:GalacticSmashApplied(args)
@@ -629,7 +633,7 @@ function mod:StarkillerSwing(args)
 	self:CastBar(args.spellId, 6, CL.count:format(L.starkiller_swing, swingCount))
 	swingCount = swingCount + 1
 	if swingCount <= 3 then -- only 3 before enrage
-			local cd = swingCount % 2 == 0 and 15 or 40 -- Heroic
+		local cd = swingCount % 2 == 0 and 15 or 40 -- Heroic
 		if self:Easy() then
 			cd = 55
 		end
@@ -640,5 +644,5 @@ end
 function mod:WorldInTwilight(args)
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long") -- enrage
-	self:Bar(args.spellId, {12.5, 182.5}) -- Update remaining time until room full
+	self:Bar(args.spellId, {10, 182.0}) -- Update remaining time until room full
 end

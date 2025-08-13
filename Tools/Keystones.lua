@@ -300,6 +300,13 @@ do
 	local tex = drag:CreateTexture(nil, "OVERLAY")
 	tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 	tex:SetAllPoints(drag)
+
+	local text = mainPanel.TitleContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	text:SetJustifyH("RIGHT")
+	text:SetText("/key")
+	text:SetSize(30, 30)
+	text:SetTextColor(0.65, 0.65, 0.65)
+	text:SetPoint("RIGHT", -26, 0)
 end
 
 local UpdateMyKeystone
@@ -877,8 +884,8 @@ do
 	do
 		local function Open() mainPanel:Show() tab1:Click() end
 		tab3:SetScript("OnEvent", function()
-			if db.profile.showViewerDungeonEnd and not not BigWigsLoader.isTestBuild then
-				BigWigsLoader.CTimerAfter(2, Open)
+			if db.profile.showViewerDungeonEnd and not BigWigsLoader.isTestBuild then
+				BigWigsLoader.CTimerAfter(5, Open)
 			end
 		end)
 	end
