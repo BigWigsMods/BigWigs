@@ -168,14 +168,14 @@ end
 function mod:OnEngage()
 	bossesKilled = 0
 	-- Adarus Duskblaze
-	adarusAlive = false
+	adarusAlive = true
 	devourersIreOnMe = false
 	voidstepCount = 1
 
 	self:Bar(1227355, 25.7, CL.count:format(self:SpellName(1227355), voidstepCount)) -- Voidstep
 
 	-- Velaryn Bloodwrath
-	velarynAlive = false
+	velarynAlive = true
 	theHuntCount = 1
 	bladeDanceCount = 1
 	eyeBeamCount = 1
@@ -184,7 +184,7 @@ function mod:OnEngage()
 	self:Bar(1218103, 19.3, CL.count:format(self:SpellName(1218103), eyeBeamCount)) -- Eye Beam
 
 	-- Ilyssa Darksorrow
-	ilyssaAlive = false
+	ilyssaAlive = true
 	fractureCount = 1
 	spiritBombCount = 1
 	sigilOfChainsCount = 1
