@@ -1290,8 +1290,10 @@ do
 			-- Workaround for wow custom font loading issues
 			self:SimpleTimer(function()
 				initial = false
-				bar:SetLabel("-1")
-				bar:SetLabel(text)
+				if bar:GetLabel() == text then
+					bar:SetLabel("-1")
+					bar:SetLabel(text)
+				end
 			end, 0.3)
 		end
 
