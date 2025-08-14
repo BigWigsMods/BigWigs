@@ -221,7 +221,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1") -- Shattered Space, Gamma Burst
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1", "boss2") -- Shattered Space, Gamma Burst
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	-- Stage One: Critical Mass
