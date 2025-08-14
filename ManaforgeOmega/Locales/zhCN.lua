@@ -31,7 +31,7 @@ if L then
 	L.oath_bound_removed_dose = "移除1层誓言约束"
 	L.behead = "处斩" -- Claws of a dragon
 	L.netherbreaker = "虚空圈"
-	L.galaxy_smash = "重碾" -- 星河重碾的简称
+	L.galaxy_smash = "重碾" -- 技能“星河重碾”的简称
 	L.starkiller_swing = "歼星斩" -- 歼星斩
 	L.vengeful_oath = "幻影"
 end
@@ -43,7 +43,7 @@ if L then
 	L.extinction = "碎片" -- 迪门修斯投掷出破碎世界的碎片
 	L.slows = "减速"
 	L.slow = "减速"
-	L.stardust_nova = "新星" -- 技能“星辰新星”的简称
+	L.stardust_nova = "新星" -- 技能“星尘新星”的简称
 	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
 	L.darkened_sky = "环形"
 	L.cosmic_collapse = "崩塌" -- 技能“寰宇崩塌”的简称
