@@ -47,7 +47,7 @@ if L then
 	L.extinguish_the_stars = "소실" -- Short for Extinguish the Stars
 	L.darkened_sky = "충격파"
 	L.cosmic_collapse = "붕괴" -- Short for Cosmic Collapse
-	--L.soaring_reshii = "Mount Available" -- On the timer for when flying is available
+	L.soaring_reshii = "비행 가능" -- On the timer for when flying is available
 
-	--L.weakened_soon_monster_yell = "We must strike--now!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
+	L.weakened_soon_monster_yell = "지금 공격해야 해요!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end
