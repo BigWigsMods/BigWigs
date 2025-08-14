@@ -47,4 +47,7 @@ if L then
 	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
 	L.darkened_sky = "环形"
 	L.cosmic_collapse = "崩塌" -- 技能“寰宇崩塌”的简称
+	--L.soaring_reshii = "Mount Available" -- On the timer for when flying is available
+
+	--L.weakened_soon_monster_yell = "We must strike--now!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end
