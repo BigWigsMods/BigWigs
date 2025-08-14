@@ -41,7 +41,7 @@ function mod:OnRegister()
 	self:SetSpellRename(1225616, CL.orbs) -- Soulfire Convergence (Orbs)
 end
 
-local soulfrayAnnihilationMarkerMapTable = {4, 6} -- Green, Blue (wm order)
+local soulfrayAnnihilationMarkerMapTable = {4, 6, 3} -- Green, Blue, Diamond (wm order)
 local soulfrayAnnihilationMarker = mod:AddMarkerOption(true, "player", soulfrayAnnihilationMarkerMapTable[1], 1227276, unpack(soulfrayAnnihilationMarkerMapTable))
 function mod:GetOptions()
 	return {
