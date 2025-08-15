@@ -10,6 +10,7 @@ if L then
 	L.voidblade_ambush = "奇袭" -- 技能“虚空剑士奇袭”的简称
 	L.soulfray_annihilation = "射线" -- Lines that shoot out an orb along that path
 	L.soulfray_annihilation_single = "射线" -- Single from Lines
+	L.remaining_adds = "剩余增援" -- All remaining adds from Soul Calling spawn
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "zhCN")
@@ -47,7 +48,7 @@ if L then
 	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
 	L.darkened_sky = "环形"
 	L.cosmic_collapse = "崩塌" -- 技能“寰宇崩塌”的简称
-	--L.soaring_reshii = "Mount Available" -- On the timer for when flying is available
+	L.soaring_reshii = "坐骑可用" -- On the timer for when flying is available
 
-	--L.weakened_soon_monster_yell = "We must strike--now!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
+	L.weakened_soon_monster_yell = "必须出击，就是现在！" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end

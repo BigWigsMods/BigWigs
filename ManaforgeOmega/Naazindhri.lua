@@ -27,6 +27,7 @@ if L then
 	L.voidblade_ambush = "Ambush" -- Short for Voidblade Ambush
 	L.soulfray_annihilation = "Lines" -- Lines that shoot out an orb along that path
 	L.soulfray_annihilation_single = "Line" -- Single from Lines
+	L.remaining_adds = "Remaining Adds" -- All remaining adds from Soul Calling spawn
 end
 
 --------------------------------------------------------------------------------
@@ -50,6 +51,7 @@ function mod:GetOptions()
 				{1227048, "NAMEPLATE", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Voidblade Ambush, using 1227048 as 1227049 has no good tooltip info
 			-- Unbound Mage
 				1227052, -- Void Volley
+			1227848, -- Essence Implosion
 		{1227276, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Soulfray Annihilation
 		soulfrayAnnihilationMarker,
 		{1223859, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Arcane Expulsion
@@ -61,16 +63,18 @@ function mod:GetOptions()
 		[1242086] = "mythic", -- Arcane Energy
 	},
 	{
-		[1225582] = CL.adds, -- Soul Calling
+		[1227848] = L.remaining_adds, -- Essence Implosion (Remaining Adds)
+		[1225582] = CL.adds, -- Soul Calling (Adds)
 		[1227048] = L.voidblade_ambush, -- Voidblade Ambush (Ambush)
 		[1227276] = L.soulfray_annihilation, -- Soulfray Annihilation (Lines)
-		[1223859] = CL.knockback, -- Arcane Expulsion
+		[1223859] = CL.knockback, -- Arcane Expulsion (Knockback)
 		[1225616] = CL.orbs, -- Soulfire Convergence (Orbs)
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SoulCalling", 1225582)
+	self:Log("SPELL_CAST_START", "Soulweave", 1219040, 1219053, 1239988)
 	self:Log("SPELL_CAST_SUCCESS", "VoidbladeAmbush", 1227049)
 	self:Log("SPELL_AURA_APPLIED", "VoidbladeAmbushTargetApplied", 1227049)
 	self:Death("ShadowguardAssassinDeath", 237897) -- Shadowguard Assassin
@@ -116,6 +120,15 @@ function mod:SoulCalling(args)
 	self:PlaySound(args.spellId, "long") -- Unbound Souls/Binding Machines inc
 	soulCallingCount = soulCallingCount + 1
 	self:Bar(args.spellId, 150.0, CL.count:format(CL.adds, soulCallingCount))
+end
+
+do
+	local prev = 0
+	function mod:Soulweave(args)
+		if args.time - prev > 2 then
+			self:Bar(1227848, 101, CL.count:format(L.remaining_adds, soulCallingCount - 1))
+		end
+	end
 end
 
 function mod:VoidbladeAmbush(args)

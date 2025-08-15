@@ -10,6 +10,7 @@ if L then
 	L.voidblade_ambush = "伏擊" -- Short for Voidblade Ambush
 	L.soulfray_annihilation = "射線" -- 傷魂滅殺/出球/射線
 	L.soulfray_annihilation_single = "射線" -- 傷魂滅殺/出球/射線
+	--L.remaining_adds = "Remaining Adds" -- All remaining adds from Soul Calling spawn
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "zhTW")
