@@ -609,7 +609,9 @@ do
 					tbl.title = nil
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 337 then -- Flickering Spoils Will Manifest Upon Delve Completion
+				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 then -- Flickering Spoils
+					-- 337 tbl.title is "Flickering Spoils Will Manifest Upon Delve Completion"
+					-- 338 tbl.title is "Shadowed Flickering Spoils Will Manifest Upon Delve Completion"
 					tbl.subtitle = tbl.title
 					tbl.title = nil
 					tbl.bwDuration = 3

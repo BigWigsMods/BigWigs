@@ -10,7 +10,7 @@ if L then
 	L.voidblade_ambush = "매복" -- Short for Voidblade Ambush
 	L.soulfray_annihilation = "구슬" -- Lines that shoot out an orb along that path
 	L.soulfray_annihilation_single = "라인" -- Single from Lines
-	--L.remaining_adds = "Remaining Adds" -- All remaining adds from Soul Calling spawn
+	L.remaining_adds = "남은 추가 몹" -- All remaining adds from Soul Calling spawn
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "koKR")
@@ -31,7 +31,7 @@ L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "koKR")
 if L then
 	L.oath_bound_removed_dose = "1x 서약결속 제거됨"
 	L.behead = "발톱" -- Claws of a dragon
-	L.netherbreaker = "원형"
+	L.netherbreaker = "차원문"
 	L.galaxy_smash = "강타" -- Short for Galactic Smash, and multiple of them.
 	L.starkiller_swing = "별 부수기" -- Short for Starkiller Swing, and multiple of them.
 	L.vengeful_oath = "영혼"

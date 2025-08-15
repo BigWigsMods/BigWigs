@@ -336,6 +336,12 @@ L.keystoneClickToWhisper = "Zum Anflüstern klicken"
 L.keystoneClickToTeleportNow = "\nZum dorthin teleportieren klicken"
 L.keystoneClickToTeleportCooldown = "\nTeleport nicht möglich, Zauber klingt ab"
 L.keystoneClickToTeleportNotLearned = "\nTeleport nicht möglich, Zauber nicht erlernt"
+--L.keystoneHistoryRuns = "%d Total"
+--L.keystoneHistoryRunsThisWeekTooltip = "Total amount of dungeons this week: |cFFFFFFFF%d|r"
+--L.keystoneHistoryRunsOlderTooltip = "Total amount of dungeons before this week: |cFFFFFFFF%d|r"
+--L.keystoneHistoryScore = "+%d Score"
+--L.keystoneHistoryScoreThisWeekTooltip = "Total score gained this week: |cFFFFFFFF+%d|r"
+--L.keystoneHistoryScoreOlderTooltip = "Total score gained before this week: |cFFFFFFFF+%d|r"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"

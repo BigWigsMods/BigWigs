@@ -998,13 +998,13 @@ do
 		thisWeekHeader:SetPoint("TOP", scrollChild, "TOP", 0, -0)
 		local olderHeader = CreateHeader()
 		olderHeader:SetText(L.keystoneHeaderOlder)
+		olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50) -- Make sure the header shows even with no runs
 
 		-- Begin Display of history
 		local runs = C_MythicPlus.GetRunHistory(true, true)
 		local tableSize = #runs
-		if tableSize == 0 then
-			olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50) -- Make sure the header shows even with no runs
-		end
+		local runsThisWeek, olderRuns = 0, 0
+		local scoreThisWeek, olderScore = 0, 0
 		local highestScoreByMap = {}
 		for i = 1, tableSize do
 			if not highestScoreByMap[runs[i].mapChallengeModeID] then
@@ -1014,21 +1014,52 @@ do
 				local diff = runs[i].runScore - highestScoreByMap[runs[i].mapChallengeModeID]
 				highestScoreByMap[runs[i].mapChallengeModeID] = runs[i].runScore
 				runs[i].gained = diff
+				if runs[i].thisWeek then
+					runsThisWeek = runsThisWeek + 1
+					scoreThisWeek = scoreThisWeek + diff
+				else
+					olderRuns = olderRuns + 1
+					olderScore = olderScore + diff
+				end
 			else
 				runs[i].gained = 0
+				if runs[i].thisWeek then
+					runsThisWeek = runsThisWeek + 1
+				else
+					olderRuns = olderRuns + 1
+				end
 			end
 		end
-		local totalThisWeek = 0
+
+		local cellRunsThisWeek, cellScoreThisWeek = CreateCell(), CreateCell()
+		cellRunsThisWeek:SetPoint("RIGHT", cellScoreThisWeek, "LEFT", -6, 0)
+		cellScoreThisWeek:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", 3, -12)
+		cellRunsThisWeek:SetWidth(120)
+		cellRunsThisWeek.text:SetText(L.keystoneHistoryRuns:format(runsThisWeek))
+		cellRunsThisWeek.tooltip = L.keystoneHistoryRunsThisWeekTooltip:format(runsThisWeek)
+		cellScoreThisWeek:SetWidth(120)
+		cellScoreThisWeek.text:SetText(L.keystoneHistoryScore:format(scoreThisWeek))
+		cellScoreThisWeek.tooltip = L.keystoneHistoryScoreThisWeekTooltip:format(scoreThisWeek)
+
+		local cellRunsOlder, cellScoreOlder = CreateCell(), CreateCell()
+		cellRunsOlder:SetPoint("RIGHT", cellScoreOlder, "LEFT", -6, 0)
+		cellScoreOlder:SetPoint("TOPLEFT", olderHeader, "CENTER", 3, -12)
+		cellRunsOlder:SetWidth(120)
+		cellRunsOlder.text:SetText(L.keystoneHistoryRuns:format(olderRuns))
+		cellRunsOlder.tooltip = L.keystoneHistoryRunsOlderTooltip:format(olderRuns)
+		cellScoreOlder:SetWidth(120)
+		cellScoreOlder.text:SetText(L.keystoneHistoryScore:format(olderScore))
+		cellScoreOlder.tooltip = L.keystoneHistoryScoreOlderTooltip:format(olderScore)
+
 		local firstOldRun = false
 		local prevMapName, prevLevel, prevScore, prevGainedScore, prevInTime = nil, nil, nil, nil, nil
 		for i = tableSize, 1, -1 do
 			local cellMapName, cellLevel, cellScore, cellGainedScore, cellInTime = CreateCell(), CreateCell(), CreateCell(), CreateCell(), CreateCell()
 			if runs[i].thisWeek then
-				totalThisWeek = totalThisWeek + 1
 				if i == tableSize then
-					cellMapName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
-					cellLevel:SetPoint("RIGHT", cellScore, "LEFT", -6, 0)
-					cellScore:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", -6, -12)
+					cellMapName:SetPoint("TOPLEFT", cellRunsThisWeek, "BOTTOMLEFT", 0, -12)
+					cellLevel:SetPoint("LEFT", cellMapName, "RIGHT", 6, 0)
+					cellScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
@@ -1041,15 +1072,15 @@ do
 			else
 				if not firstOldRun then
 					firstOldRun = true
-					if totalThisWeek == 0 then
+					if runsThisWeek == 0 then
 						olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50)
 					else
-						local y = 24 + totalThisWeek*26
+						local y = 50 + runsThisWeek*26
 						olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
 					end
-					cellMapName:SetPoint("RIGHT", cellLevel, "LEFT", -6, 0)
-					cellLevel:SetPoint("RIGHT", cellScore, "LEFT", -6, 0)
-					cellScore:SetPoint("TOPLEFT", olderHeader, "CENTER", -6, -12)
+					cellMapName:SetPoint("TOPLEFT", cellRunsOlder, "BOTTOMLEFT", 0, -12)
+					cellLevel:SetPoint("LEFT", cellMapName, "RIGHT", 6, 0)
+					cellScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
@@ -1061,7 +1092,7 @@ do
 				end
 			end
 
-			cellMapName:SetWidth(WIDTH_MAP)
+			cellMapName:SetWidth(WIDTH_MAP+24)
 			cellMapName.text:SetText(dungeonNames[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
 			cellMapName.tooltip = L.keystoneMapTooltip:format(GetMapUIInfo(runs[i].mapChallengeModeID) or "-")
 			cellLevel:SetWidth(WIDTH_LEVEL)

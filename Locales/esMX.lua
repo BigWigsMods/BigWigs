@@ -336,6 +336,12 @@ L.keystoneHeaderMyCharacters = "Mis Personajes"
 --L.keystoneClickToTeleportNow = "\nClick to teleport here"
 --L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
 --L.keystoneClickToTeleportNotLearned = "\nCannot teleport, spell not learned"
+--L.keystoneHistoryRuns = "%d Total"
+--L.keystoneHistoryRunsThisWeekTooltip = "Total amount of dungeons this week: |cFFFFFFFF%d|r"
+--L.keystoneHistoryRunsOlderTooltip = "Total amount of dungeons before this week: |cFFFFFFFF%d|r"
+--L.keystoneHistoryScore = "+%d Score"
+--L.keystoneHistoryScoreThisWeekTooltip = "Total score gained this week: |cFFFFFFFF+%d|r"
+--L.keystoneHistoryScoreOlderTooltip = "Total score gained before this week: |cFFFFFFFF+%d|r"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 --L.keystoneShortName_TheRookery = "ROOK"
