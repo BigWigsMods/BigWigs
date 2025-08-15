@@ -8,7 +8,7 @@
 
 local mod, CL = BigWigs:NewBoss("The Soul Hunters", 2810, 2688)
 if not mod then return end
-mod:RegisterEnableMob(237661, 248404, 237662) -- Adarus Duskblaze, Velaryn Bloodwrath, Ilyssa Darksorrow
+mod:RegisterEnableMob(237661, 237660, 237662) -- Adarus Duskblaze, Velaryn Bloodwrath, Ilyssa Darksorrow
 mod:SetEncounterID(3122)
 mod:SetRespawnTime(30)
 
@@ -150,7 +150,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FelbladeApplied", 1225130)
 	self:Log("SPELL_AURA_APPLIED", "FelRushApplied", 1233863)
 	-- Intermission: The Demon Within
-	self:Death("VelarynBloodwrathDeath", 248404)
+	self:Death("VelarynBloodwrathDeath", 237660)
 
 	-- Ilyssa Darksorrow
 	self:Log("SPELL_CAST_START", "Fracture", 1241833)
@@ -381,10 +381,12 @@ do
 end
 
 function mod:AdarusDuskblazeDeath(args)
-	self:StopBar(CL.count:format(self:SpellName(1227355), voidstepTotalCount)) -- Voidstep
 	bossesKilled = bossesKilled + 1
-	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
 	adarusAlive = false
+	self:StopBar(CL.count:format(self:SpellName(1227355), voidstepTotalCount)) -- Voidstep
+	if bossesKilled < 3 then
+		self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	end
 end
 
 -- Velaryn Bloodwrath
@@ -473,12 +475,14 @@ function mod:FelRushApplied(args)
 end
 
 function mod:VelarynBloodwrathDeath(args)
+	bossesKilled = bossesKilled + 1
+	velarynAlive = false
 	self:StopBar(CL.count:format(CL.soak, theHuntTotalCount)) -- The Hunt
 	self:StopBar(CL.count:format(CL.dodge, bladeDanceTotalCount)) -- Blade Dance
 	self:StopBar(CL.count:format(self:SpellName(1218103), eyeBeamTotalCount)) -- Eye Beam
-	bossesKilled = bossesKilled + 1
-	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
-	velarynAlive = false
+	if bossesKilled < 3 then
+		self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	end
 end
 
 -- Ilyssa Darksorrow
@@ -594,11 +598,13 @@ function mod:SigilOfChains(args)
 end
 
 function mod:IlyssaDarksorrowDeath(args)
+	bossesKilled = bossesKilled + 1
+	ilyssaAlive = false
 	self:StopBar(CL.count:format(self:SpellName(1241833), fractureTotalCount)) -- Fracture
 	self:StopBar(CL.count:format(CL.raid_damage, spiritBombTotalCount)) -- Spirit Bomb
 	self:StopBar(CL.count:format(CL.pull_in, sigilOfChainsTotalCount)) -- Sigil of Chains
 	self:StopBar(CL.count:format(CL.leap, infernalStrikeCount)) -- Infernal Strike
-	bossesKilled = bossesKilled + 1
-	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
-	ilyssaAlive = false
+	if bossesKilled < 3 then
+		self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	end
 end

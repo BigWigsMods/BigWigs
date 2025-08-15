@@ -604,6 +604,16 @@ do
 						tbl.subtitle = CL.other:format(L.newRespawnPoint, latestKill[3]) -- New Respawn Point: Boss Name
 						self:SimpleTimer(function() printMessage(self, tbl) end, 1) -- Delay a little after the boss kill
 					end
+				elseif tbl.eventToastID == 339 then -- A Flickergate Has Manifested Within
+					tbl.subtitle = tbl.title
+					tbl.title = nil
+					tbl.bwDuration = 3
+					printMessage(self, tbl)
+				elseif tbl.eventToastID == 337 then -- Flickering Spoils Will Manifest Upon Delve Completion
+					tbl.subtitle = tbl.title
+					tbl.title = nil
+					tbl.bwDuration = 3
+					printMessage(self, tbl)
 				else -- Something we don't support, pass to Blizz to process
 					return
 				end
