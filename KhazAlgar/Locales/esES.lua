@@ -6,5 +6,5 @@ end
 
 L = BigWigs:NewBossLocale("Reshanor, The Untethered", "esES")
 if L then
-	--L.run = "Run to the portal and click the extra action button"
+	L.run = "Corre al portal y clica el botón de acción extra"
 end
