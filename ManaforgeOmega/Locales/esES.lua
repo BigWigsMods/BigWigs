@@ -47,7 +47,7 @@ if L then
 	L.extinguish_the_stars = "Estrellas" -- Short for Extinguish the Stars
 	L.darkened_sky = "Anillos"
 	L.cosmic_collapse = "Colapso" -- Short for Cosmic Collapse
-	--L.soaring_reshii = "Mount Available" -- On the timer for when flying is available
+	L.soaring_reshii = "Montura disponible" -- On the timer for when flying is available
 
-	--L.weakened_soon_monster_yell = "We must strike--now!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
+	L.weakened_soon_monster_yell = "¡Debemos de atacar ya!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end
