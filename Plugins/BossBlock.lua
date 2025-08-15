@@ -741,12 +741,20 @@ do
 					for i = 1, #trackedAchievements do
 						local achievementID = trackedAchievements[i]
 						local category = GetAchievementCategory(achievementID)
-						local cname, parent = GetCategoryInfo(category)
-						if riskyAchievementCategories[parent] then
+						if riskyAchievementCategories[category] then
 							local _, _, _, completed = GetAchievementInfo(achievementID)
 							if not completed then
 								isTrackingAchievements = true
 								break
+							end
+						else
+							local _, parentCategory = GetCategoryInfo(category)
+							if riskyAchievementCategories[parentCategory] then
+								local _, _, _, completed = GetAchievementInfo(achievementID)
+								if not completed then
+									isTrackingAchievements = true
+									break
+								end
 							end
 						end
 					end
