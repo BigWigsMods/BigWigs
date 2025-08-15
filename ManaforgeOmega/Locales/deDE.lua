@@ -10,7 +10,7 @@ if L then
 	L.voidblade_ambush = "Hinterhalt" -- Short for Voidblade Ambush
 	L.soulfray_annihilation = "Linien" -- Lines that shoot out an orb along that path
 	L.soulfray_annihilation_single = "Linie" -- Single from Lines
-	--L.remaining_adds = "Remaining Adds" -- All remaining adds from Soul Calling spawn
+	L.remaining_adds = "Verbleibende Adds" -- All remaining adds from Soul Calling spawn
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "deDE")
@@ -48,4 +48,7 @@ if L then
 	L.extinguish_the_stars = "Sterne" -- Short for Extinguish the Stars
 	L.darkened_sky = "Ringe"
 	L.cosmic_collapse = "Kollaps" -- Short for Cosmic Collapse
+	L.soaring_reshii = "Fliegen verfügbar" -- On the timer for when flying is available
+
+	L.weakened_soon_monster_yell = "Wir müssen zuschlagen!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end
