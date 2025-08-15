@@ -10,7 +10,7 @@ if L then
 	L.voidblade_ambush = "奇袭" -- 技能“虚空剑士奇袭”的简称
 	L.soulfray_annihilation = "射线" -- Lines that shoot out an orb along that path
 	L.soulfray_annihilation_single = "射线" -- Single from Lines
-	--L.remaining_adds = "Remaining Adds" -- All remaining adds from Soul Calling spawn
+	L.remaining_adds = "剩余增援" -- All remaining adds from Soul Calling spawn
 end
 
 L = BigWigs:NewBossLocale("Forgeweaver Araz", "zhCN")
