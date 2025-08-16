@@ -72,28 +72,28 @@ local timersHeroic = {
 
 local timersMythic = {
 	[1] = {
-		[1219450] = { 11.6, 29.3, 0 }, -- Manifest Matrices
-		[1219263] = { 21.8, 30.4, 0 }, -- Obliteration Arcanocannon
-		[1219607] = { 42.1, 0 }, -- Eradicating Salvo
+		[1219450] = { 11.5, 28.1, 0 }, -- Manifest Matrices
+		[1219263] = { 21.7, 30.4, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 40.9, 0 }, -- Eradicating Salvo
 		[1234733] = { 0.0, 0 }, -- Cleanse the Chamber
 	},
 	[2] = {
-		[1219450] = { 6.9, 23.2, 23.3, 25.7, 0 }, -- Manifest Matrices
-		[1219263] = { 14.1, 28.2, 29.2, 0 }, -- Obliteration Arcanocannon
-		[1219607] = { 20.8, 34.0, 32.2, 0 }, -- Eradicating Salvo
-		[1234733] = { 28.0, 0 }, -- Cleanse the Chamber
+		[1219450] = { 7.4, 26.7, 26.8, 23.1, 0 }, -- Manifest Matrices
+		[1219263] = { 13.9, 29.2, 29.2, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 19.9, 31.6, 33.7, 0 }, -- Eradicating Salvo
+		[1234733] = { 28.5, 0 }, -- Cleanse the Chamber
 	},
 	[3] = {
-		[1219450] = { 7.5, 28.1, 26.8, 23.0, 0 }, -- Manifest Matrices
-		[1219263] = { 14.1, 28.2, 29.2, 0 }, -- Obliteration Arcanocannon
-		[1219607] = { 21.5, 31.7, 34.0, 0 }, -- Eradicating Salvo
-		[1234733] = { 31.7, 0 }, -- Cleanse the Chamber
+		[1219450] = { 7.6, 26.8, 26.8, 23.1, 0 }, -- Manifest Matrices
+		[1219263] = { 14.1, 28.0, 30.4, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 20.2, 31.7, 33.6, 0 }, -- Eradicating Salvo
+		[1234733] = { 28.7, 0 }, -- Cleanse the Chamber
 	},
 	[4] = {
-		[1219450] = { 7.9, 23.1, 23.1, 32.8, 32.8, 32.8, 32.8, 32.8 }, -- Manifest Matrices
-		[1219263] = { 14.3, 29.1, 29.2, 32.8, 32.8, 32.8, 32.8 }, -- Obliteration Arcanocannon
-		[1219607] = { 21.7, 33.7, 38.1, 32.8, 32.8, 32.8, 32.8, 32.8 }, -- Eradicating Salvo
-		[1234733] = { 63.0, 6.1, 11.0, 8.1, 12.5, 12.1, 8.1 }, -- Cleanse the Chamber
+		[1219450] = { 7.0, 24.3, 23.1, 30.4, 28.0, 24.3, 24.3 }, -- Manifest Matrices
+		[1219263] = { 13.5, 29.2, 30.4, 28.0, 42.5 }, -- Obliteration Arcanocannon
+		[1219607] = { 20.8, 35.2, 34.1, 34.0, 43.7 }, -- Eradicating Salvo
+		[1234733] = { 63.3, 6.1, 9.7, 6.9, 11.3, 9.7, 7.0, 6.3, 10.9, 7.0, 11.2, 6.1, 7.1 }, -- Cleanse the Chamber
 	},
 }
 
