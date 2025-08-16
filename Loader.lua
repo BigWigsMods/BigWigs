@@ -1941,7 +1941,7 @@ do
 			if enableZones[newId] then
 				ModifyInstanceInfo(newId, "scenario", 208, 5) -- Unfortunately, GetInstanceInfo() is not accurate until 1 frame later, so we mod it
 				self:PLAYER_ENTERING_WORLD()
-				CTimerAfter(1, ModifyInstanceInfo) -- reset
+				CTimerAfter(1, ModifyInstanceInfo) -- Reset back to defaults
 			end
 		end
 	end
@@ -2026,8 +2026,8 @@ end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
-	local _, _, _, _, _, _, _, id = GetInstanceInfoModified()
-	local zoneAddon = public.zoneTbl[id]
+	local _, _, _, _, _, _, _, instanceID = GetInstanceInfoModified()
+	local zoneAddon = public.zoneTbl[instanceID]
 	if zoneAddon and zoneAddon:find("LittleWigs", nil, true) then
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga"
 	elseif zoneAddon and zoneAddon:find("BigWigs", nil, true) and zoneAddon ~= public.currentExpansion.name then
