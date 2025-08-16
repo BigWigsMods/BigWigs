@@ -39,7 +39,6 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "esES")
 if L then
-	L.shattered_space = "Manos" -- Dimensius reaches down with both hands
 	L.reverse_gravity = "Gravedad" -- Short for Reverse Gravity
 	L.extinction = "Fragmento" -- Dimensius hurls a fragment of a broken world
 	L.slows = "Frenados"

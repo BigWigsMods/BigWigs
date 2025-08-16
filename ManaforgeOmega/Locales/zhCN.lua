@@ -39,7 +39,6 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "zhCN")
 if L then
-	L.shattered_space = "破碎空间" -- 描述是双手撕裂空间，暂使用技能名字
 	L.reverse_gravity = "引力" -- 技能“引力倒逆”的简称
 	L.extinction = "碎片" -- 迪门修斯投掷出破碎世界的碎片
 	L.slows = "减速"

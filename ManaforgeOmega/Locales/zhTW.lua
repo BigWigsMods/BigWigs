@@ -39,7 +39,6 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "zhTW")
 if L then
-	L.shattered_space = "破碎空間" -- 原名，或者就叫大圈
 	L.reverse_gravity = "逆轉重力" -- 原名就行
 	L.extinction = "滅絕" -- Dimensius hurls a fragment of a broken world
 	L.slows = "緩速"
