@@ -304,7 +304,7 @@ do
 	local text = mainPanel.TitleContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	text:SetJustifyH("RIGHT")
 	text:SetText("/key")
-	text:SetSize(30, 30)
+	text:SetSize(50, 30)
 	text:SetTextColor(0.65, 0.65, 0.65)
 	text:SetPoint("RIGHT", -26, 0)
 end
