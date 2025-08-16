@@ -251,7 +251,10 @@ do
 	local x, y = db.profile.viewerPosition[3], db.profile.viewerPosition[4]
 	mainPanel:SetPoint(point, UIParent, relPoint, x, y)
 end
-mainPanel:SetFrameStrata("DIALOG")
+mainPanel:SetFrameStrata("MEDIUM")
+mainPanel:SetFixedFrameStrata(true)
+mainPanel:SetFrameLevel(100)
+mainPanel:SetFixedFrameLevel(true)
 mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
