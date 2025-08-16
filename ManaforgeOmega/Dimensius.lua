@@ -706,6 +706,7 @@ function mod:Destabilized(args)
 
 	self:Bar(1231716, 17, L.extinguish_the_stars) -- Extinguish the Stars
 	self:Bar(1234044, timers[3][1234044][darkenedSkyCount], CL.count:format(L.darkened_sky, darkenedSkyCount)) -- Darkened Sky
+	self:Bar(1250055, timers[3][1250055][voidgraspCount], CL.count:format(L.slows, voidgraspCount)) -- Void Grasp
 	self:Bar(1234263, timers[3][1234263][cosmicCollapseCount], CL.count:format(L.cosmic_collapse, cosmicCollapseCount)) -- Cosmic Collapse
 	self:Bar(1233539, timers[3][1233539][devourCount], CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
 	self:Bar(1232973, timers[3][1232973][supernovaCount], CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
