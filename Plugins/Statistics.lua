@@ -48,7 +48,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-11.1.5
+11.2.0
 1. Normal
 2. Heroic
 3. 10 Player
@@ -98,6 +98,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 220. Story
 230. Heroic
 232. Event
+236. Lorewalking
 
 5.5.0
 1. Normal
