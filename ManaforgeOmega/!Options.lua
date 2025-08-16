@@ -44,6 +44,8 @@ BigWigs:AddColors("Loom'ithar", {
 	[1238502] = "green",
 	[1243771] = "blue",
 	[1246921] = "yellow",
+	[1247029] = "red",
+	[1247045] = "blue",
 	["stages"] = "green",
 })
 
@@ -59,6 +61,7 @@ BigWigs:AddSounds("Loom'ithar", {
 	[1238502] = "info",
 	[1243771] = "underyou",
 	[1246921] = "long",
+	[1247045] = {"alarm","info"},
 	["stages"] = "long",
 })
 

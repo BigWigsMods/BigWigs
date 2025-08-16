@@ -22,6 +22,10 @@ local arcaneOutrageCount = 1
 local writhingWaveCount = 1
 
 local infusionPylonCount = 1
+local infusionPylonTimer
+
+local primalSpellstormCount = 1
+local primalSpellstormTimer
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,6 +35,7 @@ local L = mod:GetLocale()
 if L then
 	L.lair_weaving = "Webs" -- Webs that spawn on the edge of the room
 	L.infusion_pylons = "Pylons" -- Short for Infusion Pylons
+	L.primal_spellstorm = CL.dodge -- "Circles"
 end
 
 --------------------------------------------------------------------------------
@@ -60,15 +65,17 @@ function mod:GetOptions()
 				1226366, -- Living Silk
 				1226721, -- Silken Snare
 			1226395, -- Overinfusion Burst
-			-- 1226867, -- Primal Spellstorm XXX No cast events, just passive dodges?
+			1226867, -- Primal Spellstorm
 			{1237212, "TANK"}, -- Piercing Strand
+			-- Mythic
+			1246921, -- Infusion Pylons
+				1247029, -- Excess Nova
+				1247045, -- Hyper Infusion
 		-- Stage Two: The Beast Unbound
 			{1228059, "COUNTDOWN"}, -- Unbound Rage
 				1243771, -- Arcane Ichor
 			1227782, -- Arcane Outrage
 			1227226, -- Writhing Wave
-		-- Mythic
-			1246921, -- Infusion Pylons
 	},{
 		{
 			tabName = CL.general,
@@ -76,11 +83,11 @@ function mod:GetOptions()
 		},
 		{
 			tabName = CL.stage:format(1),
-			{1237272, 1238502, 1226311, 1226366, 1226721, 1226395, 1237212, 1246921},
+			{1237272, 1238502, 1226311, 1226366, 1226721, 1226395, 1226867, 1237212, 1246921, 1247029, 1247045},
 		},
 		{
 			tabName = CL.stage:format(2),
-			{1228059, 1243771, 1227782, 1227226}
+			{1228059, 1243771, 1227782, 1227226, 1226867}
 		},
 		[1246921] = "mythic", -- Infusion Pylons
 	},{
@@ -94,7 +101,7 @@ function mod:GetOptions()
 		[1246921] = L.infusion_pylons, -- Infusion Pylons (Pylons)
 		[1227782] = CL.pushback, -- Arcane Outrage (Pushback)
 		[1227226] = CL.soak, -- Writhing Wave (Soak)
-
+		[1226867] = L.primal_spellstorm, -- Primal Spellstorm (Circles)
 	}
 end
 
@@ -121,6 +128,10 @@ function mod:OnBossEnable()
 	-- Stage Two: The Beast Unbound
 	self:Log("SPELL_CAST_START", "ArcaneOutrage", 1227782)
 	self:Log("SPELL_CAST_START", "WrithingWave", 1227226)
+	-- Mythic
+	self:Log("SPELL_CAST_SUCCESS", "ExcessNova", 1247029)
+	self:Log("SPELL_AURA_APPLIED", "HyperInfusionApplied", 1247045)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "HyperInfusionAppliedDose", 1247045)
 end
 
 function mod:OnEngage()
@@ -131,6 +142,7 @@ function mod:OnEngage()
 	infusionTetherCount = 1
 	piercingStrandCount = 1
 	infusionPylonCount = 1
+	primalSpellstormCount = 1
 
 	self:Bar(1237212, self:Mythic() and 12.7 or 9.5, CL.count:format(CL.tank_frontal, piercingStrandCount)) -- Piercing Strand
 	self:Bar(1226311, 22.0, CL.count:format(CL.pull_in, infusionTetherCount)) -- Infusion Tether
@@ -138,7 +150,12 @@ function mod:OnEngage()
 	self:Bar(1226395, 76.0, CL.count:format(CL.full_energy, overinfusionBurstCount)) -- Overinfusion Burst
 
 	if self:Mythic() then
-		self:Bar(1246921, 10.0, CL.count:format(L.infusion_pylons, infusionPylonCount))
+		-- CHAT_MSG_RAID_BOSS_WHISPER at 5s, then activates 8s later
+		self:Bar(1246921, 13.0, CL.count:format(L.infusion_pylons, infusionPylonCount))
+
+		local primalSpellstormCD = 14
+		self:Bar(1226867, primalSpellstormCD, CL.count:format(L.primal_spellstorm, primalSpellstormCount)) -- Primal Spellstorm
+		primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", primalSpellstormCD)
 	end
 end
 
@@ -149,10 +166,11 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	-- |TInterface\\ICONS\\Spell_Mage_Overpowered.blp|t |cFFFF0000|Hspell:1246921|h[Infusion Pylons]|h|r begin to turn on!#Loom'ithar#0#false",
 	if msg:find("spell:1246921", nil, true) then
-		self:Message(1246921, "yellow", CL.count:format(L.infusion_pylons, infusionPylonCount))
+		self:Message(1246921, "yellow", CL.incoming:format(CL.count:format(L.infusion_pylons, infusionPylonCount)))
 		self:PlaySound(1246921, "long")
 		infusionPylonCount = infusionPylonCount + 1
-		self:Bar(1246921, infusionPylonCount % 2 == 0 and 30.0 or 55, CL.count:format(L.infusion_pylons, infusionPylonCount))
+		-- timer offset to first debuff
+		self:ScheduleTimer("Bar", 8, 1246921, infusionPylonCount % 2 == 0 and 35.0 or 55.0, CL.count:format(L.infusion_pylons, infusionPylonCount))
 	end
 end
 
@@ -170,14 +188,23 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(CL.count:format(CL.full_energy, overinfusionBurstCount)) -- Overinfusion Burst
 		self:StopBar(CL.count:format(CL.pull_in, infusionTetherCount)) -- Infusion Tether
 		self:StopBar(CL.count:format(CL.tank_frontal, piercingStrandCount)) -- Piercing Strand
-		self:StopBar(CL.count:format(L.infusion_pylons, infusionPylonCount))
+		self:StopBar(CL.count:format(self:SpellName(1247672), infusionPylonCount)) -- Infused Pylon
+		self:CancelTimer(infusionPylonTimer)
+		self:StopBar(CL.count:format(L.primal_spellstorm, primalSpellstormCount)) -- Primal Spellstorm
+		self:CancelTimer(primalSpellstormTimer)
 
 		arcaneOutrageCount = 1
 		writhingWaveCount = 1
+		primalSpellstormCount = 1
 
 		self:Bar(1228059, 5.8, CL.knockback)
 		self:Bar(1227226, 16.0, CL.count:format(CL.soak, writhingWaveCount)) -- Writhing Wave
 		self:Bar(1227782, 23.0, CL.count:format(CL.pushback, arcaneOutrageCount)) -- Arcane Outrage
+		if self:Mythic() then
+			local primalSpellstormCD = 10
+			self:Bar(1226867, primalSpellstormCD, CL.count:format(L.primal_spellstorm, primalSpellstormCount)) -- Primal Spellstorm
+			primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", primalSpellstormCD)
+		end
 	end
 end
 
@@ -252,7 +279,7 @@ function mod:PiercingStrand()
 	self:PlaySound(1237212, "alert") -- tank hit inc
 	piercingStrandCount = piercingStrandCount + 1
 	-- every 2nd is fast, others alternate in speed
-	local cd = piercingStrandCount % 2 == 0 and (self:Mythic() and 4 or 5.5) or piercingStrandCount % 4 == 3 and 39.5 or (self:Mythic() and 36.5 or 33.5)
+	local cd = piercingStrandCount % 2 == 0 and (self:Mythic() and 4 or 7) or piercingStrandCount % 4 == 3 and 39.5 or (self:Mythic() and 36.5 or 33.5)
 	self:Bar(1237212, cd, CL.count:format(CL.tank_frontal, piercingStrandCount))
 end
 
@@ -292,4 +319,42 @@ function mod:WrithingWave(args)
 	self:PlaySound(args.spellId, "warning") -- soak or avoid
 	writhingWaveCount = writhingWaveCount + 1
 	self:Bar(args.spellId, 20, CL.count:format(CL.soak, writhingWaveCount))
+end
+
+-- Mythic
+
+function mod:PrimalSpellstormRepeater()
+	primalSpellstormCount = primalSpellstormCount + 1
+	local cd = self:GetStage() == 1 and 14.5 or 8.0
+	self:Bar(1226867, cd, CL.count:format(L.primal_spellstorm, primalSpellstormCount))
+	primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", cd)
+end
+
+do
+	local prev = 0
+	function mod:ExcessNova(args)
+		if args.time - prev > 3 then
+			prev = args.time
+			self:Message(args.spellId, "red")
+			-- self:PlaySound(args.spellId, "alarm") -- fail
+		end
+	end
+end
+
+function mod:HyperInfusionApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
+function mod:HyperInfusionAppliedDose(args)
+	if self:Me(args.destGUID) and (args.amount % 5 == 0) then
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 10)
+		if args.amount >= 10 then
+			self:PlaySound(args.spellId, "alarm")
+		else
+			self:PlaySound(args.spellId, "info")
+		end
+	end
 end
