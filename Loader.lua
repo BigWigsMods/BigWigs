@@ -193,7 +193,7 @@ local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a host
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
-local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
+local disabledZones = {} -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
 	[-101]=true, -- Outland
@@ -919,12 +919,12 @@ do
 		else
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content
-				for j = 1, select("#", strsplit(",", meta)) do
-					local rawId = select(j, strsplit(",", meta))
-					local id = tonumber(rawId:trim())
-					if id and id > 0 and public.zoneTbl[id] then
-						if not disabledZones then disabledZones = {} end
-						disabledZones[id] = name
+				local instanceIDsTable = {strsplit(",", meta)}
+				for numInTable = 1, #instanceIDsTable do
+					local instanceIDRaw = instanceIDsTable[numInTable]:trim()
+					local instanceID = tonumber(instanceIDRaw)
+					if instanceID and instanceID > 0 and public.zoneTbl[instanceID] then
+						disabledZones[instanceID] = name
 					end
 				end
 			end
@@ -1410,8 +1410,6 @@ do
 					local msg = L.removeAddOn:format(name, old[name])
 					delayedMessages[#delayedMessages+1] = msg
 					Popup(msg, true)
-				else
-					EnableAddOn(i) -- XXX temp as we were accidentally disabling the Shadowlands addon for a while
 				end
 			else
 				DisableAddOn(i)
@@ -1897,7 +1895,7 @@ do
 			if BigWigs3DB and BigWigs3DB.breakTime then -- Break timer restoration
 				loadAndEnableCore()
 			end
-			if disabledZones and disabledZones[instanceID] then -- We have content for the zone but it is disabled in the addons menu
+			if disabledZones[instanceID] then -- We have content for the zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
 				sysprint(msg)
 				Popup(msg)
@@ -1938,7 +1936,7 @@ do
 	end
 	function mod:PLAYER_MAP_CHANGED(oldId, newId)
 		if oldId ~= -1 then -- Skip non-delve events
-			if enableZones[newId] then
+			if public.zoneTbl[newId] then
 				ModifyInstanceInfo(newId, "scenario", 208, 5) -- Unfortunately, GetInstanceInfo() is not accurate until 1 frame later, so we mod it
 				self:PLAYER_ENTERING_WORLD()
 				CTimerAfter(1, ModifyInstanceInfo) -- Reset back to defaults
