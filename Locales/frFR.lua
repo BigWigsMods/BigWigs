@@ -90,7 +90,7 @@ L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
 L.spell_on_you = "BigWigs : sort sur vous"
 L.spell_under_you = "BigWigs : sort en dessous de vous"
---L.simple_no_voice = "Simple (No Voice)"
+L.simple_no_voice = "Simple (Pas de voix)"
 
 -- Options.lua
 L.options = "Options"
