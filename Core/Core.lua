@@ -305,7 +305,7 @@ do
 		elseif zoneList[newId] then
 			-- Joining a delve but we were already enabled from something
 			DisableCore()
-			--core:Enable() -- We rely on the 0 second delay from the loader to re-enable the core
+			core:Enable()
 		end
 	end
 	function core:Enable()
