@@ -5,7 +5,7 @@ if not L then return end
 L.tempNew = "NOUVEAU : Vous pouvez écrire |cFFFFFFFF/key|r afin de voir les clefs mythiques +des membres de votre groupe."
 
 -- API.lua
---L.showAddonBar = "The addon '%s' created the '%s' bar."
+L.showAddonBar = "L'addon '%s' a créé la barre '%s'."
 
 -- Core.lua
 L.berserk = "Berserk"
