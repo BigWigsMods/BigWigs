@@ -375,7 +375,7 @@ function mod:AstralHarvestApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1228214, nil, CL.orbs)
 		self:PlaySound(1228214, "warning", nil, args.destName) -- move out
-		self:Say(args.spellId, CL.orb, nil, "Orb")
+		self:Say(1228214, CL.orb, nil, "Orb")
 		self:SayCountdown(1228214, 7)
 	end
 end
