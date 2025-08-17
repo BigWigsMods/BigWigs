@@ -535,7 +535,7 @@ function mod:Stage2Start()
 
 	self:Bar(1228502, 4.0, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:Bar(1243901, 8.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
-	self:Bar(1228188, self:Mythic() and 30 or 37, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
+	self:Bar(1228188, self:Mythic() and 30 or 12.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	if self:Mythic() then
 		self:Bar(1232221, 12.0, CL.count:format(CL.knockback, deathThroesCount)) -- Death Throes
 	end
