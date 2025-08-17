@@ -106,14 +106,14 @@ end
 
 function mod:OnRegister()
 	self:SetSpellRename(1231720, L.invoke_collector) -- Invoke Collector (Collector)
-	self:SetSpellRename(1228214, CL.orbs) -- Astral Harvest (Orbs)
+	self:SetSpellRename(1228214, CL.adds) -- Astral Harvest (Adds)
 	self:SetSpellRename(1228216, CL.soak) -- Arcane Obliteration (Soak)
 	self:SetSpellRename(1228188, CL.pools) -- Silencing Tempest (Pools)
 	self:SetSpellRename(1227631, CL.knockback) -- Arcane Expulsion (Knockback)
 	self:SetSpellRename(1234328, CL.dodge) -- Photon Blast (Dodge)
 	self:SetSpellRename(1232590, CL.raid_damage) -- Arcane Convergence (Raid Damage)
 	self:SetSpellRename(1233415, CL.weakened) -- Mana Splinter (Weakened)
-	self:SetSpellRename(1243901, CL.orbs) -- Void Harvest (Orbs)
+	self:SetSpellRename(1243901, CL.adds) -- Void Harvest (Adds)
 	self:SetSpellRename(1232221, CL.knockback) -- Death Throes (Knockback)
 end
 
@@ -170,15 +170,15 @@ function mod:GetOptions()
 		[1232221] = "mythic",
 	},{
 		[1231720] = L.invoke_collector, -- Invoke Collector (Collector)
-		[1228214] = CL.orbs, -- Astral Harvest (Orbs)
+		[1228214] = CL.adds, -- Astral Harvest (Add)
 		[1228216] = CL.soak, -- Arcane Obliteration (Soak)
 		[1228188] = CL.pools, -- Silencing Tempest (Pools)
 		[1227631] = CL.knockback, -- Arcane Expulsion (Knockback)
 		[1234328] = CL.dodge, -- Photon Blast (Dodge)
 		[1232590] = CL.raid_damage, -- Arcane Convergence (Raid Damage)
-		[-32596] = CL.adds, -- Shielded Attendant (Adds)
+		[-32596] = CL.adds_spawning, -- Shielded Attendant (Adds spawning)
 		[1233415] = CL.weakened, -- Mana Splinter (Weakened)
-		[1243901] = CL.orbs, -- Void Harvest (Orbs)
+		[1243901] = CL.adds, -- Void Harvest (Adds)
 		[1232221] = CL.knockback, -- Death Throes (Knockback)
 	}
 end
@@ -250,7 +250,7 @@ function mod:OnEngage()
 
 	self:Bar(1228502, getTimers(1228502, 1), CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:Bar(1231720, getTimers(1231720, 1), CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-	self:Bar(1228214, getTimers(1228214, 1), CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+	self:Bar(1228214, getTimers(1228214, 1), CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 	self:Bar(1228216, getTimers(1228216, 1), CL.count:format(CL.soak, arcaneObliterationTotalCount)) -- Arcane Obliteration
 	self:Bar(1228188, getTimers(1228188, 1), CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	self:Bar(1227631, self:Easy() and 125.0 or 155.0, CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
@@ -331,7 +331,7 @@ function mod:SilencingTempestApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1228188, nil, CL.pools)
 		self:PlaySound(1228188, "warning", nil, args.destName) -- move out
-		self:Say(1228188, CL.pools, true, "Pools")
+		self:Say(1228188, CL.pools, nil, "Pools")
 		silencesOnMe = silencesOnMe + 1
 	end
 end
@@ -363,20 +363,20 @@ function mod:InvokeCollector()
 end
 
 function mod:AstralHarvest()
-	self:StopBar(CL.count:format(CL.orbs, astralHarvestCount))
-	self:Message(1228214, "yellow", CL.count:format(CL.orbs, astralHarvestCount))
+	self:StopBar(CL.count:format(CL.adds, astralHarvestCount))
+	self:Message(1228214, "yellow", CL.count:format(CL.adds, astralHarvestCount))
 	self:PlaySound(1228214, "info")
 	astralHarvestCount = astralHarvestCount + 1
 	local cd = getTimers(1228214, astralHarvestCount)
-	self:Bar(1228214, cd, CL.count:format(CL.orbs, astralHarvestCount))
+	self:Bar(1228214, cd, CL.count:format(CL.adds, astralHarvestCount))
 end
 
 function mod:AstralHarvestApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(1228214, nil, CL.orbs)
-		self:PlaySound(1228214, "warning", nil, args.destName) -- move out
-		self:Say(1228214, CL.orb, nil, "Orb")
+		self:PersonalMessage(1228214, nil, CL.add)
+		self:Say(1228214, CL.add, nil, "Add")
 		self:SayCountdown(1228214, 7)
+		self:PlaySound(1228214, "warning", nil, args.destName) -- move in
 	end
 end
 
@@ -400,7 +400,7 @@ end
 function mod:DarkTerminus(args) -- Early P2 Starting
 	self:StopBar(CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:StopBar(CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-	self:StopBar(CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+	self:StopBar(CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 	self:StopBar(CL.count:format(CL.soak, arcaneObliterationTotalCount)) -- Arcane Obliteration
 	self:StopBar(CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	self:StopBar(CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
@@ -419,13 +419,13 @@ function mod:ArcaneExpulsionSuccess()
 
 	self:StopBar(CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:StopBar(CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-	self:StopBar(CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+	self:StopBar(CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 	self:StopBar(CL.count:format(CL.soak, arcaneObliterationCount)) -- Arcane Obliteration
 	self:StopBar(CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	self:StopBar(CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
 	self:StopBar(CL.count:format(self:SpellName(1248133), voidTearCount)) -- Void Tear
 
-	self:Bar(-32596, 12, CL.adds, 1232738) -- Shielded Attendant. Hardened Shell Icon
+	self:Bar(-32596, 12, CL.adds_spawning, 1232738) -- Shielded Attendant. Hardened Shell Icon
 end
 
 do
@@ -485,7 +485,7 @@ function mod:ManaSacrifice() -- Back to P1 / P2
 		-- Move these to the actual p1 start? small improvement or no difference?
 		self:Bar(1228502, getTimers(1228502, overwhelmingPowerCount), CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 		self:Bar(1228216, getTimers(1228216, arcaneObliterationCount), CL.count:format(CL.soak, arcaneObliterationTotalCount)) -- Arcane Obliteration
-		self:Bar(1228214, getTimers(1228214, astralHarvestCount), CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+		self:Bar(1228214, getTimers(1228214, astralHarvestCount), CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 		self:Bar(1228188, getTimers(1228188, silencingTempestCount), CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 		self:Bar(1231720, getTimers(1231720, invokerCollectorCount), CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
 		self:Bar(1227631, self:Easy() and 79.5 or 81.1, CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
@@ -534,7 +534,7 @@ function mod:Stage2Start()
 	deathThroesCount = 1
 
 	self:Bar(1228502, 4.0, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
-	self:Bar(1243901, 8.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
+	self:Bar(1243901, 8.0, CL.count:format(CL.adds, voidHarvestCount)) -- Void Harvest
 	self:Bar(1228188, self:Mythic() and 30 or 12.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	if self:Mythic() then
 		self:Bar(1232221, 12.0, CL.count:format(CL.knockback, deathThroesCount)) -- Death Throes
@@ -553,22 +553,22 @@ do
 end
 
 function mod:VoidHarvest()
-	self:StopBar(CL.count:format(CL.orbs, voidHarvestCount))
-	self:Message(1243901, "yellow", CL.count:format(CL.orbs, voidHarvestCount))
+	self:StopBar(CL.count:format(CL.adds, voidHarvestCount))
+	self:Message(1243901, "yellow", CL.count:format(CL.adds, voidHarvestCount))
 	self:PlaySound(1243901, "info") -- debuffs incoming
 	voidHarvestCount = voidHarvestCount + 1
 	local cd = voidHarvestCount % 2 == 1 and 36 or 8
 	if self:Mythic() then
 		cd = voidHarvestCount % 3 == 1 and 28 or 8
 	end
-	self:Bar(1243901, cd, CL.count:format(CL.orbs, voidHarvestCount))
+	self:Bar(1243901, cd, CL.count:format(CL.adds, voidHarvestCount))
 end
 
 function mod:VoidHarvestApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(1243901, nil, CL.orbs)
+		self:PersonalMessage(1243901, nil, CL.add)
 		self:PlaySound(1243901, "warning", nil, args.destName) -- move out
-		self:Say(1243901, CL.orb, nil, "Orb")
+		self:Say(1243901, CL.add, nil, "Add")
 		self:SayCountdown(1243901, 7)
 	end
 end
