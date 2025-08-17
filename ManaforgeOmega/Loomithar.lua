@@ -35,7 +35,6 @@ local L = mod:GetLocale()
 if L then
 	L.lair_weaving = "Webs" -- Webs that spawn on the edge of the room
 	L.infusion_pylons = "Pylons" -- Short for Infusion Pylons
-	L.primal_spellstorm = CL.dodge -- "Circles"
 end
 
 --------------------------------------------------------------------------------
@@ -101,7 +100,7 @@ function mod:GetOptions()
 		[1246921] = L.infusion_pylons, -- Infusion Pylons (Pylons)
 		[1227782] = CL.pushback, -- Arcane Outrage (Pushback)
 		[1227226] = CL.soak, -- Writhing Wave (Soak)
-		[1226867] = L.primal_spellstorm, -- Primal Spellstorm (Circles)
+		[1226867] = CL.dodge, -- Primal Spellstorm (Circles)
 	}
 end
 
@@ -154,7 +153,7 @@ function mod:OnEngage()
 		self:Bar(1246921, 13.0, CL.count:format(L.infusion_pylons, infusionPylonCount))
 
 		local primalSpellstormCD = 14
-		self:Bar(1226867, primalSpellstormCD, CL.count:format(L.primal_spellstorm, primalSpellstormCount)) -- Primal Spellstorm
+		self:Bar(1226867, primalSpellstormCD, CL.count:format(CL.dodge, primalSpellstormCount)) -- Primal Spellstorm
 		primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", primalSpellstormCD)
 	end
 end
@@ -190,7 +189,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(CL.count:format(CL.tank_frontal, piercingStrandCount)) -- Piercing Strand
 		self:StopBar(CL.count:format(self:SpellName(1247672), infusionPylonCount)) -- Infused Pylon
 		self:CancelTimer(infusionPylonTimer)
-		self:StopBar(CL.count:format(L.primal_spellstorm, primalSpellstormCount)) -- Primal Spellstorm
+		self:StopBar(CL.count:format(CL.dodge, primalSpellstormCount)) -- Primal Spellstorm
 		self:CancelTimer(primalSpellstormTimer)
 
 		arcaneOutrageCount = 1
@@ -201,8 +200,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(1227226, 16.0, CL.count:format(CL.soak, writhingWaveCount)) -- Writhing Wave
 		self:Bar(1227782, 23.0, CL.count:format(CL.pushback, arcaneOutrageCount)) -- Arcane Outrage
 		if self:Mythic() then
-			local primalSpellstormCD = 10
-			self:Bar(1226867, primalSpellstormCD, CL.count:format(L.primal_spellstorm, primalSpellstormCount)) -- Primal Spellstorm
+			local primalSpellstormCD = 13
+			self:Bar(1226867, primalSpellstormCD, CL.count:format(CL.dodge, primalSpellstormCount)) -- Primal Spellstorm
 			primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", primalSpellstormCD)
 		end
 	end
@@ -324,9 +323,15 @@ end
 -- Mythic
 
 function mod:PrimalSpellstormRepeater()
+	if primalSpellstormTimer then
+		self:CancelTimer(primalSpellstormTimer)
+		primalSpellstormTimer = nil
+	end
 	primalSpellstormCount = primalSpellstormCount + 1
-	local cd = self:GetStage() == 1 and 14.5 or 8.0
-	self:Bar(1226867, cd, CL.count:format(L.primal_spellstorm, primalSpellstormCount))
+	local primalSpellstormCDTable = {12, 15, 13, 15, 16, 14}
+	local cdCount = primalSpellstormCDTable % 6 + 1
+	local cd = self:GetStage() == 2 and 8 or primalSpellstormCDTable[cdCount]
+	self:Bar(1226867, cd, CL.count:format(CL.dodge, primalSpellstormCount))
 	primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", cd)
 end
 
