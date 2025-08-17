@@ -63,7 +63,7 @@ function mod:GetOptions()
 			{1226311, "ME_ONLY_EMPHASIZE"}, -- Infusion Tether
 				1226366, -- Living Silk
 				1226721, -- Silken Snare
-			1226395, -- Overinfusion Burst
+			{1226395, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Overinfusion Burst
 			1226867, -- Primal Spellstorm
 			{1237212, "TANK"}, -- Piercing Strand
 			-- Mythic
@@ -229,11 +229,13 @@ function mod:ShieldRemoved(args)
 end
 
 function mod:OverinfusionBurst(args)
-	self:StopBar(CL.count:format(CL.full_energy, overinfusionBurstCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.full_energy, overinfusionBurstCount))
-	self:PlaySound(args.spellId, "warning") -- move away
+	local msg = CL.count:format(CL.full_energy, overinfusionBurstCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
+	self:CastBar(args.spellId, 8, msg)
 	overinfusionBurstCount = overinfusionBurstCount + 1
 	self:Bar(args.spellId, 85, CL.count:format(CL.full_energy, overinfusionBurstCount))
+	self:PlaySound(args.spellId, "warning") -- move away
 end
 
 do
@@ -241,11 +243,11 @@ do
 	function mod:InfusionTetherApplied(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:StopBar(CL.count:format(CL.pull_in, overinfusionBurstCount))
-			self:Message(1226311, "cyan", CL.count:format(CL.pull_in, overinfusionBurstCount))
-			overinfusionBurstCount = overinfusionBurstCount + 1
-			local cd = overinfusionBurstCount % 2 == 1 and 41 or 44
-			self:Bar(1226311, cd, CL.count:format(CL.pull_in, overinfusionBurstCount))
+			self:StopBar(CL.count:format(CL.pull_in, infusionTetherCount))
+			self:Message(1226311, "cyan", CL.count:format(CL.pull_in, infusionTetherCount))
+			infusionTetherCount = infusionTetherCount + 1
+			local cd = infusionTetherCount % 2 == 1 and 41 or 44
+			self:Bar(1226311, cd, CL.count:format(CL.pull_in, infusionTetherCount))
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, CL.pull_in)
