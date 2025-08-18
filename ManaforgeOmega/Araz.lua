@@ -127,7 +127,7 @@ function mod:GetOptions()
 				{1228214, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Astral Harvest
 					-- Arcane Manifestation
 						1236207, -- Astral Surge
-		1228216, -- Arcane Obliteration
+		{1228216, "SAY", "SAY_COUNTDOWN", "CASTBAR"}, -- Arcane Obliteration
 			-- Arcane Echo
 				-- 1228454, -- Mark of Power XXX Add warning when too close?
 			1228219, -- Astral Mark
@@ -275,8 +275,6 @@ end
 -- Stage One: Priming the Forge
 function mod:OverwhelmingPower(args)
 	self:StopBar(CL.count:format(args.spellName, overwhelmingPowerCount))
-	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, overwhelmingPowerCount)))
-	self:PlaySound(args.spellId, "alert")
 	overwhelmingPowerCount = overwhelmingPowerCount + 1
 	local cd
 	if self:GetStage() == 1 then  -- 6 per rotation
@@ -287,25 +285,55 @@ function mod:OverwhelmingPower(args)
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, overwhelmingPowerCount))
 end
 
-function mod:OverwhelmingPowerApplied(args)
-	local highStacks = 4
-	local amount = args.amount or 1
-	self:StackMessage(1228502, "purple", args.destName, amount, highStacks)
-	if self:Me(args.destGUID) then
-		self:PlaySound(1228502, "alarm", nil, args.destName)
-	elseif self:Tank() and amount >= highStacks then
-		self:PlaySound(1228502, "warning") -- swap?
+do
+	local highStacks = 2
+	function mod:OverwhelmingPowerApplied(args)
+		if self:GetStage() > 1 then
+			local amount = args.amount or 1
+			self:StackMessage(1228502, "purple", args.destName, amount, highStacks)
+			if amount >= highStacks then
+				if self:Me(args.destGUID) then
+					self:PlaySound(1228502, "alarm", nil, args.destName)
+				elseif self:Tank() then
+					self:PlaySound(1228502, "warning") -- swap?
+				end
+			end
+		end
 	end
 end
 
 function mod:ArcaneObliteration(args)
-	self:StopBar(CL.count:format(CL.soak, arcaneObliterationTotalCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.soak, arcaneObliterationTotalCount))
-	self:PlaySound(args.spellId, "warning") -- soak if needed
+	local msg = CL.count:format(CL.soak, arcaneObliterationTotalCount)
+	self:StopBar(msg)
+	self:CastBar(args.spellId, 5.5, msg)
+
+	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+	if bossUnit then
+		if self:Tanking(bossUnit) then
+			self:PersonalMessage(args.spellId, nil, msg)
+			self:Yell(args.spellId, CL.soak, nil, "Soak")
+			self:YellCountdown(args.spellId, 5.5)
+		else
+			local target = self:UnitName(bossUnit.."target")
+			if target then
+				if self:Tank() then
+					self:TargetMessage(args.spellId, "purple", target, msg)
+				else
+					self:TargetMessage(args.spellId, "purple", target, msg)
+				end
+			else -- Fallback for no boss target
+				self:Message(args.spellId, "purple", msg)
+			end
+		end
+	else -- Fallback for no boss unit
+		self:Message(args.spellId, "purple", msg)
+	end
+
 	arcaneObliterationCount = arcaneObliterationCount + 1
 	arcaneObliterationTotalCount = arcaneObliterationTotalCount + 1 -- Total count as in mythic you can only soak 1 in the whole fight.
 	local cd = getTimers(args.spellId, arcaneObliterationCount)
 	self:Bar(args.spellId, cd, CL.count:format(CL.soak, arcaneObliterationTotalCount))
+	self:PlaySound(args.spellId, "warning") -- soak if needed
 end
 
 function mod:AstralMarkApplied(args)
@@ -458,13 +486,17 @@ function mod:ArcaneConvergence(args)
 	self:PlaySound(args.spellId, "alarm") -- raid damage inc
 end
 
-function mod:RampingPowerApplied(args)
-	local amount = args.amount or 1
+do
 	local highStacks = 10 -- why are you still tanking?
-	if amount == 5 or amount >= highStacks then -- 5 & 10 (capped at 10?)
-		self:StackMessage(args.spellId, "purple", args.destName, amount, highStacks)
-		if amount >= highStacks then
-			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- swap?
+	function mod:RampingPowerApplied(args) -- Stacks are on the add, based on how many times it hits the same target
+		if args.amount == 5 or args.amount >= highStacks then -- 5 & 10+
+			local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+			if bossUnit and self:Tanking(bossUnit) then
+				self:StackMessage(args.spellId, "purple", args.destName, args.amount, highStacks)
+				if args.amount > highStacks then
+					self:PlaySound(args.spellId, "alarm", nil, args.destName) -- swap?
+				end
+			end
 		end
 	end
 end
