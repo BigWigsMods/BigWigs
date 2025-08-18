@@ -326,8 +326,6 @@ L.keystoneViewerTitle = "Visor de Piedra angular"
 L.keystoneHideGuildTitle = "Ocultar mi piedra angular a los miembros de hermandad"
 L.keystoneHideGuildDesc = "|cffff4411No recomendado.|r Esta opción evitará que tus miembros de hermandad vean tu piedra angular. Cualquiera en tu grupo seguirá siendo capaz de verla."
 L.keystoneHideGuildWarning = "Desabilitar la opción de que tus miembros de hermandad vean tu piedra angular |cffff4411no está recomendado|r.\n\n¿Estás seguro de que quieres hacer esto?"
-L.keystoneAutoShowZoneIn = "Mostrar al entrar a una mazmorra"
-L.keystoneAutoShowZoneInDesc = "Enseña automáticamente el visor de piedra angular al entrar a una mazmorra mítica.\n\n|cFF33FF99Esto puede ayudarte a recordar cuál jugador tiene la piedra angular que vas a hacer.|r"
 L.keystoneAutoShowEndOfRun = "Mostrar al acabar la Mítica+"
 L.keystoneAutoShowEndOfRunDesc = "Enseña automáticamente el visor de piedra angular cuando acabe la mazmorra Mítica+.\n\n|cFF33FF99Esto puede ayudarte a ver las nuevas piedras angulares que haya conseguido tu grupo.|r"
 L.keystoneViewerExplainer = "Puedes abrir el visor de piedras angular usando el comando |cFF33FF99/key|r o clicando el botón de abajo.\n\n"
@@ -376,6 +374,13 @@ L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambito"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Calles"
 L.keystoneShortName_TheDawnbreaker_Bar = "Rompealbas"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
+--L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
+--L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +397,9 @@ L.lfgUseMasterDesc = "Cuando esta opción se activa el sonido de BDG listo se re
 L.general = "General"
 L.advanced = "Avanzado"
 L.comma = ", "
+L.reset = "Reiniciar"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "Resetear todo"
 
 L.positionX = "Posición X"
 L.positionY = "Posición Y"
@@ -605,10 +613,8 @@ L.textShadow = "Sombra de texto"
 L.expiring_normal = "Normal"
 L.emphasized = "Enfatizado"
 
-L.reset = "Reiniciar"
-L.resetDesc = "Reinicia los colores por defecto"
-L.resetAll = "Resetear todo"
-L.resetAllDesc = "Si has personalizado los colores de cualquier encuentro, este botón los reiniciará TODOS para que se utilicen los colores aquí definidos."
+L.resetColorsDesc = "Reinicia los colores por defecto"
+L.resetAllColorsDesc = "Si has personalizado los colores de cualquier encuentro, este botón los reiniciará TODOS para que se utilicen los colores aquí definidos."
 
 L.red = "Rojo"
 L.redDesc = "Avisos generales para encuentros."

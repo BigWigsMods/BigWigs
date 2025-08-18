@@ -326,8 +326,6 @@ L.keystoneViewerTitle = "钥石查看器"
 L.keystoneHideGuildTitle = "向公会成员隐藏我的钥石信息"
 L.keystoneHideGuildDesc = "|cffff4411不推荐。|r 此功能将阻止公会成员看到你拥有的钥石信息。你队伍中的其他成员仍然可以看到它。"
 L.keystoneHideGuildWarning = "禁用公会成员查看你钥石信息的功能是 |cffff4411不推荐|r 的。\n\n你确定要这样做吗？"
-L.keystoneAutoShowZoneIn = "进入地下城时显示"
-L.keystoneAutoShowZoneInDesc = "进入史诗地下城时自动显示钥石查看器。\n\n|cFF33FF99这可以帮助你记住你们要打的钥石属于哪位玩家。|r"
 L.keystoneAutoShowEndOfRun = "史诗钥石地下城结束时显示"
 L.keystoneAutoShowEndOfRunDesc = "当史诗钥石地下城结束时自动显示钥石查看器。\n\n|cFF33FF99这可以帮助你查看队伍成员获得了哪些新钥石。|r"
 L.keystoneViewerExplainer = "你可以使用|cFF33FF99/key|r 命令或点击下方按钮打开钥石查看器。\n\n"
@@ -376,6 +374,13 @@ L.keystoneShortName_TazaveshSoleahsGambit_Bar = "索·莉亚宏图"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "琳彩天街"
 L.keystoneShortName_TheDawnbreaker_Bar = "破晨号"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
+--L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
+--L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +397,9 @@ L.lfgUseMasterDesc = "启用此选项后，寻找组队就绪提示音将通过'
 L.general = "一般"
 L.advanced = "高级"
 L.comma = "，"
+L.reset = "重置"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "重置所有"
 
 L.positionX = "水平位置"
 L.positionY = "垂直位置"
@@ -605,10 +613,8 @@ L.textShadow = "文本阴影"
 L.expiring_normal = "普通"
 L.emphasized = "醒目"
 
-L.reset = "重置"
-L.resetDesc = "重置以上颜色为默认。"
-L.resetAll = "重置所有"
-L.resetAllDesc = "如果为首领战斗自定义了颜色设置，这个按钮将重置替换“所有”颜色为默认。"
+L.resetColorsDesc = "重置以上颜色为默认。"
+L.resetAllColorsDesc = "如果为首领战斗自定义了颜色设置，这个按钮将重置替换“所有”颜色为默认。"
 
 L.red = "红色"
 L.redDesc = "一般战斗警报。"

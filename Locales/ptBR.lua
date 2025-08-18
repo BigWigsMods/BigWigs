@@ -326,8 +326,6 @@ L.H25 = "Heroico 25"
 --L.keystoneHideGuildTitle = "Hide my keystone from my guild members"
 --L.keystoneHideGuildDesc = "|cffff4411Not recommended.|r This feature will prevent your guild members seeing what keystone you have. Anyone in your group will still be able to see it."
 --L.keystoneHideGuildWarning = "Disabling the ability for your guild members to see your keystone is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
---L.keystoneAutoShowZoneIn = "Show when entering a dungeon"
---L.keystoneAutoShowZoneInDesc = "Automatically show the keystone viewer when entering a Mythic dungeon.\n\n|cFF33FF99This can help remind you which player owns the keystone that you're about to do.|r"
 --L.keystoneAutoShowEndOfRun = "Show when the Mythic+ is over"
 --L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 --L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
@@ -376,6 +374,13 @@ L.H25 = "Heroico 25"
 --L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
 --L.keystoneShortName_TheDawnbreaker_Bar = "Dawnbreaker"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
+--L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
+--L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +397,9 @@ L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play 
 L.general = "Geral"
 L.advanced = "Avançado"
 L.comma = ", "
+L.reset = "Reiniciar"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "Reiniciar tudo"
 
 L.positionX = "Posição X"
 L.positionY = "Posição Y"
@@ -605,10 +613,8 @@ L.textShadow = "Sombra do texto"
 L.expiring_normal = "Normal"
 L.emphasized = "Enfatizado"
 
-L.reset = "Reiniciar"
-L.resetDesc = "Reinicia as cores padrões"
-L.resetAll = "Reiniciar tudo"
-L.resetAllDesc = "Se você personalizou as cores para os ajustes de algum encontro de chefe, este botão reiniciará TODOS ELES e usará as cores padrões."
+L.resetColorsDesc = "Reinicia as cores padrões"
+L.resetAllColorsDesc = "Se você personalizou as cores para os ajustes de algum encontro de chefe, este botão reiniciará TODOS ELES e usará as cores padrões."
 
 L.red = "Vermelho"
 L.redDesc = "Alertas de encontros em geral."

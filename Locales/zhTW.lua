@@ -326,8 +326,6 @@ L.keystoneTeleportReady = "傳送法術「|cFFFFFFFF%s|r」已|cFF33FF99就緒|r
 --L.keystoneHideGuildTitle = "Hide my keystone from my guild members"
 --L.keystoneHideGuildDesc = "|cffff4411Not recommended.|r This feature will prevent your guild members seeing what keystone you have. Anyone in your group will still be able to see it."
 --L.keystoneHideGuildWarning = "Disabling the ability for your guild members to see your keystone is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
---L.keystoneAutoShowZoneIn = "Show when entering a dungeon"
---L.keystoneAutoShowZoneInDesc = "Automatically show the keystone viewer when entering a Mythic dungeon.\n\n|cFF33FF99This can help remind you which player owns the keystone that you're about to do.|r"
 --L.keystoneAutoShowEndOfRun = "Show when the Mythic+ is over"
 --L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 --L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
@@ -376,6 +374,13 @@ L.keystoneShortName_TheDawnbreaker = "破曉者號" --破曉
 --L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
 --L.keystoneShortName_TheDawnbreaker_Bar = "Dawnbreaker"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
+--L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
+--L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +397,9 @@ L.lfgUseMasterDesc = "啟用後，以主音效頻道播放副本就續的提示�
 L.general = "一般"
 L.advanced = "進階"
 L.comma = "，"
+L.reset = "重置"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "重置所有"
 
 L.positionX = "X 座標"
 L.positionY = "Y 座標"
@@ -605,10 +613,8 @@ L.textShadow = "文字陰影"
 L.expiring_normal = "普通"
 L.emphasized = "強調"
 
-L.reset = "重置"
-L.resetDesc = "重置以上顏色為預設。"
-L.resetAll = "重置所有"
-L.resetAllDesc = "如果為首領戰鬥自訂了顏色設定。這個按鈕將重置替換“所有”顏色為預設。"
+L.resetColorsDesc = "重置以上顏色為預設。"
+L.resetAllColorsDesc = "如果為首領戰鬥自訂了顏色設定。這個按鈕將重置替換“所有”顏色為預設。"
 
 L.red = "紅色"
 L.redDesc = "一般戰鬥警報"

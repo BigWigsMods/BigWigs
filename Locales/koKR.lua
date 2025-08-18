@@ -326,8 +326,6 @@ L.keystoneViewerTitle = "쐐기돌 뷰어"
 L.keystoneHideGuildTitle = "길드원에게 내 쐐기돌 숨기기"
 L.keystoneHideGuildDesc = "|cffff4411권장하지 않습니다.|r 이 기능은 길드원들이 당신의 쐐기돌을 볼 수 없도록 합니다. 파티 내의 다른 멤버들은 여전히 이를 확인할 수 있습니다."
 L.keystoneHideGuildWarning = "길드원이 당신의 쐐기돌을 볼 수 없도록 하는 것은 |cffff4411권장하지 않습니다|r.\n\n정말로 이 기능을 사용하시겠습니까?"
-L.keystoneAutoShowZoneIn = "던전 입장 시 표시"
-L.keystoneAutoShowZoneInDesc = "신화+ 던전에 입장할 때 자동으로 쐐기돌 뷰어를 표시합니다.\n\n|cFF33FF99이 기능을 사용하면 곧 진행할 쐐기돌을 어떤 플레이어가 소유하고 있는지 확인할 수 있습니다.|r"
 L.keystoneAutoShowEndOfRun = "신화+ 던전이 종료될 때 표시"
 L.keystoneAutoShowEndOfRunDesc = "신화+ 던전이 종료될 때 자동으로 쐐기돌 뷰어를 표시합니다.\n\n|cFF33FF99이 기능을 사용하면 파티가 획득한 새로운 쐐기돌을 확인할 수 있습니다.|r"
 L.keystoneViewerExplainer = "쐐기돌 뷰어를 열려면 |cFF33FF99/key|r 명령어를 사용하거나 아래 버튼을 클릭하세요.\n\n"
@@ -376,6 +374,13 @@ L.keystoneShortName_TazaveshSoleahsGambit_Bar = "소레아"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "거리"
 L.keystoneShortName_TheDawnbreaker_Bar = "새인호"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
+--L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
+--L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +397,9 @@ L.lfgUseMasterDesc = "이 옵션을 활성화하면 파티 찾기 준비 완료�
 L.general = "일반"
 L.advanced = "고급"
 L.comma = ", "
+L.reset = "초기화"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "모두 초기화"
 
 L.positionX = "X 위치"
 L.positionY = "Y 위치"
@@ -605,10 +613,8 @@ L.textShadow = "문자 그림자"
 L.expiring_normal = "일반"
 L.emphasized = "강조"
 
-L.reset = "초기화"
-L.resetDesc = "위의 색상을 기본 색상으로 초기화합니다."
-L.resetAll = "모두 초기화"
-L.resetAllDesc = "보스 전투 설정에 사용자 설정 색상을 적용했다면, 이 버튼은 여기에 정의된 색상이 대신 사용되도록 모두 초기화합니다."
+L.resetColorsDesc = "위의 색상을 기본 색상으로 초기화합니다."
+L.resetAllColorsDesc = "보스 전투 설정에 사용자 설정 색상을 적용했다면, 이 버튼은 여기에 정의된 색상이 대신 사용되도록 모두 초기화합니다."
 
 L.red = "빨강"
 L.redDesc = "일반적인 경보"

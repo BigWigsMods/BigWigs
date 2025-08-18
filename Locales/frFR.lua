@@ -326,8 +326,6 @@ L.keystoneViewerTitle = "Vue des clefs"
 L.keystoneHideGuildTitle = "Cache ma clef des autres membres de la guilde"
 L.keystoneHideGuildDesc = "|cffff4411Non recommandé.|r Cette fonctionnalité empêche vos membres de guilde de voire votre clef. N'importe qui dans votre groupe pourra la voire."
 L.keystoneHideGuildWarning = "Désactiver la possibilité pour vos membres de guilde de voir votre clef est |cffff4411non recommandé|r.\n\nÊtes-vous sûr(e) de vouloir faire cela ?"
-L.keystoneAutoShowZoneIn = "Montrer lorsque vous rentrez dans un donjon"
-L.keystoneAutoShowZoneInDesc = "Affiche automatiquement la vue des clefs lorsque vous entrez dans un donjon mythique.\n\n|cFF33FF99Cela peut vous aider à vous souvenir de quel joueur possède la clef que vous vous apprêtez à faire.|r"
 L.keystoneAutoShowEndOfRun = "Affiche lorsque le mythique + est terminé"
 L.keystoneAutoShowEndOfRunDesc = "Montre automatiquement la vue des clefs lorsque le donjon mythique + est terminé.\n\n|cFF33FF99Cela peut vous aider à voir les nouvelles clefs que votre groupe a obtenu.|r"
 L.keystoneViewerExplainer = "Vous pouvez ouvrir la vue des clefs en utilisant la commande |cFF33FF99/key|r ou en cliquant sur le bouton ci-dessous.\n\n"
@@ -376,6 +374,13 @@ L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Stratagème"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Rues"
 L.keystoneShortName_TheDawnbreaker_Bar = "Brise-Aube"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
+--L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
+--L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +397,9 @@ L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play 
 L.general = "Général"
 L.advanced = "Avancé"
 L.comma = ", "
+L.reset = "Réinitialiser"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "Tout réinitialiser"
 
 L.positionX = "Position X"
 L.positionY = "Position Y"
@@ -605,10 +613,8 @@ L.textShadow = "Ombre du texte"
 L.expiring_normal = "Normal"
 L.emphasized = "En évidence"
 
-L.reset = "Réinitialiser"
-L.resetDesc = "Réinitialise les couleurs ci-dessus à leurs valeurs par défaut."
-L.resetAll = "Tout réinitialiser"
-L.resetAllDesc = "Si vous avez des couleurs personnalisées dans les paramètres des rencontres de boss, ce bouton les réinitialisera TOUTES et les couleurs définies ici seront utilisées à la place."
+L.resetColorsDesc = "Réinitialise les couleurs ci-dessus à leurs valeurs par défaut."
+L.resetAllColorsDesc = "Si vous avez des couleurs personnalisées dans les paramètres des rencontres de boss, ce bouton les réinitialisera TOUTES et les couleurs définies ici seront utilisées à la place."
 
 L.red = "Rouge"
 L.redDesc = "Alertes générales des rencontres."
