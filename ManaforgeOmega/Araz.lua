@@ -188,8 +188,8 @@ function mod:OnBossEnable()
 
 	-- Stage One: Priming the Forge
 	self:Log("SPELL_CAST_START", "OverwhelmingPower", 1228502)
-	self:Log("SPELL_AURA_APPLIED", "OverwhelmingPowerApplied", 1228502)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingPowerApplied", 1228502)
+	self:Log("SPELL_AURA_APPLIED", "OverwhelmingPowerApplied", 1228506)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingPowerApplied", 1228506)
 	self:Log("SPELL_CAST_START", "ArcaneObliteration", 1228216)
 	self:Log("SPELL_AURA_APPLIED", "AstralMarkApplied", 1228219)
 	self:Log("SPELL_CAST_START", "SilencingTempest", 1228161)
@@ -290,11 +290,11 @@ end
 function mod:OverwhelmingPowerApplied(args)
 	local highStacks = 4
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, amount, highStacks)
+	self:StackMessage(1228502, "purple", args.destName, amount, highStacks)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm", nil, args.destName)
+		self:PlaySound(1228502, "alarm", nil, args.destName)
 	elseif self:Tank() and amount >= highStacks then
-		self:PlaySound(args.spellId, "warning") -- swap?
+		self:PlaySound(1228502, "warning") -- swap?
 	end
 end
 
