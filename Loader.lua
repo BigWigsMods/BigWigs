@@ -12,9 +12,9 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 394
+local BIGWIGS_VERSION = 395
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 2, 11},
+	["LittleWigs"] = {11, 2, 13},
 	["BigWigs_Classic"] = {11, 2, 0},
 	["BigWigs_BurningCrusade"] = {11, 1, 4},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 7},
@@ -106,7 +106,7 @@ end
 
 local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTimer = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTimer
-local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local GetBestMapForUnit, GetMapInfo = C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
@@ -114,6 +114,22 @@ local myName = UnitNameUnmodified("player")
 local myGUID = UnitGUID("player")
 local function sysprint(msg)
 	print("|cFF33FF99BigWigs|r: "..msg)
+end
+local GetInstanceInfoModified, ModifyInstanceInfo
+do
+	local instanceID, instanceType, difficultyID, maxPlayers
+	local GetInstanceInfo = GetInstanceInfo
+	GetInstanceInfoModified = function()
+		if instanceID then
+			return nil, instanceType, difficultyID, nil, maxPlayers, nil, nil, instanceID
+		else
+			return GetInstanceInfo()
+		end
+
+	end
+	ModifyInstanceInfo = function(newID, newType, newDifficulty, newMaxPlayers)
+		instanceID, instanceType, difficultyID, maxPlayers = newID, newType, newDifficulty, newMaxPlayers
+	end
 end
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
@@ -124,7 +140,7 @@ public.CTimerNewTicker = C_Timer.NewTicker
 public.CTimerNewTimer = CTimerNewTimer
 public.DoCountdown = C_PartyInfo.DoCountdown
 public.GetBestMapForUnit = GetBestMapForUnit
-public.GetInstanceInfo = GetInstanceInfo
+public.GetInstanceInfo = GetInstanceInfoModified
 public.GetMapInfo = GetMapInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
 public.GetSpellCooldown = C_Spell.GetSpellCooldown or GetSpellCooldown -- XXX [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
@@ -177,7 +193,7 @@ local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a host
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
-local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
+local disabledZones = {} -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
 	[-101]=true, -- Outland
@@ -903,12 +919,12 @@ do
 		else
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content
-				for j = 1, select("#", strsplit(",", meta)) do
-					local rawId = select(j, strsplit(",", meta))
-					local id = tonumber(rawId:trim())
-					if id and id > 0 and public.zoneTbl[id] then
-						if not disabledZones then disabledZones = {} end
-						disabledZones[id] = name
+				local instanceIDsTable = {strsplit(",", meta)}
+				for numInTable = 1, #instanceIDsTable do
+					local instanceIDRaw = instanceIDsTable[numInTable]:trim()
+					local instanceID = tonumber(instanceIDRaw)
+					if instanceID and instanceID > 0 and public.zoneTbl[instanceID] then
+						disabledZones[instanceID] = name
 					end
 				end
 			end
@@ -1394,8 +1410,6 @@ do
 					local msg = L.removeAddOn:format(name, old[name])
 					delayedMessages[#delayedMessages+1] = msg
 					Popup(msg, true)
-				else
-					EnableAddOn(i) -- XXX temp as we were accidentally disabling the Shadowlands addon for a while
 				end
 			else
 				DisableAddOn(i)
@@ -1595,9 +1609,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20250813153914" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "11.2.8" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20250813000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20250816044208" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "11.2.9" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20250816000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 19
@@ -1868,13 +1882,12 @@ do
 
 	local warnedThisZone = {}
 	function mod:PLAYER_ENTERING_WORLD() -- Raid bosses
-		-- Zone checking
-		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
+		local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfoModified()
 
 		-- Module loading
-		if enableZones[id] then
+		if enableZones[instanceID] then
 			if loadAndEnableCore() then
-				loadZone(id)
+				loadZone(instanceID)
 			end
 			RegisterUnitTargetEvents()
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
@@ -1882,14 +1895,14 @@ do
 			if BigWigs3DB and BigWigs3DB.breakTime then -- Break timer restoration
 				loadAndEnableCore()
 			end
-			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu
-				local msg = L.disabledAddOn:format(disabledZones[id])
+			if disabledZones[instanceID] then -- We have content for the zone but it is disabled in the addons menu
+				local msg = L.disabledAddOn:format(disabledZones[instanceID])
 				sysprint(msg)
 				Popup(msg)
 				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
 				-- Only print once
-				warnedThisZone[id] = true
-				disabledZones[id] = nil
+				warnedThisZone[instanceID] = true
+				disabledZones[instanceID] = nil
 			end
 			if instanceType == "none" then
 				bwFrame:RegisterEvent("ZONE_CHANGED")
@@ -1902,18 +1915,18 @@ do
 
 		-- Lacking zone modules
 		if not public.db.profile.showZoneMessages then return end
-		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
+		local zoneAddon = public.zoneTbl[instanceID]
+		if zoneAddon and instanceID > 0 and not fakeZones[instanceID] and not warnedThisZone[instanceID] then
 			if public.usingBigWigsRepo and public.currentExpansion.bigWigsBundled[zoneAddon] then return end -- If we are a BW Git user, then bundled content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
-			if public.currentExpansion.zones[id] then
+			if public.currentExpansion.zones[instanceID] then
 				if guildDisableContentWarnings then return end
-				zoneAddon = public.currentExpansion.zones[id] -- Current BigWigs content has individual zone specific addons
+				zoneAddon = public.currentExpansion.zones[instanceID] -- Current BigWigs content has individual zone specific addons
 			elseif public.currentExpansion.littleWigsBundled[zoneAddon] then
 				zoneAddon = "LittleWigs" -- Bundled LittleWigs content is stored in the main addon
 			end
 			if public:GetAddOnState(zoneAddon) == "MISSING" then
-				warnedThisZone[id] = true
+				warnedThisZone[instanceID] = true
 				Popup(L.missingAddOnPopup:format(zoneAddon))
 				local msg = L.missingAddOnRaidWarning:format(zoneAddon)
 				sysprint(msg)
@@ -1923,8 +1936,10 @@ do
 	end
 	function mod:PLAYER_MAP_CHANGED(oldId, newId)
 		if oldId ~= -1 then -- Skip non-delve events
-			if enableZones[newId] then
-				CTimerAfter(0, mod.PLAYER_ENTERING_WORLD) -- Unfortunately, GetInstanceInfo() is not accurate until 1 frame later
+			if public.zoneTbl[newId] then
+				ModifyInstanceInfo(newId, "scenario", 208, 5) -- Unfortunately, GetInstanceInfo() is not accurate until 1 frame later, so we mod it
+				self:PLAYER_ENTERING_WORLD()
+				CTimerAfter(1, ModifyInstanceInfo) -- Reset back to defaults
 			end
 		end
 	end
@@ -2009,8 +2024,8 @@ end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
-	local _, _, _, _, _, _, _, id = GetInstanceInfo()
-	local zoneAddon = public.zoneTbl[id]
+	local _, _, _, _, _, _, _, instanceID = GetInstanceInfoModified()
+	local zoneAddon = public.zoneTbl[instanceID]
 	if zoneAddon and zoneAddon:find("LittleWigs", nil, true) then
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga"
 	elseif zoneAddon and zoneAddon:find("BigWigs", nil, true) and zoneAddon ~= public.currentExpansion.name then

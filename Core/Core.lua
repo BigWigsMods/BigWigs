@@ -268,12 +268,16 @@ do
 			coreEnabled = false
 
 			loader.UnregisterMessage(mod, "BigWigs_BossComm")
-			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
-			core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
+			loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
 			core.UnregisterEvent(mod, "ENCOUNTER_START")
 			core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
 			core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
-			loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
+			core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
+			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
+			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+				core.UnregisterEvent(mod, "PLAYER_MAP_CHANGED")
+			end
+			core.UnregisterEvent(mod, "PLAYER_LOGIN")
 
 			core:SendMessage("BigWigs_StopConfigureMode")
 			if BigWigsOptions then
@@ -305,27 +309,27 @@ do
 		elseif zoneList[newId] then
 			-- Joining a delve but we were already enabled from something
 			DisableCore()
-			--core:Enable() -- We rely on the 0 second delay from the loader to re-enable the core
+			core:Enable()
 		end
 	end
 	function core:Enable()
 		if not coreEnabled then
 			coreEnabled = true
 
+			-- Always make sure to unregister everything that's added here in DisableCore()
 			loader.RegisterMessage(mod, "BigWigs_BossComm", bossComm)
+			loader.RegisterMessage(mod, "BigWigs_UNIT_TARGET", UnitTargetChanged)
 			core.RegisterEvent(mod, "ENCOUNTER_START")
 			core.RegisterEvent(mod, "RAID_BOSS_WHISPER")
 			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", UpdateMouseoverUnit)
-			loader.RegisterMessage(mod, "BigWigs_UNIT_TARGET", UnitTargetChanged)
 			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", DisableCore) -- Simple disable when leaving instances
-			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
-				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", CheckIfLeavingDelve)
-			end
 			local _, instanceType = GetInstanceInfo()
 			if instanceType == "none" then -- We don't want to be disabling in instances
 				core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged) -- Special checks for disabling after world bosses
 			end
-
+			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", CheckIfLeavingDelve)
+			end
 
 			if IsLoggedIn() then
 				EnablePlugins()

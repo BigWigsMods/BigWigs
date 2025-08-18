@@ -17,6 +17,7 @@ local overwhelmingPowerCount = 1
 local arcaneObliterationCount = 1
 local arcaneObliterationTotalCount = 1
 local silencingTempestCount = 1
+local silencesOnMe = 0
 local arcaneExpulsionCount = 1
 local invokerCollectorCount = 1
 local astralHarvestCount = 1
@@ -69,16 +70,16 @@ local timersMythic = {
 		[1228216] = {31.0, 45.0, 0}, -- Arcane Obliteration
 		[1228188] = {63.0, 44, 23.0, 0}, -- Silencing Tempest
 		[1231720] = {8.9, 44.0, 44.0, 0}, -- Invoke Collector
-		[1228214] = {24.0, 46.0, 15.0, 29.5, 15.6, 15.0, 0}, -- Astral Harvest
+		[1228214] = {23.5, 46.0, 15.0, 29.5, 15.0, 15.0, 0}, -- Astral Harvest
 		[1248171] = {22.0, 46.0, 15.0, 28.5, 15.5, 15.1, 0}, -- Void Tear
 	},
 	[2] = { -- from Mana Sacrifice _START
-		[1228502] = {18.9, 22.0, 22.0, 22.0, 22.0, 22.0, 0}, -- Overwhelming Power
-		[1228216] = {69.0, 0}, -- Arcane Obliteration
-		[1228188] = {57.8, 44.0, 21.0, 0}, -- Silencing Tempest
-		[1231720] = {23.8, 22.0, 44.0, 0}, -- Invoke Collector
-		[1228214] = {38.9, 21.5, 15.5, 29.0, 15.0, 14.5, 0}, -- Astral Harvest
-		[1248171] = {36.9, 21.5, 15.5, 29.0, 15.0, 14.5, 0}, -- Void Tear
+		[1228502] = {18.9, 22.0, 22.0, 0}, -- Overwhelming Power
+		[1228216] = {45.7, 0}, -- Arcane Obliteration
+		[1228188] = {67.7, 0}, -- Silencing Tempest
+		[1231720] = {23.7, 0}, -- Invoke Collector
+		[1228214] = {38.7, 15.0, 15.0, 0}, -- Astral Harvest
+		[1248171] = {36.7, 15.0, 15.0, 0}, -- Void Tear
 	},
 }
 
@@ -105,14 +106,14 @@ end
 
 function mod:OnRegister()
 	self:SetSpellRename(1231720, L.invoke_collector) -- Invoke Collector (Collector)
-	self:SetSpellRename(1228214, CL.orbs) -- Astral Harvest (Orbs)
+	self:SetSpellRename(1228214, CL.adds) -- Astral Harvest (Adds)
 	self:SetSpellRename(1228216, CL.soak) -- Arcane Obliteration (Soak)
 	self:SetSpellRename(1228188, CL.pools) -- Silencing Tempest (Pools)
 	self:SetSpellRename(1227631, CL.knockback) -- Arcane Expulsion (Knockback)
 	self:SetSpellRename(1234328, CL.dodge) -- Photon Blast (Dodge)
 	self:SetSpellRename(1232590, CL.raid_damage) -- Arcane Convergence (Raid Damage)
 	self:SetSpellRename(1233415, CL.weakened) -- Mana Splinter (Weakened)
-	self:SetSpellRename(1243901, CL.orbs) -- Void Harvest (Orbs)
+	self:SetSpellRename(1243901, CL.adds) -- Void Harvest (Adds)
 	self:SetSpellRename(1232221, CL.knockback) -- Death Throes (Knockback)
 end
 
@@ -141,7 +142,7 @@ function mod:GetOptions()
 			-- Arcane Collector
 				{1234328, "NAMEPLATE"}, -- Photon Blast
 				1232590, -- Arcane Convergence
-			-32596, -- Shielded Attendant
+			{-32596, "TANK"}, -- Shielded Attendant
 				{1238266, "TANK"}, -- Ramping Power
 			{1233415, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Mana Splinter
 		-- Stage Two: Darkness Hungers
@@ -169,15 +170,15 @@ function mod:GetOptions()
 		[1232221] = "mythic",
 	},{
 		[1231720] = L.invoke_collector, -- Invoke Collector (Collector)
-		[1228214] = CL.orbs, -- Astral Harvest (Orbs)
+		[1228214] = CL.adds, -- Astral Harvest (Add)
 		[1228216] = CL.soak, -- Arcane Obliteration (Soak)
 		[1228188] = CL.pools, -- Silencing Tempest (Pools)
 		[1227631] = CL.knockback, -- Arcane Expulsion (Knockback)
 		[1234328] = CL.dodge, -- Photon Blast (Dodge)
 		[1232590] = CL.raid_damage, -- Arcane Convergence (Raid Damage)
-		[-32596] = CL.adds, -- Shielded Attendant (Adds)
+		[-32596] = CL.adds_spawning, -- Shielded Attendant (Adds spawning)
 		[1233415] = CL.weakened, -- Mana Splinter (Weakened)
-		[1243901] = CL.orbs, -- Void Harvest (Orbs)
+		[1243901] = CL.adds, -- Void Harvest (Adds)
 		[1232221] = CL.knockback, -- Death Throes (Knockback)
 	}
 end
@@ -187,8 +188,8 @@ function mod:OnBossEnable()
 
 	-- Stage One: Priming the Forge
 	self:Log("SPELL_CAST_START", "OverwhelmingPower", 1228502)
-	self:Log("SPELL_AURA_APPLIED", "OverwhelmingPowerApplied", 1228502)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingPowerApplied", 1228502)
+	self:Log("SPELL_AURA_APPLIED", "OverwhelmingPowerApplied", 1228506)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "OverwhelmingPowerApplied", 1228506)
 	self:Log("SPELL_CAST_START", "ArcaneObliteration", 1228216)
 	self:Log("SPELL_AURA_APPLIED", "AstralMarkApplied", 1228219)
 	self:Log("SPELL_CAST_START", "SilencingTempest", 1228161)
@@ -197,12 +198,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ArcaneExpulsion", 1227631)
 	self:Log("SPELL_CAST_START", "InvokeCollector", 1231720, 1254321) -- Single, All
 	self:Log("SPELL_CAST_START", "AstralHarvest", 1228213)
-	self:Log("SPELL_AURA_APPLIED", "AstralHarvestApplied", 1228214)
+	self:Log("SPELL_AURA_APPLIED", "AstralHarvestApplied", 1233979)
 	self:Log("SPELL_AURA_APPLIED", "AstralSurgeApplied", 1236207)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AstralSurgeApplied", 1236207)
 	self:Log("SPELL_CAST_START", "DarkTerminus", 1248009)
 	-- Intermission: The Iris Opens
-	self:Log("SPELL_CAST_SUCCESS", "IntermissionStart", 1230231) -- Staging into intermission
+	self:Log("SPELL_CAST_SUCCESS", "ArcaneExpulsionSuccess", 1227631) -- Staging into intermission
 	self:Log("SPELL_AURA_APPLIED", "AstralBurnApplied", 1240705)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AstralBurnApplied", 1240705)
 	self:Log("SPELL_AURA_APPLIED", "VolatileSurgeApplied", 1240437)
@@ -217,12 +218,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ManaSacrifice", 1230529) -- Intermission Ending
 	self:Log("SPELL_AURA_APPLIED", "ManaSacrificeApplied", 1230529)
 	self:Log("SPELL_AURA_APPLIED", "ManaSplinterApplied", 1233415)
+	self:Log("SPELL_AURA_REMOVED", "ManaSplinterRemoved", 1233415)
+
 	-- Stage Two: Darkness Hungers
 	self:Log("SPELL_AURA_APPLIED", "CrushingDarknessDamage", 1233074)
 	self:Log("SPELL_PERIODIC_DAMAGE", "CrushingDarknessDamage", 1233074)
 	self:Log("SPELL_PERIODIC_MISSED", "CrushingDarknessDamage", 1233074)
 	self:Log("SPELL_CAST_START", "VoidHarvest", 1243887)
-	self:Log("SPELL_AURA_APPLIED", "VoidHarvestApplied", 1243901)
+	self:Log("SPELL_AURA_APPLIED", "VoidHarvestApplied", 1243873)
 	self:Log("SPELL_AURA_APPLIED", "VoidSurgeApplied", 1243641)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidSurgeApplied", 1243641)
 	-- Mythic
@@ -243,10 +246,11 @@ function mod:OnEngage()
 	invokerCollectorCount = 1
 	astralHarvestCount = 1
 	voidTearCount = 1
+	silencesOnMe = 0
 
 	self:Bar(1228502, getTimers(1228502, 1), CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:Bar(1231720, getTimers(1231720, 1), CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-	self:Bar(1228214, getTimers(1228214, 1), CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+	self:Bar(1228214, getTimers(1228214, 1), CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 	self:Bar(1228216, getTimers(1228216, 1), CL.count:format(CL.soak, arcaneObliterationTotalCount)) -- Arcane Obliteration
 	self:Bar(1228188, getTimers(1228188, 1), CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	self:Bar(1227631, self:Easy() and 125.0 or 155.0, CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
@@ -278,7 +282,7 @@ function mod:OverwhelmingPower(args)
 	if self:GetStage() == 1 then  -- 6 per rotation
 		cd = getTimers(args.spellId, overwhelmingPowerCount)
 	elseif self:GetStage() == 2 then
-		cd = 44
+		cd = self:Mythic() and 22 or 44
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, overwhelmingPowerCount))
 end
@@ -286,11 +290,11 @@ end
 function mod:OverwhelmingPowerApplied(args)
 	local highStacks = 4
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, amount, highStacks)
+	self:StackMessage(1228502, "purple", args.destName, amount, highStacks)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm", nil, args.destName)
+		self:PlaySound(1228502, "alarm", nil, args.destName)
 	elseif self:Tank() and amount >= highStacks then
-		self:PlaySound(args.spellId, "warning") -- swap?
+		self:PlaySound(1228502, "warning") -- swap?
 	end
 end
 
@@ -316,7 +320,7 @@ function mod:SilencingTempest()
 	self:Message(1228188, "cyan", CL.count:format(CL.pools, silencingTempestCount))
 	silencingTempestCount = silencingTempestCount + 1
 	local cd = getTimers(1228188, silencingTempestCount)
-	if self:GetStage() == 2 then
+	if self:GetStage() == 2 and not self:Mythic() then -- XXX Yet to see
 		local stageTwoHeroicTimers = {12, 21, 23, 21}
 		cd = self:Easy() and 44 or stageTwoHeroicTimers[silencingTempestCount]
 	end
@@ -327,13 +331,17 @@ function mod:SilencingTempestApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1228188, nil, CL.pools)
 		self:PlaySound(1228188, "warning", nil, args.destName) -- move out
-		self:Say(1228188, CL.pools, true, "Pools")
+		self:Say(1228188, CL.pools, nil, "Pools")
+		silencesOnMe = silencesOnMe + 1
 	end
 end
 
 function mod:SilencingTempestRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Say(1228188, CL.over:format(CL.pools), true, "Pools Over")
+		silencesOnMe = silencesOnMe - 1
+		if silencesOnMe == 0 then
+			self:Say(1228188, CL.over:format(CL.pools), true, "Pools Over")
+		end
 	end
 end
 
@@ -355,20 +363,20 @@ function mod:InvokeCollector()
 end
 
 function mod:AstralHarvest()
-	self:StopBar(CL.count:format(CL.orbs, astralHarvestCount))
-	self:Message(1228214, "yellow", CL.count:format(CL.orbs, astralHarvestCount))
+	self:StopBar(CL.count:format(CL.adds, astralHarvestCount))
+	self:Message(1228214, "yellow", CL.count:format(CL.adds, astralHarvestCount))
 	self:PlaySound(1228214, "info")
 	astralHarvestCount = astralHarvestCount + 1
 	local cd = getTimers(1228214, astralHarvestCount)
-	self:Bar(1228214, cd, CL.count:format(CL.orbs, astralHarvestCount))
+	self:Bar(1228214, cd, CL.count:format(CL.adds, astralHarvestCount))
 end
 
 function mod:AstralHarvestApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning", nil, args.destName) -- move out
-		self:Say(args.spellId, CL.orb, nil, "Orb")
-		self:SayCountdown(args.spellId, 4)
+		self:PersonalMessage(1228214, nil, CL.add)
+		self:Say(1228214, CL.add, nil, "Add")
+		self:SayCountdown(1228214, 7)
+		self:PlaySound(1228214, "warning", nil, args.destName) -- move in
 	end
 end
 
@@ -392,7 +400,7 @@ end
 function mod:DarkTerminus(args) -- Early P2 Starting
 	self:StopBar(CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:StopBar(CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-	self:StopBar(CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+	self:StopBar(CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 	self:StopBar(CL.count:format(CL.soak, arcaneObliterationTotalCount)) -- Arcane Obliteration
 	self:StopBar(CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	self:StopBar(CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
@@ -404,20 +412,20 @@ function mod:DarkTerminus(args) -- Early P2 Starting
 end
 
 -- Intermission: The Iris Opens
-function mod:IntermissionStart()
+function mod:ArcaneExpulsionSuccess()
 	self:SetStage(1.5)
 	self:Message("stages", "cyan", CL.intermission, false)
 	self:PlaySound("stages", "long") -- intermission
 
 	self:StopBar(CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 	self:StopBar(CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
-	self:StopBar(CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+	self:StopBar(CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 	self:StopBar(CL.count:format(CL.soak, arcaneObliterationCount)) -- Arcane Obliteration
 	self:StopBar(CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	self:StopBar(CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
 	self:StopBar(CL.count:format(self:SpellName(1248133), voidTearCount)) -- Void Tear
 
-	self:Bar(-32596, 21, CL.adds, 1232738) -- Shielded Attendant. Hardened Shell Icon
+	self:Bar(-32596, 12, CL.adds_spawning, 1232738) -- Shielded Attendant. Hardened Shell Icon
 end
 
 do
@@ -433,7 +441,7 @@ end
 
 function mod:PhotonBlast(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and self:UnitWithinRange(unit, 45) then
+	if unit and self:UnitWithinRange(unit, 20) then
 		self:Message(args.spellId, "yellow", CL.dodge)
 		self:PlaySound(args.spellId, "alert") -- dodge
 	end
@@ -477,7 +485,7 @@ function mod:ManaSacrifice() -- Back to P1 / P2
 		-- Move these to the actual p1 start? small improvement or no difference?
 		self:Bar(1228502, getTimers(1228502, overwhelmingPowerCount), CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
 		self:Bar(1228216, getTimers(1228216, arcaneObliterationCount), CL.count:format(CL.soak, arcaneObliterationTotalCount)) -- Arcane Obliteration
-		self:Bar(1228214, getTimers(1228214, astralHarvestCount), CL.count:format(CL.orbs, astralHarvestCount)) -- Astral Harvest
+		self:Bar(1228214, getTimers(1228214, astralHarvestCount), CL.count:format(CL.adds, astralHarvestCount)) -- Astral Harvest
 		self:Bar(1228188, getTimers(1228188, silencingTempestCount), CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 		self:Bar(1231720, getTimers(1231720, invokerCollectorCount), CL.count:format(L.invoke_collector, invokerCollectorCount)) -- Invoke Collector
 		self:Bar(1227631, self:Easy() and 79.5 or 81.1, CL.count:format(CL.knockback, arcaneExpulsionCount)) -- Arcane Expulsion
@@ -498,6 +506,10 @@ function mod:ManaSplinterApplied(args)
 	self:TargetMessage(args.spellId, "red", args.destName)
 	self:PlaySound(args.spellId, "long") -- weakened
 	self:Bar(args.spellId, 12, CL.weakened)
+end
+
+function mod:ManaSplinterRemoved(args)
+	self:StopBar(CL.weakened) -- Dropped if staged into p2 early
 end
 
 function mod:AstralBurnApplied(args)
@@ -522,10 +534,10 @@ function mod:Stage2Start()
 	deathThroesCount = 1
 
 	self:Bar(1228502, 4.0, CL.count:format(self:SpellName(1228502), overwhelmingPowerCount)) -- Overwhelming Power
-	self:Bar(1243901, 8.0, CL.count:format(CL.orbs, voidHarvestCount)) -- Void Harvest
-	self:Bar(1228188, 12.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
+	self:Bar(1243901, 8.0, CL.count:format(CL.adds, voidHarvestCount)) -- Void Harvest
+	self:Bar(1228188, self:Mythic() and 30 or 12.0, CL.count:format(CL.pools, silencingTempestCount)) -- Silencing Tempest
 	if self:Mythic() then
-		self:Bar(1232221, 39.0, CL.count:format(CL.knockback, deathThroesCount)) -- Death Throes
+		self:Bar(1232221, 12.0, CL.count:format(CL.knockback, deathThroesCount)) -- Death Throes
 	end
 end
 
@@ -541,23 +553,23 @@ do
 end
 
 function mod:VoidHarvest()
-	self:StopBar(CL.count:format(CL.orbs, voidHarvestCount))
-	self:Message(1243901, "yellow", CL.count:format(CL.orbs, voidHarvestCount))
+	self:StopBar(CL.count:format(CL.adds, voidHarvestCount))
+	self:Message(1243901, "yellow", CL.count:format(CL.adds, voidHarvestCount))
 	self:PlaySound(1243901, "info") -- debuffs incoming
 	voidHarvestCount = voidHarvestCount + 1
 	local cd = voidHarvestCount % 2 == 1 and 36 or 8
 	if self:Mythic() then
-		cd = voidHarvestCount % 3 == 1 and 25 or 8
+		cd = voidHarvestCount % 3 == 1 and 28 or 8
 	end
-	self:Bar(1243901, cd, CL.count:format(CL.orbs, voidHarvestCount))
+	self:Bar(1243901, cd, CL.count:format(CL.adds, voidHarvestCount))
 end
 
 function mod:VoidHarvestApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning", nil, args.destName) -- move out
-		self:Say(args.spellId, CL.orb, nil, "Orb")
-		self:SayCountdown(args.spellId, 4)
+		self:PersonalMessage(1243901, nil, CL.add)
+		self:PlaySound(1243901, "warning", nil, args.destName) -- move out
+		self:Say(1243901, CL.add, nil, "Add")
+		self:SayCountdown(1243901, 7)
 	end
 end
 

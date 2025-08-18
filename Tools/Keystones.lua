@@ -251,7 +251,10 @@ do
 	local x, y = db.profile.viewerPosition[3], db.profile.viewerPosition[4]
 	mainPanel:SetPoint(point, UIParent, relPoint, x, y)
 end
-mainPanel:SetFrameStrata("DIALOG")
+mainPanel:SetFrameStrata("MEDIUM")
+mainPanel:SetFixedFrameStrata(true)
+mainPanel:SetFrameLevel(100)
+mainPanel:SetFixedFrameLevel(true)
 mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
@@ -304,7 +307,7 @@ do
 	local text = mainPanel.TitleContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	text:SetJustifyH("RIGHT")
 	text:SetText("/key")
-	text:SetSize(30, 30)
+	text:SetSize(50, 30)
 	text:SetTextColor(0.65, 0.65, 0.65)
 	text:SetPoint("RIGHT", -26, 0)
 end

@@ -119,7 +119,10 @@ files["Plugins/BossBlock.lua"].ignore = {
 	"113/C_UIWidgetManager",
 	"113/DeadlyDebuffFrame",
 	"113/GetFramesRegisteredForEvent",
-	"113/GetTrackedAchievements",
+	"113/GetAchievementCategory",
+	"113/GetAchievementInfo",
+	"113/GetCategoryInfo",
+	"113/GetTrackedAchievements", -- Classic WoW
 	"113/MuteSoundFile",
 	"113/Questie_BaseFrame",
 	"113/QuestWatchFrame",
