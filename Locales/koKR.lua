@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "koKR")
 if not L then return end
 
-L.tempNew = "신규: |cFFFFFFFF/key|r를 입력하면 파티원의 쐐기돌을 볼 수 있습니다."
-
 -- API.lua
 L.showAddonBar = "'%s' 애드온이 '%s' 바를 생성했습니다."
 

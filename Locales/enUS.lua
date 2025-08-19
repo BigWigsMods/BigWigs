@@ -1,8 +1,6 @@
 local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "enUS")
 
-L.tempNew = "NEW: You can now type |cFFFFFFFF/key|r to see the Mythic+ keystones of your party members."
-
 -- API.lua
 L.showAddonBar = "The addon '%s' created the '%s' bar."
 

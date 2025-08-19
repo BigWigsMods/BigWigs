@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
-L.tempNew = "新功能：你可以輸入 |cFFFFFFFF/key|r 查看隊友的鑰石。"
-
 -- API.lua
 --L.showAddonBar = "The addon '%s' created the '%s' bar."
 

@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "deDE")
 if not L then return end
 
-L.tempNew = "NEU: Du kannst jetzt |cFFFFFFFF/key|r eingeben, um die Mythisch+ Schlüsselsteine Deiner Gruppenmitglieder zu sehen."
-
 -- API.lua
 L.showAddonBar = "Das Addon '%s' hat die Leiste '%s' erstellt."
 

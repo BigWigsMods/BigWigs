@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "esES")
 if not L then return end
 
-L.tempNew = "NUEVO: Ahora puedes escribir |cFFFFFFFF/key|r para ver las Piedras Angulares de los miembros de tu grupo."
-
 -- API.lua
 L.showAddonBar = "El addon '%s' creó la barra '%s'."
 

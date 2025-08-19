@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.tempNew = "新：现在输入 |cFFFFFFFF/key|r 可以查看队伍的史诗钥石信息。"
-
 -- API.lua
 L.showAddonBar = "'%s' 插件创建了 '%s' 动作条。"
 
