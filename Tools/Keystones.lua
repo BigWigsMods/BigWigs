@@ -1486,6 +1486,15 @@ end
 
 do
 	local function UpdateWidgets()
+		LibKeystone.SetGuildHidden(db.profile.hideFromGuild)
+		mainPanel:ClearAllPoints()
+		do
+			local point, relPoint = db.profile.viewerPosition[1], db.profile.viewerPosition[2]
+			local x, y = db.profile.viewerPosition[3], db.profile.viewerPosition[4]
+			mainPanel:SetPoint(point, UIParent, relPoint, x, y)
+		end
+		mainPanel:SetSize(350, db.profile.windowHeight)
+
 		instanceKeysWidgets.header:SetJustifyH(db.profile.instanceKeysAlign)
 		instanceKeysWidgets.header:ClearAllPoints()
 		instanceKeysWidgets.header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
@@ -1563,6 +1572,12 @@ do
 			mainPanel.CloseButton:Click()
 		end
 	end
+
+	BigWigsLoader:RegisterMessage("BigWigs_ProfileUpdate", function()
+		UpdateProfile()
+		UpdateProfileFont()
+		UpdateWidgets()
+	end)
 
 	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer)
 	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer)
