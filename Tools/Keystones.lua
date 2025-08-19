@@ -339,6 +339,7 @@ mainPanel:SetFrameStrata("MEDIUM")
 mainPanel:SetFixedFrameStrata(true)
 mainPanel:SetFrameLevel(100)
 mainPanel:SetFixedFrameLevel(true)
+mainPanel:SetClampedToScreen(true)
 mainPanel:SetMovable(true)
 mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
@@ -731,6 +732,7 @@ do
 	tab1 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 	tab1:SetSize(50, 26)
 	tab1:SetPoint("BOTTOMLEFT", 10, -25)
+	tab1:SetClampedToScreen(true)
 	tab1.Text:SetText(L.keystoneTabOnline)
 	tab1:UnregisterAllEvents() -- Remove events registered by the template
 	tab1:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
@@ -791,6 +793,7 @@ do
 	tab2 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 	tab2:SetSize(50, 26)
 	tab2:SetPoint("LEFT", tab1, "RIGHT", 4, 0)
+	tab2:SetClampedToScreen(true)
 	tab2.Text:SetText(L.keystoneTabTeleports)
 	tab2:UnregisterAllEvents() -- Remove events registered by the template
 	tab2:RegisterEvent("CHALLENGE_MODE_RESET")
@@ -935,6 +938,7 @@ do
 	tab3 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 	tab3:SetSize(50, 26)
 	tab3:SetPoint("LEFT", tab2, "RIGHT", 4, 0)
+	tab3:SetClampedToScreen(true)
 	tab3.Text:SetText(L.keystoneTabAlts)
 	tab3:UnregisterAllEvents() -- Remove events registered by the template
 	tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
@@ -1038,6 +1042,7 @@ do
 	tab4 = CreateFrame("Button", nil, mainPanel, "PanelTabButtonTemplate")
 	tab4:SetSize(50, 26)
 	tab4:SetPoint("LEFT", tab3, "RIGHT", 4, 0)
+	tab4:SetClampedToScreen(true)
 	tab4.Text:SetText(L.keystoneTabHistory)
 	tab4:UnregisterAllEvents() -- Remove events registered by the template
 	-- Tab 4 Click Handler
@@ -1449,6 +1454,7 @@ do
 			for i = 1, #sortedPlayerList do
 				namesToShow[#namesToShow+1] = sortedPlayerList[i].decoratedName
 			end
+			instanceKeysWidgets.namesToShow = namesToShow
 			playerListText:SetText(table.concat(namesToShow, "\n"))
 		end
 	end
@@ -1466,12 +1472,20 @@ do
 		end
 	end
 	main:SetScript("OnEvent", function(self, event)
+		if instanceKeysWidgets.testing then
+			instanceKeysWidgets.testing = false
+			instanceKeysWidgets.main:Hide()
+			instanceKeysWidgets.main:EnableMouse(false)
+			instanceKeysWidgets.main:SetMovable(false)
+			instanceKeysWidgets.bg:Hide()
+		end
 		if event == "PLAYER_ENTERING_WORLD" then
 			BigWigsLoader.CTimerAfter(0, Delay)
 		else
 			LibKeystone.Unregister(whosKeyTable)
 			self:Hide()
 			nameList = {}
+			instanceKeysWidgets.namesToShow = nil
 			self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -1759,10 +1773,14 @@ do
 						func = function()
 							if instanceKeysWidgets.testing then
 								instanceKeysWidgets.testing = false
-								instanceKeysWidgets.main:Hide()
 								instanceKeysWidgets.main:EnableMouse(false)
 								instanceKeysWidgets.main:SetMovable(false)
 								instanceKeysWidgets.bg:Hide()
+								if instanceKeysWidgets.namesToShow then
+									instanceKeysWidgets.playerListText:SetText(table.concat(instanceKeysWidgets.namesToShow, "\n"))
+								else
+									instanceKeysWidgets.main:Hide()
+								end
 							else
 								instanceKeysWidgets.testing = true
 								instanceKeysWidgets.main:Show()
