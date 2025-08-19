@@ -485,7 +485,9 @@ local function WipeHeaders()
 end
 
 local teleportButtons = {}
+local UnregisterLibKeystone
 mainPanel.CloseButton:SetScript("OnClick", function(self)
+	UnregisterLibKeystone()
 	self:UnregisterAllEvents()
 	tab2:SetScript("OnUpdate", nil)
 	WipeCells()
@@ -682,6 +684,7 @@ end
 -- GUI Tabs
 --
 
+local RegisterLibKeystone
 do
 	local function SelectTab(tab)
 		tab2:SetScript("OnUpdate", nil)
@@ -784,6 +787,7 @@ do
 
 		partyList = {}
 		guildList = {}
+		RegisterLibKeystone()
 		LibSpec.RequestGuildSpecialization()
 		LibKeystone.Request("PARTY")
 		C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
@@ -1308,7 +1312,7 @@ do
 		end
 	end
 
-	LibKeystone.Register({}, function(keyLevel, keyMap, playerRating, playerName, channel)
+	local function LibKeystoneFunction(keyLevel, keyMap, playerRating, playerName, channel)
 		if channel == "PARTY" then
 			if not partyList[playerName] or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
 				partyList[playerName] = {keyLevel, keyMap, playerRating}
@@ -1331,7 +1335,14 @@ do
 				end
 			end
 		end
-	end)
+	end
+	local LibKeystoneTable = {}
+	function RegisterLibKeystone()
+		LibKeystone.Register(LibKeystoneTable, LibKeystoneFunction)
+	end
+	function UnregisterLibKeystone()
+		LibKeystone.Unregister(LibKeystoneTable)
+	end
 end
 
 --------------------------------------------------------------------------------
