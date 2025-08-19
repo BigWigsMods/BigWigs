@@ -375,9 +375,10 @@ L.keystoneHeaderMyCharacters = "Mis Personajes"
 -- Instance Keys "Who has a key?"
 --L.instanceKeysTitle = "Who has a key?"
 --L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
---L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
---L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
---L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+--L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
+--L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
+--L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+--L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

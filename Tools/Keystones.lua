@@ -39,7 +39,7 @@ do
 		viewerPosition = {"LEFT", "LEFT", 15, 0},
 		instanceKeysPosition = {"BOTTOM", "TOP", 0, -60},
 		instanceKeysFontName = fontName,
-		instanceKeysFontSize = 18,
+		instanceKeysFontSize = 16,
 		instanceKeysMonochrome = false,
 		instanceKeysGrowUpwards = false,
 		instanceKeysOutline = "OUTLINE",
@@ -1421,7 +1421,8 @@ do
 		if channel == "PARTY" and (not nameList[playerName] or nameList[playerName][1] ~= keyLevel or nameList[playerName][2] ~= keyMap) then
 			local _, classFile = UnitClass(playerName)
 			local color = classFile and C_ClassColor.GetClassColor(classFile):GenerateHexColor() or "FFFFFFFF"
-			local decoratedName = format(L.instanceKeysDisplay, dungeonNamesTrimmed[keyMap] or keyMap, keyLevel, color, gsub(playerName, "%-.+", "*"))
+			--local decoratedName = format(L.instanceKeysDisplay, dungeonNamesTrimmed[keyMap] or keyMap, keyLevel, color, gsub(playerName, "%-.+", "*"))
+			local decoratedName = format(L.instanceKeysDisplay, color, gsub(playerName, "%-.+", "*"), keyLevel)
 			nameList[playerName] = {keyLevel, keyMap, decoratedName}
 
 			local sortedPlayerList = {}
@@ -1441,7 +1442,6 @@ do
 			for i = 1, #sortedPlayerList do
 				namesToShow[#namesToShow+1] = sortedPlayerList[i].decoratedName
 			end
-			playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
 			playerListText:SetText(table.concat(namesToShow, "\n"))
 		end
 	end
@@ -1451,6 +1451,9 @@ do
 		if diffID == 23 then
 			nameList = {}
 			currentInstanceID = instanceID
+			UpdateProfileFont() -- We delay this to allow enough time for other addons to register their fonts into LSM
+			header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
+			playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
 			LibKeystone.Register(whosKeyTable, ReceivePartyData)
 			LibKeystone.Request("PARTY")
 		end

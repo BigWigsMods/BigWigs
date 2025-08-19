@@ -375,9 +375,10 @@ L.keystoneShortName_TheDawnbreaker_Bar = "破晨号"
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "谁拥有钥石？"
 L.instanceKeysDesc = "当你进入一个史诗钥石地下城时，拥有该地下城钥石的玩家将会以列表形式显示。\n\n"
-L.instanceKeysTest8 = "地下城 +8 - |cFF00FF98武僧|r"
-L.instanceKeysTest10 = "地下城 +10 - |cFFFF7C0A德鲁伊|r"
-L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+--L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
+--L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
+L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+--L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

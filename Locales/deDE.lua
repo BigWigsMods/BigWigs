@@ -375,9 +375,10 @@ L.keystoneShortName_TheDawnbreaker_Bar = "Morgenbringer"
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Wer hat einen Schlüsselstein?"
 L.instanceKeysDesc = "Beim Betreten eines mythischen Dungeons werden die Spieler, welche einen Schlüsselstein für diesen Dungeon haben, als Liste angezeigt.\n\n"
-L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Mönch|r"
-L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruide|r"
-L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+L.instanceKeysTest8 = "|cFF00FF98Mönch:|r +8"
+L.instanceKeysTest10 = "|cFFFF7C0ADruide:|r +10"
+L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
