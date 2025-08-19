@@ -173,6 +173,9 @@ local dungeonNamesTrimmed = {
 	[391] = L.keystoneShortName_TazaveshStreetsOfWonder_Bar, -- STREET
 	[505] = L.keystoneShortName_TheDawnbreaker_Bar, -- DAWN
 }
+local dungeonMapWithMultipleKeys = {
+	[2441] = true, -- Tazavesh, the Veiled Market
+}
 local teleportList = {
 	-- Current Season (Built Automatically)
 	{},
@@ -1421,8 +1424,12 @@ do
 		if channel == "PARTY" and (not nameList[playerName] or nameList[playerName][1] ~= keyLevel or nameList[playerName][2] ~= keyMap) then
 			local _, classFile = UnitClass(playerName)
 			local color = classFile and C_ClassColor.GetClassColor(classFile):GenerateHexColor() or "FFFFFFFF"
-			--local decoratedName = format(L.instanceKeysDisplay, dungeonNamesTrimmed[keyMap] or keyMap, keyLevel, color, gsub(playerName, "%-.+", "*"))
-			local decoratedName = format(L.instanceKeysDisplay, color, gsub(playerName, "%-.+", "*"), keyLevel)
+			local decoratedName
+			if dungeonMapWithMultipleKeys[currentInstanceID] then
+				decoratedName = format(L.instanceKeysDisplayWithDungeon, color, gsub(playerName, "%-.+", "*"), keyLevel, dungeonNamesTrimmed[keyMap] or keyMap)
+			else
+				decoratedName = format(L.instanceKeysDisplay, color, gsub(playerName, "%-.+", "*"), keyLevel)
+			end
 			nameList[playerName] = {keyLevel, keyMap, decoratedName}
 
 			local sortedPlayerList = {}
