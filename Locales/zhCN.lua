@@ -375,11 +375,11 @@ L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "琳彩天街"
 L.keystoneShortName_TheDawnbreaker_Bar = "破晨号"
 
 -- Instance Keys "Who has a key?"
---L.instanceKeysTitle = "Who has a key?"
---L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
---L.instanceKeysTest8 = "Dungeon +8 - |cFF00FF98Monk|r"
---L.instanceKeysTest10 = "Dungeon +10 - |cFFFF7C0ADruid|r"
---L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
+L.instanceKeysTitle = "谁拥有钥石？"
+L.instanceKeysDesc = "当你进入一个史诗钥石地下城时，拥有该地下城钥石的玩家将会以列表形式显示。\n\n"
+L.instanceKeysTest8 = "地下城 +8 - |cFF00FF98武僧|r"
+L.instanceKeysTest10 = "地下城 +10 - |cFFFF7C0A德鲁伊|r"
+L.instanceKeysDisplay = "%s +%d - |c%s%s|r" -- "DUNGEON_NAME +DUNGEON_LEVEL - PLAYER_NAME"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -398,7 +398,7 @@ L.general = "一般"
 L.advanced = "高级"
 L.comma = "，"
 L.reset = "重置"
---L.resetDesc = "Reset the above settings to their default values."
+L.resetDesc = "将上述设置重置为默认值。"
 L.resetAll = "重置所有"
 
 L.positionX = "水平位置"
@@ -746,9 +746,9 @@ L.resetNameplateTextDesc = "重置与姓名板文本相关的所有选项。"
 L.glowAt = "开始高亮（秒）"
 L.glowAt_desc = "选择在冷却计时剩余多少秒时开始高亮。"
 L.headerIconSizeTarget = "当前目标的图标大小"
-L.headerIconSizeOthers = "其他所有目标的图标大小"
---L.headerIconPositionTarget = "Icon position of your current target"
---L.headerIconPositionOthers = "Icon position of all other targets"
+L.headerIconSizeOthers = "其他目标的图标大小"
+L.headerIconPositionTarget = "当前目标的图标位置"
+L.headerIconPositionOthers = "其他目标的图标位置"
 
 -- Glow types as part of LibCustomGlow
 L.pixelGlow = "像素发光"
