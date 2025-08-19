@@ -1128,6 +1128,7 @@ if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainlin
 			showZoneMessages = true,
 			fakeDBMVersion = false,
 			englishSayMessages = false,
+			enableSayMessages = true,
 		},
 		global = {
 			watchedMovies = {},

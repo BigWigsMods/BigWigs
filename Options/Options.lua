@@ -148,11 +148,18 @@ local acOptions = {
 					order = 40,
 					width = "full",
 				},
+				enableSayMessages = {
+					type = "toggle",
+					name = L.enableSayMessages,
+					desc = L.enableSayMessagesDesc,
+					order = 41,
+					width = "full",
+				},
 				englishSayMessages = {
 					type = "toggle",
 					name = L.englishSayMessages,
 					desc = L.englishSayMessagesDesc,
-					order = 41,
+					order = 42,
 					width = "full",
 					disabled = function()
 						local myLocale = GetLocale()

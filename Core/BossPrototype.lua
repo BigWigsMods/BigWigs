@@ -68,6 +68,7 @@ local myGroupGUIDs, myGroupRoles, myGroupRolePositions = {}, {}, {}
 local solo = false
 local classColorMessages = true
 local englishSayMessages = false
+local enableSayMessages = true
 do -- Update some data that may be called at the top of modules (prior to initialization)
 	local _, _, diff, _, currentMaxPlayers = GetInstanceInfo()
 	difficulty, maxPlayers = diff, currentMaxPlayers
@@ -101,6 +102,12 @@ local updateData = function(module)
 		englishSayMessages = true
 	else
 		englishSayMessages = false
+	end
+
+	if loader.db.profile.enableSayMessages then
+		enableSayMessages = true
+	else
+		enableSayMessages = false
 	end
 
 	local _, _, diff = GetInstanceInfo()
@@ -3550,6 +3557,7 @@ do
 	-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
 	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
 	function boss:Say(key, msg, directPrint, englishText)
+		if not enableSayMessages then return end
 		if not checkFlag(self, key, C.SAY) then return end
 		if directPrint then
 			SendChatMessage(englishSayMessages and englishText or msg, "SAY")
@@ -3569,6 +3577,7 @@ do
 	-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
 	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
 	function boss:Yell(key, msg, directPrint, englishText)
+		if not enableSayMessages then return end
 		if not checkFlag(self, key, C.SAY) then return end
 		if directPrint then
 			SendChatMessage(englishSayMessages and englishText or msg, "YELL")
@@ -3614,6 +3623,7 @@ do
 	-- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
 	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
 	function boss:SayCountdown(key, seconds, textOrIcon, startAt, englishText)
+		if not enableSayMessages then return end
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
 		local tbl = {false}
@@ -3638,6 +3648,7 @@ do
 	-- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
 	-- @string[opt] englishText The text string to replace the message with if the user has enabled the option to only print messages in English
 	function boss:YellCountdown(key, seconds, textOrIcon, startAt, englishText)
+		if not enableSayMessages then return end
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
 		local tbl = {false}
