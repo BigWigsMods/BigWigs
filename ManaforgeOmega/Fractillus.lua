@@ -94,9 +94,9 @@ function mod:OnEngage()
 	crystallizationCount = 1
 	slamCount = 1
 
-	self:Bar(1233416, 7.0, CL.count:format(L.crystalline_eruption, conjunctionCount)) -- Crystalline Shockwave Pre-Debuffs
-	self:Bar(1231871, self:Mythic() and 14.5 or 18.0, CL.count:format(L.shockwave_slam, slamCount)) -- Shockwave Slam
-	self:Bar(1227373, self:Mythic() and 32.7 or 41.0, CL.count:format(L.shattershell, crystallizationCount)) -- Shattershell
+	self:CDBar(1233416, 7.0, CL.count:format(L.crystalline_eruption, conjunctionCount)) -- Crystalline Shockwave Pre-Debuffs
+	self:CDBar(1231871, self:Mythic() and 14.5 or 18.0, CL.count:format(L.shockwave_slam, slamCount)) -- Shockwave Slam
+	self:CDBar(1227373, self:Mythic() and 32.7 or 41.0, CL.count:format(L.shattershell, crystallizationCount)) -- Shattershell
 end
 
 --------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ do
 			self:Message(args.spellId, "cyan", CL.count:format(L.shattershell, crystallizationCount))
 			self:PlaySound(args.spellId, "long") -- take your spot before rooted
 			crystallizationCount = crystallizationCount + 1
-			self:Bar(args.spellId, self:Mythic() and 40 or 51.5, CL.count:format(L.shattershell, crystallizationCount))
+			self:CDBar(args.spellId, self:Mythic() and 40 or 51.5, CL.count:format(L.shattershell, crystallizationCount))
 			self:Bar(1232130, self:Mythic() and 10.5 or 12, L.nexus_shrapnel)
 		end
 		if self:Me(args.destGUID) then
@@ -196,7 +196,7 @@ function mod:ShockwaveSlam(args)
 	self:Message(args.spellId, "purple", CL.count:format(L.shockwave_slam, slamCount))
 	self:PlaySound(args.spellId, "alert")
 	slamCount = slamCount + 1
-	self:Bar(args.spellId, self:Mythic() and 40.5 or 51.1, CL.count:format(L.shockwave_slam, slamCount))
+	self:CDBar(args.spellId, self:Mythic() and 40.5 or 51.1, CL.count:format(L.shockwave_slam, slamCount))
 end
 
 function mod:ShockwaveSlamApplied(args)
