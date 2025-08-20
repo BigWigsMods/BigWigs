@@ -502,6 +502,7 @@ do
 	local prev	= 0
 	function mod:SelfDestruct(args)
 		if args.time - prev > 2 then -- throttle
+			prev = args.time
 			self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 			self:PlaySound(args.spellId, "warning") -- self destructing
 			-- update the bar so it fits the end

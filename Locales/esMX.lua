@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "esMX")
 if not L then return end
 
-L.tempNew = "NUEVO: Ahora puedes escribir |cFFFFFFFF/key|r para ver las Piedras Angulares de los miembros de tu grupo."
-
 -- API.lua
 --L.showAddonBar = "The addon '%s' created the '%s' bar."
 
@@ -326,8 +324,6 @@ L.keystoneHeaderMyCharacters = "Mis Personajes"
 --L.keystoneHideGuildTitle = "Hide my keystone from my guild members"
 --L.keystoneHideGuildDesc = "|cffff4411Not recommended.|r This feature will prevent your guild members seeing what keystone you have. Anyone in your group will still be able to see it."
 --L.keystoneHideGuildWarning = "Disabling the ability for your guild members to see your keystone is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
---L.keystoneAutoShowZoneIn = "Show when entering a dungeon"
---L.keystoneAutoShowZoneInDesc = "Automatically show the keystone viewer when entering a Mythic dungeon.\n\n|cFF33FF99This can help remind you which player owns the keystone that you're about to do.|r"
 --L.keystoneAutoShowEndOfRun = "Show when the Mythic+ is over"
 --L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 --L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
@@ -376,6 +372,14 @@ L.keystoneHeaderMyCharacters = "Mis Personajes"
 --L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
 --L.keystoneShortName_TheDawnbreaker_Bar = "Dawnbreaker"
 
+-- Instance Keys "Who has a key?"
+--L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+--L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
+--L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
+--L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+--L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +396,9 @@ L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play 
 L.general = "General"
 L.advanced = "Avanzado"
 L.comma = ", "
+L.reset = "Restablecer"
+--L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "Restablecer todo"
 
 L.positionX = "Posición X"
 L.positionY = "Posición Y"
@@ -605,10 +612,8 @@ L.textShadow = "Sombra de texto"
 L.expiring_normal = "Normal"
 L.emphasized = "Enfatizado"
 
-L.reset = "Restablecer"
-L.resetDesc = "Restablece los colores anteriores a sus valores predeterminados."
-L.resetAll = "Restablecer todo"
-L.resetAllDesc = "Si has personalizado los colores de cualquier encuentro con el jefe, este botón los restablecerá TODOS para que se usen los colores definidos aquí."
+L.resetColorsDesc = "Restablece los colores anteriores a sus valores predeterminados."
+L.resetAllColorsDesc = "Si has personalizado los colores de cualquier encuentro con el jefe, este botón los restablecerá TODOS para que se usen los colores definidos aquí."
 
 L.red = "Rojo"
 L.redDesc = "Alertas generales del encuentro."

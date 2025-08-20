@@ -2,8 +2,6 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "deDE")
 if not L then return end
 
-L.tempNew = "NEU: Du kannst jetzt |cFFFFFFFF/key|r eingeben, um die Mythisch+ Schlüsselsteine Deiner Gruppenmitglieder zu sehen."
-
 -- API.lua
 L.showAddonBar = "Das Addon '%s' hat die Leiste '%s' erstellt."
 
@@ -326,8 +324,6 @@ L.keystoneViewerTitle = "Schlüsselstein Anzeige"
 L.keystoneHideGuildTitle = "Meinen Schlüsselstein vor meinen Gildenmitgliedern verstecken"
 L.keystoneHideGuildDesc = "|cffff4411Nicht empfohlen.|r Diese Funktion verhindert die Anzeige Deines Schlüsselsteins für die Gildenmitglieder. Jedes Mitglied der Gruppe kann diesen weiterhin sehen."
 L.keystoneHideGuildWarning = "Die Deaktivierung der Anzeige Deines Schlüsselsteins für Deine Gilde wird |cffff4411nicht empfohlen|r.\n\nBist Du sicher?"
-L.keystoneAutoShowZoneIn = "Beim Betreten eines Dungeons anzeigen"
-L.keystoneAutoShowZoneInDesc = "Die Schlüsselstein Anzeige automatisch beim Betreten eines mythischen Dungeons anzeigen.\n\n|cFF33FF99Dies kann helfen, den Besitzer des aktuellen Schlüsselsteins ausfindig zu machen.|r"
 L.keystoneAutoShowEndOfRun = "Nach Beenden von Mythisch+ anzeigen"
 L.keystoneAutoShowEndOfRunDesc = "Die Schlüsselstein Anzeige automatisch nach Abschluss des Mythisch+ Dungeons anzeigen.\n\n|cFF33FF99Dies kann helfen, die neu erhaltenen Schlüsselsteine der Gruppe zu sehen.|r"
 L.keystoneViewerExplainer = "Die Schlüsselstein Anzeige kann durch Nutzung des Befehls |cFF33FF99/key|r oder die untenstehende Schaltfläche geöffnet werden.\n\n"
@@ -376,6 +372,14 @@ L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Schachzug"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Straßen"
 L.keystoneShortName_TheDawnbreaker_Bar = "Morgenbringer"
 
+-- Instance Keys "Who has a key?"
+L.instanceKeysTitle = "Wer hat einen Schlüsselstein?"
+L.instanceKeysDesc = "Beim Betreten eines mythischen Dungeons werden die Spieler, welche einen Schlüsselstein für diesen Dungeon haben, als Liste angezeigt.\n\n"
+L.instanceKeysTest8 = "|cFF00FF98Mönch:|r +8"
+L.instanceKeysTest10 = "|cFFFF7C0ADruide:|r +10"
+L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -392,6 +396,9 @@ L.lfgUseMasterDesc = "Wenn diese Option aktiviert ist, wird der Bereitschaftssou
 L.general = "Allgemein"
 L.advanced = "Erweitert"
 L.comma = ", "
+L.reset = "Zurücksetzen"
+L.resetDesc = "Die obigen Einstellungen auf Standardwerte zurücksetzen."
+L.resetAll = "Alle zurücksetzen"
 
 L.positionX = "X-Position"
 L.positionY = "Y-Position"
@@ -605,10 +612,8 @@ L.textShadow = "Textschatten"
 L.expiring_normal = "Normal"
 L.emphasized = "Hervorgehoben"
 
-L.reset = "Zurücksetzen"
-L.resetDesc = "Setzt die obenstehenden Farben auf ihre Ausgangswerte zurück."
-L.resetAll = "Alle zurücksetzen"
-L.resetAllDesc = "Falls Du veränderte Farbeinstellungen für Bosse benutzt, wird dieser Button ALLE zurücksetzen, sodass erneut die hier festgelegten Farben verwendet werden."
+L.resetColorsDesc = "Setzt die obenstehenden Farben auf ihre Ausgangswerte zurück."
+L.resetAllColorsDesc = "Falls Du veränderte Farbeinstellungen für Bosse benutzt, wird dieser Button ALLE zurücksetzen, sodass erneut die hier festgelegten Farben verwendet werden."
 
 L.red = "Rot"
 L.redDesc = "Allgemeine Bosswarnungen."

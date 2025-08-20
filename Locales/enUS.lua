@@ -1,8 +1,6 @@
 local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "enUS")
 
-L.tempNew = "NEW: You can now type |cFFFFFFFF/key|r to see the Mythic+ keystones of your party members."
-
 -- API.lua
 L.showAddonBar = "The addon '%s' created the '%s' bar."
 
@@ -325,8 +323,6 @@ L.keystoneViewerTitle = "Keystone Viewer"
 L.keystoneHideGuildTitle = "Hide my keystone from my guild members"
 L.keystoneHideGuildDesc = "|cffff4411Not recommended.|r This feature will prevent your guild members seeing what keystone you have. Anyone in your group will still be able to see it."
 L.keystoneHideGuildWarning = "Disabling the ability for your guild members to see your keystone is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
-L.keystoneAutoShowZoneIn = "Show when entering a dungeon"
-L.keystoneAutoShowZoneInDesc = "Automatically show the keystone viewer when entering a Mythic dungeon.\n\n|cFF33FF99This can help remind you which player owns the keystone that you're about to do.|r"
 L.keystoneAutoShowEndOfRun = "Show when the Mythic+ is over"
 L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
@@ -375,6 +371,14 @@ L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambit"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
 L.keystoneShortName_TheDawnbreaker_Bar = "Dawnbreaker"
 
+-- Instance Keys "Who has a key?"
+L.instanceKeysTitle = "Who has a key?"
+L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
+L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
+L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
+L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -391,6 +395,9 @@ L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play 
 L.general = "General"
 L.advanced = "Advanced"
 L.comma = ", "
+L.reset = "Reset"
+L.resetDesc = "Reset the above settings to their default values."
+L.resetAll = "Reset all"
 
 L.positionX = "X Position"
 L.positionY = "Y Position"
@@ -604,10 +611,8 @@ L.textShadow = "Text Shadow"
 L.expiring_normal = "Normal"
 L.emphasized = "Emphasized"
 
-L.reset = "Reset"
-L.resetDesc = "Resets the above colors to their defaults."
-L.resetAll = "Reset all"
-L.resetAllDesc = "If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."
+L.resetColorsDesc = "Resets the above colors to their defaults."
+L.resetAllColorsDesc = "If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."
 
 L.red = "Red"
 L.redDesc = "General encounter warnings."

@@ -331,7 +331,7 @@ function mod:PrimalSpellstormRepeater()
 	end
 	primalSpellstormCount = primalSpellstormCount + 1
 	local primalSpellstormCDTable = {12, 15, 13, 15, 16, 14}
-	local cdCount = primalSpellstormCDTable % 6 + 1
+	local cdCount = primalSpellstormCount % 6 + 1
 	local cd = self:GetStage() == 2 and 8 or primalSpellstormCDTable[cdCount]
 	self:Bar(1226867, cd, CL.count:format(CL.dodge, primalSpellstormCount))
 	primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", cd)
