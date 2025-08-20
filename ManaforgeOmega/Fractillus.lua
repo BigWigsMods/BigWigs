@@ -168,6 +168,7 @@ do
 		if args.time - prev > 2 then
 			knockbackOnMe = false
 			prev = args.time
+			self:StopBar(CL.count:format(L.shattershell, crystallizationCount))
 			self:Message(args.spellId, "cyan", CL.count:format(L.shattershell, crystallizationCount))
 			self:PlaySound(args.spellId, "long") -- take your spot before rooted
 			crystallizationCount = crystallizationCount + 1
