@@ -373,12 +373,12 @@ L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "거리"
 L.keystoneShortName_TheDawnbreaker_Bar = "새인호"
 
 -- Instance Keys "Who has a key?"
---L.instanceKeysTitle = "Who has a key?"
---L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
---L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
---L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
---L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
---L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+L.instanceKeysTitle = "누구 쐐기돌이야?"
+L.instanceKeysDesc = "신화 던전에 입장하면 해당 던전의 쐐기돌을 가진 플레이어가 목록으로 표시됩니다.\n\n"
+L.instanceKeysTest8 = "|cFF00FF98수도사:|r +8"
+L.instanceKeysTest10 = "|cFFFF7C0A드루이드:|r +10"
+L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -397,7 +397,7 @@ L.general = "일반"
 L.advanced = "고급"
 L.comma = ", "
 L.reset = "초기화"
---L.resetDesc = "Reset the above settings to their default values."
+L.resetDesc = "위의 설정을 기본값으로 초기화합니다."
 L.resetAll = "모두 초기화"
 
 L.positionX = "X 위치"
