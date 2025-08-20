@@ -373,12 +373,12 @@ L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Calles"
 L.keystoneShortName_TheDawnbreaker_Bar = "Rompealbas"
 
 -- Instance Keys "Who has a key?"
---L.instanceKeysTitle = "Who has a key?"
---L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
---L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
---L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
---L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
---L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+L.instanceKeysTitle = "¿Quién tiene la piedra?"
+L.instanceKeysDesc = "Cuando entres a una mazmorra mítica, los jugadores que tengan la piedra angular de esa mazmorra se mostrarán en una lista.\n\n"
+L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
+L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
+L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
+L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -397,7 +397,7 @@ L.general = "General"
 L.advanced = "Avanzado"
 L.comma = ", "
 L.reset = "Reiniciar"
---L.resetDesc = "Reset the above settings to their default values."
+L.resetDesc = "Restablece la configuración anterior a sus valores predeterminados."
 L.resetAll = "Resetear todo"
 
 L.positionX = "Posición X"
