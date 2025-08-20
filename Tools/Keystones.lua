@@ -978,8 +978,8 @@ do
 				if specID > 0 then
 					local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
 					local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
-					decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, pData.name)
-					nameTooltip = format("|c%s%s|r [%s] |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s", color, pData.name, pData.realm, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
+					decoratedName = ("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r"):format(specIcon, roleIcons[role] or "", color, pData.name)
+					nameTooltip = ("|c%s%s|r [%s] |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s"):format(color, pData.name, pData.realm, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "")
 				end
 				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData.keyMap)
 				sortedplayerList[#sortedplayerList+1] = {
@@ -1226,8 +1226,8 @@ do
 				if specID then
 					local _, specName, _, specIcon, role, classFile, className = GetSpecializationInfoByID(specID)
 					local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
-					decoratedName = format("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r", specIcon, roleIcons[role] or "", color, gsub(pName, "%-.+", "*"))
-					nameTooltip = format("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s\n%s", color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "", L.keystoneClickToWhisper)
+					decoratedName = ("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r"):format(specIcon, roleIcons[role] or "", color, pName:gsub("%-.+", "*"))
+					nameTooltip = ("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s\n%s"):format(color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "", L.keystoneClickToWhisper)
 				end
 				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
 				local teleportSpellID = mapID and teleportList[1][mapID] or 0
@@ -1442,9 +1442,9 @@ do
 			local color = classFile and C_ClassColor.GetClassColor(classFile):GenerateHexColor() or "FFFFFFFF"
 			local decoratedName
 			if dungeonMapWithMultipleKeys[currentInstanceID] then
-				decoratedName = format(L.instanceKeysDisplayWithDungeon, color, gsub(playerName, "%-.+", "*"), keyLevel, dungeonNamesTrimmed[keyMap] or keyMap)
+				decoratedName = L.instanceKeysDisplayWithDungeon:format(color, playerName:gsub("%-.+", ""), keyLevel, dungeonNamesTrimmed[keyMap] or keyMap)
 			else
-				decoratedName = format(L.instanceKeysDisplay, color, gsub(playerName, "%-.+", "*"), keyLevel)
+				decoratedName = L.instanceKeysDisplay:format(color, playerName:gsub("%-.+", ""), keyLevel)
 			end
 			nameList[playerName] = {keyLevel, keyMap, decoratedName}
 
