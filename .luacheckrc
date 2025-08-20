@@ -24,7 +24,6 @@ files["Loader.lua"].ignore = {
 	"113/C_AddOns",
 	"113/C_ChatInfo",
 	"113/C_CVar",
-	"113/C_EventUtils",
 	"113/C_Item",
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
@@ -90,7 +89,6 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 }
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
-	"113/C_EventUtils",
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
 }
@@ -146,7 +144,6 @@ files["Plugins/Proximity.lua"].ignore = {
 	"113/UnitInPhase", -- Classic support
 }
 files["Plugins/Pull.lua"].ignore = {
-	"113/C_EventUtils",
 	"113/ClearOverrideBindings",
 	"113/GetPlayerInfoByGUID",
 	"113/SetOverrideBindingClick",

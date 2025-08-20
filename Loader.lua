@@ -1084,7 +1084,7 @@ do
 	end
 end
 
-if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+if public.isRetail then
 	bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
 end
 bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")

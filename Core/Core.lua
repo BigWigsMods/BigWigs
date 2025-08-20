@@ -59,14 +59,15 @@ do
 
 	function core:RegisterEvent(event, func)
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
-		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", event, func or event)) end
+		local functionType = type(func)
+		if (not func and not self[event]) or (functionType == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", event, func or event)) end
 		if not eventMap[event] then eventMap[event] = {} end
 
 		if eventMap[event][self] then -- Event is already registered to this specific module, just change the assigned function
 			eventMap[event][self] = func or event
 		else -- Event has not been previously registered to this specific module
 			if event == currentEvent then
-				core:Error(curEvent:format(self.moduleName or "?", event, func or event))
+				core:Error(curEvent:format(self.moduleName or "?", event, functionType == "function" and "<local func>" or func or event))
 			end
 			eventMap[event][self] = func or event
 			bwUtilityFrame:RegisterEvent(event)
@@ -263,7 +264,7 @@ do
 			plugins[i]:Disable()
 		end
 	end
-	local function DisableCore()
+	local function DisableCore(skipDelveEvent)
 		if coreEnabled then
 			coreEnabled = false
 
@@ -274,7 +275,7 @@ do
 			core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
 			core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
 			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
-			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+			if loader.isRetail and not skipDelveEvent then
 				core.UnregisterEvent(mod, "PLAYER_MAP_CHANGED")
 			end
 			core.UnregisterEvent(mod, "PLAYER_LOGIN")
@@ -308,7 +309,7 @@ do
 			DisableCore() -- Leaving a Delve
 		elseif zoneList[newId] then
 			-- Joining a delve but we were already enabled from something
-			DisableCore()
+			DisableCore(true) -- Avoid re-registering PLAYER_MAP_CHANGED whilst it's still dispatching
 			core:Enable()
 		end
 	end
@@ -322,12 +323,12 @@ do
 			core.RegisterEvent(mod, "ENCOUNTER_START")
 			core.RegisterEvent(mod, "RAID_BOSS_WHISPER")
 			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", UpdateMouseoverUnit)
-			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", DisableCore) -- Simple disable when leaving instances
+			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", function() DisableCore() end) -- Simple disable when leaving instances
 			local _, instanceType = GetInstanceInfo()
 			if instanceType == "none" then -- We don't want to be disabling in instances
 				core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged) -- Special checks for disabling after world bosses
 			end
-			if C_EventUtils.IsEventValid("PLAYER_MAP_CHANGED") then
+			if loader.isRetail then
 				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", CheckIfLeavingDelve)
 			end
 
