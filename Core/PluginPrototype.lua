@@ -134,7 +134,7 @@ do
 	-- @param sound Either a FileID (number), or the path to a sound file (string)
 	-- @string[opt] channel the channel the sound should play on, defaults to "Master"
 	function plugin:PlaySoundFile(sound, channel)
-		PlaySoundFile(sound, channel or "Master")
+		return PlaySoundFile(sound, channel or "Master")
 	end
 end
 
