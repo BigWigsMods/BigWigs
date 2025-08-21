@@ -373,7 +373,7 @@ L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "거리"
 L.keystoneShortName_TheDawnbreaker_Bar = "새인호"
 
 -- Instance Keys "Who has a key?"
-L.instanceKeysTitle = "누구 쐐기돌이야?"
+L.instanceKeysTitle = "누가 쐐기돌을 가지고 있나요?"
 L.instanceKeysDesc = "신화 던전에 입장하면 해당 던전의 쐐기돌을 가진 플레이어가 목록으로 표시됩니다.\n\n"
 L.instanceKeysTest8 = "|cFF00FF98수도사:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0A드루이드:|r +10"
