@@ -247,7 +247,9 @@ do
 		self:RegisterMessage("Blizz_StartCountdown")
 		self:RegisterMessage("Blizz_StopCountdown")
 
-		self:RegisterEvent("CHALLENGE_MODE_START")
+		if BigWigsLoader.isRetail then
+			self:RegisterEvent("CHALLENGE_MODE_START")
+		end
 	end
 end
 
