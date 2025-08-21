@@ -35,6 +35,7 @@ do
 		countEndSound = "BigWigs: Alarm",
 		showViewerDungeonEnd = true,
 		hideFromGuild = false,
+		viewerKeybind = "",
 		windowHeight = 320,
 		viewerPosition = {"LEFT", "LEFT", 15, 0},
 		instanceKeysPosition = {"BOTTOM", "TOP", 0, -86},
@@ -1510,6 +1511,10 @@ end
 --
 
 do
+	local viewerKeybindFrame = CreateFrame("Button", "BWViewerKeybindFrame")
+	viewerKeybindFrame:SetSize(1, 1)
+	viewerKeybindFrame:Hide()
+
 	local function UpdateWidgets()
 		LibKeystone.SetGuildHidden(db.profile.hideFromGuild)
 		mainPanel:ClearAllPoints()
@@ -1562,6 +1567,15 @@ do
 		if instanceKeysWidgets.testing then
 			instanceKeysWidgets.playerListText:SetText(db.profile.instanceKeysGrowUpwards and (L.instanceKeysTest10.."\n"..L.instanceKeysTest8) or (L.instanceKeysTest8.."\n"..L.instanceKeysTest10))
 		end
+
+		if not InCombatLockdown() then
+			ClearOverrideBindings(viewerKeybindFrame)
+			if db.profile.viewerKeybind ~= "" then
+				SetOverrideBindingClick(viewerKeybindFrame, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
+			end
+		else
+			viewerKeybindFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+		end
 	end
 
 	local function voiceSorting()
@@ -1607,13 +1621,31 @@ do
 	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer)
 	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer)
 
+	viewerKeybindFrame:SetScript("OnClick", ShowViewer)
+	if db.profile.viewerKeybind ~= "" then
+		SetOverrideBindingClick(viewerKeybindFrame, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
+	end
+	viewerKeybindFrame:SetScript("OnEvent", function(self, event)
+		self:UnregisterEvent(event)
+		ClearOverrideBindings(self)
+		if db.profile.viewerKeybind ~= "" then
+			SetOverrideBindingClick(self, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
+		end
+	end)
+
+	local function GetSettings(info)
+		return db.profile[info[#info]]
+	end
+	local function UpdateSettingsAndWidgets(info, value)
+		local key = info[#info]
+		db.profile[key] = value
+		UpdateWidgets()
+	end
 	BigWigsAPI.SetToolOptionsTable("MythicPlus", {
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,
-		get = function(info)
-			return db.profile[info[#info]]
-		end,
+		get = GetSettings,
 		set = function(info, value)
 			local key = info[#info]
 			db.profile[key] = value
@@ -1744,20 +1776,27 @@ do
 							end
 						end,
 					},
+					explainViewerKeybinding = {
+						type = "description",
+						name = L.keystoneViewerKeybindingExplainer,
+						order = 6,
+						width = "full",
+					},
+					viewerKeybind = {
+						type = "keybinding",
+						name = L.keybinding,
+						desc = L.keystoneViewerKeybindingDesc,
+						order = 7,
+						set = UpdateSettingsAndWidgets,
+					},
 				},
 			},
 			instanceKeys = {
 				type = "group",
 				name = L.instanceKeysTitle,
 				order = 3,
-				get = function(info)
-					return db.profile[info[#info]]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					db.profile[key] = value
-					UpdateWidgets()
-				end,
+				get = GetSettings,
+				set = UpdateSettingsAndWidgets,
 				args = {
 					explainInstanceKeys = {
 						type = "description",

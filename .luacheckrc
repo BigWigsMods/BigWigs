@@ -188,12 +188,12 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
 	"113/C_PlayerInfo",
+	"113/ClearOverrideBindings",
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
 	"113/GetSpecializationInfoByID",
 	"113/PlaySound",
-	"111/SLASH_BigWigsTestKS1",
-	"112/SlashCmdList",
+	"113/SetOverrideBindingClick",
 	"113/TimerTracker",
 }
 files["Tools/LFGTimer.lua"].ignore = {
