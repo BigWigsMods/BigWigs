@@ -37,7 +37,7 @@ do
 		hideFromGuild = false,
 		windowHeight = 320,
 		viewerPosition = {"LEFT", "LEFT", 15, 0},
-		instanceKeysPosition = {"BOTTOM", "TOP", 0, -60},
+		instanceKeysPosition = {"BOTTOM", "TOP", 0, -86},
 		instanceKeysFontName = fontName,
 		instanceKeysFontSize = 16,
 		instanceKeysMonochrome = false,
@@ -337,7 +337,7 @@ do
 end
 mainPanel:SetFrameStrata("MEDIUM")
 mainPanel:SetFixedFrameStrata(true)
-mainPanel:SetFrameLevel(100)
+mainPanel:SetFrameLevel(9500)
 mainPanel:SetFixedFrameLevel(true)
 mainPanel:SetClampedToScreen(true)
 mainPanel:SetMovable(true)
@@ -1358,9 +1358,9 @@ do
 		local x, y = db.profile.instanceKeysPosition[3], db.profile.instanceKeysPosition[4]
 		main:SetPoint(point, UIParent, relPoint, x, y)
 	end
-	main:SetFrameStrata("HIGH")
+	main:SetFrameStrata("MEDIUM")
 	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(200)
+	main:SetFrameLevel(9400)
 	main:SetFixedFrameLevel(true)
 	main:SetClampedToScreen(true)
 	main:EnableMouse(false)
@@ -1386,7 +1386,7 @@ do
 	bg:Hide()
 	instanceKeysWidgets.bg = bg
 
-	local header = main:CreateFontString(nil, "OVERLAY")
+	local header = main:CreateFontString()
 	header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
 	header:SetJustifyH(db.profile.instanceKeysAlign)
 
@@ -1403,7 +1403,7 @@ do
 	header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 	instanceKeysWidgets.header = header
 
-	local playerListText = main:CreateFontString(nil, "OVERLAY")
+	local playerListText = main:CreateFontString()
 	if db.profile.instanceKeysGrowUpwards then
 		playerListText:SetJustifyV("BOTTOM")
 		playerListText:SetPoint(
