@@ -20,7 +20,7 @@ end
 
 L = BigWigs:NewBossLocale("Fractillus", "zhTW")
 if L then
-	L.crystalline_eruption = "水晶牆" -- 出牆
+	L.crystalline_shockwave = "水晶牆" -- 出牆
 	L.shattershell = "破牆"
 	L.shockwave_slam = "坦克牆"
 	L.nexus_shrapnel = "碎片落地" -- 粉碎反擊小圈

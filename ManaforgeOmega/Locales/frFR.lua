@@ -20,7 +20,7 @@ end
 
 L = BigWigs:NewBossLocale("Fractillus", "frFR")
 if L then
-	L.crystalline_eruption = "Murs"
+	L.crystalline_shockwave = "Murs"
 	L.shattershell = "Casser"
 	L.shockwave_slam = "Mur Tank"
 	L.nexus_shrapnel = "Éclats atterrissent"
