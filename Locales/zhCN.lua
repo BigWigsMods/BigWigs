@@ -272,7 +272,7 @@ L.H25 = "25人英雄"
 -----------------------------------------------------------------------
 
 L.tools = "工具"
-L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"用于简化和加速首领战斗流程。点击 |cFF33FF99+|r 图标展开菜单可查看所有功能。"
+L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"，让你可以轻松的简化首领战斗流程。点击 |cFF33FF99+|r 图标展开菜单可查看所有功能。"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -530,7 +530,7 @@ L.sendCustomBar = "正在发送自定义计时条“%s”到 BigWigs 和 DBM 玩
 L.requiresLeadOrAssist = "此功能需要团队领袖或助理权限。"
 L.encounterRestricted = "此功能在战斗中不能使用。"
 L.wrongCustomBarFormat = "错误格式。正确用法：/raidbar 20 文本"
-L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单位，一个分:秒一对，或分秒。例如，1:20或2M。"
+L.wrongTime = "指定的时间无效。  <time> 可以是秒数、M:S格式或分钟数。例如：5、1:20 或 2分钟"
 
 L.wrongBreakFormat = "必须位于1至60分钟之间。正确用法：/break 5"
 L.sendBreak = "发送休息时间计时器到 BigWigs 和 DBM 用户。"
