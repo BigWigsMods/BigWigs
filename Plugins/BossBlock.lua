@@ -1024,6 +1024,7 @@ do
 		[991] = true, -- Iridikron (DotI) defeat
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 		[1003] = true, -- Amirdrassil, Fyrakk defeat
+		[1034] = true, -- [The War Within/Manaforge Omega] clicking the portal after Dimensius defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
