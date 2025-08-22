@@ -1459,7 +1459,8 @@ do
 			local _, classFile = UnitClass(playerName)
 			local color = classFile and C_ClassColor.GetClassColor(classFile):GenerateHexColor() or "FFFFFFFF"
 			local decoratedName
-			if dungeonMapWithMultipleKeys[currentInstanceID] or (db.profile.instanceKeysShowAllPlayers and keyMap ~= currentInstanceID) then
+			local _, _, _, _, _, keyMapInstanceID = GetMapUIInfo(keyMap)
+			if dungeonMapWithMultipleKeys[keyMapInstanceID] or (db.profile.instanceKeysShowAllPlayers and keyMapInstanceID ~= currentInstanceID) then
 				decoratedName = L.instanceKeysDisplayWithDungeon:format(color, playerName:gsub("%-.+", ""), keyLevel, dungeonNamesTrimmed[keyMap] or keyMap)
 			else
 				decoratedName = L.instanceKeysDisplay:format(color, playerName:gsub("%-.+", ""), keyLevel)
@@ -1468,13 +1469,16 @@ do
 
 			local sortedPlayerList = {}
 			for pName, pData in next, instanceKeysWidgets.nameList do
-				local _, _, _, _, _, mapID = GetMapUIInfo(pData[2])
-				if mapID == currentInstanceID or db.profile.instanceKeysShowAllPlayers then
-					main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
-					main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
-					main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
-					main:Show()
-					sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = mapID == currentInstanceID}
+				if UnitInParty(pName) then -- Safety check, in case we're forming a group inside a dungeon and people keep leaving
+					local _, _, _, _, _, playerMapInstanceID = GetMapUIInfo(pData[2])
+					local inCurrentDungeon = playerMapInstanceID == currentInstanceID
+					if inCurrentDungeon or db.profile.instanceKeysShowAllPlayers then
+						main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
+						main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
+						main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
+						main:Show()
+						sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = inCurrentDungeon}
+					end
 				end
 			end
 
