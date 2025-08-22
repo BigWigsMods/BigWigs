@@ -1404,25 +1404,28 @@ do
 	header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 	instanceKeysWidgets.header = header
 
-	local playerListText = main:CreateFontString()
-	if db.profile.instanceKeysGrowUpwards then
-		playerListText:SetJustifyV("BOTTOM")
-		playerListText:SetPoint(
-			db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", header,
-			db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
-		)
-	else
-		playerListText:SetJustifyV("TOP")
-		playerListText:SetPoint(
-			db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", header,
-			db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
-		)
+	instanceKeysWidgets.playerListText = {}
+	for i = 1, 5 do
+		local playerListText = main:CreateFontString()
+		if db.profile.instanceKeysGrowUpwards then
+			playerListText:SetJustifyV("BOTTOM")
+			playerListText:SetPoint(
+				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", i == 1 and header or instanceKeysWidgets.playerListText[i-1],
+				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
+			)
+		else
+			playerListText:SetJustifyV("TOP")
+			playerListText:SetPoint(
+				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", i == 1 and header or instanceKeysWidgets.playerListText[i-1],
+				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
+			)
+		end
+		playerListText:SetJustifyH(db.profile.instanceKeysAlign)
+		playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+		playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
+		playerListText:SetText(" ")
+		instanceKeysWidgets.playerListText[i] = playerListText
 	end
-	playerListText:SetJustifyH(db.profile.instanceKeysAlign)
-	playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-	playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-	playerListText:SetText(" ")
-	instanceKeysWidgets.playerListText = playerListText
 
 	main:Hide()
 
@@ -1463,22 +1466,30 @@ do
 
 			table.sort(sortedPlayerList, SortTableByLevelThenName)
 			local namesToShow = {}
-			for i = 1, #sortedPlayerList do
-				namesToShow[#namesToShow+1] = sortedPlayerList[i].decoratedName
+			for i = 1, 5 do
+				local name = sortedPlayerList[i] and sortedPlayerList[i].decoratedName
+				if name then
+					namesToShow[#namesToShow+1] = name
+					instanceKeysWidgets.playerListText[i]:SetText(name)
+				else
+					instanceKeysWidgets.playerListText[i]:SetText(" ")
+				end
 			end
-			instanceKeysWidgets.namesToShow = namesToShow
-			playerListText:SetText(table.concat(namesToShow, "\n"))
+			instanceKeysWidgets.namesToShow = namesToShow[1] and namesToShow or nil
 		end
 	end
 	local whosKeyTable = {}
 	local function Delay() -- Difficulty info isn't accurate until 1 frame after PEW
 		local _, _, diffID, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 		if diffID == 23 then
+			instanceKeysWidgets.namesToShow = nil
 			nameList = {}
 			currentInstanceID = instanceID
 			UpdateProfileFont() -- We delay this to allow enough time for other addons to register their fonts into LSM
 			header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-			playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
+			for i = 1, 5 do
+				instanceKeysWidgets.playerListText[i]:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
+			end
 			LibKeystone.Register(whosKeyTable, ReceivePartyData)
 			LibKeystone.Request("PARTY")
 		end
@@ -1525,26 +1536,39 @@ do
 		end
 		mainPanel:SetSize(350, db.profile.windowHeight)
 
+		local fontFlags = nil
+		if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
+			fontFlags = "MONOCHROME," .. db.profile.instanceKeysOutline
+		elseif db.profile.instanceKeysMonochrome then
+			fontFlags = "MONOCHROME"
+		elseif db.profile.instanceKeysOutline ~= "NONE" then
+			fontFlags = db.profile.instanceKeysOutline
+		end
+
 		instanceKeysWidgets.header:SetJustifyH(db.profile.instanceKeysAlign)
 		instanceKeysWidgets.header:ClearAllPoints()
 		instanceKeysWidgets.header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
+		instanceKeysWidgets.header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
 		instanceKeysWidgets.header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-		instanceKeysWidgets.playerListText:SetJustifyH(db.profile.instanceKeysAlign)
-		instanceKeysWidgets.playerListText:ClearAllPoints()
-		if db.profile.instanceKeysGrowUpwards then
-			instanceKeysWidgets.playerListText:SetJustifyV("BOTTOM")
-			instanceKeysWidgets.playerListText:SetPoint(
-				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", instanceKeysWidgets.header,
-				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
-			)
-		else
-			instanceKeysWidgets.playerListText:SetJustifyV("TOP")
-			instanceKeysWidgets.playerListText:SetPoint(
-				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", instanceKeysWidgets.header,
-				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
-			)
+		for i = 1, 5 do
+			instanceKeysWidgets.playerListText[i]:SetJustifyH(db.profile.instanceKeysAlign)
+			instanceKeysWidgets.playerListText[i]:ClearAllPoints()
+			if db.profile.instanceKeysGrowUpwards then
+				instanceKeysWidgets.playerListText[i]:SetJustifyV("BOTTOM")
+				instanceKeysWidgets.playerListText[i]:SetPoint(
+					db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", i == 1 and instanceKeysWidgets.header or instanceKeysWidgets.playerListText[i-1],
+					db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
+				)
+			else
+				instanceKeysWidgets.playerListText[i]:SetJustifyV("TOP")
+				instanceKeysWidgets.playerListText[i]:SetPoint(
+					db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", i == 1 and instanceKeysWidgets.header or instanceKeysWidgets.playerListText[i-1],
+					db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
+				)
+			end
+			instanceKeysWidgets.playerListText[i]:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
+			instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 		end
-		instanceKeysWidgets.playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 
 		instanceKeysWidgets.main:ClearAllPoints()
 		do
@@ -1553,19 +1577,9 @@ do
 			instanceKeysWidgets.main:SetPoint(point, UIParent, relPoint, x, y)
 		end
 
-		local flags = nil
-		if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
-			flags = "MONOCHROME," .. db.profile.instanceKeysOutline
-		elseif db.profile.instanceKeysMonochrome then
-			flags = "MONOCHROME"
-		elseif db.profile.instanceKeysOutline ~= "NONE" then
-			flags = db.profile.instanceKeysOutline
-		end
-		instanceKeysWidgets.header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-		instanceKeysWidgets.playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-
 		if instanceKeysWidgets.testing then
-			instanceKeysWidgets.playerListText:SetText(db.profile.instanceKeysGrowUpwards and (L.instanceKeysTest10.."\n"..L.instanceKeysTest8) or (L.instanceKeysTest8.."\n"..L.instanceKeysTest10))
+			instanceKeysWidgets.playerListText[1]:SetText(L.instanceKeysTest8)
+			instanceKeysWidgets.playerListText[2]:SetText(L.instanceKeysTest10)
 		end
 
 		if not InCombatLockdown() then
@@ -1827,7 +1841,13 @@ do
 								instanceKeysWidgets.main:SetMovable(false)
 								instanceKeysWidgets.bg:Hide()
 								if instanceKeysWidgets.namesToShow then
-									instanceKeysWidgets.playerListText:SetText(table.concat(instanceKeysWidgets.namesToShow, "\n"))
+									for i = 1, 5 do
+										if i <= #instanceKeysWidgets.namesToShow then
+											instanceKeysWidgets.playerListText[i]:SetText(instanceKeysWidgets.namesToShow[i])
+										else
+											instanceKeysWidgets.playerListText[i]:SetText("")
+										end
+									end
 								else
 									instanceKeysWidgets.main:Hide()
 								end
@@ -1837,7 +1857,11 @@ do
 								instanceKeysWidgets.main:EnableMouse(true)
 								instanceKeysWidgets.main:SetMovable(true)
 								instanceKeysWidgets.bg:Show()
-								instanceKeysWidgets.playerListText:SetText(db.profile.instanceKeysGrowUpwards and (L.instanceKeysTest10.."\n"..L.instanceKeysTest8) or (L.instanceKeysTest8.."\n"..L.instanceKeysTest10))
+								instanceKeysWidgets.playerListText[1]:SetText(L.instanceKeysTest8)
+								instanceKeysWidgets.playerListText[2]:SetText(L.instanceKeysTest10)
+								for i = 3, 5 do
+									instanceKeysWidgets.playerListText[i]:SetText("")
+								end
 							end
 						end,
 						width = 1.5,
