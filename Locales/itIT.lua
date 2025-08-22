@@ -380,6 +380,11 @@ L.H25 = "Eroico 25"
 --L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
 --L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
 --L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+--L.instanceKeysShowAll = "Always show all players"
+--L.instanceKeysShowAllDesc = "Enabling this option will show all players in the list, even if their keystone doesn't belong to the dungeon you are in."
+--L.instanceKeysOtherDungeonColor = "Other dungeon color"
+--L.instanceKeysOtherDungeonColorDesc = "Choose the font color for players that have keystones that don't belong to the dungeon you are in."
+--L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter a mythic dungeon. Enabling this option will also show the list when the Mythic+ is over."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
