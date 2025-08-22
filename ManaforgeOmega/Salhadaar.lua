@@ -130,7 +130,7 @@ function mod:GetOptions()
 			1225634, -- World in Twilight
 		-- Mythic
 		1238975, -- Vengeful Oath
-		{1237106, "PRIVATE", "NAMEPLATE"}, -- Twilight Massacre
+		{1237106, "PRIVATE"}, -- Twilight Massacre
 	},{
 		-- Tabs
 		{
