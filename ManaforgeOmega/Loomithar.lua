@@ -100,7 +100,7 @@ function mod:GetOptions()
 		[1246921] = L.infusion_pylons, -- Infusion Pylons (Pylons)
 		[1227782] = CL.pushback, -- Arcane Outrage (Pushback)
 		[1227226] = CL.soak, -- Writhing Wave (Soak)
-		[1226867] = CL.dodge, -- Primal Spellstorm (Circles)
+		[1226867] = CL.dodge, -- Primal Spellstorm (Dodge)
 	}
 end
 

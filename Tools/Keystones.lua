@@ -35,9 +35,10 @@ do
 		countEndSound = "BigWigs: Alarm",
 		showViewerDungeonEnd = true,
 		hideFromGuild = false,
+		viewerKeybind = "",
 		windowHeight = 320,
 		viewerPosition = {"LEFT", "LEFT", 15, 0},
-		instanceKeysPosition = {"BOTTOM", "TOP", 0, -60},
+		instanceKeysPosition = {"BOTTOM", "TOP", 0, -86},
 		instanceKeysFontName = fontName,
 		instanceKeysFontSize = 16,
 		instanceKeysMonochrome = false,
@@ -45,11 +46,14 @@ do
 		instanceKeysOutline = "OUTLINE",
 		instanceKeysAlign = "CENTER",
 		instanceKeysColor = {1, 1, 1, 1},
+		instanceKeysOtherDungeonColor = {1, 1, 1, 0.5},
+		instanceKeysShowAllPlayers = false,
+		instanceKeysShowDungeonEnd = false,
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 
 	function UpdateProfile()
-		for k, v in next, db do
+		for k, v in next, db.profile do
 			local defaultType = type(defaults[k])
 			if defaultType == "nil" then
 				db.profile[k] = nil
@@ -110,6 +114,16 @@ do
 		if db.profile.instanceKeysColor[4] < 0.3 then -- Limit lowest alpha value
 			db.profile.instanceKeysColor = defaults.instanceKeysColor
 		end
+		for i = 1, 4 do
+			local n = db.profile.instanceKeysOtherDungeonColor[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
+				break -- If 1 entry is bad, reset the whole table
+			end
+		end
+		if db.profile.instanceKeysOtherDungeonColor[4] < 0.3 then -- Limit lowest alpha value
+			db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
+		end
 	end
 	function UpdateProfileFont()
 		if not LibStub("LibSharedMedia-3.0"):IsValid("font", db.profile.instanceKeysFontName) then
@@ -127,6 +141,9 @@ do
 		db.profile.instanceKeysOutline = defaults.instanceKeysOutline
 		db.profile.instanceKeysAlign = defaults.instanceKeysAlign
 		db.profile.instanceKeysColor = defaults.instanceKeysColor
+		db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
+		db.profile.instanceKeysShowAllPlayers = defaults.instanceKeysShowAllPlayers
+		db.profile.instanceKeysShowDungeonEnd = defaults.instanceKeysShowDungeonEnd
 	end
 end
 
@@ -337,7 +354,7 @@ do
 end
 mainPanel:SetFrameStrata("MEDIUM")
 mainPanel:SetFixedFrameStrata(true)
-mainPanel:SetFrameLevel(100)
+mainPanel:SetFrameLevel(9500)
 mainPanel:SetFixedFrameLevel(true)
 mainPanel:SetClampedToScreen(true)
 mainPanel:SetMovable(true)
@@ -1349,7 +1366,7 @@ end
 -- Who has a key?
 --
 
-local instanceKeysWidgets = {testing = false}
+local instanceKeysWidgets = {testing = false, nameList = {}, playerListText = {}}
 do
 	local main = CreateFrame("Frame", nil, UIParent)
 	main:SetSize(200, 40)
@@ -1358,9 +1375,9 @@ do
 		local x, y = db.profile.instanceKeysPosition[3], db.profile.instanceKeysPosition[4]
 		main:SetPoint(point, UIParent, relPoint, x, y)
 	end
-	main:SetFrameStrata("HIGH")
+	main:SetFrameStrata("MEDIUM")
 	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(200)
+	main:SetFrameLevel(9400)
 	main:SetFixedFrameLevel(true)
 	main:SetClampedToScreen(true)
 	main:EnableMouse(false)
@@ -1386,7 +1403,7 @@ do
 	bg:Hide()
 	instanceKeysWidgets.bg = bg
 
-	local header = main:CreateFontString(nil, "OVERLAY")
+	local header = main:CreateFontString()
 	header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
 	header:SetJustifyH(db.profile.instanceKeysAlign)
 
@@ -1403,25 +1420,27 @@ do
 	header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 	instanceKeysWidgets.header = header
 
-	local playerListText = main:CreateFontString(nil, "OVERLAY")
-	if db.profile.instanceKeysGrowUpwards then
-		playerListText:SetJustifyV("BOTTOM")
-		playerListText:SetPoint(
-			db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", header,
-			db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
-		)
-	else
-		playerListText:SetJustifyV("TOP")
-		playerListText:SetPoint(
-			db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", header,
-			db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
-		)
+	for i = 1, 5 do
+		local playerListText = main:CreateFontString()
+		if db.profile.instanceKeysGrowUpwards then
+			playerListText:SetJustifyV("BOTTOM")
+			playerListText:SetPoint(
+				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", i == 1 and header or instanceKeysWidgets.playerListText[i-1],
+				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
+			)
+		else
+			playerListText:SetJustifyV("TOP")
+			playerListText:SetPoint(
+				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", i == 1 and header or instanceKeysWidgets.playerListText[i-1],
+				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
+			)
+		end
+		playerListText:SetJustifyH(db.profile.instanceKeysAlign)
+		playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+		playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
+		playerListText:SetText(" ")
+		instanceKeysWidgets.playerListText[i] = playerListText
 	end
-	playerListText:SetJustifyH(db.profile.instanceKeysAlign)
-	playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-	playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-	playerListText:SetText(" ")
-	instanceKeysWidgets.playerListText = playerListText
 
 	main:Hide()
 
@@ -1435,49 +1454,88 @@ do
 		end
 	end
 	local currentInstanceID = nil
-	local nameList = {}
 	local function ReceivePartyData(keyLevel, keyMap, _, playerName, channel)
-		if channel == "PARTY" and (not nameList[playerName] or nameList[playerName][1] ~= keyLevel or nameList[playerName][2] ~= keyMap) then
+		if channel == "PARTY" and (not instanceKeysWidgets.nameList[playerName] or instanceKeysWidgets.nameList[playerName][1] ~= keyLevel or instanceKeysWidgets.nameList[playerName][2] ~= keyMap) then
 			local _, classFile = UnitClass(playerName)
 			local color = classFile and C_ClassColor.GetClassColor(classFile):GenerateHexColor() or "FFFFFFFF"
 			local decoratedName
-			if dungeonMapWithMultipleKeys[currentInstanceID] then
+			local _, _, _, _, _, keyMapInstanceID = GetMapUIInfo(keyMap)
+			if dungeonMapWithMultipleKeys[keyMapInstanceID] or (db.profile.instanceKeysShowAllPlayers and keyMapInstanceID ~= currentInstanceID) then
 				decoratedName = L.instanceKeysDisplayWithDungeon:format(color, playerName:gsub("%-.+", ""), keyLevel, dungeonNamesTrimmed[keyMap] or keyMap)
 			else
 				decoratedName = L.instanceKeysDisplay:format(color, playerName:gsub("%-.+", ""), keyLevel)
 			end
-			nameList[playerName] = {keyLevel, keyMap, decoratedName}
+			instanceKeysWidgets.nameList[playerName] = {keyLevel, keyMap, decoratedName}
 
 			local sortedPlayerList = {}
-			for pName, pData in next, nameList do
-				local _, _, _, _, _, mapID = GetMapUIInfo(pData[2])
-				if mapID == currentInstanceID then
-					main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
-					main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
-					main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
-					main:Show()
-					sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1]}
+			for pName, pData in next, instanceKeysWidgets.nameList do
+				if UnitInParty(pName) then -- Safety check, in case we're forming a group inside a dungeon and people keep leaving
+					local _, _, _, _, _, playerMapInstanceID = GetMapUIInfo(pData[2])
+					local inCurrentDungeon = playerMapInstanceID == currentInstanceID
+					if inCurrentDungeon or db.profile.instanceKeysShowAllPlayers then
+						main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
+						main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
+						main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
+						main:Show()
+						sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = inCurrentDungeon}
+					end
 				end
 			end
 
 			table.sort(sortedPlayerList, SortTableByLevelThenName)
-			local namesToShow = {}
-			for i = 1, #sortedPlayerList do
-				namesToShow[#namesToShow+1] = sortedPlayerList[i].decoratedName
+			local namesToShow, otherDungeons = {}, {false, false, false, false, false}
+			for i = 1, 5 do
+				local name = sortedPlayerList[i] and sortedPlayerList[i].decoratedName
+				if name then
+					namesToShow[#namesToShow+1] = name
+					if not sortedPlayerList[i].inCurrentDungeon then
+						otherDungeons[i] = true
+						if not instanceKeysWidgets.testing then
+							instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
+							instanceKeysWidgets.playerListText[i]:SetText(name)
+						end
+					elseif not instanceKeysWidgets.testing then
+						instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+						instanceKeysWidgets.playerListText[i]:SetText(name)
+					end
+				elseif not instanceKeysWidgets.testing then
+					instanceKeysWidgets.playerListText[i]:SetText(" ")
+				end
 			end
-			instanceKeysWidgets.namesToShow = namesToShow
-			playerListText:SetText(table.concat(namesToShow, "\n"))
+			if namesToShow[1] then
+				instanceKeysWidgets.namesToShow = namesToShow
+				instanceKeysWidgets.otherDungeons = otherDungeons
+			else
+				instanceKeysWidgets.namesToShow = nil
+				instanceKeysWidgets.otherDungeons = nil
+				if not instanceKeysWidgets.testing then
+					instanceKeysWidgets.main:Hide()
+				end
+			end
 		end
 	end
 	local whosKeyTable = {}
 	local function Delay() -- Difficulty info isn't accurate until 1 frame after PEW
 		local _, _, diffID, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 		if diffID == 23 then
-			nameList = {}
+			instanceKeysWidgets.namesToShow = nil
+			instanceKeysWidgets.otherDungeons = nil
+			instanceKeysWidgets.nameList = {}
 			currentInstanceID = instanceID
 			UpdateProfileFont() -- We delay this to allow enough time for other addons to register their fonts into LSM
-			header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-			playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
+			local fontFlags = nil
+			if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
+				fontFlags = "MONOCHROME," .. db.profile.instanceKeysOutline
+			elseif db.profile.instanceKeysMonochrome then
+				fontFlags = "MONOCHROME"
+			elseif db.profile.instanceKeysOutline ~= "NONE" then
+				fontFlags = db.profile.instanceKeysOutline
+			end
+			header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
+			for i = 1, 5 do
+				instanceKeysWidgets.playerListText[i]:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
+			end
+			main:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 			LibKeystone.Register(whosKeyTable, ReceivePartyData)
 			LibKeystone.Request("PARTY")
 		end
@@ -1492,13 +1550,19 @@ do
 		end
 		if event == "PLAYER_ENTERING_WORLD" then
 			BigWigsLoader.CTimerAfter(0, Delay)
+		elseif event == "CHALLENGE_MODE_COMPLETED" then
+			if db.profile.instanceKeysShowDungeonEnd then
+				BigWigsLoader.CTimerAfter(5, Delay)
+			end
 		else
 			LibKeystone.Unregister(whosKeyTable)
 			self:Hide()
-			nameList = {}
+			instanceKeysWidgets.nameList = {}
 			instanceKeysWidgets.namesToShow = nil
+			instanceKeysWidgets.otherDungeons = nil
 			self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
+			self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 	end)
@@ -1510,6 +1574,10 @@ end
 --
 
 do
+	local viewerKeybindFrame = CreateFrame("Button", "BWViewerKeybindFrame")
+	viewerKeybindFrame:SetSize(1, 1)
+	viewerKeybindFrame:Hide()
+
 	local function UpdateWidgets()
 		LibKeystone.SetGuildHidden(db.profile.hideFromGuild)
 		mainPanel:ClearAllPoints()
@@ -1520,26 +1588,42 @@ do
 		end
 		mainPanel:SetSize(350, db.profile.windowHeight)
 
+		local fontFlags = nil
+		if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
+			fontFlags = "MONOCHROME," .. db.profile.instanceKeysOutline
+		elseif db.profile.instanceKeysMonochrome then
+			fontFlags = "MONOCHROME"
+		elseif db.profile.instanceKeysOutline ~= "NONE" then
+			fontFlags = db.profile.instanceKeysOutline
+		end
+
 		instanceKeysWidgets.header:SetJustifyH(db.profile.instanceKeysAlign)
 		instanceKeysWidgets.header:ClearAllPoints()
 		instanceKeysWidgets.header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
+		instanceKeysWidgets.header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
 		instanceKeysWidgets.header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-		instanceKeysWidgets.playerListText:SetJustifyH(db.profile.instanceKeysAlign)
-		instanceKeysWidgets.playerListText:ClearAllPoints()
-		if db.profile.instanceKeysGrowUpwards then
-			instanceKeysWidgets.playerListText:SetJustifyV("BOTTOM")
-			instanceKeysWidgets.playerListText:SetPoint(
-				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", instanceKeysWidgets.header,
-				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
-			)
-		else
-			instanceKeysWidgets.playerListText:SetJustifyV("TOP")
-			instanceKeysWidgets.playerListText:SetPoint(
-				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", instanceKeysWidgets.header,
-				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
-			)
+		for i = 1, 5 do
+			instanceKeysWidgets.playerListText[i]:SetJustifyH(db.profile.instanceKeysAlign)
+			instanceKeysWidgets.playerListText[i]:ClearAllPoints()
+			if db.profile.instanceKeysGrowUpwards then
+				instanceKeysWidgets.playerListText[i]:SetJustifyV("BOTTOM")
+				instanceKeysWidgets.playerListText[i]:SetPoint(
+					db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", i == 1 and instanceKeysWidgets.header or instanceKeysWidgets.playerListText[i-1],
+					db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
+				)
+			else
+				instanceKeysWidgets.playerListText[i]:SetJustifyV("TOP")
+				instanceKeysWidgets.playerListText[i]:SetPoint(
+					db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", i == 1 and instanceKeysWidgets.header or instanceKeysWidgets.playerListText[i-1],
+					db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
+				)
+			end
+			instanceKeysWidgets.playerListText[i]:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
+			instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+			if not instanceKeysWidgets.testing and instanceKeysWidgets.namesToShow and instanceKeysWidgets.namesToShow[i] and instanceKeysWidgets.otherDungeons[i] then
+				instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
+			end
 		end
-		instanceKeysWidgets.playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 
 		instanceKeysWidgets.main:ClearAllPoints()
 		do
@@ -1548,19 +1632,21 @@ do
 			instanceKeysWidgets.main:SetPoint(point, UIParent, relPoint, x, y)
 		end
 
-		local flags = nil
-		if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
-			flags = "MONOCHROME," .. db.profile.instanceKeysOutline
-		elseif db.profile.instanceKeysMonochrome then
-			flags = "MONOCHROME"
-		elseif db.profile.instanceKeysOutline ~= "NONE" then
-			flags = db.profile.instanceKeysOutline
-		end
-		instanceKeysWidgets.header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-		instanceKeysWidgets.playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-
 		if instanceKeysWidgets.testing then
-			instanceKeysWidgets.playerListText:SetText(db.profile.instanceKeysGrowUpwards and (L.instanceKeysTest10.."\n"..L.instanceKeysTest8) or (L.instanceKeysTest8.."\n"..L.instanceKeysTest10))
+			instanceKeysWidgets.playerListText[1]:SetText(L.instanceKeysTest8)
+			instanceKeysWidgets.playerListText[2]:SetText(L.instanceKeysTest10)
+			for i = 3, 5 do
+				instanceKeysWidgets.playerListText[i]:SetText("")
+			end
+		end
+
+		if not InCombatLockdown() then
+			ClearOverrideBindings(viewerKeybindFrame)
+			if db.profile.viewerKeybind ~= "" then
+				SetOverrideBindingClick(viewerKeybindFrame, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
+			end
+		else
+			viewerKeybindFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 		end
 	end
 
@@ -1607,17 +1693,45 @@ do
 	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer)
 	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer)
 
+	viewerKeybindFrame:SetScript("OnClick", ShowViewer)
+	if db.profile.viewerKeybind ~= "" then
+		SetOverrideBindingClick(viewerKeybindFrame, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
+	end
+	viewerKeybindFrame:SetScript("OnEvent", function(self, event)
+		self:UnregisterEvent(event)
+		ClearOverrideBindings(self)
+		if db.profile.viewerKeybind ~= "" then
+			SetOverrideBindingClick(self, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
+		end
+	end)
+
+	local function GetSettings(info)
+		return db.profile[info[#info]]
+	end
+	local function UpdateSettings(info, value)
+		local key = info[#info]
+		db.profile[key] = value
+	end
+	local function UpdateSettingsAndWidgets(info, value)
+		local key = info[#info]
+		db.profile[key] = value
+		UpdateWidgets()
+	end
+	local function GetColor(info)
+		local colorTable = db.profile[info[#info]]
+		return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+	end
+	local function UpdateColorAndWidgets(info, r, g, b, a)
+		local key = info[#info]
+		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
+		UpdateWidgets()
+	end
 	BigWigsAPI.SetToolOptionsTable("MythicPlus", {
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,
-		get = function(info)
-			return db.profile[info[#info]]
-		end,
-		set = function(info, value)
-			local key = info[#info]
-			db.profile[key] = value
-		end,
+		get = GetSettings,
+		set = UpdateSettings,
 		args = {
 			explainer = {
 				type = "description",
@@ -1744,20 +1858,27 @@ do
 							end
 						end,
 					},
+					explainViewerKeybinding = {
+						type = "description",
+						name = L.keystoneViewerKeybindingExplainer,
+						order = 6,
+						width = "full",
+					},
+					viewerKeybind = {
+						type = "keybinding",
+						name = L.keybinding,
+						desc = L.keystoneViewerKeybindingDesc,
+						order = 7,
+						set = UpdateSettingsAndWidgets,
+					},
 				},
 			},
 			instanceKeys = {
 				type = "group",
 				name = L.instanceKeysTitle,
 				order = 3,
-				get = function(info)
-					return db.profile[info[#info]]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					db.profile[key] = value
-					UpdateWidgets()
-				end,
+				get = GetSettings,
+				set = UpdateSettingsAndWidgets,
 				args = {
 					explainInstanceKeys = {
 						type = "description",
@@ -1788,7 +1909,18 @@ do
 								instanceKeysWidgets.main:SetMovable(false)
 								instanceKeysWidgets.bg:Hide()
 								if instanceKeysWidgets.namesToShow then
-									instanceKeysWidgets.playerListText:SetText(table.concat(instanceKeysWidgets.namesToShow, "\n"))
+									for i = 1, 5 do
+										if i <= #instanceKeysWidgets.namesToShow then
+											instanceKeysWidgets.playerListText[i]:SetText(instanceKeysWidgets.namesToShow[i])
+											if instanceKeysWidgets.otherDungeons[i] then
+												instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
+											else
+												instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+											end
+										else
+											instanceKeysWidgets.playerListText[i]:SetText("")
+										end
+									end
 								else
 									instanceKeysWidgets.main:Hide()
 								end
@@ -1798,7 +1930,13 @@ do
 								instanceKeysWidgets.main:EnableMouse(true)
 								instanceKeysWidgets.main:SetMovable(true)
 								instanceKeysWidgets.bg:Show()
-								instanceKeysWidgets.playerListText:SetText(db.profile.instanceKeysGrowUpwards and (L.instanceKeysTest10.."\n"..L.instanceKeysTest8) or (L.instanceKeysTest8.."\n"..L.instanceKeysTest10))
+								instanceKeysWidgets.playerListText[1]:SetText(L.instanceKeysTest8)
+								instanceKeysWidgets.playerListText[1]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+								instanceKeysWidgets.playerListText[2]:SetText(L.instanceKeysTest10)
+								instanceKeysWidgets.playerListText[2]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+								for i = 3, 5 do
+									instanceKeysWidgets.playerListText[i]:SetText("")
+								end
 							end
 						end,
 						width = 1.5,
@@ -1865,13 +2003,8 @@ do
 					instanceKeysColor = {
 						type = "color",
 						name = L.fontColor,
-						get = function(info)
-							return db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4]
-						end,
-						set = function(info, r, g, b, a)
-							db.profile.instanceKeysColor = {r, g, b, a < 0.3 and 0.3 or a}
-							UpdateWidgets()
-						end,
+						get = GetColor,
+						set = UpdateColorAndWidgets,
 						hasAlpha = true,
 						order = 8,
 					},
@@ -1881,17 +2014,65 @@ do
 						desc = L.growingUpwardsDesc,
 						order = 9,
 					},
-					resetHeader = {
+					extrasHeader = {
 						type = "header",
 						name = "",
 						order = 10,
+					},
+					instanceKeysShowAllPlayers = {
+						type = "toggle",
+						name = L.instanceKeysShowAll,
+						desc = L.instanceKeysShowAllDesc,
+						width = 2,
+						order = 11,
+						set = function(info, value)
+							local key = info[#info]
+							db.profile[key] = value
+							instanceKeysWidgets.nameList = {}
+							LibKeystone.Request("PARTY")
+						end,
+						confirm = function(_, value)
+							if value then
+								return L.instanceKeysShowAllDesc
+							end
+						end,
+					},
+					instanceKeysOtherDungeonColor = {
+						type = "color",
+						name = L.instanceKeysOtherDungeonColor,
+						desc = L.instanceKeysOtherDungeonColorDesc,
+						get = GetColor,
+						set = UpdateColorAndWidgets,
+						hasAlpha = true,
+						order = 12,
+						disabled = function() return not db.profile.instanceKeysShowAllPlayers end,
+					},
+					instanceKeysShowDungeonEnd = {
+						type = "toggle",
+						name = L.keystoneAutoShowEndOfRun,
+						desc = L.instanceKeysEndOfRunDesc,
+						set = UpdateSettings,
+						order = 13,
+						width = "full",
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 14,
 					},
 					reset = {
 						type = "execute",
 						name = L.reset,
 						desc = L.resetDesc,
-						func = function() ResetInstanceKeys() UpdateWidgets() end,
-						order = 11,
+						func = function()
+							ResetInstanceKeys()
+							UpdateWidgets()
+							if not instanceKeysWidgets.testing then
+								instanceKeysWidgets.nameList = {}
+								LibKeystone.Request("PARTY")
+							end
+						end,
+						order = 15,
 					},
 				},
 			},

@@ -20,7 +20,7 @@ end
 
 L = BigWigs:NewBossLocale("Fractillus", "koKR")
 if L then
-	L.crystalline_eruption = "벽"
+	L.crystalline_shockwave = "벽"
 	L.shattershell = "제거"
 	L.shockwave_slam = "탱커 벽"
 	L.nexus_shrapnel = "파편"
@@ -39,14 +39,14 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "koKR")
 if L then
-	L.reverse_gravity = "중력" -- Short for Reverse Gravity
+	L.reverse_gravity = "역전" -- Short for Reverse Gravity
 	L.extinction = "파편" -- Dimensius hurls a fragment of a broken world
 	L.slows = "이감"
 	L.slow = "이감" -- Singular of Slows
-	L.stardust_nova = "별조각" -- Short for Stardust Nova
-	L.extinguish_the_stars = "소실" -- Short for Extinguish the Stars
+	L.stardust_nova = "바닥" -- Short for Stardust Nova
+	L.extinguish_the_stars = "별" -- Short for Extinguish the Stars
 	L.darkened_sky = "충격파"
-	L.cosmic_collapse = "붕괴" -- Short for Cosmic Collapse
+	L.cosmic_collapse = "당겨짐" -- Short for Cosmic Collapse
 	L.soaring_reshii = "비행 가능" -- On the timer for when flying is available
 
 	L.weakened_soon_monster_yell = "지금 공격해야 해요!" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",

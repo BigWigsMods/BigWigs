@@ -328,6 +328,8 @@ L.keystoneTeleportReady = "傳送法術「|cFFFFFFFF%s|r」已|cFF33FF99就緒|r
 --L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 --L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
 --L.keystoneViewerOpen = "Open the keystone viewer"
+--L.keystoneViewerKeybindingExplainer = "\n\nYou can also set a keybinding to open the keystone viewer:\n\n"
+--L.keystoneViewerKeybindingDesc = "Choose a keybinding to open the keystone viewer."
 --L.keystoneClickToWhisper = "Click to open a whisper dialog"
 --L.keystoneClickToTeleportNow = "\nClick to teleport here"
 --L.keystoneClickToTeleportCooldown = "\nCannot teleport, spell on cooldown"
@@ -379,6 +381,11 @@ L.keystoneShortName_TheDawnbreaker = "破曉者號" --破曉
 --L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
 --L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
 --L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
+--L.instanceKeysShowAll = "Always show all players"
+--L.instanceKeysShowAllDesc = "Enabling this option will show all players in the list, even if their keystone doesn't belong to the dungeon you are in."
+--L.instanceKeysOtherDungeonColor = "Other dungeon color"
+--L.instanceKeysOtherDungeonColorDesc = "Choose the font color for players that have keystones that don't belong to the dungeon you are in."
+--L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter a mythic dungeon. Enabling this option will also show the list when the Mythic+ is over."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

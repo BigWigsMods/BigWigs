@@ -301,6 +301,13 @@ function plugin:OnRegister()
 			itemControl = "DDI-Sound",
 		}
 	end
+
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Long)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Info)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Alert)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Alarm)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Warning)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.underyou)) if played then StopSound(id) end end, 0)
 end
 
 function plugin:OnPluginEnable()

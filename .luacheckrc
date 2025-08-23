@@ -24,7 +24,6 @@ files["Loader.lua"].ignore = {
 	"113/C_AddOns",
 	"113/C_ChatInfo",
 	"113/C_CVar",
-	"113/C_EventUtils",
 	"113/C_Item",
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
@@ -90,7 +89,6 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 }
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
-	"113/C_EventUtils",
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
 }
@@ -124,6 +122,7 @@ files["Plugins/BossBlock.lua"].ignore = {
 	"113/GetCategoryInfo",
 	"113/GetTrackedAchievements", -- Classic WoW
 	"113/MuteSoundFile",
+	"113/PlaySound",
 	"113/Questie_BaseFrame",
 	"113/QuestWatchFrame",
 	"113/RaidBossEmoteFrame_OnEvent",
@@ -146,11 +145,13 @@ files["Plugins/Proximity.lua"].ignore = {
 	"113/UnitInPhase", -- Classic support
 }
 files["Plugins/Pull.lua"].ignore = {
-	"113/C_EventUtils",
 	"113/ClearOverrideBindings",
 	"113/GetPlayerInfoByGUID",
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
+}
+files["Plugins/Sound.lua"].ignore = {
+	"113/StopSound",
 }
 files["Plugins/Statistics.lua"].ignore = {
 	"113/C_UIWidgetManager",
@@ -187,15 +188,18 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
 	"113/C_PlayerInfo",
+	"113/ClearOverrideBindings",
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
 	"113/GetSpecializationInfoByID",
-	"111/SLASH_BigWigsTestKS1",
-	"112/SlashCmdList",
+	"113/PlaySound",
+	"113/SetOverrideBindingClick",
 	"113/TimerTracker",
 }
 files["Tools/LFGTimer.lua"].ignore = {
 	"113/LFGDungeonReadyPopup",
+	"113/PlaySound",
+	"113/StopSound",
 }
 ignore = {
 	"113/BigWigs",
@@ -292,12 +296,10 @@ globals = {
 	"MovieFrame",
 	"ObjectiveTrackerFrame",
 	"PlayerHasToy",
-	"PlaySound",
 	"RaidBossEmoteFrame",
 	"RaidNotice_AddMessage",
 	"RaidWarningFrame",
 	"SecondsToTime",
-	"StopSound",
 	"TalkingHeadFrame",
 	"Tukui",
 	"UIParent",

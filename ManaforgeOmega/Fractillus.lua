@@ -13,8 +13,8 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
-local conjunctionCount = 1
-local crystallizationCount = 1
+local shockwaveCount = 1
+local shattershellCount = 1
 local slamCount = 1
 
 --------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ local slamCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.crystalline_eruption = "Walls"
+	L.crystalline_shockwave = "Walls"
 	L.shattershell = "Breaks"
 	L.shockwave_slam = "Tank Wall"
 	L.nexus_shrapnel = "Shrapnel Lands"
@@ -37,7 +37,7 @@ end
 function mod:OnRegister()
 	self:SetSpellRename(1247424, CL.bomb) -- Null Consumption (Bomb)
 	self:SetSpellRename(1232130, L.nexus_shrapnel) -- Nexus Shrapnel (Shrapnel Lands)
-	self:SetSpellRename(1233416, L.crystalline_eruption) -- Crystalline Eruption (Walls)
+	self:SetSpellRename(1233416, L.crystalline_shockwave) -- Crystalline Shockwave (Walls)
 	self:SetSpellRename(1220394, CL.knockback) -- Shattering Backhand (Knockback)
 	self:SetSpellRename(1227373, L.shattershell) -- Shattershell (Breaks)
 	self:SetSpellRename(1227378, CL.rooted) -- Crystal Encasement (Rooted)
@@ -50,7 +50,7 @@ function mod:GetOptions()
 		1232130, -- Nexus Shrapnel
 		{1247424, "ME_ONLY_EMPHASIZE"}, -- Null Consumption
 		1225673, -- Enraged Shattering
-		{1233416, "ME_ONLY_EMPHASIZE"}, -- Crystalline Eruption
+		{1233416, "ME_ONLY_EMPHASIZE"}, -- Crystalline Shockwave
 			1224414, -- Crystalline Shockwave
 		{1220394, "COUNTDOWN"}, -- Shattering Backhand
 		{1227373, "ME_ONLY_EMPHASIZE"}, -- Shattershell
@@ -63,7 +63,7 @@ function mod:GetOptions()
 	},{
 		[1247424] = CL.bomb, -- Null Consumption (Bomb)
 		[1232130] = L.nexus_shrapnel, -- Nexus Shrapnel (Shrapnel Lands)
-		[1233416] = L.crystalline_eruption, -- Crystalline Eruption (Walls)
+		[1233416] = L.crystalline_shockwave, -- Crystalline Shockwave (Walls)
 		[1220394] = CL.knockback, -- Shattering Backhand (Knockback)
 		[1227373] = L.shattershell, -- Shattershell (Breaks)
 		[1227378] = CL.rooted, -- Crystal Encasement (Rooted)
@@ -77,7 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EnragedShatteringApplied", 1225673)
 	self:Log("SPELL_CAST_SUCCESS", "CrystallineShockwaveSuccess", 1233411) -- Wall pre-debuffs
 	self:Log("SPELL_AURA_APPLIED", "CrystallineShockwavePreDebuffs", 1233411)
-	self:Log("SPELL_AURA_APPLIED", "CrystallineShockwaveApplied", 1224414)
+	self:Log("SPELL_AURA_APPLIED", "CrystallineShockwaveApplied", 1224414) -- Wall hit debuffs
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrystallineShockwaveApplied", 1224414)
 	self:Log("SPELL_CAST_START", "ShatteringBackhand", 1220394)
 	self:Log("SPELL_AURA_APPLIED", "ShattershellApplied", 1227373)
@@ -90,13 +90,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	conjunctionCount = 1
-	crystallizationCount = 1
+	shockwaveCount = 1
+	shattershellCount = 1
 	slamCount = 1
 
-	self:CDBar(1233416, 7.0, CL.count:format(L.crystalline_eruption, conjunctionCount)) -- Crystalline Shockwave Pre-Debuffs
+	self:CDBar(1233416, 7.0, CL.count:format(L.crystalline_shockwave, shockwaveCount)) -- Crystalline Shockwave Pre-Debuffs
 	self:CDBar(1231871, self:Mythic() and 14.5 or 18.0, CL.count:format(L.shockwave_slam, slamCount)) -- Shockwave Slam
-	self:CDBar(1227373, self:Mythic() and 32.7 or 41.0, CL.count:format(L.shattershell, crystallizationCount)) -- Shattershell
+	self:CDBar(1227373, self:Mythic() and 32.7 or 41.0, CL.count:format(L.shattershell, shattershellCount)) -- Shattershell
 end
 
 --------------------------------------------------------------------------------
@@ -116,19 +116,19 @@ function mod:EnragedShatteringApplied(args)
 end
 
 function mod:CrystallineShockwaveSuccess(args)
-	self:StopBar(CL.count:format(L.crystalline_eruption, conjunctionCount))
-	self:Message(1233416, "orange", CL.count:format(L.crystalline_eruption, conjunctionCount))
-	conjunctionCount = conjunctionCount + 1
-	local cd = conjunctionCount % 2 == 1 and 30.5 or 20.5
+	self:StopBar(CL.count:format(L.crystalline_shockwave, shockwaveCount))
+	self:Message(1233416, "orange", CL.count:format(L.crystalline_shockwave, shockwaveCount))
+	shockwaveCount = shockwaveCount + 1
+	local cd = shockwaveCount % 2 == 1 and 30.5 or 20.5
 	if self:Mythic() then
-		cd = conjunctionCount % 2 == 1 and 25.5 or 14.5
+		cd = shockwaveCount % 2 == 1 and 25.5 or 14.5
 	end
-	self:CDBar(1233416, cd, CL.count:format(L.crystalline_eruption, conjunctionCount))
+	self:CDBar(1233416, cd, CL.count:format(L.crystalline_shockwave, shockwaveCount))
 end
 
 function mod:CrystallineShockwavePreDebuffs(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(1233416, nil, L.crystalline_eruption)
+		self:PersonalMessage(1233416, nil, L.crystalline_shockwave)
 		self:PlaySound(1233416, "warning", nil, args.destName) -- Spawning Walls
 	end
 end
@@ -168,11 +168,11 @@ do
 		if args.time - prev > 2 then
 			knockbackOnMe = false
 			prev = args.time
-			self:StopBar(CL.count:format(L.shattershell, crystallizationCount))
-			self:Message(args.spellId, "cyan", CL.count:format(L.shattershell, crystallizationCount))
+			self:StopBar(CL.count:format(L.shattershell, shattershellCount))
+			self:Message(args.spellId, "cyan", CL.count:format(L.shattershell, shattershellCount))
 			self:PlaySound(args.spellId, "long") -- take your spot before rooted
-			crystallizationCount = crystallizationCount + 1
-			self:CDBar(args.spellId, self:Mythic() and 40 or 51.5, CL.count:format(L.shattershell, crystallizationCount))
+			shattershellCount = shattershellCount + 1
+			self:CDBar(args.spellId, self:Mythic() and 40 or 51.5, CL.count:format(L.shattershell, shattershellCount))
 			self:Bar(1232130, self:Mythic() and 10.5 or 12, L.nexus_shrapnel)
 		end
 		if self:Me(args.destGUID) then
