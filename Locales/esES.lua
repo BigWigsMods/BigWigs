@@ -381,11 +381,11 @@ L.instanceKeysTest8 = "|cFF00FF98Monje:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0ADruida:|r +10"
 L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
 L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
---L.instanceKeysShowAll = "Always show all players"
---L.instanceKeysShowAllDesc = "Enabling this option will show all players in the list, even if their keystone doesn't belong to the dungeon you are in."
---L.instanceKeysOtherDungeonColor = "Other dungeon color"
---L.instanceKeysOtherDungeonColorDesc = "Choose the font color for players that have keystones that don't belong to the dungeon you are in."
---L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter a mythic dungeon. Enabling this option will also show the list when the Mythic+ is over."
+L.instanceKeysShowAll = "Mostrar siempre a todos los jugadores"
+L.instanceKeysShowAllDesc = "Activar esta opción mostrará a todos los jugadores en la lista, incluso si su piedra angular no pertenece a la mazmorra en la que estás."
+L.instanceKeysOtherDungeonColor = "Otro color de mazmorra"
+L.instanceKeysOtherDungeonColorDesc = "Escoge el color para los jugadores que tengan una piedra angular que no pertenezca a la mazmorra en la que estás."
+L.instanceKeysEndOfRunDesc = "Por defecto la lista se mostrará cuando entres a una mazmorra mítica. Al activar esta opción también aparecerá la lista cuando termine la Mítica+."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
