@@ -405,7 +405,7 @@ do
 			mod:CancelTimer(collectiveGravityCheck)
 			collectiveGravityCheck = nil
 		end
-		if collectiveGravityOnMe or mod:UnitIsDeadOrGhost("player") then return end -- safe! (or death)
+		if mod:GetStage() ~= 1 and collectiveGravityOnMe or mod:UnitIsDeadOrGhost("player") then return end -- safe! or death. or staged.
 
 		mod:Message(1228207, "blue", CL.no:format(collectiveGravitySpellName))
 		mod:PlaySound(1228207, "warning") -- no collective gravity
