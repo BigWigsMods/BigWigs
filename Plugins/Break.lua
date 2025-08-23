@@ -148,7 +148,7 @@ do
 			plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
 		end
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, 134062)
-		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot)
+		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot, L.breakBar, 134062)
 	end
 end
 

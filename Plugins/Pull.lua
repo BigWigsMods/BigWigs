@@ -325,7 +325,7 @@ do
 		self:SendMessage("BigWigs_StartCountdown", self, nil, "pulling time", timeLeft, nil, self.db.profile.voice, self.db.profile.countBegin, self.db.profile.countType ~= "emphasized")
 		self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 		self:SendMessage("BigWigs_StartBar", self, nil, L.pull, timeSeconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
-		self:SendMessage("BigWigs_StartPull", self, timeSeconds, name)
+		self:SendMessage("BigWigs_StartPull", self, timeSeconds, name, L.pull, 132337)
 		local soundName = self.db.profile.startPullSound
 		if soundName ~= "None" then
 			local sound = media:Fetch(SOUND, soundName, true)
