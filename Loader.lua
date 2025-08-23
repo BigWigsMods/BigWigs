@@ -1879,18 +1879,22 @@ do
 	function mod:PLAYER_ENTERING_WORLD() -- Raid bosses
 		local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfoModified()
 
+		-- Core loading
+		local zoneAddon = public.zoneTbl[instanceID]
+		if zoneAddon or (BigWigs3DB and BigWigs3DB.breakTime) then -- A zone the core should always load on, or break timer restoration
+			loadAndEnableCore()
+		end
+
 		-- Module loading
-		if enableZones[instanceID] then
-			if loadAndEnableCore() then
-				loadZone(instanceID)
+		if enableZones[instanceID] then -- A zone a content addon has told us to load in
+			if not zoneAddon then
+				loadAndEnableCore()
 			end
+			loadZone(instanceID)
 			RegisterUnitTargetEvents()
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
 		else
-			if BigWigs3DB and BigWigs3DB.breakTime then -- Break timer restoration
-				loadAndEnableCore()
-			end
-			if disabledZones[instanceID] then -- We have content for the zone but it is disabled in the addons menu
+			if disabledZones[instanceID] then -- We have a content addon for the this zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
 				sysprint(msg)
 				Popup(msg)
@@ -1910,7 +1914,6 @@ do
 
 		-- Lacking zone modules
 		if not public.db.profile.showZoneMessages then return end
-		local zoneAddon = public.zoneTbl[instanceID]
 		if zoneAddon and instanceID > 0 and not fakeZones[instanceID] and not warnedThisZone[instanceID] then
 			if public.usingBigWigsRepo and public.currentExpansion.bigWigsBundled[zoneAddon] then return end -- If we are a BW Git user, then bundled content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
