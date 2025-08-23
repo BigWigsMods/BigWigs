@@ -235,7 +235,7 @@ do
 		keyTable[2] = key
 		local t = addKey(soundOptions, keyTable)
 		if t.args.countdown then
-			t.args.countdown.disabled = not flags or bit.band(flags, C.COUNTDOWN) == 0
+			t.args.countdown.disabled = not flags or (bit.band(flags, C.COUNTDOWN) == 0 and bit.band(flags, C.CASTBAR_COUNTDOWN) == 0)
 		end
 		return t
 	end
