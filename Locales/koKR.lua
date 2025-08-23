@@ -381,11 +381,11 @@ L.instanceKeysTest8 = "|cFF00FF98수도사:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0A드루이드:|r +10"
 L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
 L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
---L.instanceKeysShowAll = "Always show all players"
---L.instanceKeysShowAllDesc = "Enabling this option will show all players in the list, even if their keystone doesn't belong to the dungeon you are in."
---L.instanceKeysOtherDungeonColor = "Other dungeon color"
---L.instanceKeysOtherDungeonColorDesc = "Choose the font color for players that have keystones that don't belong to the dungeon you are in."
---L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter a mythic dungeon. Enabling this option will also show the list when the Mythic+ is over."
+L.instanceKeysShowAll = "모든 플레이어 항상 표시"
+L.instanceKeysShowAllDesc = "이 옵션을 활성화하면 현재 있는 던전과 관련이 없는 쐐기돌을 가진 플레이어도 목록에 표시됩니다."
+L.instanceKeysOtherDungeonColor = "다른 던전 색상"
+L.instanceKeysOtherDungeonColorDesc = "현재 있는 던전과 관련이 없는 쐐기돌을 가진 플레이어의 글꼴 색상을 선택합니다."
+L.instanceKeysEndOfRunDesc = "기본적으로 목록은 신화 던전에 들어갈 때만 표시됩니다. 이 옵션을 활성화하면 신화+가 끝난 후에도 목록이 표시됩니다."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
