@@ -856,7 +856,7 @@ do
 				end
 			else -- CHALLENGE_MODE_RESET
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-				if diffID == 8 then
+				if diffID == 8 or diffID == 23 then -- Mythic+, Mythic
 					TimerTracker:UnregisterEvent("START_TIMER")
 					BigWigsLoader.CTimerAfter(1, function()
 						TimerTracker:RegisterEvent("START_TIMER")
@@ -1549,6 +1549,7 @@ do
 			instanceKeysWidgets.bg:Hide()
 		end
 		if event == "PLAYER_ENTERING_WORLD" then
+			self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
 			BigWigsLoader.CTimerAfter(0, Delay)
 		elseif event == "CHALLENGE_MODE_COMPLETED" then
 			if db.profile.instanceKeysShowDungeonEnd then
@@ -1562,7 +1563,6 @@ do
 			instanceKeysWidgets.otherDungeons = nil
 			self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
-			self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 	end)
