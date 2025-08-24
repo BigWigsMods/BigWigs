@@ -29,7 +29,7 @@ end
 
 L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "deDE")
 if L then
-	--L.fractal_images = "Dragons"
+	L.fractal_images = "Drachen"
 	L.oath_bound_removed_dose = "1x Eidgebunden entfernt"
 	L.behead = "Klauen" -- Claws of a dragon
 	L.netherbreaker = "Zirkel"
@@ -44,7 +44,7 @@ if L then
 	L.extinction = "Fragment" -- Dimensius hurls a fragment of a broken world
 	L.slows = "Verlangsamungen"
 	L.slow = "Verlangsamung" -- Singular of Slows
-	--L.mass_destruction = "Lines"
+	L.mass_destruction = "Linien"
 	L.stardust_nova = "Nova" -- Short for Stardust Nova
 	L.extinguish_the_stars = "Sterne" -- Short for Extinguish the Stars
 	L.darkened_sky = "Ringe"
