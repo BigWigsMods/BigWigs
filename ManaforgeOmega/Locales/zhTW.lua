@@ -29,6 +29,7 @@ end
 
 L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "zhTW")
 if L then
+	--L.fractal_images = "Dragons"
 	L.oath_bound_removed_dose = "移除一層誓言"
 	L.behead = "斬首" -- Claws of a dragon
 	L.netherbreaker = "大圈"
@@ -39,10 +40,11 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "zhTW")
 if L then
-	L.reverse_gravity = "逆轉重力" -- 原名就行
+	L.gravity = "逆轉重力" -- 原名就行
 	L.extinction = "滅絕" -- Dimensius hurls a fragment of a broken world
 	L.slows = "緩速"
 	L.slow = "緩速" -- Singular of Slows
+	--L.mass_destruction = "Lines"
 	L.stardust_nova = "新星" -- Short for Stardust Nova
 	L.extinguish_the_stars = "星晨" -- Short for Extinguish the Stars
 	L.darkened_sky = "星環"
