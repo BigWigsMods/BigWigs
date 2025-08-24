@@ -236,6 +236,7 @@ BigWigs:AddColors("Nexus-King Salhadaar", {
 	[1231097] = "blue",
 	[1232399] = "yellow",
 	[1234529] = {"blue","purple"},
+	[1237106] = "red",
 	[1238975] = "red",
 	["stages"] = {"green","yellow"},
 })
@@ -256,7 +257,7 @@ BigWigs:AddSounds("Nexus-King Salhadaar", {
 	[1227734] = "warning",
 	[1228075] = "alert",
 	[1228115] = "alert",
-	[1228163] = "alert",
+	[1228163] = {"alert","info"},
 	[1228265] = "long",
 	[1230261] = "alarm",
 	[1230302] = "warning",
