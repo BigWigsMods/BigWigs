@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Sounds", {
+local plugin, L = BigWigs:NewPlugin("Sounds", {
 	"db",
 	"soundOptions",
 	"SetSoundOptions",
@@ -14,8 +14,6 @@ if not plugin then return end
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
-local BL = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
@@ -26,8 +24,8 @@ local sounds = {
 	Alert = "BigWigs: Alert",
 	Alarm = "BigWigs: Alarm",
 	Warning = "BigWigs: Raid Warning",
-	--onyou = BL.spell_on_you,
-	underyou = BL.spell_under_you,
+	--onyou = L.spell_on_you,
+	underyou = L.spell_under_you,
 	privateaura = "BigWigs: Raid Warning",
 }
 
@@ -42,8 +40,8 @@ plugin.defaultDB = {
 		Alert = sounds.Alert,
 		Alarm = sounds.Alarm,
 		Warning = sounds.Warning,
-		--onyou = BL.spell_on_you,
-		underyou = BL.spell_under_you,
+		--onyou = L.spell_on_you,
+		underyou = L.spell_under_you,
 		privateaura = sounds.privateaura,
 	},
 	Long = {},
@@ -237,7 +235,7 @@ do
 		keyTable[2] = key
 		local t = addKey(soundOptions, keyTable)
 		if t.args.countdown then
-			t.args.countdown.disabled = not flags or bit.band(flags, C.COUNTDOWN) == 0
+			t.args.countdown.disabled = not flags or (bit.band(flags, C.COUNTDOWN) == 0 and bit.band(flags, C.CASTBAR_COUNTDOWN) == 0)
 		end
 		return t
 	end
@@ -303,6 +301,13 @@ function plugin:OnRegister()
 			itemControl = "DDI-Sound",
 		}
 	end
+
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Long)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Info)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Alert)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Alarm)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Warning)) if played then StopSound(id) end end, 0)
+	self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.underyou)) if played then StopSound(id) end end, 0)
 end
 
 function plugin:OnPluginEnable()

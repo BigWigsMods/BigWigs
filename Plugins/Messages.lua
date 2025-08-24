@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Messages")
+local plugin, L = BigWigs:NewPlugin("Messages")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -25,7 +25,6 @@ local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
 
 local db = nil
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
 local validFramePoints = {
@@ -89,7 +88,7 @@ local function updateProfile()
 	if db.align ~= "LEFT" and db.align ~= "CENTER" and db.align ~= "RIGHT" then
 		db.align = plugin.defaultDB.align
 	end
-	if db.fontSize < 10 or db.fontSize > 200 then
+	if db.fontSize < 14 or db.fontSize > 200 then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
 	if db.emphFontSize < 20 or db.emphFontSize > 200 then
@@ -411,10 +410,8 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 3,
-						max = 200, softMax = 72,
-						min = 10,
-						step = 1,
 						width = 2,
+						softMax = 100, max = 200, min = 14, step = 1,
 					},
 					monochrome = {
 						type = "toggle",
@@ -426,9 +423,9 @@ do
 						type = "select",
 						name = L.align,
 						values = {
-							L.left,
-							L.center,
-							L.right,
+							L.LEFT,
+							L.CENTER,
+							L.RIGHT,
 						},
 						style = "radio",
 						order = 5,
@@ -851,13 +848,19 @@ do
 
 		if not db.useicons then icon = nil end
 
-		if emphasized and not db.emphDisabled then
+		if emphasized then
+			if db.emphDisabled and module and module.IsEnableMob then
+				return
+			end
 			if db.emphUppercase then
 				text = upper(text)
 				text = gsub(text, "(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 			end
 			self:EmphasizedPrint(nil, text, r, g, b, nil, nil, nil, nil, nil, nil, customDisplayTime)
-		elseif not db.disabled then
+		else
+			if db.disabled and module and module.IsEnableMob then
+				return
+			end
 			self:Print(nil, text, r, g, b, nil, nil, nil, nil, nil, icon, customDisplayTime)
 		end
 		if db.chat then

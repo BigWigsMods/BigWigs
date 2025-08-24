@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Statistics")
+local plugin, L = BigWigs:NewPlugin("Statistics")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
@@ -28,11 +27,12 @@ local difficultyTable = {
 	[148] = "normal", -- 20 Player (AQ20/ZG)
 	[175] = "N10", -- 10 Player (Ulduar 10 & Karazhan)
 	[176] = "N25", -- 25 Player (Ulduar 25 & TBC raids)
-	[186] = "SOD", -- 40 Player (Onyxia - Classic Season of Discovery)
+	[185] = "SOD", -- 20 Player (AQ20 - Classic Season of Discovery)
+	[186] = "SOD", -- 40 Player (Onyxia & BWL - Classic Season of Discovery)
 	[198] = "SOD", -- Normal (10 player Blackfathom Deeps/Gnomeregan - Classic Season of Discovery)
 	[215] = "SOD", -- Normal (20 player Sunken Temple - Classic Season of Discovery)
 	[220] = "story", -- Story
-	[226] = "SOD", -- 20 Player (Molten Core - Classic Season of Discovery)
+	[226] = "SOD", -- 20 Player (Molten Core & ZG - Classic Season of Discovery)
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime, date = GetTime, BigWigsLoader.date
@@ -48,7 +48,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-11.0.2
+11.2.0
 1. Normal
 2. Heroic
 3. 10 Player
@@ -96,8 +96,32 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 208. Delves
 216. Quest
 220. Story
+230. Heroic
+232. Event
+236. Lorewalking
 
-4.4.0
+5.5.0
+1. Normal
+2. Heroic
+3. 10 Player
+4. 25 Player
+5. 10 Player (Heroic)
+6. 25 Player (Heroic)
+7. Looking For Raid
+8. Challenge Mode
+9. 40 Player
+11. Heroic Scenario
+12. Normal Scenario
+14. Flexible
+148. 20 Player
+173. Normal
+174. Heroic
+175. 10 Player
+176. 25 Player
+193. 10 Player (Heroic)
+194. 25 Player (Heroic)
+
+4.4.2
 1. Normal
 2. Heroic
 3. 10 Player
@@ -113,7 +137,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
 
-1.15.3
+1.15.7
 1. Normal
 9. 40 Player
 148. 20 Player
@@ -131,6 +155,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 214. DNT - Internal only
 215. Normal
 226. 20 Player
+231. Normal
 
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
@@ -279,10 +304,10 @@ end
 --
 
 local function GetModuleID(bossMod)
-	local journalId = bossMod:GetJournalID()
-	if journalId then
-		return journalId
-	elseif not journalId and bossMod:GetAllowWin() and bossMod:GetEncounterID() then
+	local journalID = bossMod:GetJournalID()
+	if journalID then
+		return journalID
+	elseif not journalID and bossMod:GetAllowWin() and bossMod:GetEncounterID() then
 		return -(bossMod:GetEncounterID()) -- Fallback to record stats for modules with no journal ID, but set to allow win
 	end
 end
@@ -291,65 +316,83 @@ do
 	local UnitHealth, UnitHealthMax, IsEncounterInProgress = UnitHealth, UnitHealthMax, IsEncounterInProgress
 	local function StoreHealth(module)
 		if IsEncounterInProgress() then
-			local journalId = GetModuleID(module)
+			local journalID = GetModuleID(module)
 			for i = 1, 5 do
 				local unit = units[i]
 				local rawHealth = UnitHealth(unit)
 				if rawHealth > 0 then
 					local maxHealth = UnitHealthMax(unit)
 					local health = rawHealth / maxHealth
-					healthPools[journalId][unit] = health
-					healthPools[journalId].names[unit] = module:UnitName(unit)
-				elseif healthPools[journalId][unit] then
-					healthPools[journalId][unit] = nil
+					healthPools[journalID][unit] = health
+					healthPools[journalID].names[unit] = module:UnitName(unit)
+				elseif healthPools[journalID][unit] then
+					healthPools[journalID][unit] = nil
 				end
 			end
 		end
 	end
-	function plugin:BigWigs_OnBossEngage(event, module)
-		local id = module.instanceId
-		local journalId = GetModuleID(module)
-
-		if journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
-			local t = GetTime()
-			activeDurations[journalId] = {t}
-
-			local diff = module:Difficulty()
-			if diff and difficultyTable[diff] then
-				local sDB = BigWigsStatsDB
-				if not sDB[id] then sDB[id] = {} end
-				if not sDB[id][journalId] then sDB[id][journalId] = {} end
-				sDB = sDB[id][journalId]
-				local difficultyText = difficultyTable[diff]
-				if diff == 226 then
-					if module:GetPlayerAura(458841) then -- Sweltering Heat
-						difficultyText = "level1"
-					elseif module:GetPlayerAura(458842) then -- Blistering Heat
-						difficultyText = "level2"
-					elseif module:GetPlayerAura(458843) then -- Molten Heat
-						difficultyText = "level3"
+	local function GetDifficultyText(module)
+		local diff = module:Difficulty()
+		if diff then
+			if diff == 208 then -- Delves
+				-- Only record stats for solo Nemesis delves
+				if module:Solo() then
+					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
+					if info and info.shownState == 1 then
+						return "solotier8"
 					end
-				elseif diff == 9 or diff == 148 then
-					local season = module:GetSeason()
-					if season == 3 then
-						difficultyText = "hardcore"
-					elseif season == 2 and diff == 9 then
-						difficultyText = "SOD"
+					info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6185) -- ?? Difficulty
+					if info and info.shownState == 1 then
+						return "solotier11"
 					end
 				end
+			elseif diff == 226 then -- SOD
+				if module:GetPlayerAura(458841) then -- Sweltering Heat
+					return "level1"
+				elseif module:GetPlayerAura(458842) then -- Blistering Heat
+					return "level2"
+				elseif module:GetPlayerAura(458843) then -- Molten Heat
+					return "level3"
+				end
+			elseif diff == 9 or diff == 148 then -- normal
+				local season = module:GetSeason()
+				if season == 3 or season == 12 then
+					return "hardcore"
+				elseif season == 2 and diff == 9 then
+					return "SOD"
+				end
+			end
+			return difficultyTable[diff]
+		end
+	end
+	function plugin:BigWigs_OnBossEngage(event, module)
+		local instanceID = module:GetZoneID()
+		local journalID = GetModuleID(module)
+
+		if journalID and instanceID and instanceID > 0 and not module.worldBoss then -- Raid restricted for now
+			local t = GetTime()
+			activeDurations[journalID] = {t}
+
+			local difficultyText = GetDifficultyText(module)
+			if difficultyText then
+				local sDB = BigWigsStatsDB
+				if not sDB[instanceID] then sDB[instanceID] = {} end
+				if not sDB[instanceID][journalID] then sDB[instanceID][journalID] = {} end
+				sDB = sDB[instanceID][journalID]
 				if not sDB[difficultyText] then sDB[difficultyText] = {} end
-				activeDurations[journalId][2] = difficultyText
+				activeDurations[journalID][2] = difficultyText
 
 				local best = sDB[difficultyText].best
 				if self.db.profile.showBar and best then
 					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 237538) -- 237538 = "Interface\\Icons\\spell_holy_borrowedtime"
+					self:SendMessage("BigWigs_Timer", self, nil, best, best, L.bestTimeBar, 0, 237538, false, true)
 				end
 			end
 
 			if self.db.profile.printHealth then
-				healthPools[journalId] = {
+				healthPools[journalID] = {
 					names = {},
-					timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module),
+					timer = self:ScheduleRepeatingTimer(function() StoreHealth(module) end, 2),
 				}
 			end
 		end
@@ -357,12 +400,12 @@ do
 end
 
 local function Stop(self, module)
-	local journalId = GetModuleID(module)
-	if journalId then
-		activeDurations[journalId] = nil
-		if healthPools[journalId] then
-			self:CancelTimer(healthPools[journalId].timer)
-			healthPools[journalId] = nil
+	local journalID = GetModuleID(module)
+	if journalID then
+		activeDurations[journalID] = nil
+		if healthPools[journalID] then
+			self:CancelTimer(healthPools[journalID].timer)
+			healthPools[journalID] = nil
 		end
 
 		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
@@ -370,18 +413,19 @@ local function Stop(self, module)
 end
 
 function plugin:BigWigs_OnBossWin(event, module)
-	local journalId = GetModuleID(module)
-	if journalId and activeDurations[journalId] then
-		local elapsed = GetTime()-activeDurations[journalId][1]
-		local difficultyText = activeDurations[journalId][2]
+	local journalID = GetModuleID(module)
+	if journalID and activeDurations[journalID] then
+		local elapsed = GetTime()-activeDurations[journalID][1]
+		local difficultyText = activeDurations[journalID][2]
 
 		if self.db.profile.printVictory then
-			BigWigs:ScheduleTimer("Print", 1, L.bossVictoryPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed)))
+			self:SimpleTimer(function() BigWigs:Print(L.bossVictoryPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed))) end, 1)
 		end
 
 		local diff = module:Difficulty()
 		if difficultyText then
-			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
+			local instanceID = module:GetZoneID()
+			local sDB = BigWigsStatsDB[instanceID][journalID][difficultyText]
 			if not sDB.kills then
 				sDB.kills = 1
 				if sDB.wipes then
@@ -396,7 +440,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 			if not sDB.best or elapsed < sDB.best then
 				if self.db.profile.printNewFastestVictory and sDB.best then
 					local t = sDB.best-elapsed
-					BigWigs:ScheduleTimer("Print", 1.1, L.newFastestVictoryPrint:format(t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t)))
+					self:SimpleTimer(function() BigWigs:Print(L.newFastestVictoryPrint:format(t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t))) end, 1.1)
 				end
 				sDB.best = elapsed
 				sDB.bestDate = date("%Y/%m/%d")
@@ -409,46 +453,58 @@ function plugin:BigWigs_OnBossWin(event, module)
 	Stop(self, module)
 end
 
-function plugin:BigWigs_OnBossWipe(event, module)
-	local journalId = GetModuleID(module)
-	if journalId and activeDurations[journalId] then
-		local elapsed = GetTime()-activeDurations[journalId][1]
-		local difficultyText = activeDurations[journalId][2]
+do
+	local function GetMinimumEncounterDuration(module)
+		local diff = module:Difficulty()
+		if diff == 208 then -- Delves
+			-- As solo content, Delve encounters can be over quickly
+			return 5
+		end
+		-- Raid encounters must last longer than 30 seconds to be an actual wipe worth noting
+		return 30
+	end
+	function plugin:BigWigs_OnBossWipe(event, module)
+		local journalID = GetModuleID(module)
+		if journalID and activeDurations[journalID] then
+			local elapsed = GetTime()-activeDurations[journalID][1]
+			local difficultyText = activeDurations[journalID][2]
 
-		if elapsed > 30 then -- Fight must last longer than 30 seconds to be an actual wipe worth noting
-			if self.db.profile.printDefeat then
-				BigWigs:Print(L.bossDefeatPrint:format(module.displayName, SecondsToTime(elapsed)))
-			end
+			if elapsed > GetMinimumEncounterDuration(module) then
+				if self.db.profile.printDefeat then
+					BigWigs:Print(L.bossDefeatPrint:format(module.displayName, SecondsToTime(elapsed)))
+				end
 
-			local diff = module:Difficulty()
-			if not difficultyText and IsInRaid() and not dontPrint[diff] then
-				BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
-			elseif difficultyText then
-				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyText]
-				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
-			end
+				local diff = module:Difficulty()
+				if not difficultyText and IsInRaid() and not dontPrint[diff] then
+					BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
+				elseif difficultyText then
+					local instanceID = module:GetZoneID()
+					local sDB = BigWigsStatsDB[instanceID][journalID][difficultyText]
+					sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
+				end
 
-			if healthPools[journalId] then
-				local total = ""
-				for i = 1, 5 do
-					local unit = units[i]
-					local hp = healthPools[journalId][unit]
-					if hp then
-						if total == "" then
-							total = L.healthFormat:format(healthPools[journalId].names[unit], hp*100)
-						else
-							total = total .. L.comma .. L.healthFormat:format(healthPools[journalId].names[unit], hp*100)
+				if healthPools[journalID] then
+					local total = ""
+					for i = 1, 5 do
+						local unit = units[i]
+						local hp = healthPools[journalID][unit]
+						if hp then
+							if total == "" then
+								total = L.healthFormat:format(healthPools[journalID].names[unit], hp*100)
+							else
+								total = total .. L.comma .. L.healthFormat:format(healthPools[journalID].names[unit], hp*100)
+							end
 						end
 					end
-				end
-				if total ~= "" then
-					BigWigs:Print(L.healthPrint:format(total))
+					if total ~= "" then
+						BigWigs:Print(L.healthPrint:format(total))
+					end
 				end
 			end
 		end
-	end
 
-	Stop(self, module)
+		Stop(self, module)
+	end
 end
 
 function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module

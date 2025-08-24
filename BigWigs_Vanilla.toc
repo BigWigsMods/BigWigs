@@ -1,4 +1,4 @@
-## Interface: 11504, 11503
+## Interface: 11506, 11507
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -15,6 +15,7 @@
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Author: Funkeh, Nebula, Justwait, Delk
 ## Version: @project-version@
+## LoadSavedVariablesFirst: 1
 
 ## X-Credits: Ammo, Elvador, Vhaarr
 ## X-Category: Raid
@@ -24,13 +25,57 @@
 ## X-WoWI-ID: 5086
 ## X-Wago-ID: 5NRegwG3
 
-## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0
+## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0, LibLatency, LibDurability
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 embeds.xml
 Init_Vanilla.lua
 API.lua
-locales.xml
+
+Locales\Encounters_Classic\encounter.enUS.lua
+Locales\Encounters_Classic\encounter.deDE.lua
+Locales\Encounters_Classic\encounter.frFR.lua
+Locales\Encounters_Classic\encounter.koKR.lua
+Locales\Encounters_Classic\encounter.zhCN.lua
+Locales\Encounters_Classic\encounter.zhTW.lua
+Locales\Encounters_Classic\encounter.esES.lua
+Locales\Encounters_Classic\encounter.esMX.lua
+Locales\Encounters_Classic\encounter.ruRU.lua
+Locales\Encounters_Classic\encounter.ptBR.lua
+Locales\Encounters_Classic\encounter.itIT.lua
+Locales\Encounters_Classic\encounterInfo.enUS.lua
+Locales\Encounters_Classic\encounterInfo.deDE.lua
+Locales\Encounters_Classic\encounterInfo.frFR.lua
+Locales\Encounters_Classic\encounterInfo.koKR.lua
+Locales\Encounters_Classic\encounterInfo.zhCN.lua
+Locales\Encounters_Classic\encounterInfo.zhTW.lua
+Locales\Encounters_Classic\encounterInfo.esES.lua
+Locales\Encounters_Classic\encounterInfo.esMX.lua
+Locales\Encounters_Classic\encounterInfo.ruRU.lua
+Locales\Encounters_Classic\encounterInfo.ptBR.lua
+Locales\Encounters_Classic\encounterInfo.itIT.lua
+Locales\enUS.lua
+Locales\enUS_common.lua
+Locales\deDE.lua
+Locales\deDE_common.lua
+Locales\frFR.lua
+Locales\frFR_common.lua
+Locales\koKR.lua
+Locales\koKR_common.lua
+Locales\zhCN.lua
+Locales\zhCN_common.lua
+Locales\zhTW.lua
+Locales\zhTW_common.lua
+Locales\esES.lua
+Locales\esES_common.lua
+Locales\esMX.lua
+Locales\esMX_common.lua
+Locales\ruRU.lua
+Locales\ruRU_common.lua
+Locales\ptBR.lua
+Locales\ptBR_common.lua
+Locales\itIT.lua
+Locales\itIT_common.lua
 
 Media\Media.lua
 GuildVersion.lua

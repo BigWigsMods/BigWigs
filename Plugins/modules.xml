@@ -1,8 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-<Include file="Locales\locales.xml"/>
-
 <Script file="AltPower.lua"/>
 <Script file="AutoReply.lua"/>
 <Script file="Colors.lua"/>
@@ -18,6 +16,7 @@
 <Script file="Flash.lua"/>
 <Script file="Countdown.lua"/>
 <Script file="Pull.lua"/>
+<Script file="Break.lua"/>
 <Script file="Statistics.lua"/>
 <Script file="Victory.lua"/>
 <Script file="Wipe.lua"/>

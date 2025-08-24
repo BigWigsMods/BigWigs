@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("AutoReply")
+local plugin, L = BigWigs:NewPlugin("AutoReply")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -22,7 +22,6 @@ plugin.defaultDB = {
 --
 
 local Ambiguate, SendChatMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, GetTime
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
@@ -37,7 +36,7 @@ local timer = nil
 do
 	local disabled = function() return plugin.db.profile.disabled end
 	local bossText = BigWigsAPI:GetLocale("BigWigs: Common").boss
-	local heroicText = BigWigsAPI:GetLocale("BigWigs").heroic
+	local heroicText = L.heroic
 	local modeTbl = {
 		type = "select",
 		name = L.responseType,

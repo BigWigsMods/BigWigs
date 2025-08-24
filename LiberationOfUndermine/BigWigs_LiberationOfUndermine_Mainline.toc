@@ -1,0 +1,44 @@
+## Interface: 110205, 110107, 110200
+
+## Title: BigWigs [|cffeda55fLiberation of Undermine|r]
+## Title-deDE: BigWigs [|cffeda55fBefreiung von Lorenhall|r]
+## Title-esES: BigWigs [|cffeda55fLiberación de Minahonda|r]
+## Title-esMX: BigWigs [|cffeda55fLiberación de Minahonda|r]
+## Title-frFR: BigWigs [|cffeda55fLibération de Terremine|r]
+## Title-itIT: BigWigs [|cffeda55fLiberazione di Cavafonda|r]
+## Title-koKR: BigWigs [|cffeda55f언더마인 해방전선|r]
+## Title-ptBR: BigWigs [|cffeda55fLibertação da Inframina|r]
+## Title-ruRU: BigWigs [|cffeda55fОсвобождение Нижней Шахты|r]
+## Title-zhCN: BigWigs [|cffeda55f解放安德麦|r]
+## Title-zhTW: BigWigs [|cffeda55f解放幽坑城|r]
+## Notes: BigWigs Liberation of Undermine Modules
+## Notes-deDE: BigWigs Befreiung von Lorenhall Module
+## Notes-esES: BigWigs Liberation of Undermine Modules
+## Notes-esMX: BigWigs Liberation of Undermine Modules
+## Notes-frFR: BigWigs Liberation of Undermine Modules
+## Notes-itIT: BigWigs Liberation of Undermine Modules
+## Notes-koKR: BigWigs Liberation of Undermine Modules
+## Notes-ptBR: BigWigs Liberation of Undermine Modules
+## Notes-ruRU: BigWigs Liberation of Undermine Modules
+## Notes-zhCN: BigWigs 解放安德麦模块
+## Notes-zhTW: BigWigs 解放幽坑城模組
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2769
+
+Vexie.lua
+Cauldron.lua
+Rik.lua
+Stix.lua
+Lockenstock.lua
+Bandit.lua
+MugZee.lua
+Gallywix.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua

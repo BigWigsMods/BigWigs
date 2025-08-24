@@ -6,6 +6,8 @@
 local plugin = {}
 local core
 
+local scheduledEvents = {}
+
 do
 	local _, tbl =...
 	core = tbl.core
@@ -26,6 +28,7 @@ end
 function plugin:Enable()
 	if not self.enabled then
 		self.enabled = true
+		scheduledEvents[self] = {}
 
 		if type(self.OnPluginEnable) == "function" then
 			self:OnPluginEnable()
@@ -41,7 +44,9 @@ function plugin:Disable()
 			self:OnPluginDisable()
 		end
 
+		-- Cancel and clean up scheduled events
 		self:CancelAllTimers()
+		scheduledEvents[self] = nil
 
 		self:SendMessage("BigWigs_OnPluginDisable", self)
 	end
@@ -129,19 +134,50 @@ do
 	-- @param sound Either a FileID (number), or the path to a sound file (string)
 	-- @string[opt] channel the channel the sound should play on, defaults to "Master"
 	function plugin:PlaySoundFile(sound, channel)
-		PlaySoundFile(sound, channel or "Master")
+		return PlaySoundFile(sound, channel or "Master")
 	end
 end
 
 do
-	local Timer = BigWigsLoader.CTimerAfter
+	local SimpleTimer = BigWigsLoader.CTimerAfter
 	--- Trigger a function after a specific delay
 	-- @param func callback function to trigger after the delay
 	-- @number delay how long to wait until triggering the function
 	function plugin:SimpleTimer(func, delay)
-		if delay < 0 then return end -- XXX This is a stopgap for BigWigs_StartCountdown going negative if started around 3
-		Timer(delay, func)
+		SimpleTimer(delay, func)
 	end
+end
+
+do
+	local Timer = BigWigsLoader.CTimerNewTimer
+	function plugin:ScheduleTimer(func, delay)
+		local timerId = Timer(delay, func)
+		scheduledEvents[self][timerId] = true
+		return timerId
+	end
+end
+
+do
+	local Ticker = BigWigsLoader.CTimerNewTicker
+	function plugin:ScheduleRepeatingTimer(func, delay)
+		local timerId = Ticker(delay, func)
+		scheduledEvents[self][timerId] = true
+		return timerId
+	end
+end
+
+function plugin:CancelTimer(timerId)
+	if scheduledEvents[self] and scheduledEvents[self][timerId] then
+		timerId:Cancel()
+		scheduledEvents[self][timerId] = nil
+	end
+end
+
+function plugin:CancelAllTimers()
+	for k in next, scheduledEvents[self] do
+		k:Cancel()
+	end
+	scheduledEvents[self] = {}
 end
 
 --- Force the options panel to update.
@@ -197,7 +233,7 @@ do
 				if extra then
 					msg = msg .."^".. extra
 				end
-				local _, result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 				if type(result) == "number" and result ~= 0 then
 					local errorMsg = format("Failed to send plugin comm %q. Error code: %d", msg, result)
 					core:Error(errorMsg)

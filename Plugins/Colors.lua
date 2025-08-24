@@ -2,15 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Colors", {
+local plugin, L = BigWigs:NewPlugin("Colors", {
 	"db",
 	"SetColorOptions",
 	"GetColorTable",
 	"GetColor",
 })
 if not plugin then return end
-
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 
 --------------------------------------------------------------------------------
 -- Options
@@ -169,7 +167,7 @@ local colorOptions = {
 			order = 2,
 			args = {
 				barColor = {
-					name = L.normal,
+					name = L.expiring_normal,
 					type = "color",
 					hasAlpha = true,
 					order = 1,
@@ -203,7 +201,7 @@ local colorOptions = {
 		reset = {
 			type = "execute",
 			name = L.reset,
-			desc = L.resetDesc,
+			desc = L.resetColorsDesc,
 			func = reset,
 			order = 3,
 			width = "full",
@@ -265,7 +263,7 @@ plugin.pluginOptions.args.reset.width = nil --"half"
 plugin.pluginOptions.args.resetAll = {
 	type = "execute",
 	name = L.resetAll,
-	desc = L.resetAllDesc,
+	desc = L.resetAllColorsDesc,
 	func = resetAll,
 	order = 17,
 }

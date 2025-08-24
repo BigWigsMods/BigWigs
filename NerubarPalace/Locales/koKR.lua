@@ -37,6 +37,8 @@ if L then
 
 	L.custom_on_experimental_dosage_marks = "실험용 투여제 할당"
 	L.custom_on_experimental_dosage_marks_desc = "'실험용 투여제'에 영향을 받는 플레이어를 근접 > 원거리 > 힐러 우선 순위로 {rt6}{rt4}{rt3}{rt7}에 할당합니다. 채팅 및 대상 메시지에 영향을 미칩니다."
+
+	L.volatile_concoction_explosion_desc = "휘발성 혼합물 디버프의 대상 바를 표시합니다."
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "koKR")
@@ -49,16 +51,21 @@ end
 L = BigWigs:NewBossLocale("The Silken Court", "koKR")
 if L then
 	L.skipped_cast = "건너뛴 %s (%d)"
+	L.intermission_trigger = "힘의 정점!" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "맹독의 비"
 	L.burrowed_eruption = "잠복"
 	L.stinging_swarm = "디버프 해제"
 	L.strands_of_reality = "전방 [S]" -- S for Skeinspinner Takazj
+	L.strands_of_reality_message = "전방 [타래직공 타카즈]"
 	L.impaling_eruption = "전방 [A]" -- A for Anub'arash
+	L.impaling_eruption_message = "전방 [아눕아라쉬]"
 	L.entropic_desolation = "밖으로 도망"
 	L.cataclysmic_entropy = "큰 폭발" -- Interrupt before it casts
 	L.spike_eruption = "가시"
 	L.unleashed_swarm = "무리"
+	L.void_degeneration = "파란 구슬"
+	L.burning_rage = "빨간 구슬"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "koKR")
@@ -71,9 +78,8 @@ if L then
 	L.web_blades = "칼날"
 	L.silken_tomb = "이동 불가" -- Raid being rooted in place
 	L.wrest = "끌어당김"
-	L.slow = "이감"
 	L.royal_condemnation = "족쇄"
 	L.frothing_gluttony = "고리"
 
-	--L.stage_two_end_message_storymode = "Run into the portal"
+	L.stage_two_end_message_storymode = "포털로 이동"
 end

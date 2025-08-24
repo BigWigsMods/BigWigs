@@ -23,8 +23,12 @@ local webBladesCount = 1
 local paralyzingVenomCount = 1
 local wrestCount = 1
 
+local firstShadowgate = false
 local gloomTouchCount = 1
-local worshipperKilled = 0
+local platformAddsKilled = 0
+local worshippersKilled = 0
+local acolytesKilled = 0
+local lastAcolyteMarked = nil
 
 local abyssalInfusionCount = 1
 local frothingGluttonyCount = 1
@@ -35,41 +39,61 @@ local gorgeCount = 1
 
 local iconOrder = {6, 3, 7, 1, 2} -- blue, diamond, red, circle, star, skipping green due to the encounter being green tinted
 local addMarks = {8, 5, 4}
-local queenSummonsCollector, queenSummonsMarks = {}, {}
+local mobCollector, mobMarks = {}, {}
 
-local timersNormal = { -- 11:29
+local timersNormal = { -- 11:32
 	[1] = {
+		[437592] = { 19.3, 56.0, 56.0, 0 }, -- Reactive Toxin
 		[439814] = { 57.5, 54.0, 0 }, -- Silken Tomb
 		[440899] = { 8.5, 40.0, 55.0, 0 }, -- Liquefy
 		[437093] = { 12.5, 40.0, 55.0, 0 }, -- Feast
 		[439299] = { 76.4, 48.0, 0 }, -- Web Blades
 	},
 	[3] = {
-		[444829] = { 113.7, 82.0 }, -- Queen's Summons
-		[438976] = { 43.2, 141.6 }, -- Royal Condemnation
-		[443325] = { 29.2, 66.0, 80.0 }, -- Infest
-		[443336] = { 35.2, 66.0, 80.0 }, -- Gorge
-		[439299] = { 201.2 }, -- Web Blades
+		[444829] = { 113.7, 82.0, 0 }, -- Queen's Summons
+		[438976] = { 43.2, 141.6, 0 }, -- Royal Condemnation
+		[443325] = { 29.2, 66.0, 80.0, 0 }, -- Infest
+		[443336] = { 35.2, 66.0, 80.0, 0 }, -- Gorge
+		[439299] = { 201.2, 0 }, -- Web Blades
 	},
 }
 
-local timersHeroic = { -- 9:54
+local timersHeroic = { -- 10:09 (enrage)
 	[1] = {
-		[439814] = { 57.5, 48.0, 16.0, 0 }, -- Silken Tomb
+		[437592] = { 19.3, 56.0, 56.0, 0 }, -- Reactive Toxin
+		[439814] = { 57.4, 64.0, 0 }, -- Silken Tomb
 		[440899] = { 8.5, 40.0, 51.0, 0 }, -- Liquefy
 		[437093] = { 11.4, 40.0, 51.0, 0 }, -- Feast
-		[439299] = { 20.4, 47.0, 47.0, 25.0, 0 }, -- Web Blades
+		[439299] = { 20.5, 47.0, 43.0, 29.0, 0 }, -- Web Blades
 	},
 	[3] = {
-		[444829] = { 119.0, 75.0 }, -- Queen's Summons
-		[438976] = { 43.2, 58.5, 99.5 }, -- Royal Condemnation
-		[443325] = { 29.7, 66.0, 82.0 }, -- Infest
-		[443336] = { 32.7, 66.0, 82.0 }, -- Gorge
-		[439299] = { 85.0, 39.0, 41.0, 18.5, 49.5 }, -- Web Blades
+		[444829] = { 119.0, 75.0, 0 }, -- Queen's Summons
+		[438976] = { 43.2, 58.5, 99.5, 0 }, -- Royal Condemnation
+		[443325] = { 29.7, 66.0, 82.0, 0 }, -- Infest
+		[443336] = { 32.7, 66.0, 82.0, 0 }, -- Gorge
+		[439299] = { 85.0, 39.0, 41.0, 18.5, 49.5, 0 }, -- Web Blades
 	},
 }
 
-local timers = mod:Easy() and timersNormal or timersHeroic
+local timersMythic = { -- 10:10 (enrage)
+	[1] = {
+		[437592] = { 21.1, 56.0, 56.0, 0 }, -- Reactive Toxin
+		[439814] = { 12.3, 40.0, 57.0, 0 }, -- Silken Tomb
+		[440899] = { 6.4, 40.0, 54.0, 0 }, -- Liquefy
+		[437093] = { 8.4, 40.0, 54.0, 0 }, -- Feast
+		[439299] = { 20.3, 40.0, 13.0, 25.0, 19.0, 23.0, 0 }, -- Web Blades
+	},
+	[3] = {
+		[444829] = { 43.3, 64.0, 83.0, 0 }, -- Queen's Summons
+		[438976] = { 111.4, 86.0, 0 }, -- Royal Condemnation
+		[443325] = { 30.0, 66.0, 80.0, 0 }, -- Infest
+		[443336] = { 32.0, 66.0, 80.0, 0 }, -- Gorge
+		[439299] = { 48.3, 37.0, 21.0, 17.0, 42.0, 21.0, 19.0, 36.0, 0 }, -- Web Blades
+		[445422] = { 45.0, 80.0, 88.0, 35.5 }, -- Frothing Gluttony
+	},
+}
+
+local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,7 +109,6 @@ if L then
 	L.web_blades = "Blades"
 	L.silken_tomb = "Roots" -- Raid being rooted in place
 	L.wrest = "Pull In"
-	L.slow = "Slow"
 	L.royal_condemnation = "Shackles"
 	L.frothing_gluttony = "Ring"
 
@@ -97,21 +120,22 @@ end
 --
 
 local reactiveToxinMarker = mod:AddMarkerOption(true, "player", 6, 437592, 6, 3, 7, 1, 2) -- Reactive Toxin
-local abyssalInfusionMarker = mod:AddMarkerOption(true, "player", 6, 443888, 1, 2) -- Abyssal Infusion
+local chamberAcolyteMarker = mod:AddMarkerOption(true, "npc", 1, -29945, 1, 2) -- Chamber Acolyte
+local abyssalInfusionMarker = mod:AddMarkerOption(true, "player", 1, 443888, 1, 2) -- Abyssal Infusion
 local royalCondemnationMarker = mod:AddMarkerOption(true, "player", 6, 438976, 6, 3, 7) -- Royal Condemnation
-local queensSummonsMarker = mod:AddMarkerOption(true, "npc", 8, 444829, 8, 5, 4) -- Queen's Summons
+local queensSummonsMarker = mod:AddMarkerOption(true, "npc", 8, 444829, 8, 5, 4) -- Queen's Summons (Summoned Acolyte)
 function mod:GetOptions()
 	return {
-		"stages",
+		{"stages", "CASTBAR"},
 		-- Stage One: A Queen's Venom
 		{437592, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Reactive Toxin
 			reactiveToxinMarker,
 			{451278, "SAY", "SAY_COUNTDOWN"}, -- Concentrated Toxin
-			464638, -- Frothy Toxin
+			464638, -- Frothy Toxin (Fail)
 			438481, -- Toxic Waves (Damage)
 			437078, -- Acid (Damage)
-		437417, -- Venom Nova
-			441556, -- Reactive Vapor
+		{437417, "CASTBAR"}, -- Venom Nova
+			441556, -- Reactive Vapor (Fail)
 		439814, -- Silken Tomb
 			441958, -- Grasping Silk (Damage)
 		440899, -- Liquefy
@@ -121,33 +145,35 @@ function mod:GetOptions()
 		-- Intermission: The Spider's Web
 		447076, -- Predation
 		447456, -- Paralyzing Venom
-		{447411, "CASTBAR"}, -- Wrest
+		{447411, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Wrest
 
 		-- Stage Two: Royal Ascension
 		443403, -- Gloom (Damage)
+		{460369, "CASTBAR"}, -- Shadowgate
 		-- Queen Ansurek
-		{449940, "CASTBAR"}, -- Acidic Apocalypse
+		449940, -- Acidic Apocalypse (Fail)
 		-- Ascended Voidspeaker
 		447950, -- Shadowblast
 		{448046, "COUNTDOWN"}, -- Gloom Eruption
 		-- Devoted Worshipper
 		{447967, "SAY", "ME_ONLY_EMPHASIZE"}, -- Gloom Touch
-		462558, -- Cosmic Rupture
-		{448458, "CASTBAR"}, -- Cosmic Apocalypse
+		448458, -- Cosmic Apocalypse (Fail)
 		-- Chamber Guardian
-		{448147, "NAMEPLATE"}, -- Oust
+		{448147, "TANK"}, -- Oust
 		-- Chamber Expeller
-		{451600, "NAMEPLATE"}, -- Expulsion Beam
+		451600, -- Expulsion Beam
+		-- Chamber Acolyte
+		{455374, "NAMEPLATE"}, -- Dark Detonation
+		chamberAcolyteMarker,
 		-- Caustic Skitterer
 		449236, -- Caustic Fangs
 
 		-- Stage Three: Paranoia's Feast
-		-- {449986, "CASTBAR"}, -- Aphotic Communion
 		{443888, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Abyssal Infusion
 			abyssalInfusionMarker,
 			455387, -- Abyssal Reverberation
 		445422, -- Frothing Gluttony
-			445880, -- Froth Vapor
+			445880, -- Froth Vapor (Fail)
 		444829, -- Queen's Summons
 			queensSummonsMarker,
 			445152, -- Acolyte's Essence
@@ -167,12 +193,15 @@ function mod:GetOptions()
 	}, {
 		[437592] = L.reactive_toxin, -- Reactive Toxin (Toxins)
 		[451278] = CL.bomb, -- Concentrated Toxin (Bomb)
+		[437417] = L.venom_nova, -- Venom Nova (Nova)
 		[439814] = L.silken_tomb, -- Silken Tomb (Roots)
 		[440899] = CL.pools, -- Liquefy (Pools)
 		[439299] = L.web_blades, -- Web Blades (Blades)
-		[447456] = L.slow, -- Paralyzing Venom (Slow)
+		[447456] = CL.waves, -- Paralyzing Venom (Waves)
 		[447411] = L.wrest, -- Wrest (Pull In)
+		[449940] = CL.you_die, -- Acidic Apocalypse (You die)
 		[448046] = CL.knockback, -- Gloom Eruption (Knockback)
+		[448458] = CL.you_die, -- Cosmic Apocalypse (You die)
 		[443888] = CL.portals, -- Abyssal Infusion (Portals)
 		[445422] = L.frothing_gluttony, -- Frothing Gluttony (Ring)
 		[444829] = CL.big_adds, -- Queen's Summons (Big Adds)
@@ -183,12 +212,28 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:SetSpellRename(439814, L.silken_tomb) -- Silken Tomb (Roots)
+	self:SetSpellRename(447456, CL.waves) -- Paralyzing Venom (Waves)
+	self:SetSpellRename(447411, L.wrest) -- Wrest (Pull In)
+	self:SetSpellRename(449940, CL.you_die) -- Acidic Apocalypse (You die)
+	self:SetSpellRename(448458, CL.you_die) -- Cosmic Apocalypse (You die)
+	self:SetSpellRename(443888, CL.portals) -- Abyssal Infusion (Portals)
+	self:SetSpellRename(445422, L.frothing_gluttony) -- Frothing Gluttony (Ring)
+	self:SetSpellRename(444829, CL.big_adds) -- Queen's Summons (Big Adds)
+	self:SetSpellRename(438976, L.royal_condemnation) -- Royal Condemnation (Shackles)
+end
+
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Story Mode Royal Condemnation
+
+	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage One: A Queen's Venom
 	self:Log("SPELL_CAST_START", "ReactiveToxin", 437592)
+	self:Log("SPELL_CAST_SUCCESS", "ReactiveToxinSuccess", 437592) -- LFR
 	self:Log("SPELL_AURA_APPLIED", "ReactiveToxinApplied", 437586)
+	self:Log("SPELL_AURA_REMOVED", "ReactiveToxinRemoved", 437586)
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedToxinApplied", 451278)
 	self:Log("SPELL_AURA_APPLIED", "FrothyToxinApplied", 464638)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrothyToxinApplied", 464638)
@@ -197,8 +242,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ReactiveVaporApplied", 441556)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ReactiveVaporApplied", 441556)
 	self:Log("SPELL_CAST_START", "SilkenTomb", 439814)
-	self:Log("SPELL_AURA_APPLIED", "GraspingSilkDamage", 441958)
-	self:Log("SPELL_DAMAGE", "GraspingSilkDamage", 441958)
 	self:Log("SPELL_CAST_START", "Liquefy", 440899)
 	self:Log("SPELL_AURA_APPLIED", "LiquefyApplied", 436800)
 	self:Log("SPELL_CAST_START", "Feast", 437093)
@@ -209,16 +252,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Predation", 447076)
 	self:Log("SPELL_AURA_APPLIED", "PredationApplied", 447207)
 	self:Log("SPELL_AURA_REMOVED", "PredationRemoved", 447207)
-	self:Log("SPELL_CAST_START", "ParalyzingVenom", 447456)
-	self:Log("SPELL_AURA_APPLIED", "ParalyzingVenomApplied", 447532)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ParalyzingVenomApplied", 447532)
+	self:Log("SPELL_CAST_SUCCESS", "ParalyzingVenom", 447456)
 	self:Log("SPELL_CAST_START", "Wrest", 447411)
 
 	-- Stage Two: Royal Ascension
+	self:Log("SPELL_CAST_START", "Shadowgate", 460369)
+	self:Log("SPELL_AURA_APPLIED", "ShadowyDistortionApplied", 460218)
+	self:Log("SPELL_AURA_APPLIED", "ShadowgateGloomTouchApplied", 464056)
 	-- Queen Ansurek
 	self:Log("SPELL_AURA_APPLIED", "CosmicProtection", 458247) -- Story Mode Stage 2
 	self:Log("SPELL_AURA_APPLIED", "PredationThreadsApplied", 447170)
-
 	self:Log("SPELL_CAST_START", "AcidicApocalypse", 449940)
 	self:Log("SPELL_CAST_SUCCESS", "AcidicApocalypseSuccess", 449940)
 	-- Ascended Voidspeaker
@@ -229,31 +272,35 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CosmicApocalypse", 448458)
 	self:Log("SPELL_CAST_SUCCESS", "CosmicApocalypseSuccess", 448458)
 	self:Death("WorshipperDeath", 223318)
-	self:Log("SPELL_AURA_APPLIED", "CosmicRuptureApplied", 462558)
 	-- Chamber Guardian
 	self:Log("SPELL_CAST_START", "Oust", 448147)
 	self:Death("GuardianDeath", 223204)
 	-- Chamber Expeller
 	self:Log("SPELL_CAST_START", "ExpulsionBeam", 451600)
 	self:Death("ExpellerDeath", 224368)
+	-- Chamber Acolyte
+	self:Log("SPELL_CAST_START", "DarkDetonation", 455374)
+	self:Death("ChamberAcolyteDeath", 226200)
 	-- Caustic Skitterer
-	self:Log("SPELL_AURA_APPLIED", "CausticFangsApplied", 449236)
+	-- self:Log("SPELL_AURA_APPLIED", "CausticFangsApplied", 449236)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CausticFangsApplied", 449236)
 
 	-- Stage Three: Paranoia's Feast
 	self:Log("SPELL_CAST_START", "AphoticCommunion", 449986)
+	self:Log("SPELL_CAST_SUCCESS", "AphoticCommunionSuccess", 449986)
 	self:Log("SPELL_CAST_START", "AbyssalInfusion", 443888)
+	self:Log("SPELL_CAST_SUCCESS", "AbyssalInfusionSuccess", 443888) -- LFR
 	self:Log("SPELL_AURA_APPLIED", "AbyssalInfusionApplied", 443903)
+	self:Log("SPELL_AURA_REMOVED", "AbyssalInfusionRemoved", 443903)
 	self:Log("SPELL_AURA_APPLIED", "AbyssalReverberationApplied", 455387)
 	self:Log("SPELL_CAST_START", "FrothingGluttony", 445422)
 	self:Log("SPELL_AURA_APPLIED", "FrothVaporAppliedOnBoss", 445880)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrothVaporAppliedOnBoss", 445880)
 	self:Log("SPELL_CAST_START", "QueensSummons", 444829)
-	self:Log("SPELL_AURA_APPLIED", "DarkBarrierApplied", 445013)
 	self:Log("SPELL_AURA_APPLIED", "AcolytesEssenceApplied", 445152)
 	self:Log("SPELL_CAST_START", "NullDetonation", 445021)
-	self:Log("SPELL_CAST_START", "RoyalCondemnation", 438976)
 	self:Log("SPELL_AURA_APPLIED", "RoyalCondemnationApplied", 438974)
+	self:Log("SPELL_AURA_REMOVED", "RoyalCondemnationRemoved", 438974)
 	self:Log("SPELL_AURA_APPLIED", "RoyalShacklesApplied", 441865)
 	self:Log("SPELL_CAST_START", "Infest", 443325)
 	self:Log("SPELL_AURA_APPLIED", "InfestApplied", 443656)
@@ -265,13 +312,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GorgeApplied", 443342)
 	self:Log("SPELL_CAST_SUCCESS", "CataclysmicEvolution", 451832)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 437078, 443403) -- Acid, Gloom
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 437078, 443403)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 437078, 443403)
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 437078, 443403, 441958) -- Acid, Gloom, Grasping Silk
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 437078, 443403, 441958)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 437078, 443403, 441958)
 end
 
 function mod:OnEngage()
-	timers = self:Easy() and timersNormal or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 
 	self:SetStage(1)
 	reactiveToxinCount = 1
@@ -281,25 +328,89 @@ function mod:OnEngage()
 	feastCount = 1
 	webBladesCount = 1
 
+	mobCollector = {}
+	mobMarks = {}
+
 	if not self:Story() then
+		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 		self:Bar(440899, timers[1][440899][1], CL.count:format(CL.pools, liquefyCount)) -- Liquefy
 		self:Bar(437093, timers[1][437093][1], CL.count:format(self:SpellName(437093), feastCount)) -- Feast
-		self:Bar(437592, 20.2, CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
+		self:Bar(437592, timers[1][437592][1], CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
+		self:Bar("stages", 153.9, CL.intermission, 447207) -- Predation
+	else
+		self:Bar("stages", 100, CL.stage:format(2), 458247) -- Cosmic Protection
 	end
-
 	self:Bar(439299, self:Story() and 7.5 or timers[1][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 	self:Bar(437417, self:Story() and 34.5 or 29.5, CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 	self:Bar(439814, self:Story() and 20.5 or timers[1][439814][1], CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
-
-	self:Bar("stages", self:Story() and 100 or 153.9, self:Story() and CL.stage:format(2) or CL.intermission, 447207) -- Predation
-	if not self:Story() then
-		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
-	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 8 do
+		local unit = ("boss%d"):format(i)
+		local guid = self:UnitGUID(unit)
+		if guid then
+			local mobId = self:MobId(guid)
+			if mobId == 221863 and not mobCollector[guid] then -- Summoned Acolyte
+				mobCollector[guid] = true
+				local index = mobMarks[mobId] or 1
+				local icon = addMarks[index] -- marks first 3 with 8, 5, 4
+				if icon then
+					self:CustomIcon(queensSummonsMarker, unit, icon)
+				end
+				mobMarks[mobId] = index + 1
+			end
+		end
+	end
+end
+
+do
+	local function getSpawnIndex(guid)
+		local spawnUID = select(7, strsplit("-", guid))
+		local spawnIndex = bit.rshift(bit.band(tonumber(string.sub(spawnUID, 1, 5), 16), 0xffff8), 3) + 1
+		return spawnIndex
+	end
+	local function getSpawnTime(guid)
+		local spawnUID = select(7, strsplit("-", guid))
+		local spawnEpochOffset = bit.band(tonumber(string.sub(spawnUID, 5), 16), 0x7fffff)
+		local serverTime = GetServerTime() -- luacheck: ignore
+		local spawnTime = serverTime - (serverTime % 2 ^ 23) + spawnEpochOffset
+		if spawnTime > serverTime then
+			spawnTime = spawnTime - ((2 ^ 23) - 1)
+		end
+		return spawnTime
+	end
+
+	function mod:AddMarking(_, unit, guid)
+		if self:MobId(guid) == 226200 and not mobCollector[guid] then -- Chamber Acolyte
+			mobCollector[guid] = true
+			if self:GetIcon(unit) and not lastAcolyteMarked then
+				-- try to minimize icon shuffle with multiple people marking
+				return
+			end
+
+			-- use the spawn time and counter from the mob spawn uid for marking star/circle (1/2)
+			local index = getSpawnIndex(guid)
+			if index == 1 and lastAcolyteMarked then -- staggered spawn
+				local spawnA, spawnB = getSpawnTime(lastAcolyteMarked), getSpawnTime(guid)
+				if spawnA < spawnB then
+					-- this is the second spawn
+					index = 2
+				else
+					-- this is the first spawn, remark other add
+					local otherUnit = self:UnitTokenFromGUID(lastAcolyteMarked)
+					self:CustomIcon(chamberAcolyteMarker, otherUnit, 2)
+				end
+			end
+			self:CustomIcon(chamberAcolyteMarker, unit, index)
+			lastAcolyteMarked = guid
+		end
+	end
+end
 
 local function addPlayerToIconList(list, playerName)
 	list[#list+1] = {
@@ -323,6 +434,29 @@ local function sortPriority(first, second)
 	end
 end
 
+function mod:UNIT_SPELLCAST_INTERRUPTED(_, _, _, spellId)
+	if spellId == 450191 then -- Wrest
+		self:WrestInterrupted()
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 450040 then -- Land
+		self:Land()
+	elseif spellId == 449962 then -- Acidic Apocalypse
+		self:AcidicApocalypsePrecast()
+	elseif self:Story() and spellId == 438667 then -- Royal Condemnation
+		-- No RoyalCondemnationApplied in story mode
+		self:StopBar(CL.count:format(L.royal_condemnation, royalCondemnationCount))
+		self:Message(438976, "yellow", CL.count:format(L.royal_condemnation, royalCondemnationCount))
+		self:Bar(441865, 6.2, CL.explosion)
+		royalCondemnationCount = royalCondemnationCount + 1
+		self:Bar(438976, 53.0, CL.count:format(L.royal_condemnation, royalCondemnationCount))
+	end
+end
+
+-- Stage One: A Queen's Venom
+
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 37 then -- Intermission forced at 35%
 		self:UnregisterUnitEvent(event, unit)
@@ -331,7 +465,6 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
--- Stage One: A Queen's Venom
 do
 	local playerList, iconList = {}, {}
 	local scheduled = nil
@@ -346,10 +479,9 @@ do
 			local icon = self:GetOption(reactiveToxinMarker) and iconOrder[i] or nil
 			if player == self:UnitName("player") then
 				local text = icon and CL.rticon:format(L.reactive_toxin_say, icon) or L.reactive_toxin_say
-				local msg = icon and CL.you_icon:format(L.reactive_toxin_say, icon) or nil
 				self:PlaySound(437592, "warning") -- position?
 				self:Say(437592, text, nil, icon and CL.rticon:format("Toxin", icon) or "Toxin")
-				self:SayCountdown(437592, 5, icon)
+				self:SayCountdown(437592, self:Mythic() and 5 or 6, icon)
 			end
 			playerList[#playerList+1] = player
 			playerList[player] = icon
@@ -362,20 +494,34 @@ do
 		playerList, iconList = {}, {}
 	end
 
+	function mod:ReactiveToxinSuccess()
+		if self:LFR() then -- No ReactiveToxinApplied in LFR
+			self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount))
+			self:Message(437592, "orange", CL.count:format(L.reactive_toxin, reactiveToxinCount))
+			reactiveToxinCount = reactiveToxinCount + 1
+			self:Bar(437592, timers[1][437592][reactiveToxinCount], CL.count:format(L.reactive_toxin, reactiveToxinCount))
+		end
+	end
+
 	function mod:ReactiveToxinApplied(args)
 		if not scheduled then
 			self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount))
 			reactiveToxinCount = reactiveToxinCount + 1
-			if reactiveToxinCount < 4 then
-				self:Bar(437592, 56.0, CL.count:format(L.reactive_toxin, reactiveToxinCount))
-			end
+			self:Bar(437592, timers[1][437592][reactiveToxinCount], CL.count:format(L.reactive_toxin, reactiveToxinCount))
 			scheduled = self:ScheduleTimer("MarkToxinPlayers", 0.5)
 		end
 		iconList = addPlayerToIconList(iconList, args.destName)
-		local requiredPlayers = self:Mythic() and 5 or self:Heroic() and 2 or 1
+		local requiredPlayers = self:Mythic() and math.min(reactiveToxinCount, 3) or self:Easy() and 1 or 2
 		if #iconList == requiredPlayers then
 			self:MarkToxinPlayers()
 		end
+	end
+
+	function mod:ReactiveToxinRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(437592)
+		end
+		self:CustomIcon(reactiveToxinMarker, args.destName)
 	end
 end
 
@@ -390,9 +536,8 @@ end
 
 function mod:FrothyToxinApplied(args)
 	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 3)
-		if amount > 3 then
+		if args.amount and args.amount > 3 then
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -406,12 +551,13 @@ function mod:ToxicWavesDamage(args)
 end
 
 function mod:VenomNova(args)
-	self:StopBar(CL.count:format(L.venom_nova, venomNovaCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.venom_nova, venomNovaCount)))
+	local msg = CL.count:format(L.venom_nova, venomNovaCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", CL.casting:format(msg))
+	self:CastBar(args.spellId, self:Mythic() and 5 or self:Story() and 4 or 6, msg)
 	self:PlaySound(args.spellId, "alert")
 	venomNovaCount = venomNovaCount + 1
-	local maxCasts = self:Story() and 3 or 4
-	if venomNovaCount < maxCasts then
+	if venomNovaCount < (self:Story() and 3 or 4) then
 		self:Bar(args.spellId, self:Story() and 38 or 56.0, CL.count:format(L.venom_nova, venomNovaCount))
 	end
 end
@@ -430,17 +576,6 @@ function mod:SilkenTomb(args)
 	self:PlaySound(args.spellId, "alarm") -- spread
 	silkenTombCount = silkenTombCount + 1
 	self:Bar(args.spellId, self:Story() and 38.0 or timers[1][args.spellId][silkenTombCount], CL.count:format(L.silken_tomb, silkenTombCount))
-end
-
-do
-	local prev = 0
-	function mod:GraspingSilkDamage(args)
-		if self:Me(args.destGUID) and args.time - prev > 2 then
-			prev = args.time
-			self:PersonalMessage(args.spellId, "underyou")
-			self:PlaySound(args.spellId, "underyou")
-		end
-	end
 end
 
 function mod:Liquefy(args)
@@ -479,10 +614,6 @@ end
 
 function mod:FeastApplied(args)
 	self:TargetMessage(437093, "purple", args.destName)
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and not self:Tanking(unit) then
-		self:PlaySound(437093, "warning") -- tauntswap
-	end
 end
 
 do
@@ -509,6 +640,7 @@ do
 		self:StopBar(CL.count:format(self:SpellName(437093), feastCount)) -- Feast
 		self:StopBar(CL.count:format(L.reactive_toxin, reactiveToxinCount)) -- Reactive Toxin
 		self:StopBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
+		self:StopCastBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 		self:StopBar(CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 		self:StopBar(CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 
@@ -520,7 +652,7 @@ do
 		wrestCount = 1
 
 		self:Bar(447411, 6.0, CL.count:format(L.wrest, wrestCount)) -- Wrest
-		self:Bar(447456, 13.0, CL.count:format(L.slow, paralyzingVenomCount)) -- Paralyzing Venom
+		self:Bar(447456, 15.5, CL.count:format(CL.waves, paralyzingVenomCount)) -- Paralyzing Venom
 	end
 
 	function mod:PredationApplied(args)
@@ -528,8 +660,9 @@ do
 	end
 
 	function mod:PredationRemoved(args)
-		self:StopBar(CL.count:format(L.slow, paralyzingVenomCount)) -- Paralyzing Venom
+		self:StopBar(CL.count:format(CL.waves, paralyzingVenomCount)) -- Paralyzing Venom
 		self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
+		self:StopCastBar(CL.count:format(L.wrest, wrestCount-1))
 
 		self:Message(447076, "green", CL.removed_after:format(args.spellName, args.time - predationApplied))
 
@@ -539,37 +672,42 @@ do
 
 		wrestCount = 1
 		gloomTouchCount = 1
-		worshipperKilled = 0
+		platformAddsKilled = 0
+		worshippersKilled = 0
+		acolytesKilled = 0
+		lastAcolyteMarked = nil
+		firstShadowgate = true
+
+		if self:Mythic() then
+			if self:GetOption(chamberAcolyteMarker) then
+				self:RegisterTargetEvents("AddMarking")
+			end
+			self:RegisterEvent("NAME_PLATE_UNIT_ADDED", "ShadowgateNameplateCheck")
+			self:RegisterEvent("UNIT_SPELLCAST_START")
+			self:RegisterEvent("UNIT_SPELLCAST_STOP")
+		end
 	end
 end
 
 function mod:ParalyzingVenom(args)
-	self:Message(args.spellId, "yellow", CL.count:format(L.slow, paralyzingVenomCount))
-	-- self:PlaySound(args.spellId, "alert")
+	self:Message(args.spellId, "yellow", CL.count:format(CL.waves, paralyzingVenomCount))
 	paralyzingVenomCount = paralyzingVenomCount + 1
-	self:Bar(args.spellId, paralyzingVenomCount % 3 == 1 and 11.0 or 4.0, CL.count:format(L.slow, paralyzingVenomCount))
-end
-
-function mod:ParalyzingVenomApplied(args)
-	-- if self:Me(args.destGUID) then
-	-- 	self:StackMessage(447456, "blue", args.destName, args.amount, 2)
-	-- 	self:PlaySound(447456, "warning")
-	-- end
+	self:Bar(args.spellId, paralyzingVenomCount % 3 == 1 and 11.0 or 4.0, CL.count:format(CL.waves, paralyzingVenomCount))
 end
 
 function mod:Wrest(args)
 	self:Message(args.spellId, "red", CL.count:format(L.wrest, wrestCount))
+	self:CastBar(args.spellId, 6, CL.count:format(L.wrest, wrestCount))
 	self:PlaySound(args.spellId, "alert")
 	wrestCount = wrestCount + 1
 	self:Bar(args.spellId, 19.0, CL.count:format(L.wrest, wrestCount))
-	self:CastBar(args.spellId, 6, CL.count:format(L.wrest, wrestCount))
 end
 
 -- Stage Two: Royal Ascension
-function mod:CosmicProtection(args) -- Story Mode
-	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
-	self:StopBar(CL.intermission)
+function mod:CosmicProtection() -- Story Mode
+	self:StopBar(CL.stage:format(2))
 	self:StopBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
+	self:StopCastBar(CL.count:format(L.venom_nova, venomNovaCount)) -- Venom Nova
 	self:StopBar(CL.count:format(L.silken_tomb, silkenTombCount)) -- Silken Tomb
 	self:StopBar(CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
 
@@ -579,19 +717,135 @@ function mod:CosmicProtection(args) -- Story Mode
 end
 
 do
-	local prev, onMe, scheduled = 0, false, nil
-	function mod:WrestTimers()
-		if scheduled then
-			self:CancelTimer(scheduled)
-			scheduled = nil
+	-- Shadowgate
+	local prev = nil
+	local casterGUID = nil
+
+	-- cast events from nameplates, requires looking at the gate D;
+	function mod:ShadowgateNameplateCheck(event, unit)
+		local guid = self:UnitGUID(unit)
+		if self:MobId(guid) == 228617 and casterGUID ~= guid then -- Shadowgate
+			casterGUID = guid
+			local name, _, _, _, endTime = UnitCastingInfo(unit)
+			if name then
+				local remaining = endTime / 1000 - GetTime()
+				self:CastBar(460369, {remaining, 12})
+			end
 		end
-		wrestCount = wrestCount + 1
-		if not onMe then
-				if wrestCount > 8 then return end
-				self:CDBar(447411, {8.0, 16.0}, CL.count:format(L.wrest, wrestCount))
+		if self.targetEventFunc then -- for RegisterTargetEvents
+			self:NAME_PLATE_UNIT_ADDED(event, unit)
+		end
+	end
+
+	function mod:UNIT_SPELLCAST_START(_, unit, castGUID, spellId)
+		if spellId == 460369 and prev ~= castGUID then -- Shadowgate
+			firstShadowgate = false
+			prev = castGUID
+			casterGUID = self:UnitGUID(unit)
+			self:CastBar(460369, 12)
+		end
+	end
+
+	function mod:UNIT_SPELLCAST_STOP(_, unit, _, spellId)
+		if spellId == 460369 then -- Shadowgate
+			casterGUID = self:UnitGUID(unit)
+			self:StopCastBar(460369)
+		end
+	end
+
+	function mod:Shadowgate(args)
+		if firstShadowgate then -- get the next cast
+			firstShadowgate = false
+			self:CastBar(args.spellId, 12)
+		elseif casterGUID == args.sourceGUID then
+			-- show the cast for the last gate you saw a nameplate for
+			self:CastBar(args.spellId, 12)
+		end
+	end
+
+	function mod:ShadowyDistortionApplied(args)
+		if self:Me(args.destGUID) then
+			casterGUID = nil
+			self:StopCastBar(460369) -- Shadowgate
+			-- Wrest swap
+			local currentCount = wrestCount - 1
+			local nextCount = wrestCount + 1
+			self:StopCastBar(CL.count:format(self:SpellName(447411), currentCount)) -- Wrest
+			local remaining = self:BarTimeLeft(CL.count:format(self:SpellName(447411), nextCount)) - 8
+			self:StopBar(CL.count:format(self:SpellName(447411), nextCount))
+			if remaining > 1 then
+				self:CDBar(447411, remaining, CL.count:format(self:SpellName(447411), wrestCount))
+			end
+		elseif args.sourceGUID ~= casterGUID then -- dest portal isn't mine
+			self:StopCastBar(460369) -- Shadowgate
+		end
+	end
+end
+
+function mod:ShadowgateGloomTouchApplied(args)
+	local touchOnMe = false
+	if self:Me(args.destGUID) then
+		touchOnMe = true -- make sure there's a message
+		self:PlaySound(447967, "alarm") -- spread
+		-- self:Say(args.spellId)
+	end
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if touchOnMe or (unit and self:UnitWithinRange(unit, 45)) then
+		self:TargetMessage(447967, "yellow", args.destName)
+	end
+end
+
+-- Queen Ansurek
+
+do
+	local prev = 0
+	local scheduled = nil
+	local threadsOnMe = false
+	local currentCount, nextCount = nil, nil
+
+	function mod:WrestReset()
+		if platformAddsKilled == 2 then -- platform 2->3
+			self:StopCastBar(460369) -- Shadowgate
+
+			-- resets when you spawn the bridge? so may vary a bit
+			local text = CL.count:format(L.wrest, wrestCount)
+			local remaining = self:BarTimeLeft(text)
+			if remaining > 1 then
+				self:CDBar(447411, 12.0, text)
+			end
+			text = CL.count:format(L.wrest, wrestCount + 1)
+			remaining = self:BarTimeLeft(text)
+			if remaining > 1 then
+				self:CDBar(447411, 12.0, text)
+			end
+		end
+	end
+
+	function mod:WrestInterrupted()
+		if threadsOnMe then -- last cast was on me
+			self:StopCastBar(CL.count:format(L.wrest, currentCount))
+			self:StopBar(CL.count:format(L.wrest, nextCount))
+			-- recasts next one here, messing with the numbering
+			self:CDBar(447411, 10.7, CL.count:format(L.wrest, currentCount + 1))
 		else
-				if wrestCount > 7 then return end
-				self:CDBar(447411, 16.0, CL.count:format(L.wrest, wrestCount + 1))
+			-- other side, swap order
+			self:StopBar(CL.count:format(L.wrest, wrestCount))
+			self:CDBar(447411, 18.7, CL.count:format(L.wrest, nextCount))
+		end
+	end
+
+	function mod:WrestCast()
+		self:StopBar(CL.count:format(L.wrest, wrestCount))
+		wrestCount = wrestCount + 1
+		if threadsOnMe then
+			currentCount = wrestCount - 1
+			self:Message(447411, "red", CL.count:format(L.wrest, currentCount))
+			self:CastBar(447411, 5, CL.count:format(L.wrest, currentCount))
+			self:PlaySound(447411, "alert")
+			nextCount = wrestCount + 1
+			self:CDBar(447411, 16.0, CL.count:format(L.wrest, nextCount))
+		else
+			self:CDBar(447411, {8.0, 16.0}, CL.count:format(L.wrest, wrestCount))
 		end
 	end
 
@@ -599,42 +853,42 @@ do
 		if self:GetStage() == 2 then
 			if args.time - prev > 2 then
 				prev = args.time
-				self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
-				onMe = false
-				if not scheduled then
-					scheduled = self:ScheduleTimer("WrestTimers", 0.1)
-				end
+				threadsOnMe = false
+				scheduled = self:ScheduleTimer("WrestCast", 0.1)
 			end
 			if self:Me(args.destGUID) then
-				self:Message(447411, "red", CL.count:format(L.wrest, wrestCount))
-				self:PlaySound(447411, "alert")
-				onMe = true
-				self:CastBar(447411, 5, CL.count:format(L.wrest, wrestCount))
+				threadsOnMe = true
 			end
 		end
 	end
 
-	function mod:AcidicApocalypse(args)
+	function mod:AcidicApocalypsePrecast()
+		-- platform 3->4
 		self:CancelTimer(scheduled)
-		self:StopBar(CL.count:format(L.wrest, wrestCount))
-		self:StopBar(CL.count:format(L.wrest, wrestCount + 1))
-		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-		self:CastBar(args.spellId, 35)
+		for i = 1, wrestCount + 1 do
+			self:StopBar(CL.count:format(L.wrest, i)) -- nuclear cleanup
+		end
+		self:StopCastBar(460369) -- Shadowgate
+		-- firstShadowgate = true -- XXX can still catch desync'd casts here z.z
+	end
+
+	function mod:AcidicApocalypse(args)
+		self:Bar(args.spellId, self:Easy() and 50 or 35, CL.you_die)
 	end
 end
 
 function mod:AcidicApocalypseSuccess(args)
-	self:Message(args.spellId, "red")
+	self:Message(args.spellId, "red", CL.you_die)
 	self:PlaySound(args.spellId, "alarm")
 end
 
 -- Ascended Voidspeaker
 
 function mod:Shadowblast(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo then
+	local isPossible, isReady = self:Interrupter(args.sourceGUID)
+	if isPossible then
 		self:Message(args.spellId, "orange")
-		if ready then
+		if isReady then
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -646,12 +900,18 @@ do
 		if args.time - prev > 2 then
 			prev = args.time
 			if self:Story() then
-				self:Message("stages", "cyan", L.stage_two_end_message_storymode, false, nil, 5) -- Stay onscreen for 4s
+				self:Message("stages", "cyan", L.stage_two_end_message_storymode, false, nil, 5) -- Stay onscreen for 5s
 			else
+				self:StopCastBar(460369) -- Shadowgate
+
 				self:Message("stages", "cyan", CL.killed:format(args.destName), false)
-				self:Bar(448046, self:Easy() and 7.1 or 5.9, CL.knockback) -- Gloom Eruption
-				if wrestCount == 1 then
+				self:Bar(448046, self:Mythic() and 5.2 or self:Easy() and 7.1 or 5.9, CL.knockback) -- Gloom Eruption
+
+				if wrestCount == 1 then -- first Voidspeaker set
+					firstShadowgate = true
 					self:CDBar(447411, self:Easy() and 13.5 or 11.8, CL.count:format(L.wrest, wrestCount)) -- Wrest
+					self:Bar(451600, 12.5) -- Expulsion Beam
+					self:Bar(448147, 14.2) -- Oust
 				end
 			end
 		end
@@ -661,32 +921,27 @@ end
 -- Devoted Worshipper
 do
 	local prev, prevSource = 0, nil
+	local touchOnMe = false
 	local playerList = {}
 	function mod:GloomTouchApplied(args)
 		if args.sourceGUID ~= prevSource or args.time - prev > 5 then
 			prev = args.time
 			prevSource = args.sourceGUID
 			playerList = {}
+			touchOnMe = false
 			gloomTouchCount = gloomTouchCount + 1
 		end
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId)
+			touchOnMe = true -- make sure there's a message
 			self:PlaySound(args.spellId, "alarm") -- spread
 			self:Say(args.spellId, nil, nil, "Gloom Touch")
 		end
 
 		local unit = self:UnitTokenFromGUID(args.sourceGUID)
-		if unit and self:UnitWithinRange(unit, 40) then
+		if touchOnMe or (unit and self:UnitWithinRange(unit, 60)) then
 			playerList[#playerList + 1] = args.destName
-			self:TargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(args.spellName, gloomTouchCount - 1))
+			self:TargetsMessage(args.spellId, "yellow", playerList, self:Mythic() and 1 or 2, CL.count:format(args.spellName, gloomTouchCount-1))
 		end
-	end
-end
-
-function mod:CosmicRuptureApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning") -- gate
 	end
 end
 
@@ -695,7 +950,7 @@ do
 	function mod:CosmicApocalypse(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:CastBar(args.spellId, 85)
+			self:Bar(args.spellId, self:Mythic() and 80 or self:Easy() and 95 or 85, CL.you_die)
 		end
 	end
 end
@@ -705,28 +960,28 @@ do
 	function mod:CosmicApocalypseSuccess(args)
 		if args.time - prev > 2 then
 			prev = args.time
-			self:Message(args.spellId, "red")
+			self:Message(args.spellId, "red", CL.you_die)
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
 end
 
 function mod:WorshipperDeath(args)
-	worshipperKilled = worshipperKilled + 1
-	self:Message("stages", "cyan", CL.mob_remaining:format(args.destName, 2 - worshipperKilled), false)
-	if worshipperKilled == 2 then
-		self:StopBar(CL.cast:format(self:SpellName(448458))) -- Cosmic Apocalypse
+	worshippersKilled = worshippersKilled + 1
+	self:Message("stages", "cyan", CL.mob_killed:format(args.destName, worshippersKilled, 2), false)
+	if worshippersKilled == 2 then
+		self:StopBar(CL.you_die) -- Cosmic Apocalypse
 	end
 end
 
 -- Chamber Guardian
 function mod:Oust(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and self:Tanking(unit) then
+	if unit and self:UnitWithinRange(unit, 60) then
 		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
+		self:Bar(args.spellId, 10)
 	end
-	self:Nameplate(args.spellId, 10, args.sourceGUID)
 end
 
 do
@@ -734,20 +989,22 @@ do
 	function mod:GuardianDeath(args)
 		if args.time - prev > 2 then
 			prev = args.time
+			self:StopBar(448147) -- Oust
 			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
+			platformAddsKilled = platformAddsKilled + 1
+			self:WrestReset()
 		end
-		self:ClearNameplate(args.destGUID)
 	end
 end
 
 -- Chamber Expeller
 function mod:ExpulsionBeam(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if not unit or self:UnitWithinRange(unit, 30) then
+	if unit and self:UnitWithinRange(unit, 60) then
 		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "alert")
+		self:Bar(args.spellId, 10)
 	end
-	self:Nameplate(args.spellId, 10, args.sourceGUID)
 end
 
 do
@@ -755,36 +1012,56 @@ do
 	function mod:ExpellerDeath(args)
 		if args.time - prev > 2 then
 			prev = args.time
+			self:StopBar(451600) -- Expulsion Beam
 			self:Message("stages", "cyan", CL.killed:format(args.destName), false)
+			platformAddsKilled = platformAddsKilled + 1
+			self:WrestReset()
 		end
-		self:ClearNameplate(args.destGUID)
 	end
 end
 
+-- Chamber Acolyte
+function mod:DarkDetonation(args)
+	local isPossible, isReady = self:Interrupter(args.sourceGUID)
+	if isPossible then
+		self:Message(args.spellId, "yellow")
+		if isReady then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+	self:Nameplate(args.spellId, 13, args.sourceGUID)
+end
+
+function mod:ChamberAcolyteDeath(args)
+	acolytesKilled = acolytesKilled + 1
+	self:Message("stages", "cyan", CL.mob_killed:format(args.destName, acolytesKilled, 2), false)
+	self:ClearNameplate(args.destGUID)
+end
 
 -- Caustic Skitterer
 function mod:CausticFangsApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount % 4 == 0 or amount > 20 then -- XXX Check amounts
-			self:StackMessage(args.spellId, "blue", args.destName, amount, 10)
-			if amount > 20 then
-				self:PlaySound(args.spellId, "alarm")
-			end
+		if amount % 10 == 0 then
+			self:StackMessage(args.spellId, "blue", args.destName, amount, 20)
+			self:PlaySound(args.spellId, "alarm")
 		end
 	end
 end
 
 -- Stage Three: Paranoia's Feast
 function mod:AphoticCommunion(args)
-	self:StopBar(CL.count:format(L.wrest, wrestCount)) -- Wrest
-	self:StopBar(CL.count:format(L.wrest, wrestCount + 1)) -- Wrest
-	self:StopBar(CL.cast:format(self:SpellName(449940))) -- Acidic Apocalypse
+	self:StopBar(CL.you_die) -- Acidic Apocalypse
+	if self:Mythic() then
+		self:UnregisterTargetEvents()
+		self:UnregisterEvent("UNIT_SPELLCAST_START")
+		self:UnregisterEvent("UNIT_SPELLCAST_STOP")
+	end
 
 	self:SetStage(3)
 	self:Message("stages", "cyan", CL.stage:format(3), false)
 	self:PlaySound("stages", "long")
-	--self:CastBar(args.spellId, 20)
+	self:CastBar("stages", 20, CL.stage:format(3), args.spellId)
 
 	abyssalInfusionCount = 1
 	frothingGluttonyCount = 1
@@ -794,17 +1071,54 @@ function mod:AphoticCommunion(args)
 	gorgeCount = 1
 	webBladesCount = 1
 
-	-- XXX variance on these?
-	if not self:Story() then
-		self:Bar(443325, timers[3][443325][1], CL.count:format(CL.small_adds, infestCount)) -- Infest
-		self:Bar(443336, timers[3][443336][1], CL.count:format(CL.pools, gorgeCount)) -- Gorge
-		self:Bar(443888, 59.1, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
-		self:Bar(439299, timers[3][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
+	if self:GetOption(queensSummonsMarker) then
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	end
 
-	self:CDBar(438976, self:Story() and 31.0 or timers[3][438976][1], CL.count:format(L.royal_condemnation, royalCondemnationCount)) -- Royal Condemnation
-	self:Bar(445422, self:Story() and 62.0 or 68.8, CL.count:format(L.frothing_gluttony, frothingGluttonyCount)) -- Frothing Gluttony
-	self:Bar(444829, self:Story() and 42.0 or timers[3][444829][1], CL.count:format(CL.big_adds, queensSummonsCount)) -- Queen's Summons
+	-- if not self:Story() then
+	-- 	self:Bar(443325, timers[3][443325][1], CL.count:format(CL.small_adds, infestCount)) -- Infest
+	-- 	self:Bar(443336, timers[3][443336][1], CL.count:format(CL.pools, gorgeCount)) -- Gorge
+	-- 	self:Bar(443888, 59.1, CL.count:format(CL.portals, abyssalInfusionCount)) -- Abyssal Infusion
+	-- 	self:Bar(439299, timers[3][439299][1], CL.count:format(L.web_blades, webBladesCount)) -- Web Blades
+	-- end
+	-- self:Bar(438976, self:Story() and 31.0 or timers[3][438976][1], CL.count:format(L.royal_condemnation, royalCondemnationCount)) -- Royal Condemnation
+	-- self:Bar(445422, self:Story() and 62.0 or 68.8, CL.count:format(L.frothing_gluttony, frothingGluttonyCount)) -- Frothing Gluttony
+	-- self:Bar(444829, self:Story() and 42.0 or timers[3][444829][1], CL.count:format(CL.big_adds, queensSummonsCount)) -- Queen's Summons
+end
+
+function mod:AphoticCommunionSuccess()
+	-- timers from Land UNIT event, roughly 24s shorter than CLEU
+	if not self:Story() then
+		self:Bar(443325, 5.9, CL.count:format(self:SpellName(443325), infestCount)) -- Infest
+		self:Bar(443336, self:Mythic() and 7.9 or self:Easy() and 11.9 or 8.9, CL.count:format(self:SpellName(443336), gorgeCount)) -- Gorge
+		self:Bar(443888, 35.7, CL.count:format(self:SpellName(443888), abyssalInfusionCount)) -- Abyssal Infusion
+		self:Bar(439299, self:Mythic() and 24.9 or self:Easy() and 177 or 62.0, CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
+
+		self:PauseBar(443325, CL.count:format(self:SpellName(443325), infestCount)) -- Infest
+		self:PauseBar(443336, CL.count:format(self:SpellName(443336), gorgeCount)) -- Gorge
+		self:PauseBar(443888, CL.count:format(self:SpellName(443888), abyssalInfusionCount)) -- Abyssal Infusion
+		self:PauseBar(439299, CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
+	end
+
+	self:Bar(444829, self:Mythic() and 19.9 or self:Easy() and 90 or self:Story() and 19.0 or 96.0, CL.count:format(self:SpellName(444829), queensSummonsCount)) -- Queen's Summons
+	self:Bar(445422, self:Story() and 39.0 or 45.0, CL.count:format(self:SpellName(445422), frothingGluttonyCount)) -- Frothing Gluttony
+	self:Bar(438976, self:Mythic() and 88.0 or self:Story() and 8.0 or 20.0, CL.count:format(self:SpellName(438976), royalCondemnationCount)) -- Royal Condemnation
+
+	self:PauseBar(444829, CL.count:format(self:SpellName(444829), queensSummonsCount)) -- Queen's Summons
+	self:PauseBar(445422, CL.count:format(self:SpellName(445422), frothingGluttonyCount)) -- Frothing Gluttony
+	self:PauseBar(438976, CL.count:format(self:SpellName(438976), royalCondemnationCount)) -- Royal Condemnation
+end
+
+function mod:Land()
+	if not self:Story() then
+		self:ResumeBar(443325, CL.count:format(self:SpellName(443325), infestCount)) -- Infest
+		self:ResumeBar(443336, CL.count:format(self:SpellName(443336), gorgeCount)) -- Gorge
+		self:ResumeBar(443888, CL.count:format(self:SpellName(443888), abyssalInfusionCount)) -- Abyssal Infusion
+		self:ResumeBar(439299, CL.count:format(self:SpellName(439299), webBladesCount)) -- Web Blades
+	end
+	self:ResumeBar(444829, CL.count:format(self:SpellName(444829), queensSummonsCount)) -- Queen's Summons
+	self:ResumeBar(445422, CL.count:format(self:SpellName(445422), frothingGluttonyCount)) -- Frothing Gluttony
+	self:ResumeBar(438976, CL.count:format(self:SpellName(438976), royalCondemnationCount)) -- Royal Condemnation
 end
 
 do
@@ -821,14 +1135,13 @@ do
 			local icon = self:GetOption(abyssalInfusionMarker) and i or nil
 			if player == self:UnitName("player") then
 				local text = icon and CL.rticon:format(CL.portal, icon) or CL.portal
-				local msg = icon and CL.you_icon:format(CL.portal, icon) or nil
 				self:PlaySound(443888, "warning") -- position?
 				self:Say(443888, text, nil, icon and CL.rticon:format("Portal", icon) or "Portal")
 				self:SayCountdown(443888, 6, icon)
 			end
 			playerList[#playerList+1] = player
 			playerList[player] = icon
-			self:TargetsMessage(438976, "yellow", playerList, nil, CL.count:format(CL.portals, abyssalInfusionCount - 1), 2)
+			self:TargetsMessage(438976, "orange", playerList, nil, CL.count:format(CL.portals, abyssalInfusionCount - 1), 2)
 			self:CustomIcon(abyssalInfusionMarker, player, icon)
 		end
 	end
@@ -837,11 +1150,22 @@ do
 		playerList, iconList = {}, {}
 	end
 
+	function mod:AbyssalInfusionSuccess()
+		if self:LFR() then -- No AbyssalInfusionApplied in LFR
+			self:StopBar(CL.count:format(CL.portals, abyssalInfusionCount))
+			self:Message(443888, "orange", CL.count:format(CL.portals, abyssalInfusionCount))
+			abyssalInfusionCount = abyssalInfusionCount + 1
+			if abyssalInfusionCount < 5 then
+				self:Bar(443888, 80, CL.count:format(CL.portals, abyssalInfusionCount))
+			end
+		end
+	end
+
 	function mod:AbyssalInfusionApplied(args)
 		if not scheduled then
 			self:StopBar(CL.count:format(CL.portals, abyssalInfusionCount))
 			abyssalInfusionCount = abyssalInfusionCount + 1
-			if abyssalInfusionCount < (self:LFR() and 5 or 4) then
+			if abyssalInfusionCount <  4 then
 				self:Bar(443888, 80, CL.count:format(CL.portals, abyssalInfusionCount))
 			end
 			scheduled = self:ScheduleTimer("MarkAbyssalInfusionPlayers", 0.5)
@@ -851,11 +1175,18 @@ do
 			self:MarkAbyssalInfusionPlayers()
 		end
 	end
+
+	function mod:AbyssalInfusionRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(443888)
+		end
+		self:CustomIcon(abyssalInfusionMarker, args.destName)
+	end
 end
 
 function mod:AbyssalReverberationApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId) -- XXX Rename shorter / more clear?
+		self:PersonalMessage(args.spellId, nil, CL.bomb) -- XXX Rename shorter / more clear?
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -865,11 +1196,14 @@ function mod:FrothingGluttony(args)
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.frothing_gluttony, frothingGluttonyCount)))
 	self:PlaySound(args.spellId, "alert")
 	frothingGluttonyCount = frothingGluttonyCount + 1
-	-- 4th (5th in LFR) cast triggers Cataclysmic Evolution
-	local cataclysmicRequired = self:LFR() and 5 or 4
-	local cd = frothingGluttonyCount < cataclysmicRequired and 80 or 25.5
-	if self:Story() then
+	local cd
+	if self:Mythic() then
+		cd = timers[3][args.spellId][frothingGluttonyCount]
+	elseif self:Story() then
 		cd = 53
+	else
+		-- 4th (5th in LFR) cast triggers Cataclysmic Evolution
+		cd = frothingGluttonyCount < (self:LFR() and 5 or 4) and 80 or 25.5
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.frothing_gluttony, frothingGluttonyCount))
 end
@@ -886,7 +1220,7 @@ do
 	function mod:FrothVaporAppliedOnBoss(args)
 		stacks = args.amount or 1
 		if not scheduled then
-			scheduled = self:ScheduleTimer("FrothVaporStacksMessage", 0.4)
+			scheduled = self:ScheduleTimer("FrothVaporStacksMessage", 1)
 		end
 	end
 end
@@ -897,30 +1231,7 @@ function mod:QueensSummons(args)
 	self:PlaySound(args.spellId, "info")
 	queensSummonsCount = queensSummonsCount + 1
 	self:Bar(args.spellId, self:Story() and 53 or timers[3][args.spellId][queensSummonsCount], CL.count:format(CL.big_adds, queensSummonsCount))
-
-	queenSummonsCollector, queenSummonsMarks = {}, {}
-	if self:GetOption(queensSummonsMarker) then
-		self:RegisterTargetEvents("QueensSummonsMarking")
-	end
-end
-
-function mod:QueensSummonsMarking(_, unit, guid)
-	if queenSummonsCollector[guid] then
-		self:CustomIcon(queensSummonsMarker, unit, queenSummonsCollector[guid]) -- icon order from Dark Barrioer _APPLIED
-		queenSummonsCollector[guid] = nil
-	end
-end
-
-function mod:DarkBarrierApplied(args)
-	if self:GetOption(queensSummonsMarker) then
-		for i = 1, #addMarks do
-			if not queenSummonsCollector[args.destGUID] and not queenSummonsMarks[i] then
-				queenSummonsMarks[i] = args.destGUID
-				queenSummonsCollector[args.destGUID] = addMarks[i]
-				return
-			end
-		end
-	end
+	mobMarks[221863] = nil
 end
 
 function mod:AcolytesEssenceApplied(args)
@@ -933,19 +1244,14 @@ end
 function mod:NullDetonation(args)
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
 	if unit and not self:UnitBuff(unit, 445013) then -- Dark Barrier
-		local canDo, ready = self:Interrupter(args.sourceGUID)
-		if canDo then
-			self:Message(args.spellId, "orange")
-			if ready then
+		local isPossible, isReady = self:Interrupter(args.sourceGUID)
+		if isPossible then
+			self:Message(args.spellId, "yellow")
+			if isReady then
 				self:PlaySound(args.spellId, "alert")
 			end
 		end
 	end
-end
-
-function mod:RoyalCondemnation(args)
-	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.royal_condemnation, royalCondemnationCount)))
-	self:PlaySound(args.spellId, "alert")
 end
 
 do
@@ -964,7 +1270,6 @@ do
 			local icon = self:GetOption(royalCondemnationMarker) and iconOrder[i] or nil
 			if player == self:UnitName("player") then
 				local text = icon and CL.rticon:format(L.royal_condemnation, icon) or L.royal_condemnation
-				local msg = icon and CL.you_icon:format(L.royal_condemnation, icon) or nil
 				self:PlaySound(438976, "warning")
 				self:Say(438976, text, nil, icon and CL.rticon:format("Shackles", icon) or "Shackles")
 				self:SayCountdown(438976, 6, icon) -- projectile based both ways? z.z
@@ -986,12 +1291,12 @@ do
 			prev = args.time
 			self:StopBar(CL.count:format(L.royal_condemnation, royalCondemnationCount))
 			if self:Easy() then
-				self:Bar(438976, 6.2, CL.explosion) -- 6~6.5
+				self:Bar(441865, 6.2, CL.explosion) -- 6~6.5
 			else
-				self:Bar(438976, 8.3, CL.on_group:format(L.royal_condemnation))
+				self:Bar(441865, 8.3, CL.on_group:format(L.royal_condemnation))
 			end
 			royalCondemnationCount = royalCondemnationCount + 1
-			self:CDBar(438976, timers[3][438976][royalCondemnationCount], CL.count:format(L.royal_condemnation, royalCondemnationCount))
+			self:Bar(438976, timers[3][438976][royalCondemnationCount], CL.count:format(L.royal_condemnation, royalCondemnationCount))
 			playerList, iconList = {}, {}
 			if not scheduled then
 				scheduled = self:ScheduleTimer("MarkRoyalCondemnationPlayers", 0.5)
@@ -1003,14 +1308,12 @@ do
 			self:MarkRoyalCondemnationPlayers()
 		end
 	end
-end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if self:Story() and spellId == 438667 then -- Royal Condemnation
-		self:StopBar(CL.count:format(L.royal_condemnation, royalCondemnationCount))
-		royalCondemnationCount = royalCondemnationCount + 1
-		self:Bar(438976, 6, CL.explosion)
-		self:CDBar(438976, 53.0, CL.count:format(L.royal_condemnation, royalCondemnationCount))
+	function mod:RoyalCondemnationRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(438976)
+		end
+		self:CustomIcon(royalCondemnationMarker, args.destName)
 	end
 end
 
@@ -1038,10 +1341,10 @@ function mod:InfestApplied(args)
 	if unit and not self:Tanking(unit) then
 		self:PlaySound(443325, "warning") -- tauntswap
 	end
-	self:TargetBar(443325, 5, args.destName)
+	self:TargetBar(443325, self:Mythic() and 4 or 5, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(443325, CL.small_adds, nil, "Small Adds")
-		self:SayCountdown(443325, 5)
+		self:SayCountdown(443325, self:Mythic() and 4 or 5)
 	end
 end
 
@@ -1064,7 +1367,7 @@ do
 	function mod:GloomHatchlingAppliedOnBoss(args)
 		stacks = args.amount or 1
 		if not scheduled then
-			scheduled = self:ScheduleTimer("GloomHatchlingStacksMessage", 1)
+			scheduled = self:ScheduleTimer("GloomHatchlingStacksMessage", 2)
 		end
 	end
 end

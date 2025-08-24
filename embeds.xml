@@ -6,9 +6,14 @@
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 
 <!--@non-debug@
-<Include file="Libs\LibSpecialization\LibSpecialization.xml"/>
-<Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
-<Include file="Libs\LibDBIcon-1.0\lib.xml"/>
+<Script file="Libs\AceDB-3.0\AceDB-3.0.lua"/>
+<Script file="Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua"/>
+<Script file="Libs\LibSpecialization\LibSpecialization.lua"/>
+<Script file="Libs\LibKeystone\LibKeystone.lua"/>
+<Script file="Libs\LibLatency\LibLatency.lua"/>
+<Script file="Libs\LibDurability\LibDurability.lua"/>
+<Script file="Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
+<Script file="Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua"/>
 @end-non-debug@-->
 <!--@do-not-package@-->
 <Script file="Options\Libs\AceGUIWidget-SharedDropdown.lua"/>

@@ -1,4 +1,4 @@
-## Interface: 110005, 110000, 110002
+## Interface: 110205, 110107, 110200
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -15,6 +15,7 @@
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Author: Funkeh, Nebula, Justwait, Delk
 ## Version: @project-version@
+## LoadSavedVariablesFirst: 1
 
 ## X-Credits: Ammo, Elvador, Vhaarr
 ## X-Category: Raid
@@ -24,18 +25,23 @@
 ## X-WoWI-ID: 5086
 ## X-Wago-ID: 5NRegwG3
 
-## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0
+## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0, LibKeystone, LibLatency, LibDurability
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 embeds.xml
 Init.lua
 API.lua
-locales.xml
+
+Locales\enUS.lua
+Locales\enUS_common.lua
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\[TextLocale]_common.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
-AutoRole.lua
-LFGTimer.lua
+Tools\AutoRole.lua
+Tools\Keystones.lua
+Tools\LFGTimer.lua
 modules.xml
 bosses.xml

@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Wipe")
+local plugin, L = BigWigs:NewPlugin("Wipe")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
@@ -100,7 +99,9 @@ end
 function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 	if status == 0 and module then
 		if module:GetRespawnTime() and self.db.profile.respawnBar then
-			self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module:GetRespawnTime(), 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
+			local time = module:GetRespawnTime()
+			self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, time, 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
+			self:SendMessage("BigWigs_Timer", self, nil, time, time, L.respawn, 0, 236372, false, true)
 		end
 		if module:GetJournalID() or module:GetAllowWin() then
 			local soundName = self.db.profile.wipeSound

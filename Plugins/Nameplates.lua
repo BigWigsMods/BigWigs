@@ -2,14 +2,13 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Nameplates")
+local plugin, L = BigWigs:NewPlugin("Nameplates")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.nameplates
 
 local db = nil
@@ -32,15 +31,50 @@ local validGrowDirections = {
 	DOWN = L.DOWN,
 }
 local inverseAnchorPoint = {
-	TOPLEFT = "BOTTOMRIGHT",
-	TOPRIGHT = "BOTTOMLEFT",
-	BOTTOMLEFT = "TOPRIGHT",
-	BOTTOMRIGHT = "TOPLEFT",
-	TOP = "BOTTOM",
-	BOTTOM = "TOP",
-	LEFT = "RIGHT",
-	RIGHT = "LEFT",
-	CENTER = "CENTER",
+	LEFT = {
+		TOPLEFT = "BOTTOMRIGHT",
+		TOPRIGHT = "BOTTOMRIGHT",
+		BOTTOMLEFT = "TOPRIGHT",
+		BOTTOMRIGHT = "TOPRIGHT",
+		TOP = "BOTTOM",
+		BOTTOM = "TOP",
+		LEFT = "RIGHT",
+		RIGHT = "RIGHT",
+		CENTER = "CENTER",
+	},
+	RIGHT = {
+		TOPLEFT = "BOTTOMLEFT",
+		TOPRIGHT = "BOTTOMLEFT",
+		BOTTOMLEFT = "TOPLEFT",
+		BOTTOMRIGHT = "TOPLEFT",
+		TOP = "BOTTOM",
+		BOTTOM = "TOP",
+		LEFT = "LEFT",
+		RIGHT = "LEFT",
+		CENTER = "CENTER",
+	},
+	UP = {
+		TOPLEFT = "BOTTOMRIGHT",
+		TOPRIGHT = "BOTTOMLEFT",
+		BOTTOMLEFT = "BOTTOMRIGHT",
+		BOTTOMRIGHT = "BOTTOMLEFT",
+		TOP = "BOTTOM",
+		BOTTOM = "BOTTOM",
+		LEFT = "RIGHT",
+		RIGHT = "LEFT",
+		CENTER = "CENTER",
+	},
+	DOWN = {
+		TOPLEFT = "TOPRIGHT",
+		TOPRIGHT = "TOPLEFT",
+		BOTTOMLEFT = "TOPRIGHT",
+		BOTTOMRIGHT = "TOPLEFT",
+		TOP = "TOP",
+		BOTTOM = "TOP",
+		LEFT = "RIGHT",
+		RIGHT = "LEFT",
+		CENTER = "CENTER",
+	},
 }
 local glowValues = {
 	pixel = L.pixelGlow,
@@ -50,26 +84,8 @@ local glowValues = {
 }
 
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
-local GetCVar = C_CVar.GetCVar
-local findUnitByGUID
-do
-	local unitTable = {
-		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
-		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
-		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
-		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
-	}
-	local unitTableCount = #unitTable
-	findUnitByGUID = function(id)
-		for i = 1, unitTableCount do
-			local unit = unitTable[i]
-			local guid = plugin:UnitGUID(unit)
-			if guid == id then
-				return unit
-			end
-		end
-	end
-end
+local UnitCanAttack = BigWigsLoader.UnitCanAttack
+local UnitTokenFromGUID = BigWigsLoader.UnitTokenFromGUID
 
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 local glowFunctions = {
@@ -92,15 +108,21 @@ local glowStopFunctions = {
 local iconDefaults = {
 	iconGrowDirection = "LEFT",
 	iconGrowDirectionStart = "LEFT",
+	iconGrowDirectionTarget = "LEFT",
+	iconGrowDirectionStartTarget = "LEFT",
 	iconSpacing = 1,
-	iconWidth = 15,
-	iconHeight = 15,
+	iconSpacingTarget = 1,
 	iconOffsetX = 0,
 	iconOffsetY = 0,
-	iconAutoScale = true,
+	iconOffsetXTarget = 0,
+	iconOffsetYTarget = 0,
+	iconWidthTarget = 20,
+	iconHeightTarget = 20,
+	iconWidthOthers = 20,
+	iconHeightOthers = 20,
 	iconCooldownNumbers = true,
 	iconFontName = "Noto Sans Regular", -- Only dealing with numbers so we can use this on all locales
-	iconFontSize = 7,
+	iconFontSize = 8,
 	iconFontColor = {1, 1, 1, 1},
 	iconFontOutline = "OUTLINE",
 	iconFontMonochrome = false,
@@ -122,6 +144,7 @@ local iconDefaults = {
 	iconGlowAutoCastScale = 1,
 	iconGlowProcStartAnim = true,
 	iconGlowProcAnimDuration = 1,
+	iconGlowTimeLeft = 0,
 	iconBorder = true,
 	iconBorderSize = 1,
 	iconBorderColor = {0, 0, 0, 1},
@@ -142,6 +165,7 @@ local textDefaults = {
 }
 
 plugin.defaultDB = {
+	migratePosition = false,
 }
 for k, v in next, iconDefaults do
 	plugin.defaultDB[k] = v
@@ -152,6 +176,15 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
+
+	if not db.migratePosition then -- XXX temp
+		db.migratePosition = true
+		db.iconGrowDirectionTarget = db.iconGrowDirection
+		db.iconGrowDirectionStartTarget = db.iconGrowDirectionStart
+		db.iconSpacingTarget = db.iconSpacing
+		db.iconOffsetXTarget = db.iconOffsetX
+		db.iconOffsetYTarget = db.iconOffsetY
+	end
 
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
@@ -168,14 +201,29 @@ local function updateProfile()
 	if not validFramePoints[db.iconGrowDirectionStart] then
 		db.iconGrowDirectionStart = plugin.defaultDB.iconGrowDirectionStart
 	end
+	if not validGrowDirections[db.iconGrowDirectionTarget] then
+		db.iconGrowDirectionTarget = plugin.defaultDB.iconGrowDirectionTarget
+	end
+	if not validFramePoints[db.iconGrowDirectionStartTarget] then
+		db.iconGrowDirectionStartTarget = plugin.defaultDB.iconGrowDirectionStartTarget
+	end
 	if db.iconSpacing < 0 or db.iconSpacing > 20 then
 		db.iconSpacing = plugin.defaultDB.iconSpacing
 	end
-	if db.iconWidth < 8 or db.iconWidth > 50 then
-		db.iconWidth = plugin.defaultDB.iconWidth
+	if db.iconSpacingTarget < 0 or db.iconSpacingTarget > 20 then
+		db.iconSpacingTarget = plugin.defaultDB.iconSpacingTarget
 	end
-	if db.iconHeight < 8 or db.iconHeight > 50 then
-		db.iconHeight = plugin.defaultDB.iconHeight
+	if db.iconWidthTarget < 12 or db.iconWidthTarget > 50 then
+		db.iconWidthTarget = plugin.defaultDB.iconWidthTarget
+	end
+	if db.iconHeightTarget < 12 or db.iconHeightTarget > 50 then
+		db.iconHeightTarget = plugin.defaultDB.iconHeightTarget
+	end
+	if db.iconWidthOthers < 12 or db.iconWidthOthers > 50 then
+		db.iconWidthOthers = plugin.defaultDB.iconWidthOthers
+	end
+	if db.iconHeightOthers < 12 or db.iconHeightOthers > 50 then
+		db.iconHeightOthers = plugin.defaultDB.iconHeightOthers
 	end
 	if db.iconOffsetX < -100 or db.iconOffsetX > 100 then
 		db.iconOffsetX = plugin.defaultDB.iconOffsetX
@@ -183,10 +231,16 @@ local function updateProfile()
 	if db.iconOffsetY < -100 or db.iconOffsetY > 100 then
 		db.iconOffsetY = plugin.defaultDB.iconOffsetY
 	end
+	if db.iconOffsetXTarget < -100 or db.iconOffsetXTarget > 100 then
+		db.iconOffsetXTarget = plugin.defaultDB.iconOffsetXTarget
+	end
+	if db.iconOffsetYTarget < -100 or db.iconOffsetYTarget > 100 then
+		db.iconOffsetYTarget = plugin.defaultDB.iconOffsetYTarget
+	end
 	if not media:IsValid(FONT, db.iconFontName) then
 		db.iconFontName = plugin.defaultDB.iconFontName
 	end
-	if db.iconFontSize < 5 or db.iconFontSize > 200 then
+	if db.iconFontSize < 6 or db.iconFontSize > 200 then
 		db.iconFontSize = plugin.defaultDB.iconFontSize
 	end
 	for i = 1, 4 do
@@ -222,6 +276,9 @@ local function updateProfile()
 	end
 	if db.iconGlowProcAnimDuration < 0.1 or db.iconGlowProcAnimDuration > 3 then
 		db.iconGlowProcAnimDuration = plugin.defaultDB.iconGlowProcAnimDuration
+	end
+	if db.iconGlowTimeLeft < 0 or db.iconGlowTimeLeft > 3 then
+		db.iconGlowTimeLeft = plugin.defaultDB.iconGlowTimeLeft
 	end
 	if db.iconZoom < 0 or db.iconZoom > 0.5 then
 		db.iconZoom = plugin.defaultDB.iconZoom
@@ -272,7 +329,7 @@ local function updateProfile()
 	if not media:IsValid(FONT, db.textFontName) then
 		db.textFontName = plugin:GetDefaultFont()
 	end
-	if db.textFontSize < 5 or db.textFontSize > 200 then
+	if db.textFontSize < 10 or db.textFontSize > 200 then
 		db.textFontSize = plugin.defaultDB.textFontSize
 	end
 	for i = 1, 4 do
@@ -312,7 +369,7 @@ local function getTextFrame()
 		textFrame:SetPoint("CENTER")
 		textFrame:SetFrameStrata("MEDIUM")
 		textFrame:SetFixedFrameStrata(true)
-		textFrame:SetFrameLevel(300)
+		textFrame:SetFrameLevel(5600)
 		textFrame:SetFixedFrameLevel(true)
 
 		local fontString = textFrame:CreateFontString()
@@ -399,12 +456,13 @@ local function iconLoop(updater)
 		if db.iconCooldownNumbers then
 			iconFrame.countdownNumber:SetText(timeToDisplay)
 		end
+		if db.iconGlowTimeLeft > 0 and timeToDisplay <= db.iconGlowTimeLeft and not iconFrame.activeGlow then
+			iconFrame:StartGlow(db.iconExpireGlowType)
+		end
 	else
 		iconFrame.countdownNumber:Hide()
 		iconFrame.updater:Stop()
-		if iconFrame.hideOnExpire then
-			iconFrame:StopIcon()
-		elseif db.iconExpireGlow and not iconFrame.activeGlow then
+		if db.iconExpireGlow and not iconFrame.activeGlow then
 			iconFrame:StartGlow(db.iconExpireGlowType)
 		end
 	end
@@ -439,12 +497,11 @@ local function getIconFrame()
 	else
 		iconFrame = CreateFrame("Frame", nil, UIParent)
 		iconFrame:SetPoint("CENTER")
-		iconFrame:SetIgnoreParentScale(true)
 		iconFrame:SetFrameStrata("MEDIUM")
 		iconFrame:SetFixedFrameStrata(true)
-		iconFrame:SetFrameLevel(200)
-		iconFrame:SetFixedFrameLevel(true)
-		iconFrame:SetSize(db.iconWidth, db.iconHeight)
+		iconFrame:SetFrameLevel(5500)
+		iconFrame:SetClampedToScreen(true)
+		iconFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
 
 		local icon = iconFrame:CreateTexture()
 		icon:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark")
@@ -460,18 +517,10 @@ local function getIconFrame()
 		cooldown:SetDrawEdge(db.iconCooldownEdge)
 		cooldown:SetDrawSwipe(db.iconCooldownSwipe)
 		cooldown:SetReverse(db.iconCooldownInverse)
-		cooldown:SetFrameLevel(210)
-		cooldown:SetFixedFrameLevel(true)
 		cooldown:SetHideCountdownNumbers(true) -- Blizzard
 		cooldown.noCooldownCount = true -- OmniCC
 
-		local textFrame = CreateFrame("Frame", nil, iconFrame)
-		textFrame:SetAllPoints(iconFrame)
-		textFrame:SetPoint("CENTER")
-		textFrame:SetFrameLevel(220)
-		textFrame:SetFixedFrameLevel(true)
-
-		local countdownNumber = textFrame:CreateFontString()
+		local countdownNumber = cooldown:CreateFontString(nil, "OVERLAY")
 		countdownNumber:SetPoint("CENTER")
 		countdownNumber:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
 		countdownNumber:SetJustifyH("CENTER")
@@ -569,10 +618,6 @@ local function getIconFrame()
 		self.icon:SetDesaturated(desaturate)
 	end
 
-	function iconFrame:SetHideOnExpire(hideOnExpire)
-		self.hideOnExpire = hideOnExpire
-	end
-
 	function iconFrame:ShowBorder(show, color)
 		if show then
 			self.border:SetBackdrop(GetBorderBackdrop(db.iconBorderSize))
@@ -657,9 +702,9 @@ do
 		for guid, _ in next, nameplateTexts do
 			guids[guid] = true
 		end
-		for guid, _ in next, guids do
-			local unit = findUnitByGUID(guid)
-			if unit then
+		for guid in next, guids do
+			local unit = UnitTokenFromGUID(guid)
+			if unit and UnitCanAttack("player", unit) then -- Mind control protection
 				plugin:NAME_PLATE_UNIT_REMOVED(nil, unit)
 				plugin:NAME_PLATE_UNIT_ADDED(nil, unit)
 			end
@@ -694,15 +739,10 @@ do
 				func = function()
 					local guid = plugin:UnitGUID("target")
 					if guid and UnitCanAttack("player", "target") then
-						for i = 1, 40 do
-							local unit = ("nameplate%d"):format(i)
-							if plugin:UnitGUID(unit) == guid then
-								testCount = testCount + 1
-								local testNumber = (testCount%3)+1
-								local key = "test"..testNumber
-								startNameplateIcon(plugin, guid, key, random(50, 200)/10, testIcons[testNumber])
-							end
-						end
+						testCount = testCount + 1
+						local testNumber = (testCount%3)+1
+						local key = "test"..testNumber
+						startNameplateIcon(plugin, guid, key, math.random(50, 200)/10, testIcons[testNumber])
 					else
 						BigWigs:Print(L.noNameplateTestTarget)
 					end
@@ -753,18 +793,18 @@ do
 					resetNameplates()
 				end,
 				args = {
-					general = {
+					position = {
 						type = "group",
-						name = L.general,
+						name = L.position,
 						order = 1,
 						args = {
-							anchoringHeader = {
+							iconPositionTargetHeader = {
 								type = "header",
-								name = L.anchoring,
+								name = L.headerIconPositionTarget,
 								order = 1,
 								width = "full",
 							},
-							iconGrowDirectionStart = {
+							iconGrowDirectionStartTarget = {
 								type = "select",
 								values = validFramePoints,
 								name = L.growStartPosition,
@@ -772,7 +812,7 @@ do
 								order = 2,
 								width = 1.5,
 							},
-							iconGrowDirection = {
+							iconGrowDirectionTarget = {
 								type = "select",
 								name = L.growDirection,
 								desc = L.growDirectionDesc,
@@ -780,7 +820,7 @@ do
 								width = 1.5,
 								values = validGrowDirections,
 							},
-							iconOffsetX = {
+							iconOffsetXTarget = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
@@ -790,7 +830,7 @@ do
 								step = 1,
 								width = 1,
 							},
-							iconOffsetY = {
+							iconOffsetYTarget = {
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
@@ -800,7 +840,7 @@ do
 								step = 1,
 								width = 1,
 							},
-							iconSpacing = {
+							iconSpacingTarget = {
 								type = "range",
 								name = L.spacing,
 								desc = L.iconSpacingDesc,
@@ -810,41 +850,141 @@ do
 								step = 1,
 								width = 1,
 							},
-							iconHeader = {
-								type = "header",
-								name = L.icon,
-								order = 10,
+							spacer = {
+								type = "description",
+								name = "\n\n",
+								order = 7,
+								width = "full",
 							},
-							iconWidth = {
+							iconPositionOthersHeader = {
+								type = "header",
+								name = L.headerIconPositionOthers,
+								order = 8,
+							},
+							iconGrowDirectionStart = {
+								type = "select",
+								values = validFramePoints,
+								name = L.growStartPosition,
+								desc = L.growStartPositionDesc,
+								order = 9,
+								width = 1.5,
+							},
+							iconGrowDirection = {
+								type = "select",
+								name = L.growDirection,
+								desc = L.growDirectionDesc,
+								order = 10,
+								width = 1.5,
+								values = validGrowDirections,
+							},
+							iconOffsetX = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								order = 11,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconOffsetY = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								order = 12,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+							},
+							iconSpacing = {
+								type = "range",
+								name = L.spacing,
+								desc = L.iconSpacingDesc,
+								order = 13,
+								min = 0,
+								max = 20,
+								step = 1,
+								width = 1,
+							},
+						},
+					},
+					size = {
+						type = "group",
+						name = L.size,
+						order = 2,
+						args = {
+							iconSizeTargetHeader = {
+								type = "header",
+								name = L.headerIconSizeTarget,
+								order = 1,
+							},
+							iconWidthTarget = {
 								type = "range",
 								name = L.width,
-								order = 11,
-								min = 8,
+								order = 2,
+								min = 12,
 								max = 50,
 								step = 1,
-								width = 1,
+								width = 1.5,
 							},
-							iconHeight = {
+							iconHeightTarget = {
 								type = "range",
 								name = L.height,
-								order = 12,
-								min = 8,
+								order = 3,
+								min = 12,
 								max = 50,
 								step = 1,
-								width = 1,
+								width = 1.5,
 							},
+							spacer = {
+								type = "description",
+								name = "\n\n",
+								order = 4,
+								width = "full",
+							},
+							iconSizeOthersHeader = {
+								type = "header",
+								name = L.headerIconSizeOthers,
+								order = 5,
+							},
+							iconWidthOthers = {
+								type = "range",
+								name = L.width,
+								order = 6,
+								min = 12,
+								max = 50,
+								step = 1,
+								width = 1.5,
+							},
+							iconHeightOthers = {
+								type = "range",
+								name = L.height,
+								order = 7,
+								min = 12,
+								max = 50,
+								step = 1,
+								width = 1.5,
+							},
+						},
+					},
+					general = {
+						type = "group",
+						name = L.general,
+						order = 3,
+						args = {
 							iconAspectRatio = {
 								type = "toggle",
 								name = L.keepAspectRatio,
 								desc = L.keepAspectRatioDesc,
-								order = 13,
+								order = 1,
 								width = 1,
 							},
 							iconColor = {
 								type = "color",
 								name = L.iconColor,
 								desc = L.iconColorDesc,
-								order = 14,
+								order = 2,
 								hasAlpha = true,
 								width = 1,
 								get = function()
@@ -859,14 +999,14 @@ do
 								type = "toggle",
 								name = L.desaturate,
 								desc = L.desaturateDesc,
-								order = 15,
+								order = 3,
 								width = 1,
 							},
 							iconZoom = {
 								type = "range",
 								name = L.zoom,
 								desc = L.zoomDesc,
-								order = 16,
+								order = 4,
 								min = 0,
 								max = 0.5,
 								step = 0.01,
@@ -877,13 +1017,13 @@ do
 								type = "toggle",
 								name = L.showBorder,
 								desc = L.showBorderDesc,
-								order = 17,
+								order = 5,
 								width = 1,
 							},
 							iconBorderColor = {
 								type = "color",
 								name = L.borderColor,
-								order = 18,
+								order = 6,
 								hasAlpha = true,
 								width = 1,
 								disabled = function() return not db.iconBorder end,
@@ -898,7 +1038,7 @@ do
 							iconBorderSize = {
 								type = "range",
 								name = L.borderSize,
-								order = 19,
+								order = 7,
 								min = 1,
 								max = 5,
 								step = 1,
@@ -908,7 +1048,7 @@ do
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 100,
+								order = 8,
 							},
 							reset = {
 								type = "execute",
@@ -921,14 +1061,14 @@ do
 										plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
 									end
 								end,
-								order = 101,
+								order = 9,
 							},
 						},
 					},
 					cooldown = {
 						type = "group",
 						name = L.cooldown,
-						order = 2,
+						order = 4,
 						args = {
 							iconCooldownSwipe = {
 								type = "toggle",
@@ -1005,7 +1145,7 @@ do
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
 								order = 8,
-								softMax = 100, max = 200, min = 5, step = 1,
+								softMax = 100, max = 200, min = 6, step = 1,
 								disabled = checkCooldownTimerDisabled,
 							},
 							iconFontMonochrome = {
@@ -1020,7 +1160,7 @@ do
 					glow = {
 						type = "group",
 						name = L.glow,
-						order = 3,
+						order = 5,
 						args = {
 							iconExpireGlow = {
 								type = "toggle",
@@ -1143,18 +1283,42 @@ do
 								disabled = function() return not db.iconExpireGlow end,
 								hidden = function() return db.iconExpireGlowType ~= "pixel" end,
 							},
+							iconGlowTimeLeft = {
+								type = "range",
+								name = L.glowAt,
+								desc = L.glowAt_desc,
+								order = 12,
+								min = 0,
+								max = 3,
+								step = 1,
+								width = 2,
+							},
 						},
 					},
 					advanced = {
 						type = "group",
 						name = L.advanced,
-						order = 4,
+						order = 6,
 						args = {
-							iconAutoScale = {
-								type = "toggle",
-								name = L.autoScale,
-								desc = L.autoScaleDesc,
+							iconFrameStrata = {
+								type = "select",
+								values = {MEDIUM="MEDIUM"},
+								name = "Icon Strata (NYI)",
+								get = function() return "MEDIUM" end,
 								order = 1,
+								width = 2,
+								disabled = true,
+							},
+							iconFrameLevel = {
+								type = "range",
+								name = "Icon Level (NYI)",
+								get = function() return 5500 end,
+								order = 2,
+								min = 0,
+								max = 10000,
+								step = 1,
+								width = 2,
+								disabled = true,
 							},
 						},
 					},
@@ -1272,7 +1436,7 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 25,
-						softMax = 100, max = 200, min = 5, step = 1,
+						softMax = 100, max = 200, min = 10, step = 1,
 					},
 					textMonochrome = {
 						type = "toggle",
@@ -1334,77 +1498,115 @@ do
 		return timerKeys
 	end
 
-	rearrangeNameplateIcons = function(guid)
-		local unit = findUnitByGUID(guid)
-		if not unit then return end
-		local nameplate = GetNamePlateForUnit(unit)
+	rearrangeNameplateIcons = function(guid, nameplateFromStart)
 		local unitIcons = nameplateIcons[guid]
 		if unitIcons then
-			local sorted = getOrder(nameplateIcons[guid])
-			local offsetY = db.iconOffsetY
-			local offsetX = db.iconOffsetX
-			local growDirection = db.iconGrowDirection
-			local iconPoint = inverseAnchorPoint[db.iconGrowDirectionStart]
-			local nameplatePoint = db.iconGrowDirectionStart
-			for i, key in ipairs(sorted) do
-				local icon = unitIcons[key].nameplateFrame
+			local unit = UnitTokenFromGUID(guid)
+			if unit then
+				local nameplate = nameplateFromStart or GetNamePlateForUnit(unit)
+				if nameplate then
+					if guid == plugin:UnitGUID("target") then
+						local sorted = getOrder(nameplateIcons[guid])
+						local offsetY = db.iconOffsetYTarget
+						local offsetX = db.iconOffsetXTarget
+						local growDirection = db.iconGrowDirectionTarget
+						local iconPoint = inverseAnchorPoint[db.iconGrowDirectionTarget][db.iconGrowDirectionStartTarget]
+						local nameplatePoint = db.iconGrowDirectionStartTarget
+						for i, key in ipairs(sorted) do
+							local icon = unitIcons[key].nameplateFrame
 
-				if i > 1 then -- Only use setup offset for first icon
-					local growOffset = db.iconSpacing
-					if growDirection == "UP" then
-						growOffset = growOffset + db.iconHeight
-						offsetY = offsetY + growOffset
-					elseif growDirection == "DOWN" then
-						growOffset = -(growOffset + db.iconHeight)
-						offsetY = offsetY + growOffset
-					elseif growDirection == "LEFT" then
-						growOffset = -(growOffset + db.iconWidth)
-						offsetX = offsetX + growOffset
-					else -- RIGHT
-						growOffset = growOffset + db.iconWidth
-						offsetX = offsetX + growOffset
+							if i > 1 then -- Only use setup offset for first icon
+								local growOffset = db.iconSpacingTarget
+								if growDirection == "UP" then
+									growOffset = growOffset + db.iconHeightTarget
+									offsetY = offsetY + growOffset
+								elseif growDirection == "DOWN" then
+									growOffset = -(growOffset + db.iconHeightTarget)
+									offsetY = offsetY + growOffset
+								elseif growDirection == "LEFT" then
+									growOffset = -(growOffset + db.iconWidthTarget)
+									offsetX = offsetX + growOffset
+								else -- RIGHT
+									growOffset = growOffset + db.iconWidthTarget
+									offsetX = offsetX + growOffset
+								end
+							end
+
+							icon:ClearAllPoints()
+							icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
+						end
+					else
+						local sorted = getOrder(nameplateIcons[guid])
+						local offsetY = db.iconOffsetY
+						local offsetX = db.iconOffsetX
+						local growDirection = db.iconGrowDirection
+						local iconPoint = inverseAnchorPoint[db.iconGrowDirection][db.iconGrowDirectionStart]
+						local nameplatePoint = db.iconGrowDirectionStart
+						for i, key in ipairs(sorted) do
+							local icon = unitIcons[key].nameplateFrame
+
+							if i > 1 then -- Only use setup offset for first icon
+								local growOffset = db.iconSpacing
+								if growDirection == "UP" then
+									growOffset = growOffset + db.iconHeightOthers
+									offsetY = offsetY + growOffset
+								elseif growDirection == "DOWN" then
+									growOffset = -(growOffset + db.iconHeightOthers)
+									offsetY = offsetY + growOffset
+								elseif growDirection == "LEFT" then
+									growOffset = -(growOffset + db.iconWidthOthers)
+									offsetX = offsetX + growOffset
+								else -- RIGHT
+									growOffset = growOffset + db.iconWidthOthers
+									offsetX = offsetX + growOffset
+								end
+							end
+
+							icon:ClearAllPoints()
+							icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
+						end
 					end
 				end
-
-				icon:ClearAllPoints()
-				icon:SetPoint(iconPoint, nameplate, nameplatePoint, offsetX, offsetY)
 			end
 		end
 	end
 
-	rearrangeNameplateTexts = function(guid)
-		local unit = findUnitByGUID(guid)
-		if not unit then return end
-		local nameplate = GetNamePlateForUnit(unit)
+	rearrangeNameplateTexts = function(guid, nameplateFromStart)
 		local unitTexts = nameplateTexts[guid]
 		if unitTexts then
-			local sorted = getOrder(nameplateTexts[guid])
-			local offsetY = db.textOffsetY
-			local offsetX = db.textOffsetX
-			local growDirection = db.textGrowDirection
-			local textPoint = inverseAnchorPoint[db.textGrowDirectionStart]
-			local nameplatePoint = db.textGrowDirectionStart
-			for i, key in ipairs(sorted) do
-				local text = unitTexts[key].nameplateFrame
-				local w, h = text:GetSize()
-				if i > 1 then -- Only use setup offset after first icon
-					local growOffset = db.textSpacing
-					if growDirection == "UP" then
-						growOffset = growOffset + h
-						offsetY = offsetY + growOffset
-					elseif growDirection == "DOWN" then
-						growOffset = -(growOffset + h)
-						offsetY = offsetY + growOffset
-					elseif growDirection == "LEFT" then
-						growOffset = -(growOffset + w)
-						offsetX = offsetX + growOffset
-					else -- RIGHT
-						growOffset = growOffset + w
-						offsetX = offsetX + growOffset
+			local unit = UnitTokenFromGUID(guid)
+			if unit then
+				local nameplate = nameplateFromStart or GetNamePlateForUnit(unit)
+				if nameplate then
+					local sorted = getOrder(nameplateTexts[guid])
+					local offsetY = db.textOffsetY
+					local offsetX = db.textOffsetX
+					local growDirection = db.textGrowDirection
+					local textPoint = inverseAnchorPoint[db.textGrowDirection][db.textGrowDirectionStart]
+					local nameplatePoint = db.textGrowDirectionStart
+					for i, key in ipairs(sorted) do
+						local text = unitTexts[key].nameplateFrame
+						local w, h = text:GetSize()
+						if i > 1 then -- Only use setup offset after first icon
+							local growOffset = db.textSpacing
+							if growDirection == "UP" then
+								growOffset = growOffset + h
+								offsetY = offsetY + growOffset
+							elseif growDirection == "DOWN" then
+								growOffset = -(growOffset + h)
+								offsetY = offsetY + growOffset
+							elseif growDirection == "LEFT" then
+								growOffset = -(growOffset + w)
+								offsetX = offsetX + growOffset
+							else -- RIGHT
+								growOffset = growOffset + w
+								offsetX = offsetX + growOffset
+							end
+						end
+						text:ClearAllPoints()
+						text:SetPoint(textPoint, nameplate, nameplatePoint, offsetX, offsetY)
 					end
 				end
-				text:ClearAllPoints()
-				text:SetPoint(textPoint, nameplate, nameplatePoint, offsetX, offsetY)
 			end
 		end
 	end
@@ -1426,16 +1628,6 @@ local function nameplateTextCascadeDelete(guid, key)
 	if not next(nameplateTexts[guid]) then
 		nameplateTexts[guid] = nil
 	end
-end
-
-local function createDeletionTimer(frameInfo, remaining)
-	return C_Timer.NewTimer(remaining, function()
-		if frameInfo.text then
-			removeFrame(frameInfo)
-		else
-			nameplateIconCascadeDelete(frameInfo.unitGUID, frameInfo.key)
-		end
-	end)
 end
 
 function frameStopped(frame, isText)
@@ -1554,7 +1746,7 @@ end
 -- Start Nameplates
 --
 
-local function createNameplateText(module, guid, key, length, text)
+local function createNameplateText(_, guid, key, length, text)
 	local textFrame = getTextFrame()
 
 	textFrame:Set("bigwigs:key", key)
@@ -1566,23 +1758,18 @@ local function createNameplateText(module, guid, key, length, text)
 	return textFrame
 end
 
-local function createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+local function createNameplateIcon(module, guid, key, length, icon)
 	local iconFrame = getIconFrame()
-	local width = db.iconWidth
-	local height = db.iconHeight
-
-	iconFrame:SetSize(width, height)
-	if db.iconAutoScale then
-		local target = module:UnitGUID("target")
-		if guid == target then
-			iconFrame:SetScale(GetCVar("nameplateSelectedScale"))
-		else
-			iconFrame:SetScale(GetCVar("nameplateGlobalScale"))
-		end
+	local target = module:UnitGUID("target")
+	if guid == target then
+		iconFrame:SetSize(db.iconWidthTarget, db.iconHeightTarget)
+		iconFrame:SetFrameLevel(5555)
+	else
+		iconFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
+		iconFrame:SetFrameLevel(5500)
 	end
 	iconFrame:Set("bigwigs:key", key)
 	iconFrame:Set("bigwigs:unitGUID", guid)
-	iconFrame:SetHideOnExpire(hideOnExpire)
 	iconFrame:ShowBorder(db.iconBorder, db.iconBorderColor)
 
 	iconFrame:SetIcon(icon)
@@ -1612,7 +1799,7 @@ local function getLength(length)
 	return expirationTime, timerDuration
 end
 
-function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+function startNameplateIcon(module, guid, key, length, icon)
 	local time = GetTime()
 	local expirationTime, timerDuration = getLength(length)
 
@@ -1624,7 +1811,9 @@ function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 
 	plugin:StopNameplate(nil, module, guid, key)
 
-	nameplateIcons[guid] = nameplateIcons[guid] or {}
+	if not nameplateIcons[guid] then
+		nameplateIcons[guid] = {}
+	end
 	local frameInfo = {
 		module = module,
 		key = key,
@@ -1632,24 +1821,22 @@ function startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
 		exp = expirationTime,
 		icon = icon,
 		unitGUID = guid,
-		hideOnExpire = hideOnExpire,
 	}
 	nameplateIcons[guid][key] = frameInfo
 
-	local unit = findUnitByGUID(guid)
-	if unit then
-		local nameplateIcon = createNameplateIcon(module, guid, key, length, icon, hideOnExpire)
-		frameInfo.nameplateFrame = nameplateIcon
-		rearrangeNameplateIcons(guid)
-	elseif hideOnExpire then
-		local remaining = expirationTime - time
-		frameInfo.deletionTimer = createDeletionTimer(frameInfo, remaining)
+	local unit = UnitTokenFromGUID(guid)
+	if unit and UnitCanAttack("player", unit) then -- Mind control protection
+		local nameplate = GetNamePlateForUnit(unit)
+		if nameplate then
+			local nameplateIcon = createNameplateIcon(module, guid, key, length, icon)
+			frameInfo.nameplateFrame = nameplateIcon
+			rearrangeNameplateIcons(guid, nameplate)
+		end
 	end
 end
 
-function showNameplateText(module, guid, key, length, text, hideOnExpire)
+function showNameplateText(module, guid, key, length, text)
 	plugin:StopNameplate(nil, module, guid, key, text)
-	local time = GetTime()
 	local expirationTime, timerDuration = getLength(length)
 
 	nameplateTexts[guid] = nameplateTexts[guid] or {}
@@ -1660,30 +1847,27 @@ function showNameplateText(module, guid, key, length, text, hideOnExpire)
 		exp = expirationTime,
 		text = text,
 		unitGUID = guid,
-		hideOnExpire = hideOnExpire,
 	}
 	nameplateTexts[guid][key] = textInfo
 
-	if hideOnExpire then
-		local remaining = expirationTime - time
-		textInfo.deletionTimer = createDeletionTimer(textInfo, remaining)
-	end
-
-	local unit = findUnitByGUID(guid)
-	if unit then
-		local nameplateText = createNameplateText(module, guid, key, length, text, hideOnExpire)
-		textInfo.nameplateFrame = nameplateText
-		rearrangeNameplateTexts(guid)
+	local unit = UnitTokenFromGUID(guid)
+	if unit and UnitCanAttack("player", unit) then -- Mind control protection
+		local nameplate = GetNamePlateForUnit(unit)
+		if nameplate then
+			local nameplateText = createNameplateText(module, guid, key, length, text)
+			textInfo.nameplateFrame = nameplateText
+			rearrangeNameplateTexts(guid, nameplate)
+		end
 	end
 end
 
-function plugin:StartNameplate(_, module, guid, key, length, customIconOrText, hideOnExpire)
+function plugin:StartNameplate(_, module, guid, key, length, customIconOrText)
 	if not module:CheckOption(key, "NAMEPLATE") then return end
 	if not customIconOrText or type(customIconOrText) == "number" then
 		local icon = customIconOrText or module:SpellTexture(key)
-		startNameplateIcon(module, guid, key, length, icon, hideOnExpire)
+		startNameplateIcon(module, guid, key, length, icon)
 	elseif type(customIconOrText) == "string" then
-		showNameplateText(module, guid, key, length, customIconOrText, hideOnExpire)
+		showNameplateText(module, guid, key, length, customIconOrText)
 	end
 end
 
@@ -1692,12 +1876,7 @@ end
 --
 
 do
-	local function handleFrame(guid, frameInfo, inCombat)
-		if not inCombat and frameInfo.module ~= plugin then
-			-- Don't re-pop when you've wiped but do re-pop for test icons
-			plugin:StopNameplate(nil, frameInfo.module, guid, frameInfo.key, frameInfo.text)
-			return
-		end
+	local function handleFrame(guid, frameInfo)
 		local remainingTime = frameInfo.exp - GetTime()
 		if frameInfo.text then
 			local nameplateFrame = createNameplateText(
@@ -1705,8 +1884,7 @@ do
 				frameInfo.unitGUID,
 				frameInfo.key,
 				remainingTime,
-				frameInfo.text,
-				frameInfo.hideOnExpire
+				frameInfo.text
 			)
 			frameInfo.nameplateFrame = nameplateFrame
 		else
@@ -1715,8 +1893,7 @@ do
 				frameInfo.unitGUID,
 				frameInfo.key,
 				{remainingTime, frameInfo.length},
-				frameInfo.icon,
-				frameInfo.hideOnExpire
+				frameInfo.icon
 			)
 			frameInfo.nameplateFrame = nameplateFrame
 			if frameInfo.deletionTimer then
@@ -1728,45 +1905,41 @@ do
 
 	function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 		local guid = self:UnitGUID(unit)
-		local unitIcons = nameplateIcons[guid] or {}
-		local unitTexts = nameplateTexts[guid] or {}
-		local inCombat = UnitAffectingCombat(unit)
-		for _, frameInfo in next, unitIcons do
-			handleFrame(guid, frameInfo, inCombat)
+		local unitIcons = nameplateIcons[guid]
+		if unitIcons then
+			for _, frameInfo in next, unitIcons do
+				handleFrame(guid, frameInfo)
+			end
 		end
-		for _, frameInfo in next, unitTexts do
-			handleFrame(guid, frameInfo, inCombat)
+		local unitTexts = nameplateTexts[guid]
+		if unitTexts then
+			for _, frameInfo in next, unitTexts do
+				handleFrame(guid, frameInfo)
+			end
 		end
 		rearrangeNameplateIcons(guid)
 		rearrangeNameplateTexts(guid)
 	end
 end
 
-do
-	local function handleFrame(guid, frameInfo)
-		if frameInfo.nameplateFrame then
-			frameInfo.nameplateFrame:HideFrame()
-		end
-		if frameInfo.hideOnExpire and not frameInfo.text then
-			local remaining = frameInfo.exp - GetTime()
-			if remaining > 0 then
-				frameInfo.deletionTimer = createDeletionTimer(frameInfo, remaining)
-			else
-				nameplateIconCascadeDelete(guid, frameInfo.key)
+function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
+	local guid = self:UnitGUID(unit)
+	local unitIcons = nameplateIcons[guid]
+	if unitIcons then
+		for _, frameInfo in next, unitIcons do
+			if frameInfo.nameplateFrame then
+				frameInfo.nameplateFrame:HideFrame()
+				frameInfo.nameplateFrame = nil
 			end
 		end
-		frameInfo.nameplateFrame = nil
 	end
-
-	function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-		local guid = self:UnitGUID(unit)
-		local unitIcons = nameplateIcons[guid] or {}
-		local unitTexts = nameplateTexts[guid] or {}
-		for _, frameInfo in next, unitIcons do
-			handleFrame(guid, frameInfo)
-		end
+	local unitTexts = nameplateTexts[guid]
+	if unitTexts then
 		for _, frameInfo in next, unitTexts do
-			handleFrame(guid, frameInfo)
+			if frameInfo.nameplateFrame then
+				frameInfo.nameplateFrame:HideFrame()
+				frameInfo.nameplateFrame = nil
+			end
 		end
 	end
 end
@@ -1774,22 +1947,24 @@ end
 do
 	local prevTarget = nil
 	function plugin:PLAYER_TARGET_CHANGED()
-		if not db.iconAutoScale then return end
-
 		local guid = self:UnitGUID("target")
 		if nameplateIcons[guid] then
 			for _, tbl in next, nameplateIcons[guid] do
 				if tbl.nameplateFrame then
-					tbl.nameplateFrame:SetScale(GetCVar("nameplateSelectedScale"))
+					tbl.nameplateFrame:SetSize(db.iconWidthTarget, db.iconHeightTarget)
+					tbl.nameplateFrame:SetFrameLevel(5555)
 				end
 			end
+			rearrangeNameplateIcons(guid)
 		end
 		if prevTarget and nameplateIcons[prevTarget] then
 			for _, tbl in next, nameplateIcons[prevTarget] do
 				if tbl.nameplateFrame then
-					tbl.nameplateFrame:SetScale(GetCVar("nameplateGlobalScale"))
+					tbl.nameplateFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
+					tbl.nameplateFrame:SetFrameLevel(5500)
 				end
 			end
+			rearrangeNameplateIcons(prevTarget)
 		end
 		prevTarget = guid
 	end

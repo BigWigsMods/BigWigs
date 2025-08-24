@@ -37,6 +37,8 @@ if L then
 
 	L.custom_on_experimental_dosage_marks = "试验性剂量分配"
 	L.custom_on_experimental_dosage_marks_desc = "将受到“试验性剂量” 的玩家，按照 近战 > 远程 > 治疗 的优先顺序分配 {rt6}{rt4}{rt3}{rt7} 标记。 包含喊话和目标信息。"
+
+	L.volatile_concoction_explosion_desc = "当玩家受到“不稳定的混合物”的减益效果影响时，显示计时条。"
 end
 
 L = BigWigs:NewBossLocale("Nexus-Princess Ky'veza", "zhCN")
@@ -49,16 +51,21 @@ end
 L = BigWigs:NewBossLocale("The Silken Court", "zhCN")
 if L then
 	L.skipped_cast = "跳过 %s (%d)"
+	L.intermission_trigger = "巅峰之力！" -- Skeinspinner Takazj 100 energy yell
 
 	L.venomous_rain = "毒雨"
 	L.burrowed_eruption = "钻地"
 	L.stinging_swarm = "驱散减益"
 	L.strands_of_reality = "正面 [塔卡]" -- S for Skeinspinner Takazj 使用了首领名字前二个字“塔卡兹基”
+	L.strands_of_reality_message = "正面 [纺束者塔卡兹基]"
 	L.impaling_eruption = "正面 [阿努]" -- A for Anub'arash 使用了首领名字前二个字“阿努巴拉什”
+	L.impaling_eruption_message = "正面 [阿努巴拉什]"
 	L.entropic_desolation = "熵能"  --使用技能名称。
 	L.cataclysmic_entropy = "大爆炸" -- Interrupt before it casts
 	L.spike_eruption = "尖刺"
 	L.unleashed_swarm = "虫群"
+	L.void_degeneration = "蓝球"
+	L.burning_rage = "红球"
 end
 
 L = BigWigs:NewBossLocale("Queen Ansurek", "zhCN")
@@ -71,7 +78,6 @@ if L then
 	L.web_blades = "网刃"  -- 中文技能名称短直接使用技能名称
 	L.silken_tomb = "缠绕" -- Raid being rooted in place
 	L.wrest = "拉扯"
-	L.slow = "减速"
 	L.royal_condemnation = "镣铐"
 	L.frothing_gluttony = "能量环"
 

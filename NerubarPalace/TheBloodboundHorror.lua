@@ -46,7 +46,7 @@ function mod:GetOptions()
 		445570, -- Unseeming Blight
 		{445936, "CASTBAR"}, -- Spewing Hemorrhage
 		459444, -- Internal Hemorrhage
-		442530, -- Goresplatter
+		{442530, "CASTBAR"}, -- Goresplatter
 		443203, -- Crimson Rain
 		{443042, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Grasp From Beyond
 		445518, -- Black Blood
@@ -205,6 +205,7 @@ function mod:Goresplatter(args)
 	self:StopBar(CL.count:format(L.goresplatter, goresplatterCount))
 	self:Message(args.spellId, "red", CL.casting:format(L.goresplatter))
 	self:PlaySound(args.spellId, "warning")
+	self:CastBar(args.spellId, 8, CL.count:format(L.goresplatter, goresplatterCount))
 	goresplatterCount = goresplatterCount + 1
 	self:Bar(args.spellId, 128, CL.count:format(L.goresplatter, goresplatterCount))
 end

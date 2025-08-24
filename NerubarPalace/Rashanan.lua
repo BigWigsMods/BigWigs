@@ -250,33 +250,33 @@ function mod:SavageAssault(args)
 	savageAssaultCount = savageAssaultCount + 1
 
 	-- XXX frequently skipped the follow up cast in testing, but seems fine now
-	local cd
+	local duration
 	if self:Mythic() then
 		if self:GetStage() == 1 then
 			local timer = { 5.6, 22.6, 2.0, 12.9, 2.5 }
-			cd = timer[savageAssaultCount]
+			duration = timer[savageAssaultCount]
 		else
 			local timer = { 9.8, 2.0, 18.0, 2.0, 11.8, 2.5 }
-			cd = timer[savageAssaultCount]
+			duration = timer[savageAssaultCount]
 		end
 	elseif self:Heroic() then
 		if self:GetStage() == 1 then
 			local timer = { 10.5, 14.8, 23.1, 6.5, 14.8 }
-			cd = timer[savageAssaultCount]
+			duration = timer[savageAssaultCount]
 		else
 			local timer = { 11.1, 14.8, 23.7, 5.9, 14.8, 3.7 }
-			cd = timer[savageAssaultCount]
+			duration = timer[savageAssaultCount]
 		end
 	else -- Easy
 		if self:GetStage() == 1 then
 			local timer = { 10.9, 15.7, 23.6, 7.8, 15.7 }
-			cd = timer[savageAssaultCount]
+			duration = timer[savageAssaultCount]
 		else
 			local timer = { 3.6, 7.8, 15.7, 23.5, 7.8, 15.7 }
-			cd = timer[savageAssaultCount]
+			duration = timer[savageAssaultCount]
 		end
 	end
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, savageAssaultCount))
+	self:Bar(args.spellId, duration, CL.count:format(args.spellName, savageAssaultCount))
 end
 
 function mod:SavageWoundApplied(args)
@@ -358,23 +358,23 @@ function mod:ErosiveSpray(args)
 	erosiveSprayCount[1] = erosiveSprayCount[1] + 1 -- Total
 	erosiveSprayCount[2] = erosiveSprayCount[2] + 1 -- Stage
 
-	local cd = 0
+	local duration = 0
 	if self:GetStage() == 1 then -- 3 casts before the first move
 		if self:Easy() then
 			local timer = { 3.0, 31.4, 47.1 }
-			cd = timer[erosiveSprayCount[2]]
+			duration = timer[erosiveSprayCount[2]]
 		elseif self:Mythic() then
 			if erosiveSprayCount[2] == 2 then -- only 2
-				cd = 40.0
+				duration = 40.0
 			end
 		else
 			local timer = { 3.0, 29.6, 44.4 }
-			cd = timer[erosiveSprayCount[2]]
+			duration = timer[erosiveSprayCount[2]]
 		end
 	elseif erosiveSprayCount[2] == 2 then -- then 2 per
-		cd = self:Mythic() and 25.0 or self:Easy() and 47.0 or 44.4
+		duration = self:Mythic() and 25.0 or self:Easy() and 47.0 or 44.4
 	end
-	self:Bar(args.spellId, cd, CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
+	self:Bar(args.spellId, duration, CL.count:format(L.erosive_spray, erosiveSprayCount[1]))
 end
 
 function mod:TackyBurst(args)

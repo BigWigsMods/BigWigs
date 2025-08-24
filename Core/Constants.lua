@@ -14,7 +14,7 @@ local descriptions = {}
 
 local GetSpellDescription, GetSpellName, GetSpellTexture = BigWigsLoader.GetSpellDescription, BigWigsLoader.GetSpellName, BigWigsLoader.GetSpellTexture
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
-local C_EncounterJournal_GetSectionInfo = BigWigsLoader.isCata and function(key)
+local C_EncounterJournal_GetSectionInfo = (BigWigsLoader.isCata or BigWigsLoader.isMists) and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end or BigWigsLoader.isRetail and C_EncounterJournal and C_EncounterJournal.GetSectionInfo or function(key)
 	return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
@@ -38,57 +38,6 @@ end
 local listToggles = { "BAR", "FLASH", "MESSAGE", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "ALTPOWER", "VOICE", "INFOBOX" }
 local roleToggles = { "TANK", "HEALER", "TANK_HEALER", "DISPEL" }
 -- NOTE: The toggle "OFF" is also valid for entirely disabling an option by default
-
-local used = nil
-function BigWigs:RegisterOption(key, name, desc)
-	if C[key] then error("Don't do that again!") end
-
-	-- Build a list of used shift indexes
-	if not used then
-		used = {}
-		for k, i in next, self.db.global.optionShiftIndexes do
-			used[i] = k
-		end
-		for i, k in next, coreToggles do
-			used[i - 1] = k
-		end
-	end
-
-	if self.db.global.optionShiftIndexes[key] then
-		local index = self.db.global.optionShiftIndexes[key]
-		if used[index] and used[index] ~= key then
-			error("Bit field shift indexes are not consistent with the stored data. BigWigs should automatically handle this, but at the moment it does not. Boss options might be completely fubar at the moment. Have fun.")
-		end
-		-- Use the stored shift index
-		C[key] = lshift(1, self.db.global.optionShiftIndexes[key])
-	else
-		-- Find the next free shift index
-		local nextShiftIndex = nil
-		for i = 10, 63 do
-			if not used[i] then
-				nextShiftIndex = i
-				break
-			end
-		end
-		for i, k in next, used do
-			if k == key then
-				error("That's weird, we seem to have a stored shift index for this key already.")
-				break
-			end
-		end
-
-		if not nextShiftIndex then error("BigWigs will now blow up. Please consult your local IT technician.") end
-		used[nextShiftIndex] = key
-		self.db.global.optionShiftIndexes[key] = nextShiftIndex
-		C[key] = lshift(1, nextShiftIndex)
-	end
-
-	if name and desc then
-		names[key] = name
-		descriptions[key] = desc
-		listToggles[#listToggles + 1] = key
-	end
-end
 
 function BigWigs:GetOptionDetails(key)
 	return names[key], descriptions[key]
@@ -161,6 +110,7 @@ local customBossOptions = { -- Adding core generic toggles
 	warmup = {L.warmup, L.warmup_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Warmup"},
 	adds = {L.adds, L.adds_desc, false},
 	health = {L.health, L.health_desc, false},
+	energy = {L.energy, L.energy_desc, false},
 }
 
 local function getIcon(icon, module, option)
@@ -196,7 +146,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 		optionType = type(option)
 	end
 
-	local alternativeName = module.altNames and module.altNames[option]
+	local optionNotes = module.notes and module.notes[option]
 	local moduleLocale = module:GetLocale(true)
 
 	if optionType == "string" then
@@ -231,7 +181,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 
 		local icon = getIcon(moduleLocale[option .. "_icon"], module, option)
 
-		return option, title, description, icon, alternativeName
+		return option, title, description, icon, optionNotes
 	elseif optionType == "number" then
 		if option > 0 then
 			local spellName = GetSpellName(option)
@@ -263,7 +213,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 				icon = getIcon(iconReplacement, module, option)
 			end
 			local roleDesc = getRoleStrings(module, option)
-			return option, spellName, roleDesc..desc, icon, alternativeName
+			return option, spellName, roleDesc..desc, icon, optionNotes
 		else
 			-- This is an EncounterJournal ID
 			local tbl = C_EncounterJournal_GetSectionInfo(-option)
@@ -277,7 +227,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 			end
 
 			local roleDesc = getRoleStrings(module, option)
-			return option, title, roleDesc..description, abilityIcon or false, alternativeName
+			return option, title, roleDesc..description, abilityIcon or false, optionNotes
 		end
 	end
 end

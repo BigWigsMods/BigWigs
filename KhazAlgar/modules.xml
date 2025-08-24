@@ -3,8 +3,12 @@
 
 <Script file="AggregationOfHorrors.lua"/>
 <Script file="Shurrai.lua"/>
+<Script file="Orta.lua"/>
+<Script file="Kordac.lua"/>
+<Script file="Gobfather.lua"/>
+<Script file="Reshanor.lua"/>
 
 <Include file="Locales\locales.xml"/>
-<Include file="Options\options.xml"/>
+<Script file="!Options.lua"/>
 
 </Ui>

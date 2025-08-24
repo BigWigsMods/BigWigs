@@ -1,4 +1,4 @@
-## Interface: 110005, 110000, 110002
+## Interface: 110205, 110107, 110200
 
 ## Title: BigWigs [|cffeda55fKhaz Algar|r]
 ## Title-deDE: BigWigs [|cffeda55fKhaz Algar|r]
@@ -30,6 +30,14 @@
 
 ## X-Category: Raid
 ## X-BigWigs-ExtraMenu: -2274
-## X-BigWigs-LoadOn-WorldBoss: -2214, 220999, -2215, 221224
+## X-BigWigs-LoadOn-WorldBoss: -2214, 220999, -2215, 221224, -2213, 221067, -2248, 221084, -2346, 231821, -2371, 238319
 
-modules.xml
+AggregationOfHorrors.lua
+Shurrai.lua
+Orta.lua
+Kordac.lua
+Gobfather.lua
+Reshanor.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua

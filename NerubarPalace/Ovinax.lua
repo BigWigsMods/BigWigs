@@ -41,6 +41,9 @@ if L then
 
 	L.custom_on_experimental_dosage_marks = "Experimental Dosage assignments"
 	L.custom_on_experimental_dosage_marks_desc = "Assign players affected by 'Experimental Dosage' to {rt6}{rt4}{rt3}{rt7} with a melee > ranged > healer priority. Affects Say and Target messages."
+
+	L.volatile_concoction_explosion = mod:SpellName(441362)
+	L.volatile_concoction_explosion_desc = "Show a target bar for the Volatile Concoction debuff."
 end
 
 --------------------------------------------------------------------------------
@@ -63,6 +66,7 @@ function mod:GetOptions()
 		{446349, "SAY", "ME_ONLY_EMPHASIZE"}, -- Sticky Web
 			446351, -- Web Eruption
 		{441362, "TANK_HEALER"}, -- Volatile Concoction
+			"volatile_concoction_explosion",
 		-- Adds
 		458212, -- Necrotic Wound
 		446700, -- Poison Burst
@@ -77,6 +81,7 @@ function mod:GetOptions()
 		[442432] = L.ingest_black_blood, -- Ingest Black Blood (Next Container)
 		[443274] = L.unstable_infusion, -- Unstable Infusion (Swirls)
 		[446349] = L.sticky_web, -- Sticky Web (Webs)
+		["volatile_concoction_explosion"] = CL.explosion, -- Volatile Concoction Explosion
 	}
 end
 
@@ -191,7 +196,6 @@ end
 
 do
 	local playerList, iconList = {}, {}
-	local prev = 0
 	local scheduled = nil
 	local markOrder = { 6, 6, 4, 4, 3, 3, 7, 7 } -- blue, green, purple, red (wm 1-4)
 
@@ -216,13 +220,6 @@ do
 		for i = 1, #iconList do
 			local player = iconList[i].player
 			local icon = self:GetOption("custom_on_experimental_dosage_marks") and (self:Mythic() and markOrder[i] or markOrder[(i * 2) - 1]) or nil
-			if player == self:UnitName("player") then
-				local text = icon and CL.rticon:format(L.experimental_dosage_say, icon) or L.experimental_dosage_say
-				self:Message(442526, "blue", text)
-				self:PlaySound(442526, "warning")
-				self:Say(442526, text, nil, icon and CL.rticon:format("Break Egg", icon) or "Break Egg")
-				self:SayCountdown(442526, self:Easy() and 10 or self:Mythic() and 6 or 8, icon)
-			end
 			-- 8 names in mythic may be a bit much, maybe infobox (bleh)?
 			playerList[#playerList+1] = player
 			playerList[player] = icon
@@ -230,14 +227,22 @@ do
 			if not self:Mythic() then
 				self:CustomIcon(experimentalDosageMarker, player, icon)
 			end
+			if player == self:UnitName("player") then
+				local text = icon and CL.rticon:format(L.experimental_dosage_say, icon) or L.experimental_dosage_say
+				self:Message(442526, "blue", text)
+				self:Say(442526, text, nil, icon and CL.rticon:format("Break Egg", icon) or "Break Egg")
+				self:SayCountdown(442526, self:Easy() and 10 or 8, icon)
+				self:PlaySound(442526, "warning")
+			end
 		end
 	end
 
 	function mod:ExperimentalDosage(args)
+		playerList, iconList = {}, {}
+
 		self:StopBar(CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.experimental_dosage, experimentalDosageCount)))
-		self:PlaySound(args.spellId, "alert")
-		local debuffDuration = self:Easy() and 10 or self:Mythic() and 6 or 8
+		local debuffDuration = self:Easy() and 10 or 8
 		self:Bar(args.spellId, 1.5 + debuffDuration, CL.count:format(CL.adds, experimentalDosageCount)) -- 1.5s Cast + debuffDuration
 		experimentalDosageCount = experimentalDosageCount + 1
 
@@ -245,10 +250,10 @@ do
 			self:Bar(args.spellId, 50.0, CL.count:format(L.experimental_dosage, experimentalDosageCount))
 		end
 
-		playerList, iconList = {}, {}
 		if not scheduled then
 			scheduled = self:ScheduleTimer("MarkPlayers", 1.8) -- 1.5s cast
 		end
+		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:ExperimentalDosageApplied(args)
@@ -283,7 +288,7 @@ end
 function mod:IngestBlackBlood(args)
 	self:StopBar(CL.count:format(L.ingest_black_blood, ingestBlackBloodCount))
 	self:Message(args.spellId, "cyan", CL.count:format(L.ingest_black_blood, ingestBlackBloodCount))
-	self:PlaySound(args.spellId, "long")
+
 	ingestBlackBloodCount = ingestBlackBloodCount + 1
 
 	local cd = 165
@@ -297,6 +302,7 @@ function mod:IngestBlackBlood(args)
 	if not self:Easy() then
 		self:ResumeBar(446349, CL.count:format(L.sticky_web, stickyWebCount)) -- Sticky Web
 	end
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:SanguineOverflowApplied(args)
@@ -340,8 +346,8 @@ do
 		if self:Me(args.destGUID)  then
 			prevOnMe = args.time
 			self:PersonalMessage(args.spellId, nil, L.sticky_web)
-			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, L.sticky_web_say, nil, "Web")
+			self:PlaySound(args.spellId, "warning")
 		end
 	end
 
@@ -365,7 +371,7 @@ end
 
 function mod:VolatileConcoctionApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, volatileConcoctionCount - 1))
-	self:TargetBar(args.spellId, 8, args.destName)
+	self:TargetBar("volatile_concoction_explosion", 8, args.destName, CL.explosion, args.spellId)
 	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
 		self:PlaySound(args.spellId, "warning") -- Taunt
@@ -375,7 +381,7 @@ function mod:VolatileConcoctionApplied(args)
 end
 
 function mod:VolatileConcoctionRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(CL.explosion, args.destName)
 end
 
 function mod:NecroticWoundApplied(args)

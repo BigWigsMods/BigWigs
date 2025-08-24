@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Proximity")
+local plugin, L = BigWigs:NewPlugin("Proximity")
 if not plugin then return end
 
 plugin.defaultDB = {
@@ -35,7 +35,6 @@ plugin.defaultDB = {
 
 local db = nil
 
-local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.proximity_name
 local L_proximityTitle = L.proximityTitle
 
@@ -73,7 +72,6 @@ local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
 local next, type, tonumber = next, type, tonumber
 
 local combatText = GARRISON_LANDING_STATUS_MISSION_COMBAT or "In Combat"
-local isWrath = BigWigsLoader.isWrath
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
@@ -169,7 +167,7 @@ do
 	end
 
 	function isInRange(unit)
-		if activeRangeChecker and (isWrath or not InCombatLockdown()) then
+		if activeRangeChecker and not InCombatLockdown() then
 			return activeRangeChecker(unit)
 		end
 	end
@@ -195,8 +193,6 @@ local function onDragStop(self)
 	db.posy = self:GetTop() * s
 	plugin:UpdateGUI() -- Update X/Y if GUI is open.
 end
-local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
-local function OnDragHandleMouseUp(self) self.frame:StopMovingOrSizing() end
 local function onResize(self, width, height)
 	db.width = width
 	db.height = height
@@ -252,13 +248,13 @@ function plugin:RestyleWindow()
 		end
 	end
 	proxAnchor.text:SetFont(media:Fetch(FONT, db.fontName), db.fontSize)
-	if db.lock then
-		locked = nil
-		lockDisplay()
-	else
+	--if db.lock then
+	--	locked = nil
+	--	lockDisplay()
+	--else
 		locked = true
 		unlockDisplay()
-	end
+	--end
 
 	local x = db.posx
 	local y = db.posy
@@ -315,7 +311,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cff777777:-)|r")
@@ -338,7 +334,7 @@ do
 	function targetProximityText()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif isInRange(proximityPlayer) then
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -375,7 +371,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cff777777:-)|r")
@@ -410,7 +406,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			proxAnchor.text:SetText("|cffff0202> STACK <|r") -- XXX localize or remove?
@@ -432,7 +428,7 @@ do
 	function reverseTargetProximityText()
 		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif isInRange(proximityPlayer) then
 			proxTitle:SetFormattedText(L_proximityTitle, activeRange, 1)
@@ -467,7 +463,7 @@ do
 
 		proxTitle:SetFormattedText(L_proximityTitle, activeRange, anyoneClose)
 
-		if InCombatLockdown() and not isWrath then
+		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
 		elseif anyoneClose == 0 then
 			tinsert(tooClose, 1, "|cffff0202> STACK <|r") -- XXX localize or remove?
@@ -595,21 +591,24 @@ do
 		proxAnchor.text = text
 
 		local drag = CreateFrame("Frame", nil, proxAnchor)
-		drag.frame = proxAnchor
 		drag:SetWidth(16)
 		drag:SetHeight(16)
-		drag:SetPoint("BOTTOMRIGHT", proxAnchor, -1, 1)
+		drag:SetPoint("BOTTOMRIGHT", -1, 1)
 		drag:EnableMouse(true)
-		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
-		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
+		drag:SetScript("OnMouseDown", function(self) self:GetParent():StartSizing("BOTTOMRIGHT") GameTooltip:Hide() end)
+		drag:SetScript("OnMouseUp", function(self) self:GetParent():StopMovingOrSizing() end)
+		drag:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+			GameTooltip:SetText(L.dragToResize)
+			GameTooltip:Show()
+		end)
+		drag:SetScript("OnLeave", onControlLeave)
 		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")
 		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
-		tex:SetWidth(16)
-		tex:SetHeight(16)
+		tex:SetAllPoints(drag)
 		tex:SetBlendMode("ADD")
-		tex:SetPoint("CENTER", drag)
 
 		plugin:RestyleWindow()
 
@@ -969,7 +968,7 @@ do
 
 		functionToFire = nil -- Kill previous updater
 		self:CancelTimer(updateTimer)
-		updateTimer = self:ScheduleTimer(openProx, 0.1, self, range, module, key, player, isReverse, spellName, spellIcon)
+		updateTimer = self:ScheduleTimer(function() openProx(self, range, module, key, player, isReverse, spellName, spellIcon) end, 0.1)
 	end
 end
 
@@ -977,7 +976,7 @@ end
 -- Slash command
 --
 
-SlashCmdList.BigWigs_Proximity = function(input)
+local function slash(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	input = input:lower()
 	local range, reverse = input:match("^(%d+)%s*(%S*)$")
@@ -998,5 +997,5 @@ SlashCmdList.BigWigs_Proximity = function(input)
 	end
 end
 
-SLASH_BigWigs_Proximity1 = "/proximity"
-SLASH_BigWigs_Proximity2 = "/range"
+BigWigsAPI.RegisterSlashCommand("/proximity", slash)
+BigWigsAPI.RegisterSlashCommand("/range", slash)

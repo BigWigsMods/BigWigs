@@ -28,11 +28,11 @@ local timersNormal = { -- 8:26
 	[442428] = {43.3, 40.1, 55.9, 40.0, 58.2, 40.1, 58.2, 40.0, 58.3, 40.0}, -- Decimate
 	[439559] = {36.2, 52.3, 42.5, 53.4, 44.9, 53.4, 44.9, 53.4, 44.9, 53.4}, -- Rain of Arrows
 }
-local timersHeroic = { -- 5:22
-	[439511] = {6.2, 23.2, 23.1, 22.7, 27.2, 23.1, 22.8, 23.1, 30.4, 23.1, 23.1, 23.1, 27.9, 22.7}, -- Captain's Flourish
-	[433517] = {14.3, 45.5, 51.1, 42.3, 57.1, 42.5, 54.7}, -- Phase Blades
-	[442428] = {42.5, 38.5, 59.7, 39.0, 58.3, 38.9}, -- Decimate
-	[439559] = {35.4, 53.2, 43.0, 53.2, 44.9, 53.5}, -- Rain of Arrows
+local timersHeroic = { -- 8:29
+	[439511] = {7.1, 23.1, 23.1, 23.0, 25.5, 23.1, 23.1, 23.1, 29.1, 23.0, 23.1, 23.1, 29.2, 23.1, 23.0, 23.1, 29.1, 23.1, 23.1, 23.1, 28.7}, -- Captain's Flourish
+	[433517] = {18.9, 46.1, 49.8, 42.6, 55.8, 42.5, 55.9, 42.5, 55.9, 42.5, 55.9}, -- Phase Blades
+	[442428] = {43.4, 38.8, 57.1, 40.0, 58.2, 40.1, 58.3, 40.1, 58.3, 40.1}, -- Decimate
+	[439559] = {35.1, 52.2, 43.8, 53.4, 44.8, 53.4, 44.9, 53.4, 44.9, 53.4}, -- Rain of Arrows
 }
 local timersMythic = { -- 8:08
 	[439511] = {6.9, 25.8, 25.1, 25.7, 18.7, 28.1, 28.0, 27.1, 15.8, 28.1, 28.1, 27.3, 15.3, 28.2, 27.1, 28.0, 15.4, 28.1, 27.2, 28.0}, -- Captain's Flourish
@@ -48,6 +48,7 @@ local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or t
 
 function mod:GetOptions()
 	return {
+		"berserk",
 		{433517, "PRIVATE"}, -- Phase Blades
 			434860, -- Cosmic Wound
 		{442428, "PRIVATE"}, -- Decimate
@@ -88,6 +89,10 @@ function mod:OnEngage()
 	shatteringSweepCount = 1
 	captainsFlourishCount = 1
 	rainOfArrowsCount = 1
+
+	if not self:Easy() then
+		self:Berserk(self:Mythic() and 481 or 391, true)
+	end
 
 	self:CDBar(439511, timers[439511][1], CL.count:format(CL.tank_combo, captainsFlourishCount)) -- Captain's Flourish
 	self:CDBar(433517, timers[433517][1], CL.count:format(CL.charge, phaseBladesCount)) -- Phase Blades
