@@ -139,8 +139,10 @@ function mod:VoidbladeAmbushTargetApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1227048, nil, L.voidblade_ambush)
 		self:PlaySound(1227048, "warning", nil, args.destName) -- position yourself
-		self:Say(1227048, L.voidblade_ambush, nil, "Ambush")
-		self:SayCountdown(1227048, 4) -- XXX 3 is tooltip on wowhead, changed?
+		if not self:Easy() then
+			self:Say(1227048, L.voidblade_ambush, nil, "Ambush")
+			self:SayCountdown(1227048, 4) -- XXX 3 is tooltip on wowhead, changed?
+		end
 	end
 end
 
@@ -189,8 +191,10 @@ do
 			local englishSayText = icon and CL.rticon:format(englishText, icon) or englishText
 			self:PersonalMessage(args.spellId, nil, L.soulfray_annihilation)
 			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
-			self:Say(args.spellId, sayText, nil, englishSayText)
-			self:SayCountdown(args.spellId, 6, icon)
+			if not self:LFR() then
+				self:Say(args.spellId, sayText, nil, englishSayText)
+				self:SayCountdown(args.spellId, 6, icon)
+			end
 		end
 		if icon then
 			self:CustomIcon(soulfrayAnnihilationMarker, args.destName, icon)
