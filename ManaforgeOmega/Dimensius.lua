@@ -178,7 +178,7 @@ function mod:GetOptions()
 			1237694, -- Mass Ejection (Artoshion)
 			1237695, -- Stardust Nova (Pargoth)
 		-- Mythic
-			1249423, -- Mass Destruction (Artoshion)
+			{1249423, "SAY", "SAY_COUNTDOWN"}, -- Mass Destruction (Artoshion)
 			1251619, -- Starshard Nova (Pargoth)
 		1234242, -- Gravitational Distortion
 			1234243, -- Crushing Gravity
