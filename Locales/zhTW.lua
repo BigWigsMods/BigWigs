@@ -285,7 +285,7 @@ L.autoRoleExplainer = "當你加入隊伍或是在隊伍中更換專精時，Big
 -- Keystones.lua
 --
 
-L.keystoneTitle = "BigWigs 鑰石資訊"
+L.keystoneTitle = "BigWigs 鑰石清單"
 L.keystoneHeaderParty = "隊伍"
 L.keystoneRefreshParty = "更新隊伍"
 L.keystoneHeaderGuild = "公會"
@@ -304,7 +304,7 @@ L.keystoneTeleportReady = "傳送法術「|cFFFFFFFF%s|r」已|cFF33FF99就緒|r
 L.keystoneTeleportInCombat = "戰鬥中無法傳送。"
 L.keystoneTabHistory = "歷史"
 L.keystoneHeaderThisWeek = "本周"
---L.keystoneHeaderOlder = "Older"
+L.keystoneHeaderOlder = "先前"
 L.keystoneScoreTooltip = "地城分數：|cFFFFFFFF%d|r"
 L.keystoneScoreGainedTooltip = "獲得分數：|cFFFFFFFF+%d|r"
 L.keystoneCompletedTooltip = "時限內完成"
@@ -327,7 +327,7 @@ L.keystoneHideGuildTitle = "向公會成員隱藏我的鑰石"
 L.keystoneAutoShowEndOfRun = "傳奇+地城結束時顯示"
 --L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
 --L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
-L.keystoneViewerOpen = "打開鑰石清單"
+L.keystoneViewerOpen = "開啟鑰石清單"
 --L.keystoneViewerKeybindingExplainer = "\n\nYou can also set a keybinding to open the keystone viewer:\n\n"
 L.keystoneViewerKeybindingDesc = "替鑰石清單設定一個快捷鍵"
 L.keystoneClickToWhisper = "點擊開啟密語"
@@ -353,25 +353,25 @@ L.keystoneShortName_OperationMechagonWorkshop = "工坊"
 L.keystoneShortName_EcoDomeAldani = "埃達尼秘境" --秘境
 L.keystoneShortName_HallsOfAtonement = "贖罪之殿" --贖罪
 L.keystoneShortName_AraKaraCityOfEchoes = "回音之城" --回音
-L.keystoneShortName_TazaveshSoleahsGambit = "索利亞的險招" --索立亞?
+L.keystoneShortName_TazaveshSoleahsGambit = "索利亞的險招" --索利亞?
 L.keystoneShortName_TazaveshStreetsOfWonder = "奇觀街道" --街道
 L.keystoneShortName_TheDawnbreaker = "破曉者號" --破曉
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
---L.keystoneShortName_TheRookery_Bar = "Rookery"
---L.keystoneShortName_DarkflameCleft_Bar = "Darkflame"
---L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "Priory"
---L.keystoneShortName_CinderbrewMeadery_Bar = "Cinderbrew"
---L.keystoneShortName_OperationFloodgate_Bar = "Floodgate"
---L.keystoneShortName_TheaterOfPain_Bar = "Theater"
---L.keystoneShortName_TheMotherlode_Bar = "Motherlode"
---L.keystoneShortName_OperationMechagonWorkshop_Bar = "Workshop"
---L.keystoneShortName_EcoDomeAldani_Bar = "Al'dani"
+L.keystoneShortName_TheRookery_Bar = "培育所"
+L.keystoneShortName_DarkflameCleft_Bar = "暗焰"
+L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "聖焰"
+L.keystoneShortName_CinderbrewMeadery_Bar = "酒莊"
+L.keystoneShortName_OperationFloodgate_Bar = "水閘"
+L.keystoneShortName_TheaterOfPain_Bar = "劇場"
+L.keystoneShortName_TheMotherlode_Bar = "晶喜"
+L.keystoneShortName_OperationMechagonWorkshop_Bar = "工坊"
+L.keystoneShortName_EcoDomeAldani_Bar = "秘境"
 L.keystoneShortName_HallsOfAtonement_Bar = "贖罪"
 L.keystoneShortName_AraKaraCityOfEchoes_Bar = "回音"
-L.keystoneShortName_TazaveshSoleahsGambit_Bar = "街道"
---L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Streets"
+L.keystoneShortName_TazaveshSoleahsGambit_Bar = "險招"
+L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "街道"
 L.keystoneShortName_TheDawnbreaker_Bar = "破曉"
 
 -- Instance Keys "Who has a key?"
@@ -381,7 +381,7 @@ L.instanceKeysDesc = "在傳奇地城中以清單顯示誰有該副本的鑰石�
 --L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
 --L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
 --L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
---L.instanceKeysShowAll = "Always show all players"
+L.instanceKeysShowAll = "總是顯示所有玩家"
 --L.instanceKeysShowAllDesc = "Enabling this option will show all players in the list, even if their keystone doesn't belong to the dungeon you are in."
 --L.instanceKeysOtherDungeonColor = "Other dungeon color"
 --L.instanceKeysOtherDungeonColorDesc = "Choose the font color for players that have keystones that don't belong to the dungeon you are in."
