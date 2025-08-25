@@ -40,7 +40,7 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "koKR")
 if L then
-	L.gravity = "역전" -- Short for Reverse Gravity
+	L.gravity = "역중력" -- Short for Reverse Gravity
 	L.extinction = "파편" -- Dimensius hurls a fragment of a broken world
 	L.slows = "이감"
 	L.slow = "이감" -- Singular of Slows
