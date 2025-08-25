@@ -1109,6 +1109,8 @@ if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainlin
 			showZoneMessages = true,
 			fakeDBMVersion = false,
 			englishSayMessages = false,
+			bossModMessagesDisabled = false,
+			bossModNameplatesDisabled = false,
 		},
 		global = {
 			watchedMovies = {},
@@ -1128,6 +1130,15 @@ if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainlin
 	db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
 	db.RegisterCallback(mod, "OnProfileReset", profileUpdate)
 	public.db = db
+
+	for k, v in next, db.profile do
+		local defaultType = type(defaults.profile[k])
+		if defaultType == "nil" then
+			db.profile[k] = nil
+		elseif type(v) ~= defaultType then
+			db.profile[k] = defaults.profile[k]
+		end
+	end
 
 	local _, _, _, _, addonState = GetAddOnInfo("QuaziiUI")
 	if type(BigWigs3DB.namespaces) == "table" and addonState ~= "MISSING" then

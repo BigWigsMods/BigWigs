@@ -489,7 +489,7 @@ local function advancedToggles(dbKey, module, check)
 
 	local isPrivateAura = hasOptionFlag(dbKey, module, "PRIVATE")
 
-	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+	if dbKey ~= "altpower" and dbKey ~= "infobox" then
 		-- Emphasize
 		if not isPrivateAura or hasOptionFlag(dbKey, module, "ME_ONLY_EMPHASIZE") then
 			advOpts[#advOpts+1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check, 0.3, module:GetMenuIcon("EMPHASIZE"))
@@ -505,7 +505,7 @@ local function advancedToggles(dbKey, module, check)
 		--
 
 		-- Cast Bars & Cast Countdowns
-		if bit.band(dbv, C.CASTBAR) == C.CASTBAR and hasOptionFlag(dbKey, module, "CASTBAR") then
+		if hasOptionFlag(dbKey, module, "CASTBAR") then
 			advOpts[#advOpts+1] = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check, 0.3, module:GetMenuIcon("CASTBAR"))
 			advOpts[#advOpts+1] = getSlaveToggle(L.CASTBAR_COUNTDOWN, L.CASTBAR_COUNTDOWN_desc, dbKey, module, C.CASTBAR_COUNTDOWN, check, 0.5, module:GetMenuIcon("CASTBAR_COUNTDOWN"))
 		end
@@ -523,7 +523,7 @@ local function advancedToggles(dbKey, module, check)
 		--
 	end
 
-	if bit.band(dbv, C.NAMEPLATE) == C.NAMEPLATE and hasOptionFlag(dbKey, module, "NAMEPLATE") then
+	if hasOptionFlag(dbKey, module, "NAMEPLATE") then
 		advOpts[#advOpts+1] = getSlaveToggle(L.NAMEPLATE, L.NAMEPLATE_desc, dbKey, module, C.NAMEPLATE, check, 0.3, module:GetMenuIcon("NAMEPLATE"))
 	end
 
@@ -534,7 +534,7 @@ local function advancedToggles(dbKey, module, check)
 	end
 	--
 
-	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+	if dbKey ~= "altpower" and dbKey ~= "infobox" then
 		if API:HasVoicePack() then
 			advOpts[#advOpts+1] = getSlaveToggle(L.VOICE, L.VOICE_desc, dbKey, module, C.VOICE, check, 0.3, module:GetMenuIcon("VOICE"))
 		end

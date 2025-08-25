@@ -503,7 +503,11 @@ do
 		return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 	end
 	local C = core.C -- Set from Constants.lua
-	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX + C.NAMEPLATE
+	local standardFlag = C.BAR + C.CASTBAR + C.ICON + C.SOUND
+		+ (loader.db.profile.bossModMessagesDisabled and 0 or C.MESSAGE)
+		+ (loader.db.profile.bossModNameplatesDisabled and 0 or C.NAMEPLATE)
+		+ C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY
+		+ C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
 	local defaultToggles = setmetatable({
 		berserk = C.BAR + C.MESSAGE + C.SOUND,
 		proximity = C.PROXIMITY,
@@ -543,7 +547,9 @@ do
 				if t == "table" then
 					for i = 2, #v do
 						local flagName = v[i]
-						if C[flagName] then
+						if flagName == "NAMEPLATE" and loader.db.profile.bossModNameplatesDisabled then
+							bitflags = bitflags -- Don't add the NAMEPLATE flag
+						elseif C[flagName] then
 							bitflags = bitflags + C[flagName]
 						elseif flagName == "OFF" then
 							disabled = true
