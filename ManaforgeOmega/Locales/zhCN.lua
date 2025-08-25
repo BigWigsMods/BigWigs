@@ -40,8 +40,8 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "zhCN")
 if L then
-	L.gravity = "引力倒逆" -- 启用技能名称，因为还有技能“倾压引力”、“引力倒转”防止误导。
-	L.extinction = "碎片" -- 迪门修斯投掷出破碎世界的碎片
+	L.gravity = "引力" -- 技能“引力倒逆”和“引力扭曲”的简称。
+	L.extinction = "碎片" -- 迪门修斯投掷出“破碎空间”的空间碎片
 	L.slows = "减速"
 	L.slow = "减速"
 	L.mass_destruction = "射线"
