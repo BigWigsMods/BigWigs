@@ -29,7 +29,7 @@ end
 
 L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "zhCN")
 if L then
-	--L.fractal_images = "Dragons"
+	L.fractal_images = "虚空龙" -- 技能“分形镜像”描述
 	L.oath_bound_removed_dose = "移除1层誓言约束"
 	L.behead = "处斩" -- Claws of a dragon
 	L.netherbreaker = "虚空圈"
@@ -40,14 +40,14 @@ end
 
 L = BigWigs:NewBossLocale("Dimensius, the All-Devouring", "zhCN")
 if L then
-	L.gravity = "引力" -- 技能“引力倒逆”的简称
+	L.gravity = "引力倒逆" -- 启用技能名称，因为还有技能“倾压引力”、“引力倒转”防止误导。
 	L.extinction = "碎片" -- 迪门修斯投掷出破碎世界的碎片
 	L.slows = "减速"
 	L.slow = "减速"
-	--L.mass_destruction = "Lines"
+	L.mass_destruction = "射线"
 	L.stardust_nova = "新星" -- 技能“星尘新星”的简称
 	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
-	L.darkened_sky = "环形"
+	L.darkened_sky = "波"
 	L.cosmic_collapse = "崩塌" -- 技能“寰宇崩塌”的简称
 	L.soaring_reshii = "坐骑可用" -- On the timer for when flying is available
 
