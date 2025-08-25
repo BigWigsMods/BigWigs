@@ -16,8 +16,8 @@ L.magic_buff_other = "Магический бафф на %s: %s" -- Magic buff o
 L.on = "%s на %s"
 L.stack = "%dx %s на %s" -- "5x SPELL_NAME on PLAYER_OR_NPC" showing how many stacks of a buff/debuff are on a player or NPC
 L.stackyou = "%dx %s на ТЕБЕ" -- "5x SPELL_NAME on YOU" showing how many stacks of a buff/debuff are on you
---L.stackboss = "%dx %s on BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
---L.stack_gained = "Gained %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
+L.stackboss = "%dx %s на БОССЕ" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
+L.stack_gained = "Получил %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
 L.cast = "<Чтение %s>"
 L.casting = "Чтение %s"
 L.soon = "%s скоро"
@@ -47,7 +47,7 @@ L.general = "Общее" -- General settings, i.e. things that apply to normal, 
 L.health = "Здоровья" -- The health of an NPC
 L.health_percent = "%d%% Здоровья" -- "10% Health" The health percentage of an NPC
 L.energy = "Энергия"
---L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
+L.energy_percent = "%d%% Энергии" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Дверь открыта" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Врата открыты" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Угрозе"
@@ -115,10 +115,10 @@ L.crenna = "Кренна Дочь Земли" -- AI druid healer (NPC 209072)
 L.crenna_short = "*Кренна"
 L.austin = "Остин Хаксворт" -- AI hunter dps (NPC 209065)
 L.austin_short = "*Остин"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "Воевода Брека Люторез" -- AI warrior tank (NPC 215517)
+L.breka_short = "*Брека"
+L.henry = "Генри Гэррик" -- AI priest healer (NPC 215011)
+L.henry_short = "*Генри"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -139,7 +139,7 @@ L.marker_npc_desc = "Отмечать %s меткой %s, требуется б�
 L.marker_npc_aura_desc = "Отмечает НПЦ под воздействием '%s' меткой %s, требуется быть помощником или лидером рейда." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Отключено"
 L.none = "Нет"
---L.markers = "Markers" -- Plural of marker
+L.markers = "Метки" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Связь"
@@ -195,7 +195,7 @@ L.arcane = "Тайная магия"
 L.autotalk = "Автоматическое взаимодействие с НПЦ"
 L.autotalk_boss_desc = "Автоматический выбирать вариант диалога с НПЦ для начала боя."
 L.autotalk_generic_desc = "Автоматический выбирать вариант диалога с НПЦ для продвижения по подземелью."
---L.autotalk_notice = "Automatically interacting with NPC %s."
+L.autotalk_notice = "Произведено автоматическое взаидействовие с НПЦ %s."
 
 -- Common ability name replacements
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
@@ -269,7 +269,7 @@ L.soaks = "Соки" -- Plural of L.soak
 L.spike = "Шип" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Шипы" -- Plural of L.spike
 L.spread = "Спредай" -- An ability that forces you to spread out away from other players, or you might damage them
---L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
+L.tank_bomb = "Бомба на танке" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Танк Дебафф" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Танк Фронтал" -- Similar to L.frontal_cone but only applies to tanks
