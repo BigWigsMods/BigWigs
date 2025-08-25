@@ -1460,7 +1460,7 @@ do
 			local color = classFile and C_ClassColor.GetClassColor(classFile):GenerateHexColor() or "FFFFFFFF"
 			local decoratedName
 			local _, _, _, _, _, keyMapInstanceID = GetMapUIInfo(keyMap)
-			if dungeonMapWithMultipleKeys[keyMapInstanceID] or (db.profile.instanceKeysShowAllPlayers and keyMapInstanceID ~= currentInstanceID) then
+			if keyMap ~= 0 and (dungeonMapWithMultipleKeys[keyMapInstanceID] or (db.profile.instanceKeysShowAllPlayers and keyMapInstanceID ~= currentInstanceID)) then
 				decoratedName = L.instanceKeysDisplayWithDungeon:format(color, playerName:gsub("%-.+", ""), keyLevel, dungeonNamesTrimmed[keyMap] or keyMap)
 			else
 				decoratedName = L.instanceKeysDisplay:format(color, playerName:gsub("%-.+", ""), keyLevel)
@@ -1535,6 +1535,7 @@ do
 		end
 		LibKeystone.Register(whosKeyTable, ReceivePartyData)
 		LibKeystone.Request("PARTY")
+		main:RegisterEvent("UNIT_CONNECTION")
 	end
 	local function DelayStartOfDungeon() -- Difficulty info isn't accurate until 1 frame after PEW
 		local _, _, diffID, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
@@ -1549,8 +1550,8 @@ do
 			RequestPartyData(instanceID)
 		end
 	end
-	main:SetScript("OnEvent", function(self, event)
-		if instanceKeysWidgets.testing then
+	main:SetScript("OnEvent", function(self, event, unit, isConnected)
+		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" then
 			instanceKeysWidgets.testing = false
 			instanceKeysWidgets.main:Hide()
 			instanceKeysWidgets.main:EnableMouse(false)
@@ -1564,6 +1565,10 @@ do
 			if db.profile.instanceKeysShowDungeonEnd then
 				BigWigsLoader.CTimerAfter(5, DelayEndOfDungeon)
 			end
+		elseif event == "UNIT_CONNECTION" then -- Someone new joined the group, or they just logged on after being offline (maybe they were offline when you joined the group)
+			if isConnected then
+				BigWigsLoader.CTimerAfter(1, function() LibKeystone.Request("PARTY") end)
+			end
 		else
 			LibKeystone.Unregister(whosKeyTable)
 			self:Hide()
@@ -1573,6 +1578,7 @@ do
 			self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+			self:UnregisterEvent("UNIT_CONNECTION")
 		end
 	end)
 	main:RegisterEvent("PLAYER_ENTERING_WORLD")
