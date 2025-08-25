@@ -45,11 +45,18 @@ if L then
 	L.slows = "减速"
 	L.slow = "减速"
 	L.mass_destruction = "射线"
+	--L.mass_destruction_single = "Line"
 	L.stardust_nova = "新星" -- 技能“星尘新星”的简称
 	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
 	L.darkened_sky = "波"
-	L.cosmic_collapse = "崩塌" -- 技能“寰宇崩塌”的简称
+	--L.cosmic_collapse = "Tank Pull"
+	--L.cosmic_collapse_easy = "Tank Smash"
 	L.soaring_reshii = "坐骑可用" -- On the timer for when flying is available
+
+	--L.left_living_mass = "Living Mass (Left)"
+	--L.right_living_mass = "Living Mass (Right)"
+
+	--L.soaring_reshii_monster_yell = "You've done well so far." -- [CHAT_MSG_MONSTER_YELL] You've done well so far. Surprising. But we're not done yet.#Xal'atath###Meeresflask##0#0##0#256#nil#0#false#false#false#false",
 
 	L.weakened_soon_monster_yell = "必须出击，就是现在！" -- [CHAT_MSG_MONSTER_YELL] We must strike--now!#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end
