@@ -165,7 +165,6 @@ local textDefaults = {
 }
 
 plugin.defaultDB = {
-	migratePosition = false,
 }
 for k, v in next, iconDefaults do
 	plugin.defaultDB[k] = v
@@ -176,15 +175,6 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
-
-	if not db.migratePosition then -- XXX temp
-		db.migratePosition = true
-		db.iconGrowDirectionTarget = db.iconGrowDirection
-		db.iconGrowDirectionStartTarget = db.iconGrowDirectionStart
-		db.iconSpacingTarget = db.iconSpacing
-		db.iconOffsetXTarget = db.iconOffsetX
-		db.iconOffsetYTarget = db.iconOffsetY
-	end
 
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
