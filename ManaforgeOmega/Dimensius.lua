@@ -357,7 +357,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg == L.weakened_soon_monster_yell then
-		self:Bar(1245292, {8.7, 14.5}, CL.weakened) -- Correct it with more precision
+		self:Bar(1245292, {8.7, 15}, CL.weakened) -- Correct it with more precision
 	end
 end
 
@@ -620,7 +620,7 @@ function mod:Extinction(args)
 	self:PlaySound(args.spellId, "warning") -- dodge fragment
 	extinctionCount = extinctionCount + 1
 	if extinctionCount < (self:Mythic() and 3 or 4) then
-		self:Bar(args.spellId, self:Mythic() and 33.2 or 35.3, CL.count:format(L.extinction, extinctionCount))
+		self:Bar(args.spellId, self:Mythic() and 31.6 or 35.3, CL.count:format(L.extinction, extinctionCount))
 	end
 
 	lastIntermissionCast = "extinction"
@@ -634,7 +634,7 @@ function mod:GammaBurst()
 	self:CastBar(1237325, 4, CL.count:format(CL.pushback, gammaBurstCount))
 	gammaBurstCount = gammaBurstCount + 1
 	if gammaBurstCount < 3 then
-		self:Bar(1237325, 35.4, CL.count:format(CL.pushback, gammaBurstCount))
+		self:Bar(1237325, self:Mythic() and 31.6 or 35.4, CL.count:format(CL.pushback, gammaBurstCount))
 	end
 
 	lastIntermissionCast = "gamma"
@@ -755,12 +755,12 @@ do
 			gravityCount = gravityCount + 1
 
 			local cd = 0
-			if self:GetStage() == 3 and gravityCount < 6 then
-				cd = gravityCount % 2 == 0 and 26.0 or 32.0
+			if self:GetStage() == 3 then
+				cd = timers[3][1234242][gravityCount]
 			elseif gravityCount < 3 then -- 2 per platform
 				cd = 31.6
 			end
-			self:Bar(1234242, cd, CL.count:format(L.gravity, gravityCount)) -- Gravitational
+			self:Bar(1234242, cd, CL.count:format(L.gravity, gravityCount))
 
 			lastIntermissionCast = "gravity"
 			lastIntermissionCastTime = GetTime()
