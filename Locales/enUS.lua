@@ -233,6 +233,9 @@ L.imported_countdown_position = "Countdown Position"
 L.imported_countdown_settings = "Countdown Settings"
 L.imported_countdown_color = "Countdown Color"
 L.imported_nameplate_settings = "Nameplate Settings"
+L.imported_mythicplus_settings = "Mythic+ Settings"
+L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
+L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
 
 -- Statistics
 L.statistics = "Statistics"

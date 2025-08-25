@@ -160,6 +160,7 @@ local countdownColorsToExport = {
 	"fontColor",
 }
 
+-- Nameplates
 local nameplateSettingsToExport = {
 	-- Icons
 	"iconGrowDirection",
@@ -219,6 +220,27 @@ local nameplateSettingsToExport = {
 	"textUppercase",
 }
 
+-- MythicPlus
+local mythicPlusSettingsToExport = {
+	-- General
+	"countVoice",
+	"countBegin",
+	"countStartSound",
+	"countEndSound",
+	-- Who has a key?
+	"instanceKeysPosition",
+	"instanceKeysFontName",
+	"instanceKeysFontSize",
+	"instanceKeysMonochrome",
+	"instanceKeysGrowUpwards",
+	"instanceKeysOutline",
+	"instanceKeysAlign",
+	"instanceKeysColor",
+	"instanceKeysOtherDungeonColor",
+	"instanceKeysShowAllPlayers",
+	"instanceKeysShowDungeonEnd",
+}
+
 -- Default Options
 local sharingExportOptionsSettings = {
 	exportBarPositions = true,
@@ -231,6 +253,7 @@ local sharingExportOptionsSettings = {
 	exportMessageColors = true,
 	exportCountdownColors = true,
 	exportNameplateSettings = true,
+	exportMythicPlusSettings = true,
 }
 
 local sharingImportOptionsSettings = {}
@@ -310,6 +333,11 @@ local function GetExportString()
 		exportOptions["nameplateSettings"] = exportProfileSettings(nameplateSettingsToExport, nameplateSettings.db.profile)
 	end
 
+	if sharingExportOptionsSettings.exportMythicPlusSettings then
+		local db = BigWigsLoader.db:GetNamespace('MythicPlus')
+		exportOptions["mythicPlusSettings"] = exportProfileSettings(mythicPlusSettingsToExport, db.profile)
+	end
+
 	local serialized = LibSerialize:Serialize(exportOptions)
 	local compressed = LibDeflate:CompressDeflate(serialized)
 	local compressedForPrint = LibDeflate:EncodeForPrint(compressed)
@@ -344,7 +372,7 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "other" then
-		if IsOptionInString("nameplateSettings") then
+		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") then
 			return true
 		end
 	end
@@ -439,6 +467,7 @@ do
 		importSettings('importCountdownSettings', 'countdownSettings', countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
 		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugin
 		importSettings('importNameplateSettings', 'nameplateSettings', nameplateSettingsToExport, nameplatePlugin, L.imported_nameplate_settings)
+		importSettings('importMythicPlusSettings', 'mythicPlusSettings', mythicPlusSettingsToExport, {db = BigWigsLoader.db:GetNamespace('MythicPlus')}, L.imported_mythicplus_settings)
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -494,6 +523,9 @@ do
 		end
 		if IsOptionInString("nameplateSettings") then
 			sharingImportOptionsSettings.importNameplateSettings = true
+		end
+		if IsOptionInString("mythicPlusSettings") then
+			sharingImportOptionsSettings.importMythicPlusSettings = true
 		end
 		sharingModule:SaveData()
 	end
@@ -654,6 +686,14 @@ local sharingOptions = {
 						width = 1,
 						disabled = function() return not IsOptionInString("nameplateSettings") end,
 					},
+					importMythicPlusSettings = {
+						type = "toggle",
+						name = L.keystoneModuleName,
+						desc = L.mythicplus_settings_import_desc,
+						order = 2,
+						width = 1,
+						disabled = function() return not IsOptionInString("mythicPlusSettings") end,
+					},
 				},
 			},
 			acceptImportButton = {
@@ -794,7 +834,14 @@ local sharingOptions = {
 						type = "toggle",
 						name = L.NAMEPLATE,
 						desc = L.nameplate_settings_export_desc,
-						order = 20,
+						order = 1,
+						width = 1,
+					},
+					exportMythicPlusSettings = {
+						type = "toggle",
+						name = L.keystoneModuleName,
+						desc = L.mythicplus_settings_export_desc,
+						order = 2,
 						width = 1,
 					},
 				},

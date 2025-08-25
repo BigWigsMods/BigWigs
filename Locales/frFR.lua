@@ -234,6 +234,9 @@ L.imported_countdown_position = "Position du compte à rebours"
 L.imported_countdown_settings = "Paramètres du compte à rebours"
 L.imported_countdown_color = "Couleur du compte à rebours"
 L.imported_nameplate_settings = "Paramètres de barres d'infos"
+--L.imported_mythicplus_settings = "Mythic+ Settings"
+--L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
+--L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
 
 -- Statistics
 L.statistics = "Statistiques"
