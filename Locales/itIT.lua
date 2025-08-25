@@ -379,6 +379,8 @@ L.H25 = "Eroico 25"
 
 -- Instance Keys "Who has a key?"
 --L.instanceKeysTitle = "Who has a key?"
+--L.instanceKeysEnabled = "Enable"
+--L.instanceKeysEnabledDesc = "Enable instance key list."
 --L.instanceKeysDesc = "When you enter a Mythic dungeon, the players that have a keystone for that dungeon will be displayed as a list.\n\n"
 --L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
 --L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"

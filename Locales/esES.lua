@@ -379,6 +379,8 @@ L.keystoneShortName_TheDawnbreaker_Bar = "Rompealbas"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "¿Quién tiene la piedra?"
+--L.instanceKeysEnabled = "Enable"
+--L.instanceKeysEnabledDesc = "Enable instance key list."
 L.instanceKeysDesc = "Cuando entres a una mazmorra mítica, los jugadores que tengan la piedra angular de esa mazmorra se mostrarán en una lista.\n\n"
 L.instanceKeysTest8 = "|cFF00FF98Monje:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0ADruida:|r +10"

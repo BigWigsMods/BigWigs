@@ -379,6 +379,8 @@ L.keystoneShortName_TheDawnbreaker_Bar = "Brise-Aube"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Qui a une clef ?"
+--L.instanceKeysEnabled = "Enable"
+--L.instanceKeysEnabledDesc = "Enable instance key list."
 L.instanceKeysDesc = "Lorsque vous entrez dans un donjon mythique, les joueurs possédant une clef pour ce donjon seront affichés dans une liste.\n\n"
 L.instanceKeysTest8 = "|cFF00FF98Moine :|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0ADruide :|r +10"

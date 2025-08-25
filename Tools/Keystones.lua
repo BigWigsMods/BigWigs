@@ -38,6 +38,7 @@ do
 		viewerKeybind = "",
 		windowHeight = 320,
 		viewerPosition = {"LEFT", "LEFT", 15, 0},
+		instanceKeysEnabled = true,
 		instanceKeysPosition = {"BOTTOM", "TOP", 0, -86},
 		instanceKeysFontName = fontName,
 		instanceKeysFontSize = 16,
@@ -133,6 +134,7 @@ do
 	UpdateProfile()
 
 	function ResetInstanceKeys()
+		db.profile.instanceKeysEnabled = defaults.instanceKeysEnabled
 		db.profile.instanceKeysPosition = defaults.instanceKeysPosition
 		db.profile.instanceKeysFontName = defaults.instanceKeysFontName
 		db.profile.instanceKeysFontSize = defaults.instanceKeysFontSize
@@ -1366,7 +1368,7 @@ end
 -- Who has a key?
 --
 
-local instanceKeysWidgets = {testing = false, nameList = {}, playerListText = {}}
+local instanceKeysWidgets = {canShow = false, testing = false, nameList = {}, playerListText = {}}
 do
 	local main = CreateFrame("Frame", nil, UIParent)
 	main:SetSize(200, 40)
@@ -1476,7 +1478,8 @@ do
 						main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
 						main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
 						main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
-						main:Show()
+						if db.profile.instanceKeysEnabled then main:Show() end
+						instanceKeysWidgets.canShow = true
 						sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = inCurrentDungeon}
 					end
 				end
@@ -1551,12 +1554,14 @@ do
 		end
 	end
 	main:SetScript("OnEvent", function(self, event, unit, isConnected)
+		if not db.profile.instanceKeysEnabled then instanceKeysWidgets.main:Hide() end
 		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" then
 			instanceKeysWidgets.testing = false
 			instanceKeysWidgets.main:Hide()
 			instanceKeysWidgets.main:EnableMouse(false)
 			instanceKeysWidgets.main:SetMovable(false)
 			instanceKeysWidgets.bg:Hide()
+			instanceKeysWidgets.canShow = false
 		end
 		if event == "PLAYER_ENTERING_WORLD" then
 			self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
@@ -1572,6 +1577,7 @@ do
 		else
 			LibKeystone.Unregister(whosKeyTable)
 			self:Hide()
+			instanceKeysWidgets.canShow = false
 			instanceKeysWidgets.nameList = {}
 			instanceKeysWidgets.namesToShow = nil
 			instanceKeysWidgets.otherDungeons = nil
@@ -1653,6 +1659,14 @@ do
 			for i = 3, 5 do
 				instanceKeysWidgets.playerListText[i]:SetText("")
 			end
+		end
+
+		if db.profile.instanceKeysEnabled then
+			if instanceKeysWidgets.canShow or instanceKeysWidgets.testing then
+				instanceKeysWidgets.main:Show()
+			end
+		else
+			instanceKeysWidgets.main:Hide()
 		end
 
 		if not InCombatLockdown() then
@@ -1901,6 +1915,17 @@ do
 						order = 1,
 						width = "full",
 					},
+					instanceKeysEnabled = {
+						type = "toggle",
+						name = L.instanceKeysEnabled,
+						desc = L.instanceKeysEnabledDesc,
+						order = 2,
+						set = function(_, value)
+							db.profile.instanceKeysEnabled = value
+							UpdateWidgets()
+						end,
+						width = "full",
+					},
 					anchorsButton = {
 						type = "execute",
 						name = function()
@@ -1955,12 +1980,12 @@ do
 							end
 						end,
 						width = 1.5,
-						order = 2,
+						order = 3,
 					},
 					instanceKeysFontName = {
 						type = "select",
 						name = L.font,
-						order = 3,
+						order = 4,
 						values = LibSharedMedia:List("font"),
 						itemControl = "DDI-Font",
 						get = function()
@@ -1978,7 +2003,7 @@ do
 					instanceKeysOutline = {
 						type = "select",
 						name = L.outline,
-						order = 4,
+						order = 5,
 						values = {
 							NONE = L.none,
 							OUTLINE = L.thin,
@@ -1989,7 +2014,7 @@ do
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
-						order = 5,
+						order = 6,
 						width = 2,
 						softMax = 100, max = 200, min = 14, step = 1,
 					},
@@ -1997,7 +2022,7 @@ do
 						type = "toggle",
 						name = L.monochrome,
 						desc = L.monochromeDesc,
-						order = 6,
+						order = 7,
 					},
 					instanceKeysAlign = {
 						type = "select",
@@ -2008,7 +2033,7 @@ do
 							L.RIGHT,
 						},
 						style = "radio",
-						order = 7,
+						order = 8,
 						get = function() return db.profile.instanceKeysAlign == "LEFT" and 1 or db.profile.instanceKeysAlign == "RIGHT" and 3 or 2 end,
 						set = function(_, value)
 							db.profile.instanceKeysAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
@@ -2021,25 +2046,25 @@ do
 						get = GetColor,
 						set = UpdateColorAndWidgets,
 						hasAlpha = true,
-						order = 8,
+						order = 9,
 					},
 					instanceKeysGrowUpwards = {
 						type = "toggle",
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
-						order = 9,
+						order = 10,
 					},
 					extrasHeader = {
 						type = "header",
 						name = "",
-						order = 10,
+						order = 11,
 					},
 					instanceKeysShowAllPlayers = {
 						type = "toggle",
 						name = L.instanceKeysShowAll,
 						desc = L.instanceKeysShowAllDesc,
 						width = 2,
-						order = 11,
+						order = 12,
 						set = function(info, value)
 							local key = info[#info]
 							db.profile[key] = value
@@ -2059,7 +2084,7 @@ do
 						get = GetColor,
 						set = UpdateColorAndWidgets,
 						hasAlpha = true,
-						order = 12,
+						order = 13,
 						disabled = function() return not db.profile.instanceKeysShowAllPlayers end,
 					},
 					instanceKeysShowDungeonEnd = {
@@ -2067,13 +2092,13 @@ do
 						name = L.keystoneAutoShowEndOfRun,
 						desc = L.instanceKeysEndOfRunDesc,
 						set = UpdateSettings,
-						order = 13,
+						order = 14,
 						width = "full",
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 14,
+						order = 15,
 					},
 					reset = {
 						type = "execute",
@@ -2087,7 +2112,7 @@ do
 								LibKeystone.Request("PARTY")
 							end
 						end,
-						order = 15,
+						order = 16,
 					},
 				},
 			},

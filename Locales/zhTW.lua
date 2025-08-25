@@ -379,6 +379,8 @@ L.keystoneShortName_TheDawnbreaker_Bar = "破曉"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "誰有鑰石？"
+--L.instanceKeysEnabled = "Enable"
+--L.instanceKeysEnabledDesc = "Enable instance key list."
 L.instanceKeysDesc = "進入傳奇地城後，列出誰有該副本的鑰石。\n\n"
 L.instanceKeysTest8 = "|cFF00FF98武僧:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0A德魯伊:|r +10"

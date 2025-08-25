@@ -379,6 +379,8 @@ L.keystoneShortName_TheDawnbreaker_Bar = "Morgenbringer"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Wer hat einen Schlüsselstein?"
+--L.instanceKeysEnabled = "Enable"
+--L.instanceKeysEnabledDesc = "Enable instance key list."
 L.instanceKeysDesc = "Beim Betreten eines mythischen Dungeons werden die Spieler, welche einen Schlüsselstein für diesen Dungeon haben, als Liste angezeigt.\n\n"
 L.instanceKeysTest8 = "|cFF00FF98Mönch:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0ADruide:|r +10"

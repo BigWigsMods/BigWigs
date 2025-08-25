@@ -379,6 +379,8 @@ L.keystoneShortName_TheDawnbreaker_Bar = "Рассвет"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "У кого есть ключ?"
+--L.instanceKeysEnabled = "Enable"
+--L.instanceKeysEnabledDesc = "Enable instance key list."
 L.instanceKeysDesc = "При входе в эпохальное подземелье отобразить список игроков, у которых есть подходящий ключ.\n\n"
 L.instanceKeysTest8 = "|cFF00FF98Монах:|r +8"
 L.instanceKeysTest10 = "|cFFFF7C0AДруид:|r +10"
