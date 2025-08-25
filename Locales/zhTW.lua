@@ -320,7 +320,7 @@ L.keystoneCountdownExplainer = "傳奇+地城開始時，播放倒數語音。�
 L.keystoneCountdownBeginsDesc = "請選擇在傳奇+地城的倒數計時剩餘幾秒時開始播放倒數語音。"
 L.keystoneCountdownBeginsSound = "傳奇+倒數開始時播放音效"
 L.keystoneCountdownEndsSound = "傳奇+倒數結束時播放音效"
-L.keystoneViewerTitle = "鑰石清單"
+L.keystoneViewerTitle = "鑰石資訊"
 L.keystoneHideGuildTitle = "向公會成員隱藏我的鑰石"
 L.keystoneHideGuildDesc = "|cffff4411不推薦。|r啟用此選項會使公會成員無法查看你的鑰石，但你的隊友仍然可以查看。"
 L.keystoneHideGuildWarning = "建議你|cffff4411不要關閉|r公會查看功能.\n\n確定仍要關閉嗎？"
@@ -376,16 +376,16 @@ L.keystoneShortName_TheDawnbreaker_Bar = "破曉"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "誰有鑰石？"
-L.instanceKeysDesc = "在傳奇地城中以清單顯示誰有該副本的鑰石。\n\n"
---L.instanceKeysTest8 = "|cFF00FF98Monk:|r +8"
---L.instanceKeysTest10 = "|cFFFF7C0ADruid:|r +10"
+L.instanceKeysDesc = "進入傳奇地城後，列出誰有該副本的鑰石。\n\n"
+L.instanceKeysTest8 = "|cFF00FF98武僧:|r +8"
+L.instanceKeysTest10 = "|cFFFF7C0A德魯伊:|r +10"
 --L.instanceKeysDisplay = "|c%s%s:|r +%d" -- "PLAYER_NAME: +DUNGEON_LEVEL"
 --L.instanceKeysDisplayWithDungeon = "|c%s%s:|r +%d (%s)" -- "PLAYER_NAME: +DUNGEON_LEVEL (DUNGEON_NAME)"
 L.instanceKeysShowAll = "總是顯示所有玩家"
---L.instanceKeysShowAllDesc = "Enabling this option will show all players in the list, even if their keystone doesn't belong to the dungeon you are in."
---L.instanceKeysOtherDungeonColor = "Other dungeon color"
---L.instanceKeysOtherDungeonColorDesc = "Choose the font color for players that have keystones that don't belong to the dungeon you are in."
---L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter a mythic dungeon. Enabling this option will also show the list when the Mythic+ is over."
+L.instanceKeysShowAllDesc = "啟用此選項會顯示所有玩家的鑰石，即便鑰石不屬於當前地城。"
+L.instanceKeysOtherDungeonColor = "其他地城顏色"
+L.instanceKeysOtherDungeonColorDesc = "替非當前地城的鑰石設定不同的文字顏色。"
+L.instanceKeysEndOfRunDesc = "預設只在進入傳奇地城時顯示鑰石列表。啟用此選項後，完成傳奇+地城時也會顯示鑰石列表。"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -419,7 +419,7 @@ L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入�
 L.disabled = "停用"
 L.disableDesc = "即將禁用「%s」的功能，但|cffff4411不建議|r這麼做。\n\n你確定要這麼做嗎？"
 L.keybinding = "按鍵綁定"
---L.dragToResize = "Drag to resize"
+L.dragToResize = "拖曳調整大小"
 
 -- Anchor Points
 L.UP = "向上"
