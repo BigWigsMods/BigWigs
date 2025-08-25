@@ -322,15 +322,15 @@ L.keystoneCountdownBeginsSound = "傳奇+倒數開始時播放音效"
 L.keystoneCountdownEndsSound = "傳奇+倒數結束時播放音效"
 L.keystoneViewerTitle = "鑰石清單"
 L.keystoneHideGuildTitle = "向公會成員隱藏我的鑰石"
---L.keystoneHideGuildDesc = "|cffff4411Not recommended.|r This feature will prevent your guild members seeing what keystone you have. Anyone in your group will still be able to see it."
---L.keystoneHideGuildWarning = "Disabling the ability for your guild members to see your keystone is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+L.keystoneHideGuildDesc = "|cffff4411不推薦。|r啟用此選項會使公會成員無法查看你的鑰石，但你的隊友仍然可以查看。"
+L.keystoneHideGuildWarning = "建議你|cffff4411不要關閉|r公會查看功能.\n\n確定仍要關閉嗎？"
 L.keystoneAutoShowEndOfRun = "傳奇+地城結束時顯示"
---L.keystoneAutoShowEndOfRunDesc = "Automatically show the keystone viewer when when the Mythic+ dungeon is over.\n\n|cFF33FF99This can help you see what new keystones your party has received.|r"
---L.keystoneViewerExplainer = "You can open the keystone viewer using the |cFF33FF99/key|r command or by clicking the button below.\n\n"
+L.keystoneAutoShowEndOfRunDesc = "完成傳奇+地城時開啟鑰石清單。\n\n|cFF33FF99此功能有助於快速查看隊友的新鑰石。|r"
+L.keystoneViewerExplainer = "點擊下方按鈕，或輸入 |cFF33FF99/key|r 可以開啟鑰石清單。\n\n"
 L.keystoneViewerOpen = "開啟鑰石清單"
---L.keystoneViewerKeybindingExplainer = "\n\nYou can also set a keybinding to open the keystone viewer:\n\n"
-L.keystoneViewerKeybindingDesc = "替鑰石清單設定一個快捷鍵"
-L.keystoneClickToWhisper = "點擊開啟密語"
+L.keystoneViewerKeybindingExplainer = "\n\n或者，替鑰石清單設定一個快捷鍵：\n\n"
+L.keystoneViewerKeybindingDesc = "設定開啟鑰石清單的快捷鍵"
+L.keystoneClickToWhisper = "點擊發送密語"
 L.keystoneClickToTeleportNow = "\n點擊傳送至此"
 L.keystoneClickToTeleportCooldown = "\n無法傳送：法術正在冷卻。"
 L.keystoneClickToTeleportNotLearned = "\n無法傳送：法術尚未學會。"
@@ -343,19 +343,19 @@ L.keystoneHistoryScoreOlderTooltip = "上周分數：|cFFFFFFFF+%d|r"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "培育所" --培育
-L.keystoneShortName_DarkflameCleft = "暗焰裂縫" --暗焰
-L.keystoneShortName_PrioryOfTheSacredFlame = "聖焰隱修院" --聖焰
-L.keystoneShortName_CinderbrewMeadery = "燼釀酒莊" --酒莊
-L.keystoneShortName_OperationFloodgate = "水閘行動" --水閘
-L.keystoneShortName_TheaterOfPain = "苦痛劇場" --劇場
-L.keystoneShortName_TheMotherlode = "晶喜鎮" --晶喜
+L.keystoneShortName_DarkflameCleft = "暗焰" --暗焰
+L.keystoneShortName_PrioryOfTheSacredFlame = "聖焰" --聖焰
+L.keystoneShortName_CinderbrewMeadery = "酒莊" --酒莊
+L.keystoneShortName_OperationFloodgate = "水閘" --水閘
+L.keystoneShortName_TheaterOfPain = "劇場" --劇場
+L.keystoneShortName_TheMotherlode = "晶喜" --晶喜
 L.keystoneShortName_OperationMechagonWorkshop = "工坊"
-L.keystoneShortName_EcoDomeAldani = "埃達尼秘境" --秘境
-L.keystoneShortName_HallsOfAtonement = "贖罪之殿" --贖罪
-L.keystoneShortName_AraKaraCityOfEchoes = "回音之城" --回音
-L.keystoneShortName_TazaveshSoleahsGambit = "索利亞的險招" --索利亞?
-L.keystoneShortName_TazaveshStreetsOfWonder = "奇觀街道" --街道
-L.keystoneShortName_TheDawnbreaker = "破曉者號" --破曉
+L.keystoneShortName_EcoDomeAldani = "秘境" --秘境
+L.keystoneShortName_HallsOfAtonement = "贖罪" --贖罪
+L.keystoneShortName_AraKaraCityOfEchoes = "回音" --回音
+L.keystoneShortName_TazaveshSoleahsGambit = "險招" --索利亞?
+L.keystoneShortName_TazaveshStreetsOfWonder = "街道" --街道
+L.keystoneShortName_TheDawnbreaker = "破曉" --破曉
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
