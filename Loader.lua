@@ -1111,6 +1111,7 @@ if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainlin
 			englishSayMessages = false,
 			bossModMessagesDisabled = false,
 			bossModNameplatesDisabled = false,
+			bossModVoiceDisabled = false,
 		},
 		global = {
 			watchedMovies = {},

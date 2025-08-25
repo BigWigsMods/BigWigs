@@ -506,8 +506,9 @@ do
 	local standardFlag = C.BAR + C.CASTBAR + C.ICON + C.SOUND
 		+ (loader.db.profile.bossModMessagesDisabled and 0 or C.MESSAGE)
 		+ (loader.db.profile.bossModNameplatesDisabled and 0 or C.NAMEPLATE)
+		+ (loader.db.profile.bossModVoiceDisabled and 0 or C.VOICE)
 		+ C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY
-		+ C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
+		+ C.FLASH + C.ALTPOWER + C.INFOBOX
 	local defaultToggles = setmetatable({
 		berserk = C.BAR + C.MESSAGE + C.SOUND,
 		proximity = C.PROXIMITY,
