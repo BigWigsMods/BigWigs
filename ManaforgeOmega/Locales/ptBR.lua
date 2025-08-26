@@ -21,7 +21,7 @@ end
 L = BigWigs:NewBossLocale("Fractillus", "ptBR")
 if L then
 	L.crystalline_shockwave = "Paredes"
-	--L.shattershell = "Breaks"
+	L.shattershell = "Quebrar parede"
 	L.shockwave_slam = "Parede do tanque"
 	--L.nexus_shrapnel = "Shrapnel Lands"
 	L.crystal_lacerations = "Sangramento"
