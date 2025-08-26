@@ -45,16 +45,16 @@ if L then
 	L.slows = "이감"
 	L.slow = "이감" -- Singular of Slows
 	L.mass_destruction = "라인"
-	--L.mass_destruction_single = "Line"
+	L.mass_destruction_single = "라인"
 	L.stardust_nova = "바닥" -- Short for Stardust Nova
 	L.extinguish_the_stars = "별" -- Short for Extinguish the Stars
 	L.darkened_sky = "충격파"
-	--L.cosmic_collapse = "Tank Pull"
-	--L.cosmic_collapse_easy = "Tank Smash"
+	L.cosmic_collapse = "탱커 당기기"
+	L.cosmic_collapse_easy = "탱커 강타"
 	L.soaring_reshii = "비행 가능" -- On the timer for when flying is available
 
-	--L.left_living_mass = "Living Mass (Left)"
-	--L.right_living_mass = "Living Mass (Right)"
+	L.left_living_mass = "살아있는 질량체 (왼쪽)"
+	L.right_living_mass = "살아있는 질량체 (오른쪽)"
 
 	--L.soaring_reshii_monster_yell = "You've done well so far." -- [CHAT_MSG_MONSTER_YELL] You've done well so far. Surprising. But we're not done yet.#Xal'atath###Meeresflask##0#0##0#256#nil#0#false#false#false#false",
 
