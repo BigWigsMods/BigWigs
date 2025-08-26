@@ -54,7 +54,6 @@ plugin.defaultDB = {
 	fadetime = 1.2,
 	emphUppercase = true,
 	disabled = false,
-	emphDisabled = false,
 	-- Designed by default to be just under the boss emote frame and grow down away from it
 	-- By order from top to bottom:
 	-- >> UIErrorsFrame (anchored to top of UIParent)
@@ -173,6 +172,11 @@ local function updateProfile()
 		font.icon:SetSize(db.fontSize, db.fontSize)
 		font:SetHeight(db.fontSize)
 		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
+	end
+
+	if db.disabled then -- XXX temp
+		db.disabled = false
+		BigWigsLoader.Popup("You had Messages disabled. This option is removed and replaced with 'opt-in' mode in: Messages >> Advanced.", true)
 	end
 end
 
@@ -485,28 +489,17 @@ do
 						order = 12,
 						width = 2,
 					},
-					disabled = {
-						type = "toggle",
-						name = L.disabled,
-						--desc = "XXX",
-						order = 13,
-						confirm = function(_, value)
-							if value then
-								return L.disableDesc:format(L.messages)
-							end
-						end,
-					},
 					header1 = {
 						type = "header",
 						name = "",
-						order = 14,
+						order = 13,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetMessagesDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 15,
+						order = 14,
 					},
 				},
 			},
@@ -572,17 +565,6 @@ do
 							local loc = GetLocale()
 							if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
 								return true
-							end
-						end,
-					},
-					emphDisabled = {
-						type = "toggle",
-						name = L.disabled,
-						--desc = "XXX",
-						order = 7,
-						confirm = function(_, value)
-							if value then
-								return L.disableDesc:format(L.emphasizedMessages)
 							end
 						end,
 					},
@@ -677,6 +659,70 @@ do
 								end,
 							},
 						},
+					},
+				},
+			},
+			advanced = {
+				type = "group",
+				name = L.advanced,
+				order = 4,
+				childGroups = "tab",
+				args = {
+					heading = {
+						type = "description",
+						name = function()
+							if not BigWigsLoader.db.profile.bossModMessagesDisabled then
+								return L.messagesOptInHeaderOff
+							else
+								return L.messagesOptInHeaderOn
+							end
+						end,
+						order = 1,
+						width = "full",
+						fontSize = "medium",
+					},
+					optintoggle = {
+						type = "toggle",
+						name = L.messagesOptInTitle,
+						order = 2,
+						width = "full",
+						get = function()
+							return BigWigsLoader.db.profile.bossModMessagesDisabled
+						end,
+						set = function(_, value)
+							local profileName = BigWigsLoader.db:GetCurrentProfile()
+							if type(profileName) == "string" and type(BigWigs3DB.namespaces) == "table" then
+								if value then
+									for moduleName, moduleSettings in next, BigWigs3DB.namespaces do
+										if type(moduleName) == "string" and type(moduleSettings) == "table" and strfind(moduleName, "BigWigs_Bosses", nil, true) and type(BigWigs3DB.namespaces[moduleName].profiles) == "table" and type(BigWigs3DB.namespaces[moduleName].profiles[profileName]) == "table" then
+											for optionKey, optionValue in next, BigWigs3DB.namespaces[moduleName].profiles[profileName] do
+												if type(optionValue) == "number" and optionValue > 10 and bit.band(optionValue, BigWigs.C.MESSAGE) == BigWigs.C.MESSAGE then
+													BigWigs3DB.namespaces[moduleName].profiles[profileName][optionKey] = optionValue - BigWigs.C.MESSAGE
+												end
+											end
+										end
+									end
+									BigWigsLoader.db.profile.bossModMessagesDisabled = true
+								else
+									for moduleName, moduleSettings in next, BigWigs3DB.namespaces do
+										if type(moduleName) == "string" and type(moduleSettings) == "table" and strfind(moduleName, "BigWigs_Bosses", nil, true) and type(BigWigs3DB.namespaces[moduleName].profiles) == "table" and type(BigWigs3DB.namespaces[moduleName].profiles[profileName]) == "table" then
+											for optionKey, optionValue in next, BigWigs3DB.namespaces[moduleName].profiles[profileName] do
+												if type(optionValue) == "number" and optionValue > 10 and bit.band(optionValue, BigWigs.C.MESSAGE) ~= BigWigs.C.MESSAGE then
+													BigWigs3DB.namespaces[moduleName].profiles[profileName][optionKey] = optionValue + BigWigs.C.MESSAGE
+												end
+											end
+										end
+									end
+									BigWigsLoader.db.profile.bossModMessagesDisabled = false
+								end
+								C_UI.Reload()
+							end
+						end,
+						confirm = function(_, value)
+							if value then
+								return L.messagesOptInWarning
+							end
+						end,
 					},
 				},
 			},
@@ -849,18 +895,12 @@ do
 		if not db.useicons then icon = nil end
 
 		if emphasized then
-			if db.emphDisabled and module and module.IsEnableMob then
-				return
-			end
 			if db.emphUppercase then
 				text = upper(text)
 				text = gsub(text, "(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 			end
 			self:EmphasizedPrint(nil, text, r, g, b, nil, nil, nil, nil, nil, nil, customDisplayTime)
 		else
-			if db.disabled and module and module.IsEnableMob then
-				return
-			end
 			self:Print(nil, text, r, g, b, nil, nil, nil, nil, nil, icon, customDisplayTime)
 		end
 		if db.chat then
