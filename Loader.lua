@@ -642,6 +642,14 @@ local reqFuncAddons = {
 	BigWigs_Plugins = true,
 }
 
+local RaidWarningMessage
+do
+	local RaidNotice_AddMessage = RaidNotice_AddMessage
+	function RaidWarningMessage(msg, duration)
+		RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, duration)
+	end
+end
+
 local Popup = public.isRetail and function(msg, focus)
 	local frame = CreateFrame("Frame", nil, UIParent, focus and "PortraitFrameTexturedBaseTemplate" or "PortraitFrameFlatBaseTemplate")
 	frame:SetFrameStrata("DIALOG")
@@ -697,6 +705,7 @@ end or function(msg, focus)
 
 	text:SetText(msg)
 end
+public.Popup = Popup -- XXX temp
 
 local function load(index)
 	if IsAddOnLoaded(index) then return true end
@@ -880,7 +889,7 @@ do
 					Popup(L.outOfDateContentPopup:format(name), true)
 					local msg = L.outOfDateContentRaidWarning:format(name, version, BIGWIGS_VERSION)
 					sysprint(msg)
-					RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 90)
+					RaidWarningMessage(msg, 90)
 				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
@@ -1507,7 +1516,7 @@ do
 						sysprint(delayedMessages[i])
 					end
 					if printMissingExpansionAddon then
-						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOnRaidWarning:format(public.currentExpansion.name), {r=1,g=1,b=1}, 120)
+						RaidWarningMessage(L.missingAddOnRaidWarning:format(public.currentExpansion.name), 120)
 					end
 					delayedMessages = nil
 				end)
@@ -1740,7 +1749,7 @@ do
 					local msg = L.warnSeveralReleases:format(diff)
 					sysprint(msg)
 					Popup(msg)
-					RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 40 + (diff * 10))
+					RaidWarningMessage(msg, 40 + (diff * 10))
 				else
 					sysprint(L.warnOldBase:format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION, diff))
 				end
@@ -1751,7 +1760,7 @@ do
 				hasWarned = 2
 				verTimer = nil
 				sysprint(L.warnTwoReleases)
-				RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1}, 20)
+				RaidWarningMessage(L.warnTwoReleases, 20)
 			end)
 		elseif warnedOutOfDate > 1 and hasWarned < 1 and not customGuildName then
 			if verTimer then verTimer:Cancel() end
@@ -1911,7 +1920,7 @@ do
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
 				sysprint(msg)
 				Popup(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
+				RaidWarningMessage(msg, 15)
 				-- Only print once
 				warnedThisZone[instanceID] = true
 				disabledZones[instanceID] = nil
@@ -1942,7 +1951,7 @@ do
 				Popup(L.missingAddOnPopup:format(zoneAddon))
 				local msg = L.missingAddOnRaidWarning:format(zoneAddon)
 				sysprint(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
+				RaidWarningMessage(msg, 20)
 			end
 		end
 	end
