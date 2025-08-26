@@ -439,9 +439,9 @@ L.CENTER = "Mitte"
 L.customAnchorPoint = "Erweitert: Benutzerdefinierter Ankerpunkt"
 L.sourcePoint = "Ursprungspunkt"
 L.destinationPoint = "Zielpunkt"
---L.drawStrata = "Draw Strata"
---L.medium = "MEDIUM"
---L.low = "LOW"
+L.drawStrata = "Schichten zeichnen"
+L.medium = "MITTEL"
+L.low = "NIEDRIG"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -705,10 +705,10 @@ L.displayTimeDesc = "Bestimmt, wie lange (in Sekunden) Nachrichten angezeigt wer
 L.fadeTime = "Ausblendedauer"
 L.fadeTimeDesc = "Bestimmt, wie lange (in Sekunden) das Ausblenden der Nachrichten dauert."
 
---L.messagesOptInHeaderOff = "Boss mod messages 'opt-in' mode: Enabling this option will turn off messages across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the messages you want.\n\n"
---L.messagesOptInHeaderOn = "Boss mod messages 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod messages, go into the settings of a specific boss ability and turn on the '|cFF33FF99Messages|r' option.\n\n"
---L.messagesOptInTitle = "Boss mod messages 'opt-in' mode"
---L.messagesOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off messages across ALL of your boss modules. You will need to go through each one and manually turn on the messages you want.\n\nYour UI will now reload, are you sure?"
+L.messagesOptInHeaderOff = "Boss-Mod Nachrichten 'Opt-in' Modus: Durch Aktivierung dieser Option werden die Nachrichten ALLER Bossmodule deaktiviert.\n\nEs ist nötig in jedem Modul händisch die gewünschten Nachrichten zu aktivieren.\n\n"
+L.messagesOptInHeaderOn = "Boss-Mod Nachrichten 'Opt-in' Modus ist |cFF33FF99AKTIV|r. Um Boss-Mod Nachrichten zu sehen, muss in den Einstellungen einer spezifischen Bossfähigkeit die '|cFF33FF99Nachrichten|r' Option aktiviert werden.\n\n"
+L.messagesOptInTitle = "Boss-Mod Nachrichten 'Opt-in' Modus"
+L.messagesOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in' Modus werden die Nachrichten ALLER Bossmodule deaktiviert. Zur Aktivierung müssen händisch in jeder gewünschten Bossfähigkeit die Nachrichten aktiviert werden.\n\nDas UI wird jetzt neu geladen, bist Du sicher?"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua
@@ -787,10 +787,10 @@ L.scale_glow_desc = "Der Maßstab der Funken in der Animation."
 L.startAnimation = "Startanimation"
 L.startAnimation_glow_desc = "Dieses Leuchten hat eine Startanimation, dies aktiviert/deaktiviert diese Animation."
 
---L.nameplateOptInHeaderOff = "\n\n\n\nBoss mod nameplates 'opt-in' mode: Enabling this option will turn off nameplates across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the nameplates you want.\n\n"
---L.nameplateOptInHeaderOn = "\n\n\n\nBoss mod nameplates 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod nameplates, go into the settings of a specific boss ability and turn on the '|cFF33FF99Nameplates|r' option.\n\n"
---L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
---L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
+L.nameplateOptInHeaderOff = "\n\n\n\nBoss-Mod Namensplaketten 'Opt-in' Modus: Durch Aktivierung dieser Option werden die Namensplaketten ALLER Bossmodule deaktiviert.\n\nEs ist nötig in jedem Modul händisch die gewünschten Namensplaketten zu aktivieren.\n\n"
+L.nameplateOptInHeaderOn = "\n\n\n\nBoss-Mod Namensplaketten 'Opt-in' Modus ist |cFF33FF99AKTIV|r. Um Boss-Mod Namensplaketten zu sehen, muss in den Einstellungen einer spezifischen Bossfähigkeit die '|cFF33FF99Namensplaketten|r' Option aktiviert werden.\n\n"
+L.nameplateOptInTitle = "Boss-Mod Namensplaketten 'Opt-in' Modus"
+L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in' Modus werden die Namensplaketten ALLER Bossmodule deaktiviert. Zur Aktivierung müssen händisch in jeder gewünschten Bossfähigkeit die Namensplaketten aktiviert werden.\n\nDas UI wird jetzt neu geladen, bist Du sicher?"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
