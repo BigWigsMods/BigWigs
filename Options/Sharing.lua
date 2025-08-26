@@ -123,8 +123,6 @@ local messageSettingsToExport = {
 	"displaytime",
 	"fadetime",
 	"emphUppercase",
-	-- "disabled",
-	-- "emphDisabled",
 }
 
 local countdownSettingsToExport = {
@@ -205,6 +203,7 @@ local nameplateSettingsToExport = {
 	"iconBorder",
 	"iconBorderSize",
 	"iconBorderColor",
+	"iconFrameStrata",
 
 	-- Text
 	"textGrowDirection",

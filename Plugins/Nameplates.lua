@@ -148,6 +148,7 @@ local iconDefaults = {
 	iconBorder = true,
 	iconBorderSize = 1,
 	iconBorderColor = {0, 0, 0, 1},
+	iconFrameStrata = "MEDIUM",
 }
 
 local textDefaults = {
@@ -300,6 +301,9 @@ local function updateProfile()
 			break -- If 1 entry is bad, reset the whole table
 		end
 	end
+	if db.iconFrameStrata ~= "MEDIUM" and db.iconFrameStrata ~= "LOW" then
+		db.iconFrameStrata = plugin.defaultDB.iconFrameStrata
+	end
 
 	if not validGrowDirections[db.textGrowDirection] then
 		db.textGrowDirection = plugin.defaultDB.textGrowDirection
@@ -359,7 +363,7 @@ local function getTextFrame()
 		textFrame:SetPoint("CENTER")
 		textFrame:SetFrameStrata("MEDIUM")
 		textFrame:SetFixedFrameStrata(true)
-		textFrame:SetFrameLevel(5600)
+		textFrame:SetFrameLevel(6200)
 		textFrame:SetFixedFrameLevel(true)
 
 		local fontString = textFrame:CreateFontString()
@@ -488,8 +492,7 @@ local function getIconFrame()
 		iconFrame = CreateFrame("Frame", nil, UIParent)
 		iconFrame:SetPoint("CENTER")
 		iconFrame:SetFrameStrata("MEDIUM")
-		iconFrame:SetFixedFrameStrata(true)
-		iconFrame:SetFrameLevel(5500)
+		iconFrame:SetFrameLevel(6000)
 		iconFrame:SetClampedToScreen(true)
 		iconFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
 
@@ -1292,23 +1295,10 @@ do
 						args = {
 							iconFrameStrata = {
 								type = "select",
-								values = {MEDIUM="MEDIUM"},
-								name = "Icon Strata (NYI)",
-								get = function() return "MEDIUM" end,
+								values = {MEDIUM=L.medium, LOW=L.low},
+								name = L.drawStrata,
 								order = 1,
 								width = 1,
-								disabled = true,
-							},
-							iconFrameLevel = {
-								type = "range",
-								name = "Icon Level (NYI)",
-								get = function() return 5500 end,
-								order = 2,
-								min = 1,
-								max = 9000,
-								step = 1,
-								width = 2,
-								disabled = true,
 							},
 							heading = {
 								type = "description",
@@ -1319,14 +1309,14 @@ do
 										return L.nameplateOptInHeaderOn
 									end
 								end,
-								order = 3,
+								order = 2,
 								width = "full",
 								fontSize = "medium",
 							},
 							optintoggle = {
 								type = "toggle",
 								name = L.nameplateOptInTitle,
-								order = 4,
+								order = 3,
 								width = "full",
 								get = function()
 									return BigWigsLoader.db.profile.bossModNameplatesDisabled
@@ -1807,12 +1797,13 @@ end
 local function createNameplateIcon(module, guid, key, length, icon)
 	local iconFrame = getIconFrame()
 	local target = module:UnitGUID("target")
+	iconFrame:SetFrameStrata(db.iconFrameStrata)
 	if guid == target then
 		iconFrame:SetSize(db.iconWidthTarget, db.iconHeightTarget)
-		iconFrame:SetFrameLevel(5555)
+		iconFrame:SetFrameLevel(6100)
 	else
 		iconFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
-		iconFrame:SetFrameLevel(5500)
+		iconFrame:SetFrameLevel(6000)
 	end
 	iconFrame:Set("bigwigs:key", key)
 	iconFrame:Set("bigwigs:unitGUID", guid)
@@ -1998,7 +1989,7 @@ do
 			for _, tbl in next, nameplateIcons[guid] do
 				if tbl.nameplateFrame then
 					tbl.nameplateFrame:SetSize(db.iconWidthTarget, db.iconHeightTarget)
-					tbl.nameplateFrame:SetFrameLevel(5555)
+					tbl.nameplateFrame:SetFrameLevel(6100)
 				end
 			end
 			rearrangeNameplateIcons(guid)
@@ -2007,7 +1998,7 @@ do
 			for _, tbl in next, nameplateIcons[prevTarget] do
 				if tbl.nameplateFrame then
 					tbl.nameplateFrame:SetSize(db.iconWidthOthers, db.iconHeightOthers)
-					tbl.nameplateFrame:SetFrameLevel(5500)
+					tbl.nameplateFrame:SetFrameLevel(6000)
 				end
 			end
 			rearrangeNameplateIcons(prevTarget)

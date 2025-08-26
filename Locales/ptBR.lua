@@ -439,6 +439,9 @@ L.CENTER = "Centro"
 L.customAnchorPoint = "Avançado: Ponto de âncora personalizado"
 L.sourcePoint = "Ponto de Origem"
 L.destinationPoint = "Ponto de Destino"
+--L.drawStrata = "Draw Strata"
+--L.medium = "MEDIUM"
+--L.low = "LOW"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

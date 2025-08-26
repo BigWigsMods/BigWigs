@@ -439,6 +439,9 @@ L.CENTER = "Mitte"
 L.customAnchorPoint = "Erweitert: Benutzerdefinierter Ankerpunkt"
 L.sourcePoint = "Ursprungspunkt"
 L.destinationPoint = "Zielpunkt"
+--L.drawStrata = "Draw Strata"
+--L.medium = "MEDIUM"
+--L.low = "LOW"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

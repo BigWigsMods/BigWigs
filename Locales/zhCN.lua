@@ -439,6 +439,9 @@ L.CENTER = "中"
 L.customAnchorPoint = "高级：自定义锚点"
 L.sourcePoint = "源点"
 L.destinationPoint = "相对锚点"
+--L.drawStrata = "Draw Strata"
+--L.medium = "MEDIUM"
+--L.low = "LOW"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
