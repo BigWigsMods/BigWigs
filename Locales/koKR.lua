@@ -234,9 +234,9 @@ L.imported_countdown_position = "카운트다운 위치"
 L.imported_countdown_settings = "카운트다운 설정"
 L.imported_countdown_color = "카운트다운 색상"
 L.imported_nameplate_settings = "이름표 설정"
---L.imported_mythicplus_settings = "Mythic+ Settings"
---L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
---L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
+L.imported_mythicplus_settings = "신화+ 설정"
+L.mythicplus_settings_import_desc = "모든 신화+ 설정 가져오기."
+L.mythicplus_settings_export_desc = "모든 신화+ 설정 내보내기."
 
 -- Statistics
 L.statistics = "통계"
