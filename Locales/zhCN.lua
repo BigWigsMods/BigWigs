@@ -234,9 +234,9 @@ L.imported_countdown_position = "倒数位置"
 L.imported_countdown_settings = "倒数设置"
 L.imported_countdown_color = "倒数颜色"
 L.imported_nameplate_settings = "姓名板设置"
---L.imported_mythicplus_settings = "Mythic+ Settings"
---L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
---L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
+--L.imported_mythicplus_settings = "史诗钥石设置"
+--L.mythicplus_settings_import_desc = "导入全部史诗钥石设置。"
+--L.mythicplus_settings_export_desc = "导出全部史诗钥石设置。"
 
 -- Statistics
 L.statistics = "统计"
@@ -387,8 +387,8 @@ L.instanceKeysDisplayWithDungeon = "|c%s%s：|r+%d（%s）" -- "PLAYER_NAME: +DU
 L.instanceKeysShowAll = "始终显示所有玩家"
 L.instanceKeysShowAllDesc = "启用此选项将显示列表中的所有玩家，即使他们的钥石不属于当前地下城。"
 L.instanceKeysOtherDungeonColor = "其他地下城颜色"
-L.instanceKeysOtherDungeonColorDesc = "为持有非当前地下城钥石的玩家选择字体颜色。"
-L.instanceKeysEndOfRunDesc = "默认情况下，列表仅在你进入史诗钥石地下城时显示。启用此选项后，还将在史诗钥石+结束后继续显示列表。"
+L.instanceKeysOtherDungeonColorDesc = "为持有非当前地下城钥石选择字体颜色。"
+L.instanceKeysEndOfRunDesc = "默认情况下，列表仅在你进入史诗钥石地下城时显示。启用此选项后，还将在史诗钥石结束后继续显示列表。"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
