@@ -2634,6 +2634,50 @@ do
 	function boss:CheckOption(key, flag)
 		return checkFlag(self, key, C[flag])
 	end
+	--- Check if the player passes the role restrictions for this option key.
+	-- @param key the option key
+	-- @return boolean
+	function boss:CanPassRoleRestrictions(key)
+		if key == false then
+			return true -- Allow optionless abilities
+		elseif type(key) == "nil" then
+			core:Print(format(nilKeyError, self.moduleName))
+			return
+		elseif type(self.db) ~= "table" then
+			local msg = format(noDBError, self.moduleName)
+			core:Print(msg)
+			error(msg)
+			return
+		elseif type(self.db.profile[key]) ~= "number" then
+			if not self.toggleDefaults[key] then
+				core:Print(format(noDefaultError, self.moduleName, key))
+				return
+			end
+			--if debug then
+			--	core:Print(format(notNumberError, self.moduleName, key, type(self.db.profile[key])))
+			--	return
+			--end
+			self.db.profile[key] = self.toggleDefaults[key]
+		else
+			local fullKey = self.db.profile[key]
+			if band(fullKey, C.TANK) == C.TANK and not self:Tank() then
+				return
+			elseif band(fullKey, C.HEALER) == C.HEALER and not self:Healer() then
+				return
+			elseif band(fullKey, C.TANK_HEALER) == C.TANK_HEALER and not self:Tank() and not self:Healer() then
+				return
+			else
+				return true
+			end
+		end
+	end
+	--- Check if an option key has a specific flag set.
+	-- @param key the option key
+	-- @string flag the option flag to check
+	-- @return boolean
+	function boss:CheckFlag(key, flag)
+		return band(self.db.profile[key], flag) == flag
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -2825,9 +2869,11 @@ end
 -- @bool[opt] disableEmphasize if true then this message can never emphasize regardless of user settings
 -- @number[opt] customDisplayTime overwrite the user display time (the time the message stays on screen) with a defined one
 function boss:Message(key, color, text, icon, disableEmphasize, customDisplayTime)
-	local isEmphasized = not disableEmphasize and band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-	if checkFlag(self, key, C.MESSAGE) or isEmphasized then
-		self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized, customDisplayTime)
+	if self:CanPassRoleRestrictions(key) then
+		local isEmphasized = not disableEmphasize and self:CheckFlag(key, C.EMPHASIZE)
+		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+			self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized, customDisplayTime)
+		end
 	end
 end
 
@@ -2837,11 +2883,13 @@ end
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
 function boss:PersonalMessage(key, localeString, text, icon)
-	local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
-	if checkFlag(self, key, C.MESSAGE) or isEmphasized then
-		local str = localeString and L[localeString] or L.you
-		local msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
-		self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
+	if self:CanPassRoleRestrictions(key) then
+		local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
+		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+			local str = localeString and L[localeString] or L.you
+			local msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
+			self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
+		end
 	end
 end
 
@@ -2870,17 +2918,19 @@ end
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
 function boss:StackMessage(key, color, player, stack, noEmphUntil, text, icon)
-	local textType = type(text)
-	local amount = stack or 1
-	if player == myName then
-		local isEmphasized = (band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE) and amount >= noEmphUntil
-		if checkFlag(self, key, C.MESSAGE) or isEmphasized then
-			self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, amount, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or key], isEmphasized)
-		end
-	elseif not checkFlag(self, key, C.ME_ONLY) then
-		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and amount >= noEmphUntil
-		if checkFlag(self, key, C.MESSAGE) or isEmphasized then
-			self:SendMessage("BigWigs_Message", self, key, format(L.stack, amount, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or key], isEmphasized)
+	if self:CanPassRoleRestrictions(key) then
+		local textType = type(text)
+		local amount = stack or 1
+		if player == myName then
+			local isEmphasized = (self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)) and amount >= noEmphUntil
+			if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, amount, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or key], isEmphasized)
+			end
+		elseif not self:CheckFlag(key, C.ME_ONLY) then
+			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) and amount >= noEmphUntil
+			if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, amount, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or key], isEmphasized)
+			end
 		end
 	end
 end
@@ -3027,11 +3077,11 @@ do
 			local texture = icon ~= false and icons[icon or key]
 			local previousAmount = playerTable.prevPlayersInTable or 0
 			if playersInTable-previousAmount == 1 and playerTable[playersInTable] == myName then
-				local meEmphasized = band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
+				local meEmphasized = self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
 				if not meEmphasized then -- We already did a ME_ONLY_EMPHASIZE print in :TargetsMessage
-					local emphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
+					local emphasized = self:CheckFlag(key, C.EMPHASIZE)
 					local marker = playerTable[myName]
-					if checkFlag(self, key, C.MESSAGE) or emphasized then
+					if self:CheckFlag(key, C.MESSAGE) or emphasized then
 						if marker then
 							self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, emphasized)
 						else
@@ -3059,8 +3109,8 @@ do
 				end
 				local list = self:TableToString(tbl, #tbl)
 				-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
-				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
-				if checkFlag(self, key, C.MESSAGE) or isEmphasized then
+				local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) and not self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
+				if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
 				end
 			end
@@ -3077,41 +3127,43 @@ do
 	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
 	-- @number[opt] customTime how long to wait to reach the max players in the table. If the max is not reached, it will print after this value (0.3s is used if nil)
 	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime)
-		local playersInTable = #playerTable
-		if band(self.db.profile[key], C.ME_ONLY) == C.ME_ONLY then
-			if playerTable[playersInTable] == myName and checkFlag(self, key, C.ME_ONLY) then -- Use checkFlag for the role check
-				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
-				if checkFlag(self, key, C.MESSAGE) or isEmphasized then
+		if self:CanPassRoleRestrictions(key) then
+			local playersInTable = #playerTable
+			if self:CheckFlag(key, C.ME_ONLY) then
+				if playerTable[playersInTable] == myName then
+					local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
+					if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+						local textType = type(text)
+						local msg = textType == "string" and text or spells[text or key]
+						local texture = icon ~= false and icons[icon or key]
+						local marker = playerTable[myName]
+						if marker then
+							self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, isEmphasized)
+						else
+							self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
+						end
+					end
+				end
+			else
+				if playerTable[playersInTable] == myName and self:CheckFlag(key, C.ME_ONLY_EMPHASIZE) then
 					local textType = type(text)
 					local msg = textType == "string" and text or spells[text or key]
 					local texture = icon ~= false and icons[icon or key]
 					local marker = playerTable[myName]
 					if marker then
-						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, isEmphasized)
+						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, true)
 					else
-						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
+						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
 					end
 				end
-			end
-		else
-			if playerTable[playersInTable] == myName and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
-				local textType = type(text)
-				local msg = textType == "string" and text or spells[text or key]
-				local texture = icon ~= false and icons[icon or key]
-				local marker = playerTable[myName]
-				if marker then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, true)
-				else
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
-				end
-			end
-			local playersAddedSinceLastPrint = playersInTable - (playerTable.prevPlayersInTable or 0)
-			if playersAddedSinceLastPrint == playerCount then
-				printTargets(self, key, playerTable, color, text, icon)
-			elseif playersAddedSinceLastPrint == 1 then
-				SimpleTimer(customTime or 0.3, function()
+				local playersAddedSinceLastPrint = playersInTable - (playerTable.prevPlayersInTable or 0)
+				if playersAddedSinceLastPrint == playerCount then
 					printTargets(self, key, playerTable, color, text, icon)
-				end)
+				elseif playersAddedSinceLastPrint == 1 then
+					SimpleTimer(customTime or 0.3, function()
+						printTargets(self, key, playerTable, color, text, icon)
+					end)
+				end
 			end
 		end
 	end
@@ -3124,24 +3176,26 @@ end
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
 function boss:TargetMessage(key, color, player, text, icon)
-	local textType = type(text)
-	local msg = textType == "string" and text or spells[text or key]
-	local texture = icon ~= false and icons[icon or key]
-	if not player then
-		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-		if checkFlag(self, key, C.MESSAGE) or isEmphasized then
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color, texture, isEmphasized)
-		end
-	elseif player == myName then
-		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
-		if checkFlag(self, key, C.MESSAGE) or isEmphasized then
-			self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
-		end
-	else
-		-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
-		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
-		if not checkFlag(self, key, C.ME_ONLY) and (checkFlag(self, key, C.MESSAGE) or isEmphasized) then
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, self:ColorName(player)), color, texture, isEmphasized)
+	if self:CanPassRoleRestrictions(key) then
+		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
+		local texture = icon ~= false and icons[icon or key]
+		if not player then
+			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE)
+			if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color, texture, isEmphasized)
+			end
+		elseif player == myName then
+			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
+			if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
+			end
+		else
+			-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
+			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) and not self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
+			if not self:CheckFlag(key, C.ME_ONLY) and (self:CheckFlag(key, C.MESSAGE) or isEmphasized) then
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, self:ColorName(player)), color, texture, isEmphasized)
+			end
 		end
 	end
 end
