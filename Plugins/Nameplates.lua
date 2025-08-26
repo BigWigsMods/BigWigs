@@ -1296,7 +1296,7 @@ do
 								name = "Icon Strata (NYI)",
 								get = function() return "MEDIUM" end,
 								order = 1,
-								width = 2,
+								width = 1,
 								disabled = true,
 							},
 							iconFrameLevel = {
@@ -1304,11 +1304,67 @@ do
 								name = "Icon Level (NYI)",
 								get = function() return 5500 end,
 								order = 2,
-								min = 0,
-								max = 10000,
+								min = 1,
+								max = 9000,
 								step = 1,
 								width = 2,
 								disabled = true,
+							},
+							heading = {
+								type = "description",
+								name = function()
+									if not BigWigsLoader.db.profile.bossModNameplatesDisabled then
+										return L.nameplateOptInHeaderOff
+									else
+										return L.nameplateOptInHeaderOn
+									end
+								end,
+								order = 3,
+								width = "full",
+								fontSize = "medium",
+							},
+							optintoggle = {
+								type = "toggle",
+								name = L.nameplateOptInTitle,
+								order = 4,
+								width = "full",
+								get = function()
+									return BigWigsLoader.db.profile.bossModNameplatesDisabled
+								end,
+								set = function(_, value)
+									local profileName = BigWigsLoader.db:GetCurrentProfile()
+									if type(profileName) == "string" and type(BigWigs3DB.namespaces) == "table" then
+										if value then
+											for moduleName, moduleSettings in next, BigWigs3DB.namespaces do
+												if type(moduleName) == "string" and type(moduleSettings) == "table" and strfind(moduleName, "BigWigs_Bosses", nil, true) and type(BigWigs3DB.namespaces[moduleName].profiles) == "table" and type(BigWigs3DB.namespaces[moduleName].profiles[profileName]) == "table" then
+													for optionKey, optionValue in next, BigWigs3DB.namespaces[moduleName].profiles[profileName] do
+														if type(optionValue) == "number" and optionValue > 10 and bit.band(optionValue, BigWigs.C.NAMEPLATE) == BigWigs.C.NAMEPLATE then
+															BigWigs3DB.namespaces[moduleName].profiles[profileName][optionKey] = optionValue - BigWigs.C.NAMEPLATE
+														end
+													end
+												end
+											end
+											BigWigsLoader.db.profile.bossModNameplatesDisabled = true
+										else
+											for moduleName, moduleSettings in next, BigWigs3DB.namespaces do
+												if type(moduleName) == "string" and type(moduleSettings) == "table" and strfind(moduleName, "BigWigs_Bosses", nil, true) and type(BigWigs3DB.namespaces[moduleName].profiles) == "table" and type(BigWigs3DB.namespaces[moduleName].profiles[profileName]) == "table" then
+													for optionKey, optionValue in next, BigWigs3DB.namespaces[moduleName].profiles[profileName] do
+														if type(optionValue) == "number" and optionValue > 10 and bit.band(optionValue, BigWigs.C.NAMEPLATE) ~= BigWigs.C.NAMEPLATE then
+															BigWigs3DB.namespaces[moduleName].profiles[profileName][optionKey] = optionValue + BigWigs.C.NAMEPLATE
+														end
+													end
+												end
+											end
+											BigWigsLoader.db.profile.bossModNameplatesDisabled = false
+										end
+										C_UI.Reload()
+									end
+								end,
+								confirm = function(_, value)
+									if value then
+										return L.nameplateOptInWarning
+									end
+								end,
 							},
 						},
 					},

@@ -140,6 +140,7 @@ files["Plugins/Messages.lua"].ignore = {
 }
 files["Plugins/Nameplates.lua"].ignore = {
 	"113/C_NamePlate",
+	"113/C_UI",
 }
 files["Plugins/Proximity.lua"].ignore = {
 	"113/GetNumGroupMembers",
