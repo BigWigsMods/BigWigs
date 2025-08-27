@@ -2,40 +2,30 @@ RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN") -- We don't need to participate
 
 local LibSpec = LibStub("LibSpecialization")
 local myName = UnitNameUnmodified("player")
-local canChangeRole = false
 
 local frame = CreateFrame("Frame")
 local IsInGroup, IsPartyLFG = IsInGroup, IsPartyLFG
 local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
 local UnitGroupRolesAssigned, UnitSetRole = UnitGroupRolesAssigned, UnitSetRole
 
-local LibSpecTable = {}
-LibSpec.RegisterGroup(LibSpecTable, function(_, role, _, player)
-	if canChangeRole and myName == player and IsInGroup() and not IsPartyLFG() and UnitGroupRolesAssigned("player") ~= role then
-		canChangeRole = false
+local function UpdateMyRole()
+	local _, role = LibSpec.MySpecialization()
+	if IsInGroup() and not IsPartyLFG() and UnitGroupRolesAssigned("player") ~= role then
 		if InCombatLockdown() or UnitAffectingCombat("player") then
 			frame:RegisterEvent("PLAYER_REGEN_ENABLED")
 			return
 		end
 		UnitSetRole("player", role)
 	end
-end)
-
-LibSpec.RegisterPlayerSpecChange(LibSpecTable, function()
-	canChangeRole = true
-end)
+end
+LibSpec.RegisterPlayerSpecChange({}, UpdateMyRole)
 
 frame:SetScript("OnEvent", function(self, event)
 	if event == "GROUP_FORMED" then
-		canChangeRole = true
-	else
+		UpdateMyRole()
+	else -- PLAYER_REGEN_ENABLED
 		self:UnregisterEvent(event)
-		if IsInGroup() and not IsPartyLFG() then
-			local _, role = LibSpec:MySpecialization()
-			if UnitGroupRolesAssigned("player") ~= role then
-				UnitSetRole("player", role)
-			end
-		end
+		UpdateMyRole()
 	end
 end)
 frame:RegisterEvent("GROUP_FORMED")
