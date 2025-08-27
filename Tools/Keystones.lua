@@ -4,7 +4,7 @@ local L, BigWigsLoader, BigWigsAPI, db
 -- Saved Settings
 --
 
-local UpdateProfile, UpdateProfileFont, ResetInstanceKeys
+local ProfileUtils = {}
 do
 	local _, tbl = ...
 	BigWigsAPI = tbl.API
@@ -52,7 +52,7 @@ do
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 
-	function UpdateProfile()
+	ProfileUtils.ValidateMainSettings = function()
 		for k, v in next, db.profile do
 			local defaultType = type(defaults[k])
 			if defaultType == "nil" then
@@ -125,14 +125,21 @@ do
 			db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
 		end
 	end
-	function UpdateProfileFont()
+	ProfileUtils.ValidateMediaSettings = function()
+		if not BigWigsAPI:HasCountdown(db.profile.countVoice) then
+			db.profile.countVoice = defaults.countVoice
+		end
+		if not LibStub("LibSharedMedia-3.0"):IsValid("sound", db.profile.countStartSound) then
+			db.profile.countStartSound = defaults.countStartSound
+		end
+		if not LibStub("LibSharedMedia-3.0"):IsValid("sound", db.profile.countEndSound) then
+			db.profile.countEndSound = defaults.countEndSound
+		end
 		if not LibStub("LibSharedMedia-3.0"):IsValid("font", db.profile.instanceKeysFontName) then
 			db.profile.instanceKeysFontName = defaults.instanceKeysFontName
 		end
 	end
-	UpdateProfile()
-
-	function ResetInstanceKeys()
+	ProfileUtils.ResetInstanceKeys = function()
 		db.profile.instanceKeysPosition = defaults.instanceKeysPosition
 		db.profile.instanceKeysFontName = defaults.instanceKeysFontName
 		db.profile.instanceKeysFontSize = defaults.instanceKeysFontSize
@@ -145,6 +152,9 @@ do
 		db.profile.instanceKeysShowAllPlayers = defaults.instanceKeysShowAllPlayers
 		db.profile.instanceKeysShowDungeonEnd = defaults.instanceKeysShowDungeonEnd
 	end
+
+	ProfileUtils.ValidateMainSettings()
+	BigWigsLoader.CTimerAfter(0, ProfileUtils.ValidateMediaSettings) -- Delay to allow time for other addons to register media into LSM
 end
 
 --------------------------------------------------------------------------------
@@ -1520,7 +1530,6 @@ do
 		instanceKeysWidgets.otherDungeons = nil
 		instanceKeysWidgets.nameList = {}
 		currentInstanceID = instanceID
-		UpdateProfileFont() -- We delay this to allow enough time for other addons to register their fonts into LSM
 		local fontFlags = nil
 		if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
 			fontFlags = "MONOCHROME," .. db.profile.instanceKeysOutline
@@ -1700,8 +1709,8 @@ do
 	end
 
 	BigWigsLoader:RegisterMessage("BigWigs_ProfileUpdate", function()
-		UpdateProfile()
-		UpdateProfileFont()
+		ProfileUtils.ValidateMainSettings()
+		ProfileUtils.ValidateMediaSettings()
 		UpdateWidgets()
 	end)
 
@@ -2080,7 +2089,7 @@ do
 						name = L.reset,
 						desc = L.resetDesc,
 						func = function()
-							ResetInstanceKeys()
+							ProfileUtils.ResetInstanceKeys()
 							UpdateWidgets()
 							if not instanceKeysWidgets.testing then
 								instanceKeysWidgets.nameList = {}
