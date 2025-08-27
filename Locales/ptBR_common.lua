@@ -16,8 +16,8 @@ L.magic_buff_other = "Buff mágico em %s: %s" -- Magic buff on NPC_NAME: SPELL_N
 L.on = "%s em %s"
 L.stack = "%dx %s em %s" -- "5x SPELL_NAME on PLAYER_OR_NPC" showing how many stacks of a buff/debuff are on a player or NPC
 L.stackyou = "%dx %s em VOCÊ" -- "5x SPELL_NAME on YOU" showing how many stacks of a buff/debuff are on you
---L.stackboss = "%dx %s on BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
---L.stack_gained = "Gained %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
+L.stackboss = "%dx %s no BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
+L.stack_gained = "Ganhou %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
 L.cast = "<Conjurando %s>"
 L.casting = "Conjurando: %s"
 L.soon = "%s em breve"
@@ -47,7 +47,7 @@ L.general = "Geral" -- General settings, i.e. things that apply to normal, heroi
 L.health = "Vida" -- The health of an NPC
 L.health_percent = "%d%% de Vida" -- "10% Health" The health percentage of an NPC
 L.energy = "Energia"
---L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
+L.energy_percent = "Energia em %d%%" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Porta Aberta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Portão Aberto" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Ameaça"
@@ -139,7 +139,7 @@ L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente." -- Mark NPC_
 L.marker_npc_aura_desc = "Marca NPCs afetados por '%s' com %s, requer líder ou assistente." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Desativado"
 L.none = "Nenhum"
---L.markers = "Markers" -- Plural of marker
+L.markers = "Marcadores" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Vínculo"
@@ -195,7 +195,7 @@ L.arcane = "Arcano"
 L.autotalk = "Interação automática com NPC"
 L.autotalk_boss_desc = "Seleciona automaticamente as opções de diálogo do NPC que iniciam o encontro com o chefe."
 L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do NPC que permitem você progredir para o próximo estágio da masmorra."
---L.autotalk_notice = "Automatically interacting with NPC %s."
+L.autotalk_notice = "Interagindo automaticamente com NPC %s."
 
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
@@ -269,7 +269,7 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Espinho" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Espinhos" -- Plural of L.spike
 L.spread = "Espalhar" -- An ability that forces you to spread out away from other players, or you might damage them
---L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
+L.tank_bomb = "Bomba no Tanque" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal Tanque" -- Similar to L.frontal_cone but only applies to tanks
