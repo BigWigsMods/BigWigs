@@ -234,9 +234,9 @@ L.imported_countdown_position = "倒数位置"
 L.imported_countdown_settings = "倒数设置"
 L.imported_countdown_color = "倒数颜色"
 L.imported_nameplate_settings = "姓名板设置"
---L.imported_mythicplus_settings = "史诗钥石设置"
---L.mythicplus_settings_import_desc = "导入全部史诗钥石设置。"
---L.mythicplus_settings_export_desc = "导出全部史诗钥石设置。"
+L.imported_mythicplus_settings = "史诗钥石设置"
+L.mythicplus_settings_import_desc = "导入全部史诗钥石设置。"
+L.mythicplus_settings_export_desc = "导出全部史诗钥石设置。"
 
 -- Statistics
 L.statistics = "统计"
