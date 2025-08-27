@@ -439,7 +439,7 @@ L.CENTER = "중앙"
 L.customAnchorPoint = "고급: 사용자 지정 앵커 지점"
 L.sourcePoint = "원본 지점"
 L.destinationPoint = "대상 지점"
-L.drawStrata = "층 표시"
+L.drawStrata = "계층"
 L.medium = "중간"
 L.low = "낮음"
 
