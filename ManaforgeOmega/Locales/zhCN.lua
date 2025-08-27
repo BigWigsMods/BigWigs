@@ -56,7 +56,7 @@ if L then
 	L.left_living_mass = "活体物质（左）"  -- NPCID：242587 活体物质
 	L.right_living_mass = "活体物质（右）"
 
-	--L.soaring_reshii_monster_yell = "你目前的表现好得出奇，" -- [CHAT_MSG_MONSTER_YELL] 你目前的表现好得出奇，可我们还没结束呢。#Xal'atath###Meeresflask##0#0##0#256#nil#0#false#false#false#false",
+	L.soaring_reshii_monster_yell = "你目前的表现好得出奇，" -- [CHAT_MSG_MONSTER_YELL] 你目前的表现好得出奇，可我们还没结束呢。#Xal'atath###Meeresflask##0#0##0#256#nil#0#false#false#false#false",
 
 	L.weakened_soon_monster_yell = "必须出击，就是现在！" -- [CHAT_MSG_MONSTER_YELL] 必须出击，就是现在！#Xal'atath###Xal'atath##0#0##0#4873#nil#0#false#false#false#false",
 end
