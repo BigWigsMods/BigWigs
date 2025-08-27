@@ -439,9 +439,9 @@ L.CENTER = "중앙"
 L.customAnchorPoint = "고급: 사용자 지정 앵커 지점"
 L.sourcePoint = "원본 지점"
 L.destinationPoint = "대상 지점"
---L.drawStrata = "Draw Strata"
---L.medium = "MEDIUM"
---L.low = "LOW"
+L.drawStrata = "층 표시"
+L.medium = "중간"
+L.low = "낮음"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -705,10 +705,10 @@ L.displayTimeDesc = "메시지를 표시할 시간, 초 단위"
 L.fadeTime = "서서히 사라질 시간"
 L.fadeTimeDesc = "메시지를 서서히 없앨 시간, 초 단위"
 
---L.messagesOptInHeaderOff = "Boss mod messages 'opt-in' mode: Enabling this option will turn off messages across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the messages you want.\n\n"
---L.messagesOptInHeaderOn = "Boss mod messages 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod messages, go into the settings of a specific boss ability and turn on the '|cFF33FF99Messages|r' option.\n\n"
---L.messagesOptInTitle = "Boss mod messages 'opt-in' mode"
---L.messagesOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off messages across ALL of your boss modules. You will need to go through each one and manually turn on the messages you want.\n\nYour UI will now reload, are you sure?"
+L.messagesOptInHeaderOff = "보스 모드 메시지 '선택 활성화' 모드: 이 옵션을 활성화하면 모든 보스 모듈에서 메시지가 비활성화됩니다.\n\n원하는 메시지만 각 모듈에서 수동으로 활성화해야 합니다.\n\n"
+L.messagesOptInHeaderOn = "보스 모드 메시지 '선택 활성화' 모드가 |cFF33FF99활성화|r되었습니다. 보스 모드 메시지를 보려면 특정 보스 능력 설정에 들어가서 '|cFF33FF99메시지|r' 옵션을 활성화하세요.\n\n"
+L.messagesOptInTitle = "보스 모드 메시지 '선택 활성화' 모드"
+L.messagesOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 활성화하면 모든 보스 모듈에서 메시지가 비활성화됩니다. 원하는 메시지만 각 모듈에서 수동으로 활성화해야 합니다.\n\nUI가 재시작됩니다. 계속하시겠습니까?"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua
@@ -787,10 +787,10 @@ L.scale_glow_desc = "애니메이션에서 반짝임의 크기."
 L.startAnimation = "애니메이션 시작"
 L.startAnimation_glow_desc = "이 반짝임은 시작 애니메이션을 가지고 있으며, 애니메이션의 활성화/비활성화를 설정합니다."
 
---L.nameplateOptInHeaderOff = "\n\n\n\nBoss mod nameplates 'opt-in' mode: Enabling this option will turn off nameplates across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the nameplates you want.\n\n"
---L.nameplateOptInHeaderOn = "\n\n\n\nBoss mod nameplates 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod nameplates, go into the settings of a specific boss ability and turn on the '|cFF33FF99Nameplates|r' option.\n\n"
---L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
---L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
+L.nameplateOptInHeaderOff = "\n\n\n\n보스 모드 이름표 '선택 활성화' 모드: 이 옵션을 활성화하면 모든 보스 모듈에서 이름표가 비활성화됩니다.\n\n원하는 이름표만 각 모듈에서 수동으로 활성화해야 합니다.\n\n"
+L.nameplateOptInHeaderOn = "\n\n\n\n보스 모드 이름표 '선택 활성화' 모드가 |cFF33FF99활성화|r되었습니다. 보스 모드 이름표를 보려면 특정 보스 능력 설정에 들어가서 '|cFF33FF99이름표|r' 옵션을 활성화하세요.\n\n"
+L.nameplateOptInTitle = "보스 모드 이름표 '선택 활성화' 모드"
+L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 활성화하면 모든 보스 모듈에서 이름표가 비활성화됩니다. 원하는 이름표만 각 모듈에서 수동으로 활성화해야 합니다.\n\nUI가 재시작됩니다. 계속하시겠습니까?"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
