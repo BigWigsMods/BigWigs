@@ -310,7 +310,7 @@ BigWigs:AddColors("Dimensius, the All-Devouring", {
 	[1249423] = {"blue","yellow"},
 	[1250055] = {"blue","yellow"},
 	[1251619] = "yellow",
-	["stages"] = {"cyan","green"},
+	["stages"] = {"cyan","green","yellow"},
 })
 
 BigWigs:AddSounds("Dimensius, the All-Devouring", {
@@ -352,7 +352,7 @@ BigWigs:AddSounds("Dimensius, the All-Devouring", {
 	[1246145] = {"info","warning"},
 	[1246541] = "alarm",
 	[1246930] = "info",
-	[1249423] = "alert",
+	[1249423] = {"alert","warning"},
 	[1250055] = "alarm",
 	[1251619] = "alert",
 	["stages"] = {"info","long"},

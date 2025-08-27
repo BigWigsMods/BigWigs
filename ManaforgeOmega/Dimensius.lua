@@ -40,41 +40,6 @@ local supernovaCount = 1
 local voidgraspCount = 1
 
 --------------------------------------------------------------------------------
--- Timers
---
-
-local timersEasy = {
-	[3] = {
-		[1233539] = { 61.6, 100.0, 100.0, 0 }, -- Devour
-		[1234044] = { 94.9, 33.3, 66.7, 33.3, 0 }, -- Darkened Sky
-		[1234263] = { 79.3, 33.3, 33.3, 33.3, 33.3, 33.3, 0 }, -- Cosmic Collapse
-		[1232973] = { 70.5, 14.5, 33.3, 33.3, 18.9, 14.5, 33.3, 33.3, 0 }, -- Supernova
-		[1250055] = { 74.9, 33.3, 33.3, 33.4, 33.3, 33.3, 0 }, -- Voidgrasp
-	}
-}
-
-local timersHeroic = {
-	[3] = {
-		[1233539] = { 61.7, 100.0, 100.0, 0 }, -- Devour
-		[1234044] = { 44.7, 51.1, 33.3, 66.6, 33.3, 0 }, -- Darkened Sky (first cast is emote only, next is at 95.1)
-		[1234263] = { 79.5, 33.3, 33.3, 33.3, 33.3, 33.3, 0 }, -- Cosmic Collapse
-		[1232973] = { 70.6, 14.5, 33.3, 33.3, 18.9, 14.5, 33.3, 33.3, 0 }, -- Supernova
-		[1250055] = { 75.1, 33.3, 33.3, 33.3, 33.3, 33.3, 0 }, -- Voidgrasp
-	}
-}
-
-local timersMythic = {
-	[3] = {
-		[1233539] = { 62.7, 80.0, 80.0, 0 }, -- Devour
-		[1234044] = { 44.7, 43.0, 30.0, 50.0, 30.0, 0 }, -- Darkened Sky (first cast is emote only, next is at 87.7)
-		[1234263] = { 72.7, 30.0, 30.0, 30.0, 30.0, 0 }, -- Cosmic Collapse
-		[1234242] = { 74.7, 26.0, 32.0, 26.0, 32.0, 0 }, -- Gravitational Distortion
-	}
-}
-
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersEasy or timersHeroic
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -284,7 +249,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StellarCoreApplied", 1246930)
 
 	-- Stage Two: The Dark Heart
-	self:Log("SPELL_AURA_APPLIED", "WorldsoulConsumptionApplied", 1237102)
+	self:Log("SPELL_CAST_SUCCESS", "WorldsoulConsumption", 1237102)
 
 	self:Log("SPELL_CAST_START", "Extinction", 1238765)
 	-- self:Log("UNIT_SPELLCAST_START", "GammaBurst", 1237319)
@@ -329,8 +294,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "VoidgraspApplied", 1250055)
 
 	self:Log("SPELL_AURA_REMOVED", "HoldTheLine", 1240533)
-
-	timers = self:Mythic() and timersMythic or self:Easy() and timersEasy or timersHeroic
 end
 
 function mod:OnEngage()
@@ -669,7 +632,7 @@ function mod:StellarCoreApplied(args)
 end
 
 -- Stage Two: The Dark Heart
-function mod:WorldsoulConsumptionApplied(args)
+function mod:WorldsoulConsumption(args)
 	lastIntermissionCast = nil
 	conquerorsCrossCount = 1
 	massEjectionCount = 1
@@ -872,8 +835,8 @@ do
 			gravityCount = gravityCount + 1
 
 			local cd = 0
-			if self:GetStage() == 3 then
-				cd = timers[3][1234242][gravityCount]
+			if self:GetStage() == 3 and gravityCount < 6 then
+				cd = gravityCount % 2 == 0 and 26.0 or 32.0
 			elseif gravityCount < 3 then -- 2 per platform
 				cd = 31.6
 			end
@@ -913,10 +876,10 @@ function mod:VoidlordDeath(args)
 	self:StopBar(CL.full_energy)
 
 	self:Message("stages", "green", CL.mob_killed:format(args.destName, voidlordKilled, 2), false)
-	self:PlaySound("stages", "info")
 
 	if self:MobId(args.destGUID) == 245255 then -- Artoshion
 		self:SetStage(1.5) -- Fly time
+		self:PlaySound("stages", "info")
 		-- Soaring Reshii gets delayed by Dimensius's casts
 		local cd = 5.5
 		if lastIntermissionCast == "gamma" then
@@ -949,15 +912,15 @@ function mod:TotalDestruction(args)
 	-- XXX can vary ~2s? maybe adjust everything in the _YELL?
 	self:CDBar(1245292, 15, CL.weakened) -- Destabilized
 	self:CDBar(1231716, 32, L.extinguish_the_stars) -- Extinguish the Stars
-	self:CDBar(1233539, timers[3][1233539][1], CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
+	self:CDBar(1233539, self:Mythic() and 62.7 or 61.7, CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
 	if self:Mythic() then
-		self:CDBar(1234242, timers[3][1234242][1], CL.count:format(self:SpellName(1234242), gravityCount)) -- Gravitational Distortion
+		self:CDBar(1234242, 74.7, CL.count:format(self:SpellName(1234242), gravityCount)) -- Gravitational Distortion
 	else
-		self:CDBar(1232973, timers[3][1232973][1], CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
-		self:CDBar(1250055, timers[3][1250055][1], CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
+		self:CDBar(1232973, 70.6, CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
+		self:CDBar(1250055, 75.0, CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
 	end
-	self:CDBar(1234263, timers[3][1234263][1], CL.count:format(cosmicCollapseLocale, cosmicCollapseCount)) -- Cosmic Collapse
-	self:CDBar(1234044, timers[3][1234044][1], CL.count:format(L.darkened_sky, darkenedSkyCount)) -- Darkened Sky
+	self:CDBar(1234263, self:Mythic() and 72.7 or 79.3, CL.count:format(cosmicCollapseLocale, cosmicCollapseCount)) -- Cosmic Collapse
+	self:CDBar(1234044, self:Easy() and 94.9 or 44.7, CL.count:format(L.darkened_sky, darkenedSkyCount)) -- Darkened Sky
 end
 
 function mod:DestabilizedApplied(args)
@@ -1010,15 +973,18 @@ do
 		self:Message(args.spellId, "red", CL.count:format(args.spellName, devourCount))
 		self:PlaySound(args.spellId, "warning") -- get safe
 		self:CastBar(args.spellId, 7, CL.count:format(args.spellName, devourCount))
-
 		devourCount = devourCount + 1
-		self:Bar(args.spellId, timers[3][args.spellId][devourCount], CL.count:format(args.spellName, devourCount))
+		if devourCount < 4 then
+			self:Bar(args.spellId, self:Mythic() and 80.0 or 100.0, CL.count:format(args.spellName, devourCount))
+		end
+		castingDevour = true
 	end
 
 	function mod:DevourP3Removed()
 		if self:Mythic() and devourCount < 3 then
 			self:CastBar(1232973, 7, CL.count:format(self:SpellName(1232973), devourCount)) -- Supernova
 		end
+		castingDevour = false
 	end
 end
 
@@ -1027,7 +993,13 @@ function mod:DarkenedSky()
 	self:Message(1234044, "yellow", CL.incoming:format(CL.count:format(L.darkened_sky, darkenedSkyCount)))
 	self:PlaySound(1234044, "alert")
 	darkenedSkyCount = darkenedSkyCount + 1
-	self:Bar(1234044, timers[3][1234044][darkenedSkyCount], CL.count:format(L.darkened_sky, darkenedSkyCount))
+	if darkenedSkyCount < 6 then
+		local cd = darkenedSkyCount % 2 == 1 and 33.3 or 66.6
+		if self:Mythic() then
+			cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+		end
+		self:Bar(1234044, cd, CL.count:format(L.darkened_sky, darkenedSkyCount))
+	end
 end
 
 function mod:ShadowquakeApplied(args)
@@ -1046,7 +1018,9 @@ function mod:CosmicCollapse(args)
 		self:CastBar(args.spellId, 4)
 	end
 	cosmicCollapseCount = cosmicCollapseCount + 1
-	self:Bar(args.spellId, timers[3][args.spellId][cosmicCollapseCount], CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
+	if cosmicCollapseCount < (self:Mythic() and 6 or 7) then
+		self:Bar(args.spellId, self:Mythic() and 30.0 or 33.3, CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
+	end
 end
 
 function mod:CosmicFragilityApplied(args)
@@ -1064,7 +1038,10 @@ function mod:Supernova(args)
 	self:PlaySound(args.spellId, "alert") -- falloff damage on star explosion
 	self:CastBar(args.spellId, 6.5, CL.count:format(args.spellName, supernovaCount)) -- 1.5s cast + 5s explosion
 	supernovaCount = supernovaCount + 1
-	self:Bar(args.spellId, timers[3][args.spellId][supernovaCount], CL.count:format(args.spellName, supernovaCount))
+	if supernovaCount < 9 then
+		local cd = supernovaCount % 4 == 1 and 18.9 or supernovaCount % 4 == 2 and 14.5 or 33.3
+		self:Bar(args.spellId, cd, CL.count:format(args.spellName, supernovaCount))
+	end
 end
 
 do
@@ -1075,7 +1052,9 @@ do
 			self:StopBar(CL.count:format(L.slows, voidgraspCount))
 			self:Message(args.spellId, "yellow", CL.count:format(L.slows, voidgraspCount))
 			voidgraspCount = voidgraspCount + 1
-			self:Bar(args.spellId, timers[3][args.spellId][voidgraspCount], CL.count:format(L.slows, voidgraspCount))
+			if voidgraspCount < 7 then
+				self:Bar(args.spellId, 33.3, CL.count:format(L.slows, voidgraspCount))
+			end
 		end
 		if self:Me(args.destGUID) then
 			prev = args.time
