@@ -439,9 +439,9 @@ L.CENTER = "中"
 L.customAnchorPoint = "高级：自定义锚点"
 L.sourcePoint = "源点"
 L.destinationPoint = "相对锚点"
---L.drawStrata = "Draw Strata"
---L.medium = "MEDIUM"
---L.low = "LOW"
+L.drawStrata = "层级"
+L.medium = "中"
+L.low = "低"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -705,10 +705,10 @@ L.displayTimeDesc = "以秒计信息显示时间。"
 L.fadeTime = "消退时间"
 L.fadeTimeDesc = "以秒计信息消退时间。"
 
---L.messagesOptInHeaderOff = "Boss mod messages 'opt-in' mode: Enabling this option will turn off messages across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the messages you want.\n\n"
---L.messagesOptInHeaderOn = "Boss mod messages 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod messages, go into the settings of a specific boss ability and turn on the '|cFF33FF99Messages|r' option.\n\n"
---L.messagesOptInTitle = "Boss mod messages 'opt-in' mode"
---L.messagesOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off messages across ALL of your boss modules. You will need to go through each one and manually turn on the messages you want.\n\nYour UI will now reload, are you sure?"
+L.messagesOptInHeaderOff = "消息'手动选择'模式：启用此选项将关闭所有模块的消息。\n\n您需要逐个进入每个模块的设置，手动开启您想要的消息提示。\n\n"
+L.messagesOptInHeaderOn = "消息'手动选择'模式已|cFF33FF99启用|r。要查看消息，请进入特定技能的设置并开启'|cFF33FF99消息|r'选项。\n\n"
+L.messagesOptInTitle = "消息'手动选择'模式"
+L.messagesOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式将关闭所有模块的消息。您需要逐个进入每个模块的设置，手动开启您想要的消息提示。\n\n界面即将重新加载，是否继续？"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua
@@ -787,10 +787,10 @@ L.scale_glow_desc = "调整发光动画中闪光点的尺寸。"
 L.startAnimation = "起始动画"
 L.startAnimation_glow_desc = "您选择的发光效果有起始动画特效，通常是一个闪烁。这个选项可以选择启用/禁用起始动画。"
 
---L.nameplateOptInHeaderOff = "\n\n\n\nBoss mod nameplates 'opt-in' mode: Enabling this option will turn off nameplates across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the nameplates you want.\n\n"
---L.nameplateOptInHeaderOn = "\n\n\n\nBoss mod nameplates 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod nameplates, go into the settings of a specific boss ability and turn on the '|cFF33FF99Nameplates|r' option.\n\n"
---L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
---L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
+L.nameplateOptInHeaderOff = "\n\n\n\n姓名板'手动选择'模式：启用此选项将关闭所有模块的姓名板效果。\n\n您需要逐个进入每个模块的设置，手动开启您想要的姓名板效果。\n\n"
+L.nameplateOptInHeaderOn = "\n\n\n\n姓名板'手动选择'模式已|cFF33FF99启用|r。需要单独启用姓名板，请进入特定技能的设置并开启'|cFF33FF99姓名板|r'选项。\n\n"
+L.nameplateOptInTitle = "姓名板'手动选择'模式"
+L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式将关闭所有模块的姓名板效果。您需要逐个进入每个模块的设置，手动开启您想要的姓名板效果。\n\n界面即将重新加载，是否继续？"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
