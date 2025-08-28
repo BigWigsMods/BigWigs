@@ -868,7 +868,7 @@ do
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 				if diffID == 8 or diffID == 23 then -- Mythic+, Mythic
 					TimerTracker:UnregisterEvent("START_TIMER")
-					BigWigsLoader.CTimerAfter(1, function()
+					BigWigsLoader.CTimerAfter(5, function()
 						TimerTracker:RegisterEvent("START_TIMER")
 						self:UnregisterEvent("CHALLENGE_MODE_START")
 					end)
