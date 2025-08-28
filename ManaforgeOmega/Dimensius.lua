@@ -313,7 +313,9 @@ function mod:OnEngage()
 	self:Bar(1229038, self:Mythic() and 10.5 or self:Easy() and 12.5 or 11.7, CL.count:format(self:SpellName(1229038), devourCount)) -- Devour
 	self:Bar(1230979, self:Mythic() and 31.5 or self:Easy() and 37.5 or 35.3, CL.count:format(CL.spread, darkMatterCount)) -- Dark Matter
 	self:Bar(1243690, self:Mythic() and 39.9 or self:Easy() and 47.0 or 44.5, CL.count:format(CL.soaks, shatteredSpaceCount)) -- Shattered Space
-	self:Bar(1243577, self:Mythic() and 43.0 or self:Easy() and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
+	if not self:LFR() then
+		self:Bar(1243577, self:Mythic() and 43.0 or self:Easy() and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
+	end
 
 	mobCollector = {}
 	if self:GetOption(nullBinderMarker) or self:GetOption(livingMassLeftMarker) or self:GetOption(livingMassRightMarker) then
