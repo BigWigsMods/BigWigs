@@ -1374,7 +1374,7 @@ do
 								min = 0.5,
 								max = 3,
 								step = 0.05,
-								width = 1.5,
+								width = 2,
 								isPercent = true,
 								disabled = function() return not db.iconExpireGlow end,
 								hidden = function() return db.iconExpireGlowType ~= "autocast" end,
