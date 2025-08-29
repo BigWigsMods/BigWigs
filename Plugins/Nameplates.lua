@@ -146,6 +146,8 @@ local iconDefaults = {
 	iconGlowProcAnimDuration = 1,
 	iconGlowTimeLeft = 0,
 	iconBorder = true,
+	iconBorderName = "Solid",
+	iconBorderOffset = 0,
 	iconBorderSize = 1,
 	iconBorderColor = {0, 0, 0, 1},
 	iconFrameStrata = "MEDIUM",
@@ -174,6 +176,7 @@ for k, v in next, textDefaults do
 	plugin.defaultDB[k] = v
 end
 
+local iconBorderTable
 local function updateProfile()
 	db = plugin.db.profile
 
@@ -291,8 +294,16 @@ local function updateProfile()
 			break -- If 1 entry is bad, reset the whole table
 		end
 	end
-	if db.iconBorderSize < 1 or db.iconBorderSize > 5 then
+	if not media:IsValid("border", db.iconBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+		db.iconBorderName = plugin.defaultDB.iconBorderName
 		db.iconBorderSize = plugin.defaultDB.iconBorderSize
+		db.iconBorderOffset = plugin.defaultDB.iconBorderOffset
+	end
+	if db.iconBorderSize < 1 or db.iconBorderSize > 32 then
+		db.iconBorderSize = plugin.defaultDB.iconBorderSize
+	end
+	if db.iconBorderOffset < 0 or db.iconBorderOffset > 32 then
+		db.iconBorderOffset = plugin.defaultDB.iconBorderOffset
 	end
 	for i = 1, 4 do
 		local n = db.iconBorderColor[i]
@@ -339,6 +350,11 @@ local function updateProfile()
 	if db.textOutline ~= "NONE" and db.textOutline ~= "OUTLINE" and db.textOutline ~= "THICKOUTLINE" then
 		db.textOutline = plugin.defaultDB.textOutline
 	end
+
+	iconBorderTable = {
+		edgeFile = media:Fetch("border", db.iconBorderName),
+		edgeSize = db.iconBorderSize,
+	}
 end
 
 local function setDefaults(options)
@@ -462,15 +478,6 @@ local function iconLoop(updater)
 	end
 end
 
-local function GetBorderBackdrop(size)
-	local borderBackdrop = {
-		edgeFile = "Interface\\Buttons\\WHITE8X8",
-		edgeSize = size,
-		insets = { left = 0, right = 0, top = 0, bottom = 0 }
-	}
-	return borderBackdrop
-end
-
 local function getGlowSettings(glowType)
 	if glowType == "pixel" then
 		return {db.iconGlowColor, db.iconGlowPixelLines, db.iconGlowFrequency, db.iconGlowPixelLength, db.iconGlowPixelThickness}
@@ -520,6 +527,7 @@ local function getIconFrame()
 		iconFrame.countdownNumber = countdownNumber
 
 		local border = CreateFrame("Frame", nil, iconFrame, "BackdropTemplate")
+		border:SetFrameLevel(border:GetFrameLevel()+1) -- Show the border above the cooldown swipe
 		border:SetPoint("TOPLEFT", iconFrame, "TOPLEFT")
 		border:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT")
 		border:Hide()
@@ -613,7 +621,9 @@ local function getIconFrame()
 
 	function iconFrame:ShowBorder(show, color)
 		if show then
-			self.border:SetBackdrop(GetBorderBackdrop(db.iconBorderSize))
+			self.border:SetBackdrop(iconBorderTable)
+			self.border:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -db.iconBorderOffset, db.iconBorderOffset)
+			self.border:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", db.iconBorderOffset, -db.iconBorderOffset)
 			self.border:SetBackdropBorderColor(color[1], color[2], color[3], color[4])
 			self.border:Show()
 		else
@@ -1033,15 +1043,55 @@ do
 								name = L.borderSize,
 								order = 7,
 								min = 1,
-								max = 5,
+								max = 32,
 								step = 1,
+								width = 1,
+								set = function(_, value)
+									db.iconBorderSize = value
+									iconBorderTable = {
+										edgeFile = media:Fetch("border", db.iconBorderName),
+										edgeSize = value,
+									}
+									resetNameplates()
+								end,
+								disabled = function() return not db.iconBorder end,
+							},
+							iconBorderOffset = {
+								type = "range",
+								name = L.borderOffset,
+								order = 8,
+								min = 0,
+								max = 32,
+								step = 1,
+								width = 1,
+								disabled = function() return not db.iconBorder end,
+							},
+							iconBorderName = {
+								type = "select",
+								name = L.borderName,
+								order = 9,
+								values = media:List("border"),
+								get = function()
+									for i, v in next, media:List("border") do
+										if v == db.iconBorderName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = media:List("border")
+									db.iconBorderName = list[value]
+									iconBorderTable = {
+										edgeFile = media:Fetch("border", db.iconBorderName),
+										edgeSize = db.iconBorderSize,
+									}
+									resetNameplates()
+								end,
 								width = 1,
 								disabled = function() return not db.iconBorder end,
 							},
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 8,
+								order = 10,
 							},
 							reset = {
 								type = "execute",
@@ -1054,7 +1104,7 @@ do
 										plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
 									end
 								end,
-								order = 9,
+								order = 11,
 							},
 						},
 					},

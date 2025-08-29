@@ -201,6 +201,8 @@ local nameplateSettingsToExport = {
 	"iconGlowProcAnimDuration",
 	"iconGlowTimeLeft",
 	"iconBorder",
+	"iconBorderName",
+	"iconBorderOffset",
 	"iconBorderSize",
 	"iconBorderColor",
 	"iconFrameStrata",

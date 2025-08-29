@@ -48,6 +48,12 @@ do
 	media:Register(FONT, "Noto Sans SemiCondensed", "Interface\\AddOns\\BigWigs\\Media\\Fonts\\NotoSans-SemiCondensed.otf", 130) -- 130 latin + cyr
 end
 
+-- Border
+do
+	local BORDER = media.MediaType and media.MediaType.BORDER or "border"
+	media:Register(BORDER, "Solid", "Interface\\Buttons\\WHITE8X8")
+end
+
 -- Countdowns
 addonTbl.API:RegisterCountdown("none", L.none, { false, false, false, false, false })
 addonTbl.API:RegisterCountdown("simple", L.simple_no_voice, {
