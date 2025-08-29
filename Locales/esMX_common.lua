@@ -195,7 +195,7 @@ L.arcane = "Arcano"
 L.autotalk = "Interacción con NPC de forma automática"
 L.autotalk_boss_desc = "Selecciona automáticamente el dialogo del NPC que provoca el inicio del encuentro con el jefe."
 L.autotalk_generic_desc = "Selecciona automáticamente el dialogo del NPC que hace que avances a la siguiente etapa de la mazmorra."
---L.autotalk_notice = "Automatically interacting with NPC %s."
+L.autotalk_notice = "Interactuando automáticamente con los NPC %s."
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
@@ -268,12 +268,12 @@ L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage,
 L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Púas" -- Plural of L.spike
---L.spread = "Spread" -- An ability that forces you to spread out away from other players, or you might damage them
---L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
-L.tank_combo = "Combo de tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
---L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
---L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+L.spread = "Separarse" -- An ability that forces you to spread out away from other players, or you might damage them
+L.tank_bomb = "Bomba de Tanque" -- Similar to L.bomb but only applies to tanks
+L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_debuff = "Debuff de Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "Frontal de Tanque" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "Soak de Tanque" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentáculo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentáculos" -- Plural of L.tentacle
 L.waves = "Olas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
