@@ -1260,6 +1260,7 @@ do
 								max = 12,
 								step = 1,
 								width = "full",
+								disabled = checkCooldownTimerDisabled,
 							},
 							iconEmphasizeFontColor = {
 								type = "color",
@@ -1273,7 +1274,7 @@ do
 									resetNameplates()
 								end,
 								order = 13,
-								disabled = function() return db.iconEmphasizeTime == 0 end,
+								disabled = function() return db.iconEmphasizeTime == 0 or not db.iconCooldownNumbers end,
 							},
 							iconEmphasizeFontSize = {
 								type = "range",
@@ -1281,7 +1282,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 14,
 								softMax = 100, max = 200, min = 6, step = 1,
-								disabled = function() return db.iconEmphasizeTime == 0 end,
+								disabled = function() return db.iconEmphasizeTime == 0 or not db.iconCooldownNumbers end,
 							},
 						},
 					},
