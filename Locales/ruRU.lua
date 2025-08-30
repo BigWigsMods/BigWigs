@@ -308,10 +308,9 @@ L.keystoneTeleportInCombat = "Вы не можете использовать т
 L.keystoneTabHistory = "История"
 L.keystoneHeaderThisWeek = "Текущая неделя"
 L.keystoneHeaderOlder = "Более старые"
-L.keystoneScoreTooltip = "Счёт полученный за прохождение подземелья: |cFFFFFFFF%d|r"
-L.keystoneScoreGainedTooltip = "Изменение рейтинга: |cFFFFFFFF+%d|r"
-L.keystoneCompletedTooltip = "Пройдено во время"
-L.keystoneFailedTooltip = "Не пройдено во время"
+L.keystoneScoreGainedTooltip = "Изменение рейтинга: |cFFFFFFFF+%d|r\nСчёт полученный за прохождение подземелья: |cFFFFFFFF%d|r"
+--L.keystoneCompletedTooltip = "Пройдено во время: |cFFFFFFFF%d мин %d сек|r\nTime Limit: |cFFFFFFFF%d мин %d сек|r"
+--L.keystoneFailedTooltip = "Не пройдено во время: |cFFFFFFFF%d мин %d сек|r\nTime Limit: |cFFFFFFFF%d мин %d сек|r"
 L.keystoneExplainer = "Инструменты, которые помогут эпохальными+ подземельями."
 L.keystoneAutoSlot = "Автоматически вставлять ключ"
 L.keystoneAutoSlotDesc = "Автоматически вставляет эпохальный+ ключ в чашу силы при открытии её интерфейса."
@@ -343,6 +342,9 @@ L.keystoneHistoryRunsOlderTooltip = "Общее количество завер�
 L.keystoneHistoryScore = "+%d рейтинга"
 L.keystoneHistoryScoreThisWeekTooltip = "Общее количество рейтинга полученное за эту неделю: |cFFFFFFFF+%d|r"
 L.keystoneHistoryScoreOlderTooltip = "Общее количество рейтинга полученное до этой недели: |cFFFFFFFF+%d|r"
+L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
+L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
+--L.keystoneTeleportTip = "TIP: Click the dungeon name below to teleport directly to the dungeon entrance."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"

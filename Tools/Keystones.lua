@@ -330,7 +330,7 @@ local LibSpec = LibStub("LibSpecialization")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 local guildList, partyList = {}, {}
-local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 66, 42
+local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 74, 42
 
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 
@@ -1091,7 +1091,7 @@ do
 		olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -50) -- Make sure the header shows even with no runs
 
 		-- Begin Display of history
-		local runs = C_MythicPlus.GetRunHistory(true, true)
+		local runs = C_MythicPlus.GetRunHistory(true, true, true)
 		local tableSize = #runs
 		local runsThisWeek, olderRuns = 0, 0
 		local scoreThisWeek, olderScore = 0, 0
@@ -1123,39 +1123,39 @@ do
 
 		local cellRunsThisWeek, cellScoreThisWeek = CreateCell(), CreateCell()
 		cellRunsThisWeek:SetPoint("RIGHT", cellScoreThisWeek, "LEFT", -6, 0)
-		cellScoreThisWeek:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", 3, -12)
-		cellRunsThisWeek:SetWidth(120)
+		cellScoreThisWeek:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", 3, -24)
+		cellRunsThisWeek:SetWidth(135)
 		cellRunsThisWeek.text:SetText(L.keystoneHistoryRuns:format(runsThisWeek))
 		cellRunsThisWeek.tooltip = L.keystoneHistoryRunsThisWeekTooltip:format(runsThisWeek)
-		cellScoreThisWeek:SetWidth(120)
+		cellScoreThisWeek:SetWidth(135)
 		cellScoreThisWeek.text:SetText(L.keystoneHistoryScore:format(scoreThisWeek))
 		cellScoreThisWeek.tooltip = L.keystoneHistoryScoreThisWeekTooltip:format(scoreThisWeek)
 
 		local cellRunsOlder, cellScoreOlder = CreateCell(), CreateCell()
 		cellRunsOlder:SetPoint("RIGHT", cellScoreOlder, "LEFT", -6, 0)
 		cellScoreOlder:SetPoint("TOPLEFT", olderHeader, "CENTER", 3, -12)
-		cellRunsOlder:SetWidth(120)
+		cellRunsOlder:SetWidth(135)
 		cellRunsOlder.text:SetText(L.keystoneHistoryRuns:format(olderRuns))
 		cellRunsOlder.tooltip = L.keystoneHistoryRunsOlderTooltip:format(olderRuns)
-		cellScoreOlder:SetWidth(120)
+		cellScoreOlder:SetWidth(135)
 		cellScoreOlder.text:SetText(L.keystoneHistoryScore:format(olderScore))
 		cellScoreOlder.tooltip = L.keystoneHistoryScoreOlderTooltip:format(olderScore)
 
 		local firstOldRun = false
-		local prevMapName, prevLevel, prevScore, prevGainedScore, prevInTime = nil, nil, nil, nil, nil
+		local prevDate, prevMapName, prevLevel, prevGainedScore, prevInTime = nil, nil, nil, nil, nil
 		for i = tableSize, 1, -1 do
-			local cellMapName, cellLevel, cellScore, cellGainedScore, cellInTime = CreateCell(), CreateCell(), CreateCell(), CreateCell(), CreateCell()
+			local cellDate, cellMapName, cellLevel, cellGainedScore, cellInTime = CreateCell(), CreateCell(), CreateCell(), CreateCell(), CreateCell()
 			if runs[i].thisWeek then
 				if i == tableSize then
-					cellMapName:SetPoint("TOPLEFT", cellRunsThisWeek, "BOTTOMLEFT", 0, -12)
+					cellDate:SetPoint("TOPLEFT", cellRunsThisWeek, "BOTTOMLEFT", 0, -12)
+					cellMapName:SetPoint("LEFT", cellDate, "RIGHT", 6, 0)
 					cellLevel:SetPoint("LEFT", cellMapName, "RIGHT", 6, 0)
-					cellScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
-					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
+					cellGainedScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
+					cellDate:SetPoint("TOP", prevDate, "BOTTOM", 0, -6)
 					cellMapName:SetPoint("TOP", prevMapName, "BOTTOM", 0, -6)
 					cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
-					cellScore:SetPoint("TOP", prevScore, "BOTTOM", 0, -6)
 					cellGainedScore:SetPoint("TOP", prevGainedScore, "BOTTOM", 0, -6)
 					cellInTime:SetPoint("TOP", prevInTime, "BOTTOM", 0, -6)
 				end
@@ -1168,36 +1168,60 @@ do
 						local y = 50 + runsThisWeek*26
 						olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
 					end
-					cellMapName:SetPoint("TOPLEFT", cellRunsOlder, "BOTTOMLEFT", 0, -12)
+					cellDate:SetPoint("TOPLEFT", cellRunsOlder, "BOTTOMLEFT", 0, -12)
+					cellMapName:SetPoint("LEFT", cellDate, "RIGHT", 6, 0)
 					cellLevel:SetPoint("LEFT", cellMapName, "RIGHT", 6, 0)
-					cellScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
-					cellGainedScore:SetPoint("LEFT", cellScore, "RIGHT", 6, 0)
+					cellGainedScore:SetPoint("LEFT", cellLevel, "RIGHT", 6, 0)
 					cellInTime:SetPoint("LEFT", cellGainedScore, "RIGHT", 6, 0)
 				else
+					cellDate:SetPoint("TOP", prevDate, "BOTTOM", 0, -6)
 					cellMapName:SetPoint("TOP", prevMapName, "BOTTOM", 0, -6)
 					cellLevel:SetPoint("TOP", prevLevel, "BOTTOM", 0, -6)
-					cellScore:SetPoint("TOP", prevScore, "BOTTOM", 0, -6)
 					cellGainedScore:SetPoint("TOP", prevGainedScore, "BOTTOM", 0, -6)
 					cellInTime:SetPoint("TOP", prevInTime, "BOTTOM", 0, -6)
 				end
 			end
 
-			cellMapName:SetWidth(WIDTH_MAP+24)
+			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
+			cellDate:SetWidth(WIDTH_RATING+14)
+			if runs[i].thisWeek then
+				cellDate.text:SetText("---")
+			else
+				cellDate.text:SetText("00/00")
+			end
+			cellDate.tooltip = "Date will be available after patch 11.2.5"
+			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
-			cellMapName.tooltip = L.keystoneMapTooltip:format(GetMapUIInfo(runs[i].mapChallengeModeID) or "-")
+			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")
 			cellLevel:SetWidth(WIDTH_LEVEL)
 			cellLevel.text:SetText(runs[i].level)
 			cellLevel.tooltip = L.keystoneLevelTooltip:format(runs[i].level)
-			cellScore:SetWidth(WIDTH_RATING)
-			cellScore.text:SetText(runs[i].runScore)
-			cellScore.tooltip = L.keystoneScoreTooltip:format(runs[i].runScore)
 			cellGainedScore:SetWidth(WIDTH_RATING)
-			cellGainedScore.text:SetText("+".. runs[i].gained)
-			cellGainedScore.tooltip = L.keystoneScoreGainedTooltip:format(runs[i].gained)
-			cellInTime:SetWidth(WIDTH_LEVEL)
-			cellInTime.text:SetText(runs[i].completed and "|T136814:0|t" or "|T136813:0|t")
-			cellInTime.tooltip = runs[i].completed and L.keystoneCompletedTooltip or L.keystoneFailedTooltip
-			prevMapName, prevLevel, prevScore, prevGainedScore, prevInTime = cellMapName, cellLevel, cellScore, cellGainedScore, cellInTime
+			cellGainedScore.text:SetFormattedText("+%d", runs[i].gained)
+			cellGainedScore.tooltip = L.keystoneScoreGainedTooltip:format(runs[i].gained, runs[i].runScore)
+			cellInTime:SetWidth(WIDTH_RATING+14)
+			if runs[i].completed then
+				local diff = timeLimit - (runs[i].durationSec or timeLimit)
+				local minutesUnder = math.floor(diff / 60)
+				local secondsUnder = math.floor(diff - (minutesUnder*60))
+				cellInTime.text:SetFormattedText(L.keystoneTimeUnder, minutesUnder, secondsUnder)
+				local minutesTotal = math.floor((runs[i].durationSec or 0) / 60)
+				local secondsTotal = math.floor((runs[i].durationSec or 0) - (minutesTotal*60))
+				local minutesTimeLimit = math.floor(timeLimit / 60)
+				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
+				cellInTime.tooltip = (L.keystoneCompletedTooltip .. "\n" .. "Numbers will be available after patch 11.2.5"):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
+			else
+				local diff = (runs[i].durationSec or timeLimit) - timeLimit
+				local minutesOver = math.floor(diff / 60)
+				local secondsOver = math.floor(diff - (minutesOver*60))
+				cellInTime.text:SetFormattedText(L.keystoneTimeOver, minutesOver, secondsOver)
+				local minutesTotal = math.floor((runs[i].durationSec or 0) / 60)
+				local secondsTotal = math.floor((runs[i].durationSec or 0) - (minutesTotal*60))
+				local minutesTimeLimit = math.floor(timeLimit / 60)
+				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
+				cellInTime.tooltip = (L.keystoneFailedTooltip .. "\n" .. "Numbers will be available after patch 11.2.5"):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
+			end
+			prevDate, prevMapName, prevLevel, prevGainedScore, prevInTime = cellDate, cellMapName, cellLevel, cellGainedScore, cellInTime
 
 			if i == 1 then
 				-- Calculate scroll height

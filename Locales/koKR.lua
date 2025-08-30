@@ -308,10 +308,9 @@ L.keystoneTeleportInCombat = "전투 중에는 순간이동할 수 없습니다.
 L.keystoneTabHistory = "기록"
 L.keystoneHeaderThisWeek = "이번 주"
 L.keystoneHeaderOlder = "이전 기록"
-L.keystoneScoreTooltip = "던전 점수: |cFFFFFFFF%d|r"
-L.keystoneScoreGainedTooltip = "획득 점수: |cFFFFFFFF+%d|r"
-L.keystoneCompletedTooltip = "제한 시간 내에 완료"
-L.keystoneFailedTooltip = "제한 시간 내에 완료하지 못함"
+L.keystoneScoreGainedTooltip = "획득 점수: |cFFFFFFFF+%d|r\n던전 점수: |cFFFFFFFF%d|r"
+--L.keystoneCompletedTooltip = "제한 시간 내에 완료: |cFFFFFFFF%d min %d sec|r\nTime Limit: |cFFFFFFFF%d min %d sec|r"
+--L.keystoneFailedTooltip = "제한 시간 내에 완료하지 못함: |cFFFFFFFF%d min %d sec|r\nTime Limit: |cFFFFFFFF%d min %d sec|r"
 L.keystoneExplainer = "신화+ 경험을 향상시키는 다양한 도구 모음입니다."
 L.keystoneAutoSlot = "쐐기돌 자동 삽입"
 L.keystoneAutoSlotDesc = "마력의 샘을 열 때 자동으로 쐐기돌을 넣습니다."
@@ -343,6 +342,9 @@ L.keystoneHistoryRunsOlderTooltip = "이번 주 이전까지 던전 총계: |cFF
 L.keystoneHistoryScore = "점수 +%d"
 L.keystoneHistoryScoreThisWeekTooltip = "이번 주 획득 총 점수: |cFFFFFFFF+%d|r"
 L.keystoneHistoryScoreOlderTooltip = "이번 주 이전에 획득한 총 점수: |cFFFFFFFF+%d|r"
+L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
+L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
+--L.keystoneTeleportTip = "TIP: Click the dungeon name below to teleport directly to the dungeon entrance."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"

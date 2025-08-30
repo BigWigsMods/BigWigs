@@ -308,10 +308,9 @@ L.keystoneTeleportInCombat = "Vous ne pouvez pas vous téléportez là lors d'un
 L.keystoneTabHistory = "Historique"
 L.keystoneHeaderThisWeek = "Cette semaine"
 L.keystoneHeaderOlder = "Plus ancien"
-L.keystoneScoreTooltip = "Score du donjon : |cFFFFFFFF%d|r"
-L.keystoneScoreGainedTooltip = "Score gagné : |cFFFFFFFF+%d|r"
-L.keystoneCompletedTooltip = "Réussite dans les temps"
-L.keystoneFailedTooltip = "Échec à terminer dans les temps"
+L.keystoneScoreGainedTooltip = "Score gagné : |cFFFFFFFF+%d|r\nScore du donjon : |cFFFFFFFF%d|r"
+--L.keystoneCompletedTooltip = "Réussite dans les temps: |cFFFFFFFF%d min %d sec|r\nTime Limit: |cFFFFFFFF%d min %d sec|r"
+--L.keystoneFailedTooltip = "Échec à terminer dans les temps: |cFFFFFFFF%d min %d sec|r\nTime Limit: |cFFFFFFFF%d min %d sec|r"
 L.keystoneExplainer = "Une collection de divers outils pour améliorer l'expérience mythique +."
 L.keystoneAutoSlot = "Clef dans le socle automatique"
 L.keystoneAutoSlotDesc = "Place automatiquement votre clef dans le socle lorsque vous ouvrez la fontaine de puissance."
@@ -343,6 +342,9 @@ L.keystoneHistoryRunsOlderTooltip = "Montant total de donjons effectués avant c
 L.keystoneHistoryScore = "Score : +%d"
 L.keystoneHistoryScoreThisWeekTooltip = "Score total gagné cette semaine : |cFFFFFFFF+%d|r"
 L.keystoneHistoryScoreOlderTooltip = "Score total gagné avant cette semaine : |cFFFFFFFF+%d|r"
+L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
+L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
+--L.keystoneTeleportTip = "TIP: Click the dungeon name below to teleport directly to the dungeon entrance."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "COLONIE"

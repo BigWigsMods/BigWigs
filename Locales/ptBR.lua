@@ -308,10 +308,9 @@ L.keystoneTeleportInCombat = "Você não pode se teleportar enquanto estiver em 
 L.keystoneTabHistory = "Histórico"
 L.keystoneHeaderThisWeek = "Esta semana"
 L.keystoneHeaderOlder = "Antigo"
-L.keystoneScoreTooltip = "Pontuação da Masmorra: |cFFFFFFFF%d|r"
-L.keystoneScoreGainedTooltip = "Pontuação obtida: |cFFFFFFFF+%d|r"
-L.keystoneCompletedTooltip = "Concluído no tempo"
-L.keystoneFailedTooltip = "Não foi possível concluir a tempo"
+L.keystoneScoreGainedTooltip = "Pontuação obtida: |cFFFFFFFF+%d|r\nPontuação da Masmorra: |cFFFFFFFF%d|r"
+L.keystoneCompletedTooltip = "Concluído no tempo: |cFFFFFFFF%d min %d seg|r\nLimite de tempo: |cFFFFFFFF%d min %d seg|r"
+L.keystoneFailedTooltip = "Não foi possível concluir a tempo: |cFFFFFFFF%d min %d seg|r\nLimite de tempo: |cFFFFFFFF%d min %d seg|r"
 L.keystoneExplainer = "Uma coleção de várias ferramentas para melhorar a experiência em Míticas+."
 L.keystoneAutoSlot = "Pedra-chave automática"
 L.keystoneAutoSlotDesc = "Coloque automaticamente sua pedra-chave no slot ao abrir o suporte de pedra-chave."
@@ -343,6 +342,9 @@ L.keystoneHistoryRunsOlderTooltip = "Quantidade total de masmorras antes desta s
 L.keystoneHistoryScore = "+%d Pontos"
 L.keystoneHistoryScoreThisWeekTooltip = "Pontuação total obtida esta semana: |cFFFFFFFF+%d|r"
 L.keystoneHistoryScoreOlderTooltip = "Pontuação total obtida antes desta semana: |cFFFFFFFF+%d|r"
+L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
+L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
+--L.keystoneTeleportTip = "TIP: Click the dungeon name below to teleport directly to the dungeon entrance."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "VIVRO"
