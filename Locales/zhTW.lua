@@ -439,9 +439,9 @@ L.CENTER = "中"
 L.customAnchorPoint = "進階：自定錨點"
 L.sourcePoint = "基準錨點"  -- 中文似乎沒有point和relativePoint的正式譯名?
 L.destinationPoint = "相對錨點"
---L.drawStrata = "Draw Strata"
---L.medium = "MEDIUM"
---L.low = "LOW"
+--L.drawStrata = "Strata"
+--L.medium = "Medium"
+--L.low = "Low"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

@@ -439,9 +439,9 @@ L.CENTER = "По центру"
 L.customAnchorPoint = "Дополнительно: Пользовательские якоря"
 L.sourcePoint = "Начальная точка"
 L.destinationPoint = "Конечная точка"
---L.drawStrata = "Draw Strata"
---L.medium = "MEDIUM"
---L.low = "LOW"
+--L.drawStrata = "Strata"
+--L.medium = "Medium"
+--L.low = "Low"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
