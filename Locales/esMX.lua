@@ -310,7 +310,7 @@ L.keystoneHeaderThisWeek = "Esta semana"
 L.keystoneHeaderOlder = "Más viejo"
 L.keystoneScoreTooltip = "Puntaje de calabozo: |cFFFFFFFF%d|r"
 L.keystoneScoreGainedTooltip = "Puntaje obtenido: |cFFFFFFFF+%d|r"
-L.keystoneCompletedTooltip = "Completadas en tiempo" -- you could also use "En tiempo" to shorten it while on context. (Comment from translator)
+L.keystoneCompletedTooltip = "Completadas en tiempo"
 L.keystoneFailedTooltip = "No completadas en tiempo"
 L.keystoneExplainer = "Una recolección de varias herramientas para mejorar la experiencia de Mítica+."
 L.keystoneAutoSlot = "Colocar piedra angular automáticamente"
@@ -328,7 +328,7 @@ L.keystoneHideGuildTitle = "Esconder mi piedra angular de los miembros de mi her
 L.keystoneHideGuildDesc = "|cffff4411No recomendado.|r Esta característica impedirá que los miembros de tu hermandad vean que piedra angular tienes. La gente en tu grupo aún podrá verla."
 L.keystoneHideGuildWarning = "Deshabilitar la habilidad para que los miembros de tu hermandad vean to piedra angular |cffff4411no es recomendado|r.\n\n¿Estás seguro de querer hacer esto?"
 L.keystoneAutoShowEndOfRun = "Mostrar cuando termina la Mítica+"
-L.keystoneAutoShowEndOfRunDesc = "Mostrar automáticamente el visualizador de piedras angulares cuando el calabozo de Mítica+ termine.\n\n|cFF33FF99Esto puede ayudarte a ver qué nuevas piedras ha recibido tu grupo|r"
+L.keystoneAutoShowEndOfRunDesc = "Mostrar automáticamente el visualizador de piedras angulares cuando el calabozo de Mítica+ termine.\n\n|cFF33FF99Esto puede ayudarte a ver qué nuevas piedras ha recibido tu grupo.|r"
 L.keystoneViewerExplainer = "Puedes abrir el visualizador de piedras angulares utilizando el comando |cFF33FF99/key|r o presionando el botón de abajo.\n\n"
 L.keystoneViewerOpen = "Abre el visualizador de piedras angulares"
 L.keystoneViewerKeybindingExplainer = "\n\nTambién puedes asignar una tecla para abrir el visualizador de piedras angulares:\n\n"
@@ -354,11 +354,11 @@ L.keystoneShortName_TheaterOfPain = "TEATRO"
 L.keystoneShortName_TheMotherlode = "FILON"
 L.keystoneShortName_OperationMechagonWorkshop = "TALLER"
 L.keystoneShortName_EcoDomeAldani = "ECODOMO"
-L.keystoneShortName_HallsOfAtonement = "SALONES" -- (Translator Comment) This can be called HOA or also SALONES but it's 7 letters
+L.keystoneShortName_HallsOfAtonement = "SALONES"
 L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
 L.keystoneShortName_TazaveshSoleahsGambit = "GAMBIT"
 L.keystoneShortName_TazaveshStreetsOfWonder = "CALLES"
-L.keystoneShortName_TheDawnbreaker = "DAWN" -- (Translator Comment) This can be called DAWN.
+L.keystoneShortName_TheDawnbreaker = "DAWN"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -370,7 +370,7 @@ L.keystoneShortName_OperationFloodgate_Bar = "Compuerta"
 L.keystoneShortName_TheaterOfPain_Bar = "Teatro"
 L.keystoneShortName_TheMotherlode_Bar = "El FIlón"
 L.keystoneShortName_OperationMechagonWorkshop_Bar = "Taller"
-L.keystoneShortName_EcoDomeAldani_Bar = "Eco-Domo"
+L.keystoneShortName_EcoDomeAldani_Bar = "Al'dani"
 L.keystoneShortName_HallsOfAtonement_Bar = "Salones"
 L.keystoneShortName_AraKaraCityOfEchoes_Bar = "Ara-Kara"
 L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambito"
@@ -439,9 +439,9 @@ L.CENTER = "Centro"
 L.customAnchorPoint = "Avanzado: Punto de anclaje personalizado"
 L.sourcePoint = "Punto de Origen"
 L.destinationPoint = "Punto de destino"
-L.drawStrata = "Capaz de dibujo (Draw Strata)" -- 2 choices here to leave this like this or just leave it as Draw Strata since the is no actual translation for this term in Spanish.
-L.medium = "MEDIO"
-L.low = "BAJO"
+L.drawStrata = "Estratos"
+L.medium = "Medio"
+L.low = "Bajo"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -706,7 +706,7 @@ L.fadeTime = "Tiempo de desvanecimiento"
 L.fadeTimeDesc = "Cuánto tiempo tardará en desaparecer un mensaje, en segundos."
 
 L.messagesOptInHeaderOff = "Mensajes de alerta de jefes modo 'opcional': Activar esta opción desactivará los mensajes en TODOS los módulos de jefes.\n\nTendrás que activar cada módulo que desees, de manera manual.\n\n"
-L.messagesOptInHeaderOn = "Mensajes de alerta de jefes modo 'opcional' ha sido |cFF33FF99ACTIVADO|r. Para ver los mensajes de alerta del jefe, ve a la configuración de una habilidad específica del jefe y enciende la '|cFF33FF99alerta|r'.\n\n"
+L.messagesOptInHeaderOn = "Mensajes de alerta de jefes modo 'opcional' ha sido |cFF33FF99ACTIVADO|r. Para ver los mensajes de alerta del jefe, ve a la configuración de una habilidad específica del jefe y enciende la '|cFF33FF99Mensajes|r'.\n\n"
 L.messagesOptInTitle = "Mensajes de alerta de jefes modo 'opcional'"
 L.messagesOptInWarning = "|cffff4411ADVERTENCIA!|r\n\nActivar el modo 'opcional' desactivará los mensaje de TODOS los módulos de jefes. Tendrás que activar cada mensaje que desees de manera manual.\n\nTu interfaz será recargada ¿Estás seguro?"
 
