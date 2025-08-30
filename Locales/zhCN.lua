@@ -347,7 +347,7 @@ L.keystoneHistoryScoreOlderTooltip = "本周之前获得的总分数：|cFFFFFFF
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷栖巢"
 L.keystoneShortName_DarkflameCleft = "暗焰裂口"
-L.keystoneShortName_PrioryOfTheSacredFlame = "隐修院"
+L.keystoneShortName_PrioryOfTheSacredFlame = "圣焰隐修院"
 L.keystoneShortName_CinderbrewMeadery = "燧酿酒庄"
 L.keystoneShortName_OperationFloodgate = "水闸行动"
 L.keystoneShortName_TheaterOfPain = "伤势剧场"
@@ -364,7 +364,7 @@ L.keystoneShortName_TheDawnbreaker = "破晨号"
 -- Use the real dungeon names but make them shorter to fit on the bar better
 L.keystoneShortName_TheRookery_Bar = "驭雷栖巢"
 L.keystoneShortName_DarkflameCleft_Bar = "暗焰裂口"
-L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "隐修院"
+L.keystoneShortName_PrioryOfTheSacredFlame_Bar = "圣焰隐修院"
 L.keystoneShortName_CinderbrewMeadery_Bar = "燧酿酒庄"
 L.keystoneShortName_OperationFloodgate_Bar = "水闸行动"
 L.keystoneShortName_TheaterOfPain_Bar = "伤逝剧场"
