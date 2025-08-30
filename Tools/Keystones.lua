@@ -1123,7 +1123,7 @@ do
 
 		local cellRunsThisWeek, cellScoreThisWeek = CreateCell(), CreateCell()
 		cellRunsThisWeek:SetPoint("RIGHT", cellScoreThisWeek, "LEFT", -6, 0)
-		cellScoreThisWeek:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", 3, -24)
+		cellScoreThisWeek:SetPoint("TOPLEFT", thisWeekHeader, "CENTER", 3, -12)
 		cellRunsThisWeek:SetWidth(135)
 		cellRunsThisWeek.text:SetText(L.keystoneHistoryRuns:format(runsThisWeek))
 		cellRunsThisWeek.tooltip = L.keystoneHistoryRunsThisWeekTooltip:format(runsThisWeek)
@@ -1183,7 +1183,7 @@ do
 			end
 
 			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
-			cellDate:SetWidth(WIDTH_RATING+14)
+			cellDate:SetWidth(WIDTH_RATING+13)
 			if runs[i].thisWeek then
 				cellDate.text:SetText("---")
 			else
@@ -1199,22 +1199,30 @@ do
 			cellGainedScore:SetWidth(WIDTH_RATING)
 			cellGainedScore.text:SetFormattedText("+%d", runs[i].gained)
 			cellGainedScore.tooltip = L.keystoneScoreGainedTooltip:format(runs[i].gained, runs[i].runScore)
-			cellInTime:SetWidth(WIDTH_RATING+14)
+			cellInTime:SetWidth(WIDTH_RATING+15)
 			if runs[i].completed then
-				local diff = timeLimit - (runs[i].durationSec or timeLimit)
-				local minutesUnder = math.floor(diff / 60)
-				local secondsUnder = math.floor(diff - (minutesUnder*60))
-				cellInTime.text:SetFormattedText(L.keystoneTimeUnder, minutesUnder, secondsUnder)
+				if (runs[i].durationSec or 0) > timeLimit then -- Was the time limit changed in a hotfix?
+					cellInTime.text:SetFormattedText(L.keystoneTimeUnder, 0, 0)
+				else
+					local diff = timeLimit - (runs[i].durationSec or timeLimit)
+					local minutesUnder = math.floor(diff / 60)
+					local secondsUnder = math.floor(diff - (minutesUnder*60))
+					cellInTime.text:SetFormattedText(L.keystoneTimeUnder, minutesUnder, secondsUnder)
+				end
 				local minutesTotal = math.floor((runs[i].durationSec or 0) / 60)
 				local secondsTotal = math.floor((runs[i].durationSec or 0) - (minutesTotal*60))
 				local minutesTimeLimit = math.floor(timeLimit / 60)
 				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
 				cellInTime.tooltip = (L.keystoneCompletedTooltip .. "\n" .. "Numbers will be available after patch 11.2.5"):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
 			else
-				local diff = (runs[i].durationSec or timeLimit) - timeLimit
-				local minutesOver = math.floor(diff / 60)
-				local secondsOver = math.floor(diff - (minutesOver*60))
-				cellInTime.text:SetFormattedText(L.keystoneTimeOver, minutesOver, secondsOver)
+				if (runs[i].durationSec or timeLimit) < timeLimit then -- Was the time limit changed in a hotfix?
+					cellInTime.text:SetFormattedText(L.keystoneTimeOver, 0, 0)
+				else
+					local diff = (runs[i].durationSec or timeLimit) - timeLimit
+					local minutesOver = math.floor(diff / 60)
+					local secondsOver = math.floor(diff - (minutesOver*60))
+					cellInTime.text:SetFormattedText(L.keystoneTimeOver, minutesOver, secondsOver)
+				end
 				local minutesTotal = math.floor((runs[i].durationSec or 0) / 60)
 				local secondsTotal = math.floor((runs[i].durationSec or 0) - (minutesTotal*60))
 				local minutesTimeLimit = math.floor(timeLimit / 60)
