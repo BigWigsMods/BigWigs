@@ -3,7 +3,7 @@ local L = addonTbl.API:NewLocale("BigWigs", "esMX")
 if not L then return end
 
 -- API.lua
---L.showAddonBar = "The addon '%s' created the '%s' bar."
+L.showAddonBar = "El addon '%s' creó la barra '%s'."
 
 -- Core.lua
 L.berserk = "Enfurecer"
@@ -354,11 +354,11 @@ L.keystoneShortName_TheaterOfPain = "TEATRO"
 L.keystoneShortName_TheMotherlode = "FILON"
 L.keystoneShortName_OperationMechagonWorkshop = "TALLER"
 L.keystoneShortName_EcoDomeAldani = "ECODOMO"
---L.keystoneShortName_HallsOfAtonement = "HOA" -- (Translator Comment) This can be called HOA or also SALONES but it's 7 letters
+L.keystoneShortName_HallsOfAtonement = "SALONES" -- (Translator Comment) This can be called HOA or also SALONES but it's 7 letters
 L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
 L.keystoneShortName_TazaveshSoleahsGambit = "GAMBIT"
 L.keystoneShortName_TazaveshStreetsOfWonder = "CALLES"
---L.keystoneShortName_TheDawnbreaker = "DAWN" -- (Translator Comment) This can be called DAWN.
+L.keystoneShortName_TheDawnbreaker = "DAWN" -- (Translator Comment) This can be called DAWN.
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -746,7 +746,7 @@ L.borderName = "Nombre del Borde"
 L.showNumbers = "Mostrar números"
 L.showNumbersDesc = "Mostrar números en el icono."
 L.cooldown = "Enfriamiento"
---L.cooldownEmphasizeHeader = "By default, Emphasize is disabled (0 seconds). Setting it to 1 second or higher will enable Emphasize. This will allow you to set a different font color and font size for those numbers."
+L.cooldownEmphasizeHeader = "Por defecto, Enfatizar está desactivado (0 segundos). Configurandolo a 1 segundo o más, activará Enfatizar. Esto permitirá elegir un color y tamaño de fuente diferente para esos números."
 L.showCooldownSwipe = "Mostrar deslizador"
 L.showCooldownSwipeDesc = "Mostrar un deslizador en el icono cuando el enfriamiento está activo."
 L.showCooldownEdge = "Mostrar borde"
