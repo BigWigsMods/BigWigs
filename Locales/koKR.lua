@@ -842,6 +842,7 @@ L.combatLogDesc = "전투 예정 타이머 시작부터 보스 전투 종료로 
 L.pull = "전투 예정"
 L.engageSoundTitle = "보스 전투가 시작되면 사운드 재생"
 L.pullStartedSoundTitle = "전투 예정 타이머가 시작되었을때 소리 재생"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "전투 예정 타이머가 끝났을때 소리 재생"
 L.pullStartedBy = "%s에 의해 풀 타이머가 시작되었습니다."
 L.pullStopped = "%s|1이;가; 전투 예정 타이머를 취소했습니다."

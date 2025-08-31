@@ -54,6 +54,7 @@ do
 		combatLog = false,
 		engageSound = "None",
 		startPullSound = "BigWigs: Long",
+		startPullMessage = true,
 		endPullSound = "BigWigs: Alarm",
 		voice = voiceMap[GetLocale()] or "English: Amy",
 		keybind = "",
@@ -142,10 +143,16 @@ do
 				width = 2.5,
 				itemControl = "DDI-Sound",
 			},
+			startPullMessage = {
+				type = "toggle",
+				name = L.pullStartedMessageTitle,
+				order = 7,
+				width = "full",
+			},
 			endPullSound = {
 				type = "select",
 				name = L.pullFinishedSoundTitle,
-				order = 7,
+				order = 8,
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
@@ -157,26 +164,26 @@ do
 				type = "select",
 				values = BigWigsAPI.GetCountdownList,
 				sorting = voiceSorting,
-				order = 8,
+				order = 9,
 				width = 2.5,
 			},
 			spacer3 = {
 				type = "description",
 				name = "\n",
-				order = 9,
+				order = 10,
 				width = "full",
 			},
 			combatLog = {
 				type = "toggle",
 				name = L.combatLog,
 				desc = L.combatLogDesc,
-				order = 10,
+				order = 11,
 				width = "full",
 			},
 			explainer = {
 				type = "description",
 				name = L.pullExplainer,
-				order = 11,
+				order = 12,
 				width = "full",
 				fontSize = "medium",
 			},
@@ -184,7 +191,7 @@ do
 				type = "keybinding",
 				name = L.keybinding,
 				desc = L.pullKeybindingDesc,
-				order = 12,
+				order = 13,
 				set = function(a, key)
 					plugin.db.profile.keybind = key
 					if not InCombatLockdown() then
@@ -323,7 +330,9 @@ do
 			LoggingCombat(isLogging)
 		end
 		self:SendMessage("BigWigs_StartCountdown", self, nil, "pulling time", timeLeft, nil, self.db.profile.voice, self.db.profile.countBegin, self.db.profile.countType ~= "emphasized")
-		self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
+		if self.db.profile.startPullMessage then
+			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
+		end
 		self:SendMessage("BigWigs_StartBar", self, nil, L.pull, timeSeconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 		self:SendMessage("BigWigs_StartPull", self, timeSeconds, name, L.pull, 132337)
 		local soundName = self.db.profile.startPullSound

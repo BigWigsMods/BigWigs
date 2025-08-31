@@ -842,6 +842,7 @@ L.combatLogDesc = "從拉怪計時器開始時自動開始戰鬥記錄，戰鬥�
 L.pull = "開怪倒數"
 L.engageSoundTitle = "首領戰開始時播放音效"
 L.pullStartedSoundTitle = "開怪倒數計時器開始時播放音效"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "開怪倒數計時器結束時播放音效"
 L.pullStartedBy = "%s發起開怪倒數。"
 L.pullStopped = "%s取消了開怪倒數。"

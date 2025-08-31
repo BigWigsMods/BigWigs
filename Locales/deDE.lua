@@ -842,6 +842,7 @@ L.combatLogDesc = "Startet automatisch die Aufzeichnung des Kampfes, wenn ein Pu
 L.pull = "Pull"
 L.engageSoundTitle = "Spiele  einen Sound ab, sobald ein Bosskampf beginnt"
 L.pullStartedSoundTitle = "Spiele einen Sound ab, sobald ein Pull-Timer gestartet wurde"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "Spiele einen Sound ab, sobald ein Pull-Timer abgelaufen ist"
 L.pullStartedBy = "Pull-Timer gestartet von %s."
 L.pullStopped = "Pull-Timer von %s abgebrochen."

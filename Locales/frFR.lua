@@ -842,6 +842,7 @@ L.combatLogDesc = "Lance automatiquement l'enregistrement du combat quand un dé
 L.pull = "Pull"
 L.engageSoundTitle = "Jouer un son quand une rencontre de boss débute"
 L.pullStartedSoundTitle = "Jouer un son quand le délai de pull est lancé"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "Jouer un son quand le délai de pull est terminé"
 L.pullStartedBy = "Délai de pull commencé par %s."
 L.pullStopped = "Délai de pull annulé par %s."

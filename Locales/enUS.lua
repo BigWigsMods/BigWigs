@@ -841,6 +841,7 @@ L.combatLogDesc = "Automatically start logging combat when a pull timer is start
 L.pull = "Pull"
 L.engageSoundTitle = "Play a sound when a boss encounter has started"
 L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
+L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
 L.pullStartedBy = "Pull timer started by %s."
 L.pullStopped = "Pull timer cancelled by %s."

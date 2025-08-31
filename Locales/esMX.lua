@@ -842,6 +842,7 @@ L.combatLogDesc = "Automáticamente comienza a registrar el combate cuando se in
 L.pull = "Llamada de jefe"
 L.engageSoundTitle = "Toca un sonido cuando un encuentro con el jefe haya comenzado"
 L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se comienza"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se termina"
 L.pullStartedBy = "%s Lanzó un pull."
 L.pullStopped = "Temporizador de llamada de jefe cancelado por %s."

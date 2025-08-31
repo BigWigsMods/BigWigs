@@ -842,6 +842,7 @@ L.combatLogDesc = "Inicia automaticamente o registro de combate quando um contad
 L.pull = "Pull"
 L.engageSoundTitle = "Tocar um som quando uma luta contra um Chefe começou"
 L.pullStartedSoundTitle = "Tocar um som quando o temporizador for iniciado"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "Tocar um som quando o temporizador terminar"
 L.pullStartedBy = "Temporizador de pull iniciado por %s."
 L.pullStopped = "Pull cancelado por %s."

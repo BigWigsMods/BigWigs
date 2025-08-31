@@ -842,6 +842,7 @@ L.combatLogDesc = "Inizia a registrare il combattimento automaticamente quando p
 L.pull = "Ingaggio"
 L.engageSoundTitle = "Riproduci un suono quando inizia il combattimento con un boss"
 L.pullStartedSoundTitle = "Riproduci un suono quando comincia il timer di ingaggio"
+--L.pullStartedMessageTitle = "Show a message when the pull timer is started"
 L.pullFinishedSoundTitle = "Riproduci un suono quando termina il timer di ingaggio"
 L.pullStartedBy = "Time di ingaggio iniziato da %s."
 L.pullStopped = "Timer ingaggio cancellato da %s."
