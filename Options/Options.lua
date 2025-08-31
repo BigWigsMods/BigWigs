@@ -66,8 +66,7 @@ local C_EncounterJournal_GetSectionInfo = loader.isClassic and function(key)
 	end
 end or C_EncounterJournal.GetSectionInfo
 
-local getOptions
-local acOptions = {
+local aceConfigTableMainBigWigsTab = {
 	type = "group",
 	name = "BigWigs",
 	get = function(info)
@@ -81,7 +80,7 @@ local acOptions = {
 		general = {
 			order = 0,
 			type = "group",
-			name = L.general,
+			name = "BigWigs",
 			args = {
 				introduction = {
 					type = "description",
@@ -248,25 +247,49 @@ local acOptions = {
 				},
 			},
 		},
-		tools = {
-			order = 1,
-			type = "group",
-			name = L.tools,
-			args = {
-				toolsDesc = {
-					type = "description",
-					name = L.toolsDesc,
-					fontSize = "large",
-					order = 0,
-					width = "full",
-				},
-			},
-			hidden = loader.isVanilla,
-		},
 	},
 }
 
+local ConstructMainBigWigsTab
 do
+	local ConstructToolsTab
+	do
+		local aceConfigTableToolsTab = {
+			type = "group",
+			name = L.tools,
+			get = function(info)
+				return loader.db.profile[info[#info]]
+			end,
+			set = function(info, value)
+				local key = info[#info]
+				loader.db.profile[key] = value
+			end,
+			args = {
+				tools = {
+					order = 1,
+					type = "group",
+					name = L.tools,
+					args = {
+						toolsDesc = {
+							type = "description",
+							name = L.toolsDesc,
+							fontSize = "large",
+							order = 0,
+							width = "full",
+						},
+					},
+					hidden = loader.isVanilla,
+				},
+			},
+		}
+		function ConstructToolsTab()
+			for key, optionsTable in next, API.GetToolOptionTables() do
+				aceConfigTableToolsTab.args.tools.args[key] = optionsTable
+			end
+			return aceConfigTableToolsTab
+		end
+	end
+
 	local addonName, addonTable = ...
 	local f = CreateFrame("Frame")
 	f:RegisterEvent("ADDON_LOADED")
@@ -274,7 +297,7 @@ do
 		if addon ~= addonName then return end
 		f:UnregisterEvent("ADDON_LOADED")
 
-		acOptions.args.general.args.profileOptions = {
+		aceConfigTableMainBigWigsTab.args.general.args.profileOptions = {
 			type = "group",
 			childGroups = "tab",
 			order = 100,
@@ -284,15 +307,17 @@ do
 				import = addonTable.sharingOptions.importSection,
 			},
 		}
-		acOptions.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. acOptions.args.general.args.profileOptions.args.profile.name
-		acOptions.args.general.args.profileOptions.args.profile.order = 1
+		aceConfigTableMainBigWigsTab.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.name
+		aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.order = 1
 
 		if lds then
-			lds:EnhanceOptions(acOptions.args.general.args.profileOptions.args.profile, loader.db)
+			lds:EnhanceOptions(aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile, loader.db)
 		end
 
-		acr:RegisterOptionsTable("BigWigs", getOptions, true)
+		acr:RegisterOptionsTable("BigWigs", ConstructMainBigWigsTab, true)
+		acr:RegisterOptionsTable("BigWigsTools", ConstructToolsTab, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
+		acd:SetDefaultSize("BigWigsTools", 858, 660)
 
 		acr.RegisterCallback(options, "ConfigTableChange")
 
@@ -1676,6 +1701,20 @@ do
 			acd:Open("BigWigs", container)
 
 			widget:AddChild(container)
+		elseif value == "tools" then
+			configFrame:SetTitle("BigWigs")
+			configFrame:SetStatusText(" "..loader:GetReleaseString())
+			-- Embed the AceConfig options in our AceGUI frame
+			local container = AceGUI:Create("SimpleGroup")
+			container.type = "BigWigsOptions" -- We want ACD to create a ScrollFrame, so we change the type to bypass it's group control check
+			container:SetFullHeight(true)
+			container:SetFullWidth(true)
+
+			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
+			isPluginOpen = container
+			acd:Open("BigWigsTools", container)
+
+			widget:AddChild(container)
 		else
 			isPluginOpen = nil
 			local treeTbl = {}
@@ -1841,6 +1880,7 @@ do
 		tabs:SetFullHeight(true)
 		tabs:SetTabs({
 			{ text = L.options, value = "options" },
+			{ text = L.tools, value = "tools" },
 			{ text = L.raidBosses, value = "bigwigs" },
 			{ text = L.dungeonBosses, value = "littlewigs" },
 		})
@@ -1859,7 +1899,7 @@ do
 		if not registered[pluginName] then
 			if type(pluginOptions) == "table" then
 				registered[pluginName] = true
-				acOptions.args.general.args[pluginName] = pluginOptions
+				aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
 			elseif type(subPanelOptions) == "table" then
 				registered[pluginName] = true
 				local key = subPanelOptions.key
@@ -1867,20 +1907,17 @@ do
 				if type(opts) == "function" then
 					subPanelRegistry[key] = opts
 				else
-					acOptions.args[key] = opts
+					aceConfigTableMainBigWigsTab.args[key] = opts
 				end
 			end
 		end
 	end
 
-	function getOptions()
+	function ConstructMainBigWigsTab()
 		for key, opts in next, subPanelRegistry do
-			acOptions.args[key] = opts()
+			aceConfigTableMainBigWigsTab.args[key] = opts()
 		end
-		for key, optionsTable in next, API.GetToolOptionTables() do
-			acOptions.args.tools.args[key] = optionsTable
-		end
-		return acOptions
+		return aceConfigTableMainBigWigsTab
 	end
 end
 
