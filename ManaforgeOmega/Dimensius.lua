@@ -415,7 +415,7 @@ end
 
 function mod:ExcessMassApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.you:format(args.spellName))
+		self:PersonalMessage(args.spellId, false, args.spellName)
 		self:PlaySound(args.spellId, "info", nil, args.destName) -- carrying excess mass
 	end
 end
