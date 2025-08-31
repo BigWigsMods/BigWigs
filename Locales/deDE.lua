@@ -344,7 +344,7 @@ L.keystoneHistoryScoreThisWeekTooltip = "Gesamte diese Woche erhaltene Wertung: 
 L.keystoneHistoryScoreOlderTooltip = "Gesamte vor dieser Woche erhaltene Wertung: |cFFFFFFFF+%d|r"
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
-L.keystoneTeleportTip = "TIPP: Dungeonnamen unten anklicken um direkt zum Dungeoneingang zu teleportieren."
+L.keystoneTeleportTip = "Dungeonnamen unten anklicken um direkt zum Dungeoneingang zu |cFF33FF99TELEPORTIEREN|r."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"

@@ -34,6 +34,7 @@ do
 		countStartSound = "BigWigs: Long",
 		countEndSound = "BigWigs: Alarm",
 		showViewerDungeonEnd = true,
+		showViewerTeleportTip = true,
 		hideFromGuild = false,
 		viewerKeybind = "",
 		windowHeight = 320,
@@ -422,6 +423,20 @@ do
 	text:SetSize(50, 30)
 	text:SetTextColor(0.65, 0.65, 0.65)
 	text:SetPoint("RIGHT", -26, 0)
+
+	local tip = CreateFrame("Frame", nil, mainPanel, "GlowBoxTemplate")
+	tip:Hide()
+	mainPanel.tip = tip
+	tip:SetSize(200, 60)
+	tip:SetPoint("BOTTOM", mainPanel, "TOP", 45, 20)
+	local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
+	arrow:SetPoint("TOP", tip, "BOTTOM", 20, 5)
+	local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
+	tipText:SetJustifyH("LEFT")
+	tipText:SetJustifyV("TOP")
+	tipText:SetSize(180, 0)
+	tipText:SetPoint("CENTER")
+	tipText:SetText(L.keystoneTeleportTip)
 end
 
 local UpdateMyKeystone
@@ -493,6 +508,7 @@ local function WipeCells()
 	for cell in next, cellsCurrentlyShowing do
 		cell:Hide()
 		cell:ClearAttributes()
+		cell:SetScript("PostClick", nil)
 		cell.tooltip = nil
 		cell:ClearAllPoints()
 		cellsAvailable[#cellsAvailable+1] = cell
@@ -741,6 +757,8 @@ do
 		tab.MiddleActive:Show()
 		tab.RightActive:Show()
 
+		mainPanel.tip:Hide()
+
 		PlaySound(841) -- SOUNDKIT.IG_CHARACTER_INFO_TAB
 	end
 	local function DeselectTab(tab)
@@ -796,6 +814,10 @@ do
 		DeselectTab(tab2)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
+
+		if db.profile.showViewerTeleportTip then
+			mainPanel.tip:Show()
+		end
 
 		local partyHeader = CreateHeader()
 		partyHeader:SetText(L.keystoneHeaderParty)
@@ -1274,6 +1296,13 @@ do
 		end
 	end
 
+	local function ClickToHideTeleportTip(_, _, isDown)
+		if not isDown then
+			db.profile.showViewerTeleportTip = false
+			mainPanel.tip:Hide()
+		end
+	end
+
 	local guildCellsCurrentlyShowing = {}
 	local function UpdateCellsForOnlineTab(playerList, isGuildList)
 		local sortedplayerList = {}
@@ -1333,6 +1362,9 @@ do
 			if sortedplayerList[i].mapID then
 				cellMap:SetAttribute("type", "spell")
 				cellMap:SetAttribute("spell", teleportList[1][sortedplayerList[i].mapID])
+				if db.profile.showViewerTeleportTip then
+					cellMap:SetScript("PostClick", ClickToHideTeleportTip)
+				end
 			end
 			cellMap.text:SetText(sortedplayerList[i].map)
 			cellMap.tooltip = sortedplayerList[i].mapTooltip
