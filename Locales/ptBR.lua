@@ -275,7 +275,7 @@ L.H25 = "Heroico 25"
 -----------------------------------------------------------------------
 
 L.tools = "Ferramentas"
-L.toolsDesc = "O BigWigs oferece diversas ferramentas ou recursos de \"qualidade de vida\" para acelerar e simplificar o processo de luta contra chefes. Expanda o menu clicando no ícone |cFF33FF99+|r para ver todos."
+L.toolsDesc = "O BigWigs oferece diversas ferramentas ou recursos de \"qualidade de vida\" para acelerar e simplificar o processo de luta contra chefes."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua

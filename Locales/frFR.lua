@@ -275,7 +275,7 @@ L.H25 = "Héroïque 25"
 -----------------------------------------------------------------------
 
 L.tools = "Outils"
-L.toolsDesc = "BigWigs propose divers outils ou des fonctionnalités \"qualité de vie\" afin d'accélérer et simplifier les combats de boss. Depliez le menu en cliquant sur |cFF33FF99+|r l'icône afin de tous les voir."
+L.toolsDesc = "BigWigs propose divers outils ou des fonctionnalités \"qualité de vie\" afin d'accélérer et simplifier les combats de boss."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
