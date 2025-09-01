@@ -344,7 +344,7 @@ L.keystoneHistoryScoreThisWeekTooltip = "이번 주 획득 총 점수: |cFFFFFFF
 L.keystoneHistoryScoreOlderTooltip = "이번 주 이전에 획득한 총 점수: |cFFFFFFFF+%d|r"
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
---L.keystoneTeleportTip = "Click the dungeon name below to |cFF33FF99TELEPORT|r directly to the dungeon entrance."
+L.keystoneTeleportTip = "아래 던전 이름을 클릭하면 |cFF33FF99순간이동|r 던전 입구로 바로 이동합니다."
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"
@@ -842,7 +842,7 @@ L.combatLogDesc = "전투 예정 타이머 시작부터 보스 전투 종료로 
 L.pull = "전투 예정"
 L.engageSoundTitle = "보스 전투가 시작되면 사운드 재생"
 L.pullStartedSoundTitle = "전투 예정 타이머가 시작되었을때 소리 재생"
---L.pullStartedMessageTitle = "Show a message when the pull timer is started"
+L.pullStartedMessageTitle = "전투 예정 타이머가 시작될 때 메시지 표시"
 L.pullFinishedSoundTitle = "전투 예정 타이머가 끝났을때 소리 재생"
 L.pullStartedBy = "%s에 의해 풀 타이머가 시작되었습니다."
 L.pullStopped = "%s|1이;가; 전투 예정 타이머를 취소했습니다."
