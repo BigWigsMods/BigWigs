@@ -315,6 +315,7 @@ L.keystoneExplainer = "Una colección de varias herramientas para mejorar la exp
 L.keystoneAutoSlot = "Introducir automáticamente la piedra angular"
 L.keystoneAutoSlotDesc = "Introduce automáticamente tu piedra angular en la ranura al abrir la fuente de poder."
 L.keystoneAutoSlotMessage = "Introducida automáticamente %s en la ranura de piedra angular."
+--L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
 L.keystoneModuleName = "Mítica+"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "¡%s +%d empieza ahora!" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"

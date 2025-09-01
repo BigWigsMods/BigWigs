@@ -315,6 +315,7 @@ L.keystoneExplainer = "傳奇+工具合集，提升你進行傳奇+副本時的�
 L.keystoneAutoSlot = "自動插鑰石"
 L.keystoneAutoSlotDesc = "打開能量之泉時，自動插入鑰石。"
 L.keystoneAutoSlotMessage = "已將 %s 插入能量之泉。"
+--L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
 L.keystoneModuleName = "傳奇+"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "%s +%d 戰鬥開始！" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"

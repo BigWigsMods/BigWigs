@@ -315,6 +315,7 @@ L.keystoneExplainer = "Uma coleção de várias ferramentas para melhorar a expe
 L.keystoneAutoSlot = "Pedra-chave automática"
 L.keystoneAutoSlotDesc = "Coloque automaticamente sua pedra-chave no slot ao abrir o suporte de pedra-chave."
 L.keystoneAutoSlotMessage = "%s colocado automaticamente no slot da pedra-chave."
+--L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
 L.keystoneModuleName = "Mítica+"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "%s +%d começa agora!" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"

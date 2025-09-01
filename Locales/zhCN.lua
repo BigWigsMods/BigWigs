@@ -315,6 +315,7 @@ L.keystoneExplainer = "一个包含多种工具的集合，旨在提升史诗钥
 L.keystoneAutoSlot = "自动插入史诗钥石"
 L.keystoneAutoSlotDesc = "打开能量之泉时，自动将你的史诗钥石插入。"
 L.keystoneAutoSlotMessage = "已将 %s 自动插入能量之泉。"
+--L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
 L.keystoneModuleName = "史诗钥石地下城"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "%s +%d 挑战开始！" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"
