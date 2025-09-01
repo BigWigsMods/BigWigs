@@ -612,7 +612,7 @@ local function CreateCell()
 		cell:SetSize(20, 20)
 		cell:SetScript("OnEnter", OnEnterShowTooltip)
 		cell:SetScript("OnLeave", GameTooltip_Hide)
-		cell:RegisterForClicks("AnyDown", "AnyUp")
+		cell:RegisterForClicks("AnyDown")
 
 		cell.text = cell:CreateFontString(nil, nil, "GameFontNormal")
 		cell.text:SetAllPoints(cell)
@@ -627,6 +627,12 @@ local function CreateCell()
 		return cell
 	end
 end
+
+for i = 1, 100 do -- XXX temp (hopefully)
+	CreateCell()
+end
+WipeCells()
+
 local function CreateHeader()
 	local header = headersAvailable[#headersAvailable]
 	if header then
@@ -685,7 +691,7 @@ do
 			button:SetSize(90, 48)
 			button:SetScript("OnEnter", OnEnter)
 			button:SetScript("OnLeave", GameTooltip_Hide)
-			button:RegisterForClicks("AnyDown", "AnyUp")
+			button:RegisterForClicks("AnyDown")
 			button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
 			local text = button:CreateFontString(nil, nil, "GameFontNormal")
@@ -1333,8 +1339,8 @@ do
 			end
 		end
 
-		function ClickTeleportButton(self, _, isDown)
-			if not isDown then
+		function ClickTeleportButton(self)
+			if not InCombatLockdown() then
 				mainPanel.teleportBar:ClearAllPoints()
 				mainPanel.teleportBar:SetParent(self)
 				mainPanel.teleportBar:SetPoint("TOPLEFT")
@@ -1398,10 +1404,11 @@ do
 				cellRating:SetPoint("TOP", prevRating, "BOTTOM", 0, -6)
 			end
 			cellName:SetWidth(WIDTH_NAME)
-			cellName.text:SetText(sortedplayerList[i].decoratedName or sortedplayerList[i].name)
+			local playerName = sortedplayerList[i].name
+			cellName.text:SetText(sortedplayerList[i].decoratedName or playerName)
 			cellName.tooltip = sortedplayerList[i].nameTooltip
 			cellName:SetAttribute("type", "macro")
-			cellName:SetAttribute("macrotext", "/run ChatFrame_SendTell(\"".. sortedplayerList[i].name .."\")")
+			cellName:SetAttribute("macrotext", "/run ChatFrame_SendTell(\"".. playerName .."\")")
 			cellLevel:SetWidth(WIDTH_LEVEL)
 			cellLevel.text:SetText(sortedplayerList[i].level == -1 and hiddenIcon or sortedplayerList[i].level)
 			cellLevel.tooltip = sortedplayerList[i].levelTooltip
@@ -1410,9 +1417,9 @@ do
 			if teleportSpellID and BigWigsLoader.IsSpellKnownOrInSpellBook(teleportSpellID) then
 				cellMap:SetAttribute("type", "spell")
 				cellMap:SetAttribute("spell", teleportSpellID)
-				cellMap.playerName = sortedplayerList[i].name
+				cellMap.playerName = playerName
 				cellMap:SetScript("PostClick", ClickTeleportButton)
-				if mainPanel.teleportBar.name == sortedplayerList[i].name then
+				if mainPanel.teleportBar.name == playerName then
 					ClickTeleportButton(cellMap)
 				end
 			end
