@@ -48,7 +48,7 @@ if L then
 	L.mass_destruction_single = "라인"
 	L.stardust_nova = "바닥" -- Short for Stardust Nova
 	L.extinguish_the_stars = "별" -- Short for Extinguish the Stars
-	L.darkened_sky = "충격파"
+	L.darkened_sky = "고리"
 	L.cosmic_collapse = "탱커 당기기"
 	L.cosmic_collapse_easy = "탱커 강타"
 	L.soaring_reshii = "비행 가능" -- On the timer for when flying is available
