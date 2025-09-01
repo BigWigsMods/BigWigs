@@ -353,8 +353,8 @@ end
 function mod:Conquer(args)
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(CL.soak, conquerCount)))
 	self:PlaySound(args.spellId, "warning") -- get in to lose a stack
-	conquerCount = conquerCount + 1
 	self:CastBar(args.spellId, 4, CL.count:format(CL.soak, conquerCount))
+	conquerCount = conquerCount + 1
 end
 
 function mod:Vanquish(args)
