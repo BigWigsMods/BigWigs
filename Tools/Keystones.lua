@@ -424,6 +424,10 @@ do
 	text:SetTextColor(0.65, 0.65, 0.65)
 	text:SetPoint("RIGHT", -26, 0)
 
+	local teleportBar = mainPanel:CreateTexture(nil, nil, nil, 5)
+	teleportBar:Hide()
+	mainPanel.teleportBar = teleportBar
+
 	local tip = CreateFrame("Frame", nil, mainPanel, "GlowBoxTemplate")
 	tip:Hide()
 	mainPanel.tip = tip
@@ -509,10 +513,14 @@ local function WipeCells()
 		cell:Hide()
 		cell:ClearAttributes()
 		cell:SetScript("PostClick", nil)
+		cell:SetScript("OnUpdate", nil)
 		cell.tooltip = nil
 		cell:ClearAllPoints()
 		cellsAvailable[#cellsAvailable+1] = cell
 	end
+	mainPanel.teleportBar:ClearAllPoints()
+	mainPanel.teleportBar:SetParent(mainPanel)
+	mainPanel.teleportBar:Hide()
 	cellsCurrentlyShowing = {}
 end
 local headersAvailable = {}
@@ -609,7 +617,7 @@ local function CreateCell()
 		cell.text:SetAllPoints(cell)
 		cell.text:SetJustifyH("CENTER")
 
-		local bg = cell:CreateTexture()
+		local bg = cell:CreateTexture(nil, nil, nil, -5)
 		bg:SetAllPoints(cell)
 		bg:SetColorTexture(0, 0, 0, 0.6)
 		cell.bg = bg
@@ -1296,10 +1304,44 @@ do
 		end
 	end
 
-	local function ClickToHideTeleportTip(_, _, isDown)
-		if not isDown then
-			db.profile.showViewerTeleportTip = false
-			mainPanel.tip:Hide()
+	local ClickTeleportButton
+	do
+		local UnitCastingInfo = UnitCastingInfo
+		local function OnUpdateCheckTeleportCastStatus(self)
+			local _, _, _, startTimeMs, endTimeMs, _, _, _, spellId = UnitCastingInfo("player")
+			if spellId then
+				local teleportSpellID = self:GetAttribute("spell")
+				if spellId == teleportSpellID and mainPanel.teleportBar:GetParent() == self then
+					local startTimeSec = startTimeMs / 1000
+					local endTimeSec = endTimeMs / 1000
+					local castDuration = endTimeSec - startTimeSec
+					if castDuration > 0 then
+						local percentage = (GetTime() - startTimeSec) / castDuration
+						if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
+						mainPanel.teleportBar:SetColorTexture(0, 0, 1, 0.6)
+						mainPanel.teleportBar:Show()
+						mainPanel.teleportBar:SetWidth(percentage * self:GetWidth())
+					end
+				end
+			elseif mainPanel.teleportBar:GetParent() == self then
+				mainPanel.teleportBar:Hide()
+			end
+		end
+
+		function ClickTeleportButton(self, _, isDown)
+			if not isDown then
+				mainPanel.teleportBar:ClearAllPoints()
+				mainPanel.teleportBar:SetParent(self)
+				mainPanel.teleportBar:SetPoint("TOPLEFT")
+				mainPanel.teleportBar:SetPoint("BOTTOMLEFT")
+				mainPanel.teleportBar:Hide()
+				mainPanel.teleportBar.name = self:GetAttribute("pn")
+				self:SetScript("OnUpdate", OnUpdateCheckTeleportCastStatus)
+				if db.profile.showViewerTeleportTip then
+					db.profile.showViewerTeleportTip = false
+					mainPanel.tip:Hide()
+				end
+			end
 		end
 	end
 
@@ -1360,10 +1402,13 @@ do
 			cellLevel.tooltip = sortedplayerList[i].levelTooltip
 			cellMap:SetWidth(WIDTH_MAP)
 			if sortedplayerList[i].mapID then
+				local teleportSpellID = teleportList[1][sortedplayerList[i].mapID]
 				cellMap:SetAttribute("type", "spell")
-				cellMap:SetAttribute("spell", teleportList[1][sortedplayerList[i].mapID])
-				if db.profile.showViewerTeleportTip then
-					cellMap:SetScript("PostClick", ClickToHideTeleportTip)
+				cellMap:SetAttribute("spell", teleportSpellID)
+				cellMap:SetAttributeNoHandler("pn", sortedplayerList[i].name)
+				cellMap:SetScript("PostClick", ClickTeleportButton)
+				if mainPanel.teleportBar.name == sortedplayerList[i].name then
+					ClickTeleportButton(cellMap)
 				end
 			end
 			cellMap.text:SetText(sortedplayerList[i].map)
@@ -1396,6 +1441,9 @@ do
 		for i = 1, #guildCellsCurrentlyShowing do
 			local cell = guildCellsCurrentlyShowing[i]
 			cell:Hide()
+			cell:ClearAttributes()
+			cell:SetScript("PostClick", nil)
+			cell:SetScript("OnUpdate", nil)
 			cell.tooltip = nil
 			cell:ClearAllPoints()
 			cellsCurrentlyShowing[cell] = nil
