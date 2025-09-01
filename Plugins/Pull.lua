@@ -204,6 +204,29 @@ do
 					end
 				end,
 			},
+			spacer = {
+				type = "description",
+				name = "\n\n",
+				order = 14,
+				width = "full",
+				fontSize = "medium",
+			},
+			resetHeader = {
+				type = "header",
+				name = "",
+				order = 15,
+			},
+			reset = {
+				type = "execute",
+				name = L.reset,
+				desc = L.resetDesc,
+				func = function()
+					for k, v in next, plugin.defaultDB do
+						plugin.db.profile[k] = v
+					end
+				end,
+				order = 16,
+			},
 		},
 	}
 end
