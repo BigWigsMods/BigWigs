@@ -518,7 +518,8 @@ local function parseGetOptions(file_name, lines, start, special_options)
 		-- sigh.
 		local s = setmetatable({}, { __index = function(_, k) return tostring(k) end })
 		local mod = {
-			SpellName = function(k) return tostring(k) end
+			SpellName = function(k) return tostring(k) end,
+			BossName = function(k) return tostring(k) end
 		}
 		local options_env = setmetatable({
 			CL = s,
