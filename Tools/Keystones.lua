@@ -515,6 +515,7 @@ local function WipeCells()
 		cell:SetScript("PostClick", nil)
 		cell:SetScript("OnUpdate", nil)
 		cell.tooltip = nil
+		cell.playerName = nil
 		cell:ClearAllPoints()
 		cellsAvailable[#cellsAvailable+1] = cell
 	end
@@ -824,7 +825,12 @@ do
 		DeselectTab(tab4)
 
 		if db.profile.showViewerTeleportTip then
-			mainPanel.tip:Show()
+			for _, teleportSpellID in next, teleportList[1] do
+				if BigWigsLoader.IsSpellKnownOrInSpellBook(teleportSpellID) then
+					mainPanel.tip:Show() -- Don't show tip unless we know 1 teleport spell
+					break
+				end
+			end
 		end
 
 		local partyHeader = CreateHeader()
@@ -1334,7 +1340,7 @@ do
 				mainPanel.teleportBar:SetPoint("TOPLEFT")
 				mainPanel.teleportBar:SetPoint("BOTTOMLEFT")
 				mainPanel.teleportBar:Hide()
-				mainPanel.teleportBar.name = self:GetAttribute("pn")
+				mainPanel.teleportBar.name = self.playerName
 				self:SetScript("OnUpdate", OnUpdateCheckTeleportCastStatus)
 				if db.profile.showViewerTeleportTip then
 					db.profile.showViewerTeleportTip = false
@@ -1404,7 +1410,7 @@ do
 			if teleportSpellID and BigWigsLoader.IsSpellKnownOrInSpellBook(teleportSpellID) then
 				cellMap:SetAttribute("type", "spell")
 				cellMap:SetAttribute("spell", teleportSpellID)
-				cellMap:SetAttributeNoHandler("pn", sortedplayerList[i].name)
+				cellMap.playerName = sortedplayerList[i].name
 				cellMap:SetScript("PostClick", ClickTeleportButton)
 				if mainPanel.teleportBar.name == sortedplayerList[i].name then
 					ClickTeleportButton(cellMap)
@@ -1444,6 +1450,7 @@ do
 			cell:SetScript("PostClick", nil)
 			cell:SetScript("OnUpdate", nil)
 			cell.tooltip = nil
+			cell.playerName = nil
 			cell:ClearAllPoints()
 			cellsCurrentlyShowing[cell] = nil
 			cellsAvailable[#cellsAvailable+1] = cell
