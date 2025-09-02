@@ -240,6 +240,7 @@ function mod:OnBossEnable()
 		-- Shadowguard Reaper
 		self:Log("SPELL_CAST_SUCCESS", "ReapSuccess", 1228053)
 		self:Log("SPELL_CAST_START", "TwilightMassacre", 1237106)
+		self:Log("SPELL_AURA_APPLIED", "PhaseWarpApplied", 1232524)
 
 	-- Intermission Two: King's Hunger
 		self:Log("SPELL_CAST_START", "KingsHunger", 1228265)
@@ -263,13 +264,14 @@ function mod:OnEngage()
 	beheadCount = 1
 	besiegeCount = 1
 
-	self:Bar(1224776, 13.5, CL.count:format(CL.tank_combo, tankComboCount)) -- Subjugation Rule
+	self:Bar(1224776, self:Easy() and 12.5 or 13.5, CL.count:format(CL.tank_combo, tankComboCount)) -- Subjugation Rule
 	if not self:Easy() then
 		self:Bar(1227549, self:Mythic() and 31.9 or 33.1, CL.count:format(self:SpellName(1227549), banishmentCount)) -- Banishment
 	end
-	self:Bar(1224827, 34.5, CL.count:format(L.behead, beheadCount)) -- Behead
+	self:Bar(1224827, self:Mythic() and 34.5 or 37.0, CL.count:format(L.behead, beheadCount)) -- Behead
 	self:Bar(1227470, self:Mythic() and 9.1 or self:Easy() and 46 or 49.0, CL.count:format(CL.breath, besiegeCount)) -- Besiege
 	self:Bar(1224906, 115.0) -- Invoke the Oath
+	self:Bar("stages", 119.6, CL.stage:format(2), 1227734) -- Coalesce Voidwing
 end
 
 --------------------------------------------------------------------------------
@@ -426,6 +428,7 @@ function mod:Stage2Start()
 	self:SetStage(2)
 	stage2StartTime = GetTime()
 
+	self:StopBar(CL.stage:format(2))
 	self:StopBar(CL.count:format(CL.tank_combo, tankComboCount)) -- Subjugation Rule
 	self:StopBar(CL.count:format(self:SpellName(1227549), banishmentCount)) -- Banishment
 	self:StopBar(CL.count:format(self:SpellName(1224906), invokeCount)) -- Invoke the Oath
@@ -626,10 +629,16 @@ do
 	end
 end
 
-function mod:RoyalWardRemoved(args)
-	if self:MobId(args.destGUID) == 233823 then -- The Royal Voidwing
+function mod:PhaseWarpApplied(args)
+	if self:Me(args.destGUID) and manaForgedTitansKilled > 0 then
+		-- End the bars when you teleport back
 		self:StopBar(1228053) -- Reap
 		self:StopBar(1237106) -- Twilight Massacre
+	end
+end
+
+function mod:RoyalWardRemoved(args)
+	if self:MobId(args.destGUID) == 233823 then -- The Royal Voidwing
 
 		intermissionDone = true
 		self:SetStage(2) -- Stage 2
@@ -642,8 +651,7 @@ function mod:RoyalWardRemoved(args)
 		-- breathCount = 1
 		-- cosmicMawCount = 1
 
-		local time = GetTime()
-		local stage2Offset = time - stage2StartTime
+		local stage2Offset = GetTime() - stage2StartTime
 		self:Bar(1228115, (self:Mythic() and 109.0 or 114.0) - stage2Offset, CL.count:format(L.netherbreaker, breakerCount)) -- Netherbreaker
 		if not self:Mythic() then
 			self:Bar(1224827, 121.0 - stage2Offset, CL.count:format(L.behead, beheadCount)) -- Behead
