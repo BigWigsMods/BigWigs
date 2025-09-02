@@ -12,9 +12,9 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 397
+local BIGWIGS_VERSION = 398
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 2, 25},
+	["LittleWigs"] = {11, 2, 27},
 	["BigWigs_Classic"] = {11, 2, 0},
 	["BigWigs_BurningCrusade"] = {11, 1, 4},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 7},
