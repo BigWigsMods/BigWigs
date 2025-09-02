@@ -747,7 +747,7 @@ do
 								isTrackingAchievements = true
 								break
 							end
-						else
+						elseif category then
 							local _, parentCategory = GetCategoryInfo(category)
 							if riskyAchievementCategories[parentCategory] then
 								local _, _, _, completed = GetAchievementInfo(achievementID)
