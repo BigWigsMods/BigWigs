@@ -280,7 +280,12 @@ function mod:PiercingStrand()
 	self:PlaySound(1237212, "alert") -- tank hit inc
 	piercingStrandCount = piercingStrandCount + 1
 	-- every 2nd is fast, others alternate in speed
-	local cd = piercingStrandCount % 2 == 0 and (self:Mythic() and 4 or 7) or piercingStrandCount % 4 == 3 and 39.5 or (self:Mythic() and 36.5 or 33.5)
+	local cd
+	if self:LFR() then
+		cd = piercingStrandCount % 2 == 0 and 43.5 or 41.5
+	else
+		cd = piercingStrandCount % 2 == 0 and (self:Mythic() and 4 or 7) or piercingStrandCount % 4 == 3 and 39.5 or (self:Mythic() and 36.5 or 33.5)
+	end
 	self:Bar(1237212, cd, CL.count:format(CL.tank_frontal, piercingStrandCount))
 end
 
