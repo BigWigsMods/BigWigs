@@ -269,7 +269,7 @@ BigWigs:AddSounds("Nexus-King Salhadaar", {
 })
 
 BigWigs:AddColors("Dimensius, the All-Devouring", {
-	[1228206] = "green",
+	[1228206] = "blue",
 	[1228207] = "blue",
 	[1229038] = "red",
 	[1230087] = "purple",
