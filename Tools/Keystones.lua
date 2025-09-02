@@ -612,7 +612,7 @@ local function CreateCell()
 		cell:SetSize(20, 20)
 		cell:SetScript("OnEnter", OnEnterShowTooltip)
 		cell:SetScript("OnLeave", GameTooltip_Hide)
-		cell:RegisterForClicks("AnyDown")
+		cell:RegisterForClicks("AnyDown", "AnyUp")
 
 		cell.text = cell:CreateFontString(nil, nil, "GameFontNormal")
 		cell.text:SetAllPoints(cell)
@@ -691,7 +691,7 @@ do
 			button:SetSize(90, 48)
 			button:SetScript("OnEnter", OnEnter)
 			button:SetScript("OnLeave", GameTooltip_Hide)
-			button:RegisterForClicks("AnyDown")
+			button:RegisterForClicks("AnyDown", "AnyUp")
 			button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
 			local text = button:CreateFontString(nil, nil, "GameFontNormal")
