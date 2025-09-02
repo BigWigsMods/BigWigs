@@ -1915,7 +1915,10 @@ do
 
 	function ConstructMainBigWigsTab()
 		for key, opts in next, subPanelRegistry do
-			aceConfigTableMainBigWigsTab.args[key] = opts()
+			local optionsTable = securecallfunction(opts)
+			if type(optionsTable) == "table" then--xpcall(acr.ValidateOptionsTable, geterrorhandler(), acr, optionsTable, optionsTable.name) then
+				aceConfigTableMainBigWigsTab.args[key] = optionsTable
+			end
 		end
 		return aceConfigTableMainBigWigsTab
 	end

@@ -172,6 +172,8 @@ files["**/Plugins/*.lua"].ignore = {
 }
 files["Options/Options.lua"].ignore = {
 	"113/C_UI",
+	"113/geterrorhandler",
+	"113/securecallfunction",
 }
 files["**/?Locales/*.lua"].ignore = {
 	"542", -- Empty if branch
