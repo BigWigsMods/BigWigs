@@ -914,7 +914,7 @@ function mod:TotalDestruction(args)
 	self:CDBar(1231716, 32, L.extinguish_the_stars) -- Extinguish the Stars
 	self:CDBar(1233539, self:Mythic() and 62.7 or 61.7, CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
 	if self:Mythic() then
-		self:CDBar(1234242, 74.7, CL.count:format(self:SpellName(1234242), gravityCount)) -- Gravitational Distortion
+		self:CDBar(1234242, 74.7, CL.count:format(L.gravity, gravityCount)) -- Gravitational Distortion
 	else
 		self:CDBar(1232973, 70.6, CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
 		self:CDBar(1250055, 75.0, CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
