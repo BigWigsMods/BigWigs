@@ -916,7 +916,7 @@ function mod:TotalDestruction(args)
 	self:CDBar(1231716, 32, L.extinguish_the_stars) -- Extinguish the Stars
 	self:CDBar(1233539, self:Mythic() and 62.7 or 61.7, CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
 	if self:Mythic() then
-		self:CDBar(1234242, 74.7, CL.count:format(self:SpellName(1234242), gravityCount)) -- Gravitational Distortion
+		self:CDBar(1234242, 74.7, CL.count:format(L.gravity, gravityCount)) -- Gravitational Distortion
 	else
 		self:CDBar(1232973, 70.6, CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
 		self:CDBar(1250055, 75.0, CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
@@ -998,7 +998,11 @@ function mod:DarkenedSky()
 	if darkenedSkyCount < 6 then
 		local cd = darkenedSkyCount % 2 == 1 and 33.3 or 66.6
 		if self:Mythic() then
-			cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+			if darkenedSkyCount == 2 then
+				cd = 43
+			else
+				cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+			end
 		end
 		self:Bar(1234044, cd, CL.count:format(L.darkened_sky, darkenedSkyCount))
 	end
