@@ -996,7 +996,11 @@ function mod:DarkenedSky()
 	if darkenedSkyCount < 6 then
 		local cd = darkenedSkyCount % 2 == 1 and 33.3 or 66.6
 		if self:Mythic() then
-			cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+			if darkenedSkyCount == 2 then
+				cd = 43
+			else
+				cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
+			end
 		end
 		self:Bar(1234044, cd, CL.count:format(L.darkened_sky, darkenedSkyCount))
 	end
