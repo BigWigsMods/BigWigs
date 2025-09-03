@@ -119,6 +119,11 @@ do
 		end
 	end
 
+	function plugin:OnRegister()
+		updateProfile()
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, self.db.profile.soundName)) if played then StopSound(id) end end, 0)
+	end
+
 	function plugin:OnPluginEnable()
 		updateProfile()
 

@@ -165,6 +165,7 @@ files["Plugins/RaidIcon.lua"].ignore = {
 }
 files["Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
+	"113/StopSound",
 }
 files["**/Plugins/*.lua"].ignore = {
 	"112/SlashCmdList",
