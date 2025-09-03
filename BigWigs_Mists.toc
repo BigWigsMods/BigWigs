@@ -1,4 +1,4 @@
-## Interface: 50500
+## Interface: 50500, 50501
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
