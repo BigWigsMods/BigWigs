@@ -1884,7 +1884,7 @@ do
 		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
 		UpdateWidgets()
 	end
-	BigWigsAPI.SetToolOptionsTable("MythicPlus", {
+	BigWigsAPI.RegisterToolOptions("MythicPlus", {
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,

@@ -197,7 +197,7 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Tools option tables
+-- Tools/Plugins option tables
 --
 
 do
@@ -212,16 +212,35 @@ do
 		end
 		return copy
 	end
-	local tbl = {}
-	-- Get all AceGUI option tables under the "Tools" category
-	function API.GetToolOptionTables()
-		return CopyTable(tbl)
+
+	-- Tools
+	do
+		local tbl = {}
+		-- Get all AceGUI option tables under the "Tools" category
+		function API.GetToolOptions()
+			return CopyTable(tbl)
+		end
+		-- Register an AceGUI options table for a module under the "Tools" category
+		function API.RegisterToolOptions(key, settingsTable)
+			if type(key) ~= "string" then error("The key needs to be a string.") end
+			if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+			tbl[key] = settingsTable
+		end
 	end
-	-- Register an AceGUI options table for a module under the "Tools" category
-	function API.SetToolOptionsTable(key, settingsTable)
-		if type(key) ~= "string" then error("The key needs to be a string.") end
-		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
-		tbl[key] = settingsTable
+
+	-- Plugins
+	do
+		local tbl = {}
+		-- Get all AceGUI option tables under the "Tools" category
+		function API.GetPluginOptions()
+			return CopyTable(tbl)
+		end
+		-- Register an AceGUI options table for a module under the "Tools" category
+		function API.RegisterPluginOptions(key, settingsTable)
+			if type(key) ~= "string" then error("The key needs to be a string.") end
+			if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+			tbl[key] = settingsTable
+		end
 	end
 end
 

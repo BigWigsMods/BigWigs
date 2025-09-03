@@ -32,7 +32,7 @@ frame:RegisterEvent("GROUP_FORMED")
 
 local _, addonTbl = ...
 local L = addonTbl.API:GetLocale("BigWigs")
-addonTbl.API.SetToolOptionsTable("AutoRole", {
+addonTbl.API.RegisterToolOptions("AutoRole", {
 	type = "group",
 	name = L.autoRoleTitle,
 	args = {

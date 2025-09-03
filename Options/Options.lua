@@ -283,7 +283,7 @@ do
 			},
 		}
 		function ConstructToolsTab()
-			for key, optionsTable in next, API.GetToolOptionTables() do
+			for key, optionsTable in next, API.GetToolOptions() do
 				aceConfigTableToolsTab.args.tools.args[key] = optionsTable
 			end
 			return aceConfigTableToolsTab
@@ -1914,11 +1914,14 @@ do
 	end
 
 	function ConstructMainBigWigsTab()
-		for key, opts in next, subPanelRegistry do
-			local optionsTable = securecallfunction(opts)
+		for key, optionsTableFunction in next, subPanelRegistry do
+			local optionsTable = securecallfunction(optionsTableFunction)
 			if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, geterrorhandler(), acr, optionsTable, optionsTable.name) then
 				aceConfigTableMainBigWigsTab.args[key] = optionsTable
 			end
+		end
+		for key, optionsTable in next, API.GetPluginOptions() do
+			aceConfigTableMainBigWigsTab.args[key] = optionsTable
 		end
 		return aceConfigTableMainBigWigsTab
 	end
