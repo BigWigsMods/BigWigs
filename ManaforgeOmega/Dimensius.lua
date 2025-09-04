@@ -656,9 +656,9 @@ function mod:WorldsoulConsumption(args)
 		-- Pargoth
 		self:CDBar(1239262, self:Mythic() and 13.9 or 18.8, CL.count:format(CL.adds, conquerorsCrossCount))
 		if self:Mythic() then
-			self:CDBar(1237695, 17.0, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
+			self:CDBar(1251619, 17.0, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
 		else
-			self:CDBar(1251619, 25.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+			self:CDBar(1237695, 25.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
 		end
 	end
 end
@@ -758,9 +758,9 @@ function mod:ConquerorsCross(args)
 		else
 			-- Pargoth
 			if self:Mythic() then
-				self:Bar(1237695, {3.2, 17.0}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
+				self:Bar(1251619, {3.2, 17.0}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
 			else
-				self:Bar(1251619, {7.1, 25.9}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+				self:Bar(1237695, {7.1, 25.9}, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
 			end
 		end
 		self:Bar(1238765, self:Mythic() and 10.5 or 11.8, CL.count:format(L.extinction, extinctionCount)) -- Extinction
