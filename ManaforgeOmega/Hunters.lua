@@ -407,7 +407,7 @@ end
 
 function mod:DarkResidueApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "yellow", args.destName, args.amount, 2)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
 		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
