@@ -224,20 +224,30 @@ do
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send
+	-- @bool[opt] noResend if true, no re-send will be attempted if the message fails to send
 	-- @usage self:Sync("pluginName", data)
-	function plugin:Sync(msg, extra)
-		if msg then
-			self:SendMessage("BigWigs_PluginComm", msg, extra, pName)
+	function plugin:Sync(msg, extra, noResend)
+		if msg and self:IsEnabled() then
 			if IsInGroup() then
 				msg = "P^".. msg
 				if extra then
 					msg = msg .."^".. extra
 				end
 				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-				if type(result) == "number" and result ~= 0 then
-					local errorMsg = format("Failed to send plugin comm %q. Error code: %d", msg, result)
-					core:Error(errorMsg)
+				if type(result) == "number" then
+					if result == 3 or result == 8 or result == 9 then
+						if not noResend then
+							self:SimpleTimer(function() self:Sync(msg, extra) end, 1)
+						end
+						return
+					else
+						local errorMsg = format("Failed to send plugin comm %q. Error code: %d", msg, result)
+						core:Error(errorMsg)
+					end
 				end
+				self:SendMessage("BigWigs_PluginComm", msg, extra, pName)
+			else
+				self:SendMessage("BigWigs_PluginComm", msg, extra, pName)
 			end
 		end
 	end

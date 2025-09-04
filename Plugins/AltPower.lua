@@ -773,7 +773,7 @@ do
 		local newPowerMax = UnitPowerMax("player", 10) -- Enum.PowerType.Alternate = 10
 		if newPower ~= power then
 			power = newPower
-			plugin:Sync("AltPower", newPower)
+			plugin:Sync("AltPower", newPower, true)
 		end
 		if newPowerMax ~= powerMax then
 			powerMax = newPowerMax

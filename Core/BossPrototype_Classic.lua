@@ -3782,11 +3782,11 @@ do
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send
+	-- @bool[opt] noResend if true, no re-send will be attempted if the message fails to send
 	-- @usage self:Sync("abilityPrefix", data)
 	-- @usage self:Sync("ability")
-	function boss:Sync(msg, extra)
+	function boss:Sync(msg, extra, noResend)
 		if msg then
-			self:SendMessage("BigWigs_BossComm", msg, extra, myName)
 			if IsInGroup() then
 				if extra then
 					msg = "B^".. msg .."^".. extra
@@ -3794,10 +3794,20 @@ do
 					msg = "B^".. msg
 				end
 				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-				if type(result) == "number" and result ~= 0 then
-					local errorMsg = format("Failed to send boss comm %q. Error code: %d", msg, result)
-					core:Error(errorMsg)
+				if type(result) == "number" then
+					if result == 3 or result == 8 or result == 9 then
+						if not noResend then
+							self:SimpleTimer(function() if self:IsEnabled() then self:Sync(msg, extra) end end, 1)
+							return
+						end
+					else
+						local errorMsg = format("Failed to send boss comm %q. Error code: %d", msg, result)
+						core:Error(errorMsg)
+					end
 				end
+				self:SendMessage("BigWigs_BossComm", msg, extra, myName)
+			else
+				self:SendMessage("BigWigs_BossComm", msg, extra, myName)
 			end
 		end
 	end

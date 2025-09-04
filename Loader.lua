@@ -1700,7 +1700,7 @@ do
 		if IsInGroup() then
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				if result == 9 then
+				if result == 3 or result == 8 or result == 9 then
 					timer = CTimerNewTimer(3, sendMsg)
 					return
 				else
