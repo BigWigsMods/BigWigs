@@ -170,6 +170,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CollapsingStar", 1233093)
 	self:Log("SPELL_AURA_APPLIED", "DarkResidueApplied", 1233105)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DarkResidueApplied", 1233105)
+	self:Log("SPELL_AURA_REMOVED", "DarkResidueRemoved", 1233105)
 	self:Log("SPELL_AURA_APPLIED", "EventHorizonDamage", 1233968)
 	self:Log("SPELL_PERIODIC_DAMAGE", "EventHorizonDamage", 1233968)
 	self:Log("SPELL_PERIODIC_MISSED", "EventHorizonDamage", 1233968)
@@ -406,14 +407,15 @@ end
 
 function mod:DarkResidueApplied(args)
 	if self:Me(args.destGUID) then
-		local highStacks = 3
-		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "yellow", args.destName, amount, highStacks)
-		if amount >= highStacks then
-			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- high stacks
-		else
-			self:PlaySound(args.spellId, "info", nil, args.destName) -- low stacks
-		end
+		self:StackMessage(args.spellId, "yellow", args.destName, args.amount, 2)
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
+	end
+end
+
+function mod:DarkResidueRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info", nil, args.destName)
 	end
 end
 
