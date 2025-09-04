@@ -340,8 +340,10 @@ local function GetExportString()
 	end
 
 	if sharingExportOptionsSettings.exportMythicPlusSettings then
-		local db = BigWigsLoader.db:GetNamespace('MythicPlus')
-		exportOptions["mythicPlusSettings"] = exportProfileSettings(mythicPlusSettingsToExport, db.profile)
+		local db = BigWigsLoader.db:GetNamespace("MythicPlus", true)
+		if db then
+			exportOptions["mythicPlusSettings"] = exportProfileSettings(mythicPlusSettingsToExport, db.profile)
+		end
 	end
 
 	local serialized = LibSerialize:Serialize(exportOptions)
@@ -463,17 +465,22 @@ do
 			end
 		end
 
-		importSettings('importBarPositions', 'barPositions', barPositionsToExport, barPlugin, L.imported_bar_positions)
-		importSettings('importBarSettings', 'barSettings', barSettingsToExport, barPlugin, L.imported_bar_settings)
-		importColorSettings('importBarColors', 'barColors', barColorsToExport, colorplugin, L.imported_bar_colors)
-		importSettings('importMessagePositions', 'messagePositions', messagePositionsToExport, messageplugin, L.imported_message_positions)
-		importSettings('importMessageSettings', 'messageSettings', messageSettingsToExport, messageplugin, L.imported_message_settings)
-		importColorSettings('importMessageColors', 'messageColors', messageColorsToExport, colorplugin, L.imported_message_colors)
-		importSettings('importCountdownPositions', 'countdownPositions', countdownPositionsToExport, countdownPlugin, L.imported_countdown_position)
-		importSettings('importCountdownSettings', 'countdownSettings', countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
-		importSettings('importCountdownColors', 'countdownColors', countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugin
-		importSettings('importNameplateSettings', 'nameplateSettings', nameplateSettingsToExport, nameplatePlugin, L.imported_nameplate_settings)
-		importSettings('importMythicPlusSettings', 'mythicPlusSettings', mythicPlusSettingsToExport, {db = BigWigsLoader.db:GetNamespace('MythicPlus')}, L.imported_mythicplus_settings)
+		importSettings("importBarPositions", "barPositions", barPositionsToExport, barPlugin, L.imported_bar_positions)
+		importSettings("importBarSettings", "barSettings", barSettingsToExport, barPlugin, L.imported_bar_settings)
+		importColorSettings("importBarColors", "barColors", barColorsToExport, colorplugin, L.imported_bar_colors)
+		importSettings("importMessagePositions", "messagePositions", messagePositionsToExport, messageplugin, L.imported_message_positions)
+		importSettings("importMessageSettings", "messageSettings", messageSettingsToExport, messageplugin, L.imported_message_settings)
+		importColorSettings("importMessageColors", "messageColors", messageColorsToExport, colorplugin, L.imported_message_colors)
+		importSettings("importCountdownPositions", "countdownPositions", countdownPositionsToExport, countdownPlugin, L.imported_countdown_position)
+		importSettings("importCountdownSettings", "countdownSettings", countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
+		importSettings("importCountdownColors", "countdownColors", countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugin
+		importSettings("importNameplateSettings", "nameplateSettings", nameplateSettingsToExport, nameplatePlugin, L.imported_nameplate_settings)
+		do
+			local db = BigWigsLoader.db:GetNamespace("MythicPlus")
+			if db then
+				importSettings("importMythicPlusSettings", "mythicPlusSettings", mythicPlusSettingsToExport, {db = db}, L.imported_mythicplus_settings)
+			end
+		end
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -698,7 +705,7 @@ local sharingOptions = {
 						desc = L.mythicplus_settings_import_desc,
 						order = 2,
 						width = 1,
-						disabled = function() return not IsOptionInString("mythicPlusSettings") end,
+						disabled = function() return not IsOptionInString("mythicPlusSettings") or not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 					},
 				},
 			},
@@ -849,6 +856,8 @@ local sharingOptions = {
 						desc = L.mythicplus_settings_export_desc,
 						order = 2,
 						width = 1,
+						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
+						disabled = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 					},
 				},
 			},
