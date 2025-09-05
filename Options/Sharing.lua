@@ -476,7 +476,7 @@ do
 		importSettings("importCountdownColors", "countdownColors", countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugin
 		importSettings("importNameplateSettings", "nameplateSettings", nameplateSettingsToExport, nameplatePlugin, L.imported_nameplate_settings)
 		do
-			local db = BigWigsLoader.db:GetNamespace("MythicPlus")
+			local db = BigWigsLoader.db:GetNamespace("MythicPlus", true)
 			if db then
 				importSettings("importMythicPlusSettings", "mythicPlusSettings", mythicPlusSettingsToExport, {db = db}, L.imported_mythicplus_settings)
 			end
