@@ -315,7 +315,7 @@ L.keystoneExplainer = "Une collection de divers outils pour améliorer l'expéri
 L.keystoneAutoSlot = "Clef dans le socle automatique"
 L.keystoneAutoSlotDesc = "Place automatiquement votre clef dans le socle lorsque vous ouvrez la fontaine de puissance."
 L.keystoneAutoSlotMessage = "Placement automatique de %s dans l'emplacement de la fontaine."
-L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Clef mythique + insérée automatiquement"
+L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Clef mythique + insérée auto."
 L.keystoneModuleName = "Mythique +"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "%s +%d commence maintenant !" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"
@@ -397,10 +397,10 @@ L.instanceKeysEndOfRunDesc = "Par défaut, la liste ne s'affichera que si vous �
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "Compte à rebours de Recherche de groupe"
-L.lfgTimerExplainer = "Lorsque le popup de Recherche de groupe apparaît, BigWigs va créer une barre de compte à rebours vous donnant le temps qu'il vous reste pour accepter.\n\n"
-L.lfgUseMaster = "Joue le son du Compte à Rebours de recherche de groupe sur le canal audio 'Principal'"
-L.lfgUseMasterDesc = "Lorsque cette option est activée, le son du Compte à rebours de Recherche de groupe va jouer sur le canal audio 'Principal'. Si vous désactiver cette option, il sera joué sur le canal audio '%s'."
+L.lfgTimerTitle = "Timer de RdG"
+L.lfgTimerExplainer = "Lorsque le popup de RdG apparaît, BigWigs va créer une barre de timer vous donnant le temps qu'il vous reste pour accepter.\n\n"
+L.lfgUseMaster = "Joue le son du Timer de RdG sur le canal audio 'Principal'"
+L.lfgUseMasterDesc = "Lorsque cette option est activée, le son du Timer de RdG va jouer sur le canal audio 'Principal'. Si vous désactiver cette option, il sera joué sur le canal audio '%s'."
 
 -----------------------------------------------------------------------
 -- PLUGINS
