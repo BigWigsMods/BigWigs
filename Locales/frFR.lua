@@ -400,7 +400,7 @@ L.instanceKeysEndOfRunDesc = "Par défaut, la liste ne s'affichera que si vous �
 L.lfgTimerTitle = "Timer de RdG"
 L.lfgTimerExplainer = "Lorsque le popup de Recherche de groupe apparaît, BigWigs va créer une barre de timer vous donnant le temps qu'il vous reste pour accepter.\n\n"
 L.lfgUseMaster = "Joue le son du Timer de RdG sur le canal audio 'Principal'"
-L.lfgUseMasterDesc = "Lorsque cette option est activée, le son du Timer de Recherche de group va jouer sur le canal audio 'Principal'. Si vous désactiver cette option, il sera joué sur le canal audio '%s'."
+L.lfgUseMasterDesc = "Lorsque cette option est activée, le son du Timer de Recherche de groupe va jouer sur le canal audio 'Principal'. Si vous désactiver cette option, il sera joué sur le canal audio '%s'."
 
 -----------------------------------------------------------------------
 -- PLUGINS
