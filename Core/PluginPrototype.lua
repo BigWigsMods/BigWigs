@@ -234,7 +234,7 @@ do
 					msg = msg .."^".. extra
 				end
 				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-				if type(result) == "number" then
+				if type(result) == "number" and result > 0 then
 					if result == 3 or result == 8 or result == 9 then
 						if not noResend then
 							self:SimpleTimer(function() self:Sync(msg, extra) end, 1)

@@ -222,7 +222,7 @@ do
 	function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
 		if msg ~= "" and IsInGroup() and coreEnabled then
 			local result = SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-			if type(result) == "number" then
+			if type(result) == "number" and result > 0 then
 				if result == 3 or result == 8 or result == 9 then
 					Timer(1, function() self:RAID_BOSS_WHISPER(nil, msg) end)
 				else
