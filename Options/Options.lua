@@ -41,7 +41,7 @@ end
 
 local colorModule
 local soundModule
-local configFrame, isPluginOpen
+local configFrame
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local toggleOptionsStatusTable, lastOptionsTab = {}, nil
@@ -318,8 +318,6 @@ do
 		acr:RegisterOptionsTable("BigWigsTools", ConstructToolsTab, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
 		acd:SetDefaultSize("BigWigsTools", 858, 660)
-
-		acr.RegisterCallback(options, "ConfigTableChange")
 
 		colorModule = BigWigs:GetPlugin("Colors")
 		soundModule = BigWigs:GetPlugin("Sounds")
@@ -1683,6 +1681,7 @@ do
 		end
 	end
 
+	local currentlyOpenContainer, currentlyOpenMenu
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
@@ -1697,8 +1696,9 @@ do
 			container:SetFullWidth(true)
 
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
-			isPluginOpen = container
-			acd:Open("BigWigs", container)
+			currentlyOpenContainer = container
+			currentlyOpenMenu = "BigWigs"
+			acd:Open(currentlyOpenMenu, container)
 
 			widget:AddChild(container)
 		elseif value == "tools" then
@@ -1711,12 +1711,14 @@ do
 			container:SetFullWidth(true)
 
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
-			isPluginOpen = container
-			acd:Open("BigWigsTools", container)
+			currentlyOpenContainer = container
+			currentlyOpenMenu = "BigWigsTools"
+			acd:Open(currentlyOpenMenu, container)
 
 			widget:AddChild(container)
 		else
-			isPluginOpen = nil
+			currentlyOpenContainer = nil
+			currentlyOpenMenu = nil
 			local treeTbl = {}
 			local addonNameToHeader = {}
 			local defaultHeader
@@ -1852,6 +1854,13 @@ do
 		end
 	end
 
+	function options:ConfigTableChange(_, appName)
+		if appName == "BigWigs" and currentlyOpenContainer then
+			acd:Open(currentlyOpenMenu, currentlyOpenContainer)
+		end
+	end
+	acr.RegisterCallback(options, "ConfigTableChange")
+
 	function options:OpenConfig()
 		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
 
@@ -1865,12 +1874,13 @@ do
 		bw:SetLayout("Flow")
 		bw:SetCallback("OnClose", function(widget)
 			visibleSpellDescriptionWidgets = {}
+			statusTable = {}
+			currentlyOpenContainer = nil
+			currentlyOpenMenu = nil
+			configFrame = nil
 			spellDescriptionUpdater:UnregisterEvent("SPELL_TEXT_UPDATE")
 			widget:ReleaseChildren()
 			AceGUI:Release(widget)
-			statusTable = {}
-			isPluginOpen = nil
-			configFrame = nil
 			options:SendMessage("BigWigs_CloseGUI")
 		end)
 
@@ -1924,12 +1934,6 @@ do
 			aceConfigTableMainBigWigsTab.args[key] = optionsTable
 		end
 		return aceConfigTableMainBigWigsTab
-	end
-end
-
-function options:ConfigTableChange(_, appName)
-	if appName == "BigWigs" and isPluginOpen then
-		acd:Open("BigWigs", isPluginOpen)
 	end
 end
 
