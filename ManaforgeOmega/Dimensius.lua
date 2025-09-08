@@ -287,6 +287,7 @@ function mod:OnBossEnable()
 	-- self:Log("SPELL_CAST_START", "DarkenedSky", 1234044)
 	self:Log("SPELL_AURA_APPLIED", "ShadowquakeApplied", 1234054)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowquakeApplied", 1234054)
+	self:Log("SPELL_AURA_REMOVED", "ShadowquakeRemoved", 1234054)
 	self:Log("SPELL_CAST_START", "CosmicCollapse", 1234263)
 	self:Log("SPELL_AURA_APPLIED", "CosmicFragilityApplied", 1234266)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CosmicFragilityApplied", 1234266)
@@ -1010,9 +1011,15 @@ end
 
 function mod:ShadowquakeApplied(args)
 	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "blue", args.destName, amount, 2)
-		self:PlaySound(args.spellId, amount == 1 and "info" or "warning", nil, args.destName)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
+	end
+end
+
+function mod:ShadowquakeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info", nil, args.destName)
 	end
 end
 
