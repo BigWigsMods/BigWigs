@@ -288,20 +288,20 @@ L.autoRoleExplainer = "当你加入一个队伍，或者在队伍中切换你的
 -- BattleRes.lua
 --
 
---L.battleResTitle = "Battle Res"
---L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
---L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
---L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
---L.battleResHistory = "Battle Res History:"
---L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
---L.battleResDurationText = "Duration Text"
---L.battleResChargesText = "Charges Text"
---L.battleResNoCharges = "0 charges available"
---L.battleResHasCharges = "1 or more charges available"
---L.battleResPlaySound = "Play a sound when a new charge is gained"
---L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
---L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
---L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+L.battleResTitle = "战复"
+L.battleResDesc = "显示可用战复次数以及下次获得额外次数所需时间的图标。"
+L.battleResDesc2 = "\n|cFF33FF99此图标可点击。|r 如果你的职业拥有战斗复活技能，点击图标将施放它。"
+L.battleResDesc3 = "将鼠标悬停在图标上会显示包含你施放 |cFF33FF99战复|r 的记录。"
+L.battleResHistory = "战复："
+L.battleResResetAll = "将所有战复设置重置为默认。"
+L.battleResDurationText = "时间文本"
+L.battleResChargesText = "次数文本"
+L.battleResNoCharges = "0 次可用"
+L.battleResHasCharges = "1 次或多次可用"
+L.battleResPlaySound = "获得新额外次数时播放音效"
+L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t 技能图标（Spell ID）"
+L.iconTextureSpellIDError = "你必须输入一个有效的法术ID来作为显示的图标。"
+L.clickToCastSpell = "点击施放 |cFFFFFFFF%s|r。"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -431,10 +431,10 @@ L.comma = "，"
 L.reset = "重置"
 L.resetDesc = "将上述设置重置为默认。"
 L.resetAll = "重置所有"
---L.startTest = "Start Test"
---L.stopTest = "Stop Test"
---L.always = "Always"
---L.never = "Never"
+L.startTest = "开始测试"
+L.stopTest = "停止测试"
+L.always = "总是" -- ALWAYS
+L.never = "从不" -- NEVER
 
 L.positionX = "横向位置"
 L.positionY = "纵向位置"
@@ -449,7 +449,7 @@ L.disabled = "禁用"
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
 L.keybinding = "按键设置"
 L.dragToResize = "拖动调整尺寸"
---L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
+L.cannotMoveInCombat = "你在战斗中时无法移动此框体。"
 
 -- Anchor Points
 L.UP = "向上"
