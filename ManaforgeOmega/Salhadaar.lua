@@ -110,7 +110,7 @@ function mod:GetOptions()
 			{1234529, "TANK"}, -- Cosmic Maw
 		-- Intermission One: Nexus Descent
 			-- Manaforged Titan
-				1230302, -- Self-Destruct
+				{1230302, "COUNTDOWN"}, -- Self-Destruct
 				1232399, -- Dread Mortar
 			-- Nexus-Prince Ky'vor / Nexus-Prince Xevvos
 				1228075, -- Nexus Beams
