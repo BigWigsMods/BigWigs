@@ -288,7 +288,7 @@ L.autoRoleExplainer = "그룹에 가입하거나 그룹에 있는 동안 특성 
 -- BattleRes.lua
 --
 
-L.battleResTitle = "전투 부활
+L.battleResTitle = "전투 부활"
 L.battleResDesc = "사용 가능한 전투 부활 충전 횟수와 다음 충전 획득까지 남은 시간을 표시하는 아이콘."
 L.battleResDesc2 = "\n|cFF33FF99아이콘은 클릭 가능합니다.|r 전투 부활 주문을 사용하는 직업을 플레이하는 경우, 아이콘을 클릭하면 해당 주문을 시전합니다."
 L.battleResDesc3 = "아이콘 위에 마우스 오버 시 |cFF33FF99전투 부활 기록|r이 표시된 툴팁이 나타납니다."
