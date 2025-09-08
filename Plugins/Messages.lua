@@ -53,7 +53,6 @@ plugin.defaultDB = {
 	displaytime = 2,
 	fadetime = 1.2,
 	emphUppercase = true,
-	disabled = false,
 	-- Designed by default to be just under the boss emote frame and grow down away from it
 	-- By order from top to bottom:
 	-- >> UIErrorsFrame (anchored to top of UIParent)
@@ -172,11 +171,6 @@ local function updateProfile()
 		font.icon:SetSize(db.fontSize, db.fontSize)
 		font:SetHeight(db.fontSize)
 		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
-	end
-
-	if db.disabled then -- XXX temp
-		db.disabled = false
-		BigWigsLoader.Popup("You had Messages disabled. This option is removed and replaced with 'opt-in' mode in: Messages >> Advanced.", true)
 	end
 end
 
