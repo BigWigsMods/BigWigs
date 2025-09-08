@@ -298,6 +298,7 @@ L.autoRoleExplainer = "Jedes mal, wenn einer Gruppe beigetreten wird, oder die T
 --L.battleResChargesText = "Charges Text"
 --L.battleResNoCharges = "0 charges available"
 --L.battleResHasCharges = "1 or more charges available"
+--L.battleResPlaySound = "Play a sound when a new charge is gained"
 --L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
 --L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
 --L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."

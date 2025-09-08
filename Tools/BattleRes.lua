@@ -44,7 +44,7 @@ do
 			durationEmphasizeFontColor = {1, 1, 1, 1},
 			chargesNoneColor = {1, 1, 1, 1},
 			chargesAvailableColor = {1, 1, 1, 1},
-			newResAvailableSound = "BigWigs: Long",
+			newResAvailableSound = "None",
 			durationEmphasizeTime = 0,
 			iconColor = {1, 1, 1, 1},
 			iconTextureFromSpellID = 20484, -- Rebirth icon
@@ -948,7 +948,7 @@ do
 					},
 					soundHeader = {
 						type = "header",
-						name = "Play a sound when a new charge is gained",
+						name = L.battleResPlaySound,
 						order = 12,
 					},
 					newResAvailableSound = {
