@@ -124,7 +124,7 @@ function mod:GetOptions()
 			1243609, -- Airborne
 
 		-- Intermission: Event Horizon
-		1235114, -- Soaring Reshii
+		{1235114, "COUNTDOWN"}, -- Soaring Reshii
 		1237097, -- Astrophysical Jet
 		1230674, -- Spaghettification
 		1246930, -- Stellar Core
