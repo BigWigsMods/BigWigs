@@ -465,6 +465,10 @@ mainPanel:SetScript("OnDragStop", function(self)
 		x = math.floor(x+0.5)
 		y = math.floor(y+0.5)
 		db.profile.position = {point, relPoint, x, y}
+		local acr = LibStub("AceConfigRegistry-3.0", true)
+		if acr then
+			acr:NotifyChange("BigWigsTools")
+		end
 	end
 end)
 mainPanel:SetScript("OnEnter", function(self)
@@ -1311,6 +1315,49 @@ do
 							UpdateWidgets()
 						end,
 						order = 17,
+						disabled = IsDisabled,
+					},
+				},
+			},
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				order = 5,
+				args = {
+					posx = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = -2048,
+						max = 2048,
+						step = 1,
+						order = 1,
+						width = "full",
+						get = function()
+							return db.profile.position[3]
+						end,
+						set = function(_, value)
+							db.profile.position[3] = value
+							UpdateWidgets()
+						end,
+						disabled = IsDisabled,
+					},
+					posy = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = -2048,
+						max = 2048,
+						step = 1,
+						order = 2,
+						width = "full",
+						get = function()
+							return db.profile.position[4]
+						end,
+						set = function(_, value)
+							db.profile.position[4] = value
+							UpdateWidgets()
+						end,
 						disabled = IsDisabled,
 					},
 				},
