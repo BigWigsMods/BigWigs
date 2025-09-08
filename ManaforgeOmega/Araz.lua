@@ -347,10 +347,11 @@ function mod:SilencingTempest()
 	self:StopBar(CL.count:format(CL.pools, silencingTempestCount))
 	self:Message(1228188, "cyan", CL.count:format(CL.pools, silencingTempestCount))
 	silencingTempestCount = silencingTempestCount + 1
-	local cd = getTimers(1228188, silencingTempestCount)
+	local cd
 	if self:GetStage() == 2 then
-		-- XXX never saw a second mythic cast
-		cd = self:Mythic() and 0 or self:Easy() and 44.0 or silencingTempestCount % 2 == 0 and 21.0 or 23.0
+		cd = not self:Heroic() and 44 or silencingTempestCount % 2 == 0 and 21.0 or 23.0
+	else
+		cd = getTimers(1228188, silencingTempestCount)
 	end
 	self:Bar(1228188, cd, CL.count:format(CL.pools, silencingTempestCount))
 end
