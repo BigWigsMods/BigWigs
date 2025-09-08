@@ -1,31 +1,32 @@
-local L, BigWigsLoader, BigWigsAPI, db
-
---------------------------------------------------------------------------------
--- Saved Settings
---
-
-local ProfileUtils = {}
+local L, BigWigsLoader, BigWigsAPI
 do
 	local _, tbl = ...
 	BigWigsAPI = tbl.API
 	L = BigWigsAPI:GetLocale("BigWigs")
 	BigWigsLoader = tbl.loaderPublic
+end
 
+--------------------------------------------------------------------------------
+-- Saved Settings
+--
+
+local ProfileUtils, db = {}
+do
 	local defaultVoice = "English: Amy"
+	local fontName = "Noto Sans Regular"
 	do
 		local locale = GetLocale()
 		if locale ~= "enUS" then
 			defaultVoice = ("%s: Default (Female)"):format(locale)
+			if locale == "koKR" or locale == "zhCN" or locale == "zhTW" then
+				fontName = LibStub("LibSharedMedia-3.0"):GetDefault("font")
+			end
 		end
 	end
 	local validFramePoints = {
 		["TOPLEFT"] = true, ["TOPRIGHT"] = true, ["BOTTOMLEFT"] = true, ["BOTTOMRIGHT"] = true,
 		["TOP"] = true, ["BOTTOM"] = true, ["LEFT"] = true, ["RIGHT"] = true, ["CENTER"] = true,
 	}
-
-	local loc = GetLocale()
-	local isWest = loc ~= "koKR" and loc ~= "zhCN" and loc ~= "zhTW" and true
-	local fontName = isWest and "Noto Sans Regular" or LibStub("LibSharedMedia-3.0"):GetDefault("font")
 
 	local defaults = {
 		autoSlotKeystone = true,
@@ -330,6 +331,10 @@ local LibKeystone = LibStub("LibKeystone")
 local LibSpec = LibStub("LibSpecialization")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
+local LibKeystoneRequest = LibKeystone.Request
+local LibKeystoneRegister = LibKeystone.Register
+local LibKeystoneUnregister = LibKeystone.Unregister
+
 local guildList, partyList = {}, {}
 local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 74, 42
 
@@ -567,7 +572,7 @@ partyRefreshButton:SetPushedTexture("Interface\\Buttons\\UI-RefreshButton-Down")
 partyRefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-RefreshButton")
 partyRefreshButton:SetScript("OnClick", function()
 	partyList = {}
-	LibKeystone.Request("PARTY")
+	LibKeystoneRequest("PARTY")
 end)
 partyRefreshButton:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -586,7 +591,7 @@ guildRefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-RefreshButton")
 guildRefreshButton:SetScript("OnClick", function()
 	guildList = {}
 	LibSpec.RequestGuildSpecialization()
-	C_Timer.After(0.1, function() LibKeystone.Request("GUILD") end)
+	C_Timer.After(0.1, function() LibKeystoneRequest("GUILD") end)
 end)
 guildRefreshButton:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -867,8 +872,8 @@ do
 		guildList = {}
 		RegisterLibKeystone()
 		LibSpec.RequestGuildSpecialization()
-		LibKeystone.Request("PARTY")
-		C_Timer.After(0.2, function() LibKeystone.Request("GUILD") end)
+		LibKeystoneRequest("PARTY")
+		C_Timer.After(0.2, function() LibKeystoneRequest("GUILD") end)
 	end)
 
 	-- Tab 2 (Teleports)
@@ -903,7 +908,7 @@ do
 					if soundName ~= "None" then
 						local sound = LibSharedMedia:Fetch("sound", soundName, true)
 						if sound then
-							BigWigsLoader.PlaySoundFile(sound)
+							BigWigsLoader.PlaySoundFile(sound, "Master")
 						end
 					end
 				end)
@@ -912,7 +917,7 @@ do
 				if soundName ~= "None" then
 					local sound = LibSharedMedia:Fetch("sound", soundName, true)
 					if sound then
-						BigWigsLoader.PlaySoundFile(sound)
+						BigWigsLoader.PlaySoundFile(sound, "Master")
 					end
 				end
 			else -- CHALLENGE_MODE_RESET
@@ -1499,10 +1504,10 @@ do
 	end
 	local LibKeystoneTable = {}
 	function RegisterLibKeystone()
-		LibKeystone.Register(LibKeystoneTable, LibKeystoneFunction)
+		LibKeystoneRegister(LibKeystoneTable, LibKeystoneFunction)
 	end
 	function UnregisterLibKeystone()
-		LibKeystone.Unregister(LibKeystoneTable)
+		LibKeystoneUnregister(LibKeystoneTable)
 	end
 end
 
@@ -1676,8 +1681,8 @@ do
 		for i = 1, 5 do
 			instanceKeysWidgets.playerListText[i]:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
 		end
-		LibKeystone.Register(whosKeyTable, ReceivePartyData)
-		LibKeystone.Request("PARTY")
+		LibKeystoneRegister(whosKeyTable, ReceivePartyData)
+		LibKeystoneRequest("PARTY")
 		main:RegisterEvent("UNIT_CONNECTION")
 	end
 	local function DelayStartOfDungeon() -- Difficulty info isn't accurate until 1 frame after PEW
@@ -1710,10 +1715,10 @@ do
 			end
 		elseif event == "UNIT_CONNECTION" then -- Someone new joined the group, or they just logged on after being offline (maybe they were offline when you joined the group)
 			if isConnected then
-				BigWigsLoader.CTimerAfter(1, function() LibKeystone.Request("PARTY") end)
+				BigWigsLoader.CTimerAfter(1, function() LibKeystoneRequest("PARTY") end)
 			end
 		else
-			LibKeystone.Unregister(whosKeyTable)
+			LibKeystoneUnregister(whosKeyTable)
 			self:Hide()
 			instanceKeysWidgets.nameList = {}
 			instanceKeysWidgets.namesToShow = nil
@@ -1848,8 +1853,8 @@ do
 		UpdateWidgets()
 	end)
 
-	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer)
-	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer)
+	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer, true)
+	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer, true)
 
 	viewerKeybindFrame:SetScript("OnClick", ShowViewer)
 	if db.profile.viewerKeybind ~= "" then
@@ -2054,7 +2059,7 @@ do
 							local key = info[#info]
 							db.profile[key] = value
 							instanceKeysWidgets.nameList = {}
-							LibKeystone.Request("PARTY")
+							LibKeystoneRequest("PARTY")
 						end,
 						confirm = function(_, value)
 							if value then
@@ -2094,7 +2099,7 @@ do
 							UpdateWidgets()
 							if not instanceKeysWidgets.testing then
 								instanceKeysWidgets.nameList = {}
-								LibKeystone.Request("PARTY")
+								LibKeystoneRequest("PARTY")
 							end
 						end,
 						order = 15,

@@ -161,10 +161,11 @@ end
 
 do
 	local slashTable = {}
-	local sub = string.sub
+	local slashNoUpdatesTable = {}
+	local strsub = string.sub
 	-- Registers a slash command
-	function API.RegisterSlashCommand(rawSlashName, slashFunc)
-		local slashName = sub(rawSlashName, 2)
+	function API.RegisterSlashCommand(rawSlashName, slashFunc, noUpdates)
+		local slashName = strsub(rawSlashName, 2)
 		if not slashTable[slashName] then
 			_G["SLASH_"..slashName.."1"] = rawSlashName
 			SlashCmdList[slashName] = function(text)
@@ -175,7 +176,12 @@ do
 				end
 			end
 		end
-		slashTable[slashName] = slashFunc
+		if not slashNoUpdatesTable[slashName] then
+			slashTable[slashName] = slashFunc
+			if noUpdates then
+				slashNoUpdatesTable[slashName] = true
+			end
+		end
 	end
 end
 
