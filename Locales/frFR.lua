@@ -285,6 +285,24 @@ L.autoRoleTitle = "Rôle automatique"
 L.autoRoleExplainer = "Lorsque vous rejoignez un groupe, ou que vous changez de spécialisation alors que vous êtes en groupe, BigWigs mettra à jour automatiquement votre rôle de groupe (Tank, Soigneur, Dégâts) en conséquence.\n\n"
 
 -----------------------------------------------------------------------
+-- BattleRes.lua
+--
+
+--L.battleResTitle = "Battle Res"
+--L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
+--L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
+--L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
+--L.battleResHistory = "Battle Res History:"
+--L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
+--L.battleResDurationText = "Duration Text"
+--L.battleResChargesText = "Charges Text"
+--L.battleResNoCharges = "0 charges available"
+--L.battleResHasCharges = "1 or more charges available"
+--L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
+--L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
+--L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+
+-----------------------------------------------------------------------
 -- Keystones.lua
 --
 
@@ -412,6 +430,10 @@ L.comma = ", "
 L.reset = "Réinitialiser"
 L.resetDesc = "Réinitialise les paramètres ci-dessus à leur valeur d'origine."
 L.resetAll = "Tout réinitialiser"
+--L.startTest = "Start Test"
+--L.stopTest = "Stop Test"
+--L.always = "Always"
+--L.never = "Never"
 
 L.positionX = "Position X"
 L.positionY = "Position Y"
@@ -426,6 +448,7 @@ L.disabled = "Désactivé"
 L.disableDesc = "Vous allez désactiver la fonctionnalité '%s', ce qui n'est |cffff4411pas recommandé|r.\n\nÊtes-vous sûr de vouloir faire cela ?"
 L.keybinding = "Raccourci clavier"
 L.dragToResize = "Tirer pour redimensionner"
+--L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
 
 -- Anchor Points
 L.UP = "Au-dessus"

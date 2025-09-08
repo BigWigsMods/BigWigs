@@ -285,6 +285,24 @@ L.autoRoleTitle = "自动分配职责"
 L.autoRoleExplainer = "当你加入一个队伍，或者在队伍中切换你的天赋专精时，BigWigs 将自动调整你在队伍中的职责（坦克、治疗者、伤害输出者）。\n\n"
 
 -----------------------------------------------------------------------
+-- BattleRes.lua
+--
+
+--L.battleResTitle = "Battle Res"
+--L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
+--L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
+--L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
+--L.battleResHistory = "Battle Res History:"
+--L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
+--L.battleResDurationText = "Duration Text"
+--L.battleResChargesText = "Charges Text"
+--L.battleResNoCharges = "0 charges available"
+--L.battleResHasCharges = "1 or more charges available"
+--L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
+--L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
+--L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+
+-----------------------------------------------------------------------
 -- Keystones.lua
 --
 
@@ -412,6 +430,10 @@ L.comma = "，"
 L.reset = "重置"
 L.resetDesc = "将上述设置重置为默认。"
 L.resetAll = "重置所有"
+--L.startTest = "Start Test"
+--L.stopTest = "Stop Test"
+--L.always = "Always"
+--L.never = "Never"
 
 L.positionX = "横向位置"
 L.positionY = "纵向位置"
@@ -426,6 +448,7 @@ L.disabled = "禁用"
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
 L.keybinding = "按键设置"
 L.dragToResize = "拖动调整尺寸"
+--L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
 
 -- Anchor Points
 L.UP = "向上"

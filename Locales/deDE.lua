@@ -285,6 +285,24 @@ L.autoRoleTitle = "Automatische Rollenwahl"
 L.autoRoleExplainer = "Jedes mal, wenn einer Gruppe beigetreten wird, oder die Talentspezialisierung in einer Gruppe geändert wird, passt BigWigs automatisch die Gruppenrolle (Tank, Heiler, Schaden) entsprechend an.\n\n"
 
 -----------------------------------------------------------------------
+-- BattleRes.lua
+--
+
+--L.battleResTitle = "Battle Res"
+--L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
+--L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
+--L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
+--L.battleResHistory = "Battle Res History:"
+--L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
+--L.battleResDurationText = "Duration Text"
+--L.battleResChargesText = "Charges Text"
+--L.battleResNoCharges = "0 charges available"
+--L.battleResHasCharges = "1 or more charges available"
+--L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
+--L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
+--L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+
+-----------------------------------------------------------------------
 -- Keystones.lua
 --
 
@@ -412,6 +430,10 @@ L.comma = ", "
 L.reset = "Zurücksetzen"
 L.resetDesc = "Die obigen Einstellungen auf Standardwerte zurücksetzen."
 L.resetAll = "Alle zurücksetzen"
+--L.startTest = "Start Test"
+--L.stopTest = "Stop Test"
+--L.always = "Always"
+--L.never = "Never"
 
 L.positionX = "X-Position"
 L.positionY = "Y-Position"
@@ -426,6 +448,7 @@ L.disabled = "Deaktivieren"
 L.disableDesc = "Du bist dabei, das Feature '%s' zu deaktivieren, was |cffff4411nicht empfohlen|r wird.\n\nBist Du sicher, dass Du das tun willst?"
 L.keybinding = "Tastenbelegung"
 L.dragToResize = "Zum Anpassen ziehen"
+--L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
 
 -- Anchor Points
 L.UP = "Hoch"

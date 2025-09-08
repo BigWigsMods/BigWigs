@@ -284,6 +284,24 @@ L.autoRoleTitle = "Auto Role"
 L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
 
 -----------------------------------------------------------------------
+-- BattleRes.lua
+--
+
+L.battleResTitle = "Battle Res"
+L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
+L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
+L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
+L.battleResHistory = "Battle Res History:"
+L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
+L.battleResDurationText = "Duration Text"
+L.battleResChargesText = "Charges Text"
+L.battleResNoCharges = "0 charges available"
+L.battleResHasCharges = "1 or more charges available"
+L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
+L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
+L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+
+-----------------------------------------------------------------------
 -- Keystones.lua
 --
 
@@ -411,6 +429,10 @@ L.comma = ", "
 L.reset = "Reset"
 L.resetDesc = "Reset the above settings to their default values."
 L.resetAll = "Reset all"
+L.startTest = "Start Test"
+L.stopTest = "Stop Test"
+L.always = "Always"
+L.never = "Never"
 
 L.positionX = "X Position"
 L.positionY = "Y Position"
@@ -425,6 +447,7 @@ L.disabled = "Disabled"
 L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 L.keybinding = "Keybinding"
 L.dragToResize = "Drag to resize"
+L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
 
 -- Anchor Points / Grow Directions
 L.UP = "Up"

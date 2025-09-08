@@ -188,6 +188,10 @@ files["Tools/AutoRole.lua"].ignore = {
 	"113/UnitNameUnmodified",
 	"113/UnitSetRole",
 }
+files["Tools/BattleRes.lua"].ignore = {
+	"113/C_ClassColor",
+	"113/C_Spell",
+}
 files["Tools/Keystones.lua"].ignore = {
 	"113/C_ChallengeMode",
 	"113/C_ClassColor",

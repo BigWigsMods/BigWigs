@@ -285,6 +285,24 @@ L.autoRoleTitle = "자동 역할"
 L.autoRoleExplainer = "그룹에 가입하거나 그룹에 있는 동안 특성 전문화를 변경할 때마다 BigWigs이 자동으로 그룹 역할(탱커, 힐러, 딜러)을 그에 맞게 조정합니다.\n\n"
 
 -----------------------------------------------------------------------
+-- BattleRes.lua
+--
+
+--L.battleResTitle = "Battle Res"
+--L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
+--L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
+--L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
+--L.battleResHistory = "Battle Res History:"
+--L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
+--L.battleResDurationText = "Duration Text"
+--L.battleResChargesText = "Charges Text"
+--L.battleResNoCharges = "0 charges available"
+--L.battleResHasCharges = "1 or more charges available"
+--L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
+--L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
+--L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+
+-----------------------------------------------------------------------
 -- Keystones.lua
 --
 
@@ -412,6 +430,10 @@ L.comma = ", "
 L.reset = "초기화"
 L.resetDesc = "위의 설정을 기본값으로 초기화합니다."
 L.resetAll = "모두 초기화"
+--L.startTest = "Start Test"
+--L.stopTest = "Stop Test"
+--L.always = "Always"
+--L.never = "Never"
 
 L.positionX = "X 위치"
 L.positionY = "Y 위치"
@@ -426,6 +448,7 @@ L.disabled = "비활성"
 L.disableDesc = "'%s' 기능을 비활성화하려고 합니다. |cffff4411권장하지 않음|r.\n\n정말로 비활성화하시겠습니까?"
 L.keybinding = "키 설정"
 L.dragToResize = "드래그하여 크기 조정"
+--L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
 
 -- Anchor Points
 L.UP = "위"

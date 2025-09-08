@@ -41,6 +41,7 @@ Media\Media.lua
 GuildVersion.lua
 Loader.lua
 Tools\AutoRole.lua
+Tools\BattleRes.lua
 Tools\Keystones.lua
 Tools\LFGTimer.lua
 modules.xml
