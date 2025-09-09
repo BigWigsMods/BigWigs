@@ -1885,7 +1885,7 @@ do
 		end
 	end
 
-	BigWigsLoader:RegisterMessage("BigWigs_ProfileUpdate", function()
+	BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", function()
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.ValidateMediaSettings()
 		UpdateWidgets()

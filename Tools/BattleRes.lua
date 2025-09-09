@@ -756,7 +756,7 @@ do
 		db.profile[info[#info]] = LibSharedMedia:List("sound")[value]
 	end
 
-	BigWigsLoader:RegisterMessage("BigWigs_ProfileUpdate", function()
+	BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", function()
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.ValidateMediaSettings()
 		UpdateWidgets()
