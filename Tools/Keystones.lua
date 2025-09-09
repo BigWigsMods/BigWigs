@@ -1721,7 +1721,7 @@ do
 			RequestPartyData(instanceID)
 		end
 	end
-	local combatHideCount = 1
+	local combatHideCount, combatDelayTimer = 1, nil
 	main:SetScript("OnEvent", function(self, event, unit, isConnected)
 		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" then
 			instanceKeysWidgets.testing = false
@@ -1745,13 +1745,25 @@ do
 			combatHideCount = combatHideCount + 1
 			self:Hide()
 			self:RegisterEvent("PLAYER_REGEN_ENABLED")
+			if combatDelayTimer then
+				combatDelayTimer:Cancel()
+				combatDelayTimer = nil
+			end
 		elseif event == "PLAYER_REGEN_ENABLED" then
 			self:UnregisterEvent(event)
-			self:Show()
+			if combatDelayTimer then combatDelayTimer:Cancel() end
+			combatDelayTimer = BigWigsLoader.CTimerNewTimer(10, function()
+				combatDelayTimer = nil
+				self:Show()
+			end)
 		else
 			combatHideCount = 1
 			LibKeystoneUnregister(whosKeyTable)
 			self:Hide()
+			if combatDelayTimer then
+				combatDelayTimer:Cancel()
+				combatDelayTimer = nil
+			end
 			instanceKeysWidgets.nameList = {}
 			instanceKeysWidgets.namesToShow = nil
 			instanceKeysWidgets.otherDungeons = nil
