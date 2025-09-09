@@ -1681,7 +1681,7 @@ do
 		end
 	end
 
-	local currentlyOpenContainer, currentlyOpenMenu
+	local currentlyOpenContainer
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
@@ -1697,8 +1697,7 @@ do
 
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
 			currentlyOpenContainer = container
-			currentlyOpenMenu = "BigWigs"
-			acd:Open(currentlyOpenMenu, container)
+			acd:Open("BigWigs", container)
 
 			widget:AddChild(container)
 		elseif value == "tools" then
@@ -1712,13 +1711,11 @@ do
 
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
 			currentlyOpenContainer = container
-			currentlyOpenMenu = "BigWigsTools"
-			acd:Open(currentlyOpenMenu, container)
+			acd:Open("BigWigsTools", container)
 
 			widget:AddChild(container)
 		else
 			currentlyOpenContainer = nil
-			currentlyOpenMenu = nil
 			local treeTbl = {}
 			local addonNameToHeader = {}
 			local defaultHeader
@@ -1855,8 +1852,9 @@ do
 	end
 
 	function options:ConfigTableChange(_, appName)
-		if appName == "BigWigs" and currentlyOpenContainer then
-			acd:Open(currentlyOpenMenu, currentlyOpenContainer)
+		print(appName)
+		if (appName == "BigWigs" or appName == "BigWigsTools") and currentlyOpenContainer then
+			acd:Open(appName, currentlyOpenContainer)
 		end
 	end
 	acr.RegisterCallback(options, "ConfigTableChange")
@@ -1876,7 +1874,6 @@ do
 			visibleSpellDescriptionWidgets = {}
 			statusTable = {}
 			currentlyOpenContainer = nil
-			currentlyOpenMenu = nil
 			configFrame = nil
 			spellDescriptionUpdater:UnregisterEvent("SPELL_TEXT_UPDATE")
 			widget:ReleaseChildren()
