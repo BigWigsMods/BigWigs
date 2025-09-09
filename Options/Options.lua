@@ -1852,7 +1852,6 @@ do
 	end
 
 	function options:ConfigTableChange(_, appName)
-		print(appName)
 		if (appName == "BigWigs" or appName == "BigWigsTools") and currentlyOpenContainer then
 			acd:Open(appName, currentlyOpenContainer)
 		end

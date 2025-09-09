@@ -829,7 +829,6 @@ do
 				get = function() return db.profile.mode == 1 end,
 				set = function(_, value)
 					if value then
-						db.profile.mode = 1
 						ProfileUtils.SetPreset("icon")
 						UpdateWidgets()
 					end
@@ -843,7 +842,6 @@ do
 				get = function() return db.profile.mode == 2 end,
 				set = function(_, value)
 					if value then
-						db.profile.mode = 2
 						ProfileUtils.SetPreset("text")
 						if isTesting then
 							BigWigsLoader.Print(L.battleResModeTextTooltip)
