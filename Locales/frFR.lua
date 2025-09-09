@@ -412,6 +412,8 @@ L.instanceKeysShowAllDesc = "Activer cette option vous affichera tous les person
 L.instanceKeysOtherDungeonColor = "Couleur des autres donjons"
 L.instanceKeysOtherDungeonColorDesc = "Choisissez la couleur de la police des personnages ayant une clef n'appartenant pas au donjon actuel."
 L.instanceKeysEndOfRunDesc = "Par défaut, la liste ne s'affichera que si vous êtes dans un donjon mythique. Activer cette option vous affichera la liste même lorsque le donjon mythique + est terminé."
+--L.instanceKeysHideTitle = "Hide title"
+--L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

@@ -245,6 +245,7 @@ local mythicPlusSettingsToExport = {
 	"instanceKeysOtherDungeonColor",
 	"instanceKeysShowAllPlayers",
 	"instanceKeysShowDungeonEnd",
+	"instanceKeysHideTitle",
 }
 
 -- Default Options

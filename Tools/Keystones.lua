@@ -51,6 +51,7 @@ do
 		instanceKeysOtherDungeonColor = {1, 1, 1, 0.5},
 		instanceKeysShowAllPlayers = false,
 		instanceKeysShowDungeonEnd = false,
+		instanceKeysHideTitle = false,
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 
@@ -1031,10 +1032,26 @@ do
 	tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 	-- Tab 3 Event Handler (Used for automatically showing the window when the dungeon ends)
 	do
-		local function Open() mainPanel:Show() tab1:Click() end
-		tab3:SetScript("OnEvent", function()
-			if db.profile.showViewerDungeonEnd and not BigWigsLoader.isTestBuild then
-				BigWigsLoader.CTimerAfter(5, Open)
+		local function Open()
+			if InCombatLockdown() then
+				tab3:RegisterEvent("PLAYER_REGEN_ENABLED")
+				return
+			end
+
+			local _, _, diffID = BigWigsLoader.GetInstanceInfo()
+			if diffID == 8 then -- Mythic+
+				mainPanel:Show()
+				tab1:Click()
+			end
+		end
+		tab3:SetScript("OnEvent", function(self, event)
+			if event == "PLAYER_REGEN_ENABLED" then
+				self:UnregisterEvent(event)
+				Open()
+			else -- CHALLENGE_MODE_COMPLETED
+				if db.profile.showViewerDungeonEnd and not BigWigsLoader.isTestBuild then
+					BigWigsLoader.CTimerAfter(5, Open)
+				end
 			end
 		end)
 	end
@@ -1567,6 +1584,11 @@ do
 	header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
 	header:SetFormattedText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t%s", L.instanceKeysTitle)
 	header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+	if db.profile.instanceKeysHideTitle then
+		header:Hide()
+	else
+		header:Show()
+	end
 	instanceKeysWidgets.header = header
 
 	for i = 1, 5 do
@@ -1624,7 +1646,8 @@ do
 					if inCurrentDungeon or db.profile.instanceKeysShowAllPlayers then
 						main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
 						main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
-						main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
+						main:RegisterEvent("ENCOUNTER_START") -- Hide when you enter combat with a boss
+						main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Temporarily hide when you enter combat
 						main:Show()
 						sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = inCurrentDungeon}
 					end
@@ -1698,6 +1721,7 @@ do
 			RequestPartyData(instanceID)
 		end
 	end
+	local combatHideCount = 1
 	main:SetScript("OnEvent", function(self, event, unit, isConnected)
 		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" then
 			instanceKeysWidgets.testing = false
@@ -1717,7 +1741,15 @@ do
 			if isConnected then
 				BigWigsLoader.CTimerAfter(1, function() LibKeystoneRequest("PARTY") end)
 			end
+		elseif event == "PLAYER_REGEN_DISABLED" and combatHideCount < 3 then -- You can enter combat twice and it will re-show, kill it after that
+			combatHideCount = combatHideCount + 1
+			self:Hide()
+			self:RegisterEvent("PLAYER_REGEN_ENABLED")
+		elseif event == "PLAYER_REGEN_ENABLED" then
+			self:UnregisterEvent(event)
+			self:Show()
 		else
+			combatHideCount = 1
 			LibKeystoneUnregister(whosKeyTable)
 			self:Hide()
 			instanceKeysWidgets.nameList = {}
@@ -1726,6 +1758,7 @@ do
 			self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 			self:UnregisterEvent("UNIT_CONNECTION")
 		end
 	end)
@@ -1786,6 +1819,11 @@ do
 			if not instanceKeysWidgets.testing and instanceKeysWidgets.namesToShow and instanceKeysWidgets.namesToShow[i] and instanceKeysWidgets.otherDungeons[i] then
 				instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
 			end
+		end
+		if db.profile.instanceKeysHideTitle then
+			instanceKeysWidgets.header:Hide()
+		else
+			instanceKeysWidgets.header:Show()
 		end
 
 		instanceKeysWidgets.main:ClearAllPoints()
@@ -2081,14 +2119,21 @@ do
 						type = "toggle",
 						name = L.keystoneAutoShowEndOfRun,
 						desc = L.instanceKeysEndOfRunDesc,
-						set = UpdateSettings,
 						order = 13,
+						width = "full",
+					},
+					instanceKeysHideTitle = {
+						type = "toggle",
+						name = L.instanceKeysHideTitle,
+						desc = L.instanceKeysHideTitleDesc,
+						set = UpdateSettingsAndWidgets,
+						order = 14,
 						width = "full",
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 14,
+						order = 15,
 					},
 					reset = {
 						type = "execute",
@@ -2102,7 +2147,7 @@ do
 								LibKeystoneRequest("PARTY")
 							end
 						end,
-						order = 15,
+						order = 16,
 					},
 				},
 			},

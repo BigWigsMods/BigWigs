@@ -412,6 +412,8 @@ L.instanceKeysShowAllDesc = "启用此选项将显示列表中的所有玩家，
 L.instanceKeysOtherDungeonColor = "其他地下城颜色"
 L.instanceKeysOtherDungeonColorDesc = "为持有非当前地下城钥石选择字体颜色。"
 L.instanceKeysEndOfRunDesc = "默认情况下，列表仅在你进入史诗钥石地下城时显示。启用此选项后，还将在史诗钥石结束后继续显示列表。"
+--L.instanceKeysHideTitle = "Hide title"
+--L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
