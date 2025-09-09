@@ -289,8 +289,7 @@ L.autoRoleExplainer = "Whenever you join a group, or you change your talent spec
 
 L.battleResTitle = "Battle Res"
 L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
-L.battleResDesc2 = "\n|cFF33FF99The icon is clickable.|r If you are playing a class with a battle resurrection spell, clicking the icon will cast it."
-L.battleResDesc3 = "Placing your mouse over the icon will show a tooltip with your |cFF33FF99Battle Resurrection History|r."
+L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
 L.battleResHistory = "Battle Res History:"
 L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
 L.battleResDurationText = "Duration Text"
@@ -300,7 +299,9 @@ L.battleResHasCharges = "1 or more charges available"
 L.battleResPlaySound = "Play a sound when a new charge is gained"
 L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
 L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
-L.clickToCastSpell = "Click to cast |cFFFFFFFF%s|r."
+L.battleResModeIcon = "Mode: Icon"
+L.battleResModeText = "Mode: Text Only"
+L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

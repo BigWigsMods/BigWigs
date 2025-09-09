@@ -290,8 +290,7 @@ L.autoRoleExplainer = "그룹에 가입하거나 그룹에 있는 동안 특성 
 
 L.battleResTitle = "전투 부활"
 L.battleResDesc = "사용 가능한 전투 부활 충전 횟수와 다음 충전 획득까지 남은 시간을 표시하는 아이콘."
-L.battleResDesc2 = "\n|cFF33FF99아이콘은 클릭 가능합니다.|r 전투 부활 주문을 사용하는 직업을 플레이하는 경우, 아이콘을 클릭하면 해당 주문을 시전합니다."
-L.battleResDesc3 = "아이콘 위에 마우스 오버 시 |cFF33FF99전투 부활 기록|r이 표시된 툴팁이 나타납니다."
+--L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
 L.battleResHistory = "전투 부활 기록:"
 L.battleResResetAll = "모든 전투 부활 설정을 기본값으로 초기화합니다."
 L.battleResDurationText = "지속 시간 텍스트"
@@ -301,7 +300,9 @@ L.battleResHasCharges = "충전량 1개 이상"
 --L.battleResPlaySound = "Play a sound when a new charge is gained"
 L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t 아이콘 텍스처(주문 ID)"
 L.iconTextureSpellIDError = "아이콘 텍스처로 사용할 유효한 주문 ID를 입력해야 합니다."
-L.clickToCastSpell = "|cFFFFFFFF%s|r 시전하려면 클릭하세요."
+--L.battleResModeIcon = "Mode: Icon"
+--L.battleResModeText = "Mode: Text Only"
+--L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

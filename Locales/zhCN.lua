@@ -290,8 +290,7 @@ L.autoRoleExplainer = "当你加入一个队伍，或者在队伍中切换你的
 
 L.battleResTitle = "战复"
 L.battleResDesc = "显示可用战复次数以及下次获得额外次数所需时间的图标。"
-L.battleResDesc2 = "\n|cFF33FF99此图标可点击。|r 如果你的职业拥有战斗复活技能，点击图标将施放它。"
-L.battleResDesc3 = "将鼠标悬停在图标上会显示包含你施放 |cFF33FF99战复|r 的记录。"
+--L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
 L.battleResHistory = "战复："
 L.battleResResetAll = "将所有战复设置重置为默认。"
 L.battleResDurationText = "时间文本"
@@ -301,7 +300,9 @@ L.battleResHasCharges = "1 次或多次可用"
 L.battleResPlaySound = "获得新额外次数时播放音效"
 L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t 技能图标（Spell ID）"
 L.iconTextureSpellIDError = "你必须输入一个有效的法术ID来作为显示的图标。"
-L.clickToCastSpell = "点击施放 |cFFFFFFFF%s|r。"
+--L.battleResModeIcon = "Mode: Icon"
+--L.battleResModeText = "Mode: Text Only"
+--L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

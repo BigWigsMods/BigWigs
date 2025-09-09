@@ -290,8 +290,7 @@ L.autoRoleExplainer = "Jedes mal, wenn einer Gruppe beigetreten wird, oder die T
 
 L.battleResTitle = "Battle Res"
 L.battleResDesc = "Zeigt ein Symbol an, welches die Anzahl der verfügbaren Battle Res Aufladungen sowie die Zeit bis zur nächsten Aufladung anzeigt."
-L.battleResDesc2 = "\n|cFF33FF99Das Symbol ist klickbar.|r Wenn Du eine Klasse mit Battle Res Zauber spielst, wird dieser beim Klick gewirkt."
-L.battleResDesc3 = "Beim Überfahren des Symbols mit der Maus wird ein Tooltip mit dem |cFF33FF99Battle Res Verlauf|r angezeigt."
+--L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
 L.battleResHistory = "Battle Res Verlauf:"
 L.battleResResetAll = "Alle Battle Res Einstellungen auf ihre Standardwerte zurücksetzen."
 L.battleResDurationText = "Dauer Text"
@@ -301,7 +300,9 @@ L.battleResHasCharges = "1 oder mehr Aufladungen verfügbar"
 L.battleResPlaySound = "Einen Sound wiedergeben wenn eine neue Aufladung verfügbar ist"
 L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Symbol Textur (Zauber ID)"
 L.iconTextureSpellIDError = "Es muss eine gültige Zauber ID zur Nutzung der Symbol Textur genutzt werden."
-L.clickToCastSpell = "Klicken, um |cFFFFFFFF%s|r zu wirken."
+--L.battleResModeIcon = "Mode: Icon"
+--L.battleResModeText = "Mode: Text Only"
+--L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

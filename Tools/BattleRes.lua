@@ -20,6 +20,7 @@ do
 
 		defaults = {
 			disabled = true,
+			mode = 1,
 			lock = false,
 			size = 50,
 			position = {"CENTER", "CENTER", 0, 0},
@@ -41,7 +42,7 @@ do
 			borderOffset = 0,
 			borderSize = 2,
 			durationColor = {1, 1, 1, 1},
-			durationEmphasizeFontColor = {1, 1, 1, 1},
+			durationEmphasizeColor = {1, 1, 1, 1},
 			chargesNoneColor = {1, 1, 1, 1},
 			chargesAvailableColor = {1, 1, 1, 1},
 			newResAvailableSound = "None",
@@ -71,11 +72,11 @@ do
 				end
 			end
 
+			if db.profile.mode < 1 or db.profile.mode > 2 then
+				db.profile.mode = defaults.mode
+			end
 			if db.profile.size < 20 or db.profile.size > 150 then
 				db.profile.size = defaults.size
-			end
-			if not BigWigsLoader.GetSpellTexture(db.profile.iconTextureFromSpellID) then
-				db.profile.iconTextureFromSpellID = defaults.iconTextureFromSpellID
 			end
 			if type(db.profile.position[1]) ~= "string" or type(db.profile.position[2]) ~= "string"
 			or type(db.profile.position[3]) ~= "number" or type(db.profile.position[4]) ~= "number"
@@ -165,9 +166,9 @@ do
 				end
 			end
 			for i = 1, 4 do
-				local n = db.profile.durationEmphasizeFontColor[i]
+				local n = db.profile.durationEmphasizeColor[i]
 				if type(n) ~= "number" or n < 0 or n > 1 then
-					db.profile.durationEmphasizeFontColor = defaults.durationEmphasizeFontColor
+					db.profile.durationEmphasizeColor = defaults.durationEmphasizeColor
 					break -- If 1 entry is bad, reset the whole table
 				end
 			end
@@ -195,6 +196,12 @@ do
 					break -- If 1 entry is bad, reset the whole table
 				end
 			end
+			if not BigWigsLoader.GetSpellTexture(db.profile.iconTextureFromSpellID) then
+				db.profile.iconTextureFromSpellID = defaults.iconTextureFromSpellID
+			end
+			if db.profile.iconDesaturate < 1 or db.profile.iconDesaturate > 3 then
+				db.profile.iconDesaturate = defaults.iconDesaturate
+			end
 		end
 	end
 	ProfileUtils.ValidateMediaSettings = function()
@@ -210,6 +217,25 @@ do
 			db.profile.newResAvailableSound = defaults.newResAvailableSound
 		end
 	end
+	ProfileUtils.SetPreset = function(mode)
+		if mode == "icon" then
+			local position = db.profile.position
+			ProfileUtils.ResetSettings()
+			db.profile.position = position
+			db.profile.mode = 1
+		elseif mode == "text" then
+			local position = db.profile.position
+			ProfileUtils.ResetSettings()
+			db.profile.position = position
+			db.profile.mode = 2
+			db.profile.borderName = "None"
+			db.profile.durationAlign = "CENTER"
+			db.profile.chargesAlign = "CENTER"
+			db.profile.iconDesaturate = 1
+			db.profile.cooldownEdge = false
+			db.profile.cooldownSwipe = false
+		end
+	end
 	ProfileUtils.ResetSettings = function()
 		for k, v in next, defaults do
 			db.profile[k] = v
@@ -223,7 +249,7 @@ do
 		db.profile.outline = defaults.outline
 		db.profile.monochrome = defaults.monochrome
 		db.profile.borderColor = defaults.borderColor
-		db.profile.durationColor = defaults.durationColor
+		db.profile.borderName = defaults.borderName
 		db.profile.borderOffset = defaults.borderOffset
 		db.profile.borderSize = defaults.borderSize
 		db.profile.newResAvailableSound = defaults.newResAvailableSound
@@ -235,7 +261,7 @@ do
 		db.profile.durationAlign = defaults.durationAlign
 		db.profile.durationColor = defaults.durationColor
 		db.profile.durationEmphasizeTime = defaults.durationEmphasizeTime
-		db.profile.durationEmphasizeFontColor = defaults.durationEmphasizeFontColor
+		db.profile.durationEmphasizeColor = defaults.durationEmphasizeColor
 		db.profile.durationEmphasizeFontSize = defaults.durationEmphasizeFontSize
 	end
 	ProfileUtils.ResetChargesSettings = function()
@@ -284,22 +310,8 @@ local resSpells = {
 -- GUI Widgets
 --
 
-local mainPanel = CreateFrame("Button", nil, UIParent, "SecureActionButtonTemplate")
+local mainPanel = CreateFrame("Button", nil, UIParent)
 mainPanel:Hide()
-mainPanel:SetAttribute("type", "spell")
-mainPanel:RegisterForClicks("AnyDown", "AnyUp")
-do
-	local _, classFile = UnitClass("player")
-	if classFile == "DRUID" then
-		mainPanel:SetAttribute("spell", 20484) -- Rebirth
-	elseif classFile == "DEATHKNIGHT" then
-		mainPanel:SetAttribute("spell", 61999) -- Raise Ally
-	elseif classFile == "PALADIN" then
-		mainPanel:SetAttribute("spell", 391054) -- Intercession
-	elseif classFile == "WARLOCK" then
-		mainPanel:SetAttribute("spell", 20707) -- Soulstone Resurrection
-	end
-end
 mainPanel:SetSize(db.profile.size, db.profile.size)
 do
 	local point, relPoint = db.profile.position[1], db.profile.position[2]
@@ -308,8 +320,12 @@ do
 
 	local icon = mainPanel:CreateTexture()
 	icon:SetAllPoints(mainPanel)
-	local texture = BigWigsLoader.GetSpellTexture(db.profile.iconTextureFromSpellID)
-	icon:SetTexture(texture)
+	if db.profile.mode == 2 then
+		icon:SetTexture(nil)
+	else
+		local texture = BigWigsLoader.GetSpellTexture(db.profile.iconTextureFromSpellID)
+		icon:SetTexture(texture)
+	end
 	icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 	icon:SetVertexColor(db.profile.iconColor[1], db.profile.iconColor[2], db.profile.iconColor[3], db.profile.iconColor[4])
 	if db.profile.iconDesaturate == 2 then
@@ -326,17 +342,23 @@ end
 do
 	local cdText = mainPanel.border:CreateFontString(nil, "OVERLAY")
 	cdText:SetJustifyH(db.profile.durationAlign)
-	cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
-	cdText:SetPoint("TOPRIGHT", mainPanel, "TOPRIGHT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
-	cdText:SetHeight(20)
+	if db.profile.mode == 2 then
+		cdText:SetPoint("CENTER", mainPanel, "LEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+	else
+		cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+	end
+	cdText:SetSize(300, 20)
 	cdText:SetTextColor(db.profile.durationColor[1], db.profile.durationColor[2], db.profile.durationColor[3], db.profile.durationColor[4])
 	mainPanel.cdText = cdText
 
 	local chargesText = mainPanel.border:CreateFontString(nil, "OVERLAY")
 	chargesText:SetJustifyH(db.profile.chargesAlign)
-	chargesText:SetPoint("BOTTOMLEFT", mainPanel, "BOTTOMLEFT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
-	chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
-	chargesText:SetHeight(20)
+	if db.profile.mode == 2 then
+		chargesText:SetPoint("CENTER", mainPanel, "RIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+	else
+		chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+	end
+	chargesText:SetSize(300, 20)
 	chargesText:SetTextColor(db.profile.chargesNoneColor[1], db.profile.chargesNoneColor[2], db.profile.chargesNoneColor[3], db.profile.chargesNoneColor[4])
 	mainPanel.chargesText = chargesText
 
@@ -352,15 +374,18 @@ do
 
 		local function SetMedia()
 			cdText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.durationFontSize, flags)
-			cdText:SetText(" ")
+			cdText:SetText("")
+			cdText:SetText("0:00")
 			chargesText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.chargesNoneFontSize, flags)
-			chargesText:SetText(" ")
+			chargesText:SetText("")
+			chargesText:SetText(0)
 			mainPanel.border:SetBackdrop({
 				edgeFile = LibSharedMedia:Fetch("border", db.profile.borderName),
 				edgeSize = db.profile.borderSize,
 			})
 			mainPanel.border:SetBackdropBorderColor(db.profile.borderColor[1], db.profile.borderColor[2], db.profile.borderColor[3], db.profile.borderColor[4])
 		end
+		SetMedia()
 		BigWigsLoader.CTimerAfter(0, SetMedia) -- Delay to allow time for other addons to register media into LSM
 	end
 
@@ -398,7 +423,7 @@ do
 					cdText:SetTextColor(db.profile.durationColor[1], db.profile.durationColor[2], db.profile.durationColor[3], db.profile.durationColor[4])
 				else
 					cdText:SetFontHeight(db.profile.durationEmphasizeFontSize)
-					cdText:SetTextColor(db.profile.durationEmphasizeFontColor[1], db.profile.durationEmphasizeFontColor[2], db.profile.durationEmphasizeFontColor[3], db.profile.durationEmphasizeFontColor[4])
+					cdText:SetTextColor(db.profile.durationEmphasizeColor[1], db.profile.durationEmphasizeColor[2], db.profile.durationEmphasizeColor[3], db.profile.durationEmphasizeColor[4])
 				end
 			end
 			if minutes == 0 then
@@ -447,19 +472,15 @@ mainPanel:SetFrameLevel(8500)
 mainPanel:SetFixedFrameLevel(true)
 mainPanel:SetClampedToScreen(true)
 mainPanel:SetMovable(true)
-mainPanel:EnableMouse(true)
 mainPanel:RegisterForDrag("LeftButton")
+mainPanel:EnableMouse(true)
 mainPanel:SetScript("OnDragStart", function(self)
-	if not InCombatLockdown() then
-		if not db.profile.lock then
-			self:StartMoving()
-		end
-	else
-		BigWigsLoader.Print(L.cannotMoveInCombat)
+	if not db.profile.lock then
+		self:StartMoving()
 	end
 end)
 mainPanel:SetScript("OnDragStop", function(self)
-	if not InCombatLockdown() and not db.profile.lock then
+	if not db.profile.lock then
 		self:StopMovingOrSizing()
 		local point, _, relPoint, x, y = self:GetPoint()
 		x = math.floor(x+0.5)
@@ -473,13 +494,7 @@ mainPanel:SetScript("OnDragStop", function(self)
 end)
 mainPanel:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t".. L.battleResTitle)
-	local spellID = self:GetAttribute("spell")
-	if spellID then
-		GameTooltip:AddLine((L.clickToCastSpell):format(BigWigsLoader.GetSpellName(spellID)))
-	end
-	GameTooltip:AddLine(" ")
-	GameTooltip:AddLine(L.battleResHistory)
+	GameTooltip:SetText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t".. L.battleResHistory)
 	for i = 1, #resCollector do
 		local time, sourceName, targetName = resCollector[i][1], resCollector[i][2], resCollector[i][3]
 		local secondsSinceFightBegan = time - fightStartTime
@@ -487,6 +502,11 @@ mainPanel:SetScript("OnEnter", function(self)
 		local seconds = math.floor(secondsSinceFightBegan - (minutes*60))
 		local timeToShow = ("[%d:%02d]"):format(minutes, seconds)
 		GameTooltip:AddDoubleLine(timeToShow, targetName and (sourceName .." >> ".. targetName) or sourceName, 1, 1, 1, 1, 1, 1)
+	end
+	if isTesting and db.profile.mode == 2 then
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine(L.battleResModeTextTooltip, 1, 1, 1)
 	end
 	GameTooltip:Show()
 end)
@@ -509,9 +529,11 @@ do
 				isTesting = false
 				mainPanel:Show()
 				mainPanel.cdText:SetText("0:00")
-				mainPanel.chargesText:SetText("0")
+				mainPanel.chargesText:SetText(0)
 				mainPanel:RegisterEvent("ENCOUNTER_START")
 				mainPanel:RegisterEvent("ENCOUNTER_END")
+				mainPanel:RegisterEvent("PLAYER_REGEN_DISABLED")
+				mainPanel:RegisterEvent("PLAYER_REGEN_ENABLED")
 				if IsEncounterInProgress() then
 					previousCharges = -1
 					resCollector = {}
@@ -526,12 +548,14 @@ do
 				isTesting = false
 				mainPanel:Show()
 				mainPanel.cdText:SetText("0:00")
-				mainPanel.chargesText:SetText("0")
+				mainPanel.chargesText:SetText(0)
 				previousCharges = -1
 				resCollector = {}
 				fightStartTime = GetTime()
 				mainPanel.updater:Play()
 				mainPanel.border:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+				mainPanel:RegisterEvent("PLAYER_REGEN_DISABLED")
+				mainPanel:RegisterEvent("PLAYER_REGEN_ENABLED")
 			end
 		end
 	end
@@ -543,14 +567,14 @@ do
 			resCollector = {}
 			fightStartTime = GetTime()
 			self.cdText:SetText("0:00")
-			self.chargesText:SetText("0")
+			self.chargesText:SetText(0)
 			self.updater:Play()
 			self.border:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		elseif event == "ENCOUNTER_END" or event == "CHALLENGE_MODE_COMPLETED" then
 			self.updater:Stop()
 			self.cooldown:Clear()
 			self.cdText:SetText("0:00")
-			self.chargesText:SetText("0")
+			self.chargesText:SetText(0)
 			if db.profile.iconDesaturate == 3 then
 				self.icon:SetDesaturated(false)
 			end
@@ -563,12 +587,19 @@ do
 			fightStartTime = GetTime()+9
 			self:Show()
 			self.cdText:SetText("0:00")
-			self.chargesText:SetText("0")
+			self.chargesText:SetText(0)
 			self.updater:Play()
 			self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+			self:RegisterEvent("PLAYER_REGEN_DISABLED")
+			self:RegisterEvent("PLAYER_REGEN_ENABLED")
 			self.border:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		elseif event == "PLAYER_REGEN_DISABLED" then
+			self:EnableMouse(false)
+		elseif event == "PLAYER_REGEN_ENABLED" then
+			self:EnableMouse(true)
 		elseif event == "PLAYER_LEAVING_WORLD" then
 			isShowing = false
+			self:EnableMouse(true)
 			self:Hide()
 			self.updater:Stop()
 			self.cooldown:Clear()
@@ -579,12 +610,16 @@ do
 			self:UnregisterEvent("ENCOUNTER_END")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
 			self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 			self.border:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
 	end)
 end
-mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
-mainPanel:RegisterEvent("PLAYER_LEAVING_WORLD")
+if not db.profile.disabled then
+	mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
+	mainPanel:RegisterEvent("PLAYER_LEAVING_WORLD")
+end
 
 --------------------------------------------------------------------------------
 -- Res history
@@ -623,17 +658,16 @@ end
 --
 
 do
-	local combatCheckFrame = CreateFrame("Frame")
-	combatCheckFrame:Hide()
-
 	local function UpdateWidgets()
-		if InCombatLockdown() then
-			combatCheckFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-			return
+		if db.profile.mode == 2 then
+			mainPanel.icon:SetTexture(nil)
+			if isTesting then
+				mainPanel.icon:SetColorTexture(0, 0, 0, 0.6)
+			end
+		else
+			local texture = BigWigsLoader.GetSpellTexture(db.profile.iconTextureFromSpellID)
+			mainPanel.icon:SetTexture(texture)
 		end
-
-		local texture = BigWigsLoader.GetSpellTexture(db.profile.iconTextureFromSpellID)
-		mainPanel.icon:SetTexture(texture)
 		mainPanel.icon:SetVertexColor(db.profile.iconColor[1], db.profile.iconColor[2], db.profile.iconColor[3], db.profile.iconColor[4])
 		if db.profile.iconDesaturate == 2 then
 			mainPanel.icon:SetDesaturated(true)
@@ -660,21 +694,40 @@ do
 
 		mainPanel.cdText:SetJustifyH(db.profile.durationAlign)
 		mainPanel.cdText:ClearAllPoints()
-		mainPanel.cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
-		mainPanel.cdText:SetPoint("TOPRIGHT", mainPanel, "TOPRIGHT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
-		mainPanel.cdText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.durationFontSize, fontFlags)
-		mainPanel.cdText:SetTextColor(db.profile.durationColor[1], db.profile.durationColor[2], db.profile.durationColor[3], db.profile.durationColor[4])
+		if db.profile.mode == 2 then
+			mainPanel.cdText:SetPoint("CENTER", mainPanel, "LEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		else
+			mainPanel.cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		end
+		local currentCDText = mainPanel.cdText:GetText()
+		local currentCDTextNumber = tonumber(currentCDText)
+		if currentCDTextNumber and db.profile.durationEmphasizeTime > 0 and currentCDTextNumber <= db.profile.durationEmphasizeTime then
+			mainPanel.cdText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.durationEmphasizeFontSize, fontFlags)
+			mainPanel.cdText:SetTextColor(db.profile.durationEmphasizeColor[1], db.profile.durationEmphasizeColor[2], db.profile.durationEmphasizeColor[3], db.profile.durationEmphasizeColor[4])
+		else
+			mainPanel.cdText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.durationFontSize, fontFlags)
+			mainPanel.cdText:SetTextColor(db.profile.durationColor[1], db.profile.durationColor[2], db.profile.durationColor[3], db.profile.durationColor[4])
+		end
 		mainPanel.cdText:SetText("")
-		mainPanel.cdText:SetText("0:00")
+		mainPanel.cdText:SetText(currentCDText)
 
 		mainPanel.chargesText:SetJustifyH(db.profile.chargesAlign)
 		mainPanel.chargesText:ClearAllPoints()
-		mainPanel.chargesText:SetPoint("BOTTOMLEFT", mainPanel, "BOTTOMLEFT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
-		mainPanel.chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
-		mainPanel.chargesText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.chargesNoneFontSize, fontFlags)
-		mainPanel.chargesText:SetTextColor(db.profile.chargesNoneColor[1], db.profile.chargesNoneColor[2], db.profile.chargesNoneColor[3], db.profile.chargesNoneColor[4])
+		if db.profile.mode == 2 then
+			mainPanel.chargesText:SetPoint("CENTER", mainPanel, "RIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		else
+			mainPanel.chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		end
+		local currentChargesText = tonumber(mainPanel.chargesText:GetText()) or 0
+		if currentChargesText == 0 then
+			mainPanel.chargesText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.chargesNoneFontSize, fontFlags)
+			mainPanel.chargesText:SetTextColor(db.profile.chargesNoneColor[1], db.profile.chargesNoneColor[2], db.profile.chargesNoneColor[3], db.profile.chargesNoneColor[4])
+		else
+			mainPanel.chargesText:SetFont(LibSharedMedia:Fetch("font", db.profile.fontName), db.profile.chargesAvailableFontSize, fontFlags)
+			mainPanel.chargesText:SetTextColor(db.profile.chargesAvailableColor[1], db.profile.chargesAvailableColor[2], db.profile.chargesAvailableColor[3], db.profile.chargesAvailableColor[4])
+		end
 		mainPanel.chargesText:SetText("")
-		mainPanel.chargesText:SetText(0)
+		mainPanel.chargesText:SetText(currentChargesText)
 
 		mainPanel.cooldown:SetDrawEdge(db.profile.cooldownEdge)
 		mainPanel.cooldown:SetDrawSwipe(db.profile.cooldownSwipe)
@@ -689,11 +742,6 @@ do
 		mainPanel.border:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.borderOffset, -db.profile.borderOffset)
 		mainPanel.border:SetBackdropBorderColor(db.profile.borderColor[1], db.profile.borderColor[2], db.profile.borderColor[3], db.profile.borderColor[4])
 	end
-
-	combatCheckFrame:SetScript("OnEvent", function(self, event)
-		self:UnregisterEvent(event)
-		UpdateWidgets()
-	end)
 
 	local function soundGet(info)
 		for i, v in next, LibSharedMedia:List("sound") do
@@ -732,6 +780,9 @@ do
 	local function IsDisabled()
 		return db.profile.disabled
 	end
+	local function IsDisabledOrTextMode()
+		return db.profile.disabled or db.profile.mode == 2
+	end
 	BigWigsAPI.RegisterToolOptions("BattleRes", {
 		type = "group",
 		childGroups = "tab",
@@ -742,29 +793,21 @@ do
 			explainer1 = {
 				type = "description",
 				name = L.battleResDesc,
-				order = 0,
+				order = 1,
 				width = "full",
 				fontSize = "medium",
 			},
 			explainer2 = {
 				type = "description",
 				name = L.battleResDesc2,
-				order = 0.5,
-				width = "full",
-				fontSize = "medium",
-			},
-			explainer3 = {
-				type = "description",
-				name = L.battleResDesc3,
-				order = 0.7,
+				order = 2,
 				width = "full",
 				fontSize = "medium",
 			},
 			disabled = {
 				type = "toggle",
 				name = L.disabled,
-				order = 1,
-				width = "full",
+				order = 3,
 				set = function(_, value)
 					db.profile.disabled = value
 					isTesting = false
@@ -779,10 +822,41 @@ do
 					end
 				end,
 			},
+			modeIcon = {
+				type = "toggle",
+				name = L.battleResModeIcon,
+				order = 4,
+				get = function() return db.profile.mode == 1 end,
+				set = function(_, value)
+					if value then
+						db.profile.mode = 1
+						ProfileUtils.SetPreset("icon")
+						UpdateWidgets()
+					end
+				end,
+				disabled = IsDisabled,
+			},
+			modeText = {
+				type = "toggle",
+				name = L.battleResModeText,
+				order = 5,
+				get = function() return db.profile.mode == 2 end,
+				set = function(_, value)
+					if value then
+						db.profile.mode = 2
+						ProfileUtils.SetPreset("text")
+						if isTesting then
+							BigWigsLoader.Print(L.battleResModeTextTooltip)
+						end
+						UpdateWidgets()
+					end
+				end,
+				disabled = IsDisabled,
+			},
 			general = {
 				type = "group",
 				name = L.general,
-				order = 1.5,
+				order = 6,
 				args = {
 					test = {
 						type = "execute",
@@ -798,6 +872,7 @@ do
 								if not isTesting then
 									isTesting = true
 									mainPanel:Show()
+									UpdateWidgets()
 									local testTable = {[0] = "5", [1]="25", [2] = "55", [3] = "1:15", [4] = "2:00"}
 									local i = 4
 									local function TestLoop()
@@ -811,7 +886,7 @@ do
 													mainPanel.cdText:SetTextColor(db.profile.durationColor[1], db.profile.durationColor[2], db.profile.durationColor[3], db.profile.durationColor[4])
 												else
 													mainPanel.cdText:SetFontHeight(db.profile.durationEmphasizeFontSize)
-													mainPanel.cdText:SetTextColor(db.profile.durationEmphasizeFontColor[1], db.profile.durationEmphasizeFontColor[2], db.profile.durationEmphasizeFontColor[3], db.profile.durationEmphasizeFontColor[4])
+													mainPanel.cdText:SetTextColor(db.profile.durationEmphasizeColor[1], db.profile.durationEmphasizeColor[2], db.profile.durationEmphasizeColor[3], db.profile.durationEmphasizeColor[4])
 												end
 											end
 											mainPanel.cooldown:SetCooldown(GetTime(), 2)
@@ -834,10 +909,14 @@ do
 										end
 									end
 									TestLoop()
+									if db.profile.mode == 2 then
+										BigWigsLoader.Print(L.battleResModeTextTooltip)
+									end
 								else
 									isTesting = false
 									mainPanel:Hide()
 									mainPanel.cooldown:Clear()
+									UpdateWidgets()
 								end
 							end
 						end,
@@ -855,7 +934,7 @@ do
 					size = {
 						type = "range",
 						name = L.size,
-						order = 2.5,
+						order = 3,
 						min = 20,
 						max = 150,
 						step = 1,
@@ -865,7 +944,7 @@ do
 					fontName = {
 						type = "select",
 						name = L.font,
-						order = 3,
+						order = 4,
 						values = LibSharedMedia:List("font"),
 						itemControl = "DDI-Font",
 						get = function()
@@ -878,18 +957,19 @@ do
 							db.profile.fontName = list[value]
 							UpdateWidgets()
 						end,
-						width = 2,
+						width = 1.5,
 						disabled = IsDisabled,
 					},
 					outline = {
 						type = "select",
 						name = L.outline,
-						order = 4,
+						order = 5,
 						values = {
 							NONE = L.none,
 							OUTLINE = L.thin,
 							THICKOUTLINE = L.thick,
 						},
+						width = 1,
 						disabled = IsDisabled,
 					},
 					monochrome = {
@@ -897,45 +977,45 @@ do
 						name = L.monochrome,
 						desc = L.monochromeDesc,
 						order = 6,
-						width = "full",
+						width = 2,
 						disabled = IsDisabled,
 					},
 					borderColor = {
 						type = "color",
 						name = L.borderColor,
-						order = 8,
+						order = 7,
 						hasAlpha = true,
 						width = 1,
 						get = function()
 							return db.profile.borderColor[1], db.profile.borderColor[2], db.profile.borderColor[3], db.profile.borderColor[4]
 						end,
 						set = UpdateColorAndWidgets,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					borderSize = {
 						type = "range",
 						name = L.borderSize,
-						order = 9,
+						order = 8,
 						min = 1,
 						max = 32,
 						step = 1,
 						width = 1,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					borderOffset = {
 						type = "range",
 						name = L.borderOffset,
-						order = 10,
+						order = 9,
 						min = 0,
 						max = 32,
 						step = 1,
 						width = 1,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					borderName = {
 						type = "select",
 						name = L.borderName,
-						order = 11,
+						order = 10,
 						values = LibSharedMedia:List("border"),
 						get = function()
 							for i, v in next, LibSharedMedia:List("border") do
@@ -948,17 +1028,17 @@ do
 							UpdateWidgets()
 						end,
 						width = 1,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					soundHeader = {
 						type = "header",
 						name = L.battleResPlaySound,
-						order = 12,
+						order = 11,
 					},
 					newResAvailableSound = {
 						type = "select",
 						name = L.sound,
-						order = 13,
+						order = 12,
 						get = soundGet,
 						set = soundSet,
 						values = LibSharedMedia:List("sound"),
@@ -969,7 +1049,7 @@ do
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 16,
+						order = 13,
 					},
 					reset = {
 						type = "execute",
@@ -979,7 +1059,7 @@ do
 							ProfileUtils.ResetSettings()
 							UpdateWidgets()
 						end,
-						order = 17,
+						order = 14,
 						disabled = IsDisabled,
 					},
 					resetAll = {
@@ -990,7 +1070,7 @@ do
 							ProfileUtils.ResetSettings()
 							UpdateWidgets()
 						end,
-						order = 17,
+						order = 15,
 						disabled = IsDisabled,
 					},
 				},
@@ -998,7 +1078,7 @@ do
 			duration = {
 				type = "group",
 				name = L.battleResDurationText,
-				order = 2,
+				order = 7,
 				args = {
 					durationFontSize = {
 						type = "range",
@@ -1060,46 +1140,46 @@ do
 					durationEmphasizeHeader = {
 						type = "header",
 						name = L.emphasize,
-						order = 10,
+						order = 6,
 					},
 					durationEmphasizeHeading = {
 						type = "description",
 						name = L.cooldownEmphasizeHeader,
-						order = 11,
+						order = 7,
 						width = "full",
 						fontSize = "medium",
 					},
 					durationEmphasizeTime = {
 						type = "range",
 						name = L.emphasizeAt,
-						order = 12,
+						order = 8,
 						min = 0,
 						max = 30,
 						step = 1,
 						width = "full",
 						disabled = IsDisabled,
 					},
-					durationEmphasizeFontColor = {
+					durationEmphasizeColor = {
 						type = "color",
 						name = L.fontColor,
 						hasAlpha = true,
 						get = GetColor,
 						set = UpdateColorAndWidgets,
-						order = 13,
+						order = 9,
 						disabled = function() return db.profile.durationEmphasizeTime == 0 or db.profile.disabled end,
 					},
 					durationEmphasizeFontSize = {
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
-						order = 14,
+						order = 10,
 						softMax = 100, max = 200, min = 12, step = 1,
 						disabled = function() return db.profile.durationEmphasizeTime == 0 or db.profile.disabled end,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 16,
+						order = 11,
 					},
 					reset = {
 						type = "execute",
@@ -1109,7 +1189,7 @@ do
 							ProfileUtils.ResetDurationSettings()
 							UpdateWidgets()
 						end,
-						order = 17,
+						order = 12,
 						disabled = IsDisabled,
 					},
 				},
@@ -1117,13 +1197,13 @@ do
 			charges = {
 				type = "group",
 				name = L.battleResChargesText,
-				order = 3,
+				order = 8,
 				args = {
 					textXPositionCharges = {
 						type = "range",
 						name = L.positionX,
 						desc = L.positionDesc,
-						order = 3,
+						order = 1,
 						max = 100,
 						min = -100,
 						step = 1,
@@ -1134,7 +1214,7 @@ do
 						type = "range",
 						name = L.positionY,
 						desc = L.positionDesc,
-						order = 4,
+						order = 2,
 						max = 100,
 						min = -100,
 						step = 1,
@@ -1150,7 +1230,7 @@ do
 							L.RIGHT,
 						},
 						style = "radio",
-						order = 5,
+						order = 3,
 						get = function() return db.profile.chargesAlign == "LEFT" and 1 or db.profile.chargesAlign == "RIGHT" and 3 or 2 end,
 						set = function(_, value)
 							db.profile.chargesAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
@@ -1161,13 +1241,13 @@ do
 					chargesNoneHeader = {
 						type = "header",
 						name = L.battleResNoCharges,
-						order = 6,
+						order = 4,
 					},
 					chargesNoneFontSize = {
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
-						order = 7,
+						order = 5,
 						width = 2,
 						softMax = 100, max = 200, min = 12, step = 1,
 						disabled = IsDisabled,
@@ -1178,19 +1258,19 @@ do
 						get = GetColor,
 						set = UpdateColorAndWidgets,
 						hasAlpha = true,
-						order = 8,
+						order = 6,
 						disabled = IsDisabled,
 					},
 					chargesAvailableHeader = {
 						type = "header",
 						name = L.battleResHasCharges,
-						order = 9,
+						order = 7,
 					},
 					chargesAvailableFontSize = {
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
-						order = 10,
+						order = 8,
 						width = 2,
 						softMax = 100, max = 200, min = 12, step = 1,
 						disabled = IsDisabled,
@@ -1201,13 +1281,13 @@ do
 						get = GetColor,
 						set = UpdateColorAndWidgets,
 						hasAlpha = true,
-						order = 11,
+						order = 9,
 						disabled = IsDisabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 12,
+						order = 10,
 					},
 					reset = {
 						type = "execute",
@@ -1217,7 +1297,7 @@ do
 							ProfileUtils.ResetChargesSettings()
 							UpdateWidgets()
 						end,
-						order = 17,
+						order = 11,
 						disabled = IsDisabled,
 					},
 				},
@@ -1225,7 +1305,7 @@ do
 			icon = {
 				type = "group",
 				name = L.icon,
-				order = 4,
+				order = 9,
 				args = {
 					iconColor = {
 						type = "color",
@@ -1235,7 +1315,7 @@ do
 						set = UpdateColorAndWidgets,
 						hasAlpha = true,
 						order = 1,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					iconTextureFromSpellID = {
 						type = "input",
@@ -1260,7 +1340,7 @@ do
 								end
 							end
 						end,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					iconDesaturate = {
 						type = "select",
@@ -1273,7 +1353,7 @@ do
 						},
 						style = "radio",
 						order = 5,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					cooldownHeader = {
 						type = "header",
@@ -1285,21 +1365,21 @@ do
 						name = L.showCooldownSwipe,
 						desc = L.showCooldownSwipeDesc,
 						order = 7,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					cooldownEdge =	{
 						type = "toggle",
 						name = L.showCooldownEdge,
 						desc = L.showCooldownEdgeDesc,
 						order = 8,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 					cooldownInverse = {
 						type = "toggle",
 						name = L.inverse,
 						desc = L.inverseSwipeDesc,
 						order = 9,
-						disabled = function() return not db.profile.cooldownSwipe or db.profile.disabled end,
+						disabled = function() return not db.profile.cooldownSwipe or IsDisabledOrTextMode() end,
 					},
 					resetHeader = {
 						type = "header",
@@ -1315,14 +1395,14 @@ do
 							UpdateWidgets()
 						end,
 						order = 17,
-						disabled = IsDisabled,
+						disabled = IsDisabledOrTextMode,
 					},
 				},
 			},
 			exactPositioning = {
 				type = "group",
 				name = L.positionExact,
-				order = 5,
+				order = 10,
 				args = {
 					posx = {
 						type = "range",
