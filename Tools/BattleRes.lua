@@ -411,8 +411,10 @@ do
 			local fullDuration = chargesInfoTable.cooldownDuration
 			if startTime ~= prevStartTime then
 				prevStartTime = startTime
-				cooldown:Clear()
-				cooldown:SetCooldown(startTime, fullDuration)
+				if db.profile.mode == 1 then
+					cooldown:Clear()
+					cooldown:SetCooldown(startTime, fullDuration)
+				end
 			end
 			local remainingSeconds = fullDuration - (GetTime() - startTime)
 			local minutes = floor(remainingSeconds / 60)
@@ -871,7 +873,7 @@ do
 									isTesting = true
 									mainPanel:Show()
 									UpdateWidgets()
-									local testTable = {[0] = "5", [1]="25", [2] = "55", [3] = "1:15", [4] = "2:00"}
+									local testTable = {[0] = "6", [1]="24", [2] = "1:15", [3] = "2:30", [4] = "3:37"}
 									local i = 4
 									local function TestLoop()
 										if isTesting then
