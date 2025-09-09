@@ -343,9 +343,15 @@ do
 	local cdText = mainPanel.border:CreateFontString(nil, "OVERLAY")
 	cdText:SetJustifyH(db.profile.durationAlign)
 	if db.profile.mode == 2 then
-		cdText:SetPoint("CENTER", mainPanel, "LEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		cdText:SetPoint(db.profile.durationAlign, mainPanel, "LEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
 	else
-		cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		if db.profile.durationAlign == "LEFT" then
+			cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		elseif db.profile.durationAlign == "RIGHT" then
+			cdText:SetPoint("TOPRIGHT", mainPanel, "TOPRIGHT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		else
+			cdText:SetPoint("TOP", mainPanel, "TOP", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+		end
 	end
 	cdText:SetSize(300, 20)
 	cdText:SetTextColor(db.profile.durationColor[1], db.profile.durationColor[2], db.profile.durationColor[3], db.profile.durationColor[4])
@@ -354,9 +360,15 @@ do
 	local chargesText = mainPanel.border:CreateFontString(nil, "OVERLAY")
 	chargesText:SetJustifyH(db.profile.chargesAlign)
 	if db.profile.mode == 2 then
-		chargesText:SetPoint("CENTER", mainPanel, "RIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		chargesText:SetPoint(db.profile.chargesAlign, mainPanel, "RIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
 	else
-		chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		if db.profile.chargesAlign == "LEFT" then
+			chargesText:SetPoint("BOTTOMLEFT", mainPanel, "BOTTOMLEFT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		elseif db.profile.chargesAlign == "RIGHT" then
+			chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		else
+			chargesText:SetPoint("BOTTOM", mainPanel, "BOTTOM", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+		end
 	end
 	chargesText:SetSize(300, 20)
 	chargesText:SetTextColor(db.profile.chargesNoneColor[1], db.profile.chargesNoneColor[2], db.profile.chargesNoneColor[3], db.profile.chargesNoneColor[4])
@@ -697,9 +709,15 @@ do
 		mainPanel.cdText:SetJustifyH(db.profile.durationAlign)
 		mainPanel.cdText:ClearAllPoints()
 		if db.profile.mode == 2 then
-			mainPanel.cdText:SetPoint("CENTER", mainPanel, "LEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+			mainPanel.cdText:SetPoint(db.profile.durationAlign, mainPanel, "LEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
 		else
-			mainPanel.cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+			if db.profile.durationAlign == "LEFT" then
+				mainPanel.cdText:SetPoint("TOPLEFT", mainPanel, "TOPLEFT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+			elseif db.profile.durationAlign == "RIGHT" then
+				mainPanel.cdText:SetPoint("TOPRIGHT", mainPanel, "TOPRIGHT", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+			else
+				mainPanel.cdText:SetPoint("TOP", mainPanel, "TOP", db.profile.textXPositionDuration, db.profile.textYPositionDuration)
+			end
 		end
 		local currentCDText = mainPanel.cdText:GetText()
 		local currentCDTextNumber = tonumber(currentCDText)
@@ -716,9 +734,15 @@ do
 		mainPanel.chargesText:SetJustifyH(db.profile.chargesAlign)
 		mainPanel.chargesText:ClearAllPoints()
 		if db.profile.mode == 2 then
-			mainPanel.chargesText:SetPoint("CENTER", mainPanel, "RIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+			mainPanel.chargesText:SetPoint(db.profile.chargesAlign, mainPanel, "RIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
 		else
-			mainPanel.chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+			if db.profile.chargesAlign == "LEFT" then
+				mainPanel.chargesText:SetPoint("BOTTOMLEFT", mainPanel, "BOTTOMLEFT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+			elseif db.profile.chargesAlign == "RIGHT" then
+				mainPanel.chargesText:SetPoint("BOTTOMRIGHT", mainPanel, "BOTTOMRIGHT", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+			else
+				mainPanel.chargesText:SetPoint("BOTTOM", mainPanel, "BOTTOM", db.profile.textXPositionCharges, db.profile.textYPositionCharges)
+			end
 		end
 		local currentChargesText = tonumber(mainPanel.chargesText:GetText()) or 0
 		if currentChargesText == 0 then
@@ -1133,6 +1157,8 @@ do
 						get = function() return db.profile.durationAlign == "LEFT" and 1 or db.profile.durationAlign == "RIGHT" and 3 or 2 end,
 						set = function(_, value)
 							db.profile.durationAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+							db.profile.textXPositionDuration = 0
+							db.profile.textYPositionDuration = 0
 							UpdateWidgets()
 						end,
 						disabled = IsDisabled,
@@ -1234,6 +1260,8 @@ do
 						get = function() return db.profile.chargesAlign == "LEFT" and 1 or db.profile.chargesAlign == "RIGHT" and 3 or 2 end,
 						set = function(_, value)
 							db.profile.chargesAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+							db.profile.textXPositionCharges = 0
+							db.profile.textYPositionCharges = 0
 							UpdateWidgets()
 						end,
 						disabled = IsDisabled,
