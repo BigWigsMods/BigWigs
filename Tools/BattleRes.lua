@@ -783,6 +783,15 @@ do
 	BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", function()
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.ValidateMediaSettings()
+		isTesting = false
+		local func = mainPanel:GetScript("OnEvent")
+		func(mainPanel, "PLAYER_LEAVING_WORLD")
+		mainPanel:UnregisterAllEvents()
+		if not db.profile.disabled then -- Enable
+			mainPanel:RegisterEvent("PLAYER_ENTERING_WORLD")
+			mainPanel:RegisterEvent("PLAYER_LEAVING_WORLD")
+			func(mainPanel, "PLAYER_ENTERING_WORLD")
+		end
 		UpdateWidgets()
 	end)
 
