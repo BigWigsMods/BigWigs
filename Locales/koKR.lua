@@ -237,6 +237,9 @@ L.imported_nameplate_settings = "이름표 설정"
 L.imported_mythicplus_settings = "신화+ 설정"
 L.mythicplus_settings_import_desc = "모든 신화+ 설정 가져오기."
 L.mythicplus_settings_export_desc = "모든 신화+ 설정 내보내기."
+--L.imported_battleres_settings = "Battle Res Settings"
+--L.battleres_settings_import_desc = "Import all Battle Res settings."
+--L.battleres_settings_export_desc = "Export all Battle Res settings."
 
 -- Statistics
 L.statistics = "통계"

@@ -237,6 +237,9 @@ L.imported_nameplate_settings = "姓名板设置"
 L.imported_mythicplus_settings = "史诗钥石设置"
 L.mythicplus_settings_import_desc = "导入全部史诗钥石设置。"
 L.mythicplus_settings_export_desc = "导出全部史诗钥石设置。"
+--L.imported_battleres_settings = "Battle Res Settings"
+--L.battleres_settings_import_desc = "Import all Battle Res settings."
+--L.battleres_settings_export_desc = "Export all Battle Res settings."
 
 -- Statistics
 L.statistics = "统计"

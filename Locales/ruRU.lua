@@ -237,6 +237,9 @@ L.imported_nameplate_settings = "Настройки полос здоровья"
 --L.imported_mythicplus_settings = "Mythic+ Settings"
 --L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
 --L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
+--L.imported_battleres_settings = "Battle Res Settings"
+--L.battleres_settings_import_desc = "Import all Battle Res settings."
+--L.battleres_settings_export_desc = "Export all Battle Res settings."
 
 -- Statistics
 L.statistics = "Статистика"

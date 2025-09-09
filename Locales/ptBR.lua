@@ -237,6 +237,9 @@ L.imported_nameplate_settings = "Configurações de Placas Identificadoras"
 L.imported_mythicplus_settings = "Configurações de Mítica+"
 L.mythicplus_settings_import_desc = "Importar todas as configurações de Míticas+."
 L.mythicplus_settings_export_desc = "Exportar todas as configurações de Míticas+."
+--L.imported_battleres_settings = "Battle Res Settings"
+--L.battleres_settings_import_desc = "Import all Battle Res settings."
+--L.battleres_settings_export_desc = "Export all Battle Res settings."
 
 -- Statistics
 L.statistics = "Estatísticas"

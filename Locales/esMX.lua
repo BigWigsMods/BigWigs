@@ -237,6 +237,9 @@ L.imported_nameplate_settings = "Opciones de las barras de nombre"
 L.imported_mythicplus_settings = "Configuraciones de Mítico+"
 L.mythicplus_settings_import_desc = "Importar todas las configuraciones de Mítica+"
 L.mythicplus_settings_export_desc = "Exportar todas las configuraciones de Mítica+"
+--L.imported_battleres_settings = "Battle Res Settings"
+--L.battleres_settings_import_desc = "Import all Battle Res settings."
+--L.battleres_settings_export_desc = "Export all Battle Res settings."
 
 -- Statistics
 L.statistics = "Estadísticas"

@@ -248,6 +248,44 @@ local mythicPlusSettingsToExport = {
 	"instanceKeysHideTitle",
 }
 
+-- BattleRes
+local battleResSettingsToExport = {
+	"disabled",
+	"mode",
+	"lock",
+	"size",
+	"position",
+	"textXPositionDuration",
+	"textYPositionDuration",
+	"textXPositionCharges",
+	"textYPositionCharges",
+	"fontName",
+	"durationFontSize",
+	"durationEmphasizeFontSize",
+	"chargesNoneFontSize",
+	"chargesAvailableFontSize",
+	"durationAlign",
+	"chargesAlign",
+	"monochrome",
+	"outline",
+	"borderName",
+	"borderColor",
+	"borderOffset",
+	"borderSize",
+	"durationColor",
+	"durationEmphasizeColor",
+	"chargesNoneColor",
+	"chargesAvailableColor",
+	"newResAvailableSound",
+	"durationEmphasizeTime",
+	"iconColor",
+	"iconTextureFromSpellID",
+	"iconDesaturate",
+	"cooldownEdge",
+	"cooldownSwipe",
+	"cooldownInverse",
+}
+
 -- Default Options
 local sharingExportOptionsSettings = {
 	exportBarPositions = true,
@@ -261,6 +299,7 @@ local sharingExportOptionsSettings = {
 	exportCountdownColors = true,
 	exportNameplateSettings = true,
 	exportMythicPlusSettings = true,
+	exportBattleResSettings = true,
 }
 
 local sharingImportOptionsSettings = {}
@@ -347,6 +386,13 @@ local function GetExportString()
 		end
 	end
 
+	if sharingExportOptionsSettings.exportBattleResSettings then
+		local db = BigWigsLoader.db:GetNamespace("BattleRes", true)
+		if db then
+			exportOptions["battleResSettings"] = exportProfileSettings(battleResSettingsToExport, db.profile)
+		end
+	end
+
 	local serialized = LibSerialize:Serialize(exportOptions)
 	local compressed = LibDeflate:CompressDeflate(serialized)
 	local compressedForPrint = LibDeflate:EncodeForPrint(compressed)
@@ -381,7 +427,7 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "other" then
-		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") then
+		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") then
 			return true
 		end
 	end
@@ -482,6 +528,12 @@ do
 				importSettings("importMythicPlusSettings", "mythicPlusSettings", mythicPlusSettingsToExport, {db = db}, L.imported_mythicplus_settings)
 			end
 		end
+		do
+			local db = BigWigsLoader.db:GetNamespace("BattleRes", true)
+			if db then
+				importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, {db = db}, L.imported_battleres_settings)
+			end
+		end
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -540,6 +592,9 @@ do
 		end
 		if IsOptionInString("mythicPlusSettings") then
 			sharingImportOptionsSettings.importMythicPlusSettings = true
+		end
+		if IsOptionInString("battleResSettings") then
+			sharingImportOptionsSettings.importBattleResSettings = true
 		end
 		sharingModule:SaveData()
 	end
@@ -708,6 +763,14 @@ local sharingOptions = {
 						width = 1,
 						disabled = function() return not IsOptionInString("mythicPlusSettings") or not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 					},
+					importBattleResSettings = {
+						type = "toggle",
+						name = L.battleResTitle,
+						desc = L.battleres_settings_import_desc,
+						order = 3,
+						width = 1,
+						disabled = function() return not IsOptionInString("battleResSettings") or not BigWigsLoader.db:GetNamespace("BattleRes", true) end,
+					},
 				},
 			},
 			acceptImportButton = {
@@ -859,6 +922,15 @@ local sharingOptions = {
 						width = 1,
 						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 						disabled = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
+					},
+					exportBattleResSettings = {
+						type = "toggle",
+						name = L.battleResTitle,
+						desc = L.battleres_settings_export_desc,
+						order = 3,
+						width = 1,
+						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("BattleRes", true) end,
+						disabled = function() return not BigWigsLoader.db:GetNamespace("BattleRes", true) end,
 					},
 				},
 			},
