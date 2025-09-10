@@ -237,9 +237,9 @@ L.imported_nameplate_settings = "이름표 설정"
 L.imported_mythicplus_settings = "신화+ 설정"
 L.mythicplus_settings_import_desc = "모든 신화+ 설정 가져오기."
 L.mythicplus_settings_export_desc = "모든 신화+ 설정 내보내기."
---L.imported_battleres_settings = "Battle Res Settings"
---L.battleres_settings_import_desc = "Import all Battle Res settings."
---L.battleres_settings_export_desc = "Export all Battle Res settings."
+L.imported_battleres_settings = "전투 부활 설정"
+L.battleres_settings_import_desc = "모든 전투 부활 설정을 가져옵니다."
+L.battleres_settings_export_desc = "모든 전투 부활 설정을 내보냅니다."
 
 -- Statistics
 L.statistics = "통계"
@@ -293,19 +293,19 @@ L.autoRoleExplainer = "그룹에 가입하거나 그룹에 있는 동안 특성 
 
 L.battleResTitle = "전투 부활"
 L.battleResDesc = "사용 가능한 전투 부활 충전 횟수와 다음 충전 획득까지 남은 시간을 표시하는 아이콘."
---L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
+L.battleResDesc2 = "\n아이콘 마우스 오버 시 |cFF33FF99전투 부활 기록|r을 툴팁으로 확인할 수 있습니다.\n\n"
 L.battleResHistory = "전투 부활 기록:"
 L.battleResResetAll = "모든 전투 부활 설정을 기본값으로 초기화합니다."
 L.battleResDurationText = "지속 시간 텍스트"
 L.battleResChargesText = "충전량 텍스트"
 L.battleResNoCharges = "충전량 0개"
 L.battleResHasCharges = "충전량 1개 이상"
---L.battleResPlaySound = "Play a sound when a new charge is gained"
+L.battleResPlaySound = "새로운 충전량이 획득될 때 소리를 재생합니다."
 L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t 아이콘 텍스처(주문 ID)"
 L.iconTextureSpellIDError = "아이콘 텍스처로 사용할 유효한 주문 ID를 입력해야 합니다."
---L.battleResModeIcon = "Mode: Icon"
---L.battleResModeText = "Mode: Text Only"
---L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
+L.battleResModeIcon = "모드: 아이콘"
+L.battleResModeText = "모드: 텍스트만"
+L.battleResModeTextTooltip = "전투 부활 기능을 이동하고 마우스 오버 영역을 확인하는 데 도움이 되도록 임시 배경을 표시합니다."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -415,8 +415,8 @@ L.instanceKeysShowAllDesc = "이 옵션을 활성화하면 현재 있는 던전�
 L.instanceKeysOtherDungeonColor = "다른 던전 색상"
 L.instanceKeysOtherDungeonColorDesc = "현재 있는 던전과 관련이 없는 쐐기돌을 가진 플레이어의 글꼴 색상을 선택합니다."
 L.instanceKeysEndOfRunDesc = "기본적으로 목록은 신화 던전에 들어갈 때만 표시됩니다. 이 옵션을 활성화하면 신화+가 끝난 후에도 목록이 표시됩니다."
---L.instanceKeysHideTitle = "Hide title"
---L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
+L.instanceKeysHideTitle = "제목 숨기기"
+L.instanceKeysHideTitleDesc = "\"누가 쐐기돌을 가지고 있나요?\" 제목을 숨깁니다."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
