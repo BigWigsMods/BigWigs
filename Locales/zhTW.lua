@@ -825,7 +825,7 @@ L.startAnimation = "起始動畫"
 L.startAnimation_glow_desc = "你選擇的發光效果有起始動畫效果，通常是一個閃爍。這個選項可以選擇是否啟用起始動畫。"
 
 L.nameplateOptInHeaderOff = "\n\n\n\n名條「手動啟用」模式：啟用此選項，會使所有首領模組的名條圖示預設為「停用」。\n\n你必須逐一進入各個模組，手動開啟你想要顯示圖示的名條。\n\n"
-L.messagesOptInHeaderOn = "首領模組的名條圖示目前處於|cFF33FF99「手動啟用」模式|r。若要顯示特定目標的名條圖示，請進入該模組的設定，並開啟「|cFF33FF99名條|r」選項。\n\n"
+L.messagesOptInHeaderOn = "\n\n\n\n首領模組的名條圖示目前處於|cFF33FF99「手動啟用」模式|r。若要顯示特定目標的名條圖示，請進入該模組的設定，並開啟「|cFF33FF99名條|r」選項。\n\n"
 L.nameplateOptInTitle = "名條「手動啟用」模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模式會關閉所有首領模組的名條圖示。你必須分別進入每個模組，啟用你需要顯示圖示的名條。\n\n即將重載介面，確定要啟用嗎？"
 
