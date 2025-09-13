@@ -315,7 +315,7 @@ do
 				local nextMetaIcon = metaCount == 4 and 1231501 or metaCount == 3 and 1227117 or 1233863 -- All Meta, Fel Rush, Fel Devastation
 				local cd = shortStage and 22.5 or 101.7
 				if self:Heroic() then
-					cd =  metaCount == 3 and 62.5 or metaCount == 3 and 99.4 or 96.6
+					cd = metaCount == 4 and 62.5 or metaCount == 3 and 99.4 or 96.6
 				end
 				self:Bar("stages", cd, CL.count:format(CL.intermission, metaCount), nextMetaIcon) -- Intermission
 
