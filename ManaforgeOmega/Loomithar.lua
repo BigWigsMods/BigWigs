@@ -166,10 +166,10 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	-- |TInterface\\ICONS\\Spell_Mage_Overpowered.blp|t |cFFFF0000|Hspell:1246921|h[Infusion Pylons]|h|r begin to turn on!#Loom'ithar#0#false",
 	if msg:find("spell:1246921", nil, true) then
 		self:Message(1246921, "yellow", CL.incoming:format(CL.count:format(L.infusion_pylons, infusionPylonCount)))
-		self:PlaySound(1246921, "long")
 		infusionPylonCount = infusionPylonCount + 1
 		-- timer offset to first debuff
 		self:ScheduleTimer("Bar", 8, 1246921, infusionPylonCount % 2 == 0 and 35.0 or 55.0, CL.count:format(L.infusion_pylons, infusionPylonCount))
+		self:PlaySound(1246921, "long")
 	end
 end
 
@@ -179,10 +179,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(1227226, {3.0, 16.0}, CL.count:format(CL.soak, writhingWaveCount)) -- Writhing Wave
 		self:Bar(1227782, {10.0, 23.0}, CL.count:format(CL.pushback, arcaneOutrageCount)) -- Arcane Outrage
 	elseif spellId == 1228059 then -- Unbound Rage, Stage 2 Starting
-		self:Message("stages", "green", CL.stage:format(2), false)
-		self:PlaySound("stages", "long")
-		self:SetStage(2)
-
 		self:StopBar(CL.count:format(L.lair_weaving, lairWeavingCount)) -- Lair Weaving
 		self:StopBar(CL.count:format(CL.full_energy, overinfusionBurstCount)) -- Overinfusion Burst
 		self:StopBar(CL.count:format(CL.pull_in, infusionTetherCount)) -- Infusion Tether
@@ -210,7 +206,6 @@ end
 function mod:LairWeaving(args)
 	self:StopBar(CL.count:format(L.lair_weaving, lairWeavingCount))
 	self:Message(args.spellId, "orange", CL.count:format(L.lair_weaving, lairWeavingCount))
-	self:PlaySound(args.spellId, "alert") -- ring coming, kill for gap?
 	lairWeavingCount = lairWeavingCount + 1
 	local cd = 85
 	if self:Heroic() then
@@ -219,6 +214,7 @@ function mod:LairWeaving(args)
 		cd = lairWeavingCount % 2 == 1 and (lairWeavingCount % 4 == 3 and 36.5 or 34.5) or 7.0
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.lair_weaving, lairWeavingCount))
+	self:PlaySound(args.spellId, "alert") -- ring coming, kill for gap?
 end
 
 function mod:ShieldRemoved(args)
@@ -261,8 +257,8 @@ do
 	function mod:LivingSilkDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -277,7 +273,6 @@ end
 function mod:PiercingStrand()
 	self:StopBar(CL.count:format(CL.tank_frontal, piercingStrandCount))
 	self:Message(1237212, "purple", CL.count:format(CL.tank_frontal, piercingStrandCount))
-	self:PlaySound(1237212, "alert") -- tank hit inc
 	piercingStrandCount = piercingStrandCount + 1
 	-- every 2nd is fast, others alternate in speed
 	local cd
@@ -287,6 +282,7 @@ function mod:PiercingStrand()
 		cd = piercingStrandCount % 2 == 0 and (self:Mythic() and 4 or 7) or piercingStrandCount % 4 == 3 and 39.5 or (self:Mythic() and 36.5 or 33.5)
 	end
 	self:Bar(1237212, cd, CL.count:format(CL.tank_frontal, piercingStrandCount))
+	self:PlaySound(1237212, "alert") -- tank hit inc
 end
 
 function mod:PiercingStrandApplied(args)
@@ -305,8 +301,8 @@ do
 	function mod:ArcaneIchorDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -314,17 +310,17 @@ end
 function mod:ArcaneOutrage(args)
 	self:StopBar(CL.count:format(CL.pushback, arcaneOutrageCount))
 	self:Message(args.spellId, "yellow", CL.count:format(CL.pushback, arcaneOutrageCount))
-	self:PlaySound(args.spellId, "alert") -- watch pools spawning?
 	arcaneOutrageCount = arcaneOutrageCount + 1
 	self:Bar(args.spellId, 20, CL.count:format(CL.pushback, arcaneOutrageCount))
+	self:PlaySound(args.spellId, "alert") -- watch pools spawning?
 end
 
 function mod:WrithingWave(args)
 	self:StopBar(CL.count:format(CL.soak, writhingWaveCount))
 	self:Message(args.spellId, "purple", CL.count:format(CL.soak, writhingWaveCount))
-	self:PlaySound(args.spellId, "warning") -- soak or avoid
 	writhingWaveCount = writhingWaveCount + 1
 	self:Bar(args.spellId, 20, CL.count:format(CL.soak, writhingWaveCount))
+	self:PlaySound(args.spellId, "warning") -- soak or avoid
 end
 
 -- Mythic

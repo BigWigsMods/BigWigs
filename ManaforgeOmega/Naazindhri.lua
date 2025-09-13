@@ -117,9 +117,9 @@ end
 function mod:SoulCalling(args)
 	self:StopBar(CL.count:format(CL.adds, soulCallingCount))
 	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, soulCallingCount))
-	self:PlaySound(args.spellId, "long") -- Unbound Souls/Binding Machines inc
 	soulCallingCount = soulCallingCount + 1
 	self:Bar(args.spellId, 150.0, CL.count:format(CL.adds, soulCallingCount))
+	self:PlaySound(args.spellId, "long") -- Unbound Souls/Binding Machines inc
 end
 
 do
@@ -138,11 +138,11 @@ end
 function mod:VoidbladeAmbushTargetApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1227048, nil, L.voidblade_ambush)
-		self:PlaySound(1227048, "warning", nil, args.destName) -- position yourself
 		if not self:Easy() then
 			self:Say(1227048, L.voidblade_ambush, nil, "Ambush")
 			self:SayCountdown(1227048, 4) -- XXX 3 is tooltip on wowhead, changed?
 		end
+		self:PlaySound(1227048, "warning", nil, args.destName) -- position yourself
 	end
 end
 
@@ -185,19 +185,19 @@ do
 		local count = #playerList + 1
 		playerList[count] = args.destName
 		local icon = self:GetOption(soulfrayAnnihilationMarker) and soulfrayAnnihilationMarkerMapTable[count] or nil
+		if icon then
+			self:CustomIcon(soulfrayAnnihilationMarker, args.destName, icon)
+		end
 		if self:Me(args.destGUID) then
 			local englishText = "Line"
 			local sayText = icon and CL.rticon:format(L.soulfray_annihilation_single, icon) or L.soulfray_annihilation_single
 			local englishSayText = icon and CL.rticon:format(englishText, icon) or englishText
 			self:PersonalMessage(args.spellId, nil, L.soulfray_annihilation)
-			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
 			if not self:LFR() then
 				self:Say(args.spellId, sayText, nil, englishSayText)
 				self:SayCountdown(args.spellId, 6, icon)
 			end
-		end
-		if icon then
-			self:CustomIcon(soulfrayAnnihilationMarker, args.destName, icon)
+			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
 		end
 	end
 
@@ -212,13 +212,13 @@ end
 function mod:MysticLash(args)
 	self:StopBar(CL.count:format(args.spellName, mysticLashCount))
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, mysticLashCount))
-	self:PlaySound(args.spellId, "alert") -- Current tank warning?
 	mysticLashCount = mysticLashCount + 1
 	local cd = mysticLashCount % 4 == 1 and 32.0 or mysticLashCount % 4 == 0 and 38.0 or 40.0
 	if self:Mythic() then
 		cd = mysticLashCount % 4 == 1 and 31.0 or mysticLashCount % 4 == 2 and 41.0 or mysticLashCount % 4 == 3 and 38.0 or 40.0
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, mysticLashCount))
+	self:PlaySound(args.spellId, "alert") -- Current tank warning?
 end
 
 function mod:MysticLashApplied(args)
@@ -236,7 +236,6 @@ end
 function mod:ArcaneExpulsion()
 	self:StopBar(CL.count:format(CL.knockback, arcaneExpulsionCount))
 	self:Message(1223859, "orange", CL.count:format(CL.knockback, arcaneExpulsionCount))
-	self:PlaySound(1223859, "warning")
 	self:CastBar(1223859, 4, CL.count:format(CL.knockback, arcaneExpulsionCount))
 	arcaneExpulsionCount = arcaneExpulsionCount + 1
 	local cd = arcaneExpulsionCount % 3 == 1 and 46.0 or arcaneExpulsionCount % 3 == 0 and 64.0 or 40.0
@@ -244,6 +243,7 @@ function mod:ArcaneExpulsion()
 		cd = arcaneExpulsionCount % 3 == 1 and 45.0 or arcaneExpulsionCount % 3 == 0 and 67.0 or 38.0
 	end
 	self:Bar(1223859, cd, CL.count:format(CL.knockback, arcaneExpulsionCount))
+	self:PlaySound(1223859, "warning")
 end
 
 function mod:SoulfireConvergence(args)
@@ -263,9 +263,9 @@ end
 function mod:SoulfireConvergenceApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1225616, nil, CL.orbs)
-		self:PlaySound(1225616, "warning", nil, args.destName) -- move
 		self:Say(1225616, CL.orbs, nil, "Orbs")
 		self:SayCountdown(1225616, 5, nil, 3)
+		self:PlaySound(1225616, "warning", nil, args.destName) -- move
 	end
 end
 
@@ -281,8 +281,8 @@ do
 	function mod:ArcaneEnergyDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end

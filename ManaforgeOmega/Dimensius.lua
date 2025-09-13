@@ -395,10 +395,11 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 				else
 					icon = livingMassRightMarkerTable[markIndex]
 				end
-				if not icon then return end
-				self:CustomIcon(false, unit, icon)
-				mobCollector[guid] = true
-				livingMassMarked = livingMassMarked + 1
+				if icon then
+					self:CustomIcon(false, unit, icon)
+					mobCollector[guid] = true
+					livingMassMarked = livingMassMarked + 1
+				end
 			end
 		end
 	end
@@ -408,12 +409,13 @@ end
 function mod:MassiveSmash(args)
 	self:StopBar(CL.count:format(CL.knockback, massiveSmashCount))
 	self:Message(args.spellId, "purple", CL.count:format(CL.knockback, massiveSmashCount))
-	self:PlaySound(args.spellId, "long") -- big tank hit + adds + knockback
 	massiveSmashCount = massiveSmashCount + 1
 	livingMassMarked = 0
-	if massiveSmashCount > 4 then return end
-	local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
-	self:Bar(args.spellId, cd, CL.count:format(CL.knockback, massiveSmashCount))
+	if massiveSmashCount > 4 then
+		local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
+		self:Bar(args.spellId, cd, CL.count:format(CL.knockback, massiveSmashCount))
+	end
+	self:PlaySound(args.spellId, "long") -- big tank hit + adds + knockback
 end
 
 function mod:ExcessMassApplied(args)
@@ -426,8 +428,8 @@ end
 function mod:CollectiveGravityApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, "underyou")
-		self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		collectiveGravityOnMe = true
+		self:PlaySound(args.spellId, "underyou", nil, args.destName)
 	end
 end
 
@@ -447,30 +449,32 @@ function mod:MortalFragilityApplied(args)
 end
 
 do
-	local collectiveGravityCheck, collectiveGravitySpellName = nil, mod:SpellName(1228207) -- Collective Gravity
+	local collectiveGravityCheck = nil
 
 	local function checkForCollectiveGravity()
 		if collectiveGravityCheck then
 			mod:CancelTimer(collectiveGravityCheck)
 			collectiveGravityCheck = nil
 		end
-		if mod:GetStage() ~= 1 or collectiveGravityOnMe or mod:UnitIsDeadOrGhost("player") then return end -- safe! or death. or staged.
 
-		mod:Message(1228207, "blue", CL.no:format(collectiveGravitySpellName))
-		mod:PlaySound(1228207, "warning") -- no collective gravity
-		collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 1)
+		if mod:GetStage() == 1 and not collectiveGravityOnMe and not mod:UnitIsDeadOrGhost("player") then -- safe! or death. or staged.
+			collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 1)
+			mod:Message(1228207, "blue", CL.no:format(mod:SpellName(1228207))) -- Collective Gravity
+			mod:PlaySound(1228207, "warning") -- no collective gravity
+		end
 	end
 
 	function mod:DevourP1(args)
 		self:StopBar(CL.count:format(args.spellName, devourCount))
 		self:Message(args.spellId, "red", CL.count:format(args.spellName, devourCount))
-		self:PlaySound(args.spellId, "warning") -- get safe
 		self:CastBar(args.spellId, 7, CL.count:format(args.spellName, devourCount))
 		devourCount = devourCount + 1
 		collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 2.5) -- check last 4~ seconds
-		if self:Mythic() and devourCount > 3 then return end
-		local cd = self:Mythic() and 84.2 or self:Easy() and 100.0 or 94.0
-		self:Bar(args.spellId, cd, CL.count:format(args.spellName, devourCount))
+		if self:Mythic() and devourCount > 3 then
+			local cd = self:Mythic() and 84.2 or self:Easy() and 100.0 or 94.0
+			self:Bar(args.spellId, cd, CL.count:format(args.spellName, devourCount))
+		end
+		self:PlaySound(args.spellId, "warning") -- get safe
 	end
 
 	function mod:DevourP1Success()
@@ -484,17 +488,18 @@ end
 function mod:DarkMatter(args)
 	self:StopBar(CL.count:format(CL.spread, darkMatterCount))
 	self:Message(args.spellId, "orange", CL.count:format(CL.spread, darkMatterCount))
-	self:PlaySound(args.spellId, "alert") -- spread
 	darkMatterCount = darkMatterCount + 1
-	if darkMatterCount > 4 then return end
-	local cd = darkMatterCount % 2 == 1 and 53.7 or 46.2
-	local spellText = CL.spread
-	if self:Heroic() then
-		cd = darkMatterCount % 2 == 1 and 50.5 or 43.5
-	elseif self:Mythic() then
-		cd = darkMatterCount % 2 == 1 and 45.2 or 39.0
+	if darkMatterCount > 4 then
+		local cd = darkMatterCount % 2 == 1 and 53.7 or 46.2
+		local spellText = CL.spread
+		if self:Heroic() then
+			cd = darkMatterCount % 2 == 1 and 50.5 or 43.5
+		elseif self:Mythic() then
+			cd = darkMatterCount % 2 == 1 and 45.2 or 39.0
+		end
+		self:Bar(args.spellId, cd, CL.count:format(CL.spread, darkMatterCount))
 	end
-	self:Bar(args.spellId, cd, CL.count:format(CL.spread, darkMatterCount))
+	self:PlaySound(args.spellId, "alert") -- spread
 end
 
 do
@@ -502,8 +507,8 @@ do
 	function mod:DarkEnergyDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -511,11 +516,12 @@ end
 function mod:ShatteredSpace()
 	self:StopBar(CL.count:format(CL.soaks, shatteredSpaceCount))
 	self:Message(1243690, "yellow", CL.count:format(CL.soaks, shatteredSpaceCount))
-	self:PlaySound(1243690, "alert") -- move away from hands
 	shatteredSpaceCount = shatteredSpaceCount + 1
-	if shatteredSpaceCount > 4 then return end
-	local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
-	self:Bar(1243690, cd, CL.count:format(CL.soaks, shatteredSpaceCount))
+	if shatteredSpaceCount > 4 then
+		local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
+		self:Bar(1243690, cd, CL.count:format(CL.soaks, shatteredSpaceCount))
+	end
+	self:PlaySound(1243690, "alert") -- move away from hands
 end
 
 do
@@ -546,20 +552,21 @@ do
 			-- Not using targetsmessage because it read as it if's cast multiple times in succession fast for now
 			-- sound for targetted players only
 			gravityCount = gravityCount + 1
-			if gravityCount > 4 then return end
-			local cd = gravityCount % 2 == 1 and 55 or 45
-			if self:Heroic() then
-				cd = gravityCount % 2 == 1 and 51.7 or 42.3
-			elseif self:Mythic() then
-				cd = 42.1
+			if gravityCount > 4 then
+				local cd = gravityCount % 2 == 1 and 55 or 45
+				if self:Heroic() then
+					cd = gravityCount % 2 == 1 and 51.7 or 42.3
+				elseif self:Mythic() then
+					cd = 42.1
+				end
+				self:Bar(args.spellId, cd, CL.count:format(L.gravity, gravityCount))
 			end
-			self:Bar(args.spellId, cd, CL.count:format(L.gravity, gravityCount))
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.gravity)
-			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
 			self:Say(args.spellId, L.gravity, nil, "Gravity")
 			self:SayCountdown(args.spellId, self:Mythic() and 5.0 or 6.0)
+			self:PlaySound(args.spellId, "warning", nil, args.destName) -- move
 		end
 	end
 
@@ -592,12 +599,13 @@ function mod:EventHorizon(args)
 	self:StopBar(CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
 
 	self:SetStage(1.5)
-	self:Message("stages", "yellow", CL.intermission, args.spellId)
-	self:PlaySound("stages", "long") -- staging
-
 	voidlordKilled = 0
+
 	self:Bar(1235114, 13.8, L.soaring_reshii) -- Soaring Reshii
 	self:Bar(1237097, 22.7, CL.beam) -- Astrophysical Beam
+
+	self:Message("stages", "yellow", CL.intermission, args.spellId)
+	self:PlaySound("stages", "long") -- staging
 end
 
 -- Intermission: Event Horizon
@@ -614,8 +622,8 @@ do
 	function mod:AstrophysicalJetDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -666,14 +674,13 @@ end
 
 function mod:EclipseStart()
 	self:Message(1237690, "red", CL.full_energy)
-	self:PlaySound(1237690, "alarm")
 	self:Bar(1237690, { 3, self:Mythic() and 65 or 85 }, CL.full_energy)
+	self:PlaySound(1237690, "alarm")
 end
 
 function mod:Extinction(args)
 	self:StopBar(CL.count:format(L.extinction, extinctionCount))
 	self:Message(args.spellId, "orange", CL.count:format(L.extinction, extinctionCount))
-	self:PlaySound(args.spellId, "warning") -- dodge fragment
 	extinctionCount = extinctionCount + 1
 	if extinctionCount < (self:Mythic() and 3 or 4) then
 		self:Bar(args.spellId, self:Mythic() and 31.6 or 35.3, CL.count:format(L.extinction, extinctionCount))
@@ -681,12 +688,12 @@ function mod:Extinction(args)
 
 	lastIntermissionCast = "extinction"
 	lastIntermissionCastTime = GetTime()
+	self:PlaySound(args.spellId, "warning") -- dodge fragment
 end
 
 function mod:GammaBurst()
 	self:StopBar(CL.count:format(CL.pushback, gammaBurstCount))
 	self:Message(1237325, "red", CL.count:format(CL.pushback, gammaBurstCount))
-	self:PlaySound(1237325, "long") -- pushback inc
 	self:CastBar(1237325, 4, CL.count:format(CL.pushback, gammaBurstCount))
 	gammaBurstCount = gammaBurstCount + 1
 	if gammaBurstCount < 3 then
@@ -695,6 +702,7 @@ function mod:GammaBurst()
 
 	lastIntermissionCast = "gamma"
 	lastIntermissionCastTime = GetTime()
+	self:PlaySound(1237325, "long") -- pushback inc
 end
 
 -- The Devoured Lords
@@ -703,21 +711,21 @@ function mod:MassEjection(args)
 	local spellName = self:Mythic() and L.mass_destruction or CL.tank_frontal
 	self:StopBar(CL.count:format(spellName, massEjectionCount))
 	self:Message(args.spellId, "yellow", CL.casting:format(spellName))
-	if not self:Mythic() then
-		self:PlaySound(args.spellId, "alert") -- dodge frontal
-	end
 	massEjectionCount = massEjectionCount + 1
 	if massEjectionCount < (self:Mythic() and 5 or 6) then
 		self:Bar(args.spellId, self:Mythic() and 15.8 or 17.5, CL.count:format(spellName, massEjectionCount))
+	end
+	if not self:Mythic() then
+		self:PlaySound(args.spellId, "alert") -- dodge frontal
 	end
 end
 
 function mod:MassDestructionApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(1249423, nil, L.mass_destruction_single)
-		self:PlaySound(1249423, "warning", nil, args.destName) -- aim line
 		self:Say(1249423, L.mass_destruction_single, true, "Line")
 		self:SayCountdown(1249423, 5)
+		self:PlaySound(1249423, "warning", nil, args.destName) -- aim line
 	end
 end
 
@@ -744,8 +752,6 @@ function mod:ConquerorsCross(args)
 		self:SetStage(2)
 	end
 	self:StopBar(CL.count:format(CL.adds, conquerorsCrossCount))
-	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, conquerorsCrossCount))
-	self:PlaySound(args.spellId, "info") -- adds/walls incoming
 
 	-- didn't see a reliable event before this for intermission boss timers
 	if conquerorsCrossCount == 1 then
@@ -776,6 +782,9 @@ function mod:ConquerorsCross(args)
 	if conquerorsCrossCount < (self:Mythic() and 3 or 4) then
 		self:Bar(args.spellId, self:Mythic() and 31.6 or 35.3, CL.count:format(CL.adds, conquerorsCrossCount))
 	end
+
+	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, conquerorsCrossCount))
+	self:PlaySound(args.spellId, "info") -- adds/walls incoming
 end
 
 function mod:VoidwardingApplied(args)
@@ -819,13 +828,13 @@ end
 function mod:StardustNova(args)
 	self:StopBar(CL.count:format(L.stardust_nova, stardustNovaCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.stardust_nova, stardustNovaCount))
-	local unit = self:UnitTokenFromGUID(args.sourceGUID)
-	if unit and self:UnitWithinRange(unit, 20) then -- radius is 10, using 20 to be safe.
-		self:PlaySound(args.spellId, "alert") -- move out of melee
-	end
 	stardustNovaCount = stardustNovaCount + 1
 	if stardustNovaCount < (self:Mythic() and 3 or 4) then
 		self:Bar(args.spellId, self:Mythic() and 31.6 or 35.4, CL.count:format(L.stardust_nova, stardustNovaCount))
+	end
+	local unit = self:UnitTokenFromGUID(args.sourceGUID)
+	if unit and self:UnitWithinRange(unit, 20) then -- radius is 10, using 20 to be safe.
+		self:PlaySound(args.spellId, "alert") -- move out of melee
 	end
 end
 
@@ -882,7 +891,6 @@ function mod:VoidlordDeath(args)
 
 	if self:MobId(args.destGUID) == 245255 then -- Artoshion
 		self:SetStage(1.5) -- Fly time
-		self:PlaySound("stages", "info")
 		-- Soaring Reshii gets delayed by Dimensius's casts
 		local cd = 5.5
 		if lastIntermissionCast == "gamma" then
@@ -896,6 +904,7 @@ function mod:VoidlordDeath(args)
 			cd = math.max(cd, 8 + (5 - (GetTime() - lastIntermissionCastTime)))
 		end
 		self:Bar(1235114, cd, L.soaring_reshii) -- Soaring Reshii
+		self:PlaySound("stages", "info")
 	end
 end
 
@@ -903,8 +912,6 @@ end
 
 function mod:TotalDestruction(args)
 	self:SetStage(3)
-	self:Message("stages", "cyan", CL.stage:format(3), false)
-	self:PlaySound("stages", "long")
 
 	devourCount = 1
 	darkenedSkyCount = 1
@@ -924,13 +931,16 @@ function mod:TotalDestruction(args)
 	end
 	self:CDBar(1234263, self:Mythic() and 72.7 or 79.3, CL.count:format(cosmicCollapseLocale, cosmicCollapseCount)) -- Cosmic Collapse
 	self:CDBar(1234044, self:Easy() and 94.9 or 44.7, CL.count:format(L.darkened_sky, darkenedSkyCount)) -- Darkened Sky
+
+	self:Message("stages", "cyan", CL.stage:format(3), false)
+	self:PlaySound("stages", "long")
 end
 
 function mod:DestabilizedApplied(args)
 	self:StopBar(CL.weakened)
 	self:Message(args.spellId, "green", CL.weakened)
-	self:PlaySound(args.spellId, "long") -- weakened
 	self:CastBar(args.spellId, 15, CL.onboss:format(CL.weakened))
+	self:PlaySound(args.spellId, "long") -- weakened
 end
 
 function mod:DestabilizedRemoved(args)
@@ -943,8 +953,8 @@ do
 	function mod:AccretionDiskDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -952,8 +962,8 @@ end
 function mod:ExtinguishTheStars(args)
 	self:StopBar(L.extinguish_the_stars)
 	self:Message(args.spellId, "red", CL.casting:format(L.extinguish_the_stars))
-	self:PlaySound(args.spellId, "warning") -- raid damage / dodge
 	self:CastBar(args.spellId, 10, L.extinguish_the_stars)
+	self:PlaySound(args.spellId, "warning") -- raid damage / dodge
 end
 
 do
@@ -974,13 +984,13 @@ do
 	function mod:DevourP3(args)
 		self:StopBar(CL.count:format(args.spellName, devourCount))
 		self:Message(args.spellId, "red", CL.count:format(args.spellName, devourCount))
-		self:PlaySound(args.spellId, "warning") -- get safe
 		self:CastBar(args.spellId, 7, CL.count:format(args.spellName, devourCount))
 		devourCount = devourCount + 1
 		if devourCount < 4 then
 			self:Bar(args.spellId, self:Mythic() and 80.0 or 100.0, CL.count:format(args.spellName, devourCount))
 		end
 		castingDevour = true
+		self:PlaySound(args.spellId, "warning") -- get safe
 	end
 
 	function mod:DevourP3Removed()
@@ -994,7 +1004,6 @@ end
 function mod:DarkenedSky()
 	self:StopBar(CL.count:format(L.darkened_sky, darkenedSkyCount))
 	self:Message(1234044, "yellow", CL.incoming:format(CL.count:format(L.darkened_sky, darkenedSkyCount)))
-	self:PlaySound(1234044, "alert")
 	darkenedSkyCount = darkenedSkyCount + 1
 	if darkenedSkyCount < 6 then
 		local cd = darkenedSkyCount % 2 == 1 and 33.3 or 66.6
@@ -1007,6 +1016,7 @@ function mod:DarkenedSky()
 		end
 		self:Bar(1234044, cd, CL.count:format(L.darkened_sky, darkenedSkyCount))
 	end
+	self:PlaySound(1234044, "alert")
 end
 
 function mod:ShadowquakeApplied(args)
@@ -1026,7 +1036,6 @@ end
 function mod:CosmicCollapse(args)
 	self:StopBar(CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
 	self:Message(args.spellId, "purple", CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
-	self:PlaySound(args.spellId, "alert") -- don't be near the tank
 	if not self:Easy() then
 		self:CastBar(args.spellId, 4)
 	end
@@ -1034,6 +1043,7 @@ function mod:CosmicCollapse(args)
 	if cosmicCollapseCount < (self:Mythic() and 6 or 7) then
 		self:Bar(args.spellId, self:Mythic() and 30.0 or 33.3, CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
 	end
+	self:PlaySound(args.spellId, "alert") -- don't be near the tank
 end
 
 function mod:CosmicFragilityApplied(args)
@@ -1048,13 +1058,13 @@ end
 function mod:Supernova(args)
 	self:StopBar(CL.count:format(args.spellName, supernovaCount))
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, supernovaCount))
-	self:PlaySound(args.spellId, "alert") -- falloff damage on star explosion
 	self:CastBar(args.spellId, 6.5, CL.count:format(args.spellName, supernovaCount)) -- 1.5s cast + 5s explosion
 	supernovaCount = supernovaCount + 1
 	if supernovaCount < 9 then
 		local cd = supernovaCount % 4 == 1 and 18.9 or supernovaCount % 4 == 2 and 14.5 or 33.3
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, supernovaCount))
 	end
+	self:PlaySound(args.spellId, "alert") -- falloff damage on star explosion
 end
 
 do

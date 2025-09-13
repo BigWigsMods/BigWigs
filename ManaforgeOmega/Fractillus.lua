@@ -161,7 +161,12 @@ do
 	local prev = 0
 	local knockbackOnMe = false
 	function mod:ShatteringBackhand()
-			self:Bar(1232130, {5.5, 12}, L.nexus_shrapnel)
+		self:Bar(1232130, {5.5, 12}, L.nexus_shrapnel)
+	end
+	local function SoundWhenNotOnMe()
+		if not knockbackOnMe then
+			mod:PlaySound(1227373, "long") -- take your spot before rooted
+		end
 	end
 
 	function mod:ShattershellApplied(args)
@@ -170,16 +175,16 @@ do
 			prev = args.time
 			self:StopBar(CL.count:format(L.shattershell, shattershellCount))
 			self:Message(args.spellId, "cyan", CL.count:format(L.shattershell, shattershellCount))
-			self:PlaySound(args.spellId, "long") -- take your spot before rooted
 			shattershellCount = shattershellCount + 1
 			self:CDBar(args.spellId, self:Mythic() and 40 or 51.5, CL.count:format(L.shattershell, shattershellCount))
 			self:Bar(1232130, self:Mythic() and 10.5 or 12, L.nexus_shrapnel)
+			self:SimpleTimer(SoundWhenNotOnMe, 0.2)
 		end
 		if self:Me(args.destGUID) then
 			knockbackOnMe = true
 			self:PersonalMessage(args.spellId, nil, L.shattershell)
-			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- getting knocked back soon
 			self:Bar(1220394, 8, CL.knockback)
+			self:PlaySound(args.spellId, "alarm", nil, args.destName) -- getting knocked back soon
 		end
 	end
 end
@@ -195,9 +200,9 @@ end
 function mod:ShockwaveSlam(args)
 	self:StopBar(CL.count:format(L.shockwave_slam, slamCount))
 	self:Message(args.spellId, "purple", CL.count:format(L.shockwave_slam, slamCount))
-	self:PlaySound(args.spellId, "alert")
 	slamCount = slamCount + 1
 	self:CDBar(args.spellId, self:Mythic() and 40.5 or 51.1, CL.count:format(L.shockwave_slam, slamCount))
+	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:ShockwaveSlamApplied(args)

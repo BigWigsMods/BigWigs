@@ -216,8 +216,8 @@ do
 	function mod:AvoidableDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -227,8 +227,8 @@ do
 	function mod:ArcaneRadiationDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -263,8 +263,8 @@ do
 	function mod:PotentResidueDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou", nil, args.destName)
 		end
 	end
 end
@@ -282,17 +282,20 @@ function mod:ObliterationArcanocannonApplied(args)
 		self:Say(1219263, CL.tank_bomb, nil, "Tank Bomb")
 		self:SayCountdown(1219263, 6)
 	end
+	self:CastBar(1219263, 6, CL.count:format(CL.tank_bomb, obliterationArcanocannonCount - 1))
 	if self:Me(args.destGUID) or self:Tank() then
 		self:PlaySound(1219263, "warning", nil, args.destName) -- taunt / run away
 	else
 		self:PlaySound(1219263, "alarm") -- raid damage inc (falloff bomb damage)
 	end
-	self:CastBar(1219263, 6, CL.count:format(CL.tank_bomb, obliterationArcanocannonCount - 1))
 end
 
 function mod:EradicatingSalvoApplied(args)
 	self:StopBar(CL.count:format(CL.soak, eradicationgSalvoCount))
 	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(CL.soak, eradicationgSalvoCount))
+	eradicationgSalvoCount = eradicationgSalvoCount + 1
+	local cd = getNextTimer(args.spellId, eradicationgSalvoCount)
+	self:Bar(args.spellId, cd, CL.count:format(CL.soak, eradicationgSalvoCount))
 	if self:Me(args.destGUID) then
 		self:Yell(args.spellId, CL.soak, nil, "Soak")
 		self:YellCountdown(args.spellId, 5)
@@ -300,9 +303,6 @@ function mod:EradicatingSalvoApplied(args)
 	else
 		self:PlaySound(args.spellId, "alert") -- soak your missile?
 	end
-	eradicationgSalvoCount = eradicationgSalvoCount + 1
-	local cd = getNextTimer(args.spellId, eradicationgSalvoCount)
-	self:Bar(args.spellId, cd, CL.count:format(CL.soak, eradicationgSalvoCount))
 end
 
 -- Stage Two: The Sieve Awakens
@@ -313,20 +313,17 @@ function mod:ProtocolPurge()
 	self:StopBar(CL.count:format(CL.stage:format(2), protocolPurgeCount)) -- Stage 2
 	self:StopBar(CL.count:format(self:SpellName(1234733), protocolPurgeCount)) -- Cleanse the Chamber
 
+	protocolPurgeCount = protocolPurgeCount + 1
 	self:SetStage(2)
 	self:Message("stages", "green", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
-	protocolPurgeCount = protocolPurgeCount + 1
 end
 
 function mod:ProtocolPurgeRemoved()
-	self:SetStage(1)
-	self:Message("stages", "green", CL.stage:format(1), false)
-	self:PlaySound("stages", "long")
-
 	manifestMatricesCount = 1
 	obliterationArcanocannonCount = 1
 	eradicationgSalvoCount = 1
+	self:SetStage(1)
 
 	self:CDBar(1219450, getNextTimer(1219450, 1), CL.count:format(CL.pools, manifestMatricesCount)) -- Manifest Matrices
 	self:CDBar(1219263, getNextTimer(1219263, 1), CL.count:format(CL.tank_bomb, obliterationArcanocannonCount)) -- Obliteration Arcanocannon
@@ -336,6 +333,9 @@ function mod:ProtocolPurgeRemoved()
 	else
 		self:Bar("stages", 94.0, CL.count:format(CL.stage:format(2), protocolPurgeCount), 1220489) -- Stage 2 (Protocol: Purge)
 	end
+
+	self:Message("stages", "green", CL.stage:format(1), false)
+	self:PlaySound("stages", "long")
 end
 
 function mod:PurgingLightningApplied(args)
