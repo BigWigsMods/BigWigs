@@ -315,7 +315,7 @@ do
 				local nextMetaIcon = metaCount == 4 and 1231501 or metaCount == 3 and 1227117 or 1233863 -- All Meta, Fel Rush, Fel Devastation
 				local cd = shortStage and 22.5 or 101.7
 				if self:Heroic() then
-					cd = metaCount == 3 and 99.4 or 96.6 -- is this even good for heroic?
+					cd =  metaCount == 3 and 62.5 or metaCount == 3 and 99.4 or 96.6
 				end
 				self:Bar("stages", cd, CL.count:format(CL.intermission, metaCount), nextMetaIcon) -- Intermission
 
@@ -374,7 +374,8 @@ function mod:Voidstep(args)
 	voidstepCount = voidstepCount + 1
 	self:StopBar(msg)
 	self:Message(args.spellId, "cyan", msg)
-	if not self:Mythic() or (self:Mythic() and metaCount ~= 4) then -- only 1 cast in the last stage
+	local totalExpectedCasts = self:Mythic() and 7 or self:Heroic() and 11 or 12
+	if voidstepTotalCount <= totalExpectedCasts then
 		self:Bar(args.spellId, timers[args.spellId][voidstepCount], CL.count:format(args.spellName, voidstepTotalCount))
 	end
 	self:PlaySound(args.spellId, "info") -- boss moving
@@ -482,7 +483,8 @@ do
 			self:TargetMessage(1227809, "orange", args.destName, messageText)
 			theHuntCount = theHuntCount + 1
 			theHuntTotalCount = theHuntTotalCount + 1
-			if not self:Mythic() and metaCount ~= 4 then -- only 1 cast in the last stage
+			local totalExpectedCasts = self:Easy() and 8 or 7
+			if theHuntTotalCount <= totalExpectedCasts then
 				self:Bar(1227809, timers[1227809][theHuntCount], CL.count:format(CL.soak, theHuntTotalCount))
 			end
 			self:PlaySound(1227809, "long") -- watch charge(s)
@@ -504,7 +506,10 @@ function mod:BladeDance()
 		self:Message(1241306, "red", CL.count:format(CL.dodge, bladeDanceTotalCount))
 		bladeDanceCount = bladeDanceCount + 1
 		bladeDanceTotalCount = bladeDanceTotalCount + 1
-		self:Bar(1241306, timers[1241306][bladeDanceCount], CL.count:format(CL.dodge, bladeDanceTotalCount))
+		local totalExpectedCasts = self:Mythic() and 9 or self:Heroic() and 11 or 12
+		if bladeDanceTotalCount <= totalExpectedCasts then
+			self:Bar(1241306, timers[1241306][bladeDanceCount], CL.count:format(CL.dodge, bladeDanceTotalCount))
+		end
 		self:PlaySound(1241306, "alert") -- watch dances
 	end
 end
@@ -514,7 +519,10 @@ function mod:EyeBeam(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, eyeBeamTotalCount))
 	eyeBeamCount = eyeBeamCount + 1
 	eyeBeamTotalCount = eyeBeamTotalCount + 1
-	self:Bar(args.spellId, timers[args.spellId][eyeBeamCount], CL.count:format(args.spellName, eyeBeamTotalCount))
+	local totalExpectedCasts = self:Mythic() and 9 or self:Heroic() and 11 or 12
+	if eyeBeamTotalCount <= totalExpectedCasts then
+		self:Bar(args.spellId, timers[args.spellId][eyeBeamCount], CL.count:format(args.spellName, eyeBeamTotalCount))
+	end
 	-- self:PlaySound(args.spellId, "alert") -- Sounds from getting hit is enough.
 end
 
@@ -558,7 +566,8 @@ function mod:Fracture(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, fractureTotalCount))
 	fractureCount = fractureCount + 1
 	fractureTotalCount = fractureTotalCount + 1
-	if not self:Mythic() or (self:Mythic() and metaCount ~= 4) then -- only 1 cast in the last stage
+	local totalExpectedCasts = self:Mythic() and 10 or self:Heroic() and 11 or 12
+	if fractureTotalCount <= totalExpectedCasts then
 		self:Bar(args.spellId, timers[args.spellId][fractureCount], CL.count:format(args.spellName, fractureTotalCount))
 	end
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
@@ -599,7 +608,8 @@ function mod:SpiritBomb(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.raid_damage, spiritBombTotalCount))
 	spiritBombCount = spiritBombCount + 1
 	spiritBombTotalCount = spiritBombTotalCount + 1
-	if not self:Mythic() or (self:Mythic() and metaCount ~= 4) then -- only 1 cast in the last stage
+	local totalExpectedCasts = self:Mythic() and 10 or self:Heroic() and 11 or 12
+	if spiritBombTotalCount <= totalExpectedCasts then
 		self:Bar(args.spellId, timers[args.spellId][spiritBombCount], CL.count:format(CL.raid_damage, spiritBombTotalCount))
 	end
 	self:PlaySound(args.spellId, "alarm") -- raid damage
