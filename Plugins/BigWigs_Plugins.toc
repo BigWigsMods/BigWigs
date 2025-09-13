@@ -32,5 +32,26 @@
 
 ## X-Category: Raid
 
-libs.xml
-modules.xml
+Libs\LibSink-2.0\LibSink-2.0.lua
+Libs\LibCandyBar-3.0\LibCandyBar-3.0.lua
+Libs\LibCustomGlow-1.0\LibCustomGlow-1.0.lua
+
+AltPower.lua
+AutoReply.lua
+Colors.lua
+Sound.lua
+Messages.lua
+BarStyles.lua
+Bars.lua
+Nameplates.lua
+BossBlock.lua
+InfoBox.lua
+RaidIcon.lua
+Proximity.lua
+Flash.lua
+Countdown.lua
+Pull.lua
+Break.lua
+Statistics.lua
+Victory.lua
+Wipe.lua

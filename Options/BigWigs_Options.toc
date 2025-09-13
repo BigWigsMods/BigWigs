@@ -28,6 +28,37 @@
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs, BigWigs_Core, BigWigs_Plugins
 
-libs.xml
-modules.xml
+Libs\AceGUI-3.0\AceGUI-3.0.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-BlizOptionsGroup.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-DropDownGroup.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-Frame.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-InlineGroup.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-ScrollFrame.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-SimpleGroup.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-TabGroup.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-TreeGroup.lua
+Libs\AceGUI-3.0\widgets\AceGUIContainer-Window.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-Button.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-CheckBox.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-ColorPicker.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-DropDown.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-DropDown-Items.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-EditBox.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-Heading.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-Icon.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-InteractiveLabel.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-Keybinding.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-Label.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-MultiLineEditBox.lua
+Libs\AceGUI-3.0\widgets\AceGUIWidget-Slider.lua
 
+Libs\AceGUIWidget-SharedDropdown.lua
+Libs\AceConfigRegistry-3.0\AceConfigRegistry-3.0.lua
+Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.lua
+Libs\AceDBOptions-3.0\AceDBOptions-3.0.lua
+Libs\LibDDI-1.0\lib.lua
+Libs\LibDeflate\LibDeflate.lua
+Libs\LibSerialize\LibSerialize.lua
+
+Options.lua
+Sharing.lua

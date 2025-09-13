@@ -1,6 +1,31 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-<Include file="Libs\AceGUI-3.0\AceGUI-3.0.xml"/>
+<Script file="Libs\AceGUI-3.0\AceGUI-3.0.lua"/>
+<!-- Container -->
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-BlizOptionsGroup.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-DropDownGroup.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-Frame.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-InlineGroup.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-ScrollFrame.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-SimpleGroup.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-TabGroup.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-TreeGroup.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIContainer-Window.lua"/>
+<!-- Widgets -->
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-Button.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-CheckBox.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-ColorPicker.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-DropDown.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-DropDown-Items.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-EditBox.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-Heading.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-Icon.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-InteractiveLabel.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-Keybinding.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-Label.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-MultiLineEditBox.lua"/>
+<Script file="Libs\AceGUI-3.0\widgets\AceGUIWidget-Slider.lua"/>
+
 <Script file="Libs\AceGUIWidget-SharedDropdown.lua"/>
 <Script file="Libs\AceConfigRegistry-3.0\AceConfigRegistry-3.0.lua"/>
 <Script file="Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.lua"/>
