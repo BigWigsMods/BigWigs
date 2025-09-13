@@ -1741,7 +1741,7 @@ do
 			if isConnected then
 				BigWigsLoader.CTimerAfter(1, function() LibKeystoneRequest("PARTY") end)
 			end
-		elseif event == "PLAYER_REGEN_DISABLED" and combatHideCount < 3 then -- You can enter combat twice and it will re-show, kill it after that
+		elseif event == "PLAYER_REGEN_DISABLED" and combatHideCount < 4 then -- You can enter combat thrice and it will re-show, kill it after that
 			combatHideCount = combatHideCount + 1
 			self:Hide()
 			self:RegisterEvent("PLAYER_REGEN_ENABLED")
