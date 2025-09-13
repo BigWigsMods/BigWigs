@@ -31,7 +31,7 @@ L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "zhTW")
 if L then
 	L.fractal_images = "飛龍"
 	L.oath_bound_removed_dose = "移除一層誓言"
-	L.behead = "爪子" -- Claws of a dragon 斬首
+	L.behead = "利爪" -- Claws of a dragon 斬首
 	L.netherbreaker = "大圈"
 	L.galaxy_smash = "撞擊" -- 星河撞擊
 	L.starkiller_swing = "弒星" -- 弒星揮擊，或者射線
