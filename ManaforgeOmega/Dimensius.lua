@@ -411,7 +411,7 @@ function mod:MassiveSmash(args)
 	self:Message(args.spellId, "purple", CL.count:format(CL.knockback, massiveSmashCount))
 	massiveSmashCount = massiveSmashCount + 1
 	livingMassMarked = 0
-	if massiveSmashCount > 4 then
+	if massiveSmashCount <= 4 then
 		local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
 		self:Bar(args.spellId, cd, CL.count:format(CL.knockback, massiveSmashCount))
 	end
@@ -470,7 +470,7 @@ do
 		self:CastBar(args.spellId, 7, CL.count:format(args.spellName, devourCount))
 		devourCount = devourCount + 1
 		collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 2.5) -- check last 4~ seconds
-		if self:Mythic() and devourCount > 3 then
+		if not self:Mythic() or (self:Mythic() and devourCount <= 3) then
 			local cd = self:Mythic() and 84.2 or self:Easy() and 100.0 or 94.0
 			self:Bar(args.spellId, cd, CL.count:format(args.spellName, devourCount))
 		end
@@ -489,7 +489,7 @@ function mod:DarkMatter(args)
 	self:StopBar(CL.count:format(CL.spread, darkMatterCount))
 	self:Message(args.spellId, "orange", CL.count:format(CL.spread, darkMatterCount))
 	darkMatterCount = darkMatterCount + 1
-	if darkMatterCount > 4 then
+	if darkMatterCount <= 4 then
 		local cd = darkMatterCount % 2 == 1 and 53.7 or 46.2
 		local spellText = CL.spread
 		if self:Heroic() then
@@ -517,7 +517,7 @@ function mod:ShatteredSpace()
 	self:StopBar(CL.count:format(CL.soaks, shatteredSpaceCount))
 	self:Message(1243690, "yellow", CL.count:format(CL.soaks, shatteredSpaceCount))
 	shatteredSpaceCount = shatteredSpaceCount + 1
-	if shatteredSpaceCount > 4 then
+	if shatteredSpaceCount <= 4 then
 		local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
 		self:Bar(1243690, cd, CL.count:format(CL.soaks, shatteredSpaceCount))
 	end
@@ -552,7 +552,7 @@ do
 			-- Not using targetsmessage because it read as it if's cast multiple times in succession fast for now
 			-- sound for targetted players only
 			gravityCount = gravityCount + 1
-			if gravityCount > 4 then
+			if gravityCount <= 4 then
 				local cd = gravityCount % 2 == 1 and 55 or 45
 				if self:Heroic() then
 					cd = gravityCount % 2 == 1 and 51.7 or 42.3

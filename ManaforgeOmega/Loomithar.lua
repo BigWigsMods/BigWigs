@@ -191,6 +191,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		arcaneOutrageCount = 1
 		writhingWaveCount = 1
 		primalSpellstormCount = 1
+		self:SetStage(2)
 
 		self:Bar(1228059, 5.8, CL.knockback)
 		self:Bar(1227226, 16.0, CL.count:format(CL.soak, writhingWaveCount)) -- Writhing Wave
@@ -200,6 +201,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			self:Bar(1226867, primalSpellstormCD, CL.count:format(CL.dodge, primalSpellstormCount)) -- Primal Spellstorm
 			primalSpellstormTimer = self:ScheduleTimer("PrimalSpellstormRepeater", primalSpellstormCD)
 		end
+
+		self:Message("stages", "green", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
 	end
 end
 

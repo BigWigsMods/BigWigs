@@ -374,7 +374,7 @@ function mod:Voidstep(args)
 	voidstepCount = voidstepCount + 1
 	self:StopBar(msg)
 	self:Message(args.spellId, "cyan", msg)
-	if self:Mythic() and metaCount == 4 then -- only 1 cast in the last stage
+	if not self:Mythic() or (self:Mythic() and metaCount ~= 4) then -- only 1 cast in the last stage
 		self:Bar(args.spellId, timers[args.spellId][voidstepCount], CL.count:format(args.spellName, voidstepTotalCount))
 	end
 	self:PlaySound(args.spellId, "info") -- boss moving
@@ -558,7 +558,7 @@ function mod:Fracture(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, fractureTotalCount))
 	fractureCount = fractureCount + 1
 	fractureTotalCount = fractureTotalCount + 1
-	if self:Mythic() and metaCount == 4 then -- only 1 cast in the last stage
+	if not self:Mythic() or (self:Mythic() and metaCount ~= 4) then -- only 1 cast in the last stage
 		self:Bar(args.spellId, timers[args.spellId][fractureCount], CL.count:format(args.spellName, fractureTotalCount))
 	end
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
@@ -599,7 +599,7 @@ function mod:SpiritBomb(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.raid_damage, spiritBombTotalCount))
 	spiritBombCount = spiritBombCount + 1
 	spiritBombTotalCount = spiritBombTotalCount + 1
-	if self:Mythic() and metaCount == 4 then -- only 1 cast in the last stage
+	if not self:Mythic() or (self:Mythic() and metaCount ~= 4) then -- only 1 cast in the last stage
 		self:Bar(args.spellId, timers[args.spellId][spiritBombCount], CL.count:format(CL.raid_damage, spiritBombTotalCount))
 	end
 	self:PlaySound(args.spellId, "alarm") -- raid damage
