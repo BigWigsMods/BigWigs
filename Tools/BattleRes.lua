@@ -479,7 +479,6 @@ do
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(1)
 end
-mainPanel:SetPoint("CENTER")
 mainPanel:SetFrameStrata("MEDIUM")
 mainPanel:SetFixedFrameStrata(true)
 mainPanel:SetFrameLevel(8500)
