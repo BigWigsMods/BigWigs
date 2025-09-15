@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Loom'ithar", "itIT")
 if not L then return end
 if L then
 	L.lair_weaving = "Ragnatele" -- Webs that spawn on the edge of the room
-	--L.infusion_pylons = "Pylons" -- Short for Infusion Pylons
+	L.infusion_pylons = "Piloni" -- Short for Infusion Pylons
 end
 
 L = BigWigs:NewBossLocale("Soulbinder Naazindhri", "itIT")
