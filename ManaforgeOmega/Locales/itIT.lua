@@ -27,7 +27,7 @@ if L then
 	L.crystal_lacerations = "Sanguinamento"
 end
 
-L = BigWigs:NewBossLocale("Re del Nexus Salhadaar", "itIT")
+L = BigWigs:NewBossLocale("Nexus-King Salhadaar", "itIT")
 if L then
 	L.fractal_images = "Draghi"
 	L.oath_bound_removed_dose = "1x Conquista Rimossa"
