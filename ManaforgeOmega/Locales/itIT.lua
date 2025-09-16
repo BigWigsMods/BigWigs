@@ -5,7 +5,7 @@ if L then
 	L.infusion_pylons = "Piloni" -- Short for Infusion Pylons
 end
 
-L = BigWigs:NewBossLocale("Vincolatrice d'Anime Naazindhri", "itIT")
+L = BigWigs:NewBossLocale("Soulbinder Naazindhri", "itIT")
 if L then
 	L.voidblade_ambush = "Imboscata" -- Short for Voidblade Ambush
 	L.soulfray_annihilation = "Linee" -- Lines that shoot out an orb along that path
@@ -13,7 +13,7 @@ if L then
 	L.remaining_adds = "Addini Rimanenti" -- All remaining adds from Soul Calling spawn
 end
 
-L = BigWigs:NewBossLocale("Tessiforgia Araz", "itIT")
+L = BigWigs:NewBossLocale("Forgeweaver Araz", "itIT")
 if L then
 	L.invoke_collector = "Collectore" -- Short for Arcane Collector
 end
