@@ -775,7 +775,7 @@ do
 			db[info[#info]] = value
 			updateProfile()
 		end,
-		order = 2,
+		order = 3,
 		args = {
 			testIconButton = {
 				type = "execute",

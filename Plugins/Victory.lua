@@ -38,7 +38,7 @@ plugin.pluginOptions = {
 			end
 		end
 	end,
-	order = 7,
+	order = 9,
 	args = {
 		heading = {
 			type = "description",

@@ -93,7 +93,7 @@ do
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,
 		set = function(i, value) plugin.db.profile[i[#i]] = value end,
-		order = 6,
+		order = 8,
 		args = {
 			countType = {
 				type = "select",

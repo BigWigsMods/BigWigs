@@ -106,6 +106,10 @@ files["Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
+files["Plugins/BattleRes.lua"].ignore = {
+	"113/C_ClassColor",
+	"113/C_Spell",
+}
 files["Plugins/BossBlock.lua"].ignore = {
 	"113/AlertFrame",
 	"112/BigWigs",
@@ -187,10 +191,6 @@ files["Tools/AutoRole.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 	"113/UnitNameUnmodified",
 	"113/UnitSetRole",
-}
-files["Tools/BattleRes.lua"].ignore = {
-	"113/C_ClassColor",
-	"113/C_Spell",
 }
 files["Tools/Keystones.lua"].ignore = {
 	"113/C_ChallengeMode",

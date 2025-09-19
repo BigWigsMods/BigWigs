@@ -45,7 +45,7 @@ do
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Markers:20|t ".. L.icons,
-		order = 11,
+		order = 14,
 		get = get,
 		set = set,
 		args = {

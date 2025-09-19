@@ -387,9 +387,9 @@ local function GetExportString()
 	end
 
 	if sharingExportOptionsSettings.exportBattleResSettings then
-		local db = BigWigsLoader.db:GetNamespace("BattleRes", true)
-		if db then
-			exportOptions["battleResSettings"] = exportProfileSettings(battleResSettingsToExport, db.profile)
+		local plugin = BigWigs:GetPlugin("BattleRes", true)
+		if plugin then
+			exportOptions["battleResSettings"] = exportProfileSettings(battleResSettingsToExport, plugin.db.profile)
 		end
 	end
 
@@ -529,9 +529,9 @@ do
 			end
 		end
 		do
-			local db = BigWigsLoader.db:GetNamespace("BattleRes", true)
-			if db then
-				importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, {db = db}, L.imported_battleres_settings)
+			local plugin = BigWigs:GetPlugin("BattleRes", true)
+			if plugin then
+				importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, plugin, L.imported_battleres_settings)
 			end
 		end
 
@@ -769,7 +769,7 @@ local sharingOptions = {
 						desc = L.battleres_settings_import_desc,
 						order = 3,
 						width = 1,
-						disabled = function() return not IsOptionInString("battleResSettings") or not BigWigsLoader.db:GetNamespace("BattleRes", true) end,
+						disabled = function() return not IsOptionInString("battleResSettings") or not BigWigs:GetPlugin("BattleRes", true) end,
 					},
 				},
 			},
@@ -929,8 +929,8 @@ local sharingOptions = {
 						desc = L.battleres_settings_export_desc,
 						order = 3,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("BattleRes", true) end,
-						disabled = function() return not BigWigsLoader.db:GetNamespace("BattleRes", true) end,
+						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("BattleRes", true) end,
+						disabled = function() return not BigWigs:GetPlugin("BattleRes", true) end,
 					},
 				},
 			},

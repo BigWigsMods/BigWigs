@@ -92,7 +92,7 @@ plugin.pluginOptions = {
 		db.media[sound] = soundList[value]
 		plugin:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
 	end,
-	order = 4,
+	order = 5,
 	args = {
 		heading = {
 			type = "description",

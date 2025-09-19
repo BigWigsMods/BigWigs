@@ -72,7 +72,7 @@ plugin.pluginOptions = {
 	desc = L.bossBlockDesc,
 	type = "group",
 	childGroups = "tab",
-	order = 10,
+	order = 13,
 	get = function(info)
 		return plugin.db.profile[info[#info]]
 	end,
