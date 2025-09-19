@@ -1166,14 +1166,14 @@ do
 	if not cdText.SetFontHeight then -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
 		cdText.SetFontHeight = function(self, num)
 			local flags = nil
-			if plugin.defaultDB.monochrome and plugin.defaultDB.outline ~= "NONE" then
-				flags = "MONOCHROME," .. plugin.defaultDB.outline
-			elseif plugin.defaultDB.monochrome then
+			if plugin.db.profile.monochrome and plugin.db.profile.outline ~= "NONE" then
+				flags = "MONOCHROME," .. plugin.db.profile.outline
+			elseif plugin.db.profile.monochrome then
 				flags = "MONOCHROME"
-			elseif plugin.defaultDB.outline ~= "NONE" then
-				flags = plugin.defaultDB.outline
+			elseif plugin.db.profile.outline ~= "NONE" then
+				flags = plugin.db.profile.outline
 			end
-			self:SetFont(LibSharedMedia:Fetch("font", plugin.defaultDB.fontName), num, flags)
+			self:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), num, flags)
 		end
 	end
 	battleResFrame.cdText = cdText
@@ -1196,14 +1196,14 @@ do
 	if not chargesText.SetFontHeight then -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
 		chargesText.SetFontHeight = function(self, num)
 			local flags = nil
-			if plugin.defaultDB.monochrome and plugin.defaultDB.outline ~= "NONE" then
-				flags = "MONOCHROME," .. plugin.defaultDB.outline
-			elseif plugin.defaultDB.monochrome then
+			if plugin.db.profile.monochrome and plugin.db.profile.outline ~= "NONE" then
+				flags = "MONOCHROME," .. plugin.db.profile.outline
+			elseif plugin.db.profile.monochrome then
 				flags = "MONOCHROME"
-			elseif plugin.defaultDB.outline ~= "NONE" then
-				flags = plugin.defaultDB.outline
+			elseif plugin.db.profile.outline ~= "NONE" then
+				flags = plugin.db.profile.outline
 			end
-			self:SetFont(LibSharedMedia:Fetch("font", plugin.defaultDB.fontName), num, flags)
+			self:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), num, flags)
 		end
 	end
 	battleResFrame.chargesText = chargesText
