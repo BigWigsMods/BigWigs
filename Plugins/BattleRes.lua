@@ -1163,6 +1163,19 @@ do
 	end
 	cdText:SetSize(300, 20)
 	cdText:SetTextColor(plugin.defaultDB.durationColor[1], plugin.defaultDB.durationColor[2], plugin.defaultDB.durationColor[3], plugin.defaultDB.durationColor[4])
+	if not cdText.SetFontHeight then -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
+		cdText.SetFontHeight = function(self, num)
+			local flags = nil
+			if plugin.defaultDB.monochrome and plugin.defaultDB.outline ~= "NONE" then
+				flags = "MONOCHROME," .. plugin.defaultDB.outline
+			elseif plugin.defaultDB.monochrome then
+				flags = "MONOCHROME"
+			elseif plugin.defaultDB.outline ~= "NONE" then
+				flags = plugin.defaultDB.outline
+			end
+			self:SetFont(LibSharedMedia:Fetch("font", plugin.defaultDB.fontName), num, flags)
+		end
+	end
 	battleResFrame.cdText = cdText
 
 	local chargesText = battleResFrame.border:CreateFontString(nil, "OVERLAY")
@@ -1180,6 +1193,19 @@ do
 	end
 	chargesText:SetSize(300, 20)
 	chargesText:SetTextColor(plugin.defaultDB.chargesNoneColor[1], plugin.defaultDB.chargesNoneColor[2], plugin.defaultDB.chargesNoneColor[3], plugin.defaultDB.chargesNoneColor[4])
+	if not chargesText.SetFontHeight then -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✗]
+		chargesText.SetFontHeight = function(self, num)
+			local flags = nil
+			if plugin.defaultDB.monochrome and plugin.defaultDB.outline ~= "NONE" then
+				flags = "MONOCHROME," .. plugin.defaultDB.outline
+			elseif plugin.defaultDB.monochrome then
+				flags = "MONOCHROME"
+			elseif plugin.defaultDB.outline ~= "NONE" then
+				flags = plugin.defaultDB.outline
+			end
+			self:SetFont(LibSharedMedia:Fetch("font", plugin.defaultDB.fontName), num, flags)
+		end
+	end
 	battleResFrame.chargesText = chargesText
 
 	do
@@ -1328,7 +1354,13 @@ battleResFrame:SetScript("OnLeave", GameTooltip_Hide)
 --
 
 do
-	local CombatLogGetCurrentEventInfo, UnitClass, GetClassColor = CombatLogGetCurrentEventInfo, UnitClass, C_ClassColor.GetClassColor
+	local GetClassColor = C_ClassColor and C_ClassColor.GetClassColor or function(class) -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+		return {GenerateHexColor = function()
+			local tbl = RAID_CLASS_COLORS[class]
+			return format("ff%02x%02x%02x", tbl.r * 255, tbl.g * 255, tbl.b * 255)
+		end}
+	end
+	local CombatLogGetCurrentEventInfo, UnitClass = CombatLogGetCurrentEventInfo, UnitClass
 	battleResFrame:SetScript("OnEvent", function()
 		local _, event, _, _, sourceName, _, _, _, targetName, _, _, spellId = CombatLogGetCurrentEventInfo()
 		if event == "SPELL_RESURRECT" then
