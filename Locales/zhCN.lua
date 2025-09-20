@@ -3,8 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "'|cFF436EEE%s|r' 插件创建了 '%s' 动作条。"
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.showAddonBar = "插件 '|cFF436EEE%s|r' 创建了 '%s' 计时条。"
+L.requestAddonProfile = "插件 '|cFF436EEE%s|r' 刚刚复制了您的配置文件导出字符串。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -424,10 +424,10 @@ L.instanceKeysHideTitleDesc = "隐藏 \"谁拥有钥石？\" 标题。"
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "寻找组队计时器"
-L.lfgTimerExplainer = "每当寻找组队队列确认窗口出现时，BigWigs 会创建一个计时条，告诉你还有多长时间必须接受队列。\n\n"
+L.lfgTimerTitle = "队列就绪计时"
+L.lfgTimerExplainer = "每当队列确认窗口出现时，BigWigs 会创建一个计时条，告诉你还有多长时间必须接受队列邀请。\n\n"
 L.lfgUseMaster = "在'主'声道播放寻找组队就绪提示音"
-L.lfgUseMasterDesc = "启用此选项后，寻找组队就绪提示音将通过'主'声道播放。如果禁用此选项，则会通过'%s'声道播放。"
+L.lfgUseMasterDesc = "启用此选项后，队列就绪提示音将通过'主'声道播放。如果禁用此选项，则会通过'%s'声道播放。"
 
 -----------------------------------------------------------------------
 -- PLUGINS
