@@ -40,6 +40,7 @@ function mod:OnRegister()
 	self:SetSpellRename(1227276, L.soulfray_annihilation) -- Soulfray Annihilation (Lines)
 	self:SetSpellRename(1223859, CL.knockback) -- Arcane Expulsion (Knockback)
 	self:SetSpellRename(1225616, CL.orbs) -- Soulfire Convergence (Orbs)
+	self:SetSpellRename(1241100, CL.tank_debuff) -- Mystic Lash (Tank Debuff)
 end
 
 local soulfrayAnnihilationMarkerMapTable = {4, 6, 3} -- Green, Blue, Diamond (wm order)
@@ -69,6 +70,7 @@ function mod:GetOptions()
 		[1227276] = L.soulfray_annihilation, -- Soulfray Annihilation (Lines)
 		[1223859] = CL.knockback, -- Arcane Expulsion (Knockback)
 		[1225616] = CL.orbs, -- Soulfire Convergence (Orbs)
+		[1241100] = CL.tank_debuff, -- Mystic Lash (Tank Debuff)
 	}
 end
 
@@ -84,7 +86,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SoulfrayAnnihilationApplied", 1227276)
 	self:Log("SPELL_AURA_REMOVED", "SoulfrayAnnihilationRemoved", 1227276)
 	self:Log("SPELL_CAST_START", "MysticLash", 1241100)
-	self:Log("SPELL_AURA_APPLIED", "MysticLashApplied", 1237607)
+	self:Log("SPELL_AURA_APPLIED", "MysticLashApplied", 1248464, 1237607) -- LFR/Normal, Heroic/Mythic
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MysticLashApplied", 1248464, 1237607) -- LFR/Normal, Heroic/Mythic
 	self:Log("SPELL_CAST_START", "ArcaneExpulsion", 1223859, 1242088)
 	self:Log("SPELL_CAST_SUCCESS", "SoulfireConvergence", 1225616)
 	self:Log("SPELL_AURA_APPLIED", "SoulfireConvergenceApplied", 1225626)
@@ -103,7 +106,7 @@ function mod:OnEngage()
 	arcaneExpulsionCount = 1
 	soulfireConvergenceCount = 1
 
-	self:Bar(1241100, self:Mythic() and 5 or 6.0, CL.count:format(self:SpellName(1241100), mysticLashCount)) -- Mystic Lash
+	self:Bar(1241100, self:Mythic() and 5 or 6.0, CL.count:format(CL.tank_debuff, mysticLashCount)) -- Mystic Lash
 	self:Bar(1225582, self:Mythic() and 13.0 or 14.0, CL.count:format(CL.adds, soulCallingCount)) -- Soul Calling
 	self:Bar(1227276, self:Mythic() and 26.0 or 20.0, CL.count:format(L.soulfray_annihilation, soulfrayAnnihilationCount)) -- Soulfray Annihilation
 	self:Bar(1225616, self:Mythic() and 18.0 or 32.0, CL.count:format(CL.orbs, soulfireConvergenceCount)) -- Soulfire Convergence
@@ -209,26 +212,29 @@ do
 	end
 end
 
-function mod:MysticLash(args)
-	self:StopBar(CL.count:format(args.spellName, mysticLashCount))
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, mysticLashCount))
-	mysticLashCount = mysticLashCount + 1
-	local cd = mysticLashCount % 4 == 1 and 32.0 or mysticLashCount % 4 == 0 and 38.0 or 40.0
-	if self:Mythic() then
-		cd = mysticLashCount % 4 == 1 and 31.0 or mysticLashCount % 4 == 2 and 41.0 or mysticLashCount % 4 == 3 and 38.0 or 40.0
+do
+	local totalApplied = 0
+	function mod:MysticLash(args)
+		totalApplied = 0
+		self:StopBar(CL.count:format(CL.tank_debuff, mysticLashCount))
+		self:Message(args.spellId, "purple", CL.soon:format(CL.count:format(CL.tank_debuff, mysticLashCount)))
+		mysticLashCount = mysticLashCount + 1
+		local cd = mysticLashCount % 4 == 1 and 32.0 or mysticLashCount % 4 == 0 and 38.0 or 40.0
+		if self:Mythic() then
+			cd = mysticLashCount % 4 == 1 and 31.0 or mysticLashCount % 4 == 2 and 41.0 or mysticLashCount % 4 == 3 and 38.0 or 40.0
+		end
+		self:Bar(args.spellId, cd, CL.count:format(CL.tank_debuff, mysticLashCount))
 	end
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, mysticLashCount))
-	self:PlaySound(args.spellId, "alert") -- Current tank warning?
-end
 
-function mod:MysticLashApplied(args)
-	local amount = args.amount or 1
-	if amount % 2 == 1 then -- multiple stacks during cast?
-		self:StackMessage(1241100, "purple", args.destName, args.amount, 4)
-		if self:Me(args.destGUID) then
-			self:PlaySound(1241100, "alarm", nil, args.destName)
-		elseif self:Tank() and amount > 4 then
-			self:PlaySound(1241100, "warning") -- taunt?
+	function mod:MysticLashApplied(args)
+		totalApplied = totalApplied + 1
+		if totalApplied == 6 then -- He is finished after applying a total of 6 stacks, which may or may not all be on the same player
+			self:StackMessage(1241100, "purple", args.destName, args.amount, 6, CL.tank_debuff)
+			if self:Me(args.destGUID) then
+				self:PlaySound(1241100, "alarm", nil, args.destName)
+			elseif self:Tank() then
+				self:PlaySound(1241100, "warning") -- taunt?
+			end
 		end
 	end
 end
