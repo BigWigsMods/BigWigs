@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "'|cFF436EEE%s|r' 애드온이 '%s' 바를 생성했습니다."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "애드온 '|cFF436EEE%s|r'이 방금 프로필 내보내기 문자열을 복사했습니다."
 
 -- Core.lua
 L.berserk = "광폭화"
@@ -307,7 +307,7 @@ L.iconTextureSpellIDError = "아이콘 텍스처로 사용할 유효한 주문 I
 L.battleResModeIcon = "모드: 아이콘"
 L.battleResModeText = "모드: 텍스트만"
 L.battleResModeTextTooltip = "전투 부활 기능을 이동하고 마우스 오버 영역을 확인하는 데 도움이 되도록 임시 배경을 표시합니다."
---L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
+L.battleResNoteTooltip = "참고: 이 툴팁은 전투 중이 아닐 때만 표시됩니다."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
