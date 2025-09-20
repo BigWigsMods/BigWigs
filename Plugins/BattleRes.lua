@@ -43,7 +43,7 @@ local ProfileUtils = {}
 local BigWigsLoader = BigWigsLoader
 local battleResFrame
 
-local isTesting, isShowing = false, false
+local isTesting, isShowing = nil, false
 local previousCharges = -1
 local resCollector = {}
 local fightStartTime = 0
@@ -481,7 +481,10 @@ do
 				order = 3,
 				set = function(_, value)
 					plugin.db.profile.disabled = value
-					isTesting = false
+					if isTesting then
+						isTesting:Cancel()
+						isTesting = nil
+					end
 					if value then -- Disable
 						plugin:OnPluginDisable()
 					else -- Enable
@@ -535,50 +538,48 @@ do
 						func = function()
 							if not isShowing then
 								if not isTesting then
-									isTesting = true
 									battleResFrame:Show()
 									UpdateWidgets()
 									local testTable = {[0] = "6", [1]="24", [2] = "1:15", [3] = "2:30", [4] = "3:37"}
 									local i = 4
 									local function TestLoop()
-										if isTesting then
-											battleResFrame.cdText:SetText(testTable[i])
-											battleResFrame.chargesText:SetText(i)
-											if plugin.db.profile.durationEmphasizeTime ~= 0 then
-												local remainingSeconds = i < 3 and tonumber(testTable[i]) or 60
-												if remainingSeconds > plugin.db.profile.durationEmphasizeTime then
-													battleResFrame.cdText:SetFontHeight(plugin.db.profile.durationFontSize)
-													battleResFrame.cdText:SetTextColor(plugin.db.profile.durationColor[1], plugin.db.profile.durationColor[2], plugin.db.profile.durationColor[3], plugin.db.profile.durationColor[4])
-												else
-													battleResFrame.cdText:SetFontHeight(plugin.db.profile.durationEmphasizeFontSize)
-													battleResFrame.cdText:SetTextColor(plugin.db.profile.durationEmphasizeColor[1], plugin.db.profile.durationEmphasizeColor[2], plugin.db.profile.durationEmphasizeColor[3], plugin.db.profile.durationEmphasizeColor[4])
-												end
-											end
-											battleResFrame.cooldown:SetCooldown(GetTime(), 2)
-											if i == 0 then
-												battleResFrame.chargesText:SetFontHeight(plugin.db.profile.chargesNoneFontSize)
-												battleResFrame.chargesText:SetTextColor(plugin.db.profile.chargesNoneColor[1], plugin.db.profile.chargesNoneColor[2], plugin.db.profile.chargesNoneColor[3], plugin.db.profile.chargesNoneColor[4])
-												if plugin.db.profile.iconDesaturate == 3 then
-													battleResFrame.icon:SetDesaturated(true)
-												end
+										battleResFrame.cdText:SetText(testTable[i])
+										battleResFrame.chargesText:SetText(i)
+										if plugin.db.profile.durationEmphasizeTime ~= 0 then
+											local remainingSeconds = i < 3 and tonumber(testTable[i]) or 60
+											if remainingSeconds > plugin.db.profile.durationEmphasizeTime then
+												battleResFrame.cdText:SetFontHeight(plugin.db.profile.durationFontSize)
+												battleResFrame.cdText:SetTextColor(plugin.db.profile.durationColor[1], plugin.db.profile.durationColor[2], plugin.db.profile.durationColor[3], plugin.db.profile.durationColor[4])
 											else
-												battleResFrame.chargesText:SetFontHeight(plugin.db.profile.chargesAvailableFontSize)
-												battleResFrame.chargesText:SetTextColor(plugin.db.profile.chargesAvailableColor[1], plugin.db.profile.chargesAvailableColor[2], plugin.db.profile.chargesAvailableColor[3], plugin.db.profile.chargesAvailableColor[4])
-												if plugin.db.profile.iconDesaturate == 3 then
-													battleResFrame.icon:SetDesaturated(false)
-												end
+												battleResFrame.cdText:SetFontHeight(plugin.db.profile.durationEmphasizeFontSize)
+												battleResFrame.cdText:SetTextColor(plugin.db.profile.durationEmphasizeColor[1], plugin.db.profile.durationEmphasizeColor[2], plugin.db.profile.durationEmphasizeColor[3], plugin.db.profile.durationEmphasizeColor[4])
 											end
-											i = i - 1
-											if i == -1 then i = 4 end
-											BigWigsLoader.CTimerAfter(2, TestLoop)
 										end
+										battleResFrame.cooldown:SetCooldown(GetTime(), 2)
+										if i == 0 then
+											battleResFrame.chargesText:SetFontHeight(plugin.db.profile.chargesNoneFontSize)
+											battleResFrame.chargesText:SetTextColor(plugin.db.profile.chargesNoneColor[1], plugin.db.profile.chargesNoneColor[2], plugin.db.profile.chargesNoneColor[3], plugin.db.profile.chargesNoneColor[4])
+											if plugin.db.profile.iconDesaturate == 3 then
+												battleResFrame.icon:SetDesaturated(true)
+											end
+										else
+											battleResFrame.chargesText:SetFontHeight(plugin.db.profile.chargesAvailableFontSize)
+											battleResFrame.chargesText:SetTextColor(plugin.db.profile.chargesAvailableColor[1], plugin.db.profile.chargesAvailableColor[2], plugin.db.profile.chargesAvailableColor[3], plugin.db.profile.chargesAvailableColor[4])
+											if plugin.db.profile.iconDesaturate == 3 then
+												battleResFrame.icon:SetDesaturated(false)
+											end
+										end
+										i = i - 1
+										if i == -1 then i = 4 end
+										isTesting = BigWigsLoader.CTimerNewTimer(2, TestLoop)
 									end
-									TestLoop()
+									isTesting = BigWigsLoader.CTimerNewTimer(0, TestLoop)
 									if plugin.db.profile.mode == 2 then
 										BigWigsLoader.Print(L.battleResModeTextTooltip)
 									end
 								else
-									isTesting = false
+									isTesting:Cancel()
+									isTesting = nil
 									battleResFrame:Hide()
 									battleResFrame.cooldown:Clear()
 									UpdateWidgets()
@@ -1404,7 +1405,10 @@ do
 		local _, _, diffID = BigWigsLoader.GetInstanceInfo()
 		if difficultiesWithBattleRes[diffID] then
 			isShowing = true
-			isTesting = false
+			if isTesting then
+				isTesting:Cancel()
+				isTesting = nil
+			end
 			battleResFrame:Show()
 			battleResFrame.cdText:SetText("0:00")
 			battleResFrame.chargesText:SetText(0)
@@ -1423,7 +1427,10 @@ do
 			plugin:RegisterEvent("CHALLENGE_MODE_START")
 		elseif diffID == 8 then -- Mythic+
 			isShowing = true
-			isTesting = false
+			if isTesting then
+				isTesting:Cancel()
+				isTesting = nil
+			end
 			battleResFrame:Show()
 			battleResFrame.cdText:SetText("0:00")
 			battleResFrame.chargesText:SetText(0)
@@ -1510,7 +1517,10 @@ function plugin:CHALLENGE_MODE_START()
 	previousCharges = -1
 	resCollector = {}
 	isShowing = true
-	isTesting = false
+	if isTesting then
+		isTesting:Cancel()
+		isTesting = nil
+	end
 	fightStartTime = GetTime()+9
 	battleResFrame:Show()
 	battleResFrame.cdText:SetText("0:00")
