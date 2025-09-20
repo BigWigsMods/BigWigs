@@ -12,10 +12,17 @@ if not plugin then return end
 --
 
 local difficultiesWithBattleRes = {
+	-- Classic
+	[3] = true, -- 10 Player
+	[4] = true, -- 25 Player
+	[5] = true, -- 10 Player (Heroic)
+	[6] = true, -- 25 Player (Heroic)
+	[7] = true, -- Looking For Raid
+	-- Retail
 	[14] = true, -- Normal
 	[15] = true, -- Heroic
 	[16] = true, -- Mythic
-	[17] = true, -- LFR
+	[17] = true, -- Looking For Raid
 	[33] = true, -- Timewalking (Raid)
 }
 local castableBattleResSpells = {
