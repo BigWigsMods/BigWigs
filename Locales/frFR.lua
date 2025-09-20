@@ -307,6 +307,7 @@ L.iconTextureSpellIDError = "Vous devez entrer un ID de sort valide pour l'utili
 L.battleResModeIcon = "Mode : Icône"
 L.battleResModeText = "Mode : Texte seulement"
 L.battleResModeTextTooltip = "Montre un arrière-plan temporaire pour vous aider à déplacer la fonctionnalité de Résurrection de combat et voir la zone de survol avec la souris."
+--L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

@@ -307,6 +307,7 @@ L.iconTextureSpellIDError = "你必须输入一个有效的法术ID来作为显�
 L.battleResModeIcon = "显示模式：图标"
 L.battleResModeText = "显示模式：仅文字"
 L.battleResModeTextTooltip = "显示临时背景以便调整战复功能的位置，并查看鼠标悬停提示位置。"
+--L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

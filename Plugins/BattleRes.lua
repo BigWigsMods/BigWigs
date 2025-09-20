@@ -1340,10 +1340,12 @@ battleResFrame:SetScript("OnEnter", function(self)
 		local timeToShow = ("[%d:%02d]"):format(minutes, seconds)
 		GameTooltip:AddDoubleLine(timeToShow, targetName and (sourceName .." >> ".. targetName) or sourceName, 1, 1, 1, 1, 1, 1)
 	end
+	GameTooltip:AddLine(" ")
+	GameTooltip:AddLine(" ")
 	if isTesting and plugin.db.profile.mode == 2 then
-		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine(L.battleResModeTextTooltip, 1, 1, 1)
+	else
+		GameTooltip:AddLine(L.battleResNoteTooltip, 1, 1, 1)
 	end
 	GameTooltip:Show()
 end)

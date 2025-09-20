@@ -307,6 +307,7 @@ L.iconTextureSpellIDError = "Es muss eine gültige Zauber ID zur Nutzung der Sym
 L.battleResModeIcon = "Modus: Symbol"
 L.battleResModeText = "Modus: Nur Text"
 L.battleResModeTextTooltip = "Es wird vorübergehend ein Hintergrund angezeigt, um beim Bewegen der Battle Res Funktion behilflich zu sein und den Mouseover Bereich anzuzeigen."
+--L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

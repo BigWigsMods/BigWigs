@@ -307,6 +307,7 @@ L.autoRoleExplainer = "Sempre que você se junta a um grupo ou muda sua especial
 --L.battleResModeIcon = "Mode: Icon"
 --L.battleResModeText = "Mode: Text Only"
 --L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
+--L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

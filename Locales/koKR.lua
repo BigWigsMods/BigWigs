@@ -307,6 +307,7 @@ L.iconTextureSpellIDError = "아이콘 텍스처로 사용할 유효한 주문 I
 L.battleResModeIcon = "모드: 아이콘"
 L.battleResModeText = "모드: 텍스트만"
 L.battleResModeTextTooltip = "전투 부활 기능을 이동하고 마우스 오버 영역을 확인하는 데 도움이 되도록 임시 배경을 표시합니다."
+--L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
