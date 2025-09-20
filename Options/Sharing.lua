@@ -329,74 +329,78 @@ local function exportProfileSettings(argsToExport, pluginProfile)
 	return export
 end
 
-local function GetExportString()
-	local exportOptions = {
-		version = sharingVersion, -- :GetVersionString() contains more info than I prefer, using our own version within the plugin.
-	}
+do
+	local function GetExportString(requestAll)
+		local exportOptions = {
+			version = sharingVersion, -- :GetVersionString() contains more info than I prefer, using our own version within the plugin.
+		}
 
-	local barSettings = BigWigs:GetPlugin("Bars")
-	local messageSettings = BigWigs:GetPlugin("Messages")
-	local countdownSettings = BigWigs:GetPlugin("Countdown")
-	local nameplateSettings = BigWigs:GetPlugin("Nameplates")
+		local barSettings = BigWigs:GetPlugin("Bars")
+		local messageSettings = BigWigs:GetPlugin("Messages")
+		local countdownSettings = BigWigs:GetPlugin("Countdown")
+		local nameplateSettings = BigWigs:GetPlugin("Nameplates")
 
-	if sharingExportOptionsSettings.exportBarPositions then
-		exportOptions["barPositions"] = exportProfileSettings(barPositionsToExport, barSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportMessagePositions then
-		exportOptions["messagePositions"] = exportProfileSettings(messagePositionsToExport, messageSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportCountdownPositions then
-		exportOptions["countdownPositions"] = exportProfileSettings(countdownPositionsToExport, countdownSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportBarSettings then
-		exportOptions["barSettings"] = exportProfileSettings(barSettingsToExport, barSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportMessageSettings then
-		exportOptions["messageSettings"] = exportProfileSettings(messageSettingsToExport, messageSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportCountdownSettings then
-		exportOptions["countdownSettings"] = exportProfileSettings(countdownSettingsToExport, countdownSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportMessageColors then
-		exportOptions["messageColors"] = exportProfileColorSettings(messageColorsToExport)
-	end
-
-	if sharingExportOptionsSettings.exportBarColors then
-		exportOptions["barColors"] = exportProfileColorSettings(barColorsToExport)
-	end
-
-	if sharingExportOptionsSettings.exportCountdownColors then
-		exportOptions["countdownColors"] = exportProfileSettings(countdownColorsToExport, countdownSettings.db.profile) -- Not part of color plugin
-	end
-
-	if sharingExportOptionsSettings.exportNameplateSettings then
-		exportOptions["nameplateSettings"] = exportProfileSettings(nameplateSettingsToExport, nameplateSettings.db.profile)
-	end
-
-	if sharingExportOptionsSettings.exportMythicPlusSettings then
-		local db = BigWigsLoader.db:GetNamespace("MythicPlus", true)
-		if db then
-			exportOptions["mythicPlusSettings"] = exportProfileSettings(mythicPlusSettingsToExport, db.profile)
+		if requestAll or sharingExportOptionsSettings.exportBarPositions then
+			exportOptions["barPositions"] = exportProfileSettings(barPositionsToExport, barSettings.db.profile)
 		end
-	end
 
-	if sharingExportOptionsSettings.exportBattleResSettings then
-		local plugin = BigWigs:GetPlugin("BattleRes", true)
-		if plugin then
-			exportOptions["battleResSettings"] = exportProfileSettings(battleResSettingsToExport, plugin.db.profile)
+		if requestAll or sharingExportOptionsSettings.exportMessagePositions then
+			exportOptions["messagePositions"] = exportProfileSettings(messagePositionsToExport, messageSettings.db.profile)
 		end
-	end
 
-	local serialized = LibSerialize:Serialize(exportOptions)
-	local compressed = LibDeflate:CompressDeflate(serialized)
-	local compressedForPrint = LibDeflate:EncodeForPrint(compressed)
-	return sharingVersion..":"..compressedForPrint
+		if requestAll or sharingExportOptionsSettings.exportCountdownPositions then
+			exportOptions["countdownPositions"] = exportProfileSettings(countdownPositionsToExport, countdownSettings.db.profile)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportBarSettings then
+			exportOptions["barSettings"] = exportProfileSettings(barSettingsToExport, barSettings.db.profile)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportMessageSettings then
+			exportOptions["messageSettings"] = exportProfileSettings(messageSettingsToExport, messageSettings.db.profile)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportCountdownSettings then
+			exportOptions["countdownSettings"] = exportProfileSettings(countdownSettingsToExport, countdownSettings.db.profile)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportMessageColors then
+			exportOptions["messageColors"] = exportProfileColorSettings(messageColorsToExport)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportBarColors then
+			exportOptions["barColors"] = exportProfileColorSettings(barColorsToExport)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportCountdownColors then
+			exportOptions["countdownColors"] = exportProfileSettings(countdownColorsToExport, countdownSettings.db.profile) -- Not part of color plugin
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportNameplateSettings then
+			exportOptions["nameplateSettings"] = exportProfileSettings(nameplateSettingsToExport, nameplateSettings.db.profile)
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportMythicPlusSettings then
+			local db = BigWigsLoader.db:GetNamespace("MythicPlus", true)
+			if db then
+				exportOptions["mythicPlusSettings"] = exportProfileSettings(mythicPlusSettingsToExport, db.profile)
+			end
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportBattleResSettings then
+			local plugin = BigWigs:GetPlugin("BattleRes", true)
+			if plugin then
+				exportOptions["battleResSettings"] = exportProfileSettings(battleResSettingsToExport, plugin.db.profile)
+			end
+		end
+
+		local serialized = LibSerialize:Serialize(exportOptions)
+		local compressed = LibDeflate:CompressDeflate(serialized)
+		local compressedForPrint = LibDeflate:EncodeForPrint(compressed)
+		return sharingVersion..":"..compressedForPrint
+	end
+	local _, addonTable = ...
+	addonTable.GetExportString = function(requestAll) return GetExportString(requestAll) end
 end
 
 local function isImportStringAvailable()
@@ -605,6 +609,12 @@ end
 --------------------------------------------------------------------------------
 -- Options
 --
+
+local addonTable
+do
+	local _
+	_, addonTable = ...
+end
 
 local sharingOptions = {
 	importSection = {
@@ -942,7 +952,7 @@ local sharingOptions = {
 				order = 100,
 				width = "full",
 				get = function()
-					return GetExportString()
+					return addonTable.GetExportString()
 				end,
 				set = function() end,
 				control = "NoAcceptMultiline",
@@ -951,5 +961,4 @@ local sharingOptions = {
 	},
 }
 
-local _, addonTable = ...
 addonTable.sharingOptions = sharingOptions

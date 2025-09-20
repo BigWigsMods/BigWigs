@@ -3,7 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "deDE")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "Das Addon '%s' hat die Leiste '%s' erstellt."
+L.showAddonBar = "Das Addon '|cFF436EEE%s|r' hat die Leiste '%s' erstellt."
+--L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
 
 -- Core.lua
 L.berserk = "Berserker"

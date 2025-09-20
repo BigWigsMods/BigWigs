@@ -26,20 +26,6 @@ function API.CreateBarFromAddon(addonName, text, icon, barTime)
 end
 
 --------------------------------------------------------------------------------
--- Addons creating messages
---
-
--- Allows addons to show a message to the user
-function API.CreateMessageFromAddon(addonName, text, icon)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for message creation.") end
-	if type(text) ~= "string" or #text < 3 then error("Invalid text for message creation.") end
-	local iconType = type(icon)
-	if iconType ~= "string" and iconType ~= "number" then error("Invalid icon for message creation.") end
-	addonTbl.LoadAndEnableCore()
-	addonTbl.loaderPublic:SendMessage("BigWigs_Message", nil, nil, text, "yellow", icon)
-end
-
---------------------------------------------------------------------------------
 -- Bar Styles
 --
 
@@ -137,7 +123,7 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Profile imports
+-- Profile import/export
 --
 
 do
@@ -151,8 +137,17 @@ do
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		addonTbl.LoadCoreAndOptions()
-		BigWigsOptions:SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
+		BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	end
+end
+
+-- Input the name of YOUR addon, i.e. the addon making the profile request
+function API.RequestProfile(addonName)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") end
+	local L = API:GetLocale("BigWigs")
+	addonTbl.loaderPublic.Print(L.requestAddonProfile:format(addonName))
+	addonTbl.LoadCoreAndOptions()
+	return BigWigsOptions.RequestProfile(addonName)
 end
 
 --------------------------------------------------------------------------------

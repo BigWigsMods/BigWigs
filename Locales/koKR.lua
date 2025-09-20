@@ -3,7 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "koKR")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "'%s' 애드온이 '%s' 바를 생성했습니다."
+L.showAddonBar = "'|cFF436EEE%s|r' 애드온이 '%s' 바를 생성했습니다."
+--L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
 
 -- Core.lua
 L.berserk = "광폭화"

@@ -3,7 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "'%s' 插件创建了 '%s' 动作条。"
+L.showAddonBar = "'|cFF436EEE%s|r' 插件创建了 '%s' 动作条。"
+--L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
 
 -- Core.lua
 L.berserk = "狂暴"
