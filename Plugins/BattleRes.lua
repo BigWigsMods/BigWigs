@@ -17,7 +17,6 @@ local difficultiesWithBattleRes = {
 	[4] = true, -- 25 Player
 	[5] = true, -- 10 Player (Heroic)
 	[6] = true, -- 25 Player (Heroic)
-	[7] = true, -- Looking For Raid
 	-- Retail
 	[14] = true, -- Normal
 	[15] = true, -- Heroic
