@@ -23,7 +23,7 @@ L.adds_desc = "Abilita le varie funzioni relative agli add che usciranno durante
 L.health = "Salute"
 L.health_desc = "Abilita le funzioni per visualizzare le varie informazioni che riguardano la Salute durante l'incontro col boss"
 L.energy = "Energia"
---L.energy_desc = "Enable functions for displaying information about the various energy levels during the boss encounter."
+L.energy_desc = "Abilita le funzioni per visualizzare informazioni sui vari livelli di energia durante l'incontro col boss."
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 
@@ -54,14 +54,14 @@ L.offline = "Disconnesso"
 L.missingAddOnPopup = "L'addon |cFF436EEE%s|r è mancante!"
 L.missingAddOnRaidWarning = "L'addon |cFF436EEE%s|r è mancante! Nessun timer sarà visualizzato in questa zona!"
 L.outOfDateAddOnPopup = "L'addon |cFF436EEE%s|r non è aggiornato!"
---L.outOfDateAddOnRaidWarning = "L'addon |cFF436EEE%s|r non è aggiornato! You have v%d.%d.%d but the latest is v%d.%d.%d!"
+L.outOfDateAddOnRaidWarning = "L'addon |cFF436EEE%s|r non è aggiornato! Tu hai v%d.%d.%d ma il piu recente è v%d.%d.%d!"
 L.disabledAddOn = "L'addon |cFF436EEE%s|r è disattivato, i timer non saranno mostrati."
 L.removeAddOn = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "WARNING!\nHai aggiornato |cFF436EEE%s|r ma devi anche aggiornare l'addon principale|cFF436EEEBigWigs|r.\nIgnorando questo poterà a funzionalità anomala e non funzionante."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r richiede la versione %d dell' addon principale |cFF436EEEBigWigs|r per funzionare correttamente, tu hai la versione %d installata attualmente."
---L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
---L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
+L.addOnLoadFailedWithReason = "BigWigs ha fallito di caricare l'addon |cFF436EEE%s|r per %q. Digli ai devs di BigWigs!"
+L.addOnLoadFailedUnknownError = "BigWigs ha trovato un errore quando cercava di caricare l'addon |cFF436EEE%s|r. Digli ai devs di BigWigs!"
 
 L.expansionNames = {
 	"Classiche", -- Classic
@@ -88,7 +88,7 @@ L.Destruction = "Distruzione (Kil'jaeden)"
 L.RunAway = "Scappa ragazzina, scappa!!! (Lupo Cattivo)"
 L.spell_on_you = "BigWigs: Abilità su di te"
 L.spell_under_you = "BigWigs: Abilità sotto di te"
---L.simple_no_voice = "Simple (No Voice)"
+L.simple_no_voice = "Simple (Senza Voce)"
 
 -- Options.lua
 L.options = "Opzioni"
@@ -234,12 +234,12 @@ L.imported_countdown_position = "Posizione Conto alla rovescia"
 L.imported_countdown_settings = "Impostazioni Conto alla rovescia"
 L.imported_countdown_color = "Colori Conto alla rovescia"
 L.imported_nameplate_settings = "Impostazioni barre delle unità"
---L.imported_mythicplus_settings = "Mythic+ Settings"
---L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
---L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
---L.imported_battleres_settings = "Battle Res Settings"
---L.battleres_settings_import_desc = "Import all Battle Res settings."
---L.battleres_settings_export_desc = "Export all Battle Res settings."
+L.imported_mythicplus_settings = "Impostazzioni Mythic+"
+L.mythicplus_settings_import_desc = "Importare tutte le impostazzioni Mythic+."
+L.mythicplus_settings_export_desc = "esportare tutte le impostazzioni Mythic+."
+L.imported_battleres_settings = "impostazzioni Battle Res"
+L.battleres_settings_import_desc = "Importare tutte le impostazzioni Battle Res."
+L.battleres_settings_export_desc = "esportare tutte le impostazzioni Battle Res."
 
 -- Statistics
 L.statistics = "Statistiche"
@@ -259,8 +259,8 @@ L.normal = "Normale"
 L.heroic = "Eroica"
 L.mythic = "Mitica"
 L.timewalk = "Viaggi nel tempo"
---L.solotier8 = "Solo Tier 8"
---L.solotier11 = "Solo Tier 11"
+L.solotier8 = "Solo Tier 8"
+L.solotier11 = "Solo Tier 11"
 L.story = "Storia"
 L.mplus = "Mitica+ %d"
 L.SOD = "Stagione della scoperta"
@@ -277,15 +277,15 @@ L.H25 = "Eroico 25"
 -- TOOLS
 -----------------------------------------------------------------------
 
---L.tools = "Tools"
---L.toolsDesc = "BigWigs provides various tools or \"quality of life\" features to speed up and simplify the process of fighting bosses."
+L.tools = "Utensili"
+L.toolsDesc = "BigWigs fornisce diversi utensili o \"quality of life\" caratteristiche per velocizzare e simplificare il processo delle uccisioni dei bosses."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
 
---L.autoRoleTitle = "Auto Role"
---L.autoRoleExplainer = "Whenever you join a group, or you change your talent specialization whilst being in a group, BigWigs will automatically adjust your group role (Tank, Healer, Damager) accordingly.\n\n"
+L.autoRoleTitle = "Auto Ruolo"
+L.autoRoleExplainer = "Quando ti unisci ad un gruppo, o cambii le tue spec mentre sei gia in gruppo, BigWigs cambierà automaticamente il tuo ruolo nel gruppo (Tank, Healer, DPS).\n\n"
 
 -----------------------------------------------------------------------
 -- BattleRes.lua
