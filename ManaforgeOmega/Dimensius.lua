@@ -70,7 +70,20 @@ local cosmicCollapseLocale = mod:Easy() and L.cosmic_collapse_easy or L.cosmic_c
 -- Initialization
 --
 
+local livingMassLeftMarkerTable = {6, 2}
+local livingMassLeftMarker = mod:AddMarkerOption(false, "npc", 6, "left_living_mass", 6, 2) -- Living Mass Left
+
+local livingMassRightMarkerTable = {1, 4}
+local livingMassRightMarker = mod:AddMarkerOption(false, "npc", 1, "right_living_mass", 1, 4) -- Living Mass Right
+
+local nullBinderMarkerMapTable = {8, 7, 6, 5}
+local nullBinderMarker = mod:AddMarkerOption(false, "npc", nullBinderMarkerMapTable[1], -33575, unpack(nullBinderMarkerMapTable)) -- Nullbinder
+
 function mod:OnRegister()
+	-- Delayed for custom locale
+	livingMassLeftMarker = mod:AddMarkerOption(false, "npc", 6, "left_living_mass", 6, 2) -- Living Mass Left
+	livingMassRightMarker = mod:AddMarkerOption(false, "npc", 1, "right_living_mass", 1, 4) -- Living Mass Right
+
 	self:SetSpellRename(1230087, CL.knockback) -- Massive Smash (Knockback)
 	self:SetSpellRename(1230979, CL.spread) -- Dark Matter (Spread)
 	self:SetSpellRename(1243690, CL.soaks) -- Shattered Space (Soaks)
@@ -91,15 +104,6 @@ function mod:OnRegister()
 	self:SetSpellRename(1250055, L.slows) -- Voidgrasp (Slows)
 	self:SetSpellRename(1249423, L.mass_destruction) -- Mass Destruction (Lines)
 end
-
-local livingMassLeftMarkerTable = {6, 2}
-local livingMassLeftMarker = mod:AddMarkerOption(false, "npc", 6, "left_living_mass", 6, 2) -- Living Mass Left
-
-local livingMassRightMarkerTable = {1, 4}
-local livingMassRightMarker = mod:AddMarkerOption(false, "npc", 1, "right_living_mass", 1, 4) -- Living Mass Right
-
-local nullBinderMarkerMapTable = {8, 7, 6, 5}
-local nullBinderMarker = mod:AddMarkerOption(false, "npc", nullBinderMarkerMapTable[1], -33575, unpack(nullBinderMarkerMapTable)) -- Nullbinder
 
 function mod:GetOptions()
 	return {
