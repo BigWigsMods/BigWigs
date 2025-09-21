@@ -63,8 +63,8 @@ L.outOfDateContentPopup = "WARNUNG!\nDu hast |cFF436EEE%s|r aktualisiert, aber D
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r benötigt Version %d des Haupt |cFF436EEEBigWigs|r Addons zur korrekten Funktion, allerdings hast Du Version %d."
 L.addOnLoadFailedWithReason = "BigWigs konnte das Addon |cFF436EEE%s|r nicht laden wegen %q. Bitte den Entwicklern melden!"
 L.addOnLoadFailedUnknownError = "BigWigs hat einen Fehler beim Laden des Addons |cFF436EEE%s|r verursacht. Bitte den Entwicklern melden!"
---L.newFeatures = "New BigWigs features:"
---L.parentheses = "%s (%s)"
+L.newFeatures = "Neue BigWigs Features:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -83,39 +83,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Tiefen",
 	["LittleWigs_CurrentSeason"] = "Aktuelle Saison",
 }
---L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
---}
---L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
---}
---L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
---}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dayNamesShort = {
+	"SO", -- Sunday
+	"MO", -- Monday
+	"DI", -- Tuesday
+	"MI", -- Wednesday
+	"DO", -- Thursday
+	"FR", -- Friday
+	"SA", -- Saturday
+}
+L.dayNames = {
+	"Sonntag",
+	"Montag",
+	"Dienstag",
+	"Mittwoch",
+	"Donnerstag",
+	"Freitag",
+	"Samstag",
+}
+L.monthNames = {
+	"Januar",
+	"Februar",
+	"März",
+	"April",
+	"Mai",
+	"Juni",
+	"Juli",
+	"August",
+	"September",
+	"Oktober",
+	"November",
+	"Dezember",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Hütet Euch (Algalon)"
