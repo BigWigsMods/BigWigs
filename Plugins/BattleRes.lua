@@ -55,6 +55,9 @@ local GetTime = GetTime
 
 do
 	local fontName = plugin:GetDefaultFont()
+	if fontName == "Noto Sans Regular" then
+		fontName = "Noto Sans Medium"
+	end
 	local defaultDB = {
 		disabled = true,
 		mode = 1,
