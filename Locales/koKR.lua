@@ -63,6 +63,8 @@ L.outOfDateContentPopup = "경고!\n |cFF436EEE%s|r을 업데이트했지만 기
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r이 올바르게 작동하려면 기본 |cFF436EEEBigWigs|r 애드온의 %d 버전이 필요하지만 %d 버전을 사용 중입니다."
 L.addOnLoadFailedWithReason = "BigWigs에서 애드온 |cFF436EEE%s|r을 로드하는 데 실패했습니다. 이유는 %q입니다. BigWigs 개발팀에 알려주세요!"
 L.addOnLoadFailedUnknownError = "BigWigs에서 애드온 |cFF436EEE%s|r을 로드하는 중 오류가 발생했습니다. BigWigs 개발팀에 알려주세요!"
+--L.newFeatures = "New BigWigs features:"
+--L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"오리지널", -- Classic
