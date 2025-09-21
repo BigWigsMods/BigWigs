@@ -270,6 +270,7 @@ globals = {
 	"C_Timer",
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
+	"CloseMerchant", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"CombatLogGetCurrentEventInfo",
 	"CreateFrame",
 	"EJ_GetCreatureInfo",
