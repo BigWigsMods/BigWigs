@@ -260,6 +260,7 @@ globals = {
 	"BigWigsOptions",
 	"BigWigsStatsDB",
 	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
+	"BuyMerchantItem", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_EncounterJournal",
 	"C_GossipInfo",
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
@@ -283,6 +284,7 @@ globals = {
 	"GetFramesRegisteredForEvent",
 	"GetInstanceInfo",
 	"GetLocale",
+	"GetMerchantItemInfo", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"GetPartyAssignment",
 	"GetPlayerFacing",
 	"GetProfessionInfo",
