@@ -1257,12 +1257,14 @@ do
 
 			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
 			cellDate:SetWidth(WIDTH_RATING+13)
-			if runs[i].thisWeek then
-				cellDate.text:SetText("---")
+			local dateTbl = runs[i].completionDate
+			if type(dateTbl) == "table" then
+				cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday])
+				cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.day, L.monthNames[dateTbl.month], dateTbl.year)
 			else
-				cellDate.text:SetText("00/00")
+				cellDate.text:SetText("---")
+				cellDate.tooltip = "Date will be available after patch 11.2.5"
 			end
-			cellDate.tooltip = "Date will be available after patch 11.2.5"
 			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
 			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")

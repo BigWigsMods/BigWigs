@@ -81,6 +81,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Imersões",
 	["LittleWigs_CurrentSeason"] = "Temporada Atual",
 }
+--L.dayNamesShort = {
+--	"SUN", -- Sunday
+--	"MON", -- Monday
+--	"TUE", -- Tuesday
+--	"WED", -- Wednesday
+--	"THU", -- Thursday
+--	"FRI", -- Friday
+--	"SAT", -- Saturday
+--}
+--L.dayNames = {
+--	"Sunday",
+--	"Monday",
+--	"Tuesday",
+--	"Wednesday",
+--	"Thursday",
+--	"Friday",
+--	"Saturday",
+--}
+--L.monthNames = {
+--	"January",
+--	"February",
+--	"March",
+--	"April",
+--	"May",
+--	"June",
+--	"July",
+--	"August",
+--	"September",
+--	"October",
+--	"November",
+--	"December",
+--}
+--L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
