@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "Das Addon '|cFF436EEE%s|r' hat die Leiste '%s' erstellt."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "Das Addon '|cFF436EEE%s|r' hat gerade eine Kopie des Profil Export-Strings erstellt."
 
 -- Core.lua
 L.berserk = "Berserker"
@@ -307,7 +307,7 @@ L.iconTextureSpellIDError = "Es muss eine gültige Zauber ID zur Nutzung der Sym
 L.battleResModeIcon = "Modus: Symbol"
 L.battleResModeText = "Modus: Nur Text"
 L.battleResModeTextTooltip = "Es wird vorübergehend ein Hintergrund angezeigt, um beim Bewegen der Battle Res Funktion behilflich zu sein und den Mouseover Bereich anzuzeigen."
---L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
+L.battleResNoteTooltip = "Hinweis: Dieser Tooltip wird nur außerhalb des Kampfes angezeigt."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
