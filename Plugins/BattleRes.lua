@@ -63,7 +63,7 @@ do
 		mode = 1,
 		lock = false,
 		size = 50,
-		position = {"CENTER", "CENTER", 500, -50},
+		position = {"CENTER", "CENTER", 500, -50, "UIParent"},
 		textXPositionDuration = 0,
 		textYPositionDuration = 0,
 		textXPositionCharges = 0,
@@ -96,10 +96,6 @@ do
 	}
 	plugin.defaultDB = defaultDB
 
-	local validFramePoints = {
-		["TOPLEFT"] = true, ["TOPRIGHT"] = true, ["BOTTOMLEFT"] = true, ["BOTTOMRIGHT"] = true,
-		["TOP"] = true, ["BOTTOM"] = true, ["LEFT"] = true, ["RIGHT"] = true, ["CENTER"] = true,
-	}
 	ProfileUtils.ValidateMainSettings = function()
 		for k, v in next, plugin.db.profile do
 			local defaultType = type(defaultDB[k])
@@ -116,9 +112,10 @@ do
 		if plugin.db.profile.size < 20 or plugin.db.profile.size > 150 then
 			plugin.db.profile.size = defaultDB.size
 		end
+
 		if type(plugin.db.profile.position[1]) ~= "string" or type(plugin.db.profile.position[2]) ~= "string"
 		or type(plugin.db.profile.position[3]) ~= "number" or type(plugin.db.profile.position[4]) ~= "number"
-		or not validFramePoints[plugin.db.profile.position[1]] or not validFramePoints[plugin.db.profile.position[2]] then
+		or not BigWigsAPI.IsValidFramePoint(plugin.db.profile.position[1]) or not BigWigsAPI.IsValidFramePoint(plugin.db.profile.position[2]) then
 			plugin.db.profile.position = defaultDB.position
 		else
 			local x = math.floor(plugin.db.profile.position[3]+0.5)
@@ -130,6 +127,13 @@ do
 				plugin.db.profile.position[4] = y
 			end
 		end
+		if plugin.db.profile.position[5] ~= defaultDB.position[5] then
+			local frame = _G[plugin.db.profile.position[5]]
+			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+				plugin.db.profile.position = defaultDB.position
+			end
+		end
+
 		if plugin.db.profile.textXPositionDuration < -100 or plugin.db.profile.textXPositionDuration > 100 then
 			plugin.db.profile.textXPositionDuration = defaultDB.textXPositionDuration
 		else
@@ -344,7 +348,7 @@ do
 		do
 			local point, relPoint = plugin.db.profile.position[1], plugin.db.profile.position[2]
 			local x, y = plugin.db.profile.position[3], plugin.db.profile.position[4]
-			battleResFrame:SetPoint(point, UIParent, relPoint, x, y)
+			battleResFrame:SetPoint(point, plugin.db.profile.position[5], relPoint, x, y)
 		end
 		battleResFrame:SetSize(plugin.db.profile.size, plugin.db.profile.size)
 
@@ -1113,6 +1117,64 @@ do
 						end,
 						disabled = IsDisabled,
 					},
+					customAnchorPoint = {
+						type = "input",
+						get = function()
+							return plugin.db.profile.position[5]
+						end,
+						set = function(_, value)
+							local frame = _G[value]
+							if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+								return
+							end
+							if value ~= plugin.defaultDB.position[5] then
+								plugin.db.profile.position = {"CENTER", "CENTER", 0, 0, value}
+							else
+								plugin.db.profile.position = plugin.defaultDB.position
+							end
+							UpdateWidgets()
+						end,
+						name = L.customAnchorPoint,
+						order = 3,
+						width = 3.2,
+						disabled = IsDisabled,
+					},
+					customAnchorPointSource = {
+						type = "select",
+						get = function()
+							return plugin.db.profile.position[1]
+						end,
+						set = function(_, value)
+							if BigWigsAPI.IsValidFramePoint(value) then
+								plugin.db.profile.position[1] = value
+								UpdateWidgets()
+							end
+						end,
+						values = BigWigsAPI.GetFramePointList(),
+						name = L.sourcePoint,
+						order = 4,
+						width = 1.6,
+						hidden = function() return plugin.db.profile.position[5] == plugin.defaultDB.position[5] end,
+						disabled = IsDisabled,
+					},
+					customAnchorPointDestination = {
+						type = "select",
+						get = function()
+							return plugin.db.profile.position[2]
+						end,
+						set = function(_, value)
+							if BigWigsAPI.IsValidFramePoint(value) then
+								plugin.db.profile.position[2] = value
+								UpdateWidgets()
+							end
+						end,
+						values = BigWigsAPI.GetFramePointList(),
+						name = L.destinationPoint,
+						order = 5,
+						width = 1.6,
+						hidden = function() return plugin.db.profile.position[5] == plugin.defaultDB.position[5] end,
+						disabled = IsDisabled,
+					},
 				},
 			},
 		},
@@ -1129,7 +1191,7 @@ battleResFrame:SetSize(plugin.defaultDB.size, plugin.defaultDB.size)
 do
 	local point, relPoint = plugin.defaultDB.position[1], plugin.defaultDB.position[2]
 	local x, y = plugin.defaultDB.position[3], plugin.defaultDB.position[4]
-	battleResFrame:SetPoint(point, UIParent, relPoint, x, y)
+	battleResFrame:SetPoint(point, plugin.defaultDB.position[5], relPoint, x, y)
 
 	local icon = battleResFrame:CreateTexture()
 	icon:SetAllPoints(battleResFrame)
@@ -1323,17 +1385,17 @@ battleResFrame:SetMovable(true)
 battleResFrame:RegisterForDrag("LeftButton")
 battleResFrame:EnableMouse(true)
 battleResFrame:SetScript("OnDragStart", function(self)
-	if not plugin.db.profile.lock then
+	if not plugin.db.profile.lock and plugin.db.profile.position[5] == plugin.defaultDB.position[5] then
 		self:StartMoving()
 	end
 end)
 battleResFrame:SetScript("OnDragStop", function(self)
-	if not plugin.db.profile.lock then
+	if not plugin.db.profile.lock and plugin.db.profile.position[5] == plugin.defaultDB.position[5] then
 		self:StopMovingOrSizing()
 		local point, _, relPoint, x, y = self:GetPoint()
 		x = math.floor(x+0.5)
 		y = math.floor(y+0.5)
-		plugin.db.profile.position = {point, relPoint, x, y}
+		plugin.db.profile.position = {point, relPoint, x, y, plugin.db.profile.position[5]}
 		if BigWigsOptions and BigWigsOptions:IsOpen() then
 			plugin:UpdateGUI() -- Update X/Y if GUI is open
 		end
