@@ -246,6 +246,28 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Validation
+--
+
+do
+	local validFramePoints = {
+		["TOPLEFT"] = true, ["TOPRIGHT"] = true, ["BOTTOMLEFT"] = true, ["BOTTOMRIGHT"] = true,
+		["TOP"] = true, ["BOTTOM"] = true, ["LEFT"] = true, ["RIGHT"] = true, ["CENTER"] = true,
+	}
+	function API.IsValidFramePoint(point)
+		return validFramePoints[point]
+	end
+	function API.GetFramePointList()
+		local list = {}
+		local L = API:GetLocale("BigWigs")
+		for k in next, validFramePoints do
+			list[k] = L[k]
+		end
+		return list
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Versions
 --
 
