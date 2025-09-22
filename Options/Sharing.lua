@@ -536,6 +536,11 @@ do
 			local plugin = BigWigs:GetPlugin("BattleRes", true)
 			if plugin then
 				importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, plugin, L.imported_battleres_settings)
+				-- XXX temp remove me
+				local db = BigWigsLoader.db:GetNamespace("BattleRes", true)
+				if db then
+					importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, {db = db}, L.imported_battleres_settings)
+				end
 			end
 		end
 
