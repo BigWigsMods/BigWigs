@@ -1477,6 +1477,9 @@ do
 			battleResFrame:Show()
 			battleResFrame.cdText:SetText("0:00")
 			battleResFrame.chargesText:SetText(0)
+			if plugin.db.profile.iconDesaturate == 3 then
+				battleResFrame.icon:SetDesaturated(true)
+			end
 			plugin:RegisterEvent("ENCOUNTER_START")
 			plugin:RegisterEvent("ENCOUNTER_END")
 			plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -1572,7 +1575,7 @@ function plugin:ENCOUNTER_END()
 	battleResFrame.cdText:SetText("0:00")
 	battleResFrame.chargesText:SetText(0)
 	if self.db.profile.iconDesaturate == 3 then
-		battleResFrame.icon:SetDesaturated(false)
+		battleResFrame.icon:SetDesaturated(true)
 	end
 	battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
