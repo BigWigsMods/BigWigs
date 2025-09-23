@@ -83,9 +83,9 @@ do
 		if db.profile.countBegin < 3 or db.profile.countBegin > 9 then
 			db.profile.countBegin = defaults.countBegin
 		end
-		local checkCount = math.floor(db.countBegin+0.5)
-		if checkCount ~= db.countBegin then
-			db.countBegin = checkCount
+		local checkCount = math.floor(db.profile.countBegin+0.5)
+		if checkCount ~= db.profile.countBegin then
+			db.profile.countBegin = checkCount
 		end
 		if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 then
 			db.profile.windowHeight = defaults.windowHeight
