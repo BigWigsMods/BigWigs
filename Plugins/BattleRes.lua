@@ -96,13 +96,24 @@ do
 	}
 	plugin.defaultDB = defaultDB
 
+	local function ValidateColor(current, default, alphaLimit)
+		for i = 1, 4 do
+			local n = current[i]
+			if not default[i] or type(n) ~= "number" or n < 0 or n > 1 then
+				current[i] = default[i]
+			end
+		end
+		if alphaLimit and current[4] < alphaLimit then -- Limit lowest alpha value
+			current[4] = default[4]
+		end
+	end
 	ProfileUtils.ValidateMainSettings = function()
-		for k, v in next, plugin.db.profile do
-			local defaultType = type(defaultDB[k])
+		for dbKey, dbValue in next, plugin.db.profile do
+			local defaultType = type(defaultDB[dbKey])
 			if defaultType == "nil" then
-				plugin.db.profile[k] = nil
-			elseif type(v) ~= defaultType then
-				plugin.db.profile[k] = defaultDB[k]
+				plugin.db.profile[dbKey] = nil
+			elseif type(dbValue) ~= defaultType then
+				plugin.db.profile[dbKey] = defaultDB[dbKey]
 			end
 		end
 
@@ -116,7 +127,11 @@ do
 		if type(plugin.db.profile.position[1]) ~= "string" or type(plugin.db.profile.position[2]) ~= "string"
 		or type(plugin.db.profile.position[3]) ~= "number" or type(plugin.db.profile.position[4]) ~= "number"
 		or not BigWigsAPI.IsValidFramePoint(plugin.db.profile.position[1]) or not BigWigsAPI.IsValidFramePoint(plugin.db.profile.position[2]) then
-			plugin.db.profile.position = defaultDB.position
+			plugin.db.profile.position[1] = defaultDB.position[1]
+			plugin.db.profile.position[2] = defaultDB.position[2]
+			plugin.db.profile.position[3] = defaultDB.position[3]
+			plugin.db.profile.position[4] = defaultDB.position[4]
+			plugin.db.profile.position[5] = defaultDB.position[5]
 		else
 			local x = math.floor(plugin.db.profile.position[3]+0.5)
 			if x ~= plugin.db.profile.position[3] then
@@ -127,10 +142,17 @@ do
 				plugin.db.profile.position[4] = y
 			end
 		end
+		if not plugin.db.profile.position[5] then
+			plugin.db.profile.position[5] = defaultDB.position[5] -- XXX temp remove me
+		end
 		if plugin.db.profile.position[5] ~= defaultDB.position[5] then
 			local frame = _G[plugin.db.profile.position[5]]
 			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				plugin.db.profile.position = defaultDB.position
+				plugin.db.profile.position[1] = defaultDB.position[1]
+				plugin.db.profile.position[2] = defaultDB.position[2]
+				plugin.db.profile.position[3] = defaultDB.position[3]
+				plugin.db.profile.position[4] = defaultDB.position[4]
+				plugin.db.profile.position[5] = defaultDB.position[5]
 			end
 		end
 
@@ -181,13 +203,8 @@ do
 		if plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline ~= "OUTLINE" and plugin.db.profile.outline ~= "THICKOUTLINE" then
 			plugin.db.profile.outline = defaultDB.outline
 		end
-		for i = 1, 4 do
-			local n = plugin.db.profile.borderColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				plugin.db.profile.borderColor = defaultDB.borderColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
+
+		ValidateColor(plugin.db.profile.borderColor, defaultDB.borderColor)
 		if plugin.db.profile.borderOffset < 0 or plugin.db.profile.borderOffset > 32 then
 			plugin.db.profile.borderOffset = defaultDB.borderOffset
 		end
@@ -200,44 +217,15 @@ do
 		if plugin.db.profile.chargesAlign ~= "LEFT" and plugin.db.profile.chargesAlign ~= "CENTER" and plugin.db.profile.chargesAlign ~= "RIGHT" then
 			plugin.db.profile.chargesAlign = defaultDB.chargesAlign
 		end
-		for i = 1, 4 do
-			local n = plugin.db.profile.durationColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				plugin.db.profile.durationColor = defaultDB.durationColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		for i = 1, 4 do
-			local n = plugin.db.profile.durationEmphasizeColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				plugin.db.profile.durationEmphasizeColor = defaultDB.durationEmphasizeColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		for i = 1, 4 do
-			local n = plugin.db.profile.chargesNoneColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				plugin.db.profile.chargesNoneColor = defaultDB.chargesNoneColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		for i = 1, 4 do
-			local n = plugin.db.profile.chargesAvailableColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				plugin.db.profile.chargesAvailableColor = defaultDB.chargesAvailableColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
+
+		ValidateColor(plugin.db.profile.durationColor, defaultDB.durationColor)
+		ValidateColor(plugin.db.profile.durationEmphasizeColor, defaultDB.durationEmphasizeColor)
+		ValidateColor(plugin.db.profile.chargesNoneColor, defaultDB.chargesNoneColor)
+		ValidateColor(plugin.db.profile.chargesAvailableColor, defaultDB.chargesAvailableColor)
 		if plugin.db.profile.durationEmphasizeTime < 0 or plugin.db.profile.durationEmphasizeTime > 30 then
 			plugin.db.profile.durationEmphasizeTime = defaultDB.durationEmphasizeTime
 		end
-		for i = 1, 4 do
-			local n = plugin.db.profile.iconColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				plugin.db.profile.iconColor = defaultDB.iconColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
+		ValidateColor(plugin.db.profile.iconColor, defaultDB.iconColor)
 		if not BigWigsLoader.GetSpellTexture(plugin.db.profile.iconTextureFromSpellID) then
 			plugin.db.profile.iconTextureFromSpellID = defaultDB.iconTextureFromSpellID
 		end
@@ -258,14 +246,24 @@ do
 	end
 	ProfileUtils.SetPreset = function(mode)
 		if mode == "icon" then
-			local position = plugin.db.profile.position
+			local point, relPoint, anchor = plugin.db.profile.position[1], plugin.db.profile.position[2], plugin.db.profile.position[5]
+			local x, y = plugin.db.profile.position[3], plugin.db.profile.position[4]
 			ProfileUtils.ResetSettings()
-			plugin.db.profile.position = position
+			plugin.db.profile.position[1] = point
+			plugin.db.profile.position[2] = relPoint
+			plugin.db.profile.position[3] = x
+			plugin.db.profile.position[4] = y
+			plugin.db.profile.position[5] = anchor
 			plugin.db.profile.mode = 1
 		elseif mode == "text" then
-			local position = plugin.db.profile.position
+			local point, relPoint, anchor = plugin.db.profile.position[1], plugin.db.profile.position[2], plugin.db.profile.position[5]
+			local x, y = plugin.db.profile.position[3], plugin.db.profile.position[4]
 			ProfileUtils.ResetSettings()
-			plugin.db.profile.position = position
+			plugin.db.profile.position[1] = point
+			plugin.db.profile.position[2] = relPoint
+			plugin.db.profile.position[3] = x
+			plugin.db.profile.position[4] = y
+			plugin.db.profile.position[5] = anchor
 			plugin.db.profile.mode = 2
 			plugin.db.profile.borderName = "None"
 			plugin.db.profile.durationAlign = "CENTER"
@@ -276,10 +274,14 @@ do
 		end
 	end
 	ProfileUtils.ResetSettings = function()
-		for k, v in next, defaultDB do
-			plugin.db.profile[k] = v
-		end
+		plugin.db:ResetProfile()
 		plugin.db.profile.disabled = false
+	end
+
+	local function ResetColor(current, default)
+		for i = 1, 4 do
+			current[i] = default[i]
+		end
 	end
 	ProfileUtils.ResetGeneralSettings = function()
 		plugin.db.profile.lock = defaultDB.lock
@@ -287,7 +289,7 @@ do
 		plugin.db.profile.fontName = defaultDB.fontName
 		plugin.db.profile.outline = defaultDB.outline
 		plugin.db.profile.monochrome = defaultDB.monochrome
-		plugin.db.profile.borderColor = defaultDB.borderColor
+		ResetColor(plugin.db.profile.borderColor, defaultDB.borderColor)
 		plugin.db.profile.borderName = defaultDB.borderName
 		plugin.db.profile.borderOffset = defaultDB.borderOffset
 		plugin.db.profile.borderSize = defaultDB.borderSize
@@ -298,9 +300,9 @@ do
 		plugin.db.profile.textYPositionDuration = defaultDB.textYPositionDuration
 		plugin.db.profile.durationFontSize = defaultDB.durationFontSize
 		plugin.db.profile.durationAlign = defaultDB.durationAlign
-		plugin.db.profile.durationColor = defaultDB.durationColor
+		ResetColor(plugin.db.profile.durationColor, defaultDB.durationColor)
 		plugin.db.profile.durationEmphasizeTime = defaultDB.durationEmphasizeTime
-		plugin.db.profile.durationEmphasizeColor = defaultDB.durationEmphasizeColor
+		ResetColor(plugin.db.profile.durationEmphasizeColor, defaultDB.durationEmphasizeColor)
 		plugin.db.profile.durationEmphasizeFontSize = defaultDB.durationEmphasizeFontSize
 	end
 	ProfileUtils.ResetChargesSettings = function()
@@ -309,12 +311,12 @@ do
 		plugin.db.profile.chargesNoneFontSize = defaultDB.chargesNoneFontSize
 		plugin.db.profile.chargesAvailableFontSize = defaultDB.chargesAvailableFontSize
 		plugin.db.profile.chargesAlign = defaultDB.chargesAlign
-		plugin.db.profile.chargesNoneColor = defaultDB.chargesNoneColor
-		plugin.db.profile.chargesAvailableColor = defaultDB.chargesAvailableColor
+		ResetColor(plugin.db.profile.chargesNoneColor, defaultDB.chargesNoneColor)
+		ResetColor(plugin.db.profile.chargesAvailableColor, defaultDB.chargesAvailableColor)
 	end
 	ProfileUtils.ResetIconSettings = function()
 		plugin.db.profile.iconTextureFromSpellID = defaultDB.iconTextureFromSpellID
-		plugin.db.profile.iconColor = defaultDB.iconColor
+		ResetColor(plugin.db.profile.iconColor, defaultDB.iconColor)
 		plugin.db.profile.iconDesaturate = defaultDB.iconDesaturate
 		plugin.db.profile.cooldownEdge = defaultDB.cooldownEdge
 		plugin.db.profile.cooldownSwipe = defaultDB.cooldownSwipe
@@ -1535,7 +1537,7 @@ do
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.UpdateWidgets()
 		if not self.db.profile.disabled then
-			isEnabled = false
+			isEnabled = true
 			BigWigsLoader.CTimerAfter(0, DelayStartOfInstance)
 		else
 			isEnabled = false
