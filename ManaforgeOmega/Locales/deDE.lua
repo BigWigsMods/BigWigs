@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Plexus Sentinel", "deDE")
 if not L then return end
 if L then
-	--L.cleanse_the_chamber = "Wall"
+	L.cleanse_the_chamber = "Wand"
 end
 
 L = BigWigs:NewBossLocale("Loom'ithar", "deDE")
