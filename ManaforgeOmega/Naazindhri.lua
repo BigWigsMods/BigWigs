@@ -143,7 +143,7 @@ function mod:VoidbladeAmbushTargetApplied(args)
 		self:PersonalMessage(1227048, nil, L.voidblade_ambush)
 		if not self:Easy() then
 			self:Say(1227048, L.voidblade_ambush, nil, "Ambush")
-			self:SayCountdown(1227048, 4) -- XXX 3 is tooltip on wowhead, changed?
+			self:SayCountdown(1227048, 3, nil, 2)
 		end
 		self:PlaySound(1227048, "warning", nil, args.destName) -- position yourself
 	end
