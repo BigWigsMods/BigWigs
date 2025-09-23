@@ -30,8 +30,8 @@ end
 -- Locals
 --
 
-local media = LibStub("LibSharedMedia-3.0")
-local FONT = media.MediaType and media.MediaType.FONT or "font"
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 local BigWigsAPI = BigWigsAPI
 plugin.displayName = L.countdown
 
@@ -39,11 +39,6 @@ local countdownAnchor = nil
 local countdownFrame = nil
 local countdownText = nil
 local inConfigMode = false
-
-local validFramePoints = {
-	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
-	["TOP"] = L.TOP, ["BOTTOM"] = L.BOTTOM, ["LEFT"] = L.LEFT, ["RIGHT"] = L.RIGHT, ["CENTER"] = L.CENTER,
-}
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -71,7 +66,7 @@ local function UpdateFont()
 	elseif plugin.db.profile.outline ~= "NONE" then
 		flags = plugin.db.profile.outline
 	end
-	countdownText:SetFont(media:Fetch(FONT, plugin.db.profile.fontName), plugin.db.profile.fontSize, flags)
+	countdownText:SetFont(LibSharedMedia:Fetch(FONT, plugin.db.profile.fontName), plugin.db.profile.fontSize, flags)
 	countdownText:SetTextColor(plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b)
 end
 
@@ -87,8 +82,8 @@ local function updateProfile()
 		end
 	end
 
-	if not media:IsValid(FONT, db.fontName) then
-		db.fontName = plugin:GetDefaultFont()
+	if not LibSharedMedia:IsValid(FONT, db.fontName) then
+		db.fontName = plugin.defaultDB.fontName
 	end
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 		db.outline = plugin.defaultDB.outline
@@ -99,7 +94,9 @@ local function updateProfile()
 	if type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1
 	or type(db.fontColor.g) ~= "number" or db.fontColor.g < 0 or db.fontColor.g > 1
 	or type(db.fontColor.b) ~= "number" or db.fontColor.b < 0 or db.fontColor.b > 1 then
-		db.fontColor = plugin.defaultDB.fontColor
+		db.fontColor.r = plugin.defaultDB.fontColor.r
+		db.fontColor.g = plugin.defaultDB.fontColor.g
+		db.fontColor.b = plugin.defaultDB.fontColor.b
 	end
 	if db.countdownTime < 3 or db.countdownTime > 10 then
 		db.countdownTime = plugin.defaultDB.countdownTime
@@ -110,8 +107,11 @@ local function updateProfile()
 	end
 	if type(db.position[1]) ~= "string" or type(db.position[2]) ~= "string"
 	or type(db.position[3]) ~= "number" or type(db.position[4]) ~= "number"
-	or not validFramePoints[db.position[1]] or not validFramePoints[db.position[2]] then
-		db.position = plugin.defaultDB.position
+	or not BigWigsAPI.IsValidFramePoint(db.position[1]) or not BigWigsAPI.IsValidFramePoint(db.position[2]) then
+		db.position[1] = plugin.defaultDB.position[1]
+		db.position[2] = plugin.defaultDB.position[2]
+		db.position[3] = plugin.defaultDB.position[3]
+		db.position[4] = plugin.defaultDB.position[4]
 	else
 		local x = math.floor(db.position[3]+0.5)
 		if x ~= db.position[3] then
@@ -169,7 +169,10 @@ do
 		local point, _, relPoint, x, y = self:GetPoint()
 		x = math.floor(x+0.5)
 		y = math.floor(y+0.5)
-		plugin.db.profile.position = {point, relPoint, x, y}
+		plugin.db.profile.position[1] = point
+		plugin.db.profile.position[2] = relPoint
+		plugin.db.profile.position[3] = x
+		plugin.db.profile.position[4] = y
 		self:RefixPosition()
 		if BigWigsOptions and BigWigsOptions:IsOpen() then
 			plugin:UpdateGUI() -- Update X/Y if GUI is open
@@ -314,15 +317,15 @@ do
 						type = "select",
 						name = L.font,
 						order = 10,
-						values = media:List(FONT),
+						values = LibSharedMedia:List(FONT),
 						itemControl = "DDI-Font",
 						get = function()
-							for i, v in next, media:List(FONT) do
+							for i, v in next, LibSharedMedia:List(FONT) do
 								if v == plugin.db.profile.fontName then return i end
 							end
 						end,
 						set = function(_, value)
-							local list = media:List(FONT)
+							local list = LibSharedMedia:List(FONT)
 							plugin.db.profile.fontName = list[value]
 							UpdateFont()
 						end,

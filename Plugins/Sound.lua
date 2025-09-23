@@ -14,8 +14,8 @@ if not plugin then return end
 -- Locals
 --
 
-local media = LibStub("LibSharedMedia-3.0")
-local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 local soundList = nil
 local db
 local sounds = {
@@ -90,7 +90,7 @@ plugin.pluginOptions = {
 	set = function(info, value)
 		local sound = info[#info]
 		db.media[sound] = soundList[value]
-		plugin:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
+		plugin:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundList[value]))
 	end,
 	order = 5,
 	args = {
@@ -248,7 +248,7 @@ end
 function plugin:OnRegister()
 	updateProfile()
 
-	soundList = media:List(SOUND)
+	soundList = LibSharedMedia:List(SOUND)
 
 	for k in next, sounds do
 		local n = L[k] or k
@@ -269,7 +269,7 @@ function plugin:OnRegister()
 				local optionName = info[#info]
 				if not db[optionName][name] then db[optionName][name] = {} end
 				db[optionName][name][key] = soundList[value]
-				self:PlaySoundFile(media:Fetch(SOUND, soundList[value]))
+				self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundList[value]))
 				-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
 			end,
 			hidden = function(info)
@@ -305,31 +305,31 @@ function plugin:OnRegister()
 	local soundsPlayedTable = {}
 	if not soundsPlayedTable[db.media.Long] then
 		soundsPlayedTable[db.media.Long] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Long)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Long)) if played then StopSound(id) end end, 0)
 	end
 	if not soundsPlayedTable[db.media.Info] then
 		soundsPlayedTable[db.media.Info] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Info)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Info)) if played then StopSound(id) end end, 0)
 	end
 	if not soundsPlayedTable[db.media.Alert] then
 		soundsPlayedTable[db.media.Alert] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Alert)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Alert)) if played then StopSound(id) end end, 0)
 	end
 	if not soundsPlayedTable[db.media.Alarm] then
 		soundsPlayedTable[db.media.Alarm] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Alarm)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Alarm)) if played then StopSound(id) end end, 0)
 	end
 	if not soundsPlayedTable[db.media.Warning] then
 		soundsPlayedTable[db.media.Warning] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.Warning)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Warning)) if played then StopSound(id) end end, 0)
 	end
 	if not soundsPlayedTable[db.media.underyou] then
 		soundsPlayedTable[db.media.underyou] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.underyou)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.underyou)) if played then StopSound(id) end end, 0)
 	end
 	if not soundsPlayedTable[db.media.privateaura] then
 		soundsPlayedTable[db.media.privateaura] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, db.media.privateaura)) if played then StopSound(id) end end, 0)
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.privateaura)) if played then StopSound(id) end end, 0)
 	end
 end
 
@@ -355,11 +355,11 @@ do
 		soundName = tmp[soundName] or soundName
 		local sDb = db[soundName]
 		if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-			local path = db.media[soundName] and media:Fetch(SOUND, db.media[soundName], true) or media:Fetch(SOUND, soundName, true)
+			local path = db.media[soundName] and LibSharedMedia:Fetch(SOUND, db.media[soundName], true) or LibSharedMedia:Fetch(SOUND, soundName, true)
 			return path
 		else
 			local newSound = sDb[module.name][key]
-			local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
+			local path = db.media[newSound] and LibSharedMedia:Fetch(SOUND, db.media[newSound], true) or LibSharedMedia:Fetch(SOUND, newSound, true)
 			return path
 		end
 	end
@@ -372,7 +372,7 @@ do
 		soundName = tmp[soundName] or soundName
 
 		local custom = soundName:match("^name:(.+)$")
-		if custom and not media:Fetch(SOUND, custom, true) then
+		if custom and not LibSharedMedia:Fetch(SOUND, custom, true) then
 			return
 		end
 		return custom or db.media[soundName]

@@ -22,7 +22,7 @@ do
 			mode = 1,
 			lock = false,
 			size = 50,
-			position = {"CENTER", "CENTER", 500, -50},
+			position = {"CENTER", "CENTER", 500, -50, "UIParent"},
 			textXPositionDuration = 0,
 			textYPositionDuration = 0,
 			textXPositionCharges = 0,

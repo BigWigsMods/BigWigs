@@ -23,10 +23,6 @@ do
 			end
 		end
 	end
-	local validFramePoints = {
-		["TOPLEFT"] = true, ["TOPRIGHT"] = true, ["BOTTOMLEFT"] = true, ["BOTTOMRIGHT"] = true,
-		["TOP"] = true, ["BOTTOM"] = true, ["LEFT"] = true, ["RIGHT"] = true, ["CENTER"] = true,
-	}
 
 	local defaults = {
 		autoSlotKeystone = true,
@@ -55,6 +51,26 @@ do
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
 
+	local function ValidateColor(current, default, alphaLimit)
+		for i = 1, 3 do
+			local n = current[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				current[1] = default[1] -- If 1 entry is bad, reset the whole table
+				current[2] = default[2]
+				current[3] = default[3]
+				current[4] = default[4]
+				return
+			end
+		end
+		if alphaLimit then
+			if type(current[4]) ~= "number" or current[4] < alphaLimit or current[4] > 1 then
+				current[4] = default[4]
+			end
+		elseif current[4] then
+			current[4] = nil
+		end
+	end
+
 	ProfileUtils.ValidateMainSettings = function()
 		for k, v in next, db.profile do
 			local defaultType = type(defaults[k])
@@ -67,13 +83,20 @@ do
 		if db.profile.countBegin < 3 or db.profile.countBegin > 9 then
 			db.profile.countBegin = defaults.countBegin
 		end
+		local checkCount = math.floor(db.countBegin+0.5)
+		if checkCount ~= db.countBegin then
+			db.countBegin = checkCount
+		end
 		if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 then
 			db.profile.windowHeight = defaults.windowHeight
 		end
 		if type(db.profile.viewerPosition[1]) ~= "string" or type(db.profile.viewerPosition[2]) ~= "string"
 		or type(db.profile.viewerPosition[3]) ~= "number" or type(db.profile.viewerPosition[4]) ~= "number"
-		or not validFramePoints[db.profile.viewerPosition[1]] or not validFramePoints[db.profile.viewerPosition[2]] then
-			db.profile.viewerPosition = defaults.viewerPosition
+		or not BigWigsAPI.IsValidFramePoint(db.profile.viewerPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.viewerPosition[2]) then
+			db.profile.viewerPosition[1] = defaults.viewerPosition[1]
+			db.profile.viewerPosition[2] = defaults.viewerPosition[2]
+			db.profile.viewerPosition[3] = defaults.viewerPosition[3]
+			db.profile.viewerPosition[4] = defaults.viewerPosition[4]
 		else
 			local x = math.floor(db.profile.viewerPosition[3]+0.5)
 			if x ~= db.profile.viewerPosition[3] then
@@ -86,8 +109,11 @@ do
 		end
 		if type(db.profile.instanceKeysPosition[1]) ~= "string" or type(db.profile.instanceKeysPosition[2]) ~= "string"
 		or type(db.profile.instanceKeysPosition[3]) ~= "number" or type(db.profile.instanceKeysPosition[4]) ~= "number"
-		or not validFramePoints[db.profile.instanceKeysPosition[1]] or not validFramePoints[db.profile.instanceKeysPosition[2]] then
-			db.profile.instanceKeysPosition = defaults.instanceKeysPosition
+		or not BigWigsAPI.IsValidFramePoint(db.profile.instanceKeysPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.instanceKeysPosition[2]) then
+			db.profile.instanceKeysPosition[1] = defaults.instanceKeysPosition[1]
+			db.profile.instanceKeysPosition[2] = defaults.instanceKeysPosition[2]
+			db.profile.instanceKeysPosition[3] = defaults.instanceKeysPosition[3]
+			db.profile.instanceKeysPosition[4] = defaults.instanceKeysPosition[4]
 		else
 			local x = math.floor(db.profile.instanceKeysPosition[3]+0.5)
 			if x ~= db.profile.instanceKeysPosition[3] then
@@ -107,26 +133,8 @@ do
 		if db.profile.instanceKeysAlign ~= "LEFT" and db.profile.instanceKeysAlign ~= "CENTER" and db.profile.instanceKeysAlign ~= "RIGHT" then
 			db.profile.instanceKeysAlign = defaults.instanceKeysAlign
 		end
-		for i = 1, 4 do
-			local n = db.profile.instanceKeysColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.profile.instanceKeysColor = defaults.instanceKeysColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		if db.profile.instanceKeysColor[4] < 0.3 then -- Limit lowest alpha value
-			db.profile.instanceKeysColor = defaults.instanceKeysColor
-		end
-		for i = 1, 4 do
-			local n = db.profile.instanceKeysOtherDungeonColor[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
-				break -- If 1 entry is bad, reset the whole table
-			end
-		end
-		if db.profile.instanceKeysOtherDungeonColor[4] < 0.3 then -- Limit lowest alpha value
-			db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
-		end
+		ValidateColor(db.profile.instanceKeysColor, defaults.instanceKeysColor, 0.3)
+		ValidateColor(db.profile.instanceKeysOtherDungeonColor, defaults.instanceKeysOtherDungeonColor, 0.3)
 	end
 	ProfileUtils.ValidateMediaSettings = function()
 		if not BigWigsAPI:HasCountdown(db.profile.countVoice) then
@@ -143,17 +151,18 @@ do
 		end
 	end
 	ProfileUtils.ResetInstanceKeys = function()
-		db.profile.instanceKeysPosition = defaults.instanceKeysPosition
-		db.profile.instanceKeysFontName = defaults.instanceKeysFontName
-		db.profile.instanceKeysFontSize = defaults.instanceKeysFontSize
-		db.profile.instanceKeysMonochrome = defaults.instanceKeysMonochrome
-		db.profile.instanceKeysGrowUpwards = defaults.instanceKeysGrowUpwards
-		db.profile.instanceKeysOutline = defaults.instanceKeysOutline
-		db.profile.instanceKeysAlign = defaults.instanceKeysAlign
-		db.profile.instanceKeysColor = defaults.instanceKeysColor
-		db.profile.instanceKeysOtherDungeonColor = defaults.instanceKeysOtherDungeonColor
-		db.profile.instanceKeysShowAllPlayers = defaults.instanceKeysShowAllPlayers
-		db.profile.instanceKeysShowDungeonEnd = defaults.instanceKeysShowDungeonEnd
+		db.profile.instanceKeysPosition = nil
+		db.profile.instanceKeysFontName = nil
+		db.profile.instanceKeysFontSize = nil
+		db.profile.instanceKeysMonochrome = nil
+		db.profile.instanceKeysGrowUpwards = nil
+		db.profile.instanceKeysOutline = nil
+		db.profile.instanceKeysAlign = nil
+		db.profile.instanceKeysColor = nil
+		db.profile.instanceKeysOtherDungeonColor = nil
+		db.profile.instanceKeysShowAllPlayers = nil
+		db.profile.instanceKeysShowDungeonEnd = nil
+		db:RegisterDefaults(db.defaults)
 	end
 
 	ProfileUtils.ValidateMainSettings()
@@ -388,7 +397,10 @@ mainPanel:SetScript("OnDragStop", function(self)
 	local point, _, relPoint, x, y = self:GetPoint()
 	x = math.floor(x+0.5)
 	y = math.floor(y+0.5)
-	db.profile.viewerPosition = {point, relPoint, x, y}
+	db.profile.viewerPosition[1] = point
+	db.profile.viewerPosition[2] = relPoint
+	db.profile.viewerPosition[3] = x
+	db.profile.viewerPosition[4] = y
 end)
 mainPanel:SetResizable(true)
 mainPanel:SetResizeBounds(350, 320, 350, 620)
@@ -1561,7 +1573,10 @@ do
 		local point, _, relPoint, x, y = self:GetPoint()
 		x = math.floor(x+0.5)
 		y = math.floor(y+0.5)
-		db.profile.instanceKeysPosition = {point, relPoint, x, y}
+		db.profile.instanceKeysPosition[1] = point
+		db.profile.instanceKeysPosition[2] = relPoint
+		db.profile.instanceKeysPosition[3] = x
+		db.profile.instanceKeysPosition[4] = y
 	end)
 	instanceKeysWidgets.main = main
 

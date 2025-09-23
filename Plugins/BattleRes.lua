@@ -97,14 +97,22 @@ do
 	plugin.defaultDB = defaultDB
 
 	local function ValidateColor(current, default, alphaLimit)
-		for i = 1, 4 do
+		for i = 1, 3 do
 			local n = current[i]
-			if not default[i] or type(n) ~= "number" or n < 0 or n > 1 then
-				current[i] = default[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				current[1] = default[1] -- If 1 entry is bad, reset the whole table
+				current[2] = default[2]
+				current[3] = default[3]
+				current[4] = default[4]
+				return
 			end
 		end
-		if alphaLimit and current[4] < alphaLimit then -- Limit lowest alpha value
-			current[4] = default[4]
+		if alphaLimit then
+			if type(current[4]) ~= "number" or current[4] < alphaLimit or current[4] > 1 then
+				current[4] = default[4]
+			end
+		elseif current[4] then
+			current[4] = nil
 		end
 	end
 	ProfileUtils.ValidateMainSettings = function()
@@ -204,7 +212,7 @@ do
 			plugin.db.profile.outline = defaultDB.outline
 		end
 
-		ValidateColor(plugin.db.profile.borderColor, defaultDB.borderColor)
+		ValidateColor(plugin.db.profile.borderColor, defaultDB.borderColor, 0)
 		if plugin.db.profile.borderOffset < 0 or plugin.db.profile.borderOffset > 32 then
 			plugin.db.profile.borderOffset = defaultDB.borderOffset
 		end
@@ -218,29 +226,29 @@ do
 			plugin.db.profile.chargesAlign = defaultDB.chargesAlign
 		end
 
-		ValidateColor(plugin.db.profile.durationColor, defaultDB.durationColor)
-		ValidateColor(plugin.db.profile.durationEmphasizeColor, defaultDB.durationEmphasizeColor)
-		ValidateColor(plugin.db.profile.chargesNoneColor, defaultDB.chargesNoneColor)
-		ValidateColor(plugin.db.profile.chargesAvailableColor, defaultDB.chargesAvailableColor)
+		ValidateColor(plugin.db.profile.durationColor, defaultDB.durationColor, 0)
+		ValidateColor(plugin.db.profile.durationEmphasizeColor, defaultDB.durationEmphasizeColor, 0)
+		ValidateColor(plugin.db.profile.chargesNoneColor, defaultDB.chargesNoneColor, 0)
+		ValidateColor(plugin.db.profile.chargesAvailableColor, defaultDB.chargesAvailableColor, 0)
 		if plugin.db.profile.durationEmphasizeTime < 0 or plugin.db.profile.durationEmphasizeTime > 30 then
 			plugin.db.profile.durationEmphasizeTime = defaultDB.durationEmphasizeTime
 		end
-		ValidateColor(plugin.db.profile.iconColor, defaultDB.iconColor)
+		ValidateColor(plugin.db.profile.iconColor, defaultDB.iconColor, 0)
 		if not BigWigsLoader.GetSpellTexture(plugin.db.profile.iconTextureFromSpellID) then
 			plugin.db.profile.iconTextureFromSpellID = defaultDB.iconTextureFromSpellID
 		end
 		if plugin.db.profile.iconDesaturate < 1 or plugin.db.profile.iconDesaturate > 3 then
 			plugin.db.profile.iconDesaturate = defaultDB.iconDesaturate
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("font", plugin.db.profile.fontName) then
+		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) then
 			plugin.db.profile.fontName = defaultDB.fontName
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("border", plugin.db.profile.borderName) then
+		if not LibSharedMedia:IsValid("border", plugin.db.profile.borderName) then
 			plugin.db.profile.borderName = defaultDB.borderName -- If the border is suddenly invalid then reset the size and offset also
 			plugin.db.profile.borderSize = defaultDB.borderSize
 			plugin.db.profile.borderOffset = defaultDB.borderOffset
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("sound", plugin.db.profile.newResAvailableSound) then
+		if not LibSharedMedia:IsValid("sound", plugin.db.profile.newResAvailableSound) then
 			plugin.db.profile.newResAvailableSound = defaultDB.newResAvailableSound
 		end
 	end
@@ -1130,9 +1138,17 @@ do
 								return
 							end
 							if value ~= plugin.defaultDB.position[5] then
-								plugin.db.profile.position = {"CENTER", "CENTER", 0, 0, value}
+								plugin.db.profile.position[1] = "CENTER"
+								plugin.db.profile.position[2] = "CENTER"
+								plugin.db.profile.position[3] = 0
+								plugin.db.profile.position[4] = 0
+								plugin.db.profile.position[5] = value
 							else
-								plugin.db.profile.position = plugin.defaultDB.position
+								plugin.db.profile.position[1] = plugin.defaultDB.position[1]
+								plugin.db.profile.position[2] = plugin.defaultDB.position[2]
+								plugin.db.profile.position[3] = plugin.defaultDB.position[3]
+								plugin.db.profile.position[4] = plugin.defaultDB.position[4]
+								plugin.db.profile.position[5] = plugin.defaultDB.position[5]
 							end
 							UpdateWidgets()
 						end,
@@ -1397,7 +1413,10 @@ battleResFrame:SetScript("OnDragStop", function(self)
 		local point, _, relPoint, x, y = self:GetPoint()
 		x = math.floor(x+0.5)
 		y = math.floor(y+0.5)
-		plugin.db.profile.position = {point, relPoint, x, y, plugin.db.profile.position[5]}
+		plugin.db.profile.position[1] = point
+		plugin.db.profile.position[2] = relPoint
+		plugin.db.profile.position[3] = x
+		plugin.db.profile.position[4] = y
 		if BigWigsOptions and BigWigsOptions:IsOpen() then
 			plugin:UpdateGUI() -- Update X/Y if GUI is open
 		end

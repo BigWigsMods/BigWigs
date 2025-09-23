@@ -329,17 +329,18 @@ do
 			end
 		end
 
-		for i = 1, #db.blockTalkingHeads do
+		for i = 1, #plugin.defaultDB.blockTalkingHeads do
 			local n = db.blockTalkingHeads[i]
 			if type(n) ~= "boolean" then
-				db.blockTalkingHeads = plugin.defaultDB.blockTalkingHeads
-				break -- If 1 entry is bad, reset the whole table
+				db.blockTalkingHeads[i] = plugin.defaultDB.blockTalkingHeads[i]
 			end
 		end
 		for i = 1, 3 do
 			local n = db.toastsColor[i]
 			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.toastsColor = plugin.defaultDB.toastsColor
+				db.toastsColor[1] = plugin.defaultDB.toastsColor[1]
+				db.toastsColor[2] = plugin.defaultDB.toastsColor[2]
+				db.toastsColor[3] = plugin.defaultDB.toastsColor[3]
 				break -- If 1 entry is bad, reset the whole table
 			end
 		end

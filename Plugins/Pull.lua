@@ -254,6 +254,10 @@ do
 		if db.countBegin < 5 or db.countBegin > 10 then
 			db.countBegin = plugin.defaultDB.countBegin
 		end
+		local checkCount = math.floor(db.countBegin+0.5)
+		if checkCount ~= db.countBegin then
+			db.countBegin = checkCount
+		end
 
 		if not BigWigsAPI:HasCountdown(db.voice) then
 			db.voice = plugin.defaultDB.voice
