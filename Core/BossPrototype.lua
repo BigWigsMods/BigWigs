@@ -3488,6 +3488,19 @@ do
 	end
 end
 
+--- Get the time left for a running nameplate.
+-- @string guid Anchor to a unit's nameplate by GUID
+-- @param key the option key
+-- @param[opt] customIconOrText a custom icon (File ID as a number) or text to show text instead
+-- @return the remaining duration in seconds or 0
+function boss:NameplateTimeLeft(guid, key, customIconOrText)
+	local nameplates = plugins.Nameplates
+	if nameplates then
+		return nameplates:GetNameplateTimeLeft(self, guid, key, customIconOrText)
+	end
+	return 0
+end
+
 --- [DEPRECATED] Toggle showing hostile nameplates to the enabled state.
 function boss:ShowPlates()
 	self:SendMessage("BigWigs_EnableHostileNameplates", self)
