@@ -64,7 +64,7 @@ L.outOfDateContentRaidWarning = "|cFF436EEE%s|r 需要安装 %d 版本的 |cFF43
 L.addOnLoadFailedWithReason = "BigWigs 未能加载 |cFF436EEE%s|r 插件，原因： %q。请通知 BigWigs 的开发者！"
 L.addOnLoadFailedUnknownError = "BigWigs 在加载 |cFF436EEE%s|r 插件时遇到了错误。请通知 BigWigs 的开发者！"
 L.newFeatures = "BigWigs 新功能："
-L.parentheses = "%s (%s)"
+L.parentheses = "%s（%s）"
 
 L.expansionNames = {
 	"经典旧世", -- Classic
