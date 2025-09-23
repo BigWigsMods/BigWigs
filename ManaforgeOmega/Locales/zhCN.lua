@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("Loom'ithar", "zhCN")
+local L = BigWigs:NewBossLocale("Plexus Sentinel", "zhCN")
 if not L then return end
+if L then
+	--L.cleanse_the_chamber = "Wall"
+end
+
+L = BigWigs:NewBossLocale("Loom'ithar", "zhCN")
 if L then
 	L.lair_weaving = "蛛网" -- Webs that spawn on the edge of the room
 	L.infusion_pylons = "晶塔" -- 技能“注能晶塔”的简称
