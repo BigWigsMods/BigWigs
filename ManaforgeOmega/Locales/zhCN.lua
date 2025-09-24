@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Plexus Sentinel", "zhCN")
 if not L then return end
 if L then
-	--L.cleanse_the_chamber = "Wall"
+	L.cleanse_the_chamber = "光墙" --技能“净化内室”
 end
 
 L = BigWigs:NewBossLocale("Loom'ithar", "zhCN")
@@ -53,7 +53,7 @@ if L then
 	L.mass_destruction_single = "射线"
 	L.stardust_nova = "新星" -- 技能“星尘新星”的简称
 	L.extinguish_the_stars = "众星" -- 技能“熄灭众星”的简称
-	L.darkened_sky = "波"
+	L.darkened_sky = "光波"
 	L.cosmic_collapse = "坦克拉人"
 	L.cosmic_collapse_easy = "坦克大圈"
 	L.soaring_reshii = "坐骑可用" -- On the timer for when flying is available
