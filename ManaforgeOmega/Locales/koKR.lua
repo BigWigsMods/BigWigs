@@ -2,7 +2,7 @@
 local L = BigWigs:NewBossLocale("Plexus Sentinel", "koKR")
 if not L then return end
 if L then
-	--L.cleanse_the_chamber = "Wall"
+	L.cleanse_the_chamber = "벽"
 end
 L = BigWigs:NewBossLocale("Loom'ithar", "koKR")
 if L then
