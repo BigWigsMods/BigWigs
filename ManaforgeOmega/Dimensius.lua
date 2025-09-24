@@ -214,8 +214,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if self:Story() then return end
-
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1", "boss2") -- Gamma Burst
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Shattered Space
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -302,8 +300,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	if self:Story() then return end
-	cosmicCollapseLocale = self:Easy() and L.cosmic_collapse_easy or L.cosmic_collapse
+	cosmicCollapseLocale = (self:Easy() or self:Story()) and L.cosmic_collapse_easy or L.cosmic_collapse
 	self:SetSpellRename(1234263, cosmicCollapseLocale) -- Cosmic Collapse (Tank Pull / Tank Smash)
 
 	self:SetStage(1)
@@ -314,12 +311,12 @@ function mod:OnEngage()
 	shatteredSpaceCount = 1
 	gravityCount = 1
 
-	self:Bar(1230087, self:Mythic() and 20.9 or self:Easy() and 25 or 23.5, CL.count:format(CL.knockback, massiveSmashCount)) -- Massive Smash
-	self:Bar(1229038, self:Mythic() and 10.5 or self:Easy() and 12.5 or 11.7, CL.count:format(self:SpellName(1229038), devourCount)) -- Devour
-	self:Bar(1230979, self:Mythic() and 31.5 or self:Easy() and 37.5 or 35.3, CL.count:format(CL.spread, darkMatterCount)) -- Dark Matter
-	self:Bar(1243690, self:Mythic() and 39.9 or self:Easy() and 47.0 or 44.5, CL.count:format(CL.soaks, shatteredSpaceCount)) -- Shattered Space
+	self:Bar(1230087, self:Mythic() and 20.9 or (self:Easy() or self:Story()) and 25 or 23.5, CL.count:format(CL.knockback, massiveSmashCount)) -- Massive Smash
+	self:Bar(1229038, self:Mythic() and 10.5 or (self:Easy() or self:Story()) and 12.5 or 11.7, CL.count:format(self:SpellName(1229038), devourCount)) -- Devour
+	self:Bar(1230979, self:Mythic() and 31.5 or (self:Easy() or self:Story()) and 37.5 or 35.3, CL.count:format(CL.spread, darkMatterCount)) -- Dark Matter
+	self:Bar(1243690, self:Mythic() and 39.9 or (self:Easy() or self:Story()) and 47.0 or 44.5, CL.count:format(CL.soaks, shatteredSpaceCount)) -- Shattered Space
 	if not self:LFR() then
-		self:Bar(1243577, self:Mythic() and 43.0 or self:Easy() and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
+		self:Bar(1243577, self:Mythic() and 43.0 or (self:Easy() or self:Story()) and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
 	end
 
 	mobCollector = {}
@@ -416,7 +413,7 @@ function mod:MassiveSmash(args)
 	massiveSmashCount = massiveSmashCount + 1
 	livingMassMarked = 0
 	if massiveSmashCount <= 4 then
-		local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
+		local cd = self:Mythic() and 42.1 or (self:Easy() or self:Story()) and 50.0 or 47.0
 		self:Bar(args.spellId, cd, CL.count:format(CL.knockback, massiveSmashCount))
 	end
 	self:PlaySound(args.spellId, "long") -- big tank hit + adds + knockback
@@ -475,7 +472,7 @@ do
 		devourCount = devourCount + 1
 		collectiveGravityCheck = mod:ScheduleTimer(checkForCollectiveGravity, 2.5) -- check last 4~ seconds
 		if not self:Mythic() or (self:Mythic() and devourCount <= 3) then
-			local cd = self:Mythic() and 84.2 or self:Easy() and 100.0 or 94.0
+			local cd = self:Mythic() and 84.2 or (self:Easy() or self:Story()) and 100.0 or 94.0
 			self:Bar(args.spellId, cd, CL.count:format(args.spellName, devourCount))
 		end
 		self:PlaySound(args.spellId, "warning") -- get safe
@@ -522,7 +519,7 @@ function mod:ShatteredSpace()
 	self:Message(1243690, "yellow", CL.count:format(CL.soaks, shatteredSpaceCount))
 	shatteredSpaceCount = shatteredSpaceCount + 1
 	if shatteredSpaceCount <= 4 then
-		local cd = self:Mythic() and 42.1 or self:Easy() and 50.0 or 47.0
+		local cd = self:Mythic() and 42.1 or (self:Easy() or self:Story()) and 50.0 or 47.0
 		self:Bar(1243690, cd, CL.count:format(CL.soaks, shatteredSpaceCount))
 	end
 	self:PlaySound(1243690, "alert") -- move away from hands
@@ -659,19 +656,35 @@ function mod:WorldsoulConsumption(args)
 	-- first cast times here are sketchy, times from the first Conqueror's Cross cast are good, though
 	if voidlordKilled == 0 then
 		-- Artoshion
-		self:CDBar(1239262, self:Mythic() and 10.1 or 15.2, CL.count:format(CL.adds, conquerorsCrossCount))
-		if self:Mythic() then
-			self:CDBar(1249423, 13.2, CL.count:format(L.mass_destruction, massEjectionCount)) -- Mass Destruction
+		if self:Story() then
+			-- No Conqueror's Cross
+			self:CDBar(1237694, 21.0, CL.count:format(CL.tank_frontal, massEjectionCount)) -- Mass Ejection
+			self:CDBar(1238765, 25.7, CL.count:format(L.extinction, extinctionCount)) -- Extinction
+			self:CDBar(1237325, 43.9, CL.count:format(CL.pushback, gammaBurstCount)) -- Gamma Burst
+			-- self:CDBar(1237690, 85, CL.full_energy) -- Eclipse
 		else
-			self:CDBar(1237694, 22.3, CL.count:format(CL.tank_frontal, massEjectionCount)) -- Mass Ejection
+			self:CDBar(1239262, self:Mythic() and 10.1 or 15.2, CL.count:format(CL.adds, conquerorsCrossCount))
+			if self:Mythic() then
+				self:CDBar(1249423, 13.2, CL.count:format(L.mass_destruction, massEjectionCount)) -- Mass Destruction
+			else
+				self:CDBar(1237694, 22.3, CL.count:format(CL.tank_frontal, massEjectionCount)) -- Mass Ejection
+			end
 		end
 	else
 		-- Pargoth
-		self:CDBar(1239262, self:Mythic() and 13.9 or 18.8, CL.count:format(CL.adds, conquerorsCrossCount))
-		if self:Mythic() then
-			self:CDBar(1251619, 17.0, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
+		if self:Story() then
+			-- No Conqueror's Cross
+			self:CDBar(1237695, 27.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+			self:CDBar(1238765, 32.6, CL.count:format(L.extinction, extinctionCount)) -- Extinction
+			self:CDBar(1237325, 50.8, CL.count:format(CL.pushback, gammaBurstCount)) -- Gamma Burst
+			-- self:CDBar(1237690, 85, CL.full_energy) -- Eclipse
 		else
-			self:CDBar(1237695, 25.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+			self:CDBar(1239262, self:Mythic() and 13.9 or 18.8, CL.count:format(CL.adds, conquerorsCrossCount))
+			if self:Mythic() then
+				self:CDBar(1251619, 17.0, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Starshard Nova
+			else
+				self:CDBar(1237695, 25.9, CL.count:format(L.stardust_nova, stardustNovaCount)) -- Stardust Nova
+			end
 		end
 	end
 end
@@ -716,7 +729,9 @@ function mod:MassEjection(args)
 	self:StopBar(CL.count:format(spellName, massEjectionCount))
 	self:Message(args.spellId, "yellow", CL.casting:format(spellName))
 	massEjectionCount = massEjectionCount + 1
-	if massEjectionCount < (self:Mythic() and 5 or 6) then
+	if self:Story() then
+		self:Bar(args.spellId, 17.6, CL.count:format(spellName, massEjectionCount))
+	elseif massEjectionCount < (self:Mythic() and 5 or 6) then
 		self:Bar(args.spellId, self:Mythic() and 15.8 or 17.5, CL.count:format(spellName, massEjectionCount))
 	end
 	if not self:Mythic() then
@@ -775,7 +790,7 @@ function mod:ConquerorsCross(args)
 			end
 		end
 		self:Bar(1238765, self:Mythic() and 10.5 or 11.8, CL.count:format(L.extinction, extinctionCount)) -- Extinction
-		self:Bar(1237325, self:Mythic() and 21.1 or self:Easy() and 30 or 25.9, CL.count:format(CL.pushback, gammaBurstCount)) -- Gamma Burst
+		self:Bar(1237325, self:Mythic() and 21.1 or (self:Easy() or self:Story()) and 30 or 25.9, CL.count:format(CL.pushback, gammaBurstCount)) -- Gamma Burst
 		if self:Mythic() then
 			self:Bar(1234242, 12.6, CL.count:format(L.gravity, gravityCount)) -- Gravitational Distortion
 		end
@@ -833,7 +848,9 @@ function mod:StardustNova(args)
 	self:StopBar(CL.count:format(L.stardust_nova, stardustNovaCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.stardust_nova, stardustNovaCount))
 	stardustNovaCount = stardustNovaCount + 1
-	if stardustNovaCount < (self:Mythic() and 3 or 4) then
+	if self:Story() then
+		self:Bar(args.spellId, 17.6, CL.count:format(L.stardust_nova, stardustNovaCount))
+	elseif stardustNovaCount < (self:Mythic() and 3 or 4) then
 		self:Bar(args.spellId, self:Mythic() and 31.6 or 35.4, CL.count:format(L.stardust_nova, stardustNovaCount))
 	end
 	local unit = self:UnitTokenFromGUID(args.sourceGUID)
@@ -926,15 +943,17 @@ function mod:TotalDestruction(args)
 	-- XXX can vary ~2s? maybe adjust everything in the _YELL?
 	self:CDBar(1245292, 15, CL.weakened) -- Destabilized
 	self:CDBar(1231716, 32, L.extinguish_the_stars) -- Extinguish the Stars
-	self:CDBar(1233539, self:Mythic() and 62.7 or 61.7, CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
+	self:CDBar(1234044, 44.7, CL.count:format(L.darkened_sky, darkenedSkyCount)) -- Darkened Sky
+	self:CDBar(1233539, 62, CL.count:format(self:SpellName(1233539), devourCount)) -- Devour
 	if self:Mythic() then
 		self:CDBar(1234242, 74.7, CL.count:format(L.gravity, gravityCount)) -- Gravitational Distortion
 	else
-		self:CDBar(1232973, 70.6, CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
-		self:CDBar(1250055, 75.0, CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
+		self:CDBar(1232973, self:Story() and 85.3 or 70.6, CL.count:format(self:SpellName(1232973), supernovaCount)) -- Supernova
+		if not self:Story() then
+			self:CDBar(1250055, 75.0, CL.count:format(L.slows, voidgraspCount)) -- Voidgrasp
+		end
 	end
 	self:CDBar(1234263, self:Mythic() and 72.7 or 79.3, CL.count:format(cosmicCollapseLocale, cosmicCollapseCount)) -- Cosmic Collapse
-	self:CDBar(1234044, self:Easy() and 94.9 or 44.7, CL.count:format(L.darkened_sky, darkenedSkyCount)) -- Darkened Sky
 
 	self:Message("stages", "cyan", CL.stage:format(3), false)
 	self:PlaySound("stages", "long")
@@ -1010,13 +1029,9 @@ function mod:DarkenedSky()
 	self:Message(1234044, "yellow", CL.incoming:format(CL.count:format(L.darkened_sky, darkenedSkyCount)))
 	darkenedSkyCount = darkenedSkyCount + 1
 	if darkenedSkyCount < 6 then
-		local cd = darkenedSkyCount % 2 == 1 and 33.3 or 66.6
+		local cd = darkenedSkyCount == 2 and 51.0 or darkenedSkyCount % 2 == 1 and 33.3 or 66.6
 		if self:Mythic() then
-			if darkenedSkyCount == 2 then
-				cd = 43
-			else
-				cd = darkenedSkyCount % 2 == 1 and 30.0 or 50.0
-			end
+			cd = darkenedSkyCount == 2 and 43.0 or darkenedSkyCount % 2 == 1 and 30.0 or 50.0
 		end
 		self:Bar(1234044, cd, CL.count:format(L.darkened_sky, darkenedSkyCount))
 	end
@@ -1040,7 +1055,7 @@ end
 function mod:CosmicCollapse(args)
 	self:StopBar(CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
 	self:Message(args.spellId, "purple", CL.count:format(cosmicCollapseLocale, cosmicCollapseCount))
-	if not self:Easy() then
+	if not (self:Easy() or self:Story()) then
 		self:CastBar(args.spellId, 4)
 	end
 	cosmicCollapseCount = cosmicCollapseCount + 1
@@ -1064,7 +1079,12 @@ function mod:Supernova(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, supernovaCount))
 	self:CastBar(args.spellId, 6.5, CL.count:format(args.spellName, supernovaCount)) -- 1.5s cast + 5s explosion
 	supernovaCount = supernovaCount + 1
-	if supernovaCount < 9 then
+	if self:Story() then
+		if supernovaCount < 5 then
+			local cd = supernovaCount % 2 == 1 and 66.7 or 33.3
+			self:Bar(args.spellId, cd, CL.count:format(args.spellName, supernovaCount))
+		end
+	elseif supernovaCount < 9 then
 		local cd = supernovaCount % 4 == 1 and 18.9 or supernovaCount % 4 == 2 and 14.5 or 33.3
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, supernovaCount))
 	end
