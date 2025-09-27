@@ -2142,3 +2142,16 @@ do
 		prevTarget = guid
 	end
 end
+
+function plugin:GetNameplateTimeLeft(module, guid, key, customIconOrText)
+	local frameInfo
+	if not customIconOrText or type(customIconOrText) == "number" then
+		frameInfo = nameplateTexts[guid] and nameplateTexts[guid][key]
+	elseif type(customIconOrText) == "string" then
+		frameInfo = nameplateIcons[guid] and nameplateIcons[guid][key]
+	end
+	if frameInfo and frameInfo.module == module then
+		return frameInfo.exp - GetTime()
+	end
+	return 0
+end
