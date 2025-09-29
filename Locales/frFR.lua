@@ -3,7 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "frFR")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "L'addon '%s' a créé la barre '%s'."
+L.showAddonBar = "L'addon '|cFF436EEE%s|r' a créé la barre '%s'."
+L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' vient de faire une copie de votre chaîne d'export de profil."
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -62,6 +63,8 @@ L.outOfDateContentPopup = "ATTENTION !\nVous avez mis à jour |cFF436EEE%s|r ma
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r a besoin de la version %d de l'addon principal |cFF436EEEBigWigs|r afin de fonctionner correctement, mais vous êtes en version %d."
 L.addOnLoadFailedWithReason = "BigWigs a échoué à charger l'addon |cFF436EEE%s|r avec comme raison %q. Avertissez les développeurs de BigWigs !"
 L.addOnLoadFailedUnknownError = "BigWigs a rencontré une erreur lors du chargement de l'addon |cFF436EEE%s|r. Avertissez les développeurs de BigWigs !"
+L.newFeatures = "Nouvelles fonctionnalités de BigWigs :"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -80,6 +83,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Gouffres",
 	["LittleWigs_CurrentSeason"] = "Saison actuelle",
 }
+L.dayNamesShort = {
+	"DIM", -- Sunday
+	"LUN", -- Monday
+	"MAR", -- Tuesday
+	"MER", -- Wednesday
+	"JEU", -- Thursday
+	"VEN", -- Friday
+	"SAM", -- Saturday
+}
+L.dayNames = {
+	"Dimanche",
+	"Lundi",
+	"Mardi",
+	"Mercredi",
+	"Jeudi",
+	"Vendredi",
+	"Samedi",
+}
+L.monthNames = {
+	"Janvier",
+	"Février",
+	"Mars",
+	"Avril",
+	"Mai",
+	"Juin",
+	"Juillet",
+	"Août",
+	"Septembre",
+	"Octobre",
+	"Novembre",
+	"Décembre",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attention (Algalon)"
@@ -306,6 +342,7 @@ L.iconTextureSpellIDError = "Vous devez entrer un ID de sort valide pour l'utili
 L.battleResModeIcon = "Mode : Icône"
 L.battleResModeText = "Mode : Texte seulement"
 L.battleResModeTextTooltip = "Montre un arrière-plan temporaire pour vous aider à déplacer la fonctionnalité de Résurrection de combat et voir la zone de survol avec la souris."
+L.battleResNoteTooltip = "Note : Cette infobule ne s'affichera que lorsque vous êtes hors combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -873,7 +910,7 @@ L.combatLogDesc = "Lance automatiquement l'enregistrement du combat quand un dé
 L.pull = "Pull"
 L.engageSoundTitle = "Jouer un son quand une rencontre de boss débute"
 L.pullStartedSoundTitle = "Jouer un son quand le délai de pull est lancé"
---L.pullStartedMessageTitle = "Show a message when the pull timer is started"
+L.pullStartedMessageTitle = "Affiche un message lorsque le timer de pull a commencé"
 L.pullFinishedSoundTitle = "Jouer un son quand le délai de pull est terminé"
 L.pullStartedBy = "Délai de pull commencé par %s."
 L.pullStopped = "Délai de pull annulé par %s."

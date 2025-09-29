@@ -397,7 +397,6 @@ function mod:AstralHarvest()
 	astralHarvestCount = astralHarvestCount + 1
 	local cd = getTimers(1228214, astralHarvestCount)
 	self:Bar(1228214, cd, CL.count:format(CL.adds, astralHarvestCount))
-	self:PlaySound(1228214, "info")
 end
 
 function mod:AstralHarvestApplied(args)

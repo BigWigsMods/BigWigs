@@ -2,7 +2,8 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "enUS")
 
 -- API.lua
-L.showAddonBar = "The addon '%s' created the '%s' bar."
+L.showAddonBar = "The addon '|cFF436EEE%s|r' created the '%s' bar."
+L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -61,6 +62,8 @@ L.outOfDateContentPopup = "WARNING!\nYou updated |cFF436EEE%s|r but you also nee
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requires version %d of the main |cFF436EEEBigWigs|r addon to function correctly, but you're on version %d."
 L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
 L.addOnLoadFailedUnknownError = "BigWigs encountered an error when loading the addon |cFF436EEE%s|r. Tell the BigWigs devs!"
+L.newFeatures = "New BigWigs features:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -79,6 +82,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Delves",
 	["LittleWigs_CurrentSeason"] = "Current Season",
 }
+L.dayNamesShort = {
+	"SUN", -- Sunday
+	"MON", -- Monday
+	"TUE", -- Tuesday
+	"WED", -- Wednesday
+	"THU", -- Thursday
+	"FRI", -- Friday
+	"SAT", -- Saturday
+}
+L.dayNames = {
+	"Sunday",
+	"Monday",
+	"Tuesday",
+	"Wednesday",
+	"Thursday",
+	"Friday",
+	"Saturday",
+}
+L.monthNames = {
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Beware (Algalon)"
@@ -305,6 +341,7 @@ L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon t
 L.battleResModeIcon = "Mode: Icon"
 L.battleResModeText = "Mode: Text Only"
 L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
+L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

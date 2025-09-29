@@ -16,18 +16,14 @@ local SetBarStyle
 
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
-local media = LibStub("LibSharedMedia-3.0")
-local FONT = media.MediaType and media.MediaType.FONT or "font"
-local STATUSBAR = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
+local STATUSBAR = LibSharedMedia.MediaType and LibSharedMedia.MediaType.STATUSBAR or "statusbar"
 local next = next
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local rearrangeBars
 
-local validFramePoints = {
-	["TOPLEFT"] = L.TOPLEFT, ["TOPRIGHT"] = L.TOPRIGHT, ["BOTTOMLEFT"] = L.BOTTOMLEFT, ["BOTTOMRIGHT"] = L.BOTTOMRIGHT,
-	["TOP"] = L.TOP, ["BOTTOM"] = L.BOTTOM, ["LEFT"] = L.LEFT, ["RIGHT"] = L.RIGHT, ["CENTER"] = L.CENTER,
-}
 local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 
 --------------------------------------------------------------------------------
@@ -81,10 +77,10 @@ local function updateProfile()
 
 	SetBarStyle(db.barStyle)
 
-	if not media:IsValid(FONT, db.fontName) then
-		db.fontName = plugin:GetDefaultFont()
+	if not LibSharedMedia:IsValid(FONT, db.fontName) then
+		db.fontName = plugin.defaultDB.fontName
 	end
-	if not media:IsValid(STATUSBAR, db.texture) then
+	if not LibSharedMedia:IsValid(STATUSBAR, db.texture) then
 		db.texture = plugin.defaultDB.texture
 	end
 	if db.fontSize < 10 or db.fontSize > 200 then
@@ -135,8 +131,12 @@ local function updateProfile()
 
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
 	or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number"
-	or not validFramePoints[db.normalPosition[1]] or not validFramePoints[db.normalPosition[2]] then
-		db.normalPosition = plugin.defaultDB.normalPosition
+	or not BigWigsAPI.IsValidFramePoint(db.normalPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.normalPosition[2]) then
+		db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
+		db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
+		db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
+		db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
+		db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
 	else
 		local x = math.floor(db.normalPosition[3]+0.5)
 		if x ~= db.normalPosition[3] then
@@ -150,14 +150,22 @@ local function updateProfile()
 	if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
 		local frame = _G[db.normalPosition[5]]
 		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-			db.normalPosition = plugin.defaultDB.normalPosition
+			db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
+			db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
+			db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
+			db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
+			db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
 		end
 	end
 
 	if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string"
 	or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number"
-	or not validFramePoints[db.expPosition[1]] or not validFramePoints[db.expPosition[2]] then
-		db.expPosition = plugin.defaultDB.expPosition
+	or not BigWigsAPI.IsValidFramePoint(db.expPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.expPosition[2]) then
+		db.expPosition[1] = plugin.defaultDB.expPosition[1]
+		db.expPosition[2] = plugin.defaultDB.expPosition[2]
+		db.expPosition[3] = plugin.defaultDB.expPosition[3]
+		db.expPosition[4] = plugin.defaultDB.expPosition[4]
+		db.expPosition[5] = plugin.defaultDB.expPosition[5]
 	else
 		local x = math.floor(db.expPosition[3]+0.5)
 		if x ~= db.expPosition[3] then
@@ -171,7 +179,11 @@ local function updateProfile()
 	if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
 		local frame = _G[db.expPosition[5]]
 		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-			db.expPosition = plugin.defaultDB.expPosition
+			db.expPosition[1] = plugin.defaultDB.expPosition[1]
+			db.expPosition[2] = plugin.defaultDB.expPosition[2]
+			db.expPosition[3] = plugin.defaultDB.expPosition[3]
+			db.expPosition[4] = plugin.defaultDB.expPosition[4]
+			db.expPosition[5] = plugin.defaultDB.expPosition[5]
 		end
 	end
 
@@ -190,8 +202,8 @@ local function updateProfile()
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end
-	local font = media:Fetch(FONT, db.fontName)
-	local texture = media:Fetch(STATUSBAR, db.texture)
+	local font = LibSharedMedia:Fetch(FONT, db.fontName)
+	local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
 
 	for bar in next, normalAnchor.bars do
 		currentBarStyler.BarStopped(bar)
@@ -314,15 +326,15 @@ do
 						type = "select",
 						name = L.font,
 						order = 1,
-						values = media:List(FONT),
+						values = LibSharedMedia:List(FONT),
 						itemControl = "DDI-Font",
 						get = function()
-							for i, v in next, media:List(FONT) do
+							for i, v in next, LibSharedMedia:List(FONT) do
 								if v == db.fontName then return i end
 							end
 						end,
 						set = function(_, value)
-							local list = media:List(FONT)
+							local list = LibSharedMedia:List(FONT)
 							db.fontName = list[value]
 							updateProfile()
 						end,
@@ -420,15 +432,15 @@ do
 						name = L.texture,
 						order = 8,
 						width = 2,
-						values = media:List(STATUSBAR),
+						values = LibSharedMedia:List(STATUSBAR),
 						itemControl = "DDI-Statusbar",
 						get = function(info)
-							for i, v in next, media:List(STATUSBAR) do
+							for i, v in next, LibSharedMedia:List(STATUSBAR) do
 								if v == db[info[#info]] then return i end
 							end
 						end,
 						set = function(info, value)
-							local list = media:List(STATUSBAR)
+							local list = LibSharedMedia:List(STATUSBAR)
 							local tex = list[value]
 							db[info[#info]] = tex
 							updateProfile()
@@ -689,9 +701,17 @@ do
 										return
 									end
 									if value ~= plugin.defaultDB.normalPosition[5] then
-										db.normalPosition = {"CENTER", "CENTER", 0, 0, value}
+										db.normalPosition[1] = "CENTER"
+										db.normalPosition[2] = "CENTER"
+										db.normalPosition[3] = 0
+										db.normalPosition[4] = 0
+										db.normalPosition[5] = value
 									else
-										db.normalPosition = plugin.defaultDB.normalPosition
+										db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
+										db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
+										db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
+										db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
+										db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
 									end
 									updateProfile()
 								end,
@@ -705,12 +725,12 @@ do
 									return db.normalPosition[1]
 								end,
 								set = function(_, value)
-									if validFramePoints[value] then
+									if BigWigsAPI.IsValidFramePoint(value) then
 										db.normalPosition[1] = value
 										updateProfile()
 									end
 								end,
-								values = validFramePoints,
+								values = BigWigsAPI.GetFramePointList(),
 								name = L.sourcePoint,
 								order = 6,
 								width = 1.6,
@@ -722,12 +742,12 @@ do
 									return db.normalPosition[2]
 								end,
 								set = function(_, value)
-									if validFramePoints[value] then
+									if BigWigsAPI.IsValidFramePoint(value) then
 										db.normalPosition[2] = value
 										updateProfile()
 									end
 								end,
-								values = validFramePoints,
+								values = BigWigsAPI.GetFramePointList(),
 								name = L.destinationPoint,
 								order = 7,
 								width = 1.6,
@@ -805,9 +825,17 @@ do
 										return
 									end
 									if value ~= plugin.defaultDB.expPosition[5] then
-										db.expPosition = {"CENTER", "CENTER", 0, 0, value}
+										db.expPosition[1] = "CENTER"
+										db.expPosition[2] = "CENTER"
+										db.expPosition[3] = 0
+										db.expPosition[4] = 0
+										db.expPosition[5] = value
 									else
-										db.expPosition = plugin.defaultDB.expPosition
+										db.expPosition[1] = plugin.defaultDB.expPosition[1]
+										db.expPosition[2] = plugin.defaultDB.expPosition[2]
+										db.expPosition[3] = plugin.defaultDB.expPosition[3]
+										db.expPosition[4] = plugin.defaultDB.expPosition[4]
+										db.expPosition[5] = plugin.defaultDB.expPosition[5]
 									end
 									updateProfile()
 								end,
@@ -821,12 +849,12 @@ do
 									return db.expPosition[1]
 								end,
 								set = function(_, value)
-									if validFramePoints[value] then
+									if BigWigsAPI.IsValidFramePoint(value) then
 										db.expPosition[1] = value
 										updateProfile()
 									end
 								end,
-								values = validFramePoints,
+								values = BigWigsAPI.GetFramePointList(),
 								name = L.sourcePoint,
 								order = 6,
 								width = 1.6,
@@ -838,12 +866,12 @@ do
 									return db.expPosition[2]
 								end,
 								set = function(_, value)
-									if validFramePoints[value] then
+									if BigWigsAPI.IsValidFramePoint(value) then
 										db.expPosition[2] = value
 										updateProfile()
 									end
 								end,
-								values = validFramePoints,
+								values = BigWigsAPI.GetFramePointList(),
 								name = L.destinationPoint,
 								order = 7,
 								width = 1.6,
@@ -1257,7 +1285,7 @@ do
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
-		local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
+		local bar = candy:New(LibSharedMedia:Fetch(STATUSBAR, db.texture), width, height)
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
 			flags = "MONOCHROME," .. db.outline
@@ -1266,7 +1294,7 @@ do
 		elseif db.outline ~= "NONE" then
 			flags = db.outline
 		end
-		local f = media:Fetch(FONT, db.fontName)
+		local f = LibSharedMedia:Fetch(FONT, db.fontName)
 		bar:SetFont(f, db.fontSize, flags)
 		bar:Set("bigwigs:module", module)
 		bar:Set("bigwigs:option", key)
@@ -1368,7 +1396,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end
-	local f = media:Fetch(FONT, db.fontName)
+	local f = LibSharedMedia:Fetch(FONT, db.fontName)
 	bar:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))

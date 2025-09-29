@@ -72,7 +72,7 @@ plugin.pluginOptions = {
 	desc = L.bossBlockDesc,
 	type = "group",
 	childGroups = "tab",
-	order = 10,
+	order = 13,
 	get = function(info)
 		return plugin.db.profile[info[#info]]
 	end,
@@ -329,17 +329,18 @@ do
 			end
 		end
 
-		for i = 1, #db.blockTalkingHeads do
+		for i = 1, #plugin.defaultDB.blockTalkingHeads do
 			local n = db.blockTalkingHeads[i]
 			if type(n) ~= "boolean" then
-				db.blockTalkingHeads = plugin.defaultDB.blockTalkingHeads
-				break -- If 1 entry is bad, reset the whole table
+				db.blockTalkingHeads[i] = plugin.defaultDB.blockTalkingHeads[i]
 			end
 		end
 		for i = 1, 3 do
 			local n = db.toastsColor[i]
 			if type(n) ~= "number" or n < 0 or n > 1 then
-				db.toastsColor = plugin.defaultDB.toastsColor
+				db.toastsColor[1] = plugin.defaultDB.toastsColor[1]
+				db.toastsColor[2] = plugin.defaultDB.toastsColor[2]
+				db.toastsColor[3] = plugin.defaultDB.toastsColor[3]
 				break -- If 1 entry is bad, reset the whole table
 			end
 		end
@@ -966,8 +967,8 @@ do
 		[250849]=true,[250850]=true,[250845]=true,[250851]=true,[250852]=true,[250853]=true,[250854]=true,[250855]=true,
 		[250856]=true,[250857]=true,[250858]=true,[250860]=true,[250861]=true,[250862]=true,[250863]=true,
 		-- Operation: Floodgate
-		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269145]=true,[269146]=true,[269150]=true,
-		[269152]=true,
+		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269144]=true,[269145]=true,[269146]=true,
+		[269150]=true,[269152]=true,
 	}
 
 	local lookup = {

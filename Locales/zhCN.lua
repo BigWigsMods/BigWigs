@@ -3,7 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "'%s' 插件创建了 '%s' 动作条。"
+L.showAddonBar = "插件 '|cFF436EEE%s|r' 创建了 '%s' 计时条。"
+L.requestAddonProfile = "插件 '|cFF436EEE%s|r' 刚刚复制了您的配置文件导出字符串。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -62,6 +63,8 @@ L.outOfDateContentPopup = "警告！\n你更新了 |cFF436EEE%s|r 但你还需�
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r 需要安装 %d 版本的 |cFF436EEEBigWigs|r 主插件才能正常运行，但你使用了 %d 版本。"
 L.addOnLoadFailedWithReason = "BigWigs 未能加载 |cFF436EEE%s|r 插件，原因： %q。请通知 BigWigs 的开发者！"
 L.addOnLoadFailedUnknownError = "BigWigs 在加载 |cFF436EEE%s|r 插件时遇到了错误。请通知 BigWigs 的开发者！"
+L.newFeatures = "BigWigs 新功能："
+L.parentheses = "%s（%s）"
 
 L.expansionNames = {
 	"经典旧世", -- Classic
@@ -80,6 +83,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "地下堡",
 	["LittleWigs_CurrentSeason"] = "当前赛季",
 }
+L.dayNamesShort = {
+	"周日", -- Sunday
+	"周一", -- Monday
+	"周二", -- Tuesday
+	"周三", -- Wednesday
+	"周四", -- Thursday
+	"周五", -- Friday
+	"周六", -- Saturday
+}
+L.dayNames = {
+	"星期日",
+	"星期一",
+	"星期二",
+	"星期三",
+	"星期四",
+	"星期五",
+	"星期六",
+}
+L.monthNames = {
+	"1月",
+	"2月",
+	"3月",
+	"4月",
+	"5月",
+	"6月",
+	"7月",
+	"8月",
+	"9月",
+	"10月",
+	"11月",
+	"12月",
+}
+L.dateFormat = "%1$s，%4$d年%3$d%2$s日" -- Date format: "Monday 1 January 2025" 中文格式1：2025年1月1日，周一 /格式2:周一，2025年1月1日
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "当心（奥尔加隆）"
@@ -298,14 +334,15 @@ L.battleResHistory = "战复："
 L.battleResResetAll = "将所有战复设置重置为默认。"
 L.battleResDurationText = "时间文本"
 L.battleResChargesText = "次数文本"
-L.battleResNoCharges = "0 次可用"
-L.battleResHasCharges = "1 次或多次可用"
-L.battleResPlaySound = "获得新额外次数时播放音效"
+L.battleResNoCharges = "无可用次数"
+L.battleResHasCharges = "有可用次数"
+L.battleResPlaySound = "获得新可用次数时播放音效"
 L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t 技能图标（Spell ID）"
 L.iconTextureSpellIDError = "你必须输入一个有效的法术ID来作为显示的图标。"
 L.battleResModeIcon = "显示模式：图标"
 L.battleResModeText = "显示模式：仅文字"
 L.battleResModeTextTooltip = "显示临时背景以便调整战复功能的位置，并查看鼠标悬停提示位置。"
+L.battleResNoteTooltip = "注意：此提示仅在脱离战斗后显示。"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -422,10 +459,10 @@ L.instanceKeysHideTitleDesc = "隐藏 \"谁拥有钥石？\" 标题。"
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "寻找组队计时器"
-L.lfgTimerExplainer = "每当寻找组队队列确认窗口出现时，BigWigs 会创建一个计时条，告诉你还有多长时间必须接受队列。\n\n"
+L.lfgTimerTitle = "队列就绪计时"
+L.lfgTimerExplainer = "每当队列确认窗口出现时，BigWigs 会创建一个计时条，告诉你还有多长时间必须接受队列邀请。\n\n"
 L.lfgUseMaster = "在'主'声道播放寻找组队就绪提示音"
-L.lfgUseMasterDesc = "启用此选项后，寻找组队就绪提示音将通过'主'声道播放。如果禁用此选项，则会通过'%s'声道播放。"
+L.lfgUseMasterDesc = "启用此选项后，队列就绪提示音将通过'主'声道播放。如果禁用此选项，则会通过'%s'声道播放。"
 
 -----------------------------------------------------------------------
 -- PLUGINS

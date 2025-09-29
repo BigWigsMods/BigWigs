@@ -55,3 +55,4 @@ Break.lua
 Statistics.lua
 Victory.lua
 Wipe.lua
+BattleRes.lua

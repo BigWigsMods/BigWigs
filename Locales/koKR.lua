@@ -3,7 +3,8 @@ local L = addonTbl.API:NewLocale("BigWigs", "koKR")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "'%s' 애드온이 '%s' 바를 생성했습니다."
+L.showAddonBar = "'|cFF436EEE%s|r' 애드온이 '%s' 바를 생성했습니다."
+L.requestAddonProfile = "애드온 '|cFF436EEE%s|r'이 방금 프로필 내보내기 문자열을 복사했습니다."
 
 -- Core.lua
 L.berserk = "광폭화"
@@ -62,6 +63,8 @@ L.outOfDateContentPopup = "경고!\n |cFF436EEE%s|r을 업데이트했지만 기
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r이 올바르게 작동하려면 기본 |cFF436EEEBigWigs|r 애드온의 %d 버전이 필요하지만 %d 버전을 사용 중입니다."
 L.addOnLoadFailedWithReason = "BigWigs에서 애드온 |cFF436EEE%s|r을 로드하는 데 실패했습니다. 이유는 %q입니다. BigWigs 개발팀에 알려주세요!"
 L.addOnLoadFailedUnknownError = "BigWigs에서 애드온 |cFF436EEE%s|r을 로드하는 중 오류가 발생했습니다. BigWigs 개발팀에 알려주세요!"
+L.newFeatures = "새로운 BigWigs 기능:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"오리지널", -- Classic
@@ -80,6 +83,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "구렁",
 	["LittleWigs_CurrentSeason"] = "현재 시즌",
 }
+L.dayNamesShort = {
+	"일", -- Sunday
+	"월", -- Monday
+	"화", -- Tuesday
+	"수", -- Wednesday
+	"목", -- Thursday
+	"금", -- Friday
+	"토", -- Saturday
+}
+L.dayNames = {
+	"일요일",
+	"월요일",
+	"화요일",
+	"수요일",
+	"목요일",
+	"금요일",
+	"토요일",
+}
+L.monthNames = {
+	"1월",
+	"2월",
+	"3월",
+	"4월",
+	"5월",
+	"6월",
+	"7월",
+	"8월",
+	"9월",
+	"10월",
+	"11월",
+	"12월",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"
@@ -306,6 +342,7 @@ L.iconTextureSpellIDError = "아이콘 텍스처로 사용할 유효한 주문 I
 L.battleResModeIcon = "모드: 아이콘"
 L.battleResModeText = "모드: 텍스트만"
 L.battleResModeTextTooltip = "전투 부활 기능을 이동하고 마우스 오버 영역을 확인하는 데 도움이 되도록 임시 배경을 표시합니다."
+L.battleResNoteTooltip = "참고: 이 툴팁은 전투 중이 아닐 때만 표시됩니다."
 
 -----------------------------------------------------------------------
 -- Keystones.lua

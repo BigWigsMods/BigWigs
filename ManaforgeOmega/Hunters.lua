@@ -487,7 +487,6 @@ do
 			if theHuntTotalCount <= totalExpectedCasts then
 				self:Bar(1227809, timers[1227809][theHuntCount], CL.count:format(CL.soak, theHuntTotalCount))
 			end
-			self:PlaySound(1227809, "long") -- watch charge(s)
 		else -- Should only happen in Mythic
 			subCount = subCount + 1
 			self:TargetMessage(1227809, "orange", args.destName, CL.count_amount:format(CL.soak, subCount, 3))
@@ -495,7 +494,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Yell(1227809, CL.soak, nil, "Soak")
 			self:YellCountdown(1227809, 6, CL.soak, nil, "Soak")
-			self:PlaySound(1227809, "warning") -- line up / immune
+			self:PlaySound(1227809, "warning", nil, args.destName) -- line up / immune
+		elseif subCount == 1 then
+			self:PlaySound(1227809, "long") -- watch charge(s)
 		end
 	end
 end

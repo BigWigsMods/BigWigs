@@ -20,5 +20,6 @@
 <Script file="Statistics.lua"/>
 <Script file="Victory.lua"/>
 <Script file="Wipe.lua"/>
+<Script file="BattleRes.lua"/>
 
 </Ui>

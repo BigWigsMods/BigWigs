@@ -85,7 +85,10 @@ do
 	display:SetScript("OnDragStop", function(self)
 		self:StopMovingOrSizing()
 		local point, _, relPoint, x, y = self:GetPoint()
-		db.position = {point, relPoint, x, y}
+		db.position[1] = point
+		db.position[2] = relPoint
+		db.position[3] = x
+		db.position[4] = y
 		--plugin:UpdateGUI() -- Update X/Y if GUI is open.
 	end)
 
@@ -97,7 +100,10 @@ do
 	local function dragStop()
 		display:StopMovingOrSizing()
 		local point, _, relPoint, x, y = display:GetPoint()
-		db.position = {point, relPoint, x, y}
+		db.position[1] = point
+		db.position[2] = relPoint
+		db.position[3] = x
+		db.position[4] = y
 		--plugin:UpdateGUI() -- Update X/Y if GUI is open.
 	end
 	local display2 = CreateFrame("Frame", nil, display)
@@ -271,8 +277,32 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
-	db.posx = nil
-	db.posy = nil
+	for dbKey, dbValue in next, plugin.db.profile do
+		local defaultType = type(plugin.defaultDB[dbKey])
+		if defaultType == "nil" then
+			plugin.db.profile[dbKey] = nil
+		elseif type(dbValue) ~= defaultType then
+			plugin.db.profile[dbKey] = plugin.defaultDB[dbKey]
+		end
+	end
+
+	if type(plugin.db.profile.position[1]) ~= "string" or type(plugin.db.profile.position[2]) ~= "string"
+	or type(plugin.db.profile.position[3]) ~= "number" or type(plugin.db.profile.position[4]) ~= "number"
+	or not BigWigsAPI.IsValidFramePoint(plugin.db.profile.position[1]) or not BigWigsAPI.IsValidFramePoint(plugin.db.profile.position[2]) then
+		plugin.db.profile.position[1] = plugin.defaultDB.position[1]
+		plugin.db.profile.position[2] = plugin.defaultDB.position[2]
+		plugin.db.profile.position[3] = plugin.defaultDB.position[3]
+		plugin.db.profile.position[4] = plugin.defaultDB.position[4]
+	else
+		local x = math.floor(plugin.db.profile.position[3]+0.5)
+		if x ~= plugin.db.profile.position[3] then
+			plugin.db.profile.position[3] = x
+		end
+		local y = math.floor(plugin.db.profile.position[4]+0.5)
+		if y ~= plugin.db.profile.position[4] then
+			plugin.db.profile.position[4] = y
+		end
+	end
 
 	display:ClearAllPoints()
 	local point, relPoint = db.position[1], db.position[2]

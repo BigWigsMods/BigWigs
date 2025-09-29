@@ -17,6 +17,7 @@ local manifestMatricesCount = 1
 local obliterationArcanocannonCount = 1
 local eradicationgSalvoCount = 1
 local protocolPurgeCount = 1
+local cleanseTheChamberCount = 1
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -70,30 +71,31 @@ local timersHeroic = {
 	},
 }
 
+local wallArriveTimer = { 26, 18, 12 } -- Time for the wall to reach the raid
 local timersMythic = {
 	[1] = {
-		[1219450] = { 11.5, 28.1, 0 }, -- Manifest Matrices
-		[1219263] = { 21.7, 30.4, 0 }, -- Obliteration Arcanocannon
-		[1219607] = { 40.9, 0 }, -- Eradicating Salvo
-		[1234733] = { 0.0, 0 }, -- Cleanse the Chamber
+		[1219450] = { 8.7, 28, 0 }, -- Manifest Matrices
+		[1219263] = { 22.0, 30.5, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 40.4, 0 }, -- Eradicating Salvo
+		[1234733] = { 0.5, 0 }, -- Cleanse the Chamber
 	},
 	[2] = {
-		[1219450] = { 7.4, 26.7, 26.8, 23.1, 0 }, -- Manifest Matrices
-		[1219263] = { 13.9, 29.2, 29.2, 0 }, -- Obliteration Arcanocannon
-		[1219607] = { 19.9, 31.6, 33.7, 0 }, -- Eradicating Salvo
-		[1234733] = { 28.5, 0 }, -- Cleanse the Chamber
+		[1219450] = { 4.7, 23.1, 23.1, 26.7, 0 }, -- Manifest Matrices
+		[1219263] = { 13, 28.0, 30.4, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 19.3, 34.9, 32.0, 0 }, -- Eradicating Salvo
+		[1234733] = { 29.5 , 0 }, -- Cleanse the Chamber
 	},
 	[3] = {
-		[1219450] = { 7.6, 26.8, 26.8, 23.1, 0 }, -- Manifest Matrices
-		[1219263] = { 14.1, 28.0, 30.4, 0 }, -- Obliteration Arcanocannon
-		[1219607] = { 20.2, 31.7, 33.6, 0 }, -- Eradicating Salvo
-		[1234733] = { 28.7, 0 }, -- Cleanse the Chamber
+		[1219450] = { 5.5, 26.8, 26.8, 23.1, 0 }, -- Manifest Matrices
+		[1219263] = { 13.1, 28.0, 29.2, 0 }, -- Obliteration Arcanocannon
+		[1219607] = { 20.2, 31.6, 33.6, 0 }, -- Eradicating Salvo
+		[1234733] = { 27.5, 0 }, -- Cleanse the Chamber
 	},
 	[4] = {
-		[1219450] = { 7.0, 24.3, 23.1, 30.4, 28.0, 24.3, 24.3 }, -- Manifest Matrices
-		[1219263] = { 13.5, 29.2, 30.4, 28.0, 42.5 }, -- Obliteration Arcanocannon
-		[1219607] = { 20.8, 35.2, 34.1, 34.0, 43.7 }, -- Eradicating Salvo
-		[1234733] = { 63.3, 6.1, 9.7, 6.9, 11.3, 9.7, 7.0, 6.3, 10.9, 7.0, 11.2, 6.1, 7.1 }, -- Cleanse the Chamber
+		[1219450] = { 5.2, 23.1, 23.1, 30.4, 28.0, 24.3, 24.3 }, -- Manifest Matrices
+		[1219263] = { 14.1, 29.2, 23.2, 32.0, 32.0, 32.0, 32.0, 32.0 }, -- Obliteration Arcanocannon
+		[1219607] = { 21.1, 34.0, 34.0, 34.0, 38.2, 38.2, 38.2, 38.2 }, -- Eradicating Salvo
+		[1234733] = { 62.3, 0 }, -- 7 after 1st all the time
 	},
 }
 
@@ -102,6 +104,15 @@ local function getNextTimer(spellId, count)
 	if timers[protocolPurgeCount] then
 		return timers[protocolPurgeCount][spellId][count]
 	end
+end
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.cleanse_the_chamber = "Wall"
 end
 
 --------------------------------------------------------------------------------
@@ -132,6 +143,8 @@ function mod:GetOptions()
 				1218668, -- Energy Cutter
 				1233110, -- Purging Lightning
 				1219471, -- Expulsion Zone
+		-- Mythic
+		1234733, -- Cleanse the Chamber
 	},{
 		{
 			tabName = CL.general,
@@ -150,6 +163,7 @@ function mod:GetOptions()
 		[1218625] = CL.stunned, -- Displacement Matrix (Stunned)
 		[1219263] = CL.tank_bomb, -- Obliteration Arcanocannon (Tank Bomb)
 		[1219607] = CL.soak, -- Eradicating Salvo (Soak)
+		[1234733] = L.cleanse_the_chamber, -- Cleanse the Chamber
 	}
 end
 
@@ -187,11 +201,15 @@ function mod:OnEngage()
 	obliterationArcanocannonCount = 1
 	eradicationgSalvoCount = 1
 	protocolPurgeCount = 1
+	cleanseTheChamberCount = 1
 
 	-- Timers from normal ptr
 	self:Bar(1219450, getNextTimer(1219450, 1), CL.count:format(CL.pools, manifestMatricesCount)) -- Manifest Matrices
 	self:Bar(1219263, getNextTimer(1219263, 1), CL.count:format(CL.tank_bomb, obliterationArcanocannonCount)) -- Obliteration Arcanocannon
 	self:Bar(1219607, getNextTimer(1219607, 1), CL.count:format(CL.soak, eradicationgSalvoCount)) -- Eradicating Salvo
+	if self:Mythic() then
+		self:Bar(1234733, getNextTimer(1234733, 1) + wallArriveTimer[cleanseTheChamberCount], CL.count:format(L.cleanse_the_chamber, cleanseTheChamberCount)) -- Cleanse the Chamber
+	end
 	self:Bar("stages", 61, CL.count:format(CL.stage:format(2), protocolPurgeCount), 1220489) -- Stage 2 (Protocol: Purge)
 end
 
@@ -207,8 +225,17 @@ function mod:PhaseBlinkApplied(args)
 end
 
 function mod:CleanseTheChamber(args)
-	self:Message("stages", "yellow", args.spellName, args.spellId) -- enrage started
-	self:PlaySound("stages", "long")
+	self:Message(args.spellId, "cyan", CL.incoming:format(L.cleanse_the_chamber))
+	if self:Mythic() and cleanseTheChamberCount < 4 then
+		local cd = getNextTimer(1234733, 1) or 0
+		local wallArrivalEta = wallArriveTimer[cleanseTheChamberCount] or 0
+		self:Bar(1234733, {wallArrivalEta, cd + wallArrivalEta}, CL.count:format(L.cleanse_the_chamber, cleanseTheChamberCount)) -- Cleanse the Chamber
+	else
+		self:StopBar(CL.count:format(L.cleanse_the_chamber, cleanseTheChamberCount-1))
+		self:StopBar(CL.count:format(L.cleanse_the_chamber, cleanseTheChamberCount))
+		self:CDBar(args.spellId, 7, CL.count:format(L.cleanse_the_chamber, cleanseTheChamberCount))
+	end
+	cleanseTheChamberCount = cleanseTheChamberCount + 1
 end
 
 do
@@ -313,10 +340,10 @@ function mod:ProtocolPurge()
 	self:StopBar(CL.count:format(CL.stage:format(2), protocolPurgeCount)) -- Stage 2
 	self:StopBar(CL.count:format(self:SpellName(1234733), protocolPurgeCount)) -- Cleanse the Chamber
 
-	protocolPurgeCount = protocolPurgeCount + 1
 	self:SetStage(2)
 	self:Message("stages", "green", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
+	protocolPurgeCount = protocolPurgeCount + 1
 end
 
 function mod:ProtocolPurgeRemoved()
@@ -328,6 +355,9 @@ function mod:ProtocolPurgeRemoved()
 	self:CDBar(1219450, getNextTimer(1219450, 1), CL.count:format(CL.pools, manifestMatricesCount)) -- Manifest Matrices
 	self:CDBar(1219263, getNextTimer(1219263, 1), CL.count:format(CL.tank_bomb, obliterationArcanocannonCount)) -- Obliteration Arcanocannon
 	self:CDBar(1219607, getNextTimer(1219607, 1), CL.count:format(CL.soak, eradicationgSalvoCount)) -- Eradicating Salvo
+	if self:Mythic() then
+		self:Bar(1234733, getNextTimer(1234733, 1) + (wallArriveTimer[cleanseTheChamberCount] or 0), CL.count:format(L.cleanse_the_chamber, cleanseTheChamberCount)) -- Cleanse the Chamber
+	end
 	if protocolPurgeCount == 4 then -- next is cleans the chamber
 		self:Bar("stages", 94.0, CL.count:format(self:SpellName(1234733), protocolPurgeCount), 1234733) -- Cleanse the Chamber
 	else
@@ -340,8 +370,8 @@ end
 
 function mod:PurgingLightningApplied(args)
 	local amount = args.amount or 1
-	if amount % 5 == 0 or amount > 25 then
+	if amount % 5 == 0 then
 		self:StackMessage(args.spellId, "purple", args.destName, amount, 25)
-		self:PlaySound(args.spellId, amount > 25 and "alarm" or "info") -- increasing damage taken on next application
+		self:PlaySound(args.spellId, "info")
 	end
 end

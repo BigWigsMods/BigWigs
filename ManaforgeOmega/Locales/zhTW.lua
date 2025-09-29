@@ -1,5 +1,10 @@
-local L = BigWigs:NewBossLocale("Loom'ithar", "zhTW")
+local L = BigWigs:NewBossLocale("Plexus Sentinel", "zhTW")
 if not L then return end
+if L then
+	--L.cleanse_the_chamber = "Wall"
+end
+
+L = BigWigs:NewBossLocale("Loom'ithar", "zhTW")
 if L then
 	L.lair_weaving = "織網" -- Webs that spawn on the edge of the room
 	L.infusion_pylons = "注能" -- Short for Infusion Pylons 注能塔
