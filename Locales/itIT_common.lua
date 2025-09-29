@@ -16,8 +16,8 @@ L.magic_buff_other = "Beneficio magico su %s: %s" -- Magic buff on NPC_NAME: SPE
 L.on = "%s su %s"
 L.stack = "%dx %s su %s" -- "5x SPELL_NAME on PLAYER_OR_NPC" showing how many stacks of a buff/debuff are on a player or NPC
 L.stackyou = "%dx %s su DI TE" -- "5x SPELL_NAME on YOU" showing how many stacks of a buff/debuff are on you
---L.stackboss = "%dx %s on BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
---L.stack_gained = "Gained %dx" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
+L.stackboss = "%dx %s sul BOSS" -- "5x SPELL_NAME on BOSS" showing how many stacks of a buff/debuff are on the boss
+L.stack_gained = "%dx Guadagnato" -- "Gained 5x" for situations where we show how many stacks of a buff were gained since last time a message showed
 L.cast = "<Lancio di %s>"
 L.casting = "Lancio di %s"
 L.soon = "%s tra poco"
@@ -47,7 +47,7 @@ L.general = "Generali" -- General settings, i.e. things that apply to normal, he
 L.health = "Salute" -- The health of an NPC
 L.health_percent = "%d%% Salute" -- "10% Health" The health percentage of an NPC
 L.energy = "Energia"
---L.energy_percent = "%d%% Energy" -- "80% Energy" The energy percentage of an NPC
+L.energy_percent = "%d%% Energia" -- "80% Energy" The energy percentage of an NPC
 L.door_open = "Porta aperta" -- When a door is open, usually after a speech from an NPC
 L.gate_open = "Cancello aperto" -- When a gate is open, usually after a speech from an NPC
 L.threat = "Minaccia"
@@ -71,15 +71,15 @@ L.you_die = "Tu muori" -- You will die
 L.you_die_sec = "Morirai in %d sec" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "Prossima abilità" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s sta atterrando" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
---L.landing = "Landing" -- Used when a flying NPC/dragon/boss is landing
+L.landing = "Atterraggio" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "Adesso puoi volare"
---L.bosses_too_close = "Bosses are too close" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
---L.keep_moving = "Keep moving" -- An ability that forces you to keep moving or you will take damage
---L.stand_still = "Stand still" -- An ability that forces you to stand still or you will take damage
---L.safe_to_stop = "Safe to stop" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
---L.safe_to_move = "Safe to move" -- When an ability to forces you to stand still fades from you, allowing you to move again
---L.safe = "Safe" -- You are safe from a bad ability
---L.unsafe = "Unsafe" -- You are unsafe (in danger) of a bad ability
+L.bosses_too_close = "Bosses troppo vicini" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
+L.keep_moving = "Muoviti" -- An ability that forces you to keep moving or you will take damage
+L.stand_still = "Fermati" -- An ability that forces you to stand still or you will take damage
+L.safe_to_stop = "Puoi fermarti" -- When an ability that forces you to keep moving fades from you, allowing you to stop moving
+L.safe_to_move = "Puoi muoverti" -- When an ability to forces you to stand still fades from you, allowing you to move again
+L.safe = "Sicuro" -- You are safe from a bad ability
+L.unsafe = "Pericolo" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
 L.add_spawned = "Add Apparso" -- singular
@@ -115,10 +115,10 @@ L.crenna = "Figlia della Terra Crenna" -- AI druid healer (NPC 209072)
 L.crenna_short = "*Crenna"
 L.austin = "Austin Huxworth" -- AI hunter dps (NPC 209065)
 L.austin_short = "*Austin"
---L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
---L.breka_short = "*Breka"
---L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
---L.henry_short = "*Henry"
+L.breka = "Warlord Breka Grimaxe" -- AI warrior tank (NPC 215517)
+L.breka_short = "*Breka"
+L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
+L.henry_short = "*Henry"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
@@ -139,7 +139,7 @@ L.marker_npc_desc = "Marchia %s con %s, necessario ruolo assistente o capo." -- 
 L.marker_npc_aura_desc = "Marchia NPCs che hanno '%s' con %s, richiede promozione or capogruppo." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Disattivato"
 L.none = "Nessuno"
---L.markers = "Markers" -- Plural of marker
+L.markers = "Marki" -- Plural of marker
 
 -- Ability where two players have to move close to each other
 L.link = "Vincolo"
@@ -180,9 +180,9 @@ L.west = "Ovest"
 L.north_west = "Nord-Ovest"
 
 -- Sizes
---L.small = "Small"
---L.medium = "Medium"
---L.large = "Large"
+L.small = "Piccolo"
+L.medium = "Medio"
+L.large = "Grande"
 
 -- Schools
 L.fire = "Fuoco"
@@ -249,31 +249,31 @@ L.spell_reflection = "Rifletti Incantesimo" -- Any ability that reflects spells
 L.rooted = "Immobilizzato" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.ball = "Ball" -- A ball, like a football, basketball, etc
---L.balls = "Balls" -- Plural of L.ball
+L.ball = "Palla" -- A ball, like a football, basketball, etc
+L.balls = "Palle" -- Plural of L.ball
 L.blind = "Accecamento" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Schiva" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Rabbia" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Paura" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "Ossessione" -- Used when a boss or add is chasing/fixated on a player
---L.fixates = "Fixates" -- Plural of L.fixate
---L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
+L.fixates = "Fissato" -- Plural of L.fixate
+L.group_damage = "Danno Gruppo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Risucchio di Salute" -- Any ability that drains health from the player
 L.parasite = "Parassita" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
---L.parasites = "Parasites" -- Plural of L.parasite
+L.parasites = "Parasite" -- Plural of L.parasite
 L.pull_in = "Trascinato Dentro" -- An ability that pulls you in towards the boss against your will
---L.raid_damage = "Raid Damage" -- Any ability that causes damage to every player in the raid
+L.raid_damage = "Danno Raid" -- Any ability that causes damage to every player in the raid
 L.smash = "Frantumazione" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Spuntone" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Spuntoni" -- Plural of L.spike
---L.spread = "Spread" -- An ability that forces you to spread out away from other players, or you might damage them
---L.tank_bomb = "Tank Bomb" -- Similar to L.bomb but only applies to tanks
+L.spread = "Separatevi" -- An ability that forces you to spread out away from other players, or you might damage them
+L.tank_bomb = "Bomba Tank" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combinazione Difensore" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
---L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
---L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "Tank Frontale" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentacolo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacoli" -- Plural of L.tentacle
 L.waves = "Onde" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
