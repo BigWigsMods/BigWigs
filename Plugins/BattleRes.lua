@@ -1486,6 +1486,12 @@ end
 -- Initialization
 --
 
+function plugin:OnRegister()
+	if self.db.profile.newResAvailableSound ~= "None" then
+		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, self.db.profile.newResAvailableSound)) if played then StopSound(id) end end, 0)
+	end
+end
+
 do
 	local function DelayStartOfInstance() -- Difficulty info isn't accurate until 1 frame after PEW
 		local _, _, diffID = BigWigsLoader.GetInstanceInfo()

@@ -61,14 +61,26 @@ local function updateProfile()
 			db[k] = nil
 		elseif type(v) ~= defaultType then
 			db[k] = plugin.defaultDB[k]
+		elseif sounds[k] then
+			for bossModuleName, soundTbl in next, v do
+				for optionKey, soundName in next, soundTbl do
+					if not LibSharedMedia:IsValid("sound", soundName) then
+						soundTbl[optionKey] = nil -- Invalid sound, remove
+					end
+				end
+				if not next(soundTbl) then
+					db[k][bossModuleName] = nil -- Sounds list for this boss module is an empty table, remove it
+				end
+			end
 		end
 	end
+
 	for k, v in next, db.media do
 		local defaultType = type(plugin.defaultDB.media[k])
 		if defaultType == "nil" then
 			db.media[k] = nil
-		elseif type(v) ~= defaultType then
-			db.media[k] = plugin.defaultDB.media[k]
+		elseif type(v) ~= defaultType or not LibSharedMedia:IsValid("sound", v) then
+			db.media[k] = plugin.defaultDB.media[k] -- Invalid type or invalid sound, reset
 		end
 	end
 end
@@ -302,34 +314,24 @@ function plugin:OnRegister()
 		}
 	end
 
-	local soundsPlayedTable = {}
-	if not soundsPlayedTable[db.media.Long] then
-		soundsPlayedTable[db.media.Long] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Long)) if played then StopSound(id) end end, 0)
+	local soundsPlayedTable = {["None"] = true}
+	for optionKey, soundName in next, db.media do
+		if sounds[optionKey] and not soundsPlayedTable[soundName] then
+			soundsPlayedTable[soundName] = true
+			self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName)) if played then StopSound(id) end end, 0)
+		end
 	end
-	if not soundsPlayedTable[db.media.Info] then
-		soundsPlayedTable[db.media.Info] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Info)) if played then StopSound(id) end end, 0)
-	end
-	if not soundsPlayedTable[db.media.Alert] then
-		soundsPlayedTable[db.media.Alert] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Alert)) if played then StopSound(id) end end, 0)
-	end
-	if not soundsPlayedTable[db.media.Alarm] then
-		soundsPlayedTable[db.media.Alarm] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Alarm)) if played then StopSound(id) end end, 0)
-	end
-	if not soundsPlayedTable[db.media.Warning] then
-		soundsPlayedTable[db.media.Warning] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.Warning)) if played then StopSound(id) end end, 0)
-	end
-	if not soundsPlayedTable[db.media.underyou] then
-		soundsPlayedTable[db.media.underyou] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.underyou)) if played then StopSound(id) end end, 0)
-	end
-	if not soundsPlayedTable[db.media.privateaura] then
-		soundsPlayedTable[db.media.privateaura] = true
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, db.media.privateaura)) if played then StopSound(id) end end, 0)
+	for k, v in next, db do
+		if sounds[k] then
+			for _, soundTbl in next, v do
+				for optionKey, soundName in next, soundTbl do
+					if not soundsPlayedTable[soundName] then
+						soundsPlayedTable[soundName] = true
+						self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName)) if played then StopSound(id) end end, 0)
+					end
+				end
+			end
+		end
 	end
 end
 

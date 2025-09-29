@@ -485,6 +485,32 @@ end
 -- Initialization
 --
 
+function plugin:OnRegister()
+	local soundsPlayedTable = {}
+	if BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
+		soundsPlayedTable[plugin.db.profile.voice] = true
+		for i = plugin.db.profile.countdownTime, 1, -1 do
+			local sound = BigWigsAPI:GetCountdownSound(plugin.db.profile.voice, i)
+			if sound then
+				self:SimpleTimer(function() local played, id = self:PlaySoundFile(sound) if played then StopSound(id) end end, 0)
+			end
+		end
+	end
+	for _, countdownTbl in next, plugin.db.profile.bossCountdowns do
+		for optionKey, voiceID in next, countdownTbl do
+			if not soundsPlayedTable[voiceID] and BigWigsAPI:HasCountdown(voiceID) then
+				soundsPlayedTable[voiceID] = true
+				for i = plugin.db.profile.countdownTime, 1, -1 do
+					local sound = BigWigsAPI:GetCountdownSound(voiceID, i)
+					if sound then
+						self:SimpleTimer(function() local played, id = self:PlaySoundFile(sound) if played then StopSound(id) end end, 0)
+					end
+				end
+			end
+		end
+	end
+end
+
 function plugin:OnPluginEnable()
 	updateProfile()
 	createOptions()

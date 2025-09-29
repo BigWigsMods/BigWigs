@@ -158,9 +158,6 @@ files["Plugins/Pull.lua"].ignore = {
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
 }
-files["Plugins/Sound.lua"].ignore = {
-	"113/StopSound",
-}
 files["Plugins/Statistics.lua"].ignore = {
 	"113/C_UIWidgetManager",
 }
@@ -169,11 +166,11 @@ files["Plugins/RaidIcon.lua"].ignore = {
 }
 files["Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
-	"113/StopSound",
 }
-files["**/Plugins/*.lua"].ignore = {
+files["Plugins/*.lua"].ignore = {
 	"112/SlashCmdList",
 	"111/SLASH_.*", -- slash handlers
+	"113/StopSound",
 }
 files["Options/Options.lua"].ignore = {
 	"113/C_UI",
