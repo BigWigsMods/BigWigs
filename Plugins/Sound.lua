@@ -314,25 +314,32 @@ function plugin:OnRegister()
 		}
 	end
 
-	local soundsPlayedTable = {["None"] = true}
+	local soundsPlayedTable = {}
 	for optionKey, soundName in next, db.media do
-		if sounds[optionKey] and not soundsPlayedTable[soundName] then
+		if sounds[optionKey] and soundName ~= "None" and not soundsPlayedTable[soundName] then
 			soundsPlayedTable[soundName] = true
-			self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName)) if played then StopSound(id) end end, 0)
 		end
 	end
 	for k, v in next, db do
 		if sounds[k] then
 			for _, soundTbl in next, v do
 				for optionKey, soundName in next, soundTbl do
-					if not soundsPlayedTable[soundName] then
+					if soundName ~= "None" and not soundsPlayedTable[soundName] then
 						soundsPlayedTable[soundName] = true
-						self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName)) if played then StopSound(id) end end, 0)
 					end
 				end
 			end
 		end
 	end
+	local timer
+	local function Loop()
+		local soundName = next(soundsPlayedTable)
+		if not soundName then timer:Cancel() return end
+		soundsPlayedTable[soundName] = nil
+		local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName))
+		if played then StopSound(id) end
+	end
+	timer = BigWigsLoader.CTimerNewTicker(0, Loop)
 end
 
 function plugin:OnPluginEnable()
