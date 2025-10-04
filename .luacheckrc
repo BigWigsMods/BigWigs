@@ -106,6 +106,9 @@ files["Plugins/AutoReply.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_FriendList",
 }
+files["Plugins/Bars.lua"].ignore = {
+	"113/C_Spell",
+}
 files["Plugins/BattleRes.lua"].ignore = {
 	"113/C_ClassColor",
 	"113/C_Spell",
@@ -260,6 +263,7 @@ globals = {
 	"BuyMerchantItem", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_EncounterJournal",
 	"C_GossipInfo",
+	"C_InstanceEncounter",
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
@@ -293,6 +297,7 @@ globals = {
 	"GetSubZoneText",
 	"GetTime",
 	"GetUnitSpeed", -- Dragonflight/Amirdrassil/TindralSageswift.lua
+	"issecretvalue",
 	"InCombatLockdown",
 	"IsAltKeyDown",
 	"IsControlKeyDown",
