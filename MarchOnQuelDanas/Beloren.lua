@@ -1,3 +1,4 @@
+if not BigWigsLoader.isBeta then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
