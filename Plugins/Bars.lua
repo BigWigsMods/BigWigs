@@ -1416,7 +1416,7 @@ end
 -- Custom Bars
 --
 
-local function parseTime(input)
+local function ConvertTimeStringToSeconds(input)
 	if type(input) == "nil" then return end
 	if tonumber(input) then return tonumber(input) end
 	if type(input) == "string" then
@@ -1428,6 +1428,29 @@ local function parseTime(input)
 		elseif input:find("^%d+mi?n?$") then
 			local _, _, t = input:find("^(%d+)mi?n?$")
 			return tonumber(t) * 60
+		end
+	end
+end
+
+local ReplaceIconWithTexture
+do
+	local markerIcons = {
+		"|T137001:0|t",
+		"|T137002:0|t",
+		"|T137003:0|t",
+		"|T137004:0|t",
+		"|T137005:0|t",
+		"|T137006:0|t",
+		"|T137007:0|t",
+		"|T137008:0|t",
+	}
+
+	function ReplaceIconWithTexture(msg)
+		local id = tonumber(msg)
+		if id and id >= 1 and id <= 8 then
+			return markerIcons[id]
+		else
+			("{rt%s}"):format(msg)
 		end
 	end
 end
@@ -1446,11 +1469,10 @@ do
 			prevBars[bar] = GetTime()
 			if not UnitIsGroupLeader(nick) and not UnitIsGroupAssistant(nick) then return end
 			seconds, barText = bar:match("(%S+) (.*)")
-			seconds = parseTime(seconds)
+			seconds = ConvertTimeStringToSeconds(seconds)
 			if type(seconds) ~= "number" or type(barText) ~= "string" or seconds < 0 then
 				return
 			end
-			BigWigs:Print(L.customBarStarted:format(barText, isDBM and "DBM" or "BigWigs", nick))
 		end
 
 		local id = "bwcb" .. nick .. barText
@@ -1459,6 +1481,10 @@ do
 			timers[id] = nil
 		end
 
+		barText = barText:gsub("{[Rr][Tt](%d)}", ReplaceIconWithTexture)
+		if not localOnly then
+			BigWigs:Print(L.customBarStarted:format(barText, isDBM and "DBM" or "BigWigs", nick))
+		end
 		nick = nick:gsub("%-.+", "*") -- Remove server name
 		if seconds == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
@@ -1501,14 +1527,15 @@ do
 		local seconds, barText = input:match("(%S+) (.*)")
 		if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
 
-		seconds = parseTime(seconds)
+		seconds = ConvertTimeStringToSeconds(seconds)
 		if not seconds or seconds < 0 then BigWigs:Print(L.wrongTime) return end
 
 		if not times then times = {} end
 		local t = GetTime()
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
-			BigWigs:Print(L.sendCustomBar:format(barText))
+			local barTextForPrinting = barText:gsub("{[Rr][Tt](%d)}", ReplaceIconWithTexture)
+			BigWigs:Print(L.sendCustomBar:format(barTextForPrinting))
 			plugin:Sync("CBar", input)
 			local name = plugin:UnitName("player")
 			local realm = GetRealmName()
@@ -1527,7 +1554,7 @@ BigWigsAPI.RegisterSlashCommand("/localbar", function(input)
 	local seconds, barText = input:match("(%S+) (.*)")
 	if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat:gsub("/raidbar", "/localbar")) return end
 
-	seconds = parseTime(seconds)
+	seconds = ConvertTimeStringToSeconds(seconds)
 	if not seconds then BigWigs:Print(L.wrongTime) return end
 
 	startCustomBar(seconds, plugin:UnitName("player"), barText)
