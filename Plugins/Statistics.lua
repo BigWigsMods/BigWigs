@@ -313,7 +313,9 @@ local function GetModuleID(bossMod)
 end
 
 do
-	local UnitHealth, UnitHealthMax, IsEncounterInProgress = UnitHealth, UnitHealthMax, IsEncounterInProgress
+	local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
+	local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
+
 	local function StoreHealth(module)
 		if IsEncounterInProgress() then
 			local journalID = GetModuleID(module)

@@ -271,7 +271,9 @@ end
 do
 	local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 
-	local UnitHealth, UnitHealthMax, IsEncounterInProgress = UnitHealth, UnitHealthMax, IsEncounterInProgress
+	local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
+	local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
+
 	local function StoreHealth()
 		if IsEncounterInProgress() then
 			for i = 1, 5 do

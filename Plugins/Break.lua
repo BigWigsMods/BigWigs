@@ -12,7 +12,7 @@ if not plugin then return end
 --local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 --local DoCountdown = BigWigsLoader.DoCountdown
 --local zoneTable = BigWigsLoader.zoneTbl
---local IsEncounterInProgress = IsEncounterInProgress
+local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 --local media = LibStub("LibSharedMedia-3.0")
 --local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 

@@ -26,6 +26,9 @@ local rearrangeBars
 
 local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 
+local barPluginFrame = CreateFrame("Frame")
+local blizzardBars = {}
+
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -1124,6 +1127,13 @@ function plugin:OnPluginEnable()
 	-- custom bars
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
+
+	-- XXX 12.0
+	if issecretvalue then
+		barPluginFrame:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+		-- barPluginFrame:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+		barPluginFrame:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+	end
 end
 
 function plugin:OnPluginDisable()
@@ -1245,6 +1255,20 @@ function plugin:StopModuleBars(_, module)
 	end
 end
 
+function plugin:StopSecretBar(key)
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
+			k:Stop()
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
+			k:Stop()
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Bar utility functions
 --
@@ -1281,7 +1305,7 @@ end
 
 do
 	local initial = true
-	function plugin:CreateBar(module, key, text, time, icon, isApprox)
+	function plugin:CreateBar(module, key, text, time, icon, isApprox, hasSecrets)
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
@@ -1298,9 +1322,14 @@ do
 		bar:SetFont(f, db.fontSize, flags)
 		bar:Set("bigwigs:module", module)
 		bar:Set("bigwigs:option", key)
+		bar:Set("bigwigs:hasSecrets", hasSecrets and hasSecrets or false)
 		bar:Set("bigwigs:anchor", "normalPosition")
 		normalAnchor.bars[bar] = true
-		bar:SetIcon(db.icon and icon or nil)
+		if db.icon then
+			bar:SetIcon(icon)
+		else
+			bar:SetIcon(nil)
+		end
 		bar:SetDuration(time, isApprox)
 		bar:SetColor(colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
@@ -1314,7 +1343,7 @@ do
 		bar:SetIconPosition(db.iconPosition)
 		bar:SetFill(db.fill)
 		bar:SetLabel(text)
-		if initial then
+		if not issecurevalue and initial then -- XXX 12.0 compat
 			-- Workaround for wow custom font loading issues
 			self:SimpleTimer(function()
 				initial = false
@@ -1337,10 +1366,12 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
-		if not text then text = "" end
-		self:StopSpecificBar(nil, module, text)
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox)
+	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, hasSecrets)
+		if not hasSecrets and not text then text = "" end
+		if not hasSecrets then
+			self:StopSpecificBar(nil, module, text)
+		end
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox, hasSecrets)
 		if isApprox then
 			bar:SetPauseWhenDone(true)
 		end
@@ -1559,3 +1590,35 @@ BigWigsAPI.RegisterSlashCommand("/localbar", function(input)
 
 	startCustomBar(seconds, plugin:UnitName("player"), barText)
 end)
+
+-------------------------------------------------------------------------------
+-- 12.0 Midnight
+--
+
+barPluginFrame:SetScript("OnEvent", function(_, event, ...)
+	barPluginFrame[event](plugin, ...)
+end)
+
+function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo, initialState)
+	-- Not Secrets
+	local eventID = eventInfo.id
+	local duration = eventInfo.duration
+	local source = eventInfo.source
+
+	-- Secrets
+	local spellId = eventInfo.tooltipSpellID
+	local spellName = C_Spell.GetSpellName(spellId)
+	local iconId = eventInfo.iconFileID
+	local dispelType = eventInfo.dispelType
+	local role = eventInfo.role
+	local priority = eventInfo.priority
+	self:BigWigs_StartBar(nil, nil, eventID, spellName, duration, iconId, nil, nil, true)
+end
+
+-- function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID, info)
+--	used to pause/unpause bars - can we test?
+-- end
+
+function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_REMOVED(eventID)
+	plugin:StopSecretBar(eventID)
+end
