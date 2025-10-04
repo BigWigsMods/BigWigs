@@ -91,6 +91,7 @@ files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
+	"113/C_CVar",
 	"113/EncounterTimeline",
 	"113/Enum",
 }
