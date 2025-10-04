@@ -40,7 +40,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("berserk", "red", "Beloren Engaged!")
+	self:Message("berserk", "red", "Beloren Engaged!", false)
 end
 
 --------------------------------------------------------------------------------
