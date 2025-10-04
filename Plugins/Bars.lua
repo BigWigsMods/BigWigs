@@ -1343,7 +1343,7 @@ do
 		bar:SetIconPosition(db.iconPosition)
 		bar:SetFill(db.fill)
 		bar:SetLabel(text)
-		if not issecurevalue and initial then -- XXX 12.0 compat
+		if not issecretvalue and initial then -- XXX 12.0 compat
 			-- Workaround for wow custom font loading issues
 			self:SimpleTimer(function()
 				initial = false
