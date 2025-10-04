@@ -1623,7 +1623,7 @@ do
 
 	local timer = nil
 	local function sendDBMMsg()
-		if loader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
@@ -1706,7 +1706,7 @@ local ResetVersionWarning
 do
 	local timer = nil
 	local function sendMsg()
-		if loader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
@@ -1845,7 +1845,7 @@ do
 		}
 		local UnitIsPlayer = UnitIsPlayer
 		local function UNIT_TARGET(frame, event, unit)
-			if BigWigsLoader.isBeta then return end -- XXX needs updating for 12.0
+			if public.isBeta then return end -- XXX needs updating for 12.0
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then

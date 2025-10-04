@@ -91,6 +91,8 @@ files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
+	"113/EncounterTimeline",
+	"113/Enum",
 }
 files["Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",
