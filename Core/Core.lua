@@ -294,10 +294,6 @@ do
 			end
 			DisableModules()
 			core:SendMessage("BigWigs_CoreDisabled")
-
-			if loader.isBeta then
-				EncounterTimeline:SetAlpha(1)
-			end
 		end
 	end
 	local function zoneChanged()
@@ -353,7 +349,7 @@ do
 			core:SendMessage("BigWigs_CoreEnabled")
 
 			if loader.isBeta then
-				EncounterTimeline:SetAlpha(0)
+				EncounterTimeline:SetTimelineVisibility(Enum.EncounterEventsVisibility.Hidden)
 			end
 		end
 	end
