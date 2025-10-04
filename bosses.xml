@@ -5,6 +5,6 @@
 <Include file="KhazAlgar\modules.xml"/>
 <Include file="LiberationOfUndermine\modules.xml"/>
 <Include file="ManaforgeOmega\modules.xml"/>
-<Include file="MarchOnQuelDanas\modules.xml"/>
 <!--@end-do-not-package@-->
+<Include file="MarchOnQuelDanas\modules.xml"/>
 </Ui>
