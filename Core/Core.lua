@@ -132,6 +132,7 @@ local enablemobs = {}
 
 local function UpdateMouseoverUnit()
 	local guid = UnitGUID("mouseover")
+	if issecretvalue and issecretvalue(guid) then return end -- XXX 12.0 compat
 	if not guid or UnitIsCorpse("mouseover") or UnitIsDead("mouseover") then return end
 	local _, _, _, _, _, mobIdString = strsplit("-", guid)
 	local mobId = tonumber(mobIdString)

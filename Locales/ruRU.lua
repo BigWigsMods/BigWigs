@@ -78,6 +78,7 @@ L.expansionNames = {
 	"Темные Земли", -- Shadowlands
 	"Dragonflight", -- Dragonflight -- Can't figure a out a good way to translate this
 	"The War Within", -- The War Within
+	"Midnight", -- Midnight
 }
 L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Вылазки",
