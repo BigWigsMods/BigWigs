@@ -1099,9 +1099,13 @@ do
 	if num < 90 then
 		C_CVar.SetCVar("Sound_NumChannels", "90") -- 64 is the default, enforce a little higher as a minimum to prevent sound clipping issues with addons
 	end
-	local cache = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
-	if cache < 134217728 then
+	local maxCache = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
+	if maxCache < 134217728 then
 		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "134217728") -- "Large (128MB)" is the default, enforce it as a minimum
+	end
+	local maxSize = tonumber(C_CVar.GetCVar("Sound_MaxCacheableSizeInBytes")) or 0
+	if maxSize < 174762 then
+		C_CVar.SetCVar("Sound_MaxCacheableSizeInBytes", "174762") -- "174762" (170KB) is the default, enforce it as a minimum
 	end
 end
 
