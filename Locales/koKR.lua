@@ -78,6 +78,7 @@ L.expansionNames = {
 	"어둠땅", -- Shadowlands
 	"용군단", -- Dragonflight
 	"내부 전쟁", -- The War Within
+	"Midnight", -- Midnight
 }
 L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "구렁",

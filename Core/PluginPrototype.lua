@@ -227,6 +227,7 @@ do
 	-- @bool[opt] noResend if true, no re-send will be attempted if the message fails to send
 	-- @usage self:Sync("pluginName", data)
 	function plugin:Sync(msg, extra, noResend)
+		if BigWigsLoader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg and self:IsEnabled() then
 			if IsInGroup() then
 				msg = "P^".. msg

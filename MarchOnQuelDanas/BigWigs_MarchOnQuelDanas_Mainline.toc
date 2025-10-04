@@ -1,0 +1,37 @@
+## Interface: 120000
+
+## Title: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-deDE: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-esES: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-esMX: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-frFR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-itIT: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-koKR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-ptBR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-ruRU: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-zhCN: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-zhTW: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Notes: BigWigs March on Quel'Danas Modules
+## Notes-deDE: BigWigs March on Quel'Danas Modules
+## Notes-esES: BigWigs March on Quel'Danas Modules
+## Notes-esMX: BigWigs March on Quel'Danas Modules
+## Notes-frFR: BigWigs March on Quel'Danas Modules
+## Notes-itIT: BigWigs March on Quel'Danas Modules
+## Notes-koKR: BigWigs March on Quel'Danas Modules
+## Notes-ptBR: BigWigs March on Quel'Danas Modules
+## Notes-ruRU: BigWigs March on Quel'Danas Modules
+## Notes-zhCN: BigWigs March on Quel'Danas Modules
+## Notes-zhTW: BigWigs March on Quel'Danas Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2913
+
+Beloren.lua
+
+# Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+# !Options.lua

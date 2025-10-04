@@ -219,6 +219,7 @@ do
 	local s = "BigWigs_Shadowlands"
 	local df = "BigWigs_Dragonflight"
 	local tww = "BigWigs_TheWarWithin"
+	local mn = "BigWigs_Midnight"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -278,29 +279,28 @@ do
 			currentSeason = {},
 			zones = {},
 		}
-	--elseif public.isBeta and public.isTestBuild then -- Retail Beta
-	--	public.currentExpansion = { -- Change on new expansion releases
-	--		name = tww,
-	--		bigWigsBundled = {
-	--			[df] = true,
-	--			[tww] = true,
-	--		},
-	--		littlewigsDefault = lw_cs,
-	--		littleWigsBundled = {
-	--			[lw_df] = true,
-	--			[lw_tww] = true,
-	--			[lw_delves] = true,
-	--			[lw_cs] = true,
-	--		},
-	--		littleWigsExtras = {
-	--			lw_delves,
-	--			lw_cs,
-	--		},
-	--		currentSeason = {},
-	--		zones = {
-	--			[2657] = "BigWigs_NerubarPalace",
-	--		}
-	--	}
+	elseif public.isBeta then -- Retail Beta
+		public.currentExpansion = { -- Change on new expansion releases
+			name = mn,
+			bigWigsBundled = {
+				[mn] = true,
+			},
+			littlewigsDefault = lw_cs,
+			littleWigsBundled = {
+				[lw_df] = true,
+				[lw_tww] = true,
+				[lw_delves] = true,
+				[lw_cs] = true,
+			},
+			littleWigsExtras = {
+				lw_delves,
+				lw_cs,
+			},
+			currentSeason = {},
+			zones = {
+				[2913] = "BigWigs_MarchOnQuelDanas",
+			}
+		}
 	else -- Retail
 		public.currentExpansion = { -- Change on new expansion releases
 			name = tww,
@@ -423,6 +423,9 @@ do
 		[2657] = tww, -- Nerub'ar Palace
 		[2769] = tww, -- Liberation of Undermine
 		[2810] = tww, -- Manaforge Omega
+		--[[ BigWigs: Midnight ]]--
+		[2913] = public.isBeta and mn, -- March on Quel'Danas
+
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = not (public.isVanilla or public.isTBC or public.isWrath) and lw_cata or nil, -- Shadowfang Keep
@@ -1387,6 +1390,7 @@ do
 		BigWigs_NerubarPalace = true,
 		BigWigs_LiberationOfUndermine = true,
 		BigWigs_ManaforgeOmega = true,
+		BigWigs_MarchOnQuelDanas = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
@@ -1619,6 +1623,7 @@ do
 
 	local timer = nil
 	local function sendDBMMsg()
+		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
@@ -1701,6 +1706,7 @@ local ResetVersionWarning
 do
 	local timer = nil
 	local function sendMsg()
+		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
@@ -1839,6 +1845,7 @@ do
 		}
 		local UnitIsPlayer = UnitIsPlayer
 		local function UNIT_TARGET(frame, event, unit)
+			if public.isBeta then return end -- XXX needs updating for 12.0
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then
@@ -1989,6 +1996,7 @@ end
 do
 	local grouped = nil
 	function mod:GROUP_FORMED()
+		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
