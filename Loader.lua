@@ -1994,6 +1994,7 @@ end
 do
 	local grouped = nil
 	function mod:GROUP_FORMED()
+		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType

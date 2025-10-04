@@ -3872,6 +3872,7 @@ do
 	-- @usage self:Sync("abilityPrefix", data)
 	-- @usage self:Sync("ability")
 	function boss:Sync(msg, extra, noResend)
+		if loader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg then
 			if IsInGroup() then
 				if extra then

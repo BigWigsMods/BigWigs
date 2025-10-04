@@ -1551,6 +1551,7 @@ do
 	local dbmPrefix = BigWigsLoader.dbmPrefix
 	local times
 	BigWigsAPI.RegisterSlashCommand("/raidbar", function(input)
+		if loader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
 		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
