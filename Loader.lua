@@ -1843,6 +1843,7 @@ do
 		}
 		local UnitIsPlayer = UnitIsPlayer
 		local function UNIT_TARGET(frame, event, unit)
+			if BigWigsLoader.isBeta then return end -- XXX needs updating for 12.0
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then
