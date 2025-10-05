@@ -1,7 +1,7 @@
 ## Interface: 120000
 
 ## Title: BigWigs [|cffeda55fMarch on Quel'Danas|r]
-## Title-deDE: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-deDE: BigWigs [|cffeda55fMarsch auf Quel'Danas|r]
 ## Title-esES: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-esMX: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-frFR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f进军奎尔丹纳斯|r]
 ## Title-zhTW: BigWigs [|cffeda55f奎爾達納斯之界|r]
 ## Notes: BigWigs March on Quel'Danas Modules
-## Notes-deDE: BigWigs March on Quel'Danas Modules
+## Notes-deDE: BigWigs Marsch auf Quel'Danas Module
 ## Notes-esES: BigWigs March on Quel'Danas Modules
 ## Notes-esMX: BigWigs March on Quel'Danas Modules
 ## Notes-frFR: BigWigs March on Quel'Danas Modules
