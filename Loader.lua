@@ -231,6 +231,7 @@ do
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
 	local lw_tww = "LittleWigs_TheWarWithin"
+	local lw_mn = "LittleWigs_Midnight"
 	local lw_delves = "LittleWigs_Delves"
 	local lw_cs = "LittleWigs_CurrentSeason"
 
@@ -424,7 +425,7 @@ do
 		[2769] = tww, -- Liberation of Undermine
 		[2810] = tww, -- Manaforge Omega
 		--[[ BigWigs: Midnight ]]--
-		[2913] = public.isBeta and mn, -- March on Quel'Danas
+		[2913] = public.isBeta and mn or nil, -- March on Quel'Danas
 
 
 		--[[ LittleWigs: Classic ]]--
@@ -598,6 +599,9 @@ do
 		[2826] = lw_delves, -- Sidestreet Sluice
 		[2831] = lw_delves, -- Demolition Dome
 		[2951] = lw_delves, -- Voidrazor Sanctuary
+		--[[ LittleWigs: Midnight ]]--
+		[2805] = public.isBeta and lw_mn or nil, -- Windrunner Spire
+		[2813] = public.isBeta and lw_mn or nil, -- Murder Row
 	}
 	public.remappedZones = {
 		[2827] = 2213, -- Horrific Vision of Stormwind (Revisited) -> Horrific Vision of Stormwind
