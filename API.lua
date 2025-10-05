@@ -11,18 +11,30 @@ local type, next, error = type, next, error
 -- Addons creating bars
 --
 
--- Allows addons to show a bar to the user
-function API.CreateBarFromAddon(addonName, text, icon, barTime)
+-- Allows addons to show a custom bar to the user
+function API.CreateBarFromAddon(addonName, barText, barIcon, barTime)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for bar creation.") end
-	if type(text) ~= "string" or #text < 3 then error("Invalid text for bar creation.") end
-	local iconType = type(icon)
+	if type(barText) ~= "string" or #barText < 3 then error("Invalid text for bar creation.") end
+	local iconType = type(barIcon)
 	if iconType ~= "string" and iconType ~= "number" then error("Invalid icon for bar creation.") end
 	if type(barTime) ~= "number" then error("Invalid bar time for bar creation.") end
 	local L = API:GetLocale("BigWigs")
-	addonTbl.loaderPublic.Print(L.showAddonBar:format(addonName, text))
+	addonTbl.loaderPublic.Print(L.showAddonBar:format(addonName, barText))
 	addonTbl.LoadAndEnableCore()
-	addonTbl.loaderPublic:SendMessage("BigWigs_StartBar", nil, nil, text, barTime, icon)
-	addonTbl.loaderPublic:SendMessage("BigWigs_Timer", nil, nil, barTime, barTime, text, 0, icon, false, true)
+	addonTbl.loaderPublic:SendMessage("BigWigs_StartBar", nil, nil, barText, barTime, barIcon)
+	addonTbl.loaderPublic:SendMessage("BigWigs_Timer", nil, nil, barTime, barTime, barText, 0, barIcon, false, true)
+end
+
+-- Allows addons to send custom bars to the group
+function API.SendBarToGroup(addonName, barText, barTime)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for bar creation.") end
+	if type(barText) ~= "string" or #barText < 3 then error("Invalid text for bar creation.") end
+	if type(barTime) ~= "number" or barTime < 3 then error("Invalid bar time for bar creation.") end
+	addonTbl.LoadAndEnableCore()
+	local bars = BigWigs:GetPlugin("Bars", true)
+	if bars then
+		bars:SendCustomBarToGroup(barText, barTime)
+	end
 end
 
 --------------------------------------------------------------------------------

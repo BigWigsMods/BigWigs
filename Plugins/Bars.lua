@@ -2,7 +2,10 @@
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Bars")
+local plugin, L = BigWigs:NewPlugin("Bars", {
+	"db",
+	"SendCustomBarToGroup",
+})
 if not plugin then return end
 
 --------------------------------------------------------------------------------
@@ -1542,43 +1545,45 @@ function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
 	end
 end
 
--------------------------------------------------------------------------------
--- Slashcommand
---
-
 do
 	local SendAddonMessage = BigWigsLoader.SendAddonMessage
 	local dbmPrefix = BigWigsLoader.dbmPrefix
 	local times
-	BigWigsAPI.RegisterSlashCommand("/raidbar", function(input)
+	function plugin:SendCustomBarToGroup(message, duration)
 		if BigWigsLoader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
-		if not plugin:IsEnabled() then BigWigs:Enable() end
-
+		if not duration or duration < 3 then BigWigs:Print(L.wrongTime) return end
 		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
-
-		local seconds, barText = input:match("(%S+) (.*)")
-		if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
-
-		seconds = ConvertTimeStringToSeconds(seconds)
-		if not seconds or seconds < 0 then BigWigs:Print(L.wrongTime) return end
+		if not plugin:IsEnabled() then BigWigs:Enable() end
 
 		if not times then times = {} end
 		local t = GetTime()
-		if not times[input] or (times[input] and (times[input] + 2) < t) then
-			times[input] = t
-			local barTextForPrinting = barText:gsub("{[Rr][Tt](%d)}", ReplaceIconWithTexture)
+		local id = duration .." ".. message
+		if not times[id] or (times[id] and (times[id] + 1) < t) then
+			times[id] = t
+			local barTextForPrinting = message:gsub("{[Rr][Tt](%d)}", ReplaceIconWithTexture)
 			BigWigs:Print(L.sendCustomBar:format(barTextForPrinting))
-			plugin:Sync("CBar", input)
+			plugin:Sync("CBar", id)
 			local name = plugin:UnitName("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local result = SendAddonMessage(dbmPrefix, ("%s-%s\t1\tU\t%d\t%s"):format(name, normalizedPlayerRealm, seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			local result = SendAddonMessage(dbmPrefix, ("%s-%s\t1\tU\t%d\t%s"):format(name, normalizedPlayerRealm, duration, message), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 			if type(result) == "number" and result ~= 0 then
 				BigWigs:Error("BigWigs: Failed to send raid bar. Error code: ".. result)
 			end
 		end
-	end)
+	end
 end
+
+-------------------------------------------------------------------------------
+-- Slashcommand
+--
+
+BigWigsAPI.RegisterSlashCommand("/raidbar", function(input)
+	local seconds, barText = input:match("(%S+) (.*)")
+	if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
+	seconds = ConvertTimeStringToSeconds(seconds)
+	plugin:SendCustomBarToGroup(barText, seconds)
+end)
 
 BigWigsAPI.RegisterSlashCommand("/localbar", function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
