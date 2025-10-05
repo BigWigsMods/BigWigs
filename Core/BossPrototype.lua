@@ -2333,7 +2333,7 @@ do
 					-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue)
 					offDispel.enrage = true
 				end
-				if SpellKnown(88423) or SpellKnown(77130) or SpellKnown(53551) or SpellKnown(527) or SpellKnown(32375) or SpellKnown(89808, true) or SpellKnown(115451) then
+				if SpellKnown(88423) or SpellKnown(77130) or SpellKnown(53551) or SpellKnown(527) or SpellKnown(32375) or SpellKnown(89808, checkPet) or SpellKnown(115451) then
 					-- Nature's Cure (Druid), Purify Spirit (Shaman), Sacred Cleansing (Paladin), Purify (Priest), Mass Dispel (Priest), Singe Magic (Warlock Imp), Internal Medicine (Monk)
 					defDispel.magic = true
 				end
