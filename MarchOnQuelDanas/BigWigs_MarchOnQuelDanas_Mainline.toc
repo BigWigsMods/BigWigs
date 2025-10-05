@@ -10,7 +10,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-ruRU: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-zhCN: BigWigs [|cffeda55f进军奎尔丹纳斯|r]
-## Title-zhTW: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-zhTW: BigWigs [|cffeda55f奎爾達納斯之界|r]
 ## Notes: BigWigs March on Quel'Danas Modules
 ## Notes-deDE: BigWigs March on Quel'Danas Modules
 ## Notes-esES: BigWigs March on Quel'Danas Modules
@@ -21,7 +21,7 @@
 ## Notes-ptBR: BigWigs March on Quel'Danas Modules
 ## Notes-ruRU: BigWigs March on Quel'Danas Modules
 ## Notes-zhCN: BigWigs 进军奎尔丹纳斯模块
-## Notes-zhTW: BigWigs March on Quel'Danas Modules
+## Notes-zhTW: BigWigs 奎爾達納斯之界模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
