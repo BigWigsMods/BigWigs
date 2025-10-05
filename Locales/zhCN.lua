@@ -78,7 +78,7 @@ L.expansionNames = {
 	"暗影国度", -- Shadowlands
 	"巨龙时代", -- Dragonflight
 	"地心之战", -- The War Within
-	"Midnight", -- Midnight
+	"至暗之夜", -- Midnight
 }
 L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "地下堡",
