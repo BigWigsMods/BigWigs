@@ -29,9 +29,6 @@ local rearrangeBars
 
 local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 
-local barPluginFrame = CreateFrame("Frame")
-local blizzardBars = {}
-
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -1131,11 +1128,10 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
 
-	-- XXX 12.0
-	if issecretvalue then
-		barPluginFrame:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
-		-- barPluginFrame:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
-		barPluginFrame:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+	if BigWigsLoader.isBeta then -- XXX 12.0
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 	end
 end
 
@@ -1220,6 +1216,38 @@ function plugin:ResumeBar(_, module, text)
 	end
 	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+			k:Resume()
+			return
+		end
+	end
+end
+
+function plugin:PauseSecretBar(key)
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
+			k:Pause()
+			return
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
+			k:Pause()
+			return
+		end
+	end
+end
+
+function plugin:ResumeSecretBar(key)
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
+			k:Resume()
+			return
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
 			k:Resume()
 			return
 		end
@@ -1601,15 +1629,12 @@ end)
 -- 12.0 Midnight
 --
 
-barPluginFrame:SetScript("OnEvent", function(_, event, ...)
-	barPluginFrame[event](plugin, ...)
-end)
-
-function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo, initialState)
+function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo, initialState)
 	-- Not Secrets
 	local eventID = eventInfo.id
 	local duration = eventInfo.duration
 	local source = eventInfo.source
+	local state = initialState -- 0 = Running, 1 = Paused
 
 	-- Secrets
 	local spellId = eventInfo.tooltipSpellID
@@ -1619,12 +1644,27 @@ function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo, initialState)
 	local role = eventInfo.role
 	local priority = eventInfo.priority
 	self:BigWigs_StartBar(nil, nil, eventID, spellName, duration, iconId, nil, nil, true)
+
+	if state == 1 then -- Starting Paused
+		self:PauseSecretBar(eventID)
+	end
 end
 
--- function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID, info)
---	used to pause/unpause bars - can we test?
--- end
+function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID, newState)
+	if newState == 0 then -- Resumed
+		self:ResumeSecretBar(eventID)
+	elseif newState == 1 then -- Paused
+		self:PauseSecretBar(eventID)
 
-function barPluginFrame:ENCOUNTER_TIMELINE_EVENT_REMOVED(eventID)
-	plugin:StopSecretBar(eventID)
+	-- Are Finished and/or Canceled needed?
+	-- it also triggers `ENCOUNTER_TIMELINE_EVENT_REMOVED` when the timer is removed.
+	-- elseif newState == 2 then -- Finished
+	-- 	plugin:StopSecretBar(eventID)
+	-- elseif newState == 3 then -- Canceled
+	-- 	plugin:StopSecretBar(eventID)
+	end
+end
+
+function plugin:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
+	self:StopSecretBar(eventID)
 end
