@@ -1262,7 +1262,7 @@ local function populateToggleOptions(widget, module)
 
 			-- Headers
 			local displayOrder = {
-				"story", "timewalk", "LFR", "normal", "heroic", "mythic",
+				"story", "timewalk", "LFR", "LFR_timerun", "normal", "normal_timerun", "heroic", "heroic_timerun", "mythic", "mythic_timerun",
 				"N10", "N25", "H10", "H25",
 				"SOD", "level1", "level2", "level3", "hardcore",
 				"solotier8", "solotier11",

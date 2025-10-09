@@ -291,10 +291,14 @@ L.first_desc = "La primera victoria ante este jefe, formateada como:\n[Número d
 
 -- Difficulty levels for statistics display on bosses
 L.unknown = "Desconocido"
-L.LFR = "Buscardor de Banda"
+L.LFR = "BdB" --"Buscardor de Banda"
 L.normal = "Normal"
 L.heroic = "Heroico"
 L.mythic = "Mítico"
+L.LFR_timerun = "|A:timerunning-glues-icon:14:14|aBdB"
+L.normal_timerun = "|A:timerunning-glues-icon:14:14|aNormal"
+L.heroic_timerun = "|A:timerunning-glues-icon:14:14|aHeroico"
+L.mythic_timerun = "|A:timerunning-glues-icon:14:14|aMítico"
 L.timewalk = "Cronoviaje"
 L.solotier8 = "Solitario Tier 8"
 L.solotier11 = "Solitario Tier 11"
