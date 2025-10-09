@@ -278,7 +278,6 @@ do
 							width = "full",
 						},
 					},
-					hidden = loader.isVanilla,
 				},
 			},
 		}
@@ -1299,7 +1298,7 @@ local function populateToggleOptions(widget, module)
 					if not value then
 						fastestVictoryLabel:SetText("-")
 					elseif value and bestDate then
-						fastestVictoryLabel:SetFormattedText("%s (%s)", value, bestDate)
+						fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
 					elseif value then
 						fastestVictoryLabel:SetText(value)
 					end
