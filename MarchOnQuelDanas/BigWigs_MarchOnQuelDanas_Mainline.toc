@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-frFR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-itIT: BigWigs [|cffeda55fMarch on Quel'Danas|r]
-## Title-koKR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-koKR: BigWigs [|cffeda55f쿠엘다나스 진격로|r]
 ## Title-ptBR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-ruRU: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-zhCN: BigWigs [|cffeda55f进军奎尔丹纳斯|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs March on Quel'Danas Modules
 ## Notes-frFR: BigWigs March on Quel'Danas Modules
 ## Notes-itIT: BigWigs March on Quel'Danas Modules
-## Notes-koKR: BigWigs March on Quel'Danas Modules
+## Notes-koKR: BigWigs 쿠엘다나스 진격로 모듈
 ## Notes-ptBR: BigWigs March on Quel'Danas Modules
 ## Notes-ruRU: BigWigs March on Quel'Danas Modules
 ## Notes-zhCN: BigWigs 进军奎尔丹纳斯模块
