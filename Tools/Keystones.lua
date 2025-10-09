@@ -921,7 +921,7 @@ do
 				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
 				BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
 				if keyLevel and keyLevel > 0 then
-					local msg = L.keystoneStartBar:format(dungeonNamesTrimmed[challengeMapID] or "?", keyLevel)
+					local msg = L.keystoneStartBar:format(dungeonNamesTrimmed[challengeMapID] or challengeMapID, keyLevel)
 					BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, msg, 9, icon)
 					BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, msg, 0, icon, false, true)
 				else
@@ -939,7 +939,7 @@ do
 						end
 					end
 				end)
-				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(dungeonNamesTrimmed[challengeMapID], keyLevel), 9), "cyan", icon)
+				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(dungeonNamesTrimmed[challengeMapID] or challengeMapID, keyLevel), 9), "cyan", icon)
 				local soundName = db.profile.countStartSound
 				if soundName ~= "None" then
 					local sound = LibSharedMedia:Fetch("sound", soundName, true)
@@ -1111,7 +1111,7 @@ do
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
-					map = dungeonNamesTiny[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID,
+					map = dungeonNamesTiny[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "?", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID,
 					rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
 				}
 			end
@@ -1429,7 +1429,7 @@ do
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
-					map = pData[2] == -1 and hiddenIcon or dungeonNamesTiny[pData[2]] or "-",
+					map = pData[2] == -1 and hiddenIcon or dungeonNamesTiny[pData[2]] or pData[2] or "?",
 					mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-") .. GetTeleportTextForSpellID(teleportSpellID),
 					mapID = mapID,
 					rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
