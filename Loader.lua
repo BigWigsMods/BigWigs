@@ -289,7 +289,7 @@ do
 			},
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
-				[lw_df] = true,
+				[lw_mn] = true,
 				[lw_tww] = true,
 				[lw_delves] = true,
 				[lw_cs] = true,
@@ -298,7 +298,15 @@ do
 				lw_delves,
 				lw_cs,
 			},
-			currentSeason = {},
+			currentSeason = {
+				[2287] = lw_cs, -- Halls of Atonement
+				[2441] = lw_cs, -- Tazavesh, the Veiled Market
+				[2649] = lw_cs, -- Priory of the Sacred Flame
+				[2660] = lw_cs, -- Ara-Kara, City of Echoes
+				[2662] = lw_cs, -- The Dawnbreaker
+				[2773] = lw_cs, -- Operation: Floodgate
+				[2830] = lw_cs, -- Eco-Dome Al'dani
+			},
 			zones = {
 				[2913] = "BigWigs_MarchOnQuelDanas",
 			}
