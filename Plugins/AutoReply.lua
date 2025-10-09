@@ -348,9 +348,8 @@ do
 			end
 			if not throttle[sender] or (GetTime() - throttle[sender]) > 30 then
 				throttle[sender] = GetTime()
-				local isBnetFriend = C_BattleNet.GetGameAccountInfoByGUID(guid)
 				local msg
-				if isBnetFriend or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
+				if C_BattleNet.GetGameAccountInfoByGUID(guid) or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
 					friendlies[sender] = true
 					msg = CreateResponse(self.db.profile.mode)
 					if not timer and self.db.profile.exitCombat == 4 then
@@ -378,7 +377,7 @@ do
 					local player = gameAccountInfo.characterName
 					local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
 					local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
-					if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == 1 and realmName and realmDisplayName and player then
+					if gameAccountInfo.clientProgram == "WoW" and realmName and realmDisplayName and player then
 						if realmDisplayName ~= GetRealmName() then
 							player = player .. "-" .. realmName
 						end
