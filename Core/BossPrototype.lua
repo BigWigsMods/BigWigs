@@ -1764,6 +1764,21 @@ function boss:GetSeason()
 	return season
 end
 
+do
+	local PlayerIsTimerunning = PlayerIsTimerunning
+	if PlayerIsTimerunning then
+		--- Check if the player is Timerunning.
+		-- @return boolean
+		function boss:Timerunning()
+			return PlayerIsTimerunning()
+		end
+	else
+		function boss:Timerunning()
+			return false
+		end
+	end
+end
+
 --- Get the mob/npc id from a GUID.
 -- @string guid GUID of a mob/npc
 -- @return mob/npc id

@@ -315,60 +315,75 @@ local function GetModuleID(bossMod)
 end
 
 do
-	local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
-	local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
+	local StoreHealth
+	do
+		local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
+		local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
+		function StoreHealth(module)
+			if IsEncounterInProgress() then
+				local journalID = GetModuleID(module)
+				for i = 1, 5 do
+					local unit = units[i]
+					local rawHealth = UnitHealth(unit)
+					if rawHealth > 0 then
+						local maxHealth = UnitHealthMax(unit)
+						local health = rawHealth / maxHealth
+						healthPools[journalID][unit] = health
+						healthPools[journalID].names[unit] = module:UnitName(unit)
+					elseif healthPools[journalID][unit] then
+						healthPools[journalID][unit] = nil
+					end
+				end
+			end
+		end
+	end
 
-	local function StoreHealth(module)
-		if IsEncounterInProgress() then
-			local journalID = GetModuleID(module)
-			for i = 1, 5 do
-				local unit = units[i]
-				local rawHealth = UnitHealth(unit)
-				if rawHealth > 0 then
-					local maxHealth = UnitHealthMax(unit)
-					local health = rawHealth / maxHealth
-					healthPools[journalID][unit] = health
-					healthPools[journalID].names[unit] = module:UnitName(unit)
-				elseif healthPools[journalID][unit] then
-					healthPools[journalID][unit] = nil
+	local GetDifficultyText
+	do
+		local timerunningDifficulties = {
+			[14] = "normal_timerun", -- Normal
+			[15] = "heroic_timerun", -- Heroic
+			[16] = "mythic_timerun", -- Mythic
+			[17] = "LFR_timerun", -- Looking For Raid
+		}
+		function GetDifficultyText(module)
+			local diff = module:Difficulty()
+			if diff then
+				if diff == 208 then -- Delves
+					-- Only record stats for solo Nemesis delves
+					if module:Solo() then
+						local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
+						if info and info.shownState == 1 then
+							return "solotier8"
+						end
+						info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6185) -- ?? Difficulty
+						if info and info.shownState == 1 then
+							return "solotier11"
+						end
+					end
+				elseif diff == 226 then -- SOD
+					if module:GetPlayerAura(458841) then -- Sweltering Heat
+						return "level1"
+					elseif module:GetPlayerAura(458842) then -- Blistering Heat
+						return "level2"
+					elseif module:GetPlayerAura(458843) then -- Molten Heat
+						return "level3"
+					end
+				elseif diff == 9 or diff == 148 then -- normal
+					local season = module:GetSeason()
+					if season == 3 or season == 12 then
+						return "hardcore"
+					elseif season == 2 and diff == 9 then
+						return "SOD"
+					end
+				elseif module:Timerunning() and timerunningDifficulties[diff] then
+					return timerunningDifficulties[diff]
 				end
+				return difficultyTable[diff]
 			end
 		end
 	end
-	local function GetDifficultyText(module)
-		local diff = module:Difficulty()
-		if diff then
-			if diff == 208 then -- Delves
-				-- Only record stats for solo Nemesis delves
-				if module:Solo() then
-					local info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6184) -- ? Difficulty
-					if info and info.shownState == 1 then
-						return "solotier8"
-					end
-					info = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6185) -- ?? Difficulty
-					if info and info.shownState == 1 then
-						return "solotier11"
-					end
-				end
-			elseif diff == 226 then -- SOD
-				if module:GetPlayerAura(458841) then -- Sweltering Heat
-					return "level1"
-				elseif module:GetPlayerAura(458842) then -- Blistering Heat
-					return "level2"
-				elseif module:GetPlayerAura(458843) then -- Molten Heat
-					return "level3"
-				end
-			elseif diff == 9 or diff == 148 then -- normal
-				local season = module:GetSeason()
-				if season == 3 or season == 12 then
-					return "hardcore"
-				elseif season == 2 and diff == 9 then
-					return "SOD"
-				end
-			end
-			return difficultyTable[diff]
-		end
-	end
+
 	function plugin:BigWigs_OnBossEngage(event, module)
 		local instanceID = module:GetZoneID()
 		local journalID = GetModuleID(module)

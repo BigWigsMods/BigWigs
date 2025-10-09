@@ -66,6 +66,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
+	"113/PlayerIsTimerunning",
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitInPartyIsAI",
@@ -79,6 +80,7 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
+	"113/PlayerIsTimerunning",
 	"113/GetTalentInfo",
 	"113/GetTalentTabInfo",
 	"113/TranscriptIgnore",
@@ -108,6 +110,7 @@ files["Plugins/AutoReply.lua"].ignore = {
 	"113/BNSendWhisper",
 	"113/C_BattleNet",
 	"113/C_FriendList",
+	"113/IsGuildMember",
 }
 files["Plugins/Bars.lua"].ignore = {
 	"113/C_Spell",
@@ -305,7 +308,6 @@ globals = {
 	"IsAltKeyDown",
 	"IsControlKeyDown",
 	"IsEncounterInProgress",
-	"IsGuildMember",
 	"IsInGroup",
 	"IsInRaid",
 	"IsLoggedIn",
