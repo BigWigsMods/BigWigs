@@ -1931,12 +1931,19 @@ end
 
 do
 	local GetPlayerAuraBySpellID = loader.GetPlayerAuraBySpellID
+	local GetUnitAuraBySpellID = loader.GetUnitAuraBySpellID
 	--- Get the aura info of the player using a spell ID.
 	-- @number spellId the spell ID of the aura
+	-- @string[opt] unit unit token or name, if nil checks the player
 	-- @return table the table full of aura info, or nil if not found
-	function boss:GetPlayerAura(spellId)
-		local tbl = GetPlayerAuraBySpellID(spellId)
-		return tbl
+	function boss:GetPlayerAura(spellId, unit)
+		if unit then
+			local tbl = GetUnitAuraBySpellID(unit, spellId)
+			return tbl
+		else
+			local tbl = GetPlayerAuraBySpellID(spellId)
+			return tbl
+		end
 	end
 end
 
