@@ -566,7 +566,7 @@ do
 		end
 
 		-- XXX temp Lemix
-		if myKeyLevel == 0 and myKeyMap == 0 and PlayerIsTimerunning and PlayerIsTimerunning() then
+		if not keyLevel and not keyChallengeMapID and PlayerIsTimerunning and PlayerIsTimerunning() then
 			for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
 				local slots = GetContainerNumSlots(currentBag)
 				for currentSlot = 1, slots do
@@ -580,6 +580,7 @@ do
 							if challengeMapID and level then
 								myKeyMap = challengeMapID
 								myKeyLevel = level
+								myRating = -1
 								break
 							end
 						end
@@ -1233,8 +1234,8 @@ do
 				cellMap.text:SetText(sortedplayerList[i].map)
 				cellMap.tooltip = sortedplayerList[i].mapTooltip
 				cellRating:SetWidth(WIDTH_RATING)
-				cellRating.text:SetText(sortedplayerList[i].rating)
-				cellRating.tooltip = sortedplayerList[i].ratingTooltip
+				cellRating.text:SetText(sortedplayerList[i].rating == -1 and "|A:timerunning-glues-icon:14:14|a" or sortedplayerList[i].rating) -- XXX temp Lemix
+				cellRating.tooltip = sortedplayerList[i].rating == -1 and L.keystoneTimerunner or sortedplayerList[i].ratingTooltip -- XXX temp Lemix
 				prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
 
 				if i == tableSize then
@@ -1359,7 +1360,7 @@ do
 					cellInTime:SetPoint("TOP", prevInTime, "BOTTOM", 0, -6)
 				end
 			end
-			if not firstOldRun then
+			if not firstOldRun then -- There are 0 older runs, fix the header
 				local y = 50 + runsThisWeek*26
 				olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
 			end
