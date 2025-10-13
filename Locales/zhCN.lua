@@ -679,6 +679,7 @@ L.blockDungeonPopups = "屏蔽地下城弹出式横幅"
 L.blockDungeonPopupsDesc = "进入地下城时弹出的横幅有时会包含很长的文字。启用此功能将完全屏蔽它们。"
 L.itemLevel = "物品等级%d"
 L.newRespawnPoint = "新的复活位置"
+L.playerLevel = "等级 %d"
 
 L.userNotifySfx = "首领屏蔽禁用了声音效果，强制它重新启用。"
 L.userNotifyMusic = "首领屏蔽禁用了音乐，强制它重新启用。"

@@ -520,10 +520,17 @@ do
 				elseif tbl.eventToastID == 156 or tbl.eventToastID == 200 then -- Talent point, Hero talent point
 					-- tbl.title is "New Talent Point Available" / "New Hero Talent Point Available"
 					-- tbl.subtitle is "Your power increased!"
-					if levelUpTbl then -- We merge this into the level up toast
-						levelUpTbl.subtitle = CL.other:format((levelUpTbl.title):upper(), tbl.title) -- Combine, without uppercase
+					if levelUpTbl then -- We merge this into the level up toast...
+						levelUpTbl.subtitle = CL.other:format(levelUpTbl.title, tbl.title) -- Combine, without uppercase
 						levelUpTbl.title = nil
 						levelUpTbl.iconFileID = tbl.iconFileID
+					else -- ...unless there was no level up toast
+						tbl.bwDuration = 4.5
+						self:SimpleTimer(function()
+							tbl.subtitle = CL.other:format(L.playerLevel:format(UnitLevel("player") or 0), tbl.title) -- Combine, without uppercase
+							tbl.title = nil
+							printMessage(self, tbl)
+						end, 0.5) -- Delay to be sure that UnitLevel is accurate
 					end
 				elseif tbl.eventToastID == 3 then -- New ability
 					-- tbl.title is "Imprison"

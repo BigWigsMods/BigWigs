@@ -679,6 +679,7 @@ L.blockDungeonPopups = "Bloque les popups de donjons"
 L.blockDungeonPopupsDesc = "Les popups qui s'affichent lorsque vous entrez dans un donjon contiennent parfois beaucoup de texte. Activer cette option désactivera complètement ces messages."
 L.itemLevel = "Niveau d'objet %d"
 L.newRespawnPoint = "Nouveau point de réapparition"
+L.playerLevel = "Niveau %d"
 
 L.userNotifySfx = "Les effets sonores étaient désactivés par BossBlock, la réactivation a été forcée."
 L.userNotifyMusic = "La musique était désactivée par BossBlock, la réactivation a été forcée."

@@ -679,6 +679,7 @@ L.blockDungeonPopups = "Bloquear carteles emergentes de calabozos"
 L.blockDungeonPopupsDesc = "Los carteles emergentes que se muestran al entrar a un calabozo a veces pueden contener texto muy largo. Al activar esta función los bloqueará completamente."
 L.itemLevel = "Nivel de objeto %d"
 L.newRespawnPoint = "Nuevo punto de reaparición"
+L.playerLevel = "Nivel %d"
 
 L.userNotifySfx = "BossBlock desactivó los efectos de sonido, lo que obligó a volver a activarlos."
 L.userNotifyMusic = "BossBlock desactivó la música, lo que obligó a volver a activarla."

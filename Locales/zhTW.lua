@@ -679,6 +679,7 @@ L.blockDungeonPopups = "封鎖地城通知橫幅"
 L.blockDungeonPopupsDesc = "有時候，進入地城彈出的通知橫幅會顯示很長的文本，啟用此選項可以完全隱藏它們。"
 L.itemLevel = "物品等級%d"
 L.newRespawnPoint = "新的復活點"
+L.playerLevel = "等級%d"
 
 L.userNotifySfx = "音效原被「首領戰訊息封鎖」功能關閉，現已強制重啟。"
 L.userNotifyMusic = "音樂原被「首領戰訊息封鎖」功能關閉，現已強制重啟。"

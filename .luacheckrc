@@ -140,6 +140,7 @@ files["Plugins/BossBlock.lua"].ignore = {
 	"113/QuestWatchFrame",
 	"113/RaidBossEmoteFrame_OnEvent",
 	"113/TooltipDataProcessor",
+	"113/UnitLevel",
 	"113/UIErrorsFrame",
 	"113/UnmuteSoundFile",
 	"113/WatchFrame",

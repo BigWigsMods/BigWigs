@@ -679,6 +679,7 @@ L.blockDungeonPopups = "Bloquear banners pop-up em masmorras"
 L.blockDungeonPopupsDesc = "Os banners de pop-up que aparecem ao entrar em uma masmorra às vezes podem conter textos muito longos. Ativar essa função os bloqueará completamente."
 L.itemLevel = "Nível do Item: %d"
 L.newRespawnPoint = "Novo ponto de respawn"
+L.playerLevel = "Nível %d"
 
 L.userNotifySfx = "Os Efeitos Sonoros estavam desativados pelo BossBlock e agora estão sendo reativados."
 L.userNotifyMusic = "A Música estava desativada pelo BossBlock e agora está sendo reativada."

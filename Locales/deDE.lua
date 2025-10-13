@@ -679,6 +679,7 @@ L.blockDungeonPopups = "Popup Banner in Instanzen blockieren"
 L.blockDungeonPopupsDesc = "Die Popup Banner beim Betreten einer Instanz können sehr lange Texte enthalten. Die Aktivierung dieser Option blockiert diese komplett."
 L.itemLevel = "Gegenstandsstufe %d"
 L.newRespawnPoint = "Neuer Wiederbelebungspunkt"
+L.playerLevel = "Stufe %d"
 
 L.userNotifySfx = "Soundeffekte wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
 L.userNotifyMusic = "Musik wurde von BossBlock deaktiviert, Aktivierung wird erzwungen."

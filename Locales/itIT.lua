@@ -679,6 +679,7 @@ L.blockDungeonPopups = "Blocca i banner popup dei dungeon"
 L.blockDungeonPopupsDesc = "I banner popup mostrati quando entri in un dungeon a volte possono contenere messaggi molto lunghi. Abilitando questa impostazione li bloccherà completamente."
 L.itemLevel = "Livello oggetto: %d"
 --L.newRespawnPoint = "New Respawn Point"
+L.playerLevel = "Livello %d"
 
 L.userNotifySfx = "Gli Effetti sonori sono disabilitati dal Blocco Boss, li riattivo forzatamente."
 L.userNotifyMusic = "La Musica è stata disabilitata dal Blocco Boss, la riattivo forzatamente."
