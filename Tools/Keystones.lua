@@ -845,7 +845,7 @@ do
 				text:SetJustifyH("CENTER")
 			end
 			text:SetText("")
-			if db.profile.autoSlotKeystone and not HasSlottedKeystone() then
+			if db.profile.autoSlotKeystone then
 				local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 				if GetOwnedKeystoneMapID() == instanceID then
 					for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
@@ -854,9 +854,11 @@ do
 							local itemLink = GetContainerItemLink(currentBag, currentSlot)
 							if itemLink and itemLink:find("Hkeystone", nil, true) then
 								text:SetText(L.keystoneAutoSlotFrame)
-								PickupContainerItem(currentBag, currentSlot)
-								SlotKeystone()
 								BigWigsLoader.Print(L.keystoneAutoSlotMessage:format(itemLink))
+								if not HasSlottedKeystone() then
+									PickupContainerItem(currentBag, currentSlot)
+									SlotKeystone()
+								end
 							end
 						end
 					end
@@ -1285,7 +1287,7 @@ do
 			cellDate:SetWidth(WIDTH_RATING+13)
 			local dateTbl = runs[i].completionDate
 			cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday])
-			cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.day, L.monthNames[dateTbl.month], dateTbl.year)
+			cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.day+1, L.monthNames[dateTbl.month], dateTbl.year+2000)
 			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
 			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")
