@@ -189,28 +189,49 @@ local dungeonNamesTiny = {
 	[247] = L.keystoneShortName_TheMotherlode, -- ML
 	[370] = L.keystoneShortName_OperationMechagonWorkshop, -- WORK
 
-	[542] = L.keystoneShortName_EcoDomeAldani, -- ALDANI
+	[542] = L.keystoneShortName_EcoDomeAldani, -- ECODOME
 	[378] = L.keystoneShortName_HallsOfAtonement, -- HOA
 	[503] = L.keystoneShortName_AraKaraCityOfEchoes, -- ARAK
 	[392] = L.keystoneShortName_TazaveshSoleahsGambit, -- GAMBIT
 	[391] = L.keystoneShortName_TazaveshStreetsOfWonder, -- STREET
 	[505] = L.keystoneShortName_TheDawnbreaker, -- DAWN
+
+	[199] = L.keystoneShortName_BlackRookHold, -- BRH
+	[210] = L.keystoneShortName_CourtOfStars, -- COS
+	[198] = L.keystoneShortName_DarkheartThicket, -- DHT
+	[197] = L.keystoneShortName_EyeOfAzshara, -- EOA
+	[200] = L.keystoneShortName_HallsOfValor, -- HOV
+	[208] = L.keystoneShortName_MawOfSouls, -- MOS
+	[206] = L.keystoneShortName_NeltharionsLair, -- NL
+	[209] = L.keystoneShortName_TheArcway, -- ARC
+	[207] = L.keystoneShortName_VaultOfTheWardens, -- VOTW
 }
 local dungeonNamesTrimmed = {
-	[500] = L.keystoneShortName_TheRookery_Bar, -- ROOK
-	[504] = L.keystoneShortName_DarkflameCleft_Bar, -- DFC
-	[499] = L.keystoneShortName_PrioryOfTheSacredFlame_Bar, -- PRIORY
-	[506] = L.keystoneShortName_CinderbrewMeadery_Bar, -- BREW
-	[525] = L.keystoneShortName_OperationFloodgate_Bar, -- FLOOD
-	[382] = L.keystoneShortName_TheaterOfPain_Bar, -- TOP
-	[247] = L.keystoneShortName_TheMotherlode_Bar, -- ML
-	[370] = L.keystoneShortName_OperationMechagonWorkshop_Bar, -- WORK
-	[542] = L.keystoneShortName_EcoDomeAldani_Bar, -- ALDANI
-	[378] = L.keystoneShortName_HallsOfAtonement_Bar, -- HOA
-	[503] = L.keystoneShortName_AraKaraCityOfEchoes_Bar, -- ARAK
-	[392] = L.keystoneShortName_TazaveshSoleahsGambit_Bar, -- GAMBIT
-	[391] = L.keystoneShortName_TazaveshStreetsOfWonder_Bar, -- STREET
-	[505] = L.keystoneShortName_TheDawnbreaker_Bar, -- DAWN
+	[500] = L.keystoneShortName_TheRookery_Bar, -- Rookery
+	[504] = L.keystoneShortName_DarkflameCleft_Bar, -- Darkflame
+	[499] = L.keystoneShortName_PrioryOfTheSacredFlame_Bar, -- Priory
+	[506] = L.keystoneShortName_CinderbrewMeadery_Bar, -- Cinderbrew
+	[525] = L.keystoneShortName_OperationFloodgate_Bar, -- Floodgate
+	[382] = L.keystoneShortName_TheaterOfPain_Bar, -- Theater
+	[247] = L.keystoneShortName_TheMotherlode_Bar, -- Motherlode
+	[370] = L.keystoneShortName_OperationMechagonWorkshop_Bar, -- Workshop
+
+	[542] = L.keystoneShortName_EcoDomeAldani_Bar, -- Eco-Dome
+	[378] = L.keystoneShortName_HallsOfAtonement_Bar, -- Halls
+	[503] = L.keystoneShortName_AraKaraCityOfEchoes_Bar, -- Ara-Kara
+	[392] = L.keystoneShortName_TazaveshSoleahsGambit_Bar, -- Gambit
+	[391] = L.keystoneShortName_TazaveshStreetsOfWonder_Bar, -- Streets
+	[505] = L.keystoneShortName_TheDawnbreaker_Bar, -- Dawnbreaker
+
+	[199] = L.keystoneShortName_BlackRookHold_Bar, -- Black Rook
+	[210] = L.keystoneShortName_CourtOfStars_Bar, -- Court
+	[198] = L.keystoneShortName_DarkheartThicket_Bar, -- Darkheart
+	[197] = L.keystoneShortName_EyeOfAzshara_Bar, -- Eye
+	[200] = L.keystoneShortName_HallsOfValor_Bar, -- Halls
+	[208] = L.keystoneShortName_MawOfSouls_Bar, -- Maw
+	[206] = L.keystoneShortName_NeltharionsLair_Bar, -- Lair
+	[209] = L.keystoneShortName_TheArcway_Bar, -- Arcway
+	[207] = L.keystoneShortName_VaultOfTheWardens_Bar, -- Vault
 }
 local dungeonMapWithMultipleKeys = {
 	[2441] = true, -- Tazavesh, the Veiled Market
