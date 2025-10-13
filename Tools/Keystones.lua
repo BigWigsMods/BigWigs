@@ -1434,6 +1434,17 @@ do
 	end
 
 	local guildCellsCurrentlyShowing = {}
+	local tempLemixDungeonsDeleteMe = { -- XXX temp Lemix
+		[199] = true,
+		[210] = true,
+		[198] = true,
+		[197] = true,
+		[200] = true,
+		[208] = true,
+		[206] = true,
+		[209] = true,
+		[207] = true,
+	}
 	local function UpdateCellsForOnlineTab(playerList, isGuildList)
 		local sortedplayerList = {}
 		for pName, pData in next, playerList do
@@ -1455,6 +1466,7 @@ do
 					map = pData[2] == -1 and hiddenIcon or dungeonNamesTiny[pData[2]] or pData[2] or "?",
 					mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-") .. GetTeleportTextForSpellID(teleportSpellID),
 					mapID = mapID,
+					challengeMapID = pData[2], -- XXX temp Lemix
 					rating = pData[3], ratingTooltip = L.keystoneRatingTooltip:format(pData[3]),
 				}
 			end
@@ -1503,8 +1515,8 @@ do
 			cellMap.text:SetText(sortedplayerList[i].map)
 			cellMap.tooltip = sortedplayerList[i].mapTooltip
 			cellRating:SetWidth(WIDTH_RATING)
-			cellRating.text:SetText(sortedplayerList[i].rating)
-			cellRating.tooltip = sortedplayerList[i].ratingTooltip
+			cellRating.text:SetText(tempLemixDungeonsDeleteMe[sortedplayerList[i].challengeMapID] and "|A:timerunning-glues-icon:14:14|a" or sortedplayerList[i].rating) -- XXX temp Lemix
+			cellRating.tooltip = tempLemixDungeonsDeleteMe[sortedplayerList[i].challengeMapID] and L.keystoneTimerunner or sortedplayerList[i].ratingTooltip -- XXX temp Lemix
 			prevName, prevLevel, prevMap, prevRating = cellName, cellLevel, cellMap, cellRating
 			if isGuildList then
 				local num = #guildCellsCurrentlyShowing

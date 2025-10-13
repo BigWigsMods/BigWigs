@@ -411,6 +411,7 @@ L.keystoneHistoryScoreOlderTooltip = "Score total gagné avant cette semaine : 
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "Cliquez sur le nom du donjon ci-dessous afin de vous |cFF33FF99TÉLÉPORTER|r directement à l'entrée du donjon."
+--L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "COLONIE"
