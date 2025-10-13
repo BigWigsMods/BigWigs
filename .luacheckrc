@@ -214,6 +214,11 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/PlaySound",
 	"113/SetOverrideBindingClick",
 	"113/TimerTracker",
+
+	-- XXX temp Lemix
+	"113/C_Item",
+	"113/PlayerIsTimerunning",
+	"143/string",
 }
 files["Tools/LFGTimer.lua"].ignore = {
 	"113/LFGDungeonReadyPopup",

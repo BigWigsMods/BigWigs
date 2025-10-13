@@ -358,6 +358,23 @@ if BigWigsLoader.isBeta then
 		[2773] = 1216786, -- Operation: Floodgate
 		[2830] = 1237215, -- Eco-Dome Al'dani
 	})
+else
+	-- XXX temp Lemix
+	teleportList[0] = {
+		--[1544] = lw_l, -- Assault on Violet Hold
+		--[1677] = lw_l, -- Cathedral of Eternal Night
+		[1571] = 393766, -- Court of Stars
+		[1651] = 373262, -- Return to Karazhan
+		[1501] = 424153, -- Black Rook Hold
+		--[1516] = lw_l, -- The Arcway
+		[1466] = 424163, -- Darkheart Thicket
+		[1458] = 410078, -- Neltharion's Lair
+		--[1456] = lw_l, -- Eye of Azshara
+		--[1492] = lw_l, -- Maw of Souls
+		[1477] = 393764, -- Halls of Valor
+		--[1493] = lw_l, -- Vault of the Wardens
+		--[1753] = lw_l, -- Seat of the Triumvirate
+	}
 end
 for mapID in next, BigWigsLoader.currentExpansion.currentSeason do -- Automatically build the current season list
 	for expansionIndex = 2, #teleportList do
@@ -498,6 +515,11 @@ end
 
 local UpdateMyKeystone
 do
+	-- XXX temp Lemix
+	local GetContainerNumSlots, GetContainerItemID, GetContainerItemLink = C_Container.GetContainerNumSlots, C_Container.GetContainerItemID, C_Container.GetContainerItemLink
+	local IsItemKeystoneByID, PlayerIsTimerunning = C_Item.IsItemKeystoneByID, PlayerIsTimerunning
+	local strsplit = string.split
+
 	local GetMaxPlayerLevel = GetMaxPlayerLevel
 	local GetWeeklyResetStartTime = C_DateAndTime.GetWeeklyResetStartTime
 	local GetOwnedKeystoneLevel, GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneLevel, C_MythicPlus.GetOwnedKeystoneChallengeMapID
@@ -541,6 +563,29 @@ do
 		local playerRatingSummary = GetPlayerMythicPlusRatingSummary("player")
 		if type(playerRatingSummary) == "table" and type(playerRatingSummary.currentSeasonScore) == "number" then
 			myRating = playerRatingSummary.currentSeasonScore
+		end
+
+		-- XXX temp Lemix
+		if myKeyLevel == 0 and myKeyMap == 0 and PlayerIsTimerunning and PlayerIsTimerunning() then
+			for currentBag = 0, 4 do -- 0=Backpack, 1/2/3/4=Bags
+				local slots = GetContainerNumSlots(currentBag)
+				for currentSlot = 1, slots do
+					local itemID = GetContainerItemID(currentBag, currentSlot)
+					if itemID and IsItemKeystoneByID(itemID) then
+						local itemLink = GetContainerItemLink(currentBag, currentSlot)
+						if type(itemLink) == "string" then
+							local _, _, _, strChallengeMapID, strLevel = strsplit(":", itemLink)
+							local challengeMapID = tonumber(strChallengeMapID)
+							local level = tonumber(strLevel)
+							if challengeMapID and level then
+								myKeyMap = challengeMapID
+								myKeyLevel = level
+								break
+							end
+						end
+					end
+				end
+			end
 		end
 
 		local guid = BigWigsLoader.UnitGUID("player")
@@ -728,7 +773,7 @@ do
 
 	local GetRealZoneText = GetRealZoneText
 	local prevButton = nil
-	for expansionIndex = 1, #teleportList do
+	for expansionIndex = 0, #teleportList do -- XXX temp Lemix, swap 0 back to 1
 		if not teleportButtons[expansionIndex] then
 			teleportButtons[expansionIndex] = {}
 		end
@@ -888,11 +933,22 @@ do
 		end)
 	end
 	-- Tab 1 Click Handler
+	local PlayerIsTimerunning = PlayerIsTimerunning -- XXX temp Lemix
 	tab1:SetScript("OnClick", function(self)
 		SelectTab(self)
 		DeselectTab(tab2)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
+
+		if PlayerIsTimerunning and PlayerIsTimerunning() then -- XXX temp Lemix
+			PlayerIsTimerunning = nil
+			teleportList[1] = teleportList[0]
+			teleportButtons[1] = teleportButtons[0]
+			local newTotal = #teleportButtons[1]
+			local num = newTotal % 2 == 0 and newTotal - 1 or newTotal
+			teleportButtons[2][1]:ClearAllPoints()
+			teleportButtons[2][1]:SetPoint("TOP", teleportButtons[1][num], "BOTTOM", 0, -36)
+		end
 
 		if db.profile.showViewerTeleportTip then
 			for _, teleportSpellID in next, teleportList[1] do
@@ -1134,7 +1190,7 @@ do
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pData.name, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData.keyLevel, levelTooltip = L.keystoneLevelTooltip:format(pData.keyLevel),
-					map = dungeonNamesTiny[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "?", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID,
+					map = dungeonNamesTiny[pData.keyMap] or pData.keyMap > 0 and pData.keyMap or "-", mapTooltip = L.keystoneMapTooltip:format(challengeMapName or "-"), mapID = mapID,
 					rating = pData.playerRating, ratingTooltip = L.keystoneRatingTooltip:format(pData.playerRating),
 				}
 			end
@@ -1302,6 +1358,10 @@ do
 					cellGainedScore:SetPoint("TOP", prevGainedScore, "BOTTOM", 0, -6)
 					cellInTime:SetPoint("TOP", prevInTime, "BOTTOM", 0, -6)
 				end
+			end
+			if not firstOldRun then
+				local y = 50 + runsThisWeek*26
+				olderHeader:SetPoint("TOP", thisWeekHeader, "BOTTOM", 0, -y)
 			end
 
 			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
