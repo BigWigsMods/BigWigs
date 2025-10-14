@@ -12,16 +12,16 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 400
+local BIGWIGS_VERSION = 401
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {11, 2, 36},
-	["BigWigs_Classic"] = {11, 2, 0},
+	["LittleWigs"] = {11, 2, 38},
+	["BigWigs_Classic"] = {11, 2, 1},
 	["BigWigs_BurningCrusade"] = {11, 1, 4},
 	["BigWigs_WrathOfTheLichKing"] = {11, 1, 7},
 	["BigWigs_Cataclysm"] = {11, 1, 7},
 	["BigWigs_MistsOfPandaria"] = {11, 2, 1},
 	["BigWigs_WarlordsOfDraenor"] = {11, 1, 1},
-	["BigWigs_Legion"] = {11, 1, 1},
+	["BigWigs_Legion"] = {11, 2, 3},
 	["BigWigs_BattleForAzeroth"] = {11, 1, 1},
 	["BigWigs_Shadowlands"] = {11, 1, 1},
 	["BigWigs_Dragonflight"] = {11, 1, 2},
@@ -1626,9 +1626,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20251001061751" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "11.2.18" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20250930000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20251006053126" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.0.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20251005000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 19
