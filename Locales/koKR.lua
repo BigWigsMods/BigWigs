@@ -85,13 +85,13 @@ L.littleWigsExtras = {
 	["LittleWigs_CurrentSeason"] = "현재 시즌",
 }
 L.dayNamesShort = {
-	"일", -- Sunday
-	"월", -- Monday
-	"화", -- Tuesday
-	"수", -- Wednesday
-	"목", -- Thursday
-	"금", -- Friday
-	"토", -- Saturday
+	"일요일", -- Sunday
+	"월요일", -- Monday
+	"화요일", -- Tuesday
+	"수요일", -- Wednesday
+	"목요일", -- Thursday
+	"금요일", -- Friday
+	"토요일", -- Saturday
 }
 L.dayNames = {
 	"일요일",
