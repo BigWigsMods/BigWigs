@@ -1553,13 +1553,6 @@ do
 		end
 	end
 	function plugin:OnPluginEnable()
-		local oldDB = BigWigsLoader.db:GetNamespace("BattleRes", true)
-		if oldDB and not oldDB.profile.imported then
-			for k, v in next, oldDB.profile do
-				plugin.db.profile[k] = v
-			end
-			oldDB.profile.imported = true
-		end
 		self:RegisterMessage("BigWigs_ProfileUpdate", SwapProfile)
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.UpdateWidgets()
