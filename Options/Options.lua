@@ -1922,7 +1922,7 @@ do
 	function ConstructMainBigWigsTab()
 		for key, optionsTableFunction in next, subPanelRegistry do
 			local optionsTable = securecallfunction(optionsTableFunction)
-			if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, geterrorhandler(), acr, optionsTable, optionsTable.name) then
+			if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
 				aceConfigTableMainBigWigsTab.args[key] = optionsTable
 			end
 		end
