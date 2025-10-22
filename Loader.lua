@@ -189,7 +189,6 @@ local highestFoundGuildVersion = BIGWIGS_GUILD_VERSION
 local dbmPrefix = public.dbmPrefix
 
 -- Loading
---local isMouseDown = false
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
@@ -810,15 +809,7 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 function dataBroker.OnClick(self, button)
 	-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
 	if button == "RightButton" then
-		--if isMouseDown then
-			loadCoreAndOpenOptions()
-		--else
-		--	local trace = debugstack(2)
-		--	public.mstack = trace
-		--	sysprint("|cFFff0000WARNING!|r")
-		--	sysprint("One of your addons was prevented from force loading the BigWigs options.")
-		--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-		--end
+		loadCoreAndOpenOptions()
 	end
 end
 
@@ -1124,13 +1115,13 @@ do
 	end
 end
 
-if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✗]
-	-- LibDBIcon setup
-	if type(BigWigsIconDB) ~= "table" then
-		BigWigsIconDB = {}
-	end
-	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
+-- LibDBIcon setup
+if type(BigWigsIconDB) ~= "table" then
+	BigWigsIconDB = {}
+end
+ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
+do
 	-- Core DB setup
 	local defaults = {
 		profile = {
@@ -1180,89 +1171,7 @@ if not public.isVanilla then -- XXX Support for LoadSavedVariablesFirst [Mainlin
 			end
 		end
 	end
-else
-	bwFrame:RegisterEvent("ADDON_LOADED")
-	local _, addonTbl = ...
-	function mod:ADDON_LOADED(addon)
-		if addon ~= "BigWigs" then
-			-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
-			--if reqFuncAddons[addon] then
-			--	local trace = debugstack(2)
-			--	public.lstack = trace
-			--	sysprint("|cFFff0000WARNING!|r")
-			--	sysprint("One of your addons is force loading the BigWigs options.")
-			--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-			--	reqFuncAddons = {}
-			--end
-			return
-		end
-		--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
-		--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
-
-		-- LibDBIcon setup
-		if type(BigWigsIconDB) ~= "table" then
-			BigWigsIconDB = {}
-		end
-		ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
-
-		-- Core DB setup
-		local defaults = {
-			profile = {
-				showZoneMessages = true,
-				fakeDBMVersion = false,
-				englishSayMessages = false,
-			},
-			global = {
-				watchedMovies = {},
-			},
-		}
-		local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
-		local lds = LibStub("LibDualSpec-1.0", true)
-		if lds then
-			lds:EnhanceDatabase(db, "BigWigs3DB")
-		end
-
-		local function profileUpdate()
-			public:SendMessage("BigWigs_ProfileUpdate")
-		end
-
-		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
-		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
-		db.RegisterCallback(mod, "OnProfileReset", profileUpdate)
-		public.db = db
-
-		if type(BigWigs3DB.namespaces) == "table" then
-			BigWigs3DB.namespaces.BattleRes = nil -- XXX temp cleanup 11.2.5
-			local _, _, _, _, addonState = GetAddOnInfo("QuaziiUI")
-			if addonState ~= "MISSING" then
-				for k,v in next, BigWigs3DB.namespaces do
-					if strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true) then
-						BigWigs3DB.namespaces[k] = nil
-					end
-				end
-			end
-		end
-
-		if addonTbl.initToolDBForClassicTemp then
-			addonTbl.initToolDBForClassicTemp()
-			addonTbl.initToolDBForClassicTemp = nil
-		end
-		bwFrame:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-	end
 end
-
---function mod:GLOBAL_MOUSE_DOWN(button)
---	if button == "RightButton" then
---		isMouseDown = true
---	end
---end
-
---function mod:GLOBAL_MOUSE_UP(button)
---	if button == "RightButton" then
---		isMouseDown = false
---	end
---end
 
 function mod:START_PLAYER_COUNTDOWN(...)
 	loadAndEnableCore()
