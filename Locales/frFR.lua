@@ -437,6 +437,8 @@ L.keystoneShortName_MawOfSouls = "GUEULE"
 L.keystoneShortName_NeltharionsLair = "NELTH"
 L.keystoneShortName_TheArcway = "ARCAVIA"
 L.keystoneShortName_VaultOfTheWardens = "CAVEAU"
+--L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
+--L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -463,6 +465,8 @@ L.keystoneShortName_MawOfSouls_Bar = "Gueule des âmes"
 L.keystoneShortName_NeltharionsLair_Bar = "Neltharion"
 L.keystoneShortName_TheArcway_Bar = "Arcavia"
 L.keystoneShortName_VaultOfTheWardens_Bar = "Gardiennes"
+--L.keystoneShortName_ReturnToKarazhanLower_Bar = "Lower Kara"
+--L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Upper Kara"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Qui a une clef ?"

@@ -205,6 +205,8 @@ local dungeonNamesTiny = {
 	[206] = L.keystoneShortName_NeltharionsLair, -- NL
 	[209] = L.keystoneShortName_TheArcway, -- ARC
 	[207] = L.keystoneShortName_VaultOfTheWardens, -- VOTW
+	[227] = L.keystoneShortName_ReturnToKarazhanLower, -- LKARA
+	[234] = L.keystoneShortName_ReturnToKarazhanUpper, -- UKARA
 }
 local dungeonNamesTrimmed = {
 	[500] = L.keystoneShortName_TheRookery_Bar, -- Rookery
@@ -232,6 +234,8 @@ local dungeonNamesTrimmed = {
 	[206] = L.keystoneShortName_NeltharionsLair_Bar, -- Lair
 	[209] = L.keystoneShortName_TheArcway_Bar, -- Arcway
 	[207] = L.keystoneShortName_VaultOfTheWardens_Bar, -- Vault
+	[227] = L.keystoneShortName_ReturnToKarazhanLower_Bar, -- Lower Kara
+	[234] = L.keystoneShortName_ReturnToKarazhanUpper_Bar, -- Upper Kara
 }
 local dungeonMapWithMultipleKeys = {
 	[2441] = true, -- Tazavesh, the Veiled Market
@@ -1524,7 +1528,7 @@ do
 				sortedplayerList[#sortedplayerList+1] = {
 					name = pName, decoratedName = decoratedName, nameTooltip = nameTooltip,
 					level = pData[1], levelTooltip = L.keystoneLevelTooltip:format(pData[1] == -1 and L.keystoneHiddenTooltip or pData[1]),
-					map = pData[2] == -1 and hiddenIcon or dungeonNamesTiny[pData[2]] or pData[2] or "?",
+					map = pData[2] == -1 and hiddenIcon or dungeonNamesTiny[pData[2]] or (pData[2] > 0 and pData[2] or "-"),
 					mapTooltip = L.keystoneMapTooltip:format(pData[2] == -1 and L.keystoneHiddenTooltip or challengeMapName or "-") .. GetTeleportTextForSpellID(teleportSpellID),
 					mapID = mapID,
 					challengeMapID = pData[2], -- XXX temp Lemix
