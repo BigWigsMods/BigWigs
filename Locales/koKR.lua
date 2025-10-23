@@ -437,8 +437,8 @@ L.keystoneShortName_MawOfSouls = "아귀"
 L.keystoneShortName_NeltharionsLair = "넬타"
 L.keystoneShortName_TheArcway = "비전로"
 L.keystoneShortName_VaultOfTheWardens = "금고"
---L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
---L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
+L.keystoneShortName_ReturnToKarazhanLower = "하층"
+L.keystoneShortName_ReturnToKarazhanUpper = "상층"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -465,8 +465,8 @@ L.keystoneShortName_MawOfSouls_Bar = "아귀"
 L.keystoneShortName_NeltharionsLair_Bar = "넬타"
 L.keystoneShortName_TheArcway_Bar = "비전로"
 L.keystoneShortName_VaultOfTheWardens_Bar = "금고"
---L.keystoneShortName_ReturnToKarazhanLower_Bar = "Lower Kara"
---L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Upper Kara"
+L.keystoneShortName_ReturnToKarazhanLower_Bar = "카라잔 하층"
+L.keystoneShortName_ReturnToKarazhanUpper_Bar = "카라잔 상층"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "누가 쐐기돌을 가지고 있나요?"
