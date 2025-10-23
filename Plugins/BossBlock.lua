@@ -600,7 +600,7 @@ do
 					end
 					tbl.title = nil
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 288 then -- Discovery: Waystone
+				elseif tbl.eventToastID == 288 or tbl.eventToastID == 290 then -- Discovery: Waystone
 					-- tbl.title is "Discovery", tbl.subtitle is "Waystone"
 					tbl.title = nil
 					tbl.iconFileID = tbl.iconFileID or 3084684 -- inv_hearthstone_aether
