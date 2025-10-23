@@ -437,8 +437,8 @@ L.keystoneShortName_MawOfSouls = "아귀"
 L.keystoneShortName_NeltharionsLair = "넬타"
 L.keystoneShortName_TheArcway = "비전로"
 L.keystoneShortName_VaultOfTheWardens = "금고"
-L.keystoneShortName_ReturnToKarazhanLower = "하층"
-L.keystoneShortName_ReturnToKarazhanUpper = "상층"
+L.keystoneShortName_ReturnToKarazhanLower = "카라잔 하층"
+L.keystoneShortName_ReturnToKarazhanUpper = "카라잔 상층"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
