@@ -2496,10 +2496,8 @@ do
 		function boss:Interrupter(guid)
 			if canInterrupt then
 				local ready = true
-				local start, duration = GetSpellCooldown(canInterrupt)
-				if type(start) == "table" then
-					start, duration = start.startTime, start.duration
-				end
+				local cooldownInfoTable = GetSpellCooldown(canInterrupt)
+				local start, duration = cooldownInfoTable.startTime, cooldownInfoTable.duration
 				if start > 0 then -- On cooldown currently
 					local endTime = start + duration
 					local t = GetTime()

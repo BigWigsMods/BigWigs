@@ -2340,8 +2340,6 @@ end)
 do
 	local SpellKnown = loader.IsSpellKnownOrInSpellBook
 	local checkPet = 1 -- Passing 0 or nil to IsSpellKnownOrInSpellBook checks the player, passing 1 checks the pet
-	local IsSpellKnown = loader.IsSpellKnown
-	local IsPlayerSpell = loader.IsPlayerSpell
 	do
 		local offDispel, defDispel = {}, {}
 		if isMists then
@@ -2379,31 +2377,31 @@ do
 		elseif isCata then
 			function UpdateDispelStatus()
 				offDispel, defDispel = {}, {}
-				if IsSpellKnown(19801) or IsSpellKnown(30449) or IsSpellKnown(370) or IsSpellKnown(527) or IsSpellKnown(32375) or IsSpellKnown(23922) or IsSpellKnown(19505, true) then
+				if SpellKnown(19801) or SpellKnown(30449) or SpellKnown(370) or SpellKnown(527) or SpellKnown(32375) or SpellKnown(23922) or SpellKnown(19505, checkPet) then
 					-- Tranquilizing Shot (Hunter), Spellsteal (Mage), Purge (Shaman), Dispel Magic (Priest), Mass Dispel (Priest), Shield Slam (Warrior), Devour Magic (Warlock Felhunter)
 					offDispel.magic = true
 				end
-				if IsSpellKnown(2908) or IsSpellKnown(19801) or IsSpellKnown(5938) then
+				if SpellKnown(2908) or SpellKnown(19801) or SpellKnown(5938) then
 					-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue)
 					offDispel.enrage = true
 				end
-				if IsPlayerSpell(88423) or IsPlayerSpell(77130) or IsPlayerSpell(53551) or IsSpellKnown(527) or IsSpellKnown(32375) or IsSpellKnown(89808, true) then
+				if SpellKnown(88423) or SpellKnown(77130) or SpellKnown(53551) or SpellKnown(527) or SpellKnown(32375) or SpellKnown(89808, checkPet) then
 					-- Nature's Cure (Druid), Improved Cleanse Spirit (Shaman), Sacred Cleansing (Paladin), Dispel Magic (Priest), Mass Dispel (Priest), Singe Magic (Warlock Imp)
 					defDispel.magic = true
 				end
-				if IsSpellKnown(4987) or IsSpellKnown(528) then
+				if SpellKnown(4987) or SpellKnown(528) then
 					-- Cleanse (Paladin), Cure Disease (Priest)
 					defDispel.disease = true
 				end
-				if IsSpellKnown(2782) or IsSpellKnown(4987) then
+				if SpellKnown(2782) or SpellKnown(4987) then
 					-- Remove Corruption (Druid), Cleanse (Paladin)
 					defDispel.poison = true
 				end
-				if IsSpellKnown(2782) or IsSpellKnown(475) or IsSpellKnown(51886) then
+				if SpellKnown(2782) or SpellKnown(475) or SpellKnown(51886) then
 					-- Remove Corruption (Druid), Remove Curse (Mage), Cleanse Spirit (Shaman)
 					defDispel.curse = true
 				end
-				if IsSpellKnown(1044) then
+				if SpellKnown(1044) then
 					-- Hand of Freedom (Paladin)
 					defDispel.movement = true
 				end
@@ -2517,7 +2515,7 @@ do
 				canInterrupt = false
 				for i = 1, #spellList do
 					local spell = spellList[i]
-					if IsSpellKnown(spell) then
+					if SpellKnown(spell) then
 						if spell == 80964 then -- Skull Bash (Druid-Feral-Bear)
 							if myRole == "TANK" then
 								canInterrupt = spell
@@ -2534,7 +2532,7 @@ do
 				end
 				for i = 1, #petSpellList do
 					local spell = petSpellList[i]
-					if IsSpellKnown(spell, true) then
+					if SpellKnown(spell, checkPet) then
 						canInterrupt = spell
 						return
 					end
@@ -2581,10 +2579,8 @@ do
 		function boss:Interrupter(guid)
 			if canInterrupt then
 				local ready = true
-				local start, duration = GetSpellCooldown(canInterrupt)
-				if type(start) == "table" then
-					start, duration = start.startTime, start.duration
-				end
+				local cooldownInfoTable = GetSpellCooldown(canInterrupt)
+				local start, duration = cooldownInfoTable.startTime, cooldownInfoTable.duration
 				if start > 0 then -- On cooldown currently
 					local endTime = start + duration
 					local t = GetTime()
