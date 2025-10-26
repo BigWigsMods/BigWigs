@@ -63,6 +63,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetInventoryItemID", -- Vanilla interrupt check (warrior shield check)
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
 	"113/PlayerIsTimerunning",

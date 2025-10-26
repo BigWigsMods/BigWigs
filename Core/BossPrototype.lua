@@ -30,7 +30,7 @@ local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization")
 local loader = BigWigsLoader
-local isClassic, isRetail, isClassicEra, isCata, isMists, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.isMists, loader.season
+local isClassic, isRetail, isVanilla, isCata, isMists, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.isMists, loader.season
 local C_EncounterJournal_GetSectionInfo = (isCata or isMists) and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
@@ -517,7 +517,7 @@ function boss:Enable(isWipe)
 		end
 
 		local _, class = UnitClass("player")
-		if class == "WARLOCK" or (class == "HUNTER" and isClassic) then
+		if class == "WARLOCK" or (class == "HUNTER" and isCata) then
 			petUtilityFrame:RegisterUnitEvent("UNIT_PET", "player")
 		end
 
@@ -1755,7 +1755,7 @@ end
 --- Check if on a vanilla server.
 -- @return boolean
 function boss:Vanilla()
-	return isClassicEra
+	return isVanilla
 end
 
 --- Get the current season.
@@ -2341,7 +2341,55 @@ do
 	local IsSpellKnownOrInSpellBook = loader.IsSpellKnownOrInSpellBook
 	do
 		local offensiveDispel_Magic, offensiveDispel_Enrage, defensiveDispel_Magic, defensiveDispel_Disease, defensiveDispel_Poison, defensiveDispel_Curse, defensiveDispel_Movement
-		if isCata then -- Cataclysm (4.x)
+		if isVanilla then -- Vanilla (1.x)
+			-- Offensive
+			offensiveDispel_Magic = {
+				[988] = 0, -- Dispel Magic Rank 2 (Priest)
+				[527] = 0, -- Dispel Magic Rank 1 (Priest)
+				[8012] = 0, -- Purge Rank 2 (Shaman)
+				[370] = 0, -- Purge Rank 1 (Shaman)
+				[23925] = 0, -- Shield Slam Rank 4 (Warrior)
+				[23924] = 0, -- Shield Slam Rank 3 (Warrior)
+				[23923] = 0, -- Shield Slam Rank 2 (Warrior)
+				[23922] = 0, -- Shield Slam Rank 1 (Warrior)
+				[19736] = 1, -- Devour Magic Rank 4 (Warlock Felhunter)
+				[19734] = 1, -- Devour Magic Rank 3 (Warlock Felhunter)
+				[19731] = 1, -- Devour Magic Rank 2 (Warlock Felhunter)
+				[19505] = 1, -- Devour Magic Rank 1 (Warlock Felhunter)
+			}
+			offensiveDispel_Enrage = {
+				[19801] = 0, -- Tranquilizing Shot (Hunter)
+			}
+			-- Defensive
+			defensiveDispel_Magic = {
+				[4987] = 0, -- Cleanse (Paladin)
+				[988] = 0, -- Dispel Magic Rank 2 (Priest)
+				[527] = 0, -- Dispel Magic Rank 1 (Priest)
+			}
+			defensiveDispel_Disease = {
+				[1152] = 0, -- Purify (Paladin)
+				[4987] = 0, -- Cleanse (Paladin)
+				[528] = 0, -- Cure Disease (Priest)
+				[552] = 0, -- Abolish Disease (Priest)
+				[2870] = 0, -- Cure Disease (Shaman)
+				[8170] = 0, -- Disease Cleansing Totem (Shaman)
+			}
+			defensiveDispel_Poison = {
+				[2893] = 0, -- Abolish Poison (Druid)
+				[8946] = 0, -- Cure Poison (Druid)
+				[1152] = 0, -- Purify (Paladin)
+				[4987] = 0, -- Cleanse (Paladin)
+				[526] = 0, -- Cure Poison (Shaman)
+				[8166] = 0, -- Poison Cleansing Totem (Shaman)
+			}
+			defensiveDispel_Curse = {
+				[2782] = 0, -- Remove Curse (Druid)
+				[475] = 0, -- Remove Lesser Curse (Mage)
+			}
+			defensiveDispel_Movement = {
+				[1044] = 0, -- Blessing of Freedom (Paladin)
+			}
+		elseif isCata then -- Cataclysm (4.x)
 			-- Offensive
 			offensiveDispel_Magic = {
 				[19801] = 0, -- Tranquilizing Shot (Hunter)
@@ -2553,7 +2601,62 @@ do
 
 	do
 		local canInterrupt = false
-		if isCata then -- Cataclysm (4.x)
+		if isVanilla then -- Vanilla (1.x)
+			local spellList = {
+				16979, -- Feral Charge (Druid, talent in Feral tree)
+				2139, -- Counterspell (Mage)
+				15487, -- Silence (Priest, talent in Shadow tree)
+				1769, -- Kick Rank 4 (Rogue)
+				1768, -- Kick Rank 3 (Rogue)
+				1767, -- Kick Rank 2 (Rogue)
+				1766, -- Kick Rank 1 (Rogue)
+				10414, -- Earth Shock Rank 7 (Shaman)
+				10413, -- Earth Shock Rank 6 (Shaman)
+				10412, -- Earth Shock Rank 5 (Shaman)
+				8046, -- Earth Shock Rank 4 (Shaman)
+				8045, -- Earth Shock Rank 3 (Shaman)
+				8044, -- Earth Shock Rank 2 (Shaman)
+				8042, -- Earth Shock Rank 1 (Shaman)
+				1672, -- Shield Bash Rank 3 (Warrior, requires a shield, requires battle/defensive stance)
+				1671, -- Shield Bash Rank 2 (Warrior, requires a shield, requires battle/defensive stance)
+				72, -- Shield Bash Rank 1 (Warrior, requires a shield, requires battle/defensive stance)
+				6554, -- Pummel Rank 2 (Warrior, requires berserker stance)
+				6552, -- Pummel Rank 1 (Warrior, requires berserker stance)
+			}
+			local petSpellList = {
+				19647, -- Spell Lock Rank 2 (Warlock Felhunter)
+				19244, -- Spell Lock Rank 1 (Warlock Felhunter)
+			}
+			local GetInventoryItemID = GetInventoryItemID
+			function UpdateInterruptStatus()
+				canInterrupt = false
+				for i = 1, #spellList do
+					local spellID = spellList[i]
+					if IsSpellKnownOrInSpellBook(spellID) then
+						if spellID == 72 or spellID == 1671 or spellID == 1672 then -- Shield Bash (Warrior)
+							local itemID = GetInventoryItemID("player", 17) -- Get the item ID of the off hand slot (shield)
+							if itemID then
+								local _, _, _, _, _, itemClassID, itemSubClassID = C_Item.GetItemInfoInstant(itemID) -- Check if it's a shield, for using Shield Bash
+								if itemClassID == 4 and itemSubClassID == 6 then -- Enum.ItemClass.Armor == 4 || Enum.ItemArmorSubclass.Shield == 6
+									canInterrupt = spellID
+									return
+								end
+							end
+						else
+							canInterrupt = spellID
+							return
+						end
+					end
+				end
+				for i = 1, #petSpellList do
+					local spellID = petSpellList[i]
+					if IsSpellKnownOrInSpellBook(spellID, 1) then
+						canInterrupt = spellID
+						return
+					end
+				end
+			end
+		elseif isCata then -- Cataclysm (4.x)
 			local spellList = {
 				78675, -- Solar Beam (Druid-Balance)
 				80964, -- Skull Bash (Druid-Feral-Bear)
