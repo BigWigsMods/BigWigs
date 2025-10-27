@@ -439,6 +439,8 @@ L.keystoneShortName_TheArcway = "ARCWAY"
 L.keystoneShortName_VaultOfTheWardens = "VOTW"
 L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
 L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
+--L.keystoneShortName_CathedralOfEternalNight = "COEN"
+--L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -467,6 +469,8 @@ L.keystoneShortName_TheArcway_Bar = "Arkus"
 L.keystoneShortName_VaultOfTheWardens_Bar = "Verlies"
 L.keystoneShortName_ReturnToKarazhanLower_Bar = "Unteres Kara"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Oberes Kara"
+--L.keystoneShortName_CathedralOfEternalNight_Bar = "Cathedral"
+--L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirate"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Wer hat einen Schlüsselstein?"

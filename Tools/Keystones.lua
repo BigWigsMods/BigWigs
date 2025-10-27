@@ -207,6 +207,8 @@ local dungeonNamesTiny = {
 	[207] = L.keystoneShortName_VaultOfTheWardens, -- VOTW
 	[227] = L.keystoneShortName_ReturnToKarazhanLower, -- LKARA
 	[234] = L.keystoneShortName_ReturnToKarazhanUpper, -- UKARA
+	[233] = L.keystoneShortName_CathedralOfEternalNight, -- COEN
+	[239] = L.keystoneShortName_SeatOfTheTriumvirate, -- SOTT
 }
 local dungeonNamesTrimmed = {
 	[500] = L.keystoneShortName_TheRookery_Bar, -- Rookery
@@ -236,8 +238,11 @@ local dungeonNamesTrimmed = {
 	[207] = L.keystoneShortName_VaultOfTheWardens_Bar, -- Vault
 	[227] = L.keystoneShortName_ReturnToKarazhanLower_Bar, -- Lower Kara
 	[234] = L.keystoneShortName_ReturnToKarazhanUpper_Bar, -- Upper Kara
+	[233] = L.keystoneShortName_CathedralOfEternalNight_Bar, -- Cathedral
+	[239] = L.keystoneShortName_SeatOfTheTriumvirate_Bar, -- Triumvirate
 }
 local dungeonMapWithMultipleKeys = {
+	[1651] = true, -- Return to Karazhan
 	[2441] = true, -- Tazavesh, the Veiled Market
 }
 local teleportList = {
