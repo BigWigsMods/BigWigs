@@ -411,7 +411,7 @@ L.keystoneHistoryScoreOlderTooltip = "本周之前获得的总分数：|cFFFFFFF
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "点击下方地下城名称可直接|cFF33FF99传送|r至地下城入口。"
---L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者角色。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者角色。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷栖巢"
