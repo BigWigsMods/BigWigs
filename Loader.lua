@@ -281,6 +281,9 @@ do
 			zones = {},
 		}
 	elseif public.isBeta then -- Retail Beta
+		EncounterTimeline:Hide() -- XXX temp
+		EncounterTimeline:SetScript("OnShow", function(f) f:Hide() end)
+		C_CVar.SetCVar("encounterTimelineEnabled", "1") -- If disabled, events wont fire atm.
 		public.currentExpansion = { -- Change on new expansion releases
 			name = mn,
 			bigWigsBundled = {

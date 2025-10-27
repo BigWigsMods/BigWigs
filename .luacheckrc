@@ -15,7 +15,7 @@ files["Locales/frFR_common.lua"].ignore = {
 	"113/UnitSex",
 }
 files["Loader.lua"].ignore = {
-	"11[13]/BigWigsTempKeystones", -- XXX temp
+	"113/EncounterTimeline", -- XXX temp
 
 	"113/date",
 	"113/geterrorhandler",
@@ -94,8 +94,6 @@ files["Core/Core.lua"].ignore = {
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
 	"113/C_CVar",
-	"113/EncounterTimeline",
-	"113/Enum",
 }
 files["Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",

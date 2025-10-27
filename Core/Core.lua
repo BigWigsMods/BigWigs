@@ -351,7 +351,6 @@ do
 
 			if loader.isBeta then
 				C_CVar.SetCVar("encounterTimelineEnabled", "1") -- If disabled, events wont fire atm.
-				EncounterTimeline:SetTimelineVisibility(Enum.EncounterEventsVisibility.Hidden)
 			end
 		end
 	end

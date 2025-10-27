@@ -350,6 +350,7 @@ local teleportList = {
 	},
 }
 if BigWigsLoader.isBeta then
+	teleportList[0] = {}
 	table.insert(teleportList, 2, {
 		[2648] = 445443, -- The Rookery
 		[2649] = 445444, -- Priory of the Sacred Flame
