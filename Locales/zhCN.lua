@@ -411,7 +411,7 @@ L.keystoneHistoryScoreOlderTooltip = "本周之前获得的总分数：|cFFFFFFF
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "点击下方地下城名称可直接|cFF33FF99传送|r至地下城入口。"
---L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+--L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者角色。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷栖巢"
@@ -439,8 +439,8 @@ L.keystoneShortName_TheArcway = "魔法回廊"
 L.keystoneShortName_VaultOfTheWardens = "守望者地窟"
 L.keystoneShortName_ReturnToKarazhanLower = "卡拉赞下层"
 L.keystoneShortName_ReturnToKarazhanUpper = "卡拉赞上层"
---L.keystoneShortName_CathedralOfEternalNight = "COEN"
---L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
+L.keystoneShortName_CathedralOfEternalNight = "永夜大教堂"
+L.keystoneShortName_SeatOfTheTriumvirate = "执政团之座"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -469,8 +469,8 @@ L.keystoneShortName_TheArcway_Bar = "魔法回廊"
 L.keystoneShortName_VaultOfTheWardens_Bar = "守望者地窟"
 L.keystoneShortName_ReturnToKarazhanLower_Bar = "卡拉赞下层"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "卡拉赞上层"
---L.keystoneShortName_CathedralOfEternalNight_Bar = "Cathedral"
---L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirate"
+L.keystoneShortName_CathedralOfEternalNight_Bar = "永夜大教堂"
+L.keystoneShortName_SeatOfTheTriumvirate_Bar = "执政团之座"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "谁拥有钥石？"
