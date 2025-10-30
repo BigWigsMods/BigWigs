@@ -1709,7 +1709,8 @@ do
 				end
 				return tmp
 			else
-				return gsub(player, "%-.+", "*") -- Replace server names with *
+				local trimmedName = gsub(player, "%-.+", "*") -- Replace server names with *
+				return trimmedName
 			end
 		end
 	end
