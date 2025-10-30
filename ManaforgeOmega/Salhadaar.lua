@@ -94,7 +94,7 @@ function mod:GetOptions()
 			1224776, -- Subjugation Rule
 				{1224787, "CASTBAR"}, -- Conquer
 				{1224812, "TANK"}, -- Vanquish
-			{1227549, "ME_ONLY", "ME_ONLY_EMPHASIZE"}, -- Banishment
+			{1227549, "ME_ONLY"}, -- Banishment
 			1224906, -- Invoke the Oath
 			-- Royal Voidwing
 				1225099, -- Fractal Images
