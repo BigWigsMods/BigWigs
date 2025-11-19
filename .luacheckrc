@@ -112,6 +112,7 @@ files["Plugins/AutoReply.lua"].ignore = {
 }
 files["Plugins/Bars.lua"].ignore = {
 	"113/C_Spell",
+	"113/C_EncounterTimeline",
 }
 files["Plugins/BattleRes.lua"].ignore = {
 	"113/C_ClassColor",

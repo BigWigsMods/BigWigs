@@ -1629,20 +1629,20 @@ end)
 -- 12.0 Midnight
 --
 
-function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo, initialState)
+function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	-- Not Secrets
 	local eventID = eventInfo.id
 	local duration = eventInfo.duration
 	local source = eventInfo.source
-	local state = initialState -- 0 = Running, 1 = Paused
+	local state = C_EncounterTimeline.GetEventState(eventID) -- 0 = Running, 1 = Paused
 
 	-- Secrets
-	local spellId = eventInfo.tooltipSpellID
-	local spellName = C_Spell.GetSpellName(spellId)
+	local spellId = eventInfo.spellID
+	local spellName = eventInfo.spellName
 	local iconId = eventInfo.iconFileID
-	local dispelType = eventInfo.dispelType
-	local role = eventInfo.role
-	local priority = eventInfo.priority
+	-- local dispelType = eventInfo.dispelType
+	-- local role = eventInfo.role
+	-- local priority = eventInfo.priority
 	self:BigWigs_StartBar(nil, nil, eventID, spellName, duration, iconId, nil, nil, true)
 
 	if state == 1 then -- Starting Paused
@@ -1650,7 +1650,8 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo, initialState)
 	end
 end
 
-function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID, newState)
+function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+	local newState = C_EncounterTimeline.GetEventState(eventID) -- 0 = Running, 1 = Paused
 	if newState == 0 then -- Resumed
 		self:ResumeSecretBar(eventID)
 	elseif newState == 1 then -- Paused
