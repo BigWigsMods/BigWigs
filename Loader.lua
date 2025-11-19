@@ -301,16 +301,19 @@ do
 				lw_cs,
 			},
 			currentSeason = {
-				[2287] = lw_cs, -- Halls of Atonement
-				[2441] = lw_cs, -- Tazavesh, the Veiled Market
-				[2649] = lw_cs, -- Priory of the Sacred Flame
-				[2660] = lw_cs, -- Ara-Kara, City of Echoes
-				[2662] = lw_cs, -- The Dawnbreaker
-				[2773] = lw_cs, -- Operation: Floodgate
-				[2830] = lw_cs, -- Eco-Dome Al'dani
+				[2805] = lw_cs, -- Windrunner Spire
+				[2811] = lw_cs, -- Magisters' Terrace
+				[2874] = lw_cs, -- Maisara Caverns
+				[2915] = lw_cs, -- Nexus-Point Xenas
+				[2526] = lw_cs, -- Algeth'ar Academy
+				[1753] = lw_cs, -- Seat of the Triumvirate
+				[1209] = lw_cs, -- Skyreach
+				[658] = lw_cs, -- Pit of Saron
 			},
 			zones = {
+				[2912] = "BigWigs_MarchOnQuelDanas", -- XXX
 				[2913] = "BigWigs_MarchOnQuelDanas",
+				[2939] = "BigWigs_MarchOnQuelDanas", -- XXX
 			}
 		}
 	else -- Retail
@@ -436,7 +439,9 @@ do
 		[2769] = tww, -- Liberation of Undermine
 		[2810] = tww, -- Manaforge Omega
 		--[[ BigWigs: Midnight ]]--
+		[2912] = public.isBeta and mn or nil, -- The Voidspire
 		[2913] = public.isBeta and mn or nil, -- March on Quel'Danas
+		[2939] = public.isBeta and mn or nil, -- The Dreamrift
 
 
 		--[[ LittleWigs: Classic ]]--
@@ -612,7 +617,13 @@ do
 		[2951] = lw_delves, -- Voidrazor Sanctuary
 		--[[ LittleWigs: Midnight ]]--
 		[2805] = public.isBeta and lw_mn or nil, -- Windrunner Spire
+		[2811] = public.isBeta and lw_mn or nil, -- Magisters' Terrace
 		[2813] = public.isBeta and lw_mn or nil, -- Murder Row
+		[2825] = public.isBeta and lw_mn or nil, -- Den of Nalorakk
+		[2859] = public.isBeta and lw_mn or nil, -- The Blinding Vale
+		[2874] = public.isBeta and lw_mn or nil, -- Maisara Caverns
+		[2915] = public.isBeta and lw_mn or nil, -- Nexus-Point Xenas
+		[2923] = public.isBeta and lw_mn or nil, -- Voidscar Arena
 	}
 	public.remappedZones = {
 		[2827] = 2213, -- Horrific Vision of Stormwind (Revisited) -> Horrific Vision of Stormwind
