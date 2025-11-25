@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "El addon '|cFF436EEE%s|r' acaba de crear una copia de cadena de exportación de tu perfil."
 
 -- Core.lua
 L.berserk = "Rabia"
@@ -63,8 +63,8 @@ L.outOfDateContentPopup = "¡ADVERTENCIA!\nHas actualizado |cFF436EEE%s|r pero t
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requiere la versión %d del addon principal |cFF436EEEBigWigs|r para funcionar correctamente, pero estás en la versión %d."
 L.addOnLoadFailedWithReason = "BigWigs falló al cargar el addon |cFF436EEE%s|r por razones %q. ¡Avisa a los desarrolladores de BigWigs!"
 L.addOnLoadFailedUnknownError = "BigWigs ha encontrado un error al cargar el addon |cFF436EEE%s|r. ¡Avisa a los desarrolladores de BigWigs!"
---L.newFeatures = "New BigWigs features:"
---L.parentheses = "%s (%s)"
+L.newFeatures = "Nuevas características de BigWigs:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -85,38 +85,38 @@ L.littleWigsExtras = {
 	["LittleWigs_CurrentSeason"] = "Temporada actual",
 }
 --L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
+	"DOM", -- Sunday
+	"LUN", -- Monday
+	"MAR", -- Tuesday
+	"MIÉ", -- Wednesday
+	"JUE", -- Thursday
+	"VIE", -- Friday
+	"SÁB", -- Saturday
 --}
 --L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
+	"Domingo",
+	"Lunes",
+	"Martes",
+	"Miércoles",
+	"Jueves",
+	"Viernes",
+	"Sábado",
 --}
 --L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
+	"Enero",
+	"Febrero",
+	"Marzo",
+	"Abril",
+	"Mayo",
+	"Junio",
+	"Julio",
+	"Agosto",
+	"Septiembre",
+	"Octubre",
+	"Noviembre",
+	"Diciembre",
 --}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
@@ -271,12 +271,12 @@ L.imported_countdown_position = "Posición de Cuenta Regresiva"
 L.imported_countdown_settings = "Configuraciones de Cuenta Regresiva"
 L.imported_countdown_color = "Color de Cuenta Regresiva"
 L.imported_nameplate_settings = "Configuraciones de Placas de Nombre"
---L.imported_mythicplus_settings = "Mythic+ Settings"
---L.mythicplus_settings_import_desc = "Import all Mythic+ settings."
---L.mythicplus_settings_export_desc = "Export all Mythic+ settings."
---L.imported_battleres_settings = "Battle Res Settings"
---L.battleres_settings_import_desc = "Import all Battle Res settings."
---L.battleres_settings_export_desc = "Export all Battle Res settings."
+L.imported_mythicplus_settings = "Mítica+ opciones"
+L.mythicplus_settings_import_desc = "Importar todas las opciones de Mítica+."
+L.mythicplus_settings_export_desc = "Exportar todas las opciones de Mítica+."
+L.imported_battleres_settings = "Opciones de Battle Res"
+L.battleres_settings_import_desc = "Importar todas las opciones de Battle Res."
+L.battleres_settings_export_desc = "Exportar todas las opciones de Battle Res."
 
 -- Statistics
 L.statistics = "Estadísticas"
@@ -332,22 +332,22 @@ L.autoRoleExplainer = "Cuando te unas a un grupo o cambies tu especialización d
 -- BattleRes.lua
 --
 
---L.battleResTitle = "Battle Res"
---L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
---L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
---L.battleResHistory = "Battle Res History:"
---L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
---L.battleResDurationText = "Duration Text"
---L.battleResChargesText = "Charges Text"
---L.battleResNoCharges = "0 charges available"
---L.battleResHasCharges = "1 or more charges available"
---L.battleResPlaySound = "Play a sound when a new charge is gained"
---L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
---L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
---L.battleResModeIcon = "Mode: Icon"
---L.battleResModeText = "Mode: Text Only"
---L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
---L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
+L.battleResTitle = "Battle res"
+L.battleResDesc = "Un icono que muestra cuántas cargas de resurrección en combate hay disponibles y el tiempo para conseguir otra carga."
+L.battleResDesc2 = "\nTu |cFF33FF99Historial de resurrección en combate|r puede verse en la ventana de opciones cuando pases el ratón por encima del icono.\n\n"
+L.battleResHistory = "Battle res historial:"
+L.battleResResetAll = "Reinicia todas las opciones de resurrección en combate a sus valores predeterminados."
+L.battleResDurationText = "Duración del texto"
+L.battleResChargesText = "Texto de cargas"
+L.battleResNoCharges = "0 cargas disponibles"
+L.battleResHasCharges = "1 o más cargas disponibles"
+L.battleResPlaySound = "Reproducir un sonido cuando se consiga una nueva carga"
+L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Textura de icono (ID del hechizo)"
+L.iconTextureSpellIDError = "Tienes que introducir un ID de hechizo válido para usarlo como textura del icono."
+L.battleResModeIcon = "Modo: Icono"
+L.battleResModeText = "Modo: Solo texto"
+L.battleResModeTextTooltip = "Mostrar un fondo temporal para ayudar a mover la opción de Battle res y para ver el área del ratón."
+L.battleResNoteTooltip = "Aviso: Esta ventana de opciones solo se mostrará al estar fuera de combate."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -380,7 +380,7 @@ L.keystoneExplainer = "Una colección de varias herramientas para mejorar la exp
 L.keystoneAutoSlot = "Introducir automáticamente la piedra angular"
 L.keystoneAutoSlotDesc = "Introduce automáticamente tu piedra angular en la ranura al abrir la fuente de poder."
 L.keystoneAutoSlotMessage = "Introducida automáticamente %s en la ranura de piedra angular."
---L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
+L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Piedra introducida automáticamente"
 L.keystoneModuleName = "Mítica+"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "¡%s +%d empieza ahora!" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"
@@ -396,8 +396,8 @@ L.keystoneAutoShowEndOfRun = "Mostrar al acabar la Mítica+"
 L.keystoneAutoShowEndOfRunDesc = "Enseña automáticamente el visor de piedra angular cuando acabe la mazmorra Mítica+.\n\n|cFF33FF99Esto puede ayudarte a ver las nuevas piedras angulares que haya conseguido tu grupo.|r"
 L.keystoneViewerExplainer = "Puedes abrir el visor de piedras angular usando el comando |cFF33FF99/key|r o clicando el botón de abajo.\n\n"
 L.keystoneViewerOpen = "Abrir el visor de piedras angular"
---L.keystoneViewerKeybindingExplainer = "\n\nYou can also set a keybinding to open the keystone viewer:\n\n"
---L.keystoneViewerKeybindingDesc = "Choose a keybinding to open the keystone viewer."
+L.keystoneViewerKeybindingExplainer = "\n\nPuedes seleccionar un atajo para abrir el visor de piedra angular:\n\n"
+L.keystoneViewerKeybindingDesc = "Escoger un atajo para abrir el visor de piedra angular."
 L.keystoneClickToWhisper = "Clica para abrir una ventana de susurro"
 L.keystoneClickToTeleportNow = "\nClica para teletransportarte aquí"
 L.keystoneClickToTeleportCooldown = "\nNo puedes teletransportarte, hechizo en reutilización"
@@ -410,37 +410,37 @@ L.keystoneHistoryScoreThisWeekTooltip = "Puntuación total ganada esta semana: |
 L.keystoneHistoryScoreOlderTooltip = "Puntuación total ganada en semanas anteriores: |cFFFFFFFF+%d|r"
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
---L.keystoneTeleportTip = "Click the dungeon name below to |cFF33FF99TELEPORT|r directly to the dungeon entrance."
---L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneTeleportTip = "Clica el nombre de la mazmorra abajo para |cFF33FF99TELETRANSPORTE|r a la entrada de la mazmorra directamente."
+L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aEste es un personaje asaltante temporal." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
---L.keystoneShortName_TheRookery = "ROOK"
---L.keystoneShortName_DarkflameCleft = "DFC"
---L.keystoneShortName_PrioryOfTheSacredFlame = "PRIORY"
---L.keystoneShortName_CinderbrewMeadery = "BREW"
---L.keystoneShortName_OperationFloodgate = "FLOOD"
---L.keystoneShortName_TheaterOfPain = "TOP"
---L.keystoneShortName_TheMotherlode = "ML"
---L.keystoneShortName_OperationMechagonWorkshop = "WORK"
---L.keystoneShortName_EcoDomeAldani = "ECODOME"
---L.keystoneShortName_HallsOfAtonement = "HOA"
---L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
---L.keystoneShortName_TazaveshSoleahsGambit = "GAMBIT"
---L.keystoneShortName_TazaveshStreetsOfWonder = "STREET"
---L.keystoneShortName_TheDawnbreaker = "DAWN"
---L.keystoneShortName_BlackRookHold = "BRH"
---L.keystoneShortName_CourtOfStars = "COS"
---L.keystoneShortName_DarkheartThicket = "DHT"
---L.keystoneShortName_EyeOfAzshara = "EOA"
---L.keystoneShortName_HallsOfValor = "HOV"
---L.keystoneShortName_MawOfSouls = "MOS"
---L.keystoneShortName_NeltharionsLair = "NL"
---L.keystoneShortName_TheArcway = "ARCWAY"
---L.keystoneShortName_VaultOfTheWardens = "VOTW"
---L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
---L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
---L.keystoneShortName_CathedralOfEternalNight = "COEN"
---L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
+L.keystoneShortName_TheRookery = "ROOK"
+L.keystoneShortName_DarkflameCleft = "DFC"
+L.keystoneShortName_PrioryOfTheSacredFlame = "PRIORY"
+L.keystoneShortName_CinderbrewMeadery = "LAGAR"
+L.keystoneShortName_OperationFloodgate = "FLOOD"
+L.keystoneShortName_TheaterOfPain = "TOP"
+L.keystoneShortName_TheMotherlode = "ML"
+L.keystoneShortName_OperationMechagonWorkshop = "WORK"
+L.keystoneShortName_EcoDomeAldani = "ECODOMO"
+L.keystoneShortName_HallsOfAtonement = "HOA"
+L.keystoneShortName_AraKaraCityOfEchoes = "ARAK"
+L.keystoneShortName_TazaveshSoleahsGambit = "GAMBIT"
+L.keystoneShortName_TazaveshStreetsOfWonder = "CALLES"
+L.keystoneShortName_TheDawnbreaker = "DAWN"
+L.keystoneShortName_BlackRookHold = "BRH"
+L.keystoneShortName_CourtOfStars = "CORTE"
+L.keystoneShortName_DarkheartThicket = "DHT"
+L.keystoneShortName_EyeOfAzshara = "OJO"
+L.keystoneShortName_HallsOfValor = "VALOR"
+L.keystoneShortName_MawOfSouls = "FAUCES"
+L.keystoneShortName_NeltharionsLair = "NL"
+L.keystoneShortName_TheArcway = "ARCWAY"
+L.keystoneShortName_VaultOfTheWardens = "VOTW"
+L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
+L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
+L.keystoneShortName_CathedralOfEternalNight = "COEN"
+L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -458,19 +458,19 @@ L.keystoneShortName_AraKaraCityOfEchoes_Bar = "Ara-Kara"
 L.keystoneShortName_TazaveshSoleahsGambit_Bar = "Gambito"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "Calles"
 L.keystoneShortName_TheDawnbreaker_Bar = "Rompealbas"
---L.keystoneShortName_BlackRookHold_Bar = "Black Rook"
---L.keystoneShortName_CourtOfStars_Bar = "Court"
---L.keystoneShortName_DarkheartThicket_Bar = "Darkheart"
---L.keystoneShortName_EyeOfAzshara_Bar = "Eye"
---L.keystoneShortName_HallsOfValor_Bar = "Halls"
---L.keystoneShortName_MawOfSouls_Bar = "Maw"
---L.keystoneShortName_NeltharionsLair_Bar = "Lair"
---L.keystoneShortName_TheArcway_Bar = "Arcway"
---L.keystoneShortName_VaultOfTheWardens_Bar = "Vault"
---L.keystoneShortName_ReturnToKarazhanLower_Bar = "Lower Kara"
---L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Upper Kara"
---L.keystoneShortName_CathedralOfEternalNight_Bar = "Cathedral"
---L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirate"
+L.keystoneShortName_BlackRookHold_Bar = "Grajo negro"
+L.keystoneShortName_CourtOfStars_Bar = "Corte"
+L.keystoneShortName_DarkheartThicket_Bar = "Arboleda"
+L.keystoneShortName_EyeOfAzshara_Bar = "Ojo"
+L.keystoneShortName_HallsOfValor_Bar = "Cámaras"
+L.keystoneShortName_MawOfSouls_Bar = "Fauces"
+L.keystoneShortName_NeltharionsLair_Bar = "Guarida"
+L.keystoneShortName_TheArcway_Bar = "Arquería"
+L.keystoneShortName_VaultOfTheWardens_Bar = "Celadoras"
+L.keystoneShortName_ReturnToKarazhanLower_Bar = "Kara inferior"
+L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Kara superior"
+L.keystoneShortName_CathedralOfEternalNight_Bar = "Catedral"
+L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triunvirato"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "¿Quién tiene la piedra?"
@@ -484,8 +484,8 @@ L.instanceKeysShowAllDesc = "Activar esta opción mostrará a todos los jugadore
 L.instanceKeysOtherDungeonColor = "Otro color de mazmorra"
 L.instanceKeysOtherDungeonColorDesc = "Escoge el color para los jugadores que tengan una piedra angular que no pertenezca a la mazmorra en la que estás."
 L.instanceKeysEndOfRunDesc = "Por defecto la lista se mostrará cuando entres a una mazmorra mítica. Al activar esta opción también aparecerá la lista cuando termine la Mítica+."
---L.instanceKeysHideTitle = "Hide title"
---L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
+L.instanceKeysHideTitle = "Esconder título"
+L.instanceKeysHideTitleDesc = "Esconder el título \"¿Quién tiene la piedra?\"."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -506,10 +506,10 @@ L.comma = ", "
 L.reset = "Restablecer"
 L.resetDesc = "Restablece la configuración anterior a sus valores predeterminados."
 L.resetAll = "Restablecer todo"
---L.startTest = "Start Test"
---L.stopTest = "Stop Test"
---L.always = "Always"
---L.never = "Never"
+L.startTest = "Empezar test"
+L.stopTest = "Parar test"
+L.always = "Siempre"
+L.never = "Nunca"
 
 L.positionX = "Posición X"
 L.positionY = "Posición Y"
@@ -542,8 +542,8 @@ L.customAnchorPoint = "Avanzado: Punto de anclaje personalizado"
 L.sourcePoint = "Punto de Origen"
 L.destinationPoint = "Punto de Destino"
 L.drawStrata = "Estratos"
---L.medium = "Medium"
---L.low = "Low"
+L.medium = "Medio"
+L.low = "Bajo"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -808,10 +808,10 @@ L.displayTimeDesc = "Cuánto tiempo mostrar un mensaje, en segundos"
 L.fadeTime = "Tiempo de desaparición"
 L.fadeTimeDesc = "Cuánto tiempo tardará en desaparecer un mensaje, en segundos"
 
---L.messagesOptInHeaderOff = "Boss mod messages 'opt-in' mode: Enabling this option will turn off messages across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the messages you want.\n\n"
---L.messagesOptInHeaderOn = "Boss mod messages 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod messages, go into the settings of a specific boss ability and turn on the '|cFF33FF99Messages|r' option.\n\n"
---L.messagesOptInTitle = "Boss mod messages 'opt-in' mode"
---L.messagesOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off messages across ALL of your boss modules. You will need to go through each one and manually turn on the messages you want.\n\nYour UI will now reload, are you sure?"
+L.messagesOptInHeaderOff = "Modo de elección de los mensajes de los jefes: Habilitar esta opción desactivará los mensajes de TODOS tus módulos de los jefes.\n\nTendrás que ir uno a uno y activar los mensajes que quieras manualmente.\n\n"
+L.messagesOptInHeaderOn = "La elección del modo de los mensajes de los jefes está |cFF33FF99ACTIVADO|r. Para ver los mensajes de los jefes, ve a las opciones de una habilidad específica de un jefe y activa la opción de '|cFF33FF99Mensajes|r'.\n\n"
+L.messagesOptInTitle = "Modo de elección de los mensajes de los jefes"
+L.messagesOptInWarning = "|cffff4411¡ATENCIÓN!|r\n\nActivar este modo desactivará los mensajes de TODOS tus módulos de los jefes. Tendrás que ir uno a uno y activar los mensajes que quieras manualmente.\n\nTu interfaz se reiniciará, ¿seguro que quieres?"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua
@@ -844,12 +844,12 @@ L.showBorder = "Mostrar Borde"
 L.showBorderDesc = "Mostrar un borde alrededor del icono."
 L.borderColor = "Color del Borde"
 L.borderSize = "Tamaño del Borde"
---L.borderOffset = "Border Offset"
---L.borderName = "Border Name"
-L.showNumbers = "Mostrar Números"
+L.borderOffset = "Desplazamiento del borde"
+L.borderName = "Nombre del borde"
+L.showNumbers = "Mostrar números"
 L.showNumbersDesc = "Mostrar números en el icono."
 L.cooldown = "Tiempo de Reutilización"
---L.cooldownEmphasizeHeader = "By default, Emphasize is disabled (0 seconds). Setting it to 1 second or higher will enable Emphasize. This will allow you to set a different font color and font size for those numbers."
+L.cooldownEmphasizeHeader = "Por defecto, el énfasis está deshabilitado (0 segundos). Ponerlo a 1 segundo o más activará el énfasis. Esto te permitirá escoger una fuente de color y tamaño diferentes para esos números."
 L.showCooldownSwipe = "Mostrar Barrido"
 L.showCooldownSwipeDesc = "Mostrar un barrido en el icono cuando el tiempo de reutilización está activo."
 L.showCooldownEdge = "Mostrar Borde"
@@ -857,19 +857,19 @@ L.showCooldownEdgeDesc = "Mostrar un borde en el tiempo de reutilización cuando
 L.inverse = "Invertir"
 L.inverseSwipeDesc = "Invertir las animaciones de tiempo de reutilización."
 L.glow = "Brillo"
-L.enableExpireGlow = "Habilitar Brillo al Expirar"
+L.enableExpireGlow = "Habilitar brillo al expirar"
 L.enableExpireGlowDesc = "Mostrar un brillo alrededor del icono cuando el tiempo de reutilización ha expirado."
-L.glowColor = "Color del Brillo"
-L.glowType = "Tipo de Brillo"
+L.glowColor = "Color del brillo"
+L.glowType = "Tipo de brillo"
 L.glowTypeDesc = "Cambiar el tipo de brillo que se muestra alrededor del icono."
 L.resetNameplateIconsDesc = "Restablecer todas las opciones relacionadas con los iconos de las placas de nombre."
-L.nameplateTextSettings = "Configuraciones de Texto"
-L.fixate_test = "Prueba de Fijación" -- Text that displays to test on the frame
+L.nameplateTextSettings = "Configuraciones de texto"
+L.fixate_test = "Prueba de fijación" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Restablecer todas las opciones relacionadas con el texto de las placas de nombre."
-L.glowAt = "Comenzar Brillo (segundos)"
+L.glowAt = "Comenzar brillo (segundos)"
 L.glowAt_desc = "Elige cuántos segundos deben quedar en el tiempo de reutilización para que comience el brillo."
---L.offsetX = "Offset X"
---L.offsetY = "Offset Y"
+L.offsetX = "Desplazamiento X"
+L.offsetY = "Desplazamiento Y"
 L.headerIconSizeTarget = "Tamaño del icono de tu objetivo actual"
 L.headerIconSizeOthers = "Tamaño del icono en otros objetivos"
 L.headerIconPositionTarget = "Posición del icono de tu objetivo actual"
@@ -895,10 +895,10 @@ L.scale_glow_desc = "La escala de las chispas en la animación."
 L.startAnimation = "Iniciar Animación"
 L.startAnimation_glow_desc = "Este brillo que tiene una animación inicial, esto habilitará/deshabilitará esa animación."
 
---L.nameplateOptInHeaderOff = "\n\n\n\nBoss mod nameplates 'opt-in' mode: Enabling this option will turn off nameplates across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the nameplates you want.\n\n"
---L.nameplateOptInHeaderOn = "\n\n\n\nBoss mod nameplates 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod nameplates, go into the settings of a specific boss ability and turn on the '|cFF33FF99Nameplates|r' option.\n\n"
---L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
---L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
+L.nameplateOptInHeaderOff = "\n\n\n\nModo de elección de placas de nombre para jefes: Habilitar esta opción desactivará los mensajes de TODOS tus módulos de los jefes.\n\nTendrás que ir uno a uno y activar los mensajes que quieras manualmente.\n\n"
+L.nameplateOptInHeaderOn = "\n\n\n\nEl modo de elección de placas de nombre para jefes está |cFF33FF99ACTIVADO|r. Para ver los mensajes de los jefes, ve a las opciones de una habilidad específica de un jefe y activa la opción de '|cFF33FF99Placas de nombre|r'.\n\n"
+L.nameplateOptInTitle = "Modo de elección de placas de nombre para jefes"
+L.nameplateOptInWarning = "|cffff4411¡ATENCIÓN!|r\n\nActivar este modo desactivará las placas de nombre de TODOS tus módulos de los jefes. Tendrás que ir uno a uno y activar las placas de nombre que quieras manualmente.\n\nTu interfaz se reiniciará, ¿seguro que quieres?"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -943,7 +943,7 @@ L.combatLogDesc = "Iniciar automáticamente el registro del combate cuando se in
 L.pull = "Pull"
 L.engageSoundTitle = "Reproduce un sonido cuando comienza un encuentro"
 L.pullStartedSoundTitle = "Reproduce un sonido cuando se inicia el temporizador de pull"
---L.pullStartedMessageTitle = "Show a message when the pull timer is started"
+L.pullStartedMessageTitle = "Muestra un mensaje al empezar el temporizador de pull"
 L.pullFinishedSoundTitle = "Reproduce un sonido cuando finalice el temporizador de pull"
 L.pullStartedBy = "Temporizador de pull iniciado por %s."
 L.pullStopped = "Pull cancelado por %s."
