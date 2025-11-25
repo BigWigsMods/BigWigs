@@ -84,7 +84,7 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Profundidades",
 	["LittleWigs_CurrentSeason"] = "Temporada actual",
 }
---L.dayNamesShort = {
+L.dayNamesShort = {
 	"DOM", -- Sunday
 	"LUN", -- Monday
 	"MAR", -- Tuesday
@@ -92,8 +92,8 @@ L.littleWigsExtras = {
 	"JUE", -- Thursday
 	"VIE", -- Friday
 	"SÁB", -- Saturday
---}
---L.dayNames = {
+}
+L.dayNames = {
 	"Domingo",
 	"Lunes",
 	"Martes",
@@ -101,8 +101,8 @@ L.littleWigsExtras = {
 	"Jueves",
 	"Viernes",
 	"Sábado",
---}
---L.monthNames = {
+}
+L.monthNames = {
 	"Enero",
 	"Febrero",
 	"Marzo",
@@ -115,7 +115,7 @@ L.littleWigsExtras = {
 	"Octubre",
 	"Noviembre",
 	"Diciembre",
---}
+}
 L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
