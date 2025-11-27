@@ -1,4 +1,4 @@
-## Interface: 20504
+## Interface: 20505
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]
