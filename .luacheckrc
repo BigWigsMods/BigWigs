@@ -152,6 +152,8 @@ files["Plugins/Break.lua"].ignore = {
 }
 files["Plugins/Messages.lua"].ignore = {
 	"113/C_UI",
+	"113/GetPlayerInfoByGUID",
+	"113/C_ClassColor",
 }
 files["Plugins/Nameplates.lua"].ignore = {
 	"113/C_NamePlate",

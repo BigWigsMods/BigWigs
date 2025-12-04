@@ -921,6 +921,19 @@ RaidWarningFrame:SetHeight(40) -- Modded to remove the empty gap between raid wa
 -- 12.0 Midnight
 --
 
+local function formatTargetName(targetName, targetGUID)
+	local formattedTargetName = targetName;
+	if targetGUID ~= nil then
+		local _, className = GetPlayerInfoByGUID(targetGUID);
+		local classColor = C_ClassColor.GetClassColor(className)
+
+		if classColor ~= nil then
+			formattedTargetName = classColor:WrapTextInColorCode(formattedTargetName);
+		end
+	end
+	return formattedTargetName
+end
+
 function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	-- Not Secrets
 	local duration = eventInfo.duration
@@ -932,8 +945,8 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	local text = eventInfo.text
 	-- local casterGUID = eventInfo.casterGUID
 	local casterName = eventInfo.casterName
-	-- local targetGUID = eventInfo.targetGUID
-	-- local targetName = eventInfo.targetName
+	local targetGUID = eventInfo.targetGUID
+	local targetName = eventInfo.targetName
 	local iconFileID = eventInfo.iconFileID
 	-- local tooltipSpellID = eventInfo.tooltipSpellID
 
@@ -948,7 +961,8 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 		[2] = "warning",
 	}
 
-	local formattedText = string.format(text, casterName)
+	local formattedTargetName = formatTargetName(targetName, targetGUID)
+	local formattedText = string.format(text, casterName, formattedTargetName)
 	self:BigWigs_Message(nil, nil, false, formattedText, severityColorMap[severity] or "yellow", iconFileID, false, duration)
 	if shouldPlaySound then
 		self:SendMessage("BigWigs_Sound", nil, false, severitySoundMap[severity] or "alert")
