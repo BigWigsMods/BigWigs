@@ -112,6 +112,7 @@ files["Plugins/AutoReply.lua"].ignore = {
 }
 files["Plugins/Bars.lua"].ignore = {
 	"113/C_Spell",
+	"113/IsInInstance",
 	"113/C_EncounterTimeline",
 }
 files["Plugins/BattleRes.lua"].ignore = {
@@ -147,6 +148,7 @@ files["Plugins/BossBlock.lua"].ignore = {
 }
 files["Plugins/Break.lua"].ignore = {
 	"113/time",
+	"113/IsInInstance",
 }
 files["Plugins/Messages.lua"].ignore = {
 	"113/C_UI",
