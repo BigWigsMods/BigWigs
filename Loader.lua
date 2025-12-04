@@ -281,9 +281,17 @@ do
 			zones = {},
 		}
 	elseif public.isBeta then -- Retail Beta
-		EncounterTimeline:Hide() -- XXX temp
-		EncounterTimeline:SetScript("OnShow", function(f) f:Hide() end)
-		C_CVar.SetCVar("encounterTimelineEnabled", "1") -- If disabled, events wont fire atm.
+		-- XXX Temp Beta disable blizzard frames
+		C_CVar.SetCVar("combatWarningsEnabled", "0") -- This disableds both warnings and timeline from blizzard
+		-- EncounterTimeline:Hide() -- XXX temp
+		-- EncounterTimeline:SetScript("OnShow", function(f) f:Hide() end)
+		-- CriticalEncounterWarnings:Hide()
+		-- CriticalEncounterWarnings:SetScript("OnShow", function(f) f:Hide() end)
+		-- MediumEncounterWarnings:Hide()
+		-- MediumEncounterWarnings:SetScript("OnShow", function(f) f:Hide() end)
+		-- MinorEncounterWarnings:Hide()
+		-- MinorEncounterWarnings:SetScript("OnShow", function(f) f:Hide() end)
+
 		public.currentExpansion = { -- Change on new expansion releases
 			name = mn,
 			bigWigsBundled = {
@@ -311,9 +319,9 @@ do
 				[658] = lw_cs, -- Pit of Saron
 			},
 			zones = {
-				[2912] = "BigWigs_MarchOnQuelDanas", -- XXX
+				[2939] = "BigWigs_TheDreamrift",
+				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
-				[2939] = "BigWigs_MarchOnQuelDanas", -- XXX
 			}
 		}
 	else -- Retail
