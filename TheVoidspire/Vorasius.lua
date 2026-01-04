@@ -4,10 +4,10 @@ if not BigWigsLoader.isBeta then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Belo'ren, Child of Al'ar", 2913, 2739)
+local mod, CL = BigWigs:NewBoss("Vorasius", 2912, 2734)
 if not mod then return end
-mod:RegisterEnableMob(240387) -- Belo'ren
-mod:SetEncounterID(3182)
+mod:RegisterEnableMob(240434) -- Vorasius
+mod:SetEncounterID(3177)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,18 +29,11 @@ function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 
-		1241282, -- Embers of Del'ren
-		1242981, -- Radiant Echoes
-		1260763, -- Guardian's Edict
-		1244344, -- Eternal Burns
-		1242260, -- Infused Quills
-		1246709, -- Death Drop
-
-		1241313, -- Rebirth
-		1242792, -- Incubation of Flames
-	}, {
-		[1241282] = -33025, -- Stage One: Phoenix Reborn
-		[1241313] = -32160, -- Stage Two: Ashen Shell
+		1260046, -- Primoridal Roar
+		1241836, -- Smashing Frenzy
+		1254199, -- Parasite Expulsion
+		1243853, -- Void Breath
+		1258967, -- Focused Aggression
 	}
 end
 

@@ -4,10 +4,13 @@ if not BigWigsLoader.isBeta then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Belo'ren, Child of Al'ar", 2913, 2739)
+local mod, CL = BigWigs:NewBoss("Vaelgor & Ezzorak", 2912, 2735)
 if not mod then return end
-mod:RegisterEnableMob(240387) -- Belo'ren
-mod:SetEncounterID(3182)
+mod:RegisterEnableMob(242056, 244552) -- Vaelgor, Ezzorak
+mod:SetEncounterID(3178)
+mod:SetPrivateAuraSounds({
+	1255612, -- Dread Breath
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -28,20 +31,26 @@ mod:SetEncounterID(3182)
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
+		1249748, -- Midnight Flames
+		1248847, -- Radiant Barrier
 
-		1241282, -- Embers of Del'ren
-		1242981, -- Radiant Echoes
-		1260763, -- Guardian's Edict
-		1244344, -- Eternal Burns
-		1242260, -- Infused Quills
-		1246709, -- Death Drop
+		-- Vaelgor
+		{1244221, "PRIVATE"}, -- Dread Breath
+		1262623, -- Nullbeam
+		1265131, -- Vaelwing
 
-		1241313, -- Rebirth
-		1242792, -- Incubation of Flames
+		-- Ezzorak
+		1244917, -- Void Howl
+		1245391, -- Gloom
+		1245645, -- Rakfang
 	}, {
-		[1241282] = -33025, -- Stage One: Phoenix Reborn
-		[1241313] = -32160, -- Stage Two: Ashen Shell
+		[1244221] = -33241, -- Vaelgor
+		[1244917] = -33255, -- Ezzorak
 	}
+end
+
+function mod:OnRegister()
+
 end
 
 function mod:OnEngage()

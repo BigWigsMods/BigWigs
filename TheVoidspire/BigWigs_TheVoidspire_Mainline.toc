@@ -1,0 +1,42 @@
+## Interface: 120000, 120001
+
+## Title: BigWigs [|cffeda55fThe Voidspire|r]
+## Title-deDE: BigWigs [|cffeda55fDie Leerenspitze|r]
+## Title-esES: BigWigs [|cffeda55fAguja del Vacío|r]
+## Title-esMX: BigWigs [|cffeda55fLa Aguja del Vacío|r]
+## Title-frFR: BigWigs [|cffeda55fLa flèche du Vide|r]
+## Title-itIT: BigWigs [|cffeda55fPinnacolo del Vuoto|r]
+## Title-koKR: BigWigs [|cffeda55f공허첨탑|r]
+## Title-ptBR: BigWigs [|cffeda55fTorre do Caos|r]
+## Title-ruRU: BigWigs [|cffeda55fШпиль Бездны	|r]
+## Title-zhCN: BigWigs [|cffeda55f虚影尖塔|r]
+## Title-zhTW: BigWigs [|cffeda55f虛無之尖|r]
+## Notes: BigWigs The Voidspire Modules
+## Notes-deDE: BigWigs The Voidspire Modules
+## Notes-esES: BigWigs The Voidspire Modules
+## Notes-esMX: BigWigs The Voidspire Modules
+## Notes-frFR: BigWigs The Voidspire Modules
+## Notes-itIT: BigWigs The Voidspire Modules
+## Notes-koKR: BigWigs The Voidspire Modules
+## Notes-ptBR: BigWigs The Voidspire Modules
+## Notes-ruRU: BigWigs The Voidspire Modules
+## Notes-zhCN: BigWigs The Voidspire Modules
+## Notes-zhTW: BigWigs The Voidspire Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2912
+
+Averzian.lua
+Vorasius.lua
+Salhadaar.lua
+VaelgorAndEzzorak.lua
+Vanguard.lua
+Crown.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua

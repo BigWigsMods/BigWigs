@@ -4,10 +4,19 @@ if not BigWigsLoader.isBeta then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Belo'ren, Child of Al'ar", 2913, 2739)
+local mod, CL = BigWigs:NewBoss("Midnight Falls", 2913, 2740)
 if not mod then return end
-mod:RegisterEnableMob(240387) -- Belo'ren
-mod:SetEncounterID(3182)
+mod:RegisterEnableMob(240391) -- L'ura
+mod:SetEncounterID(3183)
+mod:SetPrivateAuraSounds({
+	{ 1249609, 1249565, 1249558, 1249562, 1249566, 1249550, 1273133 }, -- Dark Rune
+	1282006, -- Abyssal Pool
+	{ 1261719, 1261720 }, -- Extinction Ray
+	1279512, -- Shatterglass
+
+	-- 1281184, -- Starburst
+	-- 1276638, -- Heaven & Hell
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -28,20 +37,11 @@ mod:SetEncounterID(3182)
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
-
-		1241282, -- Embers of Del'ren
-		1242981, -- Radiant Echoes
-		1260763, -- Guardian's Edict
-		1244344, -- Eternal Burns
-		1242260, -- Infused Quills
-		1246709, -- Death Drop
-
-		1241313, -- Rebirth
-		1242792, -- Incubation of Flames
-	}, {
-		[1241282] = -33025, -- Stage One: Phoenix Reborn
-		[1241313] = -32160, -- Stage Two: Ashen Shell
 	}
+end
+
+function mod:OnRegister()
+
 end
 
 function mod:OnEngage()

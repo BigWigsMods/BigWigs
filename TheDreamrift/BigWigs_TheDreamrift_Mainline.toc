@@ -1,0 +1,37 @@
+## Interface: 120000, 120001
+
+## Title: BigWigs [|cffeda55fThe Dreamrift|r]
+## Title-deDE: BigWigs [|cffeda55fDer Traumriss|r]
+## Title-esES: BigWigs [|cffeda55fFalla Onírica|r]
+## Title-esMX: BigWigs [|cffeda55fLa Onirifalla|r]
+## Title-frFR: BigWigs [|cffeda55fFaille du Rêve|r]
+## Title-itIT: BigWigs [|cffeda55fFrattura del Sogno|r]
+## Title-koKR: BigWigs [|cffeda55f꿈의 균열|r]
+## Title-ptBR: BigWigs [|cffeda55fA Fenda Onírica|r]
+## Title-ruRU: BigWigs [|cffeda55fПровал снов|r]
+## Title-zhCN: BigWigs [|cffeda55f梦境裂隙|r]
+## Title-zhTW: BigWigs [|cffeda55f夢境裂隙|r]
+## Notes: BigWigs The Dreamrift Modules
+## Notes-deDE: BigWigs The Dreamrift Modules
+## Notes-esES: BigWigs The Dreamrift Modules
+## Notes-esMX: BigWigs The Dreamrift Modules
+## Notes-frFR: BigWigs The Dreamrift Modules
+## Notes-itIT: BigWigs The Dreamrift Modules
+## Notes-koKR: BigWigs The Dreamrift Modules
+## Notes-ptBR: BigWigs The Dreamrift Modules
+## Notes-ruRU: BigWigs The Dreamrift Modules
+## Notes-zhCN: BigWigs The Dreamrift Modules
+## Notes-zhTW: BigWigs The Dreamrift Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2939
+
+Chimaerus.lua
+
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+!Options.lua

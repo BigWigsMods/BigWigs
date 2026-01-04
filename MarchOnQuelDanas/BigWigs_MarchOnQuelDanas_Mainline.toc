@@ -1,24 +1,24 @@
-## Interface: 120000
+## Interface: 120000, 120001
 
 ## Title: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-deDE: BigWigs [|cffeda55fMarsch auf Quel'Danas|r]
-## Title-esES: BigWigs [|cffeda55fMarch on Quel'Danas|r]
-## Title-esMX: BigWigs [|cffeda55fMarch on Quel'Danas|r]
-## Title-frFR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
-## Title-itIT: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-esES: BigWigs [|cffeda55fMarcha a Quel'Danas|r]
+## Title-esMX: BigWigs [|cffeda55fMarcha sobre Quel'Danas|r]
+## Title-frFR: BigWigs [|cffeda55fMarche sur Quel’Danas|r]
+## Title-itIT: BigWigs [|cffeda55fMarcia su Quel'Danas|r]
 ## Title-koKR: BigWigs [|cffeda55f쿠엘다나스 진격로|r]
-## Title-ptBR: BigWigs [|cffeda55fMarch on Quel'Danas|r]
-## Title-ruRU: BigWigs [|cffeda55fMarch on Quel'Danas|r]
+## Title-ptBR: BigWigs [|cffeda55fMarcha em Quel'Danas|r]
+## Title-ruRU: BigWigs [|cffeda55fМарш на Кель'Данас|r]
 ## Title-zhCN: BigWigs [|cffeda55f进军奎尔丹纳斯|r]
-## Title-zhTW: BigWigs [|cffeda55f奎爾達納斯之界|r]
+## Title-zhTW: BigWigs [|cffeda55f進軍奎爾達納斯|r]
 ## Notes: BigWigs March on Quel'Danas Modules
 ## Notes-deDE: BigWigs Marsch auf Quel'Danas Module
-## Notes-esES: BigWigs March on Quel'Danas Modules
-## Notes-esMX: BigWigs March on Quel'Danas Modules
-## Notes-frFR: BigWigs March on Quel'Danas Modules
-## Notes-itIT: BigWigs March on Quel'Danas Modules
+## Notes-esES: BigWigs Marcha a Quel'Danas Modules
+## Notes-esMX: BigWigs Marcha sobre Quel'Danas Modules
+## Notes-frFR: BigWigs Marche sur Quel’Danas Modules
+## Notes-itIT: BigWigs Marcha su Quel'Danas Modules
 ## Notes-koKR: BigWigs 쿠엘다나스 진격로 모듈
-## Notes-ptBR: BigWigs March on Quel'Danas Modules
+## Notes-ptBR: BigWigs Marcha em Quel'Danas Modules
 ## Notes-ruRU: BigWigs March on Quel'Danas Modules
 ## Notes-zhCN: BigWigs 进军奎尔丹纳斯模块
 ## Notes-zhTW: BigWigs 奎爾達納斯之界模組
@@ -32,6 +32,7 @@
 ## X-BigWigs-LoadOn-InstanceId: 2913
 
 Beloren.lua
+MidnightFalls.lua
 
 # Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 # !Options.lua

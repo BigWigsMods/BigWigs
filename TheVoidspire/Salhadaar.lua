@@ -4,10 +4,10 @@ if not BigWigsLoader.isBeta then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Belo'ren, Child of Al'ar", 2913, 2739)
+local mod, CL = BigWigs:NewBoss("Fallen-King Salhadaar", 2912, 2736)
 if not mod then return end
-mod:RegisterEnableMob(240387) -- Belo'ren
-mod:SetEncounterID(3182)
+mod:RegisterEnableMob(240432) -- Fallen-King Salhadaar
+mod:SetEncounterID(3179)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,18 +29,12 @@ function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 
-		1241282, -- Embers of Del'ren
-		1242981, -- Radiant Echoes
-		1260763, -- Guardian's Edict
-		1244344, -- Eternal Burns
-		1242260, -- Infused Quills
-		1246709, -- Death Drop
-
-		1241313, -- Rebirth
-		1242792, -- Incubation of Flames
-	}, {
-		[1241282] = -33025, -- Stage One: Phoenix Reborn
-		[1241313] = -32160, -- Stage Two: Ashen Shell
+		1247738, -- Desperate Measures
+		1250686, -- Twisting Obscurity
+		1254081, -- Fractured Projection
+		1260823, -- Despotic Command
+		1253911, -- Shattering Twilight
+		1246175, -- Cosmic Unraveling
 	}
 end
 

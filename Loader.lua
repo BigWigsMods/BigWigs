@@ -1343,6 +1343,8 @@ do
 		BigWigs_NerubarPalace = true,
 		BigWigs_LiberationOfUndermine = true,
 		BigWigs_ManaforgeOmega = true,
+		BigWigs_TheVoidspire = true,
+		BigWigs_TheDreamrift = true,
 		BigWigs_MarchOnQuelDanas = true,
 	}
 	-- Try to teach people not to force load our modules.
