@@ -338,7 +338,6 @@ do
 		local barSettings = BigWigs:GetPlugin("Bars")
 		local messageSettings = BigWigs:GetPlugin("Messages")
 		local countdownSettings = BigWigs:GetPlugin("Countdown")
-		local nameplateSettings = BigWigs:GetPlugin("Nameplates")
 
 		if requestAll or sharingExportOptionsSettings.exportBarPositions then
 			exportOptions["barPositions"] = exportProfileSettings(barPositionsToExport, barSettings.db.profile)
@@ -377,7 +376,10 @@ do
 		end
 
 		if requestAll or sharingExportOptionsSettings.exportNameplateSettings then
-			exportOptions["nameplateSettings"] = exportProfileSettings(nameplateSettingsToExport, nameplateSettings.db.profile)
+			local nameplateSettings = BigWigs:GetPlugin("Nameplates", true)
+			if nameplateSettings then
+				exportOptions["nameplateSettings"] = exportProfileSettings(nameplateSettingsToExport, nameplateSettings.db.profile)
+			end
 		end
 
 		if requestAll or sharingExportOptionsSettings.exportMythicPlusSettings then
@@ -487,7 +489,6 @@ do
 		local messageplugin = BigWigs:GetPlugin("Messages")
 		local countdownPlugin = BigWigs:GetPlugin("Countdown")
 		local colorplugin = BigWigs:GetPlugin("Colors")
-		local nameplatePlugin = BigWigs:GetPlugin("Nameplates")
 
 		-- Colors are stored for each plugin/module (e.g. BigWigs_Plugins_Colors for the defaults, BigWigs_Bosses_* for bosses)
 		-- We only want to modify the defaults with these imports right now.
@@ -525,7 +526,12 @@ do
 		importSettings("importCountdownPositions", "countdownPositions", countdownPositionsToExport, countdownPlugin, L.imported_countdown_position)
 		importSettings("importCountdownSettings", "countdownSettings", countdownSettingsToExport, countdownPlugin, L.imported_countdown_settings)
 		importSettings("importCountdownColors", "countdownColors", countdownColorsToExport, countdownPlugin, L.imported_countdown_color) -- Not part of color plugin
-		importSettings("importNameplateSettings", "nameplateSettings", nameplateSettingsToExport, nameplatePlugin, L.imported_nameplate_settings)
+		do
+			local nameplatePlugin = BigWigs:GetPlugin("Nameplates", true)
+			if nameplatePlugin then
+				importSettings("importNameplateSettings", "nameplateSettings", nameplateSettingsToExport, nameplatePlugin, L.imported_nameplate_settings)
+			end
+		end
 		do
 			local db = BigWigsLoader.db:GetNamespace("MythicPlus", true)
 			if db then
@@ -763,7 +769,7 @@ local sharingOptions = {
 						desc = L.nameplate_settings_import_desc,
 						order = 1,
 						width = 1,
-						disabled = function() return not IsOptionInString("nameplateSettings") end,
+						disabled = function() return not IsOptionInString("nameplateSettings") or not BigWigs:GetPlugin("Nameplates", true) end,
 					},
 					importMythicPlusSettings = {
 						type = "toggle",
@@ -923,6 +929,8 @@ local sharingOptions = {
 						desc = L.nameplate_settings_export_desc,
 						order = 1,
 						width = 1,
+						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("Nameplates", true) end,
+						disabled = function() return not BigWigs:GetPlugin("Nameplates", true) end,
 					},
 					exportMythicPlusSettings = {
 						type = "toggle",
