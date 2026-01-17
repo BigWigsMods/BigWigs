@@ -30,7 +30,8 @@ local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
-local isClassic, isRetail, isClassicEra, isCata, isMists, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.isMists, loader.season
+local season = loader.season
+local isClassic, isRetail, isVanilla, isTBC, isWrath, isCata, isMists = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isTBC, loader.isWrath, loader.isCata, loader.isMists
 local C_EncounterJournal_GetSectionInfo = (isCata or isMists) and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
@@ -144,7 +145,7 @@ local updateData = function(module)
 				myRole = "DAMAGER"
 			end
 		elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
-			if isClassicEra then
+			if isVanilla then
 				-- Check for bear talents
 				local feralInstinct = select(5, GetTalentInfo(2, 3))
 				local thickHide = select(5, GetTalentInfo(2, 5))
@@ -1800,22 +1801,34 @@ function boss:MythicPlus()
 	return difficulty == 8
 end
 
---- Check if on a retail server.
+--- Check if the current game type is Retail.
 -- @return boolean
 function boss:Retail()
 	return isRetail
 end
 
---- Check if on a classic server.
+--- Check if the current game type is any form of Classic.
 -- @return boolean
 function boss:Classic()
 	return isClassic
 end
 
---- Check if on a vanilla server.
+--- Check if the current game type is Vanilla.
 -- @return boolean
 function boss:Vanilla()
-	return isClassicEra
+	return isVanilla
+end
+
+--- Check if the current game type is Burning Crusade.
+-- @return boolean
+function boss:TBC()
+	return isTBC
+end
+
+--- Check if the current game type is Wrath of the Lich King.
+-- @return boolean
+function boss:Wrath()
+	return isWrath
 end
 
 --- Get the current season.
@@ -2419,7 +2432,7 @@ do
 				-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W]
 				defDispel.magic = true
 			end
-			if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (isClassicEra and IsSpellKnown(2870)) or (isClassic and IsSpellKnown(526)) or IsSpellKnown(8170) then
+			if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (isVanilla and IsSpellKnown(2870)) or (isClassic and IsSpellKnown(526)) or IsSpellKnown(8170) then
 				-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman)[C,BC], Cure Toxins (Shaman)[W], Disease Cleansing Totem (Shaman)
 				defDispel.disease = true
 			end
@@ -2473,7 +2486,7 @@ do
 			47528, -- Mind Freeze (Death Knight)
 			57994, -- Wind Shear (Shaman)
 		}
-		local spellList = isClassicEra and spellListClassic or spellListWrath
+		local spellList = isVanilla and spellListClassic or spellListWrath
 		function UpdateInterruptStatus()
 			if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
 				canInterrupt = GetSpellName(19647)

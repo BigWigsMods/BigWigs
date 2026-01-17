@@ -30,7 +30,8 @@ local BigWigsAPI = BigWigsAPI
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization")
 local loader = BigWigsLoader
-local isClassic, isRetail, isVanilla, isCata, isMists, season = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isCata, loader.isMists, loader.season
+local season = loader.season
+local isClassic, isRetail, isVanilla, isTBC, isWrath, isCata, isMists = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isTBC, loader.isWrath, loader.isCata, loader.isMists
 local C_EncounterJournal_GetSectionInfo = (isCata or isMists) and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
@@ -1741,22 +1742,34 @@ function boss:MythicPlus()
 	return difficulty == 8
 end
 
---- Check if on a retail server.
+--- Check if the current game type is Retail.
 -- @return boolean
 function boss:Retail()
 	return isRetail
 end
 
---- Check if on a classic server.
+--- Check if the current game type is any form of Classic.
 -- @return boolean
 function boss:Classic()
 	return isClassic
 end
 
---- Check if on a vanilla server.
+--- Check if the current game type is Vanilla.
 -- @return boolean
 function boss:Vanilla()
 	return isVanilla
+end
+
+--- Check if the current game type is Burning Crusade.
+-- @return boolean
+function boss:TBC()
+	return isTBC
+end
+
+--- Check if the current game type is Wrath of the Lich King.
+-- @return boolean
+function boss:Wrath()
+	return isWrath
 end
 
 --- Get the current season.
