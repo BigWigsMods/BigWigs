@@ -922,16 +922,19 @@ RaidWarningFrame:SetHeight(40) -- Modded to remove the empty gap between raid wa
 --
 
 local function formatTargetName(targetName, targetGUID)
-	local formattedTargetName = targetName;
-	if targetGUID ~= nil then
-		local _, className = GetPlayerInfoByGUID(targetGUID);
-		local classColor = C_ClassColor.GetClassColor(className)
+	if not targetGUID or not db.classcolor then
+		return targetName
+	end
 
-		if classColor ~= nil then
-			formattedTargetName = classColor:WrapTextInColorCode(formattedTargetName);
+	local _, className = GetPlayerInfoByGUID(targetGUID)
+	if className then
+		local classColor = C_ClassColor.GetClassColor(className)
+		if classColor then
+			return classColor:WrapTextInColorCode(targetName)
 		end
 	end
-	return formattedTargetName
+
+	return targetName
 end
 
 function plugin:ENCOUNTER_WARNING(_, eventInfo)
