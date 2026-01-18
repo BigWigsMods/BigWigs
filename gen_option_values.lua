@@ -581,7 +581,7 @@ local function parseGetOptions(file_name, lines, start, special_options)
 					error(string.format("    %s:%d: Missing tabName for a tab", file_name, start, tostring(key)))
 				end
 				for _, optionInTab in next, header[1] do
-					if not options[optionInTab] then
+					if not options[optionInTab] and not opt.ignore_unused then
 						error(string.format("    %s:%d: Invalid option key %q in tab", file_name, start, tostring(optionInTab)))
 					end
 				end
@@ -840,6 +840,11 @@ local function parseLua(file)
 				comment = comment .. new_line:sub(1, stop):reverse()
 				line = new_line:sub(stop + 1):reverse()
 			end
+		end
+
+		-- parser options
+		if comment:find("SetOption:skip-unused", nil, true) then
+			opt.ignore_unused = true
 		end
 
 		-- set some module flags
@@ -1404,7 +1409,7 @@ local function parseLua(file)
 
 	-- Check for options that were set but never used.
 	for key in next, option_keys do
-		if not option_key_used[key] and not tostring(key):match("^custom_") then
+		if not option_key_used[key] and not tostring(key):match("^custom_") and not opt.ignore_unused then
 			error(string.format("    %s:%d: %q was registered as an option key, but was not used.", file_name, options_block_start, key))
 		end
 	end
@@ -1413,7 +1418,7 @@ local function parseLua(file)
 	for key, flags in next, option_keys do
 		if type(flags) == "table" then
 			for flag in next, flags do
-				if tracked_bitflags[flag] and (not bitflag_used[key] or not bitflag_used[key][flag]) then
+				if tracked_bitflags[flag] and (not bitflag_used[key] or not bitflag_used[key][flag]) and not opt.ignore_unused then
 					error(string.format("    %s:%d: %q was added as a bitflag to option key %q, but was not used.", file_name, options_block_start, flag, key))
 				end
 			end
@@ -1576,7 +1581,7 @@ local start_path = "modules.xml"
 local arg_paths = {}
 
 -- simple arg parser
-if arg then
+if arg and #arg > 0 then
 	for _, v in ipairs(arg) do
 		if string.sub(v, 1, 1) == "-" then
 			v = string.match(v, "^[-]+(.+)$")
@@ -1585,6 +1590,9 @@ if arg then
 			end
 			if v == "n" or v == "dry-run" then
 				opt.dryrun = true
+			end
+			if v == "u" or v == "skip-unused" then
+				opt.ignore_unused = true
 			end
 		else
 			local path = v:gsub("\\", "/")
@@ -1602,6 +1610,9 @@ if arg then
 			arg_paths[#arg_paths + 1] = start_path
 		end
 	end
+end
+if #arg_paths == 0 then
+	arg_paths[#arg_paths + 1] = start_path
 end
 
 setCommonLocale(start_path)
