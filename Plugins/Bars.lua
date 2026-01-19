@@ -1361,7 +1361,7 @@ do
 		else
 			bar:SetIcon(nil)
 		end
-		bar:SetDuration(time, isApprox)
+		bar:SetDuration(time, not hasSecrets and isApprox) -- isApprox is maxQueueDuration when hasSecrets
 		bar:SetColor(colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 		bar:SetTextColor(colors:GetColor("barText", module, key))
@@ -1403,9 +1403,7 @@ do
 			self:StopSpecificBar(nil, module, text)
 		end
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, hasSecrets)
-		if isApprox then
-			bar:SetPauseWhenDone(true)
-		end
+		bar:SetPauseWhenDone(isApprox)
 		if db.emphasize and time < db.emphasizeTime then
 			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then
 				bar:Start(db.emphasizeTime)
@@ -1634,17 +1632,19 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local eventID = eventInfo.id
 	local duration = eventInfo.duration
 	local source = eventInfo.source
-	local state = C_EncounterTimeline.GetEventState(eventID) -- 0 = Running, 1 = Paused
+	local maxQueueDuration = eventInfo.maxQueueDuration
 
 	-- Secrets
 	local spellId = eventInfo.spellID
 	local spellName = eventInfo.spellName
-	local iconId = eventInfo.iconFileID
-	-- local dispelType = eventInfo.dispelType
-	-- local role = eventInfo.role
-	-- local priority = eventInfo.priority
-	self:BigWigs_StartBar(nil, nil, eventID, spellName, duration, iconId, nil, nil, true)
+	local icon = eventInfo.iconFileID
+	-- local icons = eventInfo.icons
+	-- local severity = eventInfo.severity
+	-- local isApproximate = eventInfo.isApproximate
 
+	self:BigWigs_StartBar(nil, nil, eventID, spellName, duration, icon, maxQueueDuration > 0 and maxQueueDuration, nil, true)
+
+	local state = C_EncounterTimeline.GetEventState(eventID) -- 0 = Running, 1 = Paused
 	if state == 1 then -- Starting Paused
 		self:PauseSecretBar(eventID)
 	end
