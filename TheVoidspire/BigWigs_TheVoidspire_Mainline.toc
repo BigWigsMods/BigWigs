@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs The Voidspire Modules
 ## Notes-ptBR: BigWigs The Voidspire Modules
 ## Notes-ruRU: BigWigs The Voidspire Modules
-## Notes-zhCN: BigWigs The Voidspire Modules
-## Notes-zhTW: BigWigs The Voidspire Modules
+## Notes-zhCN: BigWigs 虚影尖塔模块
+## Notes-zhTW: BigWigs 虛無之尖模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
