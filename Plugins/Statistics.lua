@@ -35,6 +35,7 @@ local difficultyTable = {
 	[215] = "SOD", -- Normal (20 player Sunken Temple - Classic Season of Discovery)
 	[220] = "story", -- Story
 	[226] = "SOD", -- 20 Player (Molten Core & ZG - Classic Season of Discovery)
+	[244] = "titan", -- Raid: 25 Titan-Reforged
 }
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime, date = GetTime, BigWigsLoader.date
@@ -138,6 +139,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 176. 25 Player
 193. 10 Player (Heroic)
 194. 25 Player (Heroic)
+244. Raid: 25 Titan-Reforged
 
 1.15.7
 1. Normal

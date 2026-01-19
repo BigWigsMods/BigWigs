@@ -313,6 +313,7 @@ L.N10 = "Normale 10"
 L.N25 = "Normale 25"
 L.H10 = "Eroico 10"
 L.H25 = "Eroico 25"
+--L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
