@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs The Dreamrift Modules
 ## Notes-ptBR: BigWigs The Dreamrift Modules
 ## Notes-ruRU: BigWigs The Dreamrift Modules
-## Notes-zhCN: BigWigs The Dreamrift Modules
-## Notes-zhTW: BigWigs The Dreamrift Modules
+## Notes-zhCN: BigWigs 梦境裂隙模块
+## Notes-zhTW: BigWigs 夢境裂隙模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
