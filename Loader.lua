@@ -1568,17 +1568,16 @@ do
 
 	local timer = nil
 	local function sendDBMMsg()
-		if public.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local msg = myName.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
 			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				if result == 3 or result == 8 or result == 9 then
+				if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 					timer = CTimerNewTimer(3, sendDBMMsg)
 					return
-				else
+				elseif result ~= 11 then -- AddOnMessageLockdown
 					sysprint("Failed to send initial _ version. Error code: ".. result)
 					geterrorhandler()("BigWigs: Failed to send initial _ version. Error code: ".. result)
 				end
@@ -1646,19 +1645,20 @@ end
 	{ Name = "ChannelThrottle", Type = "SendAddonMessageResult", EnumValue = 8 },
 	{ Name = "GeneralError", Type = "SendAddonMessageResult", EnumValue = 9 },
 	{ Name = "NotInGuild", Type = "SendAddonMessageResult", EnumValue = 10 },
+	{ Name = "AddOnMessageLockdown", Type = "SendAddonMessageResult", EnumValue = 11 },
+	{ Name = "TargetOffline", Type = "SendAddonMessageResult", EnumValue = 12 },
 ]]
 local ResetVersionWarning
 do
 	local timer = nil
 	local function sendMsg()
-		if public.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
-				if result == 3 or result == 8 or result == 9 then
+				if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 					timer = CTimerNewTimer(3, sendMsg)
 					return
-				else
+				elseif result ~= 11 then -- AddOnMessageLockdown
 					sysprint("Failed to send initial version. Error code: ".. result)
 					geterrorhandler()("BigWigs: Failed to send initial version. Error code: ".. result)
 				end
@@ -1788,9 +1788,9 @@ do
 			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
 			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
 		}
-		local UnitIsPlayer = UnitIsPlayer
+		local IsInInstance, UnitIsPlayer = IsInInstance, UnitIsPlayer
 		local function UNIT_TARGET(frame, event, unit)
-			if public.isMidnight then return end -- XXX needs updating for 12.0
+			if public.isMidnight and IsInInstance() then return end
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then
@@ -1941,19 +1941,18 @@ end
 do
 	local grouped = nil
 	function mod:GROUP_FORMED()
-		if public.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			local result = SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			if type(result) == "number" and result ~= 0 then
+			if type(result) == "number" and result ~= 0 and result ~= 11 then -- 0=Success, 11=AddOnMessageLockdown
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
 			local dbmResult = SendAddonMessage(dbmPrefix, myName.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
-			if type(dbmResult) == "number" and dbmResult ~= 0 then
+			if type(dbmResult) == "number" and dbmResult ~= 0 and dbmResult ~= 11 then -- 0=Success, 11=AddOnMessageLockdown
 				sysprint("Failed to ask for _ versions. Error code: ".. dbmResult)
 				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. dbmResult)
 			end

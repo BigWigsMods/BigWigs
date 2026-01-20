@@ -47,6 +47,7 @@ end or isRetail and EJ_GetEncounterInfo or function(key)
 end
 local SendChatMessage, GetInstanceInfo, SimpleTimer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
+local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
 local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
@@ -1907,10 +1908,11 @@ end
 -- @string unit unit token or name
 -- @return guid guid of the unit
 function boss:UnitGUID(unit)
-	if loader.isMidnight then return end -- XXX needs updating for 12.0
-	local guid = UnitGUID(unit)
-	if guid then
-		return guid
+	if not issecretvalue(unit) then
+		local guid = UnitGUID(unit)
+		if not issecretvalue(guid) then
+			return guid
+		end
 	end
 end
 
@@ -1959,12 +1961,13 @@ end
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
-	if loader.isMidnight then return end -- XXX needs updating for 12.0
-	local maxHP = UnitHealthMax(unit)
-	if maxHP == 0 then
-		return maxHP
-	else
-		return UnitHealth(unit) / maxHP * 100
+	if not issecretvalue(unit) then
+		local maxHP = UnitHealthMax(unit)
+		if issecretvalue(maxHP) or maxHP == 0 then
+			return 0
+		else
+			return UnitHealth(unit) / maxHP * 100
+		end
 	end
 end
 
@@ -4113,7 +4116,6 @@ do
 	-- @usage self:Sync("abilityPrefix", data)
 	-- @usage self:Sync("ability")
 	function boss:Sync(msg, extra, noResend)
-		if loader.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg then
 			if IsInGroup() then
 				if extra then
@@ -4123,12 +4125,12 @@ do
 				end
 				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 				if type(result) == "number" and result > 0 then
-					if result == 3 or result == 8 or result == 9 then
+					if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 						if not noResend then
 							self:SimpleTimer(function() if self:IsEnabled() then self:Sync(msg, extra) end end, 1)
 							return
 						end
-					else
+					elseif result ~= 11 then -- AddOnMessageLockdown
 						local errorMsg = format("Failed to send boss comm %q. Error code: %d", msg, result)
 						core:Error(errorMsg)
 					end

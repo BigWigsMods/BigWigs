@@ -33,6 +33,7 @@ files["Loader.lua"].ignore = {
 	"113/GetBuildInfo",
 	"113/GetNumGroupMembers",
 	"113/GetRealmID",
+	"113/IsInInstance", -- XXX temp
 	"113/IsPlayerSpell", -- XXX temp
 	"113/IsSpellKnown", -- XXX temp
 	"113/IsPublicTestClient",
