@@ -171,11 +171,19 @@ files["Plugins/Pull.lua"].ignore = {
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
 }
+files["Plugins/RaidIcon.lua"].ignore = {
+	"113/GetRaidTargetIndex",
+}
 files["Plugins/Statistics.lua"].ignore = {
 	"113/C_UIWidgetManager",
 }
-files["Plugins/RaidIcon.lua"].ignore = {
-	"113/GetRaidTargetIndex",
+files["Plugins/Timeline.lua"].ignore = {
+	"113/C_ClassColor",
+	"113/C_CVar",
+	"113/C_EncounterTimeline",
+	"113/C_EncounterWarnings",
+	"113/Enum",
+	"113/GetPlayerInfoByGUID",
 }
 files["Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
@@ -195,6 +203,10 @@ files["**/?Locales/*.lua"].ignore = {
 }
 files["gen_option_values.lua"].ignore = {
 	"113/arg", -- We use global arg in the parser
+}
+
+files["Media/Media.lua"].ignore = {
+	"113/GetBuildInfo",
 }
 files["Tools/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
