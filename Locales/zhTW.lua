@@ -1009,6 +1009,12 @@ L.bossDefeatPrint = "你被「%s」擊敗，用時%s。" -- You were defeated by
 L.newFastestVictoryPrint = "新的最快紀錄：（-%s）" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
+-- Timeline.lua
+--
+
+--L.timeline = "Timeline"
+
+-----------------------------------------------------------------------
 -- Victory.lua
 --
 
