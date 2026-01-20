@@ -1540,7 +1540,6 @@ do
 	local dbmPrefix = BigWigsLoader.dbmPrefix
 	local times
 	function plugin:SendCustomBarToGroup(message, duration)
-		if BigWigsLoader.isMidnight and IsInInstance() and InCombatLockdown()  then return end -- XXX 12.0 Needs more fixing? not allowed in combat in instances
 		if not duration or duration < 3 then BigWigs:Print(L.wrongTime) return end
 		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
 		if not plugin:IsEnabled() then BigWigs:Enable() end
