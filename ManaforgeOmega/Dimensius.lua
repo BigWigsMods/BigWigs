@@ -133,7 +133,7 @@ function mod:OnRegister()
 	self:SetSpellRename(1249423, L.mass_destruction) -- Mass Destruction (Lines)
 end
 
-function mod:GetOptions()
+function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 
