@@ -2,7 +2,9 @@
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Messages")
+local plugin, L = BigWigs:NewPlugin("Messages", {
+	"db",
+})
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -743,11 +745,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-
-	if BigWigsLoader.isBeta then -- XXX 12.0
-		self:RegisterEvent("ENCOUNTER_WARNING")
-		-- self:RegisterEvent("CHAT_MSG_ENCOUNTER_EVENT")
-	end
 end
 
 -------------------------------------------------------------------------------
@@ -916,82 +913,3 @@ end
 
 -- Always last to prevent a potential error breaking the plugin
 RaidWarningFrame:SetHeight(40) -- Modded to remove the empty gap between raid warnings and boss emotes
-
--------------------------------------------------------------------------------
--- 12.0 Midnight
---
-
-local function formatTargetName(targetName, targetGUID)
-	if not targetGUID or not db.classcolor then
-		return targetName
-	end
-
-	local _, className = GetPlayerInfoByGUID(targetGUID)
-	if className then
-		local classColor = C_ClassColor.GetClassColor(className)
-		if classColor then
-			return classColor:WrapTextInColorCode(targetName)
-		end
-	end
-
-	return targetName
-end
-
-function plugin:ENCOUNTER_WARNING(_, eventInfo)
-	-- Not Secrets
-	local duration = eventInfo.duration
-	local severity = eventInfo.severity
-	local shouldPlaySound = eventInfo.shouldPlaySound
-	-- local shouldShowChatMessage = eventInfo.shouldShowChatMessage
-
-	-- Secrets
-	local text = eventInfo.text
-	-- local casterGUID = eventInfo.casterGUID
-	local casterName = eventInfo.casterName
-	local targetGUID = eventInfo.targetGUID
-	local targetName = eventInfo.targetName
-	local iconFileID = eventInfo.iconFileID
-	-- local tooltipSpellID = eventInfo.tooltipSpellID
-
-	local severityColorMap = {
-		[0] = "yellow",
-		[1] = "orange",
-		[2] = "red",
-	}
-	local severitySoundMap = {
-		[0] = "alert",
-		[1] = "alarm",
-		[2] = "warning",
-	}
-
-	local formattedTargetName = formatTargetName(targetName, targetGUID)
-	local formattedText = string.format(text, casterName, formattedTargetName)
-	self:BigWigs_Message(nil, nil, false, formattedText, severityColorMap[severity] or "yellow", iconFileID, false, duration)
-	if shouldPlaySound then
-		self:SendMessage("BigWigs_Sound", nil, false, severitySoundMap[severity] or "alert")
-	end
-end
-
--- function plugin:CHAT_MSG_ENCOUNTER_EVENT(_, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, suppressRaidIcons)
-
--- 	-- Not Secrets
--- 	local languageName = languageName
--- 	local channelName = channelName
--- 	local specialFlags = specialFlags
--- 	local zoneChannelID = zoneChannelID
--- 	local channelIndex = channelIndex
--- 	local channelBaseName = channelBaseName
--- 	local languageID = languageID
--- 	local lineID = lineID
--- 	local isMobile = isMobile
--- 	local isSubtitle = isSubtitle
--- 	local hideSenderInLetterbox = hideSenderInLetterbox
--- 	local suppressRaidIcons = suppressRaidIcons
-
--- 	-- Secret
--- 	local text = text
--- 	local playerName = playerName
--- 	local playerName2 = playerName2
--- 	local guid = guid
--- 	local bnSenderID = bnSenderID
--- end

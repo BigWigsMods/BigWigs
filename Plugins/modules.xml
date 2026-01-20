@@ -21,5 +21,6 @@
 <Script file="Victory.lua"/>
 <Script file="Wipe.lua"/>
 <Script file="BattleRes.lua"/>
+<Script file="Timeline.lua"/>
 
 </Ui>

@@ -1127,12 +1127,6 @@ function plugin:OnPluginEnable()
 	-- custom bars
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
-
-	if BigWigsLoader.isBeta then -- XXX 12.0
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
-	end
 end
 
 function plugin:OnPluginDisable()
@@ -1190,66 +1184,42 @@ end
 -- Pausing bars
 --
 
-function plugin:PauseBar(_, module, text)
+function plugin:PauseBar(_, module, text, eventId)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Pause()
 			return
+		elseif eventId and k:Get("bigwigs:eventId") == eventId then
+			k:Pause()
 		end
 	end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Pause()
 			return
+		elseif eventId and k:Get("bigwigs:eventId") == eventId then
+			k:Pause()
 		end
 	end
 end
 
-function plugin:ResumeBar(_, module, text)
+function plugin:ResumeBar(_, module, text, eventId)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Resume()
 			return
+		elseif eventId and k:Get("bigwigs:eventId") == eventId then
+			k:Resume()
 		end
 	end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
 			k:Resume()
 			return
-		end
-	end
-end
-
-function plugin:PauseSecretBar(key)
-	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
-			k:Pause()
-			return
-		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
-			k:Pause()
-			return
-		end
-	end
-end
-
-function plugin:ResumeSecretBar(key)
-	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
+		elseif eventId and k:Get("bigwigs:eventId") == eventId then
 			k:Resume()
-			return
-		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
-			k:Resume()
-			return
 		end
 	end
 end
@@ -1258,15 +1228,21 @@ end
 -- Stopping bars
 --
 
-function plugin:StopSpecificBar(_, module, text)
+function plugin:StopSpecificBar(_, module, text, eventId)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
+			k:Stop()
+			return
+		elseif eventId and k:Get("bigwigs:eventId") == eventId then
 			k:Stop()
 		end
 	end
 	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
+			k:Stop()
+			return
+		elseif eventId and k:Get("bigwigs:eventId") == eventId then
 			k:Stop()
 		end
 	end
@@ -1281,20 +1257,6 @@ function plugin:StopModuleBars(_, module)
 	end
 	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module then
-			k:Stop()
-		end
-	end
-end
-
-function plugin:StopSecretBar(key)
-	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
-			k:Stop()
-		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:hasSecrets") and k:Get("bigwigs:option") == key then
 			k:Stop()
 		end
 	end
@@ -1336,7 +1298,7 @@ end
 
 do
 	local initial = true
-	function plugin:CreateBar(module, key, text, time, icon, isApprox, hasSecrets)
+	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId)
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
@@ -1353,7 +1315,9 @@ do
 		bar:SetFont(f, db.fontSize, flags)
 		bar:Set("bigwigs:module", module)
 		bar:Set("bigwigs:option", key)
-		bar:Set("bigwigs:hasSecrets", hasSecrets and hasSecrets or false)
+		if eventId then
+			bar:Set("bigwigs:eventId", eventId)
+		end
 		bar:Set("bigwigs:anchor", "normalPosition")
 		normalAnchor.bars[bar] = true
 		if db.icon then
@@ -1361,7 +1325,7 @@ do
 		else
 			bar:SetIcon(nil)
 		end
-		bar:SetDuration(time, not hasSecrets and isApprox) -- isApprox is maxQueueDuration when hasSecrets
+		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		bar:SetColor(colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 		bar:SetTextColor(colors:GetColor("barText", module, key))
@@ -1374,11 +1338,11 @@ do
 		bar:SetIconPosition(db.iconPosition)
 		bar:SetFill(db.fill)
 		bar:SetLabel(text)
-		if not issecretvalue and initial then -- XXX 12.0 compat
+		if initial then
 			-- Workaround for wow custom font loading issues
 			self:SimpleTimer(function()
 				initial = false
-				if bar:GetLabel() == text then
+				if (not eventId and bar:GetLabel() == text) or (eventId and bar:Get("bigwigs:eventId") == eventId) then
 					bar:SetLabel("-1")
 					bar:SetLabel(text)
 				end
@@ -1397,12 +1361,12 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, hasSecrets)
-		if not hasSecrets and not text then text = "" end
-		if not hasSecrets then
+	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId)
+		if issecretvalue == nil or not issecretvalue(text) then -- XXX 12.0 compat
+			if not text then text = "" end
 			self:StopSpecificBar(nil, module, text)
 		end
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox, hasSecrets)
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId)
 		bar:SetPauseWhenDone(isApprox)
 		if db.emphasize and time < db.emphasizeTime then
 			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then
@@ -1576,7 +1540,7 @@ do
 	local dbmPrefix = BigWigsLoader.dbmPrefix
 	local times
 	function plugin:SendCustomBarToGroup(message, duration)
-		if BigWigsLoader.isBeta and IsInInstance() and InCombatLockdown()  then return end -- XXX 12.0 Needs more fixing? not allowed in combat in instances
+		if BigWigsLoader.isMidnight and IsInInstance() and InCombatLockdown()  then return end -- XXX 12.0 Needs more fixing? not allowed in combat in instances
 		if not duration or duration < 3 then BigWigs:Print(L.wrongTime) return end
 		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
 		if not plugin:IsEnabled() then BigWigs:Enable() end
@@ -1622,50 +1586,3 @@ BigWigsAPI.RegisterSlashCommand("/localbar", function(input)
 
 	startCustomBar(seconds, plugin:UnitName("player"), barText)
 end)
-
--------------------------------------------------------------------------------
--- 12.0 Midnight
---
-
-function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
-	-- Not Secrets
-	local eventID = eventInfo.id
-	local duration = eventInfo.duration
-	local source = eventInfo.source
-	local maxQueueDuration = eventInfo.maxQueueDuration
-
-	-- Secrets
-	local spellId = eventInfo.spellID
-	local spellName = eventInfo.spellName
-	local icon = eventInfo.iconFileID
-	-- local icons = eventInfo.icons
-	-- local severity = eventInfo.severity
-	-- local isApproximate = eventInfo.isApproximate
-
-	self:BigWigs_StartBar(nil, nil, eventID, spellName, duration, icon, maxQueueDuration > 0 and maxQueueDuration, nil, true)
-
-	local state = C_EncounterTimeline.GetEventState(eventID) -- 0 = Running, 1 = Paused
-	if state == 1 then -- Starting Paused
-		self:PauseSecretBar(eventID)
-	end
-end
-
-function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
-	local newState = C_EncounterTimeline.GetEventState(eventID) -- 0 = Running, 1 = Paused
-	if newState == 0 then -- Resumed
-		self:ResumeSecretBar(eventID)
-	elseif newState == 1 then -- Paused
-		self:PauseSecretBar(eventID)
-
-	-- Are Finished and/or Canceled needed?
-	-- it also triggers `ENCOUNTER_TIMELINE_EVENT_REMOVED` when the timer is removed.
-	-- elseif newState == 2 then -- Finished
-	-- 	plugin:StopSecretBar(eventID)
-	-- elseif newState == 3 then -- Canceled
-	-- 	plugin:StopSecretBar(eventID)
-	end
-end
-
-function plugin:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	self:StopSecretBar(eventID)
-end
