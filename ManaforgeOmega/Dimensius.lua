@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Dimensius, the All-Devouring", 2810, 2691)
 if not mod then return end
-mod:RegisterEnableMob(241517, 234478, 233824) -- P1/2/3
+-- mod:RegisterEnableMob(241517, 234478, 233824) -- P1/2/3
 mod:SetEncounterID(3135)
 mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
@@ -19,6 +19,21 @@ mod:SetPrivateAuraSounds({
 	1234244, -- Inverse Gravity
 	{1234266, sound = "alarm"}, -- Cosmic Fragility
 	{1250055, sound = "alert"}, -- Void Grasp
+	1229325, -- Oblivion
+	{1231002, sound = "underyou"}, -- Dark Energy
+	{1237097, sound = "underyou"}, -- Astrophysical Jet
+	1238773, -- Extinction
+	{1237325, sound = "long"}, -- Gamma Burst
+	1234251, -- Crushed
+	1249425, -- Mass Destruction
+	{1237696, sound = "underyou"}, -- Debris Field
+	{1239270, sound = "underyou"}, -- Voidwarding
+	{1246542, sound = "alarm"}, -- Null Binding
+	{1246145, sound = "alarm"}, -- Touch of Oblivion
+	{1254385, sound = "info"}, -- Starshard
+	{1232394, sound = "underyou"}, -- Gravity Well
+	{1234054, sound = "alarm"}, -- Shadowquake
+	1234266, -- Cosmic Fragility
 })
 mod:SetStage(1)
 
@@ -227,116 +242,116 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1", "boss2") -- Gamma Burst
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Shattered Space
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	-- self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1", "boss2") -- Gamma Burst
+	-- self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Shattered Space
+	-- self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	-- self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	-- Stage One: Critical Mass
-	self:Log("SPELL_CAST_START", "MassiveSmash", 1230087)
-	self:Log("SPELL_AURA_APPLIED", "ExcessMassApplied", 1228206)
-	self:Log("SPELL_AURA_APPLIED", "CollectiveGravityApplied", 1228207)
-	self:Log("SPELL_AURA_REMOVED", "CollectiveGravityRemoved", 1228207)
-	self:Log("SPELL_AURA_APPLIED", "MortalFragilityApplied", 1230168)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "MortalFragilityApplied", 1230168)
-	self:Log("SPELL_CAST_START", "DevourP1", 1229038)
-	self:Log("SPELL_CAST_SUCCESS", "DevourP1Success", 1229038)
-	self:Log("SPELL_CAST_START", "DarkMatter", 1230979)
-	self:Log("SPELL_AURA_APPLIED", "DarkEnergyDamage", 1231002)
-	self:Log("SPELL_PERIODIC_DAMAGE", "DarkEnergyDamage", 1231002)
-	self:Log("SPELL_PERIODIC_MISSED", "DarkEnergyDamage", 1231002)
-	-- self:Log("SPELL_CAST_START", "ShatteredSpace", 1243690)
-	self:Log("SPELL_DAMAGE", "AntimatterHit", 1243702)
-	self:Log("SPELL_MISSED", "AntimatterHit", 1243702)
-	self:Log("SPELL_AURA_APPLIED", "SpatialFragmentApplied", 1243699)
-	self:Log("SPELL_AURA_APPLIED", "ReverseGravityApplied", 1243577)
-	self:Log("SPELL_AURA_REMOVED", "ReverseGravityRemoved", 1243577)
-	self:Log("SPELL_AURA_APPLIED", "AirborneApplied", 1243609)
-	self:Log("SPELL_AURA_REMOVED", "AirborneRemoved", 1243609)
-	self:Log("SPELL_CAST_START", "EventHorizon", 1234898) -- End of P1
+	-- -- Stage One: Critical Mass
+	-- self:Log("SPELL_CAST_START", "MassiveSmash", 1230087)
+	-- self:Log("SPELL_AURA_APPLIED", "ExcessMassApplied", 1228206)
+	-- self:Log("SPELL_AURA_APPLIED", "CollectiveGravityApplied", 1228207)
+	-- self:Log("SPELL_AURA_REMOVED", "CollectiveGravityRemoved", 1228207)
+	-- self:Log("SPELL_AURA_APPLIED", "MortalFragilityApplied", 1230168)
+	-- self:Log("SPELL_AURA_APPLIED_DOSE", "MortalFragilityApplied", 1230168)
+	-- self:Log("SPELL_CAST_START", "DevourP1", 1229038)
+	-- self:Log("SPELL_CAST_SUCCESS", "DevourP1Success", 1229038)
+	-- self:Log("SPELL_CAST_START", "DarkMatter", 1230979)
+	-- self:Log("SPELL_AURA_APPLIED", "DarkEnergyDamage", 1231002)
+	-- self:Log("SPELL_PERIODIC_DAMAGE", "DarkEnergyDamage", 1231002)
+	-- self:Log("SPELL_PERIODIC_MISSED", "DarkEnergyDamage", 1231002)
+	-- -- self:Log("SPELL_CAST_START", "ShatteredSpace", 1243690)
+	-- self:Log("SPELL_DAMAGE", "AntimatterHit", 1243702)
+	-- self:Log("SPELL_MISSED", "AntimatterHit", 1243702)
+	-- self:Log("SPELL_AURA_APPLIED", "SpatialFragmentApplied", 1243699)
+	-- self:Log("SPELL_AURA_APPLIED", "ReverseGravityApplied", 1243577)
+	-- self:Log("SPELL_AURA_REMOVED", "ReverseGravityRemoved", 1243577)
+	-- self:Log("SPELL_AURA_APPLIED", "AirborneApplied", 1243609)
+	-- self:Log("SPELL_AURA_REMOVED", "AirborneRemoved", 1243609)
+	-- self:Log("SPELL_CAST_START", "EventHorizon", 1234898) -- End of P1
 
-	-- Intermission: Event Horizon
-	self:Log("SPELL_AURA_APPLIED", "SoaringReshiiApplied", 1235114)
-	self:Log("SPELL_AURA_APPLIED", "AstrophysicalJetDamage", 1237097)
-	self:Log("SPELL_PERIODIC_DAMAGE", "AstrophysicalJetDamage", 1237097)
-	self:Log("SPELL_PERIODIC_MISSED", "AstrophysicalJetDamage", 1237097)
-	self:Log("SPELL_AURA_APPLIED", "SpaghettificationApplied", 1230674)
-	self:Log("SPELL_AURA_APPLIED", "StellarCoreApplied", 1246930)
+	-- -- Intermission: Event Horizon
+	-- self:Log("SPELL_AURA_APPLIED", "SoaringReshiiApplied", 1235114)
+	-- self:Log("SPELL_AURA_APPLIED", "AstrophysicalJetDamage", 1237097)
+	-- self:Log("SPELL_PERIODIC_DAMAGE", "AstrophysicalJetDamage", 1237097)
+	-- self:Log("SPELL_PERIODIC_MISSED", "AstrophysicalJetDamage", 1237097)
+	-- self:Log("SPELL_AURA_APPLIED", "SpaghettificationApplied", 1230674)
+	-- self:Log("SPELL_AURA_APPLIED", "StellarCoreApplied", 1246930)
 
-	-- Stage Two: The Dark Heart
-	self:Log("SPELL_CAST_SUCCESS", "WorldsoulConsumption", 1237102)
+	-- -- Stage Two: The Dark Heart
+	-- self:Log("SPELL_CAST_SUCCESS", "WorldsoulConsumption", 1237102)
 
-	self:Log("SPELL_CAST_START", "Extinction", 1238765)
-	-- self:Log("UNIT_SPELLCAST_START", "GammaBurst", 1237319)
+	-- self:Log("SPELL_CAST_START", "Extinction", 1238765)
+	-- -- self:Log("UNIT_SPELLCAST_START", "GammaBurst", 1237319)
 
-	-- The Devoured Lords
-	self:Log("SPELL_CAST_START", "EclipseStart", 1244606)
-	self:Log("SPELL_CAST_START", "MassEjection", 1237694, 1249423) -- Mass Ejection, Mass Destruction
-	self:Log("SPELL_AURA_APPLIED", "MassDestructionApplied", 1249425)
-	self:Log("SPELL_AURA_REMOVED", "MassDestructionRemoved", 1249425)
-	self:Log("SPELL_AURA_APPLIED", "DebrisFieldDamage", 1237696)
-	self:Log("SPELL_PERIODIC_DAMAGE", "DebrisFieldDamage", 1237696)
-	self:Log("SPELL_PERIODIC_MISSED", "DebrisFieldDamage", 1237696)
-	self:Log("SPELL_CAST_START", "ConquerorsCross", 1239262)
-	self:Log("SPELL_AURA_APPLIED", "VoidwardingApplied", 1239270)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidwardingApplied", 1239270)
-	self:Log("SPELL_CAST_SUCCESS", "NullBinding", 1246541)
-	self:Death("NullBinderDeath", 248589) -- Nullbinder
-	self:Log("SPELL_AURA_APPLIED", "TouchOfOblivionApplied", 1246145)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfOblivionApplied", 1246145)
-	self:Log("SPELL_CAST_START", "StardustNova", 1237695, 1251619) -- Stardust Nova, Starshard Nova
-	self:Log("SPELL_AURA_APPLIED", "CrushingGravityApplied", 1234243)
-	self:Log("SPELL_AURA_APPLIED", "InverseGravityApplied", 1234244)
-	self:Death("VoidlordDeath", 245255, 245222) -- Artoshion & Pargoth
+	-- -- The Devoured Lords
+	-- self:Log("SPELL_CAST_START", "EclipseStart", 1244606)
+	-- self:Log("SPELL_CAST_START", "MassEjection", 1237694, 1249423) -- Mass Ejection, Mass Destruction
+	-- self:Log("SPELL_AURA_APPLIED", "MassDestructionApplied", 1249425)
+	-- self:Log("SPELL_AURA_REMOVED", "MassDestructionRemoved", 1249425)
+	-- self:Log("SPELL_AURA_APPLIED", "DebrisFieldDamage", 1237696)
+	-- self:Log("SPELL_PERIODIC_DAMAGE", "DebrisFieldDamage", 1237696)
+	-- self:Log("SPELL_PERIODIC_MISSED", "DebrisFieldDamage", 1237696)
+	-- self:Log("SPELL_CAST_START", "ConquerorsCross", 1239262)
+	-- self:Log("SPELL_AURA_APPLIED", "VoidwardingApplied", 1239270)
+	-- self:Log("SPELL_AURA_APPLIED_DOSE", "VoidwardingApplied", 1239270)
+	-- self:Log("SPELL_CAST_SUCCESS", "NullBinding", 1246541)
+	-- self:Death("NullBinderDeath", 248589) -- Nullbinder
+	-- self:Log("SPELL_AURA_APPLIED", "TouchOfOblivionApplied", 1246145)
+	-- self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfOblivionApplied", 1246145)
+	-- self:Log("SPELL_CAST_START", "StardustNova", 1237695, 1251619) -- Stardust Nova, Starshard Nova
+	-- self:Log("SPELL_AURA_APPLIED", "CrushingGravityApplied", 1234243)
+	-- self:Log("SPELL_AURA_APPLIED", "InverseGravityApplied", 1234244)
+	-- self:Death("VoidlordDeath", 245255, 245222) -- Artoshion & Pargoth
 
-	-- Stage Three: Singularity
-	self:Log("SPELL_CAST_START", "TotalDestruction", 1240310)
-	self:Log("SPELL_AURA_APPLIED", "DestabilizedApplied", 1245292)
-	self:Log("SPELL_AURA_REMOVED", "DestabilizedRemoved", 1245292)
-	self:Log("SPELL_DAMAGE", "AccretionDiskDamage", 1233292)
-	self:Log("SPELL_MISSED", "AccretionDiskDamage", 1233292)
-	self:Log("SPELL_CAST_SUCCESS", "ExtinguishTheStars", 1231716)
-	self:Log("SPELL_AURA_APPLIED", "GravityWellApplied", 1232394)
-	self:Log("SPELL_CAST_START", "DevourP3", 1233539)
-	self:Log("SPELL_AURA_REMOVED", "DevourP3Removed", 1233539) -- Channel Over
-	-- self:Log("SPELL_CAST_START", "DarkenedSky", 1234044)
-	self:Log("SPELL_AURA_APPLIED", "ShadowquakeApplied", 1234054)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowquakeApplied", 1234054)
-	self:Log("SPELL_AURA_REMOVED", "ShadowquakeRemoved", 1234054)
-	self:Log("SPELL_CAST_START", "CosmicCollapse", 1234263)
-	self:Log("SPELL_AURA_APPLIED", "CosmicFragilityApplied", 1234266)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "CosmicFragilityApplied", 1234266)
-	self:Log("SPELL_CAST_START", "Supernova", 1232973)
-	self:Log("SPELL_AURA_APPLIED", "VoidgraspApplied", 1250055)
+	-- -- Stage Three: Singularity
+	-- self:Log("SPELL_CAST_START", "TotalDestruction", 1240310)
+	-- self:Log("SPELL_AURA_APPLIED", "DestabilizedApplied", 1245292)
+	-- self:Log("SPELL_AURA_REMOVED", "DestabilizedRemoved", 1245292)
+	-- self:Log("SPELL_DAMAGE", "AccretionDiskDamage", 1233292)
+	-- self:Log("SPELL_MISSED", "AccretionDiskDamage", 1233292)
+	-- self:Log("SPELL_CAST_SUCCESS", "ExtinguishTheStars", 1231716)
+	-- self:Log("SPELL_AURA_APPLIED", "GravityWellApplied", 1232394)
+	-- self:Log("SPELL_CAST_START", "DevourP3", 1233539)
+	-- self:Log("SPELL_AURA_REMOVED", "DevourP3Removed", 1233539) -- Channel Over
+	-- -- self:Log("SPELL_CAST_START", "DarkenedSky", 1234044)
+	-- self:Log("SPELL_AURA_APPLIED", "ShadowquakeApplied", 1234054)
+	-- self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowquakeApplied", 1234054)
+	-- self:Log("SPELL_AURA_REMOVED", "ShadowquakeRemoved", 1234054)
+	-- self:Log("SPELL_CAST_START", "CosmicCollapse", 1234263)
+	-- self:Log("SPELL_AURA_APPLIED", "CosmicFragilityApplied", 1234266)
+	-- self:Log("SPELL_AURA_APPLIED_DOSE", "CosmicFragilityApplied", 1234266)
+	-- self:Log("SPELL_CAST_START", "Supernova", 1232973)
+	-- self:Log("SPELL_AURA_APPLIED", "VoidgraspApplied", 1250055)
 
-	self:Log("SPELL_AURA_REMOVED", "HoldTheLine", 1240533)
+	-- self:Log("SPELL_AURA_REMOVED", "HoldTheLine", 1240533)
 end
 
 function mod:OnEngage()
 	cosmicCollapseLocale = (self:Easy() or self:Story()) and L.cosmic_collapse_easy or L.cosmic_collapse
 	self:SetSpellRename(1234263, cosmicCollapseLocale) -- Cosmic Collapse (Tank Pull / Tank Smash)
 
-	self:SetStage(1)
+	-- self:SetStage(1)
 
-	massiveSmashCount = 1
-	devourCount = 1
-	darkMatterCount = 1
-	shatteredSpaceCount = 1
-	gravityCount = 1
+	-- massiveSmashCount = 1
+	-- devourCount = 1
+	-- darkMatterCount = 1
+	-- shatteredSpaceCount = 1
+	-- gravityCount = 1
 
-	self:Bar(1230087, self:Mythic() and 20.9 or (self:Easy() or self:Story()) and 25 or 23.5, CL.count:format(CL.knockback, massiveSmashCount)) -- Massive Smash
-	self:Bar(1229038, self:Mythic() and 10.5 or (self:Easy() or self:Story()) and 12.5 or 11.7, CL.count:format(self:SpellName(1229038), devourCount)) -- Devour
-	self:Bar(1230979, self:Mythic() and 31.5 or (self:Easy() or self:Story()) and 37.5 or 35.3, CL.count:format(CL.spread, darkMatterCount)) -- Dark Matter
-	self:Bar(1243690, self:Mythic() and 39.9 or (self:Easy() or self:Story()) and 47.0 or 44.5, CL.count:format(CL.soaks, shatteredSpaceCount)) -- Shattered Space
-	if not self:LFR() then
-		self:Bar(1243577, self:Mythic() and 43.0 or (self:Easy() or self:Story()) and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
-	end
+	-- self:Bar(1230087, self:Mythic() and 20.9 or (self:Easy() or self:Story()) and 25 or 23.5, CL.count:format(CL.knockback, massiveSmashCount)) -- Massive Smash
+	-- self:Bar(1229038, self:Mythic() and 10.5 or (self:Easy() or self:Story()) and 12.5 or 11.7, CL.count:format(self:SpellName(1229038), devourCount)) -- Devour
+	-- self:Bar(1230979, self:Mythic() and 31.5 or (self:Easy() or self:Story()) and 37.5 or 35.3, CL.count:format(CL.spread, darkMatterCount)) -- Dark Matter
+	-- self:Bar(1243690, self:Mythic() and 39.9 or (self:Easy() or self:Story()) and 47.0 or 44.5, CL.count:format(CL.soaks, shatteredSpaceCount)) -- Shattered Space
+	-- if not self:LFR() then
+	-- 	self:Bar(1243577, self:Mythic() and 43.0 or (self:Easy() or self:Story()) and 56.3 or 52.9, CL.count:format(L.gravity, gravityCount)) -- Reverse Gravity
+	-- end
 
-	mobCollector = {}
-	if self:GetOption(nullBinderMarker) or self:GetOption(livingMassLeftMarker) or self:GetOption(livingMassRightMarker) then
-		self:RegisterTargetEvents("AddMarking")
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	end
+	-- mobCollector = {}
+	-- if self:GetOption(nullBinderMarker) or self:GetOption(livingMassLeftMarker) or self:GetOption(livingMassRightMarker) then
+	-- 	self:RegisterTargetEvents("AddMarking")
+	-- 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	-- end
 end
 
 --------------------------------------------------------------------------------
