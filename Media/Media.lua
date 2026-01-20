@@ -34,6 +34,12 @@ do
 	-- Ingame sounds used for raid warning messages
 	media:Register(SOUND, "BigWigs: Raid Warning", 567397) -- Sound\\Interface\\RaidWarning
 	--media:Register(SOUND, "BigWigs: Raid Boss Whisper", 876098) -- Sound\\Interface\\UI_RaidBossWhisperWarning
+	if select(4, GetBuildInfo()) >= 120000 then
+		-- Midnight text warning sounds
+		media:Register(SOUND, "BigWigs: Encounter Warning: Low", 7670699)
+		media:Register(SOUND, "BigWigs: Encounter Warning: Medium", 7670701)
+		media:Register(SOUND, "BigWigs: Encounter Warning: High", 7670697)
+	end
 
 	-- Victory
 	media:Register(SOUND, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Victory.ogg")
