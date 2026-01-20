@@ -176,7 +176,7 @@ do
 	local _, _, _, build = GetBuildInfo()
 	public.isMidnight = build >= 120000
 	public.isBeta = build >= 120001
-	public.isNext = build >= 110207
+	public.isNext = build >= 120001
 end
 
 -- Version
@@ -340,8 +340,8 @@ do
 				[2662] = lw_cs, -- The Dawnbreaker
 				[2773] = lw_cs, -- Operation: Floodgate
 				[2830] = lw_cs, -- Eco-Dome Al'dani
-				[369] = (public.isNext and UnitFactionGroup("player") == "Alliance") and lw_cs or nil, -- Deeprun Tram
-				[1043] = (public.isNext and UnitFactionGroup("player") == "Horde") and lw_cs or nil, -- Brawl'gar Arena
+				[369] = UnitFactionGroup("player") == "Alliance" and lw_cs or nil, -- Deeprun Tram
+				[1043] = UnitFactionGroup("player") == "Horde" and lw_cs or nil, -- Brawl'gar Arena
 			},
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
@@ -596,8 +596,8 @@ do
 		[2773] = lw_tww, -- Operation: Floodgate
 		[2830] = lw_tww, -- Eco-Dome Al'dani
 		--[2849] = lw_tww, -- Dastardly Dome
-		[369] = (public.isNext and UnitFactionGroup("player") == "Alliance") and lw_tww or nil, -- Deeprun Tram
-		[1043] = (public.isNext and UnitFactionGroup("player") == "Horde") and lw_tww or nil, -- Brawl'gar Arena
+		[369] = UnitFactionGroup("player") == "Alliance" and lw_tww or nil, -- Deeprun Tram
+		[1043] = UnitFactionGroup("player") == "Horde" and lw_tww or nil, -- Brawl'gar Arena
 		--[[ LittleWigs: Delves ]]--
 		[2664] = lw_delves, -- Fungal Folly
 		[2679] = lw_delves, -- Mycomancer Cavern
