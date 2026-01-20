@@ -6,6 +6,16 @@ local mod, CL = BigWigs:NewBoss("Forgeweaver Araz", 2810, 2687)
 if not mod then return end
 mod:RegisterEnableMob(233817) -- Forgeweaver Araz
 mod:SetEncounterID(3132)
+mod:SetPrivateAuraSounds({
+	-- Arcane Obliteration
+	{1228219, sound = "info" }, -- Astral Mark
+	{1228188, 1238874}, -- Silencing Tempest, Echoing Tempest
+	1233979, -- Astral Harvest
+	{1236207, sound = "alarm" }, -- Astral Surge
+	-- {1240705, sound = "alarm" }, -- Astral Burn
+	1243873, -- Void Harvest
+	{1243641, sound = "alarm" }, -- Void Surge
+})
 mod:SetRespawnTime(30)
 mod:SetStage(1)
 

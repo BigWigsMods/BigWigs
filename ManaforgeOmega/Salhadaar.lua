@@ -7,11 +7,15 @@ if not mod then return end
 mod:RegisterEnableMob(237763) -- Nexus-King Salhadaar
 mod:SetEncounterID(3134)
 mod:SetPrivateAuraSounds({
-	1224864, -- Behead, Unused: 1224828, 1224855, 1224857, 1224858,  1224859, 1224860, 1225055, 1225056, 1225057, 1225058, 1225059, 1225060
+	{1227549, sound = "alarm"}, -- Banishment
+	1224864, -- Behead
 	1228114, -- Netherbreaker
-	1225316, -- Galactic Smash, Unused: 1226602, 1248128, 1226601
-	1226018, -- Starkiller Swing
+	{1234529, sound = "alarm"}, -- Cosmic Maw
 	1237108, -- Twilight Massacre
+	{1226362, sound = "alarm"}, -- Twilight Scar
+	{1226413, sound = "alarm"}, -- Starshattered
+	1225316, -- Galactic Smash
+	1226018, -- Starkiller Swing
 })
 mod:SetRespawnTime(30)
 mod:SetStage(1)

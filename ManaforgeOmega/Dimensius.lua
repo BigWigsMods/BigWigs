@@ -7,6 +7,19 @@ if not mod then return end
 mod:RegisterEnableMob(241517, 234478, 233824) -- P1/2/3
 mod:SetEncounterID(3135)
 mod:SetRespawnTime(30)
+mod:SetPrivateAuraSounds({
+	{1228206, sound = "info"}, -- Excess Mass
+	{1230168, sound = "alarm"}, -- Mortal Fragility
+	1243699, -- Spatial Fragment
+	1243577, -- Reverse Gravity
+	1232394, -- Gravity Well
+	1249425, -- Mass Destruction
+	{1246542, sound = "alarm"}, -- Null Binding
+	{1234243, sound = "alarm"}, -- Crushing Gravity
+	1234244, -- Inverse Gravity
+	{1234266, sound = "alarm"}, -- Cosmic Fragility
+	{1250055, sound = "alert"}, -- Void Grasp
+})
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------

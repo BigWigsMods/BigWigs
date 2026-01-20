@@ -6,6 +6,13 @@ local mod, CL = BigWigs:NewBoss("Plexus Sentinel", 2810, 2684)
 if not mod then return end
 mod:RegisterEnableMob(233814) -- Plexus Sentinel
 mod:SetEncounterID(3129)
+mod:SetPrivateAuraSounds({
+	{1220679, sound = "info"}, -- Phase Blink
+	1219459, -- Manifest Matrices
+	{1218625, sound = "alarm"}, -- Displacement Matrix
+	1219439, -- Obliteration Arcanocannon
+	1219607, -- Eradicating Salvo
+})
 mod:SetRespawnTime(30)
 mod:SetStage(1)
 

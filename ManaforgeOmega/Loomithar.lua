@@ -6,6 +6,11 @@ local mod, CL = BigWigs:NewBoss("Loom'ithar", 2810, 2686)
 if not mod then return end
 mod:RegisterEnableMob(233815) -- Loom'ithar
 mod:SetEncounterID(3131)
+mod:SetPrivateAuraSounds({
+	1226311, -- Infusion Tether
+	{1237212, sound = "alarm"}, -- Piercing Strand
+	{1247045, sound = "info"}, -- Hyper Infusion
+})
 mod:SetRespawnTime(30)
 mod:SetStage(1)
 

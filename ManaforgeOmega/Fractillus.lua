@@ -7,6 +7,14 @@ local mod, CL = BigWigs:NewBoss("Fractillus", 2810, 2747)
 if not mod then return end
 mod:RegisterEnableMob(237861) -- Fractillus
 mod:SetEncounterID(3133)
+mod:SetPrivateAuraSounds({
+	1247424, -- Null Consumption
+	1225673, -- Enraged Shattering
+	1233411, -- Crystalline Shockwave
+	{1227373, sound = "alarm"}, -- Shattershell
+	{1231871, sound = "alarm"}, -- Shockwave Slam
+	-- {1232760, sound = "alarm"}, -- Crystal Lacerations
+})
 mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------

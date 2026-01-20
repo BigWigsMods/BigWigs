@@ -6,6 +6,13 @@ local mod, CL = BigWigs:NewBoss("Soulbinder Naazindhri", 2810, 2685)
 if not mod then return end
 mod:RegisterEnableMob(233816) -- Soulbinder Naazindhri
 mod:SetEncounterID(3130)
+mod:SetPrivateAuraSounds({
+	1248979, -- Voidblade Ambush
+	1227276, -- Soulfray Annihilation
+	{1237607, 1248464, sound = "alarm"}, -- Mythic Lash
+	1225626, -- Soulfire Convergence
+	{1226827, sound = "alarm"}, -- Soulrend Orb
+})
 mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------

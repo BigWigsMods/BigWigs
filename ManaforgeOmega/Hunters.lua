@@ -10,6 +10,16 @@ local mod, CL = BigWigs:NewBoss("The Soul Hunters", 2810, 2688)
 if not mod then return end
 mod:RegisterEnableMob(237661, 237660, 237662) -- Adarus Duskblaze, Velaryn Bloodwrath, Ilyssa Darksorrow
 mod:SetEncounterID(3122)
+mod:SetPrivateAuraSounds({
+	1222232, -- Devourer's Ire
+	{1222310, sound = "alarm"}, -- Unending Hunger
+	-- {1221490, sound = "alarm"}, -- Fel-Singed
+	{1225130, sound = "alarm"}, -- Felblade
+	{1233105, sound = "info"}, -- Dark Residue
+	1227847, -- The Hunt
+	{1226493, sound = "alarm"}, -- Shattered Soul
+	{1241946, sound = "info"}, -- Frailty
+})
 mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------
