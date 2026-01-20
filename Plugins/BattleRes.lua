@@ -1,5 +1,3 @@
-if BigWigsLoader.isMidnight then return end -- XXX needs updating for 12.0
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -1518,7 +1516,9 @@ do
 				resCollector = {}
 				fightStartTime = GetTime()
 				battleResFrame.updater:Play()
-				battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+				if not BigWigsLoader.isMidnight then
+					battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+				end
 			end
 		elseif diffID == 23 then -- Mythic
 			plugin:RegisterEvent("CHALLENGE_MODE_START")
@@ -1535,7 +1535,9 @@ do
 			resCollector = {}
 			fightStartTime = GetTime()
 			battleResFrame.updater:Play()
-			battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			if not BigWigsLoader.isMidnight then
+				battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			end
 			plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
 			plugin:RegisterEvent("PLAYER_REGEN_ENABLED")
 		end
@@ -1574,7 +1576,9 @@ function plugin:OnPluginDisable()
 	if plugin.db.profile.iconDesaturate == 3 then
 		battleResFrame.icon:SetDesaturated(false)
 	end
-	battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	if not BigWigsLoader.isMidnight then
+		battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -1588,7 +1592,9 @@ function plugin:ENCOUNTER_START()
 	battleResFrame.cdText:SetText("0:00")
 	battleResFrame.chargesText:SetText(0)
 	battleResFrame.updater:Play()
-	battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	if not BigWigsLoader.isMidnight then
+		battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 end
 
 function plugin:ENCOUNTER_END()
@@ -1599,7 +1605,9 @@ function plugin:ENCOUNTER_END()
 	if self.db.profile.iconDesaturate == 3 then
 		battleResFrame.icon:SetDesaturated(true)
 	end
-	battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	if not BigWigsLoader.isMidnight then
+		battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 end
 plugin.CHALLENGE_MODE_COMPLETED = plugin.ENCOUNTER_END
 
@@ -1619,7 +1627,9 @@ function plugin:CHALLENGE_MODE_START()
 	self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	if not BigWigsLoader.isMidnight then
+		battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 end
 
 function plugin:PLAYER_REGEN_DISABLED()
