@@ -221,7 +221,7 @@ do
 	local SendAddonMessage = loader.SendAddonMessage
 	local Timer = loader.CTimerAfter
 	function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
-		if loader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if loader.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg ~= "" and IsInGroup() and coreEnabled then
 			local result = SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 			if type(result) == "number" and result > 0 then
@@ -348,10 +348,6 @@ do
 			end
 
 			core:SendMessage("BigWigs_CoreEnabled")
-
-			if loader.isBeta then
-				C_CVar.SetCVar("encounterTimelineEnabled", "1") -- If disabled, events wont fire atm.
-			end
 		end
 	end
 end

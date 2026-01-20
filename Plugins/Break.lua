@@ -173,7 +173,7 @@ end
 local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local dbmPrefix = BigWigsLoader.dbmPrefix
 BigWigsAPI.RegisterSlashCommand("/break", function(input)
-	if BigWigsLoader.isBeta and IsInInstance() and InCombatLockdown()  then return end -- XXX 12.0 Needs more fixing? not allowed in combat in instances
+	if BigWigsLoader.isMidnight and IsInInstance() and InCombatLockdown()  then return end -- XXX 12.0 Needs more fixing? not allowed in combat in instances
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader/assist

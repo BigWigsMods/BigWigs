@@ -174,7 +174,8 @@ public.Print = sysprint
 public.isTestBuild = IsPublicTestClient() -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
-	public.isBeta = build >= 120000
+	public.isMidnight = build >= 120000
+	public.isBeta = build >= 120001
 	public.isNext = build >= 110207
 end
 
@@ -281,17 +282,6 @@ do
 			zones = {},
 		}
 	elseif public.isBeta then -- Retail Beta
-		-- XXX Temp Beta disable blizzard frames
-		C_CVar.SetCVar("combatWarningsEnabled", "0") -- This disableds both warnings and timeline from blizzard
-		-- EncounterTimeline:Hide() -- XXX temp
-		-- EncounterTimeline:SetScript("OnShow", function(f) f:Hide() end)
-		-- CriticalEncounterWarnings:Hide()
-		-- CriticalEncounterWarnings:SetScript("OnShow", function(f) f:Hide() end)
-		-- MediumEncounterWarnings:Hide()
-		-- MediumEncounterWarnings:SetScript("OnShow", function(f) f:Hide() end)
-		-- MinorEncounterWarnings:Hide()
-		-- MinorEncounterWarnings:SetScript("OnShow", function(f) f:Hide() end)
-
 		public.currentExpansion = { -- Change on new expansion releases
 			name = mn,
 			bigWigsBundled = {
@@ -1578,7 +1568,7 @@ do
 
 	local timer = nil
 	local function sendDBMMsg()
-		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if public.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
@@ -1661,7 +1651,7 @@ local ResetVersionWarning
 do
 	local timer = nil
 	local function sendMsg()
-		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if public.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if IsInGroup() then
 			local result = SendAddonMessage("BigWigs", versionResponseString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
@@ -1800,7 +1790,7 @@ do
 		}
 		local UnitIsPlayer = UnitIsPlayer
 		local function UNIT_TARGET(frame, event, unit)
-			if public.isBeta then return end -- XXX needs updating for 12.0
+			if public.isMidnight then return end -- XXX needs updating for 12.0
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then
@@ -1951,7 +1941,7 @@ end
 do
 	local grouped = nil
 	function mod:GROUP_FORMED()
-		if public.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if public.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		local groupType = (IsInGroup(2) and 3) or (IsInRaid() and 2) or (IsInGroup() and 1) -- LE_PARTY_CATEGORY_INSTANCE = 2
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType

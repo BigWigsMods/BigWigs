@@ -516,7 +516,7 @@ function boss:Enable(isWipe)
 		if self.SetupOptions then self:SetupOptions() end
 
 		if self:GetEncounterID() then
-			if loader.isBeta then
+			if loader.isMidnight then
 				self:RegisterEvent("ENCOUNTER_START", "EncounterStart")
 			else
 				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
@@ -560,7 +560,7 @@ function boss:Disable(isWipe)
 
 		-- No enabled modules? Unregister the combat log!
 		if #enabledModules == 0 then
-			if not loader.isBeta then
+			if not loader.isMidnight then
 				bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			end
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
@@ -869,7 +869,7 @@ do
 	-- @param func callback function, passed a keyed table (sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, extraSpellId, extraSpellName, amount)
 	-- @number ... any number of spell ids
 	function boss:Log(event, func, ...)
-		if loader.isBeta then return end -- XXX Needs updating for 12.0
+		if loader.isMidnight then return end -- XXX Needs updating for 12.0
 		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
@@ -902,7 +902,7 @@ do
 	-- @param func callback function, passed a keyed table (mobId, destGUID, destName, destFlags, destRaidFlags)
 	-- @number ... any number of mob ids
 	function boss:Death(func, ...)
-		if loader.isBeta then return end -- XXX Needs updating for 12.0
+		if loader.isMidnight then return end -- XXX Needs updating for 12.0
 		if not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].UNIT_DIED then eventMap[self].UNIT_DIED = {} end
@@ -1185,7 +1185,7 @@ do
 		-- disables the module if set as engaged but has no boss match.
 		-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 		function boss:CheckForEncounterEngage(noEngage)
-			if loader.isBeta then return end -- XXX needs updating for 12.0
+			if loader.isMidnight then return end -- XXX needs updating for 12.0
 			if not self:IsEngaged() then
 				for i = 1, 10 do
 					local bossUnit = bosses[i]
@@ -1907,7 +1907,7 @@ end
 -- @string unit unit token or name
 -- @return guid guid of the unit
 function boss:UnitGUID(unit)
-	if loader.isBeta then return end -- XXX needs updating for 12.0
+	if loader.isMidnight then return end -- XXX needs updating for 12.0
 	local guid = UnitGUID(unit)
 	if guid then
 		return guid
@@ -1959,7 +1959,7 @@ end
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
-	if loader.isBeta then return end -- XXX needs updating for 12.0
+	if loader.isMidnight then return end -- XXX needs updating for 12.0
 	local maxHP = UnitHealthMax(unit)
 	if maxHP == 0 then
 		return maxHP
@@ -4113,7 +4113,7 @@ do
 	-- @usage self:Sync("abilityPrefix", data)
 	-- @usage self:Sync("ability")
 	function boss:Sync(msg, extra, noResend)
-		if loader.isBeta then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
+		if loader.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg then
 			if IsInGroup() then
 				if extra then
