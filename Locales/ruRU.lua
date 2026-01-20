@@ -1013,6 +1013,19 @@ L.newFastestVictoryPrint = "Новая самая быстрая победа: (
 --
 
 --L.timeline = "Timeline"
+--L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
+--L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
+--L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
+--L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
+--L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
+--L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
+--L.blizzWarningSettings = "Blizzard Warnings Settings"
+--L.blizzTimelineSettings = "Blizzard Timeline Settings"
+--L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
+--L.enableBlizzTimeline = "Enable Blizz timeline"
+--L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
+--L.enableBlizzWarnings = "Enable Blizz boss warings"
+--L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warings you should also disable showing them as BigWigs messages or you will see all messages twice."
 
 -----------------------------------------------------------------------
 -- Victory.lua

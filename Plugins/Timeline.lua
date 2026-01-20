@@ -52,12 +52,11 @@ do
 				type = "execute",
 				name = function()
 					if inConfigureMode then
-						return "Stop Config Mode"
+						return L.stopTest
 					else
-						return "Start Config Mode"
+						return L.startTest
 					end
 				end,
-				desc = "Toggle showing test boss encounter timeline abilities.",
 				func = function()
 					if inConfigureMode then
 						plugin:SendMessage("BigWigs_StopConfigureMode", "Timeline")
@@ -76,8 +75,8 @@ do
 			},
 			show_bars = {
 				type = "toggle",
-				name = "Show Timeline Events as BigWigs Bars",
-				desc = "The bars will always show when a timeline event fires. The general timeline settings have no affect on when bars are shown.",
+				name = L.blizzTimersAsBigWigsBars,
+				desc = L.blizzTimersAsBigWigsBarsDesc,
 				get = function(info)
 					return db[info[#info]]
 				end,
@@ -94,8 +93,8 @@ do
 			},
 			show_messages = {
 				type = "toggle",
-				name = "Show Encounter Warnings as BigWigs Messages",
-				desc = "Messages will use your normal anchor.",
+				name = L.blizzWarningsAsBigWigsMessages,
+				desc = L.blizzWarningsAsBigWigsMessagesDesc,
 				get = function(info)
 					return db[info[#info]]
 				end,
@@ -107,8 +106,8 @@ do
 			},
 			play_sound = {
 				type = "toggle",
-				name = "Play Encounter Warning Sounds",
-				desc = "Play your default sound (Alert, Alarm, Warning) based on the encounter warning severity.",
+				name = L.blizzAudioAsBigWigsAudio,
+				desc = L.blizzAudioAsBigWigsAudioDesc,
 				get = function(info)
 					return db[info[#info]]
 				end,
@@ -120,7 +119,7 @@ do
 			},
 			timeline = {
 				type = "group",
-				name = "Blizzard Timeline Settings",
+				name = L.blizzTimelineSettings,
 				get = function(info)
 					local cvar = info[#info]
 					return C_CVar.GetCVarBool(cvar)
@@ -133,22 +132,16 @@ do
 				args = {
 					header = {
 						type = "description",
-						name = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r",
+						name = L.blizzTimelineSettingsNote,
 						order = 0,
 					},
 					encounterTimelineEnabled = {
 						type = "toggle",
-						name = COMBAT_WARNINGS_ENABLE_ENCOUNTER_TIMELINE_LABEL,
-						desc = function()
-							local isAvailable = C_EncounterTimeline.IsFeatureAvailable()
-							if isAvailable then
-								return _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_TIMELINE_TOOLTIP
-							else
-								return string.format("%s|n|n%s", _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_TIMELINE_TOOLTIP, _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_TIMELINE_NOT_AVAILABLE)
-							end
-						end,
+						name = L.enableBlizzTimeline,
+						desc = L.enableBlizzTimelineDesc,
 						width = 2,
 						order = 1,
+						disabled = function() return db.show_bars end,
 					},
 					encounterTimelineHideLongCountdowns = {
 						type = "toggle",
@@ -198,7 +191,7 @@ do
 							[Enum.EncounterTimelineIconSet.TankAlert] = "|A:icons_16x16_tank:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_TANK_ALERT_LABEL,
 							[Enum.EncounterTimelineIconSet.HealerAlert] = "|A:icons_16x16_heal:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_HEALER_ALERT_LABEL,
 							[Enum.EncounterTimelineIconSet.DamageAlert] = "|A:icons_16x16_damage:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DAMAGE_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.Dispel] = "|A:icons_16x16_magic:16:16|a" .. "|A:icons_16x16_curse:16:16|a" .. "|A:icons_16x16_disease:16:16|a" .. "|A:icons_16x16_poison:16:16|a" .. "|A:icons_16x16_bleed:16:16|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DISPEL_LABEL,
+							[Enum.EncounterTimelineIconSet.Dispel] = "|A:icons_16x16_magic:16:16|a" .. "|A:icons_16x16_curse:16:16|a" .. "|A:icons_16x16_disease:16:16|a" .. "|A:icons_16x16_poison:16:16|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DISPEL_LABEL,
 							[Enum.EncounterTimelineIconSet.Enrage] = "|A:icons_16x16_enrage:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_ENRAGE_LABEL,
 							[Enum.EncounterTimelineIconSet.Deadly] = "|A:icons_16x16_deadly:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DEADLY_LABEL,
 						},
@@ -208,7 +201,7 @@ do
 			},
 			warnings = {
 				type = "group",
-				name = "Blizzard Warnings Settings",
+				name = L.blizzWarningSettings,
 				get = function(info)
 					local cvar = info[#info]
 					return C_CVar.GetCVarBool(cvar)
@@ -221,7 +214,7 @@ do
 				args = {
 					header = {
 						type = "description",
-						name = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r",
+						name = L.blizzTimelineSettingsNote,
 						order = 0,
 					},
 					encounterWarningsEnabled = {
@@ -237,6 +230,7 @@ do
 						end,
 						width = 2,
 						order = 1,
+						disabled = function() return db.show_messages end,
 					},
 					encounterWarningsHideIfNotTargetingPlayer = {
 						type = "toggle",
@@ -315,6 +309,7 @@ end
 
 function plugin:OnRegister()
 	self.displayName = L.timeline
+	C_CVar.SetCVar("combatWarningsEnabled", "1")
 end
 
 function plugin:OnPluginEnable()
@@ -331,7 +326,11 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("ENCOUNTER_WARNING")
 
 	if db.show_bars then
+		C_CVar.SetCVar("encounterTimelineEnabled", "0")
 		self:StartBars()
+	end
+	if db.show_messages then
+		C_CVar.SetCVar("encounterWarningsEnabled", "0")
 	end
 end
 
@@ -434,7 +433,7 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	-- local tooltipSpellID = eventInfo.tooltipSpellID
 
 	if db.show_messages then
-		local messages = self:GetPlugin("Messages", true)
+		local messages = BigWigs:GetPlugin("Messages", true)
 		local formattedTargetName = targetName
 		if targetGUID and not messages or messages.db.profile.classcolor then
 			local _, className = GetPlayerInfoByGUID(targetGUID)
