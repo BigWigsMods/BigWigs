@@ -313,7 +313,7 @@ L.N10 = "일반 10"
 L.N25 = "일반 25"
 L.H10 = "영웅 10"
 L.H25 = "영웅 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "티탄" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
