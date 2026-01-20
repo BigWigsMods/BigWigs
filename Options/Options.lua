@@ -1072,7 +1072,6 @@ function populatePrivateAuraOptions(widget)
 
 	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
 	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
-	local defaultSound = soundModule:GetDefaultSound("privateaura")
 	local sDB = soundModule.db.profile["privateaura"]
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
@@ -1088,6 +1087,7 @@ function populatePrivateAuraOptions(widget)
 				local spellId = option[1]
 				local key = spellId
 				local id = option.tooltip or spellId
+				local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
 
 				local name = loader.GetSpellName(id)
 				local texture = loader.GetSpellTexture(id)
@@ -1817,6 +1817,7 @@ do
 			end
 
 			local tree = AceGUI:Create("TreeGroup")
+			tree:EnableButtonTooltips(false)
 			tree:SetFullWidth(true)
 			tree:SetFullHeight(true)
 			tree:SetStatusTable(statusTable)

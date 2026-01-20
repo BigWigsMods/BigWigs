@@ -378,7 +378,17 @@ function boss:RegisterPrivateAuraSounds()
 	self.privateAuraSounds = {}
 	for _, opt in next, self.privateAuraSoundOptions do
 		local key = opt[1]
-		local sound = soundModule:GetSoundFile(self, key, "privateaura")
+		local sound
+		if opt.sound then
+			-- use the spell table default if the sound hasn't been changed in the config
+			local sDB = soundModule.db.profile["privateaura"]
+			if not sDB[self] or not sDB[self][key] then
+				sound = soundModule:GetDefaultSound(opt.sound)
+			end
+		end
+		if not sound then
+			sound = soundModule:GetSoundFile(self, key, "privateaura")
+		end
 		if sound then
 			for i = 1, #opt do
 				local privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
