@@ -313,7 +313,7 @@ L.N10 = "10人普通"
 L.N25 = "25人普通"
 L.H10 = "10人英雄"
 L.H25 = "25人英雄"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "25人泰坦" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
