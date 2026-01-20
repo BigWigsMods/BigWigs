@@ -1,5 +1,3 @@
-if BigWigsLoader.isMidnight then return end -- XXX needs updating for 12.0
-
 -------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -410,7 +408,7 @@ do
 				end
 			end
 
-			if self.db.profile.printHealth then
+			if self.db.profile.printHealth and not BigWigsLoader.isMidnight then
 				healthPools[journalID] = {
 					names = {},
 					timer = self:ScheduleRepeatingTimer(function() StoreHealth(module) end, 2),
