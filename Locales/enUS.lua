@@ -1023,8 +1023,8 @@ L.blizzTimelineSettings = "Blizzard Timeline Settings"
 L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
 L.enableBlizzTimeline = "Enable Blizz timeline"
 L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
-L.enableBlizzWarnings = "Enable Blizz boss warings"
-L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.enableBlizzWarnings = "Enable Blizz boss warnings"
+L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
 
 -----------------------------------------------------------------------
 -- Victory.lua
