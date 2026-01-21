@@ -48,6 +48,7 @@ end
 local SendChatMessage, GetInstanceInfo, SimpleTimer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+local hasanysecretvalues = hasanysecretvalues or function() return false end -- XXX 12.0 compat
 local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
 local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
@@ -995,7 +996,7 @@ do
 
 	local frameTbl = {}
 	local eventFunc = function(_, event, unit, ...)
-		if not issecretvalue(unit) then
+		if not hasanysecretvalues(unit, ...) then
 			for i = #enabledModules, 1, -1 do
 				local self = enabledModules[i]
 				local m = unitEventMap[self] and unitEventMap[self][event]

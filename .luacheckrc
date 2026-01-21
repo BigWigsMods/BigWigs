@@ -325,6 +325,7 @@ globals = {
 	"GetSubZoneText",
 	"GetTime",
 	"GetUnitSpeed", -- Dragonflight/Amirdrassil/TindralSageswift.lua
+	"hasanysecretvalues",
 	"issecretvalue",
 	"InCombatLockdown",
 	"IsAltKeyDown",
