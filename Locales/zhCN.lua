@@ -1012,20 +1012,20 @@ L.newFastestVictoryPrint = "新的最快获胜：（-%s）" -- New fastest victo
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
---L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
---L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
---L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
---L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
---L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
---L.blizzWarningSettings = "Blizzard Warnings Settings"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.enableBlizzWarnings = "Enable Blizz boss warings"
---L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.timeline = "时间轴"
+L.blizzTimersAsBigWigsBars = "将暴雪计时器（时间轴）显示为 BigWigs 计时条"
+L.blizzTimersAsBigWigsBarsDesc = "所有暴雪首领战斗计时器（时间轴）将显示为 BigWigs 计时条。"
+L.blizzWarningsAsBigWigsMessages = "将暴雪首领预警信息显示为 BigWigs 消息"
+L.blizzWarningsAsBigWigsMessagesDesc = "所有暴雪首领预警信息将显示为 BigWigs 消息。"
+L.blizzAudioAsBigWigsAudio = "将暴雪音效转换为BigWigs音效"
+L.blizzAudioAsBigWigsAudioDesc = "根据首领战的预警优先级播放对应的 BigWigs 音效（提醒、警报、警告）。"
+L.blizzWarningSettings = "暴雪首领预警设置"
+L.blizzTimelineSettings = "暴雪时间轴设置"
+L.blizzTimelineSettingsNote = "|cffff4411本页选项仅控制暴雪自带设置，此处仅为方便操作提供。|r"
+L.enableBlizzTimeline = "启用暴雪时间轴"
+L.enableBlizzTimelineDesc = "在暴雪时间轴上显示所有首领战斗计时器。"
+L.enableBlizzWarnings = "启用暴雪首领预警"
+L.enableBlizzWarningsDesc = "启用暴雪首领预警时，建议同时关闭“显示为BigWigs消息”功能，否则所有提示信息将会重复显示两次。"
 
 -----------------------------------------------------------------------
 -- Victory.lua
