@@ -411,10 +411,11 @@ end
 
 function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	-- Not Secret
-	local duration = eventInfo.duration
+	-- local duration = eventInfo.duration
 	local severity = eventInfo.severity
 	local shouldPlaySound = eventInfo.shouldPlaySound
 	-- local shouldShowChatMessage = eventInfo.shouldShowChatMessage
+	local shouldShowWarning = eventInfo.shouldShowWarning
 
 	-- Secret
 	local text = eventInfo.text
@@ -425,10 +426,10 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	local iconFileID = eventInfo.iconFileID
 	-- local tooltipSpellID = eventInfo.tooltipSpellID
 
-	if db.show_messages then
+	if shouldShowWarning and db.show_messages then
 		local messages = BigWigs:GetPlugin("Messages", true)
 		local formattedTargetName = targetName
-		if targetGUID and not messages or messages.db.profile.classcolor then
+		if targetGUID and messages.db.profile.classcolor then
 			local _, className = GetPlayerInfoByGUID(targetGUID)
 			if className then
 				local classColor = C_ClassColor.GetClassColor(className)
@@ -445,7 +446,7 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 			[2] = "red",
 		}
 
-		self:BigWigs_Message(nil, nil, false, formattedText, severityColorMap[severity] or "yellow", iconFileID, false, duration)
+		self:SendMessage("BigWigs_Message", nil, false, formattedText, severityColorMap[severity] or "yellow", iconFileID, false)
 	end
 
 	if shouldPlaySound and db.play_sound then
