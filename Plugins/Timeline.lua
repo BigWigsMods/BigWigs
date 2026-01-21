@@ -188,12 +188,12 @@ do
 							return not C_CVar.GetCVarBool("encounterTimelineIconographyEnabled")
 						end,
 						values = {
-							[Enum.EncounterTimelineIconSet.TankAlert] = "|A:icons_16x16_tank:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_TANK_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.HealerAlert] = "|A:icons_16x16_heal:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_HEALER_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.DamageAlert] = "|A:icons_16x16_damage:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DAMAGE_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.Dispel] = "|A:icons_16x16_magic:16:16|a" .. "|A:icons_16x16_curse:16:16|a" .. "|A:icons_16x16_disease:16:16|a" .. "|A:icons_16x16_poison:16:16|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DISPEL_LABEL,
-							[Enum.EncounterTimelineIconSet.Enrage] = "|A:icons_16x16_enrage:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_ENRAGE_LABEL,
-							[Enum.EncounterTimelineIconSet.Deadly] = "|A:icons_16x16_deadly:19:19|a" .. COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DEADLY_LABEL,
+							[Enum.EncounterTimelineIconSet.TankAlert] = "|A:icons_16x16_tank:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_TANK_ALERT_LABEL,
+							[Enum.EncounterTimelineIconSet.HealerAlert] = "|A:icons_16x16_heal:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_HEALER_ALERT_LABEL,
+							[Enum.EncounterTimelineIconSet.DamageAlert] = "|A:icons_16x16_damage:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DAMAGE_ALERT_LABEL,
+							[Enum.EncounterTimelineIconSet.Dispel] = "|A:icons_16x16_magic:16:16|a" .. "|A:icons_16x16_curse:16:16|a" .. "|A:icons_16x16_disease:16:16|a" .. "|A:icons_16x16_poison:16:16|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DISPEL_LABEL,
+							[Enum.EncounterTimelineIconSet.Enrage] = "|A:icons_16x16_enrage:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_ENRAGE_LABEL,
+							[Enum.EncounterTimelineIconSet.Deadly] = "|A:icons_16x16_deadly:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DEADLY_LABEL,
 						},
 						order = 6,
 					},
@@ -221,36 +221,43 @@ do
 						type = "toggle",
 						name = L.enableBlizzWarnings,
 						desc = L.enableBlizzWarningsDesc,
-						width = 2,
+						width = 1,
 						order = 1,
 						disabled = function() return db.show_messages end,
+					},
+					encounterWarningsLevel = {
+						type = "select",
+						name = _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_LABEL,
+						desc = ("%s|n|n%s: %s|n|n%s: %s|N|n%s: %s"):format(_G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_TOOLTIP,
+							WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_LABEL), NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_TOOLTIP),
+							WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_LABEL), NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_TOOLTIP),
+							WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_LABEL), NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_TOOLTIP)
+						),
+						values = {
+							[Enum.EncounterEventSeverity.Low] = _G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_LABEL,
+							[Enum.EncounterEventSeverity.Medium] = _G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_LABEL,
+							[Enum.EncounterEventSeverity.High] = _G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_LABEL,
+						},
+						get = function(info)
+							local cvar = info[#info]
+							return tonumber(C_CVar.GetCVar(cvar))
+						end,
+						set = function(info, value)
+							local cvar = info[#info]
+							C_CVar.SetCVar(cvar, tostring(value))
+						end,
+						width = 1,
+						order = 2,
 					},
 					encounterWarningsHideIfNotTargetingPlayer = {
 						type = "toggle",
 						name = _G.COMBAT_WARNINGS_HIDE_IF_NOT_TARGETING_PLAYER_LABEL,
 						desc = _G.COMBAT_WARNINGS_HIDE_IF_NOT_TARGETING_PLAYER_TOOLTIP,
 						width = 2,
-						order = 2,
+						order = 3,
 					},
 				},
 			},
-			-- display = {
-			-- 	type = "group",
-			-- 	name = "Timeline Settings",
-			-- 	order = 20,
-			-- 	args = {
-			-- 		-- Orientation: Vertical/Horizontal (Vertical)
-			-- 		-- Icon Direction: Vertical: Bottom/Top (Bottom) / Horizontal: Left/Right (Right)
-			-- 		-- Icon Size: 50-200% (100)
-			-- 		-- Size: 50-200% (100)
-			-- 		-- Background 0-100% (0)
-			-- 		-- Opacity 0-100% (100)
-			-- 		-- Visiblility Active Encounter/Always Visible (Active Encounter)
-			-- 		-- Show Spell Name [ ] (Vertical Only)
-			-- 		-- Show Tooltips [X]
-			-- 		-- Show Timer [X]
-			-- 	},
-			-- },
 		},
 	}
 
