@@ -219,15 +219,8 @@ do
 					},
 					encounterWarningsEnabled = {
 						type = "toggle",
-						name = _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_LABEL,
-						desc = function()
-							local isAvailable = C_EncounterWarnings.IsFeatureAvailable()
-							if isAvailable then
-								return _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_TOOLTIP
-							else
-								return string.format("%s|n|n%s", _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_TOOLTIP, _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_NOT_AVAILABLE)
-							end
-						end,
+						name = L.enableBlizzWarnings,
+						desc = L.enableBlizzWarningsDesc,
 						width = 2,
 						order = 1,
 						disabled = function() return db.show_messages end,
