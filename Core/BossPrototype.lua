@@ -1469,8 +1469,14 @@ do
 
 				self:SendMessage("BigWigs_OnBossEngage", self)
 
-				if self.OnEngage then
-					self:OnEngage(difficulty)
+				if loader.isMidnight then
+					if self.OnEncounterStart then
+						self:OnEncounterStart(difficulty)
+					end
+				else
+					if self.OnEngage then
+						self:OnEngage(difficulty)
+					end
 				end
 			elseif noEngage == "NoEngage" then
 				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self)
