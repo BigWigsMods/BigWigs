@@ -730,7 +730,7 @@ end
 
 local function flagOnEnter(widget)
 	bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-	bwTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
+	bwTooltip:AddLine(widget:GetUserData("tooltipText"), 1, 1, 1, true)
 	bwTooltip:Show()
 end
 
