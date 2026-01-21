@@ -742,7 +742,7 @@ local function load(index)
 
 	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
 	local loaded, reason = LoadAddOn(index)
-	if not loaded then
+	if not loaded and reason ~= "INCOMPATIBLE" then
 		local addonName = GetAddOnInfo(index)
 		local msg = L.addOnLoadFailedWithReason:format(addonName, reason)
 		sysprint(msg)
