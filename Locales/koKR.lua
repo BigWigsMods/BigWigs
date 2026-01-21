@@ -1012,20 +1012,20 @@ L.newFastestVictoryPrint = "새로운 최고 승리 시간: (-%s)" -- New fastes
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
---L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
---L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
---L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
---L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
---L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
---L.blizzWarningSettings = "Blizzard Warnings Settings"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.enableBlizzWarnings = "Enable Blizz boss warnings"
---L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.timeline = "타임라인"
+L.blizzTimersAsBigWigsBars = "블리자드 타이머(타임라인)를 BigWigs 바 형태로 표시"
+L.blizzTimersAsBigWigsBarsDesc = "모든 블리자드 보스 타이머(타임라인)가 BigWigs 바로 표시됩니다."
+L.blizzWarningsAsBigWigsMessages = "블리자드 보스 경고 메시지를 BigWigs 메시지로 표시"
+L.blizzWarningsAsBigWigsMessagesDesc = "모든 블리자드 보스 경고 메시지가 BigWigs 메시지로 표시됩니다."
+L.blizzAudioAsBigWigsAudio = "블리자드 사운드를 BigWigs 사운드로 변환"
+L.blizzAudioAsBigWigsAudioDesc = "전투 경고 심각도에 따라 BigWigs 사운드(경보, 알람, 경고)를 재생합니다."
+L.blizzWarningSettings = "블리자드 경고 설정"
+L.blizzTimelineSettings = "블리자드 타임라인 설정"
+L.blizzTimelineSettingsNote = "|cffff4411이 옵션은 블리자드 설정을 제어하며 편의를 위해 제공됩니다.|r"
+L.enableBlizzTimeline = "블리자드 타임라인 활성화"
+L.enableBlizzTimelineDesc = "이 옵션을 활성화하면 모든 보스 전투 타이머가 블리자드 타임라인에 표시됩니다."
+L.enableBlizzWarnings = "블리자드 보스 경고 활성화"
+L.enableBlizzWarningsDesc = "블리자드 보스 경고를 활성화할 경우, BigWigs 메시지로 표시하는 기능을 비활성화해야 합니다. 그렇지 않으면 모든 메시지가 두 번 표시됩니다."
 
 -----------------------------------------------------------------------
 -- Victory.lua
