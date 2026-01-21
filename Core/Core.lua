@@ -100,7 +100,18 @@ end
 -- ENCOUNTER event handler
 --
 
-if loader.isRetail or loader.isMists or loader.isCata then
+if loader.isRetail then
+	function mod:ENCOUNTER_START(_, encounterId)
+		for _, module in next, bosses do
+			if module:IsEncounterID(encounterId) then
+				if not module:IsEnabled() then
+					module:Enable()
+				end
+				module:Engage()
+			end
+		end
+	end
+elseif loader.isMists or loader.isCata then
 	function mod:ENCOUNTER_START(_, encounterId)
 		for _, module in next, bosses do
 			if module:IsEncounterID(encounterId) and not module:IsEnabled() then

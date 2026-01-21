@@ -518,9 +518,7 @@ function boss:Enable(isWipe)
 		if self.SetupOptions then self:SetupOptions() end
 
 		if self:GetEncounterID() then
-			if loader.isMidnight then
-				self:RegisterEvent("ENCOUNTER_START", "EncounterStart")
-			else
+			if not loader.isMidnight then
 				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			end
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
