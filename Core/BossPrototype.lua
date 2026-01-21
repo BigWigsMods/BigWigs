@@ -995,11 +995,13 @@ do
 
 	local frameTbl = {}
 	local eventFunc = function(_, event, unit, ...)
-		for i = #enabledModules, 1, -1 do
-			local self = enabledModules[i]
-			local m = unitEventMap[self] and unitEventMap[self][event]
-			if m and m[unit] then
-				self[m[unit]](self, event, unit, ...)
+		if not issecretvalue(unit) then
+			for i = #enabledModules, 1, -1 do
+				local self = enabledModules[i]
+				local m = unitEventMap[self] and unitEventMap[self][event]
+				if m and m[unit] then
+					self[m[unit]](self, event, unit, ...)
+				end
 			end
 		end
 	end
