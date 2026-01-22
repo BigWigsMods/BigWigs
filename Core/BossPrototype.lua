@@ -47,7 +47,6 @@ end or isRetail and EJ_GetEncounterInfo or function(key)
 end
 local SendChatMessage, GetInstanceInfo, SimpleTimer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
-local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 local hasanysecretvalues = hasanysecretvalues or function() return false end -- XXX 12.0 compat
 local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
 local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
@@ -1916,9 +1915,9 @@ end
 -- @string unit unit token or name
 -- @return guid guid of the unit
 function boss:UnitGUID(unit)
-	if not issecretvalue(unit) then
+	if not self:IsSecret(unit) then
 		local guid = UnitGUID(unit)
-		if not issecretvalue(guid) then
+		if not self:IsSecret(guid) then
 			return guid
 		end
 	end
@@ -1969,9 +1968,9 @@ end
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
-	if not issecretvalue(unit) then
+	if not self:IsSecret(unit) then
 		local maxHP = UnitHealthMax(unit)
-		if issecretvalue(maxHP) or maxHP == 0 then
+		if self:IsSecret(maxHP) or maxHP == 0 then
 			return 0
 		else
 			return UnitHealth(unit) / maxHP * 100
@@ -3995,6 +3994,13 @@ end
 -- Misc.
 -- @section misc
 --
+
+do
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+	function boss:IsSecret(value)
+		return issecretvalue(value)
+	end
+end
 
 --- Trigger a function after a specific delay
 -- @param func callback function to trigger after the delay
