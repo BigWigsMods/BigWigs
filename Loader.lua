@@ -596,8 +596,8 @@ do
 		[2773] = lw_tww, -- Operation: Floodgate
 		[2830] = lw_tww, -- Eco-Dome Al'dani
 		--[2849] = lw_tww, -- Dastardly Dome
-		[369] = UnitFactionGroup("player") == "Alliance" and lw_tww or nil, -- Deeprun Tram
-		[1043] = UnitFactionGroup("player") == "Horde" and lw_tww or nil, -- Brawl'gar Arena
+		[369] = (public.isRetail and UnitFactionGroup("player") == "Alliance") and lw_tww or nil, -- Deeprun Tram
+		[1043] = (public.isRetail and UnitFactionGroup("player") == "Horde") and lw_tww or nil, -- Brawl'gar Arena
 		--[[ LittleWigs: Delves ]]--
 		[2664] = lw_delves, -- Fungal Folly
 		[2679] = lw_delves, -- Mycomancer Cavern
