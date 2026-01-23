@@ -1175,18 +1175,6 @@ do
 			db.profile[k] = defaults.profile[k]
 		end
 	end
-
-	if type(BigWigs3DB.namespaces) == "table" then
-		BigWigs3DB.namespaces.BattleRes = nil -- XXX temp cleanup 11.2.5
-		local _, _, _, _, addonState = GetAddOnInfo("QuaziiUI")
-		if addonState ~= "MISSING" then
-			for k,v in next, BigWigs3DB.namespaces do
-				if strfind(k, " Trash", nil, true) or strfind(k, " Rares", nil, true) then
-					BigWigs3DB.namespaces[k] = nil
-				end
-			end
-		end
-	end
 end
 
 function mod:START_PLAYER_COUNTDOWN(...)
