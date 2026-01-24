@@ -42,6 +42,13 @@ end
 do
 	local inConfigureMode = false
 
+	local function timelineDisabled()
+		return not C_CVar.GetCVarBool("combatWarningsEnabled") or not C_CVar.GetCVarBool("encounterTimelineEnabled")
+	end
+	local function warningsDisabled()
+		return not C_CVar.GetCVarBool("combatWarningsEnabled") or not C_CVar.GetCVarBool("encounterWarningsEnabled")
+	end
+
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Timeline:20|t ".. L.timeline,
@@ -147,6 +154,7 @@ do
 						type = "toggle",
 						name = _G.COMBAT_WARNINGS_HIDE_LONG_COUNTDOWNS_LABEL,
 						desc = _G.COMBAT_WARNINGS_HIDE_LONG_COUNTDOWNS_TOOLTIP,
+						disabled = timelineDisabled,
 						width = 2,
 						order = 2,
 					},
@@ -154,6 +162,7 @@ do
 						type = "toggle",
 						name = _G.COMBAT_WARNINGS_HIDE_QUEUED_COUNTDOWNS_LABEL,
 						desc = _G.COMBAT_WARNINGS_HIDE_QUEUED_COUNTDOWNS_TOOLTIP,
+						disabled = timelineDisabled,
 						width = 2,
 						order = 3,
 					},
@@ -161,6 +170,7 @@ do
 						type = "toggle",
 						name = _G.COMBAT_WARNINGS_HIDE_FOR_OTHER_ROLES_LABEL,
 						desc = _G.COMBAT_WARNINGS_HIDE_FOR_OTHER_ROLES_TOOLTIP,
+						disabled = timelineDisabled,
 						width = 2,
 						order = 4,
 					},
@@ -168,6 +178,7 @@ do
 						type = "toggle",
 						name = _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_LABEL,
 						desc = _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_TOOLTIP,
+						disabled = timelineDisabled,
 						width = 2,
 						order = 5,
 					},
@@ -175,6 +186,14 @@ do
 						type = "multiselect",
 						name = _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_LABEL,
 						desc = _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_TOOLTIP,
+						values = {
+							[Enum.EncounterTimelineIconSet.TankAlert] = "|A:icons_16x16_tank:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_TANK_ALERT_LABEL,
+							[Enum.EncounterTimelineIconSet.HealerAlert] = "|A:icons_16x16_heal:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_HEALER_ALERT_LABEL,
+							[Enum.EncounterTimelineIconSet.DamageAlert] = "|A:icons_16x16_damage:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DAMAGE_ALERT_LABEL,
+							[Enum.EncounterTimelineIconSet.Dispel] = "|A:icons_16x16_magic:16:16|a" .. "|A:icons_16x16_curse:16:16|a" .. "|A:icons_16x16_disease:16:16|a" .. "|A:icons_16x16_poison:16:16|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DISPEL_LABEL,
+							[Enum.EncounterTimelineIconSet.Enrage] = "|A:icons_16x16_enrage:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_ENRAGE_LABEL,
+							[Enum.EncounterTimelineIconSet.Deadly] = "|A:icons_16x16_deadly:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DEADLY_LABEL,
+						},
 						get = function(info, key)
 							local cvar = info[#info]
 							local value = C_CVar.GetCVarBitfield(cvar, key)
@@ -185,16 +204,8 @@ do
 							C_CVar.SetCVarBitfield(cvar, key, not value) -- values are inverted
 						end,
 						disabled = function()
-							return not C_CVar.GetCVarBool("encounterTimelineIconographyEnabled")
+							return timelineDisabled() or not C_CVar.GetCVarBool("encounterTimelineIconographyEnabled")
 						end,
-						values = {
-							[Enum.EncounterTimelineIconSet.TankAlert] = "|A:icons_16x16_tank:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_TANK_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.HealerAlert] = "|A:icons_16x16_heal:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_HEALER_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.DamageAlert] = "|A:icons_16x16_damage:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DAMAGE_ALERT_LABEL,
-							[Enum.EncounterTimelineIconSet.Dispel] = "|A:icons_16x16_magic:16:16|a" .. "|A:icons_16x16_curse:16:16|a" .. "|A:icons_16x16_disease:16:16|a" .. "|A:icons_16x16_poison:16:16|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DISPEL_LABEL,
-							[Enum.EncounterTimelineIconSet.Enrage] = "|A:icons_16x16_enrage:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_ENRAGE_LABEL,
-							[Enum.EncounterTimelineIconSet.Deadly] = "|A:icons_16x16_deadly:19:19|a" .. _G.COMBAT_WARNINGS_SPELL_SUPPORT_ICONOGRAPHY_OPTION_DEADLY_LABEL,
-						},
 						order = 6,
 					},
 				},
@@ -246,6 +257,7 @@ do
 							local cvar = info[#info]
 							C_CVar.SetCVar(cvar, tostring(value))
 						end,
+						disabled = warningsDisabled,
 						width = 1,
 						order = 2,
 					},
@@ -253,6 +265,7 @@ do
 						type = "toggle",
 						name = _G.COMBAT_WARNINGS_HIDE_IF_NOT_TARGETING_PLAYER_LABEL,
 						desc = _G.COMBAT_WARNINGS_HIDE_IF_NOT_TARGETING_PLAYER_TOOLTIP,
+						disabled = warningsDisabled,
 						width = 2,
 						order = 3,
 					},
