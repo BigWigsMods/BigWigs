@@ -221,7 +221,7 @@ do
 					local cvar = info[#info]
 					C_CVar.SetCVar(cvar, value and "1" or "0")
 				end,
-				order = 10,
+				order = 20,
 				args = {
 					header = {
 						type = "description",
@@ -232,7 +232,7 @@ do
 						type = "toggle",
 						name = L.enableBlizzWarnings,
 						desc = L.enableBlizzWarningsDesc,
-						width = 1,
+						width = 1.5,
 						order = 1,
 						disabled = function() return db.show_messages end,
 					},
@@ -240,9 +240,9 @@ do
 						type = "select",
 						name = _G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_LABEL,
 						desc = ("%s|n|n%s: %s|n|n%s: %s|N|n%s: %s"):format(_G.COMBAT_WARNINGS_ENABLE_ENCOUNTER_WARNINGS_TOOLTIP,
-							WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_LABEL), NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_TOOLTIP),
-							WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_LABEL), NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_TOOLTIP),
-							WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_LABEL), NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_TOOLTIP)
+							NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_LABEL), WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_TOOLTIP),
+							NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_LABEL), WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_MEDIUM_TOOLTIP),
+							NORMAL_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_LABEL), WHITE_FONT_COLOR:WrapTextInColorCode(_G.COMBAT_WARNINGS_TEXT_LEVEL_CRITICAL_TOOLTIP)
 						),
 						values = {
 							[Enum.EncounterEventSeverity.Low] = _G.COMBAT_WARNINGS_TEXT_LEVEL_MINOR_LABEL,
@@ -306,12 +306,12 @@ do
 	local sounds = {"Warning", "Alarm", "Alert"}
 
 	function plugin:DoTestMessage(name, icon)
-		local index = math.random(1, 3)
+		local severity = math.random(1, 3)
 		if db.show_messages then
-			plugin:SendMessage("BigWigs_Message", plugin, nil, name, colors[index], icon, false)
+			plugin:SendMessage("BigWigs_Message", plugin, nil, name, colors[severity], icon, false)
 		end
 		if db.play_sound then
-			plugin:SendMessage("BigWigs_Sound", plugin, nil, sounds[index])
+			plugin:SendMessage("BigWigs_Sound", plugin, nil, sounds[severity])
 		end
 	end
 end
@@ -358,7 +358,7 @@ function plugin:StartBars()
 		local remaining = C_EncounterTimeline.GetEventTimeRemaining(eventId)
 		local spellName = info.spellName
 		if info.source == Enum.EncounterTimelineEventSource.EditMode then
-			spellName = ("%s (%d)"):format(L.test, eventId)
+			spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
 		end
 		self:SendMessage("BigWigs_StartBar", nil, nil, spellName, remaining, info.iconFileID, info.maxQueueDuration, info.duration, eventId)
 
@@ -397,7 +397,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 
 	if source == Enum.EncounterTimelineEventSource.EditMode then
 		-- EditMode spells all have the same name
-		spellName = ("%s (%d)"):format(L.test, eventId)
+		spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
 	end
 	self:SendMessage("BigWigs_StartBar", nil, nil, spellName, duration, icon, maxQueueDuration, nil, eventId)
 
@@ -411,12 +411,15 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
 	local newState = C_EncounterTimeline.GetEventState(eventId)
 	if newState == Enum.EncounterTimelineEventState.Active then
 		self:SendMessage("BigWigs_ResumeBar", nil, nil, eventId)
+
 	elseif newState == Enum.EncounterTimelineEventState.Paused then
 		self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
+
 	elseif newState == Enum.EncounterTimelineEventState.Finished then
 		local info = C_EncounterTimeline.GetEventInfo(eventId)
+
 		if info.source == Enum.EncounterTimelineEventSource.EditMode then
-			self:DoTestMessage(("%s (%d)"):format(info.spellName, eventId), info.iconFileID)
+			self:DoTestMessage(("%s (%d)"):format(info.spellName, tonumber(strsub(eventId, -1)) + 1), info.iconFileID)
 		end
 	end
 end
