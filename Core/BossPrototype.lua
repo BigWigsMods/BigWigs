@@ -392,12 +392,22 @@ function boss:RegisterPrivateAuraSounds()
 		end
 		if sound then
 			for i = 1, #opt do
-				local privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
-					spellID = opt[i],
-					unitToken = "player",
-					soundFileName = sound,
-					outputChannel = "master",
-				})
+				local privateAuraSoundID
+				if type(sound) == "string" then -- sound file path
+					privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
+						spellID = opt[i],
+						unitToken = "player",
+						soundFileName = sound,
+						outputChannel = "master",
+					})
+				else -- sound file id
+					privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
+						spellID = opt[i],
+						unitToken = "player",
+						soundFileID = sound,
+						outputChannel = "master",
+					})
+				end
 				if privateAuraSoundID then
 					self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
 				end
