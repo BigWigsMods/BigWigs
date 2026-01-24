@@ -267,6 +267,7 @@ globals = {
 	"strmatch",
 	"strrep",
 	"strsplit",
+	"strsub",
 	"strtrim",
 	"strupper",
 	"table.wipe",
