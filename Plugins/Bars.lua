@@ -25,7 +25,7 @@ local STATUSBAR = LibSharedMedia.MediaType and LibSharedMedia.MediaType.STATUSBA
 local next = next
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
-local rearrangeBars
+local rearrangeBars, getBar
 
 local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 
@@ -1103,6 +1103,19 @@ local function hideAnchors(_, mode)
 	end
 end
 
+function getBar(anchor, module, text, eventId)
+	if not anchor then return end
+	for bar in next, anchor.bars do
+		if eventId then
+			if bar:Get("bigwigs:eventId") == eventId then
+				return bar
+			end
+		elseif text and bar:Get("bigwigs:module") == module and bar:GetLabel() == text then
+			return bar
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -1186,41 +1199,29 @@ end
 
 function plugin:PauseBar(_, module, text, eventId)
 	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Pause()
-			return
-		elseif eventId and k:Get("bigwigs:eventId") == eventId then
-			k:Pause()
-		end
+	local bar = getBar(normalAnchor, module, text, eventId)
+	if bar then
+		bar:Pause()
+		return
 	end
-	for k in next, emphasizeAnchor.bars do
-		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Pause()
-			return
-		elseif eventId and k:Get("bigwigs:eventId") == eventId then
-			k:Pause()
-		end
+	bar = getBar(emphasizeAnchor, module, text, eventId)
+	if bar then
+		bar:Pause()
+		return
 	end
 end
 
 function plugin:ResumeBar(_, module, text, eventId)
 	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Resume()
-			return
-		elseif eventId and k:Get("bigwigs:eventId") == eventId then
-			k:Resume()
-		end
+	local bar = getBar(normalAnchor, module, text, eventId)
+	if bar then
+		bar:Resume()
+		return
 	end
-	for k in next, emphasizeAnchor.bars do
-		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Resume()
-			return
-		elseif eventId and k:Get("bigwigs:eventId") == eventId then
-			k:Resume()
-		end
+	bar = getBar(emphasizeAnchor, module, text, eventId)
+	if bar then
+		bar:Resume()
+		return
 	end
 end
 
@@ -1230,21 +1231,15 @@ end
 
 function plugin:StopSpecificBar(_, module, text, eventId)
 	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Stop()
-			return
-		elseif eventId and k:Get("bigwigs:eventId") == eventId then
-			k:Stop()
-		end
+	local bar = getBar(normalAnchor, module, text, eventId)
+	if bar then
+		bar:Stop()
+		return
 	end
-	for k in next, emphasizeAnchor.bars do
-		if text and k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Stop()
-			return
-		elseif eventId and k:Get("bigwigs:eventId") == eventId then
-			k:Stop()
-		end
+	bar = getBar(emphasizeAnchor, module, text, eventId)
+	if bar then
+		bar:Stop()
+		return
 	end
 end
 
@@ -1276,17 +1271,15 @@ function plugin:HasActiveBars()
 	return false
 end
 
-function plugin:GetBarTimeLeft(module, text)
+function plugin:GetBarTimeLeft(module, text, eventId)
 	if normalAnchor then
-		for k in next, normalAnchor.bars do
-			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-				return k.remaining
-			end
+		local bar = getBar(normalAnchor, module, text, eventId)
+		if bar then
+			return bar.remaining
 		end
-		for k in next, emphasizeAnchor.bars do
-			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-				return k.remaining
-			end
+		bar = getBar(emphasizeAnchor, module, text, eventId)
+		if bar then
+			return bar.remaining
 		end
 	end
 	return 0
@@ -1362,10 +1355,8 @@ do
 	end
 
 	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId)
-		if issecretvalue == nil or not issecretvalue(text) then -- XXX 12.0 compat
-			if not text then text = "" end
-			self:StopSpecificBar(nil, module, text)
-		end
+		if (issecretvalue == nil or not issecretvalue(text)) and not text then text = "" end
+		self:StopSpecificBar(nil, module, text, eventId)
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId)
 		bar:SetPauseWhenDone(isApprox)
 		if db.emphasize and time < db.emphasizeTime then
