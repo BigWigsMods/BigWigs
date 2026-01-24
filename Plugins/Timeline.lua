@@ -433,7 +433,11 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	local iconFileID = eventInfo.iconFileID
 	-- local tooltipSpellID = eventInfo.tooltipSpellID
 
-	if shouldShowWarning and db.show_messages then
+	-- shouldShowWarning gets set to false if encounterWarningsEnabled is false
+	-- we obviously can't check if the message is targeting the player, so we lose that functionality
+	-- local shouldShowWarningBasedOnSeverity = severity >= tonumber(C_CVar.GetCVar("encounterWarningsLevel"))
+
+	if db.show_messages then
 		local messages = BigWigs:GetPlugin("Messages", true)
 		local formattedTargetName = targetName
 		if targetGUID and messages.db.profile.classcolor then
