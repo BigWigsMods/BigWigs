@@ -386,6 +386,11 @@ do
 		end
 		return custom or db.media[soundName]
 	end
+
+	function plugin:GetDefaultSoundFile(soundName)
+		local defaultSound = self:GetDefaultSound(soundName)
+		return defaultSound and LibSharedMedia:Fetch(SOUND, defaultSound, true)
+	end
 end
 
 function plugin:BigWigs_Sound(event, module, key, soundName)
