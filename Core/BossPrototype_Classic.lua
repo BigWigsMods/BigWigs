@@ -455,7 +455,7 @@ function boss:RegisterPrivateAuraSounds()
 		if opt.sound then
 			-- use the spell table default if the sound hasn't been changed in the config
 			local sDB = soundModule.db.profile["privateaura"]
-			if not sDB[self] or not sDB[self][key] then
+			if not sDB[self.name] or not sDB[self.name][key] then
 				sound = soundModule:GetDefaultSoundFile(opt.sound)
 			end
 		end
