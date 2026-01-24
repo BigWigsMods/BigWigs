@@ -148,7 +148,6 @@ do
 						desc = L.enableBlizzTimelineDesc,
 						width = 2,
 						order = 1,
-						disabled = function() return db.show_bars end,
 					},
 					encounterTimelineHideLongCountdowns = {
 						type = "toggle",
@@ -338,10 +337,6 @@ function plugin:OnPluginEnable()
 
 	self:RegisterEvent("ENCOUNTER_WARNING")
 
-	if db.show_bars then
-		C_CVar.SetCVar("encounterTimelineEnabled", "0")
-		self:StartBars()
-	end
 	if db.show_messages then
 		C_CVar.SetCVar("encounterWarningsEnabled", "0")
 	end
