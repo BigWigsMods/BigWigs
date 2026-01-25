@@ -1115,6 +1115,10 @@ L.enableBlizzTimeline = "啟用暴雪時間軸"
 L.enableBlizzTimelineDesc = "在暴雪內建的時間軸上顯示所有的首領戰計時條。"
 L.enableBlizzWarnings = "啟用暴雪首領警告"
 L.enableBlizzWarningsDesc = "若啟用暴雪內建的首領警告，建議關閉「使用 BigWigs 訊息取代暴雪內建首領警告」功能，以免出現重複警報。"
+--L.show_custom_timers = "Show Custom Timers"
+--L.show_custom_timers_desc = "BigWigs will replace Blizzard's encounter timeline timers with its own (improved) timers.\n\nThis only works on encounters we have configured."
+--L.show_custom_and_blizzard = "Show Both"
+--L.show_custom_and_blizzard_desc = "Both Blizzard and Custom Timers will be shown simultaneously. Usefull for development, early raid releases and PTR testing."
 
 -----------------------------------------------------------------------
 -- Victory.lua

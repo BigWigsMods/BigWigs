@@ -1115,6 +1115,10 @@ L.enableBlizzTimeline = "Blizz Zeitlinie aktivieren"
 L.enableBlizzTimelineDesc = "Diese Option zeigt alle Boss Timer in der Blizzard Zeitlinie."
 L.enableBlizzWarnings = "Blizz Bosswarnungen aktivieren"
 L.enableBlizzWarningsDesc = "Beim Aktivieren der Blizzard Bosswarnungen sollte die Option zur Anzeige als BigWigs Nachrichten deaktiviert werden, da diese ansonsten doppelt angezeigt werden."
+--L.show_custom_timers = "Show Custom Timers"
+--L.show_custom_timers_desc = "BigWigs will replace Blizzard's encounter timeline timers with its own (improved) timers.\n\nThis only works on encounters we have configured."
+--L.show_custom_and_blizzard = "Show Both"
+--L.show_custom_and_blizzard_desc = "Both Blizzard and Custom Timers will be shown simultaneously. Usefull for development, early raid releases and PTR testing."
 
 -----------------------------------------------------------------------
 -- Victory.lua
