@@ -172,6 +172,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 			obliterationArcanocannonCount = 1
 			eradicatingSalvoCount = 1
 			protocolPurgeCount = 1
+		elseif spellId == 1219263 then -- Obliteration Arcanocannon
+			self:CastBar(1219263, 6, CL.count:format(CL.tank_bomb, obliterationArcanocannonCount - 1))
 		end
 	end
 end
@@ -181,7 +183,7 @@ end
 -- Event Handlers
 --
 
-function mod:CleanseTheChamber(args)
+function mod:CleanseTheChamber(duration)
 	local barText = CL.incoming:format(L.cleanse_the_chamber)
 	self:CDBar(1234733, duration, barText)
 	return {msg = barText, key = 1234733, color = "cyan"}
