@@ -1,9 +1,5 @@
-local _, addonTable = ...
 local AceGUI = LibStub("AceGUI-3.0")
 local instanceExportPrefix = "BWIS1"
-
-local InstanceSharing = {}
-InstanceSharing.SendMessage = BigWigsLoader.SendMessage
 
 local function createExportString(exportTable)
     local serialized = C_EncodingUtil.SerializeCBOR(exportTable);
@@ -12,23 +8,25 @@ local function createExportString(exportTable)
     return instanceExportPrefix..":"..encoded;
 end
 
+local isMidnight = BigWigsLoader.isMidnight
 local exportFrame = nil
 local lastImportData = nil
 local lastExportData = nil
 do
     local function  updateExportString(widget, event, value)
         local tab = widget.parent
-        local flags = tab.checks.flags:GetValue()
-        local sounds = tab.checks.sounds:GetValue()
-        local colors = tab.checks.colors:GetValue()
-        local privateAuras = tab.checks.privateAuras:GetValue()
+        local flags =  tab.checks.flags and tab.checks.flags:GetValue()
+        local sounds = tab.checks.flags and tab.checks.sounds:GetValue()
+        local colors = tab.checks.flags and tab.checks.colors:GetValue()
+        local privateAuras = tab.checks.flags and tab.checks.privateAuras:GetValue()
         local textBox = tab.multiline
-        local exportTable = lastExportData
+        local exportTable = lastExportData.data
         local filteredExportTable = {
             includeFlags = flags,
             includeSounds = sounds,
             includeColors = colors,
             includePrivateAuras = privateAuras,
+			zone = lastExportData.zone,
             exportData = {},
         }
         for optionsTable, doExport in pairs({flags = flags, sounds = sounds, colors = colors}) do
@@ -159,19 +157,21 @@ do
         widget.multiline = multiline
 
         if tab == "export" then
-            local flagsCheck = AceGUI:Create("CheckBox")
-            flagsCheck:SetLabel("Flags")
-            flagsCheck:SetValue(true)
-            flagsCheck:SetFullWidth(true)
-            flagsCheck:SetCallback("OnValueChanged", updateExportString)
-            widget:AddChild(flagsCheck)
+			-- In Midnight we only show the PA export for now.
+			if not isMidnight then
+				local flagsCheck = AceGUI:Create("CheckBox")
+				flagsCheck:SetLabel("Flags")
+				flagsCheck:SetFullWidth(true)
+				flagsCheck:SetCallback("OnValueChanged", updateExportString)
+				widget:AddChild(flagsCheck)
 
-            local soundsCheck = AceGUI:Create("CheckBox")
-            soundsCheck:SetLabel("Sounds")
-            soundsCheck:SetValue(true)
-            soundsCheck:SetWidth(150)
-            soundsCheck:SetCallback("OnValueChanged", updateExportString)
-            widget:AddChild(soundsCheck)
+				local soundsCheck = AceGUI:Create("CheckBox")
+				soundsCheck:SetLabel("Sounds")
+				soundsCheck:SetValue(true)
+				soundsCheck:SetWidth(150)
+				soundsCheck:SetCallback("OnValueChanged", updateExportString)
+				widget:AddChild(soundsCheck)
+			end
 
             local privateAuraCheck = AceGUI:Create("CheckBox")
 			privateAuraCheck:SetLabel("Private Auras")
@@ -180,29 +180,34 @@ do
             privateAuraCheck:SetCallback("OnValueChanged", updateExportString)
 			widget:AddChild(privateAuraCheck)
 
-            local colorsCheck = AceGUI:Create("CheckBox")
-            colorsCheck:SetLabel("Colors")
-            colorsCheck:SetValue(true)
-            colorsCheck:SetFullWidth(true)
-            colorsCheck:SetCallback("OnValueChanged", updateExportString)
-            widget:AddChild(colorsCheck)
+			if not isMidnight then
+				local colorsCheck = AceGUI:Create("CheckBox")
+				colorsCheck:SetLabel("Colors")
+				colorsCheck:SetValue(true)
+				colorsCheck:SetFullWidth(true)
+				colorsCheck:SetCallback("OnValueChanged", updateExportString)
+				widget:AddChild(colorsCheck)
+			end
 
             widget.checks = {flags = flagsCheck, sounds = soundsCheck, colors = colorsCheck, privateAuras = privateAuraCheck}
 			updateExportString(multiline)
 		else
-			local flagsCheck = AceGUI:Create("CheckBox")
-			flagsCheck:SetLabel("Flags")
-			flagsCheck:SetValue(true)
-            flagsCheck:SetFullWidth(true)
-			flagsCheck:SetDisabled(true)
-			widget:AddChild(flagsCheck)
+			-- In Midnight we only show the PA export for now.
+			if not isMidnight then
+				local flagsCheck = AceGUI:Create("CheckBox")
+				flagsCheck:SetLabel("Flags")
+				flagsCheck:SetValue(true)
+				flagsCheck:SetFullWidth(true)
+				flagsCheck:SetDisabled(true)
+				widget:AddChild(flagsCheck)
 
-			local soundsCheck = AceGUI:Create("CheckBox")
-			soundsCheck:SetLabel("Sounds")
-			soundsCheck:SetValue(true)
-			soundsCheck:SetDisabled(true)
-            soundsCheck:SetWidth(150)
-			widget:AddChild(soundsCheck)
+				local soundsCheck = AceGUI:Create("CheckBox")
+				soundsCheck:SetLabel("Sounds")
+				soundsCheck:SetValue(true)
+				soundsCheck:SetDisabled(true)
+				soundsCheck:SetWidth(150)
+				widget:AddChild(soundsCheck)
+			end
 
 			local privateAuraCheck = AceGUI:Create("CheckBox")
 			privateAuraCheck:SetLabel("Private Auras")
@@ -211,12 +216,15 @@ do
             privateAuraCheck:SetWidth(150)
 			widget:AddChild(privateAuraCheck)
 
-			local colorsCheck = AceGUI:Create("CheckBox")
-			colorsCheck:SetLabel("Colors")
-			colorsCheck:SetValue(true)
-			colorsCheck:SetDisabled(true)
-            colorsCheck:SetFullWidth(true)
-			widget:AddChild(colorsCheck)
+			if not isMidnight then
+				local colorsCheck = AceGUI:Create("CheckBox")
+				colorsCheck:SetLabel("Colors")
+				colorsCheck:SetValue(true)
+				colorsCheck:SetDisabled(true)
+				colorsCheck:SetValue(not isMidnight)
+				colorsCheck:SetFullWidth(true)
+				widget:AddChild(colorsCheck)
+			end
 
 			local importButton = AceGUI:Create("Button")
 			importButton:SetText("Import")
@@ -247,6 +255,7 @@ do
         frame:SetStatusText("")
 
 		if exportInfo.zone then
+			print(exportInfo.zone)
 			local zoneName = GetRealZoneText(exportInfo.zone)
             frame:SetStatusText("Exporting "..zoneName)
 		end
@@ -261,7 +270,7 @@ do
 		})
 		tabs:SetCallback("OnGroupSelected", onExportTabGroupSelected)
 		tabs:SelectTab("import")
-		lastExportData = exportInfo.exportTable
+		lastExportData = {data = exportInfo.exportTable, zone = exportInfo.zone}
 
 		frame:AddChild(tabs)
 
