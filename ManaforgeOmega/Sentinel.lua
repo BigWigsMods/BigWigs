@@ -46,10 +46,10 @@ end
 --
 
 function mod:OnRegister()
-	self:SetSpellRename(1219450, CL.pools) -- Manifest Matrices (Pools)
-	self:SetSpellRename(1218625, CL.stunned) -- Displacement Matrix (Stunned)
-	self:SetSpellRename(1219263, CL.tank_bomb) -- Obliteration Arcanocannon (Tank Bomb)
 	self:SetSpellRename(1219607, CL.soak) -- Eradicating Salvo (Soak)
+	self:SetSpellRename(1219450, CL.pools) -- Manifest Matrices (Pools)
+	self:SetSpellRename(1219263, CL.tank_bomb) -- Obliteration Arcanocannon (Tank Bomb)
+	self:SetSpellRename(1234733, L.cleanse_the_chamber) -- Cleanse the Chamber (Wall)
 end
 
 function mod:GetOptions()
@@ -158,10 +158,10 @@ function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 		self:StopBar(barInfo.msg)
 		local spellId = barInfo.key
 		if barInfo.color then
-			self:Message(spellId, barInfo.color, barInfo.msg, barInfo.icon) -- SetOption:123,456:yellow:alert:
+			self:Message(spellId, barInfo.color, barInfo.msg, barInfo.icon) -- SetOption:"stages",1219607,1219450,1219263,1234733:green,orange,yellow,purple,cyan:
 		end
 		if barInfo.playSound then
-			self:PlaySound(spellId, barInfo.playSound) -- SetOption:123,456:yellow:alert:
+			self:PlaySound(spellId, barInfo.playSound) -- SetOption:"stages",1219607,1219450,1219263,1234733::alert,alert,,alarm:
 		end
 		startedBars[eventID] = nil
 
@@ -183,8 +183,8 @@ end
 
 function mod:CleanseTheChamber(args)
 	local barText = CL.incoming:format(L.cleanse_the_chamber)
-	self:CDBar(1219450, duration, barText)
-	return {msg = barText, key = 1219450, color = "cyan"}
+	self:CDBar(1234733, duration, barText)
+	return {msg = barText, key = 1234733, color = "cyan"}
 end
 
 -- Stage One: Purge The Intruders
