@@ -203,6 +203,11 @@ files["Options/Sharing.lua"].ignore = {
 	"113/C_EncodingUtil",
 	"113/Enum",
 }
+files["Options/InstanceSharing.lua"].ignore = {
+	"113/C_EncodingUtil",
+	"113/CopyTable",
+	"113/Enum",
+}
 files["**/?Locales/*.lua"].ignore = {
 	"542", -- Empty if branch
 }
