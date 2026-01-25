@@ -293,6 +293,7 @@ globals = {
 	"C_EncounterJournal",
 	"C_GossipInfo",
 	"C_InstanceEncounter",
+	"C_MerchantFrame", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
@@ -315,7 +316,6 @@ globals = {
 	"GetFramesRegisteredForEvent",
 	"GetInstanceInfo",
 	"GetLocale",
-	"GetMerchantItemInfo", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"GetPartyAssignment",
 	"GetPlayerFacing",
 	"GetProfessionInfo",
