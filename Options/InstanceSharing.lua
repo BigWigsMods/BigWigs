@@ -15,32 +15,36 @@ local lastExportData = nil
 do
     local function  updateExportString(widget, event, value)
         local tab = widget.parent
-        local flags =  tab.checks.flags and tab.checks.flags:GetValue()
-        local sounds = tab.checks.flags and tab.checks.sounds:GetValue()
-        local colors = tab.checks.flags and tab.checks.colors:GetValue()
-        local privateAuras = tab.checks.flags and tab.checks.privateAuras:GetValue()
+        local exportFlags =  tab.checks.flags and tab.checks.flags:GetValue()
+        local exportSounds = tab.checks.sounds and tab.checks.sounds:GetValue()
+        local exportColors = tab.checks.colors and tab.checks.colors:GetValue()
+        local exportPrivateAuras = tab.checks.privateAuras and tab.checks.privateAuras:GetValue()
         local textBox = tab.multiline
         local exportTable = lastExportData.data
         local filteredExportTable = {
-            includeFlags = flags,
-            includeSounds = sounds,
-            includeColors = colors,
-            includePrivateAuras = privateAuras,
+            includeFlags = exportFlags,
+            includeSounds = exportSounds,
+            includeColors = exportColors,
+            includePrivateAuras = exportPrivateAuras,
 			zone = lastExportData.zone,
             exportData = {},
         }
-        for optionsTable, doExport in pairs({flags = flags, sounds = sounds, colors = colors}) do
+        for optionsTable, doExport in pairs({flags = exportFlags, sounds = exportSounds or exportPrivateAuras, colors = exportColors}) do
             if doExport then
                 for moduleName, settings in pairs(exportTable) do
                     if settings[optionsTable] then
                         filteredExportTable.exportData[moduleName] = filteredExportTable.exportData[moduleName] or {}
                         filteredExportTable.exportData[moduleName][optionsTable] = CopyTable(settings[optionsTable] or {})
-                        if optionsTable == "sounds" and not privateAuras then -- remove private auras from sound export table
-                            filteredExportTable.exportData[moduleName][optionsTable].privateaura = nil
-                            local count = 0
-                            for _ in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
-                                count = count + 1
-                            end
+                        if optionsTable == "sounds" and not (exportSounds and exportPrivateAuras) then -- Filter away extra sound options if only one is selected
+							local count = 0
+							for key, value in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
+								local shouldKeep = (key == "privateaura" and exportPrivateAuras) or (key ~= "privateaura" and exportSounds)
+								if not shouldKeep then
+									filteredExportTable.exportData[moduleName][optionsTable][key] = nil
+								else
+									count = count + 1
+								end
+							end
                             if count == 0 then
                                 filteredExportTable.exportData[moduleName][optionsTable] = nil
                             end
@@ -57,12 +61,12 @@ do
         if type(string) ~= "string" then return end
 		local preFix, importData = string:match("^(%w+):(.+)$")
 		if preFix ~= instanceExportPrefix then return end
-        local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
-        if not decodedForPrint then return end
-        local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, Enum.CompressionMethod.Deflate);
-        if not decompressed then return end
-        local data = C_EncodingUtil.DeserializeCBOR(decompressed);
-		if not data then return end
+        local decode_success, decodedForPrint = xpcall(C_EncodingUtil.DecodeBase64, function() return end, importData)
+        if not decode_success or not decodedForPrint then return end
+        local decomp_success, decompressed =  xpcall(C_EncodingUtil.DecompressString, function() return end, decodedForPrint, Enum.CompressionMethod.Deflate)
+        if not decomp_success or not decompressed then return end
+        local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, function() return end, decompressed)
+		if not deserialize_success or not data then return end
         lastImportData = data
 		return {
             flags =  lastImportData.includeFlags,
@@ -100,6 +104,7 @@ do
         local privateAuras = tab.importChecks.privateAuras:GetValue()
 		local soundModule = BigWigs:GetPlugin("Sounds")
 		local colorModule = BigWigs:GetPlugin("Colors")
+		BigWigsLoader:LoadZone(lastImportData.zone)
 		for moduleName, data in pairs(lastImportData.exportData) do
 			if flags and data.flags then
 				local module = BigWigs:GetBossModule(moduleName:sub(16))
