@@ -47,6 +47,7 @@ end or isRetail and EJ_GetEncounterInfo or function(key)
 end
 local SendChatMessage, GetInstanceInfo, SimpleTimer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
+local hasanysecretvalues = hasanysecretvalues or function() return false end -- XXX 12.0 compat
 local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
 local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
@@ -1070,11 +1071,13 @@ do
 
 	local frameTbl = {}
 	local eventFunc = function(_, event, unit, ...)
-		for i = #enabledModules, 1, -1 do
-			local self = enabledModules[i]
-			local m = unitEventMap[self] and unitEventMap[self][event]
-			if m and m[unit] then
-				self[m[unit]](self, event, unit, ...)
+		if not hasanysecretvalues(unit, ...) then
+			for i = #enabledModules, 1, -1 do
+				local self = enabledModules[i]
+				local m = unitEventMap[self] and unitEventMap[self][event]
+				if m and m[unit] then
+					self[m[unit]](self, event, unit, ...)
+				end
 			end
 		end
 	end
@@ -1603,7 +1606,7 @@ do
 				self.bossTargetChecks[unit] = func
 				self:RegisterUnitEvent("UNIT_TARGET", "NextTarget", unit)
 				SimpleTimer(timeToWait or 0.3, function()
-					if self.bossTargetChecks[unit] then
+					if self.bossTargetChecks and self.bossTargetChecks[unit] then
 						self:UnregisterUnitEvent("UNIT_TARGET", unit)
 					end
 				end)
@@ -1976,9 +1979,11 @@ end
 -- @string unit unit token or name
 -- @return guid guid of the unit
 function boss:UnitGUID(unit)
-	local guid = UnitGUID(unit)
-	if guid then
-		return guid
+	if not self:IsSecret(unit) then
+		local guid = UnitGUID(unit)
+		if not self:IsSecret(guid) then
+			return guid
+		end
 	end
 end
 
@@ -2027,11 +2032,13 @@ end
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
-	local maxHP = UnitHealthMax(unit)
-	if maxHP == 0 then
-		return maxHP
-	else
-		return UnitHealth(unit) / maxHP * 100
+	if not self:IsSecret(unit) then
+		local maxHP = UnitHealthMax(unit)
+		if self:IsSecret(maxHP) or maxHP == 0 then
+			return 0
+		else
+			return UnitHealth(unit) / maxHP * 100
+		end
 	end
 end
 
@@ -3713,6 +3720,13 @@ end
 -- @section misc
 --
 
+do
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+	function boss:IsSecret(value)
+		return issecretvalue(value)
+	end
+end
+
 --- Trigger a function after a specific delay
 -- @param func callback function to trigger after the delay
 -- @number delay how long to wait until triggering the function
@@ -3850,12 +3864,12 @@ do
 				end
 				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 				if type(result) == "number" and result > 0 then
-					if result == 3 or result == 8 or result == 9 then
+					if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 						if not noResend then
 							self:SimpleTimer(function() if self:IsEnabled() then self:Sync(msg, extra) end end, 1)
 							return
 						end
-					else
+					elseif result ~= 11 then -- AddOnMessageLockdown
 						local errorMsg = format("Failed to send boss comm %q. Error code: %d", msg, result)
 						core:Error(errorMsg)
 					end
