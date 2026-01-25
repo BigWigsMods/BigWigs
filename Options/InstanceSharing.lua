@@ -89,7 +89,7 @@ do
 				check:SetValue(hasImports[checkName])
 			end
 			local zoneName = GetRealZoneText(lastImportData.zone)
-			widget.parent.parent:SetStatusText("Importing "..zoneName)
+			widget.parent.parent:SetStatusText("Importing |cFF33FF99"..zoneName.."|r")
         else
 			tab.importButton:SetDisabled(true)
 			for _, check in pairs(tab.importChecks) do
@@ -161,6 +161,7 @@ do
         multiline:DisableButton(true)
         multiline:SetLabel("")
         multiline:SetFullWidth(true)
+		multiline:SetText("")
 		widget:AddChild(multiline)
         widget.multiline = multiline
 
@@ -202,7 +203,7 @@ do
 
 			if widget.parent then
 				local zoneName = GetRealZoneText(lastExportData.zone)
-            	widget.parent:SetStatusText("Exporting "..zoneName)
+            	widget.parent:SetStatusText("Exporting |cFF33FF99"..zoneName.."|r")
 			end
 		else
 			-- In Midnight we only show the PA export for now.
