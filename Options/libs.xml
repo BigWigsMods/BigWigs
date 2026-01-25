@@ -31,6 +31,4 @@
 <Script file="Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.lua"/>
 <Script file="Libs\AceDBOptions-3.0\AceDBOptions-3.0.lua"/>
 <Script file="Libs\LibDDI-1.0\lib.lua"/>
-<Script file="Libs\LibDeflate\LibDeflate.lua"/>
-<Script file="Libs\LibSerialize\LibSerialize.lua"/>
 </Ui>

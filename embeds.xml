@@ -17,7 +17,5 @@
 @end-non-debug@-->
 <!--@do-not-package@-->
 <Script file="Options\Libs\AceGUIWidget-SharedDropdown.lua"/>
-<Script file="Options\Libs\LibDeflate\LibDeflate.lua"/>
-<Script file="Options\Libs\LibSerialize\LibSerialize.lua"/>
 <!--@end-do-not-package@-->
 </Ui>
