@@ -4,8 +4,6 @@ local sharingModule = {}
 -- Libraries
 --
 
-local LibSerialize = LibStub("LibSerialize")
-local LibDeflate = LibStub("LibDeflate")
 local AceGUI = LibStub("AceGUI-3.0")
 
 -------------------------------------------------------------------------------
@@ -57,7 +55,7 @@ end
 
 local L = BigWigsAPI:GetLocale("BigWigs")
 local BigWigs = BigWigs
-local sharingVersion = "BW1"
+local sharingVersion = "BW2"
 
 -- Position Args
 local barPositionsToExport = {
@@ -396,10 +394,10 @@ do
 			end
 		end
 
-		local serialized = LibSerialize:Serialize(exportOptions)
-		local compressed = LibDeflate:CompressDeflate(serialized)
-		local compressedForPrint = LibDeflate:EncodeForPrint(compressed)
-		return sharingVersion..":"..compressedForPrint
+		local serialized = C_EncodingUtil.SerializeCBOR(exportOptions)
+		local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate)
+		local encoded = C_EncodingUtil.EncodeBase64(compressed)
+		return sharingVersion..":"..encoded
 	end
 	local _, addonTable = ...
 	addonTable.GetExportString = function(requestAll) return GetExportString(requestAll) end
@@ -468,12 +466,12 @@ do
 
 		local versionPlain, importData = string:match("^(%w+):(.+)$")
 		if versionPlain ~= sharingVersion then return end
-		local decodedForPrint = LibDeflate:DecodeForPrint(importData)
-		if not decodedForPrint then return end
-		local decompressed = LibDeflate:DecompressDeflate(decodedForPrint)
-		if not decompressed then return end
-		local success, data = LibSerialize:Deserialize(decompressed)
-		if not success or not data.version or data.version ~= sharingVersion then return end
+        local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
+        if not decodedForPrint then return end
+        local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, Enum.CompressionMethod.Deflate)
+        if not decompressed then return end
+        local data = C_EncodingUtil.DeserializeCBOR(decompressed)
+		if not data then return end
 		local importSucceeded = PreProcess(data)
 		return importSucceeded
 	end

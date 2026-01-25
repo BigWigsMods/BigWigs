@@ -57,8 +57,6 @@ Libs\AceConfigRegistry-3.0\AceConfigRegistry-3.0.lua
 Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.lua
 Libs\AceDBOptions-3.0\AceDBOptions-3.0.lua
 Libs\LibDDI-1.0\lib.lua
-Libs\LibDeflate\LibDeflate.lua
-Libs\LibSerialize\LibSerialize.lua
 
 Options.lua
 Sharing.lua
