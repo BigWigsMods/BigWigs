@@ -45,6 +45,7 @@ local configFrame
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local toggleOptionsStatusTable, lastOptionsTab = {}, nil
+local lastTabSelected, lastTreeGroupSelected, lastBossModuleGroup = nil, nil, nil
 
 local C_EncounterJournal_GetSectionInfo = loader.isClassic and function(key)
 	local info = (loader.isCata or loader.isMists) and C_EncounterJournal.GetSectionInfo(key)
@@ -1442,6 +1443,7 @@ local function populateToggleOptions(widget, module)
 end
 
 function showToggleOptions(widget, event, group, noScrollReset)
+	lastBossModuleGroup = group
 	widget:SetUserData("bossIndex", group)
 	-- reset scroll bar if not hitting the back button
 	if not noScrollReset then
@@ -1493,7 +1495,7 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	outerContainer:SetFullWidth(true)
 	treeWidget:AddChild(outerContainer)
 
-	local innerContainer = AceGUI:Create("DropdownGroup")
+	local innerContainer = AceGUI:Create("BossDropdownGroup") -- Adds extra share buttons
 	innerContainer:SetTitle(L.selectEncounter)
 	innerContainer:SetLayout("Flow")
 	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
@@ -1517,14 +1519,27 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	outerContainer:ResumeLayout()
 	outerContainer:PerformLayout() -- Everything added, gogo
 
-	-- Find the first enabled module and select that in the dropdown if possible.
+	-- Find the last opened module or the first enabled module and select that in the dropdown if possible.
 	local index = 1
-	for i = 1, #zoneSort do
-		local name = zoneSort[i]
-		local m = BigWigs:GetBossModule(name, true)
-		if m and m:IsEnabled() and m:GetJournalID() then
-			index = i
-			break
+	local bossFound = false
+	if lastBossModuleGroup then
+		for i = 1, #zoneSort do
+			if zoneSort[i] == lastBossModuleGroup then
+				index = i
+				bossFound = true
+				break
+			end
+		end
+	end
+
+	if not bossFound then
+		for i = 1, #zoneSort do
+			local name = zoneSort[i]
+			local m = BigWigs:GetBossModule(name, true)
+			if m and m:IsEnabled() and m:GetJournalID() then
+				index = i
+				break
+			end
 		end
 	end
 	innerContainer:SetGroup(zoneSort[index])
@@ -1600,6 +1615,7 @@ do
 	local remappedZones = loader.remappedZones
 
 	local function onTreeGroupSelected(widget, event, value)
+		lastTreeGroupSelected = value
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
 		local instanceIdOrMapId = value:match("\001(-?%d+)$")
@@ -1685,6 +1701,7 @@ do
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
+		lastTabSelected = value
 
 		if value == "options" then
 			configFrame:SetTitle("BigWigs")
@@ -1845,7 +1862,7 @@ do
 				local current = treeTbl[parent].value
 				tree:SelectByValue(moduleList and ("%s\001%d"):format(current, id) or current)
 			else
-				tree:SelectByValue(defaultHeader)
+				tree:SelectByValue(lastTreeGroupSelected or defaultHeader)
 			end
 
 			widget:AddChild(tree)
@@ -1892,8 +1909,9 @@ do
 			{ text = L.dungeonBosses, value = "littlewigs" },
 		})
 		tabs:SetCallback("OnGroupSelected", onTabGroupSelected)
-		tabs:SelectTab("options")
+		tabs:SelectTab(lastTabSelected or "options")
 		bw:AddChild(tabs)
+		bw.tabs = tabs
 
 		bw:Show()
 		self:SendMessage("BigWigs_OpenGUI")

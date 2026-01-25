@@ -3,6 +3,7 @@
 
 <Script file="Options.lua"/>
 <Script file="Sharing.lua"/>
+<Script file="InstanceSharing.lua"/>
 
 </Ui>
 
