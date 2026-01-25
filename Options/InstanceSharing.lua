@@ -88,11 +88,14 @@ do
 				check:SetDisabled(not hasImports[checkName])
 				check:SetValue(hasImports[checkName])
 			end
+			local zoneName = GetRealZoneText(lastImportData.zone)
+			widget.parent.parent:SetStatusText("Importing "..zoneName)
         else
 			tab.importButton:SetDisabled(true)
 			for _, check in pairs(tab.importChecks) do
 				check:SetDisabled(true)
 			end
+            widget.parent.parent:SetStatusText("Paste a valid import string")
         end
     end
 
@@ -196,6 +199,11 @@ do
 
             widget.checks = {flags = flagsCheck, sounds = soundsCheck, colors = colorsCheck, privateAuras = privateAuraCheck}
 			updateExportString(multiline)
+
+			if widget.parent then
+				local zoneName = GetRealZoneText(lastExportData.zone)
+            	widget.parent:SetStatusText("Exporting "..zoneName)
+			end
 		else
 			-- In Midnight we only show the PA export for now.
 			if not isMidnight then
@@ -241,6 +249,9 @@ do
 
 			widget.importButton = importButton
 			widget.importChecks = {flags = flagsCheck, sounds = soundsCheck, colors = colorsCheck, privateAuras = privateAuraCheck}
+			if widget.parent and widget.parent.SetStatusText then
+           		widget.parent:SetStatusText("Paste a valid import string")
+			end
 		end
 
 		widget:ResumeLayout()
@@ -257,12 +268,7 @@ do
 			f.frame:SetSize(400, 300)
 			frame = f
         end
-        frame:SetStatusText("")
-
-		if exportInfo.zone then
-			local zoneName = GetRealZoneText(exportInfo.zone)
-            frame:SetStatusText("Exporting "..zoneName)
-		end
+        frame:SetStatusText("Paste a valid import string")
 
 		local tabs = AceGUI:Create("TabGroup")
 		tabs:SetLayout("Flow")
