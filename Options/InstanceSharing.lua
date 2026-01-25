@@ -1,17 +1,15 @@
 local _, addonTable = ...
 local AceGUI = LibStub("AceGUI-3.0")
-local LibSerialize = LibStub("LibSerialize")
-local LibDeflate = LibStub("LibDeflate")
 local instanceExportPrefix = "BWIS1"
 
 local InstanceSharing = {}
 InstanceSharing.SendMessage = BigWigsLoader.SendMessage
 
 local function createExportString(exportTable)
-	local serialized = LibSerialize:Serialize(exportTable)
-	local compressed = LibDeflate:CompressDeflate(serialized)
-	local compressedForPrint = LibDeflate:EncodeForPrint(compressed)
-    return instanceExportPrefix..":"..compressedForPrint
+    local serialized = C_EncodingUtil.SerializeCBOR(exportTable);
+    local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate);
+    local encoded = C_EncodingUtil.EncodeBase64(compressed);
+    return instanceExportPrefix..":"..encoded;
 end
 
 local exportFrame = nil
@@ -61,12 +59,12 @@ do
         if type(string) ~= "string" then return end
 		local preFix, importData = string:match("^(%w+):(.+)$")
 		if preFix ~= instanceExportPrefix then return end
-		local decodedForPrint = LibDeflate:DecodeForPrint(importData)
-		if not decodedForPrint then return end
-		local decompressed = LibDeflate:DecompressDeflate(decodedForPrint)
-		if not decompressed then return end
-		local success, data = LibSerialize:Deserialize(decompressed)
-		if not success then return end
+        local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
+        if not decodedForPrint then return end
+        local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, Enum.CompressionMethod.Deflate);
+        if not decompressed then return end
+        local data = C_EncodingUtil.DeserializeCBOR(decompressed);
+		if not data then return end
         lastImportData = data
 		return {
             flags =  lastImportData.includeFlags,
