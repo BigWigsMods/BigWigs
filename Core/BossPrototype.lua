@@ -228,9 +228,19 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
+
+--- Set this module to have custom timers to and to allow disabling of Blizzard's timeline timers.
+-- @boolean
 function boss:UseCustomTimers(hide)
 	if hide then
 		self.useCustomTimers = true
+	end
+end
+
+function boss:CustomTimersEnabled()
+	local TP = BigWigs:GetPlugin("Timeline", true)
+	if TP and TP.db.profile.show_custom_timers then
+		return true
 	end
 end
 
@@ -3526,8 +3536,7 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:Bar(key, length, text, icon)
-		local TP = BigWigs:GetPlugin("Timeline", true)
-		if TP and not TP.db.profile.show_custom_timers then
+		if not self:CustomTimersEnabled() then
 			return
 		end
 		local lengthType = type(length)
@@ -3578,8 +3587,7 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CDBar(key, length, text, icon)
-		local TP = BigWigs:GetPlugin("Timeline", true)
-		if TP and not TP.db.profile.show_custom_timers then
+		if not self:CustomTimersEnabled() then
 			return
 		end
 		local lengthType = type(length)
