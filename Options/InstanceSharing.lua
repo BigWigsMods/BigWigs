@@ -255,7 +255,6 @@ do
         frame:SetStatusText("")
 
 		if exportInfo.zone then
-			print(exportInfo.zone)
 			local zoneName = GetRealZoneText(exportInfo.zone)
             frame:SetStatusText("Exporting "..zoneName)
 		end
