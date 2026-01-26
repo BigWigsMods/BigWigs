@@ -1979,11 +1979,12 @@ end
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
 	if not self:IsSecret(unit) then
+		local hp = UnitHealth(unit)
 		local maxHP = UnitHealthMax(unit)
-		if self:IsSecret(maxHP) or maxHP == 0 then
+		if self:IsSecret(hp) or maxHP == 0 then
 			return 0
 		else
-			return UnitHealth(unit) / maxHP * 100
+			return hp / maxHP * 100
 		end
 	end
 end
