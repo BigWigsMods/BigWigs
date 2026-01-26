@@ -179,7 +179,9 @@ do
 		if tex then
 			local icon = bar.candyBarIconFrame
 			bar:SetIcon(nil)
-			icon:SetTexture(tex)
+			if icon.SetToDefaults then
+				icon:SetToDefaults()
+			end
 			icon:Show()
 			if bar.iconPosition == "RIGHT" then
 				icon:SetPoint("BOTTOMLEFT", bar, "BOTTOMRIGHT", 5, 0)
@@ -190,6 +192,11 @@ do
 			bar:Set("bigwigs:restoreicon", tex)
 
 			local iconBd = bar.candyBarIconFrameBackdrop
+			if iconBd.SetToDefaults then -- This SHOULDN'T be needed since we reset the icon frame, but for now iconBd:IsAnchoringSecret() is returning true and we need to reset that
+				iconBd:SetToDefaults()
+				iconBd:SetFrameLevel(0) -- From LibCandyBar
+			end
+
 			iconBd:SetBackdrop(backdropBorder)
 			iconBd:SetBackdropColor(.1,.1,.1,1)
 			iconBd:SetBackdropBorderColor(0,0,0,1)
@@ -198,6 +205,8 @@ do
 			iconBd:SetPoint("TOPLEFT", icon, "TOPLEFT", -2, 2)
 			iconBd:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 2, -2)
 			iconBd:Show()
+			icon:SetTexture(tex)
+			icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		end
 
 		bar.candyBarLabel:ClearAllPoints()
@@ -358,7 +367,9 @@ do
 		if tex then
 			local icon = bar.candyBarIconFrame
 			bar:SetIcon(nil)
-			icon:SetTexture(tex)
+			if icon.SetToDefaults then
+				icon:SetToDefaults()
+			end
 			icon:Show()
 			if bar.iconPosition == "RIGHT" then
 				icon:SetPoint("BOTTOMLEFT", bar, "BOTTOMRIGHT", E and (E.PixelMode and 1 or 5) or 1, 0)
@@ -369,6 +380,10 @@ do
 			bar:Set("bigwigs:restoreicon", tex)
 
 			local iconBd = bar.candyBarIconFrameBackdrop
+			if iconBd.SetToDefaults then -- This SHOULDN'T be needed since we reset the icon frame, but for now iconBd:IsAnchoringSecret() is returning true and we need to reset that
+				iconBd:SetToDefaults()
+				iconBd:SetFrameLevel(0) -- From LibCandyBar
+			end
 
 			if E then
 				iconBd:SetTemplate("Transparent")
@@ -387,6 +402,8 @@ do
 				iconBd:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 1, -1)
 			end
 			iconBd:Show()
+			icon:SetTexture(tex)
+			icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		end
 
 		bd:Show()
