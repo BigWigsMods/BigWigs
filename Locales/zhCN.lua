@@ -657,6 +657,7 @@ L.breakMinutes = "休息时间将在 %d 分钟后结束！"
 L.breakSeconds = "休息时间将在 %d 秒后结束！"
 L.breakFinished = "休息时间结束！"
 
+--L.indicatorTitle = "Spell Indicators"
 L.indicatorType_Deadly = "灭团技"
 L.indicatorType_Bleed = "流血"
 L.indicatorType_Magic = "魔法"

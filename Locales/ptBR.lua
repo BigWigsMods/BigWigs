@@ -657,6 +657,7 @@ L.breakMinutes = "Intervalo acaba em %d |4minuto:minutos;!"
 L.breakSeconds = "Intervalo acaba em %d |4segundo:segundos;!"
 L.breakFinished = "Intervalo acabou!"
 
+--L.indicatorTitle = "Spell Indicators"
 L.indicatorType_Deadly = "Mortal"
 L.indicatorType_Bleed = "Sangramento"
 L.indicatorType_Magic = "Magia"

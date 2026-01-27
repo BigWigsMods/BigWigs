@@ -657,6 +657,7 @@ L.breakMinutes = "%d분 후 휴식 종료!"
 L.breakSeconds = "%d초 후 휴식 종료!"
 L.breakFinished = "휴식 시간이 끝났습니다!"
 
+--L.indicatorTitle = "Spell Indicators"
 L.indicatorType_Deadly = "치명적"
 L.indicatorType_Bleed = "출혈"
 L.indicatorType_Magic = "마법"

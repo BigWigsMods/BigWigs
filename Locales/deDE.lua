@@ -657,6 +657,7 @@ L.breakMinutes = "Pause endet in %d |4Minute:Minuten;!"
 L.breakSeconds = "Pause endet in %d |4Sekunde:Sekunden;!"
 L.breakFinished = "Die Pause ist vorbei!"
 
+--L.indicatorTitle = "Spell Indicators"
 L.indicatorType_Deadly = "Tödlich"
 L.indicatorType_Bleed = "Blutung"
 L.indicatorType_Magic = "Magischer"
