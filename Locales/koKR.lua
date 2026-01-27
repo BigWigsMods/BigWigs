@@ -657,6 +657,14 @@ L.breakMinutes = "%d분 후 휴식 종료!"
 L.breakSeconds = "%d초 후 휴식 종료!"
 L.breakFinished = "휴식 시간이 끝났습니다!"
 
+L.indicatorType_Deadly = "치명적"
+L.indicatorType_Bleed = "출혈"
+L.indicatorType_Magic = "마법"
+L.indicatorType_Dispels = "무효화"
+L.indicatorType_Tank = "방어 전담"
+L.indicatorType_Healer = "치유 전담"
+--L.indicatorType_Damager = "Damager"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

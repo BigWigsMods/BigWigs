@@ -657,6 +657,14 @@ L.breakMinutes = "Перерыв закончится через %d |4минут
 L.breakSeconds = "Перерыв закончится через %d секунд!"
 L.breakFinished = "Перерыв закончен!"
 
+L.indicatorType_Deadly = "Смертельные"
+L.indicatorType_Bleed = "Кровотечение"
+L.indicatorType_Magic = "Магия"
+L.indicatorType_Dispels = "Развеивание"
+L.indicatorType_Tank = "Танк"
+L.indicatorType_Healer = "Лекарь"
+L.indicatorType_Damager = "Боец"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

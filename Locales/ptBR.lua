@@ -657,6 +657,14 @@ L.breakMinutes = "Intervalo acaba em %d |4minuto:minutos;!"
 L.breakSeconds = "Intervalo acaba em %d |4segundo:segundos;!"
 L.breakFinished = "Intervalo acabou!"
 
+L.indicatorType_Deadly = "Mortal"
+L.indicatorType_Bleed = "Sangramento"
+L.indicatorType_Magic = "Magia"
+L.indicatorType_Dispels = "Dissipa"
+L.indicatorType_Tank = "Tanque"
+L.indicatorType_Healer = "Curador"
+L.indicatorType_Damager = "Dano"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

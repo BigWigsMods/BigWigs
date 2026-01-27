@@ -657,6 +657,14 @@ L.breakMinutes = "Pause endet in %d |4Minute:Minuten;!"
 L.breakSeconds = "Pause endet in %d |4Sekunde:Sekunden;!"
 L.breakFinished = "Die Pause ist vorbei!"
 
+L.indicatorType_Deadly = "Tödlich"
+L.indicatorType_Bleed = "Blutung"
+L.indicatorType_Magic = "Magischer"
+L.indicatorType_Dispels = "Bannungen"
+L.indicatorType_Tank = "Tank"
+L.indicatorType_Healer = "Heiler"
+L.indicatorType_Damager = "Schaden"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

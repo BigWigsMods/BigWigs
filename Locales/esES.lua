@@ -657,6 +657,14 @@ L.breakMinutes = "¡El descanso termina en %d |4minuto:minutos;!"
 L.breakSeconds = "¡El descanso termina en %d |4segundo:segundos;!"
 L.breakFinished = "¡El descanso ha terminado!"
 
+L.indicatorType_Deadly = "Letalidad"
+L.indicatorType_Bleed = "Sangrar"
+L.indicatorType_Magic = "Mágica"
+L.indicatorType_Dispels = "Disipación"
+L.indicatorType_Tank = "Tanque"
+L.indicatorType_Healer = "Sanador"
+L.indicatorType_Damager = "Daño"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

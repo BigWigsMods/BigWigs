@@ -656,6 +656,15 @@ L.breakMinutes = "Break ends in %d |4minute:minutes;!"
 L.breakSeconds = "Break ends in %d |4second:seconds;!"
 L.breakFinished = "Break time is now over!"
 
+L.indicatorTitle = "Spell Indicators"
+L.indicatorType_Deadly = "Deadly"
+L.indicatorType_Bleed = "Bleed"
+L.indicatorType_Magic = "Magic"
+L.indicatorType_Dispels = "Dispels"
+L.indicatorType_Tank = "Tank"
+L.indicatorType_Healer = "Healer"
+L.indicatorType_Damager = "Damager"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

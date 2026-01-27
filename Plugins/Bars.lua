@@ -62,6 +62,7 @@ plugin.defaultDB = {
 	normalHeight = 18,
 	expWidth = 260,
 	expHeight = 22,
+	spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
 	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
 	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
 }
@@ -130,6 +131,10 @@ local function updateProfile()
 	end
 	if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
 		db.expHeight = plugin.defaultDB.expHeight
+	end
+
+	if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators then
+		db.spellIndicators = plugin.defaultDB.spellIndicators
 	end
 
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
@@ -235,6 +240,7 @@ local function updateProfile()
 		bar:SetIconPosition(db.iconPosition)
 		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 		if indicatorFrame then
+			indicatorFrame:ClearTextures()
 			indicatorFrame:SetIndicatorSize(height)
 			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"), db.iconPosition)
 		end
@@ -259,6 +265,7 @@ local function updateProfile()
 		bar:SetIconPosition(db.iconPosition)
 		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 		if indicatorFrame then
+			indicatorFrame:ClearTextures()
 			indicatorFrame:SetIndicatorSize(db.expHeight)
 			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"), db.iconPosition)
 		end
@@ -526,17 +533,49 @@ do
 						},
 						disabled = function() return not db.icon end,
 					},
+					spellIndicators = {
+						type = "multiselect",
+						name = L.indicatorTitle,
+						order = 18,
+						width = 2,
+						control = "Dropdown",
+						values = {
+							[1] = "|A:icons_16x16_deadly:16:16|a " .. L.indicatorType_Deadly,
+							[2] = "|A:icons_16x16_enrage:16:16|a " .. BigWigsAPI:GetLocale("BigWigs: Common").enrage,
+							[4] = "|A:icons_16x16_bleed:16:16|a " .. L.indicatorType_Bleed,
+							[8] = "|A:icons_16x16_magic:16:16|a " .. L.indicatorType_Magic,
+							[16] = "|A:icons_16x16_disease:16:16|a " .. BigWigsAPI:GetLocale("BigWigs: Common").disease,
+							[32] = "|A:icons_16x16_curse:16:16|a " .. BigWigsAPI:GetLocale("BigWigs: Common").curse,
+							[64] = "|A:icons_16x16_poison:16:16|a " .. BigWigsAPI:GetLocale("BigWigs: Common").poison,
+							[128] = "|A:icons_16x16_tank:16:16|a " .. L.indicatorType_Tank,
+							[256] = "|A:icons_16x16_heal:16:16|a " .. L.indicatorType_Healer,
+							[512] = "|A:icons_16x16_damage:16:16|a " .. L.indicatorType_Damager,
+						},
+						get = function(info, entry)
+							return bit.band(plugin.db.profile[info[#info]], entry) == entry
+						end,
+						set = function(info, entry, value)
+							if value then
+								plugin.db.profile[info[#info]] = plugin.db.profile[info[#info]] + entry
+							else
+								plugin.db.profile[info[#info]] = plugin.db.profile[info[#info]] - entry
+							end
+							updateProfile()
+						end,
+						disabled = function() return not db.icon end,
+						hidden = function() return not BigWigsLoader.isRetail end,
+					},
 					header3 = {
 						type = "header",
 						name = "",
-						order = 18,
+						order = 19,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 19,
+						order = 20,
 					},
 				},
 			},
@@ -1308,11 +1347,15 @@ end
 
 do
 	local indicatorCache = {}
-	local function RemoveIndicators(self)
+	local function ClearTextures(self)
 		self.RoleIndicators[1]:SetTexture(nil)
 		self.RoleIndicators[2]:SetTexture(nil)
 		self.OtherIndicators[1]:SetTexture(nil)
 		self.OtherIndicators[2]:SetTexture(nil)
+	end
+
+	local function RemoveIndicators(self)
+		self:ClearTextures()
 		self:ClearAllPoints()
 		self:SetParent(UIParent)
 		self.bar = nil
@@ -1331,16 +1374,15 @@ do
 	local function AddIndicators(self, eventId, position)
 		-- Constants.EncounterTimelineIconMasks.EncounterTimelineRoleIcons = 896
 		-- Constants.EncounterTimelineIconMasks.EncounterTimelineOtherIcons = 127
-		-- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
 		self:ClearAllPoints()
 		if position == "LEFT" then
 			self:SetPoint("RIGHT", self.bar.candyBarIconFrame, "LEFT", -4, 0)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, 1023), self.RoleIndicators)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, 1023), self.OtherIndicators)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, db.spellIndicators), self.RoleIndicators)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, db.spellIndicators), self.OtherIndicators)
 		else
 			self:SetPoint("LEFT", self.bar.candyBarIconFrame, "RIGHT", 4, 0)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, 1023), self.RoleIndicatorsReverse)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, 1023), self.OtherIndicatorsReverse)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, db.spellIndicators), self.RoleIndicatorsReverse)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, db.spellIndicators), self.OtherIndicatorsReverse)
 		end
 	end
 
@@ -1354,6 +1396,7 @@ do
 			indicatorFrame:SetPoint("CENTER")
 			indicatorFrame:Hide()
 			indicatorFrame:SetSize(34,34)
+			indicatorFrame.ClearTextures = ClearTextures
 			indicatorFrame.RemoveIndicators = RemoveIndicators
 			indicatorFrame.SetIndicatorSize = SetIndicatorSize
 			indicatorFrame.AddIndicators = AddIndicators

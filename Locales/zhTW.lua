@@ -657,6 +657,14 @@ L.breakMinutes = "休息時間將在 %d 分鐘後結束！"
 L.breakSeconds = "休息時間將在 %d 秒後結束！"
 L.breakFinished = "休息時間結束！"
 
+L.indicatorType_Deadly = "致命"
+L.indicatorType_Bleed = "流血"
+L.indicatorType_Magic = "魔法"
+L.indicatorType_Dispels = "驅散"
+L.indicatorType_Tank = "坦克"
+L.indicatorType_Healer = "治療者"
+L.indicatorType_Damager = "傷害輸出"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
