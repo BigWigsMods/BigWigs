@@ -72,7 +72,7 @@ do
 				zone = parent:GetUserData("zone"),
 				exportTable = allBossesDb,
 			}
-			InstanceSharing:OpenExportFrame(exportInfo)
+			InstanceSharing:OpenExportFrame(exportInfo, dropdownGroup)
 		end)
 		exportInstanceBtn:SetHeight(20)
 		local font = exportInstanceBtn.Text:GetFont()
@@ -119,6 +119,8 @@ local exportSettings = CopyTable(defaultSettings)
 local importSettings = CopyTable(defaultSettings)
 
 local applyImport, verifyImportString = nil, nil
+
+local bossWidget = nil
 
 -------------------------------------------------------------------------------
 -- Options
@@ -206,7 +208,9 @@ local function getImportSettings(widget)
 				func = function()
 					local success = applyImport()
 					if success then
-						BigWigsOptions:Open()
+						if bossWidget then
+							bossWidget:SetGroup(bossWidget.localstatus.selected) -- refreshes the displayed settings
+						end
 						exportFrame:Hide()
 					end
 				end,
@@ -318,8 +322,18 @@ local function onExportTabGroupSelected(widget, callback, tab)
 	widget:PerformLayout()
 end
 
-local function exportPopup(_, exportInfo)
+local function CloseExportFrame(widget)
+	if widget then
+		widget:ReleaseChildren()
+		AceGUI:Release(widget)
+		exportFrame = nil
+	end
+end
+
+local function exportPopup(_, exportInfo, dropdownGroup)
 	local frame = exportFrame
+	bossWidget = dropdownGroup
+
 	if not frame then
 		local f = AceGUI:Create("Frame")
 
@@ -348,14 +362,15 @@ local function exportPopup(_, exportInfo)
 
 	frame:AddChild(tabs)
 
-	frame:SetCallback("OnClose",function(widget)
-		tabs:SelectTab("import")
-		BigWigsOptions:Open()
-		widget.frame:Hide()
+	frame:SetCallback("OnClose",function(self)
+		CloseExportFrame(exportFrame)
 	end)
+	BigWigsLoader.RegisterMessage(InstanceSharing, "BigWigs_CloseGUI", function()
+		CloseExportFrame(exportFrame)
+	 end)
+
 
 	frame:Show()
-	BigWigsOptions:Close()
 end
 
 InstanceSharing.OpenExportFrame = exportPopup
