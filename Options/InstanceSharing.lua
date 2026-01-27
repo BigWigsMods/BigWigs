@@ -118,7 +118,7 @@ local defaultSettings = {
 local exportSettings = CopyTable(defaultSettings)
 local importSettings = CopyTable(defaultSettings)
 
-local applyImport, verifyImportString = nil, nil
+local applyImport, verifyImportString, GetSelectedInstanceName = nil, nil, nil
 
 local bossWidget = nil
 
@@ -225,7 +225,7 @@ local function getImportSettings(widget)
 					return not isSomethingSelected or not lastImportData
 				end,
 				confirm = function()
-					local zoneName = GetRealZoneText(lastImportData.zone)
+					local zoneName = GetSelectedInstanceName(lastImportData.zone)
 					local profileName = BigWigsLoader.db:GetCurrentProfile()
 					return L.confirm_instance_import:format(profileName, zoneName)
 				end,
@@ -311,7 +311,7 @@ local function onExportTabGroupSelected(widget, callback, tab)
 		acr:RegisterOptionsTable("Import Instance Tab", getImportSettings(widget))
 		acd:Open("Import Instance Tab", widget)
 	else
-		local zoneName = GetRealZoneText(lastExportData.zone)
+		local zoneName = GetSelectedInstanceName(lastExportData.zone)
 		exportFrame:SetStatusText(L.exporting_instance:format(zoneName))
 
 		acr:RegisterOptionsTable("Export Instance Tab", getExportSettings(widget))
@@ -378,6 +378,20 @@ InstanceSharing.OpenExportFrame = exportPopup
 -------------------------------------------------------------------------------
 -- Functions
 --
+
+local GetMapInfo = C_Map.GetMapInfo
+function GetSelectedInstanceName(zoneId)
+	if zoneId < 0 then
+		local tbl = GetMapInfo(-zoneId)
+		if tbl then
+			return tbl.name
+		else
+			return tostring(zoneId)
+		end
+	else
+		return GetRealZoneText(zoneId)
+	end
+end
 
 function InstanceSharing:CreateExportString(exportTable, prefix)
     local serialized = C_EncodingUtil.SerializeCBOR(exportTable);
@@ -453,7 +467,7 @@ do
 		lastImportData = nil
 		local hasImports = parseImportString(value)
 		if hasImports then
-			local zoneName = GetRealZoneText(lastImportData.zone)
+			local zoneName = GetSelectedInstanceName(lastImportData.zone)
 			exportFrame:SetStatusText(L.importing_instance:format(zoneName))
 		else
 			exportFrame:SetStatusText(L.status_text_paste_import)
