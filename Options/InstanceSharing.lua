@@ -1,301 +1,18 @@
+local InstanceSharing = {}
+
+-------------------------------------------------------------------------------
+-- Libraries
+--
+
 local AceGUI = LibStub("AceGUI-3.0")
-local instanceExportPrefix = "BWIS1"
+local acd = LibStub("AceConfigDialog-3.0")
+local acr = LibStub("AceConfigRegistry-3.0")
 
-local function createExportString(exportTable)
-    local serialized = C_EncodingUtil.SerializeCBOR(exportTable);
-    local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate);
-    local encoded = C_EncodingUtil.EncodeBase64(compressed);
-    return instanceExportPrefix..":"..encoded;
-end
+-------------------------------------------------------------------------------
+-- Custom Widgets
+--
 
-local isMidnight = BigWigsLoader.isMidnight
-local exportFrame = nil
-local lastImportData = nil
-local lastExportData = nil
 do
-    local function  updateExportString(widget, event, value)
-        local tab = widget.parent
-        local exportFlags =  tab.checks.flags and tab.checks.flags:GetValue()
-        local exportSounds = tab.checks.sounds and tab.checks.sounds:GetValue()
-        local exportColors = tab.checks.colors and tab.checks.colors:GetValue()
-        local exportPrivateAuras = tab.checks.privateAuras and tab.checks.privateAuras:GetValue()
-        local textBox = tab.multiline
-        local exportTable = lastExportData.data
-        local filteredExportTable = {
-            includeFlags = exportFlags,
-            includeSounds = exportSounds,
-            includeColors = exportColors,
-            includePrivateAuras = exportPrivateAuras,
-			zone = lastExportData.zone,
-            exportData = {},
-        }
-        for optionsTable, doExport in pairs({flags = exportFlags, sounds = exportSounds or exportPrivateAuras, colors = exportColors}) do
-            if doExport then
-                for moduleName, settings in pairs(exportTable) do
-                    if settings[optionsTable] then
-                        filteredExportTable.exportData[moduleName] = filteredExportTable.exportData[moduleName] or {}
-                        filteredExportTable.exportData[moduleName][optionsTable] = CopyTable(settings[optionsTable] or {})
-                        if optionsTable == "sounds" and not (exportSounds and exportPrivateAuras) then -- Filter away extra sound options if only one is selected
-							local count = 0
-							for key, value in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
-								local shouldKeep = (key == "privateaura" and exportPrivateAuras) or (key ~= "privateaura" and exportSounds)
-								if not shouldKeep then
-									filteredExportTable.exportData[moduleName][optionsTable][key] = nil
-								else
-									count = count + 1
-								end
-							end
-                            if count == 0 then
-                                filteredExportTable.exportData[moduleName][optionsTable] = nil
-                            end
-                        end
-                    end
-                end
-            end
-        end
-        local exportString = createExportString(filteredExportTable)
-        textBox:SetText(exportString)
-    end
-
-    local function parseImportString(string)
-        if type(string) ~= "string" then return end
-		local preFix, importData = string:match("^(%w+):(.+)$")
-		if preFix ~= instanceExportPrefix then return end
-        local decode_success, decodedForPrint = xpcall(C_EncodingUtil.DecodeBase64, function() return end, importData)
-        if not decode_success or not decodedForPrint then return end
-        local decomp_success, decompressed =  xpcall(C_EncodingUtil.DecompressString, function() return end, decodedForPrint, Enum.CompressionMethod.Deflate)
-        if not decomp_success or not decompressed then return end
-        local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, function() return end, decompressed)
-		if not deserialize_success or not data then return end
-        lastImportData = data
-		return {
-            flags =  lastImportData.includeFlags,
-            colors = lastImportData.includeColors,
-            sounds = lastImportData.includeSounds,
-            privateAuras = lastImportData.includePrivateAuras,
-        }
-    end
-
-
-    local function verifyImportString(widget, event, value)
-        local tab = widget.parent
-        local multiline = tab.multiline
-        lastImportData = nil
-        local hasImports = parseImportString(value)
-        if hasImports then
-			tab.importButton:SetDisabled(false)
-			for checkName, check in pairs(tab.importChecks) do
-				check:SetDisabled(not hasImports[checkName])
-				check:SetValue(hasImports[checkName])
-			end
-			local zoneName = GetRealZoneText(lastImportData.zone)
-			widget.parent.parent:SetStatusText("Importing |cFF33FF99"..zoneName.."|r")
-        else
-			tab.importButton:SetDisabled(true)
-			for _, check in pairs(tab.importChecks) do
-				check:SetDisabled(true)
-			end
-            widget.parent.parent:SetStatusText("Paste a valid import string")
-        end
-    end
-
-	local function ApplyImport(widget)
-		local tab = widget.parent
-		local flags = tab.importChecks.flags:GetValue()
-		local sounds = tab.importChecks.sounds:GetValue()
-		local colors = tab.importChecks.colors:GetValue()
-        local privateAuras = tab.importChecks.privateAuras:GetValue()
-		local soundModule = BigWigs:GetPlugin("Sounds")
-		local colorModule = BigWigs:GetPlugin("Colors")
-		BigWigsLoader:LoadZone(lastImportData.zone)
-		for moduleName, data in pairs(lastImportData.exportData) do
-			if flags and data.flags then
-				local module = BigWigs:GetBossModule(moduleName:sub(16))
-				if module then
-					if module.SetupOptions then module:SetupOptions() end
-					if module.db and module.db.profile then
-						for key, value in pairs(module.db.profile) do
-							if data.flags[key] then
-								module.db.profile[key] = data.flags[key]
-							end
-						end
-					end
-				end
-			end
-			if sounds then
-				for soundSettingName, savedModules in pairs(soundModule.db.profile) do
-                    if soundSettingName ~= "privateaura" or privateAuras then -- only import private auras if the user allowed it
-                        if data.sounds and data.sounds[soundSettingName] then
-                            soundModule.db.profile[soundSettingName][moduleName] = data.sounds[soundSettingName]
-                        else
-                            soundModule.db.profile[soundSettingName][moduleName] = nil
-                        end
-                    end
-				end
-			end
-			if colors then
-				for colorSettingName, savedModules in pairs(colorModule.db.profile) do
-					if data.colors and data.colors[colorSettingName] then
-						colorModule.db.profile[colorSettingName][moduleName] = data.colors[colorSettingName]
-					else
-						colorModule.db.profile[colorSettingName][moduleName] = nil
-					end
-				end
-			end
-		end
-        BigWigsOptions:Open()
-        exportFrame:Hide()
-	end
-
-	local function onExportTabGroupSelected(widget, callback, tab)
-		widget:PauseLayout()
-		widget:ReleaseChildren()
-
-        local multiline
-		if tab == "import" then
-			multiline = AceGUI:Create("ImportStringMultiline")
-            multiline:SetCallback("OnEnterPressed", verifyImportString)
-		else -- export
-			multiline = AceGUI:Create("NoAcceptMultiline")
-		end
-        multiline:DisableButton(true)
-        multiline:SetLabel("")
-        multiline:SetFullWidth(true)
-		multiline:SetText("")
-		widget:AddChild(multiline)
-        widget.multiline = multiline
-
-        if tab == "export" then
-			-- In Midnight we only show the PA export for now.
-			if not isMidnight then
-				local flagsCheck = AceGUI:Create("CheckBox")
-				flagsCheck:SetLabel("Flags")
-				flagsCheck:SetFullWidth(true)
-				flagsCheck:SetCallback("OnValueChanged", updateExportString)
-				widget:AddChild(flagsCheck)
-
-				local soundsCheck = AceGUI:Create("CheckBox")
-				soundsCheck:SetLabel("Sounds")
-				soundsCheck:SetValue(true)
-				soundsCheck:SetWidth(150)
-				soundsCheck:SetCallback("OnValueChanged", updateExportString)
-				widget:AddChild(soundsCheck)
-			end
-
-            local privateAuraCheck = AceGUI:Create("CheckBox")
-			privateAuraCheck:SetLabel("Private Auras")
-			privateAuraCheck:SetValue(true)
-            privateAuraCheck:SetWidth(150)
-            privateAuraCheck:SetCallback("OnValueChanged", updateExportString)
-			widget:AddChild(privateAuraCheck)
-
-			if not isMidnight then
-				local colorsCheck = AceGUI:Create("CheckBox")
-				colorsCheck:SetLabel("Colors")
-				colorsCheck:SetValue(true)
-				colorsCheck:SetFullWidth(true)
-				colorsCheck:SetCallback("OnValueChanged", updateExportString)
-				widget:AddChild(colorsCheck)
-			end
-
-            widget.checks = {flags = flagsCheck, sounds = soundsCheck, colors = colorsCheck, privateAuras = privateAuraCheck}
-			updateExportString(multiline)
-
-			if widget.parent then
-				local zoneName = GetRealZoneText(lastExportData.zone)
-            	widget.parent:SetStatusText("Exporting |cFF33FF99"..zoneName.."|r")
-			end
-		else
-			-- In Midnight we only show the PA export for now.
-			if not isMidnight then
-				local flagsCheck = AceGUI:Create("CheckBox")
-				flagsCheck:SetLabel("Flags")
-				flagsCheck:SetValue(true)
-				flagsCheck:SetFullWidth(true)
-				flagsCheck:SetDisabled(true)
-				widget:AddChild(flagsCheck)
-
-				local soundsCheck = AceGUI:Create("CheckBox")
-				soundsCheck:SetLabel("Sounds")
-				soundsCheck:SetValue(true)
-				soundsCheck:SetDisabled(true)
-				soundsCheck:SetWidth(150)
-				widget:AddChild(soundsCheck)
-			end
-
-			local privateAuraCheck = AceGUI:Create("CheckBox")
-			privateAuraCheck:SetLabel("Private Auras")
-			privateAuraCheck:SetValue(true)
-			privateAuraCheck:SetDisabled(true)
-            privateAuraCheck:SetWidth(150)
-			widget:AddChild(privateAuraCheck)
-
-			if not isMidnight then
-				local colorsCheck = AceGUI:Create("CheckBox")
-				colorsCheck:SetLabel("Colors")
-				colorsCheck:SetValue(true)
-				colorsCheck:SetDisabled(true)
-				colorsCheck:SetValue(not isMidnight)
-				colorsCheck:SetFullWidth(true)
-				widget:AddChild(colorsCheck)
-			end
-
-			local importButton = AceGUI:Create("Button")
-			importButton:SetText("Import")
-            importButton:SetCallback("OnClick", function(self)
-				ApplyImport(self)
-			end)
-			importButton:SetDisabled(true)
-			widget:AddChild(importButton)
-
-			widget.importButton = importButton
-			widget.importChecks = {flags = flagsCheck, sounds = soundsCheck, colors = colorsCheck, privateAuras = privateAuraCheck}
-			if widget.parent and widget.parent.SetStatusText then
-           		widget.parent:SetStatusText("Paste a valid import string")
-			end
-		end
-
-		widget:ResumeLayout()
-		widget:PerformLayout()
-	end
-
-	local function exportPopup(exportInfo)
-		local frame = exportFrame
-		if not frame then
-			local f = AceGUI:Create("Frame")
-
-			f:SetTitle("BigWigs Export")
-			f:SetLayout("Flow")
-			f.frame:SetSize(400, 300)
-			frame = f
-        end
-        frame:SetStatusText("Paste a valid import string")
-
-		local tabs = AceGUI:Create("TabGroup")
-		tabs:SetLayout("Flow")
-		tabs:SetFullWidth(true)
-		tabs:SetFullHeight(true)
-		tabs:SetTabs({
-			{ text = "Import", value = "import" },
-			{ text = "Export", value = "export" },
-		})
-		tabs:SetCallback("OnGroupSelected", onExportTabGroupSelected)
-		tabs:SelectTab("import")
-		lastExportData = {data = exportInfo.exportTable, zone = exportInfo.zone}
-
-		frame:AddChild(tabs)
-
-		frame:SetCallback("OnClose",function(widget)
-			tabs:SelectTab("import")
-            BigWigsOptions:Open()
-			widget.frame:Hide()
-        end)
-
-		frame:Show()
-        BigWigsOptions:Close()
-		exportFrame = frame
-	end
-
 	local Type, Version = "BossDropdownGroup", 1
 	local function Constructor()
 		local dropdownGroup = AceGUI:Create("DropdownGroup")
@@ -309,37 +26,6 @@ do
 		titletext:SetHeight(18)
 
 		local dropdownGroupFrame = dropdownGroup.frame
-		-- local exporttext = dropdownGroupFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		-- exporttext:SetPoint("TOPLEFT", 4, -5)
-		-- exporttext:SetJustifyH("LEFT")
-		-- exporttext:SetHeight(18)
-		-- exporttext:SetText("Export/Import")
-
-		-- local exportTextWidth = exporttext:GetWidth()
-		-- TODO: Fix boss export
-		-- local exportBossBtn = CreateFrame("Button", nil, dropdownGroupFrame, "UIPanelButtonTemplate")
-		-- exportBossBtn.parentGroup = dropdownGroup
-		-- exportBossBtn:SetPoint("TOPLEFT", exportTextWidth + 4, -4)
-		-- exportBossBtn:SetScript("OnClick", function(self)
-		-- 	local parent = self.parentGroup
-		-- 	local modules = parent:GetUserData("moduleList")
-		-- 	local currentModule = parent:GetUserData("bossIndex")
-		-- 	local bossDb = nil
-		-- 	for i, module in ipairs(modules) do
-		-- 		if module.moduleName == currentModule then
-		-- 			bossDb = module.db.profile
-		-- 			break
-		-- 		end
-		-- 	end
-		-- end)
-		-- exportBossBtn:SetHeight(20)
-		-- local font = exportBossBtn.Text:GetFont()
-		-- exportBossBtn.Text:SetFont(font, 12)
-		-- exportBossBtn:SetTextToFit("Boss")
-		-- exportBossBtn:SetNormalFontObject("DialogButtonNormalText")
-		-- exportBossBtn:SetHighlightFontObject("DialogButtonHighlightText")
-		-- dropdownGroup.exportBossBtn = exportBossBtn
-
 		local exportInstanceBtn = CreateFrame("Button", nil, dropdownGroupFrame, "UIPanelButtonTemplate")
 		exportInstanceBtn.parentGroup = dropdownGroup
 		exportInstanceBtn:SetPoint("TOPLEFT", 10, -4)
@@ -386,7 +72,7 @@ do
 				zone = parent:GetUserData("zone"),
 				exportTable = allBossesDb,
 			}
-			exportPopup(exportInfo)
+			InstanceSharing:OpenExportFrame(exportInfo)
 		end)
 		exportInstanceBtn:SetHeight(20)
 		local font = exportInstanceBtn.Text:GetFont()
@@ -400,3 +86,442 @@ do
 	end
 	AceGUI:RegisterWidgetType(Type, Constructor, Version)
 end
+
+-------------------------------------------------------------------------------
+-- Locals
+--
+
+local exportFrame = nil
+local L = BigWigsAPI:GetLocale("BigWigs")
+local instanceExportPrefix = "BWIS1"
+local isMidnight = BigWigsLoader.isMidnight
+
+-- String/Data storage
+local lastImportData, lastExportData = nil, nil
+
+-- Default checkbox settings
+-- local defaultSettings = {
+-- 	doFlags = not isMidnight and true or false,
+-- 	doSounds = not isMidnight and true or false,
+-- 	doColors = not isMidnight and true or false,
+-- 	doPrivateAuras = isMidnight and true or false,
+-- }
+
+-- to test
+local defaultSettings = {
+	doFlags = true,
+	doSounds = true,
+	doColors = true,
+	doPrivateAuras = true,
+}
+
+local exportSettings = CopyTable(defaultSettings)
+local importSettings = CopyTable(defaultSettings)
+
+local applyImport, verifyImportString = nil, nil
+
+-------------------------------------------------------------------------------
+-- Options
+--
+
+local function getImportSettings(widget)
+	return {
+		name = "",
+		type = "group",
+		get = function(i) return importSettings[i[#i]] end,
+		set = function(i, value) importSettings[i[#i]] = value end,
+		args = {
+			importString = {
+				type = "input",
+				name = "Import String",
+				multiline = 3,
+				width = "full",
+				order = 1,
+				set = function(i, value)
+					verifyImportString(value)
+					importSettings[i[#i]] = value
+				end,
+				control = "ImportStringMultiline",
+			},
+			doFlags = {
+				type = "toggle",
+				name = "Flags",
+				desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings.",
+				order = 10,
+				width = 1,
+				-- hidden = isMidnight,
+				disabled = function() return not lastImportData or not lastImportData.includeFlags end,
+			},
+			separator1 = {
+				type = "description",
+				name = "",
+				order = 20,
+				width = "full",
+			},
+			doSounds = {
+				type = "toggle",
+				name = "Sounds",
+				desc = "Import which sounds to play for abilities.",
+				order = 30,
+				width = 1,
+				-- hidden = isMidnight,
+				disabled = function() return not lastImportData or not lastImportData.includeSounds end,
+			},
+			doPrivateAuras = {
+				type = "toggle",
+				name = "Private Auras",
+				desc = "Import the configured Private Auras sounds.",
+				order = 31,
+				width = 1,
+				hidden = not isMidnight,
+				disabled = function() return not lastImportData or not lastImportData.includePrivateAuras end,
+			},
+			separator2 = {
+				type = "description",
+				name = "",
+				order = 40,
+				width = "full",
+			},
+			doColors = {
+				type = "toggle",
+				name = "Colors",
+				desc = "Import the color settings for bars and messages.",
+				order = 50,
+				width = 1,
+				-- hidden = isMidnight,
+				disabled = function() return not lastImportData or not lastImportData.includeColors end,
+			},
+			separator3 = {
+				type = "description",
+				name = "",
+				order = 60,
+				width = "full",
+			},
+			acceptImportButton = {
+				type = "execute",
+				name = L.import,
+				order = 100,
+				width = "full",
+				func = function()
+					local success = applyImport()
+					if success then
+						BigWigsOptions:Open()
+						exportFrame:Hide()
+					end
+				end,
+				disabled = function()
+					local isSomethingSelected = false
+					for k, v in pairs(importSettings) do
+						if k ~= "importString" and v then
+							isSomethingSelected = true
+							break
+						end
+					end
+					return not isSomethingSelected or not lastImportData
+				end,
+				confirm = function()
+					local zoneName = GetRealZoneText(lastImportData.zone)
+					local profileName = BigWigsLoader.db:GetCurrentProfile()
+					return L.confirm_instance_import:format(profileName, zoneName)
+				end,
+			},
+		},
+	}
+end
+
+local function getExportSettings()
+	return {
+		name = "",
+		type = "group",
+		get = function(i) return exportSettings[i[#i]] end,
+		set = function(i, value) exportSettings[i[#i]] = value end,
+		args = {
+			exportString = {
+				type = "input",
+				name = "Export String",
+				desc = "The export string for sharing your instance options.",
+				multiline = 4,
+				width = "full",
+				order = 1,
+				get = function() return InstanceSharing:GetInstanceExportString() end,
+				set = function() end,
+				control = "NoAcceptMultiline",
+			},
+			doFlags = {
+				type = "toggle",
+				name = "Flags",
+				desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings.",
+				order = 10,
+				width = 1,
+				-- hidden = isMidnight,
+			},
+			separator1 = {
+				type = "description",
+				name = "",
+				order = 20,
+				width = "full",
+			},
+			doSounds = {
+				type = "toggle",
+				name = "Sounds",
+				desc = "Export which sounds to play for abilities.",
+				order = 30,
+				width = 1,
+				-- hidden = isMidnight,
+			},
+			doPrivateAuras = {
+				type = "toggle",
+				name = "Private Auras",
+				desc = "Export the configured Private Auras sounds.",
+				order = 31,
+				width = 1,
+				-- hidden = not isMidnight,
+			},
+			separator2 = {
+				type = "description",
+				name = "",
+				order = 40,
+				width = "full",
+			},
+			doColors = {
+				type = "toggle",
+				name = "Colors",
+				desc = "Export the color settings for bars and messages.",
+				order = 50,
+				width = 1,
+				-- hidden = isMidnight,
+			},
+		},
+	}
+end
+
+local function onExportTabGroupSelected(widget, callback, tab)
+	widget:PauseLayout()
+	widget:ReleaseChildren()
+
+	if tab == "import" then
+		importSettings.importString = nil
+		exportFrame:SetStatusText("Paste a valid import string")
+
+		acr:RegisterOptionsTable("Import Instance Tab", getImportSettings(widget))
+		acd:Open("Import Instance Tab", widget)
+	else
+		local zoneName = GetRealZoneText(lastExportData.zone)
+		exportFrame:SetStatusText("Exporting |cFFBB66FF"..zoneName.."|r")
+
+		acr:RegisterOptionsTable("Export Instance Tab", getExportSettings(widget))
+		acd:Open("Export Instance Tab", widget)
+	end
+
+	widget:ResumeLayout()
+	widget:PerformLayout()
+end
+
+local function exportPopup(_, exportInfo)
+	local frame = exportFrame
+	if not frame then
+		local f = AceGUI:Create("Frame")
+
+		f:SetTitle("BigWigs Share")
+		f:SetLayout("Flow")
+		f:SetWidth(400)
+		f:SetHeight(380)
+		f:EnableResize(false)
+		frame = f
+	end
+	exportFrame = frame
+
+	frame:SetStatusText("Paste a valid import string")
+
+	local tabs = AceGUI:Create("TabGroup")
+	tabs:SetLayout("Flow")
+	tabs:SetFullWidth(true)
+	tabs:SetFullHeight(true)
+	tabs:SetTabs({
+		{ text = "Import", value = "import" },
+		{ text = "Export", value = "export" },
+	})
+	tabs:SetCallback("OnGroupSelected", onExportTabGroupSelected)
+	tabs:SelectTab("import")
+	lastExportData = {data = exportInfo.exportTable, zone = exportInfo.zone}
+
+	frame:AddChild(tabs)
+
+	frame:SetCallback("OnClose",function(widget)
+		tabs:SelectTab("import")
+		BigWigsOptions:Open()
+		widget.frame:Hide()
+	end)
+
+	frame:Show()
+	BigWigsOptions:Close()
+end
+
+InstanceSharing.OpenExportFrame = exportPopup
+
+-------------------------------------------------------------------------------
+-- Functions
+--
+
+function InstanceSharing:CreateExportString(exportTable, prefix)
+    local serialized = C_EncodingUtil.SerializeCBOR(exportTable);
+    local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate);
+    local encoded = C_EncodingUtil.EncodeBase64(compressed);
+    return prefix..":"..encoded;
+end
+
+function InstanceSharing:GetInstanceExportString()
+	local exportFlags =  exportSettings.doFlags
+	local exportSounds = exportSettings.doSounds
+	local exportColors = exportSettings.doColors
+	local exportPrivateAuras = exportSettings.doPrivateAuras
+
+	-- Get the data and make a string
+	local exportTable = lastExportData.data
+	local filteredExportTable = {
+		includeFlags = exportFlags,
+		includeSounds = exportSounds,
+		includeColors = exportColors,
+		includePrivateAuras = exportPrivateAuras,
+		zone = lastExportData.zone,
+		exportData = {},
+		version = instanceExportPrefix,
+	}
+
+	for optionsTable, doExport in pairs({flags = exportFlags, sounds = exportSounds or exportPrivateAuras, colors = exportColors}) do
+		if doExport then
+			for moduleName, settings in pairs(exportTable) do
+				if settings[optionsTable] then
+					filteredExportTable.exportData[moduleName] = filteredExportTable.exportData[moduleName] or {}
+					filteredExportTable.exportData[moduleName][optionsTable] = CopyTable(settings[optionsTable] or {})
+					if optionsTable == "sounds" and not (exportSounds and exportPrivateAuras) then -- Filter away extra sound options if only one is selected
+						local count = 0
+						for key, value in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
+							local shouldKeep = (key == "privateaura" and exportPrivateAuras) or (key ~= "privateaura" and exportSounds)
+							if not shouldKeep then
+								filteredExportTable.exportData[moduleName][optionsTable][key] = nil
+							else
+								count = count + 1
+							end
+						end
+						if count == 0 then
+							filteredExportTable.exportData[moduleName][optionsTable] = nil
+						end
+					end
+				end
+			end
+		end
+	end
+
+	local exportString = InstanceSharing:CreateExportString(filteredExportTable, instanceExportPrefix)
+	return exportString
+end
+
+do
+	local function parseImportString(string)
+		if type(string) ~= "string" then return end
+		local preFix, importData = string:match("^(%w+):(.+)$")
+		if preFix ~= instanceExportPrefix then return end
+		local decode_success, decodedForPrint = xpcall(C_EncodingUtil.DecodeBase64, function() return end, importData)
+		if not decode_success or not decodedForPrint then return end
+		local decomp_success, decompressed =  xpcall(C_EncodingUtil.DecompressString, function() return end, decodedForPrint, Enum.CompressionMethod.Deflate)
+		if not decomp_success or not decompressed then return end
+		local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, function() return end, decompressed)
+		if not deserialize_success or not data then return end
+		lastImportData = data
+		return true
+	end
+
+
+	function verifyImportString(value)
+		lastImportData = nil
+		local hasImports = parseImportString(value)
+		if hasImports then
+			local zoneName = GetRealZoneText(lastImportData.zone)
+			exportFrame:SetStatusText("Importing |cFFBB66FF"..zoneName.."|r")
+		else
+			exportFrame:SetStatusText("Paste a valid import string")
+		end
+	end
+end
+
+local function ImportSounds(soundSettings, privateAuras)
+	local soundModule = BigWigs:GetPlugin("Sounds", true)
+	if not soundModule then return end
+
+	for soundSettingName, savedModules in pairs(soundModule.db.profile) do
+		if soundSettingName ~= "privateaura" or privateAuras then -- only import private auras if the user allowed it
+			if soundSettings[soundSettingName] then
+				soundModule.db.profile[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
+			else
+				soundModule.db.profile[soundSettingName][moduleName] = nil
+			end
+		end
+	end
+end
+
+local function ImportPrivateAuras(privateAuraSettings)
+	local soundModule = BigWigs:GetPlugin("Sounds", true)
+	if not soundModule then return end
+
+end
+
+local function ImportFlags(flagSettings)
+	local module = BigWigs:GetBossModule(moduleName:sub(16))
+	if module then
+		if module.SetupOptions then module:SetupOptions() end
+		if module.db and module.db.profile then
+			for key, value in pairs(module.db.profile) do
+				if flagSettings[key] then
+					module.db.profile[key] = CopyTable(flagSettings[key])
+				end
+			end
+		end
+	end
+end
+
+local function ImportColors(colorSettings)
+	local colorModule = BigWigs:GetPlugin("Colors", true)
+	if not colorModule then return end
+
+	for colorSettingName, savedModules in pairs(colorModule.db.profile) do
+		if colorSettings[colorSettingName] then
+			colorModule.db.profile[colorSettingName][moduleName] = CopyTable(colorSettings[colorSettingName])
+		else
+			colorModule.db.profile[colorSettingName][moduleName] = nil
+		end
+	end
+end
+
+function applyImport()
+	local flags = importSettings.doFlags
+	local sounds = importSettings.doSounds
+	local colors = importSettings.doColors
+	local privateAuras = importSettings.doPrivateAuras
+
+	if not (flags or sounds or colors or privateAuras) then
+		return -- Nothing to import
+	end
+
+	-- Prepare modules and plugins to import to
+	BigWigsLoader:LoadZone(lastImportData.zone)
+
+	for moduleName, data in pairs(lastImportData.exportData) do
+		if flags and data.flags then
+			ImportFlags(data.flags)
+		end
+		if sounds and data.sounds then
+			ImportSounds(data.sounds)
+		end
+		if privateAuras and data.sounds then
+			ImportPrivateAuras(data.sounds)
+		end
+		if colors and data.colors then
+			ImportColors(data.colors)
+		end
+	end
+
+	-- success!
+	return true
+end
+

@@ -277,6 +277,9 @@ L.imported_battleres_settings = "Battle Res Settings"
 L.battleres_settings_import_desc = "Import all Battle Res settings."
 L.battleres_settings_export_desc = "Export all Battle Res settings."
 
+-- InstanceSharing.lua
+L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
+
 -- Statistics
 L.statistics = "Statistics"
 L.defeat = "Defeat"
