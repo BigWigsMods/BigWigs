@@ -210,11 +210,14 @@ local function updateProfile()
 
 	for bar in next, normalAnchor.bars do
 		currentBarStyler.BarStopped(bar)
+		local height = 0
 		if db.emphasizeMove then
-			bar:SetHeight(db.normalHeight)
+			height = db.normalHeight
+			bar:SetHeight(height)
 			bar:SetWidth(db.normalWidth)
 		elseif bar:Get("bigwigs:emphasized") then
-			bar:SetHeight(db.normalHeight * db.emphasizeMultiplier)
+			height = db.normalHeight * db.emphasizeMultiplier
+			bar:SetHeight(height)
 			bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
 		end
 		bar:SetTexture(texture)
@@ -230,6 +233,11 @@ local function updateProfile()
 			bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 		end
 		bar:SetIconPosition(db.iconPosition)
+		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
+		if indicatorFrame then
+			indicatorFrame:SetIndicatorSize(height)
+			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"), db.iconPosition)
+		end
 		currentBarStyler.ApplyStyle(bar)
 	end
 	for bar in next, emphasizeAnchor.bars do
@@ -249,6 +257,11 @@ local function updateProfile()
 			bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 		end
 		bar:SetIconPosition(db.iconPosition)
+		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
+		if indicatorFrame then
+			indicatorFrame:SetIndicatorSize(db.expHeight)
+			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"), db.iconPosition)
+		end
 		currentBarStyler.ApplyStyle(bar)
 	end
 
@@ -943,6 +956,10 @@ do
 end
 
 local function barStopped(event, bar)
+	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
+	if indicatorFrame then
+		indicatorFrame:RemoveIndicators()
+	end
 	local anchorText = bar:Get("bigwigs:anchor")
 	if anchorText then
 		local anchor = anchorText == "expPosition" and emphasizeAnchor or normalAnchor
@@ -1290,6 +1307,97 @@ end
 --
 
 do
+	local indicatorCache = {}
+	local function RemoveIndicators(self)
+		self.RoleIndicators[1]:SetTexture(nil)
+		self.RoleIndicators[2]:SetTexture(nil)
+		self.OtherIndicators[1]:SetTexture(nil)
+		self.OtherIndicators[2]:SetTexture(nil)
+		self:ClearAllPoints()
+		self:SetParent(UIParent)
+		self.bar = nil
+		indicatorCache[#indicatorCache+1] = self
+	end
+
+	local function SetIndicatorSize(self, size)
+		local half = size / 2
+		self:SetSize(size+2, size+2)
+		self.RoleIndicators[1]:SetSize(half, half)
+		self.RoleIndicators[2]:SetSize(half, half)
+		self.OtherIndicators[1]:SetSize(half, half)
+		self.OtherIndicators[2]:SetSize(half, half)
+	end
+
+	local function AddIndicators(self, eventId, position)
+		-- Constants.EncounterTimelineIconMasks.EncounterTimelineRoleIcons = 896
+		-- Constants.EncounterTimelineIconMasks.EncounterTimelineOtherIcons = 127
+		-- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
+		self:ClearAllPoints()
+		if position == "LEFT" then
+			self:SetPoint("RIGHT", self.bar.candyBarIconFrame, "LEFT", -4, 0)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, 1023), self.RoleIndicators)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, 1023), self.OtherIndicators)
+		else
+			self:SetPoint("LEFT", self.bar.candyBarIconFrame, "RIGHT", 4, 0)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, 1023), self.RoleIndicatorsReverse)
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, 1023), self.OtherIndicatorsReverse)
+		end
+	end
+
+	local function GetBarIndicatorFrame()
+		local indicatorFrame
+
+		if next(indicatorCache) then
+			indicatorFrame = table.remove(indicatorCache)
+		else
+			indicatorFrame = CreateFrame("Frame", nil, UIParent)
+			indicatorFrame:SetPoint("CENTER")
+			indicatorFrame:Hide()
+			indicatorFrame:SetSize(34,34)
+			indicatorFrame.RemoveIndicators = RemoveIndicators
+			indicatorFrame.SetIndicatorSize = SetIndicatorSize
+			indicatorFrame.AddIndicators = AddIndicators
+			indicatorFrame.RoleIndicators = {}
+			indicatorFrame.RoleIndicatorsReverse = {}
+			indicatorFrame.OtherIndicators = {}
+			indicatorFrame.OtherIndicatorsReverse = {}
+
+			local roleIndicator1 = indicatorFrame:CreateTexture()
+			roleIndicator1:SetPoint("TOPRIGHT")
+			roleIndicator1:SetSnapToPixelGrid(false)
+			roleIndicator1:SetTexelSnappingBias(0)
+			roleIndicator1:SetSize(16,16)
+			indicatorFrame.RoleIndicators[1] = roleIndicator1
+
+			local roleIndicator2 = indicatorFrame:CreateTexture()
+			roleIndicator2:SetPoint("TOPLEFT")
+			roleIndicator2:SetSnapToPixelGrid(false)
+			roleIndicator2:SetTexelSnappingBias(0)
+			roleIndicator2:SetSize(16,16)
+			indicatorFrame.RoleIndicators[2] = roleIndicator2
+			indicatorFrame.RoleIndicatorsReverse[1] = roleIndicator2
+			indicatorFrame.RoleIndicatorsReverse[2] = roleIndicator1
+
+			local otherIndicator1 = indicatorFrame:CreateTexture()
+			otherIndicator1:SetPoint("BOTTOMRIGHT")
+			otherIndicator1:SetSnapToPixelGrid(false)
+			otherIndicator1:SetTexelSnappingBias(0)
+			otherIndicator1:SetSize(16,16)
+			indicatorFrame.OtherIndicators[1] = otherIndicator1
+
+			local otherIndicator2 = indicatorFrame:CreateTexture()
+			otherIndicator2:SetPoint("BOTTOMLEFT")
+			otherIndicator2:SetSnapToPixelGrid(false)
+			otherIndicator2:SetTexelSnappingBias(0)
+			otherIndicator2:SetSize(16,16)
+			indicatorFrame.OtherIndicators[2] = otherIndicator2
+			indicatorFrame.OtherIndicatorsReverse[1] = otherIndicator2
+			indicatorFrame.OtherIndicatorsReverse[2] = otherIndicator1
+		end
+
+		return indicatorFrame
+	end
+
 	local initial = true
 	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId)
 		local width, height
@@ -1315,6 +1423,15 @@ do
 		normalAnchor.bars[bar] = true
 		if db.icon then
 			bar:SetIcon(icon)
+			if eventId then
+				local indicatorFrame = GetBarIndicatorFrame()
+				indicatorFrame:SetParent(bar)
+				indicatorFrame:Show()
+				indicatorFrame.bar = bar
+				indicatorFrame:SetIndicatorSize(height)
+				indicatorFrame:AddIndicators(eventId, db.iconPosition)
+				bar:Set("bigwigs:indicatorFrame", indicatorFrame)
+			end
 		else
 			bar:SetIcon(nil)
 		end
@@ -1415,12 +1532,21 @@ function plugin:EmphasizeBar(bar, freshBar)
 	bar:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
+	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 	if db.emphasizeMove then
-		bar:SetHeight(db.expHeight)
+		local height = db.expHeight
+		bar:SetHeight(height)
 		bar:SetWidth(db.expWidth)
+		if indicatorFrame then
+			indicatorFrame:SetIndicatorSize(height)
+		end
 	else
-		bar:SetHeight(db.normalHeight * db.emphasizeMultiplier)
+		local height = db.normalHeight * db.emphasizeMultiplier
+		bar:SetHeight(height)
 		bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+		if indicatorFrame then
+			indicatorFrame:SetIndicatorSize(height)
+		end
 	end
 	bar:SetFrameLevel(105) -- Put emphasized bars just above normal bars (LibCandyBar 100)
 	currentBarStyler.ApplyStyle(bar)

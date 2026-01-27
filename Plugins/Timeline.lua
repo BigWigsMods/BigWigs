@@ -386,7 +386,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local spellId = eventInfo.spellID
 	local spellName = eventInfo.spellName
 	local icon = eventInfo.iconFileID
-	-- local icons = eventInfo.icons
+	-- local roleAndSpellIndicators = eventInfo.icons
 	-- local severity = eventInfo.severity
 	-- local isApproximate = eventInfo.isApproximate
 
