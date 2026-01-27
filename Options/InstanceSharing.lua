@@ -550,6 +550,7 @@ function applyImport()
 		end
 	end
 
+	BigWigs:SendMessage("BigWigs_ProfileUpdate")
 	-- success!
 	return true
 end
