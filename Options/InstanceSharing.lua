@@ -133,7 +133,8 @@ local function getImportSettings(widget)
 		args = {
 			importString = {
 				type = "input",
-				name = "Import String",
+				name = L.import_string,
+				desc = L.import_string_desc,
 				multiline = 3,
 				width = "full",
 				order = 1,
@@ -145,8 +146,8 @@ local function getImportSettings(widget)
 			},
 			doFlags = {
 				type = "toggle",
-				name = "Flags",
-				desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings.",
+				name = L.sharing_flags,
+				desc = L.sharing_flags_desc,
 				order = 10,
 				width = 1,
 				-- hidden = isMidnight,
@@ -160,8 +161,8 @@ local function getImportSettings(widget)
 			},
 			doSounds = {
 				type = "toggle",
-				name = "Sounds",
-				desc = "Import which sounds to play for abilities.",
+				name = L.Sounds,
+				desc = L.sharing_sounds_desc,
 				order = 30,
 				width = 1,
 				-- hidden = isMidnight,
@@ -169,8 +170,8 @@ local function getImportSettings(widget)
 			},
 			doPrivateAuras = {
 				type = "toggle",
-				name = "Private Auras",
-				desc = "Import the configured Private Auras sounds.",
+				name = L.sharing_private_auras,
+				desc = L.sharing_private_auras_desc,
 				order = 31,
 				width = 1,
 				hidden = not isMidnight,
@@ -184,8 +185,8 @@ local function getImportSettings(widget)
 			},
 			doColors = {
 				type = "toggle",
-				name = "Colors",
-				desc = "Import the color settings for bars and messages.",
+				name = L.colors,
+				desc = L.sharing_colors_desc,
 				order = 50,
 				width = 1,
 				-- hidden = isMidnight,
@@ -238,8 +239,8 @@ local function getExportSettings()
 		args = {
 			exportString = {
 				type = "input",
-				name = "Export String",
-				desc = "The export string for sharing your instance options.",
+				name = L.export_string,
+				desc = L.export_string_desc,
 				multiline = 4,
 				width = "full",
 				order = 1,
@@ -249,8 +250,8 @@ local function getExportSettings()
 			},
 			doFlags = {
 				type = "toggle",
-				name = "Flags",
-				desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings.",
+				name = L.sharing_flags,
+				desc = L.sharing_export_flags_desc,
 				order = 10,
 				width = 1,
 				-- hidden = isMidnight,
@@ -263,16 +264,16 @@ local function getExportSettings()
 			},
 			doSounds = {
 				type = "toggle",
-				name = "Sounds",
-				desc = "Export which sounds to play for abilities.",
+				name = L.Sounds,
+				desc = L.sharing_export_sounds_desc,
 				order = 30,
 				width = 1,
 				-- hidden = isMidnight,
 			},
 			doPrivateAuras = {
 				type = "toggle",
-				name = "Private Auras",
-				desc = "Export the configured Private Auras sounds.",
+				name = L.sharing_private_auras,
+				desc = L.sharing_export_private_auras_desc,
 				order = 31,
 				width = 1,
 				-- hidden = not isMidnight,
@@ -285,8 +286,8 @@ local function getExportSettings()
 			},
 			doColors = {
 				type = "toggle",
-				name = "Colors",
-				desc = "Export the color settings for bars and messages.",
+				name = L.colors,
+				desc = L.sharing_export_colors_desc,
 				order = 50,
 				width = 1,
 				-- hidden = isMidnight,
@@ -301,13 +302,13 @@ local function onExportTabGroupSelected(widget, callback, tab)
 
 	if tab == "import" then
 		importSettings.importString = nil
-		exportFrame:SetStatusText("Paste a valid import string")
+		exportFrame:SetStatusText(L.status_text_paste_import)
 
 		acr:RegisterOptionsTable("Import Instance Tab", getImportSettings(widget))
 		acd:Open("Import Instance Tab", widget)
 	else
 		local zoneName = GetRealZoneText(lastExportData.zone)
-		exportFrame:SetStatusText("Exporting |cFFBB66FF"..zoneName.."|r")
+		exportFrame:SetStatusText(L.exporting_instance:format(zoneName))
 
 		acr:RegisterOptionsTable("Export Instance Tab", getExportSettings(widget))
 		acd:Open("Export Instance Tab", widget)
@@ -322,7 +323,7 @@ local function exportPopup(_, exportInfo)
 	if not frame then
 		local f = AceGUI:Create("Frame")
 
-		f:SetTitle("BigWigs Share")
+		f:SetTitle(L.sharing_window_title)
 		f:SetLayout("Flow")
 		f:SetWidth(400)
 		f:SetHeight(380)
@@ -331,15 +332,15 @@ local function exportPopup(_, exportInfo)
 	end
 	exportFrame = frame
 
-	frame:SetStatusText("Paste a valid import string")
+	frame:SetStatusText(L.status_text_paste_import)
 
 	local tabs = AceGUI:Create("TabGroup")
 	tabs:SetLayout("Flow")
 	tabs:SetFullWidth(true)
 	tabs:SetFullHeight(true)
 	tabs:SetTabs({
-		{ text = "Import", value = "import" },
-		{ text = "Export", value = "export" },
+		{ text = L.import, value = "import" },
+		{ text = L.export, value = "export" },
 	})
 	tabs:SetCallback("OnGroupSelected", onExportTabGroupSelected)
 	tabs:SelectTab("import")
@@ -438,57 +439,65 @@ do
 		local hasImports = parseImportString(value)
 		if hasImports then
 			local zoneName = GetRealZoneText(lastImportData.zone)
-			exportFrame:SetStatusText("Importing |cFFBB66FF"..zoneName.."|r")
+			exportFrame:SetStatusText(L.importing_instance:format(zoneName))
 		else
-			exportFrame:SetStatusText("Paste a valid import string")
+			exportFrame:SetStatusText(L.status_text_paste_import)
 		end
 	end
 end
 
-local function ImportSounds(soundSettings, privateAuras)
+local function ImportSounds(soundSettings, moduleName)
 	local soundModule = BigWigs:GetPlugin("Sounds", true)
 	if not soundModule then return end
 
-	for soundSettingName, savedModules in pairs(soundModule.db.profile) do
-		if soundSettingName ~= "privateaura" or privateAuras then -- only import private auras if the user allowed it
-			if soundSettings[soundSettingName] then
-				soundModule.db.profile[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
-			else
-				soundModule.db.profile[soundSettingName][moduleName] = nil
+	local sDB = soundModule.db.profile
+	for soundSettingName, _ in pairs(sDB) do
+		if soundSettingName ~= "privateaura" then -- private auras are handled separately inside ImportPrivateAuras
+			if soundSettings and soundSettings[soundSettingName] then
+				sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
+			else -- wipe to set default
+				sDB[soundSettingName][moduleName] = nil
 			end
 		end
 	end
 end
 
-local function ImportPrivateAuras(privateAuraSettings)
+local function ImportPrivateAuras(privateAuraSettings, moduleName)
 	local soundModule = BigWigs:GetPlugin("Sounds", true)
-	if not soundModule then return end
+	if not soundModule or not privateAuraSettings then return end
 
+	local sDB = soundModule.db.profile["privateaura"]
+	sDB[moduleName] = CopyTable(privateAuraSettings)
 end
 
-local function ImportFlags(flagSettings)
+local function ImportFlags(flagSettings, moduleName)
 	local module = BigWigs:GetBossModule(moduleName:sub(16))
 	if module then
 		if module.SetupOptions then module:SetupOptions() end
 		if module.db and module.db.profile then
 			for key, value in pairs(module.db.profile) do
-				if flagSettings[key] then
-					module.db.profile[key] = CopyTable(flagSettings[key])
+				if flagSettings and flagSettings[key] then
+					module.db.profile[key] = flagSettings[key]
+				else -- wipe to set default
+					module.db.profile[key] = nil
 				end
 			end
 		end
 	end
 end
 
-local function ImportColors(colorSettings)
+local function ImportColors(colorSettings, moduleName)
 	local colorModule = BigWigs:GetPlugin("Colors", true)
 	if not colorModule then return end
 
-	for colorSettingName, savedModules in pairs(colorModule.db.profile) do
-		if colorSettings[colorSettingName] then
-			colorModule.db.profile[colorSettingName][moduleName] = CopyTable(colorSettings[colorSettingName])
-		else
-			colorModule.db.profile[colorSettingName][moduleName] = nil
+	local cDB = colorModule.db.profile
+	for colorSettingName in next, cDB do
+		for k in next, cDB[colorSettingName][moduleName] do
+			if colorSettings and colorSettings[colorSettingName] and colorSettings[colorSettingName][k] then
+				cDB[colorSettingName][moduleName][k] = CopyTable(colorSettings[colorSettingName][k])
+			else -- wipe to set default
+				cDB[colorSettingName][moduleName][k] = nil
+			end
 		end
 	end
 end
@@ -507,17 +516,18 @@ function applyImport()
 	BigWigsLoader:LoadZone(lastImportData.zone)
 
 	for moduleName, data in pairs(lastImportData.exportData) do
-		if flags and data.flags then
-			ImportFlags(data.flags)
+		if flags then
+			ImportFlags(data.flags, moduleName)
 		end
-		if sounds and data.sounds then
-			ImportSounds(data.sounds)
+		if sounds then
+			ImportSounds(data.sounds, moduleName)
 		end
-		if privateAuras and data.sounds then
-			ImportPrivateAuras(data.sounds)
+		if privateAuras then
+			local privateAuraSounds = data.sounds and data.sounds.privateaura
+			ImportPrivateAuras(privateAuraSounds, moduleName)
 		end
-		if colors and data.colors then
-			ImportColors(data.colors)
+		if colors then
+			ImportColors(data.colors, moduleName)
 		end
 	end
 
