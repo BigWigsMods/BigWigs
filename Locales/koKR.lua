@@ -278,6 +278,23 @@ L.imported_battleres_settings = "전투 부활 설정"
 L.battleres_settings_import_desc = "모든 전투 부활 설정을 가져옵니다."
 L.battleres_settings_export_desc = "모든 전투 부활 설정을 내보냅니다."
 
+-- InstanceSharing.lua
+--L.sharing_window_title = "Share Boss Settings"
+--L.sharing_flags = "General Settings"
+--L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
+--L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
+--L.sharing_sounds_desc = "Import which sounds to play for abilities."
+--L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
+--L.sharing_private_auras = "Private Auras"
+--L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
+--L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
+--L.sharing_colors_desc = "Import the color settings for bars and messages."
+--L.sharing_export_colors_desc = "Export the color settings for bars and messages."
+--L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
+--L.status_text_paste_import = "Paste a valid import string"
+--L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
+--L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
+
 -- Statistics
 L.statistics = "통계"
 L.defeat = "패배"

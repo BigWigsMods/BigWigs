@@ -278,10 +278,10 @@ L.battleres_settings_import_desc = "Import all Battle Res settings."
 L.battleres_settings_export_desc = "Export all Battle Res settings."
 
 -- InstanceSharing.lua
-L.sharing_window_title = "BigWigs Share"
+L.sharing_window_title = "Share Boss Settings"
 L.sharing_flags = "General Settings"
 L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
-L.sharing_export_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
+L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
 L.sharing_sounds_desc = "Import which sounds to play for abilities."
 L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
 L.sharing_private_auras = "Private Auras"
