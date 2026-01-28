@@ -665,6 +665,13 @@ L.indicatorType_Tank = "Tank"
 L.indicatorType_Healer = "Healer"
 L.indicatorType_Damager = "Damager"
 
+L.spellIndicatorSize = "Spell Indicator Size"
+L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
+L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
+L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
+L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
+L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --

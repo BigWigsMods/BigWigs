@@ -63,6 +63,7 @@ plugin.defaultDB = {
 	expWidth = 260,
 	expHeight = 22,
 	spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
+	spellIndicatorsSize = 4,
 	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
 	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
 }
@@ -135,6 +136,9 @@ local function updateProfile()
 
 	if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators then
 		db.spellIndicators = plugin.defaultDB.spellIndicators
+	end
+	if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 then
+		db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
 	end
 
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
@@ -213,17 +217,18 @@ local function updateProfile()
 	local font = LibSharedMedia:Fetch(FONT, db.fontName)
 	local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
 
+	local lastIndicatorFrame = nil
 	for bar in next, normalAnchor.bars do
 		currentBarStyler.BarStopped(bar)
-		local height = 0
-		if db.emphasizeMove then
-			height = db.normalHeight
-			bar:SetHeight(height)
-			bar:SetWidth(db.normalWidth)
-		elseif bar:Get("bigwigs:emphasized") then
+		local height
+		if bar:Get("bigwigs:emphasized") then
 			height = db.normalHeight * db.emphasizeMultiplier
 			bar:SetHeight(height)
 			bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+		else
+			height = db.normalHeight
+			bar:SetHeight(height)
+			bar:SetWidth(db.normalWidth)
 		end
 		bar:SetTexture(texture)
 		bar:SetFill(db.fill)
@@ -240,9 +245,10 @@ local function updateProfile()
 		bar:SetIconPosition(db.iconPosition)
 		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 		if indicatorFrame then
+			lastIndicatorFrame = indicatorFrame
 			indicatorFrame:ClearTextures()
 			indicatorFrame:SetIndicatorSize(height)
-			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"), db.iconPosition)
+			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"))
 		end
 		currentBarStyler.ApplyStyle(bar)
 	end
@@ -265,11 +271,15 @@ local function updateProfile()
 		bar:SetIconPosition(db.iconPosition)
 		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 		if indicatorFrame then
+			lastIndicatorFrame = indicatorFrame
 			indicatorFrame:ClearTextures()
 			indicatorFrame:SetIndicatorSize(db.expHeight)
-			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"), db.iconPosition)
+			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"))
 		end
 		currentBarStyler.ApplyStyle(bar)
+	end
+	if lastIndicatorFrame then
+		lastIndicatorFrame:UpdateAllIndicatorPoints()
 	end
 
 	rearrangeBars(normalAnchor)
@@ -565,17 +575,31 @@ do
 						disabled = function() return not db.icon end,
 						hidden = function() return not BigWigsLoader.isRetail end,
 					},
+					spellIndicatorsSize = {
+						type = "select",
+						name = L.spellIndicatorSize,
+						order = 19,
+						values = {
+							L.spellIndicatorSizeDropdown_Large1,
+							L.spellIndicatorSizeDropdown_Large2,
+							L.spellIndicatorSizeDropdown_Large3,
+							L.spellIndicatorSizeDropdown_Small4,
+							L.spellIndicatorSizeDropdown_Small2,
+						},
+						disabled = function() return not db.icon end,
+						hidden = function() return not BigWigsLoader.isRetail end,
+					},
 					header3 = {
 						type = "header",
 						name = "",
-						order = 19,
+						order = 20,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 20,
+						order = 21,
 					},
 				},
 			},
@@ -1027,18 +1051,32 @@ do
 		end
 		for k in next, self.bars do
 			currentBarStyler.BarStopped(k)
+			local indicatorFrame = k:Get("bigwigs:indicatorFrame")
 			if db.emphasizeMove then
 				if self == normalAnchor then
 					k:SetSize(db.normalWidth, db.normalHeight)
+					if indicatorFrame then
+						indicatorFrame:SetIndicatorSize(db.normalHeight)
+					end
 				else
 					k:SetSize(db.expWidth, db.expHeight)
+					if indicatorFrame then
+						indicatorFrame:SetIndicatorSize(db.expHeight)
+					end
 				end
 			elseif self == normalAnchor then
 				-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
 				if k:Get("bigwigs:emphasized") then
-					k:SetSize(db.normalWidth * db.emphasizeMultiplier, db.normalHeight * db.emphasizeMultiplier)
+					local newHeight = db.normalHeight * db.emphasizeMultiplier
+					k:SetSize(db.normalWidth * db.emphasizeMultiplier, newHeight)
+					if indicatorFrame then
+						indicatorFrame:SetIndicatorSize(newHeight)
+					end
 				else
 					k:SetSize(db.normalWidth, db.normalHeight)
+					if indicatorFrame then
+						indicatorFrame:SetIndicatorSize(db.normalHeight)
+					end
 				end
 			end
 			currentBarStyler.ApplyStyle(k)
@@ -1346,99 +1384,176 @@ end
 --
 
 do
-	local indicatorCache = {}
-	local function ClearTextures(self)
-		self.RoleIndicators[1]:SetTexture(nil)
-		self.RoleIndicators[2]:SetTexture(nil)
-		self.OtherIndicators[1]:SetTexture(nil)
-		self.OtherIndicators[2]:SetTexture(nil)
-	end
-
-	local function RemoveIndicators(self)
-		self:ClearTextures()
-		self:ClearAllPoints()
-		self:SetParent(UIParent)
-		self.bar = nil
-		indicatorCache[#indicatorCache+1] = self
-	end
-
-	local function SetIndicatorSize(self, size)
-		local half = size / 2
-		self:SetSize(size+2, size+2)
-		self.RoleIndicators[1]:SetSize(half, half)
-		self.RoleIndicators[2]:SetSize(half, half)
-		self.OtherIndicators[1]:SetSize(half, half)
-		self.OtherIndicators[2]:SetSize(half, half)
-	end
-
-	local function AddIndicators(self, eventId, position)
-		-- Constants.EncounterTimelineIconMasks.EncounterTimelineRoleIcons = 896
-		-- Constants.EncounterTimelineIconMasks.EncounterTimelineOtherIcons = 127
-		self:ClearAllPoints()
-		if position == "LEFT" then
-			self:SetPoint("RIGHT", self.bar.candyBarIconFrame, "LEFT", -4, 0)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, db.spellIndicators), self.RoleIndicators)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, db.spellIndicators), self.OtherIndicators)
-		else
-			self:SetPoint("LEFT", self.bar.candyBarIconFrame, "RIGHT", 4, 0)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(896, db.spellIndicators), self.RoleIndicatorsReverse)
-			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(127, db.spellIndicators), self.OtherIndicatorsReverse)
-		end
-	end
-
-	local function GetBarIndicatorFrame()
-		local indicatorFrame
-
-		if next(indicatorCache) then
-			indicatorFrame = table.remove(indicatorCache)
-		else
-			indicatorFrame = CreateFrame("Frame", nil, UIParent)
-			indicatorFrame:SetPoint("CENTER")
-			indicatorFrame:Hide()
-			indicatorFrame:SetSize(34,34)
-			indicatorFrame.ClearTextures = ClearTextures
-			indicatorFrame.RemoveIndicators = RemoveIndicators
-			indicatorFrame.SetIndicatorSize = SetIndicatorSize
-			indicatorFrame.AddIndicators = AddIndicators
-			indicatorFrame.RoleIndicators = {}
-			indicatorFrame.RoleIndicatorsReverse = {}
-			indicatorFrame.OtherIndicators = {}
-			indicatorFrame.OtherIndicatorsReverse = {}
-
-			local roleIndicator1 = indicatorFrame:CreateTexture()
-			roleIndicator1:SetPoint("TOPRIGHT")
-			roleIndicator1:SetSnapToPixelGrid(false)
-			roleIndicator1:SetTexelSnappingBias(0)
-			roleIndicator1:SetSize(16,16)
-			indicatorFrame.RoleIndicators[1] = roleIndicator1
-
-			local roleIndicator2 = indicatorFrame:CreateTexture()
-			roleIndicator2:SetPoint("TOPLEFT")
-			roleIndicator2:SetSnapToPixelGrid(false)
-			roleIndicator2:SetTexelSnappingBias(0)
-			roleIndicator2:SetSize(16,16)
-			indicatorFrame.RoleIndicators[2] = roleIndicator2
-			indicatorFrame.RoleIndicatorsReverse[1] = roleIndicator2
-			indicatorFrame.RoleIndicatorsReverse[2] = roleIndicator1
-
-			local otherIndicator1 = indicatorFrame:CreateTexture()
-			otherIndicator1:SetPoint("BOTTOMRIGHT")
-			otherIndicator1:SetSnapToPixelGrid(false)
-			otherIndicator1:SetTexelSnappingBias(0)
-			otherIndicator1:SetSize(16,16)
-			indicatorFrame.OtherIndicators[1] = otherIndicator1
-
-			local otherIndicator2 = indicatorFrame:CreateTexture()
-			otherIndicator2:SetPoint("BOTTOMLEFT")
-			otherIndicator2:SetSnapToPixelGrid(false)
-			otherIndicator2:SetTexelSnappingBias(0)
-			otherIndicator2:SetSize(16,16)
-			indicatorFrame.OtherIndicators[2] = otherIndicator2
-			indicatorFrame.OtherIndicatorsReverse[1] = otherIndicator2
-			indicatorFrame.OtherIndicatorsReverse[2] = otherIndicator1
+	local GetBarIndicatorFrame
+	do
+		local function ClearTextures(self)
+			self.textureLists[4][1]:SetTexture(nil)
+			self.textureLists[4][2]:SetTexture(nil)
+			self.textureLists[4][3]:SetTexture(nil)
+			self.textureLists[4][4]:SetTexture(nil)
 		end
 
-		return indicatorFrame
+		local function SetIndicatorSize(self, size)
+			self:SetSize(size+2, size+2)
+			if db.spellIndicatorsSize >= 4 then
+				size = size / 2
+			end
+			self.textureLists[4][1]:SetSize(size, size)
+			self.textureLists[4][2]:SetSize(size, size)
+			self.textureLists[4][3]:SetSize(size, size)
+			self.textureLists[4][4]:SetSize(size, size)
+		end
+
+		local function AddIndicators(self, eventId)
+			self:ClearAllPoints()
+			if db.iconPosition == "LEFT" then
+				self:SetPoint("RIGHT", self.bar.candyBarIconFrame, "LEFT", -4, 0)
+			else
+				self:SetPoint("LEFT", self.bar.candyBarIconFrame, "RIGHT", 4, 0)
+			end
+			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(1023, db.spellIndicators), self.textureLists[db.spellIndicatorsSize])
+		end
+
+		local indicatorList = {}
+		local function UpdateAllIndicatorPoints()
+			if db.spellIndicatorsSize >= 4 then
+				if db.iconPosition == "LEFT" then
+					for indicatorCount = 1, #indicatorList do
+						local indicatorFrame = indicatorList[indicatorCount]
+						indicatorFrame.textureLists[4][1]:ClearAllPoints()
+						indicatorFrame.textureLists[4][2]:ClearAllPoints()
+						indicatorFrame.textureLists[4][3]:ClearAllPoints()
+						indicatorFrame.textureLists[4][4]:ClearAllPoints()
+						indicatorFrame.textureLists[4][1]:SetPoint("TOPRIGHT")
+						indicatorFrame.textureLists[4][2]:SetPoint("BOTTOMRIGHT")
+						indicatorFrame.textureLists[4][3]:SetPoint("TOPLEFT")
+						indicatorFrame.textureLists[4][4]:SetPoint("BOTTOMLEFT")
+					end
+				else
+					for indicatorCount = 1, #indicatorList do
+						local indicatorFrame = indicatorList[indicatorCount]
+						indicatorFrame.textureLists[4][1]:ClearAllPoints()
+						indicatorFrame.textureLists[4][2]:ClearAllPoints()
+						indicatorFrame.textureLists[4][3]:ClearAllPoints()
+						indicatorFrame.textureLists[4][4]:ClearAllPoints()
+						indicatorFrame.textureLists[4][1]:SetPoint("TOPLEFT")
+						indicatorFrame.textureLists[4][2]:SetPoint("BOTTOMLEFT")
+						indicatorFrame.textureLists[4][3]:SetPoint("TOPRIGHT")
+						indicatorFrame.textureLists[4][4]:SetPoint("BOTTOMRIGHT")
+					end
+				end
+			else
+				if db.iconPosition == "LEFT" then
+					for indicatorCount = 1, #indicatorList do
+						local indicatorFrame = indicatorList[indicatorCount]
+						indicatorFrame.textureLists[4][1]:ClearAllPoints()
+						indicatorFrame.textureLists[4][2]:ClearAllPoints()
+						indicatorFrame.textureLists[4][3]:ClearAllPoints()
+						indicatorFrame.textureLists[4][4]:ClearAllPoints()
+						indicatorFrame.textureLists[4][1]:SetPoint("CENTER")
+						indicatorFrame.textureLists[4][2]:SetPoint("RIGHT", indicatorFrame.textureLists[4][1], "LEFT", -2, 0)
+						indicatorFrame.textureLists[4][3]:SetPoint("RIGHT", indicatorFrame.textureLists[4][2], "LEFT", -2, 0)
+						indicatorFrame.textureLists[4][4]:SetPoint("RIGHT", indicatorFrame.textureLists[4][3], "LEFT", -2, 0)
+					end
+				else
+					for indicatorCount = 1, #indicatorList do
+						local indicatorFrame = indicatorList[indicatorCount]
+						indicatorFrame.textureLists[4][1]:ClearAllPoints()
+						indicatorFrame.textureLists[4][2]:ClearAllPoints()
+						indicatorFrame.textureLists[4][3]:ClearAllPoints()
+						indicatorFrame.textureLists[4][4]:ClearAllPoints()
+						indicatorFrame.textureLists[4][1]:SetPoint("CENTER")
+						indicatorFrame.textureLists[4][2]:SetPoint("LEFT", indicatorFrame.textureLists[4][1], "RIGHT", -2, 0)
+						indicatorFrame.textureLists[4][3]:SetPoint("LEFT", indicatorFrame.textureLists[4][2], "RIGHT", -2, 0)
+						indicatorFrame.textureLists[4][4]:SetPoint("LEFT", indicatorFrame.textureLists[4][3], "RIGHT", -2, 0)
+					end
+				end
+			end
+		end
+
+		local indicatorCache = {}
+		local function RemoveIndicators(self)
+			self:ClearTextures()
+			self:ClearAllPoints()
+			self:SetParent(UIParent)
+			self.bar = nil
+			indicatorCache[#indicatorCache+1] = self
+		end
+
+		function GetBarIndicatorFrame()
+			local indicatorFrame
+
+			if next(indicatorCache) then
+				indicatorFrame = table.remove(indicatorCache)
+			else
+				indicatorFrame = CreateFrame("Frame", nil, UIParent)
+				indicatorList[#indicatorList+1] = indicatorFrame
+				indicatorFrame:SetPoint("CENTER")
+				indicatorFrame:Hide()
+				indicatorFrame:SetSize(34,34)
+				indicatorFrame.ClearTextures = ClearTextures
+				indicatorFrame.RemoveIndicators = RemoveIndicators
+				indicatorFrame.SetIndicatorSize = SetIndicatorSize
+				indicatorFrame.AddIndicators = AddIndicators
+				indicatorFrame.UpdateAllIndicatorPoints = UpdateAllIndicatorPoints
+
+				local indicatorTexture1 = indicatorFrame:CreateTexture()
+				indicatorTexture1:SetSnapToPixelGrid(false)
+				indicatorTexture1:SetTexelSnappingBias(0)
+				indicatorTexture1:SetSize(16,16)
+
+				local indicatorTexture2 = indicatorFrame:CreateTexture()
+				indicatorTexture2:SetSnapToPixelGrid(false)
+				indicatorTexture2:SetTexelSnappingBias(0)
+				indicatorTexture2:SetSize(16,16)
+
+				local indicatorTexture3 = indicatorFrame:CreateTexture()
+				indicatorTexture3:SetSnapToPixelGrid(false)
+				indicatorTexture3:SetTexelSnappingBias(0)
+				indicatorTexture3:SetSize(16,16)
+
+				local indicatorTexture4 = indicatorFrame:CreateTexture()
+				indicatorTexture4:SetSnapToPixelGrid(false)
+				indicatorTexture4:SetTexelSnappingBias(0)
+				indicatorTexture4:SetSize(16,16)
+
+				indicatorFrame.textureLists = {
+					{indicatorTexture1},
+					{indicatorTexture1, indicatorTexture2},
+					{indicatorTexture1, indicatorTexture2, indicatorTexture3},
+					{indicatorTexture1, indicatorTexture2, indicatorTexture3, indicatorTexture4},
+					{indicatorTexture1, indicatorTexture2},
+				}
+
+				if db.spellIndicatorsSize >= 4 then
+					if db.iconPosition == "LEFT" then
+						indicatorTexture1:SetPoint("TOPRIGHT")
+						indicatorTexture2:SetPoint("BOTTOMRIGHT")
+						indicatorTexture3:SetPoint("TOPLEFT")
+						indicatorTexture4:SetPoint("BOTTOMLEFT")
+					else
+						indicatorTexture1:SetPoint("TOPLEFT")
+						indicatorTexture2:SetPoint("BOTTOMLEFT")
+						indicatorTexture3:SetPoint("TOPRIGHT")
+						indicatorTexture4:SetPoint("BOTTOMRIGHT")
+					end
+				else
+					if db.iconPosition == "LEFT" then
+						indicatorTexture1:SetPoint("CENTER")
+						indicatorTexture2:SetPoint("RIGHT", indicatorTexture1, "LEFT", -2, 0)
+						indicatorTexture3:SetPoint("RIGHT", indicatorTexture2, "LEFT", -2, 0)
+						indicatorTexture4:SetPoint("RIGHT", indicatorTexture3, "LEFT", -2, 0)
+					else
+						indicatorTexture1:SetPoint("CENTER")
+						indicatorTexture2:SetPoint("LEFT", indicatorTexture1, "RIGHT", -2, 0)
+						indicatorTexture3:SetPoint("LEFT", indicatorTexture2, "RIGHT", -2, 0)
+						indicatorTexture4:SetPoint("LEFT", indicatorTexture3, "RIGHT", -2, 0)
+					end
+				end
+			end
+
+			return indicatorFrame
+		end
 	end
 
 	local initial = true
@@ -1472,7 +1587,7 @@ do
 				indicatorFrame:Show()
 				indicatorFrame.bar = bar
 				indicatorFrame:SetIndicatorSize(height)
-				indicatorFrame:AddIndicators(eventId, db.iconPosition)
+				indicatorFrame:AddIndicators(eventId)
 				bar:Set("bigwigs:indicatorFrame", indicatorFrame)
 			end
 		else
