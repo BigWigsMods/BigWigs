@@ -195,8 +195,10 @@ files["Plugins/*.lua"].ignore = {
 	"113/StopSound",
 }
 files["Options/Options.lua"].ignore = {
+	"113/C_EncodingUtil",
 	"113/C_UI",
 	"113/CallErrorHandler",
+	"113/Enum",
 	"113/securecallfunction",
 }
 files["Options/Sharing.lua"].ignore = {

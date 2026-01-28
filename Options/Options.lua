@@ -1996,11 +1996,28 @@ do
 	end)
 
 	local _, addonTable = ...
+
+	-- A verify check for API usages
+	function options.VerifyAddOnProfileString(profileString)
+		if type(profileString) ~= "string" then return end
+		local versionPlain, importData = profileString:match("^(%w+):(.+)$")
+		if versionPlain ~= addonTable.sharingVersion then return end
+		local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
+		if not decodedForPrint then return end
+		local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, Enum.CompressionMethod.Deflate)
+		if not decompressed then return end
+		local data = C_EncodingUtil.DeserializeCBOR(decompressed)
+		if not data then return end
+		if data.version ~= addonTable.sharingVersion then return end -- encoded version does not match expected version
+		return true
+	end
+
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
 	-- Use BigWigsAPI.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	function options.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
+		if not options.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") end
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original

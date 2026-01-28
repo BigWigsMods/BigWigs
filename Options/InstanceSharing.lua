@@ -445,6 +445,7 @@ do
 		if not decomp_success or not decompressed then return end
 		local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, function() return end, decompressed)
 		if not deserialize_success or not data then return end
+		if data.version ~= instanceExportPrefix then return end -- encoded version does not match expected version
 		lastImportData = data
 		return true
 	end
