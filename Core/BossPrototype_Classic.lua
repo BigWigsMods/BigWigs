@@ -48,7 +48,7 @@ end
 local SendChatMessage, GetInstanceInfo, SimpleTimer, SetRaidTarget = loader.SendChatMessage, loader.GetInstanceInfo, loader.CTimerAfter, loader.SetRaidTarget
 local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 local hasanysecretvalues = hasanysecretvalues or function() return false end -- XXX 12.0 compat
-local UnitGUID, UnitHealth, UnitHealthMax = loader.UnitGUID, loader.UnitHealth, loader.UnitHealthMax
+local UnitGUID = loader.UnitGUID
 local RegisterAddonMessagePrefix = loader.RegisterAddonMessagePrefix
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -1245,7 +1245,7 @@ do
 
 	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
-		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
+		local hasBoss = self:UnitHealth("boss1") > 0 or self:UnitHealth("boss2") > 0 or self:UnitHealth("boss3") > 0 or self:UnitHealth("boss4") > 0 or self:UnitHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
 			self:Debug(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer(wipeCheck, 6, self)
@@ -2028,17 +2028,20 @@ do
 	end
 end
 
---- Get the health percentage of a unit.
--- @string unit unit token or name
--- @return hp health of the unit as a percentage between 0 and 100
-function boss:GetHealth(unit)
-	if not self:IsSecret(unit) then
-		local hp = UnitHealth(unit)
-		local maxHP = UnitHealthMax(unit)
-		if self:IsSecret(hp) or maxHP == 0 then
-			return 0
-		else
-			return hp / maxHP * 100
+do
+	local UnitHealth, UnitHealthMax = loader.UnitHealth, loader.UnitHealthMax
+	--- Get the health percentage of a unit.
+	-- @string unit unit token or name
+	-- @return hp health of the unit as a percentage between 0 and 100
+	function boss:GetHealth(unit)
+		if not self:IsSecret(unit) then
+			local hp = UnitHealth(unit)
+			local maxHP = UnitHealthMax(unit)
+			if self:IsSecret(hp) or maxHP == 0 then
+				return 0
+			else
+				return hp / maxHP * 100
+			end
 		end
 	end
 end
