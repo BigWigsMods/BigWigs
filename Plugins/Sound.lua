@@ -7,6 +7,7 @@ local plugin, L = BigWigs:NewPlugin("Sounds", {
 	"soundOptions",
 	"SetSoundOptions",
 	"GetDefaultSound",
+	"GetDefaultSoundFile",
 })
 if not plugin then return end
 
