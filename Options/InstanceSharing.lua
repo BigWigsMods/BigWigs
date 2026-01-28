@@ -457,6 +457,7 @@ do
 		if zoneName and zoneName ~= "" then
 			exportFrame:SetStatusText(L.importing_instance:format(zoneName))
 		else
+			lastImportData = nil -- reset the import due to invalid zone
 			exportFrame:SetStatusText(L.status_text_paste_import)
 		end
 	end
