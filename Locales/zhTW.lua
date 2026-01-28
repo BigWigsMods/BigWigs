@@ -935,6 +935,24 @@ L.nameplateOptInTitle = "名條「手動啟用」模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模式會關閉所有首領模組的名條圖示。你必須分別進入每個模組，啟用你需要顯示圖示的名條。\n\n即將重載介面，確定要啟用嗎？"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+--L.privateAuras = "Private Auras"
+
+--L.createTestAura = "Create Test Aura"
+--L.showDispelType = "Show Dispel Type Indicator"
+--L.showDispelTypeDesc = "Show an icon the private aura frame if it has a dispel type.|n|nNote: This is a global option for all private aura frames."
+--L.iconSize = "Icon Size"
+--L.iconSpacing = "Icon Spacing"
+--L.showCooldown = "Show Cooldown Spiral"
+--L.showCountdownText = "Show Cooldown Text"
+--L.showDurationText = "Show Duration Text"
+--L.growthDirection = "Icon Growth Direction"
+
+--L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 

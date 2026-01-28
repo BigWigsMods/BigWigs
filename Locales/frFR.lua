@@ -935,6 +935,24 @@ L.nameplateOptInTitle = "Choix du mode barres d'infos des boss"
 L.nameplateOptInWarning = "|cffff4411ATTENTION !|r\n\nActiver ce choix va désactiver les barres d'infos de TOUS les modules de boss. Vous devrez aller sur chaque boss et activer les barres d'infos que vous souhaiterez.\n\nVotre Interface utilisateur va recharger, êtes-vous sûr(e) ?"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+--L.privateAuras = "Private Auras"
+
+--L.createTestAura = "Create Test Aura"
+--L.showDispelType = "Show Dispel Type Indicator"
+--L.showDispelTypeDesc = "Show an icon the private aura frame if it has a dispel type.|n|nNote: This is a global option for all private aura frames."
+--L.iconSize = "Icon Size"
+--L.iconSpacing = "Icon Spacing"
+--L.showCooldown = "Show Cooldown Spiral"
+--L.showCountdownText = "Show Cooldown Text"
+--L.showDurationText = "Show Duration Text"
+--L.growthDirection = "Icon Growth Direction"
+
+--L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 

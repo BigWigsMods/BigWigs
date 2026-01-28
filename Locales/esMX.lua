@@ -935,6 +935,24 @@ L.nameplateOptInTitle = "Placas de nombre de jefes modo 'opcional'"
 L.nameplateOptInWarning = "|cffff4411ADVERTENCIA!|r\n\nActivar el modo 'opcional' desactivará las placas de nombres de TODOS los módulos de jefe. Tendrás que activar cada mensaje que desees de manera manual.\n\nTu interfaz será recargada ¿Estás seguro?"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+--L.privateAuras = "Private Auras"
+
+--L.createTestAura = "Create Test Aura"
+--L.showDispelType = "Show Dispel Type Indicator"
+--L.showDispelTypeDesc = "Show an icon the private aura frame if it has a dispel type.|n|nNote: This is a global option for all private aura frames."
+--L.iconSize = "Icon Size"
+--L.iconSpacing = "Icon Spacing"
+--L.showCooldown = "Show Cooldown Spiral"
+--L.showCountdownText = "Show Cooldown Text"
+--L.showDurationText = "Show Duration Text"
+--L.growthDirection = "Icon Growth Direction"
+
+--L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 

@@ -935,6 +935,24 @@ L.nameplateOptInTitle = "보스 모드 이름표 '선택 활성화' 모드"
 L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 활성화하면 모든 보스 모듈에서 이름표가 비활성화됩니다. 원하는 이름표만 각 모듈에서 수동으로 활성화해야 합니다.\n\nUI가 재시작됩니다. 계속하시겠습니까?"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+--L.privateAuras = "Private Auras"
+
+--L.createTestAura = "Create Test Aura"
+--L.showDispelType = "Show Dispel Type Indicator"
+--L.showDispelTypeDesc = "Show an icon the private aura frame if it has a dispel type.|n|nNote: This is a global option for all private aura frames."
+--L.iconSize = "Icon Size"
+--L.iconSpacing = "Icon Spacing"
+--L.showCooldown = "Show Cooldown Spiral"
+--L.showCountdownText = "Show Cooldown Text"
+--L.showDurationText = "Show Duration Text"
+--L.growthDirection = "Icon Growth Direction"
+
+--L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 
