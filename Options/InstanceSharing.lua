@@ -181,7 +181,6 @@ local function getImportSettings(widget)
 				desc = L.sharing_colors_desc,
 				order = 50,
 				width = 1,
-				-- hidden = isMidnight,
 				disabled = function() return isMidnight or not lastImportData or not lastImportData.includeColors end,
 			},
 			separator3 = {
@@ -456,7 +455,7 @@ do
 	function verifyImportString(value)
 		lastImportData = nil
 		local hasImports = parseImportString(value)
-		if hasImports then
+		if hasImports and BigWigsLoader.zoneTbl[lastImportData.zone] then -- Verify the zoneId exist for us
 			local zoneName = GetSelectedInstanceName(lastImportData.zone)
 			exportFrame:SetStatusText(L.importing_instance:format(zoneName))
 		else
