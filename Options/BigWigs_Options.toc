@@ -60,3 +60,4 @@ Libs\LibDDI-1.0\lib.lua
 
 Options.lua
 Sharing.lua
+InstanceSharing.lua
