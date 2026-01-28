@@ -94,17 +94,17 @@ end
 local exportFrame = nil
 local L = BigWigsAPI:GetLocale("BigWigs")
 local instanceExportPrefix = "BWIS1"
-local isMidnight = BigWigsLoader.isMidnight
+local isRetail = BigWigsLoader.isRetail
 
 -- String/Data storage
 local lastImportData, lastExportData = nil, nil
 
 -- Default checkbox settings
 local defaultSettings = {
-	doFlags = not isMidnight and true or false,
-	doSounds = not isMidnight and true or false,
-	doColors = not isMidnight and true or false,
-	doPrivateAuras = isMidnight and true or false,
+	doFlags = not isRetail and true or false,
+	doSounds = not isRetail and true or false,
+	doColors = not isRetail and true or false,
+	doPrivateAuras = isRetail and true or false,
 }
 
 local exportSettings = CopyTable(defaultSettings)
@@ -144,7 +144,7 @@ local function getImportSettings(widget)
 				desc = L.sharing_flags_desc,
 				order = 10,
 				width = 1,
-				disabled = function() return isMidnight or not lastImportData or not lastImportData.includeFlags end,
+				disabled = function() return isRetail or not lastImportData or not lastImportData.includeFlags end,
 			},
 			separator1 = {
 				type = "description",
@@ -158,7 +158,7 @@ local function getImportSettings(widget)
 				desc = L.sharing_sounds_desc,
 				order = 30,
 				width = 1,
-				disabled = function() return isMidnight or not lastImportData or not lastImportData.includeSounds end,
+				disabled = function() return isRetail or not lastImportData or not lastImportData.includeSounds end,
 			},
 			doPrivateAuras = {
 				type = "toggle",
@@ -166,7 +166,7 @@ local function getImportSettings(widget)
 				desc = L.sharing_private_auras_desc,
 				order = 31,
 				width = 1,
-				hidden = not isMidnight,
+				hidden = not isRetail,
 				disabled = function() return not lastImportData or not lastImportData.includePrivateAuras end,
 			},
 			separator2 = {
@@ -181,7 +181,7 @@ local function getImportSettings(widget)
 				desc = L.sharing_colors_desc,
 				order = 50,
 				width = 1,
-				disabled = function() return isMidnight or not lastImportData or not lastImportData.includeColors end,
+				disabled = function() return isRetail or not lastImportData or not lastImportData.includeColors end,
 			},
 			separator3 = {
 				type = "description",
@@ -247,7 +247,7 @@ local function getExportSettings()
 				desc = L.sharing_export_flags_desc,
 				order = 10,
 				width = 1,
-				disabled = function() return isMidnight end,
+				disabled = function() return isRetail end,
 			},
 			separator1 = {
 				type = "description",
@@ -261,7 +261,7 @@ local function getExportSettings()
 				desc = L.sharing_export_sounds_desc,
 				order = 30,
 				width = 1,
-				disabled = function() return isMidnight end,
+				disabled = function() return isRetail end,
 			},
 			doPrivateAuras = {
 				type = "toggle",
@@ -269,7 +269,7 @@ local function getExportSettings()
 				desc = L.sharing_export_private_auras_desc,
 				order = 31,
 				width = 1,
-				hidden = not isMidnight,
+				hidden = not isRetail,
 			},
 			separator2 = {
 				type = "description",
@@ -283,7 +283,7 @@ local function getExportSettings()
 				desc = L.sharing_export_colors_desc,
 				order = 50,
 				width = 1,
-				disabled = function() return isMidnight end,
+				disabled = function() return isRetail end,
 			},
 		},
 	}
