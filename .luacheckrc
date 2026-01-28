@@ -205,6 +205,7 @@ files["Options/Sharing.lua"].ignore = {
 }
 files["Options/InstanceSharing.lua"].ignore = {
 	"113/C_EncodingUtil",
+	"113/C_Map",
 	"113/CopyTable",
 	"113/Enum",
 }
