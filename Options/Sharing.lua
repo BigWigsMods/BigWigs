@@ -472,6 +472,7 @@ do
         if not decompressed then return end
         local data = C_EncodingUtil.DeserializeCBOR(decompressed)
 		if not data then return end
+		if data.version ~= sharingVersion then return end -- encoded version does not match expected version
 		local importSucceeded = PreProcess(data)
 		return importSucceeded
 	end
@@ -968,3 +969,4 @@ local sharingOptions = {
 }
 
 addonTable.sharingOptions = sharingOptions
+addonTable.sharingVersion = sharingVersion
