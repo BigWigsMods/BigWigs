@@ -225,14 +225,20 @@ local function updateProfile()
 			height = db.normalHeight * db.emphasizeMultiplier
 			bar:SetHeight(height)
 			bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+			bar:SetFont(font, db.fontSizeEmph, flags)
+			if db.emphasizeMove then
+				normalAnchor.bars[bar] = nil
+				emphasizeAnchor.bars[bar] = true
+				bar:Set("bigwigs:anchor", "expPosition")
+			end
 		else
 			height = db.normalHeight
 			bar:SetHeight(height)
 			bar:SetWidth(db.normalWidth)
+			bar:SetFont(font, db.fontSize, flags)
 		end
 		bar:SetTexture(texture)
 		bar:SetFill(db.fill)
-		bar:SetFont(font, db.fontSize, flags)
 		bar:SetLabelVisibility(db.text)
 		bar.candyBarLabel:SetJustifyH(db.alignText)
 		bar:SetTimeVisibility(db.time)
@@ -252,6 +258,8 @@ local function updateProfile()
 		end
 		currentBarStyler.ApplyStyle(bar)
 	end
+
+	local rerun = false
 	for bar in next, emphasizeAnchor.bars do
 		currentBarStyler.BarStopped(bar)
 		bar:SetHeight(db.expHeight)
@@ -263,6 +271,12 @@ local function updateProfile()
 		bar.candyBarLabel:SetJustifyH(db.alignText)
 		bar:SetTimeVisibility(db.time)
 		bar.candyBarDuration:SetJustifyH(db.alignTime)
+		if not db.emphasizeMove then
+			rerun = true
+			normalAnchor.bars[bar] = true
+			emphasizeAnchor.bars[bar] = nil
+			bar:Set("bigwigs:anchor", "normalPosition")
+		end
 		if not db.icon then
 			bar:SetIcon(nil)
 		else
@@ -278,12 +292,17 @@ local function updateProfile()
 		end
 		currentBarStyler.ApplyStyle(bar)
 	end
+
 	if lastIndicatorFrame then
 		lastIndicatorFrame:UpdateAllIndicatorPoints()
 	end
 
 	rearrangeBars(normalAnchor)
 	rearrangeBars(emphasizeAnchor)
+
+	if rerun then
+		updateProfile()
+	end
 end
 
 --------------------------------------------------------------------------------
