@@ -1436,7 +1436,7 @@ do
 		local isNumber = type(id) == "number"
 		for i = 1, 5 do
 			local unit = unitTable[i]
-			local guid = UnitGUID(unit)
+			local guid = self:UnitGUID(unit)
 			if id == guid then
 				return unit, guid
 			elseif guid and isNumber then
