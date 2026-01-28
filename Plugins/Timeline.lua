@@ -3,7 +3,9 @@ if not BigWigsLoader.isMidnight then return end -- XXX Only for Midnight
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Timeline")
+local plugin, L = BigWigs:NewPlugin("Timeline", {
+	"db",
+})
 if not plugin then return end
 
 --------------------------------------------------------------------------------
@@ -11,12 +13,15 @@ if not plugin then return end
 --
 
 local db = nil
+local trackedEncounterSettings = {}
 
 --------------------------------------------------------------------------------
 -- Profile
 --
 
 plugin.defaultDB = {
+	show_custom_timers = true,
+	show_both_timers = true,
 	show_bars = true,
 	show_messages = true,
 	play_sound = true,
@@ -79,6 +84,49 @@ do
 				name = "",
 				width = "full",
 				order = 2,
+			},
+			show_custom_timers = {
+				type = "toggle",
+				name = "Show Custom Timers",
+				desc = "When this is enabled, where possible BigWigs will replace Blizzard's encounter timeline timers with its own (improved) timers.",
+				get = function(info)
+					return db[info[#info]]
+				end,
+				set = function(info, value)
+					db[info[#info]] = value
+					if value then
+						plugin:StopBars()
+					else
+						plugin:StartBars()
+					end
+				end,
+				width = 1.5,
+				order = 2.5,
+			},
+			show_both_timers = {
+				type = "toggle",
+				name = "Show Both",
+				desc = "This will display both Blizzard and BigWigs boss timers simultaneously. use at your own risk, good for PTR and early raid releases.",
+				get = function(info)
+					return db[info[#info]]
+				end,
+				set = function(info, value)
+					db[info[#info]] = value
+					if value then
+						plugin:StopBars()
+					else
+						plugin:StartBars()
+					end
+				end,
+				width = 1.5,
+				order = 2.6,
+				disabled = function() return not db.show_custom_timers end,
+			},
+			spacer2 = {
+				type = "description",
+				name = "",
+				width = "full",
+				order = 2.9,
 			},
 			show_bars = {
 				type = "toggle",
@@ -319,6 +367,19 @@ end
 -- Initialization
 --
 
+local function checkForBlizzardEncounterWarnings(event, module)
+	local encounterID = module:GetEncounterID()
+	if not encounterID then return end
+
+	if event == "BigWigs_OnBossEngage" or event == "BigWigs_OnBossEngageMidEncounter" then
+		trackedEncounterSettings[encounterID] = {
+			useCustomTimers = module.useCustomTimers,
+		}
+	else -- Wipe, Win, Disable
+		trackedEncounterSettings[encounterID] = nil
+	end
+end
+
 function plugin:OnRegister()
 	self.displayName = L.timeline
 	C_CVar.SetCVar("combatWarningsEnabled", "1")
@@ -330,6 +391,12 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
+
+	self:RegisterMessage("BigWigs_OnBossEngage", checkForBlizzardEncounterWarnings)
+	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", checkForBlizzardEncounterWarnings)
+	self:RegisterMessage("BigWigs_OnBossWin", checkForBlizzardEncounterWarnings)
+	self:RegisterMessage("BigWigs_OnBossWipe", checkForBlizzardEncounterWarnings)
+	self:RegisterMessage("BigWigs_OnBossDisable", checkForBlizzardEncounterWarnings)
 
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -373,8 +440,19 @@ end
 -------------------------------------------------------------------------------
 -- Bars
 
+function plugin:CheckForDisabledBlizzardBars()
+	for encounterID, settings in next, trackedEncounterSettings do
+		if settings.useCustomTimers then
+			return true
+		end
+	end
+end
+
 function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
-	if not db.show_bars then return end
+	if not db.show_bars or
+		((db.show_custom_timers and not db.show_both_timers) and self:CheckForDisabledBlizzardBars()) then
+		return
+	end
 
 	-- Not Secret
 	local eventId = eventInfo.id
