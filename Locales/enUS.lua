@@ -934,6 +934,24 @@ L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
 L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+L.privateAuras = "Private Auras"
+
+L.createTestAura = "Create Test Aura"
+L.showDispelType = "Show Dispel Type Indicator"
+L.showDispelTypeDesc = "Show an icon the private aura frame if it has a dispel type.|n|nNote: This is a global option for all private aura frames."
+L.iconSize = "Icon Size"
+L.iconSpacing = "Icon Spacing"
+L.showCooldown = "Show Cooldown Spiral"
+L.showCountdownText = "Show Cooldown Text"
+L.showDurationText = "Show Duration Text"
+L.growthDirection = "Icon Growth Direction"
+
+L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 

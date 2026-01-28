@@ -57,3 +57,4 @@ Victory.lua
 Wipe.lua
 BattleRes.lua
 Timeline.lua
+PrivateAuras.lua

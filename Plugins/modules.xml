@@ -22,5 +22,6 @@
 <Script file="Wipe.lua"/>
 <Script file="BattleRes.lua"/>
 <Script file="Timeline.lua"/>
+<Script file="PrivateAuras.lua"/>
 
 </Ui>
