@@ -455,8 +455,8 @@ do
 	function verifyImportString(value)
 		lastImportData = nil
 		local hasImports = parseImportString(value)
-		if hasImports and BigWigsLoader.zoneTbl[lastImportData.zone] then -- Verify the zoneId exist for us
-			local zoneName = GetSelectedInstanceName(lastImportData.zone)
+		local zoneName = hasImports and BigWigsLoader.zoneTbl[lastImportData.zone] and GetSelectedInstanceName(lastImportData.zone)
+		if zoneName and zoneName ~= "" then
 			exportFrame:SetStatusText(L.importing_instance:format(zoneName))
 		else
 			exportFrame:SetStatusText(L.status_text_paste_import)
