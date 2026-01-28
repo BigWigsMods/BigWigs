@@ -374,8 +374,6 @@ function GetSelectedInstanceName(zoneId)
 		local tbl = GetMapInfo(-zoneId)
 		if tbl then
 			return tbl.name
-		else
-			return tostring(zoneId)
 		end
 	else
 		return GetRealZoneText(zoneId)
