@@ -279,21 +279,21 @@ L.battleres_settings_import_desc = "导入所有战复设置。"
 L.battleres_settings_export_desc = "导入所有战复设置。"
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
+L.sharing_window_title = "分享首领设置"
+L.sharing_flags = "通用设置"
+L.sharing_flags_desc = "导入控制各项功能的设置，例如'显示计时条'、'播放音效'、'显示信息'等。\n这涵盖了技能设置中大部分复选框选项。"
+L.sharing_export_flags_desc = "导出控制各项功能的设置，例如'显示计时条'、'播放音效'、'显示信息'等。\n这涵盖了技能设置中大部分复选框选项。"
+L.sharing_sounds_desc = "导入技能播放的音效设置。"
+L.sharing_export_sounds_desc = "导出技能播放的音效设置。"
+L.sharing_private_auras = "私人光环"
+L.sharing_private_auras_desc = "导入私人光环音效设置。"
+L.sharing_export_private_auras_desc = "导出私人光环音效设置。"
+L.sharing_colors_desc = "导入计时条与信息文本的颜色设置。"
+L.sharing_export_colors_desc = "导出计时条与信息文本的颜色设置。"
+L.confirm_instance_import = "您即将导入的选中设置将覆盖您当前所选配置文件中的设置：\n\n|cFF33FF99\"%s\"|r\n\n副本：\n|cFFBB66FF\"%s\"|r\n\n您确定要执行此操作吗？"
+L.status_text_paste_import = "粘贴有效的导入字符串"
+L.exporting_instance = "导出 |cFFBB66FF%s|r" -- Exporting Molten Core
+L.importing_instance = "导入 |cFFBB66FF%s|r" -- Importing Molten Core
 
 -- Statistics
 L.statistics = "统计"
@@ -674,7 +674,7 @@ L.breakMinutes = "休息时间将在 %d 分钟后结束！"
 L.breakSeconds = "休息时间将在 %d 秒后结束！"
 L.breakFinished = "休息时间结束！"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "法术指示器"
 L.indicatorType_Deadly = "灭团技"
 L.indicatorType_Bleed = "流血"
 L.indicatorType_Magic = "魔法"
@@ -683,12 +683,12 @@ L.indicatorType_Tank = "坦克"
 L.indicatorType_Healer = "治疗者"
 L.indicatorType_Damager = "伤害输出者"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "法术指示器尺寸"
+L.spellIndicatorSizeDropdown_Large1 = "大 (1个指示器)"
+L.spellIndicatorSizeDropdown_Large2 = "大 (2个指示器)"
+L.spellIndicatorSizeDropdown_Large3 = "大 (3个指示器)"
+L.spellIndicatorSizeDropdown_Small4 = "小 (4个指示器)"
+L.spellIndicatorSizeDropdown_Small2 = "小 (2个指示器)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
