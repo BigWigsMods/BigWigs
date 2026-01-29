@@ -294,6 +294,7 @@ L.battleres_settings_export_desc = "모든 전투 부활 설정을 내보냅니�
 --L.status_text_paste_import = "Paste a valid import string"
 --L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
 --L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
+--L.share = "Share"
 
 -- Statistics
 L.statistics = "통계"

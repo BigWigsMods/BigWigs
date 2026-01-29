@@ -294,6 +294,7 @@ L.imported_nameplate_settings = "Настройки полос здоровья"
 --L.status_text_paste_import = "Paste a valid import string"
 --L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
 --L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
+--L.share = "Share"
 
 -- Statistics
 L.statistics = "Статистика"

@@ -77,7 +77,7 @@ do
 		exportInstanceBtn:SetHeight(20)
 		local font = exportInstanceBtn.Text:GetFont()
 		exportInstanceBtn.Text:SetFont(font, 12)
-		exportInstanceBtn:SetTextToFit("Share")
+		exportInstanceBtn:SetTextToFit(BigWigsAPI:GetLocale("BigWigs").share)
 		exportInstanceBtn:SetNormalFontObject("DialogButtonNormalText")
 		exportInstanceBtn:SetHighlightFontObject("DialogButtonHighlightText")
 		dropdownGroup.exportInstanceBtn = exportInstanceBtn
