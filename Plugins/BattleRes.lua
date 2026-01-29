@@ -2,7 +2,9 @@
 -- Module Declaration
 --
 
-if BigWigsLoader.isVanilla then return end
+if BigWigsLoader.isVanilla or BigWigsLoader.isTBC or BigWigsLoader.isWrath or BigWigsLoader.isCata then
+	return
+end
 
 local plugin, L = BigWigs:NewPlugin("BattleRes")
 if not plugin then return end
