@@ -1178,7 +1178,7 @@ do
 
 	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
-		local hasBoss = self:UnitHealth("boss1") > 0 or self:UnitHealth("boss2") > 0 or self:UnitHealth("boss3") > 0 or self:UnitHealth("boss4") > 0 or self:UnitHealth("boss5") > 0
+		local hasBoss = self:GetHealth("boss1") > 0 or self:GetHealth("boss2") > 0 or self:GetHealth("boss3") > 0 or self:GetHealth("boss4") > 0 or self:GetHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
 			self:Debug(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer(wipeCheck, 6, self)
