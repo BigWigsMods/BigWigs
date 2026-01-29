@@ -935,6 +935,24 @@ L.nameplateOptInTitle = "Boss-Mod Namensplaketten 'Opt-in' Modus"
 L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in' Modus werden die Namensplaketten ALLER Bossmodule deaktiviert. Zur Aktivierung müssen händisch in jeder gewünschten Bossfähigkeit die Namensplaketten aktiviert werden.\n\nDas UI wird jetzt neu geladen, bist Du sicher?"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+--L.privateAuras = "Private Auras"
+
+--L.createTestAura = "Create Test Aura"
+--L.showDispelType = "Show Dispel Type Indicator"
+--L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.|n|n|cffffd200Note: This is a global option for all private aura frames.|r"
+--L.iconSize = "Icon Size"
+--L.iconSpacing = "Icon Spacing"
+--L.showCooldown = "Show Cooldown Spiral"
+--L.showCountdownText = "Show Cooldown Text"
+--L.showDurationText = "Show Duration Text"
+--L.growthDirection = "Icon Growth Direction"
+
+--L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 
