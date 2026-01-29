@@ -776,12 +776,14 @@ do
 	local multipleRegistration = "Module %q registered the event %q with spell id %q multiple times."
 
 	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
-		if eventMap[self][event][msg] then
-			self[eventMap[self][event][msg]](self, msg, ...)
-		else
-			for emote, func in next, eventMap[self][event] do
-				if find(msg, emote, nil, true) or find(msg, emote) then -- Preserve backwards compat by leaving in the 2nd check
-					self[func](self, msg, ...)
+		if not self:IsSecret(msg) then
+			if eventMap[self][event][msg] then
+				self[eventMap[self][event][msg]](self, msg, ...)
+			else
+				for emote, func in next, eventMap[self][event] do
+					if find(msg, emote, nil, true) or find(msg, emote) then -- Preserve backwards compat by leaving in the 2nd check
+						self[func](self, msg, ...)
+					end
 				end
 			end
 		end
@@ -800,12 +802,14 @@ do
 	end
 
 	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)
-		if eventMap[self][event][msg] then
-			self[eventMap[self][event][msg]](self, msg, ...)
-		else
-			for yell, func in next, eventMap[self][event] do
-				if find(msg, yell, nil, true) or find(msg, yell) then -- Preserve backwards compat by leaving in the 2nd check
-					self[func](self, msg, ...)
+		if not self:IsSecret(msg) then
+			if eventMap[self][event][msg] then
+				self[eventMap[self][event][msg]](self, msg, ...)
+			else
+				for yell, func in next, eventMap[self][event] do
+					if find(msg, yell, nil, true) or find(msg, yell) then -- Preserve backwards compat by leaving in the 2nd check
+						self[func](self, msg, ...)
+					end
 				end
 			end
 		end
