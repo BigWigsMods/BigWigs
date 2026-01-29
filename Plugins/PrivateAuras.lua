@@ -10,6 +10,7 @@ if not plugin then return end
 --
 
 local MAX_AURAS = 3
+local CONFIG_MODE_DURATION = 5
 
 local db
 local anchors = {}
@@ -528,13 +529,14 @@ do
 			frame.dispelIcon = dispelIcon
 		end
 
-		-- aura values
+		-- Set our aura values
 		local spellIndex = (index - 1) % #privateAuraSpellList + 1
 		local icon = C_Spell.GetSpellTexture(privateAuraSpellList[spellIndex])
 		local dispelType = dispelTypeList[(index - 1) % 7]
-		local duration = 5
+		local duration = CONFIG_MODE_DURATION
 		local expirationTime = GetTime() + duration
 
+		-- Setup the fake private aura
 		frame.icon:SetTexture(icon)
 
 		if db.showCooldown then
@@ -560,7 +562,7 @@ do
 			releaseFrame(frame)
 		end)
 
-		-- from Blizzard_PrivateAurasUI
+		-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
 		local borderScale = db.size / 32 * 2
 		local borderSize = db.size + (5 * borderScale)
 		frame.dispelIcon:SetSize(borderSize, borderSize)
