@@ -279,22 +279,22 @@ L.battleres_settings_import_desc = "모든 전투 부활 설정을 가져옵니�
 L.battleres_settings_export_desc = "모든 전투 부활 설정을 내보냅니다."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "보스 설정 공유"
+L.sharing_flags = "일반 설정"
+L.sharing_flags_desc = "바 표시, 사운드 재생, 메시지 표시 등의 설정을 가져옵니다.\n이것은 능력 설정의 대부분 체크박스를 포함합니다."
+L.sharing_export_flags_desc = "바 표시, 사운드 재생, 메시지 표시 등의 설정을 내보냅니다.\n이것은 능력 설정의 대부분 체크박스를 포함합니다."
+L.sharing_sounds_desc = "능력에 재생할 사운드를 가져옵니다."
+L.sharing_export_sounds_desc = "능력에 재생할 사운드를 내보냅니다."
+L.sharing_private_auras = "비공개 오라"
+L.sharing_private_auras_desc = "설정된 비공개 오라 사운드를 가져옵니다."
+L.sharing_export_private_auras_desc = "설정된 비공개 오라 사운드를 내보냅니다."
+L.sharing_colors_desc = "바와 메시지의 색상 설정을 가져옵니다."
+L.sharing_export_colors_desc = "바와 메시지의 색상 설정을 내보냅니다."
+L.confirm_instance_import = "가져올 선택된 설정이 현재 선택된 프로필을 덮어씁니다:\n\n|cFF33FF99\"%s\"|r\n\n인스턴스:\n|cFFBB66FF\"%s\"|r\n\n정말 하시겠습니까?"
+L.status_text_paste_import = "유효한 가져오기 문자열 붙여넣기"
+L.exporting_instance = "|cFFBB66FF%s|r 내보내기" -- Exporting Molten Core
+L.importing_instance = "|cFFBB66FF%s|r 가져오기" -- Importing Molten Core
+L.share = "공유"
 
 -- Statistics
 L.statistics = "통계"
@@ -675,21 +675,21 @@ L.breakMinutes = "%d분 후 휴식 종료!"
 L.breakSeconds = "%d초 후 휴식 종료!"
 L.breakFinished = "휴식 시간이 끝났습니다!"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "주문 표시기"
 L.indicatorType_Deadly = "치명적"
 L.indicatorType_Bleed = "출혈"
 L.indicatorType_Magic = "마법"
 L.indicatorType_Dispels = "무효화"
 L.indicatorType_Tank = "방어 전담"
 L.indicatorType_Healer = "치유 전담"
---L.indicatorType_Damager = "Damager"
+L.indicatorType_Damager = "딜러"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "주문 표시기 크기"
+L.spellIndicatorSizeDropdown_Large1 = "큰 사이즈 (1개 표시)"
+L.spellIndicatorSizeDropdown_Large2 = "큰 사이즈 (2개 표시"
+L.spellIndicatorSizeDropdown_Large3 = "큰 사이즈 (3개 표시"
+L.spellIndicatorSizeDropdown_Small4 = "작은 사이즈 (4개 표시)"
+L.spellIndicatorSizeDropdown_Small2 = "작은 사이즈 (2개 표시)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
