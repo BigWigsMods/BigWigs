@@ -681,11 +681,11 @@ do
 	end
 end
 
-local Popup = public.isRetail and function(msg, focus)
+local Popup = public.isRetail and function(msg, focus, height)
 	local frame = CreateFrame("Frame", nil, UIParent, focus and "PortraitFrameTexturedBaseTemplate" or "PortraitFrameFlatBaseTemplate")
 	frame:SetFrameStrata("DIALOG")
 	frame:SetToplevel(true)
-	frame:SetSize(400, 150)
+	frame:SetSize(400, height or 150)
 	frame:SetPoint("CENTER")
 	frame:SetTitle("BigWigs")
 	frame:SetTitleOffsets(0, 0)
@@ -693,7 +693,7 @@ local Popup = public.isRetail and function(msg, focus)
 	frame:SetPortraitTextureSizeAndOffset(38, -5, 0)
 	frame:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 
-	local text = frame:CreateFontString(nil, nil, "GameFontRedLarge")
+	local text = frame:CreateFontString(nil, nil, "GameFontGreenLarge")
 	text:SetSize(380, 0)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("TOP")
@@ -735,7 +735,6 @@ end or function(msg, focus)
 	text:SetText(msg)
 	frame:Show()
 end
-public.Popup = Popup -- XXX temp
 
 local function load(index)
 	if IsAddOnLoaded(index) then return true end
@@ -1095,6 +1094,22 @@ do
 		end
 	end
 end
+
+-- XXX 12.0.0
+if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE then
+	BW_FEAT_SHARE = true
+	local msg = "|cFFFFFFFF" .. L.newFeatures .. "|r\n"
+	msg = msg .. "\n" .. L.parentheses:format(L.sharing_window_title, L.import .. "/" .. L.export)
+	if public.isRetail then
+		msg = msg .. "\n" .. L.parentheses:format(L.indicatorTitle, L.bars)
+	end
+	if public.isRetail or public.isMists then
+		msg = msg .. "\n" .. L.parentheses:format(L.battleResTitle, L.icon)
+	end
+	msg = msg .. "\n"
+	Popup(msg, true, 180)
+end
+--
 
 if public.isRetail then
 	bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
@@ -2040,9 +2055,6 @@ end
 -----------------------------------------------------------------------
 -- Slash commands
 --
-
--- XXX compat code
-SlashCmdList.BIGWIGSPULL = function() Popup("Use /pull to start pull timers.", true) error("Use /pull to start pull timers.") end
 
 SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
