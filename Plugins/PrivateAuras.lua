@@ -52,6 +52,8 @@ local function updateProfile()
 		end
 	end
 
+	-- TODO more setting validation
+
 	if db.enabled then
 		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
 	end
@@ -140,7 +142,7 @@ do
 				args = {
 					size = {
 						type = "range",
-						name = "Icon Size",
+						name = L.iconSize,
 						min = 24, max = 512, step = 1,
 						width = 1.6,
 						order = 1,
@@ -148,7 +150,7 @@ do
 					},
 					spacing = {
 						type = "range",
-						name = "Icon Spacing",
+						name = L.iconSpacing,
 						min = 0, max = 50, step = 1,
 						width = 1.6,
 						order = 2,
