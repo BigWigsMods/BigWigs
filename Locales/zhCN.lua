@@ -936,6 +936,24 @@ L.nameplateOptInTitle = "姓名板'手动选择'模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式将关闭所有模块的姓名板效果。您需要逐个进入每个模块的设置，手动开启您想要的姓名板效果。\n\n界面即将重新加载，是否继续？"
 
 -----------------------------------------------------------------------
+-- PrivateAuras.lua
+--
+
+--L.privateAuras = "Private Auras"
+
+--L.createTestAura = "Create Test Aura"
+--L.showDispelType = "Show Dispel Type Indicator"
+--L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.|n|n|cffffd200Note: This is a global option for all private aura frames.|r"
+--L.iconSize = "Icon Size"
+--L.iconSpacing = "Icon Spacing"
+--L.showCooldown = "Show Cooldown Spiral"
+--L.showCountdownText = "Show Cooldown Text"
+--L.showDurationText = "Show Duration Text"
+--L.growthDirection = "Icon Growth Direction"
+
+--L.privateAurasTestAnchorText = "PA%d"
+
+-----------------------------------------------------------------------
 -- Proximity.lua
 --
 
