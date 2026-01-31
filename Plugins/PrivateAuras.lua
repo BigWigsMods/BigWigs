@@ -192,6 +192,18 @@ do
 						order = 6,
 						disabled = disabled,
 					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 7,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetDesc,
+						func = function() plugin.db:ResetProfile() updateProfile() end,
+						order = 8,
+					},
 				},
 			},
 			exactPositioning = {
