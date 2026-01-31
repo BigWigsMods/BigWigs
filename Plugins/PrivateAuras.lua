@@ -27,6 +27,7 @@ local UpdateAnchorPosition
 plugin.defaultDB = {
 	disabled = false,
 	showDispelType = true,
+	iconBorder = true,
 
 	size = 64,
 	spacing = 6,
@@ -114,6 +115,18 @@ do
 				set = function(_, value)
 					db.showDispelType = value
 					C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+				end,
+				width = "full",
+				order = 3,
+				disabled = function() return disabled() or not db.iconBorder end,
+			},
+			iconBorder = {
+				type = "toggle",
+				name = L.showBorder,
+				desc = L.showBorderDesc,
+				set = function(info, value)
+					db[info[#info]] = value
+					plugin:UpdateAnchors()
 				end,
 				width = "full",
 				order = 4,
@@ -444,6 +457,9 @@ function plugin:UpdateAnchors()
 	local width = db.size
 	local height = db.size
 	local borderScale = db.size / 32 * 2 -- scale the dispel type border
+	if not db.iconBorder then
+		borderScale = -10000 -- hide the border
+	end
 
 	for index = 1, MAX_AURAS do
 		local anchor = anchors[index]
@@ -589,11 +605,19 @@ do
 			releaseFrame(frame)
 		end)
 
-		-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
-		local borderScale = db.size / 32 * 2
-		local borderSize = db.size + (5 * borderScale)
-		frame.dispelIcon:SetSize(borderSize, borderSize)
-		AuraUtil.SetAuraBorderAtlas(frame.dispelIcon, dispelType, db.showDispelType)
+		if db.iconBorder then
+			-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
+			local borderScale = db.size / 32 * 2
+			local borderSize = db.size + (5 * borderScale)
+			frame.dispelIcon:SetSize(borderSize, borderSize)
+			local DEBUFF_DISPLAY_INFO = AuraUtil.GetDebuffDisplayInfoTable()
+			local info = DEBUFF_DISPLAY_INFO[dispelType] or DEBUFF_DISPLAY_INFO.None
+			local atlas = db.showDispelType and info.dispelAtlas or info.basicAtlas
+			frame.dispelIcon:SetAtlas(atlas)
+			frame.dispelIcon:Show()
+		else
+			frame.dispelIcon:Hide()
+		end
 
 		return frame
 	end
