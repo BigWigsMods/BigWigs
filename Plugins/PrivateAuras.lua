@@ -1,3 +1,5 @@
+if not BigWigsLoader.isRetail then return end -- Retail only module
+
 -------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -76,7 +78,7 @@ do
 		handler = plugin,
 		get = function(info) return db[info[#info]] end,
 		set = function(info, value) db[info[#info]] = value end,
-		order = 6.5,
+		order = 3,
 		args = {
 			anchorsButton = {
 				type = "execute",
