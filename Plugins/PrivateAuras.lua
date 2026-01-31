@@ -25,10 +25,11 @@ local UpdateAnchorPosition
 --
 
 plugin.defaultDB = {
-	disabled = false,
 	showDispelType = true,
 	iconBorder = true,
 
+	-- You
+	disabled = false,
 	size = 64,
 	spacing = 6,
 	growthDirection = "RIGHT",
@@ -41,6 +42,21 @@ plugin.defaultDB = {
 	anchorXOffset = 0,
 	anchorYOffset = -262,
 	anchorRelativeTo = "UIParent",
+
+	-- Others
+	disabledOther = false,
+	sizeOther = 64,
+	spacingOther = 6,
+	growthDirectionOther = "RIGHT",
+	showCooldownOther = true,
+	showCountdownTextOther = true,
+	showDurationTextOther = false,
+
+	anchorPointOther = "BOTTOM",
+	anchorRelPointOther = "TOP",
+	anchorXOffsetOther = 0,
+	anchorYOffsetOther = -262,
+	anchorRelativeToOther = "UIParent",
 }
 
 local function updateProfile()
@@ -118,7 +134,7 @@ do
 				end,
 				width = "full",
 				order = 3,
-				disabled = function() return disabled() or not db.iconBorder end,
+				disabled = function() return not db.iconBorder end,
 			},
 			iconBorder = {
 				type = "toggle",
@@ -130,11 +146,10 @@ do
 				end,
 				width = "full",
 				order = 4,
-				disabled = disabled,
 			},
-			display = {
+			paYou = {
 				type = "group",
-				name = L.general,
+				name = "XX Auras on you",
 				get = function(info)
 					return db[info[#info]]
 				end,
@@ -144,6 +159,13 @@ do
 				end,
 				order = 10,
 				args = {
+					heading = {
+						type = "description",
+						name = "XX Customize the icons for auras that apply to you.\n\n",
+						order = 0.5,
+						width = "full",
+						fontSize = "medium",
+					},
 					size = {
 						type = "range",
 						name = L.iconSize,
@@ -230,81 +252,264 @@ do
 					},
 				},
 			},
-			exactPositioning = {
+			paOthers = {
 				type = "group",
-				name = L.positionExact,
+				name = "XX Auras on others",
 				get = function(info)
 					return db[info[#info]]
 				end,
 				set = function(info, value)
 					db[info[#info]] = value
-					UpdateAnchorPosition(1)
+					plugin:UpdateAnchors()
 				end,
-				order = 20,
+				order = 15,
 				args = {
-					anchorXOffset = {
+					heading = {
+						type = "description",
+						name = "XX Choose a specific player and then customize the icons for auras that apply to them.\n\n",
+						order = 0.5,
+						width = "full",
+						fontSize = "medium",
+					},
+					sizeOther = {
 						type = "range",
-						name = L.positionX,
-						desc = L.positionDesc,
-						min = -2048, max = 2048, step = 1,
-						width = 3.2,
+						name = L.iconSize,
+						min = 24, max = 512, step = 1,
+						width = 1.6,
 						order = 1,
 						disabled = disabled,
 					},
-					anchorYOffset = {
+					spacingOther = {
 						type = "range",
-						name = L.positionY,
-						desc = L.positionDesc,
-						min = -2048, max = 2048, step = 1,
-						width = 3.2,
+						name = L.iconSpacing,
+						min = 0, max = 50, step = 1,
+						width = 1.6,
 						order = 2,
 						disabled = disabled,
 					},
-					anchorRelativeTo = {
-						type = "input",
-						name = L.customAnchorPoint,
-						set = function(_, value)
-							if value ~= plugin.defaultDB.anchorRelativeTo then
-								db.anchorPoint = "CENTER"
-								db.anchorRelPoint = "CENTER"
-								db.anchorXOffset = 0
-								db.anchorYOffset = 0
-								db.anchorRelativeTo = value
-							else
-								db.anchorPoint = plugin.defaultDB.anchorPoint
-								db.anchorRelPoint = plugin.defaultDB.anchorRelPoint
-								db.anchorXOffset = plugin.defaultDB.anchorXOffset
-								db.anchorYOffset = plugin.defaultDB.anchorYOffset
-								db.anchorRelativeTo = plugin.defaultDB.anchorRelativeTo
-							end
-							UpdateAnchorPosition(1)
-						end,
-						validate = function(_, value)
-							local frame = _G[value]
-							if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-								return false
-							end
-							return true
-						end,
-						width = 3.2,
+					showCooldownOther = {
+						type = "toggle",
+						name = L.showCooldown,
+						width = 1.6,
 						order = 3,
 						disabled = disabled,
 					},
-					anchorPoint = {
-						type = "select",
-						name = L.sourcePoint,
-						values = BigWigsAPI.GetFramePointList(),
+					showCountdownTextOther = {
+						type = "toggle",
+						name = L.showCountdownText,
 						width = 1.6,
 						order = 4,
-						disabled = function() return disabled() or db.anchorRelativeTo == plugin.defaultDB.anchorRelativeTo end,
+						disabled = function() return disabled() or not db.showCooldown end,
 					},
-					anchorRelPoint = {
+					-- showDurationTextOther = {
+					-- 	type = "toggle",
+					-- 	name = L.showDurationText,
+					-- 	width = 1.6,
+					-- 	order = 5,
+					-- 	disabled = disabled,
+					-- },
+					growthDirectionOther = {
 						type = "select",
-						name = L.destinationPoint,
-						values = BigWigsAPI.GetFramePointList(),
+						name = L.growthDirection,
+						values = {
+							LEFT = L.LEFT,
+							RIGHT = L.RIGHT,
+							UP = L.UP,
+							DOWN = L.DOWN,
+						},
 						width = 1.6,
-						order = 5,
-						disabled = function() return disabled() or db.anchorRelativeTo == plugin.defaultDB.anchorRelativeTo end,
+						order = 6,
+						disabled = disabled,
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 7,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetDesc,
+						func = function() plugin.db:ResetProfile() updateProfile() end,
+						order = 8,
+					},
+					disabledSpacer = {
+						type = "description",
+						name = "\n\n\n\n\n\n\n",
+						order = 9,
+						width = "full",
+						fontSize = "medium",
+					},
+					disabledOther = {
+						type = "toggle",
+						name = L.disabled,
+						set = function(_, value)
+							db.disabled = value
+							updateProfile()
+						end,
+						width = "full",
+						order = 10,
+						confirm = function(_, value)
+							if value then
+								return L.disableDesc:format(L.privateAuras)
+							end
+						end,
+					},
+				},
+			},
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				set = function(info, value)
+					db[info[#info]] = value
+					UpdateAnchorPosition(1)
+				end,
+				order = 20,
+				childGroups = "tab",
+				args = {
+					paOnYou = {
+						type = "group",
+						name = "XX PA ON YOU",
+						order = 1,
+						inline = true,
+						args = {
+							anchorXOffset = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								min = -2048, max = 2048, step = 1,
+								width = 3.2,
+								order = 1,
+								disabled = disabled,
+							},
+							anchorYOffset = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								min = -2048, max = 2048, step = 1,
+								width = 3.2,
+								order = 2,
+								disabled = disabled,
+							},
+							anchorRelativeTo = {
+								type = "input",
+								name = L.customAnchorPoint,
+								set = function(_, value)
+									if value ~= plugin.defaultDB.anchorRelativeTo then
+										db.anchorPoint = "CENTER"
+										db.anchorRelPoint = "CENTER"
+										db.anchorXOffset = 0
+										db.anchorYOffset = 0
+										db.anchorRelativeTo = value
+									else
+										db.anchorPoint = plugin.defaultDB.anchorPoint
+										db.anchorRelPoint = plugin.defaultDB.anchorRelPoint
+										db.anchorXOffset = plugin.defaultDB.anchorXOffset
+										db.anchorYOffset = plugin.defaultDB.anchorYOffset
+										db.anchorRelativeTo = plugin.defaultDB.anchorRelativeTo
+									end
+									UpdateAnchorPosition(1)
+								end,
+								validate = function(_, value)
+									local frame = _G[value]
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+										return false
+									end
+									return true
+								end,
+								width = 3.2,
+								order = 3,
+								disabled = disabled,
+							},
+							anchorPoint = {
+								type = "select",
+								name = L.sourcePoint,
+								values = BigWigsAPI.GetFramePointList(),
+								width = 1.6,
+								order = 4,
+								disabled = function() return disabled() or db.anchorRelativeTo == plugin.defaultDB.anchorRelativeTo end,
+							},
+							anchorRelPoint = {
+								type = "select",
+								name = L.destinationPoint,
+								values = BigWigsAPI.GetFramePointList(),
+								width = 1.6,
+								order = 5,
+								disabled = function() return disabled() or db.anchorRelativeTo == plugin.defaultDB.anchorRelativeTo end,
+							},
+						},
+					},
+					paOnOthers = {
+						type = "group",
+						name = "XX PA ON OTHERS",
+						order = 2,
+						inline = true,
+						args = {
+							anchorXOffsetOther = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								min = -2048, max = 2048, step = 1,
+								width = 3.2,
+								order = 1,
+								disabled = disabled,
+							},
+							anchorYOffsetOther = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								min = -2048, max = 2048, step = 1,
+								width = 3.2,
+								order = 2,
+								disabled = disabled,
+							},
+							anchorRelativeToOther = {
+								type = "input",
+								name = L.customAnchorPoint,
+								set = function(_, value)
+									if value ~= plugin.defaultDB.anchorRelativeToOther then
+										db.anchorPointOther = "CENTER"
+										db.anchorRelPointOther = "CENTER"
+										db.anchorXOffsetOther = 0
+										db.anchorYOffsetOther = 0
+										db.anchorRelativeToOther = value
+									else
+										db.anchorPointOther = plugin.defaultDB.anchorPointOther
+										db.anchorRelPointOther = plugin.defaultDB.anchorRelPointOther
+										db.anchorXOffsetOther = plugin.defaultDB.anchorXOffsetOther
+										db.anchorYOffsetOther = plugin.defaultDB.anchorYOffsetOther
+										db.anchorRelativeToOther = plugin.defaultDB.anchorRelativeToOther
+									end
+									UpdateAnchorPosition(1)
+								end,
+								validate = function(_, value)
+									local frame = _G[value]
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+										return false
+									end
+									return true
+								end,
+								width = 3.2,
+								order = 3,
+								disabled = disabled,
+							},
+							anchorPointOther = {
+								type = "select",
+								name = L.sourcePoint,
+								values = BigWigsAPI.GetFramePointList(),
+								width = 1.6,
+								order = 4,
+								disabled = function() return disabled() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
+							},
+							anchorRelPointOther = {
+								type = "select",
+								name = L.destinationPoint,
+								values = BigWigsAPI.GetFramePointList(),
+								width = 1.6,
+								order = 5,
+								disabled = function() return disabled() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
+							},
+						},
 					},
 				},
 			},
