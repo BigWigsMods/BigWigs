@@ -25,7 +25,7 @@ local UpdateAnchorPosition
 --
 
 plugin.defaultDB = {
-	enabled = false,
+	disabled = false,
 	showDispelType = true,
 
 	size = 64,
@@ -35,10 +35,10 @@ plugin.defaultDB = {
 	showCountdownText = true,
 	showDurationText = false,
 
-	anchorPoint = "CENTER",
-	anchorRelPoint = "CENTER",
-	anchorXOffset = 100,
-	anchorYOffset = 100,
+	anchorPoint = "BOTTOM",
+	anchorRelPoint = "TOP",
+	anchorXOffset = 0,
+	anchorYOffset = -262,
 	anchorRelativeTo = "UIParent",
 }
 
@@ -68,7 +68,7 @@ end
 
 do
 	local function disabled()
-		return not db.enabled
+		return db.disabled
 	end
 
 	plugin.pluginOptions = {
@@ -105,17 +105,6 @@ do
 				func = "CreateTestAura",
 				width = 1.5,
 				order = 2,
-			},
-			enabled = {
-				type = "toggle",
-				name = L.enable,
-				get = function() return db.enabled end,
-				set = function(_, value)
-					db.enabled = value
-					updateProfile()
-				end,
-				width = "full",
-				order = 3,
 			},
 			showDispelType = {
 				type = "toggle",
@@ -203,6 +192,28 @@ do
 						desc = L.resetDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
 						order = 8,
+					},
+					disabledSpacer = {
+						type = "description",
+						name = "\n\n\n\n\n\n\n",
+						order = 9,
+						width = "full",
+						fontSize = "medium",
+					},
+					disabled = {
+						type = "toggle",
+						name = L.disabled,
+						set = function(_, value)
+							db.disabled = value
+							updateProfile()
+						end,
+						width = "full",
+						order = 10,
+						confirm = function(_, value)
+							if value then
+								return L.disableDesc:format(L.privateAuras)
+							end
+						end,
 					},
 				},
 			},
