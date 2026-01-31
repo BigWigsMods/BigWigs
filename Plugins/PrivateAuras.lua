@@ -56,7 +56,7 @@ local function updateProfile()
 
 	-- TODO more setting validation
 
-	if db.enabled then
+	if not db.disabled then
 		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
 	end
 	plugin:UpdateAnchors()
@@ -437,7 +437,7 @@ end
 function plugin:UpdateAnchors()
 	self:RemoveAnchors()
 
-	if not db.enabled then
+	if db.disabled then
 		return
 	end
 
