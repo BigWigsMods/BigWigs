@@ -2069,6 +2069,18 @@ do
 end
 
 do
+	local GetUnitAuraBySpellID = loader.GetUnitAuraBySpellID
+	--- Get the aura info of a specific unit using a spell ID.
+	-- @string unit unit token or name
+	-- @number spellId the spell ID of the aura
+	-- @return table the table full of aura info, or nil if not found
+	function boss:GetUnitAura(unit, spellId)
+		local tbl = GetUnitAuraBySpellID(unit, spellId)
+		return tbl
+	end
+end
+
+do
 	local GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
 	local blacklist = {}
 	--- Get the buff info of a unit.
