@@ -3580,7 +3580,8 @@ do
 			local icon = GetRaidTargetIndex(unitOrFlags)
 			return icon
 		else
-			return flagToIcon[unitOrFlags]
+			local flag = band(unitOrFlags, 255) -- COMBATLOG_OBJECT_RAIDTARGET_MASK = 255
+			return flagToIcon[flag]
 		end
 	end
 end
