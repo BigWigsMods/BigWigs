@@ -363,7 +363,6 @@ globals = {
 	"UIParent",
 	"UIWidgetManager",
 	"UnitAffectingCombat",
-	"UnitAura",
 	"UnitCanAttack",
 	"UnitCastingInfo",
 	"UnitClass",

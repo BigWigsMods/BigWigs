@@ -2069,7 +2069,7 @@ do
 end
 
 do
-	local UnitAura = C_UnitAuras and C_UnitAuras.GetAuraDataByIndex or UnitAura
+	local GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
 	local blacklist = {}
 	--- Get the buff info of a unit.
 	-- @string unit unit token or name
@@ -2085,15 +2085,17 @@ do
 			end
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
-				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
-				if type(name) == "table" then
-					stack = name.applications
-					duration = name.duration
-					expirationTime = name.expirationTime
-					spellId = name.spellId
-					value = name.points and name.points[1]
-					name = name.name
+				local auraTable = GetAuraDataByIndex(unit, i, "HELPFUL")
+				if self:IsSecret(auraTable.name) then
+					return
 				end
+
+				local stack = auraTable.applications
+				local duration = auraTable.duration
+				local expirationTime = auraTable.expirationTime
+				local spellId = auraTable.spellId
+				local value = auraTable.points and auraTable.points[1]
+				local name = auraTable.name
 
 				if name == spell then
 					if not blacklist[spellId] then
@@ -2109,21 +2111,23 @@ do
 			end
 		else
 			for i = 1, 100 do
-				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
-				if type(name) == "table" then
-					stack = name.applications
-					duration = name.duration
-					expirationTime = name.expirationTime
-					spellId = name.spellId
-					value = name.points and name.points[1]
-					name = name.name
+				local auraTable = GetAuraDataByIndex(unit, i, "HELPFUL")
+				if self:IsSecret(auraTable.name) then
+					return
 				end
+
+				local stack = auraTable.applications
+				local duration = auraTable.duration
+				local expirationTime = auraTable.expirationTime
+				local spellId = auraTable.spellId
+				local value = auraTable.points and auraTable.points[1]
+				local name = auraTable.name
 
 				if not spellId then
 					return
 				elseif not spell then
 					local desiredType = ...
-					if auraType == desiredType then
+					if auraTable.dispelName == desiredType then
 						return name, stack, duration, expirationTime
 					end
 				elseif spellId == spell then
@@ -2147,15 +2151,17 @@ do
 			end
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
-				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
-				if type(name) == "table" then
-					stack = name.applications
-					duration = name.duration
-					expirationTime = name.expirationTime
-					spellId = name.spellId
-					value = name.points and name.points[1]
-					name = name.name
+				local auraTable = GetAuraDataByIndex(unit, i, "HARMFUL")
+				if self:IsSecret(auraTable.name) then
+					return
 				end
+
+				local stack = auraTable.applications
+				local duration = auraTable.duration
+				local expirationTime = auraTable.expirationTime
+				local spellId = auraTable.spellId
+				local value = auraTable.points and auraTable.points[1]
+				local name = auraTable.name
 
 				if name == spell then
 					if not blacklist[spellId] then
@@ -2171,21 +2177,23 @@ do
 			end
 		else
 			for i = 1, 100 do
-				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
-				if type(name) == "table" then
-					stack = name.applications
-					duration = name.duration
-					expirationTime = name.expirationTime
-					spellId = name.spellId
-					value = name.points and name.points[1]
-					name = name.name
+				local auraTable = GetAuraDataByIndex(unit, i, "HARMFUL")
+				if self:IsSecret(auraTable.name) then
+					return
 				end
+
+				local stack = auraTable.applications
+				local duration = auraTable.duration
+				local expirationTime = auraTable.expirationTime
+				local spellId = auraTable.spellId
+				local value = auraTable.points and auraTable.points[1]
+				local name = auraTable.name
 
 				if not spellId then
 					return
 				elseif not spell then
 					local desiredType = ...
-					if auraType == desiredType then
+					if auraTable.dispelName == desiredType then
 						return name, stack, duration, expirationTime
 					end
 				elseif spellId == spell then
