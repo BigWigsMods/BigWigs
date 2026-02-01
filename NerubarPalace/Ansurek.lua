@@ -435,12 +435,14 @@ local function sortPriority(first, second)
 end
 
 function mod:UNIT_SPELLCAST_INTERRUPTED(_, _, _, spellId)
+	if self:IsSecret(spellId) then return end
 	if spellId == 450191 then -- Wrest
 		self:WrestInterrupted()
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if self:IsSecret(spellId) then return end
 	if spellId == 450040 then -- Land
 		self:Land()
 	elseif spellId == 449962 then -- Acidic Apocalypse

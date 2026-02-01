@@ -187,8 +187,8 @@ function mod:OnEngage()
 
 	-- MugTakingCharge/ZeeTakingCharge start the phase
 
-	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
-	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
+	--self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
+	--self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
 	if self:GetOption(electroShockerMarker) then
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	end
@@ -531,12 +531,14 @@ do
 	local woundOnMe = false
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+		if self:IsSecret(spellId) then return end
 		if spellId == 469490 then -- Double Whammy Shot, someone has debuff
 			self:DoubleWhammyShot()
 		end
 	end
 
 	function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+		if self:IsSecret(msg) then return end
 		-- |TInterface\\\\ICONS\\\\Ability_Hunter_BurstingShot.blp:20|t Zee targets you with |cFFFF0000|Hspell:469490|h[Double Whammy Shot]
 		-- "BOSS_DEBUFF#469490#Double Whammy Shot#6#raid17#Zhatzipr\u00e4st",
 		-- When this debuff is unhidden we can use it.

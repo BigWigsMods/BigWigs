@@ -141,6 +141,7 @@ function mod:RaidBossWhisperSync(msg, player)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+	if self:IsSecret(msg) then return end
 	-- |TInterface\\ICONS\\INV_Misc_Web_01.blp:20|t  Ulgrax engages you in a |cFFFF0000|Hspell:434776|h[Carnivorous Contest]|h|r!
 	if msg:find("spell:434776", nil, true) then
 		--self:PersonalMessage(434803, nil, CL.soak)

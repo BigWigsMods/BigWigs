@@ -305,6 +305,7 @@ end
 
 -- General
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if self:IsSecret(spellId) then return end
 	if spellId == 465833 then -- Colossal Clash
 		self:ColossalClash()
 	elseif spellId == 1213994 then -- Voltaic Image

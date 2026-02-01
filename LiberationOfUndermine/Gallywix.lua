@@ -517,8 +517,8 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 53 then -- Intermission at ~50%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
-		self:PlaySound("stages", "info")
+		--self:Message("stages", "cyan", CL.soon:format(CL.intermission), false)
+		--self:PlaySound("stages", "info")
 	end
 end
 
@@ -579,6 +579,7 @@ function mod:GigaBlastSuccess()
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if self:IsSecret(msg) then return end
 	if msg:find(L.story_phase_trigger, nil, true) then
 		self:StopBar(CL.count:format(self:SpellName(465952), fullBombsCount)) -- Big Bad Buncha Bombs
 		self:StopBar(CL.count:format(self:SpellName(467182), fullSuppressionCount)) -- Suppression

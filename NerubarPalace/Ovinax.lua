@@ -176,6 +176,7 @@ function mod:AddDeaths(args)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if self:IsSecret(spellId) then return end
 	if spellId == 442430 then -- Ingest Black Blood (100 energy)
 		local stage = self:GetStage()
 		self:SetStage(stage + 1)

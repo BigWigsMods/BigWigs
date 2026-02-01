@@ -427,6 +427,7 @@ end
 -- Stage 1
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if self:IsSecret(msg) then return end
 	if msg == L.intermission_trigger then
 		-- need to figure out why there's a 6s variance, stop gap but this seems consistent?
 		self:CDBar("stages", {4.8,127}, CL.count:format(CL.intermission, 1), 450980)

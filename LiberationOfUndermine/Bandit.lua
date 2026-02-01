@@ -236,8 +236,8 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 33 then -- Forced Stage 2 at 30%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(2)), false)
-		self:PlaySound("stages", "info")
+		--self:Message("stages", "cyan", CL.soon:format(CL.stage:format(2)), false)
+		--self:PlaySound("stages", "info")
 	end
 end
 
