@@ -3512,6 +3512,7 @@ end
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:PrimaryIcon(key, player)
+	if isRetail then return end
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", self, 1)
@@ -3524,6 +3525,7 @@ end
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:SecondaryIcon(key, player)
+	if isRetail then return end
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", self, 2)
@@ -3537,6 +3539,7 @@ end
 -- @string unit the unit (player/npc) to mark
 -- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
 function boss:CustomIcon(key, unit, icon)
+	if isRetail then return end
 	if key == false or self:GetOption(key) then
 		if solo then -- setting the same icon twice while not in a group removes it
 			SetRaidTarget(unit, 0)
