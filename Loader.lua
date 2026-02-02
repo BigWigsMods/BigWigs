@@ -1096,18 +1096,20 @@ do
 end
 
 -- XXX 12.0.0
-if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE then
-	BW_FEAT_SHARE = true
-	local msg = "|cFFFFFFFF" .. L.newFeatures .. "|r\n"
-	msg = msg .. "\n" .. L.parentheses:format(L.sharing_window_title, L.import .. "/" .. L.export)
-	if public.isRetail then
-		msg = msg .. "\n" .. L.parentheses:format(L.indicatorTitle, L.bars)
+if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE2 then
+	BW_FEAT_SHARE2 = true
+	if BigWigs3DB and not BW_FEAT_SHARE then -- No popup for fresh users
+		local msg = "|cFFFFFFFF" .. L.newFeatures .. "|r\n"
+		msg = msg .. "\n" .. L.parentheses:format(L.sharing_window_title, L.import .. "/" .. L.export)
+		if public.isRetail then
+			msg = msg .. "\n" .. L.parentheses:format(L.indicatorTitle, L.bars)
+		end
+		if public.isRetail or public.isMists then
+			msg = msg .. "\n" .. L.parentheses:format(L.battleResTitle, L.icon)
+		end
+		msg = msg .. "\n"
+		Popup(msg, true, 180)
 	end
-	if public.isRetail or public.isMists then
-		msg = msg .. "\n" .. L.parentheses:format(L.battleResTitle, L.icon)
-	end
-	msg = msg .. "\n"
-	Popup(msg, true, 180)
 end
 --
 
