@@ -2098,52 +2098,35 @@ do
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HELPFUL")
-				if self:IsSecret(auraTable.name) then
-					return
+				if not auraTable or self:IsSecret(auraTable.name) then
+					return t1, t2, t3, t4, t5
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if name == spell then
+				if auraTable.name == spell then
+					local spellId = auraTable.spellId
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", auraTable.name, spellId, self:Difficulty()))
 					end
-					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
-				end
-
-				if not spellId then
-					return t1, t2, t3, t4, t5
+					local value = auraTable.points and auraTable.points[1]
+					t1, t2, t3, t4, t5 = auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		else
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HELPFUL")
-				if self:IsSecret(auraTable.name) then
+				if not auraTable or self:IsSecret(auraTable.name) then
 					return
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if not spellId then
-					return
-				elseif not spell then
+				if not spell then
 					local desiredType = ...
 					if auraTable.dispelName == desiredType then
-						return name, stack, duration, expirationTime
+						return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime
 					end
-				elseif spellId == spell then
-					return name, stack, duration, expirationTime, value
+				elseif auraTable.spellId == spell then
+					local value = auraTable.points and auraTable.points[1]
+					return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		end
@@ -2164,52 +2147,35 @@ do
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HARMFUL")
-				if self:IsSecret(auraTable.name) then
-					return
+				if not auraTable or self:IsSecret(auraTable.name) then
+					return t1, t2, t3, t4, t5
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if name == spell then
+				if auraTable.name == spell then
+					local spellId = auraTable.spellId
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", auraTable.name, spellId, self:Difficulty()))
 					end
-					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
-				end
-
-				if not spellId then
-					return t1, t2, t3, t4, t5
+					local value = auraTable.points and auraTable.points[1]
+					t1, t2, t3, t4, t5 = auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		else
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HARMFUL")
-				if self:IsSecret(auraTable.name) then
+				if not auraTable or self:IsSecret(auraTable.name) then
 					return
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if not spellId then
-					return
-				elseif not spell then
+				if not spell then
 					local desiredType = ...
 					if auraTable.dispelName == desiredType then
-						return name, stack, duration, expirationTime
+						return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime
 					end
-				elseif spellId == spell then
-					return name, stack, duration, expirationTime, value
+				elseif auraTable.spellId == spell then
+					local value = auraTable.points and auraTable.points[1]
+					return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		end
