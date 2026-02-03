@@ -12,13 +12,13 @@ if not plugin then return end
 --
 
 local MAX_AURAS = 3
-local CONFIG_MODE_DURATION = 5
+local CONFIG_MODE_DURATION = 10
 
 local db
 local anchors = {}
 local inConfigureMode = false
 
-local UpdateAnchorPosition
+local UpdateAnchorPosition, UpdateTestAura
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -26,36 +26,39 @@ local UpdateAnchorPosition
 
 plugin.defaultDB = {
 	showDispelType = true,
-	iconBorder = true,
 
 	-- You
 	disabled = false,
 	size = 64,
 	spacing = 6,
+	iconBorder = true,
 	growthDirection = "RIGHT",
 	showCooldown = true,
 	showCountdownText = true,
-	showDurationText = false,
+	countdownTextScale = 1,
+	-- showDurationText = false,
 
-	anchorPoint = "BOTTOM",
-	anchorRelPoint = "TOP",
-	anchorXOffset = 0,
-	anchorYOffset = -262,
+	anchorPoint = "CENTER",
+	anchorRelPoint = "CENTER",
+	anchorXOffset = 100,
+	anchorYOffset = 100,
 	anchorRelativeTo = "UIParent",
 
-	-- Others
-	disabledOther = false,
+	-- Other
+	disabledOther = true,
 	sizeOther = 64,
 	spacingOther = 6,
+	iconBorderOther = true,
 	growthDirectionOther = "RIGHT",
 	showCooldownOther = true,
 	showCountdownTextOther = true,
-	showDurationTextOther = false,
+	countdownTextScaleOther = 1,
+	-- showDurationTextOther = false,
 
-	anchorPointOther = "BOTTOM",
-	anchorRelPointOther = "TOP",
-	anchorXOffsetOther = 0,
-	anchorYOffsetOther = -262,
+	anchorPointOther = "CENTER",
+	anchorRelPointOther = "CENTER",
+	anchorXOffsetOther = 100,
+	anchorYOffsetOther = -150,
 	anchorRelativeToOther = "UIParent",
 }
 
@@ -134,18 +137,6 @@ do
 				end,
 				width = "full",
 				order = 3,
-				disabled = function() return not db.iconBorder end,
-			},
-			iconBorder = {
-				type = "toggle",
-				name = L.showBorder,
-				desc = L.showBorderDesc,
-				set = function(info, value)
-					db[info[#info]] = value
-					plugin:UpdateAnchors()
-				end,
-				width = "full",
-				order = 4,
 			},
 			paYou = {
 				type = "group",
@@ -161,7 +152,7 @@ do
 				args = {
 					heading = {
 						type = "description",
-						name = "XX Customize the icons for auras that apply to you.\n\n",
+						name = "XX Customize the icons for auras that apply to you." .. "\n\n",
 						order = 0.5,
 						width = "full",
 						fontSize = "medium",
@@ -182,25 +173,41 @@ do
 						order = 2,
 						disabled = disabled,
 					},
+					iconBorder = {
+						type = "toggle",
+						name = L.showBorder,
+						desc = L.showBorderDesc,
+						width = 1.6,
+						order = 3,
+						disabled = disabled,
+					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						width = 1.6,
-						order = 3,
+						order = 4,
 						disabled = disabled,
 					},
 					showCountdownText = {
 						type = "toggle",
 						name = L.showCountdownText,
 						width = 1.6,
-						order = 4,
+						order = 5,
 						disabled = function() return disabled() or not db.showCooldown end,
+					},
+					countdownTextScale = {
+						type = "range",
+						name = L.countdownTextScale,
+						min = 0.1, max = 4, step = 0.1, isPercent = true,
+						width = 1.6,
+						order = 6,
+						disabled = function() return disabled() or not db.showCooldown or not db.showCountdownText end,
 					},
 					-- showDurationText = {
 					-- 	type = "toggle",
 					-- 	name = L.showDurationText,
 					-- 	width = 1.6,
-					-- 	order = 5,
+					-- 	order = 7,
 					-- 	disabled = disabled,
 					-- },
 					growthDirection = {
@@ -213,25 +220,25 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 6,
+						order = 8,
 						disabled = disabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 7,
+						order = 10,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 8,
+						order = 11,
 					},
 					disabledSpacer = {
 						type = "description",
 						name = "\n\n\n\n\n\n\n",
-						order = 9,
+						order = 12,
 						width = "full",
 						fontSize = "medium",
 					},
@@ -243,7 +250,7 @@ do
 							updateProfile()
 						end,
 						width = "full",
-						order = 10,
+						order = 13,
 						confirm = function(_, value)
 							if value then
 								return L.disableDesc:format(L.privateAuras)
@@ -266,7 +273,7 @@ do
 				args = {
 					heading = {
 						type = "description",
-						name = "XX Choose a specific player and then customize the icons for auras that apply to them.\n\n",
+						name = "XX Choose a specific player and then customize the icons for auras that apply to them." .. "\n\n",
 						order = 0.5,
 						width = "full",
 						fontSize = "medium",
@@ -287,25 +294,41 @@ do
 						order = 2,
 						disabled = disabled,
 					},
+					iconBorderOther = {
+						type = "toggle",
+						name = L.showBorder,
+						desc = L.showBorderDesc,
+						width = 1.6,
+						order = 3,
+						disabled = disabled,
+					},
 					showCooldownOther = {
 						type = "toggle",
 						name = L.showCooldown,
 						width = 1.6,
-						order = 3,
+						order = 4,
 						disabled = disabled,
 					},
 					showCountdownTextOther = {
 						type = "toggle",
 						name = L.showCountdownText,
 						width = 1.6,
-						order = 4,
-						disabled = function() return disabled() or not db.showCooldown end,
+						order = 5,
+						disabled = function() return disabled() or not db.showCooldownOther end,
+					},
+					countdownTextScaleOther = {
+						type = "range",
+						name = L.countdownTextScale,
+						min = 0.1, max = 4, step = 0.1, isPercent = true,
+						width = 1.6,
+						order = 6,
+						disabled = function() return disabled() or not db.showCooldownOther or not db.showCountdownTextOther end,
 					},
 					-- showDurationTextOther = {
 					-- 	type = "toggle",
 					-- 	name = L.showDurationText,
 					-- 	width = 1.6,
-					-- 	order = 5,
+					-- 	order = 7,
 					-- 	disabled = disabled,
 					-- },
 					growthDirectionOther = {
@@ -318,7 +341,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 6,
+						order = 8,
 						disabled = disabled,
 					},
 					resetHeader = {
@@ -331,12 +354,12 @@ do
 						name = L.resetAll,
 						desc = L.resetDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 8,
+						order = 10,
 					},
 					disabledSpacer = {
 						type = "description",
 						name = "\n\n\n\n\n\n\n",
-						order = 9,
+						order = 11,
 						width = "full",
 						fontSize = "medium",
 					},
@@ -344,11 +367,11 @@ do
 						type = "toggle",
 						name = L.disabled,
 						set = function(_, value)
-							db.disabled = value
+							db.disabledOther = value
 							updateProfile()
 						end,
 						width = "full",
-						order = 10,
+						order = 12,
 						confirm = function(_, value)
 							if value then
 								return L.disableDesc:format(L.privateAuras)
@@ -614,12 +637,13 @@ function UpdateAnchorPosition(index)
 	local anchor = anchors[index]
 	if not anchor then return end
 
+	local scale = anchor:GetScale()
 	anchor:ClearAllPoints()
 	if index == 1 then
 		local relativeTo = db.anchorRelativeTo
 		local point, relPoint = db.anchorPoint, db.anchorRelPoint
 		local x, y = db.anchorXOffset, db.anchorYOffset
-		anchor:SetPoint(point, relativeTo, relPoint, x, y)
+		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
 	else
 		local relativeTo = anchors[index - 1]
 		local point, relPoint
@@ -637,7 +661,7 @@ function UpdateAnchorPosition(index)
 			point, relPoint = "TOP", "BOTTOM"
 			y = -db.spacing
 		end
-		anchor:SetPoint(point, relativeTo, relPoint, x, y)
+		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
 	end
 end
 
@@ -659,9 +683,10 @@ function plugin:UpdateAnchors()
 		return
 	end
 
-	local width = db.size
-	local height = db.size
-	local borderScale = db.size / 32 * 2 -- scale the dispel type border
+	local scale = db.countdownTextScale
+	local width = db.size * (1 / scale)
+	local height = db.size * (1 / scale)
+	local borderScale = width / 32 * 2 -- scale the dispel type border
 	if not db.iconBorder then
 		borderScale = -10000 -- hide the border
 	end
@@ -675,12 +700,16 @@ function plugin:UpdateAnchors()
 			-- anchor:SetResizable(true)
 			anchors[index] = anchor
 		end
-		UpdateAnchorPosition(index)
 
 		anchor:SetSize(width, height)
+		anchor:SetScale(scale)
+		UpdateAnchorPosition(index)
 		anchor:Show()
 
-		if not inConfigureMode then -- re-registers on BigWigs_StopConfigureMode
+		UpdateTestAura(index)
+
+		if not inConfigureMode then
+			-- re-registers on BigWigs_StopConfigureMode, don't really want to spam this when moving anchors or whatnot
 			anchor.anchorId = C_UnitAuras.AddPrivateAuraAnchor({
 				unitToken = "player",
 				auraIndex = index,
@@ -725,6 +754,7 @@ do
 	local icons = {}
 	local function releaseFrame(frame)
 		frame:ClearAllPoints()
+		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
 		frame:Hide()
@@ -744,10 +774,10 @@ do
 		table.insert(icons, frame)
 	end
 
-	local function DurationOnUpdate(self)
-		self.duration:SetFormattedText(SecondsToTimeAbbrev(self.timeLeft))
-		self.timeLeft = math.max(self.expirationTime - GetTime(), 0)
-	end
+	-- local function DurationOnUpdate(self)
+	-- 	self.duration:SetFormattedText(SecondsToTimeAbbrev(self.timeLeft))
+	-- 	self.timeLeft = math.max(self.expirationTime - GetTime(), 0)
+	-- end
 
 	local function getDebuffFrame(index)
 		local frame = table.remove(icons)
@@ -766,65 +796,76 @@ do
 			cooldown:SetDrawEdge(false)
 			frame.cooldown = cooldown
 
-			local duration = frame:CreateFontString(nil, "BACKGROUND")
-			duration:SetPoint("TOP", frame, "BOTTOM", 0, 0)
-			duration:SetFontObject("GameFontNormalSmall")
-			duration:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
-			frame.duration = duration
+			-- local duration = frame:CreateFontString(nil, "BACKGROUND")
+			-- duration:SetPoint("TOP", frame, "BOTTOM", 0, 0)
+			-- duration:SetFontObject("GameFontNormalSmall")
+			-- duration:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+			-- frame.duration = duration
 
 			local dispelIcon = frame:CreateTexture(nil, "OVERLAY")
 			dispelIcon:SetPoint("CENTER")
 			frame.dispelIcon = dispelIcon
 		end
 
-		-- Set our aura values
+		-- Setup the fake private aura
 		local spellIndex = (index - 1) % #privateAuraSpellList + 1
 		local icon = C_Spell.GetSpellTexture(privateAuraSpellList[spellIndex])
 		local dispelType = dispelTypeList[(index - 1) % 7]
 		local duration = CONFIG_MODE_DURATION
 		local expirationTime = GetTime() + duration
 
-		-- Setup the fake private aura
 		frame.icon:SetTexture(icon)
+
+		frame.timeLeft = duration
+		frame.expirationTime = expirationTime
+		frame.timer = C_Timer.NewTimer(duration, function()
+			releaseFrame(frame)
+		end)
+
+		local DEBUFF_DISPLAY_INFO = AuraUtil.GetDebuffDisplayInfoTable()
+		local info = DEBUFF_DISPLAY_INFO[dispelType] or DEBUFF_DISPLAY_INFO.None
+		local atlas = db.showDispelType and (info.dispelAtlas or info.basicAtlas)
+		frame.dispelIcon:SetAtlas(atlas)
+
+		return frame
+	end
+
+	function UpdateTestAura(index)
+		local frame = testAuras[index]
+		if not frame then return end
 
 		if db.showCooldown then
 			frame.cooldown:SetHideCountdownNumbers(not db.showCountdownText)
-			frame.cooldown:SetCooldownDuration(duration)
+			frame.cooldown:SetCooldownFromExpirationTime(frame.expirationTime, CONFIG_MODE_DURATION)
 			frame.cooldown:Show()
 		else
 			frame.cooldown:Hide()
 		end
 
-		if db.showDurationText then
-			frame.timeLeft = duration
-			frame.expirationTime = expirationTime
-			frame:SetScript("OnUpdate", DurationOnUpdate)
-			DurationOnUpdate(frame, 0)
-			frame.duration:Show()
-		else
-			frame.duration:SetText("")
-			frame.duration:Hide()
-		end
+		-- if db.showDurationText then
+		-- 	frame:SetScript("OnUpdate", DurationOnUpdate)
+		-- 	DurationOnUpdate(frame, 0)
+		-- 	frame.duration:Show()
+		-- else
+		-- 	frame.duration:SetText("")
+		-- 	frame.duration:Hide()
+		-- end
 
-		frame.timer = C_Timer.NewTimer(duration, function()
-			releaseFrame(frame)
-		end)
+		local scale = db.countdownTextScale
+		local size = db.size * (1 / scale)
 
 		if db.iconBorder then
 			-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
-			local borderScale = db.size / 32 * 2
-			local borderSize = db.size + (5 * borderScale)
+			local borderScale = size / 32 * 2
+			local borderSize = size + (5 * borderScale)
 			frame.dispelIcon:SetSize(borderSize, borderSize)
-			local DEBUFF_DISPLAY_INFO = AuraUtil.GetDebuffDisplayInfoTable()
-			local info = DEBUFF_DISPLAY_INFO[dispelType] or DEBUFF_DISPLAY_INFO.None
-			local atlas = db.showDispelType and info.dispelAtlas or info.basicAtlas
-			frame.dispelIcon:SetAtlas(atlas)
 			frame.dispelIcon:Show()
 		else
 			frame.dispelIcon:Hide()
 		end
 
-		return frame
+		frame:SetSize(size, size)
+		frame:Show()
 	end
 
 	function plugin:CreateTestAura()
@@ -837,9 +878,9 @@ do
 		for i = 1, math.min(#testAuras, MAX_AURAS) do
 			local frame = testAuras[i]
 			frame:ClearAllPoints()
-			frame:SetPoint("CENTER", anchors[i], "CENTER")
-			frame:SetSize(db.size, db.size)
-			frame:Show()
+			frame:SetParent(anchors[i])
+			frame:SetPoint("CENTER")
+			UpdateTestAura(i)
 		end
 		for i = #testAuras, MAX_AURAS + 1, -1  do
 			releaseFrame(testAuras[i])
