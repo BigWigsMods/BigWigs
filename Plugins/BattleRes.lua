@@ -152,9 +152,6 @@ do
 				plugin.db.profile.position[4] = y
 			end
 		end
-		if not plugin.db.profile.position[5] then
-			plugin.db.profile.position[5] = defaultDB.position[5] -- XXX temp remove me
-		end
 		if plugin.db.profile.position[5] ~= defaultDB.position[5] then
 			local frame = _G[plugin.db.profile.position[5]]
 			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
@@ -1488,12 +1485,6 @@ end
 -- Initialization
 --
 
-function plugin:OnRegister()
-	if self.db.profile.newResAvailableSound ~= "None" then
-		self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, self.db.profile.newResAvailableSound)) if played then StopSound(id) end end, 0)
-	end
-end
-
 do
 	local function DelayStartOfInstance() -- Difficulty info isn't accurate until 1 frame after PEW
 		local _, _, diffID = BigWigsLoader.GetInstanceInfo()
@@ -1560,6 +1551,9 @@ do
 		self:RegisterMessage("BigWigs_ProfileUpdate", SwapProfile)
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.UpdateWidgets()
+		if self.db.profile.newResAvailableSound ~= "None" then
+			self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, self.db.profile.newResAvailableSound)) if played then StopSound(id) end end, 0)
+		end
 		if not self.db.profile.disabled then
 			isEnabled = true
 			BigWigsLoader.CTimerAfter(0, DelayStartOfInstance)
