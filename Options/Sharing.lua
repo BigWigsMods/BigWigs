@@ -95,13 +95,15 @@ local barSettingsToExport = {
 	"emphasizeRestart",
 	"emphasizeTime",
 	"emphasizeMultiplier",
+	"spacing",
+	"visibleBarLimit",
+	"visibleBarLimitEmph",
 	"normalWidth",
 	"normalHeight",
 	"expWidth",
 	"expHeight",
-	"spacing",
-	"visibleBarLimit",
-	"visibleBarLimitEmph",
+	"spellIndicators",
+	"spellIndicatorsSize",
 }
 
 local messageSettingsToExport = {
@@ -124,9 +126,10 @@ local messageSettingsToExport = {
 }
 
 local countdownSettingsToExport = {
+	"textEnabled",
 	"fontName",
-	"fontSize",
 	"outline",
+	"fontSize",
 	"monochrome",
 	"voice",
 	"countdownTime",
