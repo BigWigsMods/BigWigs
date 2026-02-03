@@ -1804,6 +1804,18 @@ function boss:Wrath()
 	return isWrath
 end
 
+--- Check if the current game type is Cataclysm.
+-- @return boolean
+function boss:Cataclysm()
+	return isCata
+end
+
+--- Check if the current game type is Mists of Pandaria.
+-- @return boolean
+function boss:MistsOfPandaria()
+	return isMists
+end
+
 --- Get the current season.
 -- @return number
 function boss:GetSeason()
