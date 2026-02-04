@@ -31,7 +31,7 @@ plugin.defaultDB = {
 	disabled = false,
 	size = 64,
 	spacing = 6,
-	iconBorder = true,
+	showBorder = true,
 	growthDirection = "RIGHT",
 	showCooldown = true,
 	showCountdownText = true,
@@ -48,7 +48,7 @@ plugin.defaultDB = {
 	disabledOther = true,
 	sizeOther = 64,
 	spacingOther = 6,
-	iconBorderOther = true,
+	showBorderOther = true,
 	growthDirectionOther = "RIGHT",
 	showCooldownOther = true,
 	showCountdownTextOther = true,
@@ -89,6 +89,9 @@ end
 do
 	local function disabled()
 		return db.disabled
+	end
+	local function disabledOther()
+		return db.disabledOther
 	end
 
 	plugin.pluginOptions = {
@@ -157,6 +160,26 @@ do
 						width = "full",
 						fontSize = "medium",
 					},
+					disabled = {
+						type = "toggle",
+						name = L.disabled,
+						set = function(_, value)
+							db.disabled = value
+							updateProfile()
+						end,
+						-- confirm = function(_, value)
+						-- 	if value then
+						-- 		return L.disableDesc:format(L.privateAuras)
+						-- 	end
+						-- end,
+						width = 1.6,
+						order = 0.6,
+					},
+					sep1 = {
+						type = "description",
+						name = "",
+						order = 0.7,
+					},
 					size = {
 						type = "range",
 						name = L.iconSize,
@@ -173,7 +196,7 @@ do
 						order = 2,
 						disabled = disabled,
 					},
-					iconBorder = {
+					showBorder = {
 						type = "toggle",
 						name = L.showBorder,
 						desc = L.showBorderDesc,
@@ -223,7 +246,7 @@ do
 						order = 8,
 						disabled = disabled,
 					},
-					resetHeader = {
+					sep2 = {
 						type = "header",
 						name = "",
 						order = 10,
@@ -232,30 +255,11 @@ do
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetDesc,
-						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 11,
-					},
-					disabledSpacer = {
-						type = "description",
-						name = "\n\n\n\n\n\n\n",
-						order = 12,
-						width = "full",
-						fontSize = "medium",
-					},
-					disabled = {
-						type = "toggle",
-						name = L.disabled,
-						set = function(_, value)
-							db.disabled = value
+						func = function()
+							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						width = "full",
-						order = 13,
-						confirm = function(_, value)
-							if value then
-								return L.disableDesc:format(L.privateAuras)
-							end
-						end,
+						order = -1,
 					},
 				},
 			},
@@ -278,13 +282,33 @@ do
 						width = "full",
 						fontSize = "medium",
 					},
+					disabledOther = {
+						type = "toggle",
+						name = L.disabled,
+						set = function(_, value)
+							db.disabledOther = value
+							updateProfile()
+						end,
+						-- confirm = function(_, value)
+						-- 	if value then
+						-- 		return L.disableDesc:format(L.privateAuras)
+						-- 	end
+						-- end,
+						width = 1.6,
+						order = 0.6,
+					},
+					sep1 = {
+						type = "description",
+						name = "",
+						order = 0.7,
+					},
 					sizeOther = {
 						type = "range",
 						name = L.iconSize,
 						min = 24, max = 512, step = 1,
 						width = 1.6,
 						order = 1,
-						disabled = disabled,
+						disabled = disabledOther,
 					},
 					spacingOther = {
 						type = "range",
@@ -292,29 +316,29 @@ do
 						min = 0, max = 50, step = 1,
 						width = 1.6,
 						order = 2,
-						disabled = disabled,
+						disabled = disabledOther,
 					},
-					iconBorderOther = {
+					showBorderOther = {
 						type = "toggle",
 						name = L.showBorder,
 						desc = L.showBorderDesc,
 						width = 1.6,
 						order = 3,
-						disabled = disabled,
+						disabled = disabledOther,
 					},
 					showCooldownOther = {
 						type = "toggle",
 						name = L.showCooldown,
 						width = 1.6,
 						order = 4,
-						disabled = disabled,
+						disabled = disabledOther,
 					},
 					showCountdownTextOther = {
 						type = "toggle",
 						name = L.showCountdownText,
 						width = 1.6,
 						order = 5,
-						disabled = function() return disabled() or not db.showCooldownOther end,
+						disabled = function() return disabledOther() or not db.showCooldownOther end,
 					},
 					countdownTextScaleOther = {
 						type = "range",
@@ -322,14 +346,14 @@ do
 						min = 0.1, max = 4, step = 0.1, isPercent = true,
 						width = 1.6,
 						order = 6,
-						disabled = function() return disabled() or not db.showCooldownOther or not db.showCountdownTextOther end,
+						disabled = function() return disabledOther() or not db.showCooldownOther or not db.showCountdownTextOther end,
 					},
 					-- showDurationTextOther = {
 					-- 	type = "toggle",
 					-- 	name = L.showDurationText,
 					-- 	width = 1.6,
 					-- 	order = 7,
-					-- 	disabled = disabled,
+					-- 	disabled = disabledOther,
 					-- },
 					growthDirectionOther = {
 						type = "select",
@@ -342,41 +366,22 @@ do
 						},
 						width = 1.6,
 						order = 8,
-						disabled = disabled,
+						disabled = disabledOther,
 					},
-					resetHeader = {
+					sep2 = {
 						type = "header",
 						name = "",
-						order = 7,
+						order = 10,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetDesc,
-						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 10,
-					},
-					disabledSpacer = {
-						type = "description",
-						name = "\n\n\n\n\n\n\n",
-						order = 11,
-						width = "full",
-						fontSize = "medium",
-					},
-					disabledOther = {
-						type = "toggle",
-						name = L.disabled,
-						set = function(_, value)
-							db.disabledOther = value
+						func = function()
+							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						width = "full",
-						order = 12,
-						confirm = function(_, value)
-							if value then
-								return L.disableDesc:format(L.privateAuras)
-							end
-						end,
+						order = -1,
 					},
 				},
 			},
@@ -475,7 +480,7 @@ do
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 1,
-								disabled = disabled,
+								disabled = disabledOther,
 							},
 							anchorYOffsetOther = {
 								type = "range",
@@ -484,7 +489,7 @@ do
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 2,
-								disabled = disabled,
+								disabled = disabledOther,
 							},
 							anchorRelativeToOther = {
 								type = "input",
@@ -514,7 +519,7 @@ do
 								end,
 								width = 3.2,
 								order = 3,
-								disabled = disabled,
+								disabled = disabledOther,
 							},
 							anchorPointOther = {
 								type = "select",
@@ -522,7 +527,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 4,
-								disabled = function() return disabled() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
+								disabled = function() return disabledOther() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
 							},
 							anchorRelPointOther = {
 								type = "select",
@@ -530,7 +535,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 5,
-								disabled = function() return disabled() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
+								disabled = function() return disabledOther() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
 							},
 						},
 					},
@@ -687,7 +692,7 @@ function plugin:UpdateAnchors()
 	local width = db.size * (1 / scale)
 	local height = db.size * (1 / scale)
 	local borderScale = width / 32 * 2 -- scale the dispel type border
-	if not db.iconBorder then
+	if not db.showBorder then
 		borderScale = -10000 -- hide the border
 	end
 
@@ -854,7 +859,7 @@ do
 		local scale = db.countdownTextScale
 		local size = db.size * (1 / scale)
 
-		if db.iconBorder then
+		if db.showBorder then
 			-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
 			local borderScale = size / 32 * 2
 			local borderSize = size + (5 * borderScale)
