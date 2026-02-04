@@ -192,7 +192,12 @@ local function UnitTargetChanged(_, mobId, unitTarget)
 	end
 end
 
-function core:RegisterEnableMob(module, ...)
+function core:RegisterEnableMob(moduleName, ...)
+	local module = bosses[moduleName]
+	if not module then
+		core:Error(("RegisterEnableMob failed, no boss module named '%s' found."):format(tostring(moduleName)))
+	end
+
 	for i = 1, select("#", ...) do
 		local mobId = select(i, ...)
 		if type(mobId) ~= "number" or mobId < 1 then
@@ -643,7 +648,12 @@ do
 		self.SetupOptions = nil
 	end
 
-	function core:RegisterBossModule(module)
+	function core:RegisterBossModule(moduleName)
+		local module = bosses[moduleName]
+		if not module then
+			core:Error(("RegisterBossModule failed, no boss module named '%s' found."):format(tostring(moduleName)))
+		end
+
 		module.SetupOptions = moduleOptions
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
@@ -655,7 +665,12 @@ do
 		core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 	end
 
-	function core:RegisterPlugin(module)
+	function core:RegisterPlugin(moduleName)
+		local module = plugins[moduleName]
+		if not module then
+			core:Error(("RegisterPlugin failed, no plugin named '%s' found."):format(tostring(moduleName)))
+		end
+
 		if type(module.defaultDB) == "table" then
 			module.db = loader.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end

@@ -291,7 +291,7 @@ local bossNames = setmetatable({}, {__index =
 --- Register the module to enable on mob id.
 -- @number ... Any number of mob ids
 function boss:RegisterEnableMob(...)
-	core:RegisterEnableMob(self, ...)
+	core:RegisterEnableMob(self.moduleName, ...)
 end
 
 --- Check if a specific mob id would enable this module.
@@ -578,7 +578,7 @@ function boss:Error(message)
 	self.errorPrints[#self.errorPrints+1] = message
 end
 
-function boss:Initialize() core:RegisterBossModule(self) end
+function boss:Initialize() core:RegisterBossModule(self.moduleName) end
 function boss:Enable(isWipe)
 	if not self:IsEnabled() then
 		self.enabled = true
