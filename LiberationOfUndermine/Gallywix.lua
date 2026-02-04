@@ -636,6 +636,7 @@ function mod:MechengineersCanistersApplied(args)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if self:IsSecret(msg) then return end
 	-- a bit earlier than the cast, bar is aligned with when the debuffs go out
 	if msg:find("spell:465952", nil, true) then
 		-- |TInterface\\ICONS\\Ships_ABILITY_Bombers.BLP:20|t %s begins to cast |cFFFF0000|Hspell:465952|h[Big Bad Buncha Bombs]|h|r!
