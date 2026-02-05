@@ -933,7 +933,7 @@ L.startAnimation_glow_desc = "Esse brilho tem uma animação inicial, isso irá 
 L.nameplateOptInHeaderOff = "\n\n\n\nModo 'opt-in' de placas de nome do boss mod: Ativar esta opção desligará as placas de nome em TODOS os seus módulos de chefes.\n\nVocê precisará acessar cada um e ativar manualmente as placas de nome que deseja.\n\n"
 L.nameplateOptInHeaderOn = "\n\n\n\nO modo 'opt-in' de placas de nome do boss mod está |cFF33FF99ATIVO|r. Para ver as placas de nome do boss mod, vá às configurações de uma habilidade específica do chefe e ative a opção '|cFF33FF99Placas de Nome|r'.\n\n"
 L.nameplateOptInTitle = "Modo 'opt-in' de placas de nome do boss mod"
-L.nameplateOptInWarning = "|cffff4411AVISO!|r\n\nAtivar o modo 'opt-in' desligará as placas de nome em TODOS os seus módulos de chefes. Você precisará acessar cada um e ativar manualmente as placas de nome que deseja.\n\nSua interfa
+L.nameplateOptInWarning = "|cffff4411AVISO!|r\n\nAtivar o modo 'opt-in' desligará as placas de nome em TODOS os seus módulos de chefes. Você precisará acessar cada um e ativar manualmente as placas de nome que deseja.\n\nSua interface será recarregada, tem certeza?"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
