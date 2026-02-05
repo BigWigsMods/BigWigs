@@ -279,22 +279,22 @@ L.battleres_settings_import_desc = "Importer tous les paramètres de Battle Rez.
 L.battleres_settings_export_desc = "Exporter tous les paramètres de Battle Rez."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Partager la configuration du boss"
+L.sharing_flags = "Paramètres généraux"
+L.sharing_flags_desc = "Importer les paramètres qui contrôlent des éléments comme 'afficher la barre', 'jouer un son', 'afficher un message', etc.\nIls couvrent la plupart des cases à cocher dans les réglages des capacités."
+L.sharing_export_flags_desc = "Exporter les paramètres qui contrôlent des éléments comme 'afficher la barre', 'jouer un son', 'afficher un message', etc.\nIls couvrent la plupart des cases à cocher dans les réglages des capacités."
+L.sharing_sounds_desc = "Importer quels sons jouer pour les capacités."
+L.sharing_export_sounds_desc = "Exporter quels sons jouer pour les capacités."
+L.sharing_private_auras = "Auras privées"
+L.sharing_private_auras_desc = "Importer les sons configurés des Auras privées."
+L.sharing_export_private_auras_desc = "Exporter les sons configurés des Auras privées."
+L.sharing_colors_desc = "Importer les paramètres de couleur pour les barres et les messages."
+L.sharing_export_colors_desc = "Exporter les paramètres de couleur pour les barres et les messages."
+L.confirm_instance_import = "Les paramètres sélectionnés que vous êtes sur le point d'importer écraseront les paramètres de votre profil actuellement sélectionné :\n\n|cFF33FF99\"%s\"|r\n\nInstance :\n|cFFBB66FF\"%s\"|r\n\nÊtes-vous sûr de vouloir continuer ?"
+L.status_text_paste_import = "Collez une chaîne d'importation valide"
+L.exporting_instance = "Exportation de |cFFBB66FF%s|r"
+L.importing_instance = "Importation de |cFFBB66FF%s|r"
+L.share = "Partager"
 
 -- Statistics
 L.statistics = "Statistiques"
@@ -331,7 +331,7 @@ L.N10 = "10 joueurs"
 L.N25 = "25 joueurs"
 L.H10 = "Héroïque 10"
 L.H25 = "Héroïque 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -675,7 +675,7 @@ L.breakMinutes = "Fin de la pause dans %d |4minute:minutes; !"
 L.breakSeconds = "Fin de la pause dans %d |4seconde:secondes; !"
 L.breakFinished = "Le temps de pause est terminé !"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "Indicateurs de sorts"
 L.indicatorType_Deadly = "Mortel"
 L.indicatorType_Bleed = "Saignement"
 L.indicatorType_Magic = "Magique"
@@ -684,12 +684,12 @@ L.indicatorType_Tank = "Tank"
 L.indicatorType_Healer = "Soigneur"
 L.indicatorType_Damager = "Dégâts"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "Taille des indicateurs de sorts"
+L.spellIndicatorSizeDropdown_Large1 = "Grand (1 indicateur)"
+L.spellIndicatorSizeDropdown_Large2 = "Grand (2 indicateurs)"
+L.spellIndicatorSizeDropdown_Large3 = "Grand (3 indicateurs)"
+L.spellIndicatorSizeDropdown_Small4 = "Petit (4 indicateurs)"
+L.spellIndicatorSizeDropdown_Small2 = "Petit (2 indicateurs)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua

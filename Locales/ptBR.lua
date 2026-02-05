@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "O addon '|cFF436EEE%s|r' criou a barra '%s'."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "O addon '|cFF436EEE%s|r' acabou de fazer uma cópia da sua string de exportação de perfil."
 
 -- Core.lua
 L.berserk = "Frenesi"
@@ -63,8 +63,8 @@ L.outOfDateContentPopup = "AVISO!\nVocê atualizou |cFF436EEE%s|r mas você tamb
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requer a versão %d do principal |cFF436EEEBigWigs|r addon para funcionar corretamente, mas você está na versão %d."
 L.addOnLoadFailedWithReason = "BigWigs falhou ao carregar o addon |cFF436EEE%s|r porquê %q. Compartilhe com os Desenvolvedores!"
 L.addOnLoadFailedUnknownError = "BigWigs encontrou um erro ao carregar o addon |cFF436EEE%s|r. Compartilhe com os Desenvolvedores!"
---L.newFeatures = "New BigWigs features:"
---L.parentheses = "%s (%s)"
+L.newFeatures = "Novos recursos do BigWigs:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Classic", -- Classic
@@ -84,39 +84,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Imersões",
 	["LittleWigs_CurrentSeason"] = "Temporada Atual",
 }
---L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
---}
---L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
---}
---L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
---}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dayNamesShort = {
+	"DOM", -- Domingo
+	"SEG", -- Segunda-feira
+	"TER", -- Terça-feira
+	"QUA", -- Quarta-feira
+	"QUI", -- Quinta-feira
+	"SEX", -- Sexta-feira
+	"SÁB", -- Sábado
+}
+L.dayNames = {
+	"Domingo",
+	"Segunda-feira",
+	"Terça-feira",
+	"Quarta-feira",
+	"Quinta-feira",
+	"Sexta-feira",
+	"Sábado",
+}
+L.monthNames = {
+	"Janeiro",
+	"Fevereiro",
+	"Março",
+	"Abril",
+	"Maio",
+	"Junho",
+	"Julho",
+	"Agosto",
+	"Setembro",
+	"Outubro",
+	"Novembro",
+	"Dezembro",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
@@ -274,27 +274,27 @@ L.imported_nameplate_settings = "Configurações de Placas Identificadoras"
 L.imported_mythicplus_settings = "Configurações de Mítica+"
 L.mythicplus_settings_import_desc = "Importar todas as configurações de Míticas+."
 L.mythicplus_settings_export_desc = "Exportar todas as configurações de Míticas+."
---L.imported_battleres_settings = "Battle Res Settings"
---L.battleres_settings_import_desc = "Import all Battle Res settings."
---L.battleres_settings_export_desc = "Export all Battle Res settings."
+L.imported_battleres_settings = "Configurações de Ressurreição em Combate"
+L.battleres_settings_import_desc = "Importar todas as configurações de Ressurreição em Combate."
+L.battleres_settings_export_desc = "Exportar todas as configurações de Ressurreição em Combate."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Compartilhar Configurações do Chefe"
+L.sharing_flags = "Configurações Gerais"
+L.sharing_flags_desc = "Importar configurações que controlam itens como 'mostrar barra', 'tocar som', 'mostrar mensagem', etc.\nEstas cobrem a maioria das caixas de seleção nas configurações de habilidades."
+L.sharing_export_flags_desc = "Exportar configurações que controlam itens como 'mostrar barra', 'tocar som', 'mostrar mensagem', etc.\nEstas cobrem a maioria das caixas de seleção nas configurações de habilidades."
+L.sharing_sounds_desc = "Importar quais sons tocar para as habilidades."
+L.sharing_export_sounds_desc = "Exportar quais sons tocar para as habilidades."
+L.sharing_private_auras = "Auras Privadas"
+L.sharing_private_auras_desc = "Importar os sons configurados das Auras Privadas."
+L.sharing_export_private_auras_desc = "Exportar os sons configurados das Auras Privadas."
+L.sharing_colors_desc = "Importar as configurações de cores para barras e mensagens."
+L.sharing_export_colors_desc = "Exportar as configurações de cores para barras e mensagens."
+L.confirm_instance_import = "As configurações selecionadas que você está prestes a importar irão sobrescrever as configurações do perfil atualmente selecionado:\n\n|cFF33FF99\"%s\"|r\n\nInstância:\n|cFFBB66FF\"%s\"|r\n\nTem certeza de que deseja continuar?"
+L.status_text_paste_import = "Cole uma string de importação válida"
+L.exporting_instance = "Exportando |cFFBB66FF%s|r"
+L.importing_instance = "Importando |cFFBB66FF%s|r"
+L.share = "Compartilhar"
 
 -- Statistics
 L.statistics = "Estatísticas"
@@ -331,7 +331,7 @@ L.N10 = "Normal 10"
 L.N25 = "Normal 25"
 L.H10 = "Heroico 10"
 L.H25 = "Heroico 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -351,22 +351,22 @@ L.autoRoleExplainer = "Sempre que você se junta a um grupo ou muda sua especial
 -- BattleRes.lua
 --
 
---L.battleResTitle = "Battle Res"
---L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
---L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
---L.battleResHistory = "Battle Res History:"
---L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
---L.battleResDurationText = "Duration Text"
---L.battleResChargesText = "Charges Text"
---L.battleResNoCharges = "0 charges available"
---L.battleResHasCharges = "1 or more charges available"
---L.battleResPlaySound = "Play a sound when a new charge is gained"
---L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
---L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
---L.battleResModeIcon = "Mode: Icon"
---L.battleResModeText = "Mode: Text Only"
---L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
---L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
+L.battleResTitle = "Ressurreição em Combate"
+L.battleResDesc = "Um ícone que mostra quantas cargas de ressurreição em combate estão disponíveis e o tempo até que outra carga seja obtida."
+L.battleResDesc2 = "\nSeu |cFF33FF99Histórico de Ressurreição em Combate|r pode ser visualizado na dica de ferramenta ao passar o mouse sobre o ícone.\n\n"
+L.battleResHistory = "Histórico de Ressurreição em Combate:"
+L.battleResResetAll = "Redefinir todas as configurações de Ressurreição em Combate para os valores padrão."
+L.battleResDurationText = "Texto de Duração"
+L.battleResChargesText = "Texto de Cargas"
+L.battleResNoCharges = "0 cargas disponíveis"
+L.battleResHasCharges = "1 ou mais cargas disponíveis"
+L.battleResPlaySound = "Tocar um som quando uma nova carga for obtida"
+L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Textura do Ícone (ID do Feitiço)"
+L.iconTextureSpellIDError = "Você deve digitar um ID de feitiço válido para usar como textura do ícone."
+L.battleResModeIcon = "Modo: Ícone"
+L.battleResModeText = "Modo: Apenas Texto"
+L.battleResModeTextTooltip = "Exibe um fundo temporário para ajudá-lo a mover o recurso de Ressurreição em Combate e ver onde está a área do mouseover."
+L.battleResNoteTooltip = "Nota: Esta dica de ferramenta só será exibida quando você estiver fora de combate."
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -429,8 +429,8 @@ L.keystoneHistoryScoreThisWeekTooltip = "Pontuação total obtida esta semana: |
 L.keystoneHistoryScoreOlderTooltip = "Pontuação total obtida antes desta semana: |cFFFFFFFF+%d|r"
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
---L.keystoneTeleportTip = "Click the dungeon name below to |cFF33FF99TELEPORT|r directly to the dungeon entrance."
---L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneTeleportTip = "Clique no nome da masmorra abaixo para |cFF33FF99TELETRANSPORTAR|r diretamente para a entrada da masmorra."
+L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aEste é um personagem fazendo corrida de tempo." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "VIVRO"
@@ -503,17 +503,17 @@ L.instanceKeysShowAllDesc = "Ativar esta opção exibirá todos os jogadores na 
 L.instanceKeysOtherDungeonColor = "Cor de outras masmorras"
 L.instanceKeysOtherDungeonColorDesc = "Escolha a cor da fonte para jogadores que possuem pedras-chave que não pertencem à masmorra em que você está."
 L.instanceKeysEndOfRunDesc = "Por padrão, a lista só aparecerá quando você entrar em uma masmorra mítica. Ativar esta opção também mostrará a lista quando a Mítica+ terminar."
---L.instanceKeysHideTitle = "Hide title"
---L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
+L.instanceKeysHideTitle = "Ocultar título"
+L.instanceKeysHideTitleDesc = "Ocultar o título 'Quem tem a chave?'"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "LFG Timer"
-L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
-L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
-L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "Temporizador de LFG"
+L.lfgTimerExplainer = "Sempre que a janela da fila de LFG aparecer, o BigWigs criará uma barra de temporizador indicando quanto tempo você tem para aceitar a fila.\n\n"
+L.lfgUseMaster = "Tocar som de pronto do LFG no canal de áudio 'Master'"
+L.lfgUseMasterDesc = "Quando esta opção está ativada, o som de pronto do LFG será reproduzido pelo canal de áudio 'Master'. Se desativar esta opção, ele será reproduzido pelo canal de áudio '%s'."
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -525,10 +525,10 @@ L.comma = ", "
 L.reset = "Reiniciar"
 L.resetDesc = "Redefinir as configurações acima para seus valores padrões."
 L.resetAll = "Reiniciar tudo"
---L.startTest = "Start Test"
---L.stopTest = "Stop Test"
---L.always = "Always"
---L.never = "Never"
+L.startTest = "Iniciar teste"
+L.stopTest = "Parar teste"
+L.always = "Sempre"
+L.never = "Nunca"
 
 L.positionX = "Posição X"
 L.positionY = "Posição Y"
@@ -543,7 +543,7 @@ L.disabled = "Desativado"
 L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
 L.keybinding = "Tecla de Atalho"
 L.dragToResize = "Arraste para redimensionar"
---L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
+L.cannotMoveInCombat = "Você não pode mover isto enquanto estiver em combate."
 
 -- Anchor Points
 L.UP = "Cima"
@@ -561,8 +561,8 @@ L.customAnchorPoint = "Avançado: Ponto de âncora personalizado"
 L.sourcePoint = "Ponto de Origem"
 L.destinationPoint = "Ponto de Destino"
 L.drawStrata = "Estratos"
---L.medium = "Medium"
---L.low = "Low"
+L.medium = "Médio"
+L.low = "Baixo"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -675,7 +675,7 @@ L.breakMinutes = "Intervalo acaba em %d |4minuto:minutos;!"
 L.breakSeconds = "Intervalo acaba em %d |4segundo:segundos;!"
 L.breakFinished = "Intervalo acabou!"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "Indicadores de Feitiço"
 L.indicatorType_Deadly = "Mortal"
 L.indicatorType_Bleed = "Sangramento"
 L.indicatorType_Magic = "Magia"
@@ -684,12 +684,12 @@ L.indicatorType_Tank = "Tanque"
 L.indicatorType_Healer = "Curador"
 L.indicatorType_Damager = "Dano"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "Tamanho do Indicador de Feitiço"
+L.spellIndicatorSizeDropdown_Large1 = "Grande (1 indicador)"
+L.spellIndicatorSizeDropdown_Large2 = "Grande (2 indicadores)"
+L.spellIndicatorSizeDropdown_Large3 = "Grande (3 indicadores)"
+L.spellIndicatorSizeDropdown_Small4 = "Pequeno (4 indicadores)"
+L.spellIndicatorSizeDropdown_Small2 = "Pequeno (2 indicadores)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -843,10 +843,10 @@ L.displayTimeDesc = "Tempo de exibição da mensagem, em segundos"
 L.fadeTime = "Tempo até esmaecer"
 L.fadeTimeDesc = "Tempo até esmaecer a mensagem, em segundos."
 
---L.messagesOptInHeaderOff = "Boss mod messages 'opt-in' mode: Enabling this option will turn off messages across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the messages you want.\n\n"
---L.messagesOptInHeaderOn = "Boss mod messages 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod messages, go into the settings of a specific boss ability and turn on the '|cFF33FF99Messages|r' option.\n\n"
---L.messagesOptInTitle = "Boss mod messages 'opt-in' mode"
---L.messagesOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off messages across ALL of your boss modules. You will need to go through each one and manually turn on the messages you want.\n\nYour UI will now reload, are you sure?"
+L.messagesOptInHeaderOff = "Modo 'opt-in' de mensagens do boss mod: Ativar esta opção desligará as mensagens em TODOS os seus módulos de chefes.\n\nVocê precisará acessar cada um e ativar manualmente as mensagens que deseja.\n\n"
+L.messagesOptInHeaderOn = "O modo 'opt-in' de mensagens do boss mod está |cFF33FF99ATIVO|r. Para ver as mensagens do boss mod, vá às configurações de uma habilidade específica do chefe e ative a opção '|cFF33FF99Mensagens|r'.\n\n"
+L.messagesOptInTitle = "Modo 'opt-in' de mensagens do boss mod"
+L.messagesOptInWarning = "|cffff4411AVISO!|r\n\nAtivar o modo 'opt-in' desligará as mensagens em TODOS os seus módulos de chefes. Você precisará acessar cada um e ativar manualmente as mensagens que deseja.\n\nSua interface será recarregada, tem certeza?"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua
@@ -879,12 +879,12 @@ L.showBorder = "Mostrar borda"
 L.showBorderDesc = "Mostrar uma borda ao redor do ícone."
 L.borderColor = "Cor da borda"
 L.borderSize = "Tamanho da borda"
---L.borderOffset = "Border Offset"
---L.borderName = "Border Name"
+L.borderOffset = "Deslocamento da Borda"
+L.borderName = "Nome da Borda"
 L.showNumbers = "Mostrar números"
 L.showNumbersDesc = "Mostrar números no ícone."
 L.cooldown = "Tempo de recarga"
---L.cooldownEmphasizeHeader = "By default, Emphasize is disabled (0 seconds). Setting it to 1 second or higher will enable Emphasize. This will allow you to set a different font color and font size for those numbers."
+L.cooldownEmphasizeHeader = "Por padrão, o Destaque está desativado (0 segundos). Definir para 1 segundo ou mais ativará o Destaque. Isso permitirá definir uma cor e tamanho de fonte diferentes para esses números."
 L.showCooldownSwipe = "Mostrar varredura"
 L.showCooldownSwipeDesc = "Mostrar uma varredura no ícone quando o tempo de recarga estiver ativo."
 L.showCooldownEdge = "Mostrar borda"
@@ -903,8 +903,8 @@ L.fixate_test = "Teste de Fixar" -- Texto que exibe para testar no quadro
 L.resetNameplateTextDesc = "Reiniciar todas as opções relacionadas ao texto da placa de identificação."
 L.glowAt = "Começar brilho (segundos)"
 L.glowAt_desc = "Escolha quantos segundos no tempo de recarga devem restar quando o brilho começar."
---L.offsetX = "Offset X"
---L.offsetY = "Offset Y"
+L.offsetX = "Deslocamento X"
+L.offsetY = "Deslocamento Y"
 L.headerIconSizeTarget = "Tamanho do íncone do seu alvo atual"
 L.headerIconSizeOthers = "Tamanho do íncone de todos os outros alvos"
 L.headerIconPositionTarget = "Posição do ícone do seu alvo atual"
@@ -930,10 +930,10 @@ L.scale_glow_desc = "A escala das faíscas na animação."
 L.startAnimation = "Iniciar Animação"
 L.startAnimation_glow_desc = "Esse brilho tem uma animação inicial, isso irá habilitar/desabilitar essa animação."
 
---L.nameplateOptInHeaderOff = "\n\n\n\nBoss mod nameplates 'opt-in' mode: Enabling this option will turn off nameplates across ALL of your boss modules.\n\nYou will need to go through each one and manually turn on the nameplates you want.\n\n"
---L.nameplateOptInHeaderOn = "\n\n\n\nBoss mod nameplates 'opt-in' mode is |cFF33FF99ACTIVE|r. To see boss mod nameplates, go into the settings of a specific boss ability and turn on the '|cFF33FF99Nameplates|r' option.\n\n"
---L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
---L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
+L.nameplateOptInHeaderOff = "\n\n\n\nModo 'opt-in' de placas de nome do boss mod: Ativar esta opção desligará as placas de nome em TODOS os seus módulos de chefes.\n\nVocê precisará acessar cada um e ativar manualmente as placas de nome que deseja.\n\n"
+L.nameplateOptInHeaderOn = "\n\n\n\nO modo 'opt-in' de placas de nome do boss mod está |cFF33FF99ATIVO|r. Para ver as placas de nome do boss mod, vá às configurações de uma habilidade específica do chefe e ative a opção '|cFF33FF99Placas de Nome|r'.\n\n"
+L.nameplateOptInTitle = "Modo 'opt-in' de placas de nome do boss mod"
+L.nameplateOptInWarning = "|cffff4411AVISO!|r\n\nAtivar o modo 'opt-in' desligará as placas de nome em TODOS os seus módulos de chefes. Você precisará acessar cada um e ativar manualmente as placas de nome que deseja.\n\nSua interfa
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -978,7 +978,7 @@ L.combatLogDesc = "Inicia automaticamente o registro de combate quando um contad
 L.pull = "Pull"
 L.engageSoundTitle = "Tocar um som quando uma luta contra um Chefe começou"
 L.pullStartedSoundTitle = "Tocar um som quando o temporizador for iniciado"
---L.pullStartedMessageTitle = "Show a message when the pull timer is started"
+L.pullStartedMessageTitle = "Mostrar uma mensagem quando o temporizador de pull for iniciado"
 L.pullFinishedSoundTitle = "Tocar um som quando o temporizador terminar"
 L.pullStartedBy = "Temporizador de pull iniciado por %s."
 L.pullStopped = "Pull cancelado por %s."
@@ -1046,20 +1046,20 @@ L.newFastestVictoryPrint = "Nova vitória mais rápida: (-%s)" -- New fastest vi
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
---L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
---L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
---L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
---L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
---L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
---L.blizzWarningSettings = "Blizzard Warnings Settings"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.enableBlizzWarnings = "Enable Blizz boss warnings"
---L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.timeline = "Linha do Tempo"
+L.blizzTimersAsBigWigsBars = "Mostrar temporizadores da Blizzard (linha do tempo) como barras do BigWigs"
+L.blizzTimersAsBigWigsBarsDesc = "Todos os temporizadores de chefes da Blizzard (linha do tempo) serão exibidos como barras do BigWigs."
+L.blizzWarningsAsBigWigsMessages = "Mostrar alertas de chefes da Blizzard como mensagens do BigWigs"
+L.blizzWarningsAsBigWigsMessagesDesc = "Todos os alertas de chefes da Blizzard serão exibidos como mensagens do BigWigs."
+L.blizzAudioAsBigWigsAudio = "Converter sons da Blizzard para sons do BigWigs"
+L.blizzAudioAsBigWigsAudioDesc = "Reproduzir seus sons do BigWigs (Alerta, Alarme e Aviso) com base na severidade do alerta do encontro."
+L.blizzWarningSettings = "Configurações de Alertas da Blizzard"
+L.blizzTimelineSettings = "Configurações da Linha do Tempo da Blizzard"
+L.blizzTimelineSettingsNote = "|cffff4411Estas opções apenas controlam as configurações da Blizzard e estão aqui por conveniência.|r"
+L.enableBlizzTimeline = "Ativar linha do tempo da Blizzard"
+L.enableBlizzTimelineDesc = "Isso mostrará todos os temporizadores de encontros de chefes na linha do tempo da Blizzard."
+L.enableBlizzWarnings = "Ativar alertas de chefes da Blizzard"
+L.enableBlizzWarningsDesc = "Ao ativar os alertas de chefes da Blizzard, você também deve desativar a exibição como mensagens do BigWigs, ou verá todas as mensagens duas vezes."
 
 -----------------------------------------------------------------------
 -- Victory.lua

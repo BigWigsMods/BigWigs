@@ -279,22 +279,22 @@ L.battleres_settings_import_desc = "Importar todas las opciones de Battle Res."
 L.battleres_settings_export_desc = "Exportar todas las opciones de Battle Res."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Compartir configuración del jefe"
+L.sharing_flags = "Configuración general"
+L.sharing_flags_desc = "Importar configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nEstas cubren la mayoría de las casillas en la configuración de habilidades."
+L.sharing_export_flags_desc = "Exportar configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nEstas cubren la mayoría de las casillas en la configuración de habilidades."
+L.sharing_sounds_desc = "Importar qué sonidos reproducir para las habilidades."
+L.sharing_export_sounds_desc = "Exportar qué sonidos reproducir para las habilidades."
+L.sharing_private_auras = "Auras privadas"
+L.sharing_private_auras_desc = "Importar los sonidos configurados de las Auras privadas."
+L.sharing_export_private_auras_desc = "Exportar los sonidos configurados de las Auras privadas."
+L.sharing_colors_desc = "Importar la configuración de colores para barras y mensajes."
+L.sharing_export_colors_desc = "Exportar la configuración de colores para barras y mensajes."
+L.confirm_instance_import = "La configuración seleccionada que estás a punto de importar sobrescribirá la configuración del perfil actualmente seleccionado:\n\n|cFF33FF99'%s'|r\n\nInstancia:\n|cFFBB66FF'%s'|r\n\n¿Seguro que deseas hacer esto?"
+L.status_text_paste_import = "Pega una cadena de importación válida"
+L.exporting_instance = "Exportando |cFFBB66FF%s|r"
+L.importing_instance = "Importando |cFFBB66FF%s|r"
+L.share = "Compartir"
 
 -- Statistics
 L.statistics = "Estadísticas"
@@ -331,7 +331,7 @@ L.N10 = "Normal 10"
 L.N25 = "Normal 25"
 L.H10 = "Heroico 10"
 L.H25 = "Heroico 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -543,7 +543,7 @@ L.disabled = "Desactivado"
 L.disableDesc = "Estás a punto de desactivar la función '%s', aunque |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacerlo?"
 L.keybinding = "Atajo de teclado"
 L.dragToResize = "Arrastra para cambiar el tamaño"
---L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
+L.cannotMoveInCombat = "No puedes mover esto mientras estés en combate."
 
 -- Anchor Points
 L.UP = "Arriba"
@@ -675,7 +675,7 @@ L.breakMinutes = "¡El descanso termina en %d |4minuto:minutos;!"
 L.breakSeconds = "¡El descanso termina en %d |4segundo:segundos;!"
 L.breakFinished = "¡El descanso ha terminado!"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "Indicadores de hechizo"
 L.indicatorType_Deadly = "Letalidad"
 L.indicatorType_Bleed = "Sangrar"
 L.indicatorType_Magic = "Mágica"
@@ -684,12 +684,12 @@ L.indicatorType_Tank = "Tanque"
 L.indicatorType_Healer = "Sanador"
 L.indicatorType_Damager = "Daño"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "Tamaño del indicador de hechizo"
+L.spellIndicatorSizeDropdown_Large1 = "Grande (1 indicador)"
+L.spellIndicatorSizeDropdown_Large2 = "Grande (2 indicadores)"
+L.spellIndicatorSizeDropdown_Large3 = "Grande (3 indicadores)"
+L.spellIndicatorSizeDropdown_Small4 = "Pequeño (4 indicadores)"
+L.spellIndicatorSizeDropdown_Small2 = "Pequeño (2 indicadores)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -1046,20 +1046,20 @@ L.newFastestVictoryPrint = "Nuevo registro victoria más rápida: (-%s)" -- New 
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
---L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
---L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
---L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
---L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
---L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
---L.blizzWarningSettings = "Blizzard Warnings Settings"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.enableBlizzWarnings = "Enable Blizz boss warnings"
---L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.timeline = "Cronología"
+L.blizzTimersAsBigWigsBars = "Mostrar los temporizadores de Blizzard (cronología) como barras de BigWigs"
+L.blizzTimersAsBigWigsBarsDesc = "Todos los temporizadores de jefes de Blizzard (cronología) se mostrarán como barras de BigWigs."
+L.blizzWarningsAsBigWigsMessages = "Mostrar las alertas de jefes de Blizzard como mensajes de BigWigs"
+L.blizzWarningsAsBigWigsMessagesDesc = "Todas las alertas de jefes de Blizzard se mostrarán como mensajes de BigWigs."
+L.blizzAudioAsBigWigsAudio = "Convertir sonidos de Blizzard a sonidos de BigWigs"
+L.blizzAudioAsBigWigsAudioDesc = "Reproducir tus sonidos de BigWigs (Alerta, Alarma y Aviso) según la severidad de la alerta del encuentro."
+L.blizzWarningSettings = "Configuración de Alertas de Blizzard"
+L.blizzTimelineSettings = "Configuración de Cronología de Blizzard"
+L.blizzTimelineSettingsNote = "|cffff4411Estas opciones solo controlan la configuración de Blizzard y están aquí por conveniencia.|r"
+L.enableBlizzTimeline = "Activar cronología de Blizzard"
+L.enableBlizzTimelineDesc = "Esto mostrará todos los temporizadores de encuentros de jefes en la cronología de Blizzard."
+L.enableBlizzWarnings = "Activar alertas de jefes de Blizzard"
+L.enableBlizzWarningsDesc = "Al activar las alertas de jefes de Blizzard también debes desactivar mostrarlas como mensajes de BigWigs, de lo contrario verás todos los mensajes dos veces."
 
 -----------------------------------------------------------------------
 -- Victory.lua
