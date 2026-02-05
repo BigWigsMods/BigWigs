@@ -28,7 +28,7 @@ local UnitGUID = loader.UnitGUID
 local UnitIsDeadOrGhost = loader.UnitIsDeadOrGhost
 
 -- Upvalues
-local next, type, setmetatable = next, type, setmetatable
+local next, type, error, setmetatable = next, type, error, setmetatable
 
 local pName = loader.UnitName("player")
 
@@ -196,25 +196,25 @@ function core:RegisterEnableMob(moduleName, ...)
 	local module = bosses[moduleName]
 	if not module then
 		core:Error(("RegisterEnableMob failed, no boss module named '%s' found."):format(tostring(moduleName)))
-	end
-
-	for i = 1, select("#", ...) do
-		local mobId = select(i, ...)
-		if type(mobId) ~= "number" or mobId < 1 then
-			core:Error(("Module %q tried to register the mobId %q, but it wasn't a valid number."):format(module.moduleName, tostring(mobId)))
-		else
-			module.enableMobs[mobId] = true -- Module specific list
-			-- Global list
-			local entryType = type(enablemobs[mobId])
-			if entryType == "nil" then
-				enablemobs[mobId] = module.moduleName
-			elseif entryType == "table" then
-				enablemobs[mobId][#enablemobs[mobId] + 1] = module.moduleName
-			elseif entryType == "string" then -- Converting from 1 module registered to this mobId, to multiple modules
-				local previousModuleEntry = enablemobs[mobId]
-				enablemobs[mobId] = { previousModuleEntry, module.moduleName }
+	else
+		for i = 1, select("#", ...) do
+			local mobId = select(i, ...)
+			if type(mobId) ~= "number" or mobId < 1 then
+				core:Error(("Module %q tried to register the mobId %q, but it wasn't a valid number."):format(moduleName, tostring(mobId)))
 			else
-				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, module.moduleName))
+				module.enableMobs[mobId] = true -- Module specific list
+				-- Global list
+				local entryType = type(enablemobs[mobId])
+				if entryType == "nil" then
+					enablemobs[mobId] = moduleName
+				elseif entryType == "table" then
+					enablemobs[mobId][#enablemobs[mobId] + 1] = moduleName
+				elseif entryType == "string" then -- Converting from 1 module registered to this mobId, to multiple modules
+					local previousModuleEntry = enablemobs[mobId]
+					enablemobs[mobId] = {previousModuleEntry, moduleName}
+				else
+					core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, moduleName))
+				end
 			end
 		end
 	end
@@ -236,14 +236,14 @@ end
 do
 	local SendAddonMessage = loader.SendAddonMessage
 	local Timer = loader.CTimerAfter
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 	function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
-		if loader.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
-		if msg ~= "" and IsInGroup() and coreEnabled then
+		if not issecretvalue(msg) and msg ~= "" and IsInGroup() and coreEnabled then
 			local result = SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 			if type(result) == "number" and result > 0 then
-				if result == 3 or result == 8 or result == 9 then
+				if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 					Timer(1, function() self:RAID_BOSS_WHISPER(nil, msg) end)
-				else
+				elseif result ~= 11 then -- AddOnMessageLockdown
 					core:Error("Failed to send TS comm. Error code: ".. result)
 				end
 			end
@@ -621,9 +621,9 @@ do
 		function core:RegisterBossModule(moduleName)
 			local module = bosses[moduleName]
 			if not module then
-				core:Error(("RegisterBossModule failed, no boss module named '%s' found."):format(tostring(moduleName)))
+				error(("RegisterBossModule failed, no boss module named '%s' found."):format(tostring(moduleName)))
 			elseif not bossesPendingInit[moduleName] then
-				core:Error(("RegisterBossModule failed, boss module '%s' is already registered."):format(tostring(moduleName)))
+				error(("RegisterBossModule failed, boss module '%s' is already registered."):format(tostring(moduleName)))
 			end
 
 			bossesPendingInit[moduleName] = nil
@@ -642,9 +642,9 @@ do
 	function core:RegisterPlugin(moduleName)
 		local module = plugins[moduleName]
 		if not module then
-			core:Error(("RegisterPlugin failed, no plugin named '%s' found."):format(tostring(moduleName)))
+			error(("RegisterPlugin failed, no plugin named '%s' found."):format(tostring(moduleName)))
 		elseif not pluginsPendingInit[moduleName] then
-			core:Error(("RegisterPlugin failed, plugin '%s' is already registered."):format(tostring(moduleName)))
+			error(("RegisterPlugin failed, plugin '%s' is already registered."):format(tostring(moduleName)))
 		end
 
 		pluginsPendingInit[moduleName] = nil
