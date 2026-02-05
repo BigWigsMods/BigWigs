@@ -403,82 +403,264 @@ end
 --
 
 do
-	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
-	local errorJournalIdInvalid = "%q is using the invalid journal id of %q."
-	local bossMeta = { __index = bossPrototype, __metatable = false }
-	local EJ_GetEncounterInfo = (loader.isCata or loader.isMists) and function(key)
-		return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
-	end or loader.isRetail and EJ_GetEncounterInfo or function(key)
-		return BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
-	end
-	function core:NewBoss(moduleName, zoneId, journalId)
-		if bosses[moduleName] then
-			core:Print(errorAlreadyRegistered:format(moduleName))
-		else
-			local m = setmetatable({
-				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-				enableMobs = {},
+	local bossesPendingInit, pluginsPendingInit = {}, {}
 
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
+	do
+		local bossAlreadyRegistered = "%q already exists as a boss module in BigWigs, but something is trying to register it again."
+		local errorJournalIdInvalid = "%q is using the invalid journal id of %q."
+		local bossMeta = { __index = bossPrototype, __metatable = false }
+		local EJ_GetEncounterInfo = (loader.isCata or loader.isMists) and function(key)
+			return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
+		end or loader.isRetail and EJ_GetEncounterInfo or function(key)
+			return BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
+		end
+		function core:NewBoss(moduleName, zoneId, journalId)
+			if bosses[moduleName] then
+				core:Print(bossAlreadyRegistered:format(moduleName))
+			else
+				local m = setmetatable({
+					name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+					moduleName = moduleName,
+					enableMobs = {},
 
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, bossMeta)
-			bosses[moduleName] = m
-			initModules[#initModules+1] = m
+					-- Embed callback handler
+					RegisterMessage = loader.RegisterMessage,
+					UnregisterMessage = loader.UnregisterMessage,
+					SendMessage = loader.SendMessage,
 
-			if journalId then
-				local name = EJ_GetEncounterInfo(journalId)
-				if name or journalId < 0 then
-					m.journalId = journalId
-					m.displayName = name or moduleName
+					-- Embed event handler
+					RegisterEvent = core.RegisterEvent,
+					UnregisterEvent = core.UnregisterEvent,
+				}, bossMeta)
+				bosses[moduleName] = m
+				initModules[#initModules+1] = m
+				bossesPendingInit[moduleName] = true
+
+				if journalId then
+					local name = EJ_GetEncounterInfo(journalId)
+					if name or journalId < 0 then
+						m.journalId = journalId
+						m.displayName = name or moduleName
+					else
+						m.displayName = moduleName
+						core:Print(errorJournalIdInvalid:format(moduleName, journalId))
+					end
 				else
 					m.displayName = moduleName
-					core:Print(errorJournalIdInvalid:format(moduleName, journalId))
 				end
-			else
-				m.displayName = moduleName
-			end
 
-			if type(zoneId) == "table" or zoneId > 0 then
-				m.instanceId = zoneId
-			else
-				m.mapId = -zoneId
+				if type(zoneId) == "table" or zoneId > 0 then
+					m.instanceId = zoneId
+				else
+					m.mapId = -zoneId
+				end
+				return m, CL
 			end
-			return m, CL
 		end
 	end
 
-	local L = BigWigsAPI:GetLocale("BigWigs")
-	local pluginMeta = { __index = pluginPrototype, __metatable = false }
-	function core:NewPlugin(moduleName, globalFuncs)
-		if plugins[moduleName] then
-			core:Print(errorAlreadyRegistered:format(moduleName))
-		else
-			local m = setmetatable({
-				name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-				globalFuncs = globalFuncs or {"db"},
+	do
+		local pluginAlreadyRegistered = "%q already exists as a plugin in BigWigs, but something is trying to register it again."
+		local L = BigWigsAPI:GetLocale("BigWigs")
+		local pluginMeta = { __index = pluginPrototype, __metatable = false }
+		function core:NewPlugin(moduleName, globalFuncs)
+			if plugins[moduleName] then
+				core:Print(pluginAlreadyRegistered:format(moduleName))
+			else
+				local m = setmetatable({
+					name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+					moduleName = moduleName,
+					globalFuncs = globalFuncs or {"db"},
 
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
+					-- Embed callback handler
+					RegisterMessage = loader.RegisterMessage,
+					UnregisterMessage = loader.UnregisterMessage,
+					SendMessage = loader.SendMessage,
 
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, pluginMeta)
-			plugins[#plugins+1] = m
-			plugins[moduleName] = m
-			initModules[#initModules+1] = m
+					-- Embed event handler
+					RegisterEvent = core.RegisterEvent,
+					UnregisterEvent = core.UnregisterEvent,
+				}, pluginMeta)
+				plugins[#plugins+1] = m
+				plugins[moduleName] = m
+				initModules[#initModules+1] = m
+				pluginsPendingInit[moduleName] = true
 
-			return m, L
+				return m, L
+			end
+		end
+	end
+
+	do
+		local moduleOptions
+		do
+			local C_EncounterJournal_GetSectionInfo = (loader.isCata or loader.isMists) and function(key)
+				return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
+			end or loader.isRetail and C_EncounterJournal.GetSectionInfo or function(key)
+				return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
+			end
+			local C = core.C -- Set from Constants.lua
+			local standardFlag = C.BAR + C.CASTBAR + C.ICON + C.SOUND
+				+ (loader.db.profile.bossModMessagesDisabled and 0 or C.MESSAGE)
+				+ (loader.db.profile.bossModNameplatesDisabled and 0 or C.NAMEPLATE)
+				+ (loader.db.profile.bossModVoiceDisabled and 0 or C.VOICE)
+				+ C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY
+				+ C.FLASH + C.ALTPOWER + C.INFOBOX
+			local defaultToggles = setmetatable({
+				berserk = C.BAR + C.MESSAGE + C.SOUND,
+				proximity = C.PROXIMITY,
+				altpower = C.ALTPOWER,
+				infobox = C.INFOBOX,
+			}, {__index = function()
+				return standardFlag
+			end})
+			function moduleOptions(module)
+				if module.GetOptions then
+					local toggles, headers, notes = module:GetOptions(CL) -- XXX stop passing CL at some point
+					if toggles then module.toggleOptions = toggles end
+					if headers then module.optionHeaders = headers end
+					if notes then module.notes = notes end
+					module.GetOptions = nil
+				end
+
+				if module.optionHeaders then
+					for k, v in next, module.optionHeaders do
+						if type(v) == "string" then
+							if CL[v] then
+								module.optionHeaders[k] = CL[v]
+							end
+						elseif type(v) == "number" then
+							if v > 0 then
+								local n = loader.GetSpellName(v)
+								if not n then core:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
+								module.optionHeaders[k] = n or v
+							else
+								local tbl = C_EncounterJournal_GetSectionInfo(-v)
+								if not tbl then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+								module.optionHeaders[k] = tbl and tbl.title or v
+							end
+						end
+					end
+				end
+
+				if module.toggleOptions then
+					module.toggleDefaults = {}
+					for k, v in next, module.toggleOptions do
+						local bitflags = 0
+						local disabled = false
+						local t = type(v)
+						if t == "table" then
+							for i = 2, #v do
+								local flagName = v[i]
+								if flagName == "NAMEPLATE" and loader.db.profile.bossModNameplatesDisabled then
+									bitflags = bitflags -- Don't add the NAMEPLATE flag
+								elseif C[flagName] then
+									bitflags = bitflags + C[flagName]
+								elseif flagName == "OFF" then
+									disabled = true
+									break
+								else
+									error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, flagName, v[1]))
+								end
+							end
+							v = v[1]
+							t = type(v)
+						end
+						-- mix in default toggles for keys we know
+						-- this allows for mod.toggleOptions = {{1234, "bar", "message"}}
+						-- while option keys don't usually specify common features such as bar or message
+						for _, b in next, C do
+							if bit.band(defaultToggles[v], b) == b and bit.band(bitflags, b) ~= b then
+								bitflags = bitflags + b
+							end
+						end
+						if disabled then
+							if not module.toggleDisabled then
+								module.toggleDisabled = {}
+							end
+							module.toggleDisabled[v] = bitflags
+							bitflags = 0
+						end
+						if t == "string" then
+							local custom = v:match("^custom_(o[nf]f?)_.*")
+							if custom then
+								module.toggleDefaults[v] = custom == "on" and true or false
+							elseif v:find("custom_select", nil, true) then
+								module.toggleDefaults[v] = 1
+							else
+								module.toggleDefaults[v] = bitflags
+							end
+						elseif t == "number" then
+							if v > 0 then
+								local n = loader.GetSpellName(v)
+								if not n then core:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
+								module.toggleDefaults[v] = bitflags
+							else
+								local tbl = C_EncounterJournal_GetSectionInfo(-v)
+								if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+								module.toggleDefaults[v] = bitflags
+							end
+						end
+					end
+					module.db = loader.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
+					local db = module.db.profile
+					for k, v in next, db do -- Option validation
+						local defaultType = type(module.toggleDefaults[k])
+						if defaultType == "nil" then
+							db[k] = nil
+						elseif type(v) ~= defaultType then
+							db[k] = module.toggleDefaults[k]
+						end
+					end
+				end
+
+				module.SetupOptions = nil
+			end
+		end
+
+		function core:RegisterBossModule(moduleName)
+			local module = bosses[moduleName]
+			if not module then
+				core:Error(("RegisterBossModule failed, no boss module named '%s' found."):format(tostring(moduleName)))
+			elseif not bossesPendingInit[moduleName] then
+				core:Error(("RegisterBossModule failed, boss module '%s' is already registered."):format(tostring(moduleName)))
+			end
+
+			bossesPendingInit[moduleName] = nil
+			module.SetupOptions = moduleOptions
+
+			-- Call the module's OnRegister (which is our OnInitialize replacement)
+			if type(module.OnRegister) == "function" then
+				module:OnRegister()
+				module.OnRegister = nil
+			end
+
+			core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
+		end
+	end
+
+	function core:RegisterPlugin(moduleName)
+		local module = plugins[moduleName]
+		if not module then
+			core:Error(("RegisterPlugin failed, no plugin named '%s' found."):format(tostring(moduleName)))
+		elseif not pluginsPendingInit[moduleName] then
+			core:Error(("RegisterPlugin failed, plugin '%s' is already registered."):format(tostring(moduleName)))
+		end
+
+		pluginsPendingInit[moduleName] = nil
+		if type(module.defaultDB) == "table" then
+			module.db = loader.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
+		end
+
+		-- Call the module's OnRegister (which is our OnInitialize replacement)
+		if type(module.OnRegister) == "function" then
+			module:OnRegister()
+			module.OnRegister = nil
+		end
+		core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
+
+		if coreEnabled then
+			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
 		end
 	end
 end
@@ -518,173 +700,6 @@ function core:GetPlugin(moduleName, silent)
 			moduleTbl[entry] = plugins[moduleName][entry]
 		end
 		return moduleTbl
-	end
-end
-
-do
-	local C_EncounterJournal_GetSectionInfo = (loader.isCata or loader.isMists) and function(key)
-		return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
-	end or loader.isRetail and C_EncounterJournal.GetSectionInfo or function(key)
-		return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
-	end
-	local C = core.C -- Set from Constants.lua
-	local standardFlag = C.BAR + C.CASTBAR + C.ICON + C.SOUND
-		+ (loader.db.profile.bossModMessagesDisabled and 0 or C.MESSAGE)
-		+ (loader.db.profile.bossModNameplatesDisabled and 0 or C.NAMEPLATE)
-		+ (loader.db.profile.bossModVoiceDisabled and 0 or C.VOICE)
-		+ C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY
-		+ C.FLASH + C.ALTPOWER + C.INFOBOX
-	local defaultToggles = setmetatable({
-		berserk = C.BAR + C.MESSAGE + C.SOUND,
-		proximity = C.PROXIMITY,
-		altpower = C.ALTPOWER,
-		infobox = C.INFOBOX,
-	}, {__index = function()
-		return standardFlag
-	end})
-
-	local function setupOptions(module)
-		if module.optionHeaders then
-			for k, v in next, module.optionHeaders do
-				if type(v) == "string" then
-					if CL[v] then
-						module.optionHeaders[k] = CL[v]
-					end
-				elseif type(v) == "number" then
-					if v > 0 then
-						local n = loader.GetSpellName(v)
-						if not n then core:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
-						module.optionHeaders[k] = n or v
-					else
-						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if not tbl then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
-						module.optionHeaders[k] = tbl and tbl.title or v
-					end
-				end
-			end
-		end
-
-		if module.toggleOptions then
-			module.toggleDefaults = {}
-			for k, v in next, module.toggleOptions do
-				local bitflags = 0
-				local disabled = false
-				local t = type(v)
-				if t == "table" then
-					for i = 2, #v do
-						local flagName = v[i]
-						if flagName == "NAMEPLATE" and loader.db.profile.bossModNameplatesDisabled then
-							bitflags = bitflags -- Don't add the NAMEPLATE flag
-						elseif C[flagName] then
-							bitflags = bitflags + C[flagName]
-						elseif flagName == "OFF" then
-							disabled = true
-							break
-						else
-							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, flagName, v[1]))
-						end
-					end
-					v = v[1]
-					t = type(v)
-				end
-				-- mix in default toggles for keys we know
-				-- this allows for mod.toggleOptions = {{1234, "bar", "message"}}
-				-- while option keys don't usually specify common features such as bar or message
-				for _, b in next, C do
-					if bit.band(defaultToggles[v], b) == b and bit.band(bitflags, b) ~= b then
-						bitflags = bitflags + b
-					end
-				end
-				if disabled then
-					if not module.toggleDisabled then
-						module.toggleDisabled = {}
-					end
-					module.toggleDisabled[v] = bitflags
-					bitflags = 0
-				end
-				if t == "string" then
-					local custom = v:match("^custom_(o[nf]f?)_.*")
-					if custom then
-						module.toggleDefaults[v] = custom == "on" and true or false
-					elseif v:find("custom_select", nil, true) then
-						module.toggleDefaults[v] = 1
-					else
-						module.toggleDefaults[v] = bitflags
-					end
-				elseif t == "number" then
-					if v > 0 then
-						local n = loader.GetSpellName(v)
-						if not n then core:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
-						module.toggleDefaults[v] = bitflags
-					else
-						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
-						module.toggleDefaults[v] = bitflags
-					end
-				end
-			end
-			module.db = loader.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
-			local db = module.db.profile
-			for k, v in next, db do -- Option validation
-				local defaultType = type(module.toggleDefaults[k])
-				if defaultType == "nil" then
-					db[k] = nil
-				elseif type(v) ~= defaultType then
-					db[k] = module.toggleDefaults[k]
-				end
-			end
-		end
-	end
-
-	local function moduleOptions(self)
-		if self.GetOptions then
-			local toggles, headers, notes = self:GetOptions(CL) -- XXX stop passing CL at some point
-			if toggles then self.toggleOptions = toggles end
-			if headers then self.optionHeaders = headers end
-			if notes then self.notes = notes end
-			self.GetOptions = nil
-		end
-		setupOptions(self)
-		self.SetupOptions = nil
-	end
-
-	function core:RegisterBossModule(moduleName)
-		local module = bosses[moduleName]
-		if not module then
-			core:Error(("RegisterBossModule failed, no boss module named '%s' found."):format(tostring(moduleName)))
-		end
-
-		module.SetupOptions = moduleOptions
-
-		-- Call the module's OnRegister (which is our OnInitialize replacement)
-		if type(module.OnRegister) == "function" then
-			module:OnRegister()
-			module.OnRegister = nil
-		end
-
-		core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
-	end
-
-	function core:RegisterPlugin(moduleName)
-		local module = plugins[moduleName]
-		if not module then
-			core:Error(("RegisterPlugin failed, no plugin named '%s' found."):format(tostring(moduleName)))
-		end
-
-		if type(module.defaultDB) == "table" then
-			module.db = loader.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
-		end
-
-		-- Call the module's OnRegister (which is our OnInitialize replacement)
-		if type(module.OnRegister) == "function" then
-			module:OnRegister()
-			module.OnRegister = nil
-		end
-		core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
-
-		if coreEnabled then
-			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
-		end
 	end
 end
 
