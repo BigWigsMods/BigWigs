@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f虚影尖塔|r]
 ## Title-zhTW: BigWigs [|cffeda55f虛無之尖|r]
 ## Notes: BigWigs The Voidspire Modules
-## Notes-deDE: BigWigs The Voidspire Modules
+## Notes-deDE: BigWigs Die Leerenspitze Module
 ## Notes-esES: BigWigs The Voidspire Modules
 ## Notes-esMX: BigWigs The Voidspire Modules
 ## Notes-frFR: BigWigs The Voidspire Modules
