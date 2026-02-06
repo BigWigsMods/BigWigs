@@ -179,7 +179,7 @@ local roleIcons = {
 	DAMAGER = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:16:16|t",
 }
 local hiddenIcon = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:16:16|t"
-local dungeonNamesTiny = {
+local dungeonNamesTiny = { -- MapChallengeMode DB2
 	[500] = L.keystoneShortName_TheRookery, -- ROOK
 	[504] = L.keystoneShortName_DarkflameCleft, -- DFC
 	[499] = L.keystoneShortName_PrioryOfTheSacredFlame, -- PRIORY
@@ -209,6 +209,15 @@ local dungeonNamesTiny = {
 	[234] = L.keystoneShortName_ReturnToKarazhanUpper, -- UKARA
 	[233] = L.keystoneShortName_CathedralOfEternalNight, -- COEN
 	[239] = L.keystoneShortName_SeatOfTheTriumvirate, -- SOTT
+
+	[557] = L.keystoneShortName_WindrunnerSpire, -- SPIRE
+	[558] = L.keystoneShortName_MagistersTerrace, -- MT
+	[560] = L.keystoneShortName_MaisaraCaverns, -- CAVERN
+	[559] = L.keystoneShortName_NexusPointXenas, -- XENAS
+	[402] = L.keystoneShortName_AlgetharAcademy, -- AA
+	[583] = L.keystoneShortName_SeatOfTheTriumvirate, -- SOTT
+	[161] = L.keystoneShortName_Skyreach, -- SKY
+	[556] = L.keystoneShortName_PitOfSaron, -- PIT
 }
 local dungeonNamesTrimmed = {
 	[500] = L.keystoneShortName_TheRookery_Bar, -- Rookery
@@ -240,6 +249,15 @@ local dungeonNamesTrimmed = {
 	[234] = L.keystoneShortName_ReturnToKarazhanUpper_Bar, -- Upper Kara
 	[233] = L.keystoneShortName_CathedralOfEternalNight_Bar, -- Cathedral
 	[239] = L.keystoneShortName_SeatOfTheTriumvirate_Bar, -- Triumvirate
+
+	[557] = L.keystoneShortName_WindrunnerSpire_Bar, -- Spire
+	[558] = L.keystoneShortName_MagistersTerrace_Bar, -- Terrace
+	[560] = L.keystoneShortName_MaisaraCaverns_Bar, -- Caverns
+	[559] = L.keystoneShortName_NexusPointXenas_Bar, -- Xenas
+	[402] = L.keystoneShortName_AlgetharAcademy_Bar, -- Academy
+	[583] = L.keystoneShortName_SeatOfTheTriumvirate_Bar, -- Triumvirate
+	[161] = L.keystoneShortName_Skyreach_Bar, -- Skyreach
+	[556] = L.keystoneShortName_PitOfSaron_Bar, -- Pit
 }
 local dungeonMapWithMultipleKeys = {
 	[1651] = true, -- Return to Karazhan
