@@ -248,6 +248,17 @@ local dungeonMapWithMultipleKeys = {
 local teleportList = {
 	-- Current Season (Built Automatically)
 	{},
+	-- Midnight
+	{
+		[2805] = 1254400, -- Windrunner Spire
+		[2811] = 1254572, -- Magisters' Terrace
+		--[2813] = , -- Murder Row
+		--[2825] = , -- Den of Nalorakk
+		--[2859] = , -- The Blinding Vale
+		[2874] = 1254559, -- Maisara Caverns
+		[2915] = 1254563, -- Nexus-Point Xenas
+		--[2923] = , -- Voidscar Arena
+	},
 	-- The War Within
 	{
 		[2648] = 445443, -- The Rookery
@@ -313,11 +324,11 @@ local teleportList = {
 		--[1492] = lw_l, -- Maw of Souls
 		[1477] = 393764, -- Halls of Valor
 		--[1493] = lw_l, -- Vault of the Wardens
-		--[1753] = lw_l, -- Seat of the Triumvirate
+		[1753] = 1254551, -- Seat of the Triumvirate
 	},
 	-- Warlords of Draenor
 	{
-		[1209] = 159898, -- Skyreach
+		[1209] = 159898, -- Skyreach -- XXX 1254557 was also added, which will be used..?
 		[1176] = 159899, -- Shadowmoon Burial Grounds
 		[1208] = 159900, -- Grimrail Depot
 		[1279] = 159901, -- The Everbloom
@@ -353,21 +364,28 @@ local teleportList = {
 		[657] = 410080, -- The Vortex Pinnacle
 		[670] = 445424, -- Grim Batol
 	},
+	-- Wrath of the Lich King
+	{
+		--[576] = lw_wotlk, -- The Nexus
+		--[578] = lw_wotlk, -- The Oculus
+		--[608] = lw_wotlk, -- Violet Hold
+		--[595] = lw_wotlk, -- The Culling of Stratholme
+		--[619] = lw_wotlk, -- Ahn'kahet: The Old Kingdom
+		--[604] = lw_wotlk, -- Gundrak
+		--[574] = lw_wotlk, -- Utgarde Keep
+		--[575] = lw_wotlk, -- Utgarde Pinnacle
+		--[602] = lw_wotlk, -- Halls of Lightning
+		--[601] = lw_wotlk, -- Azjol-Nerub
+		[658] = 1254555, -- Pit of Saron
+		--[599] = lw_wotlk, -- Halls of Stone
+		--[600] = lw_wotlk, -- Drak'Tharon Keep
+		--[650] = lw_wotlk, -- Trial of the Champion
+		--[668] = lw_wotlk, -- Halls of Reflection
+		--[632] = lw_wotlk, -- The Forge of Souls
+	},
 }
-if BigWigsLoader.isBeta then
+if BigWigsLoader.isRetail then
 	teleportList[0] = {}
-	table.insert(teleportList, 2, {
-		[2648] = 445443, -- The Rookery
-		[2649] = 445444, -- Priory of the Sacred Flame
-		[2651] = 445441, -- Darkflame Cleft
-		[2652] = 445269, -- The Stonevault
-		[2660] = 445417, -- Ara-Kara, City of Echoes
-		[2661] = 445440, -- Cinderbrew Meadery
-		[2662] = 445414, -- The Dawnbreaker
-		[2669] = 445416, -- City of Threads
-		[2773] = 1216786, -- Operation: Floodgate
-		[2830] = 1237215, -- Eco-Dome Al'dani
-	})
 else
 	-- XXX temp Lemix
 	teleportList[0] = {
