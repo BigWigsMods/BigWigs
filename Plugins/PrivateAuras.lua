@@ -15,10 +15,10 @@ local MAX_AURAS = 3
 local CONFIG_MODE_DURATION = 10
 
 local db
-local anchors = {}
+local anchors = { player = {}, other = {} }
 local inConfigureMode = false
 
-local UpdateAnchorPosition, UpdateTestAura
+local GetAnchorUnitToken, UpdateTestAura
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -27,39 +27,46 @@ local UpdateAnchorPosition, UpdateTestAura
 plugin.defaultDB = {
 	showDispelType = true,
 
-	-- You
-	disabled = false,
-	size = 64,
-	spacing = 6,
-	showBorder = true,
-	growthDirection = "RIGHT",
-	showCooldown = true,
-	showCountdownText = true,
-	countdownTextScale = 1,
-	-- showDurationText = false,
+	player = {
+		disabled = false,
+		targetType = "player",
+		unitToken = "player",
 
-	anchorPoint = "CENTER",
-	anchorRelPoint = "CENTER",
-	anchorXOffset = 100,
-	anchorYOffset = 100,
-	anchorRelativeTo = "UIParent",
+		size = 64,
+		spacing = 6,
+		showBorder = true,
+		showCooldown = true,
+		showCountdownText = true,
+		countdownTextScale = 1,
+		-- showDurationText = false,
+		growthDirection = "RIGHT",
 
-	-- Other
-	disabledOther = true,
-	sizeOther = 64,
-	spacingOther = 6,
-	showBorderOther = true,
-	growthDirectionOther = "RIGHT",
-	showCooldownOther = true,
-	showCountdownTextOther = true,
-	countdownTextScaleOther = 1,
-	-- showDurationTextOther = false,
+		anchorPoint = "CENTER",
+		anchorRelPoint = "CENTER",
+		anchorXOffset = 100,
+		anchorYOffset = 100,
+		anchorRelativeTo = "UIParent",
+	},
+	other = {
+		disabled = true,
+		targetType = "tank",
+		unitToken = "",
 
-	anchorPointOther = "CENTER",
-	anchorRelPointOther = "CENTER",
-	anchorXOffsetOther = 100,
-	anchorYOffsetOther = -150,
-	anchorRelativeToOther = "UIParent",
+		size = 64,
+		spacing = 6,
+		showBorder = true,
+		showCooldown = true,
+		showCountdownText = true,
+		countdownTextScale = 1,
+		-- showDurationText = false,
+		growthDirection = "RIGHT",
+
+		anchorPoint = "CENTER",
+		anchorRelPoint = "CENTER",
+		anchorXOffset = 100,
+		anchorYOffset = -150,
+		anchorRelativeTo = "UIParent",
+	},
 }
 
 local function updateProfile()
@@ -71,15 +78,26 @@ local function updateProfile()
 			db[k] = nil
 		elseif type(v) ~= defaultType then
 			db[k] = plugin.defaultDB[k]
+		elseif type(v) == "table" then
+			for kk, vv in next, db[k] do
+				defaultType = type(plugin.defaultDB[k][kk])
+				if defaultType == "nil" then
+					db[k][kk] = nil
+				elseif type(vv) ~= defaultType then
+					db[k][kk] = plugin.defaultDB[k][kk]
+				end
+			end
 		end
 	end
 
-	-- TODO more setting validation
+	-- TODO more setting validation?
 
-	if not db.disabled then
-		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+	C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+
+	plugin:UpdateAllAnchors()
+	if inConfigureMode then -- update visible anchors
+		plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
 	end
-	plugin:UpdateAnchors()
 end
 
 --------------------------------------------------------------------------------
@@ -87,11 +105,21 @@ end
 --
 
 do
-	local function disabled()
-		return db.disabled
-	end
-	local function disabledOther()
-		return db.disabledOther
+	local function disabled(info)
+		local key = info[#info]
+		local unitType = info[#info-1]
+		local optionDB = db[unitType]
+
+		if optionDB.disabled then
+			return true
+		end
+		if key == "showCountdownText" then
+			return not optionDB.showCooldown
+		elseif key == "countdownTextScale" then
+			return not optionDB.showCooldown or not optionDB.showCountdownText
+		elseif key == "anchorPoint" or key == "anchorRelPoint" then
+			return optionDB.anchorRelativeTo == plugin.defaultDB[unitType].anchorRelativeTo
+		end
 	end
 
 	plugin.pluginOptions = {
@@ -99,8 +127,6 @@ do
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:20|t ".. L.privateAuras,
 		childGroups = "tab",
 		handler = plugin,
-		get = function(info) return db[info[#info]] end,
-		set = function(info, value) db[info[#info]] = value end,
 		order = 3,
 		args = {
 			anchorsButton = {
@@ -136,20 +162,20 @@ do
 				get = function() return db.showDispelType end,
 				set = function(_, value)
 					db.showDispelType = value
-					C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+					C_UnitAuras.TriggerPrivateAuraShowDispelType(value)
 				end,
 				width = "full",
 				order = 3,
 			},
-			paYou = {
+			player = {
 				type = "group",
-				name = "XX Auras on you",
+				name = "XX Auras On You",
 				get = function(info)
-					return db[info[#info]]
+					return db.player[info[#info]]
 				end,
 				set = function(info, value)
-					db[info[#info]] = value
-					plugin:UpdateAnchors()
+					db.player[info[#info]] = value
+					plugin:UpdateAnchors("player")
 				end,
 				order = 10,
 				args = {
@@ -164,7 +190,7 @@ do
 						type = "toggle",
 						name = L.disabled,
 						set = function(_, value)
-							db.disabled = value
+							db.player.disabled = value
 							updateProfile()
 						end,
 						-- confirm = function(_, value)
@@ -216,7 +242,7 @@ do
 						name = L.showCountdownText,
 						width = 1.6,
 						order = 5,
-						disabled = function() return disabled() or not db.showCooldown end,
+						disabled = disabled,
 					},
 					countdownTextScale = {
 						type = "range",
@@ -224,7 +250,7 @@ do
 						min = 0.1, max = 4, step = 0.1, isPercent = true,
 						width = 1.6,
 						order = 6,
-						disabled = function() return disabled() or not db.showCooldown or not db.showCountdownText end,
+						disabled = disabled,
 					},
 					-- showDurationText = {
 					-- 	type = "toggle",
@@ -246,7 +272,7 @@ do
 						order = 8,
 						disabled = disabled,
 					},
-					sep2 = {
+					line1 = {
 						type = "header",
 						name = "",
 						order = 10,
@@ -263,30 +289,30 @@ do
 					},
 				},
 			},
-			paOthers = {
+			other = {
 				type = "group",
-				name = "XX Auras on others",
+				name = "XX Auras On Another",
 				get = function(info)
-					return db[info[#info]]
+					return db.other[info[#info]]
 				end,
 				set = function(info, value)
-					db[info[#info]] = value
-					plugin:UpdateAnchors()
+					db.other[info[#info]] = value
+					plugin:UpdateAnchors("other")
 				end,
 				order = 15,
 				args = {
 					heading = {
 						type = "description",
 						name = "XX Choose a specific player and then customize the icons for auras that apply to them." .. "\n\n",
-						order = 0.5,
+						order = 0.1,
 						width = "full",
 						fontSize = "medium",
 					},
-					disabledOther = {
+					disabled = {
 						type = "toggle",
 						name = L.disabled,
 						set = function(_, value)
-							db.disabledOther = value
+							db.other.disabled = value
 							updateProfile()
 						end,
 						-- confirm = function(_, value)
@@ -295,67 +321,105 @@ do
 						-- 	end
 						-- end,
 						width = 1.6,
-						order = 0.6,
+						order = 0.2,
 					},
 					sep1 = {
 						type = "description",
 						name = "",
-						order = 0.7,
+						order = 0.3,
 					},
-					sizeOther = {
+					targetType = {
+						type = "select",
+						name = "XX Player Target",
+						values = {
+							tank = "XX Co-Tank",
+							player = "XX Player Name",
+						},
+						disabled = disabled,
+						-- width = 1.6,
+						order = 0.4,
+					},
+					unitToken = {
+						type = "input",
+						name = "",
+						hidden = function()
+							return db.other.targetType == "tank"
+						end,
+						disabled = disabled,
+						width = 2.2,
+						order = 0.5,
+					},
+					targetTypeIsTankLabel = {
+						type = "description",
+						name = function()
+							return ("XX Show private auras that are on the other tank when you are a tank. (Current: %s)"):format(GetAnchorUnitToken("tank"))
+						end,
+						hidden = function()
+							return db.other.targetType == "player"
+						end,
+						disabled = disabled,
+						width = 2.2,
+						order = 0.5,
+					},
+					sep2 = {
+						type = "description",
+						name = "",
+						order = 0.9,
+					},
+					size = {
 						type = "range",
 						name = L.iconSize,
 						min = 24, max = 512, step = 1,
 						width = 1.6,
 						order = 1,
-						disabled = disabledOther,
+						disabled = disabled,
 					},
-					spacingOther = {
+					spacing = {
 						type = "range",
 						name = L.iconSpacing,
 						min = 0, max = 50, step = 1,
 						width = 1.6,
 						order = 2,
-						disabled = disabledOther,
+						disabled = disabled,
 					},
-					showBorderOther = {
+					showBorder = {
 						type = "toggle",
 						name = L.showBorder,
 						desc = L.showBorderDesc,
 						width = 1.6,
 						order = 3,
-						disabled = disabledOther,
+						disabled = disabled,
 					},
-					showCooldownOther = {
+					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						width = 1.6,
 						order = 4,
-						disabled = disabledOther,
+						disabled = disabled,
 					},
-					showCountdownTextOther = {
+					showCountdownText = {
 						type = "toggle",
 						name = L.showCountdownText,
 						width = 1.6,
 						order = 5,
-						disabled = function() return disabledOther() or not db.showCooldownOther end,
+						disabled = disabled,
 					},
-					countdownTextScaleOther = {
+					countdownTextScale = {
 						type = "range",
 						name = L.countdownTextScale,
 						min = 0.1, max = 4, step = 0.1, isPercent = true,
 						width = 1.6,
 						order = 6,
-						disabled = function() return disabledOther() or not db.showCooldownOther or not db.showCountdownTextOther end,
+						disabled = disabled,
 					},
-					-- showDurationTextOther = {
+					-- showDurationText = {
 					-- 	type = "toggle",
 					-- 	name = L.showDurationText,
 					-- 	width = 1.6,
 					-- 	order = 7,
-					-- 	disabled = disabledOther,
+					-- 	disabled = disabled,
 					-- },
-					growthDirectionOther = {
+					growthDirection = {
 						type = "select",
 						name = L.growthDirection,
 						values = {
@@ -366,9 +430,9 @@ do
 						},
 						width = 1.6,
 						order = 8,
-						disabled = disabledOther,
+						disabled = disabled,
 					},
-					sep2 = {
+					line1 = {
 						type = "header",
 						name = "",
 						order = 10,
@@ -388,18 +452,24 @@ do
 			exactPositioning = {
 				type = "group",
 				name = L.positionExact,
-				set = function(info, value)
-					db[info[#info]] = value
-					UpdateAnchorPosition(1)
-				end,
 				order = 20,
 				childGroups = "tab",
 				args = {
-					paOnYou = {
+					player = {
 						type = "group",
 						name = "XX PA ON YOU",
-						order = 1,
 						inline = true,
+						get = function(info)
+							return db.player[info[#info]]
+						end,
+						set = function(info, value)
+							db.player[info[#info]] = value
+							local anchor = anchors.player[1]
+							if anchor then
+								anchor:UpdateAnchorPosition()
+							end
+						end,
+						order = 1,
 						args = {
 							anchorXOffset = {
 								type = "range",
@@ -423,20 +493,25 @@ do
 								type = "input",
 								name = L.customAnchorPoint,
 								set = function(_, value)
-									if value ~= plugin.defaultDB.anchorRelativeTo then
-										db.anchorPoint = "CENTER"
-										db.anchorRelPoint = "CENTER"
-										db.anchorXOffset = 0
-										db.anchorYOffset = 0
-										db.anchorRelativeTo = value
+									local anchorDB = db.player
+									local defaultDB = plugin.defaultDB.player
+									if value ~= defaultDB.anchorRelativeTo then
+										anchorDB.anchorPoint = "CENTER"
+										anchorDB.anchorRelPoint = "CENTER"
+										anchorDB.anchorXOffset = 0
+										anchorDB.anchorYOffset = 0
+										anchorDB.anchorRelativeTo = value
 									else
-										db.anchorPoint = plugin.defaultDB.anchorPoint
-										db.anchorRelPoint = plugin.defaultDB.anchorRelPoint
-										db.anchorXOffset = plugin.defaultDB.anchorXOffset
-										db.anchorYOffset = plugin.defaultDB.anchorYOffset
-										db.anchorRelativeTo = plugin.defaultDB.anchorRelativeTo
+										anchorDB.anchorPoint = defaultDB.anchorPoint
+										anchorDB.anchorRelPoint = defaultDB.anchorRelPoint
+										anchorDB.anchorXOffset = defaultDB.anchorXOffset
+										anchorDB.anchorYOffset = defaultDB.anchorYOffset
+										anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
 									end
-									UpdateAnchorPosition(1)
+									local anchor = anchors.player[1]
+									if anchor then
+										anchor:UpdateAnchorPosition()
+									end
 								end,
 								validate = function(_, value)
 									local frame = _G[value]
@@ -455,7 +530,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 4,
-								disabled = function() return disabled() or db.anchorRelativeTo == plugin.defaultDB.anchorRelativeTo end,
+								disabled = disabled,
 							},
 							anchorRelPoint = {
 								type = "select",
@@ -463,52 +538,67 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 5,
-								disabled = function() return disabled() or db.anchorRelativeTo == plugin.defaultDB.anchorRelativeTo end,
+								disabled = disabled,
 							},
 						},
 					},
-					paOnOthers = {
+					other = {
 						type = "group",
 						name = "XX PA ON OTHERS",
-						order = 2,
 						inline = true,
+						get = function(info)
+							return db.other[info[#info]]
+						end,
+						set = function(info, value)
+							db.other[info[#info]] = value
+							local anchor = anchors.other[1]
+							if anchor then
+								anchor:UpdateAnchorPosition()
+							end
+						end,
+						order = 2,
 						args = {
-							anchorXOffsetOther = {
+							anchorXOffset = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 1,
-								disabled = disabledOther,
+								disabled = disabled,
 							},
-							anchorYOffsetOther = {
+							anchorYOffset = {
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 2,
-								disabled = disabledOther,
+								disabled = disabled,
 							},
-							anchorRelativeToOther = {
+							anchorRelativeTo = {
 								type = "input",
 								name = L.customAnchorPoint,
 								set = function(_, value)
-									if value ~= plugin.defaultDB.anchorRelativeToOther then
-										db.anchorPointOther = "CENTER"
-										db.anchorRelPointOther = "CENTER"
-										db.anchorXOffsetOther = 0
-										db.anchorYOffsetOther = 0
-										db.anchorRelativeToOther = value
+									local anchorDB = db.other
+									local defaultDB = plugin.defaultDB.other
+									if value ~= defaultDB.anchorRelativeTo then
+										anchorDB.anchorPoint = "CENTER"
+										anchorDB.anchorRelPoint = "CENTER"
+										anchorDB.anchorXOffset = 0
+										anchorDB.anchorYOffset = 0
+										anchorDB.anchorRelativeTo = value
 									else
-										db.anchorPointOther = plugin.defaultDB.anchorPointOther
-										db.anchorRelPointOther = plugin.defaultDB.anchorRelPointOther
-										db.anchorXOffsetOther = plugin.defaultDB.anchorXOffsetOther
-										db.anchorYOffsetOther = plugin.defaultDB.anchorYOffsetOther
-										db.anchorRelativeToOther = plugin.defaultDB.anchorRelativeToOther
+										anchorDB.anchorPoint = defaultDB.anchorPoint
+										anchorDB.anchorRelPoint = defaultDB.anchorRelPoint
+										anchorDB.anchorXOffset = defaultDB.anchorXOffset
+										anchorDB.anchorYOffset = defaultDB.anchorYOffset
+										anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
 									end
-									UpdateAnchorPosition(1)
+									local anchor = anchors.other[1]
+									if anchor then
+										anchor:UpdateAnchorPosition()
+									end
 								end,
 								validate = function(_, value)
 									local frame = _G[value]
@@ -519,23 +609,23 @@ do
 								end,
 								width = 3.2,
 								order = 3,
-								disabled = disabledOther,
+								disabled = disabled,
 							},
-							anchorPointOther = {
+							anchorPoint = {
 								type = "select",
 								name = L.sourcePoint,
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 4,
-								disabled = function() return disabledOther() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
+								disabled = disabled,
 							},
-							anchorRelPointOther = {
+							anchorRelPoint = {
 								type = "select",
 								name = L.destinationPoint,
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 5,
-								disabled = function() return disabledOther() or db.anchorRelativeToOther == plugin.defaultDB.anchorRelativeToOther end,
+								disabled = disabled,
 							},
 						},
 					},
@@ -545,30 +635,33 @@ do
 	}
 
 	local function OnDragStart(self)
-		anchors[1]:StartMoving()
+		local anchor = self.dragAnchor
+		anchor:StartMoving()
 	end
 	local function OnDragStop(self)
-		local anchor = anchors[1]
+		local anchor = self.dragAnchor
 		anchor:StopMovingOrSizing()
+
 		local point, _, relPoint, x, y = anchor:GetPoint()
 		x = math.floor(x + 0.5)
 		y = math.floor(y + 0.5)
 
-		db.anchorPoint = point
-		db.anchorRelPoint = relPoint
-		db.anchorXOffset = x
-		db.anchorYOffset = y
-		UpdateAnchorPosition(1)
+		local anchorDB = anchor.db
+		anchorDB.anchorPoint = point
+		anchorDB.anchorRelPoint = relPoint
+		anchorDB.anchorXOffset = x
+		anchorDB.anchorYOffset = y
+		anchor:UpdateAnchorPosition()
 
 		if BigWigsOptions and BigWigsOptions:IsOpen() then
 			plugin:UpdateGUI()
 		end
 	end
 
-	local function createDragAnchor(anchor, index)
+	local function createDragAnchor(parent)
 		local display = CreateFrame("Frame", nil, UIParent)
-		display:SetPoint("TOPLEFT", anchor)
-		display:SetPoint("BOTTOMRIGHT", anchor)
+		display:SetPoint("TOPLEFT", parent)
+		display:SetPoint("BOTTOMRIGHT", parent)
 		display:Hide()
 
 		display:EnableMouse(true)
@@ -584,10 +677,10 @@ do
 		header:SetFont(plugin:GetDefaultFont(12))
 		header:SetShadowOffset(1, -1)
 		header:SetTextColor(1, 0.82, 0, 1)
-		header:SetText(L.privateAurasTestAnchorText:format(index))
 		header:SetPoint("CENTER", display, "CENTER")
 		header:SetJustifyH("CENTER")
 		header:SetJustifyV("MIDDLE")
+		display.text = header
 
 		return display
 	end
@@ -596,11 +689,15 @@ do
 		if mode and mode ~= self.moduleName then return end
 		inConfigureMode = true
 
-		for index, anchor in ipairs(anchors) do
-			if not anchor.configMode then
-				anchor.configMode = createDragAnchor(anchor, index)
+		for unitType, unitAnchors in pairs(anchors) do
+			for index, anchor in ipairs(unitAnchors) do
+				if not anchor.configModeFrame then
+					anchor.configModeFrame = createDragAnchor(anchor)
+					anchor.configModeFrame.text:SetText(L.privateAurasTestAnchorText:format(index))
+					anchor.configModeFrame.dragAnchor = unitAnchors[1]
+				end
+				anchor.configModeFrame:Show()
 			end
-			anchor.configMode:Show()
 		end
 	end
 
@@ -608,13 +705,15 @@ do
 		if mode and mode ~= self.moduleName then return end
 		inConfigureMode = false
 
-		for _, anchor in ipairs(anchors) do
-			if anchor.configMode then
-				anchor.configMode:Hide()
+		for _, unitAnchors in pairs(anchors) do
+			for _, anchor in ipairs(unitAnchors) do
+				if anchor.configModeFrame then
+					anchor.configModeFrame:Hide()
+				end
 			end
 		end
 
-		self:UpdateAnchors()
+		self:UpdateAllAnchors()
 	end
 end
 
@@ -627,51 +726,93 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnPluginDisable", "RemoveAnchors")
+	self:RegisterMessage("BigWigs_OnPluginDisable", "RemoveAllAnchors")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
+
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+end
+
+function plugin:GROUP_ROSTER_UPDATE()
+	if not InCombatLockdown() then
+		self:UpdateAnchors("other")
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Anchors
 --
 
-function UpdateAnchorPosition(index)
-	local anchor = anchors[index]
-	if not anchor then return end
+local function UpdateAnchorPosition(anchor)
+	local anchorDB = anchor.db
 
 	local scale = anchor:GetScale()
 	anchor:ClearAllPoints()
+
+	local index = anchor:GetID()
 	if index == 1 then
-		local relativeTo = db.anchorRelativeTo
-		local point, relPoint = db.anchorPoint, db.anchorRelPoint
-		local x, y = db.anchorXOffset, db.anchorYOffset
+		local relativeTo = anchorDB.anchorRelativeTo
+		local point, relPoint = anchorDB.anchorPoint, anchorDB.anchorRelPoint
+		local x, y = anchorDB.anchorXOffset, anchorDB.anchorYOffset
 		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
 	else
-		local relativeTo = anchors[index - 1]
+		local relativeTo = anchors[anchor.unitType][index - 1]
 		local point, relPoint
 		local x, y = 0, 0
-		if db.growthDirection == "RIGHT" then
+		if anchorDB.growthDirection == "RIGHT" then
 			point, relPoint = "LEFT", "RIGHT"
-			x = db.spacing
-		elseif db.growthDirection == "LEFT" then
+			x = anchorDB.spacing
+		elseif anchorDB.growthDirection == "LEFT" then
 			point, relPoint = "RIGHT", "LEFT"
-			x = -db.spacing
-		elseif db.growthDirection == "UP" then
+			x = -anchorDB.spacing
+		elseif anchorDB.growthDirection == "UP" then
 			point, relPoint = "BOTTOM", "TOP"
-			y = db.spacing
-		elseif db.growthDirection == "DOWN" then
+			y = anchorDB.spacing
+		elseif anchorDB.growthDirection == "DOWN" then
 			point, relPoint = "TOP", "BOTTOM"
-			y = -db.spacing
+			y = -anchorDB.spacing
 		end
 		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
 	end
 end
 
-function plugin:RemoveAnchors()
-	for index, anchor in next, anchors do
+function GetAnchorUnitToken(targetType, unitToken)
+	if targetType == "player" then
+		if unitToken and UnitExists(unitToken) then
+			return unitToken
+		end
+	elseif targetType == "tank" and UnitGroupRolesAssigned("player") == "TANK" then
+		-- XXX at what point does UnitIsUnit start to return a secret?
+		for unit in plugin:IterateGroup(true) do
+			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
+				return unit
+			end
+		end
+	end
+end
+
+function plugin:RemoveAllAnchors()
+	for _, unitAnchors in pairs(anchors) do
+		for _, anchor in ipairs(unitAnchors) do
+			if anchor.anchorId then
+				C_UnitAuras.RemovePrivateAuraAnchor(anchor.anchorId)
+				anchor.anchorId = nil
+			end
+			anchor:ClearAllPoints()
+			anchor:Hide()
+		end
+	end
+end
+
+function plugin:UpdateAllAnchors()
+	self:UpdateAnchors("player")
+	self:UpdateAnchors("other")
+end
+
+function plugin:UpdateAnchors(unitType)
+	for _, anchor in ipairs(anchors[unitType]) do
 		if anchor.anchorId then
 			C_UnitAuras.RemovePrivateAuraAnchor(anchor.anchorId)
 			anchor.anchorId = nil
@@ -679,48 +820,50 @@ function plugin:RemoveAnchors()
 		anchor:ClearAllPoints()
 		anchor:Hide()
 	end
-end
 
-function plugin:UpdateAnchors()
-	self:RemoveAnchors()
-
-	if db.disabled then
+	local anchorDB = db[unitType]
+	if anchorDB.disabled then
 		return
 	end
 
-	local scale = db.countdownTextScale
-	local width = db.size * (1 / scale)
-	local height = db.size * (1 / scale)
+	local scale = anchorDB.countdownTextScale
+	local width = anchorDB.size * (1 / scale)
+	local height = anchorDB.size * (1 / scale)
 	local borderScale = width / 32 * 2 -- scale the dispel type border
-	if not db.showBorder then
+	if not anchorDB.showBorder then
 		borderScale = -10000 -- hide the border
 	end
 
 	for index = 1, MAX_AURAS do
-		local anchor = anchors[index]
+		local anchor = anchors[unitType][index]
 		if not anchor then
-			anchor = CreateFrame("Frame", "BigWigsPrivateAurasAnchor" .. index, UIParent)
+			anchor = CreateFrame("Frame", "BigWigsPrivateAurasAnchor" .. (unitType:gsub("^%l", string.upper)) .. index, UIParent, nil, index)
 			anchor:SetFrameStrata("HIGH")
 			anchor:SetMovable(true)
-			-- anchor:SetResizable(true)
-			anchors[index] = anchor
+
+			anchor.db = anchorDB
+			anchor.unitType = unitType
+			anchor.UpdateAnchorPosition = UpdateAnchorPosition
+
+			anchors[unitType][index] = anchor
 		end
 
 		anchor:SetSize(width, height)
 		anchor:SetScale(scale)
-		UpdateAnchorPosition(index)
+		anchor:UpdateAnchorPosition()
 		anchor:Show()
 
-		UpdateTestAura(index)
+		UpdateTestAura(unitType, index)
 
-		if not inConfigureMode then
+		local unitToken = GetAnchorUnitToken(anchorDB.targetType, anchorDB.unitToken)
+		if unitToken and not inConfigureMode then
 			-- re-registers on BigWigs_StopConfigureMode, don't really want to spam this when moving anchors or whatnot
 			anchor.anchorId = C_UnitAuras.AddPrivateAuraAnchor({
-				unitToken = "player",
+				unitToken = unitToken,
 				auraIndex = index,
 				parent = anchor,
-				showCountdownFrame = db.showCooldown,
-				showCountdownNumbers = db.showCountdownText,
+				showCountdownFrame = anchorDB.showCooldown,
+				showCountdownNumbers = anchorDB.showCountdownText,
 				iconInfo = {
 					iconAnchor = {
 						point = "CENTER",
@@ -733,7 +876,7 @@ function plugin:UpdateAnchors()
 					iconHeight = height,
 					borderScale = borderScale,
 				},
-				-- durationAnchor = db.showDurationText and {
+				-- durationAnchor = anchorDB.showDurationText and {
 				-- 	point = "TOP",
 				-- 	relativeTo = anchor,
 				-- 	relativePoint = "BOTTOM",
@@ -750,33 +893,35 @@ end
 --
 
 do
+	local testAuras = { player = {}, other = {} }
 	local testCount = 1
-	local testAuras = {}
+	local auraFramePool = {}
 
+	local dispelTypeInfo = AuraUtil.GetDebuffDisplayInfoTable()
 	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", [0] = "None" }
 	local privateAuraSpellList = { 407221, 418720, 421828, 428970, 406317 }
 
-	local icons = {}
 	local function releaseFrame(frame)
 		frame:ClearAllPoints()
 		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
-		frame:Hide()
 		if frame.timer then
 			frame.timer:Cancel()
 			frame.timer = nil
 		end
+		frame:Hide()
 
 		-- pull it out of the active list
-		for i = #testAuras, 1, -1 do
-			if testAuras[i] == frame then
-				table.remove(testAuras, i)
+		local active = testAuras[frame.unitType]
+		for i = #active, 1, -1 do
+			if active[i] == frame then
+				table.remove(active, i)
 				break
 			end
 		end
 		-- and put it back in the pool
-		table.insert(icons, frame)
+		table.insert(auraFramePool, frame)
 	end
 
 	-- local function DurationOnUpdate(self)
@@ -784,70 +929,66 @@ do
 	-- 	self.timeLeft = math.max(self.expirationTime - GetTime(), 0)
 	-- end
 
-	local function getDebuffFrame(index)
-		local frame = table.remove(icons)
-		if not frame then
-			frame = CreateFrame("Frame", nil, UIParent)
-			frame:SetFrameStrata("HIGH")
+	local function getTestAura(unitType, index)
+		local aura = table.remove(auraFramePool)
+		if not aura then
+			aura = CreateFrame("Frame", nil, UIParent)
+			aura:SetFrameStrata("HIGH")
 
-			local icon = frame:CreateTexture(nil, "BACKGROUND")
+			local icon = aura:CreateTexture(nil, "BACKGROUND")
 			icon:SetAllPoints()
-			frame.icon = icon
+			aura.icon = icon
 
-			local cooldown = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
+			local cooldown = CreateFrame("Cooldown", nil, aura, "CooldownFrameTemplate")
 			cooldown:SetAllPoints()
 			cooldown:SetReverse(true)
 			cooldown:SetDrawBling(false)
 			cooldown:SetDrawEdge(false)
-			frame.cooldown = cooldown
+			aura.cooldown = cooldown
 
-			-- local duration = frame:CreateFontString(nil, "BACKGROUND")
-			-- duration:SetPoint("TOP", frame, "BOTTOM", 0, 0)
+			-- local duration = aura:CreateFontString(nil, "BACKGROUND")
+			-- duration:SetPoint("TOP", aura, "BOTTOM", 0, 0)
 			-- duration:SetFontObject("GameFontNormalSmall")
 			-- duration:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
-			-- frame.duration = duration
+			-- aura.duration = duration
 
-			local dispelIcon = frame:CreateTexture(nil, "OVERLAY")
+			local dispelIcon = aura:CreateTexture(nil, "OVERLAY")
 			dispelIcon:SetPoint("CENTER")
-			frame.dispelIcon = dispelIcon
+			aura.dispelIcon = dispelIcon
 		end
 
-		-- Setup the fake private aura
+		-- Setup test aura info
 		local spellIndex = (index - 1) % #privateAuraSpellList + 1
 		local icon = C_Spell.GetSpellTexture(privateAuraSpellList[spellIndex])
 		local dispelType = dispelTypeList[(index - 1) % 7]
 		local duration = CONFIG_MODE_DURATION
 		local expirationTime = GetTime() + duration
 
-		frame.icon:SetTexture(icon)
+		aura.icon:SetTexture(icon)
+		aura.dispelType = dispelType
+		-- aura.timeLeft = duration
+		aura.expirationTime = expirationTime
+		aura.timer = C_Timer.NewTimer(duration, function() releaseFrame(aura) end)
+		aura.unitType = unitType
 
-		frame.timeLeft = duration
-		frame.expirationTime = expirationTime
-		frame.timer = C_Timer.NewTimer(duration, function()
-			releaseFrame(frame)
-		end)
-
-		local DEBUFF_DISPLAY_INFO = AuraUtil.GetDebuffDisplayInfoTable()
-		local info = DEBUFF_DISPLAY_INFO[dispelType] or DEBUFF_DISPLAY_INFO.None
-		local atlas = db.showDispelType and (info.dispelAtlas or info.basicAtlas)
-		frame.dispelIcon:SetAtlas(atlas)
-
-		return frame
+		return aura
 	end
 
-	function UpdateTestAura(index)
-		local frame = testAuras[index]
-		if not frame then return end
+	function UpdateTestAura(unitType, index)
+		local aura = testAuras[unitType][index]
+		if not aura then return end
 
-		if db.showCooldown then
-			frame.cooldown:SetHideCountdownNumbers(not db.showCountdownText)
-			frame.cooldown:SetCooldownFromExpirationTime(frame.expirationTime, CONFIG_MODE_DURATION)
-			frame.cooldown:Show()
+		local anchorDB = db[unitType]
+
+		if anchorDB.showCooldown then
+			aura.cooldown:SetHideCountdownNumbers(not anchorDB.showCountdownText)
+			aura.cooldown:SetCooldownFromExpirationTime(aura.expirationTime, CONFIG_MODE_DURATION)
+			aura.cooldown:Show()
 		else
-			frame.cooldown:Hide()
+			aura.cooldown:Hide()
 		end
 
-		-- if db.showDurationText then
+		-- if anchorDB.showDurationText then
 		-- 	frame:SetScript("OnUpdate", DurationOnUpdate)
 		-- 	DurationOnUpdate(frame, 0)
 		-- 	frame.duration:Show()
@@ -856,39 +997,53 @@ do
 		-- 	frame.duration:Hide()
 		-- end
 
-		local scale = db.countdownTextScale
-		local size = db.size * (1 / scale)
+		local scale = anchorDB.countdownTextScale
+		local size = anchorDB.size * (1 / scale)
 
-		if db.showBorder then
+		if anchorDB.showBorder then
 			-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
 			local borderScale = size / 32 * 2
 			local borderSize = size + (5 * borderScale)
-			frame.dispelIcon:SetSize(borderSize, borderSize)
-			frame.dispelIcon:Show()
+			aura.dispelIcon:SetSize(borderSize, borderSize)
+
+			local info = dispelTypeInfo[aura.dispelType] or dispelTypeInfo.None
+			local atlas = db.showDispelType and info.dispelAtlas or info.basicAtlas
+			aura.dispelIcon:SetAtlas(atlas)
+			aura.dispelIcon:Show()
 		else
-			frame.dispelIcon:Hide()
+			aura.dispelIcon:Hide()
 		end
 
-		frame:SetSize(size, size)
-		frame:Show()
+		aura:SetSize(size, size)
+		aura:Show()
 	end
 
 	function plugin:CreateTestAura()
-		table.insert(testAuras, 1, getDebuffFrame(testCount)) -- pop it on
-		testCount = testCount + 1
-		if testCount > 10 then
-			testCount = 1
-		end
+		for unitType, unitAnchors in pairs(anchors) do
+			if not db[unitType].disabled then
+				local auras = testAuras[unitType]
 
-		for i = 1, math.min(#testAuras, MAX_AURAS) do
-			local frame = testAuras[i]
-			frame:ClearAllPoints()
-			frame:SetParent(anchors[i])
-			frame:SetPoint("CENTER")
-			UpdateTestAura(i)
-		end
-		for i = #testAuras, MAX_AURAS + 1, -1  do
-			releaseFrame(testAuras[i])
+				local aura = getTestAura(unitType, testCount)
+				table.insert(auras, 1, aura) -- pop it on
+				testCount = testCount + 1
+				if testCount > 10 then
+					testCount = 1
+				end
+
+				for i = 1, math.min(#auras, MAX_AURAS) do
+					local frame = auras[i]
+					frame:ClearAllPoints()
+					frame:SetParent(unitAnchors[i])
+					frame:SetPoint("CENTER")
+					UpdateTestAura(unitType, i)
+				end
+				for i = #auras, MAX_AURAS + 1, -1  do
+					local frame = auras[i]
+					if frame then
+						releaseFrame(frame)
+					end
+				end
+			end
 		end
 	end
 end

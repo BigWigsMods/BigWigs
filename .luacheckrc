@@ -165,6 +165,7 @@ files["Plugins/PrivateAuras.lua"].ignore = {
 	"113/C_UnitAuras",
 	"113/C_Spell",
 	"113/SecondsToTimeAbbrev",
+	"113/UnitGroupRolesAssigned",
 }
 files["Plugins/Proximity.lua"].ignore = {
 	"113/GetNumGroupMembers",
