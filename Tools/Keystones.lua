@@ -1660,6 +1660,80 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Challenges UI Clickable Teleports
+--
+
+do
+	local dirty = true
+	local challengesUIButtonList = {}
+	for i = 1, 8 do
+		challengesUIButtonList[i] = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
+		challengesUIButtonList[i]:RegisterForClicks("AnyDown", "AnyUp")
+		challengesUIButtonList[i]:SetPropagateMouseMotion(true)
+		challengesUIButtonList[i]:SetAttribute("type", "spell")
+		challengesUIButtonList[i]:Hide()
+	end
+	local claimedButtons = {}
+
+	local function OnEnter(self)
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs")
+		if InCombatLockdown() then
+			GameTooltip:AddLine(L.keystoneTeleportInCombat)
+			claimedButtons[self]:EnableMouse(false)
+		else
+			claimedButtons[self]:EnableMouse(true)
+			if claimedButtons[self]:GetParent() ~= self then
+				claimedButtons[self]:SetParent(self)
+				claimedButtons[self]:SetAllPoints(self)
+				claimedButtons[self]:Show()
+			end
+			local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- challengesFrameIcon.mapID is actually the challengeMapID, convert into mapID (instance ID)
+			for instanceID, spellID in next, teleportList[1] do
+				if instanceID == mapID then
+					claimedButtons[self]:SetAttribute("spell", spellID)
+					local spellName = BigWigsLoader.GetSpellName(spellID)
+					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
+						GameTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
+					else
+						local cd = BigWigsLoader.GetSpellCooldown(spellID)
+						if cd.startTime > 0 and cd.duration > 0 then
+							local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+							local hours = math.floor(remainingSeconds / 3600)
+							remainingSeconds = remainingSeconds % 3600
+							local minutes = math.floor(remainingSeconds / 60)
+							GameTooltip:AddLine(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+						else
+							GameTooltip:AddLine(L.keystoneTeleportReady:format(spellName))
+						end
+					end
+					break
+				end
+			end
+		end
+		GameTooltip:Show()
+	end
+	challengesUIButtonList[1]:SetScript("OnEvent", function(self, event, addonName)
+		if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
+			self:UnregisterEvent(event)
+			self:SetScript("OnEvent", nil)
+			ChallengesFrame:HookScript("OnShow", function(challengesFrame)
+				if challengesFrame.DungeonIcons then
+					for i = 1, #challengesFrame.DungeonIcons do
+						local icon = challengesFrame.DungeonIcons[i]
+						if not claimedButtons[icon] then
+							claimedButtons[icon] = table.remove(challengesUIButtonList)
+							icon:HookScript("OnEnter", OnEnter)
+						end
+					end
+				end
+			end)
+		end
+	end)
+	challengesUIButtonList[1]:RegisterEvent("ADDON_LOADED")
+end
+
+--------------------------------------------------------------------------------
 -- Who has a key?
 --
 
