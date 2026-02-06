@@ -340,6 +340,8 @@ L.H25 = "25人英雄"
 L.tools = "工具"
 L.toolsDesc = "BigWigs 提供了多種實用工具或便利功能，讓你可以輕鬆寫意地擊敗首領。"
 
+--L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
@@ -431,6 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "點擊副本名字可以直接|cFF33FF99傳送|r到該副本。"
 --L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+--L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
+--L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "培育所" --培育

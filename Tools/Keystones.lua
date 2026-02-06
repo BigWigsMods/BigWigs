@@ -49,7 +49,11 @@ do
 		instanceKeysShowDungeonEnd = false,
 		instanceKeysHideTitle = false,
 	}
-	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
+	local globalDefaults = {
+		slashKeys = true,
+		slashKeystone = true,
+	}
+	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults, global = globalDefaults})
 
 	local function ValidateColor(current, default, alphaLimit)
 		for i = 1, 3 do
@@ -78,6 +82,14 @@ do
 				db.profile[k] = nil
 			elseif type(v) ~= defaultType then
 				db.profile[k] = defaults[k]
+			end
+		end
+		for k, v in next, db.global do
+			local defaultType = type(globalDefaults[k])
+			if defaultType == "nil" then
+				db.global[k] = nil
+			elseif type(v) ~= defaultType then
+				db.global[k] = globalDefaults[k]
 			end
 		end
 		if db.profile.countBegin < 3 or db.profile.countBegin > 9 then
@@ -560,6 +572,12 @@ do
 			if id or isReloadingUi then
 				if SLASH_KEYSTONE3 then
 					SLASH_KEYSTONE3 = nil
+				end
+				if SLASH_KEYSTONE2 and db.global.slashKeys then
+					SLASH_KEYSTONE2 = nil
+				end
+				if SLASH_KEYSTONE1 and db.global.slashKeystone then
+					SLASH_KEYSTONE1 = nil
 				end
 			end
 			if BigWigsLoader.UnitLevel("player") ~= GetMaxPlayerLevel() then
@@ -1682,7 +1700,6 @@ end
 --
 
 do
-	local dirty = true
 	local challengesUIButtonList = {}
 	for i = 1, 8 do
 		challengesUIButtonList[i] = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
@@ -2131,6 +2148,12 @@ do
 
 	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer, true)
 	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer, true)
+	if db.global.slashKeys then
+		BigWigsAPI.RegisterSlashCommand("/keys", ShowViewer, true)
+	end
+	if db.global.slashKeystone then
+		BigWigsAPI.RegisterSlashCommand("/keystone", ShowViewer, true)
+	end
 
 	viewerKeybindFrame:SetScript("OnClick", ShowViewer)
 	if db.profile.viewerKeybind ~= "" then
@@ -2449,6 +2472,42 @@ do
 						desc = L.keystoneViewerKeybindingDesc,
 						order = 7,
 						set = UpdateSettingsAndWidgets,
+					},
+					slashDescription = {
+						type = "description",
+						name = "\n\n",
+						order = 8,
+						width = "full",
+					},
+					slashKeys = {
+						type = "toggle",
+						name = L.keystoneSlashKeys,
+						order = 9,
+						width = "full",
+						get = function() return db.global.slashKeys end,
+						set = function(info, value)
+							local key = info[#info]
+							db.global[key] = value
+							C_UI.Reload()
+						end,
+						confirm = function()
+							return L.reloadUIWarning
+						end,
+					},
+					slashKeystone = {
+						type = "toggle",
+						name = L.keystoneSlashKeystone,
+						order = 10,
+						width = "full",
+						get = function() return db.global.slashKeystone end,
+						set = function(info, value)
+							local key = info[#info]
+							db.global[key] = value
+							C_UI.Reload()
+						end,
+						confirm = function()
+							return L.reloadUIWarning
+						end,
 					},
 				},
 			},

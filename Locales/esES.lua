@@ -340,6 +340,8 @@ L.H25 = "Heroico 25"
 L.tools = "Herramientas"
 L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calidad de vida\" para acelerar y simplificar el proceso de enfrentamiento con los jefes."
 
+--L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
@@ -431,6 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "Clica el nombre de la mazmorra abajo para |cFF33FF99TELETRANSPORTE|r a la entrada de la mazmorra directamente."
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aEste es un personaje asaltante temporal." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+--L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
+--L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"
