@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f梦境裂隙|r]
 ## Title-zhTW: BigWigs [|cffeda55f夢境裂隙|r]
 ## Notes: BigWigs The Dreamrift Modules
-## Notes-deDE: BigWigs The Dreamrift Modules
+## Notes-deDE: BigWigs Der Traumriss Module
 ## Notes-esES: BigWigs The Dreamrift Modules
 ## Notes-esMX: BigWigs The Dreamrift Modules
 ## Notes-frFR: BigWigs The Dreamrift Modules
