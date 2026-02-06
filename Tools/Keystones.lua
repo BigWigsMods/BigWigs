@@ -384,30 +384,12 @@ local teleportList = {
 		--[632] = lw_wotlk, -- The Forge of Souls
 	},
 }
-if BigWigsLoader.isRetail then
-	teleportList[0] = {}
-else
-	-- XXX temp Lemix
-	teleportList[0] = {
-		--[1544] = lw_l, -- Assault on Violet Hold
-		--[1677] = lw_l, -- Cathedral of Eternal Night
-		[1571] = 393766, -- Court of Stars
-		[1651] = 373262, -- Return to Karazhan
-		[1501] = 424153, -- Black Rook Hold
-		--[1516] = lw_l, -- The Arcway
-		[1466] = 424163, -- Darkheart Thicket
-		[1458] = 410078, -- Neltharion's Lair
-		--[1456] = lw_l, -- Eye of Azshara
-		--[1492] = lw_l, -- Maw of Souls
-		[1477] = 393764, -- Halls of Valor
-		--[1493] = lw_l, -- Vault of the Wardens
-		--[1753] = lw_l, -- Seat of the Triumvirate
-	}
-end
+
 for mapID in next, BigWigsLoader.currentExpansion.currentSeason do -- Automatically build the current season list
 	for expansionIndex = 2, #teleportList do
-		if teleportList[expansionIndex][mapID] then
-			teleportList[1][mapID] = teleportList[expansionIndex][mapID]
+		local spellID = teleportList[expansionIndex][mapID]
+		if spellID then
+			teleportList[1][mapID] = spellID
 			break
 		end
 	end
@@ -802,7 +784,7 @@ do
 
 	local GetRealZoneText = GetRealZoneText
 	local prevButton = nil
-	for expansionIndex = 0, #teleportList do -- XXX temp Lemix, swap 0 back to 1
+	for expansionIndex = 1, #teleportList do
 		if not teleportButtons[expansionIndex] then
 			teleportButtons[expansionIndex] = {}
 		end
@@ -1127,7 +1109,7 @@ do
 			teleportButtons[1][1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
 			self:SetScript("OnUpdate", OnUpdate)
 
-			local numExpansions = #L.expansionNames - (BigWigsLoader.isBeta and 0 or 1)
+			local numExpansions = #L.expansionNames
 			for expansionIndex = 1, #teleportButtons do
 				if expansionIndex > 1 then
 					local expansionNameHeader = CreateHeader()
