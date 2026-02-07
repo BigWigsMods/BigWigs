@@ -1204,123 +1204,28 @@ end
 
 battleResFrame = CreateFrame("Button", nil, UIParent)
 battleResFrame:Hide()
-battleResFrame:SetSize(plugin.defaultDB.size, plugin.defaultDB.size)
 do
-	local point, relPoint = plugin.defaultDB.position[1], plugin.defaultDB.position[2]
-	local x, y = plugin.defaultDB.position[3], plugin.defaultDB.position[4]
-	battleResFrame:SetPoint(point, plugin.defaultDB.position[5], relPoint, x, y)
-
 	local icon = battleResFrame:CreateTexture()
 	icon:SetAllPoints(battleResFrame)
-	if plugin.defaultDB.mode == 2 then
-		icon:SetTexture(nil)
-	else
-		local texture = BigWigsLoader.GetSpellTexture(plugin.defaultDB.iconTextureFromSpellID)
-		icon:SetTexture(texture)
-	end
 	icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-	icon:SetVertexColor(plugin.defaultDB.iconColor[1], plugin.defaultDB.iconColor[2], plugin.defaultDB.iconColor[3], plugin.defaultDB.iconColor[4])
-	if plugin.defaultDB.iconDesaturate == 2 then
-		icon:SetDesaturated(true)
-	end
 	battleResFrame.icon = icon
 
 	local border = CreateFrame("Frame", nil, battleResFrame, "BackdropTemplate")
 	border:SetFrameLevel(border:GetFrameLevel()+1) -- Show the border above the cooldown swipe
-	border:SetPoint("TOPLEFT", battleResFrame, "TOPLEFT", -plugin.defaultDB.borderOffset, plugin.defaultDB.borderOffset)
-	border:SetPoint("BOTTOMRIGHT", battleResFrame, "BOTTOMRIGHT", plugin.defaultDB.borderOffset, -plugin.defaultDB.borderOffset)
-	border:SetBackdrop({
-		edgeFile = LibSharedMedia:Fetch("border", plugin.defaultDB.borderName),
-		edgeSize = plugin.defaultDB.borderSize,
-	})
-	border:SetBackdropBorderColor(plugin.defaultDB.borderColor[1], plugin.defaultDB.borderColor[2], plugin.defaultDB.borderColor[3], plugin.defaultDB.borderColor[4])
 	battleResFrame.border = border
 end
 do
 	local cdText = battleResFrame.border:CreateFontString(nil, "OVERLAY")
-	cdText:SetJustifyH(plugin.defaultDB.durationAlign)
-	if plugin.defaultDB.mode == 2 then
-		cdText:SetPoint(plugin.defaultDB.durationAlign, battleResFrame, "LEFT", plugin.defaultDB.textXPositionDuration, plugin.defaultDB.textYPositionDuration)
-	else
-		if plugin.defaultDB.durationAlign == "LEFT" then
-			cdText:SetPoint("TOPLEFT", battleResFrame, "TOPLEFT", plugin.defaultDB.textXPositionDuration, plugin.defaultDB.textYPositionDuration)
-		elseif plugin.defaultDB.durationAlign == "RIGHT" then
-			cdText:SetPoint("TOPRIGHT", battleResFrame, "TOPRIGHT", plugin.defaultDB.textXPositionDuration, plugin.defaultDB.textYPositionDuration)
-		else
-			cdText:SetPoint("TOP", battleResFrame, "TOP", plugin.defaultDB.textXPositionDuration, plugin.defaultDB.textYPositionDuration)
-		end
-	end
 	cdText:SetSize(300, 20)
-	cdText:SetTextColor(plugin.defaultDB.durationColor[1], plugin.defaultDB.durationColor[2], plugin.defaultDB.durationColor[3], plugin.defaultDB.durationColor[4])
-	if not cdText.SetFontHeight then -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✓]
-		cdText.SetFontHeight = function(self, num)
-			local flags = nil
-			if plugin.db.profile.monochrome and plugin.db.profile.outline ~= "NONE" then
-				flags = "MONOCHROME," .. plugin.db.profile.outline
-			elseif plugin.db.profile.monochrome then
-				flags = "MONOCHROME"
-			elseif plugin.db.profile.outline ~= "NONE" then
-				flags = plugin.db.profile.outline
-			end
-			self:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), num, flags)
-		end
-	end
 	battleResFrame.cdText = cdText
 
 	local chargesText = battleResFrame.border:CreateFontString(nil, "OVERLAY")
-	chargesText:SetJustifyH(plugin.defaultDB.chargesAlign)
-	if plugin.defaultDB.mode == 2 then
-		chargesText:SetPoint(plugin.defaultDB.chargesAlign, battleResFrame, "RIGHT", plugin.defaultDB.textXPositionCharges, plugin.defaultDB.textYPositionCharges)
-	else
-		if plugin.defaultDB.chargesAlign == "LEFT" then
-			chargesText:SetPoint("BOTTOMLEFT", battleResFrame, "BOTTOMLEFT", plugin.defaultDB.textXPositionCharges, plugin.defaultDB.textYPositionCharges)
-		elseif plugin.defaultDB.chargesAlign == "RIGHT" then
-			chargesText:SetPoint("BOTTOMRIGHT", battleResFrame, "BOTTOMRIGHT", plugin.defaultDB.textXPositionCharges, plugin.defaultDB.textYPositionCharges)
-		else
-			chargesText:SetPoint("BOTTOM", battleResFrame, "BOTTOM", plugin.defaultDB.textXPositionCharges, plugin.defaultDB.textYPositionCharges)
-		end
-	end
 	chargesText:SetSize(300, 20)
-	chargesText:SetTextColor(plugin.defaultDB.chargesNoneColor[1], plugin.defaultDB.chargesNoneColor[2], plugin.defaultDB.chargesNoneColor[3], plugin.defaultDB.chargesNoneColor[4])
-	if not chargesText.SetFontHeight then -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✓]
-		chargesText.SetFontHeight = function(self, num)
-			local flags = nil
-			if plugin.db.profile.monochrome and plugin.db.profile.outline ~= "NONE" then
-				flags = "MONOCHROME," .. plugin.db.profile.outline
-			elseif plugin.db.profile.monochrome then
-				flags = "MONOCHROME"
-			elseif plugin.db.profile.outline ~= "NONE" then
-				flags = plugin.db.profile.outline
-			end
-			self:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), num, flags)
-		end
-	end
 	battleResFrame.chargesText = chargesText
-
-	do
-		local flags = nil
-		if plugin.defaultDB.monochrome and plugin.defaultDB.outline ~= "NONE" then
-			flags = "MONOCHROME," .. plugin.defaultDB.outline
-		elseif plugin.defaultDB.monochrome then
-			flags = "MONOCHROME"
-		elseif plugin.defaultDB.outline ~= "NONE" then
-			flags = plugin.defaultDB.outline
-		end
-
-		cdText:SetFont(LibSharedMedia:Fetch("font", plugin.defaultDB.fontName), plugin.defaultDB.durationFontSize, flags)
-		cdText:SetText("")
-		cdText:SetText("0:00")
-		chargesText:SetFont(LibSharedMedia:Fetch("font", plugin.defaultDB.fontName), plugin.defaultDB.chargesNoneFontSize, flags)
-		chargesText:SetText("")
-		chargesText:SetText(0)
-	end
 
 	local cooldown = CreateFrame("Cooldown", nil, battleResFrame, "CooldownFrameTemplate")
 	cooldown:SetAllPoints(battleResFrame)
 	cooldown:SetDrawBling(false)
-	cooldown:SetDrawEdge(plugin.defaultDB.cooldownEdge)
-	cooldown:SetDrawSwipe(plugin.defaultDB.cooldownSwipe)
-	cooldown:SetReverse(plugin.defaultDB.cooldownInverse)
 	cooldown:SetHideCountdownNumbers(true) -- Blizzard
 	cooldown.noCooldownCount = true -- OmniCC
 	battleResFrame.cooldown = cooldown
@@ -1556,7 +1461,7 @@ do
 		end
 		if not self.db.profile.disabled then
 			isEnabled = true
-			BigWigsLoader.CTimerAfter(0, DelayStartOfInstance)
+			self:SimpleTimer(DelayStartOfInstance, 0)
 		else
 			isEnabled = false
 		end
