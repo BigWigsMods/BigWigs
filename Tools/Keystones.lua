@@ -1700,33 +1700,27 @@ end
 --
 
 do
-	local challengesUIButtonList = {}
-	for i = 1, 8 do
-		challengesUIButtonList[i] = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
-		challengesUIButtonList[i]:RegisterForClicks("AnyDown", "AnyUp")
-		challengesUIButtonList[i]:SetPropagateMouseMotion(true)
-		challengesUIButtonList[i]:SetAttribute("type", "spell")
-		challengesUIButtonList[i]:Hide()
-	end
-	local claimedButtons = {}
+	local challengesTeleportButton = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
+	challengesTeleportButton:RegisterForClicks("AnyDown", "AnyUp")
+	challengesTeleportButton:SetPropagateMouseMotion(true)
+	challengesTeleportButton:SetAttribute("type", "spell")
+	local hookedIcons = {}
 
 	local function OnEnter(self)
 		GameTooltip:AddLine(" ")
 		GameTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs")
 		if InCombatLockdown() then
 			GameTooltip:AddLine(L.keystoneTeleportInCombat)
-			claimedButtons[self]:EnableMouse(false)
+			challengesTeleportButton:EnableMouse(false)
 		else
-			claimedButtons[self]:EnableMouse(true)
-			if claimedButtons[self]:GetParent() ~= self then
-				claimedButtons[self]:SetParent(self)
-				claimedButtons[self]:SetAllPoints(self)
-				claimedButtons[self]:Show()
-			end
-			local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- challengesFrameIcon.mapID is actually the challengeMapID, convert into mapID (instance ID)
+			challengesTeleportButton:EnableMouse(true)
+			challengesTeleportButton:ClearAllPoints()
+			challengesTeleportButton:SetParent(self)
+			challengesTeleportButton:SetAllPoints(self)
+			local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
 			for instanceID, spellID in next, teleportList[1] do
 				if instanceID == mapID then
-					claimedButtons[self]:SetAttribute("spell", spellID)
+					challengesTeleportButton:SetAttribute("spell", spellID)
 					local spellName = BigWigsLoader.GetSpellName(spellID)
 					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
 						GameTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
@@ -1748,7 +1742,7 @@ do
 		end
 		GameTooltip:Show()
 	end
-	challengesUIButtonList[1]:SetScript("OnEvent", function(self, event, addonName)
+	challengesTeleportButton:SetScript("OnEvent", function(self, event, addonName)
 		if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
 			self:UnregisterEvent(event)
 			self:SetScript("OnEvent", nil)
@@ -1756,8 +1750,8 @@ do
 				if challengesFrame.DungeonIcons then
 					for i = 1, #challengesFrame.DungeonIcons do
 						local icon = challengesFrame.DungeonIcons[i]
-						if not claimedButtons[icon] then
-							claimedButtons[icon] = table.remove(challengesUIButtonList)
+						if not hookedIcons[icon] then
+							hookedIcons[icon] = true
 							icon:HookScript("OnEnter", OnEnter)
 						end
 					end
@@ -1765,7 +1759,7 @@ do
 			end)
 		end
 	end)
-	challengesUIButtonList[1]:RegisterEvent("ADDON_LOADED")
+	challengesTeleportButton:RegisterEvent("ADDON_LOADED")
 end
 
 --------------------------------------------------------------------------------
