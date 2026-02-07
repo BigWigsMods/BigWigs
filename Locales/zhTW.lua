@@ -180,7 +180,7 @@ L.ICON_desc = "BigWigs 可以根據技能用圖示標記人物。這將使他們
 L.SAY_desc = "對話泡泡容易被看見。BigWigs 將以說話訊息通知附近的人你中了什麼技能。"
 L.EMPHASIZE_desc = "啟用後會強調所有與此技能相關的訊息，使它們更大和更容易看到。你可以在「訊息」選項中調整強調訊息的字型及大小。"
 L.PROXIMITY = "距離監視器"
-L.proximity_desc = "有時候，某些技能會要求團隊散開。啟用此選項會在特定首領戰中顯示距離監視視窗，列出所有離你過近的玩家。"
+L.PROXIMITY_desc = "有時候，某些技能會要求團隊散開。啟用此選項會在特定首領戰中顯示距離監視視窗，列出所有離你過近的玩家。"
 L.ALTPOWER = "顯示替代能量"
 L.ALTPOWER_desc = "某些首領戰鬥會使用替代能量機制。替代能量視窗讓玩家快速查看團隊中誰有最少或最多替代能量，對特定戰術或分配會有幫助。"
 L.TANK = "只對坦克"
@@ -959,14 +959,14 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模�
 
 L.customRange = "自訂距離指示器"
 L.proximityTitle = "%d碼 / %d 玩家" -- yd = yards (short)
-L.proximity_name = "玩家雷達"
+L.proximity_name = "距離監視"
 L.soundDelay = "音效延遲"
 L.soundDelayDesc = "當有人太靠近你時指定多長時間 BigWigs 重複間隔等待指定的音效。"
 
-L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和位置。"
+L.resetProximityDesc = "重設所有距離監視自訂選項，包括錨點和位置。"
 
 L.close = "關閉"
-L.closeProximityDesc = "關閉玩家雷達。\n\n要在所有首領戰鬥中停用此功能，你需要到選項的「玩家雷達」中勾選停用。"
+L.closeProximityDesc = "關閉距離監視器。\n\n要在所有首領戰鬥中停用此功能，你需要到選項的「距離監視」中勾選停用。"
 L.lock = "鎖定"
 L.lockDesc = "鎖定顯示視窗，防止被移動和縮放。"
 L.title = "標題"
