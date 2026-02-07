@@ -340,7 +340,7 @@ L.titan = "25人泰坦" -- Chinese-only "Titan Reforged" servers
 L.tools = "工具"
 L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"，让你可以轻松的简化首领战斗流程。"
 
---L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+L.reloadUIWarning = "更改此选项将重载界面，并短暂显示载入画面。你确定要继续吗？"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -433,8 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "点击下方地下城名称可直接|cFF33FF99传送|r至地下城入口。"
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者角色。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
---L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
---L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
+L.keystoneSlashKeys = "同时注册 |cFF33FF99/keys|r 命令"
+L.keystoneSlashKeystone = "同时注册 |cFF33FF99/keystone|r 命令"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷栖巢"
@@ -464,13 +464,13 @@ L.keystoneShortName_ReturnToKarazhanLower = "卡拉赞下层"
 L.keystoneShortName_ReturnToKarazhanUpper = "卡拉赞上层"
 L.keystoneShortName_CathedralOfEternalNight = "永夜大教堂"
 L.keystoneShortName_SeatOfTheTriumvirate = "执政团之座"
---L.keystoneShortName_WindrunnerSpire = "SPIRE"
---L.keystoneShortName_MagistersTerrace = "MT"
---L.keystoneShortName_MaisaraCaverns = "CAVERN"
---L.keystoneShortName_NexusPointXenas = "XENAS"
---L.keystoneShortName_AlgetharAcademy = "AA"
---L.keystoneShortName_Skyreach = "SKY"
---L.keystoneShortName_PitOfSaron = "PIT"
+L.keystoneShortName_WindrunnerSpire = "风行者之塔"
+L.keystoneShortName_MagistersTerrace = "魔导师平台"
+L.keystoneShortName_MaisaraCaverns = "迈萨拉洞窟"
+L.keystoneShortName_NexusPointXenas = "节点希纳斯"
+L.keystoneShortName_AlgetharAcademy = "艾杰斯亚学院"
+L.keystoneShortName_Skyreach = "通天峰"
+L.keystoneShortName_PitOfSaron = "萨隆矿坑"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -501,13 +501,13 @@ L.keystoneShortName_ReturnToKarazhanLower_Bar = "卡拉赞下层"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "卡拉赞上层"
 L.keystoneShortName_CathedralOfEternalNight_Bar = "永夜大教堂"
 L.keystoneShortName_SeatOfTheTriumvirate_Bar = "执政团之座"
---L.keystoneShortName_WindrunnerSpire_Bar = "Spire"
---L.keystoneShortName_MagistersTerrace_Bar = "Terrace"
---L.keystoneShortName_MaisaraCaverns_Bar = "Caverns"
---L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
---L.keystoneShortName_AlgetharAcademy_Bar = "Academy"
---L.keystoneShortName_Skyreach_Bar = "Skyreach"
---L.keystoneShortName_PitOfSaron_Bar = "Pit"
+L.keystoneShortName_WindrunnerSpire_Bar = "风行者之塔"
+L.keystoneShortName_MagistersTerrace_Bar = "魔导师平台"
+L.keystoneShortName_MaisaraCaverns_Bar = "迈萨拉洞窟"
+L.keystoneShortName_NexusPointXenas_Bar = "节点希纳斯"
+L.keystoneShortName_AlgetharAcademy_Bar = "艾杰斯亚学院"
+L.keystoneShortName_Skyreach_Bar = "通天峰"
+L.keystoneShortName_PitOfSaron_Bar = "萨隆矿坑"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "谁拥有钥石？"
