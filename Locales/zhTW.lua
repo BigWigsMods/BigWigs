@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "插件「|cFF436EEE%s|r」創建了「%s」計時器。"
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "插件 '|cFF436EEE%s|r' 剛剛複製了您的設定檔匯出字串。"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -78,45 +78,45 @@ L.expansionNames = {
 	"暗影之境", -- Shadowlands
 	"巨龍崛起", -- Dragonflight
 	"地心之戰", -- The War Within
-	"至​暗​之​夜", -- Midnight
+	"至暗之夜", -- Midnight
 }
 L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "探究",
 	["LittleWigs_CurrentSeason"] = "當前賽季",
 }
---L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
---}
---L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
---}
---L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
---}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dayNamesShort = {
+	"星期日", -- Sunday
+	"星期一", -- Monday
+	"星期二", -- Tuesday
+	"星期三", -- Wednesday
+	"星期四", -- Thursday
+	"星期五", -- Friday
+	"星期六", -- Saturday
+}
+L.dayNames = {
+	"星期日",
+	"星期一",
+	"星期二",
+	"星期三",
+	"星期四",
+	"星期五",
+	"星期六",
+}
+L.monthNames = {
+	"1月",
+	"2月",
+	"3月",
+	"4月",
+	"5月",
+	"6月",
+	"7月",
+	"8月",
+	"9月",
+	"10月",
+	"11月",
+	"12月",
+}
+L.dateFormat = "%1$s，%4$d年%3$d%2$s日" -- Date format: "Monday 1 January 2025" 中文格式1：2025年1月1日，周一 /格式2:周一，2025年1月1日
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "當心（艾爾加隆）"
@@ -179,7 +179,7 @@ L.FLASH_desc = "某些技能可能比其他技能更重要。如果你希望此�
 L.ICON_desc = "BigWigs 可以根據技能用圖示標記人物。這將使他們更容易被辨認。"
 L.SAY_desc = "對話泡泡容易被看見。BigWigs 將以說話訊息通知附近的人你中了什麼技能。"
 L.EMPHASIZE_desc = "啟用後會強調所有與此技能相關的訊息，使它們更大和更容易看到。你可以在「訊息」選項中調整強調訊息的字型及大小。"
-L.PROXIMITY = "玩家雷達"
+L.PROXIMITY = "近距離顯示"
 L.PROXIMITY_desc = "有時候，某些技能會要求團隊散開。玩家雷達是一個為此類技能獨立顯示的視窗，告訴你誰距離過近並且不安全。"
 L.ALTPOWER = "顯示替代能量"
 L.ALTPOWER_desc = "玩家在一些首領戰鬥中會使用替代能量機制。替代能量視窗讓玩家快速查看團隊中誰有最少或最多替代能量，對特定戰術或分配會有幫助。"
@@ -218,7 +218,7 @@ L.back = "<< 返回"
 L.tank = "|cFFFF0000只警報坦克。|r"
 L.healer = "|cFFFF0000只警報治療。|r"
 L.tankhealer = "|cFFFF0000只警報坦克和治療。|r"
-L.dispeller = "|cFFFF0000只警報驅散和打斷。|r"
+L.dispeller = "|cFFFF0000只警報驅散。|r"
 
 -- Sharing.lua
 L.import = "匯入"
@@ -279,22 +279,22 @@ L.battleres_settings_import_desc = "匯入戰復設定。"
 L.battleres_settings_export_desc = "匯出戰復設定。"
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "分享首領設定"
+L.sharing_flags = "通用設定"
+L.sharing_flags_desc = "匯入控制各項功能的設定，例如'顯示計時條'、'播放音效'、'顯示訊息'等。\n這涵蓋了技能設置中大部分勾選選項。"
+L.sharing_export_flags_desc = "匯出控制各項功能的設定，例如'顯示計時條'、'播放音效'、'顯示訊息'等。\n這涵蓋了技能設置中大部分勾選選項。"
+L.sharing_sounds_desc = "匯入技能播放的音效設定。"
+L.sharing_export_sounds_desc = "匯出技能播放的音效設定。"
+L.sharing_private_auras = "私人光環"
+L.sharing_private_auras_desc = "匯入私人光環音效設定。"
+L.sharing_export_private_auras_desc = "匯出私人光環音效設定。"
+L.sharing_colors_desc = "匯入計時條與訊息文字顏色設定。"
+L.sharing_export_colors_desc = "匯出計時條與訊息文字的顏色設定。"
+L.confirm_instance_import = "您即將匯入所選的設定將覆蓋您當前所選設定檔中的設定：\n\n|cFF33FF99\"%s\"|r\n\n副本：\n|cFFBB66FF\"%s\"|r\n\n您確定要執行此操作嗎？"
+L.status_text_paste_import = "貼上有效的匯入字串"
+L.exporting_instance = "匯出 |cFFBB66FF%s|r" -- Exporting Molten Core
+L.importing_instance = "匯入 |cFFBB66FF%s|r" -- Importing Molten Core
+L.share = "分享"
 
 -- Statistics
 L.statistics = "統計"
@@ -331,7 +331,7 @@ L.N10 = "10人普通"
 L.N25 = "25人普通"
 L.H10 = "10人英雄"
 L.H25 = "25人英雄"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "25人泰坦" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -432,9 +432,9 @@ L.keystoneHistoryScoreOlderTooltip = "上周分數：|cFFFFFFFF+%d|r"
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "點擊副本名字可以直接|cFF33FF99傳送|r到該副本。"
---L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
---L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
---L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
+L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a時空奔行者角色。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneSlashKeys = "同時註冊 |cFF33FF99/keys|r 指令"
+L.keystoneSlashKeystone = "同時註冊 |cFF33FF99/keystone|r 指令"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "培育所" --培育
@@ -451,26 +451,26 @@ L.keystoneShortName_AraKaraCityOfEchoes = "回音" --回音
 L.keystoneShortName_TazaveshSoleahsGambit = "險招" --索利亞?
 L.keystoneShortName_TazaveshStreetsOfWonder = "街道" --街道
 L.keystoneShortName_TheDawnbreaker = "破曉" --破曉
---L.keystoneShortName_BlackRookHold = "BRH"
---L.keystoneShortName_CourtOfStars = "COS"
---L.keystoneShortName_DarkheartThicket = "DHT"
---L.keystoneShortName_EyeOfAzshara = "EOA"
---L.keystoneShortName_HallsOfValor = "HOV"
---L.keystoneShortName_MawOfSouls = "MOS"
---L.keystoneShortName_NeltharionsLair = "NL"
---L.keystoneShortName_TheArcway = "ARCWAY"
---L.keystoneShortName_VaultOfTheWardens = "VOTW"
---L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
---L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
---L.keystoneShortName_CathedralOfEternalNight = "COEN"
---L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
---L.keystoneShortName_WindrunnerSpire = "SPIRE"
---L.keystoneShortName_MagistersTerrace = "MT"
---L.keystoneShortName_MaisaraCaverns = "CAVERN"
---L.keystoneShortName_NexusPointXenas = "XENAS"
---L.keystoneShortName_AlgetharAcademy = "AA"
---L.keystoneShortName_Skyreach = "SKY"
---L.keystoneShortName_PitOfSaron = "PIT"
+L.keystoneShortName_BlackRookHold = "玄鴉"
+L.keystoneShortName_CourtOfStars = "眾星"
+L.keystoneShortName_DarkheartThicket = "暗心"
+L.keystoneShortName_EyeOfAzshara = "艾薩拉"
+L.keystoneShortName_HallsOfValor = "英靈"
+L.keystoneShortName_MawOfSouls = "靈魂"
+L.keystoneShortName_NeltharionsLair = "巢穴"
+L.keystoneShortName_TheArcway = "地道"
+L.keystoneShortName_VaultOfTheWardens = "看守"
+L.keystoneShortName_ReturnToKarazhanLower = "卡拉下"
+L.keystoneShortName_ReturnToKarazhanUpper = "卡拉上"
+L.keystoneShortName_CathedralOfEternalNight = "永夜"
+L.keystoneShortName_SeatOfTheTriumvirate = "三傑"
+L.keystoneShortName_WindrunnerSpire = "風行者"
+L.keystoneShortName_MagistersTerrace = "博學者"
+L.keystoneShortName_MaisaraCaverns = "梅薩拉"
+L.keystoneShortName_NexusPointXenas = "奧核點"
+L.keystoneShortName_AlgetharAcademy = "學院"
+L.keystoneShortName_Skyreach = "擎天峰"
+L.keystoneShortName_PitOfSaron = "薩倫"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -488,26 +488,26 @@ L.keystoneShortName_AraKaraCityOfEchoes_Bar = "回音"
 L.keystoneShortName_TazaveshSoleahsGambit_Bar = "險招"
 L.keystoneShortName_TazaveshStreetsOfWonder_Bar = "街道"
 L.keystoneShortName_TheDawnbreaker_Bar = "破曉"
---L.keystoneShortName_BlackRookHold_Bar = "Black Rook"
---L.keystoneShortName_CourtOfStars_Bar = "Court"
---L.keystoneShortName_DarkheartThicket_Bar = "Darkheart"
---L.keystoneShortName_EyeOfAzshara_Bar = "Eye"
---L.keystoneShortName_HallsOfValor_Bar = "Halls"
---L.keystoneShortName_MawOfSouls_Bar = "Maw"
---L.keystoneShortName_NeltharionsLair_Bar = "Lair"
---L.keystoneShortName_TheArcway_Bar = "Arcway"
---L.keystoneShortName_VaultOfTheWardens_Bar = "Vault"
---L.keystoneShortName_ReturnToKarazhanLower_Bar = "Lower Kara"
---L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Upper Kara"
---L.keystoneShortName_CathedralOfEternalNight_Bar = "Cathedral"
---L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirate"
---L.keystoneShortName_WindrunnerSpire_Bar = "Spire"
---L.keystoneShortName_MagistersTerrace_Bar = "Terrace"
---L.keystoneShortName_MaisaraCaverns_Bar = "Caverns"
---L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
---L.keystoneShortName_AlgetharAcademy_Bar = "Academy"
---L.keystoneShortName_Skyreach_Bar = "Skyreach"
---L.keystoneShortName_PitOfSaron_Bar = "Pit"
+L.keystoneShortName_BlackRookHold_Bar = "玄鴉"
+L.keystoneShortName_CourtOfStars_Bar = "眾星"
+L.keystoneShortName_DarkheartThicket_Bar = "暗心"
+L.keystoneShortName_EyeOfAzshara_Bar = "艾薩拉"
+L.keystoneShortName_HallsOfValor_Bar = "英靈"
+L.keystoneShortName_MawOfSouls_Bar = "靈魂"
+L.keystoneShortName_NeltharionsLair_Bar = "巢穴"
+L.keystoneShortName_TheArcway_Bar = "地道"
+L.keystoneShortName_VaultOfTheWardens_Bar = "看守"
+L.keystoneShortName_ReturnToKarazhanLower_Bar = "卡拉下"
+L.keystoneShortName_ReturnToKarazhanUpper_Bar = "卡拉上"
+L.keystoneShortName_CathedralOfEternalNight_Bar = "永夜"
+L.keystoneShortName_SeatOfTheTriumvirate_Bar = "三傑"
+L.keystoneShortName_WindrunnerSpire_Bar = "風行者"
+L.keystoneShortName_MagistersTerrace_Bar = "博學者"
+L.keystoneShortName_MaisaraCaverns_Bar = "梅薩拉"
+L.keystoneShortName_NexusPointXenas_Bar = "奧核點"
+L.keystoneShortName_AlgetharAcademy_Bar = "學院"
+L.keystoneShortName_Skyreach_Bar = "擎天峰"
+L.keystoneShortName_PitOfSaron_Bar = "薩倫"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "誰有鑰石？"
@@ -693,7 +693,7 @@ L.breakMinutes = "休息時間將在 %d 分鐘後結束！"
 L.breakSeconds = "休息時間將在 %d 秒後結束！"
 L.breakFinished = "休息時間結束！"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "法術指示器"
 L.indicatorType_Deadly = "致命"
 L.indicatorType_Bleed = "流血"
 L.indicatorType_Magic = "魔法"
@@ -702,12 +702,12 @@ L.indicatorType_Tank = "坦克"
 L.indicatorType_Healer = "治療者"
 L.indicatorType_Damager = "傷害輸出"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "法術指示器大小"
+L.spellIndicatorSizeDropdown_Large1 = "大 (1個指示器)"
+L.spellIndicatorSizeDropdown_Large2 = "大 (2個指示器)"
+L.spellIndicatorSizeDropdown_Large3 = "大 (3個指示器)"
+L.spellIndicatorSizeDropdown_Small4 = "小 (4個指示器)"
+L.spellIndicatorSizeDropdown_Small2 = "小 (2個指示器)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -1064,20 +1064,20 @@ L.newFastestVictoryPrint = "新的最快紀錄：（-%s）" -- New fastest victo
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
---L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
---L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
---L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
---L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
---L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
---L.blizzWarningSettings = "Blizzard Warnings Settings"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.enableBlizzWarnings = "Enable Blizz boss warnings"
---L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.timeline = "時間軸"
+L.blizzTimersAsBigWigsBars = "將暴雪計時器（時間軸）顯示為 BigWigs 計時條"
+L.blizzTimersAsBigWigsBarsDesc = "所有暴雪首領戰鬥計時器（時間軸）將顯示為 BigWigs 計時條。"
+L.blizzWarningsAsBigWigsMessages = "將暴雪首領警告顯示為 BigWigs 訊息"
+L.blizzWarningsAsBigWigsMessagesDesc = "所有暴雪首領警告將顯示為 BigWigs 訊息。"
+L.blizzAudioAsBigWigsAudio = "將暴雪音效轉換為BigWigs音效"
+L.blizzAudioAsBigWigsAudioDesc = "根據首領戰的警告優先級播放對應的 BigWigs 音效（提醒、警告、警報）。"
+L.blizzWarningSettings = "暴雪首領警告設置"
+L.blizzTimelineSettings = "暴雪時間軸設置"
+L.blizzTimelineSettingsNote = "|cffff4411本頁選項僅控制暴雪內建設定，此處僅為方便操作提供。|r"
+L.enableBlizzTimeline = "啟用暴雪時間軸"
+L.enableBlizzTimelineDesc = "在暴雪時間軸上顯示所有首領戰鬥計時器。"
+L.enableBlizzWarnings = "啟用暴雪首領警告"
+L.enableBlizzWarningsDesc = "啟用暴雪首領警告時，建議同時關閉“顯示為BigWigs訊息”功能，否則所有提示訊息將會重複顯示兩次。"
 
 -----------------------------------------------------------------------
 -- Victory.lua
