@@ -9,13 +9,31 @@ if not mod then return end
 mod:RegisterEnableMob(240391) -- L'ura
 mod:SetEncounterID(3183)
 mod:SetPrivateAuraSounds({
+	{1282027, "underyou"}, -- The Darkwell
+	{1282470, "underyou"}, -- Dark Quasar
+	-- {1254077, "underyou"}, -- Heaven's Glaives, Used?
+	{1284984, 1286294, "long"}, -- Grim Symphony
+	-- 1249615, -- Death's Dirge, Used?
 	{ 1249609, 1249565, 1249558, 1249562, 1249566, 1249550, 1273133 }, -- Dark Rune
-	1282006, -- Abyssal Pool
-	{ 1261719, 1261720 }, -- Extinction Ray
-	1279512, -- Shatterglass
-
-	-- 1281184, -- Starburst
-	-- 1276638, -- Heaven & Hell
+	1249584, -- Dissonance
+	1251789, -- Cosmic Fracture
+	1284699, -- Light's End
+	{1253031, "info"}, -- Glimmering
+	{1265842, "alarm"}, -- Impaled
+	{1262055, "alert"}, -- Eclipsed
+	{1279512, 1285510}, -- Starsplinter
+	-- {1282035, 1282036, 1282039, 1282049, 1286406}, -- Into the Darkwell, Used?
+	1282016, -- Iris of Oblivion
+	1284527, -- Galvanize, also has a 2m duration 1284533, Used?
+	1281184, -- Criticality
+	{1284531, "alert"}, -- Decay
+	{1263514, "underyou"}, -- Midnight, also has 1266623, Used?
+	-- 1266587, -- Dark Constellation, Used?
+	{1275429, "info"}, -- Severance (RIGHT?)
+	{1266946, "info"}, -- Severance (other side?)
+	-- 1276531, -- Dimension Breach, Used?
+	{1266113, 1266627, "info"}, -- Tochbrearer
+	{1253770, 1253104, "info"}, -- Dawnlight Barrier
 })
 
 --------------------------------------------------------------------------------
