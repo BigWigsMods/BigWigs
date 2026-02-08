@@ -1701,7 +1701,11 @@ do
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
-		lastTabSelected = value
+
+		if value ~= lastTabSelected then
+			lastTabSelected = value
+			lastTreeGroupSelected, lastBossModuleGroup = nil, nil
+		end
 
 		if value == "options" then
 			configFrame:SetTitle("BigWigs")
