@@ -279,22 +279,22 @@ L.battleres_settings_import_desc = "Importer tous les paramètres de Battle Rez.
 L.battleres_settings_export_desc = "Exporter tous les paramètres de Battle Rez."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Partage des paramètres de Boss"
+L.sharing_flags = "Paramètres généraux"
+L.sharing_flags_desc = "Paramètres d'import contrôlant des menus comme 'affiche une barre', 'joue un son', 'affiche un message' etc.\nCes paramètres couvrent la plupart des cases à cocher des paramètres d'une technique."
+L.sharing_export_flags_desc = "Paramètres d'export contrôlant des menus comme 'affiche une barre', 'joue un son', 'affiche un message' etc.\nCes paramètres couvrent la plupart des cases à cocher des paramètres d'une technique."
+L.sharing_sounds_desc = "Import des sons à jouer pour les techniques."
+L.sharing_export_sounds_desc = "Export des sons à jouer pour les techniques."
+L.sharing_private_auras = "Auras Privées"
+L.sharing_private_auras_desc = "Import des sons des auras privées configurées."
+L.sharing_export_private_auras_desc = "Export des sons des auras privées configurées."
+L.sharing_colors_desc = "Import des paramètres de couleurs des barres et messages."
+L.sharing_export_colors_desc = "Export des paramètres de couleurs des barres et messages."
+L.confirm_instance_import = "Les paramètres sélectionnés que vous êtes en train d'importer va écraser vos paramètres du profil actuel :\n\n|cFF33FF99\"%s\"|r\n\nInstance :\n|cFFBB66FF\"%s\"|r\n\nÊtes-vous sûr de vouloir faire cela ?"
+L.status_text_paste_import = "Coller une chaîne d'import valide"
+L.exporting_instance = "Export |cFFBB66FF%s|r" -- Exporting Molten Core
+L.importing_instance = "Import |cFFBB66FF%s|r" -- Importing Molten Core
+L.share = "Partager"
 
 -- Statistics
 L.statistics = "Statistiques"
@@ -331,7 +331,7 @@ L.N10 = "10 joueurs"
 L.N25 = "25 joueurs"
 L.H10 = "Héroïque 10"
 L.H25 = "Héroïque 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -339,6 +339,8 @@ L.H25 = "Héroïque 25"
 
 L.tools = "Outils"
 L.toolsDesc = "BigWigs propose divers outils ou des fonctionnalités \"qualité de vie\" afin d'accélérer et simplifier les combats de boss."
+
+--L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -431,6 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "Cliquez sur le nom du donjon ci-dessous afin de vous |cFF33FF99TÉLÉPORTER|r directement à l'entrée du donjon."
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aCeci est un personnage du cours du temps." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+--L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
+--L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "COLONIE"
@@ -460,6 +464,13 @@ L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
 L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
 L.keystoneShortName_CathedralOfEternalNight = "COEN"
 L.keystoneShortName_SeatOfTheTriumvirate = "TRIUM"
+--L.keystoneShortName_WindrunnerSpire = "SPIRE"
+--L.keystoneShortName_MagistersTerrace = "MT"
+--L.keystoneShortName_MaisaraCaverns = "CAVERN"
+--L.keystoneShortName_NexusPointXenas = "XENAS"
+--L.keystoneShortName_AlgetharAcademy = "AA"
+--L.keystoneShortName_Skyreach = "SKY"
+--L.keystoneShortName_PitOfSaron = "PIT"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -490,6 +501,13 @@ L.keystoneShortName_ReturnToKarazhanLower_Bar = "Kara bas"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Kara haut"
 L.keystoneShortName_CathedralOfEternalNight_Bar = "Cathédrale"
 L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirat"
+--L.keystoneShortName_WindrunnerSpire_Bar = "Spire"
+--L.keystoneShortName_MagistersTerrace_Bar = "Terrace"
+--L.keystoneShortName_MaisaraCaverns_Bar = "Caverns"
+--L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
+--L.keystoneShortName_AlgetharAcademy_Bar = "Academy"
+--L.keystoneShortName_Skyreach_Bar = "Skyreach"
+--L.keystoneShortName_PitOfSaron_Bar = "Pit"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Qui a une clef ?"
@@ -675,7 +693,7 @@ L.breakMinutes = "Fin de la pause dans %d |4minute:minutes; !"
 L.breakSeconds = "Fin de la pause dans %d |4seconde:secondes; !"
 L.breakFinished = "Le temps de pause est terminé !"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "Indicateur de sorts"
 L.indicatorType_Deadly = "Mortel"
 L.indicatorType_Bleed = "Saignement"
 L.indicatorType_Magic = "Magique"
@@ -684,12 +702,12 @@ L.indicatorType_Tank = "Tank"
 L.indicatorType_Healer = "Soigneur"
 L.indicatorType_Damager = "Dégâts"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "Taille de l'indicateur de sorts"
+L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicateur)"
+L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicateurs)"
+L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicateurs)"
+L.spellIndicatorSizeDropdown_Small4 = "Petit (4 indicateurs)"
+L.spellIndicatorSizeDropdown_Small2 = "Petit (2 indicateurs)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua

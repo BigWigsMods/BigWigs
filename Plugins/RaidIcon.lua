@@ -1,4 +1,4 @@
-if BigWigsLoader.isMidnight then return end -- XXX needs updating for 12.0
+if BigWigsLoader.isRetail then return end -- Classic only module
 
 -------------------------------------------------------------------------------
 -- Module Declaration

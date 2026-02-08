@@ -258,7 +258,7 @@ end
 -- Initialization
 --
 
-function plugin:OnRegister()
+function plugin:OnPluginEnable()
 	updateProfile()
 
 	soundList = LibSharedMedia:List(SOUND)
@@ -341,12 +341,9 @@ function plugin:OnRegister()
 		if played then StopSound(id) end
 	end
 	timer = BigWigsLoader.CTimerNewTicker(0, Loop)
-end
 
-function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Sound")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
 end
 
 -------------------------------------------------------------------------------

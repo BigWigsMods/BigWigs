@@ -1,5 +1,17 @@
 local InstanceSharing = {}
 
+local function CopyTable(tbl)
+	local copy = {}
+	for key, value in next, tbl do
+		if type(value) == "table" then
+			copy[key] = CopyTable(value)
+		else
+			copy[key] = value
+		end
+	end
+	return copy
+end
+
 -------------------------------------------------------------------------------
 -- Libraries
 --
@@ -381,14 +393,14 @@ function GetSelectedInstanceName(zoneId)
 end
 
 function InstanceSharing:CreateExportString(exportTable, prefix)
-    local serialized = C_EncodingUtil.SerializeCBOR(exportTable);
-    local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate);
-    local encoded = C_EncodingUtil.EncodeBase64(compressed);
-    return prefix..":"..encoded;
+	local serialized = C_EncodingUtil.SerializeCBOR(exportTable)
+	local compressed = C_EncodingUtil.CompressString(serialized, 0) -- Enum.CompressionMethod.Deflate = 0
+	local encoded = C_EncodingUtil.EncodeBase64(compressed)
+	return prefix..":"..encoded
 end
 
 function InstanceSharing:GetInstanceExportString()
-	local exportFlags =  exportSettings.doFlags
+	local exportFlags = exportSettings.doFlags
 	local exportSounds = exportSettings.doSounds
 	local exportColors = exportSettings.doColors
 	local exportPrivateAuras = exportSettings.doPrivateAuras
@@ -435,21 +447,24 @@ function InstanceSharing:GetInstanceExportString()
 end
 
 do
-	local function parseImportString(string)
-		if type(string) ~= "string" then return end
-		local preFix, importData = string:match("^(%w+):(.+)$")
-		if preFix ~= instanceExportPrefix then return end
-		local decode_success, decodedForPrint = xpcall(C_EncodingUtil.DecodeBase64, function() return end, importData)
-		if not decode_success or not decodedForPrint then return end
-		local decomp_success, decompressed =  xpcall(C_EncodingUtil.DecompressString, function() return end, decodedForPrint, Enum.CompressionMethod.Deflate)
-		if not decomp_success or not decompressed then return end
-		local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, function() return end, decompressed)
-		if not deserialize_success or not data then return end
-		if data.version ~= instanceExportPrefix then return end -- encoded version does not match expected version
-		lastImportData = data
-		return true
+	local parseImportString
+	do
+		local function dummy() end
+		function parseImportString(string)
+			if type(string) ~= "string" then return end
+			local preFix, importData = string:match("^(%w+):(.+)$")
+			if preFix ~= instanceExportPrefix then return end
+			local decode_success, decodedForPrint = xpcall(C_EncodingUtil.DecodeBase64, dummy, importData)
+			if not decode_success or not decodedForPrint then return end
+			local decomp_success, decompressed = xpcall(C_EncodingUtil.DecompressString, dummy, decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
+			if not decomp_success or not decompressed then return end
+			local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, dummy, decompressed)
+			if not deserialize_success or not data then return end
+			if data.version ~= instanceExportPrefix then return end -- encoded version does not match expected version
+			lastImportData = data
+			return true
+		end
 	end
-
 
 	function verifyImportString(value)
 		lastImportData = nil

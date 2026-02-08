@@ -340,6 +340,8 @@ L.H25 = "Героик 25"
 L.tools = "Инструменты"
 L.toolsDesc = "BigWigs предоставляет различные инструменты или \"упрощающие жизнь\" функции для ускорения и упрощения процесса убийства боссов."
 
+--L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
@@ -431,6 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 --L.keystoneTeleportTip = "Click the dungeon name below to |cFF33FF99TELEPORT|r directly to the dungeon entrance."
 --L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+--L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
+--L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"
@@ -460,6 +464,13 @@ L.keystoneShortName_TheDawnbreaker = "DAWN"
 --L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
 --L.keystoneShortName_CathedralOfEternalNight = "COEN"
 --L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
+--L.keystoneShortName_WindrunnerSpire = "SPIRE"
+--L.keystoneShortName_MagistersTerrace = "MT"
+--L.keystoneShortName_MaisaraCaverns = "CAVERN"
+--L.keystoneShortName_NexusPointXenas = "XENAS"
+--L.keystoneShortName_AlgetharAcademy = "AA"
+--L.keystoneShortName_Skyreach = "SKY"
+--L.keystoneShortName_PitOfSaron = "PIT"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -490,6 +501,13 @@ L.keystoneShortName_TheDawnbreaker_Bar = "Рассвет"
 --L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Upper Kara"
 --L.keystoneShortName_CathedralOfEternalNight_Bar = "Cathedral"
 --L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirate"
+--L.keystoneShortName_WindrunnerSpire_Bar = "Spire"
+--L.keystoneShortName_MagistersTerrace_Bar = "Terrace"
+--L.keystoneShortName_MaisaraCaverns_Bar = "Caverns"
+--L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
+--L.keystoneShortName_AlgetharAcademy_Bar = "Academy"
+--L.keystoneShortName_Skyreach_Bar = "Skyreach"
+--L.keystoneShortName_PitOfSaron_Bar = "Pit"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "У кого есть ключ?"

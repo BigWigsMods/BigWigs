@@ -37,15 +37,15 @@ L.littlewigsOfficialRelease = "你所使用的 LittleWigs 为官方正式版（%
 L.littlewigsAlphaRelease = "你所使用的 LittleWigs 为“α测试版”（%s）。"
 L.littlewigsSourceCheckout = "你所使用的 LittleWigs 是从原始代码仓库直接下载的。"
 L.guildRelease = "你正在使用 BigWigs 公会版，版本 %d ，其基于官方版本 %d 。"
-L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 CurseForge 客户端轻松升级。另外，也可以从 curseforge.com 或 addons.wago.io 手动升级。"
-L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误，功能缺失或不正确的计时器。所以强烈建议你升级。"
-L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期 %d 个发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
+L.getNewRelease = "你的 BigWigs 已过期（输入 /bwv 查看版本）。建议你使用 CurseForge 客户端轻松快速更新，或前往 curseforge.com 或 addons.wago.io 手动下载安装最新版本。"
+L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误、功能缺失或不正确的计时器。所以强烈建议你升级。"
+L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期 %d 个发行版！！我们*强烈*建议你更新，以防止与其他队友发生同步异常！|r"
 L.warnOldBase = "你正在使用公会版本 BigWigs（%d），但是它是基于官方版本（%d）已过期 %d 个版本。可能出现一些问题。"
 
 L.tooltipHint = "|cffeda55f右击|r打开选项。"
 L.activeBossModules = "激活首领模块："
 
-L.oldVersionsInGroup = "在你队伍里有人使用了 |cffff0000旧版本|r 的 BigWigs。你可以使用 /bwv 名字获得详细信息。"
+L.oldVersionsInGroup = "你队伍里有人使用了 |cffff0000旧版本|r 的 BigWigs或者没有使用 BigWigs。你可以使用 /bwv 名字获得详细信息。"
 L.upToDate = "已更新："
 L.outOfDate = "过期："
 L.dbmUsers = "DBM 用户："
@@ -59,10 +59,10 @@ L.outOfDateAddOnRaidWarning = "|cFF436EEE%s|r 插件已过期！您当前版本 
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将无法显示。"
 L.removeAddOn = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"
-L.outOfDateContentPopup = "警告！\n你更新了 |cFF436EEE%s|r 但你还需要更新 |cFF436EEEBigWigs|r 主插件。\n忽略这一点将导致功能崩溃。"
-L.outOfDateContentRaidWarning = "|cFF436EEE%s|r 需要安装 %d 版本的 |cFF436EEEBigWigs|r 主插件才能正常运行，但你使用了 %d 版本。"
-L.addOnLoadFailedWithReason = "BigWigs 未能加载 |cFF436EEE%s|r 插件，原因： %q。请通知 BigWigs 的开发者！"
-L.addOnLoadFailedUnknownError = "BigWigs 在加载 |cFF436EEE%s|r 插件时遇到了错误。请通知 BigWigs 的开发者！"
+L.outOfDateContentPopup = "警告！\n你更新了 |cFF436EEE%s|r 但你还需要更新 |cFF436EEEBigWigs|r 核心。\n如果不更新。将会导致插件功能异常或者无法正常运行。"
+L.outOfDateContentRaidWarning = "|cFF436EEE%s|r 需要安装 %d 版本的 |cFF436EEEBigWigs|r 主插件才能正常运行，但你目前使用的版本是 %d 。"
+L.addOnLoadFailedWithReason = "BigWigs 未能加载 |cFF436EEE%s|r 插件，原因： %q。请将此问题回报给 BigWigs 的开发者！"
+L.addOnLoadFailedUnknownError = "BigWigs 在加载 |cFF436EEE%s|r 插件时遇到了错误。请将此问题回报给 BigWigs 的开发者！"
 L.newFeatures = "BigWigs 新功能："
 L.parentheses = "%s（%s）"
 
@@ -148,7 +148,7 @@ L.listAbilities = "列出技能到团队聊天"
 L.dbmFaker = "伪装成 DBM 用户"
 L.dbmFakerDesc = "如果 DBM 用户进行版本检查，看看谁在使用 DBM，他们会看到你的列表上。当公会强制使用 DBM 时非常有用。"
 L.zoneMessages = "显示区域信息"
-L.zoneMessagesDesc = "禁用此项 BigWigs 在进入新区域时将停止显示已有计时器。建议不要关闭此选项，因为可能在进入新的区域时需要创建新的计时器，这是非常有帮助的。"
+L.zoneMessagesDesc = "当您进入BigWigs支持的区域但未安装相应模块时，会提示可安装的BigWigs模块。我们强烈建议开启此功能，这是您获取新模块提醒的唯一途径，有助于及时安装BigWigs的功能。"
 L.englishSayMessages = "英文喊话"
 L.englishSayMessagesDesc = "在首领战中所有以“大喊”与“说”发送的提示信息都会以英文发送，这对多语言的团队非常有用。"
 
@@ -340,6 +340,8 @@ L.titan = "25人泰坦" -- Chinese-only "Titan Reforged" servers
 L.tools = "工具"
 L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"，让你可以轻松的简化首领战斗流程。"
 
+L.reloadUIWarning = "更改此选项将重载界面，并短暂显示载入画面。你确定要继续吗？"
+
 -----------------------------------------------------------------------
 -- AutoRole.lua
 --
@@ -430,7 +432,9 @@ L.keystoneHistoryScoreOlderTooltip = "本周之前获得的总分数：|cFFFFFFF
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "点击下方地下城名称可直接|cFF33FF99传送|r至地下城入口。"
-L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者角色。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneSlashKeys = "同时注册 |cFF33FF99/keys|r 命令"
+L.keystoneSlashKeystone = "同时注册 |cFF33FF99/keystone|r 命令"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷栖巢"
@@ -460,6 +464,13 @@ L.keystoneShortName_ReturnToKarazhanLower = "卡拉赞下层"
 L.keystoneShortName_ReturnToKarazhanUpper = "卡拉赞上层"
 L.keystoneShortName_CathedralOfEternalNight = "永夜大教堂"
 L.keystoneShortName_SeatOfTheTriumvirate = "执政团之座"
+L.keystoneShortName_WindrunnerSpire = "风行者之塔"
+L.keystoneShortName_MagistersTerrace = "魔导师平台"
+L.keystoneShortName_MaisaraCaverns = "迈萨拉洞窟"
+L.keystoneShortName_NexusPointXenas = "节点希纳斯"
+L.keystoneShortName_AlgetharAcademy = "艾杰斯亚学院"
+L.keystoneShortName_Skyreach = "通天峰"
+L.keystoneShortName_PitOfSaron = "萨隆矿坑"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -490,6 +501,13 @@ L.keystoneShortName_ReturnToKarazhanLower_Bar = "卡拉赞下层"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "卡拉赞上层"
 L.keystoneShortName_CathedralOfEternalNight_Bar = "永夜大教堂"
 L.keystoneShortName_SeatOfTheTriumvirate_Bar = "执政团之座"
+L.keystoneShortName_WindrunnerSpire_Bar = "风行者之塔"
+L.keystoneShortName_MagistersTerrace_Bar = "魔导师平台"
+L.keystoneShortName_MaisaraCaverns_Bar = "迈萨拉洞窟"
+L.keystoneShortName_NexusPointXenas_Bar = "节点希纳斯"
+L.keystoneShortName_AlgetharAcademy_Bar = "艾杰斯亚学院"
+L.keystoneShortName_Skyreach_Bar = "通天峰"
+L.keystoneShortName_PitOfSaron_Bar = "萨隆矿坑"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "谁拥有钥石？"
@@ -784,18 +802,18 @@ L.purpleDesc = "坦克特定技能的警报，例如负面效果叠加。"
 --
 
 L.textCountdown = "倒数文本"
-L.textCountdownDesc = "当倒数时显示可见数字。"
+L.textCountdownDesc = "倒数时显示倒数文本。"
 L.countdownColor = "倒数颜色"
 L.countdownVoice = "倒数语音"
 L.countdownTest = "测试倒数"
 L.countdownAt = "倒数…（秒）"
 L.countdownAt_desc = "选择倒计时开始时首领技能应剩余多少时间（以秒为单位）。"
 L.countdown = "倒数"
-L.countdownDesc = "倒数功能包括语音倒计时和可视文字倒计时。默认情况下很少启用它，但是在查看特定的首领战斗设置时，可以为任何首领技能启用它。"
-L.countdownAudioHeader = "语音倒计时"
-L.countdownTextHeader = "可视文字倒计时"
-L.resetCountdownDesc = "重置全部以上倒计时设置为默认。"
-L.resetAllCountdownDesc = "如果为任何首领战斗的设置选择了自定义倒计时声音，此按钮将重置*所有*这些声音并将上述所有倒计时设置重置为默认。"
+L.countdownDesc = "倒数功能包括语音倒计时和倒数文本。默认情况下很少启用它，可以为任何首领技能启用它；可以在首领模块的技能列表内点击“>>”后进行指定技能倒数设置。"
+L.countdownAudioHeader = "语音倒数"
+L.countdownTextHeader = "可视文本倒数"
+L.resetCountdownDesc = "重置所有倒数设置为默认。"
+L.resetAllCountdownDesc = "如果你为任何首领战斗的设置“倒数”选项，此按钮将重置*所有*这些设置并将上述所有“倒数”设置重置为默认。"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -941,14 +959,14 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式�
 
 L.customRange = "自定义距离指示器"
 L.proximityTitle = "%d码/%d玩家" -- yd = yards (short)
-L.proximity_name = "近距离"
+L.proximity_name = "距离监视"
 L.soundDelay = "音效延迟"
 L.soundDelayDesc = "当有人太靠近你时指定多长时间 BigWigs 重复间隔等待指定的音效。"
 
-L.resetProximityDesc = "重置全部近距离有关选项，包括近距离锚点位置。"
+L.resetProximityDesc = "重置所有自定义距离指示器有关选项，包括锚点和位置。"
 
 L.close = "关闭"
-L.closeProximityDesc = "关闭近距离显示。\n\n这是临时性的关闭，要完全禁用此一功能，需进入相对应首领模块选项关闭“近距离”功能。"
+L.closeProximityDesc = "关闭距离监视显示。\n\n这是临时性的关闭，要完全禁用此功能，需进入相对应首领模块选项关闭“距离监视”功能。"
 L.lock = "锁定"
 L.lockDesc = "锁定显示窗口，防止被移动和缩放。"
 L.title = "标题"
@@ -956,7 +974,7 @@ L.titleDesc = "显示或隐藏标题。"
 L.background = "背景"
 L.backgroundDesc = "显示或隐藏背景。"
 L.toggleSound = "切换音效"
-L.toggleSoundDesc = "当近距离窗口有其他过近玩家时切换任一或关闭音效。"
+L.toggleSoundDesc = "当距离监视窗口有其他过近玩家时切换任一或关闭音效。"
 L.soundButton = "音效按钮"
 L.soundButtonDesc = "显示或隐藏音效按钮。"
 L.closeButton = "关闭按钮"
@@ -964,7 +982,7 @@ L.closeButtonDesc = "显示或隐藏关闭按钮。"
 L.showHide = "显示/隐藏"
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
-L.tooltip = "提示"
+L.tooltip = "工具提示"
 L.tooltipDesc = "显示或隐藏近距离显示从首领战斗技能获取的法术提示。"
 
 -----------------------------------------------------------------------
@@ -975,7 +993,7 @@ L.countdownType = "倒数类型"
 L.combatLog = "自动战斗记录"
 L.combatLogDesc = "当开怪倒数计时器开始到战斗结束时自动开始战斗记录。"
 
-L.pull = "开怪"
+L.pull = "开怪倒数"
 L.engageSoundTitle = "当首领战斗开始时播放音效"
 L.pullStartedSoundTitle = "当开怪倒数计时器开始时播放音效"
 L.pullStartedMessageTitle = "当开怪倒数计时器开始时显示消息"
@@ -1047,32 +1065,32 @@ L.newFastestVictoryPrint = "新的最快获胜：（-%s）" -- New fastest victo
 --
 
 L.timeline = "时间轴"
-L.blizzTimersAsBigWigsBars = "将暴雪计时器（时间轴）显示为 BigWigs 计时条"
-L.blizzTimersAsBigWigsBarsDesc = "所有暴雪首领战斗计时器（时间轴）将显示为 BigWigs 计时条。"
-L.blizzWarningsAsBigWigsMessages = "将暴雪首领预警信息显示为 BigWigs 消息"
-L.blizzWarningsAsBigWigsMessagesDesc = "所有暴雪首领预警信息将显示为 BigWigs 消息。"
-L.blizzAudioAsBigWigsAudio = "将暴雪音效转换为BigWigs音效"
-L.blizzAudioAsBigWigsAudioDesc = "根据首领战的预警优先级播放对应的 BigWigs 音效（提醒、警报、警告）。"
+L.blizzTimersAsBigWigsBars = "使用 BigWigs 计时条替换暴雪内置时间轴"
+L.blizzTimersAsBigWigsBarsDesc = "所有暴雪内置的首领计时器（时间轴）替换为 BigWigs 计时条样式。"
+L.blizzWarningsAsBigWigsMessages = "使用 BigWigs 信息替换暴雪内置首领预警"
+L.blizzWarningsAsBigWigsMessagesDesc = "将所有暴雪首领预警信息将显示为 BigWigs 消息。"
+L.blizzAudioAsBigWigsAudio = "使用 BigWigs 音效替换暴雪内置音效"
+L.blizzAudioAsBigWigsAudioDesc = "将暴雪的内置音效替换为 BigWigs 音效，并根据重要程度播放对应的音效（警告、警示、警报）。"
 L.blizzWarningSettings = "暴雪首领预警设置"
 L.blizzTimelineSettings = "暴雪时间轴设置"
-L.blizzTimelineSettingsNote = "|cffff4411本页选项仅控制暴雪自带设置，此处仅为方便操作提供。|r"
+L.blizzTimelineSettingsNote = "|cffff4411本页选项仅控制暴雪内置设置，此处提供是为了方便你与 BigWigs 的选项一起设置。|r"
 L.enableBlizzTimeline = "启用暴雪时间轴"
 L.enableBlizzTimelineDesc = "在暴雪时间轴上显示所有首领战斗计时器。"
 L.enableBlizzWarnings = "启用暴雪首领预警"
-L.enableBlizzWarningsDesc = "启用暴雪首领预警时，建议同时关闭“显示为BigWigs消息”功能，否则所有提示信息将会重复显示两次。"
+L.enableBlizzWarningsDesc = "启用暴雪首领预警时，建议同时关闭“使用 BigWigs 信息替换暴雪内置首领预警”功能，否则所有信息将会重复显示。"
 
 -----------------------------------------------------------------------
 -- Victory.lua
 --
 
 L.Victory = "胜利"
-L.victoryHeader = "配置击败首领战斗之后的动作。"
+L.victoryHeader = "设置击败首领战斗之后的信息。"
 L.victorySound = "播放胜利音效"
 L.victoryMessages = "显示击败首领信息"
 L.victoryMessageBigWigs = "显示 BigWigs 信息"
-L.victoryMessageBigWigsDesc = "BigWigs 的“首领已被击败”信息很简单。"
-L.victoryMessageBlizzard = "显示暴雪信息"
-L.victoryMessageBlizzardDesc = "位于屏幕中央的暴雪动画“首领已被击败”信息过长。"
+L.victoryMessageBigWigsDesc = "BigWigs 信息显示是简单的“首领已被击败”信息。"
+L.victoryMessageBlizzard = "显示暴雪内置信息"
+L.victoryMessageBlizzardDesc = "暴雪内置信息会以特效显示“首领已被击败”在动画上。"
 L.defeated = "%s被击败了！"
 
 -----------------------------------------------------------------------

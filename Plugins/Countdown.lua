@@ -485,7 +485,8 @@ end
 -- Initialization
 --
 
-function plugin:OnRegister()
+function plugin:OnPluginEnable()
+	updateProfile()
 	local soundsPlayedTable = {}
 	if BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
 		soundsPlayedTable[plugin.db.profile.voice] = true
@@ -509,10 +510,7 @@ function plugin:OnRegister()
 			end
 		end
 	end
-end
 
-function plugin:OnPluginEnable()
-	updateProfile()
 	createOptions()
 
 	self:RegisterMessage("BigWigs_StartCountdown")

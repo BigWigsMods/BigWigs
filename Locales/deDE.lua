@@ -279,22 +279,22 @@ L.battleres_settings_import_desc = "Alle Battle Res Einstellungen importieren."
 L.battleres_settings_export_desc = "Alle Battle Res Einstellungen exportieren."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Boss Einstellungen teilen"
+L.sharing_flags = "Allgemeine Einstellungen"
+L.sharing_flags_desc = "Einstellungen wie 'Leiste anzeigen', 'Sound abspielen', 'Nachricht anzeigen' etc. importieren.\nDiese Decken die meisten Kontrollkästchen der Fähigkeiten ab."
+L.sharing_export_flags_desc = "Einstellungen wie 'Leiste anzeigen', 'Sound abspielen', 'Nachricht anzeigen' etc. exportieren.\nDiese Decken die meisten Kontrollkästchen der Fähigkeiten ab."
+L.sharing_sounds_desc = "Importiert, welche Sounds für Fähigkeiten abgespielt werden."
+L.sharing_export_sounds_desc = "Exportiert, welche Sounds für Fähigkeiten abgespielt werden."
+L.sharing_private_auras = "Private Auren"
+L.sharing_private_auras_desc = "Die konfigurierten privaten Aura Sounds importieren."
+L.sharing_export_private_auras_desc = "Die konfigurierten privaten Aura Sounds exportieren."
+L.sharing_colors_desc = "Importiert die Farbeinstellungen für Leisten und Nachrichten."
+L.sharing_export_colors_desc = "Exportiert die Farbeinstellungen für Leisten und Nachrichten."
+L.confirm_instance_import = "Die zum Import gewählten Einstellungen überschreiben die Einstellungen im derzeit gewählten Profil:\n\n|cFF33FF99\"%s\"|r\n\nInstanz:\n|cFFBB66FF\"%s\"|r\n\nBist Du sicher?"
+L.status_text_paste_import = "Gültigen Importstring einfügen"
+L.exporting_instance = "Exportiere |cFFBB66FF%s|r" -- Exporting Molten Core
+L.importing_instance = "Importiere |cFFBB66FF%s|r" -- Importing Molten Core
+L.share = "Teilen"
 
 -- Statistics
 L.statistics = "Statistiken"
@@ -331,7 +331,7 @@ L.N10 = "Normal 10"
 L.N25 = "Normal 25"
 L.H10 = "Heroisch 10"
 L.H25 = "Heroisch 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -339,6 +339,8 @@ L.H25 = "Heroisch 25"
 
 L.tools = "Werkzeuge"
 L.toolsDesc = "BigWigs bietet verschiedene Werkzeuge oder Features der \"Lebensqualität\" zur Beschleunigung und Vereinfachung von Bossbegegnungen."
+
+L.reloadUIWarning = "Die Änderung dieser Funktion lädt das Interface neu und zeigt kurz den Ladebildschirm an. Bist Du sicher?"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -431,6 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "Dungeonnamen unten anklicken um direkt zum Dungeoneingang zu |cFF33FF99TELEPORTIEREN|r."
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aDies ist ein Zeitläufer Charakter." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneSlashKeys = "Den |cFF33FF99/keys|r Slash-Befehl registrieren"
+L.keystoneSlashKeystone = "Den |cFF33FF99/keystone|r Slash-Befehl registrieren"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"
@@ -460,6 +464,13 @@ L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
 L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
 L.keystoneShortName_CathedralOfEternalNight = "COEN"
 L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
+L.keystoneShortName_WindrunnerSpire = "SPIRE"
+L.keystoneShortName_MagistersTerrace = "MT"
+L.keystoneShortName_MaisaraCaverns = "CAVERN"
+L.keystoneShortName_NexusPointXenas = "XENAS"
+L.keystoneShortName_AlgetharAcademy = "AA"
+L.keystoneShortName_Skyreach = "SKY"
+L.keystoneShortName_PitOfSaron = "PIT"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -490,6 +501,13 @@ L.keystoneShortName_ReturnToKarazhanLower_Bar = "Unteres Kara"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Oberes Kara"
 L.keystoneShortName_CathedralOfEternalNight_Bar = "Kathedrale"
 L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirat"
+L.keystoneShortName_WindrunnerSpire_Bar = "Turm"
+L.keystoneShortName_MagistersTerrace_Bar = "Terrasse"
+L.keystoneShortName_MaisaraCaverns_Bar = "Kavernen"
+L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
+L.keystoneShortName_AlgetharAcademy_Bar = "Akademie"
+L.keystoneShortName_Skyreach_Bar = "Himmelsnadel"
+L.keystoneShortName_PitOfSaron_Bar = "Grube"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Wer hat einen Schlüsselstein?"
@@ -675,7 +693,7 @@ L.breakMinutes = "Pause endet in %d |4Minute:Minuten;!"
 L.breakSeconds = "Pause endet in %d |4Sekunde:Sekunden;!"
 L.breakFinished = "Die Pause ist vorbei!"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "Zauberindikatoren"
 L.indicatorType_Deadly = "Tödlich"
 L.indicatorType_Bleed = "Blutung"
 L.indicatorType_Magic = "Magischer"
@@ -684,12 +702,12 @@ L.indicatorType_Tank = "Tank"
 L.indicatorType_Healer = "Heiler"
 L.indicatorType_Damager = "Schaden"
 
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorSize = "Größe der Zauberindikatoren"
+L.spellIndicatorSizeDropdown_Large1 = "Groß (1 Indikator)"
+L.spellIndicatorSizeDropdown_Large2 = "Groß (2 Indikatoren)"
+L.spellIndicatorSizeDropdown_Large3 = "Groß (3 Indikatoren)"
+L.spellIndicatorSizeDropdown_Small4 = "Klein (4 Indikatoren)"
+L.spellIndicatorSizeDropdown_Small2 = "Klein (2 Indikatoren)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -1046,20 +1064,20 @@ L.newFastestVictoryPrint = "Neuer schnellster Sieg: (-%s)" -- New fastest victor
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimersAsBigWigsBars = "Show Blizz timers (timeline) as BigWigs bars"
---L.blizzTimersAsBigWigsBarsDesc = "All Blizzard boss timers (timeline) will display as BigWigs bars instead."
---L.blizzWarningsAsBigWigsMessages = "Show Blizz boss warnings as BigWigs messages"
---L.blizzWarningsAsBigWigsMessagesDesc = "All Blizzard boss warnings will display as BigWigs messages instead."
---L.blizzAudioAsBigWigsAudio = "Convert Blizz sounds to BigWigs sounds"
---L.blizzAudioAsBigWigsAudioDesc = "Play your BigWigs sounds (Alert, Alarm & Warning) based on the encounter warning severity."
---L.blizzWarningSettings = "Blizzard Warnings Settings"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.enableBlizzWarnings = "Enable Blizz boss warnings"
---L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
+L.timeline = "Zeitlinie"
+L.blizzTimersAsBigWigsBars = "Blizz Timer (Zeitlinie) als BigWigs Leisten anzeigen"
+L.blizzTimersAsBigWigsBarsDesc = "Alle Blizzard Bosstimer (Zeitlinie) werden stattdessen als BigWigs Leisten angezeigt."
+L.blizzWarningsAsBigWigsMessages = "Blizz Bosswarnungen als BigWigs Nachrichten anzeigen"
+L.blizzWarningsAsBigWigsMessagesDesc = "Alle Blizzard Bosswarnungen werden stattdessen als BigWigs Nachrichten angezeigt."
+L.blizzAudioAsBigWigsAudio = "Blizz Sounds zu BigWigs Sounds konvertieren"
+L.blizzAudioAsBigWigsAudioDesc = "Spielt die BigWigs Sounds (Alarmruf, Alarm & Warnung) basierend auf der Gewichtung."
+L.blizzWarningSettings = "Blizzard Warnungen Einstellungen"
+L.blizzTimelineSettings = "Blizzard Zeitlinie Einstellungen"
+L.blizzTimelineSettingsNote = "|cffff4411Diese Optionen spiegeln lediglich die Blizzard Einstellungen und sind zum Komfort hier aufgeführt.|r"
+L.enableBlizzTimeline = "Blizz Zeitlinie aktivieren"
+L.enableBlizzTimelineDesc = "Diese Option zeigt alle Boss Timer in der Blizzard Zeitlinie."
+L.enableBlizzWarnings = "Blizz Bosswarnungen aktivieren"
+L.enableBlizzWarningsDesc = "Beim Aktivieren der Blizzard Bosswarnungen sollte die Option zur Anzeige als BigWigs Nachrichten deaktiviert werden, da diese ansonsten doppelt angezeigt werden."
 
 -----------------------------------------------------------------------
 -- Victory.lua

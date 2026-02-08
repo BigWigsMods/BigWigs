@@ -291,7 +291,7 @@ local bossNames = setmetatable({}, {__index =
 --- Register the module to enable on mob id.
 -- @number ... Any number of mob ids
 function boss:RegisterEnableMob(...)
-	core:RegisterEnableMob(self, ...)
+	core:RegisterEnableMob(self.moduleName, ...)
 end
 
 --- Check if a specific mob id would enable this module.
@@ -578,7 +578,7 @@ function boss:Error(message)
 	self.errorPrints[#self.errorPrints+1] = message
 end
 
-function boss:Initialize() core:RegisterBossModule(self) end
+function boss:Initialize() core:RegisterBossModule(self.moduleName) end
 function boss:Enable(isWipe)
 	if not self:IsEnabled() then
 		self.enabled = true
@@ -600,7 +600,9 @@ function boss:Enable(isWipe)
 		if self.SetupOptions then self:SetupOptions() end
 
 		if self:GetEncounterID() then
-			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+			if not self:Retail() then
+				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+			end
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		else
 			-- Some modules don't engage (trash modules) so we register them here
@@ -640,7 +642,9 @@ function boss:Disable(isWipe)
 
 		-- No enabled modules? Unregister the combat log!
 		if #enabledModules == 0 then
-			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			if not self:Retail() then
+				bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			end
 			petUtilityFrame:UnregisterEvent("UNIT_PET")
 			activeNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
 			inactiveNameplateUtilityFrame:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
@@ -952,6 +956,7 @@ do
 	-- @param func callback function, passed a keyed table (sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, extraSpellId, extraSpellName, amount)
 	-- @number ... any number of spell ids
 	function boss:Log(event, func, ...)
+		if self:Retail() then return end
 		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
@@ -984,6 +989,7 @@ do
 	-- @param func callback function, passed a keyed table (mobId, destGUID, destName, destFlags, destRaidFlags)
 	-- @number ... any number of mob ids
 	function boss:Death(func, ...)
+		if self:Retail() then return end
 		if not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].UNIT_DIED then eventMap[self].UNIT_DIED = {} end
@@ -1035,6 +1041,7 @@ do
 		-- @param func callback function, passed (guid, mobId)
 		-- @number ... any number of mob ids
 		function boss:RegisterEngageMob(func, ...)
+			if self:Retail() then return end
 			if not func then core:Print(format(missingArgument, self.moduleName)) return end
 			if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 			if not eventMap[self].UNIT_ENTERING_COMBAT then eventMap[self].UNIT_ENTERING_COMBAT = {} end
@@ -1268,6 +1275,7 @@ do
 		-- disables the module if set as engaged but has no boss match.
 		-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 		function boss:CheckForEncounterEngage(noEngage)
+			if self:Retail() then return end
 			if not self:IsEngaged() then
 				for i = 1, 10 do
 					local bossUnit = bosses[i]
@@ -1544,8 +1552,14 @@ do
 
 				self:SendMessage("BigWigs_OnBossEngage", self)
 
-				if self.OnEngage then
-					self:OnEngage(difficulty)
+				if self:Retail() then
+					if self.OnEncounterStart then
+						self:OnEncounterStart(difficulty)
+					end
+				else
+					if self.OnEngage then
+						self:OnEngage(difficulty)
+					end
 				end
 			elseif noEngage == "NoEngage" then
 				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self)
@@ -1858,6 +1872,18 @@ function boss:Wrath()
 	return isWrath
 end
 
+--- Check if the current game type is Cataclysm.
+-- @return boolean
+function boss:Cataclysm()
+	return isCata
+end
+
+--- Check if the current game type is Mists of Pandaria.
+-- @return boolean
+function boss:MistsOfPandaria()
+	return isMists
+end
+
 --- Get the current season.
 -- @return number
 function boss:GetSeason()
@@ -2098,52 +2124,35 @@ do
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HELPFUL")
-				if self:IsSecret(auraTable.name) then
-					return
+				if not auraTable or self:IsSecret(auraTable.name) then
+					return t1, t2, t3, t4, t5
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if name == spell then
+				if auraTable.name == spell then
+					local spellId = auraTable.spellId
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", auraTable.name, spellId, self:Difficulty()))
 					end
-					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
-				end
-
-				if not spellId then
-					return t1, t2, t3, t4, t5
+					local value = auraTable.points and auraTable.points[1]
+					t1, t2, t3, t4, t5 = auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		else
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HELPFUL")
-				if self:IsSecret(auraTable.name) then
+				if not auraTable or self:IsSecret(auraTable.name) then
 					return
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if not spellId then
-					return
-				elseif not spell then
+				if not spell then
 					local desiredType = ...
 					if auraTable.dispelName == desiredType then
-						return name, stack, duration, expirationTime
+						return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime
 					end
-				elseif spellId == spell then
-					return name, stack, duration, expirationTime, value
+				elseif auraTable.spellId == spell then
+					local value = auraTable.points and auraTable.points[1]
+					return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		end
@@ -2164,52 +2173,35 @@ do
 			local t1, t2, t3, t4, t5
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HARMFUL")
-				if self:IsSecret(auraTable.name) then
-					return
+				if not auraTable or self:IsSecret(auraTable.name) then
+					return t1, t2, t3, t4, t5
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if name == spell then
+				if auraTable.name == spell then
+					local spellId = auraTable.spellId
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", auraTable.name, spellId, self:Difficulty()))
 					end
-					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
-				end
-
-				if not spellId then
-					return t1, t2, t3, t4, t5
+					local value = auraTable.points and auraTable.points[1]
+					t1, t2, t3, t4, t5 = auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		else
 			for i = 1, 100 do
 				local auraTable = GetAuraDataByIndex(unit, i, "HARMFUL")
-				if self:IsSecret(auraTable.name) then
+				if not auraTable or self:IsSecret(auraTable.name) then
 					return
 				end
 
-				local stack = auraTable.applications
-				local duration = auraTable.duration
-				local expirationTime = auraTable.expirationTime
-				local spellId = auraTable.spellId
-				local value = auraTable.points and auraTable.points[1]
-				local name = auraTable.name
-
-				if not spellId then
-					return
-				elseif not spell then
+				if not spell then
 					local desiredType = ...
 					if auraTable.dispelName == desiredType then
-						return name, stack, duration, expirationTime
+						return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime
 					end
-				elseif spellId == spell then
-					return name, stack, duration, expirationTime, value
+				elseif auraTable.spellId == spell then
+					local value = auraTable.points and auraTable.points[1]
+					return auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
 				end
 			end
 		end
@@ -3546,6 +3538,7 @@ end
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:PrimaryIcon(key, player)
+	if isRetail then return end
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", self, 1)
@@ -3558,6 +3551,7 @@ end
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:SecondaryIcon(key, player)
+	if isRetail then return end
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", self, 2)
@@ -3571,6 +3565,7 @@ end
 -- @string unit the unit (player/npc) to mark
 -- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
 function boss:CustomIcon(key, unit, icon)
+	if isRetail then return end
 	if key == false or self:GetOption(key) then
 		if solo then -- setting the same icon twice while not in a group removes it
 			SetRaidTarget(unit, 0)

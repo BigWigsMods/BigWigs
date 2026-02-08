@@ -600,6 +600,14 @@ local function parseGetOptions(file_name, lines, start, special_options)
 	return options
 end
 
+local function markPrivateOptions(opts, option_key_used)
+	for key, flags in next, opts do
+		if type(flags) == "table" and flags.PRIVATE then
+			option_key_used[key] = true
+		end
+	end
+end
+
 local function checkForAPI(line)
 	for method in next, valid_methods do
 		if line:find(method, nil, true) then
@@ -934,6 +942,8 @@ local function parseLua(file)
 						end
 					end
 				end
+				-- mark private options as used
+				markPrivateOptions(option_keys, option_key_used)
 				-- check string keys
 				local custom_options = {
 					berserk = true,

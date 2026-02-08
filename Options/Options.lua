@@ -1377,7 +1377,7 @@ local function populateToggleOptions(widget, module)
 	if #tabs > 0 then -- tabs!
 		local generalTabExists = nil
 		local tabbedOptions = {}
-		local tabInfo, tabOptions  = {}, {}
+		local tabInfo, tabOptions = {}, {}
 		for _, tab in next, tabs do
 			local text = tab.tabName
 			if text == "general" or text == CL.general then
@@ -1701,7 +1701,11 @@ do
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
-		lastTabSelected = value
+
+		if value ~= lastTabSelected then
+			lastTabSelected = value
+			lastTreeGroupSelected, lastBossModuleGroup = nil, nil
+		end
 
 		if value == "options" then
 			configFrame:SetTitle("BigWigs")
@@ -2004,7 +2008,7 @@ do
 		if versionPlain ~= addonTable.sharingVersion then return end
 		local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
 		if not decodedForPrint then return end
-		local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, Enum.CompressionMethod.Deflate)
+		local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
 		if not decompressed then return end
 		local data = C_EncodingUtil.DeserializeCBOR(decompressed)
 		if not data then return end

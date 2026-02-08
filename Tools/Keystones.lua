@@ -49,7 +49,11 @@ do
 		instanceKeysShowDungeonEnd = false,
 		instanceKeysHideTitle = false,
 	}
-	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults})
+	local globalDefaults = {
+		slashKeys = true,
+		slashKeystone = true,
+	}
+	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults, global = globalDefaults})
 
 	local function ValidateColor(current, default, alphaLimit)
 		for i = 1, 3 do
@@ -78,6 +82,14 @@ do
 				db.profile[k] = nil
 			elseif type(v) ~= defaultType then
 				db.profile[k] = defaults[k]
+			end
+		end
+		for k, v in next, db.global do
+			local defaultType = type(globalDefaults[k])
+			if defaultType == "nil" then
+				db.global[k] = nil
+			elseif type(v) ~= defaultType then
+				db.global[k] = globalDefaults[k]
 			end
 		end
 		if db.profile.countBegin < 3 or db.profile.countBegin > 9 then
@@ -179,7 +191,7 @@ local roleIcons = {
 	DAMAGER = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:16:16|t",
 }
 local hiddenIcon = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:16:16|t"
-local dungeonNamesTiny = {
+local dungeonNamesTiny = { -- MapChallengeMode DB2
 	[500] = L.keystoneShortName_TheRookery, -- ROOK
 	[504] = L.keystoneShortName_DarkflameCleft, -- DFC
 	[499] = L.keystoneShortName_PrioryOfTheSacredFlame, -- PRIORY
@@ -209,6 +221,15 @@ local dungeonNamesTiny = {
 	[234] = L.keystoneShortName_ReturnToKarazhanUpper, -- UKARA
 	[233] = L.keystoneShortName_CathedralOfEternalNight, -- COEN
 	[239] = L.keystoneShortName_SeatOfTheTriumvirate, -- SOTT
+
+	[557] = L.keystoneShortName_WindrunnerSpire, -- SPIRE
+	[558] = L.keystoneShortName_MagistersTerrace, -- MT
+	[560] = L.keystoneShortName_MaisaraCaverns, -- CAVERN
+	[559] = L.keystoneShortName_NexusPointXenas, -- XENAS
+	[402] = L.keystoneShortName_AlgetharAcademy, -- AA
+	[583] = L.keystoneShortName_SeatOfTheTriumvirate, -- SOTT
+	[161] = L.keystoneShortName_Skyreach, -- SKY
+	[556] = L.keystoneShortName_PitOfSaron, -- PIT
 }
 local dungeonNamesTrimmed = {
 	[500] = L.keystoneShortName_TheRookery_Bar, -- Rookery
@@ -240,6 +261,15 @@ local dungeonNamesTrimmed = {
 	[234] = L.keystoneShortName_ReturnToKarazhanUpper_Bar, -- Upper Kara
 	[233] = L.keystoneShortName_CathedralOfEternalNight_Bar, -- Cathedral
 	[239] = L.keystoneShortName_SeatOfTheTriumvirate_Bar, -- Triumvirate
+
+	[557] = L.keystoneShortName_WindrunnerSpire_Bar, -- Spire
+	[558] = L.keystoneShortName_MagistersTerrace_Bar, -- Terrace
+	[560] = L.keystoneShortName_MaisaraCaverns_Bar, -- Caverns
+	[559] = L.keystoneShortName_NexusPointXenas_Bar, -- Xenas
+	[402] = L.keystoneShortName_AlgetharAcademy_Bar, -- Academy
+	[583] = L.keystoneShortName_SeatOfTheTriumvirate_Bar, -- Triumvirate
+	[161] = L.keystoneShortName_Skyreach_Bar, -- Skyreach
+	[556] = L.keystoneShortName_PitOfSaron_Bar, -- Pit
 }
 local dungeonMapWithMultipleKeys = {
 	[1651] = true, -- Return to Karazhan
@@ -248,6 +278,17 @@ local dungeonMapWithMultipleKeys = {
 local teleportList = {
 	-- Current Season (Built Automatically)
 	{},
+	-- Midnight
+	{
+		[2805] = 1254400, -- Windrunner Spire
+		[2811] = 1254572, -- Magisters' Terrace
+		--[2813] = , -- Murder Row
+		--[2825] = , -- Den of Nalorakk
+		--[2859] = , -- The Blinding Vale
+		[2874] = 1254559, -- Maisara Caverns
+		[2915] = 1254563, -- Nexus-Point Xenas
+		--[2923] = , -- Voidscar Arena
+	},
 	-- The War Within
 	{
 		[2648] = 445443, -- The Rookery
@@ -313,11 +354,11 @@ local teleportList = {
 		--[1492] = lw_l, -- Maw of Souls
 		[1477] = 393764, -- Halls of Valor
 		--[1493] = lw_l, -- Vault of the Wardens
-		--[1753] = lw_l, -- Seat of the Triumvirate
+		[1753] = 1254551, -- Seat of the Triumvirate
 	},
 	-- Warlords of Draenor
 	{
-		[1209] = 159898, -- Skyreach
+		[1209] = 159898, -- Skyreach -- XXX 1254557 was also added, which will be used..?
 		[1176] = 159899, -- Shadowmoon Burial Grounds
 		[1208] = 159900, -- Grimrail Depot
 		[1279] = 159901, -- The Everbloom
@@ -353,43 +394,32 @@ local teleportList = {
 		[657] = 410080, -- The Vortex Pinnacle
 		[670] = 445424, -- Grim Batol
 	},
+	-- Wrath of the Lich King
+	{
+		--[576] = lw_wotlk, -- The Nexus
+		--[578] = lw_wotlk, -- The Oculus
+		--[608] = lw_wotlk, -- Violet Hold
+		--[595] = lw_wotlk, -- The Culling of Stratholme
+		--[619] = lw_wotlk, -- Ahn'kahet: The Old Kingdom
+		--[604] = lw_wotlk, -- Gundrak
+		--[574] = lw_wotlk, -- Utgarde Keep
+		--[575] = lw_wotlk, -- Utgarde Pinnacle
+		--[602] = lw_wotlk, -- Halls of Lightning
+		--[601] = lw_wotlk, -- Azjol-Nerub
+		[658] = 1254555, -- Pit of Saron
+		--[599] = lw_wotlk, -- Halls of Stone
+		--[600] = lw_wotlk, -- Drak'Tharon Keep
+		--[650] = lw_wotlk, -- Trial of the Champion
+		--[668] = lw_wotlk, -- Halls of Reflection
+		--[632] = lw_wotlk, -- The Forge of Souls
+	},
 }
-if BigWigsLoader.isBeta then
-	teleportList[0] = {}
-	table.insert(teleportList, 2, {
-		[2648] = 445443, -- The Rookery
-		[2649] = 445444, -- Priory of the Sacred Flame
-		[2651] = 445441, -- Darkflame Cleft
-		[2652] = 445269, -- The Stonevault
-		[2660] = 445417, -- Ara-Kara, City of Echoes
-		[2661] = 445440, -- Cinderbrew Meadery
-		[2662] = 445414, -- The Dawnbreaker
-		[2669] = 445416, -- City of Threads
-		[2773] = 1216786, -- Operation: Floodgate
-		[2830] = 1237215, -- Eco-Dome Al'dani
-	})
-else
-	-- XXX temp Lemix
-	teleportList[0] = {
-		--[1544] = lw_l, -- Assault on Violet Hold
-		--[1677] = lw_l, -- Cathedral of Eternal Night
-		[1571] = 393766, -- Court of Stars
-		[1651] = 373262, -- Return to Karazhan
-		[1501] = 424153, -- Black Rook Hold
-		--[1516] = lw_l, -- The Arcway
-		[1466] = 424163, -- Darkheart Thicket
-		[1458] = 410078, -- Neltharion's Lair
-		--[1456] = lw_l, -- Eye of Azshara
-		--[1492] = lw_l, -- Maw of Souls
-		[1477] = 393764, -- Halls of Valor
-		--[1493] = lw_l, -- Vault of the Wardens
-		--[1753] = lw_l, -- Seat of the Triumvirate
-	}
-end
+
 for mapID in next, BigWigsLoader.currentExpansion.currentSeason do -- Automatically build the current season list
 	for expansionIndex = 2, #teleportList do
-		if teleportList[expansionIndex][mapID] then
-			teleportList[1][mapID] = teleportList[expansionIndex][mapID]
+		local spellID = teleportList[expansionIndex][mapID]
+		if spellID then
+			teleportList[1][mapID] = spellID
 			break
 		end
 	end
@@ -542,6 +572,12 @@ do
 			if id or isReloadingUi then
 				if SLASH_KEYSTONE3 then
 					SLASH_KEYSTONE3 = nil
+				end
+				if SLASH_KEYSTONE2 and db.global.slashKeys then
+					SLASH_KEYSTONE2 = nil
+				end
+				if SLASH_KEYSTONE1 and db.global.slashKeystone then
+					SLASH_KEYSTONE1 = nil
 				end
 			end
 			if BigWigsLoader.UnitLevel("player") ~= GetMaxPlayerLevel() then
@@ -784,7 +820,7 @@ do
 
 	local GetRealZoneText = GetRealZoneText
 	local prevButton = nil
-	for expansionIndex = 0, #teleportList do -- XXX temp Lemix, swap 0 back to 1
+	for expansionIndex = 1, #teleportList do
 		if not teleportButtons[expansionIndex] then
 			teleportButtons[expansionIndex] = {}
 		end
@@ -1109,7 +1145,7 @@ do
 			teleportButtons[1][1]:SetPoint("TOPRIGHT", scrollChild, "TOP", 0, -40)
 			self:SetScript("OnUpdate", OnUpdate)
 
-			local numExpansions = #L.expansionNames - (BigWigsLoader.isBeta and 0 or 1)
+			local numExpansions = #L.expansionNames
 			for expansionIndex = 1, #teleportButtons do
 				if expansionIndex > 1 then
 					local expansionNameHeader = CreateHeader()
@@ -1378,8 +1414,10 @@ do
 			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
 			cellDate:SetWidth(WIDTH_RATING+13)
 			local dateTbl = runs[i].completionDate
-			cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday])
-			cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.day+1, L.monthNames[dateTbl.month], dateTbl.year+2000)
+			cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday + 1] or L.dayNamesShort[dateTbl.weekday] or "?")
+			local dayNameStr = L.dayNames[dateTbl.weekday + 1] or L.dayNames[dateTbl.weekday] or "?"
+			local monthStr = L.monthNames[dateTbl.month + 1] or L.monthNames[dateTbl.month] or "?"
+			cellDate.tooltip = L.dateFormat:format(dayNameStr, dateTbl.day+1, monthStr, dateTbl.year+2000)
 			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
 			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")
@@ -1655,6 +1693,73 @@ do
 	function UnregisterLibKeystone()
 		LibKeystoneUnregister(LibKeystoneTable)
 	end
+end
+
+--------------------------------------------------------------------------------
+-- Challenges UI Clickable Teleports
+--
+
+do
+	local challengesTeleportButton = CreateFrame("Button", nil, nil, "InsecureActionButtonTemplate")
+	challengesTeleportButton:RegisterForClicks("AnyDown", "AnyUp")
+	challengesTeleportButton:SetPropagateMouseMotion(true)
+	challengesTeleportButton:SetAttribute("type", "spell")
+	local hookedIcons = {}
+
+	local function OnEnter(self)
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs")
+		if InCombatLockdown() then
+			GameTooltip:AddLine(L.keystoneTeleportInCombat)
+			challengesTeleportButton:EnableMouse(false)
+		else
+			challengesTeleportButton:EnableMouse(true)
+			challengesTeleportButton:ClearAllPoints()
+			challengesTeleportButton:SetParent(self)
+			challengesTeleportButton:SetAllPoints(self)
+			local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
+			for instanceID, spellID in next, teleportList[1] do
+				if instanceID == mapID then
+					challengesTeleportButton:SetAttribute("spell", spellID)
+					local spellName = BigWigsLoader.GetSpellName(spellID)
+					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
+						GameTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
+					else
+						local cd = BigWigsLoader.GetSpellCooldown(spellID)
+						if cd.startTime > 0 and cd.duration > 0 then
+							local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+							local hours = math.floor(remainingSeconds / 3600)
+							remainingSeconds = remainingSeconds % 3600
+							local minutes = math.floor(remainingSeconds / 60)
+							GameTooltip:AddLine(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+						else
+							GameTooltip:AddLine(L.keystoneTeleportReady:format(spellName))
+						end
+					end
+					break
+				end
+			end
+		end
+		GameTooltip:Show()
+	end
+	challengesTeleportButton:SetScript("OnEvent", function(self, event, addonName)
+		if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
+			self:UnregisterEvent(event)
+			self:SetScript("OnEvent", nil)
+			ChallengesFrame:HookScript("OnShow", function(challengesFrame)
+				if challengesFrame.DungeonIcons then
+					for i = 1, #challengesFrame.DungeonIcons do
+						local icon = challengesFrame.DungeonIcons[i]
+						if not hookedIcons[icon] then
+							hookedIcons[icon] = true
+							icon:HookScript("OnEnter", OnEnter)
+						end
+					end
+				end
+			end)
+		end
+	end)
+	challengesTeleportButton:RegisterEvent("ADDON_LOADED")
 end
 
 --------------------------------------------------------------------------------
@@ -2037,6 +2142,12 @@ do
 
 	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer, true)
 	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer, true)
+	if db.global.slashKeys then
+		BigWigsAPI.RegisterSlashCommand("/keys", ShowViewer, true)
+	end
+	if db.global.slashKeystone then
+		BigWigsAPI.RegisterSlashCommand("/keystone", ShowViewer, true)
+	end
 
 	viewerKeybindFrame:SetScript("OnClick", ShowViewer)
 	if db.profile.viewerKeybind ~= "" then
@@ -2355,6 +2466,42 @@ do
 						desc = L.keystoneViewerKeybindingDesc,
 						order = 7,
 						set = UpdateSettingsAndWidgets,
+					},
+					slashDescription = {
+						type = "description",
+						name = "\n\n",
+						order = 8,
+						width = "full",
+					},
+					slashKeys = {
+						type = "toggle",
+						name = L.keystoneSlashKeys,
+						order = 9,
+						width = "full",
+						get = function() return db.global.slashKeys end,
+						set = function(info, value)
+							local key = info[#info]
+							db.global[key] = value
+							C_UI.Reload()
+						end,
+						confirm = function()
+							return L.reloadUIWarning
+						end,
+					},
+					slashKeystone = {
+						type = "toggle",
+						name = L.keystoneSlashKeystone,
+						order = 10,
+						width = "full",
+						get = function() return db.global.slashKeystone end,
+						set = function(info, value)
+							local key = info[#info]
+							db.global[key] = value
+							C_UI.Reload()
+						end,
+						confirm = function()
+							return L.reloadUIWarning
+						end,
 					},
 				},
 			},

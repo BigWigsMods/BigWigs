@@ -15,7 +15,7 @@ do
 end
 
 function plugin:Initialize()
-	core:RegisterPlugin(self)
+	core:RegisterPlugin(self.moduleName)
 end
 
 --- Module enabled check.

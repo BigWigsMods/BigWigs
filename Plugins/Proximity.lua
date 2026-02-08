@@ -497,11 +497,6 @@ end
 -- Initialization
 --
 
-function plugin:OnRegister()
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-end
-
 do
 	local createAnchor = function()
 		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
@@ -631,15 +626,15 @@ do
 	end
 
 	function plugin:OnPluginEnable()
+		updateProfile()
+
 		if createAnchor then createAnchor() createAnchor = nil end
 
 		self:RegisterMessage("BigWigs_ShowProximity")
 		self:RegisterMessage("BigWigs_HideProximity", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossDisable")
-
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		updateProfile()
 	end
 end
 

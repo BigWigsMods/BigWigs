@@ -95,13 +95,15 @@ local barSettingsToExport = {
 	"emphasizeRestart",
 	"emphasizeTime",
 	"emphasizeMultiplier",
+	"spacing",
+	"visibleBarLimit",
+	"visibleBarLimitEmph",
 	"normalWidth",
 	"normalHeight",
 	"expWidth",
 	"expHeight",
-	"spacing",
-	"visibleBarLimit",
-	"visibleBarLimitEmph",
+	"spellIndicators",
+	"spellIndicatorsSize",
 }
 
 local messageSettingsToExport = {
@@ -124,9 +126,10 @@ local messageSettingsToExport = {
 }
 
 local countdownSettingsToExport = {
+	"textEnabled",
 	"fontName",
-	"fontSize",
 	"outline",
+	"fontSize",
 	"monochrome",
 	"voice",
 	"countdownTime",
@@ -395,7 +398,7 @@ do
 		end
 
 		local serialized = C_EncodingUtil.SerializeCBOR(exportOptions)
-		local compressed = C_EncodingUtil.CompressString(serialized, Enum.CompressionMethod.Deflate)
+		local compressed = C_EncodingUtil.CompressString(serialized, 0) -- Enum.CompressionMethod.Deflate = 0
 		local encoded = C_EncodingUtil.EncodeBase64(compressed)
 		return sharingVersion..":"..encoded
 	end
@@ -466,11 +469,11 @@ do
 
 		local versionPlain, importData = string:match("^(%w+):(.+)$")
 		if versionPlain ~= sharingVersion then return end
-        local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
-        if not decodedForPrint then return end
-        local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, Enum.CompressionMethod.Deflate)
-        if not decompressed then return end
-        local data = C_EncodingUtil.DeserializeCBOR(decompressed)
+		local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
+		if not decodedForPrint then return end
+		local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
+		if not decompressed then return end
+		local data = C_EncodingUtil.DeserializeCBOR(decompressed)
 		if not data then return end
 		if data.version ~= sharingVersion then return end -- encoded version does not match expected version
 		local importSucceeded = PreProcess(data)
