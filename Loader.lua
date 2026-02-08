@@ -1875,6 +1875,7 @@ do
 			loadZone(instanceID)
 			RegisterUnitTargetEvents()
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
+			-- automatically enable trash modules for this zone
 			if trashModules[instanceID] then
 				for i = 1, #trashModules[instanceID] do
 					trashModules[instanceID][i]:Enable()
