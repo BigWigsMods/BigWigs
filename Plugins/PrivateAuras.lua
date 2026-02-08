@@ -837,6 +837,7 @@ function plugin:UpdateAnchors(unitType)
 	if not anchorDB.showBorder then
 		borderScale = -10000 -- hide the border
 	end
+	local unitToken = GetAnchorUnitToken(anchorDB.targetType, anchorDB.unitToken)
 
 	for index = 1, MAX_AURAS do
 		local anchor = anchors[unitType][index]
@@ -859,7 +860,6 @@ function plugin:UpdateAnchors(unitType)
 
 		UpdateTestAura(unitType, index)
 
-		local unitToken = GetAnchorUnitToken(anchorDB.targetType, anchorDB.unitToken)
 		if unitToken and not inConfigureMode then
 			-- re-registers on BigWigs_StopConfigureMode, don't really want to spam this when moving anchors or whatnot
 			anchor.anchorId = C_UnitAuras.AddPrivateAuraAnchor({
