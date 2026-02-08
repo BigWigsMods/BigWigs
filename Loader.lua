@@ -598,7 +598,7 @@ do
 		--[2849] = lw_tww, -- Dastardly Dome
 		[369] = (public.isRetail and UnitFactionGroup("player") == "Alliance") and lw_tww or nil, -- Deeprun Tram
 		[1043] = (public.isRetail and UnitFactionGroup("player") == "Horde") and lw_tww or nil, -- Brawl'gar Arena
-		--[[ LittleWigs: Delves ]]--
+		--[[ LittleWigs: The War Within Delves ]]--
 		[2664] = public.isBeta and lw_tww or lw_delves, -- Fungal Folly
         [2679] = public.isBeta and lw_tww or lw_delves, -- Mycomancer Cavern
         [2680] = public.isBeta and lw_tww or lw_delves, -- Earthcrawl Mines
