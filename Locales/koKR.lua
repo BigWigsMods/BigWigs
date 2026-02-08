@@ -433,8 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "아래 던전 이름을 클릭하면 |cFF33FF99순간이동|r 던전 입구로 바로 이동합니다."
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a이것은 시간질주자 캐릭터입니다." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
-L.keystoneSlashKeys = "또한 |cFF33FF99/keys|r 슬래시 명령어를 등록합니다"
-L.keystoneSlashKeystone = "또한 |cFF33FF99/keystone|r 슬래시 명령어를 등록합니다"
+L.keystoneSlashKeys = "|cFF33FF99/keys|r 슬래시 명령어도 등록"
+L.keystoneSlashKeystone = "|cFF33FF99/keystone|r 슬래시 명령어도 등록"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "부화장"
