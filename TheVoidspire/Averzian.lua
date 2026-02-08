@@ -8,6 +8,18 @@ local mod, CL = BigWigs:NewBoss("Imperator Averzian", 2912, 2733)
 if not mod then return end
 mod:RegisterEnableMob(240435) -- Imperator Averzian
 mod:SetEncounterID(3176)
+mod:SetPrivateAuraSounds({
+	{1255680, sound = "alarm"}, -- Gnashing Void
+	{1275059, sound = "alert"}, -- Black Miasma
+	{1249265, 1260203}, -- Umbral Collapse (Targetted)
+	-- {1249309, sound = "alarm"}, -- Umbral Collapse (DoT effect), still used?
+	-- {1249716, 1265398}, -- Umbral Collapse (Unknown Aura)
+	1280023, -- Void Marked
+	{1280075, sound = "info"}, -- Lingering Darkness (DoT effect after dispel)
+	{1260981, sound = "underyou"}, -- March of the Endless
+	{1265540, sound = "alarm"}, -- Blackening Wounds
+	1283069, -- Weakened
+})
 
 --------------------------------------------------------------------------------
 -- Locals
