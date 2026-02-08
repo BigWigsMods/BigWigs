@@ -340,7 +340,7 @@ L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 L.tools = "Werkzeuge"
 L.toolsDesc = "BigWigs bietet verschiedene Werkzeuge oder Features der \"Lebensqualität\" zur Beschleunigung und Vereinfachung von Bossbegegnungen."
 
---L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+L.reloadUIWarning = "Die Änderung dieser Funktion lädt das Interface neu und zeigt kurz den Ladebildschirm an. Bist Du sicher?"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -433,8 +433,8 @@ L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 L.keystoneTeleportTip = "Dungeonnamen unten anklicken um direkt zum Dungeoneingang zu |cFF33FF99TELEPORTIEREN|r."
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aDies ist ein Zeitläufer Charakter." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
---L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
---L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
+L.keystoneSlashKeys = "Den |cFF33FF99/keys|r Slash-Befehl registrieren"
+L.keystoneSlashKeystone = "Den |cFF33FF99/keystone|r Slash-Befehl registrieren"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "ROOK"
@@ -464,13 +464,13 @@ L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
 L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
 L.keystoneShortName_CathedralOfEternalNight = "COEN"
 L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
---L.keystoneShortName_WindrunnerSpire = "SPIRE"
---L.keystoneShortName_MagistersTerrace = "MT"
---L.keystoneShortName_MaisaraCaverns = "CAVERN"
---L.keystoneShortName_NexusPointXenas = "XENAS"
---L.keystoneShortName_AlgetharAcademy = "AA"
---L.keystoneShortName_Skyreach = "SKY"
---L.keystoneShortName_PitOfSaron = "PIT"
+L.keystoneShortName_WindrunnerSpire = "SPIRE"
+L.keystoneShortName_MagistersTerrace = "MT"
+L.keystoneShortName_MaisaraCaverns = "CAVERN"
+L.keystoneShortName_NexusPointXenas = "XENAS"
+L.keystoneShortName_AlgetharAcademy = "AA"
+L.keystoneShortName_Skyreach = "SKY"
+L.keystoneShortName_PitOfSaron = "PIT"
 
 -- These short names are for the bar that shows during the Mythic+ countdown
 -- Use the real dungeon names but make them shorter to fit on the bar better
@@ -501,13 +501,13 @@ L.keystoneShortName_ReturnToKarazhanLower_Bar = "Unteres Kara"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Oberes Kara"
 L.keystoneShortName_CathedralOfEternalNight_Bar = "Kathedrale"
 L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triumvirat"
---L.keystoneShortName_WindrunnerSpire_Bar = "Spire"
---L.keystoneShortName_MagistersTerrace_Bar = "Terrace"
---L.keystoneShortName_MaisaraCaverns_Bar = "Caverns"
---L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
---L.keystoneShortName_AlgetharAcademy_Bar = "Academy"
---L.keystoneShortName_Skyreach_Bar = "Skyreach"
---L.keystoneShortName_PitOfSaron_Bar = "Pit"
+L.keystoneShortName_WindrunnerSpire_Bar = "Turm"
+L.keystoneShortName_MagistersTerrace_Bar = "Terrasse"
+L.keystoneShortName_MaisaraCaverns_Bar = "Kavernen"
+L.keystoneShortName_NexusPointXenas_Bar = "Xenas"
+L.keystoneShortName_AlgetharAcademy_Bar = "Akademie"
+L.keystoneShortName_Skyreach_Bar = "Himmelsnadel"
+L.keystoneShortName_PitOfSaron_Bar = "Grube"
 
 -- Instance Keys "Who has a key?"
 L.instanceKeysTitle = "Wer hat einen Schlüsselstein?"
