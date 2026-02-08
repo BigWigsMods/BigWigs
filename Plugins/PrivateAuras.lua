@@ -352,7 +352,7 @@ do
 					targetTypeIsTankLabel = {
 						type = "description",
 						name = function()
-							return ("XX Show private auras that are on the other tank when you are a tank. (Current: %s)"):format(GetAnchorUnitToken("tank"))
+							return ("XX Show private auras that are on the other tank when you are a tank. (Current: %s)"):format(GetAnchorUnitToken("tank") or L.none)
 						end,
 						hidden = function()
 							return db.other.targetType == "player"
@@ -779,17 +779,21 @@ local function UpdateAnchorPosition(anchor)
 end
 
 function GetAnchorUnitToken(targetType, unitToken)
+	-- XXX at what point does UnitIsUnit start to return a secret?
 	if targetType == "player" then
-		if unitToken and UnitExists(unitToken) then
-			return unitToken
+		for unit in plugin:IterateGroup(true) do
+			if UnitIsUnit(unitToken, unit) then
+				return unit
+			end
 		end
+		return nil
 	elseif targetType == "tank" and UnitGroupRolesAssigned("player") == "TANK" then
-		-- XXX at what point does UnitIsUnit start to return a secret?
 		for unit in plugin:IterateGroup(true) do
 			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
 				return unit
 			end
 		end
+		return nil
 	end
 end
 
