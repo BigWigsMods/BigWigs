@@ -947,6 +947,7 @@ L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 �
 --L.iconSpacing = "Icon Spacing"
 --L.showCooldown = "Show Cooldown Spiral"
 --L.showCountdownText = "Show Cooldown Text"
+--L.countdownTextScale = "Countdown Text Scale"
 --L.showDurationText = "Show Duration Text"
 --L.growthDirection = "Icon Growth Direction"
 

@@ -947,6 +947,7 @@ L.nameplateOptInWarning = "|cffff4411¡ATENCIÓN!|r\n\nActivar este modo desacti
 --L.iconSpacing = "Icon Spacing"
 --L.showCooldown = "Show Cooldown Spiral"
 --L.showCountdownText = "Show Cooldown Text"
+--L.countdownTextScale = "Countdown Text Scale"
 --L.showDurationText = "Show Duration Text"
 --L.growthDirection = "Icon Growth Direction"
 

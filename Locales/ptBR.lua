@@ -947,6 +947,7 @@ L.startAnimation_glow_desc = "Esse brilho tem uma animação inicial, isso irá 
 --L.iconSpacing = "Icon Spacing"
 --L.showCooldown = "Show Cooldown Spiral"
 --L.showCountdownText = "Show Cooldown Text"
+--L.countdownTextScale = "Countdown Text Scale"
 --L.showDurationText = "Show Duration Text"
 --L.growthDirection = "Icon Growth Direction"
 

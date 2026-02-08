@@ -946,7 +946,8 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式�
 --L.iconSize = "Icon Size"
 --L.iconSpacing = "Icon Spacing"
 --L.showCooldown = "Show Cooldown Spiral"
---L.showCountdownText = "Show Cooldown Text"
+-- L.showCountdownText = "Show Cooldown Text"
+--L.countdownTextScale = "Countdown Text Scale"
 --L.showDurationText = "Show Duration Text"
 --L.growthDirection = "Icon Growth Direction"
 
