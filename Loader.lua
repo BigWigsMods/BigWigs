@@ -1989,7 +1989,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		end
 	elseif type(module.instanceId) == "table" then
 		for i = 1, #module.instanceId do
-			if not module.engageId then
+			if public.isRetail and not module.engageId then
 				if trashModules[module.instanceId[i]] then
 					trashModules[module.instanceId[i]][#trashModules[module.instanceId[i]] + 1] = module
 				else
@@ -1999,7 +1999,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 			enableZones[module.instanceId[i]] = true
 		end
 	else
-		if not module.engageId then
+		if public.isRetail and not module.engageId then
 			if trashModules[module.instanceId] then
 				trashModules[module.instanceId][#trashModules[module.instanceId] + 1] = module
 			else
