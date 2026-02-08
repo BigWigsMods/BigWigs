@@ -643,7 +643,7 @@ do
 			end
 
 			core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
-	
+
 			-- automatically enable trash modules if we're in the relevant zone at module registration
 			local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 			if loader.isRetail and not module.engageId and not module.worldBoss and module:IsZoneID(instanceID) then
