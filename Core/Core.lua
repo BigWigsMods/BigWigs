@@ -355,19 +355,21 @@ do
 			end
 			if loader.isRetail then
 				core.RegisterEvent(mod, "PLAYER_MAP_CHANGED", CheckIfLeavingDelve)
-
-				-- enable trash modules for the current zone
-				for _, module in next, bosses do
-					if not module.engageId and not module.worldBoss and module:IsZoneID(instanceID) then
-						module:Enable()
-					end
-				end
 			end
 
 			if IsLoggedIn() then
 				EnablePlugins()
 			else
 				core.RegisterEvent(mod, "PLAYER_LOGIN", EnablePlugins)
+			end
+
+			if loader.isRetail then
+				-- enable trash modules for the current zone
+				for _, module in next, bosses do
+					if not module:GetEncounterID() and not module.worldBoss and module:IsZoneID(instanceID) then
+						module:Enable()
+					end
+				end
 			end
 
 			core:SendMessage("BigWigs_CoreEnabled")
@@ -645,9 +647,11 @@ do
 			core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
 			-- automatically enable trash modules if we're in the relevant zone at module registration
-			local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
-			if loader.isRetail and not module.engageId and not module.worldBoss and module:IsZoneID(instanceID) then
-				module:Enable()
+			if module:Retail() and not module:GetEncounterID() and not module.worldBoss then
+				local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
+				if module:IsZoneID(instanceID) then
+					module:Enable()
+				end
 			end
 		end
 	end
