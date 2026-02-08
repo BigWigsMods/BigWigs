@@ -1805,9 +1805,8 @@ do
 			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
 			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
 		}
-		local IsInInstance, UnitIsPlayer = IsInInstance, UnitIsPlayer
+		local UnitIsPlayer = UnitIsPlayer
 		local function UNIT_TARGET(frame, event, unit)
-			if public.isMidnight and IsInInstance() then return end
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then
@@ -1886,7 +1885,9 @@ do
 				loadAndEnableCore()
 			end
 			loadZone(instanceID)
-			RegisterUnitTargetEvents()
+			if not public.isRetail then
+				RegisterUnitTargetEvents()
+			end
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
 		else
 			if disabledZones[instanceID] then -- We have a content addon for the this zone but it is disabled in the addons menu
