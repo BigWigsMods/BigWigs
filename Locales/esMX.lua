@@ -1046,20 +1046,20 @@ L.newFastestVictoryPrint = "Nueva victoria más rápida: (-%s)" -- New fastest v
 -- Timeline.lua
 --
 
-L.timeline = "Cronología"
-L.blizzTimersAsBigWigsBars = "Mostrar los temporizadores de Blizzard (cronología) como barras de BigWigs"
-L.blizzTimersAsBigWigsBarsDesc = "Todos los temporizadores de jefes de Blizzard (cronología) se mostrarán como barras de BigWigs."
-L.blizzWarningsAsBigWigsMessages = "Mostrar las alertas de jefes de Blizzard como mensajes de BigWigs"
-L.blizzWarningsAsBigWigsMessagesDesc = "Todas las alertas de jefes de Blizzard se mostrarán como mensajes de BigWigs."
+L.timeline = "Línea temporal"
+L.blizzTimersAsBigWigsBars = "Mostrar los temporizadores de Blizzard (Línea temporal) como barras de BigWigs"
+L.blizzTimersAsBigWigsBarsDesc = "Todos los temporizadores de jefes de Blizzard (Línea temporal) se mostrarán como barras de BigWigs."
+L.blizzWarningsAsBigWigsMessages = "Mostrar las advertencias de jefes de Blizzard como mensajes de BigWigs"
+L.blizzWarningsAsBigWigsMessagesDesc = "Todas las advertencias de jefes de Blizzard se mostrarán como mensajes de BigWigs."
 L.blizzAudioAsBigWigsAudio = "Convertir sonidos de Blizzard a sonidos de BigWigs"
-L.blizzAudioAsBigWigsAudioDesc = "Reproduce tus sonidos de BigWigs (Alerta, Alarma y Aviso) según la severidad de la alerta del encuentro."
-L.blizzWarningSettings = "Configuración de Alertas de Blizzard"
-L.blizzTimelineSettings = "Configuración de Cronología de Blizzard"
+L.blizzAudioAsBigWigsAudioDesc = "Reproduce tus sonidos de BigWigs (Alerta, Alarma y Advertencia) según la severidad de la alerta del encuentro."
+L.blizzWarningSettings = "Configuración de Advertencias de Blizzard"
+L.blizzTimelineSettings = "Configuración de Línea temporal de Blizzard"
 L.blizzTimelineSettingsNote = "|cffff4411Estas opciones solo controlan la configuración de Blizzard y están aquí por conveniencia.|r"
-L.enableBlizzTimeline = "Activar cronología de Blizzard"
-L.enableBlizzTimelineDesc = "Esto mostrará todos los temporizadores de encuentros de jefes en la cronología de Blizzard."
-L.enableBlizzWarnings = "Activar alertas de jefes de Blizzard"
-L.enableBlizzWarningsDesc = "Al activar las alertas de jefes de Blizzard también debes desactivar mostrarlas como mensajes de BigWigs, de lo contrario verás todos los mensajes dos veces."
+L.enableBlizzTimeline = "Activar línea temporal de Blizzard"
+L.enableBlizzTimelineDesc = "Esto mostrará todos los temporizadores de encuentros de jefes en la línea temporal de Blizzard."
+L.enableBlizzWarnings = "Activar advertencias de jefes de Blizzard"
+L.enableBlizzWarningsDesc = "Al activar las advertencias de jefe de Blizzard también debes desactivar mostrarlas como mensajes de BigWigs, de lo contrario verás todos los mensajes dos veces."
 
 -----------------------------------------------------------------------
 -- Victory.lua

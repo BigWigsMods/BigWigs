@@ -1046,18 +1046,18 @@ L.newFastestVictoryPrint = "Nova vitória mais rápida: (-%s)" -- New fastest vi
 -- Timeline.lua
 --
 
-L.timeline = "Linha do Tempo"
-L.blizzTimersAsBigWigsBars = "Mostrar temporizadores da Blizzard (linha do tempo) como barras do BigWigs"
-L.blizzTimersAsBigWigsBarsDesc = "Todos os temporizadores de chefes da Blizzard (linha do tempo) serão exibidos como barras do BigWigs."
+L.timeline = "Linha Temporal"
+L.blizzTimersAsBigWigsBars = "Mostrar temporizadores da Blizzard (Linha Temporal) como barras do BigWigs"
+L.blizzTimersAsBigWigsBarsDesc = "Todos os temporizadores de chefes da Blizzard (Linha Temporal) serão exibidos como barras do BigWigs."
 L.blizzWarningsAsBigWigsMessages = "Mostrar alertas de chefes da Blizzard como mensagens do BigWigs"
 L.blizzWarningsAsBigWigsMessagesDesc = "Todos os alertas de chefes da Blizzard serão exibidos como mensagens do BigWigs."
 L.blizzAudioAsBigWigsAudio = "Converter sons da Blizzard para sons do BigWigs"
 L.blizzAudioAsBigWigsAudioDesc = "Reproduzir seus sons do BigWigs (Alerta, Alarme e Aviso) com base na severidade do alerta do encontro."
 L.blizzWarningSettings = "Configurações de Alertas da Blizzard"
-L.blizzTimelineSettings = "Configurações da Linha do Tempo da Blizzard"
+L.blizzTimelineSettings = "Configurações da Linha Temporal da Blizzard"
 L.blizzTimelineSettingsNote = "|cffff4411Estas opções apenas controlam as configurações da Blizzard e estão aqui por conveniência.|r"
-L.enableBlizzTimeline = "Ativar linha do tempo da Blizzard"
-L.enableBlizzTimelineDesc = "Isso mostrará todos os temporizadores de encontros de chefes na linha do tempo da Blizzard."
+L.enableBlizzTimeline = "Ativar Linha Temporal da Blizzard"
+L.enableBlizzTimelineDesc = "Isso mostrará todos os temporizadores de encontros de chefes na Linha Temporal da Blizzard."
 L.enableBlizzWarnings = "Ativar alertas de chefes da Blizzard"
 L.enableBlizzWarningsDesc = "Ao ativar os alertas de chefes da Blizzard, você também deve desativar a exibição como mensagens do BigWigs, ou verá todas as mensagens duas vezes."
 

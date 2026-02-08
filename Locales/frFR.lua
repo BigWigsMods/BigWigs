@@ -1047,19 +1047,19 @@ L.newFastestVictoryPrint = "Nouvelle victoire la plus rapide : (-%s)" -- New fa
 --
 
 L.timeline = "Ligne temporelle"
-L.blizzTimersAsBigWigsBars = "Affiche les CàR (Comptes à Rebours) de Blizz (ligne temporelle) comme barres de BigWigs"
-L.blizzTimersAsBigWigsBarsDesc = "Tous les CàR de boss de Blizz (ligne temporelle) seront affichés comme barres de BigWigs."
-L.blizzWarningsAsBigWigsMessages = "Affiche les avertissements de boss de Blizz comme messages de BigWigs"
-L.blizzWarningsAsBigWigsMessagesDesc = "Tous les avertissements de boss de Blizz seront affichés comme messages de BigWigs."
-L.blizzAudioAsBigWigsAudio = "Convertit les sons de Blizz à des sons de BigWigs"
+L.blizzTimersAsBigWigsBars = "Affiche les minuteurs de Blizzard (ligne temporelle) comme barres de BigWigs"
+L.blizzTimersAsBigWigsBarsDesc = "Tous les minuteurs de boss de Blizzard (ligne temporelle) seront affichés comme barres de BigWigs."
+L.blizzWarningsAsBigWigsMessages = "Affiche les avertissements de boss de Blizzard comme messages de BigWigs"
+L.blizzWarningsAsBigWigsMessagesDesc = "Tous les avertissements de boss de Blizzard seront affichés comme messages de BigWigs."
+L.blizzAudioAsBigWigsAudio = "Convertit les sons de Blizzard à des sons de BigWigs"
 L.blizzAudioAsBigWigsAudioDesc = "Joue vos sons de BigWigs (Alertes, Alarmes & Avertissements) par rapport à la sévérité de la rencontre."
-L.blizzWarningSettings = "Paramètres des avertissements de Blizz"
-L.blizzTimelineSettings = "Paramètres de la ligne temporelle de Blizz"
-L.blizzTimelineSettingsNote = "|cffff4411Ces options ne contrôlent que les paramètres de Blizz settings et sont ici par commodité.|r"
-L.enableBlizzTimeline = "Activer la ligne temporelle de Blizz"
-L.enableBlizzTimelineDesc = "Cela affichera tous les CàR sur la ligne temporelle de Blizz."
-L.enableBlizzWarnings = "Activer les avertissements de boss de Blizz"
-L.enableBlizzWarningsDesc = "Lorsque vous activez les avertissements de boss de Blizz, vous devriez désactiver l'affichage en tant que message BigWigs ou vous verrez les messages deux fois."
+L.blizzWarningSettings = "Paramètres des avertissements de Blizzard"
+L.blizzTimelineSettings = "Paramètres de la ligne temporelle de Blizzard"
+L.blizzTimelineSettingsNote = "|cffff4411Ces options ne contrôlent que les paramètres de Blizzard et sont ici par commodité.|r"
+L.enableBlizzTimeline = "Activer la ligne temporelle de Blizzard"
+L.enableBlizzTimelineDesc = "Cela affichera tous les minuteurs sur la ligne temporelle de Blizzard."
+L.enableBlizzWarnings = "Activer les avertissements de boss de Blizzard"
+L.enableBlizzWarningsDesc = "Lorsque vous activez les avertissements de boss de Blizzard, vous devriez désactiver l'affichage en tant que message BigWigs ou vous verrez les messages deux fois."
 
 -----------------------------------------------------------------------
 -- Victory.lua
