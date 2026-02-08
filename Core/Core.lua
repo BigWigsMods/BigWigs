@@ -349,7 +349,7 @@ do
 			core.RegisterEvent(mod, "RAID_BOSS_WHISPER")
 			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", UpdateMouseoverUnit)
 			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", function() DisableCore() end) -- Simple disable when leaving instances
-			local _, instanceType = GetInstanceInfo()
+			local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfo()
 			if instanceType == "none" then -- We don't want to be disabling in instances
 				core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged) -- Special checks for disabling after world bosses
 			end
@@ -361,6 +361,15 @@ do
 				EnablePlugins()
 			else
 				core.RegisterEvent(mod, "PLAYER_LOGIN", EnablePlugins)
+			end
+
+			if loader.isRetail then
+				-- enable trash modules for the current zone
+				for _, module in next, bosses do
+					if not module:GetEncounterID() and not module.worldBoss and module:IsZoneID(instanceID) then
+						module:Enable()
+					end
+				end
 			end
 
 			core:SendMessage("BigWigs_CoreEnabled")
@@ -636,6 +645,14 @@ do
 			end
 
 			core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
+
+			-- automatically enable trash modules if we're in the relevant zone at module registration
+			if module:Retail() and not module:GetEncounterID() and not module.worldBoss then
+				local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
+				if module:IsZoneID(instanceID) then
+					module:Enable()
+				end
+			end
 		end
 	end
 
