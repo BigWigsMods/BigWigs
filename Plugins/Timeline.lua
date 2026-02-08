@@ -410,12 +410,15 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
 	elseif newState == Enum.EncounterTimelineEventState.Paused then
 		self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
 
+	elseif newState == Enum.EncounterTimelineEventState.Canceled then
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+
 	elseif newState == Enum.EncounterTimelineEventState.Finished then
 		local info = C_EncounterTimeline.GetEventInfo(eventId)
-
 		if info.source == Enum.EncounterTimelineEventSource.EditMode then
 			self:DoTestMessage(("%s (%d)"):format(info.spellName, tonumber(strsub(eventId, -1)) + 1), info.iconFileID)
 		end
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
 	end
 end
 
