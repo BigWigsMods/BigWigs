@@ -8,6 +8,24 @@ local mod, CL = BigWigs:NewBoss("Crown of the Cosmos", 2912, 2738)
 if not mod then return end
 mod:RegisterEnableMob(240430, 243805, 243810, 243811) -- Alleria, Morium, Demiar, Vorelus
 mod:SetEncounterID(3181)
+mod:SetPrivateAuraSounds({
+	1233602, -- Silverstrike Arrow (Targetted)
+	{1232470, 1260027, sound = "alert"}, -- Grasp of Emptiness
+	1283236, -- Void Expulsion (Targetted)
+	{1242553, sound = "underyou"}, -- Void Remnants
+	{1233865, 1233887, sound = "alarm"}, -- Null Corona
+	{1243753, sound = "alert"}, -- Ravenous Abyss
+	{1243981, sound = "info"}, -- Silverstrike Barrage
+	{1234570, sound = "alert"}, -- Stellar Emission
+	{1246462, sound = "alarm"}, -- Rift Slash
+	{1238206, sound = "underyou"}, -- Volatile Fissure
+	{1237623, 1259861}, -- Ranger Captain's Mark (Targetted)
+	{1237038, sound = "alarm"}, -- Voidstalker's Sting
+	{1227557, sound = "underyou"}, -- Devouring Cosmos
+	1239111, -- Aspect of the End
+	{1255453, sound = "alarm"}, -- Gravity Collapse
+	{1238708, sound = "info"}, -- Dark Rush
+})
 
 --------------------------------------------------------------------------------
 -- Locals
