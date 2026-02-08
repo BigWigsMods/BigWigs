@@ -10,17 +10,17 @@ mod:RegisterEnableMob(240387) -- Belo'ren
 mod:SetEncounterID(3182)
 mod:SetPrivateAuraSounds({
 	1241292, -- Light Dive
-	{1241840, "underyou"}, -- Light Patch
+	{1241840, sound = "underyou"}, -- Light Patch
 	1241339, -- Void Dive
-	{1241841, "underyou"}, -- Void Patch
-	{1262861, "alarm"}, -- Guardian's Edict
-	{1244348, "alarm"}, -- Holy Burn
-	{1266404, "alarm"}, -- Void Burn
+	{1241841, sound = "underyou"}, -- Void Patch
+	{1262861, sound = "alarm"}, -- Guardian's Edict
+	{1244348, sound = "alarm"}, -- Holy Burn
+	{1266404, sound = "alarm"}, -- Void Burn
 	-- {1282768, 1282776}, -- Infused Quills, Used?
 	1241992, -- Light Quill
 	1242091, -- Void Quill
-	{1242803, "underyou"}, -- Light Flames
-	{1242815, "underyou"}, -- Void Flames
+	{1242803, sound = "underyou"}, -- Light Flames
+	{1242815, sound = "underyou"}, -- Void Flames
 })
 
 --------------------------------------------------------------------------------
