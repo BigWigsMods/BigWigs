@@ -64,6 +64,8 @@ plugin.defaultDB = {
 	expHeight = 22,
 	spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
 	spellIndicatorsSize = 4,
+	spellIndicatorsPosition = "LEFT",
+	spellIndicatorsOffset = 4,
 	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
 	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
 }
@@ -139,6 +141,12 @@ local function updateProfile()
 	end
 	if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 then
 		db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
+	end
+	if db.spellIndicatorsPosition ~= "LEFT" and db.spellIndicatorsPosition ~= "RIGHT" then
+		db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
+	end
+	if db.spellIndicatorsOffset < 0 or db.spellIndicatorsOffset > 100 then
+		db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
 	end
 
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
@@ -317,6 +325,7 @@ do
 		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga",
 		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga",
 	}
+	local function HiddenOnRetail() return not BigWigsLoader.isRetail end
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars:20|t ".. L.bars,
@@ -452,6 +461,11 @@ do
 									db.outline = style.fontOutline
 								else
 									db.outline = plugin.defaultDB.outline
+								end
+								if type(style.spellIndicatorsOffset) == "number" and db.spellIndicatorsOffset > 0 and db.spellIndicatorsOffset <= 100 then
+									db.spellIndicatorsOffset = style.spellIndicatorsOffset
+								else
+									db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
 								end
 
 								plugin:UpdateGUI()
@@ -591,8 +605,7 @@ do
 							end
 							updateProfile()
 						end,
-						disabled = function() return not db.icon end,
-						hidden = function() return not BigWigsLoader.isRetail end,
+						hidden = HiddenOnRetail,
 					},
 					spellIndicatorsSize = {
 						type = "select",
@@ -605,20 +618,41 @@ do
 							L.spellIndicatorSizeDropdown_Small4,
 							L.spellIndicatorSizeDropdown_Small2,
 						},
-						disabled = function() return not db.icon end,
-						hidden = function() return not BigWigsLoader.isRetail end,
+						hidden = HiddenOnRetail,
 					},
-					header3 = {
+					spellIndicatorsPosition = {
+						type = "select",
+						name = L.spellIndicatorsPosition,
+						desc = L.spellIndicatorsPositionDesc,
+						order = 20,
+						width = 2,
+						values = {
+							LEFT = L.LEFT,
+							RIGHT = L.RIGHT,
+						},
+						hidden = HiddenOnRetail,
+					},
+					spellIndicatorsOffset = {
+						type = "range",
+						name = L.spellIndicatorsOffset,
+						desc = L.positionDesc,
+						order = 21,
+						max = 100,
+						min = 0,
+						step = 1,
+						hidden = HiddenOnRetail,
+					},
+					resetHeader = {
 						type = "header",
 						name = "",
-						order = 20,
+						order = 22,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 21,
+						order = 23,
 					},
 				},
 			},
@@ -1413,7 +1447,7 @@ do
 		end
 
 		local function SetIndicatorSize(self, size)
-			self:SetSize(size+2, size+2)
+			self:SetSize(size, size)
 			if db.spellIndicatorsSize >= 4 then
 				size = size / 2
 			end
@@ -1425,10 +1459,10 @@ do
 
 		local function AddIndicators(self, eventId)
 			self:ClearAllPoints()
-			if db.iconPosition == "LEFT" then
-				self:SetPoint("RIGHT", self.bar.candyBarIconFrame, "LEFT", -4, 0)
+			if db.spellIndicatorsPosition == "LEFT" then
+				self:SetPoint("BOTTOMRIGHT", self.bar, "BOTTOMLEFT", -db.spellIndicatorsOffset, 0)
 			else
-				self:SetPoint("LEFT", self.bar.candyBarIconFrame, "RIGHT", 4, 0)
+				self:SetPoint("BOTTOMLEFT", self.bar, "BOTTOMRIGHT", db.spellIndicatorsOffset, 0)
 			end
 			C_EncounterTimeline.SetEventIconTextures(eventId, bit.band(1023, db.spellIndicators), self.textureLists[db.spellIndicatorsSize])
 		end
@@ -1436,7 +1470,7 @@ do
 		local indicatorList = {}
 		local function UpdateAllIndicatorPoints()
 			if db.spellIndicatorsSize >= 4 then
-				if db.iconPosition == "LEFT" then
+				if db.spellIndicatorsPosition == "LEFT" then
 					for indicatorCount = 1, #indicatorList do
 						local indicatorFrame = indicatorList[indicatorCount]
 						indicatorFrame.textureLists[4][1]:ClearAllPoints()
@@ -1462,7 +1496,7 @@ do
 					end
 				end
 			else
-				if db.iconPosition == "LEFT" then
+				if db.spellIndicatorsPosition == "LEFT" then
 					for indicatorCount = 1, #indicatorList do
 						local indicatorFrame = indicatorList[indicatorCount]
 						indicatorFrame.textureLists[4][1]:ClearAllPoints()
@@ -1545,7 +1579,7 @@ do
 				}
 
 				if db.spellIndicatorsSize >= 4 then
-					if db.iconPosition == "LEFT" then
+					if db.spellIndicatorsPosition == "LEFT" then
 						indicatorTexture1:SetPoint("TOPRIGHT")
 						indicatorTexture2:SetPoint("BOTTOMRIGHT")
 						indicatorTexture3:SetPoint("TOPLEFT")
@@ -1557,7 +1591,7 @@ do
 						indicatorTexture4:SetPoint("BOTTOMRIGHT")
 					end
 				else
-					if db.iconPosition == "LEFT" then
+					if db.spellIndicatorsPosition == "LEFT" then
 						indicatorTexture1:SetPoint("CENTER")
 						indicatorTexture2:SetPoint("RIGHT", indicatorTexture1, "LEFT", -2, 0)
 						indicatorTexture3:SetPoint("RIGHT", indicatorTexture2, "LEFT", -2, 0)
@@ -1600,17 +1634,17 @@ do
 		normalAnchor.bars[bar] = true
 		if db.icon then
 			bar:SetIcon(icon)
-			if eventId then
-				local indicatorFrame = GetBarIndicatorFrame()
-				indicatorFrame:SetParent(bar)
-				indicatorFrame:Show()
-				indicatorFrame.bar = bar
-				indicatorFrame:SetIndicatorSize(height)
-				indicatorFrame:AddIndicators(eventId)
-				bar:Set("bigwigs:indicatorFrame", indicatorFrame)
-			end
 		else
 			bar:SetIcon(nil)
+		end
+		if eventId then
+			local indicatorFrame = GetBarIndicatorFrame()
+			indicatorFrame:SetParent(bar)
+			indicatorFrame:Show()
+			indicatorFrame.bar = bar
+			indicatorFrame:SetIndicatorSize(height)
+			indicatorFrame:AddIndicators(eventId)
+			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
 		end
 		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		bar:SetColor(colors:GetColor("barColor", module, key))
