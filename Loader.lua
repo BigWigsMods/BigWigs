@@ -194,7 +194,6 @@ local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a host
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
-local trashModules = {} -- contains the trash modules per zone
 local disabledZones = {} -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
@@ -1889,12 +1888,6 @@ do
 			loadZone(instanceID)
 			RegisterUnitTargetEvents()
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
-			-- automatically enable trash modules for this zone
-			if trashModules[instanceID] then
-				for i = 1, #trashModules[instanceID] do
-					trashModules[instanceID][i]:Enable()
-				end
-			end
 		else
 			if disabledZones[instanceID] then -- We have a content addon for the this zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
@@ -2004,23 +1997,9 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		end
 	elseif type(module.instanceId) == "table" then
 		for i = 1, #module.instanceId do
-			if public.isRetail and not module.engageId then
-				if trashModules[module.instanceId[i]] then
-					trashModules[module.instanceId[i]][#trashModules[module.instanceId[i]] + 1] = module
-				else
-					trashModules[module.instanceId[i]] = { module }
-				end
-			end
 			enableZones[module.instanceId[i]] = true
 		end
 	else
-		if public.isRetail and not module.engageId then
-			if trashModules[module.instanceId] then
-				trashModules[module.instanceId][#trashModules[module.instanceId] + 1] = module
-			else
-				trashModules[module.instanceId] = { module }
-			end
-		end
 		enableZones[module.instanceId] = true
 	end
 

@@ -274,7 +274,7 @@ function boss:IsEncounterID(encounterId)
 	return encounterId == self.engageId or (self.extraEncounterIDs and self.extraEncounterIDs[encounterId])
 end
 
---- Get the zone ID used for this module. (Negative for mapArtID, positive for instanceID)
+--- Get the zone ID used for this module.
 -- @return number
 -- @within Enable triggers
 function boss:GetZoneID()
@@ -285,6 +285,26 @@ function boss:GetZoneID()
 			return unpack(self.instanceId)
 		else
 			return self.instanceId
+		end
+	end
+end
+
+--- Check if a specific zone ID is registered for this module.
+-- @number zoneId A singular specific zone ID
+-- @return boolean
+-- @within Enable triggers
+function boss:IsZoneID(zoneId)
+	if self.mapId then
+		return self.mapId == zoneId
+	else
+		if type(self.instanceId) == "table" then
+			for i = 1, #self.instanceId do
+				if self.instanceId[i] == zoneId then
+					return true
+				end
+			end
+		else
+			return self.instanceId == zoneId
 		end
 	end
 end
