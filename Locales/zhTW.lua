@@ -157,7 +157,7 @@ L.slashDescPull = "|cFFFED000/pull:|r 向團隊發送開怪倒數。"
 L.slashDescBreak = "|cFFFED000/break:|r 向團隊發送休息時間計時器。"
 L.slashDescRaidBar = "|cFFFED000/raidbar:|r 向團隊發送自訂計時器。"
 L.slashDescLocalBar = "|cFFFED000/localbar:|r 創建一個只有自身可見的自訂計時條。"
-L.slashDescRange = "|cFFFED000/range:|r 開啟距離監式器。"
+L.slashDescRange = "|cFFFED000/range:|r 開啟距離監視器。"
 L.slashDescVersion = "|cFFFED000/bwv:|r 進行 BigWigs 版本檢查。"
 L.slashDescConfig = "|cFFFED000/bw:|r 開啟 BigWigs 設定選項。"
 
