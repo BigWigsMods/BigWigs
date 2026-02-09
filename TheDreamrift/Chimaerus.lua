@@ -11,13 +11,13 @@ mod:SetEncounterID(3306)
 mod:SetPrivateAuraSounds({
 	{1245698, sound = "info"}, -- Alnsight
 	-- 1253744, -- Rift Vulnerability (Applied at the same time as Alnsight)
-	{1250953, sound = "alert"}, -- Rift Sickness
+	{1250953, sound = "none"}, -- Rift Sickness
 	-- 1262020, -- Colossal Strikes, Used?
 	{1265940, sound = "alarm"}, -- Fearsome Cry
 	1264756, -- Rift Madness
 	1257087, -- Consuming Miasma
-	{1258192, sound = "alert"}, -- Lingering Miasma
-	{1246653, sound = "alert"}, -- Caustic Phelgm
+	{1258192, sound = "none"}, -- Lingering Miasma
+	{1246653, sound = "none"}, -- Caustic Phelgm
 	{1272726, sound = "alarm"}, -- Rending Tear
 })
 

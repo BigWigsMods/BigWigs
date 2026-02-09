@@ -11,7 +11,7 @@ mod:SetEncounterID(3180)
 mod:SetPrivateAuraSounds({
 	{1276982, sound = "underyou"}, -- Divine Consecration
 	{1248985, 1248994}, -- Execution Sentence (Targetted)
-	{1249008, 1249024, sound = "info"}, -- Execution Sentence (Soaked Debuff)
+	{1249008, 1249024, sound = "none"}, -- Execution Sentence (Soaked Debuff)
 	-- {1249122, 1249123} -- Execution Sentance (Unknown)
 	{1272324, sound = "underyou"}, -- Divine Tempest
 	{1246736, sound = "alarm"}, -- Judgement (Final Verdict)

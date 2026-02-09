@@ -26,7 +26,7 @@ mod:SetPrivateAuraSounds({
 	1282016, -- Iris of Oblivion
 	1284527, -- Galvanize, also has a 2m duration 1284533, Used?
 	1281184, -- Criticality
-	{1284531, sound = "alert"}, -- Decay
+	{1284531, sound = "none"}, -- Decay
 	{1263514, sound = "underyou"}, -- Midnight, also has 1266623, Used?
 	-- 1266587, -- Dark Constellation, Used?
 	{1275429, sound = "info"}, -- Severance (RIGHT?)

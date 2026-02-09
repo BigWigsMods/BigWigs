@@ -18,7 +18,7 @@ mod:SetPrivateAuraSounds({
 	{1251213, sound = "underyou"}, -- Twilight Spikes
 	1248697, -- Despotic Command
 	{1248709, sound = "alarm"}, -- Oppressive Darkness
-	{1250686, sound = "info"}, -- Twisting Obscurity (Raid damage/dot)
+	{1250686, sound = "none"}, -- Twisting Obscurity (Raid damage/dot)
 	{1271577, sound = "alarm"}, -- Destabilizing Strikes
 })
 

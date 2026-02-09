@@ -11,7 +11,7 @@ mod:SetEncounterID(3177)
 mod:SetPrivateAuraSounds({
 	-- {1243016, sound = "alarm"}, -- Blisterburst (15s debuff) still used?
 	1259186, -- Blisterburst
-	{1272527, sound = "info"}, -- Creep Spit
+	{1272527, sound = "none"}, -- Creep Spit
 	{1243220, 1243270, sound = "underyou"}, -- Dark Goo
 	1241844, -- Smashed
 })

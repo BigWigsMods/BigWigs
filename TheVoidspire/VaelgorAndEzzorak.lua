@@ -16,10 +16,10 @@ mod:SetPrivateAuraSounds({
 	{1255979, sound = "alarm"}, -- Dread Breath (Feared)
 	{1264467, sound = "underyou"}, -- Tail Lash
 	{1245554, sound = "alert"},-- Gloomtouched
-	{1270852, sound = "info"}, -- Diminish
+	{1270852, sound = "none"}, -- Diminish
 	{1245421, sound = "underyou"}, -- Gloomfield
 	{1245059, sound = "alarm"}, -- Void Howl
-	{1245175, sound = "info"}, -- Voidbolt
+	{1245175, sound = "none"}, -- Voidbolt
 	-- {1280355, sound = "alarm"}, -- Rakfang Too spammy?
 	1265152, -- Impale
 	{1248865, 1249595, sound = "info"}, -- Radiant Barrier

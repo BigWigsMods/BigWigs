@@ -15,7 +15,7 @@ mod:SetPrivateAuraSounds({
 	{1242553, sound = "underyou"}, -- Void Remnants
 	{1233865, 1233887, sound = "alarm"}, -- Null Corona
 	{1243753, sound = "alert"}, -- Ravenous Abyss
-	{1243981, sound = "info"}, -- Silverstrike Barrage
+	{1243981, sound = "none"}, -- Silverstrike Barrage
 	{1234570, sound = "alert"}, -- Stellar Emission
 	{1246462, sound = "alarm"}, -- Rift Slash
 	{1238206, sound = "underyou"}, -- Volatile Fissure
