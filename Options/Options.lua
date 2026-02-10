@@ -15,6 +15,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 local lds = LibStub("LibDualSpec-1.0", true)
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 options.SendMessage = loader.SendMessage
 local UnitName = loader.UnitName
@@ -763,10 +764,13 @@ local function getBlizzardToggleOption(scrollFrame, dropdown, module, encounterE
 	local desc = loader.GetSpellDescription(spellId)
 	local icon = eventInfo.iconFileID
 
+	local simpleGroup = AceGUI:Create("SimpleGroup")
+	simpleGroup:SetFullWidth(true)
+	simpleGroup:SetLayout("Flow")
+
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(name)
-	-- check:SetTriState(true)
-	check:SetRelativeWidth(0.85)
+	check:SetFullWidth(true)
 	check:SetUserData("key", dbKey)
 	check:SetUserData("blizzardOption", true) -- set so visibleSpellDescriptionWidgets doesnt try too much atm
 	check:SetUserData("module", module)
@@ -783,18 +787,27 @@ local function getBlizzardToggleOption(scrollFrame, dropdown, module, encounterE
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
 	visibleSpellDescriptionWidgets[check] = spellId
-	return check
 
-	-- local button = AceGUI:Create("Button")
-	-- button:SetText(">>")
-	-- button:SetRelativeWidth(0.15)
-	-- button:SetUserData("scrollFrame", scrollFrame)
-	-- button:SetUserData("dropdown", dropdown)
-	-- button:SetUserData("module", module)
-	-- button:SetUserData("bossOption", bossOption)
-	-- button:SetCallback("OnClick", buttonClicked)
+	local spacer = AceGUI:Create("Label")
+	spacer:SetText("")
+	spacer:SetRelativeWidth(0.05)
 
-	-- return check, button
+	-- Color Option
+	local colorInfo = eventInfo.color or {}
+	-- Calling :GetRGB or :GetRGBA doesnt seem to work nicely?
+	-- Also rough estimates of Blizzard defaults
+	local r, g, b = colorInfo.r or 0.8, colorInfo.g or 0.1, colorInfo.b or 0.1
+	local colorPicker = AceGUI:Create("ColorPicker")
+	colorPicker:SetLabel("Bar Color")
+	colorPicker:SetHasAlpha(false)
+	colorPicker:SetColor(r, g, b)
+	colorPicker:SetRelativeWidth(0.3)
+	colorPicker:SetCallback("OnValueChanged", function(widget, _, r, g, b)
+		C_EncounterEvents.SetEventColor(encounterEventId, {r = r, g = g, b = b})
+	end)
+
+	simpleGroup:AddChildren(check, spacer, colorPicker)
+	return simpleGroup
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
@@ -1085,7 +1098,7 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local default = widget:GetUserData("default")
 	local module = widget:GetUserData("module")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local soundList = LibSharedMedia:List("sound")
 	value = soundList[value]
 	if value == default then
 		value = nil
@@ -1121,7 +1134,7 @@ function populatePrivateAuraOptions(widget)
 	scrollFrame:AddChild(text)
 
 	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local soundList = LibSharedMedia:List("sound")
 	local sDB = soundModule.db.profile["privateaura"]
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
