@@ -1429,7 +1429,7 @@ local function populateToggleOptions(widget, module)
 		end
 	end
 
-	if module.GetBlizzardOptions or #tabs > 0 then -- tabs!
+	if module.blizzardEncounterOptions or #tabs > 0 then -- tabs!
 		local generalTabExists = nil
 		local tabbedOptions = {}
 		local tabInfo, tabOptions = {}, {}
@@ -1460,9 +1460,9 @@ local function populateToggleOptions(widget, module)
 			end
 		end
 
-		if module.GetBlizzardOptions then
+		if module.blizzardEncounterOptions then
 			table.insert(tabInfo, { text = "|A:gmchat-icon-blizz:18:18|a Blizzard", value = "blizzard" })
-			tabOptions["blizzard"] = module:GetBlizzardOptions()
+			tabOptions["blizzard"] = module.blizzardEncounterOptions
 		end
 
 		local tabsWidget = AceGUI:Create("TabGroup")
