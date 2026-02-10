@@ -23,6 +23,150 @@ do
 end
 
 do
+	local atlasInfo = { -- from C_Texture.GetAtlasInfo
+		["UI-HUD-CoolDownManager-Bar"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.826177875, 00.16015625, 0.23828125, 0, 8, 10, 8, 8},
+		["UI-HUD-CoolDownManager-Bar-BG"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.857421875, 0.00390625, 0.15234375, 1, 242, 14, 20, 22},
+		["UI-HUD-CoolDownManager-IconOverlay"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.001953125, 0.337890625, 0.00390625, 0.67578125},
+		["UI-HUD-CoolDownManager-Mask"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManagerMask", 0, 1, 0, 1},
+	}
+	local function SetTexureFromAtlas(texture, atlas)
+		texture:SetAtlas(atlas)
+		-- XXX slice margins aren't saving so it's stretching the bg, statusbar is just fucked. not sure where things are getting messed up
+		-- local file, left, right, top, bottom, sliceMode, marginLeft, marginTop, marginRight, marginBottom = unpack(atlasInfo[atlas])
+		-- texture:SetTexture(file)
+		-- texture:SetTexCoord(left, right, top, bottom)
+		-- if sliceMode then
+		-- 	texture:SetTextureSliceMode(sliceMode)
+		-- 	texture:SetTextureSliceMargins(marginLeft, marginTop, marginRight, marginBottom)
+		-- end
+	end
+
+	local iconFramePool = {}
+
+	local function removeStyle(bar)
+		local iconFrame = bar:Get("bigwigs:blizzardtimeline:icon")
+		if iconFrame then
+			iconFrame:SetParent(nil)
+			iconFrame:ClearAllPoints()
+			iconFrame:Hide()
+			iconFramePool[#iconFramePool + 1] = iconFrame
+		end
+
+		local statusbar = bar.candyBarBar
+		statusbar:SetPoint("TOPRIGHT")
+		statusbar:SetPoint("BOTTOMRIGHT")
+		statusbar:GetStatusBarTexture():SetTexCoord(0, 1, 0, 1)
+
+		local bg = bar.candyBarBackground
+		bg:SetAllPoints()
+		bg:SetTexCoord(0, 1, 0, 1)
+
+		local duration = bar.candyBarDuration
+		duration:ClearAllPoints()
+		duration:SetPoint("TOPLEFT", statusbar, "TOPLEFT", 2, 0)
+		duration:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", -2, 0)
+
+		local label = bar.candyBarLabel
+		label:ClearAllPoints()
+		label:SetPoint("TOPLEFT", statusbar, "TOPLEFT", 2, 0)
+		label:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", -2, 0)
+	end
+
+	local function styleBar(bar)
+		local barHeight = bar:GetHeight()
+
+		-- Replicating the layering in the template was annoying, so just create our own icon frame
+		local iconTexture = bar:GetIcon()
+		bar.candyBarIconFrame:Hide()
+
+		local iconFrame = tremove(iconFramePool)
+		if not iconFrame then
+			iconFrame = CreateFrame("Frame")
+
+			local mask = iconFrame:CreateMaskTexture(nil, "ARTWORK")
+			mask:SetPoint("TOPLEFT", 0, -1)
+			mask:SetPoint("BOTTOMRIGHT", 0, 0)
+			-- mask:SetTexture("Interface/AddOns/BigWigs/Media/UICooldownManagerMask")
+			SetTexureFromAtlas(mask, "UI-HUD-CoolDownManager-Mask")
+
+			local icon = iconFrame:CreateTexture(nil, "ARTWORK")
+			icon:SetPoint("TOPLEFT", 0, 0)
+			icon:SetPoint("BOTTOMRIGHT", 0, 0)
+			icon:AddMaskTexture(mask)
+			iconFrame.icon = icon
+
+			local overlay = iconFrame:CreateTexture(nil, "OVERLAY")
+			overlay:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -7, 6)
+			overlay:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 7, -7)
+			SetTexureFromAtlas(overlay, "UI-HUD-CoolDownManager-IconOverlay")
+		end
+		bar:Set("bigwigs:blizzardtimeline:icon", iconFrame)
+		iconFrame:SetParent(bar)
+		iconFrame:ClearAllPoints()
+		if bar.iconPosition == "RIGHT" then
+			iconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -2, 0)
+			iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+		else
+			iconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", 2, 0)
+			iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+		end
+		iconFrame:SetWidth(barHeight)
+		iconFrame.icon:SetTexture(iconTexture)
+		iconFrame:SetShown(iconTexture and true)
+
+		local statusbar = bar.candyBarBar
+		statusbar:ClearAllPoints()
+		if iconTexture then
+			if bar.iconPosition == "RIGHT" then
+				statusbar:SetPoint("TOPRIGHT", iconFrame, "TOPLEFT", -4, -4)
+				statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 4, 4)
+			else
+				statusbar:SetPoint("TOPLEFT", iconFrame, "TOPRIGHT", 4, -4)
+				statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -4, 4)
+			end
+		else
+			statusbar:SetPoint("TOPLEFT", bar, "TOPLEFT", 6, -4)
+			statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -4, 4)
+		end
+		-- statusbar:SetStatusBarTexture("UI-HUD-CoolDownManager-Bar")
+		SetTexureFromAtlas(statusbar:GetStatusBarTexture(), "UI-HUD-CoolDownManager-Bar")
+
+		local bg = bar.candyBarBackground
+		bg:ClearAllPoints()
+		bg:SetPoint("LEFT", statusbar, "LEFT", -2, -2)
+		bg:SetPoint("RIGHT", statusbar, "RIGHT", 6, -2)
+		SetTexureFromAtlas(bg, "UI-HUD-CoolDownManager-Bar-BG")
+		bg:SetVertexColor(1, 1, 1, 1)
+		-- Since this is offset vertically, just scale the height instead of trying to adjust the points to match the texture
+		bg:SetHeight(barHeight * 1.06) -- 36/34
+
+		local duration = bar.candyBarDuration
+		duration:ClearAllPoints()
+		duration:SetPoint("RIGHT", statusbar, "RIGHT", -5, 0)
+
+		local name = bar.candyBarLabel
+		name:SetWordWrap(false) -- Force truncating since there is no height
+		name:ClearAllPoints()
+		name:SetPoint("LEFT", statusbar, "LEFT", 5, 0)
+		name:SetPoint("RIGHT", duration, "LEFT", -10, 0)
+	end
+
+	BigWigsAPI:RegisterBarStyle("Blizzard", {
+		apiVersion = 1,
+		version = 1,
+		barSpacing = 2,
+		barHeight = 34,
+		spellIndicatorsOffset = 2,
+		fontSizeNormal = 14,
+		fontSizeEmphasized = 14,
+		fontOutline = "OUTLINE",
+		ApplyStyle = styleBar,
+		BarStopped = removeStyle,
+		GetStyleName = function() return "XX Blizzard" end,
+	})
+end
+
+do
 	-- !Beautycase styling, based on !Beatycase by Neal "Neave" @ WowI, texture made by Game92 "Aftermathh" @ WowI
 
 	local textureNormal = "Interface\\AddOns\\BigWigs\\Media\\Textures\\beautycase"
