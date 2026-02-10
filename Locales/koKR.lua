@@ -633,6 +633,7 @@ L.autoReplyLeftCombatAdvancedWipe = "'%s'에게 %s 에서 전멸하였습니다.
 L.bars = "바"
 L.style = "모양"
 L.bigWigsBarStyleName_Default = "기본"
+--L.bigWigsBarStyleName_Blizzard = "Blizzard"
 L.resetBarsDesc = "위치를 비롯한 모든 바 관련 설정을 초기화합니다."
 L.testBarsBtn = "테스트 바 만들기"
 L.testBarsBtn_desc = "당신의 현재 표시 설정으로 테스트용 바를 만듭니다."
