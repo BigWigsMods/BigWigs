@@ -342,9 +342,15 @@ spellDescriptionUpdater:SetScript("OnEvent", function(_, _, spellId)
 	local scrollFrame = nil
 	for widget, widgetSpellId in next, visibleSpellDescriptionWidgets do
 		if spellId == widgetSpellId then
-			scrollFrame = widget:GetUserData("scrollFrame")
-			local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
-			local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+			local module, bossOption, blizzardOption = widget:GetUserData("module"), widget:GetUserData("option"), widget:GetUserData("blizzardOption")
+			local desc
+			if not blizzardOption then
+				scrollFrame = widget:GetUserData("scrollFrame")
+				local _, _, detailsDesc = BigWigs:GetBossOptionDetails(module, bossOption)
+				desc = detailsDesc
+			else
+				desc = loader.GetSpellDescription(bossOption)
+			end
 			widget:SetDescription(desc)
 		end
 	end
@@ -749,22 +755,22 @@ local function customDropdownValueChanged(widget, _, value)
 end
 
 local function getBlizzardToggleOption(scrollFrame, dropdown, module, encounterEventId)
-	-- local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 	local dbKey = encounterEventId
 	local eventInfo = C_EncounterEvents.GetEventInfo(encounterEventId)
 	if not eventInfo then return end
 	local spellId = eventInfo.spellID
 	local name = loader.GetSpellName(spellId)
 	local desc = loader.GetSpellDescription(spellId)
-	local icon = loader.GetSpellTexture(spellId)
+	local icon = eventInfo.iconFileID
 
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(name)
 	-- check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
+	check:SetUserData("blizzardOption", true) -- set so visibleSpellDescriptionWidgets doesnt try too much atm
 	check:SetUserData("module", module)
-	check:SetUserData("option", dbKey)
+	check:SetUserData("option", spellId)
 	check:SetUserData("scrollFrame", scrollFrame)
 	check:SetDescription(desc)
 	-- check:SetCallback("OnValueChanged", masterOptionToggled)

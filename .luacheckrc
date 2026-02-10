@@ -196,6 +196,7 @@ files["Options/Options.lua"].ignore = {
 	"113/C_UI",
 	"113/CallErrorHandler",
 	"113/securecallfunction",
+	"113/C_EncounterEvents",
 }
 files["Options/Sharing.lua"].ignore = {
 	"113/C_EncodingUtil",
