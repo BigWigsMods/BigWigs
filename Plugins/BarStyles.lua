@@ -151,6 +151,7 @@ if BigWigsLoader.isRetail then
 		name:SetPoint("RIGHT", duration, "LEFT", -10, 0)
 	end
 
+	local L = BigWigsAPI:GetLocale("BigWigs")
 	BigWigsAPI:RegisterBarStyle("Blizzard", {
 		apiVersion = 1,
 		version = 1,
@@ -162,7 +163,7 @@ if BigWigsLoader.isRetail then
 		fontOutline = "OUTLINE",
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
-		GetStyleName = function() return "XX Blizzard" end,
+		GetStyleName = function() return L.bigWigsBarStyleName_Blizzard end,
 	})
 end
 
