@@ -58,6 +58,29 @@ function mod:GetOptions() -- SetOption:skip-unused
 	}
 end
 
+function mod:GetBlizzardOptions()
+	return {
+		128,
+		130,
+		134,
+		138,
+		161,
+		218,
+		272,
+		273,
+		384,
+		385,
+		417,
+		418,
+		482,
+		483,
+		494,
+		495,
+		497,
+		500
+	}
+end
+
 function mod:OnEngage()
 	self:Message("stages", "yellow", mod.displayName .. " engaged", false)
 end

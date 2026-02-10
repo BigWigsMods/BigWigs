@@ -58,6 +58,33 @@ function mod:GetOptions() -- SetOption:skip-unused
 	}
 end
 
+function mod:GetBlizzardOptions()
+	return {
+		255,
+		256,
+		257,
+		258,
+		259,
+		260,
+		261,
+		262,
+		263,
+		362,
+		363,
+		364,
+		433,
+		434,
+		435,
+		436,
+		437,
+		632,
+		636,
+		644,
+		649,
+		650
+	}
+end
+
 function mod:OnRegister()
 
 end

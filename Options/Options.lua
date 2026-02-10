@@ -748,6 +748,49 @@ local function customDropdownValueChanged(widget, _, value)
 	module.db.profile[key] = value or 1
 end
 
+local function getBlizzardToggleOption(scrollFrame, dropdown, module, encounterEventId)
+	-- local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey = encounterEventId
+	local eventInfo = C_EncounterEvents.GetEventInfo(encounterEventId)
+	if not eventInfo then return end
+	local spellId = eventInfo.spellID
+	local name = loader.GetSpellName(spellId)
+	local desc = loader.GetSpellDescription(spellId)
+	local icon = loader.GetSpellTexture(spellId)
+
+	local check = AceGUI:Create("CheckBox")
+	check:SetLabel(name)
+	-- check:SetTriState(true)
+	check:SetRelativeWidth(0.85)
+	check:SetUserData("key", dbKey)
+	check:SetUserData("module", module)
+	check:SetUserData("option", dbKey)
+	check:SetUserData("scrollFrame", scrollFrame)
+	check:SetDescription(desc)
+	-- check:SetCallback("OnValueChanged", masterOptionToggled)
+	check.frame:SetHitRectInsets(0, 250, 0, 0) -- Reduce checkbox "hit" area
+	check:SetCallback("OnRelease", function(widget) widget.frame:SetHitRectInsets(0, 0, 0, 0) end) -- Reset hit area to default
+	check:SetValue(eventInfo.enabled)
+	check:SetDisabled(true) -- until we do something with it
+	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue and :SetDisabled so it's not overwritten
+	check.desc:SetTextColor(1, 1, 1) -- After :SetValue and :SetDisabled so it's not overwritten
+	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
+
+	visibleSpellDescriptionWidgets[check] = spellId
+	return check
+
+	-- local button = AceGUI:Create("Button")
+	-- button:SetText(">>")
+	-- button:SetRelativeWidth(0.15)
+	-- button:SetUserData("scrollFrame", scrollFrame)
+	-- button:SetUserData("dropdown", dropdown)
+	-- button:SetUserData("module", module)
+	-- button:SetUserData("bossOption", bossOption)
+	-- button:SetCallback("OnClick", buttonClicked)
+
+	-- return check, button
+end
+
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
@@ -1175,16 +1218,22 @@ local function toggleOptionsTabSelected(widget, callback, tab)
 	local scrollFrame = widget:GetUserData("scrollFrame")
 	local dropdown = widget:GetUserData("dropdown")
 	local tabOptions = widget:GetUserData("tabOptions")
-	for i, option in next, tabOptions[tab] do
-		local o = option
-		if type(o) == "table" then o = option[1] end
-		if module.optionHeaders and module.optionHeaders[o] then
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.optionHeaders[o])
-			header:SetFullWidth(true)
-			widget:AddChild(header)
+	if tab == "blizzard" then -- Different toggle rules.
+		for _, v in next, tabOptions[tab] do
+			widget:AddChildren(getBlizzardToggleOption(scrollFrame, dropdown, module, v))
 		end
-		widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+	else
+		for i, option in next, tabOptions[tab] do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if module.optionHeaders and module.optionHeaders[o] then
+				local header = AceGUI:Create("Heading")
+				header:SetText(module.optionHeaders[o])
+				header:SetFullWidth(true)
+				widget:AddChild(header)
+			end
+			widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+		end
 	end
 
 	-- Store last active tab
@@ -1374,7 +1423,7 @@ local function populateToggleOptions(widget, module)
 		end
 	end
 
-	if #tabs > 0 then -- tabs!
+	if module.GetBlizzardOptions or #tabs > 0 then -- tabs!
 		local generalTabExists = nil
 		local tabbedOptions = {}
 		local tabInfo, tabOptions = {}, {}
@@ -1403,6 +1452,11 @@ local function populateToggleOptions(widget, module)
 				tabOptions[generalTabExists] = tabOptions[generalTabExists] or {}
 				table.insert(tabOptions[generalTabExists], option)
 			end
+		end
+
+		if module.GetBlizzardOptions then
+			table.insert(tabInfo, { text = "|A:gmchat-icon-blizz:18:18|a Blizzard", value = "blizzard" })
+			tabOptions["blizzard"] = module:GetBlizzardOptions()
 		end
 
 		local tabsWidget = AceGUI:Create("TabGroup")
