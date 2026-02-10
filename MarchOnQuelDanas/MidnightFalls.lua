@@ -35,6 +35,30 @@ mod:SetPrivateAuraSounds({
 	{1266113, 1266627, sound = "info"}, -- Tochbrearer
 	{1253770, 1253104, sound = "info"}, -- Dawnlight Barrier
 })
+mod:SetBlizzardEncounterEvents({
+	255,
+	256,
+	257,
+	258,
+	259,
+	260,
+	261,
+	262,
+	263,
+	362,
+	363,
+	364,
+	433,
+	434,
+	435,
+	436,
+	437,
+	632,
+	636,
+	644,
+	649,
+	650
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -55,33 +79,6 @@ mod:SetPrivateAuraSounds({
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
-	}
-end
-
-function mod:GetBlizzardOptions()
-	return {
-		255,
-		256,
-		257,
-		258,
-		259,
-		260,
-		261,
-		262,
-		263,
-		362,
-		363,
-		364,
-		433,
-		434,
-		435,
-		436,
-		437,
-		632,
-		636,
-		644,
-		649,
-		650
 	}
 end
 

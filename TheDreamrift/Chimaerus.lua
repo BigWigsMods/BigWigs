@@ -20,7 +20,26 @@ mod:SetPrivateAuraSounds({
 	{1246653, sound = "none"}, -- Caustic Phelgm
 	{1272726, sound = "alarm"}, -- Rending Tear
 })
-
+mod:SetBlizzardEncounterEvents({
+	48,
+	49,
+	50,
+	51,
+	53,
+	117,
+	118,
+	119,
+	126,
+	149,
+	170,
+	208,
+	217,
+	307,
+	353,
+	431,
+	458,
+	555
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -40,44 +59,21 @@ mod:SetPrivateAuraSounds({
 
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
-		"stages",
+	-- 	"stages",
 
-		1246621, -- Caustic Phelgm
-		1272726, -- Rending Tear
-		1262289, -- Alndust Upheaval
-		1251021, -- Rift Emergence
-		1257085, -- Consuming Miasma
-		1245396, -- Consume
+	-- 	1246621, -- Caustic Phelgm
+	-- 	1272726, -- Rending Tear
+	-- 	1262289, -- Alndust Upheaval
+	-- 	1251021, -- Rift Emergence
+	-- 	1257085, -- Consuming Miasma
+	-- 	1245396, -- Consume
 
-		-- 1272966, -- Stage Two
-		1245452, -- Corrupted Devastation
-		1245404, -- Ravenous Dive
-	}, {
-		[1246621] = -32998, -- Stage One: Insatiable Hunger
-		[1245452] = -33000, -- Stage Two: To the Skies
-	}
-end
-
-function mod:GetBlizzardOptions()
-	return {
-		48,
-		49,
-		50,
-		51,
-		53,
-		117,
-		118,
-		119,
-		126,
-		149,
-		170,
-		208,
-		217,
-		307,
-		353,
-		431,
-		458,
-		555
+	-- 	-- 1272966, -- Stage Two
+	-- 	1245452, -- Corrupted Devastation
+	-- 	1245404, -- Ravenous Dive
+	-- }, {
+	-- 	[1246621] = -32998, -- Stage One: Insatiable Hunger
+	-- 	[1245452] = -33000, -- Stage Two: To the Skies
 	}
 end
 

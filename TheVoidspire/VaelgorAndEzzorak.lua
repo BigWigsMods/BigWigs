@@ -25,6 +25,21 @@ mod:SetPrivateAuraSounds({
 	{1248865, 1249595, sound = "info"}, -- Radiant Barrier
 	1270497, -- Shadowmark
 })
+mod:SetBlizzardEncounterEvents({
+	101,
+	102,
+	103,
+	104,
+	105,
+	219,
+	220,
+	221,
+	377,
+	378,
+	379,
+	380,
+	381
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -45,39 +60,21 @@ mod:SetPrivateAuraSounds({
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
-		1249748, -- Midnight Flames
-		1248847, -- Radiant Barrier
+	-- 	1249748, -- Midnight Flames
+	-- 	1248847, -- Radiant Barrier
 
-		-- Vaelgor
-		{1244221, "PRIVATE"}, -- Dread Breath
-		1262623, -- Nullbeam
-		1265131, -- Vaelwing
+	-- 	-- Vaelgor
+	-- 	{1244221, "PRIVATE"}, -- Dread Breath
+	-- 	1262623, -- Nullbeam
+	-- 	1265131, -- Vaelwing
 
-		-- Ezzorak
-		1244917, -- Void Howl
-		1245391, -- Gloom
-		1245645, -- Rakfang
-	}, {
-		[1244221] = -33241, -- Vaelgor
-		[1244917] = -33255, -- Ezzorak
-	}
-end
-
-function mod:GetBlizzardOptions()
-	return {
-		101,
-		102,
-		103,
-		104,
-		105,
-		219,
-		220,
-		221,
-		377,
-		378,
-		379,
-		380,
-		381
+	-- 	-- Ezzorak
+	-- 	1244917, -- Void Howl
+	-- 	1245391, -- Gloom
+	-- 	1245645, -- Rakfang
+	-- }, {
+	-- 	[1244221] = -33241, -- Vaelgor
+	-- 	[1244917] = -33255, -- Ezzorak
 	}
 end
 

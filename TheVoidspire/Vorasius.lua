@@ -15,6 +15,15 @@ mod:SetPrivateAuraSounds({
 	{1243220, 1243270, sound = "underyou"}, -- Dark Goo
 	1241844, -- Smashed
 })
+mod:SetBlizzardEncounterEvents({
+	59,
+	60,
+	61,
+	62,
+	63,
+	133,
+	557
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -36,23 +45,11 @@ function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 
-		1260046, -- Primoridal Roar
-		1241836, -- Smashing Frenzy
-		1254199, -- Parasite Expulsion
-		1243853, -- Void Breath
-		1258967, -- Focused Aggression
-	}
-end
-
-function mod:GetBlizzardOptions()
-	return {
-		59,
-		60,
-		61,
-		62,
-		63,
-		133,
-		557
+		-- 1260046, -- Primoridal Roar
+		-- 1241836, -- Smashing Frenzy
+		-- 1254199, -- Parasite Expulsion
+		-- 1243853, -- Void Breath
+		-- 1258967, -- Focused Aggression
 	}
 end
 

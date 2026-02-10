@@ -22,6 +22,26 @@ mod:SetPrivateAuraSounds({
 	{1242803, sound = "underyou"}, -- Light Flames
 	{1242815, sound = "underyou"}, -- Void Flames
 })
+mod:SetBlizzardEncounterEvents({
+	128,
+	130,
+	134,
+	138,
+	161,
+	218,
+	272,
+	273,
+	384,
+	385,
+	417,
+	418,
+	482,
+	483,
+	494,
+	495,
+	497,
+	500
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -43,41 +63,18 @@ function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 
-		1241282, -- Embers of Del'ren
-		1242981, -- Radiant Echoes
-		1260763, -- Guardian's Edict
-		1244344, -- Eternal Burns
-		1242260, -- Infused Quills
-		1246709, -- Death Drop
+	-- 	1241282, -- Embers of Del'ren
+	-- 	1242981, -- Radiant Echoes
+	-- 	1260763, -- Guardian's Edict
+	-- 	1244344, -- Eternal Burns
+	-- 	1242260, -- Infused Quills
+	-- 	1246709, -- Death Drop
 
-		1241313, -- Rebirth
-		1242792, -- Incubation of Flames
-	}, {
-		[1241282] = -33025, -- Stage One: Phoenix Reborn
-		[1241313] = -32160, -- Stage Two: Ashen Shell
-	}
-end
-
-function mod:GetBlizzardOptions()
-	return {
-		128,
-		130,
-		134,
-		138,
-		161,
-		218,
-		272,
-		273,
-		384,
-		385,
-		417,
-		418,
-		482,
-		483,
-		494,
-		495,
-		497,
-		500
+	-- 	1241313, -- Rebirth
+	-- 	1242792, -- Incubation of Flames
+	-- }, {
+	-- 	[1241282] = -33025, -- Stage One: Phoenix Reborn
+	-- 	[1241313] = -32160, -- Stage Two: Ashen Shell
 	}
 end
 
