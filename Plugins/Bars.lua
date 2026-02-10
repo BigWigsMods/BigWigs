@@ -65,7 +65,7 @@ plugin.defaultDB = {
 	spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
 	spellIndicatorsSize = 4,
 	spellIndicatorsPosition = "LEFT",
-	spellIndicatorsOffset = 4,
+	spellIndicatorsOffset = 2,
 	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
 	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
 }
@@ -1093,6 +1093,7 @@ end
 
 do
 	local function OnSizeChanged(self, width, height)
+		if not self:IsShown() then return end
 		width = math.floor(width+0.5)
 		height = math.floor(height+0.5)
 		if self == normalAnchor then
