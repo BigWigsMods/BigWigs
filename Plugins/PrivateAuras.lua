@@ -18,7 +18,7 @@ local db
 local anchors = { player = {}, other = {} }
 local inConfigureMode = false
 
-local GetAnchorUnitToken, UpdateTestAura
+local GetUnitToken, UpdateTestAura
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -29,8 +29,6 @@ plugin.defaultDB = {
 
 	player = {
 		disabled = false,
-		targetType = "player",
-		unitToken = "player",
 
 		size = 64,
 		spacing = 6,
@@ -49,8 +47,6 @@ plugin.defaultDB = {
 	},
 	other = {
 		disabled = true,
-		targetType = "tank",
-		unitToken = "",
 
 		size = 64,
 		spacing = 6,
@@ -67,7 +63,21 @@ plugin.defaultDB = {
 		anchorYOffset = -150,
 		anchorRelativeTo = "UIParent",
 	},
+	otherPlayerType = "tank",
+	otherPlayerName = "",
 }
+
+local function CopyTable(settingsTable)
+	local copy = {}
+	for key, value in next, settingsTable do
+		if type(value) == "table" then
+			copy[key] = CopyTable(value)
+		else
+			copy[key] = value
+		end
+	end
+	return copy
+end
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -77,14 +87,18 @@ local function updateProfile()
 		if defaultType == "nil" then
 			db[k] = nil
 		elseif type(v) ~= defaultType then
-			db[k] = plugin.defaultDB[k]
+			if defaultType == "table" then
+				db[k] = CopyTable(plugin.defaultDB[k])
+			else
+				db[k] = plugin.defaultDB[k]
+			end
 		elseif type(v) == "table" then
-			for kk, vv in next, db[k] do
-				defaultType = type(plugin.defaultDB[k][kk])
+			for subKey, subValue in next, db[k] do
+				defaultType = type(plugin.defaultDB[k][subKey])
 				if defaultType == "nil" then
-					db[k][kk] = nil
-				elseif type(vv) ~= defaultType then
-					db[k][kk] = plugin.defaultDB[k][kk]
+					db[k][subKey] = nil
+				elseif type(subValue) ~= defaultType then
+					db[k][subKey] = plugin.defaultDB[k][subKey]
 				end
 			end
 		end
@@ -105,7 +119,7 @@ end
 --
 
 do
-	local function disabled(info)
+	local function IsAnchorDisabled(info)
 		local key = info[#info]
 		local unitType = info[#info-1]
 		local optionDB = db[unitType]
@@ -121,6 +135,12 @@ do
 			return optionDB.anchorRelativeTo == plugin.defaultDB[unitType].anchorRelativeTo
 		end
 	end
+	local roleIcons = {
+		["TANK"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t",
+		["HEALER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer:0|t",
+		["DAMAGER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:0|t",
+		["NONE"] = "",
+	}
 
 	plugin.pluginOptions = {
 		type = "group",
@@ -193,11 +213,6 @@ do
 							db.player.disabled = value
 							updateProfile()
 						end,
-						-- confirm = function(_, value)
-						-- 	if value then
-						-- 		return L.disableDesc:format(L.privateAuras)
-						-- 	end
-						-- end,
 						width = 1.6,
 						order = 0.6,
 					},
@@ -212,7 +227,7 @@ do
 						min = 24, max = 512, step = 1,
 						width = 1.6,
 						order = 1,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					spacing = {
 						type = "range",
@@ -220,7 +235,7 @@ do
 						min = 0, max = 50, step = 1,
 						width = 1.6,
 						order = 2,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					showBorder = {
 						type = "toggle",
@@ -228,21 +243,21 @@ do
 						desc = L.showBorderDesc,
 						width = 1.6,
 						order = 3,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						width = 1.6,
 						order = 4,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					showCountdownText = {
 						type = "toggle",
 						name = L.showCountdownText,
 						width = 1.6,
 						order = 5,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					countdownTextScale = {
 						type = "range",
@@ -250,14 +265,14 @@ do
 						min = 0.1, max = 4, step = 0.1, isPercent = true,
 						width = 1.6,
 						order = 6,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					-- showDurationText = {
 					-- 	type = "toggle",
 					-- 	name = L.showDurationText,
 					-- 	width = 1.6,
 					-- 	order = 7,
-					-- 	disabled = disabled,
+					-- 	disabled = IsAnchorDisabled,
 					-- },
 					growthDirection = {
 						type = "select",
@@ -270,7 +285,7 @@ do
 						},
 						width = 1.6,
 						order = 8,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					line1 = {
 						type = "header",
@@ -315,11 +330,6 @@ do
 							db.other.disabled = value
 							updateProfile()
 						end,
-						-- confirm = function(_, value)
-						-- 	if value then
-						-- 		return L.disableDesc:format(L.privateAuras)
-						-- 	end
-						-- end,
 						width = 1.6,
 						order = 0.2,
 					},
@@ -328,36 +338,60 @@ do
 						name = "",
 						order = 0.3,
 					},
-					targetType = {
+					otherPlayerType = {
 						type = "select",
 						name = "XX Player Target",
 						values = {
-							tank = "XX Co-Tank",
+							tank = "XX Other Tank",
 							player = "XX Player Name",
 						},
-						disabled = disabled,
+						get = function() return db.otherPlayerType end,
+						set = function(_, value)
+							db.otherPlayerType = value
+							db.otherPlayerName = ""
+							plugin:UpdateAnchors("other")
+						end,
+						disabled = IsAnchorDisabled,
 						-- width = 1.6,
 						order = 0.4,
 					},
-					unitToken = {
-						type = "input",
-						name = "",
-						hidden = function()
-							return db.other.targetType == "tank"
+					otherPlayerName = {
+						type = "select",
+						name = "XX Player Name",
+						values = function()
+							local playerList = {}
+							local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+							for unit in plugin:IterateGroup(true) do
+								if not UnitInPartyIsAI(unit) then
+									local name = plugin:UnitName(unit)
+									local _, class = UnitClass(unit)
+									local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+									playerList[name] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+								end
+							end
+							return playerList
 						end,
-						disabled = disabled,
+						get = function() return db.otherPlayerName end,
+						set = function(_, value)
+							db.otherPlayerName = value
+							plugin:UpdateAnchors("other")
+						end,
+						hidden = function()
+							return db.otherPlayerType == "tank"
+						end,
+						disabled = IsAnchorDisabled,
 						width = 2.2,
 						order = 0.5,
 					},
-					targetTypeIsTankLabel = {
+					otherPlayerIsTankLabel = {
 						type = "description",
 						name = function()
-							return ("XX Show private auras that are on the other tank when you are a tank. (Current: %s)"):format(GetAnchorUnitToken("tank") or L.none)
+							return ("XX Show private auras that are on the other tank when you are a tank. (Current: %s)"):format(GetUnitToken("tank") or L.none)
 						end,
 						hidden = function()
-							return db.other.targetType == "player"
+							return db.otherPlayerType == "player"
 						end,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 						width = 2.2,
 						order = 0.5,
 					},
@@ -372,7 +406,7 @@ do
 						min = 24, max = 512, step = 1,
 						width = 1.6,
 						order = 1,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					spacing = {
 						type = "range",
@@ -380,7 +414,7 @@ do
 						min = 0, max = 50, step = 1,
 						width = 1.6,
 						order = 2,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					showBorder = {
 						type = "toggle",
@@ -388,21 +422,21 @@ do
 						desc = L.showBorderDesc,
 						width = 1.6,
 						order = 3,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						width = 1.6,
 						order = 4,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					showCountdownText = {
 						type = "toggle",
 						name = L.showCountdownText,
 						width = 1.6,
 						order = 5,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					countdownTextScale = {
 						type = "range",
@@ -410,14 +444,14 @@ do
 						min = 0.1, max = 4, step = 0.1, isPercent = true,
 						width = 1.6,
 						order = 6,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					-- showDurationText = {
 					-- 	type = "toggle",
 					-- 	name = L.showDurationText,
 					-- 	width = 1.6,
 					-- 	order = 7,
-					-- 	disabled = disabled,
+					-- 	disabled = IsAnchorDisabled,
 					-- },
 					growthDirection = {
 						type = "select",
@@ -430,7 +464,7 @@ do
 						},
 						width = 1.6,
 						order = 8,
-						disabled = disabled,
+						disabled = IsAnchorDisabled,
 					},
 					line1 = {
 						type = "header",
@@ -478,7 +512,7 @@ do
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 1,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorYOffset = {
 								type = "range",
@@ -487,7 +521,7 @@ do
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 2,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorRelativeTo = {
 								type = "input",
@@ -522,7 +556,7 @@ do
 								end,
 								width = 3.2,
 								order = 3,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorPoint = {
 								type = "select",
@@ -530,7 +564,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 4,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorRelPoint = {
 								type = "select",
@@ -538,7 +572,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 5,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 						},
 					},
@@ -565,7 +599,7 @@ do
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 1,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorYOffset = {
 								type = "range",
@@ -574,7 +608,7 @@ do
 								min = -2048, max = 2048, step = 1,
 								width = 3.2,
 								order = 2,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorRelativeTo = {
 								type = "input",
@@ -609,7 +643,7 @@ do
 								end,
 								width = 3.2,
 								order = 3,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorPoint = {
 								type = "select",
@@ -617,7 +651,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 4,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 							anchorRelPoint = {
 								type = "select",
@@ -625,7 +659,7 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								width = 1.6,
 								order = 5,
-								disabled = disabled,
+								disabled = IsAnchorDisabled,
 							},
 						},
 					},
@@ -748,7 +782,6 @@ end
 local function UpdateAnchorPosition(anchor)
 	local anchorDB = anchor.db
 
-	local scale = anchor:GetScale()
 	anchor:ClearAllPoints()
 
 	local index = anchor:GetID()
@@ -756,7 +789,7 @@ local function UpdateAnchorPosition(anchor)
 		local relativeTo = anchorDB.anchorRelativeTo
 		local point, relPoint = anchorDB.anchorPoint, anchorDB.anchorRelPoint
 		local x, y = anchorDB.anchorXOffset, anchorDB.anchorYOffset
-		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
+		anchor:SetPoint(point, relativeTo, relPoint, x, y)
 	else
 		local relativeTo = anchors[anchor.unitType][index - 1]
 		local point, relPoint
@@ -774,20 +807,20 @@ local function UpdateAnchorPosition(anchor)
 			point, relPoint = "TOP", "BOTTOM"
 			y = -anchorDB.spacing
 		end
-		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
+		anchor:SetPoint(point, relativeTo, relPoint, x, y)
 	end
 end
 
-function GetAnchorUnitToken(targetType, unitToken)
+function GetUnitToken(targetType, playerName)
 	-- XXX at what point does UnitIsUnit start to return a secret?
 	if targetType == "player" then
 		for unit in plugin:IterateGroup(true) do
-			if UnitIsUnit(unitToken, unit) then
+			if UnitIsUnit(playerName, unit) then
 				return unit
 			end
 		end
 		return nil
-	elseif targetType == "tank" and UnitGroupRolesAssigned("player") == "TANK" then
+	elseif targetType == "tank" then
 		for unit in plugin:IterateGroup(true) do
 			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
 				return unit
@@ -837,7 +870,7 @@ function plugin:UpdateAnchors(unitType)
 	if not anchorDB.showBorder then
 		borderScale = -10000 -- hide the border
 	end
-	local unitToken = GetAnchorUnitToken(anchorDB.targetType, anchorDB.unitToken)
+	local unitToken = unitType == "player" and unitType or GetUnitToken(db.otherPlayerType, db.otherPlayerName)
 
 	for index = 1, MAX_AURAS do
 		local anchor = anchors[unitType][index]
@@ -972,7 +1005,7 @@ do
 		aura.dispelType = dispelType
 		-- aura.timeLeft = duration
 		aura.expirationTime = expirationTime
-		aura.timer = C_Timer.NewTimer(duration, function() releaseFrame(aura) end)
+		aura.timer = plugin:ScheduleTimer(function() releaseFrame(aura) end, duration)
 		aura.unitType = unitType
 
 		return aura
