@@ -104,6 +104,8 @@ local barSettingsToExport = {
 	"expHeight",
 	"spellIndicators",
 	"spellIndicatorsSize",
+	"spellIndicatorsPosition",
+	"spellIndicatorsOffset",
 }
 
 local messageSettingsToExport = {
