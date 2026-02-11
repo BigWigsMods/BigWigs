@@ -1611,7 +1611,7 @@ do
 	end
 
 	local initial = true
-	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId)
+	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId, color)
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
@@ -1648,7 +1648,7 @@ do
 			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
 		end
 		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
-		bar:SetColor(colors:GetColor("barColor", module, key))
+		bar:SetColor(eventId and color:GetRGBA() or colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 		bar:SetTextColor(colors:GetColor("barText", module, key))
 		bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
@@ -1683,10 +1683,10 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId)
+	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId, color)
 		if (issecretvalue == nil or not issecretvalue(text)) and not text then text = "" end
 		self:StopSpecificBar(nil, module, text, eventId)
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId)
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, color)
 		bar:SetPauseWhenDone(isApprox)
 		if db.emphasize and time < db.emphasizeTime then
 			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then
