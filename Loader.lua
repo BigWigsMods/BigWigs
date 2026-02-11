@@ -1886,8 +1886,10 @@ do
 				loadAndEnableCore()
 			end
 			loadZone(instanceID)
-			if not public.isRetail then
+			if not public.isRetail then -- Not retail, register target events in instances
 				RegisterUnitTargetEvents()
+			elseif areEventsRegistered then -- Retail, make sure events weren't left registered as we enter the instance
+				UnregisterUnitTargetEvents()
 			end
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
 		else
