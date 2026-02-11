@@ -286,6 +286,7 @@ do
 			name = mn,
 			bigWigsBundled = {
 				[mn] = true,
+				[tww] = true,
 			},
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
