@@ -313,6 +313,9 @@ do
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
+				[2657] = "BigWigs_NerubarPalace", -- XXX temp
+				[2769] = "BigWigs_LiberationOfUndermine", -- XXX temp
+				[2810] = "BigWigs_ManaforgeOmega" -- XXX temp
 			}
 		}
 	else -- Retail
