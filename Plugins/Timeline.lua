@@ -355,7 +355,7 @@ function plugin:StartBars()
 		if info.source == Enum.EncounterTimelineEventSource.EditMode then
 			spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
 		end
-		self:SendMessage("BigWigs_StartBar", nil, nil, spellName, remaining, info.iconFileID, info.maxQueueDuration, info.duration, eventId)
+		self:SendMessage("BigWigs_StartBar", nil, nil, spellName, remaining, info.iconFileID, info.maxQueueDuration, info.duration, eventId, info.color)
 
 		local state = C_EncounterTimeline.GetEventState(eventId)
 		if state == Enum.EncounterTimelineEventState.Paused then
@@ -386,6 +386,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local spellId = eventInfo.spellID
 	local spellName = eventInfo.spellName
 	local icon = eventInfo.iconFileID
+	local color = eventInfo.color
 	-- local roleAndSpellIndicators = eventInfo.icons
 	-- local severity = eventInfo.severity
 	-- local isApproximate = eventInfo.isApproximate
@@ -394,7 +395,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		-- EditMode spells all have the same name
 		spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
 	end
-	self:SendMessage("BigWigs_StartBar", nil, nil, spellName, duration, icon, maxQueueDuration, nil, eventId)
+	self:SendMessage("BigWigs_StartBar", nil, nil, spellName, duration, icon, maxQueueDuration, nil, eventId, color)
 
 	local state = C_EncounterTimeline.GetEventState(eventId)
 	if state == Enum.EncounterTimelineEventState.Paused then
