@@ -1651,7 +1651,7 @@ do
 		local r, g, b, a = colors:GetColor("barColor", module, key)
 		if color then -- color isn't secret, but the values in it are.
 			r, g, b = color:GetRGB()
-			a = 1 -- No alpha is returned, neither from :GetRGBA
+			a = 1 -- No alpha is returned from :GetRGBA
 		end
 		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		bar:SetColor(r, g, b, a)
