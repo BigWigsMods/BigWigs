@@ -175,8 +175,8 @@ public.isTestBuild = IsPublicTestClient() -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isMidnight = build >= 120000
-	public.isBeta = build >= 120001
-	public.isNext = build >= 120001
+	public.isBeta = public.isTestBuild and build >= 120001
+	public.isNext = build >= 120002
 end
 
 -- Version
@@ -313,19 +313,18 @@ do
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
-				[2657] = "BigWigs_NerubarPalace", -- XXX temp
-				[2769] = "BigWigs_LiberationOfUndermine", -- XXX temp
-				[2810] = "BigWigs_ManaforgeOmega" -- XXX temp
 			}
 		}
 	else -- Retail
 		public.currentExpansion = { -- Change on new expansion releases
-			name = tww,
+			name = mn,
 			bigWigsBundled = {
 				[tww] = true,
+				[mn] = true,
 			},
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
+				[lw_mn] = true,
 				[lw_tww] = true,
 				[lw_delves] = true,
 				[lw_cs] = true,
@@ -346,11 +345,22 @@ do
 				[2830] = lw_cs, -- Eco-Dome Al'dani
 				[369] = UnitFactionGroup("player") == "Alliance" and lw_cs or nil, -- Deeprun Tram
 				[1043] = UnitFactionGroup("player") == "Horde" and lw_cs or nil, -- Brawl'gar Arena
+				--[2805] = lw_cs, -- Windrunner Spire
+				--[2811] = lw_cs, -- Magisters' Terrace
+				--[2874] = lw_cs, -- Maisara Caverns
+				--[2915] = lw_cs, -- Nexus-Point Xenas
+				--[2526] = lw_cs, -- Algeth'ar Academy
+				--[1753] = lw_cs, -- Seat of the Triumvirate
+				--[1209] = lw_cs, -- Skyreach
+				--[658] = lw_cs, -- Pit of Saron
 			},
 			zones = {
 				[2657] = "BigWigs_NerubarPalace",
 				[2769] = "BigWigs_LiberationOfUndermine",
-				[2810] = "BigWigs_ManaforgeOmega"
+				[2810] = "BigWigs_ManaforgeOmega",
+				[2939] = "BigWigs_TheDreamrift",
+				[2912] = "BigWigs_TheVoidspire",
+				[2913] = "BigWigs_MarchOnQuelDanas",
 			}
 		}
 	end
@@ -443,9 +453,9 @@ do
 		[2769] = tww, -- Liberation of Undermine
 		[2810] = tww, -- Manaforge Omega
 		--[[ BigWigs: Midnight ]]--
-		[2912] = public.isBeta and mn or nil, -- The Voidspire
-		[2913] = public.isBeta and mn or nil, -- March on Quel'Danas
-		[2939] = public.isBeta and mn or nil, -- The Dreamrift
+		[2912] = mn, -- The Voidspire
+		[2913] = mn, -- March on Quel'Danas
+		[2939] = mn, -- The Dreamrift
 
 
 		--[[ LittleWigs: Classic ]]--
@@ -603,45 +613,45 @@ do
 		[369] = (public.isRetail and UnitFactionGroup("player") == "Alliance") and lw_tww or nil, -- Deeprun Tram
 		[1043] = (public.isRetail and UnitFactionGroup("player") == "Horde") and lw_tww or nil, -- Brawl'gar Arena
 		--[[ LittleWigs: The War Within Delves ]]--
-		[2664] = public.isBeta and lw_tww or lw_delves, -- Fungal Folly
-        [2679] = public.isBeta and lw_tww or lw_delves, -- Mycomancer Cavern
-        [2680] = public.isBeta and lw_tww or lw_delves, -- Earthcrawl Mines
-        [2681] = public.isBeta and lw_tww or lw_delves, -- Kriegval's Rest
-        [2682] = public.isBeta and lw_tww or lw_delves, -- Zekvir's Lair
-        [2683] = public.isBeta and lw_tww or lw_delves, -- The Waterworks
-        [2684] = public.isBeta and lw_tww or lw_delves, -- The Dread Pit
-        [2685] = public.isBeta and lw_tww or lw_delves, -- Skittering Breach
-        [2686] = public.isBeta and lw_tww or lw_delves, -- Nightfall Sanctum
-        [2687] = public.isBeta and lw_tww or lw_delves, -- The Sinkhole
-        [2688] = public.isBeta and lw_tww or lw_delves, -- The Spiral Weave
-        [2689] = public.isBeta and lw_tww or lw_delves, -- Tak-Rethan Abyss
-        [2690] = public.isBeta and lw_tww or lw_delves, -- The Underkeep
-        [2803] = public.isBeta and lw_tww or lw_delves, -- Archival Assault
-        [2815] = public.isBeta and lw_tww or lw_delves, -- Excavation Site 9
-        [2826] = public.isBeta and lw_tww or lw_delves, -- Sidestreet Sluice
-        [2831] = public.isBeta and lw_tww or lw_delves, -- Demolition Dome
-        [2951] = public.isBeta and lw_tww or lw_delves, -- Voidrazor Sanctuary
+		[2664] = lw_tww, -- Fungal Folly
+		[2679] = lw_tww, -- Mycomancer Cavern
+		[2680] = lw_tww, -- Earthcrawl Mines
+		[2681] = lw_tww, -- Kriegval's Rest
+		[2682] = lw_tww, -- Zekvir's Lair
+		[2683] = lw_tww, -- The Waterworks
+		[2684] = lw_tww, -- The Dread Pit
+		[2685] = lw_tww, -- Skittering Breach
+		[2686] = lw_tww, -- Nightfall Sanctum
+		[2687] = lw_tww, -- The Sinkhole
+		[2688] = lw_tww, -- The Spiral Weave
+		[2689] = lw_tww, -- Tak-Rethan Abyss
+		[2690] = lw_tww, -- The Underkeep
+		[2803] = lw_tww, -- Archival Assault
+		[2815] = lw_tww, -- Excavation Site 9
+		[2826] = lw_tww, -- Sidestreet Sluice
+		[2831] = lw_tww, -- Demolition Dome
+		[2951] = lw_tww, -- Voidrazor Sanctuary
 		--[[ LittleWigs: Midnight ]]--
-		[2805] = public.isBeta and lw_mn or nil, -- Windrunner Spire
-		[2811] = public.isBeta and lw_mn or nil, -- Magisters' Terrace
-		[2813] = public.isBeta and lw_mn or nil, -- Murder Row
-		[2825] = public.isBeta and lw_mn or nil, -- Den of Nalorakk
-		[2859] = public.isBeta and lw_mn or nil, -- The Blinding Vale
-		[2874] = public.isBeta and lw_mn or nil, -- Maisara Caverns
-		[2915] = public.isBeta and lw_mn or nil, -- Nexus-Point Xenas
-		[2923] = public.isBeta and lw_mn or nil, -- Voidscar Arena
+		[2805] = lw_mn, -- Windrunner Spire
+		[2811] = lw_mn, -- Magisters' Terrace
+		[2813] = lw_mn, -- Murder Row
+		[2825] = lw_mn, -- Den of Nalorakk
+		[2859] = lw_mn, -- The Blinding Vale
+		[2874] = lw_mn, -- Maisara Caverns
+		[2915] = lw_mn, -- Nexus-Point Xenas
+		[2923] = lw_mn, -- Voidscar Arena
 		--[[ LittleWigs: Midnight Delves ]]--
-		[2933] = public.isBeta and lw_delves or nil, -- Collegiate Calamity
-		[2952] = public.isBeta and lw_delves or nil, -- The Shadow Enclave
-		[2953] = public.isBeta and lw_delves or nil, -- Parhelion Plaza
-		[2961] = public.isBeta and lw_delves or nil, -- Twilight Crypts
-		[2962] = public.isBeta and lw_delves or nil, -- Atal'Aman
-		[2963] = public.isBeta and lw_delves or nil, -- The Grudge Pit
-		[2964] = public.isBeta and lw_delves or nil, -- The Gulf of Memory
-		[2965] = public.isBeta and lw_delves or nil, -- Sunkiller Sanctum
-		[2966] = public.isBeta and lw_delves or nil, -- Torment's Rise
-		[2979] = public.isBeta and lw_delves or nil, -- Shadowguard Point
-		[3003] = public.isBeta and lw_delves or nil, -- The Darkway
+		[2933] = lw_delves, -- Collegiate Calamity
+		[2952] = lw_delves, -- The Shadow Enclave
+		[2953] = lw_delves, -- Parhelion Plaza
+		[2961] = lw_delves, -- Twilight Crypts
+		[2962] = lw_delves, -- Atal'Aman
+		[2963] = lw_delves, -- The Grudge Pit
+		[2964] = lw_delves, -- The Gulf of Memory
+		[2965] = lw_delves, -- Sunkiller Sanctum
+		[2966] = lw_delves, -- Torment's Rise
+		[2979] = lw_delves, -- Shadowguard Point
+		[3003] = lw_delves, -- The Darkway
 	}
 	public.remappedZones = {
 		[2827] = 2213, -- Horrific Vision of Stormwind (Revisited) -> Horrific Vision of Stormwind

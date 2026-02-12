@@ -1606,6 +1606,7 @@ do
 			"Shadowlands",
 			"Dragonflight",
 			"TheWarWithin",
+			"Midnight",
 		}
 	end
 
