@@ -928,7 +928,7 @@ do
 	local function GetUnitToken()
 		if db.otherPlayerType == "player" then
 			local playerName = db.otherPlayerName
-			if playerName ~= "" then
+			if playerName ~= "" and UnitExists(playerName) then
 				for unit in plugin:IterateGroup(true) do
 					if UnitIsUnit(playerName, unit) then
 						return unit
