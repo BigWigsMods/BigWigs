@@ -1698,7 +1698,7 @@ do
 		end
 	end
 
-	local currentlyOpenContainer
+	local currentlyOpenContainer, openPath
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
 		widget:ReleaseChildren()
@@ -1721,6 +1721,11 @@ do
 			currentlyOpenContainer = container
 			acd:Open("BigWigs", container)
 
+			if openPath then
+				container.children[1]:SelectByPath(unpack(openPath))
+				openPath = nil
+			end
+
 			widget:AddChild(container)
 		elseif value == "tools" then
 			configFrame:SetTitle("BigWigs")
@@ -1734,6 +1739,11 @@ do
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
 			currentlyOpenContainer = container
 			acd:Open("BigWigsTools", container)
+
+			if openPath then
+				container.children[1]:SelectByPath(unpack(openPath))
+				openPath = nil
+			end
 
 			widget:AddChild(container)
 		else
@@ -1881,7 +1891,14 @@ do
 	end
 	acr.RegisterCallback(options, "ConfigTableChange")
 
-	function options:OpenConfig()
+	local allowedDirectOpens = {
+		["PrivateAuras"] = {tab = "options", path = {"general", "PrivateAuras"}},
+	}
+	function options:OpenConfig(directOpen)
+		if allowedDirectOpens[directOpen] then
+			lastTabSelected = allowedDirectOpens[directOpen].tab
+			openPath = allowedDirectOpens[directOpen].path
+		end
 		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
 
 		local bw = AceGUI:Create("Frame")
