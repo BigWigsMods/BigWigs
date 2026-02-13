@@ -92,7 +92,7 @@ do
 					if value then
 						plugin:StartBars()
 					else
-						plugin:StopBars()
+						plugin:OnPluginDisable()
 					end
 				end,
 				width = "full",
@@ -325,7 +325,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnPluginDisable")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -340,10 +339,14 @@ function plugin:OnPluginEnable()
 	if db.show_messages then
 		C_CVar.SetCVar("encounterWarningsEnabled", "0")
 	end
+
+	self:StartBars()
 end
 
-function plugin:BigWigs_OnPluginDisable()
-	self:StopBars()
+function plugin:OnPluginDisable()
+	for _, eventId in next, C_EncounterTimeline.GetEventList() do
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+	end
 end
 
 function plugin:StartBars()
@@ -361,12 +364,6 @@ function plugin:StartBars()
 		if state == Enum.EncounterTimelineEventState.Paused then
 			self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
 		end
-	end
-end
-
-function plugin:StopBars()
-	for _, eventId in next, C_EncounterTimeline.GetEventList() do
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
 	end
 end
 
