@@ -942,16 +942,23 @@ L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in
 
 --L.createTestAura = "Create Test Aura"
 --L.showDispelType = "Show Dispel Type Indicator"
---L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.|n|n|cffffd200Note: This is a global option for all private aura frames.|r"
+--L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.\n\n|cffffd200Note: This is a global option for all private aura frames.|r"
 --L.iconSize = "Icon Size"
 --L.iconSpacing = "Icon Spacing"
 --L.showCooldown = "Show Cooldown Spiral"
---L.showCountdownText = "Show Cooldown Text"
---L.countdownTextScale = "Countdown Text Scale"
---L.showDurationText = "Show Duration Text"
+--L.showCooldownText = "Show Cooldown Text"
+--L.cooldownTextScale = "Cooldown Text Scale"
 --L.growthDirection = "Icon Growth Direction"
+--L.aurasOnYou = "Auras On You"
+--L.aurasOnYouDesc = "Customize the icons for auras that apply to you.\n\n"
+--L.aurasOnAnother = "Auras On Another"
+--L.aurasOnAnotherDesc = "Choose a specific player and then customize the icons for auras that apply to them.\n\n"
+--L.chooseAPlayer = "Choose a player"
+--L.theOtherTank = "Automatically find a tank"
+--L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
+--L.playerInYourGroup = "A player in your group"
 
---L.privateAurasTestAnchorText = "PA%d"
+--L.privateAurasTestAnchorText = "PA %d"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
