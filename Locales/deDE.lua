@@ -961,27 +961,27 @@ L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in
 -- PrivateAuras.lua
 --
 
---L.privateAuras = "Private Auras"
+L.privateAuras = "Private Auren"
 
---L.createTestAura = "Create Test Aura"
---L.showDispelType = "Show Dispel Type Indicator"
---L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.\n\n|cffffd200Note: This is a global option for all private aura frames.|r"
---L.iconSize = "Icon Size"
---L.iconSpacing = "Icon Spacing"
---L.showCooldown = "Show Cooldown Spiral"
---L.showCooldownText = "Show Cooldown Text"
---L.cooldownTextScale = "Cooldown Text Scale"
---L.growthDirection = "Icon Growth Direction"
---L.aurasOnYou = "Auras On You"
---L.aurasOnYouDesc = "Customize the icons for auras that apply to you.\n\n"
---L.aurasOnAnother = "Auras On Another"
---L.aurasOnAnotherDesc = "Choose a specific player and then customize the icons for auras that apply to them.\n\n"
---L.chooseAPlayer = "Choose a player"
---L.theOtherTank = "Automatically find a tank"
---L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
---L.playerInYourGroup = "A player in your group"
+L.createTestAura = "Testaura erstellen"
+L.showDispelType = "Bannhinweise anzeigen"
+L.showDispelTypeDesc = "Zeigt ein Symbol auf der privaten Aura an, wenn ein Banntyp vorhanden ist.\n\n|cffffd200Hinweis: Dies ist eine globale Option für alle Aurafenster.|r"
+L.iconSize = "Symbolgröße"
+L.iconSpacing = "Symbolabstand"
+L.showCooldown = "Abklingzeit Zirkel anzeigen"
+L.showCooldownText = "Abklingzeit Text anzeigen"
+L.cooldownTextScale = "Abklingzeit Text Maßstab"
+L.growthDirection = "Richtung der Symbole"
+L.aurasOnYou = "Auren auf Dir"
+L.aurasOnYouDesc = "Passe die Symbole für Auren auf Dir an.\n\n"
+L.aurasOnAnother = "Auren auf anderen"
+L.aurasOnAnotherDesc = "Wählen einen bestimmten Spieler und passe die Symbole for Auren auf diesem an.\n\n"
+L.chooseAPlayer = "Spieler wählen"
+L.theOtherTank = "Automatisch einen Tank finden"
+L.theOtherTankDesc = "Private Auren auf dem ersten Tank in Deiner Gruppe neben Dir anzeigen. (Aktuell: %s)"
+L.playerInYourGroup = "Ein Spieler in Deiner Gruppe"
 
---L.privateAurasTestAnchorText = "PA %d"
+L.privateAurasTestAnchorText = "PA %d"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
