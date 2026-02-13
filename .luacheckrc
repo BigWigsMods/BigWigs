@@ -157,6 +157,14 @@ files["Plugins/Nameplates.lua"].ignore = {
 	"113/C_NamePlate",
 	"113/C_UI",
 }
+files["Plugins/PrivateAuras.lua"].ignore = {
+	"113/AuraUtil",
+	"113/C_UnitAuras",
+	"113/C_Spell",
+	"113/SecondsToTimeAbbrev",
+	"113/UnitGroupRolesAssigned",
+	"113/UnitInPartyIsAI",
+}
 files["Plugins/Proximity.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
