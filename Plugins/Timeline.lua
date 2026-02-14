@@ -13,7 +13,8 @@ if not plugin then return end
 --
 
 local db = nil
-local trackedEncounterSettings = {}
+local enabledCustomEncounters = {}
+local blockingBlizzardBars = false
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -87,15 +88,15 @@ do
 			},
 			show_custom_timers = {
 				type = "toggle",
-				name = "Show Custom Timers",
-				desc = "When this is enabled, where possible BigWigs will replace Blizzard's encounter timeline timers with its own (improved) timers.",
+				name = L.show_custom_timers,
+				desc = L.show_custom_timers_desc,
 				get = function(info)
 					return db[info[#info]]
 				end,
 				set = function(info, value)
 					db[info[#info]] = value
 					if value then
-						plugin:StopBars()
+						plugin:OnPluginDisable()
 					else
 						plugin:StartBars()
 					end
@@ -105,15 +106,15 @@ do
 			},
 			show_both_timers = {
 				type = "toggle",
-				name = "Show Both",
-				desc = "This will display both Blizzard and BigWigs boss timers simultaneously. use at your own risk, good for PTR and early raid releases.",
+				name = L.show_custom_and_blizzard,
+				desc = L.show_custom_and_blizzard_desc,
 				get = function(info)
 					return db[info[#info]]
 				end,
 				set = function(info, value)
 					db[info[#info]] = value
 					if value then
-						plugin:StopBars()
+						plugin:OnPluginDisable()
 					else
 						plugin:StartBars()
 					end
@@ -367,16 +368,36 @@ end
 -- Initialization
 --
 
-local function checkForBlizzardEncounterWarnings(event, module)
+local function updateBlockingBlizzardBars(force)
+	if force then
+		blockingBlizzardBars = true
+	end
+
+	for encounterID, config in next, enabledCustomEncounters do
+		if config.useCustomTimers then
+			if not blockingBlizzardBars then
+				plugin:OnPluginDisable()
+				blockingBlizzardBars = true
+			end
+			return
+		end
+	end
+	blockingBlizzardBars = false
+	plugin:StartBars()
+end
+
+local function checkCustomEncounterConfig(event, module)
 	local encounterID = module:GetEncounterID()
 	if not encounterID then return end
 
 	if event == "BigWigs_OnBossEngage" or event == "BigWigs_OnBossEngageMidEncounter" then
-		trackedEncounterSettings[encounterID] = {
+		enabledCustomEncounters[encounterID] = {
 			useCustomTimers = module.useCustomTimers,
 		}
+		updateBlockingBlizzardBars(module.useCustomTimers)
 	else -- Wipe, Win, Disable
-		trackedEncounterSettings[encounterID] = nil
+		enabledCustomEncounters[encounterID] = nil
+		updateBlockingBlizzardBars()
 	end
 end
 
@@ -391,11 +412,11 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 
-	self:RegisterMessage("BigWigs_OnBossEngage", checkForBlizzardEncounterWarnings)
-	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", checkForBlizzardEncounterWarnings)
-	self:RegisterMessage("BigWigs_OnBossWin", checkForBlizzardEncounterWarnings)
-	self:RegisterMessage("BigWigs_OnBossWipe", checkForBlizzardEncounterWarnings)
-	self:RegisterMessage("BigWigs_OnBossDisable", checkForBlizzardEncounterWarnings)
+	self:RegisterMessage("BigWigs_OnBossEngage", checkCustomEncounterConfig)
+	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", checkCustomEncounterConfig)
+	self:RegisterMessage("BigWigs_OnBossWin", checkCustomEncounterConfig)
+	self:RegisterMessage("BigWigs_OnBossWipe", checkCustomEncounterConfig)
+	self:RegisterMessage("BigWigs_OnBossDisable", checkCustomEncounterConfig)
 
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -437,17 +458,9 @@ end
 -------------------------------------------------------------------------------
 -- Bars
 
-function plugin:CheckForDisabledBlizzardBars()
-	for encounterID, settings in next, trackedEncounterSettings do
-		if settings.useCustomTimers then
-			return true
-		end
-	end
-end
-
 function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	if not db.show_bars or
-		((db.show_custom_timers and not db.show_both_timers) and self:CheckForDisabledBlizzardBars()) then
+		((db.show_custom_timers and not db.show_both_timers) and blockingBlizzardBars) then
 		return
 	end
 

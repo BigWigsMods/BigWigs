@@ -16,7 +16,6 @@ mod:SetPrivateAuraSounds({
 })
 mod:SetRespawnTime(30)
 mod:SetStage(1)
-mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -79,6 +78,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEncounterStart()
+	self:UseCustomTimers(true)
 	self:SetStage(1)
 
 	manifestMatricesCount = 1
@@ -149,7 +149,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		startedBars[eventInfo.id] = barInfo
 		return
 	end
-	print("Unhandled Event: ", eventInfo.id, " Duration: ", eventInfo.duration, durationRounded, eventInfo.spellName, stage)
+	BigWigsLoader.Print("Unhandled Timeline Event: ", eventInfo.id, " Duration: ", eventInfo.duration, durationRounded, eventInfo.spellName, stage)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
