@@ -980,7 +980,7 @@ L.chooseAPlayer = "Spieler wählen"
 L.theOtherTank = "Automatisch einen Tank finden"
 L.theOtherTankDesc = "Private Auren auf dem ersten Tank in Deiner Gruppe neben Dir anzeigen. (Aktuell: %s)"
 L.playerInYourGroup = "Ein Spieler in Deiner Gruppe"
---L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine privaten Aura Debuffs als Symbole sehen, oder sogar die privaten Auren eines anderen Spielers (z.B. eines Tanks)."
 
 L.privateAurasTestAnchorText = "PA %d"
 
