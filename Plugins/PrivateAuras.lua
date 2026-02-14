@@ -65,6 +65,9 @@ plugin.defaultDB = {
 	otherPlayerType = "tank",
 	otherPlayerName = "",
 }
+plugin.defaultGlobalDB = {
+	showHelpTip = true,
+}
 
 local function CopyTable(settingsTable)
 	local copy = {}
@@ -856,15 +859,53 @@ function plugin:OnRegister()
 	self.displayName = L.privateAuras
 end
 
-function plugin:OnPluginEnable()
-	previouslyFoundUnit = nil
-	self:RegisterMessage("BigWigs_StartConfigureMode")
-	self:RegisterMessage("BigWigs_StopConfigureMode")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
+do
+	local function ShowHelpTip()
+		local tip = CreateFrame("Frame", nil, anchors.player[1], "GlowBoxTemplate")
+		tip:Show()
+		tip:SetSize(260, 120)
+		tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
+		local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
+		arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
+		local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
+		tipText:SetJustifyH("LEFT")
+		tipText:SetJustifyV("TOP")
+		tipText:SetSize(240, 0)
+		tipText:SetPoint("TOPLEFT", 10, -10)
+		tipText:SetText(L.privateAurasHelpTip)
+		local button = CreateFrame("Button", nil, tip, "SharedButtonTemplate")
+		button:SetSize(130, 32)
+		button:SetPoint("BOTTOM", 0, 6)
+		button:SetText(L.settings)
+		button:SetScript("OnClick", function(self)
+			self:GetParent():Hide()
+			BigWigsAPI.OpenConfigToPanel("PrivateAuras")
+			plugin.db.global.showHelpTip = false
+			plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
+			plugin:CancelAllTimers()
+		end)
+		ShowHelpTip = nil
+	end
 
-	if not db.other.disabled then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	function plugin:OnPluginEnable()
+		previouslyFoundUnit = nil
+		self:RegisterMessage("BigWigs_StartConfigureMode")
+		self:RegisterMessage("BigWigs_StopConfigureMode")
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+
+		if not db.other.disabled then
+			self:RegisterEvent("GROUP_ROSTER_UPDATE")
+		end
+
+		plugin.db.global.showHelpTip = true -- XXX remove
+		if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
+			self:CreateTestAura()
+			self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
+			if ShowHelpTip then
+				ShowHelpTip()
+			end
+		end
 	end
 end
 
@@ -1096,7 +1137,7 @@ do
 		aura.icon:SetTexture(icon)
 		aura.dispelType = dispelType
 		aura.expirationTime = expirationTime
-		aura.timer = plugin:ScheduleTimer(function() releaseFrame(aura) end, duration)
+		aura.timer = plugin:SimpleTimer(function() releaseFrame(aura) end, duration)
 		aura.unitType = unitType
 
 		return aura
