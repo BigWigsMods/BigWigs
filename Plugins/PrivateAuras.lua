@@ -898,7 +898,6 @@ do
 			self:RegisterEvent("GROUP_ROSTER_UPDATE")
 		end
 
-		plugin.db.global.showHelpTip = true -- XXX remove
 		if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
 			self:CreateTestAura()
 			self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
@@ -1079,15 +1078,16 @@ do
 	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", [0] = "None" }
 	local privateAuraSpellList = { 407221, 418720, 421828, 428970, 406317 }
 
-	local function releaseFrame(frame)
+	local function releaseFrame(frame, timerID)
+		if timerID and frame.timerID ~= timerID then
+			return
+		end
+
 		frame:ClearAllPoints()
 		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
-		if frame.timer then
-			frame.timer:Cancel()
-			frame.timer = nil
-		end
+		frame.timerID = nil
 		frame:Hide()
 
 		-- Pull it out of the active list
@@ -1137,8 +1137,11 @@ do
 		aura.icon:SetTexture(icon)
 		aura.dispelType = dispelType
 		aura.expirationTime = expirationTime
-		aura.timer = plugin:SimpleTimer(function() releaseFrame(aura) end, duration)
 		aura.unitType = unitType
+		local tbl = {}
+		aura.timerID = tbl
+		-- We don't want to use ScheduleTimer as we don't want the timer to cancel if this plugin is disabled
+		plugin:SimpleTimer(function() releaseFrame(aura, tbl) end, duration)
 
 		return aura
 	end
@@ -1197,7 +1200,7 @@ do
 					frame:SetPoint("CENTER")
 					UpdateTestAura(unitType, i)
 				end
-				for i = #auras, MAX_AURAS + 1, -1  do
+				for i = #auras, MAX_AURAS + 1, -1 do
 					local frame = auras[i]
 					if frame then
 						releaseFrame(frame)
