@@ -893,6 +893,7 @@ L.fadeTimeDesc = "Сколько секунд будет затухать соо
 --L.theOtherTank = "Automatically find a tank"
 --L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
 --L.playerInYourGroup = "A player in your group"
+--L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 
 --L.privateAurasTestAnchorText = "PA %d"
 
