@@ -279,7 +279,7 @@ do
 				get = function() return db.showDispelType end,
 				set = function(_, value)
 					db.showDispelType = value
-					C_UnitAuras.TriggerPrivateAuraShowDispelType(value)
+					updateProfile()
 				end,
 				width = "full",
 				order = 3,
