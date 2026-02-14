@@ -961,27 +961,27 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式�
 -- PrivateAuras.lua
 --
 
---L.privateAuras = "Private Auras"
+L.privateAuras = "私有光环"
 
---L.createTestAura = "Create Test Aura"
---L.showDispelType = "Show Dispel Type Indicator"
---L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.\n\n|cffffd200Note: This is a global option for all private aura frames.|r"
---L.iconSize = "Icon Size"
---L.iconSpacing = "Icon Spacing"
---L.showCooldown = "Show Cooldown Spiral"
---L.showCooldownText = "Show Cooldown Text"
---L.cooldownTextScale = "Cooldown Text Scale"
---L.growthDirection = "Icon Growth Direction"
---L.aurasOnYou = "Auras On You"
---L.aurasOnYouDesc = "Customize the icons for auras that apply to you.\n\n"
---L.aurasOnAnother = "Auras On Another"
---L.aurasOnAnotherDesc = "Choose a specific player and then customize the icons for auras that apply to them.\n\n"
---L.chooseAPlayer = "Choose a player"
---L.theOtherTank = "Automatically find a tank"
---L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
---L.playerInYourGroup = "A player in your group"
+L.createTestAura = "创建测试光环"
+L.showDispelType = "显示驱散类型图标"
+L.showDispelTypeDesc = "如果在私有光环框体上有驱散类型，则显示一个图标。\n\n|cffffd200注意：这是对所有私有光环框体的全局设置。|r"
+L.iconSize = "图标尺寸"
+L.iconSpacing = "图标间距"
+L.showCooldown = "显示冷却转圈"
+L.showCooldownText = "显示冷却文本"
+L.cooldownTextScale = "冷却文本缩放"
+L.growthDirection = "图标增长方向"
+L.aurasOnYou = "你身上的光环"
+L.aurasOnYouDesc = "自定义你身上的光环图标。\n\n"
+L.aurasOnAnother = "其他玩家身上的光环"
+L.aurasOnAnotherDesc = "选择一名特定玩家，然后为该玩家自定义光环图标。\n\n"
+L.chooseAPlayer = "选择一名玩家"
+L.theOtherTank = "自动寻找坦克"
+L.theOtherTankDesc = "在你队伍中除你之外的第一位坦克的私有光环。（当前：%s）"
+L.playerInYourGroup = "你队伍中的玩家"
 
---L.privateAurasTestAnchorText = "PA %d"
+L.privateAurasTestAnchorText = "私有光环 %d"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
