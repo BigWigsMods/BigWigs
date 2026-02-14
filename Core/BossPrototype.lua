@@ -231,16 +231,16 @@ end
 
 --- Set this module to have custom timers to and to allow disabling of Blizzard's timeline timers.
 -- @boolean
-function boss:UseCustomTimers(hide)
-	if hide then
+function boss:UseCustomTimers(useCustomTimers)
+	if useCustomTimers then
 		self.useCustomTimers = true
 	end
 end
 
 function boss:CustomTimersEnabled()
-	local TP = BigWigs:GetPlugin("Timeline", true)
-	if TP and TP.db.profile.show_custom_timers then
-		return true
+	local timelinePlugin = plugins.Timeline
+	if timelinePlugin then
+		return timelinePlugin.db.profile.show_custom_timers
 	end
 end
 
