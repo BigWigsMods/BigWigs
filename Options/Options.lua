@@ -353,9 +353,10 @@ spellDescriptionUpdater:SetScript("OnEvent", function(_, _, spellId)
 	end
 end)
 
-function options:Open()
+local OpenConfig = nil
+function options:Open(specificPanel)
 	if not configFrame then
-		options:OpenConfig()
+		OpenConfig(specificPanel)
 	end
 end
 
@@ -1894,10 +1895,12 @@ do
 	local allowedDirectOpens = {
 		["PrivateAuras"] = {tab = "options", path = {"general", "PrivateAuras"}},
 	}
-	function options:OpenConfig(directOpen)
-		if allowedDirectOpens[directOpen] then
-			lastTabSelected = allowedDirectOpens[directOpen].tab
-			openPath = allowedDirectOpens[directOpen].path
+	function OpenConfig(specificPanel)
+		if allowedDirectOpens[specificPanel] then
+			lastTabSelected = allowedDirectOpens[specificPanel].tab
+			openPath = allowedDirectOpens[specificPanel].path
+		elseif specificPanel then
+			return
 		end
 		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
 
@@ -1936,7 +1939,7 @@ do
 		bw.tabs = tabs
 
 		bw:Show()
-		self:SendMessage("BigWigs_OpenGUI")
+		options:SendMessage("BigWigs_OpenGUI")
 	end
 end
 

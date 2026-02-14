@@ -81,6 +81,25 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Configuration
+--
+
+do
+	local list = {
+		["PrivateAuras"] = true,
+	}
+	function API.OpenConfigToPanel(panel)
+		if list[panel] then
+			addonTbl.LoadCoreAndOptions()
+			if BigWigsOptions then
+				BigWigsOptions:Close()
+				BigWigsOptions:Open(panel)
+			end
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Countdown
 --
 
