@@ -28,6 +28,10 @@
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0, LibLatency, LibDurability
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB, BW_FEAT_SHARE, BW_FEAT_SHARE2
 
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+
 embeds.xml
 Init_Wrath.lua
 API.lua
