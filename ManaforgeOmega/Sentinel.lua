@@ -17,7 +17,6 @@ mod:SetPrivateAuraSounds({
 })
 mod:SetRespawnTime(30)
 mod:SetStage(1)
-mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -76,6 +75,7 @@ function mod:OnBossEnable()
 	if self:Mythic() then -- Not setup for other difficulties yet
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+		self:UseCustomTimers(true)
 	end
 end
 
