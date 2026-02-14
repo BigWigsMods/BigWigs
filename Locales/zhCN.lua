@@ -980,6 +980,8 @@ L.chooseAPlayer = "选择一名玩家"
 L.theOtherTank = "自动寻找坦克"
 L.theOtherTankDesc = "在你队伍中除你之外的第一位坦克的私有光环。（当前：%s）"
 L.playerInYourGroup = "你队伍中的玩家"
+--L.maxIcons = "Max Icons"
+--L.maxIconsDesc = "The maximum amount of icons to be displayed."
 --L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 
 L.privateAurasTestAnchorText = "私有光环 %d"

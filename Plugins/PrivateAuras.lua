@@ -11,7 +11,6 @@ if not plugin then return end
 -- Locals
 --
 
-local MAX_AURAS = 3
 local CONFIG_MODE_DURATION = 10
 
 local db
@@ -38,6 +37,7 @@ plugin.defaultDB = {
 		showCooldownText = true,
 		cooldownTextScale = 1,
 		growthDirection = "LEFT",
+		maxIcons = 3,
 
 		anchorPoint = "CENTER",
 		anchorRelPoint = "CENTER",
@@ -55,6 +55,7 @@ plugin.defaultDB = {
 		showCooldownText = true,
 		cooldownTextScale = 1,
 		growthDirection = "LEFT",
+		maxIcons = 3,
 
 		anchorPoint = "CENTER",
 		anchorRelPoint = "CENTER",
@@ -186,6 +187,22 @@ local function updateProfile()
 				db.other.anchorRelativeTo = plugin.defaultDB.other.anchorRelativeTo
 			end
 		end
+	end
+
+	if db.player.maxIcons < 2 or db.player.maxIcons > 5 then
+		db.player.maxIcons = plugin.defaultDB.player.maxIcons
+	end
+	local numPlayer = math.floor(db.player.maxIcons+0.5)
+	if numPlayer ~= db.player.maxIcons then
+		db.player.maxIcons = numPlayer
+	end
+
+	if db.other.maxIcons < 2 or db.other.maxIcons > 5 then
+		db.other.maxIcons = plugin.defaultDB.other.maxIcons
+	end
+	local numOther = math.floor(db.other.maxIcons+0.5)
+	if numOther ~= db.other.maxIcons then
+		db.other.maxIcons = numOther
 	end
 
 	if db.otherPlayerType ~= "tank" and db.otherPlayerType ~= "player" then
@@ -377,10 +394,19 @@ do
 						order = 10,
 						disabled = IsAnchorDisabled,
 					},
+					maxIcons = {
+						type = "range",
+						name = L.maxIcons,
+						desc = L.maxIconsDesc,
+						min = 2, max = 5, step = 1,
+						width = 1.6,
+						order = 11,
+						disabled = IsAnchorDisabled,
+					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 11,
+						order = 12,
 					},
 					reset = {
 						type = "execute",
@@ -390,7 +416,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 12,
+						order = 13,
 					},
 				},
 			},
@@ -560,10 +586,19 @@ do
 						order = 15,
 						disabled = IsAnchorDisabled,
 					},
+					maxIcons = {
+						type = "range",
+						name = L.maxIcons,
+						desc = L.maxIconsDesc,
+						min = 2, max = 5, step = 1,
+						width = 1.6,
+						order = 16,
+						disabled = IsAnchorDisabled,
+					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 16,
+						order = 17,
 					},
 					reset = {
 						type = "execute",
@@ -573,7 +608,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 17,
+						order = 18,
 					},
 				},
 			},
@@ -1017,7 +1052,7 @@ do
 		end
 		local unitToken = token or GetUnitToken()
 
-		for index = 1, MAX_AURAS do
+		for index = 1, anchorDB.maxIcons do
 			local anchor = anchors[unitType][index]
 			if not anchor then
 				anchor = CreateFrame("Frame", "BigWigsPrivateAurasAnchor" .. (unitType:gsub("^%l", string.upper)) .. index, UIParent, nil, index)
@@ -1193,14 +1228,14 @@ do
 					testCount = 1
 				end
 
-				for i = 1, math.min(#auras, MAX_AURAS) do
+				for i = 1, math.min(#auras, db[unitType].maxIcons) do
 					local frame = auras[i]
 					frame:ClearAllPoints()
 					frame:SetParent(unitAnchors[i])
 					frame:SetPoint("CENTER")
 					UpdateTestAura(unitType, i)
 				end
-				for i = #auras, MAX_AURAS + 1, -1 do
+				for i = #auras, db[unitType].maxIcons + 1, -1 do
 					local frame = auras[i]
 					if frame then
 						releaseFrame(frame)

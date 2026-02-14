@@ -980,6 +980,8 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模�
 --L.theOtherTank = "Automatically find a tank"
 --L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
 --L.playerInYourGroup = "A player in your group"
+--L.maxIcons = "Max Icons"
+--L.maxIconsDesc = "The maximum amount of icons to be displayed."
 --L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 
 --L.privateAurasTestAnchorText = "PA %d"
