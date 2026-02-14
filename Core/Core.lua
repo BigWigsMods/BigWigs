@@ -633,24 +633,24 @@ do
 				error(("RegisterBossModule failed, no boss module named '%s' found."):format(tostring(moduleName)))
 			elseif not bossesPendingInit[moduleName] then
 				error(("RegisterBossModule failed, boss module '%s' is already registered."):format(tostring(moduleName)))
-			end
+			else
+				bossesPendingInit[moduleName] = nil
+				module.SetupOptions = moduleOptions
 
-			bossesPendingInit[moduleName] = nil
-			module.SetupOptions = moduleOptions
+				-- Call the module's OnRegister (which is our OnInitialize replacement)
+				if type(module.OnRegister) == "function" then
+					module:OnRegister()
+					module.OnRegister = nil
+				end
 
-			-- Call the module's OnRegister (which is our OnInitialize replacement)
-			if type(module.OnRegister) == "function" then
-				module:OnRegister()
-				module.OnRegister = nil
-			end
+				core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-			core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
-
-			-- automatically enable trash modules if we're in the relevant zone at module registration
-			if module:Retail() and not module:GetEncounterID() and not module.worldBoss then
-				local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
-				if module:IsZoneID(instanceID) then
-					module:Enable()
+				-- automatically enable trash modules if we're in the relevant zone at module registration
+				if module:Retail() and not module:GetEncounterID() and not module.worldBoss then
+					local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
+					if module:IsZoneID(instanceID) then
+						module:Enable()
+					end
 				end
 			end
 		end
@@ -662,22 +662,29 @@ do
 			error(("RegisterPlugin failed, no plugin named '%s' found."):format(tostring(moduleName)))
 		elseif not pluginsPendingInit[moduleName] then
 			error(("RegisterPlugin failed, plugin '%s' is already registered."):format(tostring(moduleName)))
-		end
+		else
+			pluginsPendingInit[moduleName] = nil
+			local defaultDB, defaultGlobalDB = nil, nil
+			if type(module.defaultDB) == "table" then
+				defaultDB = module.defaultDB
+			end
+			if type(module.defaultGlobalDB) == "table" then
+				defaultGlobalDB = module.defaultGlobalDB
+			end
+			if defaultDB or defaultGlobalDB then
+				module.db = loader.db:RegisterNamespace(module.name, {profile = defaultDB, global = defaultGlobalDB})
+			end
 
-		pluginsPendingInit[moduleName] = nil
-		if type(module.defaultDB) == "table" then
-			module.db = loader.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
-		end
+			-- Call the module's OnRegister (which is our OnInitialize replacement)
+			if type(module.OnRegister) == "function" then
+				module:OnRegister()
+				module.OnRegister = nil
+			end
+			core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
 
-		-- Call the module's OnRegister (which is our OnInitialize replacement)
-		if type(module.OnRegister) == "function" then
-			module:OnRegister()
-			module.OnRegister = nil
-		end
-		core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
-
-		if coreEnabled then
-			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
+			if coreEnabled then
+				module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
+			end
 		end
 	end
 end
