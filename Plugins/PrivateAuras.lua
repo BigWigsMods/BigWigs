@@ -879,10 +879,10 @@ do
 		button:SetText(L.settings)
 		button:SetScript("OnClick", function(self)
 			self:GetParent():Hide()
+			plugin:CancelAllTimers()
+			plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
 			BigWigsAPI.OpenConfigToPanel("PrivateAuras")
 			plugin.db.global.showHelpTip = false
-			plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
-			plugin:CancelAllTimers()
 		end)
 		ShowHelpTip = nil
 	end
