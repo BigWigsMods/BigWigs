@@ -4,6 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Plexus Sentinel", 2810, 2684)
 if not mod then return end
+mod:RegisterEnableMob(233814) -- Plexus Sentinel
 mod:SetEncounterID(3129)
 mod:SetPrivateAuraSounds({
 	{1220679, sound = "info"}, -- Phase Blink
