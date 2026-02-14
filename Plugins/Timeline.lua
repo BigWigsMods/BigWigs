@@ -375,10 +375,10 @@ local function updateBlockingBlizzardBars(force)
 
 	for encounterID, config in next, enabledCustomEncounters do
 		if config.useCustomTimers then
-			if not blockingBlizzardBars then
+			if not db.show_both_timers then
 				plugin:OnPluginDisable()
-				blockingBlizzardBars = true
 			end
+			blockingBlizzardBars = true
 			return
 		end
 	end
