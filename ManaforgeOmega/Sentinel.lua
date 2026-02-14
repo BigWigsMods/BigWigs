@@ -16,6 +16,7 @@ mod:SetPrivateAuraSounds({
 })
 mod:SetRespawnTime(30)
 mod:SetStage(1)
+mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -78,7 +79,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEncounterStart()
-	self:UseCustomTimers(true)
 	self:SetStage(1)
 
 	manifestMatricesCount = 1
