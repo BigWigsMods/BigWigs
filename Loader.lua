@@ -707,59 +707,91 @@ do
 	end
 end
 
-local Popup = public.isRetail and function(msg, focus, height)
-	local frame = CreateFrame("Frame", nil, UIParent, focus and "PortraitFrameTexturedBaseTemplate" or "PortraitFrameFlatBaseTemplate")
-	frame:SetFrameStrata("DIALOG")
-	frame:SetToplevel(true)
-	frame:SetSize(400, height or 150)
-	frame:SetPoint("CENTER")
-	frame:SetTitle("BigWigs")
-	frame:SetTitleOffsets(0, 0)
-	frame:SetBorder("HeldBagLayout")
-	frame:SetPortraitTextureSizeAndOffset(38, -5, 0)
-	frame:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+local Popup
+do
+	local level = 300
+	local popupDelay = {}
+	local isShowingPopup = false
+	Popup = public.isRetail and function(msg, focus, height)
+		level = level + 5
+		local frame = CreateFrame("Frame", nil, UIParent, focus and "PortraitFrameTexturedBaseTemplate" or "PortraitFrameFlatBaseTemplate")
+		frame:SetFrameStrata("DIALOG")
+		frame:SetFrameLevel(level)
+		frame:SetSize(400, height or 150)
+		frame:SetPoint("CENTER")
+		frame:SetTitle("BigWigs")
+		frame:SetTitleOffsets(0, 0)
+		frame:SetBorder("HeldBagLayout")
+		frame:SetPortraitTextureSizeAndOffset(38, -5, 0)
+		frame:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
 
-	local text = frame:CreateFontString(nil, nil, "GameFontGreenLarge")
-	text:SetSize(380, 0)
-	text:SetJustifyH("CENTER")
-	text:SetJustifyV("TOP")
-	text:SetNonSpaceWrap(true)
-	text:SetPoint("TOP", 0, -40)
+		local text = frame:CreateFontString(nil, nil, "GameFontGreenLarge")
+		text:SetSize(380, 0)
+		text:SetJustifyH("CENTER")
+		text:SetJustifyV("TOP")
+		text:SetNonSpaceWrap(true)
+		text:SetPoint("TOP", 0, -40)
 
-	local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-	button:SetSize(128, 32)
-	button:SetPoint("BOTTOM", 0, 16)
-	button:SetScript("OnClick", function(self)
-		self:GetParent():Hide()
-	end)
-	button:SetText(L.okay)
+		local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+		button:SetSize(128, 32)
+		button:SetPoint("BOTTOM", 0, 16)
+		button:SetScript("OnClick", function(self)
+			self:GetParent():Hide()
+			local nextPopup = table.remove(popupDelay, 1)
+			if nextPopup then
+				nextPopup:Show()
+			else
+				isShowingPopup = false
+			end
+		end)
+		button:SetText(L.okay)
 
-	text:SetText(msg)
-	frame:Show()
-end or function(msg, focus)
-	local frame = CreateFrame("Frame", nil, UIParent)
-	frame:SetFrameStrata("DIALOG")
-	frame:SetToplevel(true)
-	frame:SetSize(400, 150)
-	frame:SetPoint("CENTER")
-	local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
-	text:SetSize(380, 0)
-	text:SetJustifyH("CENTER")
-	text:SetJustifyV("TOP")
-	text:SetNonSpaceWrap(true)
-	text:SetPoint("TOP", 0, -16)
-	local border = CreateFrame("Frame", nil, frame, focus and "DialogBorderOpaqueTemplate" or "DialogBorderTemplate")
-	border:SetAllPoints(frame)
-	local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-	button:SetSize(128, 32)
-	button:SetPoint("BOTTOM", 0, 16)
-	button:SetScript("OnClick", function(self)
-		self:GetParent():Hide()
-	end)
-	button:SetText(L.okay)
+		text:SetText(msg)
+		if not isShowingPopup then
+			isShowingPopup = true
+			frame:Show()
+		else
+			frame:Hide()
+			popupDelay[#popupDelay+1] = frame
+		end
+	end or function(msg, focus)
+		level = level + 5
+		local frame = CreateFrame("Frame", nil, UIParent)
+		frame:SetFrameStrata("DIALOG")
+		frame:SetFrameLevel(level)
+		frame:SetSize(400, 150)
+		frame:SetPoint("CENTER")
+		local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
+		text:SetSize(380, 0)
+		text:SetJustifyH("CENTER")
+		text:SetJustifyV("TOP")
+		text:SetNonSpaceWrap(true)
+		text:SetPoint("TOP", 0, -16)
+		local border = CreateFrame("Frame", nil, frame, focus and "DialogBorderOpaqueTemplate" or "DialogBorderTemplate")
+		border:SetAllPoints(frame)
+		local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+		button:SetSize(128, 32)
+		button:SetPoint("BOTTOM", 0, 16)
+		button:SetScript("OnClick", function(self)
+			self:GetParent():Hide()
+			local nextPopup = table.remove(popupDelay, 1)
+			if nextPopup then
+				nextPopup:Show()
+			else
+				isShowingPopup = false
+			end
+		end)
+		button:SetText(L.okay)
 
-	text:SetText(msg)
-	frame:Show()
+		text:SetText(msg)
+		if not isShowingPopup then
+			isShowingPopup = true
+			frame:Show()
+		else
+			frame:Hide()
+			popupDelay[#popupDelay+1] = frame
+		end
+	end
 end
 
 local function load(index)
