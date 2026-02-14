@@ -31,7 +31,6 @@ do
 		countStartSound = "BigWigs: Long",
 		countEndSound = "BigWigs: Alarm",
 		showViewerDungeonEnd = true,
-		showViewerTeleportTip = true,
 		hideFromGuild = false,
 		viewerKeybind = "",
 		windowHeight = 320,
@@ -50,6 +49,7 @@ do
 		instanceKeysHideTitle = false,
 	}
 	local globalDefaults = {
+		showViewerTeleportTip = true,
 		slashKeys = true,
 		slashKeystone = true,
 	}
@@ -997,7 +997,7 @@ do
 			teleportButtons[2][1]:SetPoint("TOP", teleportButtons[1][num], "BOTTOM", 0, -36)
 		end
 
-		if db.profile.showViewerTeleportTip then
+		if db.global.showViewerTeleportTip then
 			for _, teleportSpellID in next, teleportList[1] do
 				if BigWigsLoader.IsSpellKnownOrInSpellBook(teleportSpellID) then
 					mainPanel.tip:Show() -- Don't show tip unless we know 1 teleport spell
@@ -1534,8 +1534,8 @@ do
 				mainPanel.teleportBar:Hide()
 				mainPanel.teleportBar.name = self.playerName
 				self:SetScript("OnUpdate", OnUpdateCheckTeleportCastStatus)
-				if db.profile.showViewerTeleportTip then
-					db.profile.showViewerTeleportTip = false
+				if db.global.showViewerTeleportTip then
+					db.global.showViewerTeleportTip = false
 					mainPanel.tip:Hide()
 				end
 			end
