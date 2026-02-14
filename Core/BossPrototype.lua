@@ -3536,7 +3536,7 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:Bar(key, length, text, icon)
-		if not self:CustomTimersEnabled() then
+		if self.useCustomTimers and not self:CustomTimersEnabled() then
 			return
 		end
 		local lengthType = type(length)
@@ -3587,7 +3587,7 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CDBar(key, length, text, icon)
-		if not self:CustomTimersEnabled() then
+		if self.useCustomTimers and not self:CustomTimersEnabled() then
 			return
 		end
 		local lengthType = type(length)
