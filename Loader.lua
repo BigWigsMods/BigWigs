@@ -709,14 +709,12 @@ end
 
 local Popup
 do
-	local level = 300
 	local popupDelay = {}
 	local isShowingPopup = false
 	Popup = public.isRetail and function(msg, focus, height)
-		level = level + 5
 		local frame = CreateFrame("Frame", nil, UIParent, focus and "PortraitFrameTexturedBaseTemplate" or "PortraitFrameFlatBaseTemplate")
 		frame:SetFrameStrata("DIALOG")
-		frame:SetFrameLevel(level)
+		frame:SetFrameLevel(300)
 		frame:SetSize(400, height or 150)
 		frame:SetPoint("CENTER")
 		frame:SetTitle("BigWigs")
@@ -732,7 +730,7 @@ do
 		text:SetNonSpaceWrap(true)
 		text:SetPoint("TOP", 0, -40)
 
-		local button = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+		local button = CreateFrame("Button", nil, frame, "SharedButtonTemplate")
 		button:SetSize(128, 32)
 		button:SetPoint("BOTTOM", 0, 16)
 		button:SetScript("OnClick", function(self)
@@ -755,10 +753,9 @@ do
 			popupDelay[#popupDelay+1] = frame
 		end
 	end or function(msg, focus)
-		level = level + 5
 		local frame = CreateFrame("Frame", nil, UIParent)
 		frame:SetFrameStrata("DIALOG")
-		frame:SetFrameLevel(level)
+		frame:SetFrameLevel(300)
 		frame:SetSize(400, 150)
 		frame:SetPoint("CENTER")
 		local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
