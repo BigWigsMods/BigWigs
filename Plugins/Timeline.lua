@@ -22,7 +22,7 @@ local blockingBlizzardBars = false
 
 plugin.defaultDB = {
 	show_custom_timers = true,
-	show_both_timers = true,
+	show_both_timers = false,
 	show_bars = true,
 	show_messages = true,
 	play_sound = true,
@@ -86,49 +86,6 @@ do
 				width = "full",
 				order = 2,
 			},
-			show_custom_timers = {
-				type = "toggle",
-				name = L.show_custom_timers,
-				desc = L.show_custom_timers_desc,
-				get = function(info)
-					return db[info[#info]]
-				end,
-				set = function(info, value)
-					db[info[#info]] = value
-					if value then
-						plugin:OnPluginDisable()
-					else
-						plugin:StartBars()
-					end
-				end,
-				width = 1.5,
-				order = 2.5,
-			},
-			show_both_timers = {
-				type = "toggle",
-				name = L.show_custom_and_blizzard,
-				desc = L.show_custom_and_blizzard_desc,
-				get = function(info)
-					return db[info[#info]]
-				end,
-				set = function(info, value)
-					db[info[#info]] = value
-					if value then
-						plugin:OnPluginDisable()
-					else
-						plugin:StartBars()
-					end
-				end,
-				width = 1.5,
-				order = 2.6,
-				disabled = function() return not db.show_custom_timers end,
-			},
-			spacer2 = {
-				type = "description",
-				name = "",
-				width = "full",
-				order = 2.9,
-			},
 			show_bars = {
 				type = "toggle",
 				name = L.blizzTimersAsBigWigsBars,
@@ -172,6 +129,49 @@ do
 				end,
 				width = "full",
 				order = 5,
+			},
+			spacer2 = {
+				type = "description",
+				name = "",
+				width = "full",
+				order = 6,
+			},
+			show_custom_timers = {
+				type = "toggle",
+				name = L.show_custom_timers,
+				desc = L.show_custom_timers_desc,
+				get = function(info)
+					return db[info[#info]]
+				end,
+				set = function(info, value)
+					db[info[#info]] = value
+					if value then
+						plugin:OnPluginDisable()
+					else
+						plugin:StartBars()
+					end
+				end,
+				width = 1.5,
+				order = 7,
+			},
+			show_both_timers = {
+				type = "toggle",
+				name = L.show_custom_and_blizzard,
+				desc = L.show_custom_and_blizzard_desc,
+				get = function(info)
+					return db[info[#info]]
+				end,
+				set = function(info, value)
+					db[info[#info]] = value
+					if value then
+						plugin:OnPluginDisable()
+					else
+						plugin:StartBars()
+					end
+				end,
+				width = 1.5,
+				order = 8,
+				disabled = function() return not db.show_custom_timers end,
 			},
 			timeline = {
 				type = "group",
