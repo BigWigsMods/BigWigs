@@ -107,6 +107,20 @@ local function updateProfile()
 		end
 	end
 
+	local globalDB = plugin.db.global
+	for k, v in next, globalDB do
+		local defaultType = type(plugin.defaultGlobalDB[k])
+		if defaultType == "nil" then
+			globalDB[k] = nil
+		elseif type(v) ~= defaultType then
+			if defaultType == "table" then
+				globalDB[k] = CopyTable(plugin.defaultGlobalDB[k])
+			else
+				globalDB[k] = plugin.defaultGlobalDB[k]
+			end
+		end
+	end
+
 	if db.player.size < 24 or db.player.size > 256 then
 		db.player.size = plugin.defaultDB.player.size
 	end
