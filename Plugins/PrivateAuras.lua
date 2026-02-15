@@ -797,8 +797,13 @@ do
 		},
 	}
 
+	local prevScale = 1
 	local function OnDragStart(self)
 		local anchor = self.dragAnchor
+		local anchorDB = plugin.db.profile[anchor.unitType]
+		prevScale = anchorDB.cooldownTextScale
+		anchorDB.cooldownTextScale = 1
+		updateProfile()
 		anchor:StartMoving()
 	end
 	local function OnDragStop(self)
@@ -814,7 +819,8 @@ do
 		anchorDB.anchorRelPoint = relPoint
 		anchorDB.anchorXOffset = x
 		anchorDB.anchorYOffset = y
-		anchor:UpdateAnchorPosition()
+		anchorDB.cooldownTextScale = prevScale
+		updateProfile()
 
 		if BigWigsOptions and BigWigsOptions:IsOpen() then
 			plugin:UpdateGUI()
