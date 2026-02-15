@@ -146,7 +146,7 @@ L.privateAuraSounds_desc = "插件無法用一般的方式追蹤私有光環，�
 L.listAbilities = "將技能列表發送到團隊聊天頻道"
 
 L.dbmFaker = "假裝我是 DBM 用戶"
-L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。這可以在你的公會強制要求使用 DBM 時派上用場。
+L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。這可以在你的公會強制要求使用 DBM 時派上用場。"
 L.zoneMessages = "顯示區域訊息"
 L.zoneMessagesDesc = "當你進入 BigWigs 支援但你尚未安裝對應模組的區域時，提示可安裝的 BigWigs 模組。我們強烈建議保持開啟，因為當 BigWigs 新增了對你有幫助的新模組時，這是唯一能提醒你進行安裝的通知管道。"
 L.englishSayMessages = "英文喊話"
