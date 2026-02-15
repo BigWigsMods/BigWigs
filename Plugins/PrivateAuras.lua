@@ -311,7 +311,7 @@ do
 				end,
 				set = function(info, value)
 					db.player[info[#info]] = value
-					plugin:UpdateAnchors("player", "player")
+					updateProfile()
 				end,
 				order = 4,
 				args = {
@@ -325,10 +325,6 @@ do
 					disabled = {
 						type = "toggle",
 						name = L.disabled,
-						set = function(_, value)
-							db.player.disabled = value
-							updateProfile()
-						end,
 						width = 1.6,
 						order = 2,
 					},
@@ -431,7 +427,7 @@ do
 				end,
 				set = function(info, value)
 					db.other[info[#info]] = value
-					plugin:UpdateAnchors("other")
+					updateProfile()
 				end,
 				order = 5,
 				args = {
@@ -842,7 +838,8 @@ do
 
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
-		bg:SetColorTexture(0, 0, 0, 0.3)
+		bg:SetColorTexture(0, 0, 0, parent.hasTestIcon and 0 or 0.3)
+		display.bg = bg
 
 		local header = display:CreateFontString(nil, "ARTWORK")
 		header:SetFont(plugin:GetDefaultFont(12))
@@ -865,7 +862,7 @@ do
 				local anchor = unitAnchors[i]
 				if not anchor.configModeFrame then
 					anchor.configModeFrame = createDragAnchor(anchor)
-					anchor.configModeFrame.text:SetText(L.privateAurasTestAnchorText:format(i))
+					anchor.configModeFrame.text:SetText(anchor.hasTestIcon and "" or L.privateAurasTestAnchorText:format(i))
 					anchor.configModeFrame.dragAnchor = unitAnchors[1]
 				end
 				anchor.configModeFrame:Show()
@@ -1123,11 +1120,17 @@ do
 
 	local function releaseFrame(frame)
 		frame:ClearAllPoints()
+		local anchor = frame:GetParent()
 		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
 		frame.timerID = nil
 		frame:Hide()
+		anchor.hasTestIcon = nil
+		if anchor.configModeFrame then
+			anchor.configModeFrame.text:SetText(L.privateAurasTestAnchorText:format(anchor:GetID()))
+			anchor.configModeFrame.bg:SetColorTexture(0, 0, 0, 0.3)
+		end
 
 		-- Pull it out of the active list
 		local active = testAuras[frame.unitType]
@@ -1242,6 +1245,11 @@ do
 					frame:ClearAllPoints()
 					frame:SetParent(unitAnchors[i])
 					frame:SetPoint("CENTER")
+					if unitAnchors[i].configModeFrame then
+						unitAnchors[i].configModeFrame.text:SetText("")
+						unitAnchors[i].configModeFrame.bg:SetColorTexture(0, 0, 0, 0)
+					end
+					unitAnchors[i].hasTestIcon = true
 					UpdateTestAura(unitType, i)
 				end
 				for i = #auras, db[unitType].maxIcons + 1, -1 do
