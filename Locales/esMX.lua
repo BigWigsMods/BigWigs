@@ -293,7 +293,7 @@ L.sharing_private_auras_desc = "Importar los sonidos configurados de Auras priva
 L.sharing_export_private_auras_desc = "Exportar los sonidos configurados de Auras privadas."
 L.sharing_colors_desc = "Importar la configuración de colores para barras y mensajes."
 L.sharing_export_colors_desc = "Exportar la configuración de colores para barras y mensajes."
-L.confirm_instance_import = "La configuración seleccionada que estás a punto de importar sobrescribirá la configuración de tu perfil actualmente seleccionado:\n\n|cFF33FF99\"%s\"|r\n\nInstancia:\n|cFFBB66FF\"%s\"|r\n\n¿Seguro que quieres hacer esto?"
+L.confirm_instance_import = "La configuración seleccionada que estás a punto de importar sobrescribirá la configuración de tu perfil actualmente seleccionado:\n\n|cFF33FF99\"%s\"|r\n\Estancia:\n|cFFBB66FF\"%s\"|r\n\n¿Seguro que quieres hacer esto?"
 L.status_text_paste_import = "Pega una cadena de importación válida"
 L.exporting_instance = "Exportando |cFFBB66FF%s|r" -- Exporting Molten Core
 L.importing_instance = "Importando |cFFBB66FF%s|r" -- Importing Molten Core
@@ -753,11 +753,11 @@ L.blockObjectiveTracker = "Ocultar el seguimiento de misión"
 L.blockObjectiveTrackerDesc = "El seguimiento de misión se ocultará durante encuentros de jefes para limpiar el espacio en pantalla.\n\nEsto no sucederá si estás en una mítica + o estás haciendo seguimiento de un logro."
 
 L.blockTalkingHead = "Ocultar la ventana emergente de diálogo 'Cabeza Parlante' del PNJ"
-L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de PNJ y un texto de chat de PNJ en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un PNJ está hablando.\n\nPuedes elegir los diferentes tipos de instancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del PNJ se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
-L.blockTalkingHeadDungeons = "Calabozos Normales & Heroicos"
+L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de PNJ y un texto de chat de PNJ en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un PNJ está hablando.\n\nPuedes elegir los diferentes tipos de estancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del PNJ se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
+L.blockTalkingHeadDungeons = "Calabozos Normales y Heroicos"
 L.blockTalkingHeadMythics = "Calabozos Míticos y Míticos+"
 L.blockTalkingHeadRaids = "Bandas"
-L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos & Bandas)"
+L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos y Bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
 L.redirectPopups = "Redirigir carteles emergentes a mensajes de BigWigs"
@@ -769,10 +769,10 @@ L.itemLevel = "Nivel de objeto %d"
 L.newRespawnPoint = "Nuevo punto de reaparición"
 L.playerLevel = "Nivel %d"
 
-L.userNotifySfx = "BossBlock desactivó los efectos de sonido, lo que obligó a volver a activarlos."
-L.userNotifyMusic = "BossBlock desactivó la música, lo que obligó a volver a activarla."
-L.userNotifyAmbience = "BossBlock desactivó el ambiente, lo que obligó a volver a activarlo."
-L.userNotifyErrorSpeech = "BossBlock desactivó el aviso de error, lo que obligó a volver a activarlo."
+L.userNotifySfx = "Bloque de jefe desactivó los efectos de sonido, lo que obligó a volver a activarlos."
+L.userNotifyMusic = "Bloque de jefe desactivó la música, lo que obligó a volver a activarla."
+L.userNotifyAmbience = "Bloque de jefe desactivó el ambiente, lo que obligó a volver a activarlo."
+L.userNotifyErrorSpeech = "Bloque de jefe desactivó el aviso de error, lo que obligó a volver a activarlo."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
