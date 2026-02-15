@@ -565,7 +565,6 @@ L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no s
 L.keybinding = "Atajo de teclado"
 L.dragToResize = "Arrastra para ajustar el tamaño"
 L.cannotMoveInCombat = "No puedes mover esto mientras estás en combate"
-`
 
 -- Anchor Points
 L.UP = "Arriba"
