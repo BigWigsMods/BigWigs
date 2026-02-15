@@ -368,7 +368,7 @@ L.iconTextureSpellIDError = "要設定顯示的圖示，你必需輸入一個有
 L.battleResModeIcon = "圖示模式"
 L.battleResModeText = "純文字模式"
 L.battleResModeTextTooltip = "顯示一個臨時背景，以便你調整戰鬥復活功能的位置，並查看滑鼠指向的區域範圍。"
--.battleResNoteTooltip = "注意：滑鼠提示僅在非戰鬥狀態下顯示。"
+L.battleResNoteTooltip = "注意：滑鼠提示僅在非戰鬥狀態下顯示。"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
