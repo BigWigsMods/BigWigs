@@ -33,6 +33,10 @@ plugin.defaultDB = {
 	toastsColor = {0.2, 1, 1},
 	blockZoneInToasts = true,
 }
+plugin.defaultGlobalDB = {
+	watchedMovies = {},
+	tableNeedsCopied = true,
+}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -317,6 +321,18 @@ do
 end
 
 do
+	local function CopyTable(settingsTable)
+		local copy = {}
+		for key, value in next, settingsTable do
+			if type(value) == "table" then
+				copy[key] = CopyTable(value)
+			else
+				copy[key] = value
+			end
+		end
+		return copy
+	end
+
 	local function updateProfile()
 		local db = plugin.db.profile
 
@@ -325,7 +341,25 @@ do
 			if defaultType == "nil" then
 				db[k] = nil
 			elseif type(v) ~= defaultType then
-				db[k] = plugin.defaultDB[k]
+				if defaultType == "table" then
+					db[k] = CopyTable(plugin.defaultDB[k])
+				else
+					db[k] = plugin.defaultDB[k]
+				end
+			end
+		end
+
+		local globalDB = plugin.db.global
+		for k, v in next, globalDB do
+			local defaultType = type(plugin.defaultGlobalDB[k])
+			if defaultType == "nil" then
+				globalDB[k] = nil
+			elseif type(v) ~= defaultType then
+				if defaultType == "table" then
+					globalDB[k] = CopyTable(plugin.defaultGlobalDB[k])
+				else
+					globalDB[k] = plugin.defaultGlobalDB[k]
+				end
 			end
 		end
 
@@ -352,6 +386,11 @@ do
 		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		if self.db.global.tableNeedsCopied then -- XXX temp 12.0.1
+			self.db.global.tableNeedsCopied = false
+			self.db.global.watchedMovies = CopyTable(loader.db.global.watchedMovies)
+			loader.db.global.watchedMovies = nil
+		end
 		updateProfile()
 
 		nemesisBoxes = 0
@@ -1037,11 +1076,11 @@ do
 
 	function plugin:PLAY_MOVIE(_, id)
 		if knownMovies[id] and self.db.profile.blockMovies then
-			if loader.db.global.watchedMovies[id] then
+			if self.db.global.watchedMovies[id] then
 				BigWigs:Print(L.movieBlocked)
 				MovieFrame:Hide()
 			else
-				loader.db.global.watchedMovies[id] = true
+				self.db.global.watchedMovies[id] = true
 			end
 		end
 	end
@@ -1152,25 +1191,25 @@ do
 
 			if cinematicZones[id] then
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
-					if type(loader.db.global.watchedMovies[id]) ~= "table" then loader.db.global.watchedMovies[id] = {} end
+					if type(self.db.global.watchedMovies[id]) ~= "table" then self.db.global.watchedMovies[id] = {} end
 					for i = 1, #cinematicZones[id] do
 						local func = cinematicZones[id][i]
 						if func() then
-							if loader.db.global.watchedMovies[id][i] then
+							if self.db.global.watchedMovies[id][i] then
 								BigWigs:Print(L.movieBlocked)
 								CinematicFrame_CancelCinematic()
 							else
-								loader.db.global.watchedMovies[id][i] = true
+								self.db.global.watchedMovies[id][i] = true
 							end
 							return
 						end
 					end
 				else
-					if loader.db.global.watchedMovies[id] then
+					if self.db.global.watchedMovies[id] then
 						BigWigs:Print(L.movieBlocked)
 						CinematicFrame_CancelCinematic()
 					else
-						loader.db.global.watchedMovies[id] = true
+						self.db.global.watchedMovies[id] = true
 					end
 				end
 			end
