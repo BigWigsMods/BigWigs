@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "El addon '|cFF436EEE%s|r' acaba de copiar una cadena de exportación de tu perfil."
 
 -- Core.lua
 L.berserk = "Enfurecer"
@@ -63,8 +63,8 @@ L.outOfDateContentPopup = "CUIDADO!\nActualizaste |cFF436EEE%s|r pero también n
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requiere la versión %d del addon principal de|cFF436EEEBigWigs|r para que funcione correctamente, pero tu estan en la versión %d."
 L.addOnLoadFailedWithReason = "BigWigs falló al cargar el addon |cFF436EEE%s|r por razones %q. ¡Avisa a los desarrolladores de BigWigs!"
 L.addOnLoadFailedUnknownError = "BigWigs ha encontrado un error al cargar el addon |cFF436EEE%s|r. ¡Avisa a los desarrolladores de BigWigs!"
---L.newFeatures = "New BigWigs features:"
---L.parentheses = "%s (%s)"
+L.newFeatures = "Nuevas características de BigWigs:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Clásico", -- Classic
@@ -84,39 +84,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Abismos",
 	["LittleWigs_CurrentSeason"] = "Temporada actual",
 }
---L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
---}
---L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
---}
---L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
---}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dayNamesShort = {
+	"DOM", -- Sunday
+	"LUN", -- Monday
+	"MAR", -- Tuesday
+	"MIÉ", -- Wednesday
+	"JUE", -- Thursday
+	"VIE", -- Friday
+	"SÁB", -- Saturday
+}
+L.dayNames = {
+	"Domingo",
+	"Lunes",
+	"Martes",
+	"Miércoles",
+	"Jueves",
+	"Viernes",
+	"Sábado",
+}
+L.monthNames = {
+	"Enero",
+	"Febrero",
+	"Marzo",
+	"Abril",
+	"Mayo",
+	"Junio",
+	"Julio",
+	"Agosto",
+	"Septiembre",
+	"Octubre",
+	"Noviembre",
+	"Diciembre",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
@@ -274,30 +274,30 @@ L.imported_nameplate_settings = "Opciones de las barras de nombre"
 L.imported_mythicplus_settings = "Configuraciones de Mítico+"
 L.mythicplus_settings_import_desc = "Importar todas las configuraciones de Mítica+"
 L.mythicplus_settings_export_desc = "Exportar todas las configuraciones de Mítica+"
---L.imported_battleres_settings = "Battle Res Settings"
---L.battleres_settings_import_desc = "Import all Battle Res settings."
---L.battleres_settings_export_desc = "Export all Battle Res settings."
---L.imported_privateAuras_settings = "Private Auras Settings"
---L.privateAuras_settings_import_desc = "Import all Private Auras settings."
---L.privateAuras_settings_export_desc = "Export all Private Auras settings."
+L.imported_battleres_settings = "Configuración de Resurrección en combate"
+L.battleres_settings_import_desc = "Importar toda la configuración de Resurrección en combate."
+L.battleres_settings_export_desc = "Exportar toda la configuración de Resurrección en combate."
+L.imported_privateAuras_settings = "Configuración de Auras privadas"
+L.privateAuras_settings_import_desc = "Importar toda la configuración de Auras privadas."
+L.privateAuras_settings_export_desc = "Exportar toda la configuración de Auras privadas."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Compartir configuración del jefe"
+L.sharing_flags = "Configuración general"
+L.sharing_flags_desc = "Importar configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nCubren la mayoría de las casillas en la configuración de habilidades."
+L.sharing_export_flags_desc = "Exportar configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nCubren la mayoría de las casillas en la configuración de habilidades."
+L.sharing_sounds_desc = "Importar qué sonidos reproducir para las habilidades."
+L.sharing_export_sounds_desc = "Exportar qué sonidos reproducir para las habilidades."
+L.sharing_private_auras = "Auras privadas"
+L.sharing_private_auras_desc = "Importar los sonidos configurados de Auras privadas."
+L.sharing_export_private_auras_desc = "Exportar los sonidos configurados de Auras privadas."
+L.sharing_colors_desc = "Importar la configuración de colores para barras y mensajes."
+L.sharing_export_colors_desc = "Exportar la configuración de colores para barras y mensajes."
+L.confirm_instance_import = "La configuración seleccionada que estás a punto de importar sobrescribirá la configuración de tu perfil actualmente seleccionado:\n\n|cFF33FF99\"%s\"|r\n\nInstancia:\n|cFFBB66FF\"%s\"|r\n\n¿Seguro que quieres hacer esto?"
+L.status_text_paste_import = "Pega una cadena de importación válida"
+L.exporting_instance = "Exportando |cFFBB66FF%s|r" -- Exporting Molten Core
+L.importing_instance = "Importando |cFFBB66FF%s|r" -- Importing Molten Core
+L.share = "Compartir"
 
 -- Statistics
 L.statistics = "Estadísticas"
@@ -334,7 +334,7 @@ L.N10 = "Normal 10"
 L.N25 = "Normal 25"
 L.H10 = "Heroico 10"
 L.H25 = "Heroico 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -343,7 +343,7 @@ L.H25 = "Heroico 25"
 L.tools = "Herramientas"
 L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calidad de vida\" para acelerar y simplificar el proceso de enfrentamiento con los jefes."
 
---L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+L.reloadUIWarning = "Cambiar esta función recargará tu interfaz, mostrando la pantalla de carga por un momento. ¿Estás seguro?"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -546,10 +546,10 @@ L.comma = ", "
 L.reset = "Restablecer"
 L.resetDesc = "Restablecer las configuraciones superiores a sus valores por defecto."
 L.resetAll = "Restablecer todo"
---L.startTest = "Start Test"
---L.stopTest = "Stop Test"
---L.always = "Always"
---L.never = "Never"
+L.startTest = "Iniciar prueba"
+L.stopTest = "Detener prueba"
+L.always = "Siempre"
+L.never = "Nunca"
 
 L.positionX = "Posición X"
 L.positionY = "Posición Y"
@@ -564,7 +564,8 @@ L.disabled = "Desactivado"
 L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacer esto?"
 L.keybinding = "Atajo de teclado"
 L.dragToResize = "Arrastra para ajustar el tamaño"
---L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
+L.cannotMoveInCombat = "No puedes mover esto mientras estás en combate"
+`
 
 -- Anchor Points
 L.UP = "Arriba"
@@ -636,7 +637,7 @@ L.autoReplyLeftCombatAdvancedWipe = "Perdí contra '%s' en: %s"
 L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Predeterminado"
---L.bigWigsBarStyleName_Blizzard = "Blizzard"
+L.bigWigsBarStyleName_Blizzard = "Blizzard"
 L.resetBarsDesc = "Restablece todas las opciones relacionadas con las barras, incluyendo la posición de anclas de este."
 L.testBarsBtn = "Crear barra de prueba"
 L.testBarsBtn_desc = "Crea barras para que las pruebes con los ajustes actuales"
@@ -1032,7 +1033,7 @@ L.combatLogDesc = "Automáticamente comienza a registrar el combate cuando se in
 L.pull = "Llamada de jefe"
 L.engageSoundTitle = "Toca un sonido cuando un encuentro con el jefe haya comenzado"
 L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se comienza"
---L.pullStartedMessageTitle = "Show a message when the pull timer is started"
+L.pullStartedMessageTitle = "Mostrar un mensaje cuando se inicie el temporizador de llamada"
 L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se termina"
 L.pullStartedBy = "%s Lanzó un pull."
 L.pullStopped = "Temporizador de llamada de jefe cancelado por %s."
