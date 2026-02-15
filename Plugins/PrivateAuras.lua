@@ -364,6 +364,7 @@ do
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
+						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
 						order = 7,
 						disabled = IsAnchorDisabled,
@@ -556,6 +557,7 @@ do
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
+						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
 						order = 12,
 						disabled = IsAnchorDisabled,
