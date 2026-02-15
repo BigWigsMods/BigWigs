@@ -289,6 +289,14 @@ local battleResSettingsToExport = {
 	"cooldownInverse",
 }
 
+-- PrivateAuras
+local privateAurasSettingsToExport = {
+	"showDispelType",
+	"player",
+	"other",
+	"otherPlayerType",
+}
+
 -- Default Options
 local sharingExportOptionsSettings = {
 	exportBarPositions = true,
@@ -303,6 +311,7 @@ local sharingExportOptionsSettings = {
 	exportNameplateSettings = true,
 	exportMythicPlusSettings = true,
 	exportBattleResSettings = true,
+	exportPrivateAurasSettings = true,
 }
 
 local sharingImportOptionsSettings = {}
@@ -399,6 +408,13 @@ do
 			end
 		end
 
+		if requestAll or sharingExportOptionsSettings.exportPrivateAurasSettings then
+			local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+			if plugin then
+				exportOptions["privateAurasSettings"] = exportProfileSettings(privateAurasSettingsToExport, plugin.db.profile)
+			end
+		end
+
 		local serialized = C_EncodingUtil.SerializeCBOR(exportOptions)
 		local compressed = C_EncodingUtil.CompressString(serialized, 0) -- Enum.CompressionMethod.Deflate = 0
 		local encoded = C_EncodingUtil.EncodeBase64(compressed)
@@ -436,7 +452,7 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "other" then
-		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") then
+		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or IsOptionInString("privateAurasSettings") then
 			return true
 		end
 	end
@@ -548,6 +564,12 @@ do
 				importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, plugin, L.imported_battleres_settings)
 			end
 		end
+		do
+			local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+			if plugin then
+				importSettings("importPrivateAurasSettings", "privateAurasSettings", privateAurasSettingsToExport, plugin, L.imported_privateAuras_settings)
+			end
+		end
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -609,6 +631,9 @@ do
 		end
 		if IsOptionInString("battleResSettings") then
 			sharingImportOptionsSettings.importBattleResSettings = true
+		end
+		if IsOptionInString("privateAurasSettings") then
+			sharingImportOptionsSettings.importPrivateAurasSettings = true
 		end
 		sharingModule:SaveData()
 	end
@@ -791,6 +816,14 @@ local sharingOptions = {
 						width = 1,
 						disabled = function() return not IsOptionInString("battleResSettings") or not BigWigs:GetPlugin("BattleRes", true) end,
 					},
+					importPrivateAurasSettings = {
+						type = "toggle",
+						name = L.privateAuras,
+						desc = L.privateAuras_settings_import_desc,
+						order = 4,
+						width = 1,
+						disabled = function() return not IsOptionInString("privateAurasSettings") or not BigWigs:GetPlugin("PrivateAuras", true) end,
+					},
 				},
 			},
 			acceptImportButton = {
@@ -953,6 +986,15 @@ local sharingOptions = {
 						width = 1,
 						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("BattleRes", true) end,
 						disabled = function() return not BigWigs:GetPlugin("BattleRes", true) end,
+					},
+					exportPrivateAurasSettings = {
+						type = "toggle",
+						name = L.privateAuras,
+						desc = L.privateAuras_settings_export_desc,
+						order = 4,
+						width = 1,
+						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("PrivateAuras", true) end,
+						disabled = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
 					},
 				},
 			},

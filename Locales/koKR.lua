@@ -277,6 +277,9 @@ L.mythicplus_settings_export_desc = "모든 신화+ 설정 내보내기."
 L.imported_battleres_settings = "전투 부활 설정"
 L.battleres_settings_import_desc = "모든 전투 부활 설정을 가져옵니다."
 L.battleres_settings_export_desc = "모든 전투 부활 설정을 내보냅니다."
+--L.imported_privateAuras_settings = "Private Auras Settings"
+--L.privateAuras_settings_import_desc = "Import all Private Auras settings."
+--L.privateAuras_settings_export_desc = "Export all Private Auras settings."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "보스 설정 공유"

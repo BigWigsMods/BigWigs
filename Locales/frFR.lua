@@ -277,6 +277,9 @@ L.mythicplus_settings_export_desc = "Exporter tous les paramètres mythique +."
 L.imported_battleres_settings = "Paramètres Battle Rez"
 L.battleres_settings_import_desc = "Importer tous les paramètres de Battle Rez."
 L.battleres_settings_export_desc = "Exporter tous les paramètres de Battle Rez."
+--L.imported_privateAuras_settings = "Private Auras Settings"
+--L.privateAuras_settings_import_desc = "Import all Private Auras settings."
+--L.privateAuras_settings_export_desc = "Export all Private Auras settings."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Partage des paramètres de Boss"

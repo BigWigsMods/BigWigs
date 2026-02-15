@@ -277,6 +277,9 @@ L.mythicplus_settings_export_desc = "匯出傳奇+ 設定。"
 L.imported_battleres_settings = "戰復設定"
 L.battleres_settings_import_desc = "匯入戰復設定。"
 L.battleres_settings_export_desc = "匯出戰復設定。"
+--L.imported_privateAuras_settings = "Private Auras Settings"
+--L.privateAuras_settings_import_desc = "Import all Private Auras settings."
+--L.privateAuras_settings_export_desc = "Export all Private Auras settings."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "分享首領設定"

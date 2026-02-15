@@ -277,6 +277,9 @@ L.mythicplus_settings_export_desc = "Exportar todas las opciones de Mítica+."
 L.imported_battleres_settings = "Opciones de Battle Res"
 L.battleres_settings_import_desc = "Importar todas las opciones de Battle Res."
 L.battleres_settings_export_desc = "Exportar todas las opciones de Battle Res."
+--L.imported_privateAuras_settings = "Private Auras Settings"
+--L.privateAuras_settings_import_desc = "Import all Private Auras settings."
+--L.privateAuras_settings_export_desc = "Export all Private Auras settings."
 
 -- InstanceSharing.lua
 --L.sharing_window_title = "Share Boss Settings"
