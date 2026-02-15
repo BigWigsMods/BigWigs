@@ -26,7 +26,7 @@ L.health_desc = "顯示與首領戰鬥中相關的生命值資訊。"
 L.energy = "能量"
 L.energy_desc = "啟用後，在首領戰鬥中顯示各種能量等級的資訊。"
 
-L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已經存在，但該模組仍試圖重新註冊；可能是更新失敗導致你的插件資料夾中同時存在兩份相同模組的拷貝。建議刪除所有 BigWigs 資料夾並重新安裝。"
+L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 BigWigs 中已經存在，但該模組仍試圖重新註冊；可能是因為更新失敗，導致你的插件資料夾中同時存在兩份相同模組的拷貝。建議刪除所有 BigWigs 資料夾並重新安裝。"
 
 -- Loader / Options.lua
 L.okay = "確定"
@@ -146,7 +146,7 @@ L.privateAuraSounds_desc = "插件無法用一般的方式追蹤私有光環，�
 L.listAbilities = "將技能列表發送到團隊聊天頻道"
 
 L.dbmFaker = "假裝我是 DBM 用戶"
-L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。當你的公會強制要求使用 DBM，這是很有用的。"
+L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。這可以在你的公會強制要求使用 DBM 時派上用場。"
 L.zoneMessages = "顯示區域訊息"
 L.zoneMessagesDesc = "當你進入 BigWigs 支援但你尚未安裝對應模組的區域時，提示可安裝的 BigWigs 模組。我們強烈建議保持開啟，因為當 BigWigs 新增了對你有幫助的新模組時，這是唯一能提醒你進行安裝的通知管道。"
 L.englishSayMessages = "英文喊話"
@@ -184,11 +184,11 @@ L.PROXIMITY_desc = "有時候，某些技能會要求團隊散開。啟用此選
 L.ALTPOWER = "顯示替代能量"
 L.ALTPOWER_desc = "某些首領戰鬥會使用替代能量機制。替代能量視窗讓玩家快速查看團隊中誰有最少或最多替代能量，對特定戰術或分配會有幫助。"
 L.TANK = "只對坦克"
-L.TANK_desc = "有些技能只對坦克重要。如果想無視職業看到這些技能警報，停用此選項。"
+L.TANK_desc = "有些技能只對坦克重要。如果想無視角色類型看到這些技能警報，停用此選項。"
 L.HEALER = "只對治療"
-L.HEALER_desc = "有些技能只對治療重要。如果想無視你的職業一律看到此技能警報，停用此選項。"
+L.HEALER_desc = "有些技能只對治療重要。如果想無視角色類型看到此技能警報，停用此選項。"
 L.TANK_HEALER = "只對坦克和治療"
-L.TANK_HEALER_desc = "有些技能只對坦克和治療重要。如果想無視職業看到這些技能警報，停用此選項。"
+L.TANK_HEALER_desc = "有些技能只對坦克和治療重要。如果無視角色類型看到這些技能警報，停用此選項。"
 L.DISPEL = "只對驅散"
 L.DISPEL_desc = "如果你希望在你不能驅散的情況下仍然警報此技能，停用此選項。"
 L.VOICE = "語音"
@@ -346,8 +346,8 @@ L.reloadUIWarning = "變更此功能需要重載介面，系統將會出現短�
 -- AutoRole.lua
 --
 
-L.autoRoleTitle = "自動設定職責"
-L.autoRoleExplainer = "當你加入隊伍或是在隊伍中更換專精時，BigWigs 會自動根據你的專精調整你的隊伍職責（坦克、治療者、傷害輸出）。\n\n"
+L.autoRoleTitle = "自動設定角色類型"
+L.autoRoleExplainer = "當你加入隊伍或是在隊伍中更換專精時，BigWigs 會自動根據你的專精調整你在隊伍中的角色類型（坦克、治療者、傷害輸出）。\n\n"
 
 -----------------------------------------------------------------------
 -- BattleRes.lua
@@ -368,7 +368,7 @@ L.iconTextureSpellIDError = "要設定顯示的圖示，你必需輸入一個有
 L.battleResModeIcon = "圖示模式"
 L.battleResModeText = "純文字模式"
 L.battleResModeTextTooltip = "顯示一個臨時背景，以便你調整戰鬥復活功能的位置，並查看滑鼠指向的區域範圍。"
---L.battleResNoteTooltip = "Note: This tooltip will only show when you are out of combat."
+L.battleResNoteTooltip = "注意：滑鼠提示僅在非戰鬥狀態下顯示。"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -633,7 +633,7 @@ L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
 L.bars = "計時條"
 L.style = "風格"
 L.bigWigsBarStyleName_Default = "預設"
---L.bigWigsBarStyleName_Blizzard = "Blizzard"
+L.bigWigsBarStyleName_Blizzard = "暴雪"
 L.resetBarsDesc = "重設所有計時條自訂選項，包括錨點和位置。"
 L.testBarsBtn = "創建測試計時條"
 L.testBarsBtn_desc = "創建一個測試計時條以測試當前顯示設定。"
