@@ -218,7 +218,7 @@ L.back = "<< Volver"
 L.tank = "|cFFFF0000Solo alertas para tanques.|r "
 L.healer = "|cFFFF0000Solo alertas para sanadores.|r "
 L.tankhealer = "|cFFFF0000Solo alertas para tanque y sanador.|r "
-L.dispeller = "|cFFFF0000Alertas para dispelear únicamente.|r "
+L.dispeller = "|cFFFF0000Alertas para disipar únicamente.|r "
 
 -- Sharing.lua
 L.import = "Importar"
