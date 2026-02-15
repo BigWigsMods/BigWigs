@@ -19,6 +19,20 @@ mod:SetPrivateAuraSounds({
 	{1265540, sound = "alarm"}, -- Blackening Wounds
 	1283069, -- Weakened
 })
+mod:SetBlizzardEncounterEvents({
+	194,
+	195,
+	196,
+	197,
+	198,
+	199,
+	200,
+	201,
+	209,
+	361,
+	419,
+	492
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -38,14 +52,20 @@ mod:SetPrivateAuraSounds({
 
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
-		"stages",
+		-- "stages",
 
-		1249251, -- Dark Upheaval
-		1251361, -- Shadow's Advance
-		1249265, -- Umbral Collapse
-		1260712, -- Oblivion's Wrath
-		1270949, -- Desolation
-		1258880, -- Void Fall
+		-- 1249251, -- Dark Upheaval
+		-- 1251361, -- Shadow's Advance
+		-- 1249265, -- Umbral Collapse
+		-- 1260712, -- Oblivion's Wrath
+		-- 1270949, -- Desolation
+		-- 1258880, -- Void Fall
+	}
+end
+
+function mod:GetBlizzardOptions()
+	return {
+
 	}
 end
 
