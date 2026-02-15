@@ -191,18 +191,20 @@ local function updateProfile()
 
 	if db.player.maxIcons < 2 or db.player.maxIcons > 5 then
 		db.player.maxIcons = plugin.defaultDB.player.maxIcons
-	end
-	local numPlayer = math.floor(db.player.maxIcons+0.5)
-	if numPlayer ~= db.player.maxIcons then
-		db.player.maxIcons = numPlayer
+	else
+		local numPlayer = math.floor(db.player.maxIcons+0.5)
+		if numPlayer ~= db.player.maxIcons then
+			db.player.maxIcons = numPlayer
+		end
 	end
 
 	if db.other.maxIcons < 2 or db.other.maxIcons > 5 then
 		db.other.maxIcons = plugin.defaultDB.other.maxIcons
-	end
-	local numOther = math.floor(db.other.maxIcons+0.5)
-	if numOther ~= db.other.maxIcons then
-		db.other.maxIcons = numOther
+	else
+		local numOther = math.floor(db.other.maxIcons+0.5)
+		if numOther ~= db.other.maxIcons then
+			db.other.maxIcons = numOther
+		end
 	end
 
 	if db.otherPlayerType ~= "tank" and db.otherPlayerType ~= "player" then
@@ -896,9 +898,13 @@ end
 
 do
 	local function ShowHelpTip()
-		local tip = CreateFrame("Frame", nil, anchors.player[1], "GlowBoxTemplate")
+		local tip = CreateFrame("Frame", nil, UIParent, "GlowBoxTemplate")
 		tip:Show()
 		tip:SetSize(260, 120)
+		tip:SetFrameStrata("DIALOG")
+		tip:SetFixedFrameStrata(true)
+		tip:SetFrameLevel(100)
+		tip:SetFixedFrameLevel(true)
 		tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
 		local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
 		arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
@@ -1113,11 +1119,7 @@ do
 	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", [0] = "None" }
 	local privateAuraSpellList = { 407221, 418720, 421828, 428970, 406317 }
 
-	local function releaseFrame(frame, timerID)
-		if timerID and frame.timerID ~= timerID then
-			return
-		end
-
+	local function releaseFrame(frame)
 		frame:ClearAllPoints()
 		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
@@ -1176,7 +1178,12 @@ do
 		local tbl = {}
 		aura.timerID = tbl
 		-- We don't want to use ScheduleTimer as we don't want the timer to cancel if this plugin is disabled
-		plugin:SimpleTimer(function() releaseFrame(aura, tbl) end, duration)
+		local onDelay = function()
+			if tbl == aura.timerID then
+				releaseFrame(aura)
+			end
+		end
+		plugin:SimpleTimer(onDelay, duration)
 
 		return aura
 	end
