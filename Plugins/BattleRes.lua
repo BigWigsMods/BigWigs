@@ -468,6 +468,9 @@ do
 	local function IsDisabledOrTextMode()
 		return plugin.db.profile.disabled or plugin.db.profile.mode == 2
 	end
+	local function IsDisabledOrAnchorPointIsDefault()
+		return plugin.db.profile.disabled or plugin.db.profile.position[5] == plugin.defaultDB.position[5]
+	end
 
 	plugin.pluginOptions = {
 		type = "group",
@@ -1098,7 +1101,7 @@ do
 						max = 2048,
 						step = 1,
 						order = 1,
-						width = "full",
+						width = 1.5,
 						get = function()
 							return plugin.db.profile.position[3]
 						end,
@@ -1116,7 +1119,7 @@ do
 						max = 2048,
 						step = 1,
 						order = 2,
-						width = "full",
+						width = 1.5,
 						get = function()
 							return plugin.db.profile.position[4]
 						end,
@@ -1132,10 +1135,6 @@ do
 							return plugin.db.profile.position[5]
 						end,
 						set = function(_, value)
-							local frame = _G[value]
-							if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-								return
-							end
 							if value ~= plugin.defaultDB.position[5] then
 								plugin.db.profile.position[1] = "CENTER"
 								plugin.db.profile.position[2] = "CENTER"
@@ -1151,9 +1150,16 @@ do
 							end
 							UpdateWidgets()
 						end,
+						validate = function(_, value)
+							local frame = _G[value]
+							if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+								return false
+							end
+							return true
+						end,
 						name = L.customAnchorPoint,
 						order = 3,
-						width = 3.2,
+						width = 3,
 						disabled = IsDisabled,
 					},
 					customAnchorPointSource = {
@@ -1170,9 +1176,8 @@ do
 						values = BigWigsAPI.GetFramePointList(),
 						name = L.sourcePoint,
 						order = 4,
-						width = 1.6,
-						hidden = function() return plugin.db.profile.position[5] == plugin.defaultDB.position[5] end,
-						disabled = IsDisabled,
+						width = 1.5,
+						disabled = IsDisabledOrAnchorPointIsDefault,
 					},
 					customAnchorPointDestination = {
 						type = "select",
@@ -1188,9 +1193,8 @@ do
 						values = BigWigsAPI.GetFramePointList(),
 						name = L.destinationPoint,
 						order = 5,
-						width = 1.6,
-						hidden = function() return plugin.db.profile.position[5] == plugin.defaultDB.position[5] end,
-						disabled = IsDisabled,
+						width = 1.5,
+						disabled = IsDisabledOrAnchorPointIsDefault,
 					},
 				},
 			},

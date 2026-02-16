@@ -326,6 +326,8 @@ do
 		"Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga",
 	}
 	local function HiddenOnRetail() return not BigWigsLoader.isRetail end
+	local function IsNormalAnchorPointDefault() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end
+	local function IsExpAnchorPointDefault() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars:20|t ".. L.bars,
@@ -776,7 +778,7 @@ do
 								max = 2048,
 								step = 1,
 								order = 1,
-								width = 3.2,
+								width = 3,
 								get = function()
 									return db.normalPosition[3]
 								end,
@@ -793,7 +795,7 @@ do
 								max = 2048,
 								step = 1,
 								order = 2,
-								width = 3.2,
+								width = 3,
 								get = function()
 									return db.normalPosition[4]
 								end,
@@ -810,7 +812,7 @@ do
 								max = maxBarWidth,
 								step = 1,
 								order = 3,
-								width = 1.6,
+								width = 1.5,
 							},
 							normalHeight = {
 								type = "range",
@@ -820,7 +822,7 @@ do
 								max = maxBarHeight,
 								step = 1,
 								order = 4,
-								width = 1.6,
+								width = 1.5,
 							},
 							normalCustomAnchorPoint = {
 								type = "input",
@@ -828,10 +830,6 @@ do
 									return db.normalPosition[5]
 								end,
 								set = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return
-									end
 									if value ~= plugin.defaultDB.normalPosition[5] then
 										db.normalPosition[1] = "CENTER"
 										db.normalPosition[2] = "CENTER"
@@ -847,9 +845,16 @@ do
 									end
 									updateProfile()
 								end,
+								validate = function(_, value)
+									local frame = _G[value]
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+										return false
+									end
+									return true
+								end,
 								name = L.customAnchorPoint,
 								order = 5,
-								width = 3.2,
+								width = 3,
 							},
 							normalCustomAnchorPointSource = {
 								type = "select",
@@ -865,8 +870,8 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								name = L.sourcePoint,
 								order = 6,
-								width = 1.6,
-								hidden = function() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end,
+								width = 1.5,
+								disabled = IsNormalAnchorPointDefault,
 							},
 							normalCustomAnchorPointDestination = {
 								type = "select",
@@ -882,8 +887,8 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								name = L.destinationPoint,
 								order = 7,
-								width = 1.6,
-								hidden = function() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end,
+								width = 1.5,
+								disabled = IsNormalAnchorPointDefault,
 							},
 						},
 					},
@@ -900,7 +905,7 @@ do
 								max = 2048,
 								step = 1,
 								order = 1,
-								width = 3.2,
+								width = 3,
 								get = function()
 									return plugin.db.profile.expPosition[3]
 								end,
@@ -917,7 +922,7 @@ do
 								max = 2048,
 								step = 1,
 								order = 2,
-								width = 3.2,
+								width = 3,
 								get = function()
 									return plugin.db.profile.expPosition[4]
 								end,
@@ -934,7 +939,7 @@ do
 								max = maxBarWidth,
 								step = 1,
 								order = 3,
-								width = 1.6,
+								width = 1.5,
 							},
 							expHeight = {
 								type = "range",
@@ -944,7 +949,7 @@ do
 								max = maxBarHeight,
 								step = 1,
 								order = 4,
-								width = 1.6,
+								width = 1.5,
 							},
 							expCustomAnchorPoint = {
 								type = "input",
@@ -952,10 +957,6 @@ do
 									return db.expPosition[5]
 								end,
 								set = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return
-									end
 									if value ~= plugin.defaultDB.expPosition[5] then
 										db.expPosition[1] = "CENTER"
 										db.expPosition[2] = "CENTER"
@@ -971,9 +972,16 @@ do
 									end
 									updateProfile()
 								end,
+								validate = function(_, value)
+									local frame = _G[value]
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+										return false
+									end
+									return true
+								end,
 								name = L.customAnchorPoint,
 								order = 5,
-								width = 3.2,
+								width = 3,
 							},
 							expCustomAnchorPointSource = {
 								type = "select",
@@ -989,8 +997,8 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								name = L.sourcePoint,
 								order = 6,
-								width = 1.6,
-								hidden = function() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end,
+								width = 1.5,
+								disabled = IsExpAnchorPointDefault,
 							},
 							expCustomAnchorPointDestination = {
 								type = "select",
@@ -1006,8 +1014,8 @@ do
 								values = BigWigsAPI.GetFramePointList(),
 								name = L.destinationPoint,
 								order = 7,
-								width = 1.6,
-								hidden = function() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end,
+								width = 1.5,
+								disabled = IsExpAnchorPointDefault,
 							},
 						},
 					},

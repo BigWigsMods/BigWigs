@@ -252,9 +252,13 @@ do
 			return not optionDB.showCooldown
 		elseif key == "cooldownTextScale" then
 			return not optionDB.showCooldown or not optionDB.showCooldownText
-		elseif key == "anchorPoint" or key == "anchorRelPoint" then
-			return optionDB.anchorRelativeTo == plugin.defaultDB[unitType].anchorRelativeTo
 		end
+	end
+	local function IsAurasOnYouDisabledOrAnchorPointIsDefault()
+		return db.player.disabled or db.player.anchorRelativeTo == plugin.defaultDB.player.anchorRelativeTo
+	end
+	local function IsAurasOnOthersDisabledOrAnchorPointIsDefault()
+		return db.other.disabled or db.other.anchorRelativeTo == plugin.defaultDB.other.anchorRelativeTo
 	end
 	local roleIcons = {
 		["TANK"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t",
@@ -642,7 +646,6 @@ do
 					player = {
 						type = "group",
 						name = L.aurasOnYou,
-						inline = true,
 						get = function(info)
 							return db.player[info[#info]]
 						end,
@@ -660,7 +663,7 @@ do
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = -2048, max = 2048, step = 1,
-								width = 3.2,
+								width = 3,
 								order = 1,
 								disabled = IsAnchorDisabled,
 							},
@@ -669,7 +672,7 @@ do
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = -2048, max = 2048, step = 1,
-								width = 3.2,
+								width = 3,
 								order = 2,
 								disabled = IsAnchorDisabled,
 							},
@@ -704,7 +707,7 @@ do
 									end
 									return true
 								end,
-								width = 3.2,
+								width = 3,
 								order = 3,
 								disabled = IsAnchorDisabled,
 							},
@@ -712,24 +715,23 @@ do
 								type = "select",
 								name = L.sourcePoint,
 								values = BigWigsAPI.GetFramePointList(),
-								width = 1.6,
+								width = 1.5,
 								order = 4,
-								disabled = IsAnchorDisabled,
+								disabled = IsAurasOnYouDisabledOrAnchorPointIsDefault,
 							},
 							anchorRelPoint = {
 								type = "select",
 								name = L.destinationPoint,
 								values = BigWigsAPI.GetFramePointList(),
-								width = 1.6,
+								width = 1.5,
 								order = 5,
-								disabled = IsAnchorDisabled,
+								disabled = IsAurasOnYouDisabledOrAnchorPointIsDefault,
 							},
 						},
 					},
 					other = {
 						type = "group",
 						name = L.aurasOnAnother,
-						inline = true,
 						get = function(info)
 							return db.other[info[#info]]
 						end,
@@ -747,7 +749,7 @@ do
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = -2048, max = 2048, step = 1,
-								width = 3.2,
+								width = 3,
 								order = 1,
 								disabled = IsAnchorDisabled,
 							},
@@ -756,7 +758,7 @@ do
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = -2048, max = 2048, step = 1,
-								width = 3.2,
+								width = 3,
 								order = 2,
 								disabled = IsAnchorDisabled,
 							},
@@ -791,7 +793,7 @@ do
 									end
 									return true
 								end,
-								width = 3.2,
+								width = 3,
 								order = 3,
 								disabled = IsAnchorDisabled,
 							},
@@ -799,17 +801,17 @@ do
 								type = "select",
 								name = L.sourcePoint,
 								values = BigWigsAPI.GetFramePointList(),
-								width = 1.6,
+								width = 1.5,
 								order = 4,
-								disabled = IsAnchorDisabled,
+								disabled = IsAurasOnOthersDisabledOrAnchorPointIsDefault,
 							},
 							anchorRelPoint = {
 								type = "select",
 								name = L.destinationPoint,
 								values = BigWigsAPI.GetFramePointList(),
-								width = 1.6,
+								width = 1.5,
 								order = 5,
-								disabled = IsAnchorDisabled,
+								disabled = IsAurasOnOthersDisabledOrAnchorPointIsDefault,
 							},
 						},
 					},
