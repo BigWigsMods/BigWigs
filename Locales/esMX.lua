@@ -4,7 +4,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "El addon '|cFF436EEE%s|r' acaba de copiar una cadena de exportación de tu perfil."
 
 -- Core.lua
 L.berserk = "Enfurecer"
@@ -63,8 +63,8 @@ L.outOfDateContentPopup = "CUIDADO!\nActualizaste |cFF436EEE%s|r pero también n
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requiere la versión %d del addon principal de|cFF436EEEBigWigs|r para que funcione correctamente, pero tu estan en la versión %d."
 L.addOnLoadFailedWithReason = "BigWigs falló al cargar el addon |cFF436EEE%s|r por razones %q. ¡Avisa a los desarrolladores de BigWigs!"
 L.addOnLoadFailedUnknownError = "BigWigs ha encontrado un error al cargar el addon |cFF436EEE%s|r. ¡Avisa a los desarrolladores de BigWigs!"
---L.newFeatures = "New BigWigs features:"
---L.parentheses = "%s (%s)"
+L.newFeatures = "Nuevas características de BigWigs:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Clásico", -- Classic
@@ -84,39 +84,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Abismos",
 	["LittleWigs_CurrentSeason"] = "Temporada actual",
 }
---L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
---}
---L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
---}
---L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
---}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dayNamesShort = {
+	"DOM", -- Sunday
+	"LUN", -- Monday
+	"MAR", -- Tuesday
+	"MIÉ", -- Wednesday
+	"JUE", -- Thursday
+	"VIE", -- Friday
+	"SÁB", -- Saturday
+}
+L.dayNames = {
+	"Domingo",
+	"Lunes",
+	"Martes",
+	"Miércoles",
+	"Jueves",
+	"Viernes",
+	"Sábado",
+}
+L.monthNames = {
+	"Enero",
+	"Febrero",
+	"Marzo",
+	"Abril",
+	"Mayo",
+	"Junio",
+	"Julio",
+	"Agosto",
+	"Septiembre",
+	"Octubre",
+	"Noviembre",
+	"Diciembre",
+}
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
@@ -218,7 +218,7 @@ L.back = "<< Volver"
 L.tank = "|cFFFF0000Solo alertas para tanques.|r "
 L.healer = "|cFFFF0000Solo alertas para sanadores.|r "
 L.tankhealer = "|cFFFF0000Solo alertas para tanque y sanador.|r "
-L.dispeller = "|cFFFF0000Alertas para dispelear únicamente.|r "
+L.dispeller = "|cFFFF0000Alertas para disipables únicamente.|r "
 
 -- Sharing.lua
 L.import = "Importar"
@@ -234,26 +234,26 @@ L.import_string_desc = "Pega la cadena de importación de BigWigs que quieras im
 L.position = "Posición"
 L.settings = "Opciones"
 L.other_settings = "Otras opciones"
-L.nameplate_settings_import_desc = "Importar todas las opciones de las placas de nombre."
-L.nameplate_settings_export_desc = "Exportar todas las opciones de las placas de nombre."
-L.position_import_bars_desc = "Importar la posición (anclajes) de las barras."
-L.position_import_messages_desc = "Importar la posición (anclajes) de los mensajes."
-L.position_import_countdown_desc = "Importar la posición (anclajes) de los contadores."
-L.position_export_bars_desc = "Exportar la posición (anclajes) de las barras."
-L.position_export_messages_desc = "Exportar la posición (anclajes) de los mensajes."
-L.position_export_countdown_desc = "Exportar la posición (anclajes) de los contadores."
+L.nameplate_settings_import_desc = "Importa todas las opciones de las placas de nombre."
+L.nameplate_settings_export_desc = "Exporta todas las opciones de las placas de nombre."
+L.position_import_bars_desc = "Importa la posición (anclajes) de las barras."
+L.position_import_messages_desc = "Importa la posición (anclajes) de los mensajes."
+L.position_import_countdown_desc = "Importa la posición (anclajes) de los contadores."
+L.position_export_bars_desc = "Exporta la posición (anclajes) de las barras."
+L.position_export_messages_desc = "Exporta la posición (anclajes) de los mensajes."
+L.position_export_countdown_desc = "Exporta la posición (anclajes) de los contadores."
 L.settings_import_bars_desc = "Importar las opciones generales, como tamaño, fuente, etc."
-L.settings_import_messages_desc = "Importar las opciones generales de los mensajes, como tamaño, fuente, etc."
-L.settings_import_countdown_desc = "Importar las opciones generales de los contadores, como tamaño, voz, fuente, etc."
-L.settings_export_bars_desc = "Exportar las opciones generales de las barras,como tamaño, fuente, etc."
-L.settings_export_messages_desc = "Exportar las opciones generales de los mensajes, como tamaño, fuente, etc."
-L.settings_export_countdown_desc = "Exportar las opciones generales de los contadores the general countdown settings such as voice, size, font, etc."
-L.colors_import_bars_desc = "Importar el color de las barras."
-L.colors_import_messages_desc = "Importar el color de los mensajes."
-L.color_import_countdown_desc = "Importar el color de los contadores."
-L.colors_export_bars_desc = "Exportar el color de las barras."
-L.colors_export_messages_desc = "Exportar el color de los mensajes."
-L.color_export_countdown_desc = "Exportar el color de los contadores."
+L.settings_import_messages_desc = "Importa las opciones generales de los mensajes, como tamaño, fuente, etc."
+L.settings_import_countdown_desc = "Importa las opciones generales de los contadores, como tamaño, voz, fuente, etc."
+L.settings_export_bars_desc = "Exporta las opciones generales de las barras,como tamaño, fuente, etc."
+L.settings_export_messages_desc = "Exporta las opciones generales de los mensajes, como tamaño, fuente, etc."
+L.settings_export_countdown_desc = "Exporta las opciones generales de los contadores, como voz, tamaño, fuente, etc."
+L.colors_import_bars_desc = "Importa el color de las barras."
+L.colors_import_messages_desc = "Importa el color de los mensajes."
+L.color_import_countdown_desc = "Importa el color de los contadores."
+L.colors_export_bars_desc = "Exporta el color de las barras."
+L.colors_export_messages_desc = "Exporta el color de los mensajes."
+L.color_export_countdown_desc = "Exporta el color de los contadores."
 L.confirm_import = "Las opciones que seleccionaste para importar, reescribiran las opciones selecionadas del perfil actuale:\n\n|cFF33FF99\"%s\"|r\n\n¿Estás seguro que quieres hacer esto?"
 L.confirm_import_addon = "El addon |cFF436EEE\"%s\"|r quiere importar de manera automática nuevas opciones para BigWigsa que sobreescribiran las actuales del perfil:\n\n|cFF33FF99\"%s\"|r\n\n¿Estás seguro que quieres hacer esto?"
 L.confirm_import_addon_new_profile = "El addon |cFF436EEE\"%s\"|r quiere de manera automática creer un nuevo perfil:\n\n|cFF33FF99\"%s\"|r\n\nAceptar esto, tambien creará un nuevo perfil."
@@ -271,33 +271,33 @@ L.imported_countdown_position = "Posiciones de los contadores"
 L.imported_countdown_settings = "Opciones de los contadores"
 L.imported_countdown_color = "Color de los contadores"
 L.imported_nameplate_settings = "Opciones de las barras de nombre"
-L.imported_mythicplus_settings = "Configuraciones de Mítico+"
-L.mythicplus_settings_import_desc = "Importar todas las configuraciones de Mítica+"
-L.mythicplus_settings_export_desc = "Exportar todas las configuraciones de Mítica+"
---L.imported_battleres_settings = "Battle Res Settings"
---L.battleres_settings_import_desc = "Import all Battle Res settings."
---L.battleres_settings_export_desc = "Export all Battle Res settings."
---L.imported_privateAuras_settings = "Private Auras Settings"
---L.privateAuras_settings_import_desc = "Import all Private Auras settings."
---L.privateAuras_settings_export_desc = "Export all Private Auras settings."
+L.imported_mythicplus_settings = "Configuraciones de Mítica+"
+L.mythicplus_settings_import_desc = "Importa todas las configuraciones de Mítica+"
+L.mythicplus_settings_export_desc = "Exporta todas las configuraciones de Mítica+"
+L.imported_battleres_settings = "Configuración de Resurrección en combate"
+L.battleres_settings_import_desc = "Importa toda la configuración de Resurrección en combate."
+L.battleres_settings_export_desc = "Exporta toda la configuración de Resurrección en combate."
+L.imported_privateAuras_settings = "Configuración de Auras privadas"
+L.privateAuras_settings_import_desc = "Importa toda la configuración de Auras privadas."
+L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras privadas."
 
 -- InstanceSharing.lua
---L.sharing_window_title = "Share Boss Settings"
---L.sharing_flags = "General Settings"
---L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_sounds_desc = "Import which sounds to play for abilities."
---L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_private_auras = "Private Auras"
---L.sharing_private_auras_desc = "Import the configured Private Auras sounds."
---L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
---L.sharing_colors_desc = "Import the color settings for bars and messages."
---L.sharing_export_colors_desc = "Export the color settings for bars and messages."
---L.confirm_instance_import = "The selected settings you are about to import will overwrite the settings in your currently selected profile:\n\n|cFF33FF99\"%s\"|r\n\nInstance:\n|cFFBB66FF\"%s\"|r\n\nAre you sure you want to do this?"
---L.status_text_paste_import = "Paste a valid import string"
---L.exporting_instance = "Exporting |cFFBB66FF%s|r" -- Exporting Molten Core
---L.importing_instance = "Importing |cFFBB66FF%s|r" -- Importing Molten Core
---L.share = "Share"
+L.sharing_window_title = "Compartir configuración del jefe"
+L.sharing_flags = "Configuración general"
+L.sharing_flags_desc = "Importa configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nCubren la mayoría de las casillas en la configuración de habilidades."
+L.sharing_export_flags_desc = "Exportar configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nCubren la mayoría de las casillas en la configuración de habilidades."
+L.sharing_sounds_desc = "Importa qué sonidos reproducir para las habilidades."
+L.sharing_export_sounds_desc = "Exporta qué sonidos reproducir para las habilidades."
+L.sharing_private_auras = "Auras privadas"
+L.sharing_private_auras_desc = "Importa los sonidos configurados de Auras privadas."
+L.sharing_export_private_auras_desc = "Exporta los sonidos configurados de Auras privadas."
+L.sharing_colors_desc = "Importa la configuración de colores para barras y mensajes."
+L.sharing_export_colors_desc = "Exporta la configuración de colores para barras y mensajes."
+L.confirm_instance_import = "La configuración seleccionada que estás a punto de importar sobrescribirá la configuración de tu perfil actualmente seleccionado:\n\n|cFF33FF99\"%s\"|r\n\nEstancia:\n|cFFBB66FF\"%s\"|r\n\n¿Seguro que quieres hacer esto?"
+L.status_text_paste_import = "Pega una cadena de importación válida"
+L.exporting_instance = "Exportando |cFFBB66FF%s|r" -- Exporting Molten Core
+L.importing_instance = "Importando |cFFBB66FF%s|r" -- Importing Molten Core
+L.share = "Compartir"
 
 -- Statistics
 L.statistics = "Estadísticas"
@@ -334,7 +334,7 @@ L.N10 = "Normal 10"
 L.N25 = "Normal 25"
 L.H10 = "Heroico 10"
 L.H25 = "Heroico 25"
---L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -343,7 +343,7 @@ L.H25 = "Heroico 25"
 L.tools = "Herramientas"
 L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calidad de vida\" para acelerar y simplificar el proceso de enfrentamiento con los jefes."
 
---L.reloadUIWarning = "Changing this feature will reload your UI, showing the loading screen for a moment. Are you sure?"
+L.reloadUIWarning = "Cambiar esta función recargará tu interfaz, mostrando la pantalla de carga por un momento. ¿Estás seguro?"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -356,7 +356,7 @@ L.autoRoleExplainer = "Cuando te unas a un grupo o cambies tu especialización d
 -- BattleRes.lua
 --
 
---L.battleResTitle = "Battle Res"
+L.battleResTitle = "Res en Combate"
 --L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
 --L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\n\n"
 --L.battleResHistory = "Battle Res History:"
@@ -405,7 +405,7 @@ L.keystoneAutoSlot = "Colocar piedra angular automáticamente"
 L.keystoneAutoSlotDesc = "Coloca tu piedra automáticamente en la ranura cuando abras la fuente de poder."
 L.keystoneAutoSlotMessage = "%s automáticamente colocada en la fuente de poder."
 --L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
-L.keystoneModuleName = "Mythic+"
+L.keystoneModuleName = "Mítica+"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "%s +%d comienza ahora!" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"
 L.keystoneCountdownExplainer = "Cuando comiences un calabozo de Mítica+ comenzará una cuenta regresiva. Selecciona que voz quieres escuchar y cuando quieres que la cuenta comience.\n\n"
@@ -544,27 +544,27 @@ L.general = "General"
 L.advanced = "Avanzado"
 L.comma = ", "
 L.reset = "Restablecer"
-L.resetDesc = "Restablecer las configuraciones superiores a sus valores por defecto."
+L.resetDesc = "Restablece las configuraciones superiores a sus valores predeterminados."
 L.resetAll = "Restablecer todo"
---L.startTest = "Start Test"
---L.stopTest = "Stop Test"
---L.always = "Always"
---L.never = "Never"
+L.startTest = "Iniciar prueba"
+L.stopTest = "Detener prueba"
+L.always = "Siempre"
+L.never = "Nunca"
 
 L.positionX = "Posición X"
 L.positionY = "Posición Y"
 L.positionExact = "Posicionamiento exacto"
-L.positionDesc = "Escriba en el recuadro o mueva el deslizador si necesita un posicionamiento exacto desde el ancla."
+L.positionDesc = "Escribe en el recuadro o mueva el deslizador si necesita un posicionamiento exacto desde el ancla."
 L.width = "Anchura"
 L.height = "Altura"
 L.size = "Tamaño"
 L.sizeDesc = "Normalmente se ajusta el tamaño arrastrando el ancla. Si necesitas un tamaño exacto puedes usar este deslizador o escribir el valor en el recuadro."
-L.fontSizeDesc = "Ajuste el tamaño de la fuente utilizando el control deslizante o escriba el valor en la casilla que tiene un máximo de 200."
+L.fontSizeDesc = "Ajuste el tamaño de la fuente utilizando el control deslizante o escribe el valor en la casilla que tiene un máximo de 200."
 L.disabled = "Desactivado"
 L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacer esto?"
 L.keybinding = "Atajo de teclado"
 L.dragToResize = "Arrastra para ajustar el tamaño"
---L.cannotMoveInCombat = "You cannot move this whilst you're in combat."
+L.cannotMoveInCombat = "No puedes mover esto mientras estás en combate."
 
 -- Anchor Points
 L.UP = "Arriba"
@@ -601,7 +601,7 @@ L.barColor = "Color de la barra"
 L.barTextColor = "Color del texto de la barra"
 L.additionalWidth = "Anchura adicional"
 L.additionalHeight = "Altura adicional"
-L.additionalSizeDesc = "Aumente el tamaño de la pantalla estándar ajustando este deslizador, o escriba el valor en la casilla que tiene un máximo de 100."
+L.additionalSizeDesc = "Aumente el tamaño de la pantalla estándar ajustando este deslizador, o escribe el valor en la casilla que tiene un máximo de 100."
 L.yourPowerTest = "Tu poder: %d" -- Your Power: 42
 L.yourAltPower = "Tu %s: %d" -- e.g. Your Corruption: 42
 L.player = "Jugador %d" -- Player 7
@@ -636,7 +636,7 @@ L.autoReplyLeftCombatAdvancedWipe = "Perdí contra '%s' en: %s"
 L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Predeterminado"
---L.bigWigsBarStyleName_Blizzard = "Blizzard"
+L.bigWigsBarStyleName_Blizzard = "Blizzard"
 L.resetBarsDesc = "Restablece todas las opciones relacionadas con las barras, incluyendo la posición de anclas de este."
 L.testBarsBtn = "Crear barra de prueba"
 L.testBarsBtn_desc = "Crea barras para que las pruebes con los ajustes actuales"
@@ -752,11 +752,11 @@ L.blockObjectiveTracker = "Ocultar el seguimiento de misión"
 L.blockObjectiveTrackerDesc = "El seguimiento de misión se ocultará durante encuentros de jefes para limpiar el espacio en pantalla.\n\nEsto no sucederá si estás en una mítica + o estás haciendo seguimiento de un logro."
 
 L.blockTalkingHead = "Ocultar la ventana emergente de diálogo 'Cabeza Parlante' del PNJ"
-L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de PNJ y un texto de chat de PNJ en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un PNJ está hablando.\n\nPuedes elegir los diferentes tipos de instancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del PNJ se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
-L.blockTalkingHeadDungeons = "Calabozos Normales & Heroicos"
+L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de PNJ y un texto de chat de PNJ en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un PNJ está hablando.\n\nPuedes elegir los diferentes tipos de estancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del PNJ se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
+L.blockTalkingHeadDungeons = "Calabozos Normales y Heroicos"
 L.blockTalkingHeadMythics = "Calabozos Míticos y Míticos+"
 L.blockTalkingHeadRaids = "Bandas"
-L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos & Bandas)"
+L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos y Bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
 
 L.redirectPopups = "Redirigir carteles emergentes a mensajes de BigWigs"
@@ -768,10 +768,10 @@ L.itemLevel = "Nivel de objeto %d"
 L.newRespawnPoint = "Nuevo punto de reaparición"
 L.playerLevel = "Nivel %d"
 
-L.userNotifySfx = "BossBlock desactivó los efectos de sonido, lo que obligó a volver a activarlos."
-L.userNotifyMusic = "BossBlock desactivó la música, lo que obligó a volver a activarla."
-L.userNotifyAmbience = "BossBlock desactivó el ambiente, lo que obligó a volver a activarlo."
-L.userNotifyErrorSpeech = "BossBlock desactivó el aviso de error, lo que obligó a volver a activarlo."
+L.userNotifySfx = "Bloque de jefe desactivó los efectos de sonido, lo que obligó a volver a activarlos."
+L.userNotifyMusic = "Bloque de jefe desactivó la música, lo que obligó a volver a activarla."
+L.userNotifyAmbience = "Bloque de jefe desactivó el ambiente, lo que obligó a volver a activarlo."
+L.userNotifyErrorSpeech = "Bloque de jefe desactivó el aviso de error, lo que obligó a volver a activarlo."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -848,7 +848,7 @@ L.uppercase = "MAYÚSCULAS"
 L.uppercaseDesc = "Todos los mensajes enfatizados se convertirán en MAYÚSCULAS."
 
 L.useIcons = "Usar iconos"
-L.useIconsDesc = "Mostrar iconos al lado de los mensajes."
+L.useIconsDesc = "Muestra iconos al lado de los mensajes."
 L.classColors = "Colores de clase"
 L.classColorsDesc = "Los mensajes a veces contienen nombres de jugadores. Al activar esta opción, esos nombres serán coloreados con los colores de la clase."
 L.chatFrameMessages = "Mensajes del marco de chat"
@@ -890,12 +890,12 @@ L.growStartPosition = "Posición inicial de crecimiento"
 L.growStartPositionDesc = "La posición inicial del primer icono."
 L.growDirection = "Dirección de crecimiento"
 L.growDirectionDesc = "La dirección en la que los iconos saldrán, a partir de la posición inicial."
-L.iconSpacingDesc = "Cambiar el espacio entre cada icono."
+L.iconSpacingDesc = "Cambia el espacio entre cada icono."
 L.nameplateIconSettings = "Opciones de iconos"
 L.keepAspectRatio = "Mantener el radio de aspecto"
 L.keepAspectRatioDesc = "Mantener un radio de aspecto de 1:1 en vez de estirarlo para que cubra el tamaño del cuadro."
 L.iconColor = "Color de icono"
-L.iconColorDesc = "Cambiar el color de la textura del icono."
+L.iconColorDesc = "Cambia el color de la textura del icono."
 L.desaturate = "Desaturar"
 L.desaturateDesc = "Desaturar la textura del icono."
 L.zoom = "Zoom"
@@ -904,8 +904,8 @@ L.showBorder = "Mostrar un borde"
 L.showBorderDesc = "Mostrar un borde alrededor del icono."
 L.borderColor = "Color del borde"
 L.borderSize = "Tamaño del borde"
-L.borderOffset = "Alineación del Borde"
-L.borderName = "Nombre del Borde"
+L.borderOffset = "Desplazamiento del borde"
+L.borderName = "Nombre del borde"
 L.showNumbers = "Mostrar números"
 L.showNumbersDesc = "Mostrar números en el icono."
 L.cooldown = "Enfriamiento"
@@ -928,8 +928,8 @@ L.fixate_test = "Texto fijado" -- Text that displays to test on the frame
 L.resetNameplateTextDesc = "Reiniciar todas las opciones relacionadas con el texto de las barras de nombre."
 L.glowAt = "Comienza el brillo (segundos)"
 L.glowAt_desc = "Elige cuantos segundos de enfriamiento deberian quedar cuando el brillo empieza."
-L.offsetX = "Alineación del eje X"
-L.offsetY = "Alineación del eje Y"
+L.offsetX = "Desplazamiento del eje X"
+L.offsetY = "Desplazamiento del eje Y"
 L.headerIconSizeTarget = "Tamaño de icono de tu objetivo actual"
 L.headerIconSizeOthers = "El tamaño del icono de los otros objetivos"
 L.headerIconPositionTarget = "Posición del ícono de tu objetivo actual"
@@ -1032,7 +1032,7 @@ L.combatLogDesc = "Automáticamente comienza a registrar el combate cuando se in
 L.pull = "Llamada de jefe"
 L.engageSoundTitle = "Toca un sonido cuando un encuentro con el jefe haya comenzado"
 L.pullStartedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se comienza"
---L.pullStartedMessageTitle = "Show a message when the pull timer is started"
+L.pullStartedMessageTitle = "Mostrar un mensaje cuando se inicie el temporizador de llamada"
 L.pullFinishedSoundTitle = "Toca un sonido cuando el temporizador de llamada de jefe se termina"
 L.pullStartedBy = "%s Lanzó un pull."
 L.pullStopped = "Temporizador de llamada de jefe cancelado por %s."
