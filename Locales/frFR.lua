@@ -982,6 +982,7 @@ L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et customisez les icôn
 L.chooseAPlayer = "Choisissez un joueur"
 L.theOtherTank = "Cherche automatiquement un tank"
 L.theOtherTankDesc = "Affiche les auras privées sur le premier tank de votre groupe n'étant pas vous. (Actuel : %s)"
+--L.onlyWhenYouAreTank = "Only show when you are also a tank"
 L.playerInYourGroup = "Un joueur dans votre groupe"
 L.maxIcons = "Icônes Max"
 L.maxIconsDesc = "Nombre maximum d'icônes à afficher."

@@ -982,6 +982,7 @@ L.aurasOnAnotherDesc = "指定一名玩家，設定該玩家身上的光環圖�
 L.chooseAPlayer = "選擇一名玩家"
 L.theOtherTank = "自動尋找坦克"
 L.theOtherTankDesc = "按照隊伍的排列順序，自動尋找隊伍中的另一名坦克，顯示該坦克的私有光環。（目前：%s）"
+--L.onlyWhenYouAreTank = "Only show when you are also a tank"
 L.playerInYourGroup = "隊伍中的玩家"
 L.maxIcons = "圖示最大數量"
 L.maxIconsDesc = "最多顯示幾個圖示。"

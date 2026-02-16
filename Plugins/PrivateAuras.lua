@@ -64,6 +64,7 @@ plugin.defaultDB = {
 		anchorRelativeTo = "UIParent",
 	},
 	otherPlayerType = "tank",
+	onlyWhenYouAreTank = false,
 	otherPlayerName = "",
 }
 plugin.defaultGlobalDB = {
@@ -546,17 +547,32 @@ do
 						width = 1.6,
 						order = 7,
 					},
+					onlyWhenYouAreTank = {
+						type = "toggle",
+						name = L.onlyWhenYouAreTank,
+						get = function() return db.onlyWhenYouAreTank end,
+						set = function(_, value)
+							db.onlyWhenYouAreTank = value
+							updateProfile()
+						end,
+						hidden = function()
+							return db.otherPlayerType == "player"
+						end,
+						disabled = IsAnchorDisabled,
+						width = "full",
+						order = 8,
+					},
 					emptylines = {
 						type = "description",
 						name = "\n\n",
-						order = 8,
+						order = 9,
 					},
 					size = {
 						type = "range",
 						name = L.iconSize,
 						min = 24, max = 256, step = 1,
 						width = 1.6,
-						order = 9,
+						order = 10,
 						disabled = IsAnchorDisabled,
 					},
 					spacing = {
@@ -564,7 +580,7 @@ do
 						name = L.iconSpacing,
 						min = 0, max = 50, step = 1,
 						width = 1.6,
-						order = 10,
+						order = 11,
 						disabled = IsAnchorDisabled,
 					},
 					showBorder = {
@@ -572,7 +588,7 @@ do
 						name = L.showBorder,
 						desc = L.showBorderDesc,
 						width = 1.6,
-						order = 11,
+						order = 12,
 						disabled = IsAnchorDisabled,
 					},
 					showCooldown = {
@@ -580,14 +596,14 @@ do
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 12,
+						order = 13,
 						disabled = IsAnchorDisabled,
 					},
 					showCooldownText = {
 						type = "toggle",
 						name = L.showCooldownText,
 						width = 1.6,
-						order = 13,
+						order = 14,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownTextScale = {
@@ -595,7 +611,7 @@ do
 						name = L.cooldownTextScale,
 						min = 0.1, max = 4, step = 0.1, isPercent = true,
 						width = 1.6,
-						order = 14,
+						order = 15,
 						disabled = IsAnchorDisabled,
 					},
 					growthDirection = {
@@ -608,7 +624,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 15,
+						order = 16,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -617,13 +633,13 @@ do
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
 						width = 1.6,
-						order = 16,
+						order = 17,
 						disabled = IsAnchorDisabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 17,
+						order = 18,
 					},
 					reset = {
 						type = "execute",
@@ -633,7 +649,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 18,
+						order = 19,
 					},
 				},
 			},
@@ -1044,7 +1060,7 @@ do
 					end
 				end
 			end
-		elseif db.otherPlayerType == "tank" then
+		elseif db.otherPlayerType == "tank" and (not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK")) then
 			for unit in plugin:IterateGroup(true) do
 				if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
 					return unit

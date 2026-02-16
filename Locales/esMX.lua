@@ -982,6 +982,7 @@ L.nameplateOptInWarning = "|cffff4411ADVERTENCIA!|r\n\nActivar el modo 'opcional
 --L.chooseAPlayer = "Choose a player"
 --L.theOtherTank = "Automatically find a tank"
 --L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
+--L.onlyWhenYouAreTank = "Only show when you are also a tank"
 --L.playerInYourGroup = "A player in your group"
 --L.maxIcons = "Max Icons"
 --L.maxIconsDesc = "The maximum amount of icons to be displayed."

@@ -982,6 +982,7 @@ L.aurasOnAnotherDesc = "选择一名特定玩家，然后为该玩家自定义�
 L.chooseAPlayer = "选择一名玩家"
 L.theOtherTank = "自动寻找坦克"
 L.theOtherTankDesc = "在你队伍中除你之外另一位坦克身上的私有光环。（当前：%s）"
+--L.onlyWhenYouAreTank = "Only show when you are also a tank"
 L.playerInYourGroup = "你队伍中的玩家"
 L.maxIcons = "最大图标数"
 L.maxIconsDesc = "显示图标的最大数量。"

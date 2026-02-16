@@ -295,6 +295,7 @@ local privateAurasSettingsToExport = {
 	"player",
 	"other",
 	"otherPlayerType",
+	"onlyWhenYouAreTank",
 }
 
 -- Default Options
