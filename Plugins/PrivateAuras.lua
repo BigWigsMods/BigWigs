@@ -225,7 +225,9 @@ local function updateProfile()
 		db.otherPlayerType = plugin.defaultDB.otherPlayerType
 	end
 
-	C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+	if not db.player.disabled or not db.other.disabled then
+		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+	end
 
 	plugin:UpdateAllAnchors()
 	if inConfigureMode then -- Update visible anchors
@@ -316,6 +318,11 @@ do
 				end,
 				width = "full",
 				order = 3,
+				disabled = function()
+					if db.player.disabled and db.other.disabled then
+						return true
+					end
+				end,
 			},
 			player = {
 				type = "group",
