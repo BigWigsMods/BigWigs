@@ -1742,11 +1742,13 @@ do
 		end
 		GameTooltip:Show()
 	end
-	challengesTeleportButton:SetScript("OnEvent", function(self, event, addonName)
+
+	local frame = CreateFrame("Frame")
+	frame:SetScript("OnEvent", function(self, event, addonName)
 		if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
 			self:UnregisterEvent(event)
 			self:SetScript("OnEvent", nil)
-			ChallengesFrame:HookScript("OnShow", function(challengesFrame)
+			self.HookScript(ChallengesFrame, "OnShow", function(challengesFrame)
 				if challengesFrame.DungeonIcons then
 					for i = 1, #challengesFrame.DungeonIcons do
 						local icon = challengesFrame.DungeonIcons[i]
@@ -1781,7 +1783,7 @@ do
 			end)
 		end
 	end)
-	challengesTeleportButton:RegisterEvent("ADDON_LOADED")
+	frame:RegisterEvent("ADDON_LOADED")
 end
 
 --------------------------------------------------------------------------------
