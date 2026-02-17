@@ -878,6 +878,7 @@ do
 
 		display:EnableMouse(true)
 		display:RegisterForDrag("LeftButton")
+		display:SetClampedToScreen(true)
 		display:SetScript("OnDragStart", OnDragStart)
 		display:SetScript("OnDragStop", OnDragStop)
 
@@ -949,6 +950,7 @@ do
 		tip:SetFixedFrameStrata(true)
 		tip:SetFrameLevel(100)
 		tip:SetFixedFrameLevel(true)
+		tip:SetClampedToScreen(true)
 		tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
 		local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
 		arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
@@ -1111,6 +1113,7 @@ do
 				anchor:SetFrameLevel(1000)
 				anchor:SetFixedFrameLevel(true)
 				anchor:SetMovable(true)
+				anchor:SetClampedToScreen(true)
 
 				anchor.unitType = unitType
 				anchor.UpdateAnchorPosition = UpdateAnchorPosition
@@ -1197,6 +1200,7 @@ do
 			aura:SetFixedFrameStrata(true)
 			aura:SetFrameLevel(1000)
 			aura:SetFixedFrameLevel(true)
+			aura:SetClampedToScreen(true)
 
 			local icon = aura:CreateTexture(nil, "BACKGROUND")
 			icon:SetAllPoints()
