@@ -1696,7 +1696,7 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Challenges UI Clickable Teleports
+-- Challenges UI Clickable Teleports & Decoration
 --
 
 do
@@ -1751,8 +1751,30 @@ do
 					for i = 1, #challengesFrame.DungeonIcons do
 						local icon = challengesFrame.DungeonIcons[i]
 						if not hookedIcons[icon] then
-							hookedIcons[icon] = true
+							local font = icon:CreateFontString(nil, nil, "SystemFont_Huge1_Outline")
+							font:SetJustifyH("CENTER")
+							font:SetPoint("BOTTOM", 0, 4)
+							font:SetShadowOffset(1, -1)
+							font:SetShadowColor(0, 0, 0)
+							font:Show()
+							hookedIcons[icon] = font
 							icon:HookScript("OnEnter", OnEnter)
+						end
+
+						hookedIcons[icon]:ClearText()
+						-- Highest score text, mimic Blizz code for the highest level text
+						local _, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(icon.mapID)
+						local inTimeInfo, overtimeInfo = C_MythicPlus.GetSeasonBestForMap(icon.mapID)
+						if overAllScore and (inTimeInfo or overtimeInfo) then
+							local color
+							if overAllScore then
+								color = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(overAllScore)
+							end
+							if not color then
+								color = HIGHLIGHT_FONT_COLOR
+							end
+							hookedIcons[icon]:SetTextColor(color.r, color.g, color.b)
+							hookedIcons[icon]:SetText(overAllScore)
 						end
 					end
 				end
