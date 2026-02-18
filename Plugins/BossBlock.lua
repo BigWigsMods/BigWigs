@@ -51,9 +51,6 @@ local isTestBuild = loader.isTestBuild
 local isClassic = loader.isClassic
 local isVanilla = loader.isVanilla
 local GetSubZoneText = GetSubZoneText
-local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
-local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
-local RemoveCurrentToast = C_EventToastManager and C_EventToastManager.RemoveCurrentToast
 local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 local SetCVar = C_CVar.SetCVar
 local GetCVar = C_CVar.GetCVar
@@ -515,6 +512,8 @@ do
 		[279]=true,[280]=true,[281]=true,[282]=true,[283]=true,[284]=true,[285]=true,[286]=true,
 	}
 	local nemesisBoxCounts = {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4}
+	local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
+	local RemoveCurrentToast = C_EventToastManager and C_EventToastManager.RemoveCurrentToast
 	function plugin:DISPLAY_EVENT_TOASTS()
 		local tbl = GetNextToastToDisplay()
 		if tbl then
@@ -664,6 +663,15 @@ do
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
 				else -- Something we don't support, pass to Blizz to process
+					local msgTable = {"eventToastID", tbl.eventToastID, "title", tbl.title}
+					for k, v in next, tbl do
+						if k ~= "eventToastID" and k ~= "title" then
+							msgTable[#msgTable+1] = k
+							msgTable[#msgTable+1] = tostring(v)
+						end
+					end
+					local msg = table.concat(msgTable, "#")
+					self:Debug("Toast", msg)
 					return
 				end
 				RemoveCurrentToast()
@@ -1030,13 +1038,19 @@ do
 		[152] = 5, -- Visions of N'Zoth
 		[205] = 1, -- Follower Dungeon
 	}
+	local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
 	function plugin:TALKINGHEAD_REQUESTED()
 		local _, _, diff = GetInstanceInfo()
 		local entry = lookup[diff]
 		if entry and self.db.profile.blockTalkingHeads[entry] then
 			local _, _, soundKitId = TalkingHeadLineInfo()
-			if known[soundKitId] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
-				TalkingHeadFrame:Hide()
+			if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
+				if known[soundKitId] then
+					TalkingHeadFrame:Hide()
+					self:Debug("TalkingHead", "Known", soundKitId)
+				else
+					self:Debug("TalkingHead", "Unknown", TalkingHeadLineInfo())
+				end
 			end
 		end
 	end

@@ -67,7 +67,6 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/GetRaidTargetIndex",
 	"113/PlayerIsTimerunning",
-	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
@@ -83,7 +82,6 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/PlayerIsTimerunning",
 	"113/GetTalentInfo",
 	"113/GetTalentTabInfo",
-	"113/TranscriptIgnore",
 	"113/Transcriptor",
 	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
@@ -97,6 +95,7 @@ files["Core/Core.lua"].ignore = {
 }
 files["Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",
+	"113/Transcriptor",
 }
 files["Plugins/AltPower.lua"].ignore = {
 	"113/GetNumGroupMembers",
