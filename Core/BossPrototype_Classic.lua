@@ -2043,18 +2043,19 @@ do
 		[5] = 8149, -- Voodoo Charm
 		[10] = 17626, -- Frostwolf Muzzle
 		[20] = 10645, -- Gnomish Death Ray
+		[25] = 13289, -- Egan's Blaster
 		[30] = 835, -- Large Rope Net
 		[35] = 18904, -- Zorbin's Ultra-Shrinker
-		[40] = 28767, -- The Decapitator (TBC+ only)
+		[40] = 4945, -- Faintly Glowing Skull
 		[45] = 23836, -- Goblin Rocket Launcher (TBC+ only)
 		[60] = 32825, -- Soul Cannon (TBC+ only)
-		[100] = 33119, -- Malister's Frost Wand (WotlK+ only)
+		[100] = 5418, -- Weapon of Mass Destruction (test)
 	}
 	for _,v in next, items do
 		C_Item.RequestLoadItemDataByID(v)
 	end
 	--- Check whether a hostile unit is within a specific range, check is performed based on specific item ranges.
-	-- Available Ranges: 10, 20, 30, 35, (TBC+: 40, 45, 60), (WotlK+: 100)
+	-- Available Ranges: 10, 20, 30, 35, 40, 100, (TBC+: 45, 60)
 	-- @string unit unit token or name
 	-- @number range the range to check
 	-- @return boolean
