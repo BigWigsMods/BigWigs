@@ -25,6 +25,7 @@ local CONTENT_PACK_VERSIONS = {
 	["BigWigs_BattleForAzeroth"] = {12, 0, 0},
 	["BigWigs_Shadowlands"] = {12, 0, 0},
 	["BigWigs_Dragonflight"] = {12, 0, 1},
+	["BigWigs_TheWarWithin"] = {12, 0, 1},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
@@ -286,7 +287,6 @@ do
 			name = mn,
 			bigWigsBundled = {
 				[mn] = true,
-				[tww] = true,
 			},
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
@@ -319,7 +319,6 @@ do
 		public.currentExpansion = { -- Change on new expansion releases
 			name = mn,
 			bigWigsBundled = {
-				[tww] = true,
 				[mn] = true,
 			},
 			littlewigsDefault = lw_cs,
@@ -355,9 +354,6 @@ do
 				--[658] = lw_cs, -- Pit of Saron
 			},
 			zones = {
-				[2657] = "BigWigs_NerubarPalace",
-				[2769] = "BigWigs_LiberationOfUndermine",
-				[2810] = "BigWigs_ManaforgeOmega",
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
@@ -1356,6 +1352,9 @@ do
 		BigWigs_Amirdrassil = "BigWigs_Dragonflight",
 		BigWigs_DragonIsles = "BigWigs_Dragonflight",
 		BigWigs_VaultOfTheIncarnates = "BigWigs_Dragonflight",
+		BigWigs_NerubarPalace = "BigWigs_TheWarWithin",
+		BigWigs_LiberationOfUndermine = "BigWigs_TheWarWithin",
+		BigWigs_ManaforgeOmega = "BigWigs_TheWarWithin",
 	}
 	local DisableAddOn = C_AddOns.DisableAddOn
 	local delayedMessages = {}
@@ -1378,6 +1377,7 @@ do
 		BigWigs_BattleForAzeroth = true,
 		BigWigs_Shadowlands = true,
 		BigWigs_Dragonflight = true,
+		BigWigs_TheWarWithin = true,
 		LittleWigs = true,
 		LittleWigs_Classic = true,
 		LittleWigs_BurningCrusade = true,
@@ -1390,9 +1390,6 @@ do
 		LittleWigs_Shadowlands = true,
 		LittleWigs_Dragonflight = true,
 		-- Dynamic content
-		BigWigs_NerubarPalace = true,
-		BigWigs_LiberationOfUndermine = true,
-		BigWigs_ManaforgeOmega = true,
 		BigWigs_TheVoidspire = true,
 		BigWigs_TheDreamrift = true,
 		BigWigs_MarchOnQuelDanas = true,
