@@ -1639,7 +1639,7 @@ do
 				missing:SetFullWidth(true)
 				container:AddChild(missing)
 
-				if disabled then
+				if disabled and addonState ~= "MISSING" then
 					local reload = AceGUI:Create("Button")
 					reload:SetText(L.enable)
 					reload:SetAutoWidth(true)
