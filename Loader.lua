@@ -1355,6 +1355,7 @@ do
 		BigWigs_NerubarPalace = "BigWigs_TheWarWithin",
 		BigWigs_LiberationOfUndermine = "BigWigs_TheWarWithin",
 		BigWigs_ManaforgeOmega = "BigWigs_TheWarWithin",
+		BigWigs_KhazAlgar = "BigWigs_TheWarWithin",
 	}
 	local DisableAddOn = C_AddOns.DisableAddOn
 	local delayedMessages = {}
