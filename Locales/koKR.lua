@@ -1115,10 +1115,14 @@ L.enableBlizzTimeline = "블리자드 타임라인 활성화"
 L.enableBlizzTimelineDesc = "이 옵션을 활성화하면 모든 보스 전투 타이머가 블리자드 타임라인에 표시됩니다."
 L.enableBlizzWarnings = "블리자드 보스 경고 활성화"
 L.enableBlizzWarningsDesc = "블리자드 보스 경고를 활성화할 경우, BigWigs 메시지로 표시하는 기능을 비활성화해야 합니다. 그렇지 않으면 모든 메시지가 두 번 표시됩니다."
---L.show_custom_timers = "Show Custom Timers"
---L.show_custom_timers_desc = "BigWigs will replace Blizzard's encounter timeline timers with its own (improved) timers.\n\nThis only works on encounters we have configured."
---L.show_custom_and_blizzard = "Show Both"
---L.show_custom_and_blizzard_desc = "Both Blizzard and Custom Timers will be shown simultaneously. Usefull for development, early raid releases and PTR testing."
+--L.show_bars = "Show Bars From"
+--L.custom_timers = "Custom Timers"
+--L.custom_timers_desc = "BigWigs will replace the Blizzard encounter timers with improved timers if available, otherwise Blizzard timers will be used."
+--L.blizzard_timers = "Blizzard Timers"
+--L.blizzard_timers_desc = "Show Blizzard encounter timers as BigWigs bars."
+--L.both_timers = "Both"
+--L.both_timers_desc = "Show Blizzard timers and Custom timers at the same time. |cffff4411For testing and not-yet-updated encounters.|r"
+--L.disabled_timers_desc = "BigWigs will not show bars."
 
 -----------------------------------------------------------------------
 -- Victory.lua
