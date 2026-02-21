@@ -650,14 +650,17 @@ do
 						tbl.subtitle = CL.other:format(L.newRespawnPoint, latestKill[3]) -- New Respawn Point: Boss Name
 						self:SimpleTimer(function() printMessage(self, tbl) end, 1) -- Delay a little after the boss kill
 					end
-				elseif tbl.eventToastID == 339 then -- A Flickergate Has Manifested Within
+				elseif tbl.eventToastID == 339 or tbl.eventToastID == 370 then -- Delve Spoils Within
+					-- 339: A Flickergate Has Manifested Within
+					-- 370: A Sanctified Banner Has Manifested Within
 					tbl.subtitle = tbl.title
 					tbl.title = nil
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 then -- Flickering Spoils
-					-- 337 tbl.title is "Flickering Spoils Will Manifest Upon Delve Completion"
-					-- 338 tbl.title is "Shadowed Flickering Spoils Will Manifest Upon Delve Completion"
+				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 372 then -- Delve Spoils Found
+					-- 337: Flickering Spoils Will Manifest Upon Delve Completion
+					-- 338: Shadowed Flickering Spoils Will Manifest Upon Delve Completion
+					-- 372: Sanctified Spoils Will Manifest Upon Delve Completion
 					tbl.subtitle = tbl.title
 					tbl.title = nil
 					tbl.bwDuration = 3
