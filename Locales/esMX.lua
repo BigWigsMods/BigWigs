@@ -863,7 +863,7 @@ L.monochrome = "Monocromo"
 L.monochromeDesc = "Cambia a modo monocromático, eliminando cualquier suavizado de los bordes de la fuente."
 L.fontColor = "Color de la fuente"
 
-L.displayTime = "Tiempo de visualización"
+L.displayTime = "Mostrar tiempo"
 L.displayTimeDesc = "Cuánto tiempo mostrará un mensaje, en segundos."
 L.fadeTime = "Tiempo de desvanecimiento"
 L.fadeTimeDesc = "Cuánto tiempo tardará en desaparecer un mensaje, en segundos."
