@@ -424,13 +424,6 @@ do
 						name = L.maxIcons,
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
-						set = function(info, value)
-							db.player.maxIcons = value
-							plugin:UpdateAnchors("player", "player")
-							if inConfigureMode then -- Update visible anchors
-								plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
-							end
-						end,
 						width = 1.6,
 						order = 11,
 						disabled = IsAnchorDisabled,
@@ -639,13 +632,6 @@ do
 						name = L.maxIcons,
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
-						set = function(info, value)
-							db.other.maxIcons = value
-							plugin:UpdateAnchors("other")
-							if inConfigureMode then -- Update visible anchors
-								plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
-							end
-						end,
 						width = 1.6,
 						order = 17,
 						disabled = IsAnchorDisabled,
@@ -918,7 +904,6 @@ do
 		inConfigureMode = true
 
 		for unitType, unitAnchors in next, anchors do
-			local maxIcons = self.db.profile[unitType].maxIcons
 			for i = 1, #unitAnchors do
 				local anchor = unitAnchors[i]
 				if not anchor.configModeFrame then
@@ -926,7 +911,7 @@ do
 					anchor.configModeFrame.text:SetText(anchor.hasTestIcon and "" or L.privateAurasTestAnchorText:format(i))
 					anchor.configModeFrame.dragAnchor = unitAnchors[1]
 				end
-				anchor.configModeFrame:SetShown(i <= maxIcons)
+				anchor.configModeFrame:Show()
 			end
 		end
 	end
