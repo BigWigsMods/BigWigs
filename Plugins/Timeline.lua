@@ -139,12 +139,6 @@ do
 				width = "full",
 				order = 5,
 			},
-			spacer2 = {
-				type = "description",
-				name = "",
-				width = "full",
-				order = 6,
-			},
 			timeline = {
 				type = "group",
 				name = L.blizzTimelineSettings,
