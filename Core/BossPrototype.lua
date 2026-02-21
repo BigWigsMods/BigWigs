@@ -237,10 +237,11 @@ function boss:UseCustomTimers(useCustomTimers)
 	end
 end
 
-function boss:CustomTimersEnabled()
-	local timelinePlugin = plugins.Timeline
-	if timelinePlugin then
-		return timelinePlugin.db.profile.show_custom_timers
+function boss:ShouldShowBars()
+	if self.useCustomTimers and plugins.Timeline then
+		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
+		local timelineDB = plugins.Timeline.db.profile
+		return timelineDB.show_bars == "custom" or timelineDB.show_bars == "both"
 	end
 end
 
@@ -3538,9 +3539,10 @@ do
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
 	function boss:Bar(key, length, text, icon, eventId)
-		if self.useCustomTimers and not self:CustomTimersEnabled() then
+		if not self:ShouldShowBars() then
 			return
 		end
+
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -3590,9 +3592,10 @@ do
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
 	function boss:CDBar(key, length, text, icon, eventId)
-		if self.useCustomTimers and not self:CustomTimersEnabled() then
+		if not self:ShouldShowBars() then
 			return
 		end
+
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
