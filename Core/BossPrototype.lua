@@ -3520,7 +3520,8 @@ do
 	-- @param length the bar duration in seconds, or a table containing {remaining duration, max duration}
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:Bar(key, length, text, icon)
+	-- @param[opt] eventId the timeline event ID (Retail only)
+	function boss:Bar(key, length, text, icon, eventId)
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -3553,7 +3554,7 @@ do
 		local msg = textType == "string" and text or spells[text or key]
 		local isBarEnabled = checkFlag(self, key, C.BAR)
 		if isBarEnabled then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime, eventId)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
@@ -3568,7 +3569,8 @@ do
 	-- @param length the bar duration in seconds, or a table containing {current duration, max duration}
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:CDBar(key, length, text, icon)
+	-- @param[opt] eventId the timeline event ID (Retail only)
+	function boss:CDBar(key, length, text, icon, eventId)
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -3601,7 +3603,7 @@ do
 		local msg = textType == "string" and text or spells[text or key]
 		local isBarEnabled = checkFlag(self, key, C.BAR)
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], true, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], true, maxTime, eventId)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
@@ -3660,7 +3662,8 @@ do
 	-- @param length the bar duration in seconds, or a table containing {current duration, max duration}
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:CastBar(key, length, text, icon)
+	-- @param[opt] eventId the timeline event ID (Retail only)
+	function boss:CastBar(key, length, text, icon, eventId)
 		local lengthType = type(length)
 		if (lengthType ~= "number" and lengthType ~= "table") or length == 0 then
 			core:Print(format(badBar, key))
@@ -3678,7 +3681,7 @@ do
 		local msg = format(L.cast, rawText)
 		local isBarEnabled = checkFlag(self, key, C.CASTBAR)
 		if isBarEnabled then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime, eventId)
 		end
 		if checkFlag(self, key, C.CASTBAR_COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
