@@ -15,6 +15,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 local lds = LibStub("LibDualSpec-1.0", true)
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 options.SendMessage = loader.SendMessage
 local UnitName = loader.UnitName
@@ -342,9 +343,15 @@ spellDescriptionUpdater:SetScript("OnEvent", function(_, _, spellId)
 	local scrollFrame = nil
 	for widget, widgetSpellId in next, visibleSpellDescriptionWidgets do
 		if spellId == widgetSpellId then
-			scrollFrame = widget:GetUserData("scrollFrame")
-			local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
-			local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+			local module, bossOption, blizzardOption = widget:GetUserData("module"), widget:GetUserData("option"), widget:GetUserData("blizzardOption")
+			local desc
+			if not blizzardOption then
+				scrollFrame = widget:GetUserData("scrollFrame")
+				local _, _, detailsDesc = BigWigs:GetBossOptionDetails(module, bossOption)
+				desc = detailsDesc
+			else
+				desc = loader.GetSpellDescription(bossOption)
+			end
 			widget:SetDescription(desc)
 		end
 	end
@@ -749,6 +756,61 @@ local function customDropdownValueChanged(widget, _, value)
 	module.db.profile[key] = value or 1
 end
 
+local function getBlizzardToggleOption(scrollFrame, dropdown, module, encounterEventId)
+	local dbKey = encounterEventId
+	local eventInfo = C_EncounterEvents.GetEventInfo(encounterEventId)
+	if not eventInfo then return end
+	local spellId = eventInfo.spellID
+	local name = loader.GetSpellName(spellId)
+	local desc = loader.GetSpellDescription(spellId)
+	local icon = eventInfo.iconFileID
+
+	local simpleGroup = AceGUI:Create("SimpleGroup")
+	simpleGroup:SetFullWidth(true)
+	simpleGroup:SetLayout("Flow")
+
+	local check = AceGUI:Create("CheckBox")
+	check:SetLabel(name)
+	check:SetFullWidth(true)
+	check:SetUserData("key", dbKey)
+	check:SetUserData("blizzardOption", true) -- set so visibleSpellDescriptionWidgets doesnt try too much atm
+	check:SetUserData("module", module)
+	check:SetUserData("option", spellId)
+	check:SetUserData("scrollFrame", scrollFrame)
+	check:SetDescription(desc)
+	-- check:SetCallback("OnValueChanged", masterOptionToggled)
+	check.frame:SetHitRectInsets(0, 250, 0, 0) -- Reduce checkbox "hit" area
+	check:SetCallback("OnRelease", function(widget) widget.frame:SetHitRectInsets(0, 0, 0, 0) end) -- Reset hit area to default
+	check:SetValue(eventInfo.enabled)
+	check:SetDisabled(true) -- until we do something with it
+	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue and :SetDisabled so it's not overwritten
+	check.desc:SetTextColor(1, 1, 1) -- After :SetValue and :SetDisabled so it's not overwritten
+	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
+
+	visibleSpellDescriptionWidgets[check] = spellId
+
+	local spacer = AceGUI:Create("Label")
+	spacer:SetText("")
+	spacer:SetRelativeWidth(0.05)
+
+	-- Color Option
+	local colorInfo = eventInfo.color or {}
+	-- Calling :GetRGB or :GetRGBA doesnt seem to work nicely?
+	-- Also rough estimates of Blizzard defaults
+	local r, g, b = colorInfo.r or 0.8, colorInfo.g or 0.1, colorInfo.b or 0.1
+	local colorPicker = AceGUI:Create("ColorPicker")
+	colorPicker:SetLabel("Bar Color")
+	colorPicker:SetHasAlpha(false)
+	colorPicker:SetColor(r, g, b)
+	colorPicker:SetRelativeWidth(0.3)
+	colorPicker:SetCallback("OnValueChanged", function(widget, _, r, g, b)
+		C_EncounterEvents.SetEventColor(encounterEventId, {r = r, g = g, b = b})
+	end)
+
+	simpleGroup:AddChildren(check, spacer, colorPicker)
+	return simpleGroup
+end
+
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
@@ -1037,7 +1099,7 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local default = widget:GetUserData("default")
 	local module = widget:GetUserData("module")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local soundList = LibSharedMedia:List("sound")
 	value = soundList[value]
 	if value == default then
 		value = nil
@@ -1073,7 +1135,7 @@ function populatePrivateAuraOptions(widget)
 	scrollFrame:AddChild(text)
 
 	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local soundList = LibSharedMedia:List("sound")
 	local sDB = soundModule.db.profile["privateaura"]
 	-- preserve module order
 	for _, module in ipairs(widget:GetUserData("moduleList")) do
@@ -1176,16 +1238,22 @@ local function toggleOptionsTabSelected(widget, callback, tab)
 	local scrollFrame = widget:GetUserData("scrollFrame")
 	local dropdown = widget:GetUserData("dropdown")
 	local tabOptions = widget:GetUserData("tabOptions")
-	for i, option in next, tabOptions[tab] do
-		local o = option
-		if type(o) == "table" then o = option[1] end
-		if module.optionHeaders and module.optionHeaders[o] then
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.optionHeaders[o])
-			header:SetFullWidth(true)
-			widget:AddChild(header)
+	if tab == "blizzard" then -- Different toggle rules.
+		for _, v in next, tabOptions[tab] do
+			widget:AddChildren(getBlizzardToggleOption(scrollFrame, dropdown, module, v))
 		end
-		widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+	else
+		for i, option in next, tabOptions[tab] do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if module.optionHeaders and module.optionHeaders[o] then
+				local header = AceGUI:Create("Heading")
+				header:SetText(module.optionHeaders[o])
+				header:SetFullWidth(true)
+				widget:AddChild(header)
+			end
+			widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+		end
 	end
 
 	-- Store last active tab
@@ -1375,7 +1443,7 @@ local function populateToggleOptions(widget, module)
 		end
 	end
 
-	if #tabs > 0 then -- tabs!
+	if module.blizzardEncounterOptions or #tabs > 0 then -- tabs!
 		local generalTabExists = nil
 		local tabbedOptions = {}
 		local tabInfo, tabOptions = {}, {}
@@ -1404,6 +1472,11 @@ local function populateToggleOptions(widget, module)
 				tabOptions[generalTabExists] = tabOptions[generalTabExists] or {}
 				table.insert(tabOptions[generalTabExists], option)
 			end
+		end
+
+		if module.blizzardEncounterOptions then
+			table.insert(tabInfo, { text = "|A:gmchat-icon-blizz:18:18|a Blizzard", value = "blizzard" })
+			tabOptions["blizzard"] = module.blizzardEncounterOptions
 		end
 
 		local tabsWidget = AceGUI:Create("TabGroup")

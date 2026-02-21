@@ -4274,3 +4274,14 @@ function boss:StopBerserk(barText, customBoss, customFinalMessage)
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 5))
 	self:CancelDelayedMessage(customFinalMessage or format(L.custom_end, customBoss or self.displayName, barText))
 end
+
+-------------------------------------------------------------------------------
+-- Blizzard
+-- @section blizzard
+--
+
+--- Set the Encounter Event Options Table
+-- @param encounterEventIdTable A table containing the encounterEventIds for the boss module
+function boss:SetBlizzardEncounterEvents(encounterEventIdTable)
+	self.blizzardEncounterOptions = encounterEventIdTable
+end

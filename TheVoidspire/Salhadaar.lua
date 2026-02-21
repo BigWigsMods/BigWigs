@@ -20,6 +20,15 @@ mod:SetPrivateAuraSounds({
 	{1250686, sound = "none"}, -- Twisting Obscurity (Raid damage/dot)
 	{1271577, sound = "alarm"}, -- Destabilizing Strikes
 })
+mod:SetBlizzardEncounterEvents({
+	139,
+	140,
+	141,
+	142,
+	143,
+	148,
+	633
+})
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -41,12 +50,12 @@ function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 
-		1247738, -- Desperate Measures
-		1250686, -- Twisting Obscurity
-		1254081, -- Fractured Projection
-		1260823, -- Despotic Command
-		1253911, -- Shattering Twilight
-		1246175, -- Cosmic Unraveling
+		-- 1247738, -- Desperate Measures
+		-- 1250686, -- Twisting Obscurity
+		-- 1254081, -- Fractured Projection
+		-- 1260823, -- Despotic Command
+		-- 1253911, -- Shattering Twilight
+		-- 1246175, -- Cosmic Unraveling
 	}
 end
 
