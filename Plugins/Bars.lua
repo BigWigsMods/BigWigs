@@ -262,7 +262,7 @@ local function updateProfile()
 			lastIndicatorFrame = indicatorFrame
 			indicatorFrame:ClearTextures()
 			indicatorFrame:SetIndicatorSize(height)
-			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"))
+			indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
 		end
 		currentBarStyler.ApplyStyle(bar)
 	end
@@ -296,7 +296,7 @@ local function updateProfile()
 			lastIndicatorFrame = indicatorFrame
 			indicatorFrame:ClearTextures()
 			indicatorFrame:SetIndicatorSize(db.expHeight)
-			indicatorFrame:AddIndicators(bar:Get("bigwigs:eventId"))
+			indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
 		end
 		currentBarStyler.ApplyStyle(bar)
 	end
@@ -1619,7 +1619,7 @@ do
 	end
 
 	local initial = true
-	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId)
+	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
@@ -1646,14 +1646,16 @@ do
 		else
 			bar:SetIcon(nil)
 		end
-		if eventId then
+		local indicators = spellIndicators or eventId
+		if indicators then
 			local indicatorFrame = GetBarIndicatorFrame()
 			indicatorFrame:SetParent(bar)
 			indicatorFrame:Show()
 			indicatorFrame.bar = bar
 			indicatorFrame:SetIndicatorSize(height)
-			indicatorFrame:AddIndicators(eventId)
+			indicatorFrame:AddIndicators(indicators)
 			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
+			bar:Set("bigwigs:indicators", indicators)
 		end
 		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		bar:SetColor(colors:GetColor("barColor", module, key))
@@ -1691,10 +1693,10 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId)
+	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId, spellIndicators)
 		if (issecretvalue == nil or not issecretvalue(text)) and not text then text = "" end
 		self:StopSpecificBar(nil, module, text, eventId)
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId)
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
 		bar:SetPauseWhenDone(isApprox)
 		if db.emphasize and time < db.emphasizeTime then
 			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then

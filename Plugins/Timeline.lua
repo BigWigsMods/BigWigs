@@ -391,7 +391,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		-- EditMode spells all have the same name
 		spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
 	end
-	self:SendMessage("BigWigs_StartBar", nil, nil, spellName, duration, icon, maxQueueDuration, nil, eventId)
+	self:SendMessage("BigWigs_StartBar", nil, nil, spellName, duration, icon, maxQueueDuration, nil, eventId, eventId)
 
 	local state = C_EncounterTimeline.GetEventState(eventId)
 	if state == Enum.EncounterTimelineEventState.Paused then
