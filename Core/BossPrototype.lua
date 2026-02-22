@@ -720,6 +720,12 @@ function boss:Disable(isWipe)
 			end
 			self.errorChatPrints = nil
 		end
+		if self.unhandledTimelineEvents then
+			for i = 1, #self.unhandledTimelineEvents do
+				core:Print(self.unhandledTimelineEvents[i])
+			end
+			self.unhandledTimelineEvents = nil
+		end
 	end
 end
 function boss:Reboot(isWipe)
@@ -3202,6 +3208,9 @@ end
 -- @bool[opt] disableEmphasize if true then this message can never emphasize regardless of user settings
 -- @number[opt] customDisplayTime overwrite the user display time (the time the message stays on screen) with a defined one
 function boss:Message(key, color, text, icon, disableEmphasize, customDisplayTime)
+	if not self:ShouldShowBars() then
+		return
+	end
 	if self:CanPassRoleRestrictions(key) then
 		local isEmphasized = not disableEmphasize and self:CheckFlag(key, C.EMPHASIZE)
 		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
@@ -4149,6 +4158,9 @@ end
 -- @string[opt] voice command to play when using a voice pack
 -- @param[opt] player either a string or a table of players to prevent playing a sound if ME_ONLY is enabled
 function boss:PlaySound(key, sound, voice, player)
+	if not self:ShouldShowBars() then
+		return
+	end
 	if checkFlag(self, key, C.SOUND) then
 		if player then
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
@@ -4316,4 +4328,25 @@ function boss:StopBerserk(barText, customBoss, customFinalMessage)
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 10))
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 5))
 	self:CancelDelayedMessage(customFinalMessage or format(L.custom_end, customBoss or self.displayName, barText))
+end
+
+-------------------------------------------------------------------------------
+-- Timeline Event Handlers
+-- @section blizzard
+--
+
+do
+	local unhandledEventString = "Event Unhandled(id:%d): %s(s:%d), %s (id:%d), %d"
+	function boss:UnhandledTimelineEvent(eventInfo)
+		if not self:ShouldShowBars() then
+			return
+		end
+		local stage = self:GetStage() or 0
+		local spellId = eventInfo.spellId
+		local spellName = eventInfo.spellName
+		local duration = eventInfo.duration
+		local unhandledEventMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, spellName, spellId, duration)
+		self.unhandledTimelineEvents = self.unhandledTimelineEvents or {}
+		self.unhandledTimelineEvents[#self.unhandledTimelineEvents + 1] = unhandledEventMessage
+	end
 end
