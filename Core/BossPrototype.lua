@@ -4339,16 +4339,15 @@ end
 --
 
 do
-	local unhandledEventString = "Event Unhandled(%d): %s(%d), %s (%d), %d"
+	local unhandledEventString = "Event Error(%d): %s(%d), %s (%d), %d"
+	--- Will print an error message with event information at the end of an encounter
+	-- @param eventInfo The event information as send by the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
 		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
 			return
 		end
 		local stage = self:GetStage() or 0
-		local spellId = eventInfo.spellID
-		local spellName = eventInfo.spellName
-		local duration = eventInfo.duration
-		local unhandledEventMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, spellName, spellId, duration)
-		self:Error(unhandledEventMessage, true)
+		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
+		self:Error(eventErrorMessage, true)
 	end
 end
