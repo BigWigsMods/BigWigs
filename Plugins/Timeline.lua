@@ -385,9 +385,7 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:OnPluginDisable()
-	for _, eventId in next, C_EncounterTimeline.GetEventList() do
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
-	end
+	self:StopBars()
 end
 
 function plugin:StartBars()
@@ -405,6 +403,12 @@ function plugin:StartBars()
 		if state == Enum.EncounterTimelineEventState.Paused then
 			self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
 		end
+	end
+end
+
+function plugin:StopBars()
+	for _, eventId in next, C_EncounterTimeline.GetEventList() do
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
 	end
 end
 
