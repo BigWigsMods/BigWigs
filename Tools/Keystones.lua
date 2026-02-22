@@ -1709,7 +1709,7 @@ do
 
 	local function OnEnter(self)
 		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: ".. CL.teleport)
+		GameTooltip:AddLine(CL.other:format("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs", CL.teleport))
 
 		if InCombatLockdown() then
 			challengesTeleportButton:EnableMouse(false)
