@@ -228,15 +228,16 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
-
---- Set this module to have custom timers to and to allow disabling of Blizzard's timeline timers.
--- @boolean
+--- Set this module to have custom timers and stop listening to Blizzard's timeline timers.
+-- @boolean useCustomTimers When true, disables listening to Blizz timeline timers
 function boss:UseCustomTimers(useCustomTimers)
 	if useCustomTimers then
 		self.useCustomTimers = true
 	end
 end
 
+--- Check if this module should show custom timer bars.
+-- @return true or nil
 function boss:ShouldShowBars()
 	if self.useCustomTimers and plugins.Timeline then
 		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
