@@ -20,7 +20,7 @@ local min = math.min
 
 local opener, display = nil, nil
 local nameList = {}
-local infoboxWidth = 150
+local infoboxWidth = 160
 local infoboxHeight = 100
 
 local db = nil
@@ -152,56 +152,37 @@ do
 	display4:SetScript("OnDragStop", dragStop)
 	display.display4 = display4
 
-	local bg = display:CreateTexture()
+	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
 	bg:SetColorTexture(0, 0, 0, 0.3)
 	display.background = bg
 
-	local xxx1 = display:CreateTexture()
+	local xxx1 = display:CreateTexture(nil, "BACKGROUND")
 	xxx1:SetPoint("LEFT", display, "RIGHT")
 	xxx1:SetColorTexture(0, 0, 0, 0.3)
 	xxx1:SetSize(infoboxWidth, infoboxHeight)
 	xxx1:Hide()
 	display.xxx1 = xxx1
 
-	local xxx2 = display:CreateTexture()
+	local xxx2 = display:CreateTexture(nil, "BACKGROUND")
 	xxx2:SetPoint("TOP", display, "BOTTOM")
 	xxx2:SetColorTexture(0, 0, 0, 0.3)
 	xxx2:SetSize(infoboxWidth, infoboxHeight)
 	xxx2:Hide()
 	display.xxx2 = xxx2
 
-	local xxx3 = display:CreateTexture()
+	local xxx3 = display:CreateTexture(nil, "BACKGROUND")
 	xxx3:SetPoint("TOPLEFT", display, "BOTTOMRIGHT")
 	xxx3:SetColorTexture(0, 0, 0, 0.3)
 	xxx3:SetSize(infoboxWidth, infoboxHeight)
 	xxx3:Hide()
 	display.xxx3 = xxx3
 
-	local close = CreateFrame("Button", nil, display)
-	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-	close:SetHeight(16)
-	close:SetWidth(16)
-	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\close")
-	close:SetScript("OnClick", function()
-		BigWigs:Print(L.toggleDisplayPrint)
-		plugin:Close()
-	end)
-	display.close = close
-
-	local header = display:CreateFontString(nil, "OVERLAY")
-	header:SetFont(plugin:GetDefaultFont(12))
-	header:SetShadowOffset(1, -1)
-	header:SetTextColor(1,0.82,0,1)
-	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
-	header:SetText(L.infobox_short)
-	display.title = header
-
 	local headerFrame = CreateFrame("Frame", nil, display)
 	headerFrame:Show()
-	headerFrame:SetWidth(infoboxWidth)
-	headerFrame:SetHeight(18)
+	headerFrame:SetHeight(36)
 	headerFrame:SetPoint("BOTTOMLEFT", display, "TOPLEFT")
+	headerFrame:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT")
 	headerFrame:SetFrameStrata("MEDIUM")
 	headerFrame:SetFixedFrameStrata(true)
 	headerFrame:SetFrameLevel(130)
@@ -214,6 +195,40 @@ do
 	headerFrame:SetScript("OnDragStop", dragStop)
 	display.headerFrame = headerFrame
 
+	local headerBg = headerFrame:CreateTexture(nil, "BACKGROUND")
+	headerBg:SetAllPoints(headerFrame)
+	headerBg:SetColorTexture(0, 0, 0, 0.3)
+
+	local close = CreateFrame("Button", nil, headerFrame)
+	close:SetPoint("TOPRIGHT", headerFrame, "TOPRIGHT", -2, -2)
+	close:SetHeight(16)
+	close:SetWidth(16)
+	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\close")
+	close:SetScript("OnClick", function()
+		BigWigs:Print(L.toggleDisplayPrint)
+		plugin:Close()
+	end)
+
+	local bigwigsText = headerFrame:CreateFontString(nil, "OVERLAY")
+	bigwigsText:SetFont(plugin:GetDefaultFont(12))
+	bigwigsText:SetShadowOffset(1, -1)
+	bigwigsText:SetTextColor(1,0.82,0,1)
+	bigwigsText:SetPoint("TOPLEFT", headerFrame, "TOPLEFT")
+	bigwigsText:SetPoint("BOTTOMRIGHT", close, "BOTTOMRIGHT")
+	bigwigsText:SetJustifyH("CENTER")
+	bigwigsText:SetText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs")
+
+	local title = headerFrame:CreateFontString(nil, "OVERLAY")
+	title:SetFont(plugin:GetDefaultFont(12))
+	title:SetShadowOffset(1, -1)
+	title:SetTextColor(1,0.82,0,1)
+	title:SetPoint("BOTTOMLEFT", headerFrame, "BOTTOMLEFT", 0, 2)
+	title:SetPoint("BOTTOMRIGHT", headerFrame, "BOTTOMRIGHT", 0, 2)
+	title:SetJustifyH("CENTER")
+	title:SetWordWrap(false)
+	title:SetText(L.infobox_short)
+	display.title = title
+
 	display.text = {}
 	for i = 1, 20 do
 		local text = display:CreateFontString(nil, "OVERLAY")
@@ -224,8 +239,11 @@ do
 		if i == 1 then
 			text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
 			text:SetJustifyH("LEFT")
+		elseif i == 2 then
+			text:SetPoint("TOPRIGHT", display, "TOPRIGHT", -5, 0)
+			text:SetJustifyH("RIGHT")
 		elseif i % 2 == 0 then
-			text:SetPoint("LEFT", display.text[i-1], "RIGHT", -5, 0)
+			text:SetPoint("TOPRIGHT", display.text[i-2], "BOTTOMRIGHT")
 			text:SetJustifyH("RIGHT")
 		else
 			text:SetPoint("TOPLEFT", display.text[i-2], "BOTTOMLEFT")
@@ -239,20 +257,25 @@ do
 		text:SetShadowOffset(1, -1)
 		text:SetTextColor(1,0.82,0,1)
 		text:SetSize(infoboxWidth/2, infoboxHeight/5)
-		if i % 2 == 0 then
-			text:SetPoint("LEFT", display.text[i-1], "RIGHT", -5, 0)
+		if i == 21 then
+			text:SetPoint("TOPLEFT", display2, "TOPLEFT", 5, 0)
+			text:SetJustifyH("LEFT")
+		elseif i == 22 then
+			text:SetPoint("TOPRIGHT", display2, "TOPRIGHT", -5, 0)
+			text:SetJustifyH("RIGHT")
+		elseif i % 2 == 0 then
+			text:SetPoint("TOPRIGHT", display.text[i-2], "BOTTOMRIGHT")
 			text:SetJustifyH("RIGHT")
 		else
-			text:SetPoint("LEFT", display.text[i-19], "RIGHT")
+			text:SetPoint("TOPLEFT", display.text[i-2], "BOTTOMLEFT")
 			text:SetJustifyH("LEFT")
 		end
 		display.text[i] = text
 	end
 
-	local bgLayer, bgLevel = bg:GetDrawLayer()
 	display.bar = {}
 	for i = 1, 40, 2 do
-		local bar = display:CreateTexture(nil, bgLayer, nil, bgLevel + 1)
+		local bar = display:CreateTexture()
 		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
 		bar:SetColorTexture(0, 1, 0, 0.3)
 		bar:Hide()
@@ -358,8 +381,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 				display.display2:Hide()
 				display.display3:Hide()
 				display.display4:Hide()
-				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-				display.headerFrame:SetWidth(infoboxWidth)
+				display.headerFrame:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT")
 			elseif lines >= 11 then
 				display.xxx1:Show()
 				display.xxx2:Show()
@@ -367,8 +389,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 				display.display2:Show()
 				display.display3:Show()
 				display.display4:Show()
-				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
-				display.headerFrame:SetWidth(infoboxWidth*2)
+				display.headerFrame:SetPoint("BOTTOMRIGHT", display.display2, "TOPRIGHT")
 			else
 				display.xxx1:Hide()
 				display.xxx2:Show()
@@ -376,8 +397,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 				display.display2:Hide()
 				display.display3:Show()
 				display.display4:Hide()
-				display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-				display.headerFrame:SetWidth(infoboxWidth)
+				display.headerFrame:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT")
 			end
 		else
 			display.xxx1:Show()
@@ -386,8 +406,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 			display.display2:Show()
 			display.display3:Show()
 			display.display4:Show()
-			display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", infoboxWidth-2, 2)
-			display.headerFrame:SetWidth(infoboxWidth*2)
+			display.headerFrame:SetPoint("BOTTOMRIGHT", display.display2, "TOPRIGHT")
 		end
 	else
 		display.xxx1:Hide()
@@ -396,8 +415,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 		display.display2:Hide()
 		display.display3:Hide()
 		display.display4:Hide()
-		display.close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-		display.headerFrame:SetWidth(infoboxWidth)
+		display.headerFrame:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT")
 	end
 end
 
