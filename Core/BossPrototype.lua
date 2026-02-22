@@ -246,6 +246,16 @@ function boss:ShouldShowBars()
 	end
 end
 
+--- Check if this module should show custom timer bars as well as blizzard timers.
+-- @return true or nil
+function boss:ShouldShowBothBars()
+	if self.useCustomTimers and plugins.Timeline then
+		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
+		local timelineDB = plugins.Timeline.db.profile
+		return timelineDB.show_bars == "both"
+	end
+end
+
 --- Set the encounter id for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @number encounterId The encounter id
@@ -3202,6 +3212,9 @@ end
 -- @bool[opt] disableEmphasize if true then this message can never emphasize regardless of user settings
 -- @number[opt] customDisplayTime overwrite the user display time (the time the message stays on screen) with a defined one
 function boss:Message(key, color, text, icon, disableEmphasize, customDisplayTime)
+	if not self:ShouldShowBars() then
+		return
+	end
 	if self:CanPassRoleRestrictions(key) then
 		local isEmphasized = not disableEmphasize and self:CheckFlag(key, C.EMPHASIZE)
 		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
@@ -4149,6 +4162,9 @@ end
 -- @string[opt] voice command to play when using a voice pack
 -- @param[opt] player either a string or a table of players to prevent playing a sound if ME_ONLY is enabled
 function boss:PlaySound(key, sound, voice, player)
+	if not self:ShouldShowBars() then
+		return
+	end
 	if checkFlag(self, key, C.SOUND) then
 		if player then
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
@@ -4316,4 +4332,22 @@ function boss:StopBerserk(barText, customBoss, customFinalMessage)
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 10))
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 5))
 	self:CancelDelayedMessage(customFinalMessage or format(L.custom_end, customBoss or self.displayName, barText))
+end
+
+-------------------------------------------------------------------------------
+-- Timeline Event Handlers
+--
+
+do
+	local unhandledEventString = "Event Error(%d): %s(%d), %s (%d), %d"
+	--- Will print an error message with event information at the end of an encounter
+	-- @param eventInfo The event information as send by the ENCOUNTER_TIMELINE_EVENT_ADDED events
+	function boss:ErrorForTimelineEvent(eventInfo)
+		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
+			return
+		end
+		local stage = self:GetStage() or 0
+		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
+		self:Error(eventErrorMessage, true)
+	end
 end
