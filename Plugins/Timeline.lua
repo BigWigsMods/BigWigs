@@ -369,7 +369,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("OnPluginDisable", "StopBars")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -387,7 +386,7 @@ function plugin:OnPluginEnable()
 	end
 end
 
-function plugin:StopBars()
+function plugin:OnPluginDisable()
 	for _, eventId in next, C_EncounterTimeline.GetEventList() do
 		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
 	end
