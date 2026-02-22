@@ -438,6 +438,7 @@ L.keystoneTeleportTip = "Cliquez sur le nom du donjon ci-dessous afin de vous |c
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aCeci est un personnage du cours du temps." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 L.keystoneSlashKeys = "Prend également en compte la commande |cFF33FF99/keys|r"
 L.keystoneSlashKeystone = "Prend également en compte la commande |cFF33FF99/keystone|r"
+--L.unavailableWhilstInCombat = "Unavailable whilst in combat"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "COLONIE"

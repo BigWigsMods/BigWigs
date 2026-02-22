@@ -438,6 +438,7 @@ L.keystoneTeleportTip = "点击下方地下城名称可直接|cFF33FF99传送|r�
 L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|a时空奔行者。" -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
 L.keystoneSlashKeys = "同时注册 |cFF33FF99/keys|r 命令"
 L.keystoneSlashKeystone = "同时注册 |cFF33FF99/keystone|r 命令"
+--L.unavailableWhilstInCombat = "Unavailable whilst in combat"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "驭雷栖巢"

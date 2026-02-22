@@ -1705,39 +1705,48 @@ do
 	challengesTeleportButton:SetPropagateMouseMotion(true)
 	challengesTeleportButton:SetAttribute("type", "spell")
 	local hookedIcons = {}
+	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 
 	local function OnEnter(self)
 		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs")
+		GameTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: ".. CL.teleport)
+
 		if InCombatLockdown() then
-			GameTooltip:AddLine(L.keystoneTeleportInCombat)
 			challengesTeleportButton:EnableMouse(false)
 		else
 			challengesTeleportButton:EnableMouse(true)
 			challengesTeleportButton:ClearAllPoints()
 			challengesTeleportButton:SetParent(self)
 			challengesTeleportButton:SetAllPoints(self)
-			local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
-			for instanceID, spellID in next, teleportList[1] do
-				if instanceID == mapID then
-					challengesTeleportButton:SetAttribute("spell", spellID)
-					local spellName = BigWigsLoader.GetSpellName(spellID)
+			challengesTeleportButton:SetAttribute("spell", nil)
+		end
+
+		local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
+		for instanceID, spellID in next, teleportList[1] do
+			if instanceID == mapID then
+				local spellName = ("|cFF33FF99%s|r"):format(BigWigsLoader.GetSpellName(spellID) or "?")
+				if InCombatLockdown() then
+					GameTooltip:AddLine(spellName)
+					GameTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
+				else
 					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
-						GameTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
+						GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
 					else
+						challengesTeleportButton:SetAttribute("spell", spellID)
 						local cd = BigWigsLoader.GetSpellCooldown(spellID)
 						if cd.startTime > 0 and cd.duration > 0 then
 							local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
 							local hours = math.floor(remainingSeconds / 3600)
 							remainingSeconds = remainingSeconds % 3600
 							local minutes = math.floor(remainingSeconds / 60)
-							GameTooltip:AddLine(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+							local seconds = math.floor(remainingSeconds - (minutes*60))
+							GameTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
 						else
-							GameTooltip:AddLine(L.keystoneTeleportReady:format(spellName))
+							GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
 						end
 					end
-					break
 				end
+				break
 			end
 		end
 		GameTooltip:Show()
