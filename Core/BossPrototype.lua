@@ -561,6 +561,20 @@ function boss:Error(message, chatOnly)
 	end
 end
 
+do
+	local unhandledEventString = "Event error %q for module %q (stage %d), %s (%d), duration %d."
+	--- Print an error message with event information after the encounter has ended
+	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
+	function boss:ErrorForTimelineEvent(eventInfo)
+		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
+			return
+		end
+		local stage = self:GetStage() or 0
+		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self:GetEncounterID(), stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
+		self:Error(eventErrorMessage, true)
+	end
+end
+
 function boss:Initialize() core:RegisterBossModule(self.moduleName) end
 function boss:Enable(isWipe)
 	if not self:IsEnabled() then
@@ -4332,22 +4346,4 @@ function boss:StopBerserk(barText, customBoss, customFinalMessage)
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 10))
 	self:CancelDelayedMessage(format(L.custom_sec, barText, 5))
 	self:CancelDelayedMessage(customFinalMessage or format(L.custom_end, customBoss or self.displayName, barText))
-end
-
--------------------------------------------------------------------------------
--- Timeline Event Handlers
---
-
-do
-	local unhandledEventString = "Event Error(%d): %s(%d), %s (%d), %d"
-	--- Will print an error message with event information at the end of an encounter
-	-- @param eventInfo The event information as send by the ENCOUNTER_TIMELINE_EVENT_ADDED events
-	function boss:ErrorForTimelineEvent(eventInfo)
-		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
-			return
-		end
-		local stage = self:GetStage() or 0
-		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
-		self:Error(eventErrorMessage, true)
-	end
 end
