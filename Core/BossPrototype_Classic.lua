@@ -302,7 +302,7 @@ function boss:IsEnableMob(mobId)
 end
 
 --- Set this module to have custom timers and stop listening to Blizzard's timeline timers.
--- @boolean useCustomTimers When true, disables listening to Blizz timeline timers
+-- @bool useCustomTimers When true, disables listening to Blizz timeline timers
 function boss:UseCustomTimers(useCustomTimers)
 	if useCustomTimers then
 		self.useCustomTimers = true
