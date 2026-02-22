@@ -239,10 +239,12 @@ end
 --- Check if this module should show custom timer bars.
 -- @return true or nil
 function boss:ShouldShowBars()
-	if self.useCustomTimers and plugins.Timeline then
+	if type(self.useCustomTimers) == "boolean" and self.useCustomTimers and plugins.Timeline then
 		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
 		local timelineDB = plugins.Timeline.db.profile
 		return timelineDB.show_bars == "custom" or timelineDB.show_bars == "both"
+	else -- Mixed modules
+		return true
 	end
 end
 
