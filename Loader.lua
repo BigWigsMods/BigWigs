@@ -291,7 +291,6 @@ do
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
 				[lw_mn] = true,
-				[lw_tww] = true,
 				[lw_delves] = true,
 				[lw_cs] = true,
 			},
@@ -324,7 +323,6 @@ do
 			littlewigsDefault = lw_cs,
 			littleWigsBundled = {
 				[lw_mn] = true,
-				[lw_tww] = true,
 				[lw_delves] = true,
 				[lw_cs] = true,
 			},
@@ -1390,6 +1388,7 @@ do
 		LittleWigs_BattleForAzeroth = true,
 		LittleWigs_Shadowlands = true,
 		LittleWigs_Dragonflight = true,
+		LittleWigs_TheWarWithin = true,
 		-- Dynamic content
 		BigWigs_TheVoidspire = true,
 		BigWigs_TheDreamrift = true,
