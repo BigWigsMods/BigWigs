@@ -609,11 +609,19 @@ end
 
 --- Show an error after the encounter has ended
 -- @string message the message to show to the user
-function boss:Error(message)
-	if not self.errorPrints then
-		self.errorPrints = {}
+-- @bool chatOnly if the message should only be shown in chat, and not sent to the error handler
+function boss:Error(message, chatOnly)
+	if chatOnly then
+		if not self.errorChatPrints then
+			self.errorChatPrints = {}
+		end
+		self.errorChatPrints[#self.errorChatPrints+1] = message
+	else
+		if not self.errorMessages then
+			self.errorMessages = {}
+		end
+		self.errorMessages[#self.errorMessages+1] = message
 	end
-	self.errorPrints[#self.errorPrints+1] = message
 end
 
 function boss:Initialize() core:RegisterBossModule(self.moduleName) end
@@ -774,11 +782,17 @@ function boss:Disable(isWipe)
 			end
 			self.missing = nil
 		end
-		if self.errorPrints then
-			for i = 1, #self.errorPrints do
-				core:Error(self.errorPrints[i])
+		if self.errorMessages then
+			for i = 1, #self.errorMessages do
+				core:Error(self.errorMessages[i])
 			end
-			self.errorPrints = nil
+			self.errorMessages = nil
+		end
+		if self.errorChatPrints then
+			for i = 1, #self.errorChatPrints do
+				core:Print(self.errorChatPrints[i])
+			end
+			self.errorChatPrints = nil
 		end
 	end
 end
