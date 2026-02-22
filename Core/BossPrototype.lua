@@ -4340,7 +4340,7 @@ end
 
 do
 	local unhandledEventString = "Event Unhandled(%d): %s(%d), %s (%d), %d"
-	function boss:UnhandledTimelineEvent(eventInfo)
+	function boss:ErrorForTimelineEvent(eventInfo)
 		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
 			return
 		end
