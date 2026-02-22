@@ -4351,7 +4351,7 @@ do
 			return
 		end
 		local stage = self:GetStage() or 0
-		local spellId = eventInfo.spellId
+		local spellId = eventInfo.spellID
 		local spellName = eventInfo.spellName
 		local duration = eventInfo.duration
 		local unhandledEventMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, spellName, spellId, duration)
