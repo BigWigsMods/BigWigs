@@ -228,6 +228,23 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
+
+--- Set this module to have custom timers to and to allow disabling of Blizzard's timeline timers.
+-- @boolean
+function boss:UseCustomTimers(useCustomTimers)
+	if useCustomTimers then
+		self.useCustomTimers = true
+	end
+end
+
+function boss:ShouldShowBars()
+	if self.useCustomTimers and plugins.Timeline then
+		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
+		local timelineDB = plugins.Timeline.db.profile
+		return timelineDB.show_bars == "custom" or timelineDB.show_bars == "both"
+	end
+end
+
 --- Set the encounter id for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @number encounterId The encounter id
@@ -3522,6 +3539,10 @@ do
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
 	function boss:Bar(key, length, text, icon, eventId)
+		if not self:ShouldShowBars() then
+			return
+		end
+
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -3571,6 +3592,10 @@ do
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
 	function boss:CDBar(key, length, text, icon, eventId)
+		if not self:ShouldShowBars() then
+			return
+		end
+
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end

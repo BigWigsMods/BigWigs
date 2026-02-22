@@ -1115,6 +1115,14 @@ L.enableBlizzTimeline = "启用暴雪时间轴"
 L.enableBlizzTimelineDesc = "在暴雪时间轴上显示所有首领战斗计时器。"
 L.enableBlizzWarnings = "启用暴雪首领预警"
 L.enableBlizzWarningsDesc = "启用暴雪首领预警时，建议同时关闭“使用 BigWigs 信息替换暴雪内置首领预警”功能，否则所有信息将会重复显示。"
+--L.show_bars = "Show Bars From"
+--L.custom_timers = "Custom Timers"
+--L.custom_timers_desc = "BigWigs will replace the Blizzard encounter timers with improved timers if available, otherwise Blizzard timers will be used."
+--L.blizzard_timers = "Blizzard Timers"
+--L.blizzard_timers_desc = "Show Blizzard encounter timers as BigWigs bars."
+--L.both_timers = "Both"
+--L.both_timers_desc = "Show Blizzard timers and Custom timers at the same time. |cffff4411For testing and not-yet-updated encounters.|r"
+--L.disabled_timers_desc = "BigWigs will not show bars."
 
 -----------------------------------------------------------------------
 -- Victory.lua

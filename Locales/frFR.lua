@@ -1115,6 +1115,14 @@ L.enableBlizzTimeline = "Activer la ligne temporelle de Blizz"
 L.enableBlizzTimelineDesc = "Cela affichera tous les CàR sur la ligne temporelle de Blizz."
 L.enableBlizzWarnings = "Activer les avertissements de boss de Blizz"
 L.enableBlizzWarningsDesc = "Lorsque vous activez les avertissements de boss de Blizz, vous devriez désactiver l'affichage en tant que message BigWigs ou vous verrez les messages deux fois."
+--L.show_bars = "Show Bars From"
+--L.custom_timers = "Custom Timers"
+--L.custom_timers_desc = "BigWigs will replace the Blizzard encounter timers with improved timers if available, otherwise Blizzard timers will be used."
+--L.blizzard_timers = "Blizzard Timers"
+--L.blizzard_timers_desc = "Show Blizzard encounter timers as BigWigs bars."
+--L.both_timers = "Both"
+--L.both_timers_desc = "Show Blizzard timers and Custom timers at the same time. |cffff4411For testing and not-yet-updated encounters.|r"
+--L.disabled_timers_desc = "BigWigs will not show bars."
 
 -----------------------------------------------------------------------
 -- Victory.lua

@@ -1115,6 +1115,14 @@ L.newFastestVictoryPrint = "Новая самая быстрая победа: (
 --L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
 --L.enableBlizzWarnings = "Enable Blizz boss warnings"
 --L.enableBlizzWarningsDesc = "When enabling the Blizzard boss warnings you should also disable showing them as BigWigs messages or you will see all messages twice."
+--L.show_bars = "Show Bars From"
+--L.custom_timers = "Custom Timers"
+--L.custom_timers_desc = "BigWigs will replace the Blizzard encounter timers with improved timers if available, otherwise Blizzard timers will be used."
+--L.blizzard_timers = "Blizzard Timers"
+--L.blizzard_timers_desc = "Show Blizzard encounter timers as BigWigs bars."
+--L.both_timers = "Both"
+--L.both_timers_desc = "Show Blizzard timers and Custom timers at the same time. |cffff4411For testing and not-yet-updated encounters.|r"
+--L.disabled_timers_desc = "BigWigs will not show bars."
 
 -----------------------------------------------------------------------
 -- Victory.lua
