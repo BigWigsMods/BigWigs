@@ -3,9 +3,7 @@ if not BigWigsLoader.isMidnight then return end -- XXX Only for Midnight
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Timeline", {
-	"db",
-})
+local plugin, L = BigWigs:NewPlugin("Timeline")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
