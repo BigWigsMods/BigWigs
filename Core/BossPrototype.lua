@@ -730,12 +730,6 @@ function boss:Disable(isWipe)
 			end
 			self.errorChatPrints = nil
 		end
-		if self.unhandledTimelineEvents then
-			for i = 1, #self.unhandledTimelineEvents do
-				core:Print(self.unhandledTimelineEvents[i])
-			end
-			self.unhandledTimelineEvents = nil
-		end
 	end
 end
 function boss:Reboot(isWipe)
@@ -4345,9 +4339,9 @@ end
 --
 
 do
-	local unhandledEventString = "Event Unhandled(id:%d): %s(s:%d), %s (id:%d), %d"
+	local unhandledEventString = "Event Unhandled(%d): %s(%d), %s (%d), %d"
 	function boss:UnhandledTimelineEvent(eventInfo)
-		if not self:ShouldShowBothBars() then -- only log debug info if you are showing both timers
+		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
 			return
 		end
 		local stage = self:GetStage() or 0
@@ -4355,7 +4349,6 @@ do
 		local spellName = eventInfo.spellName
 		local duration = eventInfo.duration
 		local unhandledEventMessage = unhandledEventString:format(eventInfo.id, self.engageId, stage, spellName, spellId, duration)
-		self.unhandledTimelineEvents = self.unhandledTimelineEvents or {}
-		self.unhandledTimelineEvents[#self.unhandledTimelineEvents + 1] = unhandledEventMessage
+		self:Error(unhandledEventMessage, true)
 	end
 end
