@@ -239,12 +239,10 @@ end
 --- Check if this module should show custom timer bars.
 -- @return true or nil
 function boss:ShouldShowBars()
-	if type(self.useCustomTimers) == "boolean" and self.useCustomTimers and plugins.Timeline then
+	if self.useCustomTimers and plugins.Timeline then
 		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
 		local timelineDB = plugins.Timeline.db.profile
 		return timelineDB.show_bars == "custom" or timelineDB.show_bars == "both"
-	else -- Mixed modules
-		return true
 	end
 end
 
@@ -3228,9 +3226,6 @@ end
 -- @bool[opt] disableEmphasize if true then this message can never emphasize regardless of user settings
 -- @number[opt] customDisplayTime overwrite the user display time (the time the message stays on screen) with a defined one
 function boss:Message(key, color, text, icon, disableEmphasize, customDisplayTime)
-	if not self:ShouldShowBars() then
-		return
-	end
 	if self:CanPassRoleRestrictions(key) then
 		local isEmphasized = not disableEmphasize and self:CheckFlag(key, C.EMPHASIZE)
 		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
@@ -3583,10 +3578,6 @@ do
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
 	function boss:Bar(key, length, text, icon, eventId)
-		if not self:ShouldShowBars() then
-			return
-		end
-
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -3636,10 +3627,6 @@ do
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
 	function boss:CDBar(key, length, text, icon, eventId)
-		if not self:ShouldShowBars() then
-			return
-		end
-
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -4178,9 +4165,6 @@ end
 -- @string[opt] voice command to play when using a voice pack
 -- @param[opt] player either a string or a table of players to prevent playing a sound if ME_ONLY is enabled
 function boss:PlaySound(key, sound, voice, player)
-	if not self:ShouldShowBars() then
-		return
-	end
 	if checkFlag(self, key, C.SOUND) then
 		if player then
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
