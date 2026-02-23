@@ -1109,21 +1109,21 @@ L.blizzWarningsAsBigWigsMessages = "用 BigWigs 訊息取代暴雪內建首領�
 L.blizzWarningsAsBigWigsMessagesDesc = "將所有暴雪內建的首領警告訊息替換為 BigWigs 風格的提示訊息"
 L.blizzAudioAsBigWigsAudio = "將暴雪內建音效替換為 BigWigs 音效"
 L.blizzAudioAsBigWigsAudioDesc = "將暴雪原本的內建音效替換為 BigWigs 音效，並根據重要程度播放對應的聲音（提示、警報或警告）"
-L.blizzWarningSettings = "暴雪警告設定"
-L.blizzTimelineSettings = "暴雪時間軸設定"
+L.blizzWarningSettings = "暴雪首領警告"
+L.blizzTimelineSettings = "暴雪首領技能時間軸"	-- fallow official translate
 L.blizzTimelineSettingsNote = "|cffff4411本頁選項僅控制暴雪內建設定，在此提供是為了方便你與 BigWigs 的設定一起調整。|r"
-L.enableBlizzTimeline = "啟用暴雪時間軸"
-L.enableBlizzTimelineDesc = "在暴雪內建的時間軸上顯示所有的首領戰計時條。"
-L.enableBlizzWarnings = "啟用暴雪首領警告"
-L.enableBlizzWarningsDesc = "若啟用暴雪內建的首領警告，建議關閉「使用 BigWigs 訊息取代暴雪內建首領警告」功能，以免出現重複警報。"
---L.show_bars = "Show Bars From"
+L.enableBlizzTimeline = "啟用暴雪的首領技能（時間軸）"	-- fallow official translate，編輯模式裡這個元素就叫「首領技能」
+L.enableBlizzTimelineDesc = "在暴雪內建的首領技能時間軸上顯示所有的首領戰計時條。"
+L.enableBlizzWarnings = "啟用暴雪的首領警告"
+L.enableBlizzWarningsDesc = "若啟用暴雪內建的首領警告，建議關閉「用 BigWigs 訊息取代暴雪內建首領警告」功能，以免出現重複警報。"
+L.show_bars = "顯示來源"
 --L.custom_timers = "Custom Timers"
 --L.custom_timers_desc = "BigWigs will replace the Blizzard encounter timers with improved timers if available, otherwise Blizzard timers will be used."
 --L.blizzard_timers = "Blizzard Timers"
 --L.blizzard_timers_desc = "Show Blizzard encounter timers as BigWigs bars."
 --L.both_timers = "Both"
 --L.both_timers_desc = "Show Blizzard timers and Custom timers at the same time. |cffff4411For testing and not-yet-updated encounters.|r"
---L.disabled_timers_desc = "BigWigs will not show bars."
+L.disabled_timers_desc = "BigWigs 將不顯示任何計時條。"
 
 -----------------------------------------------------------------------
 -- Victory.lua
