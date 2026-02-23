@@ -194,8 +194,8 @@ L.arcane = "Arcanes"
 
 -- Autotalk
 L.autotalk = "Interaction automatique avec un PNJ"
-L.autotalk_boss_desc = "Sélectionne automatiquement le diaglogue avec le PNJ qui lance la rencontre."
-L.autotalk_generic_desc = "Sélectionne automatiquement le diaglogue avec le PNJ qui vous fait progresser à la prochaine étape du donjon."
+L.autotalk_boss_desc = "Sélectionne automatiquement le dialogue avec le PNJ qui lance la rencontre."
+L.autotalk_generic_desc = "Sélectionne automatiquement le dialogue avec le PNJ qui vous fait progresser à la prochaine étape du donjon."
 L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 
 -- Common ability name replacements
