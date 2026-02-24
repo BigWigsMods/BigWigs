@@ -966,8 +966,8 @@ L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in
 --
 
 L.privateAuras = "Private Auren"
---L.privateAurasDesc1 = "'Private Auras' are a special type of debuff that addons cannot detect or perform any automation on. These debuffs are used by all modern boss encounters now.\n\n"
---L.privateAurasDesc2 = "BigWigs can help you keep track of when they are applied to you by displaying them as icons. |cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+L.privateAurasDesc1 = "'Private Auren' sind ein spezieller Debuff-Typ, welcher von Addons nicht erkannt oder zu Automatisierung genutzt werden kann. Diese Debuffs werden jetzt in allen aktuellen Bossbegegnungen verwendet.\n\n"
+L.privateAurasDesc2 = "BigWigs kann helfen, diese bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden. |cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
 
 L.createTestAura = "Testaura erstellen"
 L.showDispelType = "Bannhinweise anzeigen"
@@ -991,8 +991,8 @@ L.maxIcons = "Maximale Symbolanzahl"
 L.maxIconsDesc = "Die maximale Anzahl der angezeigten Symbole."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine privaten Aura Debuffs als Symbole sehen, oder sogar die privaten Auren eines anderen Spielers (z.B. eines Tanks)."
 
-L.privateAurasTestAnchorText = "Private\nAuren\n(%d)"
---L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
+L.privateAurasTestAnchorText = "Private\nAura\n(%d)"
+L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -1111,10 +1111,10 @@ L.blizzTimelineSettingsNote = "|cffff4411Diese Optionen spiegeln lediglich die B
 L.enableBlizzTimeline = "Blizz Zeitlinie aktivieren"
 L.enableBlizzTimelineDesc = "Diese Option zeigt alle Boss Timer in der Blizzard Zeitlinie."
 L.show_bars = "Zeige Leisten von"
---L.bigwigsEnhancedTimers = "BigWigs enhanced timers displayed as BigWigs bars |cFF33FF99(recommended)|r"
---L.blizzBasicAsBars = "Blizzard basic timers displayed as BigWigs bars"
---L.blizzBasicAsBlizzTimeline = "Blizzard basic timers displayed on the Blizzard timeline"
---L.developerMode = "Developer Mode"
+L.bigwigsEnhancedTimers = "Erweiterte BigWigs Timer als BigWigs Leisten anzeigen |cFF33FF99(empfohlen)|r"
+L.blizzBasicAsBars = "Blizzard Standardtimer als BigWigs Leisten anzeigen"
+L.blizzBasicAsBlizzTimeline = "Blizzard Standardtimer in der Blizzard Zeitlinie anzeigen"
+L.developerMode = "Entwicklermodus"
 
 -----------------------------------------------------------------------
 -- Victory.lua
