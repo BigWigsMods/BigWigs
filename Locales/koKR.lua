@@ -966,8 +966,8 @@ L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 �
 --
 
 L.privateAuras = "비공개 오라"
---L.privateAurasDesc1 = "'Private Auras' are a special type of debuff that addons cannot detect or perform any automation on. These debuffs are used by all modern boss encounters now.\n\n"
---L.privateAurasDesc2 = "BigWigs can help you keep track of when they are applied to you by displaying them as icons. |cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+L.privateAurasDesc1 = "'비공개 오라'는 애드온이 감지하거나 자동화할 수 없는 특별한 유형의 디버프입니다. 이러한 디버프는 현재 모든 최신 보스 전투에서 사용됩니다.\n\n"
+L.privateAurasDesc2 = "BigWigs은 이를 아이콘으로 표시하여 적용 시점을 추적하는 데 도움을 줄 수 있습니다. |cFF33FF99이는 일반 디버프와 구분하여 중요한 디버프를 별도로 표시함으로써 플레이어에게 유용합니다.|r\n\n"
 
 L.createTestAura = "테스트 오라 생성"
 L.showDispelType = "해제 유형 표시기 표시"
@@ -992,7 +992,7 @@ L.maxIconsDesc = "표시할 최대 아이콘 수"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 이제 비공개 오라 디버프를 아이콘으로 볼 수 있으며, 다른 플레이어(예: 탱커)의 비공개 오라도 볼 수 있습니다."
 
 L.privateAurasTestAnchorText = "오라\n(%d)"
---L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
+L.privateAurasTestTankAnchorText = "탱커\n오라\n(%d)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -1111,10 +1111,10 @@ L.blizzTimelineSettingsNote = "|cffff4411이 옵션은 블리자드 설정을 �
 L.enableBlizzTimeline = "블리자드 타임라인 활성화"
 L.enableBlizzTimelineDesc = "이 옵션을 활성화하면 모든 보스 전투 타이머가 블리자드 타임라인에 표시됩니다."
 L.show_bars = "바 표시"
---L.bigwigsEnhancedTimers = "BigWigs enhanced timers displayed as BigWigs bars |cFF33FF99(recommended)|r"
---L.blizzBasicAsBars = "Blizzard basic timers displayed as BigWigs bars"
---L.blizzBasicAsBlizzTimeline = "Blizzard basic timers displayed on the Blizzard timeline"
---L.developerMode = "Developer Mode"
+L.bigwigsEnhancedTimers = "BigWigs 향상된 타이머를 BigWigs 바 형태로 표시 |cFF33FF99(권장)|r"
+L.blizzBasicAsBars = "블리자드 기본 타이머를 BigWigs 바 형태로 표시"
+L.blizzBasicAsBlizzTimeline = "블리자드 기본 타이머를 블리자드 타임라인에 표시"
+L.developerMode = "개발자 모드"
 
 -----------------------------------------------------------------------
 -- Victory.lua
