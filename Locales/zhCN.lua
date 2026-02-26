@@ -1111,9 +1111,9 @@ L.blizzTimelineSettingsNote = "|cffff4411本页选项仅控制暴雪内置的首
 L.enableBlizzTimeline = "启用暴雪的内置首领预警"
 L.enableBlizzTimelineDesc = "在暴雪的内置的首领技能“类型”上显示所有的首领战计时。"
 L.show_bars = "显示来源"
-L.bigwigsEnhancedTimers = "将 BigWigs 强化的首领预警，显示为 BigWigs 计时条|cFF33FF99（推荐）|r"
-L.blizzBasicAsBars = "暴雪内置的首领预警，显示为 BigWigs 计时条"
-L.blizzBasicAsBlizzTimeline = "暴雪内置的首领预警，显示在暴雪内置的首领技能“类型”上"
+L.bigwigsEnhancedTimers = "将 BigWigs 增强首领预警显示为 BigWigs 计时条|cFF33FF99（推荐）|r"
+L.blizzBasicAsBars = "暴雪内置的首领预警显示为 BigWigs 计时条"
+L.blizzBasicAsBlizzTimeline = "暴雪内置的首领预警显示在暴雪内置的首领技能“类型”上"
 L.developerMode = "开发者模式"
 
 -----------------------------------------------------------------------
