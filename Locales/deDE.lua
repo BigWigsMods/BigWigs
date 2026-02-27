@@ -344,7 +344,7 @@ L.tools = "Werkzeuge"
 L.toolsDesc = "BigWigs bietet verschiedene Werkzeuge oder Features der \"Lebensqualität\" zur Beschleunigung und Vereinfachung von Bossbegegnungen."
 
 L.reloadUIWarning = "Die Änderung dieser Funktion lädt das Interface neu und zeigt kurz den Ladebildschirm an. Bist Du sicher?"
---L.qualityOfLife = "Quality of Life"
+L.qualityOfLife = "Lebensqualität"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
