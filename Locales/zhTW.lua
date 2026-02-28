@@ -1127,10 +1127,10 @@ L.victoryHeader = "設定擊敗首領後顯示的訊息。"
 L.victorySound = "播放勝利音效"
 L.victoryMessages = "顯示擊敗首領訊息"
 L.victoryMessageBigWigs = "顯示 BigWigs 訊息"
-L.victoryMessageBigWigsDesc = "BigWigs 訊息是一條簡單的「首領已被擊敗」訊息。"
+L.victoryMessageBigWigsDesc = "BigWigs 訊息是一條簡單的「已戰勝」訊息。"
 L.victoryMessageBlizzard = "顯示暴雪內建訊息"
-L.victoryMessageBlizzardDesc = "暴雪內建訊息會以特效顯示「首領被擊敗了」於畫面上。"
-L.defeated = "%s被擊敗了！"
+L.victoryMessageBlizzardDesc = "暴雪內建訊息是畫面中央巨大的淡出淡入動畫效果。"
+L.defeated = "你戰勝了%s！" -- 比較適合中文語法
 
 -----------------------------------------------------------------------
 -- Wipe.lua
