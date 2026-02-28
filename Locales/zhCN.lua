@@ -341,10 +341,10 @@ L.titan = "25人泰坦" -- Chinese-only "Titan Reforged" servers
 -----------------------------------------------------------------------
 
 L.tools = "工具"
-L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"，让你可以轻松的简化首领战斗流程。"
+L.toolsDesc = "BigWigs 提供多种工具和\"便利功能\"，帮你更快、更轻松地应对首领战。"
 
 L.reloadUIWarning = "更改此选项将重载界面，并短暂显示载入画面。你确定要继续吗？"
---L.qualityOfLife = "Quality of Life"
+L.qualityOfLife = "便利功能"
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
