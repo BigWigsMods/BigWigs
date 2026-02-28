@@ -1747,19 +1747,27 @@ do
 	end
 end
 
-function boss:EncounterEnd(_, id, name, diff, size, status)
-	if self:IsEncounterID(id) and self:IsEnabled() then
-		if status == 1 then
-			if self:GetJournalID() or self:GetAllowWin() then
-				self:Win() -- Official boss module
-			else
-				self:Disable() -- Custom external boss module
+do
+	local modulesWiping = {}
+	function boss:IsWiping()
+		return modulesWiping[self]
+	end
+
+	function boss:EncounterEnd(_, id, name, diff, size, status)
+		if self:IsEncounterID(id) and self:IsEnabled() then
+			if status == 1 then
+				if self:GetJournalID() or self:GetAllowWin() then
+					self:Win() -- Official boss module
+				else
+					self:Disable() -- Custom external boss module
+				end
+			elseif status == 0 then
+				modulesWiping[self] = true
+				self:SendMessage("BigWigs_StopBars", self)
+				SimpleTimer(5, function() modulesWiping[self] = nil self:Wipe() end) -- Delayed due to issues with some multi-boss encounters showing/hiding the boss frames (IEEU) rapidly whilst wiping.
 			end
-		elseif status == 0 then
-			self:SendMessage("BigWigs_StopBars", self)
-			SimpleTimer(5, function() self:Wipe() end) -- Delayed due to issues with some multi-boss encounters showing/hiding the boss frames (IEEU) rapidly whilst wiping.
+			self:SendMessage("BigWigs_EncounterEnd", self, id, name, diff, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
 		end
-		self:SendMessage("BigWigs_EncounterEnd", self, id, name, diff, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
 	end
 end
 
