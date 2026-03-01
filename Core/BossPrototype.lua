@@ -552,7 +552,7 @@ function boss:Error(message, chatOnly)
 end
 
 do
-	local unhandledEventString = "Event error %q for module %q (stage %d), %s (%d), duration %d."
+	local unhandledEventString = "Event error %q for module %q (stage %s), %s (%d), duration %s."
 	--- Print an error message with event information after the encounter has ended
 	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
