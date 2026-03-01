@@ -111,7 +111,6 @@ files["Plugins/AutoReply.lua"].ignore = {
 }
 files["Plugins/Bars.lua"].ignore = {
 	"113/C_Spell",
-	"113/C_EncounterTimeline",
 }
 files["Plugins/BattleRes.lua"].ignore = {
 	"113/C_ClassColor",
@@ -185,7 +184,6 @@ files["Plugins/Statistics.lua"].ignore = {
 files["Plugins/Timeline.lua"].ignore = {
 	"113/C_ClassColor",
 	"113/C_CVar",
-	"113/C_EncounterTimeline",
 	"113/C_EncounterWarnings",
 	"113/Enum",
 	"113/GetPlayerInfoByGUID",
@@ -305,6 +303,7 @@ globals = {
 	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
 	"BuyMerchantItem", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_EncounterJournal",
+	"C_EncounterTimeline",
 	"C_GossipInfo",
 	"C_InstanceEncounter",
 	"C_MerchantFrame", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
