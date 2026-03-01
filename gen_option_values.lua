@@ -1299,6 +1299,10 @@ local function parseLua(file)
 				if functionName == "CloseProximity" and not key then
 					key = "\"proximity\""
 				end
+				-- Dynamic key only usable with PauseBar and ResumeBar
+				if (functionName == "PauseBar" or functionName == "ResumeBar") and key == "barInfo.key" then
+					key = nil
+				end
 			end
 
 			-- -- SetOption:key:color:sound:
