@@ -319,16 +319,6 @@ function boss:ShouldShowBars()
 	end
 end
 
---- Check if this module should show custom timer bars as well as blizzard timers.
--- @return true or nil
-function boss:ShouldShowBothBars()
-	if self.useCustomTimers and plugins.Timeline then
-		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
-		local timelineDB = plugins.Timeline.db.profile
-		return timelineDB.timer_mode == "dev"
-	end
-end
-
 --- Set the encounter id for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @number encounterId The encounter id
@@ -639,7 +629,8 @@ do
 	--- Print an error message with event information after the encounter has ended
 	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
-		if not self:ShouldShowBothBars() then -- only error with debug info if you are showing both timers
+		local option = plugins.Timeline and plugins.Timeline.db.profile.timer_mode
+		if option ~= "dev" then -- only error with debug info if you are showing both timers
 			return
 		end
 		local stage = self:GetStage() or 0
