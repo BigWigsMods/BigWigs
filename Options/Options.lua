@@ -1087,43 +1087,47 @@ function populatePrivateAuraOptions(widget)
 			scrollFrame:AddChild(header)
 			for _, option in ipairs(paOptions) do
 				local spellId = option[1]
-				local key = spellId
-				local id = option.tooltip or spellId
-				local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
+				if C_UnitAuras.AuraIsPrivate(spellId) then
+					local key = spellId
+					local id = option.tooltip or spellId
+					local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
 
-				local name = loader.GetSpellName(id)
-				local texture = loader.GetSpellTexture(id)
+					local name = loader.GetSpellName(id)
+					local texture = loader.GetSpellTexture(id)
 
-				local icon = AceGUI:Create("Icon")
-				icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
-				icon:SetImageSize(40, 40)
-				icon:SetRelativeWidth(0.1)
-				icon:SetUserData("spellId", id)
-				icon:SetUserData("updateTooltip", true)
-				icon:SetCallback("OnEnter", privateAuraOnEnter)
-				icon:SetCallback("OnLeave", bwTooltip_Hide)
+					local icon = AceGUI:Create("Icon")
+					icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
+					icon:SetImageSize(40, 40)
+					icon:SetRelativeWidth(0.1)
+					icon:SetUserData("spellId", id)
+					icon:SetUserData("updateTooltip", true)
+					icon:SetCallback("OnEnter", privateAuraOnEnter)
+					icon:SetCallback("OnLeave", bwTooltip_Hide)
 
-				local dropdown = AceGUI:Create("SharedDropdown")
-				if option.mythic then
-					dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
-				else
-					dropdown:SetLabel(name)
-				end
-				dropdown:SetList(soundList, nil, "DDI-Sound")
-				dropdown:SetRelativeWidth(0.88)
-				dropdown:SetUserData("key", key)
-				dropdown:SetUserData("default", defaultSound)
-				dropdown:SetUserData("module", module)
-				dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
-				local value = sDB[module.name] and sDB[module.name][key] or defaultSound
-				for i, v in next, soundList do
-					if v == value then
-						dropdown:SetValue(i)
-						break
+					local dropdown = AceGUI:Create("SharedDropdown")
+					if option.mythic then
+						dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
+					else
+						dropdown:SetLabel(name)
 					end
-				end
+					dropdown:SetList(soundList, nil, "DDI-Sound")
+					dropdown:SetRelativeWidth(0.88)
+					dropdown:SetUserData("key", key)
+					dropdown:SetUserData("default", defaultSound)
+					dropdown:SetUserData("module", module)
+					dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
+					local value = sDB[module.name] and sDB[module.name][key] or defaultSound
+					for i, v in next, soundList do
+						if v == value then
+							dropdown:SetValue(i)
+							break
+						end
+					end
 
-				scrollFrame:AddChildren(icon, dropdown)
+					scrollFrame:AddChildren(icon, dropdown)
+				--else
+				--	print(C_Spell.GetSpellName(spellId))
+				end
 			end
 		end
 	end

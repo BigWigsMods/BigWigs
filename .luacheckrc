@@ -199,6 +199,7 @@ files["Plugins/*.lua"].ignore = {
 files["Options/Options.lua"].ignore = {
 	"113/C_EncodingUtil",
 	"113/C_UI",
+	"113/C_UnitAuras",
 	"113/CallErrorHandler",
 	"113/securecallfunction",
 }
