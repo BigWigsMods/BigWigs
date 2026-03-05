@@ -1,21 +1,21 @@
 local L = BigWigs:NewBossLocale("Vorasius", "frFR")
 if not L then return end
 if L then
-	--L.shadowclaw_slam = "Slams"
+	L.shadowclaw_slam = "Coups"
 end
 
 L = BigWigs:NewBossLocale("Fallen-King Salhadaar", "frFR")
 if L then
-	--L.fractured_projection = "Kicks"
+	L.fractured_projection = "Interruptions"
 end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "frFR")
 if L then
-	--L.aura_of_wrath = "Wrath" -- Short for Aura of Wrath
-	--L.execution_sentence = "Executes" -- Short for Execution Sentence
-	--L.judgement_red = "Judgement [R]" -- R for the Red icon.
-	--L.aura_of_devotion = "Devotion" -- Short for Aura of Devotion
-	--L.judgement_blue = "Judgement [B]" -- B for the Blue icon.
-	--L.aura_of_peace = "Peace" -- Short for Aura of Peace
-	--L.zaelous_spirit = "Spirit" -- Short for Zealous Spirit
+	L.aura_of_wrath = "Colère" -- Short for Aura of Wrath
+	L.execution_sentence = "Exécution" -- Short for Execution Sentence
+	L.judgement_red = "Jugement [R]" -- R for the Red icon.
+	L.aura_of_devotion = "Dévotion" -- Short for Aura of Devotion
+	L.judgement_blue = "Jugement [B]" -- B for the Blue icon.
+	L.aura_of_peace = "Paix" -- Short for Aura of Peace
+	L.zaelous_spirit = "Esprit" -- Short for Zealous Spirit
 end
