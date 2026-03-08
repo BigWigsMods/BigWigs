@@ -465,7 +465,7 @@ do
 	main:Hide()
 	main:SetFrameStrata("MEDIUM")
 	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(5000)
+	main:SetFrameLevel(5010)
 	main:SetFixedFrameLevel(true)
 	main:SetClampedToScreen(true)
 	main:EnableMouse(true)
@@ -579,7 +579,7 @@ do
 	main:Hide()
 	main:SetFrameStrata("MEDIUM")
 	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(5000)
+	main:SetFrameLevel(5005)
 	main:SetFixedFrameLevel(true)
 	main:SetClampedToScreen(true)
 	main:EnableMouse(true)
@@ -2431,7 +2431,9 @@ do
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
 		UpdateInstanceTimerWidget()
-		BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
+		if not db.profile.instanceTimerDisabled then
+			BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
+		end
 	end
 	local loginFrame = CreateFrame("Frame")
 	loginFrame:SetScript("OnEvent", function(self, event)
