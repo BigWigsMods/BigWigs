@@ -176,9 +176,6 @@ do
 		db.profile.instanceKeysShowDungeonEnd = nil
 		db:RegisterDefaults(db.defaults)
 	end
-
-	ProfileUtils.ValidateMainSettings()
-	BigWigsLoader.CTimerAfter(0, ProfileUtils.ValidateMediaSettings) -- Delay to allow time for other addons to register media into LSM
 end
 
 --------------------------------------------------------------------------------
@@ -2052,12 +2049,13 @@ end
 -- Options Table
 --
 
+local UpdateWidgets
 do
 	local viewerKeybindFrame = CreateFrame("Button", "BWViewerKeybindFrame")
 	viewerKeybindFrame:SetSize(1, 1)
 	viewerKeybindFrame:Hide()
 
-	local function UpdateWidgets()
+	function UpdateWidgets()
 		LibKeystone.SetGuildHidden(db.profile.hideFromGuild)
 		mainPanel:ClearAllPoints()
 		do
@@ -2167,12 +2165,6 @@ do
 			mainPanel.CloseButton:Click()
 		end
 	end
-
-	BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", function()
-		ProfileUtils.ValidateMainSettings()
-		ProfileUtils.ValidateMediaSettings()
-		UpdateWidgets()
-	end)
 
 	BigWigsAPI.RegisterSlashCommand("/key", ShowViewer, true)
 	BigWigsAPI.RegisterSlashCommand("/bwkey", ShowViewer, true)
@@ -2610,4 +2602,24 @@ do
 			},
 		},
 	})
+end
+
+--------------------------------------------------------------------------------
+-- Login
+--
+
+do
+	local function UpdateProfile()
+		ProfileUtils.ValidateMainSettings()
+		ProfileUtils.ValidateMediaSettings()
+		UpdateWidgets()
+	end
+	local loginFrame = CreateFrame("Frame")
+	loginFrame:SetScript("OnEvent", function(self, event)
+		self:UnregisterEvent(event)
+		self:SetScript("OnEvent", nil)
+		UpdateProfile()
+		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
+	end)
+	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 end

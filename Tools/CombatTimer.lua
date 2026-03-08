@@ -2520,7 +2520,7 @@ do
 		self:UnregisterEvent(event)
 		self:SetScript("OnEvent", nil)
 		UpdateProfile()
-		BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", UpdateProfile)
+		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
 	end)
 	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
