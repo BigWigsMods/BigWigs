@@ -432,6 +432,7 @@ end
 local LibKeystone = LibStub("LibKeystone")
 local LibSpec = LibStub("LibSpecialization")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local bwTooltip = BigWigsAPI.GetTooltip()
 
 local LibKeystoneRequest = LibKeystone.Request
 local LibKeystoneRegister = LibKeystone.Register
@@ -499,7 +500,7 @@ mainPanel:SetResizeBounds(350, 320, 350, 620)
 do
 	local function OnMouseDown(self)
 		self:GetParent():StartSizing("BOTTOMRIGHT")
-		GameTooltip_Hide()
+		bwTooltip:Hide()
 	end
 	local function OnMouseUp(self)
 		local parent = self:GetParent()
@@ -518,11 +519,11 @@ do
 	drag:SetScript("OnMouseDown", OnMouseDown)
 	drag:SetScript("OnMouseUp", OnMouseUp)
 	drag:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetText(L.dragToResize)
-		GameTooltip:Show()
+		bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		bwTooltip:AddLine(L.dragToResize)
+		bwTooltip:Show()
 	end)
-	drag:SetScript("OnLeave", GameTooltip_Hide)
+	drag:SetScript("OnLeave", function() bwTooltip:Hide() end)
 	local tex = drag:CreateTexture(nil, "OVERLAY")
 	tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 	tex:SetAllPoints(drag)
@@ -715,11 +716,11 @@ partyRefreshButton:SetScript("OnClick", function()
 	LibKeystoneRequest("PARTY")
 end)
 partyRefreshButton:SetScript("OnEnter", function(self)
-	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText(L.keystoneRefreshParty)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	bwTooltip:AddLine(L.keystoneRefreshParty)
+	bwTooltip:Show()
 end)
-partyRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
+partyRefreshButton:SetScript("OnLeave", function() bwTooltip:Hide() end)
 
 -- Refresh button for Guild section
 local guildRefreshButton = CreateFrame("Button", nil, scrollChild)
@@ -734,16 +735,16 @@ guildRefreshButton:SetScript("OnClick", function()
 	C_Timer.After(0.1, function() LibKeystoneRequest("GUILD") end)
 end)
 guildRefreshButton:SetScript("OnEnter", function(self)
-	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText(L.keystoneRefreshGuild)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	bwTooltip:AddLine(L.keystoneRefreshGuild)
+	bwTooltip:Show()
 end)
-guildRefreshButton:SetScript("OnLeave", GameTooltip_Hide)
+guildRefreshButton:SetScript("OnLeave", function() bwTooltip:Hide() end)
 
 local OnEnterShowTooltip = function(self)
-	GameTooltip:SetOwner(self, "ANCHOR_TOP")
-	GameTooltip:SetText(self.tooltip)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(self, "ANCHOR_TOP")
+	bwTooltip:AddLine(self.tooltip)
+	bwTooltip:Show()
 end
 local function CreateCell()
 	local cell = cellsAvailable[#cellsAvailable]
@@ -756,7 +757,7 @@ local function CreateCell()
 		cell = CreateFrame("Button", nil, scrollChild, "InsecureActionButtonTemplate")
 		cell:SetSize(20, 20)
 		cell:SetScript("OnEnter", OnEnterShowTooltip)
-		cell:SetScript("OnLeave", GameTooltip_Hide)
+		cell:SetScript("OnLeave", function() bwTooltip:Hide() end)
 		cell:RegisterForClicks("AnyDown", "AnyUp")
 
 		cell.text = cell:CreateFontString(nil, nil, "GameFontNormal")
@@ -795,13 +796,13 @@ end
 
 do
 	local function OnEnter(self)
-		GameTooltip:SetOwner(self, "ANCHOR_TOP")
+		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		if InCombatLockdown() then
-			GameTooltip:SetText(L.keystoneTeleportInCombat)
+			bwTooltip:AddLine(L.keystoneTeleportInCombat)
 		else
 			local spellName = BigWigsLoader.GetSpellName(self.spellID)
 			if not BigWigsLoader.IsSpellKnownOrInSpellBook(self.spellID) then
-				GameTooltip:SetText(L.keystoneTeleportNotLearned:format(spellName))
+				bwTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
 				if cd.startTime > 0 and cd.duration > 0 then
@@ -809,13 +810,13 @@ do
 					local hours = math.floor(remainingSeconds / 3600)
 					remainingSeconds = remainingSeconds % 3600
 					local minutes = math.floor(remainingSeconds / 60)
-					GameTooltip:SetText(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
+					bwTooltip:AddLine(L.keystoneTeleportOnCooldown:format(spellName, hours, minutes))
 				else
-					GameTooltip:SetText(L.keystoneTeleportReady:format(spellName))
+					bwTooltip:AddLine(L.keystoneTeleportReady:format(spellName))
 				end
 			end
 		end
-		GameTooltip:Show()
+		bwTooltip:Show()
 	end
 
 	local GetRealZoneText = GetRealZoneText
@@ -835,7 +836,7 @@ do
 			button:Hide()
 			button:SetSize(90, 48)
 			button:SetScript("OnEnter", OnEnter)
-			button:SetScript("OnLeave", GameTooltip_Hide)
+			button:SetScript("OnLeave", function() bwTooltip:Hide() end)
 			button:RegisterForClicks("AnyDown", "AnyUp")
 			button:SetHitRectInsets(-52, 0, 0, 0) -- Allow clicking the icon to work
 
@@ -1708,8 +1709,8 @@ do
 	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 
 	local function OnEnter(self)
-		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine(CL.other:format("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs", CL.teleport))
+		bwTooltip:AddLine(" ")
+		bwTooltip:AddLine(CL.other:format("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs", CL.teleport))
 
 		if InCombatLockdown() then
 			challengesTeleportButton:EnableMouse(false)
@@ -1726,11 +1727,11 @@ do
 			if instanceID == mapID then
 				local spellName = ("|cFF33FF99%s|r"):format(BigWigsLoader.GetSpellName(spellID) or "?")
 				if InCombatLockdown() then
-					GameTooltip:AddLine(spellName)
-					GameTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
+					bwTooltip:AddLine(spellName)
+					bwTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
 				else
 					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
-						GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
+						bwTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
 					else
 						challengesTeleportButton:SetAttribute("spell", spellID)
 						local cd = BigWigsLoader.GetSpellCooldown(spellID)
@@ -1740,16 +1741,16 @@ do
 							remainingSeconds = remainingSeconds % 3600
 							local minutes = math.floor(remainingSeconds / 60)
 							local seconds = math.floor(remainingSeconds - (minutes*60))
-							GameTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
+							bwTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
 						else
-							GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
+							bwTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
 						end
 					end
 				end
 				break
 			end
 		end
-		GameTooltip:Show()
+		bwTooltip:Show()
 	end
 
 	local frame = CreateFrame("Frame")

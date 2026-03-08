@@ -36,7 +36,7 @@ local castableBattleResSpells = {
 	[384893] = true, -- Convincingly Realistic Jumper Cables
 }
 
-
+local bwTooltip = BigWigsAPI.GetTooltip()
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 plugin.displayName = L.battleResTitle
@@ -1331,26 +1331,26 @@ battleResFrame:SetScript("OnDragStop", function(self)
 	end
 end)
 battleResFrame:SetScript("OnEnter", function(self)
-	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	GameTooltip:SetText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t".. L.battleResHistory)
+	bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	bwTooltip:AddLine("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t".. L.battleResHistory)
 	for i = 1, #resCollector do
 		local time, sourceName, targetName = resCollector[i][1], resCollector[i][2], resCollector[i][3]
 		local secondsSinceFightBegan = time - fightStartTime
 		local minutes = math.floor(secondsSinceFightBegan / 60)
 		local seconds = math.floor(secondsSinceFightBegan - (minutes*60))
 		local timeToShow = ("[%d:%02d]"):format(minutes, seconds)
-		GameTooltip:AddDoubleLine(timeToShow, targetName and (sourceName .." >> ".. targetName) or sourceName, 1, 1, 1, 1, 1, 1)
+		bwTooltip:AddDoubleLine(timeToShow, targetName and (sourceName .." >> ".. targetName) or sourceName, 1, 1, 1, 1, 1, 1)
 	end
-	GameTooltip:AddLine(" ")
-	GameTooltip:AddLine(" ")
+	bwTooltip:AddLine(" ")
+	bwTooltip:AddLine(" ")
 	if isTesting and plugin.db.profile.mode == 2 then
-		GameTooltip:AddLine(L.battleResModeTextTooltip, 1, 1, 1)
+		bwTooltip:AddLine(L.battleResModeTextTooltip, 1, 1, 1)
 	else
-		GameTooltip:AddLine(L.battleResNoteTooltip, 1, 1, 1)
+		bwTooltip:AddLine(L.battleResNoteTooltip, 1, 1, 1)
 	end
-	GameTooltip:Show()
+	bwTooltip:Show()
 end)
-battleResFrame:SetScript("OnLeave", GameTooltip_Hide)
+battleResFrame:SetScript("OnLeave", function() bwTooltip:Hide() end)
 
 --------------------------------------------------------------------------------
 -- Res history

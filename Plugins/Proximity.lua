@@ -63,7 +63,7 @@ local proxAnchor, proxTitle = nil, nil
 
 -- Upvalues
 local CTimerAfter = BigWigsLoader.CTimerAfter
-local GameTooltip = CreateFrame("GameTooltip", "BigWigsProximityTooltip", UIParent, "GameTooltipTemplate")
+local bwTooltip = BigWigsAPI.GetTooltip()
 local UnitPosition = UnitPosition
 local IsItemInRange = BigWigsLoader.IsItemInRange
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
@@ -228,13 +228,12 @@ local function unlockDisplay()
 end
 
 local function onControlEnter(self)
-	GameTooltip:ClearLines()
-	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
-	GameTooltip:AddLine(self.tooltipHeader)
-	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
+	bwTooltip:AddLine(self.tooltipHeader)
+	bwTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
+	bwTooltip:Show()
 end
-local function onControlLeave() GameTooltip:Hide() end
+local function onControlLeave() bwTooltip:Hide() end
 
 function plugin:RestyleWindow()
 	if not proxAnchor then return end
@@ -521,9 +520,9 @@ do
 		tooltipFrame:SetPoint("BOTTOM", proxAnchor, "TOP")
 		tooltipFrame:SetScript("OnEnter", function(self)
 			if not activeSpellID then return end
-			GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-			GameTooltip:SetHyperlink(format("spell:%d", activeSpellID or 44318))
-			GameTooltip:Show()
+			bwTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+			bwTooltip:SetHyperlink(format("spell:%d", activeSpellID or 44318))
+			bwTooltip:Show()
 		end)
 		tooltipFrame:SetScript("OnLeave", onControlLeave)
 		proxAnchor.tooltip = tooltipFrame
@@ -592,12 +591,12 @@ do
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", -1, 1)
 		drag:EnableMouse(true)
-		drag:SetScript("OnMouseDown", function(self) self:GetParent():StartSizing("BOTTOMRIGHT") GameTooltip:Hide() end)
+		drag:SetScript("OnMouseDown", function(self) self:GetParent():StartSizing("BOTTOMRIGHT") bwTooltip:Hide() end)
 		drag:SetScript("OnMouseUp", function(self) self:GetParent():StopMovingOrSizing() end)
 		drag:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetText(L.dragToResize)
-			GameTooltip:Show()
+			bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
+			bwTooltip:AddLine(L.dragToResize)
+			bwTooltip:Show()
 		end)
 		drag:SetScript("OnLeave", onControlLeave)
 		proxAnchor.drag = drag
@@ -948,7 +947,7 @@ do
 			return
 		end
 
-		if spellName and key > 0 then -- GameTooltip doesn't do "journal" hyperlinks
+		if spellName and key > 0 then -- tooltip doesn't do "journal" hyperlinks
 			activeSpellID = key
 		else
 			activeSpellID = nil

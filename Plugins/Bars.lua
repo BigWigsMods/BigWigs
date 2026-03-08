@@ -17,6 +17,7 @@ plugin.displayName = L.bars
 local currentBarStyler = nil
 local SetBarStyle
 
+local bwTooltip = BigWigsAPI.GetTooltip()
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
@@ -1218,7 +1219,7 @@ do
 	end
 	local function OnMouseDown(self)
 		self:GetParent():StartSizing("BOTTOMRIGHT")
-		GameTooltip_Hide()
+		bwTooltip:Hide()
 	end
 	local function OnMouseUp(self)
 		self:GetParent():StopMovingOrSizing()
@@ -1227,9 +1228,9 @@ do
 		end
 	end
 	local function OnEnter(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetText(L.dragToResize)
-		GameTooltip:Show()
+		bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		bwTooltip:AddLine(L.dragToResize)
+		bwTooltip:Show()
 	end
 
 	local function createAnchor(position, title, frameLevel, width, height)
@@ -1267,7 +1268,7 @@ do
 		drag:SetScript("OnMouseDown", OnMouseDown)
 		drag:SetScript("OnMouseUp", OnMouseUp)
 		drag:SetScript("OnEnter", OnEnter)
-		drag:SetScript("OnLeave", GameTooltip_Hide)
+		drag:SetScript("OnLeave", function() bwTooltip:Hide() end)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
 		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 		tex:SetAllPoints(drag)

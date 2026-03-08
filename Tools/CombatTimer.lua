@@ -10,6 +10,7 @@ end
 -- Locals
 --
 
+local bwTooltip = BigWigsAPI.GetTooltip()
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local db
 local ProfileUtils = {
@@ -504,15 +505,15 @@ do
 		end
 	end)
 	main:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		GameTooltip:AddLine(L.anyCombatTimerTooltip)
+		bwTooltip:SetOwner(self, "ANCHOR_TOP")
+		bwTooltip:AddLine(L.anyCombatTimerTooltip)
 		for i = 1, #widgets.anyCombatHistoryTime do
-			GameTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], SecondsToTime(widgets.anyCombatHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], SecondsToTime(widgets.anyCombatHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
 		end
-		GameTooltip:Show()
+		bwTooltip:Show()
 	end)
 	main:SetScript("OnLeave", function(self)
-		GameTooltip:Hide()
+		bwTooltip:Hide()
 	end)
 	widgets.anyCombat = main
 
@@ -542,7 +543,7 @@ do
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(1)
 	local prevCombatEnd = 0
-	main:SetScript("OnEvent", function(_, event)
+	main:SetScript("OnEvent", function(self, event)
 		if event == "PLAYER_REGEN_DISABLED" then
 			widgets.anyCombatActive = true
 			local t = GetTime()
@@ -585,7 +586,7 @@ do
 				local borderColor = db.profile.anyCombatBorderColor
 				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 			elseif db.profile.anyCombatInactive == "HIDE" then
-				main:Show()
+				self:Show()
 			end
 		elseif event == "PLAYER_REGEN_ENABLED" then
 			widgets.anyCombatActive = false
@@ -599,7 +600,7 @@ do
 				local borderColor = db.profile.anyCombatBorderColorInactive
 				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 			elseif db.profile.anyCombatInactive == "HIDE" then
-				main:Hide()
+				self:Hide()
 			end
 		end
 	end)
@@ -641,20 +642,20 @@ do
 		[2] = L.inProgress,
 	}
 	main:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		GameTooltip:AddLine(L.bossCombatTimerTooltip)
+		bwTooltip:SetOwner(self, "ANCHOR_TOP")
+		bwTooltip:AddLine(L.bossCombatTimerTooltip)
 		for i = 1, #widgets.bossCombatHistoryTime do
-			GameTooltip:AddDoubleLine(
+			bwTooltip:AddDoubleLine(
 				widgets.bossCombatHistoryTime[i][1],
 				("%s [%s]"):format(SecondsToTime(widgets.bossCombatHistoryDuration[i][1]), encounterStatusTexts[widgets.bossCombatHistoryDuration[i][2]]),
 				1, 1, 1,
 				0, 1, 0
 			)
 		end
-		GameTooltip:Show()
+		bwTooltip:Show()
 	end)
 	main:SetScript("OnLeave", function(self)
-		GameTooltip:Hide()
+		bwTooltip:Hide()
 	end)
 	widgets.bossCombat = main
 
@@ -687,7 +688,7 @@ do
 	end)
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(1)
-	main:SetScript("OnEvent", function(_, event, encounterID, encounterName, _, _, success)
+	main:SetScript("OnEvent", function(self, event, encounterID, encounterName, _, _, success)
 		if event == "ENCOUNTER_START" then
 			local tooltipText = ("%s %s"):format(date("[%I:%M:%S %p]"), encounterName)
 			table.insert(widgets.bossCombatHistoryTime, 1, {tooltipText, encounterID})
@@ -715,7 +716,7 @@ do
 					local borderColor = db.profile.bossCombatBorderColor
 					border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 				elseif db.profile.bossCombatInactive == "HIDE" then
-					main:Show()
+					self:Show()
 				end
 			end
 		elseif event == "ENCOUNTER_END" then
@@ -742,7 +743,7 @@ do
 				local borderColor = db.profile.bossCombatBorderColorInactive
 				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 			elseif db.profile.bossCombatInactive == "HIDE" then
-				main:Hide()
+				self:Hide()
 			end
 		elseif event == "PLAYER_LEAVING_WORLD" then -- Classic support, allows you to release during encounter combat :(
 			for i = 1, #widgets.bossCombatHistoryDuration do
@@ -761,7 +762,7 @@ do
 				local borderColor = db.profile.bossCombatBorderColorInactive
 				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 			elseif db.profile.bossCombatInactive == "HIDE" then
-				main:Hide()
+				self:Hide()
 			end
 		end
 	end)
@@ -798,15 +799,15 @@ do
 		end
 	end)
 	main:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		GameTooltip:AddLine(L.instanceTimerTooltip)
+		bwTooltip:SetOwner(self, "ANCHOR_TOP")
+		bwTooltip:AddLine(L.instanceTimerTooltip)
 		for i = 1, #widgets.instanceTimerHistoryTime do
-			GameTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], SecondsToTime(widgets.instanceTimerHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], SecondsToTime(widgets.instanceTimerHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
 		end
-		GameTooltip:Show()
+		bwTooltip:Show()
 	end)
 	main:SetScript("OnLeave", function(self)
-		GameTooltip:Hide()
+		bwTooltip:Hide()
 	end)
 	widgets.instanceTimer = main
 
@@ -871,7 +872,7 @@ do
 			end
 		end
 	end
-	main:SetScript("OnEvent", function(_, event)
+	main:SetScript("OnEvent", function(self, event)
 		if event == "PLAYER_ENTERING_WORLD" then
 			BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
 		elseif event == "PLAYER_LEAVING_WORLD" then
@@ -886,7 +887,7 @@ do
 					local borderColor = db.profile.instanceTimerBorderColorInactive
 					border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 				elseif db.profile.instanceTimerInactive == "HIDE" then
-					main:Hide()
+					self:Hide()
 				end
 			end
 		end
