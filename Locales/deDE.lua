@@ -378,24 +378,23 @@ L.battleResNoteTooltip = "Hinweis: Dieser Tooltip wird nur außerhalb des Kampfe
 -- CombatTimer.lua
 --
 
---L.combatTimerTitle = "Combat Timer"
---L.anyCombatTimer = "Any Combat Timer"
---L.anyCombatTimerDesc = "A timer that displays how long you've been in combat for, with a tooltip to see combat history."
---L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tCombat History"
---L.bossCombatTimer = "Boss Combat Timer"
---L.bossCombatTimerDesc = "A timer that displays how long you've been in combat with a boss encounter for, with a tooltip to see boss encounter history."
---L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Combat History"
---L.instanceTimer = "Instance Timer"
---L.instanceTimerDesc = "A timer that displays how long you've been in an instance (dungeon/raid/etc) for, with a tooltip to see instance history."
---L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstance History"
---L.backgroundColor = "Background Color"
---L.inactive = "Inactive"
---L.whenInactive = "When Inactive"
---L.doNothing = "Do Nothing"
---L.hide = "Hide"
---L.colorFade = "Color/Fade"
---L.inProgress = "In Progress"
-
+L.combatTimerTitle = "Kampf-Timer"
+L.anyCombatTimer = "Timer für jeden Kampf"
+L.anyCombatTimerDesc = "Ein Timer, welcher die Kampfdauer anzeigt, mit einem Tooltip des Kampfverlaufs."
+L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tKampfverlauf"
+L.bossCombatTimer = "Timer für Bosskämpfe"
+L.bossCombatTimerDesc = "Ein Timer, welcher die Kampfdauer für Bossbegegnungen anzeigt, mit einem Tooltip des Kampfverlaufs für Bosse."
+L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Kampfverlauf"
+L.instanceTimer = "Instanz-Timer"
+L.instanceTimerDesc = "Ein Timer, welcher die Dauer einer Instanz anzeigt (Dungeon/Schlachtzug/etc), mit einem Tooltip des Instanzverlaufs."
+L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstanzverlauf"
+L.backgroundColor = "Hintergrundfarbe"
+L.inactive = "Inaktiv"
+L.whenInactive = "Bei Inaktivität"
+L.doNothing = "Nichts tun"
+L.hide = "Verstecken"
+L.colorFade = "Farbe/Verblassen"
+L.inProgress = "Im Gange"
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
