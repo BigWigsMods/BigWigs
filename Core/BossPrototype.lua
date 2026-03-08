@@ -557,7 +557,7 @@ do
 	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
 		local option = plugins.Timeline and plugins.Timeline.db.profile.timer_mode
-		if option ~= "dev" then -- only error with debug info if you are showing both timers
+		if option ~= "dev" and option ~= "enhanced" then -- only error with debug info if we are showing enhanced info
 			return
 		end
 		local stage = self:GetStage() or 0
