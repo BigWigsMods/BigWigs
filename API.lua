@@ -277,6 +277,17 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Tooltip
+--
+
+do
+	local bwTooltip = CreateFrame("GameTooltip", "BigWigsTooltip", UIParent, "GameTooltipTemplate")
+	function API.GetTooltip()
+		return bwTooltip
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Validation
 --
 
