@@ -2219,6 +2219,7 @@ do
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,
+		order = 1,
 		get = GetSettings,
 		set = UpdateSettings,
 		args = {
