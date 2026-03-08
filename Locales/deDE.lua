@@ -395,6 +395,8 @@ L.doNothing = "Nichts tun"
 L.hide = "Verstecken"
 L.colorFade = "Farbe/Verblassen"
 L.inProgress = "Im Gange"
+--L.textFormat = "Text Format"
+
 -----------------------------------------------------------------------
 -- Keystones.lua
 --

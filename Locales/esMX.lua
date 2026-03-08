@@ -395,6 +395,7 @@ L.battleResTitle = "Res en Combate"
 --L.hide = "Hide"
 --L.colorFade = "Color/Fade"
 --L.inProgress = "In Progress"
+--L.textFormat = "Text Format"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

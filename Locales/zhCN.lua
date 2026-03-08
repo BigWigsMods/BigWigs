@@ -395,6 +395,7 @@ L.doNothing = "无操作"
 L.hide = "隐藏"
 L.colorFade = "颜色/渐隐"
 L.inProgress = "进行中"
+--L.textFormat = "Text Format"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

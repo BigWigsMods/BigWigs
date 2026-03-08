@@ -395,6 +395,7 @@ L.battleResNoteTooltip = "Note : Cette infobule ne s'affichera que lorsque vous
 --L.hide = "Hide"
 --L.colorFade = "Color/Fade"
 --L.inProgress = "In Progress"
+--L.textFormat = "Text Format"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

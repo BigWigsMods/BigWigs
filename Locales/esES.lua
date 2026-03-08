@@ -395,6 +395,7 @@ L.battleResNoteTooltip = "Aviso: Esta ventana de opciones solo se mostrará al e
 --L.hide = "Hide"
 --L.colorFade = "Color/Fade"
 --L.inProgress = "In Progress"
+--L.textFormat = "Text Format"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

@@ -395,6 +395,7 @@ L.autoRoleExplainer = "Sempre que você se junta a um grupo ou muda sua especial
 --L.hide = "Hide"
 --L.colorFade = "Color/Fade"
 --L.inProgress = "In Progress"
+--L.textFormat = "Text Format"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

@@ -395,6 +395,7 @@ L.battleResNoteTooltip = "注意：滑鼠提示僅在非戰鬥狀態下顯示。
 --L.hide = "Hide"
 --L.colorFade = "Color/Fade"
 --L.inProgress = "In Progress"
+--L.textFormat = "Text Format"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

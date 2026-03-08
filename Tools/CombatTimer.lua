@@ -56,6 +56,7 @@ do
 		anyCombatBorderOffset = 1,
 		anyCombatBorderName = "Solid",
 		anyCombatInactive = "NONE",
+		anyCombatTextFormat = 1,
 
 		-- Boss Combat
 		bossCombatDisabled = true,
@@ -78,6 +79,7 @@ do
 		bossCombatBorderOffset = 1,
 		bossCombatBorderName = "Solid",
 		bossCombatInactive = "NONE",
+		bossCombatTextFormat = 1,
 
 		-- Instance Timer
 		instanceTimerDisabled = true,
@@ -100,6 +102,7 @@ do
 		instanceTimerBorderOffset = 1,
 		instanceTimerBorderName = "Solid",
 		instanceTimerInactive = "NONE",
+		instanceTimerTextFormat = 1,
 	}
 
 	db = BigWigsLoader.db:RegisterNamespace("CombatTimer", {profile = defaults})
@@ -189,6 +192,9 @@ do
 		if db.profile.anyCombatInactive ~= "NONE" and db.profile.anyCombatInactive ~= "HIDE" and db.profile.anyCombatInactive ~= "COLOR" then
 			db.profile.anyCombatInactive = defaults.anyCombatInactive
 		end
+		if db.profile.anyCombatTextFormat ~= 1 and db.profile.anyCombatTextFormat ~= 2 then
+			db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
+		end
 
 		ValidateColor(db.profile.anyCombatColor, defaults.anyCombatColor, 0.3)
 		ValidateColor(db.profile.anyCombatColorInactive, defaults.anyCombatColorInactive, 0.3)
@@ -241,6 +247,9 @@ do
 		if db.profile.bossCombatInactive ~= "NONE" and db.profile.bossCombatInactive ~= "HIDE" and db.profile.bossCombatInactive ~= "COLOR" then
 			db.profile.bossCombatInactive = defaults.bossCombatInactive
 		end
+		if db.profile.bossCombatTextFormat ~= 1 and db.profile.bossCombatTextFormat ~= 2 then
+			db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
+		end
 
 		ValidateColor(db.profile.bossCombatColor, defaults.bossCombatColor, 0.3)
 		ValidateColor(db.profile.bossCombatColorInactive, defaults.bossCombatColorInactive, 0.3)
@@ -292,6 +301,9 @@ do
 		end
 		if db.profile.instanceTimerInactive ~= "NONE" and db.profile.instanceTimerInactive ~= "HIDE" and db.profile.instanceTimerInactive ~= "COLOR" then
 			db.profile.instanceTimerInactive = defaults.instanceTimerInactive
+		end
+		if db.profile.instanceTimerTextFormat ~= 1 and db.profile.instanceTimerTextFormat ~= 2 then
+			db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
 		end
 
 		ValidateColor(db.profile.instanceTimerColor, defaults.instanceTimerColor, 0.3)
@@ -350,6 +362,7 @@ do
 		db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
 		db.profile.anyCombatBorderName = defaults.anyCombatBorderName
 		db.profile.anyCombatInactive = defaults.anyCombatInactive
+		db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
 	end
 	ProfileUtils.ResetAnyCombatBorder = function()
 		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
@@ -386,6 +399,7 @@ do
 		db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
 		db.profile.bossCombatBorderName = defaults.bossCombatBorderName
 		db.profile.bossCombatInactive = defaults.bossCombatInactive
+		db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
 	end
 	ProfileUtils.ResetBossCombatBorder = function()
 		db.profile.bossCombatBorderColor = CopyTable(defaults.bossCombatBorderColor)
@@ -422,6 +436,7 @@ do
 		db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
 		db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
 		db.profile.instanceTimerInactive = defaults.instanceTimerInactive
+		db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
 	end
 	ProfileUtils.ResetInstanceTimerBorder = function()
 		db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
@@ -515,14 +530,15 @@ do
 	widgets.anyCombatText = text
 
 	local current = 0
+	local increment = 1
 	local updater = main:CreateAnimationGroup()
 	updater:SetLooping("REPEAT")
 	updater:SetScript("OnLoop", function()
-		current = current + 1
+		current = current + increment
 		widgets.anyCombatHistoryDuration[1] = current
 		local m = current/60
 		local s = current % 60
-		text:SetFormattedText("%d:%02d", m, s)
+		text:SetFormattedText(db.profile.anyCombatTextFormat == 2 and "%d:%04.1f" or "%d:%02d", m, s)
 	end)
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(1)
@@ -531,10 +547,20 @@ do
 		if event == "PLAYER_REGEN_DISABLED" then
 			widgets.anyCombatActive = true
 			local t = GetTime()
-			local elasped = t-prevCombatEnd
-			if elasped <= 2 then -- If you re-enter combat within 2 sec then we don't consider it as ended
-				local rounded = math.floor(elasped+0.5)
-				current = current + rounded
+			local elapsed = t-prevCombatEnd
+			if elapsed <= 2 then -- If you re-enter combat within 2 sec then we don't consider it as ended
+				local secondsToAdd = 0
+				if db.profile.anyCombatTextFormat == 2 then
+					local roundedText = string.format("%.1f", elapsed)
+					local rounded = tonumber(roundedText)
+					if rounded then
+						secondsToAdd = rounded
+					end
+				else
+					local rounded = math.floor(elapsed+0.5)
+					secondsToAdd = rounded
+				end
+				current = current + secondsToAdd
 			else
 				current = 0
 				table.insert(widgets.anyCombatHistoryTime, 1, date("[%I:%M:%S %p]"))
@@ -542,7 +568,14 @@ do
 				-- Limit to 10 entries
 				widgets.anyCombatHistoryTime[11] = nil
 				widgets.anyCombatHistoryDuration[11] = nil
-				text:SetText("0:00")
+				text:SetText(db.profile.anyCombatTextFormat == 2 and "0:00.0" or "0:00")
+			end
+			if db.profile.anyCombatTextFormat == 2 then
+				anim:SetDuration(0.1)
+				increment = 0.1
+			else
+				anim:SetDuration(1)
+				increment = 1
 			end
 			updater:Play()
 			if db.profile.anyCombatInactive == "COLOR" then
@@ -638,17 +671,18 @@ do
 	local text = main:CreateFontString()
 	widgets.bossCombatText = text
 
+	local increment = 1
 	local updater = main:CreateAnimationGroup()
 	updater:SetLooping("REPEAT")
 	updater:SetScript("OnLoop", function()
 		for i = 1, #widgets.bossCombatHistoryDuration do
 			local tbl = widgets.bossCombatHistoryDuration[i]
 			if tbl[2] == 2 then
-				local current = tbl[1] + 1
+				local current = tbl[1] + increment
 				tbl[1] = current
 				local m = current/60
 				local s = current % 60
-				text:SetFormattedText("%d:%02d", m, s)
+				text:SetFormattedText(db.profile.bossCombatTextFormat == 2 and "%d:%04.1f" or "%d:%02d", m, s)
 			end
 		end
 	end)
@@ -664,7 +698,15 @@ do
 			widgets.bossCombatHistoryDuration[11] = nil
 			if not widgets.bossCombatActive then
 				widgets.bossCombatActive = true
-				text:SetText("0:00")
+				if db.profile.bossCombatTextFormat == 2 then
+					anim:SetDuration(0.1)
+					increment = 0.1
+					text:SetText("0:00.0")
+				else
+					anim:SetDuration(1)
+					increment = 1
+					text:SetText("0:00")
+				end
 				updater:Play()
 				if db.profile.bossCombatInactive == "COLOR" then
 					local textColor = db.profile.bossCombatColor
@@ -781,14 +823,15 @@ do
 	local text = main:CreateFontString()
 	widgets.instanceTimerText = text
 
+	local increment = 1
 	local updater = main:CreateAnimationGroup()
 	updater:SetLooping("REPEAT")
 	updater:SetScript("OnLoop", function()
-		local current = widgets.instanceTimerHistoryDuration[1] + 1
+		local current = widgets.instanceTimerHistoryDuration[1] + increment
 		widgets.instanceTimerHistoryDuration[1] = current
 		local m = current/60
 		local s = current % 60
-		text:SetFormattedText("%d:%02d", m, s)
+		text:SetFormattedText(db.profile.instanceTimerTextFormat == 2 and "%d:%04.1f" or "%d:%02d", m, s)
 	end)
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(1)
@@ -803,7 +846,15 @@ do
 			-- Limit to 10 entries
 			widgets.instanceTimerHistoryTime[11] = nil
 			widgets.instanceTimerHistoryDuration[11] = nil
-			text:SetText("0:00")
+			if db.profile.instanceTimerTextFormat == 2 then
+				anim:SetDuration(0.1)
+				increment = 0.1
+				text:SetText("0:00.0")
+			else
+				anim:SetDuration(1)
+				increment = 1
+				text:SetText("0:00")
+			end
 			updater:Play()
 			if db.profile.instanceTimerInactive == "COLOR" then
 				local textColor = db.profile.instanceTimerColor
@@ -873,7 +924,7 @@ local function UpdateAnyCombatWidget()
 			flags = db.profile.anyCombatOutline
 		end
 		widgets.anyCombatText:SetFont(LibSharedMedia:Fetch("font", db.profile.anyCombatFontName), db.profile.anyCombatFontSize, flags)
-		widgets.anyCombatText:SetText("0:00")
+		widgets.anyCombatText:SetText(db.profile.anyCombatTextFormat == 2 and "0:00.0" or "0:00")
 
 		local borderTable = {
 			edgeFile = LibSharedMedia:Fetch("border", db.profile.anyCombatBorderName),
@@ -956,7 +1007,7 @@ local function UpdateBossCombatWidget()
 			flags = db.profile.bossCombatOutline
 		end
 		widgets.bossCombatText:SetFont(LibSharedMedia:Fetch("font", db.profile.bossCombatFontName), db.profile.bossCombatFontSize, flags)
-		widgets.bossCombatText:SetText("0:00")
+		widgets.bossCombatText:SetText(db.profile.bossCombatTextFormat == 2 and "0:00.0" or "0:00")
 
 		local borderTable = {
 			edgeFile = LibSharedMedia:Fetch("border", db.profile.bossCombatBorderName),
@@ -1039,7 +1090,7 @@ local function UpdateInstanceTimerWidget()
 			flags = db.profile.instanceTimerOutline
 		end
 		widgets.instanceTimerText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceTimerFontName), db.profile.instanceTimerFontSize, flags)
-		widgets.instanceTimerText:SetText("0:00")
+		widgets.instanceTimerText:SetText(db.profile.instanceTimerTextFormat == 2 and "0:00.0" or "0:00")
 
 		local borderTable = {
 			edgeFile = LibSharedMedia:Fetch("border", db.profile.instanceTimerBorderName),
@@ -1455,6 +1506,15 @@ do
 								end,
 								disabled = AnyCombatDisabled,
 							},
+							anyCombatTextFormat = {
+								type = "select",
+								name = L.textFormat,
+								values = {
+									"1:23",
+									"1:23.4",
+								},
+								order = 3,
+							},
 						},
 					},
 					anyCombatExactPositioning = {
@@ -1868,6 +1928,15 @@ do
 								end,
 								disabled = BossCombatDisabled,
 							},
+							bossCombatTextFormat = {
+								type = "select",
+								name = L.textFormat,
+								values = {
+									"1:23",
+									"1:23.4",
+								},
+								order = 3,
+							},
 						},
 					},
 					bossCombatExactPositioning = {
@@ -2280,6 +2349,15 @@ do
 									UpdateInstanceTimerWidget()
 								end,
 								disabled = InstanceTimerDisabled,
+							},
+							instanceTimerTextFormat = {
+								type = "select",
+								name = L.textFormat,
+								values = {
+									"1:23",
+									"1:23.4",
+								},
+								order = 3,
 							},
 						},
 					},
