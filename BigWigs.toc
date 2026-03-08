@@ -47,5 +47,6 @@ Loader.lua
 Tools\AutoRole.lua
 Tools\Keystones.lua
 Tools\LFGTimer.lua
+Tools\CombatTimer.lua
 modules.xml
 bosses.xml

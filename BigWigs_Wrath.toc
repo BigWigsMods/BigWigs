@@ -85,4 +85,5 @@ Media\Media.lua
 GuildVersion.lua
 Loader.lua
 Tools\LFGTimer.lua
+Tools\CombatTimer.lua
 modules_Classic.xml
