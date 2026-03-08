@@ -325,11 +325,13 @@ end
 -------------------------------------------------------------------------------
 -- Bars
 
+local validIDs = {}
 function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	-- Not Secret
 	local source = eventInfo.source
 	if source == 1 then return end -- Enum.EncounterTimelineEventSource.Script = 1
 	local eventId = eventInfo.id
+	validIDs[eventId] = true
 	local duration = eventInfo.duration
 	local maxQueueDuration = eventInfo.maxQueueDuration
 
@@ -354,8 +356,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 end
 
 function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
-	local info = C_EncounterTimeline.GetEventInfo(eventId)
-	if info.source == 1 then return end -- Enum.EncounterTimelineEventSource.Script = 1
+	if not validIDs[eventId] then return end
 
 	local newState = C_EncounterTimeline.GetEventState(eventId)
 	if newState == Enum.EncounterTimelineEventState.Active then
@@ -368,6 +369,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
 		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
 
 	elseif newState == Enum.EncounterTimelineEventState.Finished then
+		local info = C_EncounterTimeline.GetEventInfo(eventId)
 		if info.source == 2 then -- Enum.EncounterTimelineEventSource.EditMode = 2
 			self:DoTestMessage(("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1), info.iconFileID)
 		end
@@ -376,7 +378,8 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
 end
 
 function plugin:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventId)
-	local info = C_EncounterTimeline.GetEventInfo(eventId)
-	if info.source == 1 then return end -- Enum.EncounterTimelineEventSource.Script = 1
-	self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+	if validIDs[eventId] then
+		validIDs[eventId] = nil
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+	end
 end
