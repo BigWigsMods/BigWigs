@@ -53,7 +53,7 @@ do
 		anyCombatBorderColor = {0, 0, 0, 1},
 		anyCombatBorderColorInactive = {0, 0, 0, 0.3},
 		anyCombatBorderSize = 1,
-		anyCombatBorderOffset = 1,
+		anyCombatBorderOffset = 0,
 		anyCombatBorderName = "Solid",
 		anyCombatInactive = "NONE",
 		anyCombatTextFormat = 1,
@@ -76,7 +76,7 @@ do
 		bossCombatBorderColor = {0, 0, 0, 1},
 		bossCombatBorderColorInactive = {0, 0, 0, 0.3},
 		bossCombatBorderSize = 1,
-		bossCombatBorderOffset = 1,
+		bossCombatBorderOffset = 0,
 		bossCombatBorderName = "Solid",
 		bossCombatInactive = "NONE",
 		bossCombatTextFormat = 1,
@@ -99,7 +99,7 @@ do
 		instanceTimerBorderColor = {0, 0, 0, 1},
 		instanceTimerBorderColorInactive = {0, 0, 0, 0.3},
 		instanceTimerBorderSize = 1,
-		instanceTimerBorderOffset = 1,
+		instanceTimerBorderOffset = 0,
 		instanceTimerBorderName = "Solid",
 		instanceTimerInactive = "NONE",
 		instanceTimerTextFormat = 1,
@@ -452,8 +452,6 @@ do
 	ProfileUtils.ResetInstanceTimerPosition = function()
 		db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
 	end
-
-	ProfileUtils.ValidateMainSettings()
 end
 
 --------------------------------------------------------------------------------
