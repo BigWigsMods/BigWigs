@@ -24,7 +24,6 @@ local ProfileUtils = {
 -- Saved Settings
 --
 
-
 do
 	local fontName = "Noto Sans Medium"
 	do
@@ -839,7 +838,11 @@ do
 		local _, instanceType, difficultyID, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 		if instanceType ~= "none" and not widgets.instanceTimerActive then
 			widgets.instanceTimerActive = true
-			local zoneAndDifficulty = L.parentheses:format(GetRealZoneText(instanceID), (GetDifficultyInfo(difficultyID) or "?"))
+			local difficultyName = GetDifficultyInfo(difficultyID)
+			if not difficultyName then
+				difficultyName = instanceType
+			end
+			local zoneAndDifficulty = L.parentheses:format(GetRealZoneText(instanceID), difficultyName)
 			local tooltipText = ("%s %s"):format(date("[%I:%M:%S %p]"), zoneAndDifficulty)
 			table.insert(widgets.instanceTimerHistoryTime, 1, tooltipText)
 			table.insert(widgets.instanceTimerHistoryDuration, 1, 0)
