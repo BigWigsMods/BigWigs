@@ -87,7 +87,7 @@ local L = tbl.API:GetLocale("BigWigs")
 tbl.API.RegisterToolOptions("LFGTimer", {
 	type = "group",
 	name = L.lfgTimerTitle,
-	order = 3,
+	order = 4,
 	get = function(info)
 		return db.profile[info[#info]]
 	end,
