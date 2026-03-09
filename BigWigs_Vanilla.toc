@@ -85,4 +85,5 @@ Media\Media.lua
 GuildVersion.lua
 Loader.lua
 Tools\CombatTimer.lua
+Tools\AutoInvite.lua
 modules_Classic.xml

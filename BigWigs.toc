@@ -44,9 +44,10 @@ Locales\[TextLocale]_common.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itI
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
-Tools\AutoRole.lua
 Tools\Keystones.lua
-Tools\LFGTimer.lua
 Tools\CombatTimer.lua
+Tools\AutoInvite.lua
+Tools\LFGTimer.lua
+Tools\AutoRole.lua
 modules.xml
 bosses.xml

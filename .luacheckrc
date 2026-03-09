@@ -220,6 +220,17 @@ files["gen_option_values.lua"].ignore = {
 files["Media/Media.lua"].ignore = {
 	"113/GetBuildInfo",
 }
+files["Tools/AutoInvite.lua"].ignore = {
+	"113/C_BattleNet",
+	"113/C_ChatInfo",
+	"113/C_FriendList",
+	"113/C_PartyInfo",
+	"113/ConvertToRaid",
+	"113/BNGetFriendIndex",
+	"113/BNIsSelf",
+	"113/BNSendWhisper",
+	"113/IsGuildMember",
+}
 files["Tools/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
