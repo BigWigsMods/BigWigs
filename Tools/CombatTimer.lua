@@ -506,7 +506,11 @@ do
 		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		bwTooltip:AddLine(L.anyCombatTimerTooltip)
 		for i = 1, #widgets.anyCombatHistoryTime do
-			bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], SecondsToTime(widgets.anyCombatHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			if i == 1 and widgets.anyCombatActive then
+				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
+			else
+				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], SecondsToTime(widgets.anyCombatHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			end
 		end
 		bwTooltip:Show()
 	end)
