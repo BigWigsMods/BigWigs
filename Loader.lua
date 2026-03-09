@@ -116,7 +116,7 @@ local myLocale = GetLocale()
 local myName = UnitNameUnmodified("player")
 local myGUID = UnitGUID("player")
 local function sysprint(msg)
-	print("|cFF33FF99BigWigs|r: "..msg)
+	print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: "..msg)
 end
 local GetInstanceInfoModified, ModifyInstanceInfo
 do
