@@ -383,7 +383,7 @@ L.anyCombatTimer = "任意战斗计时器"
 L.anyCombatTimerDesc = "显示你处于战斗状态的持续时间，鼠标悬停可查看战斗历史记录。"
 L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t战斗历史记录"
 L.bossCombatTimer = "首领战斗计时器"
-L.bossCombatTimerDesc = "示你与首领战斗的持续时间，鼠标悬停可查看首领战历史记录。"
+L.bossCombatTimerDesc = "显示你与首领战斗的持续时间，鼠标悬停可查看首领战历史记录。"
 L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t首领战历史记录"
 L.instanceTimer = "副本计时器"
 L.instanceTimerDesc = "显示你进入副本（地下城/团队等）的持续时间，鼠标悬停可查看副本历史记录。"
@@ -395,7 +395,7 @@ L.doNothing = "无操作"
 L.hide = "隐藏"
 L.colorFade = "颜色/渐隐"
 L.inProgress = "进行中"
---L.textFormat = "Text Format"
+L.textFormat = "文本格式"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
