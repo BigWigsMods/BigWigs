@@ -62,6 +62,7 @@ do
 	local invitesBlocked = false
 	local SendChatMessage = BigWigsLoader.SendChatMessage
 	local Ambiguate = BigWigsLoader.Ambiguate
+	local myClient = WOW_PROJECT_ID
 	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 	popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
 		if event == "GROUP_LEFT" then
@@ -121,45 +122,42 @@ do
 					local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 					for i=1, gameAccs do
 						local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
-						local player = gameAccountInfo.characterName
-						local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
-						local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
-						if gameAccountInfo.clientProgram == "WoW" and realmName and realmDisplayName and player then
-							if realmDisplayName ~= GetRealmName() then
-								sender = player .. "-" .. realmName
-							end
-							if UnitInRaid(sender) or UnitInParty(sender) then -- Player is in our group
-								local _, _, _, myInstanceId = UnitPosition("player")
-								local _, _, _, tarInstanceId = UnitPosition(sender)
-								if myInstanceId == tarInstanceId then -- Player is also in our instance
-									throttle[bnSenderID] = nil
-									return
+						if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == myClient and gameAccountInfo.isInCurrentRegion and gameAccountInfo.realmID > 0
+						and (BigWigsLoader.isRetail or (gameAccountInfo.realmID == GetRealmID() and gameAccountInfo.factionName == UnitFactionGroup("player"))) then -- Classic is more restrictive than retail
+							local player = gameAccountInfo.characterName
+							local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
+							local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
+							if realmName and realmDisplayName and player then
+								if realmDisplayName ~= GetRealmName() then
+									sender = player .. "-" .. realmName
 								end
-							end
-							message = message:lower()
-							for num = 1, #db.profile.wordsFriendly do
-								if db.profile.wordsFriendly[num] == message then
-									if IsInRaid() then
-										if C_PartyInfo.IsPartyFull() then
-											throttle[bnSenderID] = throttle[bnSenderID] + 10
-											BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
-										else
-											BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-											C_PartyInfo.InviteUnit(sender)
-										end
-									else
-										if C_PartyInfo.IsPartyFull() then
-											if not invitesBlocked then
-												delayedInvite[sender] = bnSenderID
-												text:SetText(L.groupIsFullConvertToRaid)
-												popupFrame:Show()
+								if not UnitInRaid(sender) and not UnitInParty(sender) then -- Player is not already in our group
+									message = message:lower()
+									for num = 1, #db.profile.wordsFriendly do
+										if db.profile.wordsFriendly[num] == message then
+											if IsInRaid() then
+												if C_PartyInfo.IsPartyFull() then
+													throttle[bnSenderID] = throttle[bnSenderID] + 10
+													BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
+												else
+													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
+													C_PartyInfo.InviteUnit(sender)
+												end
 											else
-												throttle[bnSenderID] = throttle[bnSenderID] + 10
-												BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
+												if C_PartyInfo.IsPartyFull() then
+													if not invitesBlocked then
+														delayedInvite[sender] = bnSenderID
+														text:SetText(L.groupIsFullConvertToRaid)
+														popupFrame:Show()
+													else
+														throttle[bnSenderID] = throttle[bnSenderID] + 10
+														BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
+													end
+												else
+													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
+													C_PartyInfo.InviteUnit(sender)
+												end
 											end
-										else
-											BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-											C_PartyInfo.InviteUnit(sender)
 										end
 									end
 								end

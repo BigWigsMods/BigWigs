@@ -229,6 +229,7 @@ files["Tools/AutoInvite.lua"].ignore = {
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
 	"113/BNSendWhisper",
+	"113/GetRealmID",
 	"113/IsGuildMember",
 }
 files["Tools/AutoRole.lua"].ignore = {
