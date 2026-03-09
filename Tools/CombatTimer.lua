@@ -804,7 +804,11 @@ do
 		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		bwTooltip:AddLine(L.instanceTimerTooltip)
 		for i = 1, #widgets.instanceTimerHistoryTime do
-			bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], SecondsToTime(widgets.instanceTimerHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			if i == 1 and widgets.instanceTimerActive then
+				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
+			else
+				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], SecondsToTime(widgets.instanceTimerHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			end
 		end
 		bwTooltip:Show()
 	end)
