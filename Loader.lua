@@ -743,7 +743,7 @@ do
 		frame:SetFrameLevel(300)
 		frame:SetSize(400, 150)
 		frame:SetPoint("CENTER")
-		local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
+		local text = frame:CreateFontString(nil, "ARTWORK", "GameFontGreenLarge")
 		text:SetSize(380, 0)
 		text:SetJustifyH("CENTER")
 		text:SetJustifyV("TOP")
