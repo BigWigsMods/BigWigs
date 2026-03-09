@@ -366,6 +366,7 @@ do
 		end
 	end
 
+	local myClient = WOW_PROJECT_ID
 	function plugin:CHAT_MSG_BN_WHISPER(event, _, playerName, _, _, _, _, _, _, _, _, _, _, bnSenderID)
 		if curDiff > 0 and not BNIsSelf(bnSenderID) then
 			if not throttleBN[bnSenderID] or (GetTime() - throttleBN[bnSenderID]) > 30 then
@@ -374,19 +375,21 @@ do
 				local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 				for i=1, gameAccs do
 					local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
-					local player = gameAccountInfo.characterName
-					local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
-					local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
-					if gameAccountInfo.clientProgram == "WoW" and realmName and realmDisplayName and player then
-						if realmDisplayName ~= GetRealmName() then
-							player = player .. "-" .. realmName
-						end
-						if UnitInRaid(player) or UnitInParty(player) then -- Player is in our group
-							local _, _, _, myInstanceId = UnitPosition("player")
-							local _, _, _, tarInstanceId = UnitPosition(player)
-							if myInstanceId == tarInstanceId then -- Player is also in our instance
-								throttleBN[bnSenderID] = nil
-								return
+					if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == myClient and gameAccountInfo.isInCurrentRegion and gameAccountInfo.realmID > 0 then
+						local player = gameAccountInfo.characterName
+						local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
+						local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
+						if realmName and realmDisplayName and player then
+							if realmDisplayName ~= GetRealmName() then
+								player = player .. "-" .. realmName
+							end
+							if UnitInRaid(player) or UnitInParty(player) then -- Player is in our group
+								local _, _, _, myInstanceId = UnitPosition("player")
+								local _, _, _, tarInstanceId = UnitPosition(player)
+								if myInstanceId == tarInstanceId then -- Player is also in our instance
+									throttleBN[bnSenderID] = nil
+									return
+								end
 							end
 						end
 					end
