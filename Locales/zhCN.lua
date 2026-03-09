@@ -280,6 +280,9 @@ L.battleres_settings_export_desc = "导入所有战复设置。"
 L.imported_privateAuras_settings = "私有光环设置"
 L.privateAuras_settings_import_desc = "导入所有私有光环设置。"
 L.privateAuras_settings_export_desc = "导出所有私有光环设置。"
+--L.imported_combattimer_settings = "Combat Timer Settings"
+--L.combattimer_settings_import_desc = "Import all Combat Timer settings."
+--L.combattimer_settings_export_desc = "Export all Combat Timer settings."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "分享首领设置"

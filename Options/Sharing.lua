@@ -298,6 +298,78 @@ local privateAurasSettingsToExport = {
 	"onlyWhenYouAreTank",
 }
 
+-- CombatTimer
+local combatTimerSettingsToExport = {
+	-- Any Combat
+	"anyCombatDisabled",
+	"anyCombatLocked",
+	"anyCombatWidth",
+	"anyCombatHeight",
+	"anyCombatPosition",
+	"anyCombatFontName",
+	"anyCombatFontSize",
+	"anyCombatMonochrome",
+	"anyCombatOutline",
+	"anyCombatAlign",
+	"anyCombatColor",
+	"anyCombatColorInactive",
+	"anyCombatBackgroundColor",
+	"anyCombatBackgroundColorInactive",
+	"anyCombatBorderColor",
+	"anyCombatBorderColorInactive",
+	"anyCombatBorderSize",
+	"anyCombatBorderOffset",
+	"anyCombatBorderName",
+	"anyCombatInactive",
+	"anyCombatTextFormat",
+
+	-- Boss Combat
+	"bossCombatDisabled",
+	"bossCombatLocked",
+	"bossCombatWidth",
+	"bossCombatHeight",
+	"bossCombatPosition",
+	"bossCombatFontName",
+	"bossCombatFontSize",
+	"bossCombatMonochrome",
+	"bossCombatOutline",
+	"bossCombatAlign",
+	"bossCombatColor",
+	"bossCombatColorInactive",
+	"bossCombatBackgroundColor",
+	"bossCombatBackgroundColorInactive",
+	"bossCombatBorderColor",
+	"bossCombatBorderColorInactive",
+	"bossCombatBorderSize",
+	"bossCombatBorderOffset",
+	"bossCombatBorderName",
+	"bossCombatInactive",
+	"bossCombatTextFormat",
+
+	-- Instance Timer
+	"instanceTimerDisabled",
+	"instanceTimerLocked",
+	"instanceTimerWidth",
+	"instanceTimerHeight",
+	"instanceTimerPosition",
+	"instanceTimerFontName",
+	"instanceTimerFontSize",
+	"instanceTimerMonochrome",
+	"instanceTimerOutline",
+	"instanceTimerAlign",
+	"instanceTimerColor",
+	"instanceTimerColorInactive",
+	"instanceTimerBackgroundColor",
+	"instanceTimerBackgroundColorInactive",
+	"instanceTimerBorderColor",
+	"instanceTimerBorderColorInactive",
+	"instanceTimerBorderSize",
+	"instanceTimerBorderOffset",
+	"instanceTimerBorderName",
+	"instanceTimerInactive",
+	"instanceTimerTextFormat",
+}
+
 -- Default Options
 local sharingExportOptionsSettings = {
 	exportBarPositions = true,
@@ -313,6 +385,7 @@ local sharingExportOptionsSettings = {
 	exportMythicPlusSettings = true,
 	exportBattleResSettings = true,
 	exportPrivateAurasSettings = true,
+	exportCombatTimerSettings = true,
 }
 
 local sharingImportOptionsSettings = {}
@@ -416,6 +489,13 @@ do
 			end
 		end
 
+		if requestAll or sharingExportOptionsSettings.exportCombatTimerSettings then
+			local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+			if db then
+				exportOptions["combatTimerSettings"] = exportProfileSettings(combatTimerSettingsToExport, db.profile)
+			end
+		end
+
 		local serialized = C_EncodingUtil.SerializeCBOR(exportOptions)
 		local compressed = C_EncodingUtil.CompressString(serialized, 0) -- Enum.CompressionMethod.Deflate = 0
 		local encoded = C_EncodingUtil.EncodeBase64(compressed)
@@ -453,7 +533,8 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "other" then
-		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or IsOptionInString("privateAurasSettings") then
+		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or
+		IsOptionInString("privateAurasSettings") or IsOptionInString("combatTimerSettings") then
 			return true
 		end
 	end
@@ -571,6 +652,12 @@ do
 				importSettings("importPrivateAurasSettings", "privateAurasSettings", privateAurasSettingsToExport, plugin, L.imported_privateAuras_settings)
 			end
 		end
+		do
+			local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+			if db then
+				importSettings("importCombatTimerSettings", "combatTimerSettings", combatTimerSettingsToExport, {db = db}, L.imported_combattimer_settings)
+			end
+		end
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -613,7 +700,7 @@ do
 			sharingImportOptionsSettings.importMessageSettings = true
 		end
 		if IsOptionInString("messageColors") then
-			sharingImportOptionsSettings.messageColors = true
+			sharingImportOptionsSettings.importMessageColors = true
 		end
 		if IsOptionInString("countdownPositions") then
 			sharingImportOptionsSettings.importCountdownPositions = true
@@ -635,6 +722,9 @@ do
 		end
 		if IsOptionInString("privateAurasSettings") then
 			sharingImportOptionsSettings.importPrivateAurasSettings = true
+		end
+		if IsOptionInString("combatTimerSettings") then
+			sharingImportOptionsSettings.importCombatTimerSettings = true
 		end
 		sharingModule:SaveData()
 	end
@@ -825,6 +915,14 @@ local sharingOptions = {
 						width = 1,
 						disabled = function() return not IsOptionInString("privateAurasSettings") or not BigWigs:GetPlugin("PrivateAuras", true) end,
 					},
+					importCombatTimerSettings = {
+						type = "toggle",
+						name = L.combatTimerTitle,
+						desc = L.combattimer_settings_import_desc,
+						order = 5,
+						width = 1,
+						disabled = function() return not IsOptionInString("combatTimerSettings") or not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+					},
 				},
 			},
 			acceptImportButton = {
@@ -996,6 +1094,15 @@ local sharingOptions = {
 						width = 1,
 						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("PrivateAuras", true) end,
 						disabled = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
+					},
+					exportCombatTimerSettings = {
+						type = "toggle",
+						name = L.combatTimerTitle,
+						desc = L.combattimer_settings_export_desc,
+						order = 5,
+						width = 1,
+						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+						disabled = function() return not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
 					},
 				},
 			},

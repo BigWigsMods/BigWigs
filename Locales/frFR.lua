@@ -280,6 +280,9 @@ L.battleres_settings_export_desc = "Exporte tous les paramètres de Battle Rez."
 L.imported_privateAuras_settings = "Paramètres des Auras Privées"
 L.privateAuras_settings_import_desc = "Importe tous les paramètres des Auras Privées."
 L.privateAuras_settings_export_desc = "Exporte tous les paramètres des Auras Privées."
+--L.imported_combattimer_settings = "Combat Timer Settings"
+--L.combattimer_settings_import_desc = "Import all Combat Timer settings."
+--L.combattimer_settings_export_desc = "Export all Combat Timer settings."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Partage des paramètres de Boss"
