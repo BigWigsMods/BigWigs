@@ -280,9 +280,9 @@ L.battleres_settings_export_desc = "Alle Battle Res Einstellungen exportieren."
 L.imported_privateAuras_settings = "Private Auren Einstellungen"
 L.privateAuras_settings_import_desc = "Alle Private Auren Einstellungen importieren."
 L.privateAuras_settings_export_desc = "Alle Private Auren Einstellungen exportieren."
---L.imported_combattimer_settings = "Combat Timer Settings"
---L.combattimer_settings_import_desc = "Import all Combat Timer settings."
---L.combattimer_settings_export_desc = "Export all Combat Timer settings."
+L.imported_combattimer_settings = "Kampf-Timer Einstellungen"
+L.combattimer_settings_import_desc = "Alle Kampf-Timer Einstellungen importieren."
+L.combattimer_settings_export_desc = "Alle Kampf-Timer Einstellungen exportieren."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Boss Einstellungen teilen"
@@ -353,16 +353,16 @@ L.qualityOfLife = "Lebensqualität"
 -- AutoInvite.lua
 --
 
---L.autoInviteTitle = "Auto Invite"
---L.autoInviteDesc = "Automatically invite players to your group when they whisper you a specific keyword from the list below."
---L.yes = "Yes"
---L.no = "No"
---L.addWords = "Add Words"
---L.removeWords = "Remove Words (Click To Delete)"
---L.invalidWordWarning = "Word must be lowercase and not already in the list."
---L.groupIsFullConvertToRaid = "Group is full. Convert to raid?"
---L.whisperToPlayerMyGroupIsFull = "[BigWigs] My group is now full."
---L.keywordDetectedInvitingPlayer = "Keyword detected, inviting %s."
+L.autoInviteTitle = "Automatische Einladung"
+L.autoInviteDesc = "Spieler automatisch in die Gruppe einladen, wenn sie eines der festgelegten Wörter aus der untenstehenden Liste flüstern."
+L.yes = "Ja"
+L.no = "Nein"
+L.addWords = "Wörter hinzufügen"
+L.removeWords = "Wörter entfernen (Klicken zum Entfernen)"
+L.invalidWordWarning = "Wort muss klein geschrieben und noch nicht in der Liste sein."
+L.groupIsFullConvertToRaid = "Gruppe ist voll. Zu Schlachtzug konvertieren?"
+L.whisperToPlayerMyGroupIsFull = "[BigWigs] Meine Gruppe ist jetzt voll."
+L.keywordDetectedInvitingPlayer = "Schlüsselwort erkannt, lade %s ein."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
