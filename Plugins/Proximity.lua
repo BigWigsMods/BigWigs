@@ -294,7 +294,7 @@ do
 	--
 
 	function normalProximityText()
-		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.5, functionToFire) else return end
 
 		local anyoneClose = 0
 		local _, _, _, mapId = UnitPosition("player")
@@ -333,7 +333,7 @@ do
 	--
 
 	function targetProximityText()
-		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.5, functionToFire) else return end
 
 		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
@@ -358,7 +358,7 @@ do
 	--
 
 	function multiTargetProximityText()
-		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.5, functionToFire) else return end
 
 		local anyoneClose = 0
 		for i = 1, #proximityPlayerTable do
@@ -392,7 +392,7 @@ do
 	--
 
 	function reverseProximityText()
-		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.5, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -427,7 +427,7 @@ do
 	--
 
 	function reverseTargetProximityText()
-		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.5, functionToFire) else return end
 
 		if InCombatLockdown() then
 			proxAnchor.text:SetFormattedText("|cff777777%s\n:-(|r", combatText)
@@ -448,7 +448,7 @@ do
 	--
 
 	function reverseMultiTargetProximityText()
-		if functionToFire then CTimerAfter(0.05, functionToFire) else return end
+		if functionToFire then CTimerAfter(0.5, functionToFire) else return end
 
 		local anyoneClose = 0
 
@@ -503,7 +503,7 @@ do
 		-- if BigWigsLoader then
 		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
 		-- end
-		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+		proxAnchor = CreateFrame("Frame", nil, UIParent)
 		proxAnchor:SetFrameStrata("MEDIUM")
 		proxAnchor:SetFixedFrameStrata(true)
 		proxAnchor:SetFrameLevel(120)
