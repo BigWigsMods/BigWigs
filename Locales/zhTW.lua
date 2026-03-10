@@ -407,12 +407,12 @@ L.instanceTimer = "副本計時"
 L.instanceTimerDesc = "顯示你在當前副本（地城、團隊等）的停留時長，並在滑鼠指向時以浮動提示列出副本紀錄。" -- instance要副本還是地城?
 L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t副本紀錄"
 L.backgroundColor = "背景顏色"
---L.inactive = "Inactive"
---L.whenInactive = "When Inactive"
+L.inactive = "閒置" -- 戰鬥計時
+L.whenInactive = "閒置時（例如脫離戰鬥後)"
 L.doNothing = "無動作"
 L.hide = "隱藏"
-L.colorFade = "顏色/淡出"
---L.inProgress = "In Progress"
+L.colorFade = "變色或淡出"
+L.inProgress = "進行中"
 L.textFormat = "文字格式"
 
 -----------------------------------------------------------------------
