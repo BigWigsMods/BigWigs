@@ -38,7 +38,6 @@ local castableBattleResSpells = {
 
 local bwTooltip = BigWigsAPI.GetTooltip()
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 plugin.displayName = L.battleResTitle
 
 local ProfileUtils = {}
@@ -1461,7 +1460,8 @@ do
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.UpdateWidgets()
 		if self.db.profile.newResAvailableSound ~= "None" then
-			self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, self.db.profile.newResAvailableSound)) if played then StopSound(id) end end, 0)
+			local path = LibSharedMedia:Fetch("sound", self.db.profile.newResAvailableSound)
+			self:SimpleTimer(function() local played, id = self:PlaySoundFile(path) if played then StopSound(id) end end, 0)
 		end
 		if not self.db.profile.disabled then
 			isEnabled = true
