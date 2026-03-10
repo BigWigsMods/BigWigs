@@ -1740,7 +1740,7 @@ do
 	end
 
 	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId, spellIndicators)
-		if (issecretvalue == nil or not issecretvalue(text)) and not text then text = "" end
+		if not text then text = "" end
 		self:StopSpecificBar(nil, module, text, eventId)
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
 		bar:SetPauseWhenDone(isApprox)
