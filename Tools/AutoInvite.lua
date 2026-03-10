@@ -285,6 +285,7 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					set = function(_, text)
 						table.insert(db.profile.wordsFriendly, text)
 						table.sort(db.profile.wordsFriendly)
+						UpdateWidgets()
 					end,
 					name = L.addWords,
 					order = 1,
@@ -310,6 +311,7 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					values = function() return db.profile.wordsFriendly end,
 					set = function(_, value)
 						table.remove(db.profile.wordsFriendly, value)
+						UpdateWidgets()
 					end,
 					width = "full",
 					disabled = function() return not next(db.profile.wordsFriendly) end,
@@ -327,6 +329,7 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					set = function(_, text)
 						table.insert(db.profile.wordsOther, text)
 						table.sort(db.profile.wordsOther)
+						UpdateWidgets()
 					end,
 					name = L.addWords,
 					order = 1,
@@ -352,6 +355,7 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					values = function() return db.profile.wordsOther end,
 					set = function(_, value)
 						table.remove(db.profile.wordsOther, value)
+						UpdateWidgets()
 					end,
 					width = "full",
 					disabled = function() return not next(db.profile.wordsOther) end,
