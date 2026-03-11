@@ -18,31 +18,34 @@ local ProfileUtils = {}
 
 local db
 do
-	local defaults = {
+	local globalDefaults = {
 		wordsFriendly = {},
 		wordsOther = {},
 	}
 
-	db = BigWigsLoader.db:RegisterNamespace("AutoInvite", {profile = defaults})
+	db = BigWigsLoader.db:RegisterNamespace("AutoInvite", {profile = {}, global = globalDefaults}) -- XXX temp 12.0.1
 
 	ProfileUtils.ValidateMainSettings = function()
+		db.profile.wordsFriendly = nil -- XXX temp 12.0.1
+		db.profile.wordsOther = nil -- XXX temp 12.0.1
+
 		for k, v in next, db do
-			local defaultType = type(defaults[k])
+			local defaultType = type(globalDefaults[k])
 			if defaultType == "nil" then
-				db.profile[k] = nil
+				db.global[k] = nil
 			elseif type(v) ~= defaultType then
-				db.profile[k] = defaults[k]
+				db.global[k] = globalDefaults[k]
 			end
 
-			for entry, word in next, db.profile.wordsFriendly do
+			for entry, word in next, db.global.wordsFriendly do
 				if type(entry) ~= "number" or type(word) ~= "string" or word ~= word:lower() or word == "" or word:find("^ +$") then
-					db.profile.wordsFriendly = {}
+					db.global.wordsFriendly = {}
 					break
 				end
 			end
-			for entry, word in next, db.profile.wordsOther do
+			for entry, word in next, db.global.wordsOther do
 				if type(entry) ~= "number" or type(word) ~= "string" or word ~= word:lower() or word == "" or word:find("^ +$") then
-					db.profile.wordsOther = {}
+					db.global.wordsOther = {}
 					break
 				end
 			end
@@ -83,9 +86,9 @@ do
 					message = message:lower()
 					local dbToUse
 					if C_BattleNet.GetGameAccountInfoByGUID(guid) or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
-						dbToUse = db.profile.wordsFriendly
+						dbToUse = db.global.wordsFriendly
 					else
-						dbToUse = db.profile.wordsOther
+						dbToUse = db.global.wordsOther
 					end
 					for i = 1, #dbToUse do
 						if dbToUse[i] == message then
@@ -133,8 +136,8 @@ do
 								end
 								if not UnitInRaid(sender) and not UnitInParty(sender) then -- Player is not already in our group
 									message = message:lower()
-									for num = 1, #db.profile.wordsFriendly do
-										if db.profile.wordsFriendly[num] == message then
+									for num = 1, #db.global.wordsFriendly do
+										if db.global.wordsFriendly[num] == message then
 											if IsInRaid() then
 												if C_PartyInfo.IsPartyFull() then
 													throttle[bnSenderID] = throttle[bnSenderID] + 10
@@ -250,7 +253,7 @@ end
 --
 
 local function UpdateWidgets()
-	if next(db.profile.wordsFriendly) or next(db.profile.wordsOther) then
+	if next(db.global.wordsFriendly) or next(db.global.wordsOther) then
 		popupFrame:RegisterEvent("CHAT_MSG_WHISPER")
 		popupFrame:RegisterEvent("CHAT_MSG_BN_WHISPER")
 		popupFrame:RegisterEvent("GROUP_LEFT")
@@ -283,8 +286,8 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					type = "input",
 					get = function() return "" end,
 					set = function(_, text)
-						table.insert(db.profile.wordsFriendly, text)
-						table.sort(db.profile.wordsFriendly)
+						table.insert(db.global.wordsFriendly, text)
+						table.sort(db.global.wordsFriendly)
 						UpdateWidgets()
 					end,
 					name = L.addWords,
@@ -296,8 +299,8 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 						if lowerCaseText ~= text or lowerCaseText == "" or lowerCaseText:find("^ +$") then
 							return false
 						end
-						for i = 1, #db.profile.wordsFriendly do
-							if db.profile.wordsFriendly[i] == text then
+						for i = 1, #db.global.wordsFriendly do
+							if db.global.wordsFriendly[i] == text then
 								return false
 							end
 						end
@@ -308,13 +311,13 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					type = "select",
 					name = L.removeWords,
 					order = 2,
-					values = function() return db.profile.wordsFriendly end,
+					values = function() return db.global.wordsFriendly end,
 					set = function(_, value)
-						table.remove(db.profile.wordsFriendly, value)
+						table.remove(db.global.wordsFriendly, value)
 						UpdateWidgets()
 					end,
 					width = "full",
-					disabled = function() return not next(db.profile.wordsFriendly) end,
+					disabled = function() return not next(db.global.wordsFriendly) end,
 				},
 			},
 		},
@@ -327,8 +330,8 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					type = "input",
 					get = function() return "" end,
 					set = function(_, text)
-						table.insert(db.profile.wordsOther, text)
-						table.sort(db.profile.wordsOther)
+						table.insert(db.global.wordsOther, text)
+						table.sort(db.global.wordsOther)
 						UpdateWidgets()
 					end,
 					name = L.addWords,
@@ -340,8 +343,8 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 						if lowerCaseText ~= text or lowerCaseText == "" or lowerCaseText:find("^ +$") then
 							return false
 						end
-						for i = 1, #db.profile.wordsOther do
-							if db.profile.wordsOther[i] == text then
+						for i = 1, #db.global.wordsOther do
+							if db.global.wordsOther[i] == text then
 								return false
 							end
 						end
@@ -352,13 +355,13 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 					type = "select",
 					name = L.removeWords,
 					order = 2,
-					values = function() return db.profile.wordsOther end,
+					values = function() return db.global.wordsOther end,
 					set = function(_, value)
-						table.remove(db.profile.wordsOther, value)
+						table.remove(db.global.wordsOther, value)
 						UpdateWidgets()
 					end,
 					width = "full",
-					disabled = function() return not next(db.profile.wordsOther) end,
+					disabled = function() return not next(db.global.wordsOther) end,
 				},
 			},
 		},
