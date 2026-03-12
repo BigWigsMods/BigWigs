@@ -113,6 +113,8 @@ local messageSettingsToExport = {
 	"emphFontName",
 	"monochrome",
 	"emphMonochrome",
+	"slugRendering",
+	"emphSlugRendering",
 	"outline",
 	"emphOutline",
 	"align",

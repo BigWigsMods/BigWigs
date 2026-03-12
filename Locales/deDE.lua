@@ -913,6 +913,8 @@ L.outline = "Kontur"
 L.monochrome = "Monochrom"
 L.monochromeDesc = "Schaltet den Monochrom-Filter an/aus, der die Schriftenkantenglättung entfernt."
 L.fontColor = "Schriftfarbe"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "Anzeigedauer"
 L.displayTimeDesc = "Bestimmt, wie lange (in Sekunden) Nachrichten angezeigt werden."

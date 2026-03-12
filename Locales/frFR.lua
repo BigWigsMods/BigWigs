@@ -913,6 +913,8 @@ L.outline = "Contour"
 L.monochrome = "Monochrome"
 L.monochromeDesc = "Active ou non le marqueur monochrome, enlevant tout lissage des bords de la police d'écriture."
 L.fontColor = "Couleur de police"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "Durée d'affichage"
 L.displayTimeDesc = "Définit pendant combien de temps un message doit rester affiché (en secondes)."

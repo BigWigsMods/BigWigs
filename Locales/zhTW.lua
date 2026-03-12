@@ -913,6 +913,8 @@ L.outline = "輪廓"
 L.monochrome = "單一顏色"
 L.monochromeDesc = "切換為單一顏色，移除全部字型邊緣平滑。"
 L.fontColor = "字型顏色"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "顯示時間"
 L.displayTimeDesc = "以秒計訊息顯示時間。"

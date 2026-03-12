@@ -36,6 +36,8 @@ plugin.defaultDB = {
 	emphFontName = plugin:GetDefaultFont(),
 	monochrome = false,
 	emphMonochrome = false,
+	slugRendering = false,
+	emphSlugRendering = false,
 	outline = "THICKOUTLINE",
 	emphOutline = "THICKOUTLINE",
 	align = "CENTER",
@@ -142,6 +144,13 @@ local function updateProfile()
 	elseif db.emphOutline ~= "NONE" then
 		emphFlags = db.emphOutline
 	end
+	if db.emphSlugRendering then
+		if not emphFlags then
+			emphFlags = "SLUG"
+		else
+			emphFlags = emphFlags .. ",SLUG"
+		end
+	end
 	emphMessageText:SetFont(LibSharedMedia:Fetch(FONT, db.emphFontName), db.emphFontSize, emphFlags)
 
 	normalMessageAnchor:RefixPosition()
@@ -162,6 +171,13 @@ local function updateProfile()
 		flags = "MONOCHROME"
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
+	end
+	if db.slugRendering then
+		if not flags then
+			flags = "SLUG"
+		else
+			flags = flags .. ",SLUG"
+		end
 	end
 	for i = 1, 4 do
 		local font = labels[i]
@@ -404,19 +420,25 @@ do
 							THICKOUTLINE = L.thick,
 						},
 					},
-					fontSize = {
-						type = "range",
-						name = L.fontSize,
-						desc = L.fontSizeDesc,
-						order = 3,
-						width = 2,
-						softMax = 100, max = 200, min = 14, step = 1,
-					},
 					monochrome = {
 						type = "toggle",
 						name = L.monochrome,
 						desc = L.monochromeDesc,
+						order = 3,
+					},
+					slugRendering = {
+						type = "toggle",
+						name = L.slugRendering,
+						desc = L.slugRenderingDesc,
 						order = 4,
+					},
+					fontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						order = 5,
+						width = 1.2,
+						softMax = 100, max = 200, min = 14, step = 1,
 					},
 					align = {
 						type = "select",
@@ -427,7 +449,7 @@ do
 							L.RIGHT,
 						},
 						style = "radio",
-						order = 5,
+						order = 6,
 						get = function() return plugin.db.profile.align == "LEFT" and 1 or plugin.db.profile.align == "RIGHT" and 3 or 2 end,
 						set = function(_, value)
 							plugin.db.profile.align = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
@@ -438,19 +460,19 @@ do
 						type = "toggle",
 						name = L.useIcons,
 						desc = L.useIconsDesc,
-						order = 6,
+						order = 7,
 					},
 					classcolor = {
 						type = "toggle",
 						name = L.classColors,
 						desc = L.classColorsDesc,
-						order = 7,
+						order = 8,
 					},
 					growUpwards = {
 						type = "toggle",
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
-						order = 8,
+						order = 9,
 					},
 					displaytime = {
 						type = "range",
@@ -459,7 +481,7 @@ do
 						min = 1,
 						max = 10,
 						step = 0.5,
-						order = 9,
+						order = 10,
 						width = 1.5,
 					},
 					fadetime = {
@@ -469,32 +491,32 @@ do
 						min = 1,
 						max = 10,
 						step = 0.5,
-						order = 10,
+						order = 11,
 						width = 1.5,
 					},
 					newline1 = {
 						type = "description",
 						name = "\n",
-						order = 11,
+						order = 12,
 					},
 					chat = {
 						type = "toggle",
 						name = L.chatFrameMessages,
 						desc = L.chatFrameMessagesDesc,
-						order = 12,
+						order = 13,
 						width = 2,
 					},
 					header1 = {
 						type = "header",
 						name = "",
-						order = 13,
+						order = 14,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetMessagesDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 14,
+						order = 15,
 					},
 				},
 			},
@@ -555,13 +577,18 @@ do
 						name = L.uppercase,
 						desc = L.uppercaseDesc,
 						order = 6,
-						width = 2,
 						hidden = function() -- Hide this option for CJK languages
 							local loc = GetLocale()
 							if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
 								return true
 							end
 						end,
+					},
+					emphSlugRendering = {
+						type = "toggle",
+						name = L.slugRendering,
+						desc = L.slugRenderingDesc,
+						order = 7,
 					},
 				},
 			},

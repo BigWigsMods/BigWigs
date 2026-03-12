@@ -913,6 +913,8 @@ L.outline = "외곽선"
 L.monochrome = "단색"
 L.monochromeDesc = "단색 상태 사용을 전환하여, 글꼴 경계의 모든 다듬기를 제거합니다."
 L.fontColor = "글꼴 색상"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "표시 시간"
 L.displayTimeDesc = "메시지를 표시할 시간, 초 단위"

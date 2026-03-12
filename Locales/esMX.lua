@@ -913,6 +913,8 @@ L.outline = "Contorno"
 L.monochrome = "Monocromo"
 L.monochromeDesc = "Cambia a modo monocromático, eliminando cualquier suavizado de los bordes de la fuente."
 L.fontColor = "Color de la fuente"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "Mostrar tiempo"
 L.displayTimeDesc = "Cuánto tiempo mostrará un mensaje, en segundos."

@@ -912,6 +912,8 @@ L.outline = "Outline"
 L.monochrome = "Monochrome"
 L.monochromeDesc = "Toggles the monochrome flag, removing any smoothing of the font edges."
 L.fontColor = "Font color"
+L.slugRendering = "Slug Rendering"
+L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "Display time"
 L.displayTimeDesc = "How long to display a message, in seconds"

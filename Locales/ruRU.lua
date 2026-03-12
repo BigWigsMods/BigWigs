@@ -913,6 +913,8 @@ L.outline = "Контур"
 L.monochrome = "Монохромный"
 L.monochromeDesc = "Включение монохромного флага, убирается любое сглаживание краев шрифта."
 L.fontColor = "Цвет шрифта"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "Время отображения"
 L.displayTimeDesc = "Сколько секунд будет показываться сообщение"
