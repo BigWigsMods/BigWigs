@@ -1086,6 +1086,7 @@ do
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 		[1003] = true, -- Amirdrassil, Fyrakk defeat
 		[1034] = true, -- [The War Within/Manaforge Omega] clicking the portal after Dimensius defeat
+		[2516] = true, -- [Midnight/Magisters' Terrace] clicking to drain the shield after defeating Seranel Sunlash
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
