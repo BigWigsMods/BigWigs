@@ -57,6 +57,8 @@ do
 		anyCombatBorderName = "Solid",
 		anyCombatInactive = "NONE",
 		anyCombatTextFormat = 1,
+		anyCombatHistoryAmount = 10,
+		anyCombatHistoryResetConditions = 7,
 
 		-- Boss Combat
 		bossCombatDisabled = true,
@@ -80,6 +82,8 @@ do
 		bossCombatBorderName = "Solid",
 		bossCombatInactive = "NONE",
 		bossCombatTextFormat = 2,
+		bossCombatHistoryAmount = 10,
+		bossCombatHistoryResetConditions = 7,
 
 		-- Instance Timer
 		instanceTimerDisabled = true,
@@ -103,6 +107,7 @@ do
 		instanceTimerBorderName = "Solid",
 		instanceTimerInactive = "NONE",
 		instanceTimerTextFormat = 1,
+		instanceTimerHistoryAmount = 10,
 	}
 
 	db = BigWigsLoader.db:RegisterNamespace("CombatTimer", {profile = defaults})
@@ -195,6 +200,12 @@ do
 		if db.profile.anyCombatTextFormat ~= 1 and db.profile.anyCombatTextFormat ~= 2 then
 			db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
 		end
+		if db.profile.anyCombatHistoryAmount < 5 or db.profile.anyCombatHistoryAmount > 30 or math.floor(db.profile.anyCombatHistoryAmount+0.5) ~= db.profile.anyCombatHistoryAmount then
+			db.profile.anyCombatHistoryAmount = defaults.anyCombatHistoryAmount
+		end
+		if db.profile.anyCombatHistoryResetConditions < 0 or db.profile.anyCombatHistoryResetConditions > 7 or math.floor(db.profile.anyCombatHistoryResetConditions+0.5) ~= db.profile.anyCombatHistoryResetConditions then
+			db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
+		end
 
 		ValidateColor(db.profile.anyCombatColor, defaults.anyCombatColor, 0.3)
 		ValidateColor(db.profile.anyCombatColorInactive, defaults.anyCombatColorInactive, 0.3)
@@ -250,6 +261,12 @@ do
 		if db.profile.bossCombatTextFormat ~= 1 and db.profile.bossCombatTextFormat ~= 2 then
 			db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
 		end
+		if db.profile.bossCombatHistoryAmount < 5 or db.profile.bossCombatHistoryAmount > 30 or math.floor(db.profile.bossCombatHistoryAmount+0.5) ~= db.profile.bossCombatHistoryAmount then
+			db.profile.bossCombatHistoryAmount = defaults.bossCombatHistoryAmount
+		end
+		if db.profile.bossCombatHistoryResetConditions < 0 or db.profile.bossCombatHistoryResetConditions > 7 or math.floor(db.profile.bossCombatHistoryResetConditions+0.5) ~= db.profile.bossCombatHistoryResetConditions then
+			db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
+		end
 
 		ValidateColor(db.profile.bossCombatColor, defaults.bossCombatColor, 0.3)
 		ValidateColor(db.profile.bossCombatColorInactive, defaults.bossCombatColorInactive, 0.3)
@@ -304,6 +321,9 @@ do
 		end
 		if db.profile.instanceTimerTextFormat ~= 1 and db.profile.instanceTimerTextFormat ~= 2 then
 			db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
+		end
+		if db.profile.instanceTimerHistoryAmount < 5 or db.profile.instanceTimerHistoryAmount > 30 or math.floor(db.profile.instanceTimerHistoryAmount+0.5) ~= db.profile.instanceTimerHistoryAmount then
+			db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
 		end
 
 		ValidateColor(db.profile.instanceTimerColor, defaults.instanceTimerColor, 0.3)
@@ -363,6 +383,8 @@ do
 		db.profile.anyCombatBorderName = defaults.anyCombatBorderName
 		db.profile.anyCombatInactive = defaults.anyCombatInactive
 		db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
+		db.profile.anyCombatHistoryAmount = defaults.anyCombatHistoryAmount
+		db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
 	end
 	ProfileUtils.ResetAnyCombatBorder = function()
 		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
@@ -400,6 +422,8 @@ do
 		db.profile.bossCombatBorderName = defaults.bossCombatBorderName
 		db.profile.bossCombatInactive = defaults.bossCombatInactive
 		db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
+		db.profile.bossCombatHistoryAmount = defaults.bossCombatHistoryAmount
+		db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
 	end
 	ProfileUtils.ResetBossCombatBorder = function()
 		db.profile.bossCombatBorderColor = CopyTable(defaults.bossCombatBorderColor)
@@ -437,6 +461,7 @@ do
 		db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
 		db.profile.instanceTimerInactive = defaults.instanceTimerInactive
 		db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
+		db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
 	end
 	ProfileUtils.ResetInstanceTimerBorder = function()
 		db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
@@ -546,7 +571,24 @@ do
 	anim:SetDuration(1)
 	local prevCombatEnd = 0
 	main:SetScript("OnEvent", function(self, event)
-		if event == "PLAYER_REGEN_DISABLED" then
+		if event == "PLAYER_ENTERING_WORLD" then
+			local _, instanceType = BigWigsLoader.GetInstanceInfo()
+			if (instanceType == "raid" and bit.band(db.profile.anyCombatHistoryResetConditions, 1) == 1) or (instanceType == "party" and bit.band(db.profile.anyCombatHistoryResetConditions, 2) == 2) then
+				self:GetScript("OnEvent")(self, "PLAYER_REGEN_ENABLED")
+				prevCombatEnd = 0
+				widgets.anyCombatHistoryTime = {}
+				widgets.anyCombatHistoryDuration = {}
+				text:SetText(db.profile.anyCombatTextFormat == 2 and "0:00.0" or "0:00")
+			end
+		elseif event == "CHALLENGE_MODE_START" then
+			if bit.band(db.profile.anyCombatHistoryResetConditions, 4) == 4 then
+				self:GetScript("OnEvent")(self, "PLAYER_REGEN_ENABLED")
+				prevCombatEnd = 0
+				widgets.anyCombatHistoryTime = {}
+				widgets.anyCombatHistoryDuration = {}
+				text:SetText(db.profile.anyCombatTextFormat == 2 and "0:00.0" or "0:00")
+			end
+		elseif event == "PLAYER_REGEN_DISABLED" then
 			widgets.anyCombatActive = true
 			local t = GetTime()
 			local elapsed = t-prevCombatEnd
@@ -568,8 +610,8 @@ do
 				table.insert(widgets.anyCombatHistoryTime, 1, date("[%I:%M:%S %p]"))
 				table.insert(widgets.anyCombatHistoryDuration, 1, current)
 				-- Limit to 10 entries
-				widgets.anyCombatHistoryTime[11] = nil
-				widgets.anyCombatHistoryDuration[11] = nil
+				widgets.anyCombatHistoryTime[db.profile.anyCombatHistoryAmount] = nil
+				widgets.anyCombatHistoryDuration[db.profile.anyCombatHistoryAmount] = nil
 				text:SetText(db.profile.anyCombatTextFormat == 2 and "0:00.0" or "0:00")
 			end
 			if db.profile.anyCombatTextFormat == 2 then
@@ -590,7 +632,7 @@ do
 			elseif db.profile.anyCombatInactive == "HIDE" then
 				self:Show()
 			end
-		elseif event == "PLAYER_REGEN_ENABLED" then
+		elseif event == "PLAYER_REGEN_ENABLED" and widgets.anyCombatActive then
 			widgets.anyCombatActive = false
 			updater:Stop()
 			prevCombatEnd = GetTime()
@@ -691,13 +733,28 @@ do
 	local anim = updater:CreateAnimation()
 	anim:SetDuration(1)
 	main:SetScript("OnEvent", function(self, event, encounterID, encounterName, _, _, success)
-		if event == "ENCOUNTER_START" then
+		if event == "PLAYER_ENTERING_WORLD" then
+			local _, instanceType = BigWigsLoader.GetInstanceInfo()
+			if (instanceType == "raid" and bit.band(db.profile.bossCombatHistoryResetConditions, 1) == 1) or (instanceType == "party" and bit.band(db.profile.bossCombatHistoryResetConditions, 2) == 2) then
+				self:GetScript("OnEvent")(self, "PLAYER_LEAVING_WORLD")
+				widgets.bossCombatHistoryTime = {}
+				widgets.bossCombatHistoryDuration = {}
+				text:SetText(db.profile.bossCombatTextFormat == 2 and "0:00.0" or "0:00")
+			end
+		elseif event == "CHALLENGE_MODE_START" then
+			if bit.band(db.profile.bossCombatHistoryResetConditions, 4) == 4 then
+				self:GetScript("OnEvent")(self, "PLAYER_LEAVING_WORLD")
+				widgets.bossCombatHistoryTime = {}
+				widgets.bossCombatHistoryDuration = {}
+				text:SetText(db.profile.bossCombatTextFormat == 2 and "0:00.0" or "0:00")
+			end
+		elseif event == "ENCOUNTER_START" then
 			local tooltipText = ("%s %s"):format(date("[%I:%M:%S %p]"), encounterName)
 			table.insert(widgets.bossCombatHistoryTime, 1, {tooltipText, encounterID})
 			table.insert(widgets.bossCombatHistoryDuration, 1, {0, 2})
 			-- Limit to 10 entries
-			widgets.bossCombatHistoryTime[11] = nil
-			widgets.bossCombatHistoryDuration[11] = nil
+			widgets.bossCombatHistoryTime[db.profile.bossCombatHistoryAmount] = nil
+			widgets.bossCombatHistoryDuration[db.profile.bossCombatHistoryAmount] = nil
 			if not widgets.bossCombatActive then
 				widgets.bossCombatActive = true
 				if db.profile.bossCombatTextFormat == 2 then
@@ -721,7 +778,7 @@ do
 					self:Show()
 				end
 			end
-		elseif event == "ENCOUNTER_END" then
+		elseif event == "ENCOUNTER_END" and widgets.bossCombatActive then
 			for i = 1, #widgets.bossCombatHistoryTime do
 				local tblTime = widgets.bossCombatHistoryTime[i]
 				local tblDuration = widgets.bossCombatHistoryDuration[i]
@@ -747,7 +804,7 @@ do
 			elseif db.profile.bossCombatInactive == "HIDE" then
 				self:Hide()
 			end
-		elseif event == "PLAYER_LEAVING_WORLD" then -- Classic support, allows you to release during encounter combat :(
+		elseif event == "PLAYER_LEAVING_WORLD" and widgets.bossCombatActive then
 			for i = 1, #widgets.bossCombatHistoryDuration do
 				local tbl = widgets.bossCombatHistoryDuration[i]
 				if tbl[2] == 2 then -- In progress
@@ -854,8 +911,8 @@ do
 			table.insert(widgets.instanceTimerHistoryTime, 1, tooltipText)
 			table.insert(widgets.instanceTimerHistoryDuration, 1, 0)
 			-- Limit to 10 entries
-			widgets.instanceTimerHistoryTime[11] = nil
-			widgets.instanceTimerHistoryDuration[11] = nil
+			widgets.instanceTimerHistoryTime[db.profile.instanceTimerHistoryAmount] = nil
+			widgets.instanceTimerHistoryDuration[db.profile.instanceTimerHistoryAmount] = nil
 			if db.profile.instanceTimerTextFormat == 2 then
 				anim:SetDuration(0.1)
 				increment = 0.1
@@ -908,6 +965,8 @@ local function UpdateAnyCombatWidget()
 	if not db.profile.anyCombatDisabled then
 		widgets.anyCombat:RegisterEvent("PLAYER_REGEN_DISABLED")
 		widgets.anyCombat:RegisterEvent("PLAYER_REGEN_ENABLED")
+		widgets.anyCombat:RegisterEvent("PLAYER_ENTERING_WORLD")
+		widgets.anyCombat:RegisterEvent("CHALLENGE_MODE_START")
 
 		widgets.anyCombat:SetSize(db.profile.anyCombatWidth, db.profile.anyCombatHeight)
 		local point, relPoint = db.profile.anyCombatPosition[1], db.profile.anyCombatPosition[2]
@@ -980,7 +1039,10 @@ local function UpdateAnyCombatWidget()
 	else
 		widgets.anyCombat:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		widgets.anyCombat:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		widgets.anyCombat:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		widgets.anyCombat:UnregisterEvent("CHALLENGE_MODE_START")
 		widgets.anyCombat:Hide()
+		widgets.anyCombat:GetScript("OnEvent")(widgets.anyCombat, "PLAYER_REGEN_ENABLED")
 	end
 end
 
@@ -988,9 +1050,9 @@ local function UpdateBossCombatWidget()
 	if not db.profile.bossCombatDisabled then
 		widgets.bossCombat:RegisterEvent("ENCOUNTER_START")
 		widgets.bossCombat:RegisterEvent("ENCOUNTER_END")
-		if BigWigsLoader.isClassic then
-			widgets.bossCombat:RegisterEvent("PLAYER_LEAVING_WORLD")
-		end
+		widgets.bossCombat:RegisterEvent("PLAYER_ENTERING_WORLD")
+		widgets.bossCombat:RegisterEvent("CHALLENGE_MODE_START")
+		widgets.bossCombat:RegisterEvent("PLAYER_LEAVING_WORLD")
 
 		widgets.bossCombat:SetSize(db.profile.bossCombatWidth, db.profile.bossCombatHeight)
 		local point, relPoint = db.profile.bossCombatPosition[1], db.profile.bossCombatPosition[2]
@@ -1063,10 +1125,11 @@ local function UpdateBossCombatWidget()
 	else
 		widgets.bossCombat:UnregisterEvent("ENCOUNTER_START")
 		widgets.bossCombat:UnregisterEvent("ENCOUNTER_END")
-		if BigWigsLoader.isClassic then
-			widgets.bossCombat:UnregisterEvent("PLAYER_LEAVING_WORLD")
-		end
+		widgets.bossCombat:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		widgets.bossCombat:UnregisterEvent("CHALLENGE_MODE_START")
+		widgets.bossCombat:UnregisterEvent("PLAYER_LEAVING_WORLD")
 		widgets.bossCombat:Hide()
+		widgets.bossCombat:GetScript("OnEvent")(widgets.bossCombat, "PLAYER_LEAVING_WORLD")
 	end
 end
 
@@ -1147,6 +1210,7 @@ local function UpdateInstanceTimerWidget()
 		widgets.instanceTimer:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		widgets.instanceTimer:UnregisterEvent("PLAYER_LEAVING_WORLD")
 		widgets.instanceTimer:Hide()
+		widgets.instanceTimer:GetScript("OnEvent")(widgets.instanceTimer, "PLAYER_LEAVING_WORLD")
 	end
 end
 
@@ -1524,6 +1588,39 @@ do
 									"1:23.4",
 								},
 								order = 3,
+							},
+							anyCombatHistoryAmount = {
+								type = "range",
+								name = L.tooltipHistoryMaxLines,
+								desc = L.tooltipHistoryMaxLinesDesc,
+								order = 4,
+								min = 5,
+								max = 30,
+								step = 1,
+								width = 1.5,
+								disabled = AnyCombatDisabled,
+							},
+							anyCombatHistoryResetConditions = {
+								type = "multiselect",
+								name = L.tooltipHistoryResetConditions,
+								desc = L.tooltipHistoryResetConditionsDesc,
+								order = 5,
+								values = {
+									[1] = L.enteringRaid,
+									[2] = L.enteringDungeon,
+									[4] = L.startingMythicKeystone,
+								},
+								get = function(info, entry)
+									return bit.band(db.profile[info[#info]], entry) == entry
+								end,
+								set = function(info, entry, value)
+									if value then
+										db.profile[info[#info]] = db.profile[info[#info]] + entry
+									else
+										db.profile[info[#info]] = db.profile[info[#info]] - entry
+									end
+								end,
+								hidden = AnyCombatDisabled,
 							},
 						},
 					},
@@ -1947,6 +2044,39 @@ do
 								},
 								order = 3,
 							},
+							bossCombatHistoryAmount = {
+								type = "range",
+								name = L.tooltipHistoryMaxLines,
+								desc = L.tooltipHistoryMaxLinesDesc,
+								order = 4,
+								min = 5,
+								max = 30,
+								step = 1,
+								width = 1.5,
+								disabled = BossCombatDisabled,
+							},
+							bossCombatHistoryResetConditions = {
+								type = "multiselect",
+								name = L.tooltipHistoryResetConditions,
+								desc = L.tooltipHistoryResetConditionsDesc,
+								order = 5,
+								values = {
+									[1] = L.enteringRaid,
+									[2] = L.enteringDungeon,
+									[4] = L.startingMythicKeystone,
+								},
+								get = function(info, entry)
+									return bit.band(db.profile[info[#info]], entry) == entry
+								end,
+								set = function(info, entry, value)
+									if value then
+										db.profile[info[#info]] = db.profile[info[#info]] + entry
+									else
+										db.profile[info[#info]] = db.profile[info[#info]] - entry
+									end
+								end,
+								hidden = BossCombatDisabled,
+							},
 						},
 					},
 					bossCombatExactPositioning = {
@@ -2368,6 +2498,17 @@ do
 									"1:23.4",
 								},
 								order = 3,
+							},
+							instanceTimerHistoryAmount = {
+								type = "range",
+								name = L.tooltipHistoryMaxLines,
+								desc = L.tooltipHistoryMaxLinesDesc,
+								order = 4,
+								min = 5,
+								max = 30,
+								step = 1,
+								width = 1.5,
+								disabled = InstanceTimerDisabled,
 							},
 						},
 					},

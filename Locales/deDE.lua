@@ -406,6 +406,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.instanceTimer = "Instanz-Timer"
 L.instanceTimerDesc = "Ein Timer, welcher die Dauer einer Instanz anzeigt (Dungeon/Schlachtzug/etc), mit einem Tooltip des Instanzverlaufs."
 L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstanzverlauf"
+
 L.backgroundColor = "Hintergrundfarbe"
 L.inactive = "Inaktiv"
 L.whenInactive = "Bei Inaktivität"
@@ -414,6 +415,13 @@ L.hide = "Verstecken"
 L.colorFade = "Farbe/Verblassen"
 L.inProgress = "Im Gange"
 L.textFormat = "Textformat"
+--L.tooltipHistoryMaxLines = "History: Max Lines"
+--L.tooltipHistoryMaxLinesDesc = "Choose how many lines of history the tooptip should display."
+--L.tooltipHistoryResetConditions = "History: Reset Conditions"
+--L.tooltipHistoryResetConditionsDesc = "Choose any conditions for when the tooltip history should reset."
+--L.enteringRaid = "Entering a raid"
+--L.enteringDungeon = "Entering a dungeon"
+--L.startingMythicKeystone = "Starting a Mythic+"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

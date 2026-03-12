@@ -406,6 +406,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.instanceTimer = "副本计时器"
 L.instanceTimerDesc = "显示你进入副本（地下城/团队等）的持续时间，鼠标悬停可查看副本历史记录。"
 L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t副本历史记录"
+
 L.backgroundColor = "背景颜色"
 L.inactive = "未激活"
 L.whenInactive = "未激活时"
@@ -414,6 +415,13 @@ L.hide = "隐藏"
 L.colorFade = "颜色/渐隐"
 L.inProgress = "进行中"
 L.textFormat = "文本格式"
+--L.tooltipHistoryMaxLines = "History: Max Lines"
+--L.tooltipHistoryMaxLinesDesc = "Choose how many lines of history the tooptip should display."
+--L.tooltipHistoryResetConditions = "History: Reset Conditions"
+--L.tooltipHistoryResetConditionsDesc = "Choose any conditions for when the tooltip history should reset."
+--L.enteringRaid = "Entering a raid"
+--L.enteringDungeon = "Entering a dungeon"
+--L.startingMythicKeystone = "Starting a Mythic+"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

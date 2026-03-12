@@ -406,6 +406,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.instanceTimer = "인스턴스 타이머"
 L.instanceTimerDesc = "인스턴스(던전/레이드 등)에 머무른 시간을 표시하는 타이머이며, 툴팁을 통해 인스턴스 기록을 확인할 수 있습니다."
 L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t인스턴스 기록"
+
 L.backgroundColor = "배경색"
 L.inactive = "비활성"
 L.whenInactive = "비활성 시"
@@ -414,6 +415,13 @@ L.hide = "숨기기"
 L.colorFade = "색상/사라짐"
 L.inProgress = "진행 중"
 L.textFormat = "텍스트 형식"
+--L.tooltipHistoryMaxLines = "History: Max Lines"
+--L.tooltipHistoryMaxLinesDesc = "Choose how many lines of history the tooptip should display."
+--L.tooltipHistoryResetConditions = "History: Reset Conditions"
+--L.tooltipHistoryResetConditionsDesc = "Choose any conditions for when the tooltip history should reset."
+--L.enteringRaid = "Entering a raid"
+--L.enteringDungeon = "Entering a dungeon"
+--L.startingMythicKeystone = "Starting a Mythic+"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

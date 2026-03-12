@@ -405,6 +405,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.instanceTimer = "Instance Timer"
 L.instanceTimerDesc = "A timer that displays how long you've been in an instance (dungeon/raid/etc) for, with a tooltip to see instance history."
 L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstance History"
+
 L.backgroundColor = "Background Color"
 L.inactive = "Inactive"
 L.whenInactive = "When Inactive"
@@ -413,6 +414,13 @@ L.hide = "Hide"
 L.colorFade = "Color/Fade"
 L.inProgress = "In Progress"
 L.textFormat = "Text Format"
+L.tooltipHistoryMaxLines = "History: Max Lines"
+L.tooltipHistoryMaxLinesDesc = "Choose how many lines of history the tooptip should display."
+L.tooltipHistoryResetConditions = "History: Reset Conditions"
+L.tooltipHistoryResetConditionsDesc = "Choose any conditions for when the tooltip history should reset."
+L.enteringRaid = "Entering a raid"
+L.enteringDungeon = "Entering a dungeon"
+L.startingMythicKeystone = "Starting a Mythic+"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

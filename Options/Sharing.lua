@@ -322,6 +322,8 @@ local combatTimerSettingsToExport = {
 	"anyCombatBorderName",
 	"anyCombatInactive",
 	"anyCombatTextFormat",
+	"anyCombatHistoryAmount",
+	"anyCombatHistoryResetConditions",
 
 	-- Boss Combat
 	"bossCombatDisabled",
@@ -345,6 +347,8 @@ local combatTimerSettingsToExport = {
 	"bossCombatBorderName",
 	"bossCombatInactive",
 	"bossCombatTextFormat",
+	"bossCombatHistoryAmount",
+	"bossCombatHistoryResetConditions",
 
 	-- Instance Timer
 	"instanceTimerDisabled",
@@ -368,6 +372,7 @@ local combatTimerSettingsToExport = {
 	"instanceTimerBorderName",
 	"instanceTimerInactive",
 	"instanceTimerTextFormat",
+	"instanceTimerHistoryAmount",
 }
 
 -- Default Options
