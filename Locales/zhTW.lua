@@ -1167,7 +1167,8 @@ L.bigwigsEnhancedTimers = "BigWigs 風格的計時條 + BigWigs 的校準計時 
 L.blizzBasicAsBars = "BigWigs 風格的計時條 + 暴雪的內建計時"
 L.blizzBasicAsBlizzTimeline = "暴雪的「首領技能」時間軸 + 暴雪的內建計時（完全使用暴雪原生）"
 L.developerMode = "開發者模式"
-
+--L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+--L.enhancedModeWelcome = "BigWigs 'Enhanced Mode' enabled!\n\nFull restoration of most pre-Midnight features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
 
 -----------------------------------------------------------------------
 -- Victory.lua

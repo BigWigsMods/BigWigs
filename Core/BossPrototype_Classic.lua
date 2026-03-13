@@ -315,7 +315,7 @@ function boss:ShouldShowBars()
 	if self.useCustomTimers and plugins.Timeline then
 		-- XXX should probably add an API in Timeline instead of accessing the db directly >.> like :CanShowCustom()
 		local timelineDB = plugins.Timeline.db.profile
-		return timelineDB.timer_mode == "enhanced" or timelineDB.timer_mode == "dev"
+		return timelineDB.timersMode == "enhanced" or timelineDB.timersMode == "dev"
 	end
 end
 
@@ -629,7 +629,7 @@ do
 	--- Print an error message with event information after the encounter has ended
 	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
-		local option = plugins.Timeline and plugins.Timeline.db.profile.timer_mode
+		local option = plugins.Timeline and plugins.Timeline.db.profile.timersMode
 		if option ~= "dev" and option ~= "enhanced" then -- only error with debug info if we are showing enhanced info
 			return
 		end

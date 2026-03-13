@@ -18,7 +18,7 @@ local hasCustomTimers = {}
 --
 
 plugin.defaultDB = {
-	timer_mode = "enhanced",
+	timersMode = "enhanced",
 }
 
 local function updateProfile()
@@ -33,8 +33,8 @@ local function updateProfile()
 		end
 	end
 
-	if db.timer_mode ~= "enhanced" and db.timer_mode ~= "blizzbars" and db.timer_mode ~= "blizztimeline" and db.timer_mode ~= "dev" then
-		db.timer_mode = plugin.defaultDB.timer_mode
+	if db.timersMode ~= "enhanced" and db.timersMode ~= "blizzbars" and db.timersMode ~= "blizztimeline" and db.timersMode ~= "dev" then
+		db.timersMode = plugin.defaultDB.timersMode
 	end
 end
 
@@ -80,7 +80,7 @@ do
 				width = "full",
 				order = 2,
 			},
-			timer_mode = {
+			timersMode = {
 				type = "select",
 				name = L.show_bars,
 				values = {
@@ -101,6 +101,11 @@ do
 				set = function(info, value)
 					db[info[#info]] = value
 					plugin:UpdateBarsShown()
+				end,
+				confirm = function(_, value)
+					if value ~= "enhanced" and value ~= "dev" then
+						return L.enhancedModeWarning
+					end
 				end,
 				width = 3,
 				order = 3,
@@ -232,12 +237,12 @@ do
 end
 
 function plugin:UpdateBarsShown(event, module)
-	local showBlizzardBars = db.timer_mode ~= "blizztimeline" -- True unless set to "blizztimeline" mode (no bars)
+	local showBlizzardBars = db.timersMode ~= "blizztimeline" -- True unless set to "blizztimeline" mode (no bars)
 
 	local encounterID = module and module:GetEncounterID()
 	if encounterID and showBlizzardBars then -- If module has encounter ID and we're not set to "blizztimeline" mode (no bars)
 		if event == "BigWigs_OnBossEngage" or event == "BigWigs_OnBossEngageMidEncounter" then
-			if db.timer_mode == "enhanced" then
+			if db.timersMode == "enhanced" then
 				if module.useCustomTimers then
 					hasCustomTimers[encounterID] = true
 					showBlizzardBars = false
@@ -245,7 +250,7 @@ function plugin:UpdateBarsShown(event, module)
 					showBlizzardBars = false
 				end
 			end
-		elseif db.timer_mode == "enhanced" then -- BigWigs_OnBossDisable
+		elseif db.timersMode == "enhanced" then -- BigWigs_OnBossDisable
 			hasCustomTimers[encounterID] = nil
 			if next(hasCustomTimers) then
 				showBlizzardBars = false

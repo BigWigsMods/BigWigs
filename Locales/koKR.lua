@@ -1167,6 +1167,8 @@ L.bigwigsEnhancedTimers = "BigWigs 향상된 타이머를 BigWigs 바 형태로 
 L.blizzBasicAsBars = "블리자드 기본 타이머를 BigWigs 바 형태로 표시"
 L.blizzBasicAsBlizzTimeline = "블리자드 기본 타이머를 블리자드 타임라인에 표시"
 L.developerMode = "개발자 모드"
+--L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+--L.enhancedModeWelcome = "BigWigs 'Enhanced Mode' enabled!\n\nFull restoration of most pre-Midnight features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
 
 -----------------------------------------------------------------------
 -- Victory.lua

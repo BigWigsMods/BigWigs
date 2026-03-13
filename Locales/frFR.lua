@@ -1167,6 +1167,8 @@ L.bigwigsEnhancedTimers = "CàR enrichis de BigWigs affichés en tant que barres
 L.blizzBasicAsBars = "CàR classiques de Blizzard affichés en tant que barres de BigWigs"
 L.blizzBasicAsBlizzTimeline = "CàR classiques de Blizzard affichés sur la ligne temporelle de Blizzard"
 L.developerMode = "Mode développeur"
+--L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+--L.enhancedModeWelcome = "BigWigs 'Enhanced Mode' enabled!\n\nFull restoration of most pre-Midnight features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
 
 -----------------------------------------------------------------------
 -- Victory.lua
