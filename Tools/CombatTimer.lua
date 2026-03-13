@@ -86,28 +86,28 @@ do
 		bossCombatHistoryResetConditions = 7,
 
 		-- Instance Timer
-		instanceTimerDisabled = true,
-		instanceTimerLocked = false,
-		instanceTimerWidth = 60,
-		instanceTimerHeight = 24,
-		instanceTimerPosition = {"CENTER", "CENTER", 615, -150, "UIParent"},
-		instanceTimerFontName = fontName,
-		instanceTimerFontSize = 16,
-		instanceTimerMonochrome = false,
-		instanceTimerOutline = "OUTLINE",
-		instanceTimerAlign = "CENTER",
-		instanceTimerColor = {1, 1, 1, 1},
-		instanceTimerColorInactive = {1, 1, 1, 0.3},
-		instanceTimerBackgroundColor = {0, 0, 0, 0.5},
-		instanceTimerBackgroundColorInactive = {0, 0, 0, 0.3},
-		instanceTimerBorderColor = {0, 0, 0, 1},
-		instanceTimerBorderColorInactive = {0, 0, 0, 0.3},
-		instanceTimerBorderSize = 1,
-		instanceTimerBorderOffset = 0,
-		instanceTimerBorderName = "Solid",
-		instanceTimerInactive = "NONE",
-		instanceTimerTextFormat = 1,
-		instanceTimerHistoryAmount = 10,
+		--instanceTimerDisabled = true,
+		--instanceTimerLocked = false,
+		--instanceTimerWidth = 60,
+		--instanceTimerHeight = 24,
+		--instanceTimerPosition = {"CENTER", "CENTER", 615, -150, "UIParent"},
+		--instanceTimerFontName = fontName,
+		--instanceTimerFontSize = 16,
+		--instanceTimerMonochrome = false,
+		--instanceTimerOutline = "OUTLINE",
+		--instanceTimerAlign = "CENTER",
+		--instanceTimerColor = {1, 1, 1, 1},
+		--instanceTimerColorInactive = {1, 1, 1, 0.3},
+		--instanceTimerBackgroundColor = {0, 0, 0, 0.5},
+		--instanceTimerBackgroundColorInactive = {0, 0, 0, 0.3},
+		--instanceTimerBorderColor = {0, 0, 0, 1},
+		--instanceTimerBorderColorInactive = {0, 0, 0, 0.3},
+		--instanceTimerBorderSize = 1,
+		--instanceTimerBorderOffset = 0,
+		--instanceTimerBorderName = "Solid",
+		--instanceTimerInactive = "NONE",
+		--instanceTimerTextFormat = 1,
+		--instanceTimerHistoryAmount = 10,
 	}
 
 	db = BigWigsLoader.db:RegisterNamespace("CombatTimer", {profile = defaults})
@@ -275,63 +275,63 @@ do
 		ValidateColor(db.profile.bossCombatBorderColor, defaults.bossCombatBorderColor, 0)
 		ValidateColor(db.profile.bossCombatBorderColorInactive, defaults.bossCombatBorderColorInactive, 0)
 
-		if db.profile.instanceTimerWidth < ProfileUtils.MinimumWidth or db.profile.instanceTimerWidth > ProfileUtils.MaximumWidth then
-			db.profile.instanceTimerWidth = defaults.instanceTimerWidth
-		end
-		if db.profile.instanceTimerHeight < ProfileUtils.MinimumHeight or db.profile.instanceTimerHeight > ProfileUtils.MaximumHeight then
-			db.profile.instanceTimerHeight = defaults.instanceTimerHeight
-		end
-		if type(db.profile.instanceTimerPosition[1]) ~= "string" or type(db.profile.instanceTimerPosition[2]) ~= "string"
-		or type(db.profile.instanceTimerPosition[3]) ~= "number" or type(db.profile.instanceTimerPosition[4]) ~= "number"
-		or not BigWigsAPI.IsValidFramePoint(db.profile.instanceTimerPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.instanceTimerPosition[2]) then
-			db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-		else
-			local x = math.floor(db.profile.instanceTimerPosition[3]+0.5)
-			if x ~= db.profile.instanceTimerPosition[3] then
-				db.profile.instanceTimerPosition[3] = x
-			end
-			local y = math.floor(db.profile.instanceTimerPosition[4]+0.5)
-			if y ~= db.profile.instanceTimerPosition[4] then
-				db.profile.instanceTimerPosition[4] = y
-			end
-		end
-		if db.profile.instanceTimerPosition[5] ~= defaults.instanceTimerPosition[5] then
-			local frame = _G[db.profile.instanceTimerPosition[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-			end
-		end
-		if db.profile.instanceTimerFontSize < 14 or db.profile.instanceTimerFontSize > 200 then
-			db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
-		end
-		if db.profile.instanceTimerOutline ~= "NONE" and db.profile.instanceTimerOutline ~= "OUTLINE" and db.profile.instanceTimerOutline ~= "THICKOUTLINE" then
-			db.profile.instanceTimerOutline = defaults.instanceTimerOutline
-		end
-		if db.profile.instanceTimerAlign ~= "LEFT" and db.profile.instanceTimerAlign ~= "CENTER" and db.profile.instanceTimerAlign ~= "RIGHT" then
-			db.profile.instanceTimerAlign = defaults.instanceTimerAlign
-		end
-		if db.profile.instanceTimerBorderSize < 1 or db.profile.instanceTimerBorderSize > 32 then
-			db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-		end
-		if db.profile.instanceTimerBorderOffset < 0 or db.profile.instanceTimerBorderOffset > 32 then
-			db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-		end
-		if db.profile.instanceTimerInactive ~= "NONE" and db.profile.instanceTimerInactive ~= "HIDE" and db.profile.instanceTimerInactive ~= "COLOR" then
-			db.profile.instanceTimerInactive = defaults.instanceTimerInactive
-		end
-		if db.profile.instanceTimerTextFormat ~= 1 and db.profile.instanceTimerTextFormat ~= 2 then
-			db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
-		end
-		if db.profile.instanceTimerHistoryAmount < 5 or db.profile.instanceTimerHistoryAmount > 30 or math.floor(db.profile.instanceTimerHistoryAmount+0.5) ~= db.profile.instanceTimerHistoryAmount then
-			db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
-		end
+		--if db.profile.instanceTimerWidth < ProfileUtils.MinimumWidth or db.profile.instanceTimerWidth > ProfileUtils.MaximumWidth then
+		--	db.profile.instanceTimerWidth = defaults.instanceTimerWidth
+		--end
+		--if db.profile.instanceTimerHeight < ProfileUtils.MinimumHeight or db.profile.instanceTimerHeight > ProfileUtils.MaximumHeight then
+		--	db.profile.instanceTimerHeight = defaults.instanceTimerHeight
+		--end
+		--if type(db.profile.instanceTimerPosition[1]) ~= "string" or type(db.profile.instanceTimerPosition[2]) ~= "string"
+		--or type(db.profile.instanceTimerPosition[3]) ~= "number" or type(db.profile.instanceTimerPosition[4]) ~= "number"
+		--or not BigWigsAPI.IsValidFramePoint(db.profile.instanceTimerPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.instanceTimerPosition[2]) then
+		--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
+		--else
+		--	local x = math.floor(db.profile.instanceTimerPosition[3]+0.5)
+		--	if x ~= db.profile.instanceTimerPosition[3] then
+		--		db.profile.instanceTimerPosition[3] = x
+		--	end
+		--	local y = math.floor(db.profile.instanceTimerPosition[4]+0.5)
+		--	if y ~= db.profile.instanceTimerPosition[4] then
+		--		db.profile.instanceTimerPosition[4] = y
+		--	end
+		--end
+		--if db.profile.instanceTimerPosition[5] ~= defaults.instanceTimerPosition[5] then
+		--	local frame = _G[db.profile.instanceTimerPosition[5]]
+		--	if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+		--		db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
+		--	end
+		--end
+		--if db.profile.instanceTimerFontSize < 14 or db.profile.instanceTimerFontSize > 200 then
+		--	db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
+		--end
+		--if db.profile.instanceTimerOutline ~= "NONE" and db.profile.instanceTimerOutline ~= "OUTLINE" and db.profile.instanceTimerOutline ~= "THICKOUTLINE" then
+		--	db.profile.instanceTimerOutline = defaults.instanceTimerOutline
+		--end
+		--if db.profile.instanceTimerAlign ~= "LEFT" and db.profile.instanceTimerAlign ~= "CENTER" and db.profile.instanceTimerAlign ~= "RIGHT" then
+		--	db.profile.instanceTimerAlign = defaults.instanceTimerAlign
+		--end
+		--if db.profile.instanceTimerBorderSize < 1 or db.profile.instanceTimerBorderSize > 32 then
+		--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
+		--end
+		--if db.profile.instanceTimerBorderOffset < 0 or db.profile.instanceTimerBorderOffset > 32 then
+		--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
+		--end
+		--if db.profile.instanceTimerInactive ~= "NONE" and db.profile.instanceTimerInactive ~= "HIDE" and db.profile.instanceTimerInactive ~= "COLOR" then
+		--	db.profile.instanceTimerInactive = defaults.instanceTimerInactive
+		--end
+		--if db.profile.instanceTimerTextFormat ~= 1 and db.profile.instanceTimerTextFormat ~= 2 then
+		--	db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
+		--end
+		--if db.profile.instanceTimerHistoryAmount < 5 or db.profile.instanceTimerHistoryAmount > 30 or math.floor(db.profile.instanceTimerHistoryAmount+0.5) ~= db.profile.instanceTimerHistoryAmount then
+		--	db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
+		--end
 
-		ValidateColor(db.profile.instanceTimerColor, defaults.instanceTimerColor, 0.3)
-		ValidateColor(db.profile.instanceTimerColorInactive, defaults.instanceTimerColorInactive, 0.3)
-		ValidateColor(db.profile.instanceTimerBackgroundColor, defaults.instanceTimerBackgroundColor, 0)
-		ValidateColor(db.profile.instanceTimerBackgroundColorInactive, defaults.instanceTimerBackgroundColorInactive, 0)
-		ValidateColor(db.profile.instanceTimerBorderColor, defaults.instanceTimerBorderColor, 0)
-		ValidateColor(db.profile.instanceTimerBorderColorInactive, defaults.instanceTimerBorderColorInactive, 0)
+		--ValidateColor(db.profile.instanceTimerColor, defaults.instanceTimerColor, 0.3)
+		--ValidateColor(db.profile.instanceTimerColorInactive, defaults.instanceTimerColorInactive, 0.3)
+		--ValidateColor(db.profile.instanceTimerBackgroundColor, defaults.instanceTimerBackgroundColor, 0)
+		--ValidateColor(db.profile.instanceTimerBackgroundColorInactive, defaults.instanceTimerBackgroundColorInactive, 0)
+		--ValidateColor(db.profile.instanceTimerBorderColor, defaults.instanceTimerBorderColor, 0)
+		--ValidateColor(db.profile.instanceTimerBorderColorInactive, defaults.instanceTimerBorderColorInactive, 0)
 	end
 	ProfileUtils.ValidateMediaSettings = function()
 		if not LibSharedMedia:IsValid("font", db.profile.anyCombatFontName) then
@@ -352,14 +352,14 @@ do
 			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
 		end
 
-		if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) then
-			db.profile.instanceTimerFontName = defaults.instanceTimerFontName
-		end
-		if not LibSharedMedia:IsValid("border", db.profile.instanceTimerBorderName) then -- If the border is suddenly invalid then reset the size and offset also
-			db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
-			db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-			db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-		end
+		--if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) then
+		--	db.profile.instanceTimerFontName = defaults.instanceTimerFontName
+		--end
+		--if not LibSharedMedia:IsValid("border", db.profile.instanceTimerBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+		--	db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
+		--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
+		--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
+		--end
 	end
 
 	ProfileUtils.ResetAnyCombat = function()
@@ -440,43 +440,43 @@ do
 		db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
 	end
 
-	ProfileUtils.ResetInstanceTimer = function()
-		db.profile.instanceTimerLocked = defaults.instanceTimerLocked
-		db.profile.instanceTimerWidth = defaults.instanceTimerWidth
-		db.profile.instanceTimerHeight = defaults.instanceTimerHeight
-		db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-		db.profile.instanceTimerFontName = defaults.instanceTimerFontName
-		db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
-		db.profile.instanceTimerMonochrome = defaults.instanceTimerMonochrome
-		db.profile.instanceTimerOutline = defaults.instanceTimerOutline
-		db.profile.instanceTimerAlign = defaults.instanceTimerAlign
-		db.profile.instanceTimerColor = CopyTable(defaults.instanceTimerColor)
-		db.profile.instanceTimerColorInactive = CopyTable(defaults.instanceTimerColorInactive)
-		db.profile.instanceTimerBackgroundColor = CopyTable(defaults.instanceTimerBackgroundColor)
-		db.profile.instanceTimerBackgroundColorInactive = CopyTable(defaults.instanceTimerBackgroundColorInactive)
-		db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
-		db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
-		db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-		db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-		db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
-		db.profile.instanceTimerInactive = defaults.instanceTimerInactive
-		db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
-		db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
-	end
-	ProfileUtils.ResetInstanceTimerBorder = function()
-		db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
-		db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
-		db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-		db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-	end
-	ProfileUtils.ResetInstanceTimerInactiveColors = function()
-		db.profile.instanceTimerColorInactive = CopyTable(defaults.instanceTimerColorInactive)
-		db.profile.instanceTimerBackgroundColorInactive = CopyTable(defaults.instanceTimerBackgroundColorInactive)
-		db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
-	end
-	ProfileUtils.ResetInstanceTimerPosition = function()
-		db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-	end
+	--ProfileUtils.ResetInstanceTimer = function()
+	--	db.profile.instanceTimerLocked = defaults.instanceTimerLocked
+	--	db.profile.instanceTimerWidth = defaults.instanceTimerWidth
+	--	db.profile.instanceTimerHeight = defaults.instanceTimerHeight
+	--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
+	--	db.profile.instanceTimerFontName = defaults.instanceTimerFontName
+	--	db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
+	--	db.profile.instanceTimerMonochrome = defaults.instanceTimerMonochrome
+	--	db.profile.instanceTimerOutline = defaults.instanceTimerOutline
+	--	db.profile.instanceTimerAlign = defaults.instanceTimerAlign
+	--	db.profile.instanceTimerColor = CopyTable(defaults.instanceTimerColor)
+	--	db.profile.instanceTimerColorInactive = CopyTable(defaults.instanceTimerColorInactive)
+	--	db.profile.instanceTimerBackgroundColor = CopyTable(defaults.instanceTimerBackgroundColor)
+	--	db.profile.instanceTimerBackgroundColorInactive = CopyTable(defaults.instanceTimerBackgroundColorInactive)
+	--	db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
+	--	db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
+	--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
+	--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
+	--	db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
+	--	db.profile.instanceTimerInactive = defaults.instanceTimerInactive
+	--	db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
+	--	db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
+	--end
+	--ProfileUtils.ResetInstanceTimerBorder = function()
+	--	db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
+	--	db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
+	--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
+	--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
+	--end
+	--ProfileUtils.ResetInstanceTimerInactiveColors = function()
+	--	db.profile.instanceTimerColorInactive = CopyTable(defaults.instanceTimerColorInactive)
+	--	db.profile.instanceTimerBackgroundColorInactive = CopyTable(defaults.instanceTimerBackgroundColorInactive)
+	--	db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
+	--end
+	--ProfileUtils.ResetInstanceTimerPosition = function()
+	--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
+	--end
 end
 
 --------------------------------------------------------------------------------
@@ -492,9 +492,9 @@ local widgets = {
 	bossCombatHistoryTime = {},
 	bossCombatHistoryDuration = {},
 
-	instanceTimerActive = false,
-	instanceTimerHistoryTime = {},
-	instanceTimerHistoryDuration = {},
+	--instanceTimerActive = false,
+	--instanceTimerHistoryTime = {},
+	--instanceTimerHistoryDuration = {},
 }
 
 -- Any Combat
@@ -828,6 +828,7 @@ do
 end
 
 -- Instance Timer
+--[[
 do
 	local main = CreateFrame("Frame", nil, UIParent)
 	main:Hide()
@@ -956,7 +957,7 @@ do
 		end
 	end)
 end
-
+]]
 --------------------------------------------------------------------------------
 -- Options Table
 --
@@ -1132,7 +1133,7 @@ local function UpdateBossCombatWidget()
 		widgets.bossCombat:GetScript("OnEvent")(widgets.bossCombat, "PLAYER_LEAVING_WORLD")
 	end
 end
-
+--[[
 local function UpdateInstanceTimerWidget()
 	if not db.profile.instanceTimerDisabled then
 		widgets.instanceTimer:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -1213,7 +1214,7 @@ local function UpdateInstanceTimerWidget()
 		widgets.instanceTimer:GetScript("OnEvent")(widgets.instanceTimer, "PLAYER_LEAVING_WORLD")
 	end
 end
-
+]]
 do
 	local function GetColor(info)
 		local colorTable = db.profile[info[#info]]
@@ -1225,7 +1226,7 @@ do
 		db.profile[key] = {r, g, b, a}
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
-		UpdateInstanceTimerWidget()
+		--UpdateInstanceTimerWidget()
 	end
 
 	local function SetColorRestrictedAlpha(info, r, g, b, a)
@@ -1233,7 +1234,7 @@ do
 		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
-		UpdateInstanceTimerWidget()
+		--UpdateInstanceTimerWidget()
 	end
 
 	local function AnyCombatDisabled()
@@ -1244,9 +1245,9 @@ do
 		return db.profile.bossCombatDisabled
 	end
 
-	local function InstanceTimerDisabled()
-		return db.profile.instanceTimerDisabled
-	end
+	--local function InstanceTimerDisabled()
+	--	return db.profile.instanceTimerDisabled
+	--end
 
 	local function AnyCombatDisabledOrNoSeparateInactiveColors()
 		return db.profile.anyCombatDisabled or db.profile.anyCombatInactive ~= "COLOR"
@@ -1256,9 +1257,9 @@ do
 		return db.profile.bossCombatDisabled or db.profile.bossCombatInactive ~= "COLOR"
 	end
 
-	local function InstanceTimerDisabledOrNoSeparateInactiveColors()
-		return db.profile.instanceTimerDisabled or db.profile.instanceTimerInactive ~= "COLOR"
-	end
+	--local function InstanceTimerDisabledOrNoSeparateInactiveColors()
+	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerInactive ~= "COLOR"
+	--end
 
 	local function AnyCombatDisabledOrBorderSetToNone()
 		return db.profile.anyCombatDisabled or db.profile.anyCombatBorderName == "None"
@@ -1268,9 +1269,9 @@ do
 		return db.profile.bossCombatDisabled or db.profile.bossCombatBorderName == "None"
 	end
 
-	local function InstanceTimerDisabledOrBorderSetToNone()
-		return db.profile.instanceTimerDisabled or db.profile.instanceTimerBorderName == "None"
-	end
+	--local function InstanceTimerDisabledOrBorderSetToNone()
+	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerBorderName == "None"
+	--end
 
 	local function AnyCombatDisabledOrAnchorPointDefault()
 		return db.profile.anyCombatDisabled or db.profile.anyCombatPosition[5] == "UIParent"
@@ -1280,9 +1281,9 @@ do
 		return db.profile.bossCombatDisabled or db.profile.bossCombatPosition[5] == "UIParent"
 	end
 
-	local function InstanceTimerDisabledOrAnchorPointDefault()
-		return db.profile.instanceTimerDisabled or db.profile.instanceTimerPosition[5] == "UIParent"
-	end
+	--local function InstanceTimerDisabledOrAnchorPointDefault()
+	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerPosition[5] == "UIParent"
+	--end
 
 	BigWigsAPI.RegisterToolOptions("CombatTimer", {
 		type = "group",
@@ -2203,7 +2204,7 @@ do
 					},
 				},
 			},
-			instance = {
+			--[[instance = {
 				name = L.instanceTimer,
 				type = "group",
 				childGroups = "tab",
@@ -2635,7 +2636,7 @@ do
 						},
 					},
 				},
-			},
+			},]]
 		},
 	})
 end
@@ -2654,15 +2655,15 @@ do
 		if not db.profile.bossCombatDisabled and not db.profile.bossCombatLocked then
 			db.profile.bossCombatLocked = true
 		end
-		if not db.profile.instanceTimerDisabled and not db.profile.instanceTimerLocked then
-			db.profile.instanceTimerLocked = true
-		end
+		--if not db.profile.instanceTimerDisabled and not db.profile.instanceTimerLocked then
+		--	db.profile.instanceTimerLocked = true
+		--end
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
-		UpdateInstanceTimerWidget()
-		if not db.profile.instanceTimerDisabled then
-			BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
-		end
+		--UpdateInstanceTimerWidget()
+		--if not db.profile.instanceTimerDisabled then
+		--	BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
+		--end
 	end
 	local loginFrame = CreateFrame("Frame")
 	loginFrame:SetScript("OnEvent", function(self, event)
