@@ -351,30 +351,6 @@ local combatTimerSettingsToExport = {
 	"bossCombatTextFormat",
 	"bossCombatHistoryAmount",
 	"bossCombatHistoryResetConditions",
-
-	-- Instance Timer
-	"instanceTimerDisabled",
-	"instanceTimerLocked",
-	"instanceTimerWidth",
-	"instanceTimerHeight",
-	"instanceTimerPosition",
-	"instanceTimerFontName",
-	"instanceTimerFontSize",
-	"instanceTimerMonochrome",
-	"instanceTimerOutline",
-	"instanceTimerAlign",
-	"instanceTimerColor",
-	"instanceTimerColorInactive",
-	"instanceTimerBackgroundColor",
-	"instanceTimerBackgroundColorInactive",
-	"instanceTimerBorderColor",
-	"instanceTimerBorderColorInactive",
-	"instanceTimerBorderSize",
-	"instanceTimerBorderOffset",
-	"instanceTimerBorderName",
-	"instanceTimerInactive",
-	"instanceTimerTextFormat",
-	"instanceTimerHistoryAmount",
 }
 
 -- Default Options
@@ -1108,8 +1084,18 @@ local sharingOptions = {
 						desc = L.combattimer_settings_export_desc,
 						order = 5,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
-						disabled = function() return not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+						get = function(i)
+							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+							if db and (not db.profile.anyCombatDisabled or not db.profile.bossCombatDisabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+							if not db or (db.profile.anyCombatDisabled and db.profile.bossCombatDisabled) then
+								return true
+							end
+						end,
 					},
 				},
 			},
