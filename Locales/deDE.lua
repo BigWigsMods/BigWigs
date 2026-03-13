@@ -733,7 +733,7 @@ L.visibleBarLimitDesc = "Legt die maximale Anzahl der Leisten fest, welche gleic
 
 L.localTimer = "Lokal"
 L.timerFinished = "%s: Timer [%s] beendet."
-L.BarStarted = "Custombar '%s' wurde gestartet von %s Nutzer %s."
+L.customBarStarted = "Custombar '%s' wurde gestartet von %s Nutzer %s."
 L.sendCustomBar = "Sende Custombar '%s' an BigWigs- und DBM-Nutzer."
 
 L.requiresLeadOrAssist = "Diese Funktion benötigt Schlachtzugsleiter oder -assistent."
