@@ -69,6 +69,8 @@ plugin.defaultDB = {
 	spellIndicatorsOffset = 2,
 	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
 	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
+	normalCopyCustomAnchorWidth = false,
+	expCopyCustomAnchorWidth = false,
 }
 
 local function updateProfile()
@@ -158,6 +160,7 @@ local function updateProfile()
 		db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
 		db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
 		db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
+		db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
 	else
 		local x = math.floor(db.normalPosition[3]+0.5)
 		if x ~= db.normalPosition[3] then
@@ -176,6 +179,23 @@ local function updateProfile()
 			db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
 			db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
 			db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
+			db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+			db.normalWidth = plugin.defaultDB.normalWidth
+		else
+			if db.normalCopyCustomAnchorWidth then
+				local width = frame:GetWidth()
+				if width < minBarWidth then
+					width = minBarWidth
+				elseif width > maxBarWidth then
+					width = maxBarWidth
+				end
+				db.normalWidth = width
+			end
+		end
+	else
+		if db.normalCopyCustomAnchorWidth then
+			db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+			db.normalWidth = plugin.defaultDB.normalWidth
 		end
 	end
 
@@ -187,6 +207,7 @@ local function updateProfile()
 		db.expPosition[3] = plugin.defaultDB.expPosition[3]
 		db.expPosition[4] = plugin.defaultDB.expPosition[4]
 		db.expPosition[5] = plugin.defaultDB.expPosition[5]
+		db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
 	else
 		local x = math.floor(db.expPosition[3]+0.5)
 		if x ~= db.expPosition[3] then
@@ -205,6 +226,23 @@ local function updateProfile()
 			db.expPosition[3] = plugin.defaultDB.expPosition[3]
 			db.expPosition[4] = plugin.defaultDB.expPosition[4]
 			db.expPosition[5] = plugin.defaultDB.expPosition[5]
+			db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+			db.expWidth = plugin.defaultDB.expWidth
+		else
+			if db.expCopyCustomAnchorWidth then
+				local width = frame:GetWidth()
+				if width < minBarWidth then
+					width = minBarWidth
+				elseif width > maxBarWidth then
+					width = maxBarWidth
+				end
+				db.expWidth = width
+			end
+		end
+	else
+		if db.expCopyCustomAnchorWidth then
+			db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+			db.expWidth = plugin.defaultDB.expWidth
 		end
 	end
 
@@ -888,6 +926,10 @@ do
 										db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
 										db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
 										db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
+										if db.normalCopyCustomAnchorWidth then
+											db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+											db.normalWidth = plugin.defaultDB.normalWidth
+										end
 									end
 									updateProfile()
 								end,
@@ -934,6 +976,21 @@ do
 								name = L.destinationPoint,
 								order = 7,
 								width = 1.5,
+								disabled = IsNormalAnchorPointDefault,
+							},
+							normalCopyCustomAnchorWidth = {
+								type = "toggle",
+								name = L.copyCustomAnchorWidth,
+								desc = L.copyCustomAnchorWidthDesc,
+								width = "full",
+								set = function(_, value)
+									if not value then
+										db.normalWidth = plugin.defaultDB.normalWidth
+									end
+									db.normalCopyCustomAnchorWidth = value
+									updateProfile()
+								end,
+								order = 8,
 								disabled = IsNormalAnchorPointDefault,
 							},
 						},
@@ -1015,6 +1072,10 @@ do
 										db.expPosition[3] = plugin.defaultDB.expPosition[3]
 										db.expPosition[4] = plugin.defaultDB.expPosition[4]
 										db.expPosition[5] = plugin.defaultDB.expPosition[5]
+										if db.expCopyCustomAnchorWidth then
+											db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+											db.expWidth = plugin.defaultDB.expWidth
+										end
 									end
 									updateProfile()
 								end,
@@ -1061,6 +1122,21 @@ do
 								name = L.destinationPoint,
 								order = 7,
 								width = 1.5,
+								disabled = IsExpAnchorPointDefault,
+							},
+							expCopyCustomAnchorWidth = {
+								type = "toggle",
+								name = L.copyCustomAnchorWidth,
+								desc = L.copyCustomAnchorWidthDesc,
+								order = 8,
+								width = "full",
+								set = function(_, value)
+									if not value then
+										db.expWidth = plugin.defaultDB.expWidth
+									end
+									db.expCopyCustomAnchorWidth = value
+									updateProfile()
+								end,
 								disabled = IsExpAnchorPointDefault,
 							},
 						},
