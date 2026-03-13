@@ -34,321 +34,362 @@ local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 -- Profile
 --
 
-plugin.defaultDB = {
-	fontName = plugin:GetDefaultFont(),
-	fontSize = 10,
-	fontSizeEmph = 13,
-	texture = "BantoBar",
-	monochrome = false,
-	outline = "NONE",
-	growup = false,
-	text = true,
-	time = true,
-	alignText = "LEFT",
-	alignTime = "RIGHT",
-	icon = true,
-	iconPosition = "LEFT",
-	fill = false,
-	barStyle = "Default",
-	emphasize = true,
-	emphasizeMove = true,
-	emphasizeGrowup = false,
-	emphasizeRestart = true,
-	emphasizeTime = 11,
-	emphasizeMultiplier = 1.1,
-	spacing = 1,
-	visibleBarLimit = 100,
-	visibleBarLimitEmph = 100,
-	normalWidth = 180,
-	normalHeight = 18,
-	expWidth = 260,
-	expHeight = 22,
-	spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
-	spellIndicatorsSize = 4,
-	spellIndicatorsPosition = "LEFT",
-	spellIndicatorsOffset = 2,
-	normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
-	expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
-	normalCopyCustomAnchorWidth = false,
-	expCopyCustomAnchorWidth = false,
-}
+local updateProfile
+do
+	plugin.defaultDB = {
+		fontName = plugin:GetDefaultFont(),
+		fontSize = 10,
+		fontSizeEmph = 13,
+		texture = "BantoBar",
+		monochrome = false,
+		outline = "NONE",
+		growup = false,
+		text = true,
+		time = true,
+		alignText = "LEFT",
+		alignTime = "RIGHT",
+		icon = true,
+		iconPosition = "LEFT",
+		fill = false,
+		barStyle = "Default",
+		emphasize = true,
+		emphasizeMove = true,
+		emphasizeGrowup = false,
+		emphasizeRestart = true,
+		emphasizeTime = 11,
+		emphasizeMultiplier = 1.1,
+		spacing = 1,
+		visibleBarLimit = 100,
+		visibleBarLimitEmph = 100,
+		normalWidth = 180,
+		normalHeight = 18,
+		expWidth = 260,
+		expHeight = 22,
+		spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
+		spellIndicatorsSize = 4,
+		spellIndicatorsPosition = "LEFT",
+		spellIndicatorsOffset = 2,
+		normalPosition = {"CENTER", "CENTER", 450, 200, "UIParent"},
+		expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
+		normalCopyCustomAnchorWidth = false,
+		expCopyCustomAnchorWidth = false,
+	}
 
-local function updateProfile()
-	db = plugin.db.profile
-
-	for k, v in next, db do
-		local defaultType = type(plugin.defaultDB[k])
-		if defaultType == "nil" then
-			db[k] = nil
-		elseif type(v) ~= defaultType then
-			db[k] = plugin.defaultDB[k]
+	local hookedFrameNormal, hookedFrameExp = {}, {}
+	local activeFrameNormal, activeFrameExp = nil, nil
+	local function HookScriptNormal(self, width)
+		if self == activeFrameNormal then
+			if width < minBarWidth then
+				width = minBarWidth
+			elseif width > maxBarWidth then
+				width = maxBarWidth
+			end
+			db.normalWidth = width
+			normalAnchor:SetWidth(width)
 		end
 	end
-
-	SetBarStyle(db.barStyle)
-
-	if not LibSharedMedia:IsValid(FONT, db.fontName) then
-		db.fontName = plugin.defaultDB.fontName
-	end
-	if not LibSharedMedia:IsValid(STATUSBAR, db.texture) then
-		db.texture = plugin.defaultDB.texture
-	end
-	if db.fontSize < 10 or db.fontSize > 200 then
-		db.fontSize = plugin.defaultDB.fontSize
-	end
-	if db.fontSizeEmph < 10 or db.fontSizeEmph > 200 then
-		db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
-	end
-	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
-		db.outline = plugin.defaultDB.outline
-	end
-	if db.alignText ~= "LEFT" and db.alignText ~= "CENTER" and db.alignText ~= "RIGHT" then
-		db.alignText = plugin.defaultDB.alignText
-	end
-	if db.alignTime ~= "LEFT" and db.alignTime ~= "CENTER" and db.alignTime ~= "RIGHT" then
-		db.alignTime = plugin.defaultDB.alignTime
-	end
-	if db.iconPosition ~= "LEFT" and db.iconPosition ~= "RIGHT" then
-		db.iconPosition = plugin.defaultDB.iconPosition
-	end
-	if db.emphasizeTime < 6 or db.emphasizeTime > 60 then
-		db.emphasizeTime = plugin.defaultDB.emphasizeTime
-	end
-	if db.emphasizeMultiplier < 1 or db.emphasizeMultiplier > 3 then
-		db.emphasizeMultiplier = plugin.defaultDB.emphasizeMultiplier
-	end
-	if db.spacing < 0 or db.spacing > 20 then
-		db.spacing = plugin.defaultDB.spacing
-	end
-	if db.visibleBarLimit < 1 or db.visibleBarLimit > 100 then
-		db.visibleBarLimit = plugin.defaultDB.visibleBarLimit
-	end
-	if db.visibleBarLimitEmph < 1 or db.visibleBarLimitEmph > 100 then
-		db.visibleBarLimitEmph = plugin.defaultDB.visibleBarLimitEmph
-	end
-	if db.normalWidth < minBarWidth or db.normalWidth > maxBarWidth then
-		db.normalWidth = plugin.defaultDB.normalWidth
-	end
-	if db.normalHeight < minBarHeight or db.normalHeight > maxBarHeight then
-		db.normalHeight = plugin.defaultDB.normalHeight
-	end
-	if db.expWidth < minBarWidth or db.expWidth > maxBarWidth then
-		db.expWidth = plugin.defaultDB.expWidth
-	end
-	if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
-		db.expHeight = plugin.defaultDB.expHeight
-	end
-
-	if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators then
-		db.spellIndicators = plugin.defaultDB.spellIndicators
-	end
-	if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 then
-		db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
-	end
-	if db.spellIndicatorsPosition ~= "LEFT" and db.spellIndicatorsPosition ~= "RIGHT" then
-		db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
-	end
-	if db.spellIndicatorsOffset < 0 or db.spellIndicatorsOffset > 100 then
-		db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
-	end
-
-	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
-	or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number"
-	or not BigWigsAPI.IsValidFramePoint(db.normalPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.normalPosition[2]) then
-		db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
-		db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
-		db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
-		db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
-		db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
-		db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
-	else
-		local x = math.floor(db.normalPosition[3]+0.5)
-		if x ~= db.normalPosition[3] then
-			db.normalPosition[3] = x
-		end
-		local y = math.floor(db.normalPosition[4]+0.5)
-		if y ~= db.normalPosition[4] then
-			db.normalPosition[4] = y
+	local function HookScriptExp(self, width)
+		if self == activeFrameExp then
+			if width < minBarWidth then
+				width = minBarWidth
+			elseif width > maxBarWidth then
+				width = maxBarWidth
+			end
+			db.expWidth = width
+			emphasizeAnchor:SetWidth(width)
 		end
 	end
-	if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
-		local frame = _G[db.normalPosition[5]]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+	function updateProfile()
+		db = plugin.db.profile
+
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
+
+		SetBarStyle(db.barStyle)
+
+		if not LibSharedMedia:IsValid(FONT, db.fontName) then
+			db.fontName = plugin.defaultDB.fontName
+		end
+		if not LibSharedMedia:IsValid(STATUSBAR, db.texture) then
+			db.texture = plugin.defaultDB.texture
+		end
+		if db.fontSize < 10 or db.fontSize > 200 then
+			db.fontSize = plugin.defaultDB.fontSize
+		end
+		if db.fontSizeEmph < 10 or db.fontSizeEmph > 200 then
+			db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
+		end
+		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
+			db.outline = plugin.defaultDB.outline
+		end
+		if db.alignText ~= "LEFT" and db.alignText ~= "CENTER" and db.alignText ~= "RIGHT" then
+			db.alignText = plugin.defaultDB.alignText
+		end
+		if db.alignTime ~= "LEFT" and db.alignTime ~= "CENTER" and db.alignTime ~= "RIGHT" then
+			db.alignTime = plugin.defaultDB.alignTime
+		end
+		if db.iconPosition ~= "LEFT" and db.iconPosition ~= "RIGHT" then
+			db.iconPosition = plugin.defaultDB.iconPosition
+		end
+		if db.emphasizeTime < 6 or db.emphasizeTime > 60 then
+			db.emphasizeTime = plugin.defaultDB.emphasizeTime
+		end
+		if db.emphasizeMultiplier < 1 or db.emphasizeMultiplier > 3 then
+			db.emphasizeMultiplier = plugin.defaultDB.emphasizeMultiplier
+		end
+		if db.spacing < 0 or db.spacing > 20 then
+			db.spacing = plugin.defaultDB.spacing
+		end
+		if db.visibleBarLimit < 1 or db.visibleBarLimit > 100 then
+			db.visibleBarLimit = plugin.defaultDB.visibleBarLimit
+		end
+		if db.visibleBarLimitEmph < 1 or db.visibleBarLimitEmph > 100 then
+			db.visibleBarLimitEmph = plugin.defaultDB.visibleBarLimitEmph
+		end
+		if db.normalWidth < minBarWidth or db.normalWidth > maxBarWidth then
+			db.normalWidth = plugin.defaultDB.normalWidth
+		end
+		if db.normalHeight < minBarHeight or db.normalHeight > maxBarHeight then
+			db.normalHeight = plugin.defaultDB.normalHeight
+		end
+		if db.expWidth < minBarWidth or db.expWidth > maxBarWidth then
+			db.expWidth = plugin.defaultDB.expWidth
+		end
+		if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
+			db.expHeight = plugin.defaultDB.expHeight
+		end
+
+		if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators then
+			db.spellIndicators = plugin.defaultDB.spellIndicators
+		end
+		if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 then
+			db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
+		end
+		if db.spellIndicatorsPosition ~= "LEFT" and db.spellIndicatorsPosition ~= "RIGHT" then
+			db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
+		end
+		if db.spellIndicatorsOffset < 0 or db.spellIndicatorsOffset > 100 then
+			db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
+		end
+
+		if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
+		or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number"
+		or not BigWigsAPI.IsValidFramePoint(db.normalPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.normalPosition[2]) then
 			db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
 			db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
 			db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
 			db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
 			db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
 			db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
-			db.normalWidth = plugin.defaultDB.normalWidth
 		else
-			if db.normalCopyCustomAnchorWidth then
-				local width = frame:GetWidth()
-				if width < minBarWidth then
-					width = minBarWidth
-				elseif width > maxBarWidth then
-					width = maxBarWidth
-				end
-				db.normalWidth = width
+			local x = math.floor(db.normalPosition[3]+0.5)
+			if x ~= db.normalPosition[3] then
+				db.normalPosition[3] = x
+			end
+			local y = math.floor(db.normalPosition[4]+0.5)
+			if y ~= db.normalPosition[4] then
+				db.normalPosition[4] = y
 			end
 		end
-	else
-		if db.normalCopyCustomAnchorWidth then
-			db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
-			db.normalWidth = plugin.defaultDB.normalWidth
-		end
-	end
+		activeFrameNormal = nil
+		if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
+			local frame = _G[db.normalPosition[5]]
+			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+				db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
+				db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
+				db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
+				db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
+				db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
+				db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+				db.normalWidth = plugin.defaultDB.normalWidth
+			else
+				if db.normalCopyCustomAnchorWidth and type(frame.GetWidth) == "function" and type(frame:GetWidth()) == "number" then
+					activeFrameNormal = frame
+					if not hookedFrameNormal[frame] then
+						hookedFrameNormal[frame] = true
+						normalAnchor.HookScript(frame, "OnSizeChanged", HookScriptNormal)
+					end
 
-	if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string"
-	or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number"
-	or not BigWigsAPI.IsValidFramePoint(db.expPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.expPosition[2]) then
-		db.expPosition[1] = plugin.defaultDB.expPosition[1]
-		db.expPosition[2] = plugin.defaultDB.expPosition[2]
-		db.expPosition[3] = plugin.defaultDB.expPosition[3]
-		db.expPosition[4] = plugin.defaultDB.expPosition[4]
-		db.expPosition[5] = plugin.defaultDB.expPosition[5]
-		db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
-	else
-		local x = math.floor(db.expPosition[3]+0.5)
-		if x ~= db.expPosition[3] then
-			db.expPosition[3] = x
+					local width = frame:GetWidth()
+					if width < minBarWidth then
+						width = minBarWidth
+					elseif width > maxBarWidth then
+						width = maxBarWidth
+					end
+					db.normalWidth = width
+				end
+			end
+		else
+			if db.normalCopyCustomAnchorWidth then
+				db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+				db.normalWidth = plugin.defaultDB.normalWidth
+			end
 		end
-		local y = math.floor(db.expPosition[4]+0.5)
-		if y ~= db.expPosition[4] then
-			db.expPosition[4] = y
-		end
-	end
-	if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
-		local frame = _G[db.expPosition[5]]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+
+		if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string"
+		or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number"
+		or not BigWigsAPI.IsValidFramePoint(db.expPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.expPosition[2]) then
 			db.expPosition[1] = plugin.defaultDB.expPosition[1]
 			db.expPosition[2] = plugin.defaultDB.expPosition[2]
 			db.expPosition[3] = plugin.defaultDB.expPosition[3]
 			db.expPosition[4] = plugin.defaultDB.expPosition[4]
 			db.expPosition[5] = plugin.defaultDB.expPosition[5]
 			db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
-			db.expWidth = plugin.defaultDB.expWidth
+		else
+			local x = math.floor(db.expPosition[3]+0.5)
+			if x ~= db.expPosition[3] then
+				db.expPosition[3] = x
+			end
+			local y = math.floor(db.expPosition[4]+0.5)
+			if y ~= db.expPosition[4] then
+				db.expPosition[4] = y
+			end
+		end
+		activeFrameExp = nil
+		if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
+			local frame = _G[db.expPosition[5]]
+			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+				db.expPosition[1] = plugin.defaultDB.expPosition[1]
+				db.expPosition[2] = plugin.defaultDB.expPosition[2]
+				db.expPosition[3] = plugin.defaultDB.expPosition[3]
+				db.expPosition[4] = plugin.defaultDB.expPosition[4]
+				db.expPosition[5] = plugin.defaultDB.expPosition[5]
+				db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+				db.expWidth = plugin.defaultDB.expWidth
+			else
+				if db.expCopyCustomAnchorWidth and type(frame.GetWidth) == "function" and type(frame:GetWidth()) == "number" then
+					activeFrameExp = frame
+					if not hookedFrameExp[frame] then
+						hookedFrameExp[frame] = true
+						emphasizeAnchor.HookScript(frame, "OnSizeChanged", HookScriptExp)
+					end
+
+					local width = frame:GetWidth()
+					if width < minBarWidth then
+						width = minBarWidth
+					elseif width > maxBarWidth then
+						width = maxBarWidth
+					end
+					db.expWidth = width
+				end
+			end
 		else
 			if db.expCopyCustomAnchorWidth then
-				local width = frame:GetWidth()
-				if width < minBarWidth then
-					width = minBarWidth
-				elseif width > maxBarWidth then
-					width = maxBarWidth
+				db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+				db.expWidth = plugin.defaultDB.expWidth
+			end
+		end
+
+		normalAnchor:SetWidth(db.normalWidth)
+		normalAnchor:SetHeight(db.normalHeight)
+		emphasizeAnchor:SetWidth(db.expWidth)
+		emphasizeAnchor:SetHeight(db.expHeight)
+		normalAnchor:RefixPosition()
+		emphasizeAnchor:RefixPosition()
+
+		local flags = nil
+		if db.monochrome and db.outline ~= "NONE" then
+			flags = "MONOCHROME," .. db.outline
+		elseif db.monochrome then
+			flags = "MONOCHROME"
+		elseif db.outline ~= "NONE" then
+			flags = db.outline
+		end
+		local font = LibSharedMedia:Fetch(FONT, db.fontName)
+		local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
+
+		local lastIndicatorFrame = nil
+		for bar in next, normalAnchor.bars do
+			currentBarStyler.BarStopped(bar)
+			local height
+			if bar:Get("bigwigs:emphasized") then
+				height = db.normalHeight * db.emphasizeMultiplier
+				bar:SetHeight(height)
+				bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+				bar:SetFont(font, db.fontSizeEmph, flags)
+				if db.emphasizeMove then
+					normalAnchor.bars[bar] = nil
+					emphasizeAnchor.bars[bar] = true
+					bar:Set("bigwigs:anchor", "expPosition")
 				end
-				db.expWidth = width
+			else
+				height = db.normalHeight
+				bar:SetHeight(height)
+				bar:SetWidth(db.normalWidth)
+				bar:SetFont(font, db.fontSize, flags)
 			end
+			bar:SetTexture(texture)
+			bar:SetFill(db.fill)
+			bar:SetLabelVisibility(db.text)
+			bar.candyBarLabel:SetJustifyH(db.alignText)
+			bar:SetTimeVisibility(db.time)
+			bar.candyBarDuration:SetJustifyH(db.alignTime)
+			if not db.icon then
+				bar:SetIcon(nil)
+			else
+				bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+			end
+			bar:SetIconPosition(db.iconPosition)
+			local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
+			if indicatorFrame then
+				lastIndicatorFrame = indicatorFrame
+				indicatorFrame:ClearTextures()
+				indicatorFrame:SetIndicatorSize(height)
+				indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
+			end
+			currentBarStyler.ApplyStyle(bar)
 		end
-	else
-		if db.expCopyCustomAnchorWidth then
-			db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
-			db.expWidth = plugin.defaultDB.expWidth
-		end
-	end
 
-	normalAnchor:SetWidth(db.normalWidth)
-	normalAnchor:SetHeight(db.normalHeight)
-	emphasizeAnchor:SetWidth(db.expWidth)
-	emphasizeAnchor:SetHeight(db.expHeight)
-	normalAnchor:RefixPosition()
-	emphasizeAnchor:RefixPosition()
-
-	local flags = nil
-	if db.monochrome and db.outline ~= "NONE" then
-		flags = "MONOCHROME," .. db.outline
-	elseif db.monochrome then
-		flags = "MONOCHROME"
-	elseif db.outline ~= "NONE" then
-		flags = db.outline
-	end
-	local font = LibSharedMedia:Fetch(FONT, db.fontName)
-	local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
-
-	local lastIndicatorFrame = nil
-	for bar in next, normalAnchor.bars do
-		currentBarStyler.BarStopped(bar)
-		local height
-		if bar:Get("bigwigs:emphasized") then
-			height = db.normalHeight * db.emphasizeMultiplier
-			bar:SetHeight(height)
-			bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
+		local rerun = false
+		for bar in next, emphasizeAnchor.bars do
+			currentBarStyler.BarStopped(bar)
+			bar:SetHeight(db.expHeight)
+			bar:SetWidth(db.expWidth)
+			bar:SetTexture(texture)
+			bar:SetFill(db.fill)
 			bar:SetFont(font, db.fontSizeEmph, flags)
-			if db.emphasizeMove then
-				normalAnchor.bars[bar] = nil
-				emphasizeAnchor.bars[bar] = true
-				bar:Set("bigwigs:anchor", "expPosition")
+			bar:SetLabelVisibility(db.text)
+			bar.candyBarLabel:SetJustifyH(db.alignText)
+			bar:SetTimeVisibility(db.time)
+			bar.candyBarDuration:SetJustifyH(db.alignTime)
+			if not db.emphasizeMove then
+				rerun = true
+				normalAnchor.bars[bar] = true
+				emphasizeAnchor.bars[bar] = nil
+				bar:Set("bigwigs:anchor", "normalPosition")
 			end
-		else
-			height = db.normalHeight
-			bar:SetHeight(height)
-			bar:SetWidth(db.normalWidth)
-			bar:SetFont(font, db.fontSize, flags)
+			if not db.icon then
+				bar:SetIcon(nil)
+			else
+				bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+			end
+			bar:SetIconPosition(db.iconPosition)
+			local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
+			if indicatorFrame then
+				lastIndicatorFrame = indicatorFrame
+				indicatorFrame:ClearTextures()
+				indicatorFrame:SetIndicatorSize(db.expHeight)
+				indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
+			end
+			currentBarStyler.ApplyStyle(bar)
 		end
-		bar:SetTexture(texture)
-		bar:SetFill(db.fill)
-		bar:SetLabelVisibility(db.text)
-		bar.candyBarLabel:SetJustifyH(db.alignText)
-		bar:SetTimeVisibility(db.time)
-		bar.candyBarDuration:SetJustifyH(db.alignTime)
-		if not db.icon then
-			bar:SetIcon(nil)
-		else
-			bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
-		end
-		bar:SetIconPosition(db.iconPosition)
-		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
-		if indicatorFrame then
-			lastIndicatorFrame = indicatorFrame
-			indicatorFrame:ClearTextures()
-			indicatorFrame:SetIndicatorSize(height)
-			indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
-		end
-		currentBarStyler.ApplyStyle(bar)
-	end
 
-	local rerun = false
-	for bar in next, emphasizeAnchor.bars do
-		currentBarStyler.BarStopped(bar)
-		bar:SetHeight(db.expHeight)
-		bar:SetWidth(db.expWidth)
-		bar:SetTexture(texture)
-		bar:SetFill(db.fill)
-		bar:SetFont(font, db.fontSizeEmph, flags)
-		bar:SetLabelVisibility(db.text)
-		bar.candyBarLabel:SetJustifyH(db.alignText)
-		bar:SetTimeVisibility(db.time)
-		bar.candyBarDuration:SetJustifyH(db.alignTime)
-		if not db.emphasizeMove then
-			rerun = true
-			normalAnchor.bars[bar] = true
-			emphasizeAnchor.bars[bar] = nil
-			bar:Set("bigwigs:anchor", "normalPosition")
+		if lastIndicatorFrame then
+			lastIndicatorFrame:UpdateAllIndicatorPoints()
 		end
-		if not db.icon then
-			bar:SetIcon(nil)
-		else
-			bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+
+		rearrangeBars(normalAnchor)
+		rearrangeBars(emphasizeAnchor)
+
+		if rerun then
+			updateProfile()
 		end
-		bar:SetIconPosition(db.iconPosition)
-		local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
-		if indicatorFrame then
-			lastIndicatorFrame = indicatorFrame
-			indicatorFrame:ClearTextures()
-			indicatorFrame:SetIndicatorSize(db.expHeight)
-			indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
-		end
-		currentBarStyler.ApplyStyle(bar)
-	end
-
-	if lastIndicatorFrame then
-		lastIndicatorFrame:UpdateAllIndicatorPoints()
-	end
-
-	rearrangeBars(normalAnchor)
-	rearrangeBars(emphasizeAnchor)
-
-	if rerun then
-		updateProfile()
 	end
 end
 
