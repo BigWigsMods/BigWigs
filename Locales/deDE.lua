@@ -606,8 +606,8 @@ L.positionX = "X-Position"
 L.positionY = "Y-Position"
 L.positionExact = "Exakte Positionierung"
 L.positionDesc = "Zur exakten Positionierung vom Ankerpunkt einen Wert in der Box eingeben oder den Schieberegler bewegen."
---L.copyCustomAnchorWidth = "Copy Custom Anchor Width"
---L.copyCustomAnchorWidthDesc = "Overwrite your width setting with the width of the custom anchor."
+L.copyCustomAnchorWidth = "Angepasste Ankerbreite kopieren"
+L.copyCustomAnchorWidthDesc = "Die Breiteneinstellung mit der Breite des angepassten Ankers überschreiben."
 L.width = "Breite"
 L.height = "Höhe"
 L.size = "Größe"
@@ -733,7 +733,7 @@ L.visibleBarLimitDesc = "Legt die maximale Anzahl der Leisten fest, welche gleic
 
 L.localTimer = "Lokal"
 L.timerFinished = "%s: Timer [%s] beendet."
-L.customBarStarted = "Custombar '%s' wurde gestartet von %s Nutzer %s."
+L.BarStarted = "Custombar '%s' wurde gestartet von %s Nutzer %s."
 L.sendCustomBar = "Sende Custombar '%s' an BigWigs- und DBM-Nutzer."
 
 L.requiresLeadOrAssist = "Diese Funktion benötigt Schlachtzugsleiter oder -assistent."
@@ -1169,8 +1169,8 @@ L.bigwigsEnhancedTimers = "Erweiterte BigWigs Timer als BigWigs Leisten anzeigen
 L.blizzBasicAsBars = "Blizzard Standardtimer als BigWigs Leisten anzeigen"
 L.blizzBasicAsBlizzTimeline = "Blizzard Standardtimer in der Blizzard Zeitlinie anzeigen"
 L.developerMode = "Entwicklermodus"
---L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
---L.enhancedModeWelcome = "BigWigs 'Enhanced Mode' enabled!\n\nFull restoration of most pre-Midnight features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+L.enhancedModeWarning = "WARNUNG!\n\nDie Deaktivierung des erweiterten Modus deaktiviert viele BigWigs Funktionen, inklusive:\n\nLeistenfarben, Zauberumbenennung, Timer, angepasster Sound/Stimme, Countdowns, Leisten an/aus, Extra Nachrichten, etc."
+L.enhancedModeWelcome = "BigWigs 'Erweiterter Modus' aktiviert!\n\nVolle Wiederherstellung der meisten Funktionen vor Midnight, inklusive:\n\nLeistenfarben, Zauberumbenennung, Timer, angepasster Sound/Stimme, Countdowns, Leisten an/aus, Extra Nachrichten, etc."
 
 -----------------------------------------------------------------------
 -- Victory.lua
