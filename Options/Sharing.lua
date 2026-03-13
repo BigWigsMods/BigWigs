@@ -1048,8 +1048,8 @@ local sharingOptions = {
 						desc = L.nameplate_settings_export_desc,
 						order = 1,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("Nameplates", true) end,
-						disabled = function() return not BigWigs:GetPlugin("Nameplates", true) end,
+						get = function(i) return BigWigs:GetPlugin("Nameplates", true) and sharingExportOptionsSettings[i[#i]] end,
+						hidden = function() return not BigWigs:GetPlugin("Nameplates", true) end,
 					},
 					exportMythicPlusSettings = {
 						type = "toggle",
@@ -1057,8 +1057,8 @@ local sharingOptions = {
 						desc = L.mythicplus_settings_export_desc,
 						order = 2,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
-						disabled = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
+						get = function(i) return BigWigsLoader.db:GetNamespace("MythicPlus", true) and sharingExportOptionsSettings[i[#i]] end,
+						hidden = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 					},
 					exportBattleResSettings = {
 						type = "toggle",
@@ -1066,8 +1066,19 @@ local sharingOptions = {
 						desc = L.battleres_settings_export_desc,
 						order = 3,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("BattleRes", true) end,
-						disabled = function() return not BigWigs:GetPlugin("BattleRes", true) end,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("BattleRes", true)
+							if plugin and not plugin.db.profile.disabled then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("BattleRes", true)
+							if not plugin or plugin.db.profile.disabled then
+								return true
+							end
+						end,
+						hidden = function() return not BigWigs:GetPlugin("BattleRes", true) end,
 					},
 					exportPrivateAurasSettings = {
 						type = "toggle",
@@ -1075,8 +1086,19 @@ local sharingOptions = {
 						desc = L.privateAuras_settings_export_desc,
 						order = 4,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("PrivateAuras", true) end,
-						disabled = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
+								return true
+							end
+						end,
+						hidden = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
 					},
 					exportCombatTimerSettings = {
 						type = "toggle",
@@ -1096,6 +1118,7 @@ local sharingOptions = {
 								return true
 							end
 						end,
+						hidden = function() return not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
 					},
 				},
 			},
