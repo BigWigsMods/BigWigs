@@ -106,6 +106,8 @@ local barSettingsToExport = {
 	"spellIndicatorsSize",
 	"spellIndicatorsPosition",
 	"spellIndicatorsOffset",
+	"normalCopyCustomAnchorWidth",
+	"expCopyCustomAnchorWidth",
 }
 
 local messageSettingsToExport = {
