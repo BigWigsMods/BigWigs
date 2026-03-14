@@ -75,8 +75,7 @@ do
 		expCopyCustomAnchorWidth = false,
 	}
 
-	local hookedFrameNormal, hookedFrameExp = {}, {}
-	local activeFrameNormal, activeFrameExp = nil, nil
+	local activeFrameNormal = nil
 	local function HookScriptNormal(self, width)
 		if self == activeFrameNormal then
 			if width < minBarWidth then
@@ -88,6 +87,7 @@ do
 			normalAnchor:SetWidth(width)
 		end
 	end
+	local activeFrameExp = nil
 	local function HookScriptExp(self, width)
 		if self == activeFrameExp then
 			if width < minBarWidth then
@@ -99,6 +99,7 @@ do
 			emphasizeAnchor:SetWidth(width)
 		end
 	end
+	local hookedFrameNormal, hookedFrameExp = {}, {}
 	function updateProfile()
 		db = plugin.db.profile
 
