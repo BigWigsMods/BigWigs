@@ -328,6 +328,7 @@ local combatTimerSettingsToExport = {
 	"anyCombatTextFormat",
 	"anyCombatHistoryAmount",
 	"anyCombatHistoryResetConditions",
+	"anyCombatHistoryTimeFormat",
 
 	-- Boss Combat
 	"bossCombatDisabled",
@@ -353,6 +354,7 @@ local combatTimerSettingsToExport = {
 	"bossCombatTextFormat",
 	"bossCombatHistoryAmount",
 	"bossCombatHistoryResetConditions",
+	"bossCombatHistoryTimeFormat",
 }
 
 -- Default Options
