@@ -422,6 +422,9 @@ L.tooltipHistoryResetConditionsDesc = "Détermine quelles conditions réunir pou
 L.enteringRaid = "Rentre en raid"
 L.enteringDungeon = "Rentre en donjon"
 L.startingMythicKeystone = "Commence un mythique +"
+--L.historyTimeFormat = "History: Time Format"
+--L.twelveHour = "12 Hour"
+--L.twentyFourHour = "24 Hour"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

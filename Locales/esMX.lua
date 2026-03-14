@@ -422,6 +422,9 @@ L.battleResTitle = "Res en Combate"
 --L.enteringRaid = "Entering a raid"
 --L.enteringDungeon = "Entering a dungeon"
 --L.startingMythicKeystone = "Starting a Mythic+"
+--L.historyTimeFormat = "History: Time Format"
+--L.twelveHour = "12 Hour"
+--L.twentyFourHour = "24 Hour"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

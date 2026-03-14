@@ -422,6 +422,9 @@ L.tooltipHistoryResetConditionsDesc = "Auswählen, unter welchen Bedingungen der
 L.enteringRaid = "Betreten eines Schlachtzuges"
 L.enteringDungeon = "Betreten eines Dungeons"
 L.startingMythicKeystone = "Starten einer Mythic+"
+--L.historyTimeFormat = "History: Time Format"
+--L.twelveHour = "12 Hour"
+--L.twentyFourHour = "24 Hour"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

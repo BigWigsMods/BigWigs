@@ -59,6 +59,7 @@ do
 		anyCombatTextFormat = 1,
 		anyCombatHistoryAmount = 10,
 		anyCombatHistoryResetConditions = 7,
+		anyCombatHistoryTimeFormat = 2,
 
 		-- Boss Combat
 		bossCombatDisabled = true,
@@ -84,6 +85,7 @@ do
 		bossCombatTextFormat = 2,
 		bossCombatHistoryAmount = 10,
 		bossCombatHistoryResetConditions = 7,
+		bossCombatHistoryTimeFormat = 2,
 
 		-- Instance Timer
 		--instanceTimerDisabled = true,
@@ -108,6 +110,7 @@ do
 		--instanceTimerInactive = "NONE",
 		--instanceTimerTextFormat = 1,
 		--instanceTimerHistoryAmount = 10,
+		--instanceTimerHistoryTimeFormat = 2,
 	}
 
 	db = BigWigsLoader.db:RegisterNamespace("CombatTimer", {profile = defaults})
@@ -206,6 +209,9 @@ do
 		if db.profile.anyCombatHistoryResetConditions < 0 or db.profile.anyCombatHistoryResetConditions > 7 or math.floor(db.profile.anyCombatHistoryResetConditions+0.5) ~= db.profile.anyCombatHistoryResetConditions then
 			db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
 		end
+		if db.profile.anyCombatHistoryTimeFormat < 1 or db.profile.anyCombatHistoryTimeFormat > 2 or math.floor(db.profile.anyCombatHistoryTimeFormat+0.5) ~= db.profile.anyCombatHistoryTimeFormat then
+			db.profile.anyCombatHistoryTimeFormat = defaults.anyCombatHistoryTimeFormat
+		end
 
 		ValidateColor(db.profile.anyCombatColor, defaults.anyCombatColor, 0.3)
 		ValidateColor(db.profile.anyCombatColorInactive, defaults.anyCombatColorInactive, 0.3)
@@ -267,6 +273,9 @@ do
 		if db.profile.bossCombatHistoryResetConditions < 0 or db.profile.bossCombatHistoryResetConditions > 7 or math.floor(db.profile.bossCombatHistoryResetConditions+0.5) ~= db.profile.bossCombatHistoryResetConditions then
 			db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
 		end
+		if db.profile.bossCombatHistoryTimeFormat < 1 or db.profile.bossCombatHistoryTimeFormat > 2 or math.floor(db.profile.bossCombatHistoryTimeFormat+0.5) ~= db.profile.bossCombatHistoryTimeFormat then
+			db.profile.bossCombatHistoryTimeFormat = defaults.bossCombatHistoryTimeFormat
+		end
 
 		ValidateColor(db.profile.bossCombatColor, defaults.bossCombatColor, 0.3)
 		ValidateColor(db.profile.bossCombatColorInactive, defaults.bossCombatColorInactive, 0.3)
@@ -324,6 +333,9 @@ do
 		--end
 		--if db.profile.instanceTimerHistoryAmount < 5 or db.profile.instanceTimerHistoryAmount > 30 or math.floor(db.profile.instanceTimerHistoryAmount+0.5) ~= db.profile.instanceTimerHistoryAmount then
 		--	db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
+		--end
+		--if db.profile.instanceTimerHistoryTimeFormat < 1 or db.profile.instanceTimerHistoryTimeFormat > 2 or math.floor(db.profile.instanceTimerHistoryTimeFormat+0.5) ~= db.profile.instanceTimerHistoryTimeFormat then
+		--	db.profile.instanceTimerHistoryTimeFormat = defaults.instanceTimerHistoryTimeFormat
 		--end
 
 		--ValidateColor(db.profile.instanceTimerColor, defaults.instanceTimerColor, 0.3)
@@ -385,6 +397,7 @@ do
 		db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
 		db.profile.anyCombatHistoryAmount = defaults.anyCombatHistoryAmount
 		db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
+		db.profile.anyCombatHistoryTimeFormat = defaults.anyCombatHistoryTimeFormat
 	end
 	ProfileUtils.ResetAnyCombatBorder = function()
 		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
@@ -424,6 +437,7 @@ do
 		db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
 		db.profile.bossCombatHistoryAmount = defaults.bossCombatHistoryAmount
 		db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
+		db.profile.bossCombatHistoryTimeFormat = defaults.bossCombatHistoryTimeFormat
 	end
 	ProfileUtils.ResetBossCombatBorder = function()
 		db.profile.bossCombatBorderColor = CopyTable(defaults.bossCombatBorderColor)
@@ -462,6 +476,7 @@ do
 	--	db.profile.instanceTimerInactive = defaults.instanceTimerInactive
 	--	db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
 	--	db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
+	--	db.profile.instanceTimerHistoryTimeFormat = defaults.instanceTimerHistoryTimeFormat
 	--end
 	--ProfileUtils.ResetInstanceTimerBorder = function()
 	--	db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
@@ -607,7 +622,7 @@ do
 				current = current + secondsToAdd
 			else
 				current = 0
-				table.insert(widgets.anyCombatHistoryTime, 1, date("[%I:%M:%S %p]"))
+				table.insert(widgets.anyCombatHistoryTime, 1, date(db.profile.anyCombatHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"))
 				table.insert(widgets.anyCombatHistoryDuration, 1, current)
 				-- Limit to 10 entries
 				widgets.anyCombatHistoryTime[db.profile.anyCombatHistoryAmount] = nil
@@ -749,7 +764,7 @@ do
 				text:SetText(db.profile.bossCombatTextFormat == 2 and "0:00.0" or "0:00")
 			end
 		elseif event == "ENCOUNTER_START" then
-			local tooltipText = ("%s %s"):format(date("[%I:%M:%S %p]"), encounterName)
+			local tooltipText = ("%s %s"):format(date(db.profile.bossCombatHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), encounterName)
 			table.insert(widgets.bossCombatHistoryTime, 1, {tooltipText, encounterID})
 			table.insert(widgets.bossCombatHistoryDuration, 1, {0, 2})
 			-- Limit to 10 entries
@@ -908,7 +923,7 @@ do
 				difficultyName = instanceType
 			end
 			local zoneAndDifficulty = L.parentheses:format(GetRealZoneText(instanceID), difficultyName)
-			local tooltipText = ("%s %s"):format(date("[%I:%M:%S %p]"), zoneAndDifficulty)
+			local tooltipText = ("%s %s"):format(date(db.profile.instanceTimerHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), zoneAndDifficulty)
 			table.insert(widgets.instanceTimerHistoryTime, 1, tooltipText)
 			table.insert(widgets.instanceTimerHistoryDuration, 1, 0)
 			-- Limit to 10 entries
@@ -1589,23 +1604,33 @@ do
 									"1:23.4",
 								},
 								order = 3,
+								disabled = AnyCombatDisabled,
+							},
+							anyCombatHistoryTimeFormat = {
+								type = "select",
+								name = L.historyTimeFormat,
+								values = {
+									L.twelveHour,
+									L.twentyFourHour,
+								},
+								order = 4,
+								disabled = AnyCombatDisabled,
 							},
 							anyCombatHistoryAmount = {
 								type = "range",
 								name = L.tooltipHistoryMaxLines,
 								desc = L.tooltipHistoryMaxLinesDesc,
-								order = 4,
+								order = 5,
 								min = 5,
 								max = 30,
 								step = 1,
-								width = 1.5,
 								disabled = AnyCombatDisabled,
 							},
 							anyCombatHistoryResetConditions = {
 								type = "multiselect",
 								name = L.tooltipHistoryResetConditions,
 								desc = L.tooltipHistoryResetConditionsDesc,
-								order = 5,
+								order = 6,
 								values = {
 									[1] = L.enteringRaid,
 									[2] = L.enteringDungeon,
@@ -2044,16 +2069,26 @@ do
 									"1:23.4",
 								},
 								order = 3,
+								disabled = BossCombatDisabled,
+							},
+							bossCombatHistoryTimeFormat = {
+								type = "select",
+								name = L.historyTimeFormat,
+								values = {
+									L.twelveHour,
+									L.twentyFourHour,
+								},
+								order = 4,
+								disabled = BossCombatDisabled,
 							},
 							bossCombatHistoryAmount = {
 								type = "range",
 								name = L.tooltipHistoryMaxLines,
 								desc = L.tooltipHistoryMaxLinesDesc,
-								order = 4,
+								order = 5,
 								min = 5,
 								max = 30,
 								step = 1,
-								width = 1.5,
 								disabled = BossCombatDisabled,
 							},
 							bossCombatHistoryResetConditions = {
@@ -2499,16 +2534,26 @@ do
 									"1:23.4",
 								},
 								order = 3,
+								disabled = InstanceTimerDisabled,
+							},
+							instanceTimerHistoryTimeFormat = {
+								type = "select",
+								name = L.historyTimeFormat,
+								values = {
+									L.twelveHour,
+									L.twentyFourHour,
+								},
+								order = 4,
+								disabled = InstanceTimerDisabled,
 							},
 							instanceTimerHistoryAmount = {
 								type = "range",
 								name = L.tooltipHistoryMaxLines,
 								desc = L.tooltipHistoryMaxLinesDesc,
-								order = 4,
+								order = 5,
 								min = 5,
 								max = 30,
 								step = 1,
-								width = 1.5,
 								disabled = InstanceTimerDisabled,
 							},
 						},
