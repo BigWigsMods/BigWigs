@@ -122,57 +122,57 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 			self:Berserk(eventInfo.duration)
 			return -- no further checks needed
 		elseif durationRounded == 121 then -- Consume
-			barInfo = self:Consume(eventInfo.duration)
+			barInfo = self:Consume(eventInfo)
 		elseif durationRounded == 36 then -- Rending Tear
-			barInfo = self:RendingTear(eventInfo.duration)
+			barInfo = self:RendingTear(eventInfo)
 		elseif durationRounded == 6 then -- Rift Emergence
-			barInfo = self:RiftEmergence(eventInfo.duration)
+			barInfo = self:RiftEmergence(eventInfo)
 		elseif durationRounded == 30 then -- Rift Madness
-			barInfo = self:RiftMadness(eventInfo.duration)
+			barInfo = self:RiftMadness(eventInfo)
 		elseif durationRounded == 53 then --  Alndust Upheaval or Rending Tear
 			-- Alndust Upheaval > Rending Tear
 			durationCount[durationRounded] = (durationCount[durationRounded] or 0) + 1
 			if durationCount[durationRounded] % 2 == 1 then
-				barInfo = self:AlndustUpheaval(eventInfo.duration)
+				barInfo = self:AlndustUpheaval(eventInfo)
 			else
-				barInfo = self:RendingTear(eventInfo.duration)
+				barInfo = self:RendingTear(eventInfo)
 			end
 		elseif durationRounded == 55 then -- Rift Emergence or Rift Madness
 			-- Rift Emergence > Rift Madness
 			durationCount[durationRounded] = (durationCount[durationRounded] or 0) + 1
 			if durationCount[durationRounded] % 2 == 1 then
-				barInfo = self:RiftEmergence(eventInfo.duration)
+				barInfo = self:RiftEmergence(eventInfo)
 			else
-				barInfo = self:RiftMadness(eventInfo.duration)
+				barInfo = self:RiftMadness(eventInfo)
 			end
 		elseif durationRounded == 14 then -- Alndust Upheaval
-			barInfo = self:AlndustUpheaval(eventInfo.duration)
+			barInfo = self:AlndustUpheaval(eventInfo)
 		elseif durationRounded == 26 or durationRounded == 28 or durationRounded == 23 or durationRounded == 24 then -- Caustic Phlegm
-			barInfo = self:CausticPhlegm(eventInfo.duration)
+			barInfo = self:CausticPhlegm(eventInfo)
 		elseif durationRounded == 32 or durationRounded == 33 or durationRounded == 35 then -- Consuming Miasma
-			barInfo = self:ConsumingMiasma(eventInfo.duration)
+			barInfo = self:ConsumingMiasma(eventInfo)
 		end
 	else -- Stage 2 timers
 		if durationRounded == 18 or durationRounded == 9 then -- Caustic Phlegm
-			barInfo = self:CausticPhlegmStage2(eventInfo.duration)
+			barInfo = self:CausticPhlegmStage2(eventInfo)
 		elseif durationRounded == 29 then -- Consuming Miasma
-			barInfo = self:ConsumingMiasmaStage2(eventInfo.duration)
+			barInfo = self:ConsumingMiasmaStage2(eventInfo)
 		elseif durationRounded == 14 then -- Corrupted Devastation
-			barInfo = self:CorruptedDevastation(eventInfo.duration)
+			barInfo = self:CorruptedDevastation(eventInfo)
 		elseif durationRounded == 84 then -- Ravenous Dive
-			barInfo = self:RavenousDive(eventInfo.duration)
+			barInfo = self:RavenousDive(eventInfo)
 		elseif durationRounded == 12 then -- Corrupted Devastation or Caustic Phlegm
 			-- Corrupted Devastation > Caustic Phlegm
 			durationCount[durationRounded] = (durationCount[durationRounded] or 0) + 1
 			if durationCount[durationRounded] % 2 == 1 then
-				barInfo = self:CorruptedDevastation(eventInfo.duration)
+				barInfo = self:CorruptedDevastation(eventInfo)
 			else
-				barInfo = self:CausticPhlegmStage2(eventInfo.duration)
+				barInfo = self:CausticPhlegmStage2(eventInfo)
 			end
 		elseif durationRounded == 23 then -- Consuming Miasma
-			barInfo = self:ConsumingMiasmaStage2(eventInfo.duration)
+			barInfo = self:ConsumingMiasmaStage2(eventInfo)
 		elseif durationRounded == 30 then -- Ravenous Dive (updates initial timer?)
-			barInfo = self:RavenousDive(eventInfo.duration)
+			barInfo = self:RavenousDive(eventInfo)
 		end
 	end
 	if barInfo then
@@ -228,24 +228,16 @@ function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 	end
 end
 
-function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	local barInfo = activeBars[eventID]
-	if barInfo then
-		self:StopBar(barInfo.msg)
-		activeBars[eventID] = nil
-	end
-end
-
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
 -- Stage One: Insatiable Hunger
 -- Alndust Upheaval
-function mod:AlndustUpheaval(duration)
+function mod:AlndustUpheaval(eventInfo)
 	local barText = CL.count:format(CL.soak, almdustUpheavalCount)
 	if self:ShouldShowBars() then
-		self:Bar(1262289, duration, barText)
+		self:Bar(1262289, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	almdustUpheavalCount = almdustUpheavalCount + 1
 	return {
@@ -259,10 +251,10 @@ function mod:AlndustUpheaval(duration)
 end
 
 -- Rift Emergence
-function mod:RiftEmergence(duration)
+function mod:RiftEmergence(eventInfo)
 	local barText = CL.count:format(CL.adds, riftEmergenceCount)
 	if self:ShouldShowBars() then
-		self:Bar(1258610, duration, barText)
+		self:Bar(1258610, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	riftEmergenceCount = riftEmergenceCount + 1
 	return {
@@ -276,10 +268,10 @@ function mod:RiftEmergence(duration)
 end
 
 -- Rift Madness
-function mod:RiftMadness(duration)
+function mod:RiftMadness(eventInfo)
 	local barText = CL.count:format(L.rift_madness, riftMadnessCount)
 	if self:ShouldShowBars() then
-		self:Bar(1264756, duration, barText)
+		self:Bar(1264756, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	riftMadnessCount = riftMadnessCount + 1
 	return {
@@ -293,10 +285,10 @@ function mod:RiftMadness(duration)
 end
 
 -- Consuming Miasma
-function mod:ConsumingMiasma(duration)
+function mod:ConsumingMiasma(eventInfo)
 	local barText = CL.count:format(L.consuming_miasma, consumingMiasmaCount)
 	if self:ShouldShowBars() then
-		self:Bar(1257087, duration, barText)
+		self:Bar(1257087, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	consumingMiasmaCount = consumingMiasmaCount + 1
 	return {
@@ -310,10 +302,10 @@ function mod:ConsumingMiasma(duration)
 end
 
 -- Caustic Phlegm
-function mod:CausticPhlegm(duration)
+function mod:CausticPhlegm(eventInfo)
 	local barText = CL.count:format(CL.raid_damage, causticPhlegmCount)
 	if self:ShouldShowBars() then
-		self:Bar(1246653, duration, barText)
+		self:Bar(1246653, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	causticPhlegmCount = causticPhlegmCount + 1
 	return {
@@ -327,10 +319,10 @@ function mod:CausticPhlegm(duration)
 end
 
 -- Rending Tear
-function mod:RendingTear(duration)
+function mod:RendingTear(eventInfo)
 	local barText = CL.count:format(CL.frontal_cone, rendingTearCount)
 	if self:ShouldShowBars() then
-		self:Bar(1272726, duration, barText)
+		self:Bar(1272726, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	rendingTearCount = rendingTearCount + 1
 	return {
@@ -344,10 +336,10 @@ function mod:RendingTear(duration)
 end
 
 -- Consume
-function mod:Consume(duration)
+function mod:Consume(eventInfo)
 	local barText = CL.count:format(CL.stage:format(2), consumeCount)
 	if self:ShouldShowBars() then
-		self:Bar(1245396, duration, barText)
+		self:Bar(1245396, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	consumeCount = consumeCount + 1
 	return {
@@ -363,10 +355,10 @@ end
 -- Stage Two: To The Skies
 
 -- Corrupted Devastation
-function mod:CorruptedDevastation(duration)
+function mod:CorruptedDevastation(eventInfo)
 	local barText = CL.count:format(CL.breath, corruptedDevastationCount)
 	if self:ShouldShowBars() then
-		self:Bar(1245486, duration, barText)
+		self:Bar(1245486, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	corruptedDevastationCount = corruptedDevastationCount + 1
 	return {
@@ -380,13 +372,13 @@ function mod:CorruptedDevastation(duration)
 end
 
 -- Ravenous Dive
-function mod:RavenousDive(duration)
+function mod:RavenousDive(eventInfo)
 	local barText = CL.stage:format(1) -- No count needed? or handle bar restarting also.
 	if self:ShouldShowBars() then
-		self:Bar(1245406, duration, barText)
+		self:Bar(1245406, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	-- only the 30s one means stage 2 is about to end, the other one was updating the timer.
-	if duration == 30 then
+	if eventInfo.duration == 30 then
 		return {
 			msg = barText,
 			key = 1245406,
@@ -400,10 +392,10 @@ function mod:RavenousDive(duration)
 end
 
 -- Caustic Phlegm (Stage 2)
-function mod:CausticPhlegmStage2(duration)
+function mod:CausticPhlegmStage2(eventInfo)
 	local barText = CL.count:format(CL.raid_damage, causticPhlegmCount)
 	if self:ShouldShowBars() then
-		self:Bar(1246621, duration, barText)
+		self:Bar(1246621, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	causticPhlegmCount = causticPhlegmCount + 1
 	return {
@@ -417,10 +409,10 @@ function mod:CausticPhlegmStage2(duration)
 end
 
 -- Consuming Miasma (Stage 2)
-function mod:ConsumingMiasmaStage2(duration)
+function mod:ConsumingMiasmaStage2(eventInfo)
 	local barText = CL.count:format(L.consuming_miasma, consumingMiasmaCount)
 	if self:ShouldShowBars() then
-		self:Bar(1257085, duration, barText)
+		self:Bar(1257085, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	consumingMiasmaCount = consumingMiasmaCount + 1
 	return {
