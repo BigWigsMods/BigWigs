@@ -21,10 +21,15 @@ mod:SetPrivateAuraSounds({
 	{1250686, sound = "none"}, -- Twisting Obscurity (Raid damage/dot)
 	{1271577, sound = "alarm"}, -- Destabilizing Strikes
 })
+mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local activeBars = {}
+
+local nextEntropicUnraveling = 0
 
 local voidConvergenceCount = 1
 local entropicUnravelingCount = 1
@@ -47,6 +52,7 @@ end
 --
 function mod:GetOptions()
 	return {
+		"berserk",
 		1247738, -- Void Convergence
 		1246175, -- Entropic Unraveling
 		1250803, -- Shattering Twilight
@@ -65,8 +71,18 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnBossEnable()
+	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+end
+
 
 function mod:OnEncounterStart()
+	activeBars = {}
+
+	nextEntropicUnraveling = 0
+
 	voidConvergenceCount = 1
 	entropicUnravelingCount = 1
 	shatteringTwilightCount = 1
@@ -76,12 +92,108 @@ function mod:OnEncounterStart()
 end
 
 --------------------------------------------------------------------------------
+-- Timeline Event Handlers
+--
+
+do
+	local function isBeforeUnraveling(duration)
+		local time = GetTime()
+		if nextEntropicUnraveling - (time + duration) > 0 then -- it'll happen
+			return true
+		end
+	end
+
+	local prev = 0
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+		local duration = eventInfo.duration
+		local barInfo
+
+		-- Pull / Timer Restart Events
+		if duration == 11 then -- Void Convergence
+			barInfo = self:VoidConvergence(duration)
+		elseif duration == 15 then -- Twisting Obscurity
+			barInfo = self:TwistingObscurity(duration)
+		elseif duration == 23 then -- Despotic Command
+			barInfo = self:DespoticCommand(duration)
+		elseif duration == 26 then -- Fractured Projection
+			barInfo = self:FracturedProjection(duration)
+		elseif duration == 44 then -- Shattering Twilight
+			barInfo = self:ShatteringTwilight(duration)
+		elseif duration == 100 then -- Entropic Unraveling
+			local time = GetTime()
+			if time - prev > 2 then -- Throttle as it triggers 2x when timers reset
+				self:EntropicUnraveling(duration)
+				nextEntropicUnraveling = time + duration
+				prev = time
+			end
+			return -- skipping barInfo checks since this is a special case
+		-- During Encounter Timers
+		elseif duration == 46.5 then -- Void Convergence
+			if not isBeforeUnraveling(duration) then return end
+			barInfo = self:VoidConvergence(duration)
+		elseif duration == 45.5 then -- Twisting Obscurity
+			if not isBeforeUnraveling(duration) then return end
+			barInfo = self:TwistingObscurity(duration)
+		elseif duration == 46 then -- Despotic Command
+			if not isBeforeUnraveling(duration) then return end
+			barInfo = self:DespoticCommand(duration)
+		elseif duration == 45 then -- Fractured Projection or Shattering Twilight
+			if not isBeforeUnraveling(duration) then return end
+			-- These two alternate, so we need to check which one is next
+			if shatteringTwilightCount <= fracturedProjectionCount then
+				barInfo = self:FracturedProjection(duration)
+			else
+				barInfo = self:ShatteringTwilight(duration)
+			end
+		elseif duration == 370 then -- Berserk
+			if self:ShouldShowBars() then
+				self:Berserk(370)
+			end
+			return -- no need to check for barInfo
+		end
+
+		if barInfo then
+			activeBars[eventInfo.id] = barInfo
+		elseif self:ShouldShowBars() and not self:IsWiping() then
+			self:ErrorForTimelineEvent(eventInfo)
+		end
+	end
+end
+
+function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+	local barInfo = activeBars[eventID]
+	if barInfo then
+		local state = C_EncounterTimeline.GetEventState(eventID)
+		-- This encounter had paused/resumed bars during the boss's full energy spell. We don't show those as it's confusing.
+		if state == 2 or state == 4 then -- Finished or Canceled
+			self:StopBar(barInfo.msg)
+
+			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
+				barInfo.callback()
+			end
+
+			activeBars[eventID] = nil
+		end
+	end
+end
+
+function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
+	local barInfo = activeBars[eventID]
+	if barInfo then
+		self:StopBar(barInfo.msg)
+		activeBars[eventID] = nil
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:VoidConvergence(duration)
+function mod:VoidConvergence(eventInfo)
 	local barText = CL.count:format(CL.orbs, voidConvergenceCount)
-	self:Bar(1247738, duration, barText)
+	if self:ShouldShowBars() then
+		self:Bar(1247738, eventInfo.duration, barText, nil, eventInfo.id)
+	end
 	voidConvergenceCount = voidConvergenceCount + 1
 	return {
 		msg = barText,
@@ -93,18 +205,24 @@ function mod:VoidConvergence(duration)
 	}
 end
 
-function mod:EntropicUnraveling(duration)
+function mod:EntropicUnraveling(eventInfo)
 	local barText = CL.count:format(CL.full_energy, entropicUnravelingCount)
-	self:Bar(1246175, duration, barText)
+	if self:ShouldShowBars() then
+		self:Bar(1246175, eventInfo.duration, barText, nil, eventInfo.id)
+	end
 	entropicUnravelingCount = entropicUnravelingCount + 1
-	-- Scheduling instead of using the callback since these were getting started and canceled right away during tests.
-	self:ScheduleTimer("Message", duration, 1246175, "red", barText)
-	self:ScheduleTimer("PlaySound", duration, 1246175, "warning")
+	if self:ShouldShowBars() then
+		-- Scheduling instead of using the callback since these were getting started and canceled right away during tests.
+		self:ScheduleTimer("Message", eventInfo.duration, 1246175, "red", barText)
+		self:ScheduleTimer("PlaySound", eventInfo.duration, 1246175, "warning")
+	end
 end
 
-function mod:ShatteringTwilight(duration)
+function mod:ShatteringTwilight(eventInfo)
 	local barText = CL.count:format(CL.spikes, shatteringTwilightCount)
-	self:Bar(1250803, duration, barText)
+	if self:ShouldShowBars() then
+		self:Bar(1250803, eventInfo.duration, barText, nil, eventInfo.id)
+	end
 	shatteringTwilightCount = shatteringTwilightCount + 1
 	return {
 		msg = barText,
@@ -116,9 +234,11 @@ function mod:ShatteringTwilight(duration)
 	}
 end
 
-function mod:FracturedProjection(duration)
+function mod:FracturedProjection(eventInfo)
 	local barText = CL.count:format(L.fractured_projection, fracturedProjectionCount)
-	self:Bar(1254081, duration, barText)
+	if self:ShouldShowBars() then
+		self:Bar(1254081, eventInfo.duration, barText, nil, eventInfo.id)
+	end
 	fracturedProjectionCount = fracturedProjectionCount + 1
 	return {
 		msg = barText,
@@ -130,9 +250,11 @@ function mod:FracturedProjection(duration)
 	}
 end
 
-function mod:DespoticCommand(duration)
+function mod:DespoticCommand(eventInfo)
 	local barText = CL.count:format(CL.pools, despoticCommandCount)
-	self:Bar(1248697, duration, barText)
+	if self:ShouldShowBars() then
+		self:Bar(1248697, eventInfo.duration, barText, nil, eventInfo.id)
+	end
 	despoticCommandCount = despoticCommandCount + 1
 	return {
 		msg = barText,
@@ -144,9 +266,11 @@ function mod:DespoticCommand(duration)
 	}
 end
 
-function mod:TwistingObscurity(duration)
+function mod:TwistingObscurity(eventInfo)
 	local barText = CL.count:format(CL.raid_damage, twistingObscurityCount)
-	self:Bar(1250686, duration, barText)
+	if self:ShouldShowBars() then
+		self:Bar(1250686, eventInfo.duration, barText, nil, eventInfo.id)
+	end
 	twistingObscurityCount = twistingObscurityCount + 1
 	return {
 		msg = barText,
