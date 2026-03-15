@@ -919,7 +919,7 @@ L.monochrome = "Monochrome"
 L.monochromeDesc = "Active ou non le marqueur monochrome, enlevant tout lissage des bords de la police d'écriture."
 L.fontColor = "Couleur de police"
 L.slugRendering = "Rendu avec Slug"
-L.slugRenderingDesc = "Les polices sont interprétées en utilisant la bibliothèque Slug. Cela peut parfois rendre les polices plus nettes à certaines tailles, mais cela peut changer la taille du surlignage. |cFF33FF99See sluglibrary.com pour plus d'info.|r"
+L.slugRenderingDesc = "Les polices sont interprétées en utilisant la bibliothèque Slug. Cela peut parfois rendre les polices plus nettes à certaines tailles, mais cela peut changer la taille du contour. |cFF33FF99See sluglibrary.com pour plus d'info.|r"
 
 L.displayTime = "Durée d'affichage"
 L.displayTimeDesc = "Définit pendant combien de temps un message doit rester affiché (en secondes)."
