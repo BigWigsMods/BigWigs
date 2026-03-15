@@ -422,9 +422,9 @@ L.tooltipHistoryResetConditionsDesc = "Détermine quelles conditions réunir pou
 L.enteringRaid = "Rentre en raid"
 L.enteringDungeon = "Rentre en donjon"
 L.startingMythicKeystone = "Commence un mythique +"
---L.historyTimeFormat = "History: Time Format"
---L.twelveHour = "12 Hour"
---L.twentyFourHour = "24 Hour"
+L.historyTimeFormat = "Historique : Format d'heure"
+L.twelveHour = "12 Heures"
+L.twentyFourHour = "24 Heures"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -609,8 +609,8 @@ L.positionX = "Position X"
 L.positionY = "Position Y"
 L.positionExact = "Positionnement exact"
 L.positionDesc = "Tapez dans la saisie ou déplacez le curseur si vous avez besoin d'un positionnement exact par rapport à l'ancre."
---L.copyCustomAnchorWidth = "Copy Custom Anchor Width"
---L.copyCustomAnchorWidthDesc = "Overwrite your width setting with the width of the custom anchor."
+L.copyCustomAnchorWidth = "Copier la largeur de l'ancre personnalisée"
+L.copyCustomAnchorWidthDesc = "Écrase votre paramètre de largeur avec la largeur de l'ancre personnalisée."
 L.width = "Largeur"
 L.height = "Hauteur"
 L.size = "Taille"
@@ -918,8 +918,8 @@ L.outline = "Contour"
 L.monochrome = "Monochrome"
 L.monochromeDesc = "Active ou non le marqueur monochrome, enlevant tout lissage des bords de la police d'écriture."
 L.fontColor = "Couleur de police"
---L.slugRendering = "Slug Rendering"
---L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
+L.slugRendering = "Rendu avec Slug"
+L.slugRenderingDesc = "Les polices sont interprétées en utilisant la bibliothèque Slug. Cela peut parfois rendre les polices plus nettes à certaines tailles, mais cela peut changer la taille du surlignage. |cFF33FF99See sluglibrary.com pour plus d'info.|r"
 
 L.displayTime = "Durée d'affichage"
 L.displayTimeDesc = "Définit pendant combien de temps un message doit rester affiché (en secondes)."
@@ -1172,8 +1172,8 @@ L.bigwigsEnhancedTimers = "CàR enrichis de BigWigs affichés en tant que barres
 L.blizzBasicAsBars = "CàR classiques de Blizzard affichés en tant que barres de BigWigs"
 L.blizzBasicAsBlizzTimeline = "CàR classiques de Blizzard affichés sur la ligne temporelle de Blizzard"
 L.developerMode = "Mode développeur"
---L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
---L.enhancedModeWelcome = "BigWigs 'Enhanced Mode' enabled!\n\nFull restoration of most pre-Midnight features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+L.enhancedModeWarning = "WARNING!\n\nDésactiver le mode avancé désactivera beaucoup de fonctionnalités de BigWigs, incluant :\n\nles couleurs de barres, le renommage des sorts, les contres, les sons / voix personnalisées, les CàR, l'activation des barres, les messages supplémentaires, etc."
+L.enhancedModeWelcome = "'Mode avancé' de BigWigs activé !\n\nRestoration complète des fonctionnalités d'avant Midnight, incluant :\n\nles couleurs de barres, le renommage des sorts, les contres, les sons / voix personnalisées, les CàR, l'activation des barres, les messages supplémentaires, etc."
 
 -----------------------------------------------------------------------
 -- Victory.lua
