@@ -183,40 +183,43 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
-	if activeBars[eventID] then
+	local barInfo = activeBars[eventID]
+	if barInfo then
 		local state = C_EncounterTimeline.GetEventState(eventID)
-		local barInfo = activeBars[eventID]
-		self:StopBar(barInfo.msg)
-		local spellId = barInfo.key
 
-		if state == 2 and barInfo.callback and self:ShouldShowBars() then -- Finished
-			barInfo.callback()
+		if state == 2 or state == 3 then -- Finished or Canceled
+			self:StopBar(barInfo.msg)
+			local spellId = barInfo.key
+
+			if state == 2 and barInfo.callback and self:ShouldShowBars() then -- Finished
+				barInfo.callback()
+			end
+
+			-- Stage logic
+			if spellId == 1245396 then -- Consume, stage 2 coming
+				self:SetStage(2)
+				almdustUpheavalCount = 1
+				riftEmergenceCount = 1
+				riftMadnessCount = 1
+				consumingMiasmaCount = 1
+				causticPhlegmCount = 1
+				rendingTearCount = 1
+				corruptedDevastationCount = 1
+				ravenousDiveCount = 1
+			elseif spellId == 1245406 then -- Ravenous Dive, stage 2 ending
+				self:SetStage(1)
+				almdustUpheavalCount = 1
+				riftEmergenceCount = 1
+				riftMadnessCount = 1
+				consumingMiasmaCount = 1
+				causticPhlegmCount = 1
+				rendingTearCount = 1
+				corruptedDevastationCount = 1
+				ravenousDiveCount = 1
+			end
+
+			activeBars[eventID] = nil
 		end
-
-		-- Stage logic
-		if spellId == 1245396 then -- Consume, stage 2 coming
-			self:SetStage(2)
-			almdustUpheavalCount = 1
-			riftEmergenceCount = 1
-			riftMadnessCount = 1
-			consumingMiasmaCount = 1
-			causticPhlegmCount = 1
-			rendingTearCount = 1
-			corruptedDevastationCount = 1
-			ravenousDiveCount = 1
-		elseif spellId == 1245406 then -- Ravenous Dive, stage 2 ending
-			self:SetStage(1)
-			almdustUpheavalCount = 1
-			riftEmergenceCount = 1
-			riftMadnessCount = 1
-			consumingMiasmaCount = 1
-			causticPhlegmCount = 1
-			rendingTearCount = 1
-			corruptedDevastationCount = 1
-			ravenousDiveCount = 1
-		end
-
-		activeBars[eventID] = nil
 	end
 end
 

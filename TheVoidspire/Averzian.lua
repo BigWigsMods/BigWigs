@@ -122,13 +122,15 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local barInfo = activeBars[eventID]
 	if barInfo then
 		local state = C_EncounterTimeline.GetEventState(eventID)
-		self:StopBar(barInfo.msg)
+		if state == 2 or state == 3 then -- Finished or Canceled
+			self:StopBar(barInfo.msg)
 
-		if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
-			barInfo.callback()
+			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
+				barInfo.callback()
+			end
+
+			activeBars[eventID] = nil
 		end
-
-		activeBars[eventID] = nil
 	end
 end
 
