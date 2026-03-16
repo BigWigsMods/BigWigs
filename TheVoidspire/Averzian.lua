@@ -148,11 +148,11 @@ end
 
 function mod:ShadowsAdvance(eventInfo)
 	local count = shadowAdvanceCount
-	-- 82 and 10 appear on pull - where 82 should be bar number 2 and 10 should be bar number 1
-	-- 10 also apears every reset
-	if eventInfo.duration == 82 then
+	-- 94 and 14 appear on pull - where 94 should be bar number 2 and 14 should be bar number 1
+	-- 14 also apears every reset
+	if eventInfo.duration == 94 then
 		count = 2
-	elseif eventInfo.duration == 10 and shadowAdvanceCount <= 1 then
+	elseif eventInfo.duration == 14 and shadowAdvanceCount <= 1 then
 		count = 1
 	end
 	local barText = CL.count:format(CL.adds, shadowAdvanceCount)
