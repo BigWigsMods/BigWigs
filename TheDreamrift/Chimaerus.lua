@@ -113,7 +113,9 @@ end
 -- Timeline Event Handlers
 --
 
+local backup = {}
 function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+	if eventInfo.source ~= 0 then return end
 	local stage = self:GetStage()
 	local durationRounded = math.floor(eventInfo.duration + 0.5)
 	local barInfo = nil
@@ -179,6 +181,13 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		activeBars[eventInfo.id] = barInfo
 	elseif self:ShouldShowBars() and not self:IsWiping() then
 		self:ErrorForTimelineEvent(eventInfo)
+		backup[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, eventInfo.spellName, eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
 	end
 end
 
@@ -220,6 +229,18 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 
 			activeBars[eventID] = nil
 		end
+	elseif backup[eventID] then
+		local newState = C_EncounterTimeline.GetEventState(eventID)
+		if newState == 0 then -- Enum.EncounterTimelineEventState.Active
+			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
+		elseif newState == 1 then -- Enum.EncounterTimelineEventState.Paused
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
+		elseif newState == 3 then -- Enum.EncounterTimelineEventState.Canceled
+			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+		elseif newState == 2 then -- Enum.EncounterTimelineEventState.Finished
+			local info = C_EncounterTimeline.GetEventInfo(eventID)
+			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+		end
 	end
 end
 
@@ -228,6 +249,9 @@ function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 	if barInfo then
 		self:StopBar(barInfo.msg)
 		activeBars[eventID] = nil
+	elseif backup[eventID] then
+		backup[eventID] = nil
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 	end
 end
 
