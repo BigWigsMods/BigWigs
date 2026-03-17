@@ -28,6 +28,7 @@ mod:UseCustomTimers(true)
 --
 
 local activeBars = {}
+local backupBars = {}
 local durationCount = {}
 
 local almdustUpheavalCount = 1
@@ -88,6 +89,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	backupBars = {}
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
@@ -109,11 +111,16 @@ function mod:OnEncounterStart()
 	ravenousDiveCount = 1
 end
 
+function mod:OnBossDisable()
+	for eventID in next, backupBars do
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
 
-local backup = {}
 function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local stage = self:GetStage()
@@ -181,7 +188,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		activeBars[eventInfo.id] = barInfo
 	elseif self:ShouldShowBars() and not self:IsWiping() then
 		self:ErrorForTimelineEvent(eventInfo)
-		backup[eventInfo.id] = true
+		backupBars[eventInfo.id] = true
 		self:SendMessage("BigWigs_StartBar", nil, nil, eventInfo.spellName, eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
 
 		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
@@ -229,7 +236,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 
 			activeBars[eventID] = nil
 		end
-	elseif backup[eventID] then
+	elseif backupBars[eventID] then
 		local newState = C_EncounterTimeline.GetEventState(eventID)
 		if newState == 0 then -- Enum.EncounterTimelineEventState.Active
 			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
@@ -249,8 +256,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 	if barInfo then
 		self:StopBar(barInfo.msg)
 		activeBars[eventID] = nil
-	elseif backup[eventID] then
-		backup[eventID] = nil
+	elseif backupBars[eventID] then
+		backupBars[eventID] = nil
 		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 	end
 end
