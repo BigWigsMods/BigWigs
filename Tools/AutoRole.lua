@@ -35,7 +35,7 @@ local L = addonTbl.API:GetLocale("BigWigs")
 addonTbl.API.RegisterToolOptions("AutoRole", {
 	type = "group",
 	name = L.autoRoleTitle,
-	order = 5,
+	order = 7,
 	args = {
 		explainer = {
 			type = "description",

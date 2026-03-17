@@ -471,10 +471,10 @@ do
 		return plugin.db.profile.disabled or plugin.db.profile.position[5] == plugin.defaultDB.position[5]
 	end
 
-	plugin.pluginOptions = {
+	BigWigsAPI.RegisterToolOptions("BattleRes", {
 		type = "group",
 		childGroups = "tab",
-		order = 9,
+		order = 3,
 		name = L.battleResTitle,
 		get = GetSettings,
 		set = UpdateSettingsAndWidgets,
@@ -1198,7 +1198,7 @@ do
 				},
 			},
 		},
-	}
+	})
 end
 
 --------------------------------------------------------------------------------

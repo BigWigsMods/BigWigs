@@ -267,7 +267,7 @@ end
 BigWigsAPI.RegisterToolOptions("AutoInvite", {
 	type = "group",
 	childGroups = "tab",
-	order = 3,
+	order = 5,
 	name = L.autoInviteTitle,
 	args = {
 		explainer = {
