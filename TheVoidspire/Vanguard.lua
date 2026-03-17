@@ -28,7 +28,6 @@ mod:SetPrivateAuraSounds({
 	-- {1249130, sound = "info"}, -- Elekk Charge (Buff on the NPC's, lol)
 	{1258514, sound = "alarm"}, -- Blinding Light
 })
-mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -116,13 +115,12 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	-- if self:Mythic() then
-	-- 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimelineAddedMythic")
-	-- else
+	if self:Mythic() then
+		self:UseCustomTimers(true)
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimelineAdded")
-	-- end
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+	end
 end
 
 function mod:OnEncounterStart()
