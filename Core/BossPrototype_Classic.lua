@@ -193,7 +193,7 @@ local updateData = function(module)
 	for unit in module:IterateGroup() do
 		local guid = UnitGUID(unit)
 		myGroupGUIDs[guid] = true
-		if solo and myGUID ~= guid and UnitIsConnected(unit) and (not isRetail or not UnitInPartyIsAI(unit) or module:MobId(guid) ~= 210759) then -- Don't include Brann Bronzebeard
+		if solo and myGUID ~= guid and UnitIsConnected(unit) and (not isRetail or not UnitInPartyIsAI(unit) or (module:MobId(guid) ~= 210759 and module:MobId(guid) ~= 248567)) then -- Don't include Brann/Valeera (Delves)
 			solo = false
 		end
 	end
