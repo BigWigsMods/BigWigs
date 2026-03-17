@@ -312,7 +312,7 @@ function mod:DreadBreath(eventInfo)
 		msg = barText,
 		callback = function()
 			self:Message(1244221, "red", barText)
-			self:PlaySound(1244221, "warning") -- watch breath
+			-- PA Sounds
 		end
 	}
 end
