@@ -1023,6 +1023,18 @@ do
 		-- Operation: Floodgate
 		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269144]=true,[269145]=true,[269146]=true,
 		[269150]=true,[269152]=true,
+
+		-- Den of Nalorakk
+		[307905]=true,[307906]=true,[307907]=true,[307909]=true,[307910]=true,[307908]=true,[307900]=true,[307902]=true,
+		-- Maisara Caverns
+		[301692]=true,[301694]=true,[301695]=true,[301697]=true,[301732]=true,[301734]=true,[301735]=true,[301635]=true,
+		[301636]=true,[301637]=true,[301641]=true,
+		-- The Blinding Vale
+		[300142]=true,[300143]=true,[300145]=true,[300148]=true,[300152]=true,
+		-- Nexus-Point Xenas
+		[308122]=true,[308123]=true,
+		-- Voidscar Arena
+		[308433]=true,[308351]=true,
 	}
 
 	local lookup = {
@@ -1042,15 +1054,15 @@ do
 	function plugin:TALKINGHEAD_REQUESTED()
 		local _, _, diff = GetInstanceInfo()
 		local entry = lookup[diff]
-		if entry and self.db.profile.blockTalkingHeads[entry] then
+		if entry then
 			local _, _, soundKitId = TalkingHeadLineInfo()
-			if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
-				if known[soundKitId] then
+			if known[soundKitId] then
+				if self.db.profile.blockTalkingHeads[entry] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
 					TalkingHeadFrame:Hide()
-					self:Debug("TalkingHead", "Known", soundKitId)
-				else
-					self:Debug("TalkingHead", "Unknown", TalkingHeadLineInfo())
 				end
+				self:Debug("TalkingHead", "Known", soundKitId)
+			else
+				self:Debug("TalkingHead", "Unknown", TalkingHeadLineInfo())
 			end
 		end
 	end
@@ -1086,7 +1098,6 @@ do
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 		[1003] = true, -- Amirdrassil, Fyrakk defeat
 		[1034] = true, -- [The War Within/Manaforge Omega] clicking the portal after Dimensius defeat
-		[2516] = true, -- [Midnight/Magisters' Terrace] clicking to drain the shield after defeating Seranel Sunlash
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
@@ -1153,6 +1164,7 @@ do
 		[-2296] = true, -- Nerub-ar Palace, Ansurek defeat
 		[-2406] = true, -- Liberation of Undermine, entering the Gallagio
 		[-2409] = true, -- Liberation of Undermine, Gallywix defeat
+		[-2516] = true, -- [Midnight/Magisters' Terrace] clicking to drain the shield after defeating Seranel Sunlash
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
