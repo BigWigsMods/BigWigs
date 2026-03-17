@@ -115,6 +115,15 @@ if BigWigsLoader.isRetail then
 			overlay:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 7, -7)
 			SetTexureFromAtlas(overlay, "UI-HUD-CoolDownManager-IconOverlay")
 		end
+		if bar.candyBarIconFrame:GetScript("OnEnter") then
+			iconFrame.icon.bwID = bar.candyBarIconFrame.bwID
+			iconFrame.icon:SetScript("OnEnter", bar.candyBarIconFrame:GetScript("OnEnter"))
+			iconFrame.icon:SetScript("OnLeave", bar.candyBarIconFrame:GetScript("OnLeave"))
+		else
+			iconFrame.icon.bwID = nil
+			iconFrame.icon:SetScript("OnEnter", nil)
+			iconFrame.icon:SetScript("OnLeave", nil)
+		end
 		bar:Set("bigwigs:blizzardtimeline:icon", iconFrame)
 		iconFrame:SetParent(bar)
 		iconFrame:ClearAllPoints()

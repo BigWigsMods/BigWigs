@@ -49,6 +49,7 @@ do
 		alignText = "LEFT",
 		alignTime = "RIGHT",
 		icon = true,
+		iconTooltip = true,
 		iconPosition = "LEFT",
 		fill = false,
 		barStyle = "Default",
@@ -704,10 +705,17 @@ do
 						},
 						disabled = function() return not db.icon end,
 					},
+					iconTooltip = {
+						type = "toggle",
+						name = L.iconTooltip,
+						desc = L.iconTooltipDesc,
+						order = 18,
+						disabled = function() return not db.icon end,
+					},
 					spellIndicators = {
 						type = "multiselect",
 						name = L.indicatorTitle,
-						order = 18,
+						order = 19,
 						width = 2,
 						control = "Dropdown",
 						values = {
@@ -738,7 +746,7 @@ do
 					spellIndicatorsSize = {
 						type = "select",
 						name = L.spellIndicatorSize,
-						order = 19,
+						order = 20,
 						values = {
 							L.spellIndicatorSizeDropdown_Large1,
 							L.spellIndicatorSizeDropdown_Large2,
@@ -752,7 +760,7 @@ do
 						type = "select",
 						name = L.spellIndicatorsPosition,
 						desc = L.spellIndicatorsPositionDesc,
-						order = 20,
+						order = 21,
 						width = 2,
 						values = {
 							LEFT = L.LEFT,
@@ -764,7 +772,7 @@ do
 						type = "range",
 						name = L.spellIndicatorsOffset,
 						desc = L.positionDesc,
-						order = 21,
+						order = 22,
 						max = 100,
 						min = 0,
 						step = 1,
@@ -1244,6 +1252,7 @@ do
 end
 
 local function barStopped(event, bar)
+	bar.candyBarIconFrame.bwID = nil
 	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 	if indicatorFrame then
 		indicatorFrame:RemoveIndicators()
@@ -1857,10 +1866,26 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
+	local function OnEnterIcon(self)
+		if self.bwID then
+			bwTooltip:SetOwner(self, "ANCHOR_TOP")
+			bwTooltip:SetSpellByID(self.bwID, false, true)
+			bwTooltip:Show()
+		end
+	end
+	local function OnLeaveIcon(self)
+		bwTooltip:Hide()
+	end
+
 	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId, spellIndicators)
 		if not text then text = "" end
 		self:StopSpecificBar(nil, module, text, eventId)
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
+		if db.iconTooltip and type(key) == "number" and key > 0 then
+			bar.candyBarIconFrame.bwID = key
+			bar.candyBarIconFrame:SetScript("OnEnter", OnEnterIcon)
+			bar.candyBarIconFrame:SetScript("OnLeave", OnLeaveIcon)
+		end
 		bar:SetPauseWhenDone(isApprox)
 		if db.emphasize and time < db.emphasizeTime then
 			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then
