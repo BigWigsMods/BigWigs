@@ -12,10 +12,10 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 407
+local BIGWIGS_VERSION = 408
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 17},
-	["BigWigs_Classic"] = {12, 0, 9},
+	["LittleWigs"] = {12, 0, 24},
+	["BigWigs_Classic"] = {12, 0, 11},
 	["BigWigs_BurningCrusade"] = {12, 0, 9},
 	["BigWigs_WrathOfTheLichKing"] = {12, 0, 3},
 	["BigWigs_Cataclysm"] = {12, 0, 0},
@@ -1615,12 +1615,12 @@ end
 --
 
 do
-	local DBMdotRevision = "20260226080850" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "12.0.26" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20260225000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20260316213103" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.0.31" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20260316000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
-	local PForceDisable = 22
+	local PForceDisable = 23
 
 	local timer = nil
 	local function sendDBMMsg()
