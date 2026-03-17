@@ -119,6 +119,7 @@ local valid_methods = {
 	StopNameplate = "NAMEPLATE",
 	PauseBar = true,
 	ResumeBar = true,
+	Berserk = true,
 }
 local tracked_bitflags = {
 	["CASTBAR"] = true,
@@ -1175,35 +1176,6 @@ local function parseLua(file)
 			end
 		end
 
-		-- Check :Berserk
-		local args = line:match(":Berserk(%b())")
-		if args then
-			args = strsplit(clean(args:sub(2, -2)))
-			local funcAsString = tostring(current_func)
-			if rep.func_key then funcAsString = string.format("%s(%s)", funcAsString, table.concat(rep.func_key, ",")) end
-
-			local key = tonumber(args[4]) -- only numbers are used as a replacement key
-			if not key then
-				key = unquote(args[4])
-				if key == "args.spellId" then
-					if rep.func_key and #rep.func_key == 1 then
-						key = rep.func_key[1]
-					else
-						error(string.format("    %s:%d: Berserk: Invalid key! func=%s, key=%s", file_name, n, funcAsString, key))
-						key = nil
-					end
-				else -- arg is a string to use as the name
-					key = "berserk"
-				end
-			end
-			if key then
-				if not option_keys[key] then
-					error(string.format("    %s:%d: Berserk: Missing option key! func=%s, key=%s", file_name, n, funcAsString, key))
-				end
-				option_key_used[key] = true
-			end
-		end
-
 		-- Check registering IEEU when it could overwrite the encounter start handler
 		if line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\"") and current_func == "mod:OnBossEnable" then
 			if module_encounter_id and not line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\", \"CheckBossStatus\"%)") then
@@ -1302,6 +1274,21 @@ local function parseLua(file)
 				-- Dynamic key only usable with PauseBar and ResumeBar
 				if (functionName == "PauseBar" or functionName == "ResumeBar") and key == "barInfo.key" then
 					key = nil
+				end
+				if functionName == "Berserk" then
+					key = argsList[4+offset]
+					if not key or key == "nil" then
+						key = "\"berserk\""
+					end
+					local noMessages = argsList[2+offset]
+					if noMessages ~= "0" then
+						if noMessages == "true" then
+							color = {"orange","red"}
+						else
+							color = {"yellow","orange","red"}
+						end
+						sound = "alarm"
+					end
 				end
 			end
 
