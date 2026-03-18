@@ -1706,8 +1706,8 @@ do
 	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 
 	local function OnEnter(self)
-		bwTooltip:AddLine(" ")
-		bwTooltip:AddLine(CL.other:format("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs", CL.teleport))
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine(CL.other:format("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs", CL.teleport))
 
 		if InCombatLockdown() then
 			challengesTeleportButton:EnableMouse(false)
@@ -1724,11 +1724,11 @@ do
 			if instanceID == mapID then
 				local spellName = ("|cFF33FF99%s|r"):format(BigWigsLoader.GetSpellName(spellID) or "?")
 				if InCombatLockdown() then
-					bwTooltip:AddLine(spellName)
-					bwTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
+					GameTooltip:AddLine(spellName)
+					GameTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
 				else
 					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
-						bwTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
+						GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
 					else
 						challengesTeleportButton:SetAttribute("spell", spellID)
 						local cd = BigWigsLoader.GetSpellCooldown(spellID)
@@ -1738,16 +1738,16 @@ do
 							remainingSeconds = remainingSeconds % 3600
 							local minutes = math.floor(remainingSeconds / 60)
 							local seconds = math.floor(remainingSeconds - (minutes*60))
-							bwTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
+							GameTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
 						else
-							bwTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
+							GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
 						end
 					end
 				end
 				break
 			end
 		end
-		bwTooltip:Show()
+		GameTooltip:Show()
 	end
 
 	local frame = CreateFrame("Frame")
