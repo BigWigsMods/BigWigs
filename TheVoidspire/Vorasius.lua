@@ -11,6 +11,7 @@ mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
 	-- {1243016, sound = "alarm"}, -- Blisterburst (15s debuff) still used?
 	1259186, -- Blisterburst
+	1254113, -- Fixate
 	{1272527, sound = "none"}, -- Creep Spit
 	{1243220, 1243270, sound = "underyou"}, -- Dark Goo
 	1241844, -- Smashed
