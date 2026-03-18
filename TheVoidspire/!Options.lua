@@ -38,7 +38,6 @@ BigWigs:AddColors("Fallen-King Salhadaar", {
 	[1250686] = "yellow",
 	[1250803] = "purple",
 	[1254081] = "red",
-	["berserk"] = {"orange","red","yellow"},
 })
 
 BigWigs:AddSounds("Fallen-King Salhadaar", {
@@ -46,7 +45,6 @@ BigWigs:AddSounds("Fallen-King Salhadaar", {
 	[1247738] = "alarm",
 	[1250686] = "alert",
 	[1254081] = "warning",
-	["berserk"] = "alarm",
 })
 
 BigWigs:AddColors("Vaelgor & Ezzorak", {
