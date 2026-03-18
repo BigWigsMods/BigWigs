@@ -9,6 +9,11 @@ if L then
 	L.fractured_projection = "Unterbrechungen"
 end
 
+L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "deDE")
+if L then
+	--L.grappling_maw = "Tank Grip"
+end
+
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "deDE")
 if L then
 	L.aura_of_wrath = "Zorn" -- Short for Aura of Wrath

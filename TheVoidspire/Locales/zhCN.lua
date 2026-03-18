@@ -9,6 +9,11 @@ if L then
 	L.fractured_projection = "镜像" -- 打断？
 end
 
+L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "zhCN")
+if L then
+	--L.grappling_maw = "Tank Grip"
+end
+
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "zhCN")
 if L then
 	L.aura_of_wrath = "愤怒" -- “愤怒光环”简称
