@@ -4,5 +4,6 @@
 <Include file="MarchOnQuelDanas\modules.xml"/>
 <Include file="TheDreamrift\modules.xml"/>
 <Include file="TheVoidspire\modules.xml"/>
+<Include file="MidnightWorld\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
