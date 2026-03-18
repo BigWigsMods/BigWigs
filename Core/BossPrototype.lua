@@ -3559,7 +3559,9 @@ end
 --- Temporarily prevent any Blizzard boss messages from showing for the specified duration
 -- @number duration the duration the block should last
 function boss:StopBlizzMessages(duration)
-	self:SendMessage("BigWigs_BlockBlizzMessage", self, duration)
+	if type(duration) == "number" then
+		self:SendMessage("BigWigs_BlockBlizzMessage", self, duration)
+	end
 end
 
 -------------------------------------------------------------------------------
