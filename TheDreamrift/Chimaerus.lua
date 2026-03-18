@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Chimaerus the Undreamt God", 2939, 2795)
 if not mod then return end
 mod:RegisterEnableMob(245569) -- Chimaerus
 mod:SetEncounterID(3306)
--- mod:SetRespawnTime(30)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 mod:SetPrivateAuraSounds({
 	{1245698, sound = "info"}, -- Alnsight

@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Imperator Averzian", 2912, 2733)
 if not mod then return end
 mod:RegisterEnableMob(240435) -- Imperator Averzian
 mod:SetEncounterID(3176)
--- mod:SetRespawnTime(30)
+mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
 	{1255680, sound = "alarm"}, -- Gnashing Void
 	{1275059, sound = "alert"}, -- Black Miasma

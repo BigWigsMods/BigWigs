@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Crown of the Cosmos", 2912, 2738)
 if not mod then return end
 mod:RegisterEnableMob(240430, 243805, 243810, 243811) -- Alleria, Morium, Demiar, Vorelus
 mod:SetEncounterID(3181)
+mod:SetRespawnTime(30)
 mod:SetPrivateAuraSounds({
 	1233602, -- Silverstrike Arrow (Targetted)
 	{1232470, 1260027, sound = "alert"}, -- Grasp of Emptiness
