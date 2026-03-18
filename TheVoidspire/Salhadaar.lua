@@ -212,12 +212,13 @@ do
 		elseif duration == 45 then -- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
 			barInfo = false
 			if isBeforeUnraveling(duration) then
-				if fracturedProjectionCount <= twistingObscurityCount then
-					barInfo = self:TwistingObscurity(eventInfo)
-				elseif shatteringTwilightCount <= fracturedProjectionCount then
+				-- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
+				if fracturedProjectionCount > shatteringTwilightCount then
+					barInfo = self:ShatteringTwilight(eventInfo)
+				elseif twistingObscurityCount > fracturedProjectionCount then
 					barInfo = self:FracturedProjection(eventInfo)
 				else
-					barInfo = self:ShatteringTwilight(eventInfo)
+					barInfo = self:TwistingObscurity(eventInfo)
 				end
 			end
 
