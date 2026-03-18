@@ -151,11 +151,11 @@ function mod:TimersOther(_, eventInfo)
 		local barInfo
 
 		if duration == 16 or duration == 136 or duration == 240 then
-			barInfo = self:ShadowclawSlam(duration)
+			barInfo = self:ShadowclawSlam(eventInfo)
 		elseif duration == 57 or duration == 122.5 then
-			barInfo = self:ParasiteExpulsion(duration)
+			barInfo = self:ParasiteExpulsion(eventInfo)
 		elseif duration == 6 or duration == 120 then
-			barInfo = self:PrimordialRoar(duration)
+			barInfo = self:PrimordialRoar(eventInfo)
 		end
 
 		if barInfo then

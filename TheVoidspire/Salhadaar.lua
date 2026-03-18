@@ -186,15 +186,15 @@ do
 
 		-- on pull / restart
 		if duration == 11 then -- Void Convergence
-			barInfo = self:VoidConvergence(duration)
+			barInfo = self:VoidConvergence(eventInfo)
 		elseif duration == 15 then -- Twisting Obscurity
-			barInfo = self:TwistingObscurity(duration)
+			barInfo = self:TwistingObscurity(eventInfo)
 		elseif duration == 27 then -- Despotic Command
-			barInfo = self:DespoticCommand(duration)
+			barInfo = self:DespoticCommand(eventInfo)
 		elseif duration == 18 then -- Fractured Projection
-			barInfo = self:FracturedProjection(duration)
+			barInfo = self:FracturedProjection(eventInfo)
 		elseif duration == 42 then -- Shattering Twilight
-			barInfo = self:ShatteringTwilight(duration)
+			barInfo = self:ShatteringTwilight(eventInfo)
 		elseif duration == 100 then -- Entropic Unraveling
 			local time = GetTime()
 			if time - prev > 2 then -- Throttle as it triggers 2x when timers reset
@@ -206,18 +206,18 @@ do
 
 		-- repeating
 		elseif duration == 46.5 then -- Void Convergence
-			barInfo = isBeforeUnraveling(duration) and self:VoidConvergence(duration) or false
+			barInfo = isBeforeUnraveling(duration) and self:VoidConvergence(eventInfo) or false
 		elseif duration == 46 then -- Despotic Command
-			barInfo =  isBeforeUnraveling(duration) and self:DespoticCommand(duration) or false
+			barInfo =  isBeforeUnraveling(duration) and self:DespoticCommand(eventInfo) or false
 		elseif duration == 45 then -- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
 			barInfo = false
 			if isBeforeUnraveling(duration) then
 				if fracturedProjectionCount <= twistingObscurityCount then
-					barInfo = self:TwistingObscurity(duration)
+					barInfo = self:TwistingObscurity(eventInfo)
 				elseif shatteringTwilightCount <= fracturedProjectionCount then
-					barInfo = self:FracturedProjection(duration)
+					barInfo = self:FracturedProjection(eventInfo)
 				else
-					barInfo = self:ShatteringTwilight(duration)
+					barInfo = self:ShatteringTwilight(eventInfo)
 				end
 			end
 
