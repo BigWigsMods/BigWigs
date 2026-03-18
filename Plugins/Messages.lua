@@ -24,6 +24,7 @@ local emphMessageFrame
 local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
 
 local db = nil
+local blizzMessageBlocker = 0
 
 plugin.displayName = L.messages
 
@@ -762,6 +763,7 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
+	blizzMessageBlocker = 0
 	colorModule = BigWigs:GetPlugin("Colors", true)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -770,6 +772,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	if BigWigsLoader.isRetail then
 		self:RegisterEvent("ENCOUNTER_WARNING")
+		self:RegisterMessage("BigWigs_BlockBlizzMessage")
 	end
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
@@ -945,6 +948,8 @@ local severityColorMap = {
 	[2] = "red",
 }
 function plugin:ENCOUNTER_WARNING(_, eventInfo)
+	if blizzMessageBlocker ~= 0 then return end
+
 	-- Not Secret
 	-- local duration = eventInfo.duration
 	local severity = eventInfo.severity
@@ -978,6 +983,17 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	local formattedText = string.format(text, casterName, formattedTargetName)
 
 	self:BigWigs_Message(nil, nil, nil, formattedText, severityColorMap[severity] or "yellow", iconFileID, false)
+end
+
+do
+	local function Decrement()
+		blizzMessageBlocker = blizzMessageBlocker - 1
+		if blizzMessageBlocker < 0 then blizzMessageBlocker = 0 end -- Should never occur
+	end
+	function plugin:BigWigs_BlockBlizzMessage(_, _, duration)
+		blizzMessageBlocker = blizzMessageBlocker + 1
+		self:SimpleTimer(Decrement, duration)
+	end
 end
 
 -- Always last to prevent a potential error breaking the plugin
