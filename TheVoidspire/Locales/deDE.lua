@@ -11,7 +11,7 @@ end
 
 L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "deDE")
 if L then
-	--L.grappling_maw = "Tank Grip"
+	L.grappling_maw = "Tank Griff"
 end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "deDE")
