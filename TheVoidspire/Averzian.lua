@@ -63,7 +63,11 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+	if self:Mythic() then
+		self:RegisterEvent("TimersMythic")
+	else
+		self:RegisterEvent("TimersOther")
+	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
@@ -90,10 +94,11 @@ end
 -- Timeline Event Handlers
 --
 
-function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local duration = eventInfo.duration
 	local barInfo
+
 	if duration == 160 then -- Void Fall
 		barInfo = self:VoidFall(eventInfo)
 		-- This starts a new rotation, reset counters
@@ -120,6 +125,38 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 			barInfo = self:ShadowsAdvance(eventInfo)
 		end
 	end
+
+	if barInfo then
+		activeBars[eventInfo.id] = barInfo
+	elseif self:ShouldShowBars() and not self:IsWiping() then
+		self:ErrorForTimelineEvent(eventInfo)
+		backupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, eventInfo.spellName, eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
+	end
+end
+
+function mod:TimersMythic(_, eventInfo)
+	if eventInfo.source ~= 0 then return end
+	local duration = eventInfo.duration
+	local barInfo
+
+	if duration == 125 then -- Void Fall
+		barInfo = self:VoidFall(eventInfo)
+	elseif duration == 84 or duration == 12 or duration == 72 then -- Shadow's Advance
+		barInfo = self:ShadowsAdvance(eventInfo)
+	elseif duration == 4 or duration == 36 then -- Dark Upheaval
+		barInfo = self:DarkUpheaval(eventInfo)
+	elseif duration == 20 then -- Umbral Collapse
+		barInfo = self:UmbralCollapse(eventInfo)
+	elseif duration == 48 or duration == 18 then -- Oblivion's Wrath
+		barInfo = self:OblivionsWrath(eventInfo)
+	end
+
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
 	elseif self:ShouldShowBars() and not self:IsWiping() then
@@ -181,12 +218,12 @@ function mod:ShadowsAdvance(eventInfo)
 	local count = shadowAdvanceCount
 	-- 94 and 14 appear on pull - where 94 should be bar number 2 and 14 should be bar number 1
 	-- 14 also apears every reset
-	if eventInfo.duration == 94 then
+	if eventInfo.duration == 94 or eventInfo.duration == 84 then -- two initial timers 94+14 / 84+12
 		count = 2
-	elseif eventInfo.duration == 14 and shadowAdvanceCount <= 1 then
+	elseif (eventInfo.duration == 14 or eventInfo.duration == 12) and shadowAdvanceCount <= 2 then
 		count = 1
 	end
-	local barText = CL.count:format(CL.adds, shadowAdvanceCount)
+	local barText = CL.count:format(CL.adds, count)
 	if self:ShouldShowBars() then
 		self:Bar(1251361, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -194,7 +231,14 @@ function mod:ShadowsAdvance(eventInfo)
 	return {
 		msg = barText,
 		key = 1251361,
+		startTime = GetTime(),
 		callback = function()
+			local barInfo = activeBars[eventInfo.id]
+			if GetTime() - barInfo.startTime < 1 then
+				-- finished immediately
+				shadowAdvanceCount = shadowAdvanceCount - 1
+				return
+			end
 			self:Message(1251361, "cyan", barText)
 			self:PlaySound(1251361, "long")
 		end
