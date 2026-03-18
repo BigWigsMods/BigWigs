@@ -382,7 +382,7 @@ function core:IsEnabled()
 end
 
 function core:Print(msg)
-	print("BigWigs: |cffffff00"..msg.."|r")
+	print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: |cffffff00"..msg.."|r")
 end
 
 function core:Error(msg, noPrint)
