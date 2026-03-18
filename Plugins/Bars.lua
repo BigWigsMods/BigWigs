@@ -781,14 +781,14 @@ do
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 22,
+						order = 23,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 23,
+						order = 24,
 					},
 				},
 			},
