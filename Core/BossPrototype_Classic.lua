@@ -2293,7 +2293,7 @@ end
 --- Register a wrapper around the CHAT_MSG_ADDON event that listens to Transcriptor comms sent by the core on every RAID_BOSS_WHISPER.
 -- @param func callback function, passed (msg, player)
 function boss:RegisterWhisperEmoteComms(func)
-	local _, result = RegisterAddonMessagePrefix("Transcriptor")
+	local result = RegisterAddonMessagePrefix("Transcriptor")
 	if type(result) == "number" and result > 2 then
 		core:Error("Failed to register the TS addon message prefix. Error code: ".. result)
 	end
