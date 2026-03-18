@@ -989,10 +989,14 @@ do
 	local function Decrement()
 		blizzMessageBlocker = blizzMessageBlocker - 1
 		if blizzMessageBlocker < 0 then blizzMessageBlocker = 0 end -- Should never occur
+		if blizzMessageBlocker == 0 then
+			plugin:Debug("ResumeBlizzMessages")
+		end
 	end
 	function plugin:BigWigs_BlockBlizzMessage(_, _, duration)
 		blizzMessageBlocker = blizzMessageBlocker + 1
 		self:SimpleTimer(Decrement, duration)
+		self:Debug("BlockBlizzMessages", duration)
 	end
 end
 
