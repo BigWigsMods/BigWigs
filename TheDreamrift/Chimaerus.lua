@@ -21,7 +21,7 @@ mod:SetPrivateAuraSounds({
 	{1246653, sound = "none"}, -- Caustic Phelgm
 	{1272726, sound = "alarm"}, -- Rending Tear
 })
-mod:UseCustomTimers(true)
+--mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
