@@ -142,13 +142,13 @@ do
 			return -- skipping barInfo checks since this is a special case
 		-- During Encounter Timers
 		elseif duration == 46.5 then -- Void Convergence
-			if not isBeforeUnraveling(eventInfo) then return end
+			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:VoidConvergence(eventInfo)
 		elseif duration == 45.5 then -- Twisting Obscurity
-			if not isBeforeUnraveling(eventInfo) then return end
+			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:TwistingObscurity(eventInfo)
 		elseif duration == 46 then -- Despotic Command
-			if not isBeforeUnraveling(eventInfo) then return end
+			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:DespoticCommand(eventInfo)
 		elseif duration == 45 then -- Fractured Projection or Shattering Twilight
 			if not isBeforeUnraveling(duration) then return end
