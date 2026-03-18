@@ -1170,12 +1170,12 @@ L.blizzTimelineSettingsNote = "|cffff4411本頁選項僅控制暴雪內建設定
 L.enableBlizzTimeline = "啟用暴雪的首領技能（時間軸）"	-- follow official translate，編輯模式裡這個元素就叫「首領技能」
 L.enableBlizzTimelineDesc = "在暴雪內建的首領技能時間軸上顯示所有的首領戰計時條。"
 L.show_bars = "顯示來源"
-L.bigwigsEnhancedTimers = "BigWigs 風格的計時條 + BigWigs 的校準計時 |cFF33FF99（推薦）|r"
+L.bigwigsEnhancedTimers = "BigWigs 風格的計時條 + BigWigs 的增強計時 |cFF33FF99（推薦）|r"
 L.blizzBasicAsBars = "BigWigs 風格的計時條 + 暴雪的內建計時"
 L.blizzBasicAsBlizzTimeline = "暴雪的「首領技能」時間軸 + 暴雪的內建計時（完全使用暴雪原生）"
 L.developerMode = "開發者模式"
---L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
---L.enhancedModeWelcome = "BigWigs 'Enhanced Mode' enabled!\n\nFull restoration of most pre-Midnight features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+L.enhancedModeWarning = "警告！\n\n停用 BigWigs 的增強計時會同步關閉 BigWigs 的其他首領戰功能，包含：計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
+L.enhancedModeWelcome = "增強模式已啟用！\n\n大部份功能已恢復至《至暗之夜》版本前的狀態，包含：計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
 
 -----------------------------------------------------------------------
 -- Victory.lua
