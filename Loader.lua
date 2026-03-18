@@ -1931,6 +1931,7 @@ do
 				UnregisterUnitTargetEvents()
 			end
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
+			bwFrame:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 		else
 			if disabledZones[instanceID] then -- We have a content addon for the this zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
@@ -1943,9 +1944,11 @@ do
 			end
 			if instanceType == "none" then
 				bwFrame:RegisterEvent("ZONE_CHANGED")
+				bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 				self:ZONE_CHANGED()
 			else
 				bwFrame:UnregisterEvent("ZONE_CHANGED")
+				bwFrame:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 				UnregisterUnitTargetEvents()
 			end
 		end
@@ -1996,6 +1999,7 @@ do
 			UnregisterUnitTargetEvents()
 		end
 	end
+	mod.ZONE_CHANGED_NEW_AREA = mod.ZONE_CHANGED
 end
 
 do
