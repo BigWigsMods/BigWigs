@@ -206,20 +206,20 @@ do
 
 		-- repeating
 		elseif duration == 46.5 then -- Void Convergence
-			barInfo = isBeforeUnraveling(duration) and self:VoidConvergence(eventInfo) or false
+			if not isBeforeUnraveling(duration) then return end
+			barInfo = self:VoidConvergence(eventInfo)
 		elseif duration == 46 then -- Despotic Command
-			barInfo =  isBeforeUnraveling(duration) and self:DespoticCommand(eventInfo) or false
+			if not isBeforeUnraveling(duration) then return end
+			barInfo =  self:DespoticCommand(eventInfo)
 		elseif duration == 45 then -- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
-			barInfo = false
-			if isBeforeUnraveling(duration) then
-				-- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
-				if fracturedProjectionCount > shatteringTwilightCount then
-					barInfo = self:ShatteringTwilight(eventInfo)
-				elseif twistingObscurityCount > fracturedProjectionCount then
-					barInfo = self:FracturedProjection(eventInfo)
-				else
-					barInfo = self:TwistingObscurity(eventInfo)
-				end
+			if not isBeforeUnraveling(duration) then return end
+			-- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
+			if fracturedProjectionCount > shatteringTwilightCount then
+				barInfo = self:ShatteringTwilight(eventInfo)
+			elseif twistingObscurityCount > fracturedProjectionCount then
+				barInfo = self:FracturedProjection(eventInfo)
+			else
+				barInfo = self:TwistingObscurity(eventInfo)
 			end
 
 		-- enrage
