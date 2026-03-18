@@ -27,7 +27,7 @@ local timelineEventCount = 0
 
 local breathCount = 1
 local parasiteCount = 1
-local frenzyCount = 1
+local slamCount = 1
 local roarCount = 1
 
 --------------------------------------------------------------------------------
@@ -60,7 +60,11 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+	if self:Mythic() then
+		self:RegisterEvent("TimersMythic")
+	else
+		self:RegisterEvent("TimersOther")
+	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
@@ -71,7 +75,7 @@ function mod:OnEncounterStart()
 
 	breathCount = 1
 	parasiteCount = 1
-	frenzyCount = 1
+	slamCount = 1
 	roarCount = 1
 end
 
@@ -81,16 +85,26 @@ function mod:OnBossDisable()
 	end
 end
 
+function mod:StopBarOnWarning(barText, severity)
+	self:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
+		if not severity or info.severity == severity then
+			self:StopBar(barText)
+			self:UnregisterEvent(event)
+		end
+	end)
+end
+
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
 
 do
 	local lastSharedCD = 0
-	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+	function mod:TimersMythic(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
 		local barInfo
+
 		timelineEventCount = timelineEventCount + 1
 		if timelineEventCount <= 5 then -- Pull Events
 			lastSharedCD = 0
@@ -129,6 +143,33 @@ do
 			end
 		end
 	end
+end
+
+function mod:TimersOther(_, eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local duration = eventInfo.duration
+		local barInfo
+
+		if duration == 16 or duration == 136 or duration == 240 then
+			barInfo = self:ShadowclawSlam(duration)
+		elseif duration == 57 or duration == 122.5 then
+			barInfo = self:ParasiteExpulsion(duration)
+		elseif duration == 6 or duration == 120 then
+			barInfo = self:PrimordialRoar(duration)
+		end
+
+		if barInfo then
+			activeBars[eventInfo.id] = barInfo
+		elseif self:ShouldShowBars() and not self:IsWiping() then
+			self:ErrorForTimelineEvent(eventInfo)
+			backupBars[eventInfo.id] = true
+			self:SendMessage("BigWigs_StartBar", nil, nil, eventInfo.spellName, eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+			local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+			if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
+				self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+			end
+		end
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
@@ -206,13 +247,13 @@ function mod:ParasiteExpulsion(eventInfo)
 	}
 end
 
-function mod:SmashingFrenzy(eventInfo)
-	local count = eventInfo.duration == 136 and frenzyCount + 1 or frenzyCount -- it starts 2 bars from the start.
-	local barText = CL.count:format(L.shadowclaw_slam, frenzyCount)
+function mod:ShadowclawSlam(eventInfo)
+	local count = eventInfo.duration == 136 and slamCount + 1 or slamCount -- it starts 2 bars from the start.
+	local barText = CL.count:format(L.shadowclaw_slam, slamCount)
 	if self:ShouldShowBars() then
 		self:Bar(1241692, eventInfo.duration, barText, nil, eventInfo.id)
 	end
-	frenzyCount = frenzyCount + 1
+	slamCount = slamCount + 1
 	return {
 		msg = barText,
 		key = 1241692,
@@ -224,6 +265,14 @@ function mod:SmashingFrenzy(eventInfo)
 end
 
 function mod:PrimordialRoar(eventInfo)
+	if not self:Mythic() and eventInfo.duration == 120 and self:ShouldShowBars() then
+		-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
+		local barText = CL.count:format(self:SpellName(1256855), breathCount)
+		self:CDBar(1256855, 90, barText)
+		breathCount = breathCount + 1
+		self:ScheduleTimer("StopBarOnWarning", 87, barText, 2)
+	end
+
 	local barText = CL.count:format(CL.roar, roarCount)
 	if self:ShouldShowBars() then
 		self:Bar(1260052, eventInfo.duration, barText, nil, eventInfo.id)
