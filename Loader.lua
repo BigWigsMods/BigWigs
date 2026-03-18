@@ -209,6 +209,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-1647]=true, -- Shadowlands
 	[-1978]=true, -- Dragon Isles
 	[-2274]=true, -- Khaz Algar
+	[-2443]=true, -- Silvermoon City
 }
 
 do
@@ -438,6 +439,7 @@ do
 		[2769] = tww, -- Liberation of Undermine
 		[2810] = tww, -- Manaforge Omega
 		--[[ BigWigs: Midnight ]]--
+		[-2443] = mn, -- Silvermoon City (Fake Menu)
 		[2912] = mn, -- The Voidspire
 		[2913] = mn, -- March on Quel'Danas
 		[2939] = mn, -- The Dreamrift
