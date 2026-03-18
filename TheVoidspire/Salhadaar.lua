@@ -75,9 +75,9 @@ end
 function mod:OnBossEnable()
 	backupBars = {}
 	if self:Mythic() then
-		self:RegisterEvent("TimersMythic")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersMythic")
 	else
-		self:RegisterEvent("TimersOther")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersOther")
 	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
