@@ -272,10 +272,10 @@ end
 function mod:PrimordialRoar(eventInfo)
 	if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
 		-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
-		local barText = CL.count:format(self:SpellName(1256855), breathCount)
-		self:CDBar(1256855, 90, barText)
+		local barText = CL.count:format(CL.breath, breathCount)
+		self:Bar(1256855, 89, barText)
 		breathCount = breathCount + 1
-		self:ScheduleTimer("StopBarOnWarning", 87, barText, 2)
+		-- self:ScheduleTimer("StopBarOnWarning", 85, barText, 2)
 	end
 
 	local barText = CL.count:format(CL.roar, roarCount)
