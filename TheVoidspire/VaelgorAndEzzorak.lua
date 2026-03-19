@@ -374,11 +374,11 @@ function mod:TimersHeroic(_, eventInfo)
 						barInfo = self:GrapplingMaw(eventInfo)
 					end
 				elseif stageOneCount == 2 then -- Rakfang, Vaelwing, Void Howl, Grapping Maw
-					if countForDuration[duration] % 3 == 1 then
+					if countForDuration[duration] % 4 == 1 then
 						barInfo = self:Rakfang(eventInfo)
-					elseif countForDuration[duration] % 3 == 2 then
+					elseif countForDuration[duration] % 4 == 2 then
 						barInfo = self:Vaelwing(eventInfo)
-					elseif countForDuration[duration] % 3 == 3 then
+					elseif countForDuration[duration] % 4 == 3 then
 						barInfo = self:VoidHowl(eventInfo)
 					else
 						barInfo = self:GrapplingMaw(eventInfo)
@@ -549,11 +549,11 @@ function mod:TimerOther(_, eventInfo)
 						barInfo = self:GrapplingMaw(eventInfo)
 					end
 				elseif stageOneCount == 2 then -- Rakfang, Vaelwing, Void Howl, Grapping Maw
-					if countForDuration[duration] % 3 == 1 then
+					if countForDuration[duration] % 4 == 1 then
 						barInfo = self:Rakfang(eventInfo)
-					elseif countForDuration[duration] % 3 == 2 then
+					elseif countForDuration[duration] % 4 == 2 then
 						barInfo = self:Vaelwing(eventInfo)
-					elseif countForDuration[duration] % 3 == 3 then
+					elseif countForDuration[duration] % 4 == 3 then
 						barInfo = self:VoidHowl(eventInfo)
 					else
 						barInfo = self:GrapplingMaw(eventInfo)
