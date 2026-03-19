@@ -1024,17 +1024,21 @@ do
 		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269144]=true,[269145]=true,[269146]=true,
 		[269150]=true,[269152]=true,
 
-		-- Den of Nalorakk
+		-- Midnight/Den of Nalorakk [Dungeon]
 		[307905]=true,[307906]=true,[307907]=true,[307909]=true,[307910]=true,[307908]=true,[307900]=true,[307902]=true,
-		-- Maisara Caverns
+		-- Midnight/Maisara Caverns [Dungeon]
 		[301692]=true,[301694]=true,[301695]=true,[301697]=true,[301732]=true,[301734]=true,[301735]=true,[301635]=true,
 		[301636]=true,[301637]=true,[301641]=true,
-		-- The Blinding Vale
+		-- Midnight/The Blinding Vale [Dungeon]
 		[300142]=true,[300143]=true,[300145]=true,[300148]=true,[300152]=true,
-		-- Nexus-Point Xenas
+		-- Midnight/Nexus-Point Xenas [Dungeon]
 		[308122]=true,[308123]=true,
-		-- Voidscar Arena
+		-- Midnight/Voidscar Arena [Dungeon]
 		[308433]=true,[308351]=true,
+		-- Midnight/The Voidspire [Raid]
+		[316005]=true,[316006]=true,[316007]=true,[316008]=true,
+		-- Midnight/The Dreamrift [Raid]
+		[299649]=true,[299650]=true,[299651]=true,[299652]=true,[299653]=true,[299655]=true,[299656]=true,
 	}
 
 	local lookup = {
