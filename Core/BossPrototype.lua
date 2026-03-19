@@ -1760,13 +1760,13 @@ do
 end
 
 --- Round a number to specific digits
--- @number number the original number you want to round
--- @number digits How many digits you want to round the number to
+-- @number numberToRound the original number you want to round
+-- @number numDigits How many digits you want to round the number to
 do
 	local floor = math.floor
-	function boss:RoundNumber(number, digits)
-		local multiplier = 10 ^ digits
-		return floor((number * multiplier) + .5) / multiplier
+	function boss:RoundNumber(numberToRound, numDigits)
+		local multiplier = 10 ^ numDigits
+		return floor((numberToRound * multiplier) + .5) / multiplier
 	end
 end
 
