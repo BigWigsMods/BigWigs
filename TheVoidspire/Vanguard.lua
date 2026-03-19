@@ -159,7 +159,7 @@ function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 1)
+	local durationRounded = self:RoundNumber(duration, 0)
 	eventInfo.durationRounded = durationRounded
 	local eventId = eventInfo.id
 	local spellName = eventInfo.spellName -- only for logging.
