@@ -81,7 +81,6 @@ function mod:GetOptions()
 		[1257087] = L.consuming_miasma, -- Consuming Miasma (Dispels)
 		[1246653] = CL.raid_damage, -- Caustic Phlegm (Raid Damage)
 		[1272726] = CL.frontal_cone, -- Rending Tear (Frontal Cone)
-		[1245396] = CL.stage:format(2), -- Consume (Stage 2)
 		[1245486] = CL.breath, -- Corrupted Devastation (Breath)
 		[1245406] = CL.stage:format(1), -- Ravenous Dive (Stage 1)
 		[1246621] = CL.raid_damage, -- Caustic Phlegm (Raid Damage)
@@ -129,8 +128,7 @@ end
 function mod:TimerOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local stage = self:GetStage()
-	local durationRounded = math.floor(eventInfo.duration + 0.5)
-	eventInfo.durationRounded = durationRounded
+	local durationRounded = self:RoundNumber(eventInfo.duration, 0)
 	local barInfo = nil
 	if stage == 1 then
 		if durationRounded == 720 and self:ShouldShowBars() then -- Rift Cataclysm
@@ -224,15 +222,9 @@ end
 function mod:TimerEasy(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local stage = self:GetStage()
-	local durationRounded = math.floor(eventInfo.duration + 0.5)
-	eventInfo.durationRounded = durationRounded
+	local durationRounded = self:RoundNumber(eventInfo.duration, 0)
 	local barInfo = nil
 	if stage == 1 then
-
-
-	-- "<41.52 12:09:52>#id#439#duration#80 Rending Tear
-	-- "<73.52 12:10:24>#id#441#duration#80 Consume
-
 		if durationRounded == 720 and self:ShouldShowBars() then -- Rift Cataclysm
 			self:Berserk(eventInfo.duration)
 			return -- no further checks needed
@@ -260,23 +252,20 @@ function mod:TimerEasy(_, eventInfo)
 			return -- no need to stop this, it gets corrected later 10s before the end.
 		elseif durationRounded == 10 then -- Stage 2 (Updated)
 			self:Bar("stages", {eventInfo.duration, 151}, CL.stage:format(2), "spell_holy_borrowedtime", nil, eventInfo.id)
-			barInfo = {
-				msg = CL.stage:format(2),
-				callback = function()
-					self:Message("stages", "red", CL.stage:format(2), false)
-					self:PlaySound("stages", "long")
-					self:SetStage(2)
-					almdustUpheavalCount = 1
-					riftEmergenceCount = 1
-					riftMadnessCount = 1
-					consumingMiasmaCount = 1
-					causticPhlegmCount = 1
-					rendingTearCount = 1
-					corruptedDevastationCount = 1
-					ravenousDiveCount = 1
-					durationCount = {}
-				end
-			}
+			self:ScheduleTimer(function()
+				self:Message("stages", "red", CL.stage:format(2), false)
+				self:PlaySound("stages", "long")
+				self:SetStage(2)
+				almdustUpheavalCount = 1
+				riftEmergenceCount = 1
+				riftMadnessCount = 1
+				consumingMiasmaCount = 1
+				causticPhlegmCount = 1
+				rendingTearCount = 1
+				corruptedDevastationCount = 1
+				ravenousDiveCount = 1
+				durationCount = {}
+			end, 10)
 		end
 	else -- Stage 2 timers
 		if durationRounded == 18 or durationRounded == 3 then -- Caustic Phlegm
@@ -454,7 +443,7 @@ end
 
 -- Consume
 function mod:Consume(eventInfo)
-	local barText = CL.count:format(CL.stage:format(2), consumeCount)
+	local barText = CL.count:format(self:SpellName(1245396), consumeCount)
 	if self:ShouldShowBars() then
 		self:Bar(1245396, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -495,9 +484,8 @@ do
 		if self:ShouldShowBars() then
 			self:Bar(1245406, timer, barText, nil, eventInfo.id)
 		end
-		return {
-			msg = barText,
-			callback = updateInitial and function() -- only play the sound and message for the updated timer
+		if updateInitial then -- Fix with better event handling later.
+			self:ScheduleTimer(function()
 				self:Message(1245406, "red", barText)
 				self:PlaySound(1245406, "long")
 				self:SetStage(1)
@@ -510,7 +498,10 @@ do
 				corruptedDevastationCount = 1
 				ravenousDiveCount = 1
 				durationCount = {}
-			end
+			end, eventInfo.duration)
+		end
+		return {
+			msg = barText,
 		}
 	end
 end
