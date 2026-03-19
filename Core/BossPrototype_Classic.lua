@@ -1833,6 +1833,17 @@ do
 	end
 end
 
+--- Round a number to specific digits
+-- @number number the original number you want to round
+-- @number digits How many digits you want to round the number to
+do
+	local floor = math.floor
+	function boss:RoundNumber(number, digits)
+		local multiplier = 10 ^ digits
+		return floor((number * multiplier) + .5) / multiplier
+	end
+end
+
 --- Delete a specific item from a table.
 -- @param[type=table] table The table to remove the item from
 -- @param item The item to remove from the table
