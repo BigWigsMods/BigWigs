@@ -86,15 +86,6 @@ function mod:OnBossDisable()
 	end
 end
 
-function mod:StopBarOnWarning(barText, severity)
-	self:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
-		if not severity or info.severity == severity then
-			self:StopBar(barText)
-			self:UnregisterEvent(event)
-		end
-	end)
-end
-
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
@@ -269,26 +260,41 @@ function mod:ShadowclawSlam(eventInfo)
 	}
 end
 
-function mod:PrimordialRoar(eventInfo)
-	if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
-		-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
-		local barText = CL.count:format(CL.breath, breathCount)
-		self:Bar(1256855, 89, barText)
-		breathCount = breathCount + 1
-		-- self:ScheduleTimer("StopBarOnWarning", 85, barText, 2)
+do
+	local t = 0
+	local function Unregister() mod:UnregisterEvent("ENCOUNTER_WARNING") end
+	local function StopBarOnWarning(barText, severity)
+		t = GetTime()
+		mod:ScheduleTimer(Unregister, 10)
+		mod:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
+			mod:Error(("Elapsed %s, severity was %s"):format(GetTime()-t, info.severity), true)
+			if not severity or info.severity == severity then
+				mod:StopBar(barText)
+				mod:UnregisterEvent(event)
+			end
+		end)
 	end
-
-	local barText = CL.count:format(CL.roar, roarCount)
-	if self:ShouldShowBars() then
-		self:Bar(1260052, eventInfo.duration, barText, nil, eventInfo.id)
-	end
-	roarCount = roarCount + 1
-	return {
-		msg = barText,
-		key = 1260052,
-		callback = function()
-			self:Message(1260052, "orange", barText)
-			self:PlaySound(1260052, "alarm")
+	function mod:PrimordialRoar(eventInfo)
+		if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
+			-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
+			local barText = CL.count:format(CL.breath, breathCount)
+			self:Bar(1256855, 89, barText)
+			breathCount = breathCount + 1
+			self:ScheduleTimer(function() StopBarOnWarning(barText, 2) end, 85)
 		end
-	}
+
+		local barText = CL.count:format(CL.roar, roarCount)
+		if self:ShouldShowBars() then
+			self:Bar(1260052, eventInfo.duration, barText, nil, eventInfo.id)
+		end
+		roarCount = roarCount + 1
+		return {
+			msg = barText,
+			key = 1260052,
+			callback = function()
+				self:Message(1260052, "orange", barText)
+				self:PlaySound(1260052, "alarm")
+			end
+		}
+	end
 end
