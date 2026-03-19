@@ -134,7 +134,7 @@ function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local durationRounded = math.floor(duration + 0.5)
+	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 	local barInfo
 	local stage = self:GetStage()
@@ -269,7 +269,7 @@ function mod:TimersHeroic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local durationRounded = math.floor(duration + 0.5)
+	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 	local barInfo
 	local stage = self:GetStage()
@@ -435,7 +435,7 @@ function mod:TimerOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local durationRounded = math.floor(duration + 0.5)
+	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 	local barInfo
 	local stage = self:GetStage()

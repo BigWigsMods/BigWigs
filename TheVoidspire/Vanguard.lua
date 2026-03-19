@@ -159,7 +159,7 @@ function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local durationRounded = math.floor(duration + 0.5)
+	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 	local eventId = eventInfo.id
 	local spellName = eventInfo.spellName -- only for logging.
@@ -320,7 +320,7 @@ end
 function mod:TimersHeroic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local duration = eventInfo.duration
-	local durationRounded = math.floor(duration + 0.5)
+	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 	timelineEventCount = timelineEventCount + 1
 	local barInfo = nil
@@ -490,7 +490,7 @@ end
 function mod:TimerOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local duration = eventInfo.duration
-	local durationRounded = math.floor(duration + 0.5)
+	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 	timelineEventCount = timelineEventCount + 1
 	local barInfo = nil

@@ -119,7 +119,7 @@ do
 	function mod:TimersMythic(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
-		local durationRounded = math.floor(duration + 0.5)
+		local durationRounded = self:RoundNumber(duration, 1)
 		eventInfo.durationRounded = durationRounded
 		local barInfo
 
@@ -184,7 +184,7 @@ do
 	function mod:TimersOther(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
-		local durationRounded = math.floor(duration + 0.5)
+		local durationRounded = self:RoundNumber(duration, 1)
 		eventInfo.durationRounded = durationRounded
 		local barInfo
 
