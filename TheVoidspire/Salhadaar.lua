@@ -119,20 +119,22 @@ do
 	function mod:TimersMythic(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
+		local durationRounded = math.floor(duration + 0.5)
+		eventInfo.durationRounded = durationRounded
 		local barInfo
 
 		-- Pull / Timer Restart Events
-		if duration == 11 then -- Void Convergence
+		if durationRounded == 11 then -- Void Convergence
 			barInfo = self:VoidConvergence(eventInfo)
-		elseif duration == 15 then -- Twisting Obscurity
+		elseif durationRounded == 15 then -- Twisting Obscurity
 			barInfo = self:TwistingObscurity(eventInfo)
-		elseif duration == 23 then -- Despotic Command
+		elseif durationRounded == 23 then -- Despotic Command
 			barInfo = self:DespoticCommand(eventInfo)
-		elseif duration == 26 then -- Fractured Projection
+		elseif durationRounded == 26 then -- Fractured Projection
 			barInfo = self:FracturedProjection(eventInfo)
-		elseif duration == 44 then -- Shattering Twilight
+		elseif durationRounded == 44 then -- Shattering Twilight
 			barInfo = self:ShatteringTwilight(eventInfo)
-		elseif duration == 100 then -- Entropic Unraveling
+		elseif durationRounded == 100 then -- Entropic Unraveling
 			local time = GetTime()
 			if time - prev > 2 then -- Throttle as it triggers 2x when timers reset
 				self:EntropicUnraveling(eventInfo)
@@ -141,16 +143,16 @@ do
 			end
 			return -- skipping barInfo checks since this is a special case
 		-- During Encounter Timers
-		elseif duration == 46.5 then -- Void Convergence
+		elseif durationRounded == 46.5 then -- Void Convergence
 			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:VoidConvergence(eventInfo)
-		elseif duration == 45.5 then -- Twisting Obscurity
+		elseif durationRounded == 45.5 then -- Twisting Obscurity
 			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:TwistingObscurity(eventInfo)
-		elseif duration == 46 then -- Despotic Command
+		elseif durationRounded == 46 then -- Despotic Command
 			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:DespoticCommand(eventInfo)
-		elseif duration == 45 then -- Fractured Projection or Shattering Twilight
+		elseif durationRounded == 45 then -- Fractured Projection or Shattering Twilight
 			if not isBeforeUnraveling(duration) then return end
 			-- These two alternate, so we need to check which one is next
 			if shatteringTwilightCount <= fracturedProjectionCount then
@@ -158,7 +160,7 @@ do
 			else
 				barInfo = self:ShatteringTwilight(eventInfo)
 			end
-		elseif duration == 370 then -- Berserk
+		elseif durationRounded == 370 then -- Berserk
 			if self:ShouldShowBars() then
 				self:Berserk(370, 0)
 			end
@@ -182,20 +184,22 @@ do
 	function mod:TimersOther(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
+		local durationRounded = math.floor(duration + 0.5)
+		eventInfo.durationRounded = durationRounded
 		local barInfo
 
 		-- on pull / restart
-		if duration == 11 then -- Void Convergence
+		if durationRounded == 11 then -- Void Convergence
 			barInfo = self:VoidConvergence(eventInfo)
-		elseif duration == 15 then -- Twisting Obscurity
+		elseif durationRounded == 15 then -- Twisting Obscurity
 			barInfo = self:TwistingObscurity(eventInfo)
-		elseif duration == 27 then -- Despotic Command
+		elseif durationRounded == 27 then -- Despotic Command
 			barInfo = self:DespoticCommand(eventInfo)
-		elseif duration == 18 then -- Fractured Projection
+		elseif durationRounded == 18 then -- Fractured Projection
 			barInfo = self:FracturedProjection(eventInfo)
-		elseif duration == 42 then -- Shattering Twilight
+		elseif durationRounded == 42 then -- Shattering Twilight
 			barInfo = self:ShatteringTwilight(eventInfo)
-		elseif duration == 100 then -- Entropic Unraveling
+		elseif durationRounded == 100 then -- Entropic Unraveling
 			local time = GetTime()
 			if time - prev > 2 then -- Throttle as it triggers 2x when timers reset
 				self:EntropicUnraveling(eventInfo)
@@ -205,13 +209,13 @@ do
 			return -- skipping barInfo checks since this is a special case
 
 		-- repeating
-		elseif duration == 46.5 then -- Void Convergence
+		elseif durationRounded == 46.5 then -- Void Convergence
 			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:VoidConvergence(eventInfo)
-		elseif duration == 46 then -- Despotic Command
+		elseif durationRounded == 46 then -- Despotic Command
 			if not isBeforeUnraveling(duration) then return end
 			barInfo =  self:DespoticCommand(eventInfo)
-		elseif duration == 45 then -- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
+		elseif durationRounded == 45 then -- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
 			if not isBeforeUnraveling(duration) then return end
 			-- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
 			if fracturedProjectionCount > shatteringTwilightCount then
@@ -223,7 +227,7 @@ do
 			end
 
 		-- enrage
-		elseif duration == 490 then
+		elseif durationRounded == 490 then
 			if self:ShouldShowBars() then
 				self:Berserk(490, 0)
 			end

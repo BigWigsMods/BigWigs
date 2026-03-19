@@ -97,23 +97,25 @@ end
 function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local duration = eventInfo.duration
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo
 
-	if duration == 160 then -- Void Fall
+	if durationRounded == 160 then -- Void Fall
 		barInfo = self:VoidFall(eventInfo)
 		-- This starts a new rotation, reset counters
 		durationEventCount = {}
-	elseif duration == 94 or duration == 14 then -- Shadow's Advance
+	elseif durationRounded == 94 or durationRounded == 14 then -- Shadow's Advance
 		barInfo = self:ShadowsAdvance(eventInfo)
-	elseif duration == 20 then -- Void Marked
+	elseif durationRounded == 20 then -- Void Marked
 		barInfo = self:VoidMarked(eventInfo)
-	elseif duration == 4 or duration == 48 or duration == 36 then -- Dark Upheaval
+	elseif durationRounded == 4 or durationRounded == 48 or durationRounded == 36 then -- Dark Upheaval
 		barInfo = self:DarkUpheaval(eventInfo)
-	elseif duration == 32 then -- Umbral Collapse
+	elseif durationRounded == 32 then -- Umbral Collapse
 		barInfo = self:UmbralCollapse(eventInfo)
-	elseif duration == 60 or duration == 18 then -- Oblivion's Wrath
+	elseif durationRounded == 60 or durationRounded == 18 then -- Oblivion's Wrath
 		barInfo = self:OblivionsWrath(eventInfo)
-	elseif duration == 80 then -- Void Marked, Umbral Collapse, Shadow's Advance (after first stage)
+	elseif durationRounded == 80 then -- Void Marked, Umbral Collapse, Shadow's Advance (after first stage)
 		durationEventCount[duration] = (durationEventCount[duration] or 0) + 1
 		if (voidFallCount == 2 and durationEventCount[duration] == 1)
 		or (voidFallCount >= 3 and durationEventCount[duration] == 2) then -- Void Marked
@@ -143,17 +145,19 @@ end
 function mod:TimersOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local duration = eventInfo.duration
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo
 
-	if duration == 125 then -- Void Fall
+	if durationRounded == 125 then -- Void Fall
 		barInfo = self:VoidFall(eventInfo)
-	elseif duration == 84 or duration == 12 or duration == 72 then -- Shadow's Advance
+	elseif durationRounded == 84 or durationRounded == 12 or durationRounded == 72 then -- Shadow's Advance
 		barInfo = self:ShadowsAdvance(eventInfo)
-	elseif duration == 4 or duration == 36 then -- Dark Upheaval
+	elseif durationRounded == 4 or durationRounded == 36 then -- Dark Upheaval
 		barInfo = self:DarkUpheaval(eventInfo)
-	elseif duration == 20 then -- Umbral Collapse
+	elseif durationRounded == 20 then -- Umbral Collapse
 		barInfo = self:UmbralCollapse(eventInfo)
-	elseif duration == 48 or duration == 18 then -- Oblivion's Wrath
+	elseif durationRounded == 48 or durationRounded == 18 then -- Oblivion's Wrath
 		barInfo = self:OblivionsWrath(eventInfo)
 	end
 
@@ -218,9 +222,9 @@ function mod:ShadowsAdvance(eventInfo)
 	local count = shadowAdvanceCount
 	-- 94 and 14 appear on pull - where 94 should be bar number 2 and 14 should be bar number 1
 	-- 14 also apears every reset
-	if eventInfo.duration == 94 or eventInfo.duration == 84 then -- two initial timers 94+14 / 84+12
+	if eventInfo.durationRounded == 94 or eventInfo.durationRounded == 84 then -- two initial timers 94+14 / 84+12
 		count = 2
-	elseif (eventInfo.duration == 14 or eventInfo.duration == 12) and shadowAdvanceCount <= 2 then
+	elseif (eventInfo.durationRounded == 14 or eventInfo.durationRounded == 12) and shadowAdvanceCount <= 2 then
 		count = 1
 	end
 	local barText = CL.count:format(CL.adds, count)

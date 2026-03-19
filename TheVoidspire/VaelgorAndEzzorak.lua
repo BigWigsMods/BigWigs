@@ -134,11 +134,12 @@ function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local rounded = math.floor(duration + 0.5)
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo
 	local stage = self:GetStage()
 
-	if stage == 1 and rounded == 8 then -- Stage 2
+	if stage == 1 and durationRounded == 8 then -- Stage 2
 		self:SetStage(2)
 		stage = 2
 		stageTwoStartTime = GetTime()
@@ -169,51 +170,51 @@ function mod:TimersMythic(_, eventInfo)
 	if stage == 1 then
 		if timelineEventCount <= 7 then -- Initial timers
 			if stageOneCount == 1 then -- Initial Pull Timers
-				if rounded == 6 then -- Vaelwing
+				if durationRounded == 6 then -- Vaelwing
 					barInfo = self:Vaelwing(eventInfo)
-				elseif rounded == 11 then -- Rakfang
+				elseif durationRounded == 11 then -- Rakfang
 					barInfo = self:Rakfang(eventInfo)
-				elseif rounded == 12 then -- Dread Breath
+				elseif durationRounded == 12 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 15 then -- Nullbeam
+				elseif durationRounded == 15 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 25 then -- Void Howl
+				elseif durationRounded == 25 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 40 then -- Gloom
+				elseif durationRounded == 40 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 120 then -- Radiant Barrier
+				elseif durationRounded == 120 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			elseif stageOneCount == 2 then -- Round 2
-				if rounded == 19 then -- Vaelwing
+				if durationRounded == 19 then -- Vaelwing
 					barInfo = self:Vaelwing(eventInfo)
-				elseif rounded == 23 then -- Nullbeam
+				elseif durationRounded == 23 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 34 then -- Dread Breath
+				elseif durationRounded == 34 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 25 then -- Rakfang
+				elseif durationRounded == 25 then -- Rakfang
 					barInfo = self:Rakfang(eventInfo)
-				elseif rounded == 28 then -- Gloom
+				elseif durationRounded == 28 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 48 then -- Void Howl
+				elseif durationRounded == 48 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 128 then -- Radiant Barrier
+				elseif durationRounded == 128 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			elseif stageOneCount == 3 then -- Round 3
-				if rounded == 21 then -- Vaelwing
+				if durationRounded == 21 then -- Vaelwing
 					barInfo = self:Vaelwing(eventInfo)
-				elseif rounded == 20 then -- Nullbeam
+				elseif durationRounded == 20 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 46 then -- Dread Breath
+				elseif durationRounded == 46 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 27 then -- Rakfang
+				elseif durationRounded == 27 then -- Rakfang
 					barInfo = self:Rakfang(eventInfo)
-				elseif rounded == 55 then -- Gloom
+				elseif durationRounded == 55 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 15 then -- Void Howl
+				elseif durationRounded == 15 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 125 then -- Radiant Barrier
+				elseif durationRounded == 125 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			end
@@ -221,16 +222,16 @@ function mod:TimersMythic(_, eventInfo)
 			if (GetTime() + duration) > (nextRadiantBarrier + nextBarrierBuffer) then -- Don't show timers which won't happen, small buffer incase of a delay
 				return
 			end
-			if rounded == 45 then -- Dread Breath
+			if durationRounded == 45 then -- Dread Breath
 				barInfo = self:DreadBreath(eventInfo)
-			elseif rounded == 25 then -- Vaelwing > Rakfang
+			elseif durationRounded == 25 then -- Vaelwing > Rakfang
 				countForDuration[duration] = (countForDuration[duration] or 0) + 1
 				if countForDuration[duration] % 2 == 0 then
 					barInfo = self:Rakfang(eventInfo)
 				else
 					barInfo = self:Vaelwing(eventInfo)
 				end
-			elseif rounded == 45 then -- Dread Breath or Void Howl
+			elseif durationRounded == 45 then -- Dread Breath or Void Howl
 				countForDuration[duration] = (countForDuration[duration] or 0) + 1
 				local breathMod = stageOneCount == 3 and 0 or 1 -- Alternate rotation in 3rd stage 1
 				if countForDuration[duration] % 2 == breathMod then
@@ -238,14 +239,14 @@ function mod:TimersMythic(_, eventInfo)
 				else
 					barInfo = self:VoidHowl(eventInfo)
 				end
-			elseif rounded == 50 then -- Gloom
+			elseif durationRounded == 50 then -- Gloom
 				barInfo = self:Gloom(eventInfo)
-			elseif rounded == 60 then -- Nullbeam
+			elseif durationRounded == 60 then -- Nullbeam
 				barInfo = self:Nullbeam(eventInfo)
 			end
 		end
 	elseif stage == 2 then
-		if rounded == 8 then -- Midnight Flames
+		if durationRounded == 8 then -- Midnight Flames
 			barInfo = self:MidnightFlames(eventInfo)
 		end
 	end
@@ -268,11 +269,12 @@ function mod:TimersHeroic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local rounded = math.floor(duration + 0.5)
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo
 	local stage = self:GetStage()
 
-	if stage == 1 and duration == 8 then -- Stage 2
+	if stage == 1 and durationRounded == 8 then -- Stage 2
 		self:SetStage(2)
 		stage = 2
 		stageTwoStartTime = GetTime()
@@ -304,51 +306,51 @@ function mod:TimersHeroic(_, eventInfo)
 	if stage == 1 then
 		if timelineEventCount <= 7 then -- Initial timers
 			if stageOneCount == 1 then -- Initial Pull Timers
-				if rounded == 6 then -- Vaelwing
+				if durationRounded == 6 then -- Vaelwing
 					barInfo = self:Vaelwing(eventInfo)
-				elseif rounded == 27 then -- Dread Breath
+				elseif durationRounded == 27 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 10 then -- Nullbeam
+				elseif durationRounded == 10 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 30 and not self:IsWiping() then -- Void Howl
+				elseif durationRounded == 30 and not self:IsWiping() then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 18 then -- Grappling Maw
+				elseif durationRounded == 18 then -- Grappling Maw
 					barInfo = self:GrapplingMaw(eventInfo)
-				elseif rounded == 50 then -- Gloom
+				elseif durationRounded == 50 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 105 then -- Radiant Barrier
+				elseif durationRounded == 105 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			elseif stageOneCount == 2 then -- Round 2
-				if rounded == 18 then -- Grappling Maw
+				if durationRounded == 18 then -- Grappling Maw
 					barInfo = self:GrapplingMaw(eventInfo)
-				elseif rounded == 45 then -- Nullbeam
+				elseif durationRounded == 45 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 27 then -- Dread Breath
+				elseif durationRounded == 27 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 6 then -- Rakfang
+				elseif durationRounded == 6 then -- Rakfang
 					barInfo = self:Rakfang(eventInfo)
-				elseif rounded == 10 then -- Gloom
+				elseif durationRounded == 10 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 15 then -- Void Howl
+				elseif durationRounded == 15 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 105 then -- Radiant Barrier
+				elseif durationRounded == 105 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			elseif stageOneCount >= 3 then -- Round 3+
-				if rounded == 8 then -- Vaelwing
+				if durationRounded == 8 then -- Vaelwing
 					barInfo = self:Vaelwing(eventInfo)
-				elseif rounded == 13 then -- Nullbeam
+				elseif durationRounded == 13 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 65 then -- Dread Breath
+				elseif durationRounded == 65 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 15 then -- Rakfang
+				elseif durationRounded == 15 then -- Rakfang
 					barInfo = self:Rakfang(eventInfo)
-				elseif rounded == 50 then -- Gloom
+				elseif durationRounded == 50 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 25 then -- Void Howl
+				elseif durationRounded == 25 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 225 then -- Radiant Barrier
+				elseif durationRounded == 225 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			end
@@ -357,9 +359,9 @@ function mod:TimersHeroic(_, eventInfo)
 				return
 			end
 			countForDuration[duration] = (countForDuration[duration] or 0) + 1
-			if rounded == 20 or rounded == 81 then -- Dread Breath
+			if durationRounded == 20 or durationRounded == 81 then -- Dread Breath
 				barInfo = self:DreadBreath(eventInfo)
-			elseif rounded == 25 then
+			elseif durationRounded == 25 then
 				if stageOneCount == 1 then -- Vaelwing, Grappling Maw
 					if countForDuration[duration] % 2 == 1 then
 						barInfo = self:Vaelwing(eventInfo)
@@ -375,17 +377,17 @@ function mod:TimersHeroic(_, eventInfo)
 						barInfo = self:GrapplingMaw(eventInfo)
 					end
 				end
-			elseif rounded == 30 and not self:IsWiping() then -- Grapplin Maw stage 1.4
+			elseif durationRounded == 30 and not self:IsWiping() then -- Grapplin Maw stage 1.4
 				barInfo = self:GrapplingMaw(eventInfo)
-			elseif rounded == 31 then -- Vaelwing, Rakfang
+			elseif durationRounded == 31 then -- Vaelwing, Rakfang
 				if countForDuration[duration] % 2 == 1 then
 					barInfo = self:Vaelwing(eventInfo)
 				else
 					barInfo = self:Rakfang(eventInfo)
 				end
-			elseif rounded == 45 or rounded == 51 then -- Void Howl
+			elseif durationRounded == 45 or durationRounded == 51 then -- Void Howl
 				barInfo = self:VoidHowl(eventInfo)
-			elseif rounded == 50 then -- Nullbeam, Dread Breath, Gloom
+			elseif durationRounded == 50 then -- Nullbeam, Dread Breath, Gloom
 				if stageOneCount == 1 then
 					barInfo = self:Nullbeam(eventInfo)
 				elseif stageOneCount == 2 then
@@ -395,13 +397,13 @@ function mod:TimersHeroic(_, eventInfo)
 						barInfo = self:DreadBreath(eventInfo)
 					end
 				end
-			elseif rounded == 63 then -- Nullbeam, Gloom
+			elseif durationRounded == 63 then -- Nullbeam, Gloom
 				if countForDuration[duration] % 2 == 1 then
 					barInfo = self:Nullbeam(eventInfo)
 				else
 					barInfo = self:Gloom(eventInfo)
 				end
-			elseif rounded == 90 then -- Nullbeam, Gloom
+			elseif durationRounded == 90 then -- Nullbeam, Gloom
 				if stageOneCount == 1 then
 					barInfo = self:Gloom(eventInfo)
 				elseif stageOneCount == 2 then
@@ -410,7 +412,7 @@ function mod:TimersHeroic(_, eventInfo)
 			end
 		end
 	elseif stage == 2 then
-		if rounded == 8 then -- Midnight Flames
+		if durationRounded == 8 then -- Midnight Flames
 			barInfo = self:MidnightFlames(eventInfo)
 		end
 	end
@@ -433,11 +435,12 @@ function mod:TimerOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
-	local rounded = math.floor(duration + 0.5)
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo
 	local stage = self:GetStage()
 
-	if stage == 1 and duration == 8 then -- Stage 2
+	if stage == 1 and durationRounded == 8 then -- Stage 2
 		self:SetStage(2)
 		stage = 2
 		stageTwoStartTime = GetTime()
@@ -469,35 +472,35 @@ function mod:TimerOther(_, eventInfo)
 	if stage == 1 then
 		if timelineEventCount <= 7 then -- Initial timers
 			if stageOneCount == 1 then -- Initial Pull Timers
-				if rounded == 6 then -- Vaelwing
+				if durationRounded == 6 then -- Vaelwing
 					barInfo = self:Vaelwing(eventInfo)
-				elseif rounded == 28 then -- Dread Breath
+				elseif durationRounded == 28 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 11 then -- Nullbeam
+				elseif durationRounded == 11 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 32 then -- Void Howl
+				elseif durationRounded == 32 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 19 then -- Grappling Maw
+				elseif durationRounded == 19 then -- Grappling Maw
 					barInfo = self:GrapplingMaw(eventInfo)
-				elseif rounded == 53 then -- Gloom
+				elseif durationRounded == 53 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 111 then -- Radiant Barrier
+				elseif durationRounded == 111 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			elseif stageOneCount == 2 then -- Round 2
-				if rounded == 19 then -- Grappling Maw
+				if durationRounded == 19 then -- Grappling Maw
 					barInfo = self:GrapplingMaw(eventInfo)
-				elseif rounded == 47 then -- Nullbeam
+				elseif durationRounded == 47 then -- Nullbeam
 					barInfo = self:Nullbeam(eventInfo)
-				elseif rounded == 28 then -- Dread Breath
+				elseif durationRounded == 28 then -- Dread Breath
 					barInfo = self:DreadBreath(eventInfo)
-				elseif rounded == 6 then -- Rakfang
+				elseif durationRounded == 6 then -- Rakfang
 					barInfo = self:Rakfang(eventInfo)
-				elseif rounded == 11 then -- Gloom
+				elseif durationRounded == 11 then -- Gloom
 					barInfo = self:Gloom(eventInfo)
-				elseif rounded == 16 then -- Void Howl
+				elseif durationRounded == 16 then -- Void Howl
 					barInfo = self:VoidHowl(eventInfo)
-				elseif rounded == 111 then -- Radiant Barrier
+				elseif durationRounded == 111 then -- Radiant Barrier
 					barInfo = self:RadiantBarrier(eventInfo)
 				end
 			end
@@ -506,9 +509,9 @@ function mod:TimerOther(_, eventInfo)
 				return
 			end
 			countForDuration[duration] = (countForDuration[duration] or 0) + 1
-			if rounded == 21 then -- Dread Breath
+			if durationRounded == 21 then -- Dread Breath
 				barInfo = self:DreadBreath(eventInfo)
-			elseif rounded == 26 then
+			elseif durationRounded == 26 then
 				if stageOneCount == 1 then -- Vaelwing, Grappling Maw
 					if countForDuration[duration] % 2 == 1 then
 						barInfo = self:Vaelwing(eventInfo)
@@ -524,9 +527,9 @@ function mod:TimerOther(_, eventInfo)
 						barInfo = self:GrapplingMaw(eventInfo)
 					end
 				end
-			elseif rounded == 47 then -- Void Howl
+			elseif durationRounded == 47 then -- Void Howl
 				barInfo = self:VoidHowl(eventInfo)
-			elseif rounded == 53 then -- Nullbeam, Dread Breath, Gloom
+			elseif durationRounded == 53 then -- Nullbeam, Dread Breath, Gloom
 				if stageOneCount == 1 then
 					barInfo = self:Nullbeam(eventInfo)
 				elseif stageOneCount == 2 then
@@ -536,7 +539,7 @@ function mod:TimerOther(_, eventInfo)
 						barInfo = self:DreadBreath(eventInfo)
 					end
 				end
-			elseif rounded ==  95 then -- Nullbeam, Gloom
+			elseif durationRounded ==  95 then -- Nullbeam, Gloom
 				if stageOneCount == 1 then
 					barInfo = self:Gloom(eventInfo)
 				elseif stageOneCount == 2 then
@@ -545,7 +548,7 @@ function mod:TimerOther(_, eventInfo)
 			end
 		end
 	elseif stage == 2 then
-		if rounded == 8 then -- Midnight Flames
+		if durationRounded == 8 then -- Midnight Flames
 			barInfo = self:MidnightFlames(eventInfo)
 		end
 	end

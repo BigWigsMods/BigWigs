@@ -130,6 +130,7 @@ function mod:TimerOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local stage = self:GetStage()
 	local durationRounded = math.floor(eventInfo.duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo = nil
 	if stage == 1 then
 		if durationRounded == 720 and self:ShouldShowBars() then -- Rift Cataclysm
@@ -224,6 +225,7 @@ function mod:TimerEasy(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local stage = self:GetStage()
 	local durationRounded = math.floor(eventInfo.duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local barInfo = nil
 	if stage == 1 then
 

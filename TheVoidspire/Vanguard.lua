@@ -159,62 +159,64 @@ function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	timelineEventCount = timelineEventCount + 1
 	local duration = eventInfo.duration
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	local eventId = eventInfo.id
 	local spellName = eventInfo.spellName -- only for logging.
 	local barInfo = nil
 	if timelineEventCount <= 19 then -- Pull Bars
-		if duration == 29 then -- Divine Toll
+		if durationRounded == 29 then -- Divine Toll
 			barInfo = self:DivineToll(eventInfo)
-		elseif duration == 26 then -- Aura of Devotion / Judgement (Red)
+		elseif durationRounded == 26 then -- Aura of Devotion / Judgement (Red)
 			lastAlternateSpell = lastAlternateSpell == 1246736 and 1246162 or 1246736 -- Judgement [R] and Aura of Devotion
 			if lastAlternateSpell == 1246736 then -- These have the same duration so we just assume the barId and link it
 				barInfo = self:JudgementRed(eventInfo)
 			else
 				barInfo = self:AuraOfDevotion(eventInfo)
 			end
-		elseif duration == 66 or duration == 12 then -- Avenger's Shield
+		elseif durationRounded == 66 or durationRounded == 12 then -- Avenger's Shield
 			barInfo = self:AvengersShield(eventInfo)
-		elseif duration == 57 or duration == 110 or duration == 4 then -- Zealous Spirit
+		elseif durationRounded == 57 or durationRounded == 110 or durationRounded == 4 then -- Zealous Spirit
 			barInfo = self:ZealousSpirit(eventInfo)
-		elseif duration == 22 then -- Judgement (Blue)
+		elseif durationRounded == 22 then -- Judgement (Blue)
 			barInfo = self:JudgementBlue(eventInfo)
-		elseif duration == 132 then -- Aura of Peace
+		elseif durationRounded == 132 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
-		elseif duration == 34 then -- Sacred Shield
+		elseif durationRounded == 34 then -- Sacred Shield
 			barInfo = self:SacredShield(eventInfo)
-		elseif duration == 135 then -- Tyr's Wrath
+		elseif durationRounded == 135 then -- Tyr's Wrath
 			barInfo = self:TyrsWrath(eventInfo)
-		elseif duration == 10 or duration == 59 then -- Searing Radiance
+		elseif durationRounded == 10 or durationRounded == 59 then -- Searing Radiance
 			barInfo = self:SearingRadiance(eventInfo)
-		elseif duration == 20 then -- Sacred Toll
+		elseif durationRounded == 20 then -- Sacred Toll
 			barInfo = self:SacredToll(eventInfo)
-		elseif duration == 15 or duration == 123 then -- Divine Storm
+		elseif durationRounded == 15 or durationRounded == 123 then -- Divine Storm
 			barInfo = self:DivineStorm(eventInfo)
-		elseif duration == 82 then -- Execution Sentence
+		elseif durationRounded == 82 then -- Execution Sentence
 			barInfo = self:ExecutionSentence(eventInfo)
-		elseif duration == 79 then -- Aura of Wrath
+		elseif durationRounded == 79 then -- Aura of Wrath
 			barInfo = self:AuraOfWrath(eventInfo)
 		end
 	else
 		durationEventCount[duration] = (durationEventCount[duration] or 0) + 1
 		local countForDuration = durationEventCount[duration]
-		if duration == 4 or duration == 5 or duration == 11 then
+		if durationRounded == 4 or durationRounded == 5 or durationRounded == 11 then
 			barInfo = self:SacredToll(eventInfo)
-		elseif duration == 7 or duration == 16 or duration == 20 or duration == 91 then
+		elseif durationRounded == 7 or durationRounded == 16 or durationRounded == 20 or durationRounded == 91 then
 			barInfo = self:AvengersShield(eventInfo)
-		elseif duration == 9 or duration == 144 then
+		elseif durationRounded == 9 or durationRounded == 144 then
 			barInfo = self:DivineStorm(eventInfo)
-		elseif duration == 19 or duration == 121 or duration == 170 then
+		elseif durationRounded == 19 or durationRounded == 121 or durationRounded == 170 then
 			barInfo = self:SearingRadiance(eventInfo)
-		elseif duration == 46 or duration == 61 or duration == 127 then
+		elseif durationRounded == 46 or durationRounded == 61 or durationRounded == 127 then
 			barInfo = self:SacredShield(eventInfo)
-		elseif duration == 52 then -- Small set
+		elseif durationRounded == 52 then -- Small set
 			if countForDuration == 1 then
 				barInfo = self:SearingRadiance(eventInfo)
 			elseif countForDuration == 2 or countForDuration == 3 then
 				barInfo = self:SacredShield(eventInfo)
 			end
-		elseif duration == 54 then
+		elseif durationRounded == 54 then
 			if countForDuration == 1 or countForDuration == 3 or countForDuration == 6 or countForDuration == 8 or countForDuration == 11 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 or countForDuration == 4 or countForDuration == 7 or countForDuration == 9 or countForDuration == 12 then
@@ -224,25 +226,25 @@ function mod:TimersMythic(_, eventInfo)
 			elseif countForDuration == 13 then
 				barInfo = self:DivineStorm(eventInfo)
 			end
-		elseif duration == 72 then
+		elseif durationRounded == 72 then
 			if countForDuration == 1 then
 				barInfo = self:DivineStorm(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:AvengersShield(eventInfo)
 			end
-		elseif duration == 90 then
+		elseif durationRounded == 90 then
 			if countForDuration <= 2 then
 				barInfo = self:AvengersShield(eventInfo)
 			elseif countForDuration == 3 then
 				barInfo = self:SearingRadiance(eventInfo)
 			end
-		elseif duration == 162 then
+		elseif durationRounded == 162 then
 			if countForDuration == 2 then
 				barInfo = self:DivineStorm(eventInfo)
 			elseif countForDuration == 1 or countForDuration == 3 then
 				barInfo = self:AvengersShield(eventInfo)
 			end
-		elseif duration == 36 then
+		elseif durationRounded == 36 then
 			if countForDuration == 1 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 then
@@ -254,7 +256,7 @@ function mod:TimersMythic(_, eventInfo)
 			elseif countForDuration == 6 or countForDuration == 7 then
 				barInfo = self:DivineStorm(eventInfo)
 			end
-		elseif duration == 159 then
+		elseif durationRounded == 159 then
 			if countForDuration == 1 or countForDuration == 4 or countForDuration == 7
 			 or countForDuration == 10 or countForDuration == 14 or countForDuration == 18 then
 				barInfo = self:ZealousSpirit(eventInfo)
@@ -273,7 +275,7 @@ function mod:TimersMythic(_, eventInfo)
 			elseif countForDuration == 11 or countForDuration == 15 then
 				barInfo = self:SearingRadiance(eventInfo)
 			end
-		elseif duration == 18 then
+		elseif durationRounded == 18 then
 			if countForDuration == 1 or countForDuration == 3 or countForDuration == 5
 			 or countForDuration == 13 or countForDuration == 17 or countForDuration == 19
 			 or countForDuration == 21 or countForDuration == 23 or countForDuration == 31
@@ -317,62 +319,65 @@ end
 
 function mod:TimersHeroic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
+	local duration = eventInfo.duration
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	timelineEventCount = timelineEventCount + 1
 	local barInfo = nil
 	if timelineEventCount <= 12 then -- Pull Bars
-		if eventInfo.duration == 10 then -- Sacred Toll
+		if durationRounded == 10 then -- Sacred Toll
 			barInfo = self:SacredToll(eventInfo)
-		elseif eventInfo.duration == 15 then -- Avenger's Shield
+		elseif durationRounded == 15 then -- Avenger's Shield
 			barInfo = self:AvengersShield(eventInfo)
-		elseif eventInfo.duration == 17 then -- Sacred Shield
+		elseif durationRounded == 17 then -- Sacred Shield
 			barInfo = self:SacredShield(eventInfo)
-		elseif eventInfo.duration == 18 then -- Divine Storm
+		elseif durationRounded == 18 then -- Divine Storm
 			barInfo = self:DivineStorm(eventInfo)
-		elseif eventInfo.duration == 26 then -- Judgement Blue
+		elseif durationRounded == 26 then -- Judgement Blue
 			barInfo = self:JudgementBlue(eventInfo)
-		elseif eventInfo.duration == 30 and not self:IsWiping()then -- Judgement Red
+		elseif durationRounded == 30 and not self:IsWiping() then -- Judgement Red
 			barInfo = self:JudgementRed(eventInfo)
-		elseif eventInfo.duration == 35 then -- Aura of Devotion
+		elseif durationRounded == 35 then -- Aura of Devotion
 			barInfo = self:AuraOfDevotion(eventInfo)
-		elseif eventInfo.duration == 38 then -- Divine Toll
+		elseif durationRounded == 38 then -- Divine Toll
 			barInfo = self:DivineToll(eventInfo)
-		elseif eventInfo.duration == 47 then -- Searing Radiance
+		elseif durationRounded == 47 then -- Searing Radiance
 			barInfo = self:SearingRadiance(eventInfo)
-		elseif eventInfo.duration == 83 then -- Aura of Wrath
+		elseif durationRounded == 83 then -- Aura of Wrath
 			barInfo = self:AuraOfWrath(eventInfo)
-		elseif eventInfo.duration == 86 then -- Execution Sentence
+		elseif durationRounded == 86 then -- Execution Sentence
 			barInfo = self:ExecutionSentence(eventInfo)
-		elseif eventInfo.duration == 131 then -- Aura of Peace
+		elseif durationRounded == 131 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
 		end
 	else
 		durationEventCount[eventInfo.duration] = (durationEventCount[eventInfo.duration] or 0) + 1
 		local countForDuration = durationEventCount[eventInfo.duration]
-		if eventInfo.duration == 13 or eventInfo.duration == 59
-		or eventInfo.duration == 72 or eventInfo.duration == 27
-		or eventInfo.duration == 21 or eventInfo.duration == 39 then
+		if durationRounded == 13 or durationRounded == 59
+		or durationRounded == 72 or durationRounded == 27
+		or durationRounded == 21 or durationRounded == 39 then
 			barInfo = self:SacredToll(eventInfo)
-		elseif eventInfo.duration == 19 or eventInfo.duration == 43 then
+		elseif durationRounded == 19 or durationRounded == 43 then
 			barInfo = self:DivineStorm(eventInfo)
-		elseif eventInfo.duration == 82 or eventInfo.duration == 132 then
+		elseif durationRounded == 82 or durationRounded == 132 then
 			barInfo = self:SearingRadiance(eventInfo)
-		elseif eventInfo.duration == 177 or eventInfo.duration == 173 then
+		elseif durationRounded == 177 or durationRounded == 173 then
 			barInfo = self:AuraOfPeace(eventInfo)
-		elseif (eventInfo.duration == 65 or eventInfo.duration == 25
-		or eventInfo.duration == 12 or eventInfo.duration == 30) and not self:IsWiping() then
+		elseif (durationRounded == 65 or durationRounded == 25
+		or durationRounded == 12 or durationRounded == 30) and not self:IsWiping() then
 			barInfo = self:AvengersShield(eventInfo)
-		elseif eventInfo.duration == 58 or eventInfo.duration == 89
-		or eventInfo.duration == 51 or eventInfo.duration == 64 then
+		elseif durationRounded == 58 or durationRounded == 89
+		or durationRounded == 51 or durationRounded == 64 then
 			barInfo = self:SacredShield(eventInfo)
-		elseif eventInfo.duration == 42 or eventInfo.duration == 40
-		or eventInfo.duration == 16 or eventInfo.duration == 24
-		or eventInfo.duration == 52 then -- Judgement Blue and Red
+		elseif durationRounded == 42 or durationRounded == 40
+		or durationRounded == 16 or durationRounded == 24
+		or durationRounded == 52 then -- Judgement Blue and Red
 			if countForDuration == 1 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:JudgementRed(eventInfo)
 			end
-		elseif eventInfo.duration == 53 then
+		elseif durationRounded == 53 then
 			if countForDuration == 1 or countForDuration == 2 then -- Searing Radiance
 				barInfo = self:SearingRadiance(eventInfo)
 			elseif countForDuration == 3 then -- Avengers Shield
@@ -382,31 +387,31 @@ function mod:TimersHeroic(_, eventInfo)
 			elseif countForDuration == 5 then -- Divine Storm
 				barInfo = self:DivineStorm(eventInfo)
 			end
-		elseif eventInfo.duration == 174 then -- Aura of Devotion and Divine Toll
+		elseif durationRounded == 174 then -- Aura of Devotion and Divine Toll
 			if countForDuration % 2 == 1 then
 				barInfo = self:AuraOfDevotion(eventInfo)
 			else
 				barInfo = self:DivineToll(eventInfo)
 			end
-		elseif eventInfo.duration == 175 or eventInfo.duration == 172 then -- Aura of Wrath and Execution Sentence
+		elseif durationRounded == 175 or durationRounded == 172 then -- Aura of Wrath and Execution Sentence
 			if countForDuration == 1 then
 				barInfo = self:AuraOfWrath(eventInfo)
 			else
 				barInfo = self:ExecutionSentence(eventInfo)
 			end
-		elseif eventInfo.duration == 45 then -- Divine Storm or Sacred Toll
+		elseif durationRounded == 45 then -- Divine Storm or Sacred Toll
 			if countForDuration == 1 then
 				barInfo = self:DivineStorm(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:SacredToll(eventInfo)
 			end
-		elseif eventInfo.duration == 22 then -- Divine Storm or Avengers Shield
+		elseif durationRounded == 22 then -- Divine Storm or Avengers Shield
 			if countForDuration == 1 then
 				barInfo = self:DivineStorm(eventInfo)
 			elseif countForDuration == 2 or countForDuration == 3 then
 				barInfo = self:AvengersShield(eventInfo)
 			end
-		elseif eventInfo.duration == 15 then -- Sacred Toll, Divine Storm, or Avengers Shield
+		elseif durationRounded == 15 then -- Sacred Toll, Divine Storm, or Avengers Shield
 			if countForDuration == 1 then
 				barInfo = self:SacredToll(eventInfo)
 			elseif countForDuration == 2 then
@@ -414,7 +419,7 @@ function mod:TimersHeroic(_, eventInfo)
 			elseif countForDuration == 3 then
 				barInfo = self:AvengersShield(eventInfo)
 			end
-		elseif eventInfo.duration == 23 then -- Sacred Toll, Judgement Blue, or Judgement Red
+		elseif durationRounded == 23 then -- Sacred Toll, Judgement Blue, or Judgement Red
 			if countForDuration == 1 then
 				barInfo = self:SacredToll(eventInfo)
 			elseif countForDuration == 2 then
@@ -422,13 +427,13 @@ function mod:TimersHeroic(_, eventInfo)
 			elseif countForDuration == 3 then
 				barInfo = self:JudgementRed(eventInfo)
 			end
-		elseif eventInfo.duration == 50 then -- Divine Storm or Searing Radiance
+		elseif durationRounded == 50 then -- Divine Storm or Searing Radiance
 			if countForDuration == 1 then
 				barInfo = self:DivineStorm(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:SearingRadiance(eventInfo)
 			end
-		elseif eventInfo.duration == 60 then -- Judgement Blue, Judgement Red, or Sacred Shield
+		elseif durationRounded == 60 then -- Judgement Blue, Judgement Red, or Sacred Shield
 			if countForDuration == 1 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 then
@@ -436,7 +441,7 @@ function mod:TimersHeroic(_, eventInfo)
 			elseif countForDuration == 3 then
 				barInfo = self:SacredShield(eventInfo)
 			end
-		elseif eventInfo.duration == 17 then -- Avengers Shield, Judgement Blue, or Judgement Red
+		elseif durationRounded == 17 then -- Avengers Shield, Judgement Blue, or Judgement Red
 			if countForDuration == 1 then
 				barInfo = self:AvengersShield(eventInfo)
 			elseif countForDuration == 2 then
@@ -444,13 +449,13 @@ function mod:TimersHeroic(_, eventInfo)
 			elseif countForDuration == 3 then
 				barInfo = self:JudgementRed(eventInfo)
 			end
-		elseif eventInfo.duration == 54 then -- Judgement Blue or Judgement Red
+		elseif durationRounded == 54 then -- Judgement Blue or Judgement Red
 			if countForDuration == 1 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:JudgementRed(eventInfo)
 			end
-		elseif eventInfo.duration == 20 then -- Many
+		elseif durationRounded == 20 then -- Many
 			if countForDuration == 1 or countForDuration == 3 or countForDuration == 13 or countForDuration == 14
 			 or countForDuration == 16 or countForDuration == 19 or countForDuration == 20
 			 or countForDuration == 22 or countForDuration == 24 or countForDuration == 26 then -- Divine Storm
@@ -484,48 +489,51 @@ end
 
 function mod:TimerOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
+	local duration = eventInfo.duration
+	local durationRounded = math.floor(duration + 0.5)
+	eventInfo.durationRounded = durationRounded
 	timelineEventCount = timelineEventCount + 1
 	local barInfo = nil
 	if timelineEventCount <= 10 then -- Pull Bars
-		if eventInfo.duration == 10 then -- Avenger's Shield
+		if durationRounded == 10 then -- Avenger's Shield
 			barInfo = self:AvengersShield(eventInfo)
-		elseif eventInfo.duration == 17 then -- Sacred Shield
+		elseif durationRounded == 17 then -- Sacred Shield
 			barInfo = self:SacredShield(eventInfo)
-		elseif eventInfo.duration == 23 then -- Sacred Toll
+		elseif durationRounded == 23 then -- Sacred Toll
 			barInfo = self:SacredToll(eventInfo)
-		elseif eventInfo.duration == 26 then -- Judgement Blue
+		elseif durationRounded == 26 then -- Judgement Blue
 			barInfo = self:JudgementBlue(eventInfo)
-		elseif eventInfo.duration == 30 and not self:IsWiping() then -- Judgement Red
+		elseif durationRounded == 30 and not self:IsWiping() then -- Judgement Red
 			barInfo = self:JudgementRed(eventInfo)
-		elseif eventInfo.duration == 35 then -- Aura of Devotion
+		elseif durationRounded == 35 then -- Aura of Devotion
 			barInfo = self:AuraOfDevotion(eventInfo)
-		elseif eventInfo.duration == 38 then -- Divine Toll
+		elseif durationRounded == 38 then -- Divine Toll
 			barInfo = self:DivineToll(eventInfo)
-		elseif eventInfo.duration == 83 then -- Aura of Wrath
+		elseif durationRounded == 83 then -- Aura of Wrath
 			barInfo = self:AuraOfWrath(eventInfo)
-		elseif eventInfo.duration == 86 then -- Execution Sentence
+		elseif durationRounded == 86 then -- Execution Sentence
 			barInfo = self:ExecutionSentence(eventInfo)
-		elseif eventInfo.duration == 131 then -- Aura of Peace
+		elseif durationRounded == 131 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
 		end
 	else
 		durationEventCount[eventInfo.duration] = (durationEventCount[eventInfo.duration] or 0) + 1
 		local countForDuration = durationEventCount[eventInfo.duration]
-		if eventInfo.duration == 67 or eventInfo.duration == 43 or eventInfo.duration == 23 or
-			eventInfo.duration == 17 or eventInfo.duration == 41 then -- Avenger's Shield
+		if durationRounded == 67 or durationRounded == 43 or durationRounded == 23 or
+			durationRounded == 17 or durationRounded == 41 then -- Avenger's Shield
 			barInfo = self:AvengersShield(eventInfo)
-		elseif eventInfo.duration == 53 or eventInfo.duration == 33 or eventInfo.duration == 68 or
-				eventInfo.duration == 66 or eventInfo.duration == 31 or eventInfo.duration == 22 then -- Sacred Shield
+		elseif durationRounded == 53 or durationRounded == 33 or durationRounded == 68 or
+				durationRounded == 66 or durationRounded == 31 or durationRounded == 22 then -- Sacred Shield
 			barInfo = self:SacredShield(eventInfo)
-		elseif eventInfo.duration == 52 then
+		elseif durationRounded == 52 then
 			barInfo = self:JudgementBlue(eventInfo)
-		elseif eventInfo.duration == 62 or eventInfo.duration == 44 or eventInfo.duration == 28 then
+		elseif durationRounded == 62 or durationRounded == 44 or durationRounded == 28 then
 			barInfo = self:SacredToll(eventInfo)
-		elseif eventInfo.duration == 92 then
+		elseif durationRounded == 92 then
 			barInfo = self:JudgementRed(eventInfo)
-		elseif eventInfo.duration == 177 then
+		elseif durationRounded == 177 then
 			barInfo = self:AuraOfPeace(eventInfo)
-		elseif eventInfo.duration == 40 then -- Many
+		elseif durationRounded == 40 then -- Many
 			if countForDuration == 1 or countForDuration == 4 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 then
@@ -535,31 +543,31 @@ function mod:TimerOther(_, eventInfo)
 			elseif countForDuration == 5 then
 				barInfo = self:AvengersShield(eventInfo)
 			end
-		elseif eventInfo.duration == 42 then -- Judgement Blue or Red
+		elseif durationRounded == 42 then -- Judgement Blue or Red
 			if countForDuration == 1 then
 				barInfo = self:JudgementBlue(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:JudgementRed(eventInfo)
 			end
-		elseif eventInfo.duration == 48 then -- Sacred Shield or Avenger's Shield
+		elseif durationRounded == 48 then -- Sacred Shield or Avenger's Shield
 			if countForDuration == 1 then
 				barInfo = self:SacredShield(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:AvengersShield(eventInfo)
 			end
-		elseif eventInfo.duration == 174 or eventInfo.duration == 172 then -- Aura of Devotion or Divine Toll
+		elseif durationRounded == 174 or durationRounded == 172 then -- Aura of Devotion or Divine Toll
 			if countForDuration == 1 then
 				barInfo = self:AuraOfDevotion(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:DivineToll(eventInfo)
 			end
-		elseif eventInfo.duration == 175 or eventInfo.duration == 169 then -- Aura of Wrath or Execution Sentence
+		elseif durationRounded == 175 or durationRounded == 169 then -- Aura of Wrath or Execution Sentence
 			if countForDuration == 1 then
 				barInfo = self:AuraOfWrath(eventInfo)
 			elseif countForDuration == 2 then
 				barInfo = self:ExecutionSentence(eventInfo)
 			end
-		elseif eventInfo.duration == 20 then -- Many
+		elseif durationRounded == 20 then -- Many
 			if countForDuration == 1 or countForDuration == 2 or countForDuration == 5 or
 				countForDuration == 14 or countForDuration == 15 then -- Sacred Toll
 				barInfo = self:SacredToll(eventInfo)
@@ -679,7 +687,7 @@ end
 
 function mod:AvengersShield(eventInfo)
 	 -- first 2 need to be a set order as they apear the other way around
-	local count = eventInfo.duration == 66 and 2 or eventInfo.duration == 12 and 1 or avengersShieldCount
+	local count = eventInfo.durationRounded == 66 and 2 or eventInfo.durationRounded == 12 and 1 or avengersShieldCount
 	local barText = CL.count:format(self:SpellName(1246485), avengersShieldCount)
 	if self:ShouldShowBars() then
 		self:CDBar(1246485, eventInfo.duration, barText, nil, eventInfo.id)
@@ -697,8 +705,8 @@ end
 
 function mod:DivineStorm(eventInfo)
 	local count = divineStormCount
-	if eventInfo.duration == 15 or eventInfo.duration == 123 then
-		count = eventInfo.duration == 15 and 1 or 3
+	if eventInfo.durationRounded == 15 or eventInfo.durationRounded == 123 then
+		count = eventInfo.durationRounded == 15 and 1 or 3
 	end
 	if divineStormCount == 3 then
 		-- set 2nd to correct on pull timers
@@ -721,7 +729,7 @@ end
 
 function mod:SearingRadiance(eventInfo)
 	-- 2 timers on pull handling
-	local count = eventInfo.duration == 10 and 1 or eventInfo.duration == 59 and 2 or searingRadianceCount
+	local count = eventInfo.durationRounded == 10 and 1 or eventInfo.durationRounded == 59 and 2 or searingRadianceCount
 	local barText = CL.count:format(self:SpellName(1255738), count)
 	if self:ShouldShowBars() then
 		self:CDBar(1255738, eventInfo.duration, barText, nil, eventInfo.id)
@@ -755,7 +763,7 @@ end
 
 function mod:ZealousSpirit(eventInfo)
 	 -- it spawns 3 timers on pull (lol)
-	local barCount = eventInfo.duration == 110 and 3 or eventInfo.duration == 57 and 2 or eventInfo.duration == 4 and 1 or zealousSpiritCount
+	local barCount = eventInfo.durationRounded == 110 and 3 or eventInfo.durationRounded == 57 and 2 or eventInfo.durationRounded == 4 and 1 or zealousSpiritCount
 	local barText = CL.count:format(L.zaelous_spirit, barCount)
 	if self:ShouldShowBars() then
 		self:CDBar(1276243, eventInfo.duration, barText, nil, eventInfo.id)

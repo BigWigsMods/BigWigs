@@ -104,30 +104,32 @@ do
 	function mod:TimersMythic(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
+		local durationRounded = math.floor(duration + 0.5)
+		eventInfo.durationRounded = durationRounded
 		local barInfo
 
 		timelineEventCount = timelineEventCount + 1
 		if timelineEventCount <= 5 then -- Pull Events
 			lastSharedCD = 0
-			if duration == 6 then -- Primordial Roar
+			if durationRounded == 6 then -- Primordial Roar
 				barInfo = self:PrimordialRoar(eventInfo)
-			elseif duration == 16 or duration == 136 then -- Smashing Frenzy
+			elseif durationRounded == 16 or durationRounded == 136 then -- Smashing Frenzy
 				barInfo = self:SmashingFrenzy(eventInfo)
-			elseif duration == 57 then -- Parasite Expulsion
+			elseif durationRounded == 57 then -- Parasite Expulsion
 				barInfo = self:ParasiteExpulsion(eventInfo)
-			elseif duration == 95 then -- Void Breath
+			elseif durationRounded == 95 then -- Void Breath
 				barInfo = self:VoidBreath(eventInfo)
 			end
 		else
-			if duration == 240 then -- Smashing Frenzy
+			if durationRounded == 240 then -- Smashing Frenzy
 				barInfo = self:SmashingFrenzy(eventInfo)
-			elseif duration == 120 and lastSharedCD == 0 then -- Roar (alternates)
+			elseif durationRounded == 120 and lastSharedCD == 0 then -- Roar (alternates)
 				barInfo = self:PrimordialRoar(eventInfo)
 				lastSharedCD = 1
-			elseif duration == 120 and lastSharedCD == 1 then -- Breath (alternates)
+			elseif durationRounded == 120 and lastSharedCD == 1 then -- Breath (alternates)
 				barInfo = self:VoidBreath(eventInfo)
 				lastSharedCD = 0
-			elseif duration == 122.5 then -- Parasite Expulsion
+			elseif durationRounded == 122.5 then -- Parasite Expulsion
 				barInfo = self:ParasiteExpulsion(eventInfo)
 			end
 		end
@@ -149,13 +151,15 @@ end
 function mod:TimersOther(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
+		local durationRounded = math.floor(duration + 0.5)
+		eventInfo.durationRounded = durationRounded
 		local barInfo
 
-		if duration == 16 or duration == 136 or duration == 240 then
+		if durationRounded == 16 or durationRounded == 136 or durationRounded == 240 then
 			barInfo = self:ShadowclawSlam(eventInfo)
-		elseif duration == 57 or duration == 122.5 then
+		elseif durationRounded == 57 or durationRounded == 122.5 then
 			barInfo = self:ParasiteExpulsion(eventInfo)
-		elseif duration == 6 or duration == 120 then
+		elseif durationRounded == 6 or durationRounded == 120 then
 			barInfo = self:PrimordialRoar(eventInfo)
 		end
 
@@ -249,7 +253,7 @@ function mod:ParasiteExpulsion(eventInfo)
 end
 
 function mod:ShadowclawSlam(eventInfo)
-	local count = eventInfo.duration == 136 and slamCount + 1 or slamCount -- it starts 2 bars from the start.
+	local count = eventInfo.durationRounded == 136 and slamCount + 1 or slamCount -- it starts 2 bars from the start.
 	local barText = CL.count:format(L.shadowclaw_slam, slamCount)
 	if self:ShouldShowBars() then
 		self:Bar(1241692, eventInfo.duration, barText, nil, eventInfo.id)
@@ -266,7 +270,7 @@ function mod:ShadowclawSlam(eventInfo)
 end
 
 function mod:PrimordialRoar(eventInfo)
-	if not self:Mythic() and eventInfo.duration == 120 and self:ShouldShowBars() then
+	if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
 		-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
 		local barText = CL.count:format(self:SpellName(1256855), breathCount)
 		self:CDBar(1256855, 90, barText)
