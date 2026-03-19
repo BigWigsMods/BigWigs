@@ -1036,7 +1036,7 @@ do
 		-- Midnight/Voidscar Arena [Dungeon]
 		[308433]=true,[308351]=true,
 		-- Midnight/The Voidspire [Raid]
-		[316005]=true,[316006]=true,[316007]=true,[316008]=true,
+		[316005]=true,[316006]=true,[316007]=true,[316008]=true,[316009]=true,[316010]=true,
 		-- Midnight/The Dreamrift [Raid]
 		[299649]=true,[299650]=true,[299651]=true,[299652]=true,[299653]=true,[299655]=true,[299656]=true,
 	}
