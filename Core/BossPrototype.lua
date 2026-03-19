@@ -1759,11 +1759,12 @@ do
 	end
 end
 
---- Round a number to specific digits
--- @number numberToRound the original number you want to round
--- @number numDigits How many digits you want to round the number to
 do
 	local floor = math.floor
+	--- Round a number to specific digits
+	-- @number numberToRound the original number you want to round
+	-- @number numDigits How many digits you want to round the number to
+	-- @return rounded number
 	function boss:RoundNumber(numberToRound, numDigits)
 		local multiplier = 10 ^ numDigits
 		return floor((numberToRound * multiplier) + .5) / multiplier
