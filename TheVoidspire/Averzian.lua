@@ -96,8 +96,7 @@ end
 
 function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
-	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
+	local durationRounded = self:RoundNumber(eventInfo.duration, 0)
 	eventInfo.durationRounded = durationRounded
 	local barInfo
 
@@ -116,14 +115,14 @@ function mod:TimersMythic(_, eventInfo)
 	elseif durationRounded == 60 or durationRounded == 18 then -- Oblivion's Wrath
 		barInfo = self:OblivionsWrath(eventInfo)
 	elseif durationRounded == 80 then -- Void Marked, Umbral Collapse, Shadow's Advance (after first stage)
-		durationEventCount[duration] = (durationEventCount[duration] or 0) + 1
-		if (voidFallCount == 2 and durationEventCount[duration] == 1)
-		or (voidFallCount >= 3 and durationEventCount[duration] == 2) then -- Void Marked
+		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+		if (voidFallCount == 2 and durationEventCount[durationRounded] == 1)
+		or (voidFallCount >= 3 and durationEventCount[durationRounded] == 2) then -- Void Marked
 			barInfo = self:VoidMarked(eventInfo)
-		elseif (voidFallCount == 2 and durationEventCount[duration] == 2)
-		or (voidFallCount >= 3 and durationEventCount[duration] == 3) then -- Umbral Collapse
+		elseif (voidFallCount == 2 and durationEventCount[durationRounded] == 2)
+		or (voidFallCount >= 3 and durationEventCount[durationRounded] == 3) then -- Umbral Collapse
 			barInfo = self:UmbralCollapse(eventInfo)
-		elseif voidFallCount >= 3 and durationEventCount[duration] == 1 then -- Shadow's Advance
+		elseif voidFallCount >= 3 and durationEventCount[durationRounded] == 1 then -- Shadow's Advance
 			barInfo = self:ShadowsAdvance(eventInfo)
 		end
 	end
@@ -142,16 +141,28 @@ function mod:TimersMythic(_, eventInfo)
 	end
 end
 
+function mod:DummyUmbralEvent(eventInfo) -- Blizzard cancels this timer, but it does happen. We Schedule it ourselves.
+	local duration = eventInfo.duration
+	local fakeEventInfo = {
+		id = -eventInfo.id, -- Negative ID to avoid conflicts with real bars
+		duration = duration,
+	}
+	local fakeInfo = self:UmbralCollapse(eventInfo)
+	activeBars[fakeEventInfo.id] = fakeInfo
+	self:ScheduleTimer("ENCOUNTER_TIMELINE_EVENT_REMOVED", duration, nil, fakeEventInfo.id)
+end
+
 function mod:TimersOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
-	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
+	local durationRounded = self:RoundNumber(eventInfo.duration, 0)
 	eventInfo.durationRounded = durationRounded
 	local barInfo
 
 	if durationRounded == 125 then -- Void Fall
 		barInfo = self:VoidFall(eventInfo)
-	elseif durationRounded == 84 or durationRounded == 12 or durationRounded == 72 then -- Shadow's Advance
+		-- This starts a new rotation, reset counters
+		durationEventCount = {}
+	elseif durationRounded == 84 or durationRounded == 12 then -- Shadow's Advance
 		barInfo = self:ShadowsAdvance(eventInfo)
 	elseif durationRounded == 4 or durationRounded == 36 then -- Dark Upheaval
 		barInfo = self:DarkUpheaval(eventInfo)
@@ -159,6 +170,19 @@ function mod:TimersOther(_, eventInfo)
 		barInfo = self:UmbralCollapse(eventInfo)
 	elseif durationRounded == 48 or durationRounded == 18 then -- Oblivion's Wrath
 		barInfo = self:OblivionsWrath(eventInfo)
+	elseif durationRounded == 72 then -- Umbral Collapse, Shadow's Advance (after first stage)
+		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+		if voidFallCount == 1 then
+				self:DummyUmbralEvent(eventInfo)
+			return
+		else
+			if durationEventCount[durationRounded] == 1 then -- Shadow's Advance
+				barInfo = self:ShadowsAdvance(eventInfo)
+			elseif durationEventCount[durationRounded] == 2 then -- Umbral Collapse
+				self:DummyUmbralEvent(eventInfo)
+				return
+			end
+		end
 	end
 
 	if barInfo then
@@ -235,14 +259,7 @@ function mod:ShadowsAdvance(eventInfo)
 	return {
 		msg = barText,
 		key = 1251361,
-		startTime = GetTime(),
 		callback = function()
-			local barInfo = activeBars[eventInfo.id]
-			if GetTime() - barInfo.startTime < 1 then
-				-- finished immediately
-				shadowAdvanceCount = shadowAdvanceCount - 1
-				return
-			end
 			self:Message(1251361, "cyan", barText)
 			self:PlaySound(1251361, "long")
 		end
@@ -252,7 +269,7 @@ end
 function mod:UmbralCollapse(eventInfo)
 	local barText = CL.count:format(CL.soak, umbralCollapseCount)
 	if self:ShouldShowBars() then
-		self:Bar(1249262, eventInfo.duration, barText, nil, eventInfo.id)
+		self:Bar(1249262, eventInfo.duration, barText, nil, math.abs(eventInfo.id)) -- make any id positive to handle our own started bar
 	end
 	umbralCollapseCount = umbralCollapseCount + 1
 	return {
