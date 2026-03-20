@@ -175,7 +175,7 @@ function mod:TimersOther(_, eventInfo)
 		barInfo = self:OblivionsWrath(eventInfo)
 	elseif durationRounded == 72 then -- Umbral Collapse, Shadow's Advance (after first stage)
 		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
-		if voidFallCount == 1 then
+		if voidFallCount == 2 then -- 2 because we already incremented the count by 1 on pull
 				self:DummyUmbralEvent(eventInfo)
 			return
 		else
