@@ -852,6 +852,12 @@ function mod:AuraOfPeace(eventInfo)
 		self:CDBar(1248451, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	auraPeaceCount = auraPeaceCount + 1
+	-- Tyr's Wrath is bugged and missing an event/timers, start it here for now.
+	local tyrsCD = eventInfo.duration + 5  -- always 5 seconds after Aura of Peace
+	activeBars[-eventInfo.id] = self:TyrsWrath({
+		duration = tyrsCD,
+	})
+	self:ScheduleTimer(function() self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil,-eventInfo.id) end, tyrsCD)
 	return {
 		msg = barText,
 		key = 1248451,
