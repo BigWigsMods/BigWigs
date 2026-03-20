@@ -11,7 +11,7 @@ end
 
 L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "zhCN")
 if L then
-	--L.grappling_maw = "Tank Grip"
+	L.grappling_maw = "抓钩之颚" -- 直接使用技能名称
 end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "zhCN")
