@@ -1226,9 +1226,16 @@ do
 			local bar = tmp[i]
 			if i > barLimit then
 				bar:SetAlpha(0)
-				bar:EnableMouse(false)
-			elseif barLimit ~= 100 then
+				if bar:Get("bigwigs:tooltip") then -- Icon tooltips are enabled and one exists for this bar
+					bar.candyBarIconFrame:EnableMouse(false)
+				end
+				bar:Set("bigwigs:notvisible", true)
+			elseif bar:Get("bigwigs:notvisible") then
 				bar:SetAlpha(1)
+				if bar:Get("bigwigs:tooltip") then
+					bar.candyBarIconFrame:EnableMouse(true)
+				end
+				bar:Set("bigwigs:notvisible", nil)
 			end
 			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
 			bar:ClearAllPoints()
@@ -1883,6 +1890,7 @@ do
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
 		if db.iconTooltip and type(key) == "number" and key > 0 then
 			bar.candyBarIconFrame.bwID = key
+			bar:Set("bigwigs:tooltip", key)
 			bar.candyBarIconFrame:SetScript("OnEnter", OnEnterIcon)
 			bar.candyBarIconFrame:SetScript("OnLeave", OnLeaveIcon)
 		end
