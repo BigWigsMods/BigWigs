@@ -156,7 +156,7 @@ function mod:TimersMythic(_, eventInfo)
 			self:Message("stages", "cyan", CL.intermission, false) -- Blizzard Radiant Barrier Message
 			self:PlaySound("stages", "long")
 			self:Bar("stages", 40, CL.stage:format(stage + 0.5), 1249748)
-			self:StopBlizzMessages(0.2) -- Radiant Barrier Message
+			self:StopBlizzMessages(1) -- Radiant Barrier Message
 		end
 	elseif stage % 1 == 0.5 then
 		stage = stage + 0.5
@@ -291,7 +291,7 @@ function mod:TimersHeroic(_, eventInfo)
 			self:Message("stages", "cyan", CL.intermission, false)
 			self:PlaySound("stages", "long")
 			self:Bar("stages", 25, CL.stage:format(stage + 0.5), 1249748)
-			self:StopBlizzMessages(0.2) -- Radiant Barrier Message
+			self:StopBlizzMessages(1) -- Radiant Barrier Message
 		end
 	elseif stage % 1 == 0.5 and time - 5 > lastStaged then
 		stage = stage + 0.5
@@ -468,7 +468,7 @@ function mod:TimerOther(_, eventInfo)
 			self:Message("stages", "cyan", CL.intermission, false)
 			self:PlaySound("stages", "long")
 			self:Bar("stages", 26.5, CL.stage:format(stage + 0.5), 1249748)
-			self:StopBlizzMessages(0.2) -- Radiant Barrier Message
+			self:StopBlizzMessages(1) -- Radiant Barrier Message
 		end
 	elseif stage % 1 == 0.5 and time - 5 > lastStaged then
 		stage = stage + 0.5
