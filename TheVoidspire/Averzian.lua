@@ -152,7 +152,12 @@ function mod:DummyUmbralEvent(eventInfo) -- Blizzard cancels this timer, but it 
 	}
 	local fakeInfo = self:UmbralCollapse(eventInfo)
 	activeBars[fakeEventInfo.id] = fakeInfo
-	self:ScheduleTimer(function() self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil, fakeEventInfo.id) end, duration)
+	self:ScheduleTimer(function()
+		self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil, fakeEventInfo.id)
+		if self:ShouldShowBars() and fakeInfo.callback then
+			fakeInfo.callback()
+		end
+	end, duration)
 end
 
 function mod:TimersOther(_, eventInfo)
