@@ -81,7 +81,6 @@ function mod:GetOptions()
 		[1245391] = -33255, -- Ezzorak
 	},{
 		[1249748] = CL.raid_damage,
-		[1262623] = CL.beam,
 		[1244221] = CL.breath,
 		[1244917] = CL.orbs,
 	}
@@ -690,7 +689,7 @@ end
 
 -- Vaelgor
 function mod:Nullbeam(eventInfo)
-	local barText = CL.count:format(CL.beam, nullbeamCount)
+	local barText = CL.count:format(self:SpellName(1262623), nullbeamCount)
 	if self:ShouldShowBars() then
 		self:CDBar(1262623, eventInfo.duration, barText, nil, eventInfo.id)
 	end
