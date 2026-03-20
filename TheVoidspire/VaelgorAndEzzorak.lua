@@ -342,6 +342,8 @@ function mod:TimersHeroic(_, eventInfo)
 				barInfo = self:DreadBreath(eventInfo)
 			elseif durationRounded == 6 then -- Rakfang
 				barInfo = self:Rakfang(eventInfo)
+			elseif durationRounded == 12 then -- Vaelwing
+				barInfo = self:Vaelwing(eventInfo)
 			elseif durationRounded == 10 then -- Gloom
 				barInfo = self:Gloom(eventInfo)
 			elseif durationRounded == 15 then -- Void Howl
