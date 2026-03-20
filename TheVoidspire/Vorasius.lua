@@ -281,7 +281,7 @@ do
 		if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
 			-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
 			local barText = CL.count:format(CL.breath, breathCount)
-			self:CDBar(1256855, 89, barText)
+			self:Bar(1256855, 89, barText)
 			breathCount = breathCount + 1
 			self:ScheduleTimer(function() StopBarOnWarning(barText, 2) end, 85)
 		end
