@@ -84,7 +84,7 @@ do
 		bossCombatInactive = "NONE",
 		bossCombatTextFormat = 2,
 		bossCombatHistoryAmount = 10,
-		bossCombatHistoryResetConditions = 7,
+		bossCombatHistoryResetConditions = 1,
 		bossCombatHistoryTimeFormat = 2,
 
 		-- Instance Timer
