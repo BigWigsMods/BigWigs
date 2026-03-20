@@ -1174,8 +1174,8 @@ L.bigwigsEnhancedTimers = "BigWigs 風格的計時條 + BigWigs 的增強計時 
 L.blizzBasicAsBars = "BigWigs 風格的計時條 + 暴雪的內建計時"
 L.blizzBasicAsBlizzTimeline = "暴雪的「首領技能」時間軸 + 暴雪的內建計時（完全使用暴雪原生）"
 L.developerMode = "開發者模式"
-L.enhancedModeWarning = "警告！\n\n停用 BigWigs 的增強計時會同步關閉 BigWigs 的其他首領戰功能，包含：計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
-L.enhancedModeWelcome = "增強模式已啟用！\n\n大部份功能已恢復至《至暗之夜》版本前的狀態，包含：計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
+L.enhancedModeWarning = "警告！\n\n停用 BigWigs 的增強計時會同步關閉 BigWigs 的其他首領戰功能，包含：\n\n計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
+L.enhancedModeWelcome = "增強模式已啟用！\n\n大部份功能已恢復至《至暗之夜》版本前的狀態，包含：\n\n計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
 
 -----------------------------------------------------------------------
 -- Victory.lua
