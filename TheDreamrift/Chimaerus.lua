@@ -185,6 +185,7 @@ function mod:TimerOther(_, eventInfo)
 				ravenousDiveCount = 1
 				durationCount = {}
 			end, eventInfo.duration)
+			return
 		end
 	else -- Stage 2 timers
 		if durationRounded == 18 or durationRounded == 3 then -- Caustic Phlegm
@@ -266,6 +267,7 @@ function mod:TimerEasy(_, eventInfo)
 				ravenousDiveCount = 1
 				durationCount = {}
 			end, eventInfo.duration)
+			return
 		end
 	else -- Stage 2 timers
 		if durationRounded == 18 or durationRounded == 3 then -- Caustic Phlegm
