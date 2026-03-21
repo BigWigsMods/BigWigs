@@ -636,6 +636,14 @@ do
 		local stage = self:GetStage() or 0
 		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self:GetEncounterID(), stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
 		self:Error(eventErrorMessage, true)
+
+		local function AddExtraInfo(_, module)
+			if self == module then
+				module:Error(("TL event info: %s (%d#%s)"):format(module:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()), true)
+			end
+		end
+		self:RegisterMessage("BigWigs_OnBossDisable", AddExtraInfo)
+		self:RegisterMessage("BigWigs_OnBossWipe", AddExtraInfo)
 	end
 end
 
