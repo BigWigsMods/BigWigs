@@ -184,9 +184,7 @@ function mod:TimerOther(_, eventInfo)
 				corruptedDevastationCount = 1
 				ravenousDiveCount = 1
 				durationCount = {}
-				self:Debug("Stage 2 starting, timers should be corrected now.")
 			end, eventInfo.duration)
-			self:Debug("Scheduled Stage 2 Start")
 		end
 	else -- Stage 2 timers
 		if durationRounded == 18 or durationRounded == 3 then -- Caustic Phlegm
@@ -267,9 +265,7 @@ function mod:TimerEasy(_, eventInfo)
 				corruptedDevastationCount = 1
 				ravenousDiveCount = 1
 				durationCount = {}
-				self:Debug("Stage 2 starting, timers should be corrected now.")
 			end, eventInfo.duration)
-			self:Debug("Scheduled Stage 2 Start")
 		end
 	else -- Stage 2 timers
 		if durationRounded == 18 or durationRounded == 3 then -- Caustic Phlegm
@@ -279,25 +275,7 @@ function mod:TimerEasy(_, eventInfo)
 		elseif durationRounded == 8 then -- Corrupted Devastation
 			barInfo = self:CorruptedDevastation(eventInfo)
 		elseif durationRounded == 30 or durationRounded == 1 then -- Ravenous Dive
-			barInfo = self:RavenousDive(eventInfo)
-			if durationRounded == 1 then
-				self:ScheduleTimer(function()
-					self:Message(1245406, "red", CL.stage:format(1), false)
-					self:PlaySound(1245406, "long")
-					self:SetStage(1)
-					almdustUpheavalCount = 1
-					riftEmergenceCount = 1
-					riftMadnessCount = 1
-					consumingMiasmaCount = 1
-					causticPhlegmCount = 1
-					rendingTearCount = 1
-					corruptedDevastationCount = 1
-					ravenousDiveCount = 1
-					durationCount = {}
-					self:Debug("Stage 1 starting, timers should be corrected now.")
-				end, eventInfo.duration)
-				self:Debug("Scheduled Stage 1 Start")
-			end
+			barInfo = self:RavenousDive(eventInfo, durationRounded == 1)
 		elseif durationRounded == 12 then
 			-- Corrupted Devastation > Caustic Phlegm > Corrupted Devastation > Caustic Phlegm
 			durationCount[durationRounded] = (durationCount[durationRounded] or 0) + 1
@@ -498,7 +476,25 @@ function mod:CorruptedDevastation(eventInfo)
 end
 
 -- Ravenous Dive
-function mod:RavenousDive(eventInfo)
+function mod:RavenousDive(eventInfo, stageEnding)
+	if stageEnding then
+		self:ScheduleTimer(function()
+			if self:ShouldShowBars() then
+				self:Message(1245406, "cyan", CL.stage:format(1), false)
+				self:PlaySound(1245406, "long")
+			end
+			self:SetStage(1)
+			almdustUpheavalCount = 1
+			riftEmergenceCount = 1
+			riftMadnessCount = 1
+			consumingMiasmaCount = 1
+			causticPhlegmCount = 1
+			rendingTearCount = 1
+			corruptedDevastationCount = 1
+			ravenousDiveCount = 1
+			durationCount = {}
+		end, eventInfo.duration)
+	end
 	local barText = CL.stage:format(1) -- Do we want a count here?
 	if self:ShouldShowBars() then
 		self:Bar(1245406, eventInfo.duration, barText, nil, eventInfo.id)
