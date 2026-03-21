@@ -182,8 +182,8 @@ local updateData = function(module)
 		end
 	end
 
-	local _, _, diff = GetInstanceInfo()
-	difficulty = diff
+	local _, _, diff, _, currentMaxPlayers = GetInstanceInfo()
+	difficulty, maxPlayers = diff, currentMaxPlayers
 
 	UpdateDispelStatus()
 	UpdateInterruptStatus()
@@ -482,6 +482,14 @@ function boss:SetPrivateAuraSounds(spellIDTable)
 	self.privateAuraSoundOptions = spellIDTable
 end
 
+--- Check if a module has private aura sounds.
+-- @return boolean
+function boss:HasPrivateAuraSounds()
+	if self.privateAuraSoundOptions then
+		return true
+	end
+end
+
 function boss:RegisterPrivateAuraSounds()
 	if not self.privateAuraSoundOptions or self.privateAuraSounds then return end
 	local soundModule = plugins.Sounds
@@ -673,9 +681,6 @@ function boss:Enable(isWipe)
 				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			end
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
-		else
-			-- Some modules don't engage (trash modules) so we register them here
-			self:RegisterPrivateAuraSounds()
 		end
 
 		local _, class = UnitClass("player")
@@ -751,14 +756,6 @@ function boss:Disable(isWipe)
 			for k in next, b do
 				allowedEvents[k] = true
 			end
-		end
-
-		-- Unregister private aura sounds
-		if self.privateAuraSounds then
-			for i = 1, #self.privateAuraSounds do
-				C_UnitAuras.RemovePrivateAuraAppliedSound(self.privateAuraSounds[i])
-			end
-			self.privateAuraSounds = nil
 		end
 
 		-- Cancel all say countdowns
@@ -1615,10 +1612,6 @@ do
 			local encounterID = self:GetEncounterID()
 
 			self:Debug(":Engage", "noEngage:", noEngage, encounterID)
-
-			if encounterID then
-				self:RegisterPrivateAuraSounds()
-			end
 
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)

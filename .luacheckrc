@@ -89,9 +89,10 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 }
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
+	"113/C_CVar",
+	"113/C_UnitAuras",
 	"113/geterrorhandler",
 	"113/UnitIsCorpse",
-	"113/C_CVar",
 }
 files["Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",

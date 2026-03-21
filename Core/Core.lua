@@ -289,28 +289,43 @@ do
 			plugins[i]:Disable()
 		end
 	end
-	local function DisableCore(skipDelveEvent)
-		if coreEnabled then
-			coreEnabled = false
+	local DisableCore
+	do
+		local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+		function DisableCore(skipDelveEvent)
+			if coreEnabled then
+				coreEnabled = false
 
-			loader.UnregisterMessage(mod, "BigWigs_BossComm")
-			loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
-			core.UnregisterEvent(mod, "ENCOUNTER_START")
-			core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
-			core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
-			core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
-			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
-			if loader.isRetail and not skipDelveEvent then
-				core.UnregisterEvent(mod, "PLAYER_MAP_CHANGED")
-			end
-			core.UnregisterEvent(mod, "PLAYER_LOGIN")
+				loader.UnregisterMessage(mod, "BigWigs_BossComm")
+				loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
+				core.UnregisterEvent(mod, "ENCOUNTER_START")
+				core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
+				core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
+				core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
+				core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
+				if loader.isRetail then
+					for _, module in next, bosses do
+						-- Unregister private aura sounds
+						if module.privateAuraSounds then
+							for i = 1, #module.privateAuraSounds do
+								RemovePrivateAuraAppliedSound(module.privateAuraSounds[i])
+							end
+							module.privateAuraSounds = nil
+						end
+					end
+					if not skipDelveEvent then
+						core.UnregisterEvent(mod, "PLAYER_MAP_CHANGED")
+					end
+				end
+				core.UnregisterEvent(mod, "PLAYER_LOGIN")
 
-			core:SendMessage("BigWigs_StopConfigureMode")
-			if BigWigsOptions then
-				BigWigsOptions:Close()
+				core:SendMessage("BigWigs_StopConfigureMode")
+				if BigWigsOptions then
+					BigWigsOptions:Close()
+				end
+				DisableModules()
+				core:SendMessage("BigWigs_CoreDisabled")
 			end
-			DisableModules()
-			core:SendMessage("BigWigs_CoreDisabled")
 		end
 	end
 	local function zoneChanged()
@@ -364,10 +379,16 @@ do
 			end
 
 			if loader.isRetail then
-				-- enable trash modules for the current zone
 				for _, module in next, bosses do
-					if not module:GetEncounterID() and not module.worldBoss and module:IsZoneID(instanceID) then
-						module:Enable()
+					if module:IsZoneID(instanceID) then
+						-- Register private aura sounds
+						if module:HasPrivateAuraSounds() then
+							module:RegisterPrivateAuraSounds()
+						end
+						-- Enable trash modules for the current zone
+						if not module:GetEncounterID() and not module.worldBoss then
+							module:Enable()
+						end
 					end
 				end
 			end
@@ -645,11 +666,17 @@ do
 
 				core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-				-- automatically enable trash modules if we're in the relevant zone at module registration
-				if module:Retail() and not module:GetEncounterID() and not module.worldBoss then
+				if module:Retail() then
 					local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 					if module:IsZoneID(instanceID) then
-						module:Enable()
+						-- Register private aura sounds
+						if self:HasPrivateAuraSounds() then
+							self:RegisterPrivateAuraSounds()
+						end
+						-- Automatically enable trash modules if we're in the relevant zone at module registration
+						if not module:GetEncounterID() and not module.worldBoss then
+							module:Enable()
+						end
 					end
 				end
 			end
