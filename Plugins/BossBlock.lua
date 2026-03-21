@@ -915,19 +915,21 @@ end
 do
 	-- Talking Head blocking
 	local known = {
-		-- Black Rook Hold
+		-- Legion/Seat of the Triumvirate [Dungeon]
+		[87083]=true,
+		-- Legion/Black Rook Hold
 		[54567]=true,[54552]=true,[54566]=true,[54511]=true,[57890]=true,[54540]=true,
 		[54527]=true,[70619]=true,[70621]=true,[70623]=true,[70625]=true,[70627]=true,
-		-- Court of Stars
+		-- Legion/Court of Stars
 		[70615]=true,[70199]=true,[70198]=true,[70197]=true,[70193]=true,
 		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
-		-- Darkheart Thicket
+		-- Legion/Darkheart Thicket
 		[54459]=true,[54460]=true,[54461]=true,[54462]=true,[54463]=true,
 		[54464]=true,[54465]=true,[54466]=true,[54467]=true,[70601]=true,
 		[70603]=true,[70607]=true,
-		-- Halls of Valor
+		-- Legion/Halls of Valor
 		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
-		-- Neltharion's Lair
+		-- Legion/Neltharion's Lair
 		[54610]=true,[54608]=true,[54697]=true,[54708]=true,[54709]=true,
 		[54718]=true,[54719]=true,[54720]=true,[58102]=true,[58104]=true,
 
