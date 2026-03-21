@@ -149,9 +149,6 @@ function mod:OnBossDisable()
 	for eventID in next, backupBars do
 		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 	end
-	if self.errorChatPrints then
-		self:Error(("TL event version info: %d#%s"):format(BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()), true)
-	end
 end
 
 --------------------------------------------------------------------------------
