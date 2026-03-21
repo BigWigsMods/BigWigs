@@ -346,6 +346,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	if BigWigsLoader.isRetail then
 		self:RegisterEvent("ENCOUNTER_WARNING")
+		self:RegisterMessage("BigWigs_BlockBlizzMessages")
+		self:RegisterMessage("BigWigs_AllowBlizzMessages")
 	end
 end
 
@@ -412,4 +414,12 @@ function plugin:ENCOUNTER_WARNING(_, eventInfo)
 	if shouldPlaySound then
 		self:BigWigs_Sound(nil, nil, false, severitySoundMap[severity] or "alert")
 	end
+end
+
+function plugin:BigWigs_AllowBlizzMessages()
+	self:RegisterEvent("ENCOUNTER_WARNING")
+end
+
+function plugin:BigWigs_BlockBlizzMessages()
+	self:UnregisterEvent("ENCOUNTER_WARNING")
 end

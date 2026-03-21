@@ -603,7 +603,7 @@ end
 -- @param ... any number of values to concatenate into the log entry
 function boss:Debug(...)
 	if Transcriptor then
-		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
+		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", self.moduleName, ...)
 	end
 end
 
@@ -645,7 +645,7 @@ function boss:Enable(isWipe)
 		self.enabled = true
 
 		local isWiping = isWipe == true
-		self:Debug("Enabling module", self:GetEncounterID(), self.moduleName)
+		self:Debug("Enabling module", self:GetEncounterID())
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -691,7 +691,7 @@ function boss:Disable(isWipe)
 		self.enabled = nil
 
 		local isWiping = isWipe == true
-		self:Debug("Disabling module", "isWipe:", isWiping, self:GetEncounterID(), self.moduleName)
+		self:Debug("Disabling module", "isWipe:", isWiping, self:GetEncounterID())
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -813,7 +813,7 @@ function boss:Disable(isWipe)
 end
 function boss:Reboot(isWipe)
 	if self:IsEnabled() then
-		self:Debug("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
+		self:Debug("Rebooting module", "isWipe:", isWipe, self:GetEncounterID())
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
 			self:SendMessage("BigWigs_OnBossWipe", self)
@@ -1301,7 +1301,7 @@ end
 do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
-			module:Debug(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module:GetEncounterID(), module.moduleName)
+			module:Debug(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module:GetEncounterID())
 			module:Wipe()
 		end
 	end
@@ -1325,13 +1325,13 @@ do
 	function boss:CheckBossStatus()
 		local hasBoss = self:GetHealth("boss1") > 0 or self:GetHealth("boss2") > 0 or self:GetHealth("boss3") > 0 or self:GetHealth("boss4") > 0 or self:GetHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
-			self:Debug(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID())
 			self:ScheduleTimer(wipeCheck, 6, self)
 		elseif not self:IsEngaged() and hasBoss then
-			self:Debug(":CheckBossStatus called :CheckForEncounterEngage", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckBossStatus called :CheckForEncounterEngage", self:GetEncounterID())
 			self:CheckForEncounterEngage()
 		else
-			self:Debug(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID())
 		end
 	end
 
@@ -1575,13 +1575,13 @@ do
 			for mobId in next, self.enableMobs do
 				local unit = findTargetByGUID(self, mobId)
 				if unit and UnitAffectingCombat(unit) then
-					self:Debug(":CheckForEngage() scan passed, calling :Engage()", self:GetEncounterID(), self.moduleName, unit, mobId)
+					self:Debug(":CheckForEngage() scan passed, calling :Engage()", self:GetEncounterID(), unit, mobId)
 					self:Engage()
 					return
 				end
 			end
 
-			self:Debug(":CheckForEngage() scan failed, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckForEngage() scan failed, next scan in 0.5s", self:GetEncounterID())
 			self:SimpleTimer(function() self:CheckForEngage() end, .5)
 		end
 	end
@@ -1592,13 +1592,13 @@ do
 			for mobId in next, self.enableMobs do
 				local unit = findTargetByGUID(self, mobId)
 				if unit and UnitAffectingCombat(unit) then
-					self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", self:GetEncounterID(), self.moduleName, unit, mobId)
+					self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", self:GetEncounterID(), unit, mobId)
 					self:SimpleTimer(function() self:CheckForWipe() end, 2)
 					return
 				end
 			end
 
-			self:Debug(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID())
 			self:Wipe()
 		end
 	end
@@ -1608,7 +1608,7 @@ do
 			self.isEngaged = true
 			local encounterID = self:GetEncounterID()
 
-			self:Debug(":Engage", "noEngage:", noEngage, encounterID, self.moduleName)
+			self:Debug(":Engage", "noEngage:", noEngage, encounterID)
 
 			if encounterID then
 				self:RegisterPrivateAuraSounds()
@@ -1636,7 +1636,7 @@ do
 
 	function boss:Win()
 		if self:IsEnabled() then
-			self:Debug(":Win", self:GetEncounterID(), self.moduleName)
+			self:Debug(":Win", self:GetEncounterID())
 			twipe(icons) -- Wipe icon cache
 			twipe(spells)
 			if self.OnWin then self:OnWin() end
@@ -3303,11 +3303,27 @@ function boss:TargetMessage(key, color, player, text, icon)
 	end
 end
 
---- Temporarily prevent any Blizzard boss messages from showing for the specified duration
--- @number duration the duration the block should last
-function boss:StopBlizzMessages(duration)
-	if type(duration) == "number" then
-		self:SendMessage("BigWigs_BlockBlizzMessage", self, duration)
+do
+	local blizzMessageBlocker = 0
+	local function Decrement()
+		blizzMessageBlocker = blizzMessageBlocker - 1
+		if blizzMessageBlocker < 0 then blizzMessageBlocker = 0 end -- Should never occur
+		if blizzMessageBlocker == 0 then
+			core:SendMessage("BigWigs_AllowBlizzMessages")
+			if Transcriptor then
+				Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", "AllowBlizzMessages")
+			end
+		end
+	end
+	--- Temporarily prevent any Blizzard boss messages from showing for the specified duration
+	-- @number duration the duration the block should last
+	function boss:StopBlizzMessages(duration)
+		if type(duration) == "number" then
+			blizzMessageBlocker = blizzMessageBlocker + 1
+			self:SimpleTimer(Decrement, duration)
+			self:SendMessage("BigWigs_BlockBlizzMessages")
+			self:Debug("BlockBlizzMessages", duration, blizzMessageBlocker)
+		end
 	end
 end
 
