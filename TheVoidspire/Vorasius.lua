@@ -265,12 +265,11 @@ end
 
 do
 	local t = 0
-	local function Unregister() mod:UnregisterEvent("ENCOUNTER_WARNING") end
 	local function StopBarOnWarning(barText, severity)
 		t = GetTime()
-		mod:ScheduleTimer(Unregister, 10)
+		mod:ScheduleTimer(function() mod:UnregisterEvent("ENCOUNTER_WARNING") mod:StopBar(barText) end, 10) -- the encounter message sometimes doesn't show, so this fails for now
 		mod:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
-			mod:Error(("Elapsed %s, severity was %s"):format(GetTime()-t, info.severity), true)
+			--mod:Error(("Elapsed %s, severity was %s"):format(GetTime()-t, info.severity), true)
 			if not severity or info.severity == severity then
 				mod:StopBar(barText)
 				mod:UnregisterEvent(event)
@@ -281,7 +280,7 @@ do
 		if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
 			-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
 			local barText = CL.count:format(CL.breath, breathCount)
-			self:Bar(1256855, 89, barText)
+			self:CDBar(1256855, 89, barText)
 			breathCount = breathCount + 1
 			self:ScheduleTimer(function() StopBarOnWarning(barText, 2) end, 85)
 		end
