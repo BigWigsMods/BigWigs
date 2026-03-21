@@ -1066,9 +1066,9 @@ do
 				if self.db.profile.blockTalkingHeads[entry] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
 					TalkingHeadFrame:Hide()
 				end
-				self:Debug("TalkingHead", "Known", soundKitId)
+				self:Debug("BlockedTalkingHead", soundKitId)
 			else
-				self:Debug("TalkingHead", "Unknown", TalkingHeadLineInfo())
+				self:Debug("NewTalkingHead", TalkingHeadLineInfo())
 			end
 		end
 	end

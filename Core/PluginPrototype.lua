@@ -278,10 +278,9 @@ do
 end
 
 --- Create a log entry in the Transcriptor addon if it is running
--- @string category the Transcriptor category to use
 -- @param ... any number of values to concatenate into the log entry
-function plugin:Debug(category, ...)
+function plugin:Debug(...)
 	if Transcriptor then
-		Transcriptor:AddCustomEvent("BigWigs_Debug", category, ...)
+		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", self.moduleName, ...)
 	end
 end
