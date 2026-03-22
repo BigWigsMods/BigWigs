@@ -670,8 +670,8 @@ do
 					local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
-						if self:HasPrivateAuraSounds() then
-							self:RegisterPrivateAuraSounds()
+						if module:HasPrivateAuraSounds() then
+							module:RegisterPrivateAuraSounds()
 						end
 						-- Automatically enable trash modules if we're in the relevant zone at module registration
 						if not module:GetEncounterID() and not module.worldBoss then
