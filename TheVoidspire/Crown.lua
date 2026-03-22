@@ -114,7 +114,7 @@ function mod:GetOptions() -- SetOption:skip-unused
 	},{
 		{ tabName = CL.stage:format(1), { "stages", 1233602, 1232467, 1255368, 1233865, 1233787, 1243743, 1243753, }, },
 		{ tabName = CL.stage:format(2), { "stages", 1237614, 1255368, 1237038, 1237837, 1246918, 1246461, }, },
-		{ tabName = CL.stage:format(3), { "stages", 1238843, 1239080, 1232467, 1233865, 1237038, 1238708, }, },
+		{ tabName = CL.stage:format(3), { "stages", 1238843, 1239080, 1232467, 1233865, 1237038, }, },
 		{ tabName = CL.intermission, { "stages", 1243982, 1245874, }, },
 
 		[1233787] = -32458, -- Morium
