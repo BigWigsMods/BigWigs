@@ -182,7 +182,7 @@ do
 				db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
 			end
 		end
-		if db.profile.anyCombatFontSize < 14 or db.profile.anyCombatFontSize > 200 then
+		if db.profile.anyCombatFontSize < 12 or db.profile.anyCombatFontSize > 200 then
 			db.profile.anyCombatFontSize = defaults.anyCombatFontSize
 		end
 		if db.profile.anyCombatOutline ~= "NONE" and db.profile.anyCombatOutline ~= "OUTLINE" and db.profile.anyCombatOutline ~= "THICKOUTLINE" then
@@ -246,7 +246,7 @@ do
 				db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
 			end
 		end
-		if db.profile.bossCombatFontSize < 14 or db.profile.bossCombatFontSize > 200 then
+		if db.profile.bossCombatFontSize < 12 or db.profile.bossCombatFontSize > 200 then
 			db.profile.bossCombatFontSize = defaults.bossCombatFontSize
 		end
 		if db.profile.bossCombatOutline ~= "NONE" and db.profile.bossCombatOutline ~= "OUTLINE" and db.profile.bossCombatOutline ~= "THICKOUTLINE" then
@@ -1428,7 +1428,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 5,
 								width = 2,
-								softMax = 100, max = 200, min = 14, step = 1,
+								softMax = 100, max = 200, min = 12, step = 1,
 								disabled = AnyCombatDisabled,
 							},
 							anyCombatMonochrome = {
@@ -1893,7 +1893,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 5,
 								width = 2,
-								softMax = 100, max = 200, min = 14, step = 1,
+								softMax = 100, max = 200, min = 12, step = 1,
 								disabled = BossCombatDisabled,
 							},
 							bossCombatMonochrome = {
