@@ -60,12 +60,14 @@ files["Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 }
 files["Core/BossPrototype.lua"].ignore = {
+	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetInventoryItemID", -- Vanilla interrupt check (warrior shield check)
 	"113/GetNumGroupMembers",
+	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",
 	"113/PlayerIsTimerunning",
 	"113/Transcriptor",
@@ -74,11 +76,13 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
 files["Core/BossPrototype_Classic.lua"].ignore = {
+	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
+	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",
 	"113/PlayerIsTimerunning",
 	"113/GetTalentInfo",

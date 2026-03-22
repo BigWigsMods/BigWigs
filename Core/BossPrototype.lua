@@ -3640,6 +3640,39 @@ do
 	end
 end
 
+do
+	local GetPlayerInfoByGUID = GetPlayerInfoByGUID
+	local GetClassColor = C_ClassColor.GetClassColor
+	--- Temporarily replace the next Blizzard boss message with a TargetMessage
+	-- @number duration the duration the block should last
+	-- @param key the option key
+	-- @string color the message color category
+	-- @param[opt] text the message text (if nil, key is used)
+	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
+	function boss:TargetMessageFromBlizzMessage(duration, key, color, text, icon)
+		self:StopBlizzMessages(duration)
+
+		local timer = self:ScheduleTimer(function()
+			self:UnregisterEvent("ENCOUNTER_WARNING")
+		end, duration)
+
+		self:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
+			self:CancelTimer(timer)
+			self:UnregisterEvent(event)
+
+			local player = info.targetName
+			local _, class = GetPlayerInfoByGUID(info.targetGUID)
+			if class and classColorMessages then
+				local classColor = GetClassColor(class)
+				if classColor then
+					player = classColor:WrapTextInColorCode(player)
+				end
+			end
+			self:Message(key, color, CL.other:format(text or self:SpellName(key), player), icon)
+		end)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Bars.
 -- @section bars
