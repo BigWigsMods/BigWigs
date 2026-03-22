@@ -490,45 +490,67 @@ function boss:HasPrivateAuraSounds()
 	end
 end
 
-function boss:RegisterPrivateAuraSounds()
-	if not self.privateAuraSoundOptions or self.privateAuraSounds then return end
-	local soundModule = plugins.Sounds
-	if not soundModule then return end
+do
+	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
+	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+	local InCombatLockdown = InCombatLockdown
+	function boss:RegisterPrivateAuraSounds()
+		if not self:HasPrivateAuraSounds() then return end
 
-	self.privateAuraSounds = {}
-	for _, opt in next, self.privateAuraSoundOptions do
-		local key = opt[1]
-		local sound
-		if opt.sound then
-			-- use the spell table default if the sound hasn't been changed in the config
-			local sDB = soundModule.db.profile["privateaura"]
-			if not sDB[self.name] or not sDB[self.name][key] then
-				sound = soundModule:GetDefaultSoundFile(opt.sound)
+		if InCombatLockdown() then
+			self:RegisterEvent("PLAYER_REGEN_ENABLED", function(event)
+				self:UnregisterEvent(event)
+				self:RegisterPrivateAuraSounds()
+			end)
+			return
+		end
+
+		-- Unregister previous sounds
+		if self.privateAuraSounds then
+			for i = 1, #self.privateAuraSounds do
+				RemovePrivateAuraAppliedSound(self.privateAuraSounds[i])
 			end
+			self.privateAuraSounds = nil
 		end
-		if not sound then
-			sound = soundModule:GetSoundFile(self, key, "privateaura")
-		end
-		if sound then
-			for i = 1, #opt do
-				local privateAuraSoundID
-				if type(sound) == "string" then -- sound file path
-					privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
-						spellID = opt[i],
-						unitToken = "player",
-						soundFileName = sound,
-						outputChannel = "master",
-					})
-				else -- sound file id
-					privateAuraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
-						spellID = opt[i],
-						unitToken = "player",
-						soundFileID = sound,
-						outputChannel = "master",
-					})
+
+		local soundModule = plugins.Sounds
+		if not soundModule then return end
+
+		self.privateAuraSounds = {}
+		for _, opt in next, self.privateAuraSoundOptions do
+			local key = opt[1]
+			local sound
+			if opt.sound then
+				-- use the spell table default if the sound hasn't been changed in the config
+				local sDB = soundModule.db.profile["privateaura"]
+				if not sDB[self.name] or not sDB[self.name][key] then
+					sound = soundModule:GetDefaultSoundFile(opt.sound)
 				end
-				if privateAuraSoundID then
-					self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+			end
+			if not sound then
+				sound = soundModule:GetSoundFile(self, key, "privateaura")
+			end
+			if sound then
+				for i = 1, #opt do
+					local privateAuraSoundID
+					if type(sound) == "string" then -- sound file path
+						privateAuraSoundID = AddPrivateAuraAppliedSound({
+							spellID = opt[i],
+							unitToken = "player",
+							soundFileName = sound,
+							outputChannel = "master",
+						})
+					else -- sound file id
+						privateAuraSoundID = AddPrivateAuraAppliedSound({
+							spellID = opt[i],
+							unitToken = "player",
+							soundFileID = sound,
+							outputChannel = "master",
+						})
+					end
+					if privateAuraSoundID then
+						self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+					end
 				end
 			end
 		end

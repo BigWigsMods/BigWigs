@@ -1048,6 +1048,7 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 		sDB[module.name] = {}
 	end
 	sDB[module.name][key] = value
+	module:RegisterPrivateAuraSounds()
 end
 
 local populatePrivateAuraOptions
@@ -1055,6 +1056,7 @@ local function privateAuraResetOnClick(widget)
 	local sDB = soundModule.db.profile["privateaura"]
 	for module, paOptions in next, widget:GetUserData("privateAuraSoundOptions") do
 		sDB[module.name] = nil
+		module:RegisterPrivateAuraSounds()
 	end
 	populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
 end
