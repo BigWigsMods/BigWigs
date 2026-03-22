@@ -1104,6 +1104,7 @@ do
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 		[1003] = true, -- Amirdrassil, Fyrakk defeat
 		[1034] = true, -- [The War Within/Manaforge Omega] clicking the portal after Dimensius defeat
+		[1049] = true, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
@@ -1170,7 +1171,8 @@ do
 		[-2296] = true, -- Nerub-ar Palace, Ansurek defeat
 		[-2406] = true, -- Liberation of Undermine, entering the Gallagio
 		[-2409] = true, -- Liberation of Undermine, Gallywix defeat
-		[-2516] = true, -- [Midnight/Magisters' Terrace] clicking to drain the shield after defeating Seranel Sunlash
+		[-2516] = true, -- [Midnight/Magisters' Terrace][Dungeon] clicking to drain the shield after defeating Seranel Sunlash
+		[-2529] = true, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
