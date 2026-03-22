@@ -732,6 +732,7 @@ function mod:DreadBreath(eventInfo)
 		msg = barText,
 		callback = function()
 			-- self:Message(1244221, "red", barText) -- Blizzard Message has a target.
+			self:TargetMessageFromBlizzMessage(1, 1244221, "red", barText)
 			-- PA Sounds
 		end
 	}
