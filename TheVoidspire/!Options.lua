@@ -48,13 +48,13 @@ BigWigs:AddSounds("Fallen-King Salhadaar", {
 })
 
 BigWigs:AddColors("Vaelgor & Ezzorak", {
-	[1244221] = "red",
 	[1244917] = "orange",
 	[1245391] = "orange",
 	[1245645] = "purple",
 	[1249748] = "yellow",
 	[1262623] = "yellow",
 	[1265131] = "purple",
+	[1280458] = "purple",
 	["stages"] = "cyan",
 })
 
@@ -100,8 +100,27 @@ BigWigs:AddSounds("Lightblinded Vanguard", {
 })
 
 BigWigs:AddColors("Crown of the Cosmos", {
-	["stages"] = "yellow",
+	[1232467] = "orange",
+	[1233602] = "yellow",
+	[1233787] = "purple",
+	[1233865] = "yellow",
+	[1237038] = "yellow",
+	[1237614] = "yellow",
+	[1237837] = "yellow",
+	[1238843] = "red",
+	[1239080] = "orange",
+	[1243743] = "orange",
+	[1243753] = "red",
+	[1246461] = "purple",
+	[1246918] = "orange",
+	[1255368] = "red",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddSounds("Crown of the Cosmos", {
+	[1237614] = "alarm",
+	[1238843] = "long",
+	[1243743] = "alert",
+	[1255368] = "alert",
+	["stages"] = "long",
 })
