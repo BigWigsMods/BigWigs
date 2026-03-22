@@ -72,7 +72,7 @@ local aspectOfTheEndCount = 1
 -- Initialization
 --
 
-function mod:GetOptions() -- SetOption:skip-unused
+function mod:GetOptions()
 	return {
 		"stages",
 
@@ -188,12 +188,12 @@ function mod:TimersEasy(_, eventInfo)
 	local durationRounded = self:RoundNumber(duration, 1)
 	eventInfo.durationRounded = durationRounded
 
-	if durationRounded == 1.5 and timeSinceLastEvent > 10 then
-		return self:SilverstrikeBarrage(duration)
-	end
-
 	local stage = self:GetStage()
-	if stage == 1 then
+
+	if durationRounded == 1.5 and timeSinceLastEvent > 10 then
+		barInfo = self:SilverstrikeBarrage(duration)
+
+	elseif stage == 1 then
 		if timelineEventCount <= 7 then
 			if durationRounded == 24 then
 				barInfo = self:SilverstrikeArrow(duration)
@@ -243,10 +243,9 @@ function mod:TimersEasy(_, eventInfo)
 		end
 		if silverstrikeBarrageCount > 1 and durationRounded == 20 then -- Stage Three
 			-- callback sets intermission, resets counts
-			return self:StageEvent(duration)
-		end
+			barInfo = self:StageEvent(duration)
 
-		if timelineEventCount <= 6 then
+		elseif timelineEventCount <= 6 then
 			-- stage start timers
 			if durationRounded == 13 then -- Null Corona
 				barInfo = self:NullCorona(duration)
@@ -360,13 +359,14 @@ function mod:TimersHeroic(_, eventInfo)
 
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 1)
-
-	if durationRounded == 1.5 and timeSinceLastEvent > 10 then
-		return self:SilverstrikeBarrage(duration)
-	end
+	eventInfo.durationRounded = durationRounded
 
 	local stage = self:GetStage()
-	if stage == 1 then
+
+	if durationRounded == 1.5 and timeSinceLastEvent > 10 then
+		barInfo = self:SilverstrikeBarrage(duration)
+
+	elseif stage == 1 then
 		if timelineEventCount <= 8 then
 			if durationRounded == 24 then
 				barInfo = self:SilverstrikeArrow(duration)
@@ -391,6 +391,7 @@ function mod:TimersHeroic(_, eventInfo)
 			if durationRounded == 25 then -- Stage Two
 				-- callback sets intermission, resets counts
 				barInfo = self:StageEvent(duration)
+
 			elseif durationRounded == 48 then
 				durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
 				if durationEventCount[durationRounded] == 1 then
@@ -421,10 +422,9 @@ function mod:TimersHeroic(_, eventInfo)
 		end
 		if silverstrikeBarrageCount > 1 and durationRounded == 20 then -- Stage Three
 			-- callback sets intermission, resets counts
-			return self:StageEvent(duration)
-		end
+			barInfo = self:StageEvent(duration)
 
-		if timelineEventCount <= 6 then
+		elseif timelineEventCount <= 6 then
 			-- stage start timers
 			if durationRounded == 21 or durationRounded == 19 then
 				barInfo = self:RangerCaptainsMark(duration)
@@ -539,7 +539,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 			if self:ShouldShowBars() then
 				if state == 2 and barInfo.callback then -- Finished
 					barInfo.callback()
-				elseif state == 3 and barInfo.cancelCallback then -- Finished
+				elseif state == 3 and barInfo.cancelCallback then -- Canceled
 					barInfo.cancelCallback()
 				end
 			end
