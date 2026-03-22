@@ -3377,7 +3377,7 @@ end
 
 do
 	local GetPlayerInfoByGUID = GetPlayerInfoByGUID
-	local GetClassColor = C_ClassColor.GetClassColor
+	local GetClassColor = C_ClassColor and C_ClassColor.GetClassColor
 	--- Temporarily replace the next Blizzard boss message with a TargetMessage
 	-- @number duration the duration the block should last
 	-- @param key the option key
