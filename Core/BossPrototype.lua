@@ -1806,18 +1806,26 @@ function boss:Difficulty()
 end
 
 do
-	local difficultyToText
-	do
-		local L = BigWigsAPI:GetLocale("BigWigs")
-		difficultyToText = {
-			[14] = L.normal,
-			[15] = L.heroic,
-			[16] = L.mythic,
-			[17] = L.LFR,
-			[220] = L.story,
-		}
-	end
-	--- Get the current instance difficulty.
+	local difficultyToText = {
+		[1] = "Normal",
+		[2] = "Heroic",
+		[3] = "Normal 10",
+		[4] = "Normal 25",
+		[5] = "Heroic 10",
+		[6] = "Heroic 25",
+		[7] = "LFR Old",
+		[23] = "Mythic",
+		[24] = "Timewalking",
+		[14] = "Normal",
+		[15] = "Heroic",
+		[16] = "Mythic",
+		[17] = "LFR",
+		[33] = "Timewalking",
+		[205] = "Follower",
+		[208] = "Delves",
+		[220] = "Story",
+	}
+	--- Get the current instance difficulty name in English.
 	-- @return difficulty id
 	function boss:DifficultyName()
 		return difficultyToText[difficulty] or difficulty
