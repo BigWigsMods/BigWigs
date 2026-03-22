@@ -354,7 +354,8 @@ function mod:AlndustUpheaval(eventInfo)
 	return {
 		msg = barText,
 		callback = function()
-			self:Message(1262289, "yellow", barText)
+			-- self:Message(1262289, "yellow", barText)
+			self:TargetMessageFromBlizzMessage(1, 1262289, "yellow", barText)
 			self:PlaySound(1262289, "alert")
 		end
 	}
