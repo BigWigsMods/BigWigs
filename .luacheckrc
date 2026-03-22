@@ -37,6 +37,7 @@ files["Loader.lua"].ignore = {
 	"113/IsSpellKnown", -- XXX temp
 	"113/IsPublicTestClient",
 	"113/PlaySoundFile",
+	"113/print",
 	"113/securecallfunction",
 	"113/SendChatMessage", -- XXX temp
 	"113/SetRaidTarget",
@@ -92,6 +93,7 @@ files["Core/Core.lua"].ignore = {
 	"113/C_CVar",
 	"113/C_UnitAuras",
 	"113/geterrorhandler",
+	"113/print",
 	"113/UnitIsCorpse",
 }
 files["Core/PluginPrototype.lua"].ignore = {
@@ -202,6 +204,7 @@ files["Options/Options.lua"].ignore = {
 	"113/C_UI",
 	"113/C_UnitAuras",
 	"113/CallErrorHandler",
+	"113/print",
 	"113/securecallfunction",
 }
 files["Options/Sharing.lua"].ignore = {
@@ -216,6 +219,7 @@ files["**/?Locales/*.lua"].ignore = {
 }
 files["gen_option_values.lua"].ignore = {
 	"113/arg", -- We use global arg in the parser
+	"113/print",
 }
 
 files["Media/Media.lua"].ignore = {
@@ -278,6 +282,7 @@ ignore = {
 }
 not_globals = {
 	"arg", -- arg is a standard global, so without this it won't error when we typo "args" in a module
+	"print",
 }
 globals = {
 	-- wow std api
