@@ -321,7 +321,10 @@ function mod:TimersOther(_, eventInfo)
 		elseif durationRounded == 15 or durationRounded == 14 then
 			barInfo = self:VoidstalkerSting(duration)
 		elseif durationRounded == 9 or durationRounded == 8 then
+			-- 8 is a refresh of previous 21s cast
 			barInfo = self:AspectOfTheEnd(duration)
+			if durationRounded == 8 then
+				barInfo.duration = {duration, 21}
 			end
 		else
 			-- repeating timers
@@ -331,6 +334,7 @@ function mod:TimersOther(_, eventInfo)
 				barInfo = self:VoidstalkerSting(duration)
 			elseif durationRounded == 39 or durationRounded == 21 then
 				barInfo = self:AspectOfTheEnd(duration)
+				barInfo.noStopBar = durationRounded == 21 -- bar gets refreshed
 			end
 		end
 
@@ -363,7 +367,9 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		local state = C_EncounterTimeline.GetEventState(eventID)
 		-- This encounter had paused/resumed bars during the boss's full energy spell. We don't show those as it's confusing.
 		if state == 2 or state == 3 then -- Finished or Canceled
-			self:StopBar(barInfo.msg)
+			if not barInfo.noStopBar then
+				self:StopBar(barInfo.msg)
+			end
 
 			if self:ShouldShowBars() then
 				if state == 2 and barInfo.callback then -- Finished
@@ -619,14 +625,20 @@ function mod:DevouringCosmos(duration)
 	}
 end
 
-function mod:AspectOfTheEnd(duration)
-	local barText = CL.count:format(self:SpellName(1239080), aspectOfTheEndCount)
-	aspectOfTheEndCount = aspectOfTheEndCount + 1
+function mod:AspectOfTheEnd(duration, updateBar)
+	local barText
+	if updateBar then
+		barText = CL.count:format(self:SpellName(1239080), aspectOfTheEndCount-1)
+	else
+		barText = CL.count:format(self:SpellName(1239080), aspectOfTheEndCount)
+		aspectOfTheEndCount = aspectOfTheEndCount + 1
+	end
 	return {
 		msg = barText,
 		key = 1239080,
 		callback = function()
 			self:Message(1239080, "orange", barText)
+			self:TargetMessageFromBlizzMessage(0.5, 1239080, "blue", CL.you:format(self:SpellName(1239080)))
 		end,
 	}
 end
