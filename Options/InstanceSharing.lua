@@ -492,17 +492,12 @@ local function ImportSounds(soundSettings, moduleName)
 	end
 end
 
-local function ImportPrivateAuras(privateAuraSettings, moduleName, zoneID)
+local function ImportPrivateAuras(privateAuraSettings, moduleName)
 	local soundModule = BigWigs:GetPlugin("Sounds", true)
 	if not soundModule or not privateAuraSettings then return end
 
 	local sDB = soundModule.db.profile["privateaura"]
 	sDB[moduleName] = CopyTable(privateAuraSettings)
-
-	local module = BigWigs:GetBossModule(moduleName:sub(16))
-	if module and module:IsZoneID(zoneID) then
-		module:RegisterPrivateAuraSounds() -- We need to re-register the sounds after the import has changed them
-	end
 end
 
 local function ImportFlags(flagSettings, moduleName)
@@ -550,7 +545,7 @@ function applyImport()
 	-- Prepare modules and plugins to import to
 	BigWigsLoader:LoadZone(lastImportData.zone)
 
-	for moduleName, data in pairs(lastImportData.exportData) do
+	for moduleName, data in next, lastImportData.exportData do
 		if flags then
 			ImportFlags(data.flags, moduleName)
 		end
@@ -559,7 +554,7 @@ function applyImport()
 		end
 		if privateAuras then
 			local privateAuraSounds = data.sounds and data.sounds.privateaura
-			ImportPrivateAuras(privateAuraSounds, moduleName, lastImportData.zone)
+			ImportPrivateAuras(privateAuraSounds, moduleName)
 		end
 		if colors then
 			ImportColors(data.colors, moduleName)
@@ -567,6 +562,17 @@ function applyImport()
 	end
 
 	BigWigs:SendMessage("BigWigs_ProfileUpdate")
+
+	-- We need to re-register any private aura sounds if the import changed them
+	if privateAuras then
+		for moduleName in next, lastImportData.exportData do
+			local module = BigWigs:GetBossModule(moduleName:sub(16))
+			if module and module:IsZoneID(lastImportData.zone) then
+				module:RegisterPrivateAuraSounds()
+			end
+		end
+	end
+
 	-- success!
 	return true
 end
