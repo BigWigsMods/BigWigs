@@ -49,9 +49,8 @@ function mod:GetOptions()
 		1254199, -- Parasite Expulsion
 		1241692, -- Shadowclaw Slam
 		1260052, -- Primordial Roar
-	},
-	{},
-	{
+		"berserk",
+	},nil,{
 		[1256855] = CL.breath, -- Void Breath (Breath)
 		[1254199] = CL.adds, -- Parasite Expulsion (Adds)
 		[1241692] = L.shadowclaw_slam, -- Shadowclaw Slam (Slams)
@@ -78,6 +77,8 @@ function mod:OnEncounterStart()
 	parasiteCount = 1
 	slamCount = 1
 	roarCount = 1
+
+	self:Berserk(372, true)
 end
 
 function mod:OnBossDisable()
