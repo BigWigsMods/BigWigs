@@ -666,7 +666,9 @@ do
 
 				core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-				if module:Retail() then
+				-- For repo users, a boss module can register prior to the core enabling, and trying to register sounds before the core/plugins is enabled would error
+				-- Since we need to run this same code on core enabled, we don't need to run it here unless the code is already enabled
+				if coreEnabled and module:Retail() then
 					local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
