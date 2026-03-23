@@ -1272,7 +1272,7 @@ local function parseLua(file)
 					key = "\"proximity\""
 				end
 				-- Dynamic key only usable with PauseBar and ResumeBar
-				if (functionName == "Bar" or functionName == "PauseBar" or functionName == "ResumeBar") and key == "barInfo.key" then
+				if (functionName == "Bar" or functionName == "CDBar" or functionName == "PauseBar" or functionName == "ResumeBar") and key == "barInfo.key" then
 					key = nil
 				end
 				if functionName == "Berserk" then
