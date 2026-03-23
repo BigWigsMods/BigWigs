@@ -254,7 +254,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	if barInfo then
 		local state = C_EncounterTimeline.GetEventState(eventID)
 		-- This encounter had paused/resumed bars during the boss's full energy spell. We don't show those as it's confusing.
-		if state == 2 or state == 4 then -- Finished or Canceled
+		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
 			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
@@ -313,13 +313,14 @@ function mod:EntropicUnraveling(eventInfo)
 	local barText = CL.count:format(CL.full_energy, entropicUnravelingCount)
 	if self:ShouldShowBars() then
 		self:Bar(1246175, eventInfo.duration, barText, nil, eventInfo.id)
+		-- Scheduling since these were getting started and canceled right away
+		self:ScheduleTimer(function()
+			self:StopBlizzMessages(2) -- since we're not on the timeline event, can vary a bit
+			self:Message(1246175, "red", barText)
+			self:PlaySound(1246175, "warning")
+		end, eventInfo.duration)
 	end
 	entropicUnravelingCount = entropicUnravelingCount + 1
-	if self:ShouldShowBars() then
-		-- Scheduling instead of using the callback since these were getting started and canceled right away during tests.
-		self:ScheduleTimer("Message", eventInfo.duration, 1246175, "red", barText)
-		self:ScheduleTimer("PlaySound", eventInfo.duration, 1246175, "warning")
-	end
 end
 
 function mod:ShatteringTwilight(eventInfo)
