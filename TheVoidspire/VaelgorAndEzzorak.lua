@@ -23,7 +23,7 @@ mod:SetPrivateAuraSounds({
 	{1245421, sound = "underyou"}, -- Gloomfield
 	{1245059, sound = "alarm"}, -- Void Howl
 	{1245175, sound = "none"}, -- Voidbolt
-	-- {1280355, sound = "alarm"}, -- Rakfang Too spammy?
+	-- {1280355, sound = "none"}, -- Rakfang
 	1265152, -- Impale
 	{1248865, 1249595, sound = "info"}, -- Radiant Barrier
 	1270497, -- Shadowmark
@@ -797,9 +797,9 @@ function mod:Rakfang(eventInfo)
 		msg = barText,
 		callback = function()
 			self:Message(1245645, "purple", barText)
-			if self:ThreatTarget("player", "boss2") then -- this assumed Ezzorak boss2
-				self:PlaySound(1245645, "alarm")
-			end
+			-- if self:ThreatTarget("player", "boss2") then -- this assumed Ezzorak boss2
+			-- 	self:PlaySound(1245645, "alarm")
+			-- end
 		end
 	}
 end
