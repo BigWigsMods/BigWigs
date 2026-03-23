@@ -23,7 +23,7 @@ mod:SetPrivateAuraSounds({
 	{1246462, sound = "alarm"}, -- Rift Slash
 	{1238206, sound = "underyou"}, -- Volatile Fissure
 	{1237623, 1259861}, -- Ranger Captain's Mark (Targetted)
-	{1237038, sound = "alarm"}, -- Voidstalker's Sting
+	{1237038, sound = "none"}, -- Voidstalker's Sting
 	{1227557, sound = "underyou"}, -- Devouring Cosmos
 	1239111, -- Aspect of the End
 	{1255453, sound = "alarm"}, -- Gravity Collapse
@@ -64,9 +64,21 @@ local aspectOfTheEndCount = 1
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
--- end
+local L = mod:GetLocale()
+if L then
+	L.silverstrike_arrow = "Arrows"
+  L.grasp_of_emptiness = "Obelisks"
+  -- L.void_expulsion = "Bait"
+  -- L.null_corona = "Corona"
+  L.interrupting_tremor = "Interrupt"
+  L.ravenous_abyss = "Move Out"
+  L.silverstrike_barrage = "Lines"
+  L.cosmic_barrier = "Barrier"
+  L.rangers_captains_mark = "Arrows"
+  L.voidstalker_sting = "Stings"
+  L.aspect_of_the_end = "Tethers"
+  L.devouring_cosmos = "Next Platform"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -102,7 +114,7 @@ function mod:GetOptions()
 		-- Intermission: Shattering Singularity
 		-- 1243982, -- Silverstrike Barrage
 		-- 1234569, -- Stellar Emission
-		1245874, -- Orbiting Matter
+		-- 1245874, -- Orbiting Matter
 
 		-- Stage Three: The End of the End
 		1238843, -- Devoiring Cosmos
@@ -115,16 +127,29 @@ function mod:GetOptions()
 		{ tabName = CL.stage:format(1), { "stages", 1233602, 1232467, 1255368, 1233865, 1233787, 1243743, 1243753, }, },
 		{ tabName = CL.stage:format(2), { "stages", 1237614, 1255368, 1237038, 1237837, 1246918, 1246461, }, },
 		{ tabName = CL.stage:format(3), { "stages", 1238843, 1239080, 1232467, 1233865, 1237038, }, },
-		{ tabName = CL.intermission, { "stages", 1243982, 1245874, }, },
+		{ tabName = CL.intermission, { "stages", 1243982, }, },
 
 		[1233787] = -32458, -- Morium
 		[1243743] = -33152, -- Demiar
 		[1243753] = -33153, -- Vorelus
 		[1233602] = -32196, -- Stage 1
-		[1243982] = -32454, -- Intermission 1
+		-- [1243982] = -32454, -- Intermission 1
 		[1237614] = -32455, -- Stage 2
-		[1245874] = -33091, -- Intermission 2
+		-- [1245874] = -33091, -- Intermission 2
 		[1238843] = -32456, -- Stage 3
+	},{
+		[1233602] = L.silverstrike_arrow, -- Arrows
+		[1232467] = L.grasp_of_emptiness, -- Obelisks
+		-- [1255368] = L.void_expulsion, -- Bait
+		[1233865] = CL.heal_absorb, -- Null Corona
+		[1243743] = L.interrupting_tremor, -- Interrupt
+		[1243753] = L.ravenous_abyss, -- Move Out
+		[1243982] = L.silverstrike_barrage, -- Lines
+		[1237614] = L.rangers_captains_mark, -- Arrows
+		[1237038] = L.voidstalker_sting, -- Stings
+		[1246918] = L.cosmic_barrier, -- Barrier
+		[1238843] = L.devouring_cosmos, -- Next Platform
+		[1239080] = L.aspect_of_the_end, -- Tethers
 	}
 end
 
@@ -445,7 +470,7 @@ function mod:StageEvent(duration)
 end
 
 function mod:SilverstrikeBarrage(duration)
-	local barText = CL.count:format(self:SpellName(1243982), silverstrikeBarrageCount)
+	local barText = CL.count:format(L.silverstrike_barrage, silverstrikeBarrageCount)
 	silverstrikeBarrageCount = silverstrikeBarrageCount + 1
 	return {
 		msg = barText,
@@ -456,26 +481,27 @@ end
 -- Stage 1
 
 function mod:SilverstrikeArrow(duration)
-	local barText = CL.count:format(self:SpellName(1233602), silverstrikeArrowCount)
+	local barText = CL.count:format(L.silverstrike_arrow, silverstrikeArrowCount)
 	silverstrikeArrowCount = silverstrikeArrowCount + 1
 	return {
 		msg = barText,
 		key = 1233602,
 		callback = function()
-			self:Message(1233602, "yellow", barText)
+			self:Message(1233602, "cyan", barText)
+			self:TargetMessageFromBlizzMessage(0.5, 1233602, "blue", CL.you:format(L.silverstrike_arrow))
 			-- PA target sound
 		end,
 	}
 end
 
 function mod:GraspOfEmptiness(duration)
-	local barText = CL.count:format(self:SpellName(1232467), graspOfEmptinessCount)
+	local barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount)
 	graspOfEmptinessCount = graspOfEmptinessCount + 1
 	return {
 		msg = barText,
 		key = 1232467,
 		callback = function()
-			self:Message(1232467, "orange", barText)
+			self:Message(1232467, "yellow", barText)
 			-- PA target sound
 		end,
 	}
@@ -496,7 +522,7 @@ function mod:VoidExpulsion(duration)
 end
 
 function mod:NullCorona(duration)
-	local barText = CL.count:format(self:SpellName(1233865), nullCoronaCount)
+	local barText = CL.count:format(CL.heal_absorb, nullCoronaCount)
 	nullCoronaCount = nullCoronaCount + 1
 	return {
 		msg = barText,
@@ -528,7 +554,7 @@ end
 
 function mod:InterruptingTremor(duration)
 	if interruptingTremorCount == 2 then
-		local text = CL.count:format(self:SpellName(1243743), 1)
+		local text = CL.count:format(L.interrupting_tremor, 1)
 		self:StopBar(text)
 
 		self:StopBlizzMessages(0.5)
@@ -536,7 +562,7 @@ function mod:InterruptingTremor(duration)
 		self:PlaySound(1243743, "alert")
 	end
 
-	local barText = CL.count:format(self:SpellName(1243743), interruptingTremorCount)
+	local barText = CL.count:format(L.interrupting_tremor, interruptingTremorCount)
 	interruptingTremorCount = interruptingTremorCount + 1
 	return {
 		msg = barText,
@@ -551,19 +577,19 @@ end
 
 function mod:RavenousAbyss(duration)
 	if ravenousAbyssCount == 2 then
-		local text = CL.count:format(self:SpellName(1243753), 1)
+		local text = CL.count:format(L.ravenous_abyss, 1)
 		self:StopBar(text)
 
 		self:Message(1243753, "orange", text)
 	end
 
-	local barText = CL.count:format(self:SpellName(1243753), ravenousAbyssCount)
+	local barText = CL.count:format(L.ravenous_abyss, ravenousAbyssCount)
 	ravenousAbyssCount = ravenousAbyssCount + 1
 	return {
 		msg = barText,
 		key = 1243753,
 		callback = function()
-			self:Message(1243753, "red", barText)
+			self:Message(1243753, "orange", barText)
 		end,
 	}
 end
@@ -571,28 +597,25 @@ end
 -- Stage 2
 
 function mod:RangerCaptainsMark(duration)
-	local barText = CL.count:format(self:SpellName(1237614), markCount)
+	local barText = CL.count:format(L.rangers_captains_mark, markCount)
 	markCount = markCount + 1
 	return {
 		msg = barText,
 		key = 1237614,
 		callback = function()
 			self:StopBlizzMessages(1)
-			self:Message(1237614, "yellow", barText)
-			self:PlaySound(1237614, "alarm", "spread") -- spread
+			self:Message(1237614, "cyan", barText)
+			-- self:PlaySound(1237614, "alarm", "spread") -- spread
 		end,
 	}
 end
 
 function mod:VoidstalkerSting(duration)
-	local barText = CL.count:format(self:SpellName(1237038), stingCount)
+	local barText = CL.count:format(L.voidstalker_sting, stingCount)
 	stingCount = stingCount + 1
 	return {
 		msg = barText,
 		key = 1237038,
-		callback = function()
-			self:Message(1237038, "yellow", barText)
-		end,
 	}
 end
 
@@ -603,19 +626,22 @@ function mod:CallOfTheVoid(duration)
 		msg = barText,
 		key = 1237837,
 		callback = function()
-			self:Message(1237837, "yellow", barText)
+			self:Message(1237837, "cyan", barText)
+			self:PlaySound(1237837, "info") -- adds
 		end,
 	}
 end
 
 function mod:CosmicBarrier(duration)
-	local barText = CL.count:format(self:SpellName(1246918), cosmicBarrierCount)
+	local barText = CL.count:format(L.cosmic_barrier, cosmicBarrierCount)
 	cosmicBarrierCount = cosmicBarrierCount + 1
 	return {
 		msg = barText,
 		key = 1246918,
 		callback = function()
 			self:Message(1246918, "orange", barText)
+			-- XXX gets held then canceled alot?
+			self:StopBlizzMessages(0.5)
 		end,
 	}
 end
@@ -635,7 +661,7 @@ end
 -- Stage 3
 
 function mod:DevouringCosmos(duration)
-	local barText = CL.count:format(self:SpellName(1238843), devouringCosmosCount)
+	local barText = CL.count:format(L.devouring_cosmos, devouringCosmosCount)
 	devouringCosmosCount = devouringCosmosCount + 1
 	return {
 		msg = barText,
@@ -655,9 +681,9 @@ end
 function mod:AspectOfTheEnd(duration, updateBar)
 	local barText
 	if updateBar then
-		barText = CL.count:format(self:SpellName(1239080), aspectOfTheEndCount-1)
+		barText = CL.count:format(L.aspect_of_the_end, aspectOfTheEndCount-1)
 	else
-		barText = CL.count:format(self:SpellName(1239080), aspectOfTheEndCount)
+		barText = CL.count:format(L.aspect_of_the_end, aspectOfTheEndCount)
 		aspectOfTheEndCount = aspectOfTheEndCount + 1
 	end
 	return {
@@ -665,7 +691,7 @@ function mod:AspectOfTheEnd(duration, updateBar)
 		key = 1239080,
 		callback = function()
 			self:Message(1239080, "orange", barText)
-			self:TargetMessageFromBlizzMessage(0.5, 1239080, "blue", CL.you:format(self:SpellName(1239080)))
+			self:TargetMessageFromBlizzMessage(0.5, 1239080, "blue", CL.you:format(L.aspect_of_the_end))
 		end,
 	}
 end
