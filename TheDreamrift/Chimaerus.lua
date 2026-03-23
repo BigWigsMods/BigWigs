@@ -208,7 +208,7 @@ function mod:TimerOther(_, eventInfo)
 	elseif self:ShouldShowBars() and not self:IsWiping() then
 		self:ErrorForTimelineEvent(eventInfo)
 		backupBars[eventInfo.id] = true
-		self:SendMessage("BigWigs_StartBar", nil, nil, eventInfo.spellName, eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
 
 		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
 		if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
@@ -290,7 +290,7 @@ function mod:TimerEasy(_, eventInfo)
 	elseif self:ShouldShowBars() and not self:IsWiping() then
 		self:ErrorForTimelineEvent(eventInfo)
 		backupBars[eventInfo.id] = true
-		self:SendMessage("BigWigs_StartBar", nil, nil, eventInfo.spellName, eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
 
 		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
 		if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
