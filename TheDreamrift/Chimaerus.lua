@@ -132,7 +132,7 @@ function mod:TimerOther(_, eventInfo)
 	local barInfo = nil
 	if stage == 1 then
 		if durationRounded == 720 and self:ShouldShowBars() then -- Rift Cataclysm
-			self:Berserk(eventInfo.duration)
+			self:Berserk(eventInfo.duration, true)
 			return -- no further checks needed
 		elseif durationRounded == 65 then -- Consume
 			barInfo = self:Consume(eventInfo)
@@ -224,7 +224,7 @@ function mod:TimerEasy(_, eventInfo)
 	local barInfo = nil
 	if stage == 1 then
 		if durationRounded == 720 and self:ShouldShowBars() then -- Rift Cataclysm
-			self:Berserk(eventInfo.duration)
+			self:Berserk(eventInfo.duration, true)
 			return -- no further checks needed
 		elseif durationRounded == 72 then -- Consume
 			barInfo = self:Consume(eventInfo)
