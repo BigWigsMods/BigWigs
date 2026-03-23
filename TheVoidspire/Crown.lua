@@ -212,6 +212,10 @@ function mod:TimersOther(_, eventInfo)
 				elseif count == 3 then
 					barInfo = self:RavenousAbyss(duration)
 				end
+				if self:ShouldShowBars() then
+					self:CDBar(barInfo.key, duration, barInfo.msg)
+				end
+				return false -- handle the first set ourself
 			end
 		else
 			if durationRounded == 25 then -- Stage Two
@@ -504,6 +508,13 @@ function mod:NullCorona(duration)
 end
 
 function mod:DarkHand(duration)
+	if darkHandCount == 2 then
+		local text = CL.count:format(self:SpellName(1233787), 1)
+		self:StopBar(text)
+
+		self:Message(1233787, "purple", text)
+	end
+
 	local barText = CL.count:format(self:SpellName(1233787), darkHandCount)
 	darkHandCount = darkHandCount + 1
 	return {
@@ -516,6 +527,15 @@ function mod:DarkHand(duration)
 end
 
 function mod:InterruptingTremor(duration)
+	if interruptingTremorCount == 2 then
+		local text = CL.count:format(self:SpellName(1243743), 1)
+		self:StopBar(text)
+
+		self:StopBlizzMessages(0.5)
+		self:Message(1243743, "red", text)
+		self:PlaySound(1243743, "alert")
+	end
+
 	local barText = CL.count:format(self:SpellName(1243743), interruptingTremorCount)
 	interruptingTremorCount = interruptingTremorCount + 1
 	return {
@@ -530,6 +550,13 @@ function mod:InterruptingTremor(duration)
 end
 
 function mod:RavenousAbyss(duration)
+	if ravenousAbyssCount == 2 then
+		local text = CL.count:format(self:SpellName(1243753), 1)
+		self:StopBar(text)
+
+		self:Message(1243753, "orange", text)
+	end
+
 	local barText = CL.count:format(self:SpellName(1243753), ravenousAbyssCount)
 	ravenousAbyssCount = ravenousAbyssCount + 1
 	return {
