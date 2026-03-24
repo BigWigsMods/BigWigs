@@ -656,7 +656,7 @@ function boss:Error(message, chatOnly)
 end
 
 do
-	local unhandledEventString = "TL event %q for mod %q (stage %s-%ss), %s (%d), duration was %s."
+	local unhandledEventString = "TL event after %.1fs for mod %q (stage %s), %s (%d), duration was %s."
 	--- Print an error message with event information after the encounter has ended
 	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
@@ -665,7 +665,7 @@ do
 			return
 		end
 		local stage = self:GetStage() or 0
-		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self:GetEncounterID(), stage, GetTime() - self.stageTime, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
+		local eventErrorMessage = unhandledEventString:format(GetTime() - self.stageTime, self:GetEncounterID(), stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
 		self:Error(eventErrorMessage, true)
 	end
 end
