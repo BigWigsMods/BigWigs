@@ -27,14 +27,14 @@ end
 
 L = BigWigs:NewBossLocale("Crown of the Cosmos", "zhCN")
 if L then
-	--L.silverstrike_arrow = "Arrows"
-	--L.grasp_of_emptiness = "Obelisks"
-	--L.interrupting_tremor = "Interrupt"
-	--L.ravenous_abyss = "Move Out"
-	--L.silverstrike_barrage = "Lines"
-	--L.cosmic_barrier = "Barrier"
-	--L.rangers_captains_mark = "Arrows"
-	--L.voidstalker_sting = "Stings"
-	--L.aspect_of_the_end = "Tethers"
-	--L.devouring_cosmos = "Next Platform"
+	L.silverstrike_arrow = "箭矢"
+	L.grasp_of_emptiness = "方尖碑"
+	L.interrupting_tremor = "干扰震荡"
+	L.ravenous_abyss = "躲避"
+	L.silverstrike_barrage = "弹幕"  -- 银锋弹幕射击
+	L.cosmic_barrier = "屏障"
+	L.rangers_captains_mark = "箭矢"
+	L.voidstalker_sting = 钉刺"  -- 虚空追猎者钉刺
+	L.aspect_of_the_end = "拉断"  -- 终末守护
+	L.devouring_cosmos = "换场地"
 end
