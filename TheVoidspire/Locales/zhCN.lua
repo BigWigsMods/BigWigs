@@ -34,7 +34,7 @@ if L then
 	L.silverstrike_barrage = "弹幕"  -- 银锋弹幕射击
 	L.cosmic_barrier = "屏障"
 	L.rangers_captains_mark = "箭矢"
-	L.voidstalker_sting = 钉刺"  -- 虚空追猎者钉刺
+	L.voidstalker_sting = "钉刺"  -- 虚空追猎者钉刺
 	L.aspect_of_the_end = "拉断"  -- 终末守护
 	L.devouring_cosmos = "换场地"
 end
