@@ -825,7 +825,7 @@ function boss:Disable(isWipe)
 				core:Print(self.errorChatPrints[i])
 			end
 			self.errorChatPrints = nil
-			core:Print("Extra info: %s (%d#%s)"):format(self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash())
+			core:Print(("Extra info: %s (%d#%s)"):format(self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()))
 		end
 	end
 end
