@@ -517,6 +517,7 @@ function boss:SetStage(stage)
 	if stage > 0 then
 		self.stage = stage
 		if self:IsEngaged() then
+			self.stageTime = GetTime()
 			self:SendMessage("BigWigs_SetStage", self, stage)
 		end
 	end
@@ -582,7 +583,7 @@ function boss:Error(message, chatOnly)
 end
 
 do
-	local unhandledEventString = "TL event %q for mod %q (stage %s), %s (%d), duration was %s."
+	local unhandledEventString = "TL event %q for mod %q (stage %s-%ss), %s (%d), duration was %s."
 	--- Print an error message with event information after the encounter has ended
 	-- @param eventInfo The event information table from the ENCOUNTER_TIMELINE_EVENT_ADDED events
 	function boss:ErrorForTimelineEvent(eventInfo)
@@ -591,7 +592,7 @@ do
 			return
 		end
 		local stage = self:GetStage() or 0
-		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self:GetEncounterID(), stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
+		local eventErrorMessage = unhandledEventString:format(eventInfo.id, self:GetEncounterID(), stage, GetTime() - self.stageTime, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
 		self:Error(eventErrorMessage, true)
 	end
 end
@@ -711,6 +712,7 @@ function boss:Disable(isWipe)
 		self.isEngaged = nil
 		self.isWinning = nil
 		self.bossTargetChecks = nil
+		self.stageTime = nil
 
 		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
@@ -1550,6 +1552,7 @@ do
 	function boss:Engage(noEngage)
 		if self:IsEnabled() and not self:IsEngaged() then
 			self.isEngaged = true
+			self.stageTime = GetTime()
 			local encounterID = self:GetEncounterID()
 
 			self:Debug(":Engage", "noEngage:", noEngage, encounterID)
