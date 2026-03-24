@@ -75,15 +75,15 @@ local aspectOfTheEndCount = 1
 local L = mod:GetLocale()
 if L then
 	L.silverstrike_arrow = "Arrows"
-  L.grasp_of_emptiness = "Obelisks"
-  L.interrupting_tremor = "Interrupt"
-  L.ravenous_abyss = "Move Out"
-  L.silverstrike_barrage = "Lines"
-  L.cosmic_barrier = "Barrier"
-  L.rangers_captains_mark = "Arrows"
-  L.voidstalker_sting = "Stings"
-  L.aspect_of_the_end = "Tethers"
-  L.devouring_cosmos = "Next Platform"
+	L.grasp_of_emptiness = "Obelisks"
+	L.interrupting_tremor = "Interrupt"
+	L.ravenous_abyss = "Move Out"
+	L.silverstrike_barrage = "Lines"
+	L.cosmic_barrier = "Barrier"
+	L.rangers_captains_mark = "Arrows"
+	L.voidstalker_sting = "Stings"
+	L.aspect_of_the_end = "Tethers"
+	L.devouring_cosmos = "Next Platform"
 end
 
 --------------------------------------------------------------------------------
