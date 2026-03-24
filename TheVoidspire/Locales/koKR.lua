@@ -11,7 +11,7 @@ end
 
 L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "koKR")
 if L then
-	L.grappling_maw = "탱커 밀침"
+	L.grappling_maw = "탱커 당김"
 end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "koKR")
