@@ -24,3 +24,17 @@ if L then
 	L.aura_of_peace = "平心" -- “平心光环”简称
 	L.zaelous_spirit = "狂热之魂" -- “狂热之魂”全称合适
 end
+
+L = BigWigs:NewBossLocale("Crown of the Cosmos", "zhCN")
+if L then
+	--L.silverstrike_arrow = "Arrows"
+	--L.grasp_of_emptiness = "Obelisks"
+	--L.interrupting_tremor = "Interrupt"
+	--L.ravenous_abyss = "Move Out"
+	--L.silverstrike_barrage = "Lines"
+	--L.cosmic_barrier = "Barrier"
+	--L.rangers_captains_mark = "Arrows"
+	--L.voidstalker_sting = "Stings"
+	--L.aspect_of_the_end = "Tethers"
+	--L.devouring_cosmos = "Next Platform"
+end

@@ -37,6 +37,14 @@ mod:SetPrivateAuraSounds({
 local activeBars = {}
 local backupBars = {}
 
+local function getBarInfoFromKey(key)
+	for _, barInfo in next, activeBars do
+		if barInfo.key == key then
+			return barInfo
+		end
+	end
+end
+
 local timelineEventCount = 0
 local durationEventCount = {}
 local stageStage = 1
@@ -68,8 +76,6 @@ local L = mod:GetLocale()
 if L then
 	L.silverstrike_arrow = "Arrows"
   L.grasp_of_emptiness = "Obelisks"
-  -- L.void_expulsion = "Bait"
-  -- L.null_corona = "Corona"
   L.interrupting_tremor = "Interrupt"
   L.ravenous_abyss = "Move Out"
   L.silverstrike_barrage = "Lines"
@@ -207,73 +213,93 @@ function mod:TimersOther(_, eventInfo)
 
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 1)
-	eventInfo.durationRounded = durationRounded
 
 	local stage = self:GetStage()
 
-	-- there's a 1.5 Null Corona that pops up if you go long in p1
 	-- Silverstrike Barrage is always have after rp
 	if durationRounded == 1.5 and timeSinceLastEvent > 10 then
 		barInfo = self:SilverstrikeBarrage(duration)
 
 	elseif stage == 1 then
-		-- pull timers
-		if timelineEventCount <= 7 then
-			if durationRounded == 24 then
-				barInfo = self:SilverstrikeArrow(duration)
-			elseif durationRounded == 5 then
-				barInfo = self:GraspOfEmptiness(duration)
-			elseif durationRounded == (self:Easy() and 60 or 12) then
-				barInfo = self:VoidExpulsion(duration)
-			elseif not self:Easy() and durationRounded == 2 then
-				barInfo = self:NullCorona(duration)
-			elseif durationRounded == 4 then
-				durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
-				local count = durationEventCount[durationRounded]
-				if count == 1 then
-					barInfo = self:InterruptingTremor(duration)
-				elseif count == 2 then
-					barInfo = self:DarkHand(duration)
-				elseif count == 3 then
-					barInfo = self:RavenousAbyss(duration)
-				end
-				if self:ShouldShowBars() then
-					self:CDBar(barInfo.key, duration, barInfo.msg)
-				end
-				return false -- handle the first set ourself
-			end
-		else
-			if durationRounded == 25 then -- Stage Two
-				-- callback sets intermission, resets counts
-				barInfo = self:StageEvent(duration)
+		if durationRounded == 25 then -- Stage Two
+			-- callback sets intermission, resets counts
+			barInfo = self:StageEvent(duration)
 
-			-- repeating timers
-			elseif (self:Easy() and durationRounded == 48) or durationRounded == 44.5 or durationRounded == 27 or (durationRounded == 1.5 and timeSinceLastEvent < 1) then
-				barInfo = self:NullCorona(duration)
-			elseif not self:Easy() and durationRounded == 48 then
-				durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
-				if durationEventCount[durationRounded] == 1 then
-					barInfo = self:VoidExpulsion(duration)
-				else
-					barInfo = self:NullCorona(duration)
-				end
-			elseif duration == 21 or duration == 23 then
-				barInfo = self:SilverstrikeArrow(duration)
-			elseif durationRounded == 28 or durationRounded == 32 or durationRounded == 31.5 or (not self:Easy() and durationRounded == 4.5) then
-				barInfo = self:GraspOfEmptiness(duration)
-			elseif durationRounded == 39 then
-				barInfo = self:VoidExpulsion(duration)
-			elseif durationRounded == (self:Easy() and 17 or 26) then
-				barInfo = self:DarkHand(duration)
-			elseif durationRounded == 20 then
+		-- pull timers
+		elseif durationRounded == 24 then
+			barInfo = self:SilverstrikeArrow(duration)
+		elseif durationRounded == 5 then
+			barInfo = self:GraspOfEmptiness(duration)
+		elseif durationRounded == (self:Easy() and 60 or 12) then
+			barInfo = self:VoidExpulsion(duration)
+		elseif durationRounded == 2 or durationRounded == 46.5 then
+			barInfo = self:NullCorona(duration)
+		elseif durationRounded == 4 then
+			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+			local count = durationEventCount[durationRounded]
+			if count == 1 then
 				barInfo = self:InterruptingTremor(duration)
-			elseif durationRounded == 19.5 then
+			elseif count == 2 then
+				barInfo = self:DarkHand(duration)
+			elseif count == 3 then
 				barInfo = self:RavenousAbyss(duration)
 			end
+			-- the order of these can change, so just fire bars for them and we'll
+			-- figure out the message on the next timer
+			if self:ShouldShowBars() then
+				self:CDBar(barInfo.key, duration, barInfo.msg)
+			end
+			return false -- don't want callback to fire
+
+		-- repeating timers
+		elseif (self:Easy() and durationRounded == 48) or durationRounded == 44.5 or durationRounded == 27 then
+			barInfo = self:NullCorona(duration)
+		elseif durationRounded == 48 then -- not self:Easy()
+			if voidExpulsionCount % 3 == 2 then
+				barInfo = self:VoidExpulsion(duration)
+			else
+				barInfo = self:NullCorona(duration)
+			end
+		elseif duration == 21 or duration == 23 then
+			barInfo = self:SilverstrikeArrow(duration)
+		elseif durationRounded == 28 or durationRounded == 32 or durationRounded == 31.5 then
+			barInfo = self:GraspOfEmptiness(duration)
+		elseif durationRounded == 39 then
+			barInfo = self:VoidExpulsion(duration)
+		elseif durationRounded == (self:Easy() and 17 or 26) then
+			barInfo = self:DarkHand(duration)
+		elseif durationRounded == 20 then
+			barInfo = self:InterruptingTremor(duration)
+		elseif durationRounded == 19.5 then
+			barInfo = self:RavenousAbyss(duration)
+
+		-- at 2min in p1, p1 restarts - 0.5 (excluding add timers), canceling and restarting active bars
+		elseif durationRounded == 4.5 then
+			local oldBarInfo = getBarInfoFromKey(1232467)
+			if oldBarInfo then
+				oldBarInfo.noStopBar = true
+				barInfo = self:GraspOfEmptiness(duration, true)
+				barInfo.duration = {duration, oldBarInfo.duration}
+			else
+				barInfo = self:GraspOfEmptiness(duration)
+			end
+		elseif durationRounded == (self:Easy() and 46 or 1.5) then
+			local oldBarInfo = getBarInfoFromKey(1233865)
+			if oldBarInfo then
+				oldBarInfo.noStopBar = true
+				barInfo = self:NullCorona(duration, true)
+				barInfo.duration = {duration, oldBarInfo.duration}
+			else
+				barInfo = self:NullCorona(duration)
+			end
+		elseif durationRounded == (self:Easy() and 59.5 or 11.5) then
+			barInfo = self:VoidExpulsion(duration)
+		elseif durationRounded == 23.5 and self:Easy() then
+			barInfo = self:SilverstrikeArrow(duration)
 		end
 
 	elseif stage == 2 then
-		if stageStage == 1 and timelineEventCount == 1 then
+		if timelineEventCount == 1 and markCount == 1 then
 			self:Message("stages", "cyan", CL.stage:format(stage), false)
 			self:PlaySound("stages", "long")
 		end
@@ -282,55 +308,39 @@ function mod:TimersOther(_, eventInfo)
 			-- callback sets intermission, resets counts
 			barInfo = self:StageEvent(duration)
 
-		elseif timelineEventCount <= 6 then
-			-- stage start timers
-			if durationRounded == 13 or durationRounded == 11 then
-				barInfo = self:NullCorona(duration)
-			elseif durationRounded == 21 or durationRounded == 19 then
-				barInfo = self:RangerCaptainsMark(duration)
-			elseif durationRounded == 16 or durationRounded == 14 then
-				barInfo = self:VoidExpulsion(duration)
-			elseif durationRounded == 8 or durationRounded == 6 then
-				barInfo = self:VoidstalkerSting(duration)
-			elseif durationRounded == 12 or durationRounded == 10 then
-				barInfo = self:CallOfTheVoid(duration)
-			elseif durationRounded == 24 or durationRounded == 22 then
-				barInfo = self:CosmicBarrier(duration)
-			end
-		else
-			-- repeating timers
+		elseif durationRounded == 13 or durationRounded == 11 then
+			barInfo = self:NullCorona(duration)
+		elseif durationRounded == 21 or durationRounded == 19 then
+			barInfo = self:RangerCaptainsMark(duration)
+		elseif durationRounded == 16 or durationRounded == 14 then
+			barInfo = self:VoidExpulsion(duration)
+		elseif durationRounded == 8 then
+			barInfo = self:VoidstalkerSting(duration)
+		elseif (durationRounded == 12 and callOfTheVoidCount == 1) or durationRounded == 10 then
+			barInfo = self:CallOfTheVoid(duration)
+		elseif durationRounded == 24 or durationRounded == 22 then
+			barInfo = self:CosmicBarrier(duration)
+		elseif durationRounded == 20 then
 			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
-
-			if durationRounded == 11 then -- Null Corona
-				-- start the next round (always first cast of the block)
-				timelineEventCount = 1
-				durationEventCount = {}
-				stageStage = stageStage + 1
-
-				barInfo = self:NullCorona(duration)
-			elseif durationRounded == 19 then
-				barInfo = self:RangerCaptainsMark(duration)
-			elseif durationRounded == 20 then
-				if durationEventCount[durationRounded] == 1 then
-					barInfo = self:VoidExpulsion(duration)
-				else
-					barInfo = self:VoidstalkerSting(duration)
-				end
-			elseif durationRounded == 6 then
-				if durationEventCount[durationRounded] == 1 and stageStage == 1 then
-					barInfo = self:RiftSlash(duration)
-				else
-					barInfo = self:VoidstalkerSting(duration)
-				end
-			elseif durationRounded == 5 then
+			if durationEventCount[durationRounded] == 1 then
+				barInfo = self:VoidExpulsion(duration)
+			else
 				barInfo = self:VoidstalkerSting(duration)
-			elseif durationRounded == 12 then
-				if durationEventCount[durationRounded] == 1 and stageStage == 1 then
-					-- fake, finishes with the first 6s cast
-					return false
-				end
-				barInfo = self:RiftSlash(duration)
 			end
+		elseif durationRounded == 6 then
+			if riftSlashCount == 1 then
+				barInfo = self:RiftSlash(duration)
+			else
+				barInfo = self:VoidstalkerSting(duration)
+			end
+		elseif durationRounded == 5 then
+			barInfo = self:VoidstalkerSting(duration)
+		elseif durationRounded == 12 then
+			if riftSlashCount == 2 then
+				-- fake, finishes with the first 6s cast
+				return false
+			end
+			barInfo = self:RiftSlash(duration)
 		end
 
 	elseif stage == 3 then
@@ -345,15 +355,22 @@ function mod:TimersOther(_, eventInfo)
 			barInfo = self:DevouringCosmos(duration)
 		elseif durationRounded == 30 or durationRounded == 29 then
 			barInfo = self:NullCorona(duration)
-		elseif (durationRounded == 12 and aspectOfTheEndCount == 1) or durationRounded == 11 then
+		elseif (durationRounded == 12 and graspOfEmptinessCount == 1) or durationRounded == 11 then
 			barInfo = self:GraspOfEmptiness(duration)
 		elseif durationRounded == 15 or durationRounded == 14 then
 			barInfo = self:VoidstalkerSting(duration)
 		elseif durationRounded == 9 or durationRounded == 8 then
 			-- 8 is a refresh of previous 21s cast
-			barInfo = self:AspectOfTheEnd(duration)
 			if durationRounded == 8 then
-				barInfo.duration = {duration, 21}
+				local oldBarInfo = getBarInfoFromKey(1239080)
+				if oldBarInfo then
+					oldBarInfo.noStopBar = true
+					barInfo = self:AspectOfTheEnd(duration, true)
+					barInfo.duration = {duration, oldBarInfo.duration}
+				end
+			end
+			if not barInfo then
+				barInfo = self:AspectOfTheEnd(duration)
 			end
 		else
 			-- repeating timers
@@ -363,20 +380,21 @@ function mod:TimersOther(_, eventInfo)
 				barInfo = self:VoidstalkerSting(duration)
 			elseif durationRounded == 39 or durationRounded == 21 then
 				barInfo = self:AspectOfTheEnd(duration)
-				barInfo.noStopBar = durationRounded == 21 -- bar gets refreshed
 			end
 		end
 
 	else -- Intermission
-		if durationRounded == 3 or durationRounded == 6 or durationRounded == 10 then
+		if durationRounded == 3 or durationRounded == 6 or durationRounded == 9.5 then
 			barInfo = self:SilverstrikeBarrage(duration)
 		end
 	end
 
 	if barInfo then
+		barInfo.eventID = eventInfo.id
+		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif self:ShouldShowBars() and not self:IsWiping() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -494,9 +512,14 @@ function mod:SilverstrikeArrow(duration)
 	}
 end
 
-function mod:GraspOfEmptiness(duration)
-	local barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount)
-	graspOfEmptinessCount = graspOfEmptinessCount + 1
+function mod:GraspOfEmptiness(duration, updateBar)
+	local barText
+	if updateBar then
+		barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount-1)
+	else
+		barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount)
+		graspOfEmptinessCount = graspOfEmptinessCount + 1
+	end
 	return {
 		msg = barText,
 		key = 1232467,
@@ -521,9 +544,14 @@ function mod:VoidExpulsion(duration)
 	}
 end
 
-function mod:NullCorona(duration)
-	local barText = CL.count:format(CL.heal_absorb, nullCoronaCount)
-	nullCoronaCount = nullCoronaCount + 1
+function mod:NullCorona(duration, updateBar)
+	local barText
+	if updateBar then
+		barText = CL.count:format(CL.heal_absorb, nullCoronaCount-1)
+	else
+		barText = CL.count:format(CL.heal_absorb, nullCoronaCount)
+		nullCoronaCount = nullCoronaCount + 1
+	end
 	return {
 		msg = barText,
 		key = 1233865,
