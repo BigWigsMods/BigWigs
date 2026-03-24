@@ -11,7 +11,7 @@ end
 
 L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "koKR")
 if L then
-	--L.grappling_maw = "Tank Grip"
+	L.grappling_maw = "탱커 밀침"
 end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "koKR")
@@ -27,14 +27,14 @@ end
 
 L = BigWigs:NewBossLocale("Crown of the Cosmos", "koKR")
 if L then
-	--L.silverstrike_arrow = "Arrows"
-	--L.grasp_of_emptiness = "Obelisks"
-	--L.interrupting_tremor = "Interrupt"
-	--L.ravenous_abyss = "Move Out"
-	--L.silverstrike_barrage = "Lines"
-	--L.cosmic_barrier = "Barrier"
-	--L.rangers_captains_mark = "Arrows"
-	--L.voidstalker_sting = "Stings"
-	--L.aspect_of_the_end = "Tethers"
-	--L.devouring_cosmos = "Next Platform"
+	L.silverstrike_arrow = "화살"
+	L.grasp_of_emptiness = "방첨탑"
+	L.interrupting_tremor = "차단"
+	L.ravenous_abyss = "이동"
+	L.silverstrike_barrage = "라인"
+	L.cosmic_barrier = "보호막"
+	L.rangers_captains_mark = "화살"
+	L.voidstalker_sting = "독침"
+	L.aspect_of_the_end = "사슬"
+	L.devouring_cosmos = "단상 이동"
 end
