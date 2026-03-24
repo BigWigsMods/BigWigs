@@ -22,6 +22,7 @@ BigWigs:AddColors("Vorasius", {
 	[1254199] = "cyan",
 	[1256855] = "red",
 	[1260052] = "orange",
+	["berserk"] = {"orange","red"},
 })
 
 BigWigs:AddSounds("Vorasius", {
@@ -29,6 +30,7 @@ BigWigs:AddSounds("Vorasius", {
 	[1254199] = "long",
 	[1256855] = "warning",
 	[1260052] = "alarm",
+	["berserk"] = "alarm",
 })
 
 BigWigs:AddColors("Fallen-King Salhadaar", {
@@ -61,7 +63,6 @@ BigWigs:AddColors("Vaelgor & Ezzorak", {
 BigWigs:AddSounds("Vaelgor & Ezzorak", {
 	[1244917] = "alarm",
 	[1245391] = "alert",
-	[1245645] = "alarm",
 	[1249748] = "alert",
 	[1262623] = "alert",
 	[1265131] = "alarm",
@@ -100,17 +101,16 @@ BigWigs:AddSounds("Lightblinded Vanguard", {
 })
 
 BigWigs:AddColors("Crown of the Cosmos", {
-	[1232467] = "orange",
-	[1233602] = "yellow",
+	[1232467] = "yellow",
+	[1233602] = "cyan",
 	[1233787] = "purple",
 	[1233865] = "yellow",
-	[1237038] = "yellow",
-	[1237614] = "yellow",
-	[1237837] = "yellow",
+	[1237614] = "cyan",
+	[1237837] = "cyan",
 	[1238843] = "red",
 	[1239080] = "orange",
-	[1243743] = "orange",
-	[1243753] = "red",
+	[1243743] = {"orange","red"},
+	[1243753] = "orange",
 	[1246461] = "purple",
 	[1246918] = "orange",
 	[1255368] = "red",
@@ -118,7 +118,7 @@ BigWigs:AddColors("Crown of the Cosmos", {
 })
 
 BigWigs:AddSounds("Crown of the Cosmos", {
-	[1237614] = "alarm",
+	[1237837] = "info",
 	[1238843] = "long",
 	[1243743] = "alert",
 	[1255368] = "alert",
