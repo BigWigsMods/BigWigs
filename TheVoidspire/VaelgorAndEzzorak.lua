@@ -370,22 +370,23 @@ function mod:TimersHeroic(_, eventInfo)
 		if durationRounded == 20 or durationRounded == 81 then -- Dread Breath
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration, 10) then return end -- Debuff is may be applied well before the timer ends\
 			barInfo = self:DreadBreath(eventInfo)
-		elseif durationRounded == 25 then
+		elseif durationRounded == 25 or durationRounded == 24 then -- 3/24/26: added 24 since timers seem differentl now?
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
+			local count = (countForDuration[25] or 0) + (countForDuration[24] or 0) -- combine these until we can safely split them again
 			if stage == 1 then -- Vaelwing, Rakfang, Grappling Maw
-				if countForDuration[duration] % 3 == 1 then
+				if count % 3 == 1 then
 					barInfo = self:Vaelwing(eventInfo)
-				elseif countForDuration[duration] % 3 == 2 then
+				elseif count % 3 == 2 then
 					barInfo = self:Rakfang(eventInfo)
 				else
 					barInfo = self:GrapplingMaw(eventInfo)
 				end
 			elseif stage == 2 then -- Rakfang, Vaelwing, Void Howl, Grapping Maw
-				if countForDuration[duration] % 4 == 1 then
+				if count % 4 == 1 then
 					barInfo = self:Rakfang(eventInfo)
-				elseif countForDuration[duration] % 4 == 2 then
+				elseif count % 4 == 2 then
 					barInfo = self:Vaelwing(eventInfo)
-				elseif countForDuration[duration] % 4 == 3 then
+				elseif count % 4 == 3 then
 					barInfo = self:VoidHowl(eventInfo)
 				else
 					barInfo = self:GrapplingMaw(eventInfo)
