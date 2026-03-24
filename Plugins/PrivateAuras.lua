@@ -1064,6 +1064,7 @@ local function UpdateAnchorPosition(anchor)
 end
 
 function plugin:UpdateAllAnchors()
+	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 	self:UpdateAnchors("player", "player")
 	self:UpdateAnchors("other")
 end
@@ -1096,11 +1097,19 @@ do
 		end
 	end
 
+	local AddPrivateAuraAnchor = C_UnitAuras.AddPrivateAuraAnchor
+	local RemovePrivateAuraAnchor = C_UnitAuras.RemovePrivateAuraAnchor
+	local InCombatLockdown = InCombatLockdown
 	function plugin:UpdateAnchors(unitType, token)
+		if InCombatLockdown() then
+			self:RegisterEvent("PLAYER_REGEN_ENABLED", "UpdateAllAnchors")
+			return
+		end
+
 		for i = 1, #anchors[unitType] do
 			local anchor = anchors[unitType][i]
 			if anchor.anchorId then
-				C_UnitAuras.RemovePrivateAuraAnchor(anchor.anchorId)
+				RemovePrivateAuraAnchor(anchor.anchorId)
 				anchor.anchorId = nil
 			end
 			anchor:ClearAllPoints()
@@ -1146,7 +1155,7 @@ do
 			UpdateTestAura(unitType, index)
 
 			if unitToken then
-				anchor.anchorId = C_UnitAuras.AddPrivateAuraAnchor({
+				anchor.anchorId = AddPrivateAuraAnchor({
 					unitToken = unitToken,
 					auraIndex = index,
 					parent = anchor,
