@@ -61,19 +61,21 @@ function mod:GetOptions()
 		-- Stage One: Insatiable Hunger
 		1262289, -- Alndust Upheaval
 		1258610, -- Rift Emergence
-		1264756, -- Rift Madness
 		1257087, -- Consuming Miasma
-		1246653, -- Caustic Phlegm
+		{1246653, "HEALER"}, -- Caustic Phlegm
 		1272726, -- Rending Tear
 		1245396, -- Consume
 		-- Stage Two: To The Skies
 		1245486, -- Corrupted Devastation
 		1245406, -- Ravenous Dive
-		1246621, -- Caustic Phlegm
+		{1246621, "HEALER"}, -- Caustic Phlegm
 		1257085, -- Consuming Miasma
+		-- Mythic
+		1264756, -- Rift Madness
 	},{
 		[1262289] = CL.stage:format(1),
 		[1245486] = CL.stage:format(2),
+		[1264756] = CL.mythic,
 	},{
 		[1262289] = CL.soak, -- Alndust Upheaval (Soak)
 		[1258610] = CL.adds, -- Rift Emergence (Adds)
