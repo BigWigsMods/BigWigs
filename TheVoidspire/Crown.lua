@@ -294,7 +294,7 @@ function mod:TimersOther(_, eventInfo)
 			end
 		elseif durationRounded == (self:Easy() and 59.5 or 11.5) then
 			barInfo = self:VoidExpulsion(duration)
-		elseif durationRounded == 23.5 and self:Easy() then
+		elseif durationRounded == 23.5 then
 			barInfo = self:SilverstrikeArrow(duration)
 		end
 
