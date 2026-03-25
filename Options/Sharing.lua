@@ -355,6 +355,30 @@ local combatTimerSettingsToExport = {
 	"bossCombatHistoryAmount",
 	"bossCombatHistoryResetConditions",
 	"bossCombatHistoryTimeFormat",
+
+	-- Boss Stages
+	"bossStagesDisabled",
+	"bossStagesLocked",
+	"bossStagesWidth",
+	"bossStagesHeight",
+	"bossStagesPosition",
+	"bossStagesFontName",
+	"bossStagesFontSize",
+	"bossStagesMonochrome",
+	"bossStagesOutline",
+	"bossStagesAlign",
+	"bossStagesColor",
+	"bossStagesColorInactive",
+	"bossStagesBackgroundColor",
+	"bossStagesBackgroundColorInactive",
+	"bossStagesBorderColor",
+	"bossStagesBorderColorInactive",
+	"bossStagesBorderSize",
+	"bossStagesBorderOffset",
+	"bossStagesBorderName",
+	"bossStagesInactive",
+	"bossStagesTextFormat",
+	"bossStagesHistoryTimeFormat",
 }
 
 -- Default Options
@@ -1112,13 +1136,13 @@ local sharingOptions = {
 						width = 1,
 						get = function(i)
 							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
-							if db and (not db.profile.anyCombatDisabled or not db.profile.bossCombatDisabled) then
+							if db and (not db.profile.anyCombatDisabled or not db.profile.bossCombatDisabled or not db.profile.bossStagesDisabled) then
 								return sharingExportOptionsSettings[i[#i]]
 							end
 						end,
 						disabled = function()
 							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
-							if not db or (db.profile.anyCombatDisabled and db.profile.bossCombatDisabled) then
+							if not db or (db.profile.anyCombatDisabled and db.profile.bossCombatDisabled and db.profile.bossStagesDisabled) then
 								return true
 							end
 						end,
