@@ -1804,6 +1804,7 @@ do
 		width = db.normalWidth
 		height = db.normalHeight
 		local bar = candy:New(LibSharedMedia:Fetch(STATUSBAR, db.texture), width, height)
+		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
 			flags = "MONOCHROME," .. db.outline
@@ -1820,24 +1821,11 @@ do
 			bar:Set("bigwigs:eventId", eventId)
 		end
 		bar:Set("bigwigs:anchor", "normalPosition")
-		normalAnchor.bars[bar] = true
 		if db.icon then
 			bar:SetIcon(icon)
 		else
 			bar:SetIcon(nil)
 		end
-		local indicators = spellIndicators or eventId
-		if indicators then
-			local indicatorFrame = GetBarIndicatorFrame()
-			indicatorFrame:SetParent(bar)
-			indicatorFrame:Show()
-			indicatorFrame.bar = bar
-			indicatorFrame:SetIndicatorSize(height)
-			indicatorFrame:AddIndicators(indicators)
-			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
-			bar:Set("bigwigs:indicators", indicators)
-		end
-		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		bar:SetColor(colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 		bar:SetTextColor(colors:GetColor("barText", module, key))
@@ -1850,11 +1838,23 @@ do
 		bar:SetIconPosition(db.iconPosition)
 		bar:SetFill(db.fill)
 		bar:SetLabel(text)
+		local indicators = spellIndicators or eventId
+		if indicators then
+			local indicatorFrame = GetBarIndicatorFrame()
+			indicatorFrame:SetParent(bar)
+			indicatorFrame:Show()
+			indicatorFrame.bar = bar
+			indicatorFrame:SetIndicatorSize(height)
+			indicatorFrame:AddIndicators(indicators)
+			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
+			bar:Set("bigwigs:indicators", indicators)
+		end
+		normalAnchor.bars[bar] = true
 		if initial then
 			-- Workaround for wow custom font loading issues
 			self:SimpleTimer(function()
 				initial = false
-				if (not eventId and bar:GetLabel() == text) or (eventId and bar:Get("bigwigs:eventId") == eventId) then
+				if (not self:IsSecret(text) and not self:IsSecret(bar:GetLabel()) and bar:GetLabel() == text) or (eventId and bar:Get("bigwigs:eventId") == eventId) then
 					bar:SetLabel("-1")
 					bar:SetLabel(text)
 				end
