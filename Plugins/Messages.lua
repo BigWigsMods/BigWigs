@@ -24,6 +24,7 @@ local emphMessageFrame
 local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
 
 local db = nil
+local allowBlizzMessages = true
 
 plugin.displayName = L.messages
 
@@ -762,6 +763,7 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
+	allowBlizzMessages = true
 	colorModule = BigWigs:GetPlugin("Colors", true)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -941,53 +943,57 @@ do
 	end
 end
 
-local severityColorMap = {
-	[0] = "yellow",
-	[1] = "orange",
-	[2] = "red",
-}
-function plugin:ENCOUNTER_WARNING(_, eventInfo)
-	-- Not Secret
-	-- local duration = eventInfo.duration
-	local severity = eventInfo.severity
-	local shouldPlaySound = eventInfo.shouldPlaySound
-	-- local shouldShowChatMessage = eventInfo.shouldShowChatMessage
-	local shouldShowWarning = eventInfo.shouldShowWarning
+do
+	local severityColorMap = {
+		[0] = "yellow",
+		[1] = "orange",
+		[2] = "red",
+	}
+	function plugin:ENCOUNTER_WARNING(_, eventInfo)
+		if not allowBlizzMessages then return end
 
-	-- Secret
-	local text = eventInfo.text
-	-- local casterGUID = eventInfo.casterGUID
-	local casterName = eventInfo.casterName
-	local targetGUID = eventInfo.targetGUID
-	local targetName = eventInfo.targetName
-	local iconFileID = eventInfo.iconFileID
-	-- local tooltipSpellID = eventInfo.tooltipSpellID
+		-- Not Secret
+		-- local duration = eventInfo.duration
+		local severity = eventInfo.severity
+		local shouldPlaySound = eventInfo.shouldPlaySound
+		-- local shouldShowChatMessage = eventInfo.shouldShowChatMessage
+		local shouldShowWarning = eventInfo.shouldShowWarning
 
-	-- shouldShowWarning gets set to false if encounterWarningsEnabled is false
-	-- we obviously can't check if the message is targeting the player, so we lose that functionality
-	-- local shouldShowWarningBasedOnSeverity = severity >= tonumber(C_CVar.GetCVar("encounterWarningsLevel"))
+		-- Secret
+		local text = eventInfo.text
+		-- local casterGUID = eventInfo.casterGUID
+		local casterName = eventInfo.casterName
+		local targetGUID = eventInfo.targetGUID
+		local targetName = eventInfo.targetName
+		local iconFileID = eventInfo.iconFileID
+		-- local tooltipSpellID = eventInfo.tooltipSpellID
 
-	local formattedTargetName = targetName
-	if targetGUID and self.db.profile.classcolor then
-		local _, className = GetPlayerInfoByGUID(targetGUID)
-		if className then
-			local classColor = C_ClassColor.GetClassColor(className)
-			if classColor then
-				formattedTargetName = classColor:WrapTextInColorCode(targetName)
+		-- shouldShowWarning gets set to false if encounterWarningsEnabled is false
+		-- we obviously can't check if the message is targeting the player, so we lose that functionality
+		-- local shouldShowWarningBasedOnSeverity = severity >= tonumber(C_CVar.GetCVar("encounterWarningsLevel"))
+
+		local formattedTargetName = targetName
+		if targetGUID and self.db.profile.classcolor then
+			local _, className = GetPlayerInfoByGUID(targetGUID)
+			if className then
+				local classColor = C_ClassColor.GetClassColor(className)
+				if classColor then
+					formattedTargetName = classColor:WrapTextInColorCode(targetName)
+				end
 			end
 		end
-	end
-	local formattedText = string.format(text, casterName, formattedTargetName)
+		local formattedText = string.format(text, casterName, formattedTargetName)
 
-	self:BigWigs_Message(nil, nil, nil, formattedText, severityColorMap[severity] or "yellow", iconFileID, false)
+		self:BigWigs_Message(nil, nil, nil, formattedText, severityColorMap[severity] or "yellow", iconFileID, false)
+	end
 end
 
 function plugin:BigWigs_AllowBlizzMessages()
-	self:RegisterEvent("ENCOUNTER_WARNING")
+	allowBlizzMessages = true
 end
 
 function plugin:BigWigs_BlockBlizzMessages()
-	self:UnregisterEvent("ENCOUNTER_WARNING")
+	allowBlizzMessages = false
 end
 
 -- Always last to prevent a potential error breaking the plugin

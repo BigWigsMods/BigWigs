@@ -29,6 +29,7 @@ local sounds = {
 	underyou = L.spell_under_you,
 	privateaura = "BigWigs: Raid Warning",
 }
+local allowBlizzMessages = true
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -262,6 +263,7 @@ function plugin:OnPluginEnable()
 	updateProfile()
 
 	soundList = LibSharedMedia:List(SOUND)
+	allowBlizzMessages = true
 
 	for k in next, sounds do
 		local n = L[k] or k
@@ -403,23 +405,27 @@ function plugin:BigWigs_Sound(event, module, key, soundName)
 	end
 end
 
-local severitySoundMap = {
-	[0] = "alert",
-	[1] = "alarm",
-	[2] = "warning",
-}
-function plugin:ENCOUNTER_WARNING(_, eventInfo)
-	local shouldPlaySound = eventInfo.shouldPlaySound
-	local severity = eventInfo.severity
-	if shouldPlaySound then
-		self:BigWigs_Sound(nil, nil, false, severitySoundMap[severity] or "alert")
+do
+	local severitySoundMap = {
+		[0] = "alert",
+		[1] = "alarm",
+		[2] = "warning",
+	}
+	function plugin:ENCOUNTER_WARNING(_, eventInfo)
+		if allowBlizzMessages then
+			local shouldPlaySound = eventInfo.shouldPlaySound
+			local severity = eventInfo.severity
+			if shouldPlaySound then
+				self:BigWigs_Sound(nil, nil, false, severitySoundMap[severity] or "alert")
+			end
+		end
 	end
 end
 
 function plugin:BigWigs_AllowBlizzMessages()
-	self:RegisterEvent("ENCOUNTER_WARNING")
+	allowBlizzMessages = true
 end
 
 function plugin:BigWigs_BlockBlizzMessages()
-	self:UnregisterEvent("ENCOUNTER_WARNING")
+	allowBlizzMessages = false
 end
