@@ -105,16 +105,16 @@ do
 			lastSharedCD = 0
 			if durationRounded == 6 then -- Primordial Roar
 				barInfo = self:PrimordialRoar(eventInfo)
-			elseif durationRounded == 16 or durationRounded == 136 then -- Smashing Frenzy
-				barInfo = self:SmashingFrenzy(eventInfo)
+			elseif durationRounded == 16 or durationRounded == 136 then -- Shadowclaw Slam
+				barInfo = self:ShadowclawSlam(eventInfo)
 			elseif durationRounded == 57 then -- Parasite Expulsion
 				barInfo = self:ParasiteExpulsion(eventInfo)
 			elseif durationRounded == 95 then -- Void Breath
 				barInfo = self:VoidBreath(eventInfo)
 			end
 		else
-			if durationRounded == 240 then -- Smashing Frenzy
-				barInfo = self:SmashingFrenzy(eventInfo)
+			if durationRounded == 240 then -- Shadowclaw Slam
+				barInfo = self:ShadowclawSlam(eventInfo)
 			elseif durationRounded == 120 and lastSharedCD == 0 then -- Roar (alternates)
 				barInfo = self:PrimordialRoar(eventInfo)
 				lastSharedCD = 1
