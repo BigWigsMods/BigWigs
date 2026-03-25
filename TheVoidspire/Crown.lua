@@ -421,8 +421,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 			if self:ShouldShowBars() then
 				if state == 2 and barInfo.onFinished then -- Finished
 					barInfo.onFinished()
-				elseif state == 3 and barInfo.onCancel then -- Canceled
-					barInfo.onCancel()
+				elseif state == 3 and barInfo.onCanceled then -- Canceled
+					barInfo.onCanceled()
 				end
 			end
 
@@ -483,7 +483,7 @@ function mod:StageEvent(duration)
 		key = "stages",
 		icon = 1280127,
 		onFinished = intermissionEnd, -- Stage Three finishes
-		onCancel = intermissionEnd, -- Stage Two cancels
+		onCanceled = intermissionEnd, -- Stage Two cancels
 	}
 end
 
