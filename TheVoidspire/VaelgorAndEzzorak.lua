@@ -367,12 +367,12 @@ function mod:TimersHeroic(_, eventInfo)
 		end
 	else
 		countForDuration[duration] = (countForDuration[duration] or 0) + 1
-		if durationRounded == 20 or durationRounded == 81 then -- Dread Breath
+		if durationRounded == 20 or durationRounded == 81 or durationRounded == 16 or durationRounded == 76 then -- Dread Breath
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration, 10) then return end -- Debuff is may be applied well before the timer ends\
 			barInfo = self:DreadBreath(eventInfo)
-		elseif durationRounded == 25 or durationRounded == 24 then -- 3/24/26: added 24 since timers seem differentl now?
+		elseif durationRounded == 25 or durationRounded == 24 or durationRounded == 23 then -- 3/24/26: added 24 since timers seem differentl now?
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
-			local count = (countForDuration[25] or 0) + (countForDuration[24] or 0) -- combine these until we can safely split them again
+			local count = (countForDuration[25] or 0) + (countForDuration[24] or 0) + (countForDuration[23] or 0) -- combine these until we can safely split them again
 			if stage == 1 then -- Vaelwing, Rakfang, Grappling Maw
 				if count % 3 == 1 then
 					barInfo = self:Vaelwing(eventInfo)
@@ -401,15 +401,16 @@ function mod:TimersHeroic(_, eventInfo)
 			else
 				barInfo = self:Rakfang(eventInfo)
 			end
-		elseif durationRounded == 45 or durationRounded == 51 then -- Void Howl
+		elseif durationRounded == 45 or durationRounded == 51 or durationRounded == 46 then -- Void Howl
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
 			barInfo = self:VoidHowl(eventInfo)
-		elseif durationRounded == 50 then -- Nullbeam, Dread Breath, Gloom
+		elseif durationRounded == 50 or durationRounded == 49 then -- Nullbeam, Dread Breath, Gloom
+			local count = (countForDuration[50] or 0) + (countForDuration[49] or 0)
 			if stage == 1 then
 				if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
 				barInfo = self:Nullbeam(eventInfo)
 			elseif stage == 2 then
-				if countForDuration[duration] % 2 == 1 then
+				if count % 2 == 1 then
 					if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
 					barInfo = self:Gloom(eventInfo)
 				else
@@ -417,14 +418,15 @@ function mod:TimersHeroic(_, eventInfo)
 					barInfo = self:DreadBreath(eventInfo)
 				end
 			end
-		elseif durationRounded == 63 then -- Nullbeam, Gloom
+		elseif durationRounded == 63 or durationRounded == 62 or durationRounded == 61 then -- Nullbeam, Gloom
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
-			if countForDuration[duration] % 2 == 1 then
+			local count = (countForDuration[63] or 0) + (countForDuration[62] or 0) + (countForDuration[61] or 0)
+			if count % 2 == 1 then
 				barInfo = self:Nullbeam(eventInfo)
 			else
 				barInfo = self:Gloom(eventInfo)
 			end
-		elseif durationRounded == 90 then -- Nullbeam, Gloom
+		elseif durationRounded == 90 or durationRounded == 85 then -- Nullbeam, Gloom
 			if not self:IsBeforeRadiantBarrier(eventInfo.duration) then return end
 			if stage == 1 then
 				barInfo = self:Gloom(eventInfo)
