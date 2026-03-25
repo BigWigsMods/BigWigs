@@ -165,8 +165,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
-			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
-				barInfo.callback()
+			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+				barInfo.onFinished()
 			end
 
 			activeBars[eventID] = nil
@@ -210,7 +210,7 @@ function mod:VoidBreath(eventInfo)
 	return {
 		msg = barText,
 		key = 1256855,
-		callback = function()
+		onFinished = function()
 			self:Message(1256855, "red", barText)
 			self:PlaySound(1256855, "warning")
 		end
@@ -226,7 +226,7 @@ function mod:ParasiteExpulsion(eventInfo)
 	return {
 		msg = barText,
 		key = 1254199,
-		callback = function()
+		onFinished = function()
 			self:Message(1254199, "cyan", barText)
 			self:PlaySound(1254199, "long")
 		end
@@ -243,7 +243,7 @@ function mod:ShadowclawSlam(eventInfo)
 	return {
 		msg = barText,
 		key = 1241692,
-		callback = function()
+		onFinished = function()
 			self:Message(1241692, "yellow", barText)
 			self:PlaySound(1241692, "alert")
 		end
@@ -280,7 +280,7 @@ do
 		return {
 			msg = barText,
 			key = 1260052,
-			callback = function()
+			onFinished = function()
 				self:Message(1260052, "orange", barText)
 				self:PlaySound(1260052, "alarm")
 			end
