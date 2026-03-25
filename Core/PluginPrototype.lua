@@ -83,6 +83,13 @@ do
 end
 
 do
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+	function plugin:IsSecret(value)
+		return issecretvalue(value)
+	end
+end
+
+do
 	local raidList = {
 		"raid1", "raid2", "raid3", "raid4", "raid5", "raid6", "raid7", "raid8", "raid9", "raid10",
 		"raid11", "raid12", "raid13", "raid14", "raid15", "raid16", "raid17", "raid18", "raid19", "raid20",

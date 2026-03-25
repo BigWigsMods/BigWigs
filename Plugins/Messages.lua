@@ -905,7 +905,6 @@ end
 do
 	local unpack, type = unpack, type
 	local format, upper, gsub = string.format, string.upper, string.gsub
-	local issecretvalue = issecretvalue or function() end -- XXX 12.0 compat
 	function plugin:BigWigs_Message(_, module, key, text, color, icon, emphasized, customDisplayTime)
 		if not text then return end
 
@@ -923,7 +922,7 @@ do
 		if not db.useicons then icon = nil end
 
 		if emphasized then
-			if db.emphUppercase and not issecretvalue(text) then -- Cannot do upper or gsub on secrets :(
+			if db.emphUppercase and not self:IsSecret(text) then -- Cannot do upper or gsub on secrets :(
 				text = upper(text)
 				text = gsub(text, "(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 			end
