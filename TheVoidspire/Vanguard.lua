@@ -602,8 +602,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		local state = C_EncounterTimeline.GetEventState(eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
-			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
-				barInfo.callback()
+			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+				barInfo.onFinished()
 			end
 			activeBars[eventID] = nil
 		end
@@ -646,7 +646,7 @@ function mod:JudgementBlue(eventInfo)
 	return {
 		msg = barText,
 		key = 1251857,
-		callback = function()
+		onFinished = function()
 			self:Message(1251857, "purple", barText)
 			self:PlaySound(1251857, "info")
 		end
@@ -662,7 +662,7 @@ function mod:JudgementRed(eventInfo)
 	return {
 		msg = barText,
 		key = 1246736,
-		callback = function()
+		onFinished = function()
 			self:Message(1246736, "purple", barText)
 			self:PlaySound(1246736, "info")
 		end
@@ -678,7 +678,7 @@ function mod:SacredToll(eventInfo)
 	return {
 		msg = barText,
 		key = 1246749,
-		callback = function()
+		onFinished = function()
 			self:Message(1246749, "yellow", barText)
 			self:PlaySound(1246749, "alert")
 		end
@@ -696,7 +696,7 @@ function mod:AvengersShield(eventInfo)
 	return {
 		msg = barText,
 		key = 1246485,
-		callback = function()
+		onFinished = function()
 			self:Message(1246485, "yellow", barText)
 			-- Sound from PA's
 		end
@@ -720,7 +720,7 @@ function mod:DivineStorm(eventInfo)
 	return {
 		msg = barText,
 		key = 1246765,
-		callback = function()
+		onFinished = function()
 			self:Message(1246765, "red", barText)
 			self:PlaySound(1246765, "alarm")
 		end
@@ -738,7 +738,7 @@ function mod:SearingRadiance(eventInfo)
 	return {
 		msg = barText,
 		key = 1255738,
-		callback = function()
+		onFinished = function()
 			self:Message(1255738, "orange", barText)
 			self:PlaySound(1255738, "alert")
 		end
@@ -754,7 +754,7 @@ function mod:SacredShield(eventInfo)
 	return {
 		msg = barText,
 		key = 1248674,
-		callback = function()
+		onFinished = function()
 			self:Message(1248674, "red", barText)
 			self:PlaySound(1248674, "warning") -- break shield
 		end
@@ -772,7 +772,7 @@ function mod:ZealousSpirit(eventInfo)
 	return {
 		msg = barText,
 		key = 1276243,
-		callback = function()
+		onFinished = function()
 			self:Message(1276243, "cyan", barText)
 			self:PlaySound(1276243, "info") -- new empower
 		end
@@ -788,7 +788,7 @@ function mod:AuraOfWrath(eventInfo)
 	return {
 		msg = barText,
 		key = 1248449,
-		callback = function()
+		onFinished = function()
 			self:Message(1248449, "cyan", barText)
 			self:PlaySound(1248449, "long") -- Aura enabled
 		end
@@ -804,7 +804,7 @@ function mod:ExecutionSentence(eventInfo)
 	return {
 		msg = barText,
 		key = 1248983,
-		callback = function()
+		onFinished = function()
 			self:Message(1248983, "red", barText)
 			-- Sound on PA's
 		end
@@ -820,7 +820,7 @@ function mod:AuraOfDevotion(eventInfo)
 	return {
 		msg = barText,
 		key = 1246162,
-		callback = function()
+		onFinished = function()
 			self:Message(1246162, "cyan", barText)
 			self:PlaySound(1246162, "long") -- Aura enabled
 		end
@@ -836,7 +836,7 @@ function mod:DivineToll(eventInfo)
 	return {
 		msg = barText,
 		key = 1248644,
-		callback = function()
+		onFinished = function()
 			self:Message(1248644, "orange", barText)
 			self:PlaySound(1248644, "warning") -- Dodge shields
 		end
@@ -858,7 +858,7 @@ function mod:AuraOfPeace(eventInfo)
 	return {
 		msg = barText,
 		key = 1248451,
-		callback = function()
+		onFinished = function()
 			self:Message(1248451, "cyan", barText)
 			self:PlaySound(1248451, "long") -- Aura enabled
 		end
@@ -874,7 +874,7 @@ function mod:TyrsWrath(eventInfo)
 	return {
 		msg = barText,
 		key = 1248710,
-		callback = function()
+		onFinished = function()
 			self:Message(1248710, "orange", barText)
 			-- Sound on PA's
 		end
