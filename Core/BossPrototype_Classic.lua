@@ -1906,6 +1906,7 @@ do
 		[5] = "Heroic 10",
 		[6] = "Heroic 25",
 		[7] = "LFR Old",
+		[8] = "Mythic+",
 		[23] = "Mythic",
 		[24] = "Timewalking",
 		[14] = "Normal",
