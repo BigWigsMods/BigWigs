@@ -164,10 +164,10 @@ function mod:TimerOther(_, eventInfo)
 		elseif durationRounded == 32 or durationRounded == 50  or durationRounded == 35 then -- Consuming Miasma
 			barInfo = self:ConsumingMiasma(eventInfo)
 		elseif durationRounded == 151 then -- Stage 2
-			self:Bar("stages", eventInfo.duration, CL.stage:format(2), "spell_holy_borrowedtime", nil, eventInfo.id)
+			self:Bar("stages", eventInfo.duration, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			return -- no need to stop this, it gets corrected later 10s before the end.
 		elseif durationRounded == 10 then -- Stage 2 (Updated)
-			self:Bar("stages", {eventInfo.duration, 151}, CL.stage:format(2), "spell_holy_borrowedtime", nil, eventInfo.id)
+			self:Bar("stages", {eventInfo.duration, 151}, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			self:ScheduleTimer(function()
 				self:Message("stages", "red", CL.stage:format(2), false)
 				self:PlaySound("stages", "long")
@@ -246,10 +246,10 @@ function mod:TimerEasy(_, eventInfo)
 				barInfo = self:Consume(eventInfo)
 			end
 		elseif durationRounded == 165 then -- Stage 2
-			self:Bar("stages", eventInfo.duration, CL.stage:format(2), "spell_holy_borrowedtime", nil, eventInfo.id)
+			self:Bar("stages", eventInfo.duration, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			return -- no need to stop this, it gets corrected later 10s before the end.
 		elseif durationRounded == 10 then -- Stage 2 (Updated)
-			self:Bar("stages", {eventInfo.duration, 165}, CL.stage:format(2), "spell_holy_borrowedtime", nil, eventInfo.id)
+			self:Bar("stages", {eventInfo.duration, 165}, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			self:ScheduleTimer(function()
 				self:Message("stages", "red", CL.stage:format(2), false)
 				self:PlaySound("stages", "long")
