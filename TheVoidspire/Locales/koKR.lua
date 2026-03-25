@@ -30,7 +30,7 @@ if L then
 	L.silverstrike_arrow = "화살"
 	L.grasp_of_emptiness = "방첨탑"
 	L.interrupting_tremor = "차단"
-	L.ravenous_abyss = "이동"
+	L.ravenous_abyss = "밖으로"
 	L.silverstrike_barrage = "라인"
 	L.cosmic_barrier = "보호막"
 	L.rangers_captains_mark = "화살"
