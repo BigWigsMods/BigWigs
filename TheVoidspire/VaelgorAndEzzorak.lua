@@ -641,8 +641,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
-			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
-				barInfo.callback()
+			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+				barInfo.onFinished()
 			end
 
 			activeBars[eventID] = nil
@@ -685,7 +685,7 @@ function mod:MidnightFlames(eventInfo)
 	midnightFlamesCount = midnightFlamesCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1249748, "yellow", barText)
 			self:PlaySound(1249748, "alert")
 			self:StopBlizzMessages(0.2)
@@ -701,7 +701,7 @@ function mod:GrapplingMaw(eventInfo)
 	grapplingMawCount = grapplingMawCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1280458, "purple", barText)
 			-- Sound needed?
 		end
@@ -717,7 +717,7 @@ function mod:Nullbeam(eventInfo)
 	nullbeamCount = nullbeamCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1262623, "yellow", barText)
 			self:PlaySound(1262623, "alert")
 			self:StopBlizzMessages(0.2)
@@ -733,7 +733,7 @@ function mod:DreadBreath(eventInfo)
 	dreadBreathCount = dreadBreathCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			-- self:Message(1244221, "red", barText) -- Blizzard Message has a target.
 			self:TargetMessageFromBlizzMessage(1, 1244221, "red", barText)
 			-- PA Sounds
@@ -749,7 +749,7 @@ function mod:Vaelwing(eventInfo)
 	vaelwingCount = vaelwingCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1265131, "purple", barText)
 			if self:ThreatTarget("player", "boss1") then -- this assumed Vaelgor boss1
 				self:PlaySound(1265131, "alarm")
@@ -767,7 +767,7 @@ function mod:Gloom(eventInfo)
 	gloomCount = gloomCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1245391, "orange", barText)
 			self:PlaySound(1245391, "alert") -- possibly soak
 			self:StopBlizzMessages(0.2)
@@ -783,7 +783,7 @@ function mod:VoidHowl(eventInfo)
 	voidHowlCount = voidHowlCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1244917, "orange", barText)
 			self:PlaySound(1244917, "alarm") -- spread
 		end
@@ -798,7 +798,7 @@ function mod:Rakfang(eventInfo)
 	rakfangCount = rakfangCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1245645, "purple", barText)
 			-- if self:ThreatTarget("player", "boss2") then -- this assumed Ezzorak boss2
 			-- 	self:PlaySound(1245645, "alarm")
