@@ -3388,6 +3388,8 @@ do
 		end, duration)
 
 		self:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
+			if info.targetGUID == nil then return end
+
 			self:CancelTimer(timer)
 			self:UnregisterEvent(event)
 
