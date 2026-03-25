@@ -151,8 +151,8 @@ function mod:DummyUmbralEvent(eventInfo) -- Blizzard cancels this timer, but it 
 	activeBars[fakeEventInfo.id] = fakeInfo
 	self:ScheduleTimer(function()
 		self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil, fakeEventInfo.id)
-		if self:ShouldShowBars() and fakeInfo.callback then
-			fakeInfo.callback()
+		if fakeInfo.onFinished and self:ShouldShowBars() then
+			fakeInfo.onFinished()
 		end
 	end, duration)
 end
@@ -211,8 +211,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
-			if state == 2 and self:ShouldShowBars() and barInfo.callback then -- Finished
-				barInfo.callback()
+			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+				barInfo.onFinished()
 			end
 
 			activeBars[eventID] = nil
@@ -264,7 +264,7 @@ function mod:ShadowsAdvance(eventInfo)
 	return {
 		msg = barText,
 		key = 1251361,
-		callback = function()
+		onFinished = function()
 			self:Message(1251361, "cyan", barText)
 			self:PlaySound(1251361, "long")
 		end
@@ -280,7 +280,7 @@ function mod:UmbralCollapse(eventInfo)
 	return {
 		msg = barText,
 		key = 1249262,
-		callback = function()
+		onFinished = function()
 			self:Message(1249262, "orange", barText)
 			self:PlaySound(1249262, "warning")
 		end
@@ -296,7 +296,7 @@ function mod:VoidMarked(eventInfo)
 	return {
 		msg = barText,
 		key = 1280015,
-		callback = function()
+		onFinished = function()
 			self:Message(1280015, "yellow", barText)
 			-- Sound on PAs
 		end
@@ -312,7 +312,7 @@ function mod:OblivionsWrath(eventInfo)
 	return {
 		msg = barText,
 		key = 1260712,
-		callback = function()
+		onFinished = function()
 			self:Message(1260712, "purple", barText)
 			self:PlaySound(1260712, "alarm")
 		end
@@ -328,7 +328,7 @@ function mod:VoidFall(eventInfo)
 	return {
 		msg = barText,
 		key = 1258883,
-		callback = function()
+		onFinished = function()
 			self:Message(1258883, "cyan", barText)
 			self:PlaySound(1258883, "long")
 		end
@@ -344,7 +344,7 @@ function mod:DarkUpheaval(eventInfo)
 	return {
 		msg = barText,
 		key = 1249251,
-		callback = function()
+		onFinished = function()
 			self:Message(1249251, "yellow", barText)
 			self:PlaySound(1249251, "alert")
 		end
