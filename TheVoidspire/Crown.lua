@@ -419,10 +419,10 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 			end
 
 			if self:ShouldShowBars() then
-				if state == 2 and barInfo.callback then -- Finished
-					barInfo.callback()
-				elseif state == 3 and barInfo.cancelCallback then -- Canceled
-					barInfo.cancelCallback()
+				if state == 2 and barInfo.onFinished then -- Finished
+					barInfo.onFinished()
+				elseif state == 3 and barInfo.onCancel then -- Canceled
+					barInfo.onCancel()
 				end
 			end
 
@@ -482,8 +482,8 @@ function mod:StageEvent(duration)
 		msg = CL.stage:format(stage + 1),
 		key = "stages",
 		icon = 1280127,
-		callback = intermissionEnd, -- Stage Three finishes
-		cancelCallback = intermissionEnd, -- Stage Two cancels
+		onFinished = intermissionEnd, -- Stage Three finishes
+		onCancel = intermissionEnd, -- Stage Two cancels
 	}
 end
 
@@ -504,7 +504,7 @@ function mod:SilverstrikeArrow(duration)
 	return {
 		msg = barText,
 		key = 1233602,
-		callback = function()
+		onFinished = function()
 			self:Message(1233602, "cyan", barText)
 			self:TargetMessageFromBlizzMessage(0.5, 1233602, "blue", CL.you:format(L.silverstrike_arrow))
 			-- PA target sound
@@ -523,7 +523,7 @@ function mod:GraspOfEmptiness(duration, updateBar)
 	return {
 		msg = barText,
 		key = 1232467,
-		callback = function()
+		onFinished = function()
 			self:Message(1232467, "yellow", barText)
 			-- PA target sound
 		end,
@@ -536,7 +536,7 @@ function mod:VoidExpulsion(duration)
 	return {
 		msg = barText,
 		key = 1255368,
-		callback = function(barInfo)
+		onFinished = function(barInfo)
 			self:StopBlizzMessages(1)
 			self:Message(1255368, "red", barText)
 			self:PlaySound(1255368, "alert") -- big damage
@@ -555,7 +555,7 @@ function mod:NullCorona(duration, updateBar)
 	return {
 		msg = barText,
 		key = 1233865,
-		callback = function()
+		onFinished = function()
 			self:Message(1233865, "yellow", barText)
 		end,
 	}
@@ -574,7 +574,7 @@ function mod:DarkHand(duration)
 	return {
 		msg = barText,
 		key = 1233787,
-		callback = function()
+		onFinished = function()
 			self:Message(1233787, "purple", barText)
 		end,
 	}
@@ -595,7 +595,7 @@ function mod:InterruptingTremor(duration)
 	return {
 		msg = barText,
 		key = 1243743,
-		callback = function()
+		onFinished = function()
 			self:StopBlizzMessages(1)
 			self:Message(1243743, "orange", barText)
 			self:PlaySound(1243743, "alert")
@@ -616,7 +616,7 @@ function mod:RavenousAbyss(duration)
 	return {
 		msg = barText,
 		key = 1243753,
-		callback = function()
+		onFinished = function()
 			self:Message(1243753, "orange", barText)
 		end,
 	}
@@ -630,7 +630,7 @@ function mod:RangerCaptainsMark(duration)
 	return {
 		msg = barText,
 		key = 1237614,
-		callback = function()
+		onFinished = function()
 			self:StopBlizzMessages(1)
 			self:Message(1237614, "cyan", barText)
 			-- self:PlaySound(1237614, "alarm", "spread") -- spread
@@ -653,7 +653,7 @@ function mod:CallOfTheVoid(duration)
 	return {
 		msg = barText,
 		key = 1237837,
-		callback = function()
+		onFinished = function()
 			self:Message(1237837, "cyan", barText)
 			self:PlaySound(1237837, "info") -- adds
 		end,
@@ -666,7 +666,7 @@ function mod:CosmicBarrier(duration)
 	return {
 		msg = barText,
 		key = 1246918,
-		callback = function()
+		onFinished = function()
 			self:Message(1246918, "orange", barText)
 			-- XXX gets held then canceled alot?
 			self:StopBlizzMessages(0.5)
@@ -680,7 +680,7 @@ function mod:RiftSlash(duration)
 	return {
 		msg = barText,
 		key = 1246461,
-		callback = function()
+		onFinished = function()
 			self:Message(1246461, "purple", barText)
 		end,
 	}
@@ -694,7 +694,7 @@ function mod:DevouringCosmos(duration)
 	return {
 		msg = barText,
 		key = 1238843,
-		callback = function()
+		onFinished = function()
 			timelineEventCount = 1
 			durationEventCount = {}
 			stageStage = stageStage + 1
@@ -717,7 +717,7 @@ function mod:AspectOfTheEnd(duration, updateBar)
 	return {
 		msg = barText,
 		key = 1239080,
-		callback = function()
+		onFinished = function()
 			self:Message(1239080, "orange", barText)
 			self:TargetMessageFromBlizzMessage(0.5, 1239080, "blue", CL.you:format(L.aspect_of_the_end))
 		end,
