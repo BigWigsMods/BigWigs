@@ -309,8 +309,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
-			if state == 2 and barInfo.callback and self:ShouldShowBars() then -- Finished
-				barInfo.callback()
+			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+				barInfo.onFinished()
 			end
 
 			activeBars[eventID] = nil
@@ -355,10 +355,10 @@ function mod:AlndustUpheaval(eventInfo)
 	almdustUpheavalCount = almdustUpheavalCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			-- self:Message(1262289, "yellow", barText)
-			self:TargetMessageFromBlizzMessage(1, 1262289, "yellow", barText)
-			self:PlaySound(1262289, "alert")
+			self:TargetMessageFromBlizzMessage(1, 1262289, "orange", barText)
+			self:PlaySound(1262289, "warning") -- soak if assigned
 		end
 	}
 end
@@ -372,9 +372,9 @@ function mod:RiftEmergence(eventInfo)
 	riftEmergenceCount = riftEmergenceCount + 1
 	return {
 		msg = barText,
-		callback = function()
-			self:Message(1258610, "yellow", barText)
-			self:PlaySound(1258610, "alert")
+		onFinished = function()
+			self:Message(1258610, "cyan", barText)
+			self:PlaySound(1258610, "long") -- adds spawning
 		end
 	}
 end
@@ -388,7 +388,7 @@ function mod:RiftMadness(eventInfo)
 	riftMadnessCount = riftMadnessCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1264756, "yellow", barText)
 			self:PlaySound(1264756, "alert")
 		end
@@ -404,7 +404,7 @@ function mod:ConsumingMiasma(eventInfo)
 	consumingMiasmaCount = consumingMiasmaCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1257087, "yellow", barText)
 			self:PlaySound(1257087, "alert")
 		end
@@ -420,7 +420,7 @@ function mod:CausticPhlegm(eventInfo)
 	causticPhlegmCount = causticPhlegmCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1246653, "yellow", barText)
 			self:PlaySound(1246653, "alert")
 		end
@@ -436,9 +436,9 @@ function mod:RendingTear(eventInfo)
 	rendingTearCount = rendingTearCount + 1
 	return {
 		msg = barText,
-		callback = function()
-			self:Message(1272726, "yellow", barText)
-			self:PlaySound(1272726, "alert")
+		onFinished = function()
+			self:Message(1272726, "purple", barText)
+			self:PlaySound(1272726, "alert") -- frontal
 		end
 	}
 end
@@ -452,9 +452,10 @@ function mod:Consume(eventInfo)
 	consumeCount = consumeCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1245396, "red", barText)
-			self:PlaySound(1245396, "long")
+			self:PlaySound(1245396, "warning") -- finish adds
+			self:StopBlizzMessages(0.2)
 		end
 	}
 end
@@ -470,9 +471,10 @@ function mod:CorruptedDevastation(eventInfo)
 	corruptedDevastationCount = corruptedDevastationCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1245486, "red", barText)
-			self:PlaySound(1245486, "long")
+			self:PlaySound(1245486, "warning") -- dodge
+			self:StopBlizzMessages(0.2)
 		end
 	}
 end
@@ -483,7 +485,7 @@ function mod:RavenousDive(eventInfo, stageEnding)
 		self:ScheduleTimer(function()
 			if self:ShouldShowBars() then
 				self:Message(1245406, "cyan", CL.stage:format(1), false)
-				self:PlaySound(1245406, "long")
+				self:PlaySound(1245406, "long") -- next stage
 			end
 			self:SetStage(1)
 			almdustUpheavalCount = 1
@@ -515,9 +517,9 @@ function mod:CausticPhlegmStage2(eventInfo)
 	causticPhlegmCount = causticPhlegmCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1246621, "red", barText)
-			self:PlaySound(1246621, "long")
+			self:PlaySound(1246621, "alert")
 		end
 	}
 end
@@ -531,9 +533,9 @@ function mod:ConsumingMiasmaStage2(eventInfo)
 	consumingMiasmaCount = consumingMiasmaCount + 1
 	return {
 		msg = barText,
-		callback = function()
+		onFinished = function()
 			self:Message(1257085, "red", barText)
-			self:PlaySound(1257085, "long")
+			self:PlaySound(1257085, "info")
 		end
 	}
 end
