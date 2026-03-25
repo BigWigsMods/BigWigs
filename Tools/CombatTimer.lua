@@ -1059,7 +1059,7 @@ do
 	end
 
 	do
-		local stageText = BigWigsAPI:GetLocale("BigWigs: Common").stage:gsub("%%d", "%s")
+		local stageText = BigWigsAPI:GetLocale("BigWigs: Common").stage:gsub("%%d", "%%s")
 		widgets.bossStagesOnStageChange = function(_, module, stage)
 			if module == currentModule then
 				updater:Stop()
