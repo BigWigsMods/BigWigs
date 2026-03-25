@@ -87,6 +87,30 @@ do
 		bossCombatHistoryResetConditions = 1,
 		bossCombatHistoryTimeFormat = 2,
 
+		-- Boss Stages
+		bossStagesDisabled = true,
+		bossStagesLocked = false,
+		bossStagesWidth = 60,
+		bossStagesHeight = 24,
+		bossStagesPosition = {"CENTER", "CENTER", 615, -150, "UIParent"},
+		bossStagesFontName = fontName,
+		bossStagesFontSize = 16,
+		bossStagesMonochrome = false,
+		bossStagesOutline = "OUTLINE",
+		bossStagesAlign = "CENTER",
+		bossStagesColor = {1, 1, 1, 1},
+		bossStagesColorInactive = {1, 1, 1, 0.3},
+		bossStagesBackgroundColor = {0, 0, 0, 0.5},
+		bossStagesBackgroundColorInactive = {0, 0, 0, 0.3},
+		bossStagesBorderColor = {0, 0, 0, 1},
+		bossStagesBorderColorInactive = {0, 0, 0, 0.3},
+		bossStagesBorderSize = 1,
+		bossStagesBorderOffset = 0,
+		bossStagesBorderName = "Solid",
+		bossStagesInactive = "NONE",
+		bossStagesTextFormat = 2,
+		bossStagesHistoryTimeFormat = 2,
+
 		-- Instance Timer
 		--instanceTimerDisabled = true,
 		--instanceTimerLocked = false,
@@ -284,6 +308,64 @@ do
 		ValidateColor(db.profile.bossCombatBorderColor, defaults.bossCombatBorderColor, 0)
 		ValidateColor(db.profile.bossCombatBorderColorInactive, defaults.bossCombatBorderColorInactive, 0)
 
+		if db.profile.bossStagesWidth < ProfileUtils.MinimumWidth or db.profile.bossStagesWidth > ProfileUtils.MaximumWidth then
+			db.profile.bossStagesWidth = defaults.bossStagesWidth
+		end
+		if db.profile.bossStagesHeight < ProfileUtils.MinimumHeight or db.profile.bossStagesHeight > ProfileUtils.MaximumHeight then
+			db.profile.bossStagesHeight = defaults.bossStagesHeight
+		end
+		if type(db.profile.bossStagesPosition[1]) ~= "string" or type(db.profile.bossStagesPosition[2]) ~= "string"
+		or type(db.profile.bossStagesPosition[3]) ~= "number" or type(db.profile.bossStagesPosition[4]) ~= "number"
+		or not BigWigsAPI.IsValidFramePoint(db.profile.bossStagesPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.bossStagesPosition[2]) then
+			db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
+		else
+			local x = math.floor(db.profile.bossStagesPosition[3]+0.5)
+			if x ~= db.profile.bossStagesPosition[3] then
+				db.profile.bossStagesPosition[3] = x
+			end
+			local y = math.floor(db.profile.bossStagesPosition[4]+0.5)
+			if y ~= db.profile.bossStagesPosition[4] then
+				db.profile.bossStagesPosition[4] = y
+			end
+		end
+		if db.profile.bossStagesPosition[5] ~= defaults.bossStagesPosition[5] then
+			local frame = _G[db.profile.bossStagesPosition[5]]
+			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+				db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
+			end
+		end
+		if db.profile.bossStagesFontSize < 12 or db.profile.bossStagesFontSize > 200 then
+			db.profile.bossStagesFontSize = defaults.bossStagesFontSize
+		end
+		if db.profile.bossStagesOutline ~= "NONE" and db.profile.bossStagesOutline ~= "OUTLINE" and db.profile.bossStagesOutline ~= "THICKOUTLINE" then
+			db.profile.bossStagesOutline = defaults.bossStagesOutline
+		end
+		if db.profile.bossStagesAlign ~= "LEFT" and db.profile.bossStagesAlign ~= "CENTER" and db.profile.bossStagesAlign ~= "RIGHT" then
+			db.profile.bossStagesAlign = defaults.bossStagesAlign
+		end
+		if db.profile.bossStagesBorderSize < 1 or db.profile.bossStagesBorderSize > 32 then
+			db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
+		end
+		if db.profile.bossStagesBorderOffset < 0 or db.profile.bossStagesBorderOffset > 32 then
+			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
+		end
+		if db.profile.bossStagesInactive ~= "NONE" and db.profile.bossStagesInactive ~= "HIDE" and db.profile.bossStagesInactive ~= "COLOR" then
+			db.profile.bossStagesInactive = defaults.bossStagesInactive
+		end
+		if db.profile.bossStagesTextFormat ~= 1 and db.profile.bossStagesTextFormat ~= 2 then
+			db.profile.bossStagesTextFormat = defaults.bossStagesTextFormat
+		end
+		if db.profile.bossStagesHistoryTimeFormat < 1 or db.profile.bossStagesHistoryTimeFormat > 2 or math.floor(db.profile.bossStagesHistoryTimeFormat+0.5) ~= db.profile.bossStagesHistoryTimeFormat then
+			db.profile.bossStagesHistoryTimeFormat = defaults.bossStagesHistoryTimeFormat
+		end
+
+		ValidateColor(db.profile.bossStagesColor, defaults.bossStagesColor, 0.3)
+		ValidateColor(db.profile.bossStagesColorInactive, defaults.bossStagesColorInactive, 0.3)
+		ValidateColor(db.profile.bossStagesBackgroundColor, defaults.bossStagesBackgroundColor, 0)
+		ValidateColor(db.profile.bossStagesBackgroundColorInactive, defaults.bossStagesBackgroundColorInactive, 0)
+		ValidateColor(db.profile.bossStagesBorderColor, defaults.bossStagesBorderColor, 0)
+		ValidateColor(db.profile.bossStagesBorderColorInactive, defaults.bossStagesBorderColorInactive, 0)
+
 		--if db.profile.instanceTimerWidth < ProfileUtils.MinimumWidth or db.profile.instanceTimerWidth > ProfileUtils.MaximumWidth then
 		--	db.profile.instanceTimerWidth = defaults.instanceTimerWidth
 		--end
@@ -362,6 +444,15 @@ do
 			db.profile.bossCombatBorderName = defaults.bossCombatBorderName
 			db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
 			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
+		end
+
+		if not LibSharedMedia:IsValid("font", db.profile.bossStagesFontName) then
+			db.profile.bossStagesFontName = defaults.bossStagesFontName
+		end
+		if not LibSharedMedia:IsValid("border", db.profile.bossStagesBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+			db.profile.bossStagesBorderName = defaults.bossStagesBorderName
+			db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
+			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
 		end
 
 		--if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) then
@@ -454,6 +545,44 @@ do
 		db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
 	end
 
+	ProfileUtils.ResetBossStages = function()
+		db.profile.bossStagesLocked = defaults.bossStagesLocked
+		db.profile.bossStagesWidth = defaults.bossStagesWidth
+		db.profile.bossStagesHeight = defaults.bossStagesHeight
+		db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
+		db.profile.bossStagesFontName = defaults.bossStagesFontName
+		db.profile.bossStagesFontSize = defaults.bossStagesFontSize
+		db.profile.bossStagesMonochrome = defaults.bossStagesMonochrome
+		db.profile.bossStagesOutline = defaults.bossStagesOutline
+		db.profile.bossStagesAlign = defaults.bossStagesAlign
+		db.profile.bossStagesColor = CopyTable(defaults.bossStagesColor)
+		db.profile.bossStagesColorInactive = CopyTable(defaults.bossStagesColorInactive)
+		db.profile.bossStagesBackgroundColor = CopyTable(defaults.bossStagesBackgroundColor)
+		db.profile.bossStagesBackgroundColorInactive = CopyTable(defaults.bossStagesBackgroundColorInactive)
+		db.profile.bossStagesBorderColor = CopyTable(defaults.bossStagesBorderColor)
+		db.profile.bossStagesBorderColorInactive = CopyTable(defaults.bossStagesBorderColorInactive)
+		db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
+		db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
+		db.profile.bossStagesBorderName = defaults.bossStagesBorderName
+		db.profile.bossStagesInactive = defaults.bossStagesInactive
+		db.profile.bossStagesTextFormat = defaults.bossStagesTextFormat
+		db.profile.bossStagesHistoryTimeFormat = defaults.bossStagesHistoryTimeFormat
+	end
+	ProfileUtils.ResetBossStagesBorder = function()
+		db.profile.bossStagesBorderColor = CopyTable(defaults.bossStagesBorderColor)
+		db.profile.bossStagesBorderColorInactive = CopyTable(defaults.bossStagesBorderColorInactive)
+		db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
+		db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
+	end
+	ProfileUtils.ResetBossStagesInactiveColors = function()
+		db.profile.bossStagesColorInactive = CopyTable(defaults.bossStagesColorInactive)
+		db.profile.bossStagesBackgroundColorInactive = CopyTable(defaults.bossStagesBackgroundColorInactive)
+		db.profile.bossStagesBorderColorInactive = CopyTable(defaults.bossStagesBorderColorInactive)
+	end
+	ProfileUtils.ResetBossStagesPosition = function()
+		db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
+	end
+
 	--ProfileUtils.ResetInstanceTimer = function()
 	--	db.profile.instanceTimerLocked = defaults.instanceTimerLocked
 	--	db.profile.instanceTimerWidth = defaults.instanceTimerWidth
@@ -506,6 +635,10 @@ local widgets = {
 	bossCombatActive = false,
 	bossCombatHistoryTime = {},
 	bossCombatHistoryDuration = {},
+
+	bossStagesActive = false,
+	bossStagesHistoryTime = {},
+	bossStagesHistoryDuration = {},
 
 	--instanceTimerActive = false,
 	--instanceTimerHistoryTime = {},
@@ -842,6 +975,142 @@ do
 	end)
 end
 
+-- Boss Stages
+do
+	local main = CreateFrame("Frame", nil, UIParent)
+	main:Hide()
+	main:SetFrameStrata("MEDIUM")
+	main:SetFixedFrameStrata(true)
+	main:SetFrameLevel(5005)
+	main:SetFixedFrameLevel(true)
+	main:SetClampedToScreen(true)
+	main:EnableMouse(true)
+	main:RegisterForDrag("LeftButton")
+	main:SetScript("OnDragStart", function(self)
+		if self:IsMovable() then
+			self:StartMoving()
+		end
+	end)
+	main:SetScript("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		local point, _, relPoint, x, y = self:GetPoint()
+		x = math.floor(x+0.5)
+		y = math.floor(y+0.5)
+		db.profile.bossStagesPosition[1] = point
+		db.profile.bossStagesPosition[2] = relPoint
+		db.profile.bossStagesPosition[3] = x
+		db.profile.bossStagesPosition[4] = y
+		local acr = LibStub("AceConfigRegistry-3.0", true)
+		if acr then
+			acr:NotifyChange("BigWigsTools")
+		end
+	end)
+	main:SetScript("OnEnter", function(self)
+		bwTooltip:SetOwner(self, "ANCHOR_TOP")
+		bwTooltip:AddLine(L.bossStagesTimerTooltip)
+		for i = 1, #widgets.bossStagesHistoryTime do
+			if i == 1 and widgets.bossStagesActive then
+				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
+			else
+				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], SecondsToTime(widgets.bossStagesHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+			end
+		end
+		bwTooltip:Show()
+	end)
+	main:SetScript("OnLeave", function(self)
+		bwTooltip:Hide()
+	end)
+	widgets.bossStages = main
+
+	local bg = main:CreateTexture()
+	bg:SetAllPoints(main)
+	bg:Show()
+	widgets.bossStagesBG = bg
+
+	local border = CreateFrame("Frame", nil, main, "BackdropTemplate")
+	border:Show()
+	widgets.bossStagesBorder = border
+
+	local text = main:CreateFontString()
+	widgets.bossStagesText = text
+
+	local current = 0
+	local increment = 1
+	local currentModule = nil
+	local updater = main:CreateAnimationGroup()
+	updater:SetLooping("REPEAT")
+	updater:SetScript("OnLoop", function()
+		current = current + increment
+		widgets.bossStagesHistoryDuration[1] = current
+		local m = current/60
+		local s = current % 60
+		text:SetFormattedText(db.profile.bossStagesTextFormat == 2 and "%d:%04.1f" or "%d:%02d", m, s)
+	end)
+	local anim = updater:CreateAnimation()
+	anim:SetDuration(1)
+
+	widgets.bossStagesOnEngage = function(_, module)
+		if module and module:GetStage() then
+			currentModule = module
+			widgets.bossStagesHistoryTime = {}
+			widgets.bossStagesHistoryDuration = {}
+			text:SetText(db.profile.bossStagesTextFormat == 2 and "0:00.0" or "0:00")
+		end
+	end
+
+	do
+		local stageText = BigWigsAPI:GetLocale("BigWigs: Common").stage:gsub("%%d", "%s")
+		widgets.bossStagesOnStageChange = function(_, module, stage)
+			if module == currentModule then
+				updater:Stop()
+				widgets.bossStagesActive = true
+				current = 0
+				local tooltipText = ("%s %s"):format(date(db.profile.bossStagesHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), stageText:format(stage))
+				table.insert(widgets.bossStagesHistoryTime, 1, tooltipText)
+				table.insert(widgets.bossStagesHistoryDuration, 1, current)
+				if db.profile.bossStagesTextFormat == 2 then
+					anim:SetDuration(0.1)
+					increment = 0.1
+					text:SetText("0:00.0")
+				else
+					anim:SetDuration(1)
+					increment = 1
+					text:SetText("0:00")
+				end
+				updater:Play()
+				if db.profile.bossStagesInactive == "COLOR" then
+					local textColor = db.profile.bossStagesColor
+					text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+					local bgColor = db.profile.bossStagesBackgroundColor
+					bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+					local borderColor = db.profile.bossStagesBorderColor
+					border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
+				elseif db.profile.bossStagesInactive == "HIDE" then
+					main:Show()
+				end
+			end
+		end
+	end
+
+	widgets.bossStagesOnEnd = function(_, module)
+		if module == currentModule then
+			currentModule = nil
+			widgets.bossStagesActive = false
+			updater:Stop()
+			if db.profile.bossStagesInactive == "COLOR" then
+				local textColor = db.profile.bossStagesColorInactive
+				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+				local bgColor = db.profile.bossStagesBackgroundColorInactive
+				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+				local borderColor = db.profile.bossStagesBorderColorInactive
+				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
+			elseif db.profile.bossStagesInactive == "HIDE" then
+				main:Hide()
+			end
+		end
+	end
+end
+
 -- Instance Timer
 --[[
 do
@@ -1148,6 +1417,93 @@ local function UpdateBossCombatWidget()
 		widgets.bossCombat:GetScript("OnEvent")(widgets.bossCombat, "PLAYER_LEAVING_WORLD")
 	end
 end
+
+local function UpdateBossStagesWidget()
+	if not db.profile.bossStagesDisabled then
+		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossEngage", widgets.bossStagesOnEngage)
+		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_SetStage", widgets.bossStagesOnStageChange)
+		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossWin", widgets.bossStagesOnEnd)
+		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossWipe", widgets.bossStagesOnEnd)
+		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossDisable", widgets.bossStagesOnEnd)
+
+		widgets.bossStages:SetSize(db.profile.bossStagesWidth, db.profile.bossStagesHeight)
+		local point, relPoint = db.profile.bossStagesPosition[1], db.profile.bossStagesPosition[2]
+		local x, y = db.profile.bossStagesPosition[3], db.profile.bossStagesPosition[4]
+		widgets.bossStages:ClearAllPoints()
+		widgets.bossStages:SetPoint(point, db.profile.bossStagesPosition[5], relPoint, x, y)
+		if db.profile.bossStagesLocked then
+			widgets.bossStages:SetMovable(false)
+			widgets.bossStages:SetPropagateMouseClicks(true)
+		else
+			widgets.bossStages:SetMovable(true)
+			widgets.bossStages:SetPropagateMouseClicks(false)
+		end
+
+		widgets.bossStagesText:ClearAllPoints()
+		widgets.bossStagesText:SetPoint(db.profile.bossStagesAlign, db.profile.bossStagesAlign == "LEFT" and 1 or db.profile.bossStagesAlign == "RIGHT" and -1 or 0, 0)
+		widgets.bossStagesText:SetJustifyH(db.profile.bossStagesAlign)
+		local flags = nil
+		if db.profile.bossStagesMonochrome and db.profile.bossStagesOutline ~= "NONE" then
+			flags = "MONOCHROME," .. db.profile.bossStagesOutline
+		elseif db.profile.bossStagesMonochrome then
+			flags = "MONOCHROME"
+		elseif db.profile.bossStagesOutline ~= "NONE" then
+			flags = db.profile.bossStagesOutline
+		end
+		widgets.bossStagesText:SetFont(LibSharedMedia:Fetch("font", db.profile.bossStagesFontName), db.profile.bossStagesFontSize, flags)
+		widgets.bossStagesText:SetText(db.profile.bossStagesTextFormat == 2 and "0:00.0" or "0:00")
+
+		local borderTable = {
+			edgeFile = LibSharedMedia:Fetch("border", db.profile.bossStagesBorderName),
+			edgeSize = db.profile.bossStagesBorderSize,
+		}
+
+		widgets.bossStagesBorder:SetBackdrop(borderTable)
+		widgets.bossStagesBorder:ClearAllPoints()
+		widgets.bossStagesBorder:SetPoint("TOPLEFT", widgets.bossStages, "TOPLEFT", -db.profile.bossStagesBorderOffset, db.profile.bossStagesBorderOffset)
+		widgets.bossStagesBorder:SetPoint("BOTTOMRIGHT", widgets.bossStages, "BOTTOMRIGHT", db.profile.bossStagesBorderOffset, -db.profile.bossStagesBorderOffset)
+
+		if widgets.bossStagesActive then
+				local textColor = db.profile.bossStagesColor
+				widgets.bossStagesText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+				local bgColor = db.profile.bossStagesBackgroundColor
+				widgets.bossStagesBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+				local borderColor = db.profile.bossStagesBorderColor
+				widgets.bossStagesBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
+				widgets.bossStages:Show()
+		else
+			if db.profile.bossStagesInactive == "COLOR" then
+				local textColor = db.profile.bossStagesColorInactive
+				widgets.bossStagesText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+				local bgColor = db.profile.bossStagesBackgroundColorInactive
+				widgets.bossStagesBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+				local borderColor = db.profile.bossStagesBorderColorInactive
+				widgets.bossStagesBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
+				widgets.bossStages:Show()
+			else
+				local textColor = db.profile.bossStagesColor
+				widgets.bossStagesText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+				local bgColor = db.profile.bossStagesBackgroundColor
+				widgets.bossStagesBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+				local borderColor = db.profile.bossStagesBorderColor
+				widgets.bossStagesBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
+				if db.profile.bossStagesInactive == "HIDE" then
+					widgets.bossStages:Hide()
+				else
+					widgets.bossStages:Show()
+				end
+			end
+		end
+	else
+		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossEngage")
+		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_SetStage")
+		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossWin")
+		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossWipe")
+		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossDisable")
+		widgets.bossStages:Hide()
+	end
+end
+
 --[[
 local function UpdateInstanceTimerWidget()
 	if not db.profile.instanceTimerDisabled then
@@ -1241,6 +1597,7 @@ do
 		db.profile[key] = {r, g, b, a}
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
+		UpdateBossStagesWidget()
 		--UpdateInstanceTimerWidget()
 	end
 
@@ -1249,6 +1606,7 @@ do
 		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
+		UpdateBossStagesWidget()
 		--UpdateInstanceTimerWidget()
 	end
 
@@ -1258,6 +1616,10 @@ do
 
 	local function BossCombatDisabled()
 		return db.profile.bossCombatDisabled
+	end
+
+	local function BossStagesDisabled()
+		return db.profile.bossStagesDisabled
 	end
 
 	--local function InstanceTimerDisabled()
@@ -1272,6 +1634,10 @@ do
 		return db.profile.bossCombatDisabled or db.profile.bossCombatInactive ~= "COLOR"
 	end
 
+	local function BossStagesDisabledOrNoSeparateInactiveColors()
+		return db.profile.bossStagesDisabled or db.profile.bossStagesInactive ~= "COLOR"
+	end
+
 	--local function InstanceTimerDisabledOrNoSeparateInactiveColors()
 	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerInactive ~= "COLOR"
 	--end
@@ -1284,6 +1650,10 @@ do
 		return db.profile.bossCombatDisabled or db.profile.bossCombatBorderName == "None"
 	end
 
+	local function BossStagesDisabledOrBorderSetToNone()
+		return db.profile.bossStagesDisabled or db.profile.bossStagesBorderName == "None"
+	end
+
 	--local function InstanceTimerDisabledOrBorderSetToNone()
 	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerBorderName == "None"
 	--end
@@ -1294,6 +1664,10 @@ do
 
 	local function BossCombatDisabledOrAnchorPointDefault()
 		return db.profile.bossCombatDisabled or db.profile.bossCombatPosition[5] == "UIParent"
+	end
+
+	local function BossStagesDisabledOrAnchorPointDefault()
+		return db.profile.bossStagesDisabled or db.profile.bossStagesPosition[5] == "UIParent"
 	end
 
 	--local function InstanceTimerDisabledOrAnchorPointDefault()
@@ -1783,7 +2157,7 @@ do
 					db.profile[key] = value
 					UpdateBossCombatWidget()
 				end,
-				order = 1,
+				order = 2,
 				args = {
 					explainBossCombat = {
 						type = "description",
@@ -2095,7 +2469,7 @@ do
 								type = "multiselect",
 								name = L.tooltipHistoryResetConditions,
 								desc = L.tooltipHistoryResetConditionsDesc,
-								order = 5,
+								order = 6,
 								values = {
 									[1] = L.enteringRaid,
 									[2] = L.enteringDungeon,
@@ -2239,6 +2613,439 @@ do
 					},
 				},
 			},
+			bossStages = {
+				name = L.bossStagesTimer,
+				type = "group",
+				childGroups = "tab",
+				set = function(info, value)
+					local key = info[#info]
+					db.profile[key] = value
+					UpdateBossStagesWidget()
+				end,
+				order = 3,
+				args = {
+					explainBossStages = {
+						type = "description",
+						name = L.bossStagesTimerDesc,
+						order = 0,
+						width = "full",
+					},
+					bossStagesDisabled = {
+						type = "toggle",
+						name = L.disabled,
+						width = 1.1,
+						order = 1,
+						set = function(info, value)
+							local key = info[#info]
+							db.profile[key] = value
+							if value then
+								ProfileUtils.ResetBossStages()
+							end
+							UpdateBossStagesWidget()
+						end,
+					},
+					bossStagesLocked = {
+						type = "toggle",
+						name = L.lock,
+						desc = L.lockDesc,
+						width = 1.1,
+						order = 2,
+						disabled = BossStagesDisabled,
+					},
+					bossStagesReset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						width = 1,
+						func = function()
+							ProfileUtils.ResetBossStages()
+							UpdateBossStagesWidget()
+						end,
+						order = 3,
+						disabled = BossStagesDisabled,
+					},
+					bossStagesGeneral = {
+						type = "group",
+						name = L.general,
+						order = 4,
+						args = {
+							bossStagesWidth = {
+								type = "range",
+								name = L.width,
+								desc = L.sizeDesc,
+								min = ProfileUtils.MinimumWidth,
+								max = ProfileUtils.MaximumWidth,
+								step = 1,
+								order = 1,
+								width = 1.5,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesHeight = {
+								type = "range",
+								name = L.height,
+								desc = L.sizeDesc,
+								min = ProfileUtils.MinimumHeight,
+								max = ProfileUtils.MaximumHeight,
+								step = 1,
+								order = 2,
+								width = 1.5,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesFontName = {
+								type = "select",
+								name = L.font,
+								order = 3,
+								values = LibSharedMedia:List("font"),
+								itemControl = "DDI-Font",
+								get = function()
+									for i, v in next, LibSharedMedia:List("font") do
+										if v == db.profile.bossStagesFontName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("font")
+									db.profile.bossStagesFontName = list[value]
+									UpdateBossStagesWidget()
+								end,
+								width = 2,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesOutline = {
+								type = "select",
+								name = L.outline,
+								order = 4,
+								values = {
+									NONE = L.none,
+									OUTLINE = L.thin,
+									THICKOUTLINE = L.thick,
+								},
+								sorting = {
+									"NONE",
+									"OUTLINE",
+									"THICKOUTLINE",
+								},
+								disabled = BossStagesDisabled,
+							},
+							bossStagesFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 5,
+								width = 2,
+								softMax = 100, max = 200, min = 12, step = 1,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesMonochrome = {
+								type = "toggle",
+								name = L.monochrome,
+								desc = L.monochromeDesc,
+								order = 6,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesAlign = {
+								type = "select",
+								name = L.align,
+								values = {
+									LEFT = L.LEFT,
+									CENTER = L.CENTER,
+									RIGHT = L.RIGHT,
+								},
+								sorting = {
+									"LEFT",
+									"CENTER",
+									"RIGHT",
+								},
+								style = "radio",
+								order = 7,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesBorderName = {
+								type = "select",
+								name = L.borderName,
+								order = 8,
+								values = LibSharedMedia:List("border"),
+								get = function()
+									for i, v in next, LibSharedMedia:List("border") do
+										if v == db.profile.bossStagesBorderName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("border")
+									db.profile.bossStagesBorderName = list[value]
+									if db.profile.bossStagesBorderName == "None" then
+										ProfileUtils.ResetBossStagesBorder()
+									end
+									UpdateBossStagesWidget()
+								end,
+								width = 1,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesBorderSize = {
+								type = "range",
+								name = L.borderSize,
+								order = 9,
+								min = 1,
+								max = 32,
+								step = 1,
+								width = 1,
+								disabled = BossStagesDisabledOrBorderSetToNone,
+							},
+							bossStagesBorderOffset = {
+								type = "range",
+								name = L.borderOffset,
+								order = 10,
+								min = 0,
+								max = 32,
+								step = 1,
+								width = 1,
+								disabled = BossStagesDisabledOrBorderSetToNone,
+							},
+						},
+					},
+					bossStagesAdvanced = {
+						type = "group",
+						name = L.advanced,
+						order = 5,
+						args = {
+							bossStagesColors = {
+								type = "group",
+								name = L.colors,
+								inline = true,
+								order = 1,
+								args = {
+									bossStagesColor = {
+										type = "color",
+										name = L.fontColor,
+										width = 1,
+										get = GetColor,
+										set = SetColorRestrictedAlpha,
+										hasAlpha = true,
+										order = 1,
+										disabled = BossStagesDisabled,
+									},
+									bossStagesBackgroundColor = {
+										type = "color",
+										name = L.backgroundColor,
+										width = 1,
+										get = GetColor,
+										set = SetColor,
+										hasAlpha = true,
+										order = 2,
+										disabled = BossStagesDisabled,
+									},
+									bossStagesBorderColor = {
+										type = "color",
+										name = L.borderColor,
+										order = 3,
+										hasAlpha = true,
+										width = 1,
+										get = GetColor,
+										set = SetColor,
+										disabled = function() return BossStagesDisabled() or db.profile.bossStagesBorderName == "None" end,
+									},
+									bossStagesColorInactive = {
+										type = "color",
+										name = L.parentheses:format(L.fontColor, L.inactive),
+										width = 1,
+										get = GetColor,
+										set = SetColorRestrictedAlpha,
+										hasAlpha = true,
+										order = 4,
+										disabled = BossStagesDisabledOrNoSeparateInactiveColors,
+									},
+									bossStagesBackgroundColorInactive = {
+										type = "color",
+										name = L.parentheses:format(L.backgroundColor, L.inactive),
+										width = 1,
+										get = GetColor,
+										set = SetColor,
+										hasAlpha = true,
+										order = 5,
+										disabled = BossStagesDisabledOrNoSeparateInactiveColors,
+									},
+									bossStagesBorderColorInactive = {
+										type = "color",
+										name = L.parentheses:format(L.borderColor, L.inactive),
+										order = 6,
+										hasAlpha = true,
+										width = 1,
+										get = GetColor,
+										set = SetColor,
+										disabled = function() return BossStagesDisabledOrNoSeparateInactiveColors() or db.profile.bossStagesBorderName == "None" end,
+									},
+								},
+							},
+							bossStagesInactive = {
+								type = "select",
+								name = L.whenInactive,
+								values = {
+									NONE = L.doNothing,
+									HIDE = L.hide,
+									COLOR = L.colorFade,
+								},
+								sorting = {
+									"NONE",
+									"HIDE",
+									"COLOR",
+								},
+								style = "radio",
+								order = 2,
+								set = function(info, value)
+									local key = info[#info]
+									db.profile[key] = value
+									if value ~= "COLOR" then
+										ProfileUtils.ResetBossStagesInactiveColors()
+									end
+									UpdateBossStagesWidget()
+								end,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesTextFormat = {
+								type = "select",
+								name = L.textFormat,
+								values = {
+									"1:23",
+									"1:23.4",
+								},
+								order = 3,
+								disabled = BossStagesDisabled,
+							},
+							bossStagesHistoryTimeFormat = {
+								type = "select",
+								name = L.historyTimeFormat,
+								values = {
+									L.twelveHour,
+									L.twentyFourHour,
+								},
+								order = 4,
+								disabled = BossStagesDisabled,
+							},
+						},
+					},
+					bossStagesExactPositioning = {
+						type = "group",
+						name = L.positionExact,
+						order = 6,
+						args = {
+							posx = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								min = -2048,
+								max = 2048,
+								step = 1,
+								order = 1,
+								width = 3,
+								get = function()
+									return db.profile.bossStagesPosition[3]
+								end,
+								set = function(_, value)
+									db.profile.bossStagesPosition[3] = value
+									UpdateBossStagesWidget()
+								end,
+								disabled = BossStagesDisabled,
+							},
+							posy = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								min = -2048,
+								max = 2048,
+								step = 1,
+								order = 2,
+								width = 3,
+								get = function()
+									return db.profile.bossStagesPosition[4]
+								end,
+								set = function(_, value)
+									db.profile.bossStagesPosition[4] = value
+									UpdateBossStagesWidget()
+								end,
+								disabled = BossStagesDisabled,
+							},
+							customAnchorPoint = {
+								type = "input",
+								get = function()
+									return db.profile.bossStagesPosition[5]
+								end,
+								set = function(_, value)
+									if value ~= "UIParent" then
+										db.profile.bossStagesPosition[1] = "CENTER"
+										db.profile.bossStagesPosition[2] = "CENTER"
+										db.profile.bossStagesPosition[3] = 0
+										db.profile.bossStagesPosition[4] = 0
+										db.profile.bossStagesPosition[5] = value
+									else
+										ProfileUtils.ResetBossStagesPosition()
+									end
+									UpdateBossStagesWidget()
+								end,
+								validate = function(_, value)
+									local frame = _G[value]
+									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+										return false
+									end
+									return true
+								end,
+								name = L.customAnchorPoint,
+								order = 3,
+								width = 3,
+								disabled = BossStagesDisabled,
+							},
+							customAnchorPointSource = {
+								type = "select",
+								get = function()
+									return db.profile.bossStagesPosition[1]
+								end,
+								set = function(_, value)
+									if BigWigsAPI.IsValidFramePoint(value) then
+										db.profile.bossStagesPosition[1] = value
+										UpdateBossStagesWidget()
+									end
+								end,
+								values = BigWigsAPI.GetFramePointList(),
+								name = L.sourcePoint,
+								order = 4,
+								width = 1.5,
+								disabled = BossStagesDisabledOrAnchorPointDefault,
+							},
+							customAnchorPointDestination = {
+								type = "select",
+								get = function()
+									return db.profile.bossStagesPosition[2]
+								end,
+								set = function(_, value)
+									if BigWigsAPI.IsValidFramePoint(value) then
+										db.profile.bossStagesPosition[2] = value
+										UpdateBossStagesWidget()
+									end
+								end,
+								values = BigWigsAPI.GetFramePointList(),
+								name = L.destinationPoint,
+								order = 5,
+								width = 1.5,
+								disabled = BossStagesDisabledOrAnchorPointDefault,
+							},
+							bossStagesPositionResetHeader = {
+								type = "header",
+								name = "",
+								order = 6,
+							},
+							bossStagesPositionReset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								func = function()
+									ProfileUtils.ResetBossStagesPosition()
+									UpdateBossStagesWidget()
+								end,
+								order = 7,
+								disabled = BossStagesDisabled,
+							},
+						},
+					},
+				},
+			},
 			--[[instance = {
 				name = L.instanceTimer,
 				type = "group",
@@ -2248,7 +3055,7 @@ do
 					db.profile[key] = value
 					UpdateInstanceTimerWidget()
 				end,
-				order = 1,
+				order = 4,
 				args = {
 					explainInstanceTimer = {
 						type = "description",
@@ -2700,11 +3507,15 @@ do
 		if not db.profile.bossCombatDisabled and not db.profile.bossCombatLocked then
 			db.profile.bossCombatLocked = true
 		end
+		if not db.profile.bossStagesDisabled and not db.profile.bossStagesLocked then
+			db.profile.bossStagesLocked = true
+		end
 		--if not db.profile.instanceTimerDisabled and not db.profile.instanceTimerLocked then
 		--	db.profile.instanceTimerLocked = true
 		--end
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
+		UpdateBossStagesWidget()
 		--UpdateInstanceTimerWidget()
 		--if not db.profile.instanceTimerDisabled then
 		--	BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
