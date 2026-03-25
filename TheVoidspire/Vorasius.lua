@@ -71,7 +71,6 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	timelineEventCount = 0
 
 	breathCount = 1
 	parasiteCount = 1
@@ -91,51 +90,41 @@ end
 -- Timeline Event Handlers
 --
 
-do
-	local lastSharedCD = 0
-	function mod:TimersMythic(_, eventInfo)
-		if eventInfo.source ~= 0 then return end
-		local duration = eventInfo.duration
-		local durationRounded = self:RoundNumber(duration, 1)
-		eventInfo.durationRounded = durationRounded
-		local barInfo
+function mod:TimersMythic(_, eventInfo)
+	if eventInfo.source ~= 0 then return end
+	local duration = eventInfo.duration
+	local durationRounded = self:RoundNumber(duration, 0)
+	eventInfo.durationRounded = durationRounded
 
-		timelineEventCount = timelineEventCount + 1
-		if timelineEventCount <= 5 then -- Pull Events
-			lastSharedCD = 0
-			if durationRounded == 6 then -- Primordial Roar
-				barInfo = self:PrimordialRoar(eventInfo)
-			elseif durationRounded == 16 or durationRounded == 136 then -- Shadowclaw Slam
-				barInfo = self:ShadowclawSlam(eventInfo)
-			elseif durationRounded == 57 then -- Parasite Expulsion
-				barInfo = self:ParasiteExpulsion(eventInfo)
-			elseif durationRounded == 95 then -- Void Breath
-				barInfo = self:VoidBreath(eventInfo)
-			end
+	local barInfo
+
+	if durationRounded == 6 then
+		barInfo = self:PrimordialRoar(eventInfo)
+	elseif durationRounded == 16 or durationRounded == 136 or durationRounded == 240 then
+		barInfo = self:ShadowclawSlam(eventInfo)
+	elseif durationRounded == 57 or durationRounded == 123 then
+		barInfo = self:ParasiteExpulsion(eventInfo)
+	elseif durationRounded == 95 then
+		barInfo = self:VoidBreath(eventInfo)
+	elseif durationRounded == 120 then
+		-- XXX since Void Breath doesn't have an event and :PrimordialRoar does it, counts should always be equal
+		if breathCount < roarCount then
+			barInfo = self:VoidBreath(eventInfo)
 		else
-			if durationRounded == 240 then -- Shadowclaw Slam
-				barInfo = self:ShadowclawSlam(eventInfo)
-			elseif durationRounded == 120 and lastSharedCD == 0 then -- Roar (alternates)
-				barInfo = self:PrimordialRoar(eventInfo)
-				lastSharedCD = 1
-			elseif durationRounded == 120 and lastSharedCD == 1 then -- Breath (alternates)
-				barInfo = self:VoidBreath(eventInfo)
-				lastSharedCD = 0
-			elseif durationRounded == 122.5 then -- Parasite Expulsion
-				barInfo = self:ParasiteExpulsion(eventInfo)
-			end
+			barInfo = self:PrimordialRoar(eventInfo)
 		end
-		if barInfo then
-			activeBars[eventInfo.id] = barInfo
-		elseif self:ShouldShowBars() and not self:IsWiping() then
-			self:ErrorForTimelineEvent(eventInfo)
-			backupBars[eventInfo.id] = true
-			self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+	end
 
-			local state = C_EncounterTimeline.GetEventState(eventInfo.id)
-			if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
-				self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
-			end
+	if barInfo then
+		activeBars[eventInfo.id] = barInfo
+	elseif self:ShouldShowBars() and not self:IsWiping() then
+		self:ErrorForTimelineEvent(eventInfo)
+		backupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
 		end
 	end
 end
@@ -143,13 +132,13 @@ end
 function mod:TimersOther(_, eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local duration = eventInfo.duration
-		local durationRounded = self:RoundNumber(duration, 1)
+		local durationRounded = self:RoundNumber(duration, 0)
 		eventInfo.durationRounded = durationRounded
 		local barInfo
 
 		if durationRounded == 16 or durationRounded == 136 or durationRounded == 240 then
 			barInfo = self:ShadowclawSlam(eventInfo)
-		elseif durationRounded == 57 or durationRounded == 122.5 then
+		elseif durationRounded == 57 or durationRounded == 123 then
 			barInfo = self:ParasiteExpulsion(eventInfo)
 		elseif durationRounded == 6 or durationRounded == 120 then
 			barInfo = self:PrimordialRoar(eventInfo)
@@ -275,7 +264,7 @@ do
 		end)
 	end
 	function mod:PrimordialRoar(eventInfo)
-		if not self:Mythic() and eventInfo.durationRounded == 120 and self:ShouldShowBars() then
+		if eventInfo.durationRounded == 120 and self:ShouldShowBars() then
 			-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
 			local barText = CL.count:format(CL.breath, breathCount)
 			self:CDBar(1256855, 89, barText)
