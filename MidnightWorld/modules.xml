@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Luashal.lua"/>
+<Script file="Cragpine.lua"/>
 
 <Script file="!Options.lua"/>
 
