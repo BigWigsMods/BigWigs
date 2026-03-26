@@ -59,14 +59,13 @@ end
 
 local popupFrame = BigWigsLoader.isRetail and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame")
 do
-	local text = popupFrame:CreateFontString(nil, nil, "GameFontGreenLarge")
 	local throttle = {}
 	local delayedInvite = {}
 	local invitesBlocked = false
 	local SendChatMessage = BigWigsLoader.SendChatMessage
 	local Ambiguate = BigWigsLoader.Ambiguate
 	local myClient = WOW_PROJECT_ID
-	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+	local issecretvalue = issecretvalue or function() end -- XXX 12.0 compat
 	popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
 		if event == "GROUP_LEFT" then
 			if not IsInGroup() then
@@ -103,9 +102,10 @@ do
 							else
 								if C_PartyInfo.IsPartyFull() then
 									if not invitesBlocked then
+										if not next(delayedInvite) then
+											popupFrame:Show()
+										end
 										delayedInvite[sender] = true
-										text:SetText(L.groupIsFullConvertToRaid)
-										popupFrame:Show()
 									else
 										throttle[sender] = throttle[sender] + 10
 										SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, sender)
@@ -149,9 +149,10 @@ do
 											else
 												if C_PartyInfo.IsPartyFull() then
 													if not invitesBlocked then
+														if not next(delayedInvite) then
+															popupFrame:Show()
+														end
 														delayedInvite[sender] = bnSenderID
-														text:SetText(L.groupIsFullConvertToRaid)
-														popupFrame:Show()
 													else
 														throttle[bnSenderID] = throttle[bnSenderID] + 10
 														BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
@@ -179,10 +180,12 @@ do
 	popupFrame:SetSize(400, 110)
 	popupFrame:SetPoint("CENTER")
 
+	local text = popupFrame:CreateFontString(nil, nil, "GameFontGreenLarge")
 	text:SetSize(380, 0)
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("TOP")
 	text:SetNonSpaceWrap(true)
+	text:SetText(L.groupIsFullConvertToRaid)
 
 	if BigWigsLoader.isRetail then
 		popupFrame:SetTitle("BigWigs")
@@ -210,38 +213,47 @@ do
 		else
 			ConvertToRaid()
 		end
-		local delay = 0
-		for playerName in next, delayedInvite do
-			delay = delay + 0.1
-			BigWigsLoader.CTimerAfter(delay, function()
+		BigWigsLoader.CTimerAfter(1.5, function() -- Hopefully long enough for the game to recognize you are now in a raid, before trying to invite others
+			local timer = nil
+			timer = BigWigsLoader.CTimerNewTicker(0.2, function() -- Throttle
+				local playerName = next(delayedInvite)
+				if not playerName then
+					timer:Cancel()
+					timer = nil
+					delayedInvite = {}
+					return
+				end
+
+				delayedInvite[playerName] = nil
 				BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(playerName))
 				C_PartyInfo.InviteUnit(playerName)
 			end)
-		end
-		delayedInvite = {}
+		end)
 	end)
 	buttonYes:SetText(L.yes)
 	local buttonNo = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isRetail and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonNo:SetSize(128, 32)
 	buttonNo:SetPoint("LEFT", buttonYes, "RIGHT", 12, 0)
-	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() return false end -- XXX 12.0 compat
+	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end -- XXX 12.0 compat
 	buttonNo:SetScript("OnClick", function(self)
-		invitesBlocked = true
-		local delay = 0
-		for playerName, isBnet in next, delayedInvite do
-			delay = delay + 0.1
-			BigWigsLoader.CTimerAfter(delay, function()
-				if not InChatMessagingLockdown() then
-					if type(isBnet) == "number" then
-						BNSendWhisper(isBnet, L.whisperToPlayerMyGroupIsFull)
-					else
-						SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, playerName)
-					end
-				end
-			end)
-		end
-		delayedInvite = {}
 		self:GetParent():Hide()
+		invitesBlocked = true
+		local timer = nil
+		timer = BigWigsLoader.CTimerNewTicker(0.5, function() -- Throttle
+			local playerName, isBnet = next(delayedInvite)
+			if not playerName or InChatMessagingLockdown() then
+				timer:Cancel()
+				timer = nil
+				delayedInvite = {}
+				return
+			end
+
+			if type(isBnet) == "number" then
+				BNSendWhisper(isBnet, L.whisperToPlayerMyGroupIsFull)
+			else
+				SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, playerName)
+			end
+		end)
 	end)
 	buttonNo:SetText(L.no)
 
