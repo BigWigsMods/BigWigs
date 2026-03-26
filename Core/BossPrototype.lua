@@ -594,6 +594,7 @@ do
 		local stage = self:GetStage() or 0
 		local eventErrorMessage = unhandledEventString:format(GetTime() - self.stageTime, stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
 		self:Error(eventErrorMessage, true)
+		self:Debug(("TL event ID %d after %.1fs (stage %s) was missed."):format(eventInfo.id, GetTime() - self.stageTime, stage))
 	end
 end
 
