@@ -341,7 +341,7 @@ do
 	end
 
 	function plugin:Blizz_StartCountdown(_, initiatedBy, timeSeconds, totalTime)
-		if IsEncounterInProgress() then return end -- Doesn't make sense to allow this in combat
+		if IsEncounterInProgress() or self:IsSecret(initiatedBy) then return end -- We don't want pull timers during encounters or when secret (encounters and M+)
 		local unitToken
 		local _, instanceType, _, _, _, _, _, instanceId = GetInstanceInfo()
 		for unit in self:IterateGroup(true) do
@@ -443,8 +443,9 @@ end
 -- Slash Handler
 --
 
+local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end -- XXX 12.0 compat
 BigWigsAPI.RegisterSlashCommand("/pull", function(input)
-	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
+	if IsEncounterInProgress() or InChatMessagingLockdown() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this during encounters/M+
 
 	if not IsInGroup() or (IsInGroup(2) and UnitGroupRolesAssigned("player") == "TANK") or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or (IsInGroup(1) and not IsInRaid()) then -- Solo, tank in LFG, leader, assist, anyone in 5m
 		if not plugin:IsEnabled() then BigWigs:Enable() end
