@@ -1143,6 +1143,7 @@ L.privateaura = "當私有光環施放在你身上時（點名）"
 L.customSoundDesc = "播放選定的自訂的聲音，而不是由模塊提供的。"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
 L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按鈕將重置「全部」以這裡自訂的聲音來代替。"
+--L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

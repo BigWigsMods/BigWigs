@@ -1142,6 +1142,7 @@ L.privateaura = "Whenever a 'Private Aura' is on you"
 L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module."
 L.resetSoundDesc = "Resets the above sounds to their defaults."
 L.resetAllCustomSound = "If you've customized sounds for any boss encounter settings, this button will reset ALL of them so the sounds defined here will be used instead."
+L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

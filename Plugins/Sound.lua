@@ -57,6 +57,7 @@ plugin.defaultDB = {
 
 local function updateProfile()
 	db = plugin.db.profile
+	local printTbl, blockedFromPrints = {}, {}
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
 		if defaultType == "nil" then
@@ -68,6 +69,11 @@ local function updateProfile()
 				for optionKey, soundName in next, soundTbl do
 					if not LibSharedMedia:IsValid("sound", soundName) then
 						soundTbl[optionKey] = nil -- Invalid sound, remove
+						if not blockedFromPrints[soundName] then
+							blockedFromPrints[soundName] = true
+							local moduleName = bossModuleName:sub(16) -- Remove "BigWigs_Bosses_" text
+							printTbl[#printTbl+1] = L.soundResetPrint:format(moduleName, soundName)
+						end
 					end
 				end
 				if not next(soundTbl) then
@@ -81,9 +87,23 @@ local function updateProfile()
 		local defaultType = type(plugin.defaultDB.media[k])
 		if defaultType == "nil" then
 			db.media[k] = nil
-		elseif type(v) ~= defaultType or not LibSharedMedia:IsValid("sound", v) then
-			db.media[k] = plugin.defaultDB.media[k] -- Invalid type or invalid sound, reset
+		elseif type(v) ~= defaultType then
+			db.media[k] = plugin.defaultDB.media[k] -- Invalid type, reset
+		elseif not LibSharedMedia:IsValid("sound", v) then
+			db.media[k] = plugin.defaultDB.media[k] -- Invalid sound, reset
+			if not blockedFromPrints[v] then
+				blockedFromPrints[v] = true
+				printTbl[#printTbl+1] = L.soundResetPrint:format(plugin.moduleName, v)
+			end
 		end
+	end
+
+	if printTbl[1] then
+		plugin:SimpleTimer(function()
+			for i = 1, #printTbl do
+				plugin:Print(printTbl[i])
+			end
+		end, 0)
 	end
 end
 

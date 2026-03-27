@@ -1143,6 +1143,7 @@ L.privateaura = "Когда на вас 'Приватная Аура'"
 L.customSoundDesc = "Воспроизводить пользовательский звук, вместо используемого в модуле."
 L.resetSoundDesc = "Сбрасывает указанные выше звуки к значениям по умолчанию."
 L.resetAllCustomSound = "Если вы используете свои звуки для какой-либо битвы, это кнопка спросит ВСЕ такие звуки на стандартные."
+--L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

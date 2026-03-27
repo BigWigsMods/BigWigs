@@ -1143,6 +1143,7 @@ L.privateaura = "'비공개 오라'가 당신에게 있을 때"
 L.customSoundDesc = "모듈이 제공한 소리 대신에 선택된 사용자 설정 소리를 재생합니다."
 L.resetSoundDesc = "소리에 관련된 모든 설정을 기본값으로 초기화합니다."
 L.resetAllCustomSound = "보스 전투 설정에 대해 사운드를 사용자 지정한 경우, 이 버튼을 누르면 모든 사운드가 재설정되어 여기에 정의된 사운드가 대신 사용됩니다."
+--L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
