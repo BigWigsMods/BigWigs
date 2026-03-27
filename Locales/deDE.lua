@@ -1143,7 +1143,7 @@ L.privateaura = "Immer wenn eine 'Private Aura' auf Dir ist"
 L.customSoundDesc = "Den speziell gewählten Sound anstatt des vom Modul bereitgestellten abspielen."
 L.resetSoundDesc = "Setzt die obigen Sounds auf ihren Standard zurück."
 L.resetAllCustomSound = "Wenn Du Sounds für Bossbegegnungen geändert hast, werden diese ALLE über diese Schaltfläche zurückgesetzt, sodass stattdessen die hier gewählten genutzt werden."
---L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
+L.soundResetPrint = "Das Modul '|cFF436EEE%s|r' nutzt einen benutzerdefinierten Sound namens '|cFF436EEE%s|r' welcher nicht mehr existiert. Zurücksetzen auf Standard erfolgt."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
