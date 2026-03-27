@@ -9,8 +9,8 @@ if not plugin then return end
 -- Locals
 --
 
-local media = LibStub("LibSharedMedia-3.0")
-local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 
 -------------------------------------------------------------------------------
 -- Options
@@ -52,16 +52,16 @@ plugin.pluginOptions = {
 			name = L.victorySound,
 			order = 2,
 			get = function(info)
-				for i, v in next, media:List(SOUND) do
+				for i, v in next, LibSharedMedia:List(SOUND) do
 					if v == plugin.db.profile[info[#info]] then
 						return i
 					end
 				end
 			end,
 			set = function(info, value)
-				plugin.db.profile[info[#info]] = media:List(SOUND)[value]
+				plugin.db.profile[info[#info]] = LibSharedMedia:List(SOUND)[value]
 			end,
-			values = media:List(SOUND),
+			values = LibSharedMedia:List(SOUND),
 			width = "full",
 			itemControl = "DDI-Sound",
 		},
@@ -113,6 +113,10 @@ do
 			end
 		end
 
+		if not LibSharedMedia:IsValid("sound", db.soundName) then
+			db.soundName = plugin.defaultDB.soundName
+		end
+
 		if not db.blizzVictory and type(BossBanner) == "table" and BossBanner:IsEventRegistered("BOSS_KILL") then
 			shouldRestoreBanner = true
 			BossBanner:UnregisterEvent("BOSS_KILL")
@@ -122,7 +126,7 @@ do
 	function plugin:OnPluginEnable()
 		updateProfile()
 		if self.db.profile.soundName ~= "None" then
-			self:SimpleTimer(function() local played, id = self:PlaySoundFile(media:Fetch(SOUND, self.db.profile.soundName)) if played then StopSound(id) end end, 0)
+			self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, self.db.profile.soundName)) if played then StopSound(id) end end, 0)
 		end
 
 		self:RegisterMessage("BigWigs_OnBossWin")
@@ -158,7 +162,7 @@ do
 			prev = t
 			local soundName = self.db.profile.soundName
 			if soundName ~= "None" then
-				local sound = media:Fetch(SOUND, soundName, true)
+				local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
 				if sound then
 					self:PlaySoundFile(sound)
 				end
