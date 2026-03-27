@@ -666,9 +666,10 @@ do
 					tbl.title = nil
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 372 then -- Delve Spoils Found
+				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 371 or tbl.eventToastID == 372 then -- Delve Spoils Found
 					-- 337: Flickering Spoils Will Manifest Upon Delve Completion
 					-- 338: Shadowed Flickering Spoils Will Manifest Upon Delve Completion
+					-- 371: Grand Sanctified Spoils Will Manifest Upon Delve Completion
 					-- 372: Sanctified Spoils Will Manifest Upon Delve Completion
 					tbl.subtitle = tbl.title
 					tbl.title = nil
