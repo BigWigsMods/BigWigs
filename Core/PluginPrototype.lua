@@ -291,3 +291,9 @@ function plugin:Debug(...)
 		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", self.moduleName, ...)
 	end
 end
+
+--- Print a message to the chat frame with the BigWigs prefix
+-- @string msg the message to print to the chat frame
+function plugin:Print(msg)
+	core:Print(msg)
+end
