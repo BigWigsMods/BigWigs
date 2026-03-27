@@ -1179,7 +1179,6 @@ L.blizzBasicAsBars = "暴雪内置的首领预警显示在 BigWigs 计时条上"
 L.blizzBasicAsBlizzTimeline = "暴雪内置的首领预警及首领技能显示“类型”"
 L.developerMode = "开发者模式"
 L.enhancedModeWarning = "警告！\n\n禁用增强模式将禁用许多 BigWigs 功能，包括：\n\n计时条颜色、法术重命名、计数器、自定义声音/语音、倒计时、计时条开关、额外消息提示等。"
-L.enhancedModeWelcome = "BigWigs“增强模式”已启用！\n\n完全恢复大部分至暗之夜更新前的功能，包括：\n\n计时条颜色、法术重命名、计数器、自定义声音/语音、倒计时、计时条开关、额外消息提示等。"
 
 -----------------------------------------------------------------------
 -- Victory.lua

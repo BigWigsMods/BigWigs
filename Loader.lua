@@ -1138,12 +1138,12 @@ do
 end
 
 -- XXX 12.0.1 s1
-if public.isRetail and not BW_FEAT_ENHANCE then
-	BW_FEAT_ENHANCE = true
-	if BigWigs3DB then -- No popup for fresh users
-		Popup(L.enhancedModeWelcome, true, 250)
-	end
-end
+--if public.isRetail and not BW_FEAT_ENHANCE then
+--	BW_FEAT_ENHANCE = true
+--	if BigWigs3DB then -- No popup for fresh users
+--		Popup(L.enhancedModeWelcome, true, 250)
+--	end
+--end
 
 -- XXX 12.0.0
 --if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE2 then

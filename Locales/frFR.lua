@@ -1179,7 +1179,6 @@ L.blizzBasicAsBars = "CàR classiques de Blizzard affichés en tant que barres d
 L.blizzBasicAsBlizzTimeline = "CàR classiques de Blizzard affichés sur la ligne temporelle de Blizzard"
 L.developerMode = "Mode développeur"
 L.enhancedModeWarning = "ATTENTION !\n\nDésactiver le mode avancé désactivera beaucoup de fonctionnalités de BigWigs, incluant :\n\nles couleurs de barres, le renommage des sorts, les contres, les sons / voix personnalisées, les CàR, l'activation des barres, les messages supplémentaires, etc."
-L.enhancedModeWelcome = "'Mode avancé' de BigWigs activé !\n\nRestoration complète des fonctionnalités d'avant Midnight, incluant :\n\nles couleurs de barres, le renommage des sorts, les contres, les sons / voix personnalisées, les CàR, l'activation des barres, les messages supplémentaires, etc."
 
 -----------------------------------------------------------------------
 -- Victory.lua
