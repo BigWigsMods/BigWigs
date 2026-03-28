@@ -43,6 +43,7 @@ local darkUpheavalCount = 1
 function mod:GetOptions()
 	return {
 		1251361, -- Shadow's Advance
+		1262036, -- Void Rupture
 		1249262, -- Umbral Collapse
 		1280015, -- Void Marked
 		1260712, -- Oblivion's Wrath
@@ -53,6 +54,7 @@ function mod:GetOptions()
 	},
 	{
 		[1251361] = CL.adds, -- Shadow's Advance (Adds)
+		[1262036] = CL.beams, -- Void Rupture (Beams)
 		[1249262] = CL.soak, -- Umbral Collapse (Soak)
 		[1280015] = CL.marks, -- Void Marked (Marks)
 		[1260712] = CL.dodge, -- Oblivion's Wrath (Dodge)
@@ -151,7 +153,7 @@ function mod:DummyUmbralEvent(eventInfo) -- Blizzard cancels this timer, but it 
 	activeBars[fakeEventInfo.id] = fakeInfo
 	self:ScheduleTimer(function()
 		self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil, fakeEventInfo.id)
-		if fakeInfo.onFinished and self:ShouldShowBars() then
+		if self:ShouldShowBars() and fakeInfo.onFinished then
 			fakeInfo.onFinished()
 		end
 	end, duration)
@@ -211,7 +213,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
-			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+			if state == 2 and self:ShouldShowBars() and barInfo.onFinished then -- Finished
 				barInfo.onFinished()
 			end
 
@@ -267,6 +269,7 @@ function mod:ShadowsAdvance(eventInfo)
 		onFinished = function()
 			self:Message(1251361, "cyan", barText)
 			self:PlaySound(1251361, "long")
+			self:Bar(1262036, self:Mythic() and 38.5 or 23.5, CL.count:format(CL.beams, count)) -- Void Rupture
 		end
 	}
 end
