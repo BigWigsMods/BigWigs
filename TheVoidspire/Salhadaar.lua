@@ -128,9 +128,9 @@ do
 			barInfo = self:VoidConvergence(eventInfo)
 		elseif durationRounded == 15 then -- Twisting Obscurity
 			barInfo = self:TwistingObscurity(eventInfo)
-		elseif durationRounded == 23 then -- Despotic Command
+		elseif durationRounded == 22 then -- Despotic Command
 			barInfo = self:DespoticCommand(eventInfo)
-		elseif durationRounded == 26 then -- Fractured Projection
+		elseif durationRounded == 27 then -- Fractured Projection
 			barInfo = self:FracturedProjection(eventInfo)
 		elseif durationRounded == 44 then -- Shattering Twilight
 			barInfo = self:ShatteringTwilight(eventInfo)
@@ -146,19 +146,18 @@ do
 		elseif durationRounded == 46.5 then -- Void Convergence
 			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:VoidConvergence(eventInfo)
-		elseif durationRounded == 45.5 then -- Twisting Obscurity
-			if not isBeforeUnraveling(duration) then return end
-			barInfo = self:TwistingObscurity(eventInfo)
 		elseif durationRounded == 46 then -- Despotic Command
 			if not isBeforeUnraveling(duration) then return end
 			barInfo = self:DespoticCommand(eventInfo)
-		elseif durationRounded == 45 then -- Fractured Projection or Shattering Twilight
+		elseif durationRounded == 45 then
 			if not isBeforeUnraveling(duration) then return end
-			-- These two alternate, so we need to check which one is next
-			if shatteringTwilightCount <= fracturedProjectionCount then
+			-- Twisting Obscurity -> Fractured Projection -> Shattering Twilight
+			if fracturedProjectionCount > shatteringTwilightCount then
+				barInfo = self:ShatteringTwilight(eventInfo)
+			elseif twistingObscurityCount > fracturedProjectionCount then
 				barInfo = self:FracturedProjection(eventInfo)
 			else
-				barInfo = self:ShatteringTwilight(eventInfo)
+				barInfo = self:TwistingObscurity(eventInfo)
 			end
 		elseif durationRounded == 370 then -- Berserk
 			if self:ShouldShowBars() then
@@ -255,7 +254,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if state == 2 or state == 3 then -- Finished or Canceled
 			self:StopBar(barInfo.msg)
 
-			if state == 2 and barInfo.onFinished and self:ShouldShowBars() then -- Finished
+			if state == 2 and self:ShouldShowBars() and barInfo.onFinished then -- Finished
 				barInfo.onFinished()
 			end
 
