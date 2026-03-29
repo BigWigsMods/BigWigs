@@ -18,26 +18,26 @@ L = BigWigs:NewBossLocale("Lightblinded Vanguard", "deDE")
 if L then
 	L.aura_of_wrath = "Zorn" -- Short for Aura of Wrath
 	L.execution_sentence = "Todesurteil" -- Short for Execution Sentence
-	--L.executes_mythic = "Executes + Dodge"
+	L.executes_mythic = "Hinrichtungen  + Ausweichen"
 	L.judgement_red = "Richturteil [R]" -- R for the Red icon.
 	L.aura_of_devotion = "Hingabe" -- Short for Aura of Devotion
 	L.judgement_blue = "Richturteil [B]" -- B for the Blue icon.
 	L.aura_of_peace = "Frieden" -- Short for Aura of Peace
-	--L.tyrs_wrath_mythic = "Absorbs + Executes"
-	--L.divine_toll_mythic = "Dodge + Absorbs"
+	L.tyrs_wrath_mythic = "Absorption + Hinrichtungen"
+	L.divine_toll_mythic = "Ausweichen + Absorption"
 	L.zealous_spirit = "Geist" -- Short for Zealous Spirit
 
-	--L.empowered_searing_radiance = "Empowered Searing Radiance"
-	--L.empowered_searing_radiance_desc = "Show the timer for the empowered Searing Radiance"
+	L.empowered_searing_radiance = "Ermächtigtes Versengendes Strahlen"
+	L.empowered_searing_radiance_desc = "Zeigt den Timer für das ermächtigte Versengende Strahlen"
 
-	--L.empowered_avengers_shield = "Empowered Avenger's Shield"
-	--L.empowered_avengers_shield_desc = "Show the timer for the empowered Avenger's Shield"
+	L.empowered_avengers_shield = "Ermächtigter Schild des Rächers"
+	L.empowered_avengers_shield_desc = "Zeigt den Timer für den ermächtigten Schild des Rächers"
 
-	--L.empowered_divine_storm = "Empowered Divine Storm"
-	--L.empowered_divine_storm_desc = "Show the timer for the empowered Divine Storm"
-	--L.tornadoes = "Tornadoes" -- The renamed empowered Divine Storm
+	L.empowered_divine_storm = "Ermächtigter Göttlicher Sturm"
+	L.empowered_divine_storm_desc = "Zeigt den Timer für den ermächtigten Göttlichen Sturm"
+	L.tornadoes = "Tornados" -- The renamed empowered Divine Storm
 
-	--L.empowered = "[E] %s" -- Empowered version of an ability, [E] Avengers Shield
+	L.empowered = "[E] %s" -- Empowered version of an ability, [E] Avengers Shield
 end
 
 L = BigWigs:NewBossLocale("Crown of the Cosmos", "deDE")
