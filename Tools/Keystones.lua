@@ -1412,10 +1412,9 @@ do
 			local challengeMapName, _, timeLimit = GetMapUIInfo(runs[i].mapChallengeModeID)
 			cellDate:SetWidth(WIDTH_RATING+13)
 			local dateTbl = runs[i].completionDate
-			cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday + 1] or L.dayNamesShort[dateTbl.weekday] or "?")
-			local dayNameStr = L.dayNames[dateTbl.weekday + 1] or L.dayNames[dateTbl.weekday] or "?"
+			cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday])
 			local monthStr = L.monthNames[dateTbl.month + 1] or L.monthNames[dateTbl.month] or "?"
-			cellDate.tooltip = L.dateFormat:format(dayNameStr, dateTbl.day+1, monthStr, dateTbl.year+2000)
+			cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.day+1, monthStr, dateTbl.year+2000)
 			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
 			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")
