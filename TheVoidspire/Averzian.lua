@@ -284,8 +284,12 @@ function mod:UmbralCollapse(eventInfo)
 		msg = barText,
 		key = 1249262,
 		onFinished = function()
-			self:Message(1249262, "orange", barText)
+			self:Message(1249262, "orange", CL.count_amount:format(CL.soak, 1, 2))
 			self:PlaySound(1249262, "warning")
+			self:ScheduleTimer(function()
+				self:Message(1249262, "orange", CL.count_amount:format(CL.soak, 2, 2))
+				self:PlaySound(1249262, "warning")
+			end, 7.5)
 		end
 	}
 end
