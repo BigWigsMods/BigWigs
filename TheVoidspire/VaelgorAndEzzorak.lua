@@ -690,7 +690,7 @@ function mod:DreadBreath(eventInfo)
 		customBuffer = 5,
 		msg = barText,
 		onFinished = function()
-			self:TargetMessageFromBlizzMessage(1, 1262289, "orange", barText)
+			self:TargetMessageFromBlizzMessage(1, 1244221, "orange", barText)
 			-- PA Sounds
 		end,
 		this = self.DreadBreath
