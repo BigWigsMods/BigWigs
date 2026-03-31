@@ -428,6 +428,7 @@ L.startingMythicKeystone = "啟動傳奇鑰石 (M+)"
 L.historyTimeFormat = "紀錄：時間格式"
 L.twelveHour = "12 小時制"
 L.twentyFourHour = "24 小時制"
+--L.hideTooltipInCombat = "Hide Tooltip in Combat"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

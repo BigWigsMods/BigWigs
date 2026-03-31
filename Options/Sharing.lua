@@ -329,6 +329,7 @@ local combatTimerSettingsToExport = {
 	"anyCombatHistoryAmount",
 	"anyCombatHistoryResetConditions",
 	"anyCombatHistoryTimeFormat",
+	"anyCombatHistoryHiddenInCombat",
 
 	-- Boss Combat
 	"bossCombatDisabled",

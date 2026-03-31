@@ -428,6 +428,7 @@ L.startingMythicKeystone = "Commence un mythique +"
 L.historyTimeFormat = "Historique : Format d'heure"
 L.twelveHour = "12 Heures"
 L.twentyFourHour = "24 Heures"
+--L.hideTooltipInCombat = "Hide Tooltip in Combat"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

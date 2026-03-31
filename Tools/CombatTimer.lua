@@ -60,6 +60,7 @@ do
 		anyCombatHistoryAmount = 10,
 		anyCombatHistoryResetConditions = 7,
 		anyCombatHistoryTimeFormat = 2,
+		anyCombatHistoryHiddenInCombat = false,
 
 		-- Boss Combat
 		bossCombatDisabled = true,
@@ -489,6 +490,7 @@ do
 		db.profile.anyCombatHistoryAmount = defaults.anyCombatHistoryAmount
 		db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
 		db.profile.anyCombatHistoryTimeFormat = defaults.anyCombatHistoryTimeFormat
+		db.profile.anyCombatHistoryHiddenInCombat = defaults.anyCombatHistoryHiddenInCombat
 	end
 	ProfileUtils.ResetAnyCombatBorder = function()
 		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
@@ -676,6 +678,7 @@ do
 		end
 	end)
 	main:SetScript("OnEnter", function(self)
+		if db.profile.anyCombatHistoryHiddenInCombat and InCombatLockdown() then return end
 		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		bwTooltip:AddLine(L.anyCombatTimerTooltip)
 		for i = 1, #widgets.anyCombatHistoryTime do
@@ -2021,6 +2024,13 @@ do
 									end
 								end,
 								hidden = AnyCombatDisabled,
+							},
+							anyCombatHistoryHiddenInCombat = {
+								type = "toggle",
+								name = L.hideTooltipInCombat,
+								width = 1.5,
+								order = 7,
+								disabled = AnyCombatDisabled,
 							},
 						},
 					},

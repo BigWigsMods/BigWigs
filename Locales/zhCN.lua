@@ -428,6 +428,7 @@ L.startingMythicKeystone = "史诗钥石时"
 L.historyTimeFormat = "历史记录：时间格式"
 L.twelveHour = "12小时"
 L.twentyFourHour = "24小时"
+--L.hideTooltipInCombat = "Hide Tooltip in Combat"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
