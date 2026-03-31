@@ -1436,6 +1436,14 @@ do
 	local function releaseFrame(frame)
 		frame:ClearAllPoints()
 		local anchor = frame:GetParent()
+		if anchor and anchor.testAura == frame then
+			anchor.testAura = nil
+			anchor.hasTestIcon = nil
+			if anchor.configModeFrame then
+				anchor.configModeFrame.text:SetText((anchor.unitType == "player" and L.privateAurasTestAnchorText or L.privateAurasTestTankAnchorText):format(anchor:GetID()))
+				anchor.configModeFrame.bg:SetColorTexture(0, 0, 0, 0.3)
+			end
+		end
 		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
@@ -1446,11 +1454,6 @@ do
 		end
 		frame.dispelIcon:Hide()
 		frame:Hide()
-		anchor.hasTestIcon = nil
-		if anchor.configModeFrame then
-			anchor.configModeFrame.text:SetText((anchor.unitType == "player" and L.privateAurasTestAnchorText or L.privateAurasTestTankAnchorText):format(anchor:GetID()))
-			anchor.configModeFrame.bg:SetColorTexture(0, 0, 0, 0.3)
-		end
 
 		-- Pull it out of the active list
 		local active = testAuras[frame.unitType]
@@ -1573,6 +1576,15 @@ do
 		for unitType, unitAnchors in next, anchors do
 			if not db[unitType].disabled then
 				local auras = testAuras[unitType]
+				for i = 1, #unitAnchors do
+					local anchor = unitAnchors[i]
+					anchor.testAura = nil
+					anchor.hasTestIcon = nil
+					if anchor.configModeFrame then
+						anchor.configModeFrame.text:SetText((anchor.unitType == "player" and L.privateAurasTestAnchorText or L.privateAurasTestTankAnchorText):format(anchor:GetID()))
+						anchor.configModeFrame.bg:SetColorTexture(0, 0, 0, 0.3)
+					end
+				end
 
 				local aura = getTestAura(unitType, testCount)
 				table.insert(auras, 1, aura)
@@ -1586,6 +1598,7 @@ do
 					frame:ClearAllPoints()
 					frame:SetParent(unitAnchors[i])
 					frame:SetPoint("CENTER")
+					unitAnchors[i].testAura = frame
 					if unitAnchors[i].configModeFrame then
 						unitAnchors[i].configModeFrame.text:SetText("")
 						unitAnchors[i].configModeFrame.bg:SetColorTexture(0, 0, 0, 0)
