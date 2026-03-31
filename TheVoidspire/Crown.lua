@@ -209,7 +209,9 @@ function mod:TimersOther(_, eventInfo)
 	local barInfo
 
 	timelineEventCount = timelineEventCount + 1
-	local timeSinceLastEvent = GetTime() - prev
+	local now = GetTime()
+	local timeSinceLastEvent = now - prev
+	prev = now
 
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 1)
@@ -217,7 +219,7 @@ function mod:TimersOther(_, eventInfo)
 	local stage = self:GetStage()
 
 	-- Silverstrike Barrage is always have after rp
-	if durationRounded == 1.5 and timeSinceLastEvent > 10 then
+	if durationRounded == 1.5 and timeSinceLastEvent > 1 then
 		barInfo = self:SilverstrikeBarrage(duration)
 
 	elseif stage == 1 then
@@ -260,7 +262,7 @@ function mod:TimersOther(_, eventInfo)
 			else
 				barInfo = self:NullCorona(duration)
 			end
-		elseif duration == 21 or duration == 23 then
+		elseif durationRounded == 21 or durationRounded == 23 then
 			barInfo = self:SilverstrikeArrow(duration)
 		elseif durationRounded == 28 or durationRounded == 32 or durationRounded == 31.5 then
 			barInfo = self:GraspOfEmptiness(duration)
@@ -355,7 +357,7 @@ function mod:TimersOther(_, eventInfo)
 			barInfo = self:DevouringCosmos(duration)
 		elseif durationRounded == 30 or durationRounded == 29 then
 			barInfo = self:NullCorona(duration)
-		elseif (durationRounded == 12 and graspOfEmptinessCount == 1) or durationRounded == 11 then
+		elseif durationRounded == 19 or durationRounded == 11 then
 			barInfo = self:GraspOfEmptiness(duration)
 		elseif durationRounded == 15 or durationRounded == 14 then
 			barInfo = self:VoidstalkerSting(duration)
@@ -372,15 +374,26 @@ function mod:TimersOther(_, eventInfo)
 			if not barInfo then
 				barInfo = self:AspectOfTheEnd(duration)
 			end
-		else
-			-- repeating timers
-			if durationRounded == 7 or durationRounded == 20 or durationRounded == 17 then
-				barInfo = self:GraspOfEmptiness(duration)
-			elseif durationRounded == 18 or durationRounded == 12 or durationRounded == 14 then
+		-- repeating timers
+		elseif durationRounded == 18 then
+			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+			if not self:Easy() or durationEventCount[durationRounded] % 2 == 1 then
 				barInfo = self:VoidstalkerSting(duration)
-			elseif durationRounded == 39 or durationRounded == 21 then
-				barInfo = self:AspectOfTheEnd(duration)
+			else
+				barInfo = self:GraspOfEmptiness(duration)
 			end
+		elseif durationRounded == 12 then
+			if not self:Easy() and graspOfEmptinessCount == 1 then
+				barInfo = self:GraspOfEmptiness(duration)
+			else
+				barInfo = self:VoidstalkerSting(duration)
+			end
+		elseif durationRounded == 7 or durationRounded == 20 or durationRounded == 17 then
+			barInfo = self:GraspOfEmptiness(duration)
+		elseif durationRounded == 14 then
+			barInfo = self:VoidstalkerSting(duration)
+		elseif durationRounded == 39 or durationRounded == 21 then
+			barInfo = self:AspectOfTheEnd(duration)
 		end
 
 	else -- Intermission
