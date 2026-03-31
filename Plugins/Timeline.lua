@@ -19,6 +19,7 @@ local hasCustomTimers = {}
 
 plugin.defaultDB = {
 	timersMode = "enhanced",
+	oneTimeTimelineDisable = false,
 }
 
 local function updateProfile()
@@ -284,11 +285,15 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
+	updateProfile()
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	if not db.oneTimeTimelineDisable then
+		db.oneTimeTimelineDisable = true
+		C_CVar.SetCVar("encounterTimelineEnabled", "0")
+	end
+
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-
 	self:RegisterMessage("BigWigs_OnBossEngage", "UpdateBarsShown")
 	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "UpdateBarsShown")
 	self:RegisterMessage("BigWigs_OnBossDisable", "UpdateBarsShown")
