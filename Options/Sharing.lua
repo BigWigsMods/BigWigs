@@ -296,6 +296,8 @@ local battleResSettingsToExport = {
 -- PrivateAuras
 local privateAurasSettingsToExport = {
 	"showDispelType",
+	"skin",
+	"borderColor",
 	"player",
 	"other",
 	"otherPlayerType",

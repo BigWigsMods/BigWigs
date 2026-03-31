@@ -12,6 +12,8 @@ if not plugin then return end
 --
 
 local CONFIG_MODE_DURATION = 10
+local DEFAULT_SKIN = "default"
+local ELVUI_SKIN = "elvui"
 
 local db
 local anchors = { player = {}, other = {} }
@@ -20,12 +22,31 @@ local previouslyFoundUnit = nil
 
 local UpdateTestAura
 
+local backdropBorder = {
+	edgeFile = "Interface\\Buttons\\WHITE8X8",
+	tile = false, tileSize = 0, edgeSize = 1,
+	insets = { left = 0, right = 0, top = 0, bottom = 0 },
+}
+
+local function GetDefaultBorderColor()
+	local E = ElvUI and ElvUI[1]
+	local color = E and E.media and E.media.bordercolor or E and E.db and E.db.general and E.db.general.bordercolor
+	return {
+		color and color[1] or 0,
+		color and color[2] or 0,
+		color and color[3] or 0,
+		color and color[4] or 1,
+	}
+end
+
 --------------------------------------------------------------------------------
 -- Profile
 --
 
 plugin.defaultDB = {
 	showDispelType = true,
+	skin = DEFAULT_SKIN,
+	borderColor = GetDefaultBorderColor(),
 
 	player = {
 		disabled = false,
@@ -226,8 +247,27 @@ local function updateProfile()
 		db.otherPlayerType = plugin.defaultDB.otherPlayerType
 	end
 
+	if db.skin ~= DEFAULT_SKIN and db.skin ~= ELVUI_SKIN then
+		db.skin = plugin.defaultDB.skin
+	end
+
+	if type(db.borderColor) ~= "table" then
+		db.borderColor = CopyTable(plugin.defaultDB.borderColor)
+	else
+		for i = 1, 4 do
+			local value = db.borderColor[i]
+			if type(value) ~= "number" then
+				db.borderColor[i] = plugin.defaultDB.borderColor[i]
+			elseif value < 0 then
+				db.borderColor[i] = 0
+			elseif value > 1 then
+				db.borderColor[i] = 1
+			end
+		end
+	end
+
 	if not db.player.disabled or not db.other.disabled then
-		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType and db.skin == DEFAULT_SKIN)
 	end
 
 	plugin:UpdateAllAnchors()
@@ -346,6 +386,39 @@ do
 				order = 3,
 				disabled = IsFeatureEntirelyDisabled,
 			},
+			skin = {
+				type = "select",
+				name = L.skin,
+				get = function() return db.skin end,
+				set = function(_, value)
+					db.skin = value
+					updateProfile()
+				end,
+				values = {
+					[DEFAULT_SKIN] = L.bigWigsBarStyleName_Default,
+					[ELVUI_SKIN] = "ElvUI",
+				},
+				width = 1.6,
+				order = 4,
+				disabled = IsFeatureEntirelyDisabled,
+			},
+			borderColor = {
+				type = "color",
+				name = L.borderColor,
+				get = function()
+					return db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4]
+				end,
+				set = function(_, r, g, b, a)
+					db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4] = r, g, b, a
+					updateProfile()
+				end,
+				hasAlpha = true,
+				width = 1.6,
+				order = 5,
+				disabled = function()
+					return IsFeatureEntirelyDisabled() or db.skin == DEFAULT_SKIN
+				end,
+			},
 			player = {
 				type = "group",
 				name = L.aurasOnYou,
@@ -356,7 +429,7 @@ do
 					db.player[info[#info]] = value
 					updateProfile()
 				end,
-				order = 4,
+				order = 6,
 				args = {
 					aurasOnYouDesc = {
 						type = "description",
@@ -472,7 +545,7 @@ do
 					db.other[info[#info]] = value
 					updateProfile()
 				end,
-				order = 5,
+				order = 7,
 				args = {
 					aurasOnAnotherDesc = {
 						type = "description",
@@ -673,7 +746,7 @@ do
 			exactPositioning = {
 				type = "group",
 				name = L.positionExact,
-				order = 6,
+				order = 8,
 				childGroups = "tab",
 				args = {
 					player = {
@@ -1020,6 +1093,7 @@ function plugin:OnPluginDisable()
 				C_UnitAuras.RemovePrivateAuraAnchor(anchor.anchorId)
 				anchor.anchorId = nil
 			end
+			ClearAnchorElvUISkin(anchor)
 			anchor:ClearAllPoints()
 			anchor:Hide()
 		end
@@ -1060,6 +1134,66 @@ local function UpdateAnchorPosition(anchor)
 			y = -anchorDB.spacing
 		end
 		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
+	end
+end
+
+local function EnsureElvUISkinBorder(frame)
+	local border = frame.elvuiSkinBorder
+	if not border then
+		border = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+		border:SetPoint("TOPLEFT", frame, "TOPLEFT")
+		border:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT")
+		border:SetFrameLevel(frame:GetFrameLevel() + 5)
+		border:SetBackdrop(backdropBorder)
+		border:Hide()
+		frame.elvuiSkinBorder = border
+	end
+
+	border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+	return border
+end
+
+local function HasVisibleTexture(frame)
+	for i = 1, select("#", frame:GetRegions()) do
+		local region = select(i, frame:GetRegions())
+		if region and region:IsObjectType("Texture") and region:IsShown() and (region:GetTexture() or region:GetAtlas()) then
+			return true
+		end
+	end
+
+	for i = 1, select("#", frame:GetChildren()) do
+		local child = select(i, frame:GetChildren())
+		if child ~= frame.elvuiSkinBorder then
+		for j = 1, child and select("#", child:GetRegions()) or 0 do
+			local region = select(j, child:GetRegions())
+			if region and region:IsObjectType("Texture") and region:IsShown() and (region:GetTexture() or region:GetAtlas()) then
+				return true
+			end
+		end
+		end
+	end
+end
+
+local function ClearAnchorElvUISkin(anchor)
+	anchor:SetScript("OnUpdate", nil)
+	if anchor.elvuiSkinBorder then
+		anchor.elvuiSkinBorder:Hide()
+	end
+end
+
+local function UpdateAnchorElvUISkin(anchor)
+	local anchorDB = db[anchor.unitType]
+	if db.skin ~= ELVUI_SKIN or not anchorDB.showBorder then
+		ClearAnchorElvUISkin(anchor)
+		return
+	end
+
+	local border = EnsureElvUISkinBorder(anchor)
+	if HasVisibleTexture(anchor) then
+		border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+		border:Show()
+	else
+		border:Hide()
 	end
 end
 
@@ -1125,7 +1259,7 @@ do
 		local width = anchorDB.size * (1 / scale)
 		local height = anchorDB.size * (1 / scale)
 		local borderScale = width / 32 * 2 -- Scale the dispel type border
-		if not anchorDB.showBorder then
+		if not anchorDB.showBorder or db.skin == ELVUI_SKIN then
 			borderScale = -10000 -- Hide the border
 		end
 		local unitToken = token or GetUnitToken()
@@ -1151,6 +1285,11 @@ do
 			anchor:SetScale(scale)
 			anchor:UpdateAnchorPosition()
 			anchor:Show()
+			if db.skin == ELVUI_SKIN and anchorDB.showBorder then
+				anchor:SetScript("OnUpdate", UpdateAnchorElvUISkin)
+			else
+				ClearAnchorElvUISkin(anchor)
+			end
 
 			UpdateTestAura(unitType, index)
 
@@ -1199,6 +1338,11 @@ do
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
 		frame.timerID = nil
+		frame.icon:SetTexCoord(0, 1, 0, 1)
+		if frame.elvuiSkinBorder then
+			frame.elvuiSkinBorder:Hide()
+		end
+		frame.dispelIcon:Hide()
 		frame:Hide()
 		anchor.hasTestIcon = nil
 		if anchor.configModeFrame then
@@ -1242,6 +1386,14 @@ do
 			local dispelIcon = aura:CreateTexture(nil, "OVERLAY")
 			dispelIcon:SetPoint("CENTER")
 			aura.dispelIcon = dispelIcon
+
+			local border = CreateFrame("Frame", nil, aura, "BackdropTemplate")
+			border:SetPoint("TOPLEFT", aura, "TOPLEFT")
+			border:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT")
+			border:SetFrameLevel(aura:GetFrameLevel() + 5)
+			border:SetBackdrop(backdropBorder)
+			border:Hide()
+			aura.elvuiSkinBorder = border
 		end
 
 		-- Setup test aura info
@@ -1286,16 +1438,28 @@ do
 		local size = anchorDB.size * (1 / scale)
 
 		if anchorDB.showBorder then
-			-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
-			local borderScale = size / 32 * 2
-			local borderSize = size + (5 * borderScale)
-			aura.dispelIcon:SetSize(borderSize, borderSize)
+			if db.skin == ELVUI_SKIN then
+				aura.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+				aura.elvuiSkinBorder:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+				aura.elvuiSkinBorder:Show()
+				aura.dispelIcon:Hide()
+			else
+				aura.icon:SetTexCoord(0, 1, 0, 1)
+				aura.elvuiSkinBorder:Hide()
 
-			local info = dispelTypeInfo[aura.dispelType] or dispelTypeInfo.None
-			local atlas = db.showDispelType and info.dispelAtlas or info.basicAtlas
-			aura.dispelIcon:SetAtlas(atlas)
-			aura.dispelIcon:Show()
+				-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
+				local borderScale = size / 32 * 2
+				local borderSize = size + (5 * borderScale)
+				aura.dispelIcon:SetSize(borderSize, borderSize)
+
+				local info = dispelTypeInfo[aura.dispelType] or dispelTypeInfo.None
+				local atlas = db.showDispelType and info.dispelAtlas or info.basicAtlas
+				aura.dispelIcon:SetAtlas(atlas)
+				aura.dispelIcon:Show()
+			end
 		else
+			aura.icon:SetTexCoord(0, 1, 0, 1)
+			aura.elvuiSkinBorder:Hide()
 			aura.dispelIcon:Hide()
 		end
 
