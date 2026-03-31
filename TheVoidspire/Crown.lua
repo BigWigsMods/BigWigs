@@ -45,6 +45,29 @@ local function getBarInfoFromKey(key)
 	end
 end
 
+local function stopBar(barInfo, isFinished)
+	if not barInfo then return end
+	mod:StopBar(barInfo.msg)
+	if isFinished and barInfo.onFinished and not mod:IsWiping() then
+		barInfo:onFinished()
+	end
+	activeBars[barInfo.eventID] = nil
+end
+
+local function updateBar(key, callback, duration)
+	local barInfo
+	local oldBarInfo = getBarInfoFromKey(key)
+	if oldBarInfo then
+		stopBar(oldBarInfo)
+		barInfo = oldBarInfo
+		barInfo.duration = {duration, oldBarInfo.duration}
+	else
+		barInfo = mod[callback](mod, duration)
+	end
+	return barInfo
+end
+
+
 local timelineEventCount = 0
 local durationEventCount = {}
 local stageStage = 1
@@ -64,9 +87,11 @@ local stingCount = 1
 local callOfTheVoidCount = 1
 local cosmicBarrierCount = 1
 local riftSlashCount = 1
+local riftSimulacrumCount = 1
 
 local devouringCosmosCount = 1
 local aspectOfTheEndCount = 1
+local cosmicPortalCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -98,7 +123,7 @@ function mod:GetOptions()
 		1233602, -- Silverstrike Arrow
 		1232467, -- Grasp of Emptiness
 		1255368, -- Void Expulsion
-		1233865, -- Null Corona
+		{1233865, "HEALER"}, -- Null Corona
 		{1233787, "TANK"}, -- Dark Hand (Morium)
 		1243743, -- Interrupting Tremor (Demiar)
 		1243753, -- Ravenous Abyss (Vorelus)
@@ -112,10 +137,12 @@ function mod:GetOptions()
 		-- 1238206, -- Volatile Fissure (Damage)
 		1237614, -- Ranger Captain's Mark
 		-- 1255368, -- Void Expulsion
-		1237038, -- Voidstalker's Sting
+		{1237038, "OFF"}, -- Voidstalker's Sting
 		1237837, -- Call of the Void
 		1246918, -- Comsmic Barrier
 		{1246461, "TANK"}, -- Rift Slash
+
+		1261016, -- Rift Simulacrum
 
 		-- Intermission: Shattering Singularity
 		-- 1243982, -- Silverstrike Barrage
@@ -129,10 +156,14 @@ function mod:GetOptions()
 		-- 1233865, -- Null Corona
 		-- 1237038, -- Voidstalker's Sting
 		-- 1238708, -- Dark Rush
+
+		-- 1261016, -- Rift Simulacrum
+		1261339, -- Cosmic Portal
+		-- 1239582, -- Cosmic Overload
 	},{
-		{ tabName = CL.stage:format(1), { "stages", 1233602, 1232467, 1255368, 1233865, 1233787, 1243743, 1243753, }, },
-		{ tabName = CL.stage:format(2), { "stages", 1237614, 1255368, 1237038, 1237837, 1246918, 1246461, }, },
-		{ tabName = CL.stage:format(3), { "stages", 1238843, 1239080, 1232467, 1233865, 1237038, }, },
+		{ tabName = CL.stage:format(1), { "stages", 1233602, 1232467, 1255368, 1233865, 1233787, 1243743, 1243753 }, },
+		{ tabName = CL.stage:format(2), { "stages", 1237614, 1255368, 1237038, 1237837, 1246918, 1246461, 1261016 }, },
+		{ tabName = CL.stage:format(3), { "stages", 1238843, 1239080, 1232467, 1233865, 1237038, 1261016, 1261339 }, },
 		{ tabName = CL.intermission, { "stages", 1243982, }, },
 
 		[1233787] = -32458, -- Morium
@@ -141,6 +172,7 @@ function mod:GetOptions()
 		[1233602] = -32196, -- Stage 1
 		-- [1243982] = -32454, -- Intermission 1
 		[1237614] = -32455, -- Stage 2
+		[1261016] = "mythic",
 		-- [1245874] = -33091, -- Intermission 2
 		[1238843] = -32456, -- Stage 3
 	},{
@@ -161,7 +193,11 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersOther")
+	if self:Mythic() then
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersMythic")
+	else
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersOther")
+	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
@@ -188,9 +224,11 @@ function mod:OnEncounterStart()
 	callOfTheVoidCount = 1
 	cosmicBarrierCount = 1
 	riftSlashCount = 1
+	riftSimulacrumCount = 1
 
 	devouringCosmosCount = 1
 	aspectOfTheEndCount = 1
+	cosmicPortalCount = 1
 end
 
 function mod:OnBossDisable()
@@ -204,6 +242,281 @@ end
 --
 
 local prev = 0
+function mod:TimersMythic(eventInfo)
+	if eventInfo.source ~= 0 then return end
+	local barInfo
+
+	timelineEventCount = timelineEventCount + 1
+	local now = GetTime()
+	local timeSinceLastEvent = now - prev
+	prev = now
+
+	local stage = self:GetStage()
+	local duration = eventInfo.duration
+	local durationRounded = self:RoundNumber(duration, 1)
+
+	if stage == 1 then
+		-- intermision start
+		if durationRounded == 1.5 then
+			return self:SilverstrikeBarrage(duration)
+		elseif durationRounded == 25 then -- Stage Two
+			-- callback sets intermission, resets counts
+			return self:StageEvent(duration)
+		end
+
+	elseif stage == 2 and timelineEventCount == 1 then
+		-- set by IntermissionEnd
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
+		self:PlaySound("stages", "long")
+
+		durationEventCount = {}
+		stageStage = 1
+
+		graspOfEmptinessCount = 1
+		voidExpulsionCount = 1
+		nullCoronaCount = 1
+
+		silverstrikeBarrageCount = 1
+
+		markCount = 1
+		stingCount = 1
+		callOfTheVoidCount = 1
+		cosmicBarrierCount = 1
+		riftSlashCount = 1
+		riftSimulacrumCount = 1
+
+		aspectOfTheEndCount = 1
+		cosmicPortalCount = 1
+
+	elseif stage == 2 and timeSinceLastEvent > 15 then
+		stage = 3
+		self:SetStage(stage)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
+		self:PlaySound("stages", "long")
+
+		timelineEventCount = 1
+		durationEventCount = {}
+		stageStage = 1
+
+		graspOfEmptinessCount = 1
+		voidExpulsionCount = 1
+		nullCoronaCount = 1
+
+		markCount = 1
+		stingCount = 1
+		callOfTheVoidCount = 1
+		cosmicBarrierCount = 1
+		riftSlashCount = 1
+		riftSimulacrumCount = 1
+
+		aspectOfTheEndCount = 1
+		cosmicPortalCount = 1
+	end
+
+	if stage == 1 then
+		if timelineEventCount <= 8 then -- XXX want to get rid of this
+			if durationRounded == 20 then
+				barInfo = self:SilverstrikeArrow(duration)
+			elseif durationRounded == 4.2 or durationRounded == 103.8 then
+				barInfo = self:GraspOfEmptiness(duration)
+			elseif durationRounded == 10 then
+				barInfo = self:VoidExpulsion(duration)
+			elseif durationRounded == 2 then
+				barInfo = self:NullCorona(duration)
+			elseif durationRounded == 4 then
+				durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+				local count = durationEventCount[durationRounded]
+				if count == 1 then
+					barInfo = self:InterruptingTremor(duration)
+				elseif count == 2 then
+					barInfo = self:DarkHand(duration)
+				elseif count == 3 then
+					-- barInfo = self:RavenousAbyss(duration)
+					return false -- fake (canceled into 26, which is canceled into 19.5)
+				end
+				-- the order of these can change, so just fire bars for them and we'll
+				-- figure out the message on the next timer
+				if self:ShouldShowBars() then
+					self:CDBar(barInfo.key, duration, barInfo.msg)
+				end
+				return false -- don't want callback to fire
+			end
+		else
+			-- repeating timers
+			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+
+			if durationRounded == 19 or durationRounded == 18 or durationRounded == 19.6 then
+				barInfo = self:SilverstrikeArrow(duration)
+			elseif durationRounded == 23 or durationRounded == 27 or durationRounded == 26.3 or durationRounded == 4 or durationRounded == 103 then
+				barInfo = self:GraspOfEmptiness(duration)
+			elseif durationRounded == 40 then
+				if durationEventCount[durationRounded] == 1 then
+					barInfo = self:NullCorona(duration)
+				else
+					barInfo = self:VoidExpulsion(duration)
+				end
+			elseif durationRounded == 32 or durationRounded == 10 then
+				barInfo = self:VoidExpulsion(duration)
+			elseif durationRounded == 37 or durationRounded == 22.5 or durationRounded == 1.3 then
+				barInfo = self:NullCorona(duration)
+			elseif durationRounded == 26 then
+				if durationEventCount[durationRounded] == 1 then
+					-- barInfo = self:RavenousAbyss(duration)
+					return false -- fake bar (cancels and restarts at 19.5)
+				end
+				barInfo = self:DarkHand(duration)
+			elseif durationRounded == 20 then
+				barInfo = self:InterruptingTremor(duration)
+			elseif durationRounded == 19.5 then
+				barInfo = self:RavenousAbyss(duration)
+			end
+		end
+	elseif stage == 2 then
+		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+
+		if durationRounded == 13 or durationRounded == 11 then
+			barInfo = self:GraspOfEmptiness(duration)
+		elseif durationRounded == 12 or durationRounded == 16 then
+			barInfo = self:RiftSlash(duration)
+		elseif durationRounded == 27 then
+			barInfo = self:RangerCaptainsMark(duration)
+		elseif durationRounded == 20 or durationRounded == 18 then
+			barInfo = self:VoidExpulsion(duration)
+		elseif durationRounded == 1.5 then
+			barInfo = self:RiftSimulacrum(duration)
+		elseif durationRounded == 50 then
+			barInfo = self:CallOfTheVoid(duration)
+		elseif durationRounded == 12 or durationRounded == 2 or durationRounded == 10 or durationRounded == 23 then
+			barInfo = self:VoidstalkerSting(duration)
+		elseif durationRounded == 25 then
+			local count = durationEventCount[durationRounded]
+			if count % 4 == 1 then
+				barInfo = self:GraspOfEmptiness(duration)
+			elseif count % 4 == 2 then
+				barInfo = self:VoidExpulsion(duration)
+			else
+				barInfo = self:RangerCaptainsMark(duration)
+			end
+		elseif durationRounded == 6 or durationRounded == 4 then
+			local count = durationEventCount[durationRounded]
+			if count % 2 == 1 then -- Rift Slash
+				barInfo = updateBar(1246461, "RiftSlash", duration)
+			else -- Call of the Void
+				barInfo = updateBar(1237837, "CallOfTheVoid", duration)
+			end
+		end
+
+	elseif stage == 3 then
+		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+
+		if durationRounded == 60 or durationRounded == 59 then
+			-- callback handles stageStage
+			barInfo = self:DevouringCosmos(duration)
+
+		elseif durationRounded == 10 or durationRounded == 9 or durationRounded == 35 then
+			-- Grasp of Emptiness
+			if durationRounded == 9 then
+				barInfo = updateBar(1232467, "GraspOfEmptiness", duration)
+			else
+				barInfo = self:GraspOfEmptiness(duration)
+			end
+		elseif durationRounded == 7 or durationRounded == 6 or durationRounded == 41 or durationRounded == 19 then
+			-- Aspect of the End
+			if durationRounded == 6 then
+				barInfo = updateBar(1239080, "AspectOfTheEnd", duration)
+			else
+				barInfo = self:AspectOfTheEnd(duration)
+			end
+		elseif durationRounded == 37 or durationRounded == 36 then
+			barInfo = self:VoidExpulsion(duration)
+		elseif durationRounded == 15 and cosmicPortalCount == 1 then
+			barInfo = self:CosmicPortal(duration)
+		elseif durationRounded == 30 or durationRounded == 29 then
+			barInfo = self:NullCorona(duration)
+		elseif durationRounded == 11 then
+			barInfo = self:RiftSimulacrum(duration)
+		elseif durationRounded == 15 or (durationRounded == 17 and durationEventCount[durationRounded] == 1) then
+			barInfo = self:VoidstalkerSting(duration)
+
+		elseif durationRounded == 12 then
+			if riftSimulacrumCount == 1 then -- initial p3 timer
+				barInfo = self:RiftSimulacrum(duration)
+			else
+				barInfo = self:VoidstalkerSting(duration)
+			end
+		elseif durationRounded == 14 then
+			local count = durationEventCount[durationRounded]
+			if riftSimulacrumCount == 4 then
+				if count % 3 == 1 then
+					barInfo = self:VoidstalkerSting(duration)
+				elseif count % 3 == 2 then
+					barInfo = self:DarkHand(duration)
+				else
+					barInfo = self:CosmicPortal(duration)
+				end
+			else
+				if count % 2 == 1 then
+					barInfo = self:VoidstalkerSting(duration)
+				else
+					barInfo = self:CosmicPortal(duration)
+				end
+			end
+		elseif durationRounded == 16 then
+			if stingCount == 1 then -- initial p3 timer
+				barInfo = self:VoidstalkerSting(duration)
+			else
+				barInfo = self:GraspOfEmptiness(duration)
+			end
+
+		-- add casts, bad things probably happen if you have multiple up
+		elseif riftSimulacrumCount == 2 and (durationRounded == 8 or durationRounded == 16.5) then
+			barInfo = self:RavenousAbyss(duration)
+		elseif riftSimulacrumCount == 3 and (durationRounded == 8 or durationRounded == 17) then -- all but the first 17
+			barInfo = self:InterruptingTremor(duration)
+		elseif durationRounded == 20 then
+			barInfo = self:DarkHand(duration)
+		elseif riftSimulacrumCount == 5 and durationRounded == 8 then -- all adds are up again
+			local count = durationEventCount[durationRounded]
+			if count == 1 then
+				interruptingTremorCount = 1
+				barInfo = self:InterruptingTremor(duration)
+			elseif count == 2 then
+				ravenousAbyssCount = 1
+				barInfo = self:RavenousAbyss(duration)
+			end
+			-- the order of these can change, so just fire bars for them and we'll
+			-- figure out the message on the next timer
+			if self:ShouldShowBars() then
+				self:CDBar(barInfo.key, duration, barInfo.msg)
+			end
+			return false -- don't want callback to fire
+		end
+
+	else -- Intermission
+		if durationRounded == 6 then
+			barInfo = self:SilverstrikeBarrage(duration)
+		end
+	end
+
+	if barInfo then
+		barInfo.eventID = eventInfo.id
+		barInfo.duration = barInfo.duration or eventInfo.duration
+		activeBars[eventInfo.id] = barInfo
+		if self:ShouldShowBars() then
+			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+		end
+	elseif self:ShouldShowBars() and not self:IsWiping() then
+		self:ErrorForTimelineEvent(eventInfo)
+		backupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
+	end
+end
+
 function mod:TimersOther(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local barInfo
@@ -277,23 +590,9 @@ function mod:TimersOther(_, eventInfo)
 
 		-- at 2min in p1, p1 restarts - 0.5 (excluding add timers), canceling and restarting active bars
 		elseif durationRounded == 4.5 then
-			local oldBarInfo = getBarInfoFromKey(1232467)
-			if oldBarInfo then
-				oldBarInfo.noStopBar = true
-				barInfo = self:GraspOfEmptiness(duration, true)
-				barInfo.duration = {duration, oldBarInfo.duration}
-			else
-				barInfo = self:GraspOfEmptiness(duration)
-			end
+			barInfo = updateBar(1232467, "GraspOfEmptiness", duration)
 		elseif durationRounded == (self:Easy() and 46 or 1.5) then
-			local oldBarInfo = getBarInfoFromKey(1233865)
-			if oldBarInfo then
-				oldBarInfo.noStopBar = true
-				barInfo = self:NullCorona(duration, true)
-				barInfo.duration = {duration, oldBarInfo.duration}
-			else
-				barInfo = self:NullCorona(duration)
-			end
+			barInfo = updateBar(1233865, "NullCorona", duration)
 		elseif durationRounded == (self:Easy() and 59.5 or 11.5) then
 			barInfo = self:VoidExpulsion(duration)
 		elseif durationRounded == 23.5 then
@@ -364,14 +663,8 @@ function mod:TimersOther(_, eventInfo)
 		elseif durationRounded == 9 or durationRounded == 8 then
 			-- 8 is a refresh of previous 21s cast
 			if durationRounded == 8 then
-				local oldBarInfo = getBarInfoFromKey(1239080)
-				if oldBarInfo then
-					oldBarInfo.noStopBar = true
-					barInfo = self:AspectOfTheEnd(duration, true)
-					barInfo.duration = {duration, oldBarInfo.duration}
-				end
-			end
-			if not barInfo then
+				barInfo = updateBar(1239080, "AspectOfTheEnd", duration)
+			else
 				barInfo = self:AspectOfTheEnd(duration)
 			end
 		-- repeating timers
@@ -425,10 +718,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		local state = C_EncounterTimeline.GetEventState(eventID)
 		-- This encounter had paused/resumed bars during the boss's full energy spell. We don't show those as it's confusing.
 		if state == 2 or state == 3 then -- Finished or Canceled
-			if not barInfo.noStopBar then
-				self:StopBar(barInfo.msg)
-			end
-
+			self:StopBar(barInfo.msg)
 			if self:ShouldShowBars() then
 				if state == 2 and barInfo.onFinished then -- Finished
 					barInfo.onFinished()
@@ -523,14 +813,9 @@ function mod:SilverstrikeArrow(duration)
 	}
 end
 
-function mod:GraspOfEmptiness(duration, updateBar)
-	local barText
-	if updateBar then
-		barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount-1)
-	else
-		barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount)
-		graspOfEmptinessCount = graspOfEmptinessCount + 1
-	end
+function mod:GraspOfEmptiness(duration)
+	local barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount)
+	graspOfEmptinessCount = graspOfEmptinessCount + 1
 	return {
 		msg = barText,
 		key = 1232467,
@@ -555,14 +840,9 @@ function mod:VoidExpulsion(duration)
 	}
 end
 
-function mod:NullCorona(duration, updateBar)
-	local barText
-	if updateBar then
-		barText = CL.count:format(CL.heal_absorb, nullCoronaCount-1)
-	else
-		barText = CL.count:format(CL.heal_absorb, nullCoronaCount)
-		nullCoronaCount = nullCoronaCount + 1
-	end
+function mod:NullCorona(duration)
+	local barText = CL.count:format(CL.heal_absorb, nullCoronaCount)
+	nullCoronaCount = nullCoronaCount + 1
 	return {
 		msg = barText,
 		key = 1233865,
@@ -573,7 +853,7 @@ function mod:NullCorona(duration, updateBar)
 end
 
 function mod:DarkHand(duration)
-	if darkHandCount == 2 then
+	if darkHandCount == 2 and (self:GetStage() == 1 or riftSimulacrumCount == 5) and self:ShouldShowBars() then
 		local text = CL.count:format(self:SpellName(1233787), 1)
 		self:StopBar(text)
 
@@ -592,7 +872,7 @@ function mod:DarkHand(duration)
 end
 
 function mod:InterruptingTremor(duration)
-	if interruptingTremorCount == 2 then
+	if interruptingTremorCount == 2 and (self:GetStage() == 1 or riftSimulacrumCount == 5) and self:ShouldShowBars() then
 		local text = CL.count:format(L.interrupting_tremor, 1)
 		self:StopBar(text)
 
@@ -615,7 +895,7 @@ function mod:InterruptingTremor(duration)
 end
 
 function mod:RavenousAbyss(duration)
-	if ravenousAbyssCount == 2 then
+	if ravenousAbyssCount == 2 and ((self:GetStage() == 1 and not self:Mythic()) or riftSimulacrumCount == 5) and self:ShouldShowBars() then
 		local text = CL.count:format(L.ravenous_abyss, 1)
 		self:StopBar(text)
 
@@ -697,6 +977,19 @@ function mod:RiftSlash(duration)
 	}
 end
 
+function mod:RiftSimulacrum(duration)
+	local barText = CL.count:format(self:SpellName(1261016), riftSimulacrumCount)
+	riftSimulacrumCount = riftSimulacrumCount + 1
+	return {
+		msg = barText,
+		key = 1261016,
+		onFinished = function()
+			self:Message(1261016, "cyan", barText)
+			self:PlaySound(1261016, "info")
+		end,
+	}
+end
+
 -- Stage 3
 
 function mod:DevouringCosmos(duration)
@@ -717,14 +1010,9 @@ function mod:DevouringCosmos(duration)
 	}
 end
 
-function mod:AspectOfTheEnd(duration, updateBar)
-	local barText
-	if updateBar then
-		barText = CL.count:format(L.aspect_of_the_end, aspectOfTheEndCount-1)
-	else
-		barText = CL.count:format(L.aspect_of_the_end, aspectOfTheEndCount)
-		aspectOfTheEndCount = aspectOfTheEndCount + 1
-	end
+function mod:AspectOfTheEnd(duration)
+	local barText = CL.count:format(L.aspect_of_the_end, aspectOfTheEndCount)
+	aspectOfTheEndCount = aspectOfTheEndCount + 1
 	return {
 		msg = barText,
 		key = 1239080,
@@ -732,5 +1020,18 @@ function mod:AspectOfTheEnd(duration, updateBar)
 			self:Message(1239080, "orange", barText)
 			self:TargetMessageFromBlizzMessage(0.5, 1239080, "blue", CL.you:format(L.aspect_of_the_end))
 		end,
+	}
+end
+
+function mod:CosmicPortal(duration)
+	local barText = CL.count:format(self:SpellName(1261339), cosmicPortalCount)
+	cosmicPortalCount = cosmicPortalCount + 1
+	return {
+		msg = barText,
+		key = 1261339,
+		-- onFinished = function()
+		-- 	self:Message(1261339, "purple", barText)
+		-- 	self:PlaySound(1261339, "info")
+		-- end,
 	}
 end
