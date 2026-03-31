@@ -16,28 +16,28 @@ end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "zhCN")
 if L then
-	L.aura_of_wrath = "愤怒" -- “愤怒光环”简称
-	L.execution_sentence = "处决" -- “处决宣判”简称
-	--L.executes_mythic = "Executes + Dodge"
+	L.aura_of_wrath = "愤怒光环"
+	L.execution_sentence = "处决宣判"
+	L.executes_mythic = "处决 + 躲避"
 	L.judgement_red = "审判 [红]" -- 红色图标
-	L.aura_of_devotion = "虔诚" -- “虔诚光环”简称
+	L.aura_of_devotion = "虔诚光环"
 	L.judgement_blue = "审判 [蓝]" -- 蓝色图标
-	L.aura_of_peace = "平心" -- “平心光环”简称
-	--L.tyrs_wrath_mythic = "Absorbs + Executes"
-	--L.divine_toll_mythic = "Dodge + Absorbs"
+	L.aura_of_peace = "平心光环"
+	L.tyrs_wrath_mythic = "吸收盾 + 处决"
+	L.divine_toll_mythic = "躲避 + 吸收盾"
 	L.zealous_spirit = "狂热之魂" -- “狂热之魂”全称合适
 
-	--L.empowered_searing_radiance = "Empowered Searing Radiance"
-	--L.empowered_searing_radiance_desc = "Show the timer for the empowered Searing Radiance"
+	L.empowered_searing_radiance = "强化灼热光辉"
+	L.empowered_searing_radiance_desc = "显示强化灼热光辉的计时器"
 
-	--L.empowered_avengers_shield = "Empowered Avenger's Shield"
-	--L.empowered_avengers_shield_desc = "Show the timer for the empowered Avenger's Shield"
+	L.empowered_avengers_shield = "强化复仇者之盾"
+	L.empowered_avengers_shield_desc = "显示强化复仇者之盾的计时器"
 
-	--L.empowered_divine_storm = "Empowered Divine Storm"
-	--L.empowered_divine_storm_desc = "Show the timer for the empowered Divine Storm"
-	--L.tornadoes = "Tornadoes" -- The renamed empowered Divine Storm
+	L.empowered_divine_storm = "强化神圣风暴"
+	L.empowered_divine_storm_desc = "显示强化神圣风暴的计时器"
+	L.tornadoes = "旋风" -- The renamed empowered Divine Storm
 
-	--L.empowered = "[E] %s" -- Empowered version of an ability, [E] Avengers Shield
+	L.empowered = "[强] %s" -- Empowered version of an ability, [E] Avengers Shield
 end
 
 L = BigWigs:NewBossLocale("Crown of the Cosmos", "zhCN")
