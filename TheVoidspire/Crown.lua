@@ -242,7 +242,7 @@ end
 --
 
 local prev = 0
-function mod:TimersMythic(eventInfo)
+function mod:TimersMythic(_, eventInfo)
 	if eventInfo.source ~= 0 then return end
 	local barInfo
 
