@@ -390,8 +390,6 @@ function mod:TimersOther(_, eventInfo)
 			end
 		elseif durationRounded == 7 or durationRounded == 20 or durationRounded == 17 then
 			barInfo = self:GraspOfEmptiness(duration)
-		elseif durationRounded == 14 then
-			barInfo = self:VoidstalkerSting(duration)
 		elseif durationRounded == 39 or durationRounded == 21 then
 			barInfo = self:AspectOfTheEnd(duration)
 		end
