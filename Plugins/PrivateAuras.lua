@@ -28,6 +28,15 @@ local backdropBorder = {
 	insets = { left = 0, right = 0, top = 0, bottom = 0 },
 }
 
+local fallbackDispelTypeColors = {
+	Magic = { 0.2, 0.6, 1, 1 },
+	Curse = { 0.6, 0, 1, 1 },
+	Disease = { 0.6, 0.4, 0, 1 },
+	Poison = { 0, 0.6, 0, 1 },
+	Bleed = { 0.6, 0, 0.1, 1 },
+	Enrage = { 0.95, 0.37, 0.96, 1 },
+}
+
 local function GetDefaultBorderColor()
 	local E = ElvUI and ElvUI[1]
 	local color = E and E.media and E.media.bordercolor or E and E.db and E.db.general and E.db.general.bordercolor
@@ -37,6 +46,24 @@ local function GetDefaultBorderColor()
 		color and color[3] or 0,
 		color and color[4] or 1,
 	}
+end
+
+local function GetDispelTypeColor(dispelType)
+	if not db.showDispelType or not dispelType or dispelType == "None" then
+		return db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4]
+	end
+
+	local color = _G.DebuffTypeColor and _G.DebuffTypeColor[dispelType]
+	if color then
+		return color.r or color[1] or db.borderColor[1], color.g or color[2] or db.borderColor[2], color.b or color[3] or db.borderColor[3], color.a or color[4] or db.borderColor[4]
+	end
+
+	local fallback = fallbackDispelTypeColors[dispelType]
+	if fallback then
+		return fallback[1], fallback[2], fallback[3], fallback[4]
+	end
+
+	return db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4]
 end
 
 --------------------------------------------------------------------------------
@@ -267,7 +294,7 @@ local function updateProfile()
 	end
 
 	if not db.player.disabled or not db.other.disabled then
-		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType and db.skin == DEFAULT_SKIN)
+		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
 	end
 
 	plugin:UpdateAllAnchors()
@@ -375,8 +402,12 @@ do
 			},
 			showDispelType = {
 				type = "toggle",
-				name = L.showDispelType,
-				desc = L.showDispelTypeDesc,
+				name = function()
+					return db.skin == ELVUI_SKIN and L.dispelTypeBorders or L.showDispelType
+				end,
+				desc = function()
+					return db.skin == ELVUI_SKIN and L.dispelTypeBordersDesc or L.showDispelTypeDesc
+				end,
 				get = function() return db.showDispelType end,
 				set = function(_, value)
 					db.showDispelType = value
@@ -1153,10 +1184,62 @@ local function EnsureElvUISkinBorder(frame)
 	return border
 end
 
+local function RestoreAnchorDispelTextures(anchor)
+	if anchor.elvuiHiddenDispelTextures then
+		for texture, alpha in next, anchor.elvuiHiddenDispelTextures do
+			if texture and texture.SetAlpha then
+				texture:SetAlpha(alpha)
+			end
+		end
+		wipe(anchor.elvuiHiddenDispelTextures)
+	end
+end
+
+local function GetDispelTextureInfo(frame)
+	local atlasTypeMap = frame.dispelAtlasTypeMap
+	if not atlasTypeMap then
+		atlasTypeMap = {}
+		local displayInfo = AuraUtil.GetDebuffDisplayInfoTable()
+		for dispelType, info in next, displayInfo do
+			if type(info) == "table" and info.dispelAtlas then
+				atlasTypeMap[info.dispelAtlas] = dispelType
+			end
+		end
+		frame.dispelAtlasTypeMap = atlasTypeMap
+	end
+
+	for i = 1, select("#", frame:GetRegions()) do
+		local region = select(i, frame:GetRegions())
+		if region and region:IsObjectType("Texture") and region.GetAtlas then
+			local atlas = region:GetAtlas()
+			local dispelType = atlas and atlasTypeMap[atlas]
+			if dispelType then
+				return dispelType, region
+			end
+		end
+	end
+
+	for i = 1, select("#", frame:GetChildren()) do
+		local child = select(i, frame:GetChildren())
+		if child and child ~= frame.elvuiSkinBorder then
+			for j = 1, select("#", child:GetRegions()) do
+				local region = select(j, child:GetRegions())
+				if region and region:IsObjectType("Texture") and region.GetAtlas then
+					local atlas = region:GetAtlas()
+					local dispelType = atlas and atlasTypeMap[atlas]
+					if dispelType then
+						return dispelType, region
+					end
+				end
+			end
+		end
+	end
+end
+
 local function HasVisibleTexture(frame)
 	for i = 1, select("#", frame:GetRegions()) do
 		local region = select(i, frame:GetRegions())
-		if region and region:IsObjectType("Texture") and region:IsShown() and (region:GetTexture() or region:GetAtlas()) then
+		if region and region:IsObjectType("Texture") and region:IsShown() and (region:GetTexture() or region:GetAtlas()) and not (frame.elvuiHiddenDispelTextures and frame.elvuiHiddenDispelTextures[region]) then
 			return true
 		end
 	end
@@ -1166,7 +1249,7 @@ local function HasVisibleTexture(frame)
 		if child ~= frame.elvuiSkinBorder then
 		for j = 1, child and select("#", child:GetRegions()) or 0 do
 			local region = select(j, child:GetRegions())
-			if region and region:IsObjectType("Texture") and region:IsShown() and (region:GetTexture() or region:GetAtlas()) then
+			if region and region:IsObjectType("Texture") and region:IsShown() and (region:GetTexture() or region:GetAtlas()) and not (frame.elvuiHiddenDispelTextures and frame.elvuiHiddenDispelTextures[region]) then
 				return true
 			end
 		end
@@ -1176,6 +1259,7 @@ end
 
 local function ClearAnchorElvUISkin(anchor)
 	anchor:SetScript("OnUpdate", nil)
+	RestoreAnchorDispelTextures(anchor)
 	if anchor.elvuiSkinBorder then
 		anchor.elvuiSkinBorder:Hide()
 	end
@@ -1188,9 +1272,27 @@ local function UpdateAnchorElvUISkin(anchor)
 		return
 	end
 
+	if anchor.hasTestIcon then
+		RestoreAnchorDispelTextures(anchor)
+		if anchor.elvuiSkinBorder then
+			anchor.elvuiSkinBorder:Hide()
+		end
+		return
+	end
+
 	local border = EnsureElvUISkinBorder(anchor)
+	local dispelType, dispelTexture
+	RestoreAnchorDispelTextures(anchor)
+	if db.showDispelType then
+		dispelType, dispelTexture = GetDispelTextureInfo(anchor)
+		if dispelTexture then
+			anchor.elvuiHiddenDispelTextures = anchor.elvuiHiddenDispelTextures or {}
+			anchor.elvuiHiddenDispelTextures[dispelTexture] = dispelTexture:GetAlpha()
+			dispelTexture:SetAlpha(0)
+		end
+	end
 	if HasVisibleTexture(anchor) then
-		border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+		border:SetBackdropBorderColor(GetDispelTypeColor(dispelType))
 		border:Show()
 	else
 		border:Hide()
@@ -1259,7 +1361,7 @@ do
 		local width = anchorDB.size * (1 / scale)
 		local height = anchorDB.size * (1 / scale)
 		local borderScale = width / 32 * 2 -- Scale the dispel type border
-		if not anchorDB.showBorder or db.skin == ELVUI_SKIN then
+		if not anchorDB.showBorder or (db.skin == ELVUI_SKIN and not db.showDispelType) then
 			borderScale = -10000 -- Hide the border
 		end
 		local unitToken = token or GetUnitToken()
@@ -1328,7 +1430,7 @@ do
 	local auraFramePool = {}
 
 	local dispelTypeInfo = AuraUtil.GetDebuffDisplayInfoTable()
-	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", [0] = "None" }
+	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", "None" }
 	local privateAuraSpellList = { 407221, 418720, 421828, 428970, 406317 }
 
 	local function releaseFrame(frame)
@@ -1399,7 +1501,7 @@ do
 		-- Setup test aura info
 		local spellIndex = (index - 1) % #privateAuraSpellList + 1
 		local icon = C_Spell.GetSpellTexture(privateAuraSpellList[spellIndex])
-		local dispelType = dispelTypeList[(index - 1) % 7]
+		local dispelType = dispelTypeList[(index - 1) % #dispelTypeList + 1]
 		local duration = CONFIG_MODE_DURATION
 		local expirationTime = GetTime() + duration
 
@@ -1440,7 +1542,7 @@ do
 		if anchorDB.showBorder then
 			if db.skin == ELVUI_SKIN then
 				aura.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-				aura.elvuiSkinBorder:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+				aura.elvuiSkinBorder:SetBackdropBorderColor(GetDispelTypeColor(aura.dispelType))
 				aura.elvuiSkinBorder:Show()
 				aura.dispelIcon:Hide()
 			else
@@ -1473,7 +1575,7 @@ do
 				local auras = testAuras[unitType]
 
 				local aura = getTestAura(unitType, testCount)
-				table.insert(auras, 1, aura) -- Pop it on
+				table.insert(auras, 1, aura)
 				testCount = testCount + 1
 				if testCount > 10 then
 					testCount = 1
