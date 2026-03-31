@@ -266,8 +266,10 @@ function mod:TimersMythic(_, eventInfo)
 
 	elseif stage == 2 and timelineEventCount == 1 then
 		-- set by IntermissionEnd
-		self:Message("stages", "cyan", CL.stage:format(stage), false)
-		self:PlaySound("stages", "long")
+		if self:ShouldShowBars() then
+			self:Message("stages", "cyan", CL.stage:format(stage), false)
+			self:PlaySound("stages", "long")
+		end
 
 		durationEventCount = {}
 		stageStage = 1
@@ -291,8 +293,11 @@ function mod:TimersMythic(_, eventInfo)
 	elseif stage == 2 and timeSinceLastEvent > 15 then
 		stage = 3
 		self:SetStage(stage)
-		self:Message("stages", "cyan", CL.stage:format(stage), false)
-		self:PlaySound("stages", "long")
+
+		if self:ShouldShowBars() then
+			self:Message("stages", "cyan", CL.stage:format(stage), false)
+			self:PlaySound("stages", "long")
+		end
 
 		timelineEventCount = 1
 		durationEventCount = {}
@@ -600,7 +605,7 @@ function mod:TimersOther(_, eventInfo)
 		end
 
 	elseif stage == 2 then
-		if timelineEventCount == 1 and markCount == 1 then
+		if timelineEventCount == 1 and markCount == 1 and self:ShouldShowBars() then
 			self:Message("stages", "cyan", CL.stage:format(stage), false)
 			self:PlaySound("stages", "long")
 		end
@@ -645,7 +650,7 @@ function mod:TimersOther(_, eventInfo)
 		end
 
 	elseif stage == 3 then
-		if timelineEventCount == 1 and devouringCosmosCount == 1 then
+		if timelineEventCount == 1 and devouringCosmosCount == 1 and self:ShouldShowBars() then
 			self:Message("stages", "cyan", CL.stage:format(stage), false)
 			self:PlaySound("stages", "long")
 		end
@@ -757,6 +762,7 @@ local function intermissionEnd()
 	local stage = mod:GetStage() + 0.5
 	mod:SetStage(stage)
 
+	prev = GetTime()
 	timelineEventCount = 0
 	durationEventCount = {}
 	stageStage = 1
@@ -772,13 +778,19 @@ local function intermissionEnd()
 	callOfTheVoidCount = 1
 	cosmicBarrierCount = 1
 	riftSlashCount = 1
+	riftSimulacrumCount = 1
+
+	aspectOfTheEndCount = 1
+	cosmicPortalCount = 1
 end
 
 function mod:StageEvent(duration)
 	local stage = self:GetStage()
 	self:SetStage(stage + 0.5)
-	self:Message("stages", "cyan", CL.count:format(CL.intermission, stage), false)
-	self:PlaySound("stages", "long")
+	if self:ShouldShowBars() then
+		self:Message("stages", "cyan", CL.count:format(CL.intermission, stage), false)
+		self:PlaySound("stages", "long")
+	end
 	return {
 		msg = CL.stage:format(stage + 1),
 		key = "stages",
