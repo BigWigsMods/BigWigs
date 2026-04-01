@@ -404,7 +404,7 @@ do
 		local instanceID = module:GetZoneID()
 		local journalID = GetModuleID(module)
 
-		if journalID and instanceID and instanceID > 0 and not module.worldBoss then -- Raid restricted for now
+		if journalID and instanceID and instanceID > 0 and not module:IsWorldModule() then -- Raid restricted for now
 			local t = GetTime()
 			activeDurations[journalID] = {t}
 

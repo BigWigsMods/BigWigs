@@ -2032,15 +2032,11 @@ do
 end
 
 function mod:BigWigs_BossModuleRegistered(_, _, module)
-	if module.worldBoss then
+	if module:IsWorldModule() then
 		local id = -(module.mapId)
 		enableZones[id] = "world"
-		if type(module.worldBoss) == "table" then
-			for i = 1, #module.worldBoss do
-				worldBosses[module.worldBoss[i]] = id
-			end
-		else
-			worldBosses[module.worldBoss] = id
+		for mobId in next, module.enableMobs do
+			worldBosses[mobId] = id
 		end
 	elseif type(module.instanceId) == "table" then
 		for i = 1, #module.instanceId do

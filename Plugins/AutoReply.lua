@@ -163,7 +163,7 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module)
-	if not self.db.profile.disabled and module and (module:GetJournalID() or module:GetAllowWin()) and not module.worldBoss then
+	if not self.db.profile.disabled and module and (module:GetJournalID() or module:GetAllowWin()) and not module:IsWorldModule() then
 		curDiff = module:Difficulty()
 		curModule = module
 		throttle, throttleBN, friendlies = {}, {}, {}

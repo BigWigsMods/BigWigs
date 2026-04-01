@@ -749,7 +749,7 @@ do
 			[15522] = true, -- Delves
 		}
 		function plugin:OnEngage(_, module)
-			if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
+			if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module:IsWorldModule() then return end
 			if next(activatedModules) then
 				activatedModules[module] = true
 				return
@@ -901,7 +901,7 @@ do
 end
 
 function plugin:BigWigs_OnBossDisable(_, module)
-	if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
+	if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module:IsWorldModule() then return end
 	activatedModules[module] = nil
 	if not next(activatedModules) then
 		activatedModules = {}

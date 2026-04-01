@@ -155,7 +155,7 @@ local function UpdateMouseoverUnit()
 				local module = bosses[moduleName]
 				if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", mobId, GetBestMapForUnit("player"))) then
 					module:Enable()
-					if not module.worldBoss then
+					if not module:IsWorldModule() then
 						module:Sync("Enable", module.moduleName, true)
 					end
 				end
@@ -164,7 +164,7 @@ local function UpdateMouseoverUnit()
 			local module = bosses[moduleNameOrTable]
 			if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", mobId, GetBestMapForUnit("player"))) then
 				module:Enable()
-				if not module.worldBoss then
+				if not module:IsWorldModule() then
 					module:Sync("Enable", module.moduleName, true)
 				end
 			end
@@ -386,7 +386,7 @@ do
 							module:RegisterPrivateAuraSounds()
 						end
 						-- Enable trash modules for the current zone
-						if not module:GetEncounterID() and not module.worldBoss then
+						if module:IsTrashModule() then
 							module:Enable()
 						end
 					end
@@ -676,7 +676,7 @@ do
 							module:RegisterPrivateAuraSounds()
 						end
 						-- Automatically enable trash modules if we're in the relevant zone at module registration
-						if not module:GetEncounterID() and not module.worldBoss then
+						if module:IsTrashModule() then
 							module:Enable()
 						end
 					end
