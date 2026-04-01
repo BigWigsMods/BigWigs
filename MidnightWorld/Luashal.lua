@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Lu'ashal", -2395, 2827)
 if not mod then return end
 mod:RegisterEnableMob(244762) -- Lu'ashal
 mod.otherMenu = -2443
-mod.worldBoss = 244762
+mod:SetWorldModule(true)
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Cragpine", -2437, 2782)
 if not mod then return end
 mod:RegisterEnableMob(244424) -- Cragpine
 mod.otherMenu = -2443
-mod.worldBoss = 244424
+mod:SetWorldModule(true)
 
 --------------------------------------------------------------------------------
 -- Initialization
