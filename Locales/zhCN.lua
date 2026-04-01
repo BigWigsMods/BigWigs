@@ -712,7 +712,7 @@ L.growingUpwardsDesc = "切换在锚点向上或向下成长。"
 L.texture = "材质"
 L.emphasize = L.EMPHASIZE
 L.emphasizeMultiplier = "尺寸倍数"
-L.emphasizeMultiplierDesc = "如果你禁用了计时条移动到醒目计时条的功能，该选项通过乘以计时条尺寸来决定醒目计时条大小"
+L.emphasizeMultiplierDesc = "如果你禁用了计时条移动到醒目计时条的功能，该选项通过乘以计时条尺寸来决定醒目计时条尺寸。"
 
 L.enable = "启用"
 L.move = "移动"
@@ -1144,7 +1144,7 @@ L.privateaura = "只要“私有光环”出现在你身上"
 L.customSoundDesc = "播放选定的自定义的声音，而不是由模块提供的。"
 L.resetSoundDesc = "重置以上音效为默认。"
 L.resetAllCustomSound = "如果设置全部首领战斗自定义的声音，此按钮将重置“全部”以这里自定义的声音来代替。"
-L.soundResetPrint = "模块'|cFF436EEE%s|r'使用了一个名为'|cFF436EEE%s|r'的自定义音效，但该音效已不存在。已重置为默认值"
+L.soundResetPrint = "模块'|cFF436EEE%s|r'使用了一个名为'|cFF436EEE%s|r'的自定义音效，但该音效已不存在。已重置为默认。"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
