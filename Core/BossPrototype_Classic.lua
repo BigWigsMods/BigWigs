@@ -301,6 +301,41 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
+do
+	local trashModuleList = {}
+	--- Mark this module as being a module for trash mobs
+	-- @bool isTrashModule If true, this module is marked as a trash module and the display name is changed to "Trash"
+	function boss:SetTrashModule(isTrashModule)
+		if isTrashModule then
+			trashModuleList[self] = true
+			self.displayName = CL.trash
+		end
+	end
+
+	--- Check if this is a module for trash mobs
+	-- @return boolean
+	function boss:IsTrashModule()
+		return trashModuleList[self] or false
+	end
+end
+
+do
+	local worldModuleList = {}
+	--- Mark this module as being a module for world bosses
+	-- @bool isWorldModule If true, this module is marked as a world module
+	function boss:SetWorldModule(isWorldModule)
+		if isWorldModule then
+			worldModuleList[self] = true
+		end
+	end
+
+	--- Check if this is a module for world bosses
+	-- @return boolean
+	function boss:IsWorldModule()
+		return worldModuleList[self] or false
+	end
+end
+
 --- Set this module to have custom timers and stop listening to Blizzard's timeline timers.
 -- @bool useCustomTimers When true, disables listening to Blizz timeline timers
 -- @bool noAfterBossError When true, no error will be shown to the user at the end of the boss encounter if :ErrorForTimelineEvent was triggered
@@ -443,11 +478,6 @@ function boss:GetRespawnTime()
 		return respawnTime
 	end
 end
-
---- The NPC/mob id of the world boss.
--- Used to specify that a module is for a world boss, not an instance boss.
--- @within Enable triggers
-boss.worldBoss = nil
 
 --- The map id the boss should be listed under in the configuration menu, generally used for world bosses.
 -- @within Enable triggers
