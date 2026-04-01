@@ -230,9 +230,13 @@ end
 
 --- Set this module to have custom timers and stop listening to Blizzard's timeline timers.
 -- @bool useCustomTimers When true, disables listening to Blizz timeline timers
-function boss:UseCustomTimers(useCustomTimers)
+-- @bool noAfterBossError When true, no error will be shown to the user at the end of the boss encounter if :ErrorForTimelineEvent was triggered
+function boss:UseCustomTimers(useCustomTimers, noAfterBossError)
 	if useCustomTimers then
 		self.useCustomTimers = true
+		if noAfterBossError then
+			self.noAfterBossError = true
+		end
 	end
 end
 
@@ -755,6 +759,9 @@ function boss:Disable(isWipe)
 			end
 			self.errorChatPrints = nil
 			core:Print(("Extra info: %s, %s (%d#%s)"):format(self.moduleName, self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()))
+			if not self.noAfterBossError and self:ShouldShowBars() then
+				core:Error(("BigWigs: %q had issues reading the timeline. Show the devs a screenshot of the messages in your chat."):format(self.moduleName), true)
+			end
 		end
 	end
 end
