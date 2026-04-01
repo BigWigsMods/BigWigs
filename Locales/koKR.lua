@@ -428,7 +428,7 @@ L.startingMythicKeystone = "신화+ 시작 중"
 L.historyTimeFormat = "기록: 시간 형식"
 L.twelveHour = "12시간제"
 L.twentyFourHour = "24시간제"
---L.hideTooltipInCombat = "Hide Tooltip in Combat"
+L.hideTooltipInCombat = "전투 중 툴팁 숨기기"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
