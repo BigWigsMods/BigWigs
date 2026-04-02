@@ -30,10 +30,11 @@
 
 ## X-Category: Raid
 ## X-BigWigs-ExtraMenu: -2443
-## X-BigWigs-LoadOn-WorldBoss: -2395, 244762, -2437, 244424
+## X-BigWigs-LoadOn-WorldBoss: -2395, 244762, -2437, 244424, -2413, 249776
 
 Luashal.lua
 Cragpine.lua
+Thormbelan.lua
 
-#Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 !Options.lua

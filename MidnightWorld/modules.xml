@@ -3,7 +3,9 @@
 
 <Script file="Luashal.lua"/>
 <Script file="Cragpine.lua"/>
+<Script file="Thormbelan.lua"/>
 
+<Include file="Locales\locales.xml"/>
 <Script file="!Options.lua"/>
 
 </Ui>
