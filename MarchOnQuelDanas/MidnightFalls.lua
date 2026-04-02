@@ -145,6 +145,7 @@ end
 --
 
 function mod:TimersOther(_, eventInfo)
+	if eventInfo.source ~= 0 then return end
 	local barInfo
 
 	local stage = self:GetStage()
