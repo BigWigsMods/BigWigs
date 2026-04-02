@@ -3710,6 +3710,23 @@ do
 	end
 end
 
+--- Prevent any middle-screen boss emotes from showing.
+--- Only allowed for trash or world modules, normal modules do this automatically.
+--- If your module doesn't disable, you will need to manually allow them again.
+function boss:BlockBossEmotes()
+	if self:IsTrashModule() or self:IsWorldModule() then
+		self:SendMessage("BigWigs_BlockBossEmotes", self)
+	end
+end
+
+--- Allow middle-screen boss emotes to show, use after blocking them.
+--- This will be called automatically on module disable, so you don't need to call this unless your module doesn't disable itself.
+function boss:AllowBossEmotes()
+	if self:IsTrashModule() or self:IsWorldModule() then
+		self:SendMessage("BigWigs_AllowBossEmotes", self)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Bars.
 -- @section bars

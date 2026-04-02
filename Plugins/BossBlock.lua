@@ -58,6 +58,7 @@ local GetTime = GetTime
 local RestoreAll
 local hideQuestTrackingTooltips = false
 local activatedModules = {}
+local modulesBlockingEmotes = {}
 local latestKill = {}
 local bbFrame = CreateFrame("Frame")
 bbFrame:Hide()
@@ -380,6 +381,8 @@ do
 	function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
 		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+		self:RegisterMessage("BigWigs_BlockBossEmotes", "BlockEmotes")
+		self:RegisterMessage("BigWigs_AllowBossEmotes", "AllowEmotes")
 		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -454,6 +457,7 @@ end
 
 function plugin:OnPluginDisable()
 	activatedModules = {}
+	modulesBlockingEmotes = {}
 	latestKill = {}
 	RestoreAll(self)
 
@@ -749,11 +753,14 @@ do
 			[15522] = true, -- Delves
 		}
 		function plugin:OnEngage(_, module)
-			if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module:IsWorldModule() then return end
+			if module:IsWorldModule() or module:IsTrashModule() or (not module:GetJournalID() and not module:GetAllowWin()) then return end
 			if next(activatedModules) then
 				activatedModules[module] = true
 				return
 			else
+				for storedModule in next, modulesBlockingEmotes do
+					self:AllowEmotes(nil, storedModule)
+				end
 				activatedModules[module] = true
 			end
 
@@ -898,14 +905,37 @@ do
 			restoreObjectiveTracker = nil
 		end
 	end
+
+	function plugin:BlockEmotes(_, module)
+		if self.db.profile.blockEmotes and (module:IsWorldModule() or module:IsTrashModule()) and not next(activatedModules) then
+			if not next(modulesBlockingEmotes) then
+				KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+				KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+			end
+			modulesBlockingEmotes[module] = true
+		end
+	end
+
+	function plugin:AllowEmotes(_, module)
+		if modulesBlockingEmotes[module] and (module:IsWorldModule() or module:IsTrashModule()) and not next(activatedModules) then
+			modulesBlockingEmotes[module] = nil
+			if not next(modulesBlockingEmotes) then
+				RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+				RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+			end
+		end
+	end
 end
 
 function plugin:BigWigs_OnBossDisable(_, module)
-	if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module:IsWorldModule() then return end
-	activatedModules[module] = nil
-	if not next(activatedModules) then
-		activatedModules = {}
-		RestoreAll(self)
+	if activatedModules[module] then
+		activatedModules[module] = nil
+		if not next(activatedModules) then
+			activatedModules = {}
+			RestoreAll(self)
+		end
+	else
+		self:AllowEmotes(nil, module)
 	end
 end
 
