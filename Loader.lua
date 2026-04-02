@@ -14,18 +14,18 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 412
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 28},
-	["BigWigs_Classic"] = {12, 0, 11},
-	["BigWigs_BurningCrusade"] = {12, 0, 9},
-	["BigWigs_WrathOfTheLichKing"] = {12, 0, 3},
-	["BigWigs_Cataclysm"] = {12, 0, 0},
-	["BigWigs_MistsOfPandaria"] = {12, 0, 3},
-	["BigWigs_WarlordsOfDraenor"] = {12, 0, 0},
-	["BigWigs_Legion"] = {12, 0, 0},
-	["BigWigs_BattleForAzeroth"] = {12, 0, 0},
-	["BigWigs_Shadowlands"] = {12, 0, 0},
-	["BigWigs_Dragonflight"] = {12, 0, 3},
-	["BigWigs_TheWarWithin"] = {12, 0, 1},
+	["LittleWigs"] = {12, 0, 32},
+	["BigWigs_Classic"] = {12, 0, 12},
+	["BigWigs_BurningCrusade"] = {12, 0, 10},
+	["BigWigs_WrathOfTheLichKing"] = {12, 0, 4},
+	["BigWigs_Cataclysm"] = {12, 0, 1},
+	["BigWigs_MistsOfPandaria"] = {12, 0, 4},
+	["BigWigs_WarlordsOfDraenor"] = {12, 0, 1},
+	["BigWigs_Legion"] = {12, 0, 1},
+	["BigWigs_BattleForAzeroth"] = {12, 0, 1},
+	["BigWigs_Shadowlands"] = {12, 0, 1},
+	["BigWigs_Dragonflight"] = {12, 0, 4},
+	["BigWigs_TheWarWithin"] = {12, 0, 2},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
