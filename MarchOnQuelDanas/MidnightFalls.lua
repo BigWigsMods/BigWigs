@@ -83,7 +83,7 @@ function mod:GetOptions()
 	},{
 		{ tabName = CL.stage:format(1), { "stages", 1279420, 1253915, 1249620, 1251386, 1267049, } },
 		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, } },
-		{ tabName = CL.stage:format(3), { "stages", "berserk", 1250898, 1266388, 1266897, 1267049, 1249796, } },
+		{ tabName = CL.stage:format(3), { "stages", 1250898, 1266388, 1266897, 1267049, 1249796, } },
 		[1279420] = -32197, -- Stage One: Final Tolls
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
 		[1250898] = -33639, -- Stage Three: Midnight Falls
