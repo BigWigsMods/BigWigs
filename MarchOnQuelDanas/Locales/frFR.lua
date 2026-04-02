@@ -5,3 +5,12 @@ if L then
 	--L.voidlight_convergence = "Color Swaps"
 	--L.light_void_dive = "Light/Void Dive"
 end
+
+L = BigWigs:NewBossLocale("Midnight Falls", "frFR")
+if L then
+	--L.deaths_dirge = "Memory Game"
+	--L.heavens_glaives = "Glaives"
+	--L.heavens_lance = "Lance"
+	--L.dark_constellation = "Lines"
+	--L.the_dark_archangel = "Archangel"
+end
