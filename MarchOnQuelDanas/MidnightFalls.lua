@@ -19,7 +19,7 @@ mod:SetPrivateAuraSounds({
 	1284527, -- Galvanize
 	{1263514, sound = "underyou"}, -- Midnight
 })
-mod:UseCustomTimers(true)
+mod:UseCustomTimers(true, true)
 
 --------------------------------------------------------------------------------
 -- Locals
