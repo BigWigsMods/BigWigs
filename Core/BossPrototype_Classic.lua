@@ -864,7 +864,7 @@ function boss:Disable(isWipe)
 			self.errorChatPrints = nil
 			core:Print(("Extra info: %s, %s (%d#%s)"):format(self.moduleName, self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()))
 			if not self.noAfterBossError and self:ShouldShowBars() then
-				core:Error(("BigWigs: %q had issues reading the timeline. Show the devs a screenshot of the messages in your chat."):format(self.moduleName), true)
+				core:Error(("BigWigs: %q had issues reading the timeline. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true)
 			end
 		end
 	end
