@@ -204,20 +204,16 @@ function mod:TimersMythic(_, eventInfo)
 		if durationRounded == 29 then -- Divine Toll
 			barInfo = self:DivineToll(eventInfo)
 			barInfo.skipTracking = true
-		elseif durationRounded == 26 then -- Aura of Devotion / Judgement (Red)
-			-- As these have the same duration, we will check which is the correct one to pass Judgement too onFinished.
-			if judgementRedCount <= auraDevotionCount then
-				barInfo = self:JudgementRed(eventInfo)
-			else
-				barInfo = self:AuraOfDevotion(eventInfo)
-			end
-			barInfo.JudgementOrDevotion = true -- These have the same on pull duration, we link the correct spell on next bar starts
+		elseif durationRounded == 26 then -- Aura of Devotion
+			barInfo = self:AuraOfDevotion(eventInfo)
 		elseif durationRounded == 66 or durationRounded == 12 then -- Avenger's Shield
 			barInfo = self:AvengersShield(eventInfo, durationRounded == 66)
 		elseif durationRounded == 4 or durationRounded == 57 or durationRounded == 110 then -- Zealous Spirit
 			barInfo = self:ZealousSpirit(eventInfo)
 			barInfo.skipTracking = true
-		elseif durationRounded == 22 then -- Judgement (Blue)
+		elseif durationRounded == 62 then -- Judgement (Red)
+			barInfo = self:JudgementBlue(eventInfo)
+		elseif durationRounded == 58 then -- Judgement (Blue)
 			barInfo = self:JudgementBlue(eventInfo)
 		elseif durationRounded == 132 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
@@ -423,14 +419,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 				if not barInfo.skipTracking then -- These are started with the intent to not re-start from their Finished states.
 					local storedEventInfo = table.remove(storedTimelineEvents, 1)
 					if storedEventInfo then
-						if barInfo.JudgementOrDevotion then -- Decide which it is based on the duration
-							if storedEventInfo.durationRounded < 50 then -- We already start the Devotion bar with a duration check in ADDED.
-								barInfo = self:JudgementRed(storedEventInfo)
-								activeBars[storedEventInfo.id] = barInfo
-							end
-						else
-							activeBars[storedEventInfo.id] = barInfo.this(self, storedEventInfo, barInfo.empowered)
-						end
+						activeBars[storedEventInfo.id] = barInfo.this(self, storedEventInfo, barInfo.empowered)
 					end
 				end
 			elseif newState == 3 then -- Canceled
