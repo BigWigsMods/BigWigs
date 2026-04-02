@@ -28,7 +28,7 @@ mod:SetPrivateAuraSounds({
 	{1248865, 1249595, sound = "info"}, -- Radiant Barrier
 	1270497, -- Shadowmark
 })
-mod:UseCustomTimers(true)
+mod:UseCustomTimers(true, true)
 
 --------------------------------------------------------------------------------
 -- Locals
