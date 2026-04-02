@@ -11,6 +11,6 @@ if L then
 	L.deaths_dirge = "记忆游戏"
 	L.heavens_glaives = "战刃"
 	L.heavens_lance = "天穹枪"
-	L.dark_constellation = "连线" --星座？
+	L.dark_constellation = "星座" -- 连线？
 	L.the_dark_archangel = "天使长"
 end
