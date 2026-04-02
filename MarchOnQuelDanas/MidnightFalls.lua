@@ -155,6 +155,13 @@ function mod:TimersOther(_, eventInfo)
 	durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 	local count = durationEventCount[rounded]
 
+	if stage == 1 and rounded == 97 then
+		-- skipped intermission
+		stage = 2
+		self:SetStage(stage)
+		self:ResetCounts()
+	end
+
 	if stage == 1 then
 		-- pull timers (get immediately canceled and restarted x.x)
 		if rounded == 40 then
@@ -192,6 +199,7 @@ function mod:TimersOther(_, eventInfo)
 		elseif rounded == 20 then
 			barInfo = self:HeavensLance(duration)
 
+		-- intermission start
 		elseif rounded == 45 then
 			barInfo = self:IntoTheDarkwell(duration)
 		end
