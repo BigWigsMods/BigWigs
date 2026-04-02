@@ -1,16 +1,16 @@
 local L = BigWigs:NewBossLocale("Belo'ren, Child of Al'ar", "deDE")
 if not L then return end
 if L then
-	--L.infused_quills = "Quills"
-	--L.voidlight_convergence = "Color Swaps"
-	--L.light_void_dive = "Light/Void Dive"
+	L.infused_quills = "Federkiele"
+	L.voidlight_convergence = "Farbwechsel"
+	L.light_void_dive = "Licht/Leerensturz"
 end
 
 L = BigWigs:NewBossLocale("Midnight Falls", "deDE")
 if L then
-	--L.deaths_dirge = "Memory Game"
-	--L.heavens_glaives = "Glaives"
-	--L.heavens_lance = "Lance"
-	--L.dark_constellation = "Lines"
-	--L.the_dark_archangel = "Archangel"
+	L.deaths_dirge = "Memory Spiel"
+	L.heavens_glaives = "Gleven"
+	L.heavens_lance = "Lanze"
+	L.dark_constellation = "Linien"
+	L.the_dark_archangel = "Erzengel"
 end
