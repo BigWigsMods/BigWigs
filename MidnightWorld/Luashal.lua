@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Lu'ashal", -2395, 2827)
+local mod, CL = BigWigs:NewBoss("Lu'ashal", -2395, 2827) -- World boss for the "Eversong Woods" zone
 if not mod then return end
 mod:RegisterEnableMob(244762) -- Lu'ashal
 mod.otherMenu = -2443
@@ -35,6 +35,8 @@ function mod:OnEncounterStart()
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+
+	self:BlockBossEmotes()
 
 	self:CDBar(1276247, 23, CL.frontal_cone)
 end
