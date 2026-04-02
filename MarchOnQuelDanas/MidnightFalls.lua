@@ -178,10 +178,9 @@ function mod:TimersOther(_, eventInfo)
 		elseif rounded == 70 then
 			if count % 4 == 1 then
 				barInfo = self:DeathsDirge(duration)
+				-- XXX was finishing early, not an issue now?
 				barInfo.noStopBar = true
-				barInfo.finishTimer = self:ScheduleTimer(function()
-					barInfo:onEnd()
-				end, duration)
+				barInfo.finishTimer = self:ScheduleTimer(function() barInfo:onEnd() end, duration)
 			elseif count % 4 == 2 then
 				barInfo = self:HeavensGlaives(duration)
 			elseif count % 4 == 3 then
@@ -222,7 +221,7 @@ function mod:TimersOther(_, eventInfo)
 		elseif rounded == 23 or rounded == 20 then
 			barInfo = self:HeavensLance(duration)
 		elseif rounded == 38 then
-			if count % 2 == 1 or self:Easy() then -- XXX check longer logs for this, Light Siphon doesn't exist in normal
+			if count % 2 == 1 or self:Easy() then -- XXX check longer logs for this / Light Siphon doesn't exist in normal
 				barInfo = self:TheDarkArchangel(duration)
 			else
 				barInfo = self:LightSiphon(duration)
@@ -325,8 +324,11 @@ function mod:DeathsDirge(duration)
 	return {
 		msg = barText,
 		key = 1249620,
-		onEnd = function(barInfo)
-			self:StopBar(barInfo.msg)
+		onCanceled = function(barInfo)
+			self:StopBar(barText)
+			self:CancelTimer(barInfo.finishTimer)
+		end,
+		onEnd = function()
 			self:Message(1249620, "red", barText)
 			self:PlaySound(1249620, "warning")
 		end
@@ -367,6 +369,10 @@ function mod:TotalEclipse(duration)
 		msg = CL.intermission,
 		key = "stages",
 		icon = 1261871,
+		onFinished = function()
+			self:Message("stages", "cyan", CL.intermission, false)
+			self:PlaySound("stages", "long")
+		end,
 		onCanceled = function()
 			self:Message("stages", "cyan", CL.intermission, false)
 			self:PlaySound("stages", "long")
