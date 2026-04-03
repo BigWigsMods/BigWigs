@@ -401,6 +401,7 @@ function mod:Rebirth(duration)
 	return {
 		msg = barText,
 		key = "stages",
+		startTime = GetTime(),
 		onFinished = function()
 			isIntermission = false
 			self:Message("stages", "cyan", barText)
@@ -408,12 +409,11 @@ function mod:Rebirth(duration)
 
 			self:Bar(1242515, 6, CL.count:format(L.voidlight_convergence, convergenceCount))
 		end,
-		onCanceled = function()
+		onCanceled = function(barInfo)
 			isIntermission = false
-			self:Message("stages", "cyan", barText)
-			self:PlaySound("stages", "info")
-
-			self:Bar(1242515, 6, CL.count:format(L.voidlight_convergence, convergenceCount))
+			if GetTime() - barInfo.startTime >= 30 then -- cancels at 30.0xx
+				barInfo:onFinished()
+			end
 		end
 	}
 end
