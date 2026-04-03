@@ -177,9 +177,8 @@ public.Print = sysprint
 public.isTestBuild = IsPublicTestClient() -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
-	public.isMidnight = build >= 120000
-	public.isBeta = public.isTestBuild and build >= 120001
-	public.isNext = build >= 120002
+	public.isBeta = public.isTestBuild and build >= 130000
+	public.isNext = build >= 120005
 end
 
 -- Version

@@ -424,7 +424,7 @@ do
 				end
 			end
 
-			if self.db.profile.printHealth and not BigWigsLoader.isMidnight then
+			if self.db.profile.printHealth and not BigWigsLoader.isRetail then
 				healthPools[journalID] = {
 					names = {},
 					timer = self:ScheduleRepeatingTimer(function() StoreHealth(module) end, 2),
