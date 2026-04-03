@@ -539,7 +539,7 @@ do
 					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
 					tbl.title = nil
 					tbl.bwDuration = 4
-					self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
+					self:SimpleTimer(function() printMessage(self, tbl) end, 6) -- Delay a little bit after the boss dies
 				elseif tbl.eventToastID == 185 then -- Vault upgraded
 					-- tbl.title is "GREAT VAULT SLOT UPGRADED"
 					-- tbl.subtitle is a random item to fetch ilvl info from "[Leggings of the Greatlynx]"
@@ -661,7 +661,7 @@ do
 						printMessage(self, tbl)
 					else -- After a boss kill
 						tbl.subtitle = CL.other:format(L.newRespawnPoint, latestKill[3]) -- New Respawn Point: Boss Name
-						self:SimpleTimer(function() printMessage(self, tbl) end, 1) -- Delay a little after the boss kill
+						self:SimpleTimer(function() printMessage(self, tbl) end, 3) -- Delay a little after the boss kill
 					end
 				elseif tbl.eventToastID == 339 or tbl.eventToastID == 370 then -- Delve Spoils Within
 					-- 339: A Flickergate Has Manifested Within
@@ -705,7 +705,7 @@ do
 					tbl.bwDone = true
 					if not delayedTbl.bwTimer then
 						delayedTbl.bwTimer = true
-						self:SimpleTimer(function() printMessage(self, delayedTbl) end, 5)
+						self:SimpleTimer(function() printMessage(self, delayedTbl) end, 6)
 					end
 					local itemLevel = success and GetDetailedItemLevelInfo(tbl.title) or 0
 					tbl.subtitle = L.itemLevel:format(itemLevel)
