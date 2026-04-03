@@ -4131,12 +4131,13 @@ do
 	function boss:Sync(msg, extra, noResend)
 		if msg then
 			if IsInGroup() then
+				local messageToTransmit
 				if extra then
-					msg = "B^".. msg .."^".. extra
+					messageToTransmit = "B^".. msg .."^".. extra
 				else
-					msg = "B^".. msg
+					messageToTransmit = "B^".. msg
 				end
-				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				local result = SendAddonMessage("BigWigs", messageToTransmit, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 				if type(result) == "number" and result > 0 then
 					if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 						if not noResend then
@@ -4144,7 +4145,7 @@ do
 							return
 						end
 					elseif result ~= 11 then -- AddOnMessageLockdown
-						local errorMsg = format("Failed to send boss comm %q. Error code: %d", msg, result)
+						local errorMsg = format("Failed to send boss comm %q. Error code: %d", messageToTransmit, result)
 						core:Error(errorMsg)
 					end
 				end
