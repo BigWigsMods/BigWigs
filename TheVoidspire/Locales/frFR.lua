@@ -11,45 +11,45 @@ end
 
 L = BigWigs:NewBossLocale("Vaelgor & Ezzorak", "frFR")
 if L then
-	--L.grappling_maw = "Tank Grip"
+	L.grappling_maw = "Tank Grip"
 end
 
 L = BigWigs:NewBossLocale("Lightblinded Vanguard", "frFR")
 if L then
 	L.aura_of_wrath = "Colère" -- Short for Aura of Wrath
 	L.execution_sentence = "Exécution" -- Short for Execution Sentence
-	--L.executes_mythic = "Executes + Dodge"
+	L.executes_mythic = "Exécution + Esquive"
 	L.judgement_red = "Jugement [R]" -- R for the Red icon.
 	L.aura_of_devotion = "Dévotion" -- Short for Aura of Devotion
 	L.judgement_blue = "Jugement [B]" -- B for the Blue icon.
 	L.aura_of_peace = "Paix" -- Short for Aura of Peace
-	--L.tyrs_wrath_mythic = "Absorbs + Executes"
-	--L.divine_toll_mythic = "Dodge + Absorbs"
+	L.tyrs_wrath_mythic = "Absorption + Exécution"
+	L.divine_toll_mythic = "Esquive + Absorption"
 	L.zealous_spirit = "Esprit" -- Short for Zealous Spirit
 
-	--L.empowered_searing_radiance = "Empowered Searing Radiance"
-	--L.empowered_searing_radiance_desc = "Show the timer for the empowered Searing Radiance"
+	L.empowered_searing_radiance = "Radiance ardente renforcée"
+	L.empowered_searing_radiance_desc = "Affiche le chrono de la radiance ardente renforcée"
 
-	--L.empowered_avengers_shield = "Empowered Avenger's Shield"
-	--L.empowered_avengers_shield_desc = "Show the timer for the empowered Avenger's Shield"
+	L.empowered_avengers_shield = "Bouclier du vengeur renforcé"
+	L.empowered_avengers_shield_desc = "Affiche le chrono du bouclier du vengeur renforcé"
 
-	--L.empowered_divine_storm = "Empowered Divine Storm"
-	--L.empowered_divine_storm_desc = "Show the timer for the empowered Divine Storm"
-	--L.tornadoes = "Tornadoes" -- The renamed empowered Divine Storm
+	L.empowered_divine_storm = "Tempête divine renforcée"
+	L.empowered_divine_storm_desc = "Affiche le chrono de la tempête divine renforcée"
+	L.tornadoes = "Tornades" -- The renamed empowered Divine Storm
 
-	--L.empowered = "[E] %s" -- Empowered version of an ability, [E] Avengers Shield
+	L.empowered = "[R] %s" -- Empowered version of an ability, [E] Avengers Shield
 end
 
 L = BigWigs:NewBossLocale("Crown of the Cosmos", "frFR")
 if L then
-	--L.silverstrike_arrow = "Arrows"
-	--L.grasp_of_emptiness = "Obelisks"
-	--L.interrupting_tremor = "Interrupt"
-	--L.ravenous_abyss = "Move Out"
-	--L.silverstrike_barrage = "Lines"
-	--L.cosmic_barrier = "Barrier"
-	--L.rangers_captains_mark = "Arrows"
-	--L.voidstalker_sting = "Stings"
-	--L.aspect_of_the_end = "Tethers"
-	--L.devouring_cosmos = "Next Platform"
+	L.silverstrike_arrow = "Flèche"
+	L.grasp_of_emptiness = "Obélisques"
+	L.interrupting_tremor = "Interruption"
+	L.ravenous_abyss = "Sortir"
+	L.silverstrike_barrage = "Lignes"
+	L.cosmic_barrier = "Barrière"
+	L.rangers_captains_mark = "Flèches"
+	L.voidstalker_sting = "Piqûre"
+	L.aspect_of_the_end = "Liens"
+	L.devouring_cosmos = "Prochaine plateforme"
 end

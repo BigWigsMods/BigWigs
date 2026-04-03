@@ -403,9 +403,9 @@ L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_r
 L.bossCombatTimer = "Chrono de combat de Boss"
 L.bossCombatTimerDesc = "Un chrono qui affiche depuis combien de temps vous êtes en rencontre de boss, avec une bulle d'aide pour voir l'historique de combat du boss."
 L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique de combat de boss"
---L.bossStagesTimer = "Boss Stages Timer"
---L.bossStagesTimerDesc = "A timer that resets every time a boss encounter changes stage, with a tooltip to see boss stage history. Only active on bosses with multiple stages."
---L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Stages History"
+L.bossStagesTimer = "Chrono de Phases de Boss"
+L.bossStagesTimerDesc = "Un chronomètre qui se réinitialise à chaque fois que le boss change de phase, avec une bulle d'aide pour voir l'historique des phases du boss. Seulement actif sur les boss ayant plusieurs phases."
+L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique des Phases de Boss"
 L.instanceTimer = "Chrono d'instance"
 L.instanceTimerDesc = "Un chrono qui affiche depuis combien de temps vous êtes en instance (donjon / raid / etc), avec une bulle d'aide pour voir l'historique de l'instance."
 L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique d'instance"
@@ -428,7 +428,7 @@ L.startingMythicKeystone = "Commence un mythique +"
 L.historyTimeFormat = "Historique : Format d'heure"
 L.twelveHour = "12 Heures"
 L.twentyFourHour = "24 Heures"
---L.hideTooltipInCombat = "Hide Tooltip in Combat"
+L.hideTooltipInCombat = "Cacher la bulle d'aide en combat"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -1144,7 +1144,7 @@ L.privateaura = "Lorsqu'une 'aura privée' est sur vous"
 L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module."
 L.resetSoundDesc = "Réinitialise les sons ci-dessous à leurs valeurs par défaut."
 L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
---L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
+L.soundResetPrint = "Le module '|cFF436EEE%s|r' utilise un son personnalisé appelé '|cFF436EEE%s|r' qui n'existe plus. Réinitialisation par défaut."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
