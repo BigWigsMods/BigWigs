@@ -1134,17 +1134,21 @@ do
 		[991] = true, -- Iridikron (DotI) defeat
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 		[1003] = true, -- Amirdrassil, Fyrakk defeat
-		[1034] = true, -- [The War Within/Manaforge Omega] clicking the portal after Dimensius defeat
-		[1049] = true, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
+		[1034] = true, -- [The War Within/Manaforge Omega][Raid] clicking the portal after Dimensius defeat
+		[1049] = function() return latestKill[2] == 3181 and GetTime()-latestKill[1] < 8 end, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat, exclude manual activation
+		[1050] = function() return latestKill[2] == 3183 and GetTime()-latestKill[1] < 8 end, -- [Midnight/March on Quel'Danas][Raid] Midnight Falls defeat, exclude manual activation
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
 		if knownMovies[id] and self.db.profile.blockMovies then
-			if self.db.global.watchedMovies[id] then
-				BigWigs:Print(L.movieBlocked)
-				MovieFrame:Hide()
-			else
-				self.db.global.watchedMovies[id] = true
+			local checkType = type(knownMovies[id])
+			if checkType == "boolean" or (checkType == "function" and knownMovies[id]()) then
+				if self.db.global.watchedMovies[id] then
+					BigWigs:Print(L.movieBlocked)
+					MovieFrame:Hide()
+				else
+					self.db.global.watchedMovies[id] = true
+				end
 			end
 		end
 	end
@@ -1203,7 +1207,7 @@ do
 		[-2406] = true, -- Liberation of Undermine, entering the Gallagio
 		[-2409] = true, -- Liberation of Undermine, Gallywix defeat
 		[-2516] = true, -- [Midnight/Magisters' Terrace][Dungeon] clicking to drain the shield after defeating Seranel Sunlash
-		[-2529] = true, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
+		[-2529] = function() return latestKill[2] == 3181 and GetTime()-latestKill[1] < 10 end, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
@@ -1256,7 +1260,8 @@ do
 			local id = -(GetBestMapForUnit("player") or 0)
 
 			if cinematicZones[id] then
-				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
+				local checkType = type(cinematicZones[id])
+				if checkType == "table" then -- For zones with more than 1 cinematic per map id
 					if type(self.db.global.watchedMovies[id]) ~= "table" then self.db.global.watchedMovies[id] = {} end
 					for i = 1, #cinematicZones[id] do
 						local func = cinematicZones[id][i]
@@ -1270,7 +1275,7 @@ do
 							return
 						end
 					end
-				else
+				elseif checkType == "boolean" or (checkType == "function" and cinematicZones[id]()) then
 					if self.db.global.watchedMovies[id] then
 						BigWigs:Print(L.movieBlocked)
 						CinematicFrame_CancelCinematic()
