@@ -234,22 +234,23 @@ do
 	-- @bool[opt] noResend if true, no re-send will be attempted if the message fails to send
 	-- @usage self:Sync("pluginName", data)
 	function plugin:Sync(msg, extra, noResend)
-		if BigWigsLoader.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg and self:IsEnabled() then
 			if IsInGroup() then
-				msg = "P^".. msg
+				local messageToTransmit
 				if extra then
-					msg = msg .."^".. extra
+					messageToTransmit = "P^".. msg .."^".. extra
+				else
+					messageToTransmit = "P^".. msg
 				end
-				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				local result = SendAddonMessage("BigWigs", messageToTransmit, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 				if type(result) == "number" and result > 0 then
-					if result == 3 or result == 8 or result == 9 then
+					if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 						if not noResend then
 							self:SimpleTimer(function() self:Sync(msg, extra) end, 1)
+							return
 						end
-						return
-					else
-						local errorMsg = format("Failed to send plugin comm %q. Error code: %d", msg, result)
+					elseif result ~= 11 then -- AddOnMessageLockdown
+						local errorMsg = format("Failed to send plugin comm %q. Error code: %d", messageToTransmit, result)
 						core:Error(errorMsg)
 					end
 				end
