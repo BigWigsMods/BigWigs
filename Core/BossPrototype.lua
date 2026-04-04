@@ -3051,7 +3051,7 @@ end
 local checkFlag
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
-	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
+	--local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
 	local nilKeyError      = "Module %s tried to check the bitflags for a nil option key."
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
 	local noDBError        = "Module %s does not have a .db property, which is weird."

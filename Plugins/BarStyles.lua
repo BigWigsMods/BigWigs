@@ -24,12 +24,12 @@ do
 end
 
 if BigWigsLoader.isRetail then
-	local atlasInfo = { -- from C_Texture.GetAtlasInfo
-		["UI-HUD-CoolDownManager-Bar"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.826177875, 00.16015625, 0.23828125, 0, 8, 10, 8, 8},
-		["UI-HUD-CoolDownManager-Bar-BG"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.857421875, 0.00390625, 0.15234375, 1, 242, 14, 20, 22},
-		["UI-HUD-CoolDownManager-IconOverlay"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.001953125, 0.337890625, 0.00390625, 0.67578125},
-		["UI-HUD-CoolDownManager-Mask"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManagerMask", 0, 1, 0, 1},
-	}
+	--local atlasInfo = { -- from C_Texture.GetAtlasInfo
+	--	["UI-HUD-CoolDownManager-Bar"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.826177875, 00.16015625, 0.23828125, 0, 8, 10, 8, 8},
+	--	["UI-HUD-CoolDownManager-Bar-BG"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.857421875, 0.00390625, 0.15234375, 1, 242, 14, 20, 22},
+	--	["UI-HUD-CoolDownManager-IconOverlay"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.001953125, 0.337890625, 0.00390625, 0.67578125},
+	--	["UI-HUD-CoolDownManager-Mask"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManagerMask", 0, 1, 0, 1},
+	--}
 	local function SetTexureFromAtlas(texture, atlas)
 		texture:SetAtlas(atlas)
 		-- XXX slice margins aren't saving so it's stretching the bg, statusbar is just fucked. not sure where things are getting messed up
@@ -219,7 +219,8 @@ do
 		bar.candyBarBackdrop:Hide()
 		local borders = bar:Get("bigwigs:beautycase:borders")
 		if borders then
-			for i, border in next, borders do
+			for i = 1, #borders do
+				local border = borders[i]
 				border:SetParent(UIParent)
 				border:Hide()
 			end
@@ -239,7 +240,8 @@ do
 		local borders
 		if #freeBorderSets > 0 then
 			borders = tremove(freeBorderSets)
-			for i, border in next, borders do
+			for i = 1, #borders do
+				local border = borders[i]
 				border:SetParent(bar.candyBarBar)
 				border:ClearAllPoints()
 				border:Show()

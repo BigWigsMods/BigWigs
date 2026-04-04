@@ -271,10 +271,10 @@ do
 					barColor = {
 						type = "color",
 						name = L.barColor,
-						get = function(info)
+						get = function()
 							return db.barColor[1], db.barColor[2], db.barColor[3], db.barColor[4]
 						end,
-						set = function(info, r, g, b, a)
+						set = function(_, r, g, b, a)
 							db.barColor = {r, g, b, a}
 							plugin:RestyleWindow()
 						end,
@@ -286,10 +286,10 @@ do
 					barTextColor = {
 						type = "color",
 						name = L.barTextColor,
-						get = function(info)
+						get = function()
 							return db.barTextColor[1], db.barTextColor[2], db.barTextColor[3]
 						end,
-						set = function(info, r, g, b)
+						set = function(_, r, g, b)
 							db.barTextColor = {r, g, b}
 							plugin:RestyleWindow()
 						end,
@@ -305,10 +305,10 @@ do
 					backgroundColor = {
 						type = "color",
 						name = L.background,
-						get = function(info)
+						get = function()
 							return db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4]
 						end,
-						set = function(info, r, g, b, a)
+						set = function(_, r, g, b, a)
 							db.backgroundColor = {r, g, b, a}
 							plugin:RestyleWindow()
 						end,
@@ -653,7 +653,7 @@ do
 
 	-- This module is rarely used, and opened once during an encounter where it is.
 	-- We will prefer on-demand variables over permanent ones.
-	function plugin:BigWigs_ShowAltPower(event, module, title, sorting, sync)
+	function plugin:BigWigs_ShowAltPower(_, module, title, sorting, sync)
 		if db.disabled then return end
 
 		self:RestyleWindow()

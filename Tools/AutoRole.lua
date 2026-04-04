@@ -1,7 +1,6 @@
 RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN") -- We don't need to participate in role polls
 
 local LibSpec = LibStub("LibSpecialization")
-local myName = UnitNameUnmodified("player")
 
 local frame = CreateFrame("Frame")
 local IsInGroup, IsPartyLFG = IsInGroup, IsPartyLFG

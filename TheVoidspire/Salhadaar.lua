@@ -271,7 +271,6 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		elseif newState == 3 then -- Enum.EncounterTimelineEventState.Canceled
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		elseif newState == 2 then -- Enum.EncounterTimelineEventState.Finished
-			local info = C_EncounterTimeline.GetEventInfo(eventID)
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		end
 	end

@@ -42,7 +42,7 @@ local L_proximityTitle = L.proximityTitle
 
 local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
-local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+--local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
 local mute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute"
@@ -55,7 +55,6 @@ local proximityPlayerTable = {}
 local maxPlayers = 0
 local myGUID = nil
 local unitList = nil
-local blipList = {}
 local updateTimer = nil
 local functionToFire = nil
 local customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
@@ -66,16 +65,14 @@ local CTimerAfter = BigWigsLoader.CTimerAfter
 local bwTooltip = BigWigsAPI.GetTooltip()
 local UnitPosition = UnitPosition
 local IsItemInRange = BigWigsLoader.IsItemInRange
-local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
+local GetNumGroupMembers, GetTime = GetNumGroupMembers, GetTime
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
-local UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason
+local UnitIsDead, UnitIsUnit, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitPhaseReason
 local format = string.format
 local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
 local next, type, tonumber = next, type, tonumber
 
 local combatText = GARRISON_LANDING_STATUS_MISSION_COMBAT or "In Combat"
-
-local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 local UnitInPhase = UnitInPhase or function(unit) return not UnitPhaseReason(unit) end -- UnitPhaseReason doesn't exist on classic
 
@@ -202,18 +199,18 @@ local function onResize(self, width, height)
 end
 
 local locked = nil
-local function lockDisplay()
-	if locked then return end
-	proxAnchor:EnableMouse(false)
-	proxAnchor:SetMovable(false)
-	proxAnchor:SetResizable(false)
-	proxAnchor:RegisterForDrag()
-	proxAnchor:SetScript("OnSizeChanged", nil)
-	proxAnchor:SetScript("OnDragStart", nil)
-	proxAnchor:SetScript("OnDragStop", nil)
-	proxAnchor.drag:Hide()
-	locked = true
-end
+--local function lockDisplay()
+--	if locked then return end
+--	proxAnchor:EnableMouse(false)
+--	proxAnchor:SetMovable(false)
+--	proxAnchor:SetResizable(false)
+--	proxAnchor:RegisterForDrag()
+--	proxAnchor:SetScript("OnSizeChanged", nil)
+--	proxAnchor:SetScript("OnDragStart", nil)
+--	proxAnchor:SetScript("OnDragStop", nil)
+--	proxAnchor.drag:Hide()
+--	locked = true
+--end
 local function unlockDisplay()
 	if not locked then return end
 	proxAnchor:EnableMouse(true)
@@ -831,7 +828,7 @@ end
 
 do
 	local opener = nil
-	function plugin:BigWigs_ShowProximity(event, module, range, ...)
+	function plugin:BigWigs_ShowProximity(_, module, range, ...)
 		if db.disabled or type(range) ~= "number" then return end
 		opener = module
 		self:Open(range, module, ...)
@@ -859,13 +856,6 @@ function plugin:Close(noReopen)
 
 	proxAnchor:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	proxAnchor:UnregisterEvent("RAID_TARGET_UPDATE")
-
-	for k,v in next, blipList do
-		if v.isShown then
-			v.isShown = nil
-			v:Hide()
-		end
-	end
 
 	activeRange = setRange(0)
 	activeSpellID = nil

@@ -49,7 +49,7 @@ function mod:BOSS_KILL(_, id)
 	end
 end
 
-function mod:RAID_BOSS_WHISPER(_, msg)
+function mod:RAID_BOSS_WHISPER()
 	self:PersonalMessage(1243594)
 	self:PlaySound(1243594, "warning")
 end

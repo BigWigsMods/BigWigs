@@ -920,7 +920,7 @@ do
 		if mode and mode ~= self.moduleName then return end
 		inConfigureMode = true
 
-		for unitType, unitAnchors in next, anchors do
+		for _, unitAnchors in next, anchors do
 			for i = 1, #unitAnchors do
 				local anchor = unitAnchors[i]
 				if not anchor.configModeFrame then

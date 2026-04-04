@@ -771,7 +771,7 @@ local function CreateCell()
 	end
 end
 
-for i = 1, 100 do -- XXX temp (hopefully)
+for _ = 1, 100 do -- XXX temp (hopefully)
 	CreateCell()
 end
 WipeCells()
@@ -1254,7 +1254,6 @@ do
 
 			local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
 			local tableSize = #sortedplayerList
-			local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 			for i = 1, tableSize do
 				local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 				if i == 1 then
@@ -1584,7 +1583,6 @@ do
 
 		local prevName, prevLevel, prevMap, prevRating = nil, nil, nil, nil
 		local tableSize = #sortedplayerList
-		local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
 		for i = 1, tableSize do
 			local cellName, cellLevel, cellMap, cellRating = CreateCell(), CreateCell(), CreateCell(), CreateCell()
 			if i == 1 then
@@ -1718,7 +1716,7 @@ do
 			challengesTeleportButton:SetAttribute("spell", nil)
 		end
 
-		local name, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
+		local _, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
 		for instanceID, spellID in next, teleportList[1] do
 			if instanceID == mapID then
 				local spellName = ("|cFF33FF99%s|r"):format(BigWigsLoader.GetSpellName(spellID) or "?")
@@ -1989,7 +1987,7 @@ do
 		end
 	end
 	local combatHideCount, combatDelayTimer = 1, nil
-	main:SetScript("OnEvent", function(self, event, unit, isConnected)
+	main:SetScript("OnEvent", function(self, event, _, isConnected)
 		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" then
 			instanceKeysWidgets.testing = false
 			instanceKeysWidgets.main:Hide()

@@ -24,7 +24,6 @@ mod:UseCustomTimers(true)
 
 local activeBars = {}
 local backupBars = {}
-local timelineEventCount = 0
 
 local breathCount = 1
 local parasiteCount = 1
@@ -138,7 +137,6 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		elseif newState == 3 then -- Enum.EncounterTimelineEventState.Canceled
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		elseif newState == 2 then -- Enum.EncounterTimelineEventState.Finished
-			local info = C_EncounterTimeline.GetEventInfo(eventID)
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		end
 	end
@@ -192,7 +190,7 @@ function mod:ParasiteExpulsion(eventInfo)
 end
 
 function mod:ShadowclawSlam(eventInfo)
-	local count = eventInfo.durationRounded == 136 and slamCount + 1 or slamCount -- it starts 2 bars from the start.
+	--local count = eventInfo.durationRounded == 136 and slamCount + 1 or slamCount -- it starts 2 bars from the start.
 	local barText = CL.count:format(L.shadowclaw_slam, slamCount)
 	if self:ShouldShowBars() then
 		self:Bar(1241692, eventInfo.duration, barText, nil, eventInfo.id)
@@ -209,9 +207,7 @@ function mod:ShadowclawSlam(eventInfo)
 end
 
 do
-	local t = 0
 	local function StopBarOnWarning(barText, severity)
-		t = GetTime()
 		mod:ScheduleTimer(function() mod:UnregisterEvent("ENCOUNTER_WARNING") mod:StopBar(barText) end, 10) -- the encounter message sometimes doesn't show, so this fails for now
 		mod:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
 			--mod:Error(("Elapsed %s, severity was %s"):format(GetTime()-t, info.severity), true)

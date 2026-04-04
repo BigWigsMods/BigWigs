@@ -1845,7 +1845,7 @@ do
 			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
 		}
 		local UnitIsPlayer = UnitIsPlayer
-		local function UNIT_TARGET(frame, event, unit)
+		local function UNIT_TARGET(_, _, unit)
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then

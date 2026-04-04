@@ -282,7 +282,9 @@ ignore = {
 	"113/BigWigs",
 	"212/self",
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
-	"2",
+	"211",
+	"212",
+	"213",
 }
 not_globals = {
 	"arg", -- arg is a standard global, so without this it won't error when we typo "args" in a module

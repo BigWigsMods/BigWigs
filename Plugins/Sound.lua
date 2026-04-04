@@ -346,7 +346,7 @@ function plugin:OnPluginEnable()
 	for k, v in next, db do
 		if sounds[k] then
 			for _, soundTbl in next, v do
-				for optionKey, soundName in next, soundTbl do
+				for _, soundName in next, soundTbl do
 					if soundName ~= "None" and not soundsPlayedTable[soundName] then
 						soundsPlayedTable[soundName] = true
 					end
@@ -418,7 +418,7 @@ do
 	end
 end
 
-function plugin:BigWigs_Sound(event, module, key, soundName)
+function plugin:BigWigs_Sound(_, module, key, soundName)
 	local soundPath = self:GetSoundFile(module, key, soundName)
 	if soundPath then
 		self:PlaySoundFile(soundPath)

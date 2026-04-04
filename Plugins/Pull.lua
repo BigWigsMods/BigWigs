@@ -192,7 +192,7 @@ do
 				name = L.keybinding,
 				desc = L.pullKeybindingDesc,
 				order = 13,
-				set = function(a, key)
+				set = function(_, key)
 					plugin.db.profile.keybind = key
 					if not InCombatLockdown() then
 						ClearOverrideBindings(BWPull)
@@ -340,7 +340,7 @@ do
 		end
 	end
 
-	function plugin:Blizz_StartCountdown(_, initiatedBy, timeSeconds, totalTime)
+	function plugin:Blizz_StartCountdown(_, initiatedBy, timeSeconds)
 		if IsEncounterInProgress() or self:IsSecret(initiatedBy) then return end -- We don't want pull timers during encounters or when secret (encounters and M+)
 		local unitToken
 		local _, instanceType, _, _, _, _, _, instanceId = GetInstanceInfo()

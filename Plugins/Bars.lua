@@ -1258,7 +1258,7 @@ do
 	end
 end
 
-local function barStopped(event, bar)
+local function barStopped(_, bar)
 	bar.candyBarIconFrame.bwID = nil
 	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 	if indicatorFrame then

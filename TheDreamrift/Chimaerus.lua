@@ -39,7 +39,6 @@ local causticPhlegmCount = 1
 local rendingTearCount = 1
 local consumeCount = 1
 local corruptedDevastationCount = 1
-local ravenousDiveCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -116,7 +115,6 @@ function mod:OnEncounterStart()
 	rendingTearCount = 1
 	consumeCount = 1
 	corruptedDevastationCount = 1
-	ravenousDiveCount = 1
 end
 
 function mod:OnBossDisable()
@@ -179,7 +177,6 @@ function mod:TimersMythic(_, eventInfo)
 				causticPhlegmCount = 1
 				rendingTearCount = 1
 				corruptedDevastationCount = 1
-				ravenousDiveCount = 1
 				durationCount = {}
 			end, eventInfo.duration)
 			self:ScheduleTimer(function() -- Schedule an Alndust Upheaval warning for Mythic
@@ -276,7 +273,6 @@ function mod:TimersHeroic(_, eventInfo)
 				causticPhlegmCount = 1
 				rendingTearCount = 1
 				corruptedDevastationCount = 1
-				ravenousDiveCount = 1
 				durationCount = {}
 			end, eventInfo.duration)
 			return
@@ -358,7 +354,6 @@ function mod:TimersEasy(_, eventInfo)
 				causticPhlegmCount = 1
 				rendingTearCount = 1
 				corruptedDevastationCount = 1
-				ravenousDiveCount = 1
 				durationCount = {}
 			end, eventInfo.duration)
 			return
@@ -419,7 +414,6 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		elseif newState == 3 then -- Enum.EncounterTimelineEventState.Canceled
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		elseif newState == 2 then -- Enum.EncounterTimelineEventState.Finished
-			local info = C_EncounterTimeline.GetEventInfo(eventID)
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		end
 	end
@@ -596,7 +590,6 @@ do
 				causticPhlegmCount = 1
 				rendingTearCount = 1
 				corruptedDevastationCount = 1
-				ravenousDiveCount = 1
 				durationCount = {}
 				scheduledEnd = nil
 			end, eventInfo.duration)

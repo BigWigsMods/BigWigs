@@ -24,7 +24,7 @@ local infoboxWidth = 160
 local infoboxHeight = 100
 
 local db = nil
-local inTestMode = false
+--local inTestMode = false
 
 function plugin:RestyleWindow()
 	if db.lock then
@@ -590,7 +590,7 @@ do
 	end
 
 	function plugin:Close()
-		inTestMode = false
+		--inTestMode = false
 		opener = nil
 		nameList, sortingTbl = {}, {}
 		display:Hide()
@@ -632,7 +632,7 @@ function plugin:BigWigs_OnBossDisable(_, module)
 end
 
 function plugin:Test()
-	inTestMode = true
+	--inTestMode = true
 	self:BigWigs_ShowInfoBox(nil, self, L.infobox_short, 5)
 	self:BigWigs_SetInfoBoxLine(nil, nil, 1, L.test)
 	self:BigWigs_SetInfoBoxLine(nil, nil, 2, 1)

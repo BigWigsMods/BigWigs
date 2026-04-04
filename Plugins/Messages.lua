@@ -955,9 +955,9 @@ do
 		-- Not Secret
 		-- local duration = eventInfo.duration
 		local severity = eventInfo.severity
-		local shouldPlaySound = eventInfo.shouldPlaySound
+		--local shouldPlaySound = eventInfo.shouldPlaySound
 		-- local shouldShowChatMessage = eventInfo.shouldShowChatMessage
-		local shouldShowWarning = eventInfo.shouldShowWarning
+		--local shouldShowWarning = eventInfo.shouldShowWarning
 
 		-- Secret
 		local text = eventInfo.text

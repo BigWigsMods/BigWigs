@@ -80,14 +80,14 @@ end
 -- Event Handlers
 --
 
-function mod:BigWigs_Flash(event, module, key)
+function mod:BigWigs_Flash()
 	flasher:Stop()
 	flashFrame:SetAlpha(0)
 	flashFrame:Show()
 	flasher:Play()
 end
 
-function mod:BigWigs_Pulse(event, _, _, icon)
+function mod:BigWigs_Pulse(_, _, _, icon)
 	pulser:Stop()
 	pulseFrame:SetTexture(icon or 134400) -- Interface\\Icons\\INV_Misc_QuestionMark
 	pulseFrame:Show()

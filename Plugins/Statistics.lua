@@ -399,7 +399,7 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossEngage(event, module)
+	function plugin:BigWigs_OnBossEngage(_, module)
 		local instanceID = module:GetZoneID()
 		local journalID = GetModuleID(module)
 
@@ -446,7 +446,7 @@ local function Stop(self, module)
 	end
 end
 
-function plugin:BigWigs_OnBossWin(event, module)
+function plugin:BigWigs_OnBossWin(_, module)
 	local journalID = GetModuleID(module)
 	if journalID and activeDurations[journalID] then
 		local elapsed = GetTime()-activeDurations[journalID][1]
@@ -497,7 +497,7 @@ do
 		-- Raid encounters must last longer than 30 seconds to be an actual wipe worth noting
 		return 30
 	end
-	function plugin:BigWigs_OnBossWipe(event, module)
+	function plugin:BigWigs_OnBossWipe(_, module)
 		local journalID = GetModuleID(module)
 		if journalID and activeDurations[journalID] then
 			local elapsed = GetTime()-activeDurations[journalID][1]
@@ -541,6 +541,6 @@ do
 	end
 end
 
-function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module
+function plugin:BigWigs_OnBossDisable(_, module) -- Manual disable or reboot of the boss module
 	Stop(self, module)
 end

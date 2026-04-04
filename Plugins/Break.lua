@@ -152,7 +152,7 @@ do
 	end
 end
 
-function plugin:DBM_AddonMessage(_, sender, prefix, seconds, text)
+function plugin:DBM_AddonMessage(_, sender, prefix, seconds)
 	if prefix == "BT" then
 		self:StartBreak(seconds, sender, true)
 	end

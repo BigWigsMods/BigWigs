@@ -162,7 +162,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossEngage(event, module)
+function plugin:BigWigs_OnBossEngage(_, module)
 	if not self.db.profile.disabled and module and (module:GetJournalID() or module:GetAllowWin()) and not module:IsWorldModule() then
 		curDiff = module:Difficulty()
 		curModule = module
@@ -256,7 +256,7 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module
+	function plugin:BigWigs_OnBossDisable(_, module) -- Manual disable or reboot of the boss module
 		if not self.db.profile.disabled and module and module == curModule then
 			curDiff = 0
 			self:UnregisterEvent("CHAT_MSG_WHISPER")
@@ -336,7 +336,7 @@ do
 		end
 	end
 
-	function plugin:CHAT_MSG_WHISPER(event, _, sender, _, _, _, flag, _, _, _, _, _, guid)
+	function plugin:CHAT_MSG_WHISPER(_, _, sender, _, _, _, flag, _, _, _, _, _, guid)
 		if curDiff > 0 and flag ~= "GM" and flag ~= "DEV" then
 			local trimmedPlayer = Ambiguate(sender, "none")
 			if UnitInRaid(trimmedPlayer) or UnitInParty(trimmedPlayer) then -- Player is in our group
@@ -367,7 +367,7 @@ do
 	end
 
 	local myClient = WOW_PROJECT_ID
-	function plugin:CHAT_MSG_BN_WHISPER(event, _, playerName, _, _, _, _, _, _, _, _, _, _, bnSenderID)
+	function plugin:CHAT_MSG_BN_WHISPER(_, _, _, _, _, _, _, _, _, _, _, _, _, bnSenderID)
 		if curDiff > 0 and not BNIsSelf(bnSenderID) then
 			if not throttleBN[bnSenderID] or (GetTime() - throttleBN[bnSenderID]) > 30 then
 				throttleBN[bnSenderID] = GetTime()

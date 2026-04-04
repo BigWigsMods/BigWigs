@@ -346,7 +346,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local maxQueueDuration = eventInfo.maxQueueDuration
 
 	-- Secret
-	local spellId = eventInfo.spellID
+	--local spellId = eventInfo.spellID
 	local spellName = eventInfo.spellName
 	local icon = eventInfo.iconFileID
 	-- local roleAndSpellIndicators = eventInfo.icons

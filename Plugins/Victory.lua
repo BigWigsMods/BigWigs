@@ -147,7 +147,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossWin(event, module)
+function plugin:BigWigs_OnBossWin(_, module)
 	if self.db.profile.bigwigsVictory then
 		self:SendMessage("BigWigs_Message", self, nil, L.defeated:format(module.displayName), "green")
 	end

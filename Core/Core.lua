@@ -575,7 +575,7 @@ do
 
 				if module.toggleOptions then
 					module.toggleDefaults = {}
-					for k, v in next, module.toggleOptions do
+					for _, v in next, module.toggleOptions do
 						local bitflags = 0
 						local disabled = false
 						local t = type(v)

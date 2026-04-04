@@ -157,19 +157,16 @@ end
 -- Profile import/export
 --
 
-do
-	-- A custom profile name and callback function is completely optional
-	-- When specified, a callback function will be called with a boolean as the first arg. True if the user accepted, false otherwise
-	local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-	function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
-		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
-		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
-		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
-		addonTbl.LoadCoreAndOptions()
-		if not BigWigsOptions.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") end
-		BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-	end
+-- A custom profile name and callback function is completely optional
+-- When specified, a callback function will be called with a boolean as the first arg. True if the user accepted, false otherwise
+function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
+	if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
+	if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
+	if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
+	addonTbl.LoadCoreAndOptions()
+	if not BigWigsOptions.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") end
+	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 end
 
 -- Input the name of YOUR addon, i.e. the addon making the profile request

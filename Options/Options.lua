@@ -17,7 +17,6 @@ local adbo = LibStub("AceDBOptions-3.0")
 local lds = LibStub("LibDualSpec-1.0", true)
 
 options.SendMessage = loader.SendMessage
-local UnitName = loader.UnitName
 
 local optionsTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 optionsTooltip:SetScript("OnUpdate", function(self, elapsed)
@@ -1054,7 +1053,7 @@ end
 local populatePrivateAuraOptions
 local function privateAuraResetOnClick(widget)
 	local sDB = soundModule.db.profile["privateaura"]
-	for module, paOptions in next, widget:GetUserData("privateAuraSoundOptions") do
+	for module in next, widget:GetUserData("privateAuraSoundOptions") do
 		sDB[module.name] = nil
 		module:RegisterPrivateAuraSounds()
 	end
