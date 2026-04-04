@@ -5,9 +5,9 @@ if not L then return end
 -- API.lua
 L.showAddonBar = "Das Addon '|cFF436EEE%s|r' hat die Leiste '%s' erstellt."
 L.requestAddonProfile = "Das Addon '|cFF436EEE%s|r' hat gerade eine Kopie des Profil Export-Strings erstellt."
---L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
---L.shortSecondsOnly = "%d Sec" -- 28 Seconds
---L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
+L.shortMinutesAndSeconds = "%d Min %d Sek" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d Sek" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f Sek" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Berserker"
