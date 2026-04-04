@@ -21,7 +21,7 @@ mod:SetPrivateAuraSounds({
 	{1242803, sound = "underyou"}, -- Light Flames
 	{1242815, sound = "underyou"}, -- Void Flames
 })
-mod:UseCustomTimers(true, true)
+mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
