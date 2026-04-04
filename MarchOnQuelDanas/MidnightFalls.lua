@@ -42,6 +42,21 @@ local siphonCount = 1
 local archangelCount = 1
 local constellationCount = 1
 
+local INTERMISSION_DARK_QUASAR_INFO = {
+	[14] = { -- normal 10, 17, 25, 33
+		count = 4,
+		duration = 7.5,
+	},
+	[15] = { -- heroic 10.6, 16.7, 23.0, 29.2, 35.5
+		count = 5,
+		duration = 6.2,
+	},
+	[16] = { -- mythic 10.4, 15.5, 20.6, 25.7, 30.8, 35.9, 41.0
+		count = 7,
+		duration = 5.1,
+	},
+}
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -64,10 +79,10 @@ function mod:GetOptions()
 		"stages",
 
 		-- Stage 1
-		1279420, -- Dark Quasar
 		1253915, -- Heaven's Glaives
 		1249620, -- Death's Dirge
 		1251386, -- Safeguard Prism
+		1279420, -- Dark Quasar
 		{1267049, "TANK"}, --- Heaven's Lance
 
 		-- Stage 2
@@ -81,9 +96,10 @@ function mod:GetOptions()
 		1266897, -- Light Siphon
 		1249796, -- Shattered Sky
 	},{
-		{ tabName = CL.stage:format(1), { "stages", 1279420, 1253915, 1249620, 1251386, 1267049, } },
+		{ tabName = CL.stage:format(1), { "stages", 1249620, 1279420, 1253915, 1251386, 1267049, } },
+		{ tabName = CL.intermission,    { "stages", 1279420, } },
 		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, 1281194, } },
-		{ tabName = CL.stage:format(3), { "stages", 1250898, 1266388, 1266897, 1267049, 1249796, } },
+		{ tabName = CL.stage:format(3), { "stages", 1250898, 1266388, 1266897, 1267049, } },
 		[1279420] = -32197, -- Stage One: Final Tolls
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
 		[1250898] = -33639, -- Stage Three: Midnight Falls
@@ -389,11 +405,31 @@ end
 function mod:IntoTheDarkwell(duration)
 	self:SetStage(2) -- just set it here, no other events
 	self:ResetCounts()
+
+	if self:ShouldShowBars() then
+		self:Bar(1279420, 10.5, CL.count:format(self:SpellName(1279420), quasarCount))
+		self:ScheduleTimer("IntermissionDarkQuasar", 10.5)
+	end
+
 	return {
 		msg = CL.stage:format(2),
 		key = "stages",
 		icon = 1282047,
 	}
+end
+
+function mod:IntermissionDarkQuasar()
+	local info = INTERMISSION_DARK_QUASAR_INFO[self:Difficulty()]
+	if not info then return end
+
+	self:Message(1279420, "yellow", CL.count_amount:format(self:SpellName(1279420), quasarCount, info.count))
+	self:PlaySound(1279420, "alert")
+	quasarCount = quasarCount + 1
+
+	if quasarCount <= info.count then
+		self:Bar(1279420, info.duration, CL.count_amount:format(self:SpellName(1279420), quasarCount, info.count))
+		self:ScheduleTimer("IntermissionDarkQuasar", info.duration)
+	end
 end
 
 -- Phase 2
