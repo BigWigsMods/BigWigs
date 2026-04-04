@@ -186,9 +186,6 @@ function mod:TimersOther(_, eventInfo)
 		elseif rounded == 70 then
 			if count % 4 == 1 then
 				barInfo = self:DeathsDirge(duration)
-				-- XXX was finishing early, not an issue now?
-				barInfo.noStopBar = true
-				barInfo.finishTimer = self:ScheduleTimer(function() barInfo:onEnd() end, duration)
 			elseif count % 4 == 2 then
 				barInfo = self:HeavensGlaives(duration)
 			elseif count % 4 == 3 then
@@ -333,11 +330,7 @@ function mod:DeathsDirge(duration)
 	return {
 		msg = barText,
 		key = 1249620,
-		onCanceled = function(barInfo)
-			self:StopBar(barText)
-			self:CancelTimer(barInfo.finishTimer)
-		end,
-		onEnd = function()
+		onFinished = function()
 			self:Message(1249620, "red", barText)
 			self:PlaySound(1249620, "warning")
 		end
