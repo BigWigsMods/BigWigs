@@ -59,7 +59,6 @@ end
 -- Initialization
 --
 
-
 function mod:GetOptions()
 	return {
 		"stages",
@@ -216,18 +215,17 @@ function mod:TimersOther(_, eventInfo)
 			barInfo = self:HeavensLance(duration)
 		end
 
-	-- XXX all normal logs skipped p3 >.>
 	elseif stage == 3 then
 		if rounded == 31 then
 			barInfo = self:LightSiphon(duration)
 		elseif rounded == 33 or rounded == 6 or rounded == 26 then
-			barInfo = self:DarkConstellation(duration)
+			barInfo = self:DarkConstellation(duration, rounded == 6 and count)
 		elseif rounded == 14 then
 			barInfo = self:TheDarkArchangel(duration)
 		elseif rounded == 23 or rounded == 20 then
 			barInfo = self:HeavensLance(duration)
 		elseif rounded == 38 then
-			if count % 2 == 1 or self:Easy() then -- XXX check longer logs for this / Light Siphon doesn't exist in normal
+			if count % 2 == 1 or self:Easy() then
 				barInfo = self:TheDarkArchangel(duration)
 			else
 				barInfo = self:LightSiphon(duration)
@@ -403,15 +401,14 @@ function mod:DarkMeltdown(duration)
 		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 	end
-	local barText = CL.stage:format(3)
 	self:ScheduleTimer(function() self:SetStage(3) end, duration) -- don't offset this
 	return {
-		msg = barText,
+		msg = CL.stage:format(3),
 		key = "stages",
 		icon = 1281194,
 		offset = 8, -- bar ends on cast>channel, bleh
 		onFinished = function()
-			self:Message("stages", "cyan", barText, false)
+			self:Message("stages", "cyan", CL.stage:format(3), false)
 			self:PlaySound("stages", "long")
 		end
 	}
@@ -472,9 +469,15 @@ function mod:TheDarkArchangel(duration)
 	}
 end
 
-function mod:DarkConstellation(duration)
-	local barText = CL.count:format(self:GetName(1266388), constellationCount)
-	constellationCount = constellationCount + 1
+function mod:DarkConstellation(duration, count)
+	local barText
+	if count then
+		count = count % 2 == 1 and 2 or 3
+		barText = CL.count_amount:format(self:GetName(1266388), count, 3)
+	else
+		barText = CL.count:format(self:GetName(1266388), constellationCount)
+		constellationCount = constellationCount + 1
+	end
 	return {
 		msg = barText,
 		key = 1266388,
