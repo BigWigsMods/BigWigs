@@ -575,7 +575,11 @@ do
 					SLASH_KEYSTONE2 = nil
 				end
 				if SLASH_KEYSTONE1 and db.global.slashKeystone then
-					SLASH_KEYSTONE1 = nil
+					if not db.global.slashKeys then
+						SLASH_KEYSTONE1 = SLASH_KEYSTONE2
+					else
+						SLASH_KEYSTONE1 = nil
+					end
 				end
 			end
 			if BigWigsLoader.UnitLevel("player") ~= GetMaxPlayerLevel() then
