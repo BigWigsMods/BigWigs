@@ -371,13 +371,15 @@ function mod:TotalEclipse(duration)
 		msg = CL.intermission,
 		key = "stages",
 		icon = 1261871,
+		endTime = GetTime() + duration,
 		onFinished = function()
 			self:Message("stages", "cyan", CL.intermission, false)
 			self:PlaySound("stages", "long")
 		end,
-		onCanceled = function()
-			self:Message("stages", "cyan", CL.intermission, false)
-			self:PlaySound("stages", "long")
+		onCanceled = function(barInfo)
+			if math.abs(GetTime() - barInfo.endTime) < 0.1 then
+				barInfo:onFinished()
+			end
 		end
 	}
 end
