@@ -15,7 +15,7 @@ mod:SetPrivateAuraSounds({
 	1249609, -- Dark Rune
 	{1253031, sound = "info"}, -- Glimmering
 	{1265842, sound = "alarm"}, -- Impaled
-	1279512, -- Starsplinter
+	{1279512, 1285510}, -- Starsplinter
 	1284527, -- Galvanize
 	{1263514, sound = "underyou"}, -- Midnight
 })
@@ -73,6 +73,7 @@ function mod:GetOptions()
 		-- Stage 2
 		1284525, -- Galvanize
 		1282412, -- Core Harvest
+		1281194, -- Dark Meltdown
 
 		-- Stage 3
 		1250898, -- The Dark Archangel
@@ -81,7 +82,7 @@ function mod:GetOptions()
 		1249796, -- Shattered Sky
 	},{
 		{ tabName = CL.stage:format(1), { "stages", 1279420, 1253915, 1249620, 1251386, 1267049, } },
-		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, } },
+		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, 1281194, } },
 		{ tabName = CL.stage:format(3), { "stages", 1250898, 1266388, 1266897, 1267049, 1249796, } },
 		[1279420] = -32197, -- Stage One: Final Tolls
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
@@ -94,6 +95,7 @@ function mod:GetOptions()
 		[1251386] = CL.shield,
 		[1284525] = CL.beams,
 		[1282412] = CL.dodge,
+		[1281194] = CL.knockback,
 		[1266388] = L.dark_constellation,
 		[1250898] = L.the_dark_archangel,
 		[1266897] = CL.soaks,
@@ -401,15 +403,16 @@ function mod:DarkMeltdown(duration)
 		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 	end
-	self:ScheduleTimer(function() self:SetStage(3) end, duration) -- don't offset this
 	return {
 		msg = CL.stage:format(3),
 		key = "stages",
 		icon = 1281194,
-		offset = 8, -- bar ends on cast>channel, bleh
 		onFinished = function()
+			self:SetStage(3)
 			self:Message("stages", "cyan", CL.stage:format(3), false)
 			self:PlaySound("stages", "long")
+
+			self:Bar(1279420, 8, self:GetName(1279420)) -- Dark Meltdown
 		end
 	}
 end
