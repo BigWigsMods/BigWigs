@@ -330,21 +330,26 @@ function mod:TimersHeroic(_, eventInfo)
 			barInfo = self:AuraOfPeace(eventInfo)
 		end
 	else
-		eventInfo.timestamp = GetTime()
-		table.insert(storedTimelineEvents, eventInfo)
-		if scheduleBackups then
-			self:CancelTimer(scheduleBackups)
-			scheduleBackups = nil
-		end
-		scheduleBackups = self:ScheduleTimer(function ()
-			for _, event in next, storedTimelineEvents do
-				if self:ShouldShowBars() and not self:IsWiping() then
-					self:StartBackupBar(event, true)
-				end
+		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+		if durationRounded == 16 and durationEventCount[durationRounded] == 1 then -- this is a judgement which loses track. we re-force it here.
+			barInfo = self:JudgementBlue(eventInfo)
+		else
+			eventInfo.timestamp = GetTime()
+			table.insert(storedTimelineEvents, eventInfo)
+			if scheduleBackups then
+				self:CancelTimer(scheduleBackups)
+				scheduleBackups = nil
 			end
-			table.wipe(storedTimelineEvents)
-		end, 0.5)
-		return
+			scheduleBackups = self:ScheduleTimer(function ()
+				for _, event in next, storedTimelineEvents do
+					if self:ShouldShowBars() and not self:IsWiping() then
+						self:StartBackupBar(event, true)
+					end
+				end
+				table.wipe(storedTimelineEvents)
+			end, 0.5)
+			return
+		end
 	end
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
