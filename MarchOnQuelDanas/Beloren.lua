@@ -401,7 +401,7 @@ function mod:Rebirth(duration)
 	return {
 		msg = barText,
 		key = "stages",
-		startTime = GetTime(),
+		endTime = GetTime() + duration,
 		onFinished = function()
 			isIntermission = false
 			self:Message("stages", "cyan", barText)
@@ -411,7 +411,7 @@ function mod:Rebirth(duration)
 		end,
 		onCanceled = function(barInfo)
 			isIntermission = false
-			if GetTime() - barInfo.startTime >= 30 then -- cancels at 30.0xx
+			if math.abs(GetTime() - barInfo.endTime) < 0.1 then
 				barInfo:onFinished()
 			end
 		end
