@@ -5,6 +5,9 @@ if not L then return end
 -- API.lua
 L.showAddonBar = "L'addon '|cFF436EEE%s|r' a créé la barre '%s'."
 L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' vient de faire une copie de votre chaîne d'export de profil."
+--L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
+--L.shortSecondsOnly = "%d Sec" -- 28 Seconds
+--L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Berserk"

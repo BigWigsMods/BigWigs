@@ -685,7 +685,7 @@ do
 			if i == 1 and widgets.anyCombatActive then
 				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
 			else
-				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], SecondsToTime(widgets.anyCombatHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], BigWigsAPI.SecondsToTime(widgets.anyCombatHistoryDuration[i], db.profile.anyCombatTextFormat == 1), 1, 1, 1, 0, 1, 0)
 			end
 		end
 		bwTooltip:Show()
@@ -842,7 +842,7 @@ do
 		for i = 1, #widgets.bossCombatHistoryTime do
 			bwTooltip:AddDoubleLine(
 				widgets.bossCombatHistoryTime[i][1],
-				("%s [%s]"):format(SecondsToTime(widgets.bossCombatHistoryDuration[i][1]), encounterStatusTexts[widgets.bossCombatHistoryDuration[i][2]]),
+				("%s [%s]"):format(BigWigsAPI.SecondsToTime(widgets.bossCombatHistoryDuration[i][1], db.profile.bossCombatTextFormat == 1), encounterStatusTexts[widgets.bossCombatHistoryDuration[i][2]]),
 				1, 1, 1,
 				0, 1, 0
 			)
@@ -1015,7 +1015,7 @@ do
 			if i == 1 and widgets.bossStagesActive then
 				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
 			else
-				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], SecondsToTime(widgets.bossStagesHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], BigWigsAPI.SecondsToTime(widgets.bossStagesHistoryDuration[i], db.profile.bossStagesTextFormat == 1), 1, 1, 1, 0, 1, 0)
 			end
 		end
 		bwTooltip:Show()
@@ -1152,7 +1152,7 @@ do
 			if i == 1 and widgets.instanceTimerActive then
 				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
 			else
-				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], SecondsToTime(widgets.instanceTimerHistoryDuration[i]), 1, 1, 1, 0, 1, 0)
+				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], BigWigsAPI.SecondsToTime(widgets.instanceTimerHistoryDuration[i], db.profile.instanceTimerTextFormat == 1), 1, 1, 1, 0, 1, 0)
 			end
 		end
 		bwTooltip:Show()

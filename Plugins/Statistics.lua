@@ -35,7 +35,6 @@ local difficultyTable = {
 	[226] = "SOD", -- 20 Player (Molten Core & ZG - Classic Season of Discovery)
 	[244] = "titan", -- Raid: 25 Titan-Reforged
 }
-local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime, date = GetTime, BigWigsLoader.date
 local dontPrint = { -- Don't print a warning message for these difficulties
 	[0] = true, -- Outside
@@ -454,7 +453,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 		local difficultyText = activeDurations[journalID][2]
 
 		if self.db.profile.printVictory then
-			self:SimpleTimer(function() BigWigs:Print(L.bossVictoryPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed))) end, 1)
+			self:SimpleTimer(function() BigWigs:Print(L.bossVictoryPrint:format(module.displayName, BigWigsAPI.SecondsToTime(elapsed))) end, 1)
 		end
 
 		local diff = module:Difficulty()
@@ -475,7 +474,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 			if not sDB.best or elapsed < sDB.best then
 				if self.db.profile.printNewFastestVictory and sDB.best then
 					local t = sDB.best-elapsed
-					self:SimpleTimer(function() BigWigs:Print(L.newFastestVictoryPrint:format(t < 1 and SPELL_DURATION_SEC:format(t) or SecondsToTime(t))) end, 1.1)
+					self:SimpleTimer(function() BigWigs:Print(L.newFastestVictoryPrint:format(BigWigsAPI.SecondsToTime(t))) end, 1.1)
 				end
 				sDB.best = elapsed
 				sDB.bestDate = date("%Y/%m/%d")
@@ -506,7 +505,7 @@ do
 
 			if elapsed > GetMinimumEncounterDuration(module) then
 				if self.db.profile.printDefeat then
-					BigWigs:Print(L.bossDefeatPrint:format(module.displayName, SecondsToTime(elapsed)))
+					BigWigs:Print(L.bossDefeatPrint:format(module.displayName, BigWigsAPI.SecondsToTime(elapsed)))
 				end
 
 				local diff = module:Difficulty()

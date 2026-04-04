@@ -4,6 +4,9 @@ local L = addonTbl.API:NewLocale("BigWigs", "enUS")
 -- API.lua
 L.showAddonBar = "The addon '|cFF436EEE%s|r' created the '%s' bar."
 L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d Sec" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Berserk"

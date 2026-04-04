@@ -288,6 +288,27 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Utility
+--
+
+do
+	local floor = math.floor
+	function API.SecondsToTime(seconds, noFloat)
+		local L = API:GetLocale("BigWigs")
+		if seconds > 60 then
+			local min = floor(seconds/60)
+			local sec = seconds % 60
+			return L.shortMinutesAndSeconds:format(min, sec)
+		elseif seconds < 10 and not noFloat then
+			local sec = floor(seconds * 10) / 10 -- Turn 9.965 into 9.9 not 10
+			return L.shortSubTenSeconds:format(sec)
+		else
+			return L.shortSecondsOnly:format(seconds)
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Validation
 --
 

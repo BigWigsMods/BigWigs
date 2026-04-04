@@ -166,7 +166,6 @@ files["Plugins/PrivateAuras.lua"].ignore = {
 	"113/AuraUtil",
 	"113/C_UnitAuras",
 	"113/C_Spell",
-	"113/SecondsToTimeAbbrev",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitInPartyIsAI",
 }
@@ -385,7 +384,6 @@ globals = {
 	"RaidBossEmoteFrame",
 	"RaidNotice_AddMessage",
 	"RaidWarningFrame",
-	"SecondsToTime",
 	"TalkingHeadFrame",
 	"Tukui",
 	"UIParent",

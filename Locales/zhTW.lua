@@ -5,6 +5,9 @@ if not L then return end
 -- API.lua
 L.showAddonBar = "插件「|cFF436EEE%s|r」創建了「%s」計時器。"
 L.requestAddonProfile = "插件「|cFF436EEE%s|r」剛剛複製了你的設定檔匯出字串。"
+--L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
+--L.shortSecondsOnly = "%d Sec" -- 28 Seconds
+--L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "狂暴"
