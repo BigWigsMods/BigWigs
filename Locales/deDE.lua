@@ -432,7 +432,7 @@ L.historyTimeFormat = "Verlauf: Zeitformat"
 L.twelveHour = "12 Stunden"
 L.twentyFourHour = "24 Stunden"
 L.hideTooltipInCombat = "Tooltip im Kampf verstecken"
---L.customText = "Custom Text (Must Contain %s)"
+L.customText = "Angepasster Text (Muss %s enthalten)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -484,7 +484,7 @@ L.keystoneViewerOpen = "Schlüsselstein Anzeige öffnen"
 L.keystoneViewerKeybindingExplainer = "\n\nEs kann eine Tastenbelegung zum Öffnen der Schlüsselstein Anzeige festgelegt werden:\n\n"
 L.keystoneViewerKeybindingDesc = "Tastenbelegung zum Öffnen der Schlüsselstein Anzeige wählen."
 L.keystoneClickToWhisper = "Zum Anflüstern klicken"
-L.keystoneClickToTeleportNow = "\nZum dorthin teleportieren klicken"
+L.keystoneClickToTeleportNow = "\nZum dorthin Teleportieren klicken"
 L.keystoneClickToTeleportCooldown = "\nTeleport nicht möglich, Zauber klingt ab"
 L.keystoneClickToTeleportNotLearned = "\nTeleport nicht möglich, Zauber nicht erlernt"
 L.keystoneHistoryRuns = "Gesamt: %d"
