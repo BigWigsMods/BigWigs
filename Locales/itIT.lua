@@ -432,6 +432,7 @@ L.autoRoleExplainer = "Quando ti unisci ad un gruppo, o cambii le tue spec mentr
 --L.twelveHour = "12 Hour"
 --L.twentyFourHour = "24 Hour"
 --L.hideTooltipInCombat = "Hide Tooltip in Combat"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

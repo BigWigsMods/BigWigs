@@ -432,6 +432,7 @@ L.historyTimeFormat = "Verlauf: Zeitformat"
 L.twelveHour = "12 Stunden"
 L.twentyFourHour = "24 Stunden"
 L.hideTooltipInCombat = "Tooltip im Kampf verstecken"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

@@ -432,6 +432,7 @@ L.battleResTitle = "Res en Combate"
 --L.twelveHour = "12 Hour"
 --L.twentyFourHour = "24 Hour"
 --L.hideTooltipInCombat = "Hide Tooltip in Combat"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

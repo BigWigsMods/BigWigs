@@ -432,6 +432,7 @@ L.historyTimeFormat = "기록: 시간 형식"
 L.twelveHour = "12시간제"
 L.twentyFourHour = "24시간제"
 L.hideTooltipInCombat = "전투 중 툴팁 숨기기"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

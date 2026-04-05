@@ -432,6 +432,7 @@ L.historyTimeFormat = "紀錄：時間格式"
 L.twelveHour = "12 小時制"
 L.twentyFourHour = "24 小時制"
 --L.hideTooltipInCombat = "Hide Tooltip in Combat"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

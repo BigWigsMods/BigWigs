@@ -432,6 +432,7 @@ L.battleResNoteTooltip = "Aviso: Esta ventana de opciones solo se mostrará al e
 --L.twelveHour = "12 Hour"
 --L.twentyFourHour = "24 Hour"
 --L.hideTooltipInCombat = "Hide Tooltip in Combat"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua

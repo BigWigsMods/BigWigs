@@ -432,6 +432,7 @@ L.historyTimeFormat = "Historique : Format d'heure"
 L.twelveHour = "12 Heures"
 L.twentyFourHour = "24 Heures"
 L.hideTooltipInCombat = "Cacher la bulle d'aide en combat"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
