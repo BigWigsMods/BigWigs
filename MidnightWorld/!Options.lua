@@ -11,3 +11,26 @@ BigWigs:AddSounds("Lu'ashal", {
 	[1276247] = "long",
 	[1276427] = "alarm",
 })
+
+BigWigs:AddColors("Cragpine", {
+	[1235131] = "yellow",
+	[1235144] = "purple",
+	[1243594] = "blue",
+})
+
+BigWigs:AddSounds("Cragpine", {
+	[1235131] = "long",
+	[1235144] = "info",
+	[1243594] = "warning",
+})
+
+BigWigs:AddColors("Thorm'belan", {
+	[1257325] = "orange",
+	[1257825] = {"red","yellow"},
+	[1258641] = {"blue","orange","red"},
+})
+
+BigWigs:AddSounds("Thorm'belan", {
+	[1257825] = "long",
+	[1258641] = {"info","warning"},
+})

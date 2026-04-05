@@ -39,7 +39,7 @@ BigWigs:AddSounds("Midnight Falls", {
 	[1253915] = "alarm",
 	[1266897] = "alert",
 	[1267049] = "alert",
-	[1279420] = "info",
+	[1279420] = {"alert","info"},
 	[1282412] = "alarm",
 	[1284525] = "alert",
 	["stages"] = "long",

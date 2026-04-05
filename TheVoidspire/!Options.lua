@@ -74,30 +74,33 @@ BigWigs:AddColors("Lightblinded Vanguard", {
 	[1246485] = "yellow",
 	[1246736] = "purple",
 	[1246749] = "yellow",
-	[1246765] = "red",
 	[1248449] = "cyan",
 	[1248451] = "cyan",
 	[1248644] = "orange",
-	[1248674] = "red",
+	[1248674] = "yellow",
 	[1248710] = "orange",
 	[1248983] = "red",
 	[1251857] = "purple",
 	[1255738] = "orange",
 	[1276243] = "cyan",
+	["empowered_avengers_shield"] = "red",
+	["empowered_divine_storm"] = "red",
+	["empowered_searing_radiance"] = "orange",
 })
 
 BigWigs:AddSounds("Lightblinded Vanguard", {
 	[1246162] = "long",
 	[1246736] = "info",
-	[1246749] = "alert",
-	[1246765] = "alarm",
+	[1246749] = "warning",
 	[1248449] = "long",
 	[1248451] = "long",
 	[1248644] = "warning",
-	[1248674] = "warning",
+	[1248674] = "alert",
 	[1251857] = "info",
 	[1255738] = "alert",
 	[1276243] = "info",
+	["empowered_divine_storm"] = "alarm",
+	["empowered_searing_radiance"] = "alert",
 })
 
 BigWigs:AddColors("Crown of the Cosmos", {
@@ -114,6 +117,7 @@ BigWigs:AddColors("Crown of the Cosmos", {
 	[1246461] = "purple",
 	[1246918] = "orange",
 	[1255368] = "red",
+	[1261016] = "cyan",
 	["stages"] = "cyan",
 })
 
@@ -122,5 +126,6 @@ BigWigs:AddSounds("Crown of the Cosmos", {
 	[1238843] = "long",
 	[1243743] = "alert",
 	[1255368] = "alert",
+	[1261016] = "info",
 	["stages"] = "long",
 })
