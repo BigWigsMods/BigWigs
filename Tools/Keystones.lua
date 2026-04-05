@@ -684,9 +684,7 @@ local function WipeHeaders()
 end
 
 local teleportButtons = {}
-local UnregisterLibKeystone
 mainPanel.CloseButton:SetScript("OnClick", function(self)
-	UnregisterLibKeystone()
 	self:UnregisterAllEvents()
 	tab2:SetScript("OnUpdate", nil)
 	WipeCells()
@@ -733,7 +731,7 @@ guildRefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-RefreshButton")
 guildRefreshButton:SetScript("OnClick", function()
 	guildList = {}
 	LibSpec.RequestGuildSpecialization()
-	C_Timer.After(0.1, function() LibKeystoneRequest("GUILD") end)
+	C_Timer.After(0.2, function() LibKeystoneRequest("GUILD") end)
 end)
 guildRefreshButton:SetScript("OnEnter", function(self)
 	bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -889,7 +887,6 @@ end
 -- GUI Tabs
 --
 
-local RegisterLibKeystone
 do
 	local function SelectTab(tab)
 		tab2:SetScript("OnUpdate", nil)
@@ -1024,8 +1021,6 @@ do
 		mainPanel.CloseButton:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
 
 		partyList = {}
-		guildList = {}
-		RegisterLibKeystone()
 		LibSpec.RequestGuildSpecialization()
 		LibKeystoneRequest("PARTY")
 		C_Timer.After(0.2, function() LibKeystoneRequest("GUILD") end)
@@ -1685,13 +1680,7 @@ do
 			end
 		end
 	end
-	local LibKeystoneTable = {}
-	function RegisterLibKeystone()
-		LibKeystoneRegister(LibKeystoneTable, LibKeystoneFunction)
-	end
-	function UnregisterLibKeystone()
-		LibKeystoneUnregister(LibKeystoneTable)
-	end
+	LibKeystoneRegister({}, LibKeystoneFunction)
 end
 
 --------------------------------------------------------------------------------
