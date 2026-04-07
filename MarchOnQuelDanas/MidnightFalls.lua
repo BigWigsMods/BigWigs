@@ -802,16 +802,11 @@ function mod:DarkConstellationMythic(duration)
 		updatedDuration = {duration, maxTime}
 	end
 
-	local sides = {
-		"left", "right", "left", "right", "left", "right", "left", "right", "left",
-		"right", "left", "right", "left", "right", "left", "right", "left", "right",
-		"left", "right", "left", "right", "left", "right",
-	}
-	local side = sides[constellationCount]
+	local side = constellationCount % 2 == 1 and "left" or "right"
 	constellationCount = constellationCount + 1
 
 	-- Show the timer for the next cast on your side
-	if side and playerSide and side ~= playerSide then
+	if playerSide and side ~= playerSide then
 		local nextDuration = durations[constellationCount]
 		if nextDuration then
 			self:Bar(1266388, duration + nextDuration, barText)
