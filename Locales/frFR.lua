@@ -5,9 +5,9 @@ if not L then return end
 -- API.lua
 L.showAddonBar = "L'addon '|cFF436EEE%s|r' a créé la barre '%s'."
 L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' vient de faire une copie de votre chaîne d'export de profil."
---L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
---L.shortSecondsOnly = "%d Sec" -- 28 Seconds
---L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
+L.shortMinutesAndSeconds = "%d min %d sec" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d sec" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -432,7 +432,7 @@ L.historyTimeFormat = "Historique : Format d'heure"
 L.twelveHour = "12 Heures"
 L.twentyFourHour = "24 Heures"
 L.hideTooltipInCombat = "Cacher la bulle d'aide en combat"
---L.customText = "Custom Text (Must Contain %s)"
+L.customText = "Texte personnalisé (Doit contenir %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
