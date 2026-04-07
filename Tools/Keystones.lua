@@ -1181,7 +1181,11 @@ do
 	tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 	-- Tab 3 Event Handler (Used for automatically showing the window when the dungeon ends)
 	do
+		local RequestMapInfo = C_MythicPlus.RequestMapInfo
 		local function Open()
+			RequestMapInfo() -- Force update the run history in case we decide to click the history tab
+			if not db.profile.showViewerDungeonEnd or BigWigsLoader.isTestBuild then return end
+
 			if InCombatLockdown() then
 				tab3:RegisterEvent("PLAYER_REGEN_ENABLED")
 				return
@@ -1198,9 +1202,7 @@ do
 				self:UnregisterEvent(event)
 				Open()
 			else -- CHALLENGE_MODE_COMPLETED
-				if db.profile.showViewerDungeonEnd and not BigWigsLoader.isTestBuild then
-					BigWigsLoader.CTimerAfter(5, Open)
-				end
+				BigWigsLoader.CTimerAfter(5, Open)
 			end
 		end)
 	end
