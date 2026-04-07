@@ -14,8 +14,8 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 412
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 34},
-	["BigWigs_Classic"] = {12, 0, 12},
+	["LittleWigs"] = {12, 0, 35},
+	["BigWigs_Classic"] = {12, 0, 13},
 	["BigWigs_BurningCrusade"] = {12, 0, 10},
 	["BigWigs_WrathOfTheLichKing"] = {12, 0, 4},
 	["BigWigs_Cataclysm"] = {12, 0, 1},
@@ -1335,6 +1335,7 @@ do
 		BigWigs_TrialOfValor = "BigWigs_Legion",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
+		Fake_Keystones = "Abandoned", -- abandoned addon breaking LibKeystone
 		BigWigs_Azeroth = "BigWigs_BattleForAzeroth",
 		BigWigs_BattleOfDazaralor = "BigWigs_BattleForAzeroth",
 		BigWigs_CrucibleOfStorms = "BigWigs_BattleForAzeroth",
@@ -1615,9 +1616,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20260331065155" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "12.0.35" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20260330000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20260407044947" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.0.37" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20260406000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 23
