@@ -130,7 +130,7 @@ end
 --
 
 function mod:TimersMythic(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
 	local duration = eventInfo.duration
@@ -152,13 +152,13 @@ function mod:TimersMythic(_, eventInfo)
 			barInfo = self:InfusedQuills(duration)
 		elseif durationRounded == 16 or durationRounded == 20 then
 			barInfo = self:GuardiansEdict(duration)
-		elseif durationRounded == 30 and not self:IsWiping() then
+		elseif durationRounded == 30 then
 			barInfo = self:EternalBurns(duration)
 		elseif durationRounded == 50 then
 			barInfo = self:VoidlightConvergence(duration)
 		end
 	else
-		if durationRounded == 30 and not self:IsWiping() then
+		if durationRounded == 30 then
 			barInfo = self:Rebirth(duration)
 		end
 	end
@@ -170,7 +170,7 @@ function mod:TimersMythic(_, eventInfo)
 		if self:ShouldShowBars() then
 			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
-	elseif self:ShouldShowBars() and not self:IsWiping() then
+	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
 		backupBars[eventInfo.id] = true
 		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
@@ -183,7 +183,7 @@ function mod:TimersMythic(_, eventInfo)
 end
 
 function mod:TimersOther(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
 	local duration = eventInfo.duration
@@ -214,7 +214,7 @@ function mod:TimersOther(_, eventInfo)
 			barInfo = self:VoidlightConvergence(duration)
 		end
 	else
-		if durationRounded == 30 and not self:IsWiping() then
+		if durationRounded == 30 then
 			barInfo = self:Rebirth(duration)
 		end
 	end
@@ -226,7 +226,7 @@ function mod:TimersOther(_, eventInfo)
 		if self:ShouldShowBars() then
 			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
-	elseif self:ShouldShowBars() and not self:IsWiping() then
+	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
 		backupBars[eventInfo.id] = true
 		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
