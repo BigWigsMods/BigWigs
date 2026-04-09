@@ -404,7 +404,7 @@ function mod:Rebirth(duration)
 		endTime = GetTime() + duration,
 		onFinished = function()
 			isIntermission = false
-			self:Message("stages", "cyan", barText)
+			self:Message("stages", "cyan", barText, false)
 			self:PlaySound("stages", "info")
 
 			self:Bar(1242515, 6, CL.count:format(L.voidlight_convergence, convergenceCount))
