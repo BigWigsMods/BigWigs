@@ -20,8 +20,8 @@ if L then
 	L.starsplinter = "파열" -- Mythic intermission and P4 bar text
 	L.starsplinter_you = "파열"
 
-	L.left = "[L] %s" -- left/west group bars in p3
-	L.right = "[R] %s" -- right/east group bars in p3
+	L.left = "[왼] %s" -- left/west group bars in p3
+	L.right = "[오] %s" -- right/east group bars in p3
 
 	L.custom_off_select_limit_warnings = "신화 3단계 그룹"
 	L.custom_off_select_limit_warnings_desc = "이 설정을 적용하면, 자신이 속한 스킬에 대한 경고만 표시됩니다."
