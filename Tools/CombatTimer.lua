@@ -524,6 +524,7 @@ do
 		db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
 		db.profile.anyCombatHistoryTimeFormat = defaults.anyCombatHistoryTimeFormat
 		db.profile.anyCombatHistoryHiddenInCombat = defaults.anyCombatHistoryHiddenInCombat
+		db.profile.anyCombatCustomText = defaults.anyCombatCustomText
 	end
 	ProfileUtils.ResetAnyCombatBorder = function()
 		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
@@ -564,6 +565,7 @@ do
 		db.profile.bossCombatHistoryAmount = defaults.bossCombatHistoryAmount
 		db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
 		db.profile.bossCombatHistoryTimeFormat = defaults.bossCombatHistoryTimeFormat
+		db.profile.bossCombatCustomText = defaults.bossCombatCustomText
 	end
 	ProfileUtils.ResetBossCombatBorder = function()
 		db.profile.bossCombatBorderColor = CopyTable(defaults.bossCombatBorderColor)
@@ -602,6 +604,7 @@ do
 		db.profile.bossStagesInactive = defaults.bossStagesInactive
 		db.profile.bossStagesTextFormat = defaults.bossStagesTextFormat
 		db.profile.bossStagesHistoryTimeFormat = defaults.bossStagesHistoryTimeFormat
+		db.profile.bossStagesCustomText = defaults.bossStagesCustomText
 	end
 	ProfileUtils.ResetBossStagesBorder = function()
 		db.profile.bossStagesBorderColor = CopyTable(defaults.bossStagesBorderColor)
