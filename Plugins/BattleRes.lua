@@ -531,10 +531,10 @@ do
 				set = function(_, value)
 					if value then
 						ProfileUtils.SetPreset("text")
+						UpdateWidgets()
 						if isTesting then
 							BigWigsLoader.Print(L.battleResModeTextTooltip)
 						end
-						UpdateWidgets()
 					end
 				end,
 				disabled = IsDisabled,
@@ -557,7 +557,6 @@ do
 							if not isShowing then
 								if not isTesting then
 									battleResFrame:Show()
-									UpdateWidgets()
 									local testTable = {[0] = "6", [1]="24", [2] = "1:15", [3] = "2:30", [4] = "3:37"}
 									local i = 4
 									local function TestLoop()
@@ -592,6 +591,7 @@ do
 										isTesting = BigWigsLoader.CTimerNewTimer(2, TestLoop)
 									end
 									isTesting = BigWigsLoader.CTimerNewTimer(0, TestLoop)
+									UpdateWidgets()
 									if plugin.db.profile.mode == 2 then
 										BigWigsLoader.Print(L.battleResModeTextTooltip)
 									end
