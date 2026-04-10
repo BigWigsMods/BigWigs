@@ -687,7 +687,7 @@ function mod:DarkMeltdown(duration)
 			self:Message("stages", "cyan", CL.stage:format(3), false)
 			self:PlaySound("stages", "long")
 
-			self:Bar(1279420, 8, self:GetName(1279420)) -- Dark Meltdown
+			self:Bar(1281194, 8, self:GetName(1281194)) -- Dark Meltdown
 		end
 	}
 end
