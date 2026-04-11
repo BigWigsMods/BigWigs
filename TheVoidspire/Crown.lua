@@ -581,7 +581,9 @@ function mod:TimersOther(_, eventInfo)
 		end
 
 	elseif stage == 2 then
-		if silverstrikeBarrageCount > 1 and durationRounded == 20 then -- Stage Three
+		if durationRounded == 1.5 then
+			barInfo = self:SilverstrikeBarrage(duration)
+		elseif silverstrikeBarrageCount > 1 and durationRounded == 20 then -- Stage Three
 			-- callback sets intermission, resets counts
 			barInfo = self:IntermissionEvent(duration)
 			barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
