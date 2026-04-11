@@ -1020,7 +1020,6 @@ do
 		mainPanel.CloseButton:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
 		mainPanel.CloseButton:RegisterEvent("PLAYER_REGEN_DISABLED") -- Hide when you enter combat
 
-		partyList = {}
 		LibSpec.RequestGuildSpecialization()
 		LibKeystoneRequest("PARTY")
 		C_Timer.After(0.2, function() LibKeystoneRequest("GUILD") end)
@@ -1554,7 +1553,7 @@ do
 	local function UpdateCellsForOnlineTab(playerList, isGuildList)
 		local sortedplayerList = {}
 		for pName, pData in next, playerList do
-			if not isGuildList or (isGuildList and not partyList[pName]) then
+			if (not isGuildList and UnitInParty(pName)) or (isGuildList and not UnitInParty(pName)) then
 				local decoratedName = nil
 				local nameTooltip = pName
 				local specID = specializationPlayerList[pName]
