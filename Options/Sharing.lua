@@ -291,6 +291,8 @@ local battleResSettingsToExport = {
 	"cooldownEdge",
 	"cooldownSwipe",
 	"cooldownInverse",
+	"durationCustomText",
+	"chargesCustomText",
 }
 
 -- PrivateAuras
