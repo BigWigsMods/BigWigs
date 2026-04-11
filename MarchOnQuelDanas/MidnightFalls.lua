@@ -306,8 +306,6 @@ function mod:TimersMythic(_, eventInfo)
 		elseif rounded == 180 then
 			self:Bar("stages", 12, 1276202) -- Severance
 			self:ScheduleTimer(function()
-				-- check phasing for side assigment
-				self:SetPlayerSide()
 				-- start watching for p4
 				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForPhaseFour")
 			end, 13)
