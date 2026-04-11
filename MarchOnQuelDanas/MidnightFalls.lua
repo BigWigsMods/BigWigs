@@ -786,7 +786,8 @@ end
 -- Mythic
 
 function mod:DarkConstellationMythic(duration)
-	local barText = self:GetName(1266388)
+	local side = constellationCount % 2 == 1 and "left" or "right"
+	local barText = L[side]:format(self:GetName(1266388))
 
 	local durations = {
 		20, 4, 4, 4, 4, 4, 4, 4, 4,
@@ -800,14 +801,13 @@ function mod:DarkConstellationMythic(duration)
 		updatedDuration = {duration, maxTime}
 	end
 
-	local side = constellationCount % 2 == 1 and "left" or "right"
 	constellationCount = constellationCount + 1
 
 	-- Show the timer for the next cast on your side
 	if playerSide and side ~= playerSide then
 		local nextDuration = durations[constellationCount]
 		if nextDuration then
-			self:Bar(1266388, duration + nextDuration, barText)
+			self:Bar(1266388, duration + nextDuration, L[playerSide]:format(self:GetName(1266388)))
 		end
 		return false
 	end
