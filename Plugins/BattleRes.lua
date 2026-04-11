@@ -40,7 +40,9 @@ local bwTooltip = BigWigsAPI.GetTooltip()
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 plugin.displayName = L.battleResTitle
 
-local ProfileUtils = {}
+local ProfileUtils = {
+	MinimumFontSize = 10,
+}
 local BigWigsLoader = BigWigsLoader
 local battleResFrame
 
@@ -200,16 +202,16 @@ do
 				plugin.db.profile.textYPositionCharges = y
 			end
 		end
-		if plugin.db.profile.durationFontSize < 12 or plugin.db.profile.durationFontSize > 200 then
+		if plugin.db.profile.durationFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.durationFontSize > 200 then
 			plugin.db.profile.durationFontSize = defaultDB.durationFontSize
 		end
-		if plugin.db.profile.durationEmphasizeFontSize < 12 or plugin.db.profile.durationEmphasizeFontSize > 200 then
+		if plugin.db.profile.durationEmphasizeFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.durationEmphasizeFontSize > 200 then
 			plugin.db.profile.durationEmphasizeFontSize = defaultDB.durationEmphasizeFontSize
 		end
-		if plugin.db.profile.chargesNoneFontSize < 12 or plugin.db.profile.chargesNoneFontSize > 200 then
+		if plugin.db.profile.chargesNoneFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.chargesNoneFontSize > 200 then
 			plugin.db.profile.chargesNoneFontSize = defaultDB.chargesNoneFontSize
 		end
-		if plugin.db.profile.chargesAvailableFontSize < 12 or plugin.db.profile.chargesAvailableFontSize > 200 then
+		if plugin.db.profile.chargesAvailableFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.chargesAvailableFontSize > 200 then
 			plugin.db.profile.chargesAvailableFontSize = defaultDB.chargesAvailableFontSize
 		end
 		if plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline ~= "OUTLINE" and plugin.db.profile.outline ~= "THICKOUTLINE" then
@@ -807,7 +809,7 @@ do
 						desc = L.fontSizeDesc,
 						order = 1,
 						width = 2,
-						softMax = 100, max = 200, min = 12, step = 1,
+						softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 						disabled = IsDisabled,
 					},
 					durationColor = {
@@ -917,7 +919,7 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 11,
-						softMax = 100, max = 200, min = 12, step = 1,
+						softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 						disabled = function() return plugin.db.profile.durationEmphasizeTime == 0 or plugin.db.profile.disabled end,
 					},
 					resetHeader = {
@@ -1016,7 +1018,7 @@ do
 						desc = L.fontSizeDesc,
 						order = 6,
 						width = 2,
-						softMax = 100, max = 200, min = 12, step = 1,
+						softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 						disabled = IsDisabled,
 					},
 					chargesNoneColor = {
@@ -1039,7 +1041,7 @@ do
 						desc = L.fontSizeDesc,
 						order = 9,
 						width = 2,
-						softMax = 100, max = 200, min = 12, step = 1,
+						softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 						disabled = IsDisabled,
 					},
 					chargesAvailableColor = {
