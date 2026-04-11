@@ -16,9 +16,9 @@ local db
 local ProfileUtils = {
 	MinimumWidth = 30,
 	MaximumWidth = 100,
-
 	MinimumHeight = 16,
 	MaximumHeight = 50,
+	MinimumFontSize = 10,
 }
 
 --------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ do
 				db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
 			end
 		end
-		if db.profile.anyCombatFontSize < 12 or db.profile.anyCombatFontSize > 200 then
+		if db.profile.anyCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.anyCombatFontSize > 200 then
 			db.profile.anyCombatFontSize = defaults.anyCombatFontSize
 		end
 		if db.profile.anyCombatOutline ~= "NONE" and db.profile.anyCombatOutline ~= "OUTLINE" and db.profile.anyCombatOutline ~= "THICKOUTLINE" then
@@ -284,7 +284,7 @@ do
 				db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
 			end
 		end
-		if db.profile.bossCombatFontSize < 12 or db.profile.bossCombatFontSize > 200 then
+		if db.profile.bossCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.bossCombatFontSize > 200 then
 			db.profile.bossCombatFontSize = defaults.bossCombatFontSize
 		end
 		if db.profile.bossCombatOutline ~= "NONE" and db.profile.bossCombatOutline ~= "OUTLINE" and db.profile.bossCombatOutline ~= "THICKOUTLINE" then
@@ -358,7 +358,7 @@ do
 				db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
 			end
 		end
-		if db.profile.bossStagesFontSize < 12 or db.profile.bossStagesFontSize > 200 then
+		if db.profile.bossStagesFontSize < ProfileUtils.MinimumFontSize or db.profile.bossStagesFontSize > 200 then
 			db.profile.bossStagesFontSize = defaults.bossStagesFontSize
 		end
 		if db.profile.bossStagesOutline ~= "NONE" and db.profile.bossStagesOutline ~= "OUTLINE" and db.profile.bossStagesOutline ~= "THICKOUTLINE" then
@@ -426,7 +426,7 @@ do
 		--		db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
 		--	end
 		--end
-		--if db.profile.instanceTimerFontSize < 14 or db.profile.instanceTimerFontSize > 200 then
+		--if db.profile.instanceTimerFontSize < ProfileUtils.MinimumFontSize or db.profile.instanceTimerFontSize > 200 then
 		--	db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
 		--end
 		--if db.profile.instanceTimerOutline ~= "NONE" and db.profile.instanceTimerOutline ~= "OUTLINE" and db.profile.instanceTimerOutline ~= "THICKOUTLINE" then
@@ -1845,7 +1845,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 5,
 								width = 2,
-								softMax = 100, max = 200, min = 12, step = 1,
+								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 								disabled = AnyCombatDisabled,
 							},
 							anyCombatMonochrome = {
@@ -2344,7 +2344,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 5,
 								width = 2,
-								softMax = 100, max = 200, min = 12, step = 1,
+								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 								disabled = BossCombatDisabled,
 							},
 							bossCombatMonochrome = {
@@ -2830,7 +2830,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 5,
 								width = 2,
-								softMax = 100, max = 200, min = 12, step = 1,
+								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 								disabled = BossStagesDisabled,
 							},
 							bossStagesMonochrome = {
@@ -3286,7 +3286,7 @@ do
 								desc = L.fontSizeDesc,
 								order = 5,
 								width = 2,
-								softMax = 100, max = 200, min = 14, step = 1,
+								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
 								disabled = InstanceTimerDisabled,
 							},
 							instanceTimerMonochrome = {
