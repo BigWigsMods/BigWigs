@@ -1670,7 +1670,7 @@ do
 
 	local function LibKeystoneFunction(keyLevel, keyMap, playerRating, playerName, channel)
 		if channel == "PARTY" then
-			if not partyList[playerName] or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
+			if not partyList[playerName] or playerName == BigWigsLoader.UnitName("player") or partyList[playerName][1] ~= keyLevel or partyList[playerName][2] ~= keyMap or partyList[playerName][3] ~= playerRating then
 				partyList[playerName] = {keyLevel, keyMap, playerRating}
 
 				if not tab1:IsEnabled() then -- Only if tab 1 (online) is showing
