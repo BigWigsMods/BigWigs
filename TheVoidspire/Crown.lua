@@ -60,7 +60,7 @@ local function updateBar(key, callback, duration)
 	if oldBarInfo then
 		stopBar(oldBarInfo)
 		barInfo = oldBarInfo
-		barInfo.duration = {duration, oldBarInfo.duration}
+		barInfo.duration = {duration, type(oldBarInfo.duration) == "table" and oldBarInfo.duration[2] or oldBarInfo.duration}
 	else
 		barInfo = mod[callback](mod, duration)
 	end
