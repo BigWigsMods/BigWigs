@@ -1550,10 +1550,21 @@ do
 		[209] = true,
 		[207] = true,
 	}
+	local InMyParty
+	do
+		local UnitInParty = UnitInParty
+		function InMyParty(playerName)
+			if playerName == BigWigsLoader.UnitName("player") then
+				return true
+			else
+				return UnitInParty(playerName)
+			end
+		end
+	end
 	local function UpdateCellsForOnlineTab(playerList, isGuildList)
 		local sortedplayerList = {}
 		for pName, pData in next, playerList do
-			if (not isGuildList and UnitInParty(pName)) or (isGuildList and not UnitInParty(pName)) then
+			if (not isGuildList and InMyParty(pName)) or (isGuildList and not InMyParty(pName)) then
 				local decoratedName = nil
 				local nameTooltip = pName
 				local specID = specializationPlayerList[pName]
