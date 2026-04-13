@@ -83,8 +83,12 @@ if L then
 	L.left = "[L] %s" -- left/west group bars in p3
 	L.right = "[R] %s" -- right/east group bars in p3
 
-	L.custom_on_limit_warnings = "Restrict Stage Three Warnings (Mythic)"
-	L.custom_on_limit_warnings_desc = "Only show warnings for abilities on your side of the room in Stage Three.  Group 1/2 is on left, Group 3/4 is on right."
+	L.custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings"
+	L.custom_select_limit_warnings_desc = "Only show warnings for abilities on your side."
+	L.custom_select_limit_warnings_icon = "misc_arrowleft"
+	L.custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right."
+	L.custom_select_limit_warnings_value2 = "Odd groups left, even groups right."
+	L.custom_select_limit_warnings_value3 = "Show warnings for both sides."
 end
 
 --------------------------------------------------------------------------------
@@ -116,7 +120,7 @@ function mod:GetOptions()
 		1281194, -- Dark Meltdown
 
 		-- Stage 3
-		"custom_on_limit_warnings",
+		"custom_select_limit_warnings",
 		1250898, -- The Dark Archangel
 		1266388, -- Dark Constellation
 		1266897, -- Light Siphon
@@ -171,17 +175,34 @@ function mod:OnEncounterStart()
 	self:SetStage(1)
 	self:ResetCounts()
 
-	playerSide = nil
-	if self:GetOption("custom_on_limit_warnings") then
-		local raidIndex = UnitInRaid("player")
-		if raidIndex then
+	local num = self:GetOption("custom_select_limit_warnings")
+	local raidIndex = UnitInRaid("player")
+	if raidIndex then
+		if num == 1 then
 			local _, _, subgroup = GetRaidRosterInfo(raidIndex)
 			if subgroup == 1 or subgroup == 2 then
 				playerSide = "left"
+				L.custom_select_limit_warnings_icon = "misc_arrowleft"
 			elseif subgroup == 3 or subgroup == 4 then
 				playerSide = "right"
+				L.custom_select_limit_warnings_icon = "misc_arrowright"
 			end
+		elseif num == 2 then
+			local _, _, subgroup = GetRaidRosterInfo(raidIndex)
+			if subgroup % 2 == 0 then
+				playerSide = "right"
+				L.custom_select_limit_warnings_icon = "misc_arrowright"
+			else
+				playerSide = "left"
+				L.custom_select_limit_warnings_icon = "misc_arrowleft"
+			end
+		else
+			playerSide = nil
+			L.custom_select_limit_warnings_icon = "misc_arrowlup"
 		end
+	else
+		playerSide = nil
+		L.custom_select_limit_warnings_icon = "misc_arrowlup"
 	end
 
 	if self:ShouldShowBars() then
