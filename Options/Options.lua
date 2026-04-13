@@ -735,13 +735,6 @@ local function flagOnEnter(widget)
 	optionsTooltip:Show()
 end
 
-local function customDropdownWithBoolValueChanged(widget, _, value)
-	if value == 0 then value = false end
-	local key = widget:GetUserData("key")
-	local module = widget:GetUserData("module")
-	module.db.profile[key] = value or false
-end
-
 local function customDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local module = widget:GetUserData("module")
@@ -750,37 +743,6 @@ end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
-
-	-- jesus this is so hacky. should probably be "custom_select_" with values as a
-	-- :GetBossOptionDetails return, but this keeps changes to a minimum for now
-	if type(dbKey) == "string" and dbKey:find("^custom_off_select_") then
-		local moduleLocale = module:GetLocale()
-		local values = { [0] = CL.disabled }
-		local i = 1
-		local value = moduleLocale[dbKey.."_value"..i]
-		repeat
-			values[i] = value
-			i = i + 1
-			value = moduleLocale[dbKey.."_value"..i]
-		until not value
-
-		local customDropdown = AceGUI:Create("Dropdown")
-		if desc then
-			-- The label will truncate at ~74 chars, but showing the desc in a tooltip seems awkward
-			customDropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
-		else
-			customDropdown:SetLabel(name)
-		end
-		customDropdown:SetMultiselect(false)
-		customDropdown:SetList(values)
-		customDropdown:SetFullWidth(true)
-		customDropdown:SetUserData("key", dbKey)
-		customDropdown:SetUserData("module", module)
-		customDropdown:SetCallback("OnValueChanged", customDropdownWithBoolValueChanged)
-		customDropdown:SetValue(module.db.profile[dbKey] or 0)
-
-		return customDropdown
-	end
 
 	if type(dbKey) == "string" and dbKey:find("^custom_select_") then
 		local moduleLocale = module:GetLocale()
