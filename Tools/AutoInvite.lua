@@ -63,6 +63,7 @@ do
 	local delayedInvite = {}
 	local invitesBlocked = false
 	local SendChatMessage = BigWigsLoader.SendChatMessage
+	local SendBattleNetMessage = BigWigsLoader.SendBattleNetMessage
 	local Ambiguate = BigWigsLoader.Ambiguate
 	local myClient = WOW_PROJECT_ID
 	local issecretvalue = issecretvalue or function() end -- XXX 12.0 compat
@@ -141,7 +142,7 @@ do
 											if IsInRaid() then
 												if C_PartyInfo.IsPartyFull() then
 													throttle[bnSenderID] = throttle[bnSenderID] + 10
-													BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
+													SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
 												else
 													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
 													C_PartyInfo.InviteUnit(sender)
@@ -155,7 +156,7 @@ do
 														delayedInvite[sender] = bnSenderID
 													else
 														throttle[bnSenderID] = throttle[bnSenderID] + 10
-														BNSendWhisper(bnSenderID, L.whisperToPlayerMyGroupIsFull)
+														SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
 													end
 												else
 													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
@@ -249,7 +250,7 @@ do
 			end
 
 			if type(isBnet) == "number" then
-				BNSendWhisper(isBnet, L.whisperToPlayerMyGroupIsFull)
+				SendBattleNetMessage(isBnet, L.whisperToPlayerMyGroupIsFull)
 			else
 				SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, playerName)
 			end

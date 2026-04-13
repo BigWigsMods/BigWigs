@@ -21,7 +21,9 @@ files["Loader.lua"].ignore = {
 	"113/geterrorhandler",
 
 	"113/Ambiguate",
+	"113/BNSendWhisper", -- XXX temp
 	"113/C_AddOns",
+	"113/C_BattleNet",
 	"113/C_ChatInfo",
 	"113/C_CVar",
 	"113/C_Item",
@@ -39,7 +41,6 @@ files["Loader.lua"].ignore = {
 	"113/PlaySoundFile",
 	"113/print",
 	"113/securecallfunction",
-	"113/SendChatMessage", -- XXX temp
 	"113/SetRaidTarget",
 	"113/TimerTracker",
 	"113/UnitDetailedThreatSituation",
@@ -111,7 +112,6 @@ files["Plugins/AltPower.lua"].ignore = {
 files["Plugins/AutoReply.lua"].ignore = {
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
-	"113/BNSendWhisper",
 	"113/C_BattleNet",
 	"113/C_FriendList",
 	"113/IsGuildMember",
@@ -237,7 +237,6 @@ files["Tools/AutoInvite.lua"].ignore = {
 	"113/ConvertToRaid",
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
-	"113/BNSendWhisper",
 	"113/GetRealmID",
 	"113/IsGuildMember",
 }

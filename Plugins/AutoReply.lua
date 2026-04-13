@@ -23,7 +23,7 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local Ambiguate, SendChatMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, GetTime
+local Ambiguate, SendChatMessage, SendBattleNetMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, BigWigsLoader.SendBattleNetMessage, GetTime
 plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
@@ -222,7 +222,7 @@ do
 					else
 						msg = L.autoReplyLeftCombatBasic
 					end
-					BNSendWhisper(k, "[BigWigs] ".. msg)
+					SendBattleNetMessage(k, "[BigWigs] ".. msg)
 				end
 				for k in next, friendlies do
 					local msg
@@ -395,7 +395,7 @@ do
 					end
 				end
 				local msg = CreateResponse(self.db.profile.mode)
-				BNSendWhisper(bnSenderID, "[BigWigs] ".. msg)
+				SendBattleNetMessage(bnSenderID, "[BigWigs] ".. msg)
 				if not timer and self.db.profile.exitCombat == 4 then
 					timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
 				end
