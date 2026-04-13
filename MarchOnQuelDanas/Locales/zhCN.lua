@@ -23,8 +23,6 @@ if L then
 	L.left = "[左] %s" -- left/west group bars in p3
 	L.right = "[右] %s" -- right/east group bars in p3
 
-	L.custom_off_select_limit_warnings = "三阶段（史诗）分组"
-	L.custom_off_select_limit_warnings_desc = "开启后，仅显示你所在半场技能的警告。"
-	L.custom_off_select_limit_warnings_value1 = "西/左"
-	L.custom_off_select_limit_warnings_value2 = "东/右"
+	--L.custom_on_limit_warnings = "Restrict Stage Three Warnings (Mythic)"
+	--L.custom_on_limit_warnings_desc = "Only show warnings for abilities on your side of the room in Stage Three.  Group 1/2 is on left, Group 3/4 is on right."
 end

@@ -23,8 +23,6 @@ if L then
 	L.left = "[L] %s" -- left/west group bars in p3
 	L.right = "[R] %s" -- right/east group bars in p3
 
-	L.custom_off_select_limit_warnings = "Mythisch Phase Drei Gruppe"
-	L.custom_off_select_limit_warnings_desc = "Bei Aktivierung werden nur Warnungen für Fähigkeiten auf Deiner Seite des Raums angezeigt."
-	L.custom_off_select_limit_warnings_value1 = "Westen/Links"
-	L.custom_off_select_limit_warnings_value2 = "Osten/Rechts"
+	--L.custom_on_limit_warnings = "Restrict Stage Three Warnings (Mythic)"
+	--L.custom_on_limit_warnings_desc = "Only show warnings for abilities on your side of the room in Stage Three.  Group 1/2 is on left, Group 3/4 is on right."
 end

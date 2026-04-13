@@ -23,8 +23,6 @@ if L then
 	L.left = "[왼] %s" -- left/west group bars in p3
 	L.right = "[오] %s" -- right/east group bars in p3
 
-	L.custom_off_select_limit_warnings = "신화 3단계 그룹"
-	L.custom_off_select_limit_warnings_desc = "이 설정을 적용하면, 자신이 속한 스킬에 대한 경고만 표시됩니다."
-	L.custom_off_select_limit_warnings_value1 = "서쪽/왼쪽"
-	L.custom_off_select_limit_warnings_value2 = "동쪽/오른쪽"
+	--L.custom_on_limit_warnings = "Restrict Stage Three Warnings (Mythic)"
+	--L.custom_on_limit_warnings_desc = "Only show warnings for abilities on your side of the room in Stage Three.  Group 1/2 is on left, Group 3/4 is on right."
 end

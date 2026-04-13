@@ -83,10 +83,8 @@ if L then
 	L.left = "[L] %s" -- left/west group bars in p3
 	L.right = "[R] %s" -- right/east group bars in p3
 
-	L.custom_off_select_limit_warnings = "Mythic Stage Three Group"
-	L.custom_off_select_limit_warnings_desc = "When set, only warnings for abilities on your side of the room will be shown."
-	L.custom_off_select_limit_warnings_value1 = "West/Left"
-	L.custom_off_select_limit_warnings_value2 = "East/Right"
+	L.custom_on_limit_warnings = "Restrict Stage Three Warnings (Mythic)"
+	L.custom_on_limit_warnings_desc = "Only show warnings for abilities on your side of the room in Stage Three.  Group 1/2 is on left, Group 3/4 is on right."
 end
 
 --------------------------------------------------------------------------------
@@ -118,7 +116,7 @@ function mod:GetOptions()
 		1281194, -- Dark Meltdown
 
 		-- Stage 3
-		"custom_off_select_limit_warnings",
+		"custom_on_limit_warnings",
 		1250898, -- The Dark Archangel
 		1266388, -- Dark Constellation
 		1266897, -- Light Siphon
@@ -173,8 +171,18 @@ function mod:OnEncounterStart()
 	self:SetStage(1)
 	self:ResetCounts()
 
-	local optionSide = self:GetOption("custom_off_select_limit_warnings")
-	playerSide = optionSide == 1 and "left" or optionSide == 2 and "right" or nil
+	playerSide = nil
+	if self:GetOption("custom_on_limit_warnings") then
+		local raidIndex = UnitInRaid("player")
+		if raidIndex then
+			local _, _, subgroup = GetRaidRosterInfo(raidIndex)
+			if subgroup == 1 or subgroup == 2 then
+				playerSide = "left"
+			elseif subgroup == 3 or subgroup == 4 then
+				playerSide = "right"
+			end
+		end
+	end
 
 	if self:ShouldShowBars() then
 		self:SendMessage("BigWigs_BlockBlizzMessages")
