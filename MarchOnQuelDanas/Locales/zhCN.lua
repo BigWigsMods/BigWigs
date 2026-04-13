@@ -23,9 +23,9 @@ if L then
 	L.left = "[左] %s" -- left/west group bars in p3
 	L.right = "[右] %s" -- right/east group bars in p3
 
-	--L.custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings"
-	--L.custom_select_limit_warnings_desc = "Only show warnings for abilities on your side."
-	--L.custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right."
-	--L.custom_select_limit_warnings_value2 = "Odd groups left, even groups right."
-	--L.custom_select_limit_warnings_value3 = "Show warnings for both sides."
+	L.custom_select_limit_warnings = "[史诗] 限制第3阶段警报"
+	L.custom_select_limit_warnings_desc = "仅显示你所在半场的技能警报。"
+	L.custom_select_limit_warnings_value1 = "1、2组去左侧，3、4组去右侧。"
+	L.custom_select_limit_warnings_value2 = "奇数组去左侧，偶数组去右侧。"
+	L.custom_select_limit_warnings_value3 = "显示两侧的所有警报。"
 end
