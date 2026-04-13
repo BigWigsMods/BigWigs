@@ -212,7 +212,7 @@ function mod:TimersMythic(_, eventInfo)
 			barInfo = self:ZealousSpirit(eventInfo)
 			barInfo.skipTracking = true
 		elseif durationRounded == 62 then -- Judgement (Red)
-			barInfo = self:JudgementBlue(eventInfo)
+			barInfo = self:JudgementRed(eventInfo)
 		elseif durationRounded == 58 then -- Judgement (Blue)
 			barInfo = self:JudgementBlue(eventInfo)
 		elseif durationRounded == 132 then -- Aura of Peace
