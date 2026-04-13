@@ -197,9 +197,13 @@ function mod:ResetCounts()
 	timelineEventCount = 0
 	durationEventCount = {}
 
+	silverstrikeArrowCount = 1
 	graspOfEmptinessCount = 1
 	voidExpulsionCount = 1
 	nullCoronaCount = 1
+	darkHandCount = 1
+	interruptingTremorCount = 1
+	ravenousAbyssCount = 1
 
 	silverstrikeBarrageCount = 1
 
