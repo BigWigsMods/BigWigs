@@ -23,9 +23,9 @@ if L then
 	L.left = "[L] %s" -- left/west group bars in p3
 	L.right = "[R] %s" -- right/east group bars in p3
 
-	--L.custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings"
-	--L.custom_select_limit_warnings_desc = "Only show warnings for abilities on your side."
-	--L.custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right."
-	--L.custom_select_limit_warnings_value2 = "Odd groups left, even groups right."
-	--L.custom_select_limit_warnings_value3 = "Show warnings for both sides."
+	L.custom_select_limit_warnings = "[Mythisch] Phase 3 Warnungen einschränken"
+	L.custom_select_limit_warnings_desc = "Nur Warnungen für Fähigkeiten auf Deiner Seite anzeigen."
+	L.custom_select_limit_warnings_value1 = "Gruppen 1 & 2 links, Gruppen 3 & 4 rechts."
+	L.custom_select_limit_warnings_value2 = "Ungerade Gruppen links, gerade Gruppen rechts."
+	L.custom_select_limit_warnings_value3 = "Warnungen für beide Seiten anzeigen."
 end
