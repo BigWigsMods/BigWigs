@@ -45,22 +45,16 @@ local function getBarInfoFromKey(key)
 	end
 end
 
-local function stopBar(barInfo, isFinished)
-	if not barInfo then return end
-	mod:StopBar(barInfo.msg)
-	if isFinished and barInfo.onFinished and not mod:IsWiping() then
-		barInfo:onFinished()
-	end
-	activeBars[barInfo.eventID] = nil
-end
-
 local function updateBar(key, callback, duration)
 	local barInfo
 	local oldBarInfo = getBarInfoFromKey(key)
 	if oldBarInfo then
-		stopBar(oldBarInfo)
+		local oldDuration = type(oldBarInfo.duration) == "table" and oldBarInfo.duration[2] or oldBarInfo.duration
+		mod:StopBar(oldBarInfo.msg)
+		activeBars[oldBarInfo.eventID] = nil
+
 		barInfo = oldBarInfo
-		barInfo.duration = {duration, type(oldBarInfo.duration) == "table" and oldBarInfo.duration[2] or oldBarInfo.duration}
+		barInfo.duration = {duration, oldDuration}
 	else
 		barInfo = mod[callback](mod, duration)
 	end
