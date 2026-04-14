@@ -1161,6 +1161,7 @@ do
 					parent = anchor,
 					showCountdownFrame = anchorDB.showCooldown,
 					showCountdownNumbers = anchorDB.showCooldownText,
+					isContainer = false,
 					iconInfo = {
 						iconAnchor = {
 							point = "CENTER",
