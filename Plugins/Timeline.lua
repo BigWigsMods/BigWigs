@@ -232,8 +232,8 @@ do
 
 	function plugin:DoTestMessage(name, icon)
 		local severity = math.random(1, 3)
-		plugin:SendMessage("BigWigs_Message", plugin, nil, name, colors[severity], icon, false)
-		plugin:SendMessage("BigWigs_Sound", plugin, nil, sounds[severity])
+		self:SendMessage("BigWigs_Message", self, nil, name, colors[severity], icon, false)
+		self:SendMessage("BigWigs_Sound", self, nil, sounds[severity])
 	end
 end
 
@@ -266,11 +266,13 @@ function plugin:UpdateBarsShown(event, module)
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 		self:StartBars()
+		self:SendMessage("BigWigs_ShowBlizzTimers")
 	else
 		self:UnregisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 		self:UnregisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 		self:UnregisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 		self:StopBars()
+		self:SendMessage("BigWigs_HideBlizzTimers")
 	end
 end
 
