@@ -564,7 +564,7 @@ do
 		end
 		prevEventID = eventInfo.id
 
-		local barText = CL.count:format(CL.breath, corruptedDevastationCount)
+		local barText = CL.count:format(CL.breath, durationRounded == 2 and corruptedDevastationCount-1 or corruptedDevastationCount)
 		if self:ShouldShowBars() then
 			self:CDBar(1245486, eventInfo.duration, barText, nil, eventInfo.id)
 		end
