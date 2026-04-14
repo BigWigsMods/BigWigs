@@ -20,7 +20,7 @@ mod:SetPrivateAuraSounds({
 	{1281184, mythic = true}, -- Criticality
 	{1263514, sound = "underyou"}, -- Midnight
 })
-mod:UseCustomTimers(true, true)
+mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
