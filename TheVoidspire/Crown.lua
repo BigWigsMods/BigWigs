@@ -857,7 +857,7 @@ function mod:InterruptingTremor()
 end
 
 function mod:RavenousAbyss()
-	if ravenousAbyssCount == 2 and ((self:GetStage() == 1 and not self:Mythic()) or riftSimulacrumCount == 5) and self:ShouldShowBars() then
+	if ravenousAbyssCount == 2 and (self:GetStage() == 1 or riftSimulacrumCount == 5) and self:ShouldShowBars() then
 		local text = CL.count:format(L.ravenous_abyss, 1)
 		self:StopBar(text)
 
