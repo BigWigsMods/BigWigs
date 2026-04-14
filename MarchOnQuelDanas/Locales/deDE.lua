@@ -28,4 +28,6 @@ if L then
 	L.custom_select_limit_warnings_value1 = "Gruppen 1 & 2 links, Gruppen 3 & 4 rechts."
 	L.custom_select_limit_warnings_value2 = "Ungerade Gruppen links, gerade Gruppen rechts."
 	L.custom_select_limit_warnings_value3 = "Warnungen für beide Seiten anzeigen."
+	--L.custom_select_limit_warnings_value4 = "Show warnings for left side only."
+	--L.custom_select_limit_warnings_value5 = "Show warnings for right side only."
 end

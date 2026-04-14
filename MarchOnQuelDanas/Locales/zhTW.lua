@@ -28,4 +28,6 @@ if L then
 	--L.custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right."
 	--L.custom_select_limit_warnings_value2 = "Odd groups left, even groups right."
 	--L.custom_select_limit_warnings_value3 = "Show warnings for both sides."
+	--L.custom_select_limit_warnings_value4 = "Show warnings for left side only."
+	--L.custom_select_limit_warnings_value5 = "Show warnings for right side only."
 end

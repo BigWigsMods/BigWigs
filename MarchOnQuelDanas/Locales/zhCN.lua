@@ -28,4 +28,6 @@ if L then
 	L.custom_select_limit_warnings_value1 = "1、2组去左侧，3、4组去右侧。"
 	L.custom_select_limit_warnings_value2 = "奇数组去左侧，偶数组去右侧。"
 	L.custom_select_limit_warnings_value3 = "显示两侧的所有警报。"
+	--L.custom_select_limit_warnings_value4 = "Show warnings for left side only."
+	--L.custom_select_limit_warnings_value5 = "Show warnings for right side only."
 end

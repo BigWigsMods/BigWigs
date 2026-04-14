@@ -85,10 +85,12 @@ if L then
 
 	L.custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings"
 	L.custom_select_limit_warnings_desc = "Only show warnings for abilities on your side."
-	L.custom_select_limit_warnings_icon = "misc_arrowleft"
+	L.custom_select_limit_warnings_icon = "misc_arrowlup"
 	L.custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right."
 	L.custom_select_limit_warnings_value2 = "Odd groups left, even groups right."
 	L.custom_select_limit_warnings_value3 = "Show warnings for both sides."
+	L.custom_select_limit_warnings_value4 = "Show warnings for left side only."
+	L.custom_select_limit_warnings_value5 = "Show warnings for right side only."
 end
 
 --------------------------------------------------------------------------------
@@ -196,7 +198,13 @@ function mod:OnEncounterStart()
 				playerSide = "left"
 				L.custom_select_limit_warnings_icon = "misc_arrowleft"
 			end
-		else
+		elseif num == 4 then
+			playerSide = "left"
+			L.custom_select_limit_warnings_icon = "misc_arrowleft"
+		elseif num == 5 then
+			playerSide = "right"
+			L.custom_select_limit_warnings_icon = "misc_arrowright"
+		else -- 3
 			playerSide = nil
 			L.custom_select_limit_warnings_icon = "misc_arrowlup"
 		end
