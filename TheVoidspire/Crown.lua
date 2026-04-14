@@ -770,7 +770,17 @@ function mod:SilverstrikeArrow()
 end
 
 function mod:GraspOfEmptiness()
-	local barText = CL.count:format(L.grasp_of_emptiness, graspOfEmptinessCount)
+	local count = graspOfEmptinessCount
+	if self:Mythic() and self:GetStage() == 1 and count > 1 then
+		-- 1 2 3 4 5   6 7 8 9
+		-- 1 3 4 5 2>2 7 8 9 6
+		if count % 4 == 2 then
+			count = count + 3
+		else
+			count = count - 1
+		end
+	end
+	local barText = CL.count:format(L.grasp_of_emptiness, count)
 	graspOfEmptinessCount = graspOfEmptinessCount + 1
 	return {
 		msg = barText,
