@@ -167,7 +167,7 @@ function mod:TimersMythic(_, eventInfo)
 		elseif durationRounded == 10 then -- Stage 2 (Updated)
 			self:Bar("stages", {eventInfo.duration, 151}, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			self:ScheduleTimer(function()
-				self:Message("stages", "red", CL.stage:format(2), false)
+				self:Message("stages", "cyan", CL.stage:format(2), false)
 				self:PlaySound("stages", "long")
 				self:SetStage(2)
 				almdustUpheavalCount = 1
@@ -263,7 +263,7 @@ function mod:TimersHeroic(_, eventInfo)
 		elseif durationRounded == 10 then -- Stage 2 (Updated)
 			self:Bar("stages", {eventInfo.duration, 151}, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			self:ScheduleTimer(function()
-				self:Message("stages", "red", CL.stage:format(2), false)
+				self:Message("stages", "cyan", CL.stage:format(2), false)
 				self:PlaySound("stages", "long")
 				self:SetStage(2)
 				almdustUpheavalCount = 1
@@ -344,7 +344,7 @@ function mod:TimersEasy(_, eventInfo)
 		elseif durationRounded == 10 then -- Stage 2 (Updated)
 			self:Bar("stages", {eventInfo.duration, 165}, CL.stage:format(2), "spell_holy_borrowedtime", eventInfo.id)
 			self:ScheduleTimer(function()
-				self:Message("stages", "red", CL.stage:format(2), false)
+				self:Message("stages", "cyan", CL.stage:format(2), false)
 				self:PlaySound("stages", "long")
 				self:SetStage(2)
 				almdustUpheavalCount = 1
@@ -364,7 +364,7 @@ function mod:TimersEasy(_, eventInfo)
 		elseif durationRounded == 29 or durationRounded == 23 then -- Consuming Miasma
 			barInfo = self:ConsumingMiasmaStage2(eventInfo)
 		elseif durationRounded == 8 or durationRounded == 2 then -- Corrupted Devastation
-			barInfo = self:CorruptedDevastation(eventInfo)
+			barInfo = self:CorruptedDevastation(eventInfo, durationRounded)
 		elseif durationRounded == 30 or durationRounded == 1 then -- Ravenous Dive
 			barInfo = self:RavenousDive(eventInfo)
 		elseif durationRounded == 12 then
@@ -552,20 +552,34 @@ end
 -- Stage Two: To The Skies
 
 -- Corrupted Devastation
-function mod:CorruptedDevastation(eventInfo)
-	local barText = CL.count:format(CL.breath, corruptedDevastationCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1245486, eventInfo.duration, barText, nil, eventInfo.id)
-	end
-	corruptedDevastationCount = corruptedDevastationCount + 1
-	return {
-		msg = barText,
-		onFinished = function()
-			self:Message(1245486, "red", barText)
-			self:PlaySound(1245486, "warning") -- dodge
-			self:StopBlizzMessages(0.2)
+do
+	local prevEventID = nil
+	function mod:CorruptedDevastation(eventInfo, durationRounded)
+		if durationRounded == 2 and prevEventID then -- LFR, when a breath gets restarted it's created with a new ID
+			local barInfo = activeBars[prevEventID]
+			if barInfo then
+				self:StopBar(barInfo.msg)
+				activeBars[prevEventID] = nil
+			end
 		end
-	}
+		prevEventID = eventInfo.id
+
+		local barText = CL.count:format(CL.breath, corruptedDevastationCount)
+		if self:ShouldShowBars() then
+			self:CDBar(1245486, eventInfo.duration, barText, nil, eventInfo.id)
+		end
+		if durationRounded ~= 2 then
+			corruptedDevastationCount = corruptedDevastationCount + 1 -- LFR, 2 is a restarted breath, don't increment it
+		end
+		return {
+			msg = barText,
+			onFinished = function()
+				self:Message(1245486, "red", barText)
+				self:PlaySound(1245486, "warning") -- dodge
+				self:StopBlizzMessages(0.4)
+			end
+		}
+	end
 end
 
 -- Ravenous Dive
