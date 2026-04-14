@@ -24,7 +24,7 @@ mod:SetPrivateAuraSounds({
 	-- {1249130, sound = "info"}, -- Elekk Charge (Buff on the NPC's, lol)
 	{1258514, sound = "alarm"}, -- Blinding Light
 })
-mod:UseCustomTimers(true, true)
+mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
