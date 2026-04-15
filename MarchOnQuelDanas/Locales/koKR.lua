@@ -23,11 +23,11 @@ if L then
 	L.left = "[왼] %s" -- left/west group bars in p3
 	L.right = "[오] %s" -- right/east group bars in p3
 
-	--L.custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings"
-	--L.custom_select_limit_warnings_desc = "Only show warnings for abilities on your side."
-	--L.custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right."
-	--L.custom_select_limit_warnings_value2 = "Odd groups left, even groups right."
-	--L.custom_select_limit_warnings_value3 = "Show warnings for both sides."
-	--L.custom_select_limit_warnings_value4 = "Show warnings for left side only."
-	--L.custom_select_limit_warnings_value5 = "Show warnings for right side only."
+	L.custom_select_limit_warnings = "[신화] 3단계 알림 제한 설정"
+	L.custom_select_limit_warnings_desc = "자신 위치의 스킬에 대한 알림만 표시합니다."
+	L.custom_select_limit_warnings_value1 = "1, 2파티 왼쪽으로, 3, 4파티 오른쪽으로 이동합니다."
+	L.custom_select_limit_warnings_value2 = "홀수 파티는 왼쪽으로, 짝수 파티는 오른쪽으로 이동합니다."
+	L.custom_select_limit_warnings_value3 = "양쪽 모두에 대한 알림를 표시합니다."
+	L.custom_select_limit_warnings_value4 = "왼쪽에만 대한 알림를 표시합니다."
+	L.custom_select_limit_warnings_value5 = "오른쪽에만 대한 알림를 표시합니다."
 end
