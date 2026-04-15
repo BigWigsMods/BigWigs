@@ -282,7 +282,7 @@ function mod:TimersHeroic(_, eventInfo)
 			barInfo = self:CausticPhlegmStage2(eventInfo)
 		elseif durationRounded == 29 or durationRounded == 23 then -- Consuming Miasma
 			barInfo = self:ConsumingMiasmaStage2(eventInfo)
-		elseif durationRounded == 8 then -- Corrupted Devastation
+		elseif durationRounded == 8 or durationRounded == 2 then -- Corrupted Devastation
 			barInfo = self:CorruptedDevastation(eventInfo)
 		elseif durationRounded == 30 or durationRounded == 1 then -- Ravenous Dive
 			barInfo = self:RavenousDive(eventInfo, durationRounded == 1)
@@ -555,7 +555,7 @@ end
 do
 	local prevEventID = nil
 	function mod:CorruptedDevastation(eventInfo, durationRounded)
-		if durationRounded == 2 and prevEventID then -- LFR, when a breath gets restarted it's created with a new ID
+		if durationRounded == 2 and prevEventID then -- Easy and Heroic, when a breath gets restarted it's created with a new ID
 			local barInfo = activeBars[prevEventID]
 			if barInfo then
 				self:StopBar(barInfo.msg)
@@ -569,7 +569,7 @@ do
 			self:CDBar(1245486, eventInfo.duration, barText, nil, eventInfo.id)
 		end
 		if durationRounded ~= 2 then
-			corruptedDevastationCount = corruptedDevastationCount + 1 -- LFR, 2 is a restarted breath, don't increment it
+			corruptedDevastationCount = corruptedDevastationCount + 1 -- Easy and Heroic, 2 is a restarted breath, don't increment it
 		end
 		return {
 			msg = barText,
