@@ -191,8 +191,8 @@ function mod:TimersMythic(_, eventInfo)
 			barInfo = self:CausticPhlegmStage2(eventInfo)
 		elseif durationRounded == 29 or durationRounded == 23 then -- Consuming Miasma
 			barInfo = self:ConsumingMiasmaStage2(eventInfo)
-		elseif durationRounded == 8 or durationRounded == 14 then -- Corrupted Devastation
-			barInfo = self:CorruptedDevastation(eventInfo)
+		elseif durationRounded == 8 or durationRounded == 14 or durationRounded == 2 then -- Corrupted Devastation
+			barInfo = self:CorruptedDevastation(eventInfo, durationRounded)
 		elseif durationRounded == 20 or durationRounded == 1 then -- Ravenous Dive
 			barInfo = self:RavenousDive(eventInfo, durationRounded == 1)
 		elseif durationRounded == 12 then
@@ -283,7 +283,7 @@ function mod:TimersHeroic(_, eventInfo)
 		elseif durationRounded == 29 or durationRounded == 23 then -- Consuming Miasma
 			barInfo = self:ConsumingMiasmaStage2(eventInfo)
 		elseif durationRounded == 8 or durationRounded == 2 then -- Corrupted Devastation
-			barInfo = self:CorruptedDevastation(eventInfo)
+			barInfo = self:CorruptedDevastation(eventInfo, durationRounded)
 		elseif durationRounded == 30 or durationRounded == 1 then -- Ravenous Dive
 			barInfo = self:RavenousDive(eventInfo, durationRounded == 1)
 		elseif durationRounded == 12 then
