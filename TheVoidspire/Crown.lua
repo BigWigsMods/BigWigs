@@ -303,7 +303,7 @@ function mod:TimersMythic(_, eventInfo)
 		-- repeating timers
 		elseif durationRoundedOne == 17.5 or durationRoundedOne == 19.2 or durationRoundedOne == 19.6 then
 			barInfo = self:SilverstrikeArrow(duration)
-		elseif durationRoundedOne == 23.3 or durationRoundedOne == 26.7 or durationRoundedOne == 26.3 or durationRoundedOne == 3.8 or durationRoundedOne == 103.3 then
+		elseif durationRoundedOne == 23.3 or durationRoundedOne == 26.7 or durationRoundedOne == 26.3 or durationRoundedOne == 26.2 or durationRoundedOne == 3.8 or durationRoundedOne == 103.3 then
 			if durationRoundedOne == 3.8 then
 				barInfo = updateBar(1232467, "GraspOfEmptiness", duration)
 			else
