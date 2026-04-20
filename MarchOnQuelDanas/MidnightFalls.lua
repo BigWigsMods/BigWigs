@@ -133,7 +133,7 @@ function mod:GetOptions()
 		{ tabName = CL.stage:format(1), { "stages", 1253915, 1279420, 1249620, 1249609, 1251386, 1267049, 1284980, 1284931, } },
 		{ tabName = CL.intermission,    { "stages", 1282441, 1279420, } },
 		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, 1281194, } },
-		{ tabName = CL.stage:format(3), { "stages", "berserk", 1250898, 1266388, 1266897, 1267049, 1273158, 1276525, } },
+		{ tabName = CL.stage:format(3), { "stages", "berserk", 1250898, 1266388, 1266897, 1267049, 1273158, 1276525, 1282441, } },
 		[1253915] = -32197, -- Stage One: Final Tolls
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
 		[1250898] = -33639, -- Stage Three: Midnight Falls
@@ -155,6 +155,7 @@ function mod:GetOptions()
 		[1284980] = L.deaths_dirge, -- Grim Symphony
 		[1284931] = L.prism_kicks, -- Termination Prism
 		[1273158] = L.deaths_dirge, -- Death's Requiem
+		[1282441] = L.starsplinter,
 	}
 end
 
@@ -926,6 +927,7 @@ end
 
 function mod:HeavenHellRepeater()
 	self:Message(1276525, "red", CL.count:format(self:GetName(1276525), heavenHellCount))
+	self:PlaySound(1276525, "alert")
 	heavenHellCount = heavenHellCount + 1
 	self:Bar(1276525, 20, CL.count:format(self:GetName(1276525), heavenHellCount))
 	self:ScheduleTimer("HeavenHellRepeater", 20)
