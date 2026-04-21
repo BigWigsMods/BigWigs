@@ -53,6 +53,13 @@ do
 		-- Progress %
 		progressTooltip = true,
 		progressNameplate = false,
+		progressNameplateOffsetX = 150,
+		progressNameplateOffsetY = 0,
+		progressNameplateFontName = fontName,
+		progressNameplateFontSize = 18,
+		progressNameplateFontColor = {1, 1, 1, 1},
+		progressNameplateOutline = "THICKOUTLINE",
+		progressNameplateMonochrome = false,
 	}
 	local globalDefaults = {
 		showViewerTeleportTip = true,
@@ -79,6 +86,17 @@ do
 		elseif current[4] then
 			current[4] = nil
 		end
+	end
+	local function CopyTable(settingsTable)
+		local copy = {}
+		for key, value in next, settingsTable do
+			if type(value) == "table" then
+				copy[key] = CopyTable(value)
+			else
+				copy[key] = value
+			end
+		end
+		return copy
 	end
 
 	ProfileUtils.ValidateMainSettings = function()
@@ -181,6 +199,15 @@ do
 		db.profile.instanceKeysShowAllPlayers = nil
 		db.profile.instanceKeysShowDungeonEnd = nil
 		db:RegisterDefaults(db.defaults)
+	end
+	ProfileUtils.ResetNameplates = function()
+		db.profile.progressNameplateOffsetX = defaults.progressNameplateOffsetX
+		db.profile.progressNameplateOffsetY = defaults.progressNameplateOffsetY
+		db.profile.progressNameplateFontName = defaults.progressNameplateFontName
+		db.profile.progressNameplateFontSize = defaults.progressNameplateFontSize
+		db.profile.progressNameplateFontColor = CopyTable(defaults.progressNameplateFontColor)
+		db.profile.progressNameplateOutline = defaults.progressNameplateOutline
+		db.profile.progressNameplateMonochrome = defaults.progressNameplateMonochrome
 	end
 end
 
@@ -2057,7 +2084,7 @@ end
 -- Progress %
 --
 
-do
+do -- Tooltip
 	local function AddPercentLine(tooltip)
 		if db.profile.progressTooltip and IsInInstance() and C_ScenarioInfo.GetUnitCriteriaProgressValues then
 			local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
@@ -2068,6 +2095,183 @@ do
 
 	end
 	TooltipDataProcessor.AddTooltipPostCall(2, AddPercentLine) -- Enum.TooltipDataType.Unit
+end
+
+local NamePlatePercentUtils = {testing = false}
+do -- Nameplates
+	local activeTexts, storedTexts = {}, {}
+	local GetTextObject
+	local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
+	do
+		local function SetText(self, text)
+			local flags = nil
+			if db.profile.progressNameplateMonochrome and db.profile.progressNameplateOutline ~= "NONE" then
+				flags = "MONOCHROME," .. db.profile.progressNameplateOutline
+			elseif db.profile.progressNameplateMonochrome then
+				flags = "MONOCHROME"
+			elseif db.profile.progressNameplateOutline ~= "NONE" then
+				flags = db.profile.progressNameplateOutline
+			end
+			self.fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, flags)
+			self.fontString:SetTextColor(db.profile.progressNameplateFontColor[1], db.profile.progressNameplateFontColor[2], db.profile.progressNameplateFontColor[3], db.profile.progressNameplateFontColor[4])
+			self.fontString:SetText("99.99%")
+			local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
+			self.frame:SetSize(w, h)
+			self.fontString:SetText(text)
+		end
+		local function Hide(self, unit)
+			self.fontString:ClearText()
+			self.fontString:ClearAllPoints()
+			self.fontString:SetPoint("CENTER")
+			self.frame:Hide()
+			self.frame:ClearAllPoints()
+			storedTexts[#storedTexts+1] = self
+			activeTexts[unit] = nil
+		end
+		local function SetPoint(self, unit)
+			local nameplateFrame = GetNamePlateForUnit(unit)
+			if nameplateFrame then
+				activeTexts[unit] = self
+				self.frame:Show()
+				self.frame:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateOffsetX, db.profile.progressNameplateOffsetY)
+				return true
+			end
+		end
+		function GetTextObject()
+			if next(storedTexts) then
+				return table.remove(storedTexts)
+			else
+				local object = {SetText = SetText, Hide = Hide, SetPoint = SetPoint}
+				local frame = CreateFrame("Frame", nil, UIParent)
+				object.frame = frame
+				frame:SetPoint("CENTER")
+				frame:SetFrameStrata("MEDIUM")
+				frame:SetFixedFrameStrata(true)
+				frame:SetFrameLevel(6200)
+				frame:SetFixedFrameLevel(true)
+
+				local fontString = frame:CreateFontString()
+				object.fontString = fontString
+				fontString:SetPoint("CENTER")
+				fontString:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
+				return object
+			end
+		end
+	end
+
+	do
+		NamePlatePercentUtils.RemoveAll = function()
+			for unit, text in next, activeTexts do
+				text:Hide(unit)
+			end
+		end
+		NamePlatePercentUtils.UpdateAll = function()
+			for unit, text in next, activeTexts do
+				local percent
+				if NamePlatePercentUtils.testing then
+					local digit, decimal = math.random(1, 5), math.random(100, 999)
+					decimal = decimal / 1000
+					percent = digit + decimal
+				else
+					local _, per = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
+					if per then percent = per end
+				end
+				if percent then
+					text.fontString:ClearText()
+					text.fontString:ClearAllPoints()
+					text.fontString:SetPoint("CENTER")
+					text.frame:ClearAllPoints()
+					if text:SetPoint(unit) then
+						text:SetText(("%.2f%%"):format(percent))
+					else
+						text:Hide(unit)
+					end
+				else
+					text:Hide(unit)
+				end
+			end
+		end
+
+		local UnitCanAttack = BigWigsLoader.UnitCanAttack
+		NamePlatePercentUtils.Test = function()
+			NamePlatePercentUtils.RemoveAll()
+			if C_ScenarioInfo.GetUnitCriteriaProgressValues then
+				for i = 1, 20 do
+					local unit = "nameplate" .. i
+					if UnitCanAttack("player", unit) then
+						local nameplateFrame = GetNamePlateForUnit(unit)
+						if nameplateFrame then
+							local _, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
+							if not percent then
+								local digit, decimal = math.random(1, 5), math.random(100, 999)
+								decimal = decimal / 1000
+								percent = digit + decimal
+							end
+							local text = GetTextObject()
+							if text:SetPoint(unit) then
+								text:SetText(("%.2f%%"):format(percent))
+							else
+								text:Hide(unit)
+							end
+						end
+					end
+				end
+			end
+		end
+		NamePlatePercentUtils.RestoreAll = function()
+			NamePlatePercentUtils.RemoveAll()
+			if db.profile.progressNameplate and IsInInstance() and C_ScenarioInfo.GetUnitCriteriaProgressValues then
+				for i = 1, 20 do
+					local unit = "nameplate" .. i
+					if UnitCanAttack("player", unit) then
+						local nameplateFrame = GetNamePlateForUnit(unit)
+						if nameplateFrame then
+							local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
+							if value and percent then
+								local text = GetTextObject()
+								if text:SetPoint(unit) then
+									text:SetText(("%.2f%%"):format(percent))
+								else
+									text:Hide(unit)
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	local nameplateFrame = CreateFrame("Frame")
+	nameplateFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
+	nameplateFrame:RegisterEvent("CHALLENGE_MODE_START")
+	nameplateFrame:SetScript("OnEvent", function(self, event, unit)
+		if event == "NAME_PLATE_UNIT_ADDED" then
+			local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
+			if value and percent then
+				local text = GetTextObject()
+				if text:SetPoint(unit) then
+					text:SetText(("%.2f%%"):format(percent))
+				else
+					text:Hide(unit)
+				end
+			end
+		elseif event == "NAME_PLATE_UNIT_REMOVED" then
+			local text = activeTexts[unit]
+			if text then
+				text:Hide(unit)
+			end
+		elseif event == "PLAYER_LEAVING_WORLD" then
+			self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+			self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
+			NamePlatePercentUtils.RemoveAll()
+		elseif event == "CHALLENGE_MODE_START" then
+			if db.profile.progressNameplate and C_ScenarioInfo.GetUnitCriteriaProgressValues then
+				self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+				self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+			end
+		end
+	end)
 end
 
 --------------------------------------------------------------------------------
@@ -2232,6 +2436,14 @@ do
 		local key = info[#info]
 		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
 		UpdateWidgets()
+	end
+	local function UpdateSettingsAndNameplates(info, value)
+		local key = info[#info]
+		db.profile[key] = value
+		NamePlatePercentUtils.UpdateAll()
+	end
+	local function DisabledWhenNameplatePercentDisabled()
+		return not db.profile.progressNameplate
 	end
 	BigWigsAPI.RegisterToolOptions("MythicPlus", {
 		type = "group",
@@ -2591,11 +2803,154 @@ do
 						name = L.nameplates,
 						order = 2,
 						args = {
+							test = {
+								type = "execute",
+								name = function()
+									if NamePlatePercentUtils.testing then
+										return L.stopTest
+									else
+										return L.startTest
+									end
+								end,
+								func = function()
+									if NamePlatePercentUtils.testing then
+										NamePlatePercentUtils.testing = false
+										NamePlatePercentUtils.RestoreAll()
+									else
+										NamePlatePercentUtils.testing = true
+										NamePlatePercentUtils.Test()
+									end
+								end,
+								width = 1.5,
+								order = 1.2,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
 							progressNameplate = {
 								type = "toggle",
 								name = L.progressPercentNameplate,
 								order = 1,
 								width = "full",
+								set = function(_, value)
+									db.profile.progressNameplate = value
+									if value then
+										NamePlatePercentUtils.RestoreAll()
+									else
+										NamePlatePercentUtils.RemoveAll()
+										NamePlatePercentUtils.testing = false
+									end
+								end,
+							},
+							anchoringHeader = {
+								type = "header",
+								name = L.anchoring,
+								order = 2,
+								width = "full",
+							},
+							progressNameplateOffsetX = {
+								type = "range",
+								name = L.positionX,
+								desc = L.positionDesc,
+								order = 5,
+								max = 300,
+								min = -300,
+								step = 1,
+								width = 1,
+								set = UpdateSettingsAndNameplates,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							progressNameplateOffsetY = {
+								type = "range",
+								name = L.positionY,
+								desc = L.positionDesc,
+								order = 6,
+								max = 100,
+								min = -100,
+								step = 1,
+								width = 1,
+								set = UpdateSettingsAndNameplates,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							fontHeader = {
+								type = "header",
+								name = L.font,
+								order = 8,
+							},
+							progressNameplateFontName = {
+								type = "select",
+								name = L.font,
+								order = 9,
+								values = LibSharedMedia:List("font"),
+								itemControl = "DDI-Font",
+								get = function()
+									for i, v in next, LibSharedMedia:List("font") do
+										if v == db.profile.progressNameplateFontName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("font")
+									db.profile.progressNameplateFontName = list[value]
+									NamePlatePercentUtils.UpdateAll()
+								end,
+								width = 2,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							progressNameplateOutline = {
+								type = "select",
+								name = L.outline,
+								order = 10,
+								values = {
+									NONE = L.none,
+									OUTLINE = L.thin,
+									THICKOUTLINE = L.thick,
+								},
+								set = UpdateSettingsAndNameplates,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							progressNameplateFontColor = {
+								type = "color",
+								name = L.fontColor,
+								hasAlpha = true,
+								get = function()
+									return db.profile.progressNameplateFontColor[1], db.profile.progressNameplateFontColor[2], db.profile.progressNameplateFontColor[3], db.profile.progressNameplateFontColor[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.profile.progressNameplateFontColor = {r, g, b, a < 0.3 and 0.3 or a}
+									NamePlatePercentUtils.UpdateAll()
+								end,
+								order = 11,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							progressNameplateFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 12,
+								softMax = 100, max = 200, min = 10, step = 1,
+								set = UpdateSettingsAndNameplates,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							progressNameplateMonochrome = {
+								type = "toggle",
+								name = L.monochrome,
+								desc = L.monochromeDesc,
+								order = 13,
+								set = UpdateSettingsAndNameplates,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 14,
+							},
+							reset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								func = function()
+									ProfileUtils.ResetNameplates()
+									NamePlatePercentUtils.UpdateAll()
+								end,
+								order = 16,
 							},
 						},
 					},

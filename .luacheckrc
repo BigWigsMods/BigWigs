@@ -255,6 +255,7 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/C_Container",
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
+	"113/C_NamePlate",
 	"113/C_PlayerInfo",
 	"113/C_UI",
 	"113/ChallengesFrame",
