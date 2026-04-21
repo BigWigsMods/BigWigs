@@ -2226,8 +2226,8 @@ do -- Nameplates
 					if UnitCanAttack("player", unit) then
 						local nameplateFrame = GetNamePlateForUnit(unit)
 						if nameplateFrame then
-							local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
-							if value and percent then
+							local _, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
+							if percent then
 								local text = GetTextObject()
 								if text:SetPoint(unit) then
 									text:SetText(("%.2f%%"):format(percent))
@@ -2247,8 +2247,8 @@ do -- Nameplates
 	nameplateFrame:RegisterEvent("CHALLENGE_MODE_START")
 	nameplateFrame:SetScript("OnEvent", function(self, event, unit)
 		if event == "NAME_PLATE_UNIT_ADDED" then
-			local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
-			if value and percent then
+			local _, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
+			if percent then
 				local text = GetTextObject()
 				if text:SetPoint(unit) then
 					text:SetText(("%.2f%%"):format(percent))
