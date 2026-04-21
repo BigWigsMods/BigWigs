@@ -42,14 +42,14 @@ end
 
 L = BigWigs:NewBossLocale("Crown of the Cosmos", "esES")
 if L then
-	--L.silverstrike_arrow = "Arrows"
-	--L.grasp_of_emptiness = "Obelisks"
-	--L.interrupting_tremor = "Interrupt"
-	--L.ravenous_abyss = "Move Out"
-	--L.silverstrike_barrage = "Lines"
-	--L.cosmic_barrier = "Barrier"
-	--L.rangers_captains_mark = "Arrows"
-	--L.voidstalker_sting = "Stings"
-	--L.aspect_of_the_end = "Tethers"
-	--L.devouring_cosmos = "Next Platform"
+	L.silverstrike_arrow = "Flechas"
+	L.grasp_of_emptiness = "Obeliscos"
+	L.interrupting_tremor = "Interrumpir"
+	L.ravenous_abyss = "Salir"
+	L.silverstrike_barrage = "Líneas"
+	L.cosmic_barrier = "Barrera"
+	L.rangers_captains_mark = "Flechas"
+	L.voidstalker_sting = "Picaduras"
+	L.aspect_of_the_end = "Ataduras"
+	L.devouring_cosmos = "Siguiente plataforma"
 end
