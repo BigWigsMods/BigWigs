@@ -2803,6 +2803,21 @@ do
 						name = L.nameplates,
 						order = 2,
 						args = {
+							progressNameplate = {
+								type = "toggle",
+								name = L.progressPercentNameplate,
+								order = 1,
+								width = "full",
+								set = function(_, value)
+									db.profile.progressNameplate = value
+									if value then
+										NamePlatePercentUtils.RestoreAll()
+									else
+										NamePlatePercentUtils.RemoveAll()
+										NamePlatePercentUtils.testing = false
+									end
+								end,
+							},
 							test = {
 								type = "execute",
 								name = function()
@@ -2822,35 +2837,20 @@ do
 									end
 								end,
 								width = 1.5,
-								order = 1.2,
+								order = 2,
 								disabled = DisabledWhenNameplatePercentDisabled,
-							},
-							progressNameplate = {
-								type = "toggle",
-								name = L.progressPercentNameplate,
-								order = 1,
-								width = "full",
-								set = function(_, value)
-									db.profile.progressNameplate = value
-									if value then
-										NamePlatePercentUtils.RestoreAll()
-									else
-										NamePlatePercentUtils.RemoveAll()
-										NamePlatePercentUtils.testing = false
-									end
-								end,
 							},
 							anchoringHeader = {
 								type = "header",
 								name = L.anchoring,
-								order = 2,
+								order = 3,
 								width = "full",
 							},
 							progressNameplateOffsetX = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								order = 5,
+								order = 4,
 								max = 300,
 								min = -300,
 								step = 1,
@@ -2862,7 +2862,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								order = 6,
+								order = 5,
 								max = 100,
 								min = -100,
 								step = 1,
@@ -2873,12 +2873,12 @@ do
 							fontHeader = {
 								type = "header",
 								name = L.font,
-								order = 8,
+								order = 6,
 							},
 							progressNameplateFontName = {
 								type = "select",
 								name = L.font,
-								order = 9,
+								order = 7,
 								values = LibSharedMedia:List("font"),
 								itemControl = "DDI-Font",
 								get = function()
@@ -2897,7 +2897,7 @@ do
 							progressNameplateOutline = {
 								type = "select",
 								name = L.outline,
-								order = 10,
+								order = 8,
 								values = {
 									NONE = L.none,
 									OUTLINE = L.thin,
@@ -2917,14 +2917,14 @@ do
 									db.profile.progressNameplateFontColor = {r, g, b, a < 0.3 and 0.3 or a}
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 11,
+								order = 9,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							progressNameplateFontSize = {
 								type = "range",
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
-								order = 12,
+								order = 10,
 								softMax = 100, max = 200, min = 10, step = 1,
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
@@ -2933,14 +2933,14 @@ do
 								type = "toggle",
 								name = L.monochrome,
 								desc = L.monochromeDesc,
-								order = 13,
+								order = 11,
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 14,
+								order = 12,
 							},
 							reset = {
 								type = "execute",
@@ -2950,7 +2950,7 @@ do
 									ProfileUtils.ResetNameplates()
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 16,
+								order = 13,
 							},
 						},
 					},

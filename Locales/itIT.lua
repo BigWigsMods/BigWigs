@@ -599,7 +599,7 @@ L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 --L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
 --L.progressCurrentPull = "Current Pull"
 --L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
---L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in Tools > Mythic+ > Progress %."
+--L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in |cFF436EEETools|r > |cFF436EEEMythic+|r > |cFF436EEEProgress %|r."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
