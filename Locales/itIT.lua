@@ -438,6 +438,8 @@ L.autoRoleExplainer = "Quando ti unisci ad un gruppo, o cambii le tue spec mentr
 -- Keystones.lua
 --
 
+--L.keys = "Keys"
+
 --L.keystoneTitle = "BigWigs Keystones"
 --L.keystoneHeaderParty = "Party"
 --L.keystoneRefreshParty = "Refresh Party"
@@ -588,6 +590,16 @@ L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
 --L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter a mythic dungeon. Enabling this option will also show the list when the Mythic+ is over."
 --L.instanceKeysHideTitle = "Hide title"
 --L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
+
+-- Progress %
+
+--L.progressPercent = "Progress %"
+--L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
+--L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
+--L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
+--L.progressCurrentPull = "Current Pull"
+--L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
+--L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in Tools > Mythic+ > Progress %."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

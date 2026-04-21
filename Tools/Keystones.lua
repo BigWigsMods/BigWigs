@@ -26,15 +26,18 @@ do
 
 	local defaults = {
 		autoSlotKeystone = true,
+		-- Countdown
 		countVoice = defaultVoice,
 		countBegin = 5,
 		countStartSound = "BigWigs: Long",
 		countEndSound = "BigWigs: Alarm",
+		-- Key viewer
 		showViewerDungeonEnd = true,
 		hideFromGuild = false,
 		viewerKeybind = "",
 		windowHeight = 320,
 		viewerPosition = {"LEFT", "LEFT", 15, 0},
+		-- Who has a key?
 		instanceKeysPosition = {"BOTTOM", "TOP", 0, -86},
 		instanceKeysFontName = fontName,
 		instanceKeysFontSize = 16,
@@ -47,6 +50,9 @@ do
 		instanceKeysShowAllPlayers = false,
 		instanceKeysShowDungeonEnd = false,
 		instanceKeysHideTitle = false,
+		-- Progress %
+		progressTooltip = true,
+		progressNameplate = false,
 	}
 	local globalDefaults = {
 		showViewerTeleportTip = true,
@@ -2048,6 +2054,23 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Progress %
+--
+
+do
+	local function AddPercentLine(tooltip)
+		if db.profile.progressTooltip and IsInInstance() and C_ScenarioInfo.GetUnitCriteriaProgressValues then
+			local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
+			if value and percent then
+				tooltip:AddLine(L.progressPercentTooltipText:format(percent, value))
+			end
+		end
+
+	end
+	TooltipDataProcessor.AddTooltipPostCall(2, AddPercentLine) -- Enum.TooltipDataType.Unit
+end
+
+--------------------------------------------------------------------------------
 -- Options Table
 --
 
@@ -2225,312 +2248,369 @@ do
 				width = "full",
 				fontSize = "large",
 			},
-			instanceKeys = {
+			keys = {
 				type = "group",
-				name = L.instanceKeysTitle,
+				name = L.keys,
 				order = 1,
+				childGroups = "tab",
 				get = GetSettings,
 				set = UpdateSettingsAndWidgets,
 				args = {
-					explainInstanceKeys = {
-						type = "description",
-						name = L.instanceKeysDesc,
+					instanceKeys = {
+						type = "group",
+						name = L.instanceKeysTitle,
 						order = 1,
-						width = "full",
-					},
-					anchorsButton = {
-						type = "execute",
-						name = function()
-							if instanceKeysWidgets.testing then
-								return L.toggleAnchorsBtnHide
-							else
-								return L.toggleAnchorsBtnShow
-							end
-						end,
-						desc = function()
-							if instanceKeysWidgets.testing then
-								return L.toggleAnchorsBtnHide_desc
-							else
-								return L.toggleMessagesAnchorsBtnShow_desc
-							end
-						end,
-						func = function()
-							if instanceKeysWidgets.testing then
-								instanceKeysWidgets.testing = false
-								instanceKeysWidgets.main:EnableMouse(false)
-								instanceKeysWidgets.main:SetMovable(false)
-								instanceKeysWidgets.bg:Hide()
-								if instanceKeysWidgets.namesToShow then
-									for i = 1, 5 do
-										if i <= #instanceKeysWidgets.namesToShow then
-											instanceKeysWidgets.playerListText[i]:SetText(instanceKeysWidgets.namesToShow[i])
-											if instanceKeysWidgets.otherDungeons[i] then
-												instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
-											else
-												instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+						get = GetSettings,
+						set = UpdateSettingsAndWidgets,
+						args = {
+							explainInstanceKeys = {
+								type = "description",
+								name = L.instanceKeysDesc,
+								order = 1,
+								width = "full",
+							},
+							anchorsButton = {
+								type = "execute",
+								name = function()
+									if instanceKeysWidgets.testing then
+										return L.toggleAnchorsBtnHide
+									else
+										return L.toggleAnchorsBtnShow
+									end
+								end,
+								desc = function()
+									if instanceKeysWidgets.testing then
+										return L.toggleAnchorsBtnHide_desc
+									else
+										return L.toggleMessagesAnchorsBtnShow_desc
+									end
+								end,
+								func = function()
+									if instanceKeysWidgets.testing then
+										instanceKeysWidgets.testing = false
+										instanceKeysWidgets.main:EnableMouse(false)
+										instanceKeysWidgets.main:SetMovable(false)
+										instanceKeysWidgets.bg:Hide()
+										if instanceKeysWidgets.namesToShow then
+											for i = 1, 5 do
+												if i <= #instanceKeysWidgets.namesToShow then
+													instanceKeysWidgets.playerListText[i]:SetText(instanceKeysWidgets.namesToShow[i])
+													if instanceKeysWidgets.otherDungeons[i] then
+														instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
+													else
+														instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+													end
+												else
+													instanceKeysWidgets.playerListText[i]:SetText("")
+												end
 											end
 										else
+											instanceKeysWidgets.main:Hide()
+										end
+									else
+										instanceKeysWidgets.testing = true
+										instanceKeysWidgets.main:Show()
+										instanceKeysWidgets.main:EnableMouse(true)
+										instanceKeysWidgets.main:SetMovable(true)
+										instanceKeysWidgets.bg:Show()
+										instanceKeysWidgets.playerListText[1]:SetText(L.instanceKeysTest8)
+										instanceKeysWidgets.playerListText[1]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+										instanceKeysWidgets.playerListText[2]:SetText(L.instanceKeysTest10)
+										instanceKeysWidgets.playerListText[2]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+										for i = 3, 5 do
 											instanceKeysWidgets.playerListText[i]:SetText("")
 										end
 									end
-								else
-									instanceKeysWidgets.main:Hide()
-								end
-							else
-								instanceKeysWidgets.testing = true
-								instanceKeysWidgets.main:Show()
-								instanceKeysWidgets.main:EnableMouse(true)
-								instanceKeysWidgets.main:SetMovable(true)
-								instanceKeysWidgets.bg:Show()
-								instanceKeysWidgets.playerListText[1]:SetText(L.instanceKeysTest8)
-								instanceKeysWidgets.playerListText[1]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-								instanceKeysWidgets.playerListText[2]:SetText(L.instanceKeysTest10)
-								instanceKeysWidgets.playerListText[2]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-								for i = 3, 5 do
-									instanceKeysWidgets.playerListText[i]:SetText("")
-								end
-							end
-						end,
-						width = 1.5,
+								end,
+								width = 1.5,
+								order = 2,
+							},
+							instanceKeysFontName = {
+								type = "select",
+								name = L.font,
+								order = 3,
+								values = LibSharedMedia:List("font"),
+								itemControl = "DDI-Font",
+								get = function()
+									for i, v in next, LibSharedMedia:List("font") do
+										if v == db.profile.instanceKeysFontName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("font")
+									db.profile.instanceKeysFontName = list[value]
+									UpdateWidgets()
+								end,
+								width = 2,
+							},
+							instanceKeysOutline = {
+								type = "select",
+								name = L.outline,
+								order = 4,
+								values = {
+									NONE = L.none,
+									OUTLINE = L.thin,
+									THICKOUTLINE = L.thick,
+								},
+							},
+							instanceKeysFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 5,
+								width = 2,
+								softMax = 100, max = 200, min = 14, step = 1,
+							},
+							instanceKeysMonochrome = {
+								type = "toggle",
+								name = L.monochrome,
+								desc = L.monochromeDesc,
+								order = 6,
+							},
+							instanceKeysAlign = {
+								type = "select",
+								name = L.align,
+								values = {
+									L.LEFT,
+									L.CENTER,
+									L.RIGHT,
+								},
+								style = "radio",
+								order = 7,
+								get = function() return db.profile.instanceKeysAlign == "LEFT" and 1 or db.profile.instanceKeysAlign == "RIGHT" and 3 or 2 end,
+								set = function(_, value)
+									db.profile.instanceKeysAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+									UpdateWidgets()
+								end,
+							},
+							instanceKeysColor = {
+								type = "color",
+								name = L.fontColor,
+								get = GetColor,
+								set = UpdateColorAndWidgets,
+								hasAlpha = true,
+								order = 8,
+							},
+							instanceKeysGrowUpwards = {
+								type = "toggle",
+								name = L.growingUpwards,
+								desc = L.growingUpwardsDesc,
+								order = 9,
+							},
+							extrasHeader = {
+								type = "header",
+								name = "",
+								order = 10,
+							},
+							instanceKeysShowAllPlayers = {
+								type = "toggle",
+								name = L.instanceKeysShowAll,
+								desc = L.instanceKeysShowAllDesc,
+								width = 2,
+								order = 11,
+								set = function(info, value)
+									local key = info[#info]
+									db.profile[key] = value
+									instanceKeysWidgets.nameList = {}
+									LibKeystoneRequest("PARTY")
+								end,
+								confirm = function(_, value)
+									if value then
+										return L.instanceKeysShowAllDesc
+									end
+								end,
+							},
+							instanceKeysOtherDungeonColor = {
+								type = "color",
+								name = L.instanceKeysOtherDungeonColor,
+								desc = L.instanceKeysOtherDungeonColorDesc,
+								get = GetColor,
+								set = UpdateColorAndWidgets,
+								hasAlpha = true,
+								order = 12,
+								disabled = function() return not db.profile.instanceKeysShowAllPlayers end,
+							},
+							instanceKeysShowDungeonEnd = {
+								type = "toggle",
+								name = L.keystoneAutoShowEndOfRun,
+								desc = L.instanceKeysEndOfRunDesc,
+								order = 13,
+								width = "full",
+							},
+							instanceKeysHideTitle = {
+								type = "toggle",
+								name = L.instanceKeysHideTitle,
+								desc = L.instanceKeysHideTitleDesc,
+								set = UpdateSettingsAndWidgets,
+								order = 14,
+								width = "full",
+							},
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 15,
+							},
+							reset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								func = function()
+									ProfileUtils.ResetInstanceKeys()
+									UpdateWidgets()
+									if not instanceKeysWidgets.testing then
+										instanceKeysWidgets.nameList = {}
+										LibKeystoneRequest("PARTY")
+									end
+								end,
+								order = 16,
+							},
+						},
+					},
+					keystoneViewer = {
+						type = "group",
+						name = L.keystoneViewerTitle,
 						order = 2,
-					},
-					instanceKeysFontName = {
-						type = "select",
-						name = L.font,
-						order = 3,
-						values = LibSharedMedia:List("font"),
-						itemControl = "DDI-Font",
-						get = function()
-							for i, v in next, LibSharedMedia:List("font") do
-								if v == db.profile.instanceKeysFontName then return i end
-							end
-						end,
-						set = function(_, value)
-							local list = LibSharedMedia:List("font")
-							db.profile.instanceKeysFontName = list[value]
-							UpdateWidgets()
-						end,
-						width = 2,
-					},
-					instanceKeysOutline = {
-						type = "select",
-						name = L.outline,
-						order = 4,
-						values = {
-							NONE = L.none,
-							OUTLINE = L.thin,
-							THICKOUTLINE = L.thick,
+						args = {
+							explainViewer = {
+								type = "description",
+								name = L.keystoneViewerExplainer,
+								order = 1,
+								width = "full",
+							},
+							openViewer = {
+								type = "execute",
+								name = L.keystoneViewerOpen,
+								func = ShowViewer,
+								order = 2,
+								width = 1.5,
+							},
+							spacerViewer = {
+								type = "description",
+								name = "\n\n",
+								order = 3,
+								width = "full",
+							},
+							showViewerDungeonEnd = {
+								type = "toggle",
+								name = L.keystoneAutoShowEndOfRun,
+								desc = L.keystoneAutoShowEndOfRunDesc,
+								order = 4,
+								width = "full",
+							},
+							hideFromGuild = {
+								type = "toggle",
+								name = L.keystoneHideGuildTitle,
+								desc = L.keystoneHideGuildDesc,
+								order = 5,
+								width = "full",
+								set = function(info, value)
+									local key = info[#info]
+									db.profile[key] = value
+									LibKeystone.SetGuildHidden(value)
+								end,
+								confirm = function(_, value)
+									if value then
+										return L.keystoneHideGuildWarning
+									end
+								end,
+							},
+							explainViewerKeybinding = {
+								type = "description",
+								name = L.keystoneViewerKeybindingExplainer,
+								order = 6,
+								width = "full",
+							},
+							viewerKeybind = {
+								type = "keybinding",
+								name = L.keybinding,
+								desc = L.keystoneViewerKeybindingDesc,
+								order = 7,
+								set = UpdateSettingsAndWidgets,
+							},
+							slashDescription = {
+								type = "description",
+								name = "\n\n",
+								order = 8,
+								width = "full",
+							},
+							slashKeys = {
+								type = "toggle",
+								name = L.keystoneSlashKeys,
+								order = 9,
+								width = "full",
+								get = function() return db.global.slashKeys end,
+								set = function(info, value)
+									local key = info[#info]
+									db.global[key] = value
+									C_UI.Reload()
+								end,
+								confirm = function()
+									return L.reloadUIWarning
+								end,
+							},
+							slashKeystone = {
+								type = "toggle",
+								name = L.keystoneSlashKeystone,
+								order = 10,
+								width = "full",
+								get = function() return db.global.slashKeystone end,
+								set = function(info, value)
+									local key = info[#info]
+									db.global[key] = value
+									C_UI.Reload()
+								end,
+								confirm = function()
+									return L.reloadUIWarning
+								end,
+							},
 						},
-					},
-					instanceKeysFontSize = {
-						type = "range",
-						name = L.fontSize,
-						desc = L.fontSizeDesc,
-						order = 5,
-						width = 2,
-						softMax = 100, max = 200, min = 14, step = 1,
-					},
-					instanceKeysMonochrome = {
-						type = "toggle",
-						name = L.monochrome,
-						desc = L.monochromeDesc,
-						order = 6,
-					},
-					instanceKeysAlign = {
-						type = "select",
-						name = L.align,
-						values = {
-							L.LEFT,
-							L.CENTER,
-							L.RIGHT,
-						},
-						style = "radio",
-						order = 7,
-						get = function() return db.profile.instanceKeysAlign == "LEFT" and 1 or db.profile.instanceKeysAlign == "RIGHT" and 3 or 2 end,
-						set = function(_, value)
-							db.profile.instanceKeysAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
-							UpdateWidgets()
-						end,
-					},
-					instanceKeysColor = {
-						type = "color",
-						name = L.fontColor,
-						get = GetColor,
-						set = UpdateColorAndWidgets,
-						hasAlpha = true,
-						order = 8,
-					},
-					instanceKeysGrowUpwards = {
-						type = "toggle",
-						name = L.growingUpwards,
-						desc = L.growingUpwardsDesc,
-						order = 9,
-					},
-					extrasHeader = {
-						type = "header",
-						name = "",
-						order = 10,
-					},
-					instanceKeysShowAllPlayers = {
-						type = "toggle",
-						name = L.instanceKeysShowAll,
-						desc = L.instanceKeysShowAllDesc,
-						width = 2,
-						order = 11,
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							instanceKeysWidgets.nameList = {}
-							LibKeystoneRequest("PARTY")
-						end,
-						confirm = function(_, value)
-							if value then
-								return L.instanceKeysShowAllDesc
-							end
-						end,
-					},
-					instanceKeysOtherDungeonColor = {
-						type = "color",
-						name = L.instanceKeysOtherDungeonColor,
-						desc = L.instanceKeysOtherDungeonColorDesc,
-						get = GetColor,
-						set = UpdateColorAndWidgets,
-						hasAlpha = true,
-						order = 12,
-						disabled = function() return not db.profile.instanceKeysShowAllPlayers end,
-					},
-					instanceKeysShowDungeonEnd = {
-						type = "toggle",
-						name = L.keystoneAutoShowEndOfRun,
-						desc = L.instanceKeysEndOfRunDesc,
-						order = 13,
-						width = "full",
-					},
-					instanceKeysHideTitle = {
-						type = "toggle",
-						name = L.instanceKeysHideTitle,
-						desc = L.instanceKeysHideTitleDesc,
-						set = UpdateSettingsAndWidgets,
-						order = 14,
-						width = "full",
-					},
-					resetHeader = {
-						type = "header",
-						name = "",
-						order = 15,
-					},
-					reset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						func = function()
-							ProfileUtils.ResetInstanceKeys()
-							UpdateWidgets()
-							if not instanceKeysWidgets.testing then
-								instanceKeysWidgets.nameList = {}
-								LibKeystoneRequest("PARTY")
-							end
-						end,
-						order = 16,
 					},
 				},
 			},
-			keystoneViewer = {
+			progressPercent = {
 				type = "group",
-				name = L.keystoneViewerTitle,
+				name = L.progressPercent,
+				childGroups = "tab",
 				order = 2,
 				args = {
-					explainViewer = {
-						type = "description",
-						name = L.keystoneViewerExplainer,
+					tooltip = {
+						type = "group",
+						name = L.tooltip,
 						order = 1,
-						width = "full",
+						args = {
+							progressTooltip = {
+								type = "toggle",
+								name = L.progressPercentTooltip,
+								order = 1,
+								width = "full",
+							},
+						},
 					},
-					openViewer = {
-						type = "execute",
-						name = L.keystoneViewerOpen,
-						func = ShowViewer,
+					nameplates = {
+						type = "group",
+						name = L.nameplates,
 						order = 2,
-						width = 1.5,
+						args = {
+							progressNameplate = {
+								type = "toggle",
+								name = L.progressPercentNameplate,
+								order = 1,
+								width = "full",
+							},
+						},
 					},
-					spacerViewer = {
-						type = "description",
-						name = "\n\n",
+					currentPull = {
+						type = "group",
+						name = L.progressCurrentPull,
 						order = 3,
-						width = "full",
-					},
-					showViewerDungeonEnd = {
-						type = "toggle",
-						name = L.keystoneAutoShowEndOfRun,
-						desc = L.keystoneAutoShowEndOfRunDesc,
-						order = 4,
-						width = "full",
-					},
-					hideFromGuild = {
-						type = "toggle",
-						name = L.keystoneHideGuildTitle,
-						desc = L.keystoneHideGuildDesc,
-						order = 5,
-						width = "full",
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							LibKeystone.SetGuildHidden(value)
-						end,
-						confirm = function(_, value)
-							if value then
-								return L.keystoneHideGuildWarning
-							end
-						end,
-					},
-					explainViewerKeybinding = {
-						type = "description",
-						name = L.keystoneViewerKeybindingExplainer,
-						order = 6,
-						width = "full",
-					},
-					viewerKeybind = {
-						type = "keybinding",
-						name = L.keybinding,
-						desc = L.keystoneViewerKeybindingDesc,
-						order = 7,
-						set = UpdateSettingsAndWidgets,
-					},
-					slashDescription = {
-						type = "description",
-						name = "\n\n",
-						order = 8,
-						width = "full",
-					},
-					slashKeys = {
-						type = "toggle",
-						name = L.keystoneSlashKeys,
-						order = 9,
-						width = "full",
-						get = function() return db.global.slashKeys end,
-						set = function(info, value)
-							local key = info[#info]
-							db.global[key] = value
-							C_UI.Reload()
-						end,
-						confirm = function()
-							return L.reloadUIWarning
-						end,
-					},
-					slashKeystone = {
-						type = "toggle",
-						name = L.keystoneSlashKeystone,
-						order = 10,
-						width = "full",
-						get = function() return db.global.slashKeystone end,
-						set = function(info, value)
-							local key = info[#info]
-							db.global[key] = value
-							C_UI.Reload()
-						end,
-						confirm = function()
-							return L.reloadUIWarning
-						end,
+						args = {
+							explaincurrentPull = {
+								type = "description",
+								name = L.progressCurrentPullDesc,
+								order = 1,
+								width = "full",
+							},
+						},
 					},
 				},
 			},
@@ -2587,18 +2667,20 @@ do
 				name = L.qualityOfLife,
 				order = 4,
 				args = {
-					autoSlotKeystone = {
-						type = "toggle",
-						name = L.keystoneAutoSlot,
-						desc = L.keystoneAutoSlotDesc,
-						order = 1,
-						width = "full",
-					},
-					spacer = {
-						type = "description",
-						name = "\n\n",
-						order = 2,
-						width = "full",
+					args = {
+						autoSlotKeystone = {
+							type = "toggle",
+							name = L.keystoneAutoSlot,
+							desc = L.keystoneAutoSlotDesc,
+							order = 1,
+							width = "full",
+						},
+						spacer = {
+							type = "description",
+							name = "\n\n",
+							order = 2,
+							width = "full",
+						},
 					},
 				},
 			},

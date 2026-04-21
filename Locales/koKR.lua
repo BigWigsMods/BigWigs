@@ -438,6 +438,8 @@ L.customText = "사용자 지정 텍스트 (%s가 포함되어야 함)"
 -- Keystones.lua
 --
 
+--L.keys = "Keys"
+
 L.keystoneTitle = "BigWigs 쐐기돌"
 L.keystoneHeaderParty = "파티"
 L.keystoneRefreshParty = "파티 새로 고침"
@@ -588,6 +590,16 @@ L.instanceKeysOtherDungeonColorDesc = "현재 있는 던전과 관련이 없는 
 L.instanceKeysEndOfRunDesc = "기본적으로 목록은 신화 던전에 들어갈 때만 표시됩니다. 이 옵션을 활성화하면 신화+가 끝난 후에도 목록이 표시됩니다."
 L.instanceKeysHideTitle = "제목 숨기기"
 L.instanceKeysHideTitleDesc = "\"누가 쐐기돌을 가지고 있나요?\" 제목을 숨깁니다."
+
+-- Progress %
+
+--L.progressPercent = "Progress %"
+--L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
+--L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
+--L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
+--L.progressCurrentPull = "Current Pull"
+--L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
+--L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in Tools > Mythic+ > Progress %."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

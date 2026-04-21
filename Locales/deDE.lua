@@ -438,6 +438,8 @@ L.customText = "Angepasster Text (Muss %s enthalten)"
 -- Keystones.lua
 --
 
+--L.keys = "Keys"
+
 L.keystoneTitle = "BigWigs Schlüsselsteine"
 L.keystoneHeaderParty = "Gruppe"
 L.keystoneRefreshParty = "Gruppe aktualisieren"
@@ -588,6 +590,16 @@ L.instanceKeysOtherDungeonColorDesc = "Schriftfarbe für Spieler wählen, deren 
 L.instanceKeysEndOfRunDesc = "Standardmäßig wird die Liste nur beim Betreten eines mythischen Dungeons angezeigt. Durch Aktivierung dieser Option wird die Liste auch nach Abschluss von Mythisch+ Dungeons angezeigt."
 L.instanceKeysHideTitle = "Titel verstecken"
 L.instanceKeysHideTitleDesc = "Versteckt den \"Wer hat einen Schlüsselstein?\" Titel."
+
+-- Progress %
+
+--L.progressPercent = "Progress %"
+--L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
+--L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
+--L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
+--L.progressCurrentPull = "Current Pull"
+--L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
+--L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in Tools > Mythic+ > Progress %."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
