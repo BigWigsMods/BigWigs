@@ -1935,6 +1935,12 @@ do
 			end
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
 			bwFrame:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+
+			-- XXX 12.0.5
+			if public.isRetail and C_ScenarioInfo.GetUnitCriteriaProgressValues and public.currentExpansion.currentSeason[instanceID] and not BW_FEAT_M_PERCENT then
+				BW_FEAT_M_PERCENT = true
+				Popup(L.tempProgressAnnounce, true, 220)
+			end
 		else
 			if disabledZones[instanceID] then -- We have a content addon for the this zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
