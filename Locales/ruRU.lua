@@ -594,6 +594,7 @@ L.instanceKeysEndOfRunDesc = "По умолчанию список отобра�
 -- Progress %
 
 --L.progressPercent = "Progress %"
+--L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
 --L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
 --L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
 --L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"

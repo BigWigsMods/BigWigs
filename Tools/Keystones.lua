@@ -2785,10 +2785,16 @@ do
 				childGroups = "tab",
 				order = 2,
 				args = {
+					explainProgressPercent = {
+						type = "description",
+						name = L.progressPercentDesc,
+						order = 1,
+						width = "full",
+					},
 					tooltip = {
 						type = "group",
 						name = L.tooltip,
-						order = 1,
+						order = 2,
 						args = {
 							progressTooltip = {
 								type = "toggle",
@@ -2801,7 +2807,7 @@ do
 					nameplates = {
 						type = "group",
 						name = L.nameplates,
-						order = 2,
+						order = 3,
 						args = {
 							progressNameplate = {
 								type = "toggle",
@@ -2957,7 +2963,7 @@ do
 					currentPull = {
 						type = "group",
 						name = L.progressCurrentPull,
-						order = 3,
+						order = 4,
 						args = {
 							explaincurrentPull = {
 								type = "description",
