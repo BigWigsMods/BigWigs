@@ -171,6 +171,20 @@ do
 		end
 		ValidateColor(db.profile.instanceKeysColor, defaults.instanceKeysColor, 0.3)
 		ValidateColor(db.profile.instanceKeysOtherDungeonColor, defaults.instanceKeysOtherDungeonColor, 0.3)
+
+		if db.profile.progressNameplateOffsetX < -300 or db.profile.progressNameplateOffsetX > 300 or math.floor(db.profile.progressNameplateOffsetX+0.5) ~= db.profile.progressNameplateOffsetX then
+			db.profile.progressNameplateOffsetX = defaults.progressNameplateOffsetX
+		end
+		if db.profile.progressNameplateOffsetY < -100 or db.profile.progressNameplateOffsetY > 100 or math.floor(db.profile.progressNameplateOffsetY+0.5) ~= db.profile.progressNameplateOffsetY then
+			db.profile.progressNameplateOffsetY = defaults.progressNameplateOffsetY
+		end
+		if db.profile.progressNameplateFontSize < 10 or db.profile.progressNameplateFontSize > 200 or math.floor(db.profile.progressNameplateFontSize+0.5) ~= db.profile.progressNameplateFontSize then
+			db.profile.progressNameplateFontSize = defaults.progressNameplateFontSize
+		end
+		ValidateColor(db.profile.progressNameplateFontColor, defaults.progressNameplateFontColor, 0.3)
+		if db.profile.progressNameplateOutline ~= "NONE" and db.profile.progressNameplateOutline ~= "OUTLINE" and db.profile.progressNameplateOutline ~= "THICKOUTLINE" then
+			db.profile.progressNameplateOutline = defaults.progressNameplateOutline
+		end
 	end
 	ProfileUtils.ValidateMediaSettings = function()
 		if not BigWigsAPI:HasCountdown(db.profile.countVoice) then
@@ -184,6 +198,9 @@ do
 		end
 		if not LibStub("LibSharedMedia-3.0"):IsValid("font", db.profile.instanceKeysFontName) then
 			db.profile.instanceKeysFontName = defaults.instanceKeysFontName
+		end
+		if not LibStub("LibSharedMedia-3.0"):IsValid("font", db.profile.progressNameplateFontName) then
+			db.profile.progressNameplateFontName = defaults.progressNameplateFontName
 		end
 	end
 	ProfileUtils.ResetInstanceKeys = function()
