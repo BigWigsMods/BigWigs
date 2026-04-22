@@ -438,6 +438,8 @@ L.battleResNoteTooltip = "Aviso: Esta ventana de opciones solo se mostrará al e
 -- Keystones.lua
 --
 
+--L.keys = "Keys"
+
 L.keystoneTitle = "BigWigs Piedras angulares"
 L.keystoneHeaderParty = "Grupo"
 L.keystoneRefreshParty = "Actualizar grupo"
@@ -588,6 +590,17 @@ L.instanceKeysOtherDungeonColorDesc = "Escoge el color para los jugadores que te
 L.instanceKeysEndOfRunDesc = "Por defecto la lista se mostrará cuando entres a una mazmorra mítica. Al activar esta opción también aparecerá la lista cuando termine la Mítica+."
 L.instanceKeysHideTitle = "Esconder título"
 L.instanceKeysHideTitleDesc = "Esconder el título \"¿Quién tiene la piedra?\"."
+
+-- Progress %
+
+--L.progressPercent = "Progress %"
+--L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
+--L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
+--L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
+--L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
+--L.progressCurrentPull = "Current Pull"
+--L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
+--L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in |cFF436EEETools|r > |cFF436EEEMythic+|r > |cFF436EEEProgress %|r."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

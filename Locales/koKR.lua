@@ -438,6 +438,8 @@ L.customText = "사용자 지정 텍스트 (%s가 포함되어야 함)"
 -- Keystones.lua
 --
 
+L.keys = "쐐기돌"
+
 L.keystoneTitle = "BigWigs 쐐기돌"
 L.keystoneHeaderParty = "파티"
 L.keystoneRefreshParty = "파티 새로 고침"
@@ -588,6 +590,17 @@ L.instanceKeysOtherDungeonColorDesc = "현재 있는 던전과 관련이 없는 
 L.instanceKeysEndOfRunDesc = "기본적으로 목록은 신화 던전에 들어갈 때만 표시됩니다. 이 옵션을 활성화하면 신화+가 끝난 후에도 목록이 표시됩니다."
 L.instanceKeysHideTitle = "제목 숨기기"
 L.instanceKeysHideTitleDesc = "\"누가 쐐기돌을 가지고 있나요?\" 제목을 숨깁니다."
+
+-- Progress %
+
+L.progressPercent = "진행률 %"
+L.progressPercentDesc = "각 NPC를 처치할 때마다 획득할 수 있는 신화+ 진행률 수치를 계산하는 데 도움이 되는 도구입니다."
+L.progressPercentTooltip = "적 NPC 위에 마우스를 올렸을 때 툴팁에 진행률 % 표시"
+L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t진행률: %.2f%% (%d)"
+L.progressPercentNameplate = "적 NPC의 이름표에 진행률 % 표시"
+L.progressCurrentPull = "현재 전투"
+L.progressCurrentPullDesc = "현재 전투 중인 NPC 무리에서 얻을 수 있는 총 진행률을 표시합니다.\n\n아직 작동하지 않습니다!"
+L.tempProgressAnnounce = "이제 NPC 위에 마우스를 올리거나 이름표에서 각 NPC가 제공하는 진행률 %를 확인할 수 있습니다.\n\n|cFF436EEE도구|r > |cFF436EEE신화+|r > |cFF436EEE진행률 %|r에서 설정하세요."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

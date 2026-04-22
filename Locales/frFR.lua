@@ -438,6 +438,8 @@ L.customText = "Texte personnalisé (Doit contenir %s)"
 -- Keystones.lua
 --
 
+L.keys = "Clefs"
+
 L.keystoneTitle = "BigWigs clefs mythique +"
 L.keystoneHeaderParty = "Groupe"
 L.keystoneRefreshParty = "MàJ Groupe"
@@ -588,6 +590,17 @@ L.instanceKeysOtherDungeonColorDesc = "Choisissez la couleur de la police des pe
 L.instanceKeysEndOfRunDesc = "Par défaut, la liste ne s'affichera que si vous êtes dans un donjon mythique. Activer cette option vous affichera la liste même lorsque le donjon mythique + est terminé."
 L.instanceKeysHideTitle = "Cacher le titre"
 L.instanceKeysHideTitleDesc = "Cacher le titre \"Qui a une clef ?\"."
+
+-- Progress %
+
+L.progressPercent = "Progrès %"
+L.progressPercentDesc = "Outils qui vous aident à calculer le progrès en mythique + que vous gagnerez sur chaque PNJ que vous tuerez."
+L.progressPercentTooltip = "Affiche le progrès en % dans la bulle d'aide lorsque vous survolez un PNJ ennemi"
+L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgrès : %.2f%% (%d)"
+L.progressPercentNameplate = "Affiche le progrès en % sur les barres d'infos des PNJ ennemis"
+L.progressCurrentPull = "Combat actuel"
+L.progressCurrentPullDesc = "Affiche le progrès total que vous gagnerez sur le groupe de PNJ ennemis que vous combattez actuellement.\n\nPAS ENCORE IMPLÉMENTÉ !"
+L.tempProgressAnnounce = "Vous pouvez maintenant voir le progrès en % que chaque PNJ ennemi vous rapportera lorsque vous les survolez avec votre souris et sur leur barre d'info.\n\nÀ configurer dans |cFF436EEEOutils|r > |cFF436EEEMythique +|r > |cFF436EEEProgrès %|r."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

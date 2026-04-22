@@ -438,6 +438,8 @@ L.autoRoleExplainer = "При вступлении в группу или изм
 -- Keystones.lua
 --
 
+--L.keys = "Keys"
+
 L.keystoneTitle = "BigWigs: Эпохальные подземелья"
 L.keystoneHeaderParty = "Группа"
 L.keystoneRefreshParty = "Обновить ключи у группы"
@@ -588,6 +590,17 @@ L.instanceKeysOtherDungeonColorDesc = "Выберите цвет текста д
 L.instanceKeysEndOfRunDesc = "По умолчанию список отображается при входе в подземелье. При включении данной опции список будет отображаться и при завершении эпохального+ подземелья."
 --L.instanceKeysHideTitle = "Hide title"
 --L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
+
+-- Progress %
+
+--L.progressPercent = "Progress %"
+--L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
+--L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
+--L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
+--L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
+--L.progressCurrentPull = "Current Pull"
+--L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
+--L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in |cFF436EEETools|r > |cFF436EEEMythic+|r > |cFF436EEEProgress %|r."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

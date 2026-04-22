@@ -438,6 +438,8 @@ L.customText = "Angepasster Text (Muss %s enthalten)"
 -- Keystones.lua
 --
 
+L.keys = "Schlüsselsteine"
+
 L.keystoneTitle = "BigWigs Schlüsselsteine"
 L.keystoneHeaderParty = "Gruppe"
 L.keystoneRefreshParty = "Gruppe aktualisieren"
@@ -588,6 +590,17 @@ L.instanceKeysOtherDungeonColorDesc = "Schriftfarbe für Spieler wählen, deren 
 L.instanceKeysEndOfRunDesc = "Standardmäßig wird die Liste nur beim Betreten eines mythischen Dungeons angezeigt. Durch Aktivierung dieser Option wird die Liste auch nach Abschluss von Mythisch+ Dungeons angezeigt."
 L.instanceKeysHideTitle = "Titel verstecken"
 L.instanceKeysHideTitleDesc = "Versteckt den \"Wer hat einen Schlüsselstein?\" Titel."
+
+-- Progress %
+
+L.progressPercent = "Fortschritt %"
+L.progressPercentDesc = "Werkzeuge zur Berechnung des Mythisch+ Fortschritts durch das Töten der einzelnen Gegner."
+L.progressPercentTooltip = "Beim Überfahren von Gegnern mit der Maus den Fortschritt in % im Tooltip anzeigen"
+L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tFortschritt: %.2f%% (%d)"
+L.progressPercentNameplate = "Fortschritt in % an Namensplaketten von Gegnern anzeigen"
+L.progressCurrentPull = "Aktueller Pull"
+L.progressCurrentPullDesc = "Gesamtfortschritt, der durch die im Kampf befindlichen Gegner erhalten wird, anzeigen.\n\nNOCH NICHT FUNKTIONSTÜCHTIG!"
+L.tempProgressAnnounce = "Es kann jetzt der Fortschrittsbeitrag in % eines Gegners beim Überfahren mit der Maus und an den Namensplaketten angezeigt werden.\n\nKonfigurieren in |cFF436EEEWerkzeuge|r > |cFF436EEEMythisch+|r > |cFF436EEEFortschritt %|r."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
