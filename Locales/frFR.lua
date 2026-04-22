@@ -438,7 +438,7 @@ L.customText = "Texte personnalisé (Doit contenir %s)"
 -- Keystones.lua
 --
 
---L.keys = "Keys"
+L.keys = "Clefs"
 
 L.keystoneTitle = "BigWigs clefs mythique +"
 L.keystoneHeaderParty = "Groupe"
@@ -593,14 +593,14 @@ L.instanceKeysHideTitleDesc = "Cacher le titre \"Qui a une clef ?\"."
 
 -- Progress %
 
---L.progressPercent = "Progress %"
---L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
---L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
---L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)"
---L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
---L.progressCurrentPull = "Current Pull"
---L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
---L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in |cFF436EEETools|r > |cFF436EEEMythic+|r > |cFF436EEEProgress %|r."
+L.progressPercent = "Progrès %"
+L.progressPercentDesc = "Outils qui vous aident à calculer le progrès en mythique + que vous gagnerez sur chaque PNJ que vous tuerez."
+L.progressPercentTooltip = "Affiche le progrès en % dans la bulle d'aide lorsque vous survolez un PNJ ennemi"
+L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgrès : %.2f%% (%d)"
+L.progressPercentNameplate = "Affiche le progrès en % sur les barres d'infos des PNJ ennemis"
+L.progressCurrentPull = "Combat actuel"
+L.progressCurrentPullDesc = "Affiche le progrès total que vous gagnerez sur le groupe de PNJ ennemis que vous combattez actuellement.\n\nPAS ENCORE IMPLÉMENTÉ !"
+L.tempProgressAnnounce = "Vous pouvez maintenant voir le progrès en % que chaque PNJ ennemi vous rapportera lorsque vous les survolez avec votre souris et sur leur barre d'info.\n\nÀ configurer dans |cFF436EEEOutils|r > |cFF436EEEMythique +|r > |cFF436EEEProgrès %|r."
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
