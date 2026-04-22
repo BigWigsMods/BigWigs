@@ -594,7 +594,7 @@ L.instanceKeysHideTitleDesc = "Versteckt den \"Wer hat einen Schlüsselstein?\" 
 -- Progress %
 
 L.progressPercent = "Fortschritt %"
---L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
+L.progressPercentDesc = "Werkzeuge zur Berechnung des Mythisch+ Fortschritts durch das Töten der einzelnen Gegner."
 L.progressPercentTooltip = "Beim Überfahren von Gegnern mit der Maus den Fortschritt in % im Tooltip anzeigen"
 L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tFortschritt: %.2f%% (%d)"
 L.progressPercentNameplate = "Fortschritt in % an Namensplaketten von Gegnern anzeigen"
