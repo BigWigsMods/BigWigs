@@ -254,6 +254,7 @@ local mythicPlusSettingsToExport = {
 	"instanceKeysShowDungeonEnd",
 	"instanceKeysHideTitle",
 	-- Progress %
+	"progressTooltipFormat",
 	"progressNameplate",
 	"progressNameplateOffsetX",
 	"progressNameplateOffsetY",

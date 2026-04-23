@@ -596,7 +596,11 @@ L.instanceKeysHideTitleDesc = "隐藏 \"谁拥有钥石？\" 标题。"
 L.progressPercent = "进度 %"
 L.progressPercentDesc = "帮助你计算每击杀一个NPC将获得多少史诗钥石进度的辅助工具。"
 L.progressPercentTooltip = "鼠标指向敌对NPC时，在提示信息中显示进度 %"
-L.progressPercentTooltipText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t进度：%.2f%% (%d)"
+L.progressPercentTooltipText = {
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t进度：%.2f%%",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t进度：%.2f%% (%d)",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t进度：%.2f%% (%d/%d)",
+}
 L.progressPercentNameplate = "在敌对NPC的姓名板上显示进度 %"
 L.progressCurrentPull = "当前波次"
 L.progressCurrentPullDesc = "显示你当前战斗中这组NPC将提供的总进度。\n\n尚未实装！"

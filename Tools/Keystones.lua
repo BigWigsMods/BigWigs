@@ -52,6 +52,7 @@ do
 		instanceKeysHideTitle = false,
 		-- Progress %
 		progressTooltip = true,
+		progressTooltipFormat = 3,
 		progressNameplate = false,
 		progressNameplateOffsetX = 150,
 		progressNameplateOffsetY = 0,
@@ -172,6 +173,9 @@ do
 		ValidateColor(db.profile.instanceKeysColor, defaults.instanceKeysColor, 0.3)
 		ValidateColor(db.profile.instanceKeysOtherDungeonColor, defaults.instanceKeysOtherDungeonColor, 0.3)
 
+		if db.profile.progressTooltipFormat < 1 or db.profile.progressTooltipFormat > 3 or math.floor(db.profile.progressTooltipFormat+0.5) ~= db.profile.progressTooltipFormat then
+			db.profile.progressTooltipFormat = defaults.progressTooltipFormat
+		end
 		if db.profile.progressNameplateOffsetX < -300 or db.profile.progressNameplateOffsetX > 300 or math.floor(db.profile.progressNameplateOffsetX+0.5) ~= db.profile.progressNameplateOffsetX then
 			db.profile.progressNameplateOffsetX = defaults.progressNameplateOffsetX
 		end
@@ -781,7 +785,7 @@ guildRefreshButton:SetHighlightTexture("Interface\\Buttons\\UI-RefreshButton")
 guildRefreshButton:SetScript("OnClick", function()
 	guildList = {}
 	LibSpec.RequestGuildSpecialization()
-	C_Timer.After(0.2, function() LibKeystoneRequest("GUILD") end)
+	BigWigsLoader.CTimerAfter(0.2, function() LibKeystoneRequest("GUILD") end)
 end)
 guildRefreshButton:SetScript("OnEnter", function(self)
 	bwTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -1072,7 +1076,7 @@ do
 
 		LibSpec.RequestGuildSpecialization()
 		LibKeystoneRequest("PARTY")
-		C_Timer.After(0.2, function() LibKeystoneRequest("GUILD") end)
+		BigWigsLoader.CTimerAfter(0.2, function() LibKeystoneRequest("GUILD") end)
 	end)
 
 	-- Tab 2 (Teleports)
@@ -2101,124 +2105,137 @@ end
 -- Progress %
 --
 
-do -- Tooltip
-	local function AddPercentLine(tooltip)
-		if db.profile.progressTooltip and IsInInstance() and C_ScenarioInfo.GetUnitCriteriaProgressValues then
-			local value, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
-			if value and percent then
-				tooltip:AddLine(L.progressPercentTooltipText:format(percent, value))
-			end
-		end
-
-	end
-	TooltipDataProcessor.AddTooltipPostCall(2, AddPercentLine) -- Enum.TooltipDataType.Unit
-end
-
 local NamePlatePercentUtils = {testing = false}
-do -- Nameplates
-	local activeTexts, storedTexts = {}, {}
-	local GetTextObject
-	local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
-	do
-		local function SetText(self, text)
-			local flags = nil
-			if db.profile.progressNameplateMonochrome and db.profile.progressNameplateOutline ~= "NONE" then
-				flags = "MONOCHROME," .. db.profile.progressNameplateOutline
-			elseif db.profile.progressNameplateMonochrome then
-				flags = "MONOCHROME"
-			elseif db.profile.progressNameplateOutline ~= "NONE" then
-				flags = db.profile.progressNameplateOutline
+do
+	local totalEnemyForcesRaw = 0
+	local GetUnitCriteriaProgressValues = C_ScenarioInfo.GetUnitCriteriaProgressValues
+	do -- Tooltip
+		local GetStepInfo = C_Scenario.GetStepInfo
+		local GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
+		local function AddPercentLine(tooltip)
+			if db.profile.progressTooltip and IsInInstance() then
+				local value, percent = GetUnitCriteriaProgressValues("mouseover")
+				if value and percent then
+					if totalEnemyForcesRaw == 0 then
+						local _, _, stepCount = GetStepInfo()
+						for i = stepCount, 1, -1 do
+							local infoTable = GetCriteriaInfo(i)
+							if infoTable.totalQuantity and infoTable.isWeightedProgress then
+								totalEnemyForcesRaw = infoTable.totalQuantity
+							end
+						end
+					end
+					tooltip:AddLine(L.progressPercentTooltipText[db.profile.progressTooltipFormat]:format(percent, value, totalEnemyForcesRaw))
+				end
 			end
-			self.fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, flags)
-			self.fontString:SetTextColor(db.profile.progressNameplateFontColor[1], db.profile.progressNameplateFontColor[2], db.profile.progressNameplateFontColor[3], db.profile.progressNameplateFontColor[4])
-			self.fontString:SetText("99.99%")
-			local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
-			self.frame:SetSize(w, h)
-			self.fontString:SetText(text)
-		end
-		local function Hide(self, unit)
-			self.fontString:ClearText()
-			self.fontString:ClearAllPoints()
-			self.fontString:SetPoint("CENTER")
-			self.frame:Hide()
-			self.frame:ClearAllPoints()
-			storedTexts[#storedTexts+1] = self
-			activeTexts[unit] = nil
-		end
-		local function SetPoint(self, unit)
-			local nameplateFrame = GetNamePlateForUnit(unit)
-			if nameplateFrame then
-				activeTexts[unit] = self
-				self.frame:Show()
-				self.frame:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateOffsetX, db.profile.progressNameplateOffsetY)
-				return true
-			end
-		end
-		function GetTextObject()
-			if next(storedTexts) then
-				return table.remove(storedTexts)
-			else
-				local object = {SetText = SetText, Hide = Hide, SetPoint = SetPoint}
-				local frame = CreateFrame("Frame", nil, UIParent)
-				object.frame = frame
-				frame:SetPoint("CENTER")
-				frame:SetFrameStrata("MEDIUM")
-				frame:SetFixedFrameStrata(true)
-				frame:SetFrameLevel(6200)
-				frame:SetFixedFrameLevel(true)
 
-				local fontString = frame:CreateFontString()
-				object.fontString = fontString
-				fontString:SetPoint("CENTER")
-				fontString:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
-				return object
-			end
 		end
+		TooltipDataProcessor.AddTooltipPostCall(2, AddPercentLine) -- Enum.TooltipDataType.Unit
 	end
 
-	do
-		NamePlatePercentUtils.RemoveAll = function()
-			for unit, text in next, activeTexts do
-				text:Hide(unit)
+	do -- Nameplates
+		local activeTexts, storedTexts = {}, {}
+		local GetTextObject
+		local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
+		do
+			local function SetText(self, text)
+				local flags = nil
+				if db.profile.progressNameplateMonochrome and db.profile.progressNameplateOutline ~= "NONE" then
+					flags = "MONOCHROME," .. db.profile.progressNameplateOutline
+				elseif db.profile.progressNameplateMonochrome then
+					flags = "MONOCHROME"
+				elseif db.profile.progressNameplateOutline ~= "NONE" then
+					flags = db.profile.progressNameplateOutline
+				end
+				self.fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, flags)
+				self.fontString:SetTextColor(db.profile.progressNameplateFontColor[1], db.profile.progressNameplateFontColor[2], db.profile.progressNameplateFontColor[3], db.profile.progressNameplateFontColor[4])
+				self.fontString:SetText("99.99%")
+				local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
+				self.frame:SetSize(w, h)
+				self.fontString:SetText(text)
+			end
+			local function Hide(self, unit)
+				self.fontString:ClearText()
+				self.fontString:ClearAllPoints()
+				self.fontString:SetPoint("CENTER")
+				self.frame:Hide()
+				self.frame:ClearAllPoints()
+				storedTexts[#storedTexts+1] = self
+				activeTexts[unit] = nil
+			end
+			local function SetPoint(self, unit)
+				local nameplateFrame = GetNamePlateForUnit(unit)
+				if nameplateFrame then
+					activeTexts[unit] = self
+					self.frame:Show()
+					self.frame:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateOffsetX, db.profile.progressNameplateOffsetY)
+					return true
+				end
+			end
+			function GetTextObject()
+				if next(storedTexts) then
+					return table.remove(storedTexts)
+				else
+					local object = {SetText = SetText, Hide = Hide, SetPoint = SetPoint}
+					local frame = CreateFrame("Frame", nil, UIParent)
+					object.frame = frame
+					frame:SetPoint("CENTER")
+					frame:SetFrameStrata("MEDIUM")
+					frame:SetFixedFrameStrata(true)
+					frame:SetFrameLevel(6200)
+					frame:SetFixedFrameLevel(true)
+
+					local fontString = frame:CreateFontString()
+					object.fontString = fontString
+					fontString:SetPoint("CENTER")
+					fontString:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
+					return object
+				end
 			end
 		end
-		NamePlatePercentUtils.UpdateAll = function()
-			for unit, text in next, activeTexts do
-				local percent
-				if NamePlatePercentUtils.testing then
-					local digit, decimal = math.random(1, 5), math.random(100, 999)
-					decimal = decimal / 1000
-					percent = digit + decimal
-				else
-					local _, per = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
-					if per then percent = per end
-				end
-				if percent then
-					text.fontString:ClearText()
-					text.fontString:ClearAllPoints()
-					text.fontString:SetPoint("CENTER")
-					text.frame:ClearAllPoints()
-					if text:SetPoint(unit) then
-						text:SetText(("%.2f%%"):format(percent))
-					else
-						text:Hide(unit)
-					end
-				else
+
+		do
+			NamePlatePercentUtils.RemoveAll = function()
+				for unit, text in next, activeTexts do
 					text:Hide(unit)
 				end
 			end
-		end
+			NamePlatePercentUtils.UpdateAll = function()
+				for unit, text in next, activeTexts do
+					local percent
+					if NamePlatePercentUtils.testing then
+						local digit, decimal = math.random(1, 5), math.random(100, 999)
+						decimal = decimal / 1000
+						percent = digit + decimal
+					else
+						local _, per = GetUnitCriteriaProgressValues(unit)
+						if per then percent = per end
+					end
+					if percent then
+						text.fontString:ClearText()
+						text.fontString:ClearAllPoints()
+						text.fontString:SetPoint("CENTER")
+						text.frame:ClearAllPoints()
+						if text:SetPoint(unit) then
+							text:SetText(("%.2f%%"):format(percent))
+						else
+							text:Hide(unit)
+						end
+					else
+						text:Hide(unit)
+					end
+				end
+			end
 
-		local UnitCanAttack = BigWigsLoader.UnitCanAttack
-		NamePlatePercentUtils.Test = function()
-			NamePlatePercentUtils.RemoveAll()
-			if C_ScenarioInfo.GetUnitCriteriaProgressValues then
+			local UnitCanAttack = BigWigsLoader.UnitCanAttack
+			NamePlatePercentUtils.Test = function()
+				NamePlatePercentUtils.RemoveAll()
 				for i = 1, 20 do
 					local unit = "nameplate" .. i
 					if UnitCanAttack("player", unit) then
 						local nameplateFrame = GetNamePlateForUnit(unit)
 						if nameplateFrame then
-							local _, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
+							local _, percent = GetUnitCriteriaProgressValues(unit)
 							if not percent then
 								local digit, decimal = math.random(1, 5), math.random(100, 999)
 								decimal = decimal / 1000
@@ -2234,22 +2251,22 @@ do -- Nameplates
 					end
 				end
 			end
-		end
-		NamePlatePercentUtils.RestoreAll = function()
-			NamePlatePercentUtils.RemoveAll()
-			if db.profile.progressNameplate and IsInInstance() and C_ScenarioInfo.GetUnitCriteriaProgressValues then
-				for i = 1, 20 do
-					local unit = "nameplate" .. i
-					if UnitCanAttack("player", unit) then
-						local nameplateFrame = GetNamePlateForUnit(unit)
-						if nameplateFrame then
-							local _, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues(unit)
-							if percent then
-								local text = GetTextObject()
-								if text:SetPoint(unit) then
-									text:SetText(("%.2f%%"):format(percent))
-								else
-									text:Hide(unit)
+			NamePlatePercentUtils.RestoreAll = function()
+				NamePlatePercentUtils.RemoveAll()
+				if db.profile.progressNameplate and IsInInstance() then
+					for i = 1, 20 do
+						local unit = "nameplate" .. i
+						if UnitCanAttack("player", unit) then
+							local nameplateFrame = GetNamePlateForUnit(unit)
+							if nameplateFrame then
+								local _, percent = GetUnitCriteriaProgressValues(unit)
+								if percent then
+									local text = GetTextObject()
+									if text:SetPoint(unit) then
+										text:SetText(("%.2f%%"):format(percent))
+									else
+										text:Hide(unit)
+									end
 								end
 							end
 						end
@@ -2257,38 +2274,47 @@ do -- Nameplates
 				end
 			end
 		end
-	end
 
-	local nameplateFrame = CreateFrame("Frame")
-	nameplateFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
-	nameplateFrame:RegisterEvent("CHALLENGE_MODE_START")
-	nameplateFrame:SetScript("OnEvent", function(self, event, unit)
-		if event == "NAME_PLATE_UNIT_ADDED" then
-			local _, percent = C_ScenarioInfo.GetUnitCriteriaProgressValues("mouseover")
-			if percent then
-				local text = GetTextObject()
-				if text:SetPoint(unit) then
-					text:SetText(("%.2f%%"):format(percent))
-				else
+		local nameplateFrame = CreateFrame("Frame")
+		nameplateFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
+		nameplateFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+		nameplateFrame:RegisterEvent("CHALLENGE_MODE_START")
+		nameplateFrame:SetScript("OnEvent", function(self, event, unit)
+			if event == "NAME_PLATE_UNIT_ADDED" then
+				local _, percent = GetUnitCriteriaProgressValues(unit)
+				if percent then
+					local text = GetTextObject()
+					if text:SetPoint(unit) then
+						text:SetText(("%.2f%%"):format(percent))
+					else
+						text:Hide(unit)
+					end
+				end
+			elseif event == "NAME_PLATE_UNIT_REMOVED" then
+				local text = activeTexts[unit]
+				if text then
 					text:Hide(unit)
 				end
+			elseif event == "PLAYER_LEAVING_WORLD" then
+				self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+				self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
+				NamePlatePercentUtils.RemoveAll()
+			elseif event == "PLAYER_ENTERING_WORLD" then -- Only the first time it fires, to compensate for reloading UI in the middle of a M+
+				self:UnregisterEvent(event)
+				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
+				if diffID == 8 and db.profile.progressNameplate then
+					self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+					self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+				end
+			elseif event == "CHALLENGE_MODE_START" then
+				totalEnemyForcesRaw = 0
+				if db.profile.progressNameplate then
+					self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+					self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+				end
 			end
-		elseif event == "NAME_PLATE_UNIT_REMOVED" then
-			local text = activeTexts[unit]
-			if text then
-				text:Hide(unit)
-			end
-		elseif event == "PLAYER_LEAVING_WORLD" then
-			self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
-			self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
-			NamePlatePercentUtils.RemoveAll()
-		elseif event == "CHALLENGE_MODE_START" then
-			if db.profile.progressNameplate and C_ScenarioInfo.GetUnitCriteriaProgressValues then
-				self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-				self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-			end
-		end
-	end)
+		end)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -2818,6 +2844,18 @@ do
 								name = L.progressPercentTooltip,
 								order = 1,
 								width = "full",
+							},
+							progressTooltipFormat = {
+								type = "select",
+								name = L.textFormat,
+								values = {
+									L.progressPercentTooltipText[1]:format(1.23),
+									L.progressPercentTooltipText[2]:format(1.23, 4),
+									L.progressPercentTooltipText[3]:format(1.23, 4, 500),
+								},
+								order = 2,
+								width = 2,
+								disabled = function() return not db.profile.progressTooltip end,
 							},
 						},
 					},
