@@ -74,11 +74,10 @@ if L then
 	L.prism_kicks = "Kicks"
 	L.dark_constellation = "Stars"
 	L.the_dark_archangel = "Big Boom"
-	L.dark_rune = "Memory Mark"
 	L.dark_rune_bar = "Solve the Game"
 
 	L.starsplinter = "Blazes" -- Mythic intermission and P4 bar text
-	L.starsplinter_you = "Blaze"
+	L.starsplinter_singular = "Blaze"
 
 	L.left = "[L] %s" -- left/west group bars in p3
 	L.right = "[R] %s" -- right/east group bars in p3
@@ -92,6 +91,31 @@ if L then
 	L.custom_select_limit_warnings_value4 = "Show warnings for left side only."
 	L.custom_select_limit_warnings_value5 = "Show warnings for right side only."
 end
+
+mod:SetRenames({
+	[1253915] = "heavens_glaives", -- XXX Sets the default to the value of L.heavens_glaives (value cached on use so the localized version is loaded)
+	[1279420] = "beams", -- Dark Quasar -- XXX Uses CL.beams as default as there is no L.beams defined
+	[1249620] = "deaths_dirge",
+	[1249609] = {"mark", "dark_rune_bar"}, -- Dark Rune -- XXX Extra associated strings show as a count (+1) on the main page, config label is just a title cased version of the string key currently
+	[1251386] = "prism_kicks", -- Safeguard Prism
+	[1267049] = "heavens_lance",
+
+	[1282441] = {"starsplinter", "starsplinter_singular"},
+
+	[1284525] = "beams", -- Galvanize
+	[1282412] = "dodge", -- Core Harvest
+	[1281194] = "knockback", -- Dark Meltdown
+
+	[1266388] = "dark_constellation",
+	[1250898] = "the_dark_archangel",
+	[1266897] = "soaks", -- Light Siphon
+
+	[1284980] = "deaths_dirge", -- Grim Symphony
+	[1284931] = "prism_kicks", -- Termination Prism
+	[1273158] = "deaths_dirge", -- Death's Requiem
+
+	[1276525] = {nil, "left", "right"}, -- Heaven & Hell -- XXX Example of associated strings with no default rename
+})
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -137,30 +161,8 @@ function mod:GetOptions()
 		[1253915] = -32197, -- Stage One: Final Tolls
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
 		[1250898] = -33639, -- Stage Three: Midnight Falls
-	},{
-		[1253915] = L.heavens_glaives,
-		[1279420] = CL.beams, -- Dark Quasar
-		[1249620] = L.deaths_dirge,
-		[1249609] = L.dark_rune,
-		[1251386] = L.prism_kicks, -- Safeguard Prism
-		[1267049] = L.heavens_lance,
-
-		[1284525] = CL.beams, -- Galvanize
-		[1282412] = CL.dodge, -- Core Harvest
-		[1281194] = CL.knockback, -- Dark Meltdown
-		[1266388] = L.dark_constellation,
-		[1250898] = L.the_dark_archangel,
-		[1266897] = CL.soaks, -- Light Siphon
-
-		[1284980] = L.deaths_dirge, -- Grim Symphony
-		[1284931] = L.prism_kicks, -- Termination Prism
-		[1273158] = L.deaths_dirge, -- Death's Requiem
-		[1282441] = L.starsplinter,
+		[1273158] = "mythic",
 	}
-end
-
-function mod:GetName(key)
-	return self.notes and self.notes[key] or self:SpellName(key)
 end
 
 function mod:OnBossEnable()
@@ -540,15 +542,15 @@ function mod:ENCOUNTER_WARNING(_, info)
 	if stage == 1 or stage == 3 then
 		if info.severity == 2 then -- Dark Rune
 			self:PersonalMessage(1249609)
-			-- self:Bar(1249609, stage == 1 and 10 or 15, L.dark_rune_bar)
+			-- self:Bar(1249609, stage == 1 and 10 or 15, self:GetName("dark_rune_bar"))
 		end
 	elseif stage == 2 or stage == 4 then
 		if info.severity == 2 then -- Galvanize
 			self:PersonalMessage(1284525)
 		elseif info.severity == 1 then -- Starsplinter
 			-- (p2 is set on intermission start)
-			self:PersonalMessage(1282441, nil, L.starsplinter_you)
-			-- self:Bar(1282441, 3, CL.you:format(L.starsplinter_you))
+			self:PersonalMessage(1282441, nil, self:GetName("starsplinter_singular"))
+			-- self:Bar(1282441, 3, CL.you:format(self:GetName("starsplinter_singular")))
 		end
 	end
 end
@@ -681,7 +683,7 @@ function mod:IntoTheDarkwell(duration)
 		self:Bar(1279420, 10.5, CL.count:format(self:GetName(1279420), quasarCount))
 		self:ScheduleTimer("IntermissionDarkQuasar", 10.5)
 		if self:Mythic() then
-			self:Bar(1282441, 38, L.starsplinter)
+			self:Bar(1282441, 38, self:GetName(1282441)) -- Starsplinter
 		end
 	end
 
