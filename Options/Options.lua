@@ -40,6 +40,7 @@ end
 
 local colorModule
 local soundModule
+local renameModule
 local configFrame
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
@@ -322,6 +323,7 @@ do
 		soundModule = BigWigs:GetPlugin("Sounds")
 		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
 		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+		renameModule = BigWigs:GetPlugin("Rename", true)
 
 		loader.RegisterMessage(options, "BigWigs_PluginOptionsReady")
 		local pluginOptions = BigWigs:GetPluginOptions()
@@ -626,8 +628,28 @@ local advancedTabs = {
 	},
 }
 
+local function setRenameValue(widget, _, value)
+	local module = widget:GetUserData("module")
+	local key = widget:GetUserData("key")
+	renameModule:SetName(module, key, value)
+
+	-- refresh
+	local dropdown = widget:GetUserData("dropdown")
+	local scrollFrame = widget:GetUserData("scrollFrame")
+	local bossOption = widget:GetUserData("option")
+	visibleSpellDescriptionWidgets = {}
+	scrollFrame:ReleaseChildren()
+	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+	scrollFrame:PerformLayout()
+end
+
+local function resetRenameValue(widget, _, value)
+	local editbox = widget:GetUserData("editbox")
+	editbox:Fire("OnEnterPressed", "")
+end
+
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, optionNotes, optionRename = BigWigs:GetBossOptionDetails(module, bossOption)
 	local widgets = {}
 
 	local back = AceGUI:Create("Button")
@@ -650,8 +672,16 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	idLabel.label:SetJustifyH("RIGHT")
 	widgets[#widgets + 1] = idLabel
 
+	local abilityLabel = name
+	if optionNotes then
+		abilityLabel = L.noteLabel:format(abilityLabel, optionNotes)
+	end
+	if optionRename and optionRename ~= name then
+		abilityLabel = L.renameLabel:format(abilityLabel, optionRename)
+	end
+
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(abilityLabel)
 	check:SetTriState(true)
 	check:SetFullWidth(true)
 	check:SetDescription(desc)
@@ -667,6 +697,95 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
 	end
 	widgets[#widgets + 1] = check
+
+	if not BigWigs:IsCustomBossOption(dbKey) and renameModule then -- can't rename builtins
+		if type(dbKey) == "number" then -- don't show general rename for string keys
+			local customDesc = AceGUI:Create("Label")
+			customDesc:SetText(L.renameHeader)
+			customDesc:SetColor(1, 0.82, 0)
+			customDesc:SetFullWidth(true)
+			widgets[#widgets + 1] = customDesc
+
+			local default = renameModule:GetDefaultName(module, dbKey)
+			local customName = AceGUI:Create("EditBox")
+			customName:SetText(optionRename)
+			customName:SetUserData("key", dbKey)
+			customName:SetUserData("scrollFrame", scrollFrame)
+			customName:SetUserData("dropdown", dropdown)
+			customName:SetUserData("module", module)
+			customName:SetUserData("option", bossOption)
+			customName:SetCallback("OnEnterPressed", setRenameValue)
+			customName:SetRelativeWidth(0.6)
+			widgets[#widgets + 1] = customName
+
+			local customReset = AceGUI:Create("Button")
+			customReset:SetText(L.reset)
+			customReset:SetDisabled(not optionRename or optionRename == default)
+			customReset:SetUserData("editbox", customName)
+			customReset:SetCallback("OnClick", resetRenameValue)
+			customReset:SetRelativeWidth(0.2)
+			widgets[#widgets + 1] = customReset
+
+			local customDefault = AceGUI:Create("Button")
+			customDefault:SetText(L.spellName)
+			customDefault:SetDisabled(not optionRename or optionRename == name or default == module:SpellName(dbKey))
+			customDefault:SetUserData("editbox", customName)
+			customDefault:SetUserData("spell", name)
+			customDefault:SetUserData("desc", L.spellNameResetDesc)
+			customDefault:SetCallback("OnEnter", slaveOptionMouseOver)
+			customDefault:SetCallback("OnLeave", optionsTooltip_Hide)
+			customDefault:SetCallback("OnClick", function(widget, event, value)
+				local editbox = widget:GetUserData("editbox")
+				editbox:Fire("OnEnterPressed", widget:GetUserData("spell"))
+			end)
+			customDefault:SetRelativeWidth(0.2)
+			widgets[#widgets + 1] = customDefault
+		end
+
+		local renameOptions = module.renameOptions and module.renameOptions[dbKey]
+		if renameOptions and renameOptions[2] then -- 2+ are extra associated strings
+			local spacer = AceGUI:Create("Label")
+			spacer:SetFullWidth(true)
+			widgets[#widgets + 1] = spacer
+
+			for i = 2, #renameOptions do
+				local stringKey = renameOptions[i]
+				local default = module.localization[stringKey]
+				local text = renameModule:GetName(module, stringKey) or default
+				-- XXX just title case the key for now
+				local label = stringKey:gsub("_", " "):gsub("(%a)(%w*)", function(a, b) return a:upper()..b:lower() end)
+				-- suffix -> localized category
+				-- local titles = {
+				-- 	me = "On Me",
+				-- 	cast = "Cast Message",
+				-- 	castbar = "Cast Bar",
+				-- 	singular = "Singular Form (Target Message/Bar)",
+				-- }
+				-- local suffix = stringKey:match("_(.-)$")
+				-- local label = titles[suffix]
+
+				local customStringName = AceGUI:Create("EditBox")
+				customStringName:SetLabel(label)
+				customStringName:SetText(text)
+				customStringName:SetUserData("key", stringKey)
+				customStringName:SetUserData("scrollFrame", scrollFrame)
+				customStringName:SetUserData("dropdown", dropdown)
+				customStringName:SetUserData("module", module)
+				customStringName:SetUserData("option", bossOption)
+				customStringName:SetCallback("OnEnterPressed", setRenameValue)
+				customStringName:SetRelativeWidth(0.6)
+				widgets[#widgets + 1] = customStringName
+
+				local customStringReset = AceGUI:Create("Button")
+				customStringReset:SetText(L.reset)
+				customStringReset:SetDisabled(text == default)
+				customStringReset:SetUserData("editbox", customStringName)
+				customStringReset:SetCallback("OnClick", resetRenameValue)
+				customStringReset:SetRelativeWidth(0.4)
+				widgets[#widgets + 1] = customStringReset
+			end
+		end
+	end
 
 	-- Create role-specific secondary checkbox
 	for i, key in next, BigWigs:GetRoleOptions() do
@@ -742,7 +861,7 @@ local function customDropdownValueChanged(widget, _, value)
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, optionNotes, optionRename = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	if type(dbKey) == "string" and dbKey:find("^custom_select_") then
 		local moduleLocale = module:GetLocale()
@@ -782,8 +901,27 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 
+	if optionRename == name then optionRename = nil end -- altname set to spell name
+	local renameOptions = module.renameOptions and module.renameOptions[dbKey]
+	if renameOptions and #renameOptions > 1 then
+		local count = #renameOptions - 1
+		if optionRename then
+			optionRename = ("%s, +%d"):format(optionRename, count)
+		else
+			optionRename = ("+%d"):format(count)
+		end
+	end
+
+	local abilityLabel = name
+	if optionNotes then
+		abilityLabel = ("%s (|cFF436EEE%s|r)"):format(abilityLabel, optionNotes)
+	end
+	if optionRename then
+		abilityLabel = ("%s (|cFFFFFF99%s|r)"):format(abilityLabel, optionRename)
+	end
+
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(abilityLabel)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)

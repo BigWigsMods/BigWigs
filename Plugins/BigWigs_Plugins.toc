@@ -58,3 +58,4 @@ Wipe.lua
 BattleRes.lua
 Timeline.lua
 PrivateAuras.lua
+Rename.lua

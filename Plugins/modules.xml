@@ -23,5 +23,6 @@
 <Script file="BattleRes.lua"/>
 <Script file="Timeline.lua"/>
 <Script file="PrivateAuras.lua"/>
+<Script file="Rename.lua"/>
 
 </Ui>

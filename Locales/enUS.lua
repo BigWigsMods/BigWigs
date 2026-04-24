@@ -60,7 +60,7 @@ L.outOfDateAddOnPopup = "The |cFF436EEE%s|r addon is out of date!"
 L.outOfDateAddOnRaidWarning = "The |cFF436EEE%s|r addon is out of date! You have v%d.%d.%d but the latest is v%d.%d.%d!"
 L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
 L.removeAddOn = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
-L.alternativeName = "%s (|cFF436EEE%s|r)"
+L.noteLabel = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "WARNING!\nYou updated |cFF436EEE%s|r but you also need to update the main |cFF436EEEBigWigs|r addon.\nIgnoring this will result in broken functionality."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requires version %d of the main |cFF436EEEBigWigs|r addon to function correctly, but you're on version %d."
 L.addOnLoadFailedWithReason = "BigWigs failed to load the addon |cFF436EEE%s|r with reason %q. Tell the BigWigs devs!"
@@ -1143,6 +1143,15 @@ L.primary = "Primary"
 L.primaryDesc = "The first raid target icon that a encounter script should use."
 L.secondary = "Secondary"
 L.secondaryDesc = "The second raid target icon that a encounter script should use."
+
+-----------------------------------------------------------------------
+-- Rename.lua
+--
+
+L.renameLabel = "%s (|cFFFFFF99%s|r)"
+L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+L.spellName = "Spell Name"
+L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the spell name instead."
 
 -----------------------------------------------------------------------
 -- Sound.lua
