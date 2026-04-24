@@ -25,7 +25,7 @@ mod:SetPrivateAuraSounds({
 	{1245175, sound = "none"}, -- Voidbolt
 	-- {1280355, sound = "none"}, -- Rakfang
 	1265152, -- Impale
-	{1248865, 1249595, sound = "info"}, -- Radiant Barrier
+	{1249595, sound = "none"}, -- Radiant Barrier
 	1270497, -- Shadowmark
 })
 mod:UseCustomTimers(true)
