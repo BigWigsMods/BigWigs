@@ -266,7 +266,7 @@ do
 		if plugin.db.profile.iconDesaturate < 1 or plugin.db.profile.iconDesaturate > 3 then
 			plugin.db.profile.iconDesaturate = defaultDB.iconDesaturate
 		end
-		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) then
+		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
 			plugin.db.profile.fontName = defaultDB.fontName
 		end
 		if not LibSharedMedia:IsValid("border", plugin.db.profile.borderName) then

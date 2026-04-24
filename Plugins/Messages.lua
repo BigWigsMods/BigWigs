@@ -96,10 +96,10 @@ local function updateProfile()
 	if db.fadetime < 1 or db.fadetime > 10 then
 		db.fadetime = plugin.defaultDB.fadetime
 	end
-	if not LibSharedMedia:IsValid(FONT, db.fontName) then
+	if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
 		db.fontName = plugin.defaultDB.fontName
 	end
-	if not LibSharedMedia:IsValid(FONT, db.emphFontName) then
+	if not LibSharedMedia:IsValid(FONT, db.emphFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.emphFontName)) then
 		db.emphFontName = plugin.defaultDB.emphFontName
 	end
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"

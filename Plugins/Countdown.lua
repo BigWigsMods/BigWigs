@@ -82,7 +82,7 @@ local function updateProfile()
 		end
 	end
 
-	if not LibSharedMedia:IsValid(FONT, db.fontName) then
+	if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
 		db.fontName = plugin.defaultDB.fontName
 	end
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then

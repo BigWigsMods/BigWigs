@@ -180,7 +180,7 @@ do
 			end
 		end
 
-		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) then
+		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
 			plugin.db.profile.fontName = plugin.defaultDB.fontName
 		end
 		if db.fontSize < 10 or db.fontSize > 200 then

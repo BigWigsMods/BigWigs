@@ -462,7 +462,7 @@ do
 		--ValidateColor(db.profile.instanceTimerBorderColorInactive, defaults.instanceTimerBorderColorInactive, 0)
 	end
 	ProfileUtils.ValidateMediaSettings = function()
-		if not LibSharedMedia:IsValid("font", db.profile.anyCombatFontName) then
+		if not LibSharedMedia:IsValid("font", db.profile.anyCombatFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.anyCombatFontName)) then
 			db.profile.anyCombatFontName = defaults.anyCombatFontName
 		end
 		if not LibSharedMedia:IsValid("border", db.profile.anyCombatBorderName) then -- If the border is suddenly invalid then reset the size and offset also
@@ -471,7 +471,7 @@ do
 			db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
 		end
 
-		if not LibSharedMedia:IsValid("font", db.profile.bossCombatFontName) then
+		if not LibSharedMedia:IsValid("font", db.profile.bossCombatFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.bossCombatFontName)) then
 			db.profile.bossCombatFontName = defaults.bossCombatFontName
 		end
 		if not LibSharedMedia:IsValid("border", db.profile.bossCombatBorderName) then -- If the border is suddenly invalid then reset the size and offset also
@@ -480,7 +480,7 @@ do
 			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
 		end
 
-		if not LibSharedMedia:IsValid("font", db.profile.bossStagesFontName) then
+		if not LibSharedMedia:IsValid("font", db.profile.bossStagesFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.bossStagesFontName)) then
 			db.profile.bossStagesFontName = defaults.bossStagesFontName
 		end
 		if not LibSharedMedia:IsValid("border", db.profile.bossStagesBorderName) then -- If the border is suddenly invalid then reset the size and offset also
@@ -489,7 +489,7 @@ do
 			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
 		end
 
-		--if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) then
+		--if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.instanceTimerFontName)) then
 		--	db.profile.instanceTimerFontName = defaults.instanceTimerFontName
 		--end
 		--if not LibSharedMedia:IsValid("border", db.profile.instanceTimerBorderName) then -- If the border is suddenly invalid then reset the size and offset also

@@ -5,6 +5,7 @@ do
 	L = BigWigsAPI:GetLocale("BigWigs")
 	BigWigsLoader = tbl.loaderPublic
 end
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 --------------------------------------------------------------------------------
 -- Saved Settings
@@ -19,7 +20,7 @@ do
 		if locale ~= "enUS" then
 			defaultVoice = ("%s: Default (Female)"):format(locale)
 			if locale == "koKR" or locale == "zhCN" or locale == "zhTW" then
-				fontName = LibStub("LibSharedMedia-3.0"):GetDefault("font")
+				fontName = LibSharedMedia:GetDefault("font")
 			end
 		end
 	end
@@ -194,16 +195,16 @@ do
 		if not BigWigsAPI:HasCountdown(db.profile.countVoice) then
 			db.profile.countVoice = defaults.countVoice
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("sound", db.profile.countStartSound) then
+		if not LibSharedMedia:IsValid("sound", db.profile.countStartSound) then
 			db.profile.countStartSound = defaults.countStartSound
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("sound", db.profile.countEndSound) then
+		if not LibSharedMedia:IsValid("sound", db.profile.countEndSound) then
 			db.profile.countEndSound = defaults.countEndSound
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("font", db.profile.instanceKeysFontName) then
+		if not LibSharedMedia:IsValid("font", db.profile.instanceKeysFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName)) then
 			db.profile.instanceKeysFontName = defaults.instanceKeysFontName
 		end
-		if not LibStub("LibSharedMedia-3.0"):IsValid("font", db.profile.progressNameplateFontName) then
+		if not LibSharedMedia:IsValid("font", db.profile.progressNameplateFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName)) then
 			db.profile.progressNameplateFontName = defaults.progressNameplateFontName
 		end
 	end
@@ -482,7 +483,6 @@ end
 
 local LibKeystone = LibStub("LibKeystone")
 local LibSpec = LibStub("LibSpecialization")
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local bwTooltip = BigWigsAPI.GetTooltip()
 
 local LibKeystoneRequest = LibKeystone.Request

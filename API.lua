@@ -327,6 +327,18 @@ do
 	end
 end
 
+do
+	local pcall = pcall
+	local dummy = UIParent:CreateFontString()
+	dummy:Hide()
+	-- XXX Currently only supports fonts but in patch 12.0.7 we should be able to validate everything.
+	-- XXX Future proofing the API name, rather than name it IsValidFontPath and rename it again later.
+	function API.IsValidMediaPath(mediaPath)
+		local result = pcall(dummy.SetFont, dummy, mediaPath, 10)
+		return result
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Versions
 --
