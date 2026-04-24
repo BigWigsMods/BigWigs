@@ -5,9 +5,9 @@ if not L then return end
 -- API.lua
 L.showAddonBar = "插件「|cFF436EEE%s|r」創建了「%s」計時器。"
 L.requestAddonProfile = "插件「|cFF436EEE%s|r」剛剛複製了你的設定檔匯出字串。"
---L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
---L.shortSecondsOnly = "%d Sec" -- 28 Seconds
---L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
+L.shortMinutesAndSeconds = "%d 分 %d 秒" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d 秒" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f 秒" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -593,18 +593,18 @@ L.instanceKeysHideTitleDesc = "隱藏「誰有鑰石？」標題。"
 
 -- Progress %
 
---L.progressPercent = "Progress %"
---L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
---L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
---L.progressPercentTooltipText = {
---	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%%",
---	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d)",
---	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %.2f%% (%d/%d)",
---}
---L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
---L.progressCurrentPull = "Current Pull"
---L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
---L.tempProgressAnnounce = "You can now see progress % each NPC will give you when mousing over them and on their nameplates.\n\nConfigure in |cFF436EEETools|r > |cFF436EEEMythic+|r > |cFF436EEEProgress %|r."
+L.progressPercent = "進度 %"
+L.progressPercentDesc = "計算傳奇+ 進度的工具，告訴你擊殺每個敵對目標可以提供多少進度。"
+L.progressPercentTooltip = "滑鼠指向敵方單位時，在浮動資訊提示顯示進度百分比"
+L.progressPercentTooltipText = {
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t進度：%.2f%%",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t進度：%.2f%%（%d）",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t進度：%.2f%%（%d/%d）",
+}
+L.progressPercentNameplate = "在敵方名條顯示進度百分比"
+L.progressCurrentPull = "當前拉怪進度"
+L.progressCurrentPullDesc = "顯示當前這波戰鬥能提供多少進度。\n\n此功能尚未實裝！"
+L.tempProgressAnnounce = "現在，可以在浮動資訊提示和名條上顯示進度。\n\n請至 |cFF436EEE工具|r > |cFF436EEE傳奇鑰石+|r > |cFF436EEE進度 %|r 設定。"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -1165,7 +1165,7 @@ L.privateaura = "當私有光環施放在你身上時（點名）"
 L.customSoundDesc = "播放選定的自訂的聲音，而不是由模塊提供的。"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
 L.resetAllCustomSound = "如果設置全部首領戰鬥自訂的聲音，此按鈕將重置「全部」以這裡自訂的聲音來代替。"
---L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
+L.soundResetPrint = "「|cFF436EEE%s|r」模組使用的自訂音效「|cFF436EEE%s|r」已不存在。現已重置為預設音效。"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
