@@ -284,6 +284,12 @@ function plugin:OnRegister()
 	self.displayName = L.timeline
 	C_CVar.SetCVar("combatWarningsEnabled", "1")
 	C_CVar.SetCVar("encounterWarningsEnabled", "0")
+	CriticalEncounterWarnings:SetScript("OnShow", nil)
+	CriticalEncounterWarnings:UnregisterAllEvents()
+	MediumEncounterWarnings:SetScript("OnShow", nil)
+	MediumEncounterWarnings:UnregisterAllEvents()
+	MinorEncounterWarnings:SetScript("OnShow", nil)
+	MinorEncounterWarnings:UnregisterAllEvents()
 end
 
 function plugin:OnPluginEnable()
