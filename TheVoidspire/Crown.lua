@@ -318,8 +318,8 @@ function mod:TimersMythic(_, eventInfo)
 			end
 		elseif durationRoundedOne == 32.5 or durationRoundedOne == 9.6 then
 			barInfo = self:VoidExpulsion(duration)
-		elseif durationRoundedOne == 37.1 or durationRoundedOne == 22.5 or durationRoundedOne == 1.3 then
-			if durationRoundedOne == 1.3 then
+		elseif durationRoundedOne == 37.1 or durationRoundedOne == 22.5 or durationRoundedOne == 1.3 or durationRoundedOne == 1.2 then
+			if durationRoundedOne == 1.3 or durationRoundedOne == 1.2 then
 				barInfo = updateBar(1233865, "NullCorona", duration)
 			else
 				barInfo = self:NullCorona(duration)
