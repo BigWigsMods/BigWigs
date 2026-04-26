@@ -1831,17 +1831,33 @@ do
 					for i = 1, #challengesFrame.DungeonIcons do
 						local icon = challengesFrame.DungeonIcons[i]
 						if not hookedIcons[icon] then
-							local font = icon:CreateFontString(nil, nil, "SystemFont_Huge1_Outline")
-							font:SetJustifyH("CENTER")
-							font:SetPoint("BOTTOM", 0, 4)
-							font:SetShadowOffset(1, -1)
-							font:SetShadowColor(0, 0, 0)
-							font:Show()
-							hookedIcons[icon] = font
+							local scoreFontstring = icon:CreateFontString(nil, nil, "SystemFont_Huge1_Outline")
+							scoreFontstring:SetJustifyH("CENTER")
+							scoreFontstring:SetPoint("BOTTOM", 0, 4)
+							scoreFontstring:SetShadowOffset(1, -1)
+							scoreFontstring:SetShadowColor(0, 0, 0)
+							scoreFontstring:Show()
+							local dungeonNameFontstring = icon:CreateFontString(nil, nil, "GameFontNormalMed1")
+							dungeonNameFontstring:SetJustifyH("CENTER")
+							dungeonNameFontstring:SetPoint("BOTTOMLEFT", icon, "TOPLEFT", 0, 2)
+							dungeonNameFontstring:SetPoint("BOTTOMRIGHT", icon, "TOPRIGHT", 0, 2)
+							dungeonNameFontstring:SetTextColor(1, 1, 1)
+							dungeonNameFontstring:SetShadowOffset(1, -1)
+							dungeonNameFontstring:SetShadowColor(0, 0, 0)
+							dungeonNameFontstring:Show()
+							hookedIcons[icon] = {scoreFontstring, dungeonNameFontstring}
 							icon:HookScript("OnEnter", OnEnter)
 						end
 
-						hookedIcons[icon]:ClearText()
+						hookedIcons[icon][1]:ClearText()
+						hookedIcons[icon][2]:ClearText()
+
+						-- Dungeon names as header text
+						hookedIcons[icon][2]:SetText(dungeonNamesTrimmed[icon.mapID] or "??")
+						hookedIcons[icon][2]:SetTextScale(1)
+						while hookedIcons[icon][2]:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
+							hookedIcons[icon][2]:SetTextScale(hookedIcons[icon][2]:GetTextScale() - 0.01)
+						end
 						-- Highest score text, mimic Blizz code for the highest level text
 						local _, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(icon.mapID)
 						local inTimeInfo, overtimeInfo = C_MythicPlus.GetSeasonBestForMap(icon.mapID)
@@ -1853,10 +1869,15 @@ do
 							if not color then
 								color = HIGHLIGHT_FONT_COLOR
 							end
-							hookedIcons[icon]:SetTextColor(color.r, color.g, color.b)
-							hookedIcons[icon]:SetText(overAllScore)
+							hookedIcons[icon][1]:SetTextColor(color.r, color.g, color.b)
+							hookedIcons[icon][1]:SetText(overAllScore)
 						end
 					end
+				end
+				-- Kill off the "Season Best" text so we can display the dungeon names instead
+				if challengesFrame.WeeklyInfo and challengesFrame.WeeklyInfo.Child and challengesFrame.WeeklyInfo.Child.SeasonBest then
+					challengesFrame.WeeklyInfo.Child.SeasonBest:ClearText()
+					challengesFrame.WeeklyInfo.Child.SeasonBest:Hide()
 				end
 			end)
 		end
