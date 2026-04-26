@@ -605,6 +605,8 @@ L.progressPercentNameplate = "적 NPC의 이름표에 진행률 % 표시"
 L.progressCurrentPull = "현재 전투"
 L.progressCurrentPullDesc = "현재 전투 중인 NPC 무리에서 얻을 수 있는 총 진행률을 표시합니다.\n\n아직 작동하지 않습니다!"
 L.tempProgressAnnounce = "이제 NPC 위에 마우스를 올리거나 이름표에서 각 NPC가 제공하는 진행률 %를 확인할 수 있습니다.\n\n|cFF436EEE도구|r > |cFF436EEE신화+|r > |cFF436EEE진행률 %|r에서 설정하세요."
+--L.settingsForCurrentTarget = "Settings for your current target"
+--L.settingsForOtherTargets = "Settings for all other targets"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

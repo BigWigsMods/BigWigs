@@ -605,6 +605,8 @@ L.progressPercentNameplate = "在敵方名條顯示進度百分比"
 L.progressCurrentPull = "當前拉怪進度"
 L.progressCurrentPullDesc = "顯示當前這波戰鬥能提供多少進度。\n\n此功能尚未實裝！"
 L.tempProgressAnnounce = "現在，可以在浮動資訊提示和名條上顯示進度。\n\n請至 |cFF436EEE工具|r > |cFF436EEE傳奇鑰石+|r > |cFF436EEE進度 %|r 設定。"
+--L.settingsForCurrentTarget = "Settings for your current target"
+--L.settingsForOtherTargets = "Settings for all other targets"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua

@@ -271,7 +271,6 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
 	"113/GetSpecializationInfoByID",
-	"113/IsInInstance",
 	"113/PlaySound",
 	"113/SetOverrideBindingClick",
 	"113/TimerTracker",

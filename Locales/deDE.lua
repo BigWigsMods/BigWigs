@@ -605,6 +605,8 @@ L.progressPercentNameplate = "Fortschritt in % an Namensplaketten von Gegnern an
 L.progressCurrentPull = "Aktueller Pull"
 L.progressCurrentPullDesc = "Gesamtfortschritt, der durch die im Kampf befindlichen Gegner erhalten wird, anzeigen.\n\nNOCH NICHT FUNKTIONSTÜCHTIG!"
 L.tempProgressAnnounce = "Es kann jetzt der Fortschrittsbeitrag in % eines Gegners beim Überfahren mit der Maus und an den Namensplaketten angezeigt werden.\n\nKonfigurieren in |cFF436EEEWerkzeuge|r > |cFF436EEEMythisch+|r > |cFF436EEEFortschritt %|r."
+--L.settingsForCurrentTarget = "Settings for your current target"
+--L.settingsForOtherTargets = "Settings for all other targets"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
