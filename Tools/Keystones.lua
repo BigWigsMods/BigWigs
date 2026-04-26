@@ -2348,7 +2348,7 @@ do
 				if UnitExists("target") then
 					local nameplate = GetNamePlateForUnit("target")
 					if nameplate then
-						local token = nameplate.namePlateUnitToken
+						local token = nameplate.unitToken
 						prevUnit = token
 						OnEvent(self, "NAME_PLATE_UNIT_REMOVED", token)
 						OnEvent(self, "NAME_PLATE_UNIT_ADDED", token)
