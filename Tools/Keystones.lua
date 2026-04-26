@@ -2350,8 +2350,8 @@ do
 					if nameplate then
 						local token = nameplate.namePlateUnitToken
 						prevUnit = token
-						OnEvent(self, "NAME_PLATE_UNIT_REMOVED", unit)
-						OnEvent(self, "NAME_PLATE_UNIT_ADDED", unit)
+						OnEvent(self, "NAME_PLATE_UNIT_REMOVED", token)
+						OnEvent(self, "NAME_PLATE_UNIT_ADDED", token)
 					end
 				end
 			elseif event == "PLAYER_LEAVING_WORLD" then
