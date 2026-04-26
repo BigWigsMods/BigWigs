@@ -62,6 +62,7 @@ files["Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 }
 files["Core/BossPrototype.lua"].ignore = {
+	"113/C_ChatInfo",
 	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
@@ -79,6 +80,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
 files["Core/BossPrototype_Classic.lua"].ignore = {
+	"113/C_ChatInfo",
 	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",

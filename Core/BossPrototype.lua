@@ -454,15 +454,24 @@ end
 do
 	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
 	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
-	local InCombatLockdown = InCombatLockdown
+	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
+	local modulesNeedingUpdated = {}
+	local frame = CreateFrame("Frame")
+	frame:SetScript("OnEvent", function(self, event, restrictionType, state)
+		if restrictionType == 5 and state == 0 then
+			self:UnregisterEvent(event)
+			for module in next, modulesNeedingUpdated do
+				module:RegisterPrivateAuraSounds()
+			end
+			modulesNeedingUpdated = {}
+		end
+	end)
 	function boss:RegisterPrivateAuraSounds()
 		if not self:HasPrivateAuraSounds() then return end
 
-		if InCombatLockdown() then
-			self:RegisterEvent("PLAYER_REGEN_ENABLED", function(event)
-				self:UnregisterEvent(event)
-				self:RegisterPrivateAuraSounds()
-			end)
+		if InChatMessagingLockdown() then
+			modulesNeedingUpdated[self] = true
+			frame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
 			return
 		end
 
