@@ -7,6 +7,7 @@ exclude_files = {
 files["API.lua"].ignore = {
 	"113/C_AddOns",
 	"112/SlashCmdList",
+	"143/table",
 }
 files["Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
@@ -71,6 +72,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",
 	"113/PlayerIsTimerunning",
+	"143/table",
 	"113/Transcriptor",
 	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
@@ -85,9 +87,10 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",
-	"113/PlayerIsTimerunning",
 	"113/GetTalentInfo",
 	"113/GetTalentTabInfo",
+	"113/PlayerIsTimerunning",
+	"143/table",
 	"113/Transcriptor",
 	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",

@@ -812,15 +812,40 @@ end
 -- @section localization
 --
 
---- Get the current localization strings.
--- @return keyed table of localized strings
-function boss:GetLocale()
-	if not self.localization then
-		self.localization = {}
+do
+	local moduleLocaleList = {}
+	--- Get the current localization strings.
+	-- @return keyed table of localized strings
+	function boss:GetLocale()
+		if moduleLocaleList[self] then
+			return moduleLocaleList[self]
+		else -- DEPRECATED fallback
+			if not self.localization then
+				self.localization = {}
+			end
+			return self.localization
+		end
 	end
-	return self.localization
+	boss.NewLocale = boss.GetLocale -- DEPRECATED
+
+	local tfreeze = table.freeze or function() end
+	--- Set the default locale table.
+	-- @param localeTable the default locale table
+	function boss:SetDefaultLocale(localeTable)
+		if moduleLocaleList[self] then
+			error(("Module %q already has a default locale set."):format(self.moduleName))
+			return
+		end
+		local otherLocaleTable = BigWigsAPI.GetBossModuleLocale(self.moduleName)
+		if otherLocaleTable then
+			for key, value in next, otherLocaleTable do
+				localeTable[key] = value
+			end
+		end
+		tfreeze(localeTable)
+		moduleLocaleList[self] = localeTable
+	end
 end
-boss.NewLocale = boss.GetLocale
 
 do
 	local SetSpellRename = BigWigsAPI.SetSpellRename

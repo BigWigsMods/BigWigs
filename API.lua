@@ -153,6 +153,29 @@ do
 	end
 end
 
+do
+	local localeTable = {}
+	function API.GetBossModuleLocale(moduleName)
+		return localeTable[moduleName]
+	end
+	local tfreeze = table.freeze or function() end
+	function API.SetBossModuleLocale(moduleName, moduleLocaleTable)
+		if API.IsLocale("enUS") then error("This function is for non-default locales only.") return end
+		if type(moduleName) ~= "string" then error("Module name must be a string.") return end
+		if type(moduleLocaleTable) ~= "table" then error("Locale must be a table.") return end
+		if localeTable[moduleName] then error(("Locale table for module %q already exists."):format(moduleName)) return end
+		tfreeze(moduleLocaleTable)
+		localeTable[moduleName] = moduleLocaleTable
+	end
+end
+
+do
+	local currentLocale = GetLocale()
+	function API.IsLocale(localeName)
+		return localeName == currentLocale
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Profile import/export
 --
