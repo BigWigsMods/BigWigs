@@ -2340,7 +2340,10 @@ do
 				end
 			elseif event == "PLAYER_TARGET_CHANGED" then
 				if prevUnit then
-					OnEvent(self, "NAME_PLATE_UNIT_REMOVED", prevUnit)
+					local text = activeTexts[prevUnit]
+					if text then
+						text:Hide(prevUnit)
+					end
 					OnEvent(self, "NAME_PLATE_UNIT_ADDED", prevUnit)
 					prevUnit = nil
 				end
@@ -2350,7 +2353,10 @@ do
 					if nameplate then
 						local token = nameplate.unitToken
 						prevUnit = token
-						OnEvent(self, "NAME_PLATE_UNIT_REMOVED", token)
+						local text = activeTexts[token]
+						if text then
+							text:Hide(token)
+						end
 						OnEvent(self, "NAME_PLATE_UNIT_ADDED", token)
 					end
 				end
