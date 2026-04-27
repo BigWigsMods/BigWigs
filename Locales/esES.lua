@@ -591,8 +591,13 @@ L.instanceKeysEndOfRunDesc = "Por defecto la lista se mostrará cuando entres a 
 L.instanceKeysHideTitle = "Esconder título"
 L.instanceKeysHideTitleDesc = "Esconder el título \"¿Quién tiene la piedra?\"."
 
--- Progress %
+-- Challenges UI Decoration
+--L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
+--L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tTeletransporte"
 
+-- Progress %
 --L.progressPercent = "Progress %"
 --L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
 --L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"

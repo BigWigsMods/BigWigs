@@ -1773,54 +1773,98 @@ do
 	challengesTeleportButton:RegisterForClicks("AnyDown", "AnyUp")
 	challengesTeleportButton:SetPropagateMouseMotion(true)
 	challengesTeleportButton:SetAttribute("type", "spell")
-	local hookedIcons = {}
-	local CL = BigWigsAPI:GetLocale("BigWigs: Common")
-
-	local function OnEnter(self)
-		GameTooltip:AddLine(" ")
-		GameTooltip:AddLine(CL.other:format("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs", CL.teleport))
-
-		if InCombatLockdown() then
-			challengesTeleportButton:EnableMouse(false)
-		else
-			challengesTeleportButton:EnableMouse(true)
-			challengesTeleportButton:ClearAllPoints()
-			challengesTeleportButton:SetParent(self)
-			challengesTeleportButton:SetAllPoints(self)
-			challengesTeleportButton:SetAttribute("spell", nil)
-		end
-
-		local _, _, _, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
-		for instanceID, spellID in next, teleportList[1] do
-			if instanceID == mapID then
-				local spellName = ("|cFF33FF99%s|r"):format(BigWigsLoader.GetSpellName(spellID) or "?")
-				if InCombatLockdown() then
-					GameTooltip:AddLine(spellName)
-					GameTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
-				else
-					if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
-						GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
-					else
-						challengesTeleportButton:SetAttribute("spell", spellID)
-						local cd = BigWigsLoader.GetSpellCooldown(spellID)
-						if cd.startTime > 0 and cd.duration > 0 then
-							local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
-							local hours = math.floor(remainingSeconds / 3600)
-							remainingSeconds = remainingSeconds % 3600
-							local minutes = math.floor(remainingSeconds / 60)
-							local seconds = math.floor(remainingSeconds - (minutes*60))
-							GameTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
-						else
-							GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
+	local OnEnter
+	do
+		local CL = BigWigsAPI:GetLocale("BigWigs: Common")
+		local unitTbl = {"party1", "party2", "party3", "party4"}
+		function OnEnter(self)
+			local _, _, timeLimit, _, _, mapID = GetMapUIInfo(self.mapID) -- The challenges frame icon .mapID is actually the challengeMapID, convert into mapID (instance ID)
+			if IsInGroup() then
+				GameTooltip:AddLine(" ")
+				GameTooltip:AddLine(L.partyRatingHeader)
+				for partyIterator = 1, 4 do
+					local unit = unitTbl[partyIterator]
+					if UnitExists(unit) then
+						local ratingTbl = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unit) or {}
+						if not ratingTbl.runs then ratingTbl.runs = {} end
+						local classColorHex = "FF808080"
+						local _, classFile = UnitClass(unit)
+						if classFile then
+							local colorTbl = C_ClassColor.GetClassColor(classFile)
+							if colorTbl then
+								classColorHex = colorTbl:GenerateHexColor()
+							end
+						end
+						for runsIterator = 1, 8 do
+							local run = ratingTbl.runs[runsIterator]
+							if run and run.challengeModeID == self.mapID then
+								local duration = run.bestRunDurationMS / 1000
+								local minutes = math.floor(duration / 60)
+								local seconds = math.floor(duration - (minutes*60))
+								local scoreColorTable = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(run.mapScore or 0) or HIGHLIGHT_FONT_COLOR
+								local scoreColorHex = scoreColorTable:GenerateHexColor()
+								GameTooltip:AddLine(
+									L.dungeonScoreString:format(
+										scoreColorHex, run.mapScore, -- Dungeon score
+										run.bestRunLevel, -- Dungeon level
+										duration > timeLimit and "FF4411" or "33FF99", minutes, seconds, -- Dungeon duration
+										classColorHex, BigWigsLoader.UnitName(unit) or "?" -- Player name
+									)
+								)
+								break
+							elseif runsIterator == 8 then
+								local scoreColorHex = HIGHLIGHT_FONT_COLOR:GenerateHexColor()
+								GameTooltip:AddLine(L.dungeonScoreNoDataString:format(classColorHex, BigWigsLoader.UnitName(unit) or "?"))
+							end
 						end
 					end
 				end
-				break
 			end
+			GameTooltip:AddLine(" ")
+			GameTooltip:AddLine(L.dungeonTeleportHeader)
+
+			if InCombatLockdown() then
+				challengesTeleportButton:EnableMouse(false)
+			else
+				challengesTeleportButton:EnableMouse(true)
+				challengesTeleportButton:ClearAllPoints()
+				challengesTeleportButton:SetParent(self)
+				challengesTeleportButton:SetAllPoints(self)
+				challengesTeleportButton:SetAttribute("spell", nil)
+			end
+
+			for instanceID, spellID in next, teleportList[1] do
+				if instanceID == mapID then
+					local spellName = ("|cFF33FF99%s|r"):format(BigWigsLoader.GetSpellName(spellID) or "?")
+					if InCombatLockdown() then
+						GameTooltip:AddLine(spellName)
+						GameTooltip:AddLine(L.unavailableWhilstInCombat, 1, 1, 1)
+					else
+						if not BigWigsLoader.IsSpellKnownOrInSpellBook(spellID) then
+							GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNotLearned, 1, 1, 1)
+						else
+							challengesTeleportButton:SetAttribute("spell", spellID)
+							local cd = BigWigsLoader.GetSpellCooldown(spellID)
+							if cd.startTime > 0 and cd.duration > 0 then
+								local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+								local hours = math.floor(remainingSeconds / 3600)
+								remainingSeconds = remainingSeconds % 3600
+								local minutes = math.floor(remainingSeconds / 60)
+								local seconds = math.floor(remainingSeconds - (minutes*60))
+								GameTooltip:AddLine(spellName .. CL.extra:format(L.keystoneClickToTeleportCooldown, ("%02d:%02d:%02d"):format(hours, minutes, seconds)), 1, 1, 1)
+							else
+								GameTooltip:AddLine(spellName .. L.keystoneClickToTeleportNow, 1, 1, 1)
+							end
+						end
+					end
+					break
+				end
+			end
+			GameTooltip:Show()
 		end
-		GameTooltip:Show()
 	end
 
+	local hookedIcons = {}
 	local frame = CreateFrame("Frame")
 	frame:SetScript("OnEvent", function(self, event, addonName)
 		if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
@@ -1853,7 +1897,7 @@ do
 						hookedIcons[icon][2]:ClearText()
 
 						-- Dungeon names as header text
-						hookedIcons[icon][2]:SetText(dungeonNamesTrimmed[icon.mapID] or "??")
+						hookedIcons[icon][2]:SetText(dungeonNamesTrimmed[icon.mapID] or icon.mapID)
 						hookedIcons[icon][2]:SetTextScale(1)
 						while hookedIcons[icon][2]:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
 							hookedIcons[icon][2]:SetTextScale(hookedIcons[icon][2]:GetTextScale() - 0.01)

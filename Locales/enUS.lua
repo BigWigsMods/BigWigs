@@ -590,8 +590,13 @@ L.instanceKeysEndOfRunDesc = "By default the list will only show when you enter 
 L.instanceKeysHideTitle = "Hide title"
 L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
 
--- Progress %
+-- Challenges UI Decoration
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tTeleport"
 
+-- Progress %
 L.progressPercent = "Progress %"
 L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
 L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
