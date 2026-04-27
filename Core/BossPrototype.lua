@@ -527,6 +527,23 @@ do
 	end
 end
 
+--- Set spell renames.
+-- @param renameOptionTable the options table
+function boss:SetRenames(renameOptionTable)
+	for key, strings in next, renameOptionTable do
+		if type(strings) ~= "table" then
+			strings = {strings}
+			renameOptionTable[key] = strings
+		end
+		for _, replacementKey in ipairs(strings) do
+			if not self.localization[replacementKey] and not CL[replacementKey] then
+				core:Error(("Module %q tried to set invalid rename string %q for id %q."):format(self.moduleName, replacementKey, key))
+			end
+		end
+	end
+	self.renameOptions = renameOptionTable
+end
+
 --- Check if a module option is enabled.
 -- This is a wrapper around the self.db.profile[key] table.
 -- @return boolean or number, depending on option type
@@ -641,7 +658,31 @@ do
 	end
 end
 
-function boss:Initialize() core:RegisterBossModule(self.moduleName) end
+function boss:Initialize()
+	core:RegisterBossModule(self.moduleName)
+
+	-- XXX really only need to do this once and it has to be a closure to use the module ref
+	self.renameSpells = setmetatable({}, { __index =
+		function(tbl, key)
+			local value = plugins.Rename:GetName(self, key)
+			if not value then
+				if type(key) == "number" then
+					value = spells[key]
+					-- error handled in spells
+				else
+					value = self.localization[key]
+					if not value then
+						value = "INVALID"
+						core:Print(format("An invalid locale string (%s) is being used in a boss module.", key))
+					end
+				end
+			end
+			tbl[key] = value
+			return value
+		end
+	})
+end
+
 function boss:Enable(isWipe)
 	if not self:IsEnabled() then
 		self.enabled = true
@@ -757,6 +798,8 @@ function boss:Disable(isWipe)
 		self.isWinning = nil
 		self.bossTargetChecks = nil
 		self.stageTime = nil
+
+		twipe(self.renameSpells) -- Wipe rename cache
 
 		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
@@ -2042,6 +2085,12 @@ function boss:MobId(guid)
 	if not guid then return 1 end
 	local _, _, _, _, _, id = strsplit("-", guid)
 	return tonumber(id) or 1
+end
+
+--- Get the display name of a spell.
+-- @param key the option key or localized string key
+function boss:GetName(key)
+	return self.renameSpells[key]
 end
 
 --- Get a localized spell name from an id. Positive ids for spells (C_Spell.GetSpellName) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).

@@ -1,9 +1,12 @@
 
 local BigWigs = {}
+
+local plugins
 do
 	local _, tbl =...
 	tbl.core = BigWigs
 	tbl.plugins = {}
+	plugins = tbl.plugins
 end
 
 local C = {}
@@ -113,6 +116,10 @@ local customBossOptions = { -- Adding core generic toggles
 	energy = {L.energy, L.energy_desc, false},
 }
 
+function BigWigs:IsCustomBossOption(key)
+	return customBossOptions[key] and true
+end
+
 local function getIcon(icon, module, option)
 	if type(icon) == "number" then
 		if icon > 8 then
@@ -147,6 +154,8 @@ function BigWigs:GetBossOptionDetails(module, option)
 	end
 
 	local optionNotes = module.notes and module.notes[option]
+	local optionRename = plugins.Rename and plugins.Rename:GetName(module, option)
+
 	local moduleLocale = module:GetLocale(true)
 
 	if optionType == "string" then
@@ -181,7 +190,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 
 		local icon = getIcon(moduleLocale[option .. "_icon"], module, option)
 
-		return option, title, description, icon, optionNotes
+		return option, title, description, icon, optionNotes, optionRename
 	elseif optionType == "number" then
 		if option > 0 then
 			local spellName = GetSpellName(option)
@@ -213,7 +222,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 				icon = getIcon(iconReplacement, module, option)
 			end
 			local roleDesc = getRoleStrings(module, option)
-			return option, spellName, roleDesc..desc, icon, optionNotes
+			return option, spellName, roleDesc..desc, icon, optionNotes, optionRename
 		else
 			-- This is an EncounterJournal ID
 			local tbl = C_EncounterJournal_GetSectionInfo(-option)
@@ -227,7 +236,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 			end
 
 			local roleDesc = getRoleStrings(module, option)
-			return option, title, roleDesc..description, abilityIcon or false, optionNotes
+			return option, title, roleDesc..description, abilityIcon or false, optionNotes, optionRename
 		end
 	end
 end
