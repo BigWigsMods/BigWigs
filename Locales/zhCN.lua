@@ -605,8 +605,8 @@ L.progressPercentNameplate = "在敌对NPC的姓名板上显示进度 %"
 L.progressCurrentPull = "当前波次"
 L.progressCurrentPullDesc = "显示你当前战斗中这组NPC将提供的总进度。\n\n尚未实装！"
 L.tempProgressAnnounce = "现在，当你鼠标指向NPC或在姓名板上时，可以看到每个NPC提供的进度 %。\n\n请在 |cFF436EEE工具|r > |cFF436EEE史诗钥石地下城|r > |cFF436EEE进度 %|r 中进行设置。"
---L.settingsForCurrentTarget = "Settings for your current target"
---L.settingsForOtherTargets = "Settings for all other targets"
+L.settingsForCurrentTarget = "当前目标设置"
+L.settingsForOtherTargets = "其他目标设置"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
