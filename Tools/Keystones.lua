@@ -1881,13 +1881,12 @@ do
 							scoreFontstring:SetShadowOffset(1, -1)
 							scoreFontstring:SetShadowColor(0, 0, 0)
 							scoreFontstring:Show()
-							local dungeonNameFontstring = icon:CreateFontString(nil, nil, "GameFontNormalMed1")
+							local dungeonNameFontstring = icon:CreateFontString(nil, nil, "SystemFont_Shadow_Med1_Outline")
 							dungeonNameFontstring:SetJustifyH("CENTER")
-							dungeonNameFontstring:SetPoint("BOTTOMLEFT", icon, "TOPLEFT", 0, 2)
-							dungeonNameFontstring:SetPoint("BOTTOMRIGHT", icon, "TOPRIGHT", 0, 2)
+							dungeonNameFontstring:SetPoint("BOTTOMLEFT", icon, "TOPLEFT", 1, 1)
+							dungeonNameFontstring:SetPoint("BOTTOMRIGHT", icon, "TOPRIGHT", -1, 1)
 							dungeonNameFontstring:SetTextColor(1, 1, 1)
-							dungeonNameFontstring:SetShadowOffset(1, -1)
-							dungeonNameFontstring:SetShadowColor(0, 0, 0)
+							dungeonNameFontstring:SetWordWrap(false)
 							dungeonNameFontstring:Show()
 							hookedIcons[icon] = {scoreFontstring, dungeonNameFontstring}
 							icon:HookScript("OnEnter", OnEnter)
@@ -1897,7 +1896,7 @@ do
 						hookedIcons[icon][2]:ClearText()
 
 						-- Dungeon names as header text
-						hookedIcons[icon][2]:SetText(dungeonNamesTrimmed[icon.mapID] or icon.mapID)
+						hookedIcons[icon][2]:SetText(dungeonNamesTiny[icon.mapID] or icon.mapID)
 						hookedIcons[icon][2]:SetTextScale(1)
 						while hookedIcons[icon][2]:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
 							hookedIcons[icon][2]:SetTextScale(hookedIcons[icon][2]:GetTextScale() - 0.01)
