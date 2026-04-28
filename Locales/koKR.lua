@@ -592,9 +592,9 @@ L.instanceKeysHideTitle = "제목 숨기기"
 L.instanceKeysHideTitleDesc = "\"누가 쐐기돌을 가지고 있나요?\" 제목을 숨깁니다."
 
 -- Challenges UI Decoration
---L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t파티 평점"
 L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
---L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFF데이터 없음|r |c%s(%s)|r"
 L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t순간이동"
 
 -- Progress %
@@ -610,8 +610,8 @@ L.progressPercentNameplate = "적 NPC의 이름표에 진행률 % 표시"
 L.progressCurrentPull = "현재 전투"
 L.progressCurrentPullDesc = "현재 전투 중인 NPC 무리에서 얻을 수 있는 총 진행률을 표시합니다.\n\n아직 작동하지 않습니다!"
 L.tempProgressAnnounce = "이제 NPC 위에 마우스를 올리거나 이름표에서 각 NPC가 제공하는 진행률 %를 확인할 수 있습니다.\n\n|cFF436EEE도구|r > |cFF436EEE신화+|r > |cFF436EEE진행률 %|r에서 설정하세요."
---L.settingsForCurrentTarget = "Settings for your current target"
---L.settingsForOtherTargets = "Settings for all other targets"
+L.settingsForCurrentTarget = "현재 대상에 대한 설정"
+L.settingsForOtherTargets = "다른 모든 대상에 대한 설정"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
