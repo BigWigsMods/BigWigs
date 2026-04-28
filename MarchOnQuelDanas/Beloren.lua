@@ -59,7 +59,7 @@ end
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions() -- SetOption:skip-unused
 	return {
 		"stages",
 		-- "berserk", -- 1241267 Voidlight Rage
