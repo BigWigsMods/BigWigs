@@ -5,9 +5,9 @@ if not L then return end
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
 L.requestAddonProfile = "El addon '|cFF436EEE%s|r' acaba de copiar una cadena de exportación de tu perfil."
---L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
---L.shortSecondsOnly = "%d Sec" -- 28 Seconds
---L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
+L.shortMinutesAndSeconds = "%d Min %d Seg" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d Seg" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f Seg" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Enfurecer"
@@ -283,9 +283,9 @@ L.battleres_settings_export_desc = "Exporta toda la configuración de Resurrecci
 L.imported_privateAuras_settings = "Configuración de Auras privadas"
 L.privateAuras_settings_import_desc = "Importa toda la configuración de Auras privadas."
 L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras privadas."
---L.imported_combattimer_settings = "Combat Timer Settings"
---L.combattimer_settings_import_desc = "Import all Combat Timer settings."
---L.combattimer_settings_export_desc = "Export all Combat Timer settings."
+L.imported_combattimer_settings = "Configuración de Temporizador de combate"
+L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate"
+L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartir configuración del jefe"
@@ -356,16 +356,16 @@ L.reloadUIWarning = "Cambiar esta función recargará tu interfaz, mostrando la 
 -- AutoInvite.lua
 --
 
---L.autoInviteTitle = "Auto Invite"
---L.autoInviteDesc = "Automatically invite players to your group when they whisper you a specific keyword from the list below."
---L.yes = "Yes"
---L.no = "No"
---L.addWords = "Add Words"
---L.removeWords = "Remove Words (Click To Delete)"
---L.invalidWordWarning = "Word must be lowercase and not already in the list."
---L.groupIsFullConvertToRaid = "Group is full. Convert to raid?"
---L.whisperToPlayerMyGroupIsFull = "[BigWigs] My group is now full."
---L.keywordDetectedInvitingPlayer = "Keyword detected, inviting %s."
+L.autoInviteTitle = "Invitación auto"
+L.autoInviteDesc = "Invita automáticamente a jugadores a tu grupo cuando te susurran una palabra clave específica de la lista de abajo."
+L.yes = "Sí"
+L.no = "No"
+L.addWords = "Agregar palabras"
+L.removeWords = "Eliminar palabras (haz clic para borrar)"
+L.invalidWordWarning = "La palabra debe estar en minúsculas y no estar ya en la lista."
+L.groupIsFullConvertToRaid = "El grupo está lleno. ¿Convertir a banda?"
+L.whisperToPlayerMyGroupIsFull = "[BigWigs] Mi grupo está lleno."
+L.keywordDetectedInvitingPlayer = "Palabra clave detectada, invitando a %s."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -641,8 +641,8 @@ L.positionX = "Posición X"
 L.positionY = "Posición Y"
 L.positionExact = "Posicionamiento exacto"
 L.positionDesc = "Escribe en el recuadro o mueve el deslizador si necesitas un posicionamiento exacto desde el ancla."
---L.copyCustomAnchorWidth = "Copy Custom Anchor Width"
---L.copyCustomAnchorWidthDesc = "Overwrite your width setting with the width of the custom anchor."
+L.copyCustomAnchorWidth = "Copiar ancho del ancla personalizada"
+L.copyCustomAnchorWidthDesc = "Sobrescribe tu configuración de ancho con el ancho del ancla personalizada."
 L.width = "Anchura"
 L.height = "Altura"
 L.size = "Tamaño"
@@ -756,8 +756,8 @@ L.icon = "Icono"
 L.iconDesc = "Muestra u oculta los iconos de la barra."
 L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige en qué lugar de la barra debe posicionarse el icono."
---L.iconTooltip = "Icon Tooltip"
---L.iconTooltipDesc = "Show a tooltip when you mouse over the icon with information about the boss ability."
+L.iconTooltip = "Información sobre el icono"
+L.iconTooltipDesc = "Muestra un tooltip al pasar el cursor sobre el icono con información sobre la habilidad del jefe."
 L.font = "Fuente"
 L.restart = "Restablecer"
 L.restartDesc = "Restablece las barras enfatizadas para que empiecen desde el principio y cuenten desde 10."
