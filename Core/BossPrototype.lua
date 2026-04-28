@@ -3745,10 +3745,11 @@ do
 end
 
 --- Temporarily replace the next Blizzard boss message with a personal message in blue
+-- @number duration the duration the block should last
 -- @param key the option key
 -- @param[opt] localeString if nil then the "%s on YOU" string will be used, if false then the text field will be printed directly, otherwise the common locale will be referenced via CL[localeString]
--- @param[opt] text the message text (if nil, key is used)
--- @param[opt] icon the message icon (spell id or texture name)
+-- @param[opt] text the message text (if nil, key is used, if true, the raw Blizzard message is used)
+-- @param[opt] icon the message icon (spell id or texture name or true to use the Blizzard provided icon)
 function boss:PersonalMessageFromBlizzMessage(duration, key, localeString, text, icon)
 	self:StopBlizzMessages(duration)
 
@@ -3759,13 +3760,23 @@ function boss:PersonalMessageFromBlizzMessage(duration, key, localeString, text,
 				self:UnregisterEvent("ENCOUNTER_WARNING")
 			end, duration)
 
-			self:RegisterEvent("ENCOUNTER_WARNING", function(event)
+			self:RegisterEvent("ENCOUNTER_WARNING", function(event, infoTable)
 				self:CancelTimer(timer)
 				self:UnregisterEvent(event)
 
-				local str = localeString and CL[localeString] or CL.you
-				local msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
-				self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
+				if text == true then
+					local iconToUse = nil
+					if icon == true then
+						iconToUse = infoTable.iconFileID
+					elseif icon ~= false then
+						iconToUse = icons[icon or key]
+					end
+					self:SendMessage("BigWigs_Message", self, key, infoTable.text, "blue", iconToUse, isEmphasized)
+				else
+					local str = localeString and CL[localeString] or CL.you
+					local msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
+					self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
+				end
 			end)
 		end
 	end
