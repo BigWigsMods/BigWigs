@@ -1056,6 +1056,9 @@ function populatePrivateAuraOptions(widget)
 					local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
 
 					local name = loader.GetSpellName(id)
+					if option.note then
+						name = L.alternativeName:format(name, option.note)
+					end
 					local texture = loader.GetSpellTexture(id)
 
 					local icon = AceGUI:Create("Icon")
