@@ -19,6 +19,8 @@ mod:SetPrivateAuraSounds({
 	1284527, -- Galvanize
 	{1281184, mythic = true}, -- Criticality
 	{1263514, sound = "underyou"}, -- Midnight
+	{1284984, sound = "none", note = BigWigsAPI:GetLocale("BigWigs").blue}, -- Grim Symphony (Blue)
+	{1286294, sound = "none", note = BigWigsAPI:GetLocale("BigWigs").red}, -- Grim Symphony (Red)
 })
 mod:UseCustomTimers(true)
 
