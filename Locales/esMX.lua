@@ -356,7 +356,7 @@ L.reloadUIWarning = "Cambiar esta función recargará tu interfaz, mostrando la 
 -- AutoInvite.lua
 --
 
-L.autoInviteTitle = "Invitación automática"
+L.autoInviteTitle = "Invitación auto"
 L.autoInviteDesc = "Invita automáticamente a jugadores a tu grupo cuando te susurran una palabra clave específica de la lista de abajo."
 L.yes = "Sí"
 L.no = "No"
