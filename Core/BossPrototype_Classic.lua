@@ -3479,6 +3479,33 @@ do
 	end
 end
 
+--- Temporarily replace the next Blizzard boss message with a personal message in blue
+-- @param key the option key
+-- @param[opt] localeString if nil then the "%s on YOU" string will be used, if false then the text field will be printed directly, otherwise the common locale will be referenced via CL[localeString]
+-- @param[opt] text the message text (if nil, key is used)
+-- @param[opt] icon the message icon (spell id or texture name)
+function boss:PersonalMessageFromBlizzMessage(duration, key, localeString, text, icon)
+	self:StopBlizzMessages(duration)
+
+	if self:CanPassRoleRestrictions(key) then
+		local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
+		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+			local timer = self:ScheduleTimer(function()
+				self:UnregisterEvent("ENCOUNTER_WARNING")
+			end, duration)
+
+			self:RegisterEvent("ENCOUNTER_WARNING", function(event)
+				self:CancelTimer(timer)
+				self:UnregisterEvent(event)
+
+				local str = localeString and CL[localeString] or CL.you
+				local msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
+				self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
+			end)
+		end
+	end
+end
+
 --- Prevent any middle-screen boss emotes from showing.
 --- Only allowed for trash or world modules, normal modules do this automatically.
 --- If your module doesn't disable, you will need to manually allow them again.
