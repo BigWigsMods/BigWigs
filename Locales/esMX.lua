@@ -364,7 +364,7 @@ L.addWords = "Agregar palabras"
 L.removeWords = "Eliminar palabras (haz clic para borrar)"
 L.invalidWordWarning = "La palabra debe estar en minúsculas y no estar ya en la lista."
 L.groupIsFullConvertToRaid = "El grupo está lleno. ¿Convertir a banda?"
-L.whisperToPlayerMyGroupIsFull = "[BigWigs] Mi grupo está lleno."
+L.whisperToPlayerMyGroupIsFull = "[BigWigs] Mi grupo está completo."
 L.keywordDetectedInvitingPlayer = "Palabra clave detectada, invitando a %s."
 
 -----------------------------------------------------------------------
