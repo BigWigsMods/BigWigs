@@ -59,7 +59,7 @@ end
 -- Initialization
 --
 
-function mod:GetOptions() -- SetOption:skip-unused
+function mod:GetOptions()
 	return {
 		"stages",
 		-- "berserk", -- 1241267 Voidlight Rage
@@ -355,7 +355,7 @@ function mod:VoidlightConvergence(duration)
 			self:PlaySound(1242515, "long")
 		end
 	end
-	local timer = self:ScheduleTimer(function() durationEventCount = {} end, duration - 0.5)
+	local timer = self:ScheduleTimer(function() durationEventCount = {} end, duration)
 	convergenceCount = convergenceCount + 1
 	local barText = CL.count:format(L.voidlight_convergence, convergenceCount)
 	return {
@@ -404,14 +404,17 @@ function mod:Rebirth(duration)
 		endTime = GetTime() + duration,
 		onFinished = function()
 			isIntermission = false
-			self:Message("stages", "cyan", barText, false)
-			self:PlaySound("stages", "info")
+			if self:ShouldShowBars() and not self:IsWiping() then
+				self:Message("stages", "cyan", barText, false)
+				self:PlaySound("stages", "info")
 
-			self:Bar(1242515, 6, CL.count:format(L.voidlight_convergence, convergenceCount))
+				self:Bar(1242515, 6, CL.count:format(L.voidlight_convergence, convergenceCount))
+			end
 		end,
 		onCanceled = function(barInfo)
 			isIntermission = false
-			if math.abs(GetTime() - barInfo.endTime) < 0.1 then
+			local t = GetTime()
+			if t > barInfo.endTime or t - barInfo.endTime < 0.2 then
 				barInfo:onFinished()
 			end
 		end
