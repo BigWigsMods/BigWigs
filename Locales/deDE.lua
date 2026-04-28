@@ -592,9 +592,9 @@ L.instanceKeysHideTitle = "Titel verstecken"
 L.instanceKeysHideTitleDesc = "Versteckt den \"Wer hat einen Schlüsselstein?\" Titel."
 
 -- Challenges UI Decoration
---L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tGruppenwertung"
 L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
---L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFFKeine Daten|r |c%s(%s)|r"
 L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tTeleport"
 
 -- Progress %
