@@ -592,14 +592,14 @@ L.instanceKeysHideTitle = "隐藏标题"
 L.instanceKeysHideTitleDesc = "隐藏 \"谁拥有钥石？\" 标题。"
 
 -- Challenges UI Decoration
---L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t队伍评分"
 L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s（%s）|r"
---L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFF暂无数据|r |c%s（%s）|r"
 L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t传送"
 
 -- Progress %
 L.progressPercent = "进度 %"
-L.progressPercentDesc = "帮助你计算每击杀一个NPC将获得多少史诗钥石进度的辅助工具。"
+L.progressPercentDesc = "助你精准掌握在史诗钥石地下城，击杀每只敌对目标后能提供多少进度。"
 L.progressPercentTooltip = "鼠标指向敌对NPC时，在提示信息中显示进度 %"
 L.progressPercentTooltipText = {
 	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t进度：%.2f%%",
