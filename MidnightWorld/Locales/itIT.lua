@@ -1,9 +1,9 @@
 local L = BigWigs:NewBossLocale("Thorm'belan", "itIT")
 if not L then return end
 if L then
-	--L.ball = "Ball"
-	--L.ball_incoming = "Ball Incoming - Don't let it touch the ground"
-	--L.ball_fail = "FAIL - Ball touched the ground"
-	--L.tendrils = "Tendrils"
-	--L.tendrils_incoming = "RUN AWAY to snap tendrils"
+	L.ball = "Palla"
+	L.ball_incoming = "Palla in arrivo - Non lasciarla cadere"
+	L.ball_fail = "FALLITO - La palla ha toccato terra"
+	L.tendrils = "Viticci"
+	L.tendrils_incoming = "CORRERE VIA per spezzare i viticci"
 end
