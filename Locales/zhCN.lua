@@ -1185,13 +1185,13 @@ L.bestTimeBar = "最快时间"
 L.healthPrint = "血量：%s。"
 L.healthFormat = "%s （%.1f%%）"
 L.chatMessages = "聊天信息"
-L.newFastestVictoryOption = "新的最快获胜"
+L.newFastestVictoryOption = "新的最快记录"
 L.victoryOption = "你取得了胜利"
 L.defeatOption = "你被击败了"
 L.bossHealthOption = "首领血量"
-L.bossVictoryPrint = "你战胜了 “%s”，用时 %s 。" -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
-L.bossDefeatPrint = "你被 “%s” 击败了，用时 %s 。" -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
-L.newFastestVictoryPrint = "新的最快获胜：（-%s）" -- New fastest victory: (-COMBAT_DURATION)
+L.bossVictoryPrint = "你击败首领 “%s”，用时 %s 。" -- You were victorious against 'BOSS_NAME' after COMBAT_DURATION.
+L.bossDefeatPrint = "你被首领 “%s” 击败，用时 %s 。" -- You were defeated by 'BOSS_NAME' after COMBAT_DURATION.
+L.newFastestVictoryPrint = "新的最快记录：（-%s）" -- New fastest victory: (-COMBAT_DURATION)
 
 -----------------------------------------------------------------------
 -- Timeline.lua
@@ -1208,7 +1208,7 @@ L.blizzBasicAsBars = "暴雪内置的首领预警显示在 BigWigs 计时条上"
 L.blizzBasicAsBlizzTimeline = "暴雪内置的首领预警及首领技能显示“类型”"
 L.developerMode = "开发者模式"
 L.enhancedModeWarning = "警告！\n\n禁用增强模式将禁用许多 BigWigs 功能，包括：\n\n计时条颜色、法术重命名、计数器、自定义声音/语音、倒计时、计时条开关、额外消息提示等。"
---L.blizzTimelineEnhancedWarning = "WARNING!\n\nThe Blizzard timeline doesn't support BigWigs enhanced features. You will NOT get renamed spells and you will see inaccurate timers.\n\nAre you sure you want to enable it?"
+L.blizzTimelineEnhancedWarning = "警告！\n\n暴雪内置时间轴不支持 BigWigs 增强功能。你将无法看到重命名的法术，并且计时会不准确。\n\n确定要启用吗？"
 
 -----------------------------------------------------------------------
 -- Victory.lua
@@ -1222,7 +1222,7 @@ L.victoryMessageBigWigs = "显示 BigWigs 信息"
 L.victoryMessageBigWigsDesc = "BigWigs 信息显示是简单的“首领已被击败”信息。"
 L.victoryMessageBlizzard = "显示暴雪内置信息"
 L.victoryMessageBlizzardDesc = "暴雪内置信息会以特效显示“首领已被击败”在动画上。"
-L.defeated = "%s被击败了！"
+L.defeated = "%s 被击败！"
 
 -----------------------------------------------------------------------
 -- Wipe.lua
