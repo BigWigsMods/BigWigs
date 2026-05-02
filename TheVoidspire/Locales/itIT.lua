@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Vorasius", "itIT")
 if not L then return end
 if L then
-	L.shadowclaw_slam = "Schianto"
+	L.shadowclaw_slam = "Urto"
 end
 
 L = BigWigs:NewBossLocale("Fallen-King Salhadaar", "itIT")
