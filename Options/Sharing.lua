@@ -256,6 +256,7 @@ local mythicPlusSettingsToExport = {
 	-- Progress %
 	"progressTooltipFormat",
 	"progressNameplate",
+	"progressNameplateFormat",
 	"progressNameplateTargetOffsetX",
 	"progressNameplateTargetOffsetY",
 	"progressNameplateOtherOffsetX",

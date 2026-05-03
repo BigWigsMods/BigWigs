@@ -264,7 +264,7 @@ function mod:TimersMythic(_, eventInfo)
 		elseif durationRoundedOne == 25 then -- Stage Two
 			-- callback sets intermission, resets counts
 			barInfo = self:IntermissionEvent(duration)
-			barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration, barInfo)
+			barInfo.timer = self:ScheduleTimer(function() barInfo:onEnd() end, duration)
 
 		-- pull timers
 		elseif durationRoundedOne == 20 then
@@ -517,7 +517,7 @@ function mod:TimersOther(_, eventInfo)
 		elseif durationRounded == 25 then -- Stage Two
 			-- callback sets intermission, resets counts
 			barInfo = self:IntermissionEvent(duration)
-			barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration, barInfo)
+			barInfo.timer = self:ScheduleTimer(function() barInfo:onEnd() end, duration)
 
 		-- pull timers
 		elseif durationRounded == 24 then
@@ -584,7 +584,7 @@ function mod:TimersOther(_, eventInfo)
 		elseif silverstrikeBarrageCount > 1 and durationRounded == 20 then -- Stage Three
 			-- callback sets intermission, resets counts
 			barInfo = self:IntermissionEvent(duration)
-			barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration, barInfo)
+			barInfo.timer = self:ScheduleTimer(function() barInfo:onEnd() end, duration)
 
 		elseif durationRounded == 13 or durationRounded == 11 then
 			barInfo = self:NullCorona(duration)
@@ -745,7 +745,7 @@ function mod:IntermissionEvent(duration)
 		onCanceled = function(barInfo)
 			if barInfo.timer then
 				self:CancelTimer(barInfo.timer)
-				barInfo.onEnd()
+				barInfo:onEnd()
 			end
 		end
 	}

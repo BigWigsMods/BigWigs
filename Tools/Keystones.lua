@@ -55,6 +55,7 @@ do
 		progressTooltip = true,
 		progressTooltipFormat = 3,
 		progressNameplate = false,
+		progressNameplateFormat = 1,
 		progressNameplateTargetOffsetX = 150,
 		progressNameplateTargetOffsetY = 0,
 		progressNameplateOtherOffsetX = 150,
@@ -180,6 +181,9 @@ do
 
 		if db.profile.progressTooltipFormat < 1 or db.profile.progressTooltipFormat > 3 or math.floor(db.profile.progressTooltipFormat+0.5) ~= db.profile.progressTooltipFormat then
 			db.profile.progressTooltipFormat = defaults.progressTooltipFormat
+		end
+		if db.profile.progressNameplateFormat < 1 or db.profile.progressNameplateFormat > 3 or math.floor(db.profile.progressNameplateFormat+0.5) ~= db.profile.progressNameplateFormat then
+			db.profile.progressNameplateFormat = defaults.progressNameplateFormat
 		end
 		if db.profile.progressNameplateTargetOffsetX < -300 or db.profile.progressNameplateTargetOffsetX > 300 or math.floor(db.profile.progressNameplateTargetOffsetX+0.5) ~= db.profile.progressNameplateTargetOffsetX then
 			db.profile.progressNameplateTargetOffsetX = defaults.progressNameplateTargetOffsetX
@@ -1249,15 +1253,9 @@ do
 	-- Tab 3 Event Handler (Used for automatically showing the window when the dungeon ends)
 	do
 		local RequestMapInfo = C_MythicPlus.RequestMapInfo
-		local GetMapTable = C_ChallengeMode.GetMapTable
-		local RequestLeaders = C_ChallengeMode.RequestLeaders
 		local function Open()
 			-- Force update the run history in case we decide to click the history tab
 			RequestMapInfo()
-			local maps = GetMapTable() or {}
-			for i = 1, #maps do
-				RequestLeaders(maps[i])
-			end
 
 			if not db.profile.showViewerDungeonEnd or BigWigsLoader.isTestBuild then return end
 
@@ -1277,7 +1275,7 @@ do
 				self:UnregisterEvent(event)
 				Open()
 			else -- CHALLENGE_MODE_COMPLETED
-				BigWigsLoader.CTimerAfter(5, Open)
+				BigWigsLoader.CTimerAfter(7, Open)
 			end
 		end)
 	end
@@ -2222,21 +2220,10 @@ do
 	local totalEnemyForcesRaw = 0
 	local GetUnitCriteriaProgressValues = C_ScenarioInfo.GetUnitCriteriaProgressValues
 	do -- Tooltip
-		local GetStepInfo = C_Scenario.GetStepInfo
-		local GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
 		local function AddPercentLine(tooltip)
 			if db.profile.progressTooltip and NamePlatePercentUtils.isActive then
 				local value, _, percentString = GetUnitCriteriaProgressValues("mouseover")
 				if value then
-					if totalEnemyForcesRaw == 0 then
-						local _, _, stepCount = GetStepInfo()
-						for i = stepCount, 1, -1 do
-							local infoTable = GetCriteriaInfo(i)
-							if infoTable.totalQuantity and infoTable.isWeightedProgress then
-								totalEnemyForcesRaw = infoTable.totalQuantity
-							end
-						end
-					end
 					tooltip:AddLine(L.progressPercentTooltipText[db.profile.progressTooltipFormat]:format(percentString, value, totalEnemyForcesRaw))
 				end
 			end
@@ -2334,7 +2321,7 @@ do
 				NamePlatePercentUtils.fontFlags = progressNameplateFontFlags
 
 				for unit, text in next, activeTexts do
-					local _, _, percentString = GetUnitCriteriaProgressValues(unit)
+					local value, _, percentString = GetUnitCriteriaProgressValues(unit)
 					if not percentString and NamePlatePercentUtils.testing then
 						local numString = unit:match("%d+")
 						if numString then
@@ -2343,6 +2330,7 @@ do
 								local decimal = num > 9 and (num / 100) or (num / 10)
 								local percent = 1 + decimal
 								percentString = tostring(percent)
+								value = num % 2 == 0 and 2 or 1
 							end
 						end
 					end
@@ -2352,7 +2340,13 @@ do
 						text.fontString:SetPoint("CENTER")
 						text.frame:ClearAllPoints()
 						if text:SetPoint(unit) then
-							text:SetText(unit, "%s%%", percentString)
+							if db.profile.progressNameplateFormat == 1 then
+								text:SetText(unit, "%s%%", percentString)
+							elseif db.profile.progressNameplateFormat == 3 then
+								text:SetText(unit, "%d/%d", value, 500)
+							else
+								text:SetText(unit, "%d", value)
+							end
 						else
 							text:Hide(unit)
 						end
@@ -2372,15 +2366,22 @@ do
 						if UnitCanAttack("player", unit) then
 							local nameplateFrame = GetNamePlateForUnit(unit)
 							if nameplateFrame then
-								local _, _, percentString = GetUnitCriteriaProgressValues(unit)
+								local value, _, percentString = GetUnitCriteriaProgressValues(unit)
 								if not percentString then
 									local decimal = i > 9 and (i / 100) or (i / 10)
 									local percent = 1 + decimal
 									percentString = tostring(percent)
+									value = i % 2 == 0 and 2 or 1
 								end
 								local text = GetTextObject()
 								if text:SetPoint(unit) then
-									text:SetText(unit, "%s%%", percentString)
+									if db.profile.progressNameplateFormat == 1 then
+										text:SetText(unit, "%s%%", percentString)
+									elseif db.profile.progressNameplateFormat == 3 then
+										text:SetText(unit, "%d/%d", value, 500)
+									else
+										text:SetText(unit, "%d", value)
+									end
 								else
 									text:Hide(unit)
 								end
@@ -2397,11 +2398,17 @@ do
 						if UnitCanAttack("player", unit) then
 							local nameplateFrame = GetNamePlateForUnit(unit)
 							if nameplateFrame then
-								local _, _, percentString = GetUnitCriteriaProgressValues(unit)
+								local value, _, percentString = GetUnitCriteriaProgressValues(unit)
 								if percentString then
 									local text = GetTextObject()
 									if text:SetPoint(unit) then
-										text:SetText(unit, "%s%%", percentString)
+										if db.profile.progressNameplateFormat == 1 then
+											text:SetText(unit, "%s%%", percentString)
+										elseif db.profile.progressNameplateFormat == 3 then
+											text:SetText(unit, "%d/%d", value, totalEnemyForcesRaw)
+										else
+											text:SetText(unit, "%d", value)
+										end
 									else
 										text:Hide(unit)
 									end
@@ -2417,14 +2424,35 @@ do
 		nameplateFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
 		nameplateFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 		nameplateFrame:RegisterEvent("CHALLENGE_MODE_START")
+		local UpdateTotal
+		do
+			local GetStepInfo = C_Scenario.GetStepInfo
+			local GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
+			function UpdateTotal()
+				local _, _, stepCount = GetStepInfo()
+				for i = stepCount, 1, -1 do
+					local infoTable = GetCriteriaInfo(i)
+					if infoTable.totalQuantity and infoTable.isWeightedProgress then
+						totalEnemyForcesRaw = infoTable.totalQuantity
+						return
+					end
+				end
+			end
+		end
 		local prevUnit = nil
 		local function OnEvent(self, event, unit)
 			if event == "NAME_PLATE_UNIT_ADDED" then
-				local _, _, percentString = GetUnitCriteriaProgressValues(unit)
+				local value, _, percentString = GetUnitCriteriaProgressValues(unit)
 				if percentString then
 					local text = GetTextObject()
 					if text:SetPoint(unit) then
-						text:SetText(unit, "%s%%", percentString)
+						if db.profile.progressNameplateFormat == 1 then
+							text:SetText(unit, "%s%%", percentString)
+						elseif db.profile.progressNameplateFormat == 3 then
+							text:SetText(unit, "%d/%d", value, totalEnemyForcesRaw)
+						else
+							text:SetText(unit, "%d", value)
+						end
 					else
 						text:Hide(unit)
 					end
@@ -2487,6 +2515,7 @@ do
 					self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
 					self:RegisterEvent("PLAYER_TARGET_CHANGED")
 				end
+				BigWigsLoader.CTimerAfter(7, UpdateTotal)
 			end
 		end
 		nameplateFrame:SetScript("OnEvent", OnEvent)
@@ -3094,15 +3123,27 @@ do
 								order = 2,
 								disabled = function() return NamePlatePercentUtils.isActive or not db.profile.progressNameplate end,
 							},
+							progressNameplateFormat = {
+								type = "select",
+								name = L.textFormat,
+								values = {
+									"1.23%",
+									"4",
+									"4/500",
+								},
+								order = 3,
+								width = 1.5,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
 							fontHeader = {
 								type = "header",
 								name = L.font,
-								order = 3,
+								order = 4,
 							},
 							progressNameplateFontName = {
 								type = "select",
 								name = L.font,
-								order = 4,
+								order = 5,
 								values = LibSharedMedia:List("font"),
 								itemControl = "DDI-Font",
 								get = function()
@@ -3121,7 +3162,7 @@ do
 							progressNameplateOutline = {
 								type = "select",
 								name = L.outline,
-								order = 5,
+								order = 6,
 								values = {
 									NONE = L.none,
 									OUTLINE = L.thin,
@@ -3134,7 +3175,7 @@ do
 								type = "range",
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
-								order = 6,
+								order = 7,
 								softMax = 100, max = 200, min = 10, step = 1,
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
@@ -3143,7 +3184,7 @@ do
 								type = "toggle",
 								name = L.monochrome,
 								desc = L.monochromeDesc,
-								order = 7,
+								order = 8,
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
@@ -3151,14 +3192,14 @@ do
 								type = "toggle",
 								name = L.slugRendering,
 								desc = L.slugRenderingDesc,
-								order = 8,
+								order = 9,
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							currentTargetHeader = {
 								type = "header",
 								name = L.settingsForCurrentTarget,
-								order = 9,
+								order = 10,
 								width = "full",
 							},
 							progressNameplateFontColorTarget = {
@@ -3172,14 +3213,14 @@ do
 									db.profile.progressNameplateFontColorTarget = {r, g, b, a < 0.3 and 0.3 or a}
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 10,
+								order = 11,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							progressNameplateTargetOffsetX = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								order = 11,
+								order = 12,
 								max = 300,
 								min = -300,
 								step = 1,
@@ -3190,7 +3231,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								order = 12,
+								order = 13,
 								max = 100,
 								min = -100,
 								step = 1,
@@ -3200,7 +3241,7 @@ do
 							otherTargetsHeader = {
 								type = "header",
 								name = L.settingsForOtherTargets,
-								order = 13,
+								order = 14,
 							},
 							progressNameplateFontColorOther = {
 								type = "color",
@@ -3213,14 +3254,14 @@ do
 									db.profile.progressNameplateFontColorOther = {r, g, b, a}
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 14,
+								order = 15,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							progressNameplateOtherOffsetX = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								order = 15,
+								order = 16,
 								max = 300,
 								min = -300,
 								step = 1,
@@ -3231,7 +3272,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								order = 16,
+								order = 17,
 								max = 100,
 								min = -100,
 								step = 1,
@@ -3241,7 +3282,7 @@ do
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 17,
+								order = 18,
 							},
 							reset = {
 								type = "execute",
@@ -3251,7 +3292,7 @@ do
 									ProfileUtils.ResetNameplates()
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 18,
+								order = 19,
 							},
 						},
 					},
