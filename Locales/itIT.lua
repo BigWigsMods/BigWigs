@@ -3,11 +3,11 @@ local L = addonTbl.API:NewLocale("BigWigs", "itIT")
 if not L then return end
 
 -- API.lua
---L.showAddonBar = "The addon '|cFF436EEE%s|r' created the '%s' bar."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
---L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
---L.shortSecondsOnly = "%d Sec" -- 28 Seconds
---L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
+L.showAddonBar = "L'addon '|cFF436EEE%s|r' ha creato la barra '%s'"
+L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' ha appena creato una copia della stringa di esportazione del tuo profilo."
+L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d Sec" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Infuriato"
@@ -66,8 +66,8 @@ L.outOfDateContentPopup = "WARNING!\nHai aggiornato |cFF436EEE%s|r ma devi anche
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r richiede la versione %d dell' addon principale |cFF436EEEBigWigs|r per funzionare correttamente, tu hai la versione %d installata attualmente."
 L.addOnLoadFailedWithReason = "BigWigs ha fallito di caricare l'addon |cFF436EEE%s|r per %q. Digli ai devs di BigWigs!"
 L.addOnLoadFailedUnknownError = "BigWigs ha trovato un errore quando cercava di caricare l'addon |cFF436EEE%s|r. Digli ai devs di BigWigs!"
---L.newFeatures = "New BigWigs features:"
---L.parentheses = "%s (%s)"
+L.newFeatures = "Nuove funzioni di BigWigs:"
+L.parentheses = "%s (%s)"
 
 L.expansionNames = {
 	"Classiche", -- Classic
@@ -87,39 +87,39 @@ L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "Scorribande",
 	["LittleWigs_CurrentSeason"] = "Stagione attuale",
 }
---L.dayNamesShort = {
---	"SUN", -- Sunday
---	"MON", -- Monday
---	"TUE", -- Tuesday
---	"WED", -- Wednesday
---	"THU", -- Thursday
---	"FRI", -- Friday
---	"SAT", -- Saturday
+L.dayNamesShort = {
+	"DOM", -- Sunday
+	"LUN", -- Monday
+	"MAR", -- Tuesday
+	"MER", -- Wednesday
+	"GIO", -- Thursday
+	"VEN", -- Friday
+	"SAB", -- Saturday
 --}
---L.dayNames = {
---	"Sunday",
---	"Monday",
---	"Tuesday",
---	"Wednesday",
---	"Thursday",
---	"Friday",
---	"Saturday",
+L.dayNames = {
+	"Domenica",
+	"Lunedì",
+	"Martedì",
+    "Mercoledì",
+	"Giovedì",
+	"Venerdì",
+	"Sabato",
 --}
---L.monthNames = {
---	"January",
---	"February",
---	"March",
---	"April",
---	"May",
---	"June",
---	"July",
---	"August",
---	"September",
---	"October",
---	"November",
---	"December",
+L.monthNames = {
+	"Gennaio",
+	"Febbraio",
+	"Marzo",
+	"Aprile",
+	"Maggio",
+	"Giugno",
+	"Luglio",
+	"Agosto",
+	"Settembre",
+	"Ottobre",
+	"Novembere",
+	"Dicembre",
 --}
---L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
+L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attenti! (Algalon)"
