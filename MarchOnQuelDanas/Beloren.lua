@@ -205,7 +205,7 @@ function mod:TimersOther(_, eventInfo)
 
 	if not isIntermission then
 		if durationRounded == 6 then
-			bardInfo = self:RadiantEchoes(duration)
+			barInfo = self:RadiantEchoes(duration)
 		elseif durationRounded == 10 then
 			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
 			if self:Easy() or durationEventCount[durationRounded] % 3 == 1 then -- resets on Death Drop

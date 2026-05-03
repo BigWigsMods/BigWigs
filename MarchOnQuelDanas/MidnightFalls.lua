@@ -604,7 +604,7 @@ function mod:SafeguardPrism(duration)
 		key = 1251386,
 		offset = 4,
 		onFinished = function()
-			self:Message(99999999999, "yellow", barText)
+			self:Message(1251386, "yellow", barText)
 			self:PlaySound(1251386, "alert")
 		end
 	}
