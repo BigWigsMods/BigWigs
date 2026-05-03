@@ -18,18 +18,22 @@ jobs:
 
     steps:
       - name: Checkout addon
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Run luacheck
-        uses: BigWigsMods/actions/luacheck@master
+        uses: BigWigsMods/luacheck@main
         with:
           args: -q
 
       - name: Update option files
         if: always()
-        run: lua gen_option_values.lua BigWigs.toc
+        uses: BigWigsMods/luacheck@main
+        with:
+          run_luacheck: false
+          custom_script: gen_option_values.lua
+          custom_args: BigWigs.toc
 
       - name: Package
         uses: BigWigsMods/packager@master
