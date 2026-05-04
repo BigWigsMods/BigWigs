@@ -3,7 +3,7 @@ local L = addonTbl.API:NewLocale("BigWigs", "itIT")
 if not L then return end
 
 -- API.lua
-L.showAddonBar = "L'addon '|cFF436EEE%s|r' ha creato la barra '%s'"
+L.showAddonBar = "L'addon '|cFF436EEE%s|r' ha creato la barra '%s'."
 L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' ha appena creato una copia della stringa di esportazione del tuo profilo."
 L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Sec" -- 28 Seconds
@@ -95,7 +95,7 @@ L.dayNamesShort = {
 	"GIO", -- Thursday
 	"VEN", -- Friday
 	"SAB", -- Saturday
---}
+}
 L.dayNames = {
 	"Domenica",
 	"Lunedì",
@@ -104,7 +104,7 @@ L.dayNames = {
 	"Giovedì",
 	"Venerdì",
 	"Sabato",
---}
+}
 L.monthNames = {
 	"Gennaio",
 	"Febbraio",
@@ -118,7 +118,7 @@ L.monthNames = {
 	"Ottobre",
 	"Novembere",
 	"Dicembre",
---}
+}
 L.dateFormat = "%s %d %s %d" -- Date format: "Monday 1 January 2025"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
