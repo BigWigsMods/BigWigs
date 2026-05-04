@@ -1208,7 +1208,7 @@ L.blizzBasicAsBars = "블리자드 기본 타이머를 BigWigs 바 형태로 표
 L.blizzBasicAsBlizzTimeline = "블리자드 기본 타이머를 블리자드 타임라인에 표시"
 L.developerMode = "개발자 모드"
 L.enhancedModeWarning = "경고!\n\n고급 모드를 비활성화하면 다음과 같은 BigWigs의 많은 기능이 사용 불가능해집니다:\n\n바 색상, 주문 이름 변경, 카운터, 사용자 지정 사운드/음성, 카운트다운, 바 표시/숨기기, 추가 메시지 등."
---L.blizzTimelineEnhancedWarning = "WARNING!\n\nThe Blizzard timeline doesn't support BigWigs enhanced features. You will NOT get renamed spells and you will see inaccurate timers.\n\nAre you sure you want to enable it?"
+L.blizzTimelineEnhancedWarning = "경고!\n\n블리자드 타임라인은 BigWigs의 고급 기능을 지원하지 않습니다. 주문 이름이 변경되지 않으며, 타이머가 정확하게 표시되지 않을 수 있습니다.\n\n정말 활성화하시겠습니까?"
 
 -----------------------------------------------------------------------
 -- Victory.lua
