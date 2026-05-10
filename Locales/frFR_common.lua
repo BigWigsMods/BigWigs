@@ -199,8 +199,8 @@ L.autotalk_generic_desc = "Sélectionne automatiquement le dialogue avec le PNJ 
 L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 
 -- GUI notes
---L.singular = "Singular"
---L.plural = "Plural"
+L.singular = "Singulier"
+L.plural = "Pluriel"
 
 -- Common ability name replacements
 L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
