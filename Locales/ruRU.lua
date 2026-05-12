@@ -993,7 +993,7 @@ L.onlyWhenYouAreTank = "Показывать только если вы тоже
 L.playerInYourGroup = "Игрок в вашей группе"
 L.maxIcons = "Максимум иконок"
 L.maxIconsDesc = "Максимальное количество отображаемых иконок."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: теперь вы можете видеть свои приватные ауры в виде иконок, а также приватные ауры другого игрока, например танка."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Теперь вы можете видеть свои приватные ауры в виде иконок, а также приватные ауры другого игрока, например танка."
 
 L.privateAurasTestAnchorText = "Приватная\nаура\n(%d)"
 L.privateAurasTestTankAnchorText = "Аура\nтанка\n(%d)"
