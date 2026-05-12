@@ -1,28 +1,28 @@
 if not BigWigsAPI.IsLocale("ruRU") then return end
 BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
-	--infused_quills = "Quills",
-	--voidlight_convergence = "Color Swaps",
-	--light_void_dive = "Light/Void Dive",
+	infused_quills = "Перья",
+	voidlight_convergence = "Смена цветов",
+	light_void_dive = "Нырок Свет/Бездна",
 })
 
 BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
-	--deaths_dirge = "Memory Game",
-	--heavens_glaives = "Glaives",
-	--heavens_lance = "Lance",
-	--the_dark_archangel = "Big Boom",
-	--prism_kicks = "Kicks",
-	--dark_constellation = "Stars",
-	--dark_rune = "Memory Mark",
-	--dark_rune_bar = "Solve the Game",
+	deaths_dirge = "Игра на запоминание",
+	heavens_glaives = "Глефы",
+	heavens_lance = "Копьё",
+	the_dark_archangel = "Большой взрыв",
+	prism_kicks = "Прерывания",
+	dark_constellation = "Звёзды",
+	dark_rune = "Метка для запоминания",
+	dark_rune_bar = "Решить игру",
 
-	--left = "[L] %s", -- left/west group bars in p3
-	--right = "[R] %s", -- right/east group bars in p3
+	left = "[Л] %s", -- left/west group bars in p3
+	right = "[П] %s", -- right/east group bars in p3
 
-	--custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings",
-	--custom_select_limit_warnings_desc = "Only show warnings for abilities on your side.",
-	--custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right.",
-	--custom_select_limit_warnings_value2 = "Odd groups left, even groups right.",
-	--custom_select_limit_warnings_value3 = "Show warnings for both sides.",
-	--custom_select_limit_warnings_value4 = "Show warnings for left side only.",
-	--custom_select_limit_warnings_value5 = "Show warnings for right side only.",
+	custom_select_limit_warnings = "[Эпохальный] Ограничить предупреждения 3-й фазы",
+	custom_select_limit_warnings_desc = "Показывать предупреждения только для способностей на вашей стороне.",
+	custom_select_limit_warnings_value1 = "Группы 1 и 2 идут налево, группы 3 и 4 направо.",
+	custom_select_limit_warnings_value2 = "Нечётные группы налево, чётные направо.",
+	custom_select_limit_warnings_value3 = "Показывать предупреждения для обеих сторон.",
+	custom_select_limit_warnings_value4 = "Показывать предупреждения только для левой стороны.",
+	custom_select_limit_warnings_value5 = "Показывать предупреждения только для правой стороны.",
 })
