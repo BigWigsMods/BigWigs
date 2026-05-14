@@ -341,7 +341,7 @@ L.N25 = "일반 25"
 L.H10 = "영웅 10"
 L.H25 = "영웅 25"
 L.titan = "티탄" -- Chinese-only "Titan Reforged" servers
---L.mythic_flex = "Mythic (Flex)" -- Mythic (Flexible 15-25 player raids)
+L.mythic_flex = "신화 (탄력)" -- Mythic (Flexible 15-25 player raids)
 
 -----------------------------------------------------------------------
 -- TOOLS
