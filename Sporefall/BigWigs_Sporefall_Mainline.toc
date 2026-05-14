@@ -1,7 +1,7 @@
 ## Interface: 120001, 120005, 120007
 
 ## Title: BigWigs [|cffeda55fSporefall|r]
-## Title-deDE: BigWigs [|cffeda55fSporefall|r]
+## Title-deDE: BigWigs [|cffeda55fSporenfall|r]
 ## Title-esES: BigWigs [|cffeda55fSporefall|r]
 ## Title-esMX: BigWigs [|cffeda55fSporefall|r]
 ## Title-frFR: BigWigs [|cffeda55fSporefall|r]
@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f孢陨幽境|r]
 ## Title-zhTW: BigWigs [|cffeda55fSporefall|r]
 ## Notes: BigWigs Sporefall Modules
-## Notes-deDE: BigWigs Sporefall Modules
+## Notes-deDE: BigWigs Sporenfall Module
 ## Notes-esES: BigWigs Sporefall Modules
 ## Notes-esMX: BigWigs Sporefall Modules
 ## Notes-frFR: BigWigs Sporefall Modules
