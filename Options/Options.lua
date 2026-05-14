@@ -581,7 +581,95 @@ local function advancedToggles(dbKey, module, check)
 	return unpack(advOpts)
 end
 
+local lastAdvancedOptionsTab = nil
+
+local function setRenameValue(widget, _, value)
+	local module = widget:GetUserData("module")
+	local key = widget:GetUserData("key")
+	local position = widget:GetUserData("position")
+	module.db.profile.renames[key][position] = value
+
+	-- refresh
+	local master = widget:GetUserData("master")
+	local dropdown = master:GetUserData("dropdown")
+	local scrollFrame = master:GetUserData("scrollFrame")
+	local bossOption = master:GetUserData("option")
+	visibleSpellDescriptionWidgets = {}
+	lastAdvancedOptionsTab = "renames"
+	scrollFrame:ReleaseChildren()
+	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+	scrollFrame:PerformLayout()
+end
+
+local function resetRenameValue(widget)
+	local name = widget:GetUserData("default")
+	local editbox = widget:GetUserData("editbox")
+	editbox:Fire("OnEnterPressed", name)
+end
+
+local function getRenameOptions(widget) -- widget = TabGroup
+	local module = widget:GetUserData("module")
+	local optionKey = widget:GetUserData("key")
+
+	local widgets = {}
+
+	local header = AceGUI:Create("Label")
+	header:SetText(L.renameHeader .. "\n\n")
+	header:SetFullWidth(true)
+	widgets[#widgets + 1] = header
+
+	for position = 1, module:GetRenameCount(optionKey) do
+		local default = module:GetRenameDefault(optionKey, position)
+		local name = module:GetRename(optionKey, position)
+		local label = module:GetRenameNote(optionKey, position)
+		local original = module:GetRenameOriginal(optionKey)
+		if original == optionKey and type(original) == "number" then
+			original = module:SpellName(optionKey)
+		end
+		local showOriginal = position == 1 and original and original ~= default
+
+		local customName = AceGUI:Create("EditBox")
+		if label then
+			customName:SetLabel(label)
+		end
+		customName:SetText(name)
+		customName:SetUserData("module", module)
+		customName:SetUserData("key", optionKey)
+		customName:SetUserData("position", position)
+		customName:SetUserData("master", widget:GetUserData("master"))
+		customName:SetCallback("OnEnterPressed", setRenameValue)
+		customName:SetRelativeWidth(0.6)
+		widgets[#widgets + 1] = customName
+
+		local customReset = AceGUI:Create("Button")
+		customReset:SetText(L.reset)
+		customReset:SetDisabled(name == default)
+		customReset:SetUserData("default", default)
+		customReset:SetUserData("editbox", customName)
+		customReset:SetCallback("OnClick", resetRenameValue)
+		customReset:SetRelativeWidth(showOriginal and 0.2 or 0.4)
+		widgets[#widgets + 1] = customReset
+
+		if showOriginal then
+			local customOriginal = AceGUI:Create("Button")
+			customOriginal:SetText(L.spellName)
+			customOriginal:SetDisabled(name == original)
+			customOriginal:SetUserData("default", original)
+			customOriginal:SetUserData("editbox", customName)
+			customOriginal:SetCallback("OnClick", resetRenameValue)
+			customOriginal:SetUserData("desc", L.spellNameResetDesc)
+			customOriginal:SetCallback("OnEnter", slaveOptionMouseOver)
+			customOriginal:SetCallback("OnLeave", optionsTooltip_Hide)
+			customOriginal:SetRelativeWidth(0.2)
+			widgets[#widgets + 1] = customOriginal
+		end
+	end
+
+	return unpack(widgets)
+end
+
 local function advancedTabSelect(widget, callback, tab)
+	lastAdvancedOptionsTab = nil
 	if widget:GetUserData("tab") == tab then return end
 	widget:SetUserData("tab", tab)
 	visibleSpellDescriptionWidgets = {}
@@ -605,29 +693,24 @@ local function advancedTabSelect(widget, callback, tab)
 		widget:AddChild(group)
 		colorModule:SetColorOptions(module.name, key, module.toggleDefaults[key])
 		acd:Open("BigWigs: Colors Override", group)
+	elseif tab == "renames" then
+		if not module:HasRenames() then
+			local label = AceGUI:Create("Label")
+			label:SetText("This boss has not been updated for renames.")
+			label:SetFontObject(GameFontHighlight)
+			label:SetFullWidth(true)
+			widget:AddChild(label)
+		else
+			widget:AddChildren(getRenameOptions(widget))
+		end
 	end
 	widget:ResumeLayout()
 	widget:GetUserData("scrollFrame"):PerformLayout()
 	widget:PerformLayout()
 end
 
-local advancedTabs = {
-	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sliders:20|t ".. L.advanced_options,
-		value = "options",
-	},
-	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Colors:20|t ".. L.colors,
-		value = "colors",
-	},
-	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sounds:20|t ".. L.sound,
-		value = "sounds",
-	},
-}
-
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, note = BigWigs:GetBossOptionDetails(module, bossOption)
 	local widgets = {}
 
 	local back = AceGUI:Create("Button")
@@ -650,8 +733,19 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	idLabel.label:SetJustifyH("RIGHT")
 	widgets[#widgets + 1] = idLabel
 
+	local abilityLabel = name
+	if module:IsRenameAvailable(dbKey) then
+		local rename = module:GetRename(dbKey)
+		if rename ~= name then
+			abilityLabel = L.renameLabel:format(abilityLabel, rename)
+		end
+	end
+	if note then
+		abilityLabel = L.noteLabel:format(abilityLabel, note)
+	end
+
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(abilityLabel)
 	check:SetTriState(true)
 	check:SetFullWidth(true)
 	check:SetDescription(desc)
@@ -699,7 +793,25 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 
 	local tabs = AceGUI:Create("TabGroup")
 	tabs:SetLayout("Flow")
-	tabs:SetTabs(advancedTabs)
+	tabs:SetTabs({
+		{
+			text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sliders:20|t ".. L.advanced_options,
+			value = "options",
+		},
+		{
+			text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Colors:20|t ".. L.colors,
+			value = "colors",
+		},
+		{
+			text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sounds:20|t ".. L.sound,
+			value = "sounds",
+		},
+		{
+			text = L.renames,
+			value = "renames",
+			disabled = module:HasRenames() and not module:IsRenameAvailable(dbKey),
+		},
+	})
 	tabs:SetFullWidth(true)
 	tabs:SetCallback("OnGroupSelected", advancedTabSelect)
 	tabs:SetUserData("tab", "")
@@ -707,7 +819,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	tabs:SetUserData("module", module)
 	tabs:SetUserData("master", check)
 	tabs:SetUserData("scrollFrame", scrollFrame)
-	tabs:SelectTab("options")
+	tabs:SelectTab(lastAdvancedOptionsTab or "options")
 	widgets[#widgets + 1] = tabs
 
 	return unpack(widgets)
@@ -742,7 +854,7 @@ local function customDropdownValueChanged(widget, _, value)
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, note = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	if type(dbKey) == "string" and dbKey:find("^custom_select_") then
 		local moduleLocale = module:GetLocale()
@@ -782,8 +894,31 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 
+	local abilityLabel = name
+	if module:IsRenameAvailable(dbKey) then
+		local rename = module:GetRename(dbKey)
+		if rename == name then rename = nil end
+		-- add counts for extra strings
+		local count = module:GetRenameCount(dbKey)
+		if module:GetRenameOriginal(dbKey) == false then
+			rename = ("+%d"):format(count)
+		elseif count > 1 then
+			if rename then
+				rename = ("%s, +%d"):format(rename, count - 1)
+			else
+				rename = ("+%d"):format(count)
+			end
+		end
+		if rename then
+			abilityLabel = L.renameLabel:format(abilityLabel, rename)
+		end
+	end
+	if note then
+		abilityLabel = L.noteLabel:format(abilityLabel, note)
+	end
+
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(abilityLabel)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
@@ -1057,7 +1192,7 @@ function populatePrivateAuraOptions(widget)
 
 					local name = loader.GetSpellName(id)
 					if option.note then
-						name = L.alternativeName:format(name, option.note)
+						name = L.renameLabel:format(name, option.note)
 					end
 					local texture = loader.GetSpellTexture(id)
 
@@ -1091,8 +1226,6 @@ function populatePrivateAuraOptions(widget)
 					end
 
 					scrollFrame:AddChildren(icon, dropdown)
-				--else
-				--	print(C_Spell.GetSpellName(spellId))
 				end
 			end
 		end

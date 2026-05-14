@@ -964,12 +964,7 @@ do
 				error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 				return
 			else
-				local nameType = type(name)
-				if nameType == "number" then
-					return spells[name]
-				else
-					return name
-				end
+				return name
 			end
 		end
 	end
@@ -982,7 +977,13 @@ do
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
 		else
-			return moduleRenamesList[self][key][position]
+			local name = moduleRenamesList[self][key][position]
+			local nameType = type(name)
+			if nameType == "number" then
+				return spells[name]
+			else
+				return name
+			end
 		end
 	end
 
