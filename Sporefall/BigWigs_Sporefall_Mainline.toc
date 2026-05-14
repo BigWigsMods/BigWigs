@@ -9,7 +9,7 @@
 ## Title-koKR: BigWigs [|cffeda55fSporefall|r]
 ## Title-ptBR: BigWigs [|cffeda55fSporefall|r]
 ## Title-ruRU: BigWigs [|cffeda55fSporefall|r]
-## Title-zhCN: BigWigs [|cffeda55fSporefall|r]
+## Title-zhCN: BigWigs [|cffeda55f孢陨幽境|r]
 ## Title-zhTW: BigWigs [|cffeda55fSporefall|r]
 ## Notes: BigWigs Sporefall Modules
 ## Notes-deDE: BigWigs Sporefall Modules
@@ -20,7 +20,7 @@
 ## Notes-koKR: BigWigs Sporefall Modules
 ## Notes-ptBR: BigWigs Sporefall Modules
 ## Notes-ruRU: BigWigs Sporefall Modules
-## Notes-zhCN: BigWigs Sporefall Modules
+## Notes-zhCN: BigWigs 孢陨幽境模块
 ## Notes-zhTW: BigWigs Sporefall Modules
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
