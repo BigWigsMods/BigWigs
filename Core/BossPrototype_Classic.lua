@@ -950,6 +950,7 @@ end
 
 do
 	local moduleRenamesList = {}
+
 	--- Get the current rename for this key and position.
 	-- @return string
 	function boss:GetRename(key, position)
@@ -957,16 +958,15 @@ do
 		if not moduleRenamesList[self][key] or not moduleRenamesList[self][key][position] then
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
-		else
-			local db = self.db.profile.renames
-			local name = db[key] and db[key][position]
-			if not name then
-				error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
-				return
-			else
-				return name
-			end
 		end
+
+		local db = self.db.profile.renames
+		local name = db[key] and db[key][position]
+		if not name then
+			error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
+			return
+		end
+		return name
 	end
 
 	--- Get the default rename for this key and position.
@@ -976,15 +976,14 @@ do
 		if not moduleRenamesList[self][key] or not moduleRenamesList[self][key][position] then
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
-		else
-			local name = moduleRenamesList[self][key][position]
-			local nameType = type(name)
-			if nameType == "number" then
-				return spells[name]
-			else
-				return name
-			end
 		end
+
+		local name = moduleRenamesList[self][key][position]
+		local nameType = type(name)
+		if nameType == "number" then
+			return spells[name]
+		end
+		return name
 	end
 
 	--- Check if the rename for this key and position is currently set to default.
@@ -1013,9 +1012,10 @@ do
 		if not moduleRenamesList[self][key] or not moduleRenamesList[self][key][position] then
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
-		elseif moduleRenamesList[self][key].notes then
-			return moduleRenamesList[self][key].notes[position]
 		end
+
+		local notes = moduleRenamesList[self][key].notes
+		return notes and notes[position]
 	end
 
 	--- Get the amount of renames for this key.
@@ -1024,9 +1024,8 @@ do
 		if not moduleRenamesList[self][key] then
 			error(("Module %q has no rename for key %q."):format(self.moduleName, tostring(key)))
 			return
-		else
-			return #moduleRenamesList[self][key]
 		end
+		return #moduleRenamesList[self][key]
 	end
 
 	--- Get the original name associated with this rename using its key
@@ -1035,14 +1034,13 @@ do
 		if not moduleRenamesList[self][key] then
 			error(("Module %q has no rename for key %q."):format(self.moduleName, tostring(key)))
 			return
-		else
-			local original = moduleRenamesList[self][key].original
-			if original or original == false then
-				return original
-			else
-				return key
-			end
 		end
+
+		local original = moduleRenamesList[self][key].original
+		if original or original == false then
+			return original
+		end
+		return key
 	end
 
 	--- Check if the rename for this key and position is currently set to the original.
@@ -1095,6 +1093,7 @@ do
 		moduleRenamesList[self] = renamesTable
 	end
 end
+
 
 --- Create a custom marking option
 -- @bool state Boolean value to represent default state
