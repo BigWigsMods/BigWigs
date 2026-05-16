@@ -892,6 +892,10 @@ do
 			error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
 		end
+		local nameType = type(name)
+		if nameType == "number" then
+			return spells[name]
+		end
 		return name
 	end
 
@@ -903,13 +907,7 @@ do
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
 		end
-
-		local name = moduleRenamesList[self][key][position]
-		local nameType = type(name)
-		if nameType == "number" then
-			return spells[name]
-		end
-		return name
+		return moduleRenamesList[self][key][position]
 	end
 
 	--- Check if the rename for this key and position is currently set to default.
