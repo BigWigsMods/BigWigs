@@ -917,16 +917,15 @@ do
 		if not moduleRenamesList[self][key] or not moduleRenamesList[self][key][position] then
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
-		else
-			local db = self.db.profile.renames
-			local name = db[key] and db[key][position]
-			if not name then
-				error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
-				return
-			else
-				return moduleRenamesList[self][key][position] == name
-			end
 		end
+
+		local db = self.db.profile.renames
+		local name = db[key] and db[key][position]
+		if not name then
+			error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
+			return
+		end
+		return moduleRenamesList[self][key][position] == name
 	end
 
 	--- Get the note associated with this rename using its key and position.
@@ -974,21 +973,19 @@ do
 		if not moduleRenamesList[self][key] or not moduleRenamesList[self][key][position] then
 			error(("Module %q has no rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
 			return
-		else
-			local db = self.db.profile.renames
-			local name = db[key] and db[key][position]
-			if not name then
-				error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
-				return
-			else
-				local original = moduleRenamesList[self][key].original
-				if original == false then
-					return original
-				else
-					return (original or key) == name
-				end
-			end
 		end
+
+		local db = self.db.profile.renames
+		local name = db[key] and db[key][position]
+		if not name then
+			error(("Module %q has no stored rename for key %q at position %q."):format(self.moduleName, tostring(key), tostring(position)))
+			return
+		end
+		local original = moduleRenamesList[self][key].original
+		if original == false then
+			return original
+		end
+		return (original or key) == name
 	end
 
 	--- Check if this module has a rename set for this key
