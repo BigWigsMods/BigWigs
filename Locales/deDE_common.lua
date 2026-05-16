@@ -279,19 +279,19 @@ L.whelps = "Welpen" -- Plural of L.whelp
 L.curse = "Fluch" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Flüche" -- Plural of L.curse
 L.disease = "Krankheit" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
---L.dispel = "Dispel" -- General term for any debuff that is dispellable
---L.dispels = "Dispels" -- Plural of L.dispel
+L.dispel = "Bannung" -- General term for any debuff that is dispellable
+L.dispels = "Bannungen" -- Plural of L.dispel
 L.poison = "Gift" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 
 -- Interrupt-related spell renames
---L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
-L.kick = "Tritt" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
---L.kicks = "Kicks" -- Plural of L.kick
+L.interrupts = "Unterbrechungen" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "Unterbrechung" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "Unterbrechungen" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "Tank Bombe" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Tank Kombi" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Tank Frontal" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_hit = "Tank Treffer" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
