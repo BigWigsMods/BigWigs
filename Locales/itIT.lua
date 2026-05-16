@@ -223,6 +223,13 @@ L.healer = "|cFFFF0000Messaggio solo per Guaritori.|r "
 L.tankhealer = "|cFFFF0000Messaggio per Difensori e Guaritori.|r "
 L.dispeller = "|cFFFF0000Messaggio solo per Dissolutori Magici.|r "
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "Importa"
 L.import_info = "Dopo che immetti una stringa puoi selezione quali impostazioni vuoi importate. \n Se impostazioni non sono disponibili nella stringa di importazione non saranno selezionabili.\n\n|cffff4411 Quest Importazione impatterà solo le impostazioni generali e non impatta le impostazioni specifiche a ogni boss.|r"

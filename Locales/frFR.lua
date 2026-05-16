@@ -223,6 +223,13 @@ L.healer = "|cFFFF0000Alertes pour soigneur uniquement.|r "
 L.tankhealer = "|cFFFF0000Alertes pour tank & soigneur uniquement.|r "
 L.dispeller = "|cFFFF0000Alertes pour dispeller uniquement.|r "
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "Importer"
 L.import_info = "Après avoir entré une chaîne, vous pouvez sélectionner quels paramètres vous souhaitez importer.\nSi les paramètres ne sont pas disponibles dans la chaîne d'import, ils ne seront pas sélectionnables.\n\n|cffff4411Cet import n'affectera que les paramètres généraux et non les paramètres spécifiques à chaque boss.|r"

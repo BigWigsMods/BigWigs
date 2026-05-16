@@ -223,6 +223,13 @@ L.healer = "|cFFFF0000치유 전담만 경보합니다.|r "
 L.tankhealer = "|cFFFF0000방어 & 치유 전담만 경보합니다.|r "
 L.dispeller = "|cFFFF0000무효화 시전자만 경보합니다.|r "
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "가져오기"
 L.import_info = "문자열을 입력한 후 가져올 설정을 선택할 수 있습니다.\n가져오기 문자열에 설정이 포함되어 있지 않으면 선택할 수 없습니다.\n\n|cffff4411이 가져오기는 일반 설정에만 영향을 미치며 보스별 설정에는 영향을 미치지 않습니다.|r"

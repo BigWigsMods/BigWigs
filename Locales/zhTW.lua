@@ -223,6 +223,13 @@ L.healer = "|cFFFF0000只警報治療。|r"
 L.tankhealer = "|cFFFF0000只警報坦克和治療。|r"
 L.dispeller = "|cFFFF0000只警報驅散。|r"
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "匯入"
 L.import_info = "輸入字串後，可以勾選要分別匯入哪些設定。\n如果字串中不包含某些設定，該選項將無法勾選。\n\n|cffff4411導入的字串只會更改一般設定，不會更改針對特定首領技能調整的單獨設定。|r"

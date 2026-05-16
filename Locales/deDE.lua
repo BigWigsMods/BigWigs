@@ -223,6 +223,13 @@ L.healer = "|cFFFF0000Warnungen nur für Heiler.|r "
 L.tankhealer = "|cFFFF0000Warnungen nur für Tanks und Heiler.|r "
 L.dispeller = "|cFFFF0000Warnungen nur für Banner.|r "
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "Importieren"
 L.import_info = "Nach der Eingabe eines Strings kann gewählt werden welche Einstellungen importiert werden sollen.\nWenn Einstellungen im Import-String nicht verfügbar sind, sind diese nicht wählbar.\n\n|cffff4411Dieser Import betrifft nur allgemeine Einstellungen und keine Boss-spezifischen Einstellungen.|r"

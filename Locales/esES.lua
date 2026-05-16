@@ -223,6 +223,13 @@ L.healer = "|cFFFF0000Solo alertas para sanadores.|r "
 L.tankhealer = "|cFFFF0000Solo alertas para tanque y sanador.|r "
 L.dispeller = "|cFFFF0000Solo alertas para disipadores.|r "
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "Importar"
 L.import_info = "Después de ingresar el código de importación, puedes seleccionar qué configuraciones te gustaría importar.\nSi las configuraciones no están disponibles en el código de importación, no serán seleccionables.\n\n|cffff4411Esta importación solo afectará las configuraciones generales y no afectará las configuraciones específicas del jefe.|r"
