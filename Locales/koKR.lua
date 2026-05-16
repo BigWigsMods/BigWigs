@@ -144,7 +144,7 @@ L.configure = "구성"
 L.resetPositions = "위치 초기화"
 L.selectEncounter = "보스 전투 선택"
 L.privateAuraSounds = "비공개 오라 소리"
-L.privateAuraSounds_desc = "비공개 오라는 일반적으로 추적할 수 없지만, 능력으로 타깃이 되었을 때 재생되도록 사운드를 설정할 수 있습니다."
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
 L.listAbilities = "파티/공격대 대화에 능력 나열하기"
 
 L.dbmFaker = "DBM을 사용 중인 것처럼 위장하기"

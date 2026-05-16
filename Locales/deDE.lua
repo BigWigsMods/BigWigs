@@ -144,7 +144,7 @@ L.configure = "Einstellungen"
 L.resetPositions = "Positionen zurücksetzen"
 L.selectEncounter = "Wähle Begegnung"
 L.privateAuraSounds = "Private Aurasounds"
-L.privateAuraSounds_desc = "Private Auren können nicht normal verfolgt werden, aber es kann ein wiederzugebender Sound festgelegt werden, wenn Du von der Fähigkeit betroffen bist."
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
 L.listAbilities = "Fähigkeiten im Chat auflisten"
 
 L.dbmFaker = "Täusche DBM Nutzung vor"

@@ -144,7 +144,7 @@ L.configure = "Настройка"
 L.resetPositions = "Сброс позиции"
 L.selectEncounter = "Выберите схватку"
 L.privateAuraSounds = "Приватные Ауры - Звуки"
-L.privateAuraSounds_desc = "Приватные ауры нельзя отслеживать стандартным методом, но есть возможность настроить звук, если вы цель заклинания."
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
 L.listAbilities = "Вывести способности в групповой чат"
 
 L.dbmFaker = "Маскировка под DBM"

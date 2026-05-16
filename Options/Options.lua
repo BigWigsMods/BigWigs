@@ -15,6 +15,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 local lds = LibStub("LibDualSpec-1.0", true)
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 options.SendMessage = loader.SendMessage
 
@@ -1132,7 +1133,7 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local default = widget:GetUserData("default")
 	local module = widget:GetUserData("module")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local soundList = LibSharedMedia:List("sound")
 	value = soundList[value]
 	if value == default then
 		value = nil
@@ -1146,104 +1147,51 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 	module:RegisterPrivateAuraSounds()
 end
 
-local populatePrivateAuraOptions
-local function privateAuraResetOnClick(widget)
+local function getPrivateAuraOptions(module, option)
 	local sDB = soundModule.db.profile["privateaura"]
-	for module in next, widget:GetUserData("privateAuraSoundOptions") do
-		sDB[module.name] = nil
-		module:RegisterPrivateAuraSounds()
+	local soundList = LibSharedMedia:List("sound")
+
+	local spellId = option[1]
+	local key = spellId
+	local id = option.tooltip or spellId
+	local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
+
+	local name = loader.GetSpellName(id)
+	if option.note then
+		name = L.renameLabel:format(name, option.note)
 	end
-	populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
-end
+	local texture = loader.GetSpellTexture(id)
 
-function populatePrivateAuraOptions(widget)
-	local scrollFrame = widget:GetUserData("parent")
-	scrollFrame:ReleaseChildren()
-	scrollFrame:PauseLayout()
+	local icon = AceGUI:Create("Icon")
+	icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
+	icon:SetImageSize(40, 40)
+	icon:SetRelativeWidth(0.1)
+	icon:SetUserData("spellId", id)
+	icon:SetUserData("updateTooltip", true)
+	icon:SetCallback("OnEnter", privateAuraOnEnter)
+	icon:SetCallback("OnLeave", optionsTooltip_Hide)
 
-	local text = AceGUI:Create("Label")
-	text:SetText(L.privateAuraSounds_desc)
-	text:SetColor(1, 0.75, 0.79)
-	text:SetImage("Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private")
-	text:SetFullWidth(true)
-	text:SetHeight(30)
-	scrollFrame:AddChild(text)
-
-	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
-	local sDB = soundModule.db.profile["privateaura"]
-	-- preserve module order
-	for _, module in ipairs(widget:GetUserData("moduleList")) do
-		local paOptions = privateAuraSoundOptions[module]
-		if paOptions then
-			if module.SetupOptions then module:SetupOptions() end -- init the db
-
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.displayName)
-			header:SetFullWidth(true)
-			scrollFrame:AddChild(header)
-			for _, option in ipairs(paOptions) do
-				local spellId = option[1]
-				if C_UnitAuras.AuraIsPrivate(spellId) then
-					local key = spellId
-					local id = option.tooltip or spellId
-					local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
-
-					local name = loader.GetSpellName(id)
-					if option.note then
-						name = L.renameLabel:format(name, option.note)
-					end
-					local texture = loader.GetSpellTexture(id)
-
-					local icon = AceGUI:Create("Icon")
-					icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
-					icon:SetImageSize(40, 40)
-					icon:SetRelativeWidth(0.1)
-					icon:SetUserData("spellId", id)
-					icon:SetUserData("updateTooltip", true)
-					icon:SetCallback("OnEnter", privateAuraOnEnter)
-					icon:SetCallback("OnLeave", optionsTooltip_Hide)
-
-					local dropdown = AceGUI:Create("SharedDropdown")
-					if option.mythic then
-						dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
-					else
-						dropdown:SetLabel(name)
-					end
-					dropdown:SetList(soundList, nil, "DDI-Sound")
-					dropdown:SetRelativeWidth(0.88)
-					dropdown:SetUserData("key", key)
-					dropdown:SetUserData("default", defaultSound)
-					dropdown:SetUserData("module", module)
-					dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
-					local value = sDB[module.name] and sDB[module.name][key] or defaultSound
-					for i, v in next, soundList do
-						if v == value then
-							dropdown:SetValue(i)
-							break
-						end
-					end
-
-					scrollFrame:AddChildren(icon, dropdown)
-				end
-			end
+	local dropdown = AceGUI:Create("SharedDropdown")
+	if option.mythic then
+		dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
+	else
+		dropdown:SetLabel(name)
+	end
+	dropdown:SetList(soundList, nil, "DDI-Sound")
+	dropdown:SetRelativeWidth(0.88)
+	dropdown:SetUserData("key", key)
+	dropdown:SetUserData("module", module)
+	dropdown:SetUserData("default", defaultSound)
+	dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
+	local value = sDB[module.name] and sDB[module.name][key] or defaultSound
+	for i, v in next, soundList do
+		if v == value then
+			dropdown:SetValue(i)
+			break
 		end
 	end
 
-	local reset = AceGUI:Create("Button")
-	reset:SetFullWidth(true)
-	reset:SetText(L.reset)
-	reset:SetUserData("label", L.reset)
-	reset:SetUserData("desc", L.resetSoundDesc)
-	reset:SetUserData("scrollFrame", widget)
-	reset:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
-	reset:SetCallback("OnEnter", slaveOptionMouseOver)
-	reset:SetCallback("OnLeave", optionsTooltip_Hide)
-	reset:SetCallback("OnClick", privateAuraResetOnClick)
-	scrollFrame:AddChild(reset)
-
-	scrollFrame:ResumeLayout()
-	scrollFrame:PerformLayout()
+	return icon, dropdown
 end
 
 do
@@ -1286,24 +1234,57 @@ do
 			local scrollFrame = widget:GetUserData("scrollFrame")
 			local dropdown = widget:GetUserData("dropdown")
 			local tabOptions = widget:GetUserData("tabOptions")
-			for i, option in next, tabOptions[tab] do
-				local o = option
-				if type(o) == "table" then o = option[1] end
-				if module.optionHeaders and module.optionHeaders[o] then
-					local header = AceGUI:Create("Heading")
-					header:SetText(module.optionHeaders[o])
-					header:SetFullWidth(true)
-					widget:AddChild(header)
+
+			if tab == "private" then
+				local header = AceGUI:Create("Label")
+				header:SetText(L.privateAuraSounds_desc)
+				header:SetColor(1, 0.75, 0.79)
+				header:SetFullWidth(true)
+				header:SetHeight(30)
+				widget:AddChild(header)
+
+				for _, v in next, tabOptions[tab] do
+					if C_UnitAuras.AuraIsPrivate(v[1]) then
+						widget:AddChildren(getPrivateAuraOptions(module, v))
+					end
 				end
-				widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+
+				local reset = AceGUI:Create("Button")
+				reset:SetFullWidth(true)
+				reset:SetText(L.reset)
+				reset:SetUserData("label", L.reset)
+				reset:SetUserData("desc", L.resetSoundDesc)
+				reset:SetCallback("OnEnter", slaveOptionMouseOver)
+				reset:SetCallback("OnLeave", optionsTooltip_Hide)
+				reset:SetCallback("OnClick", function()
+					soundModule.db.profile["privateaura"][module.name] = nil
+					toggleOptionsTabSelected(widget, nil, "private")
+					-- populateToggleOptions(dropdown, module)
+				end)
+				widget:AddChild(reset)
+			else
+				for i, option in next, tabOptions[tab] do
+					local o = option
+					if type(o) == "table" then o = option[1] end
+					if module.optionHeaders and module.optionHeaders[o] then
+						local header = AceGUI:Create("Heading")
+						header:SetText(module.optionHeaders[o])
+						header:SetFullWidth(true)
+						widget:AddChild(header)
+					end
+					widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+				end
 			end
+
+			widget:ResumeLayout()
+			if lastOptionsTab ~= tab then
+				-- scrollFrame gets squished if layouted after the tab group is calculated?
+				scrollFrame:PerformLayout()
+			end
+			widget:PerformLayout()
 
 			-- Store last active tab
 			lastOptionsTab = tab
-
-			widget:ResumeLayout()
-			scrollFrame:PerformLayout()
-			widget:PerformLayout()
 		end
 
 		function populateToggleOptions(widget, module)
@@ -1316,10 +1297,10 @@ do
 			local encounterID, multiple = module:GetEncounterID()
 			if encounterID then
 				local idLabel = AceGUI:Create("Label")
-				idLabel.label:SetFormattedText(L.optionsKey, multiple and module:TableToString({module:GetEncounterID()}) or encounterID)
+				idLabel:SetText(format(L.optionsKey, multiple and module:TableToString({module:GetEncounterID()}) or encounterID))
 				idLabel:SetColor(0.65, 0.65, 0.65)
 				idLabel:SetFullWidth(true)
-				idLabel.label:SetJustifyH("RIGHT")
+				idLabel:SetJustifyH("RIGHT")
 				scrollFrame:AddChild(idLabel)
 			end
 
@@ -1485,7 +1466,21 @@ do
 				end
 			end
 
-			if #tabs > 0 then -- tabs!
+			local showTabs = #tabs > 0
+
+			local showPATab = false
+			if module.privateAuraSoundOptions then
+				-- Non-PA spells will not be shown and we don't want an empty tab
+				for _, opt in ipairs(module.privateAuraSoundOptions) do
+					if C_UnitAuras.AuraIsPrivate(opt[1]) then
+						showTabs = true
+						showPATab = true
+						break
+					end
+				end
+			end
+
+			if showTabs then -- tabs!
 				local generalTabExists = nil
 				local tabbedOptions = {}
 				local tabInfo, tabOptions = {}, {}
@@ -1514,6 +1509,12 @@ do
 						tabOptions[generalTabExists] = tabOptions[generalTabExists] or {}
 						table.insert(tabOptions[generalTabExists], option)
 					end
+				end
+
+				if showPATab then
+					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:18:18:-2:-1|t"
+					table.insert(tabInfo, { text = iconText .. L.privateAuras, value = "private" })
+					tabOptions["private"] = module.privateAuraSoundOptions
 				end
 
 				local tabsWidget = AceGUI:Create("TabGroup")
@@ -1566,11 +1567,7 @@ do
 		toggleOptionsStatusTable.offset = toggleOptionsStatusTable.restore_offset
 		toggleOptionsStatusTable.scrollvalue = toggleOptionsStatusTable.restore_scrollvalue
 
-		if group == "Private Aura Sounds" then
-			populatePrivateAuraOptions(widget)
-		else
-			populateToggleOptions(widget, BigWigs:GetBossModule(group, true))
-		end
+		populateToggleOptions(widget, BigWigs:GetBossModule(group, true))
 	end
 end
 
@@ -1582,23 +1579,12 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	local moduleList = loader:GetZoneMenus()[instanceIdOrMapId]
 	if type(moduleList) ~= "table" then return end -- No modules registered
 
-	local zoneList, zoneSort, privateAuraSoundOptions = {}, {}, nil
+	local zoneList, zoneSort = {}, {}
 	do
 		for i = 1, #moduleList do
 			local module = moduleList[i]
 			zoneList[module.moduleName] = module.displayName
 			zoneSort[i] = module.moduleName
-			if module.privateAuraSoundOptions then
-				if not privateAuraSoundOptions then privateAuraSoundOptions = {} end
-				privateAuraSoundOptions[module] = module.privateAuraSoundOptions
-			end
-		end
-
-		-- Add the private aura plugin module
-		if privateAuraSoundOptions then
-			local moduleName = "Private Aura Sounds"
-			zoneList[moduleName] = ("|cffffbfc9%s|r"):format(L.privateAuraSounds)
-			zoneSort[#zoneSort+1] = moduleName
 		end
 	end
 
@@ -1614,7 +1600,6 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
 	innerContainer:SetUserData("zone", instanceIdOrMapId)
 	innerContainer:SetUserData("moduleList", moduleList)
-	innerContainer:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
 	innerContainer:SetGroupList(zoneList, zoneSort)
 
 	-- scroll is where we actually put stuff in case things

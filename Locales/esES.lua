@@ -144,7 +144,7 @@ L.configure = "Configurar"
 L.resetPositions = "Reiniciar posiciones"
 L.selectEncounter = "Seleccionar encuentro"
 L.privateAuraSounds = "Sonidos de Aura Privada"
-L.privateAuraSounds_desc = "Las auras privadas no pueden ser rastreadas normalmente, pero puedes configurar un sonido para que se reproduzca cuando seas el objetivo de la habilidad."
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
 L.listAbilities = "Listar las habilidades en el chat de grupo"
 
 L.dbmFaker = "Fingir que estoy usando DBM"
