@@ -225,7 +225,7 @@ L.dispeller = "|cFFFF0000Warnungen nur für Banner.|r "
 --L.renames = "Renames"
 --L.noteLabel = "%s (|cFFFFFF99%s|r)"
 --L.renameLabel = "%s (|cFF3366FF%s|r)"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars."
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
 --L.spellName = "Spell Name"
 --L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
 

@@ -614,7 +614,7 @@ local function getRenameOptions(widget) -- widget = TabGroup
 	local widgets = {}
 
 	local header = AceGUI:Create("Label")
-	header:SetText(L.renameHeader .. "\n\n")
+	header:SetText(L.renameHeader)
 	header:SetFullWidth(true)
 	widgets[#widgets + 1] = header
 
