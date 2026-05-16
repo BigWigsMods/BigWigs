@@ -623,10 +623,7 @@ local function getRenameOptions(widget) -- widget = TabGroup
 		local name = module:GetRename(optionKey, position)
 		local label = module:GetRenameNote(optionKey, position)
 		local original = module:GetRenameOriginal(optionKey)
-		if original == optionKey and type(original) == "number" then
-			original = module:SpellName(optionKey)
-		end
-		local showOriginal = position == 1 and original and original ~= default
+		local showOriginal = position == 1 and original
 
 		local customName = AceGUI:Create("EditBox")
 		if label then
@@ -643,7 +640,7 @@ local function getRenameOptions(widget) -- widget = TabGroup
 
 		local customReset = AceGUI:Create("Button")
 		customReset:SetText(L.reset)
-		customReset:SetDisabled(name == default)
+		customReset:SetDisabled(module:IsRenameDefault(optionKey, position))
 		customReset:SetUserData("default", default)
 		customReset:SetUserData("editbox", customName)
 		customReset:SetCallback("OnClick", resetRenameValue)
@@ -653,7 +650,7 @@ local function getRenameOptions(widget) -- widget = TabGroup
 		if showOriginal then
 			local customOriginal = AceGUI:Create("Button")
 			customOriginal:SetText(L.spellName)
-			customOriginal:SetDisabled(name == original)
+			customOriginal:SetDisabled(module:IsRenameOriginal(optionKey))
 			customOriginal:SetUserData("default", original)
 			customOriginal:SetUserData("editbox", customName)
 			customOriginal:SetCallback("OnClick", resetRenameValue)
@@ -696,7 +693,7 @@ local function advancedTabSelect(widget, callback, tab)
 	elseif tab == "renames" then
 		if not module:HasRenames() then
 			local label = AceGUI:Create("Label")
-			label:SetText("This boss has not been updated for renames.")
+			label:SetText(L.notYetImplemented)
 			label:SetFontObject(GameFontHighlight)
 			label:SetFullWidth(true)
 			widget:AddChild(label)
