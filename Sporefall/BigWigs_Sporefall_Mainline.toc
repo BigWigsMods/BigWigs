@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fSporefall|r]
 ## Title-frFR: BigWigs [|cffeda55fSporefall|r]
 ## Title-itIT: BigWigs [|cffeda55fSporefall|r]
-## Title-koKR: BigWigs [|cffeda55fSporefall|r]
+## Title-koKR: BigWigs [|cffeda55f진균나락|r]
 ## Title-ptBR: BigWigs [|cffeda55fSporefall|r]
 ## Title-ruRU: BigWigs [|cffeda55fSporefall|r]
 ## Title-zhCN: BigWigs [|cffeda55f孢陨幽境|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Sporefall Modules
 ## Notes-frFR: BigWigs Sporefall Modules
 ## Notes-itIT: BigWigs Sporefall Modules
-## Notes-koKR: BigWigs Sporefall Modules
+## Notes-koKR: BigWigs 진균나락 모듈
 ## Notes-ptBR: BigWigs Sporefall Modules
 ## Notes-ruRU: BigWigs Sporefall Modules
 ## Notes-zhCN: BigWigs 孢陨幽境模块
