@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
---L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening its advanced settings (>>) and clicking the renames tab."
+L.tempRenameFeat = "现在你可以打开任意首领技能的进阶设置点击“>>”，在“重命名”标签中|cFF436EEE重命名|r该技能名称。"
 
 -- API.lua
 L.showAddonBar = "插件 '|cFF436EEE%s|r' 创建了 '%s' 计时条。"
@@ -146,7 +146,7 @@ L.configure = "配置"
 L.resetPositions = "重置位置"
 L.selectEncounter = "选择战斗"
 L.privateAuraSounds = "私有光环音效"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
+L.privateAuraSounds_desc = "私有光环无法被正常追踪，但你可以为其设置一个音效，当对应减益施加到你身上时播放。"
 L.listAbilities = "列出技能到团队聊天"
 
 L.dbmFaker = "伪装成 DBM 用户"
@@ -224,12 +224,12 @@ L.healer = "|cFFFF0000只警报治疗。|r"
 L.tankhealer = "|cFFFF0000只警报坦克和治疗。|r"
 L.dispeller = "|cFFFF0000只警报驱散。|r"
 
---L.renames = "Renames"
+L.renames = "重命名"
 L.noteLabel = "%s（|cFFFFFF99%s|r）"
 L.renameLabel = "%s（|cFF3366FF%s|r）"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
---L.spellName = "Spell Name"
---L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+L.renameHeader = "为该技能设置一个自定义名称。该名称将取代法术原本的名称，显示在所有信息和计时条中。\n\n"
+L.spellName = "法术名称"
+L.spellNameResetDesc = "该技能默认使用自定义名称，点击此按钮可恢复为原始名称（通常为法术名称）。"
 
 -- Sharing.lua
 L.import = "导入"
