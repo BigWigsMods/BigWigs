@@ -201,10 +201,10 @@ L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 -- GUI notes for renames
 L.singular = "Singulier"
 L.plural = "Pluriel"
---L.timerNote = "This text will be used for timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
+L.timerNote = "Ce texte sera utilisé pour les CàR"
+L.messageNote = "Ce texte sera utilisé pour les messages"
+L.messageOnYouNote = "Le message affiché lorsque la technique vous cible"
+L.timerOnYouNote = "Le texte affiché dans le CàR lorsque la technique vous cible"
 
 -- Common ability name replacements
 L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
@@ -284,19 +284,19 @@ L.whelps = "Dragonnets" -- Plural of L.whelp
 L.curse = "Malédiction" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Malédictions" -- Plural of L.curse
 L.disease = "Maladie" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
---L.dispel = "Dispel" -- General term for any debuff that is dispellable
+L.dispel = "Dispel" -- General term for any debuff that is dispellable
 L.dispels = "Dispells" -- Plural of L.dispel
 L.poison = "Poison" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 
 -- Interrupt-related spell renames
---L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
---L.kick = "Coup de pied??" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
---L.kicks = "Kicks" -- Plural of L.kick
+L.interrupts = "Interruption" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "Cut" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "Cuts" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "Bombe Tank" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo Tank" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Debuff Tank" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal Tank" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_hit = "Coup sur Tank" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks

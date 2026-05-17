@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "frFR")
 if not L then return end
 
---L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening its advanced settings (>>) and clicking the renames tab."
+L.tempRenameFeat = "Vous pouvez maintenant |cFF436EEErenommer|r n'importe quelle technique de boss en ouvrant ses paramètres avancés (>>) et cliquer sur l'onglet Renommer."
 
 -- API.lua
 L.showAddonBar = "L'addon '|cFF436EEE%s|r' a créé la barre '%s'."
@@ -146,7 +146,7 @@ L.configure = "Configuration"
 L.resetPositions = "Réinitialiser les positions"
 L.selectEncounter = "Sélectionnez une rencontre"
 L.privateAuraSounds = "Sons privés d'aura"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
+L.privateAuraSounds_desc = "Les auras privées ne peuvent être traquées normalement, mais vous pouvez paramétrer un son à jouer lorsque l'affaiblissement vous est appliqué."
 L.listAbilities = "Lister les techniques dans la discussion de groupe"
 
 L.dbmFaker = "Prétendre d'utiliser DBM"
@@ -224,12 +224,12 @@ L.healer = "|cFFFF0000Alertes pour soigneur uniquement.|r "
 L.tankhealer = "|cFFFF0000Alertes pour tank & soigneur uniquement.|r "
 L.dispeller = "|cFFFF0000Alertes pour dispeller uniquement.|r "
 
---L.renames = "Renames"
---L.noteLabel = "%s (|cFFFFFF99%s|r)"
---L.renameLabel = "%s (|cFF3366FF%s|r)"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
---L.spellName = "Spell Name"
---L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+L.renames = "Renommer"
+L.noteLabel = "%s (|cFFFFFF99%s|r)"
+L.renameLabel = "%s (|cFF3366FF%s|r)"
+L.renameHeader = "Paramètre un nom personnalisé pour la technique. Ce texte sera utilisé à la place du nom du sorts dans tous les messages et barres.\n\n"
+L.spellName = "Nom du sort"
+L.spellNameResetDesc = "Cette technique a un nom personnalisé par défaut, cliquez sur ce bouton pour utiliser le nom original (normallement, le nom du sort)."
 
 -- Sharing.lua
 L.import = "Importer"
@@ -349,7 +349,7 @@ L.N25 = "25 joueurs"
 L.H10 = "Héroïque 10"
 L.H25 = "Héroïque 25"
 L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
---L.mythic_flex = "Mythic (Flex)" -- Mythic (Flexible 15-25 player raids)
+L.mythic_flex = "Mythique (Flexible)" -- Mythic (Flexible 15-25 player raids)
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -360,7 +360,7 @@ L.toolsDesc = "BigWigs propose divers outils ou des fonctionnalités \"qualité 
 
 L.reloadUIWarning = "Changer cette fonctionnalité va recharger votre IU, affichant l'écran de chargement pendant un moment. Êtes-vous sûr(e) ?"
 L.qualityOfLife = "Qualité de vie"
---L.notYetImplemented = "Not Yet Implemented" -- When a feature hasn't been implemented yet
+L.notYetImplemented = "Pas encore implémentée" -- When a feature hasn't been implemented yet
 
 -----------------------------------------------------------------------
 -- AutoInvite.lua
@@ -674,7 +674,7 @@ L.TOPLEFT = "En haut à gauche"
 L.BOTTOMRIGHT = "En bas à droite"
 L.BOTTOMLEFT = "En bas à gauche"
 L.CENTER = "Centre"
-L.customAnchorPoint = "Avancé : point d'ancrage personnalisé"
+L.customAnchorPoint = "Avancé : point d'ancrage personnalisé"
 L.sourcePoint = "Point source"
 L.destinationPoint = "Point destination"
 L.drawStrata = "Couches"
@@ -1080,7 +1080,7 @@ L.growthDirection = "Direction des icônes"
 L.aurasOnYou = "Auras sur vous"
 L.aurasOnYouDesc = "Customise les icônes des auras qui s'appliquent à vous.\n\n"
 L.aurasOnAnother = "Auras sur les autres"
-L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et customisez les icônes des auras s'appliquant à lui.\n\n"
+L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et personnalisez les icônes des auras s'appliquant à lui.\n\n"
 L.chooseAPlayer = "Choisissez un joueur"
 L.theOtherTank = "Cherche automatiquement un tank"
 L.theOtherTankDesc = "Afficher les auras privées sur le premier tank de votre groupe n'étant pas vous. (Actuel : %s)"
