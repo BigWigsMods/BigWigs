@@ -200,10 +200,10 @@ L.autotalk_notice = "NPC %s와 자동으로 상호 작용합니다."
 -- GUI notes for renames
 L.singular = "단수"
 L.plural = "복수"
---L.timerNote = "This text will be used for timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
+L.timerNote = "이 텍스트는 타이머에 사용됨"
+L.messageNote = "이 텍스트는 메시지에 사용됨"
+L.messageOnYouNote = "이 능력이 본인에게 적용되었을 때 표시되는 메시지"
+L.timerOnYouNote = "이 능력이 본인에게 적용되었을 때 타이머에 표시되는 텍스트"
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -283,14 +283,14 @@ L.whelps = "새끼용" -- Plural of L.whelp
 L.curse = "저주" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "저주" -- Plural of L.curse
 L.disease = "질병" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
---L.dispel = "Dispel" -- General term for any debuff that is dispellable
+L.dispel = "해제" -- General term for any debuff that is dispellable
 L.dispels = "해제" -- Plural of L.dispel
 L.poison = "독" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 
 -- Interrupt-related spell renames
---L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
+L.interrupts = "차단" -- General term used when a player needs to interrupt a spell being cast
 L.kick = "발차기" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
---L.kicks = "Kicks" -- Plural of L.kick
+L.kicks = "차단" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "탱커 폭탄" -- Similar to L.bomb but only applies to tanks
