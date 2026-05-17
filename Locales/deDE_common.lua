@@ -200,10 +200,10 @@ L.autotalk_notice = "Automatisch mit NPC %s interagiert."
 -- GUI notes for renames
 L.singular = "Singular"
 L.plural = "Plural"
---L.timerNote = "This text will be used for timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
+L.timerNote = "Dieser Text wird für Timer genutzt"
+L.messageNote = "Dieser Text wird für Nachrichten genutzt"
+L.messageOnYouNote = "Die anzuzeigende Nachricht wenn diese Fähigkeit auf Dir ist"
+L.timerOnYouNote = "Der anzuzeigende Text im Timer wenn diese Fähigkeit auf Dir ist"
 
 -- Common ability name replacements
 L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
