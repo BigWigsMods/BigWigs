@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs The Dreamrift Modules
 ## Notes-frFR: BigWigs The Dreamrift Modules
 ## Notes-itIT: BigWigs The Dreamrift Modules
-## Notes-koKR: BigWigs The Dreamrift Modules
+## Notes-koKR: BigWigs 꿈의 균열 모듈
 ## Notes-ptBR: BigWigs The Dreamrift Modules
 ## Notes-ruRU: BigWigs The Dreamrift Modules
 ## Notes-zhCN: BigWigs 梦境裂隙模块
