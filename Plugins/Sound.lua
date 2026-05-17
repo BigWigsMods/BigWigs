@@ -251,7 +251,7 @@ plugin.soundOptions = soundOptions
 
 do
 	local function addKey(t, key)
-		if t.type and t.type == "select" then
+		if t.type and (t.type == "select" or t.type == "range")then
 			t.arg = key
 		elseif t.args then
 			for k, v in next, t.args do
@@ -270,6 +270,7 @@ do
 		local t = addKey(soundOptions, keyTable)
 		if t.args.countdown then
 			t.args.countdown.disabled = not flags or (bit.band(flags, C.COUNTDOWN) == 0 and bit.band(flags, C.CASTBAR_COUNTDOWN) == 0)
+			t.args.countdownTime.disabled = not flags or (bit.band(flags, C.COUNTDOWN) == 0 and bit.band(flags, C.CASTBAR_COUNTDOWN) == 0)
 		end
 		return t
 	end

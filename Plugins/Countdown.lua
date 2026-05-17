@@ -131,9 +131,17 @@ local function updateProfile()
 		db.voice = defaultVoice
 	end
 	for boss, tbl in next, db.bossCountdowns do
-		for ability, chosenVoice in next, tbl do
-			if not BigWigsAPI:HasCountdown(chosenVoice) then
-				db.bossCountdowns[boss][ability] = nil
+		for ability, countdownSettings in next, tbl do
+			if type(countdownSettings) ~= "table" then -- XXX 12.0.7 Temp to migrate settings
+				db.bossCountdowns[boss][ability] = {
+					voice = countdownSettings,
+				}
+			end
+			if not BigWigsAPI:HasCountdown(db.bossCountdowns[boss][ability].voice) then
+				db.bossCountdowns[boss][ability].voice = nil
+				if not db.bossCountdowns[boss][ability].countdownTime then
+					db.bossCountdowns[boss][ability] = nil
+				end
 			end
 		end
 	end
@@ -459,16 +467,20 @@ local function createOptions()
 			sorting = voiceSorting,
 			get = function(info)
 				local name, key = unpack(info.arg)
-				return plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] or plugin.db.profile.voice
+				return plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] and plugin.db.profile.bossCountdowns[name][key].voice or plugin.db.profile.voice
 			end,
 			set = function(info, value)
 				local name, key = unpack(info.arg)
 				if value ~= plugin.db.profile.voice then
 					if not plugin.db.profile.bossCountdowns[name] then plugin.db.profile.bossCountdowns[name] = {} end
-					plugin.db.profile.bossCountdowns[name][key] = value
-				else -- clean up
-					if plugin.db.profile.bossCountdowns[name] then
-						plugin.db.profile.bossCountdowns[name][key] = nil
+					if not plugin.db.profile.bossCountdowns[name][key] then plugin.db.profile.bossCountdowns[name][key] = {} end
+					plugin.db.profile.bossCountdowns[name][key].voice = value
+				elseif plugin.db.profile.bossCountdowns[name] then -- clean up
+					if plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] then
+						plugin.db.profile.bossCountdowns[name][key].voice = nil
+						if not plugin.db.profile.bossCountdowns[name][key].countdownTime then
+							plugin.db.profile.bossCountdowns[name][key] = nil
+						end
 					end
 					if not next(plugin.db.profile.bossCountdowns[name]) then
 						plugin.db.profile.bossCountdowns[name] = nil
@@ -477,6 +489,35 @@ local function createOptions()
 			end,
 			order = 4,
 			width = "full",
+		}
+		sModule.soundOptions.args.countdownTime = {
+			name = L.countdownAt,
+			desc = L.countdownAt_desc,
+			type = "range", min = 3, max = 10, step = 1,
+			order = 5,
+			width = "full",
+			get = function(info)
+				local name, key = unpack(info.arg)
+				return plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] and plugin.db.profile.bossCountdowns[name][key].countdownTime or plugin.db.profile.countdownTime
+			end,
+			set = function(info, value)
+				local name, key = unpack(info.arg)
+				if value ~= plugin.db.profile.countdownTime then
+					if not plugin.db.profile.bossCountdowns[name] then plugin.db.profile.bossCountdowns[name] = {} end
+					if not plugin.db.profile.bossCountdowns[name][key] then plugin.db.profile.bossCountdowns[name][key] = {} end
+					plugin.db.profile.bossCountdowns[name][key].countdownTime = value
+				elseif plugin.db.profile.bossCountdowns[name] then -- clean up
+					if plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] then
+						plugin.db.profile.bossCountdowns[name][key].countdownTime = nil
+						if not plugin.db.profile.bossCountdowns[name][key].voice then
+							plugin.db.profile.bossCountdowns[name][key] = nil
+						end
+					end
+					if not next(plugin.db.profile.bossCountdowns[name]) then
+						plugin.db.profile.bossCountdowns[name] = nil
+					end
+				end
+			end,
 		}
 	end
 end
@@ -498,7 +539,8 @@ function plugin:OnPluginEnable()
 		end
 	end
 	for _, countdownTbl in next, plugin.db.profile.bossCountdowns do
-		for _, voiceID in next, countdownTbl do
+		for _, bossSettingsTbl in next, countdownTbl do
+			local voiceID = bossSettingsTbl.voice or plugin.db.profile.voice
 			if not soundsPlayedTable[voiceID] and BigWigsAPI:HasCountdown(voiceID) then
 				soundsPlayedTable[voiceID] = true
 				for i = plugin.db.profile.countdownTime, 1, -1 do
@@ -618,7 +660,8 @@ do
 					timers[module][text] = countdownTable
 				end
 
-				local textCount = customStart or self.db.profile.countdownTime
+				local bossCountdownStart = plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] and plugin.db.profile.bossCountdowns[module.name][key].countdownTime
+				local textCount = customStart or bossCountdownStart or self.db.profile.countdownTime
 				if time < textCount then
 					textCount = math.floor(time)
 				end
@@ -629,7 +672,8 @@ do
 							if not audioOnly and plugin.db.profile.textEnabled then
 								plugin:SetText(textCount, countdownTable)
 							end
-							local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
+							local bossCountdownVoice = plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] and plugin.db.profile.bossCountdowns[module.name][key].voice
+							local voice = customVoice or bossCountdownVoice or plugin.db.profile.voice
 							local sound = textCount <= (customAudioStart or textCount) and BigWigsAPI:GetCountdownSound(voice, textCount)
 							if sound then
 								self:PlaySoundFile(sound)
