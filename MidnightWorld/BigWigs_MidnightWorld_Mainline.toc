@@ -1,7 +1,7 @@
 ## Interface: 120001, 120005, 120007
 
 ## Title: BigWigs [|cffeda55fMidnight World Bosses|r]
-## Title-deDE: BigWigs [|cffeda55fMidnight World Bosses|r]
+## Title-deDE: BigWigs [|cffeda55fMidnight Weltbosse|r]
 ## Title-esES: BigWigs [|cffeda55fMidnight World Bosses|r]
 ## Title-esMX: BigWigs [|cffeda55fMidnight World Bosses|r]
 ## Title-frFR: BigWigs [|cffeda55fMidnight World Bosses|r]
@@ -12,7 +12,7 @@
 ## Title-zhCN: BigWigs [|cffeda55f至暗之夜世界首领|r]
 ## Title-zhTW: BigWigs [|cffeda55f至暗之夜世界首領|r]
 ## Notes: BigWigs Midnight World Boss Modules
-## Notes-deDE: BigWigs Midnight World Boss Modules
+## Notes-deDE: BigWigs Midnight Weltboss Module
 ## Notes-esES: BigWigs Midnight World Boss Modules
 ## Notes-esMX: BigWigs Midnight World Boss Modules
 ## Notes-frFR: BigWigs Midnight World Boss Modules
