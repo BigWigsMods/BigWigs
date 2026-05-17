@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "deDE")
 if not L then return end
 
---L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening its advanced settings (>>) and clicking the renames tab."
+L.tempRenameFeat = "Du kannst alle Bossfähigkeiten nun |cFF436EEEUmbenennen|r in den erweiterten Einstellungen (>>) in der Umbenennen Registerkarte."
 
 -- API.lua
 L.showAddonBar = "Das Addon '|cFF436EEE%s|r' hat die Leiste '%s' erstellt."
@@ -146,7 +146,7 @@ L.configure = "Einstellungen"
 L.resetPositions = "Positionen zurücksetzen"
 L.selectEncounter = "Wähle Begegnung"
 L.privateAuraSounds = "Private Aurasounds"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
+L.privateAuraSounds_desc = "Private Auren können nicht normal verfolgt werden, aber es kann ein wiederzugebender Sound festgelegt werden, wenn der Debuff der Fähigkeit auf Dich angewandt wird."
 L.listAbilities = "Fähigkeiten im Chat auflisten"
 
 L.dbmFaker = "Täusche DBM Nutzung vor"
@@ -224,12 +224,12 @@ L.healer = "|cFFFF0000Warnungen nur für Heiler.|r "
 L.tankhealer = "|cFFFF0000Warnungen nur für Tanks und Heiler.|r "
 L.dispeller = "|cFFFF0000Warnungen nur für Banner.|r "
 
---L.renames = "Renames"
---L.noteLabel = "%s (|cFFFFFF99%s|r)"
---L.renameLabel = "%s (|cFF3366FF%s|r)"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
---L.spellName = "Spell Name"
---L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+L.renames = "Umbenennen"
+L.noteLabel = "%s (|cFFFFFF99%s|r)"
+L.renameLabel = "%s (|cFF3366FF%s|r)"
+L.renameHeader = "Einen benutzerdefinierten Namen für die Fähigkeit festlegen. Dieser Text wird an Stelle des Zaubernamens in allen Nachrichten und Leisten genutzt.\n\n"
+L.spellName = "Zaubername"
+L.spellNameResetDesc = "Diese Fähigkeit hat standardmäßig einen benutzerdefinierten Namen, auf die Schaltfläche klicken um den Originalnamen zu verwenden (normalerweise ein Zaubername)."
 
 -- Sharing.lua
 L.import = "Importieren"
