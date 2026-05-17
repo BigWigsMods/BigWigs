@@ -25,6 +25,6 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	custom_select_limit_warnings_value4 = "왼쪽에만 대한 알림를 표시합니다.",
 	custom_select_limit_warnings_value5 = "오른쪽에만 대한 알림를 표시합니다.",
 
-	--dark_quasar_stage1_note = "Stage 1 Only",
-	--dark_quasar_intermission_note = "Intermission Only",
+	dark_quasar_stage1_note = "1단계만",
+	dark_quasar_intermission_note = "사잇단계만",
 })
