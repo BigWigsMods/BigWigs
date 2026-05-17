@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
---L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening its advanced settings (>>) and clicking the renames tab."
+L.tempRenameFeat = "現在，首領技能的進階設定 (>>) 可以為技能|cFF436EEE重新命名|r。"
 
 -- API.lua
 L.showAddonBar = "插件「|cFF436EEE%s|r」創建了「%s」計時器。"
@@ -224,12 +224,12 @@ L.healer = "|cFFFF0000只警報治療。|r"
 L.tankhealer = "|cFFFF0000只警報坦克和治療。|r"
 L.dispeller = "|cFFFF0000只警報驅散。|r"
 
---L.renames = "Renames"
+L.renames = "重新命名"
 L.noteLabel = "%s（|cFFFFFF99%s|r）"
 L.renameLabel = "%s（|cFF3366FF%s|r）"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
---L.spellName = "Spell Name"
---L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+L.renameHeader = "為技能設定自訂名稱，取代原本的技能名稱，並套用至所有的訊息與計時條。\n\n"
+L.spellName = "技能名稱"
+L.spellNameResetDesc = "此技能已預設了一個自訂名稱，點擊此按鈕可還原為原本的技能名稱。"
 
 -- Sharing.lua
 L.import = "匯入"
@@ -360,7 +360,7 @@ L.toolsDesc = "BigWigs 提供了多種實用工具或便捷功能，讓你可以
 
 L.reloadUIWarning = "變更此功能需要重載介面，系統將會出現短暫的載入畫面。你確定要繼續嗎？"
 L.qualityOfLife = "便捷功能"
---L.notYetImplemented = "Not Yet Implemented" -- When a feature hasn't been implemented yet
+L.notYetImplemented = "尚未實裝"
 
 -----------------------------------------------------------------------
 -- AutoInvite.lua
@@ -440,8 +440,8 @@ L.startingMythicKeystone = "啟動傳奇鑰石 (M+)"
 L.historyTimeFormat = "紀錄：時間格式"
 L.twelveHour = "12 小時制"
 L.twentyFourHour = "24 小時制"
---L.hideTooltipInCombat = "Hide Tooltip in Combat"
---L.customText = "Custom Text (Must Contain %s)"
+L.hideTooltipInCombat = "戰鬥中隱藏浮動提示"
+L.customText = "自訂文字（必須包含 %s）"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
@@ -618,8 +618,8 @@ L.progressPercentTooltipText = {
 L.progressPercentNameplate = "在敵方名條顯示進度百分比"
 L.progressCurrentPull = "當前拉怪進度"
 L.progressCurrentPullDesc = "顯示當前這波戰鬥能提供多少進度。\n\n此功能尚未實裝！"
---L.settingsForCurrentTarget = "Settings for your current target"
---L.settingsForOtherTargets = "Settings for all other targets"
+L.settingsForCurrentTarget = "當前目標設定"
+L.settingsForOtherTargets = "其他目標設定"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
