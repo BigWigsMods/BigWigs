@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs The Voidspire Modules
 ## Notes-frFR: BigWigs The Voidspire Modules
 ## Notes-itIT: BigWigs The Voidspire Modules
-## Notes-koKR: BigWigs The Voidspire Modules
+## Notes-koKR: BigWigs The 공허첨탑 모듈
 ## Notes-ptBR: BigWigs The Voidspire Modules
 ## Notes-ruRU: BigWigs The Voidspire Modules
 ## Notes-zhCN: BigWigs 虚影尖塔模块
