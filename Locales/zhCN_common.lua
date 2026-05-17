@@ -200,10 +200,10 @@ L.autotalk_notice = "自动与NPC %s 交互。"
 -- GUI notes for renames
 L.singular = "单数"
 L.plural = "复数"
---L.timerNote = "This text will be used for timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
+L.timerNote = "此文本将用于计时条"
+L.messageNote = "此文本将用于消息提示"
+L.messageOnYouNote = "当该技能点名你时显示的消息"
+L.timerOnYouNote = "当该技能点名你时计时条中显示的文本"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
