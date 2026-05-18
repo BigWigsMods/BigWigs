@@ -1320,13 +1320,11 @@ do
 
 	local frameTbl = {}
 	local eventFunc = function(_, event, unit, ...)
-		if not hasanysecretvalues(unit, ...) then
-			for i = #enabledModules, 1, -1 do
-				local self = enabledModules[i]
-				local m = unitEventMap[self] and unitEventMap[self][event]
-				if m and m[unit] then
-					self[m[unit]](self, event, unit, ...)
-				end
+		for i = #enabledModules, 1, -1 do
+			local self = enabledModules[i]
+			local m = unitEventMap[self] and unitEventMap[self][event]
+			if m and m[unit] and (self.OnEncounterStart or not hasanysecretvalues(unit, ...)) then -- XXX Temp way to allow modern modules for now
+				self[m[unit]](self, event, unit, ...)
 			end
 		end
 	end
