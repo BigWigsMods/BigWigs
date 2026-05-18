@@ -145,7 +145,7 @@ function mod:GetOptions()
 		1282469, -- Dark Quasar [Intermission Only]
 
 		-- Stage 2
-		1284525, -- Galvanize
+		{1284525, "ME_ONLY_EMPHASIZE"}, -- Galvanize
 		1282412, -- Core Harvest
 		1281194, -- Dark Meltdown
 
