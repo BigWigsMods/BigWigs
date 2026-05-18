@@ -348,7 +348,7 @@ do
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
-				[1592] = public.isNext and "BigWigs_Sporefall",
+				[1592] = public.isNext and "BigWigs_Sporefall" or nil,
 			}
 		}
 	end
