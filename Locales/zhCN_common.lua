@@ -200,13 +200,13 @@ L.autotalk_notice = "自动与NPC %s 交互。"
 -- GUI notes for renames
 L.singular = "单数"
 L.plural = "复数"
---L.generalNote = "This is the text that will generally be used"
+L.generalNote = "此文本为通用说明"
 L.timerNote = "此文本将用于计时条"
---L.castTimerNote = "This text will only be used for cast timers"
+L.castTimerNote = "此文本仅用于施法计时条"
 L.messageNote = "此文本将用于消息提示"
 L.messageOnYouNote = "当该技能点名你时显示的消息"
 L.timerOnYouNote = "当该技能点名你时计时条中显示的文本"
---L.thisOnly = "%s Only" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.thisOnly = "仅限 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
@@ -293,8 +293,8 @@ L.poison = "中毒" -- Any poison-type dispellable debuff, or debuffs called "Po
 
 -- Interrupt-related spell renames
 L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
-L.kick = "脚踢" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
-L.kicks = "脚踢" -- Plural of L.kick
+L.kick = "打断" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "打断" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "坦克炸弹" -- Similar to L.bomb but only applies to tanks
