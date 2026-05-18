@@ -198,15 +198,15 @@ L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do 
 L.autotalk_notice = "Interagindo automaticamente com NPC %s."
 
 -- GUI notes for renames
---L.singular = "Singular"
---L.plural = "Plural"
---L.generalNote = "This is the text that will generally be used"
---L.timerNote = "This text will be used for timers"
---L.castTimerNote = "This text will only be used for cast timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
---L.thisOnly = "%s Only" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.singular = "Singular"
+L.plural = "Plural"
+L.generalNote = "Este é o texto que será geralmente usado"
+L.timerNote = "Este texto será usado para temporizadores"
+L.castTimerNote = "Este texto será usado apenas para temporizadores de lançamento"
+L.messageNote = "Este texto será usado para mensagens"
+L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você"
+L.timerOnYouNote = "O texto exibido no temporizador quando esta habilidade estiver em você"
+L.thisOnly = "Apenas %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
@@ -247,7 +247,7 @@ L.spirit = "Espírito" -- Sometimes a boss will summon spirits, similar to ghost
 L.spirits = "Espíritos" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Tornados" -- Plural of L.tornado
-L.frontal_cone = "Cônica à Frente" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.frontal_cone = "Cone Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Controle Mental" -- Any kind of Mind Control ability, where a player loses control of their character
@@ -287,19 +287,19 @@ L.whelps = "Dragonetes" -- Plural of L.whelp
 L.curse = "Maldição" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Maldições" -- Plural of L.curse
 L.disease = "Doença" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
---L.dispel = "Dispel" -- General term for any debuff that is dispellable
---L.dispels = "Dispels" -- Plural of L.dispel
+L.dispel = "Dissipável" -- General term for any debuff that is dispellable
+L.dispels = "Dissipáveis" -- Plural of L.dispel
 L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 
 -- Interrupt-related spell renames
---L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
+L.interrupts = "Interrupções" -- General term used when a player needs to interrupt a spell being cast
 L.kick = "Chute" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
---L.kicks = "Kicks" -- Plural of L.kick
+L.kicks = "Chutes" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "Bomba no Tanque" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "Frontal Tanque" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_frontal = "Cone Frontal do Tanque" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_hit = "Golpe no Tanque" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "Soak Tanque" -- Similar to L.soak but only applies to tanks
