@@ -33,7 +33,6 @@ local prevAdded = 0
 
 local durationEventCount = {}
 local isIntermission = false
-local phaseCount = 1
 
 local embersCount = 1
 local echosCount = 1
@@ -60,15 +59,20 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 --
 
 mod:SetRenames({
-	["stages"] = {CL.stage:format(1), CL.intermission, original = false, notes = {CL.stage:format(1), CL.intermission}}, -- Stages
+	["stages"] = {CL.stage:format(1), original = false, notes = {CL.stage:format(1)}}, -- Stages
 	[1242515] = {L.voidlight_convergence}, -- Voidlight Convergence (Color Swaps)
 	[1241282] = {CL.adds}, -- Embers of Beloren (Adds)
-	["light_void_dive"] = {CL.soaks, original = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339))}, -- Light/Void Dive (Soaks)
+	["light_void_dive"] = { -- Light/Void Dive (Soaks)
+		CL.soaks, CL.soak, CL.cast:format(CL.soaks),
+		notes = {L.generalNote, L.messageOnYouNote, L.castTimerNote},
+		original = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339))
+	},
 	[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
 	[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
 	[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
 	[1242260] = {L.infused_quills}, -- Infused Quills (Quills)
 	[1246709] = {CL.landing}, -- Death Drop (Landing)
+	[1241313] = {1241313}, -- Rebirth
 })
 
 --------------------------------------------------------------------------------
@@ -78,24 +82,22 @@ mod:SetRenames({
 function mod:GetOptions()
 	return {
 		"stages",
-		-- "berserk", -- 1241267 Voidlight Rage
 
 		-- Stage 1
 		1242515, -- Voidlight Convergence
 		1241282, -- Embers of Del'ren
-			"light_void_dive", -- Light/Void Dive
+		{"light_void_dive", "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Light/Void Dive
 		1242981, -- Radiant Echoes
 		1260763, -- Guardian's Edict
 		1244344, -- Eternal Burns
-		1242260, -- Infused Quills
-		1246709, -- Death Drop
+		{1242260, "ME_ONLY_EMPHASIZE"}, -- Infused Quills
+		{1246709, "COUNTDOWN"}, -- Death Drop
 
 		-- Stage 2
-		-- 1241313, -- Rebirth
-		-- 1242792, -- Incubation of Flames
-	}, {
-		-- [1241282] = -33025, -- Stage One: Phoenix Reborn
-		-- [1241313] = -32160, -- Stage Two: Ashen Shell
+		{1241313, "COUNTDOWN"}, -- Rebirth
+	},{
+		[1242515] = -33025, -- Stage One: Phoenix Reborn
+		[1241313] = -32160, -- Stage Two: Ashen Shell
 	}
 end
 
@@ -116,7 +118,6 @@ function mod:OnEncounterStart()
 	activeBars = {}
 	durationEventCount = {}
 	isIntermission = false
-	phaseCount = 1
 
 	embersCount = 1
 	echosCount = 1
@@ -152,25 +153,23 @@ function mod:TimersMythic(_, eventInfo)
 		isIntermission = true
 	end
 
-	if not isIntermission then
-		if durationRounded == 6 then
+	if durationRounded == 8 then
+		barInfo = self:EmbersOfBeloren(duration)
+	elseif durationRounded == 19 or durationRounded == 10 then
+		barInfo = self:InfusedQuills(duration)
+	elseif durationRounded == 16 or durationRounded == 20 then
+		barInfo = self:GuardiansEdict(duration)
+	elseif durationRounded == 30 then
+		barInfo = self:EternalBurns(duration)
+	elseif durationRounded == 50 then
+		barInfo = self:VoidlightConvergence(duration)
+	elseif durationRounded == 40 then
+		barInfo = self:Rebirth()
+	elseif durationRounded == 6 then
+		if not isIntermission then
 			barInfo = self:RadiantEchoes(duration)
-		elseif durationRounded == 8 then
-			barInfo = self:EmbersOfBeloren(duration)
-		elseif durationRounded == 19 or durationRounded == 10 then
-			barInfo = self:InfusedQuills(duration)
-		elseif durationRounded == 16 or durationRounded == 20 then
-			barInfo = self:GuardiansEdict(duration)
-		elseif durationRounded == 30 then
-			barInfo = self:EternalBurns(duration)
-		elseif durationRounded == 50 then
-			barInfo = self:VoidlightConvergence(duration)
-		end
-	else
-		if durationRounded == 6 then
+		else
 			barInfo = self:DeathDrop(duration)
-		elseif durationRounded == 40 then
-			barInfo = self:Rebirth(duration)
 		end
 	end
 
@@ -179,7 +178,7 @@ function mod:TimersMythic(_, eventInfo)
 		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -209,30 +208,28 @@ function mod:TimersOther(_, eventInfo)
 		isIntermission = true
 	end
 
-	if not isIntermission then
-		if durationRounded == 6 then
-			barInfo = self:RadiantEchoes(duration)
-		elseif durationRounded == 10 then
-			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
-			if self:Easy() or durationEventCount[durationRounded] % 3 == 1 then -- resets on Death Drop
-				barInfo = self:EmbersOfBeloren(duration)
-			else
-				barInfo = self:InfusedQuills(duration)
-			end
-		elseif durationRounded == 20 or durationRounded == 18 then
-			barInfo = self:GuardiansEdict(duration)
-		elseif durationRounded == 21 then
+	if durationRounded == 10 then
+		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
+		if self:Easy() or durationEventCount[durationRounded] % 3 == 1 then -- resets on Death Drop
+			barInfo = self:EmbersOfBeloren(duration)
+		else
 			barInfo = self:InfusedQuills(duration)
-		elseif durationRounded == 34 then
-			barInfo = self:EternalBurns(duration)
-		elseif durationRounded == 50 then
-			barInfo = self:VoidlightConvergence(duration)
 		end
-	else
-		if durationRounded == 6 then
+	elseif durationRounded == 20 or durationRounded == 18 then
+		barInfo = self:GuardiansEdict(duration)
+	elseif durationRounded == 21 then
+		barInfo = self:InfusedQuills(duration)
+	elseif durationRounded == 34 then
+		barInfo = self:EternalBurns(duration)
+	elseif durationRounded == 50 then
+		barInfo = self:VoidlightConvergence(duration)
+	elseif durationRounded == 40 then
+		barInfo = self:Rebirth()
+	elseif durationRounded == 6 then
+		if not isIntermission then
+			barInfo = self:RadiantEchoes(duration)
+		else
 			barInfo = self:DeathDrop(duration)
-		elseif durationRounded == 40 then
-			barInfo = self:Rebirth(duration)
 		end
 	end
 
@@ -241,7 +238,7 @@ function mod:TimersOther(_, eventInfo)
 		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -292,24 +289,29 @@ end
 -- Event Handlers
 --
 
-function mod:EmbersOfBeloren(duration)
-	local barText = CL.count:format(self:GetRename(1241282), embersCount)
-	local diveBarText = CL.count:format(self:GetRename("light_void_dive"), embersCount)
+function mod:EmbersOfBeloren(duration) -- Soaks / Adds
+	local addsText = CL.count:format(self:GetRename(1241282), embersCount)
+	local soaksText = CL.count:format(self:GetRename("light_void_dive"), embersCount)
 	embersCount = embersCount + 1
 	return {
-		msg = barText,
-		key = 1241282,
+		msg = soaksText,
+		key = "light_void_dive",
+		icon = 1241292,
 		onFinished = function()
-			-- if the adds spawn, they don't do away on phase, so no need to stop this
-			self:Bar("light_void_dive", 9, diveBarText, 1241292)
+			self:Message("light_void_dive", "red", nil, 1241292)
+			self:PersonalMessageFromBlizzMessage("light_void_dive", 1, nil, self:GetRename("light_void_dive", 2), 1241292)
+			-- if the adds spawn, they don't go away on phase, so no need to stop this
+			self:CastBar("light_void_dive", 9, 3, 1241292)
 
-			self:Message(1241282, "cyan", barText)
-			self:PlaySound(1241282, "info", "adds")
+			self:ScheduleTimer(function()
+				self:Message(1241282, "cyan", addsText)
+				self:PlaySound(1241282, "info", "adds")
+			end, 9)
 		end,
 	}
 end
 
-function mod:RadiantEchoes(duration)
+function mod:RadiantEchoes(duration) -- Orbs
 	local barText = CL.count:format(self:GetRename(1242981), echosCount)
 	echosCount = echosCount + 1
 	return {
@@ -322,13 +324,14 @@ function mod:RadiantEchoes(duration)
 	}
 end
 
-function mod:GuardiansEdict(duration)
+function mod:GuardiansEdict(duration) -- Tank Combo
 	local barText = CL.count:format(self:GetRename(1260763), edictCount)
 	edictCount = edictCount + 1
 	return {
 		msg = barText,
 		key = 1260763,
 		onFinished = function()
+			self:StopBlizzMessages(0.5)
 			self:Message(1260763, "purple", barText)
 			if self:Tank() then
 				self:PlaySound(1260763, "alert")
@@ -337,7 +340,7 @@ function mod:GuardiansEdict(duration)
 	}
 end
 
-function mod:EternalBurns(duration)
+function mod:EternalBurns(duration) -- Heal Absorbs
 	local barText = CL.count:format(self:GetRename(1244344), burnsCount)
 	burnsCount = burnsCount + 1
 	return {
@@ -352,23 +355,24 @@ function mod:EternalBurns(duration)
 	}
 end
 
-function mod:InfusedQuills(duration)
+function mod:InfusedQuills(duration) -- Quills
 	local barText = CL.count:format(self:GetRename(1242260), quillsCount)
 	quillsCount = quillsCount + 1
 	return {
 		msg = barText,
 		key = 1242260,
 		onFinished = function()
+			self:PersonalMessageFromBlizzMessage(1242260, 1)
 			self:Message(1242260, "orange", barText)
 			-- self:PlaySound(1242260, "alarm") -- dodge
 		end
 	}
 end
 
-function mod:VoidlightConvergence(duration)
+function mod:VoidlightConvergence(duration) -- Color Swaps
 	if self:ShouldShowBars() then
 		self:Message(1242515, "cyan", CL.count:format(self:GetRename(1242515), convergenceCount))
-		if convergenceCount > 1 or phaseCount > 1 then
+		if convergenceCount > 1 or self:GetStage() > 1 then
 			self:PlaySound(1242515, "long")
 		end
 	end
@@ -380,10 +384,9 @@ function mod:VoidlightConvergence(duration)
 	}
 end
 
-function mod:DeathDrop(duration)
+function mod:DeathDrop(duration) -- Landing
 	-- SetStage here to match lr
-	local stage = self:GetStage()
-	self:SetStage(stage + 1)
+	self:SetStage(self:GetStage() + 1)
 
 	durationEventCount = {}
 	isIntermission = true
@@ -396,8 +399,8 @@ function mod:DeathDrop(duration)
 	convergenceCount = 1
 
 	if self:ShouldShowBars() then
-		self:Message("stages", "cyan", CL.count:format(self:GetRename("stages", 2), phaseCount), false) -- Intermission
-		self:PlaySound("stages", "long")
+		self:Message(1246709, "red")
+		self:PlaySound(1246709, "warning")
 	end
 	return {
 		msg = self:GetRename(1246709),
@@ -409,31 +412,29 @@ function mod:DeathDrop(duration)
 end
 
 -- Phase 2
+function mod:UNIT_SPELLCAST_START(event, unit)
+	self:UnregisterUnitEvent(event, unit)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, unit)
+	if self:ShouldShowBars() then
+		self:StopBlizzMessages(0.5)
+		self:Message(1241313, "cyan")
+		self:Bar(1241313, 40)
+		self:PlaySound(1241313, "long")
+	end
+end
 
-function mod:Rebirth(duration)
-	phaseCount = phaseCount + 1
-	local barText = CL.count:format(self:GetRename("stages"), phaseCount)
+function mod:UNIT_SPELLCAST_SUCCEEDED(event, unit)
+	isIntermission = false
+	self:UnregisterUnitEvent(event, unit)
+	if self:ShouldShowBars() and not self:IsWiping() then
+		self:Bar(1242515, 4.5, CL.count:format(self:GetRename(1242515), convergenceCount)) -- Voidlight Convergence (Color Swaps)
 
-	return {
-		msg = barText,
-		key = "stages",
-		icon = "inv_12_dualityphoenix_phoenix_rebirth",
-		endTime = GetTime() + duration + 1.5,
-		onFinished = function()
-			isIntermission = false
-			if self:ShouldShowBars() and not self:IsWiping() then
-				self:Message("stages", "cyan", barText, false)
+		self:Message("stages", "cyan", nil, false)
+		self:PlaySound("stages", "info")
+	end
+end
 
-				self:Bar(1242515, 4.5, CL.count:format(self:GetRename(1242515), convergenceCount))
-				self:PlaySound("stages", "info")
-			end
-		end,
-		onCanceled = function(barInfo)
-			isIntermission = false
-			-- always gets cancelled, don't show phase message on win or wipe
-			if GetTime() >= barInfo.endTime then
-				barInfo:onFinished()
-			end
-		end
-	}
+function mod:Rebirth()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
+	return false
 end
