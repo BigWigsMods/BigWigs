@@ -1,8 +1,8 @@
 if not BigWigsAPI.IsLocale("koKR") then return end
 BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
-	infused_quills = "레이저",
-	voidlight_convergence = "색상 변경",
-	light_void_dive = "빛/공허 바닥",
+	quills = "레이저",
+	color_swaps = "색상 변경",
+	["1241292"] = "빛/공허 바닥",
 })
 
 BigWigsAPI.SetBossModuleLocale("Midnight Falls", {

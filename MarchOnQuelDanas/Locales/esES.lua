@@ -1,8 +1,8 @@
 if not BigWigsAPI.IsLocale("esES") then return end
 BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
-	--infused_quills = "Quills",
-	--voidlight_convergence = "Color Swaps",
-	--light_void_dive = "Light/Void Dive",
+	--quills = "Quills",
+	--color_swaps = "Color Swaps",
+	--["1241292"] = "Light/Void Dive",
 })
 
 BigWigsAPI.SetBossModuleLocale("Midnight Falls", {

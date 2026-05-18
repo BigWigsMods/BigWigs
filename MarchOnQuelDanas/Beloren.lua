@@ -46,12 +46,10 @@ local convergenceCount = 1
 --
 
 local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
-	infused_quills = "Quills",
-	voidlight_convergence = "Color Swaps",
+	quills = "Quills",
+	color_swaps = "Color Swaps",
 
-	light_void_dive = "Light/Void Dive",
-	light_void_dive_desc = 1241292,
-	light_void_dive_icon = 1241292,
+	["1241292"] = "Light/Void Dive",
 })
 
 --------------------------------------------------------------------------------
@@ -60,9 +58,9 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 
 mod:SetRenames({
 	["stages"] = {CL.stage:format(1), original = false, notes = {CL.stage:format(1)}}, -- Stages
-	[1242515] = {L.voidlight_convergence}, -- Voidlight Convergence (Color Swaps)
+	[1242515] = {L.color_swaps}, -- Voidlight Convergence (Color Swaps)
 	[1241282] = {CL.adds}, -- Embers of Beloren (Adds)
-	["light_void_dive"] = { -- Light/Void Dive (Soaks)
+	[1241292] = { -- Light/Void Dive (Soaks)
 		CL.soaks, CL.soak, CL.cast:format(CL.soaks),
 		notes = {L.generalNote, L.messageOnYouNote, L.castTimerNote},
 		original = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339))
@@ -70,7 +68,7 @@ mod:SetRenames({
 	[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
 	[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
 	[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
-	[1242260] = {L.infused_quills}, -- Infused Quills (Quills)
+	[1242260] = {L.quills}, -- Infused Quills (Quills)
 	[1246709] = {CL.landing}, -- Death Drop (Landing)
 	[1241313] = {1241313}, -- Rebirth
 })
@@ -86,7 +84,7 @@ function mod:GetOptions()
 		-- Stage 1
 		1242515, -- Voidlight Convergence
 		1241282, -- Embers of Del'ren
-		{"light_void_dive", "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Light/Void Dive
+		{1241292, "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Light/Void Dive
 		1242981, -- Radiant Echoes
 		1260763, -- Guardian's Edict
 		1244344, -- Eternal Burns
@@ -291,17 +289,17 @@ end
 
 function mod:EmbersOfBeloren(duration) -- Soaks / Adds
 	local addsText = CL.count:format(self:GetRename(1241282), embersCount)
-	local soaksText = CL.count:format(self:GetRename("light_void_dive"), embersCount)
+	local soaksText = CL.count:format(self:GetRename(1241292), embersCount)
 	embersCount = embersCount + 1
 	return {
 		msg = soaksText,
-		key = "light_void_dive",
+		key = 1241292,
 		icon = 1241292,
 		onFinished = function()
-			self:Message("light_void_dive", "red", nil, 1241292)
-			self:PersonalMessageFromBlizzMessage("light_void_dive", 1, nil, self:GetRename("light_void_dive", 2), 1241292)
+			self:Message(1241292, "red")
+			self:PersonalMessageFromBlizzMessage(1241292, 1, nil, self:GetRename(1241292, 2))
 			-- if the adds spawn, they don't go away on phase, so no need to stop this
-			self:CastBar("light_void_dive", 9, 3, 1241292)
+			self:CastBar(1241292, 9, 3)
 
 			self:ScheduleTimer(function()
 				self:Message(1241282, "cyan", addsText)
