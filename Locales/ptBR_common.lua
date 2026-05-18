@@ -300,6 +300,6 @@ L.kicks = "Chutes" -- Plural of L.kick
 L.tank_bomb = "Bomba no Tanque" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "Cone Frontal do Tanque" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_frontal = "Frontal do Tanque" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "Golpe no Tanque" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "Soak Tanque" -- Similar to L.soak but only applies to tanks
