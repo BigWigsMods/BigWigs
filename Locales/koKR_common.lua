@@ -200,13 +200,13 @@ L.autotalk_notice = "NPC %s와 자동으로 상호 작용합니다."
 -- GUI notes for renames
 L.singular = "단수"
 L.plural = "복수"
---L.generalNote = "This is the text that will generally be used"
+L.generalNote = "일반적으로 사용되는 텍스트입니다"
 L.timerNote = "이 텍스트는 타이머에 사용됨"
---L.castTimerNote = "This text will only be used for cast timers"
+L.castTimerNote = "이 텍스트는 시전 타이머에만 사용됩니다"
 L.messageNote = "이 텍스트는 메시지에 사용됨"
 L.messageOnYouNote = "이 능력이 본인에게 적용되었을 때 표시되는 메시지"
 L.timerOnYouNote = "이 능력이 본인에게 적용되었을 때 타이머에 표시되는 텍스트"
---L.thisOnly = "%s Only" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.thisOnly = "%s 전용" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -301,5 +301,5 @@ L.tank_bomb = "탱커 폭탄" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "탱커 연계기" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "탱커 디버프" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "탱커 정면기" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_hit = "탱커 피해" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tanks
