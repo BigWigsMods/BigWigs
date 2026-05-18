@@ -366,7 +366,7 @@ function mod:TimersMythic(_, eventInfo)
 		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -490,7 +490,7 @@ function mod:TimersOther(_, eventInfo)
 		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
