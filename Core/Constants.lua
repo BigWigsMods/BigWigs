@@ -185,7 +185,14 @@ function BigWigs:GetBossOptionDetails(module, option)
 	elseif optionType == "number" then
 		if option > 0 then
 			local spellName = GetSpellName(option)
-			local icon = GetSpellTexture(option)
+			local nameReplacement = moduleLocale[tostring(option)]
+			if nameReplacement then
+				if type(nameReplacement) == "number" then
+					spellName = GetSpellName(nameReplacement)
+				else
+					spellName = nameReplacement
+				end
+			end
 			if not spellName then
 				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
 				spellName = option
@@ -208,6 +215,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 				descriptionReplacement = gsub(descriptionReplacement, "{rt(%d)}", "|T13700%1:15|t")
 				desc = descriptionReplacement
 			end
+			local icon = GetSpellTexture(option)
 			local iconReplacement = moduleLocale[option .. "_icon"]
 			if iconReplacement then
 				icon = getIcon(iconReplacement, module, option)
