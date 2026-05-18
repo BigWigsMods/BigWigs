@@ -32,8 +32,8 @@ L.boss = "首领"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 L.extra = "%s（%s）" -- SPELL_NAME (short spell name or extra information)
 
-L.phase = "阶段：%d"
-L.stage = "阶段：%d"
+L.phase = "%d阶段"
+L.stage = "%d阶段"
 L.wave = "第%d波" -- e.g. "Wave 1" (Waves of adds)
 L.wave_count = "第%d波，共%d波" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "普通模式"
@@ -206,7 +206,7 @@ L.castTimerNote = "此文本仅用于施法计时条"
 L.messageNote = "此文本将用于消息提示"
 L.messageOnYouNote = "当该技能点名你时显示的消息"
 L.timerOnYouNote = "当该技能点名你时计时条中显示的文本"
-L.thisOnly = "仅限 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.thisOnly = "仅 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
