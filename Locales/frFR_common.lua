@@ -304,3 +304,4 @@ L.tank_debuff = "Debuff Tank" -- Used for debuffs that only apply to tanks, usua
 L.tank_frontal = "Frontal Tank" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "Coup sur Tank" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+--L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
