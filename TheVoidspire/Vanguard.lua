@@ -64,7 +64,6 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 	aura_of_peace = "Peace", -- Short for Aura of Peace
 	tyrs_wrath_mythic = "Absorbs + Executes",
 	divine_toll_mythic = "Dodge + Absorbs",
-	zealous_spirit = "Spirit", -- Short for Zealous Spirit
 
 	empowered_searing_radiance = "Empowered Searing Radiance",
 	empowered_searing_radiance_desc = "Show the timer for the empowered Searing Radiance",
@@ -126,7 +125,7 @@ function mod:GetOptions()
 		[1248451] = L.aura_of_peace,
 		[1248710] = CL.heal_absorbs,
 		[1248674] = CL.shield,
-		[1276243] = L.zealous_spirit,
+		[1276243] = CL.spirit,
 	}
 end
 
@@ -623,7 +622,7 @@ function mod:ZealousSpirit(eventInfo)
 	if zealousSpiritCount <= 3 then -- it spawns 3 timers on pull (lol)
 		barCount = eventInfo.durationRounded == 4 and 1 or eventInfo.durationRounded == 57 and 2 or 3
 	end
-	local barText = CL.count:format(L.zealous_spirit, barCount)
+	local barText = CL.count:format(CL.spirit, barCount)
 	if self:ShouldShowBars() then
 		self:CDBar(1276243, eventInfo.duration, barText, nil, eventInfo.id)
 	end

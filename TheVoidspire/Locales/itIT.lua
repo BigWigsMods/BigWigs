@@ -3,14 +3,6 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "Urto",
 })
 
-BigWigsAPI.SetBossModuleLocale("Fallen-King Salhadaar", {
-	fractured_projection = "Interruzioni",
-})
-
-BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
-	grappling_maw = "Presa Tank",
-})
-
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "Ira", -- Short for Aura of Wrath
 	execution_sentence = "Esecuzione", -- Short for Execution Sentence
@@ -21,7 +13,6 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_peace = "Pace", -- Short for Aura of Peace
 	tyrs_wrath_mythic = "Assorbimenti + Esecuzioni",
 	divine_toll_mythic = "Schiva + Assorbimenti",
-	zealous_spirit = "Spirito", -- Short for Zealous Spirit
 
 	empowered_searing_radiance = "Radiosità Rovente potenziata",
 	empowered_searing_radiance_desc = "Mostra il timer per la Radiosità Rovente Potenziata",

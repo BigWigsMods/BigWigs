@@ -54,14 +54,6 @@ local radiantBarrierCount = 1
 local grapplingMawCount = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
-	grappling_maw = "Tank Grip",
-})
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 function mod:GetOptions()
@@ -83,7 +75,7 @@ function mod:GetOptions()
 		[1245391] = -33255, -- Ezzorak
 	},{
 		[1249748] = CL.raid_damage,
-		[1280458] = L.grappling_maw,
+		[1280458] = CL.tank_grip,
 		[1244221] = CL.breath,
 		[1244917] = CL.orbs,
 	}
@@ -675,7 +667,7 @@ function mod:MidnightFlames(eventInfo)
 end
 
 function mod:GrapplingMaw(eventInfo)
-	local barText = CL.count:format(L.grappling_maw, grapplingMawCount)
+	local barText = CL.count:format(CL.tank_grip, grapplingMawCount)
 	if self:ShouldShowBars() then
 		self:CDBar(1280458, eventInfo.duration, barText, nil, eventInfo.id)
 	end

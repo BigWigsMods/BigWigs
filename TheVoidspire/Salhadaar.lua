@@ -40,14 +40,6 @@ local despoticCommandCount = 1
 local twistingObscurityCount = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
-	fractured_projection = "Kicks", -- Move this to common?
-})
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 function mod:GetOptions()
@@ -65,7 +57,7 @@ function mod:GetOptions()
 		[1247738] = CL.orbs, -- Void Convergence (Orbs)
 		[1246175] = CL.full_energy, -- Entropic Unraveling (Full Energy)
 		[1250803] = CL.spikes, -- Shattering Twilight (Spikes)
-		[1254081] = L.fractured_projection, -- Fractured Projection (Kicks)
+		[1254081] = CL.kicks, -- Fractured Projection (Kicks)
 		[1248697] = CL.pools, -- Despotic Command (Pools)
 		[1250686] = CL.raid_damage, -- Twisting Obscurity (Raid Damage)
 	}
@@ -339,7 +331,7 @@ function mod:ShatteringTwilight(eventInfo)
 end
 
 function mod:FracturedProjection(eventInfo)
-	local barText = CL.count:format(L.fractured_projection, fracturedProjectionCount)
+	local barText = CL.count:format(CL.kicks, fracturedProjectionCount)
 	if self:ShouldShowBars() then
 		self:Bar(1254081, eventInfo.duration, barText, nil, eventInfo.id)
 	end

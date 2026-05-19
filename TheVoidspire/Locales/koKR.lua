@@ -3,14 +3,6 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "바닥",
 })
 
-BigWigsAPI.SetBossModuleLocale("Fallen-King Salhadaar", {
-	fractured_projection = "차단",
-})
-
-BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
-	grappling_maw = "탱커 당김",
-})
-
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "진노", -- Short for Aura of Wrath
 	executes_mythic = "선고 + 피하기",
@@ -21,7 +13,6 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_peace = "바닥", -- Short for Aura of Peace
 	tyrs_wrath_mythic = "보호막 + 선고",
 	divine_toll_mythic = "피하기 + 보호막",
-	zealous_spirit = "영혼", -- Short for Zealous Spirit
 
 	empowered_searing_radiance = "강화된 이글거리는 광휘",
 	empowered_searing_radiance_desc = "강화된 이글거리는 광휘 타이머 표시",

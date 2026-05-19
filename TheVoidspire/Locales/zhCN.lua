@@ -3,14 +3,6 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "重击", --“影爪重击”简称
 })
 
-BigWigsAPI.SetBossModuleLocale("Fallen-King Salhadaar", {
-	fractured_projection = "镜像", -- 打断？
-})
-
-BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
-	grappling_maw = "抓钩之颚", -- 直接使用技能名称
-})
-
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "愤怒光环",
 	execution_sentence = "处决宣判",
@@ -21,7 +13,6 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_peace = "平心光环",
 	tyrs_wrath_mythic = "吸收盾 + 处决",
 	divine_toll_mythic = "躲避 + 吸收盾",
-	zealous_spirit = "狂热之魂", -- “狂热之魂”全称合适
 
 	empowered_searing_radiance = "强化灼热光辉",
 	empowered_searing_radiance_desc = "显示强化灼热光辉的计时器",

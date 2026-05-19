@@ -3,14 +3,6 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "猛擊",
 })
 
-BigWigsAPI.SetBossModuleLocale("Fallen-King Salhadaar", {
-	fractured_projection = "投影",
-})
-
-BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
-	grappling_maw = "爪鉤之喉",
-})
-
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "憤慨光環", -- Short for Aura of Wrath 不用縮寫
 	execution_sentence = "死刑宣判", -- Short for Execution Sentence  不用縮寫，或者處決?
@@ -21,7 +13,6 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_peace = "和平光環", -- Short for Aura of Peace
 	tyrs_wrath_mythic = "吸收+死刑", -- 提爾之盾+死刑宣判，吸收盾/治療吸收盾太長了
 	divine_toll_mythic = "躲開 + 吸收", -- 神聖鳴響+提爾之盾
-	zealous_spirit = "狂熱", -- Short for Zealous Spirit
 
 	empowered_searing_radiance = "強化熾熱烈光",
 	empowered_searing_radiance_desc = "顯示強化熾熱烈光的計時條",
