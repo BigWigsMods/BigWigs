@@ -120,7 +120,7 @@ local lastImportData, lastExportData = nil, nil
 -- Default checkbox settings
 local defaultSettings = {
 	doFlags = true,
-	doRenames = isRetail and true or false,
+	doRenames = true,
 	doSounds = true,
 	doColors = true,
 	doPrivateAuras = isRetail and true or false,
@@ -167,12 +167,11 @@ local function getImportSettings(widget)
 			},
 			doRenames = {
 				type = "toggle",
-				name = L.sharing_renames,
+				name = L.renames,
 				desc = L.sharing_renames_desc,
 				order = 11,
 				width = 1,
 				disabled = function() return not lastImportData or not lastImportData.includeRenames end,
-				hidden = not isRetail,
 			},
 			separator1 = {
 				type = "description",
@@ -278,11 +277,10 @@ local function getExportSettings()
 			},
 			doRenames = {
 				type = "toggle",
-				name = L.sharing_renames,
+				name = L.renames,
 				desc = L.sharing_export_renames_desc,
 				order = 11,
 				width = 1,
-				hidden = not isRetail,
 			},
 			separator1 = {
 				type = "description",

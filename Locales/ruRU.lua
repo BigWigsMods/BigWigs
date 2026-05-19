@@ -300,7 +300,6 @@ L.sharing_window_title = "Поделиться настройками босса
 L.sharing_flags = "Общие настройки"
 L.sharing_flags_desc = "Импортировать настройки, которые управляют такими параметрами, как 'показывать полосу', 'проигрывать звук', 'показывать сообщение' и т.д.\nОни охватывают большинство флажков в настройках способностей."
 L.sharing_export_flags_desc = "Экспортировать настройки, которые управляют такими параметрами, как 'показывать полосу', 'проигрывать звук', 'показывать сообщение' и т.д.\nОни охватывают большинство флажков в настройках способностей."
---L.sharing_renames = "Renames"
 --L.sharing_renames_desc = "Import the custom renames that are configured."
 --L.sharing_export_renames_desc = "Export the custom renames that are configured."
 L.sharing_sounds_desc = "Импортировать звуки, которые будут проигрываться для способностей."

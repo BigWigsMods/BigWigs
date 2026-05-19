@@ -300,7 +300,6 @@ L.battleres_settings_export_desc = "esportare tutte le impostazzioni Battle Res.
 --L.sharing_flags = "General Settings"
 --L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
 --L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
---L.sharing_renames = "Renames"
 --L.sharing_renames_desc = "Import the custom renames that are configured."
 --L.sharing_export_renames_desc = "Export the custom renames that are configured."
 --L.sharing_sounds_desc = "Import which sounds to play for abilities."
