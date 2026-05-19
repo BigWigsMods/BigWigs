@@ -251,7 +251,7 @@ plugin.soundOptions = soundOptions
 
 do
 	local function addKey(t, key)
-		if t.type and (t.type == "select" or t.type == "range")then
+		if t.type and (t.type == "select" or t.type == "range") then
 			t.arg = key
 		elseif t.args then
 			for k, v in next, t.args do

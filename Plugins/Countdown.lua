@@ -126,7 +126,7 @@ local function updateProfile()
 	UpdateFont()
 	countdownAnchor:RefixPosition()
 
-	-- Reset invalid voice selections
+	-- Reset invalid voice options
 	if not BigWigsAPI:HasCountdown(db.voice) then
 		db.voice = defaultVoice
 	end
@@ -140,6 +140,13 @@ local function updateProfile()
 			if not BigWigsAPI:HasCountdown(db.bossCountdowns[boss][ability].voice) then
 				db.bossCountdowns[boss][ability].voice = nil
 				if not db.bossCountdowns[boss][ability].countdownTime then
+					db.bossCountdowns[boss][ability] = nil
+				end
+			end
+			if db.bossCountdowns[boss][ability].countdownTime and
+			(type(db.bossCountdowns[boss][ability].countdownTime) ~= "number" or db.bossCountdowns[boss][ability].countdownTime > 9 or db.bossCountdowns[boss][ability].countdownTime < 3) then
+				db.bossCountdowns[boss][ability].countdownTime = nil
+				if not db.bossCountdowns[boss][ability].voice then
 					db.bossCountdowns[boss][ability] = nil
 				end
 			end
@@ -476,7 +483,7 @@ local function createOptions()
 					if not plugin.db.profile.bossCountdowns[name][key] then plugin.db.profile.bossCountdowns[name][key] = {} end
 					plugin.db.profile.bossCountdowns[name][key].voice = value
 				elseif plugin.db.profile.bossCountdowns[name] then -- clean up
-					if plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] then
+					if plugin.db.profile.bossCountdowns[name][key] then
 						plugin.db.profile.bossCountdowns[name][key].voice = nil
 						if not plugin.db.profile.bossCountdowns[name][key].countdownTime then
 							plugin.db.profile.bossCountdowns[name][key] = nil
@@ -507,7 +514,7 @@ local function createOptions()
 					if not plugin.db.profile.bossCountdowns[name][key] then plugin.db.profile.bossCountdowns[name][key] = {} end
 					plugin.db.profile.bossCountdowns[name][key].countdownTime = value
 				elseif plugin.db.profile.bossCountdowns[name] then -- clean up
-					if plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] then
+					if plugin.db.profile.bossCountdowns[name][key] then
 						plugin.db.profile.bossCountdowns[name][key].countdownTime = nil
 						if not plugin.db.profile.bossCountdowns[name][key].voice then
 							plugin.db.profile.bossCountdowns[name][key] = nil
