@@ -303,4 +303,4 @@ L.tank_debuff = "탱커 디버프" -- Used for debuffs that only apply to tanks,
 L.tank_frontal = "탱커 정면기" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "탱커 피해" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tanks
---L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.tank_grip = "탱커 당김" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
