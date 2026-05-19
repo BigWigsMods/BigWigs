@@ -43,10 +43,9 @@ local twistingObscurityCount = 1
 -- Localization
 --
 
-local L = mod:GetLocale()
-if L then
-	L.fractured_projection = "Kicks" -- Move this to common?
-end
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	fractured_projection = "Kicks", -- Move this to common?
+})
 
 --------------------------------------------------------------------------------
 -- Initialization

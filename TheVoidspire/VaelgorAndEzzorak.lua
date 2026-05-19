@@ -57,10 +57,9 @@ local grapplingMawCount = 1
 -- Localization
 --
 
-local L = mod:GetLocale()
-if L then
-	L.grappling_maw = "Tank Grip"
-end
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	grappling_maw = "Tank Grip",
+})
 
 --------------------------------------------------------------------------------
 -- Initialization

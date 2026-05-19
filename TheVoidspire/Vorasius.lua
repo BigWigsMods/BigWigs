@@ -34,10 +34,9 @@ local roarCount = 1
 -- Localization
 --
 
-local L = mod:GetLocale()
-if L then
-	L.shadowclaw_slam = "Slams"
-end
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	shadowclaw_slam = "Slams",
+})
 
 --------------------------------------------------------------------------------
 -- Initialization
