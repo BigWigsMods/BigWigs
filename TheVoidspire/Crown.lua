@@ -113,7 +113,7 @@ mod:SetRenames({
 	[1255368] = {1255368}, -- Void Expulsion
 	[1233865] = {CL.heal_absorb}, -- Null Corona (Heal Absorb)
 	[1233787] = {1233787}, -- Dark Hand
-	[1243743] = {L.interrupting_tremor, CL.cast:format(L.interrupting_tremor), notes={L.generalNote, L.castTimerNote}}, -- Interrupting Tremor (Interrupt)
+	[1243743] = {L.interrupting_tremor, CL.cast:format(L.interrupting_tremor), notes={CL.generalNote, CL.castTimerNote}}, -- Interrupting Tremor (Interrupt)
 	[1243753] = {L.ravenous_abyss}, -- Ravenous Abyss (Move Out)
 	[1243982] = {L.silverstrike_barrage}, -- Silverstrike Barrage (Lines)
 	[1237614] = {CL.mark}, -- Ranger Captain's Mark (Mark)
