@@ -44,12 +44,12 @@ local twistingObscurityCount = 1
 --
 
 mod:SetRenames({
-	[1247738] = CL.orbs, -- Void Convergence (Orbs)
-	[1246175] = CL.full_energy, -- Entropic Unraveling (Full Energy)
-	[1250803] = CL.spikes, -- Shattering Twilight (Spikes)
-	[1254081] = CL.kicks, -- Fractured Projection (Kicks)
-	[1248697] = CL.pools, -- Despotic Command (Pools)
-	[1250686] = CL.raid_damage, -- Twisting Obscurity (Raid Damage)
+	[1247738] = {CL.orbs}, -- Void Convergence (Orbs)
+	[1246175] = {CL.full_energy}, -- Entropic Unraveling (Full Energy)
+	[1250803] = {CL.spikes}, -- Shattering Twilight (Spikes)
+	[1254081] = {CL.kicks}, -- Fractured Projection (Kicks)
+	[1248697] = {CL.pools}, -- Despotic Command (Pools)
+	[1250686] = {CL.raid_damage}, -- Twisting Obscurity (Raid Damage)
 })
 
 --------------------------------------------------------------------------------

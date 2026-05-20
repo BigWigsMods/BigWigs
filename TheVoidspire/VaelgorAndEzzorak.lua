@@ -59,15 +59,15 @@ local grapplingMawCount = 1
 
 mod:SetRenames({
 	["stages"] = {CL.intermission, CL.stage:format(2), CL.stage:format(3), original = false, notes = {CL.intermission, CL.stage:format(2), CL.stage:format(3)}}, -- Stages
-	[1249748] = CL.raid_damage, -- Midnight Flames (Raid Damage)
-	[1280458] = CL.tank_grip, -- Grappling Maw (Tank Grip)
+	[1249748] = {CL.raid_damage}, -- Midnight Flames (Raid Damage)
+	[1280458] = {CL.tank_grip}, -- Grappling Maw (Tank Grip)
 	-- Vaelgor
 	[1262623] = {1262623}, -- Nullbeam
-	[1244221] = CL.breath, -- Dread Breath (Breath)
+	[1244221] = {CL.breath}, -- Dread Breath (Breath)
 	[1265131] = {1265131}, -- Vaelwing
 	-- Ezzorak
 	[1245391] = {1245391}, -- Gloom
-	[1244917] = CL.orbs, -- Void Howl (Orbs)
+	[1244917] = {CL.orbs}, -- Void Howl (Orbs)
 	[1245645] = {1245645}, -- Rakfang
 })
 
