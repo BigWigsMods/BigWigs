@@ -193,22 +193,22 @@ L.arcane = "奥术"
 
 -- Autotalk
 L.autotalk = "自动与NPC对话"
-L.autotalk_boss_desc = "自动选择NPC对话选项，使首领战开始。"
-L.autotalk_generic_desc = "自动选择使你进入地下城下一阶段的NPC对话选项。"
+L.autotalk_boss_desc = "自动选择NPC对话选项以开启首领战。"
+L.autotalk_generic_desc = "自动选择NPC对话选项以进入下一阶段。"
 L.autotalk_notice = "自动与NPC %s 交互。"
 
 -- GUI notes for renames
 L.singular = "单数"
 L.plural = "复数"
-L.generalNote = "此文本为通用说明"
-L.timerNote = "此文本将用于计时条"
-L.castTimerNote = "此文本仅用于施法计时条"
-L.messageNote = "此文本将用于消息提示"
-L.messageOnYouNote = "当该技能点名你时显示的消息"
-L.timerOnYouNote = "当该技能点名你时计时条中显示的文本"
+L.generalNote = "通用说明文本"
+L.timerNote = "计时条中显示的文本"
+L.castTimerNote = "施法计时条中显示的文本"
+L.messageNote = "消息中显示的文本"
+L.messageOnYouNote = "技能点名你时显示的消息"
+L.timerOnYouNote = "技能点名你时计时条中显示的文本"
 L.thisOnly = "仅 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
+L.mythicOnlyNote = "史诗难度下显示的文本"
+L.otherDifficultiesNote = "其他难度下显示的文本"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
