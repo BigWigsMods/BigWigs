@@ -143,13 +143,14 @@ local function updateProfile()
 					db.bossCountdowns[boss][ability] = nil
 				end
 			end
-			if db.bossCountdowns[boss][ability].countdownTime and
-			(type(db.bossCountdowns[boss][ability].countdownTime) ~= "number"
-			or db.bossCountdowns[boss][ability].countdownTime > 10 or db.bossCountdowns[boss][ability].countdownTime < 3)
-			or math.floor(db.bossCountdowns[boss][ability].countdownTime+0.5) ~= db.bossCountdowns[boss][ability].countdownTime then
-				db.bossCountdowns[boss][ability].countdownTime = nil
-				if not db.bossCountdowns[boss][ability].voice then
-					db.bossCountdowns[boss][ability] = nil
+			if db.bossCountdowns[boss][ability].countdownTime then
+				if type(db.bossCountdowns[boss][ability].countdownTime) ~= "number"
+				or db.bossCountdowns[boss][ability].countdownTime > 10 or db.bossCountdowns[boss][ability].countdownTime < 3
+				or math.floor(db.bossCountdowns[boss][ability].countdownTime + 0.5) ~= db.bossCountdowns[boss][ability].countdownTime then
+					db.bossCountdowns[boss][ability].countdownTime = nil
+					if not db.bossCountdowns[boss][ability].voice then
+						db.bossCountdowns[boss][ability] = nil
+					end
 				end
 			end
 		end
