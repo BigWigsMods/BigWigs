@@ -39,6 +39,17 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 })
 
 --------------------------------------------------------------------------------
+-- Renames
+--
+
+mod:SetRenames({
+	[1256855] = {CL.breath}, -- Void Breath (Breath)
+	[1254199] = {CL.adds}, -- Parasite Expulsion (Adds)
+	[1241692] = {L.shadowclaw_slam}, -- Shadowclaw Slam (Slams)
+	[1260052] = {CL.roar}, -- Primordial Roar (Roar)
+})
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 function mod:GetOptions()
@@ -48,11 +59,6 @@ function mod:GetOptions()
 		1241692, -- Shadowclaw Slam
 		1260052, -- Primordial Roar
 		"berserk",
-	},nil,{
-		[1256855] = CL.breath, -- Void Breath (Breath)
-		[1254199] = CL.adds, -- Parasite Expulsion (Adds)
-		[1241692] = L.shadowclaw_slam, -- Shadowclaw Slam (Slams)
-		[1260052] = CL.roar, -- Primordial Roar (Roar)
 	}
 end
 
@@ -157,7 +163,7 @@ end
 --
 
 function mod:VoidBreath(eventInfo)
-	local barText = CL.count:format(CL.breath, breathCount)
+	local barText = CL.count:format(self:GetRename(1256855), breathCount)
 	if self:ShouldShowBars() then
 		self:Bar(1256855, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -173,7 +179,7 @@ function mod:VoidBreath(eventInfo)
 end
 
 function mod:ParasiteExpulsion(eventInfo)
-	local barText = CL.count:format(CL.adds, parasiteCount)
+	local barText = CL.count:format(self:GetRename(1254199), parasiteCount)
 	if self:ShouldShowBars() then
 		self:Bar(1254199, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -195,7 +201,7 @@ function mod:ShadowclawSlam(eventInfo)
 	elseif eventInfo.durationCount == 136 then
 		count = 2
 	end
-	local barText = CL.count:format(L.shadowclaw_slam, count)
+	local barText = CL.count:format(self:GetRename(1241692), count)
 	if self:ShouldShowBars() then
 		self:Bar(1241692, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -224,13 +230,13 @@ do
 	function mod:PrimordialRoar(eventInfo)
 		if eventInfo.durationRounded == 120 and self:ShouldShowBars() then
 			-- Void Breath: boss is bugged and doesn't gain energy? which doesn't fire breath bars?
-			local barText = CL.count:format(CL.breath, breathCount)
+			local barText = CL.count:format(self:GetRename(1256855), breathCount)
 			self:CDBar(1256855, 89, barText)
 			breathCount = breathCount + 1
 			self:ScheduleTimer(function() StopBarOnWarning(barText, 2) end, 85)
 		end
 
-		local barText = CL.count:format(CL.roar, roarCount)
+		local barText = CL.count:format(self:GetRename(1260052), roarCount)
 		if self:ShouldShowBars() then
 			self:Bar(1260052, eventInfo.duration, barText, nil, eventInfo.id)
 		end

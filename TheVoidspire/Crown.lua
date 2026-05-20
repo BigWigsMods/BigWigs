@@ -92,16 +92,39 @@ local cosmicPortalCount = 1
 --
 
 local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
-	silverstrike_arrow = "Arrows",
 	grasp_of_emptiness = "Obelisks",
 	interrupting_tremor = "Interrupt",
 	ravenous_abyss = "Move Out",
 	silverstrike_barrage = "Lines",
 	cosmic_barrier = "Barrier",
-	rangers_captains_mark = "Arrows",
 	voidstalker_sting = "Stings",
 	aspect_of_the_end = "Tethers",
 	devouring_cosmos = "Next Platform",
+})
+
+--------------------------------------------------------------------------------
+-- Renames
+--
+
+mod:SetRenames({
+	["stages"] = {CL.intermission, CL.stage:format(2), CL.stage:format(3), original = false, notes = {CL.intermission, CL.stage:format(2), CL.stage:format(3)}}, -- Stages
+	[1233602] = {CL.arrows, CL.arrow, notes={CL.generalNote, CL.messageOnYouNote}}, -- Silverstrike Arrow (Arrows)
+	[1232467] = {L.grasp_of_emptiness}, -- Grasp of Emptiness (Obelisks)
+	[1255368] = {1255368}, -- Void Expulsion
+	[1233865] = {CL.heal_absorb}, -- Null Corona (Heal Absorb)
+	[1233787] = {1233787}, -- Dark Hand
+	[1243743] = {L.interrupting_tremor, CL.cast:format(L.interrupting_tremor), notes={L.generalNote, L.castTimerNote}}, -- Interrupting Tremor (Interrupt)
+	[1243753] = {L.ravenous_abyss}, -- Ravenous Abyss (Move Out)
+	[1243982] = {L.silverstrike_barrage}, -- Silverstrike Barrage (Lines)
+	[1237614] = {CL.mark}, -- Ranger Captain's Mark (Mark)
+	[1237038] = {L.voidstalker_sting}, -- Voidstalker's Sting (Stings)
+	[1237837] = {1237837}, -- Call of the Void
+	[1246918] = {L.cosmic_barrier}, -- Cosmic Barrier (Barrier)
+	[1246461] = {1246461}, -- Rift Slash
+	[1261016] = {1261016}, -- Rift Simulacrum
+	[1238843] = {L.devouring_cosmos}, -- Devouring Cosmos (Next Platform)
+	[1239080] = {L.aspect_of_the_end}, -- Aspect of the End (Tethers)
+	[1261339] = {CL.big_add}, -- Cosmic Portal (Big Add)
 })
 
 --------------------------------------------------------------------------------
@@ -117,9 +140,9 @@ function mod:GetOptions()
 		1232467, -- Grasp of Emptiness
 		1255368, -- Void Expulsion
 		{1233865, "HEALER"}, -- Null Corona
-		{1233787, "TANK"}, -- Dark Hand (Morium)
-		{1243743, "CASTBAR"}, -- Interrupting Tremor (Demiar)
-		1243753, -- Ravenous Abyss (Vorelus)
+		{1233787, "TANK"}, -- Dark Hand [Morium]
+		{1243743, "CASTBAR"}, -- Interrupting Tremor [Demiar]
+		1243753, -- Ravenous Abyss [Vorelus]
 
 		-- Intermission: Crushing Singularity
 		1243982, -- Silverstrike Barrage
@@ -128,13 +151,13 @@ function mod:GetOptions()
 		1237614, -- Ranger Captain's Mark
 		{1237038, "OFF"}, -- Voidstalker's Sting
 		1237837, -- Call of the Void
-		1246918, -- Comsmic Barrier
+		1246918, -- Cosmic Barrier
 		{1246461, "TANK"}, -- Rift Slash
 
 		1261016, -- Rift Simulacrum
 
 		-- Stage Three: The End of the End
-		1238843, -- Devoiring Cosmos
+		1238843, -- Devouring Cosmos
 		1239080, -- Aspect of the End
 
 		1261339, -- Cosmic Portal
@@ -151,19 +174,6 @@ function mod:GetOptions()
 		[1237614] = -32455, -- Stage 2
 		[1261016] = "mythic",
 		[1238843] = -32456, -- Stage 3
-	},{
-		[1233602] = L.silverstrike_arrow, -- Arrows
-		[1232467] = L.grasp_of_emptiness, -- Obelisks
-		[1233865] = CL.heal_absorb, -- Null Corona
-		[1243743] = L.interrupting_tremor, -- Interrupt
-		[1243753] = L.ravenous_abyss, -- Move Out
-		[1243982] = L.silverstrike_barrage, -- Lines
-		[1237614] = L.rangers_captains_mark, -- Arrows
-		[1237038] = L.voidstalker_sting, -- Stings
-		[1246918] = L.cosmic_barrier, -- Barrier
-		[1238843] = L.devouring_cosmos, -- Next Platform
-		[1239080] = L.aspect_of_the_end, -- Tethers
-		[1261339] = CL.big_add, -- Cosmic Portal
 	}
 end
 
@@ -239,7 +249,7 @@ function mod:TimersMythic(_, eventInfo)
 	if stage == 2 and timelineEventCount == 1 then
 		-- set by IntermissionEnd
 		if self:ShouldShowBars() then
-			self:Message("stages", "cyan", CL.stage:format(stage), false)
+			self:Message("stages", "cyan", self:GetRename("stages", stage), false)
 			self:PlaySound("stages", "long")
 		end
 
@@ -248,7 +258,7 @@ function mod:TimersMythic(_, eventInfo)
 		self:SetStage(stage)
 
 		if self:ShouldShowBars() then
-			self:Message("stages", "cyan", CL.stage:format(stage), false)
+			self:Message("stages", "cyan", self:GetRename("stages", stage), false)
 			self:PlaySound("stages", "long")
 		end
 
@@ -468,7 +478,7 @@ function mod:TimersMythic(_, eventInfo)
 		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -499,13 +509,13 @@ function mod:TimersOther(_, eventInfo)
 	-- counts reset on intermission end, show phase message with first new timer
 	if stage == 2 and timelineEventCount == 1 then
 		if self:ShouldShowBars() then
-			self:Message("stages", "cyan", CL.stage:format(stage), false)
+			self:Message("stages", "cyan", self:GetRename("stages", stage), false)
 			self:PlaySound("stages", "long")
 		end
 
 	elseif stage == 3 and timelineEventCount == 1 then
 		if self:ShouldShowBars() then
-			self:Message("stages", "cyan", CL.stage:format(stage), false)
+			self:Message("stages", "cyan", self:GetRename("stages", stage), false)
 			self:PlaySound("stages", "long")
 		end
 	end
@@ -670,7 +680,7 @@ function mod:TimersOther(_, eventInfo)
 		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -722,24 +732,21 @@ end
 
 function mod:IntermissionEvent(duration)
 	local stage = self:GetStage()
+	local nextStage = stage + 1
 	self:SetStage(stage + 0.5)
 
 	if self:ShouldShowBars() then
-		if self:Mythic() then
-			self:Message("stages", "cyan", CL.intermission, false)
-		else
-			self:Message("stages", "cyan", CL.count:format(CL.intermission, stage), false)
-		end
+		self:Message("stages", "cyan", self:GetRename("stages", 1), false)
 		self:PlaySound("stages", "long")
 	end
 
 	return {
-		msg = CL.stage:format(stage + 1),
+		msg = self:GetRename("stages", nextStage),
 		key = "stages",
 		icon = 1280127,
 		onEnd = function(barInfo)
 			barInfo.timer = nil
-			self:SetStage(self:GetStage() + 0.5)
+			self:SetStage(nextStage)
 			self:ResetCounts()
 		end,
 		onCanceled = function(barInfo)
@@ -752,7 +759,7 @@ function mod:IntermissionEvent(duration)
 end
 
 function mod:SilverstrikeBarrage()
-	local barText = CL.count:format(L.silverstrike_barrage, silverstrikeBarrageCount)
+	local barText = CL.count:format(self:GetRename(1243982), silverstrikeBarrageCount)
 	silverstrikeBarrageCount = silverstrikeBarrageCount + 1
 	return {
 		msg = barText,
@@ -766,14 +773,14 @@ end
 -- Stage 1
 
 function mod:SilverstrikeArrow()
-	local barText = CL.count:format(L.silverstrike_arrow, silverstrikeArrowCount)
+	local barText = CL.count:format(self:GetRename(1233602), silverstrikeArrowCount)
 	silverstrikeArrowCount = silverstrikeArrowCount + 1
 	return {
 		msg = barText,
 		key = 1233602,
 		onFinished = function()
 			self:Message(1233602, "cyan", barText)
-			self:PersonalMessageFromBlizzMessage(1233602, 0.5, nil, L.silverstrike_arrow)
+			self:PersonalMessageFromBlizzMessage(1233602, 0.5, nil, self:GetRename(1233602, 2))
 			-- PA target sound
 		end,
 	}
@@ -790,7 +797,7 @@ function mod:GraspOfEmptiness()
 			count = count - 1
 		end
 	end
-	local barText = CL.count:format(L.grasp_of_emptiness, count)
+	local barText = CL.count:format(self:GetRename(1232467), count)
 	graspOfEmptinessCount = graspOfEmptinessCount + 1
 	return {
 		msg = barText,
@@ -803,7 +810,7 @@ function mod:GraspOfEmptiness()
 end
 
 function mod:VoidExpulsion()
-	local barText = CL.count:format(self:SpellName(1255368), voidExpulsionCount)
+	local barText = CL.count:format(self:GetRename(1255368), voidExpulsionCount)
 	voidExpulsionCount = voidExpulsionCount + 1
 	return {
 		msg = barText,
@@ -817,7 +824,7 @@ function mod:VoidExpulsion()
 end
 
 function mod:NullCorona()
-	local barText = CL.count:format(CL.heal_absorb, nullCoronaCount)
+	local barText = CL.count:format(self:GetRename(1233865), nullCoronaCount)
 	nullCoronaCount = nullCoronaCount + 1
 	return {
 		msg = barText,
@@ -830,13 +837,13 @@ end
 
 function mod:DarkHand()
 	if darkHandCount == 2 and (self:GetStage() == 1 or riftSimulacrumCount == 5) and self:ShouldShowBars() then
-		local text = CL.count:format(self:SpellName(1233787), 1)
+		local text = CL.count:format(self:GetRename(1233787), 1)
 		self:StopBar(text)
 
 		self:Message(1233787, "purple", text)
 	end
 
-	local barText = CL.count:format(self:SpellName(1233787), darkHandCount)
+	local barText = CL.count:format(self:GetRename(1233787), darkHandCount)
 	darkHandCount = darkHandCount + 1
 	return {
 		msg = barText,
@@ -849,7 +856,7 @@ end
 
 function mod:InterruptingTremor()
 	if interruptingTremorCount == 2 and (self:GetStage() == 1 or riftSimulacrumCount == 5) and self:ShouldShowBars() then
-		local text = CL.count:format(L.interrupting_tremor, 1)
+		local text = CL.count:format(self:GetRename(1243743), 1)
 		self:StopBar(text)
 
 		self:StopBlizzMessages(0.5)
@@ -857,7 +864,7 @@ function mod:InterruptingTremor()
 		self:PlaySound(1243743, "alert")
 	end
 
-	local barText = CL.count:format(L.interrupting_tremor, interruptingTremorCount)
+	local barText = CL.count:format(self:GetRename(1243743), interruptingTremorCount)
 	interruptingTremorCount = interruptingTremorCount + 1
 	return {
 		msg = barText,
@@ -865,7 +872,7 @@ function mod:InterruptingTremor()
 		onFinished = function()
 			self:StopBlizzMessages(1)
 			self:Message(1243743, "orange", barText)
-			self:CastBar(1243743, 5)
+			self:CastBar(1243743, 5, 2)
 			self:PlaySound(1243743, "alert")
 		end,
 	}
@@ -873,13 +880,13 @@ end
 
 function mod:RavenousAbyss()
 	if ravenousAbyssCount == 2 and (self:GetStage() == 1 or riftSimulacrumCount == 5) and self:ShouldShowBars() then
-		local text = CL.count:format(L.ravenous_abyss, 1)
+		local text = CL.count:format(self:GetRename(1243753), 1)
 		self:StopBar(text)
 
 		self:Message(1243753, "orange", text)
 	end
 
-	local barText = CL.count:format(L.ravenous_abyss, ravenousAbyssCount)
+	local barText = CL.count:format(self:GetRename(1243753), ravenousAbyssCount)
 	ravenousAbyssCount = ravenousAbyssCount + 1
 	return {
 		msg = barText,
@@ -893,7 +900,7 @@ end
 -- Stage 2
 
 function mod:RangerCaptainsMark()
-	local barText = CL.count:format(L.rangers_captains_mark, markCount)
+	local barText = CL.count:format(self:GetRename(1237614), markCount)
 	markCount = markCount + 1
 	return {
 		msg = barText,
@@ -907,7 +914,7 @@ function mod:RangerCaptainsMark()
 end
 
 function mod:VoidstalkerSting()
-	local barText = L.voidstalker_sting
+	local barText = self:GetRename(1237038)
 	stingCount = stingCount + 1
 	return {
 		msg = barText,
@@ -919,7 +926,7 @@ function mod:VoidstalkerSting()
 end
 
 function mod:CallOfTheVoid()
-	local barText = CL.count:format(self:SpellName(1237837), callOfTheVoidCount)
+	local barText = CL.count:format(self:GetRename(1237837), callOfTheVoidCount)
 	callOfTheVoidCount = callOfTheVoidCount + 1
 	return {
 		msg = barText,
@@ -932,7 +939,7 @@ function mod:CallOfTheVoid()
 end
 
 function mod:CosmicBarrier()
-	local barText = CL.count:format(L.cosmic_barrier, cosmicBarrierCount)
+	local barText = CL.count:format(self:GetRename(1246918), cosmicBarrierCount)
 	cosmicBarrierCount = cosmicBarrierCount + 1
 	return {
 		msg = barText,
@@ -946,7 +953,7 @@ function mod:CosmicBarrier()
 end
 
 function mod:RiftSlash()
-	local barText = CL.count:format(self:SpellName(1246461), riftSlashCount)
+	local barText = CL.count:format(self:GetRename(1246461), riftSlashCount)
 	riftSlashCount = riftSlashCount + 1
 	return {
 		msg = barText,
@@ -958,7 +965,7 @@ function mod:RiftSlash()
 end
 
 function mod:RiftSimulacrum()
-	local barText = CL.count:format(self:SpellName(1261016), riftSimulacrumCount)
+	local barText = CL.count:format(self:GetRename(1261016), riftSimulacrumCount)
 	riftSimulacrumCount = riftSimulacrumCount + 1
 	return {
 		msg = barText,
@@ -973,7 +980,7 @@ end
 -- Stage 3
 
 function mod:DevouringCosmos()
-	local barText = CL.count:format(L.devouring_cosmos, devouringCosmosCount)
+	local barText = CL.count:format(self:GetRename(1238843), devouringCosmosCount)
 	devouringCosmosCount = devouringCosmosCount + 1
 	return {
 		msg = barText,
@@ -991,20 +998,20 @@ function mod:DevouringCosmos()
 end
 
 function mod:AspectOfTheEnd()
-	local barText = CL.count:format(L.aspect_of_the_end, aspectOfTheEndCount)
+	local barText = CL.count:format(self:GetRename(1239080), aspectOfTheEndCount)
 	aspectOfTheEndCount = aspectOfTheEndCount + 1
 	return {
 		msg = barText,
 		key = 1239080,
 		onFinished = function()
 			self:Message(1239080, "orange", barText)
-			self:PersonalMessageFromBlizzMessage(1239080, 0.5, nil, L.aspect_of_the_end)
+			self:PersonalMessageFromBlizzMessage(1239080, 0.5, nil, self:GetRename(1239080))
 		end,
 	}
 end
 
 function mod:CosmicPortal()
-	local barText = CL.count:format(CL.big_add, cosmicPortalCount)
+	local barText = CL.count:format(self:GetRename(1261339), cosmicPortalCount)
 	cosmicPortalCount = cosmicPortalCount + 1
 	return {
 		msg = barText,

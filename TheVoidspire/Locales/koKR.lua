@@ -15,26 +15,24 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	divine_toll_mythic = "피하기 + 보호막",
 
 	empowered_searing_radiance = "강화된 이글거리는 광휘",
-	empowered_searing_radiance_desc = "강화된 이글거리는 광휘 타이머 표시",
+	empowered_searing_radiance_desc = "강화된 이글거리는 광휘 타이머 표시.",
 
 	empowered_avengers_shield = "강화된 응징의 방패",
-	empowered_avengers_shield_desc = "강화된 응징의 방패 타이머 표시",
+	empowered_avengers_shield_desc = "강화된 응징의 방패 타이머 표시.",
 
 	empowered_divine_storm = "강화된 천상의 폭풍",
-	empowered_divine_storm_desc = "강화된 천상의 폭풍 타이머 표시",
+	empowered_divine_storm_desc = "강화된 천상의 폭풍 타이머 표시.",
 	tornadoes = "토네이도", -- The renamed empowered Divine Storm
 
 	empowered = "[강화] %s", -- Empowered version of an ability, [E] Avengers Shield
 })
 
 BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
-	silverstrike_arrow = "화살",
 	grasp_of_emptiness = "방첨탑",
 	interrupting_tremor = "차단",
 	ravenous_abyss = "바닥",
 	silverstrike_barrage = "라인",
 	cosmic_barrier = "보호막",
-	rangers_captains_mark = "화살",
 	voidstalker_sting = "독침",
 	aspect_of_the_end = "사슬",
 	devouring_cosmos = "단상 이동",

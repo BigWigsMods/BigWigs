@@ -38,6 +38,20 @@ local voidFallCount = 1
 local darkUpheavalCount = 1
 
 --------------------------------------------------------------------------------
+-- Renames
+--
+
+mod:SetRenames({
+	[1251361] = {CL.adds}, -- Shadow's Advance (Adds)
+	[1262036] = {CL.beams}, -- Void Rupture (Beams)
+	[1249262] = {CL.soak}, -- Umbral Collapse (Soak)
+	[1280015] = {CL.marks}, -- Void Marked (Marks)
+	[1260712] = {CL.dodge}, -- Oblivion's Wrath (Dodge)
+	[1258883] = {CL.knockback}, -- Void Fall (Knockback)
+	[1249251] = {CL.raid_damage}, -- Dark Upheaval (Raid Damage)
+})
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 function mod:GetOptions()
@@ -49,17 +63,6 @@ function mod:GetOptions()
 		1260712, -- Oblivion's Wrath
 		1258883, -- Void Fall
 		1249251, -- Dark Upheaval
-	},{
-
-	},
-	{
-		[1251361] = CL.adds, -- Shadow's Advance (Adds)
-		[1262036] = CL.beams, -- Void Rupture (Beams)
-		[1249262] = CL.soak, -- Umbral Collapse (Soak)
-		[1280015] = CL.marks, -- Void Marked (Marks)
-		[1260712] = CL.dodge, -- Oblivion's Wrath (Dodge)
-		[1258883] = CL.knockback, -- Void Fall (Knockback)
-		[1249251] = CL.raid_damage, -- Dark Upheaval (Raid Damage)
 	}
 end
 
@@ -258,7 +261,7 @@ function mod:ShadowsAdvance(eventInfo)
 	elseif (eventInfo.durationRounded == 14 or eventInfo.durationRounded == 12) and shadowAdvanceCount <= 2 then
 		count = 1
 	end
-	local barText = CL.count:format(CL.adds, count)
+	local barText = CL.count:format(self:GetRename(1251361), count)
 	if self:ShouldShowBars() then
 		self:Bar(1251361, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -267,15 +270,15 @@ function mod:ShadowsAdvance(eventInfo)
 		msg = barText,
 		key = 1251361,
 		onFinished = function()
+			self:Bar(1262036, self:Mythic() and 38.5 or 23.5, CL.count:format(self:GetRename(1262036), count)) -- Void Rupture
 			self:Message(1251361, "cyan", barText)
-			self:Bar(1262036, self:Mythic() and 38.5 or 23.5, CL.count:format(CL.beams, count)) -- Void Rupture
 			self:PlaySound(1251361, "long")
 		end
 	}
 end
 
 function mod:UmbralCollapse(eventInfo)
-	local barText = CL.count:format(CL.soak, umbralCollapseCount)
+	local barText = CL.count:format(self:GetRename(1249262), umbralCollapseCount)
 	if self:ShouldShowBars() then
 		self:Bar(1249262, eventInfo.duration, barText, nil, math.abs(eventInfo.id)) -- make any id positive to handle our own started bar
 	end
@@ -284,18 +287,18 @@ function mod:UmbralCollapse(eventInfo)
 		msg = barText,
 		key = 1249262,
 		onFinished = function()
-			self:Message(1249262, "orange", CL.count_amount:format(CL.soak, 1, 2))
-			self:PlaySound(1249262, "warning")
 			self:ScheduleTimer(function()
-				self:Message(1249262, "orange", CL.count_amount:format(CL.soak, 2, 2))
+				self:Message(1249262, "orange", CL.count_amount:format(self:GetRename(1249262), 2, 2))
 				self:PlaySound(1249262, "warning")
 			end, 7.5)
+			self:Message(1249262, "orange", CL.count_amount:format(self:GetRename(1249262), 1, 2))
+			self:PlaySound(1249262, "warning")
 		end
 	}
 end
 
 function mod:VoidMarked(eventInfo)
-	local barText = CL.count:format(CL.marks, voidMarkedCount)
+	local barText = CL.count:format(self:GetRename(1280015), voidMarkedCount)
 	if self:ShouldShowBars() then
 		self:Bar(1280015, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -311,7 +314,7 @@ function mod:VoidMarked(eventInfo)
 end
 
 function mod:OblivionsWrath(eventInfo)
-	local barText = CL.count:format(CL.dodge, oblivionsWrathCount)
+	local barText = CL.count:format(self:GetRename(1260712), oblivionsWrathCount)
 	if self:ShouldShowBars() then
 		self:Bar(1260712, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -327,7 +330,7 @@ function mod:OblivionsWrath(eventInfo)
 end
 
 function mod:VoidFall(eventInfo)
-	local barText = CL.count:format(CL.knockback, voidFallCount)
+	local barText = CL.count:format(self:GetRename(1258883), voidFallCount)
 	if self:ShouldShowBars() then
 		self:Bar(1258883, eventInfo.duration, barText, nil, eventInfo.id)
 	end
@@ -343,7 +346,7 @@ function mod:VoidFall(eventInfo)
 end
 
 function mod:DarkUpheaval(eventInfo)
-	local barText = CL.count:format(CL.raid_damage, darkUpheavalCount)
+	local barText = CL.count:format(self:GetRename(1249251), darkUpheavalCount)
 	if self:ShouldShowBars() then
 		self:Bar(1249251, eventInfo.duration, barText, nil, eventInfo.id)
 	end

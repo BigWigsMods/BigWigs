@@ -15,26 +15,24 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	divine_toll_mythic = "躲開 + 吸收", -- 神聖鳴響+提爾之盾
 
 	empowered_searing_radiance = "強化熾熱烈光",
-	empowered_searing_radiance_desc = "顯示強化熾熱烈光的計時條",
+	empowered_searing_radiance_desc = "顯示強化熾熱烈光的計時條。",
 
 	empowered_avengers_shield = "強化神聖之盾",
-	empowered_avengers_shield_desc = "顯示強化神聖之盾的計時條",
+	empowered_avengers_shield_desc = "顯示強化神聖之盾的計時條。",
 
 	empowered_divine_storm = "強化神性風暴",
-	empowered_divine_storm_desc = "顯示強化神性風暴的計時條",
+	empowered_divine_storm_desc = "顯示強化神性風暴的計時條。",
 	tornadoes = "神聖暴風", -- The renamed empowered Divine Storm 手冊裡這麼叫
 
 	empowered = "強化%s", -- Empowered version of an ability, [E] Avengers Shield
 })
 
 BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
-	silverstrike_arrow = "箭矢",
 	grasp_of_emptiness = "方尖碑",
 	interrupting_tremor = "震顫", --用法術名，或者斷法
 	ravenous_abyss = "深淵", -- 貪婪深淵
 	silverstrike_barrage = "箭雨",  -- 銀殤箭雨
 	cosmic_barrier = "屏障",
-	rangers_captains_mark = "箭頭", --遊俠隊長印記，是個箭頭
 	voidstalker_sting = "釘刺", -- 虛無潛獵者釘刺
 	aspect_of_the_end = "拉斷", -- 終結守護
 	devouring_cosmos = "下個平台", -- 換場地/換平台/下個平台

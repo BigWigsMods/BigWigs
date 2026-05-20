@@ -15,26 +15,24 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	divine_toll_mythic = "Esquiva + Absorções",
 
 	empowered_searing_radiance = "Resplendor Calcinante Potencializado",
-	empowered_searing_radiance_desc = "Mostra o temporizador para o Resplendor Calcinante potencializado",
+	empowered_searing_radiance_desc = "Mostra o temporizador para o Resplendor Calcinante potencializado.",
 
 	empowered_avengers_shield = "Escudo do Vingador Potencializado",
-	empowered_avengers_shield_desc = "Mostra o temporizador para o Escudo do Vingador potencializado",
+	empowered_avengers_shield_desc = "Mostra o temporizador para o Escudo do Vingador potencializado.",
 
 	empowered_divine_storm = "Tempestade Divina Potencializada",
-	empowered_divine_storm_desc = "Mostra o temporizador para a Tempestade Divina potencializada",
+	empowered_divine_storm_desc = "Mostra o temporizador para a Tempestade Divina potencializada.",
 	tornadoes = "Tornados", -- The renamed empowered Divine Storm
 
 	empowered = "[P] %s", -- Empowered version of an ability, [E] Avengers Shield
 })
 
 BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
-	silverstrike_arrow = "Flechas",
 	grasp_of_emptiness = "Obeliscos",
 	interrupting_tremor = "Corte",
 	ravenous_abyss = "Afaste-se",
 	silverstrike_barrage = "Linhas",
 	cosmic_barrier = "Barreira",
-	rangers_captains_mark = "Flechas",
 	voidstalker_sting = "Ferroadas",
 	aspect_of_the_end = "Correntes",
 	devouring_cosmos = "Próxima Plataforma",
