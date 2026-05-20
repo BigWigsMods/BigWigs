@@ -207,6 +207,8 @@ L.messageNote = "Este texto será usado para mensagens"
 L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você"
 L.timerOnYouNote = "O texto exibido no temporizador quando esta habilidade estiver em você"
 L.thisOnly = "Apenas %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
 
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
@@ -256,6 +258,8 @@ L.spell_reflection = "Reflexão de Feitiço" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "Flechas" -- Plural of L.arrow
 L.ball = "Bola" -- A ball, like a football, basketball, etc
 L.balls = "Bolas" -- Plural of L.ball
 L.blind = "Cegar" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.

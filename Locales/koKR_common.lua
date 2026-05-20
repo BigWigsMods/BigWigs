@@ -207,6 +207,8 @@ L.messageNote = "이 텍스트는 메시지에 사용됨"
 L.messageOnYouNote = "이 능력이 본인에게 적용되었을 때 표시되는 메시지"
 L.timerOnYouNote = "이 능력이 본인에게 적용되었을 때 타이머에 표시되는 텍스트"
 L.thisOnly = "%s 전용" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -256,6 +258,8 @@ L.spell_reflection = "주문 반사" -- Any ability that reflects spells
 L.rooted = "묶임" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+L.arrow = "화살" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "화살" -- Plural of L.arrow
 L.ball = "공" -- A ball, like a football, basketball, etc
 L.balls = "공" -- Plural of L.ball
 L.blind = "실명" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.

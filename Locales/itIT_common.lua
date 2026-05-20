@@ -207,6 +207,8 @@ L.autotalk_generic_desc = "Automaticamente selezione l'opzione di dialogo NPC ch
 --L.messageOnYouNote = "The message shown when this ability is on you"
 --L.timerOnYouNote = "The text shown in the timer when this ability is on you"
 --L.thisOnly = "%s Only" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
 
 -- Common ability name replacements
 L.absorb = "Assorbimento" -- Used for shield-like abilities that absorb damage or healing
@@ -256,6 +258,8 @@ L.spell_reflection = "Rifletti Incantesimo" -- Any ability that reflects spells
 L.rooted = "Immobilizzato" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "Frecce" -- Plural of L.arrow
 L.ball = "Palla" -- A ball, like a football, basketball, etc
 L.balls = "Palle" -- Plural of L.ball
 L.blind = "Accecamento" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.

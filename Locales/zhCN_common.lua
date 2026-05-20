@@ -207,6 +207,8 @@ L.messageNote = "此文本将用于消息提示"
 L.messageOnYouNote = "当该技能点名你时显示的消息"
 L.timerOnYouNote = "当该技能点名你时计时条中显示的文本"
 L.thisOnly = "仅 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
@@ -256,6 +258,8 @@ L.spell_reflection = "法术反射" -- Any ability that reflects spells
 L.rooted = "定身" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+L.arrow = "箭矢" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "箭矢" -- Plural of L.arrow
 L.ball = "球" -- A ball, like a football, basketball, etc
 L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
