@@ -298,9 +298,9 @@ L.kicks = "打断" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "坦克炸弹" -- Similar to L.bomb but only applies to tanks
-L.tank_combo = "坦克连击" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_combo = "连击坦克" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "坦克减益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
-L.tank_hit = "坦克命中" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_hit = "命中坦克" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "坦克分摊" -- Similar to L.soak but only applies to tanks
---L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.tank_grip = "拖拽坦克" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
