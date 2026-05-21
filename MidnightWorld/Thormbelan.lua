@@ -27,7 +27,7 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 mod:SetRenames({
 	[1257325] = {CL.bombs, CL.incoming:format(CL.bombs), notes = {CL.timerNote, CL.messageNote}}, -- Radiant Mote (Bombs)
 	[1257825] = {L.ball, L.ball_incoming, L.ball_fail, notes = {CL.timerNote, CL.messageNote, CL.messageNote}}, -- Scintillating Shard (Ball)
-	[1258641] = {L.tendrils, L.tendrils_incoming, notes = {CL.timerNote, CL.messageNote}}, -- Shredding Tendrils (Tendrils)
+	[1258641] = {L.tendrils, L.tendrils_incoming, CL.you:format(L.tendrils), notes = {CL.timerNote, CL.messageNote, CL.messageOnYouNote}}, -- Shredding Tendrils (Tendrils)
 })
 
 --------------------------------------------------------------------------------
@@ -95,6 +95,7 @@ end
 
 do
 	local playerList, prev = {}, 0
+	local renames = {1, 3}
 	function mod:RaidBossWhisperSync(msg, player)
 		if msg:find("spell:1258641", nil, true) then
 			local t = GetTime()
@@ -104,7 +105,7 @@ do
 			end
 
 			playerList[#playerList+1] = player
-			self:TargetsMessage(1258641, "orange", playerList)
+			self:TargetsMessage(1258641, "orange", playerList, nil, renames)
 			if player == self:UnitName("player") then
 				self:PlaySound(1258641, "warning", nil, player)
 			end

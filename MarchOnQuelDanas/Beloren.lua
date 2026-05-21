@@ -61,14 +61,14 @@ mod:SetRenames({
 	[1242515] = {L.color_swaps}, -- Voidlight Convergence (Color Swaps)
 	[1241282] = {CL.adds}, -- Embers of Beloren (Adds)
 	[1241292] = { -- Light/Void Dive (Soaks)
-		CL.soaks, CL.soak, CL.cast:format(CL.soaks),
+		CL.soaks, CL.you:format(CL.soak), CL.cast:format(CL.soaks),
 		notes = {L.generalNote, L.messageOnYouNote, L.castTimerNote},
 		original = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339))
 	},
 	[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
 	[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
 	[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
-	[1242260] = {L.quills}, -- Infused Quills (Quills)
+	[1242260] = {L.quills, CL.you:format(L.quills), notes = {L.generalNote, L.messageOnYouNote}}, -- Infused Quills (Quills)
 	[1246709] = {CL.landing}, -- Death Drop (Landing)
 	[1241313] = {1241313}, -- Rebirth
 })
@@ -297,7 +297,7 @@ function mod:EmbersOfBeloren(duration) -- Soaks / Adds
 		icon = 1241292,
 		onFinished = function()
 			self:Message(1241292, "red")
-			self:PersonalMessageFromBlizzMessage(1241292, 1, nil, self:GetRename(1241292, 2))
+			self:PersonalMessageFromBlizzMessage(1241292, 1, false, self:GetRename(1241292, 2))
 			-- if the adds spawn, they don't go away on phase, so no need to stop this
 			self:CastBar(1241292, 9, 3)
 
@@ -360,7 +360,7 @@ function mod:InfusedQuills(duration) -- Quills
 		msg = barText,
 		key = 1242260,
 		onFinished = function()
-			self:PersonalMessageFromBlizzMessage(1242260, 1)
+			self:PersonalMessageFromBlizzMessage(1242260, 1, false, self:GetRename(1242260, 2))
 			self:Message(1242260, "orange", barText)
 			-- self:PlaySound(1242260, "alarm") -- dodge
 		end

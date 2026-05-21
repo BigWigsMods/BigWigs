@@ -14,7 +14,7 @@ mod:SetWorldModule(true)
 
 mod:SetRenames({
 	[1258427] = {CL.orbs, CL.incoming:format(CL.orbs), notes = {CL.timerNote, CL.messageNote}}, -- Radiant Flare (Orbs)
-	[1276427] = {CL.bombs, CL.bomb, notes = {CL.timerNote, CL.messageNote}}, -- Dawncrazed Halo (Bombs)
+	[1276427] = {CL.bombs, CL.you:format(CL.bomb), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Dawncrazed Halo (Bombs)
 	[1276247] = {CL.frontal_cone, CL.extra:format(mod:SpellName(1276247), CL.frontal_cone), notes = {CL.timerNote, CL.messageNote}}, -- Dawnfire Breath (Frontal Cone)
 })
 
@@ -66,6 +66,7 @@ end
 
 do
 	local playerList, prev = {}, 0
+	local renames = {1, 2}
 	function mod:RaidBossWhisperSync(msg, player)
 		if msg:find("spell:1276427", nil, true) then
 			local t = GetTime()
@@ -77,7 +78,7 @@ do
 			end
 
 			playerList[#playerList+1] = player
-			self:TargetsMessage(1276427, "yellow", playerList, nil, self:GetRename(1276427, 2))
+			self:TargetsMessage(1276427, "yellow", playerList, nil, renames)
 		end
 	end
 end

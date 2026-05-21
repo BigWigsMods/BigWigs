@@ -14,7 +14,7 @@ mod:SetWorldModule(true)
 
 mod:SetRenames({
 	[1235131] = {CL.dodge, CL.extra:format(mod:SpellName(1235131), CL.dodge), notes = {CL.timerNote, CL.messageNote}}, -- Rootquake (Dodge)
-	[1243594] = {CL.fixate}, -- Fixate (Fixate)
+	[1243594] = {CL.format(CL.fixate), notes = {CL.messageOnYouNote}}, -- Fixate (Fixate)
 	[1235144] = {1235144}, -- War Club
 })
 
@@ -58,7 +58,7 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:RAID_BOSS_WHISPER()
-	self:PersonalMessage(1243594)
+	self:PersonalMessage(1243594, false)
 	self:PlaySound(1243594, "warning")
 end
 

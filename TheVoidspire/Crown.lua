@@ -108,7 +108,7 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 
 mod:SetRenames({
 	["stages"] = {CL.intermission, CL.stage:format(2), CL.stage:format(3), original = false, notes = {CL.intermission, CL.stage:format(2), CL.stage:format(3)}}, -- Stages
-	[1233602] = {CL.arrows, CL.arrow, notes={CL.generalNote, CL.messageOnYouNote}}, -- Silverstrike Arrow (Arrows)
+	[1233602] = {CL.arrows, CL.you:format(CL.arrow), notes={CL.generalNote, CL.messageOnYouNote}}, -- Silverstrike Arrow (Arrows)
 	[1232467] = {L.grasp_of_emptiness}, -- Grasp of Emptiness (Obelisks)
 	[1255368] = {1255368}, -- Void Expulsion
 	[1233865] = {CL.heal_absorb}, -- Null Corona (Heal Absorb)
@@ -123,7 +123,7 @@ mod:SetRenames({
 	[1246461] = {1246461}, -- Rift Slash
 	[1261016] = {1261016}, -- Rift Simulacrum
 	[1238843] = {L.devouring_cosmos}, -- Devouring Cosmos (Next Platform)
-	[1239080] = {L.aspect_of_the_end}, -- Aspect of the End (Tethers)
+	[1239080] = {L.aspect_of_the_end, CL.you:format(L.aspect_of_the_end), notes={CL.generalNote, CL.messageOnYouNote}}, -- Aspect of the End (Tethers)
 	[1261339] = {CL.big_add}, -- Cosmic Portal (Big Add)
 })
 
@@ -780,7 +780,7 @@ function mod:SilverstrikeArrow()
 		key = 1233602,
 		onFinished = function()
 			self:Message(1233602, "cyan", barText)
-			self:PersonalMessageFromBlizzMessage(1233602, 0.5, nil, self:GetRename(1233602, 2))
+			self:PersonalMessageFromBlizzMessage(1233602, 0.5, false, self:GetRename(1233602, 2))
 			-- PA target sound
 		end,
 	}
@@ -1005,7 +1005,7 @@ function mod:AspectOfTheEnd()
 		key = 1239080,
 		onFinished = function()
 			self:Message(1239080, "orange", barText)
-			self:PersonalMessageFromBlizzMessage(1239080, 0.5, nil, self:GetRename(1239080))
+			self:PersonalMessageFromBlizzMessage(1239080, 0.5, false, self:GetRename(1239080, 2))
 		end,
 	}
 end
