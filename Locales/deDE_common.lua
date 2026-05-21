@@ -198,17 +198,18 @@ L.autotalk_generic_desc = "Automatisch die NPC Dialogoptionen wählen, welche di
 L.autotalk_notice = "Automatisch mit NPC %s interagiert."
 
 -- GUI notes for renames
-L.singular = "Singular"
-L.plural = "Plural"
 L.generalNote = "Dieser Text wird generell genutzt"
 L.timerNote = "Dieser Text wird für Timer genutzt"
 L.castTimerNote = "Dieser Text wird nur für Zauber Timer genutzt"
 L.messageNote = "Dieser Text wird für Nachrichten genutzt"
 L.messageOnYouNote = "Die anzuzeigende Nachricht wenn diese Fähigkeit auf Dir ist"
 L.timerOnYouNote = "Der anzuzeigende Text im Timer wenn diese Fähigkeit auf Dir ist"
-L.thisOnly = "Nur %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 --L.mythicOnlyNote = "This text will be used on Mythic only"
 --L.otherDifficultiesNote = "This text will be used on all other difficulties"
+--L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+--L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+--L.stage2Only = "Stage 2 Only"
+--L.stage3Only = "Stage 3 Only"
 
 -- Common ability name replacements
 L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing

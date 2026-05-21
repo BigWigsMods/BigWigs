@@ -110,7 +110,7 @@ mod:SetRenames({
 	[1284931] = {L.prism_kicks}, -- Termination Prism (Kicks)
 	[1282441] = {1282441}, -- Starsplinter
 	[1282469] = {CL.beams}, -- Dark Quasar (Beams) [Intermission Only]
-	[1284525] = {CL.beams, CL.beam, notes = {CL.plural, CL.singular}}, -- Galvanize (Beams)
+	[1284525] = {CL.beams, CL.beam, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Galvanize (Beams)
 	[1282412] = {CL.dodge}, -- Core Harvest (Dodge)
 	[1281194] = {CL.knockback}, -- Dark Meltdown (Knockback)
 	[1250898] = {L.the_dark_archangel}, -- The Dark Archangel (Big Boom)
@@ -166,8 +166,8 @@ function mod:GetOptions()
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
 		[1250898] = -33639, -- Stage Three: Midnight Falls
 	},{
-		[1279420] = CL.thisOnly:format(CL.stage:format(1)),
-		[1282469] = CL.thisOnly:format(CL.intermission),
+		[1279420] = CL.stage1Only,
+		[1282469] = CL.intermissionOnly,
 	}
 end
 
