@@ -780,7 +780,7 @@ L.visibleBarLimitDesc = "设置同时可见计时条的最大数量。"
 
 L.localTimer = "本地"
 L.timerFinished = "%s：计时条 [%s] 已结束。"
-L.customBarStarted = "自定义计时条"%s"由%s用户%s发起。"
+L.customBarStarted = "自定义计时条“%s”由%s用户%s发起。"
 L.sendCustomBar = "正在向 BigWigs 和 DBM 用户发送自定义计时条“%s”。"
 
 L.requiresLeadOrAssist = "此功能需要团队领袖或助理权限。"
