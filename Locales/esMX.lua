@@ -368,7 +368,7 @@ L.notYetImplemented = "Aún no implementado" -- When a feature hasn't been imple
 -- AutoInvite.lua
 --
 
-L.autoInviteTitle = "Invitación auto"
+L.autoInviteTitle = "Autoinvitar"
 L.autoInviteDesc = "Invita automáticamente a jugadores a tu grupo cuando te susurran una palabra clave específica de la lista de abajo."
 L.yes = "Sí"
 L.no = "No"
