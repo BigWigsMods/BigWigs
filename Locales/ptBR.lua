@@ -300,8 +300,8 @@ L.sharing_window_title = "Compartilhar Configurações do Chefe"
 L.sharing_flags = "Configurações Gerais"
 L.sharing_flags_desc = "Importa configurações que controlam coisas como 'exibir barra', 'tocar som', 'exibir mensagem', etc.\nIsso cobre a maioria das caixas de seleção em configurações de habilidades."
 L.sharing_export_flags_desc = "Exporta configurações que controlam coisas como 'exibir barra', 'tocar som', 'exibir mensagem', etc.\nIsso cobre a maioria das caixas de seleção em configurações de habilidades."
---L.sharing_renames_desc = "Import the custom renames that are configured."
---L.sharing_export_renames_desc = "Export the custom renames that are configured."
+L.sharing_renames_desc = "Importa os nomes personalizados configurados."
+L.sharing_export_renames_desc = "Exporta os nomes personalizados configurados."
 L.sharing_sounds_desc = "Importa quais sons reproduzir para habilidades."
 L.sharing_export_sounds_desc = "Exporta quais sons reproduzir para habilidades."
 L.sharing_private_auras = "Auras Privadas"
@@ -627,10 +627,10 @@ L.settingsForOtherTargets = "Configurações para todos os outros alvos"
 -- LFGTimer.lua
 --
 
-L.lfgTimerTitle = "LFG Timer"
-L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
-L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
-L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "Temporizador de PG"
+L.lfgTimerExplainer = "Sempre que a janela da fila do Procurando Grupo aparecer, o BigWigs criará uma barra de temporizador indicando quanto tempo você tem para aceitar a fila.\n\n"
+L.lfgUseMaster = "Reproduzir som de PG pronto no canal de áudio 'Principal'"
+L.lfgUseMasterDesc = "Quando esta opção estiver ativada, o som de Procurando Grupo pronto será reproduzido no canal de áudio 'Principal'. Se desativar esta opção, ele será reproduzido no canal de áudio '%s'."
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -639,9 +639,9 @@ L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play 
 L.general = "Geral"
 L.advanced = "Avançado"
 L.comma = ", "
-L.reset = "Reiniciar"
-L.resetDesc = "Redefinir as configurações acima para seus valores padrões."
-L.resetAll = "Reiniciar tudo"
+L.reset = "Redefinir"
+L.resetDesc = "Redefine as configurações acima para seus valores padrões."
+L.resetAll = "Redefinir tudo"
 L.startTest = "Iniciar Teste"
 L.stopTest = "Parar Teste"
 L.always = "Sempre"
