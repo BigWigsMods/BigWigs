@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "esMX")
 if not L then return end
 
-L.tempRenameFeat = "Ahora puedes |cFF436EEErenombrar|r cualquier habilidad de jefe abriendo sus ajustes avanzados (>>) y haciendo clic en la pestaña de renombres."
+L.tempRenameFeat = "Ahora puedes |cFF436EEErenombrar|r cualquier habilidad de jefe abriendo sus ajustes avanzados (>>) y haciendo clic en la pestaña de renombres."1
 
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
