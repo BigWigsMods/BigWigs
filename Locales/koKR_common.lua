@@ -204,12 +204,12 @@ L.castTimerNote = "시전 타이머에만 사용될 텍스트"
 L.messageNote = "이 텍스트는 메시지에 사용됨"
 L.messageOnYouNote = "이 능력이 본인에게 적용되었을 때 표시되는 메시지"
 L.timerOnYouNote = "이 능력이 본인에게 적용되었을 때 타이머에 표시되는 텍스트"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
---L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
---L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+L.mythicOnlyNote = "이 텍스트는 신화 난이도에서만 사용됨"
+L.otherDifficultiesNote = "이 텍스트는 다른 모든 난이도에서 사용됨"
+L.intermissionOnly = "사잇단계 전용" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+L.stage1Only = "1단계 전용" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+L.stage2Only = "2단계 전용"
+L.stage3Only = "3단계 전용"
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
