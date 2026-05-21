@@ -14,7 +14,7 @@ mod:SetWorldModule(true)
 
 mod:SetRenames({
 	[1235131] = {CL.dodge, CL.extra:format(mod:SpellName(1235131), CL.dodge), notes = {CL.timerNote, CL.messageNote}}, -- Rootquake (Dodge)
-	[1243594] = {CL.format(CL.fixate), notes = {CL.messageOnYouNote}}, -- Fixate (Fixate)
+	[1243594] = {CL.you:format(CL.fixate), notes = {CL.messageOnYouNote}}, -- Fixate (Fixate)
 	[1235144] = {1235144}, -- War Club
 })
 
