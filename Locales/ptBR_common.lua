@@ -204,15 +204,15 @@ L.castTimerNote = "Este texto será usado apenas para temporizadores de lançame
 L.messageNote = "Este texto será usado para mensagens"
 L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você"
 L.timerOnYouNote = "O texto exibido no temporizador quando esta habilidade estiver em você"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
---L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
---L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+L.mythicOnlyNote = "Este texto será usado apenas no Mítico"
+L.otherDifficultiesNote = "Este texto será usado em todas as outras dificuldades"
+L.intermissionOnly = "Somente no Intervalo"
+L.stage1Only = "Somente no Estágio 1"
+L.stage2Only = "Somente no Estágio 2"
+L.stage3Only = "Somente no Estágio 3"
 
 -- Common ability name replacements
-L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
+L.absorb = "Absorção" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Absorção de Cura" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "Absorção de Cura" -- Plural of L.heal_absorb
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
@@ -259,7 +259,7 @@ L.spell_reflection = "Reflexão de Feitiço" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrow = "Flecha" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
 L.arrows = "Flechas" -- Plural of L.arrow
 L.ball = "Bola" -- A ball, like a football, basketball, etc
 L.balls = "Bolas" -- Plural of L.ball
