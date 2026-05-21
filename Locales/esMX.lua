@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "esMX")
 if not L then return end
 
---L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening its advanced settings (>>) and clicking the renames tab."
+L.tempRenameFeat = "Ahora puedes |cFF436EEErenombrar|r cualquier habilidad de jefe abriendo sus ajustes avanzados (>>) y haciendo clic en la pestaña de renombres."
 
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
@@ -146,7 +146,7 @@ L.configure = "Configurar"
 L.resetPositions = "Restablecer posiciones"
 L.selectEncounter = "Seleccionar encuentro"
 L.privateAuraSounds = "Sonidos de aura privada"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
+L.privateAuraSounds_desc = "Las auras privadas no se pueden rastrear de forma normal, pero puedes configurar un sonido para que se reproduzca cuando el perjuicio de la habilidad se te aplique."
 L.listAbilities = "Listar las habilidades en el chat"
 
 L.dbmFaker = "Fingir que estoy usando DBM"
@@ -224,12 +224,12 @@ L.healer = "|cFFFF0000Solo alertas para sanadores.|r "
 L.tankhealer = "|cFFFF0000Solo alertas para tanque y sanador.|r "
 L.dispeller = "|cFFFF0000Alertas para disipables únicamente.|r "
 
---L.renames = "Renames"
---L.noteLabel = "%s (|cFFFFFF99%s|r)"
---L.renameLabel = "%s (|cFF3366FF%s|r)"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
---L.spellName = "Spell Name"
---L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+L.renames = "Renombres"
+L.noteLabel = "%s (|cFFFFFF99%s|r)"
+L.renameLabel = "%s (|cFF3366FF%s|r)"
+L.renameHeader = "Establece un nombre personalizado para la facultad. Este texto se usará en lugar del nombre del hechizo en todos los mensajes y barras.\n\n"
+L.spellName = "Nombre del hechizo"
+L.spellNameResetDesc = "Esta facultad tiene un nombre personalizado por defecto, haz clic en este botón para usar el nombre original (normalmente el nombre del hechizo)."
 
 -- Sharing.lua
 L.import = "Importar"
@@ -300,8 +300,8 @@ L.sharing_window_title = "Compartir configuración del jefe"
 L.sharing_flags = "Configuración general"
 L.sharing_flags_desc = "Importa configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nCubren la mayoría de las casillas en la configuración de habilidades."
 L.sharing_export_flags_desc = "Exporta configuraciones que controlan cosas como 'mostrar barra', 'reproducir sonido', 'mostrar mensaje', etc.\nCubren la mayoría de las casillas en la configuración de habilidades."
---L.sharing_renames_desc = "Import the custom renames that are configured."
---L.sharing_export_renames_desc = "Export the custom renames that are configured."
+L.sharing_renames_desc = "Importa los renombres personalizados configurados."
+L.sharing_export_renames_desc = "Exporta los renombres personalizados configurados."
 L.sharing_sounds_desc = "Importa qué sonidos reproducir para las habilidades."
 L.sharing_export_sounds_desc = "Exporta qué sonidos reproducir para las habilidades."
 L.sharing_private_auras = "Auras privadas"
@@ -351,7 +351,7 @@ L.N25 = "Normal 25"
 L.H10 = "Heroico 10"
 L.H25 = "Heroico 25"
 L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
---L.mythic_flex = "Mythic (Flex)" -- Mythic (Flexible 15-25 player raids)
+L.mythic_flex = "Mítico (Flexible)" -- Mythic (Flexible 15-25 player raids)
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -361,8 +361,8 @@ L.tools = "Herramientas"
 L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calidad de vida\" para acelerar y simplificar el proceso de enfrentarte a los jefes."
 
 L.reloadUIWarning = "Cambiar esta función recargará tu interfaz, mostrando la pantalla de carga por un momento. ¿Estás seguro?"
---L.qualityOfLife = "Quality of Life"
---L.notYetImplemented = "Not Yet Implemented" -- When a feature hasn't been implemented yet
+L.qualityOfLife = "Calidad de vida"
+L.notYetImplemented = "Aún no implementado" -- When a feature hasn't been implemented yet
 
 -----------------------------------------------------------------------
 -- AutoInvite.lua
@@ -391,65 +391,65 @@ L.autoRoleExplainer = "Cuando te unas a un grupo o cambies tu especialización d
 --
 
 L.battleResTitle = "Res en Combate"
---L.battleResDesc = "An icon that shows how many battle resurrection charges are available and the time until another charge is gained."
---L.battleResDesc2 = "\nYour |cFF33FF99Battle Resurrection History|r can be viewed in the tooltip when you mouse over the icon.\nNote: The tooltip will only show when you are out of combat.\n\n"
---L.battleResHistory = "Battle Res History:"
---L.battleResResetAll = "Reset all the Battle Resurrection settings to their default values."
---L.battleResDurationText = "Duration Text"
---L.battleResChargesText = "Charges Text"
---L.battleResNoCharges = "0 charges available"
---L.battleResHasCharges = "1 or more charges available"
---L.battleResPlaySound = "Play a sound when a new charge is gained"
---L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Icon Texture (Spell ID)"
---L.iconTextureSpellIDError = "You must type a valid spell ID to use as the icon texture."
---L.battleResModeIcon = "Mode: Icon"
---L.battleResModeText = "Mode: Text Only"
---L.battleResModeTextTooltip = "Showing a temporary background to help you move the Battle Res feature and to see where the mouseover area is."
+L.battleResDesc = "Un icono que muestra cuántas cargas de resurrección en combate están disponibles y el tiempo hasta que se obtenga otra carga."
+L.battleResDesc2 = "\nTu |cFF33FF99Historial de resurrecciones en combate|r se puede ver en el tooltip al pasar el cursor sobre el icono.\nNota: El tooltip solo se mostrará cuando no estés en combate.\n\n"
+L.battleResHistory = "Historial de resurrecciones en combate:"
+L.battleResResetAll = "Restablece todos los ajustes de resurrección en combate a sus valores predeterminados."
+L.battleResDurationText = "Texto de duración"
+L.battleResChargesText = "Texto de cargas"
+L.battleResNoCharges = "0 cargas disponibles"
+L.battleResHasCharges = "1 o más cargas disponibles"
+L.battleResPlaySound = "Reproducir un sonido cuando se obtenga una nueva carga"
+L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Textura del icono (ID de hechizo)"
+L.iconTextureSpellIDError = "Debes escribir un ID de hechizo válido para usarlo como textura del icono."
+L.battleResModeIcon = "Modo: Icono"
+L.battleResModeText = "Modo: Solo texto"
+L.battleResModeTextTooltip = "Mostrando un fondo temporal para ayudarte a mover la función de resurrección en combate y ver dónde está el área de interacción del mouse."
 
 -----------------------------------------------------------------------
 -- CombatTimer.lua
 --
 
---L.combatTimerTitle = "Combat Timer"
---L.anyCombatTimer = "Any Combat Timer"
---L.anyCombatTimerDesc = "A timer that displays how long you've been in combat for, with a tooltip to see combat history."
---L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tCombat History"
---L.bossCombatTimer = "Boss Combat Timer"
---L.bossCombatTimerDesc = "A timer that displays how long you've been in combat with a boss encounter for, with a tooltip to see boss encounter history."
---L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Combat History"
---L.bossStagesTimer = "Boss Stages Timer"
---L.bossStagesTimerDesc = "A timer that resets every time a boss encounter changes stage, with a tooltip to see boss stage history. Only active on bosses with multiple stages."
---L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Stages History"
---L.instanceTimer = "Instance Timer"
---L.instanceTimerDesc = "A timer that displays how long you've been in an instance (dungeon/raid/etc) for, with a tooltip to see instance history."
---L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstance History"
+L.combatTimerTitle = "Temporizador de combate"
+L.anyCombatTimer = "Cualquier temporizador de combate"
+L.anyCombatTimerDesc = "Un temporizador que muestra cuánto tiempo has estado en combate, con un tooltip para ver el historial de combate."
+L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorial de combate"
+L.bossCombatTimer = "Temporizador de combate contra jefe"
+L.bossCombatTimerDesc = "Un temporizador que muestra cuánto tiempo has estado en combate con un jefe, con un tooltip para ver el historial del encuentro."
+L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorial de combate contra jefes"
+L.bossStagesTimer = "Temporizador de fases del jefe"
+L.bossStagesTimerDesc = "Un temporizador que se reinicia cada vez que un jefe cambia de fase, con un tooltip para ver el historial de fases. Solo está activo en jefes con múltiples fases."
+L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorial de fases del jefe"
+L.instanceTimer = "Temporizador de estancia"
+L.instanceTimerDesc = "Un temporizador que muestra cuánto tiempo has estado en una estancia (calabozo/banda/etc.), con un tooltip para ver el historial de la estancia."
+L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorial de estancias"
 
---L.backgroundColor = "Background Color"
---L.inactive = "Inactive"
---L.whenInactive = "When Inactive"
---L.doNothing = "Do Nothing"
---L.hide = "Hide"
---L.colorFade = "Color/Fade"
---L.inProgress = "In Progress"
---L.textFormat = "Text Format"
---L.tooltipHistoryMaxLines = "History: Max Lines"
---L.tooltipHistoryMaxLinesDesc = "Choose how many lines of history the tooltip should display."
---L.tooltipHistoryResetConditions = "History: Reset Conditions"
---L.tooltipHistoryResetConditionsDesc = "Choose any conditions for when the tooltip history should reset."
---L.enteringRaid = "Entering a raid"
---L.enteringDungeon = "Entering a dungeon"
---L.startingMythicKeystone = "Starting a Mythic+"
---L.historyTimeFormat = "History: Time Format"
---L.twelveHour = "12 Hour"
---L.twentyFourHour = "24 Hour"
---L.hideTooltipInCombat = "Hide Tooltip in Combat"
---L.customText = "Custom Text (Must Contain %s)"
+L.backgroundColor = "Color de fondo"
+L.inactive = "Inactivo"
+L.whenInactive = "Cuando está inactivo"
+L.doNothing = "No hacer nada"
+L.hide = "Ocultar"
+L.colorFade = "Color/Fundido"
+L.inProgress = "En progreso"
+L.textFormat = "Formato de texto"
+L.tooltipHistoryMaxLines = "Historial: Máximo de líneas"
+L.tooltipHistoryMaxLinesDesc = "Elige cuántas líneas de historial debe mostrar el tooltip."
+L.tooltipHistoryResetConditions = "Historial: Condiciones de reinicio"
+L.tooltipHistoryResetConditionsDesc = "Elige las condiciones para cuando el historial del tooltip debe reiniciarse."
+L.enteringRaid = "Entrando en una banda"
+L.enteringDungeon = "Entrando en una mazmorra"
+L.startingMythicKeystone = "Iniciando una piedra angular mítica"
+L.historyTimeFormat = "Historial: Formato de hora"
+L.twelveHour = "12 horas"
+L.twentyFourHour = "24 horas"
+L.hideTooltipInCombat = "Ocultar tooltip en combate"
+L.customText = "Texto personalizado (Debe contener %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
 
---L.keys = "Keys"
+L.keys = "Piedra angular"
 
 L.keystoneTitle = "BigWigs Piedras angulares"
 L.keystoneHeaderParty = "Grupo"
@@ -478,7 +478,7 @@ L.keystoneExplainer = "Una recolección de varias herramientas para mejorar la e
 L.keystoneAutoSlot = "Colocar piedra angular automáticamente"
 L.keystoneAutoSlotDesc = "Coloca tu piedra automáticamente en la ranura cuando abras la fuente de poder."
 L.keystoneAutoSlotMessage = "%s automáticamente colocada en la fuente de poder."
---L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Keystone Auto Inserted"
+L.keystoneAutoSlotFrame = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:14:14|t Piedra angular insertada automáticamente"
 L.keystoneModuleName = "Mítica+"
 L.keystoneStartBar = "%s +%d" -- Format is SHORT_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "ROOK +12"
 L.keystoneStartMessage = "¡%s +%d comienza ahora!" -- Format is LONG_DUNGEON_NAME +KEYSTONE_LEVEL e.g. "The Rookery +12 begins now!"
@@ -508,11 +508,11 @@ L.keystoneHistoryScoreThisWeekTooltip = "Puntaje total obtenido esta semana: |cF
 L.keystoneHistoryScoreOlderTooltip = "Puntaje total obtenido antes de esta semana: |cFFFFFFFF+%d|r"
 L.keystoneTimeUnder = "|cFF33FF99-%02d:%02d|r"
 L.keystoneTimeOver = "|cFFFF4411+%02d:%02d|r"
---L.keystoneTeleportTip = "Click the dungeon name below to |cFF33FF99TELEPORT|r directly to the dungeon entrance."
---L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aThis is a timerunning character." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
---L.keystoneSlashKeys = "Also register the |cFF33FF99/keys|r slash command"
---L.keystoneSlashKeystone = "Also register the |cFF33FF99/keystone|r slash command"
---L.unavailableWhilstInCombat = "Unavailable whilst in combat"
+L.keystoneTeleportTip = "Haz clic en el nombre del calabozo abajo para |cFF33FF99TELETRANSPORTARTE|r directamente a la entrada del calabozo."
+L.keystoneTimerunner = "|A:timerunning-glues-icon:14:14|aEste es un personaje de modo de carrera contra el tiempo." -- Note: Timerunning is a mode like "Legion Remix", it is NOT the same as Timewalking
+L.keystoneSlashKeys = "También registra el comando |cFF33FF99/keys|r"
+L.keystoneSlashKeystone = "También registra el comando |cFF33FF99/keystone|r"
+L.unavailableWhilstInCombat = "No disponible en combate"
 
 -- It doesn't really matter what you call it as long as it's recognizable and limited to ~6 characters
 L.keystoneShortName_TheRookery = "CORV"
@@ -599,38 +599,38 @@ L.instanceKeysShowAllDesc = "Al activar esta opción se mostrará siempre a todo
 L.instanceKeysOtherDungeonColor = "Otro color de calabozo"
 L.instanceKeysOtherDungeonColorDesc = "Escoge el color de la fuente para los jugadores que tienen piedras angulares que no pertenecen al calabozo en el que te encuentras."
 L.instanceKeysEndOfRunDesc = "Por defecto, la lista solo se mostrará cuando entres a un calabozo mítico. Activar esta opción también mostrará la lista cuando la Mítica+ termine."
---L.instanceKeysHideTitle = "Hide title"
---L.instanceKeysHideTitleDesc = "Hide the \"Who has a key?\" title."
+L.instanceKeysHideTitle = "Ocultar título"
+L.instanceKeysHideTitleDesc = "Oculta el título \"¿Quién tiene una llave?\"."
 
 -- Challenges UI Decoration
---L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tCalificación del grupo"
 L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
---L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFFSin datos|r |c%s(%s)|r"
 L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tTeletransporte"
 
 -- Progress %
---L.progressPercent = "Progress %"
---L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
---L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
---L.progressPercentTooltipText = {
---	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %s%%",
---	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %s%% (%d)",
---	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %s%% (%d/%d)",
---}
---L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
---L.progressCurrentPull = "Current Pull"
---L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
---L.settingsForCurrentTarget = "Settings for your current target"
---L.settingsForOtherTargets = "Settings for all other targets"
+L.progressPercent = "Progreso %"
+L.progressPercentDesc = "Herramientas para ayudarte a calcular cuánto progreso de Piedra angular mítica obtendrás por cada PNJ que mates."
+L.progressPercentTooltip = "Mostrar el % de progreso en los tooltips al pasar el cursor sobre PNJs enemigos"
+L.progressPercentTooltipText = {
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgreso: %s%%",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgreso: %s%% (%d)",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgreso: %s%% (%d/%d)",
+}
+L.progressPercentNameplate = "Mostrar % de progreso en placas de nombre de PNJ enemigos"
+L.progressCurrentPull = "Pull actual"
+L.progressCurrentPullDesc = "Muestra el progreso total que obtendrás del grupo actual de PNJ con los que estás en combate.\n\n¡AÚN NO FUNCIONAL!"
+L.settingsForCurrentTarget = "Ajustes para tu objetivo actual"
+L.settingsForOtherTargets = "Ajustes para otros objetivos"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
 
---L.lfgTimerTitle = "LFG Timer"
---L.lfgTimerExplainer = "Whenever the LFG queue popup appears, BigWigs will create a timer bar telling you how long you have to accept the queue.\n\n"
---L.lfgUseMaster = "Play LFG ready sound on 'Master' audio channel"
---L.lfgUseMasterDesc = "When this option is enabled the LFG ready sound will play over the 'Master' audio channel. If you disable this option it will play over the '%s' audio channel instead."
+L.lfgTimerTitle = "Temporizador de BG"
+L.lfgTimerExplainer = "Cada vez que aparezca la ventana emergente de la cola de Buscar Grupo, BigWigs creará una barra de temporizador que indica cuánto tiempo tienes para aceptar la cola.\n\n"
+L.lfgUseMaster = "Reproducir sonido de Buscar Grupo listo en el canal de audio 'Principal'"
+L.lfgUseMasterDesc = "Cuando esta opción está activada, el sonido de Buscar Grupo listo se reproducirá en el canal de audio 'Principal'. Si desactivas esta opción, se reproducirá en el canal de audio '%s' en su lugar."
 
 -----------------------------------------------------------------------
 -- PLUGINS
@@ -797,7 +797,7 @@ L.breakMinutes = "¡El descanso termina en %d |4minuto:minutos;!"
 L.breakSeconds = "¡El descanso termina en %d |4segundo:segundos;!"
 L.breakFinished = "¡El descanso ha terminado!"
 
---L.indicatorTitle = "Spell Indicators"
+L.indicatorTitle = "Indicadores de hechizos"
 L.indicatorType_Deadly = "Letal"
 L.indicatorType_Bleed = "Sangrado"
 L.indicatorType_Magic = "Mágica"
@@ -806,15 +806,15 @@ L.indicatorType_Tank = "Tanque"
 L.indicatorType_Healer = "Sanador"
 L.indicatorType_Damager = "Daño"
 
---L.spellIndicatorsPosition = "Spell Indicators Position"
---L.spellIndicatorsPositionDesc = "Choose where on the bar the spell indicators should be positioned."
---L.spellIndicatorsOffset = "Spell Indicators Offset"
---L.spellIndicatorSize = "Spell Indicator Size"
---L.spellIndicatorSizeDropdown_Large1 = "Large (1 indicator)"
---L.spellIndicatorSizeDropdown_Large2 = "Large (2 indicators)"
---L.spellIndicatorSizeDropdown_Large3 = "Large (3 indicators)"
---L.spellIndicatorSizeDropdown_Small4 = "Small (4 indicators)"
---L.spellIndicatorSizeDropdown_Small2 = "Small (2 indicators)"
+L.spellIndicatorsPosition = "Posición de los indicadores de hechizos"
+L.spellIndicatorsPositionDesc = "Elige en qué parte de la barra deben colocarse los indicadores de hechizos."
+L.spellIndicatorsOffset = "Desplazamiento de los indicadores de hechizos"
+L.spellIndicatorSize = "Tamaño de los indicadores de hechizos"
+L.spellIndicatorSizeDropdown_Large1 = "Grande (1 indicador)"
+L.spellIndicatorSizeDropdown_Large2 = "Grande (2 indicadores)"
+L.spellIndicatorSizeDropdown_Large3 = "Grande (3 indicadores)"
+L.spellIndicatorSizeDropdown_Small4 = "Pequeño (4 indicadores)"
+L.spellIndicatorSizeDropdown_Small2 = "Pequeño (2 indicadores)"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -962,8 +962,8 @@ L.outline = "Contorno"
 L.monochrome = "Monocromo"
 L.monochromeDesc = "Cambia a modo monocromático, eliminando cualquier suavizado de los bordes de la fuente."
 L.fontColor = "Color de la fuente"
---L.slugRendering = "Slug Rendering"
---L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
+L.slugRendering = "Renderizado de slug"
+L.slugRenderingDesc = "Las fuentes se renderizan usando la biblioteca slug. Esto a veces puede hacer que las fuentes se vean más nítidas en tamaños grandes, pero puede cambiar el tamaño del contorno. |cFF33FF99Consulta sluglibrary.com para más información.|r"
 
 L.displayTime = "Mostrar tiempo"
 L.displayTimeDesc = "Cuánto tiempo mostrará un mensaje, en segundos."
@@ -1066,34 +1066,34 @@ L.nameplateOptInWarning = "|cffff4411ADVERTENCIA!|r\n\nActivar el modo 'opcional
 -- PrivateAuras.lua
 --
 
---L.privateAuras = "Private Auras"
---L.privateAurasDesc1 = "'Private Auras' are a special type of debuff that addons cannot detect or perform any automation on. These debuffs are used by all modern boss encounters now.\n\n"
---L.privateAurasDesc2 = "BigWigs can help you keep track of when they are applied to you by displaying them as icons. |cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+L.privateAuras = "Auras privadas"
+L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
+L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como iconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
 
---L.createTestAura = "Create Test Aura"
---L.showDispelType = "Show Dispel Type Indicator"
---L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.\n\n|cffffd200Note: This is a global option for all private aura frames.|r"
---L.iconSize = "Icon Size"
---L.iconSpacing = "Icon Spacing"
---L.showCooldown = "Show Cooldown Spiral"
---L.showCooldownText = "Show Cooldown Text"
---L.cooldownTextScale = "Cooldown Text Scale"
---L.growthDirection = "Icon Growth Direction"
---L.aurasOnYou = "Auras On You"
---L.aurasOnYouDesc = "Customize the icons for auras that apply to you.\n\n"
---L.aurasOnAnother = "Auras On Another"
---L.aurasOnAnotherDesc = "Choose a specific player and then customize the icons for auras that apply to them.\n\n"
---L.chooseAPlayer = "Choose a player"
---L.theOtherTank = "Automatically find a tank"
---L.theOtherTankDesc = "Show private auras on the first tank in your group that isn't you. (Current: %s)"
---L.onlyWhenYouAreTank = "Only show when you are also a tank"
---L.playerInYourGroup = "A player in your group"
---L.maxIcons = "Max Icons"
---L.maxIconsDesc = "The maximum amount of icons to be displayed."
---L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
+L.createTestAura = "Crear aura de prueba"
+L.showDispelType = "Mostrar indicador de tipo de disipación"
+L.showDispelTypeDesc = "Muestra un icono en el marco de auras privadas si tiene un tipo de disipación.\n\n|cffffd200Nota: Esta es una opción global para todos los marcos de auras privadas.|r"
+L.iconSize = "Tamaño del icono"
+L.iconSpacing = "Espaciado de iconos"
+L.showCooldown = "Mostrar espiral de tiempo de reutilización"
+L.showCooldownText = "Mostrar texto de reutilización"
+L.cooldownTextScale = "Escala del texto de reutilización"
+L.growthDirection = "Dirección de crecimiento de iconos"
+L.aurasOnYou = "Auras sobre ti"
+L.aurasOnYouDesc = "Personaliza los iconos para las auras que se te aplican.\n\n"
+L.aurasOnAnother = "Auras sobre otro"
+L.aurasOnAnotherDesc = "Elige un jugador específico y luego personaliza los iconos para las auras que se le aplican.\n\n"
+L.chooseAPlayer = "Elige un jugador"
+L.theOtherTank = "Encontrar automáticamente un tanque"
+L.theOtherTankDesc = "Muestra las auras privadas en el primer tanque de tu grupo que no seas tú. (Actual: %s)"
+L.onlyWhenYouAreTank = "Mostrar solo cuando tú también eres tanque"
+L.playerInYourGroup = "Un jugador de tu grupo"
+L.maxIcons = "Máximo de iconos"
+L.maxIconsDesc = "La cantidad máxima de iconos que se mostrarán."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como iconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
 
---L.privateAurasTestAnchorText = "Private\nAura\n(%d)"
---L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
+L.privateAurasTestAnchorText = "Aura\nprivada\n(%d)"
+L.privateAurasTestTankAnchorText = "Aura\nde tanque\n(%d)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -1182,7 +1182,7 @@ L.privateaura = "Cuando un 'Aura Privada' esta sobre ti"
 L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del suministrado por el módulo."
 L.resetSoundDesc = "Restablece los sonidos anteriores a sus valores predeterminados."
 L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuentro con el jefe, este botón los restablecerá TODOS para que se usen los sonidos definidos aquí."
---L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
+L.soundResetPrint = "El módulo '|cFF436EEE%s|r' usa un sonido personalizado llamado '|cFF436EEE%s|r' que ya no existe. Restableciendo al valor predeterminado."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
@@ -1207,18 +1207,18 @@ L.newFastestVictoryPrint = "Nueva victoria más rápida: (-%s)" -- New fastest v
 -- Timeline.lua
 --
 
---L.timeline = "Timeline"
---L.blizzTimelineSettings = "Blizzard Timeline Settings"
---L.blizzTimelineSettingsNote = "|cffff4411These options just control the Blizzard settings and are here as a convenience.|r"
---L.enableBlizzTimeline = "Enable Blizz timeline"
---L.enableBlizzTimelineDesc = "This will show all boss encounter timers on the Blizzard timeline."
---L.show_bars = "Show Bars From"
---L.bigwigsEnhancedTimers = "BigWigs enhanced timers displayed as BigWigs bars |cFF33FF99(recommended)|r"
---L.blizzBasicAsBars = "Blizzard basic timers displayed as BigWigs bars"
---L.blizzBasicAsBlizzTimeline = "Blizzard basic timers displayed on the Blizzard timeline"
---L.developerMode = "Developer Mode"
---L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
---L.blizzTimelineEnhancedWarning = "WARNING!\n\nThe Blizzard timeline doesn't support BigWigs enhanced features. You will NOT get renamed spells and you will see inaccurate timers.\n\nAre you sure you want to enable it?"
+L.timeline = "Línea temporal"
+L.blizzTimelineSettings = "Ajustes de la línea temporal de Blizzard"
+L.blizzTimelineSettingsNote = "|cffff4411Estas opciones solo controlan los ajustes de Blizzard y están aquí como comodidad.|r"
+L.enableBlizzTimeline = "Activar línea temporal de Blizzard"
+L.enableBlizzTimelineDesc = "Esto mostrará todos los temporizadores de encuentros de jefes en la línea temporal de Blizzard."
+L.show_bars = "Mostrar barras de"
+L.bigwigsEnhancedTimers = "Temporizadores mejorados de BigWigs mostrados como barras de BigWigs |cFF33FF99(recomendado)|r"
+L.blizzBasicAsBars = "Temporizadores básicos de Blizzard mostrados como barras de BigWigs"
+L.blizzBasicAsBlizzTimeline = "Temporizadores básicos de Blizzard mostrados en la línea temporal de Blizzard"
+L.developerMode = "Modo desarrollador"
+L.enhancedModeWarning = "¡ADVERTENCIA!\n\nDesactivar el modo mejorado deshabilitará muchas funciones de BigWigs, incluyendo:\n\nColores de barras, renombres de hechizos, contadores, sonido/voz personalizado, cuentas regresivas, activación/desactivación de barras, mensajes adicionales, etc."
+L.blizzTimelineEnhancedWarning = "¡ADVERTENCIA!\n\nLa línea temporal de Blizzard no admite funciones mejoradas de BigWigs. NO verás hechizos renombrados y verás temporizadores inexactos.\n\n¿Seguro que quieres activarlo?"
 
 -----------------------------------------------------------------------
 -- Victory.lua
