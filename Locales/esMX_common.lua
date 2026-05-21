@@ -209,6 +209,7 @@ L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta facul
 L.thisOnly = "Solo %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 L.mythicOnlyNote = "Este texto se usará solo en Mítico"
 L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
+L.intermissionOnly = "Solo Intervalo" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
 L.stage1Only = "Solo Etapa 1"
 L.stage2Only = "Solo Etapa 2"
 L.stage3Only = "Solo Etapa 3"
