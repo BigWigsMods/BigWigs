@@ -161,7 +161,7 @@ function mod:GetOptions()
 		{ tabName = CL.stage:format(1), { "stages", 1253915, 1279420, 1249620, 1249609, 1251386, 1267049, 1284980, 1284931, } },
 		{ tabName = CL.intermission,    { "stages", 1282441, 1282469 } },
 		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, 1281194, } },
-		{ tabName = CL.stage:format(3), { "stages", "berserk", 1250898, 1266388, 1266897, 1267049, 1273158, 1276525, 1282441, } },
+		{ tabName = CL.stage:format(3), { "custom_select_limit_warnings", "stages", "berserk", 1250898, 1266388, 1266897, 1267049, 1273158, 1276525, 1282441, } },
 		[1253915] = -32197, -- Stage One: Final Tolls
 		[1284525] = -33638, -- Stage Two: The Dark Reactor
 		[1250898] = -33639, -- Stage Three: Midnight Falls
