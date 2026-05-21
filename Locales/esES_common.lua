@@ -198,17 +198,17 @@ L.autotalk_generic_desc = "Seleccionar automáticamente las opciones de diálogo
 L.autotalk_notice = "Interactuando automáticamente con el NPC %s."
 
 -- GUI notes for renames
---L.singular = "Singular"
---L.plural = "Plural"
---L.generalNote = "This is the text that will generally be used"
---L.timerNote = "This text will be used for timers"
---L.castTimerNote = "This text will only be used for cast timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
---L.thisOnly = "%s Only" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
+L.singular = "Singular"
+L.plural = "Plural"
+L.generalNote = "Este es el texto que se usará de forma general"
+L.timerNote = "Este texto se usará para los temporizadores"
+L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
+L.messageNote = "Este texto se usará para los mensajes"
+L.messageOnYouNote = "El mensaje que se muestra cuando esta facultad te afecta"
+L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta facultad te afecta"
+L.thisOnly = "Solo %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.mythicOnlyNote = "Este texto se usará solo en Mítico"
+L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
@@ -258,7 +258,7 @@ L.spell_reflection = "Reflejo de hechizos" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrow = "Flecha" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
 L.arrows = "Flechas" -- Plural of L.arrow
 L.ball = "Bola" -- A ball, like a football, basketball, etc
 L.balls = "Bolas" -- Plural of L.ball
@@ -291,20 +291,20 @@ L.whelps = "Crías" -- Plural of L.whelp
 L.curse = "Maldición" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Maldiciones" -- Plural of L.curse
 L.disease = "Enfermedad" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
---L.dispel = "Dispel" -- General term for any debuff that is dispellable
-L.dispels = "Disipar" -- Plural of L.dispel
+L.dispel = "Disipación" -- General term for any debuff that is dispellable
+L.dispels = "Disipaciones" -- Plural of L.dispel
 L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 
 -- Interrupt-related spell renames
---L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
+L.interrupts = "Interrupciones" -- General term used when a player needs to interrupt a spell being cast
 L.kick = "Patada" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
---L.kicks = "Kicks" -- Plural of L.kick
+L.kicks = "Patadas" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "Bomba de Tanque" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Debuff de Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal de Tanque" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_hit = "Golpe de Tanque"  -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_soak = "Soak de Tanque" -- Similar to L.soak but only applies to tanks
---L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.tank_grip = "Agarre al Tanque"-- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
