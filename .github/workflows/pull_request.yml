@@ -8,13 +8,17 @@ jobs:
 
     steps:
       - name: Checkout addon
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run luacheck
-        uses: BigWigsMods/actions/luacheck@master
+        uses: BigWigsMods/luacheck@main
         with:
           args: -q
 
       - name: Lint boss modules
         if: always()
-        run: lua gen_option_values.lua BigWigs.toc -n -q
+        uses: BigWigsMods/luacheck@main
+        with:
+          run_luacheck: false
+          custom_script: gen_option_values.lua
+          custom_args: -q -n BigWigs.toc

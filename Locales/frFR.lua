@@ -2,9 +2,14 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "frFR")
 if not L then return end
 
+L.tempRenameFeat = "Vous pouvez maintenant |cFF436EEErenommer|r n'importe quelle technique de boss en ouvrant ses paramètres avancés (>>) et cliquer sur l'onglet Renommer."
+
 -- API.lua
 L.showAddonBar = "L'addon '|cFF436EEE%s|r' a créé la barre '%s'."
 L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' vient de faire une copie de votre chaîne d'export de profil."
+L.shortMinutesAndSeconds = "%d min %d sec" -- 1 Minute 2 Seconds
+L.shortSecondsOnly = "%d sec" -- 28 Seconds
+L.shortSubTenSeconds = "%.1f sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -58,7 +63,6 @@ L.outOfDateAddOnPopup = "L'addon |cFF436EEE%s|r n'est pas à jour !"
 L.outOfDateAddOnRaidWarning = "L'addon |cFF436EEE%s|r n'est pas à jour ! Vous avez la v%d.%d.%d mais la dernière est v%d.%d.%d !"
 L.disabledAddOn = "L'addon |cFF436EEE%s|r est désactivé, les délais ne seront pas affichés."
 L.removeAddOn = "Veuillez enlever '|cFF436EEE%s|r' étant donné qu'il a été remplacé par '|cFF436EEE%s|r'."
-L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "ATTENTION !\nVous avez mis à jour |cFF436EEE%s|r mais vous avez également besoin de mettre à jour l'addon principal |cFF436EEEBigWigs|r.\nIgnorer cela empêchera le fonctionnement de certaines fonctionnalités."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r a besoin de la version %d de l'addon principal |cFF436EEEBigWigs|r afin de fonctionner correctement, mais vous êtes en version %d."
 L.addOnLoadFailedWithReason = "BigWigs a échoué à charger l'addon |cFF436EEE%s|r avec comme raison %q. Avertissez les développeurs de BigWigs !"
@@ -142,7 +146,7 @@ L.configure = "Configuration"
 L.resetPositions = "Réinitialiser les positions"
 L.selectEncounter = "Sélectionnez une rencontre"
 L.privateAuraSounds = "Sons privés d'aura"
-L.privateAuraSounds_desc = "Les auras privées ne peuvent être trackées normalement, mais vous pouvez enregistrer un son qui sera joué lorsque vous serez ciblé par la compétence."
+L.privateAuraSounds_desc = "Les auras privées ne peuvent être traquées normalement, mais vous pouvez paramétrer un son à jouer lorsque l'affaiblissement vous est appliqué."
 L.listAbilities = "Lister les techniques dans la discussion de groupe"
 
 L.dbmFaker = "Prétendre d'utiliser DBM"
@@ -220,6 +224,13 @@ L.healer = "|cFFFF0000Alertes pour soigneur uniquement.|r "
 L.tankhealer = "|cFFFF0000Alertes pour tank & soigneur uniquement.|r "
 L.dispeller = "|cFFFF0000Alertes pour dispeller uniquement.|r "
 
+L.renames = "Renommer"
+L.noteLabel = "%s (|cFFFFFF99%s|r)"
+L.renameLabel = "%s (|cFF3366FF%s|r)"
+L.renameHeader = "Paramètre un nom personnalisé pour la technique. Ce texte sera utilisé à la place du nom du sorts dans tous les messages et barres.\n\n"
+L.spellName = "Nom du sort"
+L.spellNameResetDesc = "Cette technique a un nom personnalisé par défaut, cliquez sur ce bouton pour utiliser le nom original (normallement, le nom du sort)."
+
 -- Sharing.lua
 L.import = "Importer"
 L.import_info = "Après avoir entré une chaîne, vous pouvez sélectionner quels paramètres vous souhaitez importer.\nSi les paramètres ne sont pas disponibles dans la chaîne d'import, ils ne seront pas sélectionnables.\n\n|cffff4411Cet import n'affectera que les paramètres généraux et non les paramètres spécifiques à chaque boss.|r"
@@ -280,12 +291,17 @@ L.battleres_settings_export_desc = "Exporte tous les paramètres de Battle Rez."
 L.imported_privateAuras_settings = "Paramètres des Auras Privées"
 L.privateAuras_settings_import_desc = "Importe tous les paramètres des Auras Privées."
 L.privateAuras_settings_export_desc = "Exporte tous les paramètres des Auras Privées."
+L.imported_combattimer_settings = "Paramètres de chrono de combat"
+L.combattimer_settings_import_desc = "Importe tous les paramètres du chrono de combat."
+L.combattimer_settings_export_desc = "Exporte tous les paramètres du chrono de combat."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Partage des paramètres de Boss"
 L.sharing_flags = "Paramètres généraux"
 L.sharing_flags_desc = "Paramètres d'import contrôlant des menus comme 'affiche une barre', 'joue un son', 'affiche un message' etc.\nCes paramètres couvrent la plupart des cases à cocher des paramètres d'une technique."
 L.sharing_export_flags_desc = "Paramètres d'export contrôlant des menus comme 'affiche une barre', 'joue un son', 'affiche un message' etc.\nCes paramètres couvrent la plupart des cases à cocher des paramètres d'une technique."
+--L.sharing_renames_desc = "Import the custom renames that are configured."
+--L.sharing_export_renames_desc = "Export the custom renames that are configured."
 L.sharing_sounds_desc = "Importe des sons à jouer pour les techniques."
 L.sharing_export_sounds_desc = "Export des sons à jouer pour les techniques."
 L.sharing_private_auras = "Auras Privées"
@@ -335,6 +351,7 @@ L.N25 = "25 joueurs"
 L.H10 = "Héroïque 10"
 L.H25 = "Héroïque 25"
 L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+L.mythic_flex = "Mythique (Flexible)" -- Mythic (Flexible 15-25 player raids)
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -344,7 +361,23 @@ L.tools = "Outils"
 L.toolsDesc = "BigWigs propose divers outils ou des fonctionnalités \"qualité de vie\" afin d'accélérer et simplifier les combats de boss."
 
 L.reloadUIWarning = "Changer cette fonctionnalité va recharger votre IU, affichant l'écran de chargement pendant un moment. Êtes-vous sûr(e) ?"
---L.qualityOfLife = "Quality of Life"
+L.qualityOfLife = "Qualité de vie"
+L.notYetImplemented = "Pas encore implémentée" -- When a feature hasn't been implemented yet
+
+-----------------------------------------------------------------------
+-- AutoInvite.lua
+--
+
+L.autoInviteTitle = "Auto Invitation"
+L.autoInviteDesc = "Invite automatiquement les joueurs à votre groupe, qui vous chuchote un mot-clef spécifique de la liste ci-dessous."
+L.yes = "Oui"
+L.no = "Non"
+L.addWords = "Ajouter des mots"
+L.removeWords = "Retirer des mots (Clic pour supprimer)"
+L.invalidWordWarning = "Le mot doit être en minuscule et non présent dans la liste."
+L.groupIsFullConvertToRaid = "Le groupe est plein. Convertir en raid ?"
+L.whisperToPlayerMyGroupIsFull = "[BigWigs] Mon groupe est maintenant complet."
+L.keywordDetectedInvitingPlayer = "Mot-clef détecté, invitation de %s."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -359,7 +392,7 @@ L.autoRoleExplainer = "Lorsque vous rejoignez un groupe, ou que vous changez de 
 
 L.battleResTitle = "Rés. de combat"
 L.battleResDesc = "Une icône qui vous affiche combien de charges de résurrection de combat sont disponibles ainsi que le temps avant qu'une autre charge soit gagnée."
-L.battleResDesc2 = "\nVotre |cFF33FF99Historique de Résurrection de combat|r peut être vu dans l'infobulle lorsque vous placez votre souris sur l'icône.\n\n"
+L.battleResDesc2 = "\nVotre |cFF33FF99Historique de Résurrection de combat|r peut être vu dans l'infobulle lorsque vous placez votre souris sur l'icône.\nNote : Cette infobule ne s'affichera que lorsque vous êtes hors combat.\n\n"
 L.battleResHistory = "Historique de Résurrection de combat :"
 L.battleResResetAll = "Réinitialiser tous les paramètres de Résurrection de combat à leurs paramètres par défaut."
 L.battleResDurationText = "Texte de durée"
@@ -372,11 +405,51 @@ L.iconTextureSpellIDError = "Vous devez entrer un ID de sort valide pour l'utili
 L.battleResModeIcon = "Mode : Icône"
 L.battleResModeText = "Mode : Texte seulement"
 L.battleResModeTextTooltip = "Montre un arrière-plan temporaire pour vous aider à déplacer la fonctionnalité de Résurrection de combat et voir la zone de survol avec la souris."
-L.battleResNoteTooltip = "Note : Cette infobule ne s'affichera que lorsque vous êtes hors combat."
+
+-----------------------------------------------------------------------
+-- CombatTimer.lua
+--
+
+L.combatTimerTitle = "Chrono de combat"
+L.anyCombatTimer = "N'importe quel chrono de combat"
+L.anyCombatTimerDesc = "Un chrono qui affiche depuis combien de temps vous êtes en combat, avec une bulle d'aide pour voir l'historique de combat."
+L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique de combat"
+L.bossCombatTimer = "Chrono de combat de Boss"
+L.bossCombatTimerDesc = "Un chrono qui affiche depuis combien de temps vous êtes en rencontre de boss, avec une bulle d'aide pour voir l'historique de combat du boss."
+L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique de combat de boss"
+L.bossStagesTimer = "Chrono de Phases de Boss"
+L.bossStagesTimerDesc = "Un chronomètre qui se réinitialise à chaque fois que le boss change de phase, avec une bulle d'aide pour voir l'historique des phases du boss. Seulement actif sur les boss ayant plusieurs phases."
+L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique des Phases de Boss"
+L.instanceTimer = "Chrono d'instance"
+L.instanceTimerDesc = "Un chrono qui affiche depuis combien de temps vous êtes en instance (donjon / raid / etc), avec une bulle d'aide pour voir l'historique de l'instance."
+L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique d'instance"
+
+L.backgroundColor = "Couleur d'arrière-plan"
+L.inactive = "Inactif"
+L.whenInactive = "Lorsqu'inactif"
+L.doNothing = "Ne rien faire"
+L.hide = "Cacher"
+L.colorFade = "Couleur / Fondu"
+L.inProgress = "En cours"
+L.textFormat = "Format du texte"
+L.tooltipHistoryMaxLines = "Historique : Lignes max"
+L.tooltipHistoryMaxLinesDesc = "Détermine combien de ligne d'historique la bulle d'aide doit afficher."
+L.tooltipHistoryResetConditions = "Historique : Réinitialiser les conditions"
+L.tooltipHistoryResetConditionsDesc = "Détermine quelles conditions réunir pour réinitialiser l'historique de la bulle d'aide."
+L.enteringRaid = "Rentre en raid"
+L.enteringDungeon = "Rentre en donjon"
+L.startingMythicKeystone = "Commence un mythique +"
+L.historyTimeFormat = "Historique : Format d'heure"
+L.twelveHour = "12 Heures"
+L.twentyFourHour = "24 Heures"
+L.hideTooltipInCombat = "Cacher la bulle d'aide en combat"
+L.customText = "Texte personnalisé (Doit contenir %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
+
+L.keys = "Clefs"
 
 L.keystoneTitle = "BigWigs clefs mythique +"
 L.keystoneHeaderParty = "Groupe"
@@ -529,6 +602,27 @@ L.instanceKeysEndOfRunDesc = "Par défaut, la liste ne s'affichera que si vous �
 L.instanceKeysHideTitle = "Cacher le titre"
 L.instanceKeysHideTitleDesc = "Cacher le titre \"Qui a une clef ?\"."
 
+-- Challenges UI Decoration
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tCote du groupe"
+L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFFPas de données|r |c%s(%s)|r"
+L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tTéléportation"
+
+-- Progress %
+L.progressPercent = "Progrès %"
+L.progressPercentDesc = "Outils qui vous aident à calculer le progrès en mythique + que vous gagnerez sur chaque PNJ que vous tuerez."
+L.progressPercentTooltip = "Affiche le progrès en % dans la bulle d'aide lorsque vous survolez un PNJ ennemi"
+L.progressPercentTooltipText = {
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgrès : %s%%",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgrès : %s%% (%d)",
+	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgrès : %s%% (%d/%d)",
+}
+L.progressPercentNameplate = "Affiche le progrès en % sur les barres d'infos des PNJ ennemis"
+L.progressCurrentPull = "Combat actuel"
+L.progressCurrentPullDesc = "Affiche le progrès total que vous gagnerez sur le groupe de PNJ ennemis que vous combattez actuellement.\n\nPAS ENCORE IMPLÉMENTÉ !"
+L.settingsForCurrentTarget = "Paramètres pour votre cible actuelle"
+L.settingsForOtherTargets = "Paramètres pour les autres cibles"
+
 -----------------------------------------------------------------------
 -- LFGTimer.lua
 --
@@ -557,6 +651,8 @@ L.positionX = "Position X"
 L.positionY = "Position Y"
 L.positionExact = "Positionnement exact"
 L.positionDesc = "Tapez dans la saisie ou déplacez le curseur si vous avez besoin d'un positionnement exact par rapport à l'ancre."
+L.copyCustomAnchorWidth = "Copier la largeur de l'ancre personnalisée"
+L.copyCustomAnchorWidthDesc = "Écrase votre paramètre de largeur avec la largeur de l'ancre personnalisée."
 L.width = "Largeur"
 L.height = "Hauteur"
 L.size = "Taille"
@@ -580,7 +676,7 @@ L.TOPLEFT = "En haut à gauche"
 L.BOTTOMRIGHT = "En bas à droite"
 L.BOTTOMLEFT = "En bas à gauche"
 L.CENTER = "Centre"
-L.customAnchorPoint = "Avancé : point d'ancrage personnalisé"
+L.customAnchorPoint = "Avancé : point d'ancrage personnalisé"
 L.sourcePoint = "Point source"
 L.destinationPoint = "Point destination"
 L.drawStrata = "Couches"
@@ -670,6 +766,8 @@ L.icon = "Icône"
 L.iconDesc = "Afficher ou non les icônes des barres."
 L.iconPosition = "Position de l'icône"
 L.iconPositionDesc = "Définit où l'icône est positionnée sur la barre."
+L.iconTooltip = "Bulle d'aide d'icône"
+L.iconTooltipDesc = "Affiche une bulle d'aide lorsque vous survolez l'icône, avec des informations sur la compétence du boss."
 L.font = "Police d'écriture"
 L.restart = "Relancer"
 L.restartDesc = "Relance les barres mises en évidence afin qu'elles commencent du début."
@@ -864,6 +962,8 @@ L.outline = "Contour"
 L.monochrome = "Monochrome"
 L.monochromeDesc = "Active ou non le marqueur monochrome, enlevant tout lissage des bords de la police d'écriture."
 L.fontColor = "Couleur de police"
+L.slugRendering = "Rendu avec Slug"
+L.slugRenderingDesc = "Les polices sont interprétées en utilisant la bibliothèque Slug. Cela peut parfois rendre les polices plus nettes à certaines tailles, mais cela peut changer la taille du contour. |cFF33FF99Vérifiez sluglibrary.com pour plus d'info.|r"
 
 L.displayTime = "Durée d'affichage"
 L.displayTimeDesc = "Définit pendant combien de temps un message doit rester affiché (en secondes)."
@@ -982,7 +1082,7 @@ L.growthDirection = "Direction des icônes"
 L.aurasOnYou = "Auras sur vous"
 L.aurasOnYouDesc = "Customise les icônes des auras qui s'appliquent à vous.\n\n"
 L.aurasOnAnother = "Auras sur les autres"
-L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et customisez les icônes des auras s'appliquant à lui.\n\n"
+L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et personnalisez les icônes des auras s'appliquant à lui.\n\n"
 L.chooseAPlayer = "Choisissez un joueur"
 L.theOtherTank = "Cherche automatiquement un tank"
 L.theOtherTankDesc = "Afficher les auras privées sur le premier tank de votre groupe n'étant pas vous. (Actuel : %s)"
@@ -1082,6 +1182,7 @@ L.privateaura = "Lorsqu'une 'aura privée' est sur vous"
 L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module."
 L.resetSoundDesc = "Réinitialise les sons ci-dessous à leurs valeurs par défaut."
 L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
+L.soundResetPrint = "Le module '|cFF436EEE%s|r' utilise un son personnalisé appelé '|cFF436EEE%s|r' qui n'existe plus. Réinitialisation par défaut."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
@@ -1116,6 +1217,8 @@ L.bigwigsEnhancedTimers = "CàR enrichis de BigWigs affichés en tant que barres
 L.blizzBasicAsBars = "CàR classiques de Blizzard affichés en tant que barres de BigWigs"
 L.blizzBasicAsBlizzTimeline = "CàR classiques de Blizzard affichés sur la ligne temporelle de Blizzard"
 L.developerMode = "Mode développeur"
+L.enhancedModeWarning = "ATTENTION !\n\nDésactiver le mode avancé désactivera beaucoup de fonctionnalités de BigWigs, incluant :\n\nles couleurs de barres, le renommage des sorts, les contres, les sons / voix personnalisées, les CàR, l'activation des barres, les messages supplémentaires, etc."
+L.blizzTimelineEnhancedWarning = "ATTENTION !\n\nLa ligne temporelle de Blizzard ne supporte pas les fonctionnalités avancées de Bigwigs. Vous n'aurez PAS les sorts renommés, et vous verrez des CàR imprécis.\n\nÊtes-vous sûr de vouloir l'activer ?"
 
 -----------------------------------------------------------------------
 -- Victory.lua

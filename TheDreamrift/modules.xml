@@ -2,8 +2,6 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Chimaerus.lua"/>
-
-<Include file="Locales\locales.xml"/>
 <Script file="!Options.lua"/>
 
 </Ui>

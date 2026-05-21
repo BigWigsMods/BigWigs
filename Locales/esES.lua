@@ -2,9 +2,14 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "esES")
 if not L then return end
 
+--L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening its advanced settings (>>) and clicking the renames tab."
+
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
 L.requestAddonProfile = "El addon '|cFF436EEE%s|r' acaba de crear una copia de cadena de exportación de tu perfil."
+--L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
+--L.shortSecondsOnly = "%d Sec" -- 28 Seconds
+--L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
 
 -- Core.lua
 L.berserk = "Rabia"
@@ -58,7 +63,6 @@ L.outOfDateAddOnPopup = "El addon |cFF436EEE%s|r está desactualizado!"
 L.outOfDateAddOnRaidWarning = "El addon |cFF436EEE%s|r está desactualizado. Tienes v%d.%d.%d la última es v%d.%d.%d!"
 L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostrarán."
 L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
-L.alternativeName = "%s (|cFF436EEE%s|r)"
 L.outOfDateContentPopup = "¡ADVERTENCIA!\nHas actualizado |cFF436EEE%s|r pero también necesitas actualizar el addon principal |cFF436EEEBigWigs|r.\nIgnorar esto resultará en un mal funcionamiento."
 L.outOfDateContentRaidWarning = "|cFF436EEE%s|r requiere la versión %d del addon principal |cFF436EEEBigWigs|r para funcionar correctamente, pero estás en la versión %d."
 L.addOnLoadFailedWithReason = "BigWigs falló al cargar el addon |cFF436EEE%s|r por razones %q. ¡Avisa a los desarrolladores de BigWigs!"
@@ -142,7 +146,7 @@ L.configure = "Configurar"
 L.resetPositions = "Reiniciar posiciones"
 L.selectEncounter = "Seleccionar encuentro"
 L.privateAuraSounds = "Sonidos de Aura Privada"
-L.privateAuraSounds_desc = "Las auras privadas no pueden ser rastreadas normalmente, pero puedes configurar un sonido para que se reproduzca cuando seas el objetivo de la habilidad."
+--L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
 L.listAbilities = "Listar las habilidades en el chat de grupo"
 
 L.dbmFaker = "Fingir que estoy usando DBM"
@@ -220,6 +224,13 @@ L.healer = "|cFFFF0000Solo alertas para sanadores.|r "
 L.tankhealer = "|cFFFF0000Solo alertas para tanque y sanador.|r "
 L.dispeller = "|cFFFF0000Solo alertas para disipadores.|r "
 
+--L.renames = "Renames"
+--L.noteLabel = "%s (|cFFFFFF99%s|r)"
+--L.renameLabel = "%s (|cFF3366FF%s|r)"
+--L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
+--L.spellName = "Spell Name"
+--L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+
 -- Sharing.lua
 L.import = "Importar"
 L.import_info = "Después de ingresar el código de importación, puedes seleccionar qué configuraciones te gustaría importar.\nSi las configuraciones no están disponibles en el código de importación, no serán seleccionables.\n\n|cffff4411Esta importación solo afectará las configuraciones generales y no afectará las configuraciones específicas del jefe.|r"
@@ -280,12 +291,17 @@ L.battleres_settings_export_desc = "Exporta todas las opciones de Battle Res."
 L.imported_privateAuras_settings = "Configuración de Auras Privadas"
 L.privateAuras_settings_import_desc = "Importa toda la configuración de Auras Privadas."
 L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras Privadas."
+--L.imported_combattimer_settings = "Combat Timer Settings"
+--L.combattimer_settings_import_desc = "Import all Combat Timer settings."
+--L.combattimer_settings_export_desc = "Export all Combat Timer settings."
 
 -- InstanceSharing.lua
 --L.sharing_window_title = "Share Boss Settings"
 --L.sharing_flags = "General Settings"
 --L.sharing_flags_desc = "Import settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
 --L.sharing_export_flags_desc = "Export settings which control things like 'show bar', 'play sound', 'show message' etc.\nThese cover most checkboxes in an abilities settings."
+--L.sharing_renames_desc = "Import the custom renames that are configured."
+--L.sharing_export_renames_desc = "Export the custom renames that are configured."
 --L.sharing_sounds_desc = "Import which sounds to play for abilities."
 --L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
 L.sharing_private_auras = "Auras privadas"
@@ -335,6 +351,7 @@ L.N25 = "Normal 25"
 L.H10 = "Heroico 10"
 L.H25 = "Heroico 25"
 L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
+--L.mythic_flex = "Mythic (Flex)" -- Mythic (Flexible 15-25 player raids)
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -345,6 +362,22 @@ L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calida
 
 L.reloadUIWarning = "Cambiar esta función recargará la interfaz, mostrando la pantalla de carga por un momento. ¿Estás seguro?"
 --L.qualityOfLife = "Quality of Life"
+--L.notYetImplemented = "Not Yet Implemented" -- When a feature hasn't been implemented yet
+
+-----------------------------------------------------------------------
+-- AutoInvite.lua
+--
+
+--L.autoInviteTitle = "Auto Invite"
+--L.autoInviteDesc = "Automatically invite players to your group when they whisper you a specific keyword from the list below."
+--L.yes = "Yes"
+--L.no = "No"
+--L.addWords = "Add Words"
+--L.removeWords = "Remove Words (Click To Delete)"
+--L.invalidWordWarning = "Word must be lowercase and not already in the list."
+--L.groupIsFullConvertToRaid = "Group is full. Convert to raid?"
+--L.whisperToPlayerMyGroupIsFull = "[BigWigs] My group is now full."
+--L.keywordDetectedInvitingPlayer = "Keyword detected, inviting %s."
 
 -----------------------------------------------------------------------
 -- AutoRole.lua
@@ -359,7 +392,7 @@ L.autoRoleExplainer = "Cuando te unas a un grupo o cambies tu especialización d
 
 L.battleResTitle = "Battle res"
 L.battleResDesc = "Un icono que muestra cuántas cargas de resurrección en combate hay disponibles y el tiempo para conseguir otra carga."
-L.battleResDesc2 = "\nTu |cFF33FF99Historial de resurrección en combate|r puede verse en la ventana de opciones cuando pases el ratón por encima del icono.\n\n"
+L.battleResDesc2 = "\nTu |cFF33FF99Historial de resurrección en combate|r puede verse en la ventana de opciones cuando pases el ratón por encima del icono.\nAviso: Esta ventana de opciones solo se mostrará al estar fuera de combate.\n\n"
 L.battleResHistory = "Battle res historial:"
 L.battleResResetAll = "Reinicia todas las opciones de resurrección en combate a sus valores predeterminados."
 L.battleResDurationText = "Duración del texto"
@@ -372,11 +405,51 @@ L.iconTextureSpellIDError = "Tienes que introducir un ID de hechizo válido para
 L.battleResModeIcon = "Modo: Icono"
 L.battleResModeText = "Modo: Solo texto"
 L.battleResModeTextTooltip = "Mostrar un fondo temporal para ayudar a mover la opción de Battle res y para ver el área del ratón."
-L.battleResNoteTooltip = "Aviso: Esta ventana de opciones solo se mostrará al estar fuera de combate."
+
+-----------------------------------------------------------------------
+-- CombatTimer.lua
+--
+
+--L.combatTimerTitle = "Combat Timer"
+--L.anyCombatTimer = "Any Combat Timer"
+--L.anyCombatTimerDesc = "A timer that displays how long you've been in combat for, with a tooltip to see combat history."
+--L.anyCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tCombat History"
+--L.bossCombatTimer = "Boss Combat Timer"
+--L.bossCombatTimerDesc = "A timer that displays how long you've been in combat with a boss encounter for, with a tooltip to see boss encounter history."
+--L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Combat History"
+--L.bossStagesTimer = "Boss Stages Timer"
+--L.bossStagesTimerDesc = "A timer that resets every time a boss encounter changes stage, with a tooltip to see boss stage history. Only active on bosses with multiple stages."
+--L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Stages History"
+--L.instanceTimer = "Instance Timer"
+--L.instanceTimerDesc = "A timer that displays how long you've been in an instance (dungeon/raid/etc) for, with a tooltip to see instance history."
+--L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstance History"
+
+--L.backgroundColor = "Background Color"
+--L.inactive = "Inactive"
+--L.whenInactive = "When Inactive"
+--L.doNothing = "Do Nothing"
+--L.hide = "Hide"
+--L.colorFade = "Color/Fade"
+--L.inProgress = "In Progress"
+--L.textFormat = "Text Format"
+--L.tooltipHistoryMaxLines = "History: Max Lines"
+--L.tooltipHistoryMaxLinesDesc = "Choose how many lines of history the tooltip should display."
+--L.tooltipHistoryResetConditions = "History: Reset Conditions"
+--L.tooltipHistoryResetConditionsDesc = "Choose any conditions for when the tooltip history should reset."
+--L.enteringRaid = "Entering a raid"
+--L.enteringDungeon = "Entering a dungeon"
+--L.startingMythicKeystone = "Starting a Mythic+"
+--L.historyTimeFormat = "History: Time Format"
+--L.twelveHour = "12 Hour"
+--L.twentyFourHour = "24 Hour"
+--L.hideTooltipInCombat = "Hide Tooltip in Combat"
+--L.customText = "Custom Text (Must Contain %s)"
 
 -----------------------------------------------------------------------
 -- Keystones.lua
 --
+
+--L.keys = "Keys"
 
 L.keystoneTitle = "BigWigs Piedras angulares"
 L.keystoneHeaderParty = "Grupo"
@@ -468,7 +541,7 @@ L.keystoneShortName_VaultOfTheWardens = "VOTW"
 L.keystoneShortName_ReturnToKarazhanLower = "LKARA"
 L.keystoneShortName_ReturnToKarazhanUpper = "UKARA"
 L.keystoneShortName_CathedralOfEternalNight = "COEN"
-L.keystoneShortName_SeatOfTheTriumvirate = "SOTT"
+L.keystoneShortName_SeatOfTheTriumvirate = "SEAT"
 --L.keystoneShortName_WindrunnerSpire = "SPIRE"
 --L.keystoneShortName_MagistersTerrace = "MT"
 --L.keystoneShortName_MaisaraCaverns = "CAVERN"
@@ -505,7 +578,7 @@ L.keystoneShortName_VaultOfTheWardens_Bar = "Celadoras"
 L.keystoneShortName_ReturnToKarazhanLower_Bar = "Kara inferior"
 L.keystoneShortName_ReturnToKarazhanUpper_Bar = "Kara superior"
 L.keystoneShortName_CathedralOfEternalNight_Bar = "Catedral"
-L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Triunvirato"
+--L.keystoneShortName_SeatOfTheTriumvirate_Bar = "Seat"
 --L.keystoneShortName_WindrunnerSpire_Bar = "Spire"
 --L.keystoneShortName_MagistersTerrace_Bar = "Terrace"
 --L.keystoneShortName_MaisaraCaverns_Bar = "Caverns"
@@ -528,6 +601,27 @@ L.instanceKeysOtherDungeonColorDesc = "Escoge el color para los jugadores que te
 L.instanceKeysEndOfRunDesc = "Por defecto la lista se mostrará cuando entres a una mazmorra mítica. Al activar esta opción también aparecerá la lista cuando termine la Mítica+."
 L.instanceKeysHideTitle = "Esconder título"
 L.instanceKeysHideTitleDesc = "Esconder el título \"¿Quién tiene la piedra?\"."
+
+-- Challenges UI Decoration
+--L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s(%s)|r"
+--L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tTeletransporte"
+
+-- Progress %
+--L.progressPercent = "Progress %"
+--L.progressPercentDesc = "Tools to help you calculate how much Mythic+ progress you will gain from each NPC you kill."
+--L.progressPercentTooltip = "Show progress % in tooltips when mousing over enemy NPCs"
+--L.progressPercentTooltipText = {
+--	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %s%%",
+--	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %s%% (%d)",
+--	"|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tProgress: %s%% (%d/%d)",
+--}
+--L.progressPercentNameplate = "Show progress % on nameplates of enemy NPCs"
+--L.progressCurrentPull = "Current Pull"
+--L.progressCurrentPullDesc = "Show total progress you will gain from the current group of NPCs you are in combat with.\n\nNOT YET FUNCTIONAL!"
+--L.settingsForCurrentTarget = "Settings for your current target"
+--L.settingsForOtherTargets = "Settings for all other targets"
 
 -----------------------------------------------------------------------
 -- LFGTimer.lua
@@ -557,6 +651,8 @@ L.positionX = "Posición X"
 L.positionY = "Posición Y"
 L.positionExact = "Posicionamiento preciso"
 L.positionDesc = "Introduce o mueve el deslizador si necesitas posicionar de manera precisa desde el anclaje."
+--L.copyCustomAnchorWidth = "Copy Custom Anchor Width"
+--L.copyCustomAnchorWidthDesc = "Overwrite your width setting with the width of the custom anchor."
 L.width = "Ancho"
 L.height = "Alto"
 L.size = "Tamaño"
@@ -670,6 +766,8 @@ L.icon = "Icono"
 L.iconDesc = "Muestra u oculta los iconos de las barras."
 L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige en qué parte de la barra debe colocarse el icono."
+--L.iconTooltip = "Icon Tooltip"
+--L.iconTooltipDesc = "Show a tooltip when you mouse over the icon with information about the boss ability."
 L.font = "Fuente"
 L.restart = "Reiniciar"
 L.restartDesc = "Reinicia las barras enfatizadas para que empiecen desde el principio y cuenten desde 10."
@@ -864,6 +962,8 @@ L.outline = "Contorno"
 L.monochrome = "Monocromo"
 L.monochromeDesc = "Activa la opción monocromo, eliminando el suavizado de los bordes de la fuente."
 L.fontColor = "Color de la fuente"
+--L.slugRendering = "Slug Rendering"
+--L.slugRenderingDesc = "Fonts are rendered using the slug library. This can sometimes make fonts look sharper at large sizes, but can change the size of the outline. |cFF33FF99See sluglibrary.com for more info.|r"
 
 L.displayTime = "Mostrar tiempo"
 L.displayTimeDesc = "Cuánto tiempo mostrar un mensaje, en segundos"
@@ -1082,6 +1182,7 @@ L.privateaura = "Siempre que tengas una 'Aura Privada'"
 L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del proporcionado por el módulo."
 L.resetSoundDesc = "Restablece los sonidos anteriores a sus valores predeterminados."
 L.resetAllCustomSound = "Si has personalizado sonidos para algún encuentro con jefes, este botón los reiniciará TODOS para que se utilicen los sonidos definidos aquí."
+--L.soundResetPrint = "The module '|cFF436EEE%s|r' uses a custom sound called '|cFF436EEE%s|r' that no longer exists. Resetting to default."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
@@ -1116,6 +1217,8 @@ L.newFastestVictoryPrint = "Nuevo registro victoria más rápida: (-%s)" -- New 
 --L.blizzBasicAsBars = "Blizzard basic timers displayed as BigWigs bars"
 --L.blizzBasicAsBlizzTimeline = "Blizzard basic timers displayed on the Blizzard timeline"
 --L.developerMode = "Developer Mode"
+--L.enhancedModeWarning = "WARNING!\n\nDisabling enhanced mode will disable many BigWigs features, including:\n\nBar colors, spell renames, counters, custom sound/voice, countdowns, bars on/off, extra messages, etc."
+--L.blizzTimelineEnhancedWarning = "WARNING!\n\nThe Blizzard timeline doesn't support BigWigs enhanced features. You will NOT get renamed spells and you will see inaccurate timers.\n\nAre you sure you want to enable it?"
 
 -----------------------------------------------------------------------
 -- Victory.lua

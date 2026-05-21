@@ -6,6 +6,7 @@ exclude_files = {
 }
 files["API.lua"].ignore = {
 	"113/C_AddOns",
+	"113/C_UIFileAsset",
 	"112/SlashCmdList",
 }
 files["Init_Vanilla.lua"].ignore = {
@@ -21,7 +22,9 @@ files["Loader.lua"].ignore = {
 	"113/geterrorhandler",
 
 	"113/Ambiguate",
+	"113/BNSendWhisper", -- XXX temp
 	"113/C_AddOns",
+	"113/C_BattleNet",
 	"113/C_ChatInfo",
 	"113/C_CVar",
 	"113/C_Item",
@@ -37,8 +40,8 @@ files["Loader.lua"].ignore = {
 	"113/IsSpellKnown", -- XXX temp
 	"113/IsPublicTestClient",
 	"113/PlaySoundFile",
+	"113/print",
 	"113/securecallfunction",
-	"113/SendChatMessage", -- XXX temp
 	"113/SetRaidTarget",
 	"113/TimerTracker",
 	"113/UnitDetailedThreatSituation",
@@ -59,12 +62,15 @@ files["Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 }
 files["Core/BossPrototype.lua"].ignore = {
+	"113/C_ChatInfo",
+	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetInventoryItemID", -- Vanilla interrupt check (warrior shield check)
 	"113/GetNumGroupMembers",
+	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",
 	"113/PlayerIsTimerunning",
 	"113/Transcriptor",
@@ -73,15 +79,18 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
 files["Core/BossPrototype_Classic.lua"].ignore = {
+	"113/C_ChatInfo",
+	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
+	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",
-	"113/PlayerIsTimerunning",
 	"113/GetTalentInfo",
 	"113/GetTalentTabInfo",
+	"113/PlayerIsTimerunning",
 	"113/Transcriptor",
 	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
@@ -89,9 +98,11 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 }
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
-	"113/geterrorhandler",
-	"113/UnitIsCorpse",
 	"113/C_CVar",
+	"113/C_UnitAuras",
+	"113/geterrorhandler",
+	"113/print",
+	"113/UnitIsCorpse",
 }
 files["Core/PluginPrototype.lua"].ignore = {
 	"113/GetNumGroupMembers",
@@ -104,14 +115,12 @@ files["Plugins/AltPower.lua"].ignore = {
 files["Plugins/AutoReply.lua"].ignore = {
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
-	"113/BNSendWhisper",
 	"113/C_BattleNet",
 	"113/C_FriendList",
 	"113/IsGuildMember",
 }
 files["Plugins/Bars.lua"].ignore = {
 	"113/C_Spell",
-	"113/C_EncounterTimeline",
 }
 files["Plugins/BattleRes.lua"].ignore = {
 	"113/C_ClassColor",
@@ -160,7 +169,6 @@ files["Plugins/PrivateAuras.lua"].ignore = {
 	"113/AuraUtil",
 	"113/C_UnitAuras",
 	"113/C_Spell",
-	"113/SecondsToTimeAbbrev",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitInPartyIsAI",
 }
@@ -171,6 +179,7 @@ files["Plugins/Proximity.lua"].ignore = {
 	"113/UnitInPhase", -- Classic support
 }
 files["Plugins/Pull.lua"].ignore = {
+	"113/C_ChatInfo",
 	"113/ClearOverrideBindings",
 	"113/GetPlayerInfoByGUID",
 	"113/SetOverrideBindingClick",
@@ -184,11 +193,15 @@ files["Plugins/Statistics.lua"].ignore = {
 }
 files["Plugins/Timeline.lua"].ignore = {
 	"113/C_ClassColor",
+	"113/C_UI",
 	"113/C_CVar",
-	"113/C_EncounterTimeline",
 	"113/C_EncounterWarnings",
+	"113/CriticalEncounterWarnings",
+	"113/EncounterTimeline",
 	"113/Enum",
 	"113/GetPlayerInfoByGUID",
+	"113/MediumEncounterWarnings",
+	"113/MinorEncounterWarnings",
 }
 files["Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
@@ -201,7 +214,9 @@ files["Plugins/*.lua"].ignore = {
 files["Options/Options.lua"].ignore = {
 	"113/C_EncodingUtil",
 	"113/C_UI",
+	"113/C_UnitAuras",
 	"113/CallErrorHandler",
+	"113/print",
 	"113/securecallfunction",
 }
 files["Options/Sharing.lua"].ignore = {
@@ -216,10 +231,22 @@ files["**/?Locales/*.lua"].ignore = {
 }
 files["gen_option_values.lua"].ignore = {
 	"113/arg", -- We use global arg in the parser
+	"113/print",
 }
 
 files["Media/Media.lua"].ignore = {
 	"113/GetBuildInfo",
+}
+files["Tools/AutoInvite.lua"].ignore = {
+	"113/C_BattleNet",
+	"113/C_ChatInfo",
+	"113/C_FriendList",
+	"113/C_PartyInfo",
+	"113/ConvertToRaid",
+	"113/BNGetFriendIndex",
+	"113/BNIsSelf",
+	"113/GetRealmID",
+	"113/IsGuildMember",
 }
 files["Tools/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
@@ -227,13 +254,18 @@ files["Tools/AutoRole.lua"].ignore = {
 	"113/UnitNameUnmodified",
 	"113/UnitSetRole",
 }
+files["Tools/CombatTimer.lua"].ignore = {
+	"113/date",
+}
 files["Tools/Keystones.lua"].ignore = {
 	"113/C_ChallengeMode",
 	"113/C_ClassColor",
 	"113/C_Container",
 	"113/C_DateAndTime",
 	"113/C_MythicPlus",
+	"113/C_NamePlate",
 	"113/C_PlayerInfo",
+	"113/C_Scenario",
 	"113/C_UI",
 	"113/ChallengesFrame",
 	"113/ChallengesKeystoneFrame",
@@ -244,6 +276,7 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/PlaySound",
 	"113/SetOverrideBindingClick",
 	"113/TimerTracker",
+	"113/TooltipDataProcessor",
 
 	-- XXX temp Lemix
 	"113/C_Item",
@@ -259,10 +292,13 @@ ignore = {
 	"113/BigWigs",
 	"212/self",
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
-	"2",
+	"211",
+	"212",
+	"213",
 }
 not_globals = {
 	"arg", -- arg is a standard global, so without this it won't error when we typo "args" in a module
+	"print",
 }
 globals = {
 	-- wow std api
@@ -305,6 +341,7 @@ globals = {
 	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
 	"BuyMerchantItem", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_EncounterJournal",
+	"C_EncounterTimeline",
 	"C_GossipInfo",
 	"C_InstanceEncounter",
 	"C_MerchantFrame", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
@@ -359,7 +396,6 @@ globals = {
 	"RaidBossEmoteFrame",
 	"RaidNotice_AddMessage",
 	"RaidWarningFrame",
-	"SecondsToTime",
 	"TalkingHeadFrame",
 	"Tukui",
 	"UIParent",

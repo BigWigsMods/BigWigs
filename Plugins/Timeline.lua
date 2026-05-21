@@ -18,7 +18,8 @@ local hasCustomTimers = {}
 --
 
 plugin.defaultDB = {
-	timer_mode = "enhanced",
+	timersMode = "enhanced",
+	blizzTimeline = false,
 }
 
 local function updateProfile()
@@ -33,8 +34,8 @@ local function updateProfile()
 		end
 	end
 
-	if db.timer_mode ~= "enhanced" and db.timer_mode ~= "blizzbars" and db.timer_mode ~= "blizztimeline" and db.timer_mode ~= "dev" then
-		db.timer_mode = plugin.defaultDB.timer_mode
+	if db.timersMode ~= "enhanced" and db.timersMode ~= "blizzbars" and db.timersMode ~= "blizztimeline" and db.timersMode ~= "dev" then
+		db.timersMode = plugin.defaultDB.timersMode
 	end
 end
 
@@ -80,7 +81,7 @@ do
 				width = "full",
 				order = 2,
 			},
-			timer_mode = {
+			timersMode = {
 				type = "select",
 				name = L.show_bars,
 				values = {
@@ -101,6 +102,11 @@ do
 				set = function(info, value)
 					db[info[#info]] = value
 					plugin:UpdateBarsShown()
+				end,
+				confirm = function(_, value)
+					if value ~= "enhanced" and value ~= "dev" then
+						return L.enhancedModeWarning
+					end
 				end,
 				width = 3,
 				order = 3,
@@ -127,6 +133,19 @@ do
 						type = "toggle",
 						name = L.enableBlizzTimeline,
 						desc = L.enableBlizzTimelineDesc,
+						get = function() return db.blizzTimeline end,
+						set = function(_, value)
+							db.blizzTimeline = value
+							if value then
+								C_CVar.SetCVar("encounterTimelineEnabled", "1")
+							end
+							C_UI.Reload()
+						end,
+						confirm = function(_, value)
+							if value then
+								return L.blizzTimelineEnhancedWarning
+							end
+						end,
 						width = 2,
 						order = 1,
 					},
@@ -226,25 +245,33 @@ do
 
 	function plugin:DoTestMessage(name, icon)
 		local severity = math.random(1, 3)
-		plugin:SendMessage("BigWigs_Message", plugin, nil, name, colors[severity], icon, false)
-		plugin:SendMessage("BigWigs_Sound", plugin, nil, sounds[severity])
+		self:SendMessage("BigWigs_Message", self, nil, name, colors[severity], icon, false)
+		self:SendMessage("BigWigs_Sound", self, nil, sounds[severity])
 	end
 end
 
 function plugin:UpdateBarsShown(event, module)
-	local showBlizzardBars = db.timer_mode ~= "blizztimeline"
+	local showBlizzardBars = db.timersMode ~= "blizztimeline" -- True unless set to "blizztimeline" mode (no bars)
 
 	local encounterID = module and module:GetEncounterID()
-	if encounterID then
+	if encounterID and showBlizzardBars then -- If module has encounter ID and we're not set to "blizztimeline" mode (no bars)
 		if event == "BigWigs_OnBossEngage" or event == "BigWigs_OnBossEngageMidEncounter" then
-			hasCustomTimers[encounterID] = module.useCustomTimers or nil
-			if module.useCustomTimers and db.timer_mode == "enhanced" then
+			if db.timersMode == "enhanced" then
+				if module.useCustomTimers then
+					hasCustomTimers[encounterID] = true
+					showBlizzardBars = false
+				elseif next(hasCustomTimers) then
+					showBlizzardBars = false
+				end
+			end
+		elseif db.timersMode == "enhanced" then -- BigWigs_OnBossDisable
+			hasCustomTimers[encounterID] = nil
+			if next(hasCustomTimers) then
 				showBlizzardBars = false
 			end
-		else -- BigWigs_OnBossDisable
-			hasCustomTimers[encounterID] = nil
-			showBlizzardBars = not next(hasCustomTimers) or db.timer_mode == "enhanced"
 		end
+	elseif next(hasCustomTimers) then -- Compensate for this function being called manually, outside of BigWigs_OnBossEngage/BigWigs_OnBossDisable
+		showBlizzardBars = false
 	end
 
 	if showBlizzardBars then
@@ -252,11 +279,13 @@ function plugin:UpdateBarsShown(event, module)
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 		self:StartBars()
+		self:SendMessage("BigWigs_ShowBlizzTimers")
 	else
 		self:UnregisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 		self:UnregisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 		self:UnregisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 		self:StopBars()
+		self:SendMessage("BigWigs_HideBlizzTimers")
 	end
 end
 
@@ -268,14 +297,26 @@ function plugin:OnRegister()
 	self.displayName = L.timeline
 	C_CVar.SetCVar("combatWarningsEnabled", "1")
 	C_CVar.SetCVar("encounterWarningsEnabled", "0")
+	CriticalEncounterWarnings:SetScript("OnShow", nil)
+	CriticalEncounterWarnings:UnregisterAllEvents()
+	MediumEncounterWarnings:SetScript("OnShow", nil)
+	MediumEncounterWarnings:UnregisterAllEvents()
+	MinorEncounterWarnings:SetScript("OnShow", nil)
+	MinorEncounterWarnings:UnregisterAllEvents()
 end
 
 function plugin:OnPluginEnable()
+	updateProfile()
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	if not db.blizzTimeline then
+		local f = CreateFrame("Frame")
+		f:Hide()
+		C_CVar.SetCVar("encounterTimelineEnabled", "0")
+		EncounterTimeline:SetParent(f)
+	end
+
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-
 	self:RegisterMessage("BigWigs_OnBossEngage", "UpdateBarsShown")
 	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "UpdateBarsShown")
 	self:RegisterMessage("BigWigs_OnBossDisable", "UpdateBarsShown")
@@ -291,18 +332,19 @@ end
 
 function plugin:StartBars()
 	for _, eventId in next, C_EncounterTimeline.GetEventList() do
-		-- not crazy about this basically being :ENCOUNTER_TIMELINE_EVENT_ADDED
-		local info = C_EncounterTimeline.GetEventInfo(eventId)
-		local remaining = C_EncounterTimeline.GetEventTimeRemaining(eventId)
-		local spellName = info.spellName
-		if info.source == Enum.EncounterTimelineEventSource.EditMode then
-			spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
-		end
-		self:SendMessage("BigWigs_StartBar", nil, nil, spellName, remaining, info.iconFileID, info.maxQueueDuration, info.duration, eventId)
-
 		local state = C_EncounterTimeline.GetEventState(eventId)
-		if state == Enum.EncounterTimelineEventState.Paused then
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
+		if state == Enum.EncounterTimelineEventState.Paused or state == Enum.EncounterTimelineEventState.Active then
+			local info = C_EncounterTimeline.GetEventInfo(eventId)
+			local remaining = C_EncounterTimeline.GetEventTimeRemaining(eventId)
+			local spellName = info.spellName
+			if info.source == Enum.EncounterTimelineEventSource.EditMode then
+				spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
+			end
+			self:SendMessage("BigWigs_StartBar", nil, nil, spellName, remaining, info.iconFileID, info.maxQueueDuration, info.duration, eventId)
+
+			if state == Enum.EncounterTimelineEventState.Paused then
+				self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
+			end
 		end
 	end
 end
@@ -316,22 +358,25 @@ end
 -------------------------------------------------------------------------------
 -- Bars
 
+local validIDs = {}
 function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	-- Not Secret
-	local eventId = eventInfo.id
-	local duration = eventInfo.duration
 	local source = eventInfo.source
+	if source == 1 then return end -- Enum.EncounterTimelineEventSource.Script = 1
+	local eventId = eventInfo.id
+	validIDs[eventId] = true
+	local duration = eventInfo.duration
 	local maxQueueDuration = eventInfo.maxQueueDuration
 
 	-- Secret
-	local spellId = eventInfo.spellID
+	--local spellId = eventInfo.spellID
 	local spellName = eventInfo.spellName
 	local icon = eventInfo.iconFileID
 	-- local roleAndSpellIndicators = eventInfo.icons
 	-- local severity = eventInfo.severity
 	-- local isApproximate = eventInfo.isApproximate
 
-	if source == Enum.EncounterTimelineEventSource.EditMode then
+	if source == 2 then -- Enum.EncounterTimelineEventSource.EditMode = 2
 		-- EditMode spells all have the same name
 		spellName = ("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1)
 	end
@@ -344,6 +389,8 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 end
 
 function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
+	if not validIDs[eventId] then return end
+
 	local newState = C_EncounterTimeline.GetEventState(eventId)
 	if newState == Enum.EncounterTimelineEventState.Active then
 		self:SendMessage("BigWigs_ResumeBar", nil, nil, eventId)
@@ -356,7 +403,7 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
 
 	elseif newState == Enum.EncounterTimelineEventState.Finished then
 		local info = C_EncounterTimeline.GetEventInfo(eventId)
-		if info.source == Enum.EncounterTimelineEventSource.EditMode then
+		if info.source == 2 then -- Enum.EncounterTimelineEventSource.EditMode = 2
 			self:DoTestMessage(("%s (%d)"):format(L.test, tonumber(strsub(eventId, -1)) + 1), info.iconFileID)
 		end
 		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
@@ -364,5 +411,8 @@ function plugin:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventId)
 end
 
 function plugin:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventId)
-	self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+	if validIDs[eventId] then
+		validIDs[eventId] = nil
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+	end
 end

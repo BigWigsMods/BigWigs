@@ -1,0 +1,96 @@
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
+local mod, CL = BigWigs:NewBoss("Lu'ashal", -2395, 2827) -- World boss for the "Eversong Woods" zone
+if not mod then return end
+mod:RegisterEnableMob(244762) -- Lu'ashal
+mod.otherMenu = -2443
+mod:SetWorldModule(true)
+
+--------------------------------------------------------------------------------
+-- Renames
+--
+
+mod:SetRenames({
+	[1258427] = {CL.orbs, CL.incoming:format(CL.orbs), notes = {CL.timerNote, CL.messageNote}}, -- Radiant Flare (Orbs)
+	[1276427] = {CL.bombs, CL.bomb, notes = {CL.timerNote, CL.messageNote}}, -- Dawncrazed Halo (Bombs)
+	[1276247] = {CL.frontal_cone, CL.extra:format(mod:SpellName(1276247), CL.frontal_cone), notes = {CL.timerNote, CL.messageNote}}, -- Dawnfire Breath (Frontal Cone)
+})
+
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
+function mod:GetOptions()
+	return {
+		{1258427, "EMPHASIZE"}, -- Radiant Flare
+		1276427, -- Dawncrazed Halo
+		1276247, -- Dawnfire Breath
+	}
+end
+
+function mod:OnBossEnable()
+	self:ScheduleTimer(function() self:CheckForEngage() end, 1)
+	self:RegisterEvent("BOSS_KILL")
+end
+
+function mod:OnEncounterStart()
+	self:ScheduleTimer(function() self:CheckForWipe() end, 3)
+
+	self:RegisterEvent("RAID_BOSS_EMOTE")
+	self:RegisterWhisperEmoteComms("RaidBossWhisperSync")
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+
+	self:BlockBossEmotes()
+
+	self:CDBar(1276247, 23)
+end
+
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
+
+function mod:BOSS_KILL(_, id)
+	if id == 3454 then
+		self:Win()
+	end
+end
+
+function mod:RAID_BOSS_EMOTE(_, msg)
+	if msg:find("1258427", nil, true) then
+		self:Message(1258427, "red", self:GetRename(1258427, 2))
+		self:PlaySound(1258427, "warning")
+	end
+end
+
+do
+	local playerList, prev = {}, 0
+	function mod:RaidBossWhisperSync(msg, player)
+		if msg:find("spell:1276427", nil, true) then
+			local t = GetTime()
+			if t - prev > 10 then
+				prev = t
+				playerList = {}
+				self:CDBar(1276427, 29.5)
+				self:PlaySound(1276427, "alarm")
+			end
+
+			playerList[#playerList+1] = player
+			self:TargetsMessage(1276427, "yellow", playerList, nil, self:GetRename(1276427, 2))
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:UNIT_SPELLCAST_CHANNEL_START(_, unit)
+		local t = GetTime()
+		if t - prev > 15 and self:MobId(self:UnitGUID(unit)) == 244762 then
+			prev = t
+			self:Message(1276247, "purple", self:GetRename(1276247, 2))
+			self:CDBar(1276247, 20.8)
+			self:PlaySound(1276247, "long")
+		end
+	end
+end

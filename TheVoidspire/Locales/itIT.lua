@@ -1,21 +1,39 @@
-local L = BigWigs:NewBossLocale("Vorasius", "itIT")
-if not L then return end
-if L then
-	--L.shadowclaw_slam = "Slams"
-end
+if not BigWigsAPI.IsLocale("itIT") then return end
+BigWigsAPI.SetBossModuleLocale("Vorasius", {
+	shadowclaw_slam = "Urto",
+})
 
-L = BigWigs:NewBossLocale("Fallen-King Salhadaar", "itIT")
-if L then
-	--L.fractured_projection = "Kicks"
-end
+BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
+	aura_of_wrath = "Ira", -- Short for Aura of Wrath
+	execution_sentence = "Esecuzione", -- Short for Execution Sentence
+	executes_mythic = "Esecuzioni + Schiva",
+	judgement_red = "Giudizio [R]", -- R for the Red icon.
+	aura_of_devotion = "Devozione", -- Short for Aura of Devotion
+	judgement_blue = "Giudizio [B]", -- B for the Blue icon.
+	aura_of_peace = "Pace", -- Short for Aura of Peace
+	tyrs_wrath_mythic = "Assorbimenti + Esecuzioni",
+	divine_toll_mythic = "Schiva + Assorbimenti",
 
-L = BigWigs:NewBossLocale("Lightblinded Vanguard", "itIT")
-if L then
-	--L.aura_of_wrath = "Wrath" -- Short for Aura of Wrath
-	--L.execution_sentence = "Executes" -- Short for Execution Sentence
-	--L.judgement_red = "Judgement [R]" -- R for the Red icon.
-	--L.aura_of_devotion = "Devotion" -- Short for Aura of Devotion
-	--L.judgement_blue = "Judgement [B]" -- B for the Blue icon.
-	--L.aura_of_peace = "Peace" -- Short for Aura of Peace
-	--L.zaelous_spirit = "Spirit" -- Short for Zealous Spirit
-end
+	empowered_searing_radiance = "Radiosità Rovente potenziata",
+	empowered_searing_radiance_desc = "Mostra il timer per la Radiosità Rovente Potenziata.",
+
+	empowered_avengers_shield = "Scudo del Vendicatore potenziato",
+	empowered_avengers_shield_desc = "Mostra il timer per lo Scudo del Vendicatore potenziato.",
+
+	empowered_divine_storm = "Tempesta Divina potenziata",
+	empowered_divine_storm_desc = "Mostra il timer per la Tempesta Divina potenziata.",
+	tornadoes = "Tornadi", -- The renamed empowered Divine Storm
+
+	empowered = "[P] %s", -- Empowered version of an ability, [E] Avengers Shield
+})
+
+BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
+	grasp_of_emptiness = "Obelischi",
+	interrupting_tremor = "Interruzione",
+	ravenous_abyss = "Uscire",
+	silverstrike_barrage = "Linee",
+	cosmic_barrier = "Barriera",
+	voidstalker_sting = "Punture",
+	aspect_of_the_end = "Catene",
+	devouring_cosmos = "Prossima Piattaforma",
+})

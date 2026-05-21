@@ -32,8 +32,8 @@ L.boss = "首领"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 L.extra = "%s（%s）" -- SPELL_NAME (short spell name or extra information)
 
-L.phase = "阶段：%d"
-L.stage = "阶段：%d"
+L.phase = "%d阶段"
+L.stage = "%d阶段"
 L.wave = "第%d波" -- e.g. "Wave 1" (Waves of adds)
 L.wave_count = "第%d波，共%d波" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "普通模式"
@@ -193,12 +193,25 @@ L.arcane = "奥术"
 
 -- Autotalk
 L.autotalk = "自动与NPC对话"
-L.autotalk_boss_desc = "自动选择NPC对话选项，使首领战开始。"
-L.autotalk_generic_desc = "自动选择使你进入地下城下一阶段的NPC对话选项。"
+L.autotalk_boss_desc = "自动选择NPC对话选项以开启首领战。"
+L.autotalk_generic_desc = "自动选择NPC对话选项以进入下一阶段。"
 L.autotalk_notice = "自动与NPC %s 交互。"
 
+-- GUI notes for renames
+L.singular = "单数"
+L.plural = "复数"
+L.generalNote = "通用说明文本"
+L.timerNote = "计时条中显示的文本"
+L.castTimerNote = "施法计时条中显示的文本"
+L.messageNote = "消息中显示的文本"
+L.messageOnYouNote = "技能点名你时显示的消息"
+L.timerOnYouNote = "技能点名你时计时条中显示的文本"
+L.thisOnly = "仅 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.mythicOnlyNote = "史诗难度下显示的文本"
+L.otherDifficultiesNote = "其他难度下显示的文本"
+
 -- Common ability name replacements
-L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
+L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "治疗吸收盾" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "治疗吸收盾" -- Plural of L.heal_absorb
 L.laser = "激光" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
@@ -232,10 +245,6 @@ L.rift = "裂隙" -- Can be used in a similar way as a portal e.g. "Time Rift" b
 L.rifts = "裂隙" -- Plural of L.rift
 L.orb = "宝珠" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "宝珠" -- Plural for L.orb
-L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
-L.curses = "诅咒" -- Plural of L.curse
-L.disease = "疾病" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
-L.poison = "中毒" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "精魂" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "精魂" -- Plural of L.spirit
 L.tornado = "旋风" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
@@ -249,6 +258,8 @@ L.spell_reflection = "法术反射" -- Any ability that reflects spells
 L.rooted = "定身" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+L.arrow = "箭矢" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "箭矢" -- Plural of L.arrow
 L.ball = "球" -- A ball, like a football, basketball, etc
 L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
@@ -259,6 +270,7 @@ L.fixate = "锁定" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "锁定" -- Plural of L.fixate
 L.group_damage = "群体伤害" -- Any ability that causes damage to every player in the 5 player group 也可以称“AOE”
 L.health_drain = "吸血" -- Any ability that drains health from the player
+L.madness = "疯狂" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
 L.parasite = "寄生" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "寄生" -- Plural of L.parasite
 L.pull_in = "拉扯" -- An ability that pulls you in towards the boss against your will
@@ -269,13 +281,30 @@ L.soaks = "分摊" -- Plural of L.soak
 L.spike = "尖刺" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "尖刺" -- Plural of L.spike
 L.spread = "分散" -- An ability that forces you to spread out away from other players, or you might damage them
-L.tank_bomb = "坦克炸弹" -- Similar to L.bomb but only applies to tanks
-L.tank_combo = "坦克连击" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
-L.tank_debuff = "坦克减益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
-L.tank_soak = "坦克分摊" -- Similar to L.soak but only applies to tanks
 L.tentacle = "触手" -- Used for bosses that summon tentacles
 L.tentacles = "触手" -- Plural of L.tentacle
 L.waves = "波浪" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "雏龙" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "雏龙" -- Plural of L.whelp
+
+-- Dispel-related spell renames
+L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
+L.curses = "诅咒" -- Plural of L.curse
+L.disease = "疾病" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.dispel = "驱散" -- General term for any debuff that is dispellable
+L.dispels = "驱散" -- Plural of L.dispel
+L.poison = "中毒" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
+
+-- Interrupt-related spell renames
+L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "打断" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "打断" -- Plural of L.kick
+
+-- Tank-related spell renames
+L.tank_bomb = "坦克炸弹" -- Similar to L.bomb but only applies to tanks
+L.tank_combo = "连击坦克" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_debuff = "坦克减益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_hit = "命中坦克" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_soak = "坦克分摊" -- Similar to L.soak but only applies to tanks
+L.tank_grip = "拖拽坦克" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense

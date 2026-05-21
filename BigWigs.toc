@@ -1,4 +1,4 @@
-## Interface: 120001, 110207, 120000
+## Interface: 120001, 120005, 120007
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -26,7 +26,7 @@
 ## X-Wago-ID: 5NRegwG3
 
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibSpecialization, LibChatAnims, LibDualSpec-1.0, LibCustomGlow-1.0, LibKeystone, LibLatency, LibDurability
-## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB, BW_FEAT_SHARE, BW_FEAT_SHARE2
+## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
@@ -44,8 +44,10 @@ Locales\[TextLocale]_common.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itI
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
-Tools\AutoRole.lua
 Tools\Keystones.lua
+Tools\CombatTimer.lua
+Tools\AutoInvite.lua
 Tools\LFGTimer.lua
+Tools\AutoRole.lua
 modules.xml
 bosses.xml

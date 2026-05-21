@@ -9,8 +9,8 @@ if not plugin then return end
 -- Locals
 --
 
-local media = LibStub("LibSharedMedia-3.0")
-local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 
 -------------------------------------------------------------------------------
 -- Options
@@ -37,16 +37,16 @@ plugin.pluginOptions = {
 			name = L.wipeSoundTitle,
 			order = 1,
 			get = function(info)
-				for i, v in next, media:List(SOUND) do
+				for i, v in next, LibSharedMedia:List(SOUND) do
 					if v == plugin.db.profile[info[#info]] then
 						return i
 					end
 				end
 			end,
 			set = function(info, value)
-				plugin.db.profile[info[#info]] = media:List(SOUND)[value]
+				plugin.db.profile[info[#info]] = LibSharedMedia:List(SOUND)[value]
 			end,
-			values = media:List(SOUND),
+			values = LibSharedMedia:List(SOUND),
 			width = 2,
 			itemControl = "DDI-Sound",
 		},
@@ -82,6 +82,10 @@ do
 				db[k] = plugin.defaultDB[k]
 			end
 		end
+
+		if not LibSharedMedia:IsValid("sound", db.wipeSound) then
+			db.wipeSound = plugin.defaultDB.wipeSound
+		end
 	end
 
 	function plugin:OnPluginEnable()
@@ -106,7 +110,7 @@ function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 		if module:GetJournalID() or module:GetAllowWin() then
 			local soundName = self.db.profile.wipeSound
 			if soundName ~= "None" then
-				local sound = media:Fetch(SOUND, soundName, true)
+				local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
 				if sound then
 					self:PlaySoundFile(sound)
 				end

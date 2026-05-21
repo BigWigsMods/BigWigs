@@ -29,6 +29,7 @@ local sounds = {
 	underyou = L.spell_under_you,
 	privateaura = "BigWigs: Raid Warning",
 }
+local allowBlizzMessages = true
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -56,6 +57,7 @@ plugin.defaultDB = {
 
 local function updateProfile()
 	db = plugin.db.profile
+	local printTbl, blockedFromPrints = {}, {}
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
 		if defaultType == "nil" then
@@ -67,6 +69,11 @@ local function updateProfile()
 				for optionKey, soundName in next, soundTbl do
 					if not LibSharedMedia:IsValid("sound", soundName) then
 						soundTbl[optionKey] = nil -- Invalid sound, remove
+						if not blockedFromPrints[soundName] then
+							blockedFromPrints[soundName] = true
+							local moduleName = bossModuleName:sub(16) -- Remove "BigWigs_Bosses_" text
+							printTbl[#printTbl+1] = L.soundResetPrint:format(moduleName, soundName)
+						end
 					end
 				end
 				if not next(soundTbl) then
@@ -80,9 +87,23 @@ local function updateProfile()
 		local defaultType = type(plugin.defaultDB.media[k])
 		if defaultType == "nil" then
 			db.media[k] = nil
-		elseif type(v) ~= defaultType or not LibSharedMedia:IsValid("sound", v) then
-			db.media[k] = plugin.defaultDB.media[k] -- Invalid type or invalid sound, reset
+		elseif type(v) ~= defaultType then
+			db.media[k] = plugin.defaultDB.media[k] -- Invalid type, reset
+		elseif not LibSharedMedia:IsValid("sound", v) then
+			db.media[k] = plugin.defaultDB.media[k] -- Invalid sound, reset
+			if not blockedFromPrints[v] then
+				blockedFromPrints[v] = true
+				printTbl[#printTbl+1] = L.soundResetPrint:format(plugin.moduleName, v)
+			end
 		end
+	end
+
+	if printTbl[1] then
+		plugin:SimpleTimer(function()
+			for i = 1, #printTbl do
+				plugin:Print(printTbl[i])
+			end
+		end, 0)
 	end
 end
 
@@ -230,7 +251,7 @@ plugin.soundOptions = soundOptions
 
 do
 	local function addKey(t, key)
-		if t.type and t.type == "select" then
+		if t.type and (t.type == "select" or t.type == "range") then
 			t.arg = key
 		elseif t.args then
 			for k, v in next, t.args do
@@ -249,6 +270,7 @@ do
 		local t = addKey(soundOptions, keyTable)
 		if t.args.countdown then
 			t.args.countdown.disabled = not flags or (bit.band(flags, C.COUNTDOWN) == 0 and bit.band(flags, C.CASTBAR_COUNTDOWN) == 0)
+			t.args.countdownTime.disabled = not flags or (bit.band(flags, C.COUNTDOWN) == 0 and bit.band(flags, C.CASTBAR_COUNTDOWN) == 0)
 		end
 		return t
 	end
@@ -262,6 +284,7 @@ function plugin:OnPluginEnable()
 	updateProfile()
 
 	soundList = LibSharedMedia:List(SOUND)
+	allowBlizzMessages = true
 
 	for k in next, sounds do
 		local n = L[k] or k
@@ -324,7 +347,7 @@ function plugin:OnPluginEnable()
 	for k, v in next, db do
 		if sounds[k] then
 			for _, soundTbl in next, v do
-				for optionKey, soundName in next, soundTbl do
+				for _, soundName in next, soundTbl do
 					if soundName ~= "None" and not soundsPlayedTable[soundName] then
 						soundsPlayedTable[soundName] = true
 					end
@@ -346,6 +369,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	if BigWigsLoader.isRetail then
 		self:RegisterEvent("ENCOUNTER_WARNING")
+		self:RegisterMessage("BigWigs_BlockBlizzMessages")
+		self:RegisterMessage("BigWigs_AllowBlizzMessages")
 	end
 end
 
@@ -394,22 +419,34 @@ do
 	end
 end
 
-function plugin:BigWigs_Sound(event, module, key, soundName)
+function plugin:BigWigs_Sound(_, module, key, soundName)
 	local soundPath = self:GetSoundFile(module, key, soundName)
 	if soundPath then
 		self:PlaySoundFile(soundPath)
 	end
 end
 
-local severitySoundMap = {
-	[0] = "alert",
-	[1] = "alarm",
-	[2] = "warning",
-}
-function plugin:ENCOUNTER_WARNING(_, eventInfo)
-	local shouldPlaySound = eventInfo.shouldPlaySound
-	local severity = eventInfo.severity
-	if shouldPlaySound then
-		self:BigWigs_Sound(nil, nil, false, severitySoundMap[severity] or "alert")
+do
+	local severitySoundMap = {
+		[0] = "alert",
+		[1] = "alarm",
+		[2] = "warning",
+	}
+	function plugin:ENCOUNTER_WARNING(_, eventInfo)
+		if allowBlizzMessages then
+			local shouldPlaySound = eventInfo.shouldPlaySound
+			local severity = eventInfo.severity
+			if shouldPlaySound then
+				self:BigWigs_Sound(nil, nil, false, severitySoundMap[severity] or "alert")
+			end
+		end
 	end
+end
+
+function plugin:BigWigs_AllowBlizzMessages()
+	allowBlizzMessages = true
+end
+
+function plugin:BigWigs_BlockBlizzMessages()
+	allowBlizzMessages = false
 end

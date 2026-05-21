@@ -7,6 +7,18 @@ local API = {}
 addonTbl.API = API
 local type, next, error = type, next, error
 
+local function CopyTable(settingsTable)
+	local copy = {}
+	for key, value in next, settingsTable do
+		if type(value) == "table" then
+			copy[key] = CopyTable(value)
+		else
+			copy[key] = value
+		end
+	end
+	return copy
+end
+
 --------------------------------------------------------------------------------
 -- Addons creating bars
 --
@@ -153,23 +165,43 @@ do
 	end
 end
 
+do
+	local localeTable = {}
+	function API.GetBossModuleLocale(moduleName)
+		if localeTable[moduleName] then
+			return CopyTable(localeTable[moduleName])
+		end
+	end
+	function API.SetBossModuleLocale(moduleName, moduleLocaleTable)
+		if API.IsLocale("enUS") then error("This function is for non-default locales only.") return end
+		if type(moduleName) ~= "string" then error("Module name must be a string.") return end
+		if type(moduleLocaleTable) ~= "table" then error("Locale must be a table.") return end
+		if localeTable[moduleName] then error(("Locale table for module %q already exists."):format(moduleName)) return end
+		localeTable[moduleName] = moduleLocaleTable
+	end
+end
+
+do
+	local currentLocale = GetLocale()
+	function API.IsLocale(localeName)
+		return localeName == currentLocale
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Profile import/export
 --
 
-do
-	-- A custom profile name and callback function is completely optional
-	-- When specified, a callback function will be called with a boolean as the first arg. True if the user accepted, false otherwise
-	local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-	function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
-		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
-		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
-		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
-		addonTbl.LoadCoreAndOptions()
-		if not BigWigsOptions.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") end
-		BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-	end
+-- A custom profile name and callback function is completely optional
+-- When specified, a callback function will be called with a boolean as the first arg. True if the user accepted, false otherwise
+function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
+	if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
+	if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
+	if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
+	addonTbl.LoadCoreAndOptions()
+	if not BigWigsOptions.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") end
+	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 end
 
 -- Input the name of YOUR addon, i.e. the addon making the profile request
@@ -212,6 +244,36 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Specialization (LibSpecialization)
+--
+
+do
+	local listID, listRole, listPosition = {}, {}, {}
+	do
+		local LibSpec = LibStub("LibSpecialization", true)
+		if LibSpec then
+			local function addToTable(specID, role, position, playerName)
+				listID[playerName] = specID
+				listRole[playerName] = role
+				listPosition[playerName] = position
+			end
+			local lsTable = {}
+			LibSpec.RegisterGroup(lsTable, addToTable)
+			LibSpec.RegisterGuild(lsTable, addToTable)
+		end
+	end
+	function API.GetSpecializationID(playerName)
+		return listID[playerName]
+	end
+	function API.GetSpecializationRole(playerName)
+		return listRole[playerName]
+	end
+	function API.GetSpecializationPosition(playerName)
+		return listPosition[playerName]
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Spell renames
 --
 
@@ -232,46 +294,62 @@ end
 -- Tools/Plugins option tables
 --
 
+do -- Tools
+	local tbl = {}
+	-- Get all AceGUI option tables under the "Tools" category
+	function API.GetToolOptions()
+		return CopyTable(tbl)
+	end
+	-- Register an AceGUI options table for a module under the "Tools" category
+	function API.RegisterToolOptions(key, settingsTable)
+		if type(key) ~= "string" then error("The key needs to be a string.") end
+		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+		tbl[key] = settingsTable
+	end
+end
+
+do -- Plugins
+	local tbl = {}
+	-- Get all AceGUI option tables under the "Tools" category
+	function API.GetPluginOptions()
+		return CopyTable(tbl)
+	end
+	-- Register an AceGUI options table for a module under the "Tools" category
+	function API.RegisterPluginOptions(key, settingsTable)
+		if type(key) ~= "string" then error("The key needs to be a string.") end
+		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+		tbl[key] = settingsTable
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Tooltip
+--
+
 do
-	local function CopyTable(settingsTable)
-		local copy = {}
-		for key, value in next, settingsTable do
-			if type(value) == "table" then
-				copy[key] = CopyTable(value)
-			else
-				copy[key] = value
-			end
-		end
-		return copy
+	local bwTooltip = CreateFrame("GameTooltip", "BigWigsTooltip", UIParent, "GameTooltipTemplate")
+	function API.GetTooltip()
+		return bwTooltip
 	end
+end
 
-	-- Tools
-	do
-		local tbl = {}
-		-- Get all AceGUI option tables under the "Tools" category
-		function API.GetToolOptions()
-			return CopyTable(tbl)
-		end
-		-- Register an AceGUI options table for a module under the "Tools" category
-		function API.RegisterToolOptions(key, settingsTable)
-			if type(key) ~= "string" then error("The key needs to be a string.") end
-			if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
-			tbl[key] = settingsTable
-		end
-	end
+--------------------------------------------------------------------------------
+-- Utility
+--
 
-	-- Plugins
-	do
-		local tbl = {}
-		-- Get all AceGUI option tables under the "Tools" category
-		function API.GetPluginOptions()
-			return CopyTable(tbl)
-		end
-		-- Register an AceGUI options table for a module under the "Tools" category
-		function API.RegisterPluginOptions(key, settingsTable)
-			if type(key) ~= "string" then error("The key needs to be a string.") end
-			if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
-			tbl[key] = settingsTable
+do
+	local floor = math.floor
+	function API.SecondsToTime(seconds, noFloat)
+		local L = API:GetLocale("BigWigs")
+		if seconds > 60 then
+			local min = floor(seconds/60)
+			local sec = seconds % 60
+			return L.shortMinutesAndSeconds:format(min, sec)
+		elseif seconds < 10 and not noFloat then
+			local sec = floor(seconds * 10) / 10 -- Turn 9.965 into 9.9 not 10
+			return L.shortSubTenSeconds:format(sec)
+		else
+			return L.shortSecondsOnly:format(seconds)
 		end
 	end
 end
@@ -295,6 +373,22 @@ do
 			list[k] = L[k]
 		end
 		return list
+	end
+end
+
+do
+	local pcall = pcall
+	local dummy = UIParent:CreateFontString()
+	dummy:Hide()
+	local IsKnownFile = C_UIFileAsset and C_UIFileAsset.IsKnownFile -- XXX [Mainline:✓ MoP:✗ Wrath:✗ TBC:✗ Vanilla:✗]
+	function API.IsValidMediaPath(mediaPath)
+		if IsKnownFile then
+			local result = IsKnownFile(mediaPath)
+			return result
+		else
+			local result = pcall(dummy.SetFont, dummy, mediaPath, 10)
+			return result
+		end
 	end
 end
 

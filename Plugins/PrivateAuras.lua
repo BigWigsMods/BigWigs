@@ -920,7 +920,7 @@ do
 		if mode and mode ~= self.moduleName then return end
 		inConfigureMode = true
 
-		for unitType, unitAnchors in next, anchors do
+		for _, unitAnchors in next, anchors do
 			for i = 1, #unitAnchors do
 				local anchor = unitAnchors[i]
 				if not anchor.configModeFrame then
@@ -1096,11 +1096,13 @@ do
 		end
 	end
 
+	local AddPrivateAuraAnchor = C_UnitAuras.AddPrivateAuraAnchor
+	local RemovePrivateAuraAnchor = C_UnitAuras.RemovePrivateAuraAnchor
 	function plugin:UpdateAnchors(unitType, token)
 		for i = 1, #anchors[unitType] do
 			local anchor = anchors[unitType][i]
 			if anchor.anchorId then
-				C_UnitAuras.RemovePrivateAuraAnchor(anchor.anchorId)
+				RemovePrivateAuraAnchor(anchor.anchorId)
 				anchor.anchorId = nil
 			end
 			anchor:ClearAllPoints()
@@ -1146,12 +1148,13 @@ do
 			UpdateTestAura(unitType, index)
 
 			if unitToken then
-				anchor.anchorId = C_UnitAuras.AddPrivateAuraAnchor({
+				anchor.anchorId = AddPrivateAuraAnchor({
 					unitToken = unitToken,
 					auraIndex = index,
 					parent = anchor,
 					showCountdownFrame = anchorDB.showCooldown,
 					showCountdownNumbers = anchorDB.showCooldownText,
+					isContainer = false,
 					iconInfo = {
 						iconAnchor = {
 							point = "CENTER",

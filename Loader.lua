@@ -12,20 +12,20 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 407
+local BIGWIGS_VERSION = 415
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 14},
-	["BigWigs_Classic"] = {12, 0, 9},
-	["BigWigs_BurningCrusade"] = {12, 0, 8},
-	["BigWigs_WrathOfTheLichKing"] = {12, 0, 3},
-	["BigWigs_Cataclysm"] = {12, 0, 0},
-	["BigWigs_MistsOfPandaria"] = {12, 0, 2},
-	["BigWigs_WarlordsOfDraenor"] = {12, 0, 0},
-	["BigWigs_Legion"] = {12, 0, 0},
-	["BigWigs_BattleForAzeroth"] = {12, 0, 0},
-	["BigWigs_Shadowlands"] = {12, 0, 0},
-	["BigWigs_Dragonflight"] = {12, 0, 3},
-	["BigWigs_TheWarWithin"] = {12, 0, 1},
+	["LittleWigs"] = {12, 0, 48},
+	["BigWigs_Classic"] = {12, 0, 16},
+	["BigWigs_BurningCrusade"] = {12, 0, 12},
+	["BigWigs_WrathOfTheLichKing"] = {12, 0, 7},
+	["BigWigs_Cataclysm"] = {12, 0, 3},
+	["BigWigs_MistsOfPandaria"] = {12, 0, 5},
+	["BigWigs_WarlordsOfDraenor"] = {12, 0, 1},
+	["BigWigs_Legion"] = {12, 0, 1},
+	["BigWigs_BattleForAzeroth"] = {12, 0, 3},
+	["BigWigs_Shadowlands"] = {12, 0, 2},
+	["BigWigs_Dragonflight"] = {12, 0, 4},
+	["BigWigs_TheWarWithin"] = {12, 0, 2},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
@@ -116,7 +116,7 @@ local myLocale = GetLocale()
 local myName = UnitNameUnmodified("player")
 local myGUID = UnitGUID("player")
 local function sysprint(msg)
-	print("|cFF33FF99BigWigs|r: "..msg)
+	print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: "..msg)
 end
 local GetInstanceInfoModified, ModifyInstanceInfo
 do
@@ -146,21 +146,22 @@ public.GetBestMapForUnit = GetBestMapForUnit
 public.GetInstanceInfo = GetInstanceInfoModified
 public.GetMapInfo = GetMapInfo
 public.GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
-public.GetUnitAuraBySpellID = C_UnitAuras.GetUnitAuraBySpellID -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✓]
+public.GetUnitAuraBySpellID = C_UnitAuras.GetUnitAuraBySpellID -- XXX [Mainline:✓ MoP:✗ Wrath:✓ Vanilla:✓]
 public.GetSpellCooldown = C_Spell.GetSpellCooldown
 public.GetSpellDescription = C_Spell.GetSpellDescription
 public.GetSpellLink = C_Spell.GetSpellLink
 public.GetSpellName = C_Spell.GetSpellName
 public.GetSpellTexture = C_Spell.GetSpellTexture
 public.IsItemInRange = C_Item.IsItemInRange
-public.IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✓]
+public.IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook -- XXX [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✓]
 public.IsPlayerSpell = IsPlayerSpell or public.IsSpellKnownOrInSpellBook
 public.IsSpellKnown = IsSpellKnown or public.IsSpellKnownOrInSpellBook
 public.PlaySoundFile = PlaySoundFile
 public.RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 public.SendAddonMessage = SendAddonMessage
+public.SendBattleNetMessage = C_BattleNet and C_BattleNet.SendWhisper or BNSendWhisper -- XXX [Mainline:✓ MoP:✗ Wrath:✗ TBC:✗ Vanilla:✗]
+public.SendChatMessage = C_ChatInfo.SendChatMessage
 public.SetRaidTarget = SetRaidTarget
-public.SendChatMessage = C_ChatInfo and C_ChatInfo.SendChatMessage or SendChatMessage -- XXX [Mainline:✓ MoP:✓ Wrath:✗ Vanilla:✓]
 public.UnitCanAttack = UnitCanAttack
 public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
 public.UnitThreatSituation = UnitThreatSituation
@@ -177,9 +178,8 @@ public.Print = sysprint
 public.isTestBuild = IsPublicTestClient() -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
-	public.isMidnight = build >= 120000
-	public.isBeta = public.isTestBuild and build >= 120001
-	public.isNext = build >= 120002
+	public.isBeta = public.isTestBuild and build >= 130000
+	public.isNext = build >= 120007
 end
 
 -- Version
@@ -209,6 +209,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-1647]=true, -- Shadowlands
 	[-1978]=true, -- Dragon Isles
 	[-2274]=true, -- Khaz Algar
+	[-2443]=true, -- Silvermoon City
 }
 
 do
@@ -314,6 +315,7 @@ do
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
+				[1592] = "BigWigs_Sporefall",
 			}
 		}
 	else -- Retail
@@ -346,6 +348,7 @@ do
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
+				[1592] = public.isNext and "BigWigs_Sporefall" or nil,
 			}
 		}
 	end
@@ -438,9 +441,11 @@ do
 		[2769] = tww, -- Liberation of Undermine
 		[2810] = tww, -- Manaforge Omega
 		--[[ BigWigs: Midnight ]]--
+		[-2443] = mn, -- Silvermoon City (Fake Menu)
 		[2912] = mn, -- The Voidspire
 		[2913] = mn, -- March on Quel'Danas
 		[2939] = mn, -- The Dreamrift
+		[1592] = mn, -- Sporefall
 
 
 		--[[ LittleWigs: Classic ]]--
@@ -707,6 +712,7 @@ do
 		frame:SetBorder("HeldBagLayout")
 		frame:SetPortraitTextureSizeAndOffset(38, -5, 0)
 		frame:SetPortraitTextureRaw("Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
+		frame.GetTitleText = nil
 
 		local text = frame:CreateFontString(nil, nil, "GameFontGreenLarge")
 		text:SetSize(380, 0)
@@ -743,7 +749,7 @@ do
 		frame:SetFrameLevel(300)
 		frame:SetSize(400, 150)
 		frame:SetPoint("CENTER")
-		local text = frame:CreateFontString(nil, "ARTWORK", "GameFontRedLarge")
+		local text = frame:CreateFontString(nil, "ARTWORK", "GameFontGreenLarge")
 		text:SetSize(380, 0)
 		text:SetJustifyH("CENTER")
 		text:SetJustifyV("TOP")
@@ -1135,23 +1141,30 @@ do
 	end
 end
 
+-- XXX 12.0.5
+--if public.isRetail and not BW_FEAT_RENAMES then
+--	BW_FEAT_RENAMES = true
+--	if BigWigs3DB then -- No popup for fresh users
+--		Popup(L.tempRenameFeat, true, 180)
+--	end
+--end
+
 -- XXX 12.0.0
-if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE2 then
-	BW_FEAT_SHARE2 = true
-	if BigWigs3DB and not BW_FEAT_SHARE then -- No popup for fresh users
-		local msg = "|cFFFFFFFF" .. L.newFeatures .. "|r\n"
-		msg = msg .. "\n" .. L.parentheses:format(L.sharing_window_title, L.import .. "/" .. L.export)
-		if public.isRetail then
-			msg = msg .. "\n" .. L.parentheses:format(L.indicatorTitle, L.bars)
-		end
-		if public.isRetail or public.isMists then
-			msg = msg .. "\n" .. L.parentheses:format(L.battleResTitle, L.icon)
-		end
-		msg = msg .. "\n"
-		Popup(msg, true, 180)
-	end
-end
---
+--if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE2 then
+--	BW_FEAT_SHARE2 = true
+--	if BigWigs3DB and not BW_FEAT_SHARE then -- No popup for fresh users
+--		local msg = "|cFFFFFFFF" .. L.newFeatures .. "|r\n"
+--		msg = msg .. "\n" .. L.parentheses:format(L.sharing_window_title, L.import .. "/" .. L.export)
+--		if public.isRetail then
+--			msg = msg .. "\n" .. L.parentheses:format(L.indicatorTitle, L.bars)
+--		end
+--		if public.isRetail or public.isMists then
+--			msg = msg .. "\n" .. L.parentheses:format(L.battleResTitle, L.icon)
+--		end
+--		msg = msg .. "\n"
+--		Popup(msg, true, 180)
+--	end
+--end
 
 if public.isRetail then
 	bwFrame:RegisterEvent("PLAYER_MAP_CHANGED")
@@ -1195,6 +1208,24 @@ end
 ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
 do
+	-- XXX temp 12.0.5
+	if type(BigWigs3DB) == "table" and type(BigWigs3DB.namespaces) == "table" then
+		for moduleName, storage in next, BigWigs3DB.namespaces do
+			if moduleName:find("BigWigs_Bosses_", nil, true) and type(storage) == "table" and storage.profiles then
+				for profileName, moduleTable in next, storage.profiles do
+					if type(moduleTable) == "table" and not moduleTable.toggles and not moduleTable.renames then
+						local newTable = {}
+						for optionKeyForBossToggle, valueOfBossToggle in next, moduleTable do
+							newTable[optionKeyForBossToggle] = valueOfBossToggle
+						end
+						storage.profiles[profileName] = {toggles = newTable}
+					end
+				end
+			end
+		end
+	end
+	-- XXX end temp
+
 	-- Core DB setup
 	local defaults = {
 		profile = {
@@ -1327,6 +1358,8 @@ do
 		BigWigs_TrialOfValor = "BigWigs_Legion",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
+		Fake_Keystones = "Abandoned", -- abandoned addon breaking LibKeystone
+		["!Fake_Keystones"] = "Abandoned", -- abandoned addon breaking LibKeystone
 		BigWigs_Azeroth = "BigWigs_BattleForAzeroth",
 		BigWigs_BattleOfDazaralor = "BigWigs_BattleForAzeroth",
 		BigWigs_CrucibleOfStorms = "BigWigs_BattleForAzeroth",
@@ -1384,6 +1417,7 @@ do
 		BigWigs_TheVoidspire = true,
 		BigWigs_TheDreamrift = true,
 		BigWigs_MarchOnQuelDanas = true,
+		BigWigs_Sporefall = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
@@ -1474,21 +1508,21 @@ do
 		--ruRU = "Russian (ruRU)",
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
-		--itIT = "Italian (itIT)",
+		itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
-		--esES = "Spanish (esES)",
-		--esMX = "Spanish (esMX)",
+		esES = "Spanish (esES)",
+		esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
-		--ptBR = "Portuguese (ptBR)",
+		ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
 	local realms = {
 		--[542] = locales.frFR, -- frFR
-		--[3207] = locales.ptBR, [3208] = locales.ptBR, [3209] = locales.ptBR, [3210] = locales.ptBR, [3234] = locales.ptBR, -- ptBR
-		--[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
-		--[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
-		--[1378] = locales.esES, [1379] = locales.esES, [1380] = locales.esES, [1381] = locales.esES, [1382] = locales.esES, [1383] = locales.esES, -- esES
-		--[1384] = locales.esES, [1385] = locales.esES, [1386] = locales.esES, [1387] = locales.esES, [1395] = locales.esES, -- esES
+		[3207] = locales.ptBR, [3208] = locales.ptBR, [3209] = locales.ptBR, [3210] = locales.ptBR, [3234] = locales.ptBR, -- ptBR
+		[1425] = locales.esMX, [1427] = locales.esMX, [1428] = locales.esMX, -- esMX
+		[1309] = locales.itIT, [1316] = locales.itIT, -- itIT
+		[1378] = locales.esES, [1379] = locales.esES, [1380] = locales.esES, [1381] = locales.esES, [1382] = locales.esES, [1383] = locales.esES, -- esES
+		[1384] = locales.esES, [1385] = locales.esES, [1386] = locales.esES, [1387] = locales.esES, [1395] = locales.esES, -- esES
 	}
 	local criticalList = {
 		--[locales.itIT] = true,
@@ -1607,12 +1641,12 @@ end
 --
 
 do
-	local DBMdotRevision = "20260226080850" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "12.0.26" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20260225000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20260514074436" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.0.46" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20260513000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
-	local PForceDisable = 22
+	local PForceDisable = 24
 
 	local timer = nil
 	local function sendDBMMsg()
@@ -1837,7 +1871,7 @@ do
 			CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"), CreateFrame("Frame"),
 		}
 		local UnitIsPlayer = UnitIsPlayer
-		local function UNIT_TARGET(frame, event, unit)
+		local function UNIT_TARGET(_, _, unit)
 			local unitTarget = unit.."target"
 			local guid = UnitGUID(unitTarget)
 			if guid and not UnitIsPlayer(unitTarget) then
@@ -1922,6 +1956,13 @@ do
 				UnregisterUnitTargetEvents()
 			end
 			bwFrame:UnregisterEvent("ZONE_CHANGED")
+			bwFrame:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+
+			-- XXX 12.0.5
+			--if public.isRetail and C_ScenarioInfo.GetUnitCriteriaProgressValues and public.currentExpansion.currentSeason[instanceID] and not BW_FEAT_M_PERCENT then
+			--	BW_FEAT_M_PERCENT = true
+			--	Popup(L.tempProgressAnnounce, true, 220)
+			--end
 		else
 			if disabledZones[instanceID] then -- We have a content addon for the this zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[instanceID])
@@ -1934,9 +1975,11 @@ do
 			end
 			if instanceType == "none" then
 				bwFrame:RegisterEvent("ZONE_CHANGED")
+				bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 				self:ZONE_CHANGED()
 			else
 				bwFrame:UnregisterEvent("ZONE_CHANGED")
+				bwFrame:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 				UnregisterUnitTargetEvents()
 			end
 		end
@@ -1987,6 +2030,7 @@ do
 			UnregisterUnitTargetEvents()
 		end
 	end
+	mod.ZONE_CHANGED_NEW_AREA = mod.ZONE_CHANGED
 end
 
 do
@@ -2019,15 +2063,11 @@ do
 end
 
 function mod:BigWigs_BossModuleRegistered(_, _, module)
-	if module.worldBoss then
+	if module:IsWorldModule() then
 		local id = -(module.mapId)
 		enableZones[id] = "world"
-		if type(module.worldBoss) == "table" then
-			for i = 1, #module.worldBoss do
-				worldBosses[module.worldBoss[i]] = id
-			end
-		else
-			worldBosses[module.worldBoss] = id
+		for mobId in next, module.enableMobs do
+			worldBosses[mobId] = id
 		end
 	elseif type(module.instanceId) == "table" then
 		for i = 1, #module.instanceId do

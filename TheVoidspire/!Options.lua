@@ -22,6 +22,7 @@ BigWigs:AddColors("Vorasius", {
 	[1254199] = "cyan",
 	[1256855] = "red",
 	[1260052] = "orange",
+	["berserk"] = {"orange","red"},
 })
 
 BigWigs:AddSounds("Vorasius", {
@@ -29,6 +30,7 @@ BigWigs:AddSounds("Vorasius", {
 	[1254199] = "long",
 	[1256855] = "warning",
 	[1260052] = "alarm",
+	["berserk"] = "alarm",
 })
 
 BigWigs:AddColors("Fallen-King Salhadaar", {
@@ -48,23 +50,24 @@ BigWigs:AddSounds("Fallen-King Salhadaar", {
 })
 
 BigWigs:AddColors("Vaelgor & Ezzorak", {
-	[1244221] = "red",
+	[1244221] = "orange",
 	[1244917] = "orange",
 	[1245391] = "orange",
 	[1245645] = "purple",
 	[1249748] = "yellow",
 	[1262623] = "yellow",
 	[1265131] = "purple",
+	[1280458] = "purple",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddSounds("Vaelgor & Ezzorak", {
-	[1244221] = "warning",
 	[1244917] = "alarm",
 	[1245391] = "alert",
-	[1245645] = "alarm",
 	[1249748] = "alert",
 	[1262623] = "alert",
 	[1265131] = "alarm",
+	["stages"] = "long",
 })
 
 BigWigs:AddColors("Lightblinded Vanguard", {
@@ -72,24 +75,60 @@ BigWigs:AddColors("Lightblinded Vanguard", {
 	[1246485] = "yellow",
 	[1246736] = "purple",
 	[1246749] = "yellow",
-	[1246765] = "red",
 	[1248449] = "cyan",
 	[1248451] = "cyan",
-	[1248644] = "yellow",
+	[1248644] = "orange",
 	[1248674] = "yellow",
 	[1248710] = "orange",
 	[1248983] = "red",
 	[1251857] = "purple",
 	[1255738] = "orange",
 	[1276243] = "cyan",
+	["empowered_avengers_shield"] = "red",
+	["empowered_divine_storm"] = "red",
+	["empowered_searing_radiance"] = "orange",
 })
 
 BigWigs:AddSounds("Lightblinded Vanguard", {
+	[1246162] = "long",
+	[1246736] = "info",
+	[1246749] = "warning",
+	[1248449] = "long",
+	[1248451] = "long",
+	[1248644] = "warning",
+	[1248674] = "alert",
+	[1251857] = "info",
+	[1255738] = "alert",
+	[1276243] = "info",
+	["empowered_divine_storm"] = "alarm",
+	["empowered_searing_radiance"] = "alert",
 })
 
 BigWigs:AddColors("Crown of the Cosmos", {
-	["stages"] = "yellow",
+	[1232467] = "yellow",
+	[1233602] = {"blue","cyan"},
+	[1233787] = "purple",
+	[1233865] = "yellow",
+	[1237614] = "cyan",
+	[1237837] = "cyan",
+	[1238843] = "red",
+	[1239080] = {"blue","orange"},
+	[1243743] = {"orange","red"},
+	[1243753] = "orange",
+	[1246461] = "purple",
+	[1246918] = "orange",
+	[1255368] = "red",
+	[1261016] = "cyan",
+	[1261339] = "orange",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddSounds("Crown of the Cosmos", {
+	[1237837] = "info",
+	[1238843] = "long",
+	[1243743] = "alert",
+	[1255368] = "alert",
+	[1261016] = "info",
+	[1261339] = "info",
+	["stages"] = "long",
 })

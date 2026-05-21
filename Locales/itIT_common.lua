@@ -197,6 +197,19 @@ L.autotalk_boss_desc = "Automaticamente selezione l'opzione di dialogo NPC che f
 L.autotalk_generic_desc = "Automaticamente selezione l'opzione di dialogo NPC che fanno iniziare la prossima fase della spedizione."
 --L.autotalk_notice = "Automatically interacting with NPC %s."
 
+-- GUI notes for renames
+--L.singular = "Singular"
+--L.plural = "Plural"
+--L.generalNote = "This is the text that will generally be used"
+--L.timerNote = "This text will be used for timers"
+--L.castTimerNote = "This text will only be used for cast timers"
+--L.messageNote = "This text will be used for messages"
+--L.messageOnYouNote = "The message shown when this ability is on you"
+--L.timerOnYouNote = "The text shown in the timer when this ability is on you"
+--L.thisOnly = "%s Only" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
+
 -- Common ability name replacements
 L.absorb = "Assorbimento" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Assorbimento di cura" -- Used for shield-like abilities that absorb healing only
@@ -232,10 +245,6 @@ L.rift = "Fenditura" -- Can be used in a similar way as a portal e.g. "Time Rift
 L.rifts = "Fenditure" -- Plural of L.rift
 L.orb = "Globo" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "Globi" -- Plural for L.orb
-L.curse = "Maledizione" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
-L.curses = "Maledizioni" -- Plural of L.curse
-L.disease = "Malattia" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
-L.poison = "Veleno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "Spirito" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "Spiriti" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
@@ -249,6 +258,8 @@ L.spell_reflection = "Rifletti Incantesimo" -- Any ability that reflects spells
 L.rooted = "Immobilizzato" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "Frecce" -- Plural of L.arrow
 L.ball = "Palla" -- A ball, like a football, basketball, etc
 L.balls = "Palle" -- Plural of L.ball
 L.blind = "Accecamento" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
@@ -259,6 +270,7 @@ L.fixate = "Ossessione" -- Used when a boss or add is chasing/fixated on a playe
 L.fixates = "Fissato" -- Plural of L.fixate
 L.group_damage = "Danno Gruppo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Risucchio di Salute" -- Any ability that drains health from the player
+L.madness = "Follia" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
 L.parasite = "Parassita" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "Parasite" -- Plural of L.parasite
 L.pull_in = "Trascinato Dentro" -- An ability that pulls you in towards the boss against your will
@@ -269,13 +281,30 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Spuntone" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Spuntoni" -- Plural of L.spike
 L.spread = "Separatevi" -- An ability that forces you to spread out away from other players, or you might damage them
-L.tank_bomb = "Bomba Tank" -- Similar to L.bomb but only applies to tanks
-L.tank_combo = "Combinazione Difensore" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
-L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "Tank Frontale" -- Similar to L.frontal_cone but only applies to tanks
-L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentacolo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacoli" -- Plural of L.tentacle
 L.waves = "Onde" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "Draghetto" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Draghetti" -- Plural of L.whelp
+
+-- Dispel-related spell renames
+L.curse = "Maledizione" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
+L.curses = "Maledizioni" -- Plural of L.curse
+L.disease = "Malattia" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+--L.dispel = "Dispel" -- General term for any debuff that is dispellable
+--L.dispels = "Dispels" -- Plural of L.dispel
+L.poison = "Veleno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
+
+-- Interrupt-related spell renames
+--L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "Calcio" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+--L.kicks = "Kicks" -- Plural of L.kick
+
+-- Tank-related spell renames
+L.tank_bomb = "Bomba Tank" -- Similar to L.bomb but only applies to tanks
+L.tank_combo = "Combinazione Difensore" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_debuff = "Tank Debuff" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "Tank Frontale" -- Similar to L.frontal_cone but only applies to tanks
+--L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
+--L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense

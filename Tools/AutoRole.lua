@@ -1,24 +1,31 @@
 RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN") -- We don't need to participate in role polls
 
 local LibSpec = LibStub("LibSpecialization")
-local myName = UnitNameUnmodified("player")
 
 local frame = CreateFrame("Frame")
 local IsInGroup, IsPartyLFG = IsInGroup, IsPartyLFG
 local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
 local UnitGroupRolesAssigned, UnitSetRole = UnitGroupRolesAssigned, UnitSetRole
 
-local function UpdateMyRole()
-	local _, role = LibSpec.MySpecialization()
-	if IsInGroup() and not IsPartyLFG() and UnitGroupRolesAssigned("player") ~= role then
-		if InCombatLockdown() or UnitAffectingCombat("player") then
-			frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-			return
+local UpdateMyRole
+do
+	local prevTime = 0
+	function UpdateMyRole()
+		local _, role = LibSpec.MySpecialization()
+		if IsInGroup() and not IsPartyLFG() and UnitGroupRolesAssigned("player") ~= role then
+			if InCombatLockdown() or UnitAffectingCombat("player") then
+				frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+				return
+			end
+			local t = GetTime()
+			if t-prevTime > 1 then
+				prevTime = t
+				UnitSetRole("player", role)
+			end
 		end
-		UnitSetRole("player", role)
 	end
+	LibSpec.RegisterPlayerSpecChange({}, UpdateMyRole)
 end
-LibSpec.RegisterPlayerSpecChange({}, UpdateMyRole)
 
 frame:SetScript("OnEvent", function(self, event)
 	if event == "GROUP_FORMED" then
@@ -35,6 +42,7 @@ local L = addonTbl.API:GetLocale("BigWigs")
 addonTbl.API.RegisterToolOptions("AutoRole", {
 	type = "group",
 	name = L.autoRoleTitle,
+	order = 7,
 	args = {
 		explainer = {
 			type = "description",

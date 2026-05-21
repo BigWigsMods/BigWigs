@@ -1,4 +1,4 @@
-if BigWigsLoader.isMidnight then return end -- XXX needs updating for 12.0
+if BigWigsLoader.isRetail then return end -- XXX needs updating for 12.0
 
 -------------------------------------------------------------------------------
 -- Module Declaration
@@ -23,7 +23,7 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local Ambiguate, SendChatMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, GetTime
+local Ambiguate, SendChatMessage, SendBattleNetMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, BigWigsLoader.SendBattleNetMessage, GetTime
 plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
@@ -162,8 +162,8 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossEngage(event, module)
-	if not self.db.profile.disabled and module and (module:GetJournalID() or module:GetAllowWin()) and not module.worldBoss then
+function plugin:BigWigs_OnBossEngage(_, module)
+	if not self.db.profile.disabled and module and (module:GetJournalID() or module:GetAllowWin()) and not module:IsWorldModule() then
 		curDiff = module:Difficulty()
 		curModule = module
 		throttle, throttleBN, friendlies = {}, {}, {}
@@ -222,7 +222,7 @@ do
 					else
 						msg = L.autoReplyLeftCombatBasic
 					end
-					BNSendWhisper(k, "[BigWigs] ".. msg)
+					SendBattleNetMessage(k, "[BigWigs] ".. msg)
 				end
 				for k in next, friendlies do
 					local msg
@@ -256,7 +256,7 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module
+	function plugin:BigWigs_OnBossDisable(_, module) -- Manual disable or reboot of the boss module
 		if not self.db.profile.disabled and module and module == curModule then
 			curDiff = 0
 			self:UnregisterEvent("CHAT_MSG_WHISPER")
@@ -336,7 +336,7 @@ do
 		end
 	end
 
-	function plugin:CHAT_MSG_WHISPER(event, _, sender, _, _, _, flag, _, _, _, _, _, guid)
+	function plugin:CHAT_MSG_WHISPER(_, _, sender, _, _, _, flag, _, _, _, _, _, guid)
 		if curDiff > 0 and flag ~= "GM" and flag ~= "DEV" then
 			local trimmedPlayer = Ambiguate(sender, "none")
 			if UnitInRaid(trimmedPlayer) or UnitInParty(trimmedPlayer) then -- Player is in our group
@@ -366,7 +366,8 @@ do
 		end
 	end
 
-	function plugin:CHAT_MSG_BN_WHISPER(event, _, playerName, _, _, _, _, _, _, _, _, _, _, bnSenderID)
+	local myClient = WOW_PROJECT_ID
+	function plugin:CHAT_MSG_BN_WHISPER(_, _, _, _, _, _, _, _, _, _, _, _, _, bnSenderID)
 		if curDiff > 0 and not BNIsSelf(bnSenderID) then
 			if not throttleBN[bnSenderID] or (GetTime() - throttleBN[bnSenderID]) > 30 then
 				throttleBN[bnSenderID] = GetTime()
@@ -374,25 +375,27 @@ do
 				local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 				for i=1, gameAccs do
 					local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
-					local player = gameAccountInfo.characterName
-					local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
-					local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
-					if gameAccountInfo.clientProgram == "WoW" and realmName and realmDisplayName and player then
-						if realmDisplayName ~= GetRealmName() then
-							player = player .. "-" .. realmName
-						end
-						if UnitInRaid(player) or UnitInParty(player) then -- Player is in our group
-							local _, _, _, myInstanceId = UnitPosition("player")
-							local _, _, _, tarInstanceId = UnitPosition(player)
-							if myInstanceId == tarInstanceId then -- Player is also in our instance
-								throttleBN[bnSenderID] = nil
-								return
+					if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == myClient and gameAccountInfo.isInCurrentRegion and gameAccountInfo.realmID > 0 then
+						local player = gameAccountInfo.characterName
+						local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
+						local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
+						if realmName and realmDisplayName and player then
+							if realmDisplayName ~= GetRealmName() then
+								player = player .. "-" .. realmName
+							end
+							if UnitInRaid(player) or UnitInParty(player) then -- Player is in our group
+								local _, _, _, myInstanceId = UnitPosition("player")
+								local _, _, _, tarInstanceId = UnitPosition(player)
+								if myInstanceId == tarInstanceId then -- Player is also in our instance
+									throttleBN[bnSenderID] = nil
+									return
+								end
 							end
 						end
 					end
 				end
 				local msg = CreateResponse(self.db.profile.mode)
-				BNSendWhisper(bnSenderID, "[BigWigs] ".. msg)
+				SendBattleNetMessage(bnSenderID, "[BigWigs] ".. msg)
 				if not timer and self.db.profile.exitCombat == 4 then
 					timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
 				end

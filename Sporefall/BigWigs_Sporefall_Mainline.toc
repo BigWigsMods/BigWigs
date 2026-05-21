@@ -1,0 +1,38 @@
+## Interface: 120001, 120005, 120007
+
+## Title: BigWigs [|cffeda55fSporefall|r]
+## Title-deDE: BigWigs [|cffeda55fSporenfall|r]
+## Title-esES: BigWigs [|cffeda55fSporefall|r]
+## Title-esMX: BigWigs [|cffeda55fSporefall|r]
+## Title-frFR: BigWigs [|cffeda55fSporefall|r]
+## Title-itIT: BigWigs [|cffeda55fSporefall|r]
+## Title-koKR: BigWigs [|cffeda55f진균나락|r]
+## Title-ptBR: BigWigs [|cffeda55fSporefall|r]
+## Title-ruRU: BigWigs [|cffeda55fSporefall|r]
+## Title-zhCN: BigWigs [|cffeda55f孢陨幽境|r]
+## Title-zhTW: BigWigs [|cffeda55fSporefall|r]
+## Notes: BigWigs Sporefall Modules
+## Notes-deDE: BigWigs Sporenfall Module
+## Notes-esES: BigWigs Sporefall Modules
+## Notes-esMX: BigWigs Sporefall Modules
+## Notes-frFR: BigWigs Sporefall Modules
+## Notes-itIT: BigWigs Sporefall Modules
+## Notes-koKR: BigWigs 진균나락 모듈
+## Notes-ptBR: BigWigs Sporefall Modules
+## Notes-ruRU: BigWigs Sporefall Modules
+## Notes-zhCN: BigWigs 孢陨幽境模块
+## Notes-zhTW: BigWigs Sporefall Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 1592
+
+#Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+
+Rotmire.lua
+
+!Options.lua

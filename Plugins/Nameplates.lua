@@ -256,7 +256,7 @@ do
 		if db.iconOffsetYTarget < -100 or db.iconOffsetYTarget > 100 then
 			db.iconOffsetYTarget = plugin.defaultDB.iconOffsetYTarget
 		end
-		if not LibSharedMedia:IsValid(FONT, db.iconFontName) then
+		if not LibSharedMedia:IsValid(FONT, db.iconFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.iconFontName)) then
 			db.iconFontName = plugin.defaultDB.iconFontName
 		end
 		if db.iconFontSize < 6 or db.iconFontSize > 200 then
@@ -342,7 +342,7 @@ do
 		if db.textOffsetY < -150 or db.textOffsetY > 150 then
 			db.textOffsetY = plugin.defaultDB.textOffsetY
 		end
-		if not LibSharedMedia:IsValid(FONT, db.textFontName) then
+		if not LibSharedMedia:IsValid(FONT, db.textFontName) or not BigWigsAPI.IsValidMediaPath(db.textFontName) then
 			db.textFontName = plugin.defaultDB.textFontName
 		end
 		if db.textFontSize < 10 or db.textFontSize > 200 then
@@ -2051,7 +2051,7 @@ end
 --
 
 do
-	local function handleFrame(guid, frameInfo)
+	local function handleFrame(frameInfo)
 		local remainingTime = frameInfo.exp - GetTime()
 		if frameInfo.text then
 			local nameplateFrame = createNameplateText(
@@ -2083,13 +2083,13 @@ do
 		local unitIcons = nameplateIcons[guid]
 		if unitIcons then
 			for _, frameInfo in next, unitIcons do
-				handleFrame(guid, frameInfo)
+				handleFrame(frameInfo)
 			end
 		end
 		local unitTexts = nameplateTexts[guid]
 		if unitTexts then
 			for _, frameInfo in next, unitTexts do
-				handleFrame(guid, frameInfo)
+				handleFrame(frameInfo)
 			end
 		end
 		rearrangeNameplateIcons(guid)

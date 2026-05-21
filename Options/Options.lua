@@ -15,12 +15,12 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 local lds = LibStub("LibDualSpec-1.0", true)
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 options.SendMessage = loader.SendMessage
-local UnitName = loader.UnitName
 
-local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
-bwTooltip:SetScript("OnUpdate", function(self, elapsed)
+local optionsTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
+optionsTooltip:SetScript("OnUpdate", function(self, elapsed)
 	-- basically GameTooltip_OnUpdate
 	self.updateTooltipTimer = (self.updateTooltipTimer or 0.2) - elapsed
 	if self.updateTooltipTimer > 0 then return end
@@ -34,9 +34,9 @@ bwTooltip:SetScript("OnUpdate", function(self, elapsed)
 		self:RefreshData()
 	end
 end)
-local function bwTooltip_Hide()
+local function optionsTooltip_Hide()
 	-- common OnLeave handler
-	bwTooltip:Hide()
+	optionsTooltip:Hide()
 end
 
 local colorModule
@@ -378,15 +378,15 @@ local function getMasterOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	if type(key) == "string" and key:find("^custom_") then
-		return module.db.profile[key]
+		return module.db.profile.toggles[key]
 	end
-	if type(module.db.profile[key]) ~= "number" then
-		module.db.profile[key] = module.toggleDefaults[key]
+	if type(module.db.profile.toggles[key]) ~= "number" then
+		module.db.profile.toggles[key] = module.toggleDefaults[key]
 	end
-	if module.db.profile[key] == 0 then
+	if module.db.profile.toggles[key] == 0 then
 		return false -- nothing go away
 	end
-	if bit.band(module.db.profile[key], module.toggleDefaults[key]) == module.toggleDefaults[key] then
+	if bit.band(module.db.profile.toggles[key], module.toggleDefaults[key]) == module.toggleDefaults[key] then
 		return true -- all default baby
 	end
 	return nil -- some options set
@@ -397,7 +397,7 @@ local function getSlaveOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	local flag = self:GetUserData("flag")
-	local current = module.db.profile[key]
+	local current = module.db.profile.toggles[key]
 	if type(current) ~= "number" or type(flag) ~= "number" then
 		error(notNumberError:format(tostring(key), tostring(module.moduleName), tostring(current), tostring(flag)))
 	end
@@ -410,15 +410,15 @@ local function masterOptionToggled(self, event, value)
 	local module = self:GetUserData("module")
 	local keyIsString = type(key) == "string"
 	if keyIsString and key:find("custom_select", nil, true) then
-		module.db.profile[key] = value or 1
+		module.db.profile.toggles[key] = value or 1
 	elseif keyIsString and key:find("custom_", nil, true) then
-		module.db.profile[key] = value or false
+		module.db.profile.toggles[key] = value or false
 	else
 		if value then
 			-- If an option is disabled by default using the "OFF" toggle flag, then when we turn it on, we want all the default flags on also
-			module.db.profile[key] = module.toggleDisabled and module.toggleDisabled[key] or module.toggleDefaults[key]
+			module.db.profile.toggles[key] = module.toggleDisabled and module.toggleDisabled[key] or module.toggleDefaults[key]
 		else
-			module.db.profile[key] = 0
+			module.db.profile.toggles[key] = 0
 		end
 		local dropdown = self:GetUserData("dropdown")
 		-- This data ONLY exists if we're looking at the advanced options tab,
@@ -443,9 +443,9 @@ local function slaveOptionToggled(self, event, value)
 	local flag = self:GetUserData("flag")
 	local master = self:GetUserData("master")
 	if value then
-		module.db.profile[key] = module.db.profile[key] + flag
+		module.db.profile.toggles[key] = module.db.profile.toggles[key] + flag
 	else
-		module.db.profile[key] = module.db.profile[key] - flag
+		module.db.profile.toggles[key] = module.db.profile.toggles[key] - flag
 	end
 	master:SetValue(getMasterOption(master))
 
@@ -455,12 +455,12 @@ local function slaveOptionToggled(self, event, value)
 end
 
 local function slaveOptionMouseOver(self, event, value)
-	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	optionsTooltip:SetOwner(self.frame, "ANCHOR_TOP")
 	if self:GetUserData("label") then
-		bwTooltip:AddLine(self:GetUserData("label"))
+		optionsTooltip:AddLine(self:GetUserData("label"))
 	end
-	bwTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
-	bwTooltip:Show()
+	optionsTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
+	optionsTooltip:Show()
 end
 
 local function getSlaveToggle(label, desc, key, module, flag, master, width, icon, ...)
@@ -488,7 +488,7 @@ local function getSlaveToggle(label, desc, key, module, flag, master, width, ico
 	toggle:SetUserData("master", master)
 	toggle:SetCallback("OnValueChanged", slaveOptionToggled)
 	toggle:SetCallback("OnEnter", slaveOptionMouseOver)
-	toggle:SetCallback("OnLeave", bwTooltip_Hide)
+	toggle:SetCallback("OnLeave", optionsTooltip_Hide)
 	toggle:SetValue(getSlaveOption(toggle))
 	toggle.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	return toggle
@@ -582,136 +582,247 @@ local function advancedToggles(dbKey, module, check)
 	return unpack(advOpts)
 end
 
-local function advancedTabSelect(widget, callback, tab)
-	if widget:GetUserData("tab") == tab then return end
-	widget:SetUserData("tab", tab)
-	visibleSpellDescriptionWidgets = {}
-	widget:PauseLayout()
-	widget:ReleaseChildren()
-	local module = widget:GetUserData("module")
-	local key = widget:GetUserData("key")
-	local master = widget:GetUserData("master")
+do
+	local lastAdvancedOptionsTab = nil
 
-	if tab == "options" then
-		widget:AddChildren(advancedToggles(key, module, master))
-	elseif tab == "sounds" then
-		local group = AceGUI:Create("SimpleGroup")
-		group:SetFullWidth(true)
-		widget:AddChild(group)
-		soundModule:SetSoundOptions(module.name, key, module.db.profile[key])
-		acd:Open("BigWigs: Sounds Override", group)
-	elseif tab == "colors" then
-		local group = AceGUI:Create("SimpleGroup")
-		group:SetFullWidth(true)
-		widget:AddChild(group)
-		colorModule:SetColorOptions(module.name, key, module.toggleDefaults[key])
-		acd:Open("BigWigs: Colors Override", group)
+	local function setRenameValue(widget, _, value)
+		local module = widget:GetUserData("module")
+		local key = widget:GetUserData("key")
+		local position = widget:GetUserData("position")
+		module.db.profile.renames[key][position] = value
+
+		-- refresh
+		local master = widget:GetUserData("master")
+		local dropdown = master:GetUserData("dropdown")
+		local scrollFrame = master:GetUserData("scrollFrame")
+		local bossOption = master:GetUserData("option")
+		visibleSpellDescriptionWidgets = {}
+		lastAdvancedOptionsTab = "renames"
+		scrollFrame:ReleaseChildren()
+		scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+		scrollFrame:PerformLayout()
 	end
-	widget:ResumeLayout()
-	widget:GetUserData("scrollFrame"):PerformLayout()
-	widget:PerformLayout()
-end
 
-local advancedTabs = {
-	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sliders:20|t ".. L.advanced_options,
-		value = "options",
-	},
-	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Colors:20|t ".. L.colors,
-		value = "colors",
-	},
-	{
-		text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sounds:20|t ".. L.sound,
-		value = "sounds",
-	},
-}
-
-function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
-	local widgets = {}
-
-	local back = AceGUI:Create("Button")
-	back:SetText(L.back)
-	back:SetFullWidth(true)
-	back:SetCallback("OnClick", function()
-		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"), true)
-	end)
-	widgets[#widgets + 1] = back
-
-	-- Add a small text label to the top right displaying the spell ID or key
-	local idLabel = AceGUI:Create("Label")
-	if type(dbKey) == "number" then
-		idLabel.label:SetFormattedText(L.optionsKey, dbKey)
-	else
-		idLabel.label:SetFormattedText(L.optionsKey, "\""..dbKey.."\"")
+	local function resetRenameValue(widget)
+		local name = widget:GetUserData("default")
+		local editbox = widget:GetUserData("editbox")
+		editbox:Fire("OnEnterPressed", name)
 	end
-	idLabel:SetColor(0.65, 0.65, 0.65)
-	idLabel:SetFullWidth(true)
-	idLabel.label:SetJustifyH("RIGHT")
-	widgets[#widgets + 1] = idLabel
 
-	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
-	check:SetTriState(true)
-	check:SetFullWidth(true)
-	check:SetDescription(desc)
-	check:SetUserData("key", dbKey)
-	check:SetUserData("scrollFrame", scrollFrame)
-	check:SetUserData("dropdown", dropdown)
-	check:SetUserData("module", module)
-	check:SetUserData("option", bossOption)
-	check:SetCallback("OnValueChanged", masterOptionToggled)
-	check:SetValue(getMasterOption(check))
-	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
-	if icon then
-		check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
-	end
-	widgets[#widgets + 1] = check
+	local function getRenameOptions(widget) -- widget = TabGroup
+		local module = widget:GetUserData("module")
+		local optionKey = widget:GetUserData("key")
 
-	-- Create role-specific secondary checkbox
-	for i, key in next, BigWigs:GetRoleOptions() do
-		local flag = C[key]
-		local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
-		if bit.band(dbv, flag) == flag then
-			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
-			local roleRestrictionCheckbox
-			if key == "TANK" or key == "HEALER" or key == "DISPEL" then
-				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 0.3, module:GetMenuIcon(key))
-			else
-				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 0.3) -- No icon
+		local widgets = {}
+
+		local header = AceGUI:Create("Label")
+		header:SetText(L.renameHeader)
+		header:SetFullWidth(true)
+		widgets[#widgets + 1] = header
+
+		for position = 1, module:GetRenameCount(optionKey) do
+			local default = module:GetRenameDefault(optionKey, position)
+			local name = module:GetRename(optionKey, position)
+			local label = module:GetRenameNote(optionKey, position)
+			local original = module:GetRenameOriginal(optionKey)
+			local showOriginal = position == 1 and original
+
+			local customName = AceGUI:Create("EditBox")
+			if label then
+				customName:SetLabel(label)
 			end
-			roleRestrictionCheckbox:SetDescription(roleDesc)
-			roleRestrictionCheckbox:SetFullWidth(true)
-			roleRestrictionCheckbox:SetUserData("desc", nil) -- Remove tooltip set by getSlaveToggle() function
-			widgets[#widgets + 1] = roleRestrictionCheckbox
+			customName:SetText(name)
+			customName:SetUserData("module", module)
+			customName:SetUserData("key", optionKey)
+			customName:SetUserData("position", position)
+			customName:SetUserData("master", widget:GetUserData("master"))
+			customName:SetCallback("OnEnterPressed", setRenameValue)
+			customName:SetRelativeWidth(0.6)
+			widgets[#widgets + 1] = customName
+
+			local customReset = AceGUI:Create("Button")
+			customReset:SetText(L.reset)
+			customReset:SetDisabled(module:IsRenameDefault(optionKey, position))
+			customReset:SetUserData("default", default)
+			customReset:SetUserData("editbox", customName)
+			customReset:SetCallback("OnClick", resetRenameValue)
+			customReset:SetRelativeWidth(showOriginal and 0.2 or 0.4)
+			widgets[#widgets + 1] = customReset
+
+			if showOriginal then
+				local customOriginal = AceGUI:Create("Button")
+				customOriginal:SetText(L.spellName)
+				customOriginal:SetDisabled(module:IsRenameOriginal(optionKey))
+				customOriginal:SetUserData("default", original)
+				customOriginal:SetUserData("editbox", customName)
+				customOriginal:SetCallback("OnClick", resetRenameValue)
+				customOriginal:SetUserData("desc", L.spellNameResetDesc)
+				customOriginal:SetCallback("OnEnter", slaveOptionMouseOver)
+				customOriginal:SetCallback("OnLeave", optionsTooltip_Hide)
+				customOriginal:SetRelativeWidth(0.2)
+				widgets[#widgets + 1] = customOriginal
+			end
 		end
+
+		return unpack(widgets)
 	end
 
-	if hasOptionFlag(dbKey, module, "PRIVATE") then
-		local privateAuraText = AceGUI:Create("Label")
-		privateAuraText:SetText(L.PRIVATE_desc)
-		privateAuraText:SetColor(1, 0.75, 0.79)
-		privateAuraText:SetImage(module:GetMenuIcon("PRIVATE"))
-		privateAuraText:SetFullWidth(true)
-		privateAuraText:SetHeight(30)
-		widgets[#widgets + 1] = privateAuraText
+	local function advancedTabSelect(widget, callback, tab)
+		lastAdvancedOptionsTab = nil
+		if widget:GetUserData("tab") == tab then return end
+		widget:SetUserData("tab", tab)
+		visibleSpellDescriptionWidgets = {}
+		widget:PauseLayout()
+		widget:ReleaseChildren()
+		local module = widget:GetUserData("module")
+		local key = widget:GetUserData("key")
+		local master = widget:GetUserData("master")
+
+		if tab == "options" then
+			widget:AddChildren(advancedToggles(key, module, master))
+		elseif tab == "sounds" then
+			local group = AceGUI:Create("SimpleGroup")
+			group:SetFullWidth(true)
+			widget:AddChild(group)
+			soundModule:SetSoundOptions(module.name, key, module.db.profile.toggles[key])
+			acd:Open("BigWigs: Sounds Override", group)
+		elseif tab == "colors" then
+			local group = AceGUI:Create("SimpleGroup")
+			group:SetFullWidth(true)
+			widget:AddChild(group)
+			colorModule:SetColorOptions(module.name, key, module.toggleDefaults[key])
+			acd:Open("BigWigs: Colors Override", group)
+		elseif tab == "renames" then
+			if not module:HasRenames() then
+				local label = AceGUI:Create("Label")
+				label:SetText(L.notYetImplemented)
+				label:SetFontObject(GameFontHighlight)
+				label:SetFullWidth(true)
+				widget:AddChild(label)
+			else
+				widget:AddChildren(getRenameOptions(widget))
+			end
+		end
+		widget:ResumeLayout()
+		widget:GetUserData("scrollFrame"):PerformLayout()
+		widget:PerformLayout()
 	end
 
-	local tabs = AceGUI:Create("TabGroup")
-	tabs:SetLayout("Flow")
-	tabs:SetTabs(advancedTabs)
-	tabs:SetFullWidth(true)
-	tabs:SetCallback("OnGroupSelected", advancedTabSelect)
-	tabs:SetUserData("tab", "")
-	tabs:SetUserData("key", dbKey)
-	tabs:SetUserData("module", module)
-	tabs:SetUserData("master", check)
-	tabs:SetUserData("scrollFrame", scrollFrame)
-	tabs:SelectTab("options")
-	widgets[#widgets + 1] = tabs
+	function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
+		local dbKey, name, desc, icon, note = BigWigs:GetBossOptionDetails(module, bossOption)
+		local widgets = {}
 
-	return unpack(widgets)
+		local back = AceGUI:Create("Button")
+		back:SetText(L.back)
+		back:SetFullWidth(true)
+		back:SetCallback("OnClick", function()
+			showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"), true)
+		end)
+		widgets[#widgets + 1] = back
+
+		-- Add a small text label to the top right displaying the spell ID or key
+		local idLabel = AceGUI:Create("Label")
+		if type(dbKey) == "number" then
+			idLabel.label:SetFormattedText(L.optionsKey, dbKey)
+		else
+			idLabel.label:SetFormattedText(L.optionsKey, "\""..dbKey.."\"")
+		end
+		idLabel:SetColor(0.65, 0.65, 0.65)
+		idLabel:SetFullWidth(true)
+		idLabel.label:SetJustifyH("RIGHT")
+		widgets[#widgets + 1] = idLabel
+
+		local abilityLabel = name
+		if module:IsRenameAvailable(dbKey) then
+			local rename = module:GetRename(dbKey)
+			if rename ~= name then
+				abilityLabel = L.renameLabel:format(abilityLabel, rename)
+			end
+		end
+		if note then
+			abilityLabel = L.noteLabel:format(abilityLabel, note)
+		end
+
+		local check = AceGUI:Create("CheckBox")
+		check:SetLabel(abilityLabel)
+		check:SetTriState(true)
+		check:SetFullWidth(true)
+		check:SetDescription(desc)
+		check:SetUserData("key", dbKey)
+		check:SetUserData("scrollFrame", scrollFrame)
+		check:SetUserData("dropdown", dropdown)
+		check:SetUserData("module", module)
+		check:SetUserData("option", bossOption)
+		check:SetCallback("OnValueChanged", masterOptionToggled)
+		check:SetValue(getMasterOption(check))
+		check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
+		if icon then
+			check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
+		end
+		widgets[#widgets + 1] = check
+
+		-- Create role-specific secondary checkbox
+		for i, key in next, BigWigs:GetRoleOptions() do
+			local flag = C[key]
+			local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
+			if bit.band(dbv, flag) == flag then
+				local roleName, roleDesc = BigWigs:GetOptionDetails(key)
+				local roleRestrictionCheckbox
+				if key == "TANK" or key == "HEALER" or key == "DISPEL" then
+					roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 0.3, module:GetMenuIcon(key))
+				else
+					roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 0.3) -- No icon
+				end
+				roleRestrictionCheckbox:SetDescription(roleDesc)
+				roleRestrictionCheckbox:SetFullWidth(true)
+				roleRestrictionCheckbox:SetUserData("desc", nil) -- Remove tooltip set by getSlaveToggle() function
+				widgets[#widgets + 1] = roleRestrictionCheckbox
+			end
+		end
+
+		if hasOptionFlag(dbKey, module, "PRIVATE") then
+			local privateAuraText = AceGUI:Create("Label")
+			privateAuraText:SetText(L.PRIVATE_desc)
+			privateAuraText:SetColor(1, 0.75, 0.79)
+			privateAuraText:SetImage(module:GetMenuIcon("PRIVATE"))
+			privateAuraText:SetFullWidth(true)
+			privateAuraText:SetHeight(30)
+			widgets[#widgets + 1] = privateAuraText
+		end
+
+		local tabs = AceGUI:Create("TabGroup")
+		tabs:SetLayout("Flow")
+		tabs:SetTabs({
+			{
+				text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sliders:20|t ".. L.advanced_options,
+				value = "options",
+			},
+			{
+				text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Colors:20|t ".. L.colors,
+				value = "colors",
+			},
+			{
+				text = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sounds:20|t ".. L.sound,
+				value = "sounds",
+			},
+			{
+				text = L.renames,
+				value = "renames",
+				disabled = module:HasRenames() and not module:IsRenameAvailable(dbKey),
+			},
+		})
+		tabs:SetFullWidth(true)
+		tabs:SetCallback("OnGroupSelected", advancedTabSelect)
+		tabs:SetUserData("tab", "")
+		tabs:SetUserData("key", dbKey)
+		tabs:SetUserData("module", module)
+		tabs:SetUserData("master", check)
+		tabs:SetUserData("scrollFrame", scrollFrame)
+		tabs:SelectTab(lastAdvancedOptionsTab or "options")
+		widgets[#widgets + 1] = tabs
+
+		return unpack(widgets)
+	end
 end
 
 local function buttonClicked(widget)
@@ -731,57 +842,19 @@ local function buttonClicked(widget)
 end
 
 local function flagOnEnter(widget)
-	bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-	bwTooltip:AddLine(widget:GetUserData("tooltipText"), 1, 1, 1, true)
-	bwTooltip:Show()
-end
-
-local function customDropdownWithBoolValueChanged(widget, _, value)
-	if value == 0 then value = false end
-	local key = widget:GetUserData("key")
-	local module = widget:GetUserData("module")
-	module.db.profile[key] = value or false
+	optionsTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+	optionsTooltip:AddLine(widget:GetUserData("tooltipText"), 1, 1, 1, true)
+	optionsTooltip:Show()
 end
 
 local function customDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local module = widget:GetUserData("module")
-	module.db.profile[key] = value or 1
+	module.db.profile.toggles[key] = value or 1
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
-
-	-- jesus this is so hacky. should probably be "custom_select_" with values as a
-	-- :GetBossOptionDetails return, but this keeps changes to a minimum for now
-	if type(dbKey) == "string" and dbKey:find("^custom_off_select_") then
-		local moduleLocale = module:GetLocale()
-		local values = { [0] = CL.disabled }
-		local i = 1
-		local value = moduleLocale[dbKey.."_value"..i]
-		repeat
-			values[i] = value
-			i = i + 1
-			value = moduleLocale[dbKey.."_value"..i]
-		until not value
-
-		local customDropdown = AceGUI:Create("Dropdown")
-		if desc then
-			-- The label will truncate at ~74 chars, but showing the desc in a tooltip seems awkward
-			customDropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
-		else
-			customDropdown:SetLabel(name)
-		end
-		customDropdown:SetMultiselect(false)
-		customDropdown:SetList(values)
-		customDropdown:SetFullWidth(true)
-		customDropdown:SetUserData("key", dbKey)
-		customDropdown:SetUserData("module", module)
-		customDropdown:SetCallback("OnValueChanged", customDropdownWithBoolValueChanged)
-		customDropdown:SetValue(module.db.profile[dbKey] or 0)
-
-		return customDropdown
-	end
+	local dbKey, name, desc, icon, note = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	if type(dbKey) == "string" and dbKey:find("^custom_select_") then
 		local moduleLocale = module:GetLocale()
@@ -806,7 +879,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		customDropdown:SetUserData("key", dbKey)
 		customDropdown:SetUserData("module", module)
 		customDropdown:SetCallback("OnValueChanged", customDropdownValueChanged)
-		customDropdown:SetValue(module.db.profile[dbKey] or 1)
+		customDropdown:SetValue(module.db.profile.toggles[dbKey] or 1)
 
 		if icon then
 			local iconWidget = AceGUI:Create("Icon")
@@ -821,8 +894,31 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 
+	local abilityLabel = name
+	if module:IsRenameAvailable(dbKey) then
+		local rename = module:GetRename(dbKey)
+		if rename == name then rename = nil end
+		-- add counts for extra strings
+		local count = module:GetRenameCount(dbKey)
+		if module:GetRenameOriginal(dbKey) == false then
+			rename = ("+%d"):format(count)
+		elseif count > 1 then
+			if rename then
+				rename = ("%s, +%d"):format(rename, count - 1)
+			else
+				rename = ("+%d"):format(count)
+			end
+		end
+		if rename then
+			abilityLabel = L.renameLabel:format(abilityLabel, rename)
+		end
+	end
+	if note then
+		abilityLabel = L.noteLabel:format(abilityLabel, note)
+	end
+
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetLabel(abilityLabel)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
@@ -880,7 +976,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			iconWidget:SetImageSize(16, 16)
 			iconWidget:SetUserData("tooltipText", L[key])
 			iconWidget:SetCallback("OnEnter", flagOnEnter)
-			iconWidget:SetCallback("OnLeave", bwTooltip_Hide)
+			iconWidget:SetCallback("OnLeave", optionsTooltip_Hide)
 
 			if key == "TANK_HEALER" then
 				-- add both "TANK" and "HEALER" icons
@@ -890,7 +986,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				icon1:SetImageSize(16, 16)
 				icon1:SetUserData("tooltipText", L[key])
 				icon1:SetCallback("OnEnter", flagOnEnter)
-				icon1:SetCallback("OnLeave", bwTooltip_Hide)
+				icon1:SetCallback("OnLeave", optionsTooltip_Hide)
 				icon1.frame:SetParent(check.frame)
 				icon1.frame:Show()
 				flagIcons[#flagIcons+1] = icon1
@@ -1028,16 +1124,16 @@ local function SecondsToTime(time)
 end
 
 local function privateAuraOnEnter(widget)
-	bwTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-	bwTooltip:SetSpellByID(widget:GetUserData("spellId"))
-	bwTooltip:Show()
+	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
+	optionsTooltip:SetSpellByID(widget:GetUserData("spellId"))
+	optionsTooltip:Show()
 end
 
 local function privateAuraDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local default = widget:GetUserData("default")
 	local module = widget:GetUserData("module")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
+	local soundList = LibSharedMedia:List("sound")
 	value = soundList[value]
 	if value == default then
 		value = nil
@@ -1048,416 +1144,429 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 		sDB[module.name] = {}
 	end
 	sDB[module.name][key] = value
+	module:RegisterPrivateAuraSounds()
 end
 
-local populatePrivateAuraOptions
-local function privateAuraResetOnClick(widget)
+local function getPrivateAuraOptions(module, option)
 	local sDB = soundModule.db.profile["privateaura"]
-	for module, paOptions in next, widget:GetUserData("privateAuraSoundOptions") do
-		sDB[module.name] = nil
+	local soundList = LibSharedMedia:List("sound")
+
+	local spellId = option[1]
+	local key = spellId
+	local id = option.tooltip or spellId
+	local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
+
+	local name = loader.GetSpellName(id)
+	if option.note then
+		name = L.renameLabel:format(name, option.note)
 	end
-	populatePrivateAuraOptions(widget:GetUserData("scrollFrame"))
-end
+	local texture = loader.GetSpellTexture(id)
 
-function populatePrivateAuraOptions(widget)
-	local scrollFrame = widget:GetUserData("parent")
-	scrollFrame:ReleaseChildren()
-	scrollFrame:PauseLayout()
+	local icon = AceGUI:Create("Icon")
+	icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
+	icon:SetImageSize(40, 40)
+	icon:SetRelativeWidth(0.1)
+	icon:SetUserData("spellId", id)
+	icon:SetUserData("updateTooltip", true)
+	icon:SetCallback("OnEnter", privateAuraOnEnter)
+	icon:SetCallback("OnLeave", optionsTooltip_Hide)
 
-	local text = AceGUI:Create("Label")
-	text:SetText(L.privateAuraSounds_desc)
-	text:SetColor(1, 0.75, 0.79)
-	text:SetImage("Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private")
-	text:SetFullWidth(true)
-	text:SetHeight(30)
-	scrollFrame:AddChild(text)
-
-	local privateAuraSoundOptions = widget:GetUserData("privateAuraSoundOptions")
-	local soundList = LibStub("LibSharedMedia-3.0"):List("sound")
-	local sDB = soundModule.db.profile["privateaura"]
-	-- preserve module order
-	for _, module in ipairs(widget:GetUserData("moduleList")) do
-		local paOptions = privateAuraSoundOptions[module]
-		if paOptions then
-			if module.SetupOptions then module:SetupOptions() end -- init the db
-
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.displayName)
-			header:SetFullWidth(true)
-			scrollFrame:AddChild(header)
-			for _, option in ipairs(paOptions) do
-				local spellId = option[1]
-				local key = spellId
-				local id = option.tooltip or spellId
-				local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
-
-				local name = loader.GetSpellName(id)
-				local texture = loader.GetSpellTexture(id)
-
-				local icon = AceGUI:Create("Icon")
-				icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
-				icon:SetImageSize(40, 40)
-				icon:SetRelativeWidth(0.1)
-				icon:SetUserData("spellId", id)
-				icon:SetUserData("updateTooltip", true)
-				icon:SetCallback("OnEnter", privateAuraOnEnter)
-				icon:SetCallback("OnLeave", bwTooltip_Hide)
-
-				local dropdown = AceGUI:Create("SharedDropdown")
-				if option.mythic then
-					dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
-				else
-					dropdown:SetLabel(name)
-				end
-				dropdown:SetList(soundList, nil, "DDI-Sound")
-				dropdown:SetRelativeWidth(0.88)
-				dropdown:SetUserData("key", key)
-				dropdown:SetUserData("default", defaultSound)
-				dropdown:SetUserData("module", module)
-				dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
-				local value = sDB[module.name] and sDB[module.name][key] or defaultSound
-				for i, v in next, soundList do
-					if v == value then
-						dropdown:SetValue(i)
-						break
-					end
-				end
-
-				scrollFrame:AddChildren(icon, dropdown)
-			end
-		end
-	end
-
-	local reset = AceGUI:Create("Button")
-	reset:SetFullWidth(true)
-	reset:SetText(L.reset)
-	reset:SetUserData("label", L.reset)
-	reset:SetUserData("desc", L.resetSoundDesc)
-	reset:SetUserData("scrollFrame", widget)
-	reset:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
-	reset:SetCallback("OnEnter", slaveOptionMouseOver)
-	reset:SetCallback("OnLeave", bwTooltip_Hide)
-	reset:SetCallback("OnClick", privateAuraResetOnClick)
-	scrollFrame:AddChild(reset)
-
-	scrollFrame:ResumeLayout()
-	scrollFrame:PerformLayout()
-end
-
-local function statsDefeatLabelOnEnter(self)
-	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	bwTooltip:AddLine(L.defeat_desc, 1, 1, 1)
-	bwTooltip:Show()
-end
-
-local function statsVictoryLabelOnEnter(self)
-	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	bwTooltip:AddLine(L.victory_desc, 1, 1, 1)
-	bwTooltip:Show()
-end
-
-local function statsFastestLabelOnEnter(self)
-	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	bwTooltip:AddLine(L.fastest_desc, 1, 1, 1)
-	bwTooltip:Show()
-end
-
-local function statsFirstLabelOnEnter(self)
-	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	bwTooltip:AddLine(L.first_desc, 1, 1, 1)
-	bwTooltip:Show()
-end
-
-local function toggleOptionsTabSelected(widget, callback, tab)
-	widget:PauseLayout()
-	widget:ReleaseChildren()
-
-	local module = widget:GetUserData("module")
-	local scrollFrame = widget:GetUserData("scrollFrame")
-	local dropdown = widget:GetUserData("dropdown")
-	local tabOptions = widget:GetUserData("tabOptions")
-	for i, option in next, tabOptions[tab] do
-		local o = option
-		if type(o) == "table" then o = option[1] end
-		if module.optionHeaders and module.optionHeaders[o] then
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.optionHeaders[o])
-			header:SetFullWidth(true)
-			widget:AddChild(header)
-		end
-		widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
-	end
-
-	-- Store last active tab
-	lastOptionsTab = tab
-
-	widget:ResumeLayout()
-	scrollFrame:PerformLayout()
-	widget:PerformLayout()
-end
-
-local function populateToggleOptions(widget, module)
-	visibleSpellDescriptionWidgets = {}
-	local scrollFrame = widget:GetUserData("parent")
-	scrollFrame:ReleaseChildren()
-	scrollFrame:PauseLayout()
-
-	-- Add a small text label to the top right displaying the boss encounter ID
-	local encounterID, multiple = module:GetEncounterID()
-	if encounterID then
-		local idLabel = AceGUI:Create("Label")
-		idLabel.label:SetFormattedText(L.optionsKey, multiple and module:TableToString({module:GetEncounterID()}) or encounterID)
-		idLabel:SetColor(0.65, 0.65, 0.65)
-		idLabel:SetFullWidth(true)
-		idLabel.label:SetJustifyH("RIGHT")
-		scrollFrame:AddChild(idLabel)
-	end
-
-	local sDB = BigWigsStatsDB
-	local journalID = module:GetJournalID()
-	if not journalID and module:GetAllowWin() and encounterID then
-		journalID = -(encounterID) -- Fallback to show stats for modules with no journal ID, but set to allow win
-	end
-	local instanceID = module:GetZoneID()
-	if journalID and instanceID and instanceID > 0 and sDB and sDB[instanceID] and sDB[instanceID][journalID] then
-		sDB = sDB[instanceID][journalID]
-
-		if next(sDB) then -- Create statistics table
-			local statGroup = AceGUI:Create("InlineGroup")
-			statGroup:SetTitle(L.statistics)
-			statGroup:SetLayout("Flow")
-			statGroup:SetFullWidth(true)
-			scrollFrame:AddChild(statGroup)
-
-			local emptyFirstColumnLabel = AceGUI:Create("Label")
-			emptyFirstColumnLabel:SetWidth(110)
-			emptyFirstColumnLabel:SetText("")
-			statGroup:AddChild(emptyFirstColumnLabel)
-
-			local defeatColumnLabel = AceGUI:Create("InteractiveLabel")
-			defeatColumnLabel:SetWidth(83)
-			defeatColumnLabel:SetText(L.defeat)
-			defeatColumnLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
-			defeatColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
-			statGroup:AddChild(defeatColumnLabel)
-
-			local victoryColumnLabel = AceGUI:Create("InteractiveLabel")
-			victoryColumnLabel:SetWidth(83)
-			victoryColumnLabel:SetText(L.victory)
-			victoryColumnLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
-			victoryColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
-			statGroup:AddChild(victoryColumnLabel)
-
-			local fastestColumnLabel = AceGUI:Create("InteractiveLabel")
-			fastestColumnLabel:SetWidth(130)
-			fastestColumnLabel:SetText(L.fastest)
-			fastestColumnLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
-			fastestColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
-			statGroup:AddChild(fastestColumnLabel)
-
-			local firstColumnLabel = AceGUI:Create("InteractiveLabel")
-			firstColumnLabel:SetWidth(140)
-			firstColumnLabel:SetText(L.first)
-			firstColumnLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
-			firstColumnLabel:SetCallback("OnLeave", bwTooltip_Hide)
-			statGroup:AddChild(firstColumnLabel)
-
-			-- Headers
-			local displayOrder = {
-				"story", "timewalk", "LFR", "LFR_timerun", "normal", "normal_timerun", "heroic", "heroic_timerun", "mythic", "mythic_timerun",
-				"N10", "N25", "H10", "H25",
-				"SOD", "level1", "level2", "level3", "hardcore",
-				"solotier8", "solotier11",
-			}
-			for diff, tbl in next, sDB do -- Unknown Stats
-				local found = false
-				for i = 1, #displayOrder do
-					if displayOrder[i] == diff then
-						found = true
-						break
-					end
-				end
-				if not found then
-					local difficultyText = AceGUI:Create("Label")
-					difficultyText:SetWidth(110)
-					difficultyText:SetText(L.unknown)
-					statGroup:AddChild(difficultyText)
-
-					local defeatsLabel = AceGUI:Create("Label")
-					defeatsLabel:SetWidth(83)
-					defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
-					statGroup:AddChild(defeatsLabel)
-
-					local victoriesLabel = AceGUI:Create("Label")
-					victoriesLabel:SetWidth(83)
-					victoriesLabel:SetText(tbl.kills or "-")
-					statGroup:AddChild(victoriesLabel)
-
-					local fastestVictoryLabel = AceGUI:Create("Label")
-					fastestVictoryLabel:SetWidth(130)
-					local value = tbl.best and SecondsToTime(tbl.best)
-					local bestDate = tbl.bestDate
-					if not value then
-						fastestVictoryLabel:SetText("-")
-					elseif value and bestDate then
-						fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
-					elseif value then
-						fastestVictoryLabel:SetText(value)
-					end
-					statGroup:AddChild(fastestVictoryLabel)
-
-					local firstKillDataLabel = AceGUI:Create("Label")
-					firstKillDataLabel:SetWidth(140)
-					if not tbl.fkDate then
-						firstKillDataLabel:SetText("-")
-					else
-						local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
-						firstKillDataLabel:SetText(text)
-					end
-					statGroup:AddChild(firstKillDataLabel)
-				end
-			end
-
-			for i = 1, #displayOrder do -- Known Stats
-				local diff = displayOrder[i]
-				local tbl = sDB[diff]
-				if tbl then
-					local difficultyText = AceGUI:Create("Label")
-					difficultyText:SetWidth(110)
-					difficultyText:SetText(L[diff] or "?")
-					statGroup:AddChild(difficultyText)
-
-					local defeatsLabel = AceGUI:Create("Label")
-					defeatsLabel:SetWidth(83)
-					defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
-					statGroup:AddChild(defeatsLabel)
-
-					local victoriesLabel = AceGUI:Create("Label")
-					victoriesLabel:SetWidth(83)
-					victoriesLabel:SetText(tbl.kills or "-")
-					statGroup:AddChild(victoriesLabel)
-
-					local fastestVictoryLabel = AceGUI:Create("Label")
-					fastestVictoryLabel:SetWidth(130)
-					local value = tbl.best and SecondsToTime(tbl.best)
-					local bestDate = tbl.bestDate
-					if not value then
-						fastestVictoryLabel:SetText("-")
-					elseif value and bestDate then
-						fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
-					elseif value then
-						fastestVictoryLabel:SetText(value)
-					end
-					statGroup:AddChild(fastestVictoryLabel)
-
-					local firstKillDataLabel = AceGUI:Create("Label")
-					firstKillDataLabel:SetWidth(140)
-					if not tbl.fkDate then
-						firstKillDataLabel:SetText("-")
-					else
-						local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
-						firstKillDataLabel:SetText(text)
-					end
-					statGroup:AddChild(firstKillDataLabel)
-				end
-			end
-		end -- End statistics table
-	end
-
-	if module.SetupOptions then module:SetupOptions() end
-
-	local tabs = {}
-	if module.optionHeaders then
-		for _, optionHeader in next, module.optionHeaders do
-			if type(optionHeader) == "table" and optionHeader.tabName then
-				table.insert(tabs, optionHeader)
-			end
-		end
-	end
-
-	if #tabs > 0 then -- tabs!
-		local generalTabExists = nil
-		local tabbedOptions = {}
-		local tabInfo, tabOptions = {}, {}
-		for _, tab in next, tabs do
-			local text = tab.tabName
-			if text == "general" or text == CL.general then
-				generalTabExists = text
-			end
-			local tabData = tab[1]
-			table.insert(tabInfo, { text = text, value = text })
-			tabOptions[text] = tabData
-			for _, option in next, tabData do
-				tabbedOptions[option] = true
-			end
-		end
-
-		for _, option in next, module.toggleOptions do
-			local o = option
-			if type(o) == "table" then o = option[1] end
-			if not tabbedOptions[o] then -- Any options that are not assigned will go to the general tab
-				if not generalTabExists then
-					local value = "general"
-					table.insert(tabInfo, 1, { text = CL.general, value = value })
-					generalTabExists = value
-				end
-				tabOptions[generalTabExists] = tabOptions[generalTabExists] or {}
-				table.insert(tabOptions[generalTabExists], option)
-			end
-		end
-
-		local tabsWidget = AceGUI:Create("TabGroup")
-		tabsWidget:SetLayout("Flow")
-		tabsWidget:SetTabs(tabInfo)
-		tabsWidget:SetFullWidth(true)
-		tabsWidget:SetCallback("OnGroupSelected", toggleOptionsTabSelected)
-		tabsWidget:SetUserData("module", module)
-		tabsWidget:SetUserData("scrollFrame", scrollFrame)
-		tabsWidget:SetUserData("dropdown", widget)
-		tabsWidget:SetUserData("tabOptions", tabOptions)
-		tabsWidget:SelectTab(lastOptionsTab and lastOptionsTab or tabInfo[1].value)
-
-		scrollFrame:AddChild(tabsWidget)
-	else -- no tabs
-		for i, option in next, module.toggleOptions do
-			local o = option
-			if type(o) == "table" then o = option[1] end
-			if module.optionHeaders and module.optionHeaders[o] then
-				local header = AceGUI:Create("Heading")
-				header:SetText(module.optionHeaders[o])
-				header:SetFullWidth(true)
-				scrollFrame:AddChild(header)
-			end
-			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
-		end
-	end
-
-	local list = AceGUI:Create("Button")
-	list:SetFullWidth(true)
-	list:SetText(L.listAbilities)
-	list:SetUserData("module", module)
-	list:SetCallback("OnClick", listAbilitiesInChat)
-	scrollFrame:AddChild(list)
-
-	scrollFrame:ResumeLayout()
-	scrollFrame:PerformLayout()
-end
-
-function showToggleOptions(widget, event, group, noScrollReset)
-	lastBossModuleGroup = group
-	widget:SetUserData("bossIndex", group)
-	-- reset scroll bar if not hitting the back button
-	if not noScrollReset then
-		toggleOptionsStatusTable.restore_offset = nil
-		toggleOptionsStatusTable.restore_scrollvalue = nil
-		lastOptionsTab = nil
-	end
-	toggleOptionsStatusTable.offset = toggleOptionsStatusTable.restore_offset
-	toggleOptionsStatusTable.scrollvalue = toggleOptionsStatusTable.restore_scrollvalue
-
-	if group == "Private Aura Sounds" then
-		populatePrivateAuraOptions(widget)
+	local dropdown = AceGUI:Create("SharedDropdown")
+	if option.mythic then
+		dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
 	else
+		dropdown:SetLabel(name)
+	end
+	dropdown:SetList(soundList, nil, "DDI-Sound")
+	dropdown:SetRelativeWidth(0.88)
+	dropdown:SetUserData("key", key)
+	dropdown:SetUserData("module", module)
+	dropdown:SetUserData("default", defaultSound)
+	dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
+	local value = sDB[module.name] and sDB[module.name][key] or defaultSound
+	for i, v in next, soundList do
+		if v == value then
+			dropdown:SetValue(i)
+			break
+		end
+	end
+
+	return icon, dropdown
+end
+
+do
+	local populateToggleOptions
+	do
+		local bwTooltip = BigWigsAPI.GetTooltip()
+		local function HideTooltip()
+			bwTooltip:Hide()
+		end
+
+		local function statsDefeatLabelOnEnter(self)
+			bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+			bwTooltip:AddLine(L.defeat_desc, 1, 1, 1)
+			bwTooltip:Show()
+		end
+
+		local function statsVictoryLabelOnEnter(self)
+			bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+			bwTooltip:AddLine(L.victory_desc, 1, 1, 1)
+			bwTooltip:Show()
+		end
+
+		local function statsFastestLabelOnEnter(self)
+			bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+			bwTooltip:AddLine(L.fastest_desc, 1, 1, 1)
+			bwTooltip:Show()
+		end
+
+		local function statsFirstLabelOnEnter(self)
+			bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+			bwTooltip:AddLine(L.first_desc, 1, 1, 1)
+			bwTooltip:Show()
+		end
+
+		local function toggleOptionsTabSelected(widget, callback, tab)
+			widget:PauseLayout()
+			widget:ReleaseChildren()
+
+			local module = widget:GetUserData("module")
+			local scrollFrame = widget:GetUserData("scrollFrame")
+			local dropdown = widget:GetUserData("dropdown")
+			local tabOptions = widget:GetUserData("tabOptions")
+
+			if tab == "private" then
+				local header = AceGUI:Create("Label")
+				header:SetText(L.privateAuraSounds_desc)
+				header:SetColor(1, 0.75, 0.79)
+				header:SetFullWidth(true)
+				header:SetHeight(30)
+				widget:AddChild(header)
+
+				for _, v in next, tabOptions[tab] do
+					if C_UnitAuras.AuraIsPrivate(v[1]) then
+						widget:AddChildren(getPrivateAuraOptions(module, v))
+					end
+				end
+
+				local reset = AceGUI:Create("Button")
+				reset:SetFullWidth(true)
+				reset:SetText(L.reset)
+				reset:SetUserData("label", L.reset)
+				reset:SetUserData("desc", L.resetSoundDesc)
+				reset:SetCallback("OnEnter", slaveOptionMouseOver)
+				reset:SetCallback("OnLeave", optionsTooltip_Hide)
+				reset:SetCallback("OnClick", function()
+					soundModule.db.profile["privateaura"][module.name] = nil
+					toggleOptionsTabSelected(widget, nil, "private")
+					-- populateToggleOptions(dropdown, module)
+				end)
+				widget:AddChild(reset)
+			else
+				for i, option in next, tabOptions[tab] do
+					local o = option
+					if type(o) == "table" then o = option[1] end
+					if module.optionHeaders and module.optionHeaders[o] then
+						local header = AceGUI:Create("Heading")
+						header:SetText(module.optionHeaders[o])
+						header:SetFullWidth(true)
+						widget:AddChild(header)
+					end
+					widget:AddChildren(getDefaultToggleOption(scrollFrame, dropdown, module, option))
+				end
+			end
+
+			widget:ResumeLayout()
+			if lastOptionsTab ~= tab then
+				-- scrollFrame gets squished if layouted after the tab group is calculated?
+				scrollFrame:PerformLayout()
+			end
+			widget:PerformLayout()
+
+			-- Store last active tab
+			lastOptionsTab = tab
+		end
+
+		function populateToggleOptions(widget, module)
+			visibleSpellDescriptionWidgets = {}
+			local scrollFrame = widget:GetUserData("parent")
+			scrollFrame:ReleaseChildren()
+			scrollFrame:PauseLayout()
+
+			-- Add a small text label to the top right displaying the boss encounter ID
+			local encounterID, multiple = module:GetEncounterID()
+			if encounterID then
+				local idLabel = AceGUI:Create("Label")
+				idLabel:SetText(format(L.optionsKey, multiple and module:TableToString({module:GetEncounterID()}) or encounterID))
+				idLabel:SetColor(0.65, 0.65, 0.65)
+				idLabel:SetFullWidth(true)
+				idLabel:SetJustifyH("RIGHT")
+				scrollFrame:AddChild(idLabel)
+			end
+
+			local sDB = BigWigsStatsDB
+			local journalID = module:GetJournalID()
+			if not journalID and module:GetAllowWin() and encounterID then
+				journalID = -(encounterID) -- Fallback to show stats for modules with no journal ID, but set to allow win
+			end
+			local instanceID = module:GetZoneID()
+			if journalID and instanceID and instanceID > 0 and sDB and sDB[instanceID] and sDB[instanceID][journalID] then
+				sDB = sDB[instanceID][journalID]
+
+				if next(sDB) then -- Create statistics table
+					local statGroup = AceGUI:Create("InlineGroup")
+					statGroup:SetTitle(L.statistics)
+					statGroup:SetLayout("Flow")
+					statGroup:SetFullWidth(true)
+					scrollFrame:AddChild(statGroup)
+
+					local emptyFirstColumnLabel = AceGUI:Create("Label")
+					emptyFirstColumnLabel:SetWidth(110)
+					emptyFirstColumnLabel:SetText("")
+					statGroup:AddChild(emptyFirstColumnLabel)
+
+					local defeatColumnLabel = AceGUI:Create("InteractiveLabel")
+					defeatColumnLabel:SetWidth(83)
+					defeatColumnLabel:SetText(L.defeat)
+					defeatColumnLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
+					defeatColumnLabel:SetCallback("OnLeave", HideTooltip)
+					statGroup:AddChild(defeatColumnLabel)
+
+					local victoryColumnLabel = AceGUI:Create("InteractiveLabel")
+					victoryColumnLabel:SetWidth(83)
+					victoryColumnLabel:SetText(L.victory)
+					victoryColumnLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
+					victoryColumnLabel:SetCallback("OnLeave", HideTooltip)
+					statGroup:AddChild(victoryColumnLabel)
+
+					local fastestColumnLabel = AceGUI:Create("InteractiveLabel")
+					fastestColumnLabel:SetWidth(130)
+					fastestColumnLabel:SetText(L.fastest)
+					fastestColumnLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
+					fastestColumnLabel:SetCallback("OnLeave", HideTooltip)
+					statGroup:AddChild(fastestColumnLabel)
+
+					local firstColumnLabel = AceGUI:Create("InteractiveLabel")
+					firstColumnLabel:SetWidth(140)
+					firstColumnLabel:SetText(L.first)
+					firstColumnLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
+					firstColumnLabel:SetCallback("OnLeave", HideTooltip)
+					statGroup:AddChild(firstColumnLabel)
+
+					-- Headers
+					local displayOrder = {
+						"story", "timewalk", "LFR", "LFR_timerun", "normal", "normal_timerun", "heroic", "heroic_timerun", "mythic", "mythic_timerun",
+						"N10", "N25", "H10", "H25",
+						"SOD", "level1", "level2", "level3", "hardcore",
+						"solotier8", "solotier11",
+					}
+					for diff, tbl in next, sDB do -- Unknown Stats
+						local found = false
+						for i = 1, #displayOrder do
+							if displayOrder[i] == diff then
+								found = true
+								break
+							end
+						end
+						if not found then
+							local difficultyText = AceGUI:Create("Label")
+							difficultyText:SetWidth(110)
+							difficultyText:SetText(L.unknown)
+							statGroup:AddChild(difficultyText)
+
+							local defeatsLabel = AceGUI:Create("Label")
+							defeatsLabel:SetWidth(83)
+							defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
+							statGroup:AddChild(defeatsLabel)
+
+							local victoriesLabel = AceGUI:Create("Label")
+							victoriesLabel:SetWidth(83)
+							victoriesLabel:SetText(tbl.kills or "-")
+							statGroup:AddChild(victoriesLabel)
+
+							local fastestVictoryLabel = AceGUI:Create("Label")
+							fastestVictoryLabel:SetWidth(130)
+							local value = tbl.best and SecondsToTime(tbl.best)
+							local bestDate = tbl.bestDate
+							if not value then
+								fastestVictoryLabel:SetText("-")
+							elseif value and bestDate then
+								fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
+							elseif value then
+								fastestVictoryLabel:SetText(value)
+							end
+							statGroup:AddChild(fastestVictoryLabel)
+
+							local firstKillDataLabel = AceGUI:Create("Label")
+							firstKillDataLabel:SetWidth(140)
+							if not tbl.fkDate then
+								firstKillDataLabel:SetText("-")
+							else
+								local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
+								firstKillDataLabel:SetText(text)
+							end
+							statGroup:AddChild(firstKillDataLabel)
+						end
+					end
+
+					for i = 1, #displayOrder do -- Known Stats
+						local diff = displayOrder[i]
+						local tbl = sDB[diff]
+						if tbl then
+							local difficultyText = AceGUI:Create("Label")
+							difficultyText:SetWidth(110)
+							difficultyText:SetText(L[diff] or "?")
+							statGroup:AddChild(difficultyText)
+
+							local defeatsLabel = AceGUI:Create("Label")
+							defeatsLabel:SetWidth(83)
+							defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
+							statGroup:AddChild(defeatsLabel)
+
+							local victoriesLabel = AceGUI:Create("Label")
+							victoriesLabel:SetWidth(83)
+							victoriesLabel:SetText(tbl.kills or "-")
+							statGroup:AddChild(victoriesLabel)
+
+							local fastestVictoryLabel = AceGUI:Create("Label")
+							fastestVictoryLabel:SetWidth(130)
+							local value = tbl.best and SecondsToTime(tbl.best)
+							local bestDate = tbl.bestDate
+							if not value then
+								fastestVictoryLabel:SetText("-")
+							elseif value and bestDate then
+								fastestVictoryLabel:SetText(("%s (%s)"):format(value, bestDate))
+							elseif value then
+								fastestVictoryLabel:SetText(value)
+							end
+							statGroup:AddChild(fastestVictoryLabel)
+
+							local firstKillDataLabel = AceGUI:Create("Label")
+							firstKillDataLabel:SetWidth(140)
+							if not tbl.fkDate then
+								firstKillDataLabel:SetText("-")
+							else
+								local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
+								firstKillDataLabel:SetText(text)
+							end
+							statGroup:AddChild(firstKillDataLabel)
+						end
+					end
+				end -- End statistics table
+			end
+
+			if module.SetupOptions then module:SetupOptions() end
+
+			local tabs = {}
+			if module.optionHeaders then
+				for _, optionHeader in next, module.optionHeaders do
+					if type(optionHeader) == "table" and optionHeader.tabName then
+						table.insert(tabs, optionHeader)
+					end
+				end
+			end
+
+			local showTabs = #tabs > 0
+
+			local showPATab = false
+			if module.privateAuraSoundOptions then
+				-- Non-PA spells will not be shown and we don't want an empty tab
+				for _, opt in ipairs(module.privateAuraSoundOptions) do
+					if C_UnitAuras.AuraIsPrivate(opt[1]) then
+						showTabs = true
+						showPATab = true
+						break
+					end
+				end
+			end
+
+			if showTabs then -- tabs!
+				local generalTabExists = nil
+				local tabbedOptions = {}
+				local tabInfo, tabOptions = {}, {}
+				for _, tab in next, tabs do
+					local text = tab.tabName
+					if text == "general" or text == CL.general then
+						generalTabExists = text
+					end
+					local tabData = tab[1]
+					table.insert(tabInfo, { text = text, value = text })
+					tabOptions[text] = tabData
+					for _, option in next, tabData do
+						tabbedOptions[option] = true
+					end
+				end
+
+				for _, option in next, module.toggleOptions do
+					local o = option
+					if type(o) == "table" then o = option[1] end
+					if not tabbedOptions[o] then -- Any options that are not assigned will go to the general tab
+						if not generalTabExists then
+							local value = "general"
+							table.insert(tabInfo, 1, { text = CL.general, value = value })
+							generalTabExists = value
+						end
+						tabOptions[generalTabExists] = tabOptions[generalTabExists] or {}
+						table.insert(tabOptions[generalTabExists], option)
+					end
+				end
+
+				if showPATab then
+					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:18:18:-2:-1|t"
+					table.insert(tabInfo, { text = iconText .. L.privateAuras, value = "private" })
+					tabOptions["private"] = module.privateAuraSoundOptions
+				end
+
+				local tabsWidget = AceGUI:Create("TabGroup")
+				tabsWidget:SetLayout("Flow")
+				tabsWidget:SetTabs(tabInfo)
+				tabsWidget:SetFullWidth(true)
+				tabsWidget:SetCallback("OnGroupSelected", toggleOptionsTabSelected)
+				tabsWidget:SetUserData("module", module)
+				tabsWidget:SetUserData("scrollFrame", scrollFrame)
+				tabsWidget:SetUserData("dropdown", widget)
+				tabsWidget:SetUserData("tabOptions", tabOptions)
+				tabsWidget:SelectTab(lastOptionsTab and lastOptionsTab or tabInfo[1].value)
+
+				scrollFrame:AddChild(tabsWidget)
+			else -- no tabs
+				for i, option in next, module.toggleOptions do
+					local o = option
+					if type(o) == "table" then o = option[1] end
+					if module.optionHeaders and module.optionHeaders[o] then
+						local header = AceGUI:Create("Heading")
+						header:SetText(module.optionHeaders[o])
+						header:SetFullWidth(true)
+						scrollFrame:AddChild(header)
+					end
+					scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
+				end
+			end
+
+			local list = AceGUI:Create("Button")
+			list:SetFullWidth(true)
+			list:SetText(L.listAbilities)
+			list:SetUserData("module", module)
+			list:SetCallback("OnClick", listAbilitiesInChat)
+			scrollFrame:AddChild(list)
+
+			scrollFrame:ResumeLayout()
+			scrollFrame:PerformLayout()
+		end
+	end
+
+	function showToggleOptions(widget, event, group, noScrollReset)
+		lastBossModuleGroup = group
+		widget:SetUserData("bossIndex", group)
+		-- reset scroll bar if not hitting the back button
+		if not noScrollReset then
+			toggleOptionsStatusTable.restore_offset = nil
+			toggleOptionsStatusTable.restore_scrollvalue = nil
+			lastOptionsTab = nil
+		end
+		toggleOptionsStatusTable.offset = toggleOptionsStatusTable.restore_offset
+		toggleOptionsStatusTable.scrollvalue = toggleOptionsStatusTable.restore_scrollvalue
+
 		populateToggleOptions(widget, BigWigs:GetBossModule(group, true))
 	end
 end
@@ -1470,23 +1579,12 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	local moduleList = loader:GetZoneMenus()[instanceIdOrMapId]
 	if type(moduleList) ~= "table" then return end -- No modules registered
 
-	local zoneList, zoneSort, privateAuraSoundOptions = {}, {}, nil
+	local zoneList, zoneSort = {}, {}
 	do
 		for i = 1, #moduleList do
 			local module = moduleList[i]
 			zoneList[module.moduleName] = module.displayName
 			zoneSort[i] = module.moduleName
-			if module.privateAuraSoundOptions then
-				if not privateAuraSoundOptions then privateAuraSoundOptions = {} end
-				privateAuraSoundOptions[module] = module.privateAuraSoundOptions
-			end
-		end
-
-		-- Add the private aura plugin module
-		if privateAuraSoundOptions then
-			local moduleName = "Private Aura Sounds"
-			zoneList[moduleName] = ("|cffffbfc9%s|r"):format(L.privateAuraSounds)
-			zoneSort[#zoneSort+1] = moduleName
 		end
 	end
 
@@ -1502,7 +1600,6 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
 	innerContainer:SetUserData("zone", instanceIdOrMapId)
 	innerContainer:SetUserData("moduleList", moduleList)
-	innerContainer:SetUserData("privateAuraSoundOptions", privateAuraSoundOptions)
 	innerContainer:SetGroupList(zoneList, zoneSort)
 
 	-- scroll is where we actually put stuff in case things
@@ -1823,7 +1920,9 @@ do
 
 				for k, v in next, loader.currentExpansion.zones do -- Parse current content zones
 					local zoneName = GetRealZoneText(k)
-					if not zoneToId[zoneName] and not loader.usingBigWigsRepo then -- If we have no registered menus for current content, and not using the Git repo
+					if zoneName == "" then
+						BigWigs:Error(("Zone ID %q has no name."):format(k))
+					elseif not zoneToId[zoneName] and not loader.usingBigWigsRepo then -- If we have no registered menus for current content, and not using the Git repo
 						alphabeticalZoneList[#alphabeticalZoneList+1] = zoneName -- We want to create sub menus in the GUI for disabled/missing BigWigs current content addons
 						zoneToId[zoneName] = {k, v}
 					end

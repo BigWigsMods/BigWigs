@@ -7,65 +7,934 @@ local mod, CL = BigWigs:NewBoss("Midnight Falls", 2913, 2740)
 if not mod then return end
 mod:RegisterEnableMob(240391) -- L'ura
 mod:SetEncounterID(3183)
+mod:SetRespawnTime(30)
+mod:SetStage(1)
 mod:SetPrivateAuraSounds({
 	{1282027, sound = "underyou"}, -- The Darkwell
 	{1282470, sound = "underyou"}, -- Dark Quasar
-	-- {1254077, "underyou"}, -- Heaven's Glaives, Used?
-	{1284984, 1286294, sound = "long"}, -- Grim Symphony
-	-- 1249615, -- Death's Dirge, Used?
-	{ 1249609, 1249565, 1249558, 1249562, 1249566, 1249550, 1273133 }, -- Dark Rune
-	1249584, -- Dissonance
-	1251789, -- Cosmic Fracture
-	1284699, -- Light's End
+	1249609, -- Dark Rune
 	{1253031, sound = "info"}, -- Glimmering
 	{1265842, sound = "alarm"}, -- Impaled
-	{1262055, sound = "alert"}, -- Eclipsed
 	{1279512, 1285510}, -- Starsplinter
-	-- {1282035, 1282036, 1282039, 1282049, 1286406}, -- Into the Darkwell, Used?
-	1282016, -- Iris of Oblivion
-	1284527, -- Galvanize, also has a 2m duration 1284533, Used?
-	1281184, -- Criticality
-	{1284531, sound = "none"}, -- Decay
-	{1263514, sound = "underyou"}, -- Midnight, also has 1266623, Used?
-	-- 1266587, -- Dark Constellation, Used?
-	{1275429, sound = "info"}, -- Severance (RIGHT?)
-	{1266946, sound = "info"}, -- Severance (other side?)
-	-- 1276531, -- Dimension Breach, Used?
-	{1266113, 1266627, sound = "info"}, -- Tochbrearer
-	{1253770, 1253104, sound = "info"}, -- Dawnlight Barrier
+	1284527, -- Galvanize
+	{1281184, mythic = true}, -- Criticality
+	{1263514, sound = "underyou"}, -- Midnight
+	{1284984, sound = "none", note = BigWigsAPI:GetLocale("BigWigs").blue}, -- Grim Symphony (Blue)
+	{1286294, sound = "none", note = BigWigsAPI:GetLocale("BigWigs").red}, -- Grim Symphony (Red)
 })
+mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
+local activeBars = {}
+local backupBars = {}
+local durationEventCount = {}
+
+local quasarCount = 1
+local glaivesCount = 1
+local dirgeCount = 1
+local prismCount = 1
+local lanceCount = 1
+
+local harvestCount = 1
+local galvanizeCount = 1
+
+local playerSide = nil
+local siphonCount = 1
+local archangelCount = 1
+local constellationCount = 1
+
+local starsplinterCount = 1
+local heavenHellCount = 1
+
+local INTERMISSION_DARK_QUASAR_INFO = {
+	[14] = { -- normal 10, 17, 25, 33
+		count = 4,
+		duration = 7.5,
+	},
+	[15] = { -- heroic 10.6, 16.7, 23.0, 29.2, 35.5
+		count = 5,
+		duration = 6.2,
+	},
+	[16] = { -- mythic 10.4, 15.5, 20.6, 25.7, 30.8, 35.9
+		count = 6,
+		duration = 5.1,
+	},
+}
+
 --------------------------------------------------------------------------------
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
--- end
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	deaths_dirge = "Memory Game",
+	heavens_glaives = "Glaives",
+	heavens_lance = "Lance",
+	prism_kicks = "Kicks",
+	dark_constellation = "Stars",
+	the_dark_archangel = "Big Boom",
+	dark_rune_bar = "Solve the Game",
+
+	left = "[L] %s", -- left/west group bars in p3
+	right = "[R] %s", -- right/east group bars in p3
+
+	custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings",
+	custom_select_limit_warnings_desc = "Only show warnings for abilities on your side.",
+	custom_select_limit_warnings_icon = "misc_arrowlup",
+	custom_select_limit_warnings_value1 = "Groups 1 & 2 go left, groups 3 & 4 go right.",
+	custom_select_limit_warnings_value2 = "Odd groups left, even groups right.",
+	custom_select_limit_warnings_value3 = "Show warnings for both sides.",
+	custom_select_limit_warnings_value4 = "Show warnings for left side only.",
+	custom_select_limit_warnings_value5 = "Show warnings for right side only.",
+})
+
+--------------------------------------------------------------------------------
+-- Renames
+--
+
+mod:SetRenames({
+	["stages"] = {
+		CL.intermission, CL.stage:format(2), CL.stage:format(3), CL.stage:format(4),
+		original = false,
+		notes = {CL.intermission, CL.stage:format(2), CL.stage:format(3), CL.stage:format(4)}
+	}, -- Stages
+	[1253915] = {L.heavens_glaives}, -- Heaven's Glaives (Glaives)
+	[1279420] = {CL.beams}, -- Dark Quasar (Beams) [Stage 1 Only]
+	[1249620] = {L.deaths_dirge}, -- Death's Dirge (Memory Game)
+	[1249609] = {CL.mark}, -- Dark Rune (Mark)
+	[1251386] = {L.prism_kicks}, -- Safeguard Prism (Kicks)
+	[1267049] = {L.heavens_lance}, -- Heaven's Lance (Lance)
+	[1284980] = {L.deaths_dirge}, -- Grim Symphony (Memory Game)
+	[1284931] = {L.prism_kicks}, -- Termination Prism (Kicks)
+	[1282441] = {1282441}, -- Starsplinter
+	[1282469] = {CL.beams}, -- Dark Quasar (Beams) [Intermission Only]
+	[1284525] = {CL.beams, CL.beam, notes = {CL.plural, CL.singular}}, -- Galvanize (Beams)
+	[1282412] = {CL.dodge}, -- Core Harvest (Dodge)
+	[1281194] = {CL.knockback}, -- Dark Meltdown (Knockback)
+	[1250898] = {L.the_dark_archangel}, -- The Dark Archangel (Big Boom)
+	[1266388] = {L.dark_constellation}, -- Dark Constellation (Stars)
+	[1266897] = {CL.soaks}, -- Light Siphon (Soaks)
+	[1273158] = {L.deaths_dirge}, -- Death's Requiem (Memory Game)
+	[1276525] = {1276525}, -- Heaven & Hell
+})
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-function mod:GetOptions() -- SetOption:skip-unused
+function mod:GetOptions()
 	return {
 		"stages",
+		"berserk", -- Shattered Sky (1249796) / Midnight Perpetual (1287447)
+
+		-- Stage 1
+		1253915, -- Heaven's Glaives
+		1279420, -- Dark Quasar [Stage 1 Only]
+		1249620, -- Death's Dirge
+			{1249609, "ME_ONLY_EMPHASIZE"}, -- Dark Rune
+		1251386, -- Safeguard Prism
+		{1267049, "TANK"}, --- Heaven's Lance
+		-- Mythic
+		1284980, -- Grim Symphony
+		1284931, -- Termination Prism
+
+		-- Intermission
+		1282441, -- Starsplinter
+		1282469, -- Dark Quasar [Intermission Only]
+
+		-- Stage 2
+		{1284525, "ME_ONLY_EMPHASIZE"}, -- Galvanize
+		1282412, -- Core Harvest
+		1281194, -- Dark Meltdown
+
+		-- Stage 3
+		"custom_select_limit_warnings",
+		1250898, -- The Dark Archangel
+		1266388, -- Dark Constellation
+		1266897, -- Light Siphon
+		-- Mythic
+		1273158, -- Death's Requiem
+		1276525, -- Heaven & Hell
+	},{
+		{ tabName = CL.stage:format(1), { "stages", 1253915, 1279420, 1249620, 1249609, 1251386, 1267049, 1284980, 1284931, } },
+		{ tabName = CL.intermission,    { "stages", 1282441, 1282469 } },
+		{ tabName = CL.stage:format(2), { "stages", 1284525, 1282412, 1267049, 1281194, } },
+		{ tabName = CL.stage:format(3), { "stages", "berserk", 1250898, 1266388, 1266897, 1267049, 1273158, 1276525, 1282441, } },
+		[1253915] = -32197, -- Stage One: Final Tolls
+		[1284525] = -33638, -- Stage Two: The Dark Reactor
+		[1250898] = -33639, -- Stage Three: Midnight Falls
+	},{
+		[1279420] = CL.thisOnly:format(CL.stage:format(1)),
+		[1282469] = CL.thisOnly:format(CL.intermission),
 	}
 end
 
-function mod:OnRegister()
-
+function mod:OnBossEnable()
+	backupBars = {}
+	if self:Mythic() then
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersMythic")
+	else
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersOther") -- Normal/Heroic
+	end
+	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
 
-function mod:OnEngage()
-	self:Message("stages", "yellow", mod.displayName .. " engaged", false)
+function mod:OnEncounterStart()
+	self:SetStage(1)
+	self:ResetCounts()
+
+	local num = self:GetOption("custom_select_limit_warnings")
+	local raidIndex = UnitInRaid("player")
+	if raidIndex then
+		if num == 1 then
+			local _, _, subgroup = GetRaidRosterInfo(raidIndex)
+			if subgroup == 1 or subgroup == 2 then
+				playerSide = "left"
+				L.custom_select_limit_warnings_icon = "misc_arrowleft"
+			elseif subgroup == 3 or subgroup == 4 then
+				playerSide = "right"
+				L.custom_select_limit_warnings_icon = "misc_arrowright"
+			end
+		elseif num == 2 then
+			local _, _, subgroup = GetRaidRosterInfo(raidIndex)
+			if subgroup % 2 == 0 then
+				playerSide = "right"
+				L.custom_select_limit_warnings_icon = "misc_arrowright"
+			else
+				playerSide = "left"
+				L.custom_select_limit_warnings_icon = "misc_arrowleft"
+			end
+		elseif num == 4 then
+			playerSide = "left"
+			L.custom_select_limit_warnings_icon = "misc_arrowleft"
+		elseif num == 5 then
+			playerSide = "right"
+			L.custom_select_limit_warnings_icon = "misc_arrowright"
+		else -- 3
+			playerSide = nil
+			L.custom_select_limit_warnings_icon = "misc_arrowlup"
+		end
+	else
+		playerSide = nil
+		L.custom_select_limit_warnings_icon = "misc_arrowlup"
+	end
+
+	if self:ShouldShowBars() then
+		self:SendMessage("BigWigs_BlockBlizzMessages")
+		self:RegisterEvent("ENCOUNTER_WARNING")
+	end
+end
+
+function mod:OnBossDisable()
+	self:SendMessage("BigWigs_AllowBlizzMessages")
+	for eventID in next, backupBars do
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+	end
+end
+
+function mod:ResetCounts()
+	durationEventCount = {}
+
+	quasarCount = 1
+	glaivesCount = 1
+	dirgeCount = 1
+	prismCount = 1
+	lanceCount = 1
+
+	harvestCount = 1
+	galvanizeCount = 1
+
+	siphonCount = 1
+	archangelCount = 1
+	constellationCount = 1
+end
+
+--------------------------------------------------------------------------------
+-- Timeline Event Handlers
+--
+
+function mod:TimersMythic(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
+	local barInfo
+
+	local stage = self:GetStage()
+	local duration = eventInfo.duration
+	local rounded = self:RoundNumber(duration, 0)
+
+	durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+	local count = durationEventCount[rounded]
+
+	if stage == 1 then
+		-- pull timers (get immediately canceled and restarted)
+		if rounded == 3 then
+			if count == 1 then return false end
+			barInfo = self:TerminationPrism(duration)
+		elseif rounded == 31 then
+			if count == 1 then return false end
+			barInfo = self:GrimSymphony(duration)
+		elseif rounded == 20 and (count == 1 or count == 2) then
+			if count == 1 then return false end
+			barInfo = self:HeavensLance(duration)
+		elseif rounded == 26 then
+			if count == 1 then return false end
+			barInfo = self:HeavensGlaives(duration)
+		elseif rounded == 57 then
+			if count == 1 then return false end
+			barInfo = self:DarkQuasar(duration)
+		elseif rounded == 180 then
+			if count == 1 then return false end
+			barInfo = self:TotalEclipse(duration)
+
+		elseif rounded == 62 then
+			if count % 4 == 1 then
+				barInfo = self:TerminationPrism(duration)
+			elseif count % 4 == 2 then
+				barInfo = self:HeavensGlaives(duration)
+			elseif count % 4 == 3 then
+				barInfo = self:GrimSymphony(duration)
+			else
+				barInfo = self:DarkQuasar(duration)
+			end
+		elseif rounded == 20 then
+			barInfo = self:HeavensLance(duration)
+
+		elseif rounded == 45 then
+			barInfo = self:IntoTheDarkwell(duration)
+		end
+
+	elseif stage == 2 then
+		if rounded == 97 then
+			barInfo = self:DarkMeltdown(duration)
+		elseif rounded == 33 then
+			barInfo = self:CoreHarvest(duration)
+		elseif rounded == 13 or rounded == 30 then
+			if count % 2 == 1 then
+				barInfo = self:Galvanize(duration)
+			else
+				barInfo = self:CoreHarvest(duration)
+			end
+		elseif rounded == 20 then
+			barInfo = self:HeavensLance(duration)
+		end
+
+	elseif stage == 3 then
+		if rounded == 18 then
+			if count == 1 then
+				barInfo = self:LightSiphon(duration)
+			elseif count == 2 then
+				barInfo = self:DeathsRequiem(duration)
+			end
+			if barInfo then
+				-- Death's Requiem is the one that cancels, but it always fires with Light Siphon and the order isn't consistent
+				barInfo.maxQueueDuration = 0
+				barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
+			end
+		elseif (rounded == 20 and count == 1) or rounded == 23 or rounded == 4 or rounded == 6 or rounded == 7 then
+			barInfo = self:DarkConstellationMythic(rounded)
+		elseif rounded == 57 or rounded == 55 then
+			barInfo = self:TheDarkArchangel(duration)
+		elseif rounded == 40 or rounded == 30 then
+			barInfo = self:HeavensLance(duration)
+
+		elseif rounded == 20 or rounded == 35 then
+			if count % 2 == 0 then
+				barInfo = self:LightSiphon(duration)
+			else
+				barInfo = self:DeathsRequiem(duration)
+			end
+			if barInfo then
+				barInfo.maxQueueDuration = 0
+				barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
+			end
+		elseif rounded == 180 then
+			self:Bar("stages", 12, 1276202) -- Severance
+			self:ScheduleTimer(function()
+				-- start watching for p4
+				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForPhaseFour")
+			end, 13)
+
+			self:Bar("berserk", duration, 1249796) -- Shattered Sky
+			return false -- timer finishes immediately
+		end
+	end
+
+	if barInfo then
+		barInfo.eventID = eventInfo.id
+		barInfo.duration = barInfo.duration or eventInfo.duration
+		activeBars[eventInfo.id] = barInfo
+		if self:ShouldShowBars() then
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+		end
+	elseif barInfo == nil and self:ShouldShowBars() then
+		self:ErrorForTimelineEvent(eventInfo)
+		backupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Paused
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
+	end
+end
+
+function mod:TimersOther(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
+	local barInfo
+
+	local stage = self:GetStage()
+	local duration = eventInfo.duration
+	local rounded = self:RoundNumber(duration, 0)
+
+	durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+	local count = durationEventCount[rounded]
+
+	if stage == 1 and rounded == 97 then
+		-- skipped intermission
+		stage = 2
+		self:SetStage(stage)
+		self:ResetCounts()
+	end
+
+	if stage == 1 then
+		-- pull timers (get immediately canceled and restarted x.x)
+		if rounded == 40 then
+			if count == 1 then return false end
+			barInfo = self:DarkQuasar(duration)
+		elseif rounded == 20 and (count == 1 or count == 2) then
+			if count == 1 then return false end
+			barInfo = self:HeavensLance(duration)
+		elseif rounded == 10 then
+			if count == 1 then return false end
+			barInfo = self:DeathsDirge(duration)
+		elseif rounded == 35 then
+			if count == 1 then return false end
+			barInfo = self:HeavensGlaives(duration)
+		elseif rounded == 55 then
+			if count == 1 then return false end
+			barInfo = self:SafeguardPrism(duration)
+		elseif rounded == 180 then
+			if count == 1 then return false end
+			barInfo = self:TotalEclipse(duration)
+
+		elseif rounded == 70 then
+			if count % 4 == 1 then
+				barInfo = self:DeathsDirge(duration)
+			elseif count % 4 == 2 then
+				barInfo = self:HeavensGlaives(duration)
+			elseif count % 4 == 3 then
+				barInfo = self:DarkQuasar(duration)
+			else
+				barInfo = self:SafeguardPrism(duration)
+			end
+		elseif rounded == 20 then
+			barInfo = self:HeavensLance(duration)
+
+		-- intermission start
+		elseif rounded == 45 then
+			barInfo = self:IntoTheDarkwell(duration)
+		end
+
+	elseif stage == 2 then
+		if rounded == 97 then
+			barInfo = self:DarkMeltdown(duration)
+		elseif rounded == 33 then
+			barInfo = self:CoreHarvest(duration)
+		elseif rounded == 13 or rounded == 30 then
+			if count % 2 == 1 then
+				barInfo = self:Galvanize(duration)
+			else
+				barInfo = self:CoreHarvest(duration)
+			end
+		elseif rounded == 20 then
+			barInfo = self:HeavensLance(duration)
+		end
+
+	elseif stage == 3 then
+		if rounded == 31 then
+			barInfo = self:LightSiphon(duration)
+			if barInfo then
+				barInfo.maxQueueDuration = 0
+				barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
+			end
+		elseif rounded == 33 or rounded == 6 or rounded == 26 then
+			if rounded == 6 then
+				barInfo = self:DarkConstellation(duration, count % 2 == 1 and 2 or 3, 3)
+			else
+				barInfo = self:DarkConstellation(duration)
+			end
+		elseif rounded == 14 then
+			barInfo = self:TheDarkArchangel(duration)
+		elseif rounded == 23 or rounded == 20 then
+			barInfo = self:HeavensLance(duration)
+		elseif rounded == 38 then
+			if count % 2 == 1 or self:Easy() then
+				barInfo = self:TheDarkArchangel(duration)
+			else
+				barInfo = self:LightSiphon(duration)
+				if barInfo then
+					barInfo.maxQueueDuration = 0
+					barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
+				end
+			end
+		elseif rounded == 180 then
+			self:Bar("berserk", duration, 1249796) -- Shattered Sky
+			return false -- timer finishes immediately
+		end
+	end
+
+	if barInfo then
+		barInfo.eventID = eventInfo.id
+		barInfo.duration = barInfo.duration or eventInfo.duration
+		activeBars[eventInfo.id] = barInfo
+		if self:ShouldShowBars() then
+			self:CDBar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+		end
+	elseif barInfo == nil and self:ShouldShowBars() then
+		self:ErrorForTimelineEvent(eventInfo)
+		backupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Paused
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
+	end
+end
+
+function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+	local barInfo = activeBars[eventID]
+	if barInfo then
+		local state = C_EncounterTimeline.GetEventState(eventID)
+		if state == 2 or state == 3 then -- Finished or Canceled
+			if not barInfo.noStopBar then
+				self:StopBar(barInfo.msg)
+			end
+			if self:ShouldShowBars() then
+				if state == 2 and barInfo.onFinished then
+					barInfo:onFinished()
+				elseif state == 3 and barInfo.onCanceled then
+					barInfo:onCanceled()
+				end
+			end
+
+			activeBars[eventID] = nil
+		end
+	elseif backupBars[eventID] then
+		local newState = C_EncounterTimeline.GetEventState(eventID)
+		if newState == 0 then
+			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
+		elseif newState == 1 then
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
+		elseif newState == 2 or newState == 3 then
+			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+		end
+	end
+end
+
+function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
+	activeBars[eventID] = nil
+	backupBars[eventID] = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:ENCOUNTER_WARNING(_, info)
+	local stage = self:GetStage()
+	if stage == 1 or stage == 3 then
+		if info.severity == 2 then -- Dark Rune (when the memory game is on you)
+			self:PersonalMessage(1249609, nil, self:GetRename(1249609)) -- Mark
+		end
+	elseif stage == 2 or stage == 4 then
+		if info.severity == 2 then -- Galvanize
+			self:PersonalMessage(1284525, nil, self:GetRename(1284525, 2)) -- Beam
+		elseif info.severity == 1 then -- Starsplinter
+			-- (p2 is set on intermission start)
+			self:PersonalMessage(1282441, nil, self:GetRename(1282441))
+		end
+	end
+end
+
+-- Stage 1
+
+function mod:DarkQuasar(duration)
+	local barText = CL.count:format(self:GetRename(1279420), quasarCount)
+	quasarCount = quasarCount + 1
+	return {
+		msg = barText,
+		key = 1279420,
+		onFinished = function()
+			self:Message(1279420, "yellow", barText)
+			self:PlaySound(1279420, "info")
+		end
+	}
+end
+
+function mod:HeavensGlaives(duration)
+	local barText = CL.count:format(self:GetRename(1253915), glaivesCount)
+	glaivesCount = glaivesCount + 1
+	return {
+		msg = barText,
+		key = 1253915,
+		onFinished = function()
+			self:Message(1253915, "orange", barText)
+			self:PlaySound(1253915, "alarm")
+		end
+	}
+end
+
+function mod:DeathsDirge(duration)
+	local barText = CL.count:format(self:GetRename(1249620), dirgeCount)
+	dirgeCount = dirgeCount + 1
+	return {
+		msg = barText,
+		key = 1249620,
+		onFinished = function()
+			self:Message(1249620, "red", barText)
+			self:PlaySound(1249620, "warning")
+		end
+	}
+end
+
+function mod:SafeguardPrism(duration)
+	local barText = CL.count:format(self:GetRename(1251386), prismCount)
+	prismCount = prismCount + 1
+	return {
+		msg = barText,
+		key = 1251386,
+		offset = 4,
+		onFinished = function()
+			self:Message(1251386, "yellow", barText)
+			self:PlaySound(1251386, "alert")
+		end
+	}
+end
+
+function mod:HeavensLance(duration)
+	local barText = CL.count:format(self:GetRename(1267049), lanceCount)
+	lanceCount = lanceCount + 1
+	return {
+		msg = barText,
+		key = 1267049,
+		onFinished = function()
+			self:Message(1267049, "purple", barText)
+			if self:Tank() then
+				self:PlaySound(1267049, "alert")
+			end
+		end
+	}
+end
+
+function mod:TotalEclipse(duration)
+	return {
+		msg = self:GetRename("stages"), -- Intermission
+		key = "stages",
+		icon = 1261871,
+		endTime = GetTime() + duration,
+		onFinished = function()
+			self:Message("stages", "cyan", self:GetRename("stages"), false) -- Intermission
+			self:PlaySound("stages", "long")
+		end,
+		onCanceled = function(barInfo)
+			if math.abs(GetTime() - barInfo.endTime) < 0.1 then
+				barInfo:onFinished()
+			end
+		end
+	}
+end
+
+-- Mythic
+
+function mod:GrimSymphony(duration)
+	local barText = CL.count:format(self:GetRename(1284980), dirgeCount)
+	dirgeCount = dirgeCount + 1
+	return {
+		msg = barText,
+		key = 1284980,
+		onFinished = function(barInfo)
+			self:Message(1284980, "red", barText)
+			self:PlaySound(1284980, "warning")
+		end,
+	}
+end
+
+function mod:TerminationPrism(duration)
+	local barText = CL.count:format(self:GetRename(1284931), prismCount)
+	prismCount = prismCount + 1
+	return {
+		msg = barText,
+		key = 1284931,
+		offset = 3,
+		onFinished = function()
+			self:Message(1284931, "yellow", barText)
+			self:PlaySound(1284931, "alert")
+		end
+	}
+end
+
+
+-- Intermission
+
+function mod:IntoTheDarkwell(duration)
+	self:SetStage(2) -- just set it here, no other events
+	self:ResetCounts()
+
+	if self:ShouldShowBars() then
+		self:Bar(1282469, 10.5, CL.count:format(self:GetRename(1282469), quasarCount)) -- Dark Quasar
+		self:ScheduleTimer("IntermissionDarkQuasar", 10.5)
+		if self:Mythic() then
+			self:Bar(1282441, 38, self:GetRename(1282441)) -- Starsplinter
+		end
+	end
+
+	return {
+		msg = self:GetRename("stages", 2), -- Stage 2
+		key = "stages",
+		icon = 1282047,
+	}
+end
+
+function mod:IntermissionDarkQuasar()
+	local info = INTERMISSION_DARK_QUASAR_INFO[self:Difficulty()]
+	if not info then return end
+
+	self:Message(1282469, "yellow", CL.count_amount:format(self:GetRename(1282469), quasarCount, info.count))
+	quasarCount = quasarCount + 1
+
+	if quasarCount <= info.count then
+		self:Bar(1282469, info.duration, CL.count_amount:format(self:GetRename(1282469), quasarCount, info.count))
+		self:ScheduleTimer("IntermissionDarkQuasar", info.duration)
+	end
+
+	self:PlaySound(1282469, "alert")
+end
+
+-- Phase 2
+
+function mod:DarkMeltdown(duration)
+	quasarCount = 1
+	if self:ShouldShowBars() then
+		self:Message("stages", "cyan", self:GetRename("stages", 2), false) -- Stage 2
+		self:PlaySound("stages", "long")
+	end
+	return {
+		msg = self:GetRename("stages", 3), -- Stage 3
+		key = "stages",
+		icon = 1281194,
+		onFinished = function()
+			self:SetStage(3)
+			self:ResetCounts()
+
+			self:Bar(1281194, 8, self:GetRename(1281194)) -- Dark Meltdown
+			self:Message("stages", "cyan", self:GetRename("stages", 3), false) -- Stage 3
+			self:PlaySound("stages", "long")
+		end
+	}
+end
+
+function mod:Galvanize(duration)
+	local barText = CL.count:format(self:GetRename(1284525), galvanizeCount)
+	galvanizeCount = galvanizeCount + 1
+	return {
+		msg = barText,
+		key = 1284525,
+		onFinished = function()
+			self:Message(1284525, "orange", barText)
+			self:PlaySound(1284525, "alert") -- soak
+		end
+	}
+end
+
+function mod:CoreHarvest(duration)
+	local barText = CL.count:format(self:GetRename(1282412), harvestCount)
+	harvestCount = harvestCount + 1
+	return {
+		msg = barText,
+		key = 1282412,
+		offset = 2.5,
+		onFinished = function()
+			self:Message(1282412, "yellow", barText)
+			self:PlaySound(1282412, "alarm") --dodge
+		end
+	}
+end
+
+-- Phase 3
+
+function mod:LightSiphon(duration)
+	local barText
+
+	if self:Mythic() then
+		local sides = { "left", "right", "right", "left", "left", "right" }
+		local side = sides[siphonCount]
+
+		barText = CL.count:format(self:GetRename(1266897), siphonCount)
+		siphonCount = siphonCount + 1
+
+		if side then
+			if playerSide and side ~= playerSide then
+				return false
+			end
+			barText = L[side]:format(barText)
+		end
+	else
+		barText = CL.count:format(self:GetRename(1266897), siphonCount)
+		siphonCount = siphonCount + 1
+	end
+
+	return {
+		msg = barText,
+		key = 1266897,
+		onEnd = function()
+			if self:ShouldShowBars() and not self:IsWiping() then
+				self:Message(1266897, "orange", barText)
+				self:PlaySound(1266897, "alert") -- soak
+			end
+		end
+	}
+end
+
+function mod:TheDarkArchangel(duration)
+	local barText = CL.count:format(self:GetRename(1250898), archangelCount)
+	archangelCount = archangelCount + 1
+	return {
+		msg = barText,
+		key = 1250898,
+		onFinished = function()
+			self:Message(1250898, "red", barText)
+			self:PlaySound(1250898, "warning") -- jazz hands
+		end
+	}
+end
+
+function mod:DarkConstellation(duration, count, totalCount)
+	local barText
+	if count then
+		barText = CL.count_amount:format(self:GetRename(1266388), count, totalCount)
+	else
+		barText = CL.count:format(self:GetRename(1266388), constellationCount)
+		constellationCount = constellationCount + 1
+	end
+	return {
+		msg = barText,
+		key = 1266388,
+		onFinished = function()
+			self:Message(1266388, "yellow", barText)
+			-- self:PlaySound(1266388, "alarm") -- dodge
+		end
+	}
+end
+
+-- Mythic
+
+function mod:DarkConstellationMythic(duration)
+	local side = constellationCount % 2 == 1 and "left" or "right"
+	local barText = L[side]:format(self:GetRename(1266388))
+
+	local durations = {
+		20, 4, 4, 4, 4, 4, 4, 4, 4,
+		23, 4, 4, 4, 4, 4, 4, 4, 4,
+		23, 7, 7, 6, 7, 7,
+	}
+	local updatedDuration = nil
+	if playerSide and constellationCount > 2 and self:BarTimeLeft(barText) > 0 then
+		self:StopBar(barText) -- Bar -> TimelineBar
+		local maxTime = duration + durations[constellationCount - 1]
+		updatedDuration = {duration, maxTime}
+	end
+
+	constellationCount = constellationCount + 1
+
+	-- Show the timer for the next cast on your side
+	if playerSide and side ~= playerSide then
+		local nextDuration = durations[constellationCount]
+		if nextDuration then
+			self:Bar(1266388, duration + nextDuration, L[playerSide]:format(self:GetRename(1266388)))
+		end
+		return false
+	end
+
+	return {
+		msg = barText,
+		key = 1266388,
+		duration = updatedDuration,
+		onFinished = function()
+			self:Message(1266388, "yellow", barText)
+			self:PlaySound(1266388, "info")
+		end
+	}
+end
+
+function mod:DeathsRequiem(duration)
+	local sides = { "right", "left", "left", "right", "right", "left" }
+	local side = sides[dirgeCount]
+
+	local barText = CL.count:format(self:GetRename(1273158), dirgeCount)
+	dirgeCount = dirgeCount + 1
+
+	if side then
+		if playerSide and side ~= playerSide then
+			return false
+		end
+		barText = L[side]:format(barText)
+	end
+
+	return {
+		msg = barText,
+		key = 1273158,
+		onEnd = function()
+			if self:ShouldShowBars() and not self:IsWiping() then
+				self:Message(1273158, "red", barText)
+				self:PlaySound(1273158, "warning")
+			end
+		end,
+	}
+end
+
+-- Phase 4
+
+function mod:CheckForPhaseFour()
+	if self:GetStage() == 3 and UnitExists("boss1") and not UnitExists("boss2") and self:ShouldShowBars() and not self:IsWiping() then
+		self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		self:StopBar(1249796) -- Shattered Sky
+
+		self:SetStage(4)
+		starsplinterCount = 1
+		heavenHellCount = 1
+
+		self:Bar(1282441, 12.7, CL.count:format(self:GetRename(1282441), starsplinterCount)) -- Starsplinter
+		self:ScheduleTimer("StarsplinterRepeater", 12.7)
+
+		self:Bar(1276525, 19.9, CL.count:format(self:GetRename(1276525), heavenHellCount))
+		self:ScheduleTimer("HeavenHellRepeater", 19.9)
+
+		-- Midnight Perpetual
+		self:Bar("berserk", 79, 1287447)
+		self:ScheduleTimer(function()
+			self:Message("berserk", "red", CL.casting:format(self:SpellName(1287447)), 1287447) -- Midnight Perpetual
+			self:PlaySound("berserk", "alarm")
+		end, 79-4)
+
+		self:Message("stages", "cyan", self:GetRename("stages", 4), false) -- Stage 4
+		self:PlaySound("stages", "long")
+	end
+end
+
+function mod:StarsplinterRepeater()
+	self:Message(1282441, "orange", CL.count:format(self:GetRename(1282441), starsplinterCount))
+	starsplinterCount = starsplinterCount + 1
+	self:Bar(1282441, 20, CL.count:format(self:GetRename(1282441), starsplinterCount))
+	self:ScheduleTimer("StarsplinterRepeater", 20)
+end
+
+function mod:HeavenHellRepeater()
+	self:Message(1276525, "red", CL.count:format(self:GetRename(1276525), heavenHellCount))
+	heavenHellCount = heavenHellCount + 1
+	self:Bar(1276525, 20, CL.count:format(self:GetRename(1276525), heavenHellCount))
+	self:ScheduleTimer("HeavenHellRepeater", 20)
+	self:PlaySound(1276525, "alert")
+end

@@ -197,6 +197,19 @@ L.autotalk_boss_desc = "보스 전투 시작 NPC 대화를 자동 선택합니�
 L.autotalk_generic_desc = "던전 다음 단계 진행에 필요한 NPC 대화를 자동 선택합니다."
 L.autotalk_notice = "NPC %s와 자동으로 상호 작용합니다."
 
+-- GUI notes for renames
+L.singular = "단수"
+L.plural = "복수"
+L.generalNote = "일반적으로 사용될 텍스트"
+L.timerNote = "이 텍스트는 타이머에 사용됨"
+L.castTimerNote = "시전 타이머에만 사용될 텍스트"
+L.messageNote = "이 텍스트는 메시지에 사용됨"
+L.messageOnYouNote = "이 능력이 본인에게 적용되었을 때 표시되는 메시지"
+L.timerOnYouNote = "이 능력이 본인에게 적용되었을 때 타이머에 표시되는 텍스트"
+L.thisOnly = "%s 전용" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
+
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "치유 흡수" -- Used for shield-like abilities that absorb healing only
@@ -232,10 +245,6 @@ L.rift = "균열" -- Can be used in a similar way as a portal e.g. "Time Rift" b
 L.rifts = "균열" -- Plural of L.rift
 L.orb = "보주" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "보주" -- Plural for L.orb
-L.curse = "저주" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
-L.curses = "저주" -- Plural of L.curse
-L.disease = "질병" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
-L.poison = "독" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "영혼" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "영혼" -- Plural of L.spirit
 L.tornado = "뇌우" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
@@ -249,6 +258,8 @@ L.spell_reflection = "주문 반사" -- Any ability that reflects spells
 L.rooted = "묶임" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+L.arrow = "화살" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "화살" -- Plural of L.arrow
 L.ball = "공" -- A ball, like a football, basketball, etc
 L.balls = "공" -- Plural of L.ball
 L.blind = "실명" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
@@ -259,6 +270,7 @@ L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a pl
 L.fixates = "시선 고정" -- Plural of L.fixate
 L.group_damage = "파티 피해" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "생명력 흡수" -- Any ability that drains health from the player
+L.madness = "광기" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
 L.parasite = "기생충" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "기생충" -- Plural of L.parasite
 L.pull_in = "끌어당김" -- An ability that pulls you in towards the boss against your will
@@ -269,13 +281,30 @@ L.soaks = "맞아주기" -- Plural of L.soak
 L.spike = "가시" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "가시" -- Plural of L.spike
 L.spread = "산개" -- An ability that forces you to spread out away from other players, or you might damage them
-L.tank_bomb = "탱커 폭탄" -- Similar to L.bomb but only applies to tanks
-L.tank_combo = "탱커 연계기" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
-L.tank_debuff = "탱커 디버프" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "탱커 정면기" -- Similar to L.frontal_cone but only applies to tanks
-L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tanks
 L.tentacle = "촉수" -- Used for bosses that summon tentacles
 L.tentacles = "촉수" -- Plural of L.tentacle
 L.waves = "웨이브" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "새끼용" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "새끼용" -- Plural of L.whelp
+
+-- Dispel-related spell renames
+L.curse = "저주" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
+L.curses = "저주" -- Plural of L.curse
+L.disease = "질병" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.dispel = "해제" -- General term for any debuff that is dispellable
+L.dispels = "해제" -- Plural of L.dispel
+L.poison = "독" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
+
+-- Interrupt-related spell renames
+L.interrupts = "차단" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "발차기" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "차단" -- Plural of L.kick
+
+-- Tank-related spell renames
+L.tank_bomb = "탱커 폭탄" -- Similar to L.bomb but only applies to tanks
+L.tank_combo = "탱커 연계기" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_debuff = "탱커 디버프" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "탱커 정면기" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_hit = "탱커 피해" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tanks
+L.tank_grip = "탱커 당기기" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense

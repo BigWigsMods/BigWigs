@@ -106,6 +106,8 @@ local barSettingsToExport = {
 	"spellIndicatorsSize",
 	"spellIndicatorsPosition",
 	"spellIndicatorsOffset",
+	"normalCopyCustomAnchorWidth",
+	"expCopyCustomAnchorWidth",
 }
 
 local messageSettingsToExport = {
@@ -113,6 +115,8 @@ local messageSettingsToExport = {
 	"emphFontName",
 	"monochrome",
 	"emphMonochrome",
+	"slugRendering",
+	"emphSlugRendering",
 	"outline",
 	"emphOutline",
 	"align",
@@ -249,6 +253,21 @@ local mythicPlusSettingsToExport = {
 	"instanceKeysShowAllPlayers",
 	"instanceKeysShowDungeonEnd",
 	"instanceKeysHideTitle",
+	-- Progress %
+	"progressTooltipFormat",
+	"progressNameplate",
+	"progressNameplateFormat",
+	"progressNameplateTargetOffsetX",
+	"progressNameplateTargetOffsetY",
+	"progressNameplateOtherOffsetX",
+	"progressNameplateOtherOffsetY",
+	"progressNameplateFontName",
+	"progressNameplateFontSize",
+	"progressNameplateFontColorTarget",
+	"progressNameplateFontColorOther",
+	"progressNameplateOutline",
+	"progressNameplateMonochrome",
+	"progressNameplateSlugRendering",
 }
 
 -- BattleRes
@@ -287,6 +306,8 @@ local battleResSettingsToExport = {
 	"cooldownEdge",
 	"cooldownSwipe",
 	"cooldownInverse",
+	"durationCustomText",
+	"chargesCustomText",
 }
 
 -- PrivateAuras
@@ -296,6 +317,89 @@ local privateAurasSettingsToExport = {
 	"other",
 	"otherPlayerType",
 	"onlyWhenYouAreTank",
+}
+
+-- CombatTimer
+local combatTimerSettingsToExport = {
+	-- Any Combat
+	"anyCombatDisabled",
+	"anyCombatLocked",
+	"anyCombatWidth",
+	"anyCombatHeight",
+	"anyCombatPosition",
+	"anyCombatFontName",
+	"anyCombatFontSize",
+	"anyCombatMonochrome",
+	"anyCombatOutline",
+	"anyCombatAlign",
+	"anyCombatColor",
+	"anyCombatColorInactive",
+	"anyCombatBackgroundColor",
+	"anyCombatBackgroundColorInactive",
+	"anyCombatBorderColor",
+	"anyCombatBorderColorInactive",
+	"anyCombatBorderSize",
+	"anyCombatBorderOffset",
+	"anyCombatBorderName",
+	"anyCombatInactive",
+	"anyCombatTextFormat",
+	"anyCombatHistoryAmount",
+	"anyCombatHistoryResetConditions",
+	"anyCombatHistoryTimeFormat",
+	"anyCombatHistoryHiddenInCombat",
+	"anyCombatCustomText",
+
+	-- Boss Combat
+	"bossCombatDisabled",
+	"bossCombatLocked",
+	"bossCombatWidth",
+	"bossCombatHeight",
+	"bossCombatPosition",
+	"bossCombatFontName",
+	"bossCombatFontSize",
+	"bossCombatMonochrome",
+	"bossCombatOutline",
+	"bossCombatAlign",
+	"bossCombatColor",
+	"bossCombatColorInactive",
+	"bossCombatBackgroundColor",
+	"bossCombatBackgroundColorInactive",
+	"bossCombatBorderColor",
+	"bossCombatBorderColorInactive",
+	"bossCombatBorderSize",
+	"bossCombatBorderOffset",
+	"bossCombatBorderName",
+	"bossCombatInactive",
+	"bossCombatTextFormat",
+	"bossCombatHistoryAmount",
+	"bossCombatHistoryResetConditions",
+	"bossCombatHistoryTimeFormat",
+	"bossCombatCustomText",
+
+	-- Boss Stages
+	"bossStagesDisabled",
+	"bossStagesLocked",
+	"bossStagesWidth",
+	"bossStagesHeight",
+	"bossStagesPosition",
+	"bossStagesFontName",
+	"bossStagesFontSize",
+	"bossStagesMonochrome",
+	"bossStagesOutline",
+	"bossStagesAlign",
+	"bossStagesColor",
+	"bossStagesColorInactive",
+	"bossStagesBackgroundColor",
+	"bossStagesBackgroundColorInactive",
+	"bossStagesBorderColor",
+	"bossStagesBorderColorInactive",
+	"bossStagesBorderSize",
+	"bossStagesBorderOffset",
+	"bossStagesBorderName",
+	"bossStagesInactive",
+	"bossStagesTextFormat",
+	"bossStagesHistoryTimeFormat",
+	"bossStagesCustomText",
 }
 
 -- Default Options
@@ -313,6 +417,7 @@ local sharingExportOptionsSettings = {
 	exportMythicPlusSettings = true,
 	exportBattleResSettings = true,
 	exportPrivateAurasSettings = true,
+	exportCombatTimerSettings = true,
 }
 
 local sharingImportOptionsSettings = {}
@@ -416,6 +521,13 @@ do
 			end
 		end
 
+		if requestAll or sharingExportOptionsSettings.exportCombatTimerSettings then
+			local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+			if db then
+				exportOptions["combatTimerSettings"] = exportProfileSettings(combatTimerSettingsToExport, db.profile)
+			end
+		end
+
 		local serialized = C_EncodingUtil.SerializeCBOR(exportOptions)
 		local compressed = C_EncodingUtil.CompressString(serialized, 0) -- Enum.CompressionMethod.Deflate = 0
 		local encoded = C_EncodingUtil.EncodeBase64(compressed)
@@ -453,7 +565,8 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "other" then
-		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or IsOptionInString("privateAurasSettings") then
+		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or
+		IsOptionInString("privateAurasSettings") or IsOptionInString("combatTimerSettings") then
 			return true
 		end
 	end
@@ -571,6 +684,12 @@ do
 				importSettings("importPrivateAurasSettings", "privateAurasSettings", privateAurasSettingsToExport, plugin, L.imported_privateAuras_settings)
 			end
 		end
+		do
+			local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+			if db then
+				importSettings("importCombatTimerSettings", "combatTimerSettings", combatTimerSettingsToExport, {db = db}, L.imported_combattimer_settings)
+			end
+		end
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
@@ -613,7 +732,7 @@ do
 			sharingImportOptionsSettings.importMessageSettings = true
 		end
 		if IsOptionInString("messageColors") then
-			sharingImportOptionsSettings.messageColors = true
+			sharingImportOptionsSettings.importMessageColors = true
 		end
 		if IsOptionInString("countdownPositions") then
 			sharingImportOptionsSettings.importCountdownPositions = true
@@ -635,6 +754,9 @@ do
 		end
 		if IsOptionInString("privateAurasSettings") then
 			sharingImportOptionsSettings.importPrivateAurasSettings = true
+		end
+		if IsOptionInString("combatTimerSettings") then
+			sharingImportOptionsSettings.importCombatTimerSettings = true
 		end
 		sharingModule:SaveData()
 	end
@@ -825,6 +947,14 @@ local sharingOptions = {
 						width = 1,
 						disabled = function() return not IsOptionInString("privateAurasSettings") or not BigWigs:GetPlugin("PrivateAuras", true) end,
 					},
+					importCombatTimerSettings = {
+						type = "toggle",
+						name = L.combatTimerTitle,
+						desc = L.combattimer_settings_import_desc,
+						order = 5,
+						width = 1,
+						disabled = function() return not IsOptionInString("combatTimerSettings") or not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+					},
 				},
 			},
 			acceptImportButton = {
@@ -967,8 +1097,8 @@ local sharingOptions = {
 						desc = L.nameplate_settings_export_desc,
 						order = 1,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("Nameplates", true) end,
-						disabled = function() return not BigWigs:GetPlugin("Nameplates", true) end,
+						get = function(i) return BigWigs:GetPlugin("Nameplates", true) and sharingExportOptionsSettings[i[#i]] end,
+						hidden = function() return not BigWigs:GetPlugin("Nameplates", true) end,
 					},
 					exportMythicPlusSettings = {
 						type = "toggle",
@@ -976,8 +1106,8 @@ local sharingOptions = {
 						desc = L.mythicplus_settings_export_desc,
 						order = 2,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
-						disabled = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
+						get = function(i) return BigWigsLoader.db:GetNamespace("MythicPlus", true) and sharingExportOptionsSettings[i[#i]] end,
+						hidden = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 					},
 					exportBattleResSettings = {
 						type = "toggle",
@@ -985,8 +1115,19 @@ local sharingOptions = {
 						desc = L.battleres_settings_export_desc,
 						order = 3,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("BattleRes", true) end,
-						disabled = function() return not BigWigs:GetPlugin("BattleRes", true) end,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("BattleRes", true)
+							if plugin and not plugin.db.profile.disabled then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("BattleRes", true)
+							if not plugin or plugin.db.profile.disabled then
+								return true
+							end
+						end,
+						hidden = function() return not BigWigs:GetPlugin("BattleRes", true) end,
 					},
 					exportPrivateAurasSettings = {
 						type = "toggle",
@@ -994,8 +1135,39 @@ local sharingOptions = {
 						desc = L.privateAuras_settings_export_desc,
 						order = 4,
 						width = 1,
-						get = function(i) return sharingExportOptionsSettings[i[#i]] and BigWigs:GetPlugin("PrivateAuras", true) end,
-						disabled = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
+								return true
+							end
+						end,
+						hidden = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
+					},
+					exportCombatTimerSettings = {
+						type = "toggle",
+						name = L.combatTimerTitle,
+						desc = L.combattimer_settings_export_desc,
+						order = 5,
+						width = 1,
+						get = function(i)
+							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+							if db and (not db.profile.anyCombatDisabled or not db.profile.bossCombatDisabled or not db.profile.bossStagesDisabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+							if not db or (db.profile.anyCombatDisabled and db.profile.bossCombatDisabled and db.profile.bossStagesDisabled) then
+								return true
+							end
+						end,
+						hidden = function() return not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
 					},
 				},
 			},

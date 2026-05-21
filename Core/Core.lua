@@ -155,7 +155,7 @@ local function UpdateMouseoverUnit()
 				local module = bosses[moduleName]
 				if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", mobId, GetBestMapForUnit("player"))) then
 					module:Enable()
-					if not module.worldBoss then
+					if not module:IsWorldModule() then
 						module:Sync("Enable", module.moduleName, true)
 					end
 				end
@@ -164,7 +164,7 @@ local function UpdateMouseoverUnit()
 			local module = bosses[moduleNameOrTable]
 			if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", mobId, GetBestMapForUnit("player"))) then
 				module:Enable()
-				if not module.worldBoss then
+				if not module:IsWorldModule() then
 					module:Sync("Enable", module.moduleName, true)
 				end
 			end
@@ -289,28 +289,43 @@ do
 			plugins[i]:Disable()
 		end
 	end
-	local function DisableCore(skipDelveEvent)
-		if coreEnabled then
-			coreEnabled = false
+	local DisableCore
+	do
+		local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+		function DisableCore(skipDelveEvent)
+			if coreEnabled then
+				coreEnabled = false
 
-			loader.UnregisterMessage(mod, "BigWigs_BossComm")
-			loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
-			core.UnregisterEvent(mod, "ENCOUNTER_START")
-			core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
-			core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
-			core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
-			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
-			if loader.isRetail and not skipDelveEvent then
-				core.UnregisterEvent(mod, "PLAYER_MAP_CHANGED")
-			end
-			core.UnregisterEvent(mod, "PLAYER_LOGIN")
+				loader.UnregisterMessage(mod, "BigWigs_BossComm")
+				loader.UnregisterMessage(mod, "BigWigs_UNIT_TARGET")
+				core.UnregisterEvent(mod, "ENCOUNTER_START")
+				core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
+				core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
+				core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
+				core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
+				if loader.isRetail then
+					for _, module in next, bosses do
+						-- Unregister private aura sounds
+						if module.privateAuraSounds then
+							for i = 1, #module.privateAuraSounds do
+								RemovePrivateAuraAppliedSound(module.privateAuraSounds[i])
+							end
+							module.privateAuraSounds = nil
+						end
+					end
+					if not skipDelveEvent then
+						core.UnregisterEvent(mod, "PLAYER_MAP_CHANGED")
+					end
+				end
+				core.UnregisterEvent(mod, "PLAYER_LOGIN")
 
-			core:SendMessage("BigWigs_StopConfigureMode")
-			if BigWigsOptions then
-				BigWigsOptions:Close()
+				core:SendMessage("BigWigs_StopConfigureMode")
+				if BigWigsOptions then
+					BigWigsOptions:Close()
+				end
+				DisableModules()
+				core:SendMessage("BigWigs_CoreDisabled")
 			end
-			DisableModules()
-			core:SendMessage("BigWigs_CoreDisabled")
 		end
 	end
 	local function zoneChanged()
@@ -364,10 +379,16 @@ do
 			end
 
 			if loader.isRetail then
-				-- enable trash modules for the current zone
 				for _, module in next, bosses do
-					if not module:GetEncounterID() and not module.worldBoss and module:IsZoneID(instanceID) then
-						module:Enable()
+					if module:IsZoneID(instanceID) then
+						-- Register private aura sounds
+						if module:HasPrivateAuraSounds() then
+							module:RegisterPrivateAuraSounds()
+						end
+						-- Enable trash modules for the current zone
+						if module:IsTrashModule() then
+							module:Enable()
+						end
 					end
 				end
 			end
@@ -382,7 +403,7 @@ function core:IsEnabled()
 end
 
 function core:Print(msg)
-	print("BigWigs: |cffffff00"..msg.."|r")
+	print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: |cffffff00"..msg.."|r")
 end
 
 function core:Error(msg, noPrint)
@@ -554,7 +575,7 @@ do
 
 				if module.toggleOptions then
 					module.toggleDefaults = {}
-					for k, v in next, module.toggleOptions do
+					for _, v in next, module.toggleOptions do
 						local bitflags = 0
 						local disabled = false
 						local t = type(v)
@@ -611,14 +632,37 @@ do
 							end
 						end
 					end
-					module.db = loader.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
-					local db = module.db.profile
-					for k, v in next, db do -- Option validation
-						local defaultType = type(module.toggleDefaults[k])
+
+					-- Set up renames storage DB
+					local renames = {}
+					if module:HasRenames() then
+						for optionKey in next, module.toggleDefaults do
+							if module:IsRenameAvailable(optionKey) then
+								renames[optionKey] = {}
+								for i = 1, module:GetRenameCount(optionKey) do
+									renames[optionKey][i] = module:GetRenameDefault(optionKey, i)
+								end
+							end
+						end
+					end
+
+					module.db = loader.db:RegisterNamespace(module.name, { profile = {renames = renames, toggles = module.toggleDefaults} })
+					-- Option validation
+					for tableName, storageTable in next, module.db.profile do
+						if tableName ~= "renames" and tableName ~= "toggles" then
+							module.db.profile[tableName] = nil
+						elseif type(storageTable) ~= "table" then
+							module.db:ResetProfile() -- Panic reset
+							break
+						end
+					end
+					-- Option validation for toggles
+					for toggleName, toggleValue in next, module.db.profile.toggles do
+						local defaultType = type(module.toggleDefaults[toggleName])
 						if defaultType == "nil" then
-							db[k] = nil
-						elseif type(v) ~= defaultType then
-							db[k] = module.toggleDefaults[k]
+							module.db.profile.toggles[toggleName] = nil
+						elseif type(toggleValue) ~= defaultType then
+							module.db.profile.toggles[toggleName] = module.toggleDefaults[toggleName]
 						end
 					end
 				end
@@ -645,11 +689,19 @@ do
 
 				core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-				-- automatically enable trash modules if we're in the relevant zone at module registration
-				if module:Retail() and not module:GetEncounterID() and not module.worldBoss then
+				-- For repo users, a boss module can register prior to the core enabling, and trying to register sounds before the core/plugins is enabled would error
+				-- Since we need to run this same code on core enabled, we don't need to run it here unless the code is already enabled
+				if coreEnabled and module:Retail() then
 					local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 					if module:IsZoneID(instanceID) then
-						module:Enable()
+						-- Register private aura sounds
+						if module:HasPrivateAuraSounds() then
+							module:RegisterPrivateAuraSounds()
+						end
+						-- Automatically enable trash modules if we're in the relevant zone at module registration
+						if module:IsTrashModule() then
+							module:Enable()
+						end
 					end
 				end
 			end

@@ -197,6 +197,19 @@ L.autotalk_boss_desc = "Seleciona automaticamente as opções de diálogo do NPC
 L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do NPC que permitem você progredir para o próximo estágio da masmorra."
 L.autotalk_notice = "Interagindo automaticamente com NPC %s."
 
+-- GUI notes for renames
+L.singular = "Singular"
+L.plural = "Plural"
+L.generalNote = "Este é o texto que será geralmente usado"
+L.timerNote = "Este texto será usado para temporizadores"
+L.castTimerNote = "Este texto será usado apenas para temporizadores de lançamento"
+L.messageNote = "Este texto será usado para mensagens"
+L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você"
+L.timerOnYouNote = "O texto exibido no temporizador quando esta habilidade estiver em você"
+L.thisOnly = "Apenas %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+--L.mythicOnlyNote = "This text will be used on Mythic only"
+--L.otherDifficultiesNote = "This text will be used on all other difficulties"
+
 -- Common ability name replacements
 L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Absorção de Cura" -- Used for shield-like abilities that absorb healing only
@@ -232,15 +245,11 @@ L.rift = "Fenda" -- Can be used in a similar way as a portal e.g. "Time Rift" bu
 L.rifts = "Fendas" -- Plural of L.rift
 L.orb = "Orbe" -- A ball/sphere object usually moving and you need to avoid it
 L.orbs = "Orbes" -- Plural for L.orb
-L.curse = "Maldição" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
-L.curses = "Maldições" -- Plural of L.curse
-L.disease = "Doença" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
-L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.spirit = "Espírito" -- Sometimes a boss will summon spirits, similar to ghosts, but not exactly, although you might have the same word for both. e.g. "Spirits of X" or "Wild Spirits"
 L.spirits = "Espíritos" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Tornados" -- Plural of L.tornado
-L.frontal_cone = "Cônica à Frente" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.frontal_cone = "Cone Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Controle Mental" -- Any kind of Mind Control ability, where a player loses control of their character
@@ -249,6 +258,8 @@ L.spell_reflection = "Reflexão de Feitiço" -- Any ability that reflects spells
 L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
+--L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrows = "Flechas" -- Plural of L.arrow
 L.ball = "Bola" -- A ball, like a football, basketball, etc
 L.balls = "Bolas" -- Plural of L.ball
 L.blind = "Cegar" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
@@ -259,6 +270,7 @@ L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Fixados" -- Plural of L.fixate
 L.group_damage = "Dano no Grupo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Dreno de Vida" -- Any ability that drains health from the player
+L.madness = "Loucura" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
 L.parasite = "Parasita" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "Parasitas" -- Plural of L.parasite
 L.pull_in = "Arrastar para Perto" -- An ability that pulls you in towards the boss against your will
@@ -269,13 +281,30 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Espinho" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Espinhos" -- Plural of L.spike
 L.spread = "Espalhar" -- An ability that forces you to spread out away from other players, or you might damage them
-L.tank_bomb = "Bomba no Tanque" -- Similar to L.bomb but only applies to tanks
-L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
-L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
-L.tank_frontal = "Frontal Tanque" -- Similar to L.frontal_cone but only applies to tanks
-L.tank_soak = "Soak Tanque" -- Similar to L.soak but only applies to tanks
 L.tentacle = "Tentáculo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentáculos" -- Plural of L.tentacle
 L.waves = "Ondas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "Dragonete" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Dragonetes" -- Plural of L.whelp
+
+-- Dispel-related spell renames
+L.curse = "Maldição" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
+L.curses = "Maldições" -- Plural of L.curse
+L.disease = "Doença" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
+L.dispel = "Dissipável" -- General term for any debuff that is dispellable
+L.dispels = "Dissipáveis" -- Plural of L.dispel
+L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
+
+-- Interrupt-related spell renames
+L.interrupts = "Interrupções" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "Chute" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "Chutes" -- Plural of L.kick
+
+-- Tank-related spell renames
+L.tank_bomb = "Bomba no Tanque" -- Similar to L.bomb but only applies to tanks
+L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_frontal = "Frontal do Tanque" -- Similar to L.frontal_cone but only applies to tanks
+L.tank_hit = "Golpe no Tanque" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+L.tank_soak = "Soak Tanque" -- Similar to L.soak but only applies to tanks
+L.tank_grip = "Agarrão no Tanque" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense

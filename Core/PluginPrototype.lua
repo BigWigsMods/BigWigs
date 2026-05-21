@@ -83,6 +83,13 @@ do
 end
 
 do
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+	function plugin:IsSecret(value)
+		return issecretvalue(value)
+	end
+end
+
+do
 	local raidList = {
 		"raid1", "raid2", "raid3", "raid4", "raid5", "raid6", "raid7", "raid8", "raid9", "raid10",
 		"raid11", "raid12", "raid13", "raid14", "raid15", "raid16", "raid17", "raid18", "raid19", "raid20",
@@ -227,22 +234,23 @@ do
 	-- @bool[opt] noResend if true, no re-send will be attempted if the message fails to send
 	-- @usage self:Sync("pluginName", data)
 	function plugin:Sync(msg, extra, noResend)
-		if BigWigsLoader.isMidnight then return end -- XXX 12.0 Needs fixing (not allowed in raids/dungeons atm)
 		if msg and self:IsEnabled() then
 			if IsInGroup() then
-				msg = "P^".. msg
+				local messageToTransmit
 				if extra then
-					msg = msg .."^".. extra
+					messageToTransmit = "P^".. msg .."^".. extra
+				else
+					messageToTransmit = "P^".. msg
 				end
-				local result = SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
+				local result = SendAddonMessage("BigWigs", messageToTransmit, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 				if type(result) == "number" and result > 0 then
-					if result == 3 or result == 8 or result == 9 then
+					if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
 						if not noResend then
 							self:SimpleTimer(function() self:Sync(msg, extra) end, 1)
+							return
 						end
-						return
-					else
-						local errorMsg = format("Failed to send plugin comm %q. Error code: %d", msg, result)
+					elseif result ~= 11 then -- AddOnMessageLockdown
+						local errorMsg = format("Failed to send plugin comm %q. Error code: %d", messageToTransmit, result)
 						core:Error(errorMsg)
 					end
 				end
@@ -278,10 +286,15 @@ do
 end
 
 --- Create a log entry in the Transcriptor addon if it is running
--- @string category the Transcriptor category to use
 -- @param ... any number of values to concatenate into the log entry
-function plugin:Debug(category, ...)
+function plugin:Debug(...)
 	if Transcriptor then
-		Transcriptor:AddCustomEvent("BigWigs_Debug", category, ...)
+		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", self.moduleName, ...)
 	end
+end
+
+--- Print a message to the chat frame with the BigWigs prefix
+-- @string msg the message to print to the chat frame
+function plugin:Print(msg)
+	core:Print(msg)
 end

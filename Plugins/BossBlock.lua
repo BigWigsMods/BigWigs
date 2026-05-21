@@ -58,6 +58,7 @@ local GetTime = GetTime
 local RestoreAll
 local hideQuestTrackingTooltips = false
 local activatedModules = {}
+local modulesBlockingEmotes = {}
 local latestKill = {}
 local bbFrame = CreateFrame("Frame")
 bbFrame:Hide()
@@ -380,6 +381,8 @@ do
 	function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
 		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+		self:RegisterMessage("BigWigs_BlockBossEmotes", "BlockEmotes")
+		self:RegisterMessage("BigWigs_AllowBossEmotes", "AllowEmotes")
 		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -454,6 +457,7 @@ end
 
 function plugin:OnPluginDisable()
 	activatedModules = {}
+	modulesBlockingEmotes = {}
 	latestKill = {}
 	RestoreAll(self)
 
@@ -535,7 +539,7 @@ do
 					tbl.subtitle = CL.other:format(tbl.title, tbl.subtitle) -- Combine, without uppercase
 					tbl.title = nil
 					tbl.bwDuration = 4
-					self:SimpleTimer(function() printMessage(self, tbl) end, 5) -- Delay a little bit after the boss dies
+					self:SimpleTimer(function() printMessage(self, tbl) end, 6) -- Delay a little bit after the boss dies
 				elseif tbl.eventToastID == 185 then -- Vault upgraded
 					-- tbl.title is "GREAT VAULT SLOT UPGRADED"
 					-- tbl.subtitle is a random item to fetch ilvl info from "[Leggings of the Greatlynx]"
@@ -657,7 +661,7 @@ do
 						printMessage(self, tbl)
 					else -- After a boss kill
 						tbl.subtitle = CL.other:format(L.newRespawnPoint, latestKill[3]) -- New Respawn Point: Boss Name
-						self:SimpleTimer(function() printMessage(self, tbl) end, 1) -- Delay a little after the boss kill
+						self:SimpleTimer(function() printMessage(self, tbl) end, 3) -- Delay a little after the boss kill
 					end
 				elseif tbl.eventToastID == 339 or tbl.eventToastID == 370 then -- Delve Spoils Within
 					-- 339: A Flickergate Has Manifested Within
@@ -666,9 +670,10 @@ do
 					tbl.title = nil
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 372 then -- Delve Spoils Found
+				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 371 or tbl.eventToastID == 372 then -- Delve Spoils Found
 					-- 337: Flickering Spoils Will Manifest Upon Delve Completion
 					-- 338: Shadowed Flickering Spoils Will Manifest Upon Delve Completion
+					-- 371: Grand Sanctified Spoils Will Manifest Upon Delve Completion
 					-- 372: Sanctified Spoils Will Manifest Upon Delve Completion
 					tbl.subtitle = tbl.title
 					tbl.title = nil
@@ -700,7 +705,7 @@ do
 					tbl.bwDone = true
 					if not delayedTbl.bwTimer then
 						delayedTbl.bwTimer = true
-						self:SimpleTimer(function() printMessage(self, delayedTbl) end, 5)
+						self:SimpleTimer(function() printMessage(self, delayedTbl) end, 6)
 					end
 					local itemLevel = success and GetDetailedItemLevelInfo(tbl.title) or 0
 					tbl.subtitle = L.itemLevel:format(itemLevel)
@@ -748,11 +753,14 @@ do
 			[15522] = true, -- Delves
 		}
 		function plugin:OnEngage(_, module)
-			if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
+			if module:IsWorldModule() or module:IsTrashModule() or (not module:GetJournalID() and not module:GetAllowWin()) then return end
 			if next(activatedModules) then
 				activatedModules[module] = true
 				return
 			else
+				for storedModule in next, modulesBlockingEmotes do
+					self:AllowEmotes(nil, storedModule)
+				end
 				activatedModules[module] = true
 			end
 
@@ -897,14 +905,37 @@ do
 			restoreObjectiveTracker = nil
 		end
 	end
+
+	function plugin:BlockEmotes(_, module)
+		if self.db.profile.blockEmotes and (module:IsWorldModule() or module:IsTrashModule()) and not next(activatedModules) then
+			if not next(modulesBlockingEmotes) then
+				KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+				KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+			end
+			modulesBlockingEmotes[module] = true
+		end
+	end
+
+	function plugin:AllowEmotes(_, module)
+		if modulesBlockingEmotes[module] and (module:IsWorldModule() or module:IsTrashModule()) and not next(activatedModules) then
+			modulesBlockingEmotes[module] = nil
+			if not next(modulesBlockingEmotes) then
+				RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+				RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+			end
+		end
+	end
 end
 
 function plugin:BigWigs_OnBossDisable(_, module)
-	if not module or (not module:GetJournalID() and not module:GetAllowWin()) or module.worldBoss then return end
-	activatedModules[module] = nil
-	if not next(activatedModules) then
-		activatedModules = {}
-		RestoreAll(self)
+	if activatedModules[module] then
+		activatedModules[module] = nil
+		if not next(activatedModules) then
+			activatedModules = {}
+			RestoreAll(self)
+		end
+	else
+		self:AllowEmotes(nil, module)
 	end
 end
 
@@ -915,19 +946,21 @@ end
 do
 	-- Talking Head blocking
 	local known = {
-		-- Black Rook Hold
+		-- Legion/Seat of the Triumvirate [Dungeon]
+		[87083]=true,
+		-- Legion/Black Rook Hold
 		[54567]=true,[54552]=true,[54566]=true,[54511]=true,[57890]=true,[54540]=true,
 		[54527]=true,[70619]=true,[70621]=true,[70623]=true,[70625]=true,[70627]=true,
-		-- Court of Stars
+		-- Legion/Court of Stars
 		[70615]=true,[70199]=true,[70198]=true,[70197]=true,[70193]=true,
 		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
-		-- Darkheart Thicket
+		-- Legion/Darkheart Thicket
 		[54459]=true,[54460]=true,[54461]=true,[54462]=true,[54463]=true,
 		[54464]=true,[54465]=true,[54466]=true,[54467]=true,[70601]=true,
 		[70603]=true,[70607]=true,
-		-- Halls of Valor
+		-- Legion/Halls of Valor
 		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
-		-- Neltharion's Lair
+		-- Legion/Neltharion's Lair
 		[54610]=true,[54608]=true,[54697]=true,[54708]=true,[54709]=true,
 		[54718]=true,[54719]=true,[54720]=true,[58102]=true,[58104]=true,
 
@@ -1023,6 +1056,22 @@ do
 		-- Operation: Floodgate
 		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269144]=true,[269145]=true,[269146]=true,
 		[269150]=true,[269152]=true,
+
+		-- Midnight/Den of Nalorakk [Dungeon]
+		[307905]=true,[307906]=true,[307907]=true,[307909]=true,[307910]=true,[307908]=true,[307900]=true,[307902]=true,
+		-- Midnight/Maisara Caverns [Dungeon]
+		[301692]=true,[301694]=true,[301695]=true,[301697]=true,[301732]=true,[301734]=true,[301735]=true,[301635]=true,
+		[301636]=true,[301637]=true,[301641]=true,
+		-- Midnight/The Blinding Vale [Dungeon]
+		[300142]=true,[300143]=true,[300145]=true,[300148]=true,[300152]=true,
+		-- Midnight/Nexus-Point Xenas [Dungeon]
+		[308122]=true,[308123]=true,
+		-- Midnight/Voidscar Arena [Dungeon]
+		[308433]=true,[308351]=true,
+		-- Midnight/The Voidspire [Raid]
+		[316005]=true,[316006]=true,[316007]=true,[316008]=true,[316009]=true,[316010]=true,[303419]=true,[303420]=true,[303421]=true,
+		-- Midnight/The Dreamrift [Raid]
+		[299649]=true,[299650]=true,[299651]=true,[299652]=true,[299653]=true,[299655]=true,[299656]=true,
 	}
 
 	local lookup = {
@@ -1042,15 +1091,15 @@ do
 	function plugin:TALKINGHEAD_REQUESTED()
 		local _, _, diff = GetInstanceInfo()
 		local entry = lookup[diff]
-		if entry and self.db.profile.blockTalkingHeads[entry] then
+		if entry then
 			local _, _, soundKitId = TalkingHeadLineInfo()
-			if TalkingHeadFrame and TalkingHeadFrame:IsShown() then
-				if known[soundKitId] then
+			if known[soundKitId] then
+				if self.db.profile.blockTalkingHeads[entry] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
 					TalkingHeadFrame:Hide()
-					self:Debug("TalkingHead", "Known", soundKitId)
-				else
-					self:Debug("TalkingHead", "Unknown", TalkingHeadLineInfo())
 				end
+				self:Debug("BlockedTalkingHead", soundKitId)
+			else
+				self:Debug("NewTalkingHead", TalkingHeadLineInfo())
 			end
 		end
 	end
@@ -1085,16 +1134,21 @@ do
 		[991] = true, -- Iridikron (DotI) defeat
 		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 		[1003] = true, -- Amirdrassil, Fyrakk defeat
-		[1034] = true, -- [The War Within/Manaforge Omega] clicking the portal after Dimensius defeat
+		[1034] = true, -- [The War Within/Manaforge Omega][Raid] clicking the portal after Dimensius defeat
+		[1049] = function() return latestKill[2] == 3181 and GetTime()-latestKill[1] < 8 end, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat, exclude manual activation
+		[1050] = function() return latestKill[2] == 3183 and GetTime()-latestKill[1] < 8 end, -- [Midnight/March on Quel'Danas][Raid] Midnight Falls defeat, exclude manual activation
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
 		if knownMovies[id] and self.db.profile.blockMovies then
-			if self.db.global.watchedMovies[id] then
-				BigWigs:Print(L.movieBlocked)
-				MovieFrame:Hide()
-			else
-				self.db.global.watchedMovies[id] = true
+			local checkType = type(knownMovies[id])
+			if checkType == "boolean" or (checkType == "function" and knownMovies[id]()) then
+				if self.db.global.watchedMovies[id] then
+					BigWigs:Print(L.movieBlocked)
+					MovieFrame:Hide()
+				else
+					self.db.global.watchedMovies[id] = true
+				end
 			end
 		end
 	end
@@ -1152,6 +1206,8 @@ do
 		[-2296] = true, -- Nerub-ar Palace, Ansurek defeat
 		[-2406] = true, -- Liberation of Undermine, entering the Gallagio
 		[-2409] = true, -- Liberation of Undermine, Gallywix defeat
+		[-2516] = true, -- [Midnight/Magisters' Terrace][Dungeon] clicking to drain the shield after defeating Seranel Sunlash
+		[-2529] = function() return latestKill[2] == 3181 and GetTime()-latestKill[1] < 10 end, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
@@ -1204,7 +1260,8 @@ do
 			local id = -(GetBestMapForUnit("player") or 0)
 
 			if cinematicZones[id] then
-				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
+				local checkType = type(cinematicZones[id])
+				if checkType == "table" then -- For zones with more than 1 cinematic per map id
 					if type(self.db.global.watchedMovies[id]) ~= "table" then self.db.global.watchedMovies[id] = {} end
 					for i = 1, #cinematicZones[id] do
 						local func = cinematicZones[id][i]
@@ -1218,7 +1275,7 @@ do
 							return
 						end
 					end
-				else
+				elseif checkType == "boolean" or (checkType == "function" and cinematicZones[id]()) then
 					if self.db.global.watchedMovies[id] then
 						BigWigs:Print(L.movieBlocked)
 						CinematicFrame_CancelCinematic()

@@ -55,6 +55,7 @@ local color_methods = {
 	Message = 2,
 	TargetMessageOld = 3,
 	TargetMessage = 2,
+	TargetMessageFromBlizzMessage = 3,
 	TargetsMessageOld = 2,
 	TargetsMessage = 2,
 	StackMessageOld = 4,
@@ -74,11 +75,13 @@ local icon_methods = {
 	Message = 4,
 	TargetMessageOld = 6,
 	TargetMessage = 5,
+	TargetMessageFromBlizzMessage = 5,
 	TargetsMessageOld = 6,
 	TargetsMessage = 6,
 	StackMessageOld = 7,
 	StackMessage = 7,
 	PersonalMessage = 4,
+	PersonalMessageFromBlizzMessage = 5,
 	Bar = 4,
 	CDBar = 4,
 	CastBar = 4,
@@ -119,6 +122,7 @@ local valid_methods = {
 	StopNameplate = "NAMEPLATE",
 	PauseBar = true,
 	ResumeBar = true,
+	Berserk = true,
 }
 local tracked_bitflags = {
 	["CASTBAR"] = true,
@@ -630,7 +634,7 @@ end
 
 local function parseLocale(file)
 	-- check if this file has already been visited
-	if visit(file) then
+	if visit(file) or opt.ignore_locale then
 		return
 	end
 
@@ -660,6 +664,17 @@ local function parseLocale(file)
 	local line_number = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		line_number = line_number + 1
+
+		do
+			local locale = line:match("BigWigsAPI%.IsLocale%(\"(.-)\"%)")
+			if locale then
+				if locale ~= file_locale then
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file, line_number, locale, file_locale))
+				end
+				-- new style is not supported yet
+				return
+			end
+		end
 
 		-- check for a new locale block in the locale file, and parse out the module name and locale from the block
 		local module_name, locale
@@ -851,8 +866,11 @@ local function parseLua(file)
 		end
 
 		-- parser options
-		if comment:find("SetOption:skip-unused", nil, true) then
-			opt.ignore_unused = true
+		if comment:find("SetOption:skip-unused", nil, true) and opt.ignore_unused ~= true then
+			opt.ignore_unused = module_name
+		end
+		if comment:find("SetOption:skip-locale", nil, true) and opt.ignore_locale ~= true then
+			opt.ignore_locale = module_name
 		end
 
 		-- set some module flags
@@ -911,7 +929,7 @@ local function parseLua(file)
 				if common_locale and not common_locale[locale_key] then
 					error(string.format("    %s:%d: Invalid locale string \"CL.%s\"", file_name, n, locale_key))
 				end
-			elseif locale_type == "L" and locale[locale_key] == nil then
+			elseif locale_type == "L" and locale[locale_key] == nil and not opt.ignore_locale then
 				error(string.format("    %s:%d: Invalid locale string \"L.%s\"", file_name, n, locale_key))
 			end
 			-- trying to invoke the string (missing :format)
@@ -945,20 +963,22 @@ local function parseLua(file)
 				-- mark private options as used
 				markPrivateOptions(option_keys, option_key_used)
 				-- check string keys
-				local custom_options = {
-					berserk = true,
-					altpower = true,
-					infobox = true,
-					proximity = true,
-					stages = true,
-					warmup = true,
-					adds = true,
-					health = true,
-					energy = true,
-				}
-				for key in next, option_keys do
-					if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and locale[key] == nil then
-						error(string.format("    %s:%d: Missing option key locale for \"%s\"", file_name, options_block_start, key))
+				if not opt.ignore_locale then
+					local custom_options = {
+						berserk = true,
+						altpower = true,
+						infobox = true,
+						proximity = true,
+						stages = true,
+						warmup = true,
+						adds = true,
+						health = true,
+						energy = true,
+					}
+					for key in next, option_keys do
+						if type(key) == "string" and not custom_options[key] and not key:find("^custom_") and locale[key] == nil then
+							error(string.format("    %s:%d: Missing option key locale for \"%s\"", file_name, options_block_start, key))
+						end
 					end
 				end
 			end
@@ -1175,35 +1195,6 @@ local function parseLua(file)
 			end
 		end
 
-		-- Check :Berserk
-		local args = line:match(":Berserk(%b())")
-		if args then
-			args = strsplit(clean(args:sub(2, -2)))
-			local funcAsString = tostring(current_func)
-			if rep.func_key then funcAsString = string.format("%s(%s)", funcAsString, table.concat(rep.func_key, ",")) end
-
-			local key = tonumber(args[4]) -- only numbers are used as a replacement key
-			if not key then
-				key = unquote(args[4])
-				if key == "args.spellId" then
-					if rep.func_key and #rep.func_key == 1 then
-						key = rep.func_key[1]
-					else
-						error(string.format("    %s:%d: Berserk: Invalid key! func=%s, key=%s", file_name, n, funcAsString, key))
-						key = nil
-					end
-				else -- arg is a string to use as the name
-					key = "berserk"
-				end
-			end
-			if key then
-				if not option_keys[key] then
-					error(string.format("    %s:%d: Berserk: Missing option key! func=%s, key=%s", file_name, n, funcAsString, key))
-				end
-				option_key_used[key] = true
-			end
-		end
-
 		-- Check registering IEEU when it could overwrite the encounter start handler
 		if line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\"") and current_func == "mod:OnBossEnable" then
 			if module_encounter_id and not line:match(":RegisterEvent%(\"INSTANCE_ENCOUNTER_ENGAGE_UNIT\", \"CheckBossStatus\"%)") then
@@ -1237,7 +1228,9 @@ local function parseLua(file)
 				if color_index then
 					color = tablize(unternary(argsList[color_index+offset], "\"(.-)\"", valid_colors))
 					if functionName:sub(1, 6) == "Target" or functionName == "StackMessageOld" or functionName == "StackMessage" then
-						color[#color+1] = "blue" -- used when on the player
+						if functionName ~= "TargetMessageFromBlizzMessage" then -- TargetMessageFromBlizzMessage never knows when an ability is on you, so it will never be blue
+							color[#color+1] = "blue" -- used when on the player
+						end
 					end
 				end
 				if functionName == "PersonalMessage" then
@@ -1247,6 +1240,14 @@ local function parseLua(file)
 					if common_locale and (locale_string and not common_locale[unquote(locale_string)]) then
 						local text = argsList[3+offset]
 						error(string.format("    %s:%d: PersonalMessage: Invalid localeString(2)! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
+					end
+				elseif functionName == "PersonalMessageFromBlizzMessage" then
+					color = {"blue"}
+					local locale_string = argsList[3+offset]
+					if (locale_string == "nil" or locale_string == "false") then locale_string = nil end
+					if common_locale and (locale_string and not common_locale[unquote(locale_string)]) then
+						local text = argsList[3+offset]
+						error(string.format("    %s:%d: PersonalMessageFromBlizzMessage: Invalid localeString(3)! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
 					end
 				end
 				local icon_index = icon_methods[functionName]
@@ -1298,6 +1299,25 @@ local function parseLua(file)
 				end
 				if functionName == "CloseProximity" and not key then
 					key = "\"proximity\""
+				end
+				-- Dynamic key only usable with PauseBar and ResumeBar
+				if (functionName == "Bar" or functionName == "CDBar" or functionName == "PauseBar" or functionName == "ResumeBar") and key == "barInfo.key" then
+					key = nil
+				end
+				if functionName == "Berserk" then
+					key = argsList[4+offset]
+					if not key or key == "nil" then
+						key = "\"berserk\""
+					end
+					local noMessages = argsList[2+offset]
+					if noMessages ~= "0" then
+						if noMessages == "true" then
+							color = {"orange","red"}
+						else
+							color = {"yellow","orange","red"}
+						end
+						sound = "alarm"
+					end
 				end
 			end
 
@@ -1434,6 +1454,14 @@ local function parseLua(file)
 			end
 		end
 	end
+
+	-- reset ignores if set by the module
+	if opt.ignore_unused ~= true then
+		opt.ignore_unused = nil
+	end
+	if opt.ignore_locale ~= true then
+		opt.ignore_locale = nil
+	end
 end
 
 -- Read modules.xml and return a table of file paths.
@@ -1509,7 +1537,7 @@ local function parse(file, relative_path)
 		-- Write the results.
 		if #file > 0 and #modules > 0 then
 			-- prefer a defined !Options path with a fallback of writing to !Options.lua in the same directory as the module
-			local path = options_path or file[1]:match(".*/") or ""
+			local path = (options_file_name ~= nil) and (options_path or "") or (file[1]:match(".*/") or "")
 			local file_name = options_file_name or "!Options.lua"
 			dumpValues(path, file_name, modules, module_colors, module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
@@ -1525,9 +1553,10 @@ local function parse(file, relative_path)
 		if string.match(file_name, "%.lua$") then
 			local options_file = string.match(file_name, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 			if options_file then
-				if options_path then
-					error(string.format("    %s: Multiple !Options paths found!", options_path))
-					error(string.format("    %s: Multiple !Options paths found!", file_name:match(".*/")))
+				if options_file_name then
+					error("Multiple !Options paths found:")
+					error(string.format("    %s", (options_path or "/")..options_file_name))
+					error(string.format("    %s", (file_name:match(".*/") or "/")..options_file))
 				end
 				-- if a file has defined a path to a specific !Options file, save it to write to later
 				options_file_name = options_file
@@ -1603,6 +1632,9 @@ if arg and #arg > 0 then
 			end
 			if v == "u" or v == "skip-unused" then
 				opt.ignore_unused = true
+			end
+			if v == "l" or v == "skip-locale" then
+				opt.ignore_locale = true
 			end
 		else
 			local path = v:gsub("\\", "/")
