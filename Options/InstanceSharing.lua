@@ -545,11 +545,14 @@ local function ImportRenames(renameSettings, moduleName)
 	if module then
 		if module.SetupOptions then module:SetupOptions() end
 		if module.db and module.db.profile and module.db.profile.renames then
-			for key, value in pairs(module.db.profile.renames) do
-				if renameSettings and renameSettings[key] then
-					module.db.profile.renames[key] = renameSettings[key]
-				else -- wipe to set default
-					module.db.profile.renames[key] = nil
+			for renamesKey, renamesTable in next, renameSettings do
+				if module:IsRenameAvailable(renamesKey) and type(renamesTable) == "table" and #renamesTable == module:GetRenameCount(renamesKey) then
+					for renameCount = 1, module:GetRenameCount(renamesKey) do
+						local renameType = type(renamesTable[renameCount])
+						if renameType == "string" or renameType == "number" then
+							module.db.profile.renames[renamesKey][renameCount] = renamesTable[renameCount]
+						end
+					end
 				end
 			end
 		end
@@ -590,7 +593,7 @@ function applyImport()
 		if flags then
 			ImportFlags(data.flags, moduleName)
 		end
-		if renames then
+		if renames and type(data.renames) == "table" then
 			ImportRenames(data.renames, moduleName)
 		end
 		if sounds then
