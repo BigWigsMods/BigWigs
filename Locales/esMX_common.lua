@@ -198,18 +198,20 @@ L.autotalk_generic_desc = "Selecciona automáticamente el dialogo del NPC que ha
 L.autotalk_notice = "Interactuando automáticamente con los NPC %s."
 
 -- GUI notes for renames
---L.generalNote = "This is the text that will generally be used"
---L.timerNote = "This text will be used for timers"
---L.castTimerNote = "This text will only be used for cast timers"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
---L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
---L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+L.singular = "Singular"
+L.plural = "Plural"
+L.generalNote = "Este es el texto que se usará de forma general"
+L.timerNote = "Este texto se usará para los temporizadores"
+L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
+L.messageNote = "Este texto se usará para los mensajes"
+L.messageOnYouNote = "El mensaje que se muestra cuando esta facultad te afecta"
+L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta facultad te afecta"
+L.thisOnly = "Solo %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
+L.mythicOnlyNote = "Este texto se usará solo en Mítico"
+L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
+L.stage1Only = "Solo Etapa 1"
+L.stage2Only = "Solo Etapa 2"
+L.stage3Only = "Solo Etapa 3"
 
 -- Common ability name replacements
 L.absorb = "Absorber" -- Used for shield-like abilities that absorb damage or healing
