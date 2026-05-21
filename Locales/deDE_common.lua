@@ -204,12 +204,12 @@ L.castTimerNote = "Dieser Text wird nur für Zauber Timer genutzt"
 L.messageNote = "Dieser Text wird für Nachrichten genutzt"
 L.messageOnYouNote = "Die anzuzeigende Nachricht wenn diese Fähigkeit auf Dir ist"
 L.timerOnYouNote = "Der anzuzeigende Text im Timer wenn diese Fähigkeit auf Dir ist"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
---L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
---L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+L.mythicOnlyNote = "Dieser Text wird nur für den mythischen Schwierigkeitsgrad verwendet"
+L.otherDifficultiesNote = "Dieser Text wird für alle anderen Schwierigkeitsgrade verwendet"
+L.intermissionOnly = "Nur Zwischenphase" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+L.stage1Only = "Nur Phase 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+L.stage2Only = "Nur Phase 2"
+L.stage3Only = "Nur Phase 3"
 
 -- Common ability name replacements
 L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
@@ -259,7 +259,7 @@ L.spell_reflection = "Zauberreflexion" -- Any ability that reflects spells
 L.rooted = "Bewegungsunfähig" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+L.arrow = "Pfeil" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
 L.arrows = "Pfeile" -- Plural of L.arrow
 L.ball = "Ball" -- A ball, like a football, basketball, etc
 L.balls = "Bälle" -- Plural of L.ball
