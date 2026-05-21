@@ -85,10 +85,10 @@ function mod:GetOptions()
 		[1245486] = CL.stage:format(2),
 		[1264756] = CL.mythic,
 	},{
-		[1257087] = CL.thisOnly:format(CL.stage:format(1)),
-		[1246653] = CL.thisOnly:format(CL.stage:format(1)),
-		[1246621] = CL.thisOnly:format(CL.stage:format(2)),
-		[1257085] = CL.thisOnly:format(CL.stage:format(2)),
+		[1257087] = CL.stage1Only,
+		[1246653] = CL.stage1Only,
+		[1246621] = CL.stage2Only,
+		[1257085] = CL.stage2Only,
 	}
 end
 

@@ -198,17 +198,18 @@ L.autotalk_generic_desc = "自动选择NPC对话选项以进入下一阶段。"
 L.autotalk_notice = "自动与NPC %s 交互。"
 
 -- GUI notes for renames
-L.singular = "单数"
-L.plural = "复数"
 L.generalNote = "通用说明文本"
 L.timerNote = "计时条中显示的文本"
 L.castTimerNote = "施法计时条中显示的文本"
 L.messageNote = "消息中显示的文本"
 L.messageOnYouNote = "技能点名你时显示的消息"
 L.timerOnYouNote = "技能点名你时计时条中显示的文本"
-L.thisOnly = "仅 %s" -- When we want to show that an ability is restricted e.g. "Stage 1 Only" or "Stage 2 Only" or "Intermission Only"
 L.mythicOnlyNote = "史诗难度下显示的文本"
 L.otherDifficultiesNote = "其他难度下显示的文本"
+--L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+--L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+--L.stage2Only = "Stage 2 Only"
+--L.stage3Only = "Stage 3 Only"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
