@@ -227,7 +227,7 @@ L.dispeller = "|cFFFF0000Alertas para disipables únicamente.|r "
 L.renames = "Renombres"
 L.noteLabel = "%s (|cFFFFFF99%s|r)"
 L.renameLabel = "%s (|cFF3366FF%s|r)"
-L.renameHeader = "Define un nombre personalizado para la facultad. Este texto se usará en lugar del nombre del hechizo en todos los mensajes y barras.\n\n"
+L.renameHeader = "Establece un nombre personalizado para la facultad. Este texto se usará en lugar del nombre del hechizo en todos los mensajes y barras.\n\n"
 L.spellName = "Nombre del hechizo"
 L.spellNameResetDesc = "Esta facultad tiene un nombre personalizado por defecto, haz clic en este botón para usar el nombre original (normalmente el nombre del hechizo)."
 
