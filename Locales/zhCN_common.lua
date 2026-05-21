@@ -32,10 +32,10 @@ L.boss = "首领"
 L.plus = "%s + %s" -- Spell 1 + Spell 2
 L.extra = "%s（%s）" -- SPELL_NAME (short spell name or extra information)
 
-L.phase = "%d阶段"
-L.stage = "%d阶段"
+L.phase = "第%d阶段"
+L.stage = "第%d阶段"  -- SCENARIO_STAGE 对齐暴雪本地化
 L.wave = "第%d波" -- e.g. "Wave 1" (Waves of adds)
-L.wave_count = "第%d波，共%d波" -- Wave 1 of 3 (Usually waves of adds)
+L.wave_count = "第%d波次，共%d波次" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "普通模式"
 L.heroic = "英雄模式"
 L.mythic = "史诗模式"
@@ -53,7 +53,7 @@ L.gate_open = "开门" -- When a gate is open, usually after a speech from an NP
 L.threat = "威胁"
 
 L.remaining = "剩余：%d" -- 5 remaining
-L.duration = "%s持续 %s 秒" -- Spell for 10 seconds
+L.duration = "%s持续%s秒" -- Spell for 10 seconds
 L.over = "%s结束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
 L.removed_from = "%2$s已移除%1$s" -- Spell removed from Player
@@ -67,10 +67,10 @@ L.no = "缺少：%s" -- No Spell
 L.intermission = "阶段转换"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
-L.you_die = "你将死亡" -- You will die
-L.you_die_sec = "你将在%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
+L.you_die = "你会死亡" -- You will die
+L.you_die_sec = "%d秒后死亡" -- "You die in 15 sec" (sec = seconds)
 L.next_ability = "下个技能" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
-L.boss_landing = "%s 正在着陆" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
+L.boss_landing = "%s正在着陆" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.landing = "着陆" -- Used when a flying NPC/dragon/boss is landing
 L.flying_available = "可以起飞"  --改为简短提示
 L.bosses_too_close = "首领距离过近" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc.
@@ -84,7 +84,7 @@ L.unsafe = "危险" -- You are unsafe (in danger) of a bad ability
 -- Add related
 L.add_spawned = "增援出现" -- singular
 L.adds_spawned = "增援出现" -- plural
-L.adds_spawned_count = "%d 增援出现" -- 1 add spawned / 2 adds spawned
+L.adds_spawned_count = "%d增援出现" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "增援出现" -- singular
 L.adds_spawning = "增援出现" -- plural
 L.spawned = "%s已刷新"
@@ -102,7 +102,7 @@ L.small_adds = "小型增援" -- plural
 -- Mob related
 L.killed = "%s已击杀"
 L.mob_killed = "%s已击杀（%d/%d）"
-L.mob_remaining = "%s已击杀，剩余 %d"
+L.mob_remaining = "%s已击杀，剩余%d"
 
 -- NPCs for follower dungeons
 L.garrick = "嘉里克船长" -- AI paladin tank (NPC 209057)
@@ -128,15 +128,15 @@ L.custom_end = "%s - %s"
 L.custom_min = "%2$d分后%1$s"
 L.custom_sec = "%2$d秒后%1$s"
 
-L.focus_only = "|cffff0000只警报焦点目标。|r "
+L.focus_only = "|cffff0000仅焦点目标。|r "
 L.trash = "小怪"
 L.affixes = "词缀" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s标记"
-L.marker_player_desc = "标记受到%s影响的玩家为%s，需要权限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
-L.marker_npc_desc = "标记%s为%s，需要权限。" -- Mark NPC_NAME with SKULL_ICON
-L.marker_npc_aura_desc = "标记受到'%s'影响的 NPC 为%s，需要权限。" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_player_desc = "将受到%s影响的玩家标记为%s，需要权限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_desc = "将%s标记为%s，需要权限。" -- Mark NPC_NAME with SKULL_ICON
+L.marker_npc_aura_desc = "将受到%s影响的NPC标记为%s，需要权限。" -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "禁用"
 L.none = "无"
 L.markers = "标记" -- Plural of marker
@@ -146,11 +146,11 @@ L.link = "连接"
 L.link_with = "与%s连接"
 L.link_with_icon = "与|T13700%d:0|t%s连接"
 L.link_with_rticon = "{rt%d}与%s连接"
-L.link_both = "%s和%s连接"
-L.link_both_icon = "|T13700%d:0|t%s和|T13700%d:0|t%s连接"
+L.link_both = "%s与%s连接"
+L.link_both_icon = "|T13700%d:0|t%s与|T13700%d:0|t%s连接"
 L.link_removed = "连接已移除"
 L.link_say_option_name = "重复“连接”信息"
-L.link_say_option_desc = "已重复喊话方式来发送信息，说明正在与谁连接。"
+L.link_say_option_desc = "以重复喊话方式来发送信息，说明正在与谁连接。"
 
 -- Abbreviated numbers
 L.amount_one = "%.2f亿" -- Billions 1,000,000,000
@@ -206,10 +206,10 @@ L.messageOnYouNote = "技能点名你时显示的消息"
 L.timerOnYouNote = "技能点名你时计时条中显示的文本"
 L.mythicOnlyNote = "史诗难度下显示的文本"
 L.otherDifficultiesNote = "其他难度下显示的文本"
---L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
---L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+L.intermissionOnly = "仅%s" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+L.stage1Only = "仅第1阶段" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+L.stage2Only = "仅第2阶段"
+L.stage3Only = "仅第3阶段"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
