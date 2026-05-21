@@ -630,7 +630,7 @@ L.settingsForOtherTargets = "Configurações para todos os outros alvos"
 L.lfgTimerTitle = "Temporizador de PG"
 L.lfgTimerExplainer = "Sempre que a janela da fila do Procurando Grupo aparecer, o BigWigs criará uma barra de temporizador indicando quanto tempo você tem para aceitar a fila.\n\n"
 L.lfgUseMaster = "Reproduzir som de PG pronto no canal de áudio 'Principal'"
-L.lfgUseMasterDesc = "Quando esta opção estiver ativada, o som de PG pronto será reproduzido no canal de áudio 'Principal'. Se desativar esta opção, ele será reproduzido no canal de áudio '%s'."
+L.lfgUseMasterDesc = "Quando esta opção estiver ativada, o som de Procurando Grupo pronto será reproduzido no canal de áudio 'Principal'. Se desativar esta opção, ele será reproduzido no canal de áudio '%s'."
 
 -----------------------------------------------------------------------
 -- PLUGINS
