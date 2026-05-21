@@ -62,13 +62,13 @@ mod:SetRenames({
 	[1241282] = {CL.adds}, -- Embers of Beloren (Adds)
 	[1241292] = { -- Light/Void Dive (Soaks)
 		CL.soaks, CL.you:format(CL.soak), CL.cast:format(CL.soaks),
-		notes = {L.generalNote, L.messageOnYouNote, L.castTimerNote},
+		notes = {CL.generalNote, CL.messageOnYouNote, CL.castTimerNote},
 		original = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339))
 	},
 	[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
 	[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
 	[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
-	[1242260] = {L.quills, CL.you:format(L.quills), notes = {L.generalNote, L.messageOnYouNote}}, -- Infused Quills (Quills)
+	[1242260] = {L.quills, CL.you:format(L.quills), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Infused Quills (Quills)
 	[1246709] = {CL.landing}, -- Death Drop (Landing)
 	[1241313] = {1241313}, -- Rebirth
 })
