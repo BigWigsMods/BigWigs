@@ -290,8 +290,8 @@ L.whelp = "雏龙" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "雏龙" -- Plural of L.whelp
 
 -- Debuff-related spell renames
---L.debuffs = "Debuffs"
---L.fire_debuffs = "Fire Debuffs"
+L.debuffs = "减益"  -- 减益效果
+L.fire_debuffs = "火焰减益"  -- “火焰减益效果”太长删“效果”
 
 -- Dispel-related spell renames
 L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
@@ -312,6 +312,6 @@ L.tank_combo = "连击坦克" -- Used for tank swap mechanics where the boss cas
 L.tank_debuff = "坦克减益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "命中坦克" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
---L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
+L.tank_knockback = "坦克击退" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "坦克分摊" -- Similar to L.soak but only applies to tanks
-L.tank_grip = "拖拽坦克" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.tank_grip = "拉拽坦克" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
