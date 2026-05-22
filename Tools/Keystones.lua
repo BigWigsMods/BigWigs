@@ -3373,25 +3373,23 @@ do
 					},
 				},
 			},
-			QoL = {
+			qol = {
 				type = "group",
 				name = L.qualityOfLife,
 				order = 4,
 				args = {
-					args = {
-						autoSlotKeystone = {
-							type = "toggle",
-							name = L.keystoneAutoSlot,
-							desc = L.keystoneAutoSlotDesc,
-							order = 1,
-							width = "full",
-						},
-						spacer = {
-							type = "description",
-							name = "\n\n",
-							order = 2,
-							width = "full",
-						},
+					autoSlotKeystone = {
+						type = "toggle",
+						name = L.keystoneAutoSlot,
+						desc = L.keystoneAutoSlotDesc,
+						order = 1,
+						width = "full",
+					},
+					spacer = {
+						type = "description",
+						name = "\n\n",
+						order = 2,
+						width = "full",
 					},
 				},
 			},
