@@ -288,15 +288,25 @@ function mod:TimersMythic(_, eventInfo)
 					self:CancelTimer(scheduleBackups)
 					scheduleBackups = nil
 				end
+				local delayedTimer = 0.5
 				scheduleBackups = self:ScheduleTimer(function()
 					scheduleBackups = nil
 					if self:ShouldShowBars() and not self:IsWiping() then
 						for i = 1, #storedTimelineEvents do
-							self:StartBackupBar(storedTimelineEvents[i], true)
+							local storedEventInfo = storedTimelineEvents[i]
+							local adjustedDuration = storedEventInfo.duration - delayedTimer -- adjust for scheduled timer
+							local isPossibleVaelwingBackup = storedEventInfo.durationRounded >= 15 and storedEventInfo.durationRounded <= 25
+							if self:IsBeforeRadiantBarrier(adjustedDuration) and isPossibleVaelwingBackup then
+								storedEventInfo.duration = adjustedDuration
+								barInfo = self:Vaelwing(storedEventInfo)
+								activeBars[storedEventInfo.id] = barInfo
+							else
+								self:StartBackupBar(storedEventInfo, true)
+							end
 						end
 					end
 					storedTimelineEvents = {}
-				end, 0.5)
+				end, delayedTimer)
 				return
 			end
 		end
@@ -334,12 +344,6 @@ function mod:TimersMythic(_, eventInfo)
 				end
 			end
 			storedTimelineEvents = {}
-		end
-	end
-
-	if not barInfo and self:IsBeforeRadiantBarrier(eventInfo.duration, 5) then
-		if durationRounded <= 25 or durationRounded >= 15 then -- Valwing Fallback
-			barInfo = self:Vaelwing(eventInfo)
 		end
 	end
 
@@ -453,26 +457,30 @@ function mod:TimersHeroic(_, eventInfo)
 				self:CancelTimer(scheduleBackups)
 				scheduleBackups = nil
 			end
+			local delayedTimer = 1.5 -- Long capture to grab delayed cancels. Still fails sometimes.
 			scheduleBackups = self:ScheduleTimer(function()
 				scheduleBackups = nil
 				if self:ShouldShowBars() and not self:IsWiping() then
 					for i = 1, #storedTimelineEvents do
-						self:StartBackupBar(storedTimelineEvents[i], true)
+						local storedEventInfo = storedTimelineEvents[i]
+						local adjustedDuration = storedEventInfo.duration - delayedTimer -- adjust for scheduled timer
+						local isPossibleRakfangBackup = storedEventInfo.durationRounded == 25 or storedEventInfo.durationRounded == 31
+						if self:IsBeforeRadiantBarrier(adjustedDuration) and isPossibleRakfangBackup then -- Rakfang backup
+							storedEventInfo.duration = adjustedDuration
+							barInfo = self:Rakfang(storedEventInfo)
+							activeBars[storedEventInfo.id] = barInfo
+						else
+							self:StartBackupBar(storedEventInfo, true)
+						end
 					end
 				end
 				storedTimelineEvents = {}
-			end, 1.5) -- Long capture to grab delayed cancels. Still happens sometimes.
+			end, delayedTimer)
 			return
 		end
 	else -- Intermissions
 		if durationRounded == 8 then -- Midnight Flames
 			barInfo = self:MidnightFlames(eventInfo)
-		end
-	end
-
-	if not barInfo and stage == 3 then
-		if durationRounded == 25 or durationRounded == 31 then -- Rakfang fallback
-			barInfo = self:Rakfang(eventInfo)
 		end
 	end
 
