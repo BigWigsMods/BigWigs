@@ -201,6 +201,7 @@ L.autotalk_notice = "自動與 NPC %s互動。"
 --L.generalNote = "This is the text that will generally be used"
 L.timerNote = "用於計時條的文字"
 --L.castTimerNote = "This text will only be used for cast timers"
+--L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
 L.messageNote = "用於訊息的文字"
 L.messageOnYouNote = "當你中了技能，訊息顯示的文字"
 L.timerOnYouNote = "當你中了技能，計時條顯示的文字"
@@ -288,6 +289,10 @@ L.waves = "波浪" -- Multiple waves of a bad ability coming from a boss, like w
 L.whelp = "幼龍" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "幼龍" -- Plural of L.whelp
 
+-- Debuff-related spell renames
+--L.debuffs = "Debuffs"
+--L.fire_debuffs = "Fire Debuffs"
+
 -- Dispel-related spell renames
 L.curse = "詛咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "詛咒" -- Plural of L.curse
@@ -307,5 +312,6 @@ L.tank_combo = "坦克連擊" -- Used for tank swap mechanics where the boss cas
 L.tank_debuff = "坦克減益" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "坦克尖刺" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+--L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "坦克分攤" -- Similar to L.soak but only applies to tanks
 --L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense

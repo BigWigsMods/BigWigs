@@ -201,6 +201,7 @@ L.autotalk_notice = "Interagindo automaticamente com NPC %s."
 L.generalNote = "Este é o texto que será geralmente usado"
 L.timerNote = "Este texto será usado para temporizadores"
 L.castTimerNote = "Este texto será usado apenas para temporizadores de lançamento"
+--L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
 L.messageNote = "Este texto será usado para mensagens"
 L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você"
 L.timerOnYouNote = "O texto exibido no temporizador quando esta habilidade estiver em você"
@@ -288,6 +289,10 @@ L.waves = "Ondas" -- Multiple waves of a bad ability coming from a boss, like wa
 L.whelp = "Dragonete" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Dragonetes" -- Plural of L.whelp
 
+-- Debuff-related spell renames
+--L.debuffs = "Debuffs"
+--L.fire_debuffs = "Fire Debuffs"
+
 -- Dispel-related spell renames
 L.curse = "Maldição" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Maldições" -- Plural of L.curse
@@ -307,5 +312,6 @@ L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss 
 L.tank_debuff = "Debuff do Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal do Tanque" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "Golpe no Tanque" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+--L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Soak Tanque" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "Agarrão no Tanque" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
