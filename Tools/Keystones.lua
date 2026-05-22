@@ -1630,6 +1630,18 @@ do
 			end
 		end
 	end
+	local RequestGuildSpecializationThrottled
+	do
+		local prev = 0
+		function RequestGuildSpecializationThrottled()
+			-- LibSpec already implements a small throttle
+			-- But since we're only doing this for badly coded 3rd party addons that don't request LibSpec guild prior to LibKeystone guild, we use a big throttle, for safety
+			if GetTime()-prev > 10 then
+				prev = GetTime()
+				LibSpec.RequestGuildSpecialization()
+			end
+		end
+	end
 	local function UpdateCellsForOnlineTab(playerList, isGuildList)
 		local sortedplayerList = {}
 		for pName, pData in next, playerList do
@@ -1642,6 +1654,8 @@ do
 					local color = C_ClassColor.GetClassColor(classFile):GenerateHexColor()
 					decoratedName = ("|T%s:16:16:0:0:64:64:4:60:4:60|t%s|c%s%s|r"):format(specIcon, roleIcons[role] or "", color, pName:gsub("%-.+", "*"))
 					nameTooltip = ("|c%s%s|r |A:classicon-%s:16:16|a%s |T%s:16:16:0:0:64:64:4:60:4:60|t%s %s%s\n%s"):format(color, pName, classFile, className, specIcon, specName, roleIcons[role] or "", roleIcons[role] and _G[role] or "", L.keystoneClickToWhisper)
+				elseif isGuildList then -- We received guild key info, but we don't have spec info? Likely some other addon requested key info and not spec info, so we now request spec info.
+					RequestGuildSpecializationThrottled()
 				end
 				local challengeMapName, _, _, _, _, mapID = GetMapUIInfo(pData[2])
 				local teleportSpellID = mapID and teleportList[1][mapID] or 0
