@@ -31,6 +31,8 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-InstanceId: 2912
 
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+
 Averzian.lua
 Vorasius.lua
 Salhadaar.lua
@@ -38,5 +40,4 @@ VaelgorAndEzzorak.lua
 Vanguard.lua
 Crown.lua
 
-Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 !Options.lua
