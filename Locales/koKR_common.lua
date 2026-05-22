@@ -201,7 +201,7 @@ L.autotalk_notice = "NPC %s와 자동으로 상호 작용합니다."
 L.generalNote = "일반적으로 사용될 텍스트"
 L.timerNote = "이 텍스트는 타이머에 사용됨"
 L.castTimerNote = "시전 타이머에만 사용될 텍스트"
---L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
+L.messageCastOverNote = "이 텍스트는 캐스팅이 끝났을 때 메시지를 표시하는 데 사용됨"
 L.messageNote = "이 텍스트는 메시지에 사용됨"
 L.messageOnYouNote = "이 능력이 본인에게 적용되었을 때 표시되는 메시지"
 L.timerOnYouNote = "이 능력이 본인에게 적용되었을 때 타이머에 표시되는 텍스트"
@@ -290,8 +290,8 @@ L.whelp = "새끼용" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "새끼용" -- Plural of L.whelp
 
 -- Debuff-related spell renames
---L.debuffs = "Debuffs"
---L.fire_debuffs = "Fire Debuffs"
+L.debuffs = "디버프"
+L.fire_debuffs = "화염 디버프"
 
 -- Dispel-related spell renames
 L.curse = "저주" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
@@ -312,6 +312,6 @@ L.tank_combo = "탱커 연계기" -- Used for tank swap mechanics where the boss
 L.tank_debuff = "탱커 디버프" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "탱커 정면기" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "탱커 피해" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
---L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
+L.tank_knockback = "탱커 넉백" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "탱커 당기기" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
