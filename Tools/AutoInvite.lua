@@ -133,9 +133,9 @@ do
 							local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
 							if realmName and realmDisplayName and player then
 								if realmDisplayName ~= GetRealmName() then
-									sender = player .. "-" .. realmName
+									player = player .. "-" .. realmName
 								end
-								if not UnitInRaid(sender) and not UnitInParty(sender) then -- Player is not already in our group
+								if not UnitInRaid(player) and not UnitInParty(player) then -- Player is not already in our group
 									message = message:lower()
 									for num = 1, #db.global.wordsFriendly do
 										if db.global.wordsFriendly[num] == message then
@@ -144,8 +144,8 @@ do
 													throttle[bnSenderID] = throttle[bnSenderID] + 10
 													SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
 												else
-													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-													C_PartyInfo.InviteUnit(sender)
+													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(player))
+													C_PartyInfo.InviteUnit(player)
 												end
 											else
 												if C_PartyInfo.IsPartyFull() then
@@ -153,14 +153,14 @@ do
 														if not next(delayedInvite) then
 															popupFrame:Show()
 														end
-														delayedInvite[sender] = bnSenderID
+														delayedInvite[player] = bnSenderID
 													else
 														throttle[bnSenderID] = throttle[bnSenderID] + 10
 														SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
 													end
 												else
-													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-													C_PartyInfo.InviteUnit(sender)
+													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(player))
+													C_PartyInfo.InviteUnit(player)
 												end
 											end
 										end
