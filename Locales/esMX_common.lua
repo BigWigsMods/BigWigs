@@ -201,7 +201,7 @@ L.autotalk_notice = "Interactuando automáticamente con los NPC %s."
 L.generalNote = "Este es el texto que se usará de forma general"
 L.timerNote = "Este texto se usará para los temporizadores"
 L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
---L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
+L.messageCastOverNote = "Este texto se utilizará para mostrar un mensaje cuando termine el lanzamiento"
 L.messageNote = "Este texto se usará para los mensajes"
 L.messageOnYouNote = "El mensaje que se muestra cuando esta facultad te afecta"
 L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta facultad te afecta"
@@ -290,8 +290,8 @@ L.whelp = "Cría" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Crías" -- Plural of L.whelp
 
 -- Debuff-related spell renames
---L.debuffs = "Debuffs"
---L.fire_debuffs = "Fire Debuffs"
+L.debuffs = "Perjuicios"
+L.fire_debuffs = "Perjuicios de fuego"
 
 -- Dispel-related spell renames
 L.curse = "Maldición" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
@@ -312,6 +312,6 @@ L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss 
 L.tank_debuff = "Debuff de Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal de Tanque" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "Golpe de Tanque" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
---L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
+L.tank_knockback = "Retroceso de Tanque" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Soak de Tanque" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "Agarre al Tanque" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
