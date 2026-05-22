@@ -10,6 +10,9 @@ L.requestAddonProfile = "Das Addon '|cFF436EEE%s|r' hat gerade eine Kopie des Pr
 L.shortMinutesAndSeconds = "%d Min %d Sek" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Sek" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f Sek" -- 3.2 Seconds
+L.accept = "Annehmen"
+L.cancel = "Abbrechen"
+--L.confirm_profile_swap = "The addon |cFF436EEE\"%s\"|r wants to automatically swap your BigWigs profile to a different profile called:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 
 -- Core.lua
 L.berserk = "Berserker"
