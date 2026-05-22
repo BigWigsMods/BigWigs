@@ -32,9 +32,10 @@
 ## X-BigWigs-ExtraMenu: -2443
 ## X-BigWigs-LoadOn-WorldBoss: -2395, 244762, -2437, 244424, -2413, 249776
 
+Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+
 Luashal.lua
 Cragpine.lua
 Thormbelan.lua
 
-Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 !Options.lua
