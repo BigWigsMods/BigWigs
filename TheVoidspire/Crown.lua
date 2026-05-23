@@ -861,6 +861,7 @@ function mod:InterruptingTremor()
 
 		self:StopBlizzMessages(0.5)
 		self:Message(1243743, "red", text)
+		self:CastBar(1243743, 5, 2)
 		self:PlaySound(1243743, "alert")
 	end
 
