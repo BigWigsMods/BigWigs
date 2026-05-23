@@ -1,6 +1,5 @@
 if not BigWigsAPI.IsLocale("itIT") then return end
 BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
-	quills = "Piume",
 	color_swaps = "Scambio Colori",
 	["1241292"] = "Picchiata Luce/Vuoto",
 })

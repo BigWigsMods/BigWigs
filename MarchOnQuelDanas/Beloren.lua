@@ -46,7 +46,6 @@ local convergenceCount = 1
 --
 
 local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
-	quills = "Quills",
 	color_swaps = "Color Swaps",
 
 	["1241292"] = "Light/Void Dive",
@@ -68,7 +67,7 @@ mod:SetRenames({
 	[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
 	[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
 	[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
-	[1242260] = {L.quills, CL.you:format(L.quills), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Infused Quills (Quills)
+	[1242260] = {CL.quills, CL.you:format(CL.quills), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Infused Quills (Quills)
 	[1246709] = {CL.landing}, -- Death Drop (Landing)
 	[1241313] = {1241313}, -- Rebirth
 })

@@ -1,6 +1,5 @@
 if not BigWigsAPI.IsLocale("zhCN") then return end
 BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
-	quills = "注能飞羽",
 	color_swaps = "颜色转换",
 	["1241292"] = "圣光/虚空俯冲",
 })
