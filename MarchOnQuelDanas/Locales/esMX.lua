@@ -10,9 +10,7 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	heavens_glaives = "Gujas",
 	heavens_lance = "Lanzas",
 	the_dark_archangel = "Explosión",
-
 	prism_kicks = "Cortes",
-
 	dark_constellation = "Estrellas",
 	dark_rune_bar = "Resuelve el Juego",
 
