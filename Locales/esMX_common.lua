@@ -33,7 +33,7 @@ L.plus = "%s + %s" -- Spell 1 + Spell 2
 L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Fase %d"
-L.stage = "Etapa %d"
+L.stage = "Fase %d"
 L.wave = "Oleada %d" -- e.g. "Wave 1" (Waves of adds)
 L.wave_count = "Oleada %d de %d" -- Wave 1 of 3 (Usually waves of adds)
 L.normal = "Modo normal"
@@ -194,7 +194,7 @@ L.arcane = "Arcano"
 -- Autotalk
 L.autotalk = "Interacción con NPC de forma automática"
 L.autotalk_boss_desc = "Selecciona automáticamente el dialogo del NPC que provoca el inicio del encuentro con el jefe."
-L.autotalk_generic_desc = "Selecciona automáticamente el dialogo del NPC que hace que avances a la siguiente etapa de la mazmorra."
+L.autotalk_generic_desc = "Selecciona automáticamente el dialogo del NPC que hace que avances a la siguiente fase de la mazmorra."
 L.autotalk_notice = "Interactuando automáticamente con los NPC %s."
 
 -- GUI notes for renames
@@ -208,9 +208,9 @@ L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta facul
 L.mythicOnlyNote = "Este texto se usará solo en Mítico"
 L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
 L.intermissionOnly = "Solo Intermedio" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
-L.stage1Only = "Solo Etapa 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
-L.stage2Only = "Solo Etapa 2"
-L.stage3Only = "Solo Etapa 3"
+L.stage1Only = "Solo Fase 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+L.stage2Only = "Solo Fase 2"
+L.stage3Only = "Solo Fase 3"
 
 -- Common ability name replacements
 L.absorb = "Absorción" -- Used for shield-like abilities that absorb damage or healing
