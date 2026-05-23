@@ -192,9 +192,6 @@ L.nature = "Naturaleza"
 L.arcane = "Arcano"
 
 -- Autotalk
-L.autotalk = "Interacción con NPC de forma automática"
-L.autotalk_boss_desc = "Selecciona automáticamente el dialogo del NPC que provoca el inicio del encuentro con el jefe."
-L.autotalk_generic_desc = "Selecciona automáticamente el dialogo del NPC que hace que avances a la siguiente fase del calabozo."
 L.autotalk = "Interacción con NPC automática"
 L.autotalk_boss_desc = "Selecciona automáticamente el diálogo del NPC que provoca el inicio del encuentro con el jefe."
 L.autotalk_generic_desc = "Selecciona automáticamente el diálogo del NPC que hace que avances a la siguiente fase del calabozo."
