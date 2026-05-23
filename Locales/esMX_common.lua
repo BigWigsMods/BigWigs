@@ -11,8 +11,8 @@ L.other = "%s: %s"
 L.onboss = "%s en JEFE"
 L.buff_boss = "Efecto en JEFE: %s"
 L.buff_other = "Efecto en %s: %s"
-L.magic_buff_boss = "Beneficio de magia en JEFE: %s" -- Magic buff on BOSS: SPELL_NAME
-L.magic_buff_other = "Beneficio de magia en %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
+L.magic_buff_boss = "Bufo magico en JEFE: %s" -- Magic buff on BOSS: SPELL_NAME
+L.magic_buff_other = "Bufo magico en %s: %s" -- Magic buff on NPC_NAME: SPELL_NAME
 L.on = "%s en %s"
 L.stack = "%dx %s en %s" -- "5x SPELL_NAME on PLAYER_OR_NPC" showing how many stacks of a buff/debuff are on a player or NPC
 L.stackyou = "%dx %s en TI" -- "5x SPELL_NAME on YOU" showing how many stacks of a buff/debuff are on you
@@ -134,9 +134,9 @@ L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s marcador"
-L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudante o líder." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere asistente o líder." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder." -- Mark NPC_NAME with SKULL_ICON
-L.marker_npc_aura_desc = "Marca NPC afectados por '%s' con %s, requiere ayudante o líder." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Marca NPC afectados por '%s' con %s, requiere asistente o líder." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Desactivado"
 L.none = "Nada"
 L.markers = "Marcas" -- Plural of marker
@@ -149,14 +149,14 @@ L.link_with_rticon = "{rt%d}Enlazado con %s"
 L.link_both = "%s + %s están enlazados"
 L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s están enlazados"
 L.link_removed = "Enlace eliminado"
-L.link_say_option_name = "Repetir 'enlazado' mensaje en decir"
-L.link_say_option_desc = "Repetir el mensaje en decir diciendo con quien estas enlazado."
+L.link_say_option_name = "Repetir 'enlazado' mensaje en chat"
+L.link_say_option_desc = "Repetir el mensaje en el chat diciendo con quien estas enlazado."
 
 -- Abbreviated numbers
 L.amount_one = "%dB" -- Miles de millones 1,000,000,000
 L.amount_two = "%dM" -- Millones 1,000,000
 L.amount_three = "%dK" -- Miles 1,000
-L.seconds = "%.1fs" -- 1.1 segundos
+L.seconds = "%.1s" -- 1.1 segundos
 
 -- Directions
 L.top = "Superior"
@@ -187,14 +187,14 @@ L.large = "Grande"
 -- Schools
 L.fire = "Fuego"
 L.frost = "Escarcha"
-L.shadow = "Sombras"
+L.shadow = "Sombra"
 L.nature = "Naturaleza"
 L.arcane = "Arcano"
 
 -- Autotalk
-L.autotalk = "Interacción con NPC de forma automática"
-L.autotalk_boss_desc = "Selecciona automáticamente el dialogo del NPC que provoca el inicio del encuentro con el jefe."
-L.autotalk_generic_desc = "Selecciona automáticamente el dialogo del NPC que hace que avances a la siguiente fase de la mazmorra."
+L.autotalk = "Interacción con NPC automática"
+L.autotalk_boss_desc = "Selecciona automáticamente el diálogo del NPC que provoca el inicio del encuentro con el jefe."
+L.autotalk_generic_desc = "Selecciona automáticamente el diálogo del NPC que hace que avances a la siguiente fase de la mazmorra."
 L.autotalk_notice = "Interactuando automáticamente con los NPC %s."
 
 -- GUI notes for renames
@@ -203,19 +203,19 @@ L.timerNote = "Este texto se usará para los temporizadores"
 L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
 L.messageCastOverNote = "Este texto se utilizará para mostrar un mensaje cuando termine el lanzamiento"
 L.messageNote = "Este texto se usará para los mensajes"
-L.messageOnYouNote = "El mensaje que se muestra cuando esta facultad te afecta"
-L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta facultad te afecta"
+L.messageOnYouNote = "El mensaje que se muestra cuando esta habilidad te afecta"
+L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta habilidad te afecta"
 L.mythicOnlyNote = "Este texto se usará solo en Mítico"
 L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
-L.intermissionOnly = "Solo Intermedio" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+L.intermissionOnly = "Solo en Intermedio" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
 L.stage1Only = "Solo Fase 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
 L.stage2Only = "Solo Fase 2"
 L.stage3Only = "Solo Fase 3"
 
 -- Common ability name replacements
 L.absorb = "Absorción" -- Used for shield-like abilities that absorb damage or healing
-L.heal_absorb = "Absorción de sanación" -- Used for shield-like abilities that absorb healing only
-L.heal_absorbs = "Absorciones de sanación" -- Plural of L.heal_absorb
+L.heal_absorb = "Absorción de curación" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Absorciones de curación" -- Plural of L.heal_absorb
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Láseres" -- Plural of L.lasers
 L.beam = "Rayo" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
@@ -223,10 +223,10 @@ L.beams = "Rayos" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Deflagración" -- When the explosion from a bomb-like ability will occur
-L.knockback = "Retroceso" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
-L.pushback = "Empujón" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
+L.knockback = "Empujón" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.pushback = "Desplazamiento" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Trampas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
-L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors
+L.meteor = "Meteorito" -- This one will probably only ever be used for actual meteors
 L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Teletransporte" -- A boss/add/etc teleported somewhere
 L.breath = "Aliento" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
@@ -262,16 +262,16 @@ L.rooted = "Enraizado" -- Any ability that roots you in place, preventing you fr
 -- Common ability name replacements A-Z
 L.arrow = "Flecha" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
 L.arrows = "Flechas" -- Plural of L.arrow
-L.ball = "Bola" -- A ball, like a football, basketball, etc
-L.balls = "Bolas" -- Plural of L.ball
+L.ball = "Pelota" -- A ball, like a football, basketball, etc
+L.balls = "Pelotas" -- Plural of L.ball
 L.blind = "Ceguera" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
 L.dodge = "Esquivar" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Miedo" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
-L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
+L.fixate = "Fijado" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Fijados" -- Plural of L.fixate
 L.group_damage = "Daño de grupo" -- Any ability that causes damage to every player in the 5 player group
-L.health_drain = "Absorción de salud" -- Any ability that drains health from the player
+L.health_drain = "Drenaje de salud" -- Any ability that drains health from the player
 L.madness = "Locura" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
 L.parasite = "Parásito" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "Parásitos" -- Plural of L.parasite
@@ -290,8 +290,8 @@ L.whelp = "Cría" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Crías" -- Plural of L.whelp
 
 -- Debuff-related spell renames
-L.debuffs = "Perjuicios"
-L.fire_debuffs = "Perjuicios de fuego"
+L.debuffs = "Debufo"
+L.fire_debuffs = "Debufo de fuego"
 
 -- Dispel-related spell renames
 L.curse = "Maldición" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
@@ -302,16 +302,16 @@ L.dispels = "Disipaciones" -- Plural of L.dispel
 L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 
 -- Interrupt-related spell renames
-L.interrupts = "Interrupciones" -- General term used when a player needs to interrupt a spell being cast
-L.kick = "Patada" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
-L.kicks = "Patadas" -- Plural of L.kick
+L.interrupts = "Interrumpir" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "Corte" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+L.kicks = "Cortes" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "Bomba de Tanque" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
-L.tank_debuff = "Debuff de Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
+L.tank_debuff = "Debufo de Tanque" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal de Tanque" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "Golpe de Tanque" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
-L.tank_knockback = "Retroceso de Tanque" -- Similar to L.knockback but only applies to tanks"
+L.tank_knockback = "Empujon de Tanque" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Soak de Tanque" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "Agarre al Tanque" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
