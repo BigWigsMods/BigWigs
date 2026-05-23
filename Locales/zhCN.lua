@@ -12,7 +12,7 @@ L.shortSecondsOnly = "%d 秒" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f 秒" -- 3.2 Seconds
 L.accept = "接受"
 L.cancel = "取消"
---L.confirm_profile_swap = "The addon |cFF436EEE\"%s\"|r wants to automatically swap your BigWigs profile to a different profile called:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+L.confirm_profile_swap = "插件 |cFF436EEE\"%s\"|r 希望将您的 BigWigs 配置文件自动切换为：\n\n|cFF33FF99\"%s\"|r\n\n确定要切换吗？"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -691,22 +691,22 @@ L.low = "低"
 --
 
 L.altPowerTitle = "交替能量"
-L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”，其中团队的交替能量以列表显示。要移动或显示框架，请使用下面的测试按钮。"
-L.toggleDisplayPrint = "显示将在下次出现时生效。要完全禁用此首领战功能，请在首领战斗选项中关闭。"
+L.altPowerDesc = "仅在极少数情况下，首领才会为玩家赋予交替能量。此功能将列出你和团队成员所拥有的“交替能量”数值。要移动该显示框体，请使用下方的测试按钮。"
+L.toggleDisplayPrint = "显示将在下次出现时生效。要在此场战斗中彻底关闭该功能，你需要在首领战斗选项中将其关闭。"
 L.disabledDisplayDesc = "禁用全部模块显示。"
-L.resetAltPowerDesc = "重置全部交替能量有关选项，包括交替能量锚点位置。"
+L.resetAltPowerDesc = "重置所有与交替能量相关的选项，包括交替能量框体的锚点位置。"
 L.test = "测试"
-L.altPowerTestDesc = "显示“交替能量”，可以移动，并模拟在首领战斗时会看到的能量变化。"
+L.altPowerTestDesc = "显示“交替能量”框体，允许你移动它，并模拟首领战斗中会出现的能量变化。"
 L.yourPowerBar = "你的能量条"
-L.barColor = "条颜色"
-L.barTextColor = "条文本颜色"
+L.barColor = "能量条颜色"
+L.barTextColor = "能量条文本颜色"
 L.additionalWidth = "附加宽度"
 L.additionalHeight = "附加高度"
 L.additionalSizeDesc = "拖动此滑条可增加显示尺寸，或在数字框内输入数值，最大为100。"
 L.yourPowerTest = "你的能量：%d" -- Your Power: 42
 L.yourAltPower = "你的 %s：%d" -- e.g. Your Corruption: 42
 L.player = "玩家 %d" -- Player 7
-L.disableAltPowerDesc = "全局禁用交替能量显示，任何首领战斗都不会显示它。"
+L.disableAltPowerDesc = "全局禁用交替能量显示，此后任何首领战中都不会显示该框体。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
