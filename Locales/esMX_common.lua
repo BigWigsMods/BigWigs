@@ -156,7 +156,7 @@ L.link_say_option_desc = "Repetir el mensaje en el chat diciendo con quien estas
 L.amount_one = "%dB" -- Miles de millones 1,000,000,000
 L.amount_two = "%dM" -- Millones 1,000,000
 L.amount_three = "%dK" -- Miles 1,000
-L.seconds = "%.1s" -- 1.1 segundos
+L.seconds = "%.1fs" -- 1.1 segundos
 
 -- Directions
 L.top = "Superior"
@@ -268,7 +268,7 @@ L.blind = "Ceguera" -- Any ability that blinds or disorientates you. Usually an 
 L.dodge = "Esquivar" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Miedo" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
-L.fixate = "Fijado" -- Used when a boss or add is chasing/fixated on a player
+L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Fijados" -- Plural of L.fixate
 L.group_damage = "Daño de grupo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Drenaje de salud" -- Any ability that drains health from the player
