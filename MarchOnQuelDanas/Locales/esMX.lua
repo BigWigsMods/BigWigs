@@ -3,6 +3,9 @@ BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
 	--quills = "Quills",
 	--color_swaps = "Color Swaps",
 	--["1241292"] = "Light/Void Dive",
+	quills = "Péndolas",
+	color_swaps = "Cambio de Color",
+	["1241292"] = "Llamas de Luz/Vacío",
 })
 
 BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
@@ -10,12 +13,24 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	--heavens_glaives = "Glaives",
 	--heavens_lance = "Lance",
 	--the_dark_archangel = "Big Boom",
+	deaths_dirge = "Juego de Memoria",
+	heavens_glaives = "Gujas",
+	heavens_lance = "Lanzas",
+	the_dark_archangel = "Explosión",
+	
 	--prism_kicks = "Kicks",
+	prism_kicks = "Cortes",
+	
 	--dark_constellation = "Stars",
 	--dark_rune_bar = "Solve the Game",
+	dark_constellation = "Estrellas",
+	dark_rune_bar = "Resuelve el Juego",
+	
 
 	--left = "[L] %s", -- left/west group bars in p3
 	--right = "[R] %s", -- right/east group bars in p3
+	left = "[I] %s", -- left/west group bars in p3
+	right = "[D] %s", -- right/east group bars in p3
 
 	--custom_select_limit_warnings = "[Mythic] Restrict Stage 3 Warnings",
 	--custom_select_limit_warnings_desc = "Only show warnings for abilities on your side.",
@@ -24,4 +39,11 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	--custom_select_limit_warnings_value3 = "Show warnings for both sides.",
 	--custom_select_limit_warnings_value4 = "Show warnings for left side only.",
 	--custom_select_limit_warnings_value5 = "Show warnings for right side only.",
+	custom_select_limit_warnings = "[Mítico] Restricciones de Alertas de la Fase 3.",
+	custom_select_limit_warnings_desc = "Solo muestra Alertas de habilidades en tu lado.",
+	custom_select_limit_warnings_value1 = "Grupos 1 & 2 izquierda, grupos 3 & 4 derecha.",
+	custom_select_limit_warnings_value2 = "Grupos impares izquierda, grupos pares derecha",
+	custom_select_limit_warnings_value3 = "Muestra alertas para ambos lados.",
+	custom_select_limit_warnings_value4 = "Muestra alertas solo para el lado izquierdo.",
+	custom_select_limit_warnings_value5 = "Muestra alertas solo pra el lado derecho.",
 })
