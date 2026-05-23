@@ -1186,20 +1186,6 @@ do
 	end
 	RegisterAddonMessagePrefix(dbmPrefix) -- DBM
 end
-do
-	local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
-	if num < 90 then
-		C_CVar.SetCVar("Sound_NumChannels", "90") -- 64 is the default, enforce a little higher as a minimum to prevent sound clipping issues with addons
-	end
-	local maxCache = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
-	if maxCache < 134217728 then
-		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "134217728") -- "Large (128MB)" is the default, enforce it as a minimum
-	end
-	local maxSize = tonumber(C_CVar.GetCVar("Sound_MaxCacheableSizeInBytes")) or 0
-	if maxSize < 174762 then
-		C_CVar.SetCVar("Sound_MaxCacheableSizeInBytes", "174762") -- "174762" (170KB) is the default, enforce it as a minimum
-	end
-end
 
 -- LibDBIcon setup
 if type(BigWigsIconDB) ~= "table" then
@@ -1231,6 +1217,7 @@ do
 		profile = {
 			showZoneMessages = true,
 			fakeDBMVersion = false,
+			enforceSoundSettings = true,
 			englishSayMessages = false,
 			bossModMessagesDisabled = false,
 			bossModNameplatesDisabled = false,
@@ -1261,6 +1248,21 @@ do
 			db.profile[k] = nil
 		elseif type(v) ~= defaultType then
 			db.profile[k] = defaults.profile[k]
+		end
+	end
+
+	if db.profile.enforceSoundSettings then
+		local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
+		if num < 90 then
+			C_CVar.SetCVar("Sound_NumChannels", "90") -- 64 is the default, enforce a little higher as a minimum to prevent sound clipping issues with addons
+		end
+		local maxCache = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
+		if maxCache < 134217728 then
+			C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "134217728") -- "Large (128MB)" is the default, enforce it as a minimum
+		end
+		local maxSize = tonumber(C_CVar.GetCVar("Sound_MaxCacheableSizeInBytes")) or 0
+		if maxSize < 174762 then
+			C_CVar.SetCVar("Sound_MaxCacheableSizeInBytes", "174762") -- "174762" (170KB) is the default, enforce it as a minimum
 		end
 	end
 end

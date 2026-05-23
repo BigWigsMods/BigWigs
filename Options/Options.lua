@@ -142,6 +142,13 @@ local aceConfigTableMainBigWigsTab = {
 					order = 33,
 					width = "full",
 				},
+				enforceSoundSettings = {
+					type = "toggle",
+					name = L.enforceSoundSettings,
+					desc = L.enforceSoundSettingsDesc,
+					order = 34,
+					width = "full",
+				},
 				separator4 = {
 					type = "description",
 					name = " ",
