@@ -3961,7 +3961,9 @@ end
 -- @param[opt] localeString if nil then the "%s on YOU" string will be used, if false then the text field will be printed directly, otherwise the common locale will be referenced via CL[localeString]
 -- @param[opt] text the message text (if nil, key is used, if true, the raw Blizzard message is used)
 -- @param[opt] icon the message icon (spell id or texture name or true to use the Blizzard provided icon)
-function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text, icon)
+-- @bool[opt] mustDefineTarget if true, a message will only be shown if Blizzard defines a player target in the boss message
+-- @param[opt] callbackIfOnMe an optional function to run
+function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text, icon, mustDefineTarget, callbackIfOnMe)
 	self:StopBlizzMessages(duration)
 
 	if self:CanPassRoleRestrictions(key) then
@@ -3972,6 +3974,8 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 			end, duration)
 
 			self:RegisterEvent("ENCOUNTER_WARNING", function(event, infoTable)
+				if infoTable.targetGUID == nil and mustDefineTarget then return end
+
 				self:CancelTimer(timer)
 				self:UnregisterEvent(event)
 
@@ -3992,6 +3996,9 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 						msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
 					end
 					self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
+				end
+				if callbackIfOnMe then
+					callbackIfOnMe(self)
 				end
 			end)
 		end
