@@ -295,8 +295,8 @@ L.imported_privateAuras_settings = "Configuración de Auras Privadas"
 L.privateAuras_settings_import_desc = "Importa toda la configuración de Auras Privadas."
 L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras Privadas."
 L.imported_combattimer_settings = "Configuración de Temporizador de combate"
-L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate"
-L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate"
+L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate."
+L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate."
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartir configuración del jefe"
