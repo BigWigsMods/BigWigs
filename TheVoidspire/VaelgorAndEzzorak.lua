@@ -178,7 +178,7 @@ function mod:TimersMythic(_, eventInfo)
 	local stage = self:GetStage()
 	local time = GetTime()
 
-	if durationRounded == 8 and time - 5 > lastStaged and not self:IsIntermission() then -- Midnight Flames Cast
+	if durationRounded == 8 and time - 5 > lastStaged and not self:IsIntermission() and stage < 3 then -- Midnight Flames Cast
 		lastStaged = time
 		if self:ShouldShowBars() then
 			self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
@@ -364,7 +364,7 @@ function mod:TimersHeroic(_, eventInfo)
 	local stage = self:GetStage()
 	local time = GetTime()
 
-	if not self:IsIntermission() and durationRounded == 8 and time - 5 > lastStaged then -- Midnight Flames Cast
+	if not self:IsIntermission() and durationRounded == 8 and time - 5 > lastStaged and stage < 3 then -- Midnight Flames Cast
 		lastStaged = time
 		if self:ShouldShowBars() then
 			self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
@@ -501,7 +501,7 @@ function mod:TimerOther(_, eventInfo)
 	local stage = self:GetStage()
 	local time = GetTime()
 
-	if not self:IsIntermission() and durationRounded == 8 and time - 5 > lastStaged then -- Midnight Flames Cast
+	if not self:IsIntermission() and durationRounded == 8 and time - 5 > lastStaged and stage < 3 then -- Midnight Flames Cast
 		lastStaged = time
 		if self:ShouldShowBars() then
 			self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
