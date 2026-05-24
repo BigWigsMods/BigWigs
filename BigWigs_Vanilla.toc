@@ -69,5 +69,7 @@ Core\BossPrototype_Classic.lua
 Core\PluginPrototype.lua
 Core\Core.lua
 Plugins\modules.xml
-Options\modules.xml
+Options\Options.lua
+Options\Sharing.lua
+Options\InstanceSharing.lua
 #@end-do-not-package@
