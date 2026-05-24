@@ -1,10 +1,53 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 <!--@do-not-package@-->
-<Include file="MarchOnQuelDanas\modules.xml"/>
-<Include file="TheDreamrift\modules.xml"/>
-<Include file="TheVoidspire\modules.xml"/>
-<Include file="MidnightWorld\modules.xml"/>
-<Include file="Sporefall\modules.xml"/>
+<Script file="MarchOnQuelDanas\Locales\deDE.lua"/>
+<Script file="MarchOnQuelDanas\Locales\esES.lua"/>
+<Script file="MarchOnQuelDanas\Locales\esMX.lua"/>
+<Script file="MarchOnQuelDanas\Locales\frFR.lua"/>
+<Script file="MarchOnQuelDanas\Locales\itIT.lua"/>
+<Script file="MarchOnQuelDanas\Locales\koKR.lua"/>
+<Script file="MarchOnQuelDanas\Locales\ptBR.lua"/>
+<Script file="MarchOnQuelDanas\Locales\ruRU.lua"/>
+<Script file="MarchOnQuelDanas\Locales\zhCN.lua"/>
+<Script file="MarchOnQuelDanas\Locales\zhTW.lua"/>
+<Script file="MarchOnQuelDanas\Beloren.lua"/>
+<Script file="MarchOnQuelDanas\MidnightFalls.lua"/>
+<Script file="MarchOnQuelDanas\!Options.lua"/>
+<Script file="TheDreamrift\Chimaerus.lua"/>
+<Script file="TheDreamrift\!Options.lua"/>
+<Script file="TheVoidspire\Locales\deDE.lua"/>
+<Script file="TheVoidspire\Locales\esES.lua"/>
+<Script file="TheVoidspire\Locales\esMX.lua"/>
+<Script file="TheVoidspire\Locales\frFR.lua"/>
+<Script file="TheVoidspire\Locales\itIT.lua"/>
+<Script file="TheVoidspire\Locales\koKR.lua"/>
+<Script file="TheVoidspire\Locales\ptBR.lua"/>
+<Script file="TheVoidspire\Locales\ruRU.lua"/>
+<Script file="TheVoidspire\Locales\zhCN.lua"/>
+<Script file="TheVoidspire\Locales\zhTW.lua"/>
+<Script file="TheVoidspire\Averzian.lua"/>
+<Script file="TheVoidspire\Vorasius.lua"/>
+<Script file="TheVoidspire\Salhadaar.lua"/>
+<Script file="TheVoidspire\VaelgorAndEzzorak.lua"/>
+<Script file="TheVoidspire\Vanguard.lua"/>
+<Script file="TheVoidspire\Crown.lua"/>
+<Script file="TheVoidspire\!Options.lua"/>
+<Script file="MidnightWorld\Locales\deDE.lua"/>
+<Script file="MidnightWorld\Locales\esES.lua"/>
+<Script file="MidnightWorld\Locales\esMX.lua"/>
+<Script file="MidnightWorld\Locales\frFR.lua"/>
+<Script file="MidnightWorld\Locales\itIT.lua"/>
+<Script file="MidnightWorld\Locales\koKR.lua"/>
+<Script file="MidnightWorld\Locales\ptBR.lua"/>
+<Script file="MidnightWorld\Locales\ruRU.lua"/>
+<Script file="MidnightWorld\Locales\zhCN.lua"/>
+<Script file="MidnightWorld\Locales\zhTW.lua"/>
+<Script file="MidnightWorld\Luashal.lua"/>
+<Script file="MidnightWorld\Cragpine.lua"/>
+<Script file="MidnightWorld\Thormbelan.lua"/>
+<Script file="MidnightWorld\!Options.lua"/>
+<Script file="Sporefall\Rotmire.lua"/>
+<Script file="Sporefall\!Options.lua"/>
 <!--@end-do-not-package@-->
 </Ui>
