@@ -201,16 +201,16 @@ L.autotalk_notice = "自动与NPC %s 交互。"
 L.generalNote = "通用说明文本"
 L.timerNote = "计时条中显示的文本"
 L.castTimerNote = "施法计时条中显示的文本"
---L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
---L.messageCastStartNote = "This text will be used for showing a message when the cast starts"
+L.messageCastOverNote = "施法结束时显示的消息文本"
+L.messageCastStartNote = "施法开始时显示的消息文本"
 L.messageNote = "消息中显示的文本"
 L.messageOnYouNote = "技能点名你时显示的消息"
 L.timerOnYouNote = "技能点名你时计时条中显示的文本"
 L.mythicOnlyNote = "史诗难度下显示的文本"
 L.otherDifficultiesNote = "其他难度下显示的文本"
---L.debuffFailureNote = "This debuff will apply to you if you fail"
---L.preDebuffNote = "This is the pre-debuff, before the main debuff applies to you"
---L.mainDebuffNote = "This is the main debuff that applies to you"
+L.debuffFailureNote = "机制失败时对你施加的减益效果"
+L.preDebuffNote = "主减益前的前置减益效果"
+L.mainDebuffNote = "对你施加的主减益效果"
 L.intermissionOnly = "仅转阶段" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
 L.stage1Only = "仅第1阶段" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
 L.stage2Only = "仅第2阶段"
@@ -228,7 +228,7 @@ L.bomb = "炸弹" -- Used for debuffs that make players explode
 L.bombs = "炸弹" -- Plural of L.bomb
 L.explosion = "爆炸" -- When the explosion from a bomb-like ability will occur
 L.knockback = "击退" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
---L.knockbacks = "Knockbacks" -- Plural of L.knockback
+L.knockbacks = "击退" -- Plural of L.knockback
 L.pushback = "推开" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "陷阱" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "流星" -- This one will probably only ever be used for actual meteors
@@ -270,7 +270,7 @@ L.arrows = "箭矢" -- Plural of L.arrow
 L.ball = "球" -- A ball, like a football, basketball, etc
 L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
---L.chakram = "飞轮" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
+L.chakram = "飞轮" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
 L.dodge = "躲开" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "激怒" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "恐惧" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
@@ -298,7 +298,7 @@ L.whelps = "雏龙" -- Plural of L.whelp
 
 -- Debuff-related spell renames
 L.debuffs = "减益"  -- 减益效果
-L.fire_debuffs = "火焰减益"  -- “火焰减益效果”太长删“效果”
+L.fire_debuffs = "火焰减益"  -- “火焰减益效果”长删“效果”
 
 -- Dispel-related spell renames
 L.curse = "诅咒" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
@@ -307,8 +307,8 @@ L.disease = "疾病" -- Any disease-type dispellable debuff, or debuffs called "
 L.dispel = "驱散" -- General term for any debuff that is dispellable
 L.dispels = "驱散" -- Plural of L.dispel
 L.poison = "中毒" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
---L.bleed = "Bleed" -- Any bleed-type debuff
---L.bleeds = "Bleeds" -- Plural of L.bleed
+L.bleed = "流血" -- Any bleed-type debuff
+L.bleeds = "流血" -- Plural of L.bleed
 
 -- Interrupt-related spell renames
 L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
