@@ -452,7 +452,7 @@ L.customText = "Texto personalizado (Debe contener %s)"
 -- Keystones.lua
 --
 
-L.keys = "Piedra angular"
+L.keys = "Piedras"
 
 L.keystoneTitle = "BigWigs Piedras angulares"
 L.keystoneHeaderParty = "Grupo"
