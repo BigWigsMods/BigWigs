@@ -30,4 +30,7 @@
 
 Libs\LibChatAnims\LibChatAnims.lua
 
-modules_Classic.xml
+Constants.lua
+BossPrototype_Classic.lua
+PluginPrototype.lua
+Core.lua

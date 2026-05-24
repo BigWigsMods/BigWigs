@@ -62,8 +62,12 @@ GuildVersion.lua
 Loader.lua
 Tools\CombatTimer.lua
 Tools\AutoInvite.lua
+
 #@do-not-package@
-Core\modules_Classic.xml
+Core\Constants.lua
+Core\BossPrototype_Classic.lua
+Core\PluginPrototype.lua
+Core\Core.lua
 Plugins\modules.xml
 Options\modules.xml
 #@end-do-not-package@

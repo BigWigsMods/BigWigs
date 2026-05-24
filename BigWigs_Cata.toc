@@ -64,8 +64,12 @@ Tools\CombatTimer.lua
 Tools\AutoInvite.lua
 Tools\LFGTimer.lua
 Tools\AutoRole.lua
+
 #@do-not-package@
-Core\modules.xml
+Core\Constants.lua
+Core\BossPrototype.lua
+Core\PluginPrototype.lua
+Core\Core.lua
 Plugins\modules.xml
 Options\modules.xml
 #@end-do-not-package@
