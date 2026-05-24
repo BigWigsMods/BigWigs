@@ -66,4 +66,27 @@ Core\modules.xml
 Plugins\modules.xml
 Options\modules.xml
 #@end-do-not-package@
-bosses.xml
+
+#@do-not-package@
+MarchOnQuelDanas\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+MarchOnQuelDanas\Beloren.lua
+MarchOnQuelDanas\MidnightFalls.lua
+MarchOnQuelDanas\!Options.lua
+TheDreamrift\Chimaerus.lua
+TheDreamrift\!Options.lua
+TheVoidspire\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+TheVoidspire\Averzian.lua
+TheVoidspire\Vorasius.lua
+TheVoidspire\Salhadaar.lua
+TheVoidspire\VaelgorAndEzzorak.lua
+TheVoidspire\Vanguard.lua
+TheVoidspire\Crown.lua
+TheVoidspire\!Options.lua
+MidnightWorld\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+MidnightWorld\Luashal.lua
+MidnightWorld\Cragpine.lua
+MidnightWorld\Thormbelan.lua
+MidnightWorld\!Options.lua
+Sporefall\Rotmire.lua
+Sporefall\!Options.lua
+#@end-do-not-package@
