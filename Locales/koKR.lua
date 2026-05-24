@@ -12,7 +12,7 @@ L.shortSecondsOnly = "%d 초" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f 초" -- 3.2 Seconds
 L.accept = "수락"
 L.cancel = "취소"
---L.confirm_profile_swap = "The addon |cFF436EEE\"%s\"|r wants to automatically swap your BigWigs profile to a different profile called:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+L.confirm_profile_swap = "|cFF436EEE\"%s\"|r 애드온이 BigWigs 프로필을 다음 이름의 다른 프로필로 자동 교체하려고 합니다::\n\n|cFF33FF99\"%s\"|r\n\n정말 이 작업을 진행하시겠습니까?"
 
 -- Core.lua
 L.berserk = "광폭화"
