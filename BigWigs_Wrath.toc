@@ -63,4 +63,8 @@ Loader.lua
 Tools\CombatTimer.lua
 Tools\AutoInvite.lua
 Tools\LFGTimer.lua
-modules_Classic.xml
+#@do-not-package@
+Core\modules_Classic.xml
+Plugins\modules.xml
+Options\modules.xml
+#@end-do-not-package@
