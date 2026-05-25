@@ -1531,7 +1531,7 @@ end
 local function writeOptions(files)
 	if #modules > 0 then
 		-- prefer a defined !Options path with a fallback of writing to !Options.lua in the same directory as the module
-		local path = (options_file_name ~= nil) and (options_path or "") or (files[1]:match(".*/") or "")
+		local path = (options_file_name ~= nil) and (options_path or "") or (files and files[1]:match(".*/") or "")
 		local file_name = options_file_name or "!Options.lua"
 		dumpValues(path, file_name, modules, module_colors, module_sounds)
 		print(string.format("    Parsed %d modules.", #modules))
@@ -1564,7 +1564,7 @@ local function parse(file, relative_path)
 				-- !Options entry found, flush previously accumulated modules
 				options_file_name = options_file
 				options_path = file_name:match(".*/")
-				writeOptions({})
+				writeOptions()
 			elseif string.find(file_name, "[TextLocale]", nil, true) then
 				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
 				-- first look for [AllowLoadTextLocale ...]
