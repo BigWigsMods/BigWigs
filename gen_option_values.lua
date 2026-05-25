@@ -1534,7 +1534,7 @@ local function writeOptions(options_path, options_file_name)
 		-- Reset!
 		modules = {}
 	elseif options_path or options_file_name then
-		warn("    An !Options.lua file was defined but no modules were found!")
+		warn("    !Options file was defined but no modules were found! No options written.")
 	end
 end
 
@@ -1546,7 +1546,7 @@ local function parse(file, relative_path)
 		end
 		if #modules > 0 then
 			modules = {}
-			warn("    !Options file was not defined but there were modules found!")
+			warn("    !Options file was not defined for "..#modules.." modules! No options written.")
 		end
 	elseif file then
 		-- split any optional [AllowLoad] condition out from the file name
