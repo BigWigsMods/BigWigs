@@ -1529,15 +1529,21 @@ local function parseTOC(file)
 end
 
 local function writeOptions(files)
-	if #modules == 0 then return end
-	-- prefer a defined !Options path with a fallback of writing to !Options.lua in the same directory as the module
-	local path = (options_file_name ~= nil) and (options_path or "") or (files[1]:match(".*/") or "")
-	local file_name = options_file_name or "!Options.lua"
-	dumpValues(path, file_name, modules, module_colors, module_sounds)
-	print(string.format("    Parsed %d modules.", #modules))
-	modules = {}
-	options_path = nil
-	options_file_name = nil
+	if #modules > 0 then
+		-- prefer a defined !Options path with a fallback of writing to !Options.lua in the same directory as the module
+		local path = (options_file_name ~= nil) and (options_path or "") or (files[1]:match(".*/") or "")
+		local file_name = options_file_name or "!Options.lua"
+		dumpValues(path, file_name, modules, module_colors, module_sounds)
+		print(string.format("    Parsed %d modules.", #modules))
+		-- Reset!
+		modules = {}
+		options_path = nil
+		options_file_name = nil
+	elseif options_path or options_file_name then
+		warn("    An !Options.lua file was defined but no modules were found!")
+		options_path = nil
+		options_file_name = nil
+	end
 end
 
 local function parse(file, relative_path)
@@ -1546,7 +1552,7 @@ local function parse(file, relative_path)
 		for _, f in next, file do
 			parse(f, relative_path)
 		end
-		-- Write the results.
+		-- Flush options in case no !Options.lua file was explicitly defined
 		writeOptions(file)
 	elseif file then
 		-- split any optional [AllowLoad] condition out from the file name
@@ -1555,12 +1561,10 @@ local function parse(file, relative_path)
 		if string.match(file_name, "%.lua$") then
 			local options_file = string.match(file_name, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 			if options_file then
-				-- Record output path from this !Options file, then dump any modules accumulated before we saw it
+				-- !Options entry found, flush previously accumulated modules
 				options_file_name = options_file
 				options_path = file_name:match(".*/")
-				if #modules > 0 then
-					writeOptions({})
-				end
+				writeOptions({})
 			elseif string.find(file_name, "[TextLocale]", nil, true) then
 				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
 				-- first look for [AllowLoadTextLocale ...]
