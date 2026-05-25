@@ -1925,7 +1925,6 @@ do
 		end
 	end
 	local hookedIcons = {}
-	local frame = CreateFrame("Frame")
 	local function OnShow(self)
 		UpdateRatings()
 		if self.DungeonIcons then
@@ -1980,10 +1979,11 @@ do
 			self.WeeklyInfo.Child.SeasonBest:Hide()
 		end
 	end
+	local frame = CreateFrame("Frame")
 	frame:SetScript("OnEvent", function(self, event, addonName)
 		if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
 			self:UnregisterEvent(event)
-			self:SetScript("OnEvent", nil)
+			self:SetScript("OnEvent", function() BigWigsLoader.CTimerAfter(8, UpdateRatings) end)
 			self.HookScript(ChallengesFrame, "OnShow", function(f)
 				OnShow(f)
 				BigWigsLoader.CTimerAfter(1, function() OnShow(f) end) -- Compensate for any data updates (that would move the icons) happening after the panel opens
