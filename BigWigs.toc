@@ -93,13 +93,13 @@ Options\Options.lua
 Options\Sharing.lua
 Options\InstanceSharing.lua
 
-MarchOnQuelDanas\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\Midnight\[TextLocale]_MarchOnQuelDanas.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 MarchOnQuelDanas\Beloren.lua
 MarchOnQuelDanas\MidnightFalls.lua
 MarchOnQuelDanas\!Options.lua
 TheDreamrift\Chimaerus.lua
 TheDreamrift\!Options.lua
-TheVoidspire\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\Midnight\[TextLocale]_TheVoidspire.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 TheVoidspire\Averzian.lua
 TheVoidspire\Vorasius.lua
 TheVoidspire\Salhadaar.lua
@@ -107,7 +107,7 @@ TheVoidspire\VaelgorAndEzzorak.lua
 TheVoidspire\Vanguard.lua
 TheVoidspire\Crown.lua
 TheVoidspire\!Options.lua
-MidnightWorld\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\Midnight\[TextLocale]_MidnightWorld.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 MidnightWorld\Luashal.lua
 MidnightWorld\Cragpine.lua
 MidnightWorld\Thormbelan.lua
