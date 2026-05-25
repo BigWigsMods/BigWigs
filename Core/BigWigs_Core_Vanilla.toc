@@ -28,5 +28,9 @@
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
 
-libs.xml
-modules_Classic.xml
+Libs\LibChatAnims\LibChatAnims.lua
+
+Constants.lua
+BossPrototype_Classic.lua
+PluginPrototype.lua
+Core.lua

@@ -13,7 +13,6 @@ local modules_locale = {}
 
 local module_colors = {}
 local module_sounds = {}
-local options_path, options_file_name = nil, nil
 
 local all_locales = {
 	"enUS",
@@ -1528,24 +1527,27 @@ local function parseTOC(file)
 	return list
 end
 
+local function writeOptions(options_path, options_file_name)
+	if #modules > 0 then
+		dumpValues(options_path or "", options_file_name, modules, module_colors, module_sounds)
+		print(string.format("    Parsed %d modules.", #modules))
+		-- Reset!
+		modules = {}
+	elseif options_path or options_file_name then
+		warn("    !Options file was defined but no modules were found! No options written.")
+	end
+end
+
 local function parse(file, relative_path)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
 		for _, f in next, file do
 			parse(f, relative_path)
 		end
-		-- Write the results.
-		if #file > 0 and #modules > 0 then
-			-- prefer a defined !Options path with a fallback of writing to !Options.lua in the same directory as the module
-			local path = (options_file_name ~= nil) and (options_path or "") or (file[1]:match(".*/") or "")
-			local file_name = options_file_name or "!Options.lua"
-			dumpValues(path, file_name, modules, module_colors, module_sounds)
-			print(string.format("    Parsed %d modules.", #modules))
+		if #modules > 0 then
+			modules = {}
+			warn("    !Options file was not defined for "..#modules.." modules! No options written.")
 		end
-		-- Reset!
-		modules = {}
-		options_path = nil
-		options_file_name = nil
 	elseif file then
 		-- split any optional [AllowLoad] condition out from the file name
 		local file_name, condition = string.match(file, "^(%S+)%s*(%[?.-%]?)$")
@@ -1553,14 +1555,8 @@ local function parse(file, relative_path)
 		if string.match(file_name, "%.lua$") then
 			local options_file = string.match(file_name, "!Options.*%.lua$") -- matches !Options.lua or !Options_Vanilla.lua, etc
 			if options_file then
-				if options_file_name then
-					error("Multiple !Options paths found:")
-					error(string.format("    %s", (options_path or "/")..options_file_name))
-					error(string.format("    %s", (file_name:match(".*/") or "/")..options_file))
-				end
-				-- if a file has defined a path to a specific !Options file, save it to write to later
-				options_file_name = options_file
-				options_path = file_name:match(".*/")
+				-- !Options entry found, flush accumulated options
+				writeOptions(string.match(file_name, ".*/"), options_file)
 			elseif string.find(file_name, "[TextLocale]", nil, true) then
 				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
 				-- first look for [AllowLoadTextLocale ...]

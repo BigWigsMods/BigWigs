@@ -31,8 +31,20 @@
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+#@non-debug@
+# Libs\AceDB-3.0\AceDB-3.0.lua
+# Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua
+# Libs\LibSpecialization\LibSpecialization.lua
+# Libs\LibKeystone\LibKeystone.lua
+# Libs\LibLatency\LibLatency.lua
+# Libs\LibDurability\LibDurability.lua
+# Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
+# Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+#@end-non-debug@
+#@do-not-package@
+Options\Libs\AceGUIWidget-SharedDropdown.lua
+#@end-do-not-package@
 
-embeds.xml
 Init_Wrath.lua
 API.lua
 
@@ -51,4 +63,35 @@ Loader.lua
 Tools\CombatTimer.lua
 Tools\AutoInvite.lua
 Tools\LFGTimer.lua
-modules_Classic.xml
+
+#@do-not-package@
+Core\Constants.lua
+Core\BossPrototype_Classic.lua
+Core\PluginPrototype.lua
+Core\Core.lua
+Plugins\AltPower.lua
+Plugins\AutoReply.lua
+Plugins\Colors.lua
+Plugins\Sound.lua
+Plugins\Messages.lua
+Plugins\BarStyles.lua
+Plugins\Bars.lua
+Plugins\Nameplates.lua
+Plugins\BossBlock.lua
+Plugins\InfoBox.lua
+Plugins\RaidIcon.lua
+Plugins\Proximity.lua
+Plugins\Flash.lua
+Plugins\Countdown.lua
+Plugins\Pull.lua
+Plugins\Break.lua
+Plugins\Statistics.lua
+Plugins\Victory.lua
+Plugins\Wipe.lua
+Plugins\BattleRes.lua
+Plugins\Timeline.lua
+Plugins\PrivateAuras.lua
+Options\Options.lua
+Options\Sharing.lua
+Options\InstanceSharing.lua
+#@end-do-not-package@
