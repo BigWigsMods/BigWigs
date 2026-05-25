@@ -92,9 +92,7 @@ Plugins\PrivateAuras.lua
 Options\Options.lua
 Options\Sharing.lua
 Options\InstanceSharing.lua
-#@end-do-not-package@
 
-#@do-not-package@
 MarchOnQuelDanas\Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 MarchOnQuelDanas\Beloren.lua
 MarchOnQuelDanas\MidnightFalls.lua
