@@ -35,18 +35,6 @@ jobs:
           custom_script: gen_option_values.lua
           custom_args: BigWigs.toc
 
-      - name: Split locales for packaging
-        if: always()
-        run: |
-          for f in Locales/Midnight/*.lua; do
-            name="${f##*/}"
-            locale="${name%%_*}"
-            encounter="${name#*_}"
-            encounter="${encounter%.lua}"
-            mkdir -p "${encounter}/Locales"
-            mv "$f" "${encounter}/Locales/${locale}.lua"
-          done
-
       - name: Package
         uses: BigWigsMods/packager@master
         env:
