@@ -1158,7 +1158,7 @@ local function getPrivateAuraOptions(module, option)
 
 	local name = loader.GetSpellName(id)
 	if option.note then
-		name = L.renameLabel:format(name, option.note)
+		name = L.noteLabel:format(name, option.note)
 	end
 	local texture = loader.GetSpellTexture(id)
 
@@ -2109,9 +2109,9 @@ do
 		return button
 	end
 
-	local acceptButton = newButton(ACCEPT)
+	local acceptButton = newButton(L.accept)
 	acceptButton:SetPoint("BOTTOMRIGHT", popup, "BOTTOM", -6, 16)
-	local cancelButton = newButton(CANCEL)
+	local cancelButton = newButton(L.cancel)
 	cancelButton:SetPoint("LEFT", acceptButton, "RIGHT", 13, 0)
 	popup:SetScript("OnKeyDown", function(_, key)
 		if key == "ESCAPE" then
