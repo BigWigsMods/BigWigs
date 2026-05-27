@@ -3948,23 +3948,25 @@ do
 			time = length
 		end
 		local textType = type(text)
-		local msg, rawText
+		local msg, rawText, texture
 		if textType == "number" and text < 10 and self:IsRenameAvailable(key) then
 			rawText = self:GetRename(key, text)
 			msg = rawText
+			texture = icons[icon or key]
 		else
 			rawText = textType == "string" and text or spells[text or key]
 			msg = format(CL.cast, rawText)
+			texture = icons[icon or textType == "number" and text or key]
 		end
 		local isBarEnabled = checkFlag(self, key, C.CASTBAR)
 		if isBarEnabled then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime, nil, eventId)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, texture, false, maxTime, nil, eventId)
 		end
 		if checkFlag(self, key, C.CASTBAR_COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 		local counter = msg:match(countString)
-		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], rawText, isBarEnabled)
+		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, texture, rawText, isBarEnabled)
 	end
 end
 
