@@ -53,7 +53,7 @@ mod:SetRenames({
 	[1272726] = {CL.frontal_cone}, -- Rending Tear (Frontal Cone)
 	[1245396] = {1245396}, -- Consume
 	[1245486] = {CL.breath}, -- Corrupted Devastation (Breath)
-	[1245406] = {CL.landing, CL.cast:format(CL.landing), notes = {CL.generalNote, CL.castTimerNote}}, -- Ravenous Dive (Landing)
+	[1245406] = {CL.landing, CL.cast:format(CL.landing), notes = {CL.generalNote, CL.castTimerNote}, original = {1245406, CL.cast:format(mod:SpellName(1245406))}}, -- Ravenous Dive (Landing)
 	[1246621] = {CL.raid_damage}, -- Caustic Phlegm (Raid Damage) [Stage 2 Only]
 	[1257085] = {CL.dispels}, -- Consuming Miasma (Dispels) [Stage 2 Only]
 	[1264756] = {CL.madness}, -- Rift Madness (Madness)

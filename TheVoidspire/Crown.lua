@@ -108,12 +108,12 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 
 mod:SetRenames({
 	["stages"] = {CL.intermission, CL.stage:format(2), CL.stage:format(3), original = false, notes = {CL.intermission, CL.stage:format(2), CL.stage:format(3)}}, -- Stages
-	[1233602] = {CL.arrows, CL.you:format(CL.arrow), notes={CL.generalNote, CL.messageOnYouNote}}, -- Silverstrike Arrow (Arrows)
+	[1233602] = {CL.arrows, CL.you:format(CL.arrow), notes={CL.generalNote, CL.messageOnYouNote}, original = {1233602, CL.you:format(mod:SpellName(1233602))}}, -- Silverstrike Arrow (Arrows)
 	[1232467] = {L.grasp_of_emptiness}, -- Grasp of Emptiness (Obelisks)
 	[1255368] = {1255368}, -- Void Expulsion
 	[1233865] = {CL.heal_absorb}, -- Null Corona (Heal Absorb)
 	[1233787] = {1233787}, -- Dark Hand
-	[1243743] = {L.interrupting_tremor, CL.cast:format(L.interrupting_tremor), notes={CL.generalNote, CL.castTimerNote}}, -- Interrupting Tremor (Interrupt)
+	[1243743] = {L.interrupting_tremor, CL.cast:format(L.interrupting_tremor), notes={CL.generalNote, CL.castTimerNote}, original = {1243743, CL.cast:format(mod:SpellName(1243743))}}, -- Interrupting Tremor (Interrupt)
 	[1243753] = {L.ravenous_abyss}, -- Ravenous Abyss (Move Out)
 	[1243982] = {L.silverstrike_barrage}, -- Silverstrike Barrage (Lines)
 	[1237614] = {CL.mark}, -- Ranger Captain's Mark (Mark)
@@ -123,7 +123,7 @@ mod:SetRenames({
 	[1246461] = {1246461}, -- Rift Slash
 	[1261016] = {1261016}, -- Rift Simulacrum
 	[1238843] = {L.devouring_cosmos}, -- Devouring Cosmos (Next Platform)
-	[1239080] = {L.aspect_of_the_end, CL.you:format(L.aspect_of_the_end), notes={CL.generalNote, CL.messageOnYouNote}}, -- Aspect of the End (Tethers)
+	[1239080] = {L.aspect_of_the_end, CL.you:format(L.aspect_of_the_end), notes={CL.generalNote, CL.messageOnYouNote}, original = {1239080, CL.you:format(mod:SpellName(1239080))}}, -- Aspect of the End (Tethers)
 	[1261339] = {CL.big_add}, -- Cosmic Portal (Big Add)
 })
 

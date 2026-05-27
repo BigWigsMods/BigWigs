@@ -13,8 +13,8 @@ mod:SetWorldModule(true)
 --
 
 mod:SetRenames({
-	[1258427] = {CL.orbs, CL.incoming:format(CL.orbs), notes = {CL.timerNote, CL.messageNote}}, -- Radiant Flare (Orbs)
-	[1276427] = {CL.bombs, CL.you:format(CL.bomb), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Dawncrazed Halo (Bombs)
+	[1258427] = {CL.orbs, CL.incoming:format(CL.orbs), notes = {CL.timerNote, CL.messageNote}, original = {1258427, CL.incoming:format(mod:SpellName(1258427))}}, -- Radiant Flare (Orbs)
+	[1276427] = {CL.bombs, CL.you:format(CL.bomb), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1276427, CL.you:format(mod:SpellName(1276427))}}, -- Dawncrazed Halo (Bombs)
 	[1276247] = {CL.frontal_cone, CL.extra:format(mod:SpellName(1276247), CL.frontal_cone), notes = {CL.timerNote, CL.messageNote}}, -- Dawnfire Breath (Frontal Cone)
 })
 

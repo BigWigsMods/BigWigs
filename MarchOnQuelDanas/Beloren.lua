@@ -55,22 +55,25 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 -- Renames
 --
 
-mod:SetRenames({
-	["stages"] = {CL.stage:format(1), original = false, notes = {CL.stage:format(1)}}, -- Stages
-	[1242515] = {L.color_swaps}, -- Voidlight Convergence (Color Swaps)
-	[1241282] = {CL.adds}, -- Embers of Beloren (Adds)
-	[1241292] = { -- Light/Void Dive (Soaks)
-		CL.soaks, CL.you:format(CL.soak), CL.cast:format(CL.soaks),
-		notes = {CL.generalNote, CL.messageOnYouNote, CL.castTimerNote},
-		original = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339))
-	},
-	[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
-	[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
-	[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
-	[1242260] = {CL.quills, CL.you:format(CL.quills), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Infused Quills (Quills)
-	[1246709] = {CL.landing}, -- Death Drop (Landing)
-	[1241313] = {1241313}, -- Rebirth
-})
+do
+	local dive = ("%s/%s"):format(mod:SpellName(1241292), mod:SpellName(1241339)) -- Light Dive/Void Dive
+	mod:SetRenames({
+		["stages"] = {CL.stage:format(1), original = false, notes = {CL.stage:format(1)}}, -- Stages
+		[1242515] = {L.color_swaps}, -- Voidlight Convergence (Color Swaps)
+		[1241282] = {CL.adds}, -- Embers of Beloren (Adds)
+		[1241292] = { -- Light/Void Dive (Soaks)
+			CL.soaks, CL.you:format(CL.soak), CL.cast:format(CL.soaks),
+			notes = {CL.generalNote, CL.messageOnYouNote, CL.castTimerNote},
+			original = {dive, CL.you:format(dive), CL.cast:format(dive)},
+		},
+		[1242981] = {CL.orbs}, -- Radiant Echoes (Orbs)
+		[1260763] = {CL.tank_combo}, -- Guardian's Edict (Tank Combo)
+		[1244344] = {CL.heal_absorbs}, -- Eternal Burns (Heal Absorbs)
+		[1242260] = {CL.quills, CL.you:format(CL.quills), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1242260, CL.you:format(mod:SpellName(1242260))}}, -- Infused Quills (Quills)
+		[1246709] = {CL.landing}, -- Death Drop (Landing)
+		[1241313] = {1241313}, -- Rebirth
+	})
+end
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -25,9 +25,17 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 --
 
 mod:SetRenames({
-	[1257325] = {CL.bombs, CL.incoming:format(CL.bombs), notes = {CL.timerNote, CL.messageNote}}, -- Radiant Mote (Bombs)
-	[1257825] = {L.ball, L.ball_incoming, L.ball_fail, notes = {CL.timerNote, CL.messageNote, CL.messageNote}}, -- Scintillating Shard (Ball)
-	[1258641] = {L.tendrils, L.tendrils_incoming, CL.you:format(L.tendrils), notes = {CL.timerNote, CL.messageNote, CL.messageOnYouNote}}, -- Shredding Tendrils (Tendrils)
+	[1257325] = {CL.bombs, CL.incoming:format(CL.bombs), notes = {CL.timerNote, CL.messageNote}, original = {1257325, CL.incoming:format(mod:SpellName(1257325))}}, -- Radiant Mote (Bombs)
+	[1257825] = { -- Scintillating Shard (Ball)
+		L.ball, L.ball_incoming, L.ball_fail,
+		notes = {CL.timerNote, CL.messageNote, CL.messageNote},
+		original = {1257825, CL.incoming:format(mod:SpellName(1257825)), false},
+	},
+	[1258641] = { -- Shredding Tendrils (Tendrils)
+		L.tendrils, L.tendrils_incoming, CL.you:format(L.tendrils),
+		notes = {CL.timerNote, CL.messageNote, CL.messageOnYouNote},
+		original = {1258641, CL.incoming:format(mod:SpellName(1258641)), CL.you:format(mod:SpellName(1258641))},
+	},
 })
 
 --------------------------------------------------------------------------------

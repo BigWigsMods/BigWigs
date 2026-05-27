@@ -103,14 +103,14 @@ mod:SetRenames({
 	[1253915] = {L.heavens_glaives}, -- Heaven's Glaives (Glaives)
 	[1279420] = {CL.beams}, -- Dark Quasar (Beams) [Stage 1 Only]
 	[1249620] = {L.deaths_dirge}, -- Death's Dirge (Memory Game)
-	[1249609] = {CL.you:format(CL.mark), notes = {CL.messageOnYouNote}}, -- Dark Rune (Mark)
+	[1249609] = {CL.you:format(CL.mark), notes = {CL.messageOnYouNote}, original = CL.you:format(mod:SpellName(1249609))}, -- Dark Rune (Mark)
 	[1251386] = {L.prism_kicks}, -- Safeguard Prism (Kicks)
 	[1267049] = {L.heavens_lance}, -- Heaven's Lance (Lance)
 	[1284980] = {L.deaths_dirge}, -- Grim Symphony (Memory Game)
 	[1284931] = {L.prism_kicks}, -- Termination Prism (Kicks)
-	[1282441] = {1282441, CL.you:format(mod:SpellName(1282441)), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Starsplinter
+	[1282441] = {1282441, CL.you:format(mod:SpellName(1282441)), notes = {CL.generalNote, CL.messageOnYouNote}, original = false}, -- Starsplinter
 	[1282469] = {CL.beams}, -- Dark Quasar (Beams) [Intermission Only]
-	[1284525] = {CL.beams, CL.you:format(CL.beam), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Galvanize (Beams)
+	[1284525] = {CL.beams, CL.you:format(CL.beam), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1284525, CL.you:format(mod:SpellName(1284525))}}, -- Galvanize (Beams)
 	[1282412] = {CL.dodge}, -- Core Harvest (Dodge)
 	[1281194] = {CL.knockback}, -- Dark Meltdown (Knockback)
 	[1250898] = {L.the_dark_archangel}, -- The Dark Archangel (Big Boom)
