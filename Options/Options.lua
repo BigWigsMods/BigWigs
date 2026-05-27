@@ -624,8 +624,7 @@ do
 			local default = module:GetRenameDefault(optionKey, position)
 			local name = module:GetRename(optionKey, position)
 			local label = module:GetRenameNote(optionKey, position)
-			local original = module:GetRenameOriginal(optionKey)
-			local showOriginal = position == 1 and original
+			local original = module:GetRenameOriginal(optionKey, position)
 
 			local customName = AceGUI:Create("EditBox")
 			if label then
@@ -646,13 +645,13 @@ do
 			customReset:SetUserData("default", default)
 			customReset:SetUserData("editbox", customName)
 			customReset:SetCallback("OnClick", resetRenameValue)
-			customReset:SetRelativeWidth(showOriginal and 0.2 or 0.4)
+			customReset:SetRelativeWidth(original and 0.2 or 0.4)
 			widgets[#widgets + 1] = customReset
 
-			if showOriginal then
+			if original then
 				local customOriginal = AceGUI:Create("Button")
 				customOriginal:SetText(L.spellName)
-				customOriginal:SetDisabled(module:IsRenameOriginal(optionKey))
+				customOriginal:SetDisabled(module:IsRenameOriginal(optionKey, position))
 				customOriginal:SetUserData("default", original)
 				customOriginal:SetUserData("editbox", customName)
 				customOriginal:SetCallback("OnClick", resetRenameValue)

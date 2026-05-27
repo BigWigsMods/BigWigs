@@ -953,17 +953,20 @@ do
 
 	--- Get the original name associated with this rename using its key
 	-- @return string or number (spell ID)
-	function boss:GetRenameOriginal(key)
+	function boss:GetRenameOriginal(key, position)
+		if not position then position = 1 end
 		if not moduleRenamesList[self][key] then
 			error(("Module %q has no rename for key %q."):format(self.moduleName, tostring(key)))
 			return
 		end
 
 		local original = moduleRenamesList[self][key].original
-		if original or original == false then
+		if original == false then
 			return original
+		elseif type(original) == "table" then
+			return original[position]
 		end
-		return key
+		return original or key
 	end
 
 	--- Check if the rename for this key and position is currently set to the original.
@@ -984,6 +987,8 @@ do
 		local original = moduleRenamesList[self][key].original
 		if original == false then
 			return original
+		elseif type(original) == "table" then
+			return original[position] == name
 		end
 		return (original or key) == name
 	end
