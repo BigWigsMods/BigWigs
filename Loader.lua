@@ -1505,7 +1505,7 @@ do
 	end
 
 	local locales = {
-		--ruRU = "Russian (ruRU)",
+		ruRU = "Russian (ruRU)",
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
 		itIT = "Italian (itIT)",
