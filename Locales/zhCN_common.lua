@@ -216,15 +216,15 @@ L.mythicOnlyNote = "史诗难度下显示的文本"
 L.otherDifficultiesNote = "其他难度下显示的文本"
 
 -- GUI notes for debuffs
-L.debuffFailureNote = "机制失败时对你施加的减益效果"
---L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
-L.preDebuffNote = "主减益前的前置减益效果"
-L.mainDebuffNote = "对你施加的主减益效果"
---L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires"
---L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place"
---L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r"
---L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r"
---L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r"
+L.debuffFailureNote = "机制失败时受到的减益效果"
+L.debuffFailureMoveFromExplosionNote = "未能脱离爆炸范围时会受到此效果"
+L.preDebuffNote = "主要减益来临前的预警效果"
+L.mainDebuffNote = "受到的主要减益效果"
+L.postDebuffNote = "|cFFFFFFFF%s|r结束后，此效果便会触发"
+L.debuffUnderYouNote = "处于危险区域内会受到减益效果"
+L.debuffDotAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，此效果将持续造成伤害"
+L.debuffWalkIntoObjectNote = "主动触碰 |cFFFFFFFF%s|r 会受到此效果"
+L.debuffAddsCast = "此效果由 |cFFFFFFFF%s|r 施加"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
@@ -237,7 +237,7 @@ L.beams = "射线" -- Plural of L.beam
 L.bomb = "炸弹" -- Used for debuffs that make players explode
 L.bombs = "炸弹" -- Plural of L.bomb
 L.explosion = "爆炸" -- When the explosion from a bomb-like ability will occur
---L.explosions = "Explosions"
+L.explosions = "爆炸"
 L.knockback = "击退" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.knockbacks = "击退" -- Plural of L.knockback
 L.pushback = "推开" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
@@ -322,8 +322,8 @@ L.bleed = "流血" -- Any bleed-type debuff
 L.bleeds = "流血" -- Plural of L.bleed
 
 -- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
---L.clear_bombs = "Clear Bombs"
---L.clear_pools = "Clear Pools"
+L.clear_bombs = "清除炸弹"
+L.clear_pools = "清除水渍"
 
 -- Interrupt-related spell renames
 L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
