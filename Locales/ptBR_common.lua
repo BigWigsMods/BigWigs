@@ -197,6 +197,12 @@ L.autotalk_boss_desc = "Seleciona automaticamente as opções de diálogo do NPC
 L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do NPC que permitem você progredir para o próximo estágio da masmorra."
 L.autotalk_notice = "Interagindo automaticamente com NPC %s."
 
+-- GUI notes
+L.intermissionOnly = "Somente no Intervalo"
+L.stage1Only = "Somente no Estágio 1"
+L.stage2Only = "Somente no Estágio 2"
+L.stage3Only = "Somente no Estágio 3"
+
 -- GUI notes for renames
 L.generalNote = "Este é o texto que será geralmente usado"
 L.timerNote = "Este texto será usado para temporizadores"
@@ -208,13 +214,17 @@ L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você
 L.timerOnYouNote = "O texto exibido no temporizador quando esta habilidade estiver em você"
 L.mythicOnlyNote = "Este texto será usado apenas no Mítico"
 L.otherDifficultiesNote = "Este texto será usado em todas as outras dificuldades"
+
+-- GUI notes for debuffs
 --L.debuffFailureNote = "This debuff will apply to you if you fail"
+--L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
 --L.preDebuffNote = "This is the pre-debuff, before the main debuff applies to you"
 --L.mainDebuffNote = "This is the main debuff that applies to you"
-L.intermissionOnly = "Somente no Intervalo"
-L.stage1Only = "Somente no Estágio 1"
-L.stage2Only = "Somente no Estágio 2"
-L.stage3Only = "Somente no Estágio 3"
+--L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires"
+--L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place"
+--L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r"
+--L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r"
+--L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r"
 
 -- Common ability name replacements
 L.absorb = "Absorção" -- Used for shield-like abilities that absorb damage or healing
@@ -227,6 +237,7 @@ L.beams = "Feixes" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Explosão" -- When the explosion from a bomb-like ability will occur
+--L.explosions = "Explosions"
 L.knockback = "Empurrão" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 --L.knockbacks = "Knockbacks" -- Plural of L.knockback
 L.pushback = "Repulsão" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
@@ -309,6 +320,10 @@ L.dispels = "Dissipáveis" -- Plural of L.dispel
 L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 --L.bleed = "Bleed" -- Any bleed-type debuff
 --L.bleeds = "Bleeds" -- Plural of L.bleed
+
+-- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
+--L.clear_bombs = "Clear Bombs"
+--L.clear_pools = "Clear Pools"
 
 -- Interrupt-related spell renames
 L.interrupts = "Interrupções" -- General term used when a player needs to interrupt a spell being cast

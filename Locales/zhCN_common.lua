@@ -197,6 +197,12 @@ L.autotalk_boss_desc = "自动选择NPC对话选项以开启首领战。"
 L.autotalk_generic_desc = "自动选择NPC对话选项以进入下一阶段。"
 L.autotalk_notice = "自动与NPC %s 交互。"
 
+-- GUI notes
+L.intermissionOnly = "仅转阶段" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
+L.stage1Only = "仅第1阶段" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
+L.stage2Only = "仅第2阶段"
+L.stage3Only = "仅第3阶段"
+
 -- GUI notes for renames
 L.generalNote = "通用说明文本"
 L.timerNote = "计时条中显示的文本"
@@ -208,13 +214,17 @@ L.messageOnYouNote = "技能点名你时显示的消息"
 L.timerOnYouNote = "技能点名你时计时条中显示的文本"
 L.mythicOnlyNote = "史诗难度下显示的文本"
 L.otherDifficultiesNote = "其他难度下显示的文本"
+
+-- GUI notes for debuffs
 L.debuffFailureNote = "机制失败时对你施加的减益效果"
+--L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
 L.preDebuffNote = "主减益前的前置减益效果"
 L.mainDebuffNote = "对你施加的主减益效果"
-L.intermissionOnly = "仅转阶段" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
-L.stage1Only = "仅第1阶段" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
-L.stage2Only = "仅第2阶段"
-L.stage3Only = "仅第3阶段"
+--L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires"
+--L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place"
+--L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r"
+--L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r"
+--L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r"
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
@@ -227,6 +237,7 @@ L.beams = "射线" -- Plural of L.beam
 L.bomb = "炸弹" -- Used for debuffs that make players explode
 L.bombs = "炸弹" -- Plural of L.bomb
 L.explosion = "爆炸" -- When the explosion from a bomb-like ability will occur
+--L.explosions = "Explosions"
 L.knockback = "击退" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.knockbacks = "击退" -- Plural of L.knockback
 L.pushback = "推开" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
@@ -309,6 +320,10 @@ L.dispels = "驱散" -- Plural of L.dispel
 L.poison = "中毒" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.bleed = "流血" -- Any bleed-type debuff
 L.bleeds = "流血" -- Plural of L.bleed
+
+-- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
+--L.clear_bombs = "Clear Bombs"
+--L.clear_pools = "Clear Pools"
 
 -- Interrupt-related spell renames
 L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
