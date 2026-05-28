@@ -217,14 +217,14 @@ L.otherDifficultiesNote = "Dieser Text wird für alle anderen Schwierigkeitsgrad
 
 -- GUI notes for debuffs
 L.debuffFailureNote = "Diesen Debuff erleidest Du wenn Du scheiterst"
---L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
+L.debuffFailureMoveFromExplosionNote = "Diesen Debuff erleidest Du wenn Du Dich nicht von der Explosion entfernst"
 L.preDebuffNote = "Dies ist ein Vor-Debuff, bevor der Haupt-Debuff auf Dich wirkt"
 L.mainDebuffNote = "Dies ist der hauptsächliche Debuff der auf Dich wirkt"
---L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires" -- This debuff will apply to you after OTHER_DEBUFF expires
---L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
---L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
---L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
---L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
+L.postDebuffNote = "Diesen Debuff erleidest Du nachdem |cFFFFFFFF%s|r abläuft" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "Diesen Debuff erleidest Du bei schlechter Positionierung" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "Dieser Debuff ist ein DoT nach dem Abschluss des Zaubers |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "Diesen Debuff erleidest Du wenn Du bewusst in die |cFFFFFFFF%s|r läufst" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+L.debuffAddsCast = "Diesen Debuff erleidest Du von |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
 L.absorb = "Absorbieren" -- Used for shield-like abilities that absorb damage or healing
@@ -237,7 +237,7 @@ L.beams = "Strahlen" -- Plural of L.beam
 L.bomb = "Bombe" -- Used for debuffs that make players explode
 L.bombs = "Bomben" -- Plural of L.bomb
 L.explosion = "Explosion" -- When the explosion from a bomb-like ability will occur
---L.explosions = "Explosions" -- Plural of L.explosion
+L.explosions = "Explosionen" -- Plural of L.explosion
 L.knockback = "Rückstoß" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.knockbacks = "Rückstöße" -- Plural of L.knockback
 L.pushback = "Zurückschieben" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
@@ -322,8 +322,8 @@ L.bleed = "Blutung" -- Any bleed-type debuff
 L.bleeds = "Blutungen" -- Plural of L.bleed
 
 -- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
---L.clear_bombs = "Clear Bombs"
---L.clear_pools = "Clear Pools"
+L.clear_bombs = "Bomben beseitigen"
+L.clear_pools = "Pfützen beseitigen"
 
 -- Interrupt-related spell renames
 L.interrupts = "Unterbrechungen" -- General term used when a player needs to interrupt a spell being cast
