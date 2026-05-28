@@ -223,7 +223,7 @@ L.mainDebuffNote = "受到的主要减益效果"
 L.postDebuffNote = "|cFFFFFFFF%s|r结束后，此效果便会触发" -- This debuff will apply to you after OTHER_DEBUFF expires
 L.debuffUnderYouNote = "处于危险区域内会受到减益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 L.debuffDotAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，此效果将持续造成伤害" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
---L.debuffPossibleAfterCastNote = "This debuff might apply to you after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+L.debuffPossibleAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，你可能会受到此效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "主动触碰 |cFFFFFFFF%s|r 会受到此效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffAddsCast = "此效果由 |cFFFFFFFF%s|r 施加" -- This debuff is applied to you by NPC_NAME
 
