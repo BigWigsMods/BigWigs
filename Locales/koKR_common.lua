@@ -217,14 +217,14 @@ L.otherDifficultiesNote = "이 텍스트는 다른 모든 난이도에서 사용
 
 -- GUI notes for debuffs
 L.debuffFailureNote = "실패할 경우 이 디버프가 적용됨"
---L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
+L.debuffFailureMoveFromExplosionNote = "폭발 지점에서 벗어나지 못하면 이 디버프가 적용됨"
 L.preDebuffNote = "이것은 주요 디버프가 적용되기 전의 사전 디버프"
 L.mainDebuffNote = "이것은 당신에게 적용되는 주요 디버프"
---L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires"
---L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place"
---L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r"
---L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r"
---L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r"
+L.postDebuffNote = "|cFFFFFFFF%s|r 효과가 종료되면 이 디버프가 적용됨"
+L.debuffUnderYouNote = "위험한 위치에 서 있으면 이 디버프가 적용됨"
+L.debuffDotAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 완료한 후 지속 피해를 주는 효과"
+L.debuffWalkIntoObjectNote = "|cFFFFFFFF%s|r 범위 안으로 의도적으로 걸어 들어갈 때 이 디버프가 적용됨"
+L.debuffAddsCast = "이 디버프는 |cFFFFFFFF%s|r 의해 적용됨"
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -237,7 +237,7 @@ L.beams = "광선" -- Plural of L.beam
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.bombs = "폭탄" -- Plural of L.bomb
 L.explosion = "폭발" -- When the explosion from a bomb-like ability will occur
---L.explosions = "Explosions"
+L.explosions = "폭발"
 L.knockback = "넉백" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.knockbacks = "넉백" -- Plural of L.knockback
 L.pushback = "밀림" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
@@ -322,8 +322,8 @@ L.bleed = "출혈" -- Any bleed-type debuff
 L.bleeds = "출혈" -- Plural of L.bleed
 
 -- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
---L.clear_bombs = "Clear Bombs"
---L.clear_pools = "Clear Pools"
+L.clear_bombs = "폭탄 제거"
+L.clear_pools = "바닥 제거"
 
 -- Interrupt-related spell renames
 L.interrupts = "차단" -- General term used when a player needs to interrupt a spell being cast
