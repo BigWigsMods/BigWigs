@@ -770,6 +770,7 @@ function mod:Gloom(eventInfo)
 		self:CDBar(1245391, eventInfo.duration, barText, nil, eventInfo.id)
 	end
 	gloomCount = gloomCount + 1
+	if gloomCount == 3 then gloomCount = 1 end -- 1, 2, 1, 2...
 	return {
 		msg = barText,
 		onFinished = function()
