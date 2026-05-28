@@ -302,6 +302,7 @@ L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike
 L.spread = "Écartez-vous" -- An ability that forces you to spread out away from other players, or you might damage them
+L.stomp = "Piétinement" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Tentacule" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacules" -- Plural of L.tentacle
 L.waves = "Vagues" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
