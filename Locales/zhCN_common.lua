@@ -220,11 +220,11 @@ L.debuffFailureNote = "机制失败时受到的减益效果"
 L.debuffFailureMoveFromExplosionNote = "未能脱离爆炸范围时会受到此效果"
 L.preDebuffNote = "主要减益来临前的预警效果"
 L.mainDebuffNote = "受到的主要减益效果"
-L.postDebuffNote = "|cFFFFFFFF%s|r结束后，此效果便会触发"
-L.debuffUnderYouNote = "处于危险区域内会受到减益效果"
-L.debuffDotAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，此效果将持续造成伤害"
-L.debuffWalkIntoObjectNote = "主动触碰 |cFFFFFFFF%s|r 会受到此效果"
-L.debuffAddsCast = "此效果由 |cFFFFFFFF%s|r 施加"
+L.postDebuffNote = "|cFFFFFFFF%s|r结束后，此效果便会触发" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "处于危险区域内会受到减益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，此效果将持续造成伤害" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "主动触碰 |cFFFFFFFF%s|r 会受到此效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+L.debuffAddsCast = "此效果由 |cFFFFFFFF%s|r 施加" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
@@ -237,7 +237,7 @@ L.beams = "射线" -- Plural of L.beam
 L.bomb = "炸弹" -- Used for debuffs that make players explode
 L.bombs = "炸弹" -- Plural of L.bomb
 L.explosion = "爆炸" -- When the explosion from a bomb-like ability will occur
-L.explosions = "爆炸"
+L.explosions = "爆炸" -- Plural of L.explosion
 L.knockback = "击退" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.knockbacks = "击退" -- Plural of L.knockback
 L.pushback = "推开" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time

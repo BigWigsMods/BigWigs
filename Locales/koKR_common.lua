@@ -220,11 +220,11 @@ L.debuffFailureNote = "실패할 경우 이 디버프가 적용됨"
 L.debuffFailureMoveFromExplosionNote = "폭발 지점에서 벗어나지 못하면 이 디버프가 적용됨"
 L.preDebuffNote = "이것은 주요 디버프가 적용되기 전의 사전 디버프"
 L.mainDebuffNote = "이것은 당신에게 적용되는 주요 디버프"
-L.postDebuffNote = "|cFFFFFFFF%s|r 효과가 종료되면 이 디버프가 적용됨"
-L.debuffUnderYouNote = "위험한 위치에 서 있으면 이 디버프가 적용됨"
-L.debuffDotAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 완료한 후 지속 피해를 주는 효과"
-L.debuffWalkIntoObjectNote = "|cFFFFFFFF%s|r 범위 안으로 의도적으로 걸어 들어갈 때 이 디버프가 적용됨"
-L.debuffAddsCast = "이 디버프는 |cFFFFFFFF%s|r 의해 적용됨"
+L.postDebuffNote = "|cFFFFFFFF%s|r 효과가 종료되면 이 디버프가 적용됨" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "위험한 위치에 서 있으면 이 디버프가 적용됨" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 완료한 후 지속 피해를 주는 효과" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "|cFFFFFFFF%s|r 범위 안으로 의도적으로 걸어 들어갈 때 이 디버프가 적용됨" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+L.debuffAddsCast = "이 디버프는 |cFFFFFFFF%s|r 의해 적용됨" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
@@ -237,7 +237,7 @@ L.beams = "광선" -- Plural of L.beam
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.bombs = "폭탄" -- Plural of L.bomb
 L.explosion = "폭발" -- When the explosion from a bomb-like ability will occur
-L.explosions = "폭발"
+L.explosions = "폭발" -- Plural of L.explosion
 L.knockback = "넉백" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.knockbacks = "넉백" -- Plural of L.knockback
 L.pushback = "밀림" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
