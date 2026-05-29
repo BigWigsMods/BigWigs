@@ -340,4 +340,4 @@ L.tank_frontal = "坦克正面" -- Similar to L.frontal_cone but only applies to
 L.tank_hit = "坦克尖刺" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
 L.tank_knockback = "坦克擊退" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "坦克分攤" -- Similar to L.soak but only applies to tanks
-L.tank_grip = "坦克被抓" -- 坦克被抓/被拉When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.tank_grip = "坦克被抓" -- 坦克被抓/被拉 When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
