@@ -12,7 +12,7 @@ L.shortSecondsOnly = "%d 秒" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f 秒" -- 3.2 Seconds
 L.accept = "接受"
 L.cancel = "取消"
---L.confirm_profile_swap = "The addon |cFF436EEE\"%s\"|r wants to automatically swap your BigWigs profile to a different profile called:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+L.confirm_profile_swap = "插件 |cFF436EEE「%s」|r 想要將你的 BigWigs 設定檔自動切換為以下設定檔：\n\n|cFF33FF99「%s」|r\n\n你確定要切换嗎？"
 
 -- Core.lua
 L.berserk = "狂暴"
@@ -149,7 +149,7 @@ L.configure = "配置"
 L.resetPositions = "重置位置"
 L.selectEncounter = "選擇戰鬥"
 L.privateAuraSounds = "私有光環音效"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
+L.privateAuraSounds_desc = "插件無法追蹤私有光環的具體內容，但你可以設定獲得私有光環的減益效果時播放指定音效。"
 L.listAbilities = "將技能列表發送到團隊聊天頻道"
 
 L.dbmFaker = "假裝我是 DBM 用戶"
@@ -230,9 +230,9 @@ L.dispeller = "|cFFFF0000只警報驅散。|r"
 L.renames = "重新命名"
 L.noteLabel = "%s（|cFFFFFF99%s|r）"
 L.renameLabel = "%s（|cFF3366FF%s|r）"
-L.renameHeader = "為技能設定自訂名稱，取代原本的技能名稱，並套用至所有的訊息與計時條。\n\n"
-L.spellName = "技能名稱"
-L.spellNameResetDesc = "此技能已預設了一個自訂名稱，點擊此按鈕可還原為原本的技能名稱。"
+L.renameHeader = "為技能設定別名，取代原本的技能名稱，並套用至所有的訊息與計時條。\n\n"
+L.spellName = "技能別名"
+L.spellNameResetDesc = "此技能已預設了一個別名，點擊此按鈕可還原為原本的技能名稱。"
 
 -- Sharing.lua
 L.import = "匯入"
@@ -303,8 +303,8 @@ L.sharing_window_title = "分享首領設定"
 L.sharing_flags = "通用設定"
 L.sharing_flags_desc = "匯入控制各項功能的設定，例如「顯示計時條」、「播放音效」、「顯示訊息」等。\n這涵蓋了技能設置中大部分勾選選項。"
 L.sharing_export_flags_desc = "匯出控制各項功能的設定，例如「顯示計時條」、「播放音效」、「顯示訊息」等。\n這涵蓋了技能設置中大部分勾選選項。"
---L.sharing_renames_desc = "Import the custom renames that are configured."
---L.sharing_export_renames_desc = "Export the custom renames that are configured."
+L.sharing_renames_desc = "匯出技能的別名設定。"
+L.sharing_export_renames_desc = "匯出技能的別名設定。"
 L.sharing_sounds_desc = "匯入技能對應的音效設定。"
 L.sharing_export_sounds_desc = "匯出技能對應的音效設定。"
 L.sharing_private_auras = "私有光環"
@@ -606,9 +606,9 @@ L.instanceKeysHideTitle = "隱藏標題"
 L.instanceKeysHideTitleDesc = "隱藏「誰有鑰石？」標題。"
 
 -- Challenges UI Decoration
---L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tParty Rating"
+L.partyRatingHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t隊伍分數"
 L.dungeonScoreString = "|c%s%03d|r |cFFFFFFFF+%02d|r |cFF%s%02d:%02d|r |c%s（%s）|r"
---L.dungeonScoreNoDataString = "|cFFFFFFFFNo data|r |c%s(%s)|r"
+L.dungeonScoreNoDataString = "|cFFFFFFFF無資料|r |c%s(%s)|r"
 L.dungeonTeleportHeader = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t傳送"
 
 -- Progress %
@@ -1220,8 +1220,8 @@ L.bigwigsEnhancedTimers = "BigWigs 風格的計時條 + BigWigs 的增強計時 
 L.blizzBasicAsBars = "BigWigs 風格的計時條 + 暴雪的內建計時"
 L.blizzBasicAsBlizzTimeline = "暴雪的「首領技能」時間軸 + 暴雪的內建計時（完全使用暴雪原生）"
 L.developerMode = "開發者模式"
-L.enhancedModeWarning = "警告！\n\n停用 BigWigs 的增強計時會同步關閉 BigWigs 的其他首領戰功能，包含：\n\n計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
---L.blizzTimelineEnhancedWarning = "WARNING!\n\nThe Blizzard timeline doesn't support BigWigs enhanced features. You will NOT get renamed spells and you will see inaccurate timers.\n\nAre you sure you want to enable it?"
+L.enhancedModeWarning = "注意！\n\n停用 BigWigs 的增強計時會同步關閉 BigWigs 的其他首領戰功能，包含：\n\n計時條顏色、技能別名、技能計數、自訂音效和語音、倒數計時、計時條開關、額外訊息等等。"
+L.blizzTimelineEnhancedWarning = "注意！\n\nBigWigs 增強功能不支援暴雪的「首領技能」時間軸。無法使用技能別名，而且計時可能不準確。\n\n確定要啟用它嗎？"
 
 -----------------------------------------------------------------------
 -- Victory.lua
