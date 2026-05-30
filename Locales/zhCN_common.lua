@@ -325,7 +325,7 @@ L.bleeds = "流血" -- Plural of L.bleed
 
 -- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
 L.clear_bombs = "拆弹"
-L.clear_pools = "消水" 
+L.clear_pools = "消水"
 
 -- Interrupt-related spell renames
 L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
