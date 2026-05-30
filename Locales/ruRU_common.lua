@@ -87,6 +87,8 @@ L.adds_spawned = "Помощники появились" -- plural
 L.adds_spawned_count = "%d |4адд:аддов:адд; spawned" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Спаун Адда" -- singular
 L.adds_spawning = "Спаун Аддов" -- plural
+--L.add_incoming = "Add incoming" -- singular
+--L.adds_incoming = "Adds incoming" -- plural
 L.spawned = "Появление: %s"
 L.spawning = "%s появление"
 L.next_add = "Следующий помощник"
@@ -98,6 +100,7 @@ L.big_add = "Большой помощник" -- singular
 L.big_adds = "Большие помощники" -- plural
 L.small_add = "Маленький помощник" -- singular
 L.small_adds = "Маленькие помощники" -- plural
+--L.eat_adds = "Eat Adds" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s убит"
@@ -224,6 +227,7 @@ L.autotalk_notice = "Произведено автоматическое вза�
 --L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 --L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
 --L.debuffPossibleAfterCastNote = "This debuff might apply to you after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+--L.debuffTankAfterCastNote = "This debuff will apply to the tank after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 --L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 --L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 

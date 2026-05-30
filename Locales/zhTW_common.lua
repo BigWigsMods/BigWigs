@@ -87,6 +87,8 @@ L.adds_spawned = "增援出現" -- plural
 L.adds_spawned_count = "%d名增援出現" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "增援出現" -- singular 小怪正在出現/小怪出現/小怪已出現，中文沒有英文那麼明確的時態和單複數之別
 L.adds_spawning = "增援出現" -- plural
+--L.add_incoming = "Add incoming" -- singular
+--L.adds_incoming = "Adds incoming" -- plural
 L.spawned = "%s已重生"
 L.spawning = "%s出現"
 L.next_add = "下一波小怪"
@@ -98,6 +100,7 @@ L.big_add = "大型增援" -- singular
 L.big_adds = "大型增援" -- plural
 L.small_add = "小型增援" -- singular
 L.small_adds = "小型增援" -- plural
+--L.eat_adds = "Eat Adds" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s已擊殺"
@@ -224,6 +227,7 @@ L.postDebuffNote = "|cFFFFFFFF%s|r消失後，受到的減益效果" -- This deb
 L.debuffUnderYouNote = "站在危險區域時，受到的減益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 L.debuffDotAfterCastNote = "首領施放|cFFFFFFFF%s|r後，受到的週期性傷害" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
 L.debuffPossibleAfterCastNote = "首領施放|cFFFFFFFF%s|r後，可能得到的減益效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+--L.debuffTankAfterCastNote = "This debuff will apply to the tank after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "踩到|cFFFFFFFF%s|r會受到的減益效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffAddsCast = "這是|cFFFFFFFF%s|r對你施加的減益效果" -- This debuff is applied to you by NPC_NAME
 

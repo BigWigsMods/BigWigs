@@ -87,6 +87,8 @@ L.adds_spawned = "Esbirros aparecieron" -- plural
 L.adds_spawned_count = "%d |4esbirro apareció:esbirros aparecieron;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Apareció un esbirro" -- singular
 L.adds_spawning = "Esbirros apareciendo" -- plural
+--L.add_incoming = "Add incoming" -- singular
+--L.adds_incoming = "Adds incoming" -- plural
 L.spawned = "%s apareció"
 L.spawning = "%s aparece"
 L.next_add = "Siguiente esbirro"
@@ -98,6 +100,7 @@ L.big_add = "Esbirro grande" -- singular
 L.big_adds = "Esbirros grandes" -- plural
 L.small_add = "Esbirro pequeño" -- singular
 L.small_adds = "Esbirros pequeños" -- plural
+--L.eat_adds = "Eat Adds" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s muerto"
@@ -224,6 +227,7 @@ L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades
 --L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 --L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
 --L.debuffPossibleAfterCastNote = "This debuff might apply to you after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+--L.debuffTankAfterCastNote = "This debuff will apply to the tank after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 --L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 --L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
