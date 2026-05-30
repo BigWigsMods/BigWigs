@@ -205,27 +205,27 @@ L.stage3Only = "仅第3阶段"
 
 -- GUI notes for renames
 L.generalNote = "通用说明文本"
-L.timerNote = "计时条中显示的文本"
-L.castTimerNote = "施法计时条中显示的文本"
-L.messageCastOverNote = "施法结束时显示的消息文本"
-L.messageCastStartNote = "施法开始时显示的消息文本"
+L.timerNote = "计时条显示文本"
+L.castTimerNote = "施法计时条显示文本"
+L.messageCastOverNote = "施法结束时的消息文本"
+L.messageCastStartNote = "施法开始时的消息文本"
 L.messageNote = "消息中显示的文本"
-L.messageOnYouNote = "技能点名你时显示的消息"
-L.timerOnYouNote = "技能点名你时计时条中显示的文本"
-L.mythicOnlyNote = "史诗难度下显示的文本"
-L.otherDifficultiesNote = "其他难度下显示的文本"
+L.messageOnYouNote = "点名你时显示的消息"
+L.timerOnYouNote = "点名你时计时条显示文本"
+L.mythicOnlyNote = "史诗难度下显示文本"
+L.otherDifficultiesNote = "非史诗难度下显示文本"
 
 -- GUI notes for debuffs
-L.debuffFailureNote = "机制失败时受到的减益效果"
-L.debuffFailureMoveFromExplosionNote = "未能脱离爆炸范围时会受到此效果"
-L.preDebuffNote = "主要减益来临前的预警效果"
-L.mainDebuffNote = "受到的主要减益效果"
-L.postDebuffNote = "|cFFFFFFFF%s|r结束后，此效果便会触发" -- This debuff will apply to you after OTHER_DEBUFF expires
-L.debuffUnderYouNote = "处于危险区域内会受到减益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
-L.debuffDotAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，此效果将持续造成伤害" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
-L.debuffPossibleAfterCastNote = "首领施放 |cFFFFFFFF%s|r 后，你可能会受到此效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
-L.debuffWalkIntoObjectNote = "主动触碰 |cFFFFFFFF%s|r 会受到此效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
-L.debuffAddsCast = "此效果由 |cFFFFFFFF%s|r 施加" -- This debuff is applied to you by NPC_NAME
+L.debuffFailureNote = "失误时获得此减益效果"
+L.debuffFailureMoveFromExplosionNote = "未能躲开爆炸时，你会受到此减益效果"
+L.preDebuffNote = "此为预警减益，出现后主减益即将生效"
+L.mainDebuffNote = "该减益为主要效果"
+L.postDebuffNote = "|cFFFFFFFF%s|r结束后，该减益会施加于你" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "若站在危险区域内，会获得此减益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "首领施放|cFFFFFFFF%s|r后，你会受到持续伤害效果" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffPossibleAfterCastNote = "首领施放|cFFFFFFFF%s|r后，你可能会受到此减益效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "主动触碰|cFFFFFFFF%s|r，你会受到此减益效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+L.debuffAddsCast = "该减益由|cFFFFFFFF%s|r对你施加" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
@@ -324,8 +324,8 @@ L.bleed = "流血" -- Any bleed-type debuff
 L.bleeds = "流血" -- Plural of L.bleed
 
 -- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
-L.clear_bombs = "清除炸弹"
-L.clear_pools = "清除水渍"
+L.clear_bombs = "拆弹"
+L.clear_pools = "消水"
 
 -- Interrupt-related spell renames
 L.interrupts = "打断" -- General term used when a player needs to interrupt a spell being cast
