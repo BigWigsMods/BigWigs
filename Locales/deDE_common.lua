@@ -87,8 +87,8 @@ L.adds_spawned = "Adds erschienen" -- plural
 L.adds_spawned_count = "%d |4Add:Adds; erschienen" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Add erscheint" -- singular
 L.adds_spawning = "Adds erscheinen" -- plural
---L.add_incoming = "Add incoming" -- singular
---L.adds_incoming = "Adds incoming" -- plural
+L.add_incoming = "Add steht bevor" -- singular
+L.adds_incoming = "Adds stehen bevor" -- plural
 L.spawned = "%s erschienen"
 L.spawning = "%s entsteht"
 L.next_add = "Nächstes Add"
@@ -100,7 +100,7 @@ L.big_add = "Großes Add" -- singular
 L.big_adds = "Große Adds" -- plural
 L.small_add = "Kleines Add" -- singular
 L.small_adds = "Kleine Adds" -- plural
---L.eat_adds = "Eat Adds" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
+L.eat_adds = "Adds fressen" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s getötet"
@@ -212,7 +212,7 @@ L.timerNote = "Dieser Text wird für Timer genutzt"
 L.castTimerNote = "Dieser Text wird nur für Zauber Timer genutzt"
 L.messageCastOverNote = "Dieser Text wird zur Anzeige einer Nachricht am Ende des Zaubers genutzt"
 L.messageCastStartNote = "Dieser Text wird zur Anzeige einer Nachricht zu Beginn des Zaubers genutzt"
---L.messageBeforeCastStartNote = "This text will be used for showing a message before a cast starts"
+L.messageBeforeCastStartNote = "Dieser Text wird zur Anzeige einer Nachricht bevor ein Zauber startet genutzt"
 L.messageNote = "Dieser Text wird für Nachrichten genutzt"
 L.messageOnYouNote = "Die anzuzeigende Nachricht wenn diese Fähigkeit auf Dir ist"
 L.timerOnYouNote = "Der anzuzeigende Text im Timer wenn diese Fähigkeit auf Dir ist"
@@ -228,7 +228,7 @@ L.postDebuffNote = "Diesen Debuff erleidest Du nachdem |cFFFFFFFF%s|r abläuft" 
 L.debuffUnderYouNote = "Diesen Debuff erleidest Du bei schlechter Positionierung" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 L.debuffDotAfterCastNote = "Dieser Debuff ist ein DoT nach dem Abschluss des Zaubers |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
 L.debuffPossibleAfterCastNote = "Diesen Debuff kannst Du erleiden nachdem der Boss |cFFFFFFFF%s|r gewirkt hat" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
---L.debuffTankAfterCastNote = "This debuff will apply to the tank after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+L.debuffTankAfterCastNote = "Diesen Debuff erleidet der Tank nachdem der Boss |cFFFFFFFF%s|r gewirkt hat" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "Diesen Debuff erleidest Du wenn Du bewusst in die |cFFFFFFFF%s|r läufst" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffAddsCast = "Diesen Debuff erleidest Du von |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
