@@ -1,4 +1,43 @@
-if not BigWigsAPI.IsLocale("zhCN") then return end
+-- March on Quel'Danas
+
+BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
+	color_swaps = "颜色转换",
+	["1241292"] = "圣光/虚空俯冲",
+})
+
+BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
+	deaths_dirge = "记忆游戏",
+	heavens_glaives = "战刃",
+	heavens_lance = "天穹枪",
+	the_dark_archangel = "大爆炸",
+	prism_kicks = "打断",
+	dark_constellation = "星座",
+	dark_rune_bar = "解密",
+
+	left = "[左] %s", -- left/west group bars in p3
+	right = "[右] %s", -- right/east group bars in p3
+
+	custom_select_limit_warnings = "[史诗] 限制第3阶段警报",
+	custom_select_limit_warnings_desc = "仅显示你所在半场的技能警报。",
+	custom_select_limit_warnings_value1 = "1、2组去左面，3、4组去右面。",
+	custom_select_limit_warnings_value2 = "奇数组去左面，偶数组去右面。",
+	custom_select_limit_warnings_value3 = "显示两面的所有警报。",
+	custom_select_limit_warnings_value4 = "仅显示左面警报。",
+	custom_select_limit_warnings_value5 = "仅显示右面警报。",
+})
+
+-- Midnight World
+
+BigWigsAPI.SetBossModuleLocale("Thorm'belan", {
+	ball = "球",
+	ball_incoming = "球来了 - 不要让他落地",
+	ball_fail = "失败 - 球落地了",
+	tendrils = "藤蔓",
+	tendrils_incoming = "快跑开，拉断藤蔓",
+})
+
+-- The Voidspire
+
 BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "重击", --“影爪重击”简称
 })
