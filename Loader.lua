@@ -1142,12 +1142,12 @@ do
 end
 
 -- XXX 12.0.5
---if public.isRetail and not BW_FEAT_RENAMES then
---	BW_FEAT_RENAMES = true
---	if BigWigs3DB then -- No popup for fresh users
---		Popup(L.tempRenameFeat, true, 180)
---	end
---end
+if public.isRetail and not BW_FEAT_RENAMES then
+	BW_FEAT_RENAMES = true
+	if BigWigs3DB then -- No popup for fresh users
+		Popup(L.tempRenameFeat, true, 180)
+	end
+end
 
 -- XXX 12.0.0
 --if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE2 then
