@@ -13,7 +13,6 @@ mod:SetWorldModule(true)
 --
 
 local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
-	ball = "Ball",
 	ball_incoming = "Ball Incoming - Don't let it touch the ground",
 	ball_fail = "FAIL - Ball touched the ground",
 	tendrils = "Tendrils",
@@ -27,7 +26,7 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 mod:SetRenames({
 	[1257325] = {CL.bombs, CL.incoming:format(CL.bombs), notes = {CL.timerNote, CL.messageNote}, original = {1257325, CL.incoming:format(mod:SpellName(1257325))}}, -- Radiant Mote (Bombs)
 	[1257825] = { -- Scintillating Shard (Ball)
-		L.ball, L.ball_incoming, L.ball_fail,
+		CL.bouncing_ball, L.ball_incoming, L.ball_fail,
 		notes = {CL.timerNote, CL.messageNote, CL.messageNote},
 		original = {1257825, CL.incoming:format(mod:SpellName(1257825)), false},
 	},
