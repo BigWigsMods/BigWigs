@@ -125,7 +125,7 @@ L.henry = "Henry Garrick" -- AI priest healer (NPC 215011)
 L.henry_short = "*Henry"
 
 -- Localizers note:
--- The default mod: Berserk(600) uses spell ID 26662 to get the Berserk name
+-- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "%s iniciado - %s en %d min"
 L.custom_start_s = "%s iniciado - %s en %d seg"
 L.custom_end = "%s comienza en %s"
