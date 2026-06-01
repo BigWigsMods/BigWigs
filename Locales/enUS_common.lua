@@ -64,6 +64,7 @@ L.interrupted_by = "%s interrupted by %s" -- Spell interrupted by Player
 L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "No %s" -- No Spell
 L.intermission = "Intermission"
+L.intermission_over = "Intermission over"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s cancelled" -- Spell cancelled
 L.you_die = "You die" -- You will die
@@ -232,9 +233,6 @@ L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely wal
 L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
-L.absorb = "Absorb" -- Used for shield-like abilities that absorb damage or healing
-L.heal_absorb = "Heal Absorb" -- Used for shield-like abilities that absorb healing only
-L.heal_absorbs = "Heal Absorbs" -- Plural of L.heal_absorb
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Lasers" -- Plural of L.lasers
 L.beam = "Beam" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
@@ -248,7 +246,6 @@ L.knockbacks = "Knockbacks" -- Plural of L.knockback
 L.pushback = "Pushback" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Traps" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteor" -- This one will probably only ever be used for actual meteors
-L.shield = "Shield" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Teleport" -- A boss/add/etc teleported somewhere
 L.breath = "Breath" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
 L.roar = "Roar" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
@@ -272,7 +269,6 @@ L.spirit = "Spirit" -- Sometimes a boss will summon spirits, similar to ghosts, 
 L.spirits = "Spirits" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Tornadoes" -- Plural of L.tornado
-L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.mark = "Mark" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Marks" -- Plural of L.marks
 L.mind_control = "Mind Control" -- Any kind of Mind Control ability, where a player loses control of their character
@@ -286,12 +282,18 @@ L.arrows = "Arrows" -- Plural of L.arrow
 L.ball = "Ball" -- A ball, like a football, basketball, etc
 L.balls = "Balls" -- Plural of L.ball
 L.blind = "Blind" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
+L.bouncing_ball = "Bouncing Ball" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
+L.bouncing_balls = "Bouncing Balls" -- Plural of L.bouncing_ball
 L.chakram = "Chakram" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
 L.dodge = "Dodge" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enrage" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Fear" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "Fixate" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Fixates" -- Plural of L.fixate
+L.frontal = "Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
+L.frontal_cone = "Frontal Cone" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.grip = "Grip" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.grips = "Grips" -- Plural of L.grip
 L.group_damage = "Group Damage" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Health Drain" -- Any ability that drains health from the player
 L.madness = "Madness" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
@@ -313,8 +315,17 @@ L.waves = "Waves" -- Multiple waves of a bad ability coming from a boss, like wa
 L.whelp = "Whelp" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Whelps" -- Plural of L.whelp
 
+-- Absorb / Shield related spell renames
+L.absorb = "Absorb" -- Used for shield-like abilities that absorb damage or healing
+L.heal_absorb = "Heal Absorb" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Heal Absorbs" -- Plural of L.heal_absorb
+L.break_shield = "Break Shield" -- When you need to do something to break an absorb shield on the boss.
+L.break_shields = "Break Shields" -- Plural of L.break_shield
+L.shield = "Shield" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+
 -- Debuff-related spell renames
-L.debuffs = "Debuffs"
+L.debuff = "Debuff"
+L.debuffs = "Debuffs" -- Plural of L.debuff
 L.fire_debuffs = "Fire Debuffs"
 
 -- Dispel-related spell renames
@@ -323,6 +334,7 @@ L.curses = "Curses" -- Plural of L.curse
 L.disease = "Disease" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.dispel = "Dispel" -- General term for any debuff that is dispellable
 L.dispels = "Dispels" -- Plural of L.dispel
+L.dispel_boss = "Dispel Boss" -- When the boss gains a buff (magic or enrage) that you need to dispel
 L.poison = "Poison" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.bleed = "Bleed" -- Any bleed-type debuff
 L.bleeds = "Bleeds" -- Plural of L.bleed
