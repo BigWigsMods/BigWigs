@@ -66,7 +66,7 @@ L.interrupted_by = "%s interrompu par %s" -- Spell interrupted by Player
 L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "Sans %s" -- No Spell
 L.intermission = "Intervalle"
-L.intermission_over = "Interphase terminée"
+L.intermission_over = "Intervalle terminée"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s annulé" -- Spell Cancelled
 L.you_die = "Vous êtes mort" -- You will die
@@ -203,7 +203,7 @@ L.autotalk_generic_desc = "Sélectionne automatiquement le dialogue avec le PNJ 
 L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 
 -- GUI notes
-L.intermissionOnly = "Seulement l'interphase"
+L.intermissionOnly = "Seulement l'intervalle"
 L.stage1Only = "Seulement la phase 1"
 L.stage2Only = "Seulement la phase 2"
 L.stage3Only = "Seulement la phase 3"
