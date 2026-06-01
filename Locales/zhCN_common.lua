@@ -65,7 +65,7 @@ L.interrupted_by = "%2$s已打断%1$s" -- Spell interrupted by Player
 L.interruptible = "可打断" -- when a spell is interruptible
 L.no = "缺少：%s" -- No Spell
 L.intermission = "转阶段"
---L.intermission_over = "Intermission over"
+L.intermission_over = "转阶段结束"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
 L.you_die = "你会死亡" -- You will die
@@ -203,9 +203,9 @@ L.autotalk_notice = "自动与NPC %s 交互。"
 
 -- GUI notes
 L.intermissionOnly = "仅转阶段" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
-L.stage1Only = "仅第1阶段" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
-L.stage2Only = "仅第2阶段"
-L.stage3Only = "仅第3阶段"
+L.stage1Only = "仅第一阶段" -- A note to explain that a specific ability only happens during stage 1 of a boss fight 同步GlobalStrings-CN本地化翻译
+L.stage2Only = "仅第二阶段"
+L.stage3Only = "仅第三阶段"
 
 -- GUI notes for renames
 L.generalNote = "通用说明文本"
@@ -229,7 +229,7 @@ L.postDebuffNote = "|cFFFFFFFF%s|r结束后，该减益会施加于你" -- This 
 L.debuffUnderYouNote = "若站在危险区域内，会获得此减益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 L.debuffDotAfterCastNote = "首领施放|cFFFFFFFF%s|r后，你会受到持续伤害效果" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
 L.debuffPossibleAfterCastNote = "首领施放|cFFFFFFFF%s|r后，你可能会受到此减益效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
---L.debuffTankAfterCastNote = "首领施放|cFFFFFFFF%s|r后，坦克会受到此减益效果" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+L.debuffTankAfterCastNote = "首领施放|cFFFFFFFF%s|r后，坦克会受到此减益效果" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "主动触碰|cFFFFFFFF%s|r，你会受到此减益效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffAddsCast = "该减益由|cFFFFFFFF%s|r对你施加" -- This debuff is applied to you by NPC_NAME
 
@@ -283,18 +283,18 @@ L.arrows = "箭矢" -- Plural of L.arrow
 L.ball = "球" -- A ball, like a football, basketball, etc
 L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
---L.bouncing_ball = "Bouncing Ball" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
---L.bouncing_balls = "Bouncing Balls" -- Plural of L.bouncing_ball
+L.bouncing_ball = "弹跳球" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
+L.bouncing_balls = "弹跳球" -- Plural of L.bouncing_ball
 L.chakram = "飞轮" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
 L.dodge = "躲开" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "激怒" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "恐惧" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "锁定" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "锁定" -- Plural of L.fixate
---L.frontal = "Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
-L.frontal_cone = "正面技能" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
---L.grip = "Grip" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
---L.grips = "Grips" -- Plural of L.grip
+L.frontal = "头前" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
+L.frontal_cone = "头前技能" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.grip = "拉拽" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.grips = "拉拽" -- Plural of L.grip
 L.group_damage = "群体伤害" -- Any ability that causes damage to every player in the 5 player group 也可以称“AOE”
 L.health_drain = "吸血" -- Any ability that drains health from the player
 L.madness = "疯狂" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
@@ -320,12 +320,12 @@ L.whelps = "雏龙" -- Plural of L.whelp
 L.absorb = "吸收盾" -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "治疗吸收盾" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "治疗吸收盾" -- Plural of L.heal_absorb
---L.break_shield = "Break Shield" -- When you need to do something to break an absorb shield on the boss.
---L.break_shields = "Break Shields" -- Plural of L.break_shield
+L.break_shield = "破盾" -- When you need to do something to break an absorb shield on the boss.
+L.break_shields = "破盾" -- Plural of L.break_shield
 L.shield = "护盾" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 
 -- Debuff-related spell renames
---L.debuff = "Debuff"
+L.debuff = "减益"
 L.debuffs = "减益"  -- 减益效果 -- Plural of L.debuff
 L.fire_debuffs = "火焰减益"  -- “火焰减益效果”长删“效果”
 
@@ -335,7 +335,7 @@ L.curses = "诅咒" -- Plural of L.curse
 L.disease = "疾病" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.dispel = "驱散" -- General term for any debuff that is dispellable
 L.dispels = "驱散" -- Plural of L.dispel
---L.dispel_boss = "Dispel Boss" -- When the boss gains a buff (magic or enrage) that you need to dispel
+L.dispel_boss = "驱散首领" -- When the boss gains a buff (magic or enrage) that you need to dispel
 L.poison = "中毒" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.bleed = "流血" -- Any bleed-type debuff
 L.bleeds = "流血" -- Plural of L.bleed
