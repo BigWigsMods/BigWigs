@@ -230,9 +230,9 @@ L.dispeller = "|cFFFF0000仅警报驱散。|r"
 L.renames = "重命名"
 L.noteLabel = "%s（|cFFFFFF99%s|r）"
 L.renameLabel = "%s（|cFF3366FF%s|r）"
-L.renameHeader = "为该技能设置一个自定义名称。该名称将取代法术原名，显示在所有信息和计时条中。\n\n"
+L.renameHeader = "为该法术设置一个自定义名称。该名称将取代法术原名，显示在所有信息和计时条中。\n\n"
 L.spellName = "法术名称"
-L.spellNameResetDesc = "该技能默认使用自定义名称，点击此按钮可恢复为原名（通常为法术名称）。"
+L.spellNameResetDesc = "该法术默认使用自定义名称，点击此按钮可恢复为原名（通常为法术名称）。"
 
 -- Sharing.lua
 L.import = "导入"
