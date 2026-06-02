@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.tempRenameFeat = "现在，你可以在任意首领技能的进阶设置中，点击“>>”并在“重命名”标签里|cFF436EEE重命名|r该技能。"
+L.tempRenameFeat = "你现在可以通过点击任意首领技能的高级设置 “>>”，并在“重命名”选项卡中|cFF436EEE重命名|r该技能。"
 
 -- API.lua
 L.showAddonBar = "插件 '|cFF436EEE%s|r' 创建了 '%s' 计时条。"
