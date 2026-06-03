@@ -752,6 +752,7 @@ function boss:Disable(isWipe)
 		self.isWinning = nil
 		self.bossTargetChecks = nil
 		self.stageTime = nil
+		self.blizzMessageTimer = nil
 
 		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
@@ -3931,14 +3932,18 @@ do
 	function boss:TargetMessageFromBlizzMessage(key, duration, color, text, icon)
 		self:StopBlizzMessages(duration)
 
-		local timer = self:ScheduleTimer(function()
+		if self.blizzMessageTimer then
+			self:CancelTimer(self.blizzMessageTimer)
+		end
+		self.blizzMessageTimer = self:ScheduleTimer(function()
 			self:UnregisterEvent("ENCOUNTER_WARNING")
 		end, duration)
 
 		self:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
 			if info.targetGUID == nil then return end
 
-			self:CancelTimer(timer)
+			self:CancelTimer(self.blizzMessageTimer)
+			self.blizzMessageTimer = nil
 			self:UnregisterEvent(event)
 
 			local player = info.targetName
@@ -3974,14 +3979,18 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 	if self:CanPassRoleRestrictions(key) then
 		local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
 		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
-			local timer = self:ScheduleTimer(function()
+			if self.blizzMessageTimer then
+				self:CancelTimer(self.blizzMessageTimer)
+			end
+			self.blizzMessageTimer = self:ScheduleTimer(function()
 				self:UnregisterEvent("ENCOUNTER_WARNING")
 			end, duration)
 
 			self:RegisterEvent("ENCOUNTER_WARNING", function(event, infoTable)
 				if infoTable.targetGUID == nil and mustDefineTarget then return end
 
-				self:CancelTimer(timer)
+				self:CancelTimer(self.blizzMessageTimer)
+				self.blizzMessageTimer = nil
 				self:UnregisterEvent(event)
 
 				if text == true then
