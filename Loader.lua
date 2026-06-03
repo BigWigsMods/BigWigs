@@ -14,7 +14,7 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 416
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 49},
+	["LittleWigs"] = {12, 0, 52},
 	["BigWigs_Classic"] = {12, 0, 17},
 	["BigWigs_BurningCrusade"] = {12, 0, 14},
 	["BigWigs_WrathOfTheLichKing"] = {12, 0, 8},
