@@ -439,7 +439,7 @@ end
 
 -- Stage One: Insatiable Hunger
 -- Alndust Upheaval
-function mod:AlndustUpheaval(eventInfo)
+function mod:AlndustUpheaval(eventInfo) -- Soak
 	local barText = CL.count:format(self:GetRename(1262289), almdustUpheavalCount)
 	if self:ShouldShowBars() then
 		self:Bar(1262289, eventInfo.duration, barText, nil, eventInfo.id)
@@ -456,7 +456,7 @@ function mod:AlndustUpheaval(eventInfo)
 end
 
 -- Rift Emergence
-function mod:RiftEmergence(eventInfo)
+function mod:RiftEmergence(eventInfo) -- Adds
 	local barText = CL.count:format(self:GetRename(1258610), riftEmergenceCount)
 	if self:ShouldShowBars() then
 		self:Bar(1258610, eventInfo.duration, barText, nil, eventInfo.id)
@@ -472,7 +472,7 @@ function mod:RiftEmergence(eventInfo)
 end
 
 -- Rift Madness
-function mod:RiftMadness(eventInfo)
+function mod:RiftMadness(eventInfo) -- Madness
 	local barText = CL.count:format(self:GetRename(1264756), riftMadnessCount)
 	if self:ShouldShowBars() then
 		self:Bar(1264756, eventInfo.duration, barText, nil, eventInfo.id)
@@ -488,7 +488,7 @@ function mod:RiftMadness(eventInfo)
 end
 
 -- Consuming Miasma
-function mod:ConsumingMiasma(eventInfo)
+function mod:ConsumingMiasma(eventInfo) -- Dispels
 	local barText = CL.count:format(self:GetRename(1257087), consumingMiasmaCount)
 	if self:ShouldShowBars() then
 		self:Bar(1257087, eventInfo.duration, barText, nil, eventInfo.id)
@@ -504,7 +504,7 @@ function mod:ConsumingMiasma(eventInfo)
 end
 
 -- Caustic Phlegm
-function mod:CausticPhlegm(eventInfo)
+function mod:CausticPhlegm(eventInfo) -- Raid Damage
 	local barText = CL.count:format(self:GetRename(1246653), causticPhlegmCount)
 	if self:ShouldShowBars() then
 		self:Bar(1246653, eventInfo.duration, barText, nil, eventInfo.id)
@@ -520,7 +520,7 @@ function mod:CausticPhlegm(eventInfo)
 end
 
 -- Rending Tear
-function mod:RendingTear(eventInfo)
+function mod:RendingTear(eventInfo) -- Frontal Cone
 	local barText = CL.count:format(self:GetRename(1272726), rendingTearCount)
 	if self:ShouldShowBars() then
 		self:Bar(1272726, eventInfo.duration, barText, nil, eventInfo.id)
@@ -536,7 +536,7 @@ function mod:RendingTear(eventInfo)
 end
 
 -- Consume
-function mod:Consume(eventInfo)
+function mod:Consume(eventInfo) -- Consume
 	local barText = CL.count:format(self:GetRename(1245396), consumeCount)
 	if self:ShouldShowBars() then
 		self:Bar(1245396, eventInfo.duration, barText, nil, eventInfo.id)
@@ -546,7 +546,7 @@ function mod:Consume(eventInfo)
 		msg = barText,
 		onFinished = function()
 			self:Message(1245396, "red", barText)
-			self:StopBlizzMessages(0.2)
+			self:StopBlizzMessages(0.3)
 			self:PlaySound(1245396, "warning") -- finish adds
 		end
 	}
@@ -557,7 +557,7 @@ end
 -- Corrupted Devastation
 do
 	local prevEventID = nil
-	function mod:CorruptedDevastation(eventInfo, durationRounded)
+	function mod:CorruptedDevastation(eventInfo, durationRounded) -- Breath
 		if durationRounded == 2 and prevEventID then -- Easy and Heroic, when a breath gets restarted it's created with a new ID
 			local barInfo = activeBars[prevEventID]
 			if barInfo then
@@ -570,6 +570,8 @@ do
 		local barText = CL.count:format(self:GetRename(1245486), durationRounded == 2 and corruptedDevastationCount-1 or corruptedDevastationCount)
 		if self:ShouldShowBars() then
 			self:CDBar(1245486, eventInfo.duration, barText, nil, eventInfo.id)
+			-- Blizz message can sometimes happen prior to the callback triggering
+			self:ScheduleTimer(function() self:StopBlizzMessages(4) end, eventInfo.duration-1)
 		end
 		if durationRounded ~= 2 then
 			corruptedDevastationCount = corruptedDevastationCount + 1 -- Easy and Heroic, 2 is a restarted breath, don't increment it
@@ -578,7 +580,7 @@ do
 			msg = barText,
 			onFinished = function()
 				self:Message(1245486, "red", barText)
-				self:StopBlizzMessages(0.4)
+				self:StopBlizzMessages(1)
 				self:PlaySound(1245486, "warning") -- dodge
 			end
 		}
@@ -588,7 +590,7 @@ end
 -- Ravenous Dive
 do
 	local scheduledEnd = nil
-	function mod:RavenousDive(eventInfo)
+	function mod:RavenousDive(eventInfo) -- Landing
 		if scheduledEnd then
 			self:CancelTimer(scheduledEnd)
 			scheduledEnd = nil
@@ -628,7 +630,7 @@ do
 end
 
 -- Caustic Phlegm (Stage 2)
-function mod:CausticPhlegmStage2(eventInfo)
+function mod:CausticPhlegmStage2(eventInfo) -- Raid Damage
 	local barText = CL.count:format(self:GetRename(1246621), causticPhlegmCount)
 	if self:ShouldShowBars() then
 		self:Bar(1246621, eventInfo.duration, barText, nil, eventInfo.id)
@@ -644,7 +646,7 @@ function mod:CausticPhlegmStage2(eventInfo)
 end
 
 -- Consuming Miasma (Stage 2)
-function mod:ConsumingMiasmaStage2(eventInfo)
+function mod:ConsumingMiasmaStage2(eventInfo) -- Dispels
 	local barText = CL.count:format(self:GetRename(1257085), consumingMiasmaCount)
 	if self:ShouldShowBars() then
 		self:Bar(1257085, eventInfo.duration, barText, nil, eventInfo.id)
