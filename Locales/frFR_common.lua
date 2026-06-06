@@ -66,6 +66,7 @@ L.interrupted_by = "%s interrompu par %s" -- Spell interrupted by Player
 L.interruptible = "Interruptible" -- when a spell is interruptible
 L.no = "Sans %s" -- No Spell
 L.intermission = "Intervalle"
+L.intermission_over = "Intervalle terminée"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s annulé" -- Spell Cancelled
 L.you_die = "Vous êtes mort" -- You will die
@@ -88,6 +89,8 @@ L.adds_spawned = "Adds sont apparus" -- plural
 L.adds_spawned_count = "%d |4add est apparu:adds sont apparus;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Add en train d'apparaître" -- singular
 L.adds_spawning = "Adds en train d'apparaître" -- plural
+L.add_incoming = "Add en approche" -- singular
+L.adds_incoming = "Adds en approche" -- plural
 L.spawned = "%s est apparu"
 L.spawning = "%s en train d'apparaître"
 L.next_add = "Prochain add"
@@ -99,6 +102,7 @@ L.big_add = "Gros add" -- singular
 L.big_adds = "Gros adds" -- plural
 L.small_add = "Petit add" -- singular
 L.small_adds = "Petits adds" -- plural
+L.eat_adds = "Manger les Adds" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s tué"
@@ -198,29 +202,42 @@ L.autotalk_boss_desc = "Sélectionne automatiquement le dialogue avec le PNJ qui
 L.autotalk_generic_desc = "Sélectionne automatiquement le dialogue avec le PNJ qui vous fait progresser à la prochaine étape du donjon."
 L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 
+-- GUI notes
+L.intermissionOnly = "Seulement l'intervalle"
+L.stage1Only = "Seulement la phase 1"
+L.stage2Only = "Seulement la phase 2"
+L.stage3Only = "Seulement la phase 3"
+
 -- GUI notes for renames
---L.generalNote = "This is the text that will generally be used"
+L.generalNote = "Ceci est le texte qui sera généralement utilisé"
 L.timerNote = "Ce texte sera utilisé pour les CàR"
---L.castTimerNote = "This text will only be used for cast timers"
---L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
---L.messageCastStartNote = "This text will be used for showing a message when the cast starts"
+L.castTimerNote = "Ce texte ne sera utilisé que pour les CàR d'incantation"
+L.messageCastOverNote = "Ce texte sera utilisé pour afficher un message à la fin de l'incantation"
+L.messageCastStartNote = "Ce texte sera utilisé pour afficher un message au début de l'incantation"
+L.messageBeforeCastStartNote = "Ce texte sera utilisé pour afficher un message avant le début de l'incantation"
 L.messageNote = "Ce texte sera utilisé pour les messages"
 L.messageOnYouNote = "Le message affiché lorsque la technique vous cible"
+L.messageSpecificHealth = "Le message affiché lorsque le boss est à %d%% de vie"
 L.timerOnYouNote = "Le texte affiché dans le CàR lorsque la technique vous cible"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
---L.debuffFailureNote = "This debuff will apply to you if you fail"
---L.preDebuffNote = "This is the pre-debuff, before the main debuff applies to you"
---L.mainDebuffNote = "This is the main debuff that applies to you"
---L.intermissionOnly = "Intermission Only" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
---L.stage1Only = "Stage 1 Only" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+L.mythicOnlyNote = "Ce texte ne sera utilisé que pour le Mythique"
+L.otherDifficultiesNote = "Ce texte sera utilisé pour toutes les autres difficultés"
+
+-- GUI notes for debuffs
+L.debuffFailureNote = "Cet affaiblissement vous sera appliqué si vous échouez"
+L.debuffFailureMoveFromExplosionNote = "Cet affaiblissement vous sera appliqué si vous ne vous écartez pas de l'explosion"
+--L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.preDebuffNote = "Ceci est le pré-affaiblissement, avant que le principal ne s'applique à vous"
+L.mainDebuffNote = "Ceci est l'affaiblissement principal qui s'applique à vous"
+L.postDebuffNote = "Cet affaiblissement vous sera appliqué après que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "Cet affaiblissement vous sera appliqué si vous vous tenez à un mauvais endroit" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "Cet affaiblissement est un DoT qui prend effet après que le boss incante |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffPossibleAfterCastNote = "Cet affaiblissement pourrait s'appliquer à vous après que le boss incante |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+L.debuffTankAfterCastNote = "Cet affaiblissement va s'appliquer sur le tank après que le boss incante |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "Cet affaiblissement vous sera appliqué si vous marchez dans le sort |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+--L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+L.debuffAddsCast = "Cet affaiblissement vous sera appliqué par |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
-L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
-L.heal_absorb = "Soins absorbés" -- Used for shield-like abilities that absorb healing only
-L.heal_absorbs = "Soins absorbés" -- Plural of L.heal_absorb
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Lasers" -- Plural of L.lasers
 L.beam = "Rayon" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
@@ -228,12 +245,12 @@ L.beams = "Rayons" -- Plural of L.beam
 L.bomb = "Bombe" -- Used for debuffs that make players explode
 L.bombs = "Bombes" -- Plural of L.bomb
 L.explosion = "Explosion" -- When the explosion from a bomb-like ability will occur
-L.knockback = "Repousser" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
---L.knockbacks = "Knockbacks" -- Plural of L.knockback
+L.explosions = "Explosions" -- Plural of L.explosion
+L.knockback = "Repoussement" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.knockbacks = "Repoussements" -- Plural of L.knockback
 L.pushback = "Repousse en continu" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Pièges" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Météore" -- This one will probably only ever be used for actual meteors
-L.shield = "Bouclier" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Téléportation" -- A boss/add/etc teleported somewhere
 L.breath = "Souffle" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
 L.roar = "Cri" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
@@ -257,7 +274,6 @@ L.spirit = "Esprit" -- Sometimes a boss will summon spirits, similar to ghosts, 
 L.spirits = "Esprits" -- Plural of L.spirit
 L.tornado = "Tornade" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Tornades" -- Plural of L.tornado
-L.frontal_cone = "Cône Devant" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.mark = "Marque" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Marques" -- Plural of L.marks
 L.mind_control = "Contrôle mental" -- Any kind of Mind Control ability, where a player loses control of their character
@@ -271,35 +287,55 @@ L.arrows = "Flèches" -- Plural of L.arrow
 L.ball = "Boule" -- A ball, like a football, basketball, etc
 L.balls = "Boules" -- Plural of L.ball
 L.blind = "Cécité" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
+L.bouncing_ball = "Balle rebondissante" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
+L.bouncing_balls = "Balles rebondissantes" -- Plural of L.bouncing_ball
 L.chakram = "Chakram" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
 L.dodge = "Esquive" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enrager" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Peur" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "Fixé" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Fixés" -- Plural of L.fixate
+L.frontal = "Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
+L.frontal_cone = "Cône Devant" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.grip = "Poigne" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.grips = "Poignes" -- Plural of L.grip
 L.group_damage = "Dégâts sur le groupe" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Drain de santé" -- Any ability that drains health from the player
 L.madness = "Folie" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
+L.miasma = "Miasme" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
+L.missile = "Missile" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
+L.missiles = "Missiles" -- Plural of L.missile
 L.parasite = "Parasite" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "Parasites" -- Plural of L.parasite
 L.pull_in = "Attraction" -- An ability that pulls you in towards the boss against your will
 L.quills = "Plumes" -- Short for any ability with the name "Quills" in it e.g. "Searing Quills" (159382) or "Infused Quills" (1242260)
 L.raid_damage = "Dégâts sur le raid" -- Any ability that causes damage to every player in the raid
+L.silence = "Silence" -- Any ability that silences a player, preventing their spells being cast
 L.smash = "Choc" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Pointe" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Pointes" -- Plural of L.spike
 L.spread = "Écartez-vous" -- An ability that forces you to spread out away from other players, or you might damage them
+L.stomp = "Piétinement" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Tentacule" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacules" -- Plural of L.tentacle
 L.waves = "Vagues" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "Dragonnet" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Dragonnets" -- Plural of L.whelp
 
+-- Absorb / Shield related spell renames
+L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
+L.heal_absorb = "Soins absorbés" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Soins absorbés" -- Plural of L.heal_absorb
+L.break_shield = "Casser le bouclier" -- When you need to do something to break an absorb shield on the boss.
+L.break_shields = "Casser les boucliers" -- Plural of L.break_shield
+L.shield = "Bouclier" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+
 -- Debuff-related spell renames
---L.debuffs = "Debuffs"
---L.fire_debuffs = "Fire Debuffs"
+L.debuff = "Affaiblissement"
+L.debuffs = "Affaiblissements" -- Plural of L.debuff
+L.fire_debuffs = "Affaiblissements de feu"
 
 -- Dispel-related spell renames
 L.curse = "Malédiction" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
@@ -307,9 +343,14 @@ L.curses = "Malédictions" -- Plural of L.curse
 L.disease = "Maladie" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.dispel = "Dispel" -- General term for any debuff that is dispellable
 L.dispels = "Dispells" -- Plural of L.dispel
+L.dispel_boss = "Purge Boss" -- When the boss gains a buff (magic or enrage) that you need to dispel
 L.poison = "Poison" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
---L.bleed = "Bleed" -- Any bleed-type debuff
---L.bleeds = "Bleeds" -- Plural of L.bleed
+L.bleed = "Saignement" -- Any bleed-type debuff
+L.bleeds = "Saignements" -- Plural of L.bleed
+
+-- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
+L.clear_bombs = "Nettoyer les bombes"
+L.clear_pools = "Nettoyer les flaques"
 
 -- Interrupt-related spell renames
 L.interrupts = "Interruption" -- General term used when a player needs to interrupt a spell being cast
@@ -322,6 +363,6 @@ L.tank_combo = "Combo Tank" -- Used for tank swap mechanics where the boss casts
 L.tank_debuff = "Debuff Tank" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Frontal Tank" -- Similar to L.frontal_cone but only applies to tanks
 L.tank_hit = "Coup sur Tank" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
---L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
+L.tank_knockback = "Repoussement du Tank" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
---L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.tank_grip = "Poigne du Tank" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense

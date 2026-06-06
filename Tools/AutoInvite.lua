@@ -249,6 +249,7 @@ do
 				return
 			end
 
+			delayedInvite[playerName] = nil
 			if type(isBnet) == "number" then
 				SendBattleNetMessage(isBnet, L.whisperToPlayerMyGroupIsFull)
 			else

@@ -12,7 +12,7 @@ L.shortSecondsOnly = "%d sec" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f sec" -- 3.2 Seconds
 L.accept = "Accepter"
 L.cancel = "Annuler"
---L.confirm_profile_swap = "The addon |cFF436EEE\"%s\"|r wants to automatically swap your BigWigs profile to a different profile called:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+L.confirm_profile_swap = "L'addon |cFF436EEE\"%s\"|r souhaite changer automatiquement votre profil BigWigs vers un profil nommé :\n\n|cFF33FF99\"%s\"|r\n\nÊtes-vous sûr(e) de le vouloir ?"
 
 -- Core.lua
 L.berserk = "Berserk"
@@ -303,8 +303,8 @@ L.sharing_window_title = "Partage des paramètres de Boss"
 L.sharing_flags = "Paramètres généraux"
 L.sharing_flags_desc = "Paramètres d'import contrôlant des menus comme 'affiche une barre', 'joue un son', 'affiche un message' etc.\nCes paramètres couvrent la plupart des cases à cocher des paramètres d'une technique."
 L.sharing_export_flags_desc = "Paramètres d'export contrôlant des menus comme 'affiche une barre', 'joue un son', 'affiche un message' etc.\nCes paramètres couvrent la plupart des cases à cocher des paramètres d'une technique."
---L.sharing_renames_desc = "Import the custom renames that are configured."
---L.sharing_export_renames_desc = "Export the custom renames that are configured."
+L.sharing_renames_desc = "Importer les renommages personnalisés configurés."
+L.sharing_export_renames_desc = "Exporter les renommages personnalisés configurés."
 L.sharing_sounds_desc = "Importe des sons à jouer pour les techniques."
 L.sharing_export_sounds_desc = "Export des sons à jouer pour les techniques."
 L.sharing_private_auras = "Auras Privées"

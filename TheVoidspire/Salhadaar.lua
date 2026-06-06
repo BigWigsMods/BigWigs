@@ -129,8 +129,8 @@ do
 			barInfo = self:DespoticCommand(eventInfo)
 		elseif durationRoundedOne == 27 then -- Fractured Projection
 			barInfo = self:FracturedProjection(eventInfo)
-		elseif durationRoundedOne == 44 or durationRoundedZero == 35 or durationRoundedZero == 34 then -- Shattering Twilight
-			if durationRoundedZero == 35 or durationRoundedZero == 34 then return end -- These ones always get instantly canceled, ignore them.
+		elseif durationRoundedOne == 44 or durationRoundedZero == 36 or durationRoundedZero == 35 or durationRoundedZero == 34 then -- Shattering Twilight
+			if durationRoundedZero == 36 or durationRoundedZero == 35 or durationRoundedZero == 34 then return end -- These ones always get instantly canceled, ignore them.
 			barInfo = self:ShatteringTwilight(eventInfo)
 		elseif durationRoundedOne == 100 then -- Entropic Unraveling
 			local time = GetTime()
@@ -195,8 +195,8 @@ do
 			barInfo = self:DespoticCommand(eventInfo)
 		elseif durationRoundedOne == 18 then -- Fractured Projection
 			barInfo = self:FracturedProjection(eventInfo)
-		elseif durationRoundedOne == 42 or durationRoundedZero == 34 then -- Shattering Twilight
-			if durationRoundedZero == 34 then return end -- These ones always get instantly canceled, ignore them.
+		elseif durationRoundedOne == 42 or durationRoundedZero == 36 or durationRoundedZero == 35 or durationRoundedZero == 34 then -- Shattering Twilight
+			if durationRoundedZero == 36 or durationRoundedZero == 35 or durationRoundedZero == 34 then return end -- These ones always get instantly canceled, ignore them.
 			barInfo = self:ShatteringTwilight(eventInfo)
 		elseif durationRoundedOne == 100 then -- Entropic Unraveling
 			local time = GetTime()

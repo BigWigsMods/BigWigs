@@ -775,6 +775,18 @@ function core:GetBossModule(moduleName, silent)
 	end
 end
 
+function core:GetBossModulesForInstanceID(instanceID)
+	local tbl = {}
+	for _, module in next, bosses do
+		if module:IsZoneID(instanceID) then
+			tbl[#tbl+1] = module
+		end
+	end
+	if tbl[1] then
+		return tbl
+	end
+end
+
 function core:GetPluginOptions()
 	local tbl = {}
 	for i = 1, #plugins do

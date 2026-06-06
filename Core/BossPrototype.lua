@@ -752,6 +752,7 @@ function boss:Disable(isWipe)
 		self.isWinning = nil
 		self.bossTargetChecks = nil
 		self.stageTime = nil
+		self.blizzMessageTimer = nil
 
 		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
@@ -953,17 +954,20 @@ do
 
 	--- Get the original name associated with this rename using its key
 	-- @return string or number (spell ID)
-	function boss:GetRenameOriginal(key)
+	function boss:GetRenameOriginal(key, position)
+		if not position then position = 1 end
 		if not moduleRenamesList[self][key] then
 			error(("Module %q has no rename for key %q."):format(self.moduleName, tostring(key)))
 			return
 		end
 
 		local original = moduleRenamesList[self][key].original
-		if original or original == false then
+		if original == false then
 			return original
+		elseif type(original) == "table" then
+			return original[position]
 		end
-		return key
+		return original or key
 	end
 
 	--- Check if the rename for this key and position is currently set to the original.
@@ -984,6 +988,8 @@ do
 		local original = moduleRenamesList[self][key].original
 		if original == false then
 			return original
+		elseif type(original) == "table" then
+			return original[position] == name
 		end
 		return (original or key) == name
 	end
@@ -3926,14 +3932,18 @@ do
 	function boss:TargetMessageFromBlizzMessage(key, duration, color, text, icon)
 		self:StopBlizzMessages(duration)
 
-		local timer = self:ScheduleTimer(function()
+		if self.blizzMessageTimer then
+			self:CancelTimer(self.blizzMessageTimer)
+		end
+		self.blizzMessageTimer = self:ScheduleTimer(function()
 			self:UnregisterEvent("ENCOUNTER_WARNING")
 		end, duration)
 
 		self:RegisterEvent("ENCOUNTER_WARNING", function(event, info)
 			if info.targetGUID == nil then return end
 
-			self:CancelTimer(timer)
+			self:CancelTimer(self.blizzMessageTimer)
+			self.blizzMessageTimer = nil
 			self:UnregisterEvent(event)
 
 			local player = info.targetName
@@ -3969,14 +3979,18 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 	if self:CanPassRoleRestrictions(key) then
 		local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
 		if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
-			local timer = self:ScheduleTimer(function()
+			if self.blizzMessageTimer then
+				self:CancelTimer(self.blizzMessageTimer)
+			end
+			self.blizzMessageTimer = self:ScheduleTimer(function()
 				self:UnregisterEvent("ENCOUNTER_WARNING")
 			end, duration)
 
 			self:RegisterEvent("ENCOUNTER_WARNING", function(event, infoTable)
 				if infoTable.targetGUID == nil and mustDefineTarget then return end
 
-				self:CancelTimer(timer)
+				self:CancelTimer(self.blizzMessageTimer)
+				self.blizzMessageTimer = nil
 				self:UnregisterEvent(event)
 
 				if text == true then
@@ -4208,23 +4222,25 @@ do
 			time = length
 		end
 		local textType = type(text)
-		local msg, rawText
+		local msg, rawText, texture
 		if textType == "number" and text < 10 and self:IsRenameAvailable(key) then
 			rawText = self:GetRename(key, text)
 			msg = rawText
+			texture = icons[icon or key]
 		else
 			rawText = textType == "string" and text or spells[text or key]
 			msg = format(CL.cast, rawText)
+			texture = icons[icon or textType == "number" and text or key]
 		end
 		local isBarEnabled = checkFlag(self, key, C.CASTBAR)
 		if isBarEnabled then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime, nil, eventId)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, texture, false, maxTime, nil, eventId)
 		end
 		if checkFlag(self, key, C.CASTBAR_COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 		local counter = msg:match(countString)
-		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, icons[icon or textType == "number" and text or key], rawText, isBarEnabled)
+		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter and tonumber(counter) or 0, texture, rawText, isBarEnabled)
 	end
 end
 

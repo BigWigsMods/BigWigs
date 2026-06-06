@@ -65,6 +65,7 @@ L.interrupted_by = "%s interrumpido por %s" -- Spell interrupted by Player
 L.interruptible = "Interrumpible" -- when a spell is interruptible
 L.no = "No %s" -- No Spell
 L.intermission = "Intermedio"
+L.intermission_over = "Intermedio Finalizo"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s cancelado" -- Spell Cancelled
 L.you_die = "Morirás" -- You will die
@@ -87,6 +88,8 @@ L.adds_spawned = "Esbirros aparecieron" -- plural
 L.adds_spawned_count = "%d |4esbirro apareció:esbirros aparecieron;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Apareció un esbirro" -- singular
 L.adds_spawning = "Esbirros apareciendo" -- plural
+L.add_incoming = "Viene un esbirro" -- singular
+L.adds_incoming = "Esbirros viniendo" -- plural
 L.spawned = "%s apareció"
 L.spawning = "%s aparece"
 L.next_add = "Siguiente esbirro"
@@ -98,6 +101,7 @@ L.big_add = "Esbirro grande" -- singular
 L.big_adds = "Esbirros grandes" -- plural
 L.small_add = "Esbirro pequeño" -- singular
 L.small_adds = "Esbirros pequeños" -- plural
+L.eat_adds = "Comer Esbirros" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s muerto"
@@ -150,7 +154,7 @@ L.link_both = "%s + %s están enlazados"
 L.link_both_icon = "|T13700%d:0|t%s + |T13700%d:0|t%s están enlazados"
 L.link_removed = "Enlace eliminado"
 L.link_say_option_name = "Repetir 'enlazado' mensaje en chat"
-L.link_say_option_desc = "Repetir el mensaje en el chat diciendo con quien estas enlazado."
+L.link_say_option_desc = "Repetir el mensaje en el chat diciendo con quién estás enlazado."
 
 -- Abbreviated numbers
 L.amount_one = "%dB" -- Miles de millones 1,000,000,000
@@ -197,29 +201,42 @@ L.autotalk_boss_desc = "Selecciona automáticamente el diálogo del NPC que prov
 L.autotalk_generic_desc = "Selecciona automáticamente el diálogo del NPC que hace que avances a la siguiente fase del calabozo."
 L.autotalk_notice = "Interactuando automáticamente con los NPC %s."
 
--- GUI notes for renames
-L.generalNote = "Este es el texto que se usará de forma general"
-L.timerNote = "Este texto se usará para los temporizadores"
-L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
-L.messageCastOverNote = "Este texto se utilizará para mostrar un mensaje cuando termine el lanzamiento"
---L.messageCastStartNote = "This text will be used for showing a message when the cast starts"
-L.messageNote = "Este texto se usará para los mensajes"
-L.messageOnYouNote = "El mensaje que se muestra cuando esta habilidad te afecta"
-L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta habilidad te afecta"
-L.mythicOnlyNote = "Este texto se usará solo en Mítico"
-L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
---L.debuffFailureNote = "This debuff will apply to you if you fail"
---L.preDebuffNote = "This is the pre-debuff, before the main debuff applies to you"
---L.mainDebuffNote = "This is the main debuff that applies to you"
+-- GUI notes
 L.intermissionOnly = "Solo en Intermedio" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
 L.stage1Only = "Solo Fase 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
 L.stage2Only = "Solo Fase 2"
 L.stage3Only = "Solo Fase 3"
 
+-- GUI notes for renames
+L.generalNote = "Este es el texto que se usará de forma general"
+L.timerNote = "Este texto se usará para los temporizadores"
+L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
+L.messageCastOverNote = "Este texto se utilizará para mostrar un mensaje cuando termine el lanzamiento"
+L.messageCastStartNote = "Este texto se usará para mostrar un mensaje cuando el lanzamiento comience"
+L.messageBeforeCastStartNote = "Este texto se usará para mostrar un mensaje cuando el lanzamiento termine"
+L.messageNote = "Este texto se usará para los mensajes"
+L.messageOnYouNote = "El mensaje que se muestra cuando esta habilidad te afecta"
+L.messageSpecificHealth = "El mensaje se muestra cuando el jefe esté en %d%% de vida"
+L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta habilidad te afecta"
+L.mythicOnlyNote = "Este texto se usará solo en Mítico"
+L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades"
+
+-- GUI notes for debuffs
+L.debuffFailureNote = "Se te aplicará este debufo si fallas"
+L.debuffFailureMoveFromExplosionNote = "Se te aplicará este debufo si fallas en moverte de la explosión"
+--L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.preDebuffNote = "Este es el bufo previo al bufo principal que se te aplicará"
+L.mainDebuffNote = "Este es el bufo principal que se te aplicará"
+L.postDebuffNote = "Este debufo se te aplicará luego de que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "Este debufo se te aplicará cuando te pares en alguna zona peligrosa" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "Este debufo es un efecto de daño por tiempo cuando el jefe lance |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffPossibleAfterCastNote = "Este debufo podra aplicarse a ti luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+L.debuffTankAfterCastNote = "Este debufo se le aplicara al tanque luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "Este debufo se te apicara si caminas hacia |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+--L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+L.debuffAddsCast = "Este bufo te lo aplicará |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
+
 -- Common ability name replacements
-L.absorb = "Absorción" -- Used for shield-like abilities that absorb damage or healing
-L.heal_absorb = "Absorción de curación" -- Used for shield-like abilities that absorb healing only
-L.heal_absorbs = "Absorciones de curación" -- Plural of L.heal_absorb
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.lasers = "Láseres" -- Plural of L.lasers
 L.beam = "Rayo" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
@@ -227,12 +244,12 @@ L.beams = "Rayos" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Deflagración" -- When the explosion from a bomb-like ability will occur
+L.explosions = "Deflagraciones" -- Plural of L.explosion
 L.knockback = "Empujón" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
---L.knockbacks = "Knockbacks" -- Plural of L.knockback
+L.knockbacks = "Empujones" -- Plural of L.knockback
 L.pushback = "Desplazamiento" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Trampas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteorito" -- This one will probably only ever be used for actual meteors
-L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Teletransporte" -- A boss/add/etc teleported somewhere
 L.breath = "Aliento" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
 L.roar = "Rugido" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
@@ -256,7 +273,6 @@ L.spirit = "Espíritu" -- Sometimes a boss will summon spirits, similar to ghost
 L.spirits = "Espíritus" -- Plural of L.spirit
 L.tornado = "Tornado" -- 'A tornado is a violently rotating column of air that is in contact with both the surface of the Earth and a cloud' - Wikipedia
 L.tornadoes = "Tornados" -- Plural of L.tornado
-L.frontal_cone = "Cono frontal" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
 L.mark = "Marca" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Marcas" -- Plural of L.marks
 L.mind_control = "Control mental" -- Any kind of Mind Control ability, where a player loses control of their character
@@ -270,34 +286,54 @@ L.arrows = "Flechas" -- Plural of L.arrow
 L.ball = "Pelota" -- A ball, like a football, basketball, etc
 L.balls = "Pelotas" -- Plural of L.ball
 L.blind = "Ceguera" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
+L.bouncing_ball = "Pelota rebotando" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
+L.bouncing_balls = "Pelotas rebotando" -- Plural of L.bouncing_ball
 L.chakram = "Chakram" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
 L.dodge = "Esquivar" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Enfurecer" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Miedo" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Fijados" -- Plural of L.fixate
+L.frontal = "Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
+L.frontal_cone = "Cono frontal" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
+L.grip = "Agarre" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+L.grips = "Agarres" -- Plural of L.grip
 L.group_damage = "Daño de grupo" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Drenaje de salud" -- Any ability that drains health from the player
 L.madness = "Locura" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
+L.miasma = "Miasma" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
+L.missile = "Misil" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
+L.missiles = "Misiles" -- Plural of L.missile
 L.parasite = "Parásito" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "Parásitos" -- Plural of L.parasite
 L.pull_in = "Atraer" -- An ability that pulls you in towards the boss against your will
-L.quills = "Plumas" -- Short for any ability with the name "Quills" in it e.g. "Searing Quills" (159382) or "Infused Quills" (1242260)
+L.quills = "Péndolas" -- Short for any ability with the name "Quills" in it e.g. "Searing Quills" (159382) or "Infused Quills" (1242260)
 L.raid_damage = "Daño de banda" -- Any ability that causes damage to every player in the raid
+L.silence = "Silencio" -- Any ability that silences a player, preventing their spells being cast
 L.smash = "Machaque" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "Soak" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
 L.soaks = "Soaks" -- Plural of L.soak
 L.spike = "Púa" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Púas" -- Plural of L.spike
 L.spread = "Separarse" -- An ability that forces you to spread out away from other players, or you might damage them
+L.stomp = "Pisotón" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Tentáculo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentáculos" -- Plural of L.tentacle
 L.waves = "Olas" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "Cría" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Crías" -- Plural of L.whelp
 
+-- Absorb / Shield related spell renames
+L.absorb = "Absorción" -- Used for shield-like abilities that absorb damage or healing
+L.heal_absorb = "Absorción de curación" -- Used for shield-like abilities that absorb healing only
+L.heal_absorbs = "Absorciones de curación" -- Plural of L.heal_absorb
+L.break_shield = "Romper Escudo" -- When you need to do something to break an absorb shield on the boss.
+L.break_shields = "Romper Escudos" -- Plural of L.break_shield
+L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+
 -- Debuff-related spell renames
-L.debuffs = "Debufo"
+L.debuff = "Debufo"
+L.debuffs = "Debufos" -- Plural of L.debuff
 L.fire_debuffs = "Debufo de fuego"
 
 -- Dispel-related spell renames
@@ -306,9 +342,14 @@ L.curses = "Maldiciones" -- Plural of L.curse
 L.disease = "Enfermedad" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.dispel = "Disipación" -- General term for any debuff that is dispellable
 L.dispels = "Disipaciones" -- Plural of L.dispel
+L.dispel_boss = "Disipar Jefe" -- When the boss gains a buff (magic or enrage) that you need to dispel
 L.poison = "Veneno" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
---L.bleed = "Bleed" -- Any bleed-type debuff
---L.bleeds = "Bleeds" -- Plural of L.bleed
+L.bleed = "Sangrado" -- Any bleed-type debuff
+L.bleeds = "Sangrados" -- Plural of L.bleed
+
+-- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
+L.clear_bombs = "Limpiar Bombas"
+L.clear_pools = "Limpiar Piscinas"
 
 -- Interrupt-related spell renames
 L.interrupts = "Interrumpir" -- General term used when a player needs to interrupt a spell being cast

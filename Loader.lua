@@ -12,14 +12,14 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 415
+local BIGWIGS_VERSION = 416
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 48},
-	["BigWigs_Classic"] = {12, 0, 16},
-	["BigWigs_BurningCrusade"] = {12, 0, 12},
-	["BigWigs_WrathOfTheLichKing"] = {12, 0, 7},
+	["LittleWigs"] = {12, 0, 52},
+	["BigWigs_Classic"] = {12, 0, 17},
+	["BigWigs_BurningCrusade"] = {12, 0, 14},
+	["BigWigs_WrathOfTheLichKing"] = {12, 0, 8},
 	["BigWigs_Cataclysm"] = {12, 0, 3},
-	["BigWigs_MistsOfPandaria"] = {12, 0, 5},
+	["BigWigs_MistsOfPandaria"] = {12, 0, 7},
 	["BigWigs_WarlordsOfDraenor"] = {12, 0, 1},
 	["BigWigs_Legion"] = {12, 0, 1},
 	["BigWigs_BattleForAzeroth"] = {12, 0, 3},
@@ -1142,12 +1142,12 @@ do
 end
 
 -- XXX 12.0.5
---if public.isRetail and not BW_FEAT_RENAMES then
---	BW_FEAT_RENAMES = true
---	if BigWigs3DB then -- No popup for fresh users
---		Popup(L.tempRenameFeat, true, 180)
---	end
---end
+if public.isRetail and not BW_FEAT_RENAMES then
+	BW_FEAT_RENAMES = true
+	if BigWigs3DB then -- No popup for fresh users
+		Popup(L.tempRenameFeat, true, 180)
+	end
+end
 
 -- XXX 12.0.0
 --if (public.isRetail or public.isMists or public.isWrath) and not BW_FEAT_SHARE2 then
@@ -1505,7 +1505,7 @@ do
 	end
 
 	local locales = {
-		--ruRU = "Russian (ruRU)",
+		ruRU = "Russian (ruRU)",
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
 		itIT = "Italian (itIT)",
@@ -1641,12 +1641,12 @@ end
 --
 
 do
-	local DBMdotRevision = "20260514074436" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "12.0.46" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20260513000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20260527072144" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.0.52" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20260526000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
-	local PForceDisable = 24
+	local PForceDisable = 26
 
 	local timer = nil
 	local function sendDBMMsg()
