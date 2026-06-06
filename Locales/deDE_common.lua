@@ -301,6 +301,7 @@ L.grips = "Griffe" -- Plural of L.grip
 L.group_damage = "Gruppenschaden" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Gesundheit entziehen" -- Any ability that drains health from the player
 L.madness = "Wahn" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
+L.miasma = "Miasma" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
 L.missile = "Geschoss" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
 L.missiles = "Geschosse" -- Plural of L.missile
 L.parasite = "Parasit" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc

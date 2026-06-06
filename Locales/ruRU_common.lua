@@ -301,6 +301,7 @@ L.frontal_cone = "Фронтал клив" -- Usually a bad Area-of-Effect abili
 L.group_damage = "Пати Урон" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Потеря здоровья" -- Any ability that drains health from the player
 L.madness = "Безумие" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
+L.miasma = "Миазмы" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
 --L.missile = "Missile" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
 --L.missiles = "Missiles" -- Plural of L.missile
 L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc

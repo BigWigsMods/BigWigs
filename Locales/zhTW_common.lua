@@ -301,6 +301,7 @@ L.frontal_cone = "正面技能" -- 正面衝擊 Usually a bad Area-of-Effect abi
 L.group_damage = "團隊傷害" -- Any ability that causes damage to every player in the 5 player group 五人本中每個人都會受到的傷害，那還是團隊傷害啊？
 L.health_drain = "吸血" -- Any ability that drains health from the player 吸血類的技能，就是術士的吸取生命那種直接吸血的法術
 L.madness = "瘋狂" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
+L.miasma = "瘴氣" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
 --L.missile = "Missile" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
 --L.missiles = "Missiles" -- Plural of L.missile
 L.parasite = "寄生" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc

@@ -301,6 +301,7 @@ L.grips = "당기기" -- Plural of L.grip
 L.group_damage = "파티 피해" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "생명력 흡수" -- Any ability that drains health from the player
 L.madness = "광기" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
+L.miasma = "독기" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
 L.missile = "탄막" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
 L.missiles = "탄막" -- Plural of L.missile
 L.parasite = "기생충" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
