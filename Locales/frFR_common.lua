@@ -225,6 +225,7 @@ L.otherDifficultiesNote = "Ce texte sera utilisé pour toutes les autres difficu
 -- GUI notes for debuffs
 L.debuffFailureNote = "Cet affaiblissement vous sera appliqué si vous échouez"
 L.debuffFailureMoveFromExplosionNote = "Cet affaiblissement vous sera appliqué si vous ne vous écartez pas de l'explosion"
+--L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.preDebuffNote = "Ceci est le pré-affaiblissement, avant que le principal ne s'applique à vous"
 L.mainDebuffNote = "Ceci est l'affaiblissement principal qui s'applique à vous"
 L.postDebuffNote = "Cet affaiblissement vous sera appliqué après que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
@@ -233,6 +234,7 @@ L.debuffDotAfterCastNote = "Cet affaiblissement est un DoT qui prend effet aprè
 L.debuffPossibleAfterCastNote = "Cet affaiblissement pourrait s'appliquer à vous après que le boss incante |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
 L.debuffTankAfterCastNote = "Cet affaiblissement va s'appliquer sur le tank après que le boss incante |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "Cet affaiblissement vous sera appliqué si vous marchez dans le sort |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+--L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "Cet affaiblissement vous sera appliqué par |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
