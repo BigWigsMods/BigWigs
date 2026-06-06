@@ -445,7 +445,7 @@ do
 		[2912] = mn, -- The Voidspire
 		[2913] = mn, -- March on Quel'Danas
 		[2939] = mn, -- The Dreamrift
-		[1592] = mn, -- Sporefall
+		[1592] = public.isNext and mn or nil, -- Sporefall
 
 
 		--[[ LittleWigs: Classic ]]--
