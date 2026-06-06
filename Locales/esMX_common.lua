@@ -224,6 +224,7 @@ L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades
 -- GUI notes for debuffs
 L.debuffFailureNote = "Se te aplicará este debufo si fallas"
 L.debuffFailureMoveFromExplosionNote = "Se te aplicará este debufo si fallas en moverte de la explosión"
+--L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.preDebuffNote = "Este es el bufo previo al bufo principal que se te aplicará"
 L.mainDebuffNote = "Este es el bufo principal que se te aplicará"
 L.postDebuffNote = "Este debufo se te aplicará luego de que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
@@ -232,6 +233,7 @@ L.debuffDotAfterCastNote = "Este debufo es un efecto de daño por tiempo cuando 
 L.debuffPossibleAfterCastNote = "Este debufo podra aplicarse a ti luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
 L.debuffTankAfterCastNote = "Este debufo se le aplicara al tanque luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "Este debufo se te apicara si caminas hacia |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+--L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "Este bufo te lo aplicará |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
