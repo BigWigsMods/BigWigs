@@ -224,7 +224,7 @@ L.otherDifficultiesNote = "Dieser Text wird für alle anderen Schwierigkeitsgrad
 -- GUI notes for debuffs
 L.debuffFailureNote = "Diesen Debuff erleidest Du wenn Du scheiterst"
 L.debuffFailureMoveFromExplosionNote = "Diesen Debuff erleidest Du wenn Du Dich nicht von der Explosion entfernst"
---L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.debuffFailureInterruptNote = "Diesen Debuff erleidest Du wenn Du das Wirken des Zaubers |cFFFFFFFF%s|r nicht unterbrichst" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.preDebuffNote = "Dies ist ein Vor-Debuff, bevor der Haupt-Debuff auf Dich wirkt"
 L.mainDebuffNote = "Dies ist der hauptsächliche Debuff der auf Dich wirkt"
 L.postDebuffNote = "Diesen Debuff erleidest Du nachdem |cFFFFFFFF%s|r abläuft" -- This debuff will apply to you after OTHER_DEBUFF expires
@@ -233,7 +233,7 @@ L.debuffDotAfterCastNote = "Dieser Debuff ist ein DoT nach dem Abschluss des Zau
 L.debuffPossibleAfterCastNote = "Diesen Debuff kannst Du erleiden nachdem der Boss |cFFFFFFFF%s|r gewirkt hat" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
 L.debuffTankAfterCastNote = "Diesen Debuff erleidet der Tank nachdem der Boss |cFFFFFFFF%s|r gewirkt hat" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "Diesen Debuff erleidest Du wenn Du bewusst in die |cFFFFFFFF%s|r läufst" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
---L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME_cast
+L.debuffHitByCastNote = "Diesen Debuff erleidest Du wenn Du vom |cFFFFFFFF%s|r Zauber getroffen wirst" -- This debuff will apply to you if you are hit by the the SPELL_NAME_cast
 L.debuffAddsCast = "Diesen Debuff erleidest Du von |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
