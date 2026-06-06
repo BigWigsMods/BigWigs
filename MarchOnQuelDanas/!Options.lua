@@ -2,20 +2,25 @@
 
 BigWigs:AddColors("Belo'ren, Child of Al'ar", {
 	[1241282] = "cyan",
-	[1242260] = "orange",
+	[1241292] = {"blue","red"},
+	[1241313] = "cyan",
+	[1242260] = {"blue","orange"},
 	[1242515] = "cyan",
 	[1242981] = "red",
 	[1244344] = "yellow",
+	[1246709] = "red",
 	[1260763] = "purple",
 	["stages"] = "cyan",
 })
 
 BigWigs:AddSounds("Belo'ren, Child of Al'ar", {
 	[1241282] = "info",
+	[1241313] = "long",
 	[1242515] = "long",
 	[1244344] = "alert",
+	[1246709] = "warning",
 	[1260763] = "alert",
-	["stages"] = {"info","long"},
+	["stages"] = "info",
 })
 
 BigWigs:AddColors("Midnight Falls", {
@@ -32,6 +37,7 @@ BigWigs:AddColors("Midnight Falls", {
 	[1279420] = "yellow",
 	[1282412] = "yellow",
 	[1282441] = {"blue","orange"},
+	[1282469] = "yellow",
 	[1284525] = {"blue","orange"},
 	[1284931] = "yellow",
 	[1284980] = "red",
@@ -49,8 +55,9 @@ BigWigs:AddSounds("Midnight Falls", {
 	[1267049] = "alert",
 	[1273158] = "warning",
 	[1276525] = "alert",
-	[1279420] = {"alert","info"},
+	[1279420] = "info",
 	[1282412] = "alarm",
+	[1282469] = "alert",
 	[1284525] = "alert",
 	[1284931] = "alert",
 	[1284980] = "warning",
