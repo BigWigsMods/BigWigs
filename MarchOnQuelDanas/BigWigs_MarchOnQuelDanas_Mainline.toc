@@ -31,8 +31,6 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-InstanceId: 2913
 
-Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
-
 Beloren.lua
 MidnightFalls.lua
 

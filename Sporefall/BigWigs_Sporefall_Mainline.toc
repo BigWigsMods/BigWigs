@@ -31,8 +31,6 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-InstanceId: 1592
 
-#Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
-
 Rotmire.lua
 
 !Options.lua
