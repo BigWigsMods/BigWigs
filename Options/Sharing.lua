@@ -432,7 +432,7 @@ local importedTableData = nil
 -- Functions
 --
 
-function getInstanceLabel(id)
+local function getInstanceLabel(id)
     if id > 0 then
         local raidName = GetRealZoneText(id)
         if raidName and raidName ~= "" then
@@ -584,43 +584,41 @@ do
 				if modules then
 					exportOptions.exportTable[k] = {}
 					local instanceSettings = exportOptions.exportTable[k]
-					for _, module in pairs(modules) do
-						for i, module in ipairs(modules) do
-							if module.SetupOptions then module:SetupOptions() end
+					for _, module in ipairs(modules) do
+						if module.SetupOptions then module:SetupOptions() end
 
-							-- Flags
-							if module.db and module.db.profile and module.db.profile.toggles then
-								instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
-								instanceSettings[module.name].flags = module.db.profile.toggles
-							else
-								error(("Module %s does not have a db.profile table."):format(module.name))
-							end
+						-- Flags
+						if module.db and module.db.profile and module.db.profile.toggles then
+							instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+							instanceSettings[module.name].flags = module.db.profile.toggles
+						else
+							error(("Module %s does not have a db.profile table."):format(module.name))
+						end
 
-							-- Renames
-							if module.db and module.db.profile and module.db.profile.renames then
-								instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
-								instanceSettings[module.name].renames = module.db.profile.renames
-							end
+						-- Renames
+						if module.db and module.db.profile and module.db.profile.renames then
+							instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+							instanceSettings[module.name].renames = module.db.profile.renames
+						end
 
-							-- Colors
-							for colorSettingName, savedModules in pairs(colorModule.db.profile) do
-								for colorSettingsModuleName, settings in pairs(savedModules) do
-									if colorSettingsModuleName == module.name then
-										instanceSettings[module.name].colors = CopyTable(instanceSettings[module.name].colors or {})
-										instanceSettings[module.name].colors[colorSettingName] = settings
-										break
-									end
+						-- Colors
+						for colorSettingName, savedModules in pairs(colorModule.db.profile) do
+							for colorSettingsModuleName, settings in pairs(savedModules) do
+								if colorSettingsModuleName == module.name then
+									instanceSettings[module.name].colors = CopyTable(instanceSettings[module.name].colors or {})
+									instanceSettings[module.name].colors[colorSettingName] = settings
+									break
 								end
 							end
+						end
 
-							-- Sounds
-							for soundSettingName, savedSoundModules in pairs(soundModule.db.profile) do
-								for soundSettingsModuleName, settings in pairs(savedSoundModules) do
-									if soundSettingsModuleName == module.name then
-										instanceSettings[module.name].sounds = CopyTable(instanceSettings[module.name].sounds or {})
-										instanceSettings[module.name].sounds[soundSettingName] = settings
-										break
-									end
+						-- Sounds
+						for soundSettingName, savedSoundModules in pairs(soundModule.db.profile) do
+							for soundSettingsModuleName, settings in pairs(savedSoundModules) do
+								if soundSettingsModuleName == module.name then
+									instanceSettings[module.name].sounds = CopyTable(instanceSettings[module.name].sounds or {})
+									instanceSettings[module.name].sounds[soundSettingName] = settings
+									break
 								end
 							end
 						end
