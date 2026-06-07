@@ -303,8 +303,9 @@ do
 			order = 100,
 			args = {
 				profile = adbo:GetOptionsTable(loader.db),
-				export = addonTable.sharingOptions.exportSection,
 				import = addonTable.sharingOptions.importSection,
+				exportCore = addonTable.sharingOptions.exportCoreSection,
+				exportBosses = addonTable.sharingOptions.exportBossSection,
 			},
 		}
 		aceConfigTableMainBigWigsTab.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.name
@@ -1864,7 +1865,7 @@ do
 			elseif value == "littlewigs" then
 				configFrame:SetTitle("LittleWigs")
 				configFrame:SetStatusText(" "..loader.littlewigsVersionString)
-				defaultHeader = loader.currentExpansion.littlewigsDefault
+				defaultHeader = loader.currentExpansion.littleWigsDefault
 				-- add an entry for each expansion
 				for i = 1, #expansionHeader do
 					local addonName = "LittleWigs_" .. expansionHeader[i]

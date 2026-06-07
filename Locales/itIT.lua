@@ -236,10 +236,11 @@ L.dispeller = "|cFFFF0000Messaggio solo per Dissolutori Magici.|r "
 
 -- Sharing.lua
 L.import = "Importa"
-L.import_info = "Dopo che immetti una stringa puoi selezione quali impostazioni vuoi importate. \n Se impostazioni non sono disponibili nella stringa di importazione non saranno selezionabili.\n\n|cffff4411 Quest Importazione impatterà solo le impostazioni generali e non impatta le impostazioni specifiche a ogni boss.|r"
+L.import_info = "Dopo che immetti una stringa puoi selezione quali impostazioni vuoi importate. \n Se impostazioni non sono disponibili nella stringa di importazione non saranno selezionabili."
 L.import_info_active = "Choose what parts you would like to import and then click the import button."
 L.import_info_none = "|cFFFF0000 La stringa di importo non è compatibile o non è aggiornata.|r"
 L.export = "Esporta"
+--L.export_core = "Export Core"
 L.export_info = "Seleziona quali impostazioni vorresti esportare e condividere con gli altri.\n\n|cffff4411 Puoi solo condividere impostazioni generali e quelle non hanno nessun effetto sulle impostazioni specifiche ai boss.|r"
 L.export_string = "Esporta Stringa"
 L.export_string_desc = "Copia questa stringa BigWigs se vuoi condividere le tue impostazioni."
@@ -297,6 +298,11 @@ L.battleres_settings_export_desc = "esportare tutte le impostazzioni Battle Res.
 --L.imported_combattimer_settings = "Combat Timer Settings"
 --L.combattimer_settings_import_desc = "Import all Combat Timer settings."
 --L.combattimer_settings_export_desc = "Export all Combat Timer settings."
+--L.export_bosses = "Export Bosses"
+--L.export_bosses_info = "Select for which content you would like to export the boss configurations for."
+--L.raids_section = "Raids"
+--L.expansion_dungeons_section = "Expansion Dungeons"
+--L.seasonal_dungeons_section = "Seasonal Dungeons"
 
 -- InstanceSharing.lua
 --L.sharing_window_title = "Share Boss Settings"

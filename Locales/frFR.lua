@@ -236,10 +236,11 @@ L.spellNameResetDesc = "Cette technique a un nom personnalisé par défaut, cliq
 
 -- Sharing.lua
 L.import = "Importer"
-L.import_info = "Après avoir entré une chaîne, vous pouvez sélectionner quels paramètres vous souhaitez importer.\nSi les paramètres ne sont pas disponibles dans la chaîne d'import, ils ne seront pas sélectionnables.\n\n|cffff4411Cet import n'affectera que les paramètres généraux et non les paramètres spécifiques à chaque boss.|r"
+L.import_info = "Après avoir entré une chaîne, vous pouvez sélectionner quels paramètres vous souhaitez importer.\nSi les paramètres ne sont pas disponibles dans la chaîne d'import, ils ne seront pas sélectionnables."
 L.import_info_active = "Choisissez quelles parties vous souhaitez importer, puis cliquez sur le bouton Importer."
 L.import_info_none = "|cFFFF0000La chaîne d'import est incompatible ou périmée.|r"
 L.export = "Exporter"
+--L.export_core = "Export Core"
 L.export_info = "Sélectionnez quels paramètres vous souhaitez exporter et partager avec les autres.\n\n|cffff4411Vous ne pouvez partager que les paramètres généraux et ces derniers n'ont aucun effet sur les paramètres spécifiques de boss.|r"
 L.export_string = "Chaîne d'export"
 L.export_string_desc = "Copie cette chaîne de caractères BigWigs si vous voulez partager vos paramètres."
@@ -297,6 +298,11 @@ L.privateAuras_settings_export_desc = "Exporte tous les paramètres des Auras Pr
 L.imported_combattimer_settings = "Paramètres de chrono de combat"
 L.combattimer_settings_import_desc = "Importe tous les paramètres du chrono de combat."
 L.combattimer_settings_export_desc = "Exporte tous les paramètres du chrono de combat."
+--L.export_bosses = "Export Bosses"
+--L.export_bosses_info = "Select for which content you would like to export the boss configurations for."
+--L.raids_section = "Raids"
+--L.expansion_dungeons_section = "Expansion Dungeons"
+--L.seasonal_dungeons_section = "Seasonal Dungeons"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Partage des paramètres de Boss"

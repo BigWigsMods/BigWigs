@@ -236,10 +236,11 @@ L.spellNameResetDesc = "Esta habilidade tem um nome customizado por padrão, cli
 
 -- Sharing.lua
 L.import = "Importar"
-L.import_info = "Depois de adicionar o código de importação, você pode selecionar quais configurações você gostaria de importar.\nSe as configurações não estiverem disponíveis no código importado, elas não poderão ser selecionadas.\n\n|cffff4411Essa importação afetará somente as configurações específicas do chefe.|r"
+L.import_info = "Depois de adicionar o código de importação, você pode selecionar quais configurações você gostaria de importar.\nSe as configurações não estiverem disponíveis no código importado, elas não poderão ser selecionadas."
 L.import_info_active = "Escolha quais partes você gostaria de importar e clique no botão importar."
 L.import_info_none = "|cFFFF0000O código de importação está incompatível ou desatualizado.|r"
 L.export = "Exportar"
+--L.export_core = "Export Core"
 L.export_info = "Selecione quais configurações você gostaria de exportar e compartilhar com os outros.\n\n|cffff4411Você só pode compartilhar configurações gerais e elas não afetam as configurações específicas de chefes.|r"
 L.export_string = "Exportar Código"
 L.export_string_desc = "Copie o código BigWigs se você quiser compartilhar suas configurações."
@@ -297,6 +298,11 @@ L.privateAuras_settings_export_desc = "Exportar todas as configurações de Aura
 L.imported_combattimer_settings = "Configurações do Cronômetro de Combate"
 L.combattimer_settings_import_desc = "Importar todas as configurações do Cronômetro de Combate."
 L.combattimer_settings_export_desc = "Exportar todas as configurações do Cronômetro de Combate."
+--L.export_bosses = "Export Bosses"
+--L.export_bosses_info = "Select for which content you would like to export the boss configurations for."
+--L.raids_section = "Raids"
+--L.expansion_dungeons_section = "Expansion Dungeons"
+--L.seasonal_dungeons_section = "Seasonal Dungeons"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartilhar Configurações do Chefe"

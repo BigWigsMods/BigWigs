@@ -236,10 +236,11 @@ L.spellNameResetDesc = "Esta habilidad tiene un nombre personalizado por defecto
 
 -- Sharing.lua
 L.import = "Importar"
-L.import_info = "Después de ingresar la cadena de importación, puedes seleccionar qué opciones quieres importar.\nSi no hay opciones disponibles en la cadena de importación estas no podrán ser seleccionadas.\n\n|cffff4411Este importe solo afectará las opciones generales y no afecta ninguna opción específica de jefes.|r"
+L.import_info = "Después de ingresar la cadena de importación, puedes seleccionar qué opciones quieres importar.\nSi no hay opciones disponibles en la cadena de importación estas no podrán ser seleccionadas."
 L.import_info_active = "Elige qué partes te gustaría importar y luego presiona el botón de importación."
 L.import_info_none = "|cFFFF0000La cadena de importación está incorrecta o vencida (fuera de fecha).|r"
 L.export = "Exportar"
+--L.export_core = "Export Core"
 L.export_info = "Selecciona qué opciones te gustaría exportar y compartir con los demás.\n\n|cffff4411Solo puedes compartir opciones generales, que no afectarán opciones de jefes.|r"
 L.export_string = "Cadena de exportación"
 L.export_string_desc = "Copia esta cadena de exportación de BigWigs si quieres compartir tus opciones."
@@ -297,6 +298,11 @@ L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras p
 L.imported_combattimer_settings = "Configuración de Temporizador de combate"
 L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate"
 L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate"
+--L.export_bosses = "Export Bosses"
+--L.export_bosses_info = "Select for which content you would like to export the boss configurations for."
+--L.raids_section = "Raids"
+--L.expansion_dungeons_section = "Expansion Dungeons"
+--L.seasonal_dungeons_section = "Seasonal Dungeons"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartir configuración del jefe"

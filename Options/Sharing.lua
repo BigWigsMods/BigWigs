@@ -56,6 +56,7 @@ end
 local L = BigWigsAPI:GetLocale("BigWigs")
 local BigWigs = BigWigs
 local sharingVersion = "BW2"
+local bossSharingVersion = "BWB1"
 
 -- Position Args
 local barPositionsToExport = {
@@ -403,6 +404,7 @@ local combatTimerSettingsToExport = {
 }
 
 -- Default Options
+local encounterExportOptionsSettings = {}
 local sharingExportOptionsSettings = {
 	exportBarPositions = true,
 	exportMessagePositions = true,
@@ -429,6 +431,33 @@ local importedTableData = nil
 -------------------------------------------------------------------------------
 -- Functions
 --
+
+function getInstanceLabel(id)
+    if id > 0 then
+        local raidName = GetRealZoneText(id)
+        if raidName and raidName ~= "" then
+            return raidName
+        end
+    else -- MapId
+        local tbl = BigWigsLoader.GetMapInfo(-id)
+        if tbl then
+            return tbl.name
+        end
+    end
+    return tostring(id)
+end
+
+local function CopyTable(tbl)
+	local copy = {}
+	for key, value in next, tbl do
+		if type(value) == "table" then
+			copy[key] = CopyTable(value)
+		else
+			copy[key] = value
+		end
+	end
+	return copy
+end
 
 local function exportProfileColorSettings(argsToExport)
 	local export = {}
@@ -537,6 +566,78 @@ do
 	addonTable.GetExportString = function(requestAll) return GetExportString(requestAll) end
 end
 
+do
+	local function GetEncounterExportString(requestAll)
+		local exportOptions = {
+			version = bossSharingVersion,
+			bossExport = true,
+			exportTable = {}
+		}
+
+		local colorModule = BigWigs:GetPlugin("Colors")
+		local soundModule = BigWigs:GetPlugin("Sounds")
+
+		for k, v in pairs(encounterExportOptionsSettings) do
+			if v == true then
+				BigWigsLoader:LoadZone(k)
+				local modules = BigWigs:GetBossModulesForInstanceID(k)
+				if modules then
+					exportOptions.exportTable[k] = {}
+					local instanceSettings = exportOptions.exportTable[k]
+					for _, module in pairs(modules) do
+						for i, module in ipairs(modules) do
+							if module.SetupOptions then module:SetupOptions() end
+
+							-- Flags
+							if module.db and module.db.profile and module.db.profile.toggles then
+								instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+								instanceSettings[module.name].flags = module.db.profile.toggles
+							else
+								error(("Module %s does not have a db.profile table."):format(module.name))
+							end
+
+							-- Renames
+							if module.db and module.db.profile and module.db.profile.renames then
+								instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+								instanceSettings[module.name].renames = module.db.profile.renames
+							end
+
+							-- Colors
+							for colorSettingName, savedModules in pairs(colorModule.db.profile) do
+								for colorSettingsModuleName, settings in pairs(savedModules) do
+									if colorSettingsModuleName == module.name then
+										instanceSettings[module.name].colors = CopyTable(instanceSettings[module.name].colors or {})
+										instanceSettings[module.name].colors[colorSettingName] = settings
+										break
+									end
+								end
+							end
+
+							-- Sounds
+							for soundSettingName, savedSoundModules in pairs(soundModule.db.profile) do
+								for soundSettingsModuleName, settings in pairs(savedSoundModules) do
+									if soundSettingsModuleName == module.name then
+										instanceSettings[module.name].sounds = CopyTable(instanceSettings[module.name].sounds or {})
+										instanceSettings[module.name].sounds[soundSettingName] = settings
+										break
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+
+		local serialized = C_EncodingUtil.SerializeCBOR(exportOptions)
+		local compressed = C_EncodingUtil.CompressString(serialized, 0) -- Enum.CompressionMethod.Deflate = 0
+		local encoded = C_EncodingUtil.EncodeBase64(compressed)
+		return bossSharingVersion..":"..encoded
+	end
+	local _, addonTable = ...
+	addonTable.GetEncounterExportString = function(requestAll) return GetEncounterExportString(requestAll) end
+end
+
 local function isImportStringAvailable()
 	return not not importedTableData
 end
@@ -546,6 +647,10 @@ local function IsOptionInString(key)
 		return true
 	end
 	return false
+end
+
+local function IsBossImport()
+	return importStringOptions.bossExport
 end
 
 local function IsOptionGroupAvailable(group)
@@ -579,11 +684,63 @@ local function IsOptionGroupAvailable(group)
 end
 
 do
+	local _, addonTable = ...
+
+	local function setupBossOptions(exportOptions)
+		sharingImportOptionsSettings = {}
+
+		local instances = {}
+		for instanceID, modules in pairs(exportOptions.exportTable) do
+			instances[instanceID] = getInstanceLabel(instanceID)
+		end
+
+		local options = {}
+		for k, v in pairs(BigWigsLoader.zoneTbl) do
+			if v == BigWigsLoader.currentExpansion.name and instances[k] then
+				options.raids = options.raids or {
+					type = "multiselect",
+					name = L.raids_section,
+					values = {},
+					order = 10,
+				}
+				options.raids.values[k] = instances[k]
+			end
+		end
+
+		for k, v in pairs(BigWigsLoader.currentExpansion.currentSeason) do
+			if instances[k] then
+				options.seasonaldungeons = options.seasonaldungeons or {
+					type = "multiselect",
+					name = L.seasonal_dungeons_section,
+					values = {},
+					order = 20,
+				}
+				options.seasonaldungeons.values[k] = instances[k]
+			end
+		end
+
+		for k, v in pairs(BigWigsLoader.zoneTbl) do
+			if v == BigWigsLoader.currentExpansion.littleWigsName and instances[k] then
+				options.expansiondungeons = options.expansiondungeons or {
+					type = "multiselect",
+					name = L.expansion_dungeons_section,
+					values = {},
+					order = 30,
+				}
+				options.expansiondungeons.values[k] = instances[k]
+			end
+		end
+
+		addonTable.sharingOptions.importSection.args.bossSettings.args = options
+	end
 
 	local function PreProcess(data)
 		importedTableData = data
 		for k, _ in pairs(data) do
 			importStringOptions[k] = true
+		end
+		if data.bossExport then
+			setupBossOptions(data)
 		end
 		return true
 	end
@@ -600,14 +757,16 @@ do
 		importedTableData = nil
 
 		local versionPlain, importData = string:match("^(%w+):(.+)$")
-		if versionPlain ~= sharingVersion then return end
+		if (versionPlain ~= sharingVersion and versionPlain ~= bossSharingVersion) then return end
 		local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
 		if not decodedForPrint then return end
 		local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
 		if not decompressed then return end
 		local data = C_EncodingUtil.DeserializeCBOR(decompressed)
 		if not data then return end
-		if data.version ~= sharingVersion then return end -- encoded version does not match expected version
+		local expectedVersion = data.bossExport and bossSharingVersion or sharingVersion
+		if versionPlain ~= expectedVersion then return end -- version prefix does not match expected version
+		if data.version ~= expectedVersion then return end -- encoded version does not match expected version
 		local importSucceeded = PreProcess(data)
 		return importSucceeded
 	end
@@ -616,7 +775,7 @@ end
 
 do
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
-	local function SaveImportedTable(tableData)
+	local function SaveImportedGeneralSettings(tableData)
 		local data = tableData
 		local chatMessages = {}
 		local barPlugin = BigWigs:GetPlugin("Bars")
@@ -701,6 +860,106 @@ do
 		BigWigs:Print(importMessage)
 	end
 
+	local function SaveImportedBossSettings(tableData)
+		local data = tableData
+		local chatMessages = {}
+		local soundModule = BigWigs:GetPlugin("Sounds", true)
+		local colorModule = BigWigs:GetPlugin("Colors", true)
+
+		local function ImportSounds(soundSettings, moduleName)
+			if not soundModule then return end
+
+			local sDB = soundModule.db.profile
+			for soundSettingName, _ in pairs(sDB) do
+				if soundSettingName ~= "privateaura" then -- private auras are handled separately inside ImportPrivateAuras
+					if soundSettings and soundSettings[soundSettingName] then
+						sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
+					else -- wipe to set default
+						sDB[soundSettingName][moduleName] = nil
+					end
+				end
+			end
+		end
+
+		local function ImportPrivateAuras(privateAuraSettings, moduleName)
+			if not soundModule or not privateAuraSettings then return end
+			local sDB = soundModule.db.profile["privateaura"]
+			sDB[moduleName] = CopyTable(privateAuraSettings)
+		end
+
+		local function ImportFlags(flagSettings, module)
+			if module then
+				if module.SetupOptions then module:SetupOptions() end
+				if module.db and module.db.profile and module.db.profile.toggles then
+					for key, value in pairs(module.db.profile.toggles) do
+						if flagSettings and flagSettings[key] then
+							module.db.profile.toggles[key] = flagSettings[key]
+						else -- wipe to set default
+							module.db.profile.toggles[key] = nil
+						end
+					end
+				end
+			end
+		end
+
+		local function ImportRenames(renameSettings, module)
+			if module then
+				if module.SetupOptions then module:SetupOptions() end
+				if module.db and module.db.profile and module.db.profile.renames then
+					for renamesKey, renamesTable in next, renameSettings do
+						if module:IsRenameAvailable(renamesKey) and type(renamesTable) == "table" and #renamesTable == module:GetRenameCount(renamesKey) then
+							for renameCount = 1, module:GetRenameCount(renamesKey) do
+								local renameType = type(renamesTable[renameCount])
+								if renameType == "string" or renameType == "number" then
+									module.db.profile.renames[renamesKey][renameCount] = renamesTable[renameCount]
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+
+		local function ImportColors(colorSettings, moduleName)
+			if not colorModule then return end
+			local cDB = colorModule.db.profile
+			for colorSettingName in next, cDB do
+				for k in next, cDB[colorSettingName][moduleName] do
+					if colorSettings and colorSettings[colorSettingName] and colorSettings[colorSettingName][k] then
+						cDB[colorSettingName][moduleName][k] = CopyTable(colorSettings[colorSettingName][k])
+					else -- wipe to set default
+						cDB[colorSettingName][moduleName][k] = nil
+					end
+				end
+			end
+		end
+
+		for instanceID, modules in pairs(data.exportTable) do
+			if sharingImportOptionsSettings[instanceID] then
+				 BigWigsLoader:LoadZone(instanceID)
+				for moduleName, settings in pairs(modules) do
+					local module = BigWigs:GetBossModule(moduleName:sub(16))
+					ImportFlags(settings.flags, module)
+					ImportRenames(settings.renames, module)
+
+					ImportColors(settings.colors, moduleName)
+					ImportSounds(settings.sounds, moduleName)
+					ImportPrivateAuras(settings.privateAuras, moduleName)
+				end
+				table.insert(chatMessages, getInstanceLabel(instanceID))
+			end
+		end
+
+		if #chatMessages == 0 then
+			BigWigs:Print(L.no_import_message)
+			return
+		end
+
+		BigWigs:SendMessage("BigWigs_ProfileUpdate")
+		local importMessage = L.import_success:format(table.concat(chatMessages, comma))
+		BigWigs:Print(importMessage)
+	end
+
 	--- Saves the currently loaded import string to the BigWigs profile.
 	-- After importing a string with :DecodeImportString, this function
 	-- will save the data to the BigWigs profile.
@@ -710,7 +969,11 @@ do
 			return
 		end
 		-- Custom Popup to confirm import?
-		SaveImportedTable(importedTableData)
+		if IsBossImport() then
+			SaveImportedBossSettings(importedTableData)
+		else
+			SaveImportedGeneralSettings(importedTableData)
+		end
 	end
 
 	local function ImportStringFromAddOn(string)
@@ -804,7 +1067,7 @@ local sharingOptions = {
 			},
 			importInfo = {
 				type = "description",
-				name = function() return IsOptionGroupAvailable("any") and L.import_info_active or L.import_info_none end,
+				name = function() return (IsOptionGroupAvailable("any") or IsBossImport()) and L.import_info_active or L.import_info_none end,
 				order = 4.5,
 				hidden = function() return not isImportStringAvailable() and not sharingImportOptionsSettings["importString"] end,
 				width = "full",
@@ -957,6 +1220,19 @@ local sharingOptions = {
 					},
 				},
 			},
+			bossSettings = {
+				type = "group",
+				name = L.encounter_settings,
+				inline = true,
+				order = 25,
+				hidden = function() return (not isImportStringAvailable() or not IsBossImport()) end,
+
+				get = function(i, key) return sharingImportOptionsSettings[key] end,
+				set = function(i, key, value) sharingImportOptionsSettings[key] = value end,
+				args = {
+					-- Filled up with boss settings by the import field
+				},
+			},
 			acceptImportButton = {
 				type = "execute",
 				name = L.import,
@@ -985,9 +1261,9 @@ local sharingOptions = {
 			},
 		},
 	},
-	exportSection = {
+	exportCoreSection = {
 		type="group",
-		name = L.export,
+		name = L.export_core,
 		order = 10,
 		get = function(i) return sharingExportOptionsSettings[i[#i]] end,
 		set = function(i, value) sharingExportOptionsSettings[i[#i]] = value end,
@@ -1186,7 +1462,78 @@ local sharingOptions = {
 			},
 		},
 	},
+	exportBossSection = {
+		type="group",
+		name = L.export_bosses,
+		order = 20,
+		get = function(i, key) return encounterExportOptionsSettings[key] end,
+		set = function(i, key, value) encounterExportOptionsSettings[key] = value end,
+		args = {
+			exportInfo = {
+				type = "description",
+				name = L.export_bosses_info,
+				order = 1,
+				width = "full",
+			},
+			raidExport = {
+				type = "multiselect",
+				name = L.raids_section,
+				values = function ()
+					local options = {}
+					for k, v in pairs(BigWigsLoader.zoneTbl) do
+						if k > 0 then -- skip world zones
+							if v == BigWigsLoader.currentExpansion.name then
+								options[k] = getInstanceLabel(k)
+							end
+						end
+					end
+					return options
+				end,
+				order = 10,
+			},
+			seasonalDungeonsExport = {
+				type = "multiselect",
+				name = L.seasonal_dungeons_section,
+				values = function ()
+					local options = {}
+					for k, v in pairs(BigWigsLoader.currentExpansion.currentSeason) do
+						options[k] = getInstanceLabel(k)
+					end
+					return options
+				end,
+				order = 20,
+			},
+			expansionDungeonsExport = {
+				type = "multiselect",
+				name = L.expansion_dungeons_section,
+				values = function ()
+					local options = {}
+					for k, v in pairs(BigWigsLoader.zoneTbl) do
+						if v == BigWigsLoader.currentExpansion.littleWigsName then
+							options[k] = getInstanceLabel(k)
+						end
+					end
+					return options
+				end,
+				order = 30,
+			},
+			exportString = {
+				type = "input",
+				multiline = 5,
+				name = L.export_string,
+				desc = L.export_string_desc,
+				order = 100,
+				width = "full",
+				get = function()
+					return addonTable.GetEncounterExportString()
+				end,
+				set = function() end,
+				control = "NoAcceptMultiline",
+			},
+		},
+	}
 }
 
 addonTable.sharingOptions = sharingOptions
 addonTable.sharingVersion = sharingVersion
+addonTable.bossSharingVersion = bossSharingVersion
