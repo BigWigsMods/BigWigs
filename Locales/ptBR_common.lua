@@ -142,6 +142,7 @@ L.affixes = "Afixos" -- Seasonal affixes for raids and mythic+ dungeons
 --L.reset_casts = "Reset after every %d casts." -- Reset after every 3 casts.
 --L.reset_stages = "Only reset on stage change."
 --L.reset_casts_and_stages = "Reset after every %d casts and every stage change."
+--L.reset_never = "Never reset"
 
 -- Common raid marking locale
 L.marker = "Marcador %s"
