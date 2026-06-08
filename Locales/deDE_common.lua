@@ -137,12 +137,12 @@ L.trash = "Trash"
 L.affixes = "Affixe" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- GUI boss dropdown for cast counters (Usually a dropdown menu in the boss options that lets you choose when a spell counter should reset back to 1)
---L.counter_reset_name = "%s cast counter" -- SPELL_NAME cast counter
---L.counter_reset_desc = "Choose when to reset the counter."
---L.reset_casts = "Reset every %d casts" -- Reset every 3 casts
---L.reset_stages = "Reset on stage change"
---L.reset_casts_and_stages = "Reset every %d casts and on stage change"
---L.reset_never = "Never reset"
+L.counter_reset_name = "%s Zauber-Zähler" -- SPELL_NAME cast counter
+L.counter_reset_desc = "Wähle wann der Zähler zurückgesetzt werden soll."
+L.reset_casts = "Nach %d Zaubern zurücksetzen" -- Reset every 3 casts
+L.reset_stages = "Beim Phasenwechsel zurücksetzen"
+L.reset_casts_and_stages = "Nach %d Zaubern und beim Phasenwechsel zurücksetzen"
+L.reset_never = "Nie zurücksetzen"
 
 -- Common raid marking locale
 L.marker = "%s markieren"
