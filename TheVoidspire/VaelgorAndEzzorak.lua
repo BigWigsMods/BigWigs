@@ -57,9 +57,9 @@ local grapplingMawCount = 1
 -- Localization
 --
 
-local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+mod:SetDefaultLocale({ -- SetOption:skip-locale
 	custom_select_gloom_reset = CL.counter_reset_name:format(mod:SpellName(1245391)),
-	custom_select_gloom_reset_desc = CL.choose_counter_reset,
+	custom_select_gloom_reset_desc = CL.counter_reset_desc,
 	custom_select_gloom_reset_icon = 1245391,
 	custom_select_gloom_reset_value1 = CL.reset_casts_and_stages:format(2),
 	custom_select_gloom_reset_value2 = CL.reset_stages,
