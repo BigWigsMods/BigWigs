@@ -136,6 +136,13 @@ L.focus_only = "|cffff0000仅焦点目标。|r "
 L.trash = "小怪"
 L.affixes = "词缀" -- Seasonal affixes for raids and mythic+ dungeons
 
+-- GUI boss dropdown for cast counters (Usually a dropdown menu in the boss options that lets you choose when a spell counter should reset back to 1)
+--L.counter_reset_name = "%s cast counter" -- SPELL_NAME cast counter
+--L.counter_reset_desc = "Choose when to reset the counter."
+--L.reset_casts = "Reset after every %d casts." -- Reset after every 3 casts.
+--L.reset_stages = "Only reset on stage change."
+--L.reset_casts_and_stages = "Reset after every %d casts and every stage change."
+
 -- Common raid marking locale
 L.marker = "%s标记"
 L.marker_player_desc = "将受到%s影响的玩家标记为%s，需要权限。" -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
