@@ -222,6 +222,7 @@ L.autotalk_generic_desc = "Automaticamente selezione l'opzione di dialogo NPC ch
 --L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
 --L.messageCastStartNote = "This text will be used for showing a message when the cast starts"
 --L.messageBeforeCastStartNote = "This text will be used for showing a message before a cast starts"
+--L.messageDuringCastNote = "This text will be used for showing messages during the cast"
 --L.messageNote = "This text will be used for messages"
 --L.messageOnYouNote = "The message shown when this ability is on you"
 --L.messageSpecificHealth = "The message shown when the boss is at %d%% health"

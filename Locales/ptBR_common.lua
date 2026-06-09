@@ -222,6 +222,7 @@ L.castTimerNote = "Este texto será usado apenas para temporizadores de lançame
 --L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
 --L.messageCastStartNote = "This text will be used for showing a message when the cast starts"
 --L.messageBeforeCastStartNote = "This text will be used for showing a message before a cast starts"
+--L.messageDuringCastNote = "This text will be used for showing messages during the cast"
 L.messageNote = "Este texto será usado para mensagens"
 L.messageOnYouNote = "A mensagem exibida quando esta habilidade estiver em você"
 --L.messageSpecificHealth = "The message shown when the boss is at %d%% health"
