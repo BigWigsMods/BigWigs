@@ -137,12 +137,12 @@ L.trash = "小怪"
 L.affixes = "词缀" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- GUI boss dropdown for cast counters (Usually a dropdown menu in the boss options that lets you choose when a spell counter should reset back to 1)
---L.counter_reset_name = "%s cast counter" -- SPELL_NAME cast counter
---L.counter_reset_desc = "Choose when to reset the counter."
---L.reset_casts = "Reset every %d casts" -- Reset every 3 casts
---L.reset_stages = "Reset on stage change"
---L.reset_casts_and_stages = "Reset every %d casts and on stage change"
---L.reset_never = "Never reset"
+L.counter_reset_name = "%s 施法次数" -- SPELL_NAME cast counter
+L.counter_reset_desc = "选择施法次数的重置条件。"
+L.reset_casts = "每 %d 次施法后重置" -- Reset every 3 casts
+L.reset_stages = "转阶段时重置"
+L.reset_casts_and_stages = "每 %d 次施法及转阶段时重置"
+L.reset_never = "永不重置"
 
 -- Common raid marking locale
 L.marker = "%s标记"
@@ -154,15 +154,15 @@ L.none = "无"
 L.markers = "标记" -- Plural of marker
 
 -- Ability where two players have to move close to each other
-L.link = "连接"
-L.link_with = "与%s连接"
-L.link_with_icon = "与|T13700%d:0|t%s连接"
-L.link_with_rticon = "{rt%d}与%s连接"
-L.link_both = "%s与%s连接"
-L.link_both_icon = "|T13700%d:0|t%s与|T13700%d:0|t%s连接"
-L.link_removed = "连接已移除"
-L.link_say_option_name = "重复“连接”信息"
-L.link_say_option_desc = "以重复喊话方式来发送信息，说明正在与谁连接。"
+L.link = "链接"
+L.link_with = "与%s链接"
+L.link_with_icon = "与|T13700%d:0|t%s链接"
+L.link_with_rticon = "{rt%d}与%s链接"
+L.link_both = "%s与%s链接"
+L.link_both_icon = "|T13700%d:0|t%s与|T13700%d:0|t%s链接"
+L.link_removed = "链接已移除"
+L.link_say_option_name = "重复“链接”喊话"
+L.link_say_option_desc = "重复喊话，告知与你链接的玩家。"
 
 -- Abbreviated numbers
 L.amount_one = "%.2f亿" -- Billions 1,000,000,000
