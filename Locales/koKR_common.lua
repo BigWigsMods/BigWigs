@@ -137,12 +137,12 @@ L.trash = "일반 몹"
 L.affixes = "어픽스" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- GUI boss dropdown for cast counters (Usually a dropdown menu in the boss options that lets you choose when a spell counter should reset back to 1)
---L.counter_reset_name = "%s cast counter" -- SPELL_NAME cast counter
---L.counter_reset_desc = "Choose when to reset the counter."
---L.reset_casts = "Reset every %d casts" -- Reset every 3 casts
---L.reset_stages = "Reset on stage change"
---L.reset_casts_and_stages = "Reset every %d casts and on stage change"
---L.reset_never = "Never reset"
+L.counter_reset_name = "%s번 시전 카운터" -- SPELL_NAME cast counter
+L.counter_reset_desc = "카운터를 초기화할 시점을 선택하세요."
+L.reset_casts = "%d번 시전마다 초기화" -- Reset every 3 casts
+L.reset_stages = "단계 변경 시 초기화"
+L.reset_casts_and_stages = "%d번 시전 및 단계 변경 시 초기화"
+L.reset_never = "절대 초기화 안 함"
 
 -- Common raid marking locale
 L.marker = "%s 징표 설정"
@@ -232,7 +232,7 @@ L.otherDifficultiesNote = "이 텍스트는 다른 모든 난이도에서 사용
 -- GUI notes for debuffs
 L.debuffFailureNote = "실패할 경우 이 디버프가 적용됨"
 L.debuffFailureMoveFromExplosionNote = "폭발 지점에서 벗어나지 못하면 이 디버프가 적용됨"
---L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.debuffFailureInterruptNote = "|cFFFFFFFF%s|r 시전을 방해하는 데 실패하면 이 디버프가 적용됨" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.preDebuffNote = "이것은 주요 디버프가 적용되기 전의 사전 디버프"
 L.mainDebuffNote = "이것은 당신에게 적용되는 주요 디버프"
 L.postDebuffNote = "|cFFFFFFFF%s|r 효과가 종료되면 이 디버프가 적용됨" -- This debuff will apply to you after OTHER_DEBUFF expires
@@ -241,7 +241,7 @@ L.debuffDotAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 
 L.debuffPossibleAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 마친 후에 적용될 수 있음" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
 L.debuffTankAfterCastNote = "보스가 |cFFFFFFFF%s|r 시전을 완료하면 탱커에게 이 디버프가 적용됩" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "|cFFFFFFFF%s|r 범위 안으로 의도적으로 걸어 들어갈 때 이 디버프가 적용됨" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
---L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+L.debuffHitByCastNote = "|cFFFFFFFF%s|r 주문 시전에 맞으면 이 디버프가 적용됩니다" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "이 디버프는 |cFFFFFFFF%s|r 의해 적용됨" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
