@@ -140,9 +140,9 @@ L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 -- GUI boss dropdown for cast counters (Usually a dropdown menu in the boss options that lets you choose when a spell counter should reset back to 1)
 L.counter_reset_name = "%s compteur d'incantation" -- SPELL_NAME cast counter
 L.counter_reset_desc = "Choisissez quand réinitialiser le compteur."
-L.reset_casts = "Se réinitialise toutes les %d incantation(s)" -- Reset every 3 casts
+L.reset_casts = "Se réinitialise toutes les %d incantations" -- Reset every 3 casts
 L.reset_stages = "Se réinitialise sur les changements de phase"
-L.reset_casts_and_stages = "Se réinitialise toutes les %d incantation(s) et en changement de phase"
+L.reset_casts_and_stages = "Se réinitialise toutes les %d incantations et en changement de phase"
 L.reset_never = "Ne se réinitialise pas"
 
 -- Common raid marking locale
