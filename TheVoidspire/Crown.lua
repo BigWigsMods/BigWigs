@@ -253,6 +253,9 @@ function mod:TimersMythic(_, eventInfo)
 			self:PlaySound("stages", "long")
 		end
 
+		self:ResetCounts()
+		timelineEventCount = 1
+
 	elseif stage == 2 and timeSinceLastEvent > 15 then
 		stage = 3
 		self:SetStage(stage)
@@ -501,10 +504,9 @@ function mod:TimersOther(_, eventInfo)
 	local timeSinceLastEvent = now - prev
 	prev = now
 
+	local stage = self:GetStage()
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 1)
-
-	local stage = self:GetStage()
 
 	-- counts reset on intermission end, show phase message with first new timer
 	if stage == 2 and timelineEventCount == 1 then
@@ -513,14 +515,21 @@ function mod:TimersOther(_, eventInfo)
 			self:PlaySound("stages", "long")
 		end
 
-	elseif stage == 3 and timelineEventCount == 1 then
+		self:ResetCounts()
+		timelineEventCount = 1
+
+	elseif stage == 3 and timelineEventCount == 1 and substage == 1 then
 		if self:ShouldShowBars() then
 			self:Message("stages", "cyan", self:GetRename("stages", stage), false)
 			self:PlaySound("stages", "long")
 		end
+
+		self:ResetCounts()
+		timelineEventCount = 1
 	end
 
 	if stage == 1 then
+		 -- Intermision 1 start
 		if durationRounded == 1.5 and timeSinceLastEvent > 1 then
 			-- Silverstrike Barrage is always have after rp
 			barInfo = self:SilverstrikeBarrage(duration)
@@ -754,7 +763,7 @@ function mod:IntermissionEvent(duration)
 				self:CancelTimer(barInfo.timer)
 				barInfo:onEnd()
 			end
-		end
+		end,
 	}
 end
 
@@ -764,8 +773,8 @@ function mod:SilverstrikeBarrage()
 	return {
 		msg = barText,
 		key = 1243982,
-		onEnd = function() -- not used, just for the parser
-			mod:Bar(1243982, 10)
+		unused = function() -- not used, just for the parser
+			mod:Bar(1243982, 0)
 		end,
 	}
 end
@@ -789,8 +798,8 @@ end
 function mod:GraspOfEmptiness()
 	local count = graspOfEmptinessCount
 	if self:Mythic() and self:GetStage() == 1 and count > 1 then
-		-- 1 2 3 4 5   6 7 8 9
-		-- 1 3 4 5 2>2 7 8 9 6
+		-- 1 2 3 4 5     6 7 8 9
+		-- 1 3 4 5 2>(6) 7 8 9 6
 		if count % 4 == 2 then
 			count = count + 3
 		else
@@ -920,8 +929,8 @@ function mod:VoidstalkerSting()
 	return {
 		msg = barText,
 		key = 1237038,
-		onEnd = function() -- not used, just for the parser
-			mod:Bar(1237038, 10)
+		unused = function() -- not used, just for the parser
+			mod:Bar(1237038, 0)
 		end,
 	}
 end

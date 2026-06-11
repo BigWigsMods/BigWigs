@@ -13,6 +13,7 @@ mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
 -- Locals
+--
 
 local activeBars = {}
 local backupBars = {}
