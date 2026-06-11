@@ -714,7 +714,7 @@ function mod:MidnightFlames(eventInfo)
 		msg = barText,
 		onFinished = function()
 			self:Message(1249748, "yellow", barText)
-			self:StopBlizzMessages(0.2)
+			self:StopBlizzMessages(0.5)
 			self:PlaySound(1249748, "alert")
 		end,
 		this = self.MidnightFlames
@@ -755,21 +755,30 @@ function mod:Nullbeam(eventInfo)
 	}
 end
 
-function mod:DreadBreath(eventInfo)
-	local barText = CL.count:format(self:GetRename(1244221), dreadBreathCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1244221, eventInfo.duration, barText, nil, eventInfo.id)
+do
+	local prevCancel = 0
+	function mod:DreadBreath(eventInfo)
+		local barText = CL.count:format(self:GetRename(1244221), dreadBreathCount)
+		if self:ShouldShowBars() then
+			self:CDBar(1244221, eventInfo.duration, barText, nil, eventInfo.id)
+			if GetTime() - prevCancel < 3 then
+				self:TargetMessageFromBlizzMessage(1244221, 1, "orange", barText)
+			end
+		end
+		dreadBreathCount = dreadBreathCount + 1
+		return {
+			customBuffer = 5,
+			msg = barText,
+			onCanceled = function()
+				prevCancel = GetTime()
+			end,
+			onFinished = function()
+				self:TargetMessageFromBlizzMessage(1244221, 1, "orange", barText)
+				-- PA Sounds
+			end,
+			this = self.DreadBreath
+		}
 	end
-	dreadBreathCount = dreadBreathCount + 1
-	return {
-		customBuffer = 5,
-		msg = barText,
-		onFinished = function()
-			self:TargetMessageFromBlizzMessage(1244221, 1, "orange", barText)
-			-- PA Sounds
-		end,
-		this = self.DreadBreath
-	}
 end
 
 function mod:Vaelwing(eventInfo)
