@@ -138,6 +138,11 @@ function mod:OnEncounterStart()
 	rakfangCount = 1
 	radiantBarrierCount = 1
 	grapplingMawCount = 1
+
+	-- Radiant barrier didnt always start on pull, we start this as fallback which will get overwritten if a real one starts.
+	local firstRadiantBarrierCD = self:Mythic() and 120 or self:Heroic() and 105 or 111
+	nextRadiantBarrier = GetTime() + firstRadiantBarrierCD
+	self:Bar("stages", firstRadiantBarrierCD, CL.count:format(self:GetRename("stages", 1), radiantBarrierCount), 1248847) -- Radiant Barrier icon
 end
 
 function mod:OnBossDisable()
