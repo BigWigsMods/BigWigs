@@ -2125,15 +2125,16 @@ do
 	function options.VerifyAddOnProfileString(profileString)
 		if type(profileString) ~= "string" then return end
 		local versionPlain, importData = profileString:match("^(%w+):(.+)$")
-		if versionPlain ~= addonTable.sharingVersion then return end
+		if versionPlain ~= addonTable.sharingVersion and versionPlain ~= addonTable.bossSharingVersion then return end
 		local decodedForPrint = C_EncodingUtil.DecodeBase64(importData)
 		if not decodedForPrint then return end
 		local decompressed = C_EncodingUtil.DecompressString(decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
 		if not decompressed then return end
 		local data = C_EncodingUtil.DeserializeCBOR(decompressed)
 		if not data then return end
-		if data.version ~= addonTable.sharingVersion then return end -- encoded version does not match expected version
-		return true
+		local expectedVersion = data.bossExport and addonTable.bossSharingVersion or addonTable.sharingVersion
+		if versionPlain ~= expectedVersion then return end -- encoded version prefix does not match expected version
+		return true, data.bossExport
 	end
 
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
@@ -2141,11 +2142,13 @@ do
 	function options.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
-		if not options.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") end
+		local stringOK, bossImport = options.VerifyAddOnProfileString(profileString)
+		if not stringOK then error("Invalid profile string for profile import.") end
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original
 		popup:Show()
+		-- XXX modify popup based on bossImport
 		local profileName = loader.db:GetCurrentProfile()
 		if not optionalCustomProfileName or profileName == optionalCustomProfileName then
 			optionalCustomProfileName = nil
