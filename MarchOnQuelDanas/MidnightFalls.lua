@@ -551,7 +551,7 @@ function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 	tankList = {}
 	for unit in self:IterateGroup() do
 		local name = self:UnitName(unit)
-		if self:Tank(name) then
+		if self:Tank(name, unit) then
 			tankList[#tankList+1] = unit
 		end
 	end
