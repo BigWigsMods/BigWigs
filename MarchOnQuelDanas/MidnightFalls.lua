@@ -275,61 +275,61 @@ function mod:TimersMythic(_, eventInfo)
 		-- pull timers (get immediately canceled and restarted)
 		if rounded == 3 then
 			if count == 1 then return false end
-			barInfo = self:TerminationPrism(duration)
+			barInfo = self:TerminationPrism()
 		elseif rounded == 31 then
 			if count == 1 then return false end
-			barInfo = self:GrimSymphony(duration)
+			barInfo = self:GrimSymphony()
 		elseif rounded == 20 and (count == 1 or count == 2) then
 			if count == 1 then return false end
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 		elseif rounded == 26 then
 			if count == 1 then return false end
-			barInfo = self:HeavensGlaives(duration)
+			barInfo = self:HeavensGlaives()
 		elseif rounded == 57 then
 			if count == 1 then return false end
-			barInfo = self:DarkQuasar(duration)
+			barInfo = self:DarkQuasar()
 		elseif rounded == 180 then
 			if count == 1 then return false end
 			barInfo = self:TotalEclipse(duration)
 
 		elseif rounded == 62 then
 			if count % 4 == 1 then
-				barInfo = self:TerminationPrism(duration)
+				barInfo = self:TerminationPrism()
 			elseif count % 4 == 2 then
-				barInfo = self:HeavensGlaives(duration)
+				barInfo = self:HeavensGlaives()
 			elseif count % 4 == 3 then
-				barInfo = self:GrimSymphony(duration)
+				barInfo = self:GrimSymphony()
 			else
-				barInfo = self:DarkQuasar(duration)
+				barInfo = self:DarkQuasar()
 			end
 		elseif rounded == 20 then
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 
 		elseif rounded == 45 then
-			barInfo = self:IntoTheDarkwell(duration)
+			barInfo = self:IntoTheDarkwell()
 		end
 
 	elseif stage == 2 then
 		if rounded == 97 then
 			barInfo = self:DarkMeltdown(duration)
 		elseif rounded == 33 then
-			barInfo = self:CoreHarvest(duration)
-		elseif rounded == 13 or rounded == 30 then
+			barInfo = self:CoreHarvest()
+		elseif rounded == 13 or (rounded == 30 and not self:IsWiping()) then
 			if count % 2 == 1 then
-				barInfo = self:Galvanize(duration)
+				barInfo = self:Galvanize()
 			else
-				barInfo = self:CoreHarvest(duration)
+				barInfo = self:CoreHarvest()
 			end
 		elseif rounded == 20 then
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 		end
 
 	elseif stage == 3 then
 		if rounded == 18 then
 			if count == 1 then
-				barInfo = self:LightSiphon(duration)
+				barInfo = self:LightSiphon()
 			elseif count == 2 then
-				barInfo = self:DeathsRequiem(duration)
+				barInfo = self:DeathsRequiem()
 			end
 			if barInfo then
 				-- Death's Requiem is the one that cancels, but it always fires with Light Siphon and the order isn't consistent
@@ -339,15 +339,16 @@ function mod:TimersMythic(_, eventInfo)
 		elseif (rounded == 20 and count == 1) or rounded == 23 or rounded == 4 or rounded == 6 or rounded == 7 then
 			barInfo = self:DarkConstellationMythic(rounded)
 		elseif rounded == 57 or rounded == 55 then
-			barInfo = self:TheDarkArchangel(duration)
+			barInfo = self:TheDarkArchangel()
 		elseif rounded == 40 or rounded == 30 then
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 
 		elseif rounded == 20 or rounded == 35 then
+			-- Dark Constellation's first cast is 20, so this is offset by one just looking at the two casts
 			if count % 2 == 0 then
-				barInfo = self:LightSiphon(duration)
+				barInfo = self:LightSiphon()
 			else
-				barInfo = self:DeathsRequiem(duration)
+				barInfo = self:DeathsRequiem()
 			end
 			if barInfo then
 				barInfo.maxQueueDuration = 0
@@ -406,59 +407,59 @@ function mod:TimersOther(_, eventInfo)
 		-- pull timers (get immediately canceled and restarted x.x)
 		if rounded == 40 then
 			if count == 1 then return false end
-			barInfo = self:DarkQuasar(duration)
+			barInfo = self:DarkQuasar()
 		elseif rounded == 20 and (count == 1 or count == 2) then
 			if count == 1 then return false end
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 		elseif rounded == 10 then
 			if count == 1 then return false end
-			barInfo = self:DeathsDirge(duration)
+			barInfo = self:DeathsDirge()
 		elseif rounded == 35 then
 			if count == 1 then return false end
-			barInfo = self:HeavensGlaives(duration)
+			barInfo = self:HeavensGlaives()
 		elseif rounded == 55 then
 			if count == 1 then return false end
-			barInfo = self:SafeguardPrism(duration)
+			barInfo = self:SafeguardPrism()
 		elseif rounded == 180 then
 			if count == 1 then return false end
 			barInfo = self:TotalEclipse(duration)
 
 		elseif rounded == 70 then
 			if count % 4 == 1 then
-				barInfo = self:DeathsDirge(duration)
+				barInfo = self:DeathsDirge()
 			elseif count % 4 == 2 then
-				barInfo = self:HeavensGlaives(duration)
+				barInfo = self:HeavensGlaives()
 			elseif count % 4 == 3 then
-				barInfo = self:DarkQuasar(duration)
+				barInfo = self:DarkQuasar()
 			else
-				barInfo = self:SafeguardPrism(duration)
+				barInfo = self:SafeguardPrism()
 			end
 		elseif rounded == 20 then
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 
 		-- intermission start
 		elseif rounded == 45 then
-			barInfo = self:IntoTheDarkwell(duration)
+			barInfo = self:IntoTheDarkwell()
 		end
 
 	elseif stage == 2 then
 		if rounded == 97 then
 			barInfo = self:DarkMeltdown(duration)
 		elseif rounded == 33 then
-			barInfo = self:CoreHarvest(duration)
-		elseif rounded == 13 or rounded == 30 then
+			barInfo = self:CoreHarvest()
+		elseif rounded == 13 or (rounded == 30 and not self:IsWiping()) then
 			if count % 2 == 1 then
-				barInfo = self:Galvanize(duration)
+				barInfo = self:Galvanize()
 			else
-				barInfo = self:CoreHarvest(duration)
+				barInfo = self:CoreHarvest()
 			end
 		elseif rounded == 20 then
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 		end
 
 	elseif stage == 3 then
 		if rounded == 31 then
-			barInfo = self:LightSiphon(duration)
+			barInfo = self:LightSiphon()
 			if barInfo then
 				barInfo.maxQueueDuration = 0
 				barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
@@ -470,14 +471,14 @@ function mod:TimersOther(_, eventInfo)
 				barInfo = self:DarkConstellation(duration)
 			end
 		elseif rounded == 14 then
-			barInfo = self:TheDarkArchangel(duration)
+			barInfo = self:TheDarkArchangel()
 		elseif rounded == 23 or rounded == 20 then
-			barInfo = self:HeavensLance(duration)
+			barInfo = self:HeavensLance()
 		elseif rounded == 38 then
 			if count % 2 == 1 or self:Easy() then
-				barInfo = self:TheDarkArchangel(duration)
+				barInfo = self:TheDarkArchangel()
 			else
-				barInfo = self:LightSiphon(duration)
+				barInfo = self:LightSiphon()
 				if barInfo then
 					barInfo.maxQueueDuration = 0
 					barInfo.timer = self:ScheduleTimer(barInfo.onEnd, duration)
@@ -575,7 +576,7 @@ end
 
 -- Stage 1
 
-function mod:DarkQuasar(duration)
+function mod:DarkQuasar() -- Beams
 	local barText = CL.count:format(self:GetRename(1279420), quasarCount)
 	quasarCount = quasarCount + 1
 	return {
@@ -588,7 +589,7 @@ function mod:DarkQuasar(duration)
 	}
 end
 
-function mod:HeavensGlaives(duration)
+function mod:HeavensGlaives() -- Glaives
 	local barText = CL.count:format(self:GetRename(1253915), glaivesCount)
 	glaivesCount = glaivesCount + 1
 	return {
@@ -601,7 +602,7 @@ function mod:HeavensGlaives(duration)
 	}
 end
 
-function mod:DeathsDirge(duration)
+function mod:DeathsDirge() -- Memory Game
 	local barText = CL.count:format(self:GetRename(1249620), dirgeCount)
 	dirgeCount = dirgeCount + 1
 	return {
@@ -614,7 +615,7 @@ function mod:DeathsDirge(duration)
 	}
 end
 
-function mod:SafeguardPrism(duration)
+function mod:SafeguardPrism() -- Kicks
 	local barText = CL.count:format(self:GetRename(1251386), prismCount)
 	prismCount = prismCount + 1
 	return {
@@ -628,7 +629,7 @@ function mod:SafeguardPrism(duration)
 	}
 end
 
-function mod:HeavensLance(duration)
+function mod:HeavensLance() -- Lance
 	local barText = CL.count:format(self:GetRename(1267049), lanceCount)
 	lanceCount = lanceCount + 1
 	return {
@@ -676,7 +677,7 @@ end
 
 -- Mythic
 
-function mod:GrimSymphony(duration)
+function mod:GrimSymphony() -- Memory Game
 	local barText = CL.count:format(self:GetRename(1284980), dirgeCount)
 	dirgeCount = dirgeCount + 1
 	return {
@@ -689,7 +690,7 @@ function mod:GrimSymphony(duration)
 	}
 end
 
-function mod:TerminationPrism(duration)
+function mod:TerminationPrism() -- Kicks
 	local barText = CL.count:format(self:GetRename(1284931), prismCount)
 	prismCount = prismCount + 1
 	return {
@@ -706,7 +707,7 @@ end
 
 -- Intermission
 
-function mod:IntoTheDarkwell(duration)
+function mod:IntoTheDarkwell()
 	self:SetStage(2) -- just set it here, no other events
 	self:ResetCounts()
 
@@ -725,7 +726,7 @@ function mod:IntoTheDarkwell(duration)
 	}
 end
 
-function mod:IntermissionDarkQuasar()
+function mod:IntermissionDarkQuasar() -- Beams
 	local info = INTERMISSION_DARK_QUASAR_INFO[self:Difficulty()]
 	if not info then return end
 
@@ -756,14 +757,14 @@ function mod:DarkMeltdown(duration)
 			self:SetStage(3)
 			self:ResetCounts()
 
-			self:Bar(1281194, 8, self:GetRename(1281194)) -- Dark Meltdown
+			self:Bar(1281194, 8, self:GetRename(1281194)) -- Dark Meltdown (Knockback)
 			self:Message("stages", "cyan", self:GetRename("stages", 3), false) -- Stage 3
 			self:PlaySound("stages", "long")
 		end
 	}
 end
 
-function mod:Galvanize(duration)
+function mod:Galvanize() -- Beams
 	local barText = CL.count:format(self:GetRename(1284525), galvanizeCount)
 	galvanizeCount = galvanizeCount + 1
 	return {
@@ -776,7 +777,7 @@ function mod:Galvanize(duration)
 	}
 end
 
-function mod:CoreHarvest(duration)
+function mod:CoreHarvest() -- Dodge
 	local barText = CL.count:format(self:GetRename(1282412), harvestCount)
 	harvestCount = harvestCount + 1
 	return {
@@ -792,21 +793,16 @@ end
 
 -- Phase 3
 
-function mod:LightSiphon(duration)
+function mod:LightSiphon() -- Soaks
 	local barText
 
 	if self:Mythic() then
-		local sides = { "left", "right", "right", "left", "left", "right" }
-		local side = sides[siphonCount]
-
-		barText = CL.count:format(self:GetRename(1266897), siphonCount)
+		local side = siphonCount % 4 > 1 and "right" or "left"
+		barText =  L[side]:format(CL.count:format(self:GetRename(1266897), siphonCount))
 		siphonCount = siphonCount + 1
 
-		if side then
-			if playerSide and side ~= playerSide then
-				return false
-			end
-			barText = L[side]:format(barText)
+		if playerSide and side ~= playerSide then
+			return false
 		end
 	else
 		barText = CL.count:format(self:GetRename(1266897), siphonCount)
@@ -825,7 +821,7 @@ function mod:LightSiphon(duration)
 	}
 end
 
-function mod:TheDarkArchangel(duration)
+function mod:TheDarkArchangel() -- Big Boom
 	local barText = CL.count:format(self:GetRename(1250898), archangelCount)
 	archangelCount = archangelCount + 1
 	return {
@@ -838,7 +834,7 @@ function mod:TheDarkArchangel(duration)
 	}
 end
 
-function mod:DarkConstellation(duration, count, totalCount)
+function mod:DarkConstellation(_duration, count, totalCount) -- Stars
 	local barText
 	if count then
 		barText = CL.count_amount:format(self:GetRename(1266388), count, totalCount)
@@ -858,7 +854,7 @@ end
 
 -- Mythic
 
-function mod:DarkConstellationMythic(duration)
+function mod:DarkConstellationMythic(duration) -- Stars
 	local side = constellationCount % 2 == 1 and "left" or "right"
 	local barText = L[side]:format(self:GetRename(1266388))
 
@@ -868,10 +864,10 @@ function mod:DarkConstellationMythic(duration)
 		23, 7, 7, 6, 7, 7,
 	}
 	local updatedDuration = nil
-	if playerSide and constellationCount > 2 and self:BarTimeLeft(barText) > 0 then
+	if playerSide == side and constellationCount > 2 and self:BarTimeLeft(barText) > 0 then
 		self:StopBar(barText) -- Bar -> TimelineBar
 		local maxTime = duration + durations[constellationCount - 1]
-		updatedDuration = {duration, maxTime}
+		updatedDuration = { duration, maxTime }
 	end
 
 	constellationCount = constellationCount + 1
@@ -896,18 +892,13 @@ function mod:DarkConstellationMythic(duration)
 	}
 end
 
-function mod:DeathsRequiem(duration)
-	local sides = { "right", "left", "left", "right", "right", "left" }
-	local side = sides[dirgeCount]
-
-	local barText = CL.count:format(self:GetRename(1273158), dirgeCount)
+function mod:DeathsRequiem() -- Memory Game
+	local side = dirgeCount % 4 > 1 and "left" or "right"
+	local barText = L[side]:format(CL.count:format(self:GetRename(1273158), dirgeCount))
 	dirgeCount = dirgeCount + 1
 
-	if side then
-		if playerSide and side ~= playerSide then
-			return false
-		end
-		barText = L[side]:format(barText)
+	if playerSide and side ~= playerSide then
+		return false
 	end
 
 	return {
