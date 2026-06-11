@@ -55,6 +55,7 @@ end
 
 local L = BigWigsAPI:GetLocale("BigWigs")
 local BigWigs = BigWigs
+local importingInstances = false
 local sharingVersion = "BW2"
 local bossSharingVersion = "BWB1"
 
@@ -433,17 +434,11 @@ local importedTableData = nil
 --
 
 local function getInstanceLabel(id)
-    if id > 0 then
-        local raidName = GetRealZoneText(id)
-        if raidName and raidName ~= "" then
-            return raidName
-        end
-    else -- MapId
-        local tbl = BigWigsLoader.GetMapInfo(-id)
-        if tbl then
-            return tbl.name
-        end
-    end
+	local raidName = GetRealZoneText(id)
+	if raidName and raidName ~= "" then
+		return raidName
+	end
+	BigWigs:Error('Missing instance name for ID: '..id..', Please report this to the BigWigs authors.')
     return tostring(id)
 end
 
@@ -932,30 +927,49 @@ do
 			end
 		end
 
+		local importInstanceQueue = {}
 		for instanceID, modules in pairs(data.exportTable) do
 			if sharingImportOptionsSettings[instanceID] then
-				 BigWigsLoader:LoadZone(instanceID)
-				for moduleName, settings in pairs(modules) do
-					local module = BigWigs:GetBossModule(moduleName:sub(16))
-					ImportFlags(settings.flags, module)
-					ImportRenames(settings.renames, module)
-
-					ImportColors(settings.colors, moduleName)
-					ImportSounds(settings.sounds, moduleName)
-					ImportPrivateAuras(settings.privateAuras, moduleName)
-				end
-				table.insert(chatMessages, getInstanceLabel(instanceID))
+				table.insert(importInstanceQueue, instanceID)
 			end
 		end
 
-		if #chatMessages == 0 then
-			BigWigs:Print(L.no_import_message)
-			return
+		local timer
+		local finalizeImport = function()
+			if timer then
+				timer:Cancel()
+			end
+			importingInstances = false
+			if #chatMessages == 0 then
+				BigWigs:Print(L.no_import_message)
+				return
+			end
+
+			BigWigs:SendMessage("BigWigs_ProfileUpdate")
+			local importMessage = L.import_success:format(table.concat(chatMessages, comma))
+			BigWigs:Print(importMessage)
 		end
 
-		BigWigs:SendMessage("BigWigs_ProfileUpdate")
-		local importMessage = L.import_success:format(table.concat(chatMessages, comma))
-		BigWigs:Print(importMessage)
+		local function ImportInstanceLoop()
+			local nextInstanceID = table.remove(importInstanceQueue)
+			if not nextInstanceID then
+				return finalizeImport()
+			end
+			BigWigsLoader:LoadZone(nextInstanceID)
+			local modules = data.exportTable[nextInstanceID]
+			for moduleName, settings in pairs(modules) do
+				local module = BigWigs:GetBossModule(moduleName:sub(16))
+				ImportFlags(settings.flags, module)
+				ImportRenames(settings.renames, module)
+
+				ImportColors(settings.colors, moduleName)
+				ImportSounds(settings.sounds, moduleName)
+				ImportPrivateAuras(settings.privateAuras, moduleName)
+			end
+			table.insert(chatMessages, getInstanceLabel(nextInstanceID))
+		end
+		importingInstances = true
+		timer = BigWigsLoader.CTimerNewTicker(0, ImportInstanceLoop)
 	end
 
 	--- Saves the currently loaded import string to the BigWigs profile.
@@ -1243,6 +1257,7 @@ local sharingOptions = {
 					return (not isImportStringAvailable() and not IsOptionGroupAvailable("any"))
 				end,
 				disabled = function()
+					if importingInstances then return true end
 					local isSomethingSelected = false
 					for k, v in pairs(sharingImportOptionsSettings) do
 						if k ~= "importString" and v then
