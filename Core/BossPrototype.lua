@@ -2698,15 +2698,16 @@ end
 do
 	local GetSpecializationRole = BigWigsAPI.GetSpecializationRole
 	--- Check if your talent tree role is TANK.
-	-- @string[opt="player"] unit check if the chosen role of another unit is set to TANK, or if that unit is listed in the MAINTANK frames.
+	-- @string[opt] playerName check if the chosen role of a specific player is set to TANK according to LibSpecialization data
+	-- @string[opt] unitToken check if the chosen role of a specific unit token is set to TANK according to Blizz MAINTANK frames or custom role selection
 	-- @return boolean
-	function boss:Tank(unit)
-		if unit then
-			local role = GetSpecializationRole(unit)
+	function boss:Tank(playerName, unitToken)
+		if playerName then
+			local role = GetSpecializationRole(playerName)
 			if role then
 				return role == "TANK"
 			else
-				return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
+				return GetPartyAssignment("MAINTANK", unitToken or playerName) or UnitGroupRolesAssigned(unitToken or playerName) == "TANK"
 			end
 		else
 			return myRole == "TANK"
@@ -2714,15 +2715,16 @@ do
 	end
 
 	--- Check if your talent tree role is HEALER.
-	-- @string[opt="player"] unit check if the chosen role of another unit is set to HEALER.
+	-- @string[opt] playerName check if the chosen role of a specific player is set to HEALER according to LibSpecialization data
+	-- @string[opt] unitToken check if the chosen role of a specific unit token is set to HEALER according to Blizz custom role selection
 	-- @return boolean
-	function boss:Healer(unit)
-		if unit then
-			local role = GetSpecializationRole(unit)
+	function boss:Healer(playerName, unitToken)
+		if playerName then
+			local role = GetSpecializationRole(playerName)
 			if role then
 				return role == "HEALER"
 			else
-				return UnitGroupRolesAssigned(unit) == "HEALER"
+				return UnitGroupRolesAssigned(unitToken or playerName) == "HEALER"
 			end
 		else
 			return myRole == "HEALER"
@@ -2730,15 +2732,16 @@ do
 	end
 
 	--- Check if your talent tree role is DAMAGER.
-	-- @string[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
+	-- @string[opt] playerName check if the chosen role of a specific player is set to DAMAGER according to LibSpecialization data
+	-- @string[opt] unitToken check if the chosen role of a specific unit token is set to DAMAGER according to Blizz custom role selection
 	-- @return boolean
-	function boss:Damager(unit)
-		if unit then
-			local role = GetSpecializationRole(unit)
+	function boss:Damager(playerName, unitToken)
+		if playerName then
+			local role = GetSpecializationRole(playerName)
 			if role then
 				return role == "DAMAGER"
 			else
-				return UnitGroupRolesAssigned(unit) == "DAMAGER"
+				return UnitGroupRolesAssigned(unitToken or playerName) == "DAMAGER"
 			end
 		else
 			if myRole == "DAMAGER" then
