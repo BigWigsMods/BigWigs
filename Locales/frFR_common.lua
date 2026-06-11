@@ -137,7 +137,9 @@ L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 L.trash = "Trash"
 L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
--- GUI boss dropdown for cast counters (Usually a dropdown menu in the boss options that lets you choose when a spell counter should reset back to 1)
+-- GUI boss dropdown for cast counters
+-- Cast counters are the numbers you see next to spell names that keep increasing e.g. "Bad Spell (3)" <-- that number
+-- This dropdown option will let you choose when that number should reset back to 1
 L.counter_reset_name = "%s compteur d'incantation" -- SPELL_NAME cast counter
 L.counter_reset_desc = "Choisissez quand réinitialiser le compteur."
 L.reset_casts = "Se réinitialise toutes les %d incantations" -- Reset every 3 casts
