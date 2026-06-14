@@ -3966,6 +3966,30 @@ do
 			self:Message(key, color, CL.other:format(msg, player), icon)
 		end)
 	end
+
+	--- Similar to TargetMessage but expects the player name to be a secret
+	-- @param key the option key
+	-- @string color the message color category
+	-- @param info this is the table containing the player data, the one provided by the ENCOUNTER_WARNING event
+	-- @param[opt] text the message text (if nil, key is used)
+	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
+	function boss:SecretTargetMessage(key, color, info, text, icon)
+		local secretPlayer = info.targetName
+		local _, class = GetPlayerInfoByGUID(info.targetGUID)
+		if class and classColorMessages then
+			local classColor = GetClassColor(class)
+			if classColor then
+				secretPlayer = classColor:WrapTextInColorCode(secretPlayer)
+			end
+		end
+		local msg
+		if not text and self:IsRenameAvailable(key) then
+			msg = self:GetRename(key, 1)
+		else
+			msg = text or self:SpellName(key)
+		end
+		self:Message(key, color, CL.other:format(msg, secretPlayer), icon)
+	end
 end
 
 --- Temporarily replace the next Blizzard boss message with a personal message in blue
