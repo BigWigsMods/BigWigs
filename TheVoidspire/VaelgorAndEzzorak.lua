@@ -899,11 +899,7 @@ end
 
 function mod:VoidHowl(eventInfo)
 	local barText = CL.count:format(self:GetRename(1244917), voidHowlCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1244917, eventInfo.duration, barText, nil, eventInfo.id)
-	end
-	voidHowlCount = voidHowlCount + 1
-	return {
+	local tbl = {
 		msg = barText,
 		onFinished = function()
 			self:Message(1244917, "orange", barText)
@@ -911,6 +907,14 @@ function mod:VoidHowl(eventInfo)
 		end,
 		this = self.VoidHowl
 	}
+	if self:ShouldShowBars() then
+		self:CDBar(1244917, eventInfo.duration, barText, nil, eventInfo.id)
+		if self:Mythic() and self:IsIntermission() then -- 2nd Intermission, OnFinished never triggers
+			self:ScheduleTimer(tbl.onFinished, eventInfo.duration)
+		end
+	end
+	voidHowlCount = voidHowlCount + 1
+	return tbl
 end
 
 function mod:Rakfang(eventInfo)
