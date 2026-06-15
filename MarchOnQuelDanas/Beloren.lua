@@ -85,7 +85,7 @@ function mod:GetOptions()
 
 		-- Stage 1
 		1242515, -- Voidlight Convergence
-		1241282, -- Embers of Del'ren
+		1241282, -- Embers of Belo'ren
 		{1241292, "CASTBAR", "ME_ONLY_EMPHASIZE"}, -- Light/Void Dive
 		1242981, -- Radiant Echoes
 		1260763, -- Guardian's Edict
@@ -364,7 +364,6 @@ function mod:InfusedQuills(duration) -- Quills
 		onFinished = function()
 			self:PersonalMessageFromBlizzMessage(1242260, 1, false, self:GetRename(1242260, 2))
 			self:Message(1242260, "orange", barText)
-			-- self:PlaySound(1242260, "alarm") -- dodge
 		end
 	}
 end

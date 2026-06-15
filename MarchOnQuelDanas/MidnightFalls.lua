@@ -136,7 +136,7 @@ function mod:GetOptions()
 		1249620, -- Death's Dirge
 			{1249609, "ME_ONLY_EMPHASIZE"}, -- Dark Rune
 		1251386, -- Safeguard Prism
-		{1267049, "TANK"}, --- Heaven's Lance
+		{1267049, "TANK"}, -- Heaven's Lance
 		-- Mythic
 		1284980, -- Grim Symphony
 		1284931, -- Termination Prism
