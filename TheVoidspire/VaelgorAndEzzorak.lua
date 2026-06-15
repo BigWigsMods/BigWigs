@@ -247,9 +247,6 @@ function mod:TimersMythic(_, eventInfo)
 		nullbeamCount = 1
 		dreadBreathCount = 1
 		vaelwingCount = 1
-		if self:GetOption("custom_select_gloom_reset") < 3 then
-			gloomCount = 1
-		end
 		voidHowlCount = 1
 		rakfangCount = 1
 		grapplingMawCount = 1
