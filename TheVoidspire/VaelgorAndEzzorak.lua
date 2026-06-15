@@ -676,25 +676,17 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		if newState == 2 or newState == 3 then
 			-- START: After entering stage 2 on mythic, Blizz wrongly starts a Rakfang and Breath timer with the same durations. Rakfang is correct, but the Breath happens later.
 			if mythicBreathOrRakfang[eventID] then
-				if not mythicRakfangHasPassed then -- Rakfang is cast first in stage 2 mythic...
+				if not mythicRakfangHasPassed then -- When Rakfang is cast we stop the bar like normal, when the Breath is cast we return, as we stop that in the :DreadBreath function
 					mythicRakfangHasPassed = true
-					for _, info in next, mythicBreathOrRakfang do
+					for id, info in next, mythicBreathOrRakfang do
+						activeBars[id] = nil
 						if info.this == self.Rakfang then
 							self:StopBar(info.msg)
 							info.onFinished()
 						end
 					end
-					return
-				else -- ...then breath
-					for id, info in next, mythicBreathOrRakfang do
-						activeBars[id] = nil
-						if info.this == self.DreadBreath then
-							self:StopBar(info.msg)
-						end
-					end
-					mythicBreathOrRakfang = {}
-					return
 				end
+				return
 			end
 			-- END
 
@@ -862,6 +854,10 @@ do
 			if math.floor(self:GetStage()) == 1 and eventInfo.durationRounded == 23 then -- Adjust this one
 				count = 2
 			end
+		elseif mythicRakfangHasPassed then -- We need to manually cancel the first Breath after the first Intermission on Mythic
+			mythicRakfangHasPassed = false
+			mythicBreathOrRakfang = {}
+			self:StopBar(CL.count:format(self:GetRename(1244221), count-1))
 		end
 		local barText = CL.count:format(self:GetRename(1244221), count)
 		if self:ShouldShowBars() then
