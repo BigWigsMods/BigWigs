@@ -41,6 +41,10 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "Удары",
 })
 
+BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
+	nullzone = "Связи",
+})
+
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "Гнев", -- Short for Aura of Wrath
 	execution_sentence = "Приговоры", -- Short for Execution Sentence

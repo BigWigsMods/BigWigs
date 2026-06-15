@@ -61,7 +61,8 @@ local breathAboutToCast = false
 -- Localization
 --
 
-mod:SetDefaultLocale({ -- SetOption:skip-locale
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	nullzone = "Tethers",
 	custom_select_gloom_reset = CL.counter_reset_name:format(mod:SpellName(1245391)),
 	custom_select_gloom_reset_desc = CL.counter_reset_desc,
 	custom_select_gloom_reset_icon = 1245391,
@@ -80,6 +81,7 @@ mod:SetRenames({
 	[1280458] = {CL.tank_grip}, -- Grappling Maw (Tank Grip)
 	-- Vaelgor
 	[1262623] = {1262623}, -- Nullbeam
+	[1244672] = {L.nullzone}, -- Nullzone
 	[1244221] = {CL.breath, CL.you:format(CL.breath), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1244221, CL.you:format(mod:SpellName(1244221))}}, -- Dread Breath (Breath)
 	[1265131] = {1265131}, -- Vaelwing
 	-- Ezzorak
@@ -97,7 +99,8 @@ function mod:GetOptions()
 		1249748, -- Midnight Flames
 		{1280458, "TANK"}, -- Grappling Maw
 		-- Vaelgor
-		1262623, -- Nullbeam
+		{1262623, "TANK"}, -- Nullbeam
+		1244672, -- Nullzone
 		{1244221, "ME_ONLY_EMPHASIZE"}, -- Dread Breath
 		{1265131, "TANK"}, -- Vaelwing
 		-- Ezzorak
@@ -244,6 +247,9 @@ function mod:TimersMythic(_, eventInfo)
 		nullbeamCount = 1
 		dreadBreathCount = 1
 		vaelwingCount = 1
+		if self:GetOption("custom_select_gloom_reset") < 3 then
+			gloomCount = 1
+		end
 		voidHowlCount = 1
 		rakfangCount = 1
 		grapplingMawCount = 1
@@ -368,6 +374,8 @@ function mod:TimersMythic(_, eventInfo)
 							activeBars[event.id] = self:DreadBreath(event)
 						elseif event.durationRounded == 18 then -- Nullbeam
 							activeBars[event.id] = self:Nullbeam(event)
+							-- Start our own timer
+							self:Bar(1244672, event.duration + 9.5, CL.count:format(self:GetRename(1244672), 1), nil, event.id) -- Nullzone icon(s)
 						else
 							self:StartBackupBar(event, true)
 						end
@@ -812,23 +820,38 @@ function mod:GrapplingMaw(eventInfo)
 end
 
 -- Vaelgor
-function mod:Nullbeam(eventInfo)
-	local barText = CL.count:format(self:GetRename(1262623), nullbeamCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1262623, eventInfo.duration, barText, nil, eventInfo.id)
-	end
-	nullbeamCount = nullbeamCount + 1
-	return {
-		msg = barText,
-		onFinished = function()
-			self:Message(1262623, "yellow", barText)
-			if not self:Mythic() then
-				self:StopBlizzMessages(0.5)
+do
+	local nullzoneAfter = 9.5
+	function mod:Nullbeam(eventInfo)
+		local barText = CL.count:format(self:GetRename(1262623), self:IsIntermission() and 1 or nullbeamCount)
+		if self:ShouldShowBars() then
+			self:CDBar(1262623, eventInfo.duration, barText, nil, eventInfo.id)
+			if not self:IsIntermission() then -- Timer in the intermission is unreliable
+				self:Bar(1244672, eventInfo.duration + nullzoneAfter, CL.count:format(self:GetRename(1244672), nullbeamCount), nil, eventInfo.id) -- Nullzone
 			end
-			self:PlaySound(1262623, "alert")
-		end,
-		this = self.Nullbeam
-	}
+		end
+		if not self:IsIntermission() then -- only increment outside of intermissions
+			nullbeamCount = nullbeamCount + 1
+		end
+		return {
+			msg = barText,
+			onFinished = function()
+				self:Message(1262623, "yellow", barText)
+				if not self:Mythic() then
+					self:StopBlizzMessages(0.5)
+				end
+				if not self:IsIntermission() then -- Timers arn't that trustworthy, let's not give fake info
+					self:Bar(1244672, {nullzoneAfter, eventInfo.duration + nullzoneAfter}, CL.count:format(self:GetRename(1244672), nullbeamCount - 1), nil, eventInfo.id) -- Nullzone
+				end
+				self:PlaySound(1262623, "alert")
+			end,
+			this = self.Nullbeam,
+			onCanceled = function()
+				local count = nullbeamCount - 1
+				self:StopBar(CL.count:format(self:GetRename(1244672), count)) -- Nullzone
+			end
+		}
+	end
 end
 
 do
@@ -836,7 +859,14 @@ do
 		breathAboutToCast = true
 	end
 	function mod:DreadBreath(eventInfo)
-		local barText = CL.count:format(self:GetRename(1244221), dreadBreathCount)
+		local count = dreadBreathCount
+		if self:IsIntermission() then
+			count = 1
+			if stageFloor == 1 and eventInfo.durationRounded == 23 then -- Adjust this one
+				count = 2
+			end
+		end
+		local barText = CL.count:format(self:GetRename(1244221), count)
 		if self:ShouldShowBars() then
 			self:CDBar(1244221, eventInfo.duration, barText, nil, eventInfo.id)
 			if self:Mythic() and not self:IsIntermission() then
@@ -898,7 +928,18 @@ function mod:Gloom(eventInfo)
 end
 
 function mod:VoidHowl(eventInfo)
-	local barText = CL.count:format(self:GetRename(1244917), voidHowlCount)
+	local count = voidHowlCount
+	local stage = self:GetStage()
+	if count <= 2 and stage == 2 then -- tweak some counts
+		if eventInfo.durationRounded == 43 then
+			count = 2
+		elseif eventInfo.durationRounded == 8 then
+			count = 1
+		end
+	elseif stage == 1 and count == 3 then
+		return -- this one never happens.
+	end
+	local barText = CL.count:format(self:GetRename(1244917), count)
 	local tbl = {
 		msg = barText,
 		onFinished = function()

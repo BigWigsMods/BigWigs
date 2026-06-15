@@ -41,6 +41,10 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "重击", --“影爪重击”简称
 })
 
+BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
+	aspect_of_the_end = "拉断",  -- 终末守护
+})
+
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "愤怒光环",
 	execution_sentence = "处决宣判",

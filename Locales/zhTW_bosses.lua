@@ -41,6 +41,10 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 	shadowclaw_slam = "猛擊",
 })
 
+BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
+	nullzone = "拉斷", -- 終結守護
+})
+
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	aura_of_wrath = "憤慨光環", -- Short for Aura of Wrath 不用縮寫
 	execution_sentence = "死刑宣判", -- Short for Execution Sentence  不用縮寫，或者處決?
