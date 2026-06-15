@@ -859,8 +859,7 @@ do
 		local count = dreadBreathCount
 		if self:IsIntermission() then -- It starts multiple breath bars at the same time, so we have to tweak the counts a bit incase of a wrong event order
 			count = 1
-			local stageFloor = math.floor(stage)
-			if stageFloor == 1 and eventInfo.durationRounded == 23 then -- Adjust this one
+			if math.floor(self:GetStage()) == 1 and eventInfo.durationRounded == 23 then -- Adjust this one
 				count = 2
 			end
 		end
