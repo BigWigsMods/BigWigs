@@ -857,8 +857,9 @@ do
 	end
 	function mod:DreadBreath(eventInfo)
 		local count = dreadBreathCount
-		if self:IsIntermission() then
+		if self:IsIntermission() then -- It starts multiple breath bars at the same time, so we have to tweak the counts a bit incase of a wrong event order
 			count = 1
+			local stageFloor = math.floor(stage)
 			if stageFloor == 1 and eventInfo.durationRounded == 23 then -- Adjust this one
 				count = 2
 			end
@@ -927,7 +928,7 @@ end
 function mod:VoidHowl(eventInfo)
 	local count = voidHowlCount
 	local stage = self:GetStage()
-	if count <= 2 and stage == 2 then -- tweak some counts
+	if count <= 2 and stage == 2 then -- tweak some counts as it starts multibars at the same time
 		if eventInfo.durationRounded == 43 then
 			count = 2
 		elseif eventInfo.durationRounded == 8 then
