@@ -17,13 +17,13 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	left = "[左] %s", -- left/west group bars in p3
 	right = "[右] %s", -- right/east group bars in p3
 
-	custom_select_limit_warnings = "[史诗] 限制第3阶段警报",
-	custom_select_limit_warnings_desc = "仅显示你所在半场的技能警报。",
+	custom_select_limit_warnings = "[史诗] 限制第三阶段警告",
+	custom_select_limit_warnings_desc = "仅显示你所在半场的技能警告。",
 	custom_select_limit_warnings_value1 = "1、2组去左面，3、4组去右面。",
 	custom_select_limit_warnings_value2 = "奇数组去左面，偶数组去右面。",
-	custom_select_limit_warnings_value3 = "显示两面的所有警报。",
-	custom_select_limit_warnings_value4 = "仅显示左面警报。",
-	custom_select_limit_warnings_value5 = "仅显示右面警报。",
+	custom_select_limit_warnings_value3 = "显示两面的所有警告。",
+	custom_select_limit_warnings_value4 = "仅显示左面警告。",
+	custom_select_limit_warnings_value5 = "仅显示右面警告。",
 })
 
 -- Midnight World
@@ -57,13 +57,13 @@ BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
 	divine_toll_mythic = "躲避 + 吸收盾",
 
 	empowered_searing_radiance = "强化灼热光辉",
-	empowered_searing_radiance_desc = "显示强化灼热光辉的计时器。",
+	empowered_searing_radiance_desc = "显示强化灼热光辉的计时条。",
 
 	empowered_avengers_shield = "强化复仇者之盾",
-	empowered_avengers_shield_desc = "显示强化复仇者之盾的计时器。",
+	empowered_avengers_shield_desc = "显示强化复仇者之盾的计时条。",
 
 	empowered_divine_storm = "强化神圣风暴",
-	empowered_divine_storm_desc = "显示强化神圣风暴的计时器。",
+	empowered_divine_storm_desc = "显示强化神圣风暴的计时条。",
 	tornadoes = "旋风", -- The renamed empowered Divine Storm
 
 	empowered = "[强] %s", -- Empowered version of an ability, [E] Avengers Shield
