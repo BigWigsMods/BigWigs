@@ -31,7 +31,7 @@ BigWigs:AddColors("Midnight Falls", {
 	[1253915] = "orange",
 	[1266388] = "yellow",
 	[1266897] = "orange",
-	[1267049] = "purple",
+	[1267049] = {"blue","purple"},
 	[1273158] = "red",
 	[1276525] = "red",
 	[1279420] = "yellow",

@@ -50,7 +50,7 @@ BigWigs:AddSounds("Fallen-King Salhadaar", {
 })
 
 BigWigs:AddColors("Vaelgor & Ezzorak", {
-	[1244221] = "orange",
+	[1244221] = {"blue","orange"},
 	[1244917] = "orange",
 	[1245391] = "orange",
 	[1245645] = "purple",
