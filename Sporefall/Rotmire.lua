@@ -32,7 +32,7 @@ local festeringVinesCount = 1
 mod:SetRenames({
 	[1221622] = {CL.adds}, -- Awaken Fungi
 	[1221637] = {CL.full_energy}, -- Fungal Bloom
-	[1222088] = {CL.debuffs, CL.you:format(CL.vines)}, -- Festering Vines
+	[1222088] = {CL.debuffs, CL.you:format(CL.vines), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1222088, CL.you:format(mod:SpellName(1222088))}}, -- Festering Vines
 	[1221787] = {CL.raid_damage}, -- Bursting Pustules
 	[1221781] = {CL.tank_hit}, -- Putrid Fist
 })
