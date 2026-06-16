@@ -330,6 +330,7 @@ L.spread = "Separatevi" -- An ability that forces you to spread out away from ot
 L.stomp = "Urto a Terra" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Tentacolo" -- Used for bosses that summon tentacles
 L.tentacles = "Tentacoli" -- Plural of L.tentacle
+L.vines = "Viticci" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
 L.waves = "Onde" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "Draghetto" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Draghetti" -- Plural of L.whelp

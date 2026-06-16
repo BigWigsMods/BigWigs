@@ -330,6 +330,7 @@ L.spread = "Verteilen" -- An ability that forces you to spread out away from oth
 L.stomp = "Stampfen" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Tentakel" -- Used for bosses that summon tentacles
 L.tentacles = "Tentakel" -- Plural of L.tentacle
+L.vines = "Ranken" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
 L.waves = "Wellen" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "Welpe" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Welpen" -- Plural of L.whelp

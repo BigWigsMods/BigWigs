@@ -330,6 +330,7 @@ L.spread = "Спредай" -- An ability that forces you to spread out away fro
 L.stomp = "Топот" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Щупальце" -- Used for bosses that summon tentacles
 L.tentacles = "Щупальца" -- Plural of L.tentacle
+--L.vines = "лианы/лианами/лозы??" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
 L.waves = "Пельмени" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean -- technically speaking "waves" is "Волны" but current tl is a very common name
 L.whelp = "Дракончик" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Дракончики" -- Plural of L.whelp

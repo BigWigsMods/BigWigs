@@ -330,6 +330,7 @@ L.spread = "산개" -- An ability that forces you to spread out away from other 
 L.stomp = "발구르기" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "촉수" -- Used for bosses that summon tentacles
 L.tentacles = "촉수" -- Plural of L.tentacle
+L.vines = "덩굴" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
 L.waves = "웨이브" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
 L.whelp = "새끼용" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "새끼용" -- Plural of L.whelp
