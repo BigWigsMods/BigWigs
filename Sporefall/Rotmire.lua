@@ -26,22 +26,15 @@ local putridFistCount = 1
 local festeringVinesCount = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
--- local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
--- })
-
---------------------------------------------------------------------------------
 -- Renames
 --
 
 mod:SetRenames({
-	[1221622] = {1221622}, -- Awaken Fungi
-	[1221637] = {1221637}, -- Fungal Bloom
-	[1222088] = {1222088}, -- Festering Vines
-	[1221787] = {1221787}, -- Bursting Pustules
-	[1221781] = {1221781}, -- Putrid Fist
+	[1221622] = {CL.adds}, -- Awaken Fungi
+	[1221637] = {CL.full_energy}, -- Fungal Bloom
+	[1222088] = {CL.debuffs, CL.you:format(CL.vines)}, -- Festering Vines
+	[1221787] = {CL.raid_damage}, -- Bursting Pustules
+	[1221781] = {CL.tank_hit}, -- Putrid Fist
 })
 
 --------------------------------------------------------------------------------
@@ -219,7 +212,7 @@ function mod:FesteringVines()
 		onFinished = function()
 			-- XXX would be better to finish on cast end when the debuffs go out :\
 			self:Message(1222088, "yellow", barText)
-			self:PersonalMessageFromBlizzMessage(1222088, 2.5) -- 2s cast + 0.5s leeway
+			self:PersonalMessageFromBlizzMessage(1222088, 2.5, false, self:GetRename(1222088, 2)) -- 2s cast + 0.5s leeway
 		end
 	}
 end
