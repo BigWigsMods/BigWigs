@@ -184,7 +184,7 @@ end
 --
 
 function mod:AwakenFungi(duration)
-	local barText = CL.count:format(self:SpellName(1221622), awakenFungiCount)
+	local barText = CL.count:format(self:GetRename(1221622), awakenFungiCount)
 	awakenFungiCount = awakenFungiCount + 1
 	return {
 		msg = barText,
@@ -198,7 +198,7 @@ function mod:AwakenFungi(duration)
 end
 
 function mod:FungalBloom(duration)
-	local barText = CL.count:format(self:SpellName(1221637), fungalBloomCount)
+	local barText = CL.count:format(self:GetRename(1221637), fungalBloomCount)
 	fungalBloomCount = fungalBloomCount + 1
 	return {
 		msg = barText,
@@ -212,7 +212,7 @@ function mod:FungalBloom(duration)
 end
 
 function mod:FesteringVines(duration)
-	local barText = CL.count:format(self:SpellName(1222088), festeringVinesCount)
+	local barText = CL.count:format(self:GetRename(1222088), festeringVinesCount)
 	festeringVinesCount = festeringVinesCount + 1
 	return {
 		msg = barText,
@@ -225,7 +225,7 @@ function mod:FesteringVines(duration)
 end
 
 function mod:BurstingPustules(duration)
-	local barText = CL.count:format(self:SpellName(1221787), burstingPustulesCount)
+	local barText = CL.count:format(self:GetRename(1221787), burstingPustulesCount)
 	burstingPustulesCount = burstingPustulesCount + 1
 	return {
 		msg = barText,
@@ -238,7 +238,7 @@ function mod:BurstingPustules(duration)
 end
 
 function mod:PutridFist(duration)
-	local barText = CL.count:format(self:SpellName(1221781), putridFistCount)
+	local barText = CL.count:format(self:GetRename(1221781), putridFistCount)
 	putridFistCount = putridFistCount + 1
 	return {
 		msg = barText,
