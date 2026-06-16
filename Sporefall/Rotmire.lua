@@ -36,23 +36,25 @@ local festeringVinesCount = 1
 -- Renames
 --
 
---mod:SetRenames({
---	[1221622] = {}, -- Awaken Fungi ()
---	[1221637] = {}, -- Fungal Bloom ()
---	[1222088] = {}, -- Festering Vines ()
---	[1221787] = {}, -- Bursting Pustules ()
---	[1221781] = {}, -- Putrid Fist ()
---})
+mod:SetRenames({
+	[1221622] = {1221622}, -- Awaken Fungi
+	[1221637] = {1221637}, -- Fungal Bloom
+	[1222088] = {1222088}, -- Festering Vines
+	[1221787] = {1221787}, -- Bursting Pustules
+	[1221781] = {1221781}, -- Putrid Fist
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
 mod:SetPrivateAuraSounds({
-	1221639, -- Shroomling fixate
-	1299508, -- Fungling fixate
+	{1221639, sound = "warning", note = CL.fixate}, -- Shroomling fixate
+	{1299508, sound = "warning", note = CL.fixate}, -- Fungling fixate
 	{1222088, sound = "alarm"}, -- Festering Vines
 	{1221714, sound = "none"}, -- Poison Burst
+	{1221787, sound = "none"}, -- Bursting Pustules
+	{1222495, sound = "none", mythic = "true"}, -- Bursting Doom Shroom
 })
 
 function mod:GetOptions()
@@ -190,7 +192,7 @@ function mod:AwakenFungi(duration)
 		onFinished = function()
 			self:Message(1221622, "cyan", barText)
 			self:StopBlizzMessages(1)
-			self:PlaySound(1221622, "info", "adds")
+			self:PlaySound(1221622, "long")
 		end
 	}
 end
@@ -202,9 +204,9 @@ function mod:FungalBloom(duration)
 		msg = barText,
 		key = 1221637,
 		onFinished = function()
-			self:Message(1221637, "yellow", barText)
+			self:Message(1221637, "red", barText)
 			self:StopBlizzMessages(1)
-			-- self:PlaySound(1221637, "alert")
+			self:PlaySound(1221637, "long")
 		end
 	}
 end
@@ -216,9 +218,8 @@ function mod:FesteringVines(duration)
 		msg = barText,
 		key = 1222088,
 		onFinished = function()
-			self:Message(1222088, "yellow", barText)
-			self:PersonalMessageFromBlizzMessage(1222088, 0.5, nil, self:SpellName(1222088))
-			-- self:PlaySound(1222088, "alert")
+			local timer = self:ScheduleTimer(function() self:Message(1222088, "yellow", barText) end, 0.6)
+			self:PersonalMessageFromBlizzMessage(1222088, 0.5, nil, nil, nil, nil, function() self:CancelTimer(timer) end)
 		end
 	}
 end
@@ -244,7 +245,9 @@ function mod:PutridFist(duration)
 		key = 1221781,
 		onFinished = function()
 			self:Message(1221781, "purple", barText)
-			-- self:PlaySound(1221781, "alert")
+			if self:Tank() then
+				self:PlaySound(1221781, "alert")
+			end
 		end
 	}
 end
