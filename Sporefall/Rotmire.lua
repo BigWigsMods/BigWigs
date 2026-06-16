@@ -56,7 +56,7 @@ function mod:GetOptions()
 		1221637, -- Fungal Bloom
 		1222088, -- Festering Vines
 		1221787, -- Bursting Pustules
-		1221781, -- Putrid Fist
+		{1221781, "TANK"}, -- Putrid Fist
 	}
 end
 
