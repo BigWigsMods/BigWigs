@@ -100,30 +100,29 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
 
-
 	if durationRounded == 8 or durationRounded == 21 then -- Bursting Pustules
-		barInfo = self:BurstingPustules(duration)
+		barInfo = self:BurstingPustules()
 	elseif durationRounded == 13 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 2 == 1 then -- Awaken Fungi -> Putred Fist
-			barInfo = self:AwakenFungi(duration)
+			barInfo = self:AwakenFungi()
 		else
-			barInfo = self:PutridFist(duration)
+			barInfo = self:PutridFist()
 		end
 	elseif durationRounded == 24 or durationRounded == 12 then -- Putrid Fist
-		barInfo = self:PutridFist(duration)
+		barInfo = self:PutridFist()
 	elseif durationRounded == 41 then -- Festering Vines
-		barInfo = self:FesteringVines(duration)
+		barInfo = self:FesteringVines()
 	elseif durationRounded == 114 then -- Fungal Bloom
-		barInfo = self:FungalBloom(duration)
+		barInfo = self:FungalBloom()
 	elseif durationRounded == 49 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 3 == 1 then -- Awaken Fungi -> Bursting Pustules -> Festering Vines
-			barInfo = self:AwakenFungi(duration)
+			barInfo = self:AwakenFungi()
 		elseif countForDuration[durationRounded] % 3 == 2 then
-			barInfo = self:BurstingPustules(duration)
+			barInfo = self:BurstingPustules()
 		else
-			barInfo = self:FesteringVines(duration)
+			barInfo = self:FesteringVines()
 		end
 	end
 
@@ -183,7 +182,7 @@ end
 -- Event Handlers
 --
 
-function mod:AwakenFungi(duration)
+function mod:AwakenFungi()
 	local barText = CL.count:format(self:GetRename(1221622), awakenFungiCount)
 	awakenFungiCount = awakenFungiCount + 1
 	return {
@@ -197,7 +196,7 @@ function mod:AwakenFungi(duration)
 	}
 end
 
-function mod:FungalBloom(duration)
+function mod:FungalBloom()
 	local barText = CL.count:format(self:GetRename(1221637), fungalBloomCount)
 	fungalBloomCount = fungalBloomCount + 1
 	return {
@@ -211,20 +210,21 @@ function mod:FungalBloom(duration)
 	}
 end
 
-function mod:FesteringVines(duration)
+function mod:FesteringVines()
 	local barText = CL.count:format(self:GetRename(1222088), festeringVinesCount)
 	festeringVinesCount = festeringVinesCount + 1
 	return {
 		msg = barText,
 		key = 1222088,
 		onFinished = function()
-			local timer = self:ScheduleTimer(function() self:Message(1222088, "yellow", barText) end, 0.6)
-			self:PersonalMessageFromBlizzMessage(1222088, 0.5, nil, nil, nil, nil, function() self:CancelTimer(timer) end)
+			-- XXX would be better to finish on cast end when the debuffs go out :\
+			self:Message(1222088, "yellow", barText)
+			self:PersonalMessageFromBlizzMessage(1222088, 2.5) -- 2s cast + 0.5s leeway
 		end
 	}
 end
 
-function mod:BurstingPustules(duration)
+function mod:BurstingPustules()
 	local barText = CL.count:format(self:GetRename(1221787), burstingPustulesCount)
 	burstingPustulesCount = burstingPustulesCount + 1
 	return {
@@ -237,7 +237,7 @@ function mod:BurstingPustules(duration)
 	}
 end
 
-function mod:PutridFist(duration)
+function mod:PutridFist()
 	local barText = CL.count:format(self:GetRename(1221781), putridFistCount)
 	putridFistCount = putridFistCount + 1
 	return {
