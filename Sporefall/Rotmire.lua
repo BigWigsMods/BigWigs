@@ -30,11 +30,11 @@ local festeringVinesCount = 1
 --
 
 mod:SetRenames({
-	[1221622] = {CL.adds}, -- Awaken Fungi
-	[1221637] = {CL.full_energy}, -- Fungal Bloom
-	[1222088] = {CL.debuffs, CL.you:format(CL.vines), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1222088, CL.you:format(mod:SpellName(1222088))}}, -- Festering Vines
-	[1221787] = {CL.raid_damage}, -- Bursting Pustules
-	[1221781] = {CL.tank_hit}, -- Putrid Fist
+	[1221622] = {CL.adds}, -- Awaken Fungi (Adds)
+	[1221637] = {CL.full_energy}, -- Fungal Bloom (Full Energy)
+	[1222088] = {CL.debuffs, CL.you:format(CL.vines), notes = {CL.generalNote, CL.messageOnYouNote}, original = {1222088, CL.you:format(mod:SpellName(1222088))}}, -- Festering Vines (Debuffs)
+	[1221787] = {CL.raid_damage}, -- Bursting Pustules (Raid Damage)
+	[1221781] = {CL.tank_hit}, -- Putrid Fist (Tank Hit)
 })
 
 --------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ mod:SetRenames({
 mod:SetPrivateAuraSounds({
 	{1221639, sound = "warning", note = CL.fixate}, -- Shroomling fixate
 	{1299508, sound = "warning", note = CL.fixate}, -- Fungling fixate
-	{1222088, sound = "alarm"}, -- Festering Vines
+	{1222088, sound = "warning", note = CL.vines}, -- Festering Vines
 	{1221714, sound = "none"}, -- Poison Burst
 	{1221787, sound = "none"}, -- Bursting Pustules
 	{1222495, sound = "none", mythic = "true"}, -- Bursting Doom Shroom
@@ -120,11 +120,9 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	end
 
 	if barInfo then
-		barInfo.eventID = eventInfo.id
-		barInfo.duration = barInfo.duration or eventInfo.duration
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
-			self:Bar(barInfo.key, barInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
 		self:ErrorForTimelineEvent(eventInfo)
@@ -142,40 +140,47 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local barInfo = activeBars[eventID]
 	if barInfo then
 		local state = C_EncounterTimeline.GetEventState(eventID)
-		if state == 2 or state == 3 then -- Finished or Canceled
-			self:StopBar(barInfo.msg)
-			if self:ShouldShowBars() then
-				if state == 2 and barInfo.onFinished then
-					barInfo:onFinished()
-				elseif state == 3 and barInfo.onCanceled then
-					barInfo:onCanceled()
-				end
-			end
-
+		if state == 2 then -- Finished
 			activeBars[eventID] = nil
+			self:StopBar(barInfo.msg)
+			if barInfo.onFinished and self:ShouldShowBars() then
+				barInfo.onFinished()
+			end
+		elseif state == 3 then -- Canceled
+			activeBars[eventID] = nil
+			self:StopBar(barInfo.msg)
+			if barInfo.onCanceled and self:ShouldShowBars() then
+				barInfo.onCanceled()
+			end
 		end
 	elseif backupBars[eventID] then
-		local newState = C_EncounterTimeline.GetEventState(eventID)
-		if newState == 0 then
+		local state = C_EncounterTimeline.GetEventState(eventID)
+		if state == 0 then -- Enum.EncounterTimelineEventState.Active
 			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
-		elseif newState == 1 then
+		elseif state == 1 then -- Enum.EncounterTimelineEventState.Paused
 			self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
-		elseif newState == 2 or newState == 3 then
+		elseif state == 2 or state == 3 then -- Enum.EncounterTimelineEventState.Finished / Enum.EncounterTimelineEventState.Canceled
 			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
 		end
 	end
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	activeBars[eventID] = nil
-	backupBars[eventID] = nil
+	local barInfo = activeBars[eventID]
+	if barInfo then
+		self:StopBar(barInfo.msg)
+		activeBars[eventID] = nil
+	elseif backupBars[eventID] then
+		backupBars[eventID] = nil
+		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:AwakenFungi()
+function mod:AwakenFungi() -- Adds
 	local barText = CL.count:format(self:GetRename(1221622), awakenFungiCount)
 	awakenFungiCount = awakenFungiCount + 1
 	return {
@@ -184,12 +189,12 @@ function mod:AwakenFungi()
 		onFinished = function()
 			self:Message(1221622, "cyan", barText)
 			self:StopBlizzMessages(1)
-			self:PlaySound(1221622, "long")
+			self:PlaySound(1221622, "info")
 		end
 	}
 end
 
-function mod:FungalBloom()
+function mod:FungalBloom() -- Full Energy
 	local barText = CL.count:format(self:GetRename(1221637), fungalBloomCount)
 	fungalBloomCount = fungalBloomCount + 1
 	return {
@@ -203,7 +208,7 @@ function mod:FungalBloom()
 	}
 end
 
-function mod:FesteringVines()
+function mod:FesteringVines() -- Debuffs
 	local barText = CL.count:format(self:GetRename(1222088), festeringVinesCount)
 	festeringVinesCount = festeringVinesCount + 1
 	return {
@@ -213,24 +218,25 @@ function mod:FesteringVines()
 			-- XXX would be better to finish on cast end when the debuffs go out :\
 			self:Message(1222088, "yellow", barText)
 			self:PersonalMessageFromBlizzMessage(1222088, 2.5, false, self:GetRename(1222088, 2)) -- 2s cast + 0.5s leeway
+			--self:PlaySound(1222088, "warning") -- PA sound
 		end
 	}
 end
 
-function mod:BurstingPustules()
+function mod:BurstingPustules() -- Raid Damage
 	local barText = CL.count:format(self:GetRename(1221787), burstingPustulesCount)
 	burstingPustulesCount = burstingPustulesCount + 1
 	return {
 		msg = barText,
 		key = 1221787,
 		onFinished = function()
-			self:Message(1221787, "yellow", barText)
-			-- self:PlaySound(1221787, "alert")
+			self:Message(1221787, "orange", barText)
+			self:PlaySound(1221787, "alarm")
 		end
 	}
 end
 
-function mod:PutridFist()
+function mod:PutridFist() -- Tank Hit
 	local barText = CL.count:format(self:GetRename(1221781), putridFistCount)
 	putridFistCount = putridFistCount + 1
 	return {
