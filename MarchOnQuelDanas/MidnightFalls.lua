@@ -22,6 +22,7 @@ mod:SetPrivateAuraSounds({
 	{1284984, sound = "none", note = BigWigsAPI:GetLocale("BigWigs").blue}, -- Grim Symphony (Blue)
 	{1286294, sound = "none", note = BigWigsAPI:GetLocale("BigWigs").red}, -- Grim Symphony (Red)
 })
+mod:SetBlockedUnitsForWipeHealthCheck({[250616] = true}) -- Dusk Crystal
 mod:UseCustomTimers(true)
 
 --------------------------------------------------------------------------------
