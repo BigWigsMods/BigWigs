@@ -27,6 +27,19 @@ local putridFistCount = 1
 local festeringVinesCount = 1
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	custom_select_tank_counter_reset = CL.counter_reset_name:format(mod:SpellName(1221781)),
+	custom_select_tank_counter_reset_desc = CL.counter_reset_desc,
+	custom_select_tank_counter_reset_icon = 1221781,
+	custom_select_tank_counter_reset_value1 = CL.reset_casts:format(2),
+	custom_select_tank_counter_reset_value2 = CL.reset_casts:format(3),
+	custom_select_tank_counter_reset_value3 = CL.reset_never,
+})
+
+--------------------------------------------------------------------------------
 -- Renames
 --
 
@@ -62,6 +75,7 @@ function mod:GetOptions()
 		{1222088, "ME_ONLY_EMPHASIZE"}, -- Festering Vines
 		1221787, -- Bursting Pustules
 		{1221781, "TANK"}, -- Putrid Fist
+		"custom_select_tank_counter_reset",
 	}
 end
 
@@ -257,6 +271,8 @@ end
 function mod:PutridFist() -- Tank Hit
 	local barText = CL.count:format(self:GetRename(1221781), putridFistCount)
 	putridFistCount = putridFistCount + 1
+	if putridFistCount == 3 and self:GetOption("custom_select_tank_counter_reset") == 1 then putridFistCount = 1 end -- 1, 2, 1, 2...
+	if putridFistCount == 4 and self:GetOption("custom_select_tank_counter_reset") == 2 then putridFistCount = 1 end -- 1, 2, 3, 1, 2, 3...
 	return {
 		msg = barText,
 		key = 1221781,
