@@ -3609,13 +3609,13 @@ function boss:TargetMessage(key, color, player, text, icon)
 		if not player then
 			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE)
 			if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
-				local msg = self:IsRenameAvailable(key) and self:GetRename(key, text[1]) or type(text) == "string" and text or spells[text or key]
+				local msg = not text and self:IsRenameAvailable(key) and self:GetRename(key, text[1]) or type(text) == "string" and text or spells[text or key]
 				self:SendMessage("BigWigs_Message", self, key, format(CL.other, msg, "???"), color, texture, isEmphasized)
 			end
 		elseif player == myName then
 			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) or self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
 			if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
-				if self:IsRenameAvailable(key) then
+				if not text and self:IsRenameAvailable(key) then
 					local msg = self:GetRename(key, text[2])
 					self:SendMessage("BigWigs_Message", self, key, msg, "blue", texture, isEmphasized)
 				else
@@ -3627,7 +3627,7 @@ function boss:TargetMessage(key, color, player, text, icon)
 			-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
 			local isEmphasized = self:CheckFlag(key, C.EMPHASIZE) and not self:CheckFlag(key, C.ME_ONLY_EMPHASIZE)
 			if not self:CheckFlag(key, C.ME_ONLY) and (self:CheckFlag(key, C.MESSAGE) or isEmphasized) then
-				local msg = self:IsRenameAvailable(key) and self:GetRename(key, text[1]) or type(text) == "string" and text or spells[text or key]
+				local msg = not text and self:IsRenameAvailable(key) and self:GetRename(key, text[1]) or type(text) == "string" and text or spells[text or key]
 				self:SendMessage("BigWigs_Message", self, key, format(CL.other, msg, self:ColorName(player)), color, texture, isEmphasized)
 			end
 		end
