@@ -25,6 +25,7 @@ local difficultiesWithBattleRes = {
 	[16] = true, -- Mythic
 	[17] = true, -- Looking For Raid
 	[33] = true, -- Timewalking (Raid)
+	[233] = true, -- Mythic (Flexible 15-25 player raids)
 }
 local castableBattleResSpells = {
 	[20484] = true, -- Rebirth
