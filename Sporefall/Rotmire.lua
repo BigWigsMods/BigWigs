@@ -54,7 +54,7 @@ function mod:GetOptions()
 	return {
 		1221622, -- Awaken Fungi
 		1221637, -- Fungal Bloom
-		1222088, -- Festering Vines
+		{1222088, "ME_ONLY_EMPHASIZE"}, -- Festering Vines
 		1221787, -- Bursting Pustules
 		{1221781, "TANK"}, -- Putrid Fist
 	}
