@@ -545,8 +545,7 @@ do
 					local total = ""
 					for i = 1, #unitInfo do
 						local unitTable = unitInfo[i]
-						-- unitTable.creatureID we might need to use this to filter certain units at some point?
-						if unitTable.remainingHealthPercent > 0 then
+						if unitTable.remainingHealthPercent > 0 and not module:IsUnitBlockedFromWipeHealthCheck(unitTable.creatureID) then
 							if total == "" then
 								total = L.healthFormat:format(unitTable.creatureName, unitTable.remainingHealthPercent*100)
 							else

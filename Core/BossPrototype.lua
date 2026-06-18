@@ -4808,6 +4808,31 @@ do
 	end
 end
 
+do
+	local moduleBlockedHealthCheckList = {}
+
+	--- Check if this unit should not be shown in the wipe health check.
+	-- @number creatureID the creature ID to check
+	-- @return boolean
+	function boss:IsUnitBlockedFromWipeHealthCheck(creatureID)
+		if not moduleBlockedHealthCheckList[self] or not moduleBlockedHealthCheckList[self][creatureID] then
+			return false
+		else
+			return true
+		end
+	end
+
+	--- Assign a list of units that should never show in the wipe health check.
+	-- @param listOfUnits the table storing the list of units via creature IDs e.g. {[12345] = true}
+	function boss:SetBlockedUnitsForWipeHealthCheck(listOfUnits)
+		if moduleBlockedHealthCheckList[self] then
+			error(("Module %q already has a list of blocked health check units set."):format(self.moduleName))
+			return
+		end
+		moduleBlockedHealthCheckList[self] = listOfUnits
+	end
+end
+
 --- Start a "berserk" bar, and optionally also show an engage message, and multiple reminder messages.
 -- @number seconds the time before the boss enrages/berserks
 -- @param[opt] noMessages if any value, don't display an engage message. If set to 0, don't display any messages
