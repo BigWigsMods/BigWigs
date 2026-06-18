@@ -452,7 +452,7 @@ L.customText = "自訂文字（必須包含 %s）"
 -- Keystones.lua
 --
 
---L.keys = "Keys"
+L.keys = "鑰石"
 
 L.keystoneTitle = "BigWigs 鑰石清單"
 L.keystoneHeaderParty = "隊伍"
