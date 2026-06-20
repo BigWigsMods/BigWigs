@@ -227,7 +227,9 @@ local function updateProfile()
 	end
 
 	if not db.player.disabled or not db.other.disabled then
-		C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+		if C_UnitAuras.TriggerPrivateAuraShowDispelType then
+			C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
+		end
 	end
 
 	plugin:UpdateAllAnchors()
