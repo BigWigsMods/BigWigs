@@ -112,4 +112,13 @@ MidnightWorld\Thormbelan.lua
 MidnightWorld\!Options.lua
 Sporefall\Rotmire.lua
 Sporefall\!Options.lua
+TheVenomousAbyss\Nekzali.lua
+TheVenomousAbyss\Sentinels.lua
+TheVenomousAbyss\Vashnik.lua
+TheVenomousAbyss\Explorers.lua
+TheVenomousAbyss\Sszorak.lua
+TheVenomousAbyss\TwinFangs.lua
+TheVenomousAbyss\Crown.lua
+TheVenomousAbyss\Ulatek.lua
+TheVenomousAbyss\!Options.lua
 #@end-do-not-package@

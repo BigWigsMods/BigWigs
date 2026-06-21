@@ -446,6 +446,7 @@ do
 		[2913] = mn, -- March on Quel'Danas
 		[2939] = mn, -- The Dreamrift
 		[1592] = public.isNext and mn or nil, -- Sporefall
+		[3004] = public.isTestBuild and mn or nil, -- The Venomous Abyss
 
 
 		--[[ LittleWigs: Classic ]]--

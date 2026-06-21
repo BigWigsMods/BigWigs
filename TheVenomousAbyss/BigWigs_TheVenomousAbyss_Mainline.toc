@@ -1,0 +1,42 @@
+## Interface: 120001, 120005, 120007
+
+## Title: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-deDE: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-esES: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-esMX: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-frFR: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-itIT: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-koKR: BigWigs [|cffeda55fthe venomous abyss|r]
+## Title-ptBR: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-ruRU: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-zhCN: BigWigs [|cffeda55fthe venomous abyss|r]
+## Title-zhTW: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Notes: BigWigs The Venomous Abyss Modules
+## Notes-deDE: BigWigs The Venomous Abyss Module
+## Notes-esES: BigWigs The Venomous Abyss Modules
+## Notes-esMX: BigWigs The Venomous Abyss Modules
+## Notes-frFR: BigWigs The Venomous Abyss Modules
+## Notes-itIT: BigWigs The Venomous Abyss Modules
+## Notes-koKR: BigWigs The Venomous Abyss Modules
+## Notes-ptBR: BigWigs The Venomous Abyss Modules
+## Notes-ruRU: BigWigs The Venomous Abyss Modules
+## Notes-zhCN: BigWigs The Venomous Abyss Modules
+## Notes-zhTW: BigWigs The Venomous Abyss Modules
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 3004
+
+Nekzali.lua
+Sentinels.lua
+Vashnik.lua
+Explorers.lua
+Sszorak.lua
+TwinFangs.lua
+Crown.lua
+Ulatek.lua
+!Options.lua
