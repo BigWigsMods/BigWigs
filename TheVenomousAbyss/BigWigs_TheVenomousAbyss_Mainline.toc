@@ -1,4 +1,4 @@
-## Interface: 120001, 120005, 120007
+## Interface: 120100, 120005, 120007
 
 ## Title: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-deDE: BigWigs [|cffeda55fThe Venomous Abyss|r]
