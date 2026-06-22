@@ -32,5 +32,4 @@
 ## X-BigWigs-LoadOn-InstanceId: 1592
 
 Rotmire.lua
-
 !Options.lua

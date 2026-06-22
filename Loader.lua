@@ -316,6 +316,7 @@ do
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
 				[1592] = "BigWigs_Sporefall",
+				[3004] = "BigWigs_TheVenomousAbyss",
 			}
 		}
 	else -- Retail
@@ -348,7 +349,8 @@ do
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
-				[1592] = public.isNext and "BigWigs_Sporefall" or nil,
+				[1592] = "BigWigs_Sporefall",
+				[3004] = public.isNext and "BigWigs_TheVenomousAbyss" or nil,
 			}
 		}
 	end
@@ -445,8 +447,8 @@ do
 		[2912] = mn, -- The Voidspire
 		[2913] = mn, -- March on Quel'Danas
 		[2939] = mn, -- The Dreamrift
-		[1592] = public.isNext and mn or nil, -- Sporefall
-		[3004] = public.isTestBuild and mn or nil, -- The Venomous Abyss
+		[1592] = mn, -- Sporefall
+		[3004] = public.isNext and mn or nil, -- The Venomous Abyss
 
 
 		--[[ LittleWigs: Classic ]]--
@@ -1419,6 +1421,7 @@ do
 		BigWigs_TheDreamrift = true,
 		BigWigs_MarchOnQuelDanas = true,
 		BigWigs_Sporefall = true,
+		BigWigs_TheVenomousAbyss = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
