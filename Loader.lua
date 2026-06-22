@@ -179,7 +179,7 @@ public.isTestBuild = IsPublicTestClient() -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = public.isTestBuild and build >= 130000
-	public.isNext = build >= 120007
+	public.isNext = build >= 120100
 end
 
 -- Version
