@@ -10,7 +10,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-ruRU: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-zhCN: BigWigs [|cffeda55f烈毒之渊|r]
-## Title-zhTW: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-zhTW: BigWigs [|cffeda55f劇毒深淵|r]
 ## Notes: BigWigs The Venomous Abyss Modules
 ## Notes-deDE: BigWigs The Venomous Abyss Module
 ## Notes-esES: BigWigs The Venomous Abyss Modules
@@ -21,7 +21,7 @@
 ## Notes-ptBR: BigWigs The Venomous Abyss Modules
 ## Notes-ruRU: BigWigs The Venomous Abyss Modules
 ## Notes-zhCN: BigWigs 烈毒之渊模块
-## Notes-zhTW: BigWigs The Venomous Abyss Modules
+## Notes-zhTW: BigWigs 劇毒深淵模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
