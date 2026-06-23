@@ -7,7 +7,7 @@ if not BigWigsLoader.isNext then return end
 local mod, CL = BigWigs:NewBoss("Vashnik the Malignant", 3004, 2882)
 if not mod then return end
 -- mod:RegisterEnableMob(0)
-mod:SetEncounterID(3445)
+mod:SetEncounterID(3455)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
 
