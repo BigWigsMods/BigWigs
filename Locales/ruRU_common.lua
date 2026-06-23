@@ -29,7 +29,7 @@ L.rticon = "%s ({rt%d})"
 L.near = "%s возле ТЕБЯ"
 L.on_group = "%s на ГРУППЕ" -- spell on group
 L.boss = "БОСС"
-L.plus = "%s + %s" -- Spell 1 + Spell 2
+L.plus = "%s + %s" -- Способность 1 + Способность 2
 L.extra = "%s (%s)" -- SPELL_NAME (short spell name or extra information)
 
 L.phase = "Фаза %d"
@@ -65,7 +65,7 @@ L.interrupted_by = "%s прерван %s" -- Spell interrupted by Player
 L.interruptible = "Прерываемое" -- when a spell is interruptible
 L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
---L.intermission_over = "Intermission over"
+--L.intermission_over = "Конец перерыва"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s отменено" -- Spell Cancelled
 L.you_die = "Умираешь" -- You will die
@@ -73,7 +73,7 @@ L.you_die_sec = "Умрёшь через %d сек" -- "You die in 15 sec" (sec 
 L.next_ability = "Следующая способность" -- We don't know what ability will be next, we only know when it will happen (showing a bar)
 L.boss_landing = "%s приземляется" -- "NPC_NAME is landing" Used when a flying NPC/dragon/boss is landing
 L.landing = "Приземление" -- Used when a flying NPC/dragon/boss is landing
-L.flying_available = "Можешь лететь"
+L.flying_available = "Доступен полет"
 L.bosses_too_close = "Разведи боссов" -- When 2 or more bosses are too close to each other, buffing each other with a shield, extra damage, etc. -- changed translation meaning, but intent is the same
 L.keep_moving = "Двигайся" -- An ability that forces you to keep moving or you will take damage
 L.stand_still = "Стой смирно" -- An ability that forces you to stand still or you will take damage
@@ -83,25 +83,25 @@ L.safe = "Безопасность" -- You are safe from a bad ability
 L.unsafe = "Опасность" -- You are unsafe (in danger) of a bad ability
 
 -- Add related
-L.add_spawned = "Помощник появился" -- singular
-L.adds_spawned = "Помощники появились" -- plural
-L.adds_spawned_count = "%d |4адд:аддов:адд; spawned" -- 1 add spawned / 2 adds spawned
-L.add_spawning = "Спаун Адда" -- singular
-L.adds_spawning = "Спаун Аддов" -- plural
---L.add_incoming = "Add incoming" -- singular
---L.adds_incoming = "Adds incoming" -- plural
+L.add_spawned = "АДД появился" -- singular
+L.adds_spawned = "АДДЫ появились" -- plural
+L.adds_spawned_count = "%d |4АДД:АДДов:АДД; spawned" -- 1 add spawned / 2 adds spawned
+L.add_spawning = "Спаун АДДа" -- singular
+L.adds_spawning = "Спаун АДДов" -- plural
+--L.add_incoming = "АДД на подходе" -- singular
+--L.adds_incoming = "АДДы на подходе" -- plural
 L.spawned = "Появление: %s"
 L.spawning = "%s появление"
-L.next_add = "Следующий помощник"
-L.add_killed = "Помощник убит (%d/%d)"
-L.add_remaining = "Помощник убит, %d осталось"
-L.add = "Помощник"
-L.adds = "Помощники"
-L.big_add = "Большой помощник" -- singular
-L.big_adds = "Большие помощники" -- plural
-L.small_add = "Маленький помощник" -- singular
-L.small_adds = "Маленькие помощники" -- plural
---L.eat_adds = "Eat Adds" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
+L.next_add = "Следующий АДД"
+L.add_killed = "АДД убит (%d/%d)"
+L.add_remaining = "АДД убит, %d осталось"
+L.add = "АДД"
+L.adds = "АДДы"
+L.big_add = "Большой АДД" -- singular
+L.big_adds = "Большие АДДы" -- plural
+L.small_add = "Маленький АДД" -- singular
+L.small_adds = "Маленькие АДДы" -- plural
+--L.eat_adds = "ЖРЕТ помощников" -- When a boss is going to eat/consume any adds remaining to empower/heal itself. Usually this is a timer. You have to kill all adds in X seconds or they will be eaten.
 
 -- Mob related
 L.killed = "%s убит"
@@ -139,18 +139,18 @@ L.affixes = "Аффикс" -- Seasonal affixes for raids and mythic+ dungeons
 -- GUI boss dropdown for cast counters
 -- Cast counters are the numbers you see next to spell names that keep increasing e.g. "Bad Spell (3)" <-- that number
 -- This dropdown option will let you choose when that number should reset back to 1
---L.counter_reset_name = "%s cast counter" -- SPELL_NAME cast counter
---L.counter_reset_desc = "Choose when to reset the counter."
---L.reset_casts = "Reset every %d casts" -- Reset every 3 casts
---L.reset_stages = "Reset on stage change"
---L.reset_casts_and_stages = "Reset every %d casts and on stage change"
---L.reset_never = "Never reset"
+--L.counter_reset_name = "%s каст(а)" -- SPELL_NAME cast counter
+--L.counter_reset_desc = "Выберите когда сбрасывать счетчик кастов."
+--L.reset_casts = "Сбрасывать каждые %d каста" -- Reset every 3 casts
+--L.reset_stages = "Сбрасывать при смене этапа"
+--L.reset_casts_and_stages = "Сбрасывать каждые %d каста при смене этапа"
+--L.reset_never = "Никогда не сбрасывать"
 
 -- Common raid marking locale
 L.marker = "Метка %s"
 L.marker_player_desc = "Отмечать игроков, затронутых %s меткой %s, требуется быть помощником или лидером рейда." -- Mark players affected by 'SPELL_NAME' with SKULL_ICON
 L.marker_npc_desc = "Отмечать %s меткой %s, требуется быть помощником или лидером рейда." -- Mark NPC_NAME with SKULL_ICON
-L.marker_npc_aura_desc = "Отмечает НПЦ под воздействием '%s' меткой %s, требуется быть помощником или лидером рейда." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
+L.marker_npc_aura_desc = "Отмечает НИП под воздействием '%s' меткой %s, требуется быть помощником или лидером рейда." -- Mark NPCs affected by 'SPELL_NAME' with SKULL_ICON
 L.disabled = "Отключено"
 L.none = "Нет"
 L.markers = "Метки" -- Plural of marker
@@ -206,48 +206,48 @@ L.nature = "Природа"
 L.arcane = "Тайная магия"
 
 -- Autotalk
-L.autotalk = "Автоматическое взаимодействие с НПЦ"
-L.autotalk_boss_desc = "Автоматический выбирать вариант диалога с НПЦ для начала боя."
-L.autotalk_generic_desc = "Автоматический выбирать вариант диалога с НПЦ для продвижения по подземелью."
-L.autotalk_notice = "Произведено автоматическое взаидействовие с НПЦ %s."
+L.autotalk = "Автоматическое взаимодействие с НИП"
+L.autotalk_boss_desc = "Автоматический выбирать вариант диалога с НИП для начала боя."
+L.autotalk_generic_desc = "Автоматический выбирать вариант диалога с НИП для продвижения по подземелью."
+L.autotalk_notice = "Произведено автоматическое взаидействовие с НИП %s."
 
 -- GUI notes
---L.intermissionOnly = "Intermission Only"
---L.stage1Only = "Stage 1 Only"
---L.stage2Only = "Stage 2 Only"
---L.stage3Only = "Stage 3 Only"
+--L.intermissionOnly = "Только Перерыв"
+--L.stage1Only = "Только 1 этап"
+--L.stage2Only = "Только 2 этап"
+--L.stage3Only = "Только 3 этап"
 
 -- GUI notes for renames
---L.generalNote = "This is the text that will generally be used"
---L.timerNote = "This text will be used for timers"
---L.castTimerNote = "This text will only be used for cast timers"
---L.messageCastOverNote = "This text will be used for showing a message when the cast ends"
---L.messageCastStartNote = "This text will be used for showing a message when the cast starts"
---L.messageBeforeCastStartNote = "This text will be used for showing a message before a cast starts"
---L.messageDuringCastNote = "This text will be used for showing messages during the cast"
---L.messageNote = "This text will be used for messages"
---L.messageOnYouNote = "The message shown when this ability is on you"
---L.messageOnOtherNote = "The message shown when this ability is on other people"
---L.messageTauntNowNote = "The message shown when you're a tank and you need to taunt"
---L.messageSpecificHealth = "The message shown when the boss is at %d%% health"
---L.timerOnYouNote = "The text shown in the timer when this ability is on you"
---L.mythicOnlyNote = "This text will be used on Mythic only"
---L.otherDifficultiesNote = "This text will be used on all other difficulties"
+--L.generalNote = "Обычное сообщение"
+--L.timerNote = "Сообщение для таймеров"
+--L.castTimerNote = "Сообщение только для таймеров кастов"
+--L.messageCastOverNote = "Сообщение для конца каста"
+--L.messageCastStartNote = "Сообщение для начала каста"
+--L.messageBeforeCastStartNote = "Сообщение перед началом каста"
+--L.messageDuringCastNote = "Сообщение во время каста"
+--L.messageNote = "Текст для сообщений"
+--L.messageOnYouNote = "Сообщение когда способность НА ТЕБЕ"
+--L.messageOnOtherNote = "Сообщение когда споробность НА ДРУГОМ персонаже"
+--L.messageTauntNowNote = "Сообщение для ТАНКА затаунтить СЕЙЧАС"
+--L.messageSpecificHealth = "Сообщение когда у БОССА %d%% здоровья"
+--L.timerOnYouNote = "Сообщение в таймере когда способность НА ТЕБЕ"
+--L.mythicOnlyNote = "Сообщение только для Эпохальной сложности"
+--L.otherDifficultiesNote = "Сообщение для остальных сложностей"
 
 -- GUI notes for debuffs
---L.debuffFailureNote = "This debuff will apply to you if you fail"
---L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
---L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
---L.preDebuffNote = "This is the pre-debuff, before the main debuff applies to you"
---L.mainDebuffNote = "This is the main debuff that applies to you"
---L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires" -- This debuff will apply to you after OTHER_DEBUFF expires
---L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
---L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
---L.debuffPossibleAfterCastNote = "This debuff might apply to you after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
---L.debuffTankAfterCastNote = "This debuff will apply to the tank after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
---L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
---L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
---L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
+--L.debuffFailureNote = "Дебафф наложится на тебя, если не успеешь отреагировать"
+--L.debuffFailureMoveFromExplosionNote = "Дебафф наложится на тебя, если не успеешь выйти из взрыва"
+--L.debuffFailureInterruptNote = "Дебафф наложится на тебя если ты не успеешь кикнуть: |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+--L.preDebuffNote = "Дебафф предшествующий основному"
+--L.mainDebuffNote = "Основной дебафф применяемый к тебе"
+--L.postDebuffNote = "Дебафф наложится на тебя, когда |cFFFFFFFF%s|r истечет" -- This debuff will apply to you after OTHER_DEBUFF expires
+--L.debuffUnderYouNote = "Дебафф наложится на тебя если будешь стоять в луже" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+--L.debuffDotAfterCastNote = "ДОТа наложится на тебя, после того как босс докастует: |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+--L.debuffPossibleAfterCastNote = "Дебафф может наложитья на тебя, если бост докастует: |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+--L.debuffTankAfterCastNote = "Дебафф наложится на танка, если не прервать каст: |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+--L.debuffWalkIntoObjectNote = "Дебафф наложится на тебя, если ты специально зайдешь в объект: |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+--L.debuffHitByCastNote = "Дебафф наложится на тебя, если ты поймаешь каст: |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+--L.debuffAddsCast = "Дебафф на тебе от: |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
@@ -257,9 +257,9 @@ L.beams = "Лучи" -- Plural of L.beam
 L.bomb = "Бомба" -- Used for debuffs that make players explode
 L.bombs = "Бомбы" -- Plural of L.bomb
 L.explosion = "Взрыв" -- When the explosion from a bomb-like ability will occur
---L.explosions = "Explosions" -- Plural of L.explosion
+--L.explosions = "Взрывы" -- Plural of L.explosion
 L.knockback = "Отбрасывание" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
---L.knockbacks = "Knockbacks" -- Plural of L.knockback
+--L.knockbacks = "Отбрасывания" -- Plural of L.knockback
 L.pushback = "Отталкивание" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "Ловушки" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Метеор" -- This one will probably only ever be used for actual meteors
@@ -289,34 +289,34 @@ L.tornadoes = "Торнадо" -- Plural of L.tornado
 L.mark = "Знак" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Знаки" -- Plural of L.marks
 L.mind_control = "Контроль над разумом" -- Any kind of Mind Control ability, where a player loses control of their character
-L.mind_control_short = "КР" -- Short version of Mind Control, mainly for bars
+L.mind_control_short = "Контр.Разум." -- Short version of Mind Control, mainly for bars
 L.spell_reflection = "Отражение заклинаний" -- Any ability that reflects spells
 L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving
 
 -- Common ability name replacements A-Z
---L.arrow = "Arrow" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
+--L.arrow = "Стрела" -- Any type of ability that looks like an arrow, or has "arrow" in the name. Like an archer's arrow.
 L.arrows = "Стрелы" -- Plural of L.arrow
 L.ball = "Шар" -- A ball, like a football, basketball, etc
 L.balls = "Шары" -- Plural of L.ball
 L.blind = "Ослепление" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
---L.bouncing_ball = "Bouncing Ball" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
---L.bouncing_balls = "Bouncing Balls" -- Plural of L.bouncing_ball
+--L.bouncing_ball = "Прыгающий Шар" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
+--L.bouncing_balls = "Прыгающие Шары" -- Plural of L.bouncing_ball
 L.chakram = "Шакрам" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
 L.dodge = "Избегай" -- When you need to continually run around to dodge abilities, like missiles landing on the ground under you
 L.enrage = "Исступление" -- Any enrage buff that can be removed by players using abilities like Soothe (Druid), Tranquilizing Shot (Hunter) and Shiv (Rogue)
 L.fear = "Страх" -- Similar to a warlock or priest ability, when a boss casts a fear on a player or multiple players, that makes them run around out of control
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
 L.fixates = "Фиксации" -- Plural of L.fixate
---L.frontal = "Frontal" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
+--L.frontal = "Фронтал" -- Usually a bad Area-of-Effect ability cast by the boss in front of them
 L.frontal_cone = "Фронтал клив" -- Usually a bad Area-of-Effect ability cast by the boss in a cone/triangle/pizza shape in front of them, don't stand in front of the boss!
---L.grip = "Grip" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
---L.grips = "Grips" -- Plural of L.grip
+--L.grip = "Притяжка" -- When a boss grapples a player towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+--L.grips = "Притяжки" -- Plural of L.grip
 L.group_damage = "Пати Урон" -- Any ability that causes damage to every player in the 5 player group
 L.health_drain = "Потеря здоровья" -- Any ability that drains health from the player
 L.madness = "Безумие" -- Any ability that contains the word "Madness" in it e.g. "Rift Madness" (1264756) or "Burning Madness" (307013)
 L.miasma = "Миазмы" -- Any ability that contains the word "Miasma" in it e.g. "Consuming Miasma" (1257087) or "Black Miasma" (1275059)
---L.missile = "Missile" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
---L.missiles = "Missiles" -- Plural of L.missile
+--L.missile = "Стрела" -- Short for any ability with the name "Missile" in it e.g. "Fey Missile" (188046) or "Water Missile" (68250)
+--L.missiles = "Стрелы" -- Plural of L.missile
 L.parasite = "Паразит" -- Any ability where a parasite is involved e.g. "Parasitic Infection", "Parasitic Growth", etc
 L.parasites = "Паразиты" -- Plural of L.parasite
 L.pull_in = "Притяжка" -- An ability that pulls you in towards the boss against your will
@@ -325,15 +325,15 @@ L.raid_damage = "Рейд Урон" -- Any ability that causes damage to every p
 L.silence = "Безмолвие" -- Any ability that silences a player, preventing their spells being cast
 L.smash = "Удар" -- Short for any ability with the name "smash" in it e.g. "Darkrift Smash" or "Seismic Smash" or "Arcing Smash"
 L.soak = "Соак" -- Abilities you have to stand in on purpose to soak the damage, like a sponge soaks water. Commonly for abilities that split damage between everyone standing in them.
-L.soaks = "Соки" -- Plural of L.soak
+L.soaks = "Соаки" -- Plural of L.soak
 L.spike = "Шип" -- Short for any ability with the name "spike" in it e.g. "Glacial Spike" or "Fel Spike" or "Volatile Spike"
 L.spikes = "Шипы" -- Plural of L.spike
 L.spread = "Спредай" -- An ability that forces you to spread out away from other players, or you might damage them
 L.stomp = "Топот" -- Short for any ability with the name "Stomp" in it e.g. "Cryostomp" (1261847) or "Powerful Stomp" (296691)
 L.tentacle = "Щупальце" -- Used for bosses that summon tentacles
 L.tentacles = "Щупальца" -- Plural of L.tentacle
---L.vines = "лианы/лианами/лозы??" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
-L.waves = "Пельмени" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean -- technically speaking "waves" is "Волны" but current tl is a very common name
+--L.vines = "Лозы" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
+L.waves = "Волны" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean -- technically speaking "waves" is "Волны" but current tl is a very common name
 L.whelp = "Дракончик" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Дракончики" -- Plural of L.whelp
 
@@ -341,41 +341,41 @@ L.whelps = "Дракончики" -- Plural of L.whelp
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Поглощение лечения" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "Поглощения лечения" -- Plural of L.heal_absorb
---L.break_shield = "Break Shield" -- When you need to do something to break an absorb shield on the boss.
---L.break_shields = "Break Shields" -- Plural of L.break_shield
+--L.break_shield = "Пробей ШИТ" -- When you need to do something to break an absorb shield on the boss.
+--L.break_shields = "Пробей ЩИТЫ" -- Plural of L.break_shield
 L.shield = "Щит" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 
 -- Debuff-related spell renames
---L.debuff = "Debuff"
---L.debuffs = "Debuffs" -- Plural of L.debuff
---L.fire_debuffs = "Fire Debuffs"
+--L.debuff = "Дебафф"
+--L.debuffs = "Дебаффы" -- Plural of L.debuff
+--L.fire_debuffs = "Огненные лучи"
 
 -- Dispel-related spell renames
 L.curse = "Проклятие" -- Any curse-type dispellable debuff, or debuffs called "Curse of XYZ", etc.
 L.curses = "Проклятия" -- Plural of L.curse
 L.disease = "Болезнь" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
---L.dispel = "Dispel" -- General term for any debuff that is dispellable
-L.dispels = "Рассеивания" -- Plural of L.dispel
---L.dispel_boss = "Dispel Boss" -- When the boss gains a buff (magic or enrage) that you need to dispel
+--L.dispel = "Рассеиваимый" -- General term for any debuff that is dispellable
+L.dispels = "Рассеиваемые" -- Plural of L.dispel
+--L.dispel_boss = "Рассеивание на Босса" -- When the boss gains a buff (magic or enrage) that you need to dispel
 L.poison = "Яд" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
---L.bleed = "Bleed" -- Any bleed-type debuff
---L.bleeds = "Bleeds" -- Plural of L.bleed
+--L.bleed = "Кровотечение" -- Any bleed-type debuff
+--L.bleeds = "Кровотечения" -- Plural of L.bleed
 
 -- Clearing-related spell renames (when you get a buff that allows you to clear/cleanse/remove other objects in the world, like pools on the ground, traps, or bombs)
---L.clear_bombs = "Clear Bombs"
---L.clear_pools = "Clear Pools"
+--L.clear_bombs = "Чистка Бомб"
+--L.clear_pools = "Чистка Луж"
 
 -- Interrupt-related spell renames
---L.interrupts = "Interrupts" -- General term used when a player needs to interrupt a spell being cast
-L.kick = "Пинок" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
---L.kicks = "Kicks" -- Plural of L.kick
+--L.interrupts = "Прерывания" -- General term used when a player needs to interrupt a spell being cast
+L.kick = "Прерывание" -- General term used when a player needs to interrupt a spell being cast, named after spell "Kick" (1766) from the Rogue class
+--L.kicks = "Прерывания" -- Plural of L.kick
 
 -- Tank-related spell renames
 L.tank_bomb = "Бомба на танке" -- Similar to L.bomb but only applies to tanks
 L.tank_combo = "Танковское комбо" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.tank_debuff = "Танк Дебафф" -- Used for debuffs that only apply to tanks, usually an indicator that you need to taunt
 L.tank_frontal = "Танк Фронтал" -- Similar to L.frontal_cone but only applies to tanks
---L.tank_hit = "Tank Hit" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
---L.tank_knockback = "Tank Knockback" -- Similar to L.knockback but only applies to tanks"
+--L.tank_hit = "Танк Удар" -- An attack that will only target the tank, usually a spell that does a lot of heavy damage to the tank
+--L.tank_knockback = "Танк Отталкивание" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Танк Соак" -- Similar to L.soak but only applies to tanks
---L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+--L.tank_grip = "Танк Притяжка" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
