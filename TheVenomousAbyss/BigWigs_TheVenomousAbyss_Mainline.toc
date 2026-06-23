@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-frFR: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-itIT: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-koKR: BigWigs [|cffeda55fthe venomous abyss|r]
+## Title-koKR: BigWigs [|cffeda55f맹독 심연|r]
 ## Title-ptBR: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-ruRU: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-zhCN: BigWigs [|cffeda55fthe venomous abyss|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs The Venomous Abyss Modules
 ## Notes-frFR: BigWigs The Venomous Abyss Modules
 ## Notes-itIT: BigWigs The Venomous Abyss Modules
-## Notes-koKR: BigWigs The Venomous Abyss Modules
+## Notes-koKR: BigWigs 맹독 심연 모듈
 ## Notes-ptBR: BigWigs The Venomous Abyss Modules
 ## Notes-ruRU: BigWigs The Venomous Abyss Modules
 ## Notes-zhCN: BigWigs The Venomous Abyss Modules
