@@ -143,7 +143,7 @@ L.affixes = "Аффикс" -- Seasonal affixes for raids and mythic+ dungeons
 --L.counter_reset_desc = "Выберите когда сбрасывать счетчик кастов."
 --L.reset_casts = "Сбрасывать каждые %d каста" -- Reset every 3 casts
 --L.reset_stages = "Сбрасывать при смене этапа"
---L.reset_casts_and_stages = "Сбрасывать каждые %d каста при смене этапа"
+--L.reset_casts_and_stages = "Сбрасывать каждые %d каста и при смене этапа"
 --L.reset_never = "Никогда не сбрасывать"
 
 -- Common raid marking locale
