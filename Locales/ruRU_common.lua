@@ -341,7 +341,7 @@ L.whelps = "Дракончики" -- Plural of L.whelp
 L.absorb = "Поглoщ." -- Used for shield-like abilities that absorb damage or healing
 L.heal_absorb = "Поглощение лечения" -- Used for shield-like abilities that absorb healing only
 L.heal_absorbs = "Поглощения лечения" -- Plural of L.heal_absorb
---L.break_shield = "Пробей ШИТ" -- When you need to do something to break an absorb shield on the boss.
+--L.break_shield = "Пробей ЩИТ" -- When you need to do something to break an absorb shield on the boss.
 --L.break_shields = "Пробей ЩИТЫ" -- Plural of L.break_shield
 L.shield = "Щит" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 
