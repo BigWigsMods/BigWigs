@@ -2,7 +2,7 @@ local _, addonTbl = ...
 local L = addonTbl.API:NewLocale("BigWigs", "ruRU")
 if not L then return end
 
---L.tempRenameFeat = "Вы теперь можете |cFF436EEEпереименовать|r любые способности боссов открыв их дополнительные настройки (>>) и нажав на вкладку Renames."
+--L.tempRenameFeat = "Вы теперь можете |cFF436EEEпереименовать|r любые способности боссов открыв их дополнительные настройки (>>) и нажав на вкладку Переименовать."
 
 -- API.lua
 L.showAddonBar = "Аддон '|cFF436EEE%s|r' создал '%s' полосу длительности."
