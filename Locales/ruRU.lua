@@ -232,7 +232,7 @@ L.dispeller = "|cFFFF0000Только для рассеивателей.|r "
 --L.renameLabel = "%s (|cFF3366FF%s|r)"
 --L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
 --L.spellName = "Spell Name"
---L.spellNameResetDesc = "This ability has a custom name by default, click this button to use the original name (usually a spell name)."
+--L.spellNameResetDesc = "Эта способность имеет специальное название по умолчанию, нажмите на эту кнопку что-бы использовать изначальное название (обычно название способности)."
 
 -- Sharing.lua
 L.import = "Импорт"
