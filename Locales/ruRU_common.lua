@@ -85,7 +85,7 @@ L.unsafe = "Опасность" -- You are unsafe (in danger) of a bad ability
 -- Add related
 L.add_spawned = "АДД появился" -- singular
 L.adds_spawned = "АДДЫ появились" -- plural
-L.adds_spawned_count = "%d |4АДД:АДДов:АДД; spawned" -- 1 add spawned / 2 adds spawned
+L.adds_spawned_count = "%d |4АДД появился:АДДа появилось:АДДов появилось;" -- 1 add spawned / 2 adds spawned
 L.add_spawning = "Спаун АДДа" -- singular
 L.adds_spawning = "Спаун АДДов" -- plural
 --L.add_incoming = "АДД на подходе" -- singular
