@@ -289,7 +289,7 @@ L.tornadoes = "Торнадо" -- Plural of L.tornado
 L.mark = "Знак" -- Short name for abilites with "Mark" in the name, for example "Mark of Death" or "Toxic Mark" or "Mark of Frost" etc.
 L.marks = "Знаки" -- Plural of L.marks
 L.mind_control = "Контроль над разумом" -- Any kind of Mind Control ability, where a player loses control of their character
-L.mind_control_short = "Контр.Разум." -- Short version of Mind Control, mainly for bars
+L.mind_control_short = "МК" -- Short version of Mind Control, mainly for bars
 L.spell_reflection = "Отражение заклинаний" -- Any ability that reflects spells
 L.rooted = "Обездвиживание" -- Any ability that roots you in place, preventing you from moving
 
