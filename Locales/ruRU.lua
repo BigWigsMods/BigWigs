@@ -12,7 +12,7 @@ L.shortSecondsOnly = "%d сек" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f сек" -- 3.2 Seconds
 L.accept = "Принять"
 L.cancel = "Отмена"
---L.confirm_profile_swap = "Аддон |cFF436EEE\"%s\"|r хочет автоматически поменять твой BigWigs профиль на :\n\n|cFF33FF99\"%s\"|r\n\nAre вы уверены что хотите этого?"
+--L.confirm_profile_swap = "Аддон |cFF436EEE\"%s\"|r хочет автоматически поменять ваш BigWigs профиль на :\n\n|cFF33FF99\"%s\"|r\n\nВы уверены что хотите этого?"
 
 -- Core.lua
 L.berserk = "Берсерк"
