@@ -230,7 +230,7 @@ L.dispeller = "|cFFFF0000Только для рассеивателей.|r "
 --L.renames = "Renames"
 --L.noteLabel = "%s (|cFFFFFF99%s|r)"
 --L.renameLabel = "%s (|cFF3366FF%s|r)"
---L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
+--L.renameHeader = "Установить собственное название для способности. Этот текст будет использован вместо названия способности во всех сообщениях и полосах.\n\n"
 --L.spellName = "Название способности"
 --L.spellNameResetDesc = "Эта способность имеет специальное название по умолчанию, нажмите на эту кнопку что-бы использовать изначальное название (обычно название способности)."
 
