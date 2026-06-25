@@ -139,7 +139,7 @@ L.affixes = "Аффикс" -- Seasonal affixes for raids and mythic+ dungeons
 -- GUI boss dropdown for cast counters
 -- Cast counters are the numbers you see next to spell names that keep increasing e.g. "Bad Spell (3)" <-- that number
 -- This dropdown option will let you choose when that number should reset back to 1
-L.counter_reset_name = "%s каст(а)" -- SPELL_NAME cast counter
+L.counter_reset_name = "Счетчик каста %s" -- SPELL_NAME cast counter
 L.counter_reset_desc = "Выберите когда сбрасывать счетчик кастов."
 L.reset_casts = "Сбрасывать каждые %d каста" -- Reset every 3 casts
 L.reset_stages = "Сбрасывать при смене этапа"
