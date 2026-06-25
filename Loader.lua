@@ -336,14 +336,22 @@ do
 				lw_cs,
 			},
 			currentSeason = {
-				[2805] = lw_cs, -- Windrunner Spire
-				[2811] = lw_cs, -- Magisters' Terrace
-				[2874] = lw_cs, -- Maisara Caverns
-				[2915] = lw_cs, -- Nexus-Point Xenas
-				[2526] = lw_cs, -- Algeth'ar Academy
-				[1753] = lw_cs, -- Seat of the Triumvirate
-				[1209] = lw_cs, -- Skyreach
-				[658] = lw_cs, -- Pit of Saron
+				[2805] = not public.isNext and lw_cs or nil, -- Windrunner Spire
+				[2811] = not public.isNext and lw_cs or nil, -- Magisters' Terrace
+				[2874] = not public.isNext and lw_cs or nil, -- Maisara Caverns
+				[2915] = not public.isNext and lw_cs or nil, -- Nexus-Point Xenas
+				[2526] = not public.isNext and lw_cs or nil, -- Algeth'ar Academy
+				[1753] = not public.isNext and lw_cs or nil, -- Seat of the Triumvirate
+				[1209] = not public.isNext and lw_cs or nil, -- Skyreach
+				[658] = not public.isNext and lw_cs or nil, -- Pit of Saron
+				[2813] = public.isNext and lw_cs or nil, -- Murder Row
+				[2825] = public.isNext and lw_cs or nil, -- Den of Nalorakk
+				[2859] = public.isNext and lw_cs or nil, -- The Blinding Vale
+				[2923] = public.isNext and lw_cs or nil, -- Voidscar Arena
+				[2993] = public.isNext and lw_cs or nil, -- Altar of Fangs
+				[2521] = public.isNext and lw_cs or nil, -- Ruby Life Pools
+				[1877] = public.isNext and lw_cs or nil, -- Temple of Sethraliss
+				[1762] = public.isNext and lw_cs or nil, -- Kings' Rest
 			},
 			zones = {
 				[2939] = "BigWigs_TheDreamrift",
@@ -557,7 +565,7 @@ do
 		--[[ LittleWigs: Battle for Azeroth ]]--
 		[1763] = lw_bfa, -- Atal'Dazar
 		[1754] = lw_bfa, -- Freehold
-		[1762] = lw_bfa, -- King's Rest
+		[1762] = lw_bfa, -- Kings' Rest
 		[1864] = lw_bfa, -- Shrine of the Storm
 		[1822] = lw_bfa, -- Siege of Boralus
 		[1877] = lw_bfa, -- Temple of Sethraliss
@@ -633,6 +641,7 @@ do
 		[2874] = lw_mn, -- Maisara Caverns
 		[2915] = lw_mn, -- Nexus-Point Xenas
 		[2923] = lw_mn, -- Voidscar Arena
+		[2993] = public.isNext and lw_mn or nil, -- Altar of Fangs
 		--[[ LittleWigs: Midnight Delves ]]--
 		[2933] = lw_delves, -- Collegiate Calamity
 		[2952] = lw_delves, -- The Shadow Enclave
