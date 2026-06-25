@@ -301,6 +301,15 @@ local dungeonNamesTiny = { -- MapChallengeMode DB2
 	[583] = L.keystoneShortName_SeatOfTheTriumvirate, -- SOTT
 	[161] = L.keystoneShortName_Skyreach, -- SKY
 	[556] = L.keystoneShortName_PitOfSaron, -- PIT
+
+	[249] = L.keystoneShortName_KingsRest, -- REST
+	[250] = L.keystoneShortName_TempleOfSethraliss, -- TEMPLE
+	[399] = L.keystoneShortName_RubyLifePools, -- POOLS
+	[584] = L.keystoneShortName_TheBlindingVale, -- VALE
+	[585] = L.keystoneShortName_VoidscarArena, -- ARENA
+	[586] = L.keystoneShortName_DenOfNalorakk, -- DEN
+	[587] = L.keystoneShortName_MurderRow, -- MURDER
+	[588] = L.keystoneShortName_AltarOfFangs, -- ALTAR
 }
 local dungeonNamesTrimmed = {
 	[500] = L.keystoneShortName_TheRookery_Bar, -- Rookery
@@ -341,6 +350,15 @@ local dungeonNamesTrimmed = {
 	[583] = L.keystoneShortName_SeatOfTheTriumvirate_Bar, -- Triumvirate
 	[161] = L.keystoneShortName_Skyreach_Bar, -- Skyreach
 	[556] = L.keystoneShortName_PitOfSaron_Bar, -- Pit
+
+	[249] = L.keystoneShortName_KingsRest_Bar, -- Rest
+	[250] = L.keystoneShortName_TempleOfSethraliss_Bar, -- Temple
+	[399] = L.keystoneShortName_RubyLifePools_Bar, -- Pools
+	[584] = L.keystoneShortName_TheBlindingVale_Bar, -- Vale
+	[585] = L.keystoneShortName_VoidscarArena_Bar, -- Arena
+	[586] = L.keystoneShortName_DenOfNalorakk_Bar, -- Den
+	[587] = L.keystoneShortName_MurderRow_Bar, -- Murder
+	[588] = L.keystoneShortName_AltarOfFangs_Bar, -- Altar
 }
 local dungeonMapWithMultipleKeys = {
 	[1651] = true, -- Return to Karazhan
@@ -353,12 +371,13 @@ local teleportList = {
 	{
 		[2805] = 1254400, -- Windrunner Spire
 		[2811] = 1254572, -- Magisters' Terrace
-		--[2813] = , -- Murder Row
-		--[2825] = , -- Den of Nalorakk
-		--[2859] = , -- The Blinding Vale
+		[2813] = 1286809, -- Murder Row
+		[2825] = 1286807, -- Den of Nalorakk
+		[2859] = 1286801, -- The Blinding Vale
 		[2874] = 1254559, -- Maisara Caverns
 		[2915] = 1254563, -- Nexus-Point Xenas
-		--[2923] = , -- Voidscar Arena
+		[2923] = 1286804, -- Voidscar Arena
+		[2993] = 1286812, -- Altar of Fangs
 	},
 	-- The War Within
 	{
@@ -401,10 +420,10 @@ local teleportList = {
 	{
 		[1763] = 424187, -- Atal'Dazar
 		[1754] = 410071, -- Freehold
-		--[1762] = lw_bfa, -- King's Rest
+		[1762] = 1286831, -- King's Rest
 		--[1864] = lw_bfa, -- Shrine of the Storm
 		[1822] = UnitFactionGroup("player") == "Alliance" and 445418 or 464256, -- Siege of Boralus
-		--[1877] = lw_bfa, -- Temple of Sethraliss
+		[1877] = 1286828, -- Temple of Sethraliss
 		[1594] = UnitFactionGroup("player") == "Alliance" and 467553 or 467555, -- The MOTHERLODE!!
 		--[1771] = lw_bfa, -- Tol Dagor
 		[1841] = 410074, -- The Underrot
