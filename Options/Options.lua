@@ -1354,7 +1354,7 @@ do
 
 					-- Headers
 					local displayOrder = {
-						"story", "timewalk", "LFR", "LFR_timerun", "normal", "normal_timerun", "heroic", "heroic_timerun", "mythic", "mythic_timerun",
+						"story", "timewalk", "LFR", "LFR_timerun", "normal", "normal_timerun", "heroic", "heroic_timerun", "mythic", "mythic_timerun", "mythic_flex",
 						"N10", "N25", "H10", "H25",
 						"SOD", "level1", "level2", "level3", "hardcore",
 						"solotier8", "solotier11",
