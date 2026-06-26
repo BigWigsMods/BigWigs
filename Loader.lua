@@ -14,18 +14,18 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 417
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 0, 56},
-	["BigWigs_Classic"] = {12, 0, 18},
-	["BigWigs_BurningCrusade"] = {12, 0, 14},
-	["BigWigs_WrathOfTheLichKing"] = {12, 0, 9},
-	["BigWigs_Cataclysm"] = {12, 0, 4},
-	["BigWigs_MistsOfPandaria"] = {12, 0, 7},
-	["BigWigs_WarlordsOfDraenor"] = {12, 0, 2},
-	["BigWigs_Legion"] = {12, 0, 2},
-	["BigWigs_BattleForAzeroth"] = {12, 0, 4},
-	["BigWigs_Shadowlands"] = {12, 0, 3},
-	["BigWigs_Dragonflight"] = {12, 0, 5},
-	["BigWigs_TheWarWithin"] = {12, 0, 3},
+	["LittleWigs"] = {12, 0, 57},
+	["BigWigs_Classic"] = {12, 0, 19},
+	["BigWigs_BurningCrusade"] = {12, 0, 15},
+	["BigWigs_WrathOfTheLichKing"] = {12, 0, 10},
+	["BigWigs_Cataclysm"] = {12, 0, 5},
+	["BigWigs_MistsOfPandaria"] = {12, 0, 8},
+	["BigWigs_WarlordsOfDraenor"] = {12, 0, 3},
+	["BigWigs_Legion"] = {12, 0, 3},
+	["BigWigs_BattleForAzeroth"] = {12, 0, 5},
+	["BigWigs_Shadowlands"] = {12, 0, 4},
+	["BigWigs_Dragonflight"] = {12, 0, 6},
+	["BigWigs_TheWarWithin"] = {12, 0, 4},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
@@ -1654,9 +1654,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20260617051838" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "12.0.53" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20260616000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20260626163357" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.0.54" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20260626000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 26
