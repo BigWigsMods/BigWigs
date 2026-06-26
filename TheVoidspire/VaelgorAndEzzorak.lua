@@ -184,7 +184,9 @@ function mod:StartBackupBar(eventInfo, timerAdjustment)
 	if not eventInfo then return end -- if we started our own bar this will be nil
 	if not self:IsBeforeRadiantBarrier(eventInfo.duration, eventInfo.customBuffer) then return end
 
-	self:ErrorForTimelineEvent(eventInfo)
+	if UnitExists("boss2") then -- Prevent debug info when one of the dragons die
+		self:ErrorForTimelineEvent(eventInfo)
+	end
 	backupBars[eventInfo.id] = true
 	local timer = eventInfo.duration
 	if timerAdjustment then
