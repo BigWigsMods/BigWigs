@@ -704,8 +704,13 @@ local reqFuncAddons = {
 local RaidWarningMessage
 do
 	local RaidNotice_AddMessage = RaidNotice_AddMessage
+	local RaidWarningUtilAddMessage = RaidWarningUtil and RaidWarningUtil.AddMessage
 	function RaidWarningMessage(msg, duration)
-		RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, duration)
+		if RaidWarningUtilAddMessage then
+			RaidWarningUtilAddMessage(msg, {r=1,g=1,b=1}, duration)
+		else
+			RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, duration)
+		end
 	end
 end
 

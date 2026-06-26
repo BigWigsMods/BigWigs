@@ -41,6 +41,7 @@ files["Loader.lua"].ignore = {
 	"113/IsPublicTestClient",
 	"113/PlaySoundFile",
 	"113/print",
+	"113/RaidWarningUtil",
 	"113/securecallfunction",
 	"113/SetRaidTarget",
 	"113/TimerTracker",
@@ -393,9 +394,9 @@ globals = {
 	"MovieFrame",
 	"ObjectiveTrackerFrame",
 	"PlayerHasToy",
-	"RaidBossEmoteFrame",
-	"RaidNotice_AddMessage",
-	"RaidWarningFrame",
+	"RaidBossEmoteFrame", -- XXX temp
+	"RaidNotice_AddMessage", -- XXX temp
+	"RaidWarningFrame", -- XXX temp
 	"TalkingHeadFrame",
 	"Tukui",
 	"UIParent",
