@@ -28,8 +28,6 @@
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
 
-Libs\LibChatAnims\LibChatAnims.lua
-
 Constants.lua
 BossPrototype.lua
 PluginPrototype.lua
