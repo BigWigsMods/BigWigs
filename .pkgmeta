@@ -33,7 +33,6 @@ move-folders:
 ignore:
   - gen_option_values.lua
   - ldoc.ltp
-  - Core/Libs/LibChatAnims/LibChatAnims.xml
   - Libs/AceDB-3.0/AceDB-3.0.xml
   - Libs/LibDBIcon-1.0/lib.xml
   - Libs/LibDualSpec-1.0/LibDualSpec-1.0.toc
