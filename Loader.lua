@@ -654,6 +654,9 @@ do
 		[2966] = lw_delves, -- Torment's Rise
 		[2979] = lw_delves, -- Shadowguard Point
 		[3003] = lw_delves, -- The Darkway
+		[3038] = public.isNext and lw_delves or nil, -- Gnarldor Isle
+		[3077] = public.isNext and lw_delves or nil, -- The Ring of Glory
+		[3079] = public.isNext and lw_delves or nil, -- Venomfall Deeps
 	}
 	public.remappedZones = {
 		[2827] = 2213, -- Horrific Vision of Stormwind (Revisited) -> Horrific Vision of Stormwind
