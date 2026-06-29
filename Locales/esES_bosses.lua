@@ -2,7 +2,7 @@
 
 BigWigsAPI.SetBossModuleLocale("Belo'ren, Child of Al'ar", {
 	color_swaps = "Cambio de color",
-	["1241292"] = "Caída de luz/vacío",
+	["1241292"] = "Imbuido en luz/vacío",
 })
 
 BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
@@ -20,7 +20,7 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	custom_select_limit_warnings = "[Mítico] Restringir avisos de fase 3",
 	custom_select_limit_warnings_desc = "Solo mostrar avisos de las habilidades en tu lado.",
 	custom_select_limit_warnings_value1 = "Grupos 1 y 2 van a la izquierda, grupos 3 y 4 a la derecha.",
-	custom_select_limit_warnings_value2 = "Grupos impares izquierda, pares derecha.",
+	custom_select_limit_warnings_value2 = "Grupos impares izquierda, grupos pares derecha.",
 	custom_select_limit_warnings_value3 = "Mostrar avisos para ambos lados.",
 	custom_select_limit_warnings_value4 = "Solo mostrar avisos del lado izquierdo.",
 	custom_select_limit_warnings_value5 = "Solo mostrar avisos del lado derecho.",
