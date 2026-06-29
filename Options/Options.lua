@@ -2134,7 +2134,13 @@ do
 		if not data then return end
 		local expectedVersion = data.bossExport and addonTable.bossSharingVersion or addonTable.sharingVersion
 		if versionPlain ~= expectedVersion then return end -- encoded version prefix does not match expected version
-		return true, data.bossExport
+		local instances = {}
+		if data.bossExport then
+			for key, _ in pairs(data.exportTable) do
+				instances[key] = true
+			end
+		end
+		return true, data.bossExport, instances
 	end
 
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
@@ -2142,7 +2148,7 @@ do
 	function options.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
 		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
-		local stringOK, bossImport = options.VerifyAddOnProfileString(profileString)
+		local stringOK, bossImport, instances = options.VerifyAddOnProfileString(profileString)
 		if not stringOK then error("Invalid profile string for profile import.") end
 		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
@@ -2150,9 +2156,26 @@ do
 		popup:Show()
 		-- XXX modify popup based on bossImport
 		local profileName = loader.db:GetCurrentProfile()
+		local instanceNamesString = ""
+		if bossImport then
+			for instanceId in next, instances do
+				local instanceName = GetRealZoneText(instanceId)
+				if instanceName == "" then
+					instanceName = tostring(instanceId)
+				end
+				if instanceNamesString ~= "" then
+					instanceNamesString = instanceNamesString .. "\n"
+				end
+				instanceNamesString = instanceNamesString .. instanceName
+			end
+		end
 		if not optionalCustomProfileName or profileName == optionalCustomProfileName then
 			optionalCustomProfileName = nil
-			textFrame:SetText(L.confirm_import_addon:format(addonName, profileName))
+			if bossImport then
+				textFrame:SetText(L.confirm_import_addon_boss_settings:format(addonName, instanceNamesString, profileName))
+			else
+				textFrame:SetText(L.confirm_import_addon:format(addonName, profileName))
+			end
 		else
 			local profiles = loader.db:GetProfiles()
 			local found = false

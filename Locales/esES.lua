@@ -303,6 +303,7 @@ L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporiz
 --L.raids_section = "Raids"
 --L.expansion_dungeons_section = "Expansion Dungeons"
 --L.seasonal_dungeons_section = "Seasonal Dungeons"
+--L.confirm_import_addon_boss_settings = "The addon |cFF436EEE\"%s\"|r wants to automatically change your BigWigs boss settings for all the bosses in the following zones:\n\n|cFFFFFF99%s|r\n\nThis will apply to the following profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartir configuración del jefe"
