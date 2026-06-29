@@ -139,12 +139,12 @@ L.affixes = "Afijos" -- Seasonal affixes for raids and mythic+ dungeons
 -- GUI boss dropdown for cast counters
 -- Cast counters are the numbers you see next to spell names that keep increasing e.g. "Bad Spell (3)" <-- that number
 -- This dropdown option will let you choose when that number should reset back to 1
---L.counter_reset_name = "%s cast counter" -- SPELL_NAME cast counter
---L.counter_reset_desc = "Choose when to reset the counter."
---L.reset_casts = "Reset every %d casts" -- Reset every 3 casts
---L.reset_stages = "Reset on stage change"
---L.reset_casts_and_stages = "Reset every %d casts and on stage change"
---L.reset_never = "Never reset"
+L.counter_reset_name = "%s contador de lanzamientos" -- SPELL_NAME cast counter
+L.counter_reset_desc = "Elige cuándo restablecer el contador."
+L.reset_casts = "Restablecer cada %d lanzamientos" -- Reset every 3 casts
+L.reset_stages = "Restablecer al cambiar de fase"
+L.reset_casts_and_stages = "Restablecer cada %d lanzamientos y al cambiar de fase"
+L.reset_never = "Nunca restablecer"
 
 -- Common raid marking locale
 L.marker = "%s marcador"
@@ -224,11 +224,11 @@ L.castTimerNote = "Este texto solo se usará para temporizadores de lanzamiento"
 L.messageCastOverNote = "Este texto se utilizará para mostrar un mensaje cuando termine el lanzamiento"
 L.messageCastStartNote = "Este texto se usará para mostrar un mensaje cuando el lanzamiento comience"
 L.messageBeforeCastStartNote = "Este texto se usará para mostrar un mensaje cuando el lanzamiento termine"
---L.messageDuringCastNote = "This text will be used for showing messages during the cast"
+L.messageDuringCastNote = "Este texto se usará para mostrar mensajes durante el lanzamiento"
 L.messageNote = "Este texto se usará para los mensajes"
 L.messageOnYouNote = "El mensaje que se muestra cuando esta habilidad te afecta"
---L.messageOnOtherNote = "The message shown when this ability is on other people"
---L.messageTauntNowNote = "The message shown when you're a tank and you need to taunt"
+L.messageOnOtherNote = "El mensaje que se muestra cuando esta habilidad está en otras personas"
+L.messageTauntNowNote = "El mensaje que se muestra cuando eres tanque y debes provocar"
 L.messageSpecificHealth = "El mensaje se muestra cuando el jefe esté en %d%% de vida"
 L.timerOnYouNote = "El texto que se muestra en el temporizador cuando esta habilidad te afecta"
 L.mythicOnlyNote = "Este texto se usará solo en Mítico"
@@ -237,16 +237,16 @@ L.otherDifficultiesNote = "Este texto se usará en todas las demás dificultades
 -- GUI notes for debuffs
 L.debuffFailureNote = "Se te aplicará este debufo si fallas"
 L.debuffFailureMoveFromExplosionNote = "Se te aplicará este debufo si fallas en moverte de la explosión"
---L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.debuffFailureInterruptNote = "Este debufo se te aplicará si fallas al interrumpir el lanzamiento de |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.preDebuffNote = "Este es el bufo previo al bufo principal que se te aplicará"
 L.mainDebuffNote = "Este es el bufo principal que se te aplicará"
 L.postDebuffNote = "Este debufo se te aplicará luego de que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
 L.debuffUnderYouNote = "Este debufo se te aplicará cuando te pares en alguna zona peligrosa" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
 L.debuffDotAfterCastNote = "Este debufo es un efecto de daño por tiempo cuando el jefe lance |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
 L.debuffPossibleAfterCastNote = "Este debufo podra aplicarse a ti luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
-L.debuffTankAfterCastNote = "Este debufo se le aplicara al tanque luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
-L.debuffWalkIntoObjectNote = "Este debufo se te apicara si caminas hacia |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
---L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+L.debuffTankAfterCastNote = "Este debufo se le aplicará al tanque luego de que el jefe lance |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "Este debufo se te aplicará si caminas hacia |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+L.debuffHitByCastNote = "Este debufo se te aplicará si eres alcanzado por el lanzamiento de |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by the SPELL_NAME cast
 L.debuffAddsCast = "Este bufo te lo aplicará |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
