@@ -29,10 +29,10 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 -- Midnight World
 
 BigWigsAPI.SetBossModuleLocale("Thorm'belan", {
-	--ball_incoming = "Ball Incoming - Don't let it touch the ground",
-	--ball_fail = "FAIL - Ball touched the ground",
-	--tendrils = "Tendrils",
-	--tendrils_incoming = "RUN AWAY to snap tendrils",
+	ball_incoming = "Viene la bola - ¡No dejes que toque el suelo!",
+	ball_fail = "¡Has fallado! - La bola ha tocado el suelo",
+	tendrils = "Zarcillos",
+	tendrils_incoming = "ALÉJATE para romper los zarcillos",
 })
 
 -- The Voidspire
