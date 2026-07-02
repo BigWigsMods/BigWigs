@@ -2154,7 +2154,6 @@ do
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
 		-- All AceConfigDialog code, go there for original
 		popup:Show()
-		-- XXX modify popup based on bossImport
 		local profileName = loader.db:GetCurrentProfile()
 		local instanceNamesString = ""
 		if bossImport then

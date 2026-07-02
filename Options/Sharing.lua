@@ -959,12 +959,14 @@ do
 			local modules = data.exportTable[nextInstanceID]
 			for moduleName, settings in pairs(modules) do
 				local module = BigWigs:GetBossModule(moduleName:sub(16))
-				ImportFlags(settings.flags, module)
-				ImportRenames(settings.renames, module)
+				if module and module:IsZoneID(nextInstanceID) then
+					ImportFlags(settings.flags, module)
+					ImportRenames(settings.renames, module)
 
-				ImportColors(settings.colors, moduleName)
-				ImportSounds(settings.sounds, moduleName)
-				ImportPrivateAuras(settings.privateAuras, moduleName)
+					ImportColors(settings.colors, moduleName)
+					ImportSounds(settings.sounds, moduleName)
+					ImportPrivateAuras(settings.privateAuras, moduleName)
+				end
 			end
 			table.insert(chatMessages, getInstanceLabel(nextInstanceID))
 		end
