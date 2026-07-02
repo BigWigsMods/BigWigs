@@ -244,7 +244,8 @@ do
 		public.currentExpansion = {
 			name = c,
 			bigWigsBundled = {},
-			littlewigsDefault = lw_c,
+			littleWigsName = lw_c,
+			littleWigsDefault = lw_c,
 			littleWigsBundled = {},
 			currentSeason = {},
 			zones = {},
@@ -253,7 +254,8 @@ do
 		public.currentExpansion = {
 			name = bc,
 			bigWigsBundled = {},
-			littlewigsDefault = lw_bc,
+			littleWigsName = lw_bc,
+			littleWigsDefault = lw_bc,
 			littleWigsBundled = {},
 			currentSeason = {},
 			zones = {},
@@ -262,7 +264,8 @@ do
 		public.currentExpansion = {
 			name = wotlk,
 			bigWigsBundled = {},
-			littlewigsDefault = lw_wotlk,
+			littleWigsName = lw_wotlk,
+			littleWigsDefault = lw_wotlk,
 			littleWigsBundled = {},
 			currentSeason = {},
 			zones = {},
@@ -271,7 +274,8 @@ do
 		public.currentExpansion = {
 			name = cata,
 			bigWigsBundled = {},
-			littlewigsDefault = lw_cata,
+			littleWigsName = lw_cata,
+			littleWigsDefault = lw_cata,
 			littleWigsBundled = {},
 			currentSeason = {},
 			zones = {},
@@ -280,7 +284,8 @@ do
 		public.currentExpansion = {
 			name = mists,
 			bigWigsBundled = {},
-			littlewigsDefault = lw_mists,
+			littleWigsName = lw_mists,
+			littleWigsDefault = lw_mists,
 			littleWigsBundled = {},
 			currentSeason = {},
 			zones = {},
@@ -291,7 +296,8 @@ do
 			bigWigsBundled = {
 				[mn] = true,
 			},
-			littlewigsDefault = lw_cs,
+			littleWigsName = lw_mn,
+			littleWigsDefault = lw_cs,
 			littleWigsBundled = {
 				[lw_mn] = true,
 				[lw_delves] = true,
@@ -325,7 +331,8 @@ do
 			bigWigsBundled = {
 				[mn] = true,
 			},
-			littlewigsDefault = lw_cs,
+			littleWigsName = lw_mn,
+			littleWigsDefault = lw_cs,
 			littleWigsBundled = {
 				[lw_mn] = true,
 				[lw_delves] = true,

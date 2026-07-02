@@ -236,10 +236,11 @@ L.spellNameResetDesc = "Diese Fähigkeit hat standardmäßig einen benutzerdefin
 
 -- Sharing.lua
 L.import = "Importieren"
-L.import_info = "Nach der Eingabe eines Strings kann gewählt werden welche Einstellungen importiert werden sollen.\nWenn Einstellungen im Import-String nicht verfügbar sind, sind diese nicht wählbar.\n\n|cffff4411Dieser Import betrifft nur allgemeine Einstellungen und keine Boss-spezifischen Einstellungen.|r"
+L.import_info = "Nach der Eingabe eines Strings kann gewählt werden welche Einstellungen importiert werden sollen.\nWenn Einstellungen im Import-String nicht verfügbar sind, sind diese nicht wählbar."
 L.import_info_active = "Zu importierende Teile auswählen und auf Importieren Button klicken."
 L.import_info_none = "|cFFFF0000Der Import-String ist inkompatibel oder veraltet.|r"
 L.export = "Exportieren"
+--L.export_core = "Export Core"
 L.export_info = "Zu exportierende und zu teilende Einstellungen wählen.\n\n|cffff4411Es können nur allgemeine Einstellungen geteilt werden und keine Boss-spezifischen Einstellungen.|r"
 L.export_string = "Export-String"
 L.export_string_desc = "BigWigs String kopieren zum Teilen der Einstellungen."
@@ -297,6 +298,12 @@ L.privateAuras_settings_export_desc = "Alle Private Auren Einstellungen exportie
 L.imported_combattimer_settings = "Kampf-Timer Einstellungen"
 L.combattimer_settings_import_desc = "Alle Kampf-Timer Einstellungen importieren."
 L.combattimer_settings_export_desc = "Alle Kampf-Timer Einstellungen exportieren."
+--L.export_bosses = "Export Bosses"
+--L.export_bosses_info = "The configuration of all bosses in the zones selected below will be exported."
+--L.raids_section = "Raids"
+--L.expansion_dungeons_section = "Expansion Dungeons"
+--L.seasonal_dungeons_section = "Seasonal Dungeons"
+--L.confirm_import_addon_boss_settings = "The addon |cFF436EEE\"%s\"|r wants to automatically change your BigWigs boss settings for all the bosses in the following zones:\n\n|cFFFFFF99%s|r\n\nThis will apply to the following profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Boss Einstellungen teilen"

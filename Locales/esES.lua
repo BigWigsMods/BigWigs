@@ -236,10 +236,11 @@ L.spellNameResetDesc = "Esta habilidad tiene un nombre personalizado por defecto
 
 -- Sharing.lua
 L.import = "Importar"
-L.import_info = "Después de ingresar el código de importación, puedes seleccionar qué configuraciones te gustaría importar.\nSi las configuraciones no están disponibles en el código de importación, no serán seleccionables.\n\n|cffff4411Esta importación solo afectará las configuraciones generales y no afectará las configuraciones específicas del jefe.|r"
+L.import_info = "Después de ingresar el código de importación, puedes seleccionar qué configuraciones te gustaría importar.\nSi las configuraciones no están disponibles en el código de importación, no serán seleccionables."
 L.import_info_active = "Elige qué partes te gustaría importar y luego haz clic en el botón de importar."
 L.import_info_none = "|cFFFF0000El código de importación es incompatible o está desactualizada.|r"
 L.export = "Exportar"
+--L.export_core = "Export Core"
 L.export_info = "Selecciona qué configuraciones te gustaría exportar y compartir con otros.\n\n|cffff4411Solo puedes compartir configuraciones generales y estas no tienen efecto en las configuraciones específicas del jefe.|r"
 L.export_string = "Código de Exportación"
 L.export_string_desc = "Copia este código de BigWigs si deseas compartir tus configuraciones."
@@ -297,6 +298,12 @@ L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras P
 L.imported_combattimer_settings = "Configuración de Temporizador de combate"
 L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate."
 L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate."
+--L.export_bosses = "Export Bosses"
+--L.export_bosses_info = "The configuration of all bosses in the zones selected below will be exported."
+--L.raids_section = "Raids"
+--L.expansion_dungeons_section = "Expansion Dungeons"
+--L.seasonal_dungeons_section = "Seasonal Dungeons"
+--L.confirm_import_addon_boss_settings = "The addon |cFF436EEE\"%s\"|r wants to automatically change your BigWigs boss settings for all the bosses in the following zones:\n\n|cFFFFFF99%s|r\n\nThis will apply to the following profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartir configuración del jefe"

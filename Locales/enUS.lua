@@ -235,10 +235,11 @@ L.spellNameResetDesc = "This ability has a custom name by default, click this bu
 
 -- Sharing.lua
 L.import = "Import"
-L.import_info = "After entering a string you can select what settings you would like to import.\nIf settings are not available in the import string they will not be selectable.\n\n|cffff4411This import will only affect the general settings and does not affect boss specific settings.|r"
+L.import_info = "After entering a string you can select what settings you would like to import.\nIf settings are not available in the import string they will not be selectable."
 L.import_info_active = "Choose what parts you would like to import and then click the import button."
 L.import_info_none = "|cFFFF0000The import string is incompatible or out of date.|r"
 L.export = "Export"
+L.export_core = "Export Core"
 L.export_info = "Select which settings you would like to export and share with others.\n\n|cffff4411You can only share general settings and these have no effect on boss specific settings.|r"
 L.export_string = "Export String"
 L.export_string_desc = "Copy this BigWigs string if you want to share your settings."
@@ -296,6 +297,12 @@ L.privateAuras_settings_export_desc = "Export all Private Auras settings."
 L.imported_combattimer_settings = "Combat Timer Settings"
 L.combattimer_settings_import_desc = "Import all Combat Timer settings."
 L.combattimer_settings_export_desc = "Export all Combat Timer settings."
+L.export_bosses = "Export Bosses"
+L.export_bosses_info = "The configuration of all bosses in the zones selected below will be exported."
+L.raids_section = "Raids"
+L.expansion_dungeons_section = "Expansion Dungeons"
+L.seasonal_dungeons_section = "Seasonal Dungeons"
+L.confirm_import_addon_boss_settings = "The addon |cFF436EEE\"%s\"|r wants to automatically change your BigWigs boss settings for all the bosses in the following zones:\n\n|cFFFFFF99%s|r\n\nThis will apply to the following profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Share Boss Settings"
