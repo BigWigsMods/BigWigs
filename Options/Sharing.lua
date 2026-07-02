@@ -729,7 +729,7 @@ do
 
 	local function PreProcess(data)
 		importedTableData = data
-		for k, _ in pairs(data) do
+		for k in next, data do
 			importStringOptions[k] = true
 		end
 		if data.bossExport then
@@ -863,7 +863,7 @@ do
 			if not soundModule then return end
 
 			local sDB = soundModule.db.profile
-			for soundSettingName, _ in pairs(sDB) do
+			for soundSettingName in next, sDB do
 				if soundSettingName ~= "privateaura" then -- private auras are handled separately inside ImportPrivateAuras
 					if soundSettings and soundSettings[soundSettingName] then
 						sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])

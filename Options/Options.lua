@@ -2136,7 +2136,7 @@ do
 		if versionPlain ~= expectedVersion then return end -- encoded version prefix does not match expected version
 		local instances = {}
 		if data.bossExport then
-			for key, _ in pairs(data.exportTable) do
+			for key in next, data.exportTable do
 				instances[key] = true
 			end
 		end
