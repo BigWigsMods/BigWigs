@@ -192,8 +192,9 @@ end
 -- Profile import/export
 --
 
--- A custom profile name and callback function is completely optional
--- You can optionally supply a callback function that will return false if the user declined the profile import, and true if the user accepted
+-- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
+-- optionalCustomProfileName: Providing this optional name will create a new profile by that name (if it doesn't already exist) and then swap to it.
+-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
 function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") return end
 	if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") return end
@@ -205,8 +206,11 @@ function API.RegisterProfile(addonName, profileString, optionalCustomProfileName
 	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 end
 
-
--- You can optionally supply a callback function that will return false if the user declined the profile import, and true if the user accepted
+-- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
+-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
+---- WARNING: If you're calling this API from some UI profile installer, we strongly recommend using a callback function, as this is an async process.
+---- You may want to have your UI state "Waiting..." while the import is in progress, and then continue whenever your callback function is triggered.
+---- This is required as we may need to load multiple addons with bosses in them to apply the profiles, and loading them all in the same execution path could lock up the game.
 function API.ImportBossOptions(addonName, bossString, optionalCallbackFunction)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for boss import.") return end
 	if type(bossString) ~= "string" or #bossString < 3 then error("Invalid boss string for import.") return end
@@ -217,7 +221,7 @@ function API.ImportBossOptions(addonName, bossString, optionalCallbackFunction)
 	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, bossString, nil, optionalCallbackFunction)
 end
 
--- Input the name of YOUR addon, i.e. the addon making the profile request
+-- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
 function API.RequestProfile(addonName)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") return end
 	local L = API:GetLocale("BigWigs")
@@ -276,9 +280,9 @@ do
 		end
 	end)
 
-	-- Input the name of YOUR addon, i.e. the addon making the swap request
-	-- If the profile you're trying to swap to doesn't exist, this function will return false, it will return true if the profile was found and the popup was displayed to the user
-	-- You can optionally supply a callback function that will return false if the user declined the profile swap, and true if the user accepted
+	-- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
+	-- profileName: If the profile you're trying to swap to doesn't exist, this function will return false, it will return true if the profile was found and the popup was displayed to the user
+	-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
 	function API.SwapProfile(addonName, profileName, optionalCallbackFunction)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") return end
 		if type(profileName) ~= "string" or #profileName < 3 then error("Invalid profile name for profile import.") return end
