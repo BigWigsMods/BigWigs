@@ -200,8 +200,21 @@ function API.RegisterProfile(addonName, profileString, optionalCustomProfileName
 	if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") return end
 	if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") return end
 	addonTbl.LoadCoreAndOptions()
-	if not BigWigsOptions.VerifyAddOnProfileString(profileString) then error("Invalid profile string for profile import.") return end
+	local valid, bossExport = BigWigsOptions.VerifyAddOnProfileString(bossString)
+	if not valid or bossExport then error("Invalid profile string for profile import.") return end
 	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
+end
+
+
+-- You can optionally supply a callback function that will return false if the user declined the profile import, and true if the user accepted
+function API.ImportBossOptions(addonName, bossString, optionalCallbackFunction)
+	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for boss import.") return end
+	if type(bossString) ~= "string" or #bossString < 3 then error("Invalid boss string for import.") return end
+	if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") return end
+	addonTbl.LoadCoreAndOptions()
+	local valid, bossExport = BigWigsOptions.VerifyAddOnProfileString(bossString)
+	if not valid or not bossExport then error("Invalid boss string for import.") return end
+	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, bossString, nil, optionalCallbackFunction)
 end
 
 -- Input the name of YOUR addon, i.e. the addon making the profile request
