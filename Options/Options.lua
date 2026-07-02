@@ -2157,16 +2157,16 @@ do
 		local profileName = loader.db:GetCurrentProfile()
 		local instanceNamesString = ""
 		if bossImport then
+			local instanceNames = {}
 			for instanceId in next, instances do
 				local instanceName = GetRealZoneText(instanceId)
 				if instanceName == "" then
-					instanceName = tostring(instanceId)
+					error("Wrong instanceID in import string")
 				end
-				if instanceNamesString ~= "" then
-					instanceNamesString = instanceNamesString .. "\n"
-				end
-				instanceNamesString = instanceNamesString .. instanceName
+				table.insert(instanceNames, instanceName)
 			end
+			table.sort(instanceNames)
+			instanceNamesString = table.concat(instanceNames, "\n")
 		end
 		if not optionalCustomProfileName or profileName == optionalCustomProfileName then
 			optionalCustomProfileName = nil

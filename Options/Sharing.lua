@@ -1036,7 +1036,7 @@ do
 			sharingImportOptionsSettings.importCombatTimerSettings = true
 		end
 		if IsBossImport() then
-			for instanceID, _ in pairs(importedTableData.exportTable) do
+			for instanceID in next, importedTableData.exportTable do
 				sharingImportOptionsSettings[instanceID] = true
 			end
 		end
