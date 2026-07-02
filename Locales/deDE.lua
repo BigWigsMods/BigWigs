@@ -303,7 +303,7 @@ L.export_bosses_info = "Die Konfiguration aller Bosse in den unten gewählten Zo
 L.raids_section = "Schlachtzüge"
 L.expansion_dungeons_section = "Dungeons der Erweiterung"
 L.seasonal_dungeons_section = "Dungeons der Saison"
-L.confirm_import_addon_boss_settings = "Das Addon |cFF436EEE\"%s\"|r möchte automatisch die BigWigs Boss Einstellungen für alle Bosse in den folgenden Zonen ändern:\n\n|cFFFFFF99%s|r\n\nDies wird auf das folgende Profil angewandt:\n\n|cFF33FF99\"%s\"|r\n\nBist Du sicher, dass Du dies tun willst??"
+L.confirm_import_addon_boss_settings = "Das Addon |cFF436EEE\"%s\"|r möchte automatisch die BigWigs Boss Einstellungen für alle Bosse in den folgenden Zonen ändern:\n\n|cFFFFFF99%s|r\n\nDies wird auf das folgende Profil angewandt:\n\n|cFF33FF99\"%s\"|r\n\nBist Du sicher, dass Du dies tun willst?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Boss Einstellungen teilen"
