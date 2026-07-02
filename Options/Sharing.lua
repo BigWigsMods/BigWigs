@@ -1035,6 +1035,11 @@ do
 		if IsOptionInString("combatTimerSettings") then
 			sharingImportOptionsSettings.importCombatTimerSettings = true
 		end
+		if IsBossImport() then
+			for instanceID, _ in pairs(importedTableData.exportTable) do
+				sharingImportOptionsSettings[instanceID] = true
+			end
+		end
 		sharingModule:SaveData()
 	end
 	local _, addonTable = ...
