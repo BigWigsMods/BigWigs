@@ -371,13 +371,13 @@ local teleportList = {
 	{
 		[2805] = 1254400, -- Windrunner Spire
 		[2811] = 1254572, -- Magisters' Terrace
-		[2813] = 1286809, -- Murder Row
-		[2825] = 1286807, -- Den of Nalorakk
-		[2859] = 1286801, -- The Blinding Vale
+		[2813] = BigWigsLoader.isNext and 1286809 or nil, -- Murder Row
+		[2825] = BigWigsLoader.isNext and 1286807 or nil, -- Den of Nalorakk
+		[2859] = BigWigsLoader.isNext and 1286801 or nil, -- The Blinding Vale
 		[2874] = 1254559, -- Maisara Caverns
 		[2915] = 1254563, -- Nexus-Point Xenas
-		[2923] = 1286804, -- Voidscar Arena
-		[2993] = 1286812, -- Altar of Fangs
+		[2923] = BigWigsLoader.isNext and 1286804 or nil, -- Voidscar Arena
+		[2993] = BigWigsLoader.isNext and 1286812 or nil, -- Altar of Fangs
 	},
 	-- The War Within
 	{
@@ -420,10 +420,10 @@ local teleportList = {
 	{
 		[1763] = 424187, -- Atal'Dazar
 		[1754] = 410071, -- Freehold
-		[1762] = 1286831, -- King's Rest
+		[1762] = BigWigsLoader.isNext and 1286831 or nil, -- King's Rest
 		--[1864] = lw_bfa, -- Shrine of the Storm
 		[1822] = UnitFactionGroup("player") == "Alliance" and 445418 or 464256, -- Siege of Boralus
-		[1877] = 1286828, -- Temple of Sethraliss
+		[1877] = BigWigsLoader.isNext and 1286828 or nil, -- Temple of Sethraliss
 		[1594] = UnitFactionGroup("player") == "Alliance" and 467553 or 467555, -- The MOTHERLODE!!
 		--[1771] = lw_bfa, -- Tol Dagor
 		[1841] = 410074, -- The Underrot
