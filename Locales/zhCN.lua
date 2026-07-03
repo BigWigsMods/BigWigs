@@ -299,11 +299,11 @@ L.imported_combattimer_settings = "战斗计时器设置"
 L.combattimer_settings_import_desc = "导入计时器设置"
 L.combattimer_settings_export_desc = "导出计时器设置"
 L.export_bosses = "导出首领设置"
-L.export_bosses_info = "将导出所选区域中全部首领的配置。"
+L.export_bosses_info = "导出下方所选副本中全部首领的设置。"
 L.raids_section = "团队副本"
 L.expansion_dungeons_section = "内容更新地下城"  -- 同步暴雪官方的本地化翻译EXPANSION_FILTER_TEXT = "内容更新"
 L.seasonal_dungeons_section = "赛季地下城"
-L.confirm_import_addon_boss_settings = "插件 |cFF436EEE\"%s\"|r 即将自动修改以下区域中所有首领的 BigWigs 设置：\n\n|cFFFFFF99%s|r\n\n此更改将应用于以下配置文件：\n\n|cFF33FF99\"%s\"|r\n\n确认继续？"
+L.confirm_import_addon_boss_settings = "插件 |cFF436EEE\"%s\"|r 即将自动修改以下副本中所有首领的 BigWigs 设置：\n\n|cFFFFFF99%s|r\n\n此更改将应用于以下配置文件：\n\n|cFF33FF99\"%s\"|r\n\n确认继续？"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "分享首领设置"
