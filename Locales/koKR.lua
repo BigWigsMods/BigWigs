@@ -303,7 +303,7 @@ L.export_bosses_info = "아래에서 선택한 구역에 있는 모든 보스의
 L.raids_section = "레이드"
 L.expansion_dungeons_section = "확장팩 던전"
 L.seasonal_dungeons_section = "시즌 던전"
-L.confirm_import_addon_boss_settings = "애드온 |cFF436EEE\”%s\"|r이 다음 지역의 모든 보스에 대해 BigWigs 보스 설정을 자동으로 변경하려고 합니다:\n\n|cFFFFFF99%s|r\n\n 변경 사항은 다음 프로필에 적용됩니다:\n\ n|cFF33FF99\“%s\”|r\n\n정말 이 작업을 진행하시겠습니까?"
+L.confirm_import_addon_boss_settings = "애드온 |cFF436EEE\"%s\"|r이 다음 지역의 모든 보스에 대해 BigWigs 보스 설정을 자동으로 변경하려고 합니다:\n\n|cFFFFFF99%s|r\n\n 변경 사항은 다음 프로필에 적용됩니다:\n\n|cFF33FF99\"%s\"|r\n\n정말 이 작업을 진행하시겠습니까?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "보스 설정 공유"
