@@ -225,11 +225,11 @@ L.castTimerNote = "Ce texte ne sera utilisé que pour les CàR d'incantation"
 L.messageCastOverNote = "Ce texte sera utilisé pour afficher un message à la fin de l'incantation"
 L.messageCastStartNote = "Ce texte sera utilisé pour afficher un message au début de l'incantation"
 L.messageBeforeCastStartNote = "Ce texte sera utilisé pour afficher un message avant le début de l'incantation"
---L.messageDuringCastNote = "This text will be used for showing messages during the cast"
+L.messageDuringCastNote = "Ce texte sera utilisé pour afficher des messages pendant l'incantation"
 L.messageNote = "Ce texte sera utilisé pour les messages"
 L.messageOnYouNote = "Le message affiché lorsque la technique vous cible"
---L.messageOnOtherNote = "The message shown when this ability is on other people"
---L.messageTauntNowNote = "The message shown when you're a tank and you need to taunt"
+L.messageOnOtherNote = "Ce message sera affiché lorsque la technique cible d'autres personnes"
+L.messageTauntNowNote = "Ce message sera affiché si vous êtes le tank, et que vous devez provoquer"
 L.messageSpecificHealth = "Le message affiché lorsque le boss est à %d%% de vie"
 L.timerOnYouNote = "Le texte affiché dans le CàR lorsque la technique vous cible"
 L.mythicOnlyNote = "Ce texte ne sera utilisé que pour le Mythique"
@@ -238,7 +238,7 @@ L.otherDifficultiesNote = "Ce texte sera utilisé pour toutes les autres difficu
 -- GUI notes for debuffs
 L.debuffFailureNote = "Cet affaiblissement vous sera appliqué si vous échouez"
 L.debuffFailureMoveFromExplosionNote = "Cet affaiblissement vous sera appliqué si vous ne vous écartez pas de l'explosion"
---L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.debuffFailureInterruptNote = "Cet affaiblissement s'appliquera à vous si vous échouez à interrompre l'incantation de |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.preDebuffNote = "Ceci est le pré-affaiblissement, avant que le principal ne s'applique à vous"
 L.mainDebuffNote = "Ceci est l'affaiblissement principal qui s'applique à vous"
 L.postDebuffNote = "Cet affaiblissement vous sera appliqué après que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
@@ -247,7 +247,7 @@ L.debuffDotAfterCastNote = "Cet affaiblissement est un DoT qui prend effet aprè
 L.debuffPossibleAfterCastNote = "Cet affaiblissement pourrait s'appliquer à vous après que le boss incante |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
 L.debuffTankAfterCastNote = "Cet affaiblissement va s'appliquer sur le tank après que le boss incante |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
 L.debuffWalkIntoObjectNote = "Cet affaiblissement vous sera appliqué si vous marchez dans le sort |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
---L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+L.debuffHitByCastNote = "cet affaiblissement s'appliquera à vous si vous êtes ciblé par l'incantation de |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "Cet affaiblissement vous sera appliqué par |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
