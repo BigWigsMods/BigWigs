@@ -1500,8 +1500,7 @@ do
 			cellDate:SetWidth(WIDTH_RATING+13)
 			local dateTbl = runs[i].completionDate
 			cellDate.text:SetText(L.dayNamesShort[dateTbl.weekday])
-			local monthStr = L.monthNames[dateTbl.month + 1] or L.monthNames[dateTbl.month] or "?"
-			cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.day+1, monthStr, dateTbl.year+2000)
+			cellDate.tooltip = L.dateFormat:format(L.dayNames[dateTbl.weekday], dateTbl.monthDay, L.monthNames[dateTbl.month], dateTbl.year)
 			cellMapName:SetWidth(WIDTH_MAP)
 			cellMapName.text:SetText(dungeonNamesTiny[runs[i].mapChallengeModeID] or runs[i].mapChallengeModeID)
 			cellMapName.tooltip = L.keystoneMapTooltip:format(challengeMapName or "-")
