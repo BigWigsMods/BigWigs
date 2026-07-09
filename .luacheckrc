@@ -97,6 +97,9 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
 }
+files["Core/Constants.lua"].ignore = {
+	"113/C_Spell",
+}
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/C_CVar",

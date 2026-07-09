@@ -125,7 +125,7 @@ local function getIcon(icon, module, option)
 		end
 		if not icon then
 			local moduleLocale = module:GetLocale(true)
-			BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
+			BigWigs:Print(("No icon found for %s using id %d."):format(module.moduleName, moduleLocale[option .. "_icon"]))
 		end
 		return icon
 	elseif type(icon) == "string" then
@@ -139,6 +139,8 @@ local function getIcon(icon, module, option)
 	end
 end
 
+local DoesSpellExist = C_Spell.DoesSpellExist
+local IsSpellDataCached = C_Spell.IsSpellDataCached
 function BigWigs:GetBossOptionDetails(module, option)
 	local optionType = type(option)
 	if optionType == "table" then
@@ -184,23 +186,36 @@ function BigWigs:GetBossOptionDetails(module, option)
 		return option, title, description, icon, optionNotes
 	elseif optionType == "number" then
 		if option > 0 then
+			if not DoesSpellExist(option) then
+				BigWigs:Error(("Option %q in module %q is set to a spell ID that doesn't exist."):format(option, module.moduleName))
+				return option, option, option, false, optionNotes
+			end
+
+			-- Name
 			local spellName = GetSpellName(option)
 			local nameReplacement = moduleLocale[tostring(option)]
 			if nameReplacement then
 				if type(nameReplacement) == "number" then
-					spellName = GetSpellName(nameReplacement)
+					if not DoesSpellExist(nameReplacement) then
+						BigWigs:Error(("Option %q in module %q is trying to define the spell ID name replacement of %q that doesn't exist."):format(option, module.moduleName, nameReplacement))
+						spellName = tostring(nameReplacement)
+					else
+						spellName = GetSpellName(nameReplacement)
+					end
 				else
 					spellName = nameReplacement
 				end
 			end
-			if not spellName then
-				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
-				spellName = option
-			end
+
+			-- Description
 			local desc = GetSpellDescription(option)
 			if not desc then
-				BigWigs:Error(("No spell description was returned for id %d!"):format(option))
-				desc = option
+				if IsSpellDataCached(option) then
+					BigWigs:Error(("Option %q in module %q has no spell description."):format(option, module.moduleName))
+					desc = option
+				else
+					desc = ""
+				end
 			else
 				desc = desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 			end
@@ -215,19 +230,22 @@ function BigWigs:GetBossOptionDetails(module, option)
 				descriptionReplacement = gsub(descriptionReplacement, "{rt(%d)}", "|T13700%1:15|t")
 				desc = descriptionReplacement
 			end
+
+			-- Icon
 			local icon = GetSpellTexture(option)
 			local iconReplacement = moduleLocale[option .. "_icon"]
 			if iconReplacement then
 				icon = getIcon(iconReplacement, module, option)
 			end
 			local roleDesc = getRoleStrings(module, option)
+
 			return option, spellName, roleDesc..desc, icon, optionNotes
 		else
 			-- This is an EncounterJournal ID
 			local tbl = C_EncounterJournal_GetSectionInfo(-option)
 			local title, description, abilityIcon
 			if not tbl then
-				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
+				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.moduleName))
 				title = option
 				description = option
 			else
