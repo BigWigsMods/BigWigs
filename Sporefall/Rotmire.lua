@@ -75,6 +75,7 @@ function mod:GetOptions()
 		1221787, -- Bursting Pustules
 		{1221781, "TANK"}, -- Putrid Fist
 		"custom_select_tank_counter_reset",
+		"berserk",
 	}
 end
 
@@ -101,6 +102,8 @@ function mod:OnEncounterStart()
 
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:GROUP_ROSTER_UPDATE()
+
+	self:Berserk(528, true)
 end
 
 --------------------------------------------------------------------------------
