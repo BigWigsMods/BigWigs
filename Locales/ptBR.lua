@@ -6,7 +6,7 @@ L.tempRenameFeat = "Agora você pode |cFF436EEErenomear|r qualquer habilidade do
 
 -- API.lua
 L.showAddonBar = "O addon '|cFF436EEE%s|r' criou a barra '%s'."
-L.requestAddonProfile = "O addon '|cFF436EEE%s|r' acabou de fazer uma cópia da sua string de exportação de perfil."
+--L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string for the profile called |cFF33FF99'%s'|r."
 L.shortMinutesAndSeconds = "%d Min %d Seg" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Seg" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f Seg" -- 3.2 Seconds

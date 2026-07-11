@@ -221,13 +221,29 @@ function API.ImportBossOptions(addonName, bossString, optionalCallbackFunction)
 	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, bossString, nil, optionalCallbackFunction)
 end
 
--- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
-function API.RequestProfile(addonName)
+-- addonName: Input the name of YOUR addon, i.e. the addon making the profile request.
+-- profileName: The profile name you are requesting.
+function API.RequestProfile(addonName, profileName)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") return end
+	if type(profileName) ~= "string" then error("Invalid profile name for profile request.") return end
+	if not API.IsValidProfile(profileName) then error("The profile being requested doesn't exist.") return end
 	local L = API:GetLocale("BigWigs")
-	addonTbl.loaderPublic.Print(L.requestAddonProfile:format(addonName))
+	addonTbl.loaderPublic.Print(L.requestAddonProfile:format(addonName, profileName))
 	addonTbl.LoadCoreAndOptions()
-	return BigWigsOptions.RequestProfile(addonName)
+	return BigWigsOptions.RequestProfile(addonName, profileName)
+end
+
+-- profileName: The profile name to check the validity of.
+function API.IsValidProfile(profileName)
+	if type(profileName) ~= "string" then error("Cannot check the validity of a profile that isn't a string.") return end
+	local profileList = {}
+	addonTbl.loaderPublic.db:GetProfiles(profileList)
+	for i = 1, #profileList do
+		if profileList[i] == profileName then
+			return true
+		end
+	end
+	return false
 end
 
 -- Fetch the name of the current profile
@@ -285,43 +301,36 @@ do
 	-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
 	function API.SwapProfile(addonName, profileName, optionalCallbackFunction)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") return end
-		if type(profileName) ~= "string" or #profileName < 3 then error("Invalid profile name for profile import.") return end
+		if type(profileName) ~= "string" then error("Invalid profile name for profile import.") return end
+		if not API.IsValidProfile(profileName) then return false end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the profile you want to swap to.") return end
 		if profileName == API.GetProfileName() then error("You cannot swap to the same profile.") return end
-		local profileList = {}
-		addonTbl.loaderPublic.db:GetProfiles(profileList)
-		for i = 1, #profileList do
-			local name = profileList[i]
-			if profileName == name then
-				popup:Show()
-				textFrame:SetText(API:GetLocale("BigWigs").confirm_profile_swap:format(addonName, profileName))
-				local height = 61 + textFrame:GetHeight()
-				popup:SetHeight(height)
+		popup:Show()
+		textFrame:SetText(API:GetLocale("BigWigs").confirm_profile_swap:format(addonName, profileName))
+		local height = 61 + textFrame:GetHeight()
+		popup:SetHeight(height)
 
-				acceptButton:ClearAllPoints()
-				acceptButton:SetPoint("BOTTOMRIGHT", popup, "BOTTOM", -6, 16)
+		acceptButton:ClearAllPoints()
+		acceptButton:SetPoint("BOTTOMRIGHT", popup, "BOTTOM", -6, 16)
 
-				acceptButton:SetScript("OnClick", function()
-					popup:Hide()
-					acceptButton:SetScript("OnClick", nil)
-					cancelButton:SetScript("OnClick", nil)
-					addonTbl.loaderPublic.db:SetProfile(profileName)
-					if optionalCallbackFunction then
-						optionalCallbackFunction(true)
-					end
-				end)
-				cancelButton:SetScript("OnClick", function()
-					popup:Hide()
-					cancelButton:SetScript("OnClick", nil)
-					acceptButton:SetScript("OnClick", nil)
-					if optionalCallbackFunction then
-						optionalCallbackFunction(false)
-					end
-				end)
-				return true
+		acceptButton:SetScript("OnClick", function()
+			popup:Hide()
+			acceptButton:SetScript("OnClick", nil)
+			cancelButton:SetScript("OnClick", nil)
+			addonTbl.loaderPublic.db:SetProfile(profileName)
+			if optionalCallbackFunction then
+				optionalCallbackFunction(true)
 			end
-		end
-		return false -- The profile name you provided doesn't exist
+		end)
+		cancelButton:SetScript("OnClick", function()
+			popup:Hide()
+			cancelButton:SetScript("OnClick", nil)
+			acceptButton:SetScript("OnClick", nil)
+			if optionalCallbackFunction then
+				optionalCallbackFunction(false)
+			end
+		end)
+		return true
 	end
 end
 

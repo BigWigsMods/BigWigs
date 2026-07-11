@@ -6,7 +6,7 @@ L.tempRenameFeat = "現在，首領技能的進階設定 (>>) 可以為技能|cF
 
 -- API.lua
 L.showAddonBar = "插件「|cFF436EEE%s|r」創建了「%s」計時器。"
-L.requestAddonProfile = "插件「|cFF436EEE%s|r」剛剛複製了你的設定檔匯出字串。"
+--L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string for the profile called |cFF33FF99'%s'|r."
 L.shortMinutesAndSeconds = "%d 分 %d 秒" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d 秒" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f 秒" -- 3.2 Seconds

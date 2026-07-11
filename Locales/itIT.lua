@@ -6,7 +6,7 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "L'addon '|cFF436EEE%s|r' ha creato la barra '%s'."
-L.requestAddonProfile = "L'addon '|cFF436EEE%s|r' ha appena creato una copia della stringa di esportazione del tuo profilo."
+--L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string for the profile called |cFF33FF99'%s'|r."
 L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Sec" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds

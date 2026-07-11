@@ -5,7 +5,7 @@ L.tempRenameFeat = "You can now |cFF436EEErename|r any boss ability by opening i
 
 -- API.lua
 L.showAddonBar = "The addon '|cFF436EEE%s|r' created the '%s' bar."
-L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string."
+L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string for the profile called |cFF33FF99'%s'|r."
 L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Sec" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds

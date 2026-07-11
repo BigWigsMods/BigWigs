@@ -1197,7 +1197,7 @@ end
 do
 	local populateToggleOptions
 	do
-		local bwTooltip = BigWigsAPI.GetTooltip()
+		local bwTooltip = API.GetTooltip()
 		local function HideTooltip()
 			bwTooltip:Hide()
 		end
@@ -2219,10 +2219,20 @@ do
 		end)
 	end
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
-	-- Use BigWigsAPI.RequestProfile(addonName)
-	function options.RequestProfile(addonName)
-		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") end
-		return addonTable.GetExportString(true)
+	-- Use BigWigsAPI.RequestProfile(addonName, profileName)
+	function options.RequestProfile(addonName, profileName)
+		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") return end
+		if type(profileName) ~= "string" then error("Invalid profile name for profile request.") return end
+		if not API.IsValidProfile(profileName) then error("The profile being requested doesn't exist.") return end
+		local currentProfileName = API.GetProfileName()
+		if currentProfileName == profileName then
+			return addonTable.GetExportString(true)
+		else
+			loader.db:SetProfile(profileName)
+			local exportString = addonTable.GetExportString(true)
+			loader.db:SetProfile(currentProfileName)
+			return exportString
+		end
 	end
 end
 
