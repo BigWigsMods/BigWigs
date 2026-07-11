@@ -235,19 +235,19 @@ L.mythicOnlyNote = "史诗难度下显示的信息"
 L.otherDifficultiesNote = "非史诗难度下显示的信息"
 
 -- GUI notes for debuffs
-L.debuffFailureNote = "失误时获得此减益效果"
-L.debuffFailureMoveFromExplosionNote = "未能躲开爆炸时，你会受到此减益效果"
-L.debuffFailureInterruptNote = "打断|cFFFFFFFF%s|r失败时，你将受到此减益效果" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
-L.preDebuffNote = "此为预警减益，出现后主减益即将生效"
+L.debuffFailureNote = "失误时获得此减益"
+L.debuffFailureMoveFromExplosionNote = "未躲开爆炸时获得此减益"
+L.debuffFailureInterruptNote = "打断|cFFFFFFFF%s|r失败时获得此减益" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+L.preDebuffNote = "预警减益，主减益即将生效"
 L.mainDebuffNote = "该减益为主要效果"
-L.postDebuffNote = "|cFFFFFFFF%s|r结束后，该减益会施加于你" -- This debuff will apply to you after OTHER_DEBUFF expires
-L.debuffUnderYouNote = "若站在危险区域内，会获得此减益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
-L.debuffDotAfterCastNote = "首领施放|cFFFFFFFF%s|r后，你会受到持续伤害效果" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
-L.debuffPossibleAfterCastNote = "首领施放|cFFFFFFFF%s|r后，你可能会受到此减益效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
-L.debuffTankAfterCastNote = "首领施放|cFFFFFFFF%s|r后，坦克会受到此减益效果" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
-L.debuffWalkIntoObjectNote = "主动触碰|cFFFFFFFF%s|r，你会受到此减益效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
-L.debuffHitByCastNote = "被|cFFFFFFFF%s|r的施法击中时，你将受到此减益效果" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
-L.debuffAddsCast = "该减益由|cFFFFFFFF%s|r对你施加" -- This debuff is applied to you by NPC_NAME
+L.postDebuffNote = "|cFFFFFFFF%s|r结束后获得此减益" -- This debuff will apply to you after OTHER_DEBUFF expires
+L.debuffUnderYouNote = "站在危险区域内获得此减益" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
+L.debuffDotAfterCastNote = "首领施放|cFFFFFFFF%s|r后，受到持续伤害" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
+L.debuffPossibleAfterCastNote = "首领施放|cFFFFFFFF%s|r后，可能获得此减益" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
+L.debuffTankAfterCastNote = "首领施放|cFFFFFFFF%s|r后，坦克获得此减益" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+L.debuffWalkIntoObjectNote = "触碰|cFFFFFFFF%s|r获得此减益" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
+L.debuffHitByCastNote = "被|cFFFFFFFF%s|r击中时获得此减益" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
+L.debuffAddsCast = "由|cFFFFFFFF%s|r对你施加的减益" -- This debuff is applied to you by NPC_NAME
 
 -- Common ability name replacements
 L.laser = "激光" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
