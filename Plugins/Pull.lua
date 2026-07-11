@@ -9,11 +9,8 @@ if not plugin then return end
 -- Locals
 --
 
-local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local DoCountdown = BigWigsLoader.DoCountdown
-local zoneTable = BigWigsLoader.zoneTbl
 local isLogging = false
-local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 
@@ -294,7 +291,7 @@ do
 		self:RegisterMessage("Blizz_StartCountdown")
 		self:RegisterMessage("Blizz_StopCountdown")
 
-		if BigWigsLoader.isRetail then
+		if BigWigsLoader.isRetail or BigWigsLoader.isMists then
 			self:RegisterEvent("CHALLENGE_MODE_START")
 		end
 	end
@@ -310,6 +307,27 @@ end
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local IsEncounterInProgress
+local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
+do
+	local OrigIsEncounterInProgress = BigWigsLoader.IsEncounterInProgress
+	if not BigWigsLoader.isMists then
+		IsEncounterInProgress = OrigIsEncounterInProgress
+	else
+		function IsEncounterInProgress()
+			local _, _, difficulty = GetInstanceInfo()
+			-- During a Mists challenge mode, you can choose to reset it during an active boss encounter.
+			-- Doing so permanently marks you as being in encounter combat until you leave the instance.
+			-- Blizz doesn't seem interested in fixing this, so we'll handle it ourselves by always allowing pull timers in challenge modes.
+			if difficulty == 8 then
+				return false
+			else
+				return OrigIsEncounterInProgress()
+			end
+		end
+	end
+end
 
 do
 	local timer, timeLeft = nil, 0
@@ -340,6 +358,7 @@ do
 		end
 	end
 
+	local zoneTable = BigWigsLoader.zoneTbl
 	function plugin:Blizz_StartCountdown(_, initiatedBy, timeSeconds)
 		if IsEncounterInProgress() or self:IsSecret(initiatedBy) then return end -- We don't want pull timers during encounters or when secret (encounters and M+)
 		local unitToken
@@ -415,9 +434,10 @@ do
 			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
 		end
 	end
-	function plugin:CHALLENGE_MODE_START()
-		self:Blizz_StopCountdown() -- Stop any active pull timers when a Mythic+ countdown is started
-	end
+end
+
+function plugin:CHALLENGE_MODE_START()
+	self:Blizz_StopCountdown() -- Stop any active pull timers when a Mythic+ countdown is started
 end
 
 function plugin:BigWigs_OnBossWin()
@@ -445,7 +465,10 @@ end
 
 local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end -- XXX 12.0 compat
 BigWigsAPI.RegisterSlashCommand("/pull", function(input)
-	if IsEncounterInProgress() or InChatMessagingLockdown() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this during encounters/M+
+	if IsEncounterInProgress() or InChatMessagingLockdown() then -- Doesn't make sense to allow this during encounters/M+
+		BigWigs:Print(L.encounterRestricted)
+		return
+	end
 
 	if not IsInGroup() or (IsInGroup(2) and UnitGroupRolesAssigned("player") == "TANK") or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or (IsInGroup(1) and not IsInRaid()) then -- Solo, tank in LFG, leader, assist, anyone in 5m
 		if not plugin:IsEnabled() then BigWigs:Enable() end
