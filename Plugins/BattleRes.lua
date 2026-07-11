@@ -1472,27 +1472,51 @@ end
 --
 
 do
-	local function DelayStartOfInstance() -- Difficulty info isn't accurate until 1 frame after PEW
-		local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-		if difficultiesWithBattleRes[diffID] then
-			isShowing = true
-			if isTesting then
-				isTesting:Cancel()
-				isTesting = nil
-			end
-			battleResFrame:Show()
-			battleResFrame.cdText:SetFormattedText(cdTextFormat, ConvertDuration(0))
-			battleResFrame.cdTextRaw = 0
-			battleResFrame.chargesText:SetFormattedText(chargesTextFormat, 0)
-			battleResFrame.chargesTextRaw = 0
-			if plugin.db.profile.iconDesaturate == 3 then
-				battleResFrame.icon:SetDesaturated(true)
-			end
-			plugin:RegisterEvent("ENCOUNTER_START")
-			plugin:RegisterEvent("ENCOUNTER_END")
-			plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
-			plugin:RegisterEvent("PLAYER_REGEN_ENABLED")
-			if IsEncounterInProgress() then
+	local DelayStartOfInstance
+	do
+		local IsEncounterInProgress = BigWigsLoader.IsEncounterInProgress
+		function DelayStartOfInstance() -- Difficulty info isn't accurate until 1 frame after PEW
+			local _, _, diffID = BigWigsLoader.GetInstanceInfo()
+			if difficultiesWithBattleRes[diffID] then
+				isShowing = true
+				if isTesting then
+					isTesting:Cancel()
+					isTesting = nil
+				end
+				battleResFrame:Show()
+				battleResFrame.cdText:SetFormattedText(cdTextFormat, ConvertDuration(0))
+				battleResFrame.cdTextRaw = 0
+				battleResFrame.chargesText:SetFormattedText(chargesTextFormat, 0)
+				battleResFrame.chargesTextRaw = 0
+				if plugin.db.profile.iconDesaturate == 3 then
+					battleResFrame.icon:SetDesaturated(true)
+				end
+				plugin:RegisterEvent("ENCOUNTER_START")
+				plugin:RegisterEvent("ENCOUNTER_END")
+				plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
+				plugin:RegisterEvent("PLAYER_REGEN_ENABLED")
+				if IsEncounterInProgress() then
+					previousCharges = -1
+					resCollector = {}
+					fightStartTime = GetTime()
+					battleResFrame.updater:Play()
+					if not BigWigsLoader.isRetail then
+						battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+					end
+				end
+			elseif diffID == 23 then -- Mythic
+				plugin:RegisterEvent("CHALLENGE_MODE_START")
+			elseif diffID == 8 then -- Mythic+
+				isShowing = true
+				if isTesting then
+					isTesting:Cancel()
+					isTesting = nil
+				end
+				battleResFrame:Show()
+				battleResFrame.cdText:SetFormattedText(cdTextFormat, ConvertDuration(0))
+				battleResFrame.cdTextRaw = 0
+				battleResFrame.chargesText:SetFormattedText(chargesTextFormat, 0)
+				battleResFrame.chargesTextRaw = 0
 				previousCharges = -1
 				resCollector = {}
 				fightStartTime = GetTime()
@@ -1500,29 +1524,9 @@ do
 				if not BigWigsLoader.isRetail then
 					battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 				end
+				plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
+				plugin:RegisterEvent("PLAYER_REGEN_ENABLED")
 			end
-		elseif diffID == 23 then -- Mythic
-			plugin:RegisterEvent("CHALLENGE_MODE_START")
-		elseif diffID == 8 then -- Mythic+
-			isShowing = true
-			if isTesting then
-				isTesting:Cancel()
-				isTesting = nil
-			end
-			battleResFrame:Show()
-			battleResFrame.cdText:SetFormattedText(cdTextFormat, ConvertDuration(0))
-			battleResFrame.cdTextRaw = 0
-			battleResFrame.chargesText:SetFormattedText(chargesTextFormat, 0)
-			battleResFrame.chargesTextRaw = 0
-			previousCharges = -1
-			resCollector = {}
-			fightStartTime = GetTime()
-			battleResFrame.updater:Play()
-			if not BigWigsLoader.isRetail then
-				battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-			end
-			plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
-			plugin:RegisterEvent("PLAYER_REGEN_ENABLED")
 		end
 	end
 	local isEnabled = false

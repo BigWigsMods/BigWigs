@@ -12,7 +12,6 @@ if not plugin then return end
 --local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 --local DoCountdown = BigWigsLoader.DoCountdown
 --local zoneTable = BigWigsLoader.zoneTbl
-local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 --local media = LibStub("LibSharedMedia-3.0")
 --local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
@@ -73,6 +72,7 @@ end
 -- Event Handlers
 --
 
+local IsEncounterInProgress = BigWigsLoader.IsEncounterInProgress
 do
 	local function Print60()
 		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)

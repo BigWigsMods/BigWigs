@@ -272,23 +272,24 @@ end
 
 do
 	local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-
 	local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
-	local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
-
-	local function StoreHealth()
-		if IsEncounterInProgress() then
-			for i = 1, 5 do
-				local unit = units[i]
-				local rawHealth = UnitHealth(unit)
-				if rawHealth > 0 then
-					local maxHealth = UnitHealthMax(unit)
-					local health = rawHealth / maxHealth
-					healthPools[i] = health
-					healthPoolNames[i] = plugin:UnitName(unit)
-				elseif healthPools[i] then
-					healthPools[i] = nil
-					healthPoolNames[i] = nil
+	local StoreHealth
+	do
+		local IsEncounterInProgress = BigWigsLoader.IsEncounterInProgress
+		function StoreHealth()
+			if IsEncounterInProgress() then
+				for i = 1, 5 do
+					local unit = units[i]
+					local rawHealth = UnitHealth(unit)
+					if rawHealth > 0 then
+						local maxHealth = UnitHealthMax(unit)
+						local health = rawHealth / maxHealth
+						healthPools[i] = health
+						healthPoolNames[i] = plugin:UnitName(unit)
+					elseif healthPools[i] then
+						healthPools[i] = nil
+						healthPoolNames[i] = nil
+					end
 				end
 			end
 		end

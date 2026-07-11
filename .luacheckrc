@@ -27,6 +27,7 @@ files["Loader.lua"].ignore = {
 	"113/C_BattleNet",
 	"113/C_ChatInfo",
 	"113/C_CVar",
+	"113/C_InstanceEncounter",
 	"113/C_Item",
 	"113/C_Map",
 	"11[23]/C_PartyInfo",
@@ -36,6 +37,7 @@ files["Loader.lua"].ignore = {
 	"113/GetBuildInfo",
 	"113/GetNumGroupMembers",
 	"113/GetRealmID",
+	"113/IsEncounterInProgress", -- XXX temp
 	"113/IsPlayerSpell", -- XXX temp
 	"113/IsSpellKnown", -- XXX temp
 	"113/IsPublicTestClient",
@@ -347,7 +349,6 @@ globals = {
 	"C_EncounterJournal",
 	"C_EncounterTimeline",
 	"C_GossipInfo",
-	"C_InstanceEncounter",
 	"C_MerchantFrame", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
@@ -386,7 +387,6 @@ globals = {
 	"InCombatLockdown",
 	"IsAltKeyDown",
 	"IsControlKeyDown",
-	"IsEncounterInProgress",
 	"IsInGroup",
 	"IsInRaid",
 	"IsLoggedIn",

@@ -341,9 +341,8 @@ do
 	local StoreHealth
 	do
 		local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
-		local IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX 12.0 compat
 		function StoreHealth(module)
-			if IsEncounterInProgress() then
+			if module:IsAnyEncounterInProgress() then
 				local journalID = GetModuleID(module)
 				for i = 1, 5 do
 					local unit = units[i]

@@ -152,6 +152,7 @@ public.GetSpellDescription = C_Spell.GetSpellDescription
 public.GetSpellLink = C_Spell.GetSpellLink
 public.GetSpellName = C_Spell.GetSpellName
 public.GetSpellTexture = C_Spell.GetSpellTexture
+public.IsEncounterInProgress = C_InstanceEncounter and C_InstanceEncounter.IsEncounterInProgress or IsEncounterInProgress -- XXX [Mainline:✓ MoP:✗ Wrath:✗ TBC:✗ Vanilla:✗]
 public.IsItemInRange = C_Item.IsItemInRange
 public.IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook -- XXX [Mainline:✓ MoP:✓ Wrath:✓ Vanilla:✓]
 public.IsPlayerSpell = IsPlayerSpell or public.IsSpellKnownOrInSpellBook
