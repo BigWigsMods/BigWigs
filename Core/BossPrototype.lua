@@ -1473,7 +1473,8 @@ end
 --
 
 do
-	local IsEncounterInProgress = BigWigsLoader.IsEncounterInProgress
+	local IsEncounterInProgress = loader.IsEncounterInProgress
+	--- Return the result of Blizzard's IsEncounterInProgress() function
 	function boss:IsAnyEncounterInProgress()
 		return IsEncounterInProgress()
 	end
@@ -4635,7 +4636,7 @@ function boss:SimpleTimer(func, delay)
 end
 
 do
-	local Timer = BigWigsLoader.CTimerNewTimer
+	local Timer = loader.CTimerNewTimer
 	function boss:ScheduleTimer(func, delay, one, two, three, four, five, six, seven, eight)
 		if type(func) == "function" then
 			local timerId = Timer(delay, function() func(one, two, three, four, five, six, seven, eight) end)
@@ -4650,7 +4651,7 @@ do
 end
 
 do
-	local Ticker = BigWigsLoader.CTimerNewTicker
+	local Ticker = loader.CTimerNewTicker
 	function boss:ScheduleRepeatingTimer(func, delay, one, two, three, four, five, six, seven, eight)
 		if type(func) == "function" then
 			local timerId = Ticker(delay, function() func(one, two, three, four, five, six, seven, eight) end)
