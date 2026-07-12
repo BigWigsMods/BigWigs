@@ -562,7 +562,45 @@ do
 end
 
 do
-	local function GetEncounterExportString(requestAll)
+	local function GetSelectedEncounterExportsFromOptions()
+		local exportSelections = {}
+		for key, value in pairs(encounterExportOptionsSettings) do
+			if value == true then
+				exportSelections[key] = true
+			end
+		end
+		return exportSelections
+	end
+
+	local function GetSelectedEncounterExports(includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
+		local exportSelections = {}
+
+		if includeRaids then
+			for key, value in pairs(BigWigsLoader.zoneTbl) do
+				if key > 0 and value == BigWigsLoader.currentExpansion.name then
+					exportSelections[key] = true
+				end
+			end
+		end
+
+		if includeSeasonalDungeons then
+			for key in pairs(BigWigsLoader.currentExpansion.currentSeason) do
+				exportSelections[key] = true
+			end
+		end
+
+		if includeExpansionDungeons then
+			for key, value in pairs(BigWigsLoader.zoneTbl) do
+				if value == BigWigsLoader.currentExpansion.littleWigsName then
+					exportSelections[key] = true
+				end
+			end
+		end
+
+		return exportSelections
+	end
+
+	local function GetEncounterExportString(selectedEncounters)
 		local exportOptions = {
 			version = bossSharingVersion,
 			bossExport = true,
@@ -572,49 +610,47 @@ do
 		local colorModule = BigWigs:GetPlugin("Colors")
 		local soundModule = BigWigs:GetPlugin("Sounds")
 
-		for k, v in pairs(encounterExportOptionsSettings) do
-			if v == true then
-				BigWigsLoader:LoadZone(k)
-				local modules = BigWigs:GetBossModulesForInstanceID(k)
-				if modules then
-					exportOptions.exportTable[k] = {}
-					local instanceSettings = exportOptions.exportTable[k]
-					for _, module in ipairs(modules) do
-						if module.SetupOptions then module:SetupOptions() end
+		for k in pairs(selectedEncounters) do
+			BigWigsLoader:LoadZone(k)
+			local modules = BigWigs:GetBossModulesForInstanceID(k)
+			if modules then
+				exportOptions.exportTable[k] = {}
+				local instanceSettings = exportOptions.exportTable[k]
+				for _, module in ipairs(modules) do
+					if module.SetupOptions then module:SetupOptions() end
 
-						-- Flags
-						if module.db and module.db.profile and module.db.profile.toggles then
-							instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
-							instanceSettings[module.name].flags = module.db.profile.toggles
-						else
-							error(("Module %s does not have a db.profile table."):format(module.name))
-						end
+					-- Flags
+					if module.db and module.db.profile and module.db.profile.toggles then
+						instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+						instanceSettings[module.name].flags = module.db.profile.toggles
+					else
+						error(("Module %s does not have a db.profile table."):format(module.name))
+					end
 
-						-- Renames
-						if module.db and module.db.profile and module.db.profile.renames then
-							instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
-							instanceSettings[module.name].renames = module.db.profile.renames
-						end
+					-- Renames
+					if module.db and module.db.profile and module.db.profile.renames then
+						instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+						instanceSettings[module.name].renames = module.db.profile.renames
+					end
 
-						-- Colors
-						for colorSettingName, savedModules in pairs(colorModule.db.profile) do
-							for colorSettingsModuleName, settings in pairs(savedModules) do
-								if colorSettingsModuleName == module.name then
-									instanceSettings[module.name].colors = CopyTable(instanceSettings[module.name].colors or {})
-									instanceSettings[module.name].colors[colorSettingName] = settings
-									break
-								end
+					-- Colors
+					for colorSettingName, savedModules in pairs(colorModule.db.profile) do
+						for colorSettingsModuleName, settings in pairs(savedModules) do
+							if colorSettingsModuleName == module.name then
+								instanceSettings[module.name].colors = CopyTable(instanceSettings[module.name].colors or {})
+								instanceSettings[module.name].colors[colorSettingName] = settings
+								break
 							end
 						end
+					end
 
-						-- Sounds
-						for soundSettingName, savedSoundModules in pairs(soundModule.db.profile) do
-							for soundSettingsModuleName, settings in pairs(savedSoundModules) do
-								if soundSettingsModuleName == module.name then
-									instanceSettings[module.name].sounds = CopyTable(instanceSettings[module.name].sounds or {})
-									instanceSettings[module.name].sounds[soundSettingName] = settings
-									break
-								end
+					-- Sounds
+					for soundSettingName, savedSoundModules in pairs(soundModule.db.profile) do
+						for soundSettingsModuleName, settings in pairs(savedSoundModules) do
+							if soundSettingsModuleName == module.name then
+								instanceSettings[module.name].sounds = CopyTable(instanceSettings[module.name].sounds or {})
+								instanceSettings[module.name].sounds[soundSettingName] = settings
+								break
 							end
 						end
 					end
@@ -628,7 +664,37 @@ do
 		return bossSharingVersion..":"..encoded
 	end
 	local _, addonTable = ...
-	addonTable.GetEncounterExportString = function(requestAll) return GetEncounterExportString(requestAll) end
+	addonTable.GetSelectedEncounterExportString = function()
+		return GetEncounterExportString(GetSelectedEncounterExportsFromOptions())
+	end
+	addonTable.RequestEncounterExportString = function(includeRaids, includeSeasonalDungeons, includeExpansionDungeons, callback)
+		local selectedEncounters = GetSelectedEncounterExports(includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
+		local exportInstanceQueue = {}
+		for instanceID in pairs(selectedEncounters) do
+			table.insert(exportInstanceQueue, instanceID)
+		end
+
+		local timer
+		local function finalizeRequest()
+			if timer then
+				timer:Cancel()
+			end
+			callback(GetEncounterExportString(selectedEncounters))
+		end
+
+		local function LoadExportInstanceLoop()
+			local nextInstanceID = table.remove(exportInstanceQueue)
+			if not nextInstanceID then
+				return finalizeRequest()
+			end
+			BigWigsLoader:LoadZone(nextInstanceID)
+		end
+
+		timer = BigWigsLoader.CTimerNewTicker(0, LoadExportInstanceLoop)
+	end
+	addonTable.GetEncounterExportString = function(includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
+		return GetEncounterExportString(GetSelectedEncounterExports(includeRaids, includeSeasonalDungeons, includeExpansionDungeons))
+	end
 end
 
 local function isImportStringAvailable()
@@ -1545,7 +1611,7 @@ local sharingOptions = {
 				order = 100,
 				width = "full",
 				get = function()
-					return addonTable.GetEncounterExportString()
+					return addonTable.GetSelectedEncounterExportString()
 				end,
 				set = function() end,
 				control = "NoAcceptMultiline",
