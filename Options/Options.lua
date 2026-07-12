@@ -2219,31 +2219,37 @@ do
 		end)
 	end
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
-	-- Use BigWigsAPI.RequestProfile(addonName, profileName)
-	function options.RequestProfile(addonName, profileName)
+	-- Use BigWigsAPI.RequestProfile(addonName, profileName, callbackFunction, includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
+	function options.RequestProfile(addonName, profileName, callbackFunction, includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
 		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") return end
 		if type(profileName) ~= "string" then error("Invalid profile name for profile request.") return end
+		if type(callbackFunction) ~= "function" then error("Invalid callback function for profile request.") return end
+		if includeRaids ~= nil and type(includeRaids) ~= "boolean" then error("Invalid raid export flag for profile request.") return end
+		if includeSeasonalDungeons ~= nil and type(includeSeasonalDungeons) ~= "boolean" then error("Invalid seasonal dungeon export flag for profile request.") return end
+		if includeExpansionDungeons ~= nil and type(includeExpansionDungeons) ~= "boolean" then error("Invalid expansion dungeon export flag for profile request.") return end
 		if not API.IsValidProfile(profileName) then error("The profile being requested doesn't exist.") return end
+
+		local includeBossOptions = includeRaids == true or includeSeasonalDungeons == true or includeExpansionDungeons == true
+		local function exportProfileAndBoss(onDone)
+			local profileString = addonTable.GetExportString(true)
+			if not includeBossOptions then
+				onDone(profileString, nil)
+				return
+			end
+			addonTable.RequestEncounterExportString(includeRaids, includeSeasonalDungeons, includeExpansionDungeons, function(bossString)
+				onDone(profileString, bossString)
+			end)
+		end
 		local currentProfileName = API.GetProfileName()
 		if currentProfileName == profileName then
-			return addonTable.GetExportString(true)
+			exportProfileAndBoss(callbackFunction)
 		else
 			loader.db:SetProfile(profileName)
-			local exportString = addonTable.GetExportString(true)
-			loader.db:SetProfile(currentProfileName)
-			return exportString
+			exportProfileAndBoss(function(profileString, bossString)
+				loader.db:SetProfile(currentProfileName)
+				callbackFunction(profileString, bossString)
+			end)
 		end
-	end
-
-	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
-	-- Use BigWigsAPI.RequestBossOptions(addonName, includeRaids, includeSeasonalDungeons, includeExpansionDungeons, callbackFunction)
-	function options.RequestBossOptions(addonName, includeRaids, includeSeasonalDungeons, includeExpansionDungeons, callbackFunction)
-		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for boss options request.") end
-		if includeRaids ~= nil and type(includeRaids) ~= "boolean" then error("Invalid raid export flag for boss options request.") end
-		if includeSeasonalDungeons ~= nil and type(includeSeasonalDungeons) ~= "boolean" then error("Invalid seasonal dungeon export flag for boss options request.") end
-		if includeExpansionDungeons ~= nil and type(includeExpansionDungeons) ~= "boolean" then error("Invalid expansion dungeon export flag for boss options request.") end
-		if type(callbackFunction) ~= "function" then error("Invalid callback function for boss options request.") end
-		addonTable.RequestEncounterExportString(includeRaids, includeSeasonalDungeons, includeExpansionDungeons, callbackFunction)
 	end
 end
 

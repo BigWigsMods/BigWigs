@@ -221,29 +221,22 @@ function API.ImportBossOptions(addonName, bossString, optionalCallbackFunction)
 	BigWigsOptions.SaveImportStringDataFromAddOn(addonName, bossString, nil, optionalCallbackFunction)
 end
 
--- addonName: Input the name of YOUR addon, i.e. the addon making the boss settings request
--- includeRaids/includeSeasonalDungeons/includeExpansionDungeons: set to true for the settings you want to include in the export string.
--- callbackFunction: Receives the export string after the selected options have been loaded.
-function API.RequestBossOptions(addonName, includeRaids, includeSeasonalDungeons, includeExpansionDungeons, callbackFunction)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for boss options request.") return end
-	if includeRaids ~= nil and type(includeRaids) ~= "boolean" then error("Invalid raid export flag for boss options request.") return end
-	if includeSeasonalDungeons ~= nil and type(includeSeasonalDungeons) ~= "boolean" then error("Invalid seasonal dungeon export flag for boss options request.") return end
-	if includeExpansionDungeons ~= nil and type(includeExpansionDungeons) ~= "boolean" then error("Invalid expansion dungeon export flag for boss options request.") return end
-	if type(callbackFunction) ~= "function" then error("Invalid callback function for boss options request.") return end
-	addonTbl.LoadCoreAndOptions()
-	BigWigsOptions.RequestBossOptions(addonName, includeRaids, includeSeasonalDungeons, includeExpansionDungeons, callbackFunction)
-end
-
 -- addonName: Input the name of YOUR addon, i.e. the addon making the profile request.
 -- profileName: The profile name you are requesting.
-function API.RequestProfile(addonName, profileName)
+-- callbackFunction: Receives (profileString, bossString) after the selected options have been loaded.
+-- includeRaids/includeSeasonalDungeons/includeExpansionDungeons: set to true for the boss settings you want to include in the boss export string.
+function API.RequestProfile(addonName, profileName, callbackFunction, includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") return end
 	if type(profileName) ~= "string" then error("Invalid profile name for profile request.") return end
+	if type(callbackFunction) ~= "function" then error("Invalid callback function for profile request.") return end
+	if includeRaids ~= nil and type(includeRaids) ~= "boolean" then error("Invalid raid export flag for profile request.") return end
+	if includeSeasonalDungeons ~= nil and type(includeSeasonalDungeons) ~= "boolean" then error("Invalid seasonal dungeon export flag for profile request.") return end
+	if includeExpansionDungeons ~= nil and type(includeExpansionDungeons) ~= "boolean" then error("Invalid expansion dungeon export flag for profile request.") return end
 	if not API.IsValidProfile(profileName) then error("The profile being requested doesn't exist.") return end
 	local L = API:GetLocale("BigWigs")
 	addonTbl.loaderPublic.Print(L.requestAddonProfile:format(addonName, profileName))
 	addonTbl.LoadCoreAndOptions()
-	return BigWigsOptions.RequestProfile(addonName, profileName)
+	BigWigsOptions.RequestProfile(addonName, profileName, callbackFunction, includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
 end
 
 -- profileName: The profile name to check the validity of.
