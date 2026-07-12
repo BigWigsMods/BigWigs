@@ -781,13 +781,13 @@ do
 		end
 
 		if hasOptionFlag(dbKey, module, "PRIVATE") then
-			local privateAuraText = AceGUI:Create("Label")
-			privateAuraText:SetText(L.PRIVATE_desc)
-			privateAuraText:SetColor(1, 0.75, 0.79)
-			privateAuraText:SetImage(module:GetMenuIcon("PRIVATE"))
-			privateAuraText:SetFullWidth(true)
-			privateAuraText:SetHeight(30)
-			widgets[#widgets + 1] = privateAuraText
+			local auraSoundText = AceGUI:Create("Label")
+			auraSoundText:SetText(L.PRIVATE_desc)
+			auraSoundText:SetColor(1, 0.75, 0.79)
+			auraSoundText:SetImage(module:GetMenuIcon("PRIVATE"))
+			auraSoundText:SetFullWidth(true)
+			auraSoundText:SetHeight(30)
+			widgets[#widgets + 1] = auraSoundText
 		end
 
 		local tabs = AceGUI:Create("TabGroup")
@@ -1123,13 +1123,13 @@ local function SecondsToTime(time)
 	return ("%d:%02d"):format(m, s)
 end
 
-local function privateAuraOnEnter(widget)
+local function auraSoundOnEnter(widget)
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
 	optionsTooltip:SetSpellByID(widget:GetUserData("spellId"))
 	optionsTooltip:Show()
 end
 
-local function privateAuraDropdownValueChanged(widget, _, value)
+local function auraSoundDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
 	local default = widget:GetUserData("default")
 	local module = widget:GetUserData("module")
@@ -1139,15 +1139,15 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 		value = nil
 	end
 
-	local sDB = soundModule.db.profile["privateaura"]
+	local sDB = soundModule.db.profile["privateaura"] -- XXX We should migrate this to an auraSounds options table
 	if not sDB[module.name] then
 		sDB[module.name] = {}
 	end
 	sDB[module.name][key] = value
-	module:RegisterPrivateAuraSounds()
+	module:RegisterAuraSounds()
 end
 
-local function getPrivateAuraOptions(module, option)
+local function getAuraOptions(module, option)
 	local sDB = soundModule.db.profile["privateaura"]
 	local soundList = LibSharedMedia:List("sound")
 
@@ -1168,7 +1168,7 @@ local function getPrivateAuraOptions(module, option)
 	icon:SetRelativeWidth(0.1)
 	icon:SetUserData("spellId", id)
 	icon:SetUserData("updateTooltip", true)
-	icon:SetCallback("OnEnter", privateAuraOnEnter)
+	icon:SetCallback("OnEnter", auraSoundOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
 
 	local dropdown = AceGUI:Create("SharedDropdown")
@@ -1182,7 +1182,7 @@ local function getPrivateAuraOptions(module, option)
 	dropdown:SetUserData("key", key)
 	dropdown:SetUserData("module", module)
 	dropdown:SetUserData("default", defaultSound)
-	dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
+	dropdown:SetCallback("OnValueChanged", auraSoundDropdownValueChanged)
 	local value = sDB[module.name] and sDB[module.name][key] or defaultSound
 	for i, v in next, soundList do
 		if v == value then
@@ -1244,9 +1244,7 @@ do
 				widget:AddChild(header)
 
 				for _, v in next, tabOptions[tab] do
-					if C_UnitAuras.AuraIsPrivate(v[1]) then
-						widget:AddChildren(getPrivateAuraOptions(module, v))
-					end
+					widget:AddChildren(getAuraOptions(module, v))
 				end
 
 				local reset = AceGUI:Create("Button")
@@ -1469,15 +1467,9 @@ do
 			local showTabs = #tabs > 0
 
 			local showPATab = false
-			if module.privateAuraSoundOptions then
-				-- Non-PA spells will not be shown and we don't want an empty tab
-				for _, opt in ipairs(module.privateAuraSoundOptions) do
-					if C_UnitAuras.AuraIsPrivate(opt[1]) then
-						showTabs = true
-						showPATab = true
-						break
-					end
-				end
+			if module.auraSoundOptions then
+				showTabs = true
+				showPATab = true
 			end
 
 			if showTabs then -- tabs!
@@ -1514,7 +1506,7 @@ do
 				if showPATab then
 					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:18:18:-2:-1|t"
 					table.insert(tabInfo, { text = iconText .. L.privateAuras, value = "private" })
-					tabOptions["private"] = module.privateAuraSoundOptions
+					tabOptions["private"] = module.auraSoundOptions
 				end
 
 				local tabsWidget = AceGUI:Create("TabGroup")

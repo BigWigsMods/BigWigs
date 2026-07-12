@@ -291,7 +291,7 @@ do
 	end
 	local DisableCore
 	do
-		local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+		local RemoveAuraAppliedSound = C_UnitAuras.RemoveAuraAppliedSound and C_UnitAuras.RemoveAuraAppliedSound or C_UnitAuras.RemovePrivateAuraAppliedSound
 		function DisableCore(skipDelveEvent)
 			if coreEnabled then
 				coreEnabled = false
@@ -305,12 +305,12 @@ do
 				core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
 				if loader.isRetail then
 					for _, module in next, bosses do
-						-- Unregister private aura sounds
-						if module.privateAuraSounds then
-							for i = 1, #module.privateAuraSounds do
-								RemovePrivateAuraAppliedSound(module.privateAuraSounds[i])
+						-- Unregister aura sounds
+						if module.auraSounds then
+							for i = 1, #module.auraSounds do
+								RemoveAuraAppliedSound(module.auraSounds[i])
 							end
-							module.privateAuraSounds = nil
+							module.auraSounds = nil
 						end
 					end
 					if not skipDelveEvent then
@@ -382,8 +382,8 @@ do
 				for _, module in next, bosses do
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
-						if module:HasPrivateAuraSounds() then
-							module:RegisterPrivateAuraSounds()
+						if module:HasAuraOptions() then
+							module:RegisterAuraSounds()
 						end
 						-- Enable trash modules for the current zone
 						if module:IsTrashModule() then
@@ -716,9 +716,9 @@ do
 				if coreEnabled and module:Retail() then
 					local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 					if module:IsZoneID(instanceID) then
-						-- Register private aura sounds
-						if module:HasPrivateAuraSounds() then
-							module:RegisterPrivateAuraSounds()
+						-- Register aura sounds
+						if module:HasAuraOptions() then
+							module:RegisterAuraSounds()
 						end
 						-- Automatically enable trash modules if we're in the relevant zone at module registration
 						if module:IsTrashModule() then

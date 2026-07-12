@@ -64,7 +64,6 @@ local color_methods = {
 local sound_methods = {
 	PlaySound = 2,
 	MessageOld = 3,
-	SetPrivateAuraSound = 3,
 	TargetMessageOld = 4,
 	StackMessageOld = 5,
 	DelayedMessage = 6,
@@ -1219,9 +1218,6 @@ local function parseLua(file)
 				local sound_index = sound_methods[functionName]
 				if sound_index then
 					sound = unternary(argsList[sound_index+offset], "\"(.-)\"", valid_sounds)
-					if functionName == "SetPrivateAuraSound" and not sound then
-						sound = "warning"
-					end
 				end
 				local color_index = color_methods[functionName]
 				if color_index then

@@ -494,25 +494,32 @@ function boss:GetAllowWin()
 	return self.allowWin and true or false
 end
 
---- Set private aura spell IDs.
+--- Set aura spell IDs.
 -- @param spellIDTable the options table
-function boss:SetPrivateAuraSounds(spellIDTable)
+function boss:SetAuraSounds(spellIDTable)
 	for i = 1, #spellIDTable do
 		local spellId = spellIDTable[i]
 		local idType = type(spellId)
 		if idType == "number" then
 			spellIDTable[i] = { spellId }
 		elseif idType ~= "table" then
-			core:Error(("Module %s tried to add an invalid private aura spell id at position #%d. Expected number or table, got %s."):format(self.moduleName, i, idType))
+			core:Error(("Module %s tried to add an invalid aura spell id at position #%d. Expected number or table, got %s."):format(self.moduleName, i, idType))
 		end
 	end
-	self.privateAuraSoundOptions = spellIDTable
+	self.auraSoundOptions = spellIDTable
 end
 
---- Check if a module has private aura sounds.
+--
+--- [DEPRECATED] Set private aura spell IDs.
+-- @param spellIDTable the options table
+function boss:SetPrivateAuraSounds(spellIDTable)
+	self:SetAuraSounds(spellIDTable)
+end
+
+--- Check if a module has aura options.
 -- @return boolean
-function boss:HasPrivateAuraSounds()
-	if self.privateAuraSoundOptions then
+function boss:HasAuraOptions()
+	if self.auraSoundOptions then
 		return true
 	end
 end
@@ -524,17 +531,17 @@ do
 		if restrictionType == 5 and state == 0 then
 			self:UnregisterEvent(event)
 			for module in next, modulesNeedingUpdated do
-				module:RegisterPrivateAuraSounds()
+				module:RegisterAuraSounds()
 			end
 			modulesNeedingUpdated = {}
 		end
 	end)
 	--C_RestrictedActions.IsAddOnRestrictionActive(1) -- Enum.AddOnRestrictionType.Encounter = 1
-	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
-	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+	local AddAuraAppliedSound = C_UnitAuras.AddAuraAppliedSound and C_UnitAuras.AddAuraAppliedSound or C_UnitAuras.AddPrivateAuraAppliedSound
+	local RemoveAuraAppliedSound = C_UnitAuras.RemoveAuraAppliedSound and C_UnitAuras.RemoveAuraAppliedSound or C_UnitAuras.RemovePrivateAuraAppliedSound
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
-	function boss:RegisterPrivateAuraSounds()
-		if not self:HasPrivateAuraSounds() then return end
+	function boss:RegisterAuraSounds()
+		if not self:HasAuraOptions() then return end
 
 		if InChatMessagingLockdown() then
 			modulesNeedingUpdated[self] = true
@@ -543,18 +550,18 @@ do
 		end
 
 		-- Unregister previous sounds
-		if self.privateAuraSounds then
-			for i = 1, #self.privateAuraSounds do
-				RemovePrivateAuraAppliedSound(self.privateAuraSounds[i])
+		if self.auraSounds then
+			for i = 1, #self.auraSounds do
+				RemoveAuraAppliedSound(self.auraSounds[i])
 			end
-			self.privateAuraSounds = nil
+			self.auraSounds = nil
 		end
 
 		local soundModule = plugins.Sounds
 		if not soundModule then return end
 
-		self.privateAuraSounds = {}
-		for _, opt in next, self.privateAuraSoundOptions do
+		self.auraSounds = {}
+		for _, opt in next, self.auraSoundOptions do
 			local key = opt[1]
 			local sound
 			if opt.sound then
@@ -569,24 +576,24 @@ do
 			end
 			if sound then
 				for i = 1, #opt do
-					local privateAuraSoundID
+					local auraSoundID
 					if type(sound) == "string" then -- sound file path
-						privateAuraSoundID = AddPrivateAuraAppliedSound({
+						auraSoundID = AddAuraAppliedSound({
 							spellID = opt[i],
 							unitToken = "player",
 							soundFileName = sound,
 							outputChannel = "master",
 						})
 					else -- sound file id
-						privateAuraSoundID = AddPrivateAuraAppliedSound({
+						auraSoundID = AddAuraAppliedSound({
 							spellID = opt[i],
 							unitToken = "player",
 							soundFileID = sound,
 							outputChannel = "master",
 						})
 					end
-					if privateAuraSoundID then
-						self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+					if auraSoundID then
+						self.auraSounds[#self.auraSounds + 1] = auraSoundID
 					end
 				end
 			end

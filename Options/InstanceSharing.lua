@@ -615,7 +615,7 @@ function applyImport()
 		for moduleName in next, lastImportData.exportData do
 			local module = BigWigs:GetBossModule(moduleName:sub(16))
 			if module and module:IsZoneID(lastImportData.zone) then
-				module:RegisterPrivateAuraSounds()
+				module:RegisterAuraSounds()
 			end
 		end
 	end
