@@ -242,8 +242,7 @@ end
 -- profileName: The profile name to check the validity of.
 function API.IsValidProfile(profileName)
 	if type(profileName) ~= "string" then error("Cannot check the validity of a profile that isn't a string.") return end
-	local profileList = {}
-	addonTbl.loaderPublic.db:GetProfiles(profileList)
+	local profileList = API.GetProfileList()
 	for i = 1, #profileList do
 		if profileList[i] == profileName then
 			return true
@@ -252,10 +251,17 @@ function API.IsValidProfile(profileName)
 	return false
 end
 
--- Fetch the name of the current profile
+-- Return the name of the current profile
 function API.GetProfileName()
 	local name = addonTbl.loaderPublic.db:GetCurrentProfile()
 	return name
+end
+
+-- Return a table containing all profile names
+function API.GetProfileList()
+	local profileList = {}
+	addonTbl.loaderPublic.db:GetProfiles(profileList)
+	return profileList
 end
 
 do
