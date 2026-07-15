@@ -1059,7 +1059,7 @@ do
 		if not importedTableData then
 			BigWigs:Print(L.no_string_available)
 			if successCallback then
-				successCallback(false)
+				successCallback(true)
 			end
 			return
 		end
