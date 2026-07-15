@@ -412,6 +412,121 @@ do
 end
 
 do
+	-- NaowhUI
+	local backdropBorder = {
+		edgeFile = "Interface\\Buttons\\WHITE8X8",
+		edgeSize = 1,
+	}
+
+	local function removeStyle(bar)
+		bar.candyBarBackdrop:Hide()
+		bar.candyBarIconFrameBackdrop:Hide()
+		local height = bar:Get("bigwigs:restoreheight")
+		if height then
+			bar:SetHeight(height) -- Note, calling SetHeight resets all the points for the statusbar and the icon, so we don't need to do it
+		end
+
+		local statusbar = bar.candyBarBar
+		local duration = bar.candyBarDuration
+		duration:ClearAllPoints()
+		duration:SetPoint("TOPLEFT", statusbar, "TOPLEFT", 2, 0)
+		duration:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", -2, 0)
+
+		local label = bar.candyBarLabel
+		label:ClearAllPoints()
+		label:SetPoint("TOPLEFT", statusbar, "TOPLEFT", 2, 0)
+		label:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", -2, 0)
+	end
+
+	local function styleBar(bar)
+		local barHeight = bar:GetHeight()
+
+		bar:Set("bigwigs:restoreheight", barHeight)
+		bar:SetHeight(barHeight / 2)
+
+		bar.candyBarLabel:ClearAllPoints()
+		bar.candyBarDuration:ClearAllPoints()
+		local statusbar = bar.candyBarBar
+		statusbar:ClearAllPoints()
+
+		local bd = bar.candyBarBackdrop
+		if bd.SetToDefaults then
+			bd:SetToDefaults()
+			bd:SetFrameLevel(0)
+		end
+		bd:ClearAllPoints()
+		bd:SetBackdrop(backdropBorder)
+		bd:SetBackdropColor(.1,.1,.1,1)
+		bd:SetBackdropBorderColor(0,0,0,1)
+		bd:SetPoint("TOPLEFT", statusbar, "TOPLEFT", -1, 1)
+		bd:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", 1, -1)
+		bd:Show()
+
+		local iconTexture = bar:GetIcon()
+		if iconTexture then
+			local reApplyIcon = false
+			local iconFrame = bar.candyBarIconFrame
+			local iconBd = bar.candyBarIconFrameBackdrop
+			if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
+				iconFrame:SetToDefaults()
+				iconBd:SetToDefaults()
+				iconBd:SetFrameLevel(0)
+				reApplyIcon = true
+			end
+
+			iconFrame:ClearAllPoints()
+			iconBd:ClearAllPoints()
+
+			if bar:GetIconPosition() == "RIGHT" then
+				iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+
+				statusbar:SetPoint("TOPRIGHT", iconFrame, "LEFT", -4, -2)
+				statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+			else
+				iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+
+				statusbar:SetPoint("TOPLEFT", iconFrame, "RIGHT", 4, -2)
+				statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+			end
+			iconFrame:SetSize(barHeight, barHeight)
+
+			iconBd:SetBackdrop(backdropBorder)
+			iconBd:SetBackdropColor(.1,.1,.1,1)
+			iconBd:SetBackdropBorderColor(0,0,0,1)
+			iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -1, 1)
+			iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 1, -1)
+			iconBd:Show()
+
+			if reApplyIcon then
+				iconFrame:SetTexture(iconTexture)
+				iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+			end
+		end
+
+		bar.candyBarLabel:SetPoint("BOTTOMLEFT", statusbar, "TOPLEFT", 2, -7)
+		bar.candyBarDuration:SetPoint("BOTTOMRIGHT", statusbar, "TOPRIGHT", -2, -7)
+	end
+
+	BigWigsAPI:RegisterBarStyle("NaowhUI", {
+		apiVersion = 1,
+		version = 10,
+		barHeight = 20,
+		texture = "NaowhGradient",
+		fontName = "Naowh",
+		fontSizeNormal = 14,
+		fontSizeEmphasized = 14,
+		spellIndicatorsOffset = 2,
+		spellIndicatorsPosition = "RIGHT",
+		fontOutline = "OUTLINE",
+		iconPosition = "RIGHT",
+		GetSpacing = function(bar) return bar:GetHeight()+4 end,
+		ApplyStyle = styleBar,
+		BarStopped = removeStyle,
+		GetStyleName = function() return "NaowhUI" end,
+	})
+end
+
+do
 	-- Tukui
 	local C = Tukui and Tukui[2]
 	local backdrop = {

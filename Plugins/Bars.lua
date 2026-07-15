@@ -596,6 +596,22 @@ do
 								else
 									db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
 								end
+								if style.iconPosition == "RIGHT" then
+									db.iconPosition = style.iconPosition
+								else
+									db.iconPosition = plugin.defaultDB.iconPosition
+								end
+								if style.spellIndicatorsPosition == "RIGHT" then
+									db.spellIndicatorsPosition = style.spellIndicatorsPosition
+								else
+									db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
+								end
+								if type(style.fontName) == "string" and LibSharedMedia:IsValid(FONT, style.fontName) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", style.fontName)) then
+									db.fontName = style.fontName
+								end
+								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) then
+									db.texture = style.texture
+								end
 
 								plugin:UpdateGUI()
 							end
