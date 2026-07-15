@@ -834,7 +834,7 @@ end
 
 do
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
-	local function SaveImportedGeneralSettings(tableData)
+	local function SaveImportedGeneralSettings(tableData, successCallback)
 		local data = tableData
 		local chatMessages = {}
 		local barPlugin = BigWigs:GetPlugin("Bars")
@@ -911,15 +911,21 @@ do
 
 		if #chatMessages == 0 then
 			BigWigs:Print(L.no_import_message)
+			if successCallback then
+				successCallback(true)
+			end
 			return
 		end
 
 		BigWigs:SendMessage("BigWigs_ProfileUpdate")
 		local importMessage = L.import_success:format(table.concat(chatMessages, comma))
 		BigWigs:Print(importMessage)
+		if successCallback then
+			successCallback(true)
+		end
 	end
 
-	local function SaveImportedBossSettings(tableData)
+	local function SaveImportedBossSettings(tableData, successCallback)
 		local data = tableData
 		local chatMessages = {}
 		local soundModule = BigWigs:GetPlugin("Sounds", true)
@@ -1008,12 +1014,18 @@ do
 			importingInstances = false
 			if #chatMessages == 0 then
 				BigWigs:Print(L.no_import_message)
+				if successCallback then
+					successCallback(true)
+				end
 				return
 			end
 
 			BigWigs:SendMessage("BigWigs_ProfileUpdate")
 			local importMessage = L.import_success:format(table.concat(chatMessages, comma))
 			BigWigs:Print(importMessage)
+			if successCallback then
+				successCallback(true)
+			end
 		end
 
 		local function ImportInstanceLoop()
@@ -1043,20 +1055,23 @@ do
 	--- Saves the currently loaded import string to the BigWigs profile.
 	-- After importing a string with :DecodeImportString, this function
 	-- will save the data to the BigWigs profile.
-	function sharingModule:SaveData()
+	function sharingModule:SaveData(successCallback)
 		if not importedTableData then
 			BigWigs:Print(L.no_string_available)
+			if successCallback then
+				successCallback(false)
+			end
 			return
 		end
-		-- Custom Popup to confirm import?
+
 		if IsBossImport() then
-			SaveImportedBossSettings(importedTableData)
+			SaveImportedBossSettings(importedTableData, successCallback)
 		else
-			SaveImportedGeneralSettings(importedTableData)
+			SaveImportedGeneralSettings(importedTableData, successCallback)
 		end
 	end
 
-	local function ImportStringFromAddOn(string)
+	local function ImportStringFromAddOn(string, successCallback)
 		sharingModule:DecodeImportString(string)
 		sharingImportOptionsSettings.importString = string
 		if IsOptionInString("barPositions") then
@@ -1106,7 +1121,7 @@ do
 				sharingImportOptionsSettings[instanceID] = true
 			end
 		end
-		sharingModule:SaveData()
+		sharingModule:SaveData(successCallback)
 	end
 	local _, addonTable = ...
 	addonTable.SaveImportStringDataFromAddOn = ImportStringFromAddOn

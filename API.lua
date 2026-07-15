@@ -194,7 +194,7 @@ end
 
 -- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
 -- optionalCustomProfileName: Providing this optional name will create a new profile by that name (if it doesn't already exist) and then swap to it.
--- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
+-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted and the import process has completed.
 function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") return end
 	if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") return end
@@ -207,7 +207,7 @@ function API.RegisterProfile(addonName, profileString, optionalCustomProfileName
 end
 
 -- addonName: Input the name of YOUR addon, i.e. the addon making the profile request
--- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
+-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted and the import process has completed.
 ---- WARNING: If you're calling this API from some UI profile installer, we strongly recommend using a callback function, as this is an async process.
 ---- You may want to have your UI state "Waiting..." while the import is in progress, and then continue whenever your callback function is triggered.
 ---- This is required as we may need to load multiple addons with bosses in them to apply the profiles, and loading them all in the same execution path could lock up the game.

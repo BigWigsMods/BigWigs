@@ -2204,10 +2204,7 @@ do
 			if optionalCustomProfileName then
 				loader.db:SetProfile(optionalCustomProfileName)
 			end
-			addonTable.SaveImportStringDataFromAddOn(profileString)
-			if optionalCallbackFunction then
-				optionalCallbackFunction(true)
-			end
+			addonTable.SaveImportStringDataFromAddOn(profileString, optionalCallbackFunction)
 		end)
 		cancelButton:SetScript("OnClick", function()
 			popup:Hide()
