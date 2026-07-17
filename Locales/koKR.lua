@@ -6,7 +6,7 @@ L.tempRenameFeat = "이제 고급 설정(>>)을 열고 |cFF436EEE이름 변경|r
 
 -- API.lua
 L.showAddonBar = "'|cFF436EEE%s|r' 애드온이 '%s' 바를 생성했습니다."
-L.requestAddonProfile = "'|cFF436EEE%s|r' 애드온이 방금 |cFF33FF99'%s'|r이라는 프로필에 대해 귀하의 프로필 내보내기 문자열을 복사했습니다."
+L.requestAddonProfile = "'|cFF436EEE%s|r' 애드온이 방금 |cFF33FF99'%s'|r 프로필에 대해 프로필 내보내기 문자열의 복사본을 생성했습니다."
 L.shortMinutesAndSeconds = "%d 분 %d 초" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d 초" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f 초" -- 3.2 Seconds
