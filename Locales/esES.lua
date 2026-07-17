@@ -6,7 +6,7 @@ L.tempRenameFeat = "Ahora puedes |cFF436EEErenombrar|r cualquier habilidad de je
 
 -- API.lua
 L.showAddonBar = "El addon '|cFF436EEE%s|r' creó la barra '%s'."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string for the profile called |cFF33FF99'%s'|r."
+L.requestAddonProfile = "El addon '|cFF436EEE%s|r' acaba de crear una copia de la cadena de exportación de tu perfil para el perfil llamado |cFF33FF99'%s'|r."
 L.shortMinutesAndSeconds = "%d Min %d Seg" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Seg" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f Seg" -- 3.2 Seconds
@@ -240,7 +240,7 @@ L.import_info = "Después de ingresar el código de importación, puedes selecci
 L.import_info_active = "Elige qué partes te gustaría importar y luego haz clic en el botón de importar."
 L.import_info_none = "|cFFFF0000El código de importación es incompatible o está desactualizada.|r"
 L.export = "Exportar"
---L.export_core = "Export Core"
+L.export_core = "Exportar el principal"
 L.export_info = "Selecciona qué configuraciones te gustaría exportar y compartir con otros.\n\n|cffff4411Solo puedes compartir configuraciones generales y estas no tienen efecto en las configuraciones específicas del jefe.|r"
 L.export_string = "Código de Exportación"
 L.export_string_desc = "Copia este código de BigWigs si deseas compartir tus configuraciones."
@@ -298,12 +298,12 @@ L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras P
 L.imported_combattimer_settings = "Configuración de Temporizador de combate"
 L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate."
 L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate."
---L.export_bosses = "Export Bosses"
---L.export_bosses_info = "The configuration of all bosses in the zones selected below will be exported."
---L.raids_section = "Raids"
---L.expansion_dungeons_section = "Expansion Dungeons"
---L.seasonal_dungeons_section = "Seasonal Dungeons"
---L.confirm_import_addon_boss_settings = "The addon |cFF436EEE\"%s\"|r wants to automatically change your BigWigs boss settings for all the bosses in the following zones:\n\n|cFFFFFF99%s|r\n\nThis will apply to the following profile:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+L.export_bosses = "Exportar Jefes"
+L.export_bosses_info = "La configuración de todos los jefes en los lugares seleccionados debajo será exportada."
+L.raids_section = "Bandas"
+L.expansion_dungeons_section = "Mazmorras de la expansión"
+L.seasonal_dungeons_section = "Mazmorras de temporada"
+L.confirm_import_addon_boss_settings = "El addon |cFF436EEE\"%s\"|r quiere modificar automáticamente la configuración de BigWigs para todos los jefes de las siguientes zonas:\n\n|cFFFFFF99%s|r\n\nEsto se va a aplicar al siguiente perfil:\n\n|cFF33FF99\"%s\"|r\n\n¿Seguro que quieres hacer esto?"
 
 -- InstanceSharing.lua
 L.sharing_window_title = "Compartir configuración del jefe"
@@ -400,10 +400,10 @@ L.autoRoleExplainer = "Cuando te unas a un grupo o cambies tu especialización d
 -- BattleRes.lua
 --
 
-L.battleResTitle = "Battle res"
+L.battleResTitle = "Resurrección en combate"
 L.battleResDesc = "Un icono que muestra cuántas cargas de resurrección en combate hay disponibles y el tiempo para conseguir otra carga."
 L.battleResDesc2 = "\nTu |cFF33FF99Historial de resurrección en combate|r puede verse en la ventana de opciones cuando pases el ratón por encima del icono.\nAviso: Esta ventana de opciones solo se mostrará al estar fuera de combate.\n\n"
-L.battleResHistory = "Battle res historial:"
+L.battleResHistory = "Historial de resurrección en combate:"
 L.battleResResetAll = "Reinicia todas las opciones de resurrección en combate a sus valores predeterminados."
 L.battleResDurationText = "Duración del texto"
 L.battleResChargesText = "Texto de cargas"
@@ -414,7 +414,7 @@ L.iconTextureSpellID = "|T%d:0:0:0:0:64:64:4:60:4:60|t Textura de icono (ID del 
 L.iconTextureSpellIDError = "Tienes que introducir un ID de hechizo válido para usarlo como textura del icono."
 L.battleResModeIcon = "Modo: Icono"
 L.battleResModeText = "Modo: Solo texto"
-L.battleResModeTextTooltip = "Mostrar un fondo temporal para ayudar a mover la opción de Battle res y para ver el área del ratón."
+L.battleResModeTextTooltip = "Mostrar un fondo temporal para ayudar a mover la opción de resurrención en combate y para ver el área del ratón."
 
 -----------------------------------------------------------------------
 -- CombatTimer.lua
@@ -468,7 +468,7 @@ L.keystoneHeaderGuild = "Hermandad"
 L.keystoneRefreshGuild = "Actualizar hermandad"
 L.keystoneLevelTooltip = "Nivel de Piedra: |cFFFFFFFF%s|r"
 L.keystoneMapTooltip = "Mazmorra: |cFFFFFFFF%s|r"
-L.keystoneRatingTooltip = "Puntuación Mítica+: |cFFFFFFFF%d|r"
+L.keystoneRatingTooltip = "Índice de Mítica+: |cFFFFFFFF%d|r"
 L.keystoneHiddenTooltip = "El jugador ha escogido ocultar esta información."
 L.keystoneTabOnline = "En línea"
 L.keystoneTabAlts = "Alters"
