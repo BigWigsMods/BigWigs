@@ -185,6 +185,7 @@ files["Plugins/Proximity.lua"].ignore = {
 	"113/UnitInPhase", -- Classic support
 }
 files["Plugins/Pull.lua"].ignore = {
+	"113/C_ChallengeMode",
 	"113/C_ChatInfo",
 	"113/ClearOverrideBindings",
 	"113/GetPlayerInfoByGUID",

@@ -11,6 +11,21 @@ if not plugin then return end
 
 local DoCountdown = BigWigsLoader.DoCountdown
 local isLogging = false
+local pendingLogStopTimer
+local function cancelLogStop()
+	if pendingLogStopTimer then
+		plugin:CancelTimer(pendingLogStopTimer)
+		pendingLogStopTimer = nil
+	end
+end
+local function scheduleLogStop(delay)
+	cancelLogStop()
+	pendingLogStopTimer = plugin:ScheduleTimer(function()
+		pendingLogStopTimer = nil
+		isLogging = false
+		LoggingCombat(false)
+	end, delay)
+end
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 
@@ -293,14 +308,17 @@ do
 
 		if BigWigsLoader.isRetail or BigWigsLoader.isMists then
 			self:RegisterEvent("CHALLENGE_MODE_START")
+			self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+			self:RegisterEvent("CHALLENGE_MODE_RESET")
 		end
 	end
 end
 
 function plugin:OnPluginDisable()
+	cancelLogStop()
 	if isLogging then
 		isLogging = false
-		LoggingCombat(isLogging)
+		LoggingCombat(false)
 	end
 end
 
@@ -326,6 +344,18 @@ do
 				return OrigIsEncounterInProgress()
 			end
 		end
+	end
+end
+
+local IsChallengeModeActive
+if BigWigsLoader.isRetail or BigWigsLoader.isMists then
+	local GetActiveChallengeMapID = C_ChallengeMode.GetActiveChallengeMapID
+	function IsChallengeModeActive()
+		return GetActiveChallengeMapID() ~= nil
+	end
+else
+	function IsChallengeModeActive()
+		return false
 	end
 end
 
@@ -385,6 +415,7 @@ do
 		BigWigs:Print(L.pullStartedBy:format(name))
 		timer = self:ScheduleRepeatingTimer(printPull, 1)
 		if self.db.profile.combatLog then
+			cancelLogStop()
 			isLogging = true
 			LoggingCombat(isLogging)
 		end
@@ -438,12 +469,23 @@ end
 
 function plugin:CHALLENGE_MODE_START()
 	self:Blizz_StopCountdown() -- Stop any active pull timers when a Mythic+ countdown is started
+	cancelLogStop() -- A new key starting shouldn't be cut short by a pending stop from the previous one
+	if self.db.profile.combatLog then
+		isLogging = true
+		LoggingCombat(true)
+	end
 end
 
-function plugin:BigWigs_OnBossWin()
+function plugin:CHALLENGE_MODE_COMPLETED()
 	if isLogging then
-		isLogging = false
-		self:SimpleTimer(function() LoggingCombat(false) end, 2) -- Delay to prevent any death events being cut out the log
+		scheduleLogStop(5) -- Delay to prevent any events after the final blow being cut out of the log
+	end
+end
+plugin.CHALLENGE_MODE_RESET = plugin.CHALLENGE_MODE_COMPLETED
+
+function plugin:BigWigs_OnBossWin()
+	if isLogging and not IsChallengeModeActive() then -- Don't stop per-boss during an active Mythic+ key, only when the key itself ends
+		scheduleLogStop(2) -- Delay to prevent any death events being cut out the log
 	end
 end
 
