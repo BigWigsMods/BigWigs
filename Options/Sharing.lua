@@ -936,7 +936,7 @@ do
 
 			local sDB = soundModule.db.profile
 			for soundSettingName in next, sDB do
-				if soundSettingName ~= "privateaura" then -- private auras are handled separately inside ImportPrivateAuras
+				if soundSettingName ~= "privateaura" then -- auras sounds are handled separately inside ImportAuraSounds
 					if soundSettings and soundSettings[soundSettingName] then
 						sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
 					else -- wipe to set default
@@ -946,10 +946,10 @@ do
 			end
 		end
 
-		local function ImportPrivateAuras(privateAuraSettings, moduleName)
-			if not soundModule or not privateAuraSettings then return end
+		local function ImportAuraSounds(auraSoundSettings, moduleName)
+			if not soundModule or not auraSoundSettings then return end
 			local sDB = soundModule.db.profile["privateaura"]
-			sDB[moduleName] = CopyTable(privateAuraSettings)
+			sDB[moduleName] = CopyTable(auraSoundSettings)
 		end
 
 		local function ImportFlags(flagSettings, module)
@@ -1043,7 +1043,7 @@ do
 
 					ImportColors(settings.colors, moduleName)
 					ImportSounds(settings.sounds, moduleName)
-					ImportPrivateAuras(settings.privateAuras, moduleName)
+					ImportAuraSounds(settings.privateAuras, moduleName)
 				end
 			end
 			table.insert(chatMessages, getInstanceLabel(nextInstanceID))
