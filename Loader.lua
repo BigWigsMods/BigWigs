@@ -1236,24 +1236,6 @@ end
 ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
 do
-	-- XXX temp 12.0.5
-	if type(BigWigs3DB) == "table" and type(BigWigs3DB.namespaces) == "table" then
-		for moduleName, storage in next, BigWigs3DB.namespaces do
-			if moduleName:find("BigWigs_Bosses_", nil, true) and type(storage) == "table" and storage.profiles then
-				for profileName, moduleTable in next, storage.profiles do
-					if type(moduleTable) == "table" and not moduleTable.toggles and not moduleTable.renames then
-						local newTable = {}
-						for optionKeyForBossToggle, valueOfBossToggle in next, moduleTable do
-							newTable[optionKeyForBossToggle] = valueOfBossToggle
-						end
-						storage.profiles[profileName] = {toggles = newTable}
-					end
-				end
-			end
-		end
-	end
-	-- XXX end temp
-
 	-- Core DB setup
 	local defaults = {
 		profile = {
