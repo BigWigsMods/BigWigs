@@ -1,10 +1,10 @@
-if not BigWigsLoader.isRetail or BigWigsLoader.isNext then return end -- Retail only module
+if not BigWigsLoader.isRetail or not BigWigsLoader.isNext then return end -- 12.1+ only module
 
 -------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("PrivateAuras")
+local plugin, L = BigWigs:NewPlugin("Auras")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
@@ -14,28 +14,28 @@ if not plugin then return end
 local CONFIG_MODE_DURATION = 10
 
 local db
+local containers = {}
 local anchors = { player = {}, other = {} }
 local inConfigureMode = false
 local previouslyFoundUnit = nil
 
-local UpdateTestAura
+local UpdateAuraContainer, UpdateTestAura
 
 --------------------------------------------------------------------------------
 -- Profile
 --
 
 plugin.defaultDB = {
-	showDispelType = true,
-
 	player = {
-		disabled = false,
+		disabled = true,
 
 		size = 64,
 		spacing = 6,
 		showBorder = true,
+		showDispelType = true,
 		showCooldown = true,
 		showCooldownText = true,
-		cooldownTextScale = 1,
+		cooldownTextFontSize = 16,
 		growthDirection = "LEFT",
 		maxIcons = 3,
 
@@ -51,9 +51,10 @@ plugin.defaultDB = {
 		size = 64,
 		spacing = 6,
 		showBorder = true,
+		showDispelType = true,
 		showCooldown = true,
 		showCooldownText = true,
-		cooldownTextScale = 1,
+		cooldownTextFontSize = 16,
 		growthDirection = "LEFT",
 		maxIcons = 3,
 
@@ -67,9 +68,9 @@ plugin.defaultDB = {
 	onlyWhenYouAreTank = false,
 	otherPlayerName = "",
 }
-plugin.defaultGlobalDB = {
-	showHelpTip = true,
-}
+-- plugin.defaultGlobalDB = {
+-- 	showHelpTip = true,
+-- }
 
 local function CopyTable(settingsTable)
 	local copy = {}
@@ -136,11 +137,11 @@ local function updateProfile()
 		db.other.spacing = plugin.defaultDB.other.spacing
 	end
 
-	if db.player.cooldownTextScale < 0.1 or db.player.cooldownTextScale > 4 then
-		db.player.cooldownTextScale = plugin.defaultDB.player.cooldownTextScale
+	if db.player.cooldownTextFontSize < 8 or db.player.cooldownTextFontSize > 200 then
+		db.player.cooldownTextFontSize = plugin.defaultDB.player.cooldownTextFontSize
 	end
-	if db.other.cooldownTextScale < 0.1 or db.other.cooldownTextScale > 4 then
-		db.other.cooldownTextScale = plugin.defaultDB.other.cooldownTextScale
+	if db.other.cooldownTextFontSize < 8 or db.other.cooldownTextFontSize > 200 then
+		db.other.cooldownTextFontSize = plugin.defaultDB.other.cooldownTextFontSize
 	end
 
 	-- Validate player anchors
@@ -204,7 +205,7 @@ local function updateProfile()
 		end
 	end
 
-	if db.player.maxIcons < 2 or db.player.maxIcons > 5 then
+	if db.player.maxIcons < 1 or db.player.maxIcons > 10 then
 		db.player.maxIcons = plugin.defaultDB.player.maxIcons
 	else
 		local numPlayer = math.floor(db.player.maxIcons+0.5)
@@ -213,7 +214,7 @@ local function updateProfile()
 		end
 	end
 
-	if db.other.maxIcons < 2 or db.other.maxIcons > 5 then
+	if db.other.maxIcons < 1 or db.other.maxIcons > 10 then
 		db.other.maxIcons = plugin.defaultDB.other.maxIcons
 	else
 		local numOther = math.floor(db.other.maxIcons+0.5)
@@ -224,12 +225,6 @@ local function updateProfile()
 
 	if db.otherPlayerType ~= "tank" and db.otherPlayerType ~= "player" then
 		db.otherPlayerType = plugin.defaultDB.otherPlayerType
-	end
-
-	if not db.player.disabled or not db.other.disabled then
-		if C_UnitAuras.TriggerPrivateAuraShowDispelType then
-			C_UnitAuras.TriggerPrivateAuraShowDispelType(db.showDispelType)
-		end
 	end
 
 	plugin:UpdateAllAnchors()
@@ -251,10 +246,11 @@ do
 		if optionDB.disabled then
 			return true
 		end
-		if key == "showCooldownText" then
-			return not optionDB.showCooldown
-		elseif key == "cooldownTextScale" then
-			return not optionDB.showCooldown or not optionDB.showCooldownText
+		if key == "showDispelType" then
+			return not optionDB.showBorder
+		end
+		if key == "cooldownTextFontSize" then
+			return not optionDB.showCooldownText
 		end
 	end
 	local function IsAurasOnYouDisabledOrAnchorPointIsDefault()
@@ -288,25 +284,25 @@ do
 
 	plugin.pluginOptions = {
 		type = "group",
-		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:20|t ".. L.privateAuras,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash:20|t ".. "XX Auras",
 		childGroups = "tab",
 		handler = plugin,
 		order = 4,
 		args = {
-			heading1 = {
-				type = "description",
-				name = L.privateAurasDesc1,
-				order = 0,
-				width = "full",
-				fontSize = "medium",
-			},
-			heading2 = {
-				type = "description",
-				name = L.privateAurasDesc2,
-				order = 0.5,
-				width = "full",
-				fontSize = "medium",
-			},
+			-- heading1 = {
+			-- 	type = "description",
+			-- 	name = L.privateAurasDesc1,
+			-- 	order = 0,
+			-- 	width = "full",
+			-- 	fontSize = "medium",
+			-- },
+			-- heading2 = {
+			-- 	type = "description",
+			-- 	name = L.privateAurasDesc2,
+			-- 	order = 0.5,
+			-- 	width = "full",
+			-- 	fontSize = "medium",
+			-- },
 			anchorsButton = {
 				type = "execute",
 				name = function()
@@ -333,19 +329,6 @@ do
 				func = "CreateTestAura",
 				width = 1.5,
 				order = 2,
-				disabled = IsFeatureEntirelyDisabled,
-			},
-			showDispelType = {
-				type = "toggle",
-				name = L.showDispelType,
-				desc = L.showDispelTypeDesc,
-				get = function() return db.showDispelType end,
-				set = function(_, value)
-					db.showDispelType = value
-					updateProfile()
-				end,
-				width = "full",
-				order = 3,
 				disabled = IsFeatureEntirelyDisabled,
 			},
 			player = {
@@ -402,27 +385,45 @@ do
 						order = 6,
 						disabled = IsAnchorDisabled,
 					},
+					showDispelType = {
+						type = "toggle",
+						name = L.showDispelType,
+						desc = L.showDispelTypeDesc,
+						width = 1.6,
+						order = 7,
+						disabled = IsAnchorDisabled,
+					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 7,
+						order = 8,
 						disabled = IsAnchorDisabled,
+					},
+					showCooldownBar = {
+						type = "description",
+						-- type = "toggle",
+						name = "",
+						-- name = "XX Show Cooldown Bar",
+						-- width = 1.6,
+						order = 9,
+						-- disabled = IsAnchorDisabled,
 					},
 					showCooldownText = {
 						type = "toggle",
 						name = L.showCooldownText,
 						width = 1.6,
-						order = 8,
+						order = 10,
 						disabled = IsAnchorDisabled,
 					},
-					cooldownTextScale = {
+					cooldownTextFontSize = {
 						type = "range",
-						name = L.cooldownTextScale,
-						min = 0.1, max = 4, step = 0.1, isPercent = true,
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						min = 8, max = 200, softMax = 100, step = 1,
 						width = 1.6,
-						order = 9,
+						order = 11,
 						disabled = IsAnchorDisabled,
 					},
 					growthDirection = {
@@ -435,7 +436,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 10,
+						order = 12,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -444,13 +445,13 @@ do
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
 						width = 1.6,
-						order = 11,
+						order = 13,
 						disabled = IsAnchorDisabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 12,
+						order = 14,
 					},
 					reset = {
 						type = "execute",
@@ -460,7 +461,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 13,
+						order = 15,
 					},
 				},
 			},
@@ -610,27 +611,45 @@ do
 						order = 12,
 						disabled = IsAnchorDisabled,
 					},
+					showDispelType = {
+						type = "toggle",
+						name = L.showDispelType,
+						desc = L.showDispelTypeDesc,
+						width = 1.6,
+						order = 13,
+						disabled = IsAnchorDisabled,
+					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 13,
+						order = 14,
 						disabled = IsAnchorDisabled,
+					},
+					showCooldownBar = {
+						type = "description",
+						-- type = "toggle",
+						name = "",
+						-- name = "XX Show Cooldown Bar",
+						-- width = 1.6,
+						order = 15,
+						-- disabled = IsAnchorDisabled,
 					},
 					showCooldownText = {
 						type = "toggle",
 						name = L.showCooldownText,
 						width = 1.6,
-						order = 14,
+						order = 16,
 						disabled = IsAnchorDisabled,
 					},
-					cooldownTextScale = {
+					cooldownTextFontSize = {
 						type = "range",
-						name = L.cooldownTextScale,
-						min = 0.1, max = 4, step = 0.1, isPercent = true,
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						min = 8, max = 200, softMax = 100, step = 1,
 						width = 1.6,
-						order = 15,
+						order = 17,
 						disabled = IsAnchorDisabled,
 					},
 					growthDirection = {
@@ -643,7 +662,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 16,
+						order = 18,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -652,13 +671,13 @@ do
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
 						width = 1.6,
-						order = 17,
+						order = 19,
 						disabled = IsAnchorDisabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 18,
+						order = 20,
 					},
 					reset = {
 						type = "execute",
@@ -668,7 +687,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 19,
+						order = 21,
 					},
 				},
 			},
@@ -957,71 +976,65 @@ end
 --
 
 function plugin:OnRegister()
-	self.displayName = L.privateAuras
+	self.displayName = "Auras"
 end
 
-do
-	local function ShowHelpTip()
-		local tip = CreateFrame("Frame", nil, UIParent, "GlowBoxTemplate")
-		tip:Show()
-		tip:SetSize(260, 120)
-		tip:SetFrameStrata("DIALOG")
-		tip:SetFixedFrameStrata(true)
-		tip:SetFrameLevel(100)
-		tip:SetFixedFrameLevel(true)
-		tip:SetClampedToScreen(true)
-		tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
-		local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
-		arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
-		local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
-		tipText:SetJustifyH("LEFT")
-		tipText:SetJustifyV("TOP")
-		tipText:SetSize(240, 0)
-		tipText:SetPoint("TOPLEFT", 10, -10)
-		tipText:SetText(L.privateAurasHelpTip)
-		local button = CreateFrame("Button", nil, tip, "SharedButtonTemplate")
-		button:SetSize(130, 32)
-		button:SetPoint("BOTTOM", 0, 6)
-		button:SetText(L.settings)
-		button:SetScript("OnClick", function(self)
-			self:GetParent():Hide()
-			plugin:CancelAllTimers()
-			plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
-			BigWigsAPI.OpenConfigToPanel("PrivateAuras")
-			plugin.db.global.showHelpTip = false
-		end)
-		ShowHelpTip = nil
+-- local function ShowHelpTip()
+-- 	local tip = CreateFrame("Frame", nil, UIParent, "GlowBoxTemplate")
+-- 	tip:Show()
+-- 	tip:SetSize(260, 120)
+-- 	tip:SetFrameStrata("DIALOG")
+-- 	tip:SetFixedFrameStrata(true)
+-- 	tip:SetFrameLevel(100)
+-- 	tip:SetFixedFrameLevel(true)
+-- 	tip:SetClampedToScreen(true)
+-- 	tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
+-- 	local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
+-- 	arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
+-- 	local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
+-- 	tipText:SetJustifyH("LEFT")
+-- 	tipText:SetJustifyV("TOP")
+-- 	tipText:SetSize(240, 0)
+-- 	tipText:SetPoint("TOPLEFT", 10, -10)
+-- 	tipText:SetText(L.privateAurasHelpTip)
+-- 	local button = CreateFrame("Button", nil, tip, "SharedButtonTemplate")
+-- 	button:SetSize(130, 32)
+-- 	button:SetPoint("BOTTOM", 0, 6)
+-- 	button:SetText(L.settings)
+-- 	button:SetScript("OnClick", function(self)
+-- 		self:GetParent():Hide()
+-- 		plugin:CancelAllTimers()
+-- 		plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
+-- 		BigWigsAPI.OpenConfigToPanel("PrivateAuras")
+-- 		plugin.db.global.showHelpTip = false
+-- 	end)
+-- 	ShowHelpTip = nil
+-- end
+
+function plugin:OnPluginEnable()
+	previouslyFoundUnit = nil
+	self:RegisterMessage("BigWigs_StartConfigureMode")
+	self:RegisterMessage("BigWigs_StopConfigureMode")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
+
+	if not db.other.disabled then
+		self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	end
 
-	function plugin:OnPluginEnable()
-		previouslyFoundUnit = nil
-		self:RegisterMessage("BigWigs_StartConfigureMode")
-		self:RegisterMessage("BigWigs_StopConfigureMode")
-		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		updateProfile()
-
-		if not db.other.disabled then
-			self:RegisterEvent("GROUP_ROSTER_UPDATE")
-		end
-
-		if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
-			self:CreateTestAura()
-			self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
-			if ShowHelpTip then
-				ShowHelpTip()
-			end
-		end
-	end
+	-- if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
+	-- 	self:CreateTestAura()
+	-- 	self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
+	-- 	if ShowHelpTip then
+	-- 		ShowHelpTip()
+	-- 	end
+	-- end
 end
 
 function plugin:OnPluginDisable()
 	for _, unitAnchors in next, anchors do
 		for i = 1, #unitAnchors do
 			local anchor = unitAnchors[i]
-			if anchor.anchorId then
-				C_UnitAuras.RemovePrivateAuraAnchor(anchor.anchorId)
-				anchor.anchorId = nil
-			end
 			anchor:ClearAllPoints()
 			anchor:Hide()
 		end
@@ -1071,7 +1084,7 @@ function plugin:UpdateAllAnchors()
 end
 
 do
-	local function GetUnitToken()
+	function plugin:GetUnitToken()
 		if db.otherPlayerType == "player" then
 			local playerName = db.otherPlayerName
 			if playerName ~= "" and UnitExists(playerName) then
@@ -1091,22 +1104,16 @@ do
 	end
 
 	function plugin:GROUP_ROSTER_UPDATE()
-		local token = GetUnitToken()
+		local token = self:GetUnitToken()
 		if token ~= previouslyFoundUnit then
 			previouslyFoundUnit = token
 			self:UpdateAnchors("other", token)
 		end
 	end
 
-	local AddPrivateAuraAnchor = C_UnitAuras.AddPrivateAuraAnchor
-	local RemovePrivateAuraAnchor = C_UnitAuras.RemovePrivateAuraAnchor
-	function plugin:UpdateAnchors(unitType, token)
+	function plugin:UpdateAnchors(unitType, unitToken)
 		for i = 1, #anchors[unitType] do
 			local anchor = anchors[unitType][i]
-			if anchor.anchorId then
-				RemovePrivateAuraAnchor(anchor.anchorId)
-				anchor.anchorId = nil
-			end
 			anchor:ClearAllPoints()
 			anchor:Hide()
 		end
@@ -1116,19 +1123,10 @@ do
 			return
 		end
 
-		local scale = anchorDB.cooldownTextScale
-		local width = anchorDB.size * (1 / scale)
-		local height = anchorDB.size * (1 / scale)
-		local borderScale = width / 32 * 2 -- Scale the dispel type border
-		if not anchorDB.showBorder then
-			borderScale = -10000 -- Hide the border
-		end
-		local unitToken = token or GetUnitToken()
-
 		for index = 1, anchorDB.maxIcons do
 			local anchor = anchors[unitType][index]
 			if not anchor then
-				anchor = CreateFrame("Frame", "BigWigsPrivateAurasAnchor" .. (unitType:gsub("^%l", string.upper)) .. index, UIParent, nil, index)
+				anchor = CreateFrame("Frame", "BigWigsAurasAnchor" .. (unitType:gsub("^%l", string.upper)) .. index, UIParent, nil, index)
 				anchor:SetFrameStrata("MEDIUM")
 				anchor:SetFixedFrameStrata(true)
 				anchor:SetFrameLevel(1000)
@@ -1142,36 +1140,212 @@ do
 				anchors[unitType][index] = anchor
 			end
 
-			anchor:SetSize(width, height)
-			anchor:SetScale(scale)
+			anchor:SetSize(anchorDB.size, anchorDB.size)
 			anchor:UpdateAnchorPosition()
 			anchor:Show()
 
 			UpdateTestAura(unitType, index)
+		end
 
-			if unitToken then
-				anchor.anchorId = AddPrivateAuraAnchor({
-					unitToken = unitToken,
-					auraIndex = index,
-					parent = anchor,
-					showCountdownFrame = anchorDB.showCooldown,
-					showCountdownNumbers = anchorDB.showCooldownText,
-					isContainer = false,
-					iconInfo = {
-						iconAnchor = {
-							point = "CENTER",
-							relativeTo = anchor,
-							relativePoint = "CENTER",
-							offsetX = 0,
-							offsetY = 0,
-						},
-						iconWidth = width,
-						iconHeight = height,
-						borderScale = borderScale,
-					},
+		UpdateAuraContainer(unitType, unitToken or self:GetUnitToken(), anchors[unitType][1])
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Container
+--
+
+local function GetAtlasBorderSize(size)
+	local scale = size / 32 * 2
+	return size + (5 * scale)
+end
+
+do
+	-- local durationFormater do
+	-- 	-- a copy of DefaultAuraDurationFormatter
+	-- 	local maxIntervalSecondsMultiplier = 1.5
+	-- 	local maxIntervalCurve = C_CurveUtil.CreateCurve()
+	-- 	maxIntervalCurve:AddPoint(1 + (maxIntervalSecondsMultiplier * SECONDS_PER_MIN), Enum.SecondsFormatterInterval.Minutes)
+	-- 	maxIntervalCurve:AddPoint(1 + (maxIntervalSecondsMultiplier * SECONDS_PER_HOUR), Enum.SecondsFormatterInterval.Hours)
+	-- 	maxIntervalCurve:AddPoint(1 + (maxIntervalSecondsMultiplier * SECONDS_PER_DAY), Enum.SecondsFormatterInterval.Days)
+
+	-- 	durationFormater = C_StringUtil.CreateSecondsFormatter()
+	-- 	durationFormater:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter)
+	-- 	durationFormater:SetMinInterval(Enum.SecondsFormatterInterval.Seconds)
+	-- 	durationFormater:SetMaxIntervalCurve(maxIntervalCurve)
+	-- 	durationFormater:SetDesiredUnitCount(1)
+
+	-- 	-- changes
+	-- 	durationFormater:SetStripIntervalWhitespace(Enum.SecondsFormatterIntervalWhitespace.Strip)
+	-- 	durationFormater:SetMillisecondsThreshold(3)
+	-- end
+
+	local function initializeFrame(aura)
+		local auraContainer = aura:GetParent()
+		local optionsDB = auraContainer.db
+		local size = optionsDB.size
+
+		aura:EnableMouse(false)
+		aura:SetSize(size, size) -- CustomAuraContainerFlowLayoutDescription:ApplyElementLayout doesn't set size
+
+		local icon = aura:CreateTexture(nil, "BACKGROUND")
+		icon:SetAllPoints()
+		aura:SetIcon(icon)
+
+		local cooldown = CreateFrame("Cooldown", nil, aura, "CooldownFrameTemplate")
+		cooldown:SetAllPoints()
+		cooldown:SetReverse(true)
+		cooldown:SetDrawEdge(false)
+		cooldown:SetDrawBling(false)
+		cooldown:SetDrawSwipe(optionsDB.showCooldown)
+		aura.cooldown = cooldown
+		aura:SetDurationCooldown(cooldown)
+
+		-- XXX the SecondsFormatter doesn't have something equivalent to Cooldown:SetCountdownAbbrevThreshold, and I don't want to see "X s"
+		local duration = cooldown:GetCountdownFontString()
+		duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
+		cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
+		cooldown:SetCountdownMillisecondsThreshold(3)
+
+		-- local cooldownBar = CreateFrame("StatusBar", nil, aura)
+		-- aura.cooldownBar = cooldownBar
+		-- if optionsDB.showCooldownBar then
+		-- 	aura:SetDurationBar(cooldownBar)
+		-- else
+		-- 	cooldownBar:Hide()
+		-- end
+
+		local overlayFrame = CreateFrame("Frame", nil, aura)
+		overlayFrame:SetAllPoints()
+		overlayFrame:SetFrameLevel(aura:GetFrameLevel() + 10)
+
+		-- Still have atlas sizing shenanigans
+		local borderSize = GetAtlasBorderSize(size)
+
+		local border = overlayFrame:CreateTexture(nil, "BACKGROUND")
+		border:SetPoint("CENTER", aura, "CENTER", 0, 0)
+		border:SetSize(borderSize, borderSize)
+		border:Hide()
+		aura.border = border
+
+		-- local duration = overlayFrame:CreateFontString(nil, "ARTWORK")
+		-- duration:SetPoint("CENTER", aura, "CENTER", 0, 0)
+		-- duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
+		-- aura.duration = duration
+		-- if optionsDB.showCooldownText then
+		-- 	aura:SetDurationText(duration, {
+		-- 		textFormatter = durationFormater,
+		-- 	})
+		-- else
+		-- 	duration:Hide()
+		-- end
+
+		local stacks = overlayFrame:CreateFontString(nil, "ARTWORK")
+		stacks:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 4, -4)
+		stacks:SetFont(plugin:GetDefaultFont(true), 24, "SLUG,OUTLINE")
+		aura.stacks = stacks
+		if optionsDB.showCountText then
+			aura:SetApplicationCount(stacks)
+		else
+			stacks:Hide()
+		end
+	end
+
+	local FlowDirection = AnchorUtil.FlowDirection
+	local FlowLayoutAxis = AnchorUtil.FlowLayoutAxis
+	function UpdateAuraContainer(unitType, unitToken, parent)
+		local optionsDB = db[unitType]
+
+		local auraContainer = containers[unitType]
+		if not auraContainer then
+			auraContainer = CreateFrame("AuraContainer", "BigWigsAuraContainer"..(unitType:gsub("^%l", string.upper)), parent, "CustomAuraContainerTemplate")
+			auraContainer.db = optionsDB
+
+			auraContainer:AddAuraGroup("debuffs", "HARMFUL", {
+				maxFrameCount = optionsDB.maxIcons,
+				initializeFrame = initializeFrame,
+				candidateFilters = {
+					maxDuration = math.huge, -- filter anything without a duration
+					isBossOrRoleAura = true,
+				},
+				sortMethod = 4, -- Enum.UnitAuraSortRule.ExpirationOnly
+				sortDirection = 0, -- Enum.UnitAuraSortDirection.Normal
+				layout = {
+					elementSpacing = optionsDB.spacing,
+					elementWidth = optionsDB.size,
+					elementHeight = optionsDB.size,
+				},
+			})
+
+			containers[unitType] = auraContainer
+		end
+
+		-- These won't trigger an container update, so update them first
+		local borderSize = GetAtlasBorderSize(optionsDB.size)
+		for index = 1, auraContainer:GetAuraGroupFrameCount("debuffs") do
+			local aura = auraContainer:GetAuraGroupFrame("debuffs", index)
+			aura:SetSize(optionsDB.size, optionsDB.size)
+
+			local cooldown = aura:GetDurationCooldown()
+			cooldown:SetDrawSwipe(optionsDB.showCooldown)
+			cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
+
+			local duration = cooldown:GetCountdownFontString()
+			duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
+
+			local border = aura.border
+			border:SetSize(borderSize, borderSize)
+			local borderStyle
+			if optionsDB.showBorder and not optionsDB.showDispelType then
+				borderStyle = 0 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Border
+			elseif optionsDB.showBorder and optionsDB.showDispelType then
+				borderStyle = 1 -- Enum.CustomAuraButtonDispelTypeTextureStyle.BorderWithIcon
+			-- elseif not optionsDB.showBorder and optionsDB.showDispelType then
+			--	-- XXX this is just the icon, not the border with icon minus the border D;
+			-- 	borderStyle = 2 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Icon
+			end
+			if borderStyle then
+				aura:SetAuraBorder(border, {
+					showWhenHarmful = true,
+					showWhenHelpful = true,
+					showWithoutDispelType = true,
+					style = borderStyle,
 				})
+			else
+				border:Hide()
+				aura:ClearAuraBorder()
 			end
 		end
+
+		auraContainer:SetEnabled(not optionsDB.disabled)
+		auraContainer:SetUnit(unitToken or "none")
+
+		auraContainer:ClearAllPoints()
+		local axis, point, x, y
+		if optionsDB.growthDirection == "RIGHT" then
+			axis = FlowLayoutAxis.Horizontal
+			point, x, y = "LEFT", FlowDirection.Right, FlowDirection.Down
+		elseif optionsDB.growthDirection == "LEFT" then
+			axis = FlowLayoutAxis.Horizontal
+			point, x, y = "RIGHT", FlowDirection.Left, FlowDirection.Down
+		elseif optionsDB.growthDirection == "UP" then
+			axis = FlowLayoutAxis.Vertical
+			point, x, y = "BOTTOM", FlowDirection.Right, FlowDirection.Up
+		elseif optionsDB.growthDirection == "DOWN" then
+			axis = FlowLayoutAxis.Vertical
+			point, x, y = "TOP", FlowDirection.Right, FlowDirection.Down
+		end
+		auraContainer:SetPoint(point)
+		auraContainer:SetFlowLayoutAxis(axis)
+		auraContainer:SetFlowLayoutAnchorPoint(point)
+		auraContainer:SetFlowLayoutGrowthDirection(x, y)
+
+		auraContainer:SetAuraGroupMaxFrameCount("debuffs", optionsDB.maxIcons)
+		auraContainer:SetAuraGroupLayout("debuffs", {
+			elementSpacing = optionsDB.spacing,
+			elementWidth = optionsDB.size,
+			elementHeight = optionsDB.size,
+		})
 	end
 end
 
@@ -1235,15 +1409,21 @@ do
 			cooldown:SetDrawEdge(false)
 			aura.cooldown = cooldown
 
-			local dispelIcon = aura:CreateTexture(nil, "OVERLAY")
-			dispelIcon:SetPoint("CENTER")
+			local overlayFrame = CreateFrame("Frame", nil, aura)
+			overlayFrame:SetAllPoints()
+			overlayFrame:SetFrameLevel(aura:GetFrameLevel() + 10)
+
+			local dispelIcon = overlayFrame:CreateTexture(nil, "BACKGROUND")
+			dispelIcon:SetPoint("CENTER", aura, "CENTER", 0, 0)
 			aura.dispelIcon = dispelIcon
 		end
 
 		-- Setup test aura info
 		local spellIndex = (index - 1) % #privateAuraSpellList + 1
-		local icon = C_Spell.GetSpellTexture(privateAuraSpellList[spellIndex])
+		local spellId = privateAuraSpellList[spellIndex]
 		local dispelType = dispelTypeList[(index - 1) % 7]
+
+		local icon = C_Spell.GetSpellTexture(spellId)
 		local duration = CONFIG_MODE_DURATION
 		local expirationTime = GetTime() + duration
 
@@ -1251,6 +1431,20 @@ do
 		aura.dispelType = dispelType
 		aura.expirationTime = expirationTime
 		aura.unitType = unitType
+
+		-- aura:SetAuraInstance("player", {
+		-- 	applications = 0,
+		-- 	auraInstanceID = spellIndex,
+		-- 	dispelName = dispelType,
+		-- 	duration = CONFIG_MODE_DURATION,
+		-- 	expirationTime = GetTime() + CONFIG_MODE_DURATION,
+		-- 	icon = C_Spell.GetSpellTexture(spellId),
+		-- 	isBossAura = true,
+		-- 	isHarmful = true,
+		-- 	name = C_Spell.GetSpellName(spellId),
+		-- 	spellId = spellId,
+		-- })
+
 		local tbl = {}
 		aura.timerID = tbl
 		-- We don't want to use ScheduleTimer as we don't want the timer to cancel if this plugin is disabled
@@ -1268,34 +1462,29 @@ do
 		local aura = testAuras[unitType][index]
 		if not aura then return end
 
-		local anchorDB = db[unitType]
+		local optionsDB = db[unitType]
 
-		if anchorDB.showCooldown then
-			aura.cooldown:SetHideCountdownNumbers(not anchorDB.showCooldownText)
-			aura.cooldown:SetCooldownFromExpirationTime(aura.expirationTime, CONFIG_MODE_DURATION)
-			aura.cooldown:Show()
-		else
-			aura.cooldown:Hide()
-		end
+		aura:SetSize(optionsDB.size, optionsDB.size)
 
-		local scale = anchorDB.cooldownTextScale
-		local size = anchorDB.size * (1 / scale)
+		aura.cooldown:SetDrawSwipe(optionsDB.showCooldown)
+		aura.cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
+		aura.cooldown:SetCooldownFromExpirationTime(aura.expirationTime, CONFIG_MODE_DURATION)
 
-		if anchorDB.showBorder then
-			-- Apply the dispel type border (from Blizzard_PrivateAurasUI)
-			local borderScale = size / 32 * 2
-			local borderSize = size + (5 * borderScale)
+		local duration = aura.cooldown:GetCountdownFontString()
+		duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
+
+		if optionsDB.showBorder then
+			local borderSize = GetAtlasBorderSize(optionsDB.size)
 			aura.dispelIcon:SetSize(borderSize, borderSize)
 
 			local info = dispelTypeInfo[aura.dispelType] or dispelTypeInfo.None
-			local atlas = db.showDispelType and info.dispelAtlas or info.basicAtlas
+			local atlas = optionsDB.showDispelType and info.dispelAtlas or info.basicAtlas
 			aura.dispelIcon:SetAtlas(atlas)
 			aura.dispelIcon:Show()
 		else
 			aura.dispelIcon:Hide()
 		end
 
-		aura:SetSize(size, size)
 		aura:Show()
 	end
 

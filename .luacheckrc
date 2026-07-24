@@ -118,6 +118,14 @@ files["Plugins/AltPower.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/UnitGroupRolesAssigned",
 }
+files["Plugins/Auras.lua"].ignore = {
+	"113/AuraUtil",
+	"113/AnchorUtil",
+	"113/C_UnitAuras",
+	"113/C_Spell",
+	"113/UnitGroupRolesAssigned",
+	"113/UnitInPartyIsAI",
+}
 files["Plugins/AutoReply.lua"].ignore = {
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
