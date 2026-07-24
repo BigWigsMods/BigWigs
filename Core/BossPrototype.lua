@@ -1020,6 +1020,151 @@ do
 	end
 end
 
+-------------------------------------------------------------------------------
+-- Auras
+-- @section auras
+--
+
+do
+	local moduleAurasList = {}
+
+	--- Get the current aura applied sound.
+	-- @return string or nil
+	function boss:GetAuraAppliedSound(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local db = self.db.profile.auras
+		local soundName = db[spellID] and db[spellID].soundOnApplied
+		if soundName then
+			return soundName
+		end
+	end
+
+	--- Get the current aura applied dose sound.
+	-- @return string or nil
+	function boss:GetAuraAppliedDoseSound(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local db = self.db.profile.auras
+		local soundName = db[spellID] and db[spellID].soundOnAppliedDose
+		if soundName then
+			return soundName
+		end
+	end
+
+	--- Get the current aura removed sound.
+	-- @return string or nil
+	function boss:GetAuraRemovedSound(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local db = self.db.profile.auras
+		local soundName = db[spellID] and db[spellID].soundOnRemoved
+		if soundName then
+			return soundName
+		end
+	end
+
+	--- Get the default aura applied sound.
+	-- @return string
+	function boss:GetAuraAppliedSoundDefault(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local soundName = moduleAurasList[self][spellID].soundOnApplied
+		if soundName then
+			return soundName or "None"
+		end
+	end
+
+	--- Get the default aura applied dose sound.
+	-- @return string or nil
+	function boss:GetAuraAppliedDoseSoundDefault(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local soundName = moduleAurasList[self][spellID].soundOnAppliedDose
+		if soundName then
+			return soundName
+		end
+	end
+
+	--- Get the default aura removed sound.
+	-- @return string
+	function boss:GetAuraRemovedSoundDefault(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local soundName = moduleAurasList[self][spellID].soundOnRemoved
+		if soundName then
+			return soundName or "None"
+		end
+	end
+
+	--- Get the aura note.
+	-- @return string or nil
+	function boss:GetAuraNote(spellID)
+		if not moduleAurasList[self][spellID] then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local note = moduleAurasList[self][spellID].note
+		return note
+	end
+
+	--- Get the list of auras for this module.
+	-- @return table
+	function boss:GetAuraList()
+		local auraList = {}
+		if moduleAurasList[self] then
+			for spellID in next, moduleAurasList[self] do
+				auraList[#auraList+1] = spellID
+			end
+		end
+		return auraList
+	end
+
+	--- Check if this module has a aura data set for this spellID
+	-- @return boolean
+	function boss:IsAuraDataAvailable(spellID)
+		if moduleAurasList[self] and moduleAurasList[self][spellID] then
+			return true
+		end
+	end
+
+	--- Check if this module has any aura data.
+	-- @return boolean
+	function boss:HasAuraData()
+		if moduleAurasList[self] then
+			return true
+		end
+	end
+
+	--- Assign aura data to this module.
+	-- @param auraDataTable the table storing the aura data
+	function boss:SetAuraData(auraDataTable)
+		if moduleAurasList[self] then
+			error(("Module %q already has a aura data set."):format(self.moduleName))
+			return
+		end
+		moduleAurasList[self] = auraDataTable
+	end
+end
 
 --- Create a custom marking option
 -- @bool state Boolean value to represent default state

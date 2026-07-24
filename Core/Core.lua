@@ -573,8 +573,9 @@ do
 					end
 				end
 
+				local toggleDefaults, renames = {}, {}
 				if module.toggleOptions then
-					module.toggleDefaults = {}
+					module.toggleDefaults = toggleDefaults
 					for _, v in next, module.toggleOptions do
 						local bitflags = 0
 						local disabled = false
@@ -614,29 +615,28 @@ do
 						if t == "string" then
 							local custom = v:match("^custom_(o[nf]f?)_.*")
 							if custom then
-								module.toggleDefaults[v] = custom == "on" and true or false
+								toggleDefaults[v] = custom == "on" and true or false
 							elseif v:find("custom_select", nil, true) then
-								module.toggleDefaults[v] = 1
+								toggleDefaults[v] = 1
 							else
-								module.toggleDefaults[v] = bitflags
+								toggleDefaults[v] = bitflags
 							end
 						elseif t == "number" then
 							if v > 0 then
 								local n = loader.GetSpellName(v)
 								if not n then core:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
-								module.toggleDefaults[v] = bitflags
+								toggleDefaults[v] = bitflags
 							else
 								local tbl = C_EncounterJournal_GetSectionInfo(-v)
 								if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
-								module.toggleDefaults[v] = bitflags
+								toggleDefaults[v] = bitflags
 							end
 						end
 					end
 
 					-- Set up renames storage DB
-					local renames = {}
 					if module:HasRenames() then
-						for optionKey in next, module.toggleDefaults do
+						for optionKey in next, toggleDefaults do
 							if module:IsRenameAvailable(optionKey) then
 								renames[optionKey] = {}
 								for i = 1, module:GetRenameCount(optionKey) do
@@ -645,46 +645,85 @@ do
 							end
 						end
 					end
+				end
 
-					module.db = loader.db:RegisterNamespace(module.name, { profile = {renames = renames, toggles = module.toggleDefaults} })
-					-- Option validation
-					for tableName, storageTable in next, module.db.profile do
-						if tableName ~= "renames" and tableName ~= "toggles" then
-							module.db.profile[tableName] = nil
-						elseif type(storageTable) ~= "table" then
-							module.db:ResetProfile() -- Panic reset
-							break
-						end
+				-- Set up aura data storage DB
+				local auras = {}
+				if module:HasAuraData() then
+					local auraList = module:GetAuraList()
+					for i = 1, #auraList do
+						local spellID = auraList[i]
+						auras[spellID] = {
+							soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
+							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
+							soundOnRemoved = module:GetAuraRemovedSoundDefault(spellID),
+						}
 					end
-					-- Option validation for renames
-					for renamesKey, renamesTable in next, module.db.profile.renames do
-						if not module:IsRenameAvailable(renamesKey) then
-							module.db.profile.renames[renamesKey] = nil
-						elseif type(renamesTable) ~= "table" or #renamesTable ~= module:GetRenameCount(renamesKey) then
-							module.db.profile.renames[renamesKey] = {}
-							for renameCount = 1, module:GetRenameCount(renamesKey) do
-								module.db.profile.renames[renamesKey][renameCount] = module:GetRenameDefault(renamesKey, renameCount)
-							end
-						else
-							for entryCount = 1, #renamesTable do
-								local renameType = type(renamesTable[entryCount])
-								if renameType ~= "string" and renameType ~= "number" then
-									module.db.profile.renames[renamesKey] = {}
-									for renameCount = 1, module:GetRenameCount(renamesKey) do
-										module.db.profile.renames[renamesKey][renameCount] = module:GetRenameDefault(renamesKey, renameCount)
-									end
-									break
+				end
+
+				module.db = loader.db:RegisterNamespace(module.name, { profile = {renames = renames, toggles = toggleDefaults, auras = auras} })
+
+				-- Option validation
+				for tableName, storageTable in next, module.db.profile do
+					if tableName ~= "renames" and tableName ~= "toggles" and tableName ~= "auras" then
+						module.db.profile[tableName] = nil
+					elseif type(storageTable) ~= "table" then
+						module.db:ResetProfile() -- Panic reset
+						break
+					end
+				end
+				-- Option validation for renames
+				for renamesKey, renamesTable in next, module.db.profile.renames do
+					if not module:IsRenameAvailable(renamesKey) then
+						module.db.profile.renames[renamesKey] = nil
+					elseif type(renamesTable) ~= "table" or #renamesTable ~= module:GetRenameCount(renamesKey) then
+						module.db.profile.renames[renamesKey] = {}
+						for renameCount = 1, module:GetRenameCount(renamesKey) do
+							module.db.profile.renames[renamesKey][renameCount] = module:GetRenameDefault(renamesKey, renameCount)
+						end
+					else
+						for entryCount = 1, #renamesTable do
+							local renameType = type(renamesTable[entryCount])
+							if renameType ~= "string" and renameType ~= "number" then
+								module.db.profile.renames[renamesKey] = {}
+								for renameCount = 1, module:GetRenameCount(renamesKey) do
+									module.db.profile.renames[renamesKey][renameCount] = module:GetRenameDefault(renamesKey, renameCount)
 								end
+								break
 							end
 						end
 					end
-					-- Option validation for toggles
-					for toggleName, toggleValue in next, module.db.profile.toggles do
-						local defaultType = type(module.toggleDefaults[toggleName])
-						if defaultType == "nil" then
-							module.db.profile.toggles[toggleName] = nil
-						elseif type(toggleValue) ~= defaultType then
-							module.db.profile.toggles[toggleName] = module.toggleDefaults[toggleName]
+				end
+				-- Option validation for toggles
+				for toggleName, toggleValue in next, module.db.profile.toggles do
+					local defaultType = type(module.toggleDefaults[toggleName])
+					if defaultType == "nil" then
+						module.db.profile.toggles[toggleName] = nil
+					elseif type(toggleValue) ~= defaultType then
+						module.db.profile.toggles[toggleName] = module.toggleDefaults[toggleName]
+					end
+				end
+				-- Option validation for auras
+				for auraSpellID, auraTable in next, module.db.profile.auras do
+					if not module:IsAuraDataAvailable(auraSpellID) then
+						module.db.profile.auras[auraSpellID] = nil
+					elseif type(auraTable) ~= "table" then
+						module.db.profile.auras[auraSpellID] = {
+							soundOnApplied = module:GetAuraAppliedSoundDefault(auraSpellID),
+							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(auraSpellID),
+							soundOnRemoved = module:GetAuraRemovedSoundDefault(auraSpellID),
+						}
+					else
+						for auraDataTableName, auraDataTableValue in next, auraTable do
+							if auraDataTableName ~= "soundOnApplied" and auraDataTableName ~= "soundOnAppliedDose" and auraDataTableName ~= "soundOnRemoved" then
+								module.db.profile.auras[auraSpellID][auraDataTableName] = nil
+							elseif auraDataTableName == "soundOnApplied" and type(auraDataTableValue) ~= "string" then
+								module.db.profile.auras[auraSpellID].soundOnApplied = module:GetAuraAppliedSoundDefault(auraSpellID)
+							elseif auraDataTableName == "soundOnAppliedDose" and type(auraDataTableValue) ~= "string" then
+								module.db.profile.auras[auraSpellID].soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(auraSpellID)
+							elseif auraDataTableName == "soundOnRemoved" and type(auraDataTableValue) ~= "string" then
+								module.db.profile.auras[auraSpellID].soundOnRemoved = module:GetAuraRemovedSoundDefault(auraSpellID)
+							end
 						end
 					end
 				end
