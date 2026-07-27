@@ -36,6 +36,8 @@ plugin.defaultDB = {
 		showCooldown = true,
 		showCooldownText = true,
 		cooldownTextFontSize = 16,
+		showCountText = true,
+		countTextFontSize = 14,
 		growthDirection = "LEFT",
 		maxIcons = 3,
 
@@ -55,6 +57,8 @@ plugin.defaultDB = {
 		showCooldown = true,
 		showCooldownText = true,
 		cooldownTextFontSize = 16,
+		showCountText = true,
+		countTextFontSize = 14,
 		growthDirection = "LEFT",
 		maxIcons = 3,
 
@@ -142,6 +146,13 @@ local function updateProfile()
 	end
 	if db.other.cooldownTextFontSize < 8 or db.other.cooldownTextFontSize > 200 then
 		db.other.cooldownTextFontSize = plugin.defaultDB.other.cooldownTextFontSize
+	end
+
+	if db.player.countTextFontSize < 8 or db.player.countTextFontSize > 200 then
+		db.player.countTextFontSize = plugin.defaultDB.player.countTextFontSize
+	end
+	if db.other.countTextFontSize < 8 or db.other.countTextFontSize > 200 then
+		db.other.countTextFontSize = plugin.defaultDB.other.countTextFontSize
 	end
 
 	-- Validate player anchors
@@ -426,6 +437,22 @@ do
 						order = 11,
 						disabled = IsAnchorDisabled,
 					},
+					showCountText = {
+						type = "toggle",
+						name = "XX Show Stacks",
+						width = 1.6,
+						order = 12,
+						disabled = IsAnchorDisabled,
+					},
+					countTextFontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						min = 8, max = 200, softMax = 100, step = 1,
+						width = 1.6,
+						order = 13,
+						disabled = IsAnchorDisabled,
+					},
 					growthDirection = {
 						type = "select",
 						name = L.growthDirection,
@@ -436,7 +463,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 12,
+						order = 14,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -445,13 +472,13 @@ do
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
 						width = 1.6,
-						order = 13,
+						order = 15,
 						disabled = IsAnchorDisabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 14,
+						order = 16,
 					},
 					reset = {
 						type = "execute",
@@ -461,7 +488,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 15,
+						order = 17,
 					},
 				},
 			},
@@ -652,6 +679,22 @@ do
 						order = 17,
 						disabled = IsAnchorDisabled,
 					},
+					showCountText = {
+						type = "toggle",
+						name = "XX Show Stacks",
+						width = 1.6,
+						order = 18,
+						disabled = IsAnchorDisabled,
+					},
+					countTextFontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						min = 8, max = 200, softMax = 100, step = 1,
+						width = 1.6,
+						order = 19,
+						disabled = IsAnchorDisabled,
+					},
 					growthDirection = {
 						type = "select",
 						name = L.growthDirection,
@@ -662,7 +705,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 18,
+						order = 20,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -671,13 +714,13 @@ do
 						desc = L.maxIconsDesc,
 						min = 2, max = 5, step = 1,
 						width = 1.6,
-						order = 19,
+						order = 21,
 						disabled = IsAnchorDisabled,
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 20,
+						order = 22,
 					},
 					reset = {
 						type = "execute",
@@ -687,7 +730,7 @@ do
 							plugin.db:ResetProfile()
 							updateProfile()
 						end,
-						order = 21,
+						order = 23,
 					},
 				},
 			},
@@ -1241,8 +1284,8 @@ do
 		-- end
 
 		local stacks = overlayFrame:CreateFontString(nil, "ARTWORK")
-		stacks:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 4, -4)
-		stacks:SetFont(plugin:GetDefaultFont(true), 24, "SLUG,OUTLINE")
+		stacks:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", -2, 2)
+		stacks:SetFont(plugin:GetDefaultFont(true), optionsDB.countTextFontSize, "SLUG,OUTLINE")
 		aura.stacks = stacks
 		if optionsDB.showCountText then
 			aura:SetApplicationCount(stacks)
@@ -1416,6 +1459,10 @@ do
 			local dispelIcon = overlayFrame:CreateTexture(nil, "BACKGROUND")
 			dispelIcon:SetPoint("CENTER", aura, "CENTER", 0, 0)
 			aura.dispelIcon = dispelIcon
+
+			local stacks = overlayFrame:CreateFontString(nil, "ARTWORK")
+			stacks:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 4, -4)
+			aura.stacks = stacks
 		end
 
 		-- Setup test aura info
@@ -1430,6 +1477,7 @@ do
 		aura.icon:SetTexture(icon)
 		aura.dispelType = dispelType
 		aura.expirationTime = expirationTime
+		aura.applications = math.random(0, 5)
 		aura.unitType = unitType
 
 		-- aura:SetAuraInstance("player", {
@@ -1483,6 +1531,13 @@ do
 			aura.dispelIcon:Show()
 		else
 			aura.dispelIcon:Hide()
+		end
+
+		if optionsDB.showCountText then
+			aura.stacks:SetFont(plugin:GetDefaultFont(true), optionsDB.countTextFontSize, "SLUG,OUTLINE")
+			aura.stacks:SetText(aura.applications > 1 and aura.applications or "")
+		else
+			aura.stacks:Hide()
 		end
 
 		aura:Show()
