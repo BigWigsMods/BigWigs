@@ -946,8 +946,9 @@ do
 			end
 		end
 
-		local function ImportPrivateAuras(privateAuraSettings, moduleName)
-			if not soundModule or not privateAuraSettings then return end
+		local function ImportPrivateAuras(soundSettings, moduleName)
+			if not soundModule then return end
+			local privateAuraSettings = soundSettings and soundSettings["privateaura"] or {}
 			local sDB = soundModule.db.profile["privateaura"]
 			sDB[moduleName] = CopyTable(privateAuraSettings)
 		end
@@ -1043,7 +1044,7 @@ do
 
 					ImportColors(settings.colors, moduleName)
 					ImportSounds(settings.sounds, moduleName)
-					ImportPrivateAuras(settings.privateAuras, moduleName)
+					ImportPrivateAuras(settings.sounds, moduleName)
 				end
 			end
 			table.insert(chatMessages, getInstanceLabel(nextInstanceID))
