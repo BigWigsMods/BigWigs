@@ -1225,7 +1225,7 @@ do
 	-- end
 
 	function InitializeAuraFrame(aura, optionsDB)
-		local optionsDB = optionsDB or aura:GetParent().db
+		optionsDB = optionsDB or aura:GetParent().db
 		local size = optionsDB.size
 
 		aura:EnableMouse(false)
