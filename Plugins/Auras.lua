@@ -19,6 +19,7 @@ local anchors = { player = {}, other = {} }
 local inConfigureMode = false
 local previouslyFoundUnit = nil
 
+local InitializeAuraFrame, UpdateAuraFrame
 local UpdateAuraContainer, UpdateTestAura
 
 --------------------------------------------------------------------------------
@@ -1223,9 +1224,8 @@ do
 	-- 	durationFormater:SetMillisecondsThreshold(3)
 	-- end
 
-	local function initializeFrame(aura)
-		local auraContainer = aura:GetParent()
-		local optionsDB = auraContainer.db
+	function InitializeAuraFrame(aura, optionsDB)
+		local optionsDB = optionsDB or aura:GetParent().db
 		local size = optionsDB.size
 
 		aura:EnableMouse(false)
@@ -1234,6 +1234,7 @@ do
 		local icon = aura:CreateTexture(nil, "BACKGROUND")
 		icon:SetAllPoints()
 		aura:SetIcon(icon)
+		aura.icon = icon
 
 		local cooldown = CreateFrame("Cooldown", nil, aura, "CooldownFrameTemplate")
 		cooldown:SetAllPoints()
@@ -1294,6 +1295,50 @@ do
 		end
 	end
 
+	function UpdateAuraFrame(aura, optionsDB)
+		aura:SetSize(optionsDB.size, optionsDB.size)
+
+		local cooldown = aura:GetDurationCooldown()
+		cooldown:SetDrawSwipe(optionsDB.showCooldown)
+		cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
+
+		local duration = cooldown:GetCountdownFontString()
+		duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
+
+		local border = aura.border
+		local borderSize = GetAtlasBorderSize(optionsDB.size)
+		border:SetSize(borderSize, borderSize)
+		local borderStyle
+		if optionsDB.showBorder and not optionsDB.showDispelType then
+			borderStyle = 0 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Border
+		elseif optionsDB.showBorder and optionsDB.showDispelType then
+			borderStyle = 1 -- Enum.CustomAuraButtonDispelTypeTextureStyle.BorderWithIcon
+			-- elseif not optionsDB.showBorder and optionsDB.showDispelType then
+			--	-- XXX this is just the icon, not the border with icon minus the border D;
+			-- 	borderStyle = 2 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Icon
+		end
+		if borderStyle then
+			aura:SetAuraBorder(border, {
+				showWhenHarmful = true,
+				showWhenHelpful = true,
+				showWithoutDispelType = true,
+				style = borderStyle,
+			})
+		else
+			border:Hide()
+			aura:ClearAuraBorder()
+		end
+
+		local stacks = aura.stacks
+		stacks:SetFont(plugin:GetDefaultFont(true), optionsDB.countTextFontSize, "SLUG,OUTLINE")
+		if optionsDB.showCountText then
+			aura:SetApplicationCount(stacks)
+		else
+			stacks:Hide()
+			aura:ClearApplicationCount()
+		end
+	end
+
 	local FlowDirection = AnchorUtil.FlowDirection
 	local FlowLayoutAxis = AnchorUtil.FlowLayoutAxis
 	function UpdateAuraContainer(unitType, unitToken, parent)
@@ -1306,7 +1351,7 @@ do
 
 			auraContainer:AddAuraGroup("debuffs", "HARMFUL", {
 				maxFrameCount = optionsDB.maxIcons,
-				initializeFrame = initializeFrame,
+				initializeFrame = InitializeAuraFrame,
 				candidateFilters = {
 					maxDuration = math.huge, -- filter anything without a duration
 					isBossOrRoleAura = true,
@@ -1324,40 +1369,9 @@ do
 		end
 
 		-- These won't trigger an container update, so update them first
-		local borderSize = GetAtlasBorderSize(optionsDB.size)
 		for index = 1, auraContainer:GetAuraGroupFrameCount("debuffs") do
 			local aura = auraContainer:GetAuraGroupFrame("debuffs", index)
-			aura:SetSize(optionsDB.size, optionsDB.size)
-
-			local cooldown = aura:GetDurationCooldown()
-			cooldown:SetDrawSwipe(optionsDB.showCooldown)
-			cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
-
-			local duration = cooldown:GetCountdownFontString()
-			duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
-
-			local border = aura.border
-			border:SetSize(borderSize, borderSize)
-			local borderStyle
-			if optionsDB.showBorder and not optionsDB.showDispelType then
-				borderStyle = 0 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Border
-			elseif optionsDB.showBorder and optionsDB.showDispelType then
-				borderStyle = 1 -- Enum.CustomAuraButtonDispelTypeTextureStyle.BorderWithIcon
-			-- elseif not optionsDB.showBorder and optionsDB.showDispelType then
-			--	-- XXX this is just the icon, not the border with icon minus the border D;
-			-- 	borderStyle = 2 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Icon
-			end
-			if borderStyle then
-				aura:SetAuraBorder(border, {
-					showWhenHarmful = true,
-					showWhenHelpful = true,
-					showWithoutDispelType = true,
-					style = borderStyle,
-				})
-			else
-				border:Hide()
-				aura:ClearAuraBorder()
-			end
+			UpdateAuraFrame(aura, optionsDB)
 		end
 
 		auraContainer:SetEnabled(not optionsDB.disabled)
@@ -1431,38 +1445,55 @@ do
 		table.insert(auraFramePool, frame)
 	end
 
+	local methods = { -- pretty annoying
+		GetApplicationBar = false,
+		SetApplicationBar = false,
+		ClearApplicationBar = false,
+		GetApplicationCount = false,
+		SetApplicationCount = function(self, fontString) fontString:Show() end,
+		ClearApplicationCount = false,
+		GetDispelTypeTextureCount = false,
+		GetDispelTypeTexture = false,
+		AddDispelTypeTexture = false,
+		RemoveDispelTypeTexture = false,
+		ClearDispelTypeTextures = false,
+		GetDispelTypeText = false,
+		SetDispelTypeText = false,
+		ClearDispelTypeText = false,
+		GetDurationCooldown = function(self) return self.cooldown end,
+		SetDurationCooldown = false,
+		ClearDurationCooldown = false,
+		GetDurationText = false,
+		SetDurationText = false,
+		ClearDurationText = false,
+		GetDurationBar = false,
+		SetDurationBar = false,
+		ClearDurationBar = false,
+		GetIcon = false,
+		SetIcon = false,
+		ClearIcon = false,
+		GetSpellName = false,
+		etSpellName = false,
+		ClearSpellName = false,
+		GetAuraBorder = false,
+		SetAuraBorder = function(self, texture, options)
+			AuraUtil.SetAuraBorderAtlas(texture, self.dispelType, options.style == 1)
+			texture:SetVertexColor(1, 1, 1, 1)
+			texture:Show()
+		end,
+		ClearAuraBorder = false,
+	}
+	local noop = function() end
+
 	local function getTestAura(unitType, index)
 		local aura = table.remove(auraFramePool)
 		if not aura then
 			aura = CreateFrame("Frame", nil, UIParent)
-			aura:SetFrameStrata("MEDIUM")
-			aura:SetFixedFrameStrata(true)
-			aura:SetFrameLevel(1000)
-			aura:SetFixedFrameLevel(true)
-			aura:SetClampedToScreen(true)
-
-			local icon = aura:CreateTexture(nil, "BACKGROUND")
-			icon:SetAllPoints()
-			aura.icon = icon
-
-			local cooldown = CreateFrame("Cooldown", nil, aura, "CooldownFrameTemplate")
-			cooldown:SetAllPoints()
-			cooldown:SetReverse(true)
-			cooldown:SetDrawBling(false)
-			cooldown:SetDrawEdge(false)
-			aura.cooldown = cooldown
-
-			local overlayFrame = CreateFrame("Frame", nil, aura)
-			overlayFrame:SetAllPoints()
-			overlayFrame:SetFrameLevel(aura:GetFrameLevel() + 10)
-
-			local dispelIcon = overlayFrame:CreateTexture(nil, "BACKGROUND")
-			dispelIcon:SetPoint("CENTER", aura, "CENTER", 0, 0)
-			aura.dispelIcon = dispelIcon
-
-			local stacks = overlayFrame:CreateFontString(nil, "ARTWORK")
-			stacks:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 4, -4)
-			aura.stacks = stacks
+			aura:SetFrameStrata("HIGH")
+			for name, func in next, methods do
+				aura[name] = func or noop
+			end
+			InitializeAuraFrame(aura, db[unitType])
 		end
 
 		-- Setup test aura info
@@ -1473,11 +1504,12 @@ do
 		local icon = C_Spell.GetSpellTexture(spellId)
 		local duration = CONFIG_MODE_DURATION
 		local expirationTime = GetTime() + duration
+		local applications = math.random(0, 5)
 
 		aura.icon:SetTexture(icon)
+		aura.cooldown:SetCooldownFromExpirationTime(expirationTime, CONFIG_MODE_DURATION)
+		aura.stacks:SetText(applications > 1 and applications or "")
 		aura.dispelType = dispelType
-		aura.expirationTime = expirationTime
-		aura.applications = math.random(0, 5)
 		aura.unitType = unitType
 
 		-- aura:SetAuraInstance("player", {
@@ -1510,36 +1542,7 @@ do
 		local aura = testAuras[unitType][index]
 		if not aura then return end
 
-		local optionsDB = db[unitType]
-
-		aura:SetSize(optionsDB.size, optionsDB.size)
-
-		aura.cooldown:SetDrawSwipe(optionsDB.showCooldown)
-		aura.cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
-		aura.cooldown:SetCooldownFromExpirationTime(aura.expirationTime, CONFIG_MODE_DURATION)
-
-		local duration = aura.cooldown:GetCountdownFontString()
-		duration:SetFont(plugin:GetDefaultFont(true), optionsDB.cooldownTextFontSize, "SLUG,OUTLINE")
-
-		if optionsDB.showBorder then
-			local borderSize = GetAtlasBorderSize(optionsDB.size)
-			aura.dispelIcon:SetSize(borderSize, borderSize)
-
-			local info = dispelTypeInfo[aura.dispelType] or dispelTypeInfo.None
-			local atlas = optionsDB.showDispelType and info.dispelAtlas or info.basicAtlas
-			aura.dispelIcon:SetAtlas(atlas)
-			aura.dispelIcon:Show()
-		else
-			aura.dispelIcon:Hide()
-		end
-
-		if optionsDB.showCountText then
-			aura.stacks:SetFont(plugin:GetDefaultFont(true), optionsDB.countTextFontSize, "SLUG,OUTLINE")
-			aura.stacks:SetText(aura.applications > 1 and aura.applications or "")
-		else
-			aura.stacks:Hide()
-		end
-
+		UpdateAuraFrame(aura, db[unitType])
 		aura:Show()
 	end
 
