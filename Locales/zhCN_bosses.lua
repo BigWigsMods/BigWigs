@@ -79,3 +79,8 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 	aspect_of_the_end = "拉断",  -- 终末守护
 	devouring_cosmos = "换场地",
 })
+
+BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
+	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
+	--corrosive_spit = "Spit", -- Short for Corrosive Spit
+})

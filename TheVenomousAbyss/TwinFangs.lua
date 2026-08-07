@@ -1,4 +1,4 @@
-if not BigWigsLoader.isNext then return end
+if not BigWigsLoader.isTestBuild then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -6,7 +6,7 @@ if not BigWigsLoader.isNext then return end
 
 local mod, CL = BigWigs:NewBoss("The Twin Fangs", 3004, 2887)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(257368, 257361) -- Ithraz, Vexhul
 mod:SetEncounterID(3421)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
@@ -17,26 +17,96 @@ mod:UseCustomTimers(true)
 
 local activeBars = {}
 local backupBars = {}
+local countForDuration = {}
+
+local causticDelugeCount = 1
+local coilingToxinCount = 1
+local beckonProgenyCount = 1
+local surgeCount = 1
+local corrosiveSpitCount = 1
+local ravenousFeastCount = 1
+local bloodTorrentCount = 1
+local stirTheDepthsCount = 1
+local stoneBreakerCount = 1
+local barrageCount = 1
+local floodCount = 1
+local rouseTheBroodCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	coiling_toxin = "Toxin", -- Short for Coiling Toxin
+	corrosive_spit = "Spit", -- Short for Corrosive Spit
+})
 
 --------------------------------------------------------------------------------
 -- Renames
 --
 
--- mod:SetRenames({
--- 	[1] = {CL.rename},
--- })
+mod:SetRenames({
+	-- Vexhul
+	[1289192] = {CL.orbs}, -- Caustic Deluge
+	[1290809] = {L.coiling_toxin}, -- Coiling Ichor
+	[1291404] = {CL.adds}, -- Venomous Emergence
+	[1294293] = {1294293}, -- Vile Flood
+	[1291478] = {L.corrosive_spit}, -- Corrosive Spit
+	-- Ithraz
+	[1290516] = {CL.soak}, -- Ravenous Feast
+	[1303230] = {CL.heal_absorb}, -- Blood Torrent
+	[1290956] = {CL.waves}, -- Stir the Depths
+	[1288538] = {1288538}, -- Stone Breaker
+	[1306872] = {1306872}, -- Sanguine Storm
+	[1293792] = {1293792}, -- Flood
+	[1308356] = {CL.kicks}, -- Rouse the Brood
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
--- Dead in 12.1?
--- mod:SetPrivateAuraSounds({
--- })
+mod:SetAuraData({ -- TODO
+	[1289192] = {soundOnApplied = "none"}, -- Caustic Deluge
+	[1290814] = {soundOnApplied = "none"}, -- Coiling Ichor
+	[1292552] = {soundOnApplied = "none"}, -- Congealed Gore
+	[1306925] = {soundOnApplied = "none"}, -- Congealed Gore -- XXX Merge?
+	[1293979] = {soundOnApplied = "none"}, -- Corrosive Spit
+	[1290336] = {soundOnApplied = "none"}, -- Eternal Venom
+	[1289092] = {soundOnApplied = "none"}, -- Stone Breaker
+	[1309471] = {soundOnApplied = "none"}, -- Noxious Slick
+	[1292807] = {soundOnApplied = "none"}, -- Stir the Depths
+	[1294605] = {soundOnApplied = "none"}, -- Vile Flood
+	[1303230] = {soundOnApplied = "none", mythic = true}, -- Blood Torrent
+	[1303235] = {soundOnApplied = "none", mythic = true}, -- Blood Torrent 2 -- XXX Merge?
+	[1310360] = {soundOnApplied = "none", mythic = true}, -- Envenomed
+	[1310096] = {soundOnApplied = "none", mythic = true}, -- Feasted
+	[1310102] = {soundOnApplied = "none", mythic = true}, -- Tainted Blood
+	[1308386] = {soundOnApplied = "none", mythic = true}, -- Visceral Burst
+})
+
 
 function mod:GetOptions()
 	return {
-		"berserk"
+		-- Vexhul
+		1289192, -- Caustic Deluge
+		1290809, -- Coiling Ichor
+		1291404, -- Venomous Emergence
+		1294293, -- Vile Flood
+		1291478, -- Corrosive Spit
+		-- Ithraz
+		1290516, -- Ravenous Feast
+		1303230, -- Blood Torrent
+		1290956, -- Stir the Depths
+		{1288538, "TANK"}, -- Stone Breaker
+		1306872, -- Sanguine Storm
+		{1293792, "CASTBAR"}, -- Flood
+		1308356, -- Rouse the Brood
+	},{
+		{ tabName = self:SpellName(-35616), -- Vexhul
+			{ 1289192, 1290809, 1291404, 1294293, 1291478 }, },
+		{ tabName = self:SpellName(-35618), -- Ithraz
+			{ 1290516, 1303230, 1290956, 1288538, 1306872, 1293792, 1308356 }, },
 	}
 end
 
@@ -46,26 +116,153 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+	if self:Mythic() then
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicEvents")
+	else
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "OtherEvents")
+	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	self:Message("berserk", "cyan", self.moduleName .. " engaged")
+	countForDuration = {}
+
+	causticDelugeCount = 1
+	coilingToxinCount = 1
+	beckonProgenyCount = 1
+	surgeCount = 1
+	corrosiveSpitCount = 1
+	ravenousFeastCount = 1
+	bloodTorrentCount = 1
+	stirTheDepthsCount = 1
+	stoneBreakerCount = 1
+	barrageCount = 1
+	floodCount = 1
+	rouseTheBroodCount = 1
 end
 
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
-
-function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+function mod:MythicEvents(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo = nil
 
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
+
+
+	if durationRounded == 6 then
+		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
+		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
+			barInfo = self:Barrage()
+		else
+			barInfo = self:Flood()
+		end
+	elseif durationRounded == 8 then
+		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
+		if countForDuration[durationRounded] % 2 == 1 then-- Caustic > Blood
+			barInfo = self:CausticDeluge()
+		else
+			barInfo = self:BloodTorrent()
+		end
+	elseif durationRounded == 18 then
+		barInfo = self:StoneBreaker()
+	elseif durationRounded == 33 then
+		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
+		if countForDuration[durationRounded] % 2 == 1 then -- Rouse
+			barInfo = self:RouseTheBrood()
+		else
+			barInfo = self:BeckonProgeny()
+		end
+	elseif durationRounded == 40 then
+		barInfo = self:CoilingToxin()
+	elseif durationRounded == 47 then
+		barInfo = self:StirTheDepths()
+	elseif durationRounded == 57 then
+		barInfo = self:RavenousFeast()
+	elseif durationRounded == 61 then
+		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
+		if countForDuration[durationRounded] % 8 == 1 then -- Caustic Deluge > Blood Torrent > Stone Breaker > Rouse > Emergence > Coiling Ichor > Stir the Depths > Feast
+			barInfo = self:CausticDeluge()
+		elseif countForDuration[durationRounded] % 8 == 2 then
+			barInfo = self:BloodTorrent()
+		elseif countForDuration[durationRounded] % 8 == 3 then
+			barInfo = self:StoneBreaker()
+		elseif countForDuration[durationRounded] % 8 == 4 then
+			barInfo = self:RouseTheBrood()
+		elseif countForDuration[durationRounded] % 8 == 5 then
+			barInfo = self:BeckonProgeny()
+		elseif countForDuration[durationRounded] % 8 == 6 then
+			barInfo = self:CoilingToxin()
+		elseif countForDuration[durationRounded] % 8 == 7 then
+			barInfo = self:StirTheDepths()
+		elseif countForDuration[durationRounded] % 8 == 0 then
+			barInfo = self:RavenousFeast()
+		end
+	end
+
+	if barInfo then
+		activeBars[eventInfo.id] = barInfo
+		if self:ShouldShowBars() then
+			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
+		end
+	elseif barInfo == nil and self:ShouldShowBars() then
+		self:ErrorForTimelineEvent(eventInfo)
+		backupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
+		if state == 1 then -- Paused
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
+	end
+end
+
+function mod:OtherEvents(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
+	local barInfo = nil
+
+	local duration = eventInfo.duration
+	local durationRounded = self:RoundNumber(duration, 0)
+
+	if durationRounded == 6 then
+		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
+		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
+			barInfo = self:Barrage()
+		else
+			barInfo = self:Flood()
+		end
+	elseif durationRounded == (self:Easy() and 50 or 44) then
+		barInfo = self:CoilingToxin()
+	elseif durationRounded == (self:Easy() and 71 or 63) then
+		barInfo = self:RavenousFeast()
+	elseif durationRounded == (self:Easy() and 23 or 20) or durationRounded == 22 then -- Stone Breaker timer is 22.5 exactly, dips round down to 22
+		barInfo = self:StoneBreaker()
+	elseif durationRounded ==  (self:Easy() and 41 or 37) then
+		barInfo = self:BeckonProgeny()
+	elseif durationRounded == (self:Easy() and 10 or 9) then
+		barInfo = self:CausticDeluge()
+	elseif durationRounded ==  (self:Easy() and 59 or 52) then
+		barInfo = self:StirTheDepths()
+	elseif durationRounded == (self:Easy() and 76 or 68) then
+		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
+		if countForDuration[durationRounded] % 6 == 1 then -- Caustic > Stone > Beckon > Coiling > Stir > Ravenous
+			barInfo = self:CausticDeluge()
+		elseif countForDuration[durationRounded] % 6 == 2 then
+			barInfo = self:StoneBreaker()
+		elseif countForDuration[durationRounded] % 6 == 3 then
+			barInfo = self:BeckonProgeny()
+		elseif countForDuration[durationRounded] % 6 == 4 then
+			barInfo = self:CoilingToxin()
+		elseif countForDuration[durationRounded] % 6 == 5 then
+			barInfo = self:StirTheDepths()
+		elseif countForDuration[durationRounded] % 6 == 0 then
+			barInfo = self:RavenousFeast()
+		end
+	end
 
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
@@ -127,3 +324,171 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CausticDeluge()
+	local barText = CL.count:format(self:GetRename(1289192), causticDelugeCount)
+	causticDelugeCount = causticDelugeCount + 1
+	return {
+		msg = barText,
+		key = 1289192,
+		onFinished = function()
+			self:Message(1289192, "orange", barText)
+			self:PlaySound(1289192, "alarm")
+			self:StopBlizzMessages(2) -- delayed blizzard message with target but it's always the tank?
+		end
+	}
+end
+
+do
+	local CoilingToxinSound = function(self)
+		mod:PlaySound(1290809, "warning")
+	end
+
+	function mod:CoilingToxin()
+		local barText = CL.count:format(self:GetRename(1290809), coilingToxinCount)
+		coilingToxinCount = coilingToxinCount + 1
+		return {
+			msg = barText,
+			key = 1290809,
+			onFinished = function()
+				self:Message(1290809, "yellow", barText)
+				self:PersonalMessageFromBlizzMessage(1290809, 5, nil, barText, nil, nil, CoilingToxinSound) -- delayed a lot
+			end
+		}
+	end
+end
+
+function mod:BeckonProgeny()
+	local barText = CL.count:format(self:GetRename(1291404), beckonProgenyCount)
+	beckonProgenyCount = beckonProgenyCount + 1
+	return {
+		msg = barText,
+		key = 1291404,
+		onFinished = function()
+			self:Message(1291404, "cyan", barText)
+			self:PlaySound(1291404, "info") -- adds
+			self:StopBlizzMessages(2)
+		end
+	}
+end
+
+function mod:Surge()
+	local barText = CL.count:format(self:GetRename(1294293), surgeCount)
+	surgeCount = surgeCount + 1
+	return {
+		msg = barText,
+		key = 1294293,
+		onFinished = function()
+			self:Message(1294293, "yellow", barText)
+			self:PlaySound(1294293, "long")
+		end
+	}
+end
+
+function mod:CorrosiveSpit()
+	local barText = CL.count:format(self:GetRename(1291478), corrosiveSpitCount)
+	corrosiveSpitCount = corrosiveSpitCount + 1
+	return {
+		msg = barText,
+		key = 1291478,
+		onFinished = function()
+			self:Message(1291478, "orange", barText)
+			self:PlaySound(1291478, "alarm") -- avoid
+		end
+	}
+end
+
+function mod:RavenousFeast()
+	local barText = CL.count:format(self:GetRename(1290516), ravenousFeastCount)
+	ravenousFeastCount = ravenousFeastCount + 1
+	return {
+		msg = barText,
+		key = 1290516,
+		onFinished = function()
+			self:Message(1290516, "orange", barText)
+			self:PlaySound(1290516, "alarm") -- soak feast
+			self:StopBlizzMessages(2)
+		end
+	}
+end
+
+function mod:BloodTorrent()
+	local barText = CL.count:format(self:GetRename(1303230), bloodTorrentCount)
+	bloodTorrentCount = bloodTorrentCount + 1
+	return {
+		msg = barText,
+		key = 1303230,
+		onFinished = function()
+			self:Message(1303230, "yellow", barText)
+			if self:Healer() then
+				self:PlaySound(1303230, "alert") -- heal absorbs
+			end
+		end
+	}
+end
+
+function mod:StirTheDepths()
+	local barText = CL.count:format(self:GetRename(1290956), stirTheDepthsCount)
+	stirTheDepthsCount = stirTheDepthsCount + 1
+	return {
+		msg = barText,
+		key = 1290956,
+		onFinished = function()
+			self:Message(1290956, "orange", barText)
+			self:PlaySound(1290956, "alarm") -- dodge waves
+		end
+	}
+end
+
+function mod:StoneBreaker()
+	local barText = CL.count:format(self:GetRename(1288538), stoneBreakerCount)
+	stoneBreakerCount = stoneBreakerCount + 1
+	return {
+		msg = barText,
+		key = 1288538,
+		onFinished = function()
+			self:Message(1288538, "purple", barText)
+			-- self:PlaySound(1288538, "alarm") -- tank slams + knockback
+		end
+	}
+end
+
+function mod:Barrage()
+	local barText = CL.count:format(self:GetRename(1306872), barrageCount)
+	barrageCount = barrageCount + 1
+	return {
+		msg = barText,
+		key = 1306872,
+		onFinished = function()
+			self:Message(1306872, "yellow", barText)
+			self:PlaySound(1306872, "alert") -- avoid pools
+		end
+	}
+end
+
+function mod:Flood()
+	local barText = CL.count:format(self:GetRename(1293792), floodCount)
+	floodCount = floodCount + 1
+	return {
+		msg = barText,
+		key = 1293792,
+		onFinished = function()
+			self:Message(1293792, "yellow", barText)
+			self:PlaySound(1293792, "long") -- Ithraz full energy
+			self:CastBar(1293792, 18, barText) -- 4s cast + 14s channel as one bar
+		end
+	}
+end
+
+function mod:RouseTheBrood()
+	local barText = CL.count:format(self:GetRename(1308356), rouseTheBroodCount)
+	rouseTheBroodCount = rouseTheBroodCount + 1
+	return {
+		msg = barText,
+		key = 1308356,
+		onFinished = function()
+			self:Message(1308356, "red", barText)
+			self:PlaySound(1308356, "warning") -- interrupts
+		end
+	}
+end

@@ -79,3 +79,8 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 	aspect_of_the_end = "Catene",
 	devouring_cosmos = "Prossima Piattaforma",
 })
+
+BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
+	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
+	--corrosive_spit = "Spit", -- Short for Corrosive Spit
+})
