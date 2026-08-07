@@ -80,6 +80,10 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 	devouring_cosmos = "下個平台", -- 換場地/換平台/下個平台
 })
 
+BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
+	--malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
+})
+
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
 	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
 	--corrosive_spit = "Spit", -- Short for Corrosive Spit

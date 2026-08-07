@@ -1,4 +1,4 @@
-if not BigWigsLoader.isNext then return end
+if not BigWigsLoader.isTestBuild then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -6,7 +6,7 @@ if not BigWigsLoader.isNext then return end
 
 local mod, CL = BigWigs:NewBoss("Vashnik the Malignant", 3004, 2882)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(259181) -- Vashnik <The Malignant>
 mod:SetEncounterID(3455)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
@@ -17,26 +17,66 @@ mod:UseCustomTimers(true)
 
 local activeBars = {}
 local backupBars = {}
+local countForDuration = {}
+
+local imbibeCount = 1
+local malignantCatalystCount = 1
+local adaptiveInfectionCount = 1
+local plagueFrothCount = 1
+local drippingFangsCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+	malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
+})
 
 --------------------------------------------------------------------------------
 -- Renames
 --
 
--- mod:SetRenames({
--- 	[1] = {CL.rename},
--- })
+mod:SetRenames({
+	[1283164] = {1283164}, -- Imbibe
+	[1282525] = {L.malignant_catalyst}, -- Malignant Catalyst
+	[1282117] = {CL.debuffs}, -- Adaptive Infection
+	[1281907] = {CL.waves}, -- Plague Froth
+	[1280935] = {CL.tank_hit}, -- Dripping Fangs
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
--- Dead in 12.1?
--- mod:SetPrivateAuraSounds({
--- })
+mod:SetAuraData({
+	[1282117] = {soundOnApplied = "none"}, -- Adaptive Infection
+	[1285979] = {soundOnApplied = "none"}, -- Caustic Surge
+	[1290036] = {soundOnApplied = "none"}, -- Caustic Venom
+	[1302517] = {soundOnApplied = "none"}, -- Clotting Blood
+	[1305833] = {soundOnApplied = "none"}, -- Congealing Bolt
+	[1299462] = {soundOnApplied = "none"}, -- Corrosive Effluvium
+	[1297338] = {soundOnApplied = "none"}, -- Deadly Venom
+	[1280934] = {soundOnApplied = "none"}, -- Dripping Fangs
+	[1295173] = {soundOnApplied = "none"}, -- Exploding Infection
+	[1280189] = {soundOnApplied = "none"}, -- Malignant Burst
+	[1281908] = {soundOnApplied = "none"}, -- Plague Froth -- XXX merge?
+	[1281910] = {soundOnApplied = "none"}, -- Plague Froth
+	[1281913] = {soundOnApplied = "none"}, -- Plague Froth
+	[1282078] = {soundOnApplied = "none"}, -- Plague Froth
+	[1295224] = {1295380, soundOnApplied = "none"}, -- Siphoning Infection -- XXX This wont work?
+	[1294994] = {soundOnApplied = "none"}, -- Stygian Infection
+	[1304459] = {soundOnApplied = "none", mythic = true}, -- Tumor Burst
+	[1291461] = {soundOnApplied = "none"}, -- Virulent Fumes
+})
 
 function mod:GetOptions()
 	return {
-		"berserk"
+		1283164, -- Imbibe
+		1282525, -- Malignant Catalyst
+		1282117, -- Adaptive Infection
+		1281907, -- Plague Froth
+		{1280935, "TANK"}, -- Dripping Fangs
 	}
 end
 
@@ -53,7 +93,13 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	self:Message("berserk", "cyan", self.moduleName .. " engaged")
+	countForDuration = {}
+
+	imbibeCount = 1
+	malignantCatalystCount = 1
+	adaptiveInfectionCount = 1
+	plagueFrothCount = 1
+	drippingFangsCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -66,6 +112,19 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
+
+	if durationRounded == 20 or durationRounded == 80 then
+		barInfo = self:Imbibe()
+	elseif durationRounded == 10 or durationRounded == 16
+		or durationRounded == 21 or durationRounded == 31 then
+		barInfo = self:PlagueFroth()
+	elseif durationRounded == 8 or durationRounded == 11 or durationRounded == 22 then
+		barInfo = self:DrippingFangs()
+	elseif durationRounded == 23 or durationRounded == 24 then
+		barInfo = self:AdaptiveInfection()
+	elseif durationRounded == 6 or durationRounded == 44 then
+		barInfo = self:MalignantCatalyst()
+	end
 
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
@@ -127,3 +186,70 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Imbibe()
+	local barText = CL.count:format(self:GetRename(1283164), imbibeCount)
+	imbibeCount = imbibeCount + 1
+	return {
+		msg = barText,
+		key = 1283164,
+		onFinished = function()
+			self:Message(1283164, "cyan", barText)
+			self:PlaySound(1283164, "long")
+			self:StopBlizzMessages(2)
+		end
+	}
+end
+
+function mod:MalignantCatalyst()
+	local barText = CL.count:format(self:GetRename(1282525), malignantCatalystCount)
+	malignantCatalystCount = malignantCatalystCount + 1
+	return {
+		msg = barText,
+		key = 1282525,
+		onFinished = function()
+			self:Message(1282525, "red", barText)
+			self:PlaySound(1282525, "warning") -- raid damage
+			self:StopBlizzMessages(2)
+		end
+	}
+end
+
+function mod:AdaptiveInfection()
+	local barText = CL.count:format(self:GetRename(1282117), adaptiveInfectionCount)
+	adaptiveInfectionCount = adaptiveInfectionCount + 1
+	return {
+		msg = barText,
+		key = 1282117,
+		onFinished = function()
+			self:Message(1282117, "yellow", barText)
+			self:PlaySound(1282117, "alert") -- debuffs
+		end
+	}
+end
+
+function mod:PlagueFroth()
+	local barText = CL.count:format(self:GetRename(1281907), plagueFrothCount)
+	plagueFrothCount = plagueFrothCount + 1
+	return {
+		msg = barText,
+		key = 1281907,
+		onFinished = function()
+			self:Message(1281907, "yellow", barText)
+			self:PlaySound(1281907, "alert") -- waves after debuffs
+		end
+	}
+end
+
+function mod:DrippingFangs()
+	local barText = CL.count:format(self:GetRename(1280935), drippingFangsCount)
+	drippingFangsCount = drippingFangsCount + 1
+	return {
+		msg = barText,
+		key = 1280935,
+		onFinished = function()
+			self:Message(1280935, "purple", barText)
+			-- self:PlaySound(1280935, "alarm") -- tank hit
+		end
+	}
+end
