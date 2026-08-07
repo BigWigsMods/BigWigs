@@ -17,7 +17,6 @@ mod:UseCustomTimers(true)
 
 local activeBars = {}
 local backupBars = {}
-local countForDuration = {}
 
 local imbibeCount = 1
 local malignantCatalystCount = 1
@@ -93,7 +92,6 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	countForDuration = {}
 
 	imbibeCount = 1
 	malignantCatalystCount = 1
