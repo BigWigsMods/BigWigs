@@ -4198,6 +4198,17 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 	end
 end
 
+--- Show a message for a secret spellId.
+-- @param key the option key
+-- @string color the message color category
+-- @number spellId the secret spellId from which the icon and text are derived.
+function boss:SecretMessage(key, color, spellId)
+	local isEmphasized = self:CheckFlag(key, C.EMPHASIZE)
+	if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+		self:SendMessage("BigWigs_Message", self, key, GetSpellName(spellId), color, GetSpellTexture(spellId), isEmphasized)
+	end
+end
+
 --- Prevent any middle-screen boss emotes from showing.
 --- Only allowed for trash or world modules, normal modules do this automatically.
 --- If your module doesn't disable, you will need to manually allow them again.
