@@ -3934,14 +3934,14 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 	end
 end
 
---- Show a message for a secret spellID.
+--- Show a message for a secret spellId.
 -- @param key the option key
 -- @string color the message color category
--- @number spellID the secret spellID from which the icon and text are derived.
-function boss:SecretMessage(key, color, spellID)
+-- @number spellId the secret spellId from which the icon and text are derived.
+function boss:SecretMessage(key, color, spellId)
 	local isEmphasized = self:CheckFlag(key, C.EMPHASIZE)
 	if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
-		self:SendMessage("BigWigs_Message", self, key, GetSpellName(spellID), color, GetSpellTexture(spellID), isEmphasized)
+		self:SendMessage("BigWigs_Message", self, key, GetSpellName(spellId), color, GetSpellTexture(spellId), isEmphasized)
 	end
 end
 
