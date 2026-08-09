@@ -9,7 +9,7 @@ on:
       - Locales/*.lua
 
 jobs:
-  ldoc:
+  missing-localization:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,10 @@ jobs:
         with:
           repository: BigWigsMods/BigWigs.wiki
           path: wiki
+
+      - uses: leafo/gh-actions-lua@v13
+        with:
+          luaVersion: 5.1
 
       - name: Output
         run: lua BigWigs/dump_missing_localization.lua BigWigs/BigWigs.toc && cp -av Missing-Localization.md wiki/
