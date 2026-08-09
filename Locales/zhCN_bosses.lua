@@ -42,7 +42,7 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
-	aspect_of_the_end = "拉断",  -- 终末守护
+	nullzone = "拉断",  -- 终末守护
 })
 
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
