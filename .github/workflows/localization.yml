@@ -1,0 +1,36 @@
+name: Count missing localization
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - dump_missing_localization.lua
+      - Locales/*.lua
+
+jobs:
+  ldoc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout BigWigs
+        uses: actions/checkout@v7
+        with:
+          path: BigWigs
+
+      - name: Checkout BigWigs.wiki
+        uses: actions/checkout@v7
+        with:
+          repository: BigWigsMods/BigWigs.wiki
+          path: wiki
+
+      - name: Output
+        run: lua BigWigs/dump_missing_localization.lua BigWigs/BigWigs.toc && cp -av Missing-Localization.md wiki/
+
+      - name: Update wiki
+        run: |
+          cd wiki
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "<>"
+          git commit -am "Update API docs from ${GITHUB_SHA:0:7}" || true
+          git push
