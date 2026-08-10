@@ -1031,13 +1031,15 @@ do
 	--- Get the current aura applied sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedSound(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
 		local db = self.db.profile.auras
-		local soundName = db[spellID] and db[spellID].soundOnApplied
+		local baseSpellID = moduleAurasList[self][index][1]
+		local soundName = db[baseSpellID] and db[baseSpellID].soundOnApplied
 		if soundName then
 			return soundName
 		end
@@ -1046,13 +1048,15 @@ do
 	--- Get the current aura applied dose sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedDoseSound(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
 		local db = self.db.profile.auras
-		local soundName = db[spellID] and db[spellID].soundOnAppliedDose
+		local baseSpellID = moduleAurasList[self][index][1]
+		local soundName = db[baseSpellID] and db[baseSpellID].soundOnAppliedDose
 		if soundName then
 			return soundName
 		end
@@ -1061,13 +1065,15 @@ do
 	--- Get the current aura removed sound.
 	-- @return string or nil
 	function boss:GetAuraRemovedSound(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
 		local db = self.db.profile.auras
-		local soundName = db[spellID] and db[spellID].soundOnRemoved
+		local baseSpellID = moduleAurasList[self][index][1]
+		local soundName = db[baseSpellID] and db[baseSpellID].soundOnRemoved
 		if soundName then
 			return soundName
 		end
@@ -1076,12 +1082,13 @@ do
 	--- Get the default aura applied sound.
 	-- @return string
 	function boss:GetAuraAppliedSoundDefault(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local soundName = moduleAurasList[self][spellID].soundOnApplied
+		local soundName = moduleAurasList[self][index].soundOnApplied
 		if soundName then
 			return soundName or "None"
 		end
@@ -1090,12 +1097,13 @@ do
 	--- Get the default aura applied dose sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedDoseSoundDefault(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local soundName = moduleAurasList[self][spellID].soundOnAppliedDose
+		local soundName = moduleAurasList[self][index].soundOnAppliedDose
 		if soundName then
 			return soundName
 		end
@@ -1104,45 +1112,92 @@ do
 	--- Get the default aura removed sound.
 	-- @return string
 	function boss:GetAuraRemovedSoundDefault(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local soundName = moduleAurasList[self][spellID].soundOnRemoved
+		local soundName = moduleAurasList[self][index].soundOnRemoved
 		if soundName then
 			return soundName or "None"
 		end
 	end
 
-	--- Get the aura note.
-	-- @return string or nil
-	function boss:GetAuraNote(spellID)
-		if not moduleAurasList[self][spellID] then
+	--- Get the aura duration.
+	-- @return number or nil
+	function boss:GetAuraDuration(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local note = moduleAurasList[self][spellID].note
+		local duration = moduleAurasList[self][index].duration
+		return duration
+	end
+
+	--- Get the aura note.
+	-- @return string or nil
+	function boss:GetAuraNote(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local note = moduleAurasList[self][index].note
 		return note
 	end
 
-	--- Get the list of auras for this module.
-	-- @return table
-	function boss:GetAuraList()
-		local auraList = {}
+	--- Get the aura header.
+	-- @return string or nil
+	function boss:GetAuraHeader(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local header = moduleAurasList[self][index].header
+		return header
+	end
+
+	--- Get the total number of auras for this module.
+	-- @return number
+	function boss:GetAuraCount()
 		if moduleAurasList[self] then
-			for spellID in next, moduleAurasList[self] do
-				auraList[#auraList+1] = spellID
+			return moduleAurasList[self].count
+		end
+		return 0
+	end
+
+	--- Get the spell ID of an aura based on its index in the aura list.
+	-- @return number or nil
+	function boss:GetAuraSpellID(index)
+		if not moduleAurasList[self] or not moduleAurasList[self][index] then
+			error(("Module %q has no aura data for index %s."):format(self.moduleName, tostring(index)))
+			return
+		end
+		return moduleAurasList[self][index][1]
+	end
+
+	--- Get the list of all spell IDs using the aura system for this module.
+	-- @return table
+	function boss:GetAuraSpellIDToIndexList()
+		local spellIDToIndexList = {}
+		if moduleAurasList[self] then
+			for spellID, index in next, moduleAurasList[self].spellIDToIndex do
+				spellIDToIndexList[spellID] = index
 			end
 		end
-		return auraList
+		return spellIDToIndexList
 	end
 
 	--- Check if this module has a aura data set for this spellID
 	-- @return boolean
 	function boss:IsAuraDataAvailable(spellID)
-		if moduleAurasList[self] and moduleAurasList[self][spellID] then
+		if moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID] then
 			return true
 		end
 	end
@@ -1159,9 +1214,21 @@ do
 	-- @param auraDataTable the table storing the aura data
 	function boss:SetAuraData(auraDataTable)
 		if moduleAurasList[self] then
-			error(("Module %q already has a aura data set."):format(self.moduleName))
+			error(("Module %q already has aura data set."):format(self.moduleName))
 			return
 		end
+		local count = #auraDataTable
+		auraDataTable.count = count
+		local spellIDToIndex = {}
+		for auraIndex = 1, count do
+			local numSpellIDs = #auraDataTable[auraIndex]
+			-- Compensate for an entry listing multiple spell IDs
+			for spellIDPosition = 1, numSpellIDs do
+				local spellID = auraDataTable[auraIndex][spellIDPosition]
+				spellIDToIndex[spellID] = auraIndex
+			end
+		end
+		auraDataTable.spellIDToIndex = spellIDToIndex
 		moduleAurasList[self] = auraDataTable
 	end
 end

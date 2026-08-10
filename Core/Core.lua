@@ -650,9 +650,9 @@ do
 				-- Set up aura data storage DB
 				local auras = {}
 				if module:HasAuraData() then
-					local auraList = module:GetAuraList()
-					for i = 1, #auraList do
-						local spellID = auraList[i]
+					local count = module:GetAuraCount()
+					for i = 1, count do
+						local spellID = module:GetAuraSpellID(i)
 						auras[spellID] = {
 							soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
 							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
