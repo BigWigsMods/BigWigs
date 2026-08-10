@@ -451,17 +451,23 @@ do
 		if restrictionType == 5 and state == 0 then
 			self:UnregisterEvent(event)
 			for module in next, modulesNeedingUpdated do
-				module:RegisterPrivateAuraSounds()
+				module:RegisterAuraSounds()
 			end
 			modulesNeedingUpdated = {}
 		end
 	end)
 	--C_RestrictedActions.IsAddOnRestrictionActive(1) -- Enum.AddOnRestrictionType.Encounter = 1
-	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
-	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+	local UnitAuraSoundTriggerMap = {
+		-- These are the enum values for UnitAuraSoundTrigger
+		onApplied = 0,
+		onStack = 1,
+		onRemoved = 2,
+	}
+	local AddAuraSound = BigWigsLoader.isNext and C_UnitAuras.AddAuraSound or C_UnitAuras.AddPrivateAuraAppliedSound
+	local RemoveAuraSound = BigWigsLoader.isNext and C_UnitAuras.RemoveAuraSound or C_UnitAuras.RemovePrivateAuraAppliedSound
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
-	function boss:RegisterPrivateAuraSounds()
-		if not self:HasPrivateAuraSounds() then return end
+	function boss:RegisterAuraSounds()
+		if (not BigWigsLoader.isNext and not self:HasAuraData()) and not self:HasPrivateAuraSounds() then return end
 
 		if InChatMessagingLockdown() then
 			modulesNeedingUpdated[self] = true
@@ -472,7 +478,7 @@ do
 		-- Unregister previous sounds
 		if self.privateAuraSounds then
 			for i = 1, #self.privateAuraSounds do
-				RemovePrivateAuraAppliedSound(self.privateAuraSounds[i])
+				RemoveAuraSound(self.privateAuraSounds[i])
 			end
 			self.privateAuraSounds = nil
 		end
@@ -481,39 +487,75 @@ do
 		if not soundModule then return end
 
 		self.privateAuraSounds = {}
-		for _, opt in next, self.privateAuraSoundOptions do
-			local key = opt[1]
-			local sound
-			if opt.sound then
-				-- use the spell table default if the sound hasn't been changed in the config
-				local sDB = soundModule.db.profile["privateaura"]
-				if not sDB[self.name] or not sDB[self.name][key] then
-					sound = soundModule:GetDefaultSoundFile(opt.sound)
+		if BigWigsLoader.isNext and self:HasAuraData() then -- new 12.1 API
+			local auraData = self:GetAuraData()
+			for _, auraOptions in next, auraData do
+
+				local key = auraOptions[1]
+				local soundsToRegister = {}
+				local onAppliedSound = self:GetAuraAppliedSound(key)
+				local onStackSound = self:GetAuraAppliedDoseSound(key)
+				local onRemovedSound = self:GetAuraRemovedSound(key)
+				if onAppliedSound then
+					soundsToRegister.onApplied = soundModule:GetDefaultSoundFile(onAppliedSound)
+				end
+				if onStackSound then
+					soundsToRegister.onStack = soundModule:GetDefaultSoundFile(onStackSound)
+				end
+				if onRemovedSound then
+					soundsToRegister.onRemoved = soundModule:GetDefaultSoundFile(onRemovedSound)
+				end
+				for i = 1, #auraOptions do
+					for k, v in next, soundsToRegister do
+						local UnitAuraSoundInfo = {
+							spellID = auraOptions[i],
+							unitToken = "player",
+							outputChannel = "master",
+						}
+						if type(v) == "string" then
+							UnitAuraSoundInfo.soundFileName = v
+						else
+							UnitAuraSoundInfo.soundFileID = v
+						end
+						local privateAuraSoundID = AddPrivateAuraAppliedSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
+						if privateAuraSoundID then
+							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+						end
+					end
 				end
 			end
-			if not sound then
-				sound = soundModule:GetSoundFile(self, key, "privateaura")
-			end
-			if sound then
-				for i = 1, #opt do
-					local privateAuraSoundID
-					if type(sound) == "string" then -- sound file path
-						privateAuraSoundID = AddPrivateAuraAppliedSound({
-							spellID = opt[i],
-							unitToken = "player",
-							soundFileName = sound,
-							outputChannel = "master",
-						})
-					else -- sound file id
-						privateAuraSoundID = AddPrivateAuraAppliedSound({
-							spellID = opt[i],
-							unitToken = "player",
-							soundFileID = sound,
-							outputChannel = "master",
-						})
+		end
+
+		if self:HasPrivateAuraSounds() then -- Old Modules with compatibility
+			for _, opt in next, self.privateAuraSoundOptions do
+				local key = opt[1]
+				local sound
+				if opt.sound then
+					-- use the spell table default if the sound hasn't been changed in the config
+					local sDB = soundModule.db.profile["privateaura"]
+					if not sDB[self.name] or not sDB[self.name][key] then
+						sound = soundModule:GetDefaultSoundFile(opt.sound)
 					end
-					if privateAuraSoundID then
-						self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+				end
+				if not sound then
+					sound = soundModule:GetSoundFile(self, key, "privateaura")
+				end
+				if sound then
+					for i = 1, #opt do
+						local UnitAuraSoundInfo = {
+							spellID = opt[i],
+							unitToken = "player",
+							outputChannel = "master",
+						}
+						if type(sound) == "string" then
+							UnitAuraSoundInfo.soundFileName = sound
+						else
+							UnitAuraSoundInfo.soundFileID = sound
+						end
+						local privateAuraSoundID = BigWigsLoader.isNext and AddAuraSound(0, UnitAuraSoundInfo) or AddAuraSound(UnitAuraSoundInfo)
+						if privateAuraSoundID then
+							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+						end
 					end
 				end
 			end
@@ -1026,7 +1068,24 @@ end
 --
 
 do
+	local L = BigWigsAPI:GetLocale("BigWigs")
+	local tmp = { -- XXX as temp as the ones in Sounds.lua
+		["long"] = "BigWigs: Long",
+		["info"] = "BigWigs: Info",
+		["alert"] = "BigWigs: Alert",
+		["alarm"] = "BigWigs: Alarm",
+		["warning"] = "BigWigs: Raid Warning",
+		["underyou"] = L.spell_under_you,
+		["none"] = "None",
+	}
+
 	local moduleAurasList = {}
+
+	local function findAuraEntry(list, spellID)
+		for i = 1, #list do
+			if list[i][1] == spellID then return list[i] end
+		end
+	end
 
 	--- Get the current aura applied sound.
 	-- @return string or nil
@@ -1089,9 +1148,8 @@ do
 		end
 
 		local soundName = moduleAurasList[self][index].soundOnApplied
-		if soundName then
-			return soundName or "None"
-		end
+		soundName = tmp[soundName] or soundName -- convert to uppercase is needed
+		return soundName or "None"
 	end
 
 	--- Get the default aura applied dose sound.
@@ -1105,6 +1163,7 @@ do
 
 		local soundName = moduleAurasList[self][index].soundOnAppliedDose
 		if soundName then
+			soundName = tmp[soundName] or soundName -- convert to uppercase is needed
 			return soundName
 		end
 	end
@@ -1119,9 +1178,8 @@ do
 		end
 
 		local soundName = moduleAurasList[self][index].soundOnRemoved
-		if soundName then
-			return soundName or "None"
-		end
+		soundName = tmp[soundName] or soundName -- convert to uppercase is needed
+		return soundName or "None"
 	end
 
 	--- Get the aura duration.
@@ -1194,7 +1252,15 @@ do
 		return spellIDToIndexList
 	end
 
-	--- Check if this module has a aura data set for this spellID
+	--- Get the list of auras for this module.
+	-- @return table
+	function boss:GetAuraData()
+		if moduleAurasList[self] then
+			return moduleAurasList[self]
+		end
+	end
+
+	--- Check if this module has aura data set for this spellID.
 	-- @return boolean
 	function boss:IsAuraDataAvailable(spellID)
 		if moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID] then
@@ -1211,7 +1277,7 @@ do
 	end
 
 	--- Assign aura data to this module.
-	-- @param auraDataTable the table storing the aura data
+	-- @param auraDataTable the table storing the aura data, entries are {spellID(s), ...fields}
 	function boss:SetAuraData(auraDataTable)
 		if moduleAurasList[self] then
 			error(("Module %q already has aura data set."):format(self.moduleName))

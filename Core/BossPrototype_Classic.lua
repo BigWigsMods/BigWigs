@@ -524,7 +524,7 @@ do
 		if restrictionType == 5 and state == 0 then
 			self:UnregisterEvent(event)
 			for module in next, modulesNeedingUpdated do
-				module:RegisterPrivateAuraSounds()
+				module:RegisterAuraSounds()
 			end
 			modulesNeedingUpdated = {}
 		end
@@ -533,7 +533,7 @@ do
 	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
 	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
-	function boss:RegisterPrivateAuraSounds()
+	function boss:RegisterAuraSounds()
 		if not self:HasPrivateAuraSounds() then return end
 
 		if InChatMessagingLockdown() then
