@@ -467,7 +467,7 @@ do
 	local RemoveAuraSound = BigWigsLoader.isNext and C_UnitAuras.RemoveAuraSound or C_UnitAuras.RemovePrivateAuraAppliedSound
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
 	function boss:RegisterAuraSounds()
-		if (not BigWigsLoader.isNext and not self:HasAuraData()) and not self:HasPrivateAuraSounds() then return end
+		if (not self:HasAuraData()) and not self:HasPrivateAuraSounds() then return end
 
 		if InChatMessagingLockdown() then
 			modulesNeedingUpdated[self] = true
@@ -517,8 +517,8 @@ do
 						else
 							UnitAuraSoundInfo.soundFileID = v
 						end
-						local privateAuraSoundID = AddPrivateAuraAppliedSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
-						if privateAuraSoundID then
+						local privateAuraSoundID = AddAuraSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
+						if privateAuraSoundID ~= nil then
 							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
 						end
 					end
@@ -553,7 +553,7 @@ do
 							UnitAuraSoundInfo.soundFileID = sound
 						end
 						local privateAuraSoundID = BigWigsLoader.isNext and AddAuraSound(0, UnitAuraSoundInfo) or AddAuraSound(UnitAuraSoundInfo)
-						if privateAuraSoundID then
+						if privateAuraSoundID ~= nil then
 							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
 						end
 					end
