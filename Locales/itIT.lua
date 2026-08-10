@@ -6,13 +6,13 @@ if not L then return end
 
 -- API.lua
 L.showAddonBar = "L'addon '|cFF436EEE%s|r' ha creato la barra '%s'."
---L.requestAddonProfile = "The addon '|cFF436EEE%s|r' just made a copy of your profile export string for the profile called |cFF33FF99'%s'|r."
+L.requestAddonProfile = "L' addon '|cFF436EEE%s|r' ha realizzato una copia della stringa da esportare per il tuo profilo chiamata |cFF33FF99'%s'|r."
 L.shortMinutesAndSeconds = "%d Min %d Sec" -- 1 Minute 2 Seconds
 L.shortSecondsOnly = "%d Sec" -- 28 Seconds
 L.shortSubTenSeconds = "%.1f Sec" -- 3.2 Seconds
 L.accept = "Accetta"
 L.cancel = "Annulla"
---L.confirm_profile_swap = "The addon |cFF436EEE\"%s\"|r wants to automatically swap your BigWigs profile to a different profile called:\n\n|cFF33FF99\"%s\"|r\n\nAre you sure you want to do this?"
+L.confirm_profile_swap = "L' addon |cFF436EEE\"%s\"|r vuole cambiare automaticamente il tuo profilo di BigWigs in un altro profilo chiamato:\n\n|cFF33FF99\"%s\"|r\n\nSei sicuro di volerlo fare?"
 
 -- Core.lua
 L.berserk = "Infuriato"
@@ -74,7 +74,7 @@ L.newFeatures = "Nuove funzioni di BigWigs:"
 L.parentheses = "%s (%s)"
 
 L.expansionNames = {
-	"Classiche", -- Classic
+	"Classic", -- Classic
 	"The Burning Crusade", -- The Burning Crusade
 	"Wrath of the Lich King", -- Wrath of the Lich King
 	"Cataclysm", -- Cataclysm
@@ -227,7 +227,7 @@ L.healer = "|cFFFF0000Messaggio solo per Guaritori.|r "
 L.tankhealer = "|cFFFF0000Messaggio per Difensori e Guaritori.|r "
 L.dispeller = "|cFFFF0000Messaggio solo per Dissolutori Magici.|r "
 
---L.renames = "Renames"
+L.renames = "Rinomina"
 --L.noteLabel = "%s (|cFFFFFF99%s|r)"
 --L.renameLabel = "%s (|cFF3366FF%s|r)"
 --L.renameHeader = "Set a custom name for the ability. This text will be used instead of the spell name in all messages and bars.\n\n"
@@ -237,14 +237,14 @@ L.dispeller = "|cFFFF0000Messaggio solo per Dissolutori Magici.|r "
 -- Sharing.lua
 L.import = "Importa"
 L.import_info = "Dopo che immetti una stringa puoi selezione quali impostazioni vuoi importate. \n Se impostazioni non sono disponibili nella stringa di importazione non saranno selezionabili."
-L.import_info_active = "Choose what parts you would like to import and then click the import button."
+L.import_info_active = "Scegli cosa vuoi importare e poi clicca sul pulsante importa."
 L.import_info_none = "|cFFFF0000 La stringa di importo non è compatibile o non è aggiornata.|r"
 L.export = "Esporta"
 --L.export_core = "Export Core"
 L.export_info = "Seleziona quali impostazioni vorresti esportare e condividere con gli altri.\n\n|cffff4411 Puoi solo condividere impostazioni generali e quelle non hanno nessun effetto sulle impostazioni specifiche ai boss.|r"
 L.export_string = "Esporta Stringa"
 L.export_string_desc = "Copia questa stringa BigWigs se vuoi condividere le tue impostazioni."
-L.import_string = "Improta Stringa"
+L.import_string = "Importa Stringa"
 L.import_string_desc = "Incolla la stringa BigWigs che vuoi importare qua."
 L.position = "Posizione"
 L.settings = "Impostazioni"
