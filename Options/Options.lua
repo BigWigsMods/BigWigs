@@ -1204,7 +1204,7 @@ local function getAuraOptions(module, option)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
 
 	local appliedDropdown = AceGUI:Create("SharedDropdown")
-	appliedDropdown:SetLabel("Applied")
+	appliedDropdown:SetLabel(L.onApplied)
 	appliedDropdown:SetList(soundList, nil, "DDI-Sound")
 	appliedDropdown:SetRelativeWidth(hasDoseSound and 0.29 or 0.44)
 	appliedDropdown:SetUserData("key", key)
@@ -1224,7 +1224,7 @@ local function getAuraOptions(module, option)
 	local doseDropdown = AceGUI:Create("SharedDropdown")
 	if hasDoseSound then
 		doseDropdown = AceGUI:Create("SharedDropdown")
-		doseDropdown:SetLabel("Dose Applied")
+		doseDropdown:SetLabel(L.onDose)
 		doseDropdown:SetList(soundList, nil, "DDI-Sound")
 		doseDropdown:SetRelativeWidth(0.3)
 		doseDropdown:SetUserData("key", key)
@@ -1243,7 +1243,7 @@ local function getAuraOptions(module, option)
 	end
 
 	local removedDropdown = AceGUI:Create("SharedDropdown")
-	removedDropdown:SetLabel("Removed")
+	removedDropdown:SetLabel(L.onRemoved)
 	removedDropdown:SetList(soundList, nil, "DDI-Sound")
 	removedDropdown:SetRelativeWidth(hasDoseSound and 0.29 or 0.44)
 	removedDropdown:SetUserData("key", key)
@@ -1650,7 +1650,7 @@ do
 
 				if showPATab then
 					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:18:18:-2:-1|t"
-					table.insert(tabInfo, { text = iconText .. L.privateAuras, value = "auras" })
+					table.insert(tabInfo, { text = iconText .. (BigWigsLoader.isNext and L.auras or L.privateAuras), value = "auras" })
 					tabOptions["auras"] = moduleHasAuraData and module:GetAuraData() or module.privateAuraSoundOptions
 				end
 
