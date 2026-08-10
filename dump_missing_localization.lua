@@ -141,22 +141,31 @@ end
 local function main()
 	local start_path = "BigWigs.toc"
 	local arg_paths = {}
+	local output_file = "Missing-Localization.md"
 
 	if arg and #arg > 0 then
-		for _, a in ipairs(arg) do
-			local path = a:gsub("\\", "/")
-			local ext = path:sub(-4)
-			local is_file = ext == ".lua" or ext == ".toc"
-			if path:sub(-1) ~= "/" and not is_file then
-				path = path .. "/"
-			end
-			path = path:gsub("^./", "")
-			if is_file then
-				start_path = path
+		local i = 1
+		while i <= #args do
+			local a = args[i]
+			if a == "-o" or a == "--output" then
+				i = i + 1
+				output_file = args[i]
 			else
-				start_path = path .. start_path
+				local path = a:gsub("\\", "/")
+				local ext = path:sub(-4)
+				local is_file = ext == ".lua" or ext == ".toc"
+				if path:sub(-1) ~= "/" and not is_file then
+					path = path .. "/"
+				end
+				path = path:gsub("^./", "")
+				if is_file then
+					start_path = path
+				else
+					start_path = path .. start_path
+				end
+				arg_paths[#arg_paths + 1] = start_path
 			end
-			arg_paths[#arg_paths + 1] = start_path
+			i = i + 1
 		end
 	end
 	if  #arg_paths == 0 then
@@ -169,8 +178,7 @@ local function main()
 		return
 	end
 
-	local output = "Missing-Localization.md"
-	local file_handle, err = io.open(output, "w")
+	local file_handle, err = io.open(output_file, "w")
 	if not file_handle then
 		error(string.format("Unable to write report to %s", tostring(err)))
 		return
@@ -184,15 +192,18 @@ local function main()
 	table.sort(results, function(a, b) return a.path < b.path end)
 	for _, r in ipairs(results) do
 		total = total + r.count
-		local file_name = r.path -- r.path:match(".*/(.*)$") or r.path
-		table.insert(out, string.format("| %s | %d |", file_name, r.count))
+		local repo, path = r.path:match("(.-)/(.*)$")
+		local link = path and string.format("[%s](https://github.com/BigWigsMods/%s/blob/master/%s)", r.path, repo, path)
+		table.insert(out, string.format("| %s | %d |", link or r.path, r.count))
 	end
 	table.insert(out, "")
 
 	file_handle:write(table.concat(out, "\n"))
 	file_handle:close()
 
-	info(string.format("%d entries missing translation.", total))
+	local summary = string.format("%d entries missing translation.", total)
+	os.execute(string.format("echo '%s' >> $GITHUB_STEP_SUMMARY", summary))
+	info(summary)
 	print(string.format("Wrote report to %s", output))
 end
 
