@@ -1221,7 +1221,7 @@ local function getAuraOptions(module, option)
 		end
 	end
 
-	local doseDropdown = AceGUI:Create("SharedDropdown")
+	local doseDropdown
 	if hasDoseSound then
 		doseDropdown = AceGUI:Create("SharedDropdown")
 		doseDropdown:SetLabel(L.onDose)
