@@ -1,4 +1,4 @@
-## Interface: 30405, 38001
+## Interface: 30405, 38002
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
