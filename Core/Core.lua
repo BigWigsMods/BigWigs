@@ -291,7 +291,7 @@ do
 	end
 	local DisableCore
 	do
-		local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+		local RemoveAuraSound = C_UnitAuras.RemoveAuraSound and C_UnitAuras.RemoveAuraSound or C_UnitAuras.RemovePrivateAuraAppliedSound -- XXX RemovePrivateAuraAppliedSound is replaced in 12.1
 		function DisableCore(skipDelveEvent)
 			if coreEnabled then
 				coreEnabled = false
@@ -308,7 +308,7 @@ do
 						-- Unregister private aura sounds
 						if module.privateAuraSounds then
 							for i = 1, #module.privateAuraSounds do
-								RemovePrivateAuraAppliedSound(module.privateAuraSounds[i])
+								RemoveAuraSound(module.privateAuraSounds[i])
 							end
 							module.privateAuraSounds = nil
 						end
