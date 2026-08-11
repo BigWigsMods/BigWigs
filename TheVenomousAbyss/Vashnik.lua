@@ -59,11 +59,8 @@ mod:SetAuraData({
 	{1280934, soundOnApplied = "none"}, -- Dripping Fangs
 	{1295173, soundOnApplied = "none"}, -- Exploding Infection
 	{1280189, soundOnApplied = "none"}, -- Malignant Burst
-	{1281908, soundOnApplied = "none"}, -- Plague Froth -- XXX merge?
-	{1281910, soundOnApplied = "none"}, -- Plague Froth
-	{1281913, soundOnApplied = "none"}, -- Plague Froth
-	{1282078, soundOnApplied = "none"}, -- Plague Froth
-	{1295224, 1295380, soundOnApplied = "none"}, -- Siphoning Infection -- XXX This wont work?
+	{1281908, 1281910, 1281913, 1282078, soundOnApplied = "none"}, -- Plague Froth
+	{1295224, 1295380, soundOnApplied = "none"}, -- Siphoning Infection
 	{1294994, soundOnApplied = "none"}, -- Stygian Infection
 	{1304459, soundOnApplied = "none", mythic = true}, -- Tumor Burst
 	{1291461, soundOnApplied = "none"}, -- Virulent Fumes
