@@ -438,16 +438,16 @@ function InstanceSharing:GetInstanceExportString()
 		version = instanceExportPrefix,
 	}
 
-	for optionsTable, doExport in pairs({flags = exportFlags, renames = exportRenames, sounds = exportSounds or exportPrivateAuras, colors = exportColors, auras = exportAuras}) do
+	for optionsTable, doExport in pairs({flags = exportFlags, renames = exportRenames, sounds = exportSounds or exportAuras, colors = exportColors, auras = exportAuras}) do
 		if doExport then
 			for moduleName, settings in pairs(exportTable) do
 				if settings[optionsTable] then
 					filteredExportTable.exportData[moduleName] = filteredExportTable.exportData[moduleName] or {}
 					filteredExportTable.exportData[moduleName][optionsTable] = CopyTable(settings[optionsTable] or {})
-					if optionsTable == "sounds" and not (exportSounds and exportPrivateAuras) then -- Filter away extra sound options if only one is selected
+					if optionsTable == "sounds" and not (exportSounds and exportAuras) then -- Filter away extra sound options if only one is selected
 						local count = 0
 						for key, value in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
-							local shouldKeep = (key == "privateaura" and exportPrivateAuras) or (key ~= "privateaura" and exportSounds)
+							local shouldKeep = (key == "privateaura" and exportAuras) or (key ~= "privateaura" and exportSounds)
 							if not shouldKeep then
 								filteredExportTable.exportData[moduleName][optionsTable][key] = nil
 							else
