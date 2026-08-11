@@ -489,7 +489,7 @@ do
 		self.privateAuraSounds = {}
 		if BigWigsLoader.isNext and self:HasAuraData() then -- new 12.1 API
 			local spellIDList = self:GetAuraSpellIDToIndexList()
-			for spellId, _ in next, spellIDList do
+			for spellId in next, spellIDList do
 				local soundsToRegister = {}
 				local onAppliedSound = self:GetAuraAppliedSound(spellId)
 				local onStackSound = self:GetAuraAppliedDoseSound(spellId)
