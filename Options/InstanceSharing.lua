@@ -620,7 +620,7 @@ function applyImport()
 			ImportPrivateAuras(privateAuraSounds, moduleName)
 		end
 		if auras and data.auras then
-			ImportAuraSounds(data.auras, moduleName)
+			ImportAuras(data.auras, moduleName)
 		end
 		if colors then
 			ImportColors(data.colors, moduleName)
