@@ -1164,28 +1164,28 @@ local function privateAuraDropdownValueChanged(widget, _, value)
 	module:RegisterAuraSounds()
 end
 
-local function getAuraOptions(module, option)
-	local spellId = option[1]
-	local key = spellId
-	local id = option.tooltip or spellId
-	local config = module.db.profile.auras[spellId]
+local function getAuraOptions(module, spellID)
+	local key = spellID
+	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
-	local defaultAppliedSound = module:GetAuraAppliedSoundDefault(spellId)
+	local defaultAppliedSound = module:GetAuraAppliedSoundDefault(spellID)
 	defaultAppliedSound = defaultAppliedSound or soundModule:GetDefaultSound(defaultAppliedSound)
-	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellId)
+	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
 	defaultDoseSound = defaultDoseSound or soundModule:GetDefaultSound(defaultDoseSound)
-	local defaultRemovedSound = module:GetAuraRemovedSoundDefault(spellId)
+	local defaultRemovedSound = module:GetAuraRemovedSoundDefault(spellID)
 	defaultRemovedSound = defaultRemovedSound or soundModule:GetDefaultSound(defaultRemovedSound)
 	local hasDoseSound = defaultDoseSound ~= nil
 
-	local name = loader.GetSpellName(id)
-	if option.note then
-		name = L.noteLabel:format(name, option.note)
+	local name = loader.GetSpellName(spellID)
+	local note = module:GetAuraNote(spellID)
+	if note then
+		name = L.noteLabel:format(name, note)
 	end
-	local texture = loader.GetSpellTexture(id)
+	local texture = loader.GetSpellTexture(spellID)
 
 	local spellLabel = AceGUI:Create("Label")
-	if option.mythic then
+	local mythic = false -- module:GetAuraIsMythic(spellID) XXX NYI
+	if mythic then
 		spellLabel:SetText(name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14|t")
 	else
 		spellLabel:SetText(name)
@@ -1198,7 +1198,7 @@ local function getAuraOptions(module, option)
 	icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
 	icon:SetImageSize(40, 40)
 	icon:SetRelativeWidth(0.1)
-	icon:SetUserData("spellId", id)
+	icon:SetUserData("spellId", spellID)
 	icon:SetUserData("updateTooltip", true)
 	icon:SetCallback("OnEnter", privateAuraOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
@@ -1213,7 +1213,7 @@ local function getAuraOptions(module, option)
 	appliedDropdown:SetUserData("triggerType", "soundOnApplied")
 	appliedDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
-	local appliedValue = module:GetAuraAppliedSound(spellId)
+	local appliedValue = module:GetAuraAppliedSound(spellID)
 	for i, v in next, soundList do
 		if v == appliedValue then
 			appliedDropdown:SetValue(i)
@@ -1233,7 +1233,7 @@ local function getAuraOptions(module, option)
 		doseDropdown:SetUserData("triggerType", "soundOnAppliedDose")
 		doseDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
-		local doseValue = module:GetAuraAppliedDoseSound(spellId)
+		local doseValue = module:GetAuraAppliedDoseSound(spellID)
 		for i, v in next, soundList do
 			if v == doseValue then
 				doseDropdown:SetValue(i)
@@ -1252,7 +1252,7 @@ local function getAuraOptions(module, option)
 	removedDropdown:SetUserData("triggerType", "soundOnRemoved")
 	removedDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
-	local removedValue = module:GetAuraRemovedSound(spellId)
+	local removedValue = module:GetAuraRemovedSound(spellID)
 	for i, v in next, soundList do
 		if v == removedValue then
 			removedDropdown:SetValue(i)
@@ -1358,9 +1358,16 @@ do
 			if tab == "auras" then
 				local hasAuraData = module:HasAuraData()
 				if hasAuraData then
-					local auraData = module:GetAuraData()
-					for _, v in next, auraData do
-						widget:AddChildren(getAuraOptions(module, v))
+					for i = 1, module:GetAuraCount() do
+						local spellID = module:GetAuraSpellID(i)
+						local header = module:GetAuraHeader(spellID)
+						if header then
+							local headerWidget = AceGUI:Create("Heading")
+							headerWidget:SetText(header)
+							headerWidget:SetFullWidth(true)
+							widget:AddChild(headerWidget)
+						end
+						widget:AddChildren(getAuraOptions(module, spellID))
 					end
 				else
 					for _, v in next, tabOptions[tab] do
@@ -1379,10 +1386,9 @@ do
 				reset:SetCallback("OnLeave", optionsTooltip_Hide)
 				reset:SetCallback("OnClick", function()
 					if hasAuraData then
-						local auraData = module:GetAuraData()
 						local resetSettings = {}
-						for i = 1, #auraData do
-							local spellID = auraData[i][1]
+						for i = 1, module:GetAuraCount() do
+							local spellID = module:GetAuraSpellID(i)
 							resetSettings[spellID] = {
 								soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
 								soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
@@ -1606,6 +1612,7 @@ do
 			local moduleHasAuraData = module:HasAuraData()
 			if moduleHasAuraData then
 				showPATab = true
+				showTabs = true
 			elseif module.privateAuraSoundOptions then
 				-- Non-PA spells will not be shown and we don't want an empty tab
 				for _, opt in ipairs(module.privateAuraSoundOptions) do
@@ -1651,7 +1658,7 @@ do
 				if showPATab then
 					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:18:18:-2:-1|t"
 					table.insert(tabInfo, { text = iconText .. (BigWigsLoader.isNext and L.auras or L.privateAuras), value = "auras" })
-					tabOptions["auras"] = moduleHasAuraData and module:GetAuraData() or module.privateAuraSoundOptions
+					tabOptions["auras"] = module.privateAuraSoundOptions -- Old Private Aura options
 				end
 
 				local tabsWidget = AceGUI:Create("TabGroup")

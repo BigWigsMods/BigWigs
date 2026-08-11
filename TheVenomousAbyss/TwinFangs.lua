@@ -67,10 +67,10 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({ -- TODO
-	{1289192, soundOnApplied = "none"}, -- Caustic Deluge
+	{1289192, soundOnApplied = "none", header = CL.general}, -- Caustic Deluge
 	{1290814, soundOnApplied = "warning"}, -- Coiling Ichor
 	{1292552, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Congealed Gore
-	{1306925, soundOnApplied = "none"}, -- Congealed Gore -- XXX Merge?
+	{1306925, soundOnApplied = "none", header = CL.adds}, -- Congealed Gore -- XXX Merge? Adds is a placeholder test.
 	{1293979, soundOnApplied = "underyou"}, -- Corrosive Spit
 	{1290336, soundOnApplied = "none"}, -- Eternal Venom
 	{1289092, soundOnApplied = "none"}, -- Stone Breaker

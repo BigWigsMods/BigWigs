@@ -488,14 +488,12 @@ do
 
 		self.privateAuraSounds = {}
 		if BigWigsLoader.isNext and self:HasAuraData() then -- new 12.1 API
-			local auraData = self:GetAuraData()
-			for _, auraOptions in next, auraData do
-
-				local key = auraOptions[1]
+			local spellIDList = self:GetAuraSpellIDToIndexList()
+			for spellId, _ in next, spellIDList do
 				local soundsToRegister = {}
-				local onAppliedSound = self:GetAuraAppliedSound(key)
-				local onStackSound = self:GetAuraAppliedDoseSound(key)
-				local onRemovedSound = self:GetAuraRemovedSound(key)
+				local onAppliedSound = self:GetAuraAppliedSound(spellId)
+				local onStackSound = self:GetAuraAppliedDoseSound(spellId)
+				local onRemovedSound = self:GetAuraRemovedSound(spellId)
 				if onAppliedSound then
 					soundsToRegister.onApplied = soundModule:GetDefaultSoundFile(onAppliedSound)
 				end
@@ -505,22 +503,20 @@ do
 				if onRemovedSound then
 					soundsToRegister.onRemoved = soundModule:GetDefaultSoundFile(onRemovedSound)
 				end
-				for i = 1, #auraOptions do
-					for k, v in next, soundsToRegister do
-						local UnitAuraSoundInfo = {
-							spellID = auraOptions[i],
-							unitToken = "player",
-							outputChannel = "master",
-						}
-						if type(v) == "string" then
-							UnitAuraSoundInfo.soundFileName = v
-						else
-							UnitAuraSoundInfo.soundFileID = v
-						end
-						local privateAuraSoundID = AddAuraSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
-						if privateAuraSoundID ~= nil then
-							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
-						end
+				for k, v in next, soundsToRegister do
+					local UnitAuraSoundInfo = {
+						spellID = spellId,
+						unitToken = "player",
+						outputChannel = "master",
+					}
+					if type(v) == "string" then
+						UnitAuraSoundInfo.soundFileName = v
+					else
+						UnitAuraSoundInfo.soundFileID = v
+					end
+					local privateAuraSoundID = AddAuraSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
+					if privateAuraSoundID ~= nil then
+						self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
 					end
 				end
 			end
@@ -1081,12 +1077,6 @@ do
 
 	local moduleAurasList = {}
 
-	local function findAuraEntry(list, spellID)
-		for i = 1, #list do
-			if list[i][1] == spellID then return list[i] end
-		end
-	end
-
 	--- Get the current aura applied sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedSound(spellID)
@@ -1252,14 +1242,6 @@ do
 		return spellIDToIndexList
 	end
 
-	--- Get the list of auras for this module.
-	-- @return table
-	function boss:GetAuraData()
-		if moduleAurasList[self] then
-			return moduleAurasList[self]
-		end
-	end
-
 	--- Check if this module has aura data set for this spellID.
 	-- @return boolean
 	function boss:IsAuraDataAvailable(spellID)
@@ -1279,6 +1261,7 @@ do
 	--- Assign aura data to this module.
 	-- @param auraDataTable the table storing the aura data, entries are {spellID(s), ...fields}
 	function boss:SetAuraData(auraDataTable)
+		print("Setting AuraData for "..self.moduleName)
 		if moduleAurasList[self] then
 			error(("Module %q already has aura data set."):format(self.moduleName))
 			return
