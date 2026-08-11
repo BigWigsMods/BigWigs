@@ -1261,7 +1261,6 @@ do
 	--- Assign aura data to this module.
 	-- @param auraDataTable the table storing the aura data, entries are {spellID(s), ...fields}
 	function boss:SetAuraData(auraDataTable)
-		print("Setting AuraData for "..self.moduleName)
 		if moduleAurasList[self] then
 			error(("Module %q already has aura data set."):format(self.moduleName))
 			return
