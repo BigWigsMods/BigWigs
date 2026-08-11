@@ -383,7 +383,7 @@ do
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
 						if module:HasPrivateAuraSounds() then
-							module:RegisterPrivateAuraSounds()
+							module:RegisterAuraSounds()
 						end
 						-- Enable trash modules for the current zone
 						if module:IsTrashModule() then
@@ -757,7 +757,7 @@ do
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
 						if module:HasPrivateAuraSounds() then
-							module:RegisterPrivateAuraSounds()
+							module:RegisterAuraSounds()
 						end
 						-- Automatically enable trash modules if we're in the relevant zone at module registration
 						if module:IsTrashModule() then
