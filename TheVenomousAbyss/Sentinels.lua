@@ -1,4 +1,3 @@
-if not BigWigsLoader.isNext then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -6,10 +5,11 @@ if not BigWigsLoader.isNext then return end
 
 local mod, CL = BigWigs:NewBoss("Entombed Sentinels", 3004, 2874)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(258557, 258556) -- Breath of Ula'tek, Blood of Ula'tek
 mod:SetEncounterID(3445)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -18,25 +18,83 @@ mod:UseCustomTimers(true)
 local activeBars = {}
 local backupBars = {}
 
+local durationEventCount = {}
+local isIntermission = nil
+local nextStasis = 0
+local berserkTime = 0
+
+local dropletsCount = 1
+local coagulationCount = 1
+local slamCount = 1
+local miasmaCount = 1
+local bloodCount = 1
+local injectionCount = 1
+local protovenomCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+-- local L = mod:SetDefaultLocale({
+-- })
+
 --------------------------------------------------------------------------------
 -- Renames
 --
 
--- mod:SetRenames({
--- 	[1] = {CL.rename},
--- })
+mod:SetRenames({
+	["berserk"] = {26662, CL.custom_end:format(mod.displayName, mod:SpellName(26662)), notes = {CL.timerNote, CL.messageNote}}, -- Berserk
+	[1284588] = {CL.intermission, CL.over:format(CL.intermission), original = {1284588, CL.over:format(mod:SpellName(1284588))}}, -- Vitriolic Stasis
+	[1296878] = {1296878, CL.soon:format(mod:SpellName(1296878)), original = false}, -- Shifting Protovenom
+	[1284251] = {1284251, CL.add_spawning, original = false}, -- Venom Coagulation
+	[1284434] = {1284434}, -- Toxic Droplets
+	[1284458] = {1284458}, -- Empowering Slam
+	[1284483] = {1284483}, -- Blighted Blood
+	[1288232] = {1288232, CL.you:format(mod:SpellName(1288232)), original = false, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Unstable Miasma
+	[1284487] = {1284487}, -- Bloodvenom Injection
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
--- Dead in 12.1?
--- mod:SetPrivateAuraSounds({
--- })
+mod:SetPrivateAuraSounds({
+	{1284500, sound = "none"}, -- Mark of Acid
+	{1284506, sound = "none"}, -- Mark of Blood
+
+	{1284210, sound = "none", note = "Standing in bad"}, -- Blood Venom
+	{1288260, sound = "warning"}, -- Unstable Miasma
+	{1288297, sound = "none", note = "Soaked Miasma; Drops pool when expires"}, -- Clinging Murk
+	{1284471, sound = "alarm", note = "DoT; Drops pool when removed"}, -- Blighted Blood
+	{1284491, sound = "none", note = "Tank stacks; Drops pool when expires"}, -- Bloodvenom Injection
+
+	{1296880, sound = "warning", mythic = true}, -- Shifting Protovenom
+
+	{1284590, sound = "warning"}, -- Helical Toxins
+	{1284947, sound = "none", note = "Fail DoT"}, -- Cultivated Burst
+})
 
 function mod:GetOptions()
 	return {
-		"berserk"
+		1284588, -- Vitriolic Stasis
+		"berserk",
+
+		-- Vashnik the Malignant (Mythic)
+		1296878, -- Shifting Protovenom
+
+		-- Breath of Ula'tek
+		1284251, -- Venom Coagulation
+		1284434, -- Toxic Droplets
+		{1284458, "TANK"}, -- Empowering Slam
+
+		-- Blood of Ula'tek
+		1284483, -- Blighted Blood
+		1288232, -- Unstable Miasma
+		{1284487, "TANK"}, -- Bloodvenom Injection
+	}, {
+		[1284251] = -34951, -- Breath of Ula'tek
+		[1284483] = -34953, -- Blood of Ula'tek
+		[1296878] = CL.mythic, -- -35867, -- Vashnik the Malignant
 	}
 end
 
@@ -53,19 +111,148 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	self:Message("berserk", "cyan", self.moduleName .. " engaged")
+	self:SetStage(1)
+	durationEventCount = {}
+	isIntermission = nil
+
+	dropletsCount = 1
+	coagulationCount = 1
+	slamCount = 1
+	miasmaCount = 1
+	bloodCount = 1
+	injectionCount = 1
+	protovenomCount = 1
+
+	local stasisCD = 46
+	self:Bar(1284588, stasisCD, CL.count:format(self:GetRename(1284588), 1)) -- Vitriolic Stasis
+	nextStasis = self.stageTime + stasisCD
+
+	berserkTime = self:Heroic() and 540 or 0
+
+	if self:Mythic() then
+		self:Bar(1296878, 36, CL.count:format(self:GetRename(1296878), protovenomCount)) -- Shifting Protovenom
+	end
+end
+
+-- Blizzard adds then cancels a few seconds later if they aren't going to happen which messes up counts.
+local function isBeforeVitriolicStasis(duration)
+	return GetTime() + duration < nextStasis - 1 -- extra 1s to catch the second Toxic Droplets
 end
 
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
 
+-- Mythic/Heroic/Normal were the same in testing
 function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo = nil
 
+	local stage = self:GetStage()
 	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
+	local rounded1 = self:RoundNumber(duration, 1)
+	local rounded = self:RoundNumber(rounded1, 0)
+
+	if isIntermission then
+		-- local elapsed = GetTime() - nextStasis
+		self:Message(1284588, "green", self:GetRename(1284588, 2), false)
+		self:PlaySound(1284588, "long")
+
+		isIntermission = nil
+		stage = stage + 1
+		self:SetStage(stage)
+
+		durationEventCount = {}
+
+		dropletsCount = 1
+		coagulationCount = 1
+		slamCount = 1
+		miasmaCount = 1
+		bloodCount = 1
+		injectionCount = 1
+		protovenomCount = 1
+
+		local stasisCD = 91
+		nextStasis = self.stageTime + stasisCD
+		if self:ShouldShowBars() then
+			self:Bar(1284588, stasisCD, CL.count:format(self:GetRename(1284588), stage)) -- Vitriolic Stasis
+
+			if self:Mythic() then
+				self:Bar(1296878, 39.9, CL.count:format(self:GetRename(1296878), protovenomCount)) -- Shifting Protovenom
+			end
+		end
+
+		if berserkTime > 0 then
+			-- Show berserk if it'll happen before the end of the next intermission
+			local berserkCD = berserkTime - self.stageTime
+			if berserkCD < stasisCD + 25 and self:ShouldShowBars() then
+				local berserkInfo = self:BerserkEvent()self:ShouldShowBars()
+				self:Bar(barInfo.key, berserkCD, barInfo.msg, barInfo.icon)
+				self:ScheduleTimer(function()
+					self:StopBar(berserkInfo.msg)
+					berserkInfo:onFinished()
+				end, berserkCD)
+			end
+		end
+	end
+
+	durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+
+	-- Blizzard adds the initial stage (not on pull, though) timers three times, first two sets get canceled
+	local initalTimers = {
+		[12] = true, -- Toxic Droplets
+		[8] = true, -- Venom Coagulation
+		[4] = true, -- Empowering Slam
+		[16] = true, -- Unstable Miasma
+		[40] = true, -- Blighted Blood
+		[6] = true, -- Bloodvenom Injection
+	}
+	if stage > 1 and initalTimers[rounded] and durationEventCount[rounded] < 3 then
+		return false
+	end
+
+	-- Don't show events that will get canceled (skipping Vitriolic Stasis itself)
+	if duration ~= 20 and not isBeforeVitriolicStasis(duration) then
+		return false
+	end
+
+	if rounded == 12 or rounded == 32 then
+		barInfo = self:ToxicDroplets()
+	elseif rounded == 8 or rounded1 == 51.5 then -- rounded (52) same as Blighted Blood
+		barInfo = self:VenomCoagulation()
+	elseif rounded == 4 then
+		barInfo = self:EmpoweringSlam()
+
+	elseif rounded == 16 or rounded == 41 then
+		barInfo = self:UnstableMiasma()
+	elseif rounded == 40 or rounded == 52 then
+		barInfo = self:BlightedBlood()
+	elseif rounded == 6 then
+		barInfo = self:BloodvenomInjection()
+
+	elseif rounded == 20 then
+		if stage == 1 then
+			if durationEventCount[rounded] % 2 > 0 and self:Mythic() then
+				barInfo = self:ShiftingProtovenom()
+			else
+				barInfo = self:VitriolicStasis(duration)
+			end
+		else
+			if durationEventCount[rounded] % 3 > 0 and self:Mythic() then
+				barInfo = self:ShiftingProtovenom()
+			else
+				barInfo = self:VitriolicStasis(duration)
+			end
+		end
+
+	elseif rounded == 22 then -- 21.5
+		-- XXX these can flip if you delay Slam by running around, should probably use UNIT_SPELLCAST_START to track which one starts
+		if durationEventCount[rounded] % 2 == 1 then
+			barInfo = self:EmpoweringSlam()
+		else
+			barInfo = self:BloodvenomInjection()
+		end
+	end
 
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
@@ -85,24 +272,35 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+	local state = C_EncounterTimeline.GetEventState(eventID)
+
 	local barInfo = activeBars[eventID]
 	if barInfo then
-		local state = C_EncounterTimeline.GetEventState(eventID)
+
+		if barInfo.key == 1296878 and state == 2 and self:ShouldShowBars() then -- Shifting Protovenom Finished
+			self:StopBlizzMessages(0.3) -- Vashnik infects players with a [Shifting Protovenom]!
+			-- self:Message(1296878, "red", self:GetRename(1296878, 2))
+			self:ScheduleTimer(function()
+				self:StopBar(barInfo.msg)
+				barInfo:onFinished()
+			end, 5)
+			return true -- skip state
+		end
+
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onFinished and self:ShouldShowBars() then
-				barInfo.onFinished()
+				barInfo:onFinished()
 			end
 		elseif state == 3 then -- Canceled
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onCanceled and self:ShouldShowBars() then
-				barInfo.onCanceled()
+				barInfo:onCanceled()
 			end
 		end
 	elseif backupBars[eventID] then
-		local state = C_EncounterTimeline.GetEventState(eventID)
 		if state == 0 then -- Enum.EncounterTimelineEventState.Active
 			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
 		elseif state == 1 then -- Enum.EncounterTimelineEventState.Paused
@@ -114,16 +312,187 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	local barInfo = activeBars[eventID]
-	if barInfo then
-		self:StopBar(barInfo.msg)
-		activeBars[eventID] = nil
-	elseif backupBars[eventID] then
-		backupBars[eventID] = nil
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-	end
+	activeBars[eventID] = nil
+	backupBars[eventID] = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:BerserkEvent()
+	local barText = self:GetRename("berserk")
+	return {
+		msg = barText,
+		icon = 26662,
+		key = "berserk",
+		onFinished = function()
+			self:Message("berserk", "red", self:GetRename("berserk", 2), 26662)
+			self:PlaySound("berserk", "alarm")
+		end,
+	}
+end
+
+function mod:ShiftingProtovenom()
+	local barText = CL.count:format(self:GetRename(1296878), protovenomCount)
+	protovenomCount = protovenomCount + 1
+
+	-- event duration is 20. finishes at 18, Vashnik yells and "casts" for 4s, debuffs apply 1s later at 23
+	-- show timer/message for when debuffs go out
+	local duration = 23
+	-- event fires mid fight, extend the bar we start
+	local remaining, total = self:BarTimeLeft(barText)
+	local newDuration = remaining > 1 and { duration, total } or duration
+	-- show a bar for the next cast on end (since blizzard doesn't)
+	local barOnFinish = self:GetStage() > 1 and protovenomCount < 3 and 41 or nil -- debuff to debuff time
+
+	-- finish is handled in OnTimelineEventChanged
+	return {
+		duration = newDuration,
+		msg = barText,
+		key = 1296878,
+		onFinished = function()
+			-- self:StopBlizzMessages(0.3) -- Vashnik infects players with a [Shifting Protovenom]!
+			self:Message(1296878, "red", barText)
+			-- self:PlaySound(1296878, "warning")
+
+			if barOnFinish then
+				self:Bar(1296878, barOnFinish, CL.count:format(self:GetRename(1296878), protovenomCount))
+			end
+		end,
+	}
+end
+
+function mod:VitriolicStasis(duration)
+	local barText = CL.count:format(self:GetRename(1284588), self:GetStage())
+
+	-- event fires once mid fight, correct the bar we start
+	local newDuration = { duration, nextStasis - self.stageTime }
+	nextStasis = GetTime() + duration
+
+	local barInfo = {
+		duration = newDuration,
+		msg = barText,
+		key = 1284588,
+		onFinished = function(this)
+			if this.timer then
+				self:CancelTimer(this.timer)
+				this.timer = nil
+			end
+
+			isIntermission = true
+			self:StopBlizzMessages(0.5) -- The Golems of Ula'tek infect players with [Helical Toxins]!
+			self:Message(1284588, "cyan", barText)
+			self:PlaySound(1284588, "long")
+		end,
+	}
+	-- can bug out finishing on time (gets delayed ~1s), but the cancel event is way later (~5s) if that happens
+	barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration + 1)
+	return barInfo
+end
+
+-- Breath of Ula'tek
+
+function mod:ToxicDroplets()
+	local barText = CL.count:format(self:GetRename(1284434), dropletsCount)
+	dropletsCount = dropletsCount + 1
+
+	return {
+		msg = barText,
+		key = 1284434,
+		onFinished = function()
+			self:Message(1284434, "yellow", barText)
+			-- self:PlaySound(1284434, "alarm")
+		end,
+	}
+end
+
+function mod:VenomCoagulation()
+	local barText = CL.count:format(self:GetRename(1284251), coagulationCount)
+	local messageText = CL.soon:format(barText)
+	coagulationCount = coagulationCount + 1
+
+	return {
+		msg = barText,
+		key = 1284251,
+		onFinished = function()
+			self:StopBlizzMessages(0.4) -- Breath of Ula'tek hurls forth a [Venom Coagulation]!
+			self:Message(1284251, "cyan", messageText)
+			self:CDBar(1284251, 5.5, self:GetRename(1284251, 2)) -- Add spawning
+			self:PlaySound(1284251, "info")
+
+			self:RegisterBossEvent("boss3", function() -- catch the next IEEU
+				self:StopBar(self:GetRename(1284251, 2))
+				self:UnregisterBossEvent("boss3")
+			end)
+		end,
+	}
+end
+
+function mod:EmpoweringSlam()
+	local barText = CL.count:format(self:GetRename(1284458), slamCount)
+	slamCount = slamCount + 1
+
+	return {
+		msg = barText,
+		key = 1284458,
+		onFinished = function()
+			if self:ThreatTarget("player", "boss1") then
+				self:Message(1284458, "purple", barText)
+				self:PlaySound(1284458, "alert")
+			end
+		end,
+	}
+end
+
+-- Blood of Ula'tek
+
+function mod:UnstableMiasma()
+	local barText = CL.count:format(self:GetRename(1288232), miasmaCount)
+	miasmaCount = miasmaCount + 1
+
+	return {
+		msg = barText,
+		key = 1288232,
+		onFinished = function()
+			-- Blood of Ula'tek targets you with [Unstable Miasma]!
+			-- 1.5s from begincast to applydebuff
+			self:PersonalMessageFromBlizzMessage(1288232, 2, false, self:GetRename(1288232, 2))
+
+			self:Message(1288232, "orange", barText)
+			self:PlaySound(1288232, "alert")
+		end,
+	}
+end
+
+function mod:BlightedBlood()
+	local barText = CL.count:format(self:GetRename(1284483), bloodCount)
+	bloodCount = bloodCount + 1
+
+	return {
+		msg = barText,
+		key = 1284483,
+		onFinished = function()
+			self:Message(1284483, "yellow", barText)
+			if self:Dispeller("magic") then
+				self:PlaySound(1284483, "alert")
+			end
+		end,
+	}
+end
+
+function mod:BloodvenomInjection()
+	local barText = CL.count:format(self:GetRename(1284487), injectionCount)
+	injectionCount = injectionCount + 1
+
+	return {
+		msg = barText,
+		key = 1284487,
+		onFinished = function()
+			if self:ThreatTarget("player", "boss2") then
+				self:Message(1284487, "purple", barText)
+				self:PlaySound(1284487, "alert")
+			end
+		end,
+	}
+end

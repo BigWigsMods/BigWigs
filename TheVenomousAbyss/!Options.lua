@@ -16,3 +16,25 @@ BigWigs:AddSounds("Nek'zali the Soulcoiler", {
 	[1299673] = "alarm",
 	["stages"] = "long",
 })
+
+BigWigs:AddColors("Entombed Sentinels", {
+	[1284251] = "cyan",
+	[1284434] = "yellow",
+	[1284458] = "purple",
+	[1284483] = "yellow",
+	[1284487] = "purple",
+	[1284588] = {"cyan","green"},
+	[1288232] = {"blue","orange"},
+	[1296878] = "red",
+	["berserk"] = "red",
+})
+
+BigWigs:AddSounds("Entombed Sentinels", {
+	[1284251] = "info",
+	[1284458] = "alert",
+	[1284483] = "alert",
+	[1284487] = "alert",
+	[1284588] = "long",
+	[1288232] = "alert",
+	["berserk"] = "alarm",
+})
