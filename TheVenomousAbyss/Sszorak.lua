@@ -56,19 +56,19 @@ mod:SetRenames({
 -- Options
 --
 
-mod:SetPrivateAuraSounds({
-	{1277105, sound = "none", note = "Tank frontal"}, -- Ravage
-	{1277051, sound = "none", note = "Frontal soaked"}, -- Mutilated Gash
-	{1287083, sound = "alarm", note = "Snare"}, -- Tempest
-	{1305963, sound = "warning"}, -- Venomous Surge
-	{1296667, sound = "underyou"}, -- Caustic Residue
-	{1285425, sound = "none", note = "Launches North"}, -- Raging Crosswinds (North)
-	{1285453, sound = "none", note = "Launches South"}, -- Raging Crosswinds (South)
-	{1297096, sound = "none", note = "Launches East"}, -- Raging Crosswinds (East)
-	{1297111, sound = "none", note = "Launches West"}, -- Raging Crosswinds (West)
-	{1305621, sound = "warning", mythic = true}, -- Serpent's Fury,
-	{1297707, sound = "warning", note = "Left", mythic = true}, -- Virulence (Left)
-	{1299899, sound = "warning", note = "Right", mythic = true}, -- Virulence (Right)
+mod:SetAuraData({
+	{1277105, soundOnApplied = "none", note = "Tank frontal"}, -- Ravage
+	{1277051, soundOnApplied = "none", note = "Frontal soaked"}, -- Mutilated Gash
+	{1287083, soundOnApplied = "alarm", note = "Snare"}, -- Tempest
+	{1305963, soundOnApplied = "warning"}, -- Venomous Surge
+	{1296667, soundOnApplied = "underyou"}, -- Caustic Residue
+	{1285425, soundOnApplied = "none", note = "Launches North"}, -- Raging Crosswinds (North)
+	{1285453, soundOnApplied = "none", note = "Launches South"}, -- Raging Crosswinds (South)
+	{1297096, soundOnApplied = "none", note = "Launches East"}, -- Raging Crosswinds (East)
+	{1297111, soundOnApplied = "none", note = "Launches West"}, -- Raging Crosswinds (West)
+	{1305621, soundOnApplied = "warning", mythic = true}, -- Serpent's Fury,
+	{1297707, soundOnApplied = "warning", note = "Left", mythic = true}, -- Virulence (Left)
+	{1299899, soundOnApplied = "warning", note = "Right", mythic = true}, -- Virulence (Right)
 })
 
 function mod:GetOptions()

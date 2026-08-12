@@ -58,20 +58,20 @@ mod:SetRenames({
 -- Options
 --
 
-mod:SetPrivateAuraSounds({
-	{1284500, sound = "none"}, -- Mark of Acid
-	{1284506, sound = "none"}, -- Mark of Blood
+mod:SetAuraData({
+	{1284500, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Mark of Acid
+	{1284506, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Mark of Blood
 
-	{1284210, sound = "none", note = "Standing in bad"}, -- Blood Venom
-	{1288260, sound = "warning"}, -- Unstable Miasma
-	{1288297, sound = "none", note = "Soaked Miasma; Drops pool when expires"}, -- Clinging Murk
-	{1284471, sound = "alarm", note = "DoT; Drops pool when removed"}, -- Blighted Blood
-	{1284491, sound = "none", note = "Tank stacks; Drops pool when expires"}, -- Bloodvenom Injection
+	{1284210, soundOnApplied = "none", note = "Standing in bad"}, -- Blood Venom
+	{1288260, soundOnApplied = "warning"}, -- Unstable Miasma
+	{1288297, soundOnApplied = "none", note = "Soaked Miasma; Drops pool when expires"}, -- Clinging Murk
+	{1284471, soundOnApplied = "alarm", note = "DoT; Drops pool when removed"}, -- Blighted Blood
+	{1284491, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks; Drops pool when expires"}, -- Bloodvenom Injection
 
-	{1296880, sound = "warning", mythic = true}, -- Shifting Protovenom
+	{1296880, soundOnApplied = "warning", mythic = true}, -- Shifting Protovenom
 
-	{1284590, sound = "warning"}, -- Helical Toxins
-	{1284947, sound = "none", note = "Fail DoT"}, -- Cultivated Burst
+	{1284590, soundOnApplied = "warning"}, -- Helical Toxins
+	{1284947, soundOnApplied = "none", note = "Fail DoT"}, -- Cultivated Burst
 })
 
 function mod:GetOptions()

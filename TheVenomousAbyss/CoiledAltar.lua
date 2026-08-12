@@ -50,19 +50,16 @@ mod:SetRenames({
 -- Options
 --
 
-mod:SetPrivateAuraSounds({
-	{1283345, sound = "none", note = "Tank stacks"}, -- Twinfang Toxin
-	-- {1282283, sound = "none", note = "DoT", toolip = 1282287}, -- Venomfang
-	{1285017, sound = "none", note = "DoT"}, -- Axegrinder
-	{1285640, 1297435, 1285647, 1297445, sound = "warning"}, -- Dreadmarch
-	{1285911, sound = "warning"}, -- Unnerving Fixation
-	-- {1286326, 1286310, sound = "none"}, -- Shadowfang
-	{1286399, sound = "alarm", note = "Kick fail"}, -- Wail of Terror
-	{1286901, sound = "warning"}, -- Gloombomb
-	{1300665, sound = "alarm", mythic = true}, -- Spirit Erasure
-	{1298594, sound = "none"}, -- Defilement of the Crucible
-	-- Not in EJ
-	{1287227, sound = "none", note = "DoT"}, -- Blighted Toxin
+mod:SetAuraData({
+	{1283345, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Twinfang Toxin
+	-- {1282283, soundOnApplied = "none", note = "DoT", toolip = 1282287}, -- Venomfang
+	{1285017, soundOnApplied = "none", note = "DoT"}, -- Axegrinder
+	{1285640, 1297435, 1285647, 1297445, soundOnApplied = "warning"}, -- Dreadmarch
+	{1285911, soundOnApplied = "warning"}, -- Unnerving Fixation
+	{1286399, soundOnApplied = "alarm", note = "Kick fail"}, -- Wail of Terror
+	{1286901, soundOnApplied = "warning"}, -- Gloombomb
+	{1300665, soundOnApplied = "alarm", mythic = true}, -- Spirit Erasure
+	{1298594, soundOnApplied = "none"}, -- Defilement of the Crucible
 })
 
 function mod:GetOptions() -- SetOption:skip-unused

@@ -98,12 +98,12 @@ mod:SetRenames({
 -- Options
 --
 
-mod:SetPrivateAuraSounds({
-	{1284109, sound = "none", note = "Tank stacks"}, -- Hollowing Strikes
-	{1287434, sound = "warning"}, -- Essence Rend
-	{1292036, sound = "warning"}, -- Possession Barrage
-	{1306666, sound = "warning"}, -- Hungering Pyre
-	{1294933, sound = "alarm", note = "Didn't soak Pyre; Corse burning debuff"}, -- Slithering Flame
+mod:SetAuraData({
+	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Hollowing Strikes
+	{1287434, soundOnApplied = "warning"}, -- Essence Rend
+	{1292036, soundOnApplied = "warning"}, -- Possession Barrage
+	{1306666, soundOnApplied = "warning"}, -- Hungering Pyre
+	{1294933, soundOnApplied = "alarm", note = "Didn't soak Pyre; Corse burning debuff"}, -- Slithering Flame
 })
 
 function mod:GetOptions()

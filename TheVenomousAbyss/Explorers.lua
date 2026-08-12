@@ -105,23 +105,23 @@ mod:SetRenames({
 -- Options
 --
 
-mod:SetPrivateAuraSounds({
-	{1295858, sound = "none", note = "Tank stacks"}, -- Shredding Shards
-	{1286922, sound = "alarm", note = "Snare/DoT"}, -- Icebound Flames
-	{1295935, sound = "warning", note = "Ice circle"}, -- Frostfire Volley (Frost)
-	{1295886, sound = "warning", note = "Fire circle"}, -- Frostfire Volley (Fire)
-	{1295954, sound = "warning", note = "Ice debuff, clear fire"}, -- Piercing Frost
-	{1295928, sound = "warning", note = "Fire debuff, clear ice"}, -- Burning Flames
-	{1297648, sound = "none", note = "Standing in ice"}, -- Ice Patch
-	{1297649, sound = "none", note = "Standing in fire"}, -- Fire Patch
+mod:SetAuraData({
+	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Shredding Shards
+	{1286922, soundOnApplied = "alarm", note = "Snare/DoT"}, -- Icebound Flames
+	{1295935, soundOnApplied = "warning", note = "Ice circle"}, -- Frostfire Volley (Frost)
+	{1295886, soundOnApplied = "warning", note = "Fire circle"}, -- Frostfire Volley (Fire)
+	{1295954, soundOnApplied = "warning", note = "Ice debuff, clear fire"}, -- Piercing Frost
+	{1295928, soundOnApplied = "warning", note = "Fire debuff, clear ice"}, -- Burning Flames
+	{1297648, soundOnApplied = "none", note = "Standing in ice"}, -- Ice Patch
+	{1297649, soundOnApplied = "none", note = "Standing in fire"}, -- Fire Patch
 
-	{1291918, sound = "underyou", note = "Stunned"}, -- Shell Spin
-	{1296092, sound = "warning", note = "Targeted"}, -- Mighty Thud XXX not applied to players?
+	{1291918, soundOnApplied = "underyou", note = "Stunned"}, -- Shell Spin
+	{1296092, soundOnApplied = "warning", note = "Targeted"}, -- Mighty Thud XXX not applied to players?
 
-	{1308853, sound = "none", note = "Junk stacks"}, -- Splinters
-	{1299854, sound = "none", note = "Mushroom bounce"}, -- Bounce
-	{1297625, sound = "warning", note = "Targeted"}, -- Explosive Surprise
-	{1305844, sound = "underyou", note = "Explosion DoT"}, -- Blast Wave
+	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Junk stacks"}, -- Splinters
+	{1299854, soundOnApplied = "none", note = "Mushroom bounce"}, -- Bounce
+	{1297625, soundOnApplied = "warning", note = "Targeted"}, -- Explosive Surprise
+	{1305844, soundOnApplied = "underyou", note = "Explosion DoT"}, -- Blast Wave
 })
 
 function mod:GetOptions() -- SetOption:skip-unused
