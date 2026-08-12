@@ -91,3 +91,10 @@ BigWigs:AddColors("The Coiled Altar", {
 
 BigWigs:AddSounds("The Coiled Altar", {
 })
+
+BigWigs:AddColors("Ula'tek", {
+	["stages"] = "yellow",
+})
+
+BigWigs:AddSounds("Ula'tek", {
+})

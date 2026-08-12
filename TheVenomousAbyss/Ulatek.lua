@@ -19,26 +19,89 @@ local activeBars = {}
 local backupBars = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+-- local L = mod:SetDefaultLocale({
+-- })
+
+--------------------------------------------------------------------------------
 -- Renames
 --
 
--- mod:SetRenames({
--- 	[1] = {CL.rename},
--- })
+mod:SetRenames({
+	-- "stages",
+	[1292999] = {1292999}, -- Submerge
+	[1292188] = {1292188}, -- Caustic Waves
+	[1300751] = {1300751}, -- Call of the Serpent
+	[1298367] = {1298367}, -- Mother's Wrath
+	[1298559] = {1298559}, -- Gore Rattle
+	[1296301] = {1296301}, -- Mephitic Thrash
+	[1300530] = {1300530}, -- Spectral Coils
+	[1286860] = {1286860}, -- Rage of the Shackled
+	[1302982] = {1302982}, -- Virulent Spit
+	[1301510] = {1301510}, -- Demolish
+	[1295905] = {1295905}, -- Serpent's Bite
+	[1286905] = {1286905}, -- Fury Unleashed
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
--- Dead in 12.1?
--- mod:SetPrivateAuraSounds({
--- })
+mod:SetAuraData({
+	-- 1308466, -- Call of the Serpent
+	{1295360, soundOnApplied = "none", note = "DoT"}, -- Malignant Shell
+	{1307612, soundOnApplied = "none", note = "DoT"}, -- Noxious Shell
+	{1300312, soundOnApplied = "none", note = "DoT"}, -- Doomscale Shell
+	{1301268, soundOnApplied = "none", note = "DoT"}, -- Putrid Membrane
+	{1287036, soundOnApplied = "none", note = "DoT"}, -- Poisonous Bite
+	-- {1287248, 1302365, tooltip = 1298367}, -- Mother's Wrath
+	{1298417, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Stone Venom
+	-- {1295844, 1295840, soundOnApplied = "none", tooltip = 1295905}, -- Serpent's Bite
+	{1306119, soundOnApplied = "alarm", note = "Petrified"}, -- Calcified Corpse
+	-- Not in EJ
+	{1306388, soundOnApplied = "warning", note = "Achievement"}, -- Greasy Hatchling
+	{1306393, soundOnApplied = "warning", note = "Achievement"}, -- Butter Fingers
+})
 
-function mod:GetOptions()
+function mod:GetOptions() -- SetOption:skip-unused
 	return {
-		"berserk"
+		"stages",
+		1292999, -- Submerge
+
+		-- Stage One: Fury of the Serpent Mother
+		1292188, -- Caustic Waves
+		1300751, -- Call of the Serpent
+		1298367, -- Mother's Wrath
+		1298559, -- Gore Rattle
+			1296301, -- Mephitic Thrash
+			1300530, -- Spectral Coils
+		1286860, -- Rage of the Shackled
+
+		-- Stage Two: Children of the Doomscale
+		1302982, -- Virulent Spit
+		-- Rage of the Shackled
+
+		-- Intermission: The Shattering
+		-- Spectral Coils
+
+		-- Stage Three: Ula'tek's Ascension
+		1301510, -- Demolish
+		-- Caustic Waves
+		-- Call of the Serpent
+		1295905, -- Serpent's Bite
+		-- Mother's Wrath
+		-- Rage of the Shackled
+		1286905, -- Fury Unleashed
+	}, {
+		[1292188] = -35561, -- Stage 1
+		[1302982] = -36171, -- Stage 2
+		-- [] = Intermission,
+		[1301510] = -36323, -- Stage 3
 	}
 end
+
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -53,7 +116,7 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	self:Message("berserk", "cyan", self.moduleName .. " engaged")
+	self:Message("stages", "yellow", self.moduleName .. " engaged")
 end
 
 --------------------------------------------------------------------------------
