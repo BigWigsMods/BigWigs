@@ -1092,7 +1092,7 @@ L.nameplateOptInTitle = "Boss mod nameplates 'opt-in' mode"
 L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "Private Auras"
@@ -1121,8 +1121,21 @@ L.maxIcons = "Max Icons"
 L.maxIconsDesc = "The maximum amount of icons to be displayed."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 
-L.privateAurasTestAnchorText = "Private\nAura\n(%d)"
-L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
+L.privateAurasTestAnchorText = "Player\nAura\n%d"
+L.privateAurasTestTankAnchorText = "Tank\nAura\n%d"
+
+L.auraSounds = "Aura Sounds"
+L.addAuraSpell = "Add Spell"
+L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+L.invalidSpell = "Invalid spell"
+L.bossDebuffsOnYou = "Boss Debuffs On You"
+L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+L.showCountText = "Show Stacks"
+L.cooldownText = "Cooldown Duration"
+L.countText = "Applications"
+L.unit = "Unit"
+L.trigger = "Trigger"
+L.remove = "Remove"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

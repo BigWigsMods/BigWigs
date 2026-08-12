@@ -2136,6 +2136,7 @@ do
 	acr.RegisterCallback(options, "ConfigTableChange")
 
 	local allowedDirectOpens = {
+		["Auras"] = {tab = "options", path = {"general", "Auras"}},
 		["PrivateAuras"] = {tab = "options", path = {"general", "PrivateAuras"}},
 	}
 	function OpenConfig(specificPanel)

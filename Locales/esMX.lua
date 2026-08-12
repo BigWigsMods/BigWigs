@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "Placas de nombre de jefes modo 'opcional'"
 L.nameplateOptInWarning = "|cffff4411ADVERTENCIA!|r\n\nActivar el modo 'opcional' desactivará las placas de nombres de TODOS los módulos de jefe. Tendrás que activar cada mensaje que desees de manera manual.\n\nTu interfaz será recargada ¿Estás seguro?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "Auras privadas"
@@ -1122,8 +1122,21 @@ L.maxIcons = "Máximo de íconos"
 L.maxIconsDesc = "La cantidad máxima de íconos que se mostrarán."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como íconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
 
-L.privateAurasTestAnchorText = "Aura\nprivada\n(%d)"
-L.privateAurasTestTankAnchorText = "Aura\nde tanque\n(%d)"
+L.privateAurasTestAnchorText = "Aura\nprivada\n%d"
+L.privateAurasTestTankAnchorText = "Aura\nde tanque\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+L.unit = "Unidad"
+--L.trigger = "Trigger"
+L.remove = "Quitar"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

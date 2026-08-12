@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "名條「手動啟用」模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模式會關閉所有首領模組的名條圖示。你必須分別進入每個模組，啟用你需要顯示圖示的名條。\n\n即將重載介面，確定要啟用嗎？"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "私有光環"
@@ -1122,8 +1122,21 @@ L.maxIcons = "圖示最大數量"
 L.maxIconsDesc = "最多顯示幾個圖示。"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 現在，你可以在受到私有光環減益效果時，獲得大圖示提示；並且，你可以設定是否要監視其他隊友（例如坦克）的狀態。"
 
-L.privateAurasTestAnchorText = "私有\n（%d）"
-L.privateAurasTestTankAnchorText = "坦克\n光環\n(%d)"
+L.privateAurasTestAnchorText = "私有\n%d"
+L.privateAurasTestTankAnchorText = "坦克\n光環\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+L.unit = "單位"
+--L.trigger = "Trigger"
+L.remove = "移除"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

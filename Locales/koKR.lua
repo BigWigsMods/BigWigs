@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "보스 모드 이름표 '선택 활성화' 모드"
 L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 활성화하면 모든 보스 모듈에서 이름표가 비활성화됩니다. 원하는 이름표만 각 모듈에서 수동으로 활성화해야 합니다.\n\nUI가 재시작됩니다. 계속하시겠습니까?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "비공개 오라"
@@ -1122,8 +1122,21 @@ L.maxIcons = "최대 아이콘 수"
 L.maxIconsDesc = "표시할 최대 아이콘 수"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 이제 비공개 오라 디버프를 아이콘으로 볼 수 있으며, 다른 플레이어(예: 탱커)의 비공개 오라도 볼 수 있습니다."
 
-L.privateAurasTestAnchorText = "오라\n(%d)"
-L.privateAurasTestTankAnchorText = "탱커\n오라\n(%d)"
+L.privateAurasTestAnchorText = "오라\n%d"
+L.privateAurasTestTankAnchorText = "탱커\n오라\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+L.unit = "유닛"
+--L.trigger = "Trigger"
+L.remove = "추방"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

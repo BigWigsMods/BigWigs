@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "姓名板'手动选择'模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式将关闭所有模块的姓名板效果。您需要逐个进入每个模块的设置，手动开启您想要的姓名板效果。\n\n界面即将重新加载，是否继续？"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "私有光环"
@@ -1122,8 +1122,21 @@ L.maxIcons = "最大图标数"
 L.maxIconsDesc = "显示图标的最大数量。"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：现在您可以显示自己的私有光环减益图标，甚至还可以显示其他玩家（例如坦克）的私有光环。"
 
-L.privateAurasTestAnchorText = "私有\n光环\n（%d）"
-L.privateAurasTestTankAnchorText = "坦克\n光环\n（%d）"
+L.privateAurasTestAnchorText = "私有\n光环\n%d"
+L.privateAurasTestTankAnchorText = "坦克\n光环\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+L.unit = "单位"
+--L.trigger = "Trigger"
+L.remove = "移除"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

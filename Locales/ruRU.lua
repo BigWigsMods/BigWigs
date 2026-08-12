@@ -1006,7 +1006,7 @@ L.messagesOptInTitle = "Режим ручного включения сообщ�
 L.messagesOptInWarning = "|cffff4411ВНИМАНИЕ!|r\n\nВключение режима ручного включения отключит сообщения во ВСЕХ ваших модулях боссов. Вам нужно будет пройтись по каждому модулю и вручную включить нужные сообщения.\n\nИнтерфейс сейчас будет перезагружен, вы уверены?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "Приватные ауры"
@@ -1035,8 +1035,21 @@ L.maxIcons = "Максимум иконок"
 L.maxIconsDesc = "Максимальное количество отображаемых иконок."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Теперь вы можете видеть свои приватные ауры в виде иконок, а также приватные ауры другого игрока, например танка."
 
-L.privateAurasTestAnchorText = "Приватная\nаура\n(%d)"
-L.privateAurasTestTankAnchorText = "Аура\nтанка\n(%d)"
+L.privateAurasTestAnchorText = "Приватная\nаура\n%d"
+L.privateAurasTestTankAnchorText = "Аура\nтанка\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+L.unit = "Цель"
+--L.trigger = "Trigger"
+L.remove = "Исключить"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua
