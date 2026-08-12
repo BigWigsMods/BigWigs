@@ -11,6 +11,7 @@ on:
 
 jobs:
   ldoc:
+    if: github.repository == 'BigWigsMods/BigWigs'
     runs-on: ubuntu-latest
 
     steps:

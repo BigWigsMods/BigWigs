@@ -10,6 +10,7 @@ on:
 
 jobs:
   missing-localization:
+    if: github.repository == 'BigWigsMods/BigWigs'
     runs-on: ubuntu-latest
 
     steps:

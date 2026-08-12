@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    if: github.repository == 'BigWigsMods/BigWigs'
     runs-on: ubuntu-latest
     concurrency:
         group: packager
