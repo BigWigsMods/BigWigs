@@ -1127,7 +1127,7 @@ L.privateAurasTestTankAnchorText = "坦克\n光环\n%d"
 
 --L.auraSounds = "Aura Sounds"
 --L.addAuraSpell = "Add Spell"
---L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
 --L.invalidSpell = "Invalid spell"
 --L.bossDebuffsOnYou = "Boss Debuffs On You"
 --L.bossDebuffsOnTank = "Boss Debuffs On Tank"
