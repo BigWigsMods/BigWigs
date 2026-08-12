@@ -291,7 +291,7 @@ do
 	end
 	local DisableCore
 	do
-		local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
+		local RemoveAuraSound = C_UnitAuras.RemoveAuraSound and C_UnitAuras.RemoveAuraSound or C_UnitAuras.RemovePrivateAuraAppliedSound -- XXX RemovePrivateAuraAppliedSound is replaced in 12.1
 		function DisableCore(skipDelveEvent)
 			if coreEnabled then
 				coreEnabled = false
@@ -308,7 +308,7 @@ do
 						-- Unregister private aura sounds
 						if module.privateAuraSounds then
 							for i = 1, #module.privateAuraSounds do
-								RemovePrivateAuraAppliedSound(module.privateAuraSounds[i])
+								RemoveAuraSound(module.privateAuraSounds[i])
 							end
 							module.privateAuraSounds = nil
 						end
@@ -383,7 +383,7 @@ do
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
 						if module:HasPrivateAuraSounds() then
-							module:RegisterPrivateAuraSounds()
+							module:RegisterAuraSounds()
 						end
 						-- Enable trash modules for the current zone
 						if module:IsTrashModule() then
@@ -650,9 +650,9 @@ do
 				-- Set up aura data storage DB
 				local auras = {}
 				if module:HasAuraData() then
-					local auraList = module:GetAuraList()
-					for i = 1, #auraList do
-						local spellID = auraList[i]
+					local count = module:GetAuraCount()
+					for i = 1, count do
+						local spellID = module:GetAuraSpellID(i)
 						auras[spellID] = {
 							soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
 							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
@@ -757,7 +757,7 @@ do
 					if module:IsZoneID(instanceID) then
 						-- Register private aura sounds
 						if module:HasPrivateAuraSounds() then
-							module:RegisterPrivateAuraSounds()
+							module:RegisterAuraSounds()
 						end
 						-- Automatically enable trash modules if we're in the relevant zone at module registration
 						if module:IsTrashModule() then

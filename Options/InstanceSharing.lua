@@ -123,7 +123,7 @@ local defaultSettings = {
 	doRenames = true,
 	doSounds = true,
 	doColors = true,
-	doPrivateAuras = isRetail and true or false,
+	doAuras = isRetail and true or false,
 }
 
 local exportSettings = CopyTable(defaultSettings)
@@ -187,14 +187,14 @@ local function getImportSettings(widget)
 				width = 1,
 				disabled = function() return not lastImportData or not lastImportData.includeSounds end,
 			},
-			doPrivateAuras = {
+			doAuras = {
 				type = "toggle",
-				name = L.sharing_private_auras,
-				desc = L.sharing_private_auras_desc,
+				name = L.sharing_auras,
+				desc = L.sharing_auras_desc,
 				order = 31,
 				width = 1,
 				hidden = not isRetail,
-				disabled = function() return not lastImportData or not lastImportData.includePrivateAuras end,
+				disabled = function() return not lastImportData or not lastImportData.includeAuras end,
 			},
 			separator2 = {
 				type = "description",
@@ -295,10 +295,10 @@ local function getExportSettings()
 				order = 30,
 				width = 1,
 			},
-			doPrivateAuras = {
+			doAuras = {
 				type = "toggle",
-				name = L.sharing_private_auras,
-				desc = L.sharing_export_private_auras_desc,
+				name = L.sharing_auras,
+				desc = L.sharing_export_auras_desc,
 				order = 31,
 				width = 1,
 				hidden = not isRetail,
@@ -423,7 +423,7 @@ function InstanceSharing:GetInstanceExportString()
 	local exportRenames = exportSettings.doRenames
 	local exportSounds = exportSettings.doSounds
 	local exportColors = exportSettings.doColors
-	local exportPrivateAuras = exportSettings.doPrivateAuras
+	local exportAuras = exportSettings.doAuras
 
 	-- Get the data and make a string
 	local exportTable = lastExportData.data
@@ -432,22 +432,22 @@ function InstanceSharing:GetInstanceExportString()
 		includeRenames = exportRenames,
 		includeSounds = exportSounds,
 		includeColors = exportColors,
-		includePrivateAuras = exportPrivateAuras,
+		includeAuras = exportAuras,
 		zone = lastExportData.zone,
 		exportData = {},
 		version = instanceExportPrefix,
 	}
 
-	for optionsTable, doExport in pairs({flags = exportFlags, renames = exportRenames, sounds = exportSounds or exportPrivateAuras, colors = exportColors}) do
+	for optionsTable, doExport in pairs({flags = exportFlags, renames = exportRenames, sounds = exportSounds or exportAuras, colors = exportColors, auras = exportAuras}) do
 		if doExport then
 			for moduleName, settings in pairs(exportTable) do
 				if settings[optionsTable] then
 					filteredExportTable.exportData[moduleName] = filteredExportTable.exportData[moduleName] or {}
 					filteredExportTable.exportData[moduleName][optionsTable] = CopyTable(settings[optionsTable] or {})
-					if optionsTable == "sounds" and not (exportSounds and exportPrivateAuras) then -- Filter away extra sound options if only one is selected
+					if optionsTable == "sounds" and not (exportSounds and exportAuras) then -- Filter away extra sound options if only one is selected
 						local count = 0
 						for key, value in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
-							local shouldKeep = (key == "privateaura" and exportPrivateAuras) or (key ~= "privateaura" and exportSounds)
+							local shouldKeep = (key == "privateaura" and exportAuras) or (key ~= "privateaura" and exportSounds)
 							if not shouldKeep then
 								filteredExportTable.exportData[moduleName][optionsTable][key] = nil
 							else
@@ -540,6 +540,22 @@ local function ImportFlags(flagSettings, moduleName)
 	end
 end
 
+local function ImportAuras(auraSettings, moduleName)
+	local module = BigWigs:GetBossModule(moduleName:sub(16))
+	if module then
+		if module.SetupOptions then module:SetupOptions() end
+		if module.db and module.db.profile and module.db.profile.auras then
+			for key, value in pairs(module.db.profile.auras) do
+				if auraSettings and auraSettings[key] then
+					module.db.profile.auras[key] = auraSettings[key]
+				else -- wipe to set default
+					module.db.profile.auras[key] = nil
+				end
+			end
+		end
+	end
+end
+
 local function ImportRenames(renameSettings, moduleName)
 	local module = BigWigs:GetBossModule(moduleName:sub(16))
 	if module then
@@ -580,9 +596,9 @@ function applyImport()
 	local renames = importSettings.doRenames
 	local sounds = importSettings.doSounds
 	local colors = importSettings.doColors
-	local privateAuras = importSettings.doPrivateAuras
+	local auras = importSettings.doAuras
 
-	if not (flags or renames or sounds or colors or privateAuras) then
+	if not (flags or renames or sounds or colors or auras) then
 		return -- Nothing to import
 	end
 
@@ -599,9 +615,12 @@ function applyImport()
 		if sounds then
 			ImportSounds(data.sounds, moduleName)
 		end
-		if privateAuras then
-			local privateAuraSounds = data.sounds and data.sounds.privateaura
+		local privateAuraSounds = data.sounds and data.sounds.privateaura -- Older modules
+		if auras and privateAuraSounds then
 			ImportPrivateAuras(privateAuraSounds, moduleName)
+		end
+		if auras and data.auras then
+			ImportAuras(data.auras, moduleName)
 		end
 		if colors then
 			ImportColors(data.colors, moduleName)
@@ -610,12 +629,12 @@ function applyImport()
 
 	BigWigs:SendMessage("BigWigs_ProfileUpdate")
 
-	-- We need to re-register any private aura sounds if the import changed them
-	if privateAuras then
+	-- We need to re-register any aura sounds if the import changed them
+	if auras then
 		for moduleName in next, lastImportData.exportData do
 			local module = BigWigs:GetBossModule(moduleName:sub(16))
 			if module and module:IsZoneID(lastImportData.zone) then
-				module:RegisterPrivateAuraSounds()
+				module:RegisterAuraSounds()
 			end
 		end
 	end

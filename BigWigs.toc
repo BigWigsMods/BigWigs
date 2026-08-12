@@ -119,7 +119,7 @@ TheVenomousAbyss\Vashnik.lua
 TheVenomousAbyss\Explorers.lua
 TheVenomousAbyss\Sszorak.lua
 TheVenomousAbyss\TwinFangs.lua
-TheVenomousAbyss\Crown.lua
+TheVenomousAbyss\CoiledAltar.lua
 TheVenomousAbyss\Ulatek.lua
 TheVenomousAbyss\!Options.lua
 #@end-do-not-package@

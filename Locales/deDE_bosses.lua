@@ -79,3 +79,13 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 	aspect_of_the_end = "Verbindungen",
 	devouring_cosmos = "Nächste Plattform",
 })
+
+BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
+	malignant_catalyst = "Katalysator", -- Short for Malignant Catalyst
+})
+
+BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
+	coiling_toxin = "Toxin", -- Short for Coiling Toxin
+	corrosive_spit = "Spucke", -- Short for Corrosive Spit
+})
+

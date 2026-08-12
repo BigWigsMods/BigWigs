@@ -32,6 +32,7 @@ move-folders:
 
 ignore:
   - gen_option_values.lua
+  - dump_missing_localization.lua
   - ldoc.ltp
   - Libs/AceDB-3.0/AceDB-3.0.xml
   - Libs/LibDBIcon-1.0/lib.xml

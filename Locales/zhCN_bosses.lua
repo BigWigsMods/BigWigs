@@ -42,7 +42,7 @@ BigWigsAPI.SetBossModuleLocale("Vorasius", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Vaelgor & Ezzorak", {
-	aspect_of_the_end = "拉断",  -- 终末守护
+	nullzone = "拉断",  -- 终末守护
 })
 
 BigWigsAPI.SetBossModuleLocale("Lightblinded Vanguard", {
@@ -78,4 +78,13 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 	voidstalker_sting = "钉刺",  -- 虚空追猎者钉刺
 	aspect_of_the_end = "拉断",  -- 终末守护
 	devouring_cosmos = "换场地",
+})
+
+BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
+	malignant_catalyst = "催化剂", -- “恶性催化剂”简称
+})
+
+BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
+	coiling_toxin = "脓液", -- “盘卷脓液”简称
+	corrosive_spit = "唾液", -- “腐蚀唾液”简称
 })

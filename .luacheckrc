@@ -244,6 +244,10 @@ files["Options/InstanceSharing.lua"].ignore = {
 files["**/?Locales/*.lua"].ignore = {
 	"542", -- Empty if branch
 }
+files["dump_missing_localization.lua"].ignore = {
+	"113/arg", -- We use global arg in the parser
+	"113/print",
+}
 files["gen_option_values.lua"].ignore = {
 	"113/arg", -- We use global arg in the parser
 	"113/print",

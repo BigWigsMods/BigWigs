@@ -524,7 +524,7 @@ do
 		if restrictionType == 5 and state == 0 then
 			self:UnregisterEvent(event)
 			for module in next, modulesNeedingUpdated do
-				module:RegisterPrivateAuraSounds()
+				module:RegisterAuraSounds()
 			end
 			modulesNeedingUpdated = {}
 		end
@@ -533,7 +533,7 @@ do
 	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
 	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
-	function boss:RegisterPrivateAuraSounds()
+	function boss:RegisterAuraSounds()
 		if not self:HasPrivateAuraSounds() then return end
 
 		if InChatMessagingLockdown() then
@@ -1105,13 +1105,15 @@ do
 	--- Get the current aura applied sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedSound(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
 		local db = self.db.profile.auras
-		local soundName = db[spellID] and db[spellID].soundOnApplied
+		local baseSpellID = moduleAurasList[self][index][1]
+		local soundName = db[baseSpellID] and db[baseSpellID].soundOnApplied
 		if soundName then
 			return soundName
 		end
@@ -1120,13 +1122,15 @@ do
 	--- Get the current aura applied dose sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedDoseSound(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
 		local db = self.db.profile.auras
-		local soundName = db[spellID] and db[spellID].soundOnAppliedDose
+		local baseSpellID = moduleAurasList[self][index][1]
+		local soundName = db[baseSpellID] and db[baseSpellID].soundOnAppliedDose
 		if soundName then
 			return soundName
 		end
@@ -1135,13 +1139,15 @@ do
 	--- Get the current aura removed sound.
 	-- @return string or nil
 	function boss:GetAuraRemovedSound(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
 		local db = self.db.profile.auras
-		local soundName = db[spellID] and db[spellID].soundOnRemoved
+		local baseSpellID = moduleAurasList[self][index][1]
+		local soundName = db[baseSpellID] and db[baseSpellID].soundOnRemoved
 		if soundName then
 			return soundName
 		end
@@ -1150,26 +1156,26 @@ do
 	--- Get the default aura applied sound.
 	-- @return string
 	function boss:GetAuraAppliedSoundDefault(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local soundName = moduleAurasList[self][spellID].soundOnApplied
-		if soundName then
-			return soundName or "None"
-		end
+		local soundName = moduleAurasList[self][index].soundOnApplied
+		return soundName or "None"
 	end
 
 	--- Get the default aura applied dose sound.
 	-- @return string or nil
 	function boss:GetAuraAppliedDoseSoundDefault(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local soundName = moduleAurasList[self][spellID].soundOnAppliedDose
+		local soundName = moduleAurasList[self][index].soundOnAppliedDose
 		if soundName then
 			return soundName
 		end
@@ -1178,45 +1184,90 @@ do
 	--- Get the default aura removed sound.
 	-- @return string
 	function boss:GetAuraRemovedSoundDefault(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local soundName = moduleAurasList[self][spellID].soundOnRemoved
-		if soundName then
-			return soundName or "None"
+		local soundName = moduleAurasList[self][index].soundOnRemoved
+		return soundName or "None"
+	end
+
+	--- Get the aura duration.
+	-- @return number or nil
+	function boss:GetAuraDuration(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
 		end
+
+		local duration = moduleAurasList[self][index].duration
+		return duration
 	end
 
 	--- Get the aura note.
 	-- @return string or nil
 	function boss:GetAuraNote(spellID)
-		if not moduleAurasList[self][spellID] then
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		local note = moduleAurasList[self][spellID].note
+		local note = moduleAurasList[self][index].note
 		return note
 	end
 
-	--- Get the list of auras for this module.
-	-- @return table
-	function boss:GetAuraList()
-		local auraList = {}
-		if moduleAurasList[self] then
-			for spellID in next, moduleAurasList[self] do
-				auraList[#auraList+1] = spellID
-			end
+	--- Get the aura header.
+	-- @return string or nil
+	function boss:GetAuraHeader(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
 		end
-		return auraList
+
+		local header = moduleAurasList[self][index].header
+		return header
 	end
 
-	--- Check if this module has a aura data set for this spellID
+	--- Get the total number of auras for this module.
+	-- @return number
+	function boss:GetAuraCount()
+		if moduleAurasList[self] then
+			return moduleAurasList[self].count
+		end
+		return 0
+	end
+
+	--- Get the spell ID of an aura based on its index in the aura list.
+	-- @return number or nil
+	function boss:GetAuraSpellID(index)
+		if not moduleAurasList[self] or not moduleAurasList[self][index] then
+			error(("Module %q has no aura data for index %s."):format(self.moduleName, tostring(index)))
+			return
+		end
+		return moduleAurasList[self][index][1]
+	end
+
+	--- Get the list of all spell IDs using the aura system for this module.
+	-- @return table
+	function boss:GetAuraSpellIDToIndexList()
+		local spellIDToIndexList = {}
+		if moduleAurasList[self] then
+			for spellID, index in next, moduleAurasList[self].spellIDToIndex do
+				spellIDToIndexList[spellID] = index
+			end
+		end
+		return spellIDToIndexList
+	end
+
+	--- Check if this module has aura data set for this spellID.
 	-- @return boolean
 	function boss:IsAuraDataAvailable(spellID)
-		if moduleAurasList[self] and moduleAurasList[self][spellID] then
+		if moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID] then
 			return true
 		end
 	end
@@ -1229,76 +1280,52 @@ do
 		end
 	end
 
-	--- Assign aura data to this module.
-	-- @param auraDataTable the table storing the aura data
-	function boss:SetAuraData(auraDataTable)
-		if moduleAurasList[self] then
-			error(("Module %q already has a aura data set."):format(self.moduleName))
-			return
+	do
+		local convertShortNamesToLSM = {
+			["long"] = "BigWigs: Long",
+			["info"] = "BigWigs: Info",
+			["alert"] = "BigWigs: Alert",
+			["alarm"] = "BigWigs: Alarm",
+			["warning"] = "BigWigs: Raid Warning",
+			["underyou"] = BigWigsAPI:GetLocale("BigWigs").spell_under_you,
+			["none"] = "None",
+		}
+
+		--- Assign aura data to this module.
+		-- @param auraDataTable the table storing the aura data
+		function boss:SetAuraData(auraDataTable)
+			if moduleAurasList[self] then
+				error(("Module %q already has aura data set."):format(self.moduleName))
+				return
+			end
+			local count = #auraDataTable
+			auraDataTable.count = count
+			local spellIDToIndex = {}
+			for auraIndex = 1, count do
+				local numSpellIDs = #auraDataTable[auraIndex]
+				-- Compensate for an entry listing multiple spell IDs
+				for spellIDPosition = 1, numSpellIDs do
+					local spellID = auraDataTable[auraIndex][spellIDPosition]
+					spellIDToIndex[spellID] = auraIndex
+				end
+				-- Convert BigWigs short sound names to full LSM sound names
+				local soundOnApplied = convertShortNamesToLSM[auraDataTable[auraIndex].soundOnApplied]
+				if soundOnApplied then
+					auraDataTable[auraIndex].soundOnApplied = soundOnApplied
+				end
+				local soundOnRemoved = convertShortNamesToLSM[auraDataTable[auraIndex].soundOnRemoved]
+				if soundOnRemoved then
+					auraDataTable[auraIndex].soundOnRemoved = soundOnRemoved
+				end
+				local soundOnAppliedDose = convertShortNamesToLSM[auraDataTable[auraIndex].soundOnAppliedDose]
+				if soundOnAppliedDose then
+					auraDataTable[auraIndex].soundOnAppliedDose = soundOnAppliedDose
+				end
+			end
+			auraDataTable.spellIDToIndex = spellIDToIndex
+			moduleAurasList[self] = auraDataTable
 		end
-		moduleAurasList[self] = auraDataTable
 	end
-end
-
-
---- Create a custom marking option
--- @bool state Boolean value to represent default state
--- @string markType The type of string to return (player, npc, npc_aura)
--- @number icon An icon id to be used for the option texture
--- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up CL.test
--- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
--- @return an option string to be used in conjunction with :GetOption
-function boss:AddMarkerOption(state, markType, icon, id, ...)
-	local moduleLocale = self:GetLocale()
-	local str = ""
-	for i = 1, select("#", ...) do
-		local raidMarkerIconNumber = select(i, ...)
-		local markerTexture = format("|T13700%d:15|t", raidMarkerIconNumber)
-		str = str .. markerTexture
-	end
-
-	local option = format(state and "custom_on_%s" or "custom_off_%s", id)
-	if type(id) == "number" then
-		moduleLocale[option] = format(CL.marker, spells[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or markType == "npc_aura" and CL.marker_npc_aura_desc or CL.marker_npc_desc, spells[id], str)
-	elseif type(id) == "string" then
-		moduleLocale[option] = format(CL.marker, moduleLocale[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or CL.marker_npc_desc, moduleLocale[id], str)
-	else
-		core:Error("Wrong id type for AddMarkerOption. Expected number or string, got: ".. tostring(id))
-	end
-	if icon then
-		moduleLocale[option.."_icon"] = icon
-	end
-	return option
-end
-
---- Create a custom auto talk option
--- @bool state Boolean value to represent default state
--- @string[opt] talkType The type of description to use ("boss" or nil for generic)
--- @string[opt] name A unique name the option should have if you want to create multiple options in one module
--- @return an option string to be used in conjunction with :GetOption
-function boss:AddAutoTalkOption(state, talkType, name)
-	if name and type(name) ~= "string" then
-		core:Error("Invalid auto talk name: ".. tostring(name))
-	elseif name then
-		name = "_".. name
-	end
-
-	local moduleLocale = self:GetLocale()
-	local option = format(state and "custom_on_autotalk%s" or "custom_off_autotalk%s", name or "")
-	if talkType == "boss" then
-		moduleLocale[option] = CL.autotalk
-		moduleLocale[option.."_desc"] = CL.autotalk_boss_desc
-		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
-	elseif not talkType then
-		moduleLocale[option] = CL.autotalk
-		moduleLocale[option.."_desc"] = CL.autotalk_generic_desc
-		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
-	else
-		core:Error("Invalid auto talk type: ".. tostring(talkType))
-	end
-	return option
 end
 
 -------------------------------------------------------------------------------
@@ -3934,6 +3961,17 @@ function boss:PersonalMessageFromBlizzMessage(key, duration, localeString, text,
 	end
 end
 
+--- Show a message for a secret spellId.
+-- @param key the option key
+-- @string color the message color category
+-- @number spellId the secret spellId from which the icon and text are derived.
+function boss:SecretMessage(key, color, spellId)
+	local isEmphasized = self:CheckFlag(key, C.EMPHASIZE)
+	if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
+		self:SendMessage("BigWigs_Message", self, key, GetSpellName(spellId), color, GetSpellTexture(spellId), isEmphasized)
+	end
+end
+
 --- Prevent any middle-screen boss emotes from showing.
 --- Only allowed for trash or world modules, normal modules do this automatically.
 --- If your module doesn't disable, you will need to manually allow them again.
@@ -4502,8 +4540,70 @@ end
 -- @section misc
 --
 
+--- Create a custom marking option
+-- @bool state Boolean value to represent default state
+-- @string markType The type of string to return (player, npc, npc_aura)
+-- @number icon An icon id to be used for the option texture
+-- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up CL.test
+-- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
+-- @return an option string to be used in conjunction with :GetOption
+function boss:AddMarkerOption(state, markType, icon, id, ...)
+	local moduleLocale = self:GetLocale()
+	local str = ""
+	for i = 1, select("#", ...) do
+		local raidMarkerIconNumber = select(i, ...)
+		local markerTexture = format("|T13700%d:15|t", raidMarkerIconNumber)
+		str = str .. markerTexture
+	end
+
+	local option = format(state and "custom_on_%s" or "custom_off_%s", id)
+	if type(id) == "number" then
+		moduleLocale[option] = format(CL.marker, spells[id])
+		moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or markType == "npc_aura" and CL.marker_npc_aura_desc or CL.marker_npc_desc, spells[id], str)
+	elseif type(id) == "string" then
+		moduleLocale[option] = format(CL.marker, moduleLocale[id])
+		moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or CL.marker_npc_desc, moduleLocale[id], str)
+	else
+		core:Error("Wrong id type for AddMarkerOption. Expected number or string, got: ".. tostring(id))
+	end
+	if icon then
+		moduleLocale[option.."_icon"] = icon
+	end
+	return option
+end
+
+--- Create a custom auto talk option
+-- @bool state Boolean value to represent default state
+-- @string[opt] talkType The type of description to use ("boss" or nil for generic)
+-- @string[opt] name A unique name the option should have if you want to create multiple options in one module
+-- @return an option string to be used in conjunction with :GetOption
+function boss:AddAutoTalkOption(state, talkType, name)
+	if name and type(name) ~= "string" then
+		core:Error("Invalid auto talk name: ".. tostring(name))
+	elseif name then
+		name = "_".. name
+	end
+
+	local moduleLocale = self:GetLocale()
+	local option = format(state and "custom_on_autotalk%s" or "custom_off_autotalk%s", name or "")
+	if talkType == "boss" then
+		moduleLocale[option] = CL.autotalk
+		moduleLocale[option.."_desc"] = CL.autotalk_boss_desc
+		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
+	elseif not talkType then
+		moduleLocale[option] = CL.autotalk
+		moduleLocale[option.."_desc"] = CL.autotalk_generic_desc
+		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
+	else
+		core:Error("Invalid auto talk type: ".. tostring(talkType))
+	end
+	return option
+end
+
 do
-	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
+	local issecretvalue = issecretvalue
+	--- Check if a value is flagged as being a secret
+	-- @param value the value to check
 	function boss:IsSecret(value)
 		return issecretvalue(value)
 	end

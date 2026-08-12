@@ -1,16 +1,15 @@
-name: Generate docs
+name: Count missing localization
 
 on:
   push:
     branches:
       - master
     paths:
-      - ldoc.ltp
-      - Core/BossPrototype.lua
-      - Core/PluginPrototype.lua
+      - dump_missing_localization.lua
+      - Locales/*.lua
 
 jobs:
-  ldoc:
+  missing-localization:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,17 +24,12 @@ jobs:
           repository: BigWigsMods/BigWigs.wiki
           path: wiki
 
-      - name: Install ldoc
-        run: |
-          sudo apt-get install luarocks
-          sudo luarocks install ldoc 1.4.6-2
+      - uses: leafo/gh-actions-lua@v13
+        with:
+          luaVersion: 5.1
 
-      - name: ldoc PluginPrototype
-        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/PluginPrototype.lua && cp -av PluginPrototype.md wiki/
-
-      - name: ldoc BossPrototype
-        if: always()
-        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/BossPrototype.lua && cp -av BossPrototype.md wiki/
+      - name: Output
+        run: lua BigWigs/dump_missing_localization.lua BigWigs/BigWigs.toc && cp -av Missing-Localization.md wiki/
 
       - name: Update wiki
         run: |

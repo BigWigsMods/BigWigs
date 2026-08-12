@@ -644,6 +644,12 @@ do
 						end
 					end
 
+					-- Aura Settings
+					if module.db and module.db.profile and module.db.profile.auras then
+						instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
+						instanceSettings[module.name].auras = module.db.profile.auras
+					end
+
 					-- Sounds
 					for soundSettingName, savedSoundModules in pairs(soundModule.db.profile) do
 						for soundSettingsModuleName, settings in pairs(savedSoundModules) do
@@ -946,8 +952,24 @@ do
 			end
 		end
 
-		local function ImportPrivateAuras(privateAuraSettings, moduleName)
-			if not soundModule or not privateAuraSettings then return end
+		local function ImportAuras(auraSoundSettings, module)
+			if module then
+				if module.SetupOptions then module:SetupOptions() end
+				if module.db and module.db.profile and module.db.profile.auras then
+					for key, value in pairs(module.db.profile.auras) do
+						if auraSoundSettings and auraSoundSettings[key] then
+							module.db.profile.auras[key] = auraSoundSettings[key]
+						else -- wipe to set default
+							module.db.profile.auras[key] = nil
+						end
+					end
+				end
+			end
+		end
+
+		local function ImportPrivateAuras(soundSettings, moduleName)
+			if not soundModule then return end
+			local privateAuraSettings = soundSettings and soundSettings["privateaura"] or {}
 			local sDB = soundModule.db.profile["privateaura"]
 			sDB[moduleName] = CopyTable(privateAuraSettings)
 		end
@@ -1040,10 +1062,11 @@ do
 				if module and module:IsZoneID(nextInstanceID) then
 					ImportFlags(settings.flags, module)
 					ImportRenames(settings.renames, module)
+					ImportAuras(settings.auras, module)
 
 					ImportColors(settings.colors, moduleName)
 					ImportSounds(settings.sounds, moduleName)
-					ImportPrivateAuras(settings.privateAuras, moduleName)
+					ImportPrivateAuras(settings.sounds, moduleName)
 				end
 			end
 			table.insert(chatMessages, getInstanceLabel(nextInstanceID))

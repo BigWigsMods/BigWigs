@@ -10,6 +10,7 @@ local file_to_module = {}
 local modules = {}
 local modules_bosses = {}
 local modules_locale = {}
+local bosses_locale = {}
 
 local module_colors = {}
 local module_sounds = {}
@@ -57,6 +58,7 @@ local color_methods = {
 	TargetMessageFromBlizzMessage = 3,
 	TargetsMessageOld = 2,
 	TargetsMessage = 2,
+	SecretMessage = 2,
 	StackMessageOld = 4,
 	StackMessage = 2,
 	DelayedMessage = 3,
@@ -77,6 +79,7 @@ local icon_methods = {
 	TargetMessageFromBlizzMessage = 5,
 	TargetsMessageOld = 6,
 	TargetsMessage = 6,
+	SecretMessage = 3,
 	StackMessageOld = 7,
 	StackMessage = 7,
 	PersonalMessage = 4,
@@ -603,6 +606,32 @@ local function parseGetOptions(file_name, lines, start, special_options)
 	return options
 end
 
+local function parseLocaleBlock(file_name, lines, start, locale)
+	for i = start, #lines do
+		local line = lines[i]
+		if line:match("}%)") then return end
+		local comment, locale_key, locale_value = line:match("^%s*(%-?%-?)%s*([%w_]+)%s*=%s*(.*),") -- key = value
+		if not locale_key then
+			comment, locale_key, locale_value = line:match('^%s*(%-?%-?)%s*%["(.+)"%]%s*=%s*(.*),') -- ["key"] = value
+		end
+		if locale_key and comment == "" then
+			if locale[locale_key] ~= nil then
+				local line_number = start + i
+				error(string.format("    %s:%d: Duplicate locale key %q", file_name, line_number, locale_key))
+			else
+				locale[locale_key] = true
+				locale_value = strtrim(locale_value)
+				-- check if we're all replacement tokens
+				local v = locale_value:gsub("%b{}", ""):gsub("\\n", "")
+				if v == '""' then
+					locale_value = ""
+				end
+				locale[locale_key] = locale_value:sub(1, 1) == "{" or locale_value ~= unquote(locale_value)
+			end
+		end
+	end
+end
+
 local function markPrivateOptions(opts, option_key_used)
 	for key, flags in next, opts do
 		if type(flags) == "table" and flags.PRIVATE then
@@ -620,12 +649,19 @@ local function checkForAPI(line)
 	return false
 end
 
--- check that all module keys are defined in the locale file
-local function reverseCheck(file, keys, current_module, current_module_line)
-	if current_module and modules_locale[current_module] then
-		for key, value in next, modules_locale[current_module] do
-			if value and not key:match("_icon$") and keys[current_module][key] == nil then
-				warn(string.format("    %s:%d: %s: Missing locale key %q", file, current_module_line, current_module, key))
+local function localeKeyCheck(file_name, source_locale, target_locale, module_name, module_line_number, do_reverse)
+	if not target_locale or not source_locale then return end
+	-- check that all module keys are defined in the locale file
+	for key, value in next, source_locale do
+		if value and not key:match("_icon$") and target_locale[key] == nil then
+			warn(string.format("    %s:%d: %s: Missing locale key %q", file_name, module_line_number, module_name, key))
+		end
+	end
+	if do_reverse then
+		-- check that all locale file keys are defined in the module
+		for key, value in next, target_locale do
+			if value and not key:match("_icon$") and source_locale[key] == nil then
+				error(string.format("    %s:%d: %s: Invalid locale key %q", file_name, module_line_number, module_name, key))
 			end
 		end
 	end
@@ -659,28 +695,17 @@ local function parseLocale(file)
 
 	-- validate the file line by line
 	local keys = {}
-	local current_module, current_module_line
+	local current_module, current_module_line, current_locale_api
 	local line_number = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		line_number = line_number + 1
 
-		do
-			local locale = line:match("BigWigsAPI%.IsLocale%(\"(.-)\"%)")
-			if locale then
-				if locale ~= file_locale then
-					error(string.format("    %s:%d: Invalid locale! %q should be %q", file, line_number, locale, file_locale))
-				end
-				-- new style is not supported yet
-				return
-			end
-		end
-
 		-- check for a new locale block in the locale file, and parse out the module name and locale from the block
-		local module_name, locale
+		local module_name, locale, locale_api
 		if file_locale == "esES" then
 			-- special handling for combined esES and esMX locales
 			local module_name2, locale2
-			module_name, locale, module_name2, locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			locale_api, module_name, locale, module_name2, locale2 = line:match("L = BigWigs:(NewBossLocale)%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
 			if module_name then
 				-- Check :NewBossLocale args
 				if module_name ~= module_name2 then
@@ -693,34 +718,40 @@ local function parseLocale(file)
 		end
 		if not module_name then
 			-- standard parsing for single-locale files
-			module_name, locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			locale_api, module_name, locale = line:match("L = BigWigs:(NewBossLocale)%(\"(.-)\", \"(.-)\"%)")
 			if not module_name then
-				module_name, locale = line:match("L =[%w%p ]*API:NewLocale%(\"(.-)\", \"(.-)\"%)")
+				locale_api, module_name, locale = line:match("L =[%w%p ]*API:(NewLocale)%(\"(.-)\", \"(.-)\"%)")
+			end
+			if not module_name then
+				locale_api, module_name = line:match("BigWigsAPI%.(SetBossModuleLocale)%(\"(.-)\", {")
 			end
 		end
 
 		-- if we found the start of a new locale block
 		if module_name then
 			-- reverse check the previous locale block in the file
-			reverseCheck(file, keys, current_module, current_module_line)
+			localeKeyCheck(file, keys[current_module], modules_locale[current_module], current_module, current_module_line)
 			-- update state for the new locale block
 			current_module = module_name
+			current_locale_api = locale_api
 			current_module_line = line_number
 			if not keys[module_name] then
 				keys[module_name] = {}
 			else
 				error(string.format("    %s:%d: Duplicate module name %q", file, line_number, module_name))
 			end
-			-- Save base keys for non-boss locales
-			if file_locale == "enUS" then
-				modules_locale[module_name] = keys[module_name]
-			end
-			-- Check API args
-			if locale ~= file_locale then
-				error(string.format("    %s:%d: Invalid locale! %q should be %q", file, line_number, locale, file_locale))
-			end
-			if not modules_locale[module_name] then
-				error(string.format("    %s:%d: Invalid module name %q", file, line_number, module_name))
+			if current_locale_api ~= "SetBossModuleLocale" then
+				-- Save base keys for non-boss locales
+				if file_locale == "enUS" then
+					modules_locale[module_name] = keys[module_name]
+				end
+				-- Check API args
+				if locale ~= file_locale then
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file, line_number, locale, file_locale))
+				end
+				if not modules_locale[module_name] then
+					error(string.format("    %s:%d: Invalid module name %q", file, line_number, module_name))
+				end
 			end
 		end
 
@@ -746,12 +777,38 @@ local function parseLocale(file)
 					error(string.format("    %s:%d: %s: Invalid locale key %q", file, line_number, current_module, key))
 				end
 			end
+		elseif current_locale_api == "SetBossModuleLocale" then
+			-- set before the module
+			if line:match("}%)") then
+				if not bosses_locale[current_module] then
+					bosses_locale[current_module] = {}
+				end
+				bosses_locale[current_module][file_locale] = {
+					file = file,
+					module_line = current_module_line,
+					strings = keys[current_module],
+				}
+				current_module = nil
+				current_locale_api = nil
+			else
+				local comment, key = line:match("^%s*(%-?%-?)%s*([%w_]+)%s*=") -- key =
+				if not key then
+					comment, key = line:match("^%s*(%-?%-?)%s*%[\"(.+)\"%]%s*=") -- ["key"] =
+				end
+				if key then
+					-- ensure there are no duplicate string keys in the same file
+					if keys[current_module][key] ~= nil then
+						error(string.format("    %s:%d: %s: Duplicate locale key %q", file, line_number, current_module, key))
+					end
+					keys[current_module][key] = comment == ""
+				end
+			end
 		end
 	end
 
 	-- reverse check the last locale block in the file
 	if current_module and not current_module:match("^BigWigs") then
-		reverseCheck(file, keys, current_module, current_module_line)
+		localeKeyCheck(file, keys[current_module], modules_locale[current_module], current_module, current_module_line)
 	end
 
 	-- Check that all enUS strings exist in the foreign locale
@@ -826,7 +883,7 @@ local function parseLua(file)
 		end
 	end
 
-	-- `modules` is used output the boss modules in the order they were parsed.
+	-- `modules` is used to output the boss modules in the order they were parsed.
 	table.insert(modules, module_name)
 	file_to_module[file] = module_name
 	modules_locale[module_name] = {}
@@ -899,7 +956,9 @@ local function parseLua(file)
 		end
 
 		-- locale checking
-		do
+		if line:find("mod:SetDefaultLocale({", nil, true) then
+			parseLocaleBlock(file_name, lines, n + 1, locale)
+		else
 			-- save module locale
 			-- multiple definitions on one line
 			if line:match("^%sL%.[%w_]+%s*,.+=.+") then -- we're setting things, right?
@@ -1450,6 +1509,16 @@ local function parseLua(file)
 				if tracked_bitflags[flag] and (not bitflag_used[key] or not bitflag_used[key][flag]) and not opt.ignore_unused then
 					error(string.format("    %s:%d: %q was added as a bitflag to option key %q, but was not used.", file_name, options_block_start, flag, key))
 				end
+			end
+		end
+	end
+
+	-- Check for missing locales keys
+	if not opt.ignore_locale and bosses_locale[module_name] then
+		for _, loc in ipairs(all_locales) do
+			local locale_info = bosses_locale[module_name][loc]
+			if locale_info then
+				localeKeyCheck(locale_info.file, locale, locale_info.strings, module_name, locale_info.module_line, true)
 			end
 		end
 	end

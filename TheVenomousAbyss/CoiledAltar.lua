@@ -4,7 +4,7 @@ if not BigWigsLoader.isNext then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Bargained Crown", 3004, 2883)
+local mod, CL = BigWigs:NewBoss("The Coiled Altar", 3004, 2883)
 if not mod then return end
 -- mod:RegisterEnableMob(0)
 mod:SetEncounterID(3429)

@@ -37,6 +37,6 @@ Vashnik.lua
 Explorers.lua
 Sszorak.lua
 TwinFangs.lua
-Crown.lua
+CoiledAltar.lua
 Ulatek.lua
 !Options.lua
