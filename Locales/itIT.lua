@@ -1126,6 +1126,9 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 --L.privateAurasTestTankAnchorText = "Tank\nAura\n%d"
 
 --L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the id from logs."
+--L.invalidSpell = "Invalid spell"
 --L.bossDebuffsOnYou = "Boss Debuffs On You"
 --L.bossDebuffsOnTank = "Boss Debuffs On Tank"
 --L.showCountText = "Show Stacks"

@@ -371,14 +371,18 @@ do
 	-- end
 
 	function UpdateSoundOptions(forceNotify)
-		-- print("UpdateSoundOptions", forceNotify, #db.sounds)
 		local options = plugin.pluginOptions.args.sounds.args
 		table.wipe(options)
 
+		options.header = {
+			type = "description",
+			name = L.addAuraSpellDesc,
+			fontSize = "medium",
+			order = 1,
+		}
 		options.add = {
 			type = "input",
-			name = "XX Add Spell",
-			desc = "XX You can add spells you currently know by name, but it is always best to use the id from logs.",
+			name = L.addAuraSpell,
 			get = false,
 			set = function(_, value)
 				local spellID = C_Spell.GetSpellIDForSpellIdentifier(value)
@@ -393,11 +397,11 @@ do
 			end,
 			validate = function(_, value)
 				if not C_Spell.GetSpellIDForSpellIdentifier(value) then
-					return ("%s: %s"):format(L.auras, "XX Invalid spell id")
+					return ("%s: %s"):format(L.auras, L.invalidSpell)
 				end
 				return true
 			end,
-			order = 0,
+			order = 2,
 		}
 
 		local function get(info)
@@ -424,7 +428,7 @@ do
 				type = "group",
 				name = " ",
 				inline = true,
-				order = order,
+				order = order + 10,
 				get = get,
 				set = set,
 				args = {
