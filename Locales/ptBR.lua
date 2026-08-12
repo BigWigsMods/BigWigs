@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "Modo 'opt-in' das placas de identificação do mod de c
 L.nameplateOptInWarning = "|cffff4411ATENÇÃO!|r\n\nHabilitar o modo 'opt-in' desligará as placas de identificação de TODOS os seus módulos de chefes. Você terá que ir em cada um e ligar manualmente as placas de identificação que desejar.\n\nSua UI será recarregada agora, deseja continuar?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "Auras Privadas"
@@ -1122,8 +1122,15 @@ L.maxIcons = "Máx. de Ícones"
 L.maxIconsDesc = "A quantidade máxima de ícones a serem exibidos."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Agora você pode visualizar seus debuffs de auras privadas como ícones, ou até mesmo as auras privadas de outro jogador (ex.: um tanque)."
 
-L.privateAurasTestAnchorText = "Aura\nprivada\n(%d)"
-L.privateAurasTestTankAnchorText = "Aura\nde Tanque\n(%d)"
+L.privateAurasTestAnchorText = "Aura\nprivada\n%d"
+L.privateAurasTestTankAnchorText = "Aura\nde Tanque\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

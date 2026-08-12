@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "Boss-Mod Namensplaketten 'Opt-in' Modus"
 L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in' Modus werden die Namensplaketten ALLER Bossmodule deaktiviert. Zur Aktivierung müssen händisch in jeder gewünschten Bossfähigkeit die Namensplaketten aktiviert werden.\n\nDas UI wird jetzt neu geladen, bist Du sicher?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "Private Auren"
@@ -1122,8 +1122,15 @@ L.maxIcons = "Maximale Symbolanzahl"
 L.maxIconsDesc = "Die maximale Anzahl der angezeigten Symbole."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine privaten Aura Debuffs als Symbole sehen, oder sogar die privaten Auren eines anderen Spielers (z.B. eines Tanks)."
 
-L.privateAurasTestAnchorText = "Private\nAura\n(%d)"
-L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
+L.privateAurasTestAnchorText = "Player\nAura\n%d"
+L.privateAurasTestTankAnchorText = "Tank\nAura\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

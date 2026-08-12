@@ -1093,7 +1093,7 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 --L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will turn off nameplates across ALL of your boss modules. You will need to go through each one and manually turn on the nameplates you want.\n\nYour UI will now reload, are you sure?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 --L.privateAuras = "Private Auras"
@@ -1122,8 +1122,15 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 --L.maxIconsDesc = "The maximum amount of icons to be displayed."
 --L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 
---L.privateAurasTestAnchorText = "Private\nAura\n(%d)"
---L.privateAurasTestTankAnchorText = "Tank\nAura\n(%d)"
+--L.privateAurasTestAnchorText = "Private\nAura\n%d"
+--L.privateAurasTestTankAnchorText = "Tank\nAura\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

@@ -25,6 +25,8 @@ local previouslyFoundUnit = nil
 local InitializeAuraFrame, UpdateAuraFrame
 local UpdateAuraContainer, UpdateTestAura
 
+-- SetOption:skip-locale
+
 --------------------------------------------------------------------------------
 -- Profile
 --
@@ -337,7 +339,7 @@ do
 
 	plugin.pluginOptions = {
 		type = "group",
-		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash:20|t ".. "XX Auras",
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash:20|t ".. L.auras,
 		childGroups = "tab",
 		handler = plugin,
 		order = 4,
@@ -386,7 +388,7 @@ do
 			},
 			player = {
 				type = "group",
-				name = L.aurasOnYou,
+				name = L.bossDebuffsOnYou,
 				get = function(info)
 					return db.player[info[#info]]
 				end,
@@ -476,64 +478,52 @@ do
 						order = 10,
 						disabled = IsAnchorDisabled,
 					},
-					showCooldownBar = {
-						type = "description",
-						-- type = "toggle",
-						name = "",
-						-- name = "XX Show Cooldown Bar",
-						-- width = 1.6,
-						order = 11,
-						-- disabled = IsAnchorDisabled,
-					},
 					cooldownText = {
 						type = "group",
 						inline = true,
-						name = "XX Cooldown Text",
-						order = 12,
+						name = L.cooldownText,
 						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
+						order = 12,
 						args = {
 							showCooldownText = {
 								type = "toggle",
 								name = L.showCooldownText,
-								width = 1,
-								order = 1,
 								disabled = function(info) return db.player.disabled end,
+								order = 1,
 							},
 							cooldownTextFontName = {
 								type = "select",
 								name = L.font,
-								order = 2,
 								values = LibSharedMedia:List(FONT),
 								itemControl = "DDI-Font",
 								get = function()
 									for i, v in next, LibSharedMedia:List(FONT) do
-										if v == plugin.db.profile.player.cooldownTextFontName then return i end
+										if v == db.player.cooldownTextFontName then return i end
 									end
 								end,
 								set = function(_, value)
 									local list = LibSharedMedia:List(FONT)
-									plugin.db.profile.player.cooldownTextFontName = list[value]
+									db.player.cooldownTextFontName = list[value]
 									updateProfile()
 								end,
-								width = 1,
+								order = 2,
 							},
 							cooldownTextFontSize = {
 								type = "range",
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
-								order = 3,
-								width = 1,
 								softMax = 100, max = 200, min = 8, step = 1,
+								order = 3,
 							},
 							cooldownTextOutline = {
 								type = "select",
 								name = L.outline,
-								order = 4,
 								values = {
 									NONE = L.none,
 									OUTLINE = L.thin,
 									THICKOUTLINE = L.thick,
 								},
+								order = 4,
 							},
 							cooldownTextMonochrome = {
 								type = "toggle",
@@ -552,21 +542,19 @@ do
 					countText = {
 						type = "group",
 						inline = true,
-						name = "XX Count Text",
+						name = L.countText,
 						order = 13,
 						disabled = function(info) return db.player.disabled or not db.player.showCountText end,
 						args = {
 							showCountText = {
 								type = "toggle",
-								name = "XX Show Stacks",
-								width = 1,
-								order = 1,
+								name = L.showCountText,
 								disabled = function(info) return db.player.disabled end,
+								order = 1,
 							},
 							countTextFontName = {
 								type = "select",
 								name = L.font,
-								order = 2,
 								values = LibSharedMedia:List(FONT),
 								itemControl = "DDI-Font",
 								get = function()
@@ -579,25 +567,24 @@ do
 									db.player.countTextFontName = list[value]
 									updateProfile()
 								end,
-								width = 1,
+								order = 2,
 							},
 							countTextFontSize = {
 								type = "range",
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
 								min = 8, max = 200, softMax = 100, step = 1,
-								width = 1,
 								order = 3,
 							},
 							countTextOutline = {
 								type = "select",
 								name = L.outline,
-								order = 4,
 								values = {
 									NONE = L.none,
 									OUTLINE = L.thin,
 									THICKOUTLINE = L.thick,
 								},
+								order = 4,
 							},
 							countTextMonochrome = {
 								type = "toggle",
@@ -615,21 +602,18 @@ do
 								type = "select",
 								name = L.position,
 								values = BigWigsAPI.GetFramePointList(),
-								width = 1,
 								order = 10,
 							},
 							countTextAnchorXOffset = {
 								type = "range",
 								name = L.offsetX,
 								min = -100, max = 100, step = 1,
-								width = 1,
 								order = 11,
 							},
 							countTextAnchorYOffset = {
 								type = "range",
 								name = L.offsetY,
 								min = -100, max = 100, step = 1,
-								width = 1,
 								order = 12,
 							},
 						},
@@ -653,7 +637,7 @@ do
 			},
 			other = {
 				type = "group",
-				name = L.aurasOnAnother,
+				name = L.bossDebuffsOnTank,
 				get = function(info)
 					return db.other[info[#info]]
 				end,
@@ -813,32 +797,22 @@ do
 						order = 14,
 						disabled = IsAnchorDisabled,
 					},
-					showCooldownBar = {
-						type = "description",
-						-- type = "toggle",
-						name = "",
-						-- name = "XX Show Cooldown Bar",
-						-- width = 1.6,
-						order = 15,
-						-- disabled = IsAnchorDisabled,
-					},
 					cooldownText = {
 						type = "group",
 						inline = true,
-						name = "Cooldown Text",
+						name = L.cooldownText,
 						order = 16,
-						disabled = function(info) return db.other.disabled end,
+						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
 						args = {
 							showCooldownText = {
 								type = "toggle",
 								name = L.showCooldownText,
-								width = 1.6,
-								order = 0.5,
+								disabled = function(info) return db.other.disabled end,
+								order = 1,
 							},
 							cooldownTextFontName = {
 								type = "select",
 								name = L.font,
-								order = 1,
 								values = LibSharedMedia:List(FONT),
 								itemControl = "DDI-Font",
 								get = function()
@@ -851,102 +825,113 @@ do
 									db.other.cooldownTextFontName = list[value]
 									updateProfile()
 								end,
-								width = 2,
-							},
-							cooldownTextOutline = {
-								type = "select",
-								name = L.outline,
 								order = 2,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-							},
-							cooldownTextMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 3,
-							},
-							cooldownTextSlug = {
-								type = "toggle",
-								name = L.slugRendering,
-								desc = L.slugRenderingDesc,
-								order = 4,
 							},
 							cooldownTextFontSize = {
 								type = "range",
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
-								order = 5,
-								width = 1.2,
 								softMax = 100, max = 200, min = 8, step = 1,
-								-- disabled = IsAnchorDisabled,
+								order = 3,
+							},
+							cooldownTextOutline = {
+								type = "select",
+								name = L.outline,
+								values = {
+									NONE = L.none,
+									OUTLINE = L.thin,
+									THICKOUTLINE = L.thick,
+								},
+								order = 4,
+							},
+							cooldownTextMonochrome = {
+								type = "toggle",
+								name = L.monochrome,
+								desc = L.monochromeDesc,
+								order = 5,
+							},
+							cooldownTextSlug = {
+								type = "toggle",
+								name = L.slugRendering,
+								desc = L.slugRenderingDesc,
+								order = 6,
 							},
 						},
 					},
 					countText = {
 						type = "group",
 						inline = true,
-						name = "Count Text",
+						name = L.countText,
 						order = 17,
 						args = {
 							showCountText = {
 								type = "toggle",
-								name = "XX Show Stacks",
-								width = 1.6,
-								order = 18,
-								-- disabled = IsAnchorDisabled,
+								name = L.showCountText,
+								order = 1,
 							},
 							countTextFontName = {
 								type = "select",
 								name = L.font,
-								order = 1,
 								values = LibSharedMedia:List(FONT),
 								itemControl = "DDI-Font",
 								get = function()
 									for i, v in next, LibSharedMedia:List(FONT) do
-										if v == plugin.db.profile.other.countTextFontName then return i end
+										if v == db.other.countTextFontName then return i end
 									end
 								end,
 								set = function(_, value)
 									local list = LibSharedMedia:List(FONT)
-									plugin.db.profile.other.countTextFontName = list[value]
+									db.other.countTextFontName = list[value]
 									updateProfile()
 								end,
-								width = 2,
-							},
-							countTextOutline = {
-								type = "select",
-								name = L.outline,
 								order = 2,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-							},
-							countTextMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 3,
-							},
-							countTextSlug = {
-								type = "toggle",
-								name = L.slugRendering,
-								desc = L.slugRenderingDesc,
-								order = 4,
 							},
 							countTextFontSize = {
 								type = "range",
 								name = L.fontSize,
 								desc = L.fontSizeDesc,
 								min = 8, max = 200, softMax = 100, step = 1,
-								width = 1.6,
-								order = 19,
-								-- disabled = IsAnchorDisabled,
+								order = 3,
+							},
+							countTextOutline = {
+								type = "select",
+								name = L.outline,
+								values = {
+									NONE = L.none,
+									OUTLINE = L.thin,
+									THICKOUTLINE = L.thick,
+								},
+								order = 4,
+							},
+							countTextMonochrome = {
+								type = "toggle",
+								name = L.monochrome,
+								desc = L.monochromeDesc,
+								order = 5,
+							},
+							countTextSlug = {
+								type = "toggle",
+								name = L.slugRendering,
+								desc = L.slugRenderingDesc,
+								order = 6,
+							},
+							countTextAnchorPoint = {
+								type = "select",
+								name = L.position,
+								values = BigWigsAPI.GetFramePointList(),
+								order = 10,
+							},
+							countTextAnchorXOffset = {
+								type = "range",
+								name = L.offsetX,
+								min = -100, max = 100, step = 1,
+								order = 11,
+							},
+							countTextAnchorYOffset = {
+								type = "range",
+								name = L.offsetY,
+								min = -100, max = 100, step = 1,
+								order = 12,
 							},
 						},
 					},
@@ -991,7 +976,7 @@ do
 			},
 			sounds = {
 				type = "group",
-				name = "XX Aura Sounds",
+				name = L.auraSounds,
 				order = 6,
 				args = {
 					resetHeader = {

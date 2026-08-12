@@ -1093,7 +1093,7 @@ L.nameplateOptInTitle = "Choix du mode barres d'infos des boss"
 L.nameplateOptInWarning = "|cffff4411ATTENTION !|r\n\nActiver ce choix va désactiver les barres d'infos de TOUS les modules de boss. Vous devrez aller sur chaque boss et activer les barres d'infos que vous souhaiterez.\n\nVotre Interface utilisateur va recharger, êtes-vous sûr(e) ?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua
+-- PrivateAuras.lua / Auras.lua
 --
 
 L.privateAuras = "Auras privées"
@@ -1122,8 +1122,15 @@ L.maxIcons = "Icônes Max"
 L.maxIconsDesc = "Nombre maximum d'icônes à afficher."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez voir vos affaiblissements d'aura privée en tant qu'icônes, ou même les auras privées d'un autre joueur (comme un a tank)."
 
-L.privateAurasTestAnchorText = "Aura\nPrivée\n(%d)"
-L.privateAurasTestTankAnchorText = "Aura\nTank\n(%d)"
+L.privateAurasTestAnchorText = "Aura\nPrivée\n%d"
+L.privateAurasTestTankAnchorText = "Aura\nTank\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
