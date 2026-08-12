@@ -84,3 +84,10 @@ BigWigs:AddSounds("Sszorak", {
 	[1296898] = "alarm",
 	[1305959] = "alarm",
 })
+
+BigWigs:AddColors("The Coiled Altar", {
+	["stages"] = "yellow",
+})
+
+BigWigs:AddSounds("The Coiled Altar", {
+})

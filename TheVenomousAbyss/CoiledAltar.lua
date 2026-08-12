@@ -1,4 +1,3 @@
-if not BigWigsLoader.isNext then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -6,7 +5,7 @@ if not BigWigsLoader.isNext then return end
 
 local mod, CL = BigWigs:NewBoss("The Coiled Altar", 3004, 2883)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(257911, 259854) -- Zul'jan, Hex Lord Malacrass
 mod:SetEncounterID(3429)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
@@ -19,24 +18,94 @@ local activeBars = {}
 local backupBars = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+-- local L = mod:SetDefaultLocale({
+-- })
+
+--------------------------------------------------------------------------------
 -- Renames
 --
 
--- mod:SetRenames({
--- 	[1] = {CL.rename},
--- })
+mod:SetRenames({
+	[1282487] = {1282487}, -- Fangs of the Crucible
+	[1299960] = {1299960}, -- Toxic Deluge
+	[1283489] = {1283489}, -- Guillotine
+	[1299680] = {1299680}, -- Sever
+	[1282281] = {1282281}, -- Venomfang
+	[1283832] = {1283832}, -- Axegrinder
+	[1289900] = {1289900}, -- Dreadmarch
+	[1285911] = {1285911}, -- Unnerving Fixation
+	[1286573] = {1286573}, -- Soul Sever
+	[1286918] = {1286918}, -- Eternal Nightfall
+	[1286441] = {1286441}, -- Spiritcackle
+	[1286895] = {1286895}, -- Gloombomb
+	[1298381] = {1298381}, -- Defilement of the Crucible
+	[1299266] = {1299266}, -- Grim Guillotine
+	[1307279] = {1307279}, -- Blighted Sever
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
--- Dead in 12.1?
--- mod:SetPrivateAuraSounds({
--- })
+mod:SetPrivateAuraSounds({
+	{1283345, sound = "none", note = "Tank stacks"}, -- Twinfang Toxin
+	-- {1282283, sound = "none", note = "DoT", toolip = 1282287}, -- Venomfang
+	{1285017, sound = "none", note = "DoT"}, -- Axegrinder
+	{1285640, 1297435, 1285647, 1297445, sound = "warning"}, -- Dreadmarch
+	{1285911, sound = "warning"}, -- Unnerving Fixation
+	-- {1286326, 1286310, sound = "none"}, -- Shadowfang
+	{1286399, sound = "alarm", note = "Kick fail"}, -- Wail of Terror
+	{1286901, sound = "warning"}, -- Gloombomb
+	{1300665, sound = "alarm", mythic = true}, -- Spirit Erasure
+	{1298594, sound = "none"}, -- Defilement of the Crucible
+	-- Not in EJ
+	{1287227, sound = "none", note = "DoT"}, -- Blighted Toxin
+})
 
-function mod:GetOptions()
+function mod:GetOptions() -- SetOption:skip-unused
 	return {
-		"berserk"
+		"stages",
+
+		-- Stage One: Serpent's Bargain
+		1282487, -- Fangs of the Crucible
+		1299960, -- Toxic Deluge
+		1283489, -- Guillotine
+		1299680, -- Sever
+		1282281, -- Venomfang
+		1283832, -- Axegrinder
+
+		-- Stage Two: Usurper's Reprisal
+		1289900, -- Dreadmarch
+		1285911, -- Unnerving Fixation
+		1286573, -- Soul Sever
+		1286918, -- Eternal Nightfall
+		1286441, -- Spiritcackle
+		1286895, -- Gloombomb
+
+		-- Intermission: The Claimed Vessel
+
+		-- Stage Three: Coiled Union
+		-- Zul'jan
+			1298381, -- Defilement of the Crucible
+			-- Toxic Deluge
+			1299266, -- Grim Guillotine
+			1307279, -- Blighted Sever
+		-- Hex Lord Malacrass
+			-- Dreadmarch
+			-- Unnerving Fixation
+			-- Eternal Nightfall
+			-- Spiritcackle
+			-- Gloombomb
+	}, {
+		[1282487] = -35584, -- Stage 1
+		[1289900] = -35599, -- Stage 2
+		-- [] = -35533, -- Intermission
+		[1298381] = -35403, -- Stage 3
+		-- [1298381] = -35063, -- Zul'jan
+		-- [1289900] = -35062, -- Hex Lord Malacrass
 	}
 end
 
@@ -53,7 +122,7 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	self:Message("berserk", "cyan", self.moduleName .. " engaged")
+	self:Message("stages", "yellow", self.moduleName .. " engaged")
 end
 
 --------------------------------------------------------------------------------
