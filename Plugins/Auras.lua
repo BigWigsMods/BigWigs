@@ -937,12 +937,34 @@ do
 						order = 11,
 						disabled = IsAnchorDisabled,
 					},
+					growthDirection = {
+						type = "select",
+						name = L.growthDirection,
+						values = {
+							LEFT = L.LEFT,
+							RIGHT = L.RIGHT,
+							UP = L.UP,
+							DOWN = L.DOWN,
+						},
+						width = 1.6,
+						order = 12,
+						disabled = IsAnchorDisabled,
+					},
+					maxIcons = {
+						type = "range",
+						name = L.maxIcons,
+						desc = L.maxIconsDesc,
+						min = 2, max = 5, step = 1,
+						width = 1.6,
+						order = 13,
+						disabled = IsAnchorDisabled,
+					},
 					showBorder = {
 						type = "toggle",
 						name = L.showBorder,
 						desc = L.showBorderDesc,
 						width = 1.6,
-						order = 12,
+						order = 14,
 						disabled = IsAnchorDisabled,
 					},
 					showDispelType = {
@@ -950,7 +972,7 @@ do
 						name = L.showDispelType,
 						desc = L.showDispelTypeDesc,
 						width = 1.6,
-						order = 13,
+						order = 15,
 						disabled = IsAnchorDisabled,
 					},
 					showCooldown = {
@@ -958,14 +980,14 @@ do
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 14,
+						order = 16,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownText = {
 						type = "group",
 						inline = true,
 						name = L.cooldownText,
-						order = 16,
+						order = 17,
 						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
 						args = {
 							showCooldownText = {
@@ -1026,7 +1048,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 17,
+						order = 18,
 						args = {
 							showCountText = {
 								type = "toggle",
@@ -1098,28 +1120,6 @@ do
 								order = 12,
 							},
 						},
-					},
-					growthDirection = {
-						type = "select",
-						name = L.growthDirection,
-						values = {
-							LEFT = L.LEFT,
-							RIGHT = L.RIGHT,
-							UP = L.UP,
-							DOWN = L.DOWN,
-						},
-						width = 1.6,
-						order = 20,
-						disabled = IsAnchorDisabled,
-					},
-					maxIcons = {
-						type = "range",
-						name = L.maxIcons,
-						desc = L.maxIconsDesc,
-						min = 2, max = 5, step = 1,
-						width = 1.6,
-						order = 21,
-						disabled = IsAnchorDisabled,
 					},
 					resetHeader = {
 						type = "header",
