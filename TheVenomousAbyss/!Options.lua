@@ -69,3 +69,18 @@ BigWigs:AddSounds("The Lost Explorers", {
 	[1296535] = "info",
 	[1297022] = "long",
 })
+
+BigWigs:AddColors("Sszorak", {
+	[1277025] = "purple",
+	[1285425] = {"blue","orange"},
+	[1285732] = "red",
+	[1296898] = "red",
+	[1305959] = "yellow",
+})
+
+BigWigs:AddSounds("Sszorak", {
+	[1277025] = "alert",
+	[1285732] = "long",
+	[1296898] = "alarm",
+	[1305959] = "alarm",
+})
