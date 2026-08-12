@@ -1131,6 +1131,9 @@ L.privateAurasTestTankAnchorText = "Aura\nde tanque\n%d"
 --L.showCountText = "Show Stacks"
 --L.cooldownText = "Cooldown Duration"
 --L.countText = "Applications"
+L.unit = "Unidad"
+--L.trigger = "Trigger"
+L.remove = "Quitar"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

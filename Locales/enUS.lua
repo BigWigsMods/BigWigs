@@ -1130,6 +1130,9 @@ L.bossDebuffsOnTank = "Boss Debuffs On Tank"
 L.showCountText = "Show Stacks"
 L.cooldownText = "Cooldown Duration"
 L.countText = "Applications"
+L.unit = "Unit"
+L.trigger = "Trigger"
+L.remove = "Remove"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

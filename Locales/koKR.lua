@@ -973,7 +973,7 @@ L.testMessagesBtn_desc = "현재 디스플레이 설정을 테스트할 메시�
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
 L.emphasizedMessages = "강조 메시지"
-L.emphasizedDesc = "강조 메시지는 화면 중앙에 큰 메시지로 표시되어 플레이어의 주의를 끌기 위한 것입니다. 기본적으로 활성화되어 있는 경우는 드물지만, 특정 보스 전투 설정에서 모든 보스 능력에 대해 활성화할 수 있���니다."
+L.emphasizedDesc = "강조 메시지는 화면 중앙에 큰 메시지로 표시되어 플레이어의 주의를 끌기 위한 것입니다. 기본적으로 활성화되어 있는 경우는 드물지만, 특정 보스 전투 설정에서 모든 보스 능력에 대해 활성화할 수 있���������니다."
 L.uppercase = "대문자"
 L.uppercaseDesc = "모든 강조 메시지들이 대문자로 표시됩니다."
 
@@ -1131,6 +1131,9 @@ L.privateAurasTestTankAnchorText = "탱커\n오라\n%d"
 --L.showCountText = "Show Stacks"
 --L.cooldownText = "Cooldown Duration"
 --L.countText = "Applications"
+L.unit = "유닛"
+--L.trigger = "Trigger"
+L.remove = "추방"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

@@ -13,6 +13,7 @@ if not plugin then return end
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
+local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 
 local CONFIG_MODE_DURATION = 10
 
@@ -21,11 +22,12 @@ local containers = {}
 local anchors = { player = {}, other = {} }
 local inConfigureMode = false
 local previouslyFoundUnit = nil
+local auraSounds = {}
 
-local InitializeAuraFrame, UpdateAuraFrame
-local UpdateAuraContainer, UpdateTestAura
-
--- SetOption:skip-locale
+local InitializeAuraFrame, UpdateAuraFrame, UpdateTestAura
+local UpdateAuraContainer
+local UpdateSoundOptions
+local AddAuraSound, AddAllAuraSounds, RemoveAllAuraSounds
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -107,6 +109,8 @@ plugin.defaultDB = {
 	otherPlayerType = "tank",
 	onlyWhenYouAreTank = false,
 	otherPlayerName = "",
+
+	sounds = {},
 }
 -- plugin.defaultGlobalDB = {
 -- 	showHelpTip = true,
@@ -143,7 +147,7 @@ local function updateProfile()
 			else
 				db[k] = plugin.defaultDB[k]
 			end
-		elseif type(v) == "table" then
+		elseif type(v) == "table" and k ~= "sounds" then
 			for subKey, subValue in next, db[k] do
 				defaultType = type(plugin.defaultDB[k][subKey])
 				if defaultType == "nil" then
@@ -334,6 +338,166 @@ do
 	local function IsFeatureEntirelyDisabled()
 		if db.player.disabled and db.other.disabled then
 			return true
+		end
+	end
+
+	-- local GetDescription do
+	-- 	local needsUpdate = {}
+	-- 	local frame = CreateFrame("Frame")
+
+	-- 	local function RefreshOnUpdate(self)
+	-- 		self:SetScript("OnUpdate", nil)
+	-- 		plugin:UpdateGUI()
+	-- 	end
+
+	-- 	frame:SetScript("OnEvent", function(self, event, spellID, success)
+	-- 		if success and needsUpdate[spellID] then
+	-- 			frame:SetScript("OnUpdate", RefreshOnUpdate)
+	-- 		end
+	-- 		needsUpdate[spellID] = nil
+	-- 	end)
+	-- 	frame:RegisterEvent("SPELL_DATA_LOAD_RESULT")
+
+	-- 	function GetDescription(info)
+	-- 		local index = tonumber(info[#info - 1])
+	-- 		if not db.sounds[index] then return end
+	-- 		local spellID = db.sounds[index].spellID
+	-- 		if spellID > 0 and not C_Spell.IsSpellDataCached(spellID) then
+	-- 			needsUpdate[spellID] = true
+	-- 			C_Spell.RequestLoadSpellData(spellID)
+	-- 		end
+	-- 		return C_Spell.GetSpellDescription(spellID)
+	-- 	end
+	-- end
+
+	function UpdateSoundOptions(forceNotify)
+		-- print("UpdateSoundOptions", forceNotify, #db.sounds)
+		local options = plugin.pluginOptions.args.sounds.args
+		table.wipe(options)
+
+		options.add = {
+			type = "input",
+			name = "XX Add Spell",
+			desc = "XX You can add spells you currently know by name, but it is always best to use the id from logs.",
+			get = false,
+			set = function(_, value)
+				local spellID = C_Spell.GetSpellIDForSpellIdentifier(value)
+				table.insert(db.sounds, {
+					enabled = true,
+					spellID = spellID,
+					trigger = 0,
+					unit = "player",
+					sound = "None",
+				})
+				UpdateSoundOptions()
+			end,
+			validate = function(_, value)
+				if not C_Spell.GetSpellIDForSpellIdentifier(value) then
+					return ("%s: %s"):format(L.auras, "XX Invalid spell id")
+				end
+				return true
+			end,
+			order = 0,
+		}
+
+		local function get(info)
+			local index = tonumber(info[#info - 1])
+			if not db.sounds[index] then return false end
+			local key = info[#info]
+			return db.sounds[index][key]
+		end
+		local function set(info, value)
+			local index = tonumber(info[#info - 1])
+			db.sounds[index][info[#info]] = value
+			if auraSounds[index] then
+				C_UnitAuras.RemoveAuraSound(auraSounds[index])
+			end
+			auraSounds[index] = AddAuraSound(db.sounds[index])
+		end
+
+		local order = 0
+		for soundIndex = #db.sounds, 1, -1 do
+			order = order + 1
+			local soundInfo = db.sounds[soundIndex]
+			local spellInfo = C_Spell.GetSpellInfo(soundInfo.spellID)
+			options[tostring(soundIndex)] = {
+				type = "group",
+				name = " ",
+				inline = true,
+				order = order,
+				get = get,
+				set = set,
+				args = {
+					enabled = {
+						type = "toggle",
+						name = ("|cfffed000%s|r (%d)"):format(spellInfo and spellInfo.name or L.unknown, soundInfo.spellID),
+						-- desc = GetDescription,
+						-- descStyle = "inline",
+						image = spellInfo and spellInfo.iconID or 134400, -- question mark
+						width = "full",
+						order = 1,
+					},
+					trigger = {
+						type = "select",
+						name = L.trigger,
+						values = {
+							[0] = L.onApplied,
+							[1] = L.onDose,
+							[2] = L.onRemoved,
+						},
+						width = 1,
+						order = 2,
+					},
+					unit = {
+						type = "select",
+						name = L.unit,
+						values = {
+							player = "player",
+							party1 = "party1",
+							party2 = "party2",
+							party3 = "party3",
+							party4 = "party4",
+						},
+						width = 0.6,
+						order = 3,
+					},
+					sound = {
+						type = "select",
+						name = L.sound,
+						get = function(info)
+							local index = tonumber(info[#info - 1])
+							if not db.sounds[index] then return end
+							local sound = db.sounds[index].sound
+							for i, v in next, LibSharedMedia:List(SOUND) do
+								if v == sound then
+									return i
+								end
+							end
+						end,
+						set = function(info, value) set(info, LibSharedMedia:List(SOUND)[value]) end,
+						values = LibSharedMedia:List(SOUND),
+						itemControl = "DDI-Sound",
+						width = 1.3,
+						order = 4,
+					},
+					delete = {
+						type = "execute",
+						name = L.remove,
+						func = function(info)
+							GameTooltip:Hide()
+							local index = tonumber(info[#info - 1])
+							table.remove(db.sounds, index)
+							AddAllAuraSounds()
+							UpdateSoundOptions()
+						end,
+						order = 5,
+					},
+				},
+			}
+		end
+
+		if forceNotify then
+			plugin:UpdateGUI()
 		end
 	end
 
@@ -979,21 +1143,6 @@ do
 				name = L.auraSounds,
 				order = 6,
 				args = {
-					resetHeader = {
-						type = "header",
-						name = "",
-						order = 100,
-					},
-					reset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						func = function()
-							reset("sounds")
-							updateProfile()
-						end,
-						order = 101,
-					},
 				},
 			},
 			exactPositioning = {
@@ -1310,7 +1459,7 @@ end
 -- 		self:GetParent():Hide()
 -- 		plugin:CancelAllTimers()
 -- 		plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
--- 		BigWigsAPI.OpenConfigToPanel("PrivateAuras")
+-- 		BigWigsAPI.OpenConfigToPanel("Auras")
 -- 		plugin.db.global.showHelpTip = false
 -- 	end)
 -- 	ShowHelpTip = nil
@@ -1322,10 +1471,13 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
+	UpdateSoundOptions()
 
 	if not db.other.disabled then
 		self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	end
+
+	AddAllAuraSounds()
 
 	-- if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
 	-- 	self:CreateTestAura()
@@ -1344,6 +1496,8 @@ function plugin:OnPluginDisable()
 			anchor:Hide()
 		end
 	end
+
+	RemoveAllAuraSounds()
 end
 
 --------------------------------------------------------------------------------
@@ -1898,4 +2052,37 @@ do
 			end
 		end
 	end
+end
+
+--------------------------------------------------------------------------------
+-- Aura Sounds
+--
+
+function AddAuraSound(info)
+	if not info.enabled or info.sound == "None" then return end
+
+	local soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
+	if soundFile then
+		return C_UnitAuras.AddAuraSound(info.trigger, {
+			unitToken = info.unit,
+			spellID = info.spellID,
+			soundFileName = type(soundFile) == "string" and soundFile or nil,
+			soundFileID = type(soundFile) == "number" and soundFile or nil,
+			outputChannel = "master",
+		})
+	end
+end
+
+function AddAllAuraSounds()
+	RemoveAllAuraSounds()
+	for index = 1, #db.sounds do
+		auraSounds[index] = AddAuraSound(db.sounds[index])
+	end
+end
+
+function RemoveAllAuraSounds()
+	for _, auraSoundID in next, auraSounds do
+		C_UnitAuras.RemoveAuraSound(auraSoundID)
+	end
+	auraSounds = {}
 end

@@ -1131,6 +1131,9 @@ L.privateAurasTestTankAnchorText = "坦克\n光环\n%d"
 --L.showCountText = "Show Stacks"
 --L.cooldownText = "Cooldown Duration"
 --L.countText = "Applications"
+L.unit = "单位"
+--L.trigger = "Trigger"
+L.remove = "移除"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

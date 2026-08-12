@@ -1131,6 +1131,9 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 --L.showCountText = "Show Stacks"
 --L.cooldownText = "Cooldown Duration"
 --L.countText = "Applications"
+L.unit = "Unità"
+--L.trigger = "Trigger"
+L.remove = "Rimuovi"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
