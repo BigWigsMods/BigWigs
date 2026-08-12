@@ -38,3 +38,34 @@ BigWigs:AddSounds("Entombed Sentinels", {
 	[1288232] = "alert",
 	["berserk"] = "alarm",
 })
+
+BigWigs:AddColors("The Lost Explorers", {
+	[1286921] = "yellow",
+	[1290711] = "blue",
+	[1291390] = "red",
+	[1291759] = "orange",
+	[1291933] = "yellow",
+	[1292104] = "green",
+	[1292779] = "red",
+	[1295817] = "green",
+	[1295854] = "purple",
+	[1295886] = "orange",
+	[1296092] = "orange",
+	[1296249] = "red",
+	[1296535] = {"blue","green"},
+	[1297022] = {"cyan","green"},
+})
+
+BigWigs:AddSounds("The Lost Explorers", {
+	[1291390] = "alarm",
+	[1291759] = "alarm",
+	[1291933] = "alert",
+	[1292104] = "info",
+	[1292779] = "alarm",
+	[1295817] = "info",
+	[1295854] = "alert",
+	[1296092] = "alert",
+	[1296249] = "alarm",
+	[1296535] = "info",
+	[1297022] = "long",
+})

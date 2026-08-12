@@ -1,4 +1,3 @@
-if not BigWigsLoader.isNext then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -6,10 +5,11 @@ if not BigWigsLoader.isNext then return end
 
 local mod, CL = BigWigs:NewBoss("The Lost Explorers", 3004, 2894)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(261835, 261843, 261848) -- First Mate Nama, Scrollsage Iku, Trader Gebbo
 mod:SetEncounterID(3497)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -18,25 +18,140 @@ mod:UseCustomTimers(true)
 local activeBars = {}
 local backupBars = {}
 
+-- Staging is kind of weird for this fight, stage 1 is unempowered time, with each other stage tied to a empowered turtle phase
+local UNIT_TO_STAGE = {
+	boss1 = 2, -- Gebbo
+	boss3 = 3, -- Nama
+	boss4 = 4, -- Iku
+}
+
+local durationEventCount = {}
+local nextEmpower = nil
+local unitEmpowered = nil
+local commandCastStart = nil
+local commandCastID = nil
+
+local stageCount = 0
+local ascensionCount = 1
+
+local blinkNovaCount = 1
+local iceboundFlamesCount = 1
+local frostfireVolleyCount = 1
+local shellSpinCount = 1
+local mightyThudCount = 1
+local throwJunkCount = 1
+local mushroomTossCount = 1
+local explosiveSurpriseCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:SetDefaultLocale({
+	trader_gebbo = "Gebbo",
+	first_mate_nama = "Nama",
+	scrollsage_iku = "Iku",
+})
+
 --------------------------------------------------------------------------------
 -- Renames
 --
 
--- mod:SetRenames({
--- 	[1] = {CL.rename},
--- })
+mod:SetRenames({
+	[1296535] = { -- Disgusting Fish
+		CL.you:format(mod:SpellName(1296535)),
+		CL.other:format(mod:SpellName(1296535), L.trader_gebbo), -- Fish: Gebbo
+		CL.other:format(mod:SpellName(1296535), L.first_mate_nama), -- Fish: Nama
+		CL.other:format(mod:SpellName(1296535), L.scrollsage_iku), -- Fish: Iku
+		original = {
+			false,
+			CL.other:format(mod:SpellName(1296535), mod:SpellName(-35742)),
+			CL.other:format(mod:SpellName(1296535), mod:SpellName(-35764)),
+			CL.other:format(mod:SpellName(1296535), mod:SpellName(-35729)),
+		},
+		-- notes = {},
+	},
+	[1297022] = { -- Mor'zahi's Command
+		CL.over:format(mod:SpellName(47257)), -- Empower over
+		CL.other:format(mod:SpellName(47257), L.trader_gebbo), -- Empower: Gebbo
+		CL.other:format(mod:SpellName(47257), L.first_mate_nama), -- Empower: Nama
+		CL.other:format(mod:SpellName(47257), L.scrollsage_iku), -- Empower: Iku
+		original = {
+			CL.over:format(mod:SpellName(1297022)),
+			CL.other:format(mod:SpellName(1297022), mod:SpellName(-35742)),
+			CL.other:format(mod:SpellName(1297022), mod:SpellName(-35764)),
+			CL.other:format(mod:SpellName(1297022), mod:SpellName(-35729)),
+		},
+		-- notes = {},
+	},
+	[1292779] = {1292779}, -- Final Ascension
+
+	[1290711] = {1290711, CL.you:format(mod:SpellName(1290711)), original = false}, -- Blink Nova
+	[1286921] = {1286921}, -- Icebound Flames
+	[1295854] = {1295854}, -- Shredding Shards
+	[1295886] = {1295886}, -- Frostfire Volley
+	[1291390] = {1291390}, -- Cataclysmic Invocation
+
+	[1291759] = {1291759}, -- Shell Spin
+	[1296092] = {1296092}, -- Mighty Thud
+
+	[1291933] = {1291933}, -- Throw Junk
+	[1295817] = {1295817}, -- Fling Fish
+	[1292104] = {1292104}, -- Mushroom Toss
+	[1296249] = {1296249}, -- Explosive Surprise
+})
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
--- Dead in 12.1?
--- mod:SetPrivateAuraSounds({
--- })
+mod:SetPrivateAuraSounds({
+	{1295858, sound = "none", note = "Tank stacks"}, -- Shredding Shards
+	{1286922, sound = "alarm", note = "Snare/DoT"}, -- Icebound Flames
+	{1295935, sound = "warning", note = "Ice circle"}, -- Frostfire Volley (Frost)
+	{1295886, sound = "warning", note = "Fire circle"}, -- Frostfire Volley (Fire)
+	{1295954, sound = "warning", note = "Ice debuff, clear fire"}, -- Piercing Frost
+	{1295928, sound = "warning", note = "Fire debuff, clear ice"}, -- Burning Flames
+	{1297648, sound = "none", note = "Standing in ice"}, -- Ice Patch
+	{1297649, sound = "none", note = "Standing in fire"}, -- Fire Patch
 
-function mod:GetOptions()
+	{1291918, sound = "underyou", note = "Stunned"}, -- Shell Spin
+	{1296092, sound = "warning", note = "Targeted"}, -- Mighty Thud XXX not applied to players?
+
+	{1308853, sound = "none", note = "Junk stacks"}, -- Splinters
+	{1299854, sound = "none", note = "Mushroom bounce"}, -- Bounce
+	{1297625, sound = "warning", note = "Targeted"}, -- Explosive Surprise
+	{1305844, sound = "underyou", note = "Explosion DoT"}, -- Blast Wave
+})
+
+function mod:GetOptions() -- SetOption:skip-unused
 	return {
-		"berserk"
+		-- Mor'zahi
+		1296535, -- Disgusting Fish
+		1297022, -- Mor'zahi's Command
+		1292779, -- Final Ascension
+
+		-- Scrollsage Iku
+		1290711, -- Blink Nova
+		1286921, -- Icebound Flames
+		{1295854, "TANK"}, -- Shredding Shards
+		1295886, -- Frostfire Volley
+		1291390, -- Cataclysmic Invocation
+
+		-- First Mate Nama
+		1291759, -- Shell Spin
+		1296092, -- Mighty Thud
+
+		-- Trader Gebbo
+		1291933, -- Throw Junk
+		1295817, -- Fling Fish
+		1292104, -- Mushroom Toss
+		1296249, -- Explosive Surprise
+	}, {
+		[1290711] = -35729, -- Scrollsage Iku
+		[1291759] = -35764, -- First Mate Nama
+		[1291933] = -35742, -- Trader Gebbo
+		[1292779] = -35748, -- Mor'zahi
 	}
 end
 
@@ -53,19 +168,187 @@ end
 
 function mod:OnEncounterStart()
 	activeBars = {}
-	self:Message("berserk", "cyan", self.moduleName .. " engaged")
+	self:SetStage(1)
+
+	durationEventCount = {}
+	nextEmpower = nil
+	unitEmpowered = nil
+	commandCastID = nil
+	stageCount = 1
+	ascensionCount = 1
+
+	blinkNovaCount = 1
+	iceboundFlamesCount = 1
+	frostfireVolleyCount = 1
+	shellSpinCount = 1
+	mightyThudCount = 1
+	throwJunkCount = 1
+	mushroomTossCount = 1
+	explosiveSurpriseCount = 1
+
+	self:RegisterEvent("UPDATE_EXTRA_ACTIONBAR")
+	-- boss units: 1 gebbo, 2 mor'zani, 3 nama, 4 iku
+	self:RegisterUnitEvent("UNIT_FLAGS", "CheckStage", "boss1", "boss3", "boss4")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", nil, "boss2")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss2")
 end
 
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
 
-function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+do
+	local scheduled = nil
+	local events = {}
+	local function dispatch()
+		scheduled = nil
+		for i = 1, #events do
+			local eventInfo = events[i]
+			mod:Timeline(eventInfo, events)
+		end
+		table.wipe(events)
+	end
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
+		if not nextEmpower then
+			return self:Timeline(nil, eventInfo, nil)
+		end
+		-- batch events after a turtle goes friendly so we known when multiple are added to trigger the empowered phase
+		if not scheduled then
+			scheduled = true
+			C_Timer.After(0, dispatch)
+		end
+		events[#events + 1] = eventInfo
+		return false
+	end
+end
+
+function mod:Timeline(_, eventInfo, events)
+	if nextEmpower and events and #events > 3 then
+		unitEmpowered = nextEmpower
+		nextEmpower = nil
+		stageCount = stageCount + 1
+		local stage = UNIT_TO_STAGE[unitEmpowered]
+
+		self:StopBar(self:GetRename(1297022, stage)) -- Empower: Turtle
+
+		self:SetStage(stage)
+
+		blinkNovaCount = 1
+		iceboundFlamesCount = 1
+		frostfireVolleyCount = 1
+		shellSpinCount = 1
+		mightyThudCount = 1
+		throwJunkCount = 1
+		mushroomTossCount = 1
+		explosiveSurpriseCount = 1
+
+		self:Message(1297022, "cyan", self:GetRename(1297022, stage), false) -- Mor'zahi's Command: Turtle
+		local commandCD = (commandCastStart + 60) - GetTime()
+		self:Bar(1297022, commandCD, self:GetRename(1297022, 1)) -- Empower over
+		self:PlaySound(1297022, "long")
+	end
+
 	local barInfo = nil
 
+	local stage = self:GetStage()
 	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
+	local rounded = self:RoundNumber(duration, 0)
+
+	-- Unempowered
+	if stage == 1 then
+		if rounded == 60 then
+			barInfo = self:FinalAscension()
+		elseif rounded == 28 then
+			barInfo = self:FlingFish()
+			-- cancels instead of finishes
+			barInfo.timer = self:ScheduleTimer(function()
+				self:StopTimelineBar(barInfo, true)
+			end, duration)
+		elseif rounded == 20 or rounded == 4 or rounded == 27 then
+			barInfo = self:ThrowJunk(duration)
+		elseif rounded == 30 then
+			barInfo = self:ShreddingShards()
+		elseif rounded == 10 then
+			barInfo = self:BlinkNova()
+		elseif rounded == 18 or rounded == 16 or rounded == 15 then
+			barInfo = self:ShellSpin()
+		elseif rounded == 5 then
+			barInfo = self:IceboundFlames()
+		elseif rounded == 31 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] % 2 == 1 then
+				barInfo = self:IceboundFlames()
+			else
+				barInfo = self:BlinkNova()
+			end
+		end
+
+	-- Gebbu
+	elseif stage == 2 then
+		if rounded == 30 then
+			barInfo = self:ShreddingShards()
+		elseif rounded == 2 or rounded == 16 then
+			barInfo = self:IceboundFlames()
+		elseif rounded == 3 then
+			barInfo = self:MushroomToss()
+		elseif rounded == 27 or rounded == 6 then
+			barInfo = self:ThrowJunk(duration)
+		elseif rounded == 13 then
+			barInfo = self:ExplosiveSurprise()
+		elseif rounded == 11 or rounded == 17 or rounded == 15 then
+			barInfo = self:ShellSpin()
+		elseif rounded == 32 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] % 3 == 1 then
+				barInfo = self:MushroomToss()
+			elseif durationEventCount[rounded] % 3 == 2 then
+				barInfo = self:ExplosiveSurprise()
+			else
+				barInfo = self:IceboundFlames()
+			end
+		end
+
+	-- Nama
+	elseif stage == 3 then
+		if rounded == 20 or rounded == 4 or rounded == 27 then
+			barInfo = self:ThrowJunk(duration)
+		elseif rounded == 3 or rounded == 32 then
+			barInfo = self:MightyThud()
+		elseif rounded == 30 then
+			barInfo = self:ShreddingShards()
+		elseif rounded == 11 or rounded == 5 or rounded == 22 then
+			barInfo = self:IceboundFlames()
+		end
+
+	-- Ikku
+	elseif stage == 4 then
+		if rounded == 7 or rounded == 4 or rounded == 11 then
+			barInfo = self:ThrowJunk(duration)
+		elseif rounded == 30 then
+			barInfo = self:ShreddingShards()
+		elseif rounded == 2 or rounded == 13 then
+			barInfo = self:IceboundFlames()
+		elseif rounded == 17 or rounded == 16 then
+			barInfo = self:ShellSpin()
+		elseif rounded == 8 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] % 2 == 1 then
+				barInfo = self:FrostfireVolley()
+			else
+				barInfo = self:ThrowJunk(duration)
+			end
+		elseif rounded == 27 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] % 3 == 1 then
+				barInfo = self:FrostfireVolley()
+			elseif durationEventCount[rounded] % 3 == 2 then
+				barInfo = self:IceboundFlames()
+			else
+				barInfo = self:ShellSpin()
+			end
+		end
+	end
 
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
@@ -85,24 +368,24 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+	local state = C_EncounterTimeline.GetEventState(eventID)
+
 	local barInfo = activeBars[eventID]
 	if barInfo then
-		local state = C_EncounterTimeline.GetEventState(eventID)
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onFinished and self:ShouldShowBars() then
-				barInfo.onFinished()
+				barInfo:onFinished()
 			end
 		elseif state == 3 then -- Canceled
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onCanceled and self:ShouldShowBars() then
-				barInfo.onCanceled()
+				barInfo:onCanceled()
 			end
 		end
 	elseif backupBars[eventID] then
-		local state = C_EncounterTimeline.GetEventState(eventID)
 		if state == 0 then -- Enum.EncounterTimelineEventState.Active
 			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
 		elseif state == 1 then -- Enum.EncounterTimelineEventState.Paused
@@ -114,16 +397,246 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	local barInfo = activeBars[eventID]
-	if barInfo then
-		self:StopBar(barInfo.msg)
-		activeBars[eventID] = nil
-	elseif backupBars[eventID] then
-		backupBars[eventID] = nil
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-	end
+	activeBars[eventID] = nil
+	backupBars[eventID] = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+-- friendly -> ~4s -> channel stop (Empower) -> channel start (Mor'zahi's Command) -> ~2s -> timers -> enemy
+
+function mod:CheckStage(event, unit, isFriend)
+	self:Debug(event, unit, "UnitIsFriend:" .. tostring(UnitIsFriend("player", unit)), "UnitCanAttack:" .. tostring(UnitCanAttack("player", unit)))
+	if self.isWinning then return end -- they go friendly after they are all dead D; (in the gap between :Win and :Disable)
+
+	if UnitIsFriend("player", unit) or isFriend then
+		nextEmpower = unit
+		local stage = UNIT_TO_STAGE[unit]
+		self:Message(1296535, "green", self:GetRename(1296535, stage)) -- Disgusting Fish: Turtle
+		self:PlaySound(1296535, "info")
+
+		self:CDBar(1297022, 6.2, self:GetRename(1297022, stage)) -- Empower: Turtle
+
+	-- elseif nextEmpower == unit then
+	-- 	-- XXX this is after timers are started fffffuuuuuu
+	-- 	nextEmpower = nil
+	-- 	unitEmpowered = unit
+	-- 	local stage = UNIT_TO_STAGE[unit]
+
+	-- 	self:SetStage(stage)
+	-- 	self:Message(1297022, "cyan", self:GetRename(1297022, stage), false) -- Mor'zahi's Command: Turtle
+	-- 	self:Bar(1297022, 60, self:GetRename(1297022, stage))
+	-- 	self:PlaySound(1297022, "long")
+	end
+end
+
+function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
+	if nextEmpower then
+		commandCastID = castID
+		commandCastStart = GetTime()
+	end
+end
+
+function mod:UNIT_SPELLCAST_CHANNEL_STOP(event, unit, _, _, _, castID)
+	if castID and castID == commandCastID and not self:IsWiping() then
+		commandCastID = nil
+
+		self:StopBar(self:GetRename(1297022, 1)) -- Empower over
+		unitEmpowered = nil
+
+		self:SetStage(1)
+
+		-- XXX reset again?
+		-- blinkNovaCount = 1
+		-- iceboundFlamesCount = 1
+		-- frostfireVolleyCount = 1
+		-- shellSpinCount = 1
+		-- mightyThudCount = 1
+		-- throwJunkCount = 1
+		-- mushroomTossCount = 1
+		-- explosiveSurpriseCount = 1
+
+		self:Message(1297022, "green", self:GetRename(1297022, 1), false) -- Mor'zahi's Command over
+		self:PlaySound(1297022, "long")
+	end
+end
+
+do
+	local prev = 0
+	function mod:UPDATE_EXTRA_ACTIONBAR()
+		local t = GetTime()
+		if t - prev > 35 and C_ActionBar.HasExtraActionBar() then -- luacheck: ignore
+			prev = t
+			self:PersonalMessage(1296535, false, self:GetRename(1296535, 1)) -- Digusting Fish
+			self:PlaySound(1296535, "info")
+		end
+	end
+end
+
+-- Mor'zahi
+
+function mod:FinalAscension()
+	local barText = CL.count:format(self:GetRename(1292779), ascensionCount)
+	ascensionCount = ascensionCount + 1
+	return {
+		msg = barText,
+		key = 1292779,
+		onFinished = function()
+			self:Message(1292779, "red", barText)
+			self:PlaySound(1292779, "alarm")
+		end,
+	}
+end
+
+-- Scrollsage Iku
+
+function mod:BlinkNova()
+	local barText = CL.count:format(self:GetRename(1290711), blinkNovaCount)
+	blinkNovaCount = blinkNovaCount + 1
+	return {
+		msg = barText,
+		key = 1290711,
+		onFinished = function()
+			local timer = self:ScheduleTimer(function() self:Message(1290711, "yellow", barText) end, 0.35)
+			-- Scrollsage Iku targets you with [Blink Nova]!
+			self:PersonalMessageFromBlizzMessage(1290711, 0.3, false, self:GetRename(1290711, 2), nil, nil, function() self:CancelTimer(timer) end)
+		end,
+	}
+end
+
+function mod:IceboundFlames()
+	local barText = CL.count:format(self:GetRename(1286921), iceboundFlamesCount)
+	iceboundFlamesCount = iceboundFlamesCount + 1
+	return {
+		msg = barText,
+		key = 1286921,
+		onFinished = function()
+			self:Message(1286921, "yellow", barText)
+			-- local canInterrupt, ready = self:Interrupter()
+			-- if canInterrupt and ready then
+			-- 	self:PlaySound(1286921, "alert")
+			-- end
+		end,
+	}
+end
+
+function mod:ShreddingShards()
+	local barText = self:GetRename(1295854)
+	return {
+		msg = barText,
+		key = 1295854,
+		onFinished = function()
+			self:Message(1295854, "purple", barText)
+			self:PlaySound(1295854, "alert")
+		end,
+	}
+end
+
+function mod:FrostfireVolley()
+	local barText = CL.count:format(self:GetRename(1295886), frostfireVolleyCount)
+	frostfireVolleyCount = frostfireVolleyCount + 1
+	return {
+		msg = barText,
+		key = 1295886,
+		onFinished = function()
+			self:Message(1295886, "orange", barText)
+			-- self:PlaySound(1295886, "alarm")
+		end,
+	}
+end
+
+function mod:CataclysmicInvocation()
+	local barText = self:GetRename(1291390)
+	return {
+		msg = barText,
+		key = 1291390,
+		onFinished = function()
+			self:Message(1291390, "red", barText)
+			self:PlaySound(1291390, "alarm")
+		end,
+	}
+end
+
+-- First Mate Nama
+
+function mod:ShellSpin()
+	local barText = CL.count:format(self:GetRename(1291759), shellSpinCount)
+	shellSpinCount = shellSpinCount + 1
+	return {
+		msg = barText,
+		key = 1291759,
+		onFinished = function()
+			self:StopBlizzMessages(0.3) -- First Mate Nama spins [Shell Spin]!
+			self:Message(1291759, "orange", barText)
+			self:PlaySound(1291759, "alarm")
+		end,
+	}
+end
+
+function mod:MightyThud()
+	local barText = CL.count:format(self:GetRename(1296092), mightyThudCount)
+	mightyThudCount = mightyThudCount + 1
+	return {
+		msg = barText,
+		key = 1296092,
+		onFinished = function()
+			self:Message(1296092, "orange", barText)
+			self:PlaySound(1296092, "alert")
+		end,
+	}
+end
+
+-- Trader Gebbo
+
+function mod:ThrowJunk(duration)
+	local barText = CL.count:format(self:GetRename(1291933), throwJunkCount)
+	throwJunkCount = throwJunkCount + 1
+	return {
+		msg = barText,
+		key = 1291933,
+		onFinished = function()
+			self:Message(1291933, "yellow", barText)
+			self:PlaySound(1291933, "alert")
+		end,
+	}
+end
+
+function mod:FlingFish()
+	local barText = self:GetRename(1295817)
+	return {
+		msg = barText,
+		key = 1295817,
+		onFinished = function()
+			self:Message(1295817, "green", barText)
+			self:PlaySound(1295817, "info")
+		end,
+	}
+end
+
+function mod:MushroomToss()
+	local barText = CL.count:format(self:GetRename(1292104), mushroomTossCount)
+	mushroomTossCount = mushroomTossCount + 1
+	return {
+		msg = barText,
+		key = 1292104,
+		onFinished = function()
+			self:Message(1292104, "green", barText)
+			self:PlaySound(1292104, "info")
+		end,
+	}
+end
+
+function mod:ExplosiveSurprise()
+	local barText = CL.count:format(self:GetRename(1296249), explosiveSurpriseCount)
+	explosiveSurpriseCount = explosiveSurpriseCount + 1
+	return {
+		msg = barText,
+		key = 1296249,
+		onFinished = function()
+			self:Message(1296249, "red", barText)
+			self:PlaySound(1296249, "alarm")
+		end,
+	}
+end
