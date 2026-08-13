@@ -106,23 +106,28 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Shredding Shards
-	{1286922, soundOnApplied = "alarm", note = "Snare/DoT"}, -- Icebound Flames
-	{1295935, soundOnApplied = "warning", note = "Ice circle"}, -- Frostfire Volley (Frost)
-	{1295886, soundOnApplied = "warning", note = "Fire circle"}, -- Frostfire Volley (Fire)
-	{1295954, soundOnApplied = "warning", note = "Ice debuff, clear fire"}, -- Piercing Frost
-	{1295928, soundOnApplied = "warning", note = "Fire debuff, clear ice"}, -- Burning Flames
-	{1297648, soundOnApplied = "none", note = "Standing in ice"}, -- Ice Patch
-	{1297649, soundOnApplied = "none", note = "Standing in fire"}, -- Fire Patch
-
-	{1291918, soundOnApplied = "underyou", note = "Stunned"}, -- Shell Spin
-	{1296092, soundOnApplied = "warning", note = "Targeted"}, -- Mighty Thud XXX not applied to players?
-
-	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Junk stacks"}, -- Splinters
-	{1299854, soundOnApplied = "none", note = "Mushroom bounce"}, -- Bounce
-	{1297625, soundOnApplied = "warning", note = "Targeted"}, -- Explosive Surprise
-	{1305844, soundOnApplied = "underyou", note = "Explosion DoT"}, -- Blast Wave
+	{1295928, soundOnApplied = "warning", header = CL.important}, -- Burning Flames (Fire debuff, clears ice)
+	{1295954, soundOnApplied = "warning"}, -- Piercing Frost (Ice debuff, clears fire)
+	{1295935, soundOnApplied = "warning"}, -- Frostfire Volley (Frost - Targetted)
+	{1295886, soundOnApplied = "warning"}, -- Frostfire Volley (Fire - Targetted)
+	{1296025, soundOnApplied = "warning"}, -- Blink Nova (Targetted)
+	{1297625, soundOnApplied = "warning"}, -- Explosive Surprise (Targeted)
+	{1296092, soundOnApplied = "warning"}, -- Mighty Thud (Targeted) XXX not applied to players?
+	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general, note = CL.tank_debuff}, -- Shredding Shards
+	{1310500, soundOnApplied = "none"}, -- Aftershock
+	{1305844, soundOnApplied = "underyou"}, -- Blast Wave (Explosion DoT)
+	{1299854, soundOnApplied = "none"}, -- Bounce (Mushroom bounce)
+	{1291390, soundOnApplied = "none"}, -- Cataclysmic Invocation
+	{1295952, soundOnApplied = "none"}, -- Elemental Explosion
+	{1297649, soundOnApplied = "none"}, -- Fire Patch (Standing in ice)
+	{1297648, soundOnApplied = "none"}, -- Frost Patch (Standing in fire)
+	{1286922, soundOnApplied = "alarm"}, -- Icebound Flames
+	{1291918, soundOnApplied = "underyou"}, -- Shell Spin (Stunned)
+	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Splinters (Junk stacks)
+	{1297650, soundOnApplied = "none"}, -- Spreading Flames
+	{1291929, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Steady Strikes
 })
+
 
 function mod:GetOptions() -- SetOption:skip-unused
 	return {
