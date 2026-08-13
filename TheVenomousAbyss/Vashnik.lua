@@ -49,22 +49,21 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1282117, soundOnApplied = "none"}, -- Adaptive Infection
-	{1285979, soundOnApplied = "none"}, -- Caustic Surge
-	{1290036, soundOnApplied = "none"}, -- Caustic Venom
-	{1302517, soundOnApplied = "none"}, -- Clotting Blood
-	{1305833, soundOnApplied = "none"}, -- Congealing Bolt
-	{1299462, soundOnApplied = "none"}, -- Corrosive Effluvium
-	{1297338, soundOnApplied = "none"}, -- Deadly Venom
-	{1280934, soundOnApplied = "none"}, -- Dripping Fangs
-	{1295173, soundOnApplied = "none"}, -- Exploding Infection
-	{1280189, soundOnApplied = "none"}, -- Malignant Burst
-	{1281908, 1281910, 1281913, 1282078, soundOnApplied = "none"}, -- Plague Froth
-	{1295224, 1295380, soundOnApplied = "none"}, -- Siphoning Infection
+	{1295173, soundOnApplied = "warning", header = CL.important, note = CL.dispel}, -- Exploding Infection
+	{1281908, 1281910, 1281913, 1282078, soundOnApplied = "warning"}, -- Plague Froth
+	{1295224, soundOnApplied = "warning"}, -- Siphoning Infection (Main debuff)
+	{1280934, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general, note = CL.tank_debuff}, -- Dripping Fangs
+	{1295380, soundOnApplied = "info"}, -- Siphoning Infection (Healing main debuffed player)
 	{1294994, soundOnApplied = "none"}, -- Stygian Infection
-	{1304459, soundOnApplied = "none", mythic = true}, -- Tumor Burst
-	{1291461, soundOnApplied = "none"}, -- Virulent Fumes
+	{1282117, soundOnApplied = "none"}, -- Adaptive Infection
+	{1304459, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, note = CL.mythic}, -- Malignance
+	{1297338, soundOnApplied = "underyou"}, -- Deadly Venom (Standing in venom?)
+	{1291461, soundOnApplied = "underyou"}, -- Virulent Fumes
+	{1285979, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.adds}, -- Caustic Surge
+	{1280189, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Malignant Burst
+	{1305833, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Congealing Bolt
 })
+
 
 function mod:GetOptions()
 	return {
