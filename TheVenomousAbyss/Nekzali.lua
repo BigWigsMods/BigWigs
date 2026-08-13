@@ -99,11 +99,24 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Hollowing Strikes
-	{1287434, soundOnApplied = "warning"}, -- Essence Rend
-	{1292036, soundOnApplied = "warning"}, -- Possession Barrage
-	{1306666, soundOnApplied = "warning"}, -- Hungering Pyre
-	{1294933, soundOnApplied = "alarm", note = "Didn't soak Pyre; Corse burning debuff"}, -- Slithering Flame
+	{1306666, soundOnApplied = "warning", header = CL.important}, -- Hungering Pyre
+	{1284103, soundOnApplied = "warning"}, -- Possession Barrage
+	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Hollowing Strikes -- Tank Stacks
+	{1287434, soundOnApplied = "warning", header = CL.general}, -- Essence Rend
+	{1298698, soundOnApplied = "none"}, -- Residual Toll
+	{1297624, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Ritual Burn
+	{1288772, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Soulcoil Rite
+	{1285623, soundOnApplied = "none"}, -- Soulcoil Well
+	{1293214, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, note = CL.mythic}, -- Grasping Depths
+	{1300524, 1300521, soundOnApplied = "none", mythic = true, note = CL.mythic}, -- Immortal Coil
+	{1299988, soundOnApplied = "none", mythic = true, note = CL.mythic}, -- Immortal Coil
+	{1290361, 1292751, soundOnApplied = "none", mythic = true, note = CL.mythic}, -- Soulcoiled
+	{1300235, soundOnApplied = "none", mythic = true, note = CL.mythic}, -- Soul Exhaustion
+	{1300239, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, note = CL.mythic}, -- Swirling Spirit
+	{1307939, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.intermission}, -- Corpse Blight
+	{1289875, soundOnApplied = "none"}, -- Cremation
+	{1288554, soundOnApplied = "none"}, -- Latent Cultist
+	{1294933, soundOnApplied = "alarm"}, -- Slithering Flame -- Note: Failed Soaking
 })
 
 function mod:GetOptions()
