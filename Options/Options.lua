@@ -1656,7 +1656,7 @@ do
 				end
 
 				if showPATab then
-					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private:18:18:-2:-1|t"
+					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash:16:16:-2:-2|t"
 					table.insert(tabInfo, { text = iconText .. (BigWigsLoader.isNext and L.auras or L.privateAuras), value = "auras" })
 					tabOptions["auras"] = module.privateAuraSoundOptions -- Old Private Aura options
 				end
