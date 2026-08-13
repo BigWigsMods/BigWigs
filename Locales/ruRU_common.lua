@@ -379,3 +379,6 @@ L.tank_hit = "Танк Удар" -- An attack that will only target the tank, us
 L.tank_knockback = "Танк Отталкивание" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Танк Соак" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "Танк Притяжка" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+
+-- Aura Sections
+--L.important = "Important" -- High priority debuffs

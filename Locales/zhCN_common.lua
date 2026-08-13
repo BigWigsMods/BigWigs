@@ -379,3 +379,6 @@ L.tank_hit = "命中坦克" -- An attack that will only target the tank, usually
 L.tank_knockback = "坦克击退" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "坦克分摊" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "拉拽坦克" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+
+-- Aura Sections
+--L.important = "Important" -- High priority debuffs

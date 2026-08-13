@@ -379,3 +379,6 @@ L.tank_hit = "Golpe de Tanque" -- An attack that will only target the tank, usua
 L.tank_knockback = "Retroceso de Tanque" -- Similar to L.knockback but only applies to tanks"
 L.tank_soak = "Soak de Tanque" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "Agarre al Tanque" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
+
+-- Aura Sections
+--L.important = "Important" -- High priority debuffs
