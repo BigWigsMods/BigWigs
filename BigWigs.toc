@@ -115,8 +115,8 @@ Sporefall\Rotmire.lua
 Sporefall\!Options.lua
 TheVenomousAbyss\Nekzali.lua
 TheVenomousAbyss\Sentinels.lua
-TheVenomousAbyss\Vashnik.lua
 TheVenomousAbyss\Explorers.lua
+TheVenomousAbyss\Vashnik.lua
 TheVenomousAbyss\Sszorak.lua
 TheVenomousAbyss\TwinFangs.lua
 TheVenomousAbyss\CoiledAltar.lua
