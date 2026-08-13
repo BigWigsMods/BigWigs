@@ -59,7 +59,7 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1284590, soundOnApplied = "warning", soundOnAppliedDose = "none", header = CL.imporant}, -- Helical Toxins
+	{1284590, soundOnApplied = "warning", soundOnAppliedDose = "none", header = CL.important}, -- Helical Toxins
 	{1296880, soundOnApplied = "warning", mythic = true, note = CL.mythic}, -- Shifting Protovenom
 	{1288260, soundOnApplied = "warning"}, -- Unstable Miasma
 	{1284471, soundOnApplied = "alarm", header = CL.general}, -- Blighted Blood -- DoT; Drops pool when removed
