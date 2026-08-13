@@ -59,19 +59,16 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
+	{1284590, soundOnApplied = "warning", soundOnAppliedDose = "none", header = CL.imporant}, -- Helical Toxins
+	{1296880, soundOnApplied = "warning", mythic = true, note = CL.mythic}, -- Shifting Protovenom
+	{1288260, soundOnApplied = "warning"}, -- Unstable Miasma
+	{1284471, soundOnApplied = "alarm", header = CL.general}, -- Blighted Blood -- DoT; Drops pool when removed
+	{1284210, soundOnApplied = "underyou"}, -- Blood Venom -- Standing in bad
+	{1284491, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Bloodvenom Injection -- Tank stacks; Drops pool when expires
+	{1288297, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Clinging Murk -- Soaked Miasma; Drops pool when expires
+	{1284947, soundOnApplied = "none"}, -- Cultivated Burst -- Fail DoT
 	{1284500, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Mark of Acid
 	{1284506, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Mark of Blood
-
-	{1284210, soundOnApplied = "none", note = "Standing in bad"}, -- Blood Venom
-	{1288260, soundOnApplied = "warning"}, -- Unstable Miasma
-	{1288297, soundOnApplied = "none", note = "Soaked Miasma; Drops pool when expires"}, -- Clinging Murk
-	{1284471, soundOnApplied = "alarm", note = "DoT; Drops pool when removed"}, -- Blighted Blood
-	{1284491, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks; Drops pool when expires"}, -- Bloodvenom Injection
-
-	{1296880, soundOnApplied = "warning", mythic = true}, -- Shifting Protovenom
-
-	{1284590, soundOnApplied = "warning"}, -- Helical Toxins
-	{1284947, soundOnApplied = "none", note = "Fail DoT"}, -- Cultivated Burst
 })
 
 function mod:GetOptions()
