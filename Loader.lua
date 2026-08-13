@@ -174,6 +174,7 @@ public.UnitIsPlayer = UnitIsPlayer
 public.UnitLevel = UnitLevel
 public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
+public.UnitClassification = UnitClassification
 public.UnitTokenFromGUID = UnitTokenFromGUID
 public.Print = sysprint
 public.isTestBuild = IsPublicTestClient() -- PTR/beta
