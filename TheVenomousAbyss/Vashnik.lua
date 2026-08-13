@@ -50,7 +50,7 @@ mod:SetRenames({
 
 mod:SetAuraData({
 	{1295173, soundOnApplied = "warning", header = CL.important, note = CL.dispel}, -- Exploding Infection
-	{1281908, 1281910, 1281913, 1282078, soundOnApplied = "warning"}, -- Plague Froth
+	{1281908, 1281913, soundOnApplied = "warning"}, -- Plague Froth (Heroic & Mythic)
 	{1295224, soundOnApplied = "warning"}, -- Siphoning Infection (Main debuff)
 	{1280934, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general, note = CL.tank_debuff}, -- Dripping Fangs
 	{1295380, soundOnApplied = "info"}, -- Siphoning Infection (Healing main debuffed player)
