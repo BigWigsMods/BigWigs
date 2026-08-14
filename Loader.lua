@@ -465,6 +465,7 @@ do
 		[2913] = mn, -- March on Quel'Danas
 		[2939] = mn, -- The Dreamrift
 		[1592] = mn, -- Sporefall
+		[2987] = mn, -- The Tidebound Grotto
 		[3004] = public.isNext and mn or nil, -- The Venomous Abyss
 
 
