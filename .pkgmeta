@@ -29,6 +29,7 @@ move-folders:
     BigWigs/MidnightWorld: BigWigs_MidnightWorld
     BigWigs/Sporefall: BigWigs_Sporefall
     BigWigs/TheVenomousAbyss: BigWigs_TheVenomousAbyss
+    BigWigs/MidnightLairs: BigWigs_MidnightLairs
 
 ignore:
   - gen_option_values.lua

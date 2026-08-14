@@ -122,4 +122,6 @@ TheVenomousAbyss\TwinFangs.lua
 TheVenomousAbyss\CoiledAltar.lua
 TheVenomousAbyss\Ulatek.lua
 TheVenomousAbyss\!Options.lua
+MidnightLairs\Nymrissa.lua
+MidnightLairs\!Options.lua
 #@end-do-not-package@
