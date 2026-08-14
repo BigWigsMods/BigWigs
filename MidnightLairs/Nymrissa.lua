@@ -41,7 +41,6 @@ mod:SetRenames({
 	[1257608] = {1257608}, -- Frost Barrage
 	[1258668] = {1258668}, -- Tidepiercer's Rush
 	[1260837] = {1260837}, -- Abyssal Rain
-	[1276710] = {1276710}, -- Call of the bubble
 	[1282937] = {1282937}, -- Water Flurry
 	-- Mythic
 	[1268562] = {CL.tank_hit}, -- Water Jet
@@ -65,12 +64,10 @@ mod:SetAuraData({
 
 function mod:GetOptions()
 	return {
-		"berserk",
 		1257717, -- Alluring Bubble
 		1257608, -- Frost Barrage
 		1258668, -- Tidepiercer's Rush
 		1260837, -- Abyssal Rain
-		1276710, -- Call of the bubble
 		1282937, -- Water Flurry
 
 		-- Mythic
