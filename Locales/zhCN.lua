@@ -366,6 +366,7 @@ L.H10 = "10人英雄"
 L.H25 = "25人英雄"
 L.titan = "25人泰坦" -- Chinese-only "Titan Reforged" servers
 L.mythic_flex = "史诗（弹性）" -- 233. 史诗 - 弹性团队副本
+--L.world = "World" -- World (The first difficulty for Lairs in Retail WoW, essentially the same as LFR since its World -> Normal -> Heroic -> Mythic)
 
 -----------------------------------------------------------------------
 -- TOOLS

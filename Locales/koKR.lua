@@ -366,6 +366,7 @@ L.H10 = "영웅 10"
 L.H25 = "영웅 25"
 L.titan = "티탄" -- Chinese-only "Titan Reforged" servers
 L.mythic_flex = "신화 (탄력)" -- Mythic (Flexible 15-25 player raids)
+--L.world = "World" -- World (The first difficulty for Lairs in Retail WoW, essentially the same as LFR since its World -> Normal -> Heroic -> Mythic)
 
 -----------------------------------------------------------------------
 -- TOOLS
