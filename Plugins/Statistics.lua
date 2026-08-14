@@ -35,6 +35,7 @@ local difficultyTable = {
 	[226] = "SOD", -- 20 Player (Molten Core & ZG - Classic Season of Discovery)
 	[233] = "mythic_flex", -- Mythic (Flexible 15-25 player raids)
 	[244] = "titan", -- Raid: 25 Titan-Reforged
+	[250] = "world", -- World (Lair bosses on retail wow)
 }
 local GetTime, date = GetTime, BigWigsLoader.date
 local dontPrint = { -- Don't print a warning message for these difficulties
@@ -51,7 +52,7 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 }
 
 --[[
-12.0.7
+12.1.0
 1. Normal
 2. Heroic
 3. 10 Player
@@ -101,15 +102,17 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 220. Story
 230. Heroic
 232. Event
-233. Mythic - Flexible-Scaling
+233. Mythic - Flexible Raiding
 236. Lorewalking
 241. Lorewalking
 245. Decor Duel
 247. Decor Duel
 248. RENAME Event
+250. World
 251. Decor Duel
 253. Decor Duel
 254. Naigtal
+257. Timewalking
 
 5.5.3
 1. Normal
