@@ -148,10 +148,10 @@ L.compartmentMenu_desc = "Désactive cette option rendra BigWigs visible dans le
 L.configure = "Configuration"
 L.resetPositions = "Réinitialiser les positions"
 L.selectEncounter = "Sélectionnez une rencontre"
---L.auras = "Auras" -- Buffs/Debuffs
---L.onApplied = "On Applied"
---L.onDose = "On Dose"
---L.onRemoved = "On Removed"
+L.auras = "Auras" -- Buffs/Debuffs
+L.onApplied = "À l'application"
+L.onDose = "Sur les doses"
+L.onRemoved = "Lorsque retiré"
 L.privateAuraSounds = "Sons privés d'aura"
 L.privateAuraSounds_desc = "Les auras privées ne peuvent être traquées normalement, mais vous pouvez paramétrer un son à jouer lorsque l'affaiblissement vous est appliqué."
 L.listAbilities = "Lister les techniques dans la discussion de groupe"
@@ -318,8 +318,8 @@ L.sharing_renames_desc = "Importer les renommages personnalisés configurés."
 L.sharing_export_renames_desc = "Exporter les renommages personnalisés configurés."
 L.sharing_sounds_desc = "Importe des sons à jouer pour les techniques."
 L.sharing_export_sounds_desc = "Export des sons à jouer pour les techniques."
---L.sharing_auras = "Auras"
---L.sharing_auras_desc = "Import the configured aura sounds."
+L.sharing_auras = "Auras"
+L.sharing_auras_desc = "Importer les sons configurés d'aura."
 L.sharing_export_private_auras_desc = "Exporte des sons des auras privées configurées."
 L.sharing_colors_desc = "Importe des paramètres de couleurs des barres et messages."
 L.sharing_export_colors_desc = "Exporte des paramètres de couleurs des barres et messages."
@@ -366,7 +366,7 @@ L.H10 = "Héroïque 10"
 L.H25 = "Héroïque 25"
 L.titan = "Titan" -- Chinese-only "Titan Reforged" servers
 L.mythic_flex = "Mythique (Flexible)" -- Mythic (Flexible 15-25 player raids)
---L.world = "World" -- World (The first difficulty for Lairs in Retail WoW, essentially the same as LFR since its World -> Normal -> Heroic -> Mythic)
+L.world = "Monde" -- World (The first difficulty for Lairs in Retail WoW, essentially the same as LFR since its World -> Normal -> Heroic -> Mythic)
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -1126,17 +1126,17 @@ L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_rai
 L.privateAurasTestAnchorText = "Aura\nPrivée\n%d"
 L.privateAurasTestTankAnchorText = "Aura\nTank\n%d"
 
---L.auraSounds = "Aura Sounds"
---L.addAuraSpell = "Add Spell"
---L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
---L.invalidSpell = "Invalid spell"
---L.bossDebuffsOnYou = "Boss Debuffs On You"
---L.bossDebuffsOnTank = "Boss Debuffs On Tank"
---L.showCountText = "Show Stacks"
---L.cooldownText = "Cooldown Duration"
---L.countText = "Applications"
+L.auraSounds = "Sons d'aura"
+L.addAuraSpell = "Ajouter un sort"
+L.addAuraSpellDesc = "Vous pouvez ajouter des sorts que vous connaissez par leur nom, mais il vaut mieux utiliser l'identifiant provenant des logs."
+L.invalidSpell = "Sort invalide"
+L.bossDebuffsOnYou = "Affaiblissements de Boss sur Vous"
+L.bossDebuffsOnTank = "Affaiblissements de Boss sur le Tank"
+L.showCountText = "Afficher les Stacks"
+L.cooldownText = "Temps de recharge"
+L.countText = "Applications"
 L.unit = "Unité"
---L.trigger = "Trigger"
+L.trigger = "Déclencheur"
 L.remove = "Supprimer"
 
 -----------------------------------------------------------------------
