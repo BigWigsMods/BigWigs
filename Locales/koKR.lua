@@ -148,10 +148,10 @@ L.compartmentMenu_desc = "이 옵션을 끄면 BigWigs 아이콘이 애드온 �
 L.configure = "구성"
 L.resetPositions = "위치 초기화"
 L.selectEncounter = "보스 전투 선택"
---L.auras = "Auras" -- Buffs/Debuffs
---L.onApplied = "On Applied"
---L.onDose = "On Dose"
---L.onRemoved = "On Removed"
+L.auras = "오라" -- Buffs/Debuffs
+L.onApplied = "적용 시"
+L.onDose = "효과 발동 시"
+L.onRemoved = "제거 시"
 L.privateAuraSounds = "비공개 오라 소리"
 L.privateAuraSounds_desc = "비공개 오라는 일반적으로 추적할 수 없지만, 해당 능력의 디버프가 자신에게 적용될 때 소리가 재생되도록 설정할 수 있습니다."
 L.listAbilities = "파티/공격대 대화에 능력 나열하기"
@@ -318,8 +318,8 @@ L.sharing_renames_desc = "구성된 사용자 지정 이름 변경 규칙을 가
 L.sharing_export_renames_desc = "구성된 사용자 지정 이름 변경 규칙을 내보냅니다."
 L.sharing_sounds_desc = "능력에 재생할 사운드를 가져옵니다."
 L.sharing_export_sounds_desc = "능력에 재생할 사운드를 내보냅니다."
---L.sharing_auras = "Auras"
---L.sharing_auras_desc = "Import the configured aura sounds."
+L.sharing_auras = "오라"
+L.sharing_auras_desc = "설정된 오라 사운드를 가져옵니다."
 L.sharing_export_private_auras_desc = "설정된 비공개 오라 사운드를 내보냅니다."
 L.sharing_colors_desc = "바와 메시지의 색상 설정을 가져옵니다."
 L.sharing_export_colors_desc = "바와 메시지의 색상 설정을 내보냅니다."
@@ -366,7 +366,7 @@ L.H10 = "영웅 10"
 L.H25 = "영웅 25"
 L.titan = "티탄" -- Chinese-only "Titan Reforged" servers
 L.mythic_flex = "신화 (탄력)" -- Mythic (Flexible 15-25 player raids)
---L.world = "World" -- World (The first difficulty for Lairs in Retail WoW, essentially the same as LFR since its World -> Normal -> Heroic -> Mythic)
+L.world = "월드" -- World (The first difficulty for Lairs in Retail WoW, essentially the same as LFR since its World -> Normal -> Heroic -> Mythic)
 
 -----------------------------------------------------------------------
 -- TOOLS
@@ -1126,17 +1126,17 @@ L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_rai
 L.privateAurasTestAnchorText = "오라\n%d"
 L.privateAurasTestTankAnchorText = "탱커\n오라\n%d"
 
---L.auraSounds = "Aura Sounds"
---L.addAuraSpell = "Add Spell"
---L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
---L.invalidSpell = "Invalid spell"
---L.bossDebuffsOnYou = "Boss Debuffs On You"
---L.bossDebuffsOnTank = "Boss Debuffs On Tank"
---L.showCountText = "Show Stacks"
---L.cooldownText = "Cooldown Duration"
---L.countText = "Applications"
+L.auraSounds = "오라 효과음"
+L.addAuraSpell = "주문 추가"
+L.addAuraSpellDesc = "현재 알고 있는 주문을 이름으로 추가할 수 있지만, 로그에 표시된 주문 ID를 사용하는 것이 항상 가장 좋습니다."
+L.invalidSpell = "유효하지 않은 주문"
+L.bossDebuffsOnYou = "보스 디버프 적용됨"
+L.bossDebuffsOnTank = "탱커에게 적용된 보스 디버프"
+L.showCountText = "중첩 수 표시"
+L.cooldownText = "재사용 대기 시간"
+L.countText = "적용 횟수"
 L.unit = "유닛"
---L.trigger = "Trigger"
+L.trigger = "발동 조건"
 L.remove = "추방"
 
 -----------------------------------------------------------------------
