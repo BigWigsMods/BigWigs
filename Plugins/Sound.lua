@@ -376,6 +376,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Sound")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
+	self:RegisterMessage("BigWigs_RefreshAuraSounds")
 	if BigWigsLoader.isRetail then
 		self:RegisterEvent("ENCOUNTER_WARNING")
 		self:RegisterMessage("BigWigs_BlockBlizzMessages")
@@ -396,6 +397,13 @@ end
 -- Functions for Aura Sounds
 function plugin:BigWigs_BossModuleRegistered(_, bossModule, currentInstanceID)
 	if bossModule:IsZoneID(currentInstanceID) and bossModule:HasAuraData() and not registeredAuraModules[bossModule] then
+		self:RegisterAuraSounds(bossModule)
+	end
+end
+
+function plugin:BigWigs_RefreshAuraSounds(_, bossModule)
+	if registeredAuraModules[bossModule] then
+		self:UnregisterAuraSounds(bossModule)
 		self:RegisterAuraSounds(bossModule)
 	end
 end
