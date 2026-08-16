@@ -1359,7 +1359,7 @@ do
 				local hasAuraData = module:HasAuraData()
 				if hasAuraData then
 					for i = 1, module:GetAuraCount() do
-						local spellID = module:GetAuraSpellID(i)
+						local spellID = module:GetAuraPrimarySpellIDByIndex(i)
 						local header = module:GetAuraHeader(spellID)
 						if header then
 							local headerWidget = AceGUI:Create("Heading")
@@ -1388,7 +1388,7 @@ do
 					if hasAuraData then
 						local resetSettings = {}
 						for i = 1, module:GetAuraCount() do
-							local spellID = module:GetAuraSpellID(i)
+							local spellID = module:GetAuraPrimarySpellIDByIndex(i)
 							resetSettings[spellID] = {
 								soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
 								soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
