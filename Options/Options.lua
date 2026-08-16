@@ -1136,9 +1136,6 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	local module = widget:GetUserData("module")
 	local soundList = LibSharedMedia:List("sound")
 	value = soundList[value]
-	if value == default then
-		value = nil
-	end
 
 	local auraDB = module.db.profile["auras"]
 	auraDB[key] = auraDB[key] or {}
@@ -1169,11 +1166,8 @@ local function getAuraOptions(module, spellID)
 	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
 	local defaultAppliedSound = module:GetAuraAppliedSoundDefault(spellID)
-	defaultAppliedSound = defaultAppliedSound or soundModule:GetDefaultSound(defaultAppliedSound)
 	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
-	defaultDoseSound = defaultDoseSound or soundModule:GetDefaultSound(defaultDoseSound)
 	local defaultRemovedSound = module:GetAuraRemovedSoundDefault(spellID)
-	defaultRemovedSound = defaultRemovedSound or soundModule:GetDefaultSound(defaultRemovedSound)
 	local hasDoseSound = defaultDoseSound ~= nil
 
 	local name = loader.GetSpellName(spellID)

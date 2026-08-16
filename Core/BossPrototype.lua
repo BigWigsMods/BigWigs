@@ -29,6 +29,7 @@ end
 local BigWigsAPI = BigWigsAPI
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization")
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local loader = BigWigsLoader
 local season = loader.season
 local isClassic, isRetail, isVanilla, isTBC, isWrath, isCata, isMists = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isTBC, loader.isWrath, loader.isCata, loader.isMists
@@ -467,7 +468,7 @@ do
 	local RemoveAuraSound = BigWigsLoader.isNext and C_UnitAuras.RemoveAuraSound or C_UnitAuras.RemovePrivateAuraAppliedSound
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
 	function boss:RegisterAuraSounds()
-		if (not self:HasAuraData()) and not self:HasPrivateAuraSounds() then return end
+		if not self:HasAuraData() and not self:HasPrivateAuraSounds() then return end
 
 		if InChatMessagingLockdown() then
 			modulesNeedingUpdated[self] = true
@@ -476,12 +477,7 @@ do
 		end
 
 		-- Unregister previous sounds
-		if self.privateAuraSounds then
-			for i = 1, #self.privateAuraSounds do
-				RemoveAuraSound(self.privateAuraSounds[i])
-			end
-			self.privateAuraSounds = nil
-		end
+		self:RemoveAuraSounds()
 
 		local soundModule = plugins.Sounds
 		if not soundModule then return end
@@ -491,32 +487,25 @@ do
 			local spellIDList = self:GetAuraSpellIDToIndexList()
 			for spellId in next, spellIDList do
 				local soundsToRegister = {}
-				local onAppliedSound = self:GetAuraAppliedSound(spellId)
-				local onStackSound = self:GetAuraAppliedDoseSound(spellId)
-				local onRemovedSound = self:GetAuraRemovedSound(spellId)
-				if onAppliedSound then
-					soundsToRegister.onApplied = soundModule:GetDefaultSoundFile(onAppliedSound)
-				end
-				if onStackSound then
-					soundsToRegister.onStack = soundModule:GetDefaultSoundFile(onStackSound)
-				end
-				if onRemovedSound then
-					soundsToRegister.onRemoved = soundModule:GetDefaultSoundFile(onRemovedSound)
-				end
+				soundsToRegister.onApplied = LibSharedMedia:Fetch("sound", self:GetAuraAppliedSound(spellId), true)
+				soundsToRegister.onStack = LibSharedMedia:Fetch("sound", self:GetAuraAppliedDoseSound(spellId), true)
+				soundsToRegister.onRemoved = LibSharedMedia:Fetch("sound", self:GetAuraRemovedSound(spellId), true)
 				for k, v in next, soundsToRegister do
-					local UnitAuraSoundInfo = {
-						spellID = spellId,
-						unitToken = "player",
-						outputChannel = "master",
-					}
-					if type(v) == "string" then
-						UnitAuraSoundInfo.soundFileName = v
-					else
-						UnitAuraSoundInfo.soundFileID = v
-					end
-					local privateAuraSoundID = AddAuraSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
-					if privateAuraSoundID ~= nil then
-						self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+					if v ~= 1 then -- "None", skip registering
+						local UnitAuraSoundInfo = {
+							spellID = spellId,
+							unitToken = "player",
+							outputChannel = "master",
+						}
+						if type(v) == "string" then
+							UnitAuraSoundInfo.soundFileName = v
+						else
+							UnitAuraSoundInfo.soundFileID = v
+						end
+						local privateAuraSoundID = AddAuraSound(UnitAuraSoundTriggerMap[k], UnitAuraSoundInfo)
+						if privateAuraSoundID ~= nil then
+							self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
+						end
 					end
 				end
 			end
@@ -556,6 +545,14 @@ do
 				end
 			end
 		end
+	end
+
+	function boss:RemoveAuraSounds()
+		if not self.privateAuraSounds then return end
+		for i = 1, #self.privateAuraSounds do
+			RemoveAuraSound(self.privateAuraSounds[i])
+		end
+		self.privateAuraSounds = nil
 	end
 end
 
@@ -693,6 +690,7 @@ function boss:Enable(isWipe)
 		enabledModules[#enabledModules+1] = self
 
 		if self.SetupOptions then self:SetupOptions() end
+		self:RegisterAuraSounds()
 
 		if self:GetEncounterID() then
 			if not self:Retail() then
@@ -780,6 +778,8 @@ function boss:Disable(isWipe)
 		for _, tbl in next, self.sayCountdowns do
 			tbl[1] = true
 		end
+
+		self:RemoveAuraSounds()
 
 		self.sayCountdowns = nil
 		self.scheduledMessages = nil
