@@ -652,7 +652,7 @@ do
 				if module:HasAuraData() then
 					local count = module:GetAuraCount()
 					for i = 1, count do
-						local spellID = module:GetAuraSpellID(i)
+						local spellID = module:GetAuraPrimarySpellIDByIndex(i)
 						auras[spellID] = {
 							soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
 							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
@@ -705,7 +705,7 @@ do
 				end
 				-- Option validation for auras
 				for auraSpellID, auraTable in next, module.db.profile.auras do
-					if not module:IsAuraDataAvailable(auraSpellID) then
+					if not module:IsAuraDataAvailable(auraSpellID) or module:GetAuraPrimarySpellIDBySpellID(auraSpellID) ~= auraSpellID then
 						module.db.profile.auras[auraSpellID] = nil
 					elseif type(auraTable) ~= "table" then
 						module.db.profile.auras[auraSpellID] = {

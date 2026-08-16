@@ -1206,14 +1206,26 @@ do
 		return 0
 	end
 
-	--- Get the spell ID of an aura based on its index in the aura list.
+	--- Get the primary spell ID of an aura via its index in the aura list.
 	-- @return number or nil
-	function boss:GetAuraSpellID(index)
+	function boss:GetAuraPrimarySpellIDByIndex(index)
 		if not moduleAurasList[self] or not moduleAurasList[self][index] then
 			error(("Module %q has no aura data for index %s."):format(self.moduleName, tostring(index)))
 			return
 		end
 		return moduleAurasList[self][index][1]
+	end
+
+	--- Get the primary spell ID of an aura via any/secondary spell ID.
+	-- @return number or nil
+	function boss:GetAuraPrimarySpellIDBySpellID(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %s."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+		local primarySpellID = moduleAurasList[self][index][1]
+		return primarySpellID
 	end
 
 	--- Get the list of all spell IDs using the aura system for this module.
