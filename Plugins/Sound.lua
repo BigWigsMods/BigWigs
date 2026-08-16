@@ -401,7 +401,7 @@ function plugin:BigWigs_BossModuleRegistered(_, bossModule, currentInstanceID)
 end
 
 do
-	local GetInstanceInfo = BigWigsLoader.GetInstanceInfo()
+	local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 	function plugin:CheckAllBossModulesForAuraSounds()
 		local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 		for _, bossModule in BigWigs:IterateBossModules() do
