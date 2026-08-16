@@ -724,6 +724,7 @@ do
 			else
 				bossesPendingInit[moduleName] = nil
 				module.SetupOptions = moduleOptions
+				module:SetupOptions()
 
 				-- Call the module's OnRegister (which is our OnInitialize replacement)
 				if type(module.OnRegister) == "function" then
