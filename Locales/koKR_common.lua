@@ -381,4 +381,4 @@ L.tank_soak = "탱커 맞아주기" -- Similar to L.soak but only applies to tan
 L.tank_grip = "탱커 당기기" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
 
 -- Aura Sections
---L.important = "Important" -- High priority debuffs
+L.important = "중요" -- High priority debuffs
