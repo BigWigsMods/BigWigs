@@ -494,104 +494,16 @@ function boss:GetAllowWin()
 	return self.allowWin and true or false
 end
 
---- Set private aura spell IDs.
+--- Set private aura spell IDs. [DEPRECATED]
 -- @param spellIDTable the options table
 function boss:SetPrivateAuraSounds(spellIDTable)
-	for i = 1, #spellIDTable do
-		local spellId = spellIDTable[i]
-		local idType = type(spellId)
-		if idType == "number" then
-			spellIDTable[i] = { spellId }
-		elseif idType ~= "table" then
-			core:Error(("Module %s tried to add an invalid private aura spell id at position #%d. Expected number or table, got %s."):format(self.moduleName, i, idType))
-		end
-	end
-	self.privateAuraSoundOptions = spellIDTable
+	return false
 end
 
---- Check if a module has private aura sounds.
+--- Check if a module has private aura sounds. [DEPRECATED]
 -- @return boolean
 function boss:HasPrivateAuraSounds()
-	if self.privateAuraSoundOptions then
-		return true
-	end
-end
-
-do
-	local modulesNeedingUpdated = {}
-	local frame = CreateFrame("Frame")
-	frame:SetScript("OnEvent", function(self, event, restrictionType, state)
-		if restrictionType == 5 and state == 0 then
-			self:UnregisterEvent(event)
-			for module in next, modulesNeedingUpdated do
-				module:RegisterAuraSounds()
-			end
-			modulesNeedingUpdated = {}
-		end
-	end)
-	--C_RestrictedActions.IsAddOnRestrictionActive(1) -- Enum.AddOnRestrictionType.Encounter = 1
-	local AddPrivateAuraAppliedSound = C_UnitAuras.AddPrivateAuraAppliedSound
-	local RemovePrivateAuraAppliedSound = C_UnitAuras.RemovePrivateAuraAppliedSound
-	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end
-	function boss:RegisterAuraSounds()
-		if not self:HasPrivateAuraSounds() then return end
-
-		if InChatMessagingLockdown() then
-			modulesNeedingUpdated[self] = true
-			frame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
-			return
-		end
-
-		-- Unregister previous sounds
-		if self.privateAuraSounds then
-			for i = 1, #self.privateAuraSounds do
-				RemovePrivateAuraAppliedSound(self.privateAuraSounds[i])
-			end
-			self.privateAuraSounds = nil
-		end
-
-		local soundModule = plugins.Sounds
-		if not soundModule then return end
-
-		self.privateAuraSounds = {}
-		for _, opt in next, self.privateAuraSoundOptions do
-			local key = opt[1]
-			local sound
-			if opt.sound then
-				-- use the spell table default if the sound hasn't been changed in the config
-				local sDB = soundModule.db.profile["privateaura"]
-				if not sDB[self.name] or not sDB[self.name][key] then
-					sound = soundModule:GetDefaultSoundFile(opt.sound)
-				end
-			end
-			if not sound then
-				sound = soundModule:GetSoundFile(self, key, "privateaura")
-			end
-			if sound then
-				for i = 1, #opt do
-					local privateAuraSoundID
-					if type(sound) == "string" then -- sound file path
-						privateAuraSoundID = AddPrivateAuraAppliedSound({
-							spellID = opt[i],
-							unitToken = "player",
-							soundFileName = sound,
-							outputChannel = "master",
-						})
-					else -- sound file id
-						privateAuraSoundID = AddPrivateAuraAppliedSound({
-							spellID = opt[i],
-							unitToken = "player",
-							soundFileID = sound,
-							outputChannel = "master",
-						})
-					end
-					if privateAuraSoundID then
-						self.privateAuraSounds[#self.privateAuraSounds + 1] = privateAuraSoundID
-					end
-				end
-			end
-		end
-	end
+	return false
 end
 
 --- Check if a module option is enabled.

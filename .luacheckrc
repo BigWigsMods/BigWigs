@@ -204,6 +204,10 @@ files["Plugins/Pull.lua"].ignore = {
 files["Plugins/RaidIcon.lua"].ignore = {
 	"113/GetRaidTargetIndex",
 }
+files["Plugins/Sound.lua"].ignore = {
+	"113/C_RestrictedActions",
+	"113/C_UnitAuras",
+}
 files["Plugins/Statistics.lua"].ignore = {
 	"113/C_UIWidgetManager",
 }

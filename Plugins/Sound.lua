@@ -30,6 +30,7 @@ local sounds = {
 	privateaura = "BigWigs: Raid Warning",
 }
 local allowBlizzMessages = true
+local registeredAuraModules = {}
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -365,8 +366,16 @@ function plugin:OnPluginEnable()
 	end
 	timer = BigWigsLoader.CTimerNewTicker(0, Loop)
 
+	-- Register aura sounds
+	if C_RestrictedActions.IsAddOnRestrictionActive(1) or (C_RestrictedActions.IsAddOnRestrictionActive(0) and C_RestrictedActions.IsAddOnRestrictionActive(2)) then
+		self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED") -- Encounter, or Combat+ChallengeMode
+	else
+		self:CheckAllBossModulesForAuraSounds()
+	end
+
 	self:RegisterMessage("BigWigs_Sound")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	if BigWigsLoader.isRetail then
 		self:RegisterEvent("ENCOUNTER_WARNING")
 		self:RegisterMessage("BigWigs_BlockBlizzMessages")
@@ -374,10 +383,110 @@ function plugin:OnPluginEnable()
 	end
 end
 
+function plugin:OnPluginDisable()
+	for bossModule in next, registeredAuraModules do
+		self:UnregisterAuraSounds(bossModule)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+-- Functions for Aura Sounds
+function plugin:BigWigs_BossModuleRegistered(_, bossModule, currentInstanceID)
+	if bossModule:IsZoneID(currentInstanceID) and bossModule:HasAuraData() and not registeredAuraModules[bossModule] then
+		self:RegisterAuraSounds(bossModule)
+	end
+end
+
+do
+	local GetInstanceInfo = BigWigsLoader.GetInstanceInfo()
+	function plugin:CheckAllBossModulesForAuraSounds()
+		local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
+		for _, bossModule in BigWigs:IterateBossModules() do
+			if bossModule:IsZoneID(instanceID) and bossModule:HasAuraData() and not registeredAuraModules[bossModule] then
+				self:RegisterAuraSounds(bossModule)
+			end
+		end
+	end
+end
+
+function plugin:ADDON_RESTRICTION_STATE_CHANGED(event)
+	if C_RestrictedActions.IsAddOnRestrictionActive(1) or (C_RestrictedActions.IsAddOnRestrictionActive(0) and C_RestrictedActions.IsAddOnRestrictionActive(2)) then
+		return -- Encounter, or Combat+ChallengeMode
+	end
+	self:UnregisterEvent(event)
+	self:CheckAllBossModulesForAuraSounds()
+end
+
+do
+	local auraEventToID = {
+		-- These are the enum values for UnitAuraSoundTrigger
+		onApplied = 0,
+		onStack = 1,
+		onRemoved = 2,
+	}
+	local AddAuraSound = C_UnitAuras.AddAuraSound
+	function plugin:RegisterAuraSounds(bossModule)
+		if bossModule:HasAuraData() and not registeredAuraModules[bossModule] then
+			if C_RestrictedActions.IsAddOnRestrictionActive(1) or (C_RestrictedActions.IsAddOnRestrictionActive(0) and C_RestrictedActions.IsAddOnRestrictionActive(2)) then
+				self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
+				return -- Encounter, or Combat+ChallengeMode
+			end
+
+			local soundsRegistedForThisModule = {}
+			registeredAuraModules[bossModule] = soundsRegistedForThisModule
+			local spellIDList = bossModule:GetAuraSpellIDToIndexList()
+			for spellId in next, spellIDList do
+				local soundsToRegister = {}
+				local onAppliedSound = bossModule:GetAuraAppliedSound(spellId)
+				local onStackSound = bossModule:GetAuraAppliedDoseSound(spellId)
+				local onRemovedSound = bossModule:GetAuraRemovedSound(spellId)
+				if onAppliedSound then
+					soundsToRegister.onApplied = self:GetDefaultSoundFile(onAppliedSound)
+				end
+				if onStackSound then
+					soundsToRegister.onStack = self:GetDefaultSoundFile(onStackSound)
+				end
+				if onRemovedSound then
+					soundsToRegister.onRemoved = self:GetDefaultSoundFile(onRemovedSound)
+				end
+				for event, sound in next, soundsToRegister do
+					local auraSoundInfoTable = {
+						spellID = spellId,
+						unitToken = "player",
+						outputChannel = "master",
+					}
+					if type(sound) == "string" then
+						auraSoundInfoTable.soundFileName = sound
+					else
+						auraSoundInfoTable.soundFileID = sound
+					end
+					local auraSoundID = AddAuraSound(auraEventToID[event], auraSoundInfoTable)
+					if auraSoundID ~= nil then
+						soundsRegistedForThisModule[#soundsRegistedForThisModule + 1] = auraSoundID
+					end
+				end
+			end
+		end
+	end
+end
+
+do
+	local RemoveAuraSound = C_UnitAuras.RemoveAuraSound
+	function plugin:UnregisterAuraSounds(bossModule)
+		if registeredAuraModules[bossModule] then
+			for i = 1, #registeredAuraModules[bossModule] do
+				local auraSoundID = registeredAuraModules[bossModule][i]
+				RemoveAuraSound(auraSoundID)
+			end
+			registeredAuraModules[bossModule] = nil
+		end
+	end
+end
+
+-- Functions for regular sounds
 do
 	local tmp = { -- XXX temp
 		["long"] = "Long",

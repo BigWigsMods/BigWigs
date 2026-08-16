@@ -2075,7 +2075,7 @@ do
 	mod:GROUP_FORMED() -- If you're already in a group, the event only fires when logging on, not when reloading UI, so we force a check
 end
 
-function mod:BigWigs_BossModuleRegistered(_, _, module)
+function mod:BigWigs_BossModuleRegistered(_, module)
 	if module:IsWorldModule() then
 		local id = -(module.mapId)
 		enableZones[id] = "world"
