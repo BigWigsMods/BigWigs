@@ -364,7 +364,7 @@ globals = {
 	"BuyMerchantItem", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_EncounterJournal",
 	"C_EncounterTimeline",
-	"C_GossipInfo", -- XXX move me
+	"C_GossipInfo", -- LittleWigs/TBC/OldHillsbradFoothills/Trash.lua and LittleWigs/WotLK/TheCullingOfStratholme/Trash.lua
 	"C_MerchantFrame", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
