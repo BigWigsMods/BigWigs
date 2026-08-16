@@ -9,8 +9,8 @@
 ## Title-koKR: BigWigs [|cffeda55fMidnight Lair Bosses|r]
 ## Title-ptBR: BigWigs [|cffeda55fMidnight Lair Bosses|r]
 ## Title-ruRU: BigWigs [|cffeda55fMidnight Lair Bosses|r]
-## Title-zhCN: BigWigs [|cffeda55fMidnight Lair Bosses|r]
-## Title-zhTW: BigWigs [|cffeda55fMidnight Lair Bosses|r]
+## Title-zhCN: BigWigs [|cffeda55f潮缚石窟|r]
+## Title-zhTW: BigWigs [|cffeda55f浪縛岩窟|r]
 ## Notes: BigWigs Midnight Lair Boss Modules
 ## Notes-deDE: BigWigs Midnight Lair Boss Modules
 ## Notes-esES: BigWigs Midnight Lair Boss Modules
@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs Midnight Lair Boss Modules
 ## Notes-ptBR: BigWigs Midnight Lair Boss Modules
 ## Notes-ruRU: BigWigs Midnight Lair Boss Modules
-## Notes-zhCN: BigWigs Midnight Lair Boss Modules
-## Notes-zhTW: BigWigs Midnight Lair Boss Modules
+## Notes-zhCN: BigWigs 潮缚石窟模块
+## Notes-zhTW: BigWigs 浪縛岩窟模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
