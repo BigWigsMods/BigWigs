@@ -51,15 +51,15 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1257608, sound = "warning", header = CL.important}, -- Frost Barrage
-	{1282937, sound = "warning"}, -- Water Flurry
-	{1282404, sound = "none", header = CL.general}, -- Drenched
-	{1257651, sound = "none"}, -- Drifting Globules
-	{1257644, sound = "none"}, -- Frost Barrage
-	{1257654, sound = "none"}, -- Lingering Frost
-	{1295086, sound = "none"}, -- Unending Tides
-	{1282947, sound = "none"}, -- Water Flurry
-	{1258901, sound = "none", header = CL.mythic}, -- Water Jet
+    {1257608, soundOnApplied = "warning", header = CL.important}, -- Frost Barrage
+    {1282937, soundOnApplied = "warning"}, -- Water Flurry
+    {1282404, soundOnApplied = "none", header = CL.general}, -- Drenched
+    {1257651, soundOnApplied = "none"}, -- Drifting Globules
+    {1257644, soundOnApplied = "none"}, -- Frost Barrage
+    {1257654, soundOnApplied = "none"}, -- Lingering Frost
+    {1295086, soundOnApplied = "none"}, -- Unending Tides
+    {1282947, soundOnApplied = "none"}, -- Water Flurry
+    {1258901, soundOnApplied = "none", header = CL.mythic}, -- Water Jet
 })
 
 function mod:GetOptions()
