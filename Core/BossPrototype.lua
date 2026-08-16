@@ -1596,9 +1596,10 @@ end
 do
 	local noID = "Module '%s' tried to register/unregister a widget event without specifying a widget id."
 	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
-	local noVisInfoDataFunction = "Module '%s' tried to register for all updates to a widget event, but the visInfoDataFunction is unknown."
+	local noVisInfoDataFunction = "Module '%s' tried to register for all updates to a widget event, but the visInfoDataFunction for type %s is unknown."
 
 	do
+		local GetIconAndTextWidgetVisualizationInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo
 		local GetStatusBarWidgetVisualizationInfo = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo
 		local GetTextWithStateWidgetVisualizationInfo = C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo
 		local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo
@@ -1608,7 +1609,10 @@ do
 		-- @number id The id of the widget
 		-- @return table The widget info table
 		function boss:GetWidgetInfo(widgetType, id)
-			if widgetType == "bar" then
+			if widgetType == "iconandtext" then
+				local info = GetIconAndTextWidgetVisualizationInfo(id)
+				return info
+			elseif widgetType == "bar" then
 				local info = GetStatusBarWidgetVisualizationInfo(id)
 				return info
 			elseif widgetType == "text" then
@@ -1630,12 +1634,14 @@ do
 					-- for known widget types, call the visualization info function directly. this
 					-- skips state checks that Blizzard might have defined in their widget template.
 					local widgetType = tbl.widgetType
-					if widgetType == 2 then -- Enum.UIWidgetVisualizationType.StatusBar
+					if widgetType == 0 then -- Enum.UIWidgetVisualizationType.IconAndText
+						info = self:GetWidgetInfo("iconandtext", id)
+					elseif widgetType == 2 then -- Enum.UIWidgetVisualizationType.StatusBar
 						info = self:GetWidgetInfo("bar", id)
 					elseif widgetType == 8 then -- Enum.UIWidgetVisualizationType.TextWithState
 						info = self:GetWidgetInfo("text", id)
 					else -- unknown widget type
-						core:Print(format(noVisInfoDataFunction, self.moduleName))
+						core:Print(format(noVisInfoDataFunction, self.moduleName, tostring(widgetType)))
 						return
 					end
 				else
@@ -2749,15 +2755,11 @@ do
 	local GetOptions = C_GossipInfo.GetOptions
 	local SelectOption = C_GossipInfo.SelectOption
 	--- Request the gossip options of the selected NPC
-	-- @return table A table result of all text strings in the form of { result1, result2, result3 }
+	-- @return table A table with all the same data as would be returned by C_GossipInfo.GetOptions()
 	function boss:GetGossipOptions()
 		local gossipOptions = GetOptions()
 		if gossipOptions[1] then
-			local gossipTbl = {}
-			for i = 1, #gossipOptions do
-				gossipTbl[#gossipTbl+1] = gossipOptions[i].name or ""
-			end
-			return gossipTbl
+			return gossipOptions
 		end
 	end
 
