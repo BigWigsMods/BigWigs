@@ -1124,8 +1124,14 @@ local function SecondsToTime(time)
 end
 
 local function auraOnEnter(widget)
+	local spellId = widget:GetUserData("spellId")
+	local secondarySpellIds = widget:GetUserData("secondarySpellIds")
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-	optionsTooltip:SetSpellByID(widget:GetUserData("spellId"))
+	optionsTooltip:SetSpellByID(spellId)
+	optionsTooltip:AddLine(L.primary_aura_spellId:format(spellId), 1, 1, 1, true)
+	if secondarySpellIds and #secondarySpellIds > 0 then
+		optionsTooltip:AddLine(L.secondary_aura_spellIds:format(table.concat(secondarySpellIds, ", ")), 1, 1, 1, true)
+	end
 	optionsTooltip:Show()
 end
 
@@ -1146,7 +1152,7 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	options:SendMessage("BigWigs_RefreshAuraSounds", module)
 end
 
-local function getAuraOptions(module, spellID)
+local function getAuraOptions(module, spellID, index)
 	local key = spellID
 	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
@@ -1181,6 +1187,7 @@ local function getAuraOptions(module, spellID)
 	icon:SetImageSize(40, 40)
 	icon:SetRelativeWidth(0.1)
 	icon:SetUserData("spellId", spellID)
+	icon:SetUserData("secondarySpellIds", module:GetAuraSecondarySpellIDs(index))
 	icon:SetUserData("updateTooltip", true)
 	icon:SetCallback("OnEnter", auraOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
@@ -1302,7 +1309,7 @@ do
 							headerWidget:SetFullWidth(true)
 							widget:AddChild(headerWidget)
 						end
-						widget:AddChildren(getAuraOptions(module, spellID))
+						widget:AddChildren(getAuraOptions(module, spellID, i))
 					end
 				end
 
