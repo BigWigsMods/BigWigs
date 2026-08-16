@@ -367,8 +367,8 @@ function plugin:OnPluginEnable()
 	timer = BigWigsLoader.CTimerNewTicker(0, Loop)
 
 	-- Register aura sounds
-	if C_RestrictedActions.IsAddOnRestrictionActive(1) or (C_RestrictedActions.IsAddOnRestrictionActive(0) and C_RestrictedActions.IsAddOnRestrictionActive(2)) then
-		self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED") -- Encounter, or Combat+ChallengeMode
+	if self:IsAuraSoundRestrictionsActive() then
+		self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
 	else
 		self:CheckAllBossModulesForAuraSounds()
 	end
@@ -401,6 +401,15 @@ function plugin:BigWigs_BossModuleRegistered(_, bossModule, currentInstanceID)
 end
 
 do
+	local IsAddOnRestrictionActive = C_RestrictedActions.IsAddOnRestrictionActive
+	function plugin:IsAuraSoundRestrictionsActive()
+		if IsAddOnRestrictionActive(1) or (IsAddOnRestrictionActive(0) and IsAddOnRestrictionActive(2)) then
+			return true -- Encounter, or Combat+ChallengeMode
+		end
+	end
+end
+
+do
 	local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 	function plugin:CheckAllBossModulesForAuraSounds()
 		local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
@@ -413,8 +422,8 @@ do
 end
 
 function plugin:ADDON_RESTRICTION_STATE_CHANGED(event)
-	if C_RestrictedActions.IsAddOnRestrictionActive(1) or (C_RestrictedActions.IsAddOnRestrictionActive(0) and C_RestrictedActions.IsAddOnRestrictionActive(2)) then
-		return -- Encounter, or Combat+ChallengeMode
+	if self:IsAuraSoundRestrictionsActive() then
+		return
 	end
 	self:UnregisterEvent(event)
 	self:CheckAllBossModulesForAuraSounds()
@@ -430,9 +439,9 @@ do
 	local AddAuraSound = C_UnitAuras.AddAuraSound
 	function plugin:RegisterAuraSounds(bossModule)
 		if bossModule:HasAuraData() and not registeredAuraModules[bossModule] then
-			if C_RestrictedActions.IsAddOnRestrictionActive(1) or (C_RestrictedActions.IsAddOnRestrictionActive(0) and C_RestrictedActions.IsAddOnRestrictionActive(2)) then
+			if self:IsAuraSoundRestrictionsActive() then
 				self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
-				return -- Encounter, or Combat+ChallengeMode
+				return
 			end
 
 			local soundsRegistedForThisModule = {}
