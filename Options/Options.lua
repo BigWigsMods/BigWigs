@@ -1123,7 +1123,7 @@ local function SecondsToTime(time)
 	return ("%d:%02d"):format(m, s)
 end
 
-local function privateAuraOnEnter(widget)
+local function auraOnEnter(widget)
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
 	optionsTooltip:SetSpellByID(widget:GetUserData("spellId"))
 	optionsTooltip:Show()
@@ -1140,28 +1140,10 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 		value = nil
 	end
 
-	local auraDB = module.db.profile["auras"]
+	local auraDB = module.db.profile.auras
 	auraDB[key] = auraDB[key] or {}
 	auraDB[key][triggerType] = value
-	module:RegisterAuraSounds()
-end
-
-local function privateAuraDropdownValueChanged(widget, _, value)
-	local key = widget:GetUserData("key")
-	local default = widget:GetUserData("default")
-	local module = widget:GetUserData("module")
-	local soundList = LibSharedMedia:List("sound")
-	value = soundList[value]
-	if value == default then
-		value = nil
-	end
-
-	local sDB = soundModule.db.profile["privateaura"]
-	if not sDB[module.name] then
-		sDB[module.name] = {}
-	end
-	sDB[module.name][key] = value
-	module:RegisterAuraSounds()
+	options:SendMessage("BigWigs_RefreshAuraSounds", module)
 end
 
 local function getAuraOptions(module, spellID)
@@ -1176,12 +1158,12 @@ local function getAuraOptions(module, spellID)
 	defaultRemovedSound = defaultRemovedSound or soundModule:GetDefaultSound(defaultRemovedSound)
 	local hasDoseSound = defaultDoseSound ~= nil
 
-	local name = loader.GetSpellName(spellID)
+	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
 	if note then
 		name = L.noteLabel:format(name, note)
 	end
-	local texture = loader.GetSpellTexture(spellID)
+	local texture = module:SpellTexture(spellID)
 
 	local spellLabel = AceGUI:Create("Label")
 	local mythic = false -- module:GetAuraIsMythic(spellID) XXX NYI
@@ -1200,7 +1182,7 @@ local function getAuraOptions(module, spellID)
 	icon:SetRelativeWidth(0.1)
 	icon:SetUserData("spellId", spellID)
 	icon:SetUserData("updateTooltip", true)
-	icon:SetCallback("OnEnter", privateAuraOnEnter)
+	icon:SetCallback("OnEnter", auraOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
 
 	local appliedDropdown = AceGUI:Create("SharedDropdown")
@@ -1267,53 +1249,6 @@ local function getAuraOptions(module, spellID)
 	end
 end
 
-local function getPrivateAuraOptions(module, option)
-	local sDB = soundModule.db.profile["privateaura"]
-	local soundList = LibSharedMedia:List("sound")
-
-	local spellId = option[1]
-	local key = spellId
-	local id = option.tooltip or spellId
-	local defaultSound = soundModule:GetDefaultSound(option.sound or "privateaura")
-
-	local name = loader.GetSpellName(id)
-	if option.note then
-		name = L.noteLabel:format(name, option.note)
-	end
-	local texture = loader.GetSpellTexture(id)
-
-	local icon = AceGUI:Create("Icon")
-	icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
-	icon:SetImageSize(40, 40)
-	icon:SetRelativeWidth(0.1)
-	icon:SetUserData("spellId", id)
-	icon:SetUserData("updateTooltip", true)
-	icon:SetCallback("OnEnter", privateAuraOnEnter)
-	icon:SetCallback("OnLeave", optionsTooltip_Hide)
-
-	local dropdown = AceGUI:Create("SharedDropdown")
-	if option.mythic then
-		dropdown:SetLabel(name .. "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:20|t")
-	else
-		dropdown:SetLabel(name)
-	end
-	dropdown:SetList(soundList, nil, "DDI-Sound")
-	dropdown:SetRelativeWidth(0.88)
-	dropdown:SetUserData("key", key)
-	dropdown:SetUserData("module", module)
-	dropdown:SetUserData("default", defaultSound)
-	dropdown:SetCallback("OnValueChanged", privateAuraDropdownValueChanged)
-	local value = sDB[module.name] and sDB[module.name][key] or defaultSound
-	for i, v in next, soundList do
-		if v == value then
-			dropdown:SetValue(i)
-			break
-		end
-	end
-
-	return icon, dropdown
-end
-
 do
 	local populateToggleOptions
 	do
@@ -1369,12 +1304,6 @@ do
 						end
 						widget:AddChildren(getAuraOptions(module, spellID))
 					end
-				else
-					for _, v in next, tabOptions[tab] do
-						if C_UnitAuras.AuraIsPrivate(v[1]) then
-							widget:AddChildren(getPrivateAuraOptions(module, v))
-						end
-					end
 				end
 
 				local reset = AceGUI:Create("Button")
@@ -1395,9 +1324,8 @@ do
 								soundOnRemoved = module:GetAuraRemovedSoundDefault(spellID),
 							}
 						end
-						module.db.profile["auras"] = resetSettings
-					else
-						soundModule.db.profile["privateaura"][module.name] = nil
+						module.db.profile.auras = resetSettings
+						options:SendMessage("BigWigs_RefreshAuraSounds", module)
 					end
 					toggleOptionsTabSelected(widget, nil, "auras")
 				end)
@@ -1608,20 +1536,10 @@ do
 
 			local showTabs = #tabs > 0
 
-			local showPATab = false
-			local moduleHasAuraData = module:HasAuraData()
-			if moduleHasAuraData then
-				showPATab = true
+			local showAurasTab = false
+			if module:HasAuraData() then
+				showAurasTab = true
 				showTabs = true
-			elseif module.privateAuraSoundOptions then
-				-- Non-PA spells will not be shown and we don't want an empty tab
-				for _, opt in ipairs(module.privateAuraSoundOptions) do
-					if C_UnitAuras.AuraIsPrivate(opt[1]) then
-						showTabs = true
-						showPATab = true
-						break
-					end
-				end
 			end
 
 			if showTabs then -- tabs!
@@ -1655,10 +1573,9 @@ do
 					end
 				end
 
-				if showPATab then
+				if showAurasTab then
 					local iconText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash:16:16:-2:-2|t"
-					table.insert(tabInfo, { text = iconText .. (BigWigsLoader.isNext and L.auras or L.privateAuras), value = "auras" })
-					tabOptions["auras"] = module.privateAuraSoundOptions -- Old Private Aura options
+					table.insert(tabInfo, { text = iconText .. L.auras, value = "auras" })
 				end
 
 				local tabsWidget = AceGUI:Create("TabGroup")
@@ -2137,7 +2054,6 @@ do
 
 	local allowedDirectOpens = {
 		["Auras"] = {tab = "options", path = {"general", "Auras"}},
-		["PrivateAuras"] = {tab = "options", path = {"general", "PrivateAuras"}},
 	}
 	function OpenConfig(specificPanel)
 		if allowedDirectOpens[specificPanel] then

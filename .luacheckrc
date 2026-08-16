@@ -106,7 +106,6 @@ files["Core/Constants.lua"].ignore = {
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/C_CVar",
-	"113/C_UnitAuras",
 	"113/geterrorhandler",
 	"113/print",
 	"113/UnitIsCorpse",
@@ -234,7 +233,6 @@ files["Plugins/*.lua"].ignore = {
 files["Options/Options.lua"].ignore = {
 	"113/C_EncodingUtil",
 	"113/C_UI",
-	"113/C_UnitAuras",
 	"113/CallErrorHandler",
 	"113/print",
 	"113/securecallfunction",
