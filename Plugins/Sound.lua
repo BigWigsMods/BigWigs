@@ -129,6 +129,8 @@ plugin.pluginOptions = {
 	set = function(info, value)
 		local sound = info[#info]
 		db.media[sound] = soundList[value]
+		plugin:UnregisterAllAuraSounds()
+		plugin:CheckAllBossModulesForAuraSounds()
 		plugin:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundList[value]))
 	end,
 	order = 7,
@@ -389,9 +391,7 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:OnPluginDisable()
-	for bossModule in next, registeredAuraModules do
-		self:UnregisterAuraSounds(bossModule)
-	end
+	self:UnregisterAllAuraSounds()
 end
 
 -------------------------------------------------------------------------------
@@ -528,6 +528,12 @@ do
 			end
 			registeredAuraModules[bossModule] = nil
 		end
+	end
+end
+
+function plugin:UnregisterAllAuraSounds()
+	for bossModule in next, registeredAuraModules do
+		self:UnregisterAuraSounds(bossModule)
 	end
 end
 
