@@ -227,6 +227,8 @@ plugin.pluginOptions = {
 				for k in next, plugin.db.profile.media do
 					plugin.db.profile.media[k] = sounds[k]
 				end
+				plugin:UnregisterAllAuraSounds()
+				plugin:CheckAllBossModulesForAuraSounds()
 			end,
 			order = 27,
 		},
@@ -234,7 +236,12 @@ plugin.pluginOptions = {
 			type = "execute",
 			name = L.resetAll,
 			desc = L.resetAllCustomSound,
-			func = function() plugin.db:ResetProfile() updateProfile() end,
+			func = function()
+				plugin.db:ResetProfile()
+				updateProfile()
+				plugin:UnregisterAllAuraSounds()
+				plugin:CheckAllBossModulesForAuraSounds()
+			end,
 			order = 28,
 		},
 	}
