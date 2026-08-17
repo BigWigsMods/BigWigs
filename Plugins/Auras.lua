@@ -1,4 +1,4 @@
-if not BigWigsLoader.isRetail or not BigWigsLoader.isNext then return end -- 12.1+ only module
+if not BigWigsLoader.isRetail then return end -- 12.1+ only module
 
 -------------------------------------------------------------------------------
 -- Module Declaration
@@ -22,12 +22,11 @@ local containers = {}
 local anchors = { player = {}, other = {} }
 local inConfigureMode = false
 local previouslyFoundUnit = nil
-local auraSounds = {}
 
 local InitializeAuraFrame, UpdateAuraFrame, UpdateTestAura
 local UpdateAuraContainer
-local UpdateSoundOptions
-local AddAuraSound, AddAllAuraSounds, RemoveAllAuraSounds
+local UpdateSoundOptions, UpdateRegisteredSounds
+local AddAuraSound, RemoveAuraSound, AddAllAuraSounds, RemoveAllAuraSounds
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -341,38 +340,19 @@ do
 		end
 	end
 
-	-- local GetDescription do
-	-- 	local needsUpdate = {}
-	-- 	local frame = CreateFrame("Frame")
-
-	-- 	local function RefreshOnUpdate(self)
-	-- 		self:SetScript("OnUpdate", nil)
-	-- 		plugin:UpdateGUI()
-	-- 	end
-
-	-- 	frame:SetScript("OnEvent", function(self, event, spellID, success)
-	-- 		if success and needsUpdate[spellID] then
-	-- 			frame:SetScript("OnUpdate", RefreshOnUpdate)
-	-- 		end
-	-- 		needsUpdate[spellID] = nil
-	-- 	end)
-	-- 	frame:RegisterEvent("SPELL_DATA_LOAD_RESULT")
-
-	-- 	function GetDescription(info)
-	-- 		local index = tonumber(info[#info - 1])
-	-- 		if not db.sounds[index] then return end
-	-- 		local spellID = db.sounds[index].spellID
-	-- 		if spellID > 0 and not C_Spell.IsSpellDataCached(spellID) then
-	-- 			needsUpdate[spellID] = true
-	-- 			C_Spell.RequestLoadSpellData(spellID)
-	-- 		end
-	-- 		return C_Spell.GetSpellDescription(spellID)
-	-- 	end
-	-- end
+	-- local followerShortNameMap = {
+	-- 	[L.garrick] = L.garrick_short,
+	-- 	[L.meredy] = L.meredy_short,
+	-- 	[L.shuja] = L.shuja_short,
+	-- 	[L.crenna] = L.crenna_short,
+	-- 	[L.austin] = L.austin_short,
+	-- 	[L.breka] = L.breka_short,
+	-- 	[L.henry] = L.henry_short,
+	-- }
 
 	function UpdateSoundOptions(forceNotify)
+		plugin.pluginOptions.args.sounds.args = {}
 		local options = plugin.pluginOptions.args.sounds.args
-		table.wipe(options)
 
 		options.header = {
 			type = "description",
@@ -391,7 +371,7 @@ do
 					spellID = spellID,
 					trigger = 0,
 					unit = "player",
-					sound = "None",
+					sound = LibSharedMedia:GetDefault(SOUND),
 				})
 				UpdateSoundOptions()
 			end,
@@ -410,13 +390,27 @@ do
 			local key = info[#info]
 			return db.sounds[index][key]
 		end
+
 		local function set(info, value)
 			local index = tonumber(info[#info - 1])
-			db.sounds[index][info[#info]] = value
-			if auraSounds[index] then
-				C_UnitAuras.RemoveAuraSound(auraSounds[index])
+			local auraDB = db.sounds[index]
+			local key = info[#info]
+			auraDB[key] = value
+
+			if key == "trigger" and value ~= 3 then
+				auraDB.sound = auraDB.sound or LibSharedMedia:GetDefault(SOUND)
+				auraDB.voice = nil
+				auraDB.duration = nil
+			elseif key == "trigger" and value == 3 then
+				auraDB.sound = nil
+				auraDB.voice = "Amy"
+				auraDB.duration = 0
 			end
-			auraSounds[index] = AddAuraSound(db.sounds[index])
+			if key == "unit" and value ~= "name" then
+				auraDB.playerName = nil
+			end
+
+			AddAuraSound(index)
 		end
 
 		local order = 0
@@ -435,11 +429,22 @@ do
 					enabled = {
 						type = "toggle",
 						name = ("|cfffed000%s|r (%d)"):format(spellInfo and spellInfo.name or L.unknown, soundInfo.spellID),
-						-- desc = GetDescription,
-						-- descStyle = "inline",
 						image = spellInfo and spellInfo.iconID or 134400, -- question mark
-						width = "full",
+						width = 2.6,
 						order = 1,
+					},
+					remove = {
+						type = "execute",
+						name = L.remove,
+						func = function(info)
+							GameTooltip:Hide()
+							local index = tonumber(info[#info - 1])
+							table.remove(db.sounds, index)
+							RemoveAuraSound(index, true)
+							UpdateSoundOptions()
+						end,
+						width = 0.6,
+						order = 2,
 					},
 					trigger = {
 						type = "select",
@@ -448,21 +453,9 @@ do
 							[0] = L.onApplied,
 							[1] = L.onDose,
 							[2] = L.onRemoved,
+							[3] = L.countdown,
 						},
-						width = 1,
-						order = 2,
-					},
-					unit = {
-						type = "select",
-						name = L.unit,
-						values = {
-							player = "player",
-							party1 = "party1",
-							party2 = "party2",
-							party3 = "party3",
-							party4 = "party4",
-						},
-						width = 0.6,
+						width = 1.4,
 						order = 3,
 					},
 					sound = {
@@ -480,21 +473,78 @@ do
 						end,
 						set = function(info, value) set(info, LibSharedMedia:List(SOUND)[value]) end,
 						values = LibSharedMedia:List(SOUND),
+						dialogControl = "SharedDropdown",
 						itemControl = "DDI-Sound",
-						width = 1.3,
+						hidden = function() return db.sounds[soundIndex].trigger == 3 end,
+						width = 1.8,
 						order = 4,
 					},
-					delete = {
-						type = "execute",
-						name = L.remove,
-						func = function(info)
-							GameTooltip:Hide()
-							local index = tonumber(info[#info - 1])
-							table.remove(db.sounds, index)
-							AddAllAuraSounds()
-							UpdateSoundOptions()
-						end,
+					voice = {
+						type = "select",
+						name = L.countdownVoice,
+						values = {
+							Amy = "English: Amy",
+							-- David = "English: David",
+							-- Jim = "English: Jim",
+						},
+						hidden = function() return db.sounds[soundIndex].trigger ~= 3 end,
+						width = 1.1,
+						order = 4,
+					},
+					duration = {
+						type = "range",
+						name = L.auraDuration,
+						desc = L.auraDurationDesc,
+						min = 1, max = 30, step = 1,
+						hidden = function() return db.sounds[soundIndex].trigger ~= 3 end,
+						width = 0.6,
 						order = 5,
+					},
+					unit = {
+						type = "select",
+						name = L.unit,
+						values = {
+							player = "player",
+							party1 = "party1",
+							party2 = "party2",
+							party3 = "party3",
+							party4 = "party4",
+							tank = L.indicatorType_Tank,
+							name = L.playerName,
+						},
+						sorting = { "player", "party1", "party2", "party3", "party4", "tank", "name" },
+						width = 1,
+						order = 6,
+					},
+					playerName = {
+						type = "input",
+						name = L.playerName,
+						hidden = function() return db.sounds[soundIndex].unit ~= "name" end,
+						width = 1,
+						order = 7,
+					},
+					unitTarget = {
+						type = "description",
+						name = function()
+							local unitType = db.sounds[soundIndex].unit
+							if unitType == "player" then
+								return ""
+							end
+							local name = L.none
+							local unit = plugin:GetUnitToken(unitType, db.sounds[soundIndex].playerName)
+							if unit then
+								name = plugin:UnitName(unit)
+								-- name = followerShortNameMap[name] or name
+								local _, class = UnitClass(unit)
+								local color = C_ClassColor.GetClassColor(class) or GRAY_FONT_COLOR
+								-- local role = UnitGroupRolesAssigned(unit)
+								-- name = ("%s%s%s|r"):format(roleIcons[role] or "", color:GenerateHexColorMarkup(), name)
+								name = color:WrapTextInColorCode(name)
+							end
+							return "  "..L.currentUnit:format(name)
+						end,
+						width = 1.2,
+						order = 8,
 					},
 				},
 			}
@@ -827,11 +877,6 @@ do
 						name = L.disabled,
 						set = function(_, value)
 							db.other.disabled = value
-							if value then
-								plugin:UnregisterEvent("GROUP_ROSTER_UPDATE")
-							else
-								plugin:RegisterEvent("GROUP_ROSTER_UPDATE")
-							end
 							updateProfile()
 						end,
 						width = 1.6,
@@ -1477,9 +1522,7 @@ function plugin:OnPluginEnable()
 	updateProfile()
 	UpdateSoundOptions()
 
-	if not db.other.disabled then
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
-	end
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 
 	AddAllAuraSounds()
 
@@ -1547,19 +1590,16 @@ function plugin:UpdateAllAnchors()
 end
 
 do
-	function plugin:GetUnitToken()
-		if db.otherPlayerType == "player" then
-			local playerName = db.otherPlayerName
-			if playerName ~= "" and UnitExists(playerName) then
-				for unit in plugin:IterateGroup(true) do
-					if UnitIsUnit(playerName, unit) then
-						return unit
-					end
-				end
-			end
-		elseif db.otherPlayerType == "tank" and (not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK")) then
+	function plugin:GetUnitToken(playerType, playerName)
+		if playerType == "tank" then
 			for unit in plugin:IterateGroup(true) do
 				if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
+					return unit
+				end
+			end
+		elseif playerName and playerName ~= "" and UnitExists(playerName) then
+			for unit in plugin:IterateGroup(true) do
+				if UnitIsUnit(playerName, unit) then
 					return unit
 				end
 			end
@@ -1567,11 +1607,16 @@ do
 	end
 
 	function plugin:GROUP_ROSTER_UPDATE()
-		local token = self:GetUnitToken()
-		if token ~= previouslyFoundUnit then
-			previouslyFoundUnit = token
-			self:UpdateAnchors("other", token)
+		if not db.other.disabled then
+			if db.otherPlayerType ~= "tank" or (db.onlyWhenYouAreTank and (not db.onlyWhenYouAreTank or UnitGroupRolesAssigned("player") ~= "TANK")) then
+				local token = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
+				if token ~= previouslyFoundUnit then
+					previouslyFoundUnit = token
+					self:UpdateAnchors("other", token)
+				end
+			end
 		end
+		UpdateRegisteredSounds()
 	end
 
 	function plugin:UpdateAnchors(unitType, unitToken)
@@ -1610,7 +1655,12 @@ do
 			UpdateTestAura(unitType, index)
 		end
 
-		UpdateAuraContainer(unitType, unitToken or self:GetUnitToken(), anchors[unitType][1])
+		if not unitToken and unitType == "other" then
+			if db.otherPlayerType ~= "tank" or (db.onlyWhenYouAreTank and (not db.onlyWhenYouAreTank or UnitGroupRolesAssigned("player") ~= "TANK")) then
+				unitToken = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
+			end
+		end
+		UpdateAuraContainer(unitType, unitToken, anchors[unitType][1])
 	end
 end
 
@@ -2062,31 +2112,116 @@ end
 -- Aura Sounds
 --
 
-function AddAuraSound(info)
-	if not info.enabled or info.sound == "None" then return end
+do
+	local auraSounds = {}
+	local registeredUnits = {}
+	local soundsNeedingUpdated = {}
 
-	local soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
-	if soundFile then
-		return C_UnitAuras.AddAuraSound(info.trigger, {
-			unitToken = info.unit,
-			spellID = info.spellID,
-			soundFileName = type(soundFile) == "string" and soundFile or nil,
-			soundFileID = type(soundFile) == "number" and soundFile or nil,
-			outputChannel = "master",
-		})
+	local frame = CreateFrame("Frame")
+	frame:SetScript("OnEvent", function(self, event, restrictionType, state)
+		if state ~= 0 then return end -- Enum.AddOnRestrictionState.Inactive
+
+		for index, soundRestrictionType in next, soundsNeedingUpdated do
+			if soundRestrictionType == restrictionType then
+				soundsNeedingUpdated[index] = nil
+				AddAuraSound(index)
+			end
+		end
+		if not next(soundsNeedingUpdated) then
+			self:UnregisterEvent(event)
+		end
+	end)
+
+	local IsAddOnRestrictionActive = C_RestrictedActions.IsAddOnRestrictionActive
+	local function getAddOnRestriction()
+		if IsAddOnRestrictionActive then
+			if IsAddOnRestrictionActive(1) then -- Encounter
+				return 1
+			elseif IsAddOnRestrictionActive(2) and IsAddOnRestrictionActive(0) then -- ChallengeMode and Combat
+				return 0
+			end
+		end
 	end
-end
 
-function AddAllAuraSounds()
-	RemoveAllAuraSounds()
-	for index = 1, #db.sounds do
-		auraSounds[index] = AddAuraSound(db.sounds[index])
+	function UpdateRegisteredSounds()
+		for index, unit in next, registeredUnits do
+			local auraDB = db.sounds[index]
+			local checkUnit = plugin:GetUnitToken(auraDB.unit, auraDB.playerName)
+			if unit ~= checkUnit then
+				AddAuraSound(index)
+			end
+		end
 	end
-end
 
-function RemoveAllAuraSounds()
-	for _, auraSoundID in next, auraSounds do
+	function AddAuraSound(index)
+		local restrictionType = getAddOnRestriction()
+		if restrictionType ~= nil then
+			soundsNeedingUpdated[index] = restrictionType
+			frame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
+			return
+		end
+
+		RemoveAuraSound(index)
+
+		local info = db.sounds[index]
+		if not info or not info.enabled then return end
+
+		local unit = info.unit
+		local trigger = info.trigger
+		local duration = tonumber(info.duration)
+
+		if unit == "tank" then
+			unit = plugin:GetUnitToken("tank")
+		elseif unit == "name" then
+			unit = plugin:GetUnitToken("name", info.playerName)
+		end
+
+		local soundFile
+		if trigger < 3 then
+			soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
+		elseif duration and duration > 0 and duration <= 30 and info.voice then -- countdown
+			trigger = 0
+			local path = [[Interface\AddOns\BigWigs\Media\Sounds\AuraCountdowns\%s\%s_Countdown%d.ogg]]
+			soundFile = path:format(info.voice, info.voice, duration)
+		end
+		if unit and soundFile then
+			local auraSoundID = C_UnitAuras.AddAuraSound(trigger, {
+				unitToken = unit,
+				spellID = info.spellID,
+				soundFileName = type(soundFile) == "string" and soundFile or nil,
+				soundFileID = type(soundFile) == "number" and soundFile or nil,
+				outputChannel = "master",
+			})
+			if auraSoundID and (info.unit == "tank" or info.unit == "name") then
+				registeredUnits[index] = unit
+			end
+			auraSounds[index] = auraSoundID
+			return auraSoundID
+		end
+	end
+
+	function RemoveAuraSound(index, remove)
+		local auraSoundID = auraSounds[index]
+		if not auraSoundID then return end
+
 		C_UnitAuras.RemoveAuraSound(auraSoundID)
+		auraSounds[index] = nil
+		registeredUnits[index] = nil
+		if remove then
+			table.remove(auraSounds, index)
+			table.remove(registeredUnits, index)
+		end
 	end
-	auraSounds = {}
+
+	function AddAllAuraSounds()
+		for index = 1, #db.sounds do
+			AddAuraSound(index)
+		end
+	end
+
+	function RemoveAllAuraSounds()
+		for index = 1, #db.sounds do
+			RemoveAuraSound(index)
+		end
+	end
 end
