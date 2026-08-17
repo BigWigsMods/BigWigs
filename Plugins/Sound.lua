@@ -6,6 +6,7 @@ local plugin, L = BigWigs:NewPlugin("Sounds", {
 	"db",
 	"soundOptions",
 	"SetSoundOptions",
+	"GetSoundFile",
 	"GetDefaultSound",
 	"GetDefaultSoundFile",
 })
@@ -460,15 +461,16 @@ do
 				local onAppliedSound = bossModule:GetAuraAppliedSound(spellId)
 				local onStackSound = bossModule:GetAuraAppliedDoseSound(spellId)
 				local onRemovedSound = bossModule:GetAuraRemovedSound(spellId)
-				if onAppliedSound then
-					soundsToRegister.onApplied = self:GetDefaultSoundFile(onAppliedSound)
+				if onAppliedSound and onAppliedSound ~= "None" then
+					soundsToRegister.onApplied = self:GetSoundFile(nil, nil, onAppliedSound)
 				end
-				if onStackSound then
-					soundsToRegister.onStack = self:GetDefaultSoundFile(onStackSound)
+				if onStackSound and onStackSound ~= "None" then
+					soundsToRegister.onStack = self:GetSoundFile(nil, nil, onStackSound)
 				end
-				if onRemovedSound then
-					soundsToRegister.onRemoved = self:GetDefaultSoundFile(onRemovedSound)
+				if onRemovedSound and onRemovedSound ~= "None" then
+					soundsToRegister.onRemoved = self:GetSoundFile(nil, nil, onRemovedSound)
 				end
+
 				for event, sound in next, soundsToRegister do
 					local auraSoundInfoTable = {
 						spellID = spellId,
