@@ -157,15 +157,15 @@ plugin.pluginOptions = {
 			width = "full",
 			itemControl = "DDI-Sound",
 		},
-		privateaura = {
-			type = "select",
-			name = L.privateaura,
-			order = 4,
-			values = function() return soundList end,
-			width = "full",
-			itemControl = "DDI-Sound",
-			hidden = BigWigsLoader.isClassic,
-		},
+		--privateaura = {
+		--	type = "select",
+		--	name = L.privateaura,
+		--	order = 4,
+		--	values = function() return soundList end,
+		--	width = "full",
+		--	itemControl = "DDI-Sound",
+		--	hidden = BigWigsLoader.isClassic,
+		--},
 		newline2 = {
 			type = "description",
 			name = "\n\n",
@@ -470,7 +470,23 @@ do
 					end
 				end
 				local onStackSound = bossModule:GetAuraAppliedDoseSound(spellId)
+				if not onStackSound then
+					onStackSound = bossModule:GetAuraAppliedDoseSoundDefault(spellId)
+					if onStackSound then
+						local hasGlobalSound = validGlobalSounds[onStackSound]
+						if hasGlobalSound then
+							onStackSound = db.media[hasGlobalSound]
+						end
+					end
+				end
 				local onRemovedSound = bossModule:GetAuraRemovedSound(spellId)
+				if not onRemovedSound then
+					onRemovedSound = bossModule:GetAuraRemovedSoundDefault(spellId)
+					local hasGlobalSound = validGlobalSounds[onAppliedSound]
+					if hasGlobalSound then
+						onAppliedSound = db.media[hasGlobalSound]
+					end
+				end
 				if onAppliedSound and onAppliedSound ~= "None" then
 					soundsToRegister.onApplied = self:GetSoundFile(nil, nil, onAppliedSound)
 				end
