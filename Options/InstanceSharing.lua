@@ -50,18 +50,15 @@ do
 			for i, module in ipairs(modules) do
 				if module.SetupOptions then module:SetupOptions() end
 
-				-- Flags
-				if module.db and module.db.profile and module.db.profile.toggles then
-					allBossesDb[module.name] = CopyTable(allBossesDb[module.name] or {})
-					allBossesDb[module.name].flags = module.db.profile.toggles
-				else
+				local profile = module.db and module.db.profile
+				if not (profile and profile.toggles) then
 					error(("Module %s does not have a db.profile table."):format(module.name))
 				end
-
-				-- Renames
-				if module.db and module.db.profile and module.db.profile.renames then
-					allBossesDb[module.name] = CopyTable(allBossesDb[module.name] or {})
-					allBossesDb[module.name].renames = module.db.profile.renames
+				for profileKey, exportKey in pairs({toggles = "flags", auras = "auras", renames = "renames"}) do
+					if profile[profileKey] then
+						allBossesDb[module.name] = CopyTable(allBossesDb[module.name] or {})
+						allBossesDb[module.name][exportKey] = profile[profileKey]
+					end
 				end
 
 				-- Colors
@@ -438,26 +435,12 @@ function InstanceSharing:GetInstanceExportString()
 		version = instanceExportPrefix,
 	}
 
-	for optionsTable, doExport in pairs({flags = exportFlags, renames = exportRenames, sounds = exportSounds or exportAuras, colors = exportColors, auras = exportAuras}) do
+	for optionsTable, doExport in pairs({flags = exportFlags, renames = exportRenames, sounds = exportSounds, colors = exportColors, auras = exportAuras}) do
 		if doExport then
 			for moduleName, settings in pairs(exportTable) do
 				if settings[optionsTable] then
 					filteredExportTable.exportData[moduleName] = filteredExportTable.exportData[moduleName] or {}
 					filteredExportTable.exportData[moduleName][optionsTable] = CopyTable(settings[optionsTable] or {})
-					if optionsTable == "sounds" and not (exportSounds and exportAuras) then -- Filter away extra sound options if only one is selected
-						local count = 0
-						for key, value in pairs(filteredExportTable.exportData[moduleName][optionsTable]) do
-							local shouldKeep = (key == "privateaura" and exportAuras) or (key ~= "privateaura" and exportSounds)
-							if not shouldKeep then
-								filteredExportTable.exportData[moduleName][optionsTable][key] = nil
-							else
-								count = count + 1
-							end
-						end
-						if count == 0 then
-							filteredExportTable.exportData[moduleName][optionsTable] = nil
-						end
-					end
 				end
 			end
 		end
@@ -506,22 +489,12 @@ local function ImportSounds(soundSettings, moduleName)
 
 	local sDB = soundModule.db.profile
 	for soundSettingName, _ in pairs(sDB) do
-		if soundSettingName ~= "privateaura" then -- private auras are handled separately inside ImportPrivateAuras
-			if soundSettings and soundSettings[soundSettingName] then
-				sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
-			else -- wipe to set default
-				sDB[soundSettingName][moduleName] = nil
-			end
+		if soundSettings and soundSettings[soundSettingName] then
+			sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
+		else -- wipe to set default
+			sDB[soundSettingName][moduleName] = nil
 		end
 	end
-end
-
-local function ImportPrivateAuras(privateAuraSettings, moduleName)
-	local soundModule = BigWigs:GetPlugin("Sounds", true)
-	if not soundModule or not privateAuraSettings then return end
-
-	local sDB = soundModule.db.profile["privateaura"]
-	sDB[moduleName] = CopyTable(privateAuraSettings)
 end
 
 local function ImportFlags(flagSettings, moduleName)
@@ -615,10 +588,6 @@ function applyImport()
 		if sounds then
 			ImportSounds(data.sounds, moduleName)
 		end
-		local privateAuraSounds = data.sounds and data.sounds.privateaura -- Older modules
-		if auras and privateAuraSounds then
-			ImportPrivateAuras(privateAuraSounds, moduleName)
-		end
 		if auras and data.auras then
 			ImportAuras(data.auras, moduleName)
 		end
@@ -634,7 +603,7 @@ function applyImport()
 		for moduleName in next, lastImportData.exportData do
 			local module = BigWigs:GetBossModule(moduleName:sub(16))
 			if module and module:IsZoneID(lastImportData.zone) then
-				module:RegisterAuraSounds()
+				BigWigs:SendMessage("BigWigs_RefreshAuraSounds", module)
 			end
 		end
 	end

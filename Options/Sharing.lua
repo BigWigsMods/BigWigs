@@ -937,21 +937,6 @@ do
 		local soundModule = BigWigs:GetPlugin("Sounds", true)
 		local colorModule = BigWigs:GetPlugin("Colors", true)
 
-		local function ImportSounds(soundSettings, moduleName)
-			if not soundModule then return end
-
-			local sDB = soundModule.db.profile
-			for soundSettingName in next, sDB do
-				if soundSettingName ~= "privateaura" then -- private auras are handled separately inside ImportPrivateAuras
-					if soundSettings and soundSettings[soundSettingName] then
-						sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
-					else -- wipe to set default
-						sDB[soundSettingName][moduleName] = nil
-					end
-				end
-			end
-		end
-
 		local function ImportAuras(auraSoundSettings, module)
 			if module then
 				if module.SetupOptions then module:SetupOptions() end
@@ -965,13 +950,6 @@ do
 					end
 				end
 			end
-		end
-
-		local function ImportPrivateAuras(soundSettings, moduleName)
-			if not soundModule then return end
-			local privateAuraSettings = soundSettings and soundSettings["privateaura"] or {}
-			local sDB = soundModule.db.profile["privateaura"]
-			sDB[moduleName] = CopyTable(privateAuraSettings)
 		end
 
 		local function ImportFlags(flagSettings, module)
@@ -1021,6 +999,19 @@ do
 			end
 		end
 
+		local function ImportSounds(soundSettings, moduleName)
+			if not soundModule then return end
+
+			local sDB = soundModule.db.profile
+			for soundSettingName in next, sDB do
+				if soundSettings and soundSettings[soundSettingName] then
+					sDB[soundSettingName][moduleName] = CopyTable(soundSettings[soundSettingName])
+				else -- wipe to set default
+					sDB[soundSettingName][moduleName] = nil
+				end
+			end
+		end
+
 		local importInstanceQueue = {}
 		for instanceID, modules in pairs(data.exportTable) do
 			if sharingImportOptionsSettings[instanceID] then
@@ -1066,7 +1057,6 @@ do
 
 					ImportColors(settings.colors, moduleName)
 					ImportSounds(settings.sounds, moduleName)
-					ImportPrivateAuras(settings.sounds, moduleName)
 				end
 			end
 			table.insert(chatMessages, getInstanceLabel(nextInstanceID))
