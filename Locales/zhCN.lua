@@ -1140,6 +1140,11 @@ L.countText = "施加次数"
 L.unit = "单位"
 L.trigger = "触发条件"
 L.remove = "移除"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+--L.playerName = "Player Name"
+L.currentUnit = "（当前：%s）"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

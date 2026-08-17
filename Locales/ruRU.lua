@@ -1053,6 +1053,11 @@ L.privateAurasTestTankAnchorText = "Аура\nтанка\n%d"
 L.unit = "Цель"
 --L.trigger = "Trigger"
 L.remove = "Исключить"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+--L.playerName = "Player Name"
+L.currentUnit = "(Текущий: %s)"
 
 -----------------------------------------------------------------------
 -- Nameplates.lua

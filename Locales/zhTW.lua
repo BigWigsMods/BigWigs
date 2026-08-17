@@ -1140,6 +1140,11 @@ L.privateAurasTestTankAnchorText = "坦克\n光環\n%d"
 L.unit = "單位"
 --L.trigger = "Trigger"
 L.remove = "移除"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+--L.playerName = "Player Name"
+L.currentUnit = "（當前：%s）"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
