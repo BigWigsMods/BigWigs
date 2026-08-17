@@ -1137,14 +1137,10 @@ end
 
 local function AuraSoundDropdownValueChanged(widget, _, value)
 	local key = widget:GetUserData("key")
-	local default = widget:GetUserData("default")
 	local triggerType = widget:GetUserData("triggerType")
 	local module = widget:GetUserData("module")
 	local soundList = LibSharedMedia:List("sound")
 	value = soundList[value]
-	if value == default then
-		value = nil
-	end
 
 	local auraDB = module.db.profile.auras
 	auraDB[key] = auraDB[key] or {}
@@ -1156,13 +1152,7 @@ local function getAuraOptions(module, spellID)
 	local key = spellID
 	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
-	local defaultAppliedSound = module:GetAuraAppliedSoundDefault(spellID)
-	defaultAppliedSound = defaultAppliedSound or soundModule:GetDefaultSound(defaultAppliedSound)
-	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
-	defaultDoseSound = defaultDoseSound or soundModule:GetDefaultSound(defaultDoseSound)
-	local defaultRemovedSound = module:GetAuraRemovedSoundDefault(spellID)
-	defaultRemovedSound = defaultRemovedSound or soundModule:GetDefaultSound(defaultRemovedSound)
-	local hasDoseSound = defaultDoseSound ~= nil
+	local hasDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID) ~= nil
 
 	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
@@ -1198,7 +1188,6 @@ local function getAuraOptions(module, spellID)
 	appliedDropdown:SetRelativeWidth(hasDoseSound and 0.29 or 0.44)
 	appliedDropdown:SetUserData("key", key)
 	appliedDropdown:SetUserData("module", module)
-	appliedDropdown:SetUserData("default", defaultAppliedSound)
 	appliedDropdown:SetUserData("triggerType", "soundOnApplied")
 	appliedDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
@@ -1218,7 +1207,6 @@ local function getAuraOptions(module, spellID)
 		doseDropdown:SetRelativeWidth(0.3)
 		doseDropdown:SetUserData("key", key)
 		doseDropdown:SetUserData("module", module)
-		doseDropdown:SetUserData("default", defaultDoseSound)
 		doseDropdown:SetUserData("triggerType", "soundOnAppliedDose")
 		doseDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
@@ -1237,7 +1225,6 @@ local function getAuraOptions(module, spellID)
 	removedDropdown:SetRelativeWidth(hasDoseSound and 0.29 or 0.44)
 	removedDropdown:SetUserData("key", key)
 	removedDropdown:SetUserData("module", module)
-	removedDropdown:SetUserData("default", defaultRemovedSound)
 	removedDropdown:SetUserData("triggerType", "soundOnRemoved")
 	removedDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
