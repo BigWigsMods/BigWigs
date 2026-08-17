@@ -1164,7 +1164,7 @@ local function getAuraOptions(module, spellID)
 	local spellLabel = AceGUI:Create("Label")
 	local mythic = false -- module:GetAuraIsMythic(spellID) XXX NYI
 	if mythic then
-		spellLabel:SetText(name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14|t")
+		spellLabel:SetText(name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14:::2|t")
 	else
 		spellLabel:SetText(name)
 	end
@@ -1528,13 +1528,8 @@ do
 				end
 			end
 
-			local showTabs = #tabs > 0
-
-			local showAurasTab = false
-			if module:HasAuraData() then
-				showAurasTab = true
-				showTabs = true
-			end
+			local showAurasTab = module:HasAuraData()
+			local showTabs = showAurasTab or #tabs > 0
 
 			if showTabs then -- tabs!
 				local generalTabExists = nil
