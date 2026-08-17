@@ -1152,7 +1152,7 @@ local function getAuraOptions(module, spellID)
 	local key = spellID
 	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
-	local hasDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID) ~= nil
+	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
 
 	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
@@ -1185,13 +1185,16 @@ local function getAuraOptions(module, spellID)
 	local appliedDropdown = AceGUI:Create("SharedDropdown")
 	appliedDropdown:SetLabel(L.onApplied)
 	appliedDropdown:SetList(soundList, nil, "DDI-Sound")
-	appliedDropdown:SetRelativeWidth(hasDoseSound and 0.29 or 0.44)
+	appliedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or 0.44)
 	appliedDropdown:SetUserData("key", key)
 	appliedDropdown:SetUserData("module", module)
 	appliedDropdown:SetUserData("triggerType", "soundOnApplied")
 	appliedDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
 	local appliedValue = module:GetAuraAppliedSound(spellID)
+	if not appliedValue then
+		appliedValue = module:GetAuraAppliedSoundDefault(spellID)
+	end
 	for i, v in next, soundList do
 		if v == appliedValue then
 			appliedDropdown:SetValue(i)
@@ -1200,7 +1203,7 @@ local function getAuraOptions(module, spellID)
 	end
 
 	local doseDropdown
-	if hasDoseSound then
+	if defaultDoseSound then
 		doseDropdown = AceGUI:Create("SharedDropdown")
 		doseDropdown:SetLabel(L.onDose)
 		doseDropdown:SetList(soundList, nil, "DDI-Sound")
@@ -1210,7 +1213,7 @@ local function getAuraOptions(module, spellID)
 		doseDropdown:SetUserData("triggerType", "soundOnAppliedDose")
 		doseDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
-		local doseValue = module:GetAuraAppliedDoseSound(spellID)
+		local doseValue = module:GetAuraAppliedDoseSound(spellID) or defaultDoseSound
 		for i, v in next, soundList do
 			if v == doseValue then
 				doseDropdown:SetValue(i)
@@ -1222,13 +1225,16 @@ local function getAuraOptions(module, spellID)
 	local removedDropdown = AceGUI:Create("SharedDropdown")
 	removedDropdown:SetLabel(L.onRemoved)
 	removedDropdown:SetList(soundList, nil, "DDI-Sound")
-	removedDropdown:SetRelativeWidth(hasDoseSound and 0.29 or 0.44)
+	removedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or 0.44)
 	removedDropdown:SetUserData("key", key)
 	removedDropdown:SetUserData("module", module)
 	removedDropdown:SetUserData("triggerType", "soundOnRemoved")
 	removedDropdown:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
 
 	local removedValue = module:GetAuraRemovedSound(spellID)
+	if not removedValue then
+		removedValue = module:GetAuraRemovedSoundDefault(spellID)
+	end
 	for i, v in next, soundList do
 		if v == removedValue then
 			removedDropdown:SetValue(i)
@@ -1236,7 +1242,7 @@ local function getAuraOptions(module, spellID)
 		end
 	end
 
-	if hasDoseSound then
+	if defaultDoseSound then
 		return spellLabel, icon, appliedDropdown, doseDropdown, removedDropdown
 	else
 		return spellLabel, icon, appliedDropdown, removedDropdown
@@ -1309,16 +1315,10 @@ do
 				reset:SetCallback("OnLeave", optionsTooltip_Hide)
 				reset:SetCallback("OnClick", function()
 					if hasAuraData then
-						local resetSettings = {}
 						for i = 1, module:GetAuraCount() do
 							local spellID = module:GetAuraPrimarySpellIDByIndex(i)
-							resetSettings[spellID] = {
-								soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
-								soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
-								soundOnRemoved = module:GetAuraRemovedSoundDefault(spellID),
-							}
+							module.db.profile.auras[spellID] = {}
 						end
-						module.db.profile.auras = resetSettings
 						options:SendMessage("BigWigs_RefreshAuraSounds", module)
 					end
 					toggleOptionsTabSelected(widget, nil, "auras")

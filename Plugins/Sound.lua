@@ -30,6 +30,9 @@ local sounds = {
 	underyou = L.spell_under_you,
 	privateaura = "BigWigs: Raid Warning",
 }
+local validGlobalSounds = {
+	[L.spell_under_you] = "underyou",
+}
 local allowBlizzMessages = true
 local registeredAuraModules = {}
 
@@ -459,6 +462,13 @@ do
 			for spellId in next, spellIDList do
 				local soundsToRegister = {}
 				local onAppliedSound = bossModule:GetAuraAppliedSound(spellId)
+				if not onAppliedSound then
+					onAppliedSound = bossModule:GetAuraAppliedSoundDefault(spellId)
+					local hasGlobalSound = validGlobalSounds[onAppliedSound]
+					if hasGlobalSound then
+						onAppliedSound = db.media[hasGlobalSound]
+					end
+				end
 				local onStackSound = bossModule:GetAuraAppliedDoseSound(spellId)
 				local onRemovedSound = bossModule:GetAuraRemovedSound(spellId)
 				if onAppliedSound and onAppliedSound ~= "None" then

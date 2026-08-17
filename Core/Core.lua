@@ -636,11 +636,7 @@ do
 					local count = module:GetAuraCount()
 					for i = 1, count do
 						local spellID = module:GetAuraPrimarySpellIDByIndex(i)
-						auras[spellID] = {
-							soundOnApplied = module:GetAuraAppliedSoundDefault(spellID),
-							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(spellID),
-							soundOnRemoved = module:GetAuraRemovedSoundDefault(spellID),
-						}
+						auras[spellID] = {}
 					end
 				end
 
@@ -691,21 +687,17 @@ do
 					if not module:IsAuraDataAvailable(auraSpellID) or module:GetAuraPrimarySpellIDBySpellID(auraSpellID) ~= auraSpellID then
 						module.db.profile.auras[auraSpellID] = nil
 					elseif type(auraTable) ~= "table" then
-						module.db.profile.auras[auraSpellID] = {
-							soundOnApplied = module:GetAuraAppliedSoundDefault(auraSpellID),
-							soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(auraSpellID),
-							soundOnRemoved = module:GetAuraRemovedSoundDefault(auraSpellID),
-						}
+						module.db.profile.auras[auraSpellID] = {}
 					else
 						for auraDataTableName, auraDataTableValue in next, auraTable do
 							if auraDataTableName ~= "soundOnApplied" and auraDataTableName ~= "soundOnAppliedDose" and auraDataTableName ~= "soundOnRemoved" then
 								module.db.profile.auras[auraSpellID][auraDataTableName] = nil
 							elseif auraDataTableName == "soundOnApplied" and type(auraDataTableValue) ~= "string" then
-								module.db.profile.auras[auraSpellID].soundOnApplied = module:GetAuraAppliedSoundDefault(auraSpellID)
+								module.db.profile.auras[auraSpellID].soundOnApplied = nil
 							elseif auraDataTableName == "soundOnAppliedDose" and type(auraDataTableValue) ~= "string" then
-								module.db.profile.auras[auraSpellID].soundOnAppliedDose = module:GetAuraAppliedDoseSoundDefault(auraSpellID)
+								module.db.profile.auras[auraSpellID].soundOnAppliedDose = nil
 							elseif auraDataTableName == "soundOnRemoved" and type(auraDataTableValue) ~= "string" then
-								module.db.profile.auras[auraSpellID].soundOnRemoved = module:GetAuraRemovedSoundDefault(auraSpellID)
+								module.db.profile.auras[auraSpellID].soundOnRemoved = nil
 							end
 						end
 					end
