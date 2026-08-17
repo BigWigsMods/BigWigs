@@ -1057,6 +1057,8 @@ do
 
 					ImportColors(settings.colors, moduleName)
 					ImportSounds(settings.sounds, moduleName)
+
+					BigWigs:SendMessage("BigWigs_RefreshAuraSounds", module)
 				end
 			end
 			table.insert(chatMessages, getInstanceLabel(nextInstanceID))
