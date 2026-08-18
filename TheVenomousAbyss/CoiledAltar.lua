@@ -344,7 +344,7 @@ function mod:OtherTimeline(_, eventInfo)
 		elseif rounded == 20 or rounded == 40 then
 			barInfo = self:Gloombomb(duration)
 		elseif rounded == 32 or rounded == 33 then
-			self:SoulSever(duration)
+			barInfo = self:SoulSever(duration)
 		end
 
 	elseif stage == 3 then
