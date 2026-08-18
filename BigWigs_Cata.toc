@@ -91,7 +91,7 @@ Plugins\Victory.lua
 Plugins\Wipe.lua
 Plugins\BattleRes.lua
 Plugins\Timeline.lua
-Plugins\PrivateAuras.lua
+Plugins\Auras.lua
 Options\Options.lua
 Options\Sharing.lua
 Options\InstanceSharing.lua
