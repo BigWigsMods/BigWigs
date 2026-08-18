@@ -70,6 +70,21 @@ BigWigs:AddSounds("The Lost Explorers", {
 	[1297022] = "long",
 })
 
+BigWigs:AddColors("Vashnik the Malignant", {
+	[1280935] = "purple",
+	[1281907] = "yellow",
+	[1282117] = "yellow",
+	[1282525] = "red",
+	[1283164] = "cyan",
+})
+
+BigWigs:AddSounds("Vashnik the Malignant", {
+	[1281907] = "alert",
+	[1282117] = "alert",
+	[1282525] = "warning",
+	[1283164] = "long",
+})
+
 BigWigs:AddColors("Sszorak", {
 	[1277025] = "purple",
 	[1285425] = {"blue","orange"},
@@ -83,6 +98,35 @@ BigWigs:AddSounds("Sszorak", {
 	[1285732] = "long",
 	[1296898] = "alarm",
 	[1305959] = "alarm",
+})
+
+BigWigs:AddColors("The Twin Fangs", {
+	[1288538] = "purple",
+	[1289192] = "orange",
+	[1290516] = "orange",
+	[1290809] = {"blue","yellow"},
+	[1290956] = "orange",
+	[1291404] = "cyan",
+	[1291478] = "orange",
+	[1293792] = "yellow",
+	[1294293] = "yellow",
+	[1303230] = "yellow",
+	[1306872] = "yellow",
+	[1308356] = "red",
+})
+
+BigWigs:AddSounds("The Twin Fangs", {
+	[1289192] = "alarm",
+	[1290516] = "alarm",
+	[1290809] = "warning",
+	[1290956] = "alarm",
+	[1291404] = "info",
+	[1291478] = "alarm",
+	[1293792] = "long",
+	[1294293] = "long",
+	[1303230] = "alert",
+	[1306872] = "alert",
+	[1308356] = "warning",
 })
 
 BigWigs:AddColors("The Coiled Altar", {
