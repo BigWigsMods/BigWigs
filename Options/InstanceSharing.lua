@@ -186,7 +186,7 @@ local function getImportSettings(widget)
 			},
 			doAuras = {
 				type = "toggle",
-				name = L.sharing_auras,
+				name = L.auras,
 				desc = L.sharing_auras_desc,
 				order = 31,
 				width = 1,
@@ -294,7 +294,7 @@ local function getExportSettings()
 			},
 			doAuras = {
 				type = "toggle",
-				name = L.sharing_auras,
+				name = L.auras,
 				desc = L.sharing_export_auras_desc,
 				order = 31,
 				width = 1,

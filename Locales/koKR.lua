@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "이 옵션을 끄면 BigWigs 아이콘이 애드온 �
 L.configure = "구성"
 L.resetPositions = "위치 초기화"
 L.selectEncounter = "보스 전투 선택"
-L.auras = "오라" -- Buffs/Debuffs
 --L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 --L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 L.onApplied = "적용 시"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "구성된 사용자 지정 이름 변경 규칙을 가
 L.sharing_export_renames_desc = "구성된 사용자 지정 이름 변경 규칙을 내보냅니다."
 L.sharing_sounds_desc = "능력에 재생할 사운드를 가져옵니다."
 L.sharing_export_sounds_desc = "능력에 재생할 사운드를 내보냅니다."
-L.sharing_auras = "오라"
 L.sharing_auras_desc = "설정된 오라 사운드를 가져옵니다."
 L.sharing_export_private_auras_desc = "설정된 비공개 오라 사운드를 내보냅니다."
 L.sharing_colors_desc = "바와 메시지의 색상 설정을 가져옵니다."
@@ -1099,6 +1097,7 @@ L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 �
 -- PrivateAuras.lua / Auras.lua
 --
 
+L.auras = "오라" -- Buffs/Debuffs
 L.privateAuras = "비공개 오라"
 L.privateAurasDesc1 = "'비공개 오라'는 애드온이 감지하거나 자동화할 수 없는 특별한 유형의 디버프입니다. 이러한 디버프는 현재 모든 최신 보스 전투에서 사용됩니다.\n\n"
 L.privateAurasDesc2 = "BigWigs은 이를 아이콘으로 표시하여 적용 시점을 추적하는 데 도움을 줄 수 있습니다. |cFF33FF99이는 일반 디버프와 구분하여 중요한 디버프를 별도로 표시함으로써 플레이어에게 유용합니다.|r\n\n"

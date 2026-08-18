@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "Отключение этой настройки бу�
 L.configure = "Настройка"
 L.resetPositions = "Сброс позиции"
 L.selectEncounter = "Выберите схватку"
---L.auras = "Auras" -- Buffs/Debuffs
 --L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 --L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 --L.onApplied = "On Applied"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "Импортировать настроенные пе
 L.sharing_export_renames_desc = "Экспортировать настроенные переименования."
 L.sharing_sounds_desc = "Импортировать звуки, которые будут проигрываться для способностей."
 L.sharing_export_sounds_desc = "Экспортировать звуки, которые будут проигрываться для способностей."
---L.sharing_auras = "Auras"
 --L.sharing_auras_desc = "Import the configured aura sounds."
 L.sharing_export_private_auras_desc = "Экспортировать настроенные звуки приватных аур."
 L.sharing_colors_desc = "Импортировать настройки цветов для полос и сообщений."
@@ -1012,6 +1010,7 @@ L.messagesOptInWarning = "|cffff4411ВНИМАНИЕ!|r\n\nВключение р
 -- PrivateAuras.lua / Auras.lua
 --
 
+--L.auras = "Auras" -- Buffs/Debuffs
 L.privateAuras = "Приватные ауры"
 L.privateAurasDesc1 = "'Приватные ауры' — это особый тип отрицательных эффектов, которые аддоны не могут обнаруживать или автоматически обрабатывать. Сейчас такие эффекты используются во всех современных схватках с боссами.\n\n"
 L.privateAurasDesc2 = "BigWigs может помочь отслеживать, когда они применяются к вам, показывая их в виде иконок. |cFF33FF99Это помогает отображать критические отрицательные эффекты отдельно от обычных.|r\n\n"

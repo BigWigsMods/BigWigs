@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "Durch Deaktivieren dieser Option wird BigWigs im Addon
 L.configure = "Einstellungen"
 L.resetPositions = "Positionen zurücksetzen"
 L.selectEncounter = "Wähle Begegnung"
-L.auras = "Auren" -- Buffs/Debuffs
 L.primary_aura_spellId = "\n|cFFFFFF99Primäre Zauber-ID: %d|r"
 L.secondary_aura_spellIds = "|cFFFFFF99Sekundäre Zauber-ID(s): %s|r"
 L.onApplied = "Beim Auferlegen"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "Importiert die benutzerdefinierten Umbenennungen."
 L.sharing_export_renames_desc = "Exportiert die benutzerdefinierten Umbenennungen."
 L.sharing_sounds_desc = "Importiert, welche Sounds für Fähigkeiten abgespielt werden."
 L.sharing_export_sounds_desc = "Exportiert, welche Sounds für Fähigkeiten abgespielt werden."
-L.sharing_auras = "Auren"
 L.sharing_auras_desc = "Die konfigurierten Aura Sounds importieren."
 L.sharing_export_private_auras_desc = "Die konfigurierten privaten Aura Sounds exportieren."
 L.sharing_colors_desc = "Importiert die Farbeinstellungen für Leisten und Nachrichten."
@@ -1099,6 +1097,7 @@ L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in
 -- PrivateAuras.lua / Auras.lua
 --
 
+L.auras = "Auren" -- Buffs/Debuffs
 L.privateAuras = "Private Auren"
 L.privateAurasDesc1 = "'Private Auren' sind ein spezieller Debuff-Typ, welcher von Addons nicht erkannt oder zu Automatisierung genutzt werden kann. Diese Debuffs werden jetzt in allen aktuellen Bossbegegnungen verwendet.\n\n"
 L.privateAurasDesc2 = "BigWigs kann helfen, diese bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden. |cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"

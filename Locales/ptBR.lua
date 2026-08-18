@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "Desativar esta opção fará com que BigWigs apareça 
 L.configure = "Configurar"
 L.resetPositions = "Resetar posições"
 L.selectEncounter = "Selecionar Encontro"
---L.auras = "Auras" -- Buffs/Debuffs
 --L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 --L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 --L.onApplied = "On Applied"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "Importa os nomes personalizados configurados."
 L.sharing_export_renames_desc = "Exporta os nomes personalizados configurados."
 L.sharing_sounds_desc = "Importa quais sons reproduzir para habilidades."
 L.sharing_export_sounds_desc = "Exporta quais sons reproduzir para habilidades."
---L.sharing_auras = "Auras"
 --L.sharing_auras_desc = "Import the configured aura sounds."
 L.sharing_export_private_auras_desc = "Exporta os sons configurados para Auras Privadas."
 L.sharing_colors_desc = "Importa as configurações de cor para barras e mensagens."
@@ -1099,6 +1097,7 @@ L.nameplateOptInWarning = "|cffff4411ATENÇÃO!|r\n\nHabilitar o modo 'opt-in' d
 -- PrivateAuras.lua / Auras.lua
 --
 
+--L.auras = "Auras" -- Buffs/Debuffs
 L.privateAuras = "Auras Privadas"
 L.privateAurasDesc1 = "'Auras Privadas' são um tipo especial de debuff que addons não podem detectar nem executar qualquer automação. Esses debuffs agora são usados por todos encontros de chefes modernos.\n\n"
 L.privateAurasDesc2 = "BigWigs pode te ajudar a detectar quando elas são aplicadas em você exibindo-as como ícones. |cFF33FF99Isso pode te ajudar exibindo os debuffs críticos separados dos debuffs comuns.|r\n\n"

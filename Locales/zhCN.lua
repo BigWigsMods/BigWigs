@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "关闭此选项将启用暴雪的小地图插件收纳
 L.configure = "配置"
 L.resetPositions = "重置位置"
 L.selectEncounter = "选择战斗"
-L.auras = "光环" -- Buffs/Debuffs
 L.primary_aura_spellId = "\n|cFFFFFF99主要法术ID：%d|r"
 L.secondary_aura_spellIds = "|cFFFFFF99次要法术ID（s）：%s|r"
 L.onApplied = "施加时"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "导入自定义重命名的设置。"
 L.sharing_export_renames_desc = "导出自定义重命名的设置。"
 L.sharing_sounds_desc = "导入技能播放的音效设置。"
 L.sharing_export_sounds_desc = "导出技能播放的音效设置。"
-L.sharing_auras = "光环"
 L.sharing_auras_desc = "导入光环的音效设置。"
 L.sharing_export_private_auras_desc = "导出私有光环的音效设置。"
 L.sharing_colors_desc = "导入计时条与信息文本的颜色设置。"
@@ -1099,6 +1097,7 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式�
 -- PrivateAuras.lua / Auras.lua
 --
 
+L.auras = "光环" -- Buffs/Debuffs
 L.privateAuras = "私有光环"
 L.privateAurasDesc1 = "“私有光环”是一种特殊的减益效果，插件既无法检测，也无法对其进行任何自动化操作。如今，这类机制已普遍应用于所有现代首领战中。\n\n"
 L.privateAurasDesc2 = "BigWigs 会用醒目的图标为你单独显示这些效果，|cFF33FF99帮助你精准定位关键减益，不再受普通减益的干扰。|r\n\n"

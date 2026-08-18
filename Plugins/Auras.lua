@@ -43,7 +43,7 @@ plugin.defaultDB = {
 		showCooldown = true,
 
 		showCooldownText = true,
-		cooldownTextFontName = plugin:GetDefaultFont(),
+		cooldownTextFontName = "Noto Sans Medium", -- Only dealing with numbers so we can use this on all locales
 		cooldownTextFontSize = 16,
 		cooldownTextOutline = "OUTLINE",
 		cooldownTextMonochrome = false,
@@ -51,8 +51,8 @@ plugin.defaultDB = {
 		cooldownTextMillisecondsThreshold = 3,
 
 		showCountText = true,
-		countTextFontName = plugin:GetDefaultFont(),
-		countTextFontSize = 22,
+		countTextFontName = "Noto Sans Medium",
+		countTextFontSize = 20,
 		countTextOutline = "OUTLINE",
 		countTextMonochrome = false,
 		countTextSlug = true,
@@ -79,7 +79,7 @@ plugin.defaultDB = {
 		showCooldown = true,
 
 		showCooldownText = true,
-		cooldownTextFontName = plugin:GetDefaultFont(),
+		cooldownTextFontName = "Noto Sans Medium",
 		cooldownTextFontSize = 16,
 		cooldownTextOutline = "OUTLINE",
 		cooldownTextMonochrome = false,
@@ -87,8 +87,8 @@ plugin.defaultDB = {
 		cooldownTextMillisecondsThreshold = 3,
 
 		showCountText = true,
-		countTextFontName = plugin:GetDefaultFont(),
-		countTextFontSize = 22,
+		countTextFontName = "Noto Sans Medium",
+		countTextFontSize = 20,
 		countTextOutline = "OUTLINE",
 		countTextMonochrome = false,
 		countTextSlug = true,
@@ -261,7 +261,7 @@ local function updateProfile()
 		end
 	end
 
-	if db.player.maxIcons < 1 or db.player.maxIcons > 10 then
+	if db.player.maxIcons < 1 or db.player.maxIcons > 5 then
 		db.player.maxIcons = plugin.defaultDB.player.maxIcons
 	else
 		local numPlayer = math.floor(db.player.maxIcons+0.5)
@@ -270,7 +270,7 @@ local function updateProfile()
 		end
 	end
 
-	if db.other.maxIcons < 1 or db.other.maxIcons > 10 then
+	if db.other.maxIcons < 1 or db.other.maxIcons > 5 then
 		db.other.maxIcons = plugin.defaultDB.other.maxIcons
 	else
 		local numOther = math.floor(db.other.maxIcons+0.5)
@@ -653,7 +653,7 @@ do
 						type = "range",
 						name = L.maxIcons,
 						desc = L.maxIconsDesc,
-						min = 2, max = 5, step = 1,
+						min = 1, max = 5, step = 1,
 						width = 1.6,
 						order = 7,
 						disabled = IsAnchorDisabled,
@@ -989,7 +989,7 @@ do
 						type = "range",
 						name = L.maxIcons,
 						desc = L.maxIconsDesc,
-						min = 2, max = 5, step = 1,
+						min = 1, max = 5, step = 1,
 						width = 1.6,
 						order = 13,
 						disabled = IsAnchorDisabled,
@@ -1465,7 +1465,7 @@ end
 --
 
 function plugin:OnRegister()
-	self.displayName = "Auras"
+	self.displayName = L.auras
 end
 
 local function ShowHelpTip()

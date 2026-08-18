@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "Disattivando quest'opzione farà in modo che BigWigs f
 L.configure = "Configura"
 L.resetPositions = "Ripristina le Posizioni"
 L.selectEncounter = "Seleziona il Combattimento"
---L.auras = "Auras" -- Buffs/Debuffs
 --L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 --L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 --L.onApplied = "On Applied"
@@ -320,7 +319,6 @@ L.battleres_settings_export_desc = "esportare tutte le impostazzioni Battle Res.
 --L.sharing_export_renames_desc = "Export the custom renames that are configured."
 --L.sharing_sounds_desc = "Import which sounds to play for abilities."
 --L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
---L.sharing_auras = "Auras"
 --L.sharing_auras_desc = "Import the configured aura sounds."
 --L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
 --L.sharing_colors_desc = "Import the color settings for bars and messages."
@@ -1099,6 +1097,7 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 -- PrivateAuras.lua / Auras.lua
 --
 
+--L.auras = "Auras" -- Buffs/Debuffs
 --L.privateAuras = "Private Auras"
 --L.privateAurasDesc1 = "'Private Auras' are a special type of debuff that addons cannot detect or perform any automation on. These debuffs are used by all modern boss encounters now.\n\n"
 --L.privateAurasDesc2 = "BigWigs can help you keep track of when they are applied to you by displaying them as icons. |cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"

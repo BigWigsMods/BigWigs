@@ -147,7 +147,6 @@ L.compartmentMenu_desc = "Turning this option off will make BigWigs show up in t
 L.configure = "Configure"
 L.resetPositions = "Reset positions"
 L.selectEncounter = "Select encounter"
-L.auras = "Auras" -- Buffs/Debuffs
 L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 L.onApplied = "On Applied"
@@ -319,7 +318,6 @@ L.sharing_renames_desc = "Import the custom renames that are configured."
 L.sharing_export_renames_desc = "Export the custom renames that are configured."
 L.sharing_sounds_desc = "Import which sounds to play for abilities."
 L.sharing_export_sounds_desc = "Export which sounds to play for abilities."
-L.sharing_auras = "Auras"
 L.sharing_auras_desc = "Import the configured aura sounds."
 L.sharing_export_private_auras_desc = "Export the configured Private Auras sounds."
 L.sharing_colors_desc = "Import the color settings for bars and messages."
@@ -1098,6 +1096,7 @@ L.nameplateOptInWarning = "|cffff4411WARNING!|r\n\nEnabling 'opt-in' mode will t
 -- PrivateAuras.lua / Auras.lua
 --
 
+L.auras = "Auras" -- Buffs/Debuffs
 L.privateAuras = "Private Auras"
 L.privateAurasDesc1 = "'Private Auras' are a special type of debuff that addons cannot detect or perform any automation on. These debuffs are used by all modern boss encounters now.\n\n"
 L.privateAurasDesc2 = "BigWigs can help you keep track of when they are applied to you by displaying them as icons. |cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"

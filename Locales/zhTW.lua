@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "關閉此選項將會啟用暴雪的小地圖插件收
 L.configure = "配置"
 L.resetPositions = "重置位置"
 L.selectEncounter = "選擇戰鬥"
---L.auras = "Auras" -- Buffs/Debuffs
 --L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 --L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 --L.onApplied = "On Applied"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "匯出技能的別名設定。"
 L.sharing_export_renames_desc = "匯出技能的別名設定。"
 L.sharing_sounds_desc = "匯入技能對應的音效設定。"
 L.sharing_export_sounds_desc = "匯出技能對應的音效設定。"
---L.sharing_auras = "Auras"
 --L.sharing_auras_desc = "Import the configured aura sounds."
 L.sharing_export_private_auras_desc = "匯出私有光環的音效設定。"
 L.sharing_colors_desc = "匯入計時條與訊息文字的顏色設定。"
@@ -1099,6 +1097,7 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模�
 -- PrivateAuras.lua / Auras.lua
 --
 
+--L.auras = "Auras" -- Buffs/Debuffs
 L.privateAuras = "私有光環"
 L.privateAurasDesc1 = "「私有光環」是一種特殊的減益光環，插件無法直接取得光環的詳細資訊，也無法對其進行任何自動化操作。目前，魔獸世界正式版（主時間線）的首領戰鬥普遍採用了這種機制。\n\n" -- retail 正式版 mainline 主時間線
 L.privateAurasDesc2 = "BigWigs 會將這些特殊光環以獨立且醒目的大圖示顯示在畫面中；|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"

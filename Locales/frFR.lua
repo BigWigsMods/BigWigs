@@ -148,7 +148,6 @@ L.compartmentMenu_desc = "Désactive cette option rendra BigWigs visible dans le
 L.configure = "Configuration"
 L.resetPositions = "Réinitialiser les positions"
 L.selectEncounter = "Sélectionnez une rencontre"
-L.auras = "Auras" -- Buffs/Debuffs
 --L.primary_aura_spellId = "\n|cFFFFFF99Primary spell ID: %d|r"
 --L.secondary_aura_spellIds = "|cFFFFFF99Secondary spell ID(s): %s|r"
 L.onApplied = "À l'application"
@@ -320,7 +319,6 @@ L.sharing_renames_desc = "Importer les renommages personnalisés configurés."
 L.sharing_export_renames_desc = "Exporter les renommages personnalisés configurés."
 L.sharing_sounds_desc = "Importe des sons à jouer pour les techniques."
 L.sharing_export_sounds_desc = "Export des sons à jouer pour les techniques."
-L.sharing_auras = "Auras"
 L.sharing_auras_desc = "Importer les sons configurés d'aura."
 L.sharing_export_private_auras_desc = "Exporte des sons des auras privées configurées."
 L.sharing_colors_desc = "Importe des paramètres de couleurs des barres et messages."
@@ -1099,6 +1097,7 @@ L.nameplateOptInWarning = "|cffff4411ATTENTION !|r\n\nActiver ce choix va désa
 -- PrivateAuras.lua / Auras.lua
 --
 
+L.auras = "Auras" -- Buffs/Debuffs
 L.privateAuras = "Auras privées"
 L.privateAurasDesc1 = "'Auras privées' sont un type spécial d'affaiblissements que les addons ne peuvent détecter ou traiter automatiquement. Ces affaiblissements sont désormais utilisés sur toutes les rencontres de boss modernes.\n\n"
 L.privateAurasDesc2 = "BigWigs peut vous aider à les traquer lorsqu'elles sont appliquées sur vous en les affichant en tant qu'icônes. |cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques séparemment de vos affaiblissements classiques.|r\n\n"
