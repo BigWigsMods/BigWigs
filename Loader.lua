@@ -1518,15 +1518,15 @@ do
 	end
 
 	local locales = {
-		--ruRU = "Russian (ruRU)",
+		ruRU = "Russian (ruRU)",
 		--zhCN = "Simplified Chinese (zhCN)",
 		--zhTW = "Traditional Chinese (zhTW)",
 		itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
-		--esMX = "Spanish (esMX)",
+		esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
-		--ptBR = "Portuguese (ptBR)",
+		ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
 	local realms = {
