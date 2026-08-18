@@ -220,8 +220,6 @@ function mod:OnEncounterStart()
 	-- Starts the encounter by casting Fangs of the Coiled Altar
 	self:Message(1282487, "red") -- CL.count:format(self:GetRename(1282487), 1) would starting the bar at count 2 be weird?
 
-	-- self:RegisterBossEvent("boss2", "StartPhaseTwo")
-	-- self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", nil, "boss2")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss2")
 end
 
@@ -325,48 +323,49 @@ function mod:OtherTimeline(_, eventInfo)
 			barInfo = self:Axegrinder(duration)
 		elseif rounded == 28 or rounded == 35 then
 			barInfo = self:Venomfang(duration)
-		elseif rounded == 42 or rounded == 43 then
+		elseif rounded == 42 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
 				barInfo = self:Guillotine(duration)
 			else
 				barInfo = self:ToxicDeluge(duration)
 			end
-		elseif rounded == 20 or rounded == 16 or rounded == 17 then
+		elseif rounded == 20 or rounded == 17 or rounded == 21 or rounded == 16 then
 			barInfo = self:Sever()
-		elseif rounded == 80 then
+		elseif rounded == 85 then
 			barInfo = self:FangsOfTheCoiledAltar(duration)
 		end
 
 	elseif stage == 2 then
 		if rounded == 70 then
 			barInfo = self:EternalNightfall()
-		elseif rounded == 6 then -- 5.5
+		elseif rounded == 6 or rounded == 34 then -- 5.5
 			barInfo = self:Dreadmarch(duration)
-		elseif rounded == 22 or rounded == 38 then
+		elseif rounded == 20 or rounded == 40 then
 			barInfo = self:Gloombomb(duration)
-		elseif rounded == 31 then
+		elseif rounded == 32 or rounded == 33 then
 			self:SoulSever(duration)
-		elseif rounded == 34 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 2 == 1 then
-				barInfo = self:SoulSever(duration)
-			else
-				barInfo = self:Dreadmarch(duration)
-			end
 		end
 
 	elseif stage == 3 then
-		if rounded == 34 or rounded == 22 then
+		local rounded1 = self:RoundNumber(duration, 1)
+		if rounded == 87 or rounded == 66 then
 			barInfo = self:EternalNightfall(duration)
-		elseif rounded == 54 or rounded == 88 or rounded == 43 or rounded == 52 then -- 53.5
+		elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 then -- 53.5
 			barInfo = self:Dreadmarch(duration)
-		elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 then
+		elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 or rounded == 54 then
 			barInfo = self:ToxicDeluge(duration)
 		elseif rounded == 29 or rounded == 28 or rounded == 30 or rounded == 33 then
 			barInfo = self:BlightedSever(duration)
 		elseif rounded == 92 or rounded == 91 then
 			barInfo = self:DefilementOfTheCoiledAltar(duration)
+		elseif rounded == 34 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] % 2 == 1 then
+				barInfo = self:EternalNightfall(duration)
+			else
+				barInfo = self:BlightedSever(duration)
+			end
 		end
 	end
 
@@ -395,7 +394,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	if barInfo and barInfo.key == 1282487 and state == 3 then -- Fangs of the Coiled Altar (Canceled)
 		-- Normally canceled after the next set of timers are added
 		self:StopBar(barInfo.msg)
-		if coiledAltarCount > barInfo.count then
+		if axegrinderCount > barInfo.count then
 			-- next bar started, so it finished
 			barInfo:onFinished()
 		else
@@ -443,8 +442,6 @@ end
 function mod:StartPhaseTwo()
 	-- Fang was canceled early
 	if self:GetStage() == 1 then
-		-- self:UnregisterBossEvent("boss2")
-
 		self:StopBar(CL.count:format(self:GetRename(1299960), toxicDelugeCount))
 		self:StopBar(CL.count:format(self:GetRename(1283832), axegrinderCount))
 		self:StopBar(CL.count:format(self:GetRename(1282281), venomfangCount))
@@ -501,13 +498,6 @@ function mod:StartIntermission()
 		self:PlaySound("stages", "long")
 	end
 end
-
--- function mod:UNIT_SPELLCAST_CHANNEL_START()
--- 	-- kinda late, but oh well.
--- 	if self:GetStage() == 2 and self:GetTimelineEventCount() == 0 then -- Soulbinding
--- 		self:StartIntermission()
--- 	end
--- end
 
 function mod:UNIT_SPELLCAST_CHANNEL_STOP()
 	if self:GetStage() == 2.5 then -- Soulbinding
