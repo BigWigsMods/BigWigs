@@ -1102,6 +1102,7 @@ L.nameplateOptInWarning = "|cffff4411ATTENTION !|r\n\nActiver ce choix va désa
 L.privateAuras = "Auras privées"
 L.privateAurasDesc1 = "'Auras privées' sont un type spécial d'affaiblissements que les addons ne peuvent détecter ou traiter automatiquement. Ces affaiblissements sont désormais utilisés sur toutes les rencontres de boss modernes.\n\n"
 L.privateAurasDesc2 = "BigWigs peut vous aider à les traquer lorsqu'elles sont appliquées sur vous en les affichant en tant qu'icônes. |cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques séparemment de vos affaiblissements classiques.|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 
 L.createTestAura = "Créer une Aura de Test"
 L.showDispelType = "Afficher l'indicateur du type de dispell"

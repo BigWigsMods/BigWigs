@@ -562,20 +562,6 @@ do
 		handler = plugin,
 		order = 4,
 		args = {
-			-- heading1 = {
-			-- 	type = "description",
-			-- 	name = L.privateAurasDesc1,
-			-- 	order = 0,
-			-- 	width = "full",
-			-- 	fontSize = "medium",
-			-- },
-			-- heading2 = {
-			-- 	type = "description",
-			-- 	name = L.privateAurasDesc2,
-			-- 	order = 0.5,
-			-- 	width = "full",
-			-- 	fontSize = "medium",
-			-- },
 			anchorsButton = {
 				type = "execute",
 				name = function()
@@ -618,7 +604,7 @@ do
 				args = {
 					aurasOnYouDesc = {
 						type = "description",
-						name = L.aurasOnYouDesc,
+						name = L.aurasDesc,
 						order = 1,
 						width = "full",
 						fontSize = "medium",
@@ -1202,7 +1188,7 @@ do
 				args = {
 					player = {
 						type = "group",
-						name = L.aurasOnYou,
+						name = L.bossDebuffsOnYou,
 						get = function(info)
 							return db.player[info[#info]]
 						end,
@@ -1288,7 +1274,7 @@ do
 					},
 					other = {
 						type = "group",
-						name = L.aurasOnAnother,
+						name = L.bossDebuffsOnTank,
 						get = function(info)
 							return db.other[info[#info]]
 						end,

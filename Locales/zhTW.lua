@@ -1102,6 +1102,7 @@ L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模�
 L.privateAuras = "私有光環"
 L.privateAurasDesc1 = "「私有光環」是一種特殊的減益光環，插件無法直接取得光環的詳細資訊，也無法對其進行任何自動化操作。目前，魔獸世界正式版（主時間線）的首領戰鬥普遍採用了這種機制。\n\n" -- retail 正式版 mainline 主時間線
 L.privateAurasDesc2 = "BigWigs 會將這些特殊光環以獨立且醒目的大圖示顯示在畫面中；|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 
 L.createTestAura = "創建測試光環"
 L.showDispelType = "顯示驅散類型圖示"

@@ -1102,6 +1102,7 @@ L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 �
 L.privateAuras = "비공개 오라"
 L.privateAurasDesc1 = "'비공개 오라'는 애드온이 감지하거나 자동화할 수 없는 특별한 유형의 디버프입니다. 이러한 디버프는 현재 모든 최신 보스 전투에서 사용됩니다.\n\n"
 L.privateAurasDesc2 = "BigWigs은 이를 아이콘으로 표시하여 적용 시점을 추적하는 데 도움을 줄 수 있습니다. |cFF33FF99이는 일반 디버프와 구분하여 중요한 디버프를 별도로 표시함으로써 플레이어에게 유용합니다.|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 
 L.createTestAura = "테스트 오라 생성"
 L.showDispelType = "해제 유형 표시기 표시"
