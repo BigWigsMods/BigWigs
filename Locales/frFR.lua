@@ -737,6 +737,60 @@ L.player = "Joueur %d" -- Player 7
 L.disableAltPowerDesc = "Désactive l'affichage de la ressource alternative de manière globale ; elle ne sera jamais affichée sur les rencontres de boss."
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+L.auras = "Auras" -- Buffs/Debuffs
+L.privateAuras = "Auras privées"
+L.privateAurasDesc1 = "'Auras privées' sont un type spécial d'affaiblissements que les addons ne peuvent détecter ou traiter automatiquement. Ces affaiblissements sont désormais utilisés sur toutes les rencontres de boss modernes.\n\n"
+L.privateAurasDesc2 = "BigWigs peut vous aider à les traquer lorsqu'elles sont appliquées sur vous en les affichant en tant qu'icônes. |cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques séparemment de vos affaiblissements classiques.|r\n\n"
+L.aurasDesc = "BigWigs peut vous aider à traquer les affaiblissements que les boss peuvent vous appliquer en tant qu'icônes.\n|cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques, séparément de vos affaiblissements normaux.|r\n\n"
+
+L.createTestAura = "Créer une Aura de Test"
+L.showDispelType = "Afficher l'indicateur du type de dispell"
+L.showDispelTypeDesc = "Afficher une icône sur le cadre de l'aura privée si elle a un type de dispell.\n\n|cffffd200Note : Ceci affecte tous les cadres d'aura privée.|r"
+L.iconSize = "Taille d'icône"
+L.iconSpacing = "Espacement d'icône"
+L.showCooldown = "Afficher la spirale de recharge"
+L.showCooldownText = "Afficher le texte de recharge"
+L.cooldownTextScale = "Échelle de texte de recharge"
+L.growthDirection = "Direction des icônes"
+L.aurasOnYou = "Auras sur vous"
+L.aurasOnYouDesc = "Customise les icônes des auras qui s'appliquent à vous.\n\n"
+L.aurasOnAnother = "Auras sur les autres"
+L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et personnalisez les icônes des auras s'appliquant à lui.\n\n"
+L.chooseAPlayer = "Choisissez un joueur"
+L.theOtherTank = "Cherche automatiquement un tank"
+L.theOtherTankDesc = "Affiche les affaiblissements des boss sur le premier tank de votre groupe si cela n'est pas vous. (Actuel : %s)"
+L.onlyWhenYouAreTank = "Seulement lorsque vous êtes également tank"
+L.playerInYourGroup = "Un joueur dans votre groupe"
+L.maxIcons = "Icônes Max"
+L.maxIconsDesc = "Nombre maximum d'icônes à afficher."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez voir vos affaiblissements d'aura privée en tant qu'icônes, ou même les auras privées d'un autre joueur (comme un tank)."
+L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez maintenant voir les affaiblissements de boss comme icônes, ou même les affaiblissements de boss d'autres joueurs (comme un tank)."
+
+L.aurasTestAnchorText = "Aura\nPrivée\n%d"
+L.aurasTestTankAnchorText = "Aura\nTank\n%d"
+
+L.auraSounds = "Sons d'aura"
+L.addAuraSpell = "Ajouter un sort"
+L.addAuraSpellDesc = "Vous pouvez ajouter des sorts que vous connaissez par leur nom, mais il vaut mieux utiliser l'identifiant provenant des logs."
+L.invalidSpell = "Sort invalide"
+L.bossDebuffsOnYou = "Affaiblissements de Boss sur Vous"
+L.bossDebuffsOnTank = "Affaiblissements de Boss sur le Tank"
+L.showCountText = "Afficher les Stacks"
+L.cooldownText = "Temps de recharge"
+L.countText = "Applications"
+L.selectPlayer = "Sélectionne un joueur"
+L.myself = "Moi-même"
+L.trigger = "Déclencheur"
+L.remove = "Supprimer"
+L.auraCountdownDesc = "Si activé, un CàR vocal sera ajouté sur les 3 dernières secondes de l'aura."
+L.auraDuration = "Durée d'Aura"
+L.auraDurationDesc = "La durée de l'aura en secondes."
+L.currentUnit = "(Actuel : %s)"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\nChoix du mode des barres d'infos des boss 
 L.nameplateOptInHeaderOn = "\n\n\n\nLe choix du mode des barres d'infos des boss est |cFF33FF99ACTIVÉ|r. Pour voir les barres d'infos des boss, allez dans les paramètres spécifiques de la compétence du boss et activez l'option '|cFF33FF99Barre d'infos|r'.\n\n"
 L.nameplateOptInTitle = "Choix du mode barres d'infos des boss"
 L.nameplateOptInWarning = "|cffff4411ATTENTION !|r\n\nActiver ce choix va désactiver les barres d'infos de TOUS les modules de boss. Vous devrez aller sur chaque boss et activer les barres d'infos que vous souhaiterez.\n\nVotre Interface utilisateur va recharger, êtes-vous sûr(e) ?"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
-L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "Auras privées"
-L.privateAurasDesc1 = "'Auras privées' sont un type spécial d'affaiblissements que les addons ne peuvent détecter ou traiter automatiquement. Ces affaiblissements sont désormais utilisés sur toutes les rencontres de boss modernes.\n\n"
-L.privateAurasDesc2 = "BigWigs peut vous aider à les traquer lorsqu'elles sont appliquées sur vous en les affichant en tant qu'icônes. |cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques séparemment de vos affaiblissements classiques.|r\n\n"
-L.aurasDesc = "BigWigs peut vous aider à traquer les affaiblissements que les boss peuvent vous appliquer en tant qu'icônes.\n|cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques, séparément de vos affaiblissements normaux.|r\n\n"
-
-L.createTestAura = "Créer une Aura de Test"
-L.showDispelType = "Afficher l'indicateur du type de dispell"
-L.showDispelTypeDesc = "Afficher une icône sur le cadre de l'aura privée si elle a un type de dispell.\n\n|cffffd200Note : Ceci affecte tous les cadres d'aura privée.|r"
-L.iconSize = "Taille d'icône"
-L.iconSpacing = "Espacement d'icône"
-L.showCooldown = "Afficher la spirale de recharge"
-L.showCooldownText = "Afficher le texte de recharge"
-L.cooldownTextScale = "Échelle de texte de recharge"
-L.growthDirection = "Direction des icônes"
-L.aurasOnYou = "Auras sur vous"
-L.aurasOnYouDesc = "Customise les icônes des auras qui s'appliquent à vous.\n\n"
-L.aurasOnAnother = "Auras sur les autres"
-L.aurasOnAnotherDesc = "Choisissez un joueur spécifique et personnalisez les icônes des auras s'appliquant à lui.\n\n"
-L.chooseAPlayer = "Choisissez un joueur"
-L.theOtherTank = "Cherche automatiquement un tank"
-L.theOtherTankDesc = "Affiche les affaiblissements des boss sur le premier tank de votre groupe si cela n'est pas vous. (Actuel : %s)"
-L.onlyWhenYouAreTank = "Seulement lorsque vous êtes également tank"
-L.playerInYourGroup = "Un joueur dans votre groupe"
-L.maxIcons = "Icônes Max"
-L.maxIconsDesc = "Nombre maximum d'icônes à afficher."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez voir vos affaiblissements d'aura privée en tant qu'icônes, ou même les auras privées d'un autre joueur (comme un tank)."
-L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez maintenant voir les affaiblissements de boss comme icônes, ou même les affaiblissements de boss d'autres joueurs (comme un tank)."
-
-L.aurasTestAnchorText = "Aura\nPrivée\n%d"
-L.aurasTestTankAnchorText = "Aura\nTank\n%d"
-
-L.auraSounds = "Sons d'aura"
-L.addAuraSpell = "Ajouter un sort"
-L.addAuraSpellDesc = "Vous pouvez ajouter des sorts que vous connaissez par leur nom, mais il vaut mieux utiliser l'identifiant provenant des logs."
-L.invalidSpell = "Sort invalide"
-L.bossDebuffsOnYou = "Affaiblissements de Boss sur Vous"
-L.bossDebuffsOnTank = "Affaiblissements de Boss sur le Tank"
-L.showCountText = "Afficher les Stacks"
-L.cooldownText = "Temps de recharge"
-L.countText = "Applications"
-L.selectPlayer = "Sélectionne un joueur"
-L.myself = "Moi-même"
-L.trigger = "Déclencheur"
-L.remove = "Supprimer"
-L.auraCountdownDesc = "Si activé, un CàR vocal sera ajouté sur les 3 dernières secondes de l'aura."
-L.auraDuration = "Durée d'Aura"
-L.auraDurationDesc = "La durée de l'aura en secondes."
-L.currentUnit = "(Actuel : %s)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

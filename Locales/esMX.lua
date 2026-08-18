@@ -737,6 +737,60 @@ L.player = "Jugador %d" -- Player 7
 L.disableAltPowerDesc = "Desactiva la pantalla de Poder Alternativo, nunca se mostrará para ningún encuentro con el jefe."
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+--L.auras = "Auras" -- Buffs/Debuffs
+L.privateAuras = "Auras privadas"
+L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
+L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como íconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+
+L.createTestAura = "Crear aura de prueba"
+L.showDispelType = "Mostrar indicador de tipo de disipación"
+L.showDispelTypeDesc = "Muestra un ícono en el marco de auras privadas si tiene un tipo de disipación.\n\n|cffffd200Nota: Esta es una opción global para todos los marcos de auras privadas.|r"
+L.iconSize = "Tamaño del ícono"
+L.iconSpacing = "Espaciado de íconos"
+L.showCooldown = "Mostrar espiral de tiempo de enfriamiento"
+L.showCooldownText = "Mostrar texto de enfriamiento"
+L.cooldownTextScale = "Escala del texto de enfriamiento"
+L.growthDirection = "Dirección de crecimiento de íconos"
+L.aurasOnYou = "Auras sobre ti"
+L.aurasOnYouDesc = "Personaliza los íconos para las auras que se te aplican.\n\n"
+L.aurasOnAnother = "Auras sobre otro"
+L.aurasOnAnotherDesc = "Elige un jugador específico y luego personaliza los íconos para las auras que se le aplican.\n\n"
+L.chooseAPlayer = "Elige un jugador"
+L.theOtherTank = "Encontrar automáticamente un tanque"
+--L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
+L.onlyWhenYouAreTank = "Mostrar solo cuando tú también eres tanque"
+L.playerInYourGroup = "Un jugador de tu grupo"
+L.maxIcons = "Máximo de íconos"
+L.maxIconsDesc = "La cantidad máxima de íconos que se mostrarán."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como íconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
+
+L.aurasTestAnchorText = "Aura\nprivada\n%d"
+L.aurasTestTankAnchorText = "Aura\nde tanque\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+--L.selectPlayer = "Select Player"
+--L.myself = "Myself"
+--L.trigger = "Trigger"
+L.remove = "Quitar"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+L.currentUnit = "(Actual: %s)"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\nPlacas de nombre de jefes modo 'opcional': 
 L.nameplateOptInHeaderOn = "\n\n\n\nPlacas de nombre de jefes modo 'opcional' ha sido |cFF33FF99ACTIVADO|r. Para ver las placas de nombre de jefes, ve a la configuración de una habilidad específica del jefe y enciende la opción de '|cFF33FF99placa de nombre|r'.\n\n"
 L.nameplateOptInTitle = "Placas de nombre de jefes modo 'opcional'"
 L.nameplateOptInWarning = "|cffff4411ADVERTENCIA!|r\n\nActivar el modo 'opcional' desactivará las placas de nombres de TODOS los módulos de jefe. Tendrás que activar cada mensaje que desees de manera manual.\n\nTu interfaz será recargada ¿Estás seguro?"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
---L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "Auras privadas"
-L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
-L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como íconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
---L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
-
-L.createTestAura = "Crear aura de prueba"
-L.showDispelType = "Mostrar indicador de tipo de disipación"
-L.showDispelTypeDesc = "Muestra un ícono en el marco de auras privadas si tiene un tipo de disipación.\n\n|cffffd200Nota: Esta es una opción global para todos los marcos de auras privadas.|r"
-L.iconSize = "Tamaño del ícono"
-L.iconSpacing = "Espaciado de íconos"
-L.showCooldown = "Mostrar espiral de tiempo de enfriamiento"
-L.showCooldownText = "Mostrar texto de enfriamiento"
-L.cooldownTextScale = "Escala del texto de enfriamiento"
-L.growthDirection = "Dirección de crecimiento de íconos"
-L.aurasOnYou = "Auras sobre ti"
-L.aurasOnYouDesc = "Personaliza los íconos para las auras que se te aplican.\n\n"
-L.aurasOnAnother = "Auras sobre otro"
-L.aurasOnAnotherDesc = "Elige un jugador específico y luego personaliza los íconos para las auras que se le aplican.\n\n"
-L.chooseAPlayer = "Elige un jugador"
-L.theOtherTank = "Encontrar automáticamente un tanque"
---L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
-L.onlyWhenYouAreTank = "Mostrar solo cuando tú también eres tanque"
-L.playerInYourGroup = "Un jugador de tu grupo"
-L.maxIcons = "Máximo de íconos"
-L.maxIconsDesc = "La cantidad máxima de íconos que se mostrarán."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como íconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
---L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
-
-L.aurasTestAnchorText = "Aura\nprivada\n%d"
-L.aurasTestTankAnchorText = "Aura\nde tanque\n%d"
-
---L.auraSounds = "Aura Sounds"
---L.addAuraSpell = "Add Spell"
---L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
---L.invalidSpell = "Invalid spell"
---L.bossDebuffsOnYou = "Boss Debuffs On You"
---L.bossDebuffsOnTank = "Boss Debuffs On Tank"
---L.showCountText = "Show Stacks"
---L.cooldownText = "Cooldown Duration"
---L.countText = "Applications"
---L.selectPlayer = "Select Player"
---L.myself = "Myself"
---L.trigger = "Trigger"
-L.remove = "Quitar"
---L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
---L.auraDuration = "Aura Duration"
---L.auraDurationDesc = "The duration in seconds that the aura will last."
-L.currentUnit = "(Actual: %s)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

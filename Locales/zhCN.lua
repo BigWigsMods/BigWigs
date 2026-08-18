@@ -737,6 +737,60 @@ L.player = "玩家 %d" -- Player 7
 L.disableAltPowerDesc = "全局禁用交替能量显示，此后任何首领战中都不会显示该框体。"
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+L.auras = "光环" -- Buffs/Debuffs
+L.privateAuras = "私有光环"
+L.privateAurasDesc1 = "“私有光环”是一种特殊的减益效果，插件既无法检测，也无法对其进行任何自动化操作。如今，这类机制已普遍应用于所有现代首领战中。\n\n"
+L.privateAurasDesc2 = "BigWigs 会用醒目的图标为你单独显示这些效果，|cFF33FF99帮助你精准定位关键减益，不再受普通减益的干扰。|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+
+L.createTestAura = "创建测试光环"
+L.showDispelType = "显示驱散类型图标"
+L.showDispelTypeDesc = "如果在光环框体上有驱散类型，则显示一个图标。\n\n|cffffd200注意：这是对所有光环框体的全局设置。|r"
+L.iconSize = "图标尺寸"
+L.iconSpacing = "图标间距"
+L.showCooldown = "显示冷却转圈"
+L.showCooldownText = "显示冷却文本"
+L.cooldownTextScale = "冷却文本缩放"
+L.growthDirection = "图标增长方向"
+L.aurasOnYou = "你身上的光环"
+L.aurasOnYouDesc = "自定义你身上的光环图标。\n\n"
+L.aurasOnAnother = "其他玩家身上的光环"
+L.aurasOnAnotherDesc = "选择一名特定玩家，然后为该玩家自定义光环图标。\n\n"
+L.chooseAPlayer = "选择一名玩家"
+L.theOtherTank = "自动寻找坦克"
+--L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
+L.onlyWhenYouAreTank = "仅当你是坦克时显示"
+L.playerInYourGroup = "你队伍中的玩家"
+L.maxIcons = "最大图标数"
+L.maxIconsDesc = "显示图标的最大数量。"
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：现在您可以显示自己的光环减益图标，甚至还可以显示其他玩家（例如坦克）的光环。"
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
+
+L.aurasTestAnchorText = "私有\n光环\n%d"
+L.aurasTestTankAnchorText = "坦克\n光环\n%d"
+
+L.auraSounds = "光环音效"
+L.addAuraSpell = "添加法术"
+L.addAuraSpellDesc = "可按名称添加已学会的法术，建议使用日志中的ID。"
+L.invalidSpell = "无效的法术"
+L.bossDebuffsOnYou = "首领减益（你）"
+L.bossDebuffsOnTank = "首领减益（坦克）"
+L.showCountText = "显示层数"
+L.cooldownText = "冷却时间"
+L.countText = "施加次数"
+--L.selectPlayer = "Select Player"
+--L.myself = "Myself"
+L.trigger = "触发条件"
+L.remove = "移除"
+L.auraCountdownDesc = "启用后，光环结束前3秒将播放语音倒计时。"
+L.auraDuration = "光环持续时间"
+L.auraDurationDesc = "光环的持续时间（秒）。"
+L.currentUnit = "（当前：%s）"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\n姓名板'手动选择'模式：启用此�
 L.nameplateOptInHeaderOn = "\n\n\n\n姓名板'手动选择'模式已|cFF33FF99启用|r。需要单独启用姓名板，请进入特定技能的设置并开启'|cFF33FF99姓名板|r'选项。\n\n"
 L.nameplateOptInTitle = "姓名板'手动选择'模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n启用'手动选择'模式将关闭所有模块的姓名板效果。您需要逐个进入每个模块的设置，手动开启您想要的姓名板效果。\n\n界面即将重新加载，是否继续？"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
-L.auras = "光环" -- Buffs/Debuffs
-L.privateAuras = "私有光环"
-L.privateAurasDesc1 = "“私有光环”是一种特殊的减益效果，插件既无法检测，也无法对其进行任何自动化操作。如今，这类机制已普遍应用于所有现代首领战中。\n\n"
-L.privateAurasDesc2 = "BigWigs 会用醒目的图标为你单独显示这些效果，|cFF33FF99帮助你精准定位关键减益，不再受普通减益的干扰。|r\n\n"
---L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
-
-L.createTestAura = "创建测试光环"
-L.showDispelType = "显示驱散类型图标"
-L.showDispelTypeDesc = "如果在光环框体上有驱散类型，则显示一个图标。\n\n|cffffd200注意：这是对所有光环框体的全局设置。|r"
-L.iconSize = "图标尺寸"
-L.iconSpacing = "图标间距"
-L.showCooldown = "显示冷却转圈"
-L.showCooldownText = "显示冷却文本"
-L.cooldownTextScale = "冷却文本缩放"
-L.growthDirection = "图标增长方向"
-L.aurasOnYou = "你身上的光环"
-L.aurasOnYouDesc = "自定义你身上的光环图标。\n\n"
-L.aurasOnAnother = "其他玩家身上的光环"
-L.aurasOnAnotherDesc = "选择一名特定玩家，然后为该玩家自定义光环图标。\n\n"
-L.chooseAPlayer = "选择一名玩家"
-L.theOtherTank = "自动寻找坦克"
---L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
-L.onlyWhenYouAreTank = "仅当你是坦克时显示"
-L.playerInYourGroup = "你队伍中的玩家"
-L.maxIcons = "最大图标数"
-L.maxIconsDesc = "显示图标的最大数量。"
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：现在您可以显示自己的光环减益图标，甚至还可以显示其他玩家（例如坦克）的光环。"
---L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
-
-L.aurasTestAnchorText = "私有\n光环\n%d"
-L.aurasTestTankAnchorText = "坦克\n光环\n%d"
-
-L.auraSounds = "光环音效"
-L.addAuraSpell = "添加法术"
-L.addAuraSpellDesc = "可按名称添加已学会的法术，建议使用日志中的ID。"
-L.invalidSpell = "无效的法术"
-L.bossDebuffsOnYou = "首领减益（你）"
-L.bossDebuffsOnTank = "首领减益（坦克）"
-L.showCountText = "显示层数"
-L.cooldownText = "冷却时间"
-L.countText = "施加次数"
---L.selectPlayer = "Select Player"
---L.myself = "Myself"
-L.trigger = "触发条件"
-L.remove = "移除"
-L.auraCountdownDesc = "启用后，光环结束前3秒将播放语音倒计时。"
-L.auraDuration = "光环持续时间"
-L.auraDurationDesc = "光环的持续时间（秒）。"
-L.currentUnit = "（当前：%s）"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

@@ -737,6 +737,60 @@ L.player = "Spieler %d" -- Player 7
 L.disableAltPowerDesc = "Die Anzeige alternativer Energien komplett deaktivieren, sodass sie bei keiner Bossbegegnung angezeigt wird."
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+L.auras = "Auren" -- Buffs/Debuffs
+L.privateAuras = "Private Auren"
+L.privateAurasDesc1 = "'Private Auren' sind ein spezieller Debuff-Typ, welcher von Addons nicht erkannt oder zu Automatisierung genutzt werden kann. Diese Debuffs werden jetzt in allen aktuellen Bossbegegnungen verwendet.\n\n"
+L.privateAurasDesc2 = "BigWigs kann helfen, diese bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden. |cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
+L.aurasDesc = "BigWigs kann helfen, Boss Debuffs bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden.\n|cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
+
+L.createTestAura = "Testaura erstellen"
+L.showDispelType = "Bannhinweise anzeigen"
+L.showDispelTypeDesc = "Zeigt ein Symbol auf der privaten Aura an, wenn ein Banntyp vorhanden ist.\n\n|cffffd200Hinweis: Dies ist eine globale Option für alle Aurafenster.|r"
+L.iconSize = "Symbolgröße"
+L.iconSpacing = "Symbolabstand"
+L.showCooldown = "Abklingzeit Zirkel anzeigen"
+L.showCooldownText = "Abklingzeit Text anzeigen"
+L.cooldownTextScale = "Abklingzeit Text Maßstab"
+L.growthDirection = "Richtung der Symbole"
+L.aurasOnYou = "Auren auf Dir"
+L.aurasOnYouDesc = "Passe die Symbole für Auren auf Dir an.\n\n"
+L.aurasOnAnother = "Auren auf anderen"
+L.aurasOnAnotherDesc = "Wählen einen bestimmten Spieler und passe die Symbole for Auren auf diesem an.\n\n"
+L.chooseAPlayer = "Spieler wählen"
+L.theOtherTank = "Automatisch einen Tank finden"
+L.theOtherTankDesc = "Boss Debuffs auf dem ersten Tank in Deiner Gruppe außer Dir anzeigen. (Aktuell: %s)"
+L.onlyWhenYouAreTank = "Nur wenn Du auch ein Tank bist anzeigen"
+L.playerInYourGroup = "Ein Spieler in Deiner Gruppe"
+L.maxIcons = "Maximale Symbolanzahl"
+L.maxIconsDesc = "Die maximale Anzahl der angezeigten Symbole."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine privaten Aura Debuffs als Symbole sehen, oder sogar die privaten Auren eines anderen Spielers (z.B. eines Tanks)."
+L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine Boss Debuffs als Symbole sehen, oder sogar die Boss Debuffs eines anderen Spielers (z.B. eines Tanks)."
+
+L.aurasTestAnchorText = "Spieler\nAura\n%d"
+L.aurasTestTankAnchorText = "Tank\nAura\n%d"
+
+L.auraSounds = "Auren Sounds"
+L.addAuraSpell = "Zauber hinzufügen"
+L.addAuraSpellDesc = "Zauber können mit ihren Namen hinzugefügt werden, aber die Nutzung der Zauber-ID aus but it is always best to use the spell ID from logs."
+L.invalidSpell = "Ungültiger Zauber"
+L.bossDebuffsOnYou = "Boss Debuffs auf Dir"
+L.bossDebuffsOnTank = "Boss Debuffs auf Tank"
+L.showCountText = "Stapel anzeigen"
+L.cooldownText = "Abklingzeitdauer"
+L.countText = "Anwendungen"
+L.selectPlayer = "Spieler wählen"
+L.myself = "Ich"
+L.trigger = "Auslöser"
+L.remove = "Entfernen"
+L.auraCountdownDesc = "Fügt bei Aktivierung einen Sprach-Countdown zu den letzten 3 Sekunden der Aura hinzu."
+L.auraDuration = "Auren Dauer"
+L.auraDurationDesc = "Die Dauer der Aura in Sekunden."
+L.currentUnit = "(Aktuell: %s)"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\nBoss-Mod Namensplaketten 'Opt-in' Modus: Du
 L.nameplateOptInHeaderOn = "\n\n\n\nBoss-Mod Namensplaketten 'Opt-in' Modus ist |cFF33FF99AKTIV|r. Um Boss-Mod Namensplaketten zu sehen, muss in den Einstellungen einer spezifischen Bossfähigkeit die '|cFF33FF99Namensplaketten|r' Option aktiviert werden.\n\n"
 L.nameplateOptInTitle = "Boss-Mod Namensplaketten 'Opt-in' Modus"
 L.nameplateOptInWarning = "|cffff4411WARNUNG!|r\n\nDurch Aktivierung des 'Opt-in' Modus werden die Namensplaketten ALLER Bossmodule deaktiviert. Zur Aktivierung müssen händisch in jeder gewünschten Bossfähigkeit die Namensplaketten aktiviert werden.\n\nDas UI wird jetzt neu geladen, bist Du sicher?"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
-L.auras = "Auren" -- Buffs/Debuffs
-L.privateAuras = "Private Auren"
-L.privateAurasDesc1 = "'Private Auren' sind ein spezieller Debuff-Typ, welcher von Addons nicht erkannt oder zu Automatisierung genutzt werden kann. Diese Debuffs werden jetzt in allen aktuellen Bossbegegnungen verwendet.\n\n"
-L.privateAurasDesc2 = "BigWigs kann helfen, diese bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden. |cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
-L.aurasDesc = "BigWigs kann helfen, Boss Debuffs bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden.\n|cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
-
-L.createTestAura = "Testaura erstellen"
-L.showDispelType = "Bannhinweise anzeigen"
-L.showDispelTypeDesc = "Zeigt ein Symbol auf der privaten Aura an, wenn ein Banntyp vorhanden ist.\n\n|cffffd200Hinweis: Dies ist eine globale Option für alle Aurafenster.|r"
-L.iconSize = "Symbolgröße"
-L.iconSpacing = "Symbolabstand"
-L.showCooldown = "Abklingzeit Zirkel anzeigen"
-L.showCooldownText = "Abklingzeit Text anzeigen"
-L.cooldownTextScale = "Abklingzeit Text Maßstab"
-L.growthDirection = "Richtung der Symbole"
-L.aurasOnYou = "Auren auf Dir"
-L.aurasOnYouDesc = "Passe die Symbole für Auren auf Dir an.\n\n"
-L.aurasOnAnother = "Auren auf anderen"
-L.aurasOnAnotherDesc = "Wählen einen bestimmten Spieler und passe die Symbole for Auren auf diesem an.\n\n"
-L.chooseAPlayer = "Spieler wählen"
-L.theOtherTank = "Automatisch einen Tank finden"
-L.theOtherTankDesc = "Boss Debuffs auf dem ersten Tank in Deiner Gruppe außer Dir anzeigen. (Aktuell: %s)"
-L.onlyWhenYouAreTank = "Nur wenn Du auch ein Tank bist anzeigen"
-L.playerInYourGroup = "Ein Spieler in Deiner Gruppe"
-L.maxIcons = "Maximale Symbolanzahl"
-L.maxIconsDesc = "Die maximale Anzahl der angezeigten Symbole."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine privaten Aura Debuffs als Symbole sehen, oder sogar die privaten Auren eines anderen Spielers (z.B. eines Tanks)."
-L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Du kannst jetzt Deine Boss Debuffs als Symbole sehen, oder sogar die Boss Debuffs eines anderen Spielers (z.B. eines Tanks)."
-
-L.aurasTestAnchorText = "Spieler\nAura\n%d"
-L.aurasTestTankAnchorText = "Tank\nAura\n%d"
-
-L.auraSounds = "Auren Sounds"
-L.addAuraSpell = "Zauber hinzufügen"
-L.addAuraSpellDesc = "Zauber können mit ihren Namen hinzugefügt werden, aber die Nutzung der Zauber-ID aus but it is always best to use the spell ID from logs."
-L.invalidSpell = "Ungültiger Zauber"
-L.bossDebuffsOnYou = "Boss Debuffs auf Dir"
-L.bossDebuffsOnTank = "Boss Debuffs auf Tank"
-L.showCountText = "Stapel anzeigen"
-L.cooldownText = "Abklingzeitdauer"
-L.countText = "Anwendungen"
-L.selectPlayer = "Spieler wählen"
-L.myself = "Ich"
-L.trigger = "Auslöser"
-L.remove = "Entfernen"
-L.auraCountdownDesc = "Fügt bei Aktivierung einen Sprach-Countdown zu den letzten 3 Sekunden der Aura hinzu."
-L.auraDuration = "Auren Dauer"
-L.auraDurationDesc = "Die Dauer der Aura in Sekunden."
-L.currentUnit = "(Aktuell: %s)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

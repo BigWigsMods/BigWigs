@@ -737,6 +737,60 @@ L.player = "玩家 %d" -- Player 7
 L.disableAltPowerDesc = "全局停用替代能量框架，啟用此選項將使任何首領戰都不顯示此框架。"
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+--L.auras = "Auras" -- Buffs/Debuffs
+L.privateAuras = "私有光環"
+L.privateAurasDesc1 = "「私有光環」是一種特殊的減益光環，插件無法直接取得光環的詳細資訊，也無法對其進行任何自動化操作。目前，魔獸世界正式版（主時間線）的首領戰鬥普遍採用了這種機制。\n\n" -- retail 正式版 mainline 主時間線
+L.privateAurasDesc2 = "BigWigs 會將這些特殊光環以獨立且醒目的大圖示顯示在畫面中；|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+
+L.createTestAura = "創建測試光環"
+L.showDispelType = "顯示驅散類型圖示"
+L.showDispelTypeDesc = "若該私有光環可被驅散，則在框架上顯示對應的驅散類型圖示。\n\n|cffffd200注意：此選項是全域設定，啟用後會套用到所有的私有光環。|r"
+L.iconSize = "圖示大小"
+L.iconSpacing = "圖示間距"
+L.showCooldown = "顯示冷卻動畫"
+L.showCooldownText = "顯示冷卻文字"
+L.cooldownTextScale = "冷卻文字尺寸"
+L.growthDirection = "圖示增長方向"
+L.aurasOnYou = "自身光環"
+L.aurasOnYouDesc = "設定你的光環圖示外觀。\n\n"
+L.aurasOnAnother = "他人光環"
+L.aurasOnAnotherDesc = "指定一名玩家，設定該玩家身上的光環圖示外觀。\n\n"
+L.chooseAPlayer = "選擇一名玩家"
+L.theOtherTank = "自動尋找坦克"
+--L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
+L.onlyWhenYouAreTank = "僅在你也是坦克時顯示"
+L.playerInYourGroup = "隊伍中的玩家"
+L.maxIcons = "圖示最大數量"
+L.maxIconsDesc = "最多顯示幾個圖示。"
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 現在，你可以在受到私有光環減益效果時，獲得大圖示提示；並且，你可以設定是否要監視其他隊友（例如坦克）的狀態。"
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
+
+L.aurasTestAnchorText = "私有\n%d"
+L.aurasTestTankAnchorText = "坦克\n光環\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+--L.selectPlayer = "Select Player"
+--L.myself = "Myself"
+--L.trigger = "Trigger"
+L.remove = "移除"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+L.currentUnit = "（當前：%s）"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\n名條「手動啟用」模式：啟用此�
 L.nameplateOptInHeaderOn = "\n\n\n\n首領模組的名條圖示目前處於|cFF33FF99「手動啟用」模式|r。若要顯示特定目標的名條圖示，請進入該模組的設定，並開啟「|cFF33FF99名條|r」選項。\n\n"
 L.nameplateOptInTitle = "名條「手動啟用」模式"
 L.nameplateOptInWarning = "|cffff4411警告！|r\n\n開啟「手動啟用」模式會關閉所有首領模組的名條圖示。你必須分別進入每個模組，啟用你需要顯示圖示的名條。\n\n即將重載介面，確定要啟用嗎？"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
---L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "私有光環"
-L.privateAurasDesc1 = "「私有光環」是一種特殊的減益光環，插件無法直接取得光環的詳細資訊，也無法對其進行任何自動化操作。目前，魔獸世界正式版（主時間線）的首領戰鬥普遍採用了這種機制。\n\n" -- retail 正式版 mainline 主時間線
-L.privateAurasDesc2 = "BigWigs 會將這些特殊光環以獨立且醒目的大圖示顯示在畫面中；|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"
---L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
-
-L.createTestAura = "創建測試光環"
-L.showDispelType = "顯示驅散類型圖示"
-L.showDispelTypeDesc = "若該私有光環可被驅散，則在框架上顯示對應的驅散類型圖示。\n\n|cffffd200注意：此選項是全域設定，啟用後會套用到所有的私有光環。|r"
-L.iconSize = "圖示大小"
-L.iconSpacing = "圖示間距"
-L.showCooldown = "顯示冷卻動畫"
-L.showCooldownText = "顯示冷卻文字"
-L.cooldownTextScale = "冷卻文字尺寸"
-L.growthDirection = "圖示增長方向"
-L.aurasOnYou = "自身光環"
-L.aurasOnYouDesc = "設定你的光環圖示外觀。\n\n"
-L.aurasOnAnother = "他人光環"
-L.aurasOnAnotherDesc = "指定一名玩家，設定該玩家身上的光環圖示外觀。\n\n"
-L.chooseAPlayer = "選擇一名玩家"
-L.theOtherTank = "自動尋找坦克"
---L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
-L.onlyWhenYouAreTank = "僅在你也是坦克時顯示"
-L.playerInYourGroup = "隊伍中的玩家"
-L.maxIcons = "圖示最大數量"
-L.maxIconsDesc = "最多顯示幾個圖示。"
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 現在，你可以在受到私有光環減益效果時，獲得大圖示提示；並且，你可以設定是否要監視其他隊友（例如坦克）的狀態。"
---L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
-
-L.aurasTestAnchorText = "私有\n%d"
-L.aurasTestTankAnchorText = "坦克\n光環\n%d"
-
---L.auraSounds = "Aura Sounds"
---L.addAuraSpell = "Add Spell"
---L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
---L.invalidSpell = "Invalid spell"
---L.bossDebuffsOnYou = "Boss Debuffs On You"
---L.bossDebuffsOnTank = "Boss Debuffs On Tank"
---L.showCountText = "Show Stacks"
---L.cooldownText = "Cooldown Duration"
---L.countText = "Applications"
---L.selectPlayer = "Select Player"
---L.myself = "Myself"
---L.trigger = "Trigger"
-L.remove = "移除"
---L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
---L.auraDuration = "Aura Duration"
---L.auraDurationDesc = "The duration in seconds that the aura will last."
-L.currentUnit = "（當前：%s）"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

@@ -737,6 +737,60 @@ L.player = "Jogador %d" -- Player 7
 L.disableAltPowerDesc = "Desativa globalmente a janela de PoderAlt, nunca mais será mostrada em encontros de chefes."
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+--L.auras = "Auras" -- Buffs/Debuffs
+L.privateAuras = "Auras Privadas"
+L.privateAurasDesc1 = "'Auras Privadas' são um tipo especial de debuff que addons não podem detectar nem executar qualquer automação. Esses debuffs agora são usados por todos encontros de chefes modernos.\n\n"
+L.privateAurasDesc2 = "BigWigs pode te ajudar a detectar quando elas são aplicadas em você exibindo-as como ícones. |cFF33FF99Isso pode te ajudar exibindo os debuffs críticos separados dos debuffs comuns.|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+
+L.createTestAura = "Criar Aura Teste"
+L.showDispelType = "Mostrar Indicador do Tipo de Dissipação"
+L.showDispelTypeDesc = "Exibe um ícone no quadro de aura privada se ela possuir um tipo de dissipação.\n\n|cffffd200Nota: Essa é uma opção global que afeta todos os quadros de auras privadas.|r"
+L.iconSize = "Tamanho do Ícone"
+L.iconSpacing = "Espaçamento do Ícone"
+L.showCooldown = "Mostrar Espiral de DRecarga"
+L.showCooldownText = "Mostrar Texto de Recarga"
+L.cooldownTextScale = "Escala do Texto de Recarga"
+L.growthDirection = "Direção de Crescimento do Ícone"
+L.aurasOnYou = "Auras em Você"
+L.aurasOnYouDesc = "Personalize os ícones de auras que se aplicam em você.\n\n"
+L.aurasOnAnother = "Auras no Outro"
+L.aurasOnAnotherDesc = "Escolha um jogador específico e então personalize os ícones de auras que se aplicam nele.\n\n"
+L.chooseAPlayer = "Escolha um Jogador"
+L.theOtherTank = "Encontra um tanque automaticamente"
+--L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
+L.onlyWhenYouAreTank = "Exibe apenas quando você também é um tanque"
+L.playerInYourGroup = "Um jogador no seu grupo"
+L.maxIcons = "Máx. de Ícones"
+L.maxIconsDesc = "A quantidade máxima de ícones a serem exibidos."
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Agora você pode visualizar seus debuffs de auras privadas como ícones, ou até mesmo as auras privadas de outro jogador (ex.: um tanque)."
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
+
+L.aurasTestAnchorText = "Aura\nprivada\n%d"
+L.aurasTestTankAnchorText = "Aura\nde Tanque\n%d"
+
+--L.auraSounds = "Aura Sounds"
+--L.addAuraSpell = "Add Spell"
+--L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
+--L.invalidSpell = "Invalid spell"
+--L.bossDebuffsOnYou = "Boss Debuffs On You"
+--L.bossDebuffsOnTank = "Boss Debuffs On Tank"
+--L.showCountText = "Show Stacks"
+--L.cooldownText = "Cooldown Duration"
+--L.countText = "Applications"
+--L.selectPlayer = "Select Player"
+--L.myself = "Myself"
+--L.trigger = "Trigger"
+L.remove = "Remover"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+L.currentUnit = "(Atual: %s)"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\nModo 'opt-in' das placas de identificação
 L.nameplateOptInHeaderOn = "\n\n\n\nO modo 'opt-in' das placas de identificação do mod de chefes está |cFF33FF99ATIVO|r. Para ver as placas de identificação do mod de chefe, vá nas configurações de uma habilidade de chefe específica e ligue a opção '|cFF33FF99Placas de Identificação|r'.\n\n"
 L.nameplateOptInTitle = "Modo 'opt-in' das placas de identificação do mod de chefe"
 L.nameplateOptInWarning = "|cffff4411ATENÇÃO!|r\n\nHabilitar o modo 'opt-in' desligará as placas de identificação de TODOS os seus módulos de chefes. Você terá que ir em cada um e ligar manualmente as placas de identificação que desejar.\n\nSua UI será recarregada agora, deseja continuar?"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
---L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "Auras Privadas"
-L.privateAurasDesc1 = "'Auras Privadas' são um tipo especial de debuff que addons não podem detectar nem executar qualquer automação. Esses debuffs agora são usados por todos encontros de chefes modernos.\n\n"
-L.privateAurasDesc2 = "BigWigs pode te ajudar a detectar quando elas são aplicadas em você exibindo-as como ícones. |cFF33FF99Isso pode te ajudar exibindo os debuffs críticos separados dos debuffs comuns.|r\n\n"
---L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
-
-L.createTestAura = "Criar Aura Teste"
-L.showDispelType = "Mostrar Indicador do Tipo de Dissipação"
-L.showDispelTypeDesc = "Exibe um ícone no quadro de aura privada se ela possuir um tipo de dissipação.\n\n|cffffd200Nota: Essa é uma opção global que afeta todos os quadros de auras privadas.|r"
-L.iconSize = "Tamanho do Ícone"
-L.iconSpacing = "Espaçamento do Ícone"
-L.showCooldown = "Mostrar Espiral de DRecarga"
-L.showCooldownText = "Mostrar Texto de Recarga"
-L.cooldownTextScale = "Escala do Texto de Recarga"
-L.growthDirection = "Direção de Crescimento do Ícone"
-L.aurasOnYou = "Auras em Você"
-L.aurasOnYouDesc = "Personalize os ícones de auras que se aplicam em você.\n\n"
-L.aurasOnAnother = "Auras no Outro"
-L.aurasOnAnotherDesc = "Escolha um jogador específico e então personalize os ícones de auras que se aplicam nele.\n\n"
-L.chooseAPlayer = "Escolha um Jogador"
-L.theOtherTank = "Encontra um tanque automaticamente"
---L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
-L.onlyWhenYouAreTank = "Exibe apenas quando você também é um tanque"
-L.playerInYourGroup = "Um jogador no seu grupo"
-L.maxIcons = "Máx. de Ícones"
-L.maxIconsDesc = "A quantidade máxima de ícones a serem exibidos."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Agora você pode visualizar seus debuffs de auras privadas como ícones, ou até mesmo as auras privadas de outro jogador (ex.: um tanque)."
---L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
-
-L.aurasTestAnchorText = "Aura\nprivada\n%d"
-L.aurasTestTankAnchorText = "Aura\nde Tanque\n%d"
-
---L.auraSounds = "Aura Sounds"
---L.addAuraSpell = "Add Spell"
---L.addAuraSpellDesc = "You can add spells you currently know by name, but it is always best to use the spell ID from logs."
---L.invalidSpell = "Invalid spell"
---L.bossDebuffsOnYou = "Boss Debuffs On You"
---L.bossDebuffsOnTank = "Boss Debuffs On Tank"
---L.showCountText = "Show Stacks"
---L.cooldownText = "Cooldown Duration"
---L.countText = "Applications"
---L.selectPlayer = "Select Player"
---L.myself = "Myself"
---L.trigger = "Trigger"
-L.remove = "Remover"
---L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
---L.auraDuration = "Aura Duration"
---L.auraDurationDesc = "The duration in seconds that the aura will last."
-L.currentUnit = "(Atual: %s)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

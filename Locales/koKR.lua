@@ -737,6 +737,60 @@ L.player = "플레이어 %d" -- Player 7
 L.disableAltPowerDesc = "전역 옵션으로 보조 자원 디스플레이를 비활성화하여, 어떠한 보스 전투에서도 보이지 않게 합니다."
 
 -----------------------------------------------------------------------
+-- Auras.lua
+--
+
+L.auras = "오라" -- Buffs/Debuffs
+L.privateAuras = "비공개 오라"
+L.privateAurasDesc1 = "'비공개 오라'는 애드온이 감지하거나 자동화할 수 없는 특별한 유형의 디버프입니다. 이러한 디버프는 현재 모든 최신 보스 전투에서 사용됩니다.\n\n"
+L.privateAurasDesc2 = "BigWigs은 이를 아이콘으로 표시하여 적용 시점을 추적하는 데 도움을 줄 수 있습니다. |cFF33FF99이는 일반 디버프와 구분하여 중요한 디버프를 별도로 표시함으로써 플레이어에게 유용합니다.|r\n\n"
+--L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
+
+L.createTestAura = "테스트 오라 생성"
+L.showDispelType = "해제 유형 표시기 표시"
+L.showDispelTypeDesc = "비공개 오라 프레임에 해제 유형이 있는 경우 아이콘을 표시합니다.\n\n|cffffd200참고: 이 옵션은 모든 비공개 오라 프레임에 적용되는 전역 옵션입니다.|r"
+L.iconSize = "아이콘 크기"
+L.iconSpacing = "아이콘 간격"
+L.showCooldown = "재사용 대기시간 표시"
+L.showCooldownText = "재사용 대기시간 텍스트 표시"
+L.cooldownTextScale = "재사용 대기시간 텍스트 크기"
+L.growthDirection = "아이콘 성장 방향"
+L.aurasOnYou = "본인에게 적용되는 오라"
+L.aurasOnYouDesc = "본인에게 적용되는 오라 아이콘을 사용자 지정합니다.\n\n"
+L.aurasOnAnother = "다른 플레이어에게 적용되는 오라"
+L.aurasOnAnotherDesc = "특정 플레이어를 선택한 다음 해당 플레이어에게 적용되는 오라 아이콘을 사용자 지정합니다.\n\n"
+L.chooseAPlayer = "플레이어 선택"
+L.theOtherTank = "탱커 자동 찾기"
+--L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
+L.onlyWhenYouAreTank = "자신도 탱커일 때만 표시"
+L.playerInYourGroup = "그룹 내 플레이어"
+L.maxIcons = "최대 아이콘 수"
+L.maxIconsDesc = "표시할 최대 아이콘 수"
+L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 이제 비공개 오라 디버프를 아이콘으로 볼 수 있으며, 다른 플레이어(예: 탱커)의 비공개 오라도 볼 수 있습니다."
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
+
+L.aurasTestAnchorText = "오라\n%d"
+L.aurasTestTankAnchorText = "탱커\n오라\n%d"
+
+L.auraSounds = "오라 효과음"
+L.addAuraSpell = "주문 추가"
+L.addAuraSpellDesc = "현재 알고 있는 주문을 이름으로 추가할 수 있지만, 로그에 표시된 주문 ID를 사용하는 것이 항상 가장 좋습니다."
+L.invalidSpell = "유효하지 않은 주문"
+L.bossDebuffsOnYou = "보스 디버프 적용됨"
+L.bossDebuffsOnTank = "탱커에게 적용된 보스 디버프"
+L.showCountText = "중첩 수 표시"
+L.cooldownText = "재사용 대기 시간"
+L.countText = "적용 횟수"
+--L.selectPlayer = "Select Player"
+--L.myself = "Myself"
+L.trigger = "발동 조건"
+L.remove = "추방"
+--L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
+--L.auraDuration = "Aura Duration"
+--L.auraDurationDesc = "The duration in seconds that the aura will last."
+L.currentUnit = "(현재: %s)"
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -1092,60 +1146,6 @@ L.nameplateOptInHeaderOff = "\n\n\n\n보스 모드 이름표 '선택 활성화' 
 L.nameplateOptInHeaderOn = "\n\n\n\n보스 모드 이름표 '선택 활성화' 모드가 |cFF33FF99활성화|r되었습니다. 보스 모드 이름표를 보려면 특정 보스 능력 설정에 들어가서 '|cFF33FF99이름표|r' 옵션을 활성화하세요.\n\n"
 L.nameplateOptInTitle = "보스 모드 이름표 '선택 활성화' 모드"
 L.nameplateOptInWarning = "|cffff4411경고!|r\n\n'선택 활성화' 모드를 활성화하면 모든 보스 모듈에서 이름표가 비활성화됩니다. 원하는 이름표만 각 모듈에서 수동으로 활성화해야 합니다.\n\nUI가 재시작됩니다. 계속하시겠습니까?"
-
------------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
---
-
-L.auras = "오라" -- Buffs/Debuffs
-L.privateAuras = "비공개 오라"
-L.privateAurasDesc1 = "'비공개 오라'는 애드온이 감지하거나 자동화할 수 없는 특별한 유형의 디버프입니다. 이러한 디버프는 현재 모든 최신 보스 전투에서 사용됩니다.\n\n"
-L.privateAurasDesc2 = "BigWigs은 이를 아이콘으로 표시하여 적용 시점을 추적하는 데 도움을 줄 수 있습니다. |cFF33FF99이는 일반 디버프와 구분하여 중요한 디버프를 별도로 표시함으로써 플레이어에게 유용합니다.|r\n\n"
---L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
-
-L.createTestAura = "테스트 오라 생성"
-L.showDispelType = "해제 유형 표시기 표시"
-L.showDispelTypeDesc = "비공개 오라 프레임에 해제 유형이 있는 경우 아이콘을 표시합니다.\n\n|cffffd200참고: 이 옵션은 모든 비공개 오라 프레임에 적용되는 전역 옵션입니다.|r"
-L.iconSize = "아이콘 크기"
-L.iconSpacing = "아이콘 간격"
-L.showCooldown = "재사용 대기시간 표시"
-L.showCooldownText = "재사용 대기시간 텍스트 표시"
-L.cooldownTextScale = "재사용 대기시간 텍스트 크기"
-L.growthDirection = "아이콘 성장 방향"
-L.aurasOnYou = "본인에게 적용되는 오라"
-L.aurasOnYouDesc = "본인에게 적용되는 오라 아이콘을 사용자 지정합니다.\n\n"
-L.aurasOnAnother = "다른 플레이어에게 적용되는 오라"
-L.aurasOnAnotherDesc = "특정 플레이어를 선택한 다음 해당 플레이어에게 적용되는 오라 아이콘을 사용자 지정합니다.\n\n"
-L.chooseAPlayer = "플레이어 선택"
-L.theOtherTank = "탱커 자동 찾기"
---L.theOtherTankDesc = "Show boss debuffs on the first tank in your group that isn't you. (Current: %s)"
-L.onlyWhenYouAreTank = "자신도 탱커일 때만 표시"
-L.playerInYourGroup = "그룹 내 플레이어"
-L.maxIcons = "최대 아이콘 수"
-L.maxIconsDesc = "표시할 최대 아이콘 수"
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 이제 비공개 오라 디버프를 아이콘으로 볼 수 있으며, 다른 플레이어(예: 탱커)의 비공개 오라도 볼 수 있습니다."
---L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
-
-L.aurasTestAnchorText = "오라\n%d"
-L.aurasTestTankAnchorText = "탱커\n오라\n%d"
-
-L.auraSounds = "오라 효과음"
-L.addAuraSpell = "주문 추가"
-L.addAuraSpellDesc = "현재 알고 있는 주문을 이름으로 추가할 수 있지만, 로그에 표시된 주문 ID를 사용하는 것이 항상 가장 좋습니다."
-L.invalidSpell = "유효하지 않은 주문"
-L.bossDebuffsOnYou = "보스 디버프 적용됨"
-L.bossDebuffsOnTank = "탱커에게 적용된 보스 디버프"
-L.showCountText = "중첩 수 표시"
-L.cooldownText = "재사용 대기 시간"
-L.countText = "적용 횟수"
---L.selectPlayer = "Select Player"
---L.myself = "Myself"
-L.trigger = "발동 조건"
-L.remove = "추방"
---L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
---L.auraDuration = "Aura Duration"
---L.auraDurationDesc = "The duration in seconds that the aura will last."
-L.currentUnit = "(현재: %s)"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
