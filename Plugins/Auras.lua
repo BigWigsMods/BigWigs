@@ -2199,12 +2199,13 @@ do
 
 	function RemoveAuraSound(index, remove)
 		local auraSoundID = auraSounds[index]
-		if not auraSoundID then return end
-
-		C_UnitAuras.RemoveAuraSound(auraSoundID)
-		auraSounds[index] = nil
-		registeredUnits[index] = nil
+		if auraSoundID then
+			C_UnitAuras.RemoveAuraSound(auraSoundID)
+			auraSounds[index] = nil
+			registeredUnits[index] = nil
+		end
 		if remove then
+			table.remove(db.sounds, index)
 			table.remove(auraSounds, index)
 			table.remove(registeredUnits, index)
 		end
