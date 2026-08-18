@@ -52,7 +52,7 @@ plugin.defaultDB = {
 
 		showCountText = true,
 		countTextFontName = plugin:GetDefaultFont(),
-		countTextFontSize = 14,
+		countTextFontSize = 22,
 		countTextOutline = "OUTLINE",
 		countTextMonochrome = false,
 		countTextSlug = true,
@@ -88,7 +88,7 @@ plugin.defaultDB = {
 
 		showCountText = true,
 		countTextFontName = plugin:GetDefaultFont(),
-		countTextFontSize = 14,
+		countTextFontSize = 22,
 		countTextOutline = "OUTLINE",
 		countTextMonochrome = false,
 		countTextSlug = true,
