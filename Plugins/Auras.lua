@@ -291,7 +291,6 @@ end
 
 local function reset(section)
 	MergeTable(plugin.db.profile[section], plugin.defaultDB[section])
-	updateProfile()
 end
 
 --------------------------------------------------------------------------------
@@ -502,25 +501,34 @@ do
 					},
 					unit = {
 						type = "select",
-						name = L.unit,
+						name = L.selectPlayer,
 						values = {
-							player = "player",
-							party1 = "party1",
-							party2 = "party2",
-							party3 = "party3",
-							party4 = "party4",
+							player = L.myself,
 							tank = L.indicatorType_Tank,
-							name = L.playerName,
+							name = L.playerInYourGroup,
 						},
-						sorting = { "player", "party1", "party2", "party3", "party4", "tank", "name" },
+						sorting = { "player", "tank", "name" },
 						width = 1,
 						order = 6,
 					},
 					playerName = {
-						type = "input",
-						name = L.playerName,
+						type = "select",
+						name = L.playerInYourGroup,
+						values = function()
+							local playerList = {}
+							local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+							for unit in plugin:IterateGroup(true) do
+								if not UnitInPartyIsAI(unit) then
+									local name = plugin:UnitName(unit)
+									local _, class = UnitClass(unit)
+									local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+									playerList[name] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+								end
+							end
+							return playerList
+						end,
 						hidden = function() return db.sounds[soundIndex].unit ~= "name" end,
-						width = 1,
+						width = 1.6,
 						order = 7,
 					},
 					unitTarget = {
@@ -2002,7 +2010,11 @@ do
 		local aura = table.remove(auraFramePool)
 		if not aura then
 			aura = CreateFrame("Frame", nil, UIParent)
-			aura:SetFrameStrata("HIGH")
+			aura:SetFrameStrata("MEDIUM")
+			aura:SetFixedFrameStrata(true)
+			aura:SetFrameLevel(1000)
+			aura:SetFixedFrameLevel(true)
+			aura:SetClampedToScreen(true)
 			for name, func in next, methods do
 				aura[name] = func or noop
 			end

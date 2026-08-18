@@ -1138,13 +1138,13 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 --L.showCountText = "Show Stacks"
 --L.cooldownText = "Cooldown Duration"
 --L.countText = "Applications"
-L.unit = "Unità"
+--L.selectPlayer = "Select Player"
+--L.myself = "Myself"
 --L.trigger = "Trigger"
 L.remove = "Rimuovi"
 --L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
 --L.auraDuration = "Aura Duration"
 --L.auraDurationDesc = "The duration in seconds that the aura will last."
---L.playerName = "Player Name"
 L.currentUnit = "(Attuale: %s)"
 
 -----------------------------------------------------------------------

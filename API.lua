@@ -99,7 +99,6 @@ end
 do
 	local list = {
 		["Auras"] = true,
-		["PrivateAuras"] = true,
 	}
 	function API.OpenConfigToPanel(panel)
 		if list[panel] then
