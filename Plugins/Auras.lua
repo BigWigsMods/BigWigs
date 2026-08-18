@@ -438,7 +438,6 @@ do
 						func = function(info)
 							GameTooltip:Hide()
 							local index = tonumber(info[#info - 1])
-							table.remove(db.sounds, index)
 							RemoveAuraSound(index, true)
 							UpdateSoundOptions()
 						end,
