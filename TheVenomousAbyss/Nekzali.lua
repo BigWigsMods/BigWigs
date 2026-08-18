@@ -27,18 +27,11 @@ local rendCount = 1
 local amaniCount = 1
 local barrageCount = 1
 local pyreCount = 1
-local tollCount = 1
 local invokeCount = 1
 
-local gapTimer
-do
-	-- XXX using counts in the bar handler would have probably been better than
-	-- duration. will probably switch to that if i feel like adding this for
-	-- non-mythic and the durations aren't unique.
-
-	-- mythic
-	local timers = {
-		[1295397] = { -- Restless Amani
+local gapTimer do
+	local timersMythic = {
+		[1295397] = {  -- Restless Amani
 			[1] = { [40] = 71 },
 			[1.5] = { [20] = 35 },
 			[2] = { [40] = 31 },
@@ -58,11 +51,34 @@ do
 			[2] = { [50] = 30 },
 		},
 	}
+	local timers = {
+		[1295397] = {  -- Restless Amani
+			[1] = { [40] = 71 },
+			[1.5] = { [30] = 40 },
+			[2] = { [40] = 40 },
+		},
+		[1287426] = { -- Essence Rend
+			[1] = { [40] = 31 },
+			[2] = { [49.5] = 80 },
+		},
+		[1292036] = { -- Possession Barrage
+			[1] = { [36] = 35 },
+			[2] = { [28] = 52 },
+		},
+		[1305421] = { -- Hungering Pyre
+			[1.5] = { [11] = 30 },
+		},
+		[1299673] = { -- Invoke
+			[2] = { [48] = 32 },
+		},
+	}
 	function gapTimer(spellId, duration)
-		if not mod:Mythic() then return end
-
 		local stage = mod:GetStage()
-		return timers[spellId][stage] and timers[spellId][stage][duration]
+		if mod:Mythic() then
+			return timersMythic[spellId][stage] and timersMythic[spellId][stage][duration]
+		else
+			return timers[spellId][stage] and timers[spellId][stage][duration]
+		end
 	end
 end
 
@@ -89,7 +105,6 @@ mod:SetRenames({
 	[1289696] = {CL.big_adds}, -- Tether of Awakening
 	[1293212] = {1293212}, -- Grasping Depths
 	[1305421] = {CL.soak}, -- Hungering Pyre
-	[1305993] = {1305993}, -- Residual Toll
 	[1299673] = {1299673}, -- Invoke
 	-- [1293497] = {1293497}, -- Entwined Step
 })
@@ -138,7 +153,6 @@ function mod:GetOptions()
 		1289696, -- Tether of Awakening
 		1305421, -- Hungering Pyre
 		-- Restless Amani
-			1305993, -- Residual Toll -- XXX removed?
 
 		-- Stage Two: Uncoiling
 		1299673, -- Invoke
@@ -160,10 +174,8 @@ function mod:OnBossEnable()
 	backupBars = {}
 	if self:Mythic() then
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicTimeline")
-	elseif self:Heroic() then
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "HeroicTimeline")
 	else
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "EasyTimeline")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "OtherTimeline")
 	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
@@ -179,7 +191,6 @@ function mod:OnEncounterStart()
 	amaniCount = 1
 	barrageCount = 1
 	pyreCount = 1
-	tollCount = 1
 	invokeCount = 1
 
 	if self:ShouldShowBars() then
@@ -240,8 +251,6 @@ function mod:MythicTimeline(_, eventInfo)
 			barInfo = self:RestlessAmani(duration)
 		elseif rounded == 16 then
 			barInfo = self:HungeringPyre(duration)
-		elseif rounded == 30 then
-			barInfo = self:ResidualToll(duration)
 		end
 
 	-- stage 2
@@ -267,72 +276,7 @@ function mod:MythicTimeline(_, eventInfo)
 	self:HandleBars(barInfo, eventInfo)
 end
 
-
-function mod:HeroicTimeline(_, eventInfo)
-	if eventInfo.source ~= 0 or self:IsWiping() then return end
-	local barInfo = nil
-
-	local stage = self:GetStage()
-	local duration = eventInfo.duration
-	local rounded = self:RoundNumber(self:RoundNumber(duration, 1), 0)
-
-	if stage == 1 then
-		if rounded == 44 then -- 43.64
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
-			barInfo = self:RestlessAmani(duration)
-		elseif rounded == 13 then -- 12.73
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
-			barInfo = self:EssenceRend(duration)
-		elseif rounded == 29 then -- 29.09
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
-			barInfo = self:PossessionBarrage(duration)
-
-		elseif rounded == 58 then -- 58.18
-			barInfo = self:EssenceRend(duration)
-		elseif rounded == 34 then -- 33.64
-			barInfo = self:RestlessAmani(duration)
-		end
-
-	elseif stage == 1.5 then
-		-- these are mostly timed completely wrong.
-		if rounded == 3 or rounded == 35 or rounded == 10 then
-			barInfo = self:ResidualToll(duration)
-		elseif rounded == 8 or rounded == 24 or rounded == 20 then
-			barInfo = self:RestlessAmani(duration)
-		elseif rounded == 22 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 4 == 2 then
-				barInfo = self:ResidualToll(duration)
-			else
-				barInfo = self:HungeringPyre(duration)
-			end
-		elseif rounded == 19 then
-			barInfo = self:HungeringPyre(duration)
-		end
-
-	elseif stage == 2 then
-		if rounded == 12 or rounded == 28 then
-			barInfo = self:Invoke(duration)
-		elseif rounded == 45 then
-			barInfo = self:PossessionBarrage(duration)
-		elseif rounded == 30 then
-			barInfo = self:RestlessAmani(duration)
-		end
-	end
-
-	self:HandleBars(barInfo, eventInfo)
-end
-
-function mod:EasyTimeline(_, eventInfo)
+function mod:OtherTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo = nil
 
@@ -342,43 +286,46 @@ function mod:EasyTimeline(_, eventInfo)
 
 	-- stage 1
 	if stage < 2 then
-		if rounded == 50 then
+		if rounded == 40 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] == 1 then
 				return false -- first bar is cancelled
 			end
 			barInfo = self:RestlessAmani(duration)
-		elseif rounded == 36 then -- 35.555
+		elseif rounded == 28 or rounded == 36 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] == 1 then
 				return false -- first bar is cancelled
 			end
 			barInfo = self:PossessionBarrage(duration)
-		elseif rounded == 16 or rounded == 48 then -- 15.555, 47.777
+		elseif rounded == 15 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if rounded == 16 and durationEventCount[rounded] == 1 then
+			if rounded == 15 and durationEventCount[rounded] == 1 then
 				return false -- first bar is cancelled
 			end
 			barInfo = self:EssenceRend(duration)
 
 		-- intermission
-		elseif rounded == 20 or rounded == 33 then -- 20, 33.333
+		elseif rounded == 30 then
 			barInfo = self:RestlessAmani(duration)
-		elseif rounded == 17 or rounded == 19 then -- 16.666, 18.888
+		elseif rounded == 11 then
 			barInfo = self:HungeringPyre(duration)
-		elseif rounded == 6 or rounded == 21 then -- 5.555, 21.111
-			barInfo = self:ResidualToll(duration)
 		end
 
 	-- stage 2
 	else
-		if rounded == 20 or rounded == 24 then -- 20, 24.444
+		if rounded == 8 or rounded == 48 then
 			barInfo = self:Invoke(duration)
-		elseif rounded == 28 then -- 27.777
+		elseif rounded == 40 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] % 2 == 1 then
 			barInfo = self:PossessionBarrage(duration)
-		elseif rounded == 6 or rounded == 31 then -- 5.555, 31.111
+			else
+				barInfo = self:RestlessAmani(duration)
+			end
+		elseif rounded == 50 then
 			barInfo = self:EssenceRend(duration)
-		elseif rounded == 53 then -- 53.333
+		elseif rounded == 20 then
 			barInfo = self:RestlessAmani(duration)
 		end
 	end
@@ -406,20 +353,6 @@ end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local state = C_EncounterTimeline.GetEventState(eventID)
-
-	-- Stop p1 bars with blizzard bars
-	-- if self:GetStage() == 1 and state == 3 and self:ShouldShowBars() and not self:IsWiping() and GetTime() - self.stageTime > 1 then -- cancelled
-	-- 	self:CancelTimer(repeaters[1285681])
-	-- 	self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
-	-- 	self:StopBar(CL.count:format(self:GetRename(1295397), amaniCount)) -- Restless Amani
-	-- 	self:StopBar(CL.count:format(self:GetRename(1287426), rendCount)) -- Essence Rend
-	-- 	self:StopBar(CL.count:format(self:GetRename(1292036), barrageCount)) -- Possession Barrage
-	-- 	if self:Mythic() then
-	-- 		self:CancelTimer(repeaters[1293212])
-	-- 		self:StopBar(CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-	-- 	end
-	-- end
-
 	local barInfo = activeBars[eventID]
 	if barInfo then
 		if state == 2 then -- Finished
@@ -466,7 +399,6 @@ do
 	function mod:UNIT_SPELLCAST_START(_, _, _, _, castID)
 		startTime = GetTime()
 	end
-
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, castID)
 		if GetTime() - startTime < 2 then -- Ritual of Awakening 1.5s
 			self:UnregisterUnitEvent("UNIT_SPELLCAST_START", unit)
@@ -507,7 +439,6 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
 				local gap = 18
 				self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), amaniCount)) -- Restless Amani
 				self:Bar(1305421, 16 + gap, CL.count:format(self:GetRename(1305421), pyreCount)) -- Hungering Pyre
-				self:Bar(1305993, 30 + gap, CL.count:format(self:GetRename(1305993), tollCount)) -- Residual Toll
 
 				-- restart with the same count so down groups can stay consistent
 				self:Bar(1293212, 41.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
@@ -561,7 +492,7 @@ function mod:SoulcoilIgnitionRepeater()
 	-- self:PlaySound(1285681, "alarm")
 	ignitionCount = ignitionCount + 1
 
-	local cd = self:Mythic() and 73 or self:Heroic() and 85 or 100
+	local cd = 73
 	self:Bar(1285681, cd, CL.count:format(self:GetRename(1285681), ignitionCount))
 	repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", cd)
 end
@@ -675,20 +606,6 @@ function mod:HungeringPyre(duration)
 				self:Bar(1305421, barOnFinish, CL.count:format(self:GetRename(1305421), pyreCount))
 			end
 		end
-	}
-end
-
-function mod:ResidualToll(duration)
-	local barText = CL.count:format(self:GetRename(1305993), tollCount)
-	tollCount = tollCount + 1
-
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
-
-	return {
-		duration = newDuration,
-		msg = barText,
-		key = 1305993,
 	}
 end
 
