@@ -86,10 +86,39 @@ BigWigs:AddSounds("Sszorak", {
 })
 
 BigWigs:AddColors("The Coiled Altar", {
-	["stages"] = "yellow",
+	[1282281] = "yellow",
+	[1282487] = "red",
+	[1283489] = "orange",
+	[1283832] = "yellow",
+	[1285911] = "blue",
+	[1286441] = "cyan",
+	[1286573] = "purple",
+	[1286895] = "blue",
+	[1286918] = "red",
+	[1289900] = "orange",
+	[1298381] = "red",
+	[1299266] = "orange",
+	[1299680] = "purple",
+	[1299960] = "yellow",
+	[1307279] = "purple",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddSounds("The Coiled Altar", {
+	[1282281] = "alarm",
+	[1282487] = "alarm",
+	[1283489] = "alert",
+	[1283832] = "alarm",
+	[1286441] = "info",
+	[1286573] = "alert",
+	[1286918] = "alarm",
+	[1289900] = "alert",
+	[1298381] = "alarm",
+	[1299266] = "alert",
+	[1299680] = "alert",
+	[1299960] = "info",
+	[1307279] = "alert",
+	["stages"] = "long",
 })
 
 BigWigs:AddColors("Ula'tek", {
