@@ -1142,6 +1142,8 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	local soundList = LibSharedMedia:List("sound")
 	if triggerType ~= "countdown" then
 		value = soundList[value]
+	else
+		if value then value = "Amy" else value = nil end
 	end
 
 	local auraDB = module.db.profile.auras
@@ -1155,7 +1157,7 @@ local function getAuraOptions(module, spellID)
 	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
 	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
-	local hasDuration = module:GetAuraDuration(spellID) ~= nil
+	local hasDuration = module:GetAuraDuration(spellID)
 
 	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
@@ -1259,7 +1261,7 @@ local function getAuraOptions(module, spellID)
 		durationCheck:SetCallback("OnEnter", slaveOptionMouseOver)
 		durationCheck:SetCallback("OnLeave", optionsTooltip_Hide)
 
-		durationCheck:SetValue(module.db.profile.auras[key] and module.db.profile.auras[key].countdown)
+		durationCheck:SetValue(module.db.profile.auras[key] and module.db.profile.auras[key].countdown and true)
 	end
 
 	if defaultDoseSound then

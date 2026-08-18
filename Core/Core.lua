@@ -698,6 +698,8 @@ do
 								module.db.profile.auras[auraSpellID].soundOnAppliedDose = nil
 							elseif auraDataTableName == "soundOnRemoved" and type(auraDataTableValue) ~= "string" then
 								module.db.profile.auras[auraSpellID].soundOnRemoved = nil
+							elseif auraDataTableName == "countdown" and type(auraDataTableValue) ~= "string" then
+								module.db.profile.auras[auraSpellID].countdown = nil
 							end
 						end
 					end

@@ -511,7 +511,9 @@ do
 				if onRemovedSound and onRemovedSound ~= "None" then
 					soundsToRegister.onRemoved = self:GetSoundFile(nil, nil, onRemovedSound)
 				end
-				soundsToRegister.onCountdown = getCountdownSoundFile(bossModule:GetAuraCountdown(spellId))
+				if bossModule:GetAuraCountdownVoice(spellId) then
+					soundsToRegister.onCountdown = getCountdownSoundFile(bossModule:GetAuraDuration(spellId))
+				end
 
 				for event, sound in next, soundsToRegister do
 					local auraSoundInfoTable = {
