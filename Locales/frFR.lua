@@ -1126,8 +1126,8 @@ L.maxIconsDesc = "Nombre maximum d'icônes à afficher."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez voir vos affaiblissements d'aura privée en tant qu'icônes, ou même les auras privées d'un autre joueur (comme un tank)."
 L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez maintenant voir les affaiblissements de boss comme icônes, ou même les affaiblissements de boss d'autres joueurs (comme un tank)."
 
-L.privateAurasTestAnchorText = "Aura\nPrivée\n%d"
-L.privateAurasTestTankAnchorText = "Aura\nTank\n%d"
+L.aurasTestAnchorText = "Aura\nPrivée\n%d"
+L.aurasTestTankAnchorText = "Aura\nTank\n%d"
 
 L.auraSounds = "Sons d'aura"
 L.addAuraSpell = "Ajouter un sort"

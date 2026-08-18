@@ -1442,7 +1442,7 @@ do
 				local anchor = unitAnchors[i]
 				if not anchor.configModeFrame then
 					anchor.configModeFrame = createDragAnchor(anchor)
-					anchor.configModeFrame.text:SetText(anchor.hasTestIcon and "" or (anchor.unitType == "player" and L.privateAurasTestAnchorText or L.privateAurasTestTankAnchorText):format(i))
+					anchor.configModeFrame.text:SetText(anchor.hasTestIcon and "" or (anchor.unitType == "player" and L.aurasTestAnchorText or L.aurasTestTankAnchorText):format(i))
 					anchor.configModeFrame.dragAnchor = unitAnchors[1]
 				end
 				anchor.configModeFrame:Show()
@@ -1949,7 +1949,7 @@ do
 		frame:Hide()
 		anchor.hasTestIcon = nil
 		if anchor.configModeFrame then
-			anchor.configModeFrame.text:SetText((anchor.unitType == "player" and L.privateAurasTestAnchorText or L.privateAurasTestTankAnchorText):format(anchor:GetID()))
+			anchor.configModeFrame.text:SetText((anchor.unitType == "player" and L.aurasTestAnchorText or L.aurasTestTankAnchorText):format(anchor:GetID()))
 			anchor.configModeFrame.bg:SetColorTexture(0, 0, 0, 0.3)
 		end
 

@@ -1126,8 +1126,8 @@ L.maxIconsDesc = "A quantidade máxima de ícones a serem exibidos."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Agora você pode visualizar seus debuffs de auras privadas como ícones, ou até mesmo as auras privadas de outro jogador (ex.: um tanque)."
 --L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
-L.privateAurasTestAnchorText = "Aura\nprivada\n%d"
-L.privateAurasTestTankAnchorText = "Aura\nde Tanque\n%d"
+L.aurasTestAnchorText = "Aura\nprivada\n%d"
+L.aurasTestTankAnchorText = "Aura\nde Tanque\n%d"
 
 --L.auraSounds = "Aura Sounds"
 --L.addAuraSpell = "Add Spell"

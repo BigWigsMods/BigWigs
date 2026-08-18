@@ -1126,8 +1126,8 @@ L.startAnimation_glow_desc = "Questo Splendore ha un animazione iniziale, questo
 --L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 --L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
---L.privateAurasTestAnchorText = "Private\nAura\n%d"
---L.privateAurasTestTankAnchorText = "Tank\nAura\n%d"
+--L.aurasTestAnchorText = "Private\nAura\n%d"
+--L.aurasTestTankAnchorText = "Tank\nAura\n%d"
 
 --L.auraSounds = "Aura Sounds"
 --L.addAuraSpell = "Add Spell"
