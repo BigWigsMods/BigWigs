@@ -991,6 +991,21 @@ do
 		end
 	end
 
+	function boss:GetAuraCountdown(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		local duration = moduleAurasList[self][index].duration
+		if not duration then return end
+
+		local db = self.db.profile.auras
+		local baseSpellID = moduleAurasList[self][index][1]
+		return db[baseSpellID] and db[baseSpellID].countdown and duration
+	end
+
 	--- Get the default aura applied sound.
 	-- @return string
 	function boss:GetAuraAppliedSoundDefault(spellID)

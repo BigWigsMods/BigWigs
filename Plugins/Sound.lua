@@ -449,11 +449,19 @@ function plugin:ADDON_RESTRICTION_STATE_CHANGED(event)
 end
 
 do
+	local function getCountdownSoundFile(duration)
+		if duration and duration > 0 and duration <= 30 then
+			local path = [[Interface\AddOns\BigWigs\Media\Sounds\AuraCountdowns\Amy\Amy_Countdown%d.ogg]]
+			return path:format(duration)
+		end
+	end
+
 	local auraEventToID = {
 		-- These are the enum values for UnitAuraSoundTrigger
 		onApplied = 0,
 		onStack = 1,
 		onRemoved = 2,
+		onCountdown = 0,
 	}
 	local AddAuraSound = C_UnitAuras.AddAuraSound
 	function plugin:RegisterAuraSounds(bossModule)
@@ -503,6 +511,7 @@ do
 				if onRemovedSound and onRemovedSound ~= "None" then
 					soundsToRegister.onRemoved = self:GetSoundFile(nil, nil, onRemovedSound)
 				end
+				soundsToRegister.onCountdown = getCountdownSoundFile(bossModule:GetAuraCountdown(spellId))
 
 				for event, sound in next, soundsToRegister do
 					local auraSoundInfoTable = {

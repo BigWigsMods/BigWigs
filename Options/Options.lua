@@ -1140,7 +1140,9 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	local triggerType = widget:GetUserData("triggerType")
 	local module = widget:GetUserData("module")
 	local soundList = LibSharedMedia:List("sound")
-	value = soundList[value]
+	if triggerType ~= "countdown" then
+		value = soundList[value]
+	end
 
 	local auraDB = module.db.profile.auras
 	auraDB[key] = auraDB[key] or {}
@@ -1153,6 +1155,7 @@ local function getAuraOptions(module, spellID)
 	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
 	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
+	local hasDuration = module:GetAuraDuration(spellID) ~= nil
 
 	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
@@ -1185,7 +1188,7 @@ local function getAuraOptions(module, spellID)
 	local appliedDropdown = AceGUI:Create("SharedDropdown")
 	appliedDropdown:SetLabel(L.onApplied)
 	appliedDropdown:SetList(soundList, nil, "DDI-Sound")
-	appliedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or 0.44)
+	appliedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or hasDuration and 0.42 or 0.44)
 	appliedDropdown:SetUserData("key", key)
 	appliedDropdown:SetUserData("module", module)
 	appliedDropdown:SetUserData("triggerType", "soundOnApplied")
@@ -1225,7 +1228,7 @@ local function getAuraOptions(module, spellID)
 	local removedDropdown = AceGUI:Create("SharedDropdown")
 	removedDropdown:SetLabel(L.onRemoved)
 	removedDropdown:SetList(soundList, nil, "DDI-Sound")
-	removedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or 0.44)
+	removedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or hasDuration and 0.42 or 0.44)
 	removedDropdown:SetUserData("key", key)
 	removedDropdown:SetUserData("module", module)
 	removedDropdown:SetUserData("triggerType", "soundOnRemoved")
@@ -1242,8 +1245,27 @@ local function getAuraOptions(module, spellID)
 		end
 	end
 
+	local durationCheck
+	if hasDuration then
+		durationCheck = AceGUI:Create("CheckBox")
+		durationCheck:SetLabel("")
+		durationCheck:SetWidth(24)
+		durationCheck:SetUserData("key", key)
+		durationCheck:SetUserData("module", module)
+		durationCheck:SetUserData("triggerType", "countdown")
+		durationCheck:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
+		durationCheck:SetUserData("label", L.countdown)
+		durationCheck:SetUserData("desc", L.auraCountdownDesc)
+		durationCheck:SetCallback("OnEnter", slaveOptionMouseOver)
+		durationCheck:SetCallback("OnLeave", optionsTooltip_Hide)
+
+		durationCheck:SetValue(module.db.profile.auras[key] and module.db.profile.auras[key].countdown)
+	end
+
 	if defaultDoseSound then
 		return spellLabel, icon, appliedDropdown, doseDropdown, removedDropdown
+	elseif hasDuration then
+		return spellLabel, icon, appliedDropdown, removedDropdown, durationCheck
 	else
 		return spellLabel, icon, appliedDropdown, removedDropdown
 	end
