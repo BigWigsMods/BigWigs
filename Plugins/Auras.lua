@@ -34,7 +34,7 @@ local AddAuraSound, RemoveAuraSound, AddAllAuraSounds, RemoveAllAuraSounds
 
 plugin.defaultDB = {
 	player = {
-		disabled = true,
+		disabled = false,
 
 		size = 64,
 		spacing = 6,
@@ -111,9 +111,9 @@ plugin.defaultDB = {
 
 	sounds = {},
 }
--- plugin.defaultGlobalDB = {
--- 	showHelpTip = true,
--- }
+plugin.defaultGlobalDB = {
+	showHelpTip = true,
+}
 
 local function CopyTable(settingsTable)
 	local copy = {}
@@ -1482,37 +1482,37 @@ function plugin:OnRegister()
 	self.displayName = "Auras"
 end
 
--- local function ShowHelpTip()
--- 	local tip = CreateFrame("Frame", nil, UIParent, "GlowBoxTemplate")
--- 	tip:Show()
--- 	tip:SetSize(260, 120)
--- 	tip:SetFrameStrata("DIALOG")
--- 	tip:SetFixedFrameStrata(true)
--- 	tip:SetFrameLevel(100)
--- 	tip:SetFixedFrameLevel(true)
--- 	tip:SetClampedToScreen(true)
--- 	tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
--- 	local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
--- 	arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
--- 	local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
--- 	tipText:SetJustifyH("LEFT")
--- 	tipText:SetJustifyV("TOP")
--- 	tipText:SetSize(240, 0)
--- 	tipText:SetPoint("TOPLEFT", 10, -10)
--- 	tipText:SetText(L.privateAurasHelpTip)
--- 	local button = CreateFrame("Button", nil, tip, "SharedButtonTemplate")
--- 	button:SetSize(130, 32)
--- 	button:SetPoint("BOTTOM", 0, 6)
--- 	button:SetText(L.settings)
--- 	button:SetScript("OnClick", function(self)
--- 		self:GetParent():Hide()
--- 		plugin:CancelAllTimers()
--- 		plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
--- 		BigWigsAPI.OpenConfigToPanel("Auras")
--- 		plugin.db.global.showHelpTip = false
--- 	end)
--- 	ShowHelpTip = nil
--- end
+local function ShowHelpTip()
+	local tip = CreateFrame("Frame", nil, UIParent, "GlowBoxTemplate")
+	tip:Show()
+	tip:SetSize(260, 120)
+	tip:SetFrameStrata("DIALOG")
+	tip:SetFixedFrameStrata(true)
+	tip:SetFrameLevel(100)
+	tip:SetFixedFrameLevel(true)
+	tip:SetClampedToScreen(true)
+	tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
+	local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
+	arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
+	local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
+	tipText:SetJustifyH("LEFT")
+	tipText:SetJustifyV("TOP")
+	tipText:SetSize(240, 0)
+	tipText:SetPoint("TOPLEFT", 10, -10)
+	tipText:SetText(L.aurasHelpTip)
+	local button = CreateFrame("Button", nil, tip, "SharedButtonTemplate")
+	button:SetSize(130, 32)
+	button:SetPoint("BOTTOM", 0, 6)
+	button:SetText(L.settings)
+	button:SetScript("OnClick", function(self)
+		self:GetParent():Hide()
+		plugin:CancelAllTimers()
+		plugin:SendMessage("BigWigs_StartConfigureMode", plugin.moduleName)
+		BigWigsAPI.OpenConfigToPanel("Auras")
+		plugin.db.global.showHelpTip = false
+	end)
+	ShowHelpTip = nil
+end
 
 function plugin:OnPluginEnable()
 	previouslyFoundUnit = nil
@@ -1526,13 +1526,13 @@ function plugin:OnPluginEnable()
 
 	AddAllAuraSounds()
 
-	-- if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
-	-- 	self:CreateTestAura()
-	-- 	self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
-	-- 	if ShowHelpTip then
-	-- 		ShowHelpTip()
-	-- 	end
-	-- end
+	if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
+		self:CreateTestAura()
+		self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
+		if ShowHelpTip then
+			ShowHelpTip()
+		end
+	end
 end
 
 function plugin:OnPluginDisable()

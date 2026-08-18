@@ -1124,6 +1124,7 @@ L.playerInYourGroup = "Un joueur dans votre groupe"
 L.maxIcons = "Icônes Max"
 L.maxIconsDesc = "Nombre maximum d'icônes à afficher."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs : Vous pouvez voir vos affaiblissements d'aura privée en tant qu'icônes, ou même les auras privées d'un autre joueur (comme un a tank)."
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 L.privateAurasTestAnchorText = "Aura\nPrivée\n%d"
 L.privateAurasTestTankAnchorText = "Aura\nTank\n%d"

@@ -1124,6 +1124,7 @@ L.playerInYourGroup = "隊伍中的玩家"
 L.maxIcons = "圖示最大數量"
 L.maxIconsDesc = "最多顯示幾個圖示。"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 現在，你可以在受到私有光環減益效果時，獲得大圖示提示；並且，你可以設定是否要監視其他隊友（例如坦克）的狀態。"
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 L.privateAurasTestAnchorText = "私有\n%d"
 L.privateAurasTestTankAnchorText = "坦克\n光環\n%d"

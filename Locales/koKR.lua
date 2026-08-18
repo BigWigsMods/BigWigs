@@ -1124,6 +1124,7 @@ L.playerInYourGroup = "그룹 내 플레이어"
 L.maxIcons = "최대 아이콘 수"
 L.maxIconsDesc = "표시할 최대 아이콘 수"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 이제 비공개 오라 디버프를 아이콘으로 볼 수 있으며, 다른 플레이어(예: 탱커)의 비공개 오라도 볼 수 있습니다."
+--L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 L.privateAurasTestAnchorText = "오라\n%d"
 L.privateAurasTestTankAnchorText = "탱커\n오라\n%d"
