@@ -129,7 +129,7 @@ mod:SetAuraData({
 })
 
 
-function mod:GetOptions() -- SetOption:skip-unused
+function mod:GetOptions()
 	return {
 		-- Mor'zahi
 		1296535, -- Disgusting Fish
@@ -209,7 +209,7 @@ do
 		scheduled = nil
 		for i = 1, #events do
 			local eventInfo = events[i]
-			mod:Timeline(eventInfo, events)
+			mod:Timeline(nil, eventInfo, events)
 		end
 		table.wipe(events)
 	end
@@ -267,10 +267,8 @@ function mod:Timeline(_, eventInfo, events)
 		elseif rounded == 28 then
 			barInfo = self:FlingFish()
 			-- cancels instead of finishes
-			barInfo.timer = self:ScheduleTimer(function()
-				self:StopTimelineBar(barInfo, true)
-			end, duration)
-		elseif rounded == 20 or rounded == 4 or rounded == 27 then
+			barInfo.timer = self:ScheduleTimer(function() self:StopBar(barInfo.msg) end, duration)
+		elseif rounded == 20 or rounded == 4 or rounded == 27 or rounded == 23 then
 			barInfo = self:ThrowJunk(duration)
 		elseif rounded == 30 then
 			barInfo = self:ShreddingShards()
@@ -326,12 +324,14 @@ function mod:Timeline(_, eventInfo, events)
 			barInfo = self:IceboundFlames()
 		end
 
-	-- Ikku
+	-- Iku
 	elseif stage == 4 then
 		if rounded == 7 or rounded == 4 or rounded == 11 then
 			barInfo = self:ThrowJunk(duration)
 		elseif rounded == 30 then
 			barInfo = self:ShreddingShards()
+		elseif rounded == 21 then
+			barInfo = self:BlinkNova()
 		elseif rounded == 2 or rounded == 13 then
 			barInfo = self:IceboundFlames()
 		elseif rounded == 17 or rounded == 16 then
@@ -573,7 +573,7 @@ function mod:ShellSpin()
 		msg = barText,
 		key = 1291759,
 		onFinished = function()
-			self:StopBlizzMessages(0.3) -- First Mate Nama spins [Shell Spin]!
+			self:StopBlizzMessages(1) -- First Mate Nama spins [Shell Spin]!
 			self:Message(1291759, "orange", barText)
 			self:PlaySound(1291759, "alarm")
 		end,
