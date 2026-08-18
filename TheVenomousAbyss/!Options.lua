@@ -108,11 +108,11 @@ BigWigs:AddColors("The Twin Fangs", {
 	[1290956] = "orange",
 	[1291404] = "cyan",
 	[1291478] = "orange",
-	[1293792] = "yellow",
 	[1294293] = "yellow",
 	[1303230] = "yellow",
 	[1306872] = "yellow",
 	[1308356] = "red",
+	[1308556] = "cyan",
 })
 
 BigWigs:AddSounds("The Twin Fangs", {
@@ -122,11 +122,11 @@ BigWigs:AddSounds("The Twin Fangs", {
 	[1290956] = "alarm",
 	[1291404] = "info",
 	[1291478] = "alarm",
-	[1293792] = "long",
 	[1294293] = "long",
 	[1303230] = "alert",
 	[1306872] = "alert",
 	[1308356] = "warning",
+	[1308556] = "info",
 })
 
 BigWigs:AddColors("The Coiled Altar", {

@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("The Twin Fangs", 3004, 2887)
 if not mod then return end
-mod:RegisterEnableMob(257368, 257361) -- Ithraz, Vexhul
+mod:RegisterEnableMob(257361, 257368) -- Vexhul, Ithraz
 mod:SetEncounterID(3421)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
@@ -18,6 +18,7 @@ local activeBars = {}
 local backupBars = {}
 local countForDuration = {}
 
+local submergeCount = 1
 local causticDelugeCount = 1
 local coilingToxinCount = 1
 local beckonProgenyCount = 1
@@ -35,7 +36,7 @@ local rouseTheBroodCount = 1
 -- Localization
 --
 
-local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+local L = mod:SetDefaultLocale({
 	coiling_toxin = "Toxin", -- Short for Coiling Toxin
 	corrosive_spit = "Spit", -- Short for Corrosive Spit
 })
@@ -45,19 +46,19 @@ local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
 --
 
 mod:SetRenames({
+	[1308556] = {1308556}, -- Submerge
 	-- Vexhul
 	[1289192] = {CL.orbs}, -- Caustic Deluge
-	[1290809] = {L.coiling_toxin}, -- Coiling Ichor
 	[1291404] = {CL.adds}, -- Venomous Emergence
-	[1294293] = {1294293}, -- Vile Flood
 	[1291478] = {L.corrosive_spit}, -- Corrosive Spit
-	-- Ithraz
-	[1290516] = {CL.soak}, -- Ravenous Feast
-	[1303230] = {CL.heal_absorb}, -- Blood Torrent
 	[1290956] = {CL.waves}, -- Stir the Depths
+	[1294293] = {1294293}, -- Vile Flood
+	-- Ithraz
+	[1303230] = {CL.heal_absorb}, -- Blood Torrent
+	[1290516] = {CL.soak}, -- Ravenous Feast
+	[1290809] = {L.coiling_toxin}, -- Coiling Ichor
 	[1288538] = {1288538}, -- Stone Breaker
 	[1306872] = {1306872}, -- Sanguine Storm
-	[1293792] = {1293792}, -- Flood
 	[1308356] = {CL.kicks}, -- Rouse the Brood
 })
 
@@ -85,25 +86,33 @@ mod:SetAuraData({ -- TODO
 
 function mod:GetOptions()
 	return {
+		1308556, -- Submerge
+
 		-- Vexhul
 		1289192, -- Caustic Deluge
-		1290809, -- Coiling Ichor
 		1291404, -- Venomous Emergence
-		1294293, -- Vile Flood
 		1291478, -- Corrosive Spit
-		-- Ithraz
-		1290516, -- Ravenous Feast
-		1303230, -- Blood Torrent
 		1290956, -- Stir the Depths
+		{1294293, "CASTBAR"}, -- Vile Flood
+
+		-- Ithraz
+		1303230, -- Blood Torrent
+		1308356, -- Rouse the Brood
+		1290516, -- Ravenous Feast
+		1290809, -- Coiling Ichor
 		{1288538, "TANK"}, -- Stone Breaker
 		1306872, -- Sanguine Storm
-		{1293792, "CASTBAR"}, -- Flood
-		1308356, -- Rouse the Brood
-	},{
-		{ tabName = self:SpellName(-35616), -- Vexhul
-			{ 1289192, 1290809, 1291404, 1294293, 1291478 }, },
-		{ tabName = self:SpellName(-35618), -- Ithraz
-			{ 1290516, 1303230, 1290956, 1288538, 1306872, 1293792, 1308356 }, },
+	}, {
+		{
+			tabName = self:SpellName(-35616), -- Vexhul
+			{ 1308556, 1289192, 1291404, 1291478, 1290956, 1294293 },
+		},
+		{
+			tabName = self:SpellName(-35618), -- Ithraz
+			{ 1308556, 1303230, 1308356, 1290516, 1290809, 1288538, 1306872 },
+		},
+	-- 	[1289192] = -35616, -- Vexhul
+	-- 	[1303230] = -35618, -- Ithraz
 	}
 end
 
@@ -126,6 +135,7 @@ function mod:OnEncounterStart()
 	activeBars = {}
 	countForDuration = {}
 
+	submergeCount = 1
 	causticDelugeCount = 1
 	coilingToxinCount = 1
 	beckonProgenyCount = 1
@@ -150,13 +160,12 @@ function mod:MythicEvents(_, eventInfo)
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
 
-
 	if durationRounded == 6 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
 			barInfo = self:Barrage()
 		else
-			barInfo = self:Flood()
+			barInfo = self:VileFlood()
 		end
 	elseif durationRounded == 8 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
@@ -225,12 +234,14 @@ function mod:OtherEvents(_, eventInfo)
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
 
-	if durationRounded == 6 then
+	if durationRounded == 163 then
+		barInfo = self:Submerge()
+	elseif durationRounded == 6 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
 			barInfo = self:Barrage()
 		else
-			barInfo = self:Flood()
+			barInfo = self:VileFlood()
 		end
 	elseif durationRounded == (self:Easy() and 50 or 44) then
 		barInfo = self:CoilingToxin()
@@ -322,6 +333,19 @@ end
 -- Event Handlers
 --
 
+function mod:Submerge()
+	local barText = CL.count:format(self:GetRename(1308556), submergeCount)
+	submergeCount = submergeCount + 1
+	return {
+		msg = barText,
+		key = 1308556,
+		onFinished = function()
+			self:Message(1308556, "cyan", barText)
+			self:PlaySound(1308556, "info")
+		end,
+	}
+end
+
 function mod:CausticDeluge()
 	local barText = CL.count:format(self:GetRename(1289192), causticDelugeCount)
 	causticDelugeCount = causticDelugeCount + 1
@@ -329,16 +353,16 @@ function mod:CausticDeluge()
 		msg = barText,
 		key = 1289192,
 		onFinished = function()
+			self:StopBlizzMessages(2) -- delayed blizzard message with target but it's always the tank?
 			self:Message(1289192, "orange", barText)
 			self:PlaySound(1289192, "alarm")
-			self:StopBlizzMessages(2) -- delayed blizzard message with target but it's always the tank?
 		end
 	}
 end
 
 do
-	local CoilingToxinSound = function(self)
-		mod:PlaySound(1290809, "warning")
+	local function CoilingToxinSound(self)
+		self:PlaySound(1290809, "warning")
 	end
 
 	function mod:CoilingToxin()
@@ -362,9 +386,9 @@ function mod:BeckonProgeny()
 		msg = barText,
 		key = 1291404,
 		onFinished = function()
+			self:StopBlizzMessages(2)
 			self:Message(1291404, "cyan", barText)
 			self:PlaySound(1291404, "info") -- adds
-			self:StopBlizzMessages(2)
 		end
 	}
 end
@@ -402,9 +426,9 @@ function mod:RavenousFeast()
 		msg = barText,
 		key = 1290516,
 		onFinished = function()
+			self:StopBlizzMessages(2)
 			self:Message(1290516, "orange", barText)
 			self:PlaySound(1290516, "alarm") -- soak feast
-			self:StopBlizzMessages(2)
 		end
 	}
 end
@@ -463,16 +487,16 @@ function mod:Barrage()
 	}
 end
 
-function mod:Flood()
-	local barText = CL.count:format(self:GetRename(1293792), floodCount)
+function mod:VileFlood()
+	local barText = CL.count:format(self:GetRename(1294293), floodCount)
 	floodCount = floodCount + 1
 	return {
 		msg = barText,
-		key = 1293792,
+		key = 1294293,
 		onFinished = function()
-			self:Message(1293792, "yellow", barText)
-			self:PlaySound(1293792, "long") -- Ithraz full energy
-			self:CastBar(1293792, 18, barText) -- 4s cast + 14s channel as one bar
+			self:Message(1294293, "yellow", barText)
+			self:CastBar(1294293, 18, barText) -- 4s cast + 14s channel as one bar
+			self:PlaySound(1294293, "long") -- Ithraz full energy
 		end
 	}
 end
