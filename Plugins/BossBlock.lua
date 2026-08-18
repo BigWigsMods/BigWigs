@@ -1003,6 +1003,9 @@ do
 		[106402]=true,[106404]=true,[106406]=true,[106411]=true,[106412]=true,[106413]=true,
 		-- Freehold
 		[104684]=true,[104682]=true,[104685]=true,[104690]=true,
+		-- Kings' Rest
+		[106795]=true,[106140]=true,[106141]=true,[106142]=true,[102918]=true,[102919]=true,[102920]=true,
+		[106138]=true,
 		-- Operation: Mechagon
 		[132189]=true,[132190]=true,[132349]=true,[132350]=true,[132351]=true,[132352]=true,[132353]=true,
 		[132354]=true,[132355]=true,[132374]=true,[132375]=true,[132376]=true,[132377]=true,[132380]=true,
