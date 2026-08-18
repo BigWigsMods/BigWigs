@@ -108,10 +108,10 @@ mod:SetRenames({
 mod:SetAuraData({
 	{1295928, soundOnApplied = "warning", header = CL.important}, -- Burning Flames (Fire debuff, clears ice)
 	{1295954, soundOnApplied = "warning"}, -- Piercing Frost (Ice debuff, clears fire)
-	{1295935, soundOnApplied = "warning"}, -- Frostfire Volley (Frost - Targetted)
-	{1295886, soundOnApplied = "warning"}, -- Frostfire Volley (Fire - Targetted)
-	{1296025, soundOnApplied = "warning"}, -- Blink Nova (Targetted)
-	{1297625, soundOnApplied = "warning"}, -- Explosive Surprise (Targeted)
+	{1295935, soundOnApplied = "warning", duration = 8}, -- Frostfire Volley (Frost - Targetted)
+	{1295886, soundOnApplied = "warning", duration = 8}, -- Frostfire Volley (Fire - Targetted)
+	{1296025, soundOnApplied = "warning", duration = 7}, -- Blink Nova (Targetted)
+	{1297625, soundOnApplied = "warning", duration = 10}, -- Explosive Surprise (Targeted)
 	{1296092, soundOnApplied = "warning"}, -- Mighty Thud (Targeted) XXX not applied to players?
 	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general, note = CL.tank_debuff}, -- Shredding Shards
 	{1310500, soundOnApplied = "none"}, -- Aftershock

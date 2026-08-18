@@ -99,11 +99,11 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1306666, soundOnApplied = "warning", header = CL.important}, -- Hungering Pyre
-	{1284103, soundOnApplied = "warning"}, -- Possession Barrage
+	{1306666, soundOnApplied = "warning", duration = 7.5, header = CL.important}, -- Hungering Pyre
+	{1284103, soundOnApplied = "warning", duration = 2}, -- Possession Barrage
 	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Hollowing Strikes -- Tank Stacks
-	{1287434, soundOnApplied = "warning"}, -- Essence Rend
-	{1298698, soundOnApplied = "none", header = CL.general}, -- Residual Toll
+	{1287434, soundOnApplied = "warning", duration = 15}, -- Essence Rend
+	{1298698, soundOnApplied = "none", duration = 12, header = CL.general}, -- Residual Toll
 	{1297624, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Ritual Burn
 	{1288772, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Soulcoil Rite
 	{1285623, soundOnApplied = "none"}, -- Soulcoil Well
@@ -114,9 +114,9 @@ mod:SetAuraData({
 	{1300235, soundOnApplied = "none", mythic = true, note = CL.mythic}, -- Soul Exhaustion
 	{1300239, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, note = CL.mythic}, -- Swirling Spirit
 	{1307939, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.intermission}, -- Corpse Blight
-	{1289875, soundOnApplied = "none"}, -- Cremation
+	{1289875, soundOnApplied = "none", duration = 3}, -- Cremation
 	{1288554, soundOnApplied = "none"}, -- Latent Cultist
-	{1294933, soundOnApplied = "alarm"}, -- Slithering Flame -- Note: Failed Soaking
+	{1294933, soundOnApplied = "alarm", duration = 8}, -- Slithering Flame -- Note: Failed Soaking
 })
 
 function mod:GetOptions()
