@@ -2340,8 +2340,8 @@ end
 --- Check if in a Mythic or Mythic+ difficulty instance.
 -- @return boolean
 function boss:Mythic()
-	-- 8: Mythic Keystone Dungeon, 16: Mythic Raid, 23: Mythic Dungeon
-	return difficulty == 8 or difficulty == 16 or difficulty == 23
+	-- 8: Mythic Keystone Dungeon, 16: Mythic Raid, 23: Mythic Dungeon, Mythic - Flexible Raiding
+	return difficulty == 8 or difficulty == 16 or difficulty == 23 or difficulty == 233
 end
 
 --- Check if in a Mythic+ difficulty instance.
