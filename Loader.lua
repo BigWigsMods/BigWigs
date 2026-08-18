@@ -181,7 +181,7 @@ public.isTestBuild = IsPublicTestClient() -- PTR/beta
 do
 	local _, _, _, build = GetBuildInfo()
 	public.isBeta = public.isTestBuild and build >= 130000
-	public.isNext = build >= 120100
+	public.isNext = build >= 120105
 end
 
 -- Version
@@ -345,29 +345,21 @@ do
 				lw_cs,
 			},
 			currentSeason = {
-				[2805] = not public.isNext and lw_cs or nil, -- Windrunner Spire
-				[2811] = not public.isNext and lw_cs or nil, -- Magisters' Terrace
-				[2874] = not public.isNext and lw_cs or nil, -- Maisara Caverns
-				[2915] = not public.isNext and lw_cs or nil, -- Nexus-Point Xenas
-				[2526] = not public.isNext and lw_cs or nil, -- Algeth'ar Academy
-				[1753] = not public.isNext and lw_cs or nil, -- Seat of the Triumvirate
-				[1209] = not public.isNext and lw_cs or nil, -- Skyreach
-				[658] = not public.isNext and lw_cs or nil, -- Pit of Saron
-				[2813] = public.isNext and lw_cs or nil, -- Murder Row
-				[2825] = public.isNext and lw_cs or nil, -- Den of Nalorakk
-				[2859] = public.isNext and lw_cs or nil, -- The Blinding Vale
-				[2923] = public.isNext and lw_cs or nil, -- Voidscar Arena
-				[2993] = public.isNext and lw_cs or nil, -- Altar of Fangs
-				[2521] = public.isNext and lw_cs or nil, -- Ruby Life Pools
-				[1877] = public.isNext and lw_cs or nil, -- Temple of Sethraliss
-				[1762] = public.isNext and lw_cs or nil, -- Kings' Rest
+				[2813] = lw_cs, -- Murder Row
+				[2825] = lw_cs, -- Den of Nalorakk
+				[2859] = lw_cs, -- The Blinding Vale
+				[2923] = lw_cs, -- Voidscar Arena
+				[2993] = lw_cs, -- Altar of Fangs
+				[2521] = lw_cs, -- Ruby Life Pools
+				[1877] = lw_cs, -- Temple of Sethraliss
+				[1762] = lw_cs, -- Kings' Rest
 			},
 			zones = {
 				[2939] = "BigWigs_TheDreamrift",
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
 				[1592] = "BigWigs_Sporefall",
-				[3004] = public.isNext and "BigWigs_TheVenomousAbyss" or nil,
+				[3004] = "BigWigs_TheVenomousAbyss",
 			}
 		}
 	end
@@ -466,7 +458,7 @@ do
 		[2939] = mn, -- The Dreamrift
 		[1592] = mn, -- Sporefall
 		[2987] = mn, -- The Tidebound Grotto
-		[3004] = public.isNext and mn or nil, -- The Venomous Abyss
+		[3004] = mn, -- The Venomous Abyss
 
 
 		--[[ LittleWigs: Classic ]]--
@@ -651,7 +643,7 @@ do
 		[2874] = lw_mn, -- Maisara Caverns
 		[2915] = lw_mn, -- Nexus-Point Xenas
 		[2923] = lw_mn, -- Voidscar Arena
-		[2993] = public.isNext and lw_mn or nil, -- Altar of Fangs
+		[2993] = lw_mn, -- Altar of Fangs
 		--[[ LittleWigs: Midnight Delves ]]--
 		[2933] = lw_delves, -- Collegiate Calamity
 		[2952] = lw_delves, -- The Shadow Enclave
@@ -664,9 +656,9 @@ do
 		[2966] = lw_delves, -- Torment's Rise
 		[2979] = lw_delves, -- Shadowguard Point
 		[3003] = lw_delves, -- The Darkway
-		[3038] = public.isNext and lw_delves or nil, -- Gnarldor Isle
-		[3077] = public.isNext and lw_delves or nil, -- The Ring of Glory
-		[3079] = public.isNext and lw_delves or nil, -- Venomfall Deeps
+		[3038] = lw_delves, -- Gnarldor Isle
+		[3077] = lw_delves, -- The Ring of Glory
+		[3079] = lw_delves, -- Venomfall Deeps
 	}
 	public.remappedZones = {
 		[2827] = 2213, -- Horrific Vision of Stormwind (Revisited) -> Horrific Vision of Stormwind

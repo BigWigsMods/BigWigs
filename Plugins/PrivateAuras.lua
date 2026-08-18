@@ -1,4 +1,4 @@
-if not BigWigsLoader.isRetail or BigWigsLoader.isNext then return end -- Retail only module
+if BigWigsLoader then return end -- Retail only module
 
 -------------------------------------------------------------------------------
 -- Module Declaration
