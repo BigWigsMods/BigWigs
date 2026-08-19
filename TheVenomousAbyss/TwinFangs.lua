@@ -234,7 +234,7 @@ function mod:OtherEvents(_, eventInfo)
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
 
-	if durationRounded == 163 then
+	if durationRounded == 163 or durationRounded == 162 then -- 162.5~ so account for precision rounding
 		barInfo = self:Submerge()
 	elseif durationRounded == 6 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
