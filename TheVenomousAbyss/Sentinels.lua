@@ -159,16 +159,6 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		stage = stage + 1
 		self:SetStage(stage)
 
-		durationEventCount = {}
-
-		dropletsCount = 1
-		coagulationCount = 1
-		slamCount = 1
-		miasmaCount = 1
-		bloodCount = 1
-		injectionCount = 1
-		protovenomCount = 1
-
 		local stasisCD = 91
 		nextStasis = self.stageTime + stasisCD
 		if self:ShouldShowBars() then
@@ -373,19 +363,35 @@ function mod:VitriolicStasis(duration)
 		msg = barText,
 		key = 1284588,
 		onFinished = function(this)
-			if this.timer then
-				self:CancelTimer(this.timer)
-				this.timer = nil
-			end
+			self:CancelTimer(this.blocktimer)
+			self:CancelTimer(this.timer)
 
 			isIntermission = true
+			durationEventCount = {}
+
+			dropletsCount = 1
+			coagulationCount = 1
+			slamCount = 1
+			miasmaCount = 1
+			bloodCount = 1
+			injectionCount = 1
+			protovenomCount = 1
+
 			self:StopBlizzMessages(6) -- The Golems of Ula'tek infect players with [Helical Toxins]!
 			self:Message(1284588, "cyan", barText)
 			self:PlaySound(1284588, "long")
 		end,
 	}
 	-- can bug out finishing on time (gets delayed ~1s), but the cancel event is way later (~5s) if that happens
-	barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration + 1)
+	barInfo.timer = self:ScheduleTimer(function()
+		self:StopBar(barInfo.msg)
+		barInfo:onFinished()
+	end, duration + 1)
+	-- always try blocking when it should start (to cover the gap in the above)
+	barInfo.blocktimer = self:ScheduleTimer(function()
+		self:StopBlizzMessages(1)
+	end, duration)
+
 	return barInfo
 end
 
