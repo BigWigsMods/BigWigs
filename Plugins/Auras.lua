@@ -324,7 +324,7 @@ do
 	}
 	local function FindTank()
 		for unit in plugin:IterateGroup(true) do
-			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" and not UnitInPartyIsAI(unit) then
+			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
 				local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 				local name = plugin:UnitName(unit)
 				local _, class = UnitClass(unit)
