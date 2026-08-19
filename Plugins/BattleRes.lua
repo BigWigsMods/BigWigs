@@ -271,7 +271,7 @@ do
 		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
 			plugin.db.profile.fontName = defaultDB.fontName
 		end
-		if not LibSharedMedia:IsValid("border", plugin.db.profile.borderName) then
+		if not LibSharedMedia:IsValid("border", plugin.db.profile.borderName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", plugin.db.profile.borderName)) then
 			plugin.db.profile.borderName = defaultDB.borderName -- If the border is suddenly invalid then reset the size and offset also
 			plugin.db.profile.borderSize = defaultDB.borderSize
 			plugin.db.profile.borderOffset = defaultDB.borderOffset

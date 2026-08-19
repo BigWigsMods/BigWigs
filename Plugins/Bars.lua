@@ -118,7 +118,7 @@ do
 		if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
 			db.fontName = plugin.defaultDB.fontName
 		end
-		if not LibSharedMedia:IsValid(STATUSBAR, db.texture) then
+		if not LibSharedMedia:IsValid(STATUSBAR, db.texture) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, db.texture)) then
 			db.texture = plugin.defaultDB.texture
 		end
 		if db.fontSize < 10 or db.fontSize > 200 then
@@ -609,7 +609,7 @@ do
 								if type(style.fontName) == "string" and LibSharedMedia:IsValid(FONT, style.fontName) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", style.fontName)) then
 									db.fontName = style.fontName
 								end
-								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) then
+								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, style.texture)) then
 									db.texture = style.texture
 								end
 

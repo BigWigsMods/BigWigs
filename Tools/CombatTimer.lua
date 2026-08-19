@@ -465,7 +465,7 @@ do
 		if not LibSharedMedia:IsValid("font", db.profile.anyCombatFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.anyCombatFontName)) then
 			db.profile.anyCombatFontName = defaults.anyCombatFontName
 		end
-		if not LibSharedMedia:IsValid("border", db.profile.anyCombatBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+		if not LibSharedMedia:IsValid("border", db.profile.anyCombatBorderName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.anyCombatBorderName)) then
 			db.profile.anyCombatBorderName = defaults.anyCombatBorderName
 			db.profile.anyCombatBorderSize = defaults.anyCombatBorderSize
 			db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
@@ -474,7 +474,7 @@ do
 		if not LibSharedMedia:IsValid("font", db.profile.bossCombatFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.bossCombatFontName)) then
 			db.profile.bossCombatFontName = defaults.bossCombatFontName
 		end
-		if not LibSharedMedia:IsValid("border", db.profile.bossCombatBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+		if not LibSharedMedia:IsValid("border", db.profile.bossCombatBorderName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.bossCombatBorderName)) then
 			db.profile.bossCombatBorderName = defaults.bossCombatBorderName
 			db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
 			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
@@ -483,7 +483,7 @@ do
 		if not LibSharedMedia:IsValid("font", db.profile.bossStagesFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.bossStagesFontName)) then
 			db.profile.bossStagesFontName = defaults.bossStagesFontName
 		end
-		if not LibSharedMedia:IsValid("border", db.profile.bossStagesBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+		if not LibSharedMedia:IsValid("border", db.profile.bossStagesBorderName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.bossStagesBorderName)) then
 			db.profile.bossStagesBorderName = defaults.bossStagesBorderName
 			db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
 			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
@@ -492,7 +492,7 @@ do
 		--if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.instanceTimerFontName)) then
 		--	db.profile.instanceTimerFontName = defaults.instanceTimerFontName
 		--end
-		--if not LibSharedMedia:IsValid("border", db.profile.instanceTimerBorderName) then -- If the border is suddenly invalid then reset the size and offset also
+		--if not LibSharedMedia:IsValid("border", db.profile.instanceTimerBorderName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.instanceTimerBorderName)) then
 		--	db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
 		--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
 		--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
