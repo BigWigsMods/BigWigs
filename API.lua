@@ -512,8 +512,12 @@ end
 do
 	local IsKnownFile = C_UIFileAsset.IsKnownFile
 	function API.IsValidMediaPath(mediaPath)
-		local result = IsKnownFile(mediaPath)
-		return result
+		if type(mediaPath) ~= "string" then
+			return false
+		else
+			local result = IsKnownFile(mediaPath)
+			return result
+		end
 	end
 end
 

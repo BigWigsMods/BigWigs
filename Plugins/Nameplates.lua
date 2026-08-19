@@ -304,7 +304,7 @@ do
 		end
 		ValidateColor(db.iconColor, plugin.defaultDB.iconColor, 0.3)
 		ValidateColor(db.iconGlowColor, plugin.defaultDB.iconGlowColor, 0)
-		if not LibSharedMedia:IsValid("border", db.iconBorderName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.iconBorderName)) then
+		if not LibSharedMedia:IsValid("border", db.iconBorderName) or (db.iconBorderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.iconBorderName))) then
 			db.iconBorderName = plugin.defaultDB.iconBorderName
 			db.iconBorderSize = plugin.defaultDB.iconBorderSize
 			db.iconBorderOffset = plugin.defaultDB.iconBorderOffset
