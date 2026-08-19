@@ -306,6 +306,8 @@ function mod:OtherTimeline(_, eventInfo)
 	else
 		if rounded == 8 or rounded == 48 then
 			barInfo = self:Invoke(duration)
+		elseif rounded == 28 then
+			barInfo = self:PossessionBarrage(duration)
 		elseif rounded == 40 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
