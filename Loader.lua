@@ -324,6 +324,7 @@ do
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
 				[1592] = "BigWigs_Sporefall",
+				[2987] = "BigWigs_MidnightLairs",
 				[3004] = "BigWigs_TheVenomousAbyss",
 			}
 		}
@@ -359,6 +360,7 @@ do
 				[2912] = "BigWigs_TheVoidspire",
 				[2913] = "BigWigs_MarchOnQuelDanas",
 				[1592] = "BigWigs_Sporefall",
+				[2987] = "BigWigs_MidnightLairs",
 				[3004] = "BigWigs_TheVenomousAbyss",
 			}
 		}
