@@ -324,7 +324,7 @@ do
 	}
 	local function FindTank()
 		for unit in plugin:IterateGroup(true) do
-			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" and not UnitInPartyIsAI(unit) then
+			if not UnitIsUnit("player", unit) and UnitGroupRolesAssigned(unit) == "TANK" then
 				local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 				local name = plugin:UnitName(unit)
 				local _, class = UnitClass(unit)
@@ -1580,6 +1580,10 @@ end
 function plugin:UpdateAllAnchors()
 	self:UpdateAnchors("player", "player")
 	self:UpdateAnchors("other")
+
+	-- reset and force roster update
+	previouslyFoundUnit = nil
+	self:GROUP_ROSTER_UPDATE()
 end
 
 do
@@ -1601,7 +1605,7 @@ do
 
 	function plugin:GROUP_ROSTER_UPDATE()
 		if not db.other.disabled then
-			if db.otherPlayerType ~= "tank" or (db.onlyWhenYouAreTank and (not db.onlyWhenYouAreTank or UnitGroupRolesAssigned("player") ~= "TANK")) then
+			if db.otherPlayerType == "tank" and (not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK")) then
 				local token = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
 				if token ~= previouslyFoundUnit then
 					previouslyFoundUnit = token
@@ -1891,7 +1895,10 @@ do
 		-- These won't trigger an container update, so update them first
 		for index = 1, auraContainer:GetAuraGroupFrameCount("debuffs") do
 			local aura = auraContainer:GetAuraGroupFrame("debuffs", index)
-			UpdateAuraFrame(aura, optionsDB)
+
+			if not InCombatLockdown() then
+				UpdateAuraFrame(aura, optionsDB)
+			end
 		end
 
 		auraContainer:SetEnabled(not optionsDB.disabled)
