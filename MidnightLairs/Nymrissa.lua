@@ -24,6 +24,8 @@ local abyssalRainCount = 1
 local icebladeFlurryCount = 1
 local waterJetCount = 1
 
+local spellChoiceCount = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -36,11 +38,12 @@ local waterJetCount = 1
 --
 
 mod:SetRenames({
-	[1276710] = {1276710}, -- Alluring Bubble
+	[1276710] = {CL.adds}, -- Alluring Bubble (Adds)
+	[1257717] = {1257717}, -- Alluring Bubble
 	[1257608] = {1257608}, -- Frost Barrage
 	[1258668] = {1258668}, -- Swirling Whirlpools
 	[1260837] = {1260837}, -- Abyssal Rain
-	[1282937] = {1282937}, -- Iceblade Flurry
+	[1282937] = {CL.tank_hit}, -- Iceblade Flurry (Tank Hit)
 	[1313393] = {1313393}, -- Chilling Frost
 	-- Mythic
 	[1268562] = {CL.tank_hit}, -- Water Jet
@@ -65,6 +68,7 @@ mod:SetAuraData({
 function mod:GetOptions()
 	return {
 		1276710, -- Alluring Bubble
+		1257717, -- Alluring Bubble
 		1257608, -- Frost Barrage
 		1258668, -- Swirling Whirlpools
 		1260837, -- Abyssal Rain
@@ -100,6 +104,7 @@ function mod:OnEncounterStart()
 	abyssalRainCount = 1
 	icebladeFlurryCount = 1
 	waterJetCount = 1
+	spellChoiceCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -158,27 +163,30 @@ function mod:Timers(_, eventInfo)
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
 
-	--if durationRounded == 3 then
-	--	if self:Mythic() then -- Frost Barrage on Mythic
-	--		barInfo = self:FrostBarrage()
-	--	else
-	--		barInfo = self:AbyssalRain()
-	--	end
-	if durationRounded == 8 or durationRounded == 23 then
-		barInfo = self:AbyssalRain()
-	elseif durationRounded == 22 then
-		barInfo = self:IcebladeFlurry()
+	if durationRounded == 44 then
+		if spellChoiceCount == 1 then
+			barInfo = self:AlluringBubbleAdds(eventInfo)
+		elseif spellChoiceCount == 2 then
+			barInfo = self:ChillingFrost(eventInfo)
+		elseif spellChoiceCount == 3 then
+			barInfo = self:AbyssalRain(eventInfo)
+		end
+		spellChoiceCount = spellChoiceCount + 1
+		if spellChoiceCount > 3 then
+			spellChoiceCount = 1
+		end
+	elseif duration == 18 then
+		barInfo = self:AlluringBubble(eventInfo)
+	elseif durationRounded == 8 or durationRounded == 23 or durationRounded == 33 then
+		barInfo = self:AbyssalRain(eventInfo)
+	elseif durationRounded == 22 or durationRounded == 27 or durationRounded == 9 then
+		barInfo = self:IcebladeFlurry(eventInfo)
 	elseif durationRounded == 25 or durationRounded == 7 then
-		barInfo = self:AlluringBubble()
-	--elseif durationRounded == 33 or durationRounded == 20 or durationRounded == 51
-	--	or durationRounded == 31 or durationRounded == 24 or durationRounded == 46 then -- 31/24/46 Mythic
-	--	barInfo = self:FrostBarrage()
+		barInfo = self:AlluringBubbleAdds(eventInfo)
 	elseif durationRounded == 107 or durationRounded == 89 then
-		barInfo = self:SwirlingWhirlpools()
-	--elseif durationRounded == 17 or durationRounded == 29 or durationRounded == 40 then -- Mythic
-	--	barInfo = self:WaterJet()
-	elseif durationRounded == 35 then
-		barInfo = self:ChillingFrost()
+		barInfo = self:SwirlingWhirlpools(eventInfo)
+	elseif durationRounded == 35 or durationRounded == 17 then
+		barInfo = self:ChillingFrost(eventInfo)
 	end
 
 	if barInfo then
@@ -242,15 +250,31 @@ end
 -- Event Handlers
 --
 
-function mod:AlluringBubble()
+function mod:AlluringBubbleAdds(eventInfo) -- Adds
 	local barText = CL.count:format(self:GetRename(1276710), alluringBubbleCount)
 	alluringBubbleCount = alluringBubbleCount + 1
+	self:ScheduleTimer(function() -- onFinished doesn't fire, timer just pauses until it expires
+		self:Message(1276710, "cyan", barText)
+		self:PlaySound(1276710, "info")
+	end, eventInfo.duration)
 	return {
 		msg = barText,
 		key = 1276710,
 		onFinished = function()
 			self:Message(1276710, "cyan", barText)
 			self:PlaySound(1276710, "info")
+		end
+	}
+end
+
+function mod:AlluringBubble()
+	local barText = CL.count:format(self:GetRename(1257717), alluringBubbleCount)
+	alluringBubbleCount = alluringBubbleCount + 1
+	return {
+		msg = barText,
+		key = 1257717,
+		onFinished = function()
+			self:Message(1257717, "cyan", barText)
 		end
 	}
 end
@@ -294,7 +318,7 @@ function mod:AbyssalRain()
 	}
 end
 
-function mod:IcebladeFlurry()
+function mod:IcebladeFlurry() -- Tank Hit
 	local barText = CL.count:format(self:GetRename(1282937), icebladeFlurryCount)
 	icebladeFlurryCount = icebladeFlurryCount + 1
 	return {
