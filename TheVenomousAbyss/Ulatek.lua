@@ -8,7 +8,7 @@ if not mod then return end
 -- mod:RegisterEnableMob(0)
 mod:SetEncounterID(3492)
 mod:SetRespawnTime(30)
-mod:UseCustomTimers(true)
+mod:UseCustomTimers(true, true)
 
 --------------------------------------------------------------------------------
 -- Locals
