@@ -223,28 +223,19 @@ function mod:MythicTimeline(_, eventInfo)
 
 	-- stage 1
 	if stage < 2 then
+		if rounded == 40 or rounded == 28 or rounded == 15 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] == 1 then
+				return false -- first bar is cancelled
+			end
+		end
+
 		if rounded == 40 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
 			barInfo = self:RestlessAmani(duration)
-		elseif rounded == 28 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
+		elseif rounded == 28 or rounded == 36 then
 			barInfo = self:PossessionBarrage(duration)
-		elseif rounded1 == 14.5 then -- 14.5
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
+		elseif rounded1 == 14.5 or rounded1 == 40.5 then
 			barInfo = self:EssenceRend(duration)
-		elseif rounded1 == 40.5 then
-			barInfo = self:EssenceRend(duration)
-		elseif rounded == 36 then
-			barInfo = self:PossessionBarrage(duration)
 
 		-- intermission
 		elseif rounded == 20 then
@@ -286,23 +277,22 @@ function mod:OtherTimeline(_, eventInfo)
 
 	-- stage 1
 	if stage < 2 then
+		if rounded == 40 or rounded == 28 or rounded == 15 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			if durationEventCount[rounded] == 1 then
+				return false -- first bar is cancelled
+			end
+		end
+
 		if rounded == 40 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
+			if durationEventCount[rounded] % 2 == 0 then -- XXX swapped due to the cancelled bar
+				barInfo = self:RestlessAmani(duration)
+			else
+				barInfo = self:EssenceRend(duration)
 			end
-			barInfo = self:RestlessAmani(duration)
 		elseif rounded == 28 or rounded == 36 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
 			barInfo = self:PossessionBarrage(duration)
 		elseif rounded == 15 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if rounded == 15 and durationEventCount[rounded] == 1 then
-				return false -- first bar is cancelled
-			end
 			barInfo = self:EssenceRend(duration)
 
 		-- intermission
