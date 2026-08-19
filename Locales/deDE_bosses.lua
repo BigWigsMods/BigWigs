@@ -89,3 +89,9 @@ BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
 	corrosive_spit = "Spucke", -- Short for Corrosive Spit
 })
 
+BigWigsAPI.SetBossModuleLocale("Ula'tek", {
+	--mephitic_thrash = "Sweep",
+	--call_of_the_serpent = "Eggs",
+	--gore_rattle = "Tail",
+	--circling_prey = "Platform Break",
+})

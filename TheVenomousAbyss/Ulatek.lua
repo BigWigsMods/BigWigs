@@ -38,10 +38,12 @@ local biteCount = 1
 -- Localization
 --
 
--- local L = mod:SetDefaultLocale({
--- 	rage_of_the_shackled = "Damage Amp",
--- 	circling_prey = "Next Platform",
--- })
+local L = mod:SetDefaultLocale({
+	mephitic_thrash = "Sweep",
+	call_of_the_serpent = "Eggs",
+	gore_rattle = "Tail",
+	circling_prey = "Platform Break",
+})
 
 --------------------------------------------------------------------------------
 -- Renames
@@ -51,17 +53,17 @@ mod:SetRenames({
 	["stages"] = {CL.stage:format(1), CL.stage:format(2), CL.stage:format(3), CL.intermission, original = false},
 
 	[1292188] = {CL.waves}, -- Caustic Waves
-	[1300751] = {1300751}, -- Call of the Serpent
+	[1300751] = {L.call_of_the_serpent}, -- Call of the Serpent
 	[1298367] = {CL.tank_knockback}, -- Mother's Wrath
-	[1298559] = {1298559}, -- Gore Rattle
-	[1296301] = {CL.knockback}, -- Mephitic Thrash
+	[1298559] = {L.gore_rattle}, -- Gore Rattle
+	[1296301] = {L.mephitic_thrash}, -- Mephitic Thrash
 	[1300530] = {CL.soaks}, -- Spectral Coils
-	[1286860] = {1286860}, -- Rage of the Shackled
+	[1286860] = {CL.weakened}, -- Rage of the Shackled
 
 	[1302982] = {1302982}, -- Virulent Spit
 
 	[1292999] = {1292999}, -- Submerge
-	[1301510] = {1301510}, -- Circling Prey
+	[1301510] = {L.circling_prey}, -- Circling Prey
 	[1295905] = {1295905}, -- Serpent's Bite
 	[1286905] = {1286905}, -- Fury Unleashed
 })
@@ -179,10 +181,15 @@ end
 function mod:OnEncounterStart()
 	activeBars = {}
 	self:SetStage(1)
+	self:ResetCounts()
+	rageCount = 1
 
+	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
+end
+
+function mod:ResetCounts()
 	durationEventCount = {}
 
-	rageCount = 1
 	goreRattleCount = 1
 	wavesCount = 1
 	wrathCount = 1
@@ -201,34 +208,20 @@ end
 
 function mod:MythicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
-	return self:HandleBars(nil, eventInfo) -- no data for mythic
+	return self:HandleBars(nil, eventInfo, true) -- no data
 end
 
 function mod:HeroicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 
 	if spitCount == 3 then -- out of data
-		return nil
+		return self:HandleBars(nil, eventInfo, true) -- no data
 	end
 
 	local barInfo
 
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
-
-	if rounded == 118 then -- New Rage of the Shackled = Phase 2
-		self:SetStage(2)
-
-		durationEventCount = {}
-
-		wavesCount = 1
-		wrathCount = 1
-		coilsCount = 1
-		thrashCount = 1
-
-		self:Message("stages", "cyan", self:GetRename("stages", 2), false)
-		self:PlaySound("stages", "long")
-	end
 
 	-- so many events cancel instead of finish x.x if they don't fix these I guess i'll move the timer to the handler
 	if rounded == 5 or rounded == 70 then
@@ -277,19 +270,7 @@ function mod:EasyTimeline(_, eventInfo)
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
-	if rounded == 118 then -- New Rage of the Shackled = Phase 2
-		stage = 2
-		self:SetStage(stage)
-
-		wavesCount = 1
-		wrathCount = 1
-		coilsCount = 1
-		thrashCount = 1
-
-		self:Message("stages", "cyan", self:GetRename("stages", 2), false)
-		self:PlaySound("stages", "long")
-
-	elseif stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
+	if stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
 		stage = 2.5
 		self:SetStage(stage)
 
@@ -299,17 +280,7 @@ function mod:EasyTimeline(_, eventInfo)
 	elseif rounded == 200 then -- New Rage of the Shackled = Phase 3
 		stage = 3
 		self:SetStage(stage)
-
-		durationEventCount = {}
-
-		wavesCount = 1
-		wrathCount = 1
-		coilsCount = 1
-		thrashCount = 1
-
-		callCount = 1
-		submergeCount = 1
-		biteCount = 1
+		self:ResetCounts()
 
 		self:Message("stages", "cyan", self:GetRename("stages", 3), false)
 		self:PlaySound("stages", "long")
@@ -419,7 +390,7 @@ function mod:EasyTimeline(_, eventInfo)
 	self:HandleBars(barInfo, eventInfo)
 end
 
-function mod:HandleBars(barInfo, eventInfo)
+function mod:HandleBars(barInfo, eventInfo, noAfterBossError)
 	if barInfo then
 		barInfo.eventID = eventInfo.id
 		activeBars[eventInfo.id] = barInfo
@@ -427,7 +398,9 @@ function mod:HandleBars(barInfo, eventInfo)
 			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
 		end
 	elseif barInfo == nil and self:ShouldShowBars() then
-		self:ErrorForTimelineEvent(eventInfo)
+		if not noAfterBossError then
+			self:ErrorForTimelineEvent(eventInfo)
+		end
 		backupBars[eventInfo.id] = true
 		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
 
@@ -484,6 +457,18 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_TARGETABLE_CHANGED(_, unit)
+	if self:GetStage() == 1 and not UnitCanAttack("player", unit) then
+		self:SetStage(2)
+		self:ResetCounts()
+
+		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
+
+		self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
+	end
+end
 
 -- Stage One: Fury of the Serpent Mother
 

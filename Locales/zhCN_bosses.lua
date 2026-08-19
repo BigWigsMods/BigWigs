@@ -88,3 +88,10 @@ BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
 	coiling_toxin = "脓液", -- “盘卷脓液”简称
 	corrosive_spit = "唾液", -- “腐蚀唾液”简称
 })
+
+BigWigsAPI.SetBossModuleLocale("Ula'tek", {
+	--mephitic_thrash = "Sweep",
+	--call_of_the_serpent = "Eggs",
+	--gore_rattle = "Tail",
+	--circling_prey = "Platform Break",
+})
