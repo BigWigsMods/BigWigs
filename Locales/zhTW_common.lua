@@ -227,8 +227,8 @@ L.messageBeforeCastStartNote = "施法即將開始的訊息文本"
 L.messageDuringCastNote = "施法期間顯示的訊息文本"
 L.messageNote = "訊息文本"
 L.messageOnYouNote = "中了技能的訊息文本"
---L.messageOnOtherNote = "The message shown when this ability is on other people"
---L.messageTauntNowNote = "The message shown when you're a tank and you need to taunt"
+L.messageOnOtherNote = "別人中了技能的訊息文本"
+L.messageTauntNowNote = "你是坦克並且需要嘲諷時顯示的訊息文本"
 L.messageSpecificHealth = "首領生命值降至 %d%% 時顯示的訊息文本"
 L.timerOnYouNote = "中了技能的計時條文本"
 L.mythicOnlyNote = "只在傳奇難度使用的文本"
@@ -356,7 +356,7 @@ L.curses = "詛咒" -- Plural of L.curse
 L.disease = "疾病" -- Any disease-type dispellable debuff, or debuffs called "Disease of XYZ", etc.
 L.dispel = "驅散" -- General term for any debuff that is dispellable
 L.dispels = "驅散" -- Plural of L.dispel
---L.dispel_boss = "Dispel Boss" -- When the boss gains a buff (magic or enrage) that you need to dispel
+L.dispel_boss = "驅散首領" -- When the boss gains a buff (magic or enrage) that you need to dispel
 L.poison = "毒" -- Any poison-type dispellable debuff, or debuffs called "Poison of XYZ", etc.
 L.bleed = "流血" -- Any bleed-type debuff
 L.bleeds = "流血" -- Plural of L.bleed
@@ -381,4 +381,4 @@ L.tank_soak = "坦克分攤" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "坦克被抓" -- 坦克被抓/被拉 When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
 
 -- Aura Sections
---L.important = "Important" -- High priority debuffs
+L.important = "重要" -- High priority debuffs
