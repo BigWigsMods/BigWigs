@@ -228,6 +228,7 @@ end
 --
 
 function mod:MythicTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 then return end
 	local barInfo
 
 	local duration = eventInfo.duration
@@ -303,6 +304,7 @@ function mod:MythicTimeline(_, eventInfo)
 end
 
 function mod:OtherTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 then return end
 	local barInfo
 
 	local duration = eventInfo.duration
