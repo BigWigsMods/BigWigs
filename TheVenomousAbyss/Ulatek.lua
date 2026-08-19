@@ -165,7 +165,13 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+	if self:Mythic() then
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicTimeline")
+	elseif self:Heroic() then
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "HeroicTimeline")
+	else
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "EasyTimeline")
+	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
@@ -192,6 +198,11 @@ end
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
+
+function mod:MythicTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
+	return self:HandleBars(nil, eventInfo) -- no data for mythic
+end
 
 function mod:HeroicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
