@@ -6,13 +6,15 @@ BigWigs:AddColors("Nymrissa Wavecaller", {
 	[1258668] = "orange",
 	[1260837] = "yellow",
 	[1268562] = "purple",
+	[1276710] = "cyan",
 	[1282937] = "yellow",
+	[1313393] = "yellow",
 })
 
 BigWigs:AddSounds("Nymrissa Wavecaller", {
 	[1257608] = "alert",
-	[1257717] = "info",
 	[1258668] = "alarm",
 	[1260837] = "long",
+	[1276710] = "info",
 	[1282937] = "alert",
 })
