@@ -1580,6 +1580,10 @@ end
 function plugin:UpdateAllAnchors()
 	self:UpdateAnchors("player", "player")
 	self:UpdateAnchors("other")
+
+	-- reset and force roster update
+	previouslyFoundUnit = nil
+	self:GROUP_ROSTER_UPDATE()
 end
 
 do
