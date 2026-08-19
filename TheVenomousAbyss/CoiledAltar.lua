@@ -228,7 +228,7 @@ end
 --
 
 function mod:MythicTimeline(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
 	local duration = eventInfo.duration
@@ -304,7 +304,7 @@ function mod:MythicTimeline(_, eventInfo)
 end
 
 function mod:OtherTimeline(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
 	local duration = eventInfo.duration
@@ -353,7 +353,7 @@ function mod:OtherTimeline(_, eventInfo)
 		local rounded1 = self:RoundNumber(duration, 1)
 		if rounded == 87 or rounded == 66 then
 			barInfo = self:EternalNightfall(duration)
-		elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 then -- 53.5
+		elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 or rounded == 43 then -- 53.5
 			barInfo = self:Dreadmarch(duration)
 		elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 or rounded == 54 then
 			barInfo = self:ToxicDeluge(duration)
