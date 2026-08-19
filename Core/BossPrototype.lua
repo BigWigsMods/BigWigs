@@ -1693,14 +1693,23 @@ do
 			ieeuEvents[self].dispatching = true
 			for i = 1, 10 do
 				local bossUnit = bosses[i]
-				local bossGUID = self:UnitGUID(bossUnit)
-				if bossGUID then
+				local bossGUID = UnitGUID(bossUnit)
+				if not bossGUID then
+					break
+				end
+
+				if not self:IsSecret(bossGUID) then
 					local bossID = self:MobId(bossGUID)
 					if ieeuEvents[self][bossID] then
 						self[ieeuEvents[self][bossID]](self, bossGUID, bossUnit, bossID)
 					end
 				else
-					break
+					local func = ieeuEvents[self][bossUnit]
+					if type(func) == "function" then
+						func(bossGUID, bossUnit)
+					elseif func then
+						self[func](self, bossGUID, bossUnit)
+					end
 				end
 			end
 			ieeuEvents[self].dispatching = nil
@@ -1713,8 +1722,8 @@ do
 		-- @number bossID the ID of a boss to scan the boss units for
 		-- @param func callback function, passed (bossGUID, bossUnit, bossID)
 		function boss:RegisterBossEvent(bossID, func)
-			if type(bossID) ~= "number" then core:Print(format(noBossID, self.moduleName)) return end
-			if type(func) ~= "string" or not self[func] then core:Print(format(noBossFunc, self.moduleName, tostring(func))) return end
+			if type(bossID) ~= "number" and type(bossID) ~= "string" then core:Print(format(noBossID, self.moduleName)) return end
+			if type(func) ~= "function" and (type(func) ~= "string" or not self[func]) then core:Print(format(noBossFunc, self.moduleName, tostring(func))) return end
 			if not ieeuEvents[self] then ieeuEvents[self] = {} end
 			if ieeuEvents[self][bossID] then
 				ieeuEvents[self][bossID] = func
