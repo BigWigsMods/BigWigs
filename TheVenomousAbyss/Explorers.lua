@@ -303,7 +303,7 @@ function mod:Timeline(_, eventInfo, events)
 			barInfo = self:ThrowJunk(duration)
 		elseif rounded == 13 then
 			barInfo = self:ExplosiveSurprise()
-		elseif rounded == 11 or rounded == 17 or rounded == 15 then
+		elseif rounded == 11 or rounded == 17 or rounded == 15 or rounded == 7 then
 			barInfo = self:ShellSpin()
 		elseif rounded == 32 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
@@ -330,7 +330,7 @@ function mod:Timeline(_, eventInfo, events)
 
 	-- Iku
 	elseif stage == 4 then
-		if rounded == 7 or rounded == 4 or rounded == 11 then
+		if rounded == 7 or rounded == 4 or rounded == 11 or rounded == 23 then
 			barInfo = self:ThrowJunk(duration)
 		elseif rounded == 30 then
 			barInfo = self:ShreddingShards()
