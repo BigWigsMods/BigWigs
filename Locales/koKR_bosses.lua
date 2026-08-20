@@ -90,8 +90,8 @@ BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Ula'tek", {
-	--mephitic_thrash = "Sweep",
-	--call_of_the_serpent = "Eggs",
-	--gore_rattle = "Tail",
-	--circling_prey = "Platform Break",
+	mephitic_thrash = "휩쓸기",
+	call_of_the_serpent = "알",
+	gore_rattle = "꼬리",
+	circling_prey = "플랫폼 파괴",
 })
