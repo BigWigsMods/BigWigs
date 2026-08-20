@@ -38,9 +38,19 @@ plugin.defaultDB = {
 
 		size = 64,
 		spacing = 6,
-		showBorder = true,
-		showDispelType = true,
 		showCooldown = true,
+
+		showDispelType = true,
+		dispelTypeSize = 24,
+		dispelTypeAnchorPoint = "TOPRIGHT",
+		dispelTypeAnchorRelPoint = "TOPRIGHT",
+		dispelTypeAnchorXOffset = 8,
+		dispelTypeAnchorYOffset = 8,
+
+		borderName = "Solid",
+		borderColor = {0, 0, 0, 1},
+		borderOffset = 0,
+		borderSize = 2,
 
 		showCooldownText = true,
 		cooldownTextFontName = "Noto Sans Medium", -- Only dealing with numbers so we can use this on all locales
@@ -74,9 +84,19 @@ plugin.defaultDB = {
 
 		size = 64,
 		spacing = 6,
-		showBorder = true,
-		showDispelType = true,
 		showCooldown = true,
+
+		showDispelType = true,
+		dispelTypeSize = 24,
+		dispelTypeAnchorPoint = "TOPRIGHT",
+		dispelTypeAnchorRelPoint = "TOPRIGHT",
+		dispelTypeAnchorXOffset = 8,
+		dispelTypeAnchorYOffset = 8,
+
+		borderName = "Solid",
+		borderColor = {0, 0, 0, 1},
+		borderOffset = 0,
+		borderSize = 2,
 
 		showCooldownText = true,
 		cooldownTextFontName = "Noto Sans Medium",
@@ -200,6 +220,20 @@ local function updateProfile()
 		db.other.countTextFontSize = plugin.defaultDB.other.countTextFontSize
 	end
 
+	if db.player.borderSize < 1 or db.player.borderSize > 32 then
+		db.player.borderSize = plugin.defaultDB.player.borderSize
+	end
+	if db.player.borderOffset < 0 or db.player.borderOffset > 32 then
+		db.player.borderOffset = plugin.defaultDB.player.borderOffset
+	end
+
+	if db.other.borderSize < 1 or db.other.borderSize > 32 then
+		db.other.borderSize = plugin.defaultDB.other.borderSize
+	end
+	if db.other.borderOffset < 0 or db.other.borderOffset > 32 then
+		db.other.borderOffset = plugin.defaultDB.other.borderOffset
+	end
+
 	-- Validate player anchors
 	do
 		if not BigWigsAPI.IsValidFramePoint(db.player.anchorPoint) or not BigWigsAPI.IsValidFramePoint(db.player.anchorRelPoint) then
@@ -305,9 +339,6 @@ do
 
 		if optionDB.disabled then
 			return true
-		end
-		if key == "showDispelType" then
-			return not optionDB.showBorder
 		end
 	end
 	local function IsAurasOnYouDisabledOrAnchorPointIsDefault()
@@ -665,28 +696,12 @@ do
 						order = 7,
 						disabled = IsAnchorDisabled,
 					},
-					showBorder = {
-						type = "toggle",
-						name = L.showBorder,
-						desc = L.showBorderDesc,
-						width = 1.6,
-						order = 8,
-						disabled = IsAnchorDisabled,
-					},
-					showDispelType = {
-						type = "toggle",
-						name = L.showDispelType,
-						desc = L.showDispelTypeDesc,
-						width = 1.6,
-						order = 9,
-						disabled = IsAnchorDisabled,
-					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 10,
+						order = 8,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownText = {
@@ -694,7 +709,7 @@ do
 						inline = true,
 						name = L.cooldownText,
 						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
-						order = 12,
+						order = 9,
 						args = {
 							showCooldownText = {
 								type = "toggle",
@@ -750,11 +765,99 @@ do
 							},
 						},
 					},
+					dispelTypeOptions = {
+						type = "group",
+						inline = true,
+						name = L.dispelType,
+						order = 10,
+						disabled = function(info) return db.player.disabled or not db.player.showDispelType end,
+						args = {
+							showDispelType = {
+								type = "toggle",
+								name = L.showDispelType,
+								desc = L.showDispelTypeDesc,
+								order = 1,
+								width = 1.2,
+								disabled = function(info) return db.player.disabled end,
+							},
+							dispelTypeSize = {
+								type = "range",
+								name = L.iconSize,
+								order = 2,
+								min = 1,
+								max = 64,
+								step = 1,
+							},
+							dispelTypeAnchorPoint = {
+								type = "select",
+								name = L.position,
+								values = BigWigsAPI.GetFramePointList(),
+								order = 3,
+							},
+							dispelTypeAnchorXOffset = {
+								type = "range",
+								name = L.offsetX,
+								min = -100, max = 100, step = 1,
+								order = 4,
+							},
+							dispelTypeAnchorYOffset = {
+								type = "range",
+								name = L.offsetY,
+								min = -100, max = 100, step = 1,
+								order = 5,
+							},
+						},
+					},
+					borderOptions = {
+						type = "group",
+						inline = true,
+						name = L.border,
+						order = 11,
+						disabled = function(info)
+							return db.player.disabled or db.player.borderName == "None"
+						end,
+						args = {
+							borderName = {
+								type = "select",
+								name = L.borderName,
+								order = 1,
+								values = LibSharedMedia:List("border"),
+								get = function()
+									for i, v in next, LibSharedMedia:List("border") do
+										if v == db.player.borderName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("border")
+									db.player.borderName = list[value]
+									plugin:UpdateAllAnchors()
+								end,
+								width = 1,
+								disabled = function(info) return db.player.disabled end,
+							},
+							borderSize = {
+								type = "range",
+								name = L.borderSize,
+								order = 2,
+								min = 1,
+								max = 32,
+								step = 1,
+							},
+							borderOffset = {
+								type = "range",
+								name = L.borderOffset,
+								order = 3,
+								min = 0,
+								max = 32,
+								step = 1,
+							},
+						},
+					},
 					countText = {
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 13,
+						order = 12,
 						disabled = function(info) return db.player.disabled or not db.player.showCountText end,
 						args = {
 							showCountText = {
@@ -1001,35 +1104,19 @@ do
 						order = 13,
 						disabled = IsAnchorDisabled,
 					},
-					showBorder = {
-						type = "toggle",
-						name = L.showBorder,
-						desc = L.showBorderDesc,
-						width = 1.6,
-						order = 14,
-						disabled = IsAnchorDisabled,
-					},
-					showDispelType = {
-						type = "toggle",
-						name = L.showDispelType,
-						desc = L.showDispelTypeDesc,
-						width = 1.6,
-						order = 15,
-						disabled = IsAnchorDisabled,
-					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 16,
+						order = 14,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownText = {
 						type = "group",
 						inline = true,
 						name = L.cooldownText,
-						order = 17,
+						order = 15,
 						disabled = function(info) return db.other.disabled or not db.other.showCooldownText end,
 						args = {
 							showCooldownText = {
@@ -1083,6 +1170,94 @@ do
 								name = L.slugRendering,
 								desc = L.slugRenderingDesc,
 								order = 6,
+							},
+						},
+					},
+					dispelTypeOptions = {
+						type = "group",
+						inline = true,
+						name = L.dispelType,
+						order = 16,
+						disabled = function(info) return db.other.disabled or not db.other.showDispelType end,
+						args = {
+							showDispelType = {
+								type = "toggle",
+								name = L.showDispelType,
+								desc = L.showDispelTypeDesc,
+								order = 1,
+								width = 1.2,
+								disabled = function(info) return db.other.disabled end,
+							},
+							dispelTypeSize = {
+								type = "range",
+								name = L.iconSize,
+								order = 2,
+								min = 1,
+								max = 64,
+								step = 1,
+							},
+							dispelTypeAnchorPoint = {
+								type = "select",
+								name = L.position,
+								values = BigWigsAPI.GetFramePointList(),
+								order = 3,
+							},
+							dispelTypeAnchorXOffset = {
+								type = "range",
+								name = L.offsetX,
+								min = -100, max = 100, step = 1,
+								order = 4,
+							},
+							dispelTypeAnchorYOffset = {
+								type = "range",
+								name = L.offsetY,
+								min = -100, max = 100, step = 1,
+								order = 5,
+							},
+						},
+					},
+					borderOptions = {
+						type = "group",
+						inline = true,
+						name = L.border,
+						order = 17,
+						disabled = function(info)
+							return db.other.disabled or db.other.borderName == "None"
+						end,
+						args = {
+							borderName = {
+								type = "select",
+								name = L.borderName,
+								order = 1,
+								values = LibSharedMedia:List("border"),
+								get = function()
+									for i, v in next, LibSharedMedia:List("border") do
+										if v == db.other.borderName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("border")
+									db.other.borderName = list[value]
+									plugin:UpdateAllAnchors()
+								end,
+								width = 1,
+								disabled = function(info) return db.other.disabled end,
+							},
+							borderSize = {
+								type = "range",
+								name = L.borderSize,
+								order = 2,
+								min = 1,
+								max = 32,
+								step = 1,
+							},
+							borderOffset = {
+								type = "range",
+								name = L.borderOffset,
+								order = 3,
+								min = 0,
+								max = 32,
+								step = 1,
 							},
 						},
 					},
@@ -1745,14 +1920,12 @@ do
 		overlayFrame:SetAllPoints()
 		overlayFrame:SetFrameLevel(aura:GetFrameLevel() + 10)
 
-		-- Still have atlas sizing shenanigans
-		local borderSize = GetAtlasBorderSize(size)
-
-		local border = overlayFrame:CreateTexture(nil, "BACKGROUND")
-		border:SetPoint("CENTER", aura, "CENTER", 0, 0)
-		border:SetSize(borderSize, borderSize)
-		border:Hide()
+		local border = CreateFrame("Frame", nil, aura, "BackdropTemplate")
+		border:SetFrameLevel(border:GetFrameLevel() + 1) -- show the border above the cooldown swipe
 		aura.border = border
+
+		local dispelIcon = border:CreateTexture(nil, "OVERLAY")
+		aura.dispelIcon = dispelIcon
 
 		local stacks = overlayFrame:CreateFontString(nil, "ARTWORK")
 		stacks:SetPoint(optionsDB.countTextAnchorPoint, aura, optionsDB.countTextAnchorPoint, optionsDB.countTextAnchorXOffset, optionsDB.countTextAnchorYOffset)
@@ -1782,6 +1955,29 @@ do
 		end
 	end
 
+	local borderOptions = {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset,
+		showWhenHarmful = true,
+		showWhenHelpful = true,
+		showWithoutDispelType = true,
+	}
+
+	local dispelIconOptions = {
+		style = Enum.CustomAuraButtonDispelTypeTextureStyle.Icon,
+	}
+
+	local backdropTextureUVs = { -- ripped from Blizzard_SharedXML/Backdrop.lua
+		TopLeftCorner = true,
+		TopRightCorner = true,
+		BottomLeftCorner = true,
+		BottomRightCorner = true,
+		TopEdge = true,
+		BottomEdge = true,
+		LeftEdge = true,
+		RightEdge = true,
+		Center = true,
+	}
+
 	function UpdateAuraFrame(aura, optionsDB)
 		aura:SetSize(optionsDB.size, optionsDB.size)
 
@@ -1810,28 +2006,34 @@ do
 			duration:SetFont(LibSharedMedia:Fetch(FONT, optionsDB.cooldownTextFontName), optionsDB.cooldownTextFontSize, flags)
 		end
 
-		local border = aura.border
-		local borderSize = GetAtlasBorderSize(optionsDB.size)
-		border:SetSize(borderSize, borderSize)
-		local borderStyle
-		if optionsDB.showBorder and not optionsDB.showDispelType then
-			borderStyle = 0 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Border
-		elseif optionsDB.showBorder and optionsDB.showDispelType then
-			borderStyle = 1 -- Enum.CustomAuraButtonDispelTypeTextureStyle.BorderWithIcon
-			-- elseif not optionsDB.showBorder and optionsDB.showDispelType then
-			--	-- XXX this is just the icon, not the border with icon minus the border D;
-			-- 	borderStyle = 2 -- Enum.CustomAuraButtonDispelTypeTextureStyle.Icon
-		end
-		if borderStyle then
-			aura:SetAuraBorder(border, {
-				showWhenHarmful = true,
-				showWhenHelpful = true,
-				showWithoutDispelType = true,
-				style = borderStyle,
+		aura:ClearDispelTypeTextures()
+
+		if optionsDB.borderName ~= "None" then
+			aura.border:SetBackdrop({
+				edgeFile = LibSharedMedia:Fetch("border", optionsDB.borderName),
+				edgeSize = optionsDB.borderSize,
 			})
+			aura.border:ClearAllPoints()
+			aura.border:SetPoint("TOPLEFT", -optionsDB.borderOffset, optionsDB.borderOffset)
+			aura.border:SetPoint("BOTTOMRIGHT", optionsDB.borderOffset, -optionsDB.borderOffset)
+
+			for pieceName in pairs(backdropTextureUVs) do -- logic copied from Blizzard_SharedXML/Backdrop.lua
+				local borderRegion = aura.border[pieceName]
+				if borderRegion and pieceName ~= "Center" then
+					aura:AddDispelTypeTexture(borderRegion, borderOptions)
+				end
+			end
 		else
-			border:Hide()
-			aura:ClearAuraBorder()
+			aura.border:ClearBackdrop()
+		end
+
+		if optionsDB.showDispelType then
+			aura.dispelIcon:ClearAllPoints()
+			aura.dispelIcon:SetPoint(optionsDB.dispelTypeAnchorPoint, aura, optionsDB.dispelTypeAnchorPoint, optionsDB.dispelTypeAnchorXOffset, optionsDB.dispelTypeAnchorYOffset)
+			aura.dispelIcon:SetSize(optionsDB.dispelTypeSize, optionsDB.dispelTypeSize)
+			aura:AddDispelTypeTexture(aura.dispelIcon, dispelIconOptions)
+		else
+			aura.dispelIcon:SetTexture(nil)
 		end
 
 		local stacks = aura.stacks
@@ -1980,7 +2182,19 @@ do
 		ClearApplicationCount = false,
 		GetDispelTypeTextureCount = false,
 		GetDispelTypeTexture = false,
-		AddDispelTypeTexture = false,
+		AddDispelTypeTexture = function(self, region, options)
+			-- replicate ApplyDispelTypeTextureStyle from Blizzard_CustomAuraButton.lua
+			if options.style == Enum.CustomAuraButtonDispelTypeTextureStyle.Icon then
+				if self.dispelType ~= "None" and self.dispelType ~= "Enrage" then -- no icons for these
+					AuraUtil.SetAuraDispelTypeIcon(region, self.dispelType)
+					region:SetVertexColor(1, 1, 1, 1)
+				else
+					region:SetTexture(nil)
+				end
+			elseif options.style == Enum.CustomAuraButtonDispelTypeTextureStyle.PreserveAsset then
+				AuraUtil.SetAuraBorderColor(region, self.dispelType)
+			end
+		end,
 		RemoveDispelTypeTexture = false,
 		ClearDispelTypeTextures = false,
 		GetDispelTypeText = false,
@@ -2002,11 +2216,7 @@ do
 		etSpellName = false,
 		ClearSpellName = false,
 		GetAuraBorder = false,
-		SetAuraBorder = function(self, texture, options)
-			AuraUtil.SetAuraBorderAtlas(texture, self.dispelType, options.style == 1)
-			texture:SetVertexColor(1, 1, 1, 1)
-			texture:Show()
-		end,
+		SetAuraBorder = false,
 		ClearAuraBorder = false,
 	}
 	local noop = function() end
