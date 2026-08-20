@@ -125,6 +125,7 @@ files["Plugins/Auras.lua"].ignore = {
 	"113/C_RestrictedActions",
 	"113/C_UnitAuras",
 	"113/C_Spell",
+	"113/Enum",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitInPartyIsAI",
 }
