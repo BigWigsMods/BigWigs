@@ -2294,7 +2294,23 @@ do
 
 		auraContainer:SetAuraGroupMaxFrameCount("debuffs", optionsDB.maxIcons)
 		auraContainer:SetAuraGroupCandidateFilters("debuffs", {
-			isBossOrRoleAura = true,
+			isFromPlayerorPlayerPet = false,
+			excludeSpellIDs = {
+				-- LFG debuffs
+				[26013] = true, -- Deserter
+				[71041] = true, -- Dungeon Deserter
+				[206151] = true, -- Challenger's Burden
+				[1313593] = true, -- Deserter
+				-- Bloodlust/Heroism debuffs
+				[57723] = true, -- Exhaustion
+				[57724] = true, -- Sated
+				[80354] = true, -- Temporal Displacement
+				[95809] = true, -- Insanity
+				[160455] = true, -- Fatigued
+				[264689] = true, -- Insanity
+				-- Other debuffs
+				[124255] = true, -- Stagger
+			}
 		})
 		auraContainer:SetAuraGroupLayout("debuffs", {
 			elementSpacing = optionsDB.spacing,
