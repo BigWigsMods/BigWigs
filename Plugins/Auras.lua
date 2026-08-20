@@ -2219,7 +2219,7 @@ do
 			end
 		end
 
-		auraContainer:SetEnabled(not optionsDB.disabled and unitToken)
+		auraContainer:SetEnabled(not optionsDB.disabled and unitToken ~= nil)
 
 		if unitToken then
 			auraContainer:SetUnit(unitToken)
