@@ -2193,8 +2193,11 @@ do
 			end
 		end
 
-		auraContainer:SetEnabled(not optionsDB.disabled)
-		auraContainer:SetUnit(unitToken or "none")
+		auraContainer:SetEnabled(not optionsDB.disabled and unitToken)
+
+		if unitToken then
+			auraContainer:SetUnit(unitToken)
+		end
 
 		auraContainer:ClearAllPoints()
 		local axis, point, x, y
