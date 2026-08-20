@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Ula'tek", 3004, 2895)
 if not mod then return end
--- mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(257758)
 mod:SetEncounterID(3492)
 mod:SetRespawnTime(30)
 mod:UseCustomTimers(true)
@@ -277,7 +277,7 @@ function mod:EasyTimeline(_, eventInfo)
 		self:Message("stages", "cyan", self:GetRename("stages", 4), false) -- intermission
 		self:PlaySound("stages", "long")
 
-	elseif rounded == 200 then -- New Rage of the Shackled = Phase 3
+	elseif stage < 3 and rounded == 200 then -- New Rage of the Shackled = Phase 3
 		stage = 3
 		self:SetStage(stage)
 		self:ResetCounts()
@@ -479,6 +479,7 @@ function mod:CausticWaves()
 		msg = barText,
 		key = 1292188,
 		onFinished = function()
+			self:StopBlizzMessages(1) -- Ula'tek prepares a surge of [Caustic Waves]!
 			self:Message(1292188, "red", barText)
 			self:PlaySound(1292188, "warning")
 		end,
@@ -570,12 +571,13 @@ end
 
 function mod:VirulentSpit()
 	local barText = CL.count:format(self:GetRename(1302982), spitCount)
+	local messageText = CL.incoming:format(barText)
 	spitCount = spitCount + 1
 	return {
 		msg = barText,
 		key = 1302982,
 		onFinished = function()
-			self:Message(1302982, "yellow", barText)
+			self:Message(1302982, "yellow", messageText)
 			self:PlaySound(1302982, "alarm")
 		end,
 	}
@@ -603,10 +605,10 @@ function mod:Submerge()
 		msg = barText,
 		key = 1292999,
 		offset = 3.5, -- 1s for prey to finish, 2.5s for cast
-		onFinished = function()
-			self:Message(1292999, "cyan", barText)
-			self:PlaySound(1292999, "info")
-		end,
+		-- onFinished = function()
+		-- 	self:Message(1292999, "cyan", barText)
+		-- 	self:PlaySound(1292999, "info")
+		-- end,
 	}
 end
 
