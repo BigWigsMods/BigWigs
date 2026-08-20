@@ -1864,7 +1864,7 @@ do
 
 	function plugin:GROUP_ROSTER_UPDATE()
 		if not db.other.disabled then
-			if db.otherPlayerType == "tank" and (not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK")) then
+			if not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK") then
 				local token = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
 				if token ~= previouslyFoundUnit then
 					previouslyFoundUnit = token
@@ -1912,7 +1912,7 @@ do
 		end
 
 		if not unitToken and unitType == "other" then
-			if db.otherPlayerType ~= "tank" or (db.onlyWhenYouAreTank and (not db.onlyWhenYouAreTank or UnitGroupRolesAssigned("player") ~= "TANK")) then
+			if not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK") then
 				unitToken = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
 			end
 		end
