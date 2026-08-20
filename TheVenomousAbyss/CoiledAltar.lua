@@ -106,7 +106,7 @@ mod:SetRenames({
 	[1285911] = {CL.you:format(mod:SpellName(1285911))}, -- Unnerving Fixation
 	[1286573] = {CL.tank_frontal}, -- Soul Sever
 	[1286918] = {1286918}, -- Eternal Nightfall
-	[1286441] = {CL.adds}, -- Spiritcackle
+	[1286441] = {CL.adds, CL.add, notes = {CL.mythicOnlyNote, CL.otherDifficultiesNote}}, -- Spiritcackle
 	[1286895] = {1286895, CL.you:format(mod:SpellName(1286895)), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Gloombomb
 
 	[1298381] = {CL.pools}, -- Defilement of the Coiled Altar
@@ -170,8 +170,8 @@ function mod:GetOptions()
 		1285911, -- Unnerving Fixation
 		1286573, -- Soul Sever
 		1286918, -- Eternal Nightfall
-		1286895, -- Gloombomb
 		1286441, -- Spiritcackle
+		1286895, -- Gloombomb
 
 		-- Intermission: The Claimed Vessel
 		-- 1287722, -- Spirit Erasure
@@ -186,8 +186,8 @@ function mod:GetOptions()
 			-- Dreadmarch
 			-- Unnerving Fixation
 			-- Eternal Nightfall
-			-- Gloombomb
 			-- Spiritcackle
+			-- Gloombomb
 	}, {
 		{
 			tabName = self:SpellName(-35584), -- Stage 1
@@ -195,19 +195,18 @@ function mod:GetOptions()
 		},
 		{
 			tabName = self:SpellName(-35599), -- Stage 2
-			 {"stages", 1289900, 1285911, 1286573, 1286918, 1286895, 1286441 },
+			 {"stages", 1289900, 1285911, 1286573, 1286918, 1286441, 1286895 },
 		},
 		{
 			tabName = self:SpellName(-35403), -- Stage 3
 			{ "stages",
 			1298381, 1299960, 1299266, 1307279,
-				1289900, 1285911, 1286918, 1286895, 1286441 },
+				1289900, 1285911, 1286918, 1286441, 1286895 },
 		},
 		-- [1287722] = -35533, -- Intermission
 		[1282487] = -35063, -- Zul'jan
 		[1298381] = -35063, -- Zul'jan
 		[1289900] = -35062, -- Hex Lord Malacrass
-		[1286441] = "mythic",
 	}
 end
 
@@ -547,7 +546,7 @@ end
 
 function mod:StartIntermission()
 	if self:GetStage() == 2 then
-		self:StopBar(CL.count:format(self:GetRename(1286441), spiritcackleCount))
+		self:StopBar(CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount))
 		self:StopBar(CL.count:format(self:GetRename(1286918), eternalNightfallCount))
 		self:StopBar(CL.count:format(self:GetRename(1289900), dreadmarchCount))
 		self:StopBar(CL.count:format(self:GetRename(1286895), gloombombCount))
@@ -724,7 +723,7 @@ end
 -- Stage 2
 
 function mod:Spiritcackle(duration)
-	local barText = CL.count:format(self:GetRename(1286441), spiritcackleCount)
+	local barText = CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount)
 	spiritcackleCount = spiritcackleCount + 1
 
 	local barOnFinish = gapTimer(1286441, duration)
@@ -740,7 +739,7 @@ function mod:Spiritcackle(duration)
 			self:PlaySound(1286441, "info")
 
 			if barOnFinish then
-				self:Bar(1286441, barOnFinish, CL.count:format(self:GetRename(1286441), spiritcackleCount))
+				self:Bar(1286441, barOnFinish, CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount))
 			end
 		end,
 	}
