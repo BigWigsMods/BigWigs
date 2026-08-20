@@ -47,10 +47,37 @@ local gapTimer do
 		[1286895] = { [2] = { [37] = 48 } }, -- Gloombomb
 		[1286573] = { [2] = { [31] = 54 } }, -- Soul Sever
 	}
+	local timersHeroic = {
+		[1299960] = { [1] = { [43] = 42 } }, -- Toxic Deluge
+		[1283489] = { [1] = { [43] = 85 } }, -- Guillotine
+		[1299680] = { [1] = { [17] = 31 } }, -- Sever
+		[1282281] = { [1] = { [35] = 50 } }, -- Venomfang
+		[1283832] = { [1] = { [12] = 85 } }, -- Axegrinder
+
+		[1286441] = { [2] = { [33] = 52 } }, -- Spiritcackle
+		[1286918] = { [2] = { [70] = 85 } }, -- Eternal Nightfall
+		[1289900] = { [2] = { [34] = 51 } }, -- Dreadmarch
+		[1286895] = { [2] = { [38] = 47 } }, -- Gloombomb
+		[1286573] = { [2] = { [31] = 54 } }, -- Soul Sever
+	}
+	local timersNormal = {
+		[1299960] = { [1] = { [42] = 43 } }, -- Toxic Deluge
+		[1283489] = { [1] = { [42] = 85 } }, -- Guillotine
+		[1299680] = { [1] = { [16] = 31 } }, -- Sever
+		[1282281] = { [1] = { [35] = 50 } }, -- Venomfang
+		[1283832] = { [1] = { [12] = 85 } }, -- Axegrinder
+
+		[1286918] = { [2] = { [70] = 85 } }, -- Eternal Nightfall
+		[1289900] = { [2] = { [34] = 51 } }, -- Dreadmarch
+		[1286895] = { [2] = { [40] = 45 } }, -- Gloombomb
+		[1286573] = { [2] = { [33] = 52 } }, -- Soul Sever
+	}
 	function gapTimer(spellId, duration)
-		if mod:Mythic() then
+		local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or mod:Normal() and timersNormal
+		if timers then
 			local stage = mod:GetStage()
-			return timersMythic[spellId][stage] and timersMythic[spellId][stage][duration]
+			local stageTimers = timers[spellId] and timers[spellId][stage]
+			return stageTimers and stageTimers[duration]
 		end
 	end
 end
@@ -258,7 +285,7 @@ function mod:MythicTimeline(_, eventInfo)
 			end
 		elseif rounded == 20 or rounded == 17 then
 			barInfo = self:Sever(duration)
-		elseif rounded == 85 then
+		elseif rounded == 85 or rounded == 84 then
 			barInfo = self:FangsOfTheCoiledAltar(duration)
 		end
 
@@ -325,7 +352,7 @@ function mod:OtherTimeline(_, eventInfo)
 			barInfo = self:Axegrinder(duration)
 		elseif rounded == 28 or rounded == 35 then
 			barInfo = self:Venomfang(duration)
-		elseif rounded == 42 then
+		elseif rounded == (self:Easy() and 42 or 43) then -- normal/heroic
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
 				barInfo = self:Guillotine(duration)
@@ -333,40 +360,86 @@ function mod:OtherTimeline(_, eventInfo)
 				barInfo = self:ToxicDeluge(duration)
 			end
 		elseif rounded == 20 or rounded == 17 or rounded == 21 or rounded == 16 then
-			barInfo = self:Sever()
+			barInfo = self:Sever(duration)
 		elseif rounded == 85 then
 			barInfo = self:FangsOfTheCoiledAltar(duration)
 		end
 
 	elseif stage == 2 then
-		if rounded == 70 then
-			barInfo = self:EternalNightfall()
-		elseif rounded == 6 or rounded == 34 then -- 5.5
-			barInfo = self:Dreadmarch(duration)
-		elseif rounded == 20 or rounded == 40 then
-			barInfo = self:Gloombomb(duration)
-		elseif rounded == 32 or rounded == 33 then
-			barInfo = self:SoulSever(duration)
+		if self:Heroic() then
+			if rounded == 13 or rounded == 33 then
+				barInfo = self:Spiritcackle(duration)
+			elseif rounded == 70 then
+				barInfo = self:EternalNightfall(duration)
+			elseif rounded == 6 then -- 5.5
+				barInfo = self:Dreadmarch(duration)
+			elseif rounded == 22 or rounded == 38 then
+				barInfo = self:Gloombomb(duration)
+			elseif rounded == 31 then
+				barInfo = self:SoulSever(duration)
+			elseif rounded == 34 then
+				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+				if durationEventCount[rounded] % 2 == 1 then
+					barInfo = self:SoulSever(duration)
+				else
+					barInfo = self:Dreadmarch(duration)
+				end
+			end
+		else
+			if rounded == 70 then
+				barInfo = self:EternalNightfall(duration)
+			elseif rounded == 6 or rounded == 34 then -- 5.5
+				barInfo = self:Dreadmarch(duration)
+			elseif rounded == 20 or rounded == 40 then
+				barInfo = self:Gloombomb(duration)
+			elseif rounded == 32 or rounded == 33 then
+				barInfo = self:SoulSever(duration)
+			end
 		end
 
 	elseif stage == 3 then
 		local rounded1 = self:RoundNumber(duration, 1)
-		if rounded == 87 or rounded == 66 then
-			barInfo = self:EternalNightfall(duration)
-		elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 or rounded == 43 then -- 53.5
-			barInfo = self:Dreadmarch(duration)
-		elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 or rounded == 54 then
-			barInfo = self:ToxicDeluge(duration)
-		elseif rounded == 29 or rounded == 28 or rounded == 30 or rounded == 33 then
-			barInfo = self:BlightedSever(duration)
-		elseif rounded == 92 or rounded == 91 then
-			barInfo = self:DefilementOfTheCoiledAltar(duration)
-		elseif rounded == 34 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 2 == 1 then
+		if self:Heroic() then
+			if rounded == 61 or rounded == 101 or rounded == 44 or rounded == 108 then -- 61.49, 101.15, 43.68, 108.05
+				barInfo = self:Dreadmarch(duration)
+			elseif rounded == 39 or rounded == 100 then
 				barInfo = self:EternalNightfall(duration)
-			else
+			elseif rounded == 26 or rounded == 51 or rounded == 67 or rounded == 86 then
+				barInfo = self:Gloombomb(duration)
+			elseif rounded == 2 or rounded == 47 or rounded == 57 or rounded == 43 or rounded == 62 then
+				barInfo = self:ToxicDeluge(duration)
+			elseif rounded == 32 or rounded == 34 or rounded == 38 then
 				barInfo = self:BlightedSever(duration)
+			elseif rounded == 17 or rounded == 170 then
+				barInfo = self:GrimGuillotine(duration)
+			elseif rounded == 106 or rounded == 105 then
+				barInfo = self:DefilementOfTheCoiledAltar(duration)
+			elseif rounded == 33 then
+				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+				if durationEventCount[rounded] % 2 == 1 then
+					barInfo = self:BlightedSever(duration)
+				else
+					barInfo = self:Gloombomb(duration)
+				end
+			end
+		else
+			if rounded == 87 or rounded == 66 then
+				barInfo = self:EternalNightfall(duration)
+			elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 or rounded == 43 then -- 53.5
+				barInfo = self:Dreadmarch(duration)
+			elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 or rounded == 54 then
+				barInfo = self:ToxicDeluge(duration)
+			elseif rounded == 29 or rounded == 28 or rounded == 30 or rounded == 33 then
+				barInfo = self:BlightedSever(duration)
+			elseif rounded == 92 or rounded == 91 then
+				barInfo = self:DefilementOfTheCoiledAltar(duration)
+			elseif rounded == 34 then
+				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+				if durationEventCount[rounded] % 2 == 1 then
+					barInfo = self:EternalNightfall(duration)
+				else
+					barInfo = self:BlightedSever(duration)
+				end
 			end
 		end
 	end
@@ -613,7 +686,7 @@ function mod:Sever(duration)
 	local barText = CL.count:format(self:GetRename(1299680), severCount)
 	severCount = severCount + 1
 
-	local lastBar = not self:Mythic() or severCount % 4 == 1
+	local lastBar = severCount % 4 == 1 -- 4 casts per cycle, only gap after the last
 	local barOnFinish = lastBar and gapTimer(1299680, duration)
 	local remaining, total = self:BarTimeLeft(barText)
 	local newDuration = remaining > 1 and { duration, total } or nil
@@ -803,6 +876,7 @@ function mod:GrimGuillotine()
 		msg = barText,
 		key = 1299266,
 		onFinished = function()
+			self:StopBlizzMessages(1) -- Zul'jan begins to cast [Grim Guillotine]!
 			self:Message(1299266, "orange", barText)
 			self:PlaySound(1299266, "alert")
 		end,
