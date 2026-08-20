@@ -2097,13 +2097,15 @@ do
 		aura:ClearDispelTypeTextures()
 
 		if optionsDB.borderName ~= "None" then
+			-- Corner-anchoring to the aura would make GetWidth() secret, and SetBackdrop does arithmetic on it
+			local borderSize = optionsDB.size + optionsDB.borderOffset * 2
+			aura.border:ClearAllPoints()
+			aura.border:SetPoint("CENTER")
+			aura.border:SetSize(borderSize, borderSize)
 			aura.border:SetBackdrop({
 				edgeFile = LibSharedMedia:Fetch("border", optionsDB.borderName),
 				edgeSize = optionsDB.borderSize,
 			})
-			aura.border:ClearAllPoints()
-			aura.border:SetPoint("TOPLEFT", -optionsDB.borderOffset, optionsDB.borderOffset)
-			aura.border:SetPoint("BOTTOMRIGHT", optionsDB.borderOffset, -optionsDB.borderOffset)
 
 			for pieceName in pairs(backdropTextureUVs) do -- logic copied from Blizzard_SharedXML/Backdrop.lua
 				local borderRegion = aura.border[pieceName]
