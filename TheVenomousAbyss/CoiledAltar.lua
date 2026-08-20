@@ -546,6 +546,7 @@ end
 
 function mod:StartIntermission()
 	if self:GetStage() == 2 then
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
 		self:StopBar(CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount))
 		self:StopBar(CL.count:format(self:GetRename(1286918), eternalNightfallCount))
 		self:StopBar(CL.count:format(self:GetRename(1289900), dreadmarchCount))
@@ -753,6 +754,10 @@ function mod:EternalNightfall(duration)
 	local remaining, total = self:BarTimeLeft(barText)
 	local newDuration = remaining > 1 and { duration, total } or nil
 
+	if self:GetStage() == 2 then
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
+	end
+
 	return {
 		duration = newDuration,
 		msg = barText,
@@ -764,6 +769,11 @@ function mod:EternalNightfall(duration)
 
 			if barOnFinish then
 				self:Bar(1286918, barOnFinish, CL.count:format(self:GetRename(1286918), eternalNightfallCount))
+			end
+
+			if self:GetStage() == 2 then
+				-- 5s gap until the phase resets, so listen for intermission channel until the next timer
+				self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "StartIntermission", "boss2")
 			end
 		end,
 		onCanceled = function()
