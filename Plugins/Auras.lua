@@ -59,6 +59,7 @@ plugin.defaultDB = {
 		cooldownTextMonochrome = false,
 		cooldownTextSlug = true,
 		cooldownTextMillisecondsThreshold = 3,
+		cooldownTextColor = {1, 1, 1, 1},
 
 		showCountText = true,
 		countTextFontName = "Noto Sans Medium",
@@ -69,6 +70,7 @@ plugin.defaultDB = {
 		countTextAnchorPoint = "BOTTOMRIGHT",
 		countTextAnchorXOffset = -2,
 		countTextAnchorYOffset = 2,
+		countTextColor = {1, 1, 1, 1},
 
 		growthDirection = "LEFT",
 		maxIcons = 3,
@@ -105,6 +107,7 @@ plugin.defaultDB = {
 		cooldownTextMonochrome = false,
 		cooldownTextSlug = true,
 		cooldownTextMillisecondsThreshold = 3,
+		cooldownTextColor = {1, 1, 1, 1},
 
 		showCountText = true,
 		countTextFontName = "Noto Sans Medium",
@@ -115,6 +118,7 @@ plugin.defaultDB = {
 		countTextAnchorPoint = "BOTTOMRIGHT",
 		countTextAnchorXOffset = -2,
 		countTextAnchorYOffset = 2,
+		countTextColor = {1, 1, 1, 1},
 
 		growthDirection = "LEFT",
 		maxIcons = 3,
@@ -152,6 +156,26 @@ local function MergeTable(dst, src)
 		dst[k] = v
 	end
 end
+
+local function ValidateColor(current, default, alphaLimit)
+		for i = 1, 3 do
+			local n = current[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				current[1] = default[1] -- If 1 entry is bad, reset the whole table
+				current[2] = default[2]
+				current[3] = default[3]
+				current[4] = default[4]
+				return
+			end
+		end
+		if alphaLimit then
+			if type(current[4]) ~= "number" or current[4] < alphaLimit or current[4] > 1 then
+				current[4] = default[4]
+			end
+		elseif current[4] then
+			current[4] = nil
+		end
+	end
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -212,6 +236,8 @@ local function updateProfile()
 	if db.other.cooldownTextFontSize < 8 or db.other.cooldownTextFontSize > 200 then
 		db.other.cooldownTextFontSize = plugin.defaultDB.other.cooldownTextFontSize
 	end
+	ValidateColor(db.other.cooldownTextColor, plugin.defaultDB.other.cooldownTextColor, 0)
+	ValidateColor(db.player.cooldownTextColor, plugin.defaultDB.player.cooldownTextColor, 0)
 
 	if db.player.countTextFontSize < 8 or db.player.countTextFontSize > 200 then
 		db.player.countTextFontSize = plugin.defaultDB.player.countTextFontSize
@@ -219,6 +245,8 @@ local function updateProfile()
 	if db.other.countTextFontSize < 8 or db.other.countTextFontSize > 200 then
 		db.other.countTextFontSize = plugin.defaultDB.other.countTextFontSize
 	end
+	ValidateColor(db.other.countTextColor, plugin.defaultDB.other.countTextColor, 0)
+	ValidateColor(db.player.countTextColor, plugin.defaultDB.player.countTextColor, 0)
 
 	if db.player.borderSize < 1 or db.player.borderSize > 32 then
 		db.player.borderSize = plugin.defaultDB.player.borderSize
@@ -763,6 +791,20 @@ do
 								desc = L.slugRenderingDesc,
 								order = 6,
 							},
+							cooldownTextColor = {
+								type = "color",
+								name = L.fontColor,
+								order = 7,
+								get = function(info)
+									local colorTable = db.player.cooldownTextColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.player.cooldownTextColor = {r, g, b, a}
+									updateProfile()
+								end,
+								hasAlpha = true,
+							},
 						},
 					},
 					dispelTypeOptions = {
@@ -929,6 +971,20 @@ do
 								name = L.offsetY,
 								min = -100, max = 100, step = 1,
 								order = 12,
+							},
+							countTextColor = {
+								type = "color",
+								name = L.fontColor,
+								order = 13,
+								get = function(info)
+									local colorTable = db.player.countTextColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.player.countTextColor  = {r, g, b, a}
+									updateProfile()
+								end,
+								hasAlpha = true,
 							},
 						},
 					},
@@ -1171,6 +1227,20 @@ do
 								desc = L.slugRenderingDesc,
 								order = 6,
 							},
+							cooldownTextColor = {
+								type = "color",
+								name = L.fontColor,
+								order = 7,
+								get = function(info)
+									local colorTable = db.other.cooldownTextColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.other.cooldownTextColor = {r, g, b, a}
+									updateProfile()
+								end,
+								hasAlpha = true,
+							},
 						},
 					},
 					dispelTypeOptions = {
@@ -1335,6 +1405,20 @@ do
 								name = L.offsetY,
 								min = -100, max = 100, step = 1,
 								order = 12,
+							},
+							countTextColor = {
+								type = "color",
+								name = L.fontColor,
+								order = 13,
+								get = function(info)
+									local colorTable = db.other.countTextColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.other.countTextColor  = {r, g, b, a}
+									updateProfile()
+								end,
+								hasAlpha = true,
 							},
 						},
 					},
@@ -2004,6 +2088,9 @@ do
 				flags = nil
 			end
 			duration:SetFont(LibSharedMedia:Fetch(FONT, optionsDB.cooldownTextFontName), optionsDB.cooldownTextFontSize, flags)
+
+			local textColor = optionsDB.cooldownTextColor
+			duration:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
 		end
 
 		aura:ClearDispelTypeTextures()
@@ -2056,6 +2143,9 @@ do
 				flags = nil
 			end
 			stacks:SetFont(LibSharedMedia:Fetch(FONT, optionsDB.countTextFontName), optionsDB.countTextFontSize, flags)
+
+			local textColor = optionsDB.countTextColor
+			stacks:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
 		end
 		if optionsDB.showCountText then
 			aura:SetApplicationCount(stacks)
