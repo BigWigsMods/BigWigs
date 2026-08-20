@@ -114,7 +114,7 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1306666, soundOnApplied = "warning", duration = 7.5, header = CL.important}, -- Hungering Pyre
+	{1306666, soundOnApplied = "warning", soundOnAppliedDose = "none", duration = 7.5, header = CL.important}, -- Hungering Pyre
 	{1284103, soundOnApplied = "warning", duration = 2}, -- Possession Barrage
 	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Hollowing Strikes -- Tank Stacks
 	{1287434, soundOnApplied = "warning", duration = 15}, -- Essence Rend

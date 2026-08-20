@@ -88,11 +88,11 @@ mod:SetAuraData({
 	{1300938}, -- Hobbled
 	{1296301}, -- Mephitic Thrash
 
-	{1295360, header = CL.adds}, -- Malignant Shell
-	{1307612, mythic = true}, -- Noxious Shell
-	{1301268}, -- Putrid Membrane
+	{1295360, soundOnAppliedDose = "none", header = CL.adds}, -- Malignant Shell
+	{1307612, soundOnAppliedDose = "none", mythic = true}, -- Noxious Shell
+	{1301268, soundOnAppliedDose = "none"}, -- Putrid Membrane
 	{1287036, soundOnAppliedDose = "none"}, -- Poisonous Bite
-	{1301800}, -- Acidic Burst
+	{1301800, soundOnAppliedDose = "none"}, -- Acidic Burst
 	{1305163, soundOnApplied = "warning", note = "Targeted"}, -- Petrifying Sting
 	{1303414, soundOnApplied = "alarm", note = "Petrified"}, -- Petrifying Sting
 	{1300312}, -- Doomscale Shell

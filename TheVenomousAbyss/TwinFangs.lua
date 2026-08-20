@@ -69,18 +69,18 @@ mod:SetRenames({
 mod:SetAuraData({ -- TODO
 	{1290336, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.important}, -- Eternal Venom
 	{1290814, soundOnApplied = "none", duration = 12}, -- Coiling Ichor
-	{1310096, soundOnApplied = "none", duration = 8}, -- Feasted
+	{1310096, soundOnApplied = "none", soundOnAppliedDose = "none", duration = 8}, -- Feasted
 	{1289192, soundOnApplied = "none", duration = 5, header = CL.general}, -- Caustic Deluge
 	{1292552, 1306925, soundOnApplied = "none"}, -- Congealed Gore
 	{1293979, soundOnApplied = "none", duration = 5}, -- Corrosive Spit
-	{1289092, soundOnApplied = "none"}, -- Stone Breaker
 	{1309471, soundOnApplied = "none"}, -- Noxious Slick
+	{1289092, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Stone Breaker
 	{1292807, soundOnApplied = "none"}, -- Stir the Depths
 	{1294605, soundOnApplied = "none"}, -- Vile Flood
 	{1303230, 1303235, soundOnApplied = "none", mythic = true, header = CL.mythic}, -- Blood Torrent
-	{1310360, soundOnApplied = "none", mythic = true}, -- Envenomed
+	{1310360, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true}, -- Envenomed
 	{1310102, soundOnApplied = "none", mythic = true}, -- Tainted Blood
-	{1308386, soundOnApplied = "none", mythic = true}, -- Visceral Burst
+	{1308386, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true}, -- Visceral Burst
 })
 
 function mod:GetOptions()

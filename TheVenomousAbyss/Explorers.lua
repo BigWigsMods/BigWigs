@@ -117,7 +117,7 @@ mod:SetAuraData({
 	{1310500, soundOnApplied = "none"}, -- Aftershock
 	{1305844, soundOnApplied = "underyou"}, -- Blast Wave (Explosion DoT)
 	{1299854, soundOnApplied = "none"}, -- Bounce (Mushroom bounce)
-	{1291390, soundOnApplied = "none"}, -- Cataclysmic Invocation
+	{1291390, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Cataclysmic Invocation
 	{1295952, soundOnApplied = "none"}, -- Elemental Explosion
 	{1297649, soundOnApplied = "none"}, -- Fire Patch (Standing in ice)
 	{1297648, soundOnApplied = "none"}, -- Frost Patch (Standing in fire)
