@@ -1958,6 +1958,7 @@ do
 
 		local icon = aura:CreateTexture(nil, "BACKGROUND")
 		icon:SetAllPoints()
+		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93) -- TODO: this needs an option
 		aura:SetIcon(icon)
 		aura.icon = icon
 
