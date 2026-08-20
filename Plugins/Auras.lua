@@ -52,6 +52,7 @@ plugin.defaultDB = {
 		borderColor = {0, 0, 0, 1},
 		borderOffset = 0,
 		borderSize = 2,
+		borderDispelColor = true,
 
 		showCooldownText = true,
 		cooldownTextFontName = "Noto Sans Medium", -- Only dealing with numbers so we can use this on all locales
@@ -101,6 +102,7 @@ plugin.defaultDB = {
 		borderColor = {0, 0, 0, 1},
 		borderOffset = 0,
 		borderSize = 2,
+		borderDispelColor = true,
 
 		showCooldownText = true,
 		cooldownTextFontName = "Noto Sans Medium",
@@ -240,6 +242,7 @@ local function updateProfile()
 	end
 	ValidateColor(db.other.cooldownTextColor, plugin.defaultDB.other.cooldownTextColor, 0)
 	ValidateColor(db.player.cooldownTextColor, plugin.defaultDB.player.cooldownTextColor, 0)
+	ValidateColor(db.player.borderColor, plugin.defaultDB.player.borderColor, 0)
 
 	if db.player.countTextFontSize < 8 or db.player.countTextFontSize > 200 then
 		db.player.countTextFontSize = plugin.defaultDB.player.countTextFontSize
@@ -249,6 +252,7 @@ local function updateProfile()
 	end
 	ValidateColor(db.other.countTextColor, plugin.defaultDB.other.countTextColor, 0)
 	ValidateColor(db.player.countTextColor, plugin.defaultDB.player.countTextColor, 0)
+	ValidateColor(db.player.borderColor, plugin.defaultDB.player.borderColor, 0)
 
 	if db.player.borderSize < 1 or db.player.borderSize > 32 then
 		db.player.borderSize = plugin.defaultDB.player.borderSize
@@ -902,6 +906,27 @@ do
 								max = 32,
 								step = 1,
 							},
+							borderDispelColor = {
+								type = "toggle",
+								name = L.borderDispelColor,
+								width = 1.5,
+								order = 4,
+							},
+							borderColor = {
+								type = "color",
+								name = L.borderColor,
+								order = 5,
+								get = function(info)
+									local colorTable = db.player.borderColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.player.borderColor = {r, g, b, a}
+									updateProfile()
+								end,
+								hasAlpha = true,
+								disabled = function(info) return db.player.borderDispelColor end,
+							},
 						},
 					},
 					countText = {
@@ -1344,6 +1369,27 @@ do
 								min = 0,
 								max = 32,
 								step = 1,
+							},
+							borderDispelColor = {
+								type = "toggle",
+								name = L.borderDispelColor,
+								width = 1.5,
+								order = 4,
+							},
+							borderColor = {
+								type = "color",
+								name = L.borderColor,
+								order = 5,
+								get = function(info)
+									local colorTable = db.other.borderColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.other.borderColor = {r, g, b, a}
+									updateProfile()
+								end,
+								hasAlpha = true,
+								disabled = function(info) return db.other.borderDispelColor end,
 							},
 						},
 					},
@@ -2084,7 +2130,7 @@ do
 		BottomEdge = true,
 		LeftEdge = true,
 		RightEdge = true,
-		Center = true,
+		-- Center = true, -- not used
 	}
 
 	function UpdateAuraFrame(aura, optionsDB)
@@ -2131,11 +2177,16 @@ do
 				edgeSize = optionsDB.borderSize,
 			})
 
-			for pieceName in pairs(backdropTextureUVs) do -- logic copied from Blizzard_SharedXML/Backdrop.lua
-				local borderRegion = aura.border[pieceName]
-				if borderRegion and pieceName ~= "Center" then
-					aura:AddDispelTypeTexture(borderRegion, borderOptions)
+			if optionsDB.borderDispelColor then
+				for pieceName in pairs(backdropTextureUVs) do -- logic copied from Blizzard_SharedXML/Backdrop.lua
+					local borderRegion = aura.border[pieceName]
+					if borderRegion then
+						aura:AddDispelTypeTexture(borderRegion, borderOptions)
+					end
 				end
+			else
+				local color = optionsDB.borderColor
+				aura.border:SetBackdropBorderColor(color[1], color[2], color[3], color[4])
 			end
 		else
 			aura.border:ClearBackdrop()
