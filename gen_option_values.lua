@@ -1222,6 +1222,18 @@ local function parseLua(file)
 			end
 		end
 
+		-- Check :GetRename
+		local getRenameArgs = line:match(":GetRename(%b())")
+		if getRenameArgs then
+			getRenameArgs = strsplit(clean(getRenameArgs:sub(2, -2)))
+			local key = tonumber(getRenameArgs[1]) or unquote(getRenameArgs[1])
+			if not option_keys[key] then
+				error(string.format("    %s:%d: GetRename: Invalid key! func=%s, key=%s", file_name, n, tostring(current_func), key))
+			elseif key then
+				option_key_used[key] = true
+			end
+		end
+
 		-- Check :CheckOption
 		local checkOptionArgs = line:match(":CheckOption(%b())")
 		if checkOptionArgs then
