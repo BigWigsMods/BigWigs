@@ -506,6 +506,9 @@ do
 	local function IsDisabledOrTextMode()
 		return plugin.db.profile.disabled or plugin.db.profile.mode == 2
 	end
+	local function IsDisabledOrTextModeOrBorderSetToNone()
+		return plugin.db.profile.disabled or plugin.db.profile.mode == 2 or plugin.db.profile.borderName == "None"
+	end
 	local function IsDisabledOrAnchorPointIsDefault()
 		return plugin.db.profile.disabled or plugin.db.profile.position[5] == plugin.defaultDB.position[5]
 	end
@@ -715,7 +718,7 @@ do
 							return plugin.db.profile.borderColor[1], plugin.db.profile.borderColor[2], plugin.db.profile.borderColor[3], plugin.db.profile.borderColor[4]
 						end,
 						set = UpdateColorAndWidgets,
-						disabled = IsDisabledOrTextMode,
+						disabled = IsDisabledOrTextModeOrBorderSetToNone,
 					},
 					borderSize = {
 						type = "range",
@@ -725,7 +728,7 @@ do
 						max = 32,
 						step = 1,
 						width = 1,
-						disabled = IsDisabledOrTextMode,
+						disabled = IsDisabledOrTextModeOrBorderSetToNone,
 					},
 					borderOffset = {
 						type = "range",
@@ -735,7 +738,7 @@ do
 						max = 32,
 						step = 1,
 						width = 1,
-						disabled = IsDisabledOrTextMode,
+						disabled = IsDisabledOrTextModeOrBorderSetToNone,
 					},
 					borderName = {
 						type = "select",
