@@ -2246,10 +2246,6 @@ do
 			auraContainer:AddAuraGroup("debuffs", "HARMFUL", {
 				maxFrameCount = optionsDB.maxIcons,
 				initializeFrame = InitializeAuraFrame,
-				candidateFilters = {
-					maxDuration = math.huge, -- filter anything without a duration
-					isBossOrRoleAura = true,
-				},
 				sortMethod = 4, -- Enum.UnitAuraSortRule.ExpirationOnly
 				sortDirection = 0, -- Enum.UnitAuraSortDirection.Normal
 				layout = {
@@ -2297,6 +2293,10 @@ do
 		auraContainer:SetFlowLayoutGrowthDirection(x, y)
 
 		auraContainer:SetAuraGroupMaxFrameCount("debuffs", optionsDB.maxIcons)
+		auraContainer:SetAuraGroupCandidateFilters("debuffs", {
+			maxDuration = math.huge, -- filter anything without a duration
+			isBossOrRoleAura = true,
+		})
 		auraContainer:SetAuraGroupLayout("debuffs", {
 			elementSpacing = optionsDB.spacing,
 			elementWidth = optionsDB.size,
