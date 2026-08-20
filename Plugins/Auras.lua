@@ -39,7 +39,7 @@ plugin.defaultDB = {
 		size = 64,
 		spacing = 6,
 		showCooldown = true,
-		showTooltip = false,
+		showTooltip = true,
 
 		showDispelType = true,
 		dispelTypeSize = 24,
@@ -88,7 +88,7 @@ plugin.defaultDB = {
 		size = 64,
 		spacing = 6,
 		showCooldown = true,
-		showTooltip = false,
+		showTooltip = true,
 
 		showDispelType = true,
 		dispelTypeSize = 24,
