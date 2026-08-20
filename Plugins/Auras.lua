@@ -39,6 +39,7 @@ plugin.defaultDB = {
 		size = 64,
 		spacing = 6,
 		showCooldown = true,
+		showTooltip = false,
 
 		showDispelType = true,
 		dispelTypeSize = 24,
@@ -87,6 +88,7 @@ plugin.defaultDB = {
 		size = 64,
 		spacing = 6,
 		showCooldown = true,
+		showTooltip = false,
 
 		showDispelType = true,
 		dispelTypeSize = 24,
@@ -724,12 +726,19 @@ do
 						order = 7,
 						disabled = IsAnchorDisabled,
 					},
+					showTooltip = {
+						type = "toggle",
+						name = L.iconTooltip,
+						desc = L.iconTooltipDesc,
+						order = 8,
+						disabled = IsAnchorDisabled,
+					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 8,
+						order = 9,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownText = {
@@ -737,7 +746,7 @@ do
 						inline = true,
 						name = L.cooldownText,
 						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
-						order = 9,
+						order = 10,
 						args = {
 							showCooldownText = {
 								type = "toggle",
@@ -811,7 +820,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.dispelType,
-						order = 10,
+						order = 11,
 						disabled = function(info) return db.player.disabled or not db.player.showDispelType end,
 						args = {
 							showDispelType = {
@@ -854,7 +863,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.border,
-						order = 11,
+						order = 12,
 						disabled = function(info)
 							return db.player.disabled or db.player.borderName == "None"
 						end,
@@ -899,7 +908,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 12,
+						order = 13,
 						disabled = function(info) return db.player.disabled or not db.player.showCountText end,
 						args = {
 							showCountText = {
@@ -1168,11 +1177,18 @@ do
 						order = 14,
 						disabled = IsAnchorDisabled,
 					},
+					showTooltip = {
+						type = "toggle",
+						name = L.iconTooltip,
+						desc = L.iconTooltipDesc,
+						order = 15,
+						disabled = IsAnchorDisabled,
+					},
 					cooldownText = {
 						type = "group",
 						inline = true,
 						name = L.cooldownText,
-						order = 15,
+						order = 16,
 						disabled = function(info) return db.other.disabled or not db.other.showCooldownText end,
 						args = {
 							showCooldownText = {
@@ -1247,7 +1263,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.dispelType,
-						order = 16,
+						order = 17,
 						disabled = function(info) return db.other.disabled or not db.other.showDispelType end,
 						args = {
 							showDispelType = {
@@ -1290,7 +1306,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.border,
-						order = 17,
+						order = 18,
 						disabled = function(info)
 							return db.other.disabled or db.other.borderName == "None"
 						end,
@@ -1335,7 +1351,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 18,
+						order = 19,
 						args = {
 							showCountText = {
 								type = "toggle",
@@ -1953,7 +1969,7 @@ do
 		optionsDB = optionsDB or aura:GetParent().db
 		local size = optionsDB.size
 
-		aura:EnableMouse(false)
+		aura:EnableMouse(optionsDB.showTooltip)
 		aura:SetSize(size, size) -- CustomAuraContainerFlowLayoutDescription:ApplyElementLayout doesn't set size
 
 		local icon = aura:CreateTexture(nil, "BACKGROUND")
