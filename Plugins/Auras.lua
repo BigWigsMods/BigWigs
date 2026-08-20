@@ -1030,7 +1030,7 @@ do
 						inline = true,
 						name = L.cooldownText,
 						order = 17,
-						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
+						disabled = function(info) return db.other.disabled or not db.other.showCooldownText end,
 						args = {
 							showCooldownText = {
 								type = "toggle",
