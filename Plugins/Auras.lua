@@ -1965,6 +1965,10 @@ do
 	-- 	durationFormater:SetMillisecondsThreshold(3)
 	-- end
 
+	local function BorderGetSize(border)
+		return border.plainSize
+	end
+
 	function InitializeAuraFrame(aura, optionsDB)
 		optionsDB = optionsDB or aura:GetParent().db
 		local size = optionsDB.size
@@ -2023,6 +2027,10 @@ do
 
 		local border = CreateFrame("Frame", nil, aura, "BackdropTemplate")
 		border:SetFrameLevel(border:GetFrameLevel() + 1) -- show the border above the cooldown swipe
+		-- The widget GetWidth/GetHeight return secrets for anything anchored to the aura,
+		-- explicit size or not, and SetBackdrop does arithmetic on them
+		border.GetWidth = BorderGetSize
+		border.GetHeight = BorderGetSize
 		aura.border = border
 
 		local dispelIcon = border:CreateTexture(nil, "OVERLAY")
@@ -2113,8 +2121,8 @@ do
 		aura:ClearDispelTypeTextures()
 
 		if optionsDB.borderName ~= "None" then
-			-- Corner-anchoring to the aura would make GetWidth() secret, and SetBackdrop does arithmetic on it
 			local borderSize = optionsDB.size + optionsDB.borderOffset * 2
+			aura.border.plainSize = borderSize
 			aura.border:ClearAllPoints()
 			aura.border:SetPoint("CENTER")
 			aura.border:SetSize(borderSize, borderSize)
