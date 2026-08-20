@@ -1132,8 +1132,31 @@ do
 			return
 		end
 
-		local duration = moduleAurasList[self][index].duration
-		return duration
+		return moduleAurasList[self][index].duration
+	end
+
+	--- Get the aura type. (Magic/Poison/Etc)
+	-- @return string or nil
+	function boss:GetAuraType(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		return moduleAurasList[self][index].type
+	end
+
+	--- Get the aura mechanic. (Snare/Stun/Etc)
+	-- @return string or nil
+	function boss:GetAuraMechanic(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		return moduleAurasList[self][index].mechanic
 	end
 
 	--- Get the aura note.
