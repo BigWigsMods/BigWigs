@@ -748,6 +748,7 @@ L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied 
 L.createTestAura = "Create Test Aura"
 L.showDispelType = "Show Dispel Type Indicator"
 L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.\n\n|cffffd200Note: This is a global option for all private aura frames.|r"
+L.dispelType = "Dispel Type Indicator"
 L.iconSize = "Icon Size"
 L.iconSpacing = "Icon Spacing"
 L.showCooldown = "Show Cooldown Spiral"

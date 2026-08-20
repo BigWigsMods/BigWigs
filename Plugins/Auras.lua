@@ -38,8 +38,14 @@ plugin.defaultDB = {
 
 		size = 64,
 		spacing = 6,
-		showDispelType = true,
 		showCooldown = true,
+
+		showDispelType = true,
+		dispelTypeSize = 24,
+		dispelTypeAnchorPoint = "TOPRIGHT",
+		dispelTypeAnchorRelPoint = "TOPRIGHT",
+		dispelTypeAnchorXOffset = 8,
+		dispelTypeAnchorYOffset = 8,
 
 		borderName = "Solid",
 		borderColor = {0, 0, 0, 1},
@@ -78,8 +84,14 @@ plugin.defaultDB = {
 
 		size = 64,
 		spacing = 6,
-		showDispelType = true,
 		showCooldown = true,
+
+		showDispelType = true,
+		dispelTypeSize = 24,
+		dispelTypeAnchorPoint = "TOPRIGHT",
+		dispelTypeAnchorRelPoint = "TOPRIGHT",
+		dispelTypeAnchorXOffset = 8,
+		dispelTypeAnchorYOffset = 8,
 
 		borderName = "Solid",
 		borderColor = {0, 0, 0, 1},
@@ -684,73 +696,20 @@ do
 						order = 7,
 						disabled = IsAnchorDisabled,
 					},
-					showDispelType = {
-						type = "toggle",
-						name = L.showDispelType,
-						desc = L.showDispelTypeDesc,
-						width = 1.6,
-						order = 8,
-						disabled = IsAnchorDisabled,
-					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 9,
+						order = 8,
 						disabled = IsAnchorDisabled,
-					},
-					borderOptions = {
-						type = "group",
-						inline = true,
-						name = L.border,
-						order = 10,
-						disabled = function(info)
-							return db.player.disabled or db.player.borderName == "None"
-						end,
-						args = {
-							borderName = {
-								type = "select",
-								name = L.borderName,
-								order = 1,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.player.borderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.player.borderName = list[value]
-									plugin:UpdateAllAnchors()
-								end,
-								width = 1,
-								disabled = function(info) return db.player.disabled end,
-							},
-							borderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 2,
-								min = 1,
-								max = 32,
-								step = 1,
-							},
-							borderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 3,
-								min = 0,
-								max = 32,
-								step = 1,
-							},
-						},
 					},
 					cooldownText = {
 						type = "group",
 						inline = true,
 						name = L.cooldownText,
 						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
-						order = 12,
+						order = 9,
 						args = {
 							showCooldownText = {
 								type = "toggle",
@@ -806,11 +765,99 @@ do
 							},
 						},
 					},
+					dispelTypeOptions = {
+						type = "group",
+						inline = true,
+						name = L.dispelType,
+						order = 10,
+						disabled = function(info) return db.player.disabled or not db.player.showDispelType end,
+						args = {
+							showDispelType = {
+								type = "toggle",
+								name = L.showDispelType,
+								desc = L.showDispelTypeDesc,
+								order = 1,
+								width = 1.2,
+								disabled = function(info) return db.player.disabled end,
+							},
+							dispelTypeSize = {
+								type = "range",
+								name = L.iconSize,
+								order = 2,
+								min = 1,
+								max = 64,
+								step = 1,
+							},
+							dispelTypeAnchorPoint = {
+								type = "select",
+								name = L.position,
+								values = BigWigsAPI.GetFramePointList(),
+								order = 3,
+							},
+							dispelTypeAnchorXOffset = {
+								type = "range",
+								name = L.offsetX,
+								min = -100, max = 100, step = 1,
+								order = 4,
+							},
+							dispelTypeAnchorYOffset = {
+								type = "range",
+								name = L.offsetY,
+								min = -100, max = 100, step = 1,
+								order = 5,
+							},
+						},
+					},
+					borderOptions = {
+						type = "group",
+						inline = true,
+						name = L.border,
+						order = 11,
+						disabled = function(info)
+							return db.player.disabled or db.player.borderName == "None"
+						end,
+						args = {
+							borderName = {
+								type = "select",
+								name = L.borderName,
+								order = 1,
+								values = LibSharedMedia:List("border"),
+								get = function()
+									for i, v in next, LibSharedMedia:List("border") do
+										if v == db.player.borderName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("border")
+									db.player.borderName = list[value]
+									plugin:UpdateAllAnchors()
+								end,
+								width = 1,
+								disabled = function(info) return db.player.disabled end,
+							},
+							borderSize = {
+								type = "range",
+								name = L.borderSize,
+								order = 2,
+								min = 1,
+								max = 32,
+								step = 1,
+							},
+							borderOffset = {
+								type = "range",
+								name = L.borderOffset,
+								order = 3,
+								min = 0,
+								max = 32,
+								step = 1,
+							},
+						},
+					},
 					countText = {
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 13,
+						order = 12,
 						disabled = function(info) return db.player.disabled or not db.player.showCountText end,
 						args = {
 							showCountText = {
@@ -1057,72 +1104,19 @@ do
 						order = 13,
 						disabled = IsAnchorDisabled,
 					},
-					showDispelType = {
-						type = "toggle",
-						name = L.showDispelType,
-						desc = L.showDispelTypeDesc,
-						width = 1.6,
-						order = 14,
-						disabled = IsAnchorDisabled,
-					},
 					showCooldown = {
 						type = "toggle",
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 15,
+						order = 14,
 						disabled = IsAnchorDisabled,
-					},
-					borderOptions = {
-						type = "group",
-						inline = true,
-						name = L.border,
-						order = 16,
-						disabled = function(info)
-							return db.other.disabled or db.other.borderName == "None"
-						end,
-						args = {
-							borderName = {
-								type = "select",
-								name = L.borderName,
-								order = 1,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.other.borderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.other.borderName = list[value]
-									plugin:UpdateAllAnchors()
-								end,
-								width = 1,
-								disabled = function(info) return db.other.disabled end,
-							},
-							borderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 2,
-								min = 1,
-								max = 32,
-								step = 1,
-							},
-							borderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 3,
-								min = 0,
-								max = 32,
-								step = 1,
-							},
-						},
 					},
 					cooldownText = {
 						type = "group",
 						inline = true,
 						name = L.cooldownText,
-						order = 17,
+						order = 15,
 						disabled = function(info) return db.other.disabled or not db.other.showCooldownText end,
 						args = {
 							showCooldownText = {
@@ -1176,6 +1170,94 @@ do
 								name = L.slugRendering,
 								desc = L.slugRenderingDesc,
 								order = 6,
+							},
+						},
+					},
+					dispelTypeOptions = {
+						type = "group",
+						inline = true,
+						name = L.dispelType,
+						order = 16,
+						disabled = function(info) return db.other.disabled or not db.other.showDispelType end,
+						args = {
+							showDispelType = {
+								type = "toggle",
+								name = L.showDispelType,
+								desc = L.showDispelTypeDesc,
+								order = 1,
+								width = 1.2,
+								disabled = function(info) return db.other.disabled end,
+							},
+							dispelTypeSize = {
+								type = "range",
+								name = L.iconSize,
+								order = 2,
+								min = 1,
+								max = 64,
+								step = 1,
+							},
+							dispelTypeAnchorPoint = {
+								type = "select",
+								name = L.position,
+								values = BigWigsAPI.GetFramePointList(),
+								order = 3,
+							},
+							dispelTypeAnchorXOffset = {
+								type = "range",
+								name = L.offsetX,
+								min = -100, max = 100, step = 1,
+								order = 4,
+							},
+							dispelTypeAnchorYOffset = {
+								type = "range",
+								name = L.offsetY,
+								min = -100, max = 100, step = 1,
+								order = 5,
+							},
+						},
+					},
+					borderOptions = {
+						type = "group",
+						inline = true,
+						name = L.border,
+						order = 17,
+						disabled = function(info)
+							return db.other.disabled or db.other.borderName == "None"
+						end,
+						args = {
+							borderName = {
+								type = "select",
+								name = L.borderName,
+								order = 1,
+								values = LibSharedMedia:List("border"),
+								get = function()
+									for i, v in next, LibSharedMedia:List("border") do
+										if v == db.other.borderName then return i end
+									end
+								end,
+								set = function(_, value)
+									local list = LibSharedMedia:List("border")
+									db.other.borderName = list[value]
+									plugin:UpdateAllAnchors()
+								end,
+								width = 1,
+								disabled = function(info) return db.other.disabled end,
+							},
+							borderSize = {
+								type = "range",
+								name = L.borderSize,
+								order = 2,
+								min = 1,
+								max = 32,
+								step = 1,
+							},
+							borderOffset = {
+								type = "range",
+								name = L.borderOffset,
+								order = 3,
+								min = 0,
+								max = 32,
+								step = 1,
 							},
 						},
 					},
@@ -1843,8 +1925,6 @@ do
 		aura.border = border
 
 		local dispelIcon = border:CreateTexture(nil, "OVERLAY")
-		dispelIcon:SetPoint("CENTER", aura, "TOPRIGHT", -1, -1)
-		dispelIcon:SetSize(24, 24)
 		aura.dispelIcon = dispelIcon
 
 		local stacks = overlayFrame:CreateFontString(nil, "ARTWORK")
@@ -1948,6 +2028,9 @@ do
 		end
 
 		if optionsDB.showDispelType then
+			aura.dispelIcon:ClearAllPoints()
+			aura.dispelIcon:SetPoint(optionsDB.dispelTypeAnchorPoint, aura, optionsDB.dispelTypeAnchorPoint, optionsDB.dispelTypeAnchorXOffset, optionsDB.dispelTypeAnchorYOffset)
+			aura.dispelIcon:SetSize(optionsDB.dispelTypeSize, optionsDB.dispelTypeSize)
 			aura:AddDispelTypeTexture(aura.dispelIcon, dispelIconOptions)
 		else
 			aura.dispelIcon:SetTexture(nil)
