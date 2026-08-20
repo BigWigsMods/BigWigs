@@ -1895,8 +1895,7 @@ do
 		-- These won't trigger an container update, so update them first
 		for index = 1, auraContainer:GetAuraGroupFrameCount("debuffs") do
 			local aura = auraContainer:GetAuraGroupFrame("debuffs", index)
-
-			if not InCombatLockdown() then
+			if aura:CanBeAccessedInContext() then
 				UpdateAuraFrame(aura, optionsDB)
 			end
 		end
