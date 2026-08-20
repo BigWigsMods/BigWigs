@@ -830,7 +830,7 @@ do
 								set = function(_, value)
 									local list = LibSharedMedia:List("border")
 									db.player.borderName = list[value]
-									plugin:UpdateAllAnchors()
+									updateProfile()
 								end,
 								width = 1,
 								disabled = function(info) return db.player.disabled end,
@@ -1238,7 +1238,7 @@ do
 								set = function(_, value)
 									local list = LibSharedMedia:List("border")
 									db.other.borderName = list[value]
-									plugin:UpdateAllAnchors()
+									updateProfile()
 								end,
 								width = 1,
 								disabled = function(info) return db.other.disabled end,
