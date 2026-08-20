@@ -238,16 +238,23 @@ L.otherDifficultiesNote = "其他難度使用的文本"
 L.debuffFailureNote = "失誤時受到的減益效果"
 L.debuffFailureMoveFromExplosionNote = "未遠離爆炸時，受到的減益效果"
 L.debuffFailureInterruptNote = "沒有打斷|cFFFFFFFF%s|r會受到的減益效果" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+--L.debuffFailureMoveFromCastNote = "If you fail to move out of the |cFFFFFFFF%s|r cast" -- If you fail to move out of the SPELL_NAME cast
+--L.debuffFailureGroupSoakNote = "If your group fails to soak |cFFFFFFFF%s|r" -- If your group fails to soak SPELL_NAME
+--L.debuffFailureSafeZoneNote = "If you fail to stand in the safe zone"
+--L.debuffHitByOtherPlayerNote = "If you are hit by another player's |cFFFFFFFF%s|r" -- If you are hit by another player's SPELL_NAME
+--L.debuffTargetedNote = "If you are being targeted for |cFFFFFFFF%s|r" -- If you are being targeted for SPELL_NAME
 L.preDebuffNote = "主要效果生效前的前置減益效果"
 L.mainDebuffNote = "產生實際作用的主要減益效果"
 L.postDebuffNote = "|cFFFFFFFF%s|r消失後，受到的減益效果" -- This debuff will apply to you after OTHER_DEBUFF expires
 L.debuffUnderYouNote = "站在危險區域時，受到的減益效果" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
-L.debuffDotAfterCastNote = "首領施放|cFFFFFFFF%s|r後，受到的週期性傷害" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
-L.debuffPossibleAfterCastNote = "首領施放|cFFFFFFFF%s|r後，可能得到的減益效果" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
-L.debuffTankAfterCastNote = "首領施放|cFFFFFFFF%s|r後，坦克受到的減益效果" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+--L.debuffDotAfterCastNote = "A damage over time effect after the |cFFFFFFFF%s|r cast" -- A damage over time effect after the SPELL_NAME cast
+--L.debuffPossibleAfterCastNote = "Might apply to you after the |cFFFFFFFF%s|r cast" -- Might apply to you after the SPELL_NAME cast
+--L.debuffTankAfterCastNote = "Applies to the tank after the |cFFFFFFFF%s|r cast" -- Applies to the tank after the SPELL_NAME cast
+--L.debuffGroupAfterCastNote = "Applies to the entire group after the |cFFFFFFFF%s|r cast" -- Applies to the entire group after the SPELL_NAME cast
 L.debuffWalkIntoObjectNote = "踩到|cFFFFFFFF%s|r會受到的減益效果" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "|cFFFFFFFF%s|r命中後，受到的減益效果" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "|cFFFFFFFF%s|r對你施加的減益效果" -- This debuff is applied to you by NPC_NAME
+--L.debuffPickupNote = "If you pick up the |cFFFFFFFF%s|r" -- If you pick up the SPELL_NAME
 
 -- Common ability name replacements
 L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
