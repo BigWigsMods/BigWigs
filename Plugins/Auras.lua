@@ -2294,7 +2294,6 @@ do
 
 		auraContainer:SetAuraGroupMaxFrameCount("debuffs", optionsDB.maxIcons)
 		auraContainer:SetAuraGroupCandidateFilters("debuffs", {
-			maxDuration = math.huge, -- filter anything without a duration
 			isBossOrRoleAura = true,
 		})
 		auraContainer:SetAuraGroupLayout("debuffs", {
