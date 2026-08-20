@@ -748,7 +748,7 @@ L.disableAltPowerDesc = "Disabilita totalmente il display del Potere Alternativo
 
 --L.createTestAura = "Create Test Aura"
 --L.showDispelType = "Show Dispel Type Indicator"
---L.showDispelTypeDesc = "Show an icon on the private aura frame if it has a dispel type.\n\n|cffffd200Note: This is a global option for all private aura frames.|r"
+--L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
 --L.dispelType = "Dispel Type Indicator"
 --L.iconSize = "Icon Size"
 --L.iconSpacing = "Icon Spacing"

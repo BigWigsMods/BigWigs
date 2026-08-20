@@ -748,7 +748,7 @@ L.privateAurasDesc2 = "BigWigs pode te ajudar a detectar quando elas são aplica
 
 L.createTestAura = "Criar Aura Teste"
 L.showDispelType = "Mostrar Indicador do Tipo de Dissipação"
-L.showDispelTypeDesc = "Exibe um ícone no quadro de aura privada se ela possuir um tipo de dissipação.\n\n|cffffd200Nota: Essa é uma opção global que afeta todos os quadros de auras privadas.|r"
+--L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
 --L.dispelType = "Dispel Type Indicator"
 L.iconSize = "Tamanho do Ícone"
 L.iconSpacing = "Espaçamento do Ícone"

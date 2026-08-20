@@ -748,7 +748,7 @@ L.aurasDesc = "BigWigs 使用獨立且醒目的大圖示來追蹤首領對你施
 
 L.createTestAura = "創建測試光環"
 L.showDispelType = "顯示驅散類型圖示"
-L.showDispelTypeDesc = "若該私有光環可被驅散，則在框架上顯示對應的驅散類型圖示。\n\n|cffffd200注意：此選項是全域設定，啟用後會套用到所有的私有光環。|r"
+--L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
 --L.dispelType = "Dispel Type Indicator"
 L.iconSize = "圖示大小"
 L.iconSpacing = "圖示間距"

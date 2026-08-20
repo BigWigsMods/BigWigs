@@ -1018,7 +1018,7 @@ L.privateAurasDesc2 = "BigWigs может помочь отслеживать, �
 
 L.createTestAura = "Создать тестовую ауру"
 L.showDispelType = "Показывать индикатор типа рассеивания"
-L.showDispelTypeDesc = "Показывать иконку на рамке приватной ауры, если у неё есть тип рассеивания.\n\n|cffffd200Примечание: это глобальная настройка для всех рамок приватных аур.|r"
+--L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
 --L.dispelType = "Dispel Type Indicator"
 L.iconSize = "Размер иконки"
 L.iconSpacing = "Отступ между иконками"

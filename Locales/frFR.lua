@@ -748,7 +748,7 @@ L.aurasDesc = "BigWigs peut vous aider à traquer les affaiblissements que les b
 
 L.createTestAura = "Créer une Aura de Test"
 L.showDispelType = "Afficher l'indicateur du type de dispell"
-L.showDispelTypeDesc = "Afficher une icône sur le cadre de l'aura privée si elle a un type de dispell.\n\n|cffffd200Note : Ceci affecte tous les cadres d'aura privée.|r"
+--L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
 --L.dispelType = "Dispel Type Indicator"
 L.iconSize = "Taille d'icône"
 L.iconSpacing = "Espacement d'icône"

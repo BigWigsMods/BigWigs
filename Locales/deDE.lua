@@ -748,7 +748,7 @@ L.aurasDesc = "BigWigs kann helfen, Boss Debuffs bei Anwendung auf Dich zu verfo
 
 L.createTestAura = "Testaura erstellen"
 L.showDispelType = "Bannhinweise anzeigen"
-L.showDispelTypeDesc = "Zeigt ein Symbol auf der privaten Aura an, wenn ein Banntyp vorhanden ist.\n\n|cffffd200Hinweis: Dies ist eine globale Option für alle Aurafenster.|r"
+--L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
 --L.dispelType = "Dispel Type Indicator"
 L.iconSize = "Symbolgröße"
 L.iconSpacing = "Symbolabstand"
