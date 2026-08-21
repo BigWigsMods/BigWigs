@@ -497,9 +497,9 @@ do
 				local onRemovedSound = bossModule:GetAuraRemovedSound(spellId)
 				if not onRemovedSound then
 					onRemovedSound = bossModule:GetAuraRemovedSoundDefault(spellId)
-					local hasGlobalSound = validGlobalSounds[onAppliedSound]
+					local hasGlobalSound = validGlobalSounds[onRemovedSound]
 					if hasGlobalSound then
-						onAppliedSound = db.media[hasGlobalSound]
+						onRemovedSound = db.media[hasGlobalSound]
 					end
 				end
 				if onAppliedSound and onAppliedSound ~= "None" then
