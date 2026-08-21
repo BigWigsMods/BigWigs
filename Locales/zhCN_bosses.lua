@@ -83,7 +83,7 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 -- The Venomous Abyss
 
 BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
-	--possession_barrage = "Barrage",
+	possession_barrage = "弹幕",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -91,7 +91,7 @@ BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Sszorak", {
-	--raging_crosswinds = "Winds",
+	raging_crosswinds = "风",
 })
 
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
