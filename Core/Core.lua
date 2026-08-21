@@ -385,8 +385,12 @@ function core:IsEnabled()
 	return coreEnabled
 end
 
-function core:Print(msg)
-	print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: |cffffff00"..msg.."|r")
+function core:Print(msg, isLittleWigs)
+	if isLittleWigs then
+		print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party:0:0|t|cFF33FF99LittleWigs|r: |cffffff00"..msg.."|r")
+	else
+		print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: |cffffff00"..msg.."|r")
+	end
 end
 
 function core:Error(msg, noPrint)

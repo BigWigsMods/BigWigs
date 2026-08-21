@@ -517,12 +517,20 @@ end
 --- Show an error after the encounter has ended
 -- @string message the message to show to the user
 -- @bool chatOnly if the message should only be shown in chat, and not sent to the error handler
-function boss:Error(message, chatOnly)
+-- @bool littleWigsMessage if the chat message should mention LittleWigs instead of BigWigs
+function boss:Error(message, chatOnly, littleWigsMessage)
 	if chatOnly then
-		if not self.errorChatPrints then
-			self.errorChatPrints = {}
+		if littleWigsMessage then
+			if not self.errorChatPrintsLittleWigs then
+				self.errorChatPrintsLittleWigs = {}
+			end
+			self.errorChatPrintsLittleWigs[#self.errorChatPrintsLittleWigs+1] = message
+		else
+			if not self.errorChatPrints then
+				self.errorChatPrints = {}
+			end
+			self.errorChatPrints[#self.errorChatPrints+1] = message
 		end
-		self.errorChatPrints[#self.errorChatPrints+1] = message
 	else
 		if not self.errorMessages then
 			self.errorMessages = {}
@@ -542,7 +550,7 @@ do
 		end
 		local stage = self:GetStage() or 0
 		local eventErrorMessage = unhandledEventString:format(GetTime() - self.stageTime, stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
-		self:Error(eventErrorMessage, true)
+		self:Error(eventErrorMessage, true, self:GetMaxPlayers() <= 5)
 		self:Debug(("TL event ID %d after %.1fs (stage %s) was missed."):format(eventInfo.id, GetTime() - self.stageTime, stage))
 	end
 end
@@ -706,7 +714,17 @@ function boss:Disable(isWipe)
 			self.errorChatPrints = nil
 			core:Print(("Extra info: %s, %s (%d#%s)"):format(self.moduleName, self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()))
 			if not self.noAfterBossError and self:ShouldShowBars() then
-				core:Error(("%q had issues reading the timeline. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true)
+				core:Error(("%q timeline issue. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true)
+			end
+		end
+		if self.errorChatPrintsLittleWigs then
+			for i = 1, #self.errorChatPrintsLittleWigs do
+				core:Print(self.errorChatPrintsLittleWigs[i], true)
+			end
+			self.errorChatPrintsLittleWigs = nil
+			core:Print(("Extra info: %s, %s (%d#%s)"):format(self.moduleName, self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()), true)
+			if not self.noAfterBossError and self:ShouldShowBars() then
+				core:Error(("%q timeline issue. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true)
 			end
 		end
 	end
@@ -2252,6 +2270,7 @@ do
 		[205] = "Follower",
 		[208] = "Delves",
 		[220] = "Story",
+		[250] = "World"
 	}
 	--- Get the current instance difficulty name in English.
 	-- @return difficulty id
