@@ -2294,7 +2294,7 @@ do
 
 		auraContainer:SetAuraGroupMaxFrameCount("debuffs", optionsDB.maxIcons)
 		auraContainer:SetAuraGroupCandidateFilters("debuffs", {
-			isFromPlayerorPlayerPet = false,
+			isFromPlayerOrPlayerPet = false,
 			excludeSpellIDs = {
 				-- LFG debuffs
 				[26013] = true, -- Deserter
