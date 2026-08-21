@@ -254,7 +254,7 @@ L.otherDifficultiesNote = "Este texto será usado em todas as outras dificuldade
 --L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 --L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 --L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
---L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the SPELL_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area

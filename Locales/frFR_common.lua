@@ -255,7 +255,7 @@ L.debuffUnderYouNote = "Cet affaiblissement vous sera appliqué si vous vous ten
 L.debuffWalkIntoObjectNote = "Cet affaiblissement vous sera appliqué si vous marchez dans le sort |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "cet affaiblissement s'appliquera à vous si vous êtes ciblé par l'incantation de |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "Cet affaiblissement vous sera appliqué par |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
---L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the SPELL_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area

@@ -254,7 +254,7 @@ L.debuffUnderYouNote = "위험한 위치에 서 있으면 이 디버프가 적�
 L.debuffWalkIntoObjectNote = "|cFFFFFFFF%s|r 범위 안으로 의도적으로 걸어 들어갈 때 이 디버프가 적용됨" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "|cFFFFFFFF%s|r 주문 시전에 맞으면 이 디버프가 적용됩니다" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "이 디버프는 |cFFFFFFFF%s|r 의해 적용됨" -- This debuff is applied to you by NPC_NAME
---L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the SPELL_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area

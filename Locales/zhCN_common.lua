@@ -254,7 +254,7 @@ L.debuffUnderYouNote = "站在危险区域内获得此减益" -- Usually when a 
 L.debuffWalkIntoObjectNote = "触碰|cFFFFFFFF%s|r获得此减益" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "被|cFFFFFFFF%s|r击中时获得此减益" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "由|cFFFFFFFF%s|r对你施加的减益" -- This debuff is applied to you by NPC_NAME
---L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the SPELL_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "激光" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area

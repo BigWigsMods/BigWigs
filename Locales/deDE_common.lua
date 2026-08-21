@@ -254,7 +254,7 @@ L.debuffUnderYouNote = "Diesen Debuff erleidest Du bei schlechter Positionierung
 L.debuffWalkIntoObjectNote = "Diesen Debuff erleidest Du wenn Du bewusst in die |cFFFFFFFF%s|r läufst" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "Diesen Debuff erleidest Du wenn Du vom |cFFFFFFFF%s|r Zauber getroffen wirst" -- This debuff will apply to you if you are hit by the the SPELL_NAME_cast
 L.debuffAddsCast = "Diesen Debuff erleidest Du von |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
---L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the SPELL_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
