@@ -547,7 +547,7 @@ end
 function mod:StartIntermission()
 	if self:GetStage() == 2 then
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
-		self:StopBar(CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount))
+		self:StopBar(CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spiritcackleCount))
 		self:StopBar(CL.count:format(self:GetRename(1286918), eternalNightfallCount))
 		self:StopBar(CL.count:format(self:GetRename(1289900), dreadmarchCount))
 		self:StopBar(CL.count:format(self:GetRename(1286895), gloombombCount))
@@ -724,7 +724,7 @@ end
 -- Stage 2
 
 function mod:Spiritcackle(duration)
-	local barText = CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount)
+	local barText = CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spiritcackleCount)
 	spiritcackleCount = spiritcackleCount + 1
 
 	local barOnFinish = gapTimer(1286441, duration)
@@ -740,7 +740,7 @@ function mod:Spiritcackle(duration)
 			self:PlaySound(1286441, "info")
 
 			if barOnFinish then
-				self:Bar(1286441, barOnFinish, CL.count:format(self:GetRename(1286441, self:Mythic() and 2 or 1), spiritcackleCount))
+				self:Bar(1286441, barOnFinish, CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spiritcackleCount))
 			end
 		end,
 	}
