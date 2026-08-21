@@ -238,16 +238,23 @@ L.otherDifficultiesNote = "Este texto será usado em todas as outras dificuldade
 --L.debuffFailureNote = "This debuff will apply to you if you fail"
 --L.debuffFailureMoveFromExplosionNote = "This debuff will apply to you if you fail to move away from the explosion"
 --L.debuffFailureInterruptNote = "This debuff will apply to you if you fail to interrupt the cast of |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+--L.debuffFailureMoveFromCastNote = "This debuff will apply to you if you fail to move out of the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you fail to move out of the SPELL_NAME cast
+--L.debuffFailureGroupSoakNote = "This debuff will apply to you if your group fails to soak |cFFFFFFFF%s|r" -- This debuff will apply to you if your group fails to soak SPELL_NAME
+--L.debuffFailureSafeZoneNote = "This debuff will apply to you if you fail to stand in the safe zone"
+--L.debuffHitByOtherPlayerNote = "This debuff will apply to you if you are hit by another player's |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by another player's SPELL_NAME
+--L.debuffTargetedNote = "This debuff will apply to you if you are being targeted for |cFFFFFFFF%s|r" -- This debuff will apply to you if you are being targeted for SPELL_NAME
 --L.preDebuffNote = "This is the pre-debuff, before the main debuff applies to you"
 --L.mainDebuffNote = "This is the main debuff that applies to you"
 --L.postDebuffNote = "This debuff will apply to you after |cFFFFFFFF%s|r expires" -- This debuff will apply to you after OTHER_DEBUFF expires
 --L.debuffUnderYouNote = "This debuff will apply to you if you are standing in a bad place" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
---L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
---L.debuffPossibleAfterCastNote = "This debuff might apply to you after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
---L.debuffTankAfterCastNote = "This debuff will apply to the tank after the boss finishes casting |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+--L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the |cFFFFFFFF%s|r cast" -- This debuff is a damage over time effect after the SPELL_NAME cast
+--L.debuffPossibleAfterCastNote = "This debuff might apply to you after the |cFFFFFFFF%s|r cast" -- This debuff might apply to you after the SPELL_NAME cast
+--L.debuffTankAfterCastNote = "This debuff will apply to the tank after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the tank after the SPELL_NAME cast
+--L.debuffGroupAfterCastNote = "This debuff will apply to the entire group after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the entire group after the SPELL_NAME cast
 --L.debuffWalkIntoObjectNote = "This debuff will apply to you if you purposely walk into the |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 --L.debuffHitByCastNote = "This debuff will apply to you if you are hit by the the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 --L.debuffAddsCast = "This debuff is applied to you by |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area

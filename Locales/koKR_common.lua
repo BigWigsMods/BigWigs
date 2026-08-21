@@ -238,16 +238,23 @@ L.otherDifficultiesNote = "이 텍스트는 다른 모든 난이도에서 사용
 L.debuffFailureNote = "실패할 경우 이 디버프가 적용됨"
 L.debuffFailureMoveFromExplosionNote = "폭발 지점에서 벗어나지 못하면 이 디버프가 적용됨"
 L.debuffFailureInterruptNote = "|cFFFFFFFF%s|r 시전을 방해하는 데 실패하면 이 디버프가 적용됨" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+--L.debuffFailureMoveFromCastNote = "This debuff will apply to you if you fail to move out of the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you fail to move out of the SPELL_NAME cast
+--L.debuffFailureGroupSoakNote = "This debuff will apply to you if your group fails to soak |cFFFFFFFF%s|r" -- This debuff will apply to you if your group fails to soak SPELL_NAME
+--L.debuffFailureSafeZoneNote = "This debuff will apply to you if you fail to stand in the safe zone"
+--L.debuffHitByOtherPlayerNote = "This debuff will apply to you if you are hit by another player's |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by another player's SPELL_NAME
+--L.debuffTargetedNote = "This debuff will apply to you if you are being targeted for |cFFFFFFFF%s|r" -- This debuff will apply to you if you are being targeted for SPELL_NAME
 L.preDebuffNote = "이것은 주요 디버프가 적용되기 전의 사전 디버프"
 L.mainDebuffNote = "이것은 당신에게 적용되는 주요 디버프"
 L.postDebuffNote = "|cFFFFFFFF%s|r 효과가 종료되면 이 디버프가 적용됨" -- This debuff will apply to you after OTHER_DEBUFF expires
 L.debuffUnderYouNote = "위험한 위치에 서 있으면 이 디버프가 적용됨" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
-L.debuffDotAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 완료한 후 지속 피해를 주는 효과" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
-L.debuffPossibleAfterCastNote = "이 디버프는 보스가 |cFFFFFFFF%s|r 시전을 마친 후에 적용될 수 있음" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
-L.debuffTankAfterCastNote = "보스가 |cFFFFFFFF%s|r 시전을 완료하면 탱커에게 이 디버프가 적용됩" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+--L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the |cFFFFFFFF%s|r cast" -- This debuff is a damage over time effect after the SPELL_NAME cast
+--L.debuffPossibleAfterCastNote = "This debuff might apply to you after the |cFFFFFFFF%s|r cast" -- This debuff might apply to you after the SPELL_NAME cast
+--L.debuffTankAfterCastNote = "This debuff will apply to the tank after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the tank after the SPELL_NAME cast
+--L.debuffGroupAfterCastNote = "This debuff will apply to the entire group after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the entire group after the SPELL_NAME cast
 L.debuffWalkIntoObjectNote = "|cFFFFFFFF%s|r 범위 안으로 의도적으로 걸어 들어갈 때 이 디버프가 적용됨" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "|cFFFFFFFF%s|r 주문 시전에 맞으면 이 디버프가 적용됩니다" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "이 디버프는 |cFFFFFFFF%s|r 의해 적용됨" -- This debuff is applied to you by NPC_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area

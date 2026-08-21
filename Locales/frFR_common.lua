@@ -239,16 +239,23 @@ L.otherDifficultiesNote = "Ce texte sera utilisé pour toutes les autres difficu
 L.debuffFailureNote = "Cet affaiblissement vous sera appliqué si vous échouez"
 L.debuffFailureMoveFromExplosionNote = "Cet affaiblissement vous sera appliqué si vous ne vous écartez pas de l'explosion"
 L.debuffFailureInterruptNote = "Cet affaiblissement s'appliquera à vous si vous échouez à interrompre l'incantation de |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
+--L.debuffFailureMoveFromCastNote = "This debuff will apply to you if you fail to move out of the |cFFFFFFFF%s|r cast" -- This debuff will apply to you if you fail to move out of the SPELL_NAME cast
+--L.debuffFailureGroupSoakNote = "This debuff will apply to you if your group fails to soak |cFFFFFFFF%s|r" -- This debuff will apply to you if your group fails to soak SPELL_NAME
+--L.debuffFailureSafeZoneNote = "This debuff will apply to you if you fail to stand in the safe zone"
+--L.debuffHitByOtherPlayerNote = "This debuff will apply to you if you are hit by another player's |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by another player's SPELL_NAME
+--L.debuffTargetedNote = "This debuff will apply to you if you are being targeted for |cFFFFFFFF%s|r" -- This debuff will apply to you if you are being targeted for SPELL_NAME
 L.preDebuffNote = "Ceci est le pré-affaiblissement, avant que le principal ne s'applique à vous"
 L.mainDebuffNote = "Ceci est l'affaiblissement principal qui s'applique à vous"
 L.postDebuffNote = "Cet affaiblissement vous sera appliqué après que |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
 L.debuffUnderYouNote = "Cet affaiblissement vous sera appliqué si vous vous tenez à un mauvais endroit" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
-L.debuffDotAfterCastNote = "Cet affaiblissement est un DoT qui prend effet après que le boss incante |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the boss finishes casting SPELL_NAME
-L.debuffPossibleAfterCastNote = "Cet affaiblissement pourrait s'appliquer à vous après que le boss incante |cFFFFFFFF%s|r" -- This debuff might apply to you after the boss finishes casting SPELL_NAME
-L.debuffTankAfterCastNote = "Cet affaiblissement va s'appliquer sur le tank après que le boss incante |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the boss finishes casting SPELL_NAME
+--L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the |cFFFFFFFF%s|r cast" -- This debuff is a damage over time effect after the SPELL_NAME cast
+--L.debuffPossibleAfterCastNote = "This debuff might apply to you after the |cFFFFFFFF%s|r cast" -- This debuff might apply to you after the SPELL_NAME cast
+--L.debuffTankAfterCastNote = "This debuff will apply to the tank after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the tank after the SPELL_NAME cast
+--L.debuffGroupAfterCastNote = "This debuff will apply to the entire group after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the entire group after the SPELL_NAME cast
 L.debuffWalkIntoObjectNote = "Cet affaiblissement vous sera appliqué si vous marchez dans le sort |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "cet affaiblissement s'appliquera à vous si vous êtes ciblé par l'incantation de |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "Cet affaiblissement vous sera appliqué par |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
+--L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
