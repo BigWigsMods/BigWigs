@@ -1718,6 +1718,7 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	innerContainer:DoLayout() -- One last refresh to adjust height
 end
 
+local AddToDirectOpens
 do
 	local expansionHeader
 	if loader.isVanilla then
@@ -2068,6 +2069,13 @@ do
 	local allowedDirectOpens = {
 		["Auras"] = {tab = "options", path = {"general", "Auras"}},
 	}
+	function AddToDirectOpens(name, key)
+		if allowedDirectOpens[name] then
+			error(format("Panel %q with key %q already exists in allowedDirectOpens.", tostring(name), tostring(key)))
+			return
+		end
+		allowedDirectOpens[name] = {tab = "options", path = {key}}
+	end
 	function OpenConfig(specificPanel)
 		if allowedDirectOpens[specificPanel] then
 			lastTabSelected = allowedDirectOpens[specificPanel].tab
@@ -2127,6 +2135,7 @@ do
 				registered[pluginName] = true
 				local key = subPanelOptions.key
 				local opts = subPanelOptions.options
+				AddToDirectOpens(subPanelOptions.name, subPanelOptions.key)
 				if type(opts) == "function" then
 					subPanelRegistry[key] = opts
 				else
