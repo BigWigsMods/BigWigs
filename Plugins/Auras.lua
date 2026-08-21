@@ -1850,6 +1850,7 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:OnPluginDisable()
+	-- Hide aura icon anchors
 	for _, unitAnchors in next, anchors do
 		for i = 1, #unitAnchors do
 			local anchor = unitAnchors[i]
@@ -1857,7 +1858,11 @@ function plugin:OnPluginDisable()
 			anchor:Hide()
 		end
 	end
-
+	-- Disable aura icon containers
+	for _, auraContainer in next, containers do
+		auraContainer:SetEnabled(false)
+	end
+	-- Remove aura sounds
 	RemoveAllAuraSounds()
 end
 
