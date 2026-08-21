@@ -988,13 +988,26 @@ do
 				local slashCommandsTable = {strsplit(",", meta)}
 				for slashNumInTable = 1, #slashCommandsTable do
 					local slash = slashCommandsTable[slashNumInTable]:trim()
-					RegisterSlashCommand(slash, function()
-						if strfind(name, "BigWigs", nil, true) then
-							-- Attempting to be smart. Only load core & config if it's a BW plugin.
+					if strfind(name, "BigWigs", nil, true) then -- Attempting to be smart. Only load core & config if it's a BW plugin.
+						RegisterSlashCommand(slash, function()
+							for tableEntry = 1, #loadOnCoreEnabled do
+								-- This addon may be registered to load with LoadOn-Slash AND with LoadOn-CoreEnabled.
+								-- Removing it from the core list means it will correctly load AFTER loadCoreAndOptions() runs.
+								-- i.e. we are trying to prevent this: Load Core > Load Addon > Load Options
+								-- we want to ensure this: Load Core > Load Options > Load Addon
+								if i == loadOnCoreEnabled[tableEntry] then
+									table.remove(loadOnCoreEnabled, tableEntry)
+									break
+								end
+							end
 							loadCoreAndOptions()
-						end
-						load(i) -- Load the addon/plugin
-					end)
+							load(i) -- Load the addon/plugin
+						end)
+					else
+						RegisterSlashCommand(slash, function()
+							load(i) -- Load the addon/plugin
+						end)
+					end
 				end
 			end
 		else
