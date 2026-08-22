@@ -610,11 +610,12 @@ local function parseLocaleBlock(file_name, lines, start, locale)
 	for i = start, #lines do
 		local line = lines[i]
 		if line:match("}%)") then return end
-		local comment, locale_key, locale_value = line:match("^%s*(%-?%-?)%s*([%w_]+)%s*=%s*(.*),") -- key = value
+		line = line:gsub("%s*%-%-.+$", "") -- strip out comments
+		local locale_key, locale_value = line:match("^%s*([%w_]+)%s*=%s*(.-)%s*,?%s*$") -- key = value
 		if not locale_key then
-			comment, locale_key, locale_value = line:match('^%s*(%-?%-?)%s*%["(.+)"%]%s*=%s*(.*),') -- ["key"] = value
+			locale_key, locale_value = line:match('^%s*%["(.+)"%]%s*=%s*(.-)%s*,?%s*$') -- ["key"] = value
 		end
-		if locale_key and comment == "" then
+		if locale_key then
 			if locale[locale_key] ~= nil then
 				local line_number = start + i
 				error(string.format("    %s:%d: Duplicate locale key %q", file_name, line_number, locale_key))
@@ -626,7 +627,7 @@ local function parseLocaleBlock(file_name, lines, start, locale)
 				if v == '""' then
 					locale_value = ""
 				end
-				locale[locale_key] = locale_value:sub(1, 1) == "{" or locale_value ~= unquote(locale_value)
+				locale[locale_key] = locale_value:sub(1, 1) == "{" or locale_value ~= unquote(locale_value) -- set false and skip if it's a replacement token or not quoted
 			end
 		end
 	end
