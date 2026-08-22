@@ -20,18 +20,7 @@ local backupBars = {}
 
 local durationEventCount = {}
 local warnStageThree = false
-
-local toxicDelugeCount = 1
-local axegrinderCount = 1
-local venomfangCount = 1
-local guillotineCount = 1
-local severCount = 1
-local coiledAltarCount = 1 -- 100 energy abilities
-
-local dreadmarchCount = 1
-local eternalNightfallCount = 1
-local spiritcackleCount = 1
-local gloombombCount = 1
+local spellCount = {}
 
 local gapTimer do
 	local timersMythic = {
@@ -74,9 +63,11 @@ local gapTimer do
 	}
 	function gapTimer(spellId, duration)
 		local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or mod:Normal() and timersNormal
-		if timers then
-			local stage = mod:GetStage()
-			local stageTimers = timers[spellId] and timers[spellId][stage]
+		if timers and timers[spellId] then
+			if duration == true then
+				return true
+			end
+			local stageTimers = timers[spellId][mod:GetStage()]
 			return stageTimers and stageTimers[duration]
 		end
 	end
@@ -103,14 +94,14 @@ mod:SetRenames({
 	[1283832] = {1283832}, -- Axegrinder
 
 	[1289900] = {1289900, CL.you:format(mod:SpellName(1289900)), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Dreadmarch
-	[1285911] = {CL.you:format(mod:SpellName(1285911))}, -- Unnerving Fixation
+	[1285911] = {CL.you:format(mod:SpellName(41294)), original = CL.you:format(mod:SpellName(1285911))}, -- Unnerving Fixation (Fixate)
 	[1286573] = {CL.tank_frontal}, -- Soul Sever
 	[1286918] = {1286918}, -- Eternal Nightfall
 	[1286441] = {CL.adds, CL.add, notes = {CL.mythicOnlyNote, CL.otherDifficultiesNote}}, -- Spiritcackle
 	[1286895] = {1286895, CL.you:format(mod:SpellName(1286895)), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Gloombomb
 
 	[1298381] = {CL.pools}, -- Defilement of the Coiled Altar
-	[1299266] = {1299266}, -- Grim Guillotine
+	[1299266] = {1283489}, -- Grim Guillotine (Guillotine)
 	[1307279] = {CL.tank_frontal}, -- Blighted Sever
 })
 
@@ -166,12 +157,12 @@ function mod:GetOptions()
 		1283832, -- Axegrinder
 
 		-- Stage Two: Usurper's Reprisal
-		1289900, -- Dreadmarch
-		1285911, -- Unnerving Fixation
+		{1289900, "ME_ONLY_EMPHASIZE"}, -- Dreadmarch
+		{1285911, "EMPHASIZE"}, -- Unnerving Fixation
 		1286573, -- Soul Sever
 		1286918, -- Eternal Nightfall
 		1286441, -- Spiritcackle
-		1286895, -- Gloombomb
+		{1286895, "ME_ONLY_EMPHASIZE"}, -- Gloombomb
 
 		-- Intermission: The Claimed Vessel
 		-- 1287722, -- Spirit Erasure
@@ -200,7 +191,7 @@ function mod:GetOptions()
 		{
 			tabName = self:SpellName(-35403), -- Stage 3
 			{ "stages",
-			1298381, 1299960, 1299266, 1307279,
+				1298381, 1299960, 1299266, 1307279,
 				1289900, 1285911, 1286918, 1286441, 1286895 },
 		},
 		-- [1287722] = -35533, -- Intermission
@@ -228,26 +219,37 @@ end
 function mod:OnEncounterStart()
 	activeBars = {}
 	self:SetStage(1)
-	durationEventCount = {}
+	self:ResetCounts()
 	warnStageThree = false
 
-	toxicDelugeCount = 1
-	axegrinderCount = 1
-	venomfangCount = 1
-	guillotineCount = 1
-	severCount = 1
-	coiledAltarCount = 1
-
-	dreadmarchCount = 1
-	eternalNightfallCount = 1
-	spiritcackleCount = 1
-	gloombombCount = 1
-
 	-- Starts the encounter by casting Fangs of the Coiled Altar
-	self:Message(1282487, "red") -- CL.count:format(self:GetRename(1282487), 1) would starting the bar at count 2 be weird?
+	self:Message(1282487, "red")
 
+	-- self:RegisterEvent("ENCOUNTER_WARNING")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss2")
 end
+
+ function mod:ResetCounts()
+	durationEventCount = {}
+	spellCount = {
+		[1299960] = 1, -- Toxic Deluge
+		[1283832] = 1, -- Axegrinder
+		[1282281] = 1, -- Venomfang
+		[1283489] = 1, -- Guillotine
+		[1299680] = 1, -- Sever
+		[1282487] = 1, -- Fangs of the Coiled Altar
+
+		[1289900] = 1, -- Dreadmarch
+		[1286918] = 1, -- Eternal Nightfall
+		[1286441] = 1, -- Spiritcackle
+		[1286895] = 1, -- Gloombomb
+		[1286573] = 1, -- Soul Sever
+
+		[1298381] = 1, -- Defilement of the Coiled Altar
+		[1299266] = 1, -- Grim Guillotine
+		[1307279] = 1, -- Blighted Sever
+	}
+ end
 
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
@@ -263,46 +265,46 @@ function mod:MythicTimeline(_, eventInfo)
 	if warnStageThree then
 		warnStageThree = false
 		-- Starts with casting Defilement of the Coiled Altar
-		self:Message(1298381, "red") -- CL.count:format(self:GetRename(1298381), 1) would starting the bar at count 2 be weird?
+		self:Message(1298381, "red")
 		self:PlaySound(1298381, "alarm")
 	end
 
 	local stage = self:GetStage()
 	if stage == 1 then
 		if rounded == 2 then
-			barInfo = self:ToxicDeluge(duration)
+			barInfo = self:ToxicDeluge()
 		elseif rounded == 12 then
-			barInfo = self:Axegrinder(duration)
+			barInfo = self:Axegrinder()
 		elseif rounded == 28 or rounded == 35 then
-			barInfo = self:Venomfang(duration)
+			barInfo = self:Venomfang()
 		elseif rounded == 43 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
-				barInfo = self:Guillotine(duration)
+				barInfo = self:Guillotine()
 			else
-				barInfo = self:ToxicDeluge(duration)
+				barInfo = self:ToxicDeluge()
 			end
 		elseif rounded == 20 or rounded == 17 then
-			barInfo = self:Sever(duration)
+			barInfo = self:Sever()
 		elseif rounded == 85 or rounded == 84 then
-			barInfo = self:FangsOfTheCoiledAltar(duration)
+			barInfo = self:FangsOfTheCoiledAltar()
 		end
 
 	elseif stage == 2 then
 		if rounded == 13 or rounded == 33 then
-			barInfo = self:Spiritcackle(duration)
+			barInfo = self:Spiritcackle()
 		elseif rounded == 70 then
-			barInfo = self:EternalNightfall(duration)
+			barInfo = self:EternalNightfall()
 		elseif rounded == 6 then -- 5.5
 			barInfo = self:Dreadmarch(duration)
 		elseif rounded == 18 or rounded == 37 then
-			barInfo = self:Gloombomb(duration)
+			barInfo = self:Gloombomb()
 		elseif rounded == 31 then
-			barInfo = self:SoulSever(duration)
+			barInfo = self:SoulSever()
 		elseif rounded == 34 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
-				barInfo = self:SoulSever(duration)
+				barInfo = self:SoulSever()
 			else
 				barInfo = self:Dreadmarch(duration)
 			end
@@ -312,21 +314,7 @@ function mod:MythicTimeline(_, eventInfo)
 		barInfo = nil -- no p3 timers
 	end
 
-	if barInfo then
-		activeBars[eventInfo.id] = barInfo
-		if self:ShouldShowBars() then
-			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
-		end
-	elseif barInfo == nil and self:ShouldShowBars() then
-		self:ErrorForTimelineEvent(eventInfo)
-		backupBars[eventInfo.id] = true
-		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
-
-		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
-		if state == 1 then -- Paused
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
-		end
-	end
+	self:HandleBar(barInfo, eventInfo)
 end
 
 function mod:OtherTimeline(_, eventInfo)
@@ -339,60 +327,60 @@ function mod:OtherTimeline(_, eventInfo)
 	if warnStageThree then
 		warnStageThree = false
 		-- Starts with casting Defilement of the Coiled Altar
-		self:Message(1298381, "red") -- CL.count:format(self:GetRename(1298381), 1) would starting the bar at count 2 be weird?
+		self:Message(1298381, "red")
 		self:PlaySound(1298381, "alarm")
 	end
 
 	local stage = self:GetStage()
 	if stage == 1 then
 		if rounded == 2 then
-			barInfo = self:ToxicDeluge(duration)
+			barInfo = self:ToxicDeluge()
 		elseif rounded == 12 then
-			barInfo = self:Axegrinder(duration)
+			barInfo = self:Axegrinder()
 		elseif rounded == 28 or rounded == 35 then
-			barInfo = self:Venomfang(duration)
+			barInfo = self:Venomfang()
 		elseif rounded == (self:Easy() and 42 or 43) then -- normal/heroic
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
-				barInfo = self:Guillotine(duration)
+				barInfo = self:Guillotine()
 			else
-				barInfo = self:ToxicDeluge(duration)
+				barInfo = self:ToxicDeluge()
 			end
 		elseif rounded == 20 or rounded == 17 or rounded == 21 or rounded == 16 then
-			barInfo = self:Sever(duration)
+			barInfo = self:Sever()
 		elseif rounded == 85 then
-			barInfo = self:FangsOfTheCoiledAltar(duration)
+			barInfo = self:FangsOfTheCoiledAltar()
 		end
 
 	elseif stage == 2 then
 		if self:Heroic() then
 			if rounded == 13 or rounded == 33 then
-				barInfo = self:Spiritcackle(duration)
+				barInfo = self:Spiritcackle()
 			elseif rounded == 70 then
-				barInfo = self:EternalNightfall(duration)
+				barInfo = self:EternalNightfall()
 			elseif rounded == 6 then -- 5.5
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 22 or rounded == 38 then
-				barInfo = self:Gloombomb(duration)
+				barInfo = self:Gloombomb()
 			elseif rounded == 31 then
-				barInfo = self:SoulSever(duration)
+				barInfo = self:SoulSever()
 			elseif rounded == 34 then
 				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 				if durationEventCount[rounded] % 2 == 1 then
-					barInfo = self:SoulSever(duration)
+					barInfo = self:SoulSever()
 				else
 					barInfo = self:Dreadmarch(duration)
 				end
 			end
 		else
 			if rounded == 70 then
-				barInfo = self:EternalNightfall(duration)
+				barInfo = self:EternalNightfall()
 			elseif rounded == 6 or rounded == 34 then -- 5.5
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 20 or rounded == 40 then
 				barInfo = self:Gloombomb(duration)
 			elseif rounded == 32 or rounded == 33 then
-				barInfo = self:SoulSever(duration)
+				barInfo = self:SoulSever()
 			end
 		end
 
@@ -402,45 +390,68 @@ function mod:OtherTimeline(_, eventInfo)
 			if rounded == 61 or rounded == 101 or rounded == 44 or rounded == 108 then -- 61.49, 101.15, 43.68, 108.05
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 39 or rounded == 100 then
-				barInfo = self:EternalNightfall(duration)
+				barInfo = self:EternalNightfall()
 			elseif rounded == 26 or rounded == 51 or rounded == 67 or rounded == 86 then
-				barInfo = self:Gloombomb(duration)
+				barInfo = self:Gloombomb()
 			elseif rounded == 2 or rounded == 47 or rounded == 57 or rounded == 43 or rounded == 62 then
-				barInfo = self:ToxicDeluge(duration)
+				barInfo = self:ToxicDeluge()
 			elseif rounded == 32 or rounded == 34 or rounded == 38 then
-				barInfo = self:BlightedSever(duration)
+				barInfo = self:BlightedSever()
 			elseif rounded == 17 or rounded == 170 then
-				barInfo = self:GrimGuillotine(duration)
+				barInfo = self:GrimGuillotine()
 			elseif rounded == 106 or rounded == 105 then
-				barInfo = self:DefilementOfTheCoiledAltar(duration)
+				barInfo = self:DefilementOfTheCoiledAltar()
 			elseif rounded == 33 then
 				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-				if durationEventCount[rounded] % 2 == 1 then
-					barInfo = self:BlightedSever(duration)
-				else
-					barInfo = self:Gloombomb(duration)
+				local count = durationEventCount[rounded]
+				if count == 1 then
+					barInfo = self:BlightedSever()
+				elseif count == 2 then
+					barInfo = self:Gloombomb()
+				end
+			elseif rounded == 60 then -- 59.77
+				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+				local count = durationEventCount[rounded]
+				if count == 1 then
+					barInfo = self:DefilementOfTheCoiledAltar()
+				elseif count == 2 then
+					barInfo = self:ToxicDeluge()
 				end
 			end
 		else
 			if rounded == 87 or rounded == 66 then
-				barInfo = self:EternalNightfall(duration)
+				barInfo = self:EternalNightfall()
 			elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 or rounded == 43 then -- 53.5
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 or rounded == 54 then
-				barInfo = self:ToxicDeluge(duration)
+				barInfo = self:ToxicDeluge()
 			elseif rounded == 29 or rounded == 28 or rounded == 30 or rounded == 33 then
-				barInfo = self:BlightedSever(duration)
+				barInfo = self:BlightedSever()
 			elseif rounded == 92 or rounded == 91 then
-				barInfo = self:DefilementOfTheCoiledAltar(duration)
+				barInfo = self:DefilementOfTheCoiledAltar()
 			elseif rounded == 34 then
 				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 				if durationEventCount[rounded] % 2 == 1 then
-					barInfo = self:EternalNightfall(duration)
+					barInfo = self:EternalNightfall()
 				else
-					barInfo = self:BlightedSever(duration)
+					barInfo = self:BlightedSever()
 				end
 			end
 		end
+	end
+
+	self:HandleBar(barInfo, eventInfo)
+end
+
+function mod:HandleBar(barInfo, eventInfo)
+	if barInfo and gapTimer(barInfo.key, true) then
+		if not barInfo.skipGapTimer then
+			-- blizzard fires sets of bars on an interval, bridge the gap with a normal bar
+			barInfo.gapTimer = gapTimer(barInfo.key, self:RoundNumber(eventInfo.duration, 0))
+		end
+		-- if the normal bar is running, use the existing duration for max time
+		local remaining, total = self:BarTimeLeft(barInfo.msg)
+		barInfo.duration = remaining > 0 and { eventInfo.duration, total } or nil
 	end
 
 	if barInfo then
@@ -468,7 +479,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	if barInfo and barInfo.key == 1282487 and state == 3 then -- Fangs of the Coiled Altar (Canceled)
 		-- Normally canceled after the next set of timers are added
 		self:StopBar(barInfo.msg)
-		if axegrinderCount > barInfo.count then
+		if spellCount[1283832] > barInfo.count then -- 1283832 = Axegrinder, a once per Fangs ability
 			-- next bar started, so it finished
 			barInfo:onFinished()
 		else
@@ -479,18 +490,22 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		barInfo = nil
 	end
 
+	if barInfo and barInfo.gapTimer and state == 2 then -- Finished
+		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key, barInfo.renamePosition), spellCount[barInfo.key]))
+	end
+
 	if barInfo and not barInfo.skipState then
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onFinished and self:ShouldShowBars() then
-				barInfo.onFinished()
+				barInfo:onFinished()
 			end
 		elseif state == 3 then -- Canceled
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onCanceled and self:ShouldShowBars() then
-				barInfo.onCanceled()
+				barInfo:onCanceled()
 			end
 		end
 	elseif backupBars[eventID] then
@@ -513,31 +528,27 @@ end
 -- Event Handlers
 --
 
+-- function mod:ENCOUNTER_WARNING(_, info)
+-- 	if self:IsStoppingBlizzMessages() or self:GetStage() == 1 then return end
+
+-- 	if info.severity == 1 and info.duration == 4 then
+-- 		-- Dreadmarch and Unnerving Fixation are 4s, but Dreadmarch should be caught
+-- 		self:UnnervingFixationMessage()
+-- 	end
+-- end
+
 function mod:StartPhaseTwo()
-	-- Fang was canceled early
+	-- Fangs was canceled early
 	if self:GetStage() == 1 then
-		self:StopBar(CL.count:format(self:GetRename(1299960), toxicDelugeCount))
-		self:StopBar(CL.count:format(self:GetRename(1283832), axegrinderCount))
-		self:StopBar(CL.count:format(self:GetRename(1282281), venomfangCount))
-		self:StopBar(CL.count:format(self:GetRename(1283489), guillotineCount))
-		self:StopBar(CL.count:format(self:GetRename(1299680), severCount))
-		self:StopBar(CL.count:format(self:GetRename(1282487), coiledAltarCount))
+		self:StopBar(CL.count:format(self:GetRename(1299960), spellCount[1299960])) -- Toxic Deluge
+		self:StopBar(CL.count:format(self:GetRename(1283832), spellCount[1283832])) -- Axegrinder
+		self:StopBar(CL.count:format(self:GetRename(1282281), spellCount[1282281])) -- Venomfang
+		self:StopBar(CL.count:format(self:GetRename(1283489), spellCount[1283489])) -- Guillotine
+		self:StopBar(CL.count:format(self:GetRename(1299680), spellCount[1299680])) -- Sever
+		self:StopBar(CL.count:format(self:GetRename(1282487), spellCount[1282487])) -- Fangs of the Coiled Altar
 
 		self:SetStage(2)
-
-		durationEventCount = {}
-
-		toxicDelugeCount = 1
-		axegrinderCount = 1
-		venomfangCount = 1
-		guillotineCount = 1
-		severCount = 1
-		coiledAltarCount = 1
-
-		dreadmarchCount = 1
-		eternalNightfallCount = 1
-		spiritcackleCount = 1
-		gloombombCount = 1
+		self:ResetCounts()
 
 		self:Message("stages", "cyan", self:GetRename("stages", 2), false)
 		self:PlaySound("stages", "long")
@@ -547,27 +558,14 @@ end
 function mod:StartIntermission()
 	if self:GetStage() == 2 then
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
-		self:StopBar(CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spiritcackleCount))
-		self:StopBar(CL.count:format(self:GetRename(1286918), eternalNightfallCount))
-		self:StopBar(CL.count:format(self:GetRename(1289900), dreadmarchCount))
-		self:StopBar(CL.count:format(self:GetRename(1286895), gloombombCount))
-		self:StopBar(CL.count:format(self:GetRename(1286573), severCount))
+		self:StopBar(CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spellCount[1286441]))
+		self:StopBar(CL.count:format(self:GetRename(1286918), spellCount[1286918]))
+		self:StopBar(CL.count:format(self:GetRename(1289900), spellCount[1289900]))
+		self:StopBar(CL.count:format(self:GetRename(1286895), spellCount[1286895]))
+		self:StopBar(CL.count:format(self:GetRename(1286573), spellCount[1286573]))
 
 		self:SetStage(2.5)
-
-		durationEventCount = {}
-
-		toxicDelugeCount = 1
-		axegrinderCount = 1
-		venomfangCount = 1
-		guillotineCount = 1
-		severCount = 1
-		coiledAltarCount = 1
-
-		dreadmarchCount = 1
-		eternalNightfallCount = 1
-		spiritcackleCount = 1
-		gloombombCount = 1
+		self:ResetCounts()
 
 		self:Message("stages", "cyan", self:GetRename("stages", 4), false) -- Intermission
 		self:PlaySound("stages", "long")
@@ -586,134 +584,87 @@ end
 
 -- Stage 1
 
-function mod:ToxicDeluge(duration)
-	local barText = CL.count:format(self:GetRename(1299960), toxicDelugeCount)
-	toxicDelugeCount = toxicDelugeCount + 1
-
-	-- show a bar for the next cast on end
-	local barOnFinish = gapTimer(1299960, duration)
-	-- short bar on phase restart, extend the bar we start
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or duration
+function mod:ToxicDeluge()
+	local barText = CL.count:format(self:GetRename(1299960), spellCount[1299960])
+	spellCount[1299960] = spellCount[1299960] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1299960,
 		onFinished = function()
-			self:StopBlizzMessages(1) -- The crucible begins to spew a [Toxic Deluge]!
+			self:StopBlizzMessages(2) -- The crucible begins to spew a [Toxic Deluge]!
 			self:Message(1299960, "yellow", barText)
 			self:PlaySound(1299960, "info")
-
-			if barOnFinish then
-				self:Bar(1299960, barOnFinish, CL.count:format(self:GetRename(1299960), toxicDelugeCount))
-			end
 		end,
 	}
 end
 
-function mod:Axegrinder(duration)
-	local barText = CL.count:format(self:GetRename(1283832), axegrinderCount)
-	axegrinderCount = axegrinderCount + 1
-
-	local barOnFinish = gapTimer(1283832, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:Axegrinder()
+	local barText = CL.count:format(self:GetRename(1283832), spellCount[1283832])
+	spellCount[1283832] = spellCount[1283832] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1283832,
 		onFinished = function()
 			self:Message(1283832, "yellow", barText)
 			self:PlaySound(1283832, "alarm")
-
-			if barOnFinish then
-				self:Bar(1283832, barOnFinish, CL.count:format(self:GetRename(1283832), axegrinderCount))
-			end
 		end,
 	}
 end
 
-function mod:Venomfang(duration)
-	local barText = CL.count:format(self:GetRename(1282281), venomfangCount)
-	venomfangCount = venomfangCount + 1
-
-	local barOnFinish = gapTimer(1282281, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:Venomfang()
+	local barText = CL.count:format(self:GetRename(1282281), spellCount[1282281])
+	spellCount[1282281] = spellCount[1282281] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1282281,
 		onFinished = function()
 			self:Message(1282281, "yellow", barText)
 			self:PlaySound(1282281, "alarm")
-
-			if barOnFinish then
-				self:Bar(1282281, barOnFinish, CL.count:format(self:GetRename(1282281), venomfangCount))
-			end
 		end,
 	}
 end
 
-function mod:Guillotine(duration)
-	local barText = CL.count:format(self:GetRename(1283489), guillotineCount)
-	guillotineCount = guillotineCount + 1
-
-	local barOnFinish = gapTimer(1283489, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:Guillotine()
+	local barText = CL.count:format(self:GetRename(1283489), spellCount[1283489])
+	spellCount[1283489] = spellCount[1283489] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1283489,
 		onFinished = function()
 			self:StopBlizzMessages(1) -- Zul'jan begins to cast [Guillotine]!
 			self:Message(1283489, "orange", barText)
 			self:PlaySound(1283489, "alert")
-
-			if barOnFinish then
-				self:Bar(1283489, barOnFinish, CL.count:format(self:GetRename(1283489), guillotineCount))
-			end
 		end,
 	}
 end
 
-function mod:Sever(duration)
-	local barText = CL.count:format(self:GetRename(1299680), severCount)
-	severCount = severCount + 1
-
-	local lastBar = severCount % 4 == 1 -- 4 casts per cycle, only gap after the last
-	local barOnFinish = lastBar and gapTimer(1299680, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:Sever()
+	local barText = CL.count:format(self:GetRename(1299680), spellCount[1299680])
+	spellCount[1299680] = spellCount[1299680] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1299680,
+		skipGapTimer = spellCount[1299680] % 4 ~= 1, -- 4 casts per cycle, only gap after the last
 		onFinished = function()
 			self:Message(1299680, "purple", barText)
 			self:PlaySound(1299680, "alert")
-
-			if barOnFinish then
-				self:Bar(1299680, barOnFinish, CL.count:format(self:GetRename(1299680), severCount))
-			end
 		end,
 	}
 end
 
-function mod:FangsOfTheCoiledAltar(duration)
-	local barText = CL.count:format(self:GetRename(1282487), coiledAltarCount)
-	coiledAltarCount = coiledAltarCount + 1
+function mod:FangsOfTheCoiledAltar()
+	local barText = CL.count:format(self:GetRename(1282487), spellCount[1282487])
+	spellCount[1282487] = spellCount[1282487] + 1
 
 	return {
 		msg = barText,
 		key = 1282487,
-		count = coiledAltarCount,
+		count = spellCount[1282487],
 		onFinished = function()
 			self:Message(1282487, "red", barText)
 			self:PlaySound(1282487, "alarm")
@@ -723,53 +674,37 @@ end
 
 -- Stage 2
 
-function mod:Spiritcackle(duration)
-	local barText = CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spiritcackleCount)
-	spiritcackleCount = spiritcackleCount + 1
-
-	local barOnFinish = gapTimer(1286441, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:Spiritcackle()
+	local position = self:Mythic() and 1 or 2 -- multiple on mythic
+	local barText = CL.count:format(self:GetRename(1286441, position), spellCount[1286441])
+	spellCount[1286441] = spellCount[1286441] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1286441,
+		renamePosition = position,
 		onFinished = function()
 			self:Message(1286441, "cyan", barText)
 			self:PlaySound(1286441, "info")
-
-			if barOnFinish then
-				self:Bar(1286441, barOnFinish, CL.count:format(self:GetRename(1286441, self:Mythic() and 1 or 2), spiritcackleCount))
-			end
 		end,
 	}
 end
 
-function mod:EternalNightfall(duration)
-	local barText = CL.count:format(self:GetRename(1286918), eternalNightfallCount)
-	eternalNightfallCount = eternalNightfallCount + 1
-
-	local barOnFinish = gapTimer(1286918, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:EternalNightfall()
+	local barText = CL.count:format(self:GetRename(1286918), spellCount[1286918])
+	spellCount[1286918] = spellCount[1286918] + 1
 
 	if self:GetStage() == 2 then
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
 	end
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1286918,
 		onFinished = function()
 			self:StopBlizzMessages(1) -- Malacrass begins to bring forth an [Eternal Nightfall]!
 			self:Message(1286918, "red", barText)
 			self:PlaySound(1286918, "alarm")
-
-			if barOnFinish then
-				self:Bar(1286918, barOnFinish, CL.count:format(self:GetRename(1286918), eternalNightfallCount))
-			end
 
 			if self:GetStage() == 2 then
 				-- 5s gap until the phase resets, so listen for intermission channel until the next timer
@@ -785,80 +720,66 @@ function mod:EternalNightfall(duration)
 	}
 end
 
-function mod:Dreadmarch(duration)
-	local barText = CL.count:format(self:GetRename(1289900), dreadmarchCount)
-	dreadmarchCount = dreadmarchCount + 1
+do
+	local isOnMe = false
+	function mod:Dreadmarch(duration)
+		local barText = CL.count:format(self:GetRename(1289900), spellCount[1289900])
+		spellCount[1289900] = spellCount[1289900] + 1
+		isOnMe = false
 
-	local barOnFinish = gapTimer(1289900, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+		local barInfo = {
+			msg = barText,
+			key = 1289900,
+			onFinished = function()
+				self:Message(1289900, "orange", barText)
+				if not isOnMe then
+					self:PlaySound(1289900, "alert")
+				end
+			end,
+			onCanceled = function(this)
+				self:CancelTimer(this.timer)
+			end,
+		}
+		-- The target message happens ~3 before the bar ends
+		barInfo.timer = self:ScheduleTimer(function()
+			-- self:StopBlizzMessages(1) -- Malacrass if about to afflict you with [Dreadmarch]
+			self:PersonalMessageFromBlizzMessage(1289900, 1, false, self:GetRename(1289900, 2), nil, nil, function() isOnMe = true end)
+		end, duration - 3.5)
 
-	return {
-		duration = newDuration,
-		msg = barText,
-		key = 1289900,
-		onFinished = function()
-			-- self:StopBlizzMessages(-3.5) -- Malacrass if about to afflict you with [Dreadmarch]
-			self:Message(1289900, "orange", barText)
-			self:PlaySound(1289900, "alert")
-
-			if barOnFinish then
-				self:Bar(1289900, barOnFinish, CL.count:format(self:GetRename(1289900), dreadmarchCount))
-			end
-		end,
-	}
+		return barInfo
+	end
 end
 
 function mod:UnnervingFixationMessage()
-	-- when Dreadmarch breaks :\
-	-- ENCOUNTER_WARNING#4.0#Medium#A Manifestation of Dread sets its gaze upon you with an [Unnerving Fixation]!
-	self:PersonalMessage(1285911)
+	-- A Manifestation of Dread sets its gaze upon you with an [Unnerving Fixation]!
+	self:PersonalMessage(1285911, false)
 end
 
-function mod:Gloombomb(duration)
-	local barText = CL.count:format(self:GetRename(1286895), gloombombCount)
-	gloombombCount = gloombombCount + 1
-
-	local barOnFinish = gapTimer(1286895, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:Gloombomb()
+	local barText = CL.count:format(self:GetRename(1286895), spellCount[1286895])
+	spellCount[1286895] = spellCount[1286895] + 1
 
 	return {
-		duration = newDuration,
-		offset = 2,
 		msg = barText,
 		key = 1286895,
 		onFinished = function()
-			-- self:StopBlizzMessages(1) -- Malacrass targets you with [Gloombomb]!
-			local timer = self:ScheduleTimer(function() self:Message(1286895, "yellow", barText) end, 1)
-			self:PersonalMessageFromBlizzMessage(1286895, 1, false, self:GetRename(1286895, 2), nil, nil, function() self:CancelTimer(timer) end)
-
-			if barOnFinish then
-				self:Bar(1286895, barOnFinish, CL.count:format(self:GetRename(1286895), gloombombCount))
-			end
+			-- self:StopBlizzMessages(3) -- Malacrass targets you with [Gloombomb]!
+			local timer = self:ScheduleTimer(function() self:Message(1286895, "yellow", barText) end, 3)
+			self:PersonalMessageFromBlizzMessage(1286895, 3, false, self:GetRename(1286895, 2), nil, nil, function() self:CancelTimer(timer) end)
 		end,
 	}
 end
 
-function mod:SoulSever(duration)
-	local barText = CL.count:format(self:GetRename(1286573), severCount)
-	severCount = severCount + 1
-
-	local barOnFinish = gapTimer(1286573, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:SoulSever()
+	local barText = CL.count:format(self:GetRename(1286573), spellCount[1286573])
+	spellCount[1286573] = spellCount[1286573] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1286573,
 		onFinished = function()
 			self:Message(1286573, "purple", barText)
 			self:PlaySound(1286573, "alert")
-
-			if barOnFinish then
-				self:Bar(1286573, barOnFinish, CL.count:format(self:GetRename(1286573), severCount))
-			end
 		end,
 	}
 end
@@ -866,8 +787,8 @@ end
 -- Stage 3
 
 function mod:DefilementOfTheCoiledAltar()
-	local barText = CL.count:format(self:GetRename(1298381), coiledAltarCount)
-	coiledAltarCount = coiledAltarCount + 1
+	local barText = CL.count:format(self:GetRename(1298381), spellCount[1298381])
+	spellCount[1298381] = spellCount[1298381] + 1
 	return {
 		msg = barText,
 		key = 1298381,
@@ -879,8 +800,8 @@ function mod:DefilementOfTheCoiledAltar()
 end
 
 function mod:GrimGuillotine()
-	local barText = CL.count:format(self:GetRename(1299266), guillotineCount)
-	guillotineCount = guillotineCount + 1
+	local barText = CL.count:format(self:GetRename(1299266), spellCount[1299266])
+	spellCount[1299266] = spellCount[1299266] + 1
 	return {
 		msg = barText,
 		key = 1299266,
@@ -893,8 +814,8 @@ function mod:GrimGuillotine()
 end
 
 function mod:BlightedSever()
-	local barText = CL.count:format(self:GetRename(1307279), severCount)
-	severCount = severCount + 1
+	local barText = CL.count:format(self:GetRename(1307279), spellCount[1307279])
+	spellCount[1307279] = spellCount[1307279] + 1
 	return {
 		msg = barText,
 		key = 1307279,
