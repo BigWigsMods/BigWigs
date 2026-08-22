@@ -26,14 +26,10 @@ local UNIT_TO_STAGE = {
 }
 
 local durationEventCount = {}
-local nextEmpower = nil
-local unitEmpowered = nil
-local commandCastStart = nil
-local commandCastID = nil
+local currentChannelStart = nil
+local currentChannelID = nil
 
-local stageCount = 0
 local ascensionCount = 1
-
 local blinkNovaCount = 1
 local iceboundFlamesCount = 1
 local frostfireVolleyCount = 1
@@ -132,12 +128,12 @@ mod:SetAuraData({
 function mod:GetOptions()
 	return {
 		-- Mor'zahi
-		1296535, -- Disgusting Fish
+		{1296535, "ME_ONLY_EMPHASIZE"}, -- Disgusting Fish
 		1297022, -- Mor'zahi's Command
 		1292779, -- Final Ascension
 
 		-- Scrollsage Iku
-		1290711, -- Blink Nova
+		{1290711, "ME_ONLY_EMPHASIZE"}, -- Blink Nova
 		1286921, -- Icebound Flames
 		{1295854, "TANK"}, -- Shredding Shards
 		1295886, -- Frostfire Volley
@@ -174,14 +170,10 @@ end
 function mod:OnEncounterStart()
 	activeBars = {}
 	self:SetStage(1)
-
-	durationEventCount = {}
-	nextEmpower = nil
-	unitEmpowered = nil
-	commandCastID = nil
-	stageCount = 1
-	ascensionCount = 1
 	self:ResetCounts()
+	ascensionCount = 1
+
+	currentChannelID = nil
 
 	self:RegisterEvent("UPDATE_EXTRA_ACTIONBAR")
 	-- boss units: 1 gebbo, 2 mor'zani, 3 nama, 4 iku
@@ -191,6 +183,8 @@ function mod:OnEncounterStart()
 end
 
 function mod:ResetCounts()
+	durationEventCount = {}
+
 	blinkNovaCount = 1
 	iceboundFlamesCount = 1
 	frostfireVolleyCount = 1
@@ -217,11 +211,7 @@ do
 		table.wipe(events)
 	end
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
-	if eventInfo.source ~= 0 or self:IsWiping() then return end
-		if not nextEmpower then
-			return self:Timeline(nil, eventInfo, nil)
-		end
-		-- batch events after a turtle goes friendly so we known when multiple are added to trigger the empowered phase
+		if eventInfo.source ~= 0 or self:IsWiping() then return end
 		if not scheduled then
 			scheduled = true
 			C_Timer.After(0, dispatch)
@@ -231,27 +221,55 @@ do
 	end
 end
 
+local function ContainsIf(tbl, pred, delta)
+	delta = delta or 0.5
+	for k, v in next, tbl do
+		if (pred - delta) < v.duration and v.duration < (pred + delta) then
+			local state = mod:GetTimelineEventState(v.id)
+			if state and state < 2 then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function GetStageFromEvents(events)
+	if not events or #events < 3 then return end
+
+	-- Check the event list for events unique to the boss.
+	if ContainsIf(events, 60) then
+		return 1 -- Final Accension
+	elseif ContainsIf(events, 27) then
+		return 2 -- Gebbo
+	elseif ContainsIf(events, 11) then
+		return 3 -- Nama
+	elseif ContainsIf(events, 16) then
+		return 4 -- Iku
+	end
+end
+
 function mod:Timeline(_, eventInfo, events)
-	if nextEmpower and events and #events > 3 then
-		unitEmpowered = nextEmpower
-		nextEmpower = nil
-		stageCount = stageCount + 1
-		local stage = UNIT_TO_STAGE[unitEmpowered]
+	local barInfo
 
-		self:StopBar(self:GetRename(1297022, stage)) -- Empower: Turtle
+	local stage = self:GetStage()
+	local checkStage = GetStageFromEvents(events)
 
+	if checkStage and checkStage ~= stage then
+		self:StopBar(self:GetRename(1297022, checkStage)) -- Empower: Turtle
+
+		stage = checkStage
 		self:SetStage(stage)
 		self:ResetCounts()
 
 		self:Message(1297022, "cyan", self:GetRename(1297022, stage), false) -- Mor'zahi's Command: Turtle
-		local commandCD = (commandCastStart + 60) - GetTime()
-		self:Bar(1297022, commandCD, self:GetRename(1297022, 1)) -- Empower over
+		if currentChannelStart then
+			local commandCD = (currentChannelStart + 60) - GetTime()
+			self:Bar(1297022, commandCD, self:GetRename(1297022, 1)) -- Empower over
+		end
 		self:PlaySound(1297022, "long")
 	end
 
-	local barInfo = nil
-
-	local stage = self:GetStage()
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
@@ -259,20 +277,13 @@ function mod:Timeline(_, eventInfo, events)
 	if stage == 1 then
 		if rounded == 60 then
 			barInfo = self:FinalAscension()
-		-- elseif rounded == 28 then
-		-- 	barInfo = self:FlingFish()
-		-- 	-- cancels instead of finishes
-		-- 	barInfo.timer = self:ScheduleTimer(function() self:StopBar(barInfo.msg) end, duration)
 		elseif rounded == 20 or rounded == 4 or rounded == 27 or rounded == 23 then
 			barInfo = self:ThrowJunk(duration)
 			if rounded == 20 then
 				self:FlingFish()
 			elseif rounded == 4 and throwJunkCount == 4 then
 				-- Throw Junk cast with the fish. Cancels instead of finishes (like the original event)
-				barInfo.timer = self:ScheduleTimer(function()
-					self:StopBar(barInfo.msg)
-					barInfo:onFinished()
-				end, duration)
+				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 			end
 		elseif rounded == 30 then
 			barInfo = self:ShreddingShards()
@@ -284,9 +295,10 @@ function mod:Timeline(_, eventInfo, events)
 			barInfo = self:IceboundFlames()
 		elseif rounded == 31 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 2 == 1 then
+			local count = durationEventCount[rounded]
+			if count == 1 then
 				barInfo = self:IceboundFlames()
-			else
+			elseif count == 2 then
 				barInfo = self:BlinkNova()
 			end
 		end
@@ -299,7 +311,7 @@ function mod:Timeline(_, eventInfo, events)
 			barInfo = self:IceboundFlames()
 		elseif rounded == 3 then
 			barInfo = self:MushroomToss()
-		elseif rounded == 27 or rounded == 6 then
+		elseif rounded == 27 or rounded == 4 then
 			barInfo = self:ThrowJunk(duration)
 		elseif rounded == 13 then
 			barInfo = self:ExplosiveSurprise()
@@ -307,11 +319,14 @@ function mod:Timeline(_, eventInfo, events)
 			barInfo = self:ShellSpin()
 		elseif rounded == 32 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 3 == 1 then
+			local count = durationEventCount[rounded]
+			if count == 1 then
 				barInfo = self:MushroomToss()
-			elseif durationEventCount[rounded] % 3 == 2 then
+			elseif count == 2 then
+				barInfo = self:ShellSpin()
+			elseif count == 3 then
 				barInfo = self:ExplosiveSurprise()
-			else
+			elseif count == 4 then
 				barInfo = self:IceboundFlames()
 			end
 		end
@@ -341,19 +356,15 @@ function mod:Timeline(_, eventInfo, events)
 		elseif rounded == 17 or rounded == 16 then
 			barInfo = self:ShellSpin()
 		elseif rounded == 8 then
-			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 2 == 1 then
-				barInfo = self:FrostfireVolley()
-			else
-				barInfo = self:ThrowJunk(duration)
-			end
+			barInfo = self:FrostfireVolley()
 		elseif rounded == 27 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-			if durationEventCount[rounded] % 3 == 1 then
+			local count = durationEventCount[rounded]
+			if count == 1 then
 				barInfo = self:FrostfireVolley()
-			elseif durationEventCount[rounded] % 3 == 2 then
+			elseif count == 2 then
 				barInfo = self:IceboundFlames()
-			else
+			elseif count == 3 then
 				barInfo = self:ShellSpin()
 			end
 		end
@@ -410,6 +421,16 @@ function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 	backupBars[eventID] = nil
 end
 
+function mod:StopTimelineBar(barInfo, finished)
+	if barInfo then
+		self:StopBar(barInfo.msg)
+		if finished and barInfo.onFinished and self:ShouldShowBars() and not self:IsWiping() then
+			barInfo:onFinished()
+		end
+		activeBars[barInfo.eventID] = nil
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -421,7 +442,6 @@ function mod:CheckStage(event, unit, isFriend)
 	if self.isWinning then return end -- they go friendly after they are all dead D; (in the gap between :Win and :Disable)
 
 	if UnitIsFriend("player", unit) or isFriend then
-		nextEmpower = unit
 		local stage = UNIT_TO_STAGE[unit]
 		self:Message(1296535, "green", self:GetRename(1296535, stage)) -- Disgusting Fish: Turtle
 		self:PlaySound(1296535, "info")
@@ -431,25 +451,23 @@ function mod:CheckStage(event, unit, isFriend)
 end
 
 function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
-	if nextEmpower then
-		commandCastID = castID
-		commandCastStart = GetTime()
-	end
+	currentChannelID = castID
+	currentChannelStart = GetTime()
 end
 
 function mod:UNIT_SPELLCAST_CHANNEL_STOP(event, unit, _, _, _, castID)
-	if castID and castID == commandCastID and not self:IsWiping() then
-		commandCastID = nil
+	if castID == currentChannelID then
+		currentChannelID = nil
 
-		self:StopBar(self:GetRename(1297022, 1)) -- Empower over
-		unitEmpowered = nil
+		if self:GetStage() ~= 1 and not self:IsWiping() then
+			self:StopBar(self:GetRename(1297022, 1)) -- Empower over
 
-		self:SetStage(1)
-		-- XXX reset again?
-		self:ResetCounts()
+			self:SetStage(1)
+			self:ResetCounts()
 
-		self:Message(1297022, "green", self:GetRename(1297022, 1), false) -- Mor'zahi's Command over
-		self:PlaySound(1297022, "long")
+			self:Message(1297022, "green", self:GetRename(1297022, 1), false) -- Mor'zahi's Command over
+			self:PlaySound(1297022, "long")
+		end
 	end
 end
 
@@ -489,7 +507,14 @@ function mod:BlinkNova()
 		msg = barText,
 		key = 1290711,
 		onFinished = function()
-			local timer = self:ScheduleTimer(function() self:Message(1290711, "yellow", barText) end, 0.35)
+			local timer = self:ScheduleTimer(function()
+				local target = _G.UnitSpellTargetName("boss4")
+				if target then
+					self:SecretTargetMessage(1290711, "yellow", "boss4", barText)
+				else
+					self:Message(1290711, "yellow", barText)
+				end
+			end, 0.35)
 			-- Scrollsage Iku targets you with [Blink Nova]!
 			self:PersonalMessageFromBlizzMessage(1290711, 0.3, false, self:GetRename(1290711, 2), nil, nil, function() self:CancelTimer(timer) end)
 		end,
