@@ -239,22 +239,22 @@ L.debuffFailureNote = "Este perjuicio se te aplicará si fallas"
 L.debuffFailureMoveFromExplosionNote = "Este perjuicio se te aplicará si no te alejas de la explosión"
 L.debuffFailureInterruptNote = "Este perjuicio se te aplicará si no logras interrumpir el lanzamiento de |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to interrupt the cast of SPELL_NAME
 L.debuffFailureMoveFromCastNote = "Este perjuicio se te aplicará si no te sales del lanzamiento de |cFFFFFFFF%s|r" -- This debuff will apply to you if you fail to move out of the SPELL_NAME cast
---L.debuffFailureGroupSoakNote = "This debuff will apply to you if your group fails to soak |cFFFFFFFF%s|r" -- This debuff will apply to you if your group fails to soak SPELL_NAME
---L.debuffFailureSafeZoneNote = "This debuff will apply to you if you fail to stand in the safe zone"
---L.debuffHitByOtherPlayerNote = "This debuff will apply to you if you are hit by another player's |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by another player's SPELL_NAME
---L.debuffTargetedNote = "This debuff will apply to you if you are being targeted for |cFFFFFFFF%s|r" -- This debuff will apply to you if you are being targeted for SPELL_NAME
+L.debuffFailureGroupSoakNote = "Este perjuicio se te aplicará si tu grupo no soakea |cFFFFFFFF%s|r" -- This debuff will apply to you if your group fails to soak SPELL_NAME
+L.debuffFailureSafeZoneNote = "Este perjuicio se te aplicará si no te quedas en la zona segura"
+L.debuffHitByOtherPlayerNote = "Este perjuicio se te aplicará si otro jugador no te golpea con |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by another player's SPELL_NAME
+L.debuffTargetedNote = "Este perjuicio se te aplicará si eres el objetivo de |cFFFFFFFF%s|r" -- This debuff will apply to you if you are being targeted for SPELL_NAME
 L.preDebuffNote = "Este es un perjuicio previo antes de que se te aplique el perjuicio principal"
 L.mainDebuffNote = "Este es el perjuicio principal que se te aplica"
 L.postDebuffNote = "Este perjuicio se te aplicará cuando |cFFFFFFFF%s|r expire" -- This debuff will apply to you after OTHER_DEBUFF expires
 L.debuffUnderYouNote = "Este perjuicio se te aplicará si te quedas quieto en un lugar peligroso" -- Usually when a player is standing in a pool of something bad, a debuff will apply to them
---L.debuffDotAfterCastNote = "This debuff is a damage over time effect after the |cFFFFFFFF%s|r cast" -- This debuff is a damage over time effect after the SPELL_NAME cast
---L.debuffPossibleAfterCastNote = "This debuff might apply to you after the |cFFFFFFFF%s|r cast" -- This debuff might apply to you after the SPELL_NAME cast
---L.debuffTankAfterCastNote = "This debuff will apply to the tank after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the tank after the SPELL_NAME cast
---L.debuffGroupAfterCastNote = "This debuff will apply to the entire group after the |cFFFFFFFF%s|r cast" -- This debuff will apply to the entire group after the SPELL_NAME cast
+L.debuffDotAfterCastNote = "Este perjuicio aplica un daño en el tiempo tras el lanzamiento de |cFFFFFFFF%s|r" -- This debuff is a damage over time effect after the SPELL_NAME cast
+L.debuffPossibleAfterCastNote = "Este perjuicio se te puede aplicar tras el lanzamiento de |cFFFFFFFF%s|r" -- This debuff might apply to you after the SPELL_NAME cast
+L.debuffTankAfterCastNote = "Este perjuicio afectará al tanque tras el lanzamiento de |cFFFFFFFF%s|r" -- This debuff will apply to the tank after the SPELL_NAME cast
+L.debuffGroupAfterCastNote = "Este perjuicio afectará al grupo entero tras el lanzamiento de |cFFFFFFFF%s|r" -- This debuff will apply to the entire group after the SPELL_NAME cast
 L.debuffWalkIntoObjectNote = "Este perjuicio se te aplicará si pisas a propósito cualquier |cFFFFFFFF%s|r" -- This debuff will apply to you if you purposely walk into the OBJECT_NAME (e.g. trap, mine, bomb)
 L.debuffHitByCastNote = "Este perjuicio se te aplicará si eres golpeado por el lanzamiento |cFFFFFFFF%s|r" -- This debuff will apply to you if you are hit by the the SPELL_NAME cast
 L.debuffAddsCast = "Este perjuicio te lo aplica |cFFFFFFFF%s|r" -- This debuff is applied to you by NPC_NAME
---L.debuffPickupNote = "This debuff will apply to you if you pick up the |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
+L.debuffPickupNote = "Este perjuicio se te aplicará si coges el objeto |cFFFFFFFF%s|r" -- This debuff will apply to you if you pick up the OBJECT_NAME
 
 -- Common ability name replacements
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
@@ -388,4 +388,4 @@ L.tank_soak = "Soak de Tanque" -- Similar to L.soak but only applies to tanks
 L.tank_grip = "Agarre al Tanque" -- When a boss grapples the tank towards them. We use "Grip" because of the Death Knight ability "Death Grip" (49576) but you can use "Grapple" if it makes more sense
 
 -- Aura Sections
---L.important = "Important" -- High priority debuffs
+L.important = "Importante" -- High priority debuffs
