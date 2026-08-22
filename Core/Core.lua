@@ -393,11 +393,11 @@ function core:Print(msg, isLittleWigs)
 	end
 end
 
-function core:Error(msg, noPrint)
+function core:Error(msg, noPrint, isLittleWigs)
 	if not noPrint then
-		core:Print(msg)
+		core:Print(msg, isLittleWigs)
 	end
-	geterrorhandler()("BigWigs: ".. msg)
+	geterrorhandler()((isLittleWigs and "LittleWigs: " or "BigWigs: ").. msg)
 end
 
 -------------------------------------------------------------------------------
