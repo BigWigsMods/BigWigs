@@ -225,10 +225,7 @@ local function ContainsIf(tbl, pred, delta)
 	delta = delta or 0.5
 	for k, v in next, tbl do
 		if (pred - delta) < v.duration and v.duration < (pred + delta) then
-			local state = mod:GetTimelineEventState(v.id)
-			if state and state < 2 then
-				return true
-			end
+			return true
 		end
 	end
 	return false
