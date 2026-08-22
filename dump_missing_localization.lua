@@ -1,6 +1,18 @@
 #!/usr/bin/env lua
 
 local results = {}
+local locale_names = {
+	["deDE"] = "German", -- German
+	["esES"] = "Spanish (Spain)", -- Spanish (Spain)
+	["esMX"] = "Spanish (Mexico)", -- Spanish (Mexico)
+	["frFR"] = "French", -- French
+	["itIT"] = "Italian", -- Italian
+	["koKR"] = "Korean", -- Korean
+	["ptBR"] = "Portuguese (Brazil)", -- Portuguese (Brazil)
+	["ruRU"] = "Russian", -- Russian
+	["zhCN"] = "Chinese (Simplified)", -- Chinese (Simplified)
+	["zhTW"] = "Chinese (Traditional)"  -- Chinese (Traditional)
+}
 
 -- Set an exit code if we show an error.
 local exit_code = 0
@@ -64,7 +76,7 @@ local function is_commented_assignment(line)
 end
 
 -- Parse a file containing localized strings and record the number of commented-out entries.
-local function parseLocale(file)
+local function parseLocale(file, locale)
 	local file_handle = io.open(file, "r")
 	if not file_handle then
 		error(string.format("    %s: File not found!", file))
@@ -81,9 +93,7 @@ local function parseLocale(file)
 	end
 	file_handle:close()
 
-	if count > 0 then
-		table.insert(results, { path = file, count = count })
-	end
+	table.insert(results, { path = file, count = count, locale = locale })
 end
 
 -- Parse a .toc file and return a list of files.
@@ -128,7 +138,7 @@ local function parse(file, relative_path)
 				end
 				for _, locale in next, allowed_locales do
 					-- shortcut to parseLocale, assuming any path with [TextLocale] is directly pointing to a locale file
-					parseLocale(file_path:gsub("%[TextLocale%]", locale))
+					parseLocale(file_path:gsub("%[TextLocale%]", locale), locale)
 				end
 			end
 		elseif string.match(file_name, "%.toc$") then
@@ -186,11 +196,18 @@ local function main()
 
 	local total = 0
 	local out = {}
-	table.insert(out, "| File | Missing |")
-	table.insert(out, "|---|---|")
 
+	local current_locale = nil
 	table.sort(results, function(a, b) return a.path < b.path end)
 	for _, r in ipairs(results) do
+		if r.locale ~= current_locale then
+			current_locale = r.locale
+			table.insert(out, "")
+			table.insert(out, string.format("## %s", locale_names[current_locale] or current_locale))
+			table.insert(out, "")
+			table.insert(out, "| File | Missing |")
+			table.insert(out, "|---|---|")
+		end
 		total = total + r.count
 		local repo, path = r.path:match("(.-)/(.*)$")
 		local link = path and string.format("[%s](https://github.com/BigWigsMods/%s/blob/master/%s)", r.path, repo, path)
