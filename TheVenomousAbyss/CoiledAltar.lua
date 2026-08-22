@@ -455,6 +455,7 @@ function mod:HandleBar(barInfo, eventInfo)
 	end
 
 	if barInfo then
+		barInfo.eventID = eventInfo.id
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
 			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
