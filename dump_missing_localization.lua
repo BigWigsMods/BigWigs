@@ -145,11 +145,11 @@ local function main()
 
 	if arg and #arg > 0 then
 		local i = 1
-		while i <= #args do
-			local a = args[i]
+		while i <= #arg do
+			local a = arg[i]
 			if a == "-o" or a == "--output" then
 				i = i + 1
-				output_file = args[i]
+				output_file = arg[i]
 			else
 				local path = a:gsub("\\", "/")
 				local ext = path:sub(-4)
@@ -204,7 +204,7 @@ local function main()
 	local summary = string.format("%d entries missing translation.", total)
 	os.execute(string.format("echo '%s' >> $GITHUB_STEP_SUMMARY", summary))
 	info(summary)
-	print(string.format("Wrote report to %s", output))
+	print(string.format("Wrote report to %s", output_file))
 end
 
 main()
