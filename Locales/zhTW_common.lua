@@ -341,6 +341,7 @@ L.tentacle = "觸手" -- Used for bosses that summon tentacles
 L.tentacles = "觸手" -- Plural of L.tentacle
 L.vines = "藤蔓" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
 L.waves = "波浪" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.winds = "風" -- Short for any ability with the name "Winds" in it e.g. "Winds of Change" (381517)
 L.whelp = "幼龍" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "幼龍" -- Plural of L.whelp
 

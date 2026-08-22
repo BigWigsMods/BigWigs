@@ -341,6 +341,7 @@ L.tentacle = "Tentakel" -- Used for bosses that summon tentacles
 L.tentacles = "Tentakel" -- Plural of L.tentacle
 L.vines = "Ranken" -- Short for any ability with the name "Vines" in it e.g. "Festering Vines" (1222088) or "Choking Vines" (238593)
 L.waves = "Wellen" -- Multiple waves of a bad ability coming from a boss, like waves in the ocean
+L.winds = "Winde" -- Short for any ability with the name "Winds" in it e.g. "Winds of Change" (381517)
 L.whelp = "Welpe" -- Short for Whelpling, a baby dragonkin (Dragon Whelp)
 L.whelps = "Welpen" -- Plural of L.whelp
 
