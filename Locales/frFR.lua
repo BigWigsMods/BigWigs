@@ -745,6 +745,7 @@ L.privateAuras = "Auras privées"
 L.privateAurasDesc1 = "'Auras privées' sont un type spécial d'affaiblissements que les addons ne peuvent détecter ou traiter automatiquement. Ces affaiblissements sont désormais utilisés sur toutes les rencontres de boss modernes.\n\n"
 L.privateAurasDesc2 = "BigWigs peut vous aider à les traquer lorsqu'elles sont appliquées sur vous en les affichant en tant qu'icônes. |cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques séparemment de vos affaiblissements classiques.|r\n\n"
 L.aurasDesc = "BigWigs peut vous aider à traquer les affaiblissements que les boss peuvent vous appliquer en tant qu'icônes.\n|cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques, séparément de vos affaiblissements normaux.|r\n\n"
+--L.disabledDuringTrash = "Disabled During Trash"
 
 L.createTestAura = "Créer une Aura de Test"
 L.showDispelType = "Afficher l'indicateur du type de dissipation"

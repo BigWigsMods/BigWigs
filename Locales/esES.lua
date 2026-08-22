@@ -745,6 +745,7 @@ L.privateAuras = "Auras privadas"
 L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
 L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como iconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
 L.aurasDesc = "BigWigs puede ayudarte a ver cuando un jefe te aplica perjuicios mostrándotelos como iconos.\n|cFF33FF99Esto te puede ayudar a mostrar por separado los perjuicios más importantes de los comunes.|r\n\n"
+--L.disabledDuringTrash = "Disabled During Trash"
 
 L.createTestAura = "Crear aura de prueba"
 L.showDispelType = "Mostrar indicador de tipo de disipación"

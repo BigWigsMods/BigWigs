@@ -745,6 +745,7 @@ L.privateAuras = "私有光环"
 L.privateAurasDesc1 = "“私有光环”是一种特殊的减益效果，插件既无法检测，也无法对其进行任何自动化操作。如今，这类机制已普遍应用于所有现代首领战中。\n\n"
 L.privateAurasDesc2 = "BigWigs 会用醒目的图标为你单独显示这些效果，|cFF33FF99帮助你精准定位关键减益，不再受普通减益的干扰。|r\n\n"
 L.aurasDesc = "BigWigs 可以将你身上的Boss减益以图标形式显示，方便你追踪。\n|cFF33FF99这样能把关键减益与普通减益分开显示，让你更直观地掌握自身状态。|r\n\n"
+--L.disabledDuringTrash = "Disabled During Trash"
 
 L.createTestAura = "创建测试光环"
 L.showDispelType = "显示驱散类型图标"
