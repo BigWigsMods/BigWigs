@@ -20,38 +20,35 @@ local backupBars = {}
 
 local durationEventCount = {}
 local repeaters = {}
+local spellCount = {}
 
-local graspingDepthsCount = 1
 local ignitionCount = 1
-local rendCount = 1
-local amaniCount = 1
-local barrageCount = 1
-local pyreCount = 1
-local invokeCount = 1
+local graspingDepthsCount = 1
+local graspingDepthsCountStart = 1
 
 local gapTimer do
 	local timersMythic = {
 		[1295397] = {  -- Restless Amani
 			[1] = { [40] = 71 },
-			[1.5] = { [20] = 35 },
-			[2] = { [40] = 31 },
+			[1.5] = { [25] = 35 },
+			[2] = { [40] = 32 },
 		},
 		[1287426] = { -- Essence Rend
 			[1] = { [40.5] = 30.5 },
-			[2] = { [49.5] = 80 },
+			[2] = { [49.5] = 80.5 },
 		},
 		[1292036] = { -- Possession Barrage
 			[1] = { [36] = 35 },
 			[2] = { [28] = 52 },
 		},
 		[1305421] = { -- Hungering Pyre
-			[1.5] = { [16] = 30 },
+			[1.5] = { [11] = 35 },
 		},
 		[1299673] = { -- Invoke
-			[2] = { [50] = 30 },
+			[2] = { [48] = 32 },
 		},
 	}
-	local timers = {
+	local timersOther = {
 		[1295397] = {  -- Restless Amani
 			[1] = { [40] = 71 },
 			[1.5] = { [30] = 40 },
@@ -73,11 +70,13 @@ local gapTimer do
 		},
 	}
 	function gapTimer(spellId, duration)
-		local stage = mod:GetStage()
-		if mod:Mythic() then
-			return timersMythic[spellId][stage] and timersMythic[spellId][stage][duration]
-		else
-			return timers[spellId][stage] and timers[spellId][stage][duration]
+		local timers = mod:Mythic() and timersMythic or timersOther
+		if timers[spellId] then
+			if duration == true then
+				return true
+			end
+			local stageTimers = timers[spellId][mod:GetStage()]
+			return stageTimers and stageTimers[duration]
 		end
 	end
 end
@@ -102,11 +101,10 @@ mod:SetRenames({
 	[1295397] = {CL.adds}, -- Restless Amani
 	[1287533] = {CL.adds_spawning}, -- Gravebound Advance
 	[1292036] = {L.possession_barrage}, -- Possession Barrage
-	[1289696] = {CL.big_adds}, -- Tether of Awakening
+	-- [1289696] = {CL.big_adds}, -- Tether of Awakening
 	[1293212] = {1293212}, -- Grasping Depths
 	[1305421] = {CL.soak}, -- Hungering Pyre
 	[1299673] = {1299673}, -- Invoke
-	-- [1293497] = {1293497}, -- Entwined Step
 })
 
 --------------------------------------------------------------------------------
@@ -150,18 +148,17 @@ function mod:GetOptions()
 		1292036, -- Possession Barrage
 
 		-- Intermission: Ritual of Awakening
-		1289696, -- Tether of Awakening
+		-- 1289696, -- Tether of Awakening
 		1305421, -- Hungering Pyre
 		-- Restless Amani
 
 		-- Stage Two: Uncoiling
 		1299673, -- Invoke
-			-- 1293497, -- Entwined Step
 		-- Possession Barrage
 	}, {
 		[1293212] = "mythic",
 		[1285681] = -36184, -- Stage 1
-		[1289696] = -35255, -- Intermission
+		[1305421] = -35255, -- Intermission
 		[1299673] = -36195, -- Stage 2
 	}
 end
@@ -186,19 +183,23 @@ function mod:OnEncounterStart()
 	self:SetStage(1)
 	durationEventCount = {}
 
+	spellCount = {
+		[1287426] = 1, -- Essence Rend
+		[1295397] = 1, -- Restless Amani
+		[1292036] = 1, -- Possession Barrage
+		[1305421] = 1, -- Hungering Pyre
+		[1299673] = 1, -- Invoke
+		[1293212] = 1, -- Grasping Depths
+	}
 	ignitionCount = 1
-	rendCount = 1
-	amaniCount = 1
-	barrageCount = 1
-	pyreCount = 1
-	invokeCount = 1
+	graspingDepthsCount = 1
+	graspingDepthsCountStart = 1
 
 	if self:ShouldShowBars() then
 		self:Bar(1285681, 3, CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
 		repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", 3)
 
 		if self:Mythic() then
-			graspingDepthsCount = 1
 			self:Bar(1293212, 42.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
 			repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 42.5)
 		end
@@ -230,41 +231,42 @@ function mod:MythicTimeline(_, eventInfo)
 			end
 		end
 
-		if rounded == 40 then
-			barInfo = self:RestlessAmani(duration)
+		if rounded == 15 or rounded1 == 40.5 then
+			barInfo = self:EssenceRend()
+		elseif rounded == 40 then
+			barInfo = self:RestlessAmani()
 		elseif rounded == 28 or rounded == 36 then
-			barInfo = self:PossessionBarrage(duration)
-		elseif rounded1 == 14.5 or rounded1 == 40.5 then
-			barInfo = self:EssenceRend(duration)
+			barInfo = self:PossessionBarrage()
+
 
 		-- intermission
-		elseif rounded == 20 then
-			barInfo = self:RestlessAmani(duration)
-		elseif rounded == 16 then
-			barInfo = self:HungeringPyre(duration)
+		elseif rounded == 25 then
+			barInfo = self:RestlessAmani()
+		elseif rounded == 11 then
+			barInfo = self:HungeringPyre()
 		end
 
 	-- stage 2
 	else
 		if rounded1 == 49.5 then
-			barInfo = self:EssenceRend(duration)
-		elseif rounded == 6 or rounded == 50 then
-			barInfo = self:Invoke(duration)
+			barInfo = self:EssenceRend()
+		elseif rounded == 8 or rounded == 48 then
+			barInfo = self:Invoke()
 		elseif rounded == 28 then
-			barInfo = self:PossessionBarrage(duration)
+			barInfo = self:PossessionBarrage()
 		elseif rounded == 20 then
-			barInfo = self:RestlessAmani(duration)
+			barInfo = self:RestlessAmani()
 		elseif rounded == 40 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
-				barInfo = self:PossessionBarrage(duration)
+				barInfo = self:PossessionBarrage()
 			else
-				barInfo = self:RestlessAmani(duration)
+				barInfo = self:RestlessAmani()
 			end
 		end
 	end
 
-	self:HandleBars(barInfo, eventInfo)
+	self:HandleBar(barInfo, eventInfo)
 end
 
 function mod:OtherTimeline(_, eventInfo)
@@ -285,47 +287,55 @@ function mod:OtherTimeline(_, eventInfo)
 		end
 
 		if rounded == 40 then
-			if durationEventCount[rounded] % 2 == 0 then -- XXX swapped due to the cancelled bar
-				barInfo = self:RestlessAmani(duration)
+			if durationEventCount[rounded] % 2 == 0 then -- swapped due to the canceled timer
+				barInfo = self:RestlessAmani()
 			else
-				barInfo = self:EssenceRend(duration)
+				barInfo = self:EssenceRend()
 			end
 		elseif rounded == 28 or rounded == 36 then
-			barInfo = self:PossessionBarrage(duration)
+			barInfo = self:PossessionBarrage()
 		elseif rounded == 15 then
-			barInfo = self:EssenceRend(duration)
+			barInfo = self:EssenceRend()
 
 		-- intermission
 		elseif rounded == 30 then
-			barInfo = self:RestlessAmani(duration)
+			barInfo = self:RestlessAmani()
 		elseif rounded == 11 then
-			barInfo = self:HungeringPyre(duration)
+			barInfo = self:HungeringPyre()
 		end
 
 	-- stage 2
 	else
 		if rounded == 8 or rounded == 48 then
-			barInfo = self:Invoke(duration)
+			barInfo = self:Invoke()
 		elseif rounded == 28 then
-			barInfo = self:PossessionBarrage(duration)
+			barInfo = self:PossessionBarrage()
 		elseif rounded == 40 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			if durationEventCount[rounded] % 2 == 1 then
-			barInfo = self:PossessionBarrage(duration)
+				barInfo = self:PossessionBarrage()
 			else
-				barInfo = self:RestlessAmani(duration)
+				barInfo = self:RestlessAmani()
 			end
 		elseif rounded == 50 then
-			barInfo = self:EssenceRend(duration)
+			barInfo = self:EssenceRend()
 		elseif rounded == 20 then
-			barInfo = self:RestlessAmani(duration)
+			barInfo = self:RestlessAmani()
 		end
 	end
 
-	self:HandleBars(barInfo, eventInfo)
+	self:HandleBar(barInfo, eventInfo)
 end
 
-function mod:HandleBars(barInfo, eventInfo)
+function mod:HandleBar(barInfo, eventInfo)
+    if barInfo and gapTimer(barInfo.key, true) then
+		-- blizzard fires sets of bars on an interval, bridge the gap with a normal bar
+		barInfo.gapTimer = gapTimer(barInfo.key, self:RoundNumber(eventInfo.duration, 1))
+		-- if the normal bar is running, use the existing duration for max time
+		local remaining, total = self:BarTimeLeft(barInfo.msg)
+		barInfo.duration = remaining > 0 and { eventInfo.duration, total } or nil
+	end
+
 	if barInfo then
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
@@ -346,6 +356,11 @@ end
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local state = C_EncounterTimeline.GetEventState(eventID)
 	local barInfo = activeBars[eventID]
+
+	if barInfo and barInfo.gapTimer and state == 2 then -- Finished
+		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key), spellCount[barInfo.key]))
+	end
+
 	if barInfo then
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
@@ -399,9 +414,9 @@ do
 
 			self:CancelTimer(repeaters[1285681])
 			self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
-			self:StopBar(CL.count:format(self:GetRename(1295397), amaniCount)) -- Restless Amani
-			self:StopBar(CL.count:format(self:GetRename(1287426), rendCount)) -- Essence Rend
-			self:StopBar(CL.count:format(self:GetRename(1292036), barrageCount)) -- Possession Barrage
+			self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+			self:StopBar(CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
+			self:StopBar(CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
 			if self:Mythic() then
 				self:CancelTimer(repeaters[1293212])
 				self:StopBar(CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
@@ -409,9 +424,9 @@ do
 
 			durationEventCount = {}
 
-			rendCount = 1
-			amaniCount = 1
-			barrageCount = 1
+			spellCount[1287426] = 1 -- Essence Rend
+			spellCount[1295397] = 1 -- Restless Amani
+			spellCount[1292036] = 1 -- Possession Barrage
 
 			-- stage set in channel, which is ~1s later (runs to the well)
 			self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
@@ -426,46 +441,51 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
 		self:SetStage(1.5)
 
 		if self:ShouldShowBars() then
-			self:Bar(1289696, 20) -- Tether of Awakening
-			if self:Mythic() then
-				local gap = 18
-				self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), amaniCount)) -- Restless Amani
-				self:Bar(1305421, 16 + gap, CL.count:format(self:GetRename(1305421), pyreCount)) -- Hungering Pyre
+			-- self:Bar(1289696, 20) -- Tether of Awakening
+			if not self:Mythic() then
+				local gap = 16.5
+				self:Bar(1305421, 11 + gap, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
+				self:Bar(1295397, 30 + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+			elseif self:Mythic() then
+				self:Bar(1305421, 7, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
+				self:Bar(1295397, 26, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
 
 				-- restart with the same count so down groups can stay consistent
-				self:Bar(1293212, 41.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 41.5)
+				self:Bar(1293212, 23.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 23.5)
+				graspingDepthsCountStart = graspingDepthsCount
 			end
 		end
 
 	elseif stage == 1.5 then -- Uncoiling
 		self:UnregisterUnitEvent(event, unit)
 
-		self:StopBar(CL.count:format(self:GetRename(1295397), amaniCount)) -- Restless Amani
-		self:StopBar(CL.count:format(self:GetRename(1305421), pyreCount)) -- Hungering Pyre
+		self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+		self:StopBar(CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
 
 		durationEventCount = {}
 
-		rendCount = 1
-		amaniCount = 1
-		barrageCount = 1
+		spellCount[1287426] = 1 -- Essence Rend
+		spellCount[1295397] = 1 -- Restless Amani
+		spellCount[1292036] = 1 -- Possession Barrage
 
 		self:SetStage(2)
 		if self:ShouldShowBars() then
 			self:Message("stages", "cyan", self:GetRename("stages", 2), false) -- Stage 2
 			self:PlaySound("stages", "long")
 
-			if self:Mythic() then
-				local gap = 5
-				self:Bar(1299673, 6 + gap, CL.count:format(self:GetRename(1299673), invokeCount)) -- Invoke
-				self:Bar(1292036, 40 + gap, CL.count:format(self:GetRename(1292036), barrageCount)) -- Possession Barrage
-				self:Bar(1287426, 49.5 + gap, CL.count:format(self:GetRename(1287426), rendCount)) -- Essence Rend
-				self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), amaniCount)) -- Restless Amani
+            local gap = 5
+			self:Bar(1299673, 8 + gap, CL.count:format(self:GetRename(1299673), spellCount[1299673])) -- Invoke
+			self:Bar(1292036, 40 + gap, CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
+			self:Bar(1287426, 49.5 + gap, CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
+			self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
 
+			if self:Mythic() then
 				self:CancelTimer(repeaters[1293212])
 				-- restart with the same count so down groups can stay consistent
 				self:Bar(1293212, 27.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
 				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 27.5)
+				graspingDepthsCountStart = graspingDepthsCount
 			end
 		end
 	end
@@ -484,47 +504,31 @@ function mod:SoulcoilIgnitionRepeater()
 	-- self:PlaySound(1285681, "alarm")
 	ignitionCount = ignitionCount + 1
 
-	local cd = 73
+	local cd = 74.9
 	self:Bar(1285681, cd, CL.count:format(self:GetRename(1285681), ignitionCount))
 	repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", cd)
 end
 
-function mod:EssenceRend(duration)
-	local barText = CL.count:format(self:GetRename(1287426), rendCount)
-	rendCount = rendCount + 1
-
-	-- blizzard fires sets of bars on an interval, bridge the gap with a normal bar
-	local barOnFinish = gapTimer(1287426, self:RoundNumber(duration, 1))
-	-- if the normal bar is running, use the existing duration for max time
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:EssenceRend()
+	local barText = CL.count:format(self:GetRename(1287426), spellCount[1287426])
+	spellCount[1287426] = spellCount[1287426] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1287426,
 		onFinished = function()
 			local timer = self:ScheduleTimer(function() self:Message(1287426, "yellow", barText) end, 0.35)
 			self:PersonalMessageFromBlizzMessage(1287426, 0.3, false, self:GetRename(1287426, 2), nil, nil, function() self:CancelTimer(timer) end)
-
-			if barOnFinish then
-				self:Bar(1287426, barOnFinish, CL.count:format(self:GetRename(1287426), rendCount))
-			end
 		end
 	}
 end
 
-function mod:RestlessAmani(duration)
-	local barText = CL.count:format(self:GetRename(1295397), amaniCount)
+function mod:RestlessAmani()
+	local barText = CL.count:format(self:GetRename(1295397), spellCount[1295397])
 	local messageText = CL.soon:format(barText)
-	amaniCount = amaniCount + 1
-
-	local barOnFinish = gapTimer(1295397, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+	spellCount[1295397] = spellCount[1295397] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1295397,
 		onFinished = function()
@@ -534,34 +538,21 @@ function mod:RestlessAmani(duration)
 
 			-- x3 12.6, x3 14.2, x1 15.7 (p1)
 			self:Bar(1287533, 12.6, self:GetRename(1287533)) -- Gravebound Advance
-
-			if barOnFinish then
-				self:Bar(1295397, barOnFinish, CL.count:format(self:GetRename(1295397), amaniCount))
-			end
 		end
 	}
 end
 
-function mod:PossessionBarrage(duration)
-	local barText = CL.count:format(self:GetRename(1292036), barrageCount)
-	barrageCount = barrageCount + 1
-
-	local barOnFinish = gapTimer(1292036, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:PossessionBarrage()
+	local barText = CL.count:format(self:GetRename(1292036), spellCount[1292036])
+	spellCount[1292036] = spellCount[1292036] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1292036,
 		onFinished = function()
 			self:Message(1292036, "purple", barText)
 			-- self:PlaySound(1292036, "alert")
 			-- 6s cast on current target, then 2s channel
-
-			if barOnFinish then
-				self:Bar(1292036, barOnFinish, CL.count:format(self:GetRename(1292036), barrageCount))
-			end
 		end
 	}
 end
@@ -572,59 +563,56 @@ function mod:GraspingDepthsRepeater()
 	self:PlaySound(1293212, "long")
 	graspingDepthsCount = graspingDepthsCount + 1
 
-	self:Bar(1293212, 60.1, CL.count:format(self:GetRename(1293212), graspingDepthsCount))
-	repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 60.1)
+	-- we don't reset the count, but the cd increases with each cast so we need a starting point
+	local stage = self:GetStage()
+	local cd
+	if stage == 1 then
+		-- 42.5, 71.0, 71.0
+		cd = 71
+	elseif stage == 1.5 then
+		local timers = { 23.5, 35.0, 74.9 }
+		local count = graspingDepthsCount - graspingDepthsCountStart
+		cd = timers[count]
+	elseif stage == 2 then
+		local timers = { 27.5, 40.0, 80.0 }
+		local count = graspingDepthsCount - graspingDepthsCountStart
+		cd = timers[count]
+	end
+	if cd then
+		self:Bar(1293212, cd, CL.count:format(self:GetRename(1293212), graspingDepthsCount))
+		repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", cd)
+	end
 end
 
 -- Intermission
 
-function mod:HungeringPyre(duration)
-	local barText = CL.count:format(self:GetRename(1305421), pyreCount)
-	pyreCount = pyreCount + 1
-
-	local barOnFinish = gapTimer(1305421, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+function mod:HungeringPyre()
+	local barText = CL.count:format(self:GetRename(1305421), spellCount[1305421])
+	spellCount[1305421] = spellCount[1305421] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1305421,
 		onFinished = function()
 			self:Message(1305421, "orange", barText)
 			-- self:PlaySound(1305421, "alert")
-
-			if barOnFinish then
-				self:Bar(1305421, barOnFinish, CL.count:format(self:GetRename(1305421), pyreCount))
-			end
 		end
 	}
 end
 
 -- Stage 2
 
-function mod:Invoke(duration)
-	local barText = CL.count:format(self:GetRename(1299673), invokeCount)
+function mod:Invoke()
+	local barText = CL.count:format(self:GetRename(1299673), spellCount[1299673])
 	local messageText = CL.casting:format(barText)
-	invokeCount = invokeCount + 1
-
-	local barOnFinish = gapTimer(1299673, duration)
-	local remaining, total = self:BarTimeLeft(barText)
-	local newDuration = remaining > 1 and { duration, total } or nil
+	spellCount[1299673] = spellCount[1299673] + 1
 
 	return {
-		duration = newDuration,
 		msg = barText,
 		key = 1299673,
 		onFinished = function()
 			self:Message(1299673, "orange", messageText)
 			self:PlaySound(1299673, "alarm")
-
-			-- self:Bar(1293497, 5) -- Entwined Step
-
-			if barOnFinish then
-				self:Bar(1299673, barOnFinish, CL.count:format(self:GetRename(1299673), invokeCount))
-			end
 		end
 	}
 end
