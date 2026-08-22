@@ -1229,11 +1229,15 @@ local function parseLua(file)
 		local getRenameArgs = line:match(":GetRename(%b())")
 		if getRenameArgs then
 			getRenameArgs = strsplit(clean(getRenameArgs:sub(2, -2)))
-			local key = tonumber(getRenameArgs[1]) or unquote(getRenameArgs[1])
-			if not option_keys[key] then
-				error(string.format("    %s:%d: GetRename: Invalid key! func=%s, key=%s", file_name, n, tostring(current_func), key))
-			elseif key then
-				option_key_used[key] = true
+			for _, key in next, tablize(unternary(getRenameArgs[1], {"(-?%d+)", "(\".-\")"})) do
+				key = tonumber(key) or unquote(key)
+				if not option_keys[key] then
+					if key ~= "barInfo.key" then
+						error(string.format("    %s:%d: GetRename: Invalid key! func=%s, key=%s", file_name, n, tostring(current_func), key))
+					end
+				elseif key then
+					option_key_used[key] = true
+				end
 			end
 		end
 
