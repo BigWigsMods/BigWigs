@@ -177,6 +177,7 @@ local updateData = function(module)
 
 	local _, _, diff, _, currentMaxPlayers = GetInstanceInfo()
 	difficulty, maxPlayers = diff, currentMaxPlayers
+	module.isLittleWigs = loader:IsLittleWigsZone(module.instanceId or (module.mapId and -module.mapId))
 
 	UpdateDispelStatus()
 	UpdateInterruptStatus()
@@ -590,20 +591,12 @@ end
 --- Show an error after the encounter has ended
 -- @string message the message to show to the user
 -- @bool chatOnly if the message should only be shown in chat, and not sent to the error handler
--- @bool littleWigsMessage if the chat message should mention LittleWigs instead of BigWigs
-function boss:Error(message, chatOnly, littleWigsMessage)
+function boss:Error(message, chatOnly)
 	if chatOnly then
-		if littleWigsMessage then
-			if not self.errorChatPrintsLittleWigs then
-				self.errorChatPrintsLittleWigs = {}
-			end
-			self.errorChatPrintsLittleWigs[#self.errorChatPrintsLittleWigs+1] = message
-		else
-			if not self.errorChatPrints then
-				self.errorChatPrints = {}
-			end
-			self.errorChatPrints[#self.errorChatPrints+1] = message
+		if not self.errorChatPrints then
+			self.errorChatPrints = {}
 		end
+		self.errorChatPrints[#self.errorChatPrints+1] = message
 	else
 		if not self.errorMessages then
 			self.errorMessages = {}
@@ -623,7 +616,7 @@ do
 		end
 		local stage = self:GetStage() or 0
 		local eventErrorMessage = unhandledEventString:format(GetTime() - self.stageTime, stage, eventInfo.spellName, eventInfo.spellID, eventInfo.duration)
-		self:Error(eventErrorMessage, true, self:GetMaxPlayers() <= 5)
+		self:Error(eventErrorMessage, true)
 		self:Debug(("TL event ID %d after %.1fs (stage %s) was missed."):format(eventInfo.id, GetTime() - self.stageTime, stage))
 	end
 end
@@ -672,6 +665,16 @@ function boss:Enable(isWipe)
 		end
 	end
 end
+--- Returns the version of the addon owning this module
+-- e.g. "422#abc1234" or "v12.1.0"
+function boss:GetVersion()
+	if self.isLittleWigs then
+		return loader.littlewigsVersion or "unknown"
+	end
+	local version = BigWigsAPI.GetVersion()
+	return ("%d#%s"):format(version, BigWigsAPI.GetVersionHash())
+end
+
 function boss:Disable(isWipe)
 	if self:IsEnabled() then
 		self.enabled = nil
@@ -753,7 +756,7 @@ function boss:Disable(isWipe)
 
 		if self.missing then
 			local newBarError = "New timer for %q at stage %d with placement %d and value %.2f."
-			local errorHeader = format("BigWigs is missing timers on %q running %d#%s, tell the devs!", self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash())
+			local errorHeader = format("%s is missing timers on %q running %s, tell the devs!", self.isLittleWigs and "LittleWigs" or "BigWigs", self:DifficultyName(), self:GetVersion())
 			local errorStrings = {errorHeader}
 			for key, stageTbl in next, self.missing do
 				for stage = 0, 5, 0.5 do
@@ -762,43 +765,33 @@ function boss:Disable(isWipe)
 						for timeEntry = 2, count do
 							local t = stageTbl[stage][timeEntry] - stageTbl[stage][timeEntry-1]
 							local text = format(newBarError, key, stage, timeEntry-1, t)
-							core:Print(text)
+							core:Print(text, self.isLittleWigs)
 							errorStrings[#errorStrings+1] = text
 						end
 					end
 				end
 			end
 			if #errorStrings > 1 then
-				core:Print(errorHeader)
+				core:Print(errorHeader, self.isLittleWigs)
 				local timersText = table.concat(errorStrings, "\n")
-				core:Error(timersText, true)
+				core:Error(timersText, true, self.isLittleWigs)
 			end
 			self.missing = nil
 		end
 		if self.errorMessages then
 			for i = 1, #self.errorMessages do
-				core:Error(self.errorMessages[i])
+				core:Error(self.errorMessages[i], nil, self.isLittleWigs)
 			end
 			self.errorMessages = nil
 		end
 		if self.errorChatPrints then
 			for i = 1, #self.errorChatPrints do
-				core:Print(self.errorChatPrints[i])
+				core:Print(self.errorChatPrints[i], self.isLittleWigs)
 			end
 			self.errorChatPrints = nil
-			core:Print(("Extra info: %s, %s (%d#%s)"):format(self.moduleName, self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()))
+			core:Print(("Extra info: %s, %s (%s)"):format(self.moduleName, self:DifficultyName(), self:GetVersion()), self.isLittleWigs)
 			if not self.noAfterBossError and self:ShouldShowBars() then
-				core:Error(("%q timeline issue. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true)
-			end
-		end
-		if self.errorChatPrintsLittleWigs then
-			for i = 1, #self.errorChatPrintsLittleWigs do
-				core:Print(self.errorChatPrintsLittleWigs[i], true)
-			end
-			self.errorChatPrintsLittleWigs = nil
-			core:Print(("Extra info: %s, %s (%d#%s)"):format(self.moduleName, self:DifficultyName(), BigWigsAPI.GetVersion(), BigWigsAPI.GetVersionHash()), true)
-			if not self.noAfterBossError and self:ShouldShowBars() then
-				core:Error(("%q timeline issue. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true)
+				core:Error(("%q timeline issue. Show the devs a screenshot of the messages in your chat, NOT this error message."):format(self.moduleName), true, self.isLittleWigs)
 			end
 		end
 	end
@@ -2684,7 +2677,7 @@ do
 					local spellId = auraTable.spellId
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %s, tell the authors!", auraTable.name, spellId, self:DifficultyName()))
+						core:Error(format("Found spell '%s' using id %d on %s, tell the authors!", auraTable.name, spellId, self:DifficultyName()), nil, self.isLittleWigs)
 					end
 					local value = auraTable.points and auraTable.points[1]
 					t1, t2, t3, t4, t5 = auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
@@ -2733,7 +2726,7 @@ do
 					local spellId = auraTable.spellId
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						core:Error(format("Found spell '%s' using id %d on %s, tell the authors!", auraTable.name, spellId, self:DifficultyName()))
+						core:Error(format("Found spell '%s' using id %d on %s, tell the authors!", auraTable.name, spellId, self:DifficultyName()), nil, self.isLittleWigs)
 					end
 					local value = auraTable.points and auraTable.points[1]
 					t1, t2, t3, t4, t5 = auraTable.name, auraTable.applications, auraTable.duration, auraTable.expirationTime, value
@@ -2837,7 +2830,7 @@ do
 	function boss:SelectGossipID(id, skipConfirmDialogBox)
 		local npc = UnitName("npc")
 		if npc then
-			core:Print(format(autotalk_notice, npc))
+			core:Print(format(autotalk_notice, npc), self.isLittleWigs)
 		end
 		SelectOption(id, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
 	end
@@ -4756,7 +4749,7 @@ do
 						end
 					elseif result ~= 11 then -- AddOnMessageLockdown
 						local errorMsg = format("Failed to send boss comm %q. Error code: %d", messageToTransmit, result)
-						core:Error(errorMsg)
+						core:Error(errorMsg, nil, self.isLittleWigs)
 					end
 				end
 				self:SendMessage("BigWigs_BossComm", msg, extra, myName)
