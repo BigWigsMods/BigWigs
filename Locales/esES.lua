@@ -775,7 +775,7 @@ L.aurasTestTankAnchorText = "Aura\nde tanque\n%d"
 
 L.auraSounds = "Sonidos de auras"
 L.addAuraSpell = "Añadir hechizo"
-L.addAuraSpellDesc = "Puedes añadir hechizos por su nombre, pero es siempre es mejor usar el ID del hechizo."
+L.addAuraSpellDesc = "Puedes añadir hechizos por su nombre, pero siempre es mejor usar el ID del hechizo."
 L.invalidSpell = "Hechizo no válido"
 L.bossDebuffsOnYou = "Perjuicios de jefe en ti"
 L.bossDebuffsOnTank = "Perjuicios del jefe en el tanque"
