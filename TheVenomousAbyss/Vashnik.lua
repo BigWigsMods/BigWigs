@@ -16,12 +16,59 @@ mod:UseCustomTimers(true)
 
 local activeBars = {}
 local backupBars = {}
+local durationEventCount = {}
+local spellCount = {}
 
-local imbibeCount = 1
-local malignantCatalystCount = 1
-local adaptiveInfectionCount = 1
-local plagueFrothCount = 1
-local drippingFangsCount = 1
+local gapTimer do
+	-- blizzard fires sets of bars on an 84s interval, these bridge the gap
+	-- between the last bar of a set and the first bar of the next set
+	local timersHeroic = {
+		[1283164] = { -- Imbibe
+			[20] = 84, -- pull
+			[80] = 84,
+		},
+		[1282525] = { -- Malignant Catalyst
+			[39] = 45,
+		},
+		[1281907] = { -- Plague Froth
+			[13] = 41, -- pull
+			[33] = 51,
+		},
+		[1280935] = { -- Dripping Fangs
+			[8] = 29, -- pull
+			[28] = 29,
+		},
+		[1282117] = { -- Adaptive Infection
+			[52] = 32,
+		},
+	}
+	local timersNormal = {
+		[1283164] = { -- Imbibe
+			[20] = 84, -- pull
+			[80] = 84,
+		},
+		[1281907] = { -- Plague Froth
+			[13] = 21, -- pull
+			[26] = 22,
+		},
+		[1280935] = { -- Dripping Fangs
+			[8] = 18, -- pull
+			[30] = 21,
+		},
+		[1282117] = { -- Adaptive Infection
+			[32] = 52,
+		},
+	}
+	function gapTimer(spellId, duration)
+		local timers = mod:Heroic() and timersHeroic or mod:Normal() and timersNormal
+		if timers and timers[spellId] then
+			if duration == true then
+				return timers[spellId] ~= nil
+			end
+			return timers[spellId][duration]
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -66,11 +113,11 @@ mod:SetAuraData({
 
 function mod:GetOptions()
 	return {
-		1283164, -- Imbibe
+		1283164, -- Imbibe ,"CASTBAR", "CASTBAR_COUNTDOWN"}
 		1282525, -- Malignant Catalyst
-		1282117, -- Adaptive Infection
 		1281907, -- Plague Froth
 		{1280935, "TANK"}, -- Dripping Fangs
+		1282117, -- Adaptive Infection
 	}
 end
 
@@ -80,48 +127,127 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
+	if self:Mythic() then
+	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicTimeline")
+	elseif self:Heroic() then
+	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "HeroicTimeline")
+	else
+	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "EasyTimeline")
+	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
 
 function mod:OnEncounterStart()
 	activeBars = {}
+	durationEventCount = {}
 
-	imbibeCount = 1
-	malignantCatalystCount = 1
-	adaptiveInfectionCount = 1
-	plagueFrothCount = 1
-	drippingFangsCount = 1
+	spellCount = {
+		[1283164] = 1, -- Imbibe
+		[1282525] = 1, -- Malignant Catalyst
+		[1281907] = 1, -- Plague Froth
+		[1280935] = 1, -- Dripping Fangs
+		[1282117] = 1, -- Adaptive Infection
+	}
 end
 
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
 
-function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
+function mod:MythicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
-	local barInfo = nil
+	local barInfo
 
 	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
+	local rounded = self:RoundNumber(duration, 0)
 
-	if durationRounded == 20 or durationRounded == 80 then
+	if rounded == 20 or rounded == 80 then
 		barInfo = self:Imbibe()
-	elseif durationRounded == 30 or durationRounded == 33 then
+	elseif rounded == 10 or rounded == 16 or rounded == 31 then
 		barInfo = self:PlagueFroth()
-	elseif durationRounded == 8 or durationRounded == 27 or durationRounded == 28 then
+	elseif rounded == 8 or rounded == 11 or rounded == 22 then
 		barInfo = self:DrippingFangs()
-	elseif durationRounded == 18 or durationRounded == 52 then
+	elseif rounded == 23 or rounded == 24 then
 		barInfo = self:AdaptiveInfection()
-	elseif durationRounded == 6 or durationRounded == 39 then
+	elseif rounded == 6 or rounded == 44 then
 		barInfo = self:MalignantCatalyst()
-	elseif durationRounded == 13 then
-		if plagueFrothCount == 1 then
+	elseif rounded == 30 then
+		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+		local count = durationEventCount[rounded]
+		if count % 2 == 0 then
+			barInfo = self:AdaptiveInfection()
+		else
+			barInfo = self:DrippingFangs()
+		end
+	end
+
+	self:HandleBar(barInfo, eventInfo)
+end
+
+function mod:HeroicTimeline(_, eventInfo)
+	local barInfo
+
+	local duration = eventInfo.duration
+	local rounded = self:RoundNumber(duration, 0)
+
+	if rounded == 13 then -- Plague Froth on the pull, Dripping Fangs in every set after
+		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+		if durationEventCount[rounded] == 1 then
 			barInfo = self:PlagueFroth()
 		else
 			barInfo = self:DrippingFangs()
 		end
+	elseif rounded == 20 or rounded == 80 then
+		barInfo = self:Imbibe()
+	elseif rounded == 30 or rounded == 33 then
+		barInfo = self:PlagueFroth()
+	elseif rounded == 8 or rounded == 27 or rounded == 28 then
+		barInfo = self:DrippingFangs()
+	elseif rounded == 18 or rounded == 52 then
+		barInfo = self:AdaptiveInfection()
+	elseif rounded == 6 or rounded == 39 then
+		barInfo = self:MalignantCatalyst()
+	end
+
+	self:HandleBar(barInfo, eventInfo)
+end
+
+function mod:EasyTimeline(_, eventInfo)
+	local barInfo
+
+	local duration = eventInfo.duration
+	local rounded = self:RoundNumber(duration, 0)
+
+	if rounded == 20 or rounded == 80 then
+		barInfo = self:Imbibe()
+	elseif rounded == 13 or rounded == 10 or rounded == 17 or rounded == 36 or rounded == 26 then
+		barInfo = self:PlagueFroth()
+	elseif rounded == 6 or rounded == 39 then
+		barInfo = self:MalignantCatalyst()
+	elseif rounded == 2 or rounded == 30 or rounded == 33 then
+		barInfo = self:DrippingFangs()
+	elseif rounded == 32 then
+		barInfo = self:AdaptiveInfection()
+	elseif rounded == 8 then
+		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+		if durationEventCount[rounded] == 1 then
+			barInfo = self:DrippingFangs()
+		else
+			barInfo = self:AdaptiveInfection()
+		end
+	end
+
+	self:HandleBar(barInfo, eventInfo)
+end
+
+function mod:HandleBar(barInfo, eventInfo)
+	if barInfo and gapTimer(barInfo.key, true) then
+		-- blizzard fires sets of bars on an interval, bridge the gap with a normal bar
+		barInfo.gapTimer = gapTimer(barInfo.key, self:RoundNumber(eventInfo.duration, 0))
+		-- if the normal bar is running, use the existing duration for max time
+		local remaining, total = self:BarTimeLeft(barInfo.msg)
+		barInfo.duration = remaining > 0 and { eventInfo.duration, total } or nil
 	end
 
 	if barInfo then
@@ -142,24 +268,28 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+	local state = C_EncounterTimeline.GetEventState(eventID)
 	local barInfo = activeBars[eventID]
+
+	if barInfo and barInfo.gapTimer and state == 2 then -- Finished
+		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key), spellCount[barInfo.key]))
+	end
+
 	if barInfo then
-		local state = C_EncounterTimeline.GetEventState(eventID)
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onFinished and self:ShouldShowBars() then
-				barInfo.onFinished()
+				barInfo:onFinished()
 			end
 		elseif state == 3 then -- Canceled
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
 			if barInfo.onCanceled and self:ShouldShowBars() then
-				barInfo.onCanceled()
+				barInfo:onCanceled()
 			end
 		end
 	elseif backupBars[eventID] then
-		local state = C_EncounterTimeline.GetEventState(eventID)
 		if state == 0 then -- Enum.EncounterTimelineEventState.Active
 			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
 		elseif state == 1 then -- Enum.EncounterTimelineEventState.Paused
@@ -171,14 +301,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	local barInfo = activeBars[eventID]
-	if barInfo then
-		self:StopBar(barInfo.msg)
-		activeBars[eventID] = nil
-	elseif backupBars[eventID] then
-		backupBars[eventID] = nil
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-	end
+	activeBars[eventID] = nil
+	backupBars[eventID] = nil
 end
 
 --------------------------------------------------------------------------------
@@ -186,62 +310,69 @@ end
 --
 
 function mod:Imbibe()
-	local barText = CL.count:format(self:GetRename(1283164), imbibeCount)
-	imbibeCount = imbibeCount + 1
+	local barText = CL.count:format(self:GetRename(1283164), spellCount[1283164])
+	spellCount[1283164] = spellCount[1283164] + 1
+
 	return {
 		msg = barText,
 		key = 1283164,
 		onFinished = function()
 			self:Message(1283164, "cyan", barText)
+			-- self:CastBar(1283164, 6, self:GetRename(1283164, 2))
 			self:PlaySound(1283164, "long")
-			self:StopBlizzMessages(2)
+			self:StopBlizzMessages(2) -- Vashnik creates venom from Fountains of Ula'tek!
 		end
 	}
 end
 
 function mod:MalignantCatalyst()
-	local barText = CL.count:format(self:GetRename(1282525), malignantCatalystCount)
-	malignantCatalystCount = malignantCatalystCount + 1
+	local barText = CL.count:format(self:GetRename(1282525), spellCount[1282525])
+	local messageText = CL.casting:format(barText)
+	spellCount[1282525] = spellCount[1282525] + 1
+
 	return {
 		msg = barText,
 		key = 1282525,
 		onFinished = function()
-			self:Message(1282525, "red", barText)
-			self:PlaySound(1282525, "warning") -- raid damage
-			self:StopBlizzMessages(2)
+			self:Message(1282525, "orange", messageText)
+			self:PlaySound(1282525, "alert")
+			self:StopBlizzMessages(2) -- Vashnik conjures an orb of venom above the Malignant Pit!
 		end
 	}
 end
 
 function mod:AdaptiveInfection()
-	local barText = CL.count:format(self:GetRename(1282117), adaptiveInfectionCount)
-	adaptiveInfectionCount = adaptiveInfectionCount + 1
+	local barText = CL.count:format(self:GetRename(1282117), spellCount[1282117])
+	spellCount[1282117] = spellCount[1282117] + 1
+
 	return {
 		msg = barText,
 		key = 1282117,
 		onFinished = function()
-			self:Message(1282117, "yellow", barText)
-			self:PlaySound(1282117, "alert") -- debuffs
-		end
+			self:Message(1282117, "red", barText)
+			-- self:PlaySound(1282117, "alert")
+		end,
 	}
 end
 
 function mod:PlagueFroth()
-	local barText = CL.count:format(self:GetRename(1281907), plagueFrothCount)
-	plagueFrothCount = plagueFrothCount + 1
+	local barText = CL.count:format(self:GetRename(1281907), spellCount[1281907])
+	spellCount[1281907] = spellCount[1281907] + 1
+
 	return {
 		msg = barText,
 		key = 1281907,
 		onFinished = function()
 			self:Message(1281907, "yellow", barText)
-			self:PlaySound(1281907, "alert") -- waves after debuffs
-		end
+			-- self:PlaySound(1281907, "alarm")
+		end,
 	}
 end
 
 function mod:DrippingFangs()
-	local barText = CL.count:format(self:GetRename(1280935), drippingFangsCount)
-	drippingFangsCount = drippingFangsCount + 1
+	local barText = CL.count:format(self:GetRename(1280935), spellCount[1280935])
+	spellCount[1280935] = spellCount[1280935] + 1
+
 	return {
 		msg = barText,
 		key = 1280935,

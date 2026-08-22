@@ -73,15 +73,13 @@ BigWigs:AddSounds("The Lost Explorers", {
 BigWigs:AddColors("Vashnik the Malignant", {
 	[1280935] = "purple",
 	[1281907] = "yellow",
-	[1282117] = "yellow",
-	[1282525] = "red",
+	[1282117] = "red",
+	[1282525] = "orange",
 	[1283164] = "cyan",
 })
 
 BigWigs:AddSounds("Vashnik the Malignant", {
-	[1281907] = "alert",
-	[1282117] = "alert",
-	[1282525] = "warning",
+	[1282525] = "alert",
 	[1283164] = "long",
 })
 
