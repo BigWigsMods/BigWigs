@@ -43,6 +43,7 @@ local L = mod:SetDefaultLocale({
 	call_of_the_serpent = "Eggs",
 	gore_rattle = "Tail",
 	circling_prey = "Platform Break",
+	p3_knock_up = "Knock Up",
 })
 
 --------------------------------------------------------------------------------
@@ -50,7 +51,11 @@ local L = mod:SetDefaultLocale({
 --
 
 mod:SetRenames({
-	["stages"] = {CL.stage:format(1), CL.stage:format(2), CL.stage:format(3), CL.intermission, original = false},
+	["stages"] = {
+		CL.stage:format(1), CL.stage:format(2), CL.stage:format(3), CL.intermission, L.p3_knock_up,
+		original = false,
+		notes = {CL.stage:format(1), CL.stage:format(2), CL.stage:format(3), CL.intermission},
+	},
 
 	[1292188] = {CL.waves}, -- Caustic Waves
 	[1300751] = {L.call_of_the_serpent}, -- Call of the Serpent
@@ -58,13 +63,16 @@ mod:SetRenames({
 	[1298559] = {L.gore_rattle}, -- Gore Rattle
 	[1296301] = {L.mephitic_thrash}, -- Mephitic Thrash
 	[1300530] = {CL.soaks}, -- Spectral Coils
-	[1286860] = {CL.weakened}, -- Rage of the Shackled
+	[1286860] = { -- Rage of the Shackled
+		CL.weakened, CL.weakened,
+		notes = {CL.generalNote, CL.castTimerNote},
+	},
 
 	[1302982] = {1302982}, -- Virulent Spit
 
 	[1292999] = {1292999}, -- Submerge
 	[1301510] = {L.circling_prey}, -- Circling Prey
-	[1295905] = {1295905}, -- Serpent's Bite
+	[1295905] = {CL.soaks}, -- Serpent's Bite
 	[1286905] = {1286905}, -- Fury Unleashed
 })
 
@@ -118,7 +126,7 @@ function mod:GetOptions()
 		1298559, -- Gore Rattle
 			1296301, -- Mephitic Thrash
 			1300530, -- Spectral Coils (1287265)
-		1286860, -- Rage of the Shackled
+		{1286860, "CASTBAR"}, -- Rage of the Shackled,
 
 		-- Stage Two: Children of the Doomscale
 		1302982, -- Virulent Spit
@@ -128,7 +136,7 @@ function mod:GetOptions()
 		-- Spectral Coils
 
 		-- Stage Three: Ula'tek's Ascension
-		1301510, -- Circling Prey
+		{1301510, "CASTBAR"}, -- Circling Prey
 			1292999, -- Submerge
 		-- Caustic Waves
 		-- Call of the Serpent
@@ -153,11 +161,6 @@ function mod:GetOptions()
 			tabName = self:SpellName(-36323), -- Stage 3
 			{ "stages", 1301510, 1292999, 1292188, 1300751, 1295905, 1298367, 1286860, 1286905 },
 		},
-
-		-- [1292188] = -35561, -- Stage 1
-		-- [1302982] = -36171, -- Stage 2
-		-- [] = -36320, -- Intermission,
-		-- [1301510] = -36323, -- Stage 3
 	}
 end
 
@@ -208,57 +211,130 @@ end
 
 function mod:MythicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
-	return self:HandleBars(nil, eventInfo, true) -- no data
+	return self:HandleBar(nil, eventInfo, true) -- no data
 end
 
 function mod:HeroicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 
 	if spitCount == 3 then -- out of data
-		return self:HandleBars(nil, eventInfo, true) -- no data
+		return self:HandleBar(nil, eventInfo, true) -- no data
 	end
 
 	local barInfo
 
+	local stage = self:GetStage()
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
-	-- so many events cancel instead of finish x.x if they don't fix these I guess i'll move the timer to the handler
-	if rounded == 5 or rounded == 70 then
-		local count = goreRattleCount < 3 and (rounded == 70 and 2 or rounded == 5 and 1) or nil
-		barInfo = self:GoreRattle(count)
-	elseif rounded == 10 or rounded == 37 or rounded == 67 then
-		barInfo = self:MothersWrath()
-	elseif rounded == 20 or rounded == 94 then
-		barInfo = self:SpectralCoils()
-		barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
-	elseif rounded == 35 then
-		barInfo = self:MephiticThrash()
-		barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
-	elseif rounded == 42 then
-		barInfo = self:CausticWaves()
-	elseif rounded == 62 then
-		barInfo = self:Submerge()
-	elseif rounded == 72 then
-		barInfo = self:CallOfTheSerpent()
-		barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
-	elseif rounded == 129 or rounded == 118 then
-		barInfo = self:RageOfTheShackled()
-	elseif rounded == 30 or rounded == 40 then
-		barInfo = self:VirulentSpit()
+	if stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
+		stage = 2.5
+		self:SetStage(stage)
+		self:ResetCounts()
 
-	elseif rounded == 52 then
-		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-		local count = durationEventCount[rounded]
-		if count == 1 then
+		self:Message("stages", "cyan", self:GetRename("stages", 4), false) -- Intermission
+		self:PlaySound("stages", "long")
+
+		self:Bar("stages", 44.3, self:GetRename("stages", 5), "spell_fire_felhellfire") -- Knockup
+		self:Bar("stages", 53, self:GetRename("stages", 3), "inv_offhand_1h_ulatek_d_01") -- Stage 3
+
+	elseif stage < 3 and rounded == 235 then -- Fury Unleashed = Phase 3
+		stage = 3
+		self:SetStage(stage)
+
+		self:Message("stages", "cyan", self:GetRename("stages", 3), false)
+		self:PlaySound("stages", "long")
+	end
+
+	-- so many events cancel instead of finish x.x if they don't fix these I guess i'll move the timer to the handler
+	if stage == 1 or stage == 2 then
+		if rounded == 5 or rounded == 70 then
+			local count = goreRattleCount < 3 and (rounded == 70 and 2 or rounded == 5 and 1) or nil
+			barInfo = self:GoreRattle(count)
+		elseif rounded == 10 or rounded == 37 or rounded == 67 then
+			barInfo = self:MothersWrath()
+		elseif rounded == 20 or rounded == 94 or rounded == 95 then
+			barInfo = self:SpectralCoils()
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 35 then
 			barInfo = self:MephiticThrash()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
-		elseif count == 2 then
+		elseif rounded == 42 then
 			barInfo = self:CausticWaves()
+		elseif rounded == 62 then
+			barInfo = self:Submerge()
+		elseif rounded == 72 then
+			barInfo = self:CallOfTheSerpent()
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 129 or rounded == 118 then -- p1, p2
+			barInfo = self:RageOfTheShackled()
+		elseif rounded == 52 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 then
+				barInfo = self:MephiticThrash()
+				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+			elseif count == 2 then
+				barInfo = self:CausticWaves()
+			end
+
+		elseif rounded == 30 or rounded == 40 then
+			barInfo = self:VirulentSpit()
+		end
+
+	-- intermission
+	elseif stage == 2.5 then
+		if rounded == 10 then
+			barInfo = self:SpectralCoils()
+		end
+
+	-- stage 3
+	else
+		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+		local count = durationEventCount[rounded]
+
+		if (rounded == 235 or rounded == 205 or rounded == 67 or rounded == 60 or
+			 rounded == 50 or rounded == 25 or rounded == 10 or rounded == 5) and count == 1
+		then
+			return nil -- the whole opening set is added twice, the first is canceled
+		end
+
+		if rounded == 235 then
+			barInfo = self:FuryUnleashed()
+		elseif rounded == 205 then
+			barInfo = self:RageOfTheShackled()
+		elseif rounded == 5 or rounded == 30 or rounded == 45 then
+			barInfo = self:CallOfTheSerpent()
+		elseif rounded == 10 or rounded == 75 or rounded == 76 then
+			barInfo = self:MothersWrath()
+		elseif rounded == 25 or rounded == 71 or rounded == 37 then
+			barInfo = self:SerpentsBite()
+		elseif rounded == 50 or rounded == 55 or rounded == 44 then
+			barInfo = self:CausticWaves()
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 51 or rounded == 61 or rounded == 52 then
+			barInfo = self:CirclingPrey(duration)
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 67 or rounded == 53 then
+			barInfo = self:Submerge()
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+
+		elseif rounded == 60 then
+			if count == 2 then
+				barInfo = self:CirclingPrey(duration)
+				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+			elseif count == 3 then
+				barInfo = self:CallOfTheSerpent()
+			elseif count == 4 then
+				barInfo = self:Submerge()
+				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+			elseif count == 5 then
+				barInfo = self:SerpentsBite()
+			end
 		end
 	end
 
-	self:HandleBars(barInfo, eventInfo)
+	self:HandleBar(barInfo, eventInfo)
 end
 
 function mod:EasyTimeline(_, eventInfo)
@@ -273,25 +349,28 @@ function mod:EasyTimeline(_, eventInfo)
 	if stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
 		stage = 2.5
 		self:SetStage(stage)
+		self:ResetCounts()
 
-		self:Message("stages", "cyan", self:GetRename("stages", 4), false) -- intermission
+		self:Message("stages", "cyan", self:GetRename("stages", 4), false) -- Intermission
 		self:PlaySound("stages", "long")
 
-	elseif stage < 3 and rounded == 200 then -- New Rage of the Shackled = Phase 3
+		self:Bar("stages", 44.3, self:GetRename("stages", 5), "spell_fire_felhellfire") -- Knockup
+		self:Bar("stages", 53, self:GetRename("stages", 3), "inv_offhand_1h_ulatek_d_01") -- Stage 3
+
+	elseif stage < 3 and rounded == 230 then -- Fury Unleashed = Phase 3
 		stage = 3
 		self:SetStage(stage)
-		self:ResetCounts()
 
 		self:Message("stages", "cyan", self:GetRename("stages", 3), false)
 		self:PlaySound("stages", "long")
 	end
 
-	if stage < 3 then
+	if stage == 1 or stage == 2 then
 		if rounded == 42 then
 			barInfo = self:CausticWaves()
 		elseif rounded == 10 or rounded == 62 then
 			barInfo = self:MothersWrath()
-		elseif rounded == 20 or rounded == 84 or rounded == 10 then
+		elseif rounded == 20 or rounded == 84 then
 			barInfo = self:SpectralCoils()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 130 or rounded == 118 then
@@ -310,9 +389,16 @@ function mod:EasyTimeline(_, eventInfo)
 		elseif rounded == 35 or rounded == 41 then
 			barInfo = self:MephiticThrash()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+
 		elseif rounded == 30 or rounded == 40 then
 			barInfo = self:VirulentSpit()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		end
+
+	-- intermission
+	elseif stage == 2.5 then
+		if rounded == 10 then
+			barInfo = self:SpectralCoils()
 		end
 
 	-- stage 3
@@ -323,7 +409,7 @@ function mod:EasyTimeline(_, eventInfo)
 		if (rounded == 230 or rounded == 40 or rounded == 25 or rounded == 200 or
 			 rounded == 10 or rounded == 57 or rounded == 5 or rounded == 50) and count == 1
 		then
-			return false -- first bar is canceled
+			return nil -- first bar is canceled
 		 end
 
 		if rounded == 230 then
@@ -345,7 +431,7 @@ function mod:EasyTimeline(_, eventInfo)
 
 		elseif rounded == 50 then
 			if count == 2 then
-				barInfo = self:CirclingPrey()
+				barInfo = self:CirclingPrey(duration)
 			elseif count == 3 then
 				barInfo = self:CausticWaves()
 			end
@@ -360,7 +446,7 @@ function mod:EasyTimeline(_, eventInfo)
 			end
 		elseif rounded == 56 then
 			if count == 1 then
-				barInfo = self:CirclingPrey()
+				barInfo = self:CirclingPrey(duration)
 			elseif count == 2 then
 				barInfo = self:Submerge()
 			end
@@ -376,7 +462,7 @@ function mod:EasyTimeline(_, eventInfo)
 			end
 		elseif rounded == 66 then
 			if count == 1 then
-				barInfo = self:CirclingPrey()
+				barInfo = self:CirclingPrey(duration)
 				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 			elseif count == 2 then
 				barInfo = self:Submerge()
@@ -387,10 +473,10 @@ function mod:EasyTimeline(_, eventInfo)
 		end
 	end
 
-	self:HandleBars(barInfo, eventInfo)
+	self:HandleBar(barInfo, eventInfo)
 end
 
-function mod:HandleBars(barInfo, eventInfo, noAfterBossError)
+function mod:HandleBar(barInfo, eventInfo, noAfterBossError)
 	if barInfo then
 		barInfo.eventID = eventInfo.id
 		activeBars[eventInfo.id] = barInfo
@@ -548,6 +634,7 @@ function mod:SpectralCoils()
 		msg = barText,
 		key = 1300530,
 		onFinished = function()
+			self:StopBlizzMessages(1) -- The temple shudders as [Spectral Coils] erupt from the venom!
 			self:Message(1300530, "orange", barText)
 			self:PlaySound(1300530, "alert")
 		end,
@@ -561,8 +648,13 @@ function mod:RageOfTheShackled()
 		msg = barText,
 		key = 1286860,
 		onFinished = function()
-			self:Message(1286860, "green", barText)
-			self:PlaySound(1286860, "long")
+			self:Message(1286860, "yellow", CL.casting:format(barText))
+			self:PlaySound(1286860, "info")
+			self:CastBar(1286860, 6.5, self:GetRename(1286860, 2))
+			self:ScheduleTimer(function()
+				self:Message(1286860, "green")
+				self:PlaySound(1286860, "long")
+			end, 6.5)
 		end,
 	}
 end
@@ -585,7 +677,7 @@ end
 
 -- Stage Three: Ula'tek's Ascension
 
-function mod:CirclingPrey()
+function mod:CirclingPrey(duration)
 	local barText = CL.count:format(self:GetRename(1301510), circlingPreyCount)
 	circlingPreyCount = circlingPreyCount + 1
 	return {
@@ -593,6 +685,7 @@ function mod:CirclingPrey()
 		key = 1301510,
 		onFinished = function()
 			self:Message(1301510, "red", barText)
+			self:CastBar(1301510, 8, self:GetRename(1301510, 2))
 			self:PlaySound(1301510, "long")
 		end,
 	}
@@ -604,7 +697,6 @@ function mod:Submerge()
 	return {
 		msg = barText,
 		key = 1292999,
-		offset = 3.5, -- 1s for prey to finish, 2.5s for cast
 		-- onFinished = function()
 		-- 	self:Message(1292999, "cyan", barText)
 		-- 	self:PlaySound(1292999, "info")

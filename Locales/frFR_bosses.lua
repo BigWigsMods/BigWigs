@@ -104,4 +104,5 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	call_of_the_serpent = "Œufs",
 	gore_rattle = "Queue",
 	circling_prey = "Destruction de plateforme",
+	--p3_knock_up = "Knock Up",
 })
