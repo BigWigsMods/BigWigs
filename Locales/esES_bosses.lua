@@ -83,25 +83,25 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 -- The Venomous Abyss
 
 BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
-	--possession_barrage = "Barrage",
+	possession_barrage = "Tromba",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
-	--malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
+	malignant_catalyst = "Catalizador", -- Short for Malignant Catalyst
 })
 
 BigWigsAPI.SetBossModuleLocale("Sszorak", {
-	--raging_crosswinds = "Winds",
+	raging_crosswinds = "Vientos",
 })
 
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
-	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
-	--corrosive_spit = "Spit", -- Short for Corrosive Spit
+	coiling_toxin = "Toxina", -- Short for Coiling Toxin
+	corrosive_spit = "Escupitajo", -- Short for Corrosive Spit
 })
 
 BigWigsAPI.SetBossModuleLocale("Ula'tek", {
-	--mephitic_thrash = "Sweep",
-	--call_of_the_serpent = "Eggs",
-	--gore_rattle = "Tail",
-	--circling_prey = "Platform Break",
+	mephitic_thrash = "Barrido",
+	call_of_the_serpent = "Huevos",
+	gore_rattle = "Cola",
+	circling_prey = "Ruptura de plataforma",
 })
