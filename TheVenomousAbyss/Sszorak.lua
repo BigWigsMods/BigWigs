@@ -28,9 +28,8 @@ local crosswindsCount = 1
 -- Localization
 --
 
-local L = mod:SetDefaultLocale({
-	raging_crosswinds = "Winds",
-})
+--local L = mod:SetDefaultLocale({
+--})
 
 --------------------------------------------------------------------------------
 -- Renames
@@ -46,7 +45,7 @@ mod:SetRenames({
 		original = {1305959, CL.you:format(mod:SpellName(1305959))}
 	},
 	[1285425] = { -- Raging Crosswinds
-		L.raging_crosswinds, CL.you:format(L.raging_crosswinds),
+		CL.winds, CL.you:format(CL.winds),
 		notes = {CL.generalNote, CL.messageOnYouNote},
 		original = {1285425, CL.you:format(mod:SpellName(1285425))}
 	},

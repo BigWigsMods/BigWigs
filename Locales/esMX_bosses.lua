@@ -90,10 +90,6 @@ BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
 	--malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
 })
 
-BigWigsAPI.SetBossModuleLocale("Sszorak", {
-	--raging_crosswinds = "Winds",
-})
-
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
 	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
 	--corrosive_spit = "Spit", -- Short for Corrosive Spit
