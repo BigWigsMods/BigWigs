@@ -4161,16 +4161,22 @@ do
 	--- Similar to TargetMessage but expects the player name to be a secret
 	-- @param key the option key
 	-- @string color the message color category
-	-- @param info this is the table containing the player data, the one provided by the ENCOUNTER_WARNING event
+	-- @param info this is the table containing the player data, the one provided by the ENCOUNTER_WARNING event, or a unit to fetch its spell target from
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
 	function boss:SecretTargetMessage(key, color, info, text, icon)
-		local secretPlayer = info.targetName
-		local _, class = GetPlayerInfoByGUID(info.targetGUID)
+		local player, class
+		if type(info) == "table" then
+			player = info.targetName
+			class = select(2, GetPlayerInfoByGUID(info.targetGUID))
+		else
+			player = UnitSpellTargetName(info)
+			class = UnitSpellTargetClass(info)
+		end
 		if class and classColorMessages then
 			local classColor = GetClassColor(class)
 			if classColor then
-				secretPlayer = classColor:WrapTextInColorCode(secretPlayer)
+				player = classColor:WrapTextInColorCode(player)
 			end
 		end
 		local msg
@@ -4179,7 +4185,7 @@ do
 		else
 			msg = text or self:SpellName(key)
 		end
-		self:Message(key, color, CL.other:format(msg, secretPlayer), icon)
+		self:Message(key, color, CL.other:format(msg, player), icon)
 	end
 end
 
