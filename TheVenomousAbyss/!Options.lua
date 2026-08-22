@@ -73,15 +73,13 @@ BigWigs:AddSounds("The Lost Explorers", {
 BigWigs:AddColors("Vashnik the Malignant", {
 	[1280935] = "purple",
 	[1281907] = "yellow",
-	[1282117] = "yellow",
-	[1282525] = "red",
+	[1282117] = "red",
+	[1282525] = "orange",
 	[1283164] = "cyan",
 })
 
 BigWigs:AddSounds("Vashnik the Malignant", {
-	[1281907] = "alert",
-	[1282117] = "alert",
-	[1282525] = "warning",
+	[1282525] = "alert",
 	[1283164] = "long",
 })
 
@@ -166,10 +164,9 @@ BigWigs:AddSounds("The Coiled Altar", {
 })
 
 BigWigs:AddColors("Ula'tek", {
-	[1286860] = "green",
+	[1286860] = {"green","yellow"},
 	[1286905] = "red",
 	[1292188] = "red",
-	[1292999] = "cyan",
 	[1295905] = "orange",
 	[1296301] = "yellow",
 	[1298367] = "purple",
@@ -182,10 +179,9 @@ BigWigs:AddColors("Ula'tek", {
 })
 
 BigWigs:AddSounds("Ula'tek", {
-	[1286860] = "long",
+	[1286860] = {"info","long"},
 	[1286905] = "alarm",
 	[1292188] = "warning",
-	[1292999] = "info",
 	[1295905] = "alert",
 	[1296301] = "alarm",
 	[1298367] = "alert",

@@ -81,6 +81,8 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/UnitInPartyIsAI",
 	"113/UnitIsInteractable",
 	"113/UnitGroupRolesAssigned",
+	"113/UnitSpellTargetClass",
+	"113/UnitSpellTargetName",
 }
 files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_ChatInfo",

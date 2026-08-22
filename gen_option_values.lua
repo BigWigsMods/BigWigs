@@ -287,14 +287,16 @@ end
 local function unternary(str, pattern, validate_table)
 	if type(str) == "string" then
 		local matches = {}
-		for m in str:gmatch(" and "..pattern) do
-			if not validate_table or validate_table[m] then
-				matches[#matches+1] = m
+		for _, p in next, tablize(pattern) do
+			for m in str:gmatch(" and "..p) do
+				if not validate_table or validate_table[m] then
+					matches[#matches+1] = m
+				end
 			end
-		end
-		for m in str:gmatch(" or "..pattern) do
-			if not validate_table or validate_table[m] then
-				matches[#matches+1] = m
+			for m in str:gmatch(" or "..p) do
+				if not validate_table or validate_table[m] then
+					matches[#matches+1] = m
+				end
 			end
 		end
 		if #matches > 0 then
@@ -610,11 +612,12 @@ local function parseLocaleBlock(file_name, lines, start, locale)
 	for i = start, #lines do
 		local line = lines[i]
 		if line:match("}%)") then return end
-		local comment, locale_key, locale_value = line:match("^%s*(%-?%-?)%s*([%w_]+)%s*=%s*(.*),") -- key = value
+		line = line:gsub("%s*%-%-.+$", "") -- strip out comments
+		local locale_key, locale_value = line:match("^%s*([%w_]+)%s*=%s*(.-)%s*,?%s*$") -- key = value
 		if not locale_key then
-			comment, locale_key, locale_value = line:match('^%s*(%-?%-?)%s*%["(.+)"%]%s*=%s*(.*),') -- ["key"] = value
+			locale_key, locale_value = line:match('^%s*%["(.+)"%]%s*=%s*(.-)%s*,?%s*$') -- ["key"] = value
 		end
-		if locale_key and comment == "" then
+		if locale_key then
 			if locale[locale_key] ~= nil then
 				local line_number = start + i
 				error(string.format("    %s:%d: Duplicate locale key %q", file_name, line_number, locale_key))
@@ -626,7 +629,7 @@ local function parseLocaleBlock(file_name, lines, start, locale)
 				if v == '""' then
 					locale_value = ""
 				end
-				locale[locale_key] = locale_value:sub(1, 1) == "{" or locale_value ~= unquote(locale_value)
+				locale[locale_key] = locale_value:sub(1, 1) == "{" or locale_value ~= unquote(locale_value) -- set false and skip if it's a replacement token or not quoted
 			end
 		end
 	end
@@ -1226,11 +1229,15 @@ local function parseLua(file)
 		local getRenameArgs = line:match(":GetRename(%b())")
 		if getRenameArgs then
 			getRenameArgs = strsplit(clean(getRenameArgs:sub(2, -2)))
-			local key = tonumber(getRenameArgs[1]) or unquote(getRenameArgs[1])
-			if not option_keys[key] then
-				error(string.format("    %s:%d: GetRename: Invalid key! func=%s, key=%s", file_name, n, tostring(current_func), key))
-			elseif key then
-				option_key_used[key] = true
+			for _, key in next, tablize(unternary(getRenameArgs[1], {"(-?%d+)", "(\".-\")"})) do
+				key = tonumber(key) or unquote(key)
+				if not option_keys[key] then
+					if key ~= "barInfo.key" then
+						error(string.format("    %s:%d: GetRename: Invalid key! func=%s, key=%s", file_name, n, tostring(current_func), key))
+					end
+				elseif key then
+					option_key_used[key] = true
+				end
 			end
 		end
 

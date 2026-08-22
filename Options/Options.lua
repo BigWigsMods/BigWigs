@@ -1871,6 +1871,17 @@ do
 		end
 	end
 
+	local function getLittleWigsStatusText()
+		if loader.usingLittleWigsRepo then
+			return L.littlewigsSourceCheckout
+		end
+		local version = loader.littlewigsVersion
+		if not version then
+			return L.missingAddOnPopup:format("LittleWigs")
+		end
+		return (string.find(version, "-", nil, true) and L.littlewigsAlphaRelease or L.littlewigsOfficialRelease):format(version)
+	end
+
 	local currentlyOpenContainer, openPath
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
@@ -1939,7 +1950,7 @@ do
 				end
 			elseif value == "littlewigs" then
 				configFrame:SetTitle("LittleWigs")
-				configFrame:SetStatusText(" "..loader.littlewigsVersionString)
+				configFrame:SetStatusText(" "..getLittleWigsStatusText())
 				defaultHeader = loader.currentExpansion.littleWigsDefault
 				-- add an entry for each expansion
 				for i = 1, #expansionHeader do

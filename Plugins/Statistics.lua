@@ -463,7 +463,7 @@ function plugin:BigWigs_OnBossWin(_, module)
 		local difficultyText = activeDurations[journalID][2]
 
 		if self.db.profile.printVictory then
-			self:SimpleTimer(function() BigWigs:Print(L.bossVictoryPrint:format(module.displayName, BigWigsAPI.SecondsToTime(elapsed))) end, 1)
+			self:SimpleTimer(function() BigWigs:Print(L.bossVictoryPrint:format(module.displayName, BigWigsAPI.SecondsToTime(elapsed)), module.isLittleWigs) end, 1)
 		end
 
 		local diff = module:Difficulty()
@@ -484,7 +484,7 @@ function plugin:BigWigs_OnBossWin(_, module)
 			if not sDB.best or elapsed < sDB.best then
 				if self.db.profile.printNewFastestVictory and sDB.best then
 					local t = sDB.best-elapsed
-					self:SimpleTimer(function() BigWigs:Print(L.newFastestVictoryPrint:format(BigWigsAPI.SecondsToTime(t))) end, 1.1)
+					self:SimpleTimer(function() BigWigs:Print(L.newFastestVictoryPrint:format(BigWigsAPI.SecondsToTime(t)), module.isLittleWigs) end, 1.1)
 				end
 				sDB.best = elapsed
 				sDB.bestDate = date("%Y/%m/%d")
@@ -515,12 +515,12 @@ do
 
 			if elapsed > GetMinimumEncounterDuration(module) then
 				if self.db.profile.printDefeat then
-					BigWigs:Print(L.bossDefeatPrint:format(module.displayName, BigWigsAPI.SecondsToTime(elapsed)))
+					BigWigs:Print(L.bossDefeatPrint:format(module.displayName, BigWigsAPI.SecondsToTime(elapsed)), module.isLittleWigs)
 				end
 
 				local diff = module:Difficulty()
 				if not difficultyText and IsInRaid() and not dontPrint[diff] then
-					BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff)
+					BigWigs:Error("Tell the devs, the stats for this boss were not recorded because a new difficulty id was found: "..diff, nil, module.isLittleWigs)
 				elseif difficultyText then
 					local instanceID = module:GetZoneID()
 					local sDB = BigWigsStatsDB[instanceID][journalID][difficultyText]
@@ -541,7 +541,7 @@ do
 						end
 					end
 					if total ~= "" then
-						BigWigs:Print(L.healthPrint:format(total))
+						BigWigs:Print(L.healthPrint:format(total), module.isLittleWigs)
 					end
 				elseif unitInfo then
 					local total = ""
@@ -556,7 +556,7 @@ do
 						end
 					end
 					if total ~= "" then
-						BigWigs:Print(L.healthPrint:format(total))
+						BigWigs:Print(L.healthPrint:format(total), module.isLittleWigs)
 					end
 				end
 			end

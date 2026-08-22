@@ -50,7 +50,6 @@ do
 	public.isCata = tbl.isCata
 	public.isMists = tbl.isMists
 	public.dbmPrefix = "D5"
-	public.littlewigsVersionString = L.missingAddOnPopup:format("LittleWigs")
 
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local REPO = "REPO"
@@ -1028,17 +1027,9 @@ do
 		if name == "LittleWigs" then
 			if GetAddOnMetadata(i, "X-LittleWigs-Repo") then
 				public.usingLittleWigsRepo = true
-				public.littlewigsVersionString = L.littlewigsSourceCheckout
+				public.littlewigsVersion = "repo"
 			else
-				local version = GetAddOnMetadata(i, "Version")
-				if version then
-					local alpha = strfind(version, "-", nil, true)
-					if alpha then
-						public.littlewigsVersionString = L.littlewigsAlphaRelease:format(version)
-					else
-						public.littlewigsVersionString = L.littlewigsOfficialRelease:format(version)
-					end
-				end
+				public.littlewigsVersion = GetAddOnMetadata(i, "Version") -- e.g. "v12.1.0" or "v12.1.0-1"
 			end
 		end
 	end
@@ -2114,7 +2105,7 @@ public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 function mod:BigWigs_CoreEnabled()
 	local _, _, _, _, _, _, _, instanceID = GetInstanceInfoModified()
 	local zoneAddon = public.zoneTbl[instanceID]
-	if zoneAddon and zoneAddon:find("LittleWigs", nil, true) then
+	if public:IsLittleWigsZone(instanceID) then
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_party.tga"
 	elseif zoneAddon and zoneAddon:find("BigWigs", nil, true) and zoneAddon ~= public.currentExpansion.name then
 		dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_legacy.tga"
@@ -2158,6 +2149,11 @@ end
 function public:IsAddOnEnabled(name)
 	local addonState = GetAddOnEnableState(name, myGUID)
 	return addonState == 2
+end
+
+function public:IsLittleWigsZone(zoneID)
+	local zoneAddon = public.zoneTbl[zoneID]
+	return zoneAddon ~= nil and zoneAddon:find("LittleWigs", nil, true) ~= nil
 end
 
 -----------------------------------------------------------------------

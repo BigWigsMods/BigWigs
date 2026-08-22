@@ -243,6 +243,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	end
 
 	if barInfo then
+		barInfo.eventID = eventInfo.id
 		activeBars[eventInfo.id] = barInfo
 		if self:ShouldShowBars() then
 			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
