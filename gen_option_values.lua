@@ -287,14 +287,16 @@ end
 local function unternary(str, pattern, validate_table)
 	if type(str) == "string" then
 		local matches = {}
-		for m in str:gmatch(" and "..pattern) do
-			if not validate_table or validate_table[m] then
-				matches[#matches+1] = m
+		for _, p in next, tablize(pattern) do
+			for m in str:gmatch(" and "..p) do
+				if not validate_table or validate_table[m] then
+					matches[#matches+1] = m
+				end
 			end
-		end
-		for m in str:gmatch(" or "..pattern) do
-			if not validate_table or validate_table[m] then
-				matches[#matches+1] = m
+			for m in str:gmatch(" or "..p) do
+				if not validate_table or validate_table[m] then
+					matches[#matches+1] = m
+				end
 			end
 		end
 		if #matches > 0 then
