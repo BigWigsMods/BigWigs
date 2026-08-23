@@ -1181,6 +1181,7 @@ do
 		[1034] = true, -- [The War Within/Manaforge Omega][Raid] clicking the portal after Dimensius defeat
 		[1049] = function() return latestKill[2] == 3181 and GetTime()-latestKill[1] < 8 end, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat, exclude manual activation
 		[1050] = function() return latestKill[2] == 3183 and GetTime()-latestKill[1] < 8 end, -- [Midnight/March on Quel'Danas][Raid] Midnight Falls defeat, exclude manual activation
+		[1065] = true, -- [Midnight/The Venomous Abyss][Raid] Ula'tek defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
