@@ -231,10 +231,11 @@ function mod:HeroicTimeline(_, eventInfo)
 
 	if stage == 1 and checkStage and rounded == 118 then -- Rage of the Shackled = Phase 2 (backup for UNIT_TARGETABLE_CHANGED)
 		checkStage = nil
-		self:SetStage(2)
+		stage = 2
+		self:SetStage(stage)
 		self:ResetCounts()
 
-		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", self:GetRename("stages", 2), false)
 		self:PlaySound("stages", "long")
 
 		self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
@@ -360,10 +361,11 @@ function mod:EasyTimeline(_, eventInfo)
 
 	if stage == 1 and checkStage  and rounded == 118 then -- Rage of the Shackled = Phase 2 (backup for UNIT_TARGETABLE_CHANGED)
 		checkStage = nil
-		self:SetStage(2)
+		stage = 2
+		self:SetStage(stage)
 		self:ResetCounts()
 
-		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", self:GetRename("stages", 2), false)
 		self:PlaySound("stages", "long")
 
 		self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
@@ -572,7 +574,7 @@ function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 		self:SetStage(2)
 		self:ResetCounts()
 
-		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", self:GetRename("stages", 2), false)
 		self:PlaySound("stages", "long")
 
 		self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
