@@ -745,7 +745,7 @@ L.privateAuras = "Private Auren"
 L.privateAurasDesc1 = "'Private Auren' sind ein spezieller Debuff-Typ, welcher von Addons nicht erkannt oder zu Automatisierung genutzt werden kann. Diese Debuffs werden jetzt in allen aktuellen Bossbegegnungen verwendet.\n\n"
 L.privateAurasDesc2 = "BigWigs kann helfen, diese bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden. |cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
 L.aurasDesc = "BigWigs kann helfen, Boss Debuffs bei Anwendung auf Dich zu verfolgen, indem diese als Symbole angezeigt werden.\n|cFF33FF99Dies kann helfen, da diese kritischen Debuffs separat von den übrigen Debuffs angezeigt werden.|r\n\n"
---L.disabledDuringTrash = "Disabled During Trash"
+L.disabledDuringTrash = "Bei Trash deaktiviert"
 
 L.createTestAura = "Testaura erstellen"
 L.showDispelType = "Bannhinweise anzeigen"
