@@ -21,7 +21,6 @@ local backupBars = {}
 local durationEventCount = {}
 local isIntermission = nil
 local nextStasis = 0
-local berserkTime = 0
 
 local dropletsCount = 1
 local coagulationCount = 1
@@ -124,8 +123,6 @@ function mod:OnEncounterStart()
 	self:Bar(1284588, stasisCD, CL.count:format(self:GetRename(1284588), 1)) -- Vitriolic Stasis
 	nextStasis = self.stageTime + stasisCD
 
-	-- berserkTime = self:Heroic() and 540 or 0
-
 	if self:Mythic() then
 		self:Bar(1296878, 36, CL.count:format(self:GetRename(1296878), protovenomCount)) -- Shifting Protovenom
 	end
@@ -168,19 +165,6 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 				self:Bar(1296878, 39.9, CL.count:format(self:GetRename(1296878), protovenomCount)) -- Shifting Protovenom
 			end
 		end
-
-		--if berserkTime > 0 then
-		--	-- Show berserk if it'll happen before the end of the next intermission
-		--	local berserkCD = berserkTime - self.stageTime
-		--	if berserkCD < stasisCD + 25 and self:ShouldShowBars() then
-		--		local berserkInfo = self:BerserkEvent()self:ShouldShowBars()
-		--		self:Bar(barInfo.key, berserkCD, barInfo.msg, barInfo.icon)
-		--		self:ScheduleTimer(function()
-		--			self:StopBar(berserkInfo.msg)
-		--			berserkInfo:onFinished()
-		--		end, berserkCD)
-		--	end
-		--end
 	end
 
 	durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
@@ -217,6 +201,8 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		barInfo = self:BlightedBlood()
 	elseif rounded == 6 then
 		barInfo = self:BloodvenomInjection()
+	elseif rounded == 15 then
+		barInfo = self:BerserkEvent()
 
 	elseif rounded == 20 then
 		if stage == 1 then
@@ -316,6 +302,7 @@ function mod:BerserkEvent()
 		icon = 26662,
 		key = "berserk",
 		onFinished = function()
+			self:StopBlizzMessages(2)
 			self:Message("berserk", "red", self:GetRename("berserk", 2), 26662)
 			self:PlaySound("berserk", "alarm")
 		end,
