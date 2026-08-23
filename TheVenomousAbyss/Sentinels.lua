@@ -20,6 +20,7 @@ local backupBars = {}
 
 local durationEventCount = {}
 local isIntermission = nil
+local berserkCD = 0
 local nextStasis = 0
 
 local dropletsCount = 1
@@ -45,11 +46,11 @@ mod:SetRenames({
 	["berserk"] = {26662, CL.custom_end:format(mod.displayName, mod:SpellName(26662)), notes = {CL.timerNote, CL.messageNote}}, -- Berserk
 	[1284588] = {CL.intermission, CL.over:format(CL.intermission), original = {1284588, CL.over:format(mod:SpellName(1284588))}}, -- Vitriolic Stasis
 	[1296878] = {1296878, CL.soon:format(mod:SpellName(1296878)), original = false}, -- Shifting Protovenom
-	[1284251] = {1284251, CL.add_spawning, original = false}, -- Venom Coagulation
+	[1284251] = {CL.add, CL.add_spawning, original = false}, -- Venom Coagulation
 	[1284434] = {1284434}, -- Toxic Droplets
 	[1284458] = {1284458}, -- Empowering Slam
-	[1284483] = {1284483}, -- Blighted Blood
-	[1288232] = {1288232, CL.you:format(mod:SpellName(1288232)), original = false, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Unstable Miasma
+	[1284483] = {CL.dispels}, -- Blighted Blood
+	[1288232] = {CL.soak, CL.you:format(mod:SpellName(CL.soak)), original = {1288232, CL.you:format(mod:SpellName(1288232))}, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Unstable Miasma
 	[1284487] = {1284487}, -- Bloodvenom Injection
 })
 
@@ -123,8 +124,14 @@ function mod:OnEncounterStart()
 	self:Bar(1284588, stasisCD, CL.count:format(self:GetRename(1284588), 1)) -- Vitriolic Stasis
 	nextStasis = self.stageTime + stasisCD
 
-	if self:Mythic() then
+	berserkCD = 0
+	if self:Heroic() then
+		berserkCD = 540
+		self:Bar("berserk", berserkCD, self:GetRename("berserk"), 26662)
+	elseif self:Mythic() then
 		self:Bar(1296878, 36, CL.count:format(self:GetRename(1296878), protovenomCount)) -- Shifting Protovenom
+		berserkCD = 450
+		self:Bar("berserk", berserkCD, self:GetRename("berserk"), 26662)
 	end
 end
 
@@ -183,7 +190,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	end
 
 	-- Don't show events that will get canceled (skipping Vitriolic Stasis itself)
-	if duration ~= 20 and not isBeforeVitriolicStasis(duration) then
+	if duration ~= 20 and duration ~= 15 and not isBeforeVitriolicStasis(duration) then
 		return false
 	end
 
@@ -203,6 +210,10 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		barInfo = self:BloodvenomInjection()
 	elseif rounded == 15 then
 		barInfo = self:BerserkEvent()
+		if berserkCD > 0 then
+			-- replace our bar with the blizzard one
+			barInfo.duration = { duration, berserkCD }
+		end
 
 	elseif rounded == 20 then
 		if stage == 1 then
@@ -297,6 +308,7 @@ end
 
 function mod:BerserkEvent()
 	local barText = self:GetRename("berserk")
+
 	return {
 		msg = barText,
 		icon = 26662,
