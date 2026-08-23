@@ -366,6 +366,7 @@ function mod:VitriolicStasis(duration)
 		onFinished = function(this)
 			self:CancelTimer(this.blocktimer)
 			self:CancelTimer(this.timer)
+			if isIntermission then return end
 
 			isIntermission = true
 			durationEventCount = {}
