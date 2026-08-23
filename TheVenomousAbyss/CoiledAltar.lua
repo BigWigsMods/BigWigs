@@ -474,7 +474,6 @@ end
 
 function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local state = C_EncounterTimeline.GetEventState(eventID)
-
 	local barInfo = activeBars[eventID]
 
 	if barInfo and barInfo.key == 1282487 and state == 3 then -- Fangs of the Coiled Altar (Canceled)

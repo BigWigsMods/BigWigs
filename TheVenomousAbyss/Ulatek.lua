@@ -19,6 +19,7 @@ local activeBars = {}
 local backupBars = {}
 
 local durationEventCount = {}
+local checkStage = nil
 
 local rageCount = 1
 local goreRattleCount = 1
@@ -187,6 +188,7 @@ function mod:OnEncounterStart()
 	self:ResetCounts()
 	rageCount = 1
 
+	checkStage = nil
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
 end
 
@@ -227,7 +229,17 @@ function mod:HeroicTimeline(_, eventInfo)
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
-	if stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
+	if stage == 1 and checkStage and rounded == 118 then -- Rage of the Shackled = Phase 2 (backup for UNIT_TARGETABLE_CHANGED)
+		checkStage = nil
+		self:SetStage(2)
+		self:ResetCounts()
+
+		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
+
+		self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
+
+	elseif stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
 		stage = 2.5
 		self:SetStage(stage)
 		self:ResetCounts()
@@ -346,7 +358,17 @@ function mod:EasyTimeline(_, eventInfo)
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
-	if stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
+	if stage == 1 and checkStage  and rounded == 118 then -- Rage of the Shackled = Phase 2 (backup for UNIT_TARGETABLE_CHANGED)
+		checkStage = nil
+		self:SetStage(2)
+		self:ResetCounts()
+
+		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
+
+		self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
+
+	elseif stage == 2 and rounded == 10 then -- Spectral Coils is the only bar in the intermission
 		stage = 2.5
 		self:SetStage(stage)
 		self:ResetCounts()
@@ -545,7 +567,8 @@ end
 --
 
 function mod:UNIT_TARGETABLE_CHANGED(_, unit)
-	if self:GetStage() == 1 and not UnitCanAttack("player", unit) then
+	if checkStage and not UnitCanAttack("player", unit) then
+		checkStage = nil
 		self:SetStage(2)
 		self:ResetCounts()
 
@@ -655,6 +678,9 @@ function mod:RageOfTheShackled()
 				self:Message(1286860, "green")
 				self:PlaySound(1286860, "long")
 			end, 6.5)
+			if self:GetStage() == 1 then
+				checkStage = true
+			end
 		end,
 	}
 end
