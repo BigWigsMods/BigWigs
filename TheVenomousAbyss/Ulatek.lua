@@ -65,14 +65,19 @@ mod:SetRenames({
 	[1296301] = {L.mephitic_thrash}, -- Mephitic Thrash
 	[1300530] = {CL.soaks}, -- Spectral Coils
 	[1286860] = { -- Rage of the Shackled
-		CL.weakened, CL.weakened,
+		CL.weakened, CL.cast:format(CL.weakened),
 		notes = {CL.generalNote, CL.castTimerNote},
+		original = {1286860, CL.cast:format(mod:SpellName(1286860))}
 	},
 
 	[1302982] = {1302982}, -- Virulent Spit
 
 	[1292999] = {1292999}, -- Submerge
-	[1301510] = {L.circling_prey}, -- Circling Prey
+	[1301510] = { -- Circling Prey
+		L.circling_prey, CL.cast:format(L.circling_prey),
+		notes = {CL.generalNote, CL.castTimerNote},
+		original = {1301510, CL.cast:format(mod:SpellName(1301510))}
+	},
 	[1295905] = {CL.soaks}, -- Serpent's Bite
 	[1286905] = {1286905}, -- Fury Unleashed
 })
@@ -671,7 +676,7 @@ function mod:RageOfTheShackled()
 		onFinished = function()
 			self:Message(1286860, "yellow", CL.casting:format(barText))
 			self:PlaySound(1286860, "info")
-			self:CastBar(1286860, 6.5, self:GetRename(1286860, 2))
+			self:CastBar(1286860, 6.5, 2)
 			self:ScheduleTimer(function()
 				self:Message(1286860, "green")
 				self:PlaySound(1286860, "long")
@@ -709,7 +714,7 @@ function mod:CirclingPrey(duration)
 		key = 1301510,
 		onFinished = function()
 			self:Message(1301510, "red", barText)
-			self:CastBar(1301510, 8, self:GetRename(1301510, 2))
+			self:CastBar(1301510, 8, 2)
 			self:PlaySound(1301510, "long")
 		end,
 	}
