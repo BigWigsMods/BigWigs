@@ -186,6 +186,7 @@ function mod:MythicTimeline(_, eventInfo)
 end
 
 function mod:HeroicTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
 	local duration = eventInfo.duration
@@ -214,6 +215,7 @@ function mod:HeroicTimeline(_, eventInfo)
 end
 
 function mod:EasyTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
 	local duration = eventInfo.duration
