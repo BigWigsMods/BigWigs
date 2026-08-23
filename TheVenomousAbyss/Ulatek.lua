@@ -219,10 +219,6 @@ end
 function mod:HeroicTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 
-	if spitCount == 3 then -- out of data
-		return self:HandleBar(nil, eventInfo, true) -- no data
-	end
-
 	local barInfo
 
 	local stage = self:GetStage()
