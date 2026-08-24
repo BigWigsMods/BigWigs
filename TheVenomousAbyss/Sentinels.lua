@@ -50,7 +50,7 @@ mod:SetRenames({
 	[1284434] = {1284434}, -- Toxic Droplets
 	[1284458] = {1284458}, -- Empowering Slam
 	[1284483] = {CL.dispels}, -- Blighted Blood
-	[1288232] = {CL.soak, CL.you:format(mod:SpellName(CL.soak)), original = {1288232, CL.you:format(mod:SpellName(1288232))}, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Unstable Miasma
+	[1288232] = {CL.soak, CL.you:format(CL.soak), original = {1288232, CL.you:format(mod:SpellName(1288232))}, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Unstable Miasma
 	[1284487] = {1284487}, -- Bloodvenom Injection
 })
 
