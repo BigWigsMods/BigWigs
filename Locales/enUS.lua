@@ -990,6 +990,10 @@ L.cyan = "Cyan"
 L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
 L.purple = "Purple"
 L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.tankbuster = "Tank Buster"
+L.tankbusterDesc = "Warnings for abilities that deal heavy damage to the tank."
+L.healercheck = "Healer Check"
+L.healercheckDesc = "Warnings for abilities that require extra raid healing."
 
 -----------------------------------------------------------------------
 -- Countdown.lua
