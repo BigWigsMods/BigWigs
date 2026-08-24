@@ -56,6 +56,14 @@ do
 		_pullout:FixScroll()
 	end
 
+	local searchTimer
+	local function CancelSearchTimer()
+		if searchTimer then
+			searchTimer:Cancel()
+			searchTimer = nil
+		end
+	end
+
 	local search = CreateFrame("EditBox", nil, _pullout.frame, "InputBoxTemplate")
 	search:SetAutoFocus(false)
 	search:SetHeight(20)
@@ -64,13 +72,18 @@ do
 	search:SetScript("OnEscapePressed", search.ClearFocus)
 	local placeholder = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
 	placeholder:SetPoint("LEFT", 6, 0)
-	placeholder:SetText("Search")
+	placeholder:SetText("Type to search...")
 	search:SetScript("OnTextChanged", function(this)
 		placeholder:SetShown(this:GetText() == "")
-		local self = _pullout.userdata.obj
-		if not self then return end
-		PopulateItems(self, this:GetText())
-		Reopen(self)
+		CancelSearchTimer()
+		local text = this:GetText()
+		searchTimer = BigWigsLoader.CTimerNewTimer(0.15, function()
+			searchTimer = nil
+			local self = _pullout.userdata.obj
+			if not self then return end
+			PopulateItems(self, text)
+			Reopen(self)
+		end)
 	end)
 
 	--[[ UI event handler ]]--
@@ -88,6 +101,7 @@ do
 	local function Dropdown_OnHide(this)
 		local self = this.obj
 		if self.open then
+			CancelSearchTimer()
 			_pullout:Close()
 		end
 	end
@@ -95,6 +109,7 @@ do
 	local function Dropdown_TogglePullout(this)
 		local self = this.obj
 		_pullout.userdata.obj = self
+		CancelSearchTimer()
 
 		if self.open then
 			self.open = nil
@@ -110,6 +125,7 @@ do
 			PopulateItems(self, "")
 			Reopen(self)
 			AceGUI:SetFocus(self)
+			search:SetFocus()
 		end
 	end
 
@@ -141,6 +157,7 @@ do
 	-- exported, AceGUI callback
 	local function OnRelease(self)
 		if self.open then
+			CancelSearchTimer()
 			_pullout:Close()
 		end
 
@@ -174,6 +191,7 @@ do
 	-- exported
 	local function ClearFocus(self)
 		if self.open then
+			CancelSearchTimer()
 			_pullout:Close()
 		end
 	end
