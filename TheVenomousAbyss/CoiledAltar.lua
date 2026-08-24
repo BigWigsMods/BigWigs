@@ -378,7 +378,7 @@ function mod:OtherTimeline(_, eventInfo)
 			elseif rounded == 6 or rounded == 34 then -- 5.5
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 20 or rounded == 40 then
-				barInfo = self:Gloombomb(duration)
+				barInfo = self:Gloombomb()
 			elseif rounded == 32 or rounded == 33 then
 				barInfo = self:SoulSever()
 			end
@@ -408,6 +408,8 @@ function mod:OtherTimeline(_, eventInfo)
 					barInfo = self:BlightedSever()
 				elseif count == 2 then
 					barInfo = self:Gloombomb()
+				elseif count == 3 then
+					barInfo = self:BlightedSever()
 				end
 			elseif rounded == 60 then -- 59.77
 				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
@@ -431,9 +433,10 @@ function mod:OtherTimeline(_, eventInfo)
 				barInfo = self:DefilementOfTheCoiledAltar()
 			elseif rounded == 34 then
 				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-				if durationEventCount[rounded] % 2 == 1 then
+				local count = durationEventCount[rounded]
+				if count == 1 then
 					barInfo = self:EternalNightfall()
-				else
+				elseif count == 2 then
 					barInfo = self:BlightedSever()
 				end
 			end
