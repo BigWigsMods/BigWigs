@@ -24,7 +24,6 @@ local spellCount = {}
 
 local ignitionCount = 1
 local graspingDepthsCount = 1
-local graspingDepthsCountStart = 1
 
 local gapTimer do
 	local timers = {
@@ -174,19 +173,18 @@ function mod:OnEncounterStart()
 		[1299673] = 1, -- Invoke
 		[1293212] = 1, -- Grasping Depths
 	}
-	-- ignitionCount = 1
-	-- graspingDepthsCount = 1
-	-- graspingDepthsCountStart = 1
 
-	-- if self:ShouldShowBars() then
-	-- 	self:Bar(1285681, 3, CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
-	-- 	repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", 3)
+	if self:ShouldShowBars() then
+		ignitionCount = 1
+		self:Bar(1285681, 3, CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
+		repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", 3)
 
-	-- 	if self:Mythic() then
-	-- 		self:Bar(1293212, 42.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-	-- 		repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 42.5)
-	-- 	end
-	-- end
+		if self:Mythic() then
+			graspingDepthsCount = 1
+			self:Bar(1293212, 42.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+			repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 42.5)
+		end
+	end
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
@@ -352,9 +350,11 @@ do
 			spellCount[1295397] = 1 -- Restless Amani
 			spellCount[1292036] = 1 -- Possession Barrage
 
-			-- stage set in channel, which is ~1s later (runs to the well)
-			self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
-			self:PlaySound("stages", "long")
+			if self:ShouldShowBars() then
+				-- stage set in channel, which is ~1s later (runs to the well)
+				self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
+				self:PlaySound("stages", "long")
+			end
 		end
 	end
 end
@@ -365,19 +365,16 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
 		self:SetStage(1.5)
 
 		if self:ShouldShowBars() then
-			-- self:Bar(1289696, 20) -- Tether of Awakening
-			if not self:Mythic() then
-				local gap = 16.5
-				self:Bar(1305421, 11 + gap, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
-				self:Bar(1295397, 30 + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
-			elseif self:Mythic() then
-				self:Bar(1305421, 7, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
-				self:Bar(1295397, 26, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+			local gap = 16.5
+			self:Bar(1305421, 11 + gap, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
+			self:Bar(1295397, (self:Mythic() and 25 or 30) + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
 
+			if self:Mythic() then
 				-- restart with the same count so down groups can stay consistent
-				-- self:Bar(1293212, 23.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-				-- repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 23.5)
-				-- graspingDepthsCountStart = graspingDepthsCount
+				local ritualChannel = 20.5
+				local graspingDepthsCD = ritualChannel + 23.5
+				self:Bar(1293212, graspingDepthsCD, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", graspingDepthsCD)
 			end
 		end
 
@@ -404,13 +401,13 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
 			self:Bar(1287426, 49.5 + gap, CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
 			self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
 
-			-- if self:Mythic() then
-			-- 	self:CancelTimer(repeaters[1293212])
-			-- 	-- restart with the same count so down groups can stay consistent
-			-- 	self:Bar(1293212, 27.5, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-			-- 	repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", 27.5)
-			-- 	graspingDepthsCountStart = graspingDepthsCount
-			-- end
+			if self:Mythic() then
+				self:CancelTimer(repeaters[1293212])
+				-- restart with the same count so down groups can stay consistent
+				local graspingDepthsCD = 27.5
+				self:Bar(1293212, graspingDepthsCD, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", graspingDepthsCD)
+			end
 		end
 	end
 end
@@ -418,9 +415,9 @@ end
 -- Stage 1
 
 -- XXX the same 3.5s severity 2 ENCOUNTER_WARNING as Restless Amani that can happen anytime. but meh, it's already red
--- function mod:UncoiledRageMessage()
--- 	self:Message(1284034, "red", self:GetRename(1284034, 2), false) -- Nek'zali goes Berserk
--- end
+function mod:UncoiledRageMessage()
+	self:Message(1284034, "red", self:GetRename(1284034, 2), false) -- Nek'zali goes Berserk
+end
 
 function mod:SoulcoilIgnitionRepeater()
 	self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount))
@@ -428,9 +425,13 @@ function mod:SoulcoilIgnitionRepeater()
 	-- self:PlaySound(1285681, "alarm")
 	ignitionCount = ignitionCount + 1
 
-	local cd = 74.9
-	self:Bar(1285681, cd, CL.count:format(self:GetRename(1285681), ignitionCount))
-	repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", cd)
+	-- XXX these are mean values with a few seconds of variance, what causes it x.x
+	local timers = { 3.0, 74.5, 70.5 }
+	local cd = timers[ignitionCount]
+	if cd then
+		self:Bar(1285681, cd, CL.count:format(self:GetRename(1285681), ignitionCount))
+		repeaters[1285681] = self:ScheduleTimer("SoulcoilIgnitionRepeater", cd)
+	end
 end
 
 function mod:EssenceRend()
@@ -487,20 +488,16 @@ function mod:GraspingDepthsRepeater()
 	self:PlaySound(1293212, "long")
 	graspingDepthsCount = graspingDepthsCount + 1
 
-	-- we don't reset the count, but the cd increases with each cast so we need a starting point
+	-- Measured over 9 mythic pulls. Stage 1 and stage 2 hold their interval exactly; the
+	-- intermission is the loose one, sitting on 35 about half the time and drifting otherwise
 	local stage = self:GetStage()
 	local cd
 	if stage == 1 then
-		-- 42.5, 71.0, 71.0
-		cd = 71
+		cd = 71 -- 42.5 into the pull, then every 71
 	elseif stage == 1.5 then
-		local timers = { 23.5, 35.0, 74.9 }
-		local count = graspingDepthsCount - graspingDepthsCountStart
-		cd = timers[count]
+		cd = 35 -- 44 into the intermission, then roughly every 35
 	elseif stage == 2 then
-		local timers = { 27.5, 40.0, 80.0 }
-		local count = graspingDepthsCount - graspingDepthsCountStart
-		cd = timers[count]
+		cd = 40 -- 27.5 into stage 2, then every 40
 	end
 	if cd then
 		self:Bar(1293212, cd, CL.count:format(self:GetRename(1293212), graspingDepthsCount))
