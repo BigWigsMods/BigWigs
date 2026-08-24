@@ -86,11 +86,7 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	if self:Mythic() then
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersMythic")
-	else
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "Timers")
-	end
+	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
@@ -111,52 +107,7 @@ end
 -- Timeline Event Handlers
 --
 
-function mod:TimersMythic(_, eventInfo)
-	if eventInfo.source ~= 0 or self:IsWiping() then return end
-	local barInfo = nil
-
-	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
-
-	if durationRounded == 3 then
-		if self:Mythic() then -- Frost Barrage on Mythic
-			barInfo = self:FrostBarrage()
-		else
-			barInfo = self:AbyssalRain()
-		end
-	elseif durationRounded == 9 then -- Mythic
-		barInfo = self:AbyssalRain()
-	elseif durationRounded == 13 or durationRounded == 30 or durationRounded == 49 then
-		barInfo = self:IcebladeFlurry()
-	elseif durationRounded == 27 then
-		barInfo = self:AlluringBubble()
-	elseif durationRounded == 33 or durationRounded == 20 or durationRounded == 51
-		or durationRounded == 31 or durationRounded == 24 or durationRounded == 46 then -- 31/24/46 Mythic
-		barInfo = self:FrostBarrage()
-	elseif durationRounded == 64 or durationRounded == 68 then -- 68 Mythic
-		barInfo = self:SwirlingWhirlpools()
-	elseif durationRounded == 17 or durationRounded == 29 or durationRounded == 40 then -- Mythic
-		barInfo = self:WaterJet()
-	end
-
-	if barInfo then
-		activeBars[eventInfo.id] = barInfo
-		if self:ShouldShowBars() then
-			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
-		end
-	elseif barInfo == nil and self:ShouldShowBars() then
-		self:ErrorForTimelineEvent(eventInfo)
-		backupBars[eventInfo.id] = true
-		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
-
-		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
-		if state == 1 then -- Paused
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
-		end
-	end
-end
-
-function mod:Timers(_, eventInfo)
+function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo = nil
 
