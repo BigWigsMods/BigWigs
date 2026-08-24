@@ -156,6 +156,7 @@ L.onRemoved = "移除时"
 L.privateAuraSounds = "私有光环音效"
 L.privateAuraSounds_desc = "私有光环无法被正常追踪，但你可以为其设置音效，当对应减益施加到你身上时播放。"
 L.listAbilities = "列出技能到团队聊天"
+L.parenthesesID = "%s|cffA5A5A5（ID: %s）|r"
 
 L.dbmFaker = "伪装成 DBM 用户"
 L.dbmFakerDesc = "当 DBM 用户进行版本检查时，你会被列为其用户。当公会强制要求使用 DBM 时非常有用。"

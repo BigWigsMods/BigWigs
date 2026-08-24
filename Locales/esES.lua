@@ -156,6 +156,7 @@ L.onRemoved = "Al eliminarse"
 L.privateAuraSounds = "Sonidos de Aura Privada"
 L.privateAuraSounds_desc = "Las auras privadas no se pueden rastrear de forma normal, pero puedes configurar un sonido para que se reproduzca cuando el debuff de la habilidad se te aplique."
 L.listAbilities = "Listar las habilidades en el chat de grupo"
+L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
 L.dbmFaker = "Fingir que estoy usando DBM"
 L.dbmFakerDesc = "Si un usuario de DBM hace un chequeo de versión para ver quien está usando DBM, ellos te verán a ti en la lista. Muy útil para guilds que fuerzan a usar DBM."

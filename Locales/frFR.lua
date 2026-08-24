@@ -156,6 +156,7 @@ L.onRemoved = "Lorsque retiré"
 L.privateAuraSounds = "Sons privés d'aura"
 L.privateAuraSounds_desc = "Les auras privées ne peuvent être traquées normalement, mais vous pouvez paramétrer un son à jouer lorsque l'affaiblissement vous est appliqué."
 L.listAbilities = "Lister les techniques dans la discussion de groupe"
+L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
 L.dbmFaker = "Prétendre d'utiliser DBM"
 L.dbmFakerDesc = "Si un utilisateur de DBM effectue une vérification des versions pour voir qui utilise DBM, il vous verra sur la liste. Utile pour les guildes qui forcent l'utilisation de DBM."

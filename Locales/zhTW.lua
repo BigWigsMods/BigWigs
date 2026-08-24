@@ -156,6 +156,7 @@ L.onRemoved = "移除時"
 L.privateAuraSounds = "私有光環音效"
 L.privateAuraSounds_desc = "插件無法追蹤私有光環的具體內容，但你可以設定獲得私有光環的減益效果時播放指定音效。"
 L.listAbilities = "將技能列表發送到團隊聊天頻道"
+L.parenthesesID = "%s|cffA5A5A5（ID: %s）|r"
 
 L.dbmFaker = "假裝我是 DBM 用戶"
 L.dbmFakerDesc = "當一個 DBM 使用者執行版本檢查以確認哪些人用了 DBM 的時候，他們會看到你在名單之上。這可以在你的公會強制要求使用 DBM 時派上用場。"

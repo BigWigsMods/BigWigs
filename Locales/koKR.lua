@@ -156,6 +156,7 @@ L.onRemoved = "제거 시"
 L.privateAuraSounds = "비공개 오라 소리"
 L.privateAuraSounds_desc = "비공개 오라는 일반적으로 추적할 수 없지만, 해당 능력의 디버프가 자신에게 적용될 때 소리가 재생되도록 설정할 수 있습니다."
 L.listAbilities = "파티/공격대 대화에 능력 나열하기"
+L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
 L.dbmFaker = "DBM을 사용 중인 것처럼 위장하기"
 L.dbmFakerDesc = "DBM 사용자가 DBM의 버전을 확인하여 누가 DBM을 사용하는지 확인할 때 DBM 사용자 명단에 당신을 표시합니다. DBM 사용을 강제하는 길드에서 유용합니다."

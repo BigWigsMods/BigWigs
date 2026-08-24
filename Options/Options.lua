@@ -354,6 +354,23 @@ spellDescriptionUpdater:SetScript("OnEvent", function(_, _, spellId)
 	end
 end)
 
+local creatureNameUpdater = CreateFrame("Frame")
+local visibleCreatureNameWidgets = {}
+local GetTooltipHyperlink = C_TooltipInfo and C_TooltipInfo.GetHyperlink
+creatureNameUpdater:SetScript("OnEvent", function()
+	local scrollFrame = nil
+	for headerWidget, widgetCreatureID in next, visibleCreatureNameWidgets do
+		local data = GetTooltipHyperlink("unit:Creature-0-0-0-0-" .. widgetCreatureID)
+		if data and data.lines and data.lines[1] then
+			scrollFrame = headerWidget:GetUserData("scrollFrame")
+			headerWidget:SetText(L.parenthesesID:format(data.lines[1].leftText, widgetCreatureID))
+		end
+	end
+	if scrollFrame then
+		scrollFrame:PerformLayout()
+	end
+end)
+
 local OpenConfig = nil
 function options:Open(specificPanel)
 	if not configFrame then
@@ -428,6 +445,7 @@ local function masterOptionToggled(self, event, value)
 			local scrollFrame = self:GetUserData("scrollFrame")
 			local bossOption = self:GetUserData("option")
 			visibleSpellDescriptionWidgets = {}
+			visibleCreatureNameWidgets = {}
 			scrollFrame:ReleaseChildren()
 			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
 			scrollFrame:PerformLayout()
@@ -598,6 +616,7 @@ do
 		local scrollFrame = master:GetUserData("scrollFrame")
 		local bossOption = master:GetUserData("option")
 		visibleSpellDescriptionWidgets = {}
+		visibleCreatureNameWidgets = {}
 		lastAdvancedOptionsTab = "renames"
 		scrollFrame:ReleaseChildren()
 		scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
@@ -672,6 +691,7 @@ do
 		if widget:GetUserData("tab") == tab then return end
 		widget:SetUserData("tab", tab)
 		visibleSpellDescriptionWidgets = {}
+		visibleCreatureNameWidgets = {}
 		widget:PauseLayout()
 		widget:ReleaseChildren()
 		local module = widget:GetUserData("module")
@@ -827,6 +847,7 @@ end
 
 local function buttonClicked(widget)
 	visibleSpellDescriptionWidgets = {}
+	visibleCreatureNameWidgets = {}
 	-- save scroll bar position
 	toggleOptionsStatusTable.restore_scrollvalue = toggleOptionsStatusTable.scrollvalue
 	toggleOptionsStatusTable.restore_offset = toggleOptionsStatusTable.offset
@@ -1322,7 +1343,16 @@ do
 						local header = module:GetAuraHeader(spellID)
 						if header then
 							local headerWidget = AceGUI:Create("Heading")
-							headerWidget:SetText(header)
+							if type(header) == "number" then
+								local data = GetTooltipHyperlink("unit:Creature-0-0-0-0-" .. header)
+								if data and data.lines and data.lines[1] then
+									headerWidget:SetText(L.parenthesesID:format(data.lines[1].leftText, header))
+								else
+									visibleCreatureNameWidgets[headerWidget] = header
+								end
+							else
+								headerWidget:SetText(header)
+							end
 							headerWidget:SetFullWidth(true)
 							widget:AddChild(headerWidget)
 						end
@@ -1375,6 +1405,7 @@ do
 
 		function populateToggleOptions(widget, module)
 			visibleSpellDescriptionWidgets = {}
+			visibleCreatureNameWidgets = {}
 			local scrollFrame = widget:GetUserData("parent")
 			scrollFrame:ReleaseChildren()
 			scrollFrame:PauseLayout()
@@ -1791,6 +1822,7 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		lastTreeGroupSelected = value
 		visibleSpellDescriptionWidgets = {}
+		visibleCreatureNameWidgets = {}
 		widget:ReleaseChildren()
 		local instanceIdOrMapId = value:match("\001(-?%d+)$")
 		local bigwigsContent = value:match("(BigWigs_%a+)$")
@@ -1885,6 +1917,7 @@ do
 	local currentlyOpenContainer, openPath
 	local function onTabGroupSelected(widget, event, value)
 		visibleSpellDescriptionWidgets = {}
+		visibleCreatureNameWidgets = {}
 		widget:ReleaseChildren()
 
 		if value ~= lastTabSelected then
@@ -2095,6 +2128,7 @@ do
 			return
 		end
 		spellDescriptionUpdater:RegisterEvent("SPELL_TEXT_UPDATE")
+		creatureNameUpdater:RegisterEvent("TOOLTIP_DATA_UPDATE")
 
 		local bw = AceGUI:Create("Frame")
 		configFrame = bw
@@ -2106,10 +2140,12 @@ do
 		bw:SetLayout("Flow")
 		bw:SetCallback("OnClose", function(widget)
 			visibleSpellDescriptionWidgets = {}
+			visibleCreatureNameWidgets = {}
 			statusTable = {}
 			currentlyOpenContainer = nil
 			configFrame = nil
 			spellDescriptionUpdater:UnregisterEvent("SPELL_TEXT_UPDATE")
+			creatureNameUpdater:UnregisterEvent("TOOLTIP_DATA_UPDATE")
 			widget:ReleaseChildren()
 			AceGUI:Release(widget)
 			options:SendMessage("BigWigs_CloseGUI")

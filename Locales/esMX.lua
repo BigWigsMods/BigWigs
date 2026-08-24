@@ -156,6 +156,7 @@ L.selectEncounter = "Seleccionar encuentro"
 L.privateAuraSounds = "Sonidos de aura privada"
 L.privateAuraSounds_desc = "Las auras privadas no se pueden rastrear de forma normal, pero puedes configurar un sonido para que se reproduzca cuando el perjuicio de la habilidad se te aplique."
 L.listAbilities = "Listar las habilidades en el chat"
+L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
 L.dbmFaker = "Fingir que estoy usando DBM"
 L.dbmFakerDesc = "Si un usuario de DBM hace un chequeo de versión para ver quién está usando DBM, ellos te verán en la lista. Muy útil para hermandades que obligan a usar DBM."

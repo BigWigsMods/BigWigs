@@ -156,6 +156,7 @@ L.selectEncounter = "Selecionar Encontro"
 L.privateAuraSounds = "Sons de Auras Privadas"
 L.privateAuraSounds_desc = "Auras privadas não podem ser rastreadas normalmente, mas você pode configurar um som para ser tocado quando o debuff for aplicado a você."
 L.listAbilities = "Listar habilidades no bate-papo do grupo"
+L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
 L.dbmFaker = "Faz de conta que eu estou usando DBM"
 L.dbmFakerDesc = "Se um usuário do DBM tem uma versão que verifica quem está usando DBM, ele irá vê-lo na lista. Útil para guildas que forçam usar o DBM."
