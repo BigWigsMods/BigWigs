@@ -415,9 +415,9 @@ end
 -- Stage 1
 
 -- XXX the same 3.5s severity 2 ENCOUNTER_WARNING as Restless Amani that can happen anytime. but meh, it's already red
-function mod:UncoiledRageMessage()
-	self:Message(1284034, "red", self:GetRename(1284034, 2), false) -- Nek'zali goes Berserk
-end
+-- function mod:UncoiledRageMessage()
+-- 	self:Message(1284034, "red", self:GetRename(1284034, 2), false) -- Nek'zali goes Berserk
+-- end
 
 function mod:SoulcoilIgnitionRepeater()
 	self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount))
