@@ -47,6 +47,32 @@ do
 		self:Fire("OnClosed")
 	end)
 
+	local PopulateItems -- defined below, forward-declared for use in the search box and toggle handler
+
+	local function Reopen(self)
+		_pullout:Open("TOPLEFT", self.frame, "BOTTOMLEFT", 0, self.label:IsShown() and -2 or 0)
+		_pullout.scrollStatus.scrollvalue = 0
+		_pullout.scrollStatus.offset = 0
+		_pullout:FixScroll()
+	end
+
+	local search = CreateFrame("EditBox", nil, _pullout.frame, "InputBoxTemplate")
+	search:SetAutoFocus(false)
+	search:SetHeight(20)
+	search:SetPoint("BOTTOMLEFT", _pullout.frame, "TOPLEFT", 8, 3)
+	search:SetPoint("BOTTOMRIGHT", _pullout.frame, "TOPRIGHT", -8, 3)
+	search:SetScript("OnEscapePressed", search.ClearFocus)
+	local placeholder = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
+	placeholder:SetPoint("LEFT", 6, 0)
+	placeholder:SetText("Search")
+	search:SetScript("OnTextChanged", function(this)
+		placeholder:SetShown(this:GetText() == "")
+		local self = _pullout.userdata.obj
+		if not self then return end
+		PopulateItems(self, this:GetText())
+		Reopen(self)
+	end)
+
 	--[[ UI event handler ]]--
 
 	local function Control_OnEnter(this)
@@ -79,10 +105,10 @@ do
 			_pullout.frame:SetFrameLevel(self.frame:GetFrameLevel() + 1)
 			fixlevels(_pullout.frame, _pullout.frame:GetChildren())
 			_pullout:SetWidth(self.pulloutWidth or self.frame:GetWidth())
-			_pullout:Open("TOPLEFT", self.frame, "BOTTOMLEFT", 0, self.label:IsShown() and -2 or 0)
-			_pullout.scrollStatus.scrollvalue = 0
-			_pullout.scrollStatus.offset = 0
-			_pullout:FixScroll()
+			search:SetText("")
+			placeholder:Show()
+			PopulateItems(self, "")
+			Reopen(self)
 			AceGUI:SetFocus(self)
 		end
 	end
@@ -207,13 +233,18 @@ do
 			return tostring(x) < tostring(y)
 		end
 	end
-	-- exported
-	local function SetList(self, list, order, itemType)
-		self.list = list or {}
-		if list and self.list == _pullout.list and #list == #self.list then return end
-		_pullout.list = self.list
+
+	function PopulateItems(self, filterText, list, order, itemType)
+		list = list or self.list
+		order = order or self.order
+		itemType = itemType or self.itemType
 		_pullout:Clear()
 		if not list then return end
+		filterText = filterText ~= "" and filterText:lower() or nil
+
+		local function matches(text)
+			return not filterText or tostring(text):lower():find(filterText, 1, true) ~= nil
+		end
 
 		if type(order) ~= "table" then
 			for v in pairs(list) do
@@ -222,14 +253,28 @@ do
 			tsort(sortlist, sortTbl)
 
 			for i, key in ipairs(sortlist) do
-				AddListItem(self, key, list[key], itemType)
+				if matches(list[key]) then
+					AddListItem(self, key, list[key], itemType)
+				end
 				sortlist[i] = nil
 			end
 		else
 			for i, key in ipairs(order) do
-				AddListItem(self, key, list[key], itemType)
+				if matches(list[key]) then
+					AddListItem(self, key, list[key], itemType)
+				end
 			end
 		end
+	end
+
+	-- exported
+	local function SetList(self, list, order, itemType)
+		self.list = list or {}
+		self.order = order
+		self.itemType = itemType
+		if list and self.list == _pullout.list and #list == #self.list then return end
+		_pullout.list = self.list
+		PopulateItems(self, "", self.list, order, itemType)
 	end
 
 	-- exported

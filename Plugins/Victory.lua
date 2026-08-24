@@ -63,6 +63,7 @@ plugin.pluginOptions = {
 			end,
 			values = LibSharedMedia:List(SOUND),
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		messages = {
