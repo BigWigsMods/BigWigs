@@ -1311,19 +1311,19 @@ do
 
 	local args = {}
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+	local GetCreatureID = loader.GetCreatureID
 	bossUtilityFrame:SetScript("OnEvent", function()
 		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, spellSchool, extraSpellId, amount = CombatLogGetCurrentEventInfo()
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
-				local _, _, _, _, _, id = strsplit("-", destGUID)
-				local mobId = tonumber(id)
-				if mobId then
+				local creatureID = GetCreatureID(destGUID)
+				if creatureID then
 					for i = #enabledModules, 1, -1 do
 						local self = enabledModules[i]
 						local m = eventMap[self][event]
-						if m and m[mobId] then
-							local func = m[mobId]
-							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = mobId, destGUID, destName, destFlags, destRaidFlags, time
+						if m and m[creatureID] then
+							local func = m[creatureID]
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags, args.time = creatureID, destGUID, destName, destFlags, destRaidFlags, time
 							self[func](self, args)
 						end
 					end
@@ -1409,7 +1409,6 @@ do
 	end
 
 	do
-		local UnitAffectingCombat = UnitAffectingCombat
 		activeNameplateUtilityFrame:SetScript("OnEvent", function(_, _, unit)
 			activeNameplates[unit] = true
 		end)
@@ -1418,32 +1417,34 @@ do
 		end)
 		nameplateWatcher = activeNameplateUtilityFrame:CreateAnimationGroup()
 		nameplateWatcher:SetLooping("REPEAT")
-		local anim = nameplateWatcher:CreateAnimation()
-		anim:SetDuration(0.5)
-		nameplateWatcher:SetScript("OnLoop", function()
-			for unit in next, activeNameplates do
-				local guid = UnitGUID(unit)
-				local engaged = engagedGUIDs[guid]
-				if not engaged and UnitAffectingCombat(unit) then
-					engagedGUIDs[guid] = true
-					local _, _, _, _, _, id = strsplit("-", guid)
-					local mobId = tonumber(id)
-					if mobId then
-						for i = #enabledModules, 1, -1 do
-							local self = enabledModules[i]
-							local m = eventMap[self]["UNIT_ENTERING_COMBAT"]
-							if m and m[mobId] then
-								self:Debug("UNIT_ENTERING_COMBAT", guid)
-								local func = m[mobId]
-								self[func](self, guid, mobId)
+		do
+			local UnitAffectingCombat = UnitAffectingCombat
+			nameplateWatcher:SetScript("OnLoop", function()
+				for unit in next, activeNameplates do
+					local GUID = UnitGUID(unit)
+					local engaged = engagedGUIDs[GUID]
+					if not engaged and UnitAffectingCombat(unit) then
+						engagedGUIDs[GUID] = true
+						local creatureID = GetCreatureID(GUID)
+						if creatureID then
+							for i = #enabledModules, 1, -1 do
+								local self = enabledModules[i]
+								local m = eventMap[self].UNIT_ENTERING_COMBAT
+								if m and m[creatureID] then
+									self:Debug("UNIT_ENTERING_COMBAT", GUID)
+									local func = m[creatureID]
+									self[func](self, GUID, creatureID)
+								end
 							end
 						end
+					elseif engaged and not UnitAffectingCombat(unit) then
+						engagedGUIDs[GUID] = nil
 					end
-				elseif engaged and not UnitAffectingCombat(unit) then
-					engagedGUIDs[guid] = nil
 				end
-			end
-		end)
+			end)
+			local anim = nameplateWatcher:CreateAnimation()
+			anim:SetDuration(0.5)
+		end
 		local GetNamePlates = C_NamePlate.GetNamePlates
 		--- Register a callback for a unit nameplate entering combat.
 		-- @param func callback function, passed (guid, mobId)
@@ -1842,8 +1843,8 @@ do
 			else
 				for i = 50, unitTableCount do -- Begin at "targettarget" (50th) in the table
 					unit = unitTable[i]
-					local guid = UnitGUID(unit)
-					if guid == id then
+					local GUID = UnitGUID(unit)
+					if GUID == id then
 						return unit
 					end
 				end
@@ -1853,13 +1854,12 @@ do
 
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
-			local guid = UnitGUID(unit)
-			if guid and not self:UnitIsPlayer(unit) then
+			local GUID = UnitGUID(unit)
+			if GUID and not self:UnitIsPlayer(unit) then
 				if isNumber then
-					local _, _, _, _, _, mobId = strsplit("-", guid)
-					guid = tonumber(mobId)
+					GUID = self:MobId(GUID)
 				end
-				if guid == id then return unit end
+				if GUID == id then return unit end
 			end
 		end
 	end
@@ -1878,13 +1878,12 @@ do
 		local isNumber = type(id) == "number"
 		for i = 1, 5 do
 			local unit = unitTable[i]
-			local guid = self:UnitGUID(unit)
-			if id == guid then
-				return unit, guid
-			elseif guid and isNumber then
-				local _, _, _, _, _, mobId = strsplit("-", guid)
-				if id == tonumber(mobId) then
-					return unit, guid
+			local GUID = self:UnitGUID(unit)
+			if id == GUID then
+				return unit, GUID
+			elseif GUID and isNumber then
+				if id == self:MobId(GUID) then
+					return unit, GUID
 				end
 			end
 		end
@@ -2384,13 +2383,16 @@ do
 	end
 end
 
---- Get the mob/npc id from a GUID.
--- @string guid GUID of a mob/npc
--- @return mob/npc id
-function boss:MobId(guid)
-	if not guid then return 1 end
-	local _, _, _, _, _, id = strsplit("-", guid)
-	return tonumber(id) or 1
+do
+	local GetCreatureID = loader.GetCreatureID
+	--- Get the mob/NPC/creature ID from a GUID.
+	-- @string guid GUID of a mob/npc
+	-- @return mob/NPC/creature ID
+	function boss:MobId(GUID)
+		if not GUID then return 1 end
+		local creatureID = GetCreatureID(GUID)
+		return creatureID or 1
+	end
 end
 
 --- Get a localized spell name from an id. Positive ids for spells (C_Spell.GetSpellName) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).

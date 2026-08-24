@@ -142,18 +142,17 @@ end
 local enablemobs = {}
 
 local function UpdateMouseoverUnit()
-	local guid = UnitGUID("mouseover")
-	if issecretvalue and issecretvalue(guid) then return end -- XXX 12.0 compat
-	if not guid or UnitIsCorpse("mouseover") or UnitIsDead("mouseover") then return end
-	local _, _, _, _, _, mobIdString = strsplit("-", guid)
-	local mobId = tonumber(mobIdString)
-	if mobId then
-		local moduleNameOrTable = enablemobs[mobId]
+	local GUID = UnitGUID("mouseover")
+	if issecretvalue and issecretvalue(GUID) then return end -- XXX 12.0 compat
+	if not GUID or UnitIsCorpse("mouseover") or UnitIsDead("mouseover") then return end
+	local creatureID = loader.GetCreatureID(GUID)
+	if creatureID then
+		local moduleNameOrTable = enablemobs[creatureID]
 		if type(moduleNameOrTable) == "table" then
 			for i = 1, #moduleNameOrTable do
 				local moduleName = moduleNameOrTable[i]
 				local module = bosses[moduleName]
-				if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", mobId, GetBestMapForUnit("player"))) then
+				if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", creatureID, GetBestMapForUnit("player"))) then
 					module:Enable()
 					if not module:IsWorldModule() then
 						module:Sync("Enable", module.moduleName, true)
@@ -162,7 +161,7 @@ local function UpdateMouseoverUnit()
 			end
 		elseif moduleNameOrTable then
 			local module = bosses[moduleNameOrTable]
-			if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", mobId, GetBestMapForUnit("player"))) then
+			if module and not module:IsEnabled() and (not module.VerifyEnable or module:VerifyEnable("mouseover", creatureID, GetBestMapForUnit("player"))) then
 				module:Enable()
 				if not module:IsWorldModule() then
 					module:Sync("Enable", module.moduleName, true)

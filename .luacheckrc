@@ -26,6 +26,7 @@ files["Loader.lua"].ignore = {
 	"113/C_AddOns",
 	"113/C_BattleNet",
 	"113/C_ChatInfo",
+	"113/C_CreatureInfo",
 	"113/C_CVar",
 	"113/C_InstanceEncounter",
 	"113/C_Item",
