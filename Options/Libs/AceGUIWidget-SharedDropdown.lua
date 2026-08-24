@@ -73,6 +73,22 @@ do
 	local placeholder = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
 	placeholder:SetPoint("LEFT", 6, 0)
 	placeholder:SetText("Type to search...")
+	local moreLabel = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
+	moreLabel:SetPoint("RIGHT", -6, 0)
+	moreLabel:Hide()
+
+	-- Rebuilding every matching item widget is what's actually expensive (not the filtering
+	-- itself), so cap how many get created per rebuild and let the search narrow the rest down.
+	local MAX_RESULTS = 60
+	local function ApplyFilter(self, text)
+		local overflow = PopulateItems(self, text)
+		moreLabel:SetShown(overflow > 0)
+		if overflow > 0 then
+			moreLabel:SetText(("+%d more"):format(overflow))
+		end
+		Reopen(self)
+	end
+
 	search:SetScript("OnTextChanged", function(this)
 		placeholder:SetShown(this:GetText() == "")
 		CancelSearchTimer()
@@ -81,8 +97,7 @@ do
 			searchTimer = nil
 			local self = _pullout.userdata.obj
 			if not self then return end
-			PopulateItems(self, text)
-			Reopen(self)
+			ApplyFilter(self, text)
 		end)
 	end)
 
@@ -122,8 +137,7 @@ do
 			_pullout:SetWidth(self.pulloutWidth or self.frame:GetWidth())
 			search:SetText("")
 			placeholder:Show()
-			PopulateItems(self, "")
-			Reopen(self)
+			ApplyFilter(self, "")
 			AceGUI:SetFocus(self)
 			search:SetFocus()
 		end
@@ -257,11 +271,21 @@ do
 		order = order or self.order
 		itemType = itemType or self.itemType
 		_pullout:Clear()
-		if not list then return end
+		if not list then return 0 end
 		filterText = filterText ~= "" and filterText:lower() or nil
 
 		local function matches(text)
 			return not filterText or tostring(text):lower():find(filterText, 1, true) ~= nil
+		end
+
+		local shown = 0
+		local function addIfMatch(key, text)
+			if matches(text) then
+				if shown < MAX_RESULTS then
+					AddListItem(self, key, text, itemType)
+				end
+				shown = shown + 1
+			end
 		end
 
 		if type(order) ~= "table" then
@@ -271,18 +295,16 @@ do
 			tsort(sortlist, sortTbl)
 
 			for i, key in ipairs(sortlist) do
-				if matches(list[key]) then
-					AddListItem(self, key, list[key], itemType)
-				end
+				addIfMatch(key, list[key])
 				sortlist[i] = nil
 			end
 		else
 			for i, key in ipairs(order) do
-				if matches(list[key]) then
-					AddListItem(self, key, list[key], itemType)
-				end
+				addIfMatch(key, list[key])
 			end
 		end
+
+		return shown > MAX_RESULTS and (shown - MAX_RESULTS) or 0
 	end
 
 	-- exported
