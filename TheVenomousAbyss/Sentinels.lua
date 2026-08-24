@@ -130,7 +130,7 @@ function mod:OnEncounterStart()
 		self:Bar("berserk", berserkCD, self:GetRename("berserk"), 26662)
 	elseif self:Mythic() then
 		self:Bar(1296878, 36, CL.count:format(self:GetRename(1296878), protovenomCount)) -- Shifting Protovenom
-		berserkCD = 450
+		berserkCD = 420
 		self:Bar("berserk", berserkCD, self:GetRename("berserk"), 26662)
 	end
 end
