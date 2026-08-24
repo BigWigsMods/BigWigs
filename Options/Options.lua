@@ -341,12 +341,13 @@ local spellDescriptionUpdater = CreateFrame("Frame")
 local visibleSpellDescriptionWidgets = {}
 spellDescriptionUpdater:SetScript("OnEvent", function(_, _, spellId)
 	local scrollFrame = nil
-	for widget, widgetSpellId in next, visibleSpellDescriptionWidgets do
-		if spellId == widgetSpellId then
-			scrollFrame = widget:GetUserData("scrollFrame")
-			local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
-			local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+	for widget, widgetDescription in next, visibleSpellDescriptionWidgets do
+		local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
+		local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+		if desc ~= widgetDescription then
 			widget:SetDescription(desc)
+			visibleSpellDescriptionWidgets[widget] = desc
+			scrollFrame = widget:GetUserData("scrollFrame")
 		end
 	end
 	if scrollFrame then
@@ -954,30 +955,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
-	local spellId = nil
-	if type(dbKey) == "number" then
-		if dbKey < 0 then
-			-- the "why did you use an ej id instead of the spell directly" check
-			-- headers and other non-spell entries don't load async
-			local info = C_EncounterJournal_GetSectionInfo(-dbKey)
-			if info.spellID > 0 then
-				spellId = info.spellID
-			end
-		else
-			spellId = dbKey
-		end
-	else
-		local moduleLocale = module:GetLocale(true)
-		local title, description = moduleLocale[dbKey], moduleLocale[dbKey .. "_desc"]
-		if type(title) == "number" and not description then
-			spellId = title
-		elseif type(description) == "number" then
-			spellId = description
-		end
-	end
-	if spellId then
-		visibleSpellDescriptionWidgets[check] = spellId
-	end
+	visibleSpellDescriptionWidgets[check] = desc
 
 	if type(dbKey) == "string" and dbKey:find("^custom_") then
 		return check

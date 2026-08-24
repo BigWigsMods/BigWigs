@@ -80,20 +80,32 @@ local function replaceIdWithName(msg)
 		end
 	end
 end
+
+local DoesSpellExist = C_Spell.DoesSpellExist
+local IsSpellDataCached = C_Spell.IsSpellDataCached
 local function replaceIdWithDescription(msg)
 	local id = tonumber(msg)
 	if id > 0 then
-		local desc = GetSpellDescription(id)
-		if desc then
-			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
-		else
-			BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+		if not DoesSpellExist(id) then
+			BigWigs:Error(("No spell exists for boss option using spell ID %d."):format(id))
 			return msg
+		end
+
+		local desc = GetSpellDescription(id)
+		if not desc then
+			if IsSpellDataCached(id) then
+				BigWigs:Error(("No spell description found for boss option using spell ID %d."):format(id))
+				return msg
+			else
+				return ""
+			end
+		else
+			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 		end
 	else
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
-			BigWigs:Print(("No journal description found for boss option using id %d."):format(id))
+			BigWigs:Print(("No journal description found for boss option using journal ID %d."):format(id))
 			return msg
 		else
 			return tbl.description
@@ -139,8 +151,6 @@ local function getIcon(icon, module, option)
 	end
 end
 
-local DoesSpellExist = C_Spell.DoesSpellExist
-local IsSpellDataCached = C_Spell.IsSpellDataCached
 function BigWigs:GetBossOptionDetails(module, option)
 	local optionType = type(option)
 	if optionType == "table" then
