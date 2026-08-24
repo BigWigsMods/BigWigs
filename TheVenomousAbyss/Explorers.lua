@@ -89,7 +89,7 @@ mod:SetRenames({
 	[1291390] = {1291390}, -- Cataclysmic Invocation
 
 	[1291759] = {1291759}, -- Shell Spin
-	[1296092] = {1296092}, -- Mighty Thud
+	[1296092] = {1296092, CL.you:format(mod:SpellName(1296092)), original = false}, -- Mighty Thud
 
 	[1291933] = {1291933}, -- Throw Junk
 	[1295817] = {1295817}, -- Fling Fish
@@ -506,12 +506,7 @@ function mod:BlinkNova()
 		key = 1290711,
 		onFinished = function()
 			local timer = self:ScheduleTimer(function()
-				local target = _G.UnitSpellTargetName("boss4")
-				if target then
-					self:SecretTargetMessage(1290711, "yellow", "boss4", barText)
-				else
-					self:Message(1290711, "yellow", barText)
-				end
+				self:SecretTargetMessage(1290711, "yellow", "boss4", barText)
 			end, 0.35)
 			-- Scrollsage Iku targets you with [Blink Nova]!
 			self:PersonalMessageFromBlizzMessage(1290711, 0.3, false, self:GetRename(1290711, 2), nil, nil, function() self:CancelTimer(timer) end)
@@ -595,8 +590,12 @@ function mod:MightyThud()
 		msg = barText,
 		key = 1296092,
 		onFinished = function()
-			self:Message(1296092, "orange", barText)
-			self:PlaySound(1296092, "alert")
+			local timer = self:ScheduleTimer(function()
+				self:Message(1296092, "orange", barText)
+				self:PlaySound(1296092, "alert")
+			end, 0.5)
+			-- You are targeted by a [Mighty Thud]!
+			self:PersonalMessageFromBlizzMessage(1296092, 0.5, false, self:GetRename(1296092, 2), nil, nil, function() self:CancelTimer(timer) end)
 		end,
 	}
 end
@@ -658,7 +657,9 @@ function mod:ExplosiveSurprise()
 		msg = barText,
 		key = 1296249,
 		onFinished = function()
-			self:Message(1296249, "red", barText)
+			-- Trader Gebbo targets Smalark with [Explosive Surprise]!
+			self:TargetMessageFromBlizzMessage(1296249, 1, "red")
+			-- self:Message(1296249, "red", barText)
 			self:PlaySound(1296249, "alarm")
 		end,
 	}
