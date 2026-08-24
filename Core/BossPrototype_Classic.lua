@@ -2450,9 +2450,9 @@ end
 
 do
 	local GetCreatureID = loader.GetCreatureID
-	--- Get the mob/NPC/creature ID from a GUID.
-	-- @string guid GUID of a mob/npc
-	-- @return mob/NPC/creature ID
+	--- Extract a creature ID from a GUID.
+	-- @string GUID The globally unique identifier of the creature
+	-- @return creature ID
 	function boss:MobId(GUID)
 		if not GUID then return 1 end
 		local creatureID = GetCreatureID(GUID)
