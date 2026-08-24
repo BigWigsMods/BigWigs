@@ -90,6 +90,7 @@ Plugins\Wipe.lua
 Plugins\BattleRes.lua
 Plugins\Timeline.lua
 Plugins\Auras.lua
+Plugins\General.lua
 Options\Options.lua
 Options\Sharing.lua
 Options\InstanceSharing.lua
