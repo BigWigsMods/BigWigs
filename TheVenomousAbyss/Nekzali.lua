@@ -476,7 +476,7 @@ function mod:PossessionBarrage()
 		key = 1292036,
 		onFinished = function()
 			self:Message(1292036, "purple", barText)
-			-- self:PlaySound(1292036, "alert")
+			self:PlaySound(1292036, "alert")
 			-- 6s cast on current target, then 2s channel
 		end
 	}
