@@ -127,19 +127,19 @@ local customBossOptions = { -- Adding core generic toggles
 
 local function getIcon(icon, module, option)
 	if type(icon) == "number" then
+		local textureFileID
 		if icon > 8 then
-			icon = GetSpellTexture(icon)
+			textureFileID = GetSpellTexture(icon)
 		elseif icon > 0 then
-			icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
+			textureFileID = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
 		else
 			local tbl = C_EncounterJournal_GetSectionInfo(-icon)
-			icon = tbl.abilityIcon
+			textureFileID = tbl.abilityIcon
 		end
-		if not icon then
-			local moduleLocale = module:GetLocale(true)
-			BigWigs:Print(("No icon found for %s using id %d."):format(module.moduleName, moduleLocale[option .. "_icon"]))
+		if not textureFileID then
+			BigWigs:Error(("No icon found for %s using ID %d."):format(module.moduleName, icon))
 		end
-		return icon
+		return textureFileID
 	elseif type(icon) == "string" then
 		if not icon:find("\\", nil, true) then
 			return "Interface\\Icons\\" .. icon
@@ -159,7 +159,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 	end
 
 	local optionNotes = module.notes and module.notes[option]
-	local moduleLocale = module:GetLocale(true)
+	local moduleLocale = module:GetLocale()
 
 	if optionType == "string" then
 		local roleDesc = ""
