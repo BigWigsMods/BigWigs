@@ -735,37 +735,40 @@ function boss:Reboot(wipeTime, unitInfo)
 	end
 end
 
--------------------------------------------------------------------------------
--- Localization
--- @section localization
---
-
 do
-	local function CopyTable(settingsTable)
-		local copy = {}
-		for key, value in next, settingsTable do
-			if type(value) == "table" then
-				copy[key] = CopyTable(value)
-			else
-				copy[key] = value
-			end
-		end
-		return copy
-	end
+	-------------------------------------------------------------------------------
+	-- Localization
+	-- @section localization
+	--
+
 	local moduleLocaleList = {}
-	--- Get the current localization strings.
-	-- @return keyed table of localized strings
-	function boss:GetLocale()
-		if moduleLocaleList[self] then
-			return CopyTable(moduleLocaleList[self])
-		else -- DEPRECATED fallback
-			if not self.localization then
-				self.localization = {}
+	do
+		local function CopyTable(settingsTable)
+			local copy = {}
+			for key, value in next, settingsTable do
+				if type(value) == "table" then
+					copy[key] = CopyTable(value)
+				else
+					copy[key] = value
+				end
 			end
-			return self.localization
+			return copy
 		end
+
+		--- Get the current localization strings.
+		-- @return keyed table of localized strings
+		function boss:GetLocale()
+			if moduleLocaleList[self] then
+				return CopyTable(moduleLocaleList[self])
+			else -- DEPRECATED fallback
+				if not self.localization then
+					self.localization = {}
+				end
+				return self.localization
+			end
+		end
+		boss.NewLocale = boss.GetLocale -- DEPRECATED
 	end
-	boss.NewLocale = boss.GetLocale -- DEPRECATED
 
 	--- Set the default locale table.
 	-- @param localeTable the default locale table
@@ -783,12 +786,70 @@ do
 		moduleLocaleList[self] = localeTable
 		return localeTable
 	end
-end
 
-do
-	local SetSpellRename = BigWigsAPI.SetSpellRename
-	function boss:SetSpellRename(spellId, text)
-		SetSpellRename(spellId, text)
+	-------------------------------------------------------------------------------
+	-- Custom boss options
+	-- @section custom_opts
+	--
+
+	--- Create a custom marking option
+	-- @bool state Boolean value to represent default state
+	-- @string markType The type of string to return (player, npc, npc_aura)
+	-- @number icon An icon id to be used for the option texture
+	-- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up CL.test
+	-- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
+	-- @return an option string to be used in conjunction with :GetOption
+	function boss:AddMarkerOption(state, markType, icon, id, ...)
+		local moduleLocale = moduleLocaleList[self] or self:GetLocale()
+		local str = ""
+		for i = 1, select("#", ...) do
+			local raidMarkerIconNumber = select(i, ...)
+			local markerTexture = format("|T13700%d:15|t", raidMarkerIconNumber)
+			str = str .. markerTexture
+		end
+
+		local option = format(state and "custom_on_%s" or "custom_off_%s", id)
+		if type(id) == "number" then
+			moduleLocale[option] = format(CL.marker, spells[id])
+			moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or markType == "npc_aura" and CL.marker_npc_aura_desc or CL.marker_npc_desc, spells[id], str)
+		elseif type(id) == "string" then
+			moduleLocale[option] = format(CL.marker, moduleLocale[id])
+			moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or CL.marker_npc_desc, moduleLocale[id], str)
+		else
+			core:Error("Wrong id type for AddMarkerOption. Expected number or string, got: ".. tostring(id))
+		end
+		if icon then
+			moduleLocale[option.."_icon"] = icon
+		end
+		return option
+	end
+
+	--- Create a custom auto talk option
+	-- @bool state Boolean value to represent default state
+	-- @string[opt] talkType The type of description to use ("boss" or nil for generic)
+	-- @string[opt] name A unique name the option should have if you want to create multiple options in one module
+	-- @return an option string to be used in conjunction with :GetOption
+	function boss:AddAutoTalkOption(state, talkType, name)
+		if name and type(name) ~= "string" then
+			core:Error("Invalid auto talk name: ".. tostring(name))
+		elseif name then
+			name = "_".. name
+		end
+
+		local moduleLocale = moduleLocaleList[self] or self:GetLocale()
+		local option = format(state and "custom_on_autotalk%s" or "custom_off_autotalk%s", name or "")
+		if talkType == "boss" then
+			moduleLocale[option] = CL.autotalk
+			moduleLocale[option.."_desc"] = CL.autotalk_boss_desc
+			moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
+		elseif not talkType then
+			moduleLocale[option] = CL.autotalk
+			moduleLocale[option.."_desc"] = CL.autotalk_generic_desc
+			moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
+		else
+			core:Error("Invalid auto talk type: ".. tostring(talkType))
+		end
+		return option
 	end
 end
 
@@ -796,6 +857,13 @@ end
 -- Renames
 -- @section renames
 --
+
+do
+	local SetSpellRename = BigWigsAPI.SetSpellRename
+	function boss:SetSpellRename(spellId, text)
+		SetSpellRename(spellId, text)
+	end
+end
 
 do
 	local moduleRenamesList = {}
@@ -4816,66 +4884,6 @@ end
 -- Misc.
 -- @section misc
 --
-
---- Create a custom marking option
--- @bool state Boolean value to represent default state
--- @string markType The type of string to return (player, npc, npc_aura)
--- @number icon An icon id to be used for the option texture
--- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up CL.test
--- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
--- @return an option string to be used in conjunction with :GetOption
-function boss:AddMarkerOption(state, markType, icon, id, ...)
-	local moduleLocale = self:GetLocale()
-	local str = ""
-	for i = 1, select("#", ...) do
-		local raidMarkerIconNumber = select(i, ...)
-		local markerTexture = format("|T13700%d:15|t", raidMarkerIconNumber)
-		str = str .. markerTexture
-	end
-
-	local option = format(state and "custom_on_%s" or "custom_off_%s", id)
-	if type(id) == "number" then
-		moduleLocale[option] = format(CL.marker, spells[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or markType == "npc_aura" and CL.marker_npc_aura_desc or CL.marker_npc_desc, spells[id], str)
-	elseif type(id) == "string" then
-		moduleLocale[option] = format(CL.marker, moduleLocale[id])
-		moduleLocale[option.."_desc"] = format(markType == "player" and CL.marker_player_desc or CL.marker_npc_desc, moduleLocale[id], str)
-	else
-		core:Error("Wrong id type for AddMarkerOption. Expected number or string, got: ".. tostring(id))
-	end
-	if icon then
-		moduleLocale[option.."_icon"] = icon
-	end
-	return option
-end
-
---- Create a custom auto talk option
--- @bool state Boolean value to represent default state
--- @string[opt] talkType The type of description to use ("boss" or nil for generic)
--- @string[opt] name A unique name the option should have if you want to create multiple options in one module
--- @return an option string to be used in conjunction with :GetOption
-function boss:AddAutoTalkOption(state, talkType, name)
-	if name and type(name) ~= "string" then
-		core:Error("Invalid auto talk name: ".. tostring(name))
-	elseif name then
-		name = "_".. name
-	end
-
-	local moduleLocale = self:GetLocale()
-	local option = format(state and "custom_on_autotalk%s" or "custom_off_autotalk%s", name or "")
-	if talkType == "boss" then
-		moduleLocale[option] = CL.autotalk
-		moduleLocale[option.."_desc"] = CL.autotalk_boss_desc
-		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
-	elseif not talkType then
-		moduleLocale[option] = CL.autotalk
-		moduleLocale[option.."_desc"] = CL.autotalk_generic_desc
-		moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
-	else
-		core:Error("Invalid auto talk type: ".. tostring(talkType))
-	end
-	return option
-end
 
 do
 	local issecretvalue = issecretvalue
