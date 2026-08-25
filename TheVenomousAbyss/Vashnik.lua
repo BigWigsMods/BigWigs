@@ -60,7 +60,7 @@ local gapTimer do
 		},
 	}
 	function gapTimer(spellId, duration)
-		local timers = mod:Heroic() and timersHeroic or mod:Normal() and timersNormal
+		local timers = mod:Easy() and timersNormal or timersHeroic
 		if timers and timers[spellId] then
 			if duration == true then
 				return timers[spellId] ~= nil
@@ -74,7 +74,7 @@ end
 -- Localization
 --
 
-local L = mod:SetDefaultLocale({ -- SetOption:skip-locale
+local L = mod:SetDefaultLocale({
 	malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
 })
 
@@ -127,12 +127,10 @@ end
 
 function mod:OnBossEnable()
 	backupBars = {}
-	if self:Mythic() then
-	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicTimeline")
-	elseif self:Heroic() then
-	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "HeroicTimeline")
-	else
+	if self:Easy() then
 	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "EasyTimeline")
+	else
+	   self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "OtherTimeline")
 	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
@@ -155,37 +153,7 @@ end
 -- Timeline Event Handlers
 --
 
-function mod:MythicTimeline(_, eventInfo)
-	if eventInfo.source ~= 0 or self:IsWiping() then return end
-	local barInfo
-
-	local duration = eventInfo.duration
-	local rounded = self:RoundNumber(duration, 0)
-
-	if rounded == 20 or rounded == 80 then
-		barInfo = self:Imbibe()
-	elseif rounded == 10 or rounded == 16 or rounded == 31 then
-		barInfo = self:PlagueFroth()
-	elseif rounded == 8 or rounded == 11 or rounded == 22 then
-		barInfo = self:DrippingFangs()
-	elseif rounded == 23 or rounded == 24 then
-		barInfo = self:AdaptiveInfection()
-	elseif rounded == 6 or rounded == 44 then
-		barInfo = self:MalignantCatalyst()
-	elseif rounded == 30 then
-		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
-		local count = durationEventCount[rounded]
-		if count % 2 == 0 then
-			barInfo = self:AdaptiveInfection()
-		else
-			barInfo = self:DrippingFangs()
-		end
-	end
-
-	self:HandleBar(barInfo, eventInfo)
-end
-
-function mod:HeroicTimeline(_, eventInfo)
+function mod:OtherTimeline(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo
 
