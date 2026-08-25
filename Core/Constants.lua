@@ -159,7 +159,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 	end
 
 	local optionNotes = module.notes and module.notes[option]
-	local moduleLocale = module:GetLocale(true)
+	local moduleLocale = module:GetLocale()
 
 	if optionType == "string" then
 		local roleDesc = ""

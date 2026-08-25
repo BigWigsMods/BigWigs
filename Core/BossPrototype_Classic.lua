@@ -814,6 +814,8 @@ end
 -- @section localization
 --
 
+local moduleLocaleList = {}
+
 do
 	local function CopyTable(settingsTable)
 		local copy = {}
@@ -826,7 +828,6 @@ do
 		end
 		return copy
 	end
-	local moduleLocaleList = {}
 	--- Get the current localization strings.
 	-- @return keyed table of localized strings
 	function boss:GetLocale()
@@ -4545,7 +4546,7 @@ end
 -- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
 -- @return an option string to be used in conjunction with :GetOption
 function boss:AddMarkerOption(state, markType, icon, id, ...)
-	local moduleLocale = self:GetLocale()
+	local moduleLocale = moduleLocaleList[self] or self:GetLocale()
 	local str = ""
 	for i = 1, select("#", ...) do
 		local raidMarkerIconNumber = select(i, ...)
@@ -4581,7 +4582,7 @@ function boss:AddAutoTalkOption(state, talkType, name)
 		name = "_".. name
 	end
 
-	local moduleLocale = self:GetLocale()
+	local moduleLocale = moduleLocaleList[self] or self:GetLocale()
 	local option = format(state and "custom_on_autotalk%s" or "custom_off_autotalk%s", name or "")
 	if talkType == "boss" then
 		moduleLocale[option] = CL.autotalk
