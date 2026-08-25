@@ -63,6 +63,9 @@ plugin.defaultDB = {
 		cooldownTextSlug = true,
 		cooldownTextMillisecondsThreshold = 3,
 		cooldownTextColor = {1, 1, 1, 1},
+		cooldownEmphasizeTime = 0,
+		cooldownEmphasizeColor = {1, 1, 1, 1},
+		cooldownEmphasizeFontSize = 16,
 
 		showCountText = true,
 		countTextFontName = "Noto Sans Medium",
@@ -114,6 +117,9 @@ plugin.defaultDB = {
 		cooldownTextSlug = true,
 		cooldownTextMillisecondsThreshold = 3,
 		cooldownTextColor = {1, 1, 1, 1},
+		cooldownEmphasizeTime = 0,
+		cooldownEmphasizeColor = {1, 1, 1, 1},
+		cooldownEmphasizeFontSize = 16,
 
 		showCountText = true,
 		countTextFontName = "Noto Sans Medium",
@@ -251,7 +257,21 @@ local function updateProfile()
 	end
 	ValidateColor(db.other.cooldownTextColor, plugin.defaultDB.other.cooldownTextColor, 0)
 	ValidateColor(db.player.cooldownTextColor, plugin.defaultDB.player.cooldownTextColor, 0)
-	ValidateColor(db.player.borderColor, plugin.defaultDB.player.borderColor, 0)
+
+	if db.player.cooldownEmphasizeTime < 0 or db.player.cooldownEmphasizeTime > 30 then
+		db.player.cooldownEmphasizeTime = plugin.defaultDB.player.cooldownEmphasizeTime
+	end
+	if db.other.cooldownEmphasizeTime < 0 or db.other.cooldownEmphasizeTime > 30 then
+		db.other.cooldownEmphasizeTime = plugin.defaultDB.other.cooldownEmphasizeTime
+	end
+	if db.player.cooldownTextFontSize < 10 or db.player.cooldownTextFontSize > 200 then
+		db.player.cooldownTextFontSize = plugin.defaultDB.player.cooldownTextFontSize
+	end
+	if db.other.cooldownTextFontSize < 10 or db.other.cooldownTextFontSize > 200 then
+		db.other.cooldownTextFontSize = plugin.defaultDB.other.cooldownTextFontSize
+	end
+	ValidateColor(db.player.cooldownEmphasizeColor, plugin.defaultDB.player.cooldownEmphasizeColor, 0)
+	ValidateColor(db.other.cooldownEmphasizeColor, plugin.defaultDB.other.cooldownEmphasizeColor, 0)
 
 	if db.player.countTextFontSize < 8 or db.player.countTextFontSize > 200 then
 		db.player.countTextFontSize = plugin.defaultDB.player.countTextFontSize
@@ -261,6 +281,7 @@ local function updateProfile()
 	end
 	ValidateColor(db.other.countTextColor, plugin.defaultDB.other.countTextColor, 0)
 	ValidateColor(db.player.countTextColor, plugin.defaultDB.player.countTextColor, 0)
+	ValidateColor(db.other.borderColor, plugin.defaultDB.other.borderColor, 0)
 	ValidateColor(db.player.borderColor, plugin.defaultDB.player.borderColor, 0)
 
 	if db.player.borderSize < 1 or db.player.borderSize > 32 then
@@ -839,6 +860,54 @@ do
 								end,
 								hasAlpha = true,
 							},
+							cooldownEmphasizeHeader = {
+								type = "header",
+								name = L.emphasize,
+								order = 8,
+							},
+							cooldownEmphasizeHeading = {
+								type = "description",
+								name = L.cooldownEmphasizeHeader,
+								order = 9,
+								width = "full",
+								fontSize = "medium",
+							},
+							cooldownEmphasizeTime = {
+								type = "range",
+								name = L.emphasizeAt,
+								order = 10,
+								min = 0,
+								max = 30,
+								step = 1,
+								width = "full",
+							},
+							cooldownEmphasizeColor = {
+								type = "color",
+								name = L.fontColor,
+								hasAlpha = true,
+								get = function(info)
+									local colorTable = db.player.cooldownEmphasizeColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.player.cooldownEmphasizeColor = {r, g, b, a}
+									updateProfile()
+								end,
+								order = 11,
+								disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
+							},
+							cooldownEmphasizeFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 12,
+								softMax = 100,
+								max = 200,
+								min = 10,
+								step = 1,
+								disabled = true, -- not currently possible
+								-- disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
+							},
 						},
 					},
 					dispelTypeOptions = {
@@ -1314,6 +1383,54 @@ do
 									updateProfile()
 								end,
 								hasAlpha = true,
+							},
+							cooldownEmphasizeHeader = {
+								type = "header",
+								name = L.emphasize,
+								order = 8,
+							},
+							cooldownEmphasizeHeading = {
+								type = "description",
+								name = L.cooldownEmphasizeHeader,
+								order = 9,
+								width = "full",
+								fontSize = "medium",
+							},
+							cooldownEmphasizeTime = {
+								type = "range",
+								name = L.emphasizeAt,
+								order = 10,
+								min = 0,
+								max = 30,
+								step = 1,
+								width = "full",
+							},
+							cooldownEmphasizeColor = {
+								type = "color",
+								name = L.fontColor,
+								hasAlpha = true,
+								get = function(info)
+									local colorTable = db.other.cooldownEmphasizeColor
+									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								end,
+								set = function(_, r, g, b, a)
+									db.other.cooldownEmphasizeColor = {r, g, b, a}
+									updateProfile()
+								end,
+								order = 11,
+								disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
+							},
+							cooldownEmphasizeFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 12,
+								softMax = 100,
+								max = 200,
+								min = 10,
+								step = 1,
+								disabled = true, -- not currently possible
+								-- disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
 							},
 						},
 					},
@@ -2030,30 +2147,69 @@ local function GetAtlasBorderSize(size)
 end
 
 do
-	-- local durationFormater do
-	-- 	-- a copy of DefaultAuraDurationFormatter
-	-- 	local maxIntervalSecondsMultiplier = 1.5
-	-- 	local maxIntervalCurve = C_CurveUtil.CreateCurve()
-	-- 	maxIntervalCurve:AddPoint(1 + (maxIntervalSecondsMultiplier * SECONDS_PER_MIN), Enum.SecondsFormatterInterval.Minutes)
-	-- 	maxIntervalCurve:AddPoint(1 + (maxIntervalSecondsMultiplier * SECONDS_PER_HOUR), Enum.SecondsFormatterInterval.Hours)
-	-- 	maxIntervalCurve:AddPoint(1 + (maxIntervalSecondsMultiplier * SECONDS_PER_DAY), Enum.SecondsFormatterInterval.Days)
+	local playerCooldownDurationBinding = C_DurationUtil.CreateDurationTextBinding()
+	do
+		local formatter = C_StringUtil.CreateNumericRuleFormatter()
+		formatter:SetBreakpoints({
+			{
+				threshold = 0.01,
+				format = "",
+			},
+			{
+				threshold = 0.011,
+				format = "%0.1f",
+			},
+			{
+				threshold = 2.999,
+				format = "%0.1f",
+			},
+			{
+				threshold = 3,
+				format = "%d",
+			},
+		})
+		playerCooldownDurationBinding:SetFormatter(formatter)
+		playerCooldownDurationBinding.formatter = formatter -- there's no 'binding:GetFormatter()'
 
-	-- 	durationFormater = C_StringUtil.CreateSecondsFormatter()
-	-- 	durationFormater:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter)
-	-- 	durationFormater:SetMinInterval(Enum.SecondsFormatterInterval.Seconds)
-	-- 	durationFormater:SetMaxIntervalCurve(maxIntervalCurve)
-	-- 	durationFormater:SetDesiredUnitCount(1)
+		local colorCurve = C_CurveUtil.CreateColorCurve()
+		colorCurve:SetType(Enum.LuaCurveType.Step)
+		playerCooldownDurationBinding:SetTextColorCurve(colorCurve, Enum.DurationTextBindingProperty.RemainingDuration)
+	end
 
-	-- 	-- changes
-	-- 	durationFormater:SetStripIntervalWhitespace(Enum.SecondsFormatterIntervalWhitespace.Strip)
-	-- 	durationFormater:SetMillisecondsThreshold(3)
-	-- end
+	local otherCooldownDurationBinding = C_DurationUtil.CreateDurationTextBinding()
+	do
+		local formatter = C_StringUtil.CreateNumericRuleFormatter()
+		formatter:SetBreakpoints({
+			{
+				threshold = 0.01,
+				format = "",
+			},
+			{
+				threshold = 0.011,
+				format = "%0.1f",
+			},
+			{
+				threshold = 2.999,
+				format = "%0.1f",
+			},
+			{
+				threshold = 3,
+				format = "%d",
+			},
+		})
+		otherCooldownDurationBinding:SetFormatter(formatter)
+		otherCooldownDurationBinding.formatter = formatter -- there's no 'binding:GetFormatter()'
+
+		local colorCurve = C_CurveUtil.CreateColorCurve()
+		colorCurve:SetType(Enum.LuaCurveType.Step)
+		otherCooldownDurationBinding:SetTextColorCurve(colorCurve, Enum.DurationTextBindingProperty.RemainingDuration)
+	end
 
 	local function BorderGetSize(border)
 		return border.plainSize
 	end
 
-	function InitializeAuraFrame(aura, optionsDB)
+	function InitializeAuraFrame(unitType, aura, optionsDB)
 		optionsDB = optionsDB or aura:GetParent().db
 		local size = optionsDB.size
 
@@ -2071,10 +2227,12 @@ do
 		cooldown:SetDrawEdge(false)
 		cooldown:SetDrawBling(false)
 		cooldown:SetDrawSwipe(optionsDB.showCooldown)
+		cooldown:SetHideCountdownNumbers(true)
 		aura.cooldown = cooldown
 		aura:SetDurationCooldown(cooldown)
 
-		local duration = cooldown:GetCountdownFontString()
+		local duration = cooldown:CreateFontString(nil, "OVERLAY")
+		duration:SetPoint("CENTER")
 		do
 			local flags = {}
 			if optionsDB.cooldownTextMonochrome then
@@ -2093,8 +2251,18 @@ do
 			end
 			duration:SetFont(LibSharedMedia:Fetch(FONT, optionsDB.cooldownTextFontName), optionsDB.cooldownTextFontSize, flags)
 		end
-		cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
-		cooldown:SetCountdownMillisecondsThreshold(optionsDB.cooldownTextMillisecondsThreshold)
+		aura.duration = duration
+
+		if unitType == "player" then
+			aura.durationBinding = playerCooldownDurationBinding
+			aura.durationBinding:SetFontString(duration)
+		else
+			aura.durationBinding = otherCooldownDurationBinding
+			aura.durationBinding:SetFontString(duration)
+		end
+		aura.durationOptions = {
+			binding = aura.durationBinding
+		}
 
 		-- local cooldownBar = CreateFrame("StatusBar", nil, aura)
 		-- aura.cooldownBar = cooldownBar
@@ -2185,11 +2353,9 @@ do
 
 		local cooldown = aura:GetDurationCooldown()
 		cooldown:SetDrawSwipe(optionsDB.showCooldown)
-		cooldown:SetHideCountdownNumbers(not optionsDB.showCooldownText)
-		cooldown:SetCountdownMillisecondsThreshold(optionsDB.cooldownTextMillisecondsThreshold)
 
-		local duration = cooldown:GetCountdownFontString()
-		do
+		local duration = aura.duration
+		if optionsDB.showCooldownText then
 			local flags = {}
 			if optionsDB.cooldownTextMonochrome then
 				flags[#flags + 1] = "MONOCHROME"
@@ -2207,8 +2373,24 @@ do
 			end
 			duration:SetFont(LibSharedMedia:Fetch(FONT, optionsDB.cooldownTextFontName), optionsDB.cooldownTextFontSize, flags)
 
-			local textColor = optionsDB.cooldownTextColor
-			duration:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+			local textColor = CreateColor(unpack(optionsDB.cooldownTextColor))
+			local curve = aura.durationBinding:GetTextColorCurve()
+			curve:ClearPoints()
+
+			if optionsDB.cooldownEmphasizeTime > 0 then
+				local emphasizedColor = CreateColor(unpack(optionsDB.cooldownEmphasizeColor))
+				curve:AddPoint(0.1, emphasizedColor)
+				curve:AddPoint(optionsDB.cooldownEmphasizeTime - 0.1, emphasizedColor)
+				curve:AddPoint(optionsDB.cooldownEmphasizeTime, textColor)
+			else
+				curve:AddPoint(0, textColor)
+			end
+
+			aura:SetDurationText(duration, aura.durationOptions)
+			duration:Show()
+		else
+			aura:ClearDurationText()
+			duration:Hide()
 		end
 
 		aura:ClearDispelTypeTextures()
@@ -2292,7 +2474,7 @@ do
 
 			auraContainer:AddAuraGroup("debuffs", "HARMFUL", {
 				maxFrameCount = optionsDB.maxIcons,
-				initializeFrame = InitializeAuraFrame,
+				initializeFrame = GenerateClosure(InitializeAuraFrame, unitType),
 				sortMethod = 4, -- Enum.UnitAuraSortRule.ExpirationOnly
 				sortDirection = 0, -- Enum.UnitAuraSortDirection.Normal
 				layout = {
@@ -2386,6 +2568,7 @@ do
 		frame:SetParent(nil)
 		frame:SetScript("OnUpdate", nil)
 		frame.cooldown:Clear()
+		frame.durationBinding:SetEnabled(false)
 		frame.timerID = nil
 		frame:Hide()
 		anchor.hasTestIcon = nil
@@ -2466,7 +2649,7 @@ do
 			for name, func in next, methods do
 				aura[name] = func or noop
 			end
-			InitializeAuraFrame(aura, db[unitType])
+			InitializeAuraFrame(unitType, aura, db[unitType])
 		end
 
 		-- Setup test aura info
@@ -2475,12 +2658,15 @@ do
 		local dispelType = dispelTypeList[(index - 1) % 7]
 
 		local icon = C_Spell.GetSpellTexture(spellId)
-		local duration = CONFIG_MODE_DURATION
-		local expirationTime = GetTime() + duration
 		local applications = math.random(0, 5)
 
+		local duration = C_DurationUtil.CreateDuration()
+		duration:SetTimeFromStart(GetTime(), CONFIG_MODE_DURATION)
+
 		aura.icon:SetTexture(icon)
-		aura.cooldown:SetCooldownFromExpirationTime(expirationTime, CONFIG_MODE_DURATION)
+		aura.cooldown:SetCooldownFromDurationObject(duration)
+		aura.durationBinding:SetDuration(duration)
+		aura.durationBinding:SetEnabled(true)
 		aura.stacks:SetText(applications > 1 and applications or "")
 		aura.dispelType = dispelType
 		aura.unitType = unitType
@@ -2506,7 +2692,7 @@ do
 				releaseFrame(aura)
 			end
 		end
-		plugin:SimpleTimer(onDelay, duration)
+		plugin:SimpleTimer(onDelay, CONFIG_MODE_DURATION)
 
 		return aura
 	end

@@ -122,13 +122,18 @@ files["Plugins/AltPower.lua"].ignore = {
 	"113/UnitGroupRolesAssigned",
 }
 files["Plugins/Auras.lua"].ignore = {
-	"113/AuraUtil",
 	"113/AnchorUtil",
+	"113/AuraUtil",
 	"113/C_ClassColor",
+	"113/C_CurveUtil",
+	"113/C_DurationUtil",
 	"113/C_RestrictedActions",
-	"113/C_UnitAuras",
 	"113/C_Spell",
+	"113/C_StringUtil",
+	"113/C_UnitAuras",
+	"113/CreateColor",
 	"113/Enum",
+	"113/GenerateClosure",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitInPartyIsAI",
 }
