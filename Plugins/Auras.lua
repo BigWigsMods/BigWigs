@@ -66,7 +66,6 @@ plugin.defaultDB = {
 		cooldownEmphasizeTime = 0,
 		cooldownEmphasizeColor = {1, 1, 1, 1},
 		cooldownEmphasizeFontSize = 16,
-		cooldownEmphasizeSize = 64,
 
 		showCountText = true,
 		countTextFontName = "Noto Sans Medium",
@@ -121,7 +120,6 @@ plugin.defaultDB = {
 		cooldownEmphasizeTime = 0,
 		cooldownEmphasizeColor = {1, 1, 1, 1},
 		cooldownEmphasizeFontSize = 16,
-		cooldownEmphasizeSize = 64,
 
 		showCountText = true,
 		countTextFontName = "Noto Sans Medium",
