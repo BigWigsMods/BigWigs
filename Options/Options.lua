@@ -1305,6 +1305,8 @@ do
 		end
 
 		local function toggleOptionsTabSelected(widget, callback, tab)
+			visibleSpellDescriptionWidgets = {}
+			visibleCreatureNameWidgets = {}
 			widget:PauseLayout()
 			widget:ReleaseChildren()
 
