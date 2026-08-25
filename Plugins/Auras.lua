@@ -37,6 +37,7 @@ plugin.defaultDB = {
 		disabled = false,
 
 		size = 64,
+		zoom = 0,
 		spacing = 6,
 		showCooldown = true,
 		showTooltip = true,
@@ -87,6 +88,7 @@ plugin.defaultDB = {
 		disabled = true,
 
 		size = 64,
+		zoom = 0,
 		spacing = 6,
 		showCooldown = true,
 		showTooltip = true,
@@ -225,6 +227,13 @@ local function updateProfile()
 	end
 	if db.other.size < 24 or db.other.size > 256 then
 		db.other.size = plugin.defaultDB.other.size
+	end
+
+	if db.player.zoom < 0 or db.player.zoom > 0.5 then
+		db.player.zoom = plugin.defaultDB.player.zoom
+	end
+	if db.other.zoom < 0 or db.other.zoom > 0.5 then
+		db.other.zoom = plugin.defaultDB.other.zoom
 	end
 
 	if db.player.spacing < 0 or db.player.spacing > 50 then
@@ -696,16 +705,28 @@ do
 						type = "range",
 						name = L.iconSize,
 						min = 24, max = 256, step = 1,
-						width = 1.6,
+						width = 1.1,
 						order = 4,
+						disabled = IsAnchorDisabled,
+					},
+					zoom = {
+						type = "range",
+						name = L.zoom,
+						desc = L.zoomDesc,
+						order = 5,
+						min = 0,
+						max = 0.5,
+						step = 0.01,
+						width = 1.1,
+						isPercent = true,
 						disabled = IsAnchorDisabled,
 					},
 					spacing = {
 						type = "range",
 						name = L.iconSpacing,
 						min = 0, max = 50, step = 1,
-						width = 1.6,
-						order = 5,
+						width = 1.1,
+						order = 6,
 						disabled = IsAnchorDisabled,
 					},
 					growthDirection = {
@@ -718,7 +739,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 6,
+						order = 7,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -727,14 +748,14 @@ do
 						desc = L.maxIconsDesc,
 						min = 1, max = 5, step = 1,
 						width = 1.6,
-						order = 7,
+						order = 8,
 						disabled = IsAnchorDisabled,
 					},
 					showTooltip = {
 						type = "toggle",
 						name = L.iconTooltip,
 						desc = L.iconTooltipDesc,
-						order = 8,
+						order = 9,
 						disabled = IsAnchorDisabled,
 					},
 					showCooldown = {
@@ -742,7 +763,7 @@ do
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 9,
+						order = 10,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownText = {
@@ -750,7 +771,7 @@ do
 						inline = true,
 						name = L.cooldownText,
 						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
-						order = 10,
+						order = 11,
 						args = {
 							showCooldownText = {
 								type = "toggle",
@@ -824,7 +845,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.dispelType,
-						order = 11,
+						order = 12,
 						disabled = function(info) return db.player.disabled or not db.player.showDispelType end,
 						args = {
 							showDispelType = {
@@ -867,7 +888,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.border,
-						order = 12,
+						order = 13,
 						disabled = function(info)
 							return db.player.disabled or db.player.borderName == "None"
 						end,
@@ -933,7 +954,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 13,
+						order = 14,
 						disabled = function(info) return db.player.disabled or not db.player.showCountText end,
 						args = {
 							showCountText = {
@@ -1160,16 +1181,28 @@ do
 						type = "range",
 						name = L.iconSize,
 						min = 24, max = 256, step = 1,
-						width = 1.6,
+						width = 1.1,
 						order = 10,
+						disabled = IsAnchorDisabled,
+					},
+					zoom = {
+						type = "range",
+						name = L.zoom,
+						desc = L.zoomDesc,
+						order = 11,
+						min = 0,
+						max = 0.5,
+						step = 0.01,
+						width = 1.1,
+						isPercent = true,
 						disabled = IsAnchorDisabled,
 					},
 					spacing = {
 						type = "range",
 						name = L.iconSpacing,
 						min = 0, max = 50, step = 1,
-						width = 1.6,
-						order = 11,
+						width = 1.1,
+						order = 12,
 						disabled = IsAnchorDisabled,
 					},
 					growthDirection = {
@@ -1182,7 +1215,7 @@ do
 							DOWN = L.DOWN,
 						},
 						width = 1.6,
-						order = 12,
+						order = 13,
 						disabled = IsAnchorDisabled,
 					},
 					maxIcons = {
@@ -1191,7 +1224,7 @@ do
 						desc = L.maxIconsDesc,
 						min = 1, max = 5, step = 1,
 						width = 1.6,
-						order = 13,
+						order = 14,
 						disabled = IsAnchorDisabled,
 					},
 					showCooldown = {
@@ -1199,21 +1232,21 @@ do
 						name = L.showCooldown,
 						desc = L.showCooldownSwipeDesc,
 						width = 1.6,
-						order = 14,
+						order = 15,
 						disabled = IsAnchorDisabled,
 					},
 					showTooltip = {
 						type = "toggle",
 						name = L.iconTooltip,
 						desc = L.iconTooltipDesc,
-						order = 15,
+						order = 16,
 						disabled = IsAnchorDisabled,
 					},
 					cooldownText = {
 						type = "group",
 						inline = true,
 						name = L.cooldownText,
-						order = 16,
+						order = 17,
 						disabled = function(info) return db.other.disabled or not db.other.showCooldownText end,
 						args = {
 							showCooldownText = {
@@ -1288,7 +1321,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.dispelType,
-						order = 17,
+						order = 18,
 						disabled = function(info) return db.other.disabled or not db.other.showDispelType end,
 						args = {
 							showDispelType = {
@@ -1331,7 +1364,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.border,
-						order = 18,
+						order = 19,
 						disabled = function(info)
 							return db.other.disabled or db.other.borderName == "None"
 						end,
@@ -1397,7 +1430,7 @@ do
 						type = "group",
 						inline = true,
 						name = L.countText,
-						order = 19,
+						order = 20,
 						args = {
 							showCountText = {
 								type = "toggle",
@@ -2029,7 +2062,6 @@ do
 
 		local icon = aura:CreateTexture(nil, "BACKGROUND")
 		icon:SetAllPoints()
-		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93) -- TODO: this needs an option
 		aura:SetIcon(icon)
 		aura.icon = icon
 
@@ -2140,6 +2172,16 @@ do
 
 	function UpdateAuraFrame(aura, optionsDB)
 		aura:SetSize(optionsDB.size, optionsDB.size)
+
+		do
+			-- icon aspect ratio and zoom calcs
+			local baseZoom = 0.86
+			local zoom = baseZoom * (1 - optionsDB.zoom)
+			local zoomedOffset = 1 - ((1 - zoom) / 2)
+			local offsetX, offsetY = zoomedOffset, zoomedOffset
+			local left, right, top, bottom = 1 - offsetX, offsetX, 1 - offsetY, offsetY
+			aura.icon:SetTexCoord(left, right, top, bottom)
+		end
 
 		local cooldown = aura:GetDurationCooldown()
 		cooldown:SetDrawSwipe(optionsDB.showCooldown)
