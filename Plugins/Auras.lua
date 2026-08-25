@@ -898,18 +898,18 @@ do
 								order = 11,
 								disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
 							},
-							-- cooldownEmphasizeFontSize = { -- TBD if blizzard allows it in the future
-							-- 	type = "range",
-							-- 	name = L.fontSize,
-							-- 	desc = L.fontSizeDesc,
-							-- 	order = 12,
-							-- 	softMax = 100,
-							-- 	max = 200,
-							-- 	min = 10,
-							-- 	step = 1,
-							-- 	disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
-							-- },
-							-- cooldownEmphasizeSize = {}, -- TBD if blizzard allows it in the future
+							cooldownEmphasizeFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 12,
+								softMax = 100,
+								max = 200,
+								min = 10,
+								step = 1,
+								disabled = true, -- not currently possible
+								-- disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
+							},
 						},
 					},
 					dispelTypeOptions = {
@@ -1422,18 +1422,18 @@ do
 								order = 11,
 								disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
 							},
-							-- cooldownEmphasizeFontSize = { -- TBD if blizzard allows it in the future
-							-- 	type = "range",
-							-- 	name = L.fontSize,
-							-- 	desc = L.fontSizeDesc,
-							-- 	order = 12,
-							-- 	softMax = 100,
-							-- 	max = 200,
-							-- 	min = 10,
-							-- 	step = 1,
-							-- 	disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
-							-- },
-							-- cooldownEmphasizeSize = {}, -- TBD if blizzard allows it in the future
+							cooldownEmphasizeFontSize = {
+								type = "range",
+								name = L.fontSize,
+								desc = L.fontSizeDesc,
+								order = 12,
+								softMax = 100,
+								max = 200,
+								min = 10,
+								step = 1,
+								disabled = true, -- not currently possible
+								-- disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
+							},
 						},
 					},
 					dispelTypeOptions = {
