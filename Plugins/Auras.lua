@@ -1881,7 +1881,7 @@ do
 		display:SetPoint("TOPLEFT", parent)
 		display:SetPoint("BOTTOMRIGHT", parent)
 		display:Hide()
-		display:SetFrameStrata("MEDIUM")
+		display:SetFrameStrata("HIGH")
 		display:SetFixedFrameStrata(true)
 		display:SetFrameLevel(25)
 		display:SetFixedFrameLevel(true)
