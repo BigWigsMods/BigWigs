@@ -1906,29 +1906,32 @@ do
 		header:SetJustifyV("MIDDLE")
 		display.text = header
 
-		local directionUp = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		local directionBox = CreateFrame("Frame", nil, display)
+		display.directionBox = directionBox
+
+		local directionUp = directionBox:CreateTexture(nil, "BACKGROUND", nil, 1)
 		directionUp:SetTexture(ARROW)
-		directionUp:SetPoint('CENTER', display, 'TOP')
+		directionUp:SetPoint('CENTER', directionBox, 'TOP')
 		directionUp:SetSize(20, 20)
 		display.directionUp = directionUp
 
-		local directionRight = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		local directionRight = directionBox:CreateTexture(nil, "BACKGROUND", nil, 1)
 		directionRight:SetTexture(ARROW)
-		directionRight:SetPoint('CENTER', display, 'RIGHT')
+		directionRight:SetPoint('CENTER', directionBox, 'RIGHT')
 		directionRight:SetSize(20, 20)
 		directionRight:SetTexCoord(1, 1, 0, 1, 1, 0, 0, 0)
 		display.directionRight = directionRight
 
-		local directionDown = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		local directionDown = directionBox:CreateTexture(nil, "BACKGROUND", nil, 1)
 		directionDown:SetTexture(ARROW)
-		directionDown:SetPoint('CENTER', display, 'BOTTOM')
+		directionDown:SetPoint('CENTER', directionBox, 'BOTTOM')
 		directionDown:SetSize(20, 20)
 		directionDown:SetTexCoord(0, 1, 0, 0, 1, 1, 1, 0)
 		display.directionDown = directionDown
 
-		local directionLeft = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		local directionLeft = directionBox:CreateTexture(nil, "BACKGROUND", nil, 1)
 		directionLeft:SetTexture(ARROW)
-		directionLeft:SetPoint('CENTER', display, 'LEFT')
+		directionLeft:SetPoint('CENTER', directionBox, 'LEFT')
 		directionLeft:SetSize(20, 20)
 		directionLeft:SetTexCoord(1, 0, 0, 0, 1, 1, 0, 1)
 		display.directionLeft = directionLeft
@@ -1947,13 +1950,39 @@ do
 				anchor.configModeFrame.dragAnchor = anchor
 			end
 
-			local direction = db[unitType].growthDirection
-			anchor.configModeFrame.directionUp:SetShown(not anchor.hasTestIcon and (direction == "UP" or direction == "CENTER_VERTICAL"))
-			anchor.configModeFrame.directionRight:SetShown(not anchor.hasTestIcon and (direction == "RIGHT" or direction == "CENTER_HORIZONTAL"))
-			anchor.configModeFrame.directionDown:SetShown(not anchor.hasTestIcon and (direction == "DOWN" or direction == "CENTER_VERTICAL"))
-			anchor.configModeFrame.directionLeft:SetShown(not anchor.hasTestIcon and (direction == "LEFT" or direction == "CENTER_HORIZONTAL"))
-			anchor.configModeFrame.bg:SetAlpha(anchor.hasTestIcon and 0 or 1)
-			anchor.configModeFrame.text:SetAlpha(anchor.hasTestIcon and 0 or 1)
+			local anchorDB = db[unitType]
+			local size = anchorDB.size
+			local spacing = anchor.numTestIcons > 1 and anchorDB.spacing or 0
+			local direction = anchorDB.growthDirection
+			anchor.configModeFrame.directionBox:ClearAllPoints()
+			if anchor.numTestIcons == 0 then
+				anchor.configModeFrame.directionBox:SetAllPoints()
+			elseif direction == "UP" then
+				anchor.configModeFrame.directionBox:SetSize(size, (anchor.numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetPoint("BOTTOM", anchor.configModeFrame)
+			elseif direction == "DOWN" then
+				anchor.configModeFrame.directionBox:SetSize(size, (anchor.numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetPoint("TOP", anchor.configModeFrame)
+			elseif direction == "CENTER_VERTICAL" then
+				anchor.configModeFrame.directionBox:SetSize(size, (anchor.numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetPoint("CENTER", anchor.configModeFrame)
+			elseif direction == "LEFT" then
+				anchor.configModeFrame.directionBox:SetSize((anchor.numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetPoint("RIGHT", anchor.configModeFrame)
+			elseif direction == "RIGHT" then
+				anchor.configModeFrame.directionBox:SetSize((anchor.numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetPoint("LEFT", anchor.configModeFrame)
+			elseif direction == "CENTER_HORIZONTAL" then
+				anchor.configModeFrame.directionBox:SetSize((anchor.numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetPoint("CENTER", anchor.configModeFrame)
+			end
+
+			anchor.configModeFrame.directionUp:SetShown(direction == "UP" or direction == "CENTER_VERTICAL")
+			anchor.configModeFrame.directionRight:SetShown(direction == "RIGHT" or direction == "CENTER_HORIZONTAL")
+			anchor.configModeFrame.directionDown:SetShown(direction == "DOWN" or direction == "CENTER_VERTICAL")
+			anchor.configModeFrame.directionLeft:SetShown(direction == "LEFT" or direction == "CENTER_HORIZONTAL")
+			anchor.configModeFrame.bg:SetAlpha(anchor.numTestIcons > 0 and 0 or 1)
+			anchor.configModeFrame.text:SetAlpha(anchor.numTestIcons > 0 and 0 or 1)
 			anchor.configModeFrame:Show()
 		end
 	end
@@ -2746,7 +2775,7 @@ do
 			end
 		end
 
-		anchor.hasTestIcon = numActive > 0
+		anchor.numTestIcons = numActive
 		if inConfigureMode then
 			plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
 		end
