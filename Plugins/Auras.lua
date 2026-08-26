@@ -2644,6 +2644,7 @@ do
 	}
 	local noop = function() end
 
+	local finishTestAura
 	local function createTestAura(unitType)
 		local aura = CreateFrame("Frame", nil, anchors[unitType])
 		aura:SetFrameStrata("MEDIUM")
@@ -2657,6 +2658,7 @@ do
 		end
 
 		InitializeAuraFrame(unitType, aura, db[unitType])
+		aura.cooldown:SetScript("OnCooldownDone", GenerateClosure(finishTestAura, aura))
 
 		return aura
 	end
@@ -2666,13 +2668,17 @@ do
 		aura:Hide()
 		aura.cooldown:Clear()
 		aura.durationBinding:SetEnabled(false)
-		aura.timerID = nil
 	end
 
 	local pools = {
 		player = CreateUnsecuredObjectPool(GenerateClosure(createTestAura, "player"), resetTestAura),
 		other = CreateUnsecuredObjectPool(GenerateClosure(createTestAura, "other"), resetTestAura),
 	}
+
+	function finishTestAura(aura)
+		pools[aura.unitType]:Release(aura)
+		UpdateTestAuras(aura.unitType)
+	end
 
 	local function activateTestAura(unitType, index)
 		local pool = pools[unitType]
@@ -2708,17 +2714,6 @@ do
 		-- 	name = C_Spell.GetSpellName(spellId),
 		-- 	spellId = spellId,
 		-- })
-
-		local tbl = {}
-		aura.timerID = tbl
-		-- We don't want to use ScheduleTimer as we don't want the timer to cancel if this plugin is disabled
-		local onDelay = function()
-			if tbl == aura.timerID then
-				pool:Release(aura)
-				UpdateTestAuras(unitType)
-			end
-		end
-		plugin:SimpleTimer(onDelay, CONFIG_MODE_DURATION)
 
 		aura:Show()
 	end
