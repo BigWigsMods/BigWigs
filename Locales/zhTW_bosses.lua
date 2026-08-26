@@ -83,7 +83,7 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 -- The Venomous Abyss
 
 BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
-	--possession_barrage = "Barrage",
+	possession_barrage = "彈幕",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -96,9 +96,9 @@ BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Ula'tek", {
-	--mephitic_thrash = "Sweep",
-	--call_of_the_serpent = "Eggs",
-	--gore_rattle = "Tail",
-	--circling_prey = "Platform Break",
-	--p3_knock_up = "Knock Up",
+	mephitic_thrash = "痛擊",
+	call_of_the_serpent = "蛇蛋",
+	gore_rattle = "尾巴",
+	circling_prey = "平台破裂",
+	p3_knock_up = "擊退",
 })
