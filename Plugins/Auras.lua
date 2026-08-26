@@ -2617,7 +2617,7 @@ do
 		local aura = CreateFrame("Frame", nil, anchors[unitType])
 		aura:SetFrameStrata("MEDIUM")
 		aura:SetFixedFrameStrata(true)
-		aura:SetFrameLevel(2000)
+		aura:SetFrameLevel(1000)
 		aura:SetFixedFrameLevel(true)
 		aura:Hide()
 
