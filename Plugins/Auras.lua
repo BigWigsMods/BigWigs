@@ -2693,52 +2693,55 @@ do
 	end
 
 	function UpdateTestAuras(unitType)
-		local optionsDB = db[unitType]
-		local anchor = anchors[unitType]
-		local scale = anchor:GetScale()
-		local point, relPoint
-		local x, y = 0, 0
-		if optionsDB.growthDirection == "RIGHT" then
-			point, relPoint = "LEFT", "RIGHT"
-			x = optionsDB.spacing
-		elseif optionsDB.growthDirection == "LEFT" then
-			point, relPoint = "RIGHT", "LEFT"
-			x = -optionsDB.spacing
-		elseif optionsDB.growthDirection == "UP" then
-			point, relPoint = "BOTTOM", "TOP"
-			y = optionsDB.spacing
-		elseif optionsDB.growthDirection == "DOWN" then
-			point, relPoint = "TOP", "BOTTOM"
-			y = -optionsDB.spacing
-		elseif optionsDB.growthDirection == "CENTER_HORIZONTAL" then
-			point = "CENTER"
-		elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
-			point = "CENTER"
-		end
-
-		local pool, lastAura = pools[unitType]
+		local pool = pools[unitType]
 		local numActive = pool:GetNumActive()
-		for index = 1, numActive do
-			local aura = pool:GetNextActive(lastAura)
-			aura:ClearAllPoints()
-			if relPoint then
-				if index == 1 then
-					aura:SetPoint("CENTER")
-				else
-					aura:SetPoint(point, lastAura, relPoint, x / scale, y / scale)
-				end
-			else
-				local centerIndex = (numActive + 1) / 2
-				local offset = (index - centerIndex) * (optionsDB.size + optionsDB.spacing)
-				if optionsDB.growthDirection == "CENTER_HORIZONTAL" then
-					aura:SetPoint(point, anchor, point, offset / scale, 0)
-				elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
-					aura:SetPoint(point, anchor, point, 0, offset / scale)
-				end
+		if numActive > 0 then
+			local optionsDB = db[unitType]
+			local anchor = anchors[unitType]
+			local scale = anchor:GetScale()
+			local point, relPoint
+			local x, y = 0, 0
+			if optionsDB.growthDirection == "RIGHT" then
+				point, relPoint = "LEFT", "RIGHT"
+				x = optionsDB.spacing
+			elseif optionsDB.growthDirection == "LEFT" then
+				point, relPoint = "RIGHT", "LEFT"
+				x = -optionsDB.spacing
+			elseif optionsDB.growthDirection == "UP" then
+				point, relPoint = "BOTTOM", "TOP"
+				y = optionsDB.spacing
+			elseif optionsDB.growthDirection == "DOWN" then
+				point, relPoint = "TOP", "BOTTOM"
+				y = -optionsDB.spacing
+			elseif optionsDB.growthDirection == "CENTER_HORIZONTAL" then
+				point = "CENTER"
+			elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
+				point = "CENTER"
 			end
 
-			UpdateAuraFrame(aura, optionsDB)
-			lastAura = aura
+			local lastAura
+			for index = 1, numActive do
+				local aura = pool:GetNextActive(lastAura)
+				aura:ClearAllPoints()
+				if relPoint then
+					if index == 1 then
+						aura:SetPoint("CENTER")
+					else
+						aura:SetPoint(point, lastAura, relPoint, x / scale, y / scale)
+					end
+				else
+					local centerIndex = (numActive + 1) / 2
+					local offset = (index - centerIndex) * (optionsDB.size + optionsDB.spacing)
+					if optionsDB.growthDirection == "CENTER_HORIZONTAL" then
+						aura:SetPoint(point, anchor, point, offset / scale, 0)
+					elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
+						aura:SetPoint(point, anchor, point, 0, offset / scale)
+					end
+				end
+
+				UpdateAuraFrame(aura, optionsDB)
+				lastAura = aura
+			end
 		end
 	end
 
