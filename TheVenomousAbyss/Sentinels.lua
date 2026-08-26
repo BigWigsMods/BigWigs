@@ -420,10 +420,10 @@ function mod:VenomCoagulation()
 	return {
 		msg = barText,
 		key = 1284251,
-		onFinished = function()
+		onFinished = function(barInfo)
 			self:StopBlizzMessages(0.4) -- Breath of Ula'tek hurls forth a [Venom Coagulation]!
 			self:Message(1284251, "cyan", messageText)
-			self:CDBar(1284251, 5.5, self:GetRename(1284251, 2)) -- Add spawning
+			self:CDBar(1284251, 5.5, self:GetRename(1284251, 2), nil, barInfo.eventID) -- Add spawning
 			self:PlaySound(1284251, "info")
 
 			self:RegisterBossEvent("boss3", function() -- catch the next IEEU
