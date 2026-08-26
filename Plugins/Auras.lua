@@ -1894,7 +1894,7 @@ do
 
 		local bg = display:CreateTexture(nil, "BACKGROUND", nil, 2)
 		bg:SetAllPoints(display)
-		bg:SetColorTexture(0, 0, 0, parent.hasTestIcon and 0 or 0.3)
+		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.bg = bg
 
 		local header = display:CreateFontString()
@@ -1948,10 +1948,12 @@ do
 			end
 
 			local direction = db[unitType].growthDirection
-			anchor.configModeFrame.directionUp:SetShown(direction == "UP" or direction == "CENTER_VERTICAL")
-			anchor.configModeFrame.directionRight:SetShown(direction == "RIGHT" or direction == "CENTER_HORIZONTAL")
-			anchor.configModeFrame.directionDown:SetShown(direction == "DOWN" or direction == "CENTER_VERTICAL")
-			anchor.configModeFrame.directionLeft:SetShown(direction == "LEFT" or direction == "CENTER_HORIZONTAL")
+			anchor.configModeFrame.directionUp:SetShown(not anchor.hasTestIcon and (direction == "UP" or direction == "CENTER_VERTICAL"))
+			anchor.configModeFrame.directionRight:SetShown(not anchor.hasTestIcon and (direction == "RIGHT" or direction == "CENTER_HORIZONTAL"))
+			anchor.configModeFrame.directionDown:SetShown(not anchor.hasTestIcon and (direction == "DOWN" or direction == "CENTER_VERTICAL"))
+			anchor.configModeFrame.directionLeft:SetShown(not anchor.hasTestIcon and (direction == "LEFT" or direction == "CENTER_HORIZONTAL"))
+			anchor.configModeFrame.bg:SetAlpha(anchor.hasTestIcon and 0 or 1)
+			anchor.configModeFrame.text:SetAlpha(anchor.hasTestIcon and 0 or 1)
 			anchor.configModeFrame:Show()
 		end
 	end
@@ -2693,11 +2695,11 @@ do
 	end
 
 	function UpdateTestAuras(unitType)
+		local anchor = anchors[unitType]
 		local pool = pools[unitType]
 		local numActive = pool:GetNumActive()
 		if numActive > 0 then
 			local optionsDB = db[unitType]
-			local anchor = anchors[unitType]
 			local scale = anchor:GetScale()
 			local point, relPoint
 			local x, y = 0, 0
@@ -2742,6 +2744,11 @@ do
 				UpdateAuraFrame(aura, optionsDB)
 				lastAura = aura
 			end
+		end
+
+		anchor.hasTestIcon = numActive > 0
+		if inConfigureMode then
+			plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
 		end
 	end
 
