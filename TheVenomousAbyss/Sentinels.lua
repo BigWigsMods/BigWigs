@@ -339,13 +339,13 @@ function mod:ShiftingProtovenom()
 		duration = newDuration,
 		msg = barText,
 		key = 1296878,
-		onFinished = function()
+		onFinished = function(barInfo)
 			-- self:StopBlizzMessages(0.3) -- Vashnik infects players with a [Shifting Protovenom]!
 			self:Message(1296878, "red", barText)
 			-- self:PlaySound(1296878, "warning")
 
 			if barOnFinish then
-				self:Bar(1296878, barOnFinish, CL.count:format(self:GetRename(1296878), protovenomCount))
+				self:Bar(1296878, barOnFinish, CL.count:format(self:GetRename(1296878), protovenomCount), nil, barInfo.eventID)
 			end
 		end,
 	}
