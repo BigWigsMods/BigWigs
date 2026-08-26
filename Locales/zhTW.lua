@@ -752,8 +752,8 @@ L.aurasDesc = "BigWigs 使用獨立且醒目的大圖示來追蹤首領對你施
 
 L.createTestAura = "創建測試光環"
 L.showDispelType = "顯示驅散類型圖示"
---L.showDispelTypeDesc = "Show an icon on the aura if it has a dispel type."
---L.dispelType = "Dispel Type Indicator"
+L.showDispelTypeDesc = "顯示驅散類型的小圖示。"
+L.dispelType = "驅散類型指示"
 L.iconSize = "圖示大小"
 L.iconSpacing = "圖示間距"
 L.showCooldown = "顯示冷卻動畫"
@@ -774,8 +774,8 @@ L.maxIconsDesc = "最多顯示幾個圖示。"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 現在，你可以在受到私有光環減益效果時，獲得大圖示提示；並且，你可以設定是否要監視其他隊友（例如坦克）的狀態。"
 L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：這個大圖示可以提示你或其他玩家（例如坦克）獲得的首領減益效果。"
 
---L.aurasTestAnchorText = "Player\nAuras"
---L.aurasTestTankAnchorText = "Tank\nAuras"
+L.aurasTestAnchorText = "玩家\n光環"
+L.aurasTestTankAnchorText = "坦克\n光環"
 
 L.auraSounds = "光環音效"
 L.addAuraSpell = "添加法術"
