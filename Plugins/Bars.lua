@@ -1902,6 +1902,10 @@ do
 
 	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId, spellIndicators)
 		if not text then text = "" end
+		if not eventId and self:IsSecret(text) then
+			BigWigs:Error("Cannot start a bar with secrets when no eventId is specified.")
+			return
+		end
 		self:StopSpecificBar(nil, module, text, eventId)
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
 		if db.iconTooltip and type(key) == "number" and key > 0 then
