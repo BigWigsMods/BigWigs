@@ -774,8 +774,8 @@ L.maxIconsDesc = "显示图标的最大数量。"
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：现在您可以显示自己的光环减益图标，甚至还可以显示其他玩家（例如坦克）的光环。"
 L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：现在您可以显示自己的首领减益图标，也可以查看其他玩家（例如坦克）的首领减益。"
 
---L.aurasTestAnchorText = "Player\nAuras"
---L.aurasTestTankAnchorText = "Tank\nAuras"
+L.aurasTestAnchorText = "玩家\n光环"
+L.aurasTestTankAnchorText = "坦克\n光环"
 
 L.auraSounds = "光环音效"
 L.addAuraSpell = "添加法术"
