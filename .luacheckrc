@@ -132,6 +132,7 @@ files["Plugins/Auras.lua"].ignore = {
 	"113/C_StringUtil",
 	"113/C_UnitAuras",
 	"113/CreateColor",
+	"113/CreateUnsecuredObjectPool",
 	"113/Enum",
 	"113/GenerateClosure",
 	"113/UnitGroupRolesAssigned",

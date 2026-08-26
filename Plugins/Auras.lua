@@ -14,16 +14,17 @@ if not plugin then return end
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
+local ARROW = [[Interface\AddOns\BigWigs\Media\Icons\arrows_up]]
 
 local CONFIG_MODE_DURATION = 10
 
 local db
 local containers = {}
-local anchors = { player = {}, other = {} }
+local anchors = {}
 local inConfigureMode = false
 local previouslyFoundUnit = nil
 
-local InitializeAuraFrame, UpdateAuraFrame, UpdateTestAura
+local InitializeAuraFrame, UpdateAuraFrame, UpdateTestAuras
 local UpdateAuraContainer
 local UpdateSoundOptions, UpdateRegisteredSounds
 local AddAuraSound, RemoveAuraSound, AddAllAuraSounds, RemoveAllAuraSounds
@@ -758,6 +759,8 @@ do
 							RIGHT = L.RIGHT,
 							UP = L.UP,
 							DOWN = L.DOWN,
+							CENTER_HORIZONTAL = L.CENTER_HORIZONTAL,
+							CENTER_VERTICAL = L.CENTER_VERTICAL,
 						},
 						width = 1.6,
 						order = 7,
@@ -1174,7 +1177,7 @@ do
 						set = function(_, value)
 							db.otherPlayerType = value
 							db.otherPlayerName = ""
-							plugin:UpdateAnchors("other")
+							plugin:UpdateAnchor("other")
 						end,
 						disabled = IsAnchorDisabled,
 						width = 1.3,
@@ -1205,7 +1208,7 @@ do
 						get = function() return db.otherPlayerName end,
 						set = function(_, value)
 							db.otherPlayerName = value
-							plugin:UpdateAnchors("other")
+							plugin:UpdateAnchor("other")
 						end,
 						hidden = function()
 							return db.otherPlayerType == "tank"
@@ -1282,6 +1285,8 @@ do
 							RIGHT = L.RIGHT,
 							UP = L.UP,
 							DOWN = L.DOWN,
+							CENTER_HORIZONTAL = L.CENTER_HORIZONTAL,
+							CENTER_VERTICAL = L.CENTER_VERTICAL,
 						},
 						width = 1.6,
 						order = 13,
@@ -1672,7 +1677,7 @@ do
 						end,
 						set = function(info, value)
 							db.player[info[#info]] = value
-							local anchor = anchors.player[1]
+							local anchor = anchors.player
 							if anchor then
 								anchor:UpdateAnchorPosition()
 							end
@@ -1716,7 +1721,7 @@ do
 										anchorDB.anchorYOffset = defaultDB.anchorYOffset
 										anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
 									end
-									local anchor = anchors.player[1]
+									local anchor = anchors.player
 									if anchor then
 										anchor:UpdateAnchorPosition()
 									end
@@ -1758,7 +1763,7 @@ do
 						end,
 						set = function(info, value)
 							db.other[info[#info]] = value
-							local anchor = anchors.other[1]
+							local anchor = anchors.other
 							if anchor then
 								anchor:UpdateAnchorPosition()
 							end
@@ -1802,7 +1807,7 @@ do
 										anchorDB.anchorYOffset = defaultDB.anchorYOffset
 										anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
 									end
-									local anchor = anchors.other[1]
+									local anchor = anchors.other
 									if anchor then
 										anchor:UpdateAnchorPosition()
 									end
@@ -1876,7 +1881,7 @@ do
 		display:SetPoint("TOPLEFT", parent)
 		display:SetPoint("BOTTOMRIGHT", parent)
 		display:Hide()
-		display:SetFrameStrata("HIGH")
+		display:SetFrameStrata("MEDIUM")
 		display:SetFixedFrameStrata(true)
 		display:SetFrameLevel(25)
 		display:SetFixedFrameLevel(true)
@@ -1887,7 +1892,7 @@ do
 		display:SetScript("OnDragStart", OnDragStart)
 		display:SetScript("OnDragStop", OnDragStop)
 
-		local bg = display:CreateTexture(nil, "BACKGROUND")
+		local bg = display:CreateTexture(nil, "BACKGROUND", nil, 2)
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, parent.hasTestIcon and 0 or 0.3)
 		display.bg = bg
@@ -1901,6 +1906,33 @@ do
 		header:SetJustifyV("MIDDLE")
 		display.text = header
 
+		local directionUp = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		directionUp:SetTexture(ARROW)
+		directionUp:SetPoint('CENTER', display, 'TOP')
+		directionUp:SetSize(20, 20)
+		display.directionUp = directionUp
+
+		local directionRight = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		directionRight:SetTexture(ARROW)
+		directionRight:SetPoint('CENTER', display, 'RIGHT')
+		directionRight:SetSize(20, 20)
+		directionRight:SetTexCoord(1, 1, 0, 1, 1, 0, 0, 0)
+		display.directionRight = directionRight
+
+		local directionDown = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		directionDown:SetTexture(ARROW)
+		directionDown:SetPoint('CENTER', display, 'BOTTOM')
+		directionDown:SetSize(20, 20)
+		directionDown:SetTexCoord(0, 1, 0, 0, 1, 1, 1, 0)
+		display.directionDown = directionDown
+
+		local directionLeft = display:CreateTexture(nil, "BACKGROUND", nil, 1)
+		directionLeft:SetTexture(ARROW)
+		directionLeft:SetPoint('CENTER', display, 'LEFT')
+		directionLeft:SetSize(20, 20)
+		directionLeft:SetTexCoord(1, 0, 0, 0, 1, 1, 0, 1)
+		display.directionLeft = directionLeft
+
 		return display
 	end
 
@@ -1908,16 +1940,19 @@ do
 		if mode and mode ~= self.moduleName then return end
 		inConfigureMode = true
 
-		for _, unitAnchors in next, anchors do
-			for i = 1, #unitAnchors do
-				local anchor = unitAnchors[i]
-				if not anchor.configModeFrame then
-					anchor.configModeFrame = createDragAnchor(anchor)
-					anchor.configModeFrame.text:SetText(anchor.hasTestIcon and "" or (anchor.unitType == "player" and L.aurasTestAnchorText or L.aurasTestTankAnchorText):format(i))
-					anchor.configModeFrame.dragAnchor = unitAnchors[1]
-				end
-				anchor.configModeFrame:Show()
+		for unitType, anchor in next, anchors do
+			if not anchor.configModeFrame then
+				anchor.configModeFrame = createDragAnchor(anchor)
+				anchor.configModeFrame.text:SetText(anchor.unitType == "player" and L.aurasTestAnchorText or L.aurasTestTankAnchorText)
+				anchor.configModeFrame.dragAnchor = anchor
 			end
+
+			local direction = db[unitType].growthDirection
+			anchor.configModeFrame.directionUp:SetShown(direction == "UP" or direction == "CENTER_VERTICAL")
+			anchor.configModeFrame.directionRight:SetShown(direction == "RIGHT" or direction == "CENTER_HORIZONTAL")
+			anchor.configModeFrame.directionDown:SetShown(direction == "DOWN" or direction == "CENTER_VERTICAL")
+			anchor.configModeFrame.directionLeft:SetShown(direction == "LEFT" or direction == "CENTER_HORIZONTAL")
+			anchor.configModeFrame:Show()
 		end
 	end
 
@@ -1925,12 +1960,9 @@ do
 		if mode and mode ~= self.moduleName then return end
 		inConfigureMode = false
 
-		for _, unitAnchors in next, anchors do
-			for i = 1, #unitAnchors do
-				local anchor = unitAnchors[i]
-				if anchor.configModeFrame then
-					anchor.configModeFrame:Hide()
-				end
+		for _, anchor in next, anchors do
+			if anchor.configModeFrame then
+				anchor.configModeFrame:Hide()
 			end
 		end
 
@@ -1955,7 +1987,7 @@ local function ShowHelpTip()
 	tip:SetFrameLevel(100)
 	tip:SetFixedFrameLevel(true)
 	tip:SetClampedToScreen(true)
-	tip:SetPoint("BOTTOM", anchors.player[1], "TOP", 0, 20)
+	tip:SetPoint("BOTTOM", anchors.player, "TOP", 0, 20)
 	local arrow = CreateFrame("Frame", nil, tip, "GlowBoxArrowTemplate")
 	arrow:SetPoint("TOP", tip, "BOTTOM", 0, 5)
 	local tipText = tip:CreateFontString(nil, "OVERLAY", "GameFontHighlightLeft")
@@ -1990,7 +2022,7 @@ function plugin:OnPluginEnable()
 
 	AddAllAuraSounds()
 
-	if not db.player.disabled and self.db.global.showHelpTip and anchors.player[1] then
+	if not db.player.disabled and self.db.global.showHelpTip and anchors.player then
 		self:CreateTestAura()
 		self:ScheduleRepeatingTimer(function() plugin:CreateTestAura() end, 10.2)
 		if ShowHelpTip then
@@ -2001,12 +2033,9 @@ end
 
 function plugin:OnPluginDisable()
 	-- Hide aura icon anchors
-	for _, unitAnchors in next, anchors do
-		for i = 1, #unitAnchors do
-			local anchor = unitAnchors[i]
-			anchor:ClearAllPoints()
-			anchor:Hide()
-		end
+	for _, anchor in next, anchors do
+		anchor:ClearAllPoints()
+		anchor:Hide()
 	end
 	-- Disable aura icon containers
 	for _, auraContainer in next, containers do
@@ -2026,36 +2055,15 @@ local function UpdateAnchorPosition(anchor)
 	local scale = anchor:GetScale()
 	anchor:ClearAllPoints()
 
-	local index = anchor:GetID()
-	if index == 1 then
-		local relativeTo = anchorDB.anchorRelativeTo
-		local point, relPoint = anchorDB.anchorPoint, anchorDB.anchorRelPoint
-		local x, y = anchorDB.anchorXOffset, anchorDB.anchorYOffset
-		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
-	else
-		local relativeTo = anchors[anchor.unitType][index - 1]
-		local point, relPoint
-		local x, y = 0, 0
-		if anchorDB.growthDirection == "RIGHT" then
-			point, relPoint = "LEFT", "RIGHT"
-			x = anchorDB.spacing
-		elseif anchorDB.growthDirection == "LEFT" then
-			point, relPoint = "RIGHT", "LEFT"
-			x = -anchorDB.spacing
-		elseif anchorDB.growthDirection == "UP" then
-			point, relPoint = "BOTTOM", "TOP"
-			y = anchorDB.spacing
-		elseif anchorDB.growthDirection == "DOWN" then
-			point, relPoint = "TOP", "BOTTOM"
-			y = -anchorDB.spacing
-		end
-		anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
-	end
+	local relativeTo = anchorDB.anchorRelativeTo
+	local point, relPoint = anchorDB.anchorPoint, anchorDB.anchorRelPoint
+	local x, y = anchorDB.anchorXOffset, anchorDB.anchorYOffset
+	anchor:SetPoint(point, relativeTo, relPoint, x / scale, y / scale)
 end
 
 function plugin:UpdateAllAnchors()
-	self:UpdateAnchors("player", "player")
-	self:UpdateAnchors("other")
+	self:UpdateAnchor("player", "player")
+	self:UpdateAnchor("other")
 
 	-- reset and force roster update
 	previouslyFoundUnit = nil
@@ -2085,55 +2093,50 @@ do
 				local token = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
 				if token ~= previouslyFoundUnit then
 					previouslyFoundUnit = token
-					self:UpdateAnchors("other", token)
+					self:UpdateAnchor("other", token)
 				end
 			end
 		end
 		UpdateRegisteredSounds()
 	end
 
-	function plugin:UpdateAnchors(unitType, unitToken)
-		for i = 1, #anchors[unitType] do
-			local anchor = anchors[unitType][i]
-			anchor:ClearAllPoints()
-			anchor:Hide()
+	function plugin:UpdateAnchor(unitType, unitToken)
+		local anchor = anchors[unitType]
+		if not anchor then
+			anchor = CreateFrame("Frame", "BigWigsAurasAnchor" .. (unitType:gsub("^%l", string.upper)), UIParent)
+			anchor:SetFrameStrata("MEDIUM")
+			anchor:SetFixedFrameStrata(true)
+			anchor:SetFrameLevel(1000)
+			anchor:SetFixedFrameLevel(true)
+			anchor:SetMovable(true)
+			anchor:SetClampedToScreen(true)
+
+			anchor.unitType = unitType
+			anchor.UpdateAnchorPosition = UpdateAnchorPosition
+
+			anchors[unitType] = anchor
 		end
+
+		anchor:ClearAllPoints()
+		anchor:Hide()
 
 		local anchorDB = self.db.profile[unitType]
 		if anchorDB.disabled then
 			return
 		end
 
-		for index = 1, anchorDB.maxIcons do
-			local anchor = anchors[unitType][index]
-			if not anchor then
-				anchor = CreateFrame("Frame", "BigWigsAurasAnchor" .. (unitType:gsub("^%l", string.upper)) .. index, UIParent, nil, index)
-				anchor:SetFrameStrata("MEDIUM")
-				anchor:SetFixedFrameStrata(true)
-				anchor:SetFrameLevel(1000)
-				anchor:SetFixedFrameLevel(true)
-				anchor:SetMovable(true)
-				anchor:SetClampedToScreen(true)
+		anchor:SetSize(anchorDB.size, anchorDB.size)
+		anchor:UpdateAnchorPosition()
+		anchor:Show()
 
-				anchor.unitType = unitType
-				anchor.UpdateAnchorPosition = UpdateAnchorPosition
-
-				anchors[unitType][index] = anchor
-			end
-
-			anchor:SetSize(anchorDB.size, anchorDB.size)
-			anchor:UpdateAnchorPosition()
-			anchor:Show()
-
-			UpdateTestAura(unitType, index)
-		end
+		UpdateTestAuras(unitType)
 
 		if not unitToken and unitType == "other" then
 			if not db.onlyWhenYouAreTank or (db.onlyWhenYouAreTank and UnitGroupRolesAssigned("player") == "TANK") then
 				unitToken = self:GetUnitToken(db.otherPlayerType, db.otherPlayerName)
 			end
 		end
-		UpdateAuraContainer(unitType, unitToken, anchors[unitType][1])
+		UpdateAuraContainer(unitType, unitToken, anchors[unitType])
 	end
 end
 
@@ -2503,23 +2506,28 @@ do
 
 		auraContainer:ClearAllPoints()
 		local axis, point, x, y
-		if optionsDB.growthDirection == "RIGHT" then
+		if optionsDB.growthDirection == "RIGHT" or optionsDB.growthDirection == "CENTER_HORIZONTAL" then
 			axis = FlowLayoutAxis.Horizontal
 			point, x, y = "LEFT", FlowDirection.Right, FlowDirection.Down
 		elseif optionsDB.growthDirection == "LEFT" then
 			axis = FlowLayoutAxis.Horizontal
 			point, x, y = "RIGHT", FlowDirection.Left, FlowDirection.Down
-		elseif optionsDB.growthDirection == "UP" then
+		elseif optionsDB.growthDirection == "UP" or optionsDB.growthDirection == "CENTER_VERTICAL" then
 			axis = FlowLayoutAxis.Vertical
 			point, x, y = "BOTTOM", FlowDirection.Right, FlowDirection.Up
 		elseif optionsDB.growthDirection == "DOWN" then
 			axis = FlowLayoutAxis.Vertical
 			point, x, y = "TOP", FlowDirection.Right, FlowDirection.Down
 		end
-		auraContainer:SetPoint(point)
 		auraContainer:SetFlowLayoutAxis(axis)
 		auraContainer:SetFlowLayoutAnchorPoint(point)
 		auraContainer:SetFlowLayoutGrowthDirection(x, y)
+
+		if optionsDB.growthDirection == "CENTER_HORIZONTAL" or optionsDB.growthDirection == "CENTER_VERTICAL" then
+			auraContainer:SetPoint("CENTER")
+		else
+			auraContainer:SetPoint(point)
+		end
 
 		auraContainer:SetAuraGroupMaxFrameCount("debuffs", optionsDB.maxIcons)
 		auraContainer:SetAuraGroupCandidateFilters("debuffs", {
@@ -2554,40 +2562,8 @@ end
 --
 
 do
-	local testAuras = { player = {}, other = {} }
-	local testCount = 1
-	local auraFramePool = {}
-
-	local dispelTypeInfo = AuraUtil.GetDebuffDisplayInfoTable()
-	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", [0] = "None" }
+	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", "None" }
 	local privateAuraSpellList = { 407221, 418720, 421828, 428970, 406317 }
-
-	local function releaseFrame(frame)
-		frame:ClearAllPoints()
-		local anchor = frame:GetParent()
-		frame:SetParent(nil)
-		frame:SetScript("OnUpdate", nil)
-		frame.cooldown:Clear()
-		frame.durationBinding:SetEnabled(false)
-		frame.timerID = nil
-		frame:Hide()
-		anchor.hasTestIcon = nil
-		if anchor.configModeFrame then
-			anchor.configModeFrame.text:SetText((anchor.unitType == "player" and L.aurasTestAnchorText or L.aurasTestTankAnchorText):format(anchor:GetID()))
-			anchor.configModeFrame.bg:SetColorTexture(0, 0, 0, 0.3)
-		end
-
-		-- Pull it out of the active list
-		local active = testAuras[frame.unitType]
-		for i = #active, 1, -1 do
-			if active[i] == frame then
-				table.remove(active, i)
-				break
-			end
-		end
-		-- And put it back in the pool
-		table.insert(auraFramePool, frame)
-	end
 
 	local methods = { -- pretty annoying
 		GetApplicationBar = false,
@@ -2637,25 +2613,43 @@ do
 	}
 	local noop = function() end
 
-	local function getTestAura(unitType, index)
-		local aura = table.remove(auraFramePool)
-		if not aura then
-			aura = CreateFrame("Frame", nil, UIParent)
-			aura:SetFrameStrata("MEDIUM")
-			aura:SetFixedFrameStrata(true)
-			aura:SetFrameLevel(1000)
-			aura:SetFixedFrameLevel(true)
-			aura:SetClampedToScreen(true)
-			for name, func in next, methods do
-				aura[name] = func or noop
-			end
-			InitializeAuraFrame(unitType, aura, db[unitType])
+	local function createTestAura(unitType)
+		local aura = CreateFrame("Frame", nil, anchors[unitType])
+		aura:SetFrameStrata("MEDIUM")
+		aura:SetFixedFrameStrata(true)
+		aura:SetFrameLevel(2000)
+		aura:SetFixedFrameLevel(true)
+		aura:Hide()
+
+		for name, func in next, methods do
+			aura[name] = func or noop
 		end
 
+		InitializeAuraFrame(unitType, aura, db[unitType])
+
+		return aura
+	end
+
+	local function resetTestAura(_, aura)
+		aura:ClearAllPoints()
+		aura:Hide()
+		aura.cooldown:Clear()
+		aura.durationBinding:SetEnabled(false)
+		aura.timerID = nil
+	end
+
+	local pools = {
+		player = CreateUnsecuredObjectPool(GenerateClosure(createTestAura, "player"), resetTestAura),
+		other = CreateUnsecuredObjectPool(GenerateClosure(createTestAura, "other"), resetTestAura),
+	}
+
+	local function activateTestAura(unitType, index)
+		local pool = pools[unitType]
+		local aura = pool:Acquire()
+
 		-- Setup test aura info
-		local spellIndex = (index - 1) % #privateAuraSpellList + 1
-		local spellId = privateAuraSpellList[spellIndex]
-		local dispelType = dispelTypeList[(index - 1) % 7]
+		local spellId = privateAuraSpellList[math.random(#privateAuraSpellList)]
+		local dispelType = dispelTypeList[math.random(#dispelTypeList)]
 
 		local icon = C_Spell.GetSpellTexture(spellId)
 		local applications = math.random(0, 5)
@@ -2689,51 +2683,71 @@ do
 		-- We don't want to use ScheduleTimer as we don't want the timer to cancel if this plugin is disabled
 		local onDelay = function()
 			if tbl == aura.timerID then
-				releaseFrame(aura)
+				pool:Release(aura)
+				UpdateTestAuras(unitType)
 			end
 		end
 		plugin:SimpleTimer(onDelay, CONFIG_MODE_DURATION)
 
-		return aura
-	end
-
-	function UpdateTestAura(unitType, index)
-		local aura = testAuras[unitType][index]
-		if not aura then return end
-
-		UpdateAuraFrame(aura, db[unitType])
 		aura:Show()
 	end
 
+	function UpdateTestAuras(unitType)
+		local optionsDB = db[unitType]
+		local anchor = anchors[unitType]
+		local scale = anchor:GetScale()
+		local point, relPoint
+		local x, y = 0, 0
+		if optionsDB.growthDirection == "RIGHT" then
+			point, relPoint = "LEFT", "RIGHT"
+			x = optionsDB.spacing
+		elseif optionsDB.growthDirection == "LEFT" then
+			point, relPoint = "RIGHT", "LEFT"
+			x = -optionsDB.spacing
+		elseif optionsDB.growthDirection == "UP" then
+			point, relPoint = "BOTTOM", "TOP"
+			y = optionsDB.spacing
+		elseif optionsDB.growthDirection == "DOWN" then
+			point, relPoint = "TOP", "BOTTOM"
+			y = -optionsDB.spacing
+		elseif optionsDB.growthDirection == "CENTER_HORIZONTAL" then
+			point = "CENTER"
+		elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
+			point = "CENTER"
+		end
+
+		local pool, lastAura = pools[unitType]
+		local numActive = pool:GetNumActive()
+		for index = 1, numActive do
+			local aura = pool:GetNextActive(lastAura)
+			aura:ClearAllPoints()
+			if relPoint then
+				if index == 1 then
+					aura:SetPoint("CENTER")
+				else
+					aura:SetPoint(point, lastAura, relPoint, x / scale, y / scale)
+				end
+			else
+				local centerIndex = (numActive + 1) / 2
+				local offset = (index - centerIndex) * (optionsDB.size + optionsDB.spacing)
+				if optionsDB.growthDirection == "CENTER_HORIZONTAL" then
+					aura:SetPoint(point, anchor, point, offset / scale, 0)
+				elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
+					aura:SetPoint(point, anchor, point, 0, offset / scale)
+				end
+			end
+
+			UpdateAuraFrame(aura, optionsDB)
+			lastAura = aura
+		end
+	end
+
 	function plugin:CreateTestAura()
-		for unitType, unitAnchors in next, anchors do
+		for unitType in next, anchors do
 			if not db[unitType].disabled then
-				local auras = testAuras[unitType]
-
-				local aura = getTestAura(unitType, testCount)
-				table.insert(auras, 1, aura) -- Pop it on
-				testCount = testCount + 1
-				if testCount > 10 then
-					testCount = 1
-				end
-
-				for i = 1, math.min(#auras, db[unitType].maxIcons) do
-					local frame = auras[i]
-					frame:ClearAllPoints()
-					frame:SetParent(unitAnchors[i])
-					frame:SetPoint("CENTER")
-					if unitAnchors[i].configModeFrame then
-						unitAnchors[i].configModeFrame.text:SetText("")
-						unitAnchors[i].configModeFrame.bg:SetColorTexture(0, 0, 0, 0)
-					end
-					unitAnchors[i].hasTestIcon = true
-					UpdateTestAura(unitType, i)
-				end
-				for i = #auras, db[unitType].maxIcons + 1, -1 do
-					local frame = auras[i]
-					if frame then
-						releaseFrame(frame)
-					end
+				if pools[unitType]:GetNumActive() < db[unitType].maxIcons then
+					activateTestAura(unitType)
+					UpdateTestAuras(unitType)
 				end
 			end
 		end
