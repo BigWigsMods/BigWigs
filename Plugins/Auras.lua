@@ -2288,10 +2288,10 @@ do
 		aura.duration = duration
 
 		if unitType == "player" then
-			aura.durationBinding = playerCooldownDurationBinding
+			aura.durationBinding = playerCooldownDurationBinding:Copy()
 			aura.durationBinding:SetFontString(duration)
 		else
-			aura.durationBinding = otherCooldownDurationBinding
+			aura.durationBinding = otherCooldownDurationBinding:Copy()
 			aura.durationBinding:SetFontString(duration)
 		end
 		aura.durationOptions = {
