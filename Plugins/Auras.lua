@@ -1952,28 +1952,29 @@ do
 
 			local anchorDB = db[unitType]
 			local size = anchorDB.size
-			local spacing = anchor.numTestIcons > 1 and anchorDB.spacing or 0
+			local numTestIcons = anchor.numTestIcons or 0
+			local spacing = numTestIcons > 1 and anchorDB.spacing or 0
 			local direction = anchorDB.growthDirection
 			anchor.configModeFrame.directionBox:ClearAllPoints()
-			if anchor.numTestIcons == 0 then
+			if numTestIcons == 0 then
 				anchor.configModeFrame.directionBox:SetAllPoints()
 			elseif direction == "UP" then
-				anchor.configModeFrame.directionBox:SetSize(size, (anchor.numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetSize(size, (numTestIcons * (size + spacing)) - spacing)
 				anchor.configModeFrame.directionBox:SetPoint("BOTTOM", anchor.configModeFrame)
 			elseif direction == "DOWN" then
-				anchor.configModeFrame.directionBox:SetSize(size, (anchor.numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetSize(size, (numTestIcons * (size + spacing)) - spacing)
 				anchor.configModeFrame.directionBox:SetPoint("TOP", anchor.configModeFrame)
 			elseif direction == "CENTER_VERTICAL" then
-				anchor.configModeFrame.directionBox:SetSize(size, (anchor.numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetSize(size, (numTestIcons * (size + spacing)) - spacing)
 				anchor.configModeFrame.directionBox:SetPoint("CENTER", anchor.configModeFrame)
 			elseif direction == "LEFT" then
-				anchor.configModeFrame.directionBox:SetSize((anchor.numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (size + spacing)) - spacing, size)
 				anchor.configModeFrame.directionBox:SetPoint("RIGHT", anchor.configModeFrame)
 			elseif direction == "RIGHT" then
-				anchor.configModeFrame.directionBox:SetSize((anchor.numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (size + spacing)) - spacing, size)
 				anchor.configModeFrame.directionBox:SetPoint("LEFT", anchor.configModeFrame)
 			elseif direction == "CENTER_HORIZONTAL" then
-				anchor.configModeFrame.directionBox:SetSize((anchor.numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (size + spacing)) - spacing, size)
 				anchor.configModeFrame.directionBox:SetPoint("CENTER", anchor.configModeFrame)
 			end
 
@@ -1981,8 +1982,8 @@ do
 			anchor.configModeFrame.directionRight:SetShown(direction == "RIGHT" or direction == "CENTER_HORIZONTAL")
 			anchor.configModeFrame.directionDown:SetShown(direction == "DOWN" or direction == "CENTER_VERTICAL")
 			anchor.configModeFrame.directionLeft:SetShown(direction == "LEFT" or direction == "CENTER_HORIZONTAL")
-			anchor.configModeFrame.bg:SetAlpha(anchor.numTestIcons > 0 and 0 or 1)
-			anchor.configModeFrame.text:SetAlpha(anchor.numTestIcons > 0 and 0 or 1)
+			anchor.configModeFrame.bg:SetAlpha(numTestIcons > 0 and 0 or 1)
+			anchor.configModeFrame.text:SetAlpha(numTestIcons > 0 and 0 or 1)
 			anchor.configModeFrame:Show()
 		end
 	end
