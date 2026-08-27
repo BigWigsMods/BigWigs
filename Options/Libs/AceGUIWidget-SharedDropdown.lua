@@ -49,8 +49,16 @@ do
 
 	local PopulateItems -- defined below, forward-declared for use in the search box and toggle handler
 
+	-- Extra vertical space the search box claims from the pullout's own frame. The external
+	-- Dropdown-Pullout sizes its frame purely from item count (see AddItem's "h + 34"), with
+	-- no idea we've pushed its scroll area down to make room for the search box, so that has
+	-- to be compensated for here or short result lists end up with a squashed, near-invisible
+	-- scroll viewport.
+	local HEADER_HEIGHT = 20
+
 	local function Reopen(self)
 		_pullout:Open("TOPLEFT", self.frame, "BOTTOMLEFT", 0, self.label:IsShown() and -2 or 0)
+		_pullout.frame:SetHeight(_pullout.frame:GetHeight() + HEADER_HEIGHT)
 		_pullout.scrollStatus.scrollvalue = 0
 		_pullout.scrollStatus.offset = 0
 		_pullout:FixScroll()
@@ -67,14 +75,14 @@ do
 	-- SearchBoxTemplate already provides a localized instructional text (the global SEARCH
 	-- string), a search icon and a clear button, so there's nothing left to build by hand.
 	local search = CreateFrame("EditBox", nil, _pullout.frame, "SearchBoxTemplate")
-	search:SetHeight(20)
-	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 10, -8)
-	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -10, -8)
+	search:SetHeight(HEADER_HEIGHT)
+	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 14, -8)
+	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -14, -8)
 
 	-- The pullout's scroll area is anchored by the external Dropdown-Pullout widget itself;
 	-- push it down to make room for the search box instead of floating the box on top of it.
 	_pullout.scrollFrame:ClearAllPoints()
-	_pullout.scrollFrame:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 6, -32)
+	_pullout.scrollFrame:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 6, -12 - HEADER_HEIGHT)
 	_pullout.scrollFrame:SetPoint("BOTTOMRIGHT", _pullout.frame, "BOTTOMRIGHT", -6, 12)
 
 	-- Rebuilding every matching item widget is what's actually expensive (not the filtering
