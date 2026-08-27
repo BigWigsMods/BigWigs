@@ -64,18 +64,31 @@ do
 		end
 	end
 
+	-- Locale is fetched lazily (never at file load) since this widget can load before the
+	-- BigWigs core addon that provides it, depending on load order.
+	local L
+	local function GetLocale()
+		L = L or BigWigsAPI:GetLocale("BigWigs")
+		return L
+	end
+
 	local search = CreateFrame("EditBox", nil, _pullout.frame, "InputBoxTemplate")
 	search:SetAutoFocus(false)
 	search:SetHeight(20)
-	search:SetPoint("BOTTOMLEFT", _pullout.frame, "TOPLEFT", 8, 3)
-	search:SetPoint("BOTTOMRIGHT", _pullout.frame, "TOPRIGHT", -8, 3)
+	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 10, -8)
+	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -10, -8)
 	search:SetScript("OnEscapePressed", search.ClearFocus)
 	local placeholder = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
 	placeholder:SetPoint("LEFT", 6, 0)
-	placeholder:SetText("Type to search...")
 	local moreLabel = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
 	moreLabel:SetPoint("RIGHT", -6, 0)
 	moreLabel:Hide()
+
+	-- The pullout's scroll area is anchored by the external Dropdown-Pullout widget itself;
+	-- push it down to make room for the search box instead of floating the box on top of it.
+	_pullout.scrollFrame:ClearAllPoints()
+	_pullout.scrollFrame:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 6, -32)
+	_pullout.scrollFrame:SetPoint("BOTTOMRIGHT", _pullout.frame, "BOTTOMRIGHT", -6, 12)
 
 	-- Rebuilding every matching item widget is what's actually expensive (not the filtering
 	-- itself), so cap how many get created per rebuild and let the search narrow the rest down.
@@ -84,7 +97,7 @@ do
 		local overflow = PopulateItems(self, text)
 		moreLabel:SetShown(overflow > 0)
 		if overflow > 0 then
-			moreLabel:SetText(("+%d more"):format(overflow))
+			moreLabel:SetText(GetLocale().searchMore:format(overflow))
 		end
 		Reopen(self)
 	end
@@ -136,6 +149,7 @@ do
 			fixlevels(_pullout.frame, _pullout.frame:GetChildren())
 			_pullout:SetWidth(self.pulloutWidth or self.frame:GetWidth())
 			search:SetText("")
+			placeholder:SetText(GetLocale().search)
 			placeholder:Show()
 			ApplyFilter(self, "")
 			AceGUI:SetFocus(self)
