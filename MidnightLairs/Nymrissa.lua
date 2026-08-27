@@ -18,7 +18,6 @@ local activeBars = {}
 local backupBars = {}
 
 local alluringBubbleCount = 1
-local frostBarrageCount = 1
 local swirlingWhirlpoolsCount = 1
 local abyssalRainCount = 1
 local icebladeFlurryCount = 1
@@ -40,7 +39,6 @@ local spellChoiceCount = 1
 mod:SetRenames({
 	[1276710] = {CL.adds}, -- Alluring Bubble (Adds)
 	[1257717] = {1257717}, -- Alluring Bubble
-	[1257608] = {1257608}, -- Frost Barrage
 	[1258668] = {1258668}, -- Swirling Whirlpools
 	[1260837] = {1260837}, -- Abyssal Rain
 	[1282937] = {CL.tank_hit}, -- Iceblade Flurry (Tank Hit)
@@ -54,11 +52,8 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1257608, soundOnApplied = "warning", header = CL.important}, -- Frost Barrage
-	{1282937, soundOnApplied = "warning"}, -- Iceblade Flurry
 	{1282404, soundOnApplied = "none", header = CL.general}, -- Drenched
 	{1257651, soundOnApplied = "none"}, -- Drifting Globules
-	{1257644, soundOnApplied = "none"}, -- Frost Barrage
 	{1257654, soundOnApplied = "none"}, -- Lingering Frost
 	{1295086, soundOnApplied = "none"}, -- Unending Tides
 	{1282947, soundOnApplied = "none"}, -- Iceblade Flurry
@@ -69,7 +64,6 @@ function mod:GetOptions()
 	return {
 		1276710, -- Alluring Bubble
 		1257717, -- Alluring Bubble
-		1257608, -- Frost Barrage
 		1258668, -- Swirling Whirlpools
 		1260837, -- Abyssal Rain
 		1282937, -- Iceblade Flurry
@@ -95,7 +89,6 @@ function mod:OnEncounterStart()
 	activeBars = {}
 
 	alluringBubbleCount = 1
-	frostBarrageCount = 1
 	swirlingWhirlpoolsCount = 1
 	abyssalRainCount = 1
 	icebladeFlurryCount = 1
@@ -226,19 +219,6 @@ function mod:AlluringBubble()
 		key = 1257717,
 		onFinished = function()
 			self:Message(1257717, "cyan", barText)
-		end
-	}
-end
-
-function mod:FrostBarrage()
-	local barText = CL.count:format(self:GetRename(1257608), frostBarrageCount)
-	frostBarrageCount = frostBarrageCount + 1
-	return {
-		msg = barText,
-		key = 1257608,
-		onFinished = function()
-			self:Message(1257608, "yellow", barText)
-			self:PlaySound(1257608, "alert")
 		end
 	}
 end
