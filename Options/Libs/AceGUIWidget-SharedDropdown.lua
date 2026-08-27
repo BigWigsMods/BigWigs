@@ -64,25 +64,12 @@ do
 		end
 	end
 
-	-- Locale is fetched lazily (never at file load) since this widget can load before the
-	-- BigWigs core addon that provides it, depending on load order.
-	local L
-	local function GetLocale()
-		L = L or BigWigsAPI:GetLocale("BigWigs")
-		return L
-	end
-
-	local search = CreateFrame("EditBox", nil, _pullout.frame, "InputBoxTemplate")
-	search:SetAutoFocus(false)
+	-- SearchBoxTemplate already provides a localized instructional text (the global SEARCH
+	-- string), a search icon and a clear button, so there's nothing left to build by hand.
+	local search = CreateFrame("EditBox", nil, _pullout.frame, "SearchBoxTemplate")
 	search:SetHeight(20)
 	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 10, -8)
 	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -10, -8)
-	search:SetScript("OnEscapePressed", search.ClearFocus)
-	local placeholder = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
-	placeholder:SetPoint("LEFT", 6, 0)
-	local moreLabel = search:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
-	moreLabel:SetPoint("RIGHT", -6, 0)
-	moreLabel:Hide()
 
 	-- The pullout's scroll area is anchored by the external Dropdown-Pullout widget itself;
 	-- push it down to make room for the search box instead of floating the box on top of it.
@@ -94,16 +81,12 @@ do
 	-- itself), so cap how many get created per rebuild and let the search narrow the rest down.
 	local MAX_RESULTS = 60
 	local function ApplyFilter(self, text)
-		local overflow = PopulateItems(self, text)
-		moreLabel:SetShown(overflow > 0)
-		if overflow > 0 then
-			moreLabel:SetText(GetLocale().searchMore:format(overflow))
-		end
+		PopulateItems(self, text)
 		Reopen(self)
 	end
 
 	search:SetScript("OnTextChanged", function(this)
-		placeholder:SetShown(this:GetText() == "")
+		SearchBoxTemplate_OnTextChanged(this)
 		CancelSearchTimer()
 		local text = this:GetText()
 		searchTimer = BigWigsLoader.CTimerNewTimer(0.15, function()
@@ -149,8 +132,6 @@ do
 			fixlevels(_pullout.frame, _pullout.frame:GetChildren())
 			_pullout:SetWidth(self.pulloutWidth or self.frame:GetWidth())
 			search:SetText("")
-			placeholder:SetText(GetLocale().search)
-			placeholder:Show()
 			ApplyFilter(self, "")
 			AceGUI:SetFocus(self)
 			search:SetFocus()
