@@ -771,6 +771,7 @@ do
 						set = soundSet,
 						values = LibSharedMedia:List("sound"),
 						width = 2.5,
+						dialogControl = "SharedDropdown",
 						itemControl = "DDI-Sound",
 						disabled = IsDisabled,
 					},

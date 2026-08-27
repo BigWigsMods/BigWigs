@@ -157,6 +157,7 @@ plugin.pluginOptions = {
 			order = 3,
 			values = function() return soundList end,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		--privateaura = {
@@ -184,6 +185,7 @@ plugin.pluginOptions = {
 			order = 22,
 			values = function() return soundList end,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Alert = {
@@ -192,6 +194,7 @@ plugin.pluginOptions = {
 			order = 23,
 			values = function() return soundList end,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Info = {
@@ -200,6 +203,7 @@ plugin.pluginOptions = {
 			order = 24,
 			values = function() return soundList end,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Long = {
@@ -208,6 +212,7 @@ plugin.pluginOptions = {
 			order = 25,
 			values = function() return soundList end,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Warning = {
@@ -216,6 +221,7 @@ plugin.pluginOptions = {
 			order = 26,
 			values = function() return soundList end,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		-- End sound dropdowns
@@ -348,6 +354,7 @@ function plugin:OnPluginEnable()
 			values = soundList,
 			order = 2,
 			width = "full",
+			dialogControl = "SharedDropdown",
 			itemControl = "DDI-Sound",
 		}
 	end

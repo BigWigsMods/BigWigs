@@ -47,6 +47,64 @@ do
 		self:Fire("OnClosed")
 	end)
 
+	local PopulateItems -- defined below, forward-declared for use in the search box and toggle handler
+
+	-- Extra vertical space the search box claims from the pullout's own frame. The external
+	-- Dropdown-Pullout sizes its frame purely from item count (see AddItem's "h + 34"), with
+	-- no idea we've pushed its scroll area down to make room for the search box, so that has
+	-- to be compensated for here or short result lists end up with a squashed, near-invisible
+	-- scroll viewport.
+	local HEADER_HEIGHT = 20
+
+	local function Reopen(self)
+		_pullout:Open("TOPLEFT", self.frame, "BOTTOMLEFT", 0, self.label:IsShown() and -2 or 0)
+		_pullout.frame:SetHeight(_pullout.frame:GetHeight() + HEADER_HEIGHT)
+		_pullout.scrollStatus.scrollvalue = 0
+		_pullout.scrollStatus.offset = 0
+		_pullout:FixScroll()
+	end
+
+	local searchTimer
+	local function CancelSearchTimer()
+		if searchTimer then
+			searchTimer:Cancel()
+			searchTimer = nil
+		end
+	end
+
+	-- SearchBoxTemplate already provides a localized instructional text (the global SEARCH
+	-- string), a search icon and a clear button, so there's nothing left to build by hand.
+	local search = CreateFrame("EditBox", nil, _pullout.frame, "SearchBoxTemplate")
+	search:SetHeight(HEADER_HEIGHT)
+	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 14, -8)
+	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -14, -8)
+
+	-- The pullout's scroll area is anchored by the external Dropdown-Pullout widget itself;
+	-- push it down to make room for the search box instead of floating the box on top of it.
+	_pullout.scrollFrame:ClearAllPoints()
+	_pullout.scrollFrame:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 6, -12 - HEADER_HEIGHT)
+	_pullout.scrollFrame:SetPoint("BOTTOMRIGHT", _pullout.frame, "BOTTOMRIGHT", -6, 12)
+
+	-- Rebuilding every matching item widget is what's actually expensive (not the filtering
+	-- itself), so cap how many get created per rebuild and let the search narrow the rest down.
+	local MAX_RESULTS = 60
+	local function ApplyFilter(self, text)
+		PopulateItems(self, text)
+		Reopen(self)
+	end
+
+	search:SetScript("OnTextChanged", function(this)
+		SearchBoxTemplate_OnTextChanged(this)
+		CancelSearchTimer()
+		local text = this:GetText()
+		searchTimer = BigWigsLoader.CTimerNewTimer(0.15, function()
+			searchTimer = nil
+			local self = _pullout.userdata.obj
+			if not self then return end
+			ApplyFilter(self, text)
+		end)
+	end)
+
 	--[[ UI event handler ]]--
 
 	local function Control_OnEnter(this)
@@ -62,6 +120,7 @@ do
 	local function Dropdown_OnHide(this)
 		local self = this.obj
 		if self.open then
+			CancelSearchTimer()
 			_pullout:Close()
 		end
 	end
@@ -69,6 +128,7 @@ do
 	local function Dropdown_TogglePullout(this)
 		local self = this.obj
 		_pullout.userdata.obj = self
+		CancelSearchTimer()
 
 		if self.open then
 			self.open = nil
@@ -79,11 +139,10 @@ do
 			_pullout.frame:SetFrameLevel(self.frame:GetFrameLevel() + 1)
 			fixlevels(_pullout.frame, _pullout.frame:GetChildren())
 			_pullout:SetWidth(self.pulloutWidth or self.frame:GetWidth())
-			_pullout:Open("TOPLEFT", self.frame, "BOTTOMLEFT", 0, self.label:IsShown() and -2 or 0)
-			_pullout.scrollStatus.scrollvalue = 0
-			_pullout.scrollStatus.offset = 0
-			_pullout:FixScroll()
+			search:SetText("")
+			ApplyFilter(self, "")
 			AceGUI:SetFocus(self)
+			search:SetFocus()
 		end
 	end
 
@@ -115,6 +174,7 @@ do
 	-- exported, AceGUI callback
 	local function OnRelease(self)
 		if self.open then
+			CancelSearchTimer()
 			_pullout:Close()
 		end
 
@@ -148,6 +208,7 @@ do
 	-- exported
 	local function ClearFocus(self)
 		if self.open then
+			CancelSearchTimer()
 			_pullout:Close()
 		end
 	end
@@ -207,13 +268,28 @@ do
 			return tostring(x) < tostring(y)
 		end
 	end
-	-- exported
-	local function SetList(self, list, order, itemType)
-		self.list = list or {}
-		if list and self.list == _pullout.list and #list == #self.list then return end
-		_pullout.list = self.list
+
+	function PopulateItems(self, filterText, list, order, itemType)
+		list = list or self.list
+		order = order or self.order
+		itemType = itemType or self.itemType
 		_pullout:Clear()
-		if not list then return end
+		if not list then return 0 end
+		filterText = filterText ~= "" and filterText:lower() or nil
+
+		local function matches(text)
+			return not filterText or tostring(text):lower():find(filterText, 1, true) ~= nil
+		end
+
+		local shown = 0
+		local function addIfMatch(key, text)
+			if matches(text) then
+				if shown < MAX_RESULTS then
+					AddListItem(self, key, text, itemType)
+				end
+				shown = shown + 1
+			end
+		end
 
 		if type(order) ~= "table" then
 			for v in pairs(list) do
@@ -222,14 +298,26 @@ do
 			tsort(sortlist, sortTbl)
 
 			for i, key in ipairs(sortlist) do
-				AddListItem(self, key, list[key], itemType)
+				addIfMatch(key, list[key])
 				sortlist[i] = nil
 			end
 		else
 			for i, key in ipairs(order) do
-				AddListItem(self, key, list[key], itemType)
+				addIfMatch(key, list[key])
 			end
 		end
+
+		return shown > MAX_RESULTS and (shown - MAX_RESULTS) or 0
+	end
+
+	-- exported
+	local function SetList(self, list, order, itemType)
+		self.list = list or {}
+		self.order = order
+		self.itemType = itemType
+		if list and self.list == _pullout.list and #list == #self.list then return end
+		_pullout.list = self.list
+		PopulateItems(self, "", self.list, order, itemType)
 	end
 
 	-- exported

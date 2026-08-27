@@ -137,6 +137,7 @@ do
 				set = soundSet,
 				values = LibSharedMedia:List(SOUND),
 				width = 2.5,
+				dialogControl = "SharedDropdown",
 				itemControl = "DDI-Sound",
 			},
 			spacer2 = {
@@ -153,6 +154,7 @@ do
 				set = soundSet,
 				values = LibSharedMedia:List(SOUND),
 				width = 2.5,
+				dialogControl = "SharedDropdown",
 				itemControl = "DDI-Sound",
 			},
 			startPullMessage = {
@@ -169,6 +171,7 @@ do
 				set = soundSet,
 				values = LibSharedMedia:List(SOUND),
 				width = 2.5,
+				dialogControl = "SharedDropdown",
 				itemControl = "DDI-Sound",
 			},
 			voice = {
