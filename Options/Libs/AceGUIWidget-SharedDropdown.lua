@@ -76,8 +76,8 @@ do
 	-- string), a search icon and a clear button, so there's nothing left to build by hand.
 	local search = CreateFrame("EditBox", nil, _pullout.frame, "SearchBoxTemplate")
 	search:SetHeight(HEADER_HEIGHT)
-	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 14, -8)
-	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -14, -8)
+	search:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 18, -12)
+	search:SetPoint("TOPRIGHT", _pullout.frame, "TOPRIGHT", -12, -12)
 
 	-- The pullout's scroll area is anchored by the external Dropdown-Pullout widget itself;
 	-- push it down to make room for the search box instead of floating the box on top of it.
