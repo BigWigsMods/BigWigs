@@ -25,7 +25,7 @@ end
 
 do
 	local widgetType = "SharedDropdown"
-	local widgetVersion = 1
+	local widgetVersion = 2
 
 	--[[ Static data ]]--
 

@@ -149,6 +149,7 @@ plugin.pluginOptions = {
 		--	order = 2,
 		--	values = function() return soundList end,
 		--	width = "full",
+		--	dialogControl = "SharedDropdown",
 		--	itemControl = "DDI-Sound",
 		--},
 		underyou = {
