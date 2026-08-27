@@ -1282,7 +1282,9 @@ local function parseLua(file)
 		--- Parse toggle option API calls.
 		if checkForAPI(line) then
 			local key, sound, color, bitflag = nil, nil, nil, nil
-			local obj, sugar, functionName, argsList = line:gsub("^.* = ", ""):match("(%w+)([.:])(.-)(%b())")
+			local check_line = line:gsub("^.* = ", "") -- remove assignment lhs
+			check_line = check_line:gsub("C?L%.%w+:", "") -- remove locale format lhs
+			local obj, sugar, functionName, argsList = check_line:match("(%w+)([.:])(.-)(%b())")
 			if argsList then argsList = argsList:sub(2, -2) end
 			local offset = 0
 			if functionName == "ScheduleTimer" or functionName == "ScheduleRepeatingTimer" then
