@@ -1182,7 +1182,7 @@ local function parseLua(file)
 				if res == "args.spellId" then
 					rep.if_key = rep.func_key
 				else
-					rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+					rep.if_key = unternary(res, {"(-?%d+)", "(\".-\")"})
 				end
 			end
 		else
@@ -1195,7 +1195,7 @@ local function parseLua(file)
 						rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
 					end
 				else
-					rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+					rep.if_key = unternary(res, {"(-?%d+)", "(\".-\")"})
 				end
 			end
 		end
@@ -1293,7 +1293,7 @@ local function parseLua(file)
 				error(string.format("    %s:%d: Invalid API method! func=%s, method=%s", file_name, n, tostring(current_func), functionName))
 			elseif valid_methods[functionName] then
 				argsList = strsplit(clean(argsList))
-				key = unternary(argsList[1+offset], "(-?%d+)") -- XXX doesn't allow for string keys
+				key = unternary(argsList[1+offset], {"(-?%d+)", "(\".-\")"})
 				local sound_index = sound_methods[functionName]
 				if sound_index then
 					sound = unternary(argsList[sound_index+offset], "\"(.-)\"", valid_sounds)
