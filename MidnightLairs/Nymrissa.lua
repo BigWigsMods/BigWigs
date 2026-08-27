@@ -52,16 +52,16 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1282947, soundOnApplied = "warning", duration = 5, header = CL.important}, -- Iceblade Flurry
+	{1313393, soundOnApplied = "warning", duration = 5, header = CL.important}, -- Chilling Frost
 	{1258901, soundOnApplied = "warning", soundOnAppliedDose = "none", mythic = true}, -- Water Jet
-	{1313393, soundOnApplied = "warning", duration = 5}, -- Chilling Frost
 
 	{1260843, soundOnApplied = "none", header = CL.general}, -- Abyssal Rain
 	{1313448, soundOnApplied = "none", duration = 16}, -- Frost Orb
 	{1257654, soundOnApplied = "none"}, -- Lingering Frost
 	{1295086, soundOnApplied = "none"}, -- Unending Tides
-	{1282947, soundOnApplied = "none", note = CL.tank_debuff}, -- Iceblade Flurry
-	{1260637, soundOnApplied = "none", mythic = true, note = CL.tank_debuff}, -- Iceblade
+	{1282947, soundOnApplied = "alarm", duration = 5}, -- Iceblade Flurry (DoT)
+	{1282947, soundOnApplied = "none", note = CL.tank_debuff}, -- Iceblade Flurry (Vulnerability)
+	{1260637, soundOnApplied = "none", mythic = true, note = CL.tank_debuff}, -- Water Jet (Vulnerability)
 })
 
 function mod:GetOptions()
