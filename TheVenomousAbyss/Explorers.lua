@@ -293,9 +293,9 @@ function mod:Timeline(_, eventInfo, events)
 		elseif rounded == 31 then
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			local count = durationEventCount[rounded]
-			if count == 1 then
+			if count % 2 == 1 then
 				barInfo = self:IceboundFlames()
-			elseif count == 2 then
+			else
 				barInfo = self:BlinkNova()
 			end
 		end
