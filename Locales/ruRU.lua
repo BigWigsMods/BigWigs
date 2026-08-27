@@ -987,6 +987,8 @@ L.classColors = "Окраска по классу"
 L.classColorsDesc = "Сообщения иногда содержат имена игроков. При включении опции эти имена будут окрашены в цвета классов."
 L.chatFrameMessages = "Сообщения в чат"
 L.chatFrameMessagesDesc = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
+--L.chatFrameChoice = "Choose Chat Frame"
+--L.chatFrame = "Chat Frame %d: %s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
 
 L.fontSize = "Размер шрифта"
 L.none = "Нет"

@@ -45,6 +45,7 @@ plugin.defaultDB = {
 	fontSize = 20,
 	emphFontSize = 44,
 	chat = false,
+	chatOutput = 1,
 	useicons = true,
 	classcolor = true,
 	growUpwards = false,
@@ -89,6 +90,9 @@ local function updateProfile()
 	end
 	if db.emphFontSize < 20 or db.emphFontSize > 200 then
 		db.emphFontSize = plugin.defaultDB.emphFontSize
+	end
+	if db.chatOutput < 1 or db.chatOutput > 10 or math.floor(db.chatOutput+0.5) ~= db.chatOutput then
+		db.chatOutput = plugin.defaultDB.chatOutput
 	end
 	if db.displaytime < 1 or db.displaytime > 10 then
 		db.displaytime = plugin.defaultDB.displaytime
@@ -511,19 +515,37 @@ do
 						name = L.chatFrameMessages,
 						desc = L.chatFrameMessagesDesc,
 						order = 13,
-						width = 2,
+						width = 1.5,
+					},
+					chatOutput = {
+						type = "select",
+						name = L.chatFrameChoice,
+						order = 14,
+						values = function()
+							local tbl = {}
+							for i = 1, 10 do
+								local text = ""
+								local widget = _G[("ChatFrame%dTab"):format(i)]
+								if widget and widget.Text then
+									text = widget.Text:GetText()
+								end
+								tbl[i] = L.chatFrame:format(i, text)
+							end
+							return tbl
+						end,
+						width = 1.5,
 					},
 					header1 = {
 						type = "header",
 						name = "",
-						order = 14,
+						order = 15,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetMessagesDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 15,
+						order = 16,
 					},
 				},
 			},
@@ -913,6 +935,7 @@ end
 do
 	local unpack, type = unpack, type
 	local format, upper, gsub = string.format, string.upper, string.gsub
+	local chatFrames = {_G.ChatFrame1, _G.ChatFrame2, _G.ChatFrame3, _G.ChatFrame4, _G.ChatFrame5, _G.ChatFrame6, _G.ChatFrame7, _G.ChatFrame8, _G.ChatFrame9, _G.ChatFrame10}
 	function plugin:BigWigs_Message(_, module, key, text, color, icon, emphasized, customDisplayTime)
 		if not text then return end
 
@@ -944,7 +967,7 @@ do
 			if icon then
 				text = format("|T%s:15:15:0:0:64:64:4:60:4:60|t%s", icon, text)
 			end
-			DEFAULT_CHAT_FRAME:AddMessage(text, r, g, b)
+			chatFrames[db.chatOutput]:AddMessage(text, r, g, b)
 		end
 	end
 end

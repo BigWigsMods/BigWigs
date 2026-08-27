@@ -1043,6 +1043,8 @@ L.classColors = "Cores de classe"
 L.classColorsDesc = "As mensagens as vezes terão os nomes dos jogadores. Habilitar essa opção irá colorir esses nomes usando as cores de classe."
 L.chatFrameMessages = "Mensagens no chat"
 L.chatFrameMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
+--L.chatFrameChoice = "Choose Chat Frame"
+--L.chatFrame = "Chat Frame %d: %s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
 
 L.fontSize = "Tamanho da fonte"
 L.none = "Nenhum"

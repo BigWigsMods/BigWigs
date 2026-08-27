@@ -1043,6 +1043,8 @@ L.classColors = "Colore delle Classi"
 L.classColorsDesc = "I messaggi possono contenere i nomi dei giocatori. Attivando questa opzione verranno colorati con il colore della classe."
 L.chatFrameMessages = "Messaggi Riquadro Chat"
 L.chatFrameMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei settaggi di visualizzazione."
+--L.chatFrameChoice = "Choose Chat Frame"
+--L.chatFrame = "Chat Frame %d: %s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
 
 L.fontSize = "Dimensione Carattere"
 L.none = "Nessuno"
