@@ -1043,8 +1043,8 @@ L.classColors = "职业颜色"
 L.classColorsDesc = "为信息中的玩家名字启用职业颜色。"
 L.chatFrameMessages = "聊天框信息"
 L.chatFrameMessagesDesc = "除了显示设置外，将所有 BigWigs 信息输出到默认聊天框。"
---L.chatFrameChoice = "Choose Chat Frame"
---L.chatFrame = "Chat Frame %d: %s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
+L.chatFrameChoice = "选择聊天框"
+L.chatFrame = "聊天框 %d：%s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
 
 L.fontSize = "字体尺寸"
 L.none = "无"
