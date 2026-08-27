@@ -48,8 +48,6 @@ do
 			local modules = parent:GetUserData("moduleList")
 			local allBossesDb = {}
 			for i, module in ipairs(modules) do
-				if module.SetupOptions then module:SetupOptions() end
-
 				local profile = module.db and module.db.profile
 				if not (profile and profile.toggles) then
 					error(("Module %s does not have a db.profile table."):format(module.name))
@@ -500,7 +498,6 @@ end
 local function ImportFlags(flagSettings, moduleName)
 	local module = BigWigs:GetBossModule(moduleName:sub(16))
 	if module then
-		if module.SetupOptions then module:SetupOptions() end
 		if module.db and module.db.profile and module.db.profile.toggles then
 			for key, value in pairs(module.db.profile.toggles) do
 				if flagSettings and flagSettings[key] then
@@ -516,7 +513,6 @@ end
 local function ImportAuras(auraSettings, moduleName)
 	local module = BigWigs:GetBossModule(moduleName:sub(16))
 	if module then
-		if module.SetupOptions then module:SetupOptions() end
 		if module.db and module.db.profile and module.db.profile.auras then
 			for key, value in pairs(module.db.profile.auras) do
 				if auraSettings and auraSettings[key] then
@@ -532,7 +528,6 @@ end
 local function ImportRenames(renameSettings, moduleName)
 	local module = BigWigs:GetBossModule(moduleName:sub(16))
 	if module then
-		if module.SetupOptions then module:SetupOptions() end
 		if module.db and module.db.profile and module.db.profile.renames then
 			for renamesKey, renamesTable in next, renameSettings do
 				if module:IsRenameAvailable(renamesKey) and type(renamesTable) == "table" and #renamesTable == module:GetRenameCount(renamesKey) then

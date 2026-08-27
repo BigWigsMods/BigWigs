@@ -617,8 +617,6 @@ do
 				exportOptions.exportTable[k] = {}
 				local instanceSettings = exportOptions.exportTable[k]
 				for _, module in ipairs(modules) do
-					if module.SetupOptions then module:SetupOptions() end
-
 					-- Flags
 					if module.db and module.db.profile and module.db.profile.toggles then
 						instanceSettings[module.name] = CopyTable(instanceSettings[module.name] or {})
@@ -939,7 +937,6 @@ do
 
 		local function ImportAuras(auraSoundSettings, module)
 			if module then
-				if module.SetupOptions then module:SetupOptions() end
 				if module.db and module.db.profile and module.db.profile.auras then
 					for key, value in pairs(module.db.profile.auras) do
 						if auraSoundSettings and auraSoundSettings[key] then
@@ -954,7 +951,6 @@ do
 
 		local function ImportFlags(flagSettings, module)
 			if module then
-				if module.SetupOptions then module:SetupOptions() end
 				if module.db and module.db.profile and module.db.profile.toggles then
 					for key, value in pairs(module.db.profile.toggles) do
 						if flagSettings and flagSettings[key] then
@@ -969,7 +965,6 @@ do
 
 		local function ImportRenames(renameSettings, module)
 			if module then
-				if module.SetupOptions then module:SetupOptions() end
 				if module.db and module.db.profile and module.db.profile.renames then
 					for renamesKey, renamesTable in next, renameSettings do
 						if module:IsRenameAvailable(renamesKey) and type(renamesTable) == "table" and #renamesTable == module:GetRenameCount(renamesKey) then

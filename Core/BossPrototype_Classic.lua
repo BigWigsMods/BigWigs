@@ -640,8 +640,6 @@ function boss:Enable(isWipe)
 		end
 		enabledModules[#enabledModules+1] = self
 
-		if self.SetupOptions then self:SetupOptions() end
-
 		if self:GetEncounterID() then
 			if not self:Retail() then
 				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")

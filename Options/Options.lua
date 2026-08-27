@@ -1552,8 +1552,6 @@ do
 				end -- End statistics table
 			end
 
-			if module.SetupOptions then module:SetupOptions() end
-
 			local tabs = {}
 			if module.optionHeaders then
 				for _, optionHeader in next, module.optionHeaders do
