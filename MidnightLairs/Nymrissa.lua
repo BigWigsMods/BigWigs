@@ -21,7 +21,7 @@ local alluringBubbleCount = 1
 local swirlingWhirlpoolsCount = 1
 local abyssalRainCount = 1
 local icebladeFlurryCount = 1
-local waterJetCount = 1
+local chillingFrostCount = 1
 
 local spellChoiceCount = 1
 
@@ -44,7 +44,7 @@ mod:SetRenames({
 	[1282937] = {CL.tank_hit}, -- Iceblade Flurry (Tank Hit)
 	[1313393] = {1313393}, -- Chilling Frost
 	-- Mythic
-	[1268562] = {CL.tank_hit}, -- Water Jet
+	[1268562] = {CL.tank_frontal}, -- Water Jet
 })
 
 --------------------------------------------------------------------------------
@@ -74,7 +74,9 @@ function mod:GetOptions()
 		1313393, -- Chilling Frost
 
 		-- Mythic
-		{1268562, "TANK"}, -- Water Jet
+		1268562, -- Water Jet
+	}, {
+		[1268562] = "mythic",
 	}
 end
 
@@ -96,7 +98,7 @@ function mod:OnEncounterStart()
 	swirlingWhirlpoolsCount = 1
 	abyssalRainCount = 1
 	icebladeFlurryCount = 1
-	waterJetCount = 1
+	chillingFrostCount = 1
 	spellChoiceCount = 1
 end
 
@@ -128,7 +130,11 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	elseif durationRounded == 8 or durationRounded == 23 or durationRounded == 33 then
 		barInfo = self:AbyssalRain(eventInfo)
 	elseif durationRounded == 22 or durationRounded == 27 or durationRounded == 9 then
-		barInfo = self:IcebladeFlurry(eventInfo)
+		if self:Mythic() then
+			barInfo = self:WaterJet(eventInfo)
+		else
+			barInfo = self:IcebladeFlurry(eventInfo)
+		end
 	elseif durationRounded == 25 or durationRounded == 7 then
 		barInfo = self:AlluringBubbleAdds(eventInfo)
 	elseif durationRounded == 107 or durationRounded == 89 then
@@ -260,15 +266,15 @@ function mod:IcebladeFlurry() -- Tank Hit
 		msg = barText,
 		key = 1282937,
 		onFinished = function()
-			self:Message(1282937, "yellow", barText)
+			self:Message(1282937, "purple", barText)
 			self:PlaySound(1282937, "alert")
 		end
 	}
 end
 
 function mod:WaterJet()
-	local barText = CL.count:format(self:GetRename(1268562), waterJetCount)
-	waterJetCount = waterJetCount + 1
+	local barText = CL.count:format(self:GetRename(1268562), icebladeFlurryCount)
+	icebladeFlurryCount = icebladeFlurryCount + 1
 	return {
 		msg = barText,
 		key = 1268562,
@@ -280,8 +286,8 @@ function mod:WaterJet()
 end
 
 function mod:ChillingFrost()
-	local barText = CL.count:format(self:GetRename(1313393), waterJetCount)
-	waterJetCount = waterJetCount + 1
+	local barText = CL.count:format(self:GetRename(1313393), chillingFrostCount)
+	chillingFrostCount = chillingFrostCount + 1
 	return {
 		msg = barText,
 		key = 1313393,
