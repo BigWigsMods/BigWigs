@@ -159,7 +159,9 @@ function mod:MythicEvents(_, eventInfo)
 	local duration = eventInfo.duration
 	local durationRounded = self:RoundNumber(duration, 0)
 
-	if durationRounded == 6 then
+	if durationRounded == 130 then
+		barInfo = self:Submerge()
+	elseif durationRounded == 6 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
 			barInfo = self:Barrage()
