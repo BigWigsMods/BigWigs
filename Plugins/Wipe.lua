@@ -48,7 +48,7 @@ plugin.pluginOptions = {
 			end,
 			values = LibSharedMedia:List(SOUND),
 			width = 2,
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		spacer = {

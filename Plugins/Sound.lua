@@ -149,7 +149,7 @@ plugin.pluginOptions = {
 		--	order = 2,
 		--	values = function() return soundList end,
 		--	width = "full",
-		--	dialogControl = "SharedDropdown",
+		--	dialogControl = "BigWigsSharedDropdown",
 		--	itemControl = "DDI-Sound",
 		--},
 		underyou = {
@@ -158,7 +158,7 @@ plugin.pluginOptions = {
 			order = 3,
 			values = function() return soundList end,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		--privateaura = {
@@ -186,7 +186,7 @@ plugin.pluginOptions = {
 			order = 22,
 			values = function() return soundList end,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Alert = {
@@ -195,7 +195,7 @@ plugin.pluginOptions = {
 			order = 23,
 			values = function() return soundList end,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Info = {
@@ -204,7 +204,7 @@ plugin.pluginOptions = {
 			order = 24,
 			values = function() return soundList end,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Long = {
@@ -213,7 +213,7 @@ plugin.pluginOptions = {
 			order = 25,
 			values = function() return soundList end,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		Warning = {
@@ -222,7 +222,7 @@ plugin.pluginOptions = {
 			order = 26,
 			values = function() return soundList end,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		},
 		-- End sound dropdowns
@@ -355,7 +355,7 @@ function plugin:OnPluginEnable()
 			values = soundList,
 			order = 2,
 			width = "full",
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Sound",
 		}
 	end

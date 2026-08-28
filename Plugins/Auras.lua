@@ -567,7 +567,7 @@ do
 						end,
 						set = function(info, value) set(info, LibSharedMedia:List(SOUND)[value]) end,
 						values = LibSharedMedia:List(SOUND),
-						dialogControl = "SharedDropdown",
+						dialogControl = "BigWigsSharedDropdown",
 						itemControl = "DDI-Sound",
 						hidden = function() return db.sounds[soundIndex].trigger == 3 end,
 						width = 1.8,

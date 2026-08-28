@@ -1186,7 +1186,7 @@ local function getAuraOptions(module, spellID)
 	icon:SetCallback("OnEnter", auraOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
 
-	local appliedDropdown = AceGUI:Create("SharedDropdown")
+	local appliedDropdown = AceGUI:Create("BigWigsSharedDropdown")
 	appliedDropdown:SetLabel(L.onApplied)
 	appliedDropdown:SetList(soundList, nil, "DDI-Sound")
 	appliedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or hasDuration and 0.42 or 0.44)
@@ -1208,7 +1208,7 @@ local function getAuraOptions(module, spellID)
 
 	local doseDropdown
 	if defaultDoseSound then
-		doseDropdown = AceGUI:Create("SharedDropdown")
+		doseDropdown = AceGUI:Create("BigWigsSharedDropdown")
 		doseDropdown:SetLabel(L.onDose)
 		doseDropdown:SetList(soundList, nil, "DDI-Sound")
 		doseDropdown:SetRelativeWidth(0.3)
@@ -1226,7 +1226,7 @@ local function getAuraOptions(module, spellID)
 		end
 	end
 
-	local removedDropdown = AceGUI:Create("SharedDropdown")
+	local removedDropdown = AceGUI:Create("BigWigsSharedDropdown")
 	removedDropdown:SetLabel(L.onRemoved)
 	removedDropdown:SetList(soundList, nil, "DDI-Sound")
 	removedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or hasDuration and 0.42 or 0.44)

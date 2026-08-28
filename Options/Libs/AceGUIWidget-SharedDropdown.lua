@@ -24,8 +24,8 @@ local function fixlevels(parent, ...)
 end
 
 do
-	local widgetType = "SharedDropdown"
-	local widgetVersion = 2
+	local widgetType = "BigWigsSharedDropdown"
+	local widgetVersion = 1
 
 	--[[ Static data ]]--
 
@@ -331,7 +331,7 @@ do
 	local function Constructor()
 		local count = AceGUI:GetNextWidgetNum(widgetType)
 		local frame = CreateFrame("Frame", nil, UIParent)
-		local dropdown = CreateFrame("Frame", "AceGUI30SharedDropdown" .. count, frame, "UIDropDownMenuTemplate")
+		local dropdown = CreateFrame("Frame", "AceGUI30" .. widgetType .. count, frame, "UIDropDownMenuTemplate")
 
 		local self = {}
 		self.type = widgetType
