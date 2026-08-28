@@ -116,7 +116,7 @@ mod:SetAuraData({
 	{1283485, soundOnApplied = "warning", duration = 5, note = "Targeted"}, -- Guillotine
 	{1297435, soundOnApplied = "warning", duration = 6, note = "Targeted"}, -- Dreadmarch XXX not applied to players?
 	{1285911, soundOnApplied = "warning", duration = 7}, -- Unnerving Fixation
-	{1286901, 1310881, soundOnApplied = "warning", duration = 5}, -- Gloombomb
+	{1310881, soundOnApplied = "warning", duration = 5}, -- Gloombomb
 	{1286837, soundOnApplied = "alarm", soundOnAppliedDose = "none", duration = 11}, -- Gravebound
 	{1299266, soundOnApplied = "warning", duration = 5, note = "Targeted"}, -- Grim Guillotine
 	-- Zul'jan
