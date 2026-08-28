@@ -86,7 +86,8 @@ do
 	_pullout.scrollFrame:SetPoint("BOTTOMRIGHT", _pullout.frame, "BOTTOMRIGHT", -6, 12)
 
 	-- Rebuilding every matching item widget is what's actually expensive (not the filtering
-	-- itself), so cap how many get created per rebuild and let the search narrow the rest down.
+	-- itself), so cap how many get created while actively searching. Only applies once there's
+	-- a search term - browsing the unfiltered list should always show everything.
 	local MAX_RESULTS = 60
 	local function ApplyFilter(self, text)
 		PopulateItems(self, text)
@@ -284,7 +285,7 @@ do
 		local shown = 0
 		local function addIfMatch(key, text)
 			if matches(text) then
-				if shown < MAX_RESULTS then
+				if not filterText or shown < MAX_RESULTS then
 					AddListItem(self, key, text, itemType)
 				end
 				shown = shown + 1
@@ -307,7 +308,7 @@ do
 			end
 		end
 
-		return shown > MAX_RESULTS and (shown - MAX_RESULTS) or 0
+		return (filterText and shown > MAX_RESULTS) and (shown - MAX_RESULTS) or 0
 	end
 
 	-- exported
