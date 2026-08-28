@@ -52,7 +52,7 @@ Libs\AceGUI-3.0\widgets\AceGUIWidget-Label.lua
 Libs\AceGUI-3.0\widgets\AceGUIWidget-MultiLineEditBox.lua
 Libs\AceGUI-3.0\widgets\AceGUIWidget-Slider.lua
 
-Libs\AceGUIWidget-SharedDropdown.lua
+Libs\AceGUIWidget-BigWigsSharedDropdown.lua
 Libs\AceConfigRegistry-3.0\AceConfigRegistry-3.0.lua
 Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.lua
 Libs\AceDBOptions-3.0\AceDBOptions-3.0.lua
