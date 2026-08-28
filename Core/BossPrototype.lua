@@ -2328,6 +2328,7 @@ do
 		[205] = "Follower",
 		[208] = "Delves",
 		[220] = "Story",
+		[233] = "Mythic Flex",
 		[250] = "World"
 	}
 	--- Get the current instance difficulty name in English.
