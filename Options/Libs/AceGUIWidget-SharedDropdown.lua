@@ -25,7 +25,7 @@ end
 
 do
 	local widgetType = "SharedDropdown"
-	local widgetVersion = 2
+	local widgetVersion = 3
 
 	--[[ Static data ]]--
 
@@ -48,6 +48,7 @@ do
 	end)
 
 	local PopulateItems -- defined below, forward-declared for use in the search box and toggle handler
+	local scrollbar -- defined below; the Blizzard-styled replacement for the pullout's own slider
 
 	-- Extra vertical space the search box claims from the pullout's own frame. The external
 	-- Dropdown-Pullout sizes its frame purely from item count (see AddItem's "h + 34"), with
@@ -62,6 +63,13 @@ do
 		_pullout.scrollStatus.scrollvalue = 0
 		_pullout.scrollStatus.offset = 0
 		_pullout:FixScroll()
+
+		if scrollbar then
+			local viewheight = _pullout.itemFrame:GetHeight()
+			local height = _pullout.scrollFrame:GetHeight()
+			scrollbar:SetVisibleExtentPercentage(viewheight > 0 and math.min(height / viewheight, 1) or 1)
+			scrollbar:SetScrollPercentage(0, true)
+		end
 	end
 
 	local searchTimer
@@ -84,6 +92,36 @@ do
 	_pullout.scrollFrame:ClearAllPoints()
 	_pullout.scrollFrame:SetPoint("TOPLEFT", _pullout.frame, "TOPLEFT", 6, -12 - HEADER_HEIGHT)
 	_pullout.scrollFrame:SetPoint("BOTTOMRIGHT", _pullout.frame, "BOTTOMRIGHT", -6, 12)
+
+	-- Replace the external Dropdown-Pullout slider with Blizzard's native
+	-- MinimalScrollBar to better match the modern WoW UI. Since this file is
+	-- shared across multiple WoW versions, use pcall in case the template
+	-- isn't available on a particular client.
+	do
+		local ok, frame = pcall(CreateFrame, "EventFrame", nil, _pullout.scrollFrame, "MinimalScrollBar")
+		if ok and frame then
+			scrollbar = frame
+			scrollbar:SetPoint("TOP", _pullout.scrollFrame, "TOPRIGHT", -8, -2)
+			scrollbar:SetPoint("BOTTOM", _pullout.scrollFrame, "BOTTOMRIGHT", -8, 2)
+			scrollbar:Init(1, 0.1)
+			scrollbar:SetHideIfUnscrollable(true)
+			scrollbar:RegisterCallback("OnScroll", function(_, percentage)
+				_pullout:SetScroll(percentage * 1000)
+			end)
+
+			-- Keep the original slider for existing scroll handling, but hide it
+			-- and disable interaction.
+			-- Its value is mirrored to the new scrollbar.
+			_pullout.slider:EnableMouse(false)
+			_pullout.slider:SetAlpha(0)
+			_pullout.slider:HookScript("OnValueChanged", function(_, value)
+				scrollbar:SetScrollPercentage(value / 1000, true)
+			end)
+
+			-- Adjust the item frame to leave enough space for the new scrollbar.
+			_pullout.itemFrame:SetPoint("TOPRIGHT", _pullout.scrollFrame, "TOPRIGHT", -20, 0)
+		end
+	end
 
 	-- Rebuilding every matching item widget is what's actually expensive (not the filtering
 	-- itself), so cap how many get created per rebuild and let the search narrow the rest down.
