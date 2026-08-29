@@ -198,6 +198,12 @@ local function updateProfile()
 	end
 
 	for _, unitType in next, profileUnits do
+		if not db[unitType].tempSizeMigrate and db[unitType].size then -- XXX 12.1.0
+			db[unitType].width = db[unitType].size
+			db[unitType].height = db[unitType].size
+			db[unitType].tempSizeMigrate = true
+		end
+
 		if db[unitType].width < 24 or db[unitType].width > 256 then
 			db[unitType].width = plugin.defaultDB[unitType].width
 		end
