@@ -1413,42 +1413,54 @@ do
 				if next(sDB) then -- Create statistics table
 					local statGroup = AceGUI:Create("InlineGroup")
 					statGroup:SetTitle(L.statistics)
-					statGroup:SetLayout("Flow")
+					statGroup:SetLayout("List")
 					statGroup:SetFullWidth(true)
 					scrollFrame:AddChild(statGroup)
+
+					-- Each row is its own full-width Flow group so a row's columns can never
+					-- wrap into the next row's, which is what caused the misaligned columns.
+					local function newStatRow()
+						local row = AceGUI:Create("SimpleGroup")
+						row:SetLayout("Flow")
+						row:SetFullWidth(true)
+						statGroup:AddChild(row)
+						return row
+					end
+
+					local headerRow = newStatRow()
 
 					local emptyFirstColumnLabel = AceGUI:Create("Label")
 					emptyFirstColumnLabel:SetWidth(110)
 					emptyFirstColumnLabel:SetText("")
-					statGroup:AddChild(emptyFirstColumnLabel)
+					headerRow:AddChild(emptyFirstColumnLabel)
 
 					local defeatColumnLabel = AceGUI:Create("InteractiveLabel")
 					defeatColumnLabel:SetWidth(83)
 					defeatColumnLabel:SetText(L.defeat)
 					defeatColumnLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
 					defeatColumnLabel:SetCallback("OnLeave", HideTooltip)
-					statGroup:AddChild(defeatColumnLabel)
+					headerRow:AddChild(defeatColumnLabel)
 
 					local victoryColumnLabel = AceGUI:Create("InteractiveLabel")
 					victoryColumnLabel:SetWidth(83)
 					victoryColumnLabel:SetText(L.victory)
 					victoryColumnLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
 					victoryColumnLabel:SetCallback("OnLeave", HideTooltip)
-					statGroup:AddChild(victoryColumnLabel)
+					headerRow:AddChild(victoryColumnLabel)
 
 					local fastestColumnLabel = AceGUI:Create("InteractiveLabel")
 					fastestColumnLabel:SetWidth(130)
 					fastestColumnLabel:SetText(L.fastest)
 					fastestColumnLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
 					fastestColumnLabel:SetCallback("OnLeave", HideTooltip)
-					statGroup:AddChild(fastestColumnLabel)
+					headerRow:AddChild(fastestColumnLabel)
 
 					local firstColumnLabel = AceGUI:Create("InteractiveLabel")
 					firstColumnLabel:SetWidth(140)
 					firstColumnLabel:SetText(L.first)
 					firstColumnLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
 					firstColumnLabel:SetCallback("OnLeave", HideTooltip)
-					statGroup:AddChild(firstColumnLabel)
+					headerRow:AddChild(firstColumnLabel)
 
 					-- Headers
 					local displayOrder = {
@@ -1466,20 +1478,22 @@ do
 							end
 						end
 						if not found then
+							local row = newStatRow()
+
 							local difficultyText = AceGUI:Create("Label")
 							difficultyText:SetWidth(110)
 							difficultyText:SetText(L.unknown)
-							statGroup:AddChild(difficultyText)
+							row:AddChild(difficultyText)
 
 							local defeatsLabel = AceGUI:Create("Label")
 							defeatsLabel:SetWidth(83)
 							defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
-							statGroup:AddChild(defeatsLabel)
+							row:AddChild(defeatsLabel)
 
 							local victoriesLabel = AceGUI:Create("Label")
 							victoriesLabel:SetWidth(83)
 							victoriesLabel:SetText(tbl.kills or "-")
-							statGroup:AddChild(victoriesLabel)
+							row:AddChild(victoriesLabel)
 
 							local fastestVictoryLabel = AceGUI:Create("Label")
 							fastestVictoryLabel:SetWidth(130)
@@ -1492,7 +1506,7 @@ do
 							elseif value then
 								fastestVictoryLabel:SetText(value)
 							end
-							statGroup:AddChild(fastestVictoryLabel)
+							row:AddChild(fastestVictoryLabel)
 
 							local firstKillDataLabel = AceGUI:Create("Label")
 							firstKillDataLabel:SetWidth(140)
@@ -1502,7 +1516,7 @@ do
 								local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
 								firstKillDataLabel:SetText(text)
 							end
-							statGroup:AddChild(firstKillDataLabel)
+							row:AddChild(firstKillDataLabel)
 						end
 					end
 
@@ -1510,20 +1524,22 @@ do
 						local diff = displayOrder[i]
 						local tbl = sDB[diff]
 						if tbl then
+							local row = newStatRow()
+
 							local difficultyText = AceGUI:Create("Label")
 							difficultyText:SetWidth(110)
 							difficultyText:SetText(L[diff] or "?")
-							statGroup:AddChild(difficultyText)
+							row:AddChild(difficultyText)
 
 							local defeatsLabel = AceGUI:Create("Label")
 							defeatsLabel:SetWidth(83)
 							defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
-							statGroup:AddChild(defeatsLabel)
+							row:AddChild(defeatsLabel)
 
 							local victoriesLabel = AceGUI:Create("Label")
 							victoriesLabel:SetWidth(83)
 							victoriesLabel:SetText(tbl.kills or "-")
-							statGroup:AddChild(victoriesLabel)
+							row:AddChild(victoriesLabel)
 
 							local fastestVictoryLabel = AceGUI:Create("Label")
 							fastestVictoryLabel:SetWidth(130)
@@ -1536,7 +1552,7 @@ do
 							elseif value then
 								fastestVictoryLabel:SetText(value)
 							end
-							statGroup:AddChild(fastestVictoryLabel)
+							row:AddChild(fastestVictoryLabel)
 
 							local firstKillDataLabel = AceGUI:Create("Label")
 							firstKillDataLabel:SetWidth(140)
@@ -1546,7 +1562,7 @@ do
 								local text = table.concat({tbl.fkWipes or "0", SecondsToTime(tbl.fkDuration), tbl.fkDate}, " - ")
 								firstKillDataLabel:SetText(text)
 							end
-							statGroup:AddChild(firstKillDataLabel)
+							row:AddChild(firstKillDataLabel)
 						end
 					end
 				end -- End statistics table
