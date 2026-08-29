@@ -15,9 +15,7 @@ local GetTime = GetTime
 local tsort = table.sort
 local db
 
--- Tracked independently of Bars.lua's own bars; identity matches the same rules Bars.lua
--- uses for BigWigs_PauseBar/BigWigs_StopBar (eventId if present, otherwise module+text),
--- so a bar and its text warning always start/stop/pause together.
+-- Tracked timers are stored in a table of {module, text, eventId, expires, paused, remaining} tables.
 local activeTimers = {}
 local ticking = false
 
