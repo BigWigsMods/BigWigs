@@ -1356,6 +1356,21 @@ do
 								order = 2,
 								width = "full",
 							},
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 100,
+							},
+							reset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								order = 101,
+								func = function()
+									MergeTables(plugin.db.profile.player, plugin.defaultDB.player)
+									updateProfile()
+								end,
+							},
 						},
 					},
 					icon = CopyTable(sharedUnitOptions.icon),
@@ -1493,6 +1508,21 @@ do
 									updateProfile()
 								end,
 								disabled = IsAnchorDisabled,
+							},
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 100,
+							},
+							reset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								order = 101,
+								func = function()
+									MergeTables(plugin.db.profile.other, plugin.defaultDB.other)
+									updateProfile()
+								end,
 							},
 						},
 					},
