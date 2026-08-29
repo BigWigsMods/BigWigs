@@ -32,6 +32,8 @@ plugin.defaultDB = {
 	fontName = plugin:GetDefaultFont(),
 	fontSize = 18,
 	position = {"CENTER", "CENTER", 0, 150},
+	urgentThreshold = 2,
+	urgentColor = {1, 0, 0, 1},
 }
 
 -------------------------------------------------------------------------------
@@ -110,6 +112,14 @@ local function sortByRemaining(a, b)
 	return a.remaining < b.remaining
 end
 local function refresh()
+	if not db.enabled then
+		for i = 1, #fontStrings do
+			fontStrings[i]:Hide()
+		end
+		ticking = false
+		return
+	end
+
 	local now = GetTime()
 	table.wipe(shown)
 	for i = 1, #activeTimers do
@@ -127,6 +137,11 @@ local function refresh()
 	for i = 1, count do
 		local fs = acquireLine(i)
 		fs:SetText(("%s  %.1f"):format(truncate(shown[i].text), shown[i].remaining))
+		if shown[i].remaining <= db.urgentThreshold then
+			fs:SetTextColor(unpack(db.urgentColor))
+		else
+			fs:SetTextColor(1, 1, 1, 1)
+		end
 		fs:Show()
 	end
 	for i = count + 1, #fontStrings do
@@ -170,6 +185,10 @@ plugin.pluginOptions = {
 			name = L.enable,
 			order = 2,
 			width = "full",
+			set = function(_, value)
+				db.enabled = value
+				startTicking()
+			end,
 		},
 		threshold = {
 			type = "range",
@@ -191,6 +210,20 @@ plugin.pluginOptions = {
 			desc = L.textTimersMaxNameLengthDesc,
 			min = 0, max = 40, step = 1,
 			order = 5,
+		},
+		urgentThreshold = {
+			type = "range",
+			name = L.textTimersUrgentThreshold,
+			desc = L.textTimersUrgentThresholdDesc,
+			min = 0, max = 15, step = 0.5,
+			order = 5.1,
+		},
+		urgentColor = {
+			type = "color",
+			name = L.textTimersUrgentColor,
+			order = 5.2,
+			get = function() return unpack(db.urgentColor) end,
+			set = function(_, r, g, b) db.urgentColor = {r, g, b, 1} end,
 		},
 		fontName = {
 			type = "select",
@@ -297,7 +330,6 @@ end
 --
 
 function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId)
-	if not db.enabled then return end
 	text = text or ""
 	removeTimer(module, text, eventId)
 	activeTimers[#activeTimers+1] = {module = module, text = text, eventId = eventId, expires = GetTime() + time}
