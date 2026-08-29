@@ -198,9 +198,6 @@ local function updateProfile()
 	end
 
 	for _, unitType in next, profileUnits do
-		-- if db[unitType].size < 24 or db[unitType].size > 256 then
-		-- 	db[unitType].size = plugin.defaultDB[unitType].size
-		-- end
 		if db[unitType].width < 24 or db[unitType].width > 256 then
 			db[unitType].width = plugin.defaultDB[unitType].width
 		end
@@ -890,10 +887,8 @@ do
 				},
 				cooldownTextDecimals = {
 					type = "range",
-					-- name = L.decimalThreshold,
-					-- desc = L.decimalThresholdDesc,
-					name = "Decimals threshold",
-					desc = "At which threshold in seconds should decimal points be shown",
+					name = L.decimalThreshold,
+					desc = L.decimalThresholdDesc,
 					order = 9,
 					width = 1.6,
 					min = 0,
