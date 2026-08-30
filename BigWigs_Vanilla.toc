@@ -42,7 +42,7 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 # Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 #@end-non-debug@
 #@do-not-package@
-Options\Libs\AceGUIWidget-SharedDropdown.lua
+Options\Libs\AceGUIWidget-BigWigsSharedDropdown.lua
 #@end-do-not-package@
 
 Init_Vanilla.lua
