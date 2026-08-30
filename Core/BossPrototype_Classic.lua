@@ -551,12 +551,14 @@ do
 
 	--- Set this module's sort order in the encounter list.
 	-- The list is sorted by value, lower first; the default is 0 and equal values keep registration order.
-	-- @number[opt] order Sort value
+	-- @number order Sort value
 	function boss:SetSortOrder(order)
-		sortOrder[self] = order
+		if type(order) == "number" then
+			sortOrder[self] = order
+		end
 	end
 
-	--- Get this module's sort order
+	--- Get this module's sort order.
 	-- @return number Sort order, or 0 if none is set
 	function boss:GetSortOrder()
 		return sortOrder[self] or 0
