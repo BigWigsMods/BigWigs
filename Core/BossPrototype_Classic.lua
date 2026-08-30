@@ -1214,14 +1214,14 @@ do
 
 	--- Get the aura type. (Magic/Poison/Etc)
 	-- @return string or nil
-	function boss:GetAuraType(spellID)
+	function boss:GetAuraDispelType(spellID)
 		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
 		if not index then
 			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
 			return
 		end
 
-		return moduleAurasList[self][index].type
+		return moduleAurasList[self][index].dispel
 	end
 
 	--- Get the aura mechanic. (Snare/Stun/Etc)
@@ -1245,8 +1245,19 @@ do
 			return
 		end
 
-		local note = moduleAurasList[self][index].note
-		return note
+		return moduleAurasList[self][index].note
+	end
+
+	--- Get the aura tip.
+	-- @return string or nil
+	function boss:GetAuraTip(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		return moduleAurasList[self][index].tip
 	end
 
 	--- Get the aura header.
