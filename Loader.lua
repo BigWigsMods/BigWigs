@@ -938,6 +938,14 @@ do
 		RegisterSlashCommand = tbl.API.RegisterSlashCommand
 	end
 
+	local function registerLoadOnZone(addon, id, enable)
+		if enable then
+			enableZones[id] = enable
+		end
+		if not loadOnZone[id] then loadOnZone[id] = {} end
+		loadOnZone[id][#loadOnZone[id] + 1] = addon
+	end
+
 	for i = 1, GetNumAddOns() do
 		local name, _, _, _, addonState = GetAddOnInfo(i)
 		if name == "BigWigs_Core" then
@@ -949,7 +957,8 @@ do
 			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		end
 
-		if GetAddOnEnableState(name, myGUID) == 2 then -- if addonState ~= "DISABLED" then (only works when disabled on ALL characters)
+		local addonEnabled = GetAddOnEnableState(name, myGUID) == 2 -- addonState ~= "DISABLED" only works when disabled on ALL characters
+		if addonEnabled then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				if name == "BigWigs_Plugins" then -- Always first
@@ -1032,6 +1041,15 @@ do
 				public.littlewigsVersion = "repo"
 			else
 				public.littlewigsVersion = GetAddOnMetadata(i, "Version") -- e.g. "v12.1.0" or "v12.1.0-1"
+				if addonEnabled then
+					-- Packaged releases always load the main LittleWigs addon in current season zones
+					for zone in next, public.currentExpansion.currentSeason do
+						local instanceName = GetRealZoneText(zone)
+						if instanceName and instanceName ~= "" then -- Protect live client from beta client ids
+							registerLoadOnZone(i, zone, true)
+						end
+					end
+				end
 			end
 		end
 	end
@@ -1042,13 +1060,8 @@ do
 			local id = tonumber(rawId:trim())
 			if id then
 				local instanceName = GetRealZoneText(id)
-				-- register the instance id for enabling.
 				if instanceName and instanceName ~= "" then -- Protect live client from beta client ids
-					enableZones[id] = true
-
-					if not loadOnZone[id] then loadOnZone[id] = {} end
-					loadOnZone[id][#loadOnZone[id] + 1] = addon
-
+					registerLoadOnZone(addon, id, true)
 					if not menus[id] and not blockedMenus[id] then menus[id] = true end
 				end
 			else
@@ -1066,12 +1079,7 @@ do
 			if zoneOrBoss then
 				if not currentZone then
 					currentZone = zoneOrBoss
-
-					-- register the zone for enabling.
-					enableZones[currentZone] = "world"
-
-					if not loadOnZone[currentZone] then loadOnZone[currentZone] = {} end
-					loadOnZone[currentZone][#loadOnZone[currentZone] + 1] = addon
+					registerLoadOnZone(addon, currentZone, "world")
 				else
 					worldBosses[zoneOrBoss] = currentZone
 					currentZone = nil
@@ -1100,9 +1108,7 @@ do
 					name = GetRealZoneText(id)
 				end
 				if name and name ~= "" then -- Protect live client from beta client ids
-					if not loadOnZone[id] then loadOnZone[id] = {} end
-					loadOnZone[id][#loadOnZone[id] + 1] = addon
-
+					registerLoadOnZone(addon, id)
 					if not menus[id] then menus[id] = true end
 				end
 			else
