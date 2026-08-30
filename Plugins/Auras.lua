@@ -119,11 +119,17 @@ do
 		other = MergeTables(CopyTable(sharedDefaults), {
 			disabled = true,
 			anchorYOffset = 120,
+
+			showTankIndicator = true,
+			tankIndicatorSize = 24,
+			tankIndicatorAnchorPoint = "TOP",
+			tankIndicatorAnchorRelPoint = "TOP",
+			tankIndicatorAnchorXOffset = 0,
+			tankIndicatorAnchorYOffset = -12,
 		}),
 		otherPlayerType = "tank",
 		onlyWhenYouAreTank = false,
 		otherPlayerName = "",
-		tankIndicator = true,
 		sounds = {},
 	}
 end
@@ -286,6 +292,11 @@ local function updateProfile()
 			end
 		end
 	end
+
+	if db.other.tankIndicatorSize < 1 or db.other.tankIndicatorSize > 64 then
+		db.other.tankIndicatorSize = plugin.defaultDB.other.tankIndicatorSize
+	end
+	ValidateAnchor("other", "tankIndicatorAnchorPoint", nil, "tankIndicatorAnchorRelPoint", "tankIndicatorAnchorXOffset", "tankIndicatorAnchorYOffset")
 
 	if db.otherPlayerType ~= "tank" and db.otherPlayerType ~= "player" then
 		db.otherPlayerType = plugin.defaultDB.otherPlayerType
@@ -1179,7 +1190,7 @@ do
 		position = {
 			type = "group",
 			name = L.positionExact,
-			order = 7,
+			order = 8,
 			set = function(info, value)
 				local unitType = info[#info - 2]
 				db[unitType][info[#info]] = value
@@ -1483,19 +1494,6 @@ do
 								end,
 								disabled = IsAnchorDisabled,
 							},
-							showTankIndicator = {
-								type = "toggle",
-								name = L.tankIndicator,
-								order = 8,
-								get = function()
-									return db.tankIndicator
-								end,
-								set = function(_, value)
-									db.tankIndicator = value
-									updateProfile()
-								end,
-								disabled = IsAnchorDisabled,
-							},
 							resetHeader = {
 								type = "header",
 								name = "",
@@ -1518,6 +1516,78 @@ do
 					cooldown = CopyTable(sharedUnitOptions.cooldown),
 					dispelType = CopyTable(sharedUnitOptions.dispelType),
 					applications = CopyTable(sharedUnitOptions.applications),
+					tankIndicator = {
+						type = "group",
+						name = L.tankIndicator,
+						order = 5,
+						disabled = function(info)
+							local unitType = info[#info - 1]
+							return db[unitType].disabled
+						end,
+						args = {
+							showTankIndicator = {
+								type = "toggle",
+								name = L.tankIndicator,
+								order = 1,
+								width = 1.2,
+								disabled = false,
+							},
+							spacer = {
+								type = "description",
+								name = "",
+								order = 2,
+								width = 1.5,
+								disabled = false
+							},
+							tankIndicatorSize = {
+								type = "range",
+								name = L.iconSize,
+								order = 3,
+								width = "full",
+								min = 1,
+								max = 64,
+								step = 1,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
+							},
+							tankIndicatorAnchorPoint = {
+								type = "select",
+								name = L.position,
+								order = 4,
+								values = BigWigsAPI.GetFramePointList(),
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
+							},
+							tankIndicatorAnchorXOffset = {
+								type = "range",
+								name = L.offsetX,
+								order = 5,
+								min = -100,
+								max = 100,
+								step = 1,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
+							},
+							tankIndicatorAnchorYOffset = {
+								type = "range",
+								name = L.offsetY,
+								order = 6,
+								min = -100,
+								max = 100,
+								step = 1,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
+							},
+						},
+					},
 					position = CopyTable(sharedUnitOptions.position),
 				},
 			},
@@ -2063,7 +2133,6 @@ do
 
 		if unitType == "other" then
 			local tankIndicator = overlayFrame:CreateTexture(nil, "OVERLAY")
-			tankIndicator:SetPoint("CENTER", aura, "TOP", 0, -3)
 			aura.tankIndicator = tankIndicator
 		end
 	end
@@ -2236,11 +2305,15 @@ do
 			aura:ClearApplicationCount()
 		end
 
-		if aura.tankIndicator then
-			local size = optionsDB.height / 3
-			aura.tankIndicator:SetShown(db.tankIndicator)
+		if optionsDB.showTankIndicator then
+			local size = optionsDB.tankIndicatorSize
+			aura.tankIndicator:ClearAllPoints()
+			aura.tankIndicator:SetPoint(optionsDB.tankIndicatorAnchorPoint, aura, optionsDB.tankIndicatorAnchorPoint, optionsDB.tankIndicatorAnchorXOffset, optionsDB.tankIndicatorAnchorYOffset)
 			aura.tankIndicator:SetSize(size, size)
 			aura.tankIndicator:SetAtlas(size > 36 and "icons_64x64_tank" or "icons_16x16_tank")
+			aura.tankIndicator:Show()
+		elseif aura.tankIndicator then
+			aura.tankIndicator:Hide()
 		end
 	end
 
