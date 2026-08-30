@@ -1045,7 +1045,7 @@ do
 		applications = {
 			type = "group",
 			name = L.countText,
-			order = 6,
+			order = 7,
 			disabled = function(info)
 				local unitType = info[#info - 1]
 				return db[unitType].disabled
@@ -1522,7 +1522,7 @@ do
 					tankIndicator = {
 						type = "group",
 						name = L.tankIndicator,
-						order = 5,
+						order = 6,
 						disabled = function(info)
 							local unitType = info[#info - 1]
 							return db[unitType].disabled
