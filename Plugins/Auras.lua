@@ -587,14 +587,6 @@ do
 					name = L.keepAspectRatio,
 					desc = L.keepAspectRatioDesc,
 					order = 3,
-					set = function(info, value)
-						local unitType = info[#info - 2]
-						db[unitType].keepAspectRatio = value
-						if value then
-							db[unitType].height = db[unitType].width
-						end
-						updateProfile()
-					end,
 					disabled = false,
 				},
 				width = {
@@ -605,14 +597,6 @@ do
 					min = 24,
 					max = 256,
 					step = 1,
-					set = function(info, value)
-						local unitType = info[#info - 2]
-						db[unitType].width = value
-						if db[unitType].keepAspectRatio then
-							db[unitType].height = value
-						end
-						updateProfile()
-					end,
 					disabled = false,
 				},
 				height = {
@@ -623,17 +607,7 @@ do
 					min = 24,
 					max = 256,
 					step = 1,
-					get = function(info)
-						local unitType = info[#info - 2]
-						if db[unitType].keepAspectRatio then
-							return db[unitType].width
-						end
-						return db[unitType].height
-					end,
-					disabled = function(info)
-						local unitType = info[#info - 2]
-						return db[unitType].keepAspectRatio
-					end,
+					disabled = false,
 				},
 				zoom = {
 					type = "range",
@@ -2110,11 +2084,13 @@ do
 			local zoomedOffset = 1 - ((1 - zoom) / 2)
 			local offsetX, offsetY = zoomedOffset, zoomedOffset
 
-			local width, height = optionsDB.width, optionsDB.height
-			if width > height then
-				offsetY = 1 - (1 - (height / width) * zoom) / 2
-			elseif height > width then
-				offsetX = 1 - (1 - (width / height) * zoom) / 2
+			if optionsDB.keepAspectRatio then
+				local width, height = optionsDB.width, optionsDB.height
+				if width > height then
+					offsetY = 1 - (1 - (height / width) * zoom) / 2
+				elseif height > width then
+					offsetX = 1 - (1 - (width / height) * zoom) / 2
+				end
 			end
 
 			local left, right, top, bottom = 1 - offsetX, offsetX, 1 - offsetY, offsetY
