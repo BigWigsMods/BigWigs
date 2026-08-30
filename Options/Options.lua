@@ -1694,10 +1694,22 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 
 	local zoneList, zoneSort = {}, {}
 	do
+		local sharedModules
 		for i = 1, #moduleList do
 			local module = moduleList[i]
 			zoneList[module.moduleName] = module.displayName
-			zoneSort[i] = module.moduleName
+			if type(module.instanceId) == "table" and #module.instanceId > 1 then
+				sharedModules = sharedModules or {}
+				sharedModules[#sharedModules + 1] = module.moduleName
+			else
+				zoneSort[#zoneSort + 1] = module.moduleName
+			end
+		end
+		-- show shared modules last in the encounter list
+		if sharedModules then
+			for i = 1, #sharedModules do
+				zoneSort[#zoneSort + 1] = sharedModules[i]
+			end
 		end
 	end
 
