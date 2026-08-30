@@ -159,8 +159,6 @@ local profileUnits = {"player", "other"}
 local function updateProfile()
 	db = plugin.db.profile
 
-	-- TODO: migrate .size to .width and .height
-
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
 		if defaultType == "nil" then
