@@ -57,8 +57,6 @@ end
 
 do
 	local sharedDefaults = {
-		disabled = true,
-
 		width = 64,
 		height = 64,
 		zoom = 0,
