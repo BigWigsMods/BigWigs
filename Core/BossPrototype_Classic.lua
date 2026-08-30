@@ -313,19 +313,6 @@ do
 	end
 end
 
---- Set this module's sort order in the encounter list.
--- The list is sorted by value, lower first; the default is 0 and equal values keep registration order.
--- @number[opt] sortOrder Sort value
-function boss:SetSortOrder(sortOrder)
-	self.sortOrder = sortOrder
-end
-
---- Get this module's sort order
--- @return number Sort order, or 0 if none is set
-function boss:GetSortOrder()
-	return self.sortOrder or 0
-end
-
 do
 	local worldModuleList = {}
 	--- Mark this module as being a module for world bosses
@@ -556,6 +543,23 @@ function boss:SetStage(stage)
 			self.stageTime = GetTime()
 			self:SendMessage("BigWigs_SetStage", self, stage)
 		end
+	end
+end
+
+do
+	local sortOrder = {}
+
+	--- Set this module's sort order in the encounter list.
+	-- The list is sorted by value, lower first; the default is 0 and equal values keep registration order.
+	-- @number[opt] order Sort value
+	function boss:SetSortOrder(order)
+		sortOrder[self] = order
+	end
+
+	--- Get this module's sort order
+	-- @return number Sort order, or 0 if none is set
+	function boss:GetSortOrder()
+		return sortOrder[self] or 0
 	end
 end
 
