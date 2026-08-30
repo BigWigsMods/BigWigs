@@ -1039,7 +1039,7 @@ do
 			if GetAddOnMetadata(i, "X-LittleWigs-Repo") then
 				public.usingLittleWigsRepo = true
 				public.littlewigsVersion = "repo"
-			else
+			else -- Packaged installs of LittleWigs
 				public.littlewigsVersion = GetAddOnMetadata(i, "Version") -- e.g. "v12.1.0" or "v12.1.0-1"
 				if addonEnabled then
 					-- Packaged releases always load the main LittleWigs addon in current season zones
