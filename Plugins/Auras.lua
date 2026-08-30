@@ -275,7 +275,7 @@ local function updateProfile()
 
 		ValidateAnchor(unitType, "anchorPoint", "anchorRelativeTo", "anchorRelPoint", "anchorXOffset", "anchorYOffset")
 		ValidateAnchor(unitType, "countTextAnchorPoint", nil, nil, "countTextAnchorXOffset", "countTextAnchorYOffset")
-		ValidateAnchor(unitType, "tankIndicatorAnchorPoint", nil, "tankIndicatorAnchorRelPoint", "tankIndicatorAnchorXOffset", "tankIndicatorAnchorYOffset")
+		ValidateAnchor(unitType, "dispelTypeAnchorPoint", nil, "dispelTypeAnchorRelPoint", "dispelTypeAnchorXOffset", "dispelTypeAnchorYOffset")
 
 		if db[unitType].maxIcons < 1 or db[unitType].maxIcons > 5 then
 			db[unitType].maxIcons = plugin.defaultDB[unitType].maxIcons
