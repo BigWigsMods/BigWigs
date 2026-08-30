@@ -891,8 +891,8 @@ do
 				},
 				cooldownTextDecimals = {
 					type = "range",
-					name = L.decimalThreshold,
-					desc = L.decimalThresholdDesc,
+					name = L.cooldownDecimalsThreshold,
+					desc = L.cooldownDecimalsThresholdDesc,
 					order = 9,
 					width = 1.6,
 					min = 0,
