@@ -29,19 +29,41 @@ local UpdateAuraContainer
 local UpdateSoundOptions, UpdateRegisteredSounds
 local AddAuraSound, RemoveAuraSound, AddAllAuraSounds, RemoveAllAuraSounds
 
+local function CopyTable(settingsTable)
+	local copy = {}
+	for key, value in next, settingsTable do
+		if type(value) == "table" then
+			copy[key] = CopyTable(value)
+		else
+			copy[key] = value
+		end
+	end
+	return copy
+end
+
+local function MergeTables(t, ...)
+	for i = 1, select("#", ...) do
+		local src = select(i, ...)
+		for k, v in pairs(src) do
+			t[k] = v
+		end
+	end
+	return t
+end
+
 --------------------------------------------------------------------------------
 -- Profile
 --
 
-plugin.defaultDB = {
-	player = {
-		disabled = false,
-
-		size = 64,
+do
+	local sharedDefaults = {
+		width = 64,
+		height = 64,
 		zoom = 0,
 		spacing = 6,
 		showCooldown = true,
 		showTooltip = true,
+		keepAspectRatio = true,
 
 		showDispelType = true,
 		dispelTypeSize = 24,
@@ -64,6 +86,7 @@ plugin.defaultDB = {
 		cooldownTextSlug = true,
 		cooldownTextMillisecondsThreshold = 3,
 		cooldownTextColor = {1, 1, 1, 1},
+		cooldownTextDecimals = 3,
 		cooldownEmphasizeTime = 0,
 		cooldownEmphasizeColor = {1, 1, 1, 1},
 		cooldownEmphasizeFontSize = 16,
@@ -87,108 +110,87 @@ plugin.defaultDB = {
 		anchorXOffset = -300,
 		anchorYOffset = 200,
 		anchorRelativeTo = "UIParent",
-	},
-	other = {
-		disabled = true,
+	}
 
-		size = 64,
-		zoom = 0,
-		spacing = 6,
-		showCooldown = true,
-		showTooltip = true,
+	plugin.defaultDB = {
+		player = MergeTables(CopyTable(sharedDefaults), {
+			disabled = false,
+		}),
+		other = MergeTables(CopyTable(sharedDefaults), {
+			disabled = true,
+			anchorYOffset = 120,
 
-		showDispelType = true,
-		dispelTypeSize = 24,
-		dispelTypeAnchorPoint = "TOPRIGHT",
-		dispelTypeAnchorRelPoint = "TOPRIGHT",
-		dispelTypeAnchorXOffset = 8,
-		dispelTypeAnchorYOffset = 8,
+			showTankIndicator = true,
+			tankIndicatorSize = 24,
+			tankIndicatorAnchorPoint = "TOP",
+			tankIndicatorAnchorRelPoint = "TOP",
+			tankIndicatorAnchorXOffset = 0,
+			tankIndicatorAnchorYOffset = 10,
+		}),
+		otherPlayerType = "tank",
+		onlyWhenYouAreTank = false,
+		otherPlayerName = "",
+		sounds = {},
+	}
+end
 
-		borderName = "Solid",
-		borderColor = {0, 0, 0, 1},
-		borderOffset = 0,
-		borderSize = 2,
-		borderDispelColor = true,
-
-		showCooldownText = true,
-		cooldownTextFontName = "Noto Sans Medium",
-		cooldownTextFontSize = 16,
-		cooldownTextOutline = "OUTLINE",
-		cooldownTextMonochrome = false,
-		cooldownTextSlug = true,
-		cooldownTextMillisecondsThreshold = 3,
-		cooldownTextColor = {1, 1, 1, 1},
-		cooldownEmphasizeTime = 0,
-		cooldownEmphasizeColor = {1, 1, 1, 1},
-		cooldownEmphasizeFontSize = 16,
-
-		showCountText = true,
-		countTextFontName = "Noto Sans Medium",
-		countTextFontSize = 20,
-		countTextOutline = "OUTLINE",
-		countTextMonochrome = false,
-		countTextSlug = true,
-		countTextAnchorPoint = "BOTTOMRIGHT",
-		countTextAnchorXOffset = -2,
-		countTextAnchorYOffset = 2,
-		countTextColor = {1, 1, 1, 1},
-
-		growthDirection = "LEFT",
-		maxIcons = 3,
-
-		anchorPoint = "CENTER",
-		anchorRelPoint = "CENTER",
-		anchorXOffset = -300,
-		anchorYOffset = 120,
-		anchorRelativeTo = "UIParent",
-	},
-	otherPlayerType = "tank",
-	onlyWhenYouAreTank = false,
-	otherPlayerName = "",
-
-	sounds = {},
-}
 plugin.defaultGlobalDB = {
 	showHelpTip = true,
 }
 
-local function CopyTable(settingsTable)
-	local copy = {}
-	for key, value in next, settingsTable do
-		if type(value) == "table" then
-			copy[key] = CopyTable(value)
-		else
-			copy[key] = value
-		end
-	end
-	return copy
-end
-
-local function MergeTable(dst, src)
-	for k, v in pairs(src) do
-		dst[k] = v
-	end
-end
-
 local function ValidateColor(current, default, alphaLimit)
-		for i = 1, 3 do
-			local n = current[i]
-			if type(n) ~= "number" or n < 0 or n > 1 then
-				current[1] = default[1] -- If 1 entry is bad, reset the whole table
-				current[2] = default[2]
-				current[3] = default[3]
-				current[4] = default[4]
-				return
-			end
-		end
-		if alphaLimit then
-			if type(current[4]) ~= "number" or current[4] < alphaLimit or current[4] > 1 then
-				current[4] = default[4]
-			end
-		elseif current[4] then
-			current[4] = nil
+	for i = 1, 3 do
+		local n = current[i]
+		if type(n) ~= "number" or n < 0 or n > 1 then
+			current[1] = default[1] -- If 1 entry is bad, reset the whole table
+			current[2] = default[2]
+			current[3] = default[3]
+			current[4] = default[4]
+			return
 		end
 	end
+	if alphaLimit then
+		if type(current[4]) ~= "number" or current[4] < alphaLimit or current[4] > 1 then
+			current[4] = default[4]
+		end
+	elseif current[4] then
+		current[4] = nil
+	end
+end
+
+local function ValidateAnchor(unitType, pointDB, relativeToDB, relPointDB, xOffsetDB, yOffsetDB)
+	if not BigWigsAPI.IsValidFramePoint(db[unitType][pointDB]) or (relPointDB and not BigWigsAPI.IsValidFramePoint(db[unitType][relPointDB])) then
+		db[unitType][pointDB] = plugin.defaultDB[unitType][pointDB]
+		db[unitType][relPointDB] = plugin.defaultDB[unitType][relPointDB]
+		db[unitType][xOffsetDB] = plugin.defaultDB[unitType][xOffsetDB]
+		db[unitType][yOffsetDB] = plugin.defaultDB[unitType][yOffsetDB]
+		if relativeToDB then
+			db[unitType][relativeToDB] = plugin.defaultDB[unitType][relativeToDB]
+		end
+	end
+
+	local x = math.floor(db[unitType][xOffsetDB]+0.5)
+	if x ~= db[unitType][xOffsetDB] then
+		db[unitType][xOffsetDB] = x
+	end
+	local y = math.floor(db[unitType][yOffsetDB]+0.5)
+	if y ~= db[unitType][yOffsetDB] then
+		db[unitType][yOffsetDB] = y
+	end
+
+	if relativeToDB and db[unitType][relativeToDB] ~= plugin.defaultDB[unitType][relativeToDB] then
+		local frame = _G[db[unitType][relativeToDB]]
+		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+			db[unitType][pointDB] = plugin.defaultDB[unitType][pointDB]
+			db[unitType][relPointDB] = plugin.defaultDB[unitType][relPointDB]
+			db[unitType][xOffsetDB] = plugin.defaultDB[unitType][xOffsetDB]
+			db[unitType][yOffsetDB] = plugin.defaultDB[unitType][yOffsetDB]
+			db[unitType][relativeToDB] = plugin.defaultDB[unitType][relativeToDB]
+		end
+	end
+end
+
+local profileUnits = {"player", "other"}
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -229,154 +231,72 @@ local function updateProfile()
 		end
 	end
 
-	if db.player.size < 24 or db.player.size > 256 then
-		db.player.size = plugin.defaultDB.player.size
-	end
-	if db.other.size < 24 or db.other.size > 256 then
-		db.other.size = plugin.defaultDB.other.size
-	end
-
-	if db.player.zoom < 0 or db.player.zoom > 0.5 then
-		db.player.zoom = plugin.defaultDB.player.zoom
-	end
-	if db.other.zoom < 0 or db.other.zoom > 0.5 then
-		db.other.zoom = plugin.defaultDB.other.zoom
-	end
-
-	if db.player.spacing < 0 or db.player.spacing > 50 then
-		db.player.spacing = plugin.defaultDB.player.spacing
-	end
-	if db.other.spacing < 0 or db.other.spacing > 50 then
-		db.other.spacing = plugin.defaultDB.other.spacing
-	end
-
-	if db.player.cooldownTextFontSize < 8 or db.player.cooldownTextFontSize > 200 then
-		db.player.cooldownTextFontSize = plugin.defaultDB.player.cooldownTextFontSize
-	end
-	if db.other.cooldownTextFontSize < 8 or db.other.cooldownTextFontSize > 200 then
-		db.other.cooldownTextFontSize = plugin.defaultDB.other.cooldownTextFontSize
-	end
-	ValidateColor(db.other.cooldownTextColor, plugin.defaultDB.other.cooldownTextColor, 0)
-	ValidateColor(db.player.cooldownTextColor, plugin.defaultDB.player.cooldownTextColor, 0)
-
-	if db.player.cooldownEmphasizeTime < 0 or db.player.cooldownEmphasizeTime > 30 then
-		db.player.cooldownEmphasizeTime = plugin.defaultDB.player.cooldownEmphasizeTime
-	end
-	if db.other.cooldownEmphasizeTime < 0 or db.other.cooldownEmphasizeTime > 30 then
-		db.other.cooldownEmphasizeTime = plugin.defaultDB.other.cooldownEmphasizeTime
-	end
-	if db.player.cooldownTextFontSize < 10 or db.player.cooldownTextFontSize > 200 then
-		db.player.cooldownTextFontSize = plugin.defaultDB.player.cooldownTextFontSize
-	end
-	if db.other.cooldownTextFontSize < 10 or db.other.cooldownTextFontSize > 200 then
-		db.other.cooldownTextFontSize = plugin.defaultDB.other.cooldownTextFontSize
-	end
-	ValidateColor(db.player.cooldownEmphasizeColor, plugin.defaultDB.player.cooldownEmphasizeColor, 0)
-	ValidateColor(db.other.cooldownEmphasizeColor, plugin.defaultDB.other.cooldownEmphasizeColor, 0)
-
-	if db.player.countTextFontSize < 8 or db.player.countTextFontSize > 200 then
-		db.player.countTextFontSize = plugin.defaultDB.player.countTextFontSize
-	end
-	if db.other.countTextFontSize < 8 or db.other.countTextFontSize > 200 then
-		db.other.countTextFontSize = plugin.defaultDB.other.countTextFontSize
-	end
-	ValidateColor(db.other.countTextColor, plugin.defaultDB.other.countTextColor, 0)
-	ValidateColor(db.player.countTextColor, plugin.defaultDB.player.countTextColor, 0)
-	ValidateColor(db.other.borderColor, plugin.defaultDB.other.borderColor, 0)
-	ValidateColor(db.player.borderColor, plugin.defaultDB.player.borderColor, 0)
-
-	if db.player.borderSize < 1 or db.player.borderSize > 32 then
-		db.player.borderSize = plugin.defaultDB.player.borderSize
-	end
-	if db.player.borderOffset < 0 or db.player.borderOffset > 32 then
-		db.player.borderOffset = plugin.defaultDB.player.borderOffset
-	end
-
-	if db.other.borderSize < 1 or db.other.borderSize > 32 then
-		db.other.borderSize = plugin.defaultDB.other.borderSize
-	end
-	if db.other.borderOffset < 0 or db.other.borderOffset > 32 then
-		db.other.borderOffset = plugin.defaultDB.other.borderOffset
-	end
-
-	-- Validate player anchors
-	do
-		if not BigWigsAPI.IsValidFramePoint(db.player.anchorPoint) or not BigWigsAPI.IsValidFramePoint(db.player.anchorRelPoint) then
-			db.player.anchorPoint = plugin.defaultDB.player.anchorPoint
-			db.player.anchorRelPoint = plugin.defaultDB.player.anchorRelPoint
-			db.player.anchorXOffset = plugin.defaultDB.player.anchorXOffset
-			db.player.anchorYOffset = plugin.defaultDB.player.anchorYOffset
-			db.player.anchorRelativeTo = plugin.defaultDB.player.anchorRelativeTo
+	for _, unitType in next, profileUnits do
+		if not db[unitType].tempSizeMigrate and db[unitType].size then -- XXX 12.1.0
+			db[unitType].width = db[unitType].size
+			db[unitType].height = db[unitType].size
+			db[unitType].tempSizeMigrate = true
 		end
 
-		local x = math.floor(db.player.anchorXOffset+0.5)
-		if x ~= db.player.anchorXOffset then
-			db.player.anchorXOffset = x
+		if db[unitType].width < 24 or db[unitType].width > 256 then
+			db[unitType].width = plugin.defaultDB[unitType].width
 		end
-		local y = math.floor(db.player.anchorYOffset+0.5)
-		if y ~= db.player.anchorYOffset then
-			db.player.anchorYOffset = y
+		if db[unitType].height < 24 or db[unitType].height > 256 then
+			db[unitType].height = plugin.defaultDB[unitType].height
+		end
+		if db[unitType].zoom < 0 or db[unitType].zoom > 0.5 then
+			db[unitType].zoom = plugin.defaultDB[unitType].zoom
+		end
+		if db[unitType].spacing < 0 or db[unitType].spacing > 50 then
+			db[unitType].spacing = plugin.defaultDB[unitType].spacing
+		end
+		if db[unitType].cooldownTextFontSize < 8 or db[unitType].cooldownTextFontSize > 200 then
+			db[unitType].cooldownTextFontSize = plugin.defaultDB[unitType].cooldownTextFontSize
+		end
+		ValidateColor(db[unitType].cooldownTextColor, plugin.defaultDB[unitType].cooldownTextColor, 0)
+		if db[unitType].cooldownEmphasizeTime < 0 or db[unitType].cooldownEmphasizeTime > 30 then
+			db[unitType].cooldownEmphasizeTime = plugin.defaultDB[unitType].cooldownEmphasizeTime
+		end
+		if db[unitType].cooldownTextFontSize < 10 or db[unitType].cooldownTextFontSize > 200 then
+			db[unitType].cooldownTextFontSize = plugin.defaultDB[unitType].cooldownTextFontSize
+		end
+		if db[unitType].cooldownTextDecimals < 0 or db[unitType].cooldownTextDecimals > 60 then
+			db[unitType].cooldownTextDecimals = plugin.defaultDB[unitType].cooldownTextDecimals
+		end
+		ValidateColor(db[unitType].cooldownEmphasizeColor, plugin.defaultDB[unitType].cooldownEmphasizeColor, 0)
+		if db[unitType].countTextFontSize < 8 or db[unitType].countTextFontSize > 200 then
+			db[unitType].countTextFontSize = plugin.defaultDB[unitType].countTextFontSize
+		end
+		ValidateColor(db[unitType].countTextColor, plugin.defaultDB[unitType].countTextColor, 0)
+		ValidateColor(db[unitType].borderColor, plugin.defaultDB[unitType].borderColor, 0)
+		if db[unitType].borderSize < 1 or db[unitType].borderSize > 32 then
+			db[unitType].borderSize = plugin.defaultDB[unitType].borderSize
+		end
+		if db[unitType].borderOffset < 0 or db[unitType].borderOffset > 32 then
+			db[unitType].borderOffset = plugin.defaultDB[unitType].borderOffset
+		end
+		if db[unitType].dispelTypeSize < 1 or db[unitType].dispelTypeSize > 64 then
+			db[unitType].dispelTypeSize = plugin.defaultDB[unitType].dispelTypeSize
 		end
 
-		if db.player.anchorRelativeTo ~= plugin.defaultDB.player.anchorRelativeTo then
-			local frame = _G[db.player.anchorRelativeTo]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				db.player.anchorPoint = plugin.defaultDB.player.anchorPoint
-				db.player.anchorRelPoint = plugin.defaultDB.player.anchorRelPoint
-				db.player.anchorXOffset = plugin.defaultDB.player.anchorXOffset
-				db.player.anchorYOffset = plugin.defaultDB.player.anchorYOffset
-				db.player.anchorRelativeTo = plugin.defaultDB.player.anchorRelativeTo
+		ValidateAnchor(unitType, "anchorPoint", "anchorRelativeTo", "anchorRelPoint", "anchorXOffset", "anchorYOffset")
+		ValidateAnchor(unitType, "countTextAnchorPoint", nil, nil, "countTextAnchorXOffset", "countTextAnchorYOffset")
+		ValidateAnchor(unitType, "dispelTypeAnchorPoint", nil, "dispelTypeAnchorRelPoint", "dispelTypeAnchorXOffset", "dispelTypeAnchorYOffset")
+
+		if db[unitType].maxIcons < 1 or db[unitType].maxIcons > 5 then
+			db[unitType].maxIcons = plugin.defaultDB[unitType].maxIcons
+		else
+			local maxIcons = math.floor(db[unitType].maxIcons+0.5)
+			if maxIcons ~= db[unitType].maxIcons then
+				db[unitType].maxIcons = maxIcons
 			end
 		end
 	end
 
-	-- Validate other anchors
-	do
-		if not BigWigsAPI.IsValidFramePoint(db.other.anchorPoint) or not BigWigsAPI.IsValidFramePoint(db.other.anchorRelPoint) then
-			db.other.anchorPoint = plugin.defaultDB.other.anchorPoint
-			db.other.anchorRelPoint = plugin.defaultDB.other.anchorRelPoint
-			db.other.anchorXOffset = plugin.defaultDB.other.anchorXOffset
-			db.other.anchorYOffset = plugin.defaultDB.other.anchorYOffset
-			db.other.anchorRelativeTo = plugin.defaultDB.other.anchorRelativeTo
-		end
-		local x = math.floor(db.other.anchorXOffset+0.5)
-		if x ~= db.other.anchorXOffset then
-			db.other.anchorXOffset = x
-		end
-		local y = math.floor(db.other.anchorYOffset+0.5)
-		if y ~= db.other.anchorYOffset then
-			db.other.anchorYOffset = y
-		end
-
-		if db.other.anchorRelativeTo ~= plugin.defaultDB.other.anchorRelativeTo then
-			local frame = _G[db.other.anchorRelativeTo]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				db.other.anchorPoint = plugin.defaultDB.other.anchorPoint
-				db.other.anchorRelPoint = plugin.defaultDB.other.anchorRelPoint
-				db.other.anchorXOffset = plugin.defaultDB.other.anchorXOffset
-				db.other.anchorYOffset = plugin.defaultDB.other.anchorYOffset
-				db.other.anchorRelativeTo = plugin.defaultDB.other.anchorRelativeTo
-			end
-		end
+	if db.other.tankIndicatorSize < 1 or db.other.tankIndicatorSize > 64 then
+		db.other.tankIndicatorSize = plugin.defaultDB.other.tankIndicatorSize
 	end
-
-	if db.player.maxIcons < 1 or db.player.maxIcons > 5 then
-		db.player.maxIcons = plugin.defaultDB.player.maxIcons
-	else
-		local numPlayer = math.floor(db.player.maxIcons+0.5)
-		if numPlayer ~= db.player.maxIcons then
-			db.player.maxIcons = numPlayer
-		end
-	end
-
-	if db.other.maxIcons < 1 or db.other.maxIcons > 5 then
-		db.other.maxIcons = plugin.defaultDB.other.maxIcons
-	else
-		local numOther = math.floor(db.other.maxIcons+0.5)
-		if numOther ~= db.other.maxIcons then
-			db.other.maxIcons = numOther
-		end
-	end
+	ValidateAnchor("other", "tankIndicatorAnchorPoint", nil, "tankIndicatorAnchorRelPoint", "tankIndicatorAnchorXOffset", "tankIndicatorAnchorYOffset")
 
 	if db.otherPlayerType ~= "tank" and db.otherPlayerType ~= "player" then
 		db.otherPlayerType = plugin.defaultDB.otherPlayerType
@@ -388,29 +308,18 @@ local function updateProfile()
 	end
 end
 
-local function reset(section)
-	MergeTable(plugin.db.profile[section], plugin.defaultDB[section])
-end
-
 --------------------------------------------------------------------------------
 -- Options
 --
 
 do
 	local function IsAnchorDisabled(info)
-		local key = info[#info]
-		local unitType = info[#info-1]
+		local unitType = info[#info-2]
 		local optionDB = db[unitType]
 
 		if optionDB.disabled then
 			return true
 		end
-	end
-	local function IsAurasOnYouDisabledOrAnchorPointIsDefault()
-		return db.player.disabled or db.player.anchorRelativeTo == plugin.defaultDB.player.anchorRelativeTo
-	end
-	local function IsAurasOnOthersDisabledOrAnchorPointIsDefault()
-		return db.other.disabled or db.other.anchorRelativeTo == plugin.defaultDB.other.anchorRelativeTo
 	end
 	local roleIcons = {
 		["TANK"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t",
@@ -658,6 +567,727 @@ do
 		end
 	end
 
+	local sharedUnitOptions = {
+		icon = {
+			type = "group",
+			name = L.icon,
+			order = 2,
+			disabled = function(info)
+				local unitType = info[#info - 1]
+				return db[unitType].disabled
+			end,
+			args = {
+				maxIcons = {
+					type = "range",
+					name = L.maxIcons,
+					order = 1,
+					width = 1.6,
+					desc = L.maxIconsDesc,
+					min = 1,
+					max = 5,
+					step = 1,
+					disabled = false,
+				},
+				growthDirection = {
+					type = "select",
+					name = L.growthDirection,
+					order = 2,
+					width = 1.6,
+					values = {
+						LEFT = L.LEFT,
+						RIGHT = L.RIGHT,
+						UP = L.UP,
+						DOWN = L.DOWN,
+						CENTER_HORIZONTAL = L.CENTER_HORIZONTAL,
+						CENTER_VERTICAL = L.CENTER_VERTICAL,
+					},
+					disabled = false,
+				},
+				width = {
+					type = "range",
+					name = L.width,
+					order = 3,
+					width = 1.6,
+					min = 24,
+					max = 256,
+					step = 1,
+					disabled = false,
+				},
+				height = {
+					type = "range",
+					name = L.height,
+					order = 4,
+					width = 1.6,
+					min = 24,
+					max = 256,
+					step = 1,
+					disabled = false,
+				},
+				zoom = {
+					type = "range",
+					name = L.zoom,
+					desc = L.zoomDesc,
+					order = 5,
+					width = 1.6,
+					min = 0,
+					max = 0.5,
+					step = 0.01,
+					isPercent = true,
+					disabled = false,
+				},
+				spacing = {
+					type = "range",
+					name = L.iconSpacing,
+					order = 6,
+					width = 1.6,
+					min = 0,
+					max = 50,
+					step = 1,
+					disabled = false,
+				},
+				spacer1 = {
+					type = "description",
+					name = "",
+					order = 7,
+					width = 1.6,
+					disabled = false,
+				},
+				keepAspectRatio = {
+					type = "toggle",
+					name = L.keepAspectRatio,
+					desc = L.keepAspectRatioDesc,
+					order = 8,
+					disabled = false,
+				},
+				spacer2 = {
+					type = "description",
+					name = "",
+					order = 9,
+					width = 1.6,
+					disabled = false,
+				},
+				showTooltip = {
+					type = "toggle",
+					name = L.iconTooltip,
+					desc = L.iconTooltipDesc,
+					order = 10,
+					disabled = false,
+				},
+				spacer3 = {
+					type = "description",
+					name = "",
+					order = 11,
+					width = 1.6,
+					disabled = false,
+				},
+				showCooldown = {
+					type = "toggle",
+					name = L.showCooldown,
+					desc = L.showCooldownSwipeDesc,
+					order = 12,
+					disabled = false,
+				},
+			},
+		},
+		border = {
+			type = "group",
+			name = L.border,
+			order = 3,
+			disabled = function(info)
+				local unitType = info[#info - 1]
+				return db[unitType].disabled
+			end,
+			args = {
+				borderName = {
+					type = "select",
+					name = L.borderName,
+					order = 1,
+					values = LibSharedMedia:List("border"),
+					get = function(info)
+						local unitType = info[#info - 2]
+						for i, v in next, LibSharedMedia:List("border") do
+							if v == db[unitType].borderName then return i end
+						end
+					end,
+					set = function(info, value)
+						local unitType = info[#info - 2]
+						local list = LibSharedMedia:List("border")
+						db[unitType].borderName = list[value]
+						updateProfile()
+					end,
+					width = 1,
+					disabled = false,
+				},
+				borderSize = {
+					type = "range",
+					name = L.borderSize,
+					order = 2,
+					min = 1,
+					max = 32,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return db[unitType].borderName == "None"
+					end,
+				},
+				borderOffset = {
+					type = "range",
+					name = L.borderOffset,
+					order = 3,
+					min = 0,
+					max = 32,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return db[unitType].borderName == "None"
+					end,
+				},
+				borderDispelColor = {
+					type = "toggle",
+					name = L.borderDispelColor,
+					order = 4,
+					width = 1.5,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return db[unitType].borderName == "None"
+					end,
+				},
+				borderColor = {
+					type = "color",
+					name = L.borderColor,
+					order = 5,
+					get = function(info)
+						local unitType = info[#info - 2]
+						local colorTable = db[unitType].borderColor
+						return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+					end,
+					set = function(info, r, g, b, a)
+						local unitType = info[#info - 2]
+						db[unitType].borderColor = {r, g, b, a}
+						updateProfile()
+					end,
+					hasAlpha = true,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return db[unitType].borderDispelColor
+					end,
+				},
+			},
+		},
+		cooldown = {
+			type = "group",
+			name = L.cooldown,
+			order = 4,
+			disabled = function(info)
+				local unitType = info[#info - 1]
+				return db[unitType].disabled
+			end,
+			args = {
+				showCooldownText = {
+					type = "toggle",
+					name = L.showCooldownText,
+					order = 1,
+					disabled = false,
+				},
+				spacer = {
+					type = "description",
+					name = "",
+					order = 2,
+					width = 1.5,
+					disabled = false
+				},
+				cooldownTextFontName = {
+					type = "select",
+					name = L.font,
+					order = 3,
+					values = LibSharedMedia:List(FONT),
+					itemControl = "DDI-Font",
+					get = function(info)
+						local unitType = info[#info - 2]
+						for i, v in next, LibSharedMedia:List(FONT) do
+							if v == db[unitType].cooldownTextFontName then
+								return i
+							end
+						end
+					end,
+					set = function(info, value)
+						local unitType = info[#info - 2]
+						local list = LibSharedMedia:List(FONT)
+						db[unitType].cooldownTextFontName = list[value]
+						updateProfile()
+					end,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextFontSize = {
+					type = "range",
+					name = L.fontSize,
+					desc = L.fontSizeDesc,
+					order = 4,
+					softMax = 100,
+					min = 8,
+					max = 200,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextOutline = {
+					type = "select",
+					name = L.outline,
+					order = 5,
+					values = {
+						NONE = L.none,
+						OUTLINE = L.thin,
+						THICKOUTLINE = L.thick,
+					},
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextMonochrome = {
+					type = "toggle",
+					name = L.monochrome,
+					desc = L.monochromeDesc,
+					order = 6,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextSlug = {
+					type = "toggle",
+					name = L.slugRendering,
+					desc = L.slugRenderingDesc,
+					order = 7,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextColor = {
+					type = "color",
+					name = L.fontColor,
+					order = 8,
+					hasAlpha = true,
+					get = function(info)
+						local unitType = info[#info - 2]
+						local colorTable = db[unitType].cooldownTextColor
+						return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+					end,
+					set = function(info, r, g, b, a)
+						local unitType = info[#info - 2]
+						db[unitType].cooldownTextColor = {r, g, b, a}
+						updateProfile()
+					end,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextDecimals = {
+					type = "range",
+					name = L.cooldownDecimalsThreshold,
+					desc = L.cooldownDecimalsThresholdDesc,
+					order = 9,
+					width = 1.6,
+					min = 0,
+					max = 60,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownEmphasizeHeader = {
+					type = "header",
+					name = L.emphasize,
+					order = 10,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownEmphasizeHeading = {
+					type = "description",
+					name = L.cooldownEmphasizeHeader,
+					order = 11,
+					width = "full",
+					fontSize = "medium",
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownEmphasizeTime = {
+					type = "range",
+					name = L.emphasizeAt,
+					order = 12,
+					width = "full",
+					min = 0,
+					max = 30,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownEmphasizeColor = {
+					type = "color",
+					name = L.fontColor,
+					order = 13,
+					hasAlpha = true,
+					get = function(info)
+						local unitType = info[#info - 2]
+						local colorTable = db[unitType].cooldownEmphasizeColor
+						return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+					end,
+					set = function(info, r, g, b, a)
+						local unitType = info[#info - 2]
+						db[unitType].cooldownEmphasizeColor = {r, g, b, a}
+						updateProfile()
+					end,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText or not db[unitType].showCooldownText or db[unitType].cooldownEmphasizeTime == 0
+					end,
+				},
+				cooldownEmphasizeFontSize = {
+					type = "range",
+					name = L.fontSize,
+					desc = L.fontSizeDesc,
+					order = 14,
+					min = 10,
+					softMax = 100,
+					max = 200,
+					step = 1,
+					disabled = true, -- not currently possible
+				},
+			},
+		},
+		dispelType = {
+			type = "group",
+			name = L.dispelType,
+			order = 5,
+			disabled = function(info)
+				local unitType = info[#info - 1]
+				return db[unitType].disabled
+			end,
+			args = {
+				showDispelType = {
+					type = "toggle",
+					name = L.showDispelType,
+					desc = L.showDispelTypeDesc,
+					order = 1,
+					width = 1.2,
+					disabled = false,
+				},
+				spacer = {
+					type = "description",
+					name = "",
+					order = 2,
+					width = 1.5,
+					disabled = false
+				},
+				dispelTypeSize = {
+					type = "range",
+					name = L.iconSize,
+					order = 3,
+					width = "full",
+					min = 1,
+					max = 64,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showDispelType
+					end,
+				},
+				dispelTypeAnchorPoint = {
+					type = "select",
+					name = L.position,
+					order = 5,
+					values = BigWigsAPI.GetFramePointList(),
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showDispelType
+					end,
+				},
+				dispelTypeAnchorXOffset = {
+					type = "range",
+					name = L.offsetX,
+					order = 6,
+					min = -100,
+					max = 100,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showDispelType
+					end,
+				},
+				dispelTypeAnchorYOffset = {
+					type = "range",
+					name = L.offsetY,
+					order = 7,
+					min = -100,
+					max = 100,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showDispelType
+					end,
+				},
+			},
+		},
+		applications = {
+			type = "group",
+			name = L.countText,
+			order = 7,
+			disabled = function(info)
+				local unitType = info[#info - 1]
+				return db[unitType].disabled
+			end,
+			args = {
+				showCountText = {
+					type = "toggle",
+					name = L.showCountText,
+					order = 1,
+					disabled = false,
+				},
+				spacer = {
+					type = "description",
+					name = "",
+					order = 2,
+					width = 1.5,
+					disabled = false
+				},
+				countTextFontName = {
+					type = "select",
+					name = L.font,
+					order = 3,
+					values = LibSharedMedia:List(FONT),
+					itemControl = "DDI-Font",
+					get = function()
+						for i, v in next, LibSharedMedia:List(FONT) do
+							if v == db.player.countTextFontName then return i end
+						end
+					end,
+					set = function(_, value)
+						local list = LibSharedMedia:List(FONT)
+						db.player.countTextFontName = list[value]
+						updateProfile()
+					end,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextFontSize = {
+					type = "range",
+					name = L.fontSize,
+					desc = L.fontSizeDesc,
+					order = 4,
+					min = 8,
+					softMax = 100,
+					max = 200,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextOutline = {
+					type = "select",
+					name = L.outline,
+					order = 5,
+					values = {
+						NONE = L.none,
+						OUTLINE = L.thin,
+						THICKOUTLINE = L.thick,
+					},
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextMonochrome = {
+					type = "toggle",
+					name = L.monochrome,
+					desc = L.monochromeDesc,
+					order = 6,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextSlug = {
+					type = "toggle",
+					name = L.slugRendering,
+					desc = L.slugRenderingDesc,
+					order = 7,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextAnchorPoint = {
+					type = "select",
+					name = L.position,
+					order = 8,
+					values = BigWigsAPI.GetFramePointList(),
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextAnchorXOffset = {
+					type = "range",
+					name = L.offsetX,
+					order = 9,
+					min = -100,
+					max = 100,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextAnchorYOffset = {
+					type = "range",
+					name = L.offsetY,
+					order = 10,
+					min = -100,
+					max = 100,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+				countTextColor = {
+					type = "color",
+					name = L.fontColor,
+					order = 11,
+					get = function(info)
+						local colorTable = db.player.countTextColor
+						return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+					end,
+					set = function(_, r, g, b, a)
+						db.player.countTextColor  = {r, g, b, a}
+						updateProfile()
+					end,
+					hasAlpha = true,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCountText
+					end,
+				},
+			},
+		},
+		position = {
+			type = "group",
+			name = L.positionExact,
+			order = 8,
+			set = function(info, value)
+				local unitType = info[#info - 2]
+				db[unitType][info[#info]] = value
+				local anchor = anchors[unitType]
+				if anchor then
+					anchor:UpdateAnchorPosition()
+				end
+			end,
+			disabled = function(info)
+				local unitType = info[#info - 1]
+				return db[unitType].disabled
+			end,
+			args = {
+				anchorXOffset = {
+					type = "range",
+					name = L.positionX,
+					desc = L.positionDesc,
+					order = 1,
+					width = 3,
+					min = -2048,
+					max = 2048,
+					step = 1,
+					disabled = false,
+				},
+				anchorYOffset = {
+					type = "range",
+					name = L.positionY,
+					desc = L.positionDesc,
+					order = 2,
+					width = 3,
+					min = -2048,
+					max = 2048,
+					step = 1,
+					disabled = false,
+				},
+				anchorRelativeTo = {
+					type = "input",
+					name = L.customAnchorPoint,
+					order = 3,
+					width = 3,
+					set = function(info, value)
+						local unitType = info[#info-2]
+						local anchorDB = db[unitType]
+						local defaultDB = plugin.defaultDB[unitType]
+						if value ~= defaultDB.anchorRelativeTo then
+							anchorDB.anchorPoint = "CENTER"
+							anchorDB.anchorRelPoint = "CENTER"
+							anchorDB.anchorXOffset = 0
+							anchorDB.anchorYOffset = 0
+							anchorDB.anchorRelativeTo = value
+						else
+							anchorDB.anchorPoint = defaultDB.anchorPoint
+							anchorDB.anchorRelPoint = defaultDB.anchorRelPoint
+							anchorDB.anchorXOffset = defaultDB.anchorXOffset
+							anchorDB.anchorYOffset = defaultDB.anchorYOffset
+							anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
+						end
+						local anchor = anchors[unitType]
+						if anchor then
+							anchor:UpdateAnchorPosition()
+						end
+					end,
+					validate = function(_, value)
+						local frame = _G[value]
+						if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+							return false
+						end
+						return true
+					end,
+					disabled = false,
+				},
+				anchorPoint = {
+					type = "select",
+					name = L.sourcePoint,
+					values = BigWigsAPI.GetFramePointList(),
+					order = 4,
+					width = 1.5,
+					disabled = function(info)
+						local unitType = info[#info-2]
+						return db[unitType].disabled or db[unitType].anchorRelativeTo == plugin.defaultDB[unitType].anchorRelativeTo
+					end,
+				},
+				anchorRelPoint = {
+					type = "select",
+					name = L.destinationPoint,
+					values = BigWigsAPI.GetFramePointList(),
+					order = 5,
+					width = 1.5,
+					disabled = function(info)
+						local unitType = info[#info-2]
+						return db[unitType].disabled or db[unitType].anchorRelativeTo == plugin.defaultDB[unitType].anchorRelativeTo
+					end,
+				},
+			},
+		},
+	}
+
 	plugin.pluginOptions = {
 		type = "group",
 		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Flash:20|t ".. L.auras,
@@ -696,6 +1326,8 @@ do
 			player = {
 				type = "group",
 				name = L.bossDebuffsOnYou,
+				order = 4,
+				childGroups = "tab",
 				get = function(info)
 					return db.player[info[#info]]
 				end,
@@ -703,438 +1335,55 @@ do
 					db.player[info[#info]] = value
 					updateProfile()
 				end,
-				order = 4,
 				args = {
-					aurasOnYouDesc = {
-						type = "description",
-						name = L.aurasDesc,
-						order = 1,
-						width = "full",
-						fontSize = "medium",
-					},
-					disabled = {
-						type = "toggle",
-						name = L.disabled,
-						width = 1.6,
-						order = 2,
-					},
-					emptyspace = {
-						type = "description",
-						name = "",
-						order = 3,
-					},
-					size = {
-						type = "range",
-						name = L.iconSize,
-						min = 24, max = 256, step = 1,
-						width = 1.1,
-						order = 4,
-						disabled = IsAnchorDisabled,
-					},
-					zoom = {
-						type = "range",
-						name = L.zoom,
-						desc = L.zoomDesc,
-						order = 5,
-						min = 0,
-						max = 0.5,
-						step = 0.01,
-						width = 1.1,
-						isPercent = true,
-						disabled = IsAnchorDisabled,
-					},
-					spacing = {
-						type = "range",
-						name = L.iconSpacing,
-						min = 0, max = 50, step = 1,
-						width = 1.1,
-						order = 6,
-						disabled = IsAnchorDisabled,
-					},
-					growthDirection = {
-						type = "select",
-						name = L.growthDirection,
-						values = {
-							LEFT = L.LEFT,
-							RIGHT = L.RIGHT,
-							UP = L.UP,
-							DOWN = L.DOWN,
-							CENTER_HORIZONTAL = L.CENTER_HORIZONTAL,
-							CENTER_VERTICAL = L.CENTER_VERTICAL,
-						},
-						width = 1.6,
-						order = 7,
-						disabled = IsAnchorDisabled,
-					},
-					maxIcons = {
-						type = "range",
-						name = L.maxIcons,
-						desc = L.maxIconsDesc,
-						min = 1, max = 5, step = 1,
-						width = 1.6,
-						order = 8,
-						disabled = IsAnchorDisabled,
-					},
-					showTooltip = {
-						type = "toggle",
-						name = L.iconTooltip,
-						desc = L.iconTooltipDesc,
-						order = 9,
-						disabled = IsAnchorDisabled,
-					},
-					showCooldown = {
-						type = "toggle",
-						name = L.showCooldown,
-						desc = L.showCooldownSwipeDesc,
-						width = 1.6,
-						order = 10,
-						disabled = IsAnchorDisabled,
-					},
-					cooldownText = {
+					general = {
 						type = "group",
-						inline = true,
-						name = L.cooldownText,
-						disabled = function(info) return db.player.disabled or not db.player.showCooldownText end,
-						order = 11,
+						name = L.general,
+						order = 1,
 						args = {
-							showCooldownText = {
-								type = "toggle",
-								name = L.showCooldownText,
-								disabled = function(info) return db.player.disabled end,
-								order = 1,
-							},
-							cooldownTextFontName = {
-								type = "select",
-								name = L.font,
-								values = LibSharedMedia:List(FONT),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List(FONT) do
-										if v == db.player.cooldownTextFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List(FONT)
-									db.player.cooldownTextFontName = list[value]
-									updateProfile()
-								end,
-								order = 2,
-							},
-							cooldownTextFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								softMax = 100, max = 200, min = 8, step = 1,
-								order = 3,
-							},
-							cooldownTextOutline = {
-								type = "select",
-								name = L.outline,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								order = 4,
-							},
-							cooldownTextMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 5,
-							},
-							cooldownTextSlug = {
-								type = "toggle",
-								name = L.slugRendering,
-								desc = L.slugRenderingDesc,
-								order = 6,
-							},
-							cooldownTextColor = {
-								type = "color",
-								name = L.fontColor,
-								order = 7,
-								get = function(info)
-									local colorTable = db.player.cooldownTextColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
-								end,
-								set = function(_, r, g, b, a)
-									db.player.cooldownTextColor = {r, g, b, a}
-									updateProfile()
-								end,
-								hasAlpha = true,
-							},
-							cooldownEmphasizeHeader = {
-								type = "header",
-								name = L.emphasize,
-								order = 8,
-							},
-							cooldownEmphasizeHeading = {
+							desc = {
 								type = "description",
-								name = L.cooldownEmphasizeHeader,
-								order = 9,
+								name = L.aurasDesc,
+								order = 1,
 								width = "full",
 								fontSize = "medium",
 							},
-							cooldownEmphasizeTime = {
-								type = "range",
-								name = L.emphasizeAt,
-								order = 10,
-								min = 0,
-								max = 30,
-								step = 1,
+							disabled = {
+								type = "toggle",
+								name = L.disabled,
+								order = 2,
 								width = "full",
 							},
-							cooldownEmphasizeColor = {
-								type = "color",
-								name = L.fontColor,
-								hasAlpha = true,
-								get = function(info)
-									local colorTable = db.player.cooldownEmphasizeColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
-								end,
-								set = function(_, r, g, b, a)
-									db.player.cooldownEmphasizeColor = {r, g, b, a}
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 100,
+							},
+							reset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								order = 101,
+								func = function()
+									MergeTables(plugin.db.profile.player, plugin.defaultDB.player)
 									updateProfile()
 								end,
-								order = 11,
-								disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
-							},
-							cooldownEmphasizeFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								order = 12,
-								softMax = 100,
-								max = 200,
-								min = 10,
-								step = 1,
-								disabled = true, -- not currently possible
-								-- disabled = function(info) return db.player.disabled or not db.player.showCooldownText or db.player.cooldownEmphasizeTime == 0 end,
 							},
 						},
 					},
-					dispelTypeOptions = {
-						type = "group",
-						inline = true,
-						name = L.dispelType,
-						order = 12,
-						disabled = function(info) return db.player.disabled or not db.player.showDispelType end,
-						args = {
-							showDispelType = {
-								type = "toggle",
-								name = L.showDispelType,
-								desc = L.showDispelTypeDesc,
-								order = 1,
-								width = 1.2,
-								disabled = function(info) return db.player.disabled end,
-							},
-							dispelTypeSize = {
-								type = "range",
-								name = L.iconSize,
-								order = 2,
-								min = 1,
-								max = 64,
-								step = 1,
-							},
-							dispelTypeAnchorPoint = {
-								type = "select",
-								name = L.position,
-								values = BigWigsAPI.GetFramePointList(),
-								order = 3,
-							},
-							dispelTypeAnchorXOffset = {
-								type = "range",
-								name = L.offsetX,
-								min = -100, max = 100, step = 1,
-								order = 4,
-							},
-							dispelTypeAnchorYOffset = {
-								type = "range",
-								name = L.offsetY,
-								min = -100, max = 100, step = 1,
-								order = 5,
-							},
-						},
-					},
-					borderOptions = {
-						type = "group",
-						inline = true,
-						name = L.border,
-						order = 13,
-						disabled = function(info)
-							return db.player.disabled or db.player.borderName == "None"
-						end,
-						args = {
-							borderName = {
-								type = "select",
-								name = L.borderName,
-								order = 1,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.player.borderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.player.borderName = list[value]
-									updateProfile()
-								end,
-								width = 1,
-								disabled = function(info) return db.player.disabled end,
-							},
-							borderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 2,
-								min = 1,
-								max = 32,
-								step = 1,
-							},
-							borderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 3,
-								min = 0,
-								max = 32,
-								step = 1,
-							},
-							borderDispelColor = {
-								type = "toggle",
-								name = L.borderDispelColor,
-								width = 1.5,
-								order = 4,
-							},
-							borderColor = {
-								type = "color",
-								name = L.borderColor,
-								order = 5,
-								get = function(info)
-									local colorTable = db.player.borderColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
-								end,
-								set = function(_, r, g, b, a)
-									db.player.borderColor = {r, g, b, a}
-									updateProfile()
-								end,
-								hasAlpha = true,
-								disabled = function(info) return db.player.borderDispelColor end,
-							},
-						},
-					},
-					countText = {
-						type = "group",
-						inline = true,
-						name = L.countText,
-						order = 14,
-						disabled = function(info) return db.player.disabled or not db.player.showCountText end,
-						args = {
-							showCountText = {
-								type = "toggle",
-								name = L.showCountText,
-								disabled = function(info) return db.player.disabled end,
-								order = 1,
-							},
-							countTextFontName = {
-								type = "select",
-								name = L.font,
-								values = LibSharedMedia:List(FONT),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List(FONT) do
-										if v == db.player.countTextFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List(FONT)
-									db.player.countTextFontName = list[value]
-									updateProfile()
-								end,
-								order = 2,
-							},
-							countTextFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								min = 8, max = 200, softMax = 100, step = 1,
-								order = 3,
-							},
-							countTextOutline = {
-								type = "select",
-								name = L.outline,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								order = 4,
-							},
-							countTextMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 5,
-							},
-							countTextSlug = {
-								type = "toggle",
-								name = L.slugRendering,
-								desc = L.slugRenderingDesc,
-								order = 6,
-							},
-							countTextAnchorPoint = {
-								type = "select",
-								name = L.position,
-								values = BigWigsAPI.GetFramePointList(),
-								order = 10,
-							},
-							countTextAnchorXOffset = {
-								type = "range",
-								name = L.offsetX,
-								min = -100, max = 100, step = 1,
-								order = 11,
-							},
-							countTextAnchorYOffset = {
-								type = "range",
-								name = L.offsetY,
-								min = -100, max = 100, step = 1,
-								order = 12,
-							},
-							countTextColor = {
-								type = "color",
-								name = L.fontColor,
-								order = 13,
-								get = function(info)
-									local colorTable = db.player.countTextColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
-								end,
-								set = function(_, r, g, b, a)
-									db.player.countTextColor  = {r, g, b, a}
-									updateProfile()
-								end,
-								hasAlpha = true,
-							},
-						},
-					},
-					resetHeader = {
-						type = "header",
-						name = "",
-						order = 100,
-					},
-					reset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						func = function()
-							reset("player")
-							updateProfile()
-						end,
-						order = 101,
-					},
+					icon = CopyTable(sharedUnitOptions.icon),
+					border = CopyTable(sharedUnitOptions.border),
+					cooldown = CopyTable(sharedUnitOptions.cooldown),
+					dispelType = CopyTable(sharedUnitOptions.dispelType),
+					applications = CopyTable(sharedUnitOptions.applications),
+					position = CopyTable(sharedUnitOptions.position),
 				},
 			},
 			other = {
 				type = "group",
 				name = L.bossDebuffsOnTank,
+				order = 5,
+				childGroups = "tab",
 				get = function(info)
 					return db.other[info[#info]]
 				end,
@@ -1142,518 +1391,207 @@ do
 					db.other[info[#info]] = value
 					updateProfile()
 				end,
-				order = 5,
 				args = {
-					aurasOnAnotherDesc = {
-						type = "description",
-						name = L.aurasOnAnotherDesc,
-						order = 1,
-						width = "full",
-						fontSize = "medium",
-					},
-					disabled = {
-						type = "toggle",
-						name = L.disabled,
-						set = function(_, value)
-							db.other.disabled = value
-							updateProfile()
-						end,
-						width = 1.6,
-						order = 2,
-					},
-					emptyspace = {
-						type = "description",
-						name = "",
-						order = 3,
-					},
-					otherPlayerType = {
-						type = "select",
-						name = L.chooseAPlayer,
-						values = {
-							tank = L.theOtherTank,
-							player = L.playerInYourGroup,
-						},
-						get = function() return db.otherPlayerType end,
-						set = function(_, value)
-							db.otherPlayerType = value
-							db.otherPlayerName = ""
-							plugin:UpdateAnchor("other")
-						end,
-						disabled = IsAnchorDisabled,
-						width = 1.3,
-						order = 4,
-					},
-					smallseparator = {
-						type = "description",
-						name = "",
-						width = 0.1,
-						order = 5,
-					},
-					otherPlayerName = {
-						type = "select",
-						name = L.playerInYourGroup,
-						values = function()
-							local playerList = {}
-							local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
-							for unit in plugin:IterateGroup(true) do
-								if not UnitInPartyIsAI(unit) then
-									local name = plugin:UnitName(unit)
-									local _, class = UnitClass(unit)
-									local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
-									playerList[name] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
-								end
-							end
-							return playerList
-						end,
-						get = function() return db.otherPlayerName end,
-						set = function(_, value)
-							db.otherPlayerName = value
-							plugin:UpdateAnchor("other")
-						end,
-						hidden = function()
-							return db.otherPlayerType == "tank"
-						end,
-						disabled = IsAnchorDisabled,
-						width = 1.6,
-						order = 6,
-					},
-					otherPlayerIsTankLabel = {
-						type = "description",
-						name = function()
-							return L.theOtherTankDesc:format(FindTank("tank") or L.none)
-						end,
-						hidden = function()
-							return db.otherPlayerType == "player"
-						end,
-						disabled = IsAnchorDisabled,
-						width = 1.6,
-						order = 7,
-					},
-					onlyWhenYouAreTank = {
-						type = "toggle",
-						name = L.onlyWhenYouAreTank,
-						get = function() return db.onlyWhenYouAreTank end,
-						set = function(_, value)
-							db.onlyWhenYouAreTank = value
-							updateProfile()
-						end,
-						hidden = function()
-							return db.otherPlayerType == "player"
-						end,
-						disabled = IsAnchorDisabled,
-						width = "full",
-						order = 8,
-					},
-					emptylines = {
-						type = "description",
-						name = "\n\n",
-						order = 9,
-					},
-					size = {
-						type = "range",
-						name = L.iconSize,
-						min = 24, max = 256, step = 1,
-						width = 1.1,
-						order = 10,
-						disabled = IsAnchorDisabled,
-					},
-					zoom = {
-						type = "range",
-						name = L.zoom,
-						desc = L.zoomDesc,
-						order = 11,
-						min = 0,
-						max = 0.5,
-						step = 0.01,
-						width = 1.1,
-						isPercent = true,
-						disabled = IsAnchorDisabled,
-					},
-					spacing = {
-						type = "range",
-						name = L.iconSpacing,
-						min = 0, max = 50, step = 1,
-						width = 1.1,
-						order = 12,
-						disabled = IsAnchorDisabled,
-					},
-					growthDirection = {
-						type = "select",
-						name = L.growthDirection,
-						values = {
-							LEFT = L.LEFT,
-							RIGHT = L.RIGHT,
-							UP = L.UP,
-							DOWN = L.DOWN,
-							CENTER_HORIZONTAL = L.CENTER_HORIZONTAL,
-							CENTER_VERTICAL = L.CENTER_VERTICAL,
-						},
-						width = 1.6,
-						order = 13,
-						disabled = IsAnchorDisabled,
-					},
-					maxIcons = {
-						type = "range",
-						name = L.maxIcons,
-						desc = L.maxIconsDesc,
-						min = 1, max = 5, step = 1,
-						width = 1.6,
-						order = 14,
-						disabled = IsAnchorDisabled,
-					},
-					showCooldown = {
-						type = "toggle",
-						name = L.showCooldown,
-						desc = L.showCooldownSwipeDesc,
-						width = 1.6,
-						order = 15,
-						disabled = IsAnchorDisabled,
-					},
-					showTooltip = {
-						type = "toggle",
-						name = L.iconTooltip,
-						desc = L.iconTooltipDesc,
-						order = 16,
-						disabled = IsAnchorDisabled,
-					},
-					cooldownText = {
+					general = {
 						type = "group",
-						inline = true,
-						name = L.cooldownText,
-						order = 17,
-						disabled = function(info) return db.other.disabled or not db.other.showCooldownText end,
+						name = L.general,
+						order = 1,
 						args = {
-							showCooldownText = {
-								type = "toggle",
-								name = L.showCooldownText,
-								disabled = function(info) return db.other.disabled end,
-								order = 1,
-							},
-							cooldownTextFontName = {
-								type = "select",
-								name = L.font,
-								values = LibSharedMedia:List(FONT),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List(FONT) do
-										if v == db.other.cooldownTextFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List(FONT)
-									db.other.cooldownTextFontName = list[value]
-									updateProfile()
-								end,
-								order = 2,
-							},
-							cooldownTextFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								softMax = 100, max = 200, min = 8, step = 1,
-								order = 3,
-							},
-							cooldownTextOutline = {
-								type = "select",
-								name = L.outline,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								order = 4,
-							},
-							cooldownTextMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 5,
-							},
-							cooldownTextSlug = {
-								type = "toggle",
-								name = L.slugRendering,
-								desc = L.slugRenderingDesc,
-								order = 6,
-							},
-							cooldownTextColor = {
-								type = "color",
-								name = L.fontColor,
-								order = 7,
-								get = function(info)
-									local colorTable = db.other.cooldownTextColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
-								end,
-								set = function(_, r, g, b, a)
-									db.other.cooldownTextColor = {r, g, b, a}
-									updateProfile()
-								end,
-								hasAlpha = true,
-							},
-							cooldownEmphasizeHeader = {
-								type = "header",
-								name = L.emphasize,
-								order = 8,
-							},
-							cooldownEmphasizeHeading = {
+							desc = {
 								type = "description",
-								name = L.cooldownEmphasizeHeader,
-								order = 9,
+								name = L.aurasOnAnotherDesc,
+								order = 1,
 								width = "full",
 								fontSize = "medium",
 							},
-							cooldownEmphasizeTime = {
-								type = "range",
-								name = L.emphasizeAt,
-								order = 10,
-								min = 0,
-								max = 30,
-								step = 1,
+							disabled = {
+								type = "toggle",
+								name = L.disabled,
+								order = 2,
 								width = "full",
 							},
-							cooldownEmphasizeColor = {
-								type = "color",
-								name = L.fontColor,
-								hasAlpha = true,
-								get = function(info)
-									local colorTable = db.other.cooldownEmphasizeColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+							otherPlayerType = {
+								type = "select",
+								name = L.chooseAPlayer,
+								order = 3,
+								width = 1.3,
+								values = {
+									tank = L.theOtherTank,
+									player = L.playerInYourGroup,
+								},
+								get = function()
+									return db.otherPlayerType
 								end,
-								set = function(_, r, g, b, a)
-									db.other.cooldownEmphasizeColor = {r, g, b, a}
+								set = function(_, value)
+									db.otherPlayerType = value
+									db.otherPlayerName = ""
+									plugin:UpdateAnchor("other")
+								end,
+								disabled = IsAnchorDisabled,
+							},
+							smallseparator = {
+								type = "description",
+								name = "",
+								order = 4,
+								width = 0.1,
+							},
+							otherPlayerName = {
+								type = "select",
+								name = L.playerInYourGroup,
+								order = 5,
+								width = 1.6,
+								values = function()
+									local playerList = {}
+									local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+									for unit in plugin:IterateGroup(true) do
+										if not UnitInPartyIsAI(unit) then
+											local name = plugin:UnitName(unit)
+											local _, class = UnitClass(unit)
+											local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+											playerList[name] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+										end
+									end
+									return playerList
+								end,
+								get = function()
+									return db.otherPlayerName
+								end,
+								set = function(_, value)
+									db.otherPlayerName = value
+									plugin:UpdateAnchor("other")
+								end,
+								hidden = function()
+									return db.otherPlayerType == "tank"
+								end,
+								disabled = IsAnchorDisabled,
+							},
+							otherPlayerIsTankLabel = {
+								type = "description",
+								order = 6,
+								width = 1.6,
+								name = function()
+									return L.theOtherTankDesc:format(FindTank("tank") or L.none)
+								end,
+								hidden = function()
+									return db.otherPlayerType == "player"
+								end,
+								disabled = IsAnchorDisabled,
+							},
+							onlyWhenYouAreTank = {
+								type = "toggle",
+								name = L.onlyWhenYouAreTank,
+								order = 7,
+								width = "full",
+								get = function()
+									return db.onlyWhenYouAreTank
+								end,
+								set = function(_, value)
+									db.onlyWhenYouAreTank = value
 									updateProfile()
 								end,
-								order = 11,
-								disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
+								hidden = function()
+									return db.otherPlayerType == "player"
+								end,
+								disabled = IsAnchorDisabled,
 							},
-							cooldownEmphasizeFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								order = 12,
-								softMax = 100,
-								max = 200,
-								min = 10,
-								step = 1,
-								disabled = true, -- not currently possible
-								-- disabled = function(info) return db.other.disabled or not db.other.showCooldownText or db.other.cooldownEmphasizeTime == 0 end,
+							resetHeader = {
+								type = "header",
+								name = "",
+								order = 100,
+							},
+							reset = {
+								type = "execute",
+								name = L.reset,
+								desc = L.resetDesc,
+								order = 101,
+								func = function()
+									MergeTables(plugin.db.profile.other, plugin.defaultDB.other)
+									plugin.db.profile.otherPlayerType = plugin.defaultDB.otherPlayerType
+									plugin.db.profile.onlyWhenYouAreTank = plugin.defaultDB.onlyWhenYouAreTank
+									plugin.db.profile.otherPlayerName = plugin.defaultDB.otherPlayerName
+									updateProfile()
+								end,
 							},
 						},
 					},
-					dispelTypeOptions = {
+					icon = CopyTable(sharedUnitOptions.icon),
+					border = CopyTable(sharedUnitOptions.border),
+					cooldown = CopyTable(sharedUnitOptions.cooldown),
+					dispelType = CopyTable(sharedUnitOptions.dispelType),
+					applications = CopyTable(sharedUnitOptions.applications),
+					tankIndicator = {
 						type = "group",
-						inline = true,
-						name = L.dispelType,
-						order = 18,
-						disabled = function(info) return db.other.disabled or not db.other.showDispelType end,
+						name = L.tankIndicator,
+						order = 6,
+						disabled = function(info)
+							local unitType = info[#info - 1]
+							return db[unitType].disabled
+						end,
 						args = {
-							showDispelType = {
+							showTankIndicator = {
 								type = "toggle",
-								name = L.showDispelType,
-								desc = L.showDispelTypeDesc,
+								name = L.tankIndicator,
 								order = 1,
 								width = 1.2,
-								disabled = function(info) return db.other.disabled end,
+								disabled = false,
 							},
-							dispelTypeSize = {
+							spacer = {
+								type = "description",
+								name = "",
+								order = 2,
+								width = 1.5,
+								disabled = false
+							},
+							tankIndicatorSize = {
 								type = "range",
 								name = L.iconSize,
-								order = 2,
+								order = 3,
+								width = "full",
 								min = 1,
 								max = 64,
 								step = 1,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
 							},
-							dispelTypeAnchorPoint = {
+							tankIndicatorAnchorPoint = {
 								type = "select",
 								name = L.position,
+								order = 4,
 								values = BigWigsAPI.GetFramePointList(),
-								order = 3,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
 							},
-							dispelTypeAnchorXOffset = {
+							tankIndicatorAnchorXOffset = {
 								type = "range",
 								name = L.offsetX,
-								min = -100, max = 100, step = 1,
-								order = 4,
+								order = 5,
+								min = -100,
+								max = 100,
+								step = 1,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
+								end,
 							},
-							dispelTypeAnchorYOffset = {
+							tankIndicatorAnchorYOffset = {
 								type = "range",
 								name = L.offsetY,
-								min = -100, max = 100, step = 1,
-								order = 5,
-							},
-						},
-					},
-					borderOptions = {
-						type = "group",
-						inline = true,
-						name = L.border,
-						order = 19,
-						disabled = function(info)
-							return db.other.disabled or db.other.borderName == "None"
-						end,
-						args = {
-							borderName = {
-								type = "select",
-								name = L.borderName,
-								order = 1,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.other.borderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.other.borderName = list[value]
-									updateProfile()
-								end,
-								width = 1,
-								disabled = function(info) return db.other.disabled end,
-							},
-							borderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 2,
-								min = 1,
-								max = 32,
-								step = 1,
-							},
-							borderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 3,
-								min = 0,
-								max = 32,
-								step = 1,
-							},
-							borderDispelColor = {
-								type = "toggle",
-								name = L.borderDispelColor,
-								width = 1.5,
-								order = 4,
-							},
-							borderColor = {
-								type = "color",
-								name = L.borderColor,
-								order = 5,
-								get = function(info)
-									local colorTable = db.other.borderColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
-								end,
-								set = function(_, r, g, b, a)
-									db.other.borderColor = {r, g, b, a}
-									updateProfile()
-								end,
-								hasAlpha = true,
-								disabled = function(info) return db.other.borderDispelColor end,
-							},
-						},
-					},
-					countText = {
-						type = "group",
-						inline = true,
-						name = L.countText,
-						order = 20,
-						args = {
-							showCountText = {
-								type = "toggle",
-								name = L.showCountText,
-								order = 1,
-							},
-							countTextFontName = {
-								type = "select",
-								name = L.font,
-								values = LibSharedMedia:List(FONT),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List(FONT) do
-										if v == db.other.countTextFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List(FONT)
-									db.other.countTextFontName = list[value]
-									updateProfile()
-								end,
-								order = 2,
-							},
-							countTextFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								min = 8, max = 200, softMax = 100, step = 1,
-								order = 3,
-							},
-							countTextOutline = {
-								type = "select",
-								name = L.outline,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								order = 4,
-							},
-							countTextMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 5,
-							},
-							countTextSlug = {
-								type = "toggle",
-								name = L.slugRendering,
-								desc = L.slugRenderingDesc,
 								order = 6,
-							},
-							countTextAnchorPoint = {
-								type = "select",
-								name = L.position,
-								values = BigWigsAPI.GetFramePointList(),
-								order = 10,
-							},
-							countTextAnchorXOffset = {
-								type = "range",
-								name = L.offsetX,
-								min = -100, max = 100, step = 1,
-								order = 11,
-							},
-							countTextAnchorYOffset = {
-								type = "range",
-								name = L.offsetY,
-								min = -100, max = 100, step = 1,
-								order = 12,
-							},
-							countTextColor = {
-								type = "color",
-								name = L.fontColor,
-								order = 13,
-								get = function(info)
-									local colorTable = db.other.countTextColor
-									return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
+								min = -100,
+								max = 100,
+								step = 1,
+								disabled = function(info)
+									local unitType = info[#info - 2]
+									return not db[unitType].showTankIndicator
 								end,
-								set = function(_, r, g, b, a)
-									db.other.countTextColor  = {r, g, b, a}
-									updateProfile()
-								end,
-								hasAlpha = true,
 							},
 						},
 					},
-					resetHeader = {
-						type = "header",
-						name = "",
-						order = 100,
-					},
-					reset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						func = function()
-							reset("other")
-							updateProfile()
-						end,
-						order = 101,
-					},
+					position = CopyTable(sharedUnitOptions.position),
 				},
 			},
 			sounds = {
@@ -1661,186 +1599,6 @@ do
 				name = L.auraSounds,
 				order = 6,
 				args = {
-				},
-			},
-			exactPositioning = {
-				type = "group",
-				name = L.positionExact,
-				order = 10,
-				childGroups = "tab",
-				args = {
-					player = {
-						type = "group",
-						name = L.bossDebuffsOnYou,
-						get = function(info)
-							return db.player[info[#info]]
-						end,
-						set = function(info, value)
-							db.player[info[#info]] = value
-							local anchor = anchors.player
-							if anchor then
-								anchor:UpdateAnchorPosition()
-							end
-						end,
-						order = 1,
-						args = {
-							anchorXOffset = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048, max = 2048, step = 1,
-								width = 3,
-								order = 1,
-								disabled = IsAnchorDisabled,
-							},
-							anchorYOffset = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048, max = 2048, step = 1,
-								width = 3,
-								order = 2,
-								disabled = IsAnchorDisabled,
-							},
-							anchorRelativeTo = {
-								type = "input",
-								name = L.customAnchorPoint,
-								set = function(_, value)
-									local anchorDB = db.player
-									local defaultDB = plugin.defaultDB.player
-									if value ~= defaultDB.anchorRelativeTo then
-										anchorDB.anchorPoint = "CENTER"
-										anchorDB.anchorRelPoint = "CENTER"
-										anchorDB.anchorXOffset = 0
-										anchorDB.anchorYOffset = 0
-										anchorDB.anchorRelativeTo = value
-									else
-										anchorDB.anchorPoint = defaultDB.anchorPoint
-										anchorDB.anchorRelPoint = defaultDB.anchorRelPoint
-										anchorDB.anchorXOffset = defaultDB.anchorXOffset
-										anchorDB.anchorYOffset = defaultDB.anchorYOffset
-										anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
-									end
-									local anchor = anchors.player
-									if anchor then
-										anchor:UpdateAnchorPosition()
-									end
-								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return false
-									end
-									return true
-								end,
-								width = 3,
-								order = 3,
-								disabled = IsAnchorDisabled,
-							},
-							anchorPoint = {
-								type = "select",
-								name = L.sourcePoint,
-								values = BigWigsAPI.GetFramePointList(),
-								width = 1.5,
-								order = 4,
-								disabled = IsAurasOnYouDisabledOrAnchorPointIsDefault,
-							},
-							anchorRelPoint = {
-								type = "select",
-								name = L.destinationPoint,
-								values = BigWigsAPI.GetFramePointList(),
-								width = 1.5,
-								order = 5,
-								disabled = IsAurasOnYouDisabledOrAnchorPointIsDefault,
-							},
-						},
-					},
-					other = {
-						type = "group",
-						name = L.bossDebuffsOnTank,
-						get = function(info)
-							return db.other[info[#info]]
-						end,
-						set = function(info, value)
-							db.other[info[#info]] = value
-							local anchor = anchors.other
-							if anchor then
-								anchor:UpdateAnchorPosition()
-							end
-						end,
-						order = 2,
-						args = {
-							anchorXOffset = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048, max = 2048, step = 1,
-								width = 3,
-								order = 1,
-								disabled = IsAnchorDisabled,
-							},
-							anchorYOffset = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048, max = 2048, step = 1,
-								width = 3,
-								order = 2,
-								disabled = IsAnchorDisabled,
-							},
-							anchorRelativeTo = {
-								type = "input",
-								name = L.customAnchorPoint,
-								set = function(_, value)
-									local anchorDB = db.other
-									local defaultDB = plugin.defaultDB.other
-									if value ~= defaultDB.anchorRelativeTo then
-										anchorDB.anchorPoint = "CENTER"
-										anchorDB.anchorRelPoint = "CENTER"
-										anchorDB.anchorXOffset = 0
-										anchorDB.anchorYOffset = 0
-										anchorDB.anchorRelativeTo = value
-									else
-										anchorDB.anchorPoint = defaultDB.anchorPoint
-										anchorDB.anchorRelPoint = defaultDB.anchorRelPoint
-										anchorDB.anchorXOffset = defaultDB.anchorXOffset
-										anchorDB.anchorYOffset = defaultDB.anchorYOffset
-										anchorDB.anchorRelativeTo = defaultDB.anchorRelativeTo
-									end
-									local anchor = anchors.other
-									if anchor then
-										anchor:UpdateAnchorPosition()
-									end
-								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return false
-									end
-									return true
-								end,
-								width = 3,
-								order = 3,
-								disabled = IsAnchorDisabled,
-							},
-							anchorPoint = {
-								type = "select",
-								name = L.sourcePoint,
-								values = BigWigsAPI.GetFramePointList(),
-								width = 1.5,
-								order = 4,
-								disabled = IsAurasOnOthersDisabledOrAnchorPointIsDefault,
-							},
-							anchorRelPoint = {
-								type = "select",
-								name = L.destinationPoint,
-								values = BigWigsAPI.GetFramePointList(),
-								width = 1.5,
-								order = 5,
-								disabled = IsAurasOnOthersDisabledOrAnchorPointIsDefault,
-							},
-						},
-					},
 				},
 			},
 		},
@@ -1951,7 +1709,6 @@ do
 			end
 
 			local anchorDB = db[unitType]
-			local size = anchorDB.size
 			local numTestIcons = anchor.numTestIcons or 0
 			local spacing = numTestIcons > 1 and anchorDB.spacing or 0
 			local direction = anchorDB.growthDirection
@@ -1959,22 +1716,22 @@ do
 			if numTestIcons == 0 then
 				anchor.configModeFrame.directionBox:SetAllPoints()
 			elseif direction == "UP" then
-				anchor.configModeFrame.directionBox:SetSize(size, (numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetSize(anchorDB.width, (numTestIcons * (anchorDB.height + spacing)) - spacing)
 				anchor.configModeFrame.directionBox:SetPoint("BOTTOM", anchor.configModeFrame)
 			elseif direction == "DOWN" then
-				anchor.configModeFrame.directionBox:SetSize(size, (numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetSize(anchorDB.width, (numTestIcons * (anchorDB.height + spacing)) - spacing)
 				anchor.configModeFrame.directionBox:SetPoint("TOP", anchor.configModeFrame)
 			elseif direction == "CENTER_VERTICAL" then
-				anchor.configModeFrame.directionBox:SetSize(size, (numTestIcons * (size + spacing)) - spacing)
+				anchor.configModeFrame.directionBox:SetSize(anchorDB.width, (numTestIcons * (anchorDB.height + spacing)) - spacing)
 				anchor.configModeFrame.directionBox:SetPoint("CENTER", anchor.configModeFrame)
 			elseif direction == "LEFT" then
-				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (anchorDB.width + spacing)) - spacing, anchorDB.height)
 				anchor.configModeFrame.directionBox:SetPoint("RIGHT", anchor.configModeFrame)
 			elseif direction == "RIGHT" then
-				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (anchorDB.width + spacing)) - spacing, anchorDB.height)
 				anchor.configModeFrame.directionBox:SetPoint("LEFT", anchor.configModeFrame)
 			elseif direction == "CENTER_HORIZONTAL" then
-				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (size + spacing)) - spacing, size)
+				anchor.configModeFrame.directionBox:SetSize((numTestIcons * (anchorDB.width + spacing)) - spacing, anchorDB.height)
 				anchor.configModeFrame.directionBox:SetPoint("CENTER", anchor.configModeFrame)
 			end
 
@@ -2157,7 +1914,7 @@ do
 			return
 		end
 
-		anchor:SetSize(anchorDB.size, anchorDB.size)
+		anchor:SetSize(anchorDB.width, anchorDB.height)
 		anchor:UpdateAnchorPosition()
 		anchor:Show()
 
@@ -2176,22 +1933,35 @@ end
 -- Container
 --
 
-local function GetAtlasBorderSize(size)
-	local scale = size / 32 * 2
-	return size + (5 * scale)
-end
-
 do
+	local noDecimalBreakpoints = {
+		{
+			threshold = 0,
+			format = ""
+		},
+		{
+			threshold = 0.001,
+			format = "%d",
+		},
+		{
+			threshold = 0.0011,
+			format = "%d",
+		},
+	}
+
 	local playerCooldownDurationBinding = C_DurationUtil.CreateDurationTextBinding()
 	do
-		local formatter = C_StringUtil.CreateNumericRuleFormatter()
-		formatter:SetBreakpoints({
+		playerCooldownDurationBinding.breakpoints = {
 			{
-				threshold = 0.01,
+				threshold = 0,
+				format = ""
+			},
+			{
+				threshold = 0.001,
 				format = "",
 			},
 			{
-				threshold = 0.011,
+				threshold = 0.0011,
 				format = "%0.1f",
 			},
 			{
@@ -2202,7 +1972,10 @@ do
 				threshold = 3,
 				format = "%d",
 			},
-		})
+		}
+
+		local formatter = C_StringUtil.CreateNumericRuleFormatter()
+		formatter:SetBreakpoints(playerCooldownDurationBinding.breakpoints)
 		playerCooldownDurationBinding:SetFormatter(formatter)
 		playerCooldownDurationBinding.formatter = formatter -- there's no 'binding:GetFormatter()'
 
@@ -2213,14 +1986,17 @@ do
 
 	local otherCooldownDurationBinding = C_DurationUtil.CreateDurationTextBinding()
 	do
-		local formatter = C_StringUtil.CreateNumericRuleFormatter()
-		formatter:SetBreakpoints({
+		otherCooldownDurationBinding.breakpoints = {
 			{
-				threshold = 0.01,
+				threshold = 0,
+				format = ""
+			},
+			{
+				threshold = 0.001,
 				format = "",
 			},
 			{
-				threshold = 0.011,
+				threshold = 0.0011,
 				format = "%0.1f",
 			},
 			{
@@ -2231,7 +2007,9 @@ do
 				threshold = 3,
 				format = "%d",
 			},
-		})
+		}
+		local formatter = C_StringUtil.CreateNumericRuleFormatter()
+		formatter:SetBreakpoints(otherCooldownDurationBinding.breakpoints)
 		otherCooldownDurationBinding:SetFormatter(formatter)
 		otherCooldownDurationBinding.formatter = formatter -- there's no 'binding:GetFormatter()'
 
@@ -2240,16 +2018,19 @@ do
 		otherCooldownDurationBinding:SetTextColorCurve(colorCurve, Enum.DurationTextBindingProperty.RemainingDuration)
 	end
 
-	local function BorderGetSize(border)
-		return border.plainSize
+	local function BorderGetWidth(border)
+		return border.plainWidth
+	end
+
+	local function BorderGetHeight(border)
+		return border.plainHeight
 	end
 
 	function InitializeAuraFrame(unitType, aura, optionsDB)
 		optionsDB = optionsDB or aura:GetParent().db
-		local size = optionsDB.size
 
 		aura:EnableMouse(optionsDB.showTooltip)
-		aura:SetSize(size, size) -- CustomAuraContainerFlowLayoutDescription:ApplyElementLayout doesn't set size
+		aura:SetSize(optionsDB.width, optionsDB.height) -- CustomAuraContainerFlowLayoutDescription:ApplyElementLayout doesn't set size
 
 		local icon = aura:CreateTexture(nil, "BACKGROUND")
 		icon:SetAllPoints()
@@ -2291,9 +2072,13 @@ do
 		if unitType == "player" then
 			aura.durationBinding = playerCooldownDurationBinding:Copy()
 			aura.durationBinding:SetFontString(duration)
+			aura.durationBinding.breakpoints = playerCooldownDurationBinding.breakpoints
+			aura.durationBinding.formatter = playerCooldownDurationBinding.formatter
 		else
 			aura.durationBinding = otherCooldownDurationBinding:Copy()
 			aura.durationBinding:SetFontString(duration)
+			aura.durationBinding.breakpoints = otherCooldownDurationBinding.breakpoints
+			aura.durationBinding.formatter = otherCooldownDurationBinding.formatter
 		end
 		aura.durationOptions = {
 			binding = aura.durationBinding
@@ -2315,8 +2100,8 @@ do
 		border:SetFrameLevel(border:GetFrameLevel() + 1) -- show the border above the cooldown swipe
 		-- The widget GetWidth/GetHeight return secrets for anything anchored to the aura,
 		-- explicit size or not, and SetBackdrop does arithmetic on them
-		border.GetWidth = BorderGetSize
-		border.GetHeight = BorderGetSize
+		border.GetWidth = BorderGetWidth
+		border.GetHeight = BorderGetHeight
 		aura.border = border
 
 		local dispelIcon = border:CreateTexture(nil, "OVERLAY")
@@ -2348,6 +2133,11 @@ do
 		else
 			stacks:Hide()
 		end
+
+		if unitType == "other" then
+			local tankIndicator = overlayFrame:CreateTexture(nil, "OVERLAY")
+			aura.tankIndicator = tankIndicator
+		end
 	end
 
 	local borderOptions = {
@@ -2374,7 +2164,7 @@ do
 	}
 
 	function UpdateAuraFrame(aura, optionsDB)
-		aura:SetSize(optionsDB.size, optionsDB.size)
+		aura:SetSize(optionsDB.width, optionsDB.height)
 
 		do
 			-- icon aspect ratio and zoom calcs
@@ -2382,6 +2172,16 @@ do
 			local zoom = baseZoom * (1 - optionsDB.zoom)
 			local zoomedOffset = 1 - ((1 - zoom) / 2)
 			local offsetX, offsetY = zoomedOffset, zoomedOffset
+
+			if optionsDB.keepAspectRatio then
+				local width, height = optionsDB.width, optionsDB.height
+				if width > height then
+					offsetY = 1 - (1 - (height / width) * zoom) / 2
+				elseif height > width then
+					offsetX = 1 - (1 - (width / height) * zoom) / 2
+				end
+			end
+
 			local left, right, top, bottom = 1 - offsetX, offsetX, 1 - offsetY, offsetY
 			aura.icon:SetTexCoord(left, right, top, bottom)
 		end
@@ -2409,6 +2209,16 @@ do
 			duration:SetFont(LibSharedMedia:Fetch(FONT, optionsDB.cooldownTextFontName), optionsDB.cooldownTextFontSize, flags)
 
 			local textColor = CreateColor(unpack(optionsDB.cooldownTextColor))
+
+			local formatter = aura.durationBinding.formatter
+			if optionsDB.cooldownTextDecimals > 0 then
+				aura.durationBinding.breakpoints[4].threshold = optionsDB.cooldownTextDecimals - 0.001
+				aura.durationBinding.breakpoints[5].threshold = optionsDB.cooldownTextDecimals
+				formatter:SetBreakpoints(aura.durationBinding.breakpoints)
+			else
+				formatter:SetBreakpoints(noDecimalBreakpoints)
+			end
+
 			local curve = aura.durationBinding:GetTextColorCurve()
 			curve:ClearPoints()
 
@@ -2431,11 +2241,13 @@ do
 		aura:ClearDispelTypeTextures()
 
 		if optionsDB.borderName ~= "None" then
-			local borderSize = optionsDB.size + optionsDB.borderOffset * 2
-			aura.border.plainSize = borderSize
+			local borderWidth = optionsDB.width + optionsDB.borderOffset * 2
+			local borderHeight = optionsDB.height + optionsDB.borderOffset * 2
+			aura.border.plainWidth = borderWidth
+			aura.border.plainHeight = borderHeight
 			aura.border:ClearAllPoints()
 			aura.border:SetPoint("CENTER")
-			aura.border:SetSize(borderSize, borderSize)
+			aura.border:SetSize(borderWidth, borderHeight)
 			aura.border:SetBackdrop({
 				edgeFile = LibSharedMedia:Fetch("border", optionsDB.borderName),
 				edgeSize = optionsDB.borderSize,
@@ -2495,6 +2307,17 @@ do
 			stacks:Hide()
 			aura:ClearApplicationCount()
 		end
+
+		if optionsDB.showTankIndicator then
+			local size = optionsDB.tankIndicatorSize
+			aura.tankIndicator:ClearAllPoints()
+			aura.tankIndicator:SetPoint(optionsDB.tankIndicatorAnchorPoint, aura, optionsDB.tankIndicatorAnchorPoint, optionsDB.tankIndicatorAnchorXOffset, optionsDB.tankIndicatorAnchorYOffset)
+			aura.tankIndicator:SetSize(size, size)
+			aura.tankIndicator:SetAtlas(size > 36 and "icons_64x64_tank" or "icons_16x16_tank")
+			aura.tankIndicator:Show()
+		elseif aura.tankIndicator then
+			aura.tankIndicator:Hide()
+		end
 	end
 
 	local FlowDirection = AnchorUtil.FlowDirection
@@ -2514,8 +2337,8 @@ do
 				sortDirection = 0, -- Enum.UnitAuraSortDirection.Normal
 				layout = {
 					elementSpacing = optionsDB.spacing,
-					elementWidth = optionsDB.size,
-					elementHeight = optionsDB.size,
+					elementWidth = optionsDB.width,
+					elementHeight = optionsDB.height,
 				},
 			})
 
@@ -2583,8 +2406,8 @@ do
 		})
 		auraContainer:SetAuraGroupLayout("debuffs", {
 			elementSpacing = optionsDB.spacing,
-			elementWidth = optionsDB.size,
-			elementHeight = optionsDB.size,
+			elementWidth = optionsDB.width,
+			elementHeight = optionsDB.height,
 		})
 	end
 end
@@ -2758,10 +2581,11 @@ do
 					end
 				else
 					local centerIndex = (numActive + 1) / 2
-					local offset = (index - centerIndex) * (optionsDB.size + optionsDB.spacing)
 					if optionsDB.growthDirection == "CENTER_HORIZONTAL" then
+						local offset = (index - centerIndex) * (optionsDB.width + optionsDB.spacing)
 						aura:SetPoint(point, anchor, point, offset / scale, 0)
 					elseif optionsDB.growthDirection == "CENTER_VERTICAL" then
+						local offset = (index - centerIndex) * (optionsDB.height + optionsDB.spacing)
 						aura:SetPoint(point, anchor, point, 0, offset / scale)
 					end
 				end
