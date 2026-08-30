@@ -87,18 +87,18 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
-	malignant_catalyst = "촉매", -- Short for Malignant Catalyst
+	malignant_catalyst = "광역기", -- Short for Malignant Catalyst
 })
 
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
-	coiling_toxin = "맹독", -- Short for Coiling Toxin
-	corrosive_spit = "타액", -- Short for Corrosive Spit
+	coiling_toxin = "바닥", -- Short for Coiling Toxin
+	corrosive_spit = "브레스", -- Short for Corrosive Spit
 })
 
 BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "휩쓸기",
 	call_of_the_serpent = "알",
-	gore_rattle = "꼬리",
-	circling_prey = "플랫폼 파괴",
+	gore_rattle = "쫄",
+	circling_prey = "단상 파괴",
 	p3_knock_up = "띄우기",
 })
