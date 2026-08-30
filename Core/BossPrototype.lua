@@ -239,22 +239,17 @@ do
 		return trashModuleList[self] or false
 	end
 end
+--- Set this module's sort order in the encounter list.
+-- The list is sorted by value, lower first; the default is 0 and equal values keep registration order.
+-- @number[opt] sortOrder Sort value
+function boss:SetSortOrder(sortOrder)
+	self.sortOrder = sortOrder
+end
 
-do
-	local sharedModuleList = {}
-	--- Mark this module as being shared across multiple expansions
-	-- @bool isSharedModule If true, this module is listed after the zone's own modules in the options, regardless of load order
-	function boss:SetSharedModule(isSharedModule)
-		if isSharedModule then
-			sharedModuleList[self] = true
-		end
-	end
-
-	--- Check if this module is shared across multiple expansions
-	-- @return boolean
-	function boss:IsSharedModule()
-		return sharedModuleList[self] or false
-	end
+--- Get this module's sort order
+-- @return number Sort order, or 0 if none is set
+function boss:GetSortOrder()
+	return self.sortOrder or 0
 end
 
 do

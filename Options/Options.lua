@@ -1693,24 +1693,17 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	if type(moduleList) ~= "table" then return end -- No modules registered
 
 	local zoneList, zoneSort = {}, {}
-	do
-		local sharedModules
-		for i = 1, #moduleList do
-			local module = moduleList[i]
-			zoneList[module.moduleName] = module.displayName
-			if module:IsSharedModule() then
-				sharedModules = sharedModules or {}
-				sharedModules[#sharedModules + 1] = module.moduleName
-			else
-				zoneSort[#zoneSort + 1] = module.moduleName
-			end
-		end
-		-- show shared modules last in the encounter list
-		if sharedModules then
-			for i = 1, #sharedModules do
-				zoneSort[#zoneSort + 1] = sharedModules[i]
-			end
-		end
+	for i = 1, #moduleList do
+		local module = moduleList[i]
+		zoneList[module.moduleName] = module.displayName
+		zoneSort[#zoneSort + 1] = {name = module.moduleName, order = module:GetSortOrder(), index = i}
+	end
+	-- sort according to sortOrder, ties sort by registration order
+	table.sort(zoneSort, function(a, b)
+		return a.order < b.order or (a.order == b.order and a.index < b.index)
+	end)
+	for i = 1, #zoneSort do
+		zoneSort[i] = zoneSort[i].name
 	end
 
 	local outerContainer = AceGUI:Create("SimpleGroup")
