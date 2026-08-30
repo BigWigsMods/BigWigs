@@ -1506,6 +1506,9 @@ do
 								order = 101,
 								func = function()
 									MergeTables(plugin.db.profile.other, plugin.defaultDB.other)
+									plugin.db.profile.otherPlayerType = plugin.defaultDB.otherPlayerType
+									plugin.db.profile.onlyWhenYouAreTank = plugin.defaultDB.onlyWhenYouAreTank
+									plugin.db.profile.otherPlayerName = plugin.defaultDB.otherPlayerName
 									updateProfile()
 								end,
 							},
