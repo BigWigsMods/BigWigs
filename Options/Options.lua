@@ -1696,7 +1696,7 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	for i = 1, #moduleList do
 		local module = moduleList[i]
 		zoneList[module.moduleName] = module.displayName
-		zoneSort[#zoneSort + 1] = {name = module.moduleName, order = module:GetSortOrder(), index = i}
+		zoneSort[i] = {name = module.moduleName, order = module:GetSortOrder(), index = i}
 	end
 	-- sort according to sortOrder, ties sort by registration order
 	table.sort(zoneSort, function(a, b)
