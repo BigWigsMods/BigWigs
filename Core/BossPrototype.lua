@@ -241,6 +241,23 @@ do
 end
 
 do
+	local sharedModuleList = {}
+	--- Mark this module as being shared across multiple expansions
+	-- @bool isSharedModule If true, this module is listed after the zone's own modules in the options, regardless of load order
+	function boss:SetSharedModule(isSharedModule)
+		if isSharedModule then
+			sharedModuleList[self] = true
+		end
+	end
+
+	--- Check if this module is shared across multiple expansions
+	-- @return boolean
+	function boss:IsSharedModule()
+		return sharedModuleList[self] or false
+	end
+end
+
+do
 	local worldModuleList = {}
 	--- Mark this module as being a module for world bosses
 	-- @bool isWorldModule If true, this module is marked as a world module

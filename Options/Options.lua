@@ -1698,7 +1698,7 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 		for i = 1, #moduleList do
 			local module = moduleList[i]
 			zoneList[module.moduleName] = module.displayName
-			if type(module.instanceId) == "table" and #module.instanceId > 1 then
+			if module:IsSharedModule() then
 				sharedModules = sharedModules or {}
 				sharedModules[#sharedModules + 1] = module.moduleName
 			else
