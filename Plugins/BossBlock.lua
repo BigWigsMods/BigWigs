@@ -1103,7 +1103,7 @@ do
 		[301692]=true,[301694]=true,[301695]=true,[301697]=true,[301732]=true,[301734]=true,[301735]=true,[301635]=true,
 		[301636]=true,[301637]=true,[301641]=true,
 		-- Midnight/The Blinding Vale [Dungeon]
-		[300142]=true,[300143]=true,[300145]=true,[300148]=true,[300152]=true,
+		[300146]=true,[300147]=true,[300142]=true,[300143]=true,[300145]=true,[300148]=true,[300152]=true,
 		-- Midnight/Nexus-Point Xenas [Dungeon]
 		[308122]=true,[308123]=true,
 		-- Midnight/Voidscar Arena [Dungeon]

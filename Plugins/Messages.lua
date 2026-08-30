@@ -534,6 +534,7 @@ do
 							return tbl
 						end,
 						width = 1.5,
+						disabled = function() return not plugin.db.profile.chat end,
 					},
 					header1 = {
 						type = "header",

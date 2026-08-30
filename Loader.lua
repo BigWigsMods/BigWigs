@@ -141,6 +141,7 @@ public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = C_Timer.NewTicker
 public.CTimerNewTimer = CTimerNewTimer
 public.DoCountdown = C_PartyInfo.DoCountdown
+public.GetAreaInfo = C_Map.GetAreaInfo
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetCreatureID = C_CreatureInfo.GetCreatureID
 public.GetInstanceInfo = GetInstanceInfoModified
