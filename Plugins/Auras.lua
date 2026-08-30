@@ -152,6 +152,38 @@ local function ValidateColor(current, default, alphaLimit)
 	end
 end
 
+local function ValidateAnchor(unitType, pointDB, relativeToDB, relPointDB, xOffsetDB, yOffsetDB)
+	if not BigWigsAPI.IsValidFramePoint(db[unitType][pointDB]) or (relPointDB and not BigWigsAPI.IsValidFramePoint(db[unitType][relPointDB])) then
+		db[unitType][pointDB] = plugin.defaultDB[unitType][pointDB]
+		db[unitType][relPointDB] = plugin.defaultDB[unitType][relPointDB]
+		db[unitType][xOffsetDB] = plugin.defaultDB[unitType][xOffsetDB]
+		db[unitType][yOffsetDB] = plugin.defaultDB[unitType][yOffsetDB]
+		if relativeToDB then
+			db[unitType][relativeToDB] = plugin.defaultDB[unitType][relativeToDB]
+		end
+	end
+
+	local x = math.floor(db[unitType][xOffsetDB]+0.5)
+	if x ~= db[unitType][xOffsetDB] then
+		db[unitType][xOffsetDB] = x
+	end
+	local y = math.floor(db[unitType][yOffsetDB]+0.5)
+	if y ~= db[unitType][yOffsetDB] then
+		db[unitType][yOffsetDB] = y
+	end
+
+	if relativeToDB and db[unitType][relativeToDB] ~= plugin.defaultDB[unitType][relativeToDB] then
+		local frame = _G[db[unitType][relativeToDB]]
+		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
+			db[unitType][pointDB] = plugin.defaultDB[unitType][pointDB]
+			db[unitType][relPointDB] = plugin.defaultDB[unitType][relPointDB]
+			db[unitType][xOffsetDB] = plugin.defaultDB[unitType][xOffsetDB]
+			db[unitType][yOffsetDB] = plugin.defaultDB[unitType][yOffsetDB]
+			db[unitType][relativeToDB] = plugin.defaultDB[unitType][relativeToDB]
+		end
+	end
+end
+
 local profileUnits = {"player", "other"}
 
 local function updateProfile()
@@ -237,35 +269,13 @@ local function updateProfile()
 		if db[unitType].borderOffset < 0 or db[unitType].borderOffset > 32 then
 			db[unitType].borderOffset = plugin.defaultDB[unitType].borderOffset
 		end
-		do
-			if not BigWigsAPI.IsValidFramePoint(db[unitType].anchorPoint) or not BigWigsAPI.IsValidFramePoint(db[unitType].anchorRelPoint) then
-				db[unitType].anchorPoint = plugin.defaultDB[unitType].anchorPoint
-				db[unitType].anchorRelPoint = plugin.defaultDB[unitType].anchorRelPoint
-				db[unitType].anchorXOffset = plugin.defaultDB[unitType].anchorXOffset
-				db[unitType].anchorYOffset = plugin.defaultDB[unitType].anchorYOffset
-				db[unitType].anchorRelativeTo = plugin.defaultDB[unitType].anchorRelativeTo
-			end
-
-			local x = math.floor(db[unitType].anchorXOffset+0.5)
-			if x ~= db[unitType].anchorXOffset then
-				db[unitType].anchorXOffset = x
-			end
-			local y = math.floor(db[unitType].anchorYOffset+0.5)
-			if y ~= db[unitType].anchorYOffset then
-				db[unitType].anchorYOffset = y
-			end
-
-			if db[unitType].anchorRelativeTo ~= plugin.defaultDB[unitType].anchorRelativeTo then
-				local frame = _G[db[unitType].anchorRelativeTo]
-				if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-					db[unitType].anchorPoint = plugin.defaultDB[unitType].anchorPoint
-					db[unitType].anchorRelPoint = plugin.defaultDB[unitType].anchorRelPoint
-					db[unitType].anchorXOffset = plugin.defaultDB[unitType].anchorXOffset
-					db[unitType].anchorYOffset = plugin.defaultDB[unitType].anchorYOffset
-					db[unitType].anchorRelativeTo = plugin.defaultDB[unitType].anchorRelativeTo
-				end
-			end
+		if db[unitType].dispelTypeSize < 1 or db[unitType].dispelTypeSize > 64 then
+			db[unitType].dispelTypeSize = plugin.defaultDB[unitType].dispelTypeSize
 		end
+
+		ValidateAnchor(unitType, "anchorPoint", "anchorRelativeTo", "anchorRelPoint", "anchorXOffset", "anchorYOffset")
+		ValidateAnchor(unitType, "countTextAnchorPoint", nil, nil, "countTextAnchorXOffset", "countTextAnchorYOffset")
+		ValidateAnchor(unitType, "tankIndicatorAnchorPoint", nil, "tankIndicatorAnchorRelPoint", "tankIndicatorAnchorXOffset", "tankIndicatorAnchorYOffset")
 
 		if db[unitType].maxIcons < 1 or db[unitType].maxIcons > 5 then
 			db[unitType].maxIcons = plugin.defaultDB[unitType].maxIcons
