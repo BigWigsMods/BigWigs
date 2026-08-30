@@ -125,7 +125,7 @@ do
 			tankIndicatorAnchorPoint = "TOP",
 			tankIndicatorAnchorRelPoint = "TOP",
 			tankIndicatorAnchorXOffset = 0,
-			tankIndicatorAnchorYOffset = -12,
+			tankIndicatorAnchorYOffset = 10,
 		}),
 		otherPlayerType = "tank",
 		onlyWhenYouAreTank = false,
