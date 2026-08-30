@@ -58,7 +58,8 @@ do
 
 	local function Reopen(self)
 		_pullout:Open("TOPLEFT", self.frame, "BOTTOMLEFT", 0, self.label:IsShown() and -2 or 0)
-		_pullout.frame:SetHeight(_pullout.frame:GetHeight() + HEADER_HEIGHT)
+		local itemsHeight = #_pullout.items * 16
+		_pullout.frame:SetHeight(math.min(itemsHeight + 34, _pullout.maxHeight) + HEADER_HEIGHT)
 		_pullout.scrollStatus.scrollvalue = 0
 		_pullout.scrollStatus.offset = 0
 		_pullout:FixScroll()
