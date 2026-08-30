@@ -239,6 +239,7 @@ do
 		return trashModuleList[self] or false
 	end
 end
+
 --- Set this module's sort order in the encounter list.
 -- The list is sorted by value, lower first; the default is 0 and equal values keep registration order.
 -- @number[opt] sortOrder Sort value
