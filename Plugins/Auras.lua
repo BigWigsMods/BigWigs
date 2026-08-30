@@ -114,10 +114,10 @@ do
 
 	plugin.defaultDB = {
 		player = MergeTables(CopyTable(sharedDefaults), {
-			disabled = true,
+			disabled = false,
 		}),
 		other = MergeTables(CopyTable(sharedDefaults), {
-			disabled = false,
+			disabled = true,
 			anchorYOffset = 120,
 		}),
 		otherPlayerType = "tank",
