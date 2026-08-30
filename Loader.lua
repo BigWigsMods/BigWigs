@@ -938,12 +938,12 @@ do
 		RegisterSlashCommand = tbl.API.RegisterSlashCommand
 	end
 
-	local function registerLoadOnZone(addon, id, enable)
+	local function registerLoadOnZone(index, id, enable)
 		if enable then
 			enableZones[id] = enable
 		end
 		if not loadOnZone[id] then loadOnZone[id] = {} end
-		loadOnZone[id][#loadOnZone[id] + 1] = addon
+		loadOnZone[id][#loadOnZone[id] + 1] = index
 	end
 
 	for i = 1, GetNumAddOns() do
