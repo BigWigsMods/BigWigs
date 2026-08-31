@@ -1035,7 +1035,7 @@ do
 				public.littlewigsVersion = GetAddOnMetadata(i, "Version") -- e.g. "v12.1.0" or "v12.1.0-1"
 				if addonEnabled then
 					-- Packaged releases always load the main LittleWigs addon in current season zones.
-					-- This ensures shared modules will be loaded in seasonal dungeons.
+					-- This ensures shared modules (e.g. "Common Trash") are also loaded in seasonal dungeons.
 					for zone in next, public.currentExpansion.currentSeason do
 						enableZones[zone] = true
 						if not loadOnZone[zone] then loadOnZone[zone] = {} end
