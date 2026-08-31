@@ -1304,14 +1304,6 @@ do
 			bwTooltip:Show()
 		end
 
-		local function newStatsRow(statGroup)
-			local row = AceGUI:Create("SimpleGroup")
-			row:SetLayout("Flow")
-			row:SetFullWidth(true)
-			statGroup:AddChild(row)
-			return row
-		end
-
 		local function toggleOptionsTabSelected(widget, callback, tab)
 			visibleSpellDescriptionWidgets = {}
 			visibleCreatureNameWidgets = {}
@@ -1421,44 +1413,42 @@ do
 				if next(sDB) then -- Create statistics table
 					local statGroup = AceGUI:Create("InlineGroup")
 					statGroup:SetTitle(L.statistics)
-					statGroup:SetLayout("List")
+					statGroup:SetLayout("Flow")
 					statGroup:SetFullWidth(true)
 					scrollFrame:AddChild(statGroup)
-
-					local headerRow = newStatsRow(statGroup)
 
 					local emptyFirstColumnLabel = AceGUI:Create("Label")
 					emptyFirstColumnLabel:SetWidth(110)
 					emptyFirstColumnLabel:SetText("")
-					headerRow:AddChild(emptyFirstColumnLabel)
+					statGroup:AddChild(emptyFirstColumnLabel)
 
 					local defeatColumnLabel = AceGUI:Create("InteractiveLabel")
 					defeatColumnLabel:SetWidth(83)
 					defeatColumnLabel:SetText(L.defeat)
 					defeatColumnLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
 					defeatColumnLabel:SetCallback("OnLeave", HideTooltip)
-					headerRow:AddChild(defeatColumnLabel)
+					statGroup:AddChild(defeatColumnLabel)
 
 					local victoryColumnLabel = AceGUI:Create("InteractiveLabel")
 					victoryColumnLabel:SetWidth(83)
 					victoryColumnLabel:SetText(L.victory)
 					victoryColumnLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
 					victoryColumnLabel:SetCallback("OnLeave", HideTooltip)
-					headerRow:AddChild(victoryColumnLabel)
+					statGroup:AddChild(victoryColumnLabel)
 
 					local fastestColumnLabel = AceGUI:Create("InteractiveLabel")
 					fastestColumnLabel:SetWidth(130)
 					fastestColumnLabel:SetText(L.fastest)
 					fastestColumnLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
 					fastestColumnLabel:SetCallback("OnLeave", HideTooltip)
-					headerRow:AddChild(fastestColumnLabel)
+					statGroup:AddChild(fastestColumnLabel)
 
 					local firstColumnLabel = AceGUI:Create("InteractiveLabel")
 					firstColumnLabel:SetWidth(140)
 					firstColumnLabel:SetText(L.first)
 					firstColumnLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
 					firstColumnLabel:SetCallback("OnLeave", HideTooltip)
-					headerRow:AddChild(firstColumnLabel)
+					statGroup:AddChild(firstColumnLabel)
 
 					-- Headers
 					local displayOrder = {
@@ -1476,26 +1466,24 @@ do
 							end
 						end
 						if not found then
-							local row = newStatsRow(statGroup)
-
 							local difficultyText = AceGUI:Create("Label")
 							difficultyText:SetWidth(110)
 							difficultyText:SetText(L.unknown)
-							row:AddChild(difficultyText)
+							statGroup:AddChild(difficultyText)
 
 							local defeatsLabel = AceGUI:Create("InteractiveLabel")
 							defeatsLabel:SetWidth(83)
 							defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
 							defeatsLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
 							defeatsLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(defeatsLabel)
+							statGroup:AddChild(defeatsLabel)
 
 							local victoriesLabel = AceGUI:Create("InteractiveLabel")
 							victoriesLabel:SetWidth(83)
 							victoriesLabel:SetText(tbl.kills or "-")
 							victoriesLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
 							victoriesLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(victoriesLabel)
+							statGroup:AddChild(victoriesLabel)
 
 							local fastestVictoryLabel = AceGUI:Create("InteractiveLabel")
 							fastestVictoryLabel:SetWidth(130)
@@ -1510,7 +1498,7 @@ do
 							end
 							fastestVictoryLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
 							fastestVictoryLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(fastestVictoryLabel)
+							statGroup:AddChild(fastestVictoryLabel)
 
 							local firstKillDataLabel = AceGUI:Create("InteractiveLabel")
 							firstKillDataLabel:SetWidth(140)
@@ -1522,7 +1510,7 @@ do
 							end
 							firstKillDataLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
 							firstKillDataLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(firstKillDataLabel)
+							statGroup:AddChild(firstKillDataLabel)
 						end
 					end
 
@@ -1530,26 +1518,24 @@ do
 						local diff = displayOrder[i]
 						local tbl = sDB[diff]
 						if tbl then
-							local row = newStatsRow(statGroup)
-
 							local difficultyText = AceGUI:Create("Label")
 							difficultyText:SetWidth(110)
 							difficultyText:SetText(L[diff] or "?")
-							row:AddChild(difficultyText)
+							statGroup:AddChild(difficultyText)
 
 							local defeatsLabel = AceGUI:Create("InteractiveLabel")
 							defeatsLabel:SetWidth(83)
 							defeatsLabel:SetText(tbl.wipes or (not tbl.kills and "-" or "0"))
 							defeatsLabel:SetCallback("OnEnter", statsDefeatLabelOnEnter)
 							defeatsLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(defeatsLabel)
+							statGroup:AddChild(defeatsLabel)
 
 							local victoriesLabel = AceGUI:Create("InteractiveLabel")
 							victoriesLabel:SetWidth(83)
 							victoriesLabel:SetText(tbl.kills or "-")
 							victoriesLabel:SetCallback("OnEnter", statsVictoryLabelOnEnter)
 							victoriesLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(victoriesLabel)
+							statGroup:AddChild(victoriesLabel)
 
 							local fastestVictoryLabel = AceGUI:Create("InteractiveLabel")
 							fastestVictoryLabel:SetWidth(130)
@@ -1564,7 +1550,7 @@ do
 							end
 							fastestVictoryLabel:SetCallback("OnEnter", statsFastestLabelOnEnter)
 							fastestVictoryLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(fastestVictoryLabel)
+							statGroup:AddChild(fastestVictoryLabel)
 
 							local firstKillDataLabel = AceGUI:Create("InteractiveLabel")
 							firstKillDataLabel:SetWidth(140)
@@ -1576,7 +1562,7 @@ do
 							end
 							firstKillDataLabel:SetCallback("OnEnter", statsFirstLabelOnEnter)
 							firstKillDataLabel:SetCallback("OnLeave", HideTooltip)
-							row:AddChild(firstKillDataLabel)
+							statGroup:AddChild(firstKillDataLabel)
 						end
 					end
 				end -- End statistics table
