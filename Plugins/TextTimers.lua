@@ -40,9 +40,8 @@ plugin.defaultDB = {
 -- Display
 --
 
-local display, fontStrings = nil, {}
+local display, fontStrings = CreateFrame("Frame", nil, UIParent), {}
 do
-	display = CreateFrame("Frame", nil, UIParent)
 	display:SetSize(280, 160)
 	display:SetClampedToScreen(true)
 	display:SetFrameStrata("HIGH")
