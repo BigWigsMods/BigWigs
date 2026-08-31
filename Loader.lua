@@ -938,14 +938,6 @@ do
 		RegisterSlashCommand = tbl.API.RegisterSlashCommand
 	end
 
-	local function registerLoadOnZone(index, id, enable)
-		if enable then
-			enableZones[id] = enable
-		end
-		if not loadOnZone[id] then loadOnZone[id] = {} end
-		loadOnZone[id][#loadOnZone[id] + 1] = index
-	end
-
 	for i = 1, GetNumAddOns() do
 		local name, _, _, _, addonState = GetAddOnInfo(i)
 		if name == "BigWigs_Core" then
@@ -1046,7 +1038,9 @@ do
 					for zone in next, public.currentExpansion.currentSeason do
 						local instanceName = GetRealZoneText(zone)
 						if instanceName and instanceName ~= "" then -- Protect live client from beta client ids
-							registerLoadOnZone(i, zone, true)
+							enableZones[zone] = true
+							if not loadOnZone[zone] then loadOnZone[zone] = {} end
+							loadOnZone[zone][#loadOnZone[zone] + 1] = i
 						end
 					end
 				end
@@ -1060,8 +1054,13 @@ do
 			local id = tonumber(rawId:trim())
 			if id then
 				local instanceName = GetRealZoneText(id)
+				-- register the instance id for enabling.
 				if instanceName and instanceName ~= "" then -- Protect live client from beta client ids
-					registerLoadOnZone(addon, id, true)
+					enableZones[id] = true
+
+					if not loadOnZone[id] then loadOnZone[id] = {} end
+					loadOnZone[id][#loadOnZone[id] + 1] = addon
+
 					if not menus[id] and not blockedMenus[id] then menus[id] = true end
 				end
 			else
@@ -1079,7 +1078,12 @@ do
 			if zoneOrBoss then
 				if not currentZone then
 					currentZone = zoneOrBoss
-					registerLoadOnZone(addon, currentZone, "world")
+
+					-- register the zone for enabling.
+					enableZones[currentZone] = "world"
+
+					if not loadOnZone[currentZone] then loadOnZone[currentZone] = {} end
+					loadOnZone[currentZone][#loadOnZone[currentZone] + 1] = addon
 				else
 					worldBosses[zoneOrBoss] = currentZone
 					currentZone = nil
@@ -1108,7 +1112,9 @@ do
 					name = GetRealZoneText(id)
 				end
 				if name and name ~= "" then -- Protect live client from beta client ids
-					registerLoadOnZone(addon, id)
+					if not loadOnZone[id] then loadOnZone[id] = {} end
+					loadOnZone[id][#loadOnZone[id] + 1] = addon
+
 					if not menus[id] then menus[id] = true end
 				end
 			else
