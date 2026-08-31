@@ -96,17 +96,6 @@ do
 			current[4] = nil
 		end
 	end
-	local function CopyTable(settingsTable)
-		local copy = {}
-		for key, value in next, settingsTable do
-			if type(value) == "table" then
-				copy[key] = CopyTable(value)
-			else
-				copy[key] = value
-			end
-		end
-		return copy
-	end
 
 	ProfileUtils.ValidateMainSettings = function()
 		for k, v in next, db.profile do
@@ -231,19 +220,30 @@ do
 			db.profile.progressNameplateFontName = defaults.progressNameplateFontName
 		end
 	end
+
+	local function CopyTable(settingsTable)
+		local copy = {}
+		for key, value in next, settingsTable do
+			if type(value) == "table" then
+				copy[key] = CopyTable(value)
+			else
+				copy[key] = value
+			end
+		end
+		return copy
+	end
 	ProfileUtils.ResetInstanceKeys = function()
-		db.profile.instanceKeysPosition = nil
-		db.profile.instanceKeysFontName = nil
-		db.profile.instanceKeysFontSize = nil
-		db.profile.instanceKeysMonochrome = nil
-		db.profile.instanceKeysGrowUpwards = nil
-		db.profile.instanceKeysOutline = nil
-		db.profile.instanceKeysAlign = nil
-		db.profile.instanceKeysColor = nil
-		db.profile.instanceKeysOtherDungeonColor = nil
-		db.profile.instanceKeysShowAllPlayers = nil
-		db.profile.instanceKeysShowDungeonEnd = nil
-		db:RegisterDefaults(db.defaults)
+		db.profile.instanceKeysPosition = CopyTable(defaults.instanceKeysPosition)
+		db.profile.instanceKeysFontName = defaults.instanceKeysFontName
+		db.profile.instanceKeysFontSize = defaults.instanceKeysFontSize
+		db.profile.instanceKeysMonochrome = defaults.instanceKeysMonochrome
+		db.profile.instanceKeysGrowUpwards = defaults.instanceKeysGrowUpwards
+		db.profile.instanceKeysOutline = defaults.instanceKeysOutline
+		db.profile.instanceKeysAlign = defaults.instanceKeysAlign
+		db.profile.instanceKeysColor = CopyTable(defaults.instanceKeysColor)
+		db.profile.instanceKeysOtherDungeonColor = CopyTable(defaults.instanceKeysOtherDungeonColor)
+		db.profile.instanceKeysShowAllPlayers = defaults.instanceKeysShowAllPlayers
+		db.profile.instanceKeysShowDungeonEnd = defaults.instanceKeysShowDungeonEnd
 	end
 	ProfileUtils.ResetNameplates = function()
 		db.profile.progressNameplateTargetOffsetX = defaults.progressNameplateTargetOffsetX
