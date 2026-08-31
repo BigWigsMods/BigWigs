@@ -949,7 +949,8 @@ do
 			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		end
 
-		if GetAddOnEnableState(name, myGUID) == 2 then -- if addonState ~= "DISABLED" then (only works when disabled on ALL characters)
+		local addonEnabled = GetAddOnEnableState(name, myGUID) == 2 -- addonState ~= "DISABLED" only works when disabled on ALL characters
+		if addonEnabled then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				if name == "BigWigs_Plugins" then -- Always first
@@ -1030,8 +1031,17 @@ do
 			if GetAddOnMetadata(i, "X-LittleWigs-Repo") then
 				public.usingLittleWigsRepo = true
 				public.littlewigsVersion = "repo"
-			else
+			else -- Packaged installs of LittleWigs
 				public.littlewigsVersion = GetAddOnMetadata(i, "Version") -- e.g. "v12.1.0" or "v12.1.0-1"
+				if addonEnabled then
+					-- Packaged releases always load the main LittleWigs addon in current season zones.
+					-- This ensures shared modules (e.g. "Common Trash") are also loaded in seasonal dungeons.
+					for zone in next, public.currentExpansion.currentSeason do
+						enableZones[zone] = true
+						if not loadOnZone[zone] then loadOnZone[zone] = {} end
+						loadOnZone[zone][#loadOnZone[zone] + 1] = i
+					end
+				end
 			end
 		end
 	end
