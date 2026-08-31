@@ -1036,12 +1036,9 @@ do
 				if addonEnabled then
 					-- Packaged releases always load the main LittleWigs addon in current season zones
 					for zone in next, public.currentExpansion.currentSeason do
-						local instanceName = GetRealZoneText(zone)
-						if instanceName and instanceName ~= "" then -- Protect live client from beta client ids
-							enableZones[zone] = true
-							if not loadOnZone[zone] then loadOnZone[zone] = {} end
-							loadOnZone[zone][#loadOnZone[zone] + 1] = i
-						end
+						enableZones[zone] = true
+						if not loadOnZone[zone] then loadOnZone[zone] = {} end
+						loadOnZone[zone][#loadOnZone[zone] + 1] = i
 					end
 				end
 			end
