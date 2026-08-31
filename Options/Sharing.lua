@@ -270,6 +270,8 @@ local mythicPlusSettingsToExport = {
 	"progressNameplateOutline",
 	"progressNameplateMonochrome",
 	"progressNameplateSlugRendering",
+	"progressNameplateTargetAlign",
+	"progressNameplateOtherAlign",
 }
 
 -- BattleRes

@@ -56,9 +56,9 @@ do
 		progressTooltipFormat = 3,
 		progressNameplate = false,
 		progressNameplateFormat = 1,
-		progressNameplateTargetOffsetX = 150,
+		progressNameplateTargetOffsetX = 100,
 		progressNameplateTargetOffsetY = 0,
-		progressNameplateOtherOffsetX = 150,
+		progressNameplateOtherOffsetX = 100,
 		progressNameplateOtherOffsetY = 0,
 		progressNameplateFontName = fontName,
 		progressNameplateFontSize = 18,
@@ -67,6 +67,8 @@ do
 		progressNameplateOutline = "OUTLINE",
 		progressNameplateMonochrome = false,
 		progressNameplateSlugRendering = true,
+		progressNameplateTargetAlign = "RIGHT",
+		progressNameplateOtherAlign = "RIGHT",
 	}
 	local globalDefaults = {
 		showViewerTeleportTip = true,
@@ -200,6 +202,12 @@ do
 		if db.profile.progressNameplateFontSize < 10 or db.profile.progressNameplateFontSize > 200 or math.floor(db.profile.progressNameplateFontSize+0.5) ~= db.profile.progressNameplateFontSize then
 			db.profile.progressNameplateFontSize = defaults.progressNameplateFontSize
 		end
+		if db.profile.progressNameplateTargetAlign ~= "LEFT" and db.profile.progressNameplateTargetAlign ~= "CENTER" and db.profile.progressNameplateTargetAlign ~= "RIGHT" then
+			db.profile.progressNameplateTargetAlign = defaults.progressNameplateTargetAlign
+		end
+		if db.profile.progressNameplateOtherAlign ~= "LEFT" and db.profile.progressNameplateOtherAlign ~= "CENTER" and db.profile.progressNameplateOtherAlign ~= "RIGHT" then
+			db.profile.progressNameplateOtherAlign = defaults.progressNameplateOtherAlign
+		end
 		ValidateColor(db.profile.progressNameplateFontColorTarget, defaults.progressNameplateFontColorTarget, 0.3)
 		ValidateColor(db.profile.progressNameplateFontColorOther, defaults.progressNameplateFontColorOther, 0)
 		if db.profile.progressNameplateOutline ~= "NONE" and db.profile.progressNameplateOutline ~= "OUTLINE" and db.profile.progressNameplateOutline ~= "THICKOUTLINE" then
@@ -249,6 +257,8 @@ do
 		db.profile.progressNameplateOutline = defaults.progressNameplateOutline
 		db.profile.progressNameplateMonochrome = defaults.progressNameplateMonochrome
 		db.profile.progressNameplateSlugRendering = defaults.progressNameplateSlugRendering
+		db.profile.progressNameplateTargetAlign = defaults.progressNameplateTargetAlign
+		db.profile.progressNameplateOtherAlign = defaults.progressNameplateOtherAlign
 	end
 end
 
@@ -2296,56 +2306,54 @@ do
 			do
 				local UnitIsUnit = UnitIsUnit
 				function SetText(self, unit, ...)
-					self.fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, NamePlatePercentUtils.fontFlags)
 					if UnitIsUnit("target", unit) then
 						self.fontString:SetTextColor(db.profile.progressNameplateFontColorTarget[1], db.profile.progressNameplateFontColorTarget[2], db.profile.progressNameplateFontColorTarget[3], db.profile.progressNameplateFontColorTarget[4])
+						self.fontString:SetJustifyH(db.profile.progressNameplateTargetAlign)
 					else
 						self.fontString:SetTextColor(db.profile.progressNameplateFontColorOther[1], db.profile.progressNameplateFontColorOther[2], db.profile.progressNameplateFontColorOther[3], db.profile.progressNameplateFontColorOther[4])
+						self.fontString:SetJustifyH(db.profile.progressNameplateOtherAlign)
 					end
-					self.fontString:SetText("99.99%")
-					local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
-					self.frame:SetSize(w, h)
 					self.fontString:SetFormattedText(...)
 				end
 				function SetPoint(self, unit)
 					local nameplateFrame = GetNamePlateForUnit(unit)
 					if nameplateFrame then
 						activeTexts[unit] = self
-						self.frame:Show()
+						self.fontString:Show()
 						if UnitIsUnit("target", unit) then
-							self.frame:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateTargetOffsetX, db.profile.progressNameplateTargetOffsetY)
+							self.fontString:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateTargetOffsetX, db.profile.progressNameplateTargetOffsetY)
 						else
-							self.frame:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateOtherOffsetX, db.profile.progressNameplateOtherOffsetY)
+							self.fontString:SetPoint("CENTER", nameplateFrame, "CENTER", db.profile.progressNameplateOtherOffsetX, db.profile.progressNameplateOtherOffsetY)
 						end
 						return true
 					end
 				end
 			end
 			local function Hide(self, unit)
+				self.fontString:Hide()
 				self.fontString:ClearText()
 				self.fontString:ClearAllPoints()
-				self.fontString:SetPoint("CENTER")
-				self.frame:Hide()
-				self.frame:ClearAllPoints()
 				storedTexts[#storedTexts+1] = self
 				activeTexts[unit] = nil
 			end
+			local frame = CreateFrame("Frame", nil, UIParent)
+			frame:SetPoint("CENTER")
+			frame:SetFrameStrata("MEDIUM")
+			frame:SetFixedFrameStrata(true)
+			frame:SetFrameLevel(6200)
+			frame:SetFixedFrameLevel(true)
+			frame:Show()
 			function GetTextObject()
 				if next(storedTexts) then
 					return table.remove(storedTexts)
 				else
-					local frame = CreateFrame("Frame", nil, UIParent)
-					frame:SetPoint("CENTER")
-					frame:SetFrameStrata("MEDIUM")
-					frame:SetFixedFrameStrata(true)
-					frame:SetFrameLevel(6200)
-					frame:SetFixedFrameLevel(true)
 					local fontString = frame:CreateFontString()
-					fontString:SetPoint("CENTER")
-					fontString:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE")
+					fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, NamePlatePercentUtils.fontFlags)
+					fontString:SetSize(300, 20)
+					fontString:SetText(" ")
 					fontString:SetSmoothScaling(true)
 
-					local object = {SetText = SetText, Hide = Hide, SetPoint = SetPoint, fontString = fontString, frame = frame}
+					local object = {SetText = SetText, Hide = Hide, SetPoint = SetPoint, fontString = fontString}
 					return object
 				end
 			end
@@ -2376,6 +2384,7 @@ do
 				NamePlatePercentUtils.fontFlags = progressNameplateFontFlags
 
 				for unit, text in next, activeTexts do
+					text.fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, NamePlatePercentUtils.fontFlags)
 					local value, _, percentString = GetUnitCriteriaProgressValues(unit)
 					if not percentString and NamePlatePercentUtils.testing then
 						local numString = unit:match("%d+")
@@ -2392,8 +2401,6 @@ do
 					if percentString then
 						text.fontString:ClearText()
 						text.fontString:ClearAllPoints()
-						text.fontString:SetPoint("CENTER")
-						text.frame:ClearAllPoints()
 						if text:SetPoint(unit) then
 							if db.profile.progressNameplateFormat == 1 then
 								text:SetText(unit, "%s%%", percentString)
@@ -3293,10 +3300,27 @@ do
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
+							progressNameplateTargetAlign = {
+								type = "select",
+								name = L.align,
+								values = {
+									L.LEFT,
+									L.CENTER,
+									L.RIGHT,
+								},
+								style = "radio",
+								order = 14,
+								get = function() return db.profile.progressNameplateTargetAlign == "LEFT" and 1 or db.profile.progressNameplateTargetAlign == "RIGHT" and 3 or 2 end,
+								set = function(_, value)
+									db.profile.progressNameplateTargetAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+									NamePlatePercentUtils.UpdateAll()
+								end,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
 							otherTargetsHeader = {
 								type = "header",
 								name = L.settingsForOtherTargets,
-								order = 14,
+								order = 15,
 							},
 							progressNameplateFontColorOther = {
 								type = "color",
@@ -3309,14 +3333,14 @@ do
 									db.profile.progressNameplateFontColorOther = {r, g, b, a}
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 15,
+								order = 16,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							progressNameplateOtherOffsetX = {
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								order = 16,
+								order = 17,
 								max = 300,
 								min = -300,
 								step = 1,
@@ -3327,17 +3351,34 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								order = 17,
+								order = 18,
 								max = 100,
 								min = -100,
 								step = 1,
 								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
+							progressNameplateOtherAlign = {
+								type = "select",
+								name = L.align,
+								values = {
+									L.LEFT,
+									L.CENTER,
+									L.RIGHT,
+								},
+								style = "radio",
+								order = 19,
+								get = function() return db.profile.progressNameplateOtherAlign == "LEFT" and 1 or db.profile.progressNameplateOtherAlign == "RIGHT" and 3 or 2 end,
+								set = function(_, value)
+									db.profile.progressNameplateOtherAlign = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+									NamePlatePercentUtils.UpdateAll()
+								end,
+								disabled = DisabledWhenNameplatePercentDisabled,
+							},
 							resetHeader = {
 								type = "header",
 								name = "",
-								order = 18,
+								order = 20,
 							},
 							reset = {
 								type = "execute",
@@ -3347,7 +3388,7 @@ do
 									ProfileUtils.ResetNameplates()
 									NamePlatePercentUtils.UpdateAll()
 								end,
-								order = 19,
+								order = 21,
 							},
 						},
 					},
