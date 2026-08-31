@@ -669,6 +669,17 @@ L.lfgUseMasterDesc = "Cuando esta opción está activada, el sonido de Buscar Gr
 -----------------------------------------------------------------------
 
 L.general = "General"
+--L.textTimers = "Text Timers"
+--L.textTimersDesc = "Show text-only warnings for bars that are about to expire, in addition to the bars themselves."
+--L.textTimersThreshold = "Time threshold"
+--L.textTimersThresholdDesc = "Show a text warning once a timer has this many seconds or less remaining."
+--L.textTimersMaxLines = "Maximum lines"
+--L.textTimersMaxLinesDesc = "The maximum number of text warnings to show at once."
+--L.textTimersMaxNameLength = "Max name length"
+--L.textTimersMaxNameLengthDesc = "Truncates ability names longer than this many characters. Set to 0 to disable."
+--L.textTimersUrgentThreshold = "Urgent threshold"
+--L.textTimersUrgentThresholdDesc = "Turn the timer text the urgent color once this many seconds or less remain. Set to 0 to disable."
+--L.textTimersUrgentColor = "Urgent color"
 L.advanced = "Avanzado"
 L.comma = ", "
 L.reset = "Restablecer"
