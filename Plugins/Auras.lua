@@ -2233,6 +2233,14 @@ do
 			duration:ClearAllPoints()
 			duration:SetPoint(point, aura, point, optionsDB.cooldownTextAnchorXOffset, optionsDB.cooldownTextAnchorYOffset)
 
+			if point == "RIGHT" or point == "TOPRIGHT" or point == "BOTTOMRIGHT" then
+				duration:SetJustifyH("RIGHT")
+			elseif point == "LEFT" or point == "TOPLEFT" or point == "BOTTOMLEFT" then
+				duration:SetJustifyH("LEFT")
+			else
+				duration:SetJustifyH("CENTER")
+			end
+
 			local flags = {}
 			if optionsDB.cooldownTextMonochrome then
 				flags[#flags + 1] = "MONOCHROME"
@@ -2324,6 +2332,14 @@ do
 			local point = optionsDB.countTextAnchorPoint
 			stacks:ClearAllPoints()
 			stacks:SetPoint(point, aura, point, optionsDB.countTextAnchorXOffset, optionsDB.countTextAnchorYOffset)
+
+			if point == "RIGHT" or point == "TOPRIGHT" or point == "BOTTOMRIGHT" then
+				stacks:SetJustifyH("RIGHT")
+			elseif point == "LEFT" or point == "TOPLEFT" or point == "BOTTOMLEFT" then
+				stacks:SetJustifyH("LEFT")
+			else
+				stacks:SetJustifyH("CENTER")
+			end
 
 			local flags = {}
 			if optionsDB.countTextMonochrome then
