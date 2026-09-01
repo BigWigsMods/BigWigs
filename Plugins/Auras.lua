@@ -85,6 +85,9 @@ do
 		cooldownTextMonochrome = false,
 		cooldownTextSlug = true,
 		cooldownTextMillisecondsThreshold = 3,
+		cooldownTextAnchorPoint = "CENTER",
+		cooldownTextAnchorXOffset = 0,
+		cooldownTextAnchorYOffset = 0,
 		cooldownTextColor = {1, 1, 1, 1},
 		cooldownTextDecimals = 3,
 		cooldownEmphasizeTime = 0,
@@ -281,6 +284,7 @@ local function updateProfile()
 
 		ValidateAnchor(unitType, "anchorPoint", "anchorRelativeTo", "anchorRelPoint", "anchorXOffset", "anchorYOffset")
 		ValidateAnchor(unitType, "countTextAnchorPoint", nil, nil, "countTextAnchorXOffset", "countTextAnchorYOffset")
+		ValidateAnchor(unitType, "cooldownTextAnchorPoint", nil, nil, "cooldownTextAnchorXOffset", "cooldownTextAnchorYOffset")
 		ValidateAnchor(unitType, "dispelTypeAnchorPoint", nil, "dispelTypeAnchorRelPoint", "dispelTypeAnchorXOffset", "dispelTypeAnchorYOffset")
 
 		if db[unitType].maxIcons < 1 or db[unitType].maxIcons > 5 then
@@ -869,10 +873,44 @@ do
 						return not db[unitType].showCooldownText
 					end,
 				},
+				cooldownTextAnchorPoint = {
+					type = "select",
+					name = L.position,
+					order = 8,
+					values = BigWigsAPI.GetFramePointList(),
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextAnchorXOffset = {
+					type = "range",
+					name = L.offsetX,
+					order = 9,
+					min = -100,
+					max = 100,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
+				cooldownTextAnchorYOffset = {
+					type = "range",
+					name = L.offsetY,
+					order = 10,
+					min = -100,
+					max = 100,
+					step = 1,
+					disabled = function(info)
+						local unitType = info[#info - 2]
+						return not db[unitType].showCooldownText
+					end,
+				},
 				cooldownTextColor = {
 					type = "color",
 					name = L.fontColor,
-					order = 8,
+					order = 11,
 					hasAlpha = true,
 					get = function(info)
 						local unitType = info[#info - 2]
@@ -893,7 +931,7 @@ do
 					type = "range",
 					name = L.cooldownDecimalsThreshold,
 					desc = L.cooldownDecimalsThresholdDesc,
-					order = 9,
+					order = 12,
 					width = 1.6,
 					min = 0,
 					max = 60,
@@ -906,7 +944,7 @@ do
 				cooldownEmphasizeHeader = {
 					type = "header",
 					name = L.emphasize,
-					order = 10,
+					order = 13,
 					disabled = function(info)
 						local unitType = info[#info - 2]
 						return not db[unitType].showCooldownText
@@ -915,7 +953,7 @@ do
 				cooldownEmphasizeHeading = {
 					type = "description",
 					name = L.cooldownEmphasizeHeader,
-					order = 11,
+					order = 14,
 					width = "full",
 					fontSize = "medium",
 					disabled = function(info)
@@ -926,7 +964,7 @@ do
 				cooldownEmphasizeTime = {
 					type = "range",
 					name = L.emphasizeAt,
-					order = 12,
+					order = 15,
 					width = "full",
 					min = 0,
 					max = 30,
@@ -939,7 +977,7 @@ do
 				cooldownEmphasizeColor = {
 					type = "color",
 					name = L.fontColor,
-					order = 13,
+					order = 16,
 					hasAlpha = true,
 					get = function(info)
 						local unitType = info[#info - 2]
@@ -960,7 +998,7 @@ do
 					type = "range",
 					name = L.fontSize,
 					desc = L.fontSizeDesc,
-					order = 14,
+					order = 17,
 					min = 10,
 					softMax = 100,
 					max = 200,
@@ -2191,6 +2229,10 @@ do
 
 		local duration = aura.duration
 		if optionsDB.showCooldownText then
+			local point = optionsDB.cooldownTextAnchorPoint
+			duration:ClearAllPoints()
+			duration:SetPoint(point, aura, point, optionsDB.cooldownTextAnchorXOffset, optionsDB.cooldownTextAnchorYOffset)
+
 			local flags = {}
 			if optionsDB.cooldownTextMonochrome then
 				flags[#flags + 1] = "MONOCHROME"
@@ -2278,9 +2320,11 @@ do
 		end
 
 		local stacks = aura.stacks
-		stacks:ClearAllPoints()
-		stacks:SetPoint(optionsDB.countTextAnchorPoint, aura, optionsDB.countTextAnchorPoint, optionsDB.countTextAnchorXOffset, optionsDB.countTextAnchorYOffset)
-		do
+		if optionsDB.showCountText then
+			local point = optionsDB.countTextAnchorPoint
+			stacks:ClearAllPoints()
+			stacks:SetPoint(point, aura, point, optionsDB.countTextAnchorXOffset, optionsDB.countTextAnchorYOffset)
+
 			local flags = {}
 			if optionsDB.countTextMonochrome then
 				flags[#flags + 1] = "MONOCHROME"
@@ -2300,8 +2344,7 @@ do
 
 			local textColor = optionsDB.countTextColor
 			stacks:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-		end
-		if optionsDB.showCountText then
+			stacks:Show()
 			aura:SetApplicationCount(stacks)
 		else
 			stacks:Hide()
