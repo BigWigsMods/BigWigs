@@ -23,12 +23,9 @@ do
 		wordsOther = {},
 	}
 
-	db = BigWigsLoader.db:RegisterNamespace("AutoInvite", {profile = {}, global = globalDefaults}) -- XXX temp 12.0.1
+	db = BigWigsLoader.db:RegisterNamespace("AutoInvite", {global = globalDefaults})
 
 	ProfileUtils.ValidateMainSettings = function()
-		db.profile.wordsFriendly = nil -- XXX temp 12.0.1
-		db.profile.wordsOther = nil -- XXX temp 12.0.1
-
 		for k, v in next, db do
 			local defaultType = type(globalDefaults[k])
 			if defaultType == "nil" then
@@ -66,7 +63,7 @@ do
 	local SendBattleNetMessage = BigWigsLoader.SendBattleNetMessage
 	local Ambiguate = BigWigsLoader.Ambiguate
 	local myClient = WOW_PROJECT_ID
-	local issecretvalue = issecretvalue or function() end -- XXX 12.0 compat
+	local issecretvalue = issecretvalue
 	popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
 		if event == "GROUP_LEFT" then
 			if not IsInGroup() then
@@ -235,7 +232,7 @@ do
 	local buttonNo = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isRetail and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonNo:SetSize(128, 32)
 	buttonNo:SetPoint("LEFT", buttonYes, "RIGHT", 12, 0)
-	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown or function() end -- XXX 12.0 compat
+	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown
 	buttonNo:SetScript("OnClick", function(self)
 		self:GetParent():Hide()
 		invitesBlocked = true
