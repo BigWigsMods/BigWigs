@@ -12,6 +12,7 @@ if not plugin then return end
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 local GetTime = GetTime
+local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
 local tsort = table.sort
 local db
 
@@ -34,6 +35,8 @@ plugin.defaultDB = {
 	position = {"CENTER", "CENTER", 0, 150},
 	urgentThreshold = 2,
 	urgentColor = {1, 0, 0, 1},
+	icon = true,
+	iconPosition = "LEFT",
 }
 
 -------------------------------------------------------------------------------
@@ -57,10 +60,28 @@ do
 	end)
 end
 
+local icons = {}
+local function layoutIcon(i)
+	local icon = icons[i]
+	if not db.icon then
+		icon:Hide()
+		return
+	end
+	local size = db.fontSize + 8
+	icon:SetSize(size, size)
+	icon:ClearAllPoints()
+	if db.iconPosition == "LEFT" then
+		icon:SetPoint("RIGHT", fontStrings[i], "LEFT", -4, 0)
+	else
+		icon:SetPoint("LEFT", fontStrings[i], "RIGHT", 4, 0)
+	end
+end
+
 local function applyFont()
 	local font = LibSharedMedia:Fetch(FONT, db.fontName)
 	for i = 1, #fontStrings do
 		fontStrings[i]:SetFont(font, db.fontSize, "OUTLINE")
+		layoutIcon(i)
 	end
 end
 
@@ -75,6 +96,11 @@ local function acquireLine(i)
 		local font = LibSharedMedia:Fetch(FONT, db.fontName)
 		fs:SetFont(font, db.fontSize, "OUTLINE")
 		fontStrings[i] = fs
+
+		local icon = display:CreateTexture(nil, "ARTWORK")
+		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+		icons[i] = icon
+		layoutIcon(i)
 	end
 	return fs
 end
@@ -114,6 +140,7 @@ local function refresh()
 	if not db.enabled then
 		for i = 1, #fontStrings do
 			fontStrings[i]:Hide()
+			icons[i]:Hide()
 		end
 		ticking = false
 		return
@@ -126,7 +153,7 @@ local function refresh()
 		if not t.paused then
 			local remaining = t.expires - now
 			if remaining <= db.threshold and remaining > 0 then
-				shown[#shown+1] = {text = t.text, remaining = remaining}
+				shown[#shown+1] = {text = t.text, remaining = remaining, icon = t.icon}
 			end
 		end
 	end
@@ -142,9 +169,19 @@ local function refresh()
 			fs:SetTextColor(1, 1, 1, 1)
 		end
 		fs:Show()
+
+		local icon = icons[i]
+		if db.icon and shown[i].icon then
+			local texture = shown[i].icon
+			icon:SetTexture(type(texture) == "number" and GetSpellTexture(texture) or texture)
+			icon:Show()
+		else
+			icon:Hide()
+		end
 	end
 	for i = count + 1, #fontStrings do
 		fontStrings[i]:Hide()
+		icons[i]:Hide()
 	end
 
 	if #activeTimers == 0 then
@@ -224,13 +261,38 @@ plugin.pluginOptions = {
 			get = function() return unpack(db.urgentColor) end,
 			set = function(_, r, g, b) db.urgentColor = {r, g, b, 1} end,
 		},
+		icon = {
+			type = "toggle",
+			name = L.icon,
+			desc = L.textTimersIconDesc,
+			order = 5.3,
+			set = function(_, value)
+				db.icon = value
+				for i = 1, #fontStrings do layoutIcon(i) end
+			end,
+		},
+		iconPosition = {
+			type = "select",
+			name = L.iconPosition,
+			desc = L.textTimersIconPositionDesc,
+			order = 5.4,
+			values = {
+				LEFT = L.LEFT,
+				RIGHT = L.RIGHT,
+			},
+			disabled = function() return not db.icon end,
+			set = function(_, value)
+				db.iconPosition = value
+				for i = 1, #fontStrings do layoutIcon(i) end
+			end,
+		},
 		fontName = {
 			type = "select",
 			name = L.font,
 			order = 6,
 			width = "full",
 			values = function() return LibSharedMedia:List(FONT) end,
-			dialogControl = "SharedDropdown",
+			dialogControl = "BigWigsSharedDropdown",
 			itemControl = "DDI-Font",
 			get = function()
 				for i, v in next, LibSharedMedia:List(FONT) do
@@ -303,6 +365,9 @@ local function updateProfile()
 	if not LibSharedMedia:IsValid(FONT, db.fontName) then
 		db.fontName = plugin.defaultDB.fontName
 	end
+	if db.iconPosition ~= "LEFT" and db.iconPosition ~= "RIGHT" then
+		db.iconPosition = plugin.defaultDB.iconPosition
+	end
 
 	display:ClearAllPoints()
 	display:SetPoint(db.position[1], UIParent, db.position[2], db.position[3], db.position[4])
@@ -331,7 +396,7 @@ end
 function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId)
 	text = text or ""
 	removeTimer(module, text, eventId)
-	activeTimers[#activeTimers+1] = {module = module, text = text, eventId = eventId, expires = GetTime() + time}
+	activeTimers[#activeTimers+1] = {module = module, text = text, eventId = eventId, expires = GetTime() + time, icon = icon}
 	startTicking()
 end
 
@@ -368,7 +433,7 @@ end
 
 function plugin:Test()
 	local now = GetTime()
-	activeTimers[#activeTimers+1] = {module = plugin, text = "Fire Blast", eventId = "textTimersTest1", expires = now + 4.8}
-	activeTimers[#activeTimers+1] = {module = plugin, text = "Meteor", eventId = "textTimersTest2", expires = now + 3.2}
+	activeTimers[#activeTimers+1] = {module = plugin, text = "Fire Blast", eventId = "textTimersTest1", expires = now + 4.8, icon = 133} -- Fireball
+	activeTimers[#activeTimers+1] = {module = plugin, text = "Meteor", eventId = "textTimersTest2", expires = now + 3.2, icon = 116} -- Frostbolt
 	startTicking()
 end
