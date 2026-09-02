@@ -35,6 +35,7 @@ local validGlobalSounds = {
 }
 local allowBlizzMessages = true
 local registeredAuraModules = {}
+local cachedSounds = {}
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -360,32 +361,23 @@ function plugin:OnPluginEnable()
 		}
 	end
 
-	local soundsPlayedTable = {}
+	cachedSounds = {}
 	for optionKey, soundName in next, db.media do
-		if sounds[optionKey] and soundName ~= "None" and not soundsPlayedTable[soundName] then
-			soundsPlayedTable[soundName] = true
+		if sounds[optionKey] and soundName ~= "None" and not cachedSounds[soundName] then
+			cachedSounds[soundName] = 0
 		end
 	end
 	for k, v in next, db do
 		if sounds[k] then
 			for _, soundTbl in next, v do
 				for _, soundName in next, soundTbl do
-					if soundName ~= "None" and not soundsPlayedTable[soundName] then
-						soundsPlayedTable[soundName] = true
+					if soundName ~= "None" and not cachedSounds[soundName] then
+						cachedSounds[soundName] = 0
 					end
 				end
 			end
 		end
 	end
-	local timer
-	local function Loop()
-		local soundName = next(soundsPlayedTable)
-		if not soundName then timer:Cancel() return end
-		soundsPlayedTable[soundName] = nil
-		local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName))
-		if played then StopSound(id) end
-	end
-	timer = BigWigsLoader.CTimerNewTicker(0, Loop)
 
 	-- Register aura sounds
 	if self:IsAuraSoundRestrictionsActive() then
@@ -403,15 +395,40 @@ function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_BlockBlizzMessages")
 		self:RegisterMessage("BigWigs_AllowBlizzMessages")
 	end
+
+	self:CacheSounds() -- Begin caching normal boss module sounds
 end
 
 function plugin:OnPluginDisable()
+	cachedSounds = {}
 	self:UnregisterAllAuraSounds()
 end
 
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local timer = nil
+	local StopSound = StopSound
+	local function Loop()
+		for soundName, status in next, cachedSounds do
+			if status == 0 then
+				cachedSounds[soundName] = true
+				local played, id = plugin:PlaySoundFile(LibSharedMedia:Fetch(SOUND, soundName))
+				if played then StopSound(id) end
+				return
+			end
+		end
+		timer:Cancel()
+		timer = nil
+	end
+	function plugin:CacheSounds()
+		if not timer then
+			timer = BigWigsLoader.CTimerNewTicker(0, Loop)
+		end
+	end
+end
 
 -- Functions for Aura Sounds
 function plugin:BigWigs_BossModuleRegistered(_, bossModule, currentInstanceID)
@@ -511,12 +528,21 @@ do
 					end
 				end
 				if onAppliedSound and onAppliedSound ~= "None" then
+					if not cachedSounds[onAppliedSound] then
+						cachedSounds[onAppliedSound] = 0
+					end
 					soundsToRegister.onApplied = self:GetSoundFile(nil, nil, onAppliedSound)
 				end
 				if onStackSound and onStackSound ~= "None" then
+					if not cachedSounds[onStackSound] then
+						cachedSounds[onStackSound] = 0
+					end
 					soundsToRegister.onStack = self:GetSoundFile(nil, nil, onStackSound)
 				end
 				if onRemovedSound and onRemovedSound ~= "None" then
+					if not cachedSounds[onRemovedSound] then
+						cachedSounds[onRemovedSound] = 0
+					end
 					soundsToRegister.onRemoved = self:GetSoundFile(nil, nil, onRemovedSound)
 				end
 				if bossModule:GetAuraCountdownVoice(spellId) then
@@ -540,6 +566,7 @@ do
 					end
 				end
 			end
+			self:CacheSounds() -- Begin caching aura sounds
 		end
 	end
 end
