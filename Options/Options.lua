@@ -2272,15 +2272,17 @@ do
 		return true, data.bossExport, instances
 	end
 
+	local strlenutf8 = strlenutf8
+
 	-- DO NOT USE THIS DIRECTLY. This code may not be loaded
 	-- Use BigWigsAPI.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
 	function options.SaveImportStringDataFromAddOn(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") end
-		if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") end
+		if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for profile import.") return end
+		if type(profileString) ~= "string" or #profileString < 10 then error("Invalid profile string for profile import.") return end
 		local stringOK, bossImport, instances = options.VerifyAddOnProfileString(profileString)
-		if not stringOK then error("Invalid profile string for profile import.") end
-		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") end
-		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") end
+		if not stringOK then error("Invalid profile string for profile import.") return end
+		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or strlenutf8(optionalCustomProfileName) < 2 or strlenutf8(optionalCustomProfileName) > 30 or optionalCustomProfileName:find("^ +$")) then error("Invalid custom profile name for the string you want to import.") return end
+		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") return end
 		-- All AceConfigDialog code, go there for original
 		popup:Show()
 		local profileName = loader.db:GetCurrentProfile()

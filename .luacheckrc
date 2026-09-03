@@ -8,6 +8,7 @@ files["API.lua"].ignore = {
 	"113/C_AddOns",
 	"113/C_UIFileAsset",
 	"112/SlashCmdList",
+	"113/strlenutf8",
 }
 files["Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
@@ -249,6 +250,7 @@ files["Options/Options.lua"].ignore = {
 	"113/CallErrorHandler",
 	"113/print",
 	"113/securecallfunction",
+	"113/strlenutf8",
 }
 files["Options/Sharing.lua"].ignore = {
 	"113/C_EncodingUtil",

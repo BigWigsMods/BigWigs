@@ -5,7 +5,7 @@ do
 end
 local API = {}
 addonTbl.API = API
-local type, next, error = type, next, error
+local type, next, error, strlenutf8 = type, next, error, strlenutf8
 
 local function CopyTable(settingsTable)
 	local copy = {}
@@ -25,11 +25,11 @@ end
 
 -- Allows addons to show a custom bar to the user
 function API.CreateBarFromAddon(addonName, barText, barIcon, barTime)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for bar creation.") end
-	if type(barText) ~= "string" or #barText < 3 then error("Invalid text for bar creation.") end
+	if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for bar creation.") return end
+	if type(barText) ~= "string" or strlenutf8(barText) < 2 or barText:find("^ +$") then error("Invalid text for bar creation.") return end
 	local iconType = type(barIcon)
-	if iconType ~= "string" and iconType ~= "number" then error("Invalid icon for bar creation.") end
-	if type(barTime) ~= "number" then error("Invalid bar time for bar creation.") end
+	if iconType ~= "string" and iconType ~= "number" then error("Invalid icon for bar creation.") return end
+	if type(barTime) ~= "number" then error("Invalid bar time for bar creation.") return end
 	local L = API:GetLocale("BigWigs")
 	addonTbl.loaderPublic.Print(L.showAddonBar:format(addonName, barText))
 	addonTbl.LoadAndEnableCore()
@@ -39,9 +39,9 @@ end
 
 -- Allows addons to send custom bars to the group
 function API.SendBarToGroup(addonName, barText, barTime)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for bar creation.") end
-	if type(barText) ~= "string" or #barText < 3 then error("Invalid text for bar creation.") end
-	if type(barTime) ~= "number" or barTime < 3 then error("Invalid bar time for bar creation.") end
+	if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for bar creation.") return end
+	if type(barText) ~= "string" or strlenutf8(barText) < 2 or barText:find("^ +$") then error("Invalid text for bar creation.") return end
+	if type(barTime) ~= "number" or barTime < 3 then error("Invalid bar time for bar creation.") return end
 	addonTbl.LoadAndEnableCore()
 	local bars = BigWigs:GetPlugin("Bars", true)
 	if bars then
@@ -196,9 +196,9 @@ end
 -- optionalCustomProfileName: Providing this optional name will create a new profile by that name (if it doesn't already exist) and then swap to it.
 -- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted and the import process has completed.
 function API.RegisterProfile(addonName, profileString, optionalCustomProfileName, optionalCallbackFunction)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") return end
-	if type(profileString) ~= "string" or #profileString < 3 then error("Invalid profile string for profile import.") return end
-	if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or #optionalCustomProfileName < 3) then error("Invalid custom profile name for the string you want to import.") return end
+	if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for profile import.") return end
+	if type(profileString) ~= "string" or #profileString < 10 then error("Invalid profile string for profile import.") return end
+	if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or strlenutf8(optionalCustomProfileName) < 2 or strlenutf8(optionalCustomProfileName) > 30 or optionalCustomProfileName:find("^ +$")) then error("Invalid custom profile name for the string you want to import.") return end
 	if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") return end
 	addonTbl.LoadCoreAndOptions()
 	local valid, bossExport = BigWigsOptions.VerifyAddOnProfileString(profileString)
@@ -212,8 +212,8 @@ end
 ---- You may want to have your UI state "Waiting..." while the import is in progress, and then continue whenever your callback function is triggered.
 ---- This is required as we may need to load multiple addons with bosses in them to apply the profiles, and loading them all in the same execution path could lock up the game.
 function API.ImportBossOptions(addonName, bossString, optionalCallbackFunction)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for boss import.") return end
-	if type(bossString) ~= "string" or #bossString < 3 then error("Invalid boss string for import.") return end
+	if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for boss import.") return end
+	if type(bossString) ~= "string" or #bossString < 10 then error("Invalid boss string for import.") return end
 	if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") return end
 	addonTbl.LoadCoreAndOptions()
 	local valid, bossExport = BigWigsOptions.VerifyAddOnProfileString(bossString)
@@ -226,7 +226,7 @@ end
 -- callbackFunction: Receives (profileString, bossString) after the selected options have been loaded.
 -- includeRaids/includeSeasonalDungeons/includeExpansionDungeons: set to true for the boss settings you want to include in the boss export string.
 function API.RequestProfile(addonName, profileName, callbackFunction, includeRaids, includeSeasonalDungeons, includeExpansionDungeons)
-	if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile request.") return end
+	if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for profile request.") return end
 	if type(profileName) ~= "string" then error("Invalid profile name for profile request.") return end
 	if type(callbackFunction) ~= "function" then error("Invalid callback function for profile request.") return end
 	if includeRaids ~= nil and type(includeRaids) ~= "boolean" then error("Invalid raid export flag for profile request.") return end
@@ -312,7 +312,7 @@ do
 	-- profileName: If the profile you're trying to swap to doesn't exist, this function will return false, it will return true if the profile was found and the popup was displayed to the user
 	-- optionalCallbackFunction: You can supply a callback function that will return false if the user declined the profile import, and true if the user accepted.
 	function API.SwapProfile(addonName, profileName, optionalCallbackFunction)
-		if type(addonName) ~= "string" or #addonName < 3 then error("Invalid addon name for profile import.") return end
+		if type(addonName) ~= "string" or strlenutf8(addonName) < 3 or addonName:find("^ +$") then error("Invalid addon name for profile import.") return end
 		if type(profileName) ~= "string" then error("Invalid profile name for profile import.") return end
 		if not API.IsValidProfile(profileName) then return false end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the profile you want to swap to.") return end
@@ -417,8 +417,8 @@ do
 		return tbl[spellId]
 	end
 	function API.SetSpellRename(spellId, text)
-		if type(spellId) ~= "number" then error("Invalid spell ID for spell rename.") end
-		if type(text) ~= "string" or #text < 3 then error("Invalid spell text for spell rename.") end
+		if type(spellId) ~= "number" then error("Invalid spell ID for spell rename.") return end
+		if type(text) ~= "string" or #text < 3 then error("Invalid spell text for spell rename.") return end
 		tbl[spellId] = text
 	end
 end
@@ -435,8 +435,8 @@ do -- Tools
 	end
 	-- Register an AceGUI options table for a module under the "Tools" category
 	function API.RegisterToolOptions(key, settingsTable)
-		if type(key) ~= "string" then error("The key needs to be a string.") end
-		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+		if type(key) ~= "string" then error("The key needs to be a string.") return end
+		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") return end
 		tbl[key] = settingsTable
 	end
 end
@@ -449,8 +449,8 @@ do -- Plugins
 	end
 	-- Register an AceGUI options table for a module under the "Tools" category
 	function API.RegisterPluginOptions(key, settingsTable)
-		if type(key) ~= "string" then error("The key needs to be a string.") end
-		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") end
+		if type(key) ~= "string" then error("The key needs to be a string.") return end
+		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") return end
 		tbl[key] = settingsTable
 	end
 end
