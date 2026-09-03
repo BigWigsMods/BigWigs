@@ -2281,7 +2281,7 @@ do
 		if type(profileString) ~= "string" or #profileString < 10 then error("Invalid profile string for profile import.") return end
 		local stringOK, bossImport, instances = options.VerifyAddOnProfileString(profileString)
 		if not stringOK then error("Invalid profile string for profile import.") return end
-		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or strlenutf8(optionalCustomProfileName) < 2 or strlenutf8(optionalCustomProfileName) > 30 or optionalCustomProfileName:find("^ +$")) then error("Invalid custom profile name for the string you want to import.") return end
+		if optionalCustomProfileName and (type(optionalCustomProfileName) ~= "string" or strlenutf8(optionalCustomProfileName) < 2 or strlenutf8(optionalCustomProfileName) > 50 or optionalCustomProfileName:find("^ +$")) then error("Invalid custom profile name for the string you want to import.") return end
 		if optionalCallbackFunction and type(optionalCallbackFunction) ~= "function" then error("Invalid custom callback function for the string you want to import.") return end
 		-- All AceConfigDialog code, go there for original
 		popup:Show()
