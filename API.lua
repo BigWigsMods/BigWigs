@@ -5,6 +5,8 @@ do
 end
 local API = {}
 addonTbl.API = API
+local PrivateAPI = {}
+addonTbl.PrivateAPI = PrivateAPI
 local type, next, error, strlenutf8 = type, next, error, strlenutf8
 
 local function CopyTable(settingsTable)
@@ -443,15 +445,33 @@ end
 
 do -- Plugins
 	local tbl = {}
-	-- Get all AceGUI option tables under the "Tools" category
+	-- Get all AceGUI option tables under the "Plugins" category
 	function API.GetPluginOptions()
 		return CopyTable(tbl)
 	end
-	-- Register an AceGUI options table for a module under the "Tools" category
+	-- Register an AceGUI options table for a module under the "Plugins" category
 	function API.RegisterPluginOptions(key, settingsTable)
 		if type(key) ~= "string" then error("The key needs to be a string.") return end
 		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") return end
 		tbl[key] = settingsTable
+	end
+end
+
+do -- Plugins (Tabs)
+	local tbl = {}
+	-- Get all AceGUI option tables for custom tabs under the "Plugins" category
+	function API.GetPluginOptionsCustomTabs()
+		return CopyTable(tbl)
+	end
+
+	-- Register a custom tab to already existing Plugins, using AceGUI option tables
+	function PrivateAPI.RegisterPluginOptionsCustomTab(moduleName, tabTableKey, settingsTable)
+		if type(moduleName) ~= "string" then error("The module name needs to be a string.") return end
+		if type(tabTableKey) ~= "string" then error("The tab table key needs to be a string.") return end
+		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") return end
+		if not tbl[moduleName] then
+			tbl[moduleName] = {tabTableKey, settingsTable}
+		end
 	end
 end
 

@@ -2201,6 +2201,12 @@ do
 		for key, optionsTable in next, API.GetPluginOptions() do
 			aceConfigTableMainBigWigsTab.args[key] = optionsTable
 		end
+		for pluginName, dataTable in next, API.GetPluginOptionsCustomTabs() do
+			if registered[pluginName] then
+				local tabTableKey, settingsTable = dataTable[1], dataTable[2]
+				aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
+			end
+		end
 		return aceConfigTableMainBigWigsTab
 	end
 end
