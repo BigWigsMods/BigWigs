@@ -12,7 +12,7 @@ if not plugin then return end
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 local GetTime = GetTime
-local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
+local GetSpellTexture = BigWigsLoader.GetSpellTexture
 local tsort = table.sort
 local db
 
