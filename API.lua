@@ -268,7 +268,7 @@ do
 	local popup = CreateFrame("Frame", nil, UIParent)
 	popup:Hide()
 	popup:SetPoint("CENTER", UIParent, "CENTER")
-	popup:SetSize(320, 72)
+	popup:SetSize(400, 72)
 	popup:EnableMouse(true) -- Do not allow click-through on the frame
 	popup:SetFrameStrata("TOOLTIP")
 	popup:SetFrameLevel(120) -- Lots of room to draw under it
@@ -279,7 +279,7 @@ do
 	border:SetAllPoints(popup)
 
 	local textFrame = popup:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	textFrame:SetSize(290, 0)
+	textFrame:SetSize(370, 0)
 	textFrame:SetPoint("TOP", 0, -16)
 	textFrame:SetText("BigWigs")
 
@@ -319,7 +319,7 @@ do
 		if profileName == API.GetProfileName() then error("You cannot swap to the same profile.") return end
 		popup:Show()
 		textFrame:SetText(API:GetLocale("BigWigs").confirm_profile_swap:format(addonName, profileName))
-		local height = 61 + textFrame:GetHeight()
+		local height = 70 + textFrame:GetHeight()
 		popup:SetHeight(height)
 
 		acceptButton:ClearAllPoints()
