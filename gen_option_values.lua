@@ -778,7 +778,7 @@ local function parseAuraData(file_name, lines, start)
 		for _, note_field in ipairs({ "note", "tip" }) do
 			local note = entry[note_field]
 			if note and note ~= localized then
-				error(string.format("    %s:%d: SetAuraData: %s must be a localized string, got %q (spell %d)", file_name, start, note_field, tostring(note), spell_id))
+				error(string.format("    %s:%d: SetAuraData: %s must be a localized string or mod:SpellName()/mod:BossName(), got %q (spell %d)", file_name, start, note_field, tostring(note), spell_id))
 			end
 		end
 		local header = entry.header
