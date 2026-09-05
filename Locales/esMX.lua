@@ -298,9 +298,9 @@ L.mythicplus_settings_export_desc = "Exporta todas las configuraciones de Mític
 L.imported_battleres_settings = "Configuración de Resurrección en combate"
 L.battleres_settings_import_desc = "Importa toda la configuración de Resurrección en combate."
 L.battleres_settings_export_desc = "Exporta toda la configuración de Resurrección en combate."
-L.imported_privateAuras_settings = "Configuración de Auras privadas"
-L.privateAuras_settings_import_desc = "Importa toda la configuración de Auras privadas."
-L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras privadas."
+--L.imported_auras_settings = "Auras Settings"
+--L.auras_settings_import_desc = "Import all Auras settings."
+--L.auras_settings_export_desc = "Export all Auras settings."
 L.imported_combattimer_settings = "Configuración de Temporizador de combate"
 L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate"
 L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate"
@@ -321,7 +321,7 @@ L.sharing_export_renames_desc = "Exporta los renombres personalizados configurad
 L.sharing_sounds_desc = "Importa qué sonidos reproducir para las habilidades."
 L.sharing_export_sounds_desc = "Exporta qué sonidos reproducir para las habilidades."
 --L.sharing_auras_desc = "Import the configured aura sounds."
-L.sharing_export_private_auras_desc = "Exporta los sonidos configurados de Auras privadas."
+--L.sharing_export_auras_desc = "Export the configured aura sounds."
 L.sharing_colors_desc = "Importa la configuración de colores para barras y mensajes."
 L.sharing_export_colors_desc = "Exporta la configuración de colores para barras y mensajes."
 L.confirm_instance_import = "La configuración seleccionada que estás a punto de importar sobrescribirá la configuración de tu perfil actualmente seleccionado:\n\n|cFF33FF99\"%s\"|r\n\nInstancia:\n|cFFBB66FF\"%s\"|r\n\n¿Seguro que quieres hacer esto?"
@@ -744,9 +744,6 @@ L.disableAltPowerDesc = "Desactiva la pantalla de Poder Alternativo, nunca se mo
 --
 
 --L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "Auras privadas"
-L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
-L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como íconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
 --L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 --L.disabledDuringTrash = "Disabled During Trash"
 
@@ -774,7 +771,6 @@ L.playerInYourGroup = "Un jugador de tu grupo"
 --L.tankIndicator = "Tank Indicator"
 L.maxIcons = "Máximo de íconos"
 L.maxIconsDesc = "La cantidad máxima de íconos que se mostrarán."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como íconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
 --L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 --L.aurasTestAnchorText = "Player\nAuras"
