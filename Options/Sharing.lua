@@ -1637,6 +1637,61 @@ local sharingOptions = {
 					},
 				},
 			},
+			auras = {
+				type = "group",
+				name = L.auras,
+				inline = true,
+				order = 17,
+				hidden = function() return not BigWigs:GetPlugin("Auras", true) end,
+				args = {
+					exportAurasPositions = {
+						type = "toggle",
+						name = L.position,
+						desc = L.position_export_auras_desc,
+						order = 1,
+						width = 1,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
+								return true
+							end
+						end,
+					},
+					exportAurasSettings = {
+						type = "toggle",
+						name = L.settings,
+						desc = L.settings_export_auras_desc,
+						order = 5,
+						width = 1,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
+								return true
+							end
+						end,
+					},
+					exportAurasSounds = {
+						type = "toggle",
+						name = L.auras_custom_sounds,
+						desc = L.auras_custom_sounds_export_desc,
+						order = 10,
+						width = 1,
+						disabled = true, -- Not yet implemented
+					},
+				},
+			},
 			otherSettings = {
 				type = "group",
 				name = L.other_settings,
@@ -1700,61 +1755,6 @@ local sharingOptions = {
 							end
 						end,
 						hidden = function() return not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
-					},
-				},
-			},
-			auras = {
-				type = "group",
-				name = L.auras,
-				inline = true,
-				order = 17,
-				hidden = function() return not BigWigs:GetPlugin("Auras", true) end,
-				args = {
-					exportAurasPositions = {
-						type = "toggle",
-						name = L.position,
-						desc = L.position_export_auras_desc,
-						order = 1,
-						width = 1,
-						get = function(i)
-							local plugin = BigWigs:GetPlugin("Auras", true)
-							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
-								return sharingExportOptionsSettings[i[#i]]
-							end
-						end,
-						disabled = function()
-							local plugin = BigWigs:GetPlugin("Auras", true)
-							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
-								return true
-							end
-						end,
-					},
-					exportAurasSettings = {
-						type = "toggle",
-						name = L.settings,
-						desc = L.settings_export_auras_desc,
-						order = 5,
-						width = 1,
-						get = function(i)
-							local plugin = BigWigs:GetPlugin("Auras", true)
-							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
-								return sharingExportOptionsSettings[i[#i]]
-							end
-						end,
-						disabled = function()
-							local plugin = BigWigs:GetPlugin("Auras", true)
-							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
-								return true
-							end
-						end,
-					},
-					exportAurasSounds = {
-						type = "toggle",
-						name = L.auras_custom_sounds,
-						desc = L.auras_custom_sounds_export_desc,
-						order = 10,
-						width = 1,
-						disabled = true, -- Not yet implemented
 					},
 				},
 			},
