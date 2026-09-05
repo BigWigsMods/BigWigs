@@ -94,7 +94,7 @@ mod:SetRenames({
 	[1283832] = {1283832}, -- Axegrinder
 
 	[1289900] = {1289900, CL.you:format(mod:SpellName(1289900)), original = {1285911, CL.you:format(mod:SpellName(1285911))}, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Dreadmarch
-	[1285911] = {CL.you:format(L.unnerving_fixation), original = CL.you:format(mod:SpellName(1285911))}, -- Unnerving Fixation
+	[1285911] = {CL.you:format(CL.fixate), original = CL.you:format(mod:SpellName(1285911)), notes = CL.messageOnYouNote}, -- Unnerving Fixation
 	[1286573] = {CL.tank_frontal, CL.you:format(CL.frontal), original = {1286573, CL.you:format(mod:SpellName(1286573))}, notes = {CL.generalNote, CL.messageOnYouNote}}, -- Soul Sever
 	[1286918] = {1286918}, -- Eternal Nightfall
 	[1286441] = {CL.adds, CL.add, notes = {CL.mythicOnlyNote, CL.otherDifficultiesNote}}, -- Spiritcackle
