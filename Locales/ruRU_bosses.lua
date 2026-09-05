@@ -105,6 +105,7 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "Размах",
 	call_of_the_serpent = "Яйца",
 	gore_rattle = "Хвост",
+	--grasping_fangs = "Tethers",
 	circling_prey = "Разруш. Платформы",
 	p3_knock_up = "Подкидывание",
 
