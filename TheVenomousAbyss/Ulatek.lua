@@ -850,25 +850,17 @@ function mod:PhaseTwoStart(isTimelineEvent)
 
 	self:SetStage(2)
 	self:ResetCounts()
-	self:ResetWardenCastInfo()
 
 	if self:ShouldShowBars() then
-		self:RegisterWardenEvents()
-
 		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 
 		local barrierCD = isTimelineEvent and 4.1 or 8.1
 		self:Bar("stages", barrierCD, self:GetRename("stages", 4), 1313355) -- 1313355 = Doomscale Cauldron
-
-		if self:Mythic() then
-			self:ScheduleTimer("UnregisterWardenEvents", barrierCD + 110) -- XXX sigh
-		end
 	end
 end
 
 function mod:IntermissionStart()
-	self:UnregisterWardenEvents()
 	self:SetStage(2.5)
 	self:ResetCounts()
 
@@ -889,10 +881,6 @@ function mod:PhaseThreeStart()
 	if self:ShouldShowBars() then
 		self:Message("stages", "cyan", self:GetRename("stages", 3), false)
 		self:PlaySound("stages", "long")
-	end
-
-	if self:Mythic() then
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	end
 end
 
