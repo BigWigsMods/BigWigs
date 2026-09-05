@@ -163,17 +163,20 @@ BigWigs:AddSounds("The Coiled Altar", {
 })
 
 BigWigs:AddColors("Ula'tek", {
-	[1286860] = {"green","yellow"},
+	[1286860] = "green",
 	[1286905] = "red",
 	[1292188] = "red",
 	[1295905] = "orange",
 	[1296301] = "yellow",
 	[1298367] = "purple",
 	[1298559] = "cyan",
+	[1299757] = "purple",
 	[1300530] = "orange",
 	[1300751] = "yellow",
 	[1301510] = "red",
 	[1302982] = "yellow",
+	[1310738] = "cyan",
+	[1310763] = "green",
 	["stages"] = "cyan",
 })
 
@@ -185,9 +188,12 @@ BigWigs:AddSounds("Ula'tek", {
 	[1296301] = "alarm",
 	[1298367] = "alert",
 	[1298559] = "info",
+	[1299757] = "alarm",
 	[1300530] = "alert",
 	[1300751] = "alarm",
 	[1301510] = "long",
 	[1302982] = "alarm",
+	[1310738] = "info",
+	[1310763] = "info",
 	["stages"] = "long",
 })
