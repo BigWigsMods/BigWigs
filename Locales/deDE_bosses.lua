@@ -86,6 +86,12 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 	possession_barrage = "Sperrfeuer",
 })
 
+BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
+	--trader_gebbo = "Gebbo",
+	--first_mate_nama = "Nama",
+	--scrollsage_iku = "Iku",
+})
+
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
 	malignant_catalyst = "Katalysator", -- Short for Malignant Catalyst
 })
