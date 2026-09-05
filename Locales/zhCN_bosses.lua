@@ -105,6 +105,23 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "横扫",
 	call_of_the_serpent = "蛇蛋",
 	gore_rattle = "尾击",
+	--grasping_fangs = "Tethers",
 	circling_prey = "平台碎裂",
 	p3_knock_up = "击飞",
+
+	--toxic_womb = "Wretch Spawn",
+	--fester_burst = "Wretch Bubble",
+	--toxic_incubation = "Wretch Waves",
+
+	--count_amount_side = "%s (%d/%d) %s",
+	--count_side = "%s (%d) %s",
+	--fester_burst_count = "%s (%d-%d)",
+
+	--custom_select_limit_warnings = "Spectral Coils Group",
+	--custom_select_limit_warnings_desc = "Only show bars for your soak group (left or right).  Right side is first in stage one, left side is first in intermission.",
+	--custom_select_limit_warnings_value1 = "Show warnings for both sides.",
+	--custom_select_limit_warnings_value2 = "Show warnings for left side only.",
+	--custom_select_limit_warnings_value3 = "Show warnings for right side only.",
+	--custom_select_limit_warnings_value4 = "Odd groups left, even groups right.",
+	--custom_select_limit_warnings_value5 = "Mythic: Groups 1 & 2 go left, groups 3 & 4 go right. Others: Groups 1/2/3 go left, groups 4/5/6 go right.",
 })
