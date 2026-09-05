@@ -85,7 +85,7 @@ end
 --
 
 mod:SetRenames({
-	["stages"] = {CL.intermission, CL.stage:format(2), CL.stage:format(3), CL.over:format(CL.intermission), original = false}, -- stages
+	["stages"] = {CL.intermission, CL.stage:format(2), CL.stage:format(3), CL.intermission_over, original = false}, -- stages
 	[1282487] = {CL.pools}, -- Fangs of the Coiled Altar
 	[1299960] = {CL.orbs}, -- Toxic Deluge
 	[1283489] = {1283489}, -- Guillotine
