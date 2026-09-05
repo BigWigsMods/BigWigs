@@ -83,7 +83,7 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 -- The Venomous Abyss
 
 BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
-	--possession_barrage = "Barrage",
+	possession_barrage = "Обстрел",
 })
 
 BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
@@ -93,21 +93,21 @@ BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
-	--malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
+	malignant_catalyst = "Катализатор", -- Short for Malignant Catalyst
 })
 
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
-	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
-	--corrosive_spit = "Spit", -- Short for Corrosive Spit
+	coiling_toxin = "Гной", -- Short for Coiling Toxin(Вероятно, Coiling Ichor - Обвивающий гной)
+	corrosive_spit = "Плевок", -- Short for Corrosive Spit
 })
 
 BigWigsAPI.SetBossModuleLocale("Ula'tek", {
-	--mephitic_thrash = "Sweep",
-	--call_of_the_serpent = "Eggs",
-	--gore_rattle = "Tail",
+	mephitic_thrash = "Размах",
+	call_of_the_serpent = "Яйца",
+	gore_rattle = "Хвост",
 	--grasping_fangs = "Tethers",
-	--circling_prey = "Platform Break",
-	--p3_knock_up = "Knock Up",
+	circling_prey = "Разруш. Платформы",
+	p3_knock_up = "Подкидывание",
 
 	--toxic_womb = "Wretch Spawn",
 	--fester_burst = "Wretch Bubble",
