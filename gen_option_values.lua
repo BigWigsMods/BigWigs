@@ -50,6 +50,65 @@ local valid_sounds = {
 	warning = true,
 	underyou = true,
 }
+local valid_aura_keys = {
+	header = true,
+	duration = true,
+	dispel = true,
+	mechanic = true,
+	note = true,
+	tip = true,
+	mythic = true,
+	soundOnApplied = true,
+	soundOnAppliedDose = true,
+	soundOnRemoved = true,
+}
+local valid_aura_dispels = { -- SpellDispelType, lowercase
+	magic = true,
+	curse = true,
+	disease = true,
+	poison = true,
+	stealth = true,
+	invisibility = true,
+	all = true,
+	special = true,
+	enrage = true,
+	zg_trinket = true,
+	bleed = true,
+}
+local valid_aura_mechanics = { -- SpellMechanic, lowercase
+	charmed = true,
+	disoriented = true,
+	disarmed = true,
+	distracted = true,
+	fleeing = true,
+	knockbacked = true,
+	rooted = true,
+	slowed = true,
+	silenced = true,
+	asleep = true,
+	snared = true,
+	stunned = true,
+	frozen = true,
+	incapacitated = true,
+	bleeding = true,
+	healing = true,
+	polymorphed = true,
+	banished = true,
+	shielded = true,
+	shackled = true,
+	mounted = true,
+	infected = true,
+	turned = true,
+	horrified = true,
+	invulnerable = true,
+	interrupted = true,
+	dazed = true,
+	discovery = true,
+	sapped = true,
+	enraged = true,
+	wounded = true,
+	taunted = true,
+}
 local color_methods = {
 	MessageOld = 2,
 	Message = 2,
@@ -608,6 +667,140 @@ local function parseGetOptions(file_name, lines, start, special_options)
 	return options
 end
 
+local function parseAuraData(file_name, lines, start)
+	local closer
+	for i = start + 1, #lines do
+		if lines[i]:match("^%s*%}%s*%)") then
+			closer = i
+			break
+		end
+	end
+	if not closer then
+		error(string.format("    %s:%d: mod:SetAuraData( is never closed with })", file_name, start))
+		return
+	end
+
+	local text = {}
+	for i = start, closer do
+		local l = lines[i]
+		if i == start then
+			l = l:match("SetAuraData%((.*)$")
+		elseif i == closer then
+			l = l:match("^(.*)%)")
+		end
+		text[#text+1] = l
+	end
+	local chunk = table.concat(text, "\n")
+
+	local aura_data
+	local localized
+	localized = setmetatable({}, {
+		__index = function() return localized end,
+		__call = function() return localized end,
+	})
+	do
+		local mod = {
+			SpellName = function() return localized end,
+			BossName = function() return localized end
+		}
+		local env = setmetatable({
+			CL = localized,
+			L = localized,
+			self = mod,
+			mod = mod,
+		}, {
+			__index = function(_, k) return k end
+		})
+		local f, err
+		if setfenv then
+			f, err = loadstring("return " .. chunk, "auradata")
+			if f then
+				setfenv(f, env)
+			end
+		else
+			f, err = load("return " .. chunk, "auradata", "t", env)
+		end
+		if err then
+			error(string.format("    %s:%d: Failed to load SetAuraData chunk: %s", file_name, start, err))
+			return
+		end
+		local success, result = pcall(f)
+		if not success then
+			error(string.format("    %s:%d: Failed to load SetAuraData chunk: %s", file_name, start, result))
+			return
+		end
+		aura_data = result
+	end
+
+	if type(aura_data) ~= "table" then
+		error(string.format("    %s:%d: SetAuraData: expected a table, got %s", file_name, start, type(aura_data)))
+		return
+	end
+
+	local spell_ids = {}
+	local function checkEntry(index, entry)
+		if type(entry) ~= "table" then
+			error(string.format("    %s:%d: SetAuraData entry %d: expected a table, got %s", file_name, start, index, type(entry)))
+			return
+		end
+		local spell_id = entry[1]
+		if type(spell_id) ~= "number" then
+			error(string.format("    %s:%d: SetAuraData entry %d: expected a numeric spell ID, got %q", file_name, start, index, tostring(spell_id)))
+			return
+		elseif spell_ids[spell_id] then
+			error(string.format("    %s:%d: SetAuraData: Duplicate spell ID %d", file_name, start, spell_id))
+			return
+		end
+		spell_ids[spell_id] = true
+		for pos = 2, #entry do
+			local extra_id = entry[pos]
+			if type(extra_id) ~= "number" then
+				error(string.format("    %s:%d: SetAuraData entry %d: expected a numeric spell ID, got %q", file_name, start, index, tostring(extra_id)))
+			elseif spell_ids[extra_id] then
+				error(string.format("    %s:%d: SetAuraData: Duplicate spell ID %d", file_name, start, extra_id))
+			else
+				spell_ids[extra_id] = true
+			end
+		end
+		for key in next, entry do
+			if type(key) == "string" and not valid_aura_keys[key] then
+				error(string.format("    %s:%d: SetAuraData: Unknown key %q (spell %d)", file_name, start, key, spell_id))
+			end
+		end
+		local dispel = entry.dispel
+		if dispel and not (type(dispel) == "string" and valid_aura_dispels[dispel]) then
+			error(string.format("    %s:%d: SetAuraData: Invalid dispel type %q (spell %d), expected: %s", file_name, start, tostring(dispel), spell_id, table.concat(sortKeys(valid_aura_dispels), ", ")))
+		end
+		local mechanic = entry.mechanic
+		if mechanic and not (type(mechanic) == "string" and valid_aura_mechanics[mechanic]) then
+			error(string.format("    %s:%d: SetAuraData: Invalid mechanic %q (spell %d), expected: %s", file_name, start, tostring(mechanic), spell_id, table.concat(sortKeys(valid_aura_mechanics), ", ")))
+		end
+		for _, note_field in ipairs({ "note", "tip" }) do
+			local note = entry[note_field]
+			if note and note ~= localized then
+				error(string.format("    %s:%d: SetAuraData: %s must be a localized string, got %q (spell %d)", file_name, start, note_field, tostring(note), spell_id))
+			end
+		end
+		local header = entry.header
+		if header and type(header) ~= "number" and header ~= localized then
+			error(string.format("    %s:%d: SetAuraData: header must be an NPC ID, localized string, or mod:SpellName()/mod:BossName(), got %q (spell %d)", file_name, start, tostring(header), spell_id))
+		end
+		local duration = entry.duration
+		if duration and not (type(duration) == "number" and duration > 0) then
+			error(string.format("    %s:%d: SetAuraData: Invalid duration %s (spell %d)", file_name, start, tostring(duration), spell_id))
+		end
+		for _, sound_field in ipairs({ "soundOnApplied", "soundOnAppliedDose", "soundOnRemoved" }) do
+			local sound = entry[sound_field]
+			if sound and not (type(sound) == "string" and (sound == "none" or valid_sounds[sound])) then
+				error(string.format("    %s:%d: SetAuraData: Invalid %s sound %q (spell %d)", file_name, start, sound_field, sound, spell_id))
+			end
+		end
+	end
+	for index, entry in next, aura_data do
+		checkEntry(index, entry)
+	end
+end
+
 local function parseLocaleBlock(file_name, lines, start, locale)
 	for i = start, #lines do
 		local line = lines[i]
@@ -933,10 +1126,10 @@ local function parseLua(file)
 		end
 
 		-- set some module flags
-		if line:match("^mod:SetEncounterID") then
+		if line:match("^%s*mod:SetEncounterID") then
 			module_encounter_id = true
 		end
-		if line:match("^mod:SetStage") then
+		if line:match("^%s*mod:SetStage") then
 			module_set_stage = true
 		else
 			local method = line:match(":([GS]etStage)%(")
@@ -944,6 +1137,11 @@ local function parseLua(file)
 				error(string.format("    %s:%d: %s: Missing initial mod:SetStage!", file_name, n, method))
 				module_set_stage = true
 			end
+		end
+
+		-- validate SetAuraData
+		if line:match("^%s*mod:SetAuraData") then
+			parseAuraData(file_name, lines, n)
 		end
 
 		-- save marker and autotalk options
