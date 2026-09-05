@@ -248,6 +248,7 @@ files["Options/Options.lua"].ignore = {
 	"113/C_TooltipInfo",
 	"113/C_UI",
 	"113/CallErrorHandler",
+	"113/GameFontHighlightSmall",
 	"113/print",
 	"113/securecallfunction",
 	"113/strlenutf8",
