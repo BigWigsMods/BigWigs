@@ -314,13 +314,81 @@ local battleResSettingsToExport = {
 	"chargesCustomText",
 }
 
--- PrivateAuras
-local privateAurasSettingsToExport = {
-	"showDispelType",
-	"player",
-	"other",
+-- Auras
+local aurasSettingsToExport = {
 	"otherPlayerType",
 	"onlyWhenYouAreTank",
+	-- "otherPlayerName", -- Not exporting character specific settings
+	-- "sounds", -- Not exporting user created auras
+}
+
+local aurasPositionSettingsToExport = { -- Applied to both the "player" and "other" tables
+	"anchorPoint",
+	"anchorRelPoint",
+	"anchorXOffset",
+	"anchorYOffset",
+	"anchorRelativeTo",
+}
+
+local aurasUnitSettingsToExport = { -- Applied to both the "player" and "other" tables
+	"disabled",
+	"width",
+	"height",
+	"keepAspectRatio",
+	"zoom",
+	"spacing",
+	"showCooldown",
+	"showTooltip",
+
+	"showDispelType",
+	"dispelTypeSize",
+	"dispelTypeAnchorPoint",
+	"dispelTypeAnchorRelPoint",
+	"dispelTypeAnchorXOffset",
+	"dispelTypeAnchorYOffset",
+
+	"showTankIndicator", -- Only exists in the "other" table
+	"tankIndicatorSize",
+	"tankIndicatorAnchorPoint",
+	"tankIndicatorAnchorRelPoint",
+	"tankIndicatorAnchorXOffset",
+	"tankIndicatorAnchorYOffset",
+
+	"borderName",
+	"borderColor",
+	"borderOffset",
+	"borderSize",
+	"borderDispelColor",
+
+	"showCooldownText",
+	"cooldownTextFontName",
+	"cooldownTextFontSize",
+	"cooldownTextOutline",
+	"cooldownTextMonochrome",
+	"cooldownTextSlug",
+	"cooldownTextMillisecondsThreshold",
+	"cooldownTextAnchorPoint",
+	"cooldownTextAnchorXOffset",
+	"cooldownTextAnchorYOffset",
+	"cooldownTextColor",
+	"cooldownTextDecimals",
+	"cooldownEmphasizeTime",
+	"cooldownEmphasizeColor",
+	"cooldownEmphasizeFontSize",
+
+	"showCountText",
+	"countTextFontName",
+	"countTextFontSize",
+	"countTextOutline",
+	"countTextMonochrome",
+	"countTextSlug",
+	"countTextAnchorPoint",
+	"countTextAnchorXOffset",
+	"countTextAnchorYOffset",
+	"countTextColor",
+
+	"growthDirection",
+	"maxIcons",
 }
 
 -- CombatTimer
@@ -421,7 +489,8 @@ local sharingExportOptionsSettings = {
 	exportNameplateSettings = true,
 	exportMythicPlusSettings = true,
 	exportBattleResSettings = true,
-	exportPrivateAurasSettings = true,
+	exportAurasPositions = true,
+	exportAurasSettings = true,
 	exportCombatTimerSettings = true,
 }
 
@@ -540,10 +609,23 @@ do
 			end
 		end
 
-		if requestAll or sharingExportOptionsSettings.exportPrivateAurasSettings then
-			local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+		if requestAll or sharingExportOptionsSettings.exportAurasPositions then
+			local plugin = BigWigs:GetPlugin("Auras", true)
 			if plugin then
-				exportOptions["privateAurasSettings"] = exportProfileSettings(privateAurasSettingsToExport, plugin.db.profile)
+				exportOptions["aurasPositions"] = {
+					player = exportProfileSettings(aurasPositionSettingsToExport, plugin.db.profile.player),
+					other = exportProfileSettings(aurasPositionSettingsToExport, plugin.db.profile.other),
+				}
+			end
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportAurasSettings then
+			local plugin = BigWigs:GetPlugin("Auras", true)
+			if plugin then
+				local export = exportProfileSettings(aurasSettingsToExport, plugin.db.profile)
+				export.player = exportProfileSettings(aurasUnitSettingsToExport, plugin.db.profile.player)
+				export.other = exportProfileSettings(aurasUnitSettingsToExport, plugin.db.profile.other)
+				exportOptions["aurasSettings"] = export
 			end
 		end
 
@@ -736,12 +818,17 @@ local function IsOptionGroupAvailable(group)
 	end
 	if group == "other" then
 		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or
-		IsOptionInString("privateAurasSettings") or IsOptionInString("combatTimerSettings") then
+		IsOptionInString("combatTimerSettings") then
+			return true
+		end
+	end
+	if group == "auras" then
+		if IsOptionInString("aurasPositions") or IsOptionInString("aurasSettings") then
 			return true
 		end
 	end
 	if group == "any" then
-		if IsOptionGroupAvailable("bars") or IsOptionGroupAvailable("messages") or IsOptionGroupAvailable("countdown") or IsOptionGroupAvailable("other") then
+		if IsOptionGroupAvailable("bars") or IsOptionGroupAvailable("messages") or IsOptionGroupAvailable("countdown") or IsOptionGroupAvailable("auras") or IsOptionGroupAvailable("other") then
 			return true
 		end
 	end
@@ -875,6 +962,53 @@ do
 			end
 		end
 
+		-- The Auras plugin nests most of its settings in a "player" and "other" table.
+		-- We import every setting individually to leave the tables the plugin validates in place.
+		local function importAurasPositions(sharingOptionKey, dataKey, plugin, chatMessageToPrint)
+			if sharingImportOptionsSettings[sharingOptionKey] and type(data[dataKey]) == "table" then
+				local profile = plugin.db.profile
+				for _, unitType in next, {"player", "other"} do
+					local unitSettings = data[dataKey][unitType]
+					if type(unitSettings) == "table" then
+						for i = 1, #aurasPositionSettingsToExport do
+							local nameOfSetting = aurasPositionSettingsToExport[i]
+							local value = unitSettings[nameOfSetting]
+							if type(value) ~= "nil" then
+								profile[unitType][nameOfSetting] = value
+							end
+						end
+					end
+				end
+				table.insert(chatMessages, chatMessageToPrint)
+			end
+		end
+
+		local function importAurasSettings(sharingOptionKey, dataKey, plugin, chatMessageToPrint)
+			if sharingImportOptionsSettings[sharingOptionKey] and type(data[dataKey]) == "table" then
+				local profile = plugin.db.profile
+				for i = 1, #aurasSettingsToExport do
+					local nameOfSetting = aurasSettingsToExport[i]
+					local value = data[dataKey][nameOfSetting]
+					if type(value) ~= "nil" then -- We need to store values set to false
+						profile[nameOfSetting] = value
+					end
+				end
+				for _, unitType in next, {"player", "other"} do
+					local unitSettings = data[dataKey][unitType]
+					if type(unitSettings) == "table" then
+						for i = 1, #aurasUnitSettingsToExport do
+							local nameOfSetting = aurasUnitSettingsToExport[i]
+							local value = unitSettings[nameOfSetting]
+							if type(value) ~= "nil" then
+								profile[unitType][nameOfSetting] = value
+							end
+						end
+					end
+				end
+				table.insert(chatMessages, chatMessageToPrint)
+			end
+		end
+
 		importSettings("importBarPositions", "barPositions", barPositionsToExport, barPlugin, L.imported_bar_positions)
 		importSettings("importBarSettings", "barSettings", barSettingsToExport, barPlugin, L.imported_bar_settings)
 		importColorSettings("importBarColors", "barColors", barColorsToExport, colorplugin, L.imported_bar_colors)
@@ -903,9 +1037,10 @@ do
 			end
 		end
 		do
-			local plugin = BigWigs:GetPlugin("PrivateAuras", true)
+			local plugin = BigWigs:GetPlugin("Auras", true)
 			if plugin then
-				importSettings("importPrivateAurasSettings", "privateAurasSettings", privateAurasSettingsToExport, plugin, L.imported_privateAuras_settings)
+				importAurasPositions("importAurasPositions", "aurasPositions", plugin, L.imported_auras_positions)
+				importAurasSettings("importAurasSettings", "aurasSettings", plugin, L.imported_auras_settings)
 			end
 		end
 		do
@@ -1122,8 +1257,11 @@ do
 		if IsOptionInString("battleResSettings") then
 			sharingImportOptionsSettings.importBattleResSettings = true
 		end
-		if IsOptionInString("privateAurasSettings") then
-			sharingImportOptionsSettings.importPrivateAurasSettings = true
+		if IsOptionInString("aurasPositions") then
+			sharingImportOptionsSettings.importAurasPositions = true
+		end
+		if IsOptionInString("aurasSettings") then
+			sharingImportOptionsSettings.importAurasSettings = true
 		end
 		if IsOptionInString("combatTimerSettings") then
 			sharingImportOptionsSettings.importCombatTimerSettings = true
@@ -1314,14 +1452,6 @@ local sharingOptions = {
 						width = 1,
 						disabled = function() return not IsOptionInString("battleResSettings") or not BigWigs:GetPlugin("BattleRes", true) end,
 					},
-					importPrivateAurasSettings = {
-						type = "toggle",
-						name = L.privateAuras,
-						desc = L.privateAuras_settings_import_desc,
-						order = 4,
-						width = 1,
-						disabled = function() return not IsOptionInString("privateAurasSettings") or not BigWigs:GetPlugin("PrivateAuras", true) end,
-					},
 					importCombatTimerSettings = {
 						type = "toggle",
 						name = L.combatTimerTitle,
@@ -1329,6 +1459,39 @@ local sharingOptions = {
 						order = 5,
 						width = 1,
 						disabled = function() return not IsOptionInString("combatTimerSettings") or not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+					},
+				},
+			},
+			auras = {
+				type = "group",
+				name = L.auras,
+				inline = true,
+				order = 17,
+				hidden = function() return (not isImportStringAvailable() or not IsOptionGroupAvailable("auras")) end,
+				args = {
+					importAurasPositions = {
+						type = "toggle",
+						name = L.position,
+						desc = L.position_import_auras_desc,
+						order = 1,
+						width = 1,
+						disabled = function() return not IsOptionInString("aurasPositions") or not BigWigs:GetPlugin("Auras", true) end,
+					},
+					importAurasSettings = {
+						type = "toggle",
+						name = L.settings,
+						desc = L.settings_import_auras_desc,
+						order = 5,
+						width = 1,
+						disabled = function() return not IsOptionInString("aurasSettings") or not BigWigs:GetPlugin("Auras", true) end,
+					},
+					importAurasSounds = {
+						type = "toggle",
+						name = L.auras_custom_sounds,
+						desc = L.auras_custom_sounds_import_desc,
+						order = 10,
+						width = 1,
+						disabled = true, -- Not yet implemented
 					},
 				},
 			},
@@ -1474,11 +1637,66 @@ local sharingOptions = {
 					},
 				},
 			},
+			auras = {
+				type = "group",
+				name = L.auras,
+				inline = true,
+				order = 17,
+				hidden = function() return not BigWigs:GetPlugin("Auras", true) end,
+				args = {
+					exportAurasPositions = {
+						type = "toggle",
+						name = L.position,
+						desc = L.position_export_auras_desc,
+						order = 1,
+						width = 1,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
+								return true
+							end
+						end,
+					},
+					exportAurasSettings = {
+						type = "toggle",
+						name = L.settings,
+						desc = L.settings_export_auras_desc,
+						order = 5,
+						width = 1,
+						get = function(i)
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
+								return sharingExportOptionsSettings[i[#i]]
+							end
+						end,
+						disabled = function()
+							local plugin = BigWigs:GetPlugin("Auras", true)
+							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
+								return true
+							end
+						end,
+					},
+					exportAurasSounds = {
+						type = "toggle",
+						name = L.auras_custom_sounds,
+						desc = L.auras_custom_sounds_export_desc,
+						order = 10,
+						width = 1,
+						disabled = true, -- Not yet implemented
+					},
+				},
+			},
 			otherSettings = {
 				type = "group",
 				name = L.other_settings,
 				inline = true,
-				order = 15,
+				order = 20,
 				args = {
 					exportNameplateSettings = {
 						type = "toggle",
@@ -1517,26 +1735,6 @@ local sharingOptions = {
 							end
 						end,
 						hidden = function() return not BigWigs:GetPlugin("BattleRes", true) end,
-					},
-					exportPrivateAurasSettings = {
-						type = "toggle",
-						name = L.privateAuras,
-						desc = L.privateAuras_settings_export_desc,
-						order = 4,
-						width = 1,
-						get = function(i)
-							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
-							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
-								return sharingExportOptionsSettings[i[#i]]
-							end
-						end,
-						disabled = function()
-							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
-							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
-								return true
-							end
-						end,
-						hidden = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
 					},
 					exportCombatTimerSettings = {
 						type = "toggle",

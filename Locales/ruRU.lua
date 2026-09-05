@@ -260,15 +260,19 @@ L.nameplate_settings_export_desc = "Экспорт всех настроек п�
 L.position_import_bars_desc = "Импортировать позицию (якоря) полос."
 L.position_import_messages_desc = "Импортировать позицию (якоря) сообщений."
 L.position_import_countdown_desc = "Импортировать позицию (якоря) отсчёта."
+--L.position_import_auras_desc = "Import the position (anchors) of the auras."
 L.position_export_bars_desc = "Экспортировать позицию (якоря) полос."
 L.position_export_messages_desc = "Экспортировать позицию (якоря) сообщений."
 L.position_export_countdown_desc = "Экспортировать позицию (якоря) отсчёта."
+--L.position_export_auras_desc = "Export the position (anchors) of the auras."
 L.settings_import_bars_desc = "Импортировать общие настройки полос, такие как размер, шрифт и т.д."
 L.settings_import_messages_desc = "Импортировать общие настройки сообщений, такие как размер, шрифт и т.д."
 L.settings_import_countdown_desc = "Импортировать общие настройки отсчёта, такие как размер, шрифт и т.д."
+--L.settings_import_auras_desc = "Import the general aura settings such as size, font, etc."
 L.settings_export_bars_desc = "Экспортировать общие настройки полос, такие как размер, шрифт и т.д."
 L.settings_export_messages_desc = "Экспортировать общие настройки сообщений, такие как размер, шрифт и т.д."
 L.settings_export_countdown_desc = "Экспортировать общие настройки отсчёта, такие как размер, шрифт и т.д."
+--L.settings_export_auras_desc = "Export the general aura settings such as size, font, etc."
 L.colors_import_bars_desc = "Импортировать цвета полос."
 L.colors_import_messages_desc = "Импортировать цвета сообщений."
 L.color_import_countdown_desc = "Импортировать цвет отсчёта."
@@ -298,9 +302,11 @@ L.mythicplus_settings_export_desc = "Экспортировать все нас�
 L.imported_battleres_settings = "Настройки боевого воскрешения"
 L.battleres_settings_import_desc = "Импортировать все настройки боевого воскрешения."
 L.battleres_settings_export_desc = "Экспортировать все настройки боевого воскрешения."
-L.imported_privateAuras_settings = "Настройки приватных аур"
-L.privateAuras_settings_import_desc = "Импортировать все настройки приватных аур."
-L.privateAuras_settings_export_desc = "Экспортировать все настройки приватных аур."
+--L.imported_auras_positions = "Auras Position"
+--L.imported_auras_settings = "Auras Settings"
+--L.auras_custom_sounds = "Custom Sounds"
+--L.auras_custom_sounds_import_desc = "Import the custom aura sounds. (Not yet implemented)"
+--L.auras_custom_sounds_export_desc = "Export the custom aura sounds. (Not yet implemented)"
 L.imported_combattimer_settings = "Настройки таймера боя"
 L.combattimer_settings_import_desc = "Импортировать все настройки таймера боя."
 L.combattimer_settings_export_desc = "Экспортировать все настройки таймера боя."
@@ -321,7 +327,7 @@ L.sharing_export_renames_desc = "Экспортировать настроенн
 L.sharing_sounds_desc = "Импортировать звуки, которые будут проигрываться для способностей."
 L.sharing_export_sounds_desc = "Экспортировать звуки, которые будут проигрываться для способностей."
 --L.sharing_auras_desc = "Import the configured aura sounds."
-L.sharing_export_private_auras_desc = "Экспортировать настроенные звуки приватных аур."
+--L.sharing_export_auras_desc = "Export the configured aura sounds."
 L.sharing_colors_desc = "Импортировать настройки цветов для полос и сообщений."
 L.sharing_export_colors_desc = "Экспортировать настройки цветов для полос и сообщений."
 L.confirm_instance_import = "Выбранные настройки, которые вы собираетесь импортировать, перезапишут настройки в вашем текущем выбранном профиле:\n\n|cFF33FF99\"%s\"|r\n\nПодземелье/рейд:\n|cFFBB66FF\"%s\"|r\n\nВы уверены, что хотите это сделать?"
@@ -1012,13 +1018,10 @@ L.messagesOptInTitle = "Режим ручного включения сообщ�
 L.messagesOptInWarning = "|cffff4411ВНИМАНИЕ!|r\n\nВключение режима ручного включения отключит сообщения во ВСЕХ ваших модулях боссов. Вам нужно будет пройтись по каждому модулю и вручную включить нужные сообщения.\n\nИнтерфейс сейчас будет перезагружен, вы уверены?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
+-- Auras.lua
 --
 
 --L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "Приватные ауры"
-L.privateAurasDesc1 = "'Приватные ауры' — это особый тип отрицательных эффектов, которые аддоны не могут обнаруживать или автоматически обрабатывать. Сейчас такие эффекты используются во всех современных схватках с боссами.\n\n"
-L.privateAurasDesc2 = "BigWigs может помочь отслеживать, когда они применяются к вам, показывая их в виде иконок. |cFF33FF99Это помогает отображать критические отрицательные эффекты отдельно от обычных.|r\n\n"
 --L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 --L.disabledDuringTrash = "Disabled During Trash"
 
@@ -1046,7 +1049,6 @@ L.playerInYourGroup = "Игрок в вашей группе"
 --L.tankIndicator = "Tank Indicator"
 L.maxIcons = "Максимум иконок"
 L.maxIconsDesc = "Максимальное количество отображаемых иконок."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Теперь вы можете видеть свои приватные ауры в виде иконок, а также приватные ауры другого игрока, например танка."
 --L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 --L.aurasTestAnchorText = "Player\nAuras"
