@@ -260,7 +260,7 @@ function mod:MythicTimeline(_, eventInfo)
 	local barInfo = nil
 
 	local duration = eventInfo.duration
-	local rounded = self:RoundNumber(duration, 0)
+	local rounded = self:RoundNumber(self:RoundNumber(duration, 1), 0)
 
 	if warnStageThree then
 		warnStageThree = false
@@ -369,7 +369,7 @@ function mod:OtherTimeline(_, eventInfo)
 	local barInfo = nil
 
 	local duration = eventInfo.duration
-	local rounded = self:RoundNumber(duration, 0)
+	local rounded = self:RoundNumber(self:RoundNumber(duration, 1), 0)
 
 	if warnStageThree then
 		warnStageThree = false
