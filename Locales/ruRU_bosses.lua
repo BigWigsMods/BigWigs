@@ -87,9 +87,9 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 })
 
 BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
-	--trader_gebbo = "Gebbo",
-	--first_mate_nama = "Nama",
-	--scrollsage_iku = "Iku",
+	trader_gebbo = "Геббо",
+	first_mate_nama = "Нама",
+	scrollsage_iku = "Ику",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -105,23 +105,23 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "Размах",
 	call_of_the_serpent = "Яйца",
 	gore_rattle = "Хвост",
-	--grasping_fangs = "Tethers",
+	grasping_fangs = "Разорвать связку",  -- tether механика, возможно найдется название получше
 	circling_prey = "Разруш. Платформы",
 	p3_knock_up = "Подкидывание",
 
-	--toxic_womb = "Wretch Spawn",
-	--fester_burst = "Wretch Bubble",
-	--toxic_incubation = "Wretch Waves",
+	toxic_womb = "Спавн гадины",
+	fester_burst = "Баббл гадины",
+	toxic_incubation = "Волны гадины",
 
-	--count_amount_side = "%s (%d/%d) %s",
-	--count_side = "%s (%d) %s",
-	--fester_burst_count = "%s (%d-%d)",
+	count_amount_side = "%s (%d/%d) %s",
+	count_side = "%s (%d) %s",
+	fester_burst_count = "%s (%d-%d)",
 
-	--custom_select_limit_warnings = "Spectral Coils Group",
-	--custom_select_limit_warnings_desc = "Only show bars for your soak group (left or right).  Right side is first in stage one, left side is first in intermission.",
-	--custom_select_limit_warnings_value1 = "Show warnings for both sides.",
-	--custom_select_limit_warnings_value2 = "Show warnings for left side only.",
-	--custom_select_limit_warnings_value3 = "Show warnings for right side only.",
-	--custom_select_limit_warnings_value4 = "Odd groups left, even groups right.",
-	--custom_select_limit_warnings_value5 = "Mythic: Groups 1 & 2 go left, groups 3 & 4 go right. Others: Groups 1/2/3 go left, groups 4/5/6 go right.",
+	custom_select_limit_warnings = "Группа на призрачные кольца",
+	custom_select_limit_warnings_desc = "Показывать только полосы для вашей соак группы (лево или право).  Правая сторона будет первой на первой стадии, левая сторона будет первой на переходке.",
+	custom_select_limit_warnings_value1 = "Показывать предупреждения для обеих сторон.",
+	custom_select_limit_warnings_value2 = "Показывать предупреждения только для левой стороны.",
+	custom_select_limit_warnings_value3 = "Показывать предупреждения только для правой стороны.",
+	custom_select_limit_warnings_value4 = "Нечетные группы слева, четные группы справа.",
+	custom_select_limit_warnings_value5 = "Мифик: группы 1 & 2 идут влево, группы 3 & 4 идут вправо. Остальные сложности: группы 1/2/3 идут влево, группы 4/5/6 идут вправо.",
 })
