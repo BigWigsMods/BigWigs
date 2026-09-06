@@ -113,35 +113,35 @@ mod:SetAuraData({
 	-- important
 	{1282419, soundOnApplied = "warning", duration = 5, header = CL.important}, -- Volatile Venom
 	{1310498, soundOnApplied = "warning", duration = 5, mythic = true}, -- Mutagenic Venom
-	{1283485, soundOnApplied = "warning", duration = 5, note = "Targeted"}, -- Guillotine
-	{1297435, soundOnApplied = "warning", duration = 6, note = "Targeted"}, -- Dreadmarch XXX not applied to players?
+	{1283485, soundOnApplied = "warning", duration = 5, note = CL.debuffTargetedNote:format(mod:SpellName(1283485))}, -- Guillotine
+	{1297435, soundOnApplied = "warning", duration = 6, note = CL.debuffTargetedNote:format(mod:SpellName(1297435))}, -- Dreadmarch XXX not applied to players?
 	{1285911, soundOnApplied = "warning", duration = 7}, -- Unnerving Fixation
 	{1310881, soundOnApplied = "warning", duration = 5}, -- Gloombomb
 	{1286837, soundOnApplied = "alarm", soundOnAppliedDose = "none", duration = 11}, -- Gravebound
-	{1299266, soundOnApplied = "warning", duration = 5, note = "Targeted"}, -- Grim Guillotine
+	{1299266, soundOnApplied = "warning", duration = 5, note = CL.debuffTargetedNote:format(mod:SpellName(1299266))}, -- Grim Guillotine
 	-- Zul'jan
-	{1283345, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks", header = mod:SpellName(-35063)}, -- Twinfang Toxin
+	{1283345, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff, header = mod:SpellName(-35063)}, -- Twinfang Toxin
 	{1283290, soundOnApplied = "none"}, -- Noxious Ground
-	{1299838, soundOnApplied = "none", soundOnAppliedDose = "none", note = "DoT"}, -- Venom Rupture
-	{1307425, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Soaked"}, -- Guillotined
-	{1301690, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank cone"}, -- Sever
-	{1306906, soundOnApplied = "none", duration = 14, note = "DoT"}, -- Venomfang
-	{1285017, soundOnApplied = "none", note = "DoT"}, -- Axegrinder
+	{1299838, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Venom Rupture
+	{1307425, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1283485))}, -- Guillotined
+	{1301690, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1301690))}, -- Sever
+	{1306906, soundOnApplied = "none", duration = 14}, -- Venomfang
+	{1285017, soundOnApplied = "none"}, -- Axegrinder
 	-- Malacrass
-	{1297445, soundOnApplied = "none", note = "Possessed", header = mod:SpellName(-35062)}, -- Dreadmarch
+	{1297445, soundOnApplied = "none", note = CL.mainDebuffNote, header = mod:SpellName(-35062)}, -- Dreadmarch
 	{1310744, soundOnApplied = "none", duration = 5, mythic = true}, -- Malevolent Resonance
-	{1307959, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank cone"}, -- Soul Sever
+	{1307959, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1307959))}, -- Soul Sever
 	{1286918, soundOnApplied = "none", duration = 15}, -- Eternal Nightfall
 	{1286947, soundOnApplied = "none"}, -- Suffocating Darkness
-	{1286399, soundOnApplied = "alarm", duration = 5, note = "Kick fail"}, -- Wail of Terror
+	{1286399, soundOnApplied = "alarm", duration = 5, note = CL.debuffFailureInterruptNote:format(mod:SpellName(1286399))}, -- Wail of Terror
 	-- intermission
 	{1300665, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, header = CL.intermission}, -- Spirit Erasure
 	-- p3
 	{1298594, soundOnApplied = "none", header = CL.stage:format(3)}, -- Defilement of the Coiled Altar
-	{1298795, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank stacks"}, -- Corrupted Toxin
+	{1298795, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Corrupted Toxin
 	{1298591, soundOnApplied = "none"}, -- Defiled Groound
-	{1307652, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Soaked"}, -- Guillotined
-	{1307403, soundOnApplied = "none", soundOnAppliedDose = "none", note = "Tank cone"}, -- Blighted Sever
+	{1307652, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1299266))}, -- Guillotined
+	{1307403, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1307403))}, -- Blighted Sever
 })
 
 function mod:GetOptions()
