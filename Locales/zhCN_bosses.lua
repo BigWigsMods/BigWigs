@@ -119,9 +119,9 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 
 	custom_select_limit_warnings = "幽魂盘卷分组",
 	custom_select_limit_warnings_desc = "仅显示你所在分摊组（左或右）的进度条。第一阶段右侧优先，转阶段左侧优先。",
-	custom_select_limit_warnings_value1 = "显示两侧警告",
+	custom_select_limit_warnings_value1 = "显示两侧警告。",
 	custom_select_limit_warnings_value2 = "仅显示左侧警告。",
 	custom_select_limit_warnings_value3 = "仅显示右侧警告。",
-	custom_select_limit_warnings_value4 = "奇数队左，偶数队右",
+	custom_select_limit_warnings_value4 = "奇数队左，偶数队右。",
 	custom_select_limit_warnings_value5 = "史诗：1、2队左，3、4队右。其他：1/2/3队左，4/5/6队右。",
 })
