@@ -2513,6 +2513,14 @@ function boss:BossName(journalEncounterId)
 	return bossNames[journalEncounterId]
 end
 
+--- Get a localized achievement name from an id.
+-- @number achievementId The achievement id
+-- @return localized achievement name
+function boss:AchievementName(achievementId)
+	local _, name = GetAchievementInfo(achievementId)
+	return name
+end
+
 --- Check if a GUID is you.
 -- @string guid player GUID
 -- @return boolean
@@ -2579,6 +2587,19 @@ do
 		local sex = UnitSex(unit)
 		if sex then
 			return sex
+		end
+	end
+end
+
+do
+	local UnitLevel = loader.UnitLevel
+	--- Returns the level of a unit or -1 for boss units or hostile units 10 levels above the player (Level ??).
+	-- @string unit unit token or name
+	-- @return level the level of the unit
+	function boss:UnitLevel(unit)
+		local level = UnitLevel(unit)
+		if level then
+			return level
 		end
 	end
 end

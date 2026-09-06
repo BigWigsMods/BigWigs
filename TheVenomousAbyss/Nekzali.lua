@@ -90,7 +90,7 @@ mod:SetRenames({
 	-- [1289696] = {CL.big_adds}, -- Tether of Awakening
 	[1293212] = {1293212}, -- Grasping Depths
 	[1305421] = {CL.soak}, -- Hungering Pyre
-	[1299673] = {1299673}, -- Invoke
+	[1299673] = {1299673, CL.cast:format(mod:SpellName(1299673)), notes = {CL.generalNote, CL.castTimerNote}}, -- Invoke
 })
 
 --------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ function mod:GetOptions()
 		-- Restless Amani
 
 		-- Stage Two: Uncoiling
-		1299673, -- Invoke
+		{1299673, "CASTBAR"}, -- Invoke
 		-- Possession Barrage
 	}, {
 		[1293212] = "mythic",
@@ -533,6 +533,7 @@ function mod:Invoke()
 		key = 1299673,
 		onFinished = function()
 			self:Message(1299673, "orange", messageText)
+			self:CastBar(1299673, 5, 2)
 			self:PlaySound(1299673, "alarm")
 		end
 	}

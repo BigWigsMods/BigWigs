@@ -390,3 +390,4 @@ L.tank_grip = "Agarre al Tanque" -- When a boss grapples the tank towards them. 
 
 -- Aura Sections
 L.important = "Importante" -- High priority debuffs
+L.achievement = "Logro: \"%s\"" -- Debuff related to an achievement

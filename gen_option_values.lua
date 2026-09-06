@@ -701,7 +701,8 @@ local function parseAuraData(file_name, lines, start)
 	do
 		local mod = {
 			SpellName = function() return localized end,
-			BossName = function() return localized end
+			BossName = function() return localized end,
+			AchievementName = function() return localized end,
 		}
 		local env = setmetatable({
 			CL = localized,

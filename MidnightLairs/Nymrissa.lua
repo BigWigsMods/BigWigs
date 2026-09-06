@@ -53,7 +53,7 @@ mod:SetRenames({
 
 mod:SetAuraData({
 	{1313393, soundOnApplied = "warning", duration = 5, header = CL.important}, -- Chilling Frost
-	{1282947, soundOnApplied = "alarm", duration = 5}, -- Iceblade Flurry
+	{1282937, soundOnApplied = "alarm", duration = 5}, -- Iceblade Flurry
 	{1258901, soundOnApplied = "warning", mythic = true}, -- Water Jet
 
 	{1260843, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general}, -- Abyssal Rain
