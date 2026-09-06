@@ -57,7 +57,7 @@ mod:SetRenames({
 
 mod:SetAuraData({
 	{1277105, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_frontal}, -- Ravage
-	{1277051, soundOnApplied = "none", duration = 22, note = "Frontal soaked"}, -- Mutilated Gash
+	{1277051, soundOnApplied = "none", duration = 22, note = CL.debuffHitByCastNote:format(mod:SpellName(1277027))}, -- Mutilated Gash
 	{1287083, soundOnApplied = "alarm", soundOnAppliedDose = "none"}, -- Tempest
 	{1305963, soundOnApplied = "warning", duration = 10}, -- Venomous Surge
 	{1296667, soundOnApplied = "underyou"}, -- Caustic Residue
