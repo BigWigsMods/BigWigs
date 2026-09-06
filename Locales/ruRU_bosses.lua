@@ -83,22 +83,45 @@ BigWigsAPI.SetBossModuleLocale("Crown of the Cosmos", {
 -- The Venomous Abyss
 
 BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
-	--possession_barrage = "Barrage",
+	possession_barrage = "Обстрел",
+})
+
+BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
+	trader_gebbo = "Геббо",
+	first_mate_nama = "Нама",
+	scrollsage_iku = "Ику",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
-	--malignant_catalyst = "Catalyst", -- Short for Malignant Catalyst
+	malignant_catalyst = "Катализатор", -- Short for Malignant Catalyst
 })
 
 BigWigsAPI.SetBossModuleLocale("The Twin Fangs", {
-	--coiling_toxin = "Toxin", -- Short for Coiling Toxin
-	--corrosive_spit = "Spit", -- Short for Corrosive Spit
+	coiling_toxin = "Гной", -- Short for Coiling Toxin(Вероятно, Coiling Ichor - Обвивающий гной)
+	corrosive_spit = "Плевок", -- Short for Corrosive Spit
 })
 
 BigWigsAPI.SetBossModuleLocale("Ula'tek", {
-	--mephitic_thrash = "Sweep",
-	--call_of_the_serpent = "Eggs",
-	--gore_rattle = "Tail",
-	--circling_prey = "Platform Break",
-	--p3_knock_up = "Knock Up",
+	mephitic_thrash = "Размах",
+	call_of_the_serpent = "Яйца",
+	gore_rattle = "Хвост",
+	grasping_fangs = "Разорвать связку",  -- tether механика, возможно найдется название получше
+	circling_prey = "Разруш. Платформы",
+	p3_knock_up = "Подкидывание",
+
+	toxic_womb = "Спавн гадины",
+	fester_burst = "Баббл гадины",
+	toxic_incubation = "Волны гадины",
+
+	count_amount_side = "%s (%d/%d) %s",
+	count_side = "%s (%d) %s",
+	fester_burst_count = "%s (%d-%d)",
+
+	custom_select_limit_warnings = "Группа на призрачные кольца",
+	custom_select_limit_warnings_desc = "Показывать только полосы для вашей соак группы (лево или право).  Правая сторона будет первой на первой стадии, левая сторона будет первой на переходке.",
+	custom_select_limit_warnings_value1 = "Показывать предупреждения для обеих сторон.",
+	custom_select_limit_warnings_value2 = "Показывать предупреждения только для левой стороны.",
+	custom_select_limit_warnings_value3 = "Показывать предупреждения только для правой стороны.",
+	custom_select_limit_warnings_value4 = "Нечетные группы слева, четные группы справа.",
+	custom_select_limit_warnings_value5 = "Мифик: группы 1 & 2 идут влево, группы 3 & 4 идут вправо. Остальные сложности: группы 1/2/3 идут влево, группы 4/5/6 идут вправо.",
 })

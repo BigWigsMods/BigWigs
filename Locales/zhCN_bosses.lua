@@ -20,10 +20,10 @@ BigWigsAPI.SetBossModuleLocale("Midnight Falls", {
 	custom_select_limit_warnings = "[史诗] 限制第三阶段警告",
 	custom_select_limit_warnings_desc = "仅显示你所在半场的技能警告。",
 	custom_select_limit_warnings_value1 = "1、2组去左面，3、4组去右面。",
-	custom_select_limit_warnings_value2 = "奇数组去左面，偶数组去右面。",
-	custom_select_limit_warnings_value3 = "显示两面的所有警告。",
-	custom_select_limit_warnings_value4 = "仅显示左面警告。",
-	custom_select_limit_warnings_value5 = "仅显示右面警告。",
+	custom_select_limit_warnings_value2 = "奇数队左，偶数队右。",
+	custom_select_limit_warnings_value3 = "显示两侧的所有警告。",
+	custom_select_limit_warnings_value4 = "仅显示左侧警告。",
+	custom_select_limit_warnings_value5 = "仅显示右侧警告。",
 })
 
 -- Midnight World
@@ -86,6 +86,12 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 	possession_barrage = "弹幕",
 })
 
+BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
+	trader_gebbo = "盖博",
+	first_mate_nama = "纳玛",
+	scrollsage_iku = "伊库",
+})
+
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
 	malignant_catalyst = "催化剂", -- “恶性催化剂”简称
 })
@@ -99,6 +105,23 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "横扫",
 	call_of_the_serpent = "蛇蛋",
 	gore_rattle = "尾击",
+	grasping_fangs = "连线",
 	circling_prey = "平台碎裂",
 	p3_knock_up = "击飞",
+
+	toxic_womb = "疫鳞畸体",
+	fester_burst = "畸体薄膜",
+	toxic_incubation = "畸体浪潮",
+
+	count_amount_side = "%s（%d/%d）%s",
+	count_side = "%s（%d）%s",
+	fester_burst_count = "%s（%d-%d）",
+
+	custom_select_limit_warnings = "幽魂盘卷分组",
+	custom_select_limit_warnings_desc = "仅显示你所在分摊组（左或右）的进度条。第一阶段右侧优先，转阶段左侧优先。",
+	custom_select_limit_warnings_value1 = "显示两侧警告。",
+	custom_select_limit_warnings_value2 = "仅显示左侧警告。",
+	custom_select_limit_warnings_value3 = "仅显示右侧警告。",
+	custom_select_limit_warnings_value4 = "奇数队左，偶数队右。",
+	custom_select_limit_warnings_value5 = "史诗：1、2队左，3、4队右。其他：1/2/3队左，4/5/6队右。",
 })
