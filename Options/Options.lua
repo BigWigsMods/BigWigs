@@ -1159,6 +1159,18 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	options:SendMessage("BigWigs_RefreshAuraSounds", module)
 end
 
+local function dispelImageOnEnter(self)
+	optionsTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..self.dispel]), 1, 1, 1, true)
+	optionsTooltip:Show()
+end
+
+local function auraHeaderOnRelease(widget)
+	widget.image:SetScript("OnEnter", nil)
+	widget.image:SetScript("OnLeave", nil)
+	widget.image.dispel = nil
+end
+
 local dispelIcons = {
 	magic = "RaidFrame-Icon-DebuffMagic",
 	curse = "RaidFrame-Icon-DebuffCurse",
@@ -1200,20 +1212,14 @@ local function getAuraOptions(module, spellID)
 	if dispelAtlas then
 		-- AceGUI Label's :SetImage() only takes texture paths, so we grab the image, call :SetAtlas, then set imageshown=true ourselves
 		local image = auraHeader.image
+		image.dispel = dispel
 		image:SetAtlas(dispelAtlas)
 		auraHeader.imageshown = true
 		auraHeader:SetImageSize(16, 16)
-		image:SetScript("OnEnter", function()
-			optionsTooltip:SetOwner(image, "ANCHOR_RIGHT")
-			optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..dispel]), 1, 1, 1, true)
-			optionsTooltip:Show()
-		end)
+		image:SetScript("OnEnter", dispelImageOnEnter)
 		image:SetScript("OnLeave", optionsTooltip_Hide)
 		-- wipe on release, AceGUI pools widgets
-		auraHeader:SetCallback("OnRelease", function(widget)
-			widget.image:SetScript("OnEnter", nil)
-			widget.image:SetScript("OnLeave", nil)
-		end)
+		auraHeader:SetCallback("OnRelease", auraHeaderOnRelease)
 	elseif dispel then -- fallback in case there is no icon for this dispel type
 		nameText = "|cff999999["..L["auraDispel_"..dispel].."]|r "..nameText
 	end
