@@ -2591,6 +2591,19 @@ do
 	end
 end
 
+do
+	local UnitLevel = loader.UnitLevel
+	--- Returns the level of a unit or -1 for boss units or hostile units 10 levels above the player (Level ??).
+	-- @string unit unit token or name
+	-- @return level the level of the unit
+	function boss:UnitLevel(unit)
+		local level = UnitLevel(unit)
+		if level then
+			return level
+		end
+	end
+end
+
 --- Get the Globally Unique Identifier of a unit.
 -- @string unit unit token or name
 -- @return guid guid of the unit
