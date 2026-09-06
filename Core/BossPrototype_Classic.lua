@@ -1288,8 +1288,19 @@ do
 			return
 		end
 
-		local header = moduleAurasList[self][index].header
-		return header
+		return moduleAurasList[self][index].header
+	end
+
+	--- Get the aura difficulty.
+	-- @return string or nil
+	function boss:GetAuraDifficulty(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		return moduleAurasList[self][index].difficulty
 	end
 
 	--- Get the total number of auras for this module.
