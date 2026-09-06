@@ -129,19 +129,19 @@ mod:SetRenames({
 mod:SetAuraData({
 	{1311611, soundOnApplied = "alarm", header = CL.important}, -- Grasping Fangs
 	{1288879, soundOnApplied = "warning"}, -- Serpent's Bite
-	{1313529, soundOnApplied = "info"}, -- Ingested Venom
-	{1312967, soundOnApplied = "alarm", soundOnAppliedDose = "none"}, -- Volatile Purge
+	{1313529, soundOnApplied = "info", note = CL.debuffWalkIntoObjectNote:format(mod:SpellName(1288879))}, -- Ingested Venom
+	{1312967, soundOnApplied = "alarm", soundOnAppliedDose = "none", note = CL.debuffAddsCast:format(mod:SpellName(1313529))}, -- Volatile Purge
 	{1300685}, -- Soul Constrictor
 
 	{1292403, soundOnAppliedDose = "none", header = CL.general}, -- Caustic Waves
 	{1297338}, -- Deadly Venom
-	{1316356, soundOnAppliedDose = "none", note = "DoT"}, -- Volatile Purge
-	{1306119, soundOnApplied = "alarm", note = "Petrified"}, -- Calcified Corpse
+	{1316356, soundOnAppliedDose = "none", note = CL.debuffDotAfterCastNote:format(1316356)}, -- Volatile Purge
+	{1306119, soundOnApplied = "alarm", note = CL.debuffFailureGroupSoakNote:format(mod:SpellName(1288879))}, -- Calcified Corpse
 	{1298367}, -- Mother's Wrath
 	{1298417, soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Stone Venom
 	{1300938}, -- Hobbled
 	{1296301}, -- Mephitic Thrash
-	{1302842, soundOnAppliedDose = "none", mythic = true, note = "Toxic Incubation"}, -- Toxic Burn
+	{1302842, soundOnAppliedDose = "none", mythic = true, note = CL.debuffHitByCastNote:format(mod:SpellName(1299757))}, -- Toxic Burn
 
 	{1295360, soundOnAppliedDose = "none", header = CL.adds}, -- Malignant Shell
 	{1307612, soundOnAppliedDose = "none", mythic = true}, -- Noxious Shell
@@ -150,17 +150,18 @@ mod:SetAuraData({
 	{1301268, soundOnAppliedDose = "none"}, -- Putrid Membrane
 	{1287036, soundOnAppliedDose = "none"}, -- Poisonous Bite
 	{1301800, soundOnAppliedDose = "none"}, -- Acidic Burst
-	{1305163, soundOnApplied = "warning", note = "Targeted"}, -- Petrifying Sting
-	{1303414, soundOnApplied = "alarm", note = "Petrified"}, -- Petrifying Sting
+	{1305163, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1305163))}, -- Petrifying Sting
+	{1303414, soundOnApplied = "alarm", note = CL.debuffHitByCastNote:format(mod:SpellName(1305163))}, -- Petrifying Sting
 	{1300312}, -- Doomscale Shell
-	{1305775, soundOnApplied = "alarm", note = "Stunned"}, -- Dread Roar
-	{1305650, soundOnApplied = "alarm", note = "Stunned"}, -- Anguished Cry
+	{1305775, soundOnApplied = "alarm", mechanic = "stunned", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1305775))}, -- Dread Roar
+	{1305650, soundOnApplied = "alarm", mechanic = "stunned", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1305650))}, -- Anguished Cry
 	{1305709}, -- Desperate Thrash
 	{1311609, soundOnAppliedDose = "none"}, -- Blight Vein
 	{1306858}, -- Warden's Protection
 
-	{1306388, soundOnApplied = "info", header = "Achievement?"}, -- Greasy Hatchling
-	{1306393, soundOnApplied = "info"}, -- Butter Fingers
+	-- XXX https://www.wowhead.com/achievement=63609/no-egg-scramble
+	-- {1306388, soundOnApplied = "warning", header = CONTENT_TRACKING_ACHIEVEMENT_FORMAT:format(_G.GetAchievementInfo(63609))}, -- Greasy Hatchling
+	-- {1306393, soundOnRemoved = "info"}, -- Butter Fingers
 })
 
 function mod:GetOptions()
