@@ -159,9 +159,9 @@ mod:SetAuraData({
 	{1311609, soundOnAppliedDose = "none"}, -- Blight Vein
 	{1306858}, -- Warden's Protection
 
-	-- XXX https://www.wowhead.com/achievement=63609/no-egg-scramble
-	-- {1306388, soundOnApplied = "warning", header = CONTENT_TRACKING_ACHIEVEMENT_FORMAT:format(_G.GetAchievementInfo(63609))}, -- Greasy Hatchling
-	-- {1306393, soundOnRemoved = "info"}, -- Butter Fingers
+	-- https://www.wowhead.com/achievement=63609/no-egg-scramble
+	{1306388, soundOnApplied = "warning", header = CL.achievement:format(mod:AchievementName(63609))}, -- Greasy Hatchling
+	{1306393, soundOnRemoved = "info"}, -- Butter Fingers
 })
 
 function mod:GetOptions()
