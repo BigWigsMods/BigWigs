@@ -11,6 +11,7 @@ BigWigs:AddColors("Nek'zali the Soulcoiler", {
 })
 
 BigWigs:AddSounds("Nek'zali the Soulcoiler", {
+	[1292036] = "alert",
 	[1293212] = "long",
 	[1295397] = "info",
 	[1299673] = "alarm",
@@ -159,7 +160,7 @@ BigWigs:AddSounds("The Coiled Altar", {
 	[1299680] = "alert",
 	[1299960] = "info",
 	[1307279] = "alert",
-	["stages"] = "long",
+	["stages"] = {"info","long"},
 })
 
 BigWigs:AddColors("Ula'tek", {
