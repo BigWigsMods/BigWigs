@@ -74,6 +74,7 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetAchievementInfo",
 	"113/GetInventoryItemID", -- Vanilla interrupt check (warrior shield check)
 	"113/GetNumGroupMembers",
 	"113/GetPlayerInfoByGUID",
@@ -93,6 +94,7 @@ files["Core/BossPrototype_Classic.lua"].ignore = {
 	"113/C_NamePlate",
 	"113/C_UIWidgetManager",
 	"113/C_UnitAuras",
+	"113/GetAchievementInfo",
 	"113/GetNumGroupMembers",
 	"113/GetPlayerInfoByGUID",
 	"113/GetRaidTargetIndex",

@@ -2578,6 +2578,14 @@ function boss:BossName(journalEncounterId)
 	return bossNames[journalEncounterId]
 end
 
+--- Get a localized achievement name from an id.
+-- @number achievementId The achievement id
+-- @return localized achievement name
+function boss:AchievementName(achievementId)
+	local _, name = GetAchievementInfo(achievementId)
+	return name
+end
+
 --- Check if a GUID is you.
 -- @string guid player GUID
 -- @return boolean

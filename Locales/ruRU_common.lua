@@ -390,3 +390,4 @@ L.tank_grip = "Танк Притяжка" -- When a boss grapples the tank towar
 
 -- Aura Sections
 L.important = "Важное" -- High priority debuffs
+L.achievement = "Достижение: \"%s\"" -- Debuff related to an achievement
