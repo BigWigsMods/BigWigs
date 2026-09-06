@@ -1209,6 +1209,11 @@ local function getAuraOptions(module, spellID)
 			optionsTooltip:Show()
 		end)
 		image:SetScript("OnLeave", optionsTooltip_Hide)
+		-- wipe on release, AceGUI pools widgets
+		auraHeader:SetCallback("OnRelease", function(widget)
+			widget.image:SetScript("OnEnter", nil)
+			widget.image:SetScript("OnLeave", nil)
+		end)
 	elseif dispel then -- fallback in case there is no icon for this dispel type
 		nameText = "|cff999999["..L["auraDispel_"..dispel].."]|r "..nameText
 	end
