@@ -1035,7 +1035,7 @@ function mod:RageOfTheShackled()
 		onFinished = function()
 			self:Message(1286860, "green", barText)
 			self:PlaySound(1286860, "long")
-			self:CastBar(1286860, 20, self:GetRename(1286860, 2))
+			self:CastBar(1286860, 20, 2)
 			self:ScheduleTimer(function()
 				if not self:IsWiping() then
 					self:Message(1286860, "green", self:GetRename(1286860, 3))
