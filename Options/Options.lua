@@ -1159,16 +1159,21 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	options:SendMessage("BigWigs_RefreshAuraSounds", module)
 end
 
-local function dispelImageOnEnter(self)
-	optionsTooltip:SetOwner(self, "ANCHOR_RIGHT")
-	optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..self.dispel]), 1, 1, 1, true)
+local function dispelIconOnEnter(widget)
+	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
+	optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..widget:GetUserData("dispel")]), 1, 1, 1, true)
 	optionsTooltip:Show()
 end
 
-local function auraHeaderOnRelease(widget)
-	widget.image:SetScript("OnEnter", nil)
-	widget.image:SetScript("OnLeave", nil)
-	widget.image.dispel = nil
+local function difficultyIconOnEnter(widget)
+	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
+	optionsTooltip:AddLine(L[widget:GetUserData("difficulty")], 1, 1, 1, true)
+	optionsTooltip:Show()
+end
+
+local function headerIconOnRelease(widget) -- restore default positioning
+	widget.image:ClearAllPoints()
+	widget.image:SetPoint("TOP", 0, -5)
 end
 
 local dispelIcons = {
@@ -1177,6 +1182,10 @@ local dispelIcons = {
 	disease = "RaidFrame-Icon-DebuffDisease",
 	poison = "RaidFrame-Icon-DebuffPoison",
 	bleed = "RaidFrame-Icon-DebuffBleed",
+}
+local difficultyIcons = {
+	heroic = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Heroic",
+	mythic = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic",
 }
 
 local function getAuraOptions(module, spellID)
@@ -1196,39 +1205,64 @@ local function getAuraOptions(module, spellID)
 	if note then
 		nameText = L.noteLabel:format(nameText, note)
 	end
-	local mythic = false -- module:GetAuraIsMythic(spellID) XXX NYI
-	if mythic then
-		nameText = nameText.." |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14:::2|t"
-	end
 	if mechanic then
 		nameText = nameText.." |cff999999["..L["auraMechanic_"..mechanic].."]|r"
 	end
 
-	local auraHeader = AceGUI:Create("Label")
-	auraHeader:SetColor(1, 0.82, 0)
-	auraHeader:SetFontObject(GameFontNormal)
-	auraHeader:SetFullWidth(true)
+	local auraWidgets = {}
 	local dispelAtlas = dispel and dispelIcons[dispel]
 	if dispelAtlas then
-		auraHeader:SetImageByAtlas(dispelAtlas)
-		local image = auraHeader.image
-		image.dispel = dispel
-		image:SetScript("OnEnter", dispelImageOnEnter)
-		image:SetScript("OnLeave", optionsTooltip_Hide)
-		-- wipe on release, AceGUI pools widgets
-		auraHeader:SetCallback("OnRelease", auraHeaderOnRelease)
+		local dispelIcon = AceGUI:Create("Icon")
+		dispelIcon:SetImageByAtlas(dispelAtlas)
+		dispelIcon:SetImageSize(16, 16)
+		dispelIcon:SetWidth(16)
+		dispelIcon:SetHeight(16)
+		dispelIcon.image:ClearAllPoints()
+		dispelIcon.image:SetPoint("CENTER", 0, 0)
+		dispelIcon:SetCallback("OnRelease", headerIconOnRelease)
+		dispelIcon:SetUserData("dispel", dispel)
+		dispelIcon:SetCallback("OnEnter", dispelIconOnEnter)
+		dispelIcon:SetCallback("OnLeave", optionsTooltip_Hide)
+		auraWidgets[#auraWidgets+1] = dispelIcon
 	elseif dispel then -- fallback in case there is no icon for this dispel type
 		nameText = "|cff999999["..L["auraDispel_"..dispel].."]|r "..nameText
 	end
+	local difficulty = module:GetAuraDifficulty(spellID)
+	local difficultyTexture = difficulty and difficultyIcons[difficulty]
+	if difficultyTexture then
+		local difficultyIcon = AceGUI:Create("Icon")
+		difficultyIcon:SetImage(difficultyTexture)
+		difficultyIcon:SetImageSize(16, 16)
+		difficultyIcon:SetWidth(16)
+		difficultyIcon:SetHeight(16)
+		difficultyIcon.image:ClearAllPoints()
+		difficultyIcon.image:SetPoint("CENTER", 0, 0)
+		difficultyIcon:SetCallback("OnRelease", headerIconOnRelease)
+		difficultyIcon:SetUserData("difficulty", difficulty)
+		difficultyIcon:SetCallback("OnEnter", difficultyIconOnEnter)
+		difficultyIcon:SetCallback("OnLeave", optionsTooltip_Hide)
+		auraWidgets[#auraWidgets+1] = difficultyIcon
+	end
+	local auraHeader = AceGUI:Create("Label")
+	auraHeader:SetColor(1, 0.82, 0)
+	auraHeader:SetFontObject(GameFontNormal)
+	if dispelAtlas and difficultyTexture then
+		auraHeader:SetRelativeWidth(0.93)
+	elseif dispelAtlas or difficultyTexture then
+		auraHeader:SetRelativeWidth(0.97)
+	else
+		auraHeader:SetFullWidth(true)
+	end
 	auraHeader:SetText(nameText)
+	auraWidgets[#auraWidgets+1] = auraHeader
 
-	local tipLabel
 	if tip then
-		tipLabel = AceGUI:Create("Label")
+		local tipLabel = AceGUI:Create("Label")
 		tipLabel:SetText(tip)
 		tipLabel:SetColor(1, 1, 1)
 		tipLabel:SetFontObject(GameFontHighlightSmall)
 		tipLabel:SetFullWidth(true)
+		auraWidgets[#auraWidgets+1] = tipLabel
 	end
 
 	local icon = AceGUI:Create("Icon")
@@ -1242,6 +1276,7 @@ local function getAuraOptions(module, spellID)
 	icon:SetUserData("updateTooltip", true)
 	icon:SetCallback("OnEnter", auraOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
+	auraWidgets[#auraWidgets+1] = icon
 
 	local appliedDropdown = AceGUI:Create("BigWigsSharedDropdown")
 	appliedDropdown:SetLabel(L.onApplied)
@@ -1262,10 +1297,10 @@ local function getAuraOptions(module, spellID)
 			break
 		end
 	end
+	auraWidgets[#auraWidgets+1] = appliedDropdown
 
-	local doseDropdown
 	if defaultDoseSound then
-		doseDropdown = AceGUI:Create("BigWigsSharedDropdown")
+		local doseDropdown = AceGUI:Create("BigWigsSharedDropdown")
 		doseDropdown:SetLabel(L.onDose)
 		doseDropdown:SetList(soundList, nil, "DDI-Sound")
 		doseDropdown:SetRelativeWidth(0.3)
@@ -1281,6 +1316,7 @@ local function getAuraOptions(module, spellID)
 				break
 			end
 		end
+		auraWidgets[#auraWidgets+1] = doseDropdown
 	end
 
 	local removedDropdown = AceGUI:Create("BigWigsSharedDropdown")
@@ -1302,10 +1338,10 @@ local function getAuraOptions(module, spellID)
 			break
 		end
 	end
+	auraWidgets[#auraWidgets+1] = removedDropdown
 
-	local durationCheck
-	if hasDuration then
-		durationCheck = AceGUI:Create("CheckBox")
+	if hasDuration and not defaultDoseSound then -- hide duration option for auras that stack
+		local durationCheck = AceGUI:Create("CheckBox")
 		durationCheck:SetLabel("")
 		durationCheck:SetWidth(24)
 		durationCheck:SetUserData("key", key)
@@ -1318,24 +1354,10 @@ local function getAuraOptions(module, spellID)
 		durationCheck:SetCallback("OnLeave", optionsTooltip_Hide)
 
 		durationCheck:SetValue(module.db.profile.auras[key] and module.db.profile.auras[key].countdown and true)
+		auraWidgets[#auraWidgets+1] = durationCheck
 	end
 
-	if tipLabel then
-		if defaultDoseSound then
-			return auraHeader, tipLabel, icon, appliedDropdown, doseDropdown, removedDropdown
-		elseif hasDuration then
-			return auraHeader, tipLabel, icon, appliedDropdown, removedDropdown, durationCheck
-		else
-			return auraHeader, tipLabel, icon, appliedDropdown, removedDropdown
-		end
-	end
-	if defaultDoseSound then
-		return auraHeader, icon, appliedDropdown, doseDropdown, removedDropdown
-	elseif hasDuration then
-		return auraHeader, icon, appliedDropdown, removedDropdown, durationCheck
-	else
-		return auraHeader, icon, appliedDropdown, removedDropdown
-	end
+	return unpack(auraWidgets)
 end
 
 do
