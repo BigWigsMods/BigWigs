@@ -1125,11 +1125,19 @@ end
 local function auraOnEnter(widget)
 	local spellId = widget:GetUserData("spellId")
 	local secondarySpellIds = widget:GetUserData("secondarySpellIds")
+	local dispel = widget:GetUserData("dispel")
+	local mechanic = widget:GetUserData("mechanic")
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
 	optionsTooltip:SetSpellByID(spellId)
 	optionsTooltip:AddLine(L.primary_aura_spellId:format(spellId), 1, 1, 1, true)
 	if secondarySpellIds then
 		optionsTooltip:AddLine(L.secondary_aura_spellIds:format(table.concat(secondarySpellIds, L.comma)), 1, 1, 1, true)
+	end
+	if dispel then
+		optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..dispel]), 1, 1, 1, true)
+	end
+	if mechanic then
+		optionsTooltip:AddLine(L.auraMechanic:format(L["auraMechanic_"..mechanic]), 1, 1, 1, true)
 	end
 	optionsTooltip:Show()
 end
@@ -1151,30 +1159,77 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	options:SendMessage("BigWigs_RefreshAuraSounds", module)
 end
 
+local function dispelImageOnEnter(self)
+	optionsTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..self.dispel]), 1, 1, 1, true)
+	optionsTooltip:Show()
+end
+
+local function auraHeaderOnRelease(widget)
+	widget.image:SetScript("OnEnter", nil)
+	widget.image:SetScript("OnLeave", nil)
+	widget.image.dispel = nil
+end
+
+local dispelIcons = {
+	magic = "RaidFrame-Icon-DebuffMagic",
+	curse = "RaidFrame-Icon-DebuffCurse",
+	disease = "RaidFrame-Icon-DebuffDisease",
+	poison = "RaidFrame-Icon-DebuffPoison",
+	bleed = "RaidFrame-Icon-DebuffBleed",
+}
+
 local function getAuraOptions(module, spellID)
 	local key = spellID
-	local config = module.db.profile.auras[spellID]
 	local soundList = LibSharedMedia:List("sound")
 	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
 	local hasDuration = module:GetAuraDuration(spellID)
 
+	local dispel = module:GetAuraDispelType(spellID)
 	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
-	if note then
-		name = L.noteLabel:format(name, note)
-	end
+	local mechanic = module:GetAuraMechanic(spellID)
+	local tip = module:GetAuraTip(spellID)
 	local texture = module:SpellTexture(spellID)
 
-	local spellLabel = AceGUI:Create("Label")
+	local nameText = name
+	if note then
+		nameText = L.noteLabel:format(nameText, note)
+	end
 	local mythic = false -- module:GetAuraIsMythic(spellID) XXX NYI
 	if mythic then
-		spellLabel:SetText(name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14:::2|t")
-	else
-		spellLabel:SetText(name)
+		nameText = nameText.." |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14:::2|t"
 	end
-	spellLabel:SetColor(1, 0.82, 0)
-	spellLabel:SetFontObject(GameFontNormal)
-	spellLabel:SetFullWidth(true)
+	if mechanic then
+		nameText = nameText.." |cff999999["..L["auraMechanic_"..mechanic].."]|r"
+	end
+
+	local auraHeader = AceGUI:Create("Label")
+	auraHeader:SetColor(1, 0.82, 0)
+	auraHeader:SetFontObject(GameFontNormal)
+	auraHeader:SetFullWidth(true)
+	local dispelAtlas = dispel and dispelIcons[dispel]
+	if dispelAtlas then
+		auraHeader:SetImageByAtlas(dispelAtlas)
+		local image = auraHeader.image
+		image.dispel = dispel
+		image:SetScript("OnEnter", dispelImageOnEnter)
+		image:SetScript("OnLeave", optionsTooltip_Hide)
+		-- wipe on release, AceGUI pools widgets
+		auraHeader:SetCallback("OnRelease", auraHeaderOnRelease)
+	elseif dispel then -- fallback in case there is no icon for this dispel type
+		nameText = "|cff999999["..L["auraDispel_"..dispel].."]|r "..nameText
+	end
+	auraHeader:SetText(nameText)
+
+	local tipLabel
+	if tip then
+		tipLabel = AceGUI:Create("Label")
+		tipLabel:SetText(tip)
+		tipLabel:SetColor(1, 1, 1)
+		tipLabel:SetFontObject(GameFontHighlightSmall)
+		tipLabel:SetFullWidth(true)
+	end
 
 	local icon = AceGUI:Create("Icon")
 	icon:SetImage(texture, 0.07, 0.93, 0.07, 0.93)
@@ -1182,6 +1237,8 @@ local function getAuraOptions(module, spellID)
 	icon:SetRelativeWidth(0.1)
 	icon:SetUserData("spellId", spellID)
 	icon:SetUserData("secondarySpellIds", module:GetAuraSecondarySpellIDBySpellID(spellID))
+	icon:SetUserData("dispel", dispel)
+	icon:SetUserData("mechanic", mechanic)
 	icon:SetUserData("updateTooltip", true)
 	icon:SetCallback("OnEnter", auraOnEnter)
 	icon:SetCallback("OnLeave", optionsTooltip_Hide)
@@ -1263,12 +1320,21 @@ local function getAuraOptions(module, spellID)
 		durationCheck:SetValue(module.db.profile.auras[key] and module.db.profile.auras[key].countdown and true)
 	end
 
+	if tipLabel then
+		if defaultDoseSound then
+			return auraHeader, tipLabel, icon, appliedDropdown, doseDropdown, removedDropdown
+		elseif hasDuration then
+			return auraHeader, tipLabel, icon, appliedDropdown, removedDropdown, durationCheck
+		else
+			return auraHeader, tipLabel, icon, appliedDropdown, removedDropdown
+		end
+	end
 	if defaultDoseSound then
-		return spellLabel, icon, appliedDropdown, doseDropdown, removedDropdown
+		return auraHeader, icon, appliedDropdown, doseDropdown, removedDropdown
 	elseif hasDuration then
-		return spellLabel, icon, appliedDropdown, removedDropdown, durationCheck
+		return auraHeader, icon, appliedDropdown, removedDropdown, durationCheck
 	else
-		return spellLabel, icon, appliedDropdown, removedDropdown
+		return auraHeader, icon, appliedDropdown, removedDropdown
 	end
 end
 
