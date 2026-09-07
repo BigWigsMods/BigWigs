@@ -1129,6 +1129,7 @@ local function auraOnEnter(widget)
 	local mechanic = widget:GetUserData("mechanic")
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
 	optionsTooltip:SetSpellByID(spellId)
+	optionsTooltip:AddLine(" ")
 	optionsTooltip:AddLine(L.primary_aura_spellId:format(spellId), 1, 1, 0.6, true)
 	if secondarySpellIds then
 		optionsTooltip:AddLine(L.secondary_aura_spellIds:format(table.concat(secondarySpellIds, L.comma)), 1, 1, 0.6, true)
