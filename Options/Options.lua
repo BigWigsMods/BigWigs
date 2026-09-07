@@ -1191,15 +1191,16 @@ local difficultyIcons = {
 local function getAuraOptions(module, spellID)
 	local key = spellID
 	local soundList = LibSharedMedia:List("sound")
-	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
-	local hasDuration = module:GetAuraDuration(spellID)
 
 	local dispel = module:GetAuraDispelType(spellID)
+	local difficulty = module:GetAuraDifficulty(spellID)
 	local name = module:SpellName(spellID)
 	local note = module:GetAuraNote(spellID)
 	local mechanic = module:GetAuraMechanic(spellID)
 	local tip = module:GetAuraTip(spellID)
 	local texture = module:SpellTexture(spellID)
+	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
+	local hasDuration = module:GetAuraDuration(spellID)
 
 	local nameText = name
 	if note then
@@ -1227,7 +1228,6 @@ local function getAuraOptions(module, spellID)
 	elseif dispel then -- fallback in case there is no icon for this dispel type
 		nameText = "|cff999999["..L["auraDispel_"..dispel].."]|r "..nameText
 	end
-	local difficulty = module:GetAuraDifficulty(spellID)
 	local difficultyTexture = difficulty and difficultyIcons[difficulty]
 	if difficultyTexture then
 		local difficultyIcon = AceGUI:Create("Icon")

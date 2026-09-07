@@ -77,10 +77,10 @@ mod:SetAuraData({ -- TODO
 	{1289092, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Stone Breaker
 	{1292807, soundOnApplied = "none"}, -- Stir the Depths
 	{1294605, soundOnApplied = "none"}, -- Vile Flood
-	{1303230, 1303235, soundOnApplied = "none", mythic = true, header = CL.mythic}, -- Blood Torrent
-	{1310360, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true}, -- Envenomed
-	{1310102, soundOnApplied = "none", mythic = true}, -- Tainted Blood
-	{1308386, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true}, -- Visceral Burst
+	{1303230, 1303235, soundOnApplied = "none", difficulty = "mythic", header = CL.mythic}, -- Blood Torrent
+	{1310360, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Envenomed
+	{1310102, soundOnApplied = "none", difficulty = "mythic"}, -- Tainted Blood
+	{1308386, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Visceral Burst
 })
 
 function mod:GetOptions()

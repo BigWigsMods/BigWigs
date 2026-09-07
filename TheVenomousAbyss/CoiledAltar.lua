@@ -112,7 +112,7 @@ mod:SetRenames({
 mod:SetAuraData({
 	-- important
 	{1282419, soundOnApplied = "warning", duration = 5, header = CL.important}, -- Volatile Venom
-	{1310498, soundOnApplied = "warning", duration = 5, mythic = true}, -- Mutagenic Venom
+	{1310498, soundOnApplied = "warning", duration = 5, difficulty = "mythic"}, -- Mutagenic Venom
 	{1283485, soundOnApplied = "warning", duration = 5, note = CL.debuffTargetedNote:format(mod:SpellName(1283485))}, -- Guillotine
 	{1297435, soundOnApplied = "warning", duration = 6, note = CL.debuffTargetedNote:format(mod:SpellName(1297435))}, -- Dreadmarch XXX not applied to players?
 	{1285911, soundOnApplied = "warning", duration = 7}, -- Unnerving Fixation
@@ -129,13 +129,13 @@ mod:SetAuraData({
 	{1285017, soundOnApplied = "none"}, -- Axegrinder
 	-- Malacrass
 	{1297445, soundOnApplied = "none", note = CL.mainDebuffNote, header = mod:SpellName(-35062)}, -- Dreadmarch
-	{1310744, soundOnApplied = "none", duration = 5, mythic = true}, -- Malevolent Resonance
+	{1310744, soundOnApplied = "none", duration = 5, difficulty = "mythic"}, -- Malevolent Resonance
 	{1307959, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1307959))}, -- Soul Sever
 	{1286918, soundOnApplied = "none", duration = 15}, -- Eternal Nightfall
 	{1286947, soundOnApplied = "none"}, -- Suffocating Darkness
 	{1286399, soundOnApplied = "alarm", duration = 5, note = CL.debuffFailureInterruptNote:format(mod:SpellName(1286399))}, -- Wail of Terror
 	-- intermission
-	{1300665, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, header = CL.intermission}, -- Spirit Erasure
+	{1300665, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic", header = CL.intermission}, -- Spirit Erasure
 	-- p3
 	{1298594, soundOnApplied = "none", header = CL.stage:format(3)}, -- Defilement of the Coiled Altar
 	{1298795, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Corrupted Toxin

@@ -56,18 +56,19 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1277105, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_frontal}, -- Ravage
+	{1305963, soundOnApplied = "warning", duration = 10, header = CL.important}, -- Venomous Surge
+	{1285419, 1285425, 1285453, 1297096, 1297111, soundOnApplied = "alert", duration = 8}, -- Raging Crosswinds
+	{1305621, soundOnApplied = "warning", difficulty = "mythic"}, -- Serpent's Fury,
+	{1297707, soundOnApplied = "warning", duration = 5, note = CL.left, difficulty = "mythic"}, -- Virulence (Left)
+	{1299899, soundOnApplied = "warning", duration = 5, note = CL.right, difficulty = "mythic"}, -- Virulence (Right)
+
+	{1277105, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1277002)), header = mod:SpellName(1277105)}, -- Ravage
 	{1277051, soundOnApplied = "none", duration = 22, note = CL.debuffHitByCastNote:format(mod:SpellName(1277027))}, -- Mutilated Gash
-	{1287083, soundOnApplied = "alarm", soundOnAppliedDose = "none"}, -- Tempest
-	{1305963, soundOnApplied = "warning", duration = 10}, -- Venomous Surge
+	{1287083, soundOnApplied = "alarm", soundOnAppliedDose = "none", mechanic = "snared", note = CL.debuffFailureMoveFromCastNote:format(mod:SpellName(1287083))}, -- Tempest
+
+	{1282873, soundOnApplied = "none", note = CL.tank_debuff, header = CL.general}, -- Corroding Venom
+	{1287205, soundOnApplied = "none", note = CL.debuffAddsCast:format(mod:SpellName(1287008))}, -- Viscous Cyst
 	{1296667, soundOnApplied = "underyou"}, -- Caustic Residue
-	{1285425, soundOnApplied = "none", duration = 8, note = CL.north}, -- Raging Crosswinds (North)
-	{1285453, soundOnApplied = "none", duration = 8, note = CL.south}, -- Raging Crosswinds (South)
-	{1297096, soundOnApplied = "none", duration = 8, note = CL.east}, -- Raging Crosswinds (East)
-	{1297111, soundOnApplied = "none", duration = 8, note = CL.west}, -- Raging Crosswinds (West)
-	{1305621, soundOnApplied = "warning", mythic = true}, -- Serpent's Fury,
-	{1297707, soundOnApplied = "warning", duration = 5, note = CL.left, mythic = true}, -- Virulence (Left)
-	{1299899, soundOnApplied = "warning", duration = 5, note = CL.right, mythic = true}, -- Virulence (Right)
 })
 
 function mod:GetOptions()
@@ -116,6 +117,10 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
+	if self:Mythic() and rounded == 46 then
+		rounded = 47 -- XXX short Venomous Surge? don't mess up the repeating logic
+	end
+
 	-- mythic / heroic / normal
 	if rounded == 100 or rounded == 111 or rounded == 125 then
 		barInfo = self:HowlingMaelstrom()
@@ -135,7 +140,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		else -- if count % 3 == 0 then
 			-- this gets finished when the debuffs go out for the previous cast x.x
 			barInfo = self:RagingCrosswinds()
-			barInfo.skipState = true
+			barInfo.ignoreState = true
 			self:ScheduleTimer(function()
 				self:StopBar(barInfo.msg)
 				barInfo:onFinished()
@@ -165,7 +170,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local state = C_EncounterTimeline.GetEventState(eventID)
 
 	local barInfo = activeBars[eventID]
-	if barInfo and not barInfo.skipState then
+	if barInfo and not barInfo.ignoreState then
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
