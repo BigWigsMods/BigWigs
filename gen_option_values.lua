@@ -109,6 +109,10 @@ local valid_aura_mechanics = { -- SpellMechanic, lowercase
 	wounded = true,
 	taunted = true,
 }
+local valid_aura_difficulties = {
+	mythic = true,
+	heroic = true,
+}
 local color_methods = {
 	MessageOld = 2,
 	Message = 2,
@@ -771,6 +775,10 @@ local function parseAuraData(file_name, lines, start)
 		local dispel = entry.dispel
 		if dispel and not (type(dispel) == "string" and valid_aura_dispels[dispel]) then
 			error(string.format("    %s:%d: SetAuraData: Invalid dispel type %q (spell %d), expected: %s", file_name, start, tostring(dispel), spell_id, table.concat(sortKeys(valid_aura_dispels), ", ")))
+		end
+		local difficulty = entry.difficulty
+		if difficulty and not (type(difficulty) == "string" and valid_aura_difficulties[difficulty]) then
+			error(string.format("    %s:%d: SetAuraData: Invalid difficulty %q (spell %d), expected: %s", file_name, start, tostring(difficulty), spell_id, table.concat(sortKeys(valid_aura_difficulties), ", ")))
 		end
 		local mechanic = entry.mechanic
 		if mechanic and not (type(mechanic) == "string" and valid_aura_mechanics[mechanic]) then
