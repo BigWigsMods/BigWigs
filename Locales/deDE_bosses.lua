@@ -87,9 +87,9 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 })
 
 BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
-	--trader_gebbo = "Gebbo",
-	--first_mate_nama = "Nama",
-	--scrollsage_iku = "Iku",
+	trader_gebbo = "Gebbo",
+	first_mate_nama = "Nama",
+	scrollsage_iku = "Iku",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -105,23 +105,23 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "Feger",
 	call_of_the_serpent = "Eier",
 	gore_rattle = "Schwanz",
-	--grasping_fangs = "Tethers",
+	grasping_fangs = "Verbindungen",
 	circling_prey = "Plattform Bruch",
 	p3_knock_up = "Hochschleudern",
 
-	--toxic_womb = "Wretch Spawn",
-	--fester_burst = "Wretch Bubble",
-	--toxic_incubation = "Wretch Waves",
+	toxic_womb = "Wicht erscheint",
+	fester_burst = "Wicht Schild",
+	toxic_incubation = "Wicht Wellen",
 
-	--count_amount_side = "%s (%d/%d) %s",
-	--count_side = "%s (%d) %s",
-	--fester_burst_count = "%s (%d-%d)",
+	count_amount_side = "%s (%d/%d) %s",
+	count_side = "%s (%d) %s",
+	fester_burst_count = "%s (%d-%d)",
 
-	--custom_select_limit_warnings = "Spectral Coils Group",
-	--custom_select_limit_warnings_desc = "Only show bars for your soak group (left or right).  Right side is first in stage one, left side is first in intermission.",
-	--custom_select_limit_warnings_value1 = "Show warnings for both sides.",
-	--custom_select_limit_warnings_value2 = "Show warnings for left side only.",
-	--custom_select_limit_warnings_value3 = "Show warnings for right side only.",
-	--custom_select_limit_warnings_value4 = "Odd groups left, even groups right.",
-	--custom_select_limit_warnings_value5 = "Mythic: Groups 1 & 2 go left, groups 3 & 4 go right. Others: Groups 1/2/3 go left, groups 4/5/6 go right.",
+	custom_select_limit_warnings = "Spektralschlingen Gruppen",
+	custom_select_limit_warnings_desc = "Nur Leisten für Deine Soak Gruppe anzeigen (links oder rechts). Rechte Seite zuerst in Phase 1, linke Seite zuerst in der ersten Unterbrechung.",
+	custom_select_limit_warnings_value1 = "Warnungen für beide Seiten anzeigen.",
+	custom_select_limit_warnings_value2 = "Nur Warnungen für linke Seite anzeigen.",
+	custom_select_limit_warnings_value3 = "Nur Warnungen für rechte Seite anzeigen.",
+	custom_select_limit_warnings_value4 = "Ungerade Gruppen links, gerade Gruppen rechts.",
+	custom_select_limit_warnings_value5 = "Mythisch: Gruppen 1 & 2 sind links, Gruppen 3 & 4 sind rechts. Ansonsten: Gruppen 1/2/3 sind links, Gruppen 4/5/6 sind rechts.",
 })
