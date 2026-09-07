@@ -1167,7 +1167,7 @@ end
 
 local function difficultyIconOnEnter(widget)
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-	optionsTooltip:AddLine(L[widget:GetUserData("difficulty")], 1, 1, 1, true)
+	optionsTooltip:AddLine("|cFFFFFF99"..L[widget:GetUserData("difficulty")].."|r", 1, 1, 1, true)
 	optionsTooltip:Show()
 end
 
