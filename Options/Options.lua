@@ -1159,19 +1159,23 @@ local function getAuraOptions(module, spellID)
 	local hasDuration = module:GetAuraDuration(spellID)
 
 	local name = module:SpellName(spellID)
+
+	local difficulty = module:GetAuraDifficulty(spellID)
+	if difficulty == "mythic" then
+		name = name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14:::2|t"
+	elseif difficulty == "heroic" then
+		name = name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Heroic:14:::2|t"
+	end
+
 	local note = module:GetAuraNote(spellID)
 	if note then
 		name = L.noteLabel:format(name, note)
 	end
+
 	local texture = module:SpellTexture(spellID)
 
 	local spellLabel = AceGUI:Create("Label")
-	local mythic = false -- module:GetAuraIsMythic(spellID) XXX NYI
-	if mythic then
-		spellLabel:SetText(name .. " |TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Mythic:14:::2|t")
-	else
-		spellLabel:SetText(name)
-	end
+	spellLabel:SetText(name)
 	spellLabel:SetColor(1, 0.82, 0)
 	spellLabel:SetFontObject(GameFontNormal)
 	spellLabel:SetFullWidth(true)
