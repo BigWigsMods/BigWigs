@@ -1244,18 +1244,18 @@ local function getAuraOptions(module, spellID)
 		difficultyIcon:SetCallback("OnLeave", optionsTooltip_Hide)
 		auraWidgets[#auraWidgets+1] = difficultyIcon
 	end
-	local auraHeader = AceGUI:Create("Label")
-	auraHeader:SetColor(1, 0.82, 0)
-	auraHeader:SetFontObject(GameFontNormal)
+	local auraLabel = AceGUI:Create("Label")
+	auraLabel:SetText(nameText)
+	auraLabel:SetColor(1, 0.82, 0)
+	auraLabel:SetFontObject(GameFontNormal)
 	if dispelAtlas and difficultyTexture then
-		auraHeader:SetRelativeWidth(0.93)
+		auraLabel:SetRelativeWidth(0.93)
 	elseif dispelAtlas or difficultyTexture then
-		auraHeader:SetRelativeWidth(0.96)
+		auraLabel:SetRelativeWidth(0.96)
 	else
-		auraHeader:SetFullWidth(true)
+		auraLabel:SetFullWidth(true)
 	end
-	auraHeader:SetText(nameText)
-	auraWidgets[#auraWidgets+1] = auraHeader
+	auraWidgets[#auraWidgets+1] = auraLabel
 
 	if tip then
 		local tipLabel = AceGUI:Create("Label")
