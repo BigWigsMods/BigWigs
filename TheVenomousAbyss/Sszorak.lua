@@ -116,6 +116,10 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	local duration = eventInfo.duration
 	local rounded = self:RoundNumber(duration, 0)
 
+	if self:Mythic() and rounded == 46 then
+		rounded = 47 -- XXX short Venomous Surge? don't mess up the repeating logic
+	end
+
 	-- mythic / heroic / normal
 	if rounded == 100 or rounded == 111 or rounded == 125 then
 		barInfo = self:HowlingMaelstrom()
