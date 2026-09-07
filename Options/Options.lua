@@ -1210,12 +1210,9 @@ local function getAuraOptions(module, spellID)
 	auraHeader:SetFullWidth(true)
 	local dispelAtlas = dispel and dispelIcons[dispel]
 	if dispelAtlas then
-		-- AceGUI Label's :SetImage() only takes texture paths, so we grab the image, call :SetAtlas, then set imageshown=true ourselves
+		auraHeader:SetImageByAtlas(dispelAtlas)
 		local image = auraHeader.image
 		image.dispel = dispel
-		image:SetAtlas(dispelAtlas)
-		auraHeader.imageshown = true
-		auraHeader:SetImageSize(16, 16)
 		image:SetScript("OnEnter", dispelImageOnEnter)
 		image:SetScript("OnLeave", optionsTooltip_Hide)
 		-- wipe on release, AceGUI pools widgets
