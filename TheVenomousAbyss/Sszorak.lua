@@ -69,10 +69,6 @@ mod:SetAuraData({
 	{1282873, soundOnApplied = "none", note = CL.tank_debuff, header = CL.general}, -- Corroding Venom
 	{1287205, soundOnApplied = "none", note = CL.debuffAddsCast:format(mod:SpellName(1287008))}, -- Viscous Cyst
 	{1296667, soundOnApplied = "underyou"}, -- Caustic Residue
-	{1285425, soundOnApplied = "none", duration = 8, note = CL.north, header = mod:SpellName(1285419)}, -- Raging Crosswinds (North)
-	{1285453, soundOnApplied = "none", duration = 8, note = CL.south}, -- Raging Crosswinds (South)
-	{1297096, soundOnApplied = "none", duration = 8, note = CL.east}, -- Raging Crosswinds (East)
-	{1297111, soundOnApplied = "none", duration = 8, note = CL.west}, -- Raging Crosswinds (West)
 })
 
 function mod:GetOptions()
