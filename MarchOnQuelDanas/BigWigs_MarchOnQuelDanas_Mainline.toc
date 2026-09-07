@@ -13,7 +13,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f進軍奎爾達納斯|r]
 ## Notes: BigWigs March on Quel'Danas Modules
 ## Notes-deDE: BigWigs Marsch auf Quel'Danas Module
-## Notes-esES: BigWigs Marcha a Quel'Danas Modules
+## Notes-esES: Módulos de BigWigs para la Marcha a Quel'Danas
 ## Notes-esMX: BigWigs Marcha sobre Quel'Danas Modules
 ## Notes-frFR: BigWigs Marche sur Quel’Danas Modules
 ## Notes-itIT: BigWigs Marcha su Quel'Danas Modules

@@ -13,7 +13,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f虛無之尖|r]
 ## Notes: BigWigs The Voidspire Modules
 ## Notes-deDE: BigWigs Die Leerenspitze Module
-## Notes-esES: BigWigs The Voidspire Modules
+## Notes-esES: Módulos de BigWigs para la Aguja del Vacío
 ## Notes-esMX: BigWigs The Voidspire Modules
 ## Notes-frFR: BigWigs The Voidspire Modules
 ## Notes-itIT: BigWigs The Voidspire Modules

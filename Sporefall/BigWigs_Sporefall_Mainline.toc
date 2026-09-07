@@ -13,7 +13,7 @@
 ## Title-zhTW: BigWigs [|cffeda55fSporefall|r]
 ## Notes: BigWigs Sporefall Modules
 ## Notes-deDE: BigWigs Sporenfall Module
-## Notes-esES: BigWigs Sporefall Modules
+## Notes-esES: Módulos de BigWigs para Sporefall
 ## Notes-esMX: BigWigs Sporefall Modules
 ## Notes-frFR: BigWigs Sporefall Modules
 ## Notes-itIT: BigWigs Sporefall Modules

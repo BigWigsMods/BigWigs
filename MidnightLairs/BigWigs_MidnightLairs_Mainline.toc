@@ -13,7 +13,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f浪縛岩窟|r]
 ## Notes: BigWigs Midnight Lair Boss Modules
 ## Notes-deDE: BigWigs Midnight Lair Boss Modules
-## Notes-esES: BigWigs Midnight Lair Boss Modules
+## Notes-esES: Módulos de BigWigs para los jefes de guarida de Midnight
 ## Notes-esMX: BigWigs Midnight Lair Boss Modules
 ## Notes-frFR: BigWigs Midnight Lair Boss Modules
 ## Notes-itIT: BigWigs Midnight Lair Boss Modules
