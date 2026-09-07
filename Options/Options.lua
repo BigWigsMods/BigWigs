@@ -1129,15 +1129,15 @@ local function auraOnEnter(widget)
 	local mechanic = widget:GetUserData("mechanic")
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
 	optionsTooltip:SetSpellByID(spellId)
-	optionsTooltip:AddLine(L.primary_aura_spellId:format(spellId), 1, 1, 1, true)
+	optionsTooltip:AddLine(L.primary_aura_spellId:format(spellId), 1, 1, 0.6, true)
 	if secondarySpellIds then
-		optionsTooltip:AddLine(L.secondary_aura_spellIds:format(table.concat(secondarySpellIds, L.comma)), 1, 1, 1, true)
+		optionsTooltip:AddLine(L.secondary_aura_spellIds:format(table.concat(secondarySpellIds, L.comma)), 1, 1, 0.6, true)
 	end
 	if dispel then
-		optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..dispel]), 1, 1, 1, true)
+		optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..dispel]), 1, 1, 0.6, true)
 	end
 	if mechanic then
-		optionsTooltip:AddLine(L.auraMechanic:format(L["auraMechanic_"..mechanic]), 1, 1, 1, true)
+		optionsTooltip:AddLine(L.auraMechanic:format(L["auraMechanic_"..mechanic]), 1, 1, 0.6, true)
 	end
 	optionsTooltip:Show()
 end
@@ -1161,13 +1161,13 @@ end
 
 local function dispelIconOnEnter(widget)
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-	optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..widget:GetUserData("dispel")]), 1, 1, 1, true)
+	optionsTooltip:AddLine(L.auraDispelType:format(L["auraDispel_"..widget:GetUserData("dispel")]), 1, 1, 0.6, true)
 	optionsTooltip:Show()
 end
 
 local function difficultyIconOnEnter(widget)
 	optionsTooltip:SetOwner(widget.frame, "ANCHOR_RIGHT")
-	optionsTooltip:AddLine("|cFFFFFF99"..L[widget:GetUserData("difficulty")].."|r", 1, 1, 1, true)
+	optionsTooltip:AddLine(L[widget:GetUserData("difficulty")], 1, 1, 0.6, true)
 	optionsTooltip:Show()
 end
 
