@@ -102,7 +102,7 @@ mod:SetAuraData({
 	{1295380, soundOnApplied = "info"}, -- Siphoning Infection (Healing main debuffed player)
 	{1294994, soundOnApplied = "none"}, -- Stygian Infection
 	{1282117, soundOnApplied = "none", duration = 10}, -- Adaptive Infection
-	{1304459, soundOnApplied = "none", soundOnAppliedDose = "none", mythic = true, note = CL.mythic}, -- Malignance
+	{1304459, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Malignance
 	{1297338, soundOnApplied = "underyou"}, -- Deadly Venom (Standing in venom?)
 	{1291461, soundOnApplied = "underyou"}, -- Virulent Fumes
 	{1285979, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.adds}, -- Caustic Surge
