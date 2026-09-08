@@ -101,7 +101,7 @@ mod:SetAuraData({
 	{1306666, soundOnApplied = "warning", soundOnAppliedDose = "none", duration = 7.5, header = CL.important}, -- Hungering Pyre
 	{1284103, soundOnApplied = "warning", duration = 2}, -- Possession Barrage
 	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Hollowing Strikes -- Tank Stacks
-	{1287434, soundOnApplied = "warning", duration = 15}, -- Essence Rend
+	{1287434, soundOnApplied = "warning", dispel = "magic", duration = 15}, -- Essence Rend
 	{1298698, soundOnApplied = "none", duration = 12, header = CL.general}, -- Residual Toll
 	{1297624, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Ritual Burn
 	{1288772, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Soulcoil Rite

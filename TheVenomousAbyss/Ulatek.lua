@@ -136,10 +136,10 @@ mod:SetAuraData({
 	{1292403, soundOnAppliedDose = "none", header = CL.general}, -- Caustic Waves
 	{1297338}, -- Deadly Venom
 	{1316356, soundOnAppliedDose = "none", note = CL.debuffDotAfterCastNote:format(mod:SpellName(1316356))}, -- Volatile Purge
-	{1306119, soundOnApplied = "alarm", note = CL.debuffFailureGroupSoakNote:format(mod:SpellName(1288879))}, -- Calcified Corpse
+	{1306119, soundOnApplied = "alarm", mechanic = "stunned", note = CL.debuffFailureGroupSoakNote:format(mod:SpellName(1288879))}, -- Calcified Corpse
 	{1298367, note = CL.tank_debuff}, -- Mother's Wrath
 	{1298417, soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Stone Venom
-	{1300938, note = CL.tank_debuff}, -- Hobbled
+	{1300938, mechanic = "snared", note = CL.tank_debuff}, -- Hobbled
 	{1296301}, -- Mephitic Thrash
 	{1302842, soundOnAppliedDose = "none", difficulty = "mythic", note = CL.debuffHitByCastNote:format(mod:SpellName(1299757))}, -- Toxic Burn
 
@@ -148,13 +148,13 @@ mod:SetAuraData({
 	{1307635, difficulty = "mythic"}, -- Noxious Splash
 	{1312150, difficulty = "mythic"}, -- Rancid Yolk
 	{1301268, soundOnAppliedDose = "none"}, -- Putrid Membrane
-	{1287036, soundOnAppliedDose = "none"}, -- Poisonous Bite
-	{1301800, soundOnAppliedDose = "none"}, -- Acidic Burst
+	{1287036, soundOnAppliedDose = "none", dispel = "poison"}, -- Poisonous Bite
+	{1301800, soundOnAppliedDose = "none", dispel = "poison"}, -- Acidic Burst
 	{1305163, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1305163))}, -- Petrifying Sting
-	{1303414, soundOnApplied = "alarm", note = CL.debuffHitByCastNote:format(mod:SpellName(1305163))}, -- Petrifying Sting
+	{1303414, soundOnApplied = "alarm", mechanic = "stunned", note = CL.debuffHitByCastNote:format(mod:SpellName(1305163))}, -- Petrifying Sting
 	{1300312}, -- Doomscale Shell
 	{1305775, soundOnApplied = "alarm", mechanic = "stunned", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1305775))}, -- Dread Roar
-	{1305650, soundOnApplied = "alarm", mechanic = "stunned", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1305650))}, -- Anguished Cry
+	{1305650, soundOnApplied = "alarm", dispel = "magic", mechanic = "stunned", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1305650))}, -- Anguished Cry
 	{1305709}, -- Desperate Thrash
 	{1311609, soundOnAppliedDose = "none"}, -- Blight Vein
 	{1306858}, -- Warden's Protection

@@ -64,7 +64,7 @@ mod:SetAuraData({
 
 	{1277105, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1277002)), header = mod:SpellName(1277105)}, -- Ravage
 	{1277051, soundOnApplied = "none", duration = 22, note = CL.debuffHitByCastNote:format(mod:SpellName(1277027))}, -- Mutilated Gash
-	{1287083, soundOnApplied = "alarm", soundOnAppliedDose = "none", mechanic = "snared", note = CL.debuffFailureMoveFromCastNote:format(mod:SpellName(1287083))}, -- Tempest
+	{1287083, soundOnApplied = "alarm", soundOnAppliedDose = "none", dispel = "poison", mechanic = "snared", note = CL.debuffFailureMoveFromCastNote:format(mod:SpellName(1287083))}, -- Tempest
 
 	{1282873, soundOnApplied = "none", note = CL.tank_debuff, header = CL.general}, -- Corroding Venom
 	{1287205, soundOnApplied = "none", note = CL.debuffAddsCast:format(mod:SpellName(1287008))}, -- Viscous Cyst
