@@ -87,9 +87,9 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 })
 
 BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
-	--trader_gebbo = "Gebbo",
-	--first_mate_nama = "Nama",
-	--scrollsage_iku = "Iku",
+	trader_gebbo = "商人",
+	first_mate_nama = "大副",
+	scrollsage_iku = "先知",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -109,19 +109,19 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	circling_prey = "平台破裂",
 	p3_knock_up = "擊退",
 
-	--toxic_womb = "Wretch Spawn",
+	toxic_womb = "疫鱗", -- 疫鱗渣滓
 	--fester_burst = "Wretch Bubble",
-	--toxic_incubation = "Wretch Waves",
+	toxic_incubation = "腐蝕波",
 
 	--count_amount_side = "%s (%d/%d) %s",
 	--count_side = "%s (%d) %s",
 	--fester_burst_count = "%s (%d-%d)",
 
-	--custom_select_limit_warnings = "Spectral Coils Group",
-	--custom_select_limit_warnings_desc = "Only show bars for your soak group (left or right).  Right side is first in stage one, left side is first in intermission.",
-	--custom_select_limit_warnings_value1 = "Show warnings for both sides.",
-	--custom_select_limit_warnings_value2 = "Show warnings for left side only.",
-	--custom_select_limit_warnings_value3 = "Show warnings for right side only.",
-	--custom_select_limit_warnings_value4 = "Odd groups left, even groups right.",
-	--custom_select_limit_warnings_value5 = "Mythic: Groups 1 & 2 go left, groups 3 & 4 go right. Others: Groups 1/2/3 go left, groups 4/5/6 go right.",
+	custom_select_limit_warnings = "幽魂之纏分組",
+	custom_select_limit_warnings_desc = "只顯示你所屬分攤組別的計時條。第一階段右側先分攤，中場階段左側先分攤。",
+	custom_select_limit_warnings_value1 = "顯示雙側警報。",
+	custom_select_limit_warnings_value2 = "只顯示左側警報。",
+	custom_select_limit_warnings_value3 = "只顯示右側警報。",
+	custom_select_limit_warnings_value4 = "奇數隊左，偶數隊右。",
+	custom_select_limit_warnings_value5 = "傳奇模式：一二隊左，三四隊右。其他模式：一二三隊左，四五六隊右。",
 })
