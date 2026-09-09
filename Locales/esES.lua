@@ -150,13 +150,13 @@ L.resetPositions = "Reiniciar posiciones"
 L.selectEncounter = "Seleccionar encuentro"
 L.primary_aura_spellId = "ID del hechizo principal: %d"
 L.secondary_aura_spellIds = "ID del hechizo secundario(s): %s"
---L.auraDispelType = "Dispel type: %s"
+L.auraDispelType = "Tipo de disipación: %s"
 L.auraDispel_magic = "Magia"
 L.auraDispel_curse = "Maldición"
 L.auraDispel_disease = "Enfermedad"
 L.auraDispel_poison = "Veneno"
 L.auraDispel_bleed = "Hemorragia"
---L.auraMechanic = "Mechanic: %s"
+L.auraMechanic = "Mecánica: %s"
 L.auraMechanic_charmed = "Embelesado"
 L.auraMechanic_disoriented = "Desorientado"
 L.auraMechanic_disarmed = "Desarmado"
@@ -417,7 +417,7 @@ L.toolsDesc = "BigWigs ofrece varias herramientas o características de \"calida
 
 L.reloadUIWarning = "Cambiar esta función recargará la interfaz, mostrando la pantalla de carga por un momento. ¿Estás seguro?"
 L.qualityOfLife = "Calidad de vida"
-L.notYetImplemented = "Aún no implementado" -- When a feature hasn't been implemented yet
+L.notYetImplemented = "Todavía no se ha implementado" -- When a feature hasn't been implemented yet
 
 -----------------------------------------------------------------------
 -- AutoInvite.lua
@@ -747,8 +747,8 @@ L.TOPLEFT = "Superior Izquierda"
 L.BOTTOMRIGHT = "Inferior Derecha"
 L.BOTTOMLEFT = "Inferior Izquierda"
 L.CENTER = "Centrado"
---L.CENTER_HORIZONTAL = "Center-Horizontal"
---L.CENTER_VERTICAL = "Center-Vertical"
+L.CENTER_HORIZONTAL = "Centrado-Horizontal"
+L.CENTER_VERTICAL = "Centrado-Vertical"
 L.customAnchorPoint = "Avanzado: Punto de anclaje personalizado"
 L.sourcePoint = "Punto de Origen"
 L.destinationPoint = "Punto de Destino"
@@ -782,12 +782,12 @@ L.disableAltPowerDesc = "Desactiva globalmente el marco de Poder alternativo, nu
 -- Auras.lua
 --
 
---L.auras = "Auras" -- Buffs/Debuffs
+L.auras = "Auras" -- Buffs/Debuffs
 L.privateAuras = "Auras privadas"
 L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
 L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como iconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
 L.aurasDesc = "BigWigs puede ayudarte a ver cuando un jefe te aplica perjuicios mostrándotelos como iconos.\n|cFF33FF99Esto te puede ayudar a mostrar por separado los perjuicios más importantes de los comunes.|r\n\n"
---L.disabledDuringTrash = "Disabled During Trash"
+L.disabledDuringTrash = "Deshabilitado en los esbirros entre jefe y jefe"
 
 L.createTestAura = "Crear aura de prueba"
 L.showDispelType = "Mostrar indicador de tipo de disipación"
@@ -797,8 +797,8 @@ L.iconSize = "Tamaño del icono"
 L.iconSpacing = "Espaciado de iconos"
 L.showCooldown = "Mostrar espiral de tiempo de reutilización"
 L.showCooldownText = "Mostrar texto de reutilización"
---L.cooldownDecimalsThreshold = "Decimals Threshold"
---L.cooldownDecimalsThresholdDesc = "At which threshold in seconds should decimal points be shown."
+L.cooldownDecimalsThreshold = "Umbral decimal"
+L.cooldownDecimalsThresholdDesc = "A partir de qué umbral, expresado en segundos, deben mostrarse los decimales."
 L.cooldownTextScale = "Escala del texto de reutilización"
 L.growthDirection = "Dirección de crecimiento de iconos"
 L.aurasOnYou = "Auras sobre ti"
@@ -810,14 +810,14 @@ L.theOtherTank = "Encontrar automáticamente un tanque"
 L.theOtherTankDesc = "Muestra los perjuicios del jefe en el primer tanque del grupo que no seas tú. (Actual: %s)"
 L.onlyWhenYouAreTank = "Mostrar solo cuando tú también eres tanque"
 L.playerInYourGroup = "Un jugador de tu grupo"
---L.tankIndicator = "Tank Indicator"
+L.tankIndicator = "Indicador del tanque"
 L.maxIcons = "Máximo de iconos"
 L.maxIconsDesc = "La cantidad máxima de iconos que se mostrarán."
 L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como iconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
 L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjucios del jefe como iconos o los perjuicios de otro jugador. (p. ej. un tanque)."
 
---L.aurasTestAnchorText = "Player\nAuras"
---L.aurasTestTankAnchorText = "Tank\nAuras"
+L.aurasTestAnchorText = "Jugador\nAuras"
+L.aurasTestTankAnchorText = "Tanque\nAuras"
 
 L.auraSounds = "Sonidos de auras"
 L.addAuraSpell = "Añadir hechizo"
@@ -1085,8 +1085,8 @@ L.classColors = "Colores de clase"
 L.classColorsDesc = "Los mensajes a veces contienen nombres de jugadores. Si activas esta opción, esos nombres se colorearán con los colores de la clase."
 L.chatFrameMessages = "Mensajes al chat"
 L.chatFrameMessagesDesc = "Envía todos los mensajes de BigWigs al cuadro de chat predeterminado, además de a la pantalla configurada."
---L.chatFrameChoice = "Choose Chat Frame"
---L.chatFrame = "Chat Frame %d: %s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
+L.chatFrameChoice = "Elegir una pestaña del chat"
+L.chatFrame = "Pestaña del chat %d: %s" -- "Chat Frame 1: General" or "Chat Frame 2: Combat Log" etc.
 
 L.fontSize = "Tamaño de la fuente"
 L.none = "Ninguno"
